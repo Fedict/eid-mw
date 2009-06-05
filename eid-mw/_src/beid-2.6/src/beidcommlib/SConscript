@@ -1,0 +1,18 @@
+Import('env')
+myenv=env.Copy()
+obj=myenv.genobj('shlib', myenv)
+obj.target='libbeidcomm'
+obj.src=Split("""
+CardMessage.cpp
+ConnectionListener.cpp
+QSocketDeviceImpl.cpp
+Connection.cpp
+ConnectionManager.cpp
+MessageQueue.cpp
+ServerRecvThread.cpp
+""")
+obj.vnum='0.0.0'
+obj.execute()
+libdir = env['LIBDIR']
+env.Alias('install', env.Install(libdir, obj.target + '.so.' + obj.vnum))
+env.Alias('install', env.Install(libdir, obj.target + '.so'))

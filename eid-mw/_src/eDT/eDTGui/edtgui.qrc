@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Resources" >
+        <file>Resources/ICO_CARD_EID_DIAGNOSIS_128x128.png</file>
+        <file>Resources/ICO_CARD_EID_DIGSIG_128x128.png</file>
+        <file>Resources/ICO_CARD_EID_TOOLS_128x128.png</file>
+        <file>Resources/ICO_CARD_EID_TOOLS_16x16.png</file>
+    </qresource>
+    <qresource prefix="/TranslationFiles" >
+        <file>edtgui_fr.qm</file>
+        <file>edtgui_nl.qm</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,168 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "svn_revision.h"
+#include "_Builds/beidversions.h" 
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Dutch (Netherlands) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLD)
+#ifdef _WIN32
+LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON                    "Resources\\Setup.ico"
+
+#endif    // Dutch (Netherlands) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Dutch (Belgium) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLB)
+#ifdef _WIN32
+LANGUAGE LANG_DUTCH, SUBLANG_DUTCH_BELGIAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+// #define MSI_FILEX "BeidMW35-"
+// #define MSI_FILEA(x) "BeidMW35-"##x
+// #define MSI_FILEB(x) MSI_FILEA(x)
+#define MSI_FILE_DASH "-"
+//#define MSI_FILEX(x) BeidMW35_##x.msi
+//// #define MSI_MINUS(x)	-x
+//// #define MSI_FILE(x) MSI_FILEX( MSI_MINUS(x) )
+// #define MSI_FILE(x) MSI_FILEX( x )
+
+#define MSI_MINUS(x)	-x
+#define MSI_FILEX(x,y,z) #x##y#z
+// #define MSI_FILE(x) MSI_FILEX( MSI_MINUS(x) )
+ #define MSI_FILE(x) MSI_FILEX( "BeidMW35" , x , ".msi")
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// MSI
+//
+
+IDR_MSI1                MSI                     "BeidMW35.msi"
+//IDR_MSI1                MSI                     MSI_FILE( SVN_REVISION )
+//IDR_MSI1                MSI                     "BeidMW35.msi"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// SMARTCARDDRIVERS
+//
+
+IDR_SMARTCARDDRIVERS1   SMARTCARDDRIVERS        "ArchiveFile.zrc"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION WIN_QI_VERSION1,WIN_QI_VERSION2,WIN_QI_VERSION3,WIN_QI_VERSION4
+ PRODUCTVERSION WIN_QI_VERSION1,WIN_QI_VERSION2,WIN_QI_VERSION3,WIN_QI_VERSION4
+FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "081304b0"
+        BEGIN
+            VALUE "Comments", "Belgium eID Middleware QuickInstaller"
+            VALUE "CompanyName", BEID_COMPANY_NAME
+            VALUE "FileDescription", "eID-QuickInstaller"
+            VALUE "FileVersion", WIN_QI_VERSION_STRING
+            VALUE "InternalName", "eID-QuickInstaller"
+            VALUE "LegalCopyright", BEID_COPYRIGHT
+            VALUE "OriginalFilename", "eID-QuickInstaller.exe"
+            VALUE "ProductName", BEID_PRODUCT_NAME
+            VALUE "ProductVersion", BEID_PRODUCT_VERSION
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x813, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// ISSFILE
+//
+
+IDR_ISSFILE1            ISSFILE                 "Resources\\uninstall24.iss"
+IDR_ISSFILE2            ISSFILE                 "Resources\\uninstall25.iss"
+IDR_ISSFILE3            ISSFILE                 "Resources\\uninstall26.iss"
+IDR_ISSFILE4            ISSFILE                 "Resources\\uninstall30.iss"
+IDR_ISSFILE5            ISSFILE                 "Resources\\uninstall35.iss"
+IDR_ISSFILE6            ISSFILE                 "Resources\\uninstall35Pro.iss"
+#endif    // Dutch (Belgium) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

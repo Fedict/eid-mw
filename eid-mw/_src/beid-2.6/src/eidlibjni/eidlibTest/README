@@ -1,0 +1,11 @@
+compile
+-------
+javac -cp beidlib.jar eidlibtest/Test.java
+
+run
+---
+java -cp .:beidlib.jar eidlibtest.Test
+
+applet
+------
+LD_LIBRARY_PATH=/usr/local/lib firefox BEIDCard.html

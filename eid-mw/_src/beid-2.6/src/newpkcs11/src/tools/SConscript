@@ -1,0 +1,18 @@
+Import('env')
+myenv = env.Copy()
+myenv.Append(CPPPATH=['../..', '../include', '../common'],
+             LIBPATH=['../libopensc', '../../../winscarp', 
+                      '../../../beidcommlib',
+                      '../../../beidcommon'],
+             LIBS=['beidlibopensc', 'beidpcsclite', 'beidcomm', 'beidcommon'],
+             CCFLAGS='-DHAVE_CONFIG_H')
+
+#following only needed if no getopt.h ...
+#../common/getopt.c ../common/getopt1.c
+
+# FIXME: twice util.c ...
+tool1 = myenv.Program('beid-pkcs11-tool', ['pkcs11-tool.c', 'libpkcs11.c', 'util.c'])
+tool2 = myenv.Program('beid-tool', ['opensc-tool.c', 'util.c'])
+prefix = env['PREFIX']
+env.Alias('install', env.Install(prefix + '/bin', tool1))
+env.Alias('install', env.Install(prefix + '/bin', tool2))

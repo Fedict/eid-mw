@@ -1,0 +1,24 @@
+Import('env')
+myenv=env.Copy()
+obj=myenv.genobj('shlib', myenv)
+# note: correct libname is crucial: dynamically loaded by pkcs11 ...
+obj.target='libbeidgui'
+obj.src=Split("""
+askmessagedialog.ui
+authenticationdialog.ui
+changepindialog.ui
+insertcarddialog.ui
+
+askmessagedialogimpl.cpp
+authenticationdialogimpl.cpp
+belpicgui.cpp
+changepindialogimpl.cpp
+insertcarddialogimpl.cpp
+
+qmake_image_collection.cpp
+""")
+obj.vnum='1.5.0'
+obj.execute()
+libdir = env['LIBDIR']
+env.Alias('install', env.Install(libdir, obj.target + '.so.' + obj.vnum) )
+env.Alias('install', env.Install(libdir, obj.target + '.so') )

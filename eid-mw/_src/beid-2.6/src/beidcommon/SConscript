@@ -1,0 +1,25 @@
+# note: log4cplus only needed if _LOGGING_CXX defined
+
+Import('env')
+myenv=env.Copy()
+obj=myenv.genobj('shlib', myenv)
+obj.target='libbeidcommon'
+obj.src=Split("""
+bytearray.cpp
+datafile.cpp
+pinpad.cpp
+config.cpp
+downloadfile.cpp
+qtservice.cpp
+qtservice_unix.cpp
+qtunixsocket.cpp
+qtunixserversocket.cpp
+TLV.cpp
+TLVBuffer.cpp
+""")
+obj.includes='../eidlib'
+obj.vnum='0.0.0'
+obj.execute()
+libdir = env['LIBDIR']
+env.Alias('install', env.Install(libdir, 'libbeidcommon.so.' + obj.vnum))
+env.Alias('install', env.Install(libdir, 'libbeidcommon.so'))

@@ -1,0 +1,35 @@
+.PU
+.ds nm \fBbeid-tool\fR
+.TH beid-tool 1 "09/2005" "" Belgium eID Card
+.SH NAME
+beid-tool \- generic smart card utility
+.SH SYNOPSIS
+\*(nm
+.RI [OPTIONS]
+.SH DESCRIPTION
+The \*(nm utility can be used from the command line to perform
+miscellaneous smart card operations such as getting the card
+ATR or listing the PC/SC compliant smartcard readers that are installed.
+.SH OPTIONS
+.TP
+.BR \-\-atr ", " \-a
+Print the Answer To Reset (ATR) of the card (output is in hexadecimal notation).
+format
+.TP
+.BR \-\-name ", " \-n
+Identify the card and print its name
+.TP
+.BR \-\-list\-readers ", " \-l
+Lists all configured readers
+.TP
+.BR "\-\-reader " \fInum\fP ", \-r " \fInum\fP
+Select a reader (default = 0)
+.TP
+.BR \-\-wait ", " \-w
+Wait for a card to be inserted
+.SH SEE ALSO
+.BR beid-pkcs11-tool (1)
+.SH AUTHORS
+\*(nm is based on opensc-tool (www.opensc.org) written by <juha.yrjola@iki.fi>
+and adapted for the Belgian national eID card by Zetes NV/SA (www.zetes.com).
+This manpage was based on the opensc-tool manpage by Joe Phillips <joe.phillips@innovationsw.com> for the Debian GNU/Linux system (but may be used by others).

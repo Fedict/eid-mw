@@ -1,0 +1,60 @@
+LIBRARY BEIDWINSCARD
+
+DESCRIPTION "EID PC/SC Proxy"
+
+EXPORTS
+	SCardBeginTransaction
+	SCardConnectA 
+	SCardControl 
+	SCardDisconnect 
+	SCardEndTransaction 
+	SCardEstablishContext 	
+	SCardGetStatusChangeA 
+	SCardListReadersA
+	SCardReleaseContext 
+	SCardStatusA 
+	SCardTransmit 
+	g_rgSCardRawPci
+	g_rgSCardT0Pci
+	g_rgSCardT1Pci
+
+;	SCardCancel
+;	SCardConnectW 
+;	SCardFreeMemory 
+;	SCardGetAttrib 
+;	SCardGetStatusChangeW 
+;	SCardListReadersW 
+;	SCardLocateCardsA 
+;	SCardLocateCardsW 
+;	SCardReconnect 
+;	SCardSetAttrib 
+;	SCardStatusW 
+
+;	SCardAddReaderToGroupA @ 3 
+;	SCardAddReaderToGroupW @ 4 
+;	SCardForgetCardTypeA @ 13 
+;	SCardForgetCardTypeW @ 14 
+;	SCardForgetReaderA @ 15 
+;	SCardForgetReaderGroupA @ 16 
+;	SCardForgetReaderGroupW @ 17 
+;	SCardForgetReaderW @ 18 
+;	SCardGetProviderIdA @ 23 
+;	SCardGetProviderIdW @ 24 
+;	SCardIntroduceCardTypeA @ 27 
+;	SCardIntroduceCardTypeW @ 28 
+;	SCardIntroduceReaderA @ 29 
+;	SCardIntroduceReaderGroupA @ 30 
+;	SCardIntroduceReaderGroupW @ 31 
+;	SCardIntroduceReaderW @ 32 
+;	SCardListCardsA @ 34 
+;	SCardListCardsW @ 35 
+;	SCardListInterfacesA @ 36 
+;	SCardListInterfacesW @ 37 
+;	SCardListReaderGroupsA @ 38 
+;	SCardListReaderGroupsW @ 39 
+;	SCardRemoveReaderFromGroupA @ 49 
+;	SCardRemoveReaderFromGroupW @ 50 
+;	SCardState @ 54 
+;	g_rgSCardRawPci @ 58 
+;	g_rgSCardT0Pci @ 59 
+;	g_rgSCardT1Pci @ 60 

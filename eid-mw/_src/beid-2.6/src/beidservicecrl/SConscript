@@ -1,0 +1,16 @@
+Import('env')
+myenv = env.Copy()
+obj=myenv.genobj('program', myenv)
+obj.target='beidcrld'
+obj.includes='../eidlib'
+obj.libpaths='../eidlib ../newpkcs11/src/libopensc ../winscarp ../beidcommlib ../beidcommon'
+obj.libs='ssl beid beidlibopensc beidpcsclite beidcomm beidcommon'
+obj.src=Split("""
+CRLScheduler.cpp  main.cpp
+""")
+obj.execute()
+
+prefix = env['PREFIX']
+initscript = 'belgium.be-beidcrld'
+env.Alias('install', env.Install(prefix + '/bin', obj.target))
+env.Alias('install', env.Install('/etc/init.d', initscript))

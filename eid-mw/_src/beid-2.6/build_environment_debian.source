@@ -1,0 +1,19 @@
+#!/bin/sh
+######################################
+#
+# use this file as:
+#   source <thisfile>
+#
+# it will set the necessary environment to run the build process
+######################################
+JAVA_HOME=`which javac 2> /dev/null`
+JAVABINDIR=`echo $JAVA_HOME | wc -l`
+if [[ $JAVABINDIR -eq 0 ]]
+then
+	echo "Directory $JAVA_HOME does not exist. Please verify."
+else
+	JAVA_HOME=${JAVA_HOME%/*}
+	JAVA_HOME=$JAVA_HOME/..
+	export JAVA_HOME
+fi
+

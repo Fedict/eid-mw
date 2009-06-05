@@ -1,0 +1,791 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: eidgui_fr\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2006-05-12 10:39+0100\n"
+"Last-Translator: Zetes\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: C:\\Programming\\Zetes\\eidviewer\n"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:109
+msgid "Identity Card"
+msgstr "Carte d'identité"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:246
+msgid "Click on the chip to read the card"
+msgstr "Cliquer sur la puce pour lire la carte"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:211
+msgid "Invalid parameter"
+msgstr "Parameter invalide"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:212
+msgid "An internal consistency check failed"
+msgstr "Un test interne de consistance a échoué"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:213
+msgid "Invalid handle"
+msgstr "'Handle' invalide"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:214
+msgid "The data buffer to receive returned data is too small for the returned data"
+msgstr "Données trop longue pour le buffer interne"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:215
+msgid "An internal communications error has been detected"
+msgstr "Erreur interne de communication"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:216
+msgid "A specified timeout value has expired"
+msgstr "Temps d'attente interne expiré"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:217
+msgid "Unknown card in reader"
+msgstr "Carte inconnue dans le lecteur"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:218
+msgid "Input cancelled"
+msgstr "Entrée du code PIN annulée par l'utilisateur"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:219
+msgid "Timout returned from pinpad"
+msgstr "Temps d'attente au clavier du lecteur expiré"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:220
+msgid "The two PINs did not match"
+msgstr "Les deux code PINs ne correspondent pas"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:221
+msgid "Message too long on pinpad"
+msgstr "Message trop long au clavier du lecteur"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:222
+msgid "Invalid PIN length"
+msgstr "Longueur de code PIN invalide"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:255
+msgid "Signature verification failed"
+msgstr "La vérification de la signature a échoué"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:224
+msgid "Library not initialized"
+msgstr "La librairie n'est pas initialisée"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:225
+msgid "An internal error has been detected, but the source is unknown"
+msgstr "Erreur interne inconnue"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:226
+msgid "Function is not supported"
+msgstr "Function non supportée"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:227
+msgid "Incorrect library version"
+msgstr "Version de librairie incorrecte"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:515
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:604
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1303
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1308
+msgid "Wrong Root Certificate"
+msgstr "Certificat racine incorrect"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:737
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1394
+msgid "Certificate validation failed (OCSP/CRL)"
+msgstr "La validation du certificat a échoué (OCSP/CRL)"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:264
+msgid "Connecting to card..."
+msgstr "Connection à la carte..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:276
+msgid "Reading Identity..."
+msgstr "Lecture de l'identité..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:287
+msgid "Reading Address..."
+msgstr "Lecture de l'adresse..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:297
+msgid "Reading Picture..."
+msgstr "Lecture de la photo..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:320
+msgid "Reading VersionInfo..."
+msgstr "Lecture des informations de version..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:328
+msgid "Reading PIN Data..."
+msgstr "Lecture des données relatives au code PIN..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:336
+msgid "Done"
+msgstr "Fini"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:403
+msgid "System Error : "
+msgstr "Erreur système : "
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:410
+msgid "Unknown errorcode"
+msgstr "Erreur inconnue"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:416
+#, c-format
+msgid "Card error : SW=%02X%02X"
+msgstr "Erreur carte : SW=%02X%02X"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:403
+msgid "Error : "
+msgstr "Erreur : "
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:554
+msgid "Changing PIN..."
+msgstr "Modification du code PIN..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:650
+msgid "PIN successfully changed"
+msgstr "Le nouveau code PIN a été enregistré avec succès"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:287
+msgid "Reading..."
+msgstr "Lecture..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:703
+msgid "Save an eID file"
+msgstr "Sauver un fichier eID"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:328
+msgid "Storing Data..."
+msgstr "Stockage des données..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:738
+msgid "Error saving eID file"
+msgstr "Erreur sauver le fichier eID"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:771
+msgid "Opening eID file..."
+msgstr "Ouverture d'un fichier eID..."
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:776
+msgid "Open an eID file"
+msgstr "Ouvrez un fichier eID"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:787
+msgid "File doesn't exist"
+msgstr "Le fichier n'existe pas"
+
+# C:\Programming\Zetes\eidviewer/eidviewerApp.cpp:222
+msgid "Invalid eID File"
+msgstr "Fichier eID invalide"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:241
+msgid "Read"
+msgstr "Lire la carte"
+
+# C:\Programming\Zetes\eidviewer/eidviewerFrame.cpp:118
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1463
+msgid "Clear"
+msgstr "Effacer les informations"
+
+# C:\Programming\Zetes\eidviewer/eidviewerFrame.cpp:87
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1385
+msgid "Open"
+msgstr "Ouvrir"
+
+# C:\Programming\Zetes\eidviewer/eidviewerFrame.cpp:88
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1386
+msgid "Save"
+msgstr "Enregistrer"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:225
+msgid "Print"
+msgstr "Imprimer"
+
+# C:\Programming\Zetes\eidviewer/eidviewerFrame.cpp:126
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1468
+msgid "Exit"
+msgstr "Quitter"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:237
+msgid "Clear Screen"
+msgstr "Effacer les informations"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:241
+msgid "Read Card"
+msgstr "Lire la carte"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:255
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:493
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1137
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1273
+msgid "Identity"
+msgstr "Identité"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:258
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1202
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1247
+msgid "Name"
+msgstr "Nom"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:264
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1205
+msgid "Givennames"
+msgstr "Prénoms"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:287
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1208
+msgid "Place of Birth"
+msgstr "Lieu de naissance"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:290
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1211
+msgid "Date of Birth"
+msgstr "Date de naissance"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:293
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1214
+msgid "Sex"
+msgstr "Sexe"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:296
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1217
+msgid "Nationality"
+msgstr "Nationalité"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:317
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1220
+msgid "Title"
+msgstr "Titre"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:320
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1223
+msgid "National Number"
+msgstr "Numéro national"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:335
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1279
+msgid "Card Info"
+msgstr "Carte"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:338
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1226
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1356
+msgid "Chip Number"
+msgstr "Numéro de la puce"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:344
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1229
+msgid "Card Number"
+msgstr "Numéro de la carte"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:354
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:553
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1232
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1316
+msgid "Valid From"
+msgstr "Valide du"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:357
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:556
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1235
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1318
+msgid "Until"
+msgstr "Au"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:368
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1238
+msgid "Issuing Municipality"
+msgstr "Commune d'émission"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:381
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1276
+msgid "Address"
+msgstr "Adresse"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:384
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1241
+msgid "Street"
+msgstr "Rue"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:394
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1244
+msgid "Postal Code"
+msgstr "Code postal"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:397
+msgid "Municipality"
+msgstr "Commune"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:400
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1250
+msgid "Country"
+msgstr "Pays"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:418
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1282
+msgid "Special Status"
+msgstr "Statut spécial"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:446
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1259
+msgid "White Cane                    "
+msgstr "Canne blanche"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:446
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1259
+msgid "Yellow Cane                    "
+msgstr "Canne jaune"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:446
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1259
+msgid "Extended Minority                    "
+msgstr "Minorité étendue                     "
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:515
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:604
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1303
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1308
+msgid "Certificates"
+msgstr "Certificats"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:529
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1310
+msgid "Owner"
+msgstr "Propriétaire"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:535
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1312
+msgid "Issuer"
+msgstr "Émetteur"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:541
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1314
+msgid "Key Length"
+msgstr "Longueur de clé"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:567
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1320
+msgid "Certificate Status"
+msgstr "Statut du certificat"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:575
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1325
+msgid "Register"
+msgstr "Enregistrer"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:578
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1327
+msgid "Details >>"
+msgstr "Détails >>"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:621
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1350
+msgid "Version Info"
+msgstr "Information de Version"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:629
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1352
+msgid "PIN Info"
+msgstr "Information relatives au PIN"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:639
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1334
+msgid "Pins"
+msgstr "PIN"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:657
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1336
+msgid "PIN Name"
+msgstr "Nom Code PIN"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:660
+msgid "Pin ID"
+msgstr "ID Code PIN"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:671
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1340
+msgid "PIN Status"
+msgstr "Statut Code PIN"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:679
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1345
+msgid "Change Pin"
+msgstr "Modification"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:701
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1380
+msgid "Field"
+msgstr "Champs"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:702
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1384
+msgid "Value"
+msgstr "Valeur"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:712
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1331
+msgid "Card && PIN"
+msgstr "Carte && PIN"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:712
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1331
+msgid "Card & PIN"
+msgstr "Carte & PIN"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:734
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1400
+msgid "Language"
+msgstr "Langue"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:737
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1394
+msgid "Certificate Validation"
+msgstr "Validation du certificat"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:749
+msgid "OCSP"
+msgstr "OCSP"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:756
+msgid "CRL"
+msgstr "CRL"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:771
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1396
+msgid "Smartcard Reader"
+msgstr "Lecteur de carte"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:797
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:800
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1419
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1434
+msgid "Not used"
+msgstr "Pas utilisé"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:798
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:801
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1420
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1435
+msgid "Optional"
+msgstr "Optionnel"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:799
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:802
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1423
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1438
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2268
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2292
+msgid "Mandatory"
+msgstr "Obligatoire"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:803
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1409
+msgid "Not specified"
+msgstr "Lecteur par défaut"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:849
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1389
+msgid "Options"
+msgstr "Options"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:928
+msgid "Belgian eID Run-time Version                           "
+msgstr "Belgian eID Run-time Version                           "
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:952
+msgid "Developed for the Belgian Government by Zetes / Computer Sciences Corporation"
+msgstr "Developpé pour le Gouvernment belge par Zetes / Computer Sciences Corporation"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1359
+msgid "Version"
+msgstr "Version"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:629
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1352
+msgid "Info"
+msgstr "Info"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:426
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1253
+msgid "White Cane"
+msgstr "Canne blanche"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:436
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1256
+msgid "Yellow Cane"
+msgstr "Canne jaune"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:446
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1259
+msgid "Extended Minority"
+msgstr "Minorité étendue"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1494
+msgid "To use your identity card with applications like Internet Explorer, Microsoft Office, OpenOffice.org, Adobe Reader, Outlook, ...  you first have to register the card in Windows. Select a certificate and click the \"Register\" button to register your certificates."
+msgstr "Les certificats de la carte eID doivent être enregistrés dans Windows pour pouvoir utiliser la carte d’identité électronique dans Internet Explorer, Microsoft Office, OpenOffice.org, Adobe Reader, Outlook, ...  Pour enregistrer un certificat, sélectionnez-le et cliquez sur le bouton « Enregistrer »."
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1338
+msgid "PIN ID"
+msgstr "PIN ID"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1357
+msgid "Component Code"
+msgstr "Component Code"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1358
+msgid "OS Number"
+msgstr "OS Number"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1359
+msgid "OS Version"
+msgstr "OS Version"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1360
+msgid "Softmask Number"
+msgstr "Softmask Number"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1361
+msgid "Softmask Version"
+msgstr "Softmask Version"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1362
+msgid "Applet Version"
+msgstr "Applet Version"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1363
+msgid "Global OS Version"
+msgstr "Global OS Version"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1364
+msgid "Applet Interface Version"
+msgstr "Applet Interface Version"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1365
+msgid "PKCS1 Support"
+msgstr "PKCS#1 Support"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1366
+msgid "Key Exchange Version"
+msgstr "Key Exchange Version"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1367
+msgid "Application Life Cycle"
+msgstr "Application Life Cycle"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1368
+msgid "Graphical Personalisation"
+msgstr "Graphical Personalisation"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1369
+msgid "Electrical Personalisation"
+msgstr "Electrical Personalisation"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1370
+msgid "Electrical Personalisation Interface"
+msgstr "Electrical Personalisation Interface"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1476
+msgid "Valid signature"
+msgstr "Signature valide"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1481
+msgid "Invalid signature"
+msgstr "Signature invalide"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1485
+msgid "Valid signature but invalid RRN certificate"
+msgstr "Signature valide mais certificat du Registre National invalide"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1496
+msgid "Belgian EID Card"
+msgstr "Carte eID belge"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1501
+msgid "There was a problem with the printer."
+msgstr "Il y a eu un problème à l'impression."
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1503
+msgid "Printing canceled."
+msgstr "Impression annulée."
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1849
+msgid "Valid"
+msgstr "Valide"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1852
+msgid "Not Validated"
+msgstr "Non validé"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1855
+msgid "Unable to get issuer certificate"
+msgstr "Impossible d’obtenir le certificat de l’émetteur"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1858
+msgid "Unable to get certificate CRL"
+msgstr "Impossible d’obtenir la CRL pour ce certificat"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1861
+msgid "Unable to decrypt certificate's signature"
+msgstr "Impossible de déchiffrer la signature du certificat"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1864
+msgid "Unable to decrypt CRL's signature"
+msgstr "Impossible de déchiffrer la signature de la CRL"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1867
+msgid "Unable to decode issuer public key"
+msgstr "Impossible de décoder la clé publique de l’émetteur"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1870
+msgid "Certificate signature failure"
+msgstr "La signature du certificat est erronée"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1873
+msgid "CRL signature failure"
+msgstr "La signature de la CRL est erronée"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1876
+msgid "Certificate is not yet valid"
+msgstr "Le certificat n’est pas encore valable"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1879
+msgid "CRL is not yet valid"
+msgstr "La CRL n’est pas encore valable"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1882
+msgid "Certificate has expired"
+msgstr "Le certificat est périmé"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1885
+msgid "CRL has expired"
+msgstr "La CRL est périmée"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1888
+msgid "Format error in certificate's notBefore field"
+msgstr "Erreur de format dans le champ 'notBefore' du certificat"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1891
+msgid "Format error in certificate's notAfter field"
+msgstr "Erreur de format dans le champ 'notAfter' du certificat"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1894
+msgid "Format error in CRL's lastUpdate field"
+msgstr "Erreur de format dans le champ 'lastUpdate' de la CRL"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1897
+msgid "Format error in CRL's nextUpdate field"
+msgstr "Erreur de format dans le champ 'nextUpdate' de la CRL"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1900
+msgid "Out of memory"
+msgstr "Mémoire insuffisante"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1903
+msgid "Self signed certificate"
+msgstr "Certificat auto-signé"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1906
+msgid "Self signed certificate in certificate chain"
+msgstr "Certificat auto-signé dans la chaîne des certificats"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1909
+msgid "Unable to get local issuer certificate"
+msgstr "Impossible d’obtenir le certificat de l’émetteur local"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1912
+msgid "Unable to verify the first certificate"
+msgstr "Impossible de vérifier le premier certificat"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1915
+msgid "Certificate chain too long"
+msgstr "Chaîne de certificats trop longue"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1918
+msgid "Certificate revoked"
+msgstr "Certificat révoqué"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1921
+msgid "Invalid CA certificate"
+msgstr "Certificat de l'autorité invalide"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1924
+msgid "Path length constraint exceeded"
+msgstr "Dépassement de la longueur maximale du chemin d’accès"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1927
+msgid "Unsupported certificate purpose"
+msgstr "Cette utilisation du certificat n’est pas prise en charge"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1930
+msgid "Certificate not trusted"
+msgstr "Certificat non fiable (\"trusted\")"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1933
+msgid "Certificate rejected"
+msgstr "Certificat rejeté"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1936
+msgid "Subject issuer mismatch"
+msgstr "Discordance entre 'Subject' et 'Issuer'"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1939
+msgid "Authority and subject key identifier mismatch"
+msgstr "Discordance entre l'identifiant des clés 'Authority' et 'Subject'"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1942
+msgid "Authority and issuer serial number mismatch"
+msgstr "Discordance entre les numéros de série des champs 'Issuer' et 'Authority'"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1945
+msgid "Key usage does not include certificate signing"
+msgstr "Cette clé ne permet pas de signer des certificats"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1948
+msgid "Unable to get CRL issuer certificate"
+msgstr "Impossible d’obtenir le certificat de l’émetteur de la CRL"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1951
+msgid "Unhandled critical extension"
+msgstr "Extension critique non traitée"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:1955
+msgid "Unknown certificate status"
+msgstr "État inconnu"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2058
+msgid "Registration of the certificate succeeded"
+msgstr "L'enregistrement du certificat a réussi"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2062
+msgid "Registration of the certificate failed !"
+msgstr "L'enregistrement du certificat a échoué !"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2183
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2240
+msgid "Unknown PIN Status"
+msgstr "Statut du code PIN inconnu"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2187
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2244
+#, c-format
+msgid "%ld tries remaining"
+msgstr "%ld essais restants"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2473
+msgid "Signature Key"
+msgstr "Clé de signature"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2478
+msgid "Authentication Key"
+msgstr "Clé d'authentification"
+
+# C:\Programming\Zetes\eidviewer/eidviewerNotebook.cpp:2944
+msgid "Belgian eID Run-time Version"
+msgstr "Belgian eID Run-time Version"
+

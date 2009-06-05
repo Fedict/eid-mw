@@ -1,0 +1,249 @@
+#!/bin/bash
+#
+#     LSB system startup script for beidcrld
+#     Copyright (C) 2006  Fedict
+#     /etc/init.d/belgium.be-beidcrld
+#     LSB compatible service control script; see http://www.freestandards.org/spec/
+#
+# REQUIREMENTS 
+# -------------
+# * This init script relies on the functions provided by the LSB script
+#   /lib/lsb/init-functions. You must have the Linux Standard Base "core"
+#   package installed for this init script to function properly.
+#   See http://refspecs.freestandards.org/LSB_3.1.0/LSB-Core-generic-LSB-Core-generic/iniscrptfunc.html
+#
+# * You must adapt the DAEMON_FULLPATH variable to reflect the actual installation
+#   directory of the daemon. The default is set to /usr/local/bin
+#   The variable is defined further down in this script.
+#
+#
+# LICENSE
+# --------
+#     This library is free software; you can redistribute it and/or modify it
+#     under the terms of the GNU Lesser General Public License as published by
+#     the Free Software Foundation; either version 2.1 of the License, or (at
+#     your option) any later version.
+#			      
+#     This library is distributed in the hope that it will be useful, but
+#     WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#     Lesser General Public License for more details.
+#      
+#     You should have received a copy of the GNU Lesser General Public
+#     License along with this library; if not, write to the Free Software
+#     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
+#     USA.
+#
+# 
+## CHKCONFIG metadata
+## The following two lines are for use by the chkconfig utility
+## (see the chkconfig man page for more details)
+## For LSB-compliant Linux distributions these lines are not relevant. Instead the
+## INIT INFO section (see below) is used top determine the runlevels and the start
+## and kill priority
+# chkconfig: 235 98 01
+#             |   |  |
+#             |   |  -- priority for kill scripts (K)
+#             |   |
+#             |   -- priority for start scripts (S)
+#             |
+#             |-- start the service in these runlevels
+#
+# description: Automatic CRL download (part of the Belgium eID card middleware)
+# 
+# 
+## LSB init scipt metadata
+### BEGIN INIT INFO
+# Provides:          beidcrld
+# Required-Start:    
+# Should-Start:      
+# Required-Stop:     
+# Should-Stop:       
+# Default-Start:     2 3 5
+# Default-Stop:      0 1 6
+# Short-Description: Automatic CRL download (part of the Belgium eID card middleware)
+# Description:       Start beidcrld to periodically download CRL to be used by the eID software libraries for verifying the validity of eID certificates.
+### END INIT INFO
+# 
+# Any extensions to the keywords given above should be preceeded by 
+# X-VendorTag- according to LSB.
+# 
+# Notes on Required-Start/Should-Start:
+# * There are two different issues that are solved by Required-Start
+#    and Should-Start
+# (a) Hard dependencies: This is used by the runlevel editor to determine
+#     which services absolutely need to be started to make the start of
+#     this service make sense. Example: nfsserver should have
+#     Required-Start: $portmap
+#     Also, required services are started before the dependent ones.
+#     The runlevel editor will warn about such missing hard dependencies
+#     and suggest enabling. During system startup, you may expect an error,
+#     if the dependency is not fulfilled.
+# (b) Specifying the init script ordering, not real (hard) dependencies.
+#     This is needed by insserv to determine which service should be
+#     started first (and at a later stage what services can be started
+#     in parallel). The tag Should-Start: is used for this.
+#     It tells, that if a service is available, it should be started
+#     before. If not, never mind.
+#
+# * When specifying hard dependencies or ordering requirements, you can 
+#   use names of services (contents of their Provides: section)
+#   or pseudo names starting with a $. The following ones are available
+#   according to LSB:
+#	$local_fs		all local file systems are mounted
+#				(most services should need this!)
+#	$remote_fs		all remote file systems are mounted
+#				(note that /usr may be remote, so
+#				 many services should Require this!)
+#	$syslog			system logging facility up
+#	$network		low level networking (eth card, ...)
+#	$named			hostname resolution available
+#	$time			the system time has been set correctly	
+#	$portmap		SunRPC portmapping service available
+#
+# * The services specified in the stop tags 
+#   (Required-Stop/Should-Stop)
+#   specify which services need to be still running when this service
+#   is shut down. Often the entries there are just copies or a subset 
+#   from the respective start tag.
+#
+
+#
+# Set daemon specific information (adapt DAEMON_PATH to reflect your installation)
+DAEMON_PATH=/usr/local/bin	## standard location of the binary (do not include a trailing slash /)
+				## the exact path depends the on prefix used when compiling the binary
+DAEMON_BINNAME=beidcrld	## name of the binary
+DAEMON_FULLPATH="$DAEMON_PATH/$DAEMON_BINNAME"
+DAEMON_LONGNAME="Belgium eID Card CRL download daemon ($DAEMON_BINNAME)"		## user friendly name to be used in log messages
+
+
+# Check for missing binaries (stale symlinks should not happen)
+# Note: Special treatment of stop for LSB conformance
+test -x $DAEMON_FULLPATH || { echo "error: $DAEMON_FULLPATH is not installed or has wrong file permissions"; 
+	if [ "$1" = "stop" ]; then exit 0;
+	else exit 5; fi; }
+
+
+# Source LSB init functions if available, otherwise exit with error code
+# providing start_daemon, killproc, pidofproc, 
+# log_success_msg, log_failure_msg and log_warning_msg.
+test -e /lib/lsb/init-functions  || { echo "error: LSB init functions not found"; exit 5; }
+. /lib/lsb/init-functions
+
+
+
+
+# Return values acc. to LSB for all commands but status:
+# 0	  - success
+# 1       - generic or unspecified error
+# 2       - invalid or excess argument(s)
+# 3       - unimplemented feature (e.g. "reload")
+# 4       - user had insufficient privileges
+# 5       - program is not installed
+# 6       - program is not configured
+# 7       - program is not running
+# 8--199  - reserved (8--99 LSB, 100--149 distrib, 150--199 appl)
+# 
+# Note that starting an already running service, stopping
+# or restarting a not-running service as well as the restart
+# with force-reload (in case signaling is not supported) are
+# considered a success.
+
+case "$1" in
+    start)
+	echo -n "Starting $DAEMON_LONGNAME "
+	## Start daemon with startproc(8). If this fails
+	## the return value is set appropriately by startproc.
+	start_daemon $DAEMON_FULLPATH
+	ret=$?
+	if test $ret != 0; then
+		log_failure_msg "$DAEMON_BINNAME could not be started. LSB compliant return code = $ret"
+	fi
+	exit $ret
+	;;
+    stop)
+	echo -n "Shutting down the $DAEMON_LONGNAME "
+	## Stop daemon with killproc(8) and if this fails
+	## killproc sets the return value according to LSB.
+
+	killproc $DAEMON_FULLPATH
+	ret=$?
+	if test $ret != 0; then
+		log_failure_msg "$DAEMON_BINNAME could not be stopped. LSB compliant return code = $ret"
+	fi
+	exit $ret
+	;;
+    restart)
+	echo -n "Restarting the $DAEMON_LONGNAME ) "
+	## Stop the service and regardless of whether it was
+	## running or not, start it again.
+	killproc $DAEMON_FULLPATH
+	ret=$?
+	if test $ret != 0; then
+		log_failure_msg "$DAEMON_BINNAME could not be stopped. LSB compliant return code = $ret"
+		exit $ret
+	fi
+
+	start_daemon $DAEMON_FULLPATH
+	ret=$?
+	if test $ret != 0; then
+		log_failure_msg "$DAEMON_BINNAME stopped but could not be restarted. LSB compliant return code = $ret"
+	fi
+	exit $ret
+	;;
+    try-restart)
+	echo -n "Trying a restart of the $DAEMON_LONGNAME "
+	## Do a restart only if the service was active before.
+	pidofproc $DAEMON_FULLPATH
+	if test $? = 0; then
+		$0 restart
+		exit $?
+	fi
+	exit 0		## Not already running is not a failure.
+	;;
+    force-reload)
+	## Signal the daemon to reload its config. Most daemons
+	## do this on signal 1 (SIGHUP).
+	## If it does not support it, restart the service if it
+	## is running.
+
+	echo -n "Reload the $DAEMON_LONGNAME "
+	## if it supports it:
+	## killproc -HUP $DAEMON_FULLPATH
+	#touch /var/run/BEIDPCSCD.pid
+
+	## Otherwise:
+	$0 try-restart
+	exit $?
+	;;
+    reload)
+	## LSB 3.2 defines this feature as optional but it is included for the sake of completeness
+	## Like force-reload, but if daemon does not support reloading its config on request
+	## but instead automatically relads new config, do nothing (!) and return success
+	## If daemon does not support reloading its config at all, return "not implemented"
+
+	exit 3		## this daemon does not support reloading of the configuration
+	;;
+    status)
+	echo -n "Checking status for $DAEMON_BINNAME "
+	## Check status with checkproc(8), if process is running
+	## checkproc will return with exit status 0.
+
+	# Return value is slightly different for the status command:
+	# 0 - service up and running
+	# 1 - service dead, but /var/run/  pid  file exists
+	# 2 - service dead, but /var/lock/ lock file exists
+	# 3 - service not running
+	# 4 - service status unknown
+	# 5--199 reserved (5--99 LSB, 100--149 distro, 150--199 appl.)
+	
+	# NOTE: checkproc returns LSB compliant status values.
+	pidofproc $DAEMON_FULLPATH
+	exit $?
+	;;
+    *)
+	echo "Usage: $0 {start|stop|status|restart|try-restart|force-reload}"
+	exit 1
+	;;
+esac
+rc_exit

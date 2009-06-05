@@ -1,0 +1,17 @@
+Title ACR38DriverPackage
+Version 
+Description ACR38 PCSC Driver and PCSCD Fix for MacOSX installation package
+DefaultLocation 
+DeleteWarning 
+
+### Package Flags
+
+NeedsAuthorization NO
+Required NO
+Relocatable NO
+RequiresReboot NO
+UseUserMask NO
+OverwritePermissions NO
+InstallFat NO
+RootVolumeOnly NO
+OnlyUpdateInstalledLanguages NO

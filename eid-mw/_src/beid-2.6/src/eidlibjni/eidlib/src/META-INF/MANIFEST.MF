@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Specification-Title: "Belgian eID Middleware Applet"
+Specification-Version: "1.1"
+Specification-Vendor: "Zetes"
+Package-Title: "be.belgium.eid"
+Package-Version: "1.1"
+Implementation-Vendor: "Zetes"
+
+

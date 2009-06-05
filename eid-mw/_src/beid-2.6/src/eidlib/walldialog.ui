@@ -1,0 +1,255 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>WallDialog</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>WallDialog</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>384</width>
+            <height>217</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>EID Card Access Confirmation</string>
+    </property>
+    <property name="sizeGripEnabled">
+        <bool>false</bool>
+    </property>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>pixmapLabelWarning</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>20</y>
+                <width>32</width>
+                <height>32</height>
+            </rect>
+        </property>
+        <property name="scaledContents">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabelApplicationText</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>60</x>
+                <y>20</y>
+                <width>310</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="font">
+            <font>
+                <bold>1</bold>
+            </font>
+        </property>
+        <property name="text">
+            <string>An Application wants to access the card !</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabelApplication</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>60</x>
+                <y>50</y>
+                <width>310</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="font">
+            <font>
+                <underline>1</underline>
+            </font>
+        </property>
+        <property name="text">
+            <string>Application:</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabelApplicationName</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>60</x>
+                <y>70</y>
+                <width>310</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabelFunction</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>60</x>
+                <y>90</y>
+                <width>310</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="font">
+            <font>
+                <underline>1</underline>
+            </font>
+        </property>
+        <property name="text">
+            <string>Function:</string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabelFunctionName</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>60</x>
+                <y>110</y>
+                <width>310</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabelAcceptText</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>60</x>
+                <y>140</y>
+                <width>310</width>
+                <height>21</height>
+            </rect>
+        </property>
+        <property name="font">
+            <font>
+                <bold>1</bold>
+            </font>
+        </property>
+        <property name="text">
+            <string>Do you want to accept it ?</string>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>buttonYes</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>21</x>
+                <y>181</y>
+                <width>82</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Yes</string>
+        </property>
+        <property name="accel">
+            <string></string>
+        </property>
+        <property name="autoDefault">
+            <bool>true</bool>
+        </property>
+        <property name="default">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>buttonNo</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>109</x>
+                <y>181</y>
+                <width>82</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>No</string>
+        </property>
+        <property name="accel">
+            <string></string>
+        </property>
+        <property name="autoDefault">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>buttonAlways</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>197</x>
+                <y>181</y>
+                <width>82</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Always</string>
+        </property>
+        <property name="accel">
+            <string></string>
+        </property>
+        <property name="autoDefault">
+            <bool>true</bool>
+        </property>
+        <property name="default">
+            <bool>false</bool>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>buttonAlwaysAll</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>285</x>
+                <y>181</y>
+                <width>82</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Always to All</string>
+        </property>
+        <property name="accel">
+            <string></string>
+        </property>
+        <property name="autoDefault">
+            <bool>true</bool>
+        </property>
+    </widget>
+</widget>
+<tabstops>
+    <tabstop>buttonYes</tabstop>
+    <tabstop>buttonNo</tabstop>
+    <tabstop>buttonAlways</tabstop>
+    <tabstop>buttonAlwaysAll</tabstop>
+</tabstops>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

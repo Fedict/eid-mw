@@ -1,0 +1,188 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_ASKPIN DIALOG  0, 0, 301, 147
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Authentication"
+FONT 8, "Tahoma"
+BEGIN
+    CONTROL         101,IDC_STATIC_ASKPIN_ICON,"Static",SS_BITMAP,0,0,80,74
+    LTEXT           "Enter your PIN, in order to authenticate yourself",IDC_STATIC_LABEL_ENTERPIN,80,0,221,74
+    RTEXT           "PIN",IDC_STATIC_PIN,57,97,72,10
+    EDITTEXT        IDC_EDIT_PIN,132,95,72,12,ES_PASSWORD | ES_AUTOHSCROLL | ES_NUMBER
+    DEFPUSHBUTTON   "OK",IDOK,97,126,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,153,126,50,14
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,0,74,301,1
+END
+
+IDD_DIALOG_MESSAGE DIALOG  0, 0, 270, 133
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Authentication"
+FONT 8, "Tahoma"
+BEGIN
+    CONTROL         106,IDC_STATIC_ASKPIN_ICON,"Static",SS_BITMAP,0,0,43,35
+    LTEXT           "",IDC_STATIC_LABEL_SHORTMSG,42,0,227,35,SS_CENTERIMAGE
+    DEFPUSHBUTTON   "OK",IDOK,82,112,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,138,112,50,14
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,0,35,269,1
+    LTEXT           "",IDC_STATIC_LABEL_LONGMSG,0,59,270,35
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOG_ASKPIN, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 140
+    END
+
+    IDD_DIALOG_MESSAGE, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 126
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_AUTH         BITMAP                  "images\\pincode_128.bmp"
+IDB_BITMAP_SIGN         BITMAP                  "images\\signature_128.bmp"
+IDB_BITMAP_CARDREADER   BITMAP                  "images\\cardreader-id_64.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON_EID            ICON                    "images\\idwindow.ico"
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Dutch (Belgium) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLB)
+#ifdef _WIN32
+LANGUAGE LANG_DUTCH, SUBLANG_DUTCH_BELGIAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,6,1,0
+ PRODUCTVERSION 2,6,1,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "081304b0"
+        BEGIN
+            VALUE "Comments", "Belgium Identity Card GUI"
+            VALUE "CompanyName", "Zetes"
+            VALUE "FileDescription", "Belgium Identity Card GUI"
+            VALUE "FileVersion", "1, 6, 1, 0"
+            VALUE "InternalName", "beidgui"
+            VALUE "LegalCopyright", "Copyright © 2005"
+            VALUE "LegalTrademarks", "See disclaimer document"
+            VALUE "OriginalFilename", "beidgui.dll"
+            VALUE "ProductName", ".be eID Software "
+            VALUE "ProductVersion", "2, 6, 1, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x813, 1200
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Dutch (Belgium) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

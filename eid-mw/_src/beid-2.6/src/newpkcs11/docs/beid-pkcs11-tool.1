@@ -1,0 +1,48 @@
+.PU
+.ds nm \fBbeid-pkcs11-tool\fR
+.TH beid-pkcs11-tool 1 "09/2005" "" Belgium eID Card
+.SH NAME
+beid-pkcs11-tool \- generic smart card utility
+.SH SYNOPSIS
+\*(nm
+.RI [OPTIONS]
+.SH DESCRIPTION
+The \*(nm utility can be used from the command line to perform
+miscellaneous operations on the Belgium eID PKCS11 library, such
+as changing your PIN or testing the library.
+.SH OPTIONS
+.TP
+.BR \-\-show-info ", " \-I
+Show global token information
+.TP
+.BR \-\-list\-slots ", " \-L
+List the available slots
+.TP
+.BR \-\-list\-mechanisms ", " \-M
+List the mechanisms supported by the token
+.TP
+.BR \-\-list\-objects ", " \-O
+List the objects on the token
+.TP
+.BR \-\-login ", " \-l
+Log into the token first (not needed when using --pin)
+.TP
+.BR "\-\-pin " \fIpin\fP ", \-r " \fIpin\fP
+Supply the PIN on the command line
+.TP
+.BR \-\-change\-pin ", " \-c
+Change the PIN
+.TP
+.BR "\-\-slot " \fIslot\fP
+Specify number of the slot to use
+.TP
+.BR "\-\-module " \fImodule\fP
+Specify PKCS11 library to use (default = libbeidpkcs11.so)
+.TP
+.BR \-\-test ", " \-t
+Test (best used with the --login or --pin option)
+.SH SEE ALSO
+.BR beid-tool (1)
+.SH AUTHORS
+\*(nm is based on pkcs11-tool (www.openc.org) and adapted for the Belgian national eID card by Zetes NV/SA (www.zetes.com).
+

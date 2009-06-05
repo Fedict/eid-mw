@@ -1,0 +1,277 @@
+REQUIREMENTS
+============
+
+Mandatory dependencies:
+-----------------------
+pkg-config >= 0.15.0
+gcc and g++
+pcsclite >= 1.2.9  (+ dev. package)
+qt >= 3.3.3 (+ dev. package)
+python >= 1.5.2
+openssl >= 0.9.7 (+ dev. package)
+
+
+
+Optional dependencies:
+----------------------
+1) wxWidgets for the GUI tool 'beidgui'
+     wxGTK-2.4.x or 2.6.x Unicode (+ dev. package) is needed. 
+     locales for FR, NL and DE installed
+
+2) Java2 SDK for the JNI module for 'beid.so
+     Java2 SDK installed (JRE alone is not enough)
+     $ export JAVA_HOME=<path to Java 2 SDK>
+     (e.g. for Debian Sid: export JAVA_HOME=/usr/lib/jvm/java-1.5.0-sun-1.5.0.06)
+
+3) LSB core package for the init scripts
+     systems that are LSB 3.2 compliant can rely on the LSB commands to install
+     the 2 init scripts included in this package
+
+
+
+
+
+BUILD & INSTALL
+===============
+
+1) The build system uses Scons instead of autoconf/automake. See www.scons.org
+   for more information on this new software build system. Scons v0.96.1 or
+   newer is recommended, but it's not required since a mini Scons distribution
+   is embedded in this package. The configure script will detect Scons on your
+   system and - if not available - unpack the embedded Scons within the source
+   tree of this package. Thus will NOT install a permanent copy of Scons on
+   your system nor will it change any of your configuration files.
+
+
+2) The default installation prefix is /usr/local. You can override this by
+   passing an alternative prefix to ./configure. If you are building the software
+   to make an rpm or deb package, you probably want to use /usr as prefix. See
+   also the information about relocation further down.
+   
+3) The build and install sequence is as follows:
+    $ ./configure <prefix>
+    $ make
+   as root
+    # make install
+
+    NOTE: 'scons' (or './scons' if the mini-distribution is used) can be
+    used instead of 'make', but then ldconfig needs to be called manually
+
+4) If the configure script cannot find the Java SDK then set the JAVA_HOME
+   environment variable in one of two ways before you run the configure script:
+    $ export JAVA_HOME=<path to top of Java SDK directory tree>
+    $ ./configure <prefix>
+   or
+    $ JAVA_HOME=<path to top of Java SDK directory tree> ./configure <prefix>
+
+
+
+5) In case of problems during ./configure, check the config.log for more info.
+
+
+
+ADVANCED BUILD FEATURES
+=======================
+
+In case you want to execute many compilation jobs in parallel,
+you can use ('N' is the number of jobs which should be run in parallel):
+    $ scons -jN
+
+A debug build of the program can be created by running:
+    $ scons configure debug=1
+    $ scons
+
+To build one specific module:
+    $ cd <path to module> (eg. cd src/eidlib)
+    $ scons -u 
+
+To build the JNI module after the first build:
+    $ export JAVA_HOME=<path to Java 2 SDK>
+    $ scons configure 
+    $ scons
+
+To build the GUI tool after the first build and installation of wxGTK-2.4:
+    $ scons configure
+    $ scons
+
+
+
+
+UNINSTALL
+=========
+
+    as root:
+    # make uninstall
+    
+
+
+
+CONFIGURATION (RELOCATION)
+==========================
+
+To install in some particular location:
+    $ scons configure prefix=/usr (or ./configure prefix=/usr)
+ 
+    default locations:
+     - binaries: /usr/local/bin
+     - libs: /usr/local/lib
+     - config files: /usr/local/etc
+
+NOTE: the locations of the global config files (beidbase.conf and beidgui.conf)
+have been hardcoded (in SConstruct and in the sources) to be in /usr/local/etc.
+If you want to change this, you should modify the following files:
+  - SConstruct
+  - src/newpkcs11/config.h
+  - src/beidcommon/config.cpp
+  - src/eidviewer/Config.cpp
+
+To install in some particular location with additional include paths:
+    $ scons configure prefix=~/tmp extraincludes=/tmp/include:/usr/local/include
+
+
+
+
+TROUBLESHOOTING
+===============
+By default, all libraries are installed in /usr/local/lib.
+If this path can't be found (e.g. if "/usr/local/bin/beid-tool -l"
+returns something like "libbeidlibopensc.so.0: cannot open shared object"),
+you should add "/usr/local/lib" to /etc/ld.so.conf. If this file doesn't
+exist (e.g. on Kubuntu), just create it and write the string "/usr/local/lib"
+(without the quotes) in it.
+Note: if you used another prefix directory, you may also have to add it to
+/etc/ld.so.conf.
+
+
+
+DAEMONS
+=======
+
+The installation process will place 2 init scripts in /etc/init.d:
+- belgium.be-beidcrld 
+- belgium.be-beidpcscd
+
+The beidpcscd daemon will establish an exclusive session with the eID card as soon
+as the card is inserted in the card reader. This forces all communication with the
+card through the beidpcscd session, allowing a sort of privacy control over the
+applications trying to read data from the card.
+
+The beidcrld daemon will periodically download and update the local copy of the
+CRL (Certificate Revocation List) that is used by the beid* software libraries
+and the beidgui application for verifying the certificates on an eID card.
+
+Both init scripts conform to the LSB 3.2 standard for init scripts but also
+contain information for distributions relying on the chkconfig tool to manage
+init scripts.
+
+In order to start the privacy filter daemon and the CRL download services for the
+appropriate runlevels (usually 3 and 5), some distribution specific actions need
+to be performed. 
+
+Different distributions have different ways of managing the startup sequence of
+init scripts for the various runlevels. Please consult the documentation of your
+distribution for information on how to complete the configuration of these init
+scripts.
+
+As a guideline, here are some examples for some popular distributions:
+- Debian, Ubuntu, Kubuntu, and other Debian derivatives) use the update-rc.d
+  command.
+  To install for the default runlevels, as root:
+    # update-rc.d belgium.be-beidpcscd defaults
+    # update-rc.d belgium.be-beidcrld defaults
+  To remove for the default runlevels, as root:
+    # update-rc.d belgium.be-beidpcscd remove
+    # update-rc.d belgium.be-beidcrld remove
+    
+  
+- Mandriva, Red Hat and Fedora use the chkconfig command.
+
+- LSB 3.x compliant distributions (eg. SuSE 10.1 and Novell NLD 10) should be
+  able to use the /usr/lib/lsb/install_initd command from the LSB core package.
+  To install for the default runlevels, as root:
+    # /usr/lib/lsb/install_initd /etc/init.d/belgium.be-beidpcscd
+    # /usr/lib/lsb/install_initd /etc/init.d/belgium.be-beidcrld
+  To remove for the default runlevels, as root:
+    # /usr/lib/lsb/remove_initd /etc/init.d/belgium.be-beidpcscd
+    # /usr/lib/lsb/remove_initd /etc/init.d/belgium.be-beidcrld
+
+
+You may also consider creating a new user account to allow the daemons to run
+under a restricted account instead of root (the default). Again, consult the
+documentation of your distribution for the recommended policy for your
+distribution.
+
+
+
+
+INSTALLED FILES
+===============
+
+default prefix  = /usr/local
+
+Libraries:
+    /usr/local/lib/libbeidcommon.so.0.0.0 (internal stuff)
+    /usr/local/lib/libbeidcomm.so.0.0.0 (internal)
+    /usr/local/lib/libbeidpcsclite.so.0.0.0 (PC/SC proxy)
+    /usr/local/lib/libbeidpkcs11.so.0.0.0 (PKCS#11)
+    /usr/local/lib/libbeidlibopensc.so.0.0.0 (low-level API)
+    /usr/local/lib/libbeidgui.so.0.0.0 (collection of dialog boxes)
+    /usr/local/lib/libbeid.so.0.0.0 (high-level API)
+    /usr/local/lib/libbeidlibjni.so.0.0.0 (Java JNI high-level API)
+    /usr/local/include/beid (include files for the low-level and high-level API)
+
+note: the 0.0.0 sequence will be replaced by the actual version numbers of
+      the respective libraries
+
+CLI tools:
+    /usr/local/bin/beid-pkcs11-tool (tool to test crypto functions of the card)
+    /usr/local/bin/beid-tool (diagnostic tool to detect card and card readers)
+    /usr/local/share/man/man1/beid-tool.1
+    /usr/local/share/man/man1/beid-pkcs11-tool.1
+
+PKCS#11:
+    /usr/local/share/beid/beid-pkcs11-register.html (for Firefox and Mozilla)
+    /usr/local/share/beid/beid-pkcs11-unregister.html (for Firefox and Mozilla)
+    /usr/local/etc/beidbase.conf
+
+Services:
+    /usr/local/bin/beidpcscd (privacy filter)
+    /etc/init.d/belgium.be-beidpcscd
+
+    /usr/local/bin/beidcrld (CRL download service for GUI tool)
+    /etc/init.d/belgium.be-beidcrld
+
+GUI tool:
+    /usr/local/bin/beidgui
+    /usr/local/bin/beidgui.desktop
+    /usr/local/bin/beidgui.png
+    /usr/local/share/locale/beidgui_nl.mo
+    /usr/local/share/locale/beidgui_fr.mo
+    /usr/local/share/locale/beidgui_de.mo
+    /usr/local/etc/beidgui.conf
+    /usr/local/share/beid/certs/beid-cert-belgiumrca.der
+    /usr/local/share/beid/certs/beid-cert-government2004.der
+    /usr/local/share/beid/certs/beid-cert-government2005.der
+    /usr/local/share/beid/certs/beid-cert-government.der
+
+SDK samples (devel):
+
+SDK include files (devel):
+
+Other:
+    /usr/local/share/beid/eID-toolkit_licensingtermsconditions Deutch.rtf
+    /usr/local/share/beid/eID-toolkit_licensingtermsconditions English.rtf
+    /usr/local/share/beid/eID-toolkit_licensingtermsconditions Francais.rtf
+    /usr/local/share/beid/eID-toolkit_licensingtermsconditions Nederlands.rtf
+    /usr/local/lib/pkcs11/Belgian_eID_PKCS11_java.cfg
+    /usr/local/share/beid/crl (directory created to hold the downloaded CRLs)
+    
+
+
+BUILDING RPMS OR DEBS WITH CHECKINSTALL
+=======================================
+
+With checkinstall 1.6, use
+$ make
+# checkinstall --fstrans=no --nodoc make install
+# make uninstall

@@ -1,0 +1,15 @@
+Import('env')
+
+env.SConscript('src/SConscript')
+
+prefix = env['PREFIX']
+confdir = env['CONFDIR']
+
+env.Alias('install', env.Install(prefix + '/share/man/man1', 'docs/beid-tool.1'))
+env.Alias('install', env.Install(prefix + '/share/man/man1', 'docs/beid-pkcs11-tool.1'))
+
+env.Alias('install', env.Install(prefix + '/share/beid', 'etc/beid-pkcs11-register.html'))
+env.Alias('install', env.Install(prefix + '/share/beid', 'etc/beid-pkcs11-unregister.html'))
+env.Alias('install', env.Install(confdir, 'etc/beidbase.conf'))
+env.Alias('install', env.Install('/usr/local/lib/pkcs11/', 'etc/Belgian_eID_PKCS11_java.cfg'))
+env.Alias('install', env.Install(prefix + '/include/beid', 'config.h'))

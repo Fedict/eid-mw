@@ -1,0 +1,17 @@
+Title PCSCD_Fix
+Version 
+Description Scripts to fix PCSCD auto start problem on Mac OSX 10.4 Installation package
+DefaultLocation /Library
+DeleteWarning 
+
+### Package Flags
+
+NeedsAuthorization YES
+Required NO
+Relocatable NO
+RequiresReboot YES
+UseUserMask NO
+OverwritePermissions NO
+InstallFat NO
+RootVolumeOnly YES
+OnlyUpdateInstalledLanguages NO
