@@ -42,6 +42,7 @@ then
 		GPP=`which /usr/bin/g++-*`
 		GPPPATH=${GPP%/*}
 		ln -s ${GPP} ${GPPPATH}/g++ 
+		GPP=`which g++ 2> /dev/null | wc -l`
 		if [ $GPP -eq 0 ]
 		then
 			echo "[Error] Link to g++ not created"
@@ -96,10 +97,6 @@ then
 				echo "[Error] The Qt4 version used is < ${MINQT4VER}"
 				echo "[Error] Stop the process and install Qt4 ${MINQT4VER}"
 			fi
-		else
-			echo "[Error] ${pkg} version ${VERSIONSTR} found at ${THEPATH}"
-			echo "[Error] The Qt4 version used is ideally ${MINQT4VER}"
-			echo "[Error] Stop the process and install Qt4 ${MINQT4VER}"
 		fi
 	fi
 else

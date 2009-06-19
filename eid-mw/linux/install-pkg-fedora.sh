@@ -12,19 +12,18 @@ echo "[Info ] Verifying installed packages..."
 #-----------------------------------------
 if [ -e "/etc/fedora-release" ]
 then
-	PACKAGES=(pcsc-lite-devel-1.4.4
-		 gcc-4.3.0
-		 gcc-c++-4.3.0
+	PACKAGES=(pcsc-lite-devel
+		 gcc
+		 gcc-c++
 		 make
 		 openssl-devel
 		 xerces-c27-devel-2.7.0
-		 swig-1.3.33
-		 pcsc-lite-1.4.4
+		 swig
+		 pcsc-lite
 		 doxygen
 		 qt3-devel
 		 compat-wxGTK26-devel-2.6.4
 		 ccid
-		 ACR38UDriver-1.8.0
 		 )
 	for pkg in ${PACKAGES[@]}
 	do
@@ -78,20 +77,30 @@ else
 			echo "[Warn ] The Qt4 version used is ideally ${MINQT4VER}"
 			echo "[Warn ] If needed, stop the process and install Qt4 ${MINQT4VER}"
 		else
-			rm /etc/alternatives/qmake
+			if [ -e "/etc/alternatives/qmake" ]
+			then
+				rm /etc/alternatives/qmake
+			fi
+
 			QT4=`which /usr/local/Trolltech/*/bin/qmake`
 			ln -s ${QT4} /etc/alternatives/qmake
-			rm /etc/alternatives/moc
+
+			if [ -e "/etc/alternatives/moc" ]
+			then
+				rm /etc/alternatives/moc
+			fi
+
 			QT4=`which /usr/local/Trolltech/*/bin/moc`
 			ln -s ${QT4} /etc/alternatives/moc
-			rm /etc/alternatives/uic
+
+			if [ -e "/etc/alternatives/uic" ]
+			then
+				rm /etc/alternatives/uic
+			fi
+
 			QT4=`which /usr/local/Trolltech/*/bin/uic`
 			ln -s ${QT4} /etc/alternatives/uic
 		fi
-	else
-		echo "[Error] ${pkg} version ${VERSIONSTR} found at ${THEPATH}"
-		echo "[Error] The Qt4 version used is ideally ${MINQT4VER}"
-		echo "[Error] Stop the process and install Qt4 ${MINQT4VER}"
 	fi
 fi
 
