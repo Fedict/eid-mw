@@ -422,18 +422,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\debug\qrc_ezResources.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\generatedfiles\release\qrc_ezResources.cpp"
 				>
 				<FileConfiguration
@@ -448,6 +436,29 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\GeneratedFiles\$(ConfigurationName)\qrc_ezResourcesD.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -571,10 +582,19 @@
 			ParseFiles="false"
 			>
 			<File
+				RelativePath=".\Resources\eID op achtergrond x176 y105.png"
+				>
+			</File>
+			<File
+				RelativePath=".\eid-ezinstaller_fr.qm"
+				>
+			</File>
+			<File
 				RelativePath=".\WIN32\ezResources.qrc"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
@@ -595,6 +615,173 @@
 						Outputs=".\GeneratedFiles\$(ConfigurationName)\qrc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\WIN32\ezResourcesD.qrc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Rcc&apos;ing ezResourcesD.qrc..."
+						CommandLine="&quot;$(QTDIR)\bin\rcc.exe&quot; -name &quot;ezResourcesD&quot; -no-compress &quot;.\WIN32\ezResourcesD.qrc&quot; -o .\GeneratedFiles\$(ConfigurationName)\qrc_ezResourcesD.cpp&#x0D;&#x0A;"
+						AdditionalDependencies=".\WIN32\ezResourcesD.qrc;.\eid-ezinstaller_fr.qm;.\Resources\Xknopje down x649 y7.png;.\Resources\Xknopje x649 y7.png;.\Resources\eID op achtergrond x176 y105.png;.\Resources\fond installer.jpg;.\Resources\fond testen.png;.\Resources\foutmelding.png;.\Resources\groene vink.png;.\Resources\ill lezer verbinden A x81 y262.png;.\Resources\ill lezer verbinden B x21 y262.png;.\Resources\ill lezer verbinden C x137 y262.png;.\Resources\kleine X.png;.\Resources\kn annuleren down x617 y517.png;.\Resources\kn annuleren x617 y517.png;.\Resources\kn breed (x242 y518).png;.\Resources\kn breed down (x242 y518).png;.\Resources\kn installeer down x78 y372.png;.\Resources\kn installeer down x82 y 315.png;.\Resources\kn installeer x78 y372.png;.\Resources\kn installeer x82 y315.png;.\Resources\kn installer down x431 y372.png;.\Resources\kn installer x431 y372.png;.\Resources\kn smal down.png;.\Resources\kn smal.png;.\Resources\symbooltje eID x92 y32.png;.\Resources\tab L down x11 y105.png;.\Resources\tab L x11 y 105.png;.\Resources\tab M down x270 y105.png;.\Resources\tab M x270 y105.png;.\Resources\tab R down x530 y 105.png;.\Resources\tab R x530 y105.png;.\Resources\terugknop down x17 y29.png;.\Resources\terugknop x17 y29.png;.\Resources\waarschuwing x220 y190.png;.\WIN32\scenario.xml;..\..\eidmw\_Binaries35\debug\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+						Outputs=".\GeneratedFiles\$(ConfigurationName)\qrc_ezResourcesD.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Rcc&apos;ing ezResourcesD.qrc..."
+						CommandLine="&quot;$(QTDIR)\bin\rcc.exe&quot; -name &quot;ezResourcesD&quot; -no-compress &quot;.\WIN32\ezResourcesD.qrc&quot; -o .\GeneratedFiles\$(ConfigurationName)\qrc_ezResourcesD.cpp&#x0D;&#x0A;"
+						AdditionalDependencies=".\WIN32\ezResourcesD.qrc;.\eid-ezinstaller_fr.qm;.\Resources\Xknopje down x649 y7.png;.\Resources\Xknopje x649 y7.png;.\Resources\eID op achtergrond x176 y105.png;.\Resources\fond installer.jpg;.\Resources\fond testen.png;.\Resources\foutmelding.png;.\Resources\groene vink.png;.\Resources\ill lezer verbinden A x81 y262.png;.\Resources\ill lezer verbinden B x21 y262.png;.\Resources\ill lezer verbinden C x137 y262.png;.\Resources\kleine X.png;.\Resources\kn annuleren down x617 y517.png;.\Resources\kn annuleren x617 y517.png;.\Resources\kn breed (x242 y518).png;.\Resources\kn breed down (x242 y518).png;.\Resources\kn installeer down x78 y372.png;.\Resources\kn installeer down x82 y 315.png;.\Resources\kn installeer x78 y372.png;.\Resources\kn installeer x82 y315.png;.\Resources\kn installer down x431 y372.png;.\Resources\kn installer x431 y372.png;.\Resources\kn smal down.png;.\Resources\kn smal.png;.\Resources\symbooltje eID x92 y32.png;.\Resources\tab L down x11 y105.png;.\Resources\tab L x11 y 105.png;.\Resources\tab M down x270 y105.png;.\Resources\tab M x270 y105.png;.\Resources\tab R down x530 y 105.png;.\Resources\tab R x530 y105.png;.\Resources\terugknop down x17 y29.png;.\Resources\terugknop x17 y29.png;.\Resources\waarschuwing x220 y190.png;.\WIN32\scenario.xml;..\..\eidmw\_Binaries35\debug\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+						Outputs=".\GeneratedFiles\$(ConfigurationName)\qrc_ezResourcesD.cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Resources\fond installer.jpg"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\fond testen.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\foutmelding.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\groene vink.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\ill lezer verbinden A x81 y262.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\ill lezer verbinden B x21 y262.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\ill lezer verbinden C x137 y262.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kleine X.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn annuleren down x617 y517.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn annuleren x617 y517.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn breed (x242 y518).png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn breed down (x242 y518).png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn installeer down x78 y372.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn installeer down x82 y 315.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn installeer x78 y372.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn installeer x82 y315.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn installer down x431 y372.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn installer x431 y372.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn smal down.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\kn smal.png"
+				>
+			</File>
+			<File
+				RelativePath=".\WIN32\scenario.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\eidmw\_Binaries35\Debug\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+				>
+			</File>
+			<File
+				RelativePath="..\..\eidmw\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\symbooltje eID x92 y32.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\tab L down x11 y105.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\tab L x11 y 105.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\tab M down x270 y105.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\tab M x270 y105.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\tab R down x530 y 105.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\tab R x530 y105.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\terugknop down x17 y29.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\terugknop x17 y29.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\waarschuwing x220 y190.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\Xknopje down x649 y7.png"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\Xknopje x649 y7.png"
+				>
 			</File>
 		</Filter>
 		<Filter
