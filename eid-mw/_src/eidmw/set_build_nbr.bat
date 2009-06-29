@@ -1,5 +1,7 @@
 @echo on
 
+@if exist "%~dp0local.cfg" goto localbuild
+
 @if not exist "%~dp0.svn\entries" goto svn_not_found
 
 @echo [INFO] Svn found =^> run %~dp0_getsvnrevision.exe
@@ -13,6 +15,10 @@
 
 :svn_not_found
 @echo [INFO] Svn not found
+@goto END
+
+:localbuild
+@echo [INFO] Local build configuration
 @goto END
 
 :END
