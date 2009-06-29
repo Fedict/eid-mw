@@ -78,7 +78,7 @@
 				IgnoreImportLibrary="true"
 				LinkLibraryDependencies="false"
 				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; &quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;&#x0D;&#x0A;"
-				AdditionalDependencies="diaglib.lib zrclib.lib qjpegd.lib Crypt32.lib qtmaind.lib setupapi.lib version.lib newdev.lib QtXmld.lib QtGuid.lib QtCored.lib kernel32.lib user32.lib shell32.lib uuid.lib ole32.lib advapi32.lib ws2_32.lib gdi32.lib comdlg32.lib oleaut32.lib imm32.lib winmm.lib winspool.lib msimg32.lib"
+				AdditionalDependencies="diaglib.lib zrclibd.lib qjpegd.lib Crypt32.lib qtmaind.lib setupapi.lib version.lib newdev.lib QtXmld.lib QtGuid.lib QtCored.lib kernel32.lib user32.lib shell32.lib uuid.lib ole32.lib advapi32.lib ws2_32.lib gdi32.lib comdlg32.lib oleaut32.lib imm32.lib winmm.lib winspool.lib msimg32.lib"
 				OutputFile="..\$(ConfigurationName)\eID-QuickInstaller.exe"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="&quot;..\EIKDiag\diaglib\$(ConfigurationName)&quot;;&quot;..\zrc\zrclib\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\plugins\imageformats&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;..\..\ThirdParty\Qt\4.5.0_static\plugins\imageformats;C:\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\plugins\imageformats;&quot;$(BEID_DIR_PLATFORMSDK_2008)\Lib&quot;;..\..\ThirdParty\MSPlatformSDK_2008\Lib;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
@@ -350,18 +350,6 @@
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
 			<File
-				RelativePath="release\eID-EZinstaller.res"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="debug\eID-EZinstaller.res"
 				>
 				<FileConfiguration
@@ -374,14 +362,14 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\GeneratedFiles\Release\moc_confirmdialogbox.cpp"
+				RelativePath="release\eID-EZinstaller.res"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCCLCompilerTool"
+						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
 			</File>
@@ -398,7 +386,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GeneratedFiles\release\moc_ezinstaller.cpp"
+				RelativePath=".\GeneratedFiles\Release\moc_confirmdialogbox.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -414,6 +402,18 @@
 				>
 				<FileConfiguration
 					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\release\moc_ezinstaller.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -457,18 +457,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\debug\ui_confirmdialogbox.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\generatedfiles\release\ui_confirmdialogbox.h"
 				>
 				<FileConfiguration
@@ -481,7 +469,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\debug\ui_ezinstaller.h"
+				RelativePath=".\generatedfiles\debug\ui_confirmdialogbox.h"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -497,6 +485,18 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\generatedfiles\debug\ui_ezinstaller.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
