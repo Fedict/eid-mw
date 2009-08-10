@@ -62,6 +62,12 @@ if ($^O =~ m/linux/)
 		$distribution_version = "etch";
 		$distro 	      = "debian";
 	}
+	elsif (-e "/etc/gentoo-release")
+	{
+		# TODO : set correct version
+		$distribution_version = "2008.0";
+		$distro 	      = "gentoo";
+	}
 	else
 	{
 		## the --include and --lib must be set by the user
@@ -132,7 +138,17 @@ if ($javaVerII < $javaVerI)
 ## determine where javac is installed 
 ## derive the include path from the bin path
 #############################################################
-my $javac_link = `which javac`;
+my $javac_link;
+if($distro eq "gentoo")
+{
+	$javac_link = "/etc/java-config-2/current-system-vm/bin/javac";
+}
+else
+{
+	$javac_link = `which javac`;
+}
+chomp($javac_link);
+
 if($javac_link eq "") {die "java not found, please adjust PATH: export PATH=<path_to_javac>:\$PATH\n"};
 my $javac_dir;
 if ( $^O =~ m/linux/ ) 
