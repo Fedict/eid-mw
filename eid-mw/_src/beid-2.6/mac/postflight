@@ -70,3 +70,21 @@ echo 31 > /tmp/beid_install.log
 echo succeeded > /tmp/beid_install.log
 
 rm /tmp/beid_install.log
+
+# Added for automatic registration of pkc11 module in Firefox 3.0
+# We still need a solution for Firefox 3.5
+if [ ! -d /Applications/Firefox.app/ ] 
+then
+	osascript <<-EOF
+tell application "Finder"
+activate
+set dd to display dialog "\nPlease install Firefox first to be able to use Tax-on-web.\n\nDownload Firefox from: \nhttp://www.firefox.com" buttons {"Continue"} default button 1 with icon caution giving up after 180
+set UserResponse to button returned of dd
+end tell
+EOF
+else
+#check if firefox isn't running
+open -a /Applications/Firefox.app /Applications/Belgium\ Identity\ Card/beid-pkcs11-register.html
+fi
+
+
