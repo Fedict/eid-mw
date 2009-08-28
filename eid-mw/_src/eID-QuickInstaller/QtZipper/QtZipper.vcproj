@@ -150,7 +150,7 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\zrc\zrclib\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\lib"
 				IgnoreAllDefaultLibraries="false"
-				IgnoreDefaultLibraryNames=""
+				IgnoreDefaultLibraryNames="LIBCMT.lib "
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

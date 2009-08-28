@@ -180,7 +180,7 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="&quot;..\EIKDiag\diaglib\$(ConfigurationName)&quot;;&quot;..\zrc\zrclib\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\plugins\imageformats&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;..\..\ThirdParty\Qt\4.5.0_static\plugins\imageformats;C:\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\plugins\imageformats;&quot;$(BEID_DIR_PLATFORMSDK_2008)\Lib&quot;;..\..\ThirdParty\MSPlatformSDK_2008\Lib;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
-				IgnoreDefaultLibraryNames=""
+				IgnoreDefaultLibraryNames="LIBCMT.lib "
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile=""
 				SubSystem="2"
@@ -350,18 +350,6 @@
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
 			<File
-				RelativePath="debug\eID-EZinstaller.res"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="release\eID-EZinstaller.res"
 				>
 				<FileConfiguration
@@ -374,14 +362,14 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\GeneratedFiles\Debug\moc_confirmdialogbox.cpp"
+				RelativePath="debug\eID-EZinstaller.res"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCCLCompilerTool"
+						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
 			</File>
@@ -398,7 +386,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GeneratedFiles\debug\moc_ezinstaller.cpp"
+				RelativePath=".\GeneratedFiles\Debug\moc_confirmdialogbox.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -414,6 +402,18 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\debug\moc_ezinstaller.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -468,18 +468,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\release\ui_confirmdialogbox.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\generatedfiles\debug\ui_confirmdialogbox.h"
 				>
 				<FileConfiguration
@@ -492,7 +480,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\release\ui_ezinstaller.h"
+				RelativePath=".\generatedfiles\release\ui_confirmdialogbox.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -508,6 +496,18 @@
 				>
 				<FileConfiguration
 					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\generatedfiles\release\ui_ezinstaller.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -728,11 +728,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\eidmw\_Binaries35\Debug\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+				RelativePath="..\..\eidmw\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
 				>
 			</File>
 			<File
-				RelativePath="..\..\eidmw\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+				RelativePath="..\..\eidmw\_Binaries35\Debug\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
 				>
 			</File>
 			<File
