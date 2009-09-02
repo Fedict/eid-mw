@@ -1449,6 +1449,11 @@ Please specify .xml, .csv or .eid</source>
         <translation>IDENTITEITSKAART</translation>
     </message>
     <message>
+        <location filename="dlgPrint.cpp" line="297"/>
+        <source>RESIDENCE PERMIT</source>
+        <translation>VERBLIJFSTITEL</translation>
+    </message>
+    <message>
         <location filename="dlgPrint.cpp" line="154"/>
         <source>SIS CARD</source>
         <translation>SIS KAART</translation>

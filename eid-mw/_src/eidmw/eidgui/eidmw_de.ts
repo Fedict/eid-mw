@@ -1450,6 +1450,11 @@ Bitte .xml, .csv oder .eid angeben</translation>
         <translation>PERSONALAUSWEIS</translation>
     </message>
     <message>
+        <location filename="dlgPrint.cpp" line="299"/>
+        <source>RESIDENCE PERMIT</source>
+        <translation>AUFENTHALTSTITEL</translation>
+    </message>
+    <message>
         <location filename="dlgPrint.cpp" line="154"/>
         <source>SIS CARD</source>
         <translation>SIS KARTE</translation>

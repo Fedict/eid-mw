@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="fr">
+<!DOCTYPE TS>
+<TS version="2.0" language="fr">
 <defaultcodec></defaultcodec>
 <context>
     <name>MainWnd</name>
@@ -43,7 +44,7 @@
         <source>Name</source>
         <translation>Nom</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="mainwnd.ui" line="888"/>
         <source>Belgische verblijfstitel - Titre de séjour belge</source>
         <translation>Belgische verblijfstitel - Titre de séjour belge</translation>
@@ -278,7 +279,7 @@
         <source>&amp;Nederlands</source>
         <translation>&amp;Nederlands</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="mainwnd.ui" line="2870"/>
         <source>&amp;Français</source>
         <translation>&amp;Français</translation>
@@ -1213,7 +1214,7 @@ Spécifiez .xml, .csv ou .eid</translation>
         <source>Belgian eID Runtime</source>
         <translation>eID Runtime belge</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="dlgAbout.ui" line="115"/>
         <source>Copyright © 2009</source>
         <translation>Copyright © 2009</translation>
@@ -1448,6 +1449,11 @@ Spécifiez .xml, .csv ou .eid</translation>
         <location filename="dlgPrint.cpp" line="299"/>
         <source>IDENTITY CARD</source>
         <translation>CARTE D&apos;IDENTITE</translation>
+    </message>
+    <message>
+        <location filename="dlgPrint.cpp" line="299"/>
+        <source>RESIDENCE PERMIT</source>
+        <translation>TITRE DE SÉJOUR</translation>
     </message>
     <message>
         <location filename="dlgPrint.cpp" line="154"/>

@@ -311,8 +311,16 @@ dlgPrint::dlgPrint( QWidget* parent, CardInformation& CI_Data, GenPur::UI_LANGUA
 		cursor.insertBlock();
 		headerTable = cursor.insertTable(nrRows,nrCols,headerTableFormat);
 
-		cursor = headerTable->cellAt(row, col).firstCursorPosition();
-		cursor.insertText(tr("IDENTITY CARD"),txtFormat);
+		if (BEID_CARDTYPE_FOREIGNER == CI_Data.m_CardInfo.getType())
+		{
+			cursor = headerTable->cellAt(row, col).firstCursorPosition();
+			cursor.insertText(tr("RESIDENCE PERMIT"),txtFormat);
+		}
+		else
+		{
+			cursor = headerTable->cellAt(row, col).firstCursorPosition();
+			cursor.insertText(tr("IDENTITY CARD"),txtFormat);
+		}
 	}
 
 	cursor.setPosition(topFrame->lastPosition());
