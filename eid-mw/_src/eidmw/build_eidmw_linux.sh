@@ -187,7 +187,7 @@ fi
 #-----------------------------------------
 cd _DocsInternal/API
 echo "[Info] Generating doxygen documentation"
-./doxygen_sdk_c.sh >> ${LOGFILE}
+#./doxygen_sdk_c.sh >> ${LOGFILE}
 ./doxygen_sdk.sh >> ${LOGFILE}
 cd ${DIR_CURR} 
 
