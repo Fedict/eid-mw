@@ -95,7 +95,7 @@ elsif (-e "/etc/debian_version")
 	$distribution_version = "etch";
 }
 
-my $svn_revision = `cat ../svn_revision`;
+my $svn_revision = `cat ../svn_revision | tr -d "\r"`;
 chomp($svn_revision);
 my $tarfile = "beid-sdk";
 $tarfile = $tarfile . "-" . $version;
@@ -109,20 +109,21 @@ my @files_include =	("eidlib.h"
 			,"eidlibException.h"
 			);
 
-my @files_includeC =	("eidlibC.h"
-			,"eidlibCdefines.h"
-			);
+#my @files_includeC =	("eidlibC.h"
+#			,"eidlibCdefines.h"
+#			);
 
 my @files_common =	("eidErrors.h"
 			);
 
-my @files_unsignedjar =	("BEID_Applet.jar"
-			,"beid35libJava.jar"
+# my @files_unsignedjar =	("BEID_Applet.jar"
+my @files_unsignedjar =	("beid35libJava.jar"
 			,"applet-launcher.jar"
 			,"Applet-Launcher License.rtf"
 			);
 
-my @files_wrap=		("libbeidlibJava_Wrapper.so.3.5.0"
+#my @files_wrap=	("libbeidlibJava_Wrapper.so.3.5.0"
+my @files_wrap=		("libbeidlibJava_Wrapper.so.3.5.2"
 			);
 
 my @files_doc =		("readme.txt"
@@ -270,16 +271,16 @@ if ( $IncludeCFiles == 1 )
 	#######################################################################
 	## Copy all the eidlib include C files
 	#######################################################################
-	$baseDir = "../install";
-	$fromDir = "../eidlibC";
-	$toDir   = "$baseDir/$sdkDir/beidlib/C/include";
-
-	print STDOUT "[Info ] Copying files from $fromDir to $toDir\n";
-
-	foreach (@files_includeC)
-	{
-		copy("$fromDir/$_","$toDir/$_") or die "[Error] Cannot copy file: $_.\n";
-	}
+#	$baseDir = "../install";
+#	$fromDir = "../eidlibC";
+#	$toDir   = "$baseDir/$sdkDir/beidlib/C/include";
+#
+#	print STDOUT "[Info ] Copying files from $fromDir to $toDir\n";
+#
+#	foreach (@files_includeC)
+#	{
+#		copy("$fromDir/$_","$toDir/$_") or die "[Error] Cannot copy file: $_.\n";
+#	}
 
 	$baseDir = "../install";
 	$fromDir = "../common";
@@ -319,11 +320,11 @@ foreach (@files_wrap)
 
 my $cmd;
 
-$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.0 libbeidlibJava_Wrapper.so.3.5";
+$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.2 libbeidlibJava_Wrapper.so.3.5";
 system($cmd);
-$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.0 libbeidlibJava_Wrapper.so.3";
+$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.2 libbeidlibJava_Wrapper.so.3";
 system($cmd);
-$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.0 libbeidlibJava_Wrapper.so";
+$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.2 libbeidlibJava_Wrapper.so";
 system($cmd);
 
 #######################################################################
@@ -337,9 +338,9 @@ print STDOUT "[Info ] Exporting signed jar files from $fromDir to $toDir\n";
 
 foreach (@files_signed)
 {
-	#copy("$fromDir/$_","$toDir/$_") or die "[Error] Cannot copy file: $_.\n";
-	$cmd = "svn cat http://10.2.250.30/svn/ThirdParty/beid_sdk/3.5/Java/SignedJar/$_ > $toDir/$_";
-	system($cmd);
+	copy("$fromDir/$_","$toDir/$_") or die "[Error] Cannot copy file: $_.\n";
+	#$cmd = "svn cat http://10.2.250.30/svn/ThirdParty/beid_sdk/3.5/Java/SignedJar/$_ > $toDir/$_";
+	#system($cmd);
 
 }
 ## Make sure to copy the jnlp file
@@ -367,32 +368,35 @@ foreach (@files_signed)
 # these should be stored in SVN
 #######################################################################
 $baseDir = "../install";
+$fromDir = "../../ThirdParty/beid_sdk/3.5/Java";
 $toDir   = "$baseDir/$sdkDir/beidlib/Java/unsigned";
 
 print STDOUT "[Info ] Exporting files from SVN to '$toDir'\n";
 
 
 if ($IncludeWinWrapper == 1)
-{	## this is for packaging the windows DLL
-	$cmd = "svn cat http://10.2.250.30/svn/ThirdParty/beid_sdk/3.5/Java/beid35libJava_Wrapper.dll > $toDir/beid35libJava_Wrapper.dll";
-	system($cmd);
-#	$filetocopy = "beid35libJava_Wrapper.dll";
-#	print STDOUT "[Info ] Copying $filetocopy from $fromDir to $toDir\n";
-#
-#	$cmd = "cp $fromDir/$filetocopy $toDir";
-#	system($cmd) == 0 or die "[ERROR ] File $fromDir/$filetocopy not found for packaging\n";
+{	
+## this is for packaging the windows DLL
+#	$cmd = "svn cat http://10.2.250.30/svn/ThirdParty/beid_sdk/3.5/Java/beid35libJava_Wrapper.dll > $toDir/beid35libJava_Wrapper.dll";
+#	system($cmd);
+	my $filetocopy = "beid35libJava_Wrapper.dll";
+	print STDOUT "[Info ] Copying $filetocopy from $fromDir to $toDir\n";
+
+	$cmd = "cp $fromDir/$filetocopy $toDir";
+	system($cmd) == 0 or die "[ERROR ] File $fromDir/$filetocopy not found for packaging\n";
 #	exit -1;
 }
 
 if ($IncludeMacWrapper == 1)
 {	# this is for packaging the Mac jnilib
-	$cmd = "svn cat http://10.2.250.30/svn/ThirdParty/beid_sdk/3.5/Java/libbeidlibJava_Wrapper.jnilib > $toDir/libbeidlibJava_Wrapper.jnilib";
-	system($cmd);
-#	$filetocopy = "beid35libJava_Wrapper.jnilib";
-#	print STDOUT "[Info ] Copying $filetocopy from $fromDir to $toDir\n";
-#
-#	$cmd = "cp $fromDir/$filetocopy $toDir";
-#	system($cmd) == 0 or die "[ERROR ] File $fromDir/$filetocopy not found for packaging\n";
+#	$cmd = "svn cat http://10.2.250.30/svn/ThirdParty/beid_sdk/3.5/Java/libbeidlibJava_Wrapper.jnilib > $toDir/libbeidlibJava_Wrapper.jnilib";
+#	system($cmd);
+#	my $filetocopy = "beid35libJava_Wrapper.jnilib";
+	my $filetocopy = "libbeidlibJava_Wrapper.jnilib";
+	print STDOUT "[Info ] Copying $filetocopy from $fromDir to $toDir\n";
+
+	$cmd = "cp $fromDir/$filetocopy $toDir";
+	system($cmd) == 0 or die "[ERROR ] File $fromDir/$filetocopy not found for packaging\n";
 #	exit -1;
 }
 
