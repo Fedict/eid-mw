@@ -120,17 +120,17 @@ then
 	eval rm $TARGETDIR/$TESTFILE
 fi
 
-echo "[Info ] Checking ../beid-2.6"
-if [ ! -d ../beid-2.6 ]
-then
-	echo "[Error] Directory ../beid-2.6 does not exist"
-fi
+#echo "[Info ] Checking ../beid-2.6"
+#if [ ! -d ../beid-2.6 ]
+#then
+#	echo "[Error] Directory ../beid-2.6 does not exist"
+#fi
 #-----------------------------------------
 # first build the 2.6 version
 #-----------------------------------------
-cd ../beid-2.6
-./build_eidmw_linux.sh
-cd ${DIR_CURR} 
+#cd ../beid-2.6
+#./build_eidmw_linux.sh
+#cd ${DIR_CURR} 
 
 #-----------------------------------------
 # check if we're doing a local build
@@ -171,7 +171,7 @@ fi
 # this looks odd, but the $PIPESTATUS holds the return
 # value of make
 #-----------------------------------------
-if [ "$PIPESTATUS" -ne 0 ] 
+if [[ $PIPESTATUS != 0 && $BUILDMW == 1 ]] 
 then 
 	echo "[Error] Make failed. See logfile '${LOGFILE}'"
 	exit -1
@@ -218,7 +218,7 @@ then
 	fi
 fi
 cd install
-BINTARBALL=`ls beid-sdk-3.?.*-${TARBALLDISTRO}-*-${PROCESSOR}-${BUILD_NR}.tgz`
+BINTARBALL=`ls beid-sdk-3.?.*-${TARBALLDISTRO}-*-${PROCESSOR}-${BUILD_NR}.tgz 2> /dev/null`
 cd ${DIR_CURR} 
 
 echo [Info ] Tarball generated: ${BINTARBALL}
