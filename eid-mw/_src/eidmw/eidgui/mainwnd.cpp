@@ -2615,7 +2615,10 @@ void MainWnd::on_actionPrint_eID_triggered()
 	{
 		return;
 	}
-	dlgPrint* dlg = new dlgPrint( this, m_CI_Data, m_Language);
+	tFieldMap& CardFields = m_CI_Data.m_CardInfo.getFields();
+	QString cardTypeText = GetCardTypeText(CardFields[CARD_TYPE]);
+
+	dlgPrint* dlg = new dlgPrint( this, m_CI_Data, m_Language, cardTypeText);
 	dlg->exec(); 
 	delete dlg;
 }

@@ -37,7 +37,7 @@ private slots:
 
 
 public:
-    dlgPrint(QWidget* parent , CardInformation& CI_Data, GenPur::UI_LANGUAGE lng);
+    dlgPrint(QWidget* parent , CardInformation& CI_Data, GenPur::UI_LANGUAGE lng, QString const& cardTypeText);
     ~dlgPrint();
 
 private:

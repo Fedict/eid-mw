@@ -90,7 +90,7 @@ dlgPrint::dlgPrint( QWidget* parent, CardInformation& CI_Data, GenPur::UI_LANGUA
 }
 */
 
-dlgPrint::dlgPrint( QWidget* parent, CardInformation& CI_Data, GenPur::UI_LANGUAGE lng ) 
+dlgPrint::dlgPrint( QWidget* parent, CardInformation& CI_Data, GenPur::UI_LANGUAGE lng, QString const& cardTypeText) 
 : QDialog(parent)
 , m_CI_Data(CI_Data)
 {	
@@ -314,7 +314,8 @@ dlgPrint::dlgPrint( QWidget* parent, CardInformation& CI_Data, GenPur::UI_LANGUA
 		if (BEID_CARDTYPE_FOREIGNER == CI_Data.m_CardInfo.getType())
 		{
 			cursor = headerTable->cellAt(row, col).firstCursorPosition();
-			cursor.insertText(tr("RESIDENCE PERMIT"),txtFormat);
+			cursor.insertText(cardTypeText,txtFormat);
+			//cursor.insertText(tr("RESIDENCE PERMIT"),txtFormat);
 		}
 		else
 		{
