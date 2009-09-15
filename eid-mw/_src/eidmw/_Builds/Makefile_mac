@@ -537,7 +537,7 @@ sdk: cleanSDK $(SDK_DIRS)
 		$(SDK_DIR)/samples/misc/Applet/Image/Java
 	chmod +x $(SDK_DIR)/samples/misc/Applet/Image/Java/compile.sh
 
-	cd ../_DocsInternal/API; ./doxygen_sdk.sh
+	cd ../_DocsInternal/API; chmod +x ./doxygen_sdk.sh; ./doxygen_sdk.sh
 	cp -r ../_DocsExternal/C++_Api $(SDK_DIR)/doc/C++_Api
 	cp -r ../_DocsExternal/Java_Api $(SDK_DIR)/doc/Java_Api
 
