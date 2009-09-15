@@ -20,12 +20,21 @@ else
 	echo "[Info ] Found MW DMG file"
 fi
 
+
+#-----------------------------------------
+# create the eidlibJava_Wrapper java files
+#-----------------------------------------
+cd ../_src/eidmw/eidlibJava_Wrapper
+chmod +x ./create_java_files.sh
+./create_java_files.sh
+cd -
+
 #-----------------------------------------
 # create the eidlibJava classes and jar files
 #-----------------------------------------
 cd ../_src/eidmw/eidlibJava
-chmod +x 1_compile.sh
-chmod +x 2_jar.sh
+chmod +x ./1_compile.sh
+chmod +x ./2_jar.sh
 ./1_compile.sh
 ./2_jar.sh
 cd -
@@ -34,7 +43,7 @@ cd -
 # create the eidlibJava_Applet classes 
 #-----------------------------------------
 cd ../_src/eidmw/eidlibJava
-chmod +x 1_compile.sh
+chmod +x ./1_compile.sh
 #chmod +x 2_jar.sh
 ./1_compile.sh
 #2_jar.sh
