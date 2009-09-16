@@ -1822,7 +1822,7 @@ bool CSysDiagnost::isSoftwareInstalled (string productName, vector <Soft_INFO>& 
 #elif __APPLE__
       CFDictionaryRef	appsInfoDict;
 
-      UInt8			i = 0;
+      UInt32			i = 0;
       CFArrayRef		itemsArray;
       CFIndex			arrayCount;
       CFStringRef		sAppName;
