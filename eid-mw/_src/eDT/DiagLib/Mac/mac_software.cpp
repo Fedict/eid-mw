@@ -227,7 +227,7 @@ int softwareFillCacheFromDictionary(CFDictionaryRef inDictionary, const char * d
 	Soft_ID searchId=id;
 
 	progressInit(arrayCount);
-	for (UInt8 i=0; i < arrayCount; i++)
+	for (CFIndex i=0; i < arrayCount; i++)
 	{
 		CFDictionaryRef embeddedDictionary = (CFDictionaryRef)CFArrayGetValueAtIndex(itemsArray, i);
 
