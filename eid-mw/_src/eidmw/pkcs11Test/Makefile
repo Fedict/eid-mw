@@ -2,11 +2,16 @@
 # Platform: Linux
 
 .PHONY : all
-all : open-close-session
+all : open-close-session close-twice
 
 open-close-session : open-close-session.c
-	gcc -o open-close-session open-close-session.c -ldl
+
+close-twice : close-twice.c
+
+% : %.c
+	gcc -o $@ $< -ldl
+
 
 .PHONY : clean
 clean :
-	rm -f open-close-session *~
+	rm -f open-close-session close-twice *~

@@ -120,6 +120,12 @@ int main() {
 			fprintf(stderr, "C_CloseSession error\n");
 			goto finalize;
 		}
+		// C_CloseSession
+		rv = (*functions->C_CloseSession) (session_handle);
+		if (CKR_OK == rv) {
+			fprintf(stderr, "C_CloseSession should give an error\n");
+			goto finalize;
+		}
 	}
 	// C_Finalize
 finalize:
