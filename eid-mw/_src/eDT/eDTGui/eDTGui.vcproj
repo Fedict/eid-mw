@@ -60,7 +60,7 @@
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				SuppressStartupBanner="false"
 				AdditionalLibraryDirectories="&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\lib;&quot;..\$(ConfigurationName)&quot;"
-				IgnoreDefaultLibraryNames=""
+				IgnoreDefaultLibraryNames="LIBCMT.lib"
 				DelayLoadDLLs="beid35libCpp.dll"
 				GenerateDebugInformation="false"
 				SubSystem="2"
