@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(BEID_DIR_PLATFORMSDK_2008)\include&quot;;..\..\ThirdParty\MSPlatformSDK_2008\Include;&quot;C:\Program Files\Microsoft Platform SDK\Include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BEID_DIR_PLATFORMSDK_2008)\include&quot;;..\..\..\ThirdParty\MSPlatformSDK_2008\Include;&quot;C:\Program Files\Microsoft Platform SDK\Include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_STATIC_CPPLIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -107,7 +107,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(BEID_DIR_PLATFORMSDK_2008)\include&quot;;..\..\ThirdParty\MSPlatformSDK_2008\Include;&quot;C:\Program Files\Microsoft Platform SDK\Include&quot;"
+				AdditionalIncludeDirectories="&quot;$(BEID_DIR_PLATFORMSDK_2008)\include&quot;;..\..\..\ThirdParty\MSPlatformSDK_2008\Include;&quot;C:\Program Files\Microsoft Platform SDK\Include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_STATIC_CPPLIB"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
