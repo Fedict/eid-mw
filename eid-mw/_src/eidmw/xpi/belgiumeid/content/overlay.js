@@ -210,9 +210,6 @@ var belgiumeid = {
     beidPKCS11.registerModule();
     
   },
-  onMenuItemCommand: function(e) {
-    addBelgiumEidPKCS11Module();
-  },
 };
 window.addEventListener("load", function(e) { belgiumeid.onLoad(e); }, false);
 

@@ -77,3 +77,10 @@ belgiumeid_extension
   build.bat                     Windows build script
   build.sh                      Linux build script
   readme.txt                    This file
+
+How to create a new version
+---------------------------
+* Edit VERSION:
+  x.y.z
+* Edit belgiumeid/install.rdf
+  <em:version>x.y.z</em:version>

@@ -11,6 +11,7 @@ XPI_NAME=${EXT_NAME}-${VERSION}.xpi
 CURRENT_NAME=${EXT_NAME}-CURRENT.xpi
 OPTFORCE=0
 
+# command line options
 while getopts fh optionname
 do
   case "$optionname" in
@@ -23,28 +24,38 @@ do
 esac
 done
 
+# check if build exists
 if [ -e ${BUILDS_DIR}/${XPI_NAME} -a $OPTFORCE -ne 1  ]; then
   echo "A build for version ${VERSION} already exists. Run '$0 -f' to override."
   exit 1
 fi
   
+# check if build dir already exitst
 if [ -e ${BUILD_DIR} ]; then
   echo "The build dir '${BUILD_DIR}' exists. Please remove the directory and run again."
   exit 1
 fi
+
+# create build dir
 mkdir ${BUILD_DIR}
+# copy files in build dir
 cp -r $EXT_NAME/* ${BUILD_DIR}
+# remove svn files
 find ${BUILD_DIR} -path "*.svn" -type d -print0 | xargs -0 /bin/rm -rf
 
+# create XPI
 cd ${BUILD_DIR}
 zip -r $XPI_NAME .
+# copy XPI to builds dir
 mkdir ../${BUILDS_DIR} 2> /dev/null
 cp -f $XPI_NAME ../${BUILDS_DIR}
 
+# create symbolic link to current dir
 cd ../${BUILDS_DIR}
 rm ${CURRENT_NAME}
 ln -s ${XPI_NAME} ${CURRENT_NAME}
 
 cd ..
 
+# clean up
 rm -rf ${BUILD_DIR}

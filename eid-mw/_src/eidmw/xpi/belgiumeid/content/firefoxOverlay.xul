@@ -47,8 +47,4 @@
     <stringbundle id="belgiumeid-strings" src="chrome://belgiumeid/locale/belgiumeid.properties"/>
   </stringbundleset>
 
-<!--  <menupopup id="menu_ToolsPopup">
-    <menuitem id="belgiumeid-hello" label="&belgiumeid.label;" 
-              oncommand="belgiumeid.onMenuItemCommand(event);"/>
-  </menupopup>-->
 </overlay>
