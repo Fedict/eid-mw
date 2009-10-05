@@ -27,6 +27,7 @@ done
 # check if build exists
 if [ -e ${BUILDS_DIR}/${XPI_NAME} -a $OPTFORCE -ne 1  ]; then
   echo "A build for version ${VERSION} already exists. Run '$0 -f' to override."
+  echo "  To change the version, edit VERSION and belgium/install.rdf"
   exit 1
 fi
   

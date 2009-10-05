@@ -23,6 +23,8 @@
   <script src="chrome://global/content/strres.js"/>
     
   <script src="overlay.js"/>
+  <script src="util.js"/>
+  <script src="BelgiumEidPKCS11.js"/>
   
   <stringbundleset id="stringbundleset">
     <stringbundle id="belgiumeid-strings" src="chrome://belgiumeid/locale/belgiumeid.properties"/>
