@@ -324,6 +324,17 @@ my $QtVerZ = 0;
 my $qmakeVerI = 10000 * $QtVerX + 100 * $QtVerY + $QtVerZ;
 
 my $qmakeVer = `qmake -v`;
+my $qmakeCmd = "qmake";
+eval {
+	print "trying qmake...";
+	$qmakeVer = `qmake -v`;
+};
+if ($@) {
+	print "trying qmake-qt4...";
+	$qmakeCmd = "qmake-qt4";
+	$qmakeVer = `qmake-qt4 -v`;
+die;
+};
 
 # get the version nr from the version string
 $qmakeVer =~ m/([0-9])\.([0-9]+)\.([0-9]+)/;
@@ -427,10 +438,10 @@ if ($configOptionIdxEnd != -1)
 #############################################################
 ## call qmake
 #############################################################
-print STDERR "qmake $qmakeOptions\n" if($verbose > 1);
+print STDERR "$qmakeCmd $qmakeOptions\n" if($verbose > 1);
 
 system("export PATH=\"" . join(":",split( /\s+/,$options{"--path"}->[2]) ) .":\$PATH\"; ".
-       " [ -e Makefile ] && make distclean &> /dev/null ; qmake $pro_file $qmakeOptions ");
+       " [ -e Makefile ] && make distclean &> /dev/null ; $qmakeCmd $pro_file $qmakeOptions ");
 
 #############################################################
 ## TODO
