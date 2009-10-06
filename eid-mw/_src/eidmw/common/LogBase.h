@@ -88,6 +88,8 @@ Example of usage through objects and macro are give at the end of this file
 #include <sys/file.h>
 #endif
 
+#include <stdarg.h>
+
 namespace eIDMW
 {
 
