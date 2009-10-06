@@ -155,7 +155,7 @@ then
 			   make
 			   libx11-dev
 			   libssl-dev
-			   libxerces27-dev
+			   libxerces-c2-dev
 			   swig
 			   libacr38u
 			   doxygen
