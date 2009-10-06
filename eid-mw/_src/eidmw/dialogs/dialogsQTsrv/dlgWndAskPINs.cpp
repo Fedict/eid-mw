@@ -21,6 +21,8 @@
 #include "dlgWndAskPINs.h"
 #include "../langUtil.h"
 
+#include <stdio.h>
+
 #define KP_BTN_SIZE 48
 
 dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, QString & Header, QString & PINName, bool UseKeypad, QWidget *parent ) : dlgWndBase(parent)
