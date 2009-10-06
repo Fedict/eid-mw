@@ -1,4 +1,7 @@
 content	belgiumeid	content/
 locale	belgiumeid	en-US	locale/en-US/
+locale	belgiumeid	en-GB	locale/en-US/
+locale	belgiumeid	nl-NL	locale/nl-NL/
+locale	belgiumeid	fr-FR	locale/fr-FR/
 skin	belgiumeid	classic/1.0	skin/
 overlay	chrome://browser/content/browser.xul	chrome://belgiumeid/content/firefoxOverlay.xul
