@@ -221,6 +221,11 @@ echo "[Info ] Checking Qt4"
 QT4=`which $pkg 2> /dev/null | wc -l`
 if [ $QT4 -eq 0 ]
 then
+	pkg=qmake-qt4
+	QT4=`which $pkg 2> /dev/null | wc -l`
+fi
+if [ $QT4 -eq 0 ]
+then
 	echo "[Error] qmake can not be found."
 	echo "[Error] Set the PATH environment variable or download/install Qt4 and try again."
 	exit -1
@@ -229,11 +234,19 @@ else
 	# parse the version string assumed to be in the format: XXX.YYY.ZZZ
 	# we use 'moc' to make parsing of the version nr easier
 	#-----------------------------------------
-	QT4=`which qmake`
+	QT4=`which $pkg`
 	THEPATH=${QT4%/*}
-	QT4VERSION=`${THEPATH}/moc -v 2>&1`
-
-	VERSIONSTR=`expr match "${QT4VERSION}" '.*\([1-9]\+\.[0-9]\+\.[0-9]\+\)'`
+	if [ `which moc 2> /dev/null | wc -l` -eq 1 ]
+	then
+		QT4VERSION=`moc -v 2>&1`
+	elif [ `which moc-qt4 2> /dev/null | wc -l` -eq 1 ]
+	then
+		QT4VERSION=`moc-qt4 -v 2>&1`
+	else
+		echo "qt moc not found"
+		exit -1
+	fi
+	VERSIONSTR=`expr match "${QT4VERSION}" '.*\(.*[1-9]\+\.[0-9]\+\.[0-9]\+\)'`
 
 	if [[ "${VERSIONSTR}" = "${MINQT4VER}" ]]
 	then
@@ -244,8 +257,8 @@ else
 			echo "[Warn ] The Qt4 version used is ideally ${MINQT4VER}"
 			echo "[Warn ] If needed, stop the process and install Qt4 ${MINQT4VER}"
 		else
-			echo "[Error] Qt4 version ${VERSIONSTR} found"
-			echo "[Error] Minimum Qt4 version ${MINQT4VER} not installed"
+			echo "[Error] Qt4 version \"${VERSIONSTR}\" found"
+			echo "[Error] Minimum Qt4 version \"${MINQT4VER}\" not installed"
 		exit -1
 	fi
 	fi
