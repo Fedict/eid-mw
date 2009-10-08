@@ -186,12 +186,71 @@
 %typemap(cstype) 				unsigned long & "ref uint" 
 %typemap(csin) 					unsigned long & "ref $csinput" 
 
+
+//////////////////////////////////////////////// const char * ////////////////////////////////////////////////
+// char* returned from middleware are utf8 encoded. We need to add some code as C# expects ANSI char*       //
+// add  -DSWIG_CSHARP_NO_STRING_HELPER  to your swig command line in order to include this code instead of  //
+// the standard string helper in csharphead.swg                                                             //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+%{
+/* Callback for returning strings to C# without leaking memory */
+typedef char * (SWIGSTDCALL* SWIG_CSharpStringHelperCallback)(const char *);
+static SWIG_CSharpStringHelperCallback SWIG_csharp_string_callback = NULL;
+
+#ifdef __cplusplus
+extern "C" SWIGEXPORT
+#endif
+void SWIGSTDCALL SWIG_RegisterStringCallback(SWIG_CSharpStringHelperCallback callback) 
+{
+  SWIG_csharp_string_callback = callback;
+}
+%}
+
+%pragma(csharp) imclasscode=%{
+ protected class SWIGStringHelper {
+      
+    public delegate string SWIGStringDelegate(IntPtr message);
+    static SWIGStringDelegate stringDelegate = new SWIGStringDelegate(FromUTF8);
+
+    [DllImport("$dllimport", EntryPoint="SWIG_RegisterStringCallback")]
+    public static extern void SWIG_RegisterStringCallback(SWIGStringDelegate stringDelegate);
+
+    static string FromUTF8(IntPtr cString) {
+        System.Collections.ArrayList myAL = new System.Collections.ArrayList();
+        Int32 i = 0;
+        Byte b;
+        do
+        {
+            b = System.Runtime.InteropServices.Marshal.ReadByte(cString, i++);
+            myAL.Add(b);
+        } while (b != 0);
+        Byte[] byteString;
+        byteString = (Byte[]) myAL.ToArray( typeof(Byte) );
+
+        char[] charData = new char[byteString.Length];
+        System.Text.Decoder d = System.Text.Encoding.UTF8.GetDecoder();
+        d.GetChars(byteString, 0, byteString.Length, charData, 0);
+        string result = new string(charData);
+        return result;
+    }
+    
+    static SWIGStringHelper() {
+		SWIG_RegisterStringCallback(stringDelegate);
+    }
+  }
+
+  static protected SWIGStringHelper swigStringHelper = new SWIGStringHelper();
+%}
+
 ///////////////////////////////////////// const char * const * /////////////////////////////////////////////
 %{
 typedef void * (SWIGSTDCALL* CUSTOM_CSharpStringArrayHelperCallback)(void *, long);
 static CUSTOM_CSharpStringArrayHelperCallback CUSTOM_CSharpStringArrayCallback = NULL;
 
+#ifdef __cplusplus
 extern "C" SWIGEXPORT
+#endif
 void SWIGSTDCALL CUSTOM_RegisterStringArrayCallback(CUSTOM_CSharpStringArrayHelperCallback callback) 
 {
   CUSTOM_CSharpStringArrayCallback = callback;
