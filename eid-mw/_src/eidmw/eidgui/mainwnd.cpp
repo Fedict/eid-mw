@@ -3052,8 +3052,8 @@ void MainWnd::fillCertTree(BEID_Certificate *cert, short level, QTreeCertItem* i
 	QString strLabel = QString::fromUtf8(label);
 	item->setText(COLUMN_CERT_NAME, strLabel);
 
-	item->setIssuer(cert->getIssuerName());
-	item->setOwner(cert->getOwnerName());
+	item->setIssuer(QString::fromUtf8(cert->getIssuerName(),-1));
+	item->setOwner(QString::fromUtf8(cert->getOwnerName(),-1));
 	item->setValidityBegin(cert->getValidityBegin());
 	item->setValidityEnd(cert->getValidityEnd());
 	QString	strKeyLen;
