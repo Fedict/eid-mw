@@ -203,39 +203,20 @@ then
 fi
 
 #-----------------------------------------
-# Check the tokend is present, otherwise unzip the sources
+# Unpack the BEID.tokend and copy to bin
 #-----------------------------------------
-if [ -d ../_src/eidmw/tokend/Sources ]
-then
-	cd ../_src/eidmw/tokend
-	sudo rm -rf Sources
-	cd -
-fi
-
 cd ../_src/eidmw/tokend 
-tar -xvf SourcesDeploy.tar.gz
-cd -
-
-#-----------------------------------------
-# build the tokend
-#-----------------------------------------
-cd ../_src/eidmw/tokend/Sources
-
-xcodebuild -configuration Deployment
-
-if [ ! -d build/Deployment/BEID.tokend ] 
+if [ -d ./BEID.tokend ]
 then
-	echo "[Error] Build tokend failed"
-	exit -1
+	sudo rm -rf ./BEID.tokend
 fi
+tar -xvf ./BEID.tokend.tar.gz
 
 if [ -d ../../bin/BEID.tokend ] 
 then
 	rm -rf ../../bin/BEID.tokend
 fi
-
-mv build/Deployment/BEID.tokend ../../bin
-
+mv ./BEID.tokend ../../bin
 cd -
 
 #-----------------------------------------
