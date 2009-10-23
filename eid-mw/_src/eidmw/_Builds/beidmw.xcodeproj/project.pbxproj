@@ -1781,7 +1781,7 @@
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 			};
 			name = Debug;
@@ -1803,8 +1803,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 			};
 			name = Release;
@@ -1903,7 +1904,7 @@
 					"${PROJECT_DIR}/../dialogs",
 					"${PROJECT_DIR}/../cardlayer",
 					/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework/Headers,
-					/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 					"${PROJECT_DIR}/../../ThirdParty/Xerces/Xerces-2.8.0-mac/include",
 				);
 				INSTALL_PATH = /usr/local/lib;
@@ -2043,7 +2044,7 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../eidlib",
-					/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/JavaVM.framework/Headers,
+					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/JavaVM.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
@@ -2089,7 +2090,7 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
-					/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
@@ -2152,7 +2153,7 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
-				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcommon.$(CURRENT_PROJECT_VERSION)";
@@ -2208,7 +2209,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					__OLD_PCSC_API__,
 					EIDMW_CAL_EXPORT,
 					CAL_BEID,
 					CARDPLUGIN_IN_CAL,
@@ -2217,11 +2217,12 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
-					/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = "";
 				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-O2";
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcardlayer.$(CURRENT_PROJECT_VERSION)";
