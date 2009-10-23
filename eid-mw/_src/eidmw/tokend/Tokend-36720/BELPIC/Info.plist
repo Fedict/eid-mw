@@ -5,13 +5,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>BELPIC</string>
+	<string>BEID</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.apple.tokend.belpic</string>
+	<string>com.apple.tokend.beid</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>BELPIC</string>
+	<string>BEID</string>
 	<key>CFBundlePackageType</key>
 	<string>????</string>
 	<key>CFBundleShortVersionString</key>

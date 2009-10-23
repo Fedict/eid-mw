@@ -435,7 +435,7 @@ void BELPICToken::verifyPIN(int pinNum, const uint8_t *pin, size_t pinLength)
 	_verifyPIN(pinNum, pin, pinLength);
 	// Start a new transaction which we never get rid of until someone calls
 	// unverifyPIN()
-	begin();
+	// sbegin();
 }
 
 void BELPICToken::_verifyPIN(int pinNum, const uint8_t *pin, size_t pinLength)
@@ -473,7 +473,7 @@ void BELPICToken::_verifyPIN(int pinNum, const uint8_t *pin, size_t pinLength)
 	BELPICError::check(mPinStatus);
 	// Start a new transaction which we never get rid of until someone calls
 	// unverifyPIN()
-	begin();
+	// begin();
 }
 
 void BELPICToken::unverifyPIN(int pinNum)
@@ -481,7 +481,7 @@ void BELPICToken::unverifyPIN(int pinNum)
 	if (pinNum != -1)
 		CssmError::throwMe(CSSM_ERRCODE_SAMPLE_VALUE_NOT_SUPPORTED);
 
-	end(SCARD_RESET_CARD);
+	// end(SCARD_RESET_CARD);
 }
 
 uint32 BELPICToken::probe(SecTokendProbeFlags flags,
@@ -490,9 +490,9 @@ uint32 BELPICToken::probe(SecTokendProbeFlags flags,
 //	uint32 score = Tokend::ISO7816Token::probe(flags, tokenUid);
 //SCARD_PROTOCOL_T0
 	const SCARD_READERSTATE &readerState = *(*startupReaderInfo)();
-	connect(mSession, readerState.szReader, SCARD_PROTOCOL_T0);
+	connect(mSession, readerState.szReader, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0);
 	uint32 score = 0;
-	
+	//flags = 2;//share pcsc 
 	bool doDisconnect = false; /*!(flags & kSecTokendProbeKeepToken); */
 
 	try
@@ -510,14 +510,23 @@ uint32 BELPICToken::probe(SecTokendProbeFlags flags,
 			doDisconnect = true;
 		else
 		{
+			/* Zetes: return a higher score for the fixed tokend
+			 * (besides, '29' should be '0x29) */
 			// If the length is not an exact match only return a score of 100
 			score = (resultLength == 29) ? 200 : 100;
 			// @@@ If the ATR matches one of the built in BELPIC ATR's we
 			// should probably return an even better score.
-
+			score = 300;
+			
 			// Setup the tokendUID
+			/* Zetes: change the tokendUID in order not to conflict with
+			 * the original tokend */
+			/*
 			memcpy(tokenUid, "BELPIC-", 7);
 			uint32_t offset = 7;
+			 */
+			memcpy(tokenUid, "BEID-", 5);
+			uint32_t offset = 5;
 			// Now stick in the chip serial # as hex bytes.
 			for (uint32_t ix = 0x07; ix < 0x17; ++ix)
 			{
@@ -627,20 +636,30 @@ void BELPICToken::populate()
 		kBELPIC_EF_Cert4, "Cert #4 (CA)"));
 	RefPointer<Tokend::Record> cert6(new BELPICCertificateRecord(kDF_BELPIC,
 		kBELPIC_EF_Cert6, "Cert #6 (root)"));
-	RefPointer<Tokend::Record> cert8(new BELPICCertificateRecord(kDF_BELPIC,
+	/* Zetes: RRN cert is not relevant here */
+	/*	RefPointer<Tokend::Record> cert8(new BELPICCertificateRecord(kDF_BELPIC,
 		kBELPIC_EF_Cert8, "Cert #8 (RN)"));
-
+	 */
 	certRelation.insertRecord(cert2);
 	certRelation.insertRecord(cert3);
 	certRelation.insertRecord(cert4);
 	certRelation.insertRecord(cert6);
+	/* Zetes: RRN cert is not relevant here */
+	/*
 	certRelation.insertRecord(cert8);
-
-	RefPointer<Tokend::Record> key2(new BELPICKeyRecord(kPrK2_Id,
+	 */
+	
+	/* Zetes: better names for the private keys */
+	/* RefPointer<Tokend::Record> key2(new BELPICKeyRecord(kPrK2_Id,
 		"PrK#2 (authentication)", privateKeyRelation.metaRecord(), true));
 	RefPointer<Tokend::Record> key3(new BELPICKeyRecord(kPrK3_Id,
 		"PrK#3 (signature)", privateKeyRelation.metaRecord(), true));
-
+	 */
+	RefPointer<Tokend::Record> key2(new BELPICKeyRecord(kPrK2_Id,
+														"Authentication key", privateKeyRelation.metaRecord(), true));
+	RefPointer<Tokend::Record> key3(new BELPICKeyRecord(kPrK3_Id,
+														"Signature key", privateKeyRelation.metaRecord(), true));
+	
 	privateKeyRelation.insertRecord(key2);
 	privateKeyRelation.insertRecord(key3);
 
@@ -648,6 +667,7 @@ void BELPICToken::populate()
 		new Tokend::LinkedRecordAdornment(cert2));
 	key3->setAdornment(mSchema->publicKeyHashCoder().certificateKey(),
 		new Tokend::LinkedRecordAdornment(cert3));
+	
 
 	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
 		kID_EF_ID_RN, "ID#RN"));
@@ -663,7 +683,7 @@ void BELPICToken::populate()
 		kID_EF_PuK7_ID, "PuK#7 ID (CA role ID)"));
 	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
 		kID_EF_Preferences, "Preferences"));
-
+	
 	secdebug("populate", "BELPICToken::populate() end");
 }
 
