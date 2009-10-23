@@ -3,7 +3,7 @@
 # java 1.4.2 is not supported any more since oct 2008
 MINJAVAVER=1.5
 MACHINETYPE=i386
-OSXVER=10.5
+OSXVER=10.6.1
 MWVER=3.5.2
 
 #########################################
