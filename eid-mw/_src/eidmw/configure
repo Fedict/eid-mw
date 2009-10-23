@@ -410,13 +410,19 @@ if ($configOptionIdxEnd != -1)
 #############################################################
 ## for MAC OSX 10.4 the following parameter has to be set:
 ##    CONFIG+=osx10_4
-## for MAC OSX 10.5 or higher, this parameter should be set to osx10_5
+## for MAC OSX 10.5 this parameter should be set to osx10_5
+## for MAC OSX 10.6 or higher, this parameter should be set to osx10_6
 #############################################################
 #get the OS version and determine if the CONFIG parameter has to be set
 	my $osxVer = `sw_vers -productVersion`;
 	chomp($osxVer);
 
-	if ( $osxVer ge "10.5.0" )
+	if ( $osxVer ge "10.6.0" )
+	{
+        	#print STDOUT "OS version:" . $osxVer . ">=" . "10.6.0\n"
+		$qmakeOptions .= " \"CONFIG+=osx10_6\"";
+	}
+	elsif ( $osxVer ge "10.5.0" )
 	{
         	#print STDOUT "OS version:" . $osxVer . ">=" . "10.5.0\n"
 		$qmakeOptions .= " \"CONFIG+=osx10_5\"";
