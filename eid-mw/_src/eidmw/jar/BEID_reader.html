@@ -9,7 +9,12 @@ Belgian eID Card
 
     function getBEIDApplet()
     {
-        return document.BEIDAppletLauncher.getSubApplet();
+        try {
+        	return document.BEIDAppletLauncher.getSubApplet();
+        } catch(e) {
+ 		return document.BEIDAppletLauncher;
+	}
+	
     }
 
     function getIDData()
@@ -210,7 +215,7 @@ Belgian eID Card
     function bodyLoaded()
     {
 
-       	if(document.BEIDAppletLauncher.getSubApplet()==null)
+       	if(getBEIDApplet()==null)
     	{
     	    setTimeout("bodyLoaded()", 100);
     	}
@@ -272,17 +277,19 @@ delete locarray[(locarray.length-1)];
 var url = locarray.join("/");
 
 	document.writeln('<applet code="org.jdesktop.applet.util.JNLPAppletLauncher"');
-    document.writeln('codebase = "' + url + subdir + '"');
-    document.writeln('width  ="140"');
-    document.writeln('height ="200"');
-    document.writeln('name   = "BEIDAppletLauncher"');
-    document.writeln('archive="applet-launcher.jar,beid35libJava.jar,BEID_Applet.jar">');
+        document.writeln('codebase = "' + url + subdir + '"');
+        document.writeln('width  ="140"');
+        document.writeln('height ="200"');
+        document.writeln('name   = "BEIDAppletLauncher"');
+        document.writeln('id   = "BEIDAppletLauncher"');
+        document.writeln('archive="applet-launcher.jar,beid35libJava.jar,BEID_Applet.jar">');
 
 	document.writeln('<param name="codebase_lookup" value="false">');
 	document.writeln('<param name="subapplet.classname" value="be.belgium.beid.BEID_Applet">');
 	document.writeln('<param name="progressbar" value="true">');
 	document.writeln('<param name="jnlpNumExtensions" value="1">');
 	document.writeln('<param name="jnlpExtension1" value= "' + url + jnlpPath + '/beid.jnlp">');
+	document.writeln('<param name="jnlp_href" value="' + url + jnlpPath + '/beid.jnlp">');
 
 	document.writeln('<param name="debug" value="false"/>');
 	document.writeln('<param name="Reader" value=""/>');
