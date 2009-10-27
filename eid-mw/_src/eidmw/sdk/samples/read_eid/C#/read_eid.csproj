@@ -28,7 +28,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="beid35libCS, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="beid35libCS, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
