@@ -124,7 +124,7 @@ int main()
 ///////////
 
 	fileout=pathout+"svn_revision.h";
-
+	version+=6000;
 #ifdef WIN32
 	fopen_s(&f,fileout.c_str(), "w");
 #else
@@ -135,7 +135,23 @@ int main()
 		return 1;
 
 	fprintf_s(f, "/* ****************************************************************************\n");
-	fprintf_s(f, "$$$_ZETES_LICENSE_MUST_BE_HERE_BEFORE_DISTRIBUTING_SOURCES_$$$\n");
+	fprintf_s(f,"\n");
+	fprintf_s(f, " * eID Middleware Project.\n");
+	fprintf_s(f, " * Copyright (C) 2008-2009 FedICT.\n");
+	fprintf_s(f, " *\n");
+	fprintf_s(f, " * This is free software; you can redistribute it and/or modify it\n");
+	fprintf_s(f, " * under the terms of the GNU Lesser General Public License version\n");
+	fprintf_s(f, " * 3.0 as published by the Free Software Foundation.\n");
+	fprintf_s(f, " *\n");
+	fprintf_s(f, " * This software is distributed in the hope that it will be useful,\n");
+	fprintf_s(f, " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+	fprintf_s(f, " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU\n");
+	fprintf_s(f, " * Lesser General Public License for more details.\n");
+	fprintf_s(f, " *\n");
+	fprintf_s(f, " * You should have received a copy of the GNU Lesser General Public\n");
+	fprintf_s(f, " * License along with this software; if not, see\n");
+	fprintf_s(f, " * http://www.gnu.org/licenses/.\n");
+	fprintf_s(f,"\n");
 	fprintf_s(f, "**************************************************************************** */\n");
 	fprintf_s(f,"#ifndef __SVN_REVISION_H__\n");
 	fprintf_s(f,"#define __SVN_REVISION_H__\n");
