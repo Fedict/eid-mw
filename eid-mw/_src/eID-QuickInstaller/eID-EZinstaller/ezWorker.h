@@ -54,20 +54,20 @@ public:
 	QDomDocument xml_in;
 	QDomDocument xml_out;
 
-    string ezWorker::TextFromNode(QDomNode theNode);
-	string ezWorker::NodeAsString(QDomNode theNode);
-	string ezWorker::inttostr(const int getal);
-	bool ezWorker::WildCardFit(string searchprofile, string stringToCheck);
-	string ezWorker::GetExtraInfoItem(string theXml, string attrib);
-	string ezWorker::AttribTextFromNode(QDomNode theNode, string attrib);
-	QDomNode ezWorker::CreateTextNode(const string tag, const string val);
-    QDomNode ezWorker::CreateAttribTextNode(const string tag, const string val, const string AttribName, const string Attribval);
-    QDomNode ezWorker::CreateInfoTextNode(const string tag, const string val);
-	string ezWorker::GetNamedItem(QDomNode theNode, string tag);
-	string ezWorker::GetNamedItem(const string theXml, string tag);
-	QDomNode ezWorker::xmlToNode(const string theXml);
-	string ezWorker::GetLastErrorText(DWORD errorCode);
-    std::string ezWorker::toHEX(std::vector<BYTE>& b);
+    string TextFromNode(QDomNode theNode);
+	string NodeAsString(QDomNode theNode);
+	string inttostr(const int getal);
+	bool WildCardFit(string searchprofile, string stringToCheck);
+	string GetExtraInfoItem(string theXml, string attrib);
+	string AttribTextFromNode(QDomNode theNode, string attrib);
+	QDomNode CreateTextNode(const string tag, const string val);
+    QDomNode CreateAttribTextNode(const string tag, const string val, const string AttribName, const string Attribval);
+    QDomNode CreateInfoTextNode(const string tag, const string val);
+	string GetNamedItem(QDomNode theNode, string tag);
+	string GetNamedItem(const string theXml, string tag);
+	QDomNode xmlToNode(const string theXml);
+	string GetLastErrorText(DWORD errorCode);
+    std::string toHEX(std::vector<BYTE>& b);
 };
 
 #endif __EZWORKER_INCL__

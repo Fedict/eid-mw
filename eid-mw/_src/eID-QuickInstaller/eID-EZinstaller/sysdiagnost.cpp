@@ -2911,7 +2911,8 @@ char *			sDataType = NULL;
 CFDictionaryRef	InfoDict;
 CFArrayRef		propertyArray;
 CFStringRef		cfDataType;
-
+CFDataRef		xmlData;
+	
 	if (dataType.length() == 0)
 		return NULL;
 
@@ -2934,7 +2935,7 @@ CFStringRef		cfDataType;
 //	cout << streamBuffer;
 	
 	// Create a CFDataRef with the xml data
-	CFDataRef xmlData = CFDataCreate (kCFAllocatorDefault, (UInt8 *)streamBuffer.get(), bytesRead);
+	xmlData = CFDataCreate (kCFAllocatorDefault, (UInt8 *)streamBuffer.get(), bytesRead);
 
 	// CFPropertyListCreateFromXMLData reads in the XML data and will parse it into a CFArrayRef for us. 
 	CFStringRef errorString;

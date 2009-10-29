@@ -158,9 +158,9 @@ public:
 	void cacheInfoItems(QDomNode ResultNode, QDomNode dn);
 	void extractSCDrivers(QString OS);
     void extractISSFiles(QString param);
-	void diagnoseThread::extractMiddleWare();
-	void diagnoseThread::verboseExtraInfoItems(string theXml);
-	void diagnoseThread::buildReport(string theXml);
+	void extractMiddleWare();
+	void verboseExtraInfoItems(string theXml);
+	void buildReport(string theXml);
 };
 
 
