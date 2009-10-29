@@ -117,20 +117,6 @@ Tokend::Attribute *BELPICProtectedRecord::getDataAttribute(Tokend::TokenContext 
 	belpicToken.readBinary(certificate, certificateLength);
 	data.Data = certificate;
 	data.Length = certificateLength;
-
-        /* Zetes: the cert files on cards older then V1.0 have padding bytes
-         * at the end (to allow updates that might be longer then the current
-         * cert). This works fine for certificate selection (keychain) but
-         * gives problems during an SSL handshake. So we first remove those
-         * padding bytes by adapting the data.Length. */
-        if (certificateLength > 500 && certificate[0] == 0x30 && certificate[1] == 0x82)
-        {
-                size_t realCertLength = 256 * certificate[2] + certificate[3] + 4;
-                if (realCertLength > 500 && realCertLength < certificateLength)
-                        data.Length = realCertLength;
-        }
- 
-        belpicToken.cacheObject(0, mDescription, data);
 	
 	return new Tokend::Attribute(data.Data, data.Length);
 }
