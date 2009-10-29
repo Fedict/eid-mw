@@ -212,11 +212,11 @@ then
 fi
 tar -xvf ./BEID.tokend.tar.gz
 
-if [ -d ../../bin/BEID.tokend ] 
+if [ -d ../bin/BEID.tokend ] 
 then
-	rm -rf ../../bin/BEID.tokend
+	sudo rm -rf ../bin/BEID.tokend
 fi
-mv ./BEID.tokend ../../bin
+mv ./BEID.tokend ../bin
 cd -
 
 #-----------------------------------------
