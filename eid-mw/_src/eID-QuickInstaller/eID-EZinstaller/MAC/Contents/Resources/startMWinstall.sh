@@ -15,5 +15,5 @@ else
 fi
 
 #Copy the SIS plugin
-mkdir -p /usr/local/lib/siscardplugins
-cp -f $DIRNAME/libsiscardplugin1__ACS__.dylib /usr/local/lib/siscardplugins/
+#mkdir -p /usr/local/lib/siscardplugins
+#cp -f $DIRNAME/libsiscardplugin1__ACS__.dylib /usr/local/lib/#siscardplugins/
