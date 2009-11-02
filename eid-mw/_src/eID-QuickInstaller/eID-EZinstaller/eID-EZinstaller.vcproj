@@ -82,7 +82,7 @@
 				OutputFile="..\$(ConfigurationName)\eID-QuickInstaller.exe"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="&quot;..\EIKDiag\diaglib\$(ConfigurationName)&quot;;&quot;..\zrc\zrclib\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\plugins\imageformats&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;..\..\ThirdParty\Qt\4.5.0_static\plugins\imageformats;C:\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\plugins\imageformats;&quot;$(BEID_DIR_PLATFORMSDK_2008)\Lib&quot;;..\..\ThirdParty\MSPlatformSDK_2008\Lib;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
-				IgnoreDefaultLibraryNames="LIBCMTD.lib"
+				IgnoreDefaultLibraryNames="LIBCMTD.lib;msvcprtd.lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=""
 				SubSystem="2"
@@ -627,7 +627,7 @@
 						Name="VCCustomBuildTool"
 						Description="Rcc&apos;ing ezResourcesD.qrc..."
 						CommandLine="call ..\..\eidmw\SetPathQt450_Exe.bat&#x0D;&#x0A;&quot;%BEID_DIR_QT_450_EXE%\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;.\WIN32\$(InputName).qrc&quot; -o .\GeneratedFiles\$(ConfigurationName)\qrc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies=".\WIN32\ezResourcesD.qrc;.\eid-ezinstaller_fr.qm;.\Resources\Xknopje down x649 y7.png;.\Resources\Xknopje x649 y7.png;.\Resources\eID op achtergrond x176 y105.png;.\Resources\fond installer.jpg;.\Resources\fond testen.png;.\Resources\foutmelding.png;.\Resources\groene vink.png;.\Resources\ill lezer verbinden A x81 y262.png;.\Resources\ill lezer verbinden B x21 y262.png;.\Resources\ill lezer verbinden C x137 y262.png;.\Resources\kleine X.png;.\Resources\kn annuleren down x617 y517.png;.\Resources\kn annuleren x617 y517.png;.\Resources\kn breed (x242 y518).png;.\Resources\kn breed down (x242 y518).png;.\Resources\kn installeer down x78 y372.png;.\Resources\kn installeer down x82 y 315.png;.\Resources\kn installeer x78 y372.png;.\Resources\kn installeer x82 y315.png;.\Resources\kn installer down x431 y372.png;.\Resources\kn installer x431 y372.png;.\Resources\kn smal down.png;.\Resources\kn smal.png;.\Resources\symbooltje eID x92 y32.png;.\Resources\tab L down x11 y105.png;.\Resources\tab L x11 y 105.png;.\Resources\tab M down x270 y105.png;.\Resources\tab M x270 y105.png;.\Resources\tab R down x530 y 105.png;.\Resources\tab R x530 y105.png;.\Resources\terugknop down x17 y29.png;.\Resources\terugknop x17 y29.png;.\Resources\waarschuwing x220 y190.png;.\WIN32\scenario.xml;..\..\eidmw\_Binaries35\debug\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+						AdditionalDependencies=".\WIN32\ezResourcesD.qrc;.\eid-ezinstaller_fr.qm;.\Resources\Xknopje down x649 y7.png;.\Resources\Xknopje x649 y7.png;.\Resources\eID op achtergrond x176 y105.png;.\Resources\fond installer.jpg;.\Resources\fond testen.png;.\Resources\foutmelding.png;.\Resources\groene vink.png;.\Resources\ill lezer verbinden A x81 y262.png;.\Resources\ill lezer verbinden B x21 y262.png;.\Resources\ill lezer verbinden C x137 y262.png;.\Resources\kleine X.png;.\Resources\kn annuleren down x617 y517.png;.\Resources\kn annuleren x617 y517.png;.\Resources\kn breed (x242 y518).png;.\Resources\kn breed down (x242 y518).png;.\Resources\kn installeer down x78 y372.png;.\Resources\kn installeer down x82 y 315.png;.\Resources\kn installeer x78 y372.png;.\Resources\kn installeer x82 y315.png;.\Resources\kn installer down x431 y372.png;.\Resources\kn installer x431 y372.png;.\Resources\kn smal down.png;.\Resources\kn smal.png;.\Resources\symbooltje eID x92 y32.png;.\Resources\tab L down x11 y105.png;.\Resources\tab L x11 y 105.png;.\Resources\tab M down x270 y105.png;.\Resources\tab M x270 y105.png;.\Resources\tab R down x530 y 105.png;.\Resources\tab R x530 y105.png;.\Resources\terugknop down x17 y29.png;.\Resources\terugknop x17 y29.png;.\Resources\waarschuwing x220 y190.png;.\WIN32\scenario.xml"
 						Outputs=".\GeneratedFiles\$(ConfigurationName)\qrc_ezResourcesD.cpp"
 					/>
 				</FileConfiguration>
@@ -639,7 +639,7 @@
 						Name="VCCustomBuildTool"
 						Description="Rcc&apos;ing ezResourcesD.qrc..."
 						CommandLine="call ..\..\eidmw\SetPathQt450_Exe.bat&#x0D;&#x0A;&quot;%BEID_DIR_QT_450_EXE%\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;.\WIN32\$(InputName).qrc&quot; -o .\GeneratedFiles\$(ConfigurationName)\qrc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies=".\WIN32\ezResourcesD.qrc;.\eid-ezinstaller_fr.qm;.\Resources\Xknopje down x649 y7.png;.\Resources\Xknopje x649 y7.png;.\Resources\eID op achtergrond x176 y105.png;.\Resources\fond installer.jpg;.\Resources\fond testen.png;.\Resources\foutmelding.png;.\Resources\groene vink.png;.\Resources\ill lezer verbinden A x81 y262.png;.\Resources\ill lezer verbinden B x21 y262.png;.\Resources\ill lezer verbinden C x137 y262.png;.\Resources\kleine X.png;.\Resources\kn annuleren down x617 y517.png;.\Resources\kn annuleren x617 y517.png;.\Resources\kn breed (x242 y518).png;.\Resources\kn breed down (x242 y518).png;.\Resources\kn installeer down x78 y372.png;.\Resources\kn installeer down x82 y 315.png;.\Resources\kn installeer x78 y372.png;.\Resources\kn installeer x82 y315.png;.\Resources\kn installer down x431 y372.png;.\Resources\kn installer x431 y372.png;.\Resources\kn smal down.png;.\Resources\kn smal.png;.\Resources\symbooltje eID x92 y32.png;.\Resources\tab L down x11 y105.png;.\Resources\tab L x11 y 105.png;.\Resources\tab M down x270 y105.png;.\Resources\tab M x270 y105.png;.\Resources\tab R down x530 y 105.png;.\Resources\tab R x530 y105.png;.\Resources\terugknop down x17 y29.png;.\Resources\terugknop x17 y29.png;.\Resources\waarschuwing x220 y190.png;.\WIN32\scenario.xml;..\..\eidmw\_Binaries35\debug\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+						AdditionalDependencies=".\WIN32\ezResourcesD.qrc;.\eid-ezinstaller_fr.qm;.\Resources\Xknopje down x649 y7.png;.\Resources\Xknopje x649 y7.png;.\Resources\eID op achtergrond x176 y105.png;.\Resources\fond installer.jpg;.\Resources\fond testen.png;.\Resources\foutmelding.png;.\Resources\groene vink.png;.\Resources\ill lezer verbinden A x81 y262.png;.\Resources\ill lezer verbinden B x21 y262.png;.\Resources\ill lezer verbinden C x137 y262.png;.\Resources\kleine X.png;.\Resources\kn annuleren down x617 y517.png;.\Resources\kn annuleren x617 y517.png;.\Resources\kn breed (x242 y518).png;.\Resources\kn breed down (x242 y518).png;.\Resources\kn installeer down x78 y372.png;.\Resources\kn installeer down x82 y 315.png;.\Resources\kn installeer x78 y372.png;.\Resources\kn installeer x82 y315.png;.\Resources\kn installer down x431 y372.png;.\Resources\kn installer x431 y372.png;.\Resources\kn smal down.png;.\Resources\kn smal.png;.\Resources\symbooltje eID x92 y32.png;.\Resources\tab L down x11 y105.png;.\Resources\tab L x11 y 105.png;.\Resources\tab M down x270 y105.png;.\Resources\tab M x270 y105.png;.\Resources\tab R down x530 y 105.png;.\Resources\tab R x530 y105.png;.\Resources\terugknop down x17 y29.png;.\Resources\terugknop x17 y29.png;.\Resources\waarschuwing x220 y190.png;.\WIN32\scenario.xml"
 						Outputs=".\GeneratedFiles\$(ConfigurationName)\qrc_ezResourcesD.cpp"
 					/>
 				</FileConfiguration>
@@ -726,14 +726,6 @@
 			</File>
 			<File
 				RelativePath=".\WIN32\scenario.xml"
-				>
-			</File>
-			<File
-				RelativePath="..\..\eidmw\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
-				>
-			</File>
-			<File
-				RelativePath="..\..\eidmw\_Binaries35\Debug\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
 				>
 			</File>
 			<File
