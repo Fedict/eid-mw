@@ -61,7 +61,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\$(ProjectName)d.lib"
-				IgnoreDefaultLibraryNames=""
+				IgnoreDefaultLibraryNames="LIBCMTD.lib libcpmtd.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
