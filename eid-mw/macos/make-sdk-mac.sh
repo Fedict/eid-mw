@@ -50,6 +50,14 @@ chmod +x ./1_compile.sh
 cd -
 
 #-----------------------------------------
+# create the java wrapper jnilib 
+#-----------------------------------------
+cd ../_src/eidmw
+chmod +x ./create_java_wrappar_jnilib.sh
+./create_java_wrappar_jnilib.sh
+cd -
+
+#-----------------------------------------
 # create a dmg file
 #-----------------------------------------
 cd ../_src/eidmw/_Builds
