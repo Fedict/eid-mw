@@ -42,7 +42,7 @@ static wchar_t* FilesSystem[]=
 	, L"beid35cardlayer.dll"
 	, L"beid35common.dll"
 	, L"beid35DlgsWin32.dll"
-//	, L"siscardplugins\\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+//	, L"siscardplugins\\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll"
 	, L"libeay32_0_9_8g.dll"
 	, L"ssleay32_0_9_8g.dll"
 	, L"xerces-c_2_8.dll"

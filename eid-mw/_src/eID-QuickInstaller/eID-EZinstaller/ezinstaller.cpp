@@ -1049,24 +1049,24 @@ LOGSTR(readersXml.c_str());
 #ifdef WIN32
 		// als we een acr 38 tegenkomen moeten we ook de sis dll uit de qresources installeren
 //		if (_readerName.find("ACR38U") != std::string::npos)
-		{
-			string sispath = this->dt.substituteResVars(SISPATH);
-			QDir sisdir(QString(sispath.c_str()));
-			if (sisdir.mkpath(QString(sispath.c_str()))) {
-				string filename = sisdir.absoluteFilePath(SISLIB).toStdString();
-				QFile sisdll_res(SISRES);
-				if (! sisdll_res.open(QIODevice::ReadOnly))
-					continue;
-				QByteArray qsis = sisdll_res.readAll();
-				sisdll_res.close();
-				QFile sisdll(filename.c_str());
-				if (! sisdll.open(QIODevice::Truncate | QIODevice::WriteOnly))
-					continue;
-				sisdll.write(qsis);
-				sisdll.close();
-				this->appendStringReport(" -> SIS/ACR38U: installed " + filename, QFont::Normal);
-			}
-		}
+//		{
+//			string sispath = this->dt.substituteResVars(SISPATH);
+//			QDir sisdir(QString(sispath.c_str()));
+//			if (sisdir.mkpath(QString(sispath.c_str()))) {
+//				string filename = sisdir.absoluteFilePath(SISLIB).toStdString();
+//				QFile sisdll_res(SISRES);
+//				if (! sisdll_res.open(QIODevice::ReadOnly))
+//					continue;
+//				QByteArray qsis = sisdll_res.readAll();
+//				sisdll_res.close();
+//				QFile sisdll(filename.c_str());
+//				if (! sisdll.open(QIODevice::Truncate | QIODevice::WriteOnly))
+//					continue;
+//				sisdll.write(qsis);
+//				sisdll.close();
+//				this->appendStringReport(" -> SIS/ACR38U: installed " + filename, QFont::Normal);
+//			}
+//		}
 #endif
 
   		if(readers.size() > 0)

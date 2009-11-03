@@ -138,6 +138,7 @@
 
       <Directory Id="SystemFolder">
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
+        <Directory Id="SISCARDPLUGINSDIR" Name="siscardplugins"/>
       </Directory>
 
       <Merge Id="VCRT" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
@@ -413,6 +414,12 @@
         <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\pinpad\xireid.dll" />
       </Component>
     </DirectoryRef>
+    
+    <DirectoryRef Id="SISCARDPLUGINSDIR">
+      <Component Id="Siscardplugin" Guid="{821ED2E0-9FDB-4a08-9686-DDE65EE3D5E5}" SharedDllRefCount="yes">
+        <File Id="siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" Name="siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" />
+      </Component>
+    </DirectoryRef>
 
     <DirectoryRef Id="TARGETDIR">
 
@@ -544,6 +551,9 @@
 
       <!-- Beid pinpad dir-->
       <ComponentRef Id="PinpadLib"/>
+
+      <!-- Beid Siscardplugin dir-->
+      <ComponentRef Id="Siscardplugin"/>
 
       <!-- Windows -->
       <ComponentRef Id="beidgui.conf"/>

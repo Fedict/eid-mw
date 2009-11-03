@@ -40,7 +40,4 @@
     <qresource prefix="/scenario" >
         <file alias="theScenario" >scenario.xml</file>
     </qresource>
-    <qresource prefix="/sis" >
-        <file alias="sisplugin">../../../eidmw/_Binaries35/Release/siscardplugin1_BE_EID_35__ACS ACR38U__.dll</file>
-    </qresource>
 </RCC>

@@ -30,7 +30,7 @@
 #include <io.h>
 // SIS plugin
 #define SISPATH "%osSystemFolder%\\siscardplugins"
-#define SISLIB  "siscardplugin1_BE_EID_35__ACS ACR38U__.dll"
+#define SISLIB  "siscardplugin1_BE_EID_35__ACS_ACR38U__.dll"
 #define SISRES  ":/sis/sisplugin"
 
 #else
