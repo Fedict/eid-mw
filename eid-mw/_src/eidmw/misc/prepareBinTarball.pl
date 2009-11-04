@@ -89,10 +89,12 @@ elsif (-e "/etc/SuSE-release")
 }
 elsif (-e "/etc/debian_version")
 {
+	@full_distribution    = split(/ /,`uname -v`);
+	$distribution_name    = $full_distribution[0];
 	my $tmp = `cat /etc/debian_version`;
 	chomp($tmp);	
-	$distribution_name    = "debian-" . $tmp;
-	$distribution_version = "etch";
+	$tmp =~ tr/\//_/;
+	$distribution_version = $tmp;		
 	$distro 	      = "debian";
 }
 else
@@ -104,23 +106,23 @@ else
 #######################################################################
 ## in case of debian, check if the version 2.6 is built
 #######################################################################
-if ( $distro eq "debian" || $distro eq "suse" || $distro eq "fedora" )
-{
-	my $libbeid_dir="../../beid-2.6/src/eidlib";
-	my $libbeid="libbeid.so";
-	my @tmp = split(/\n/,`ls $libbeid_dir/$libbeid.*.*.*`);
-	my $nrLibs = @tmp;
-	if ( $nrLibs==0 )
-	{
-		print STDERR "[Error] $libbeid_dir/$libbeid.X.Y.Z not found. Please build first\n";
-		exit -1;
-	}
-	if ( $nrLibs>1 )
-	{
-		print STDERR "[Error] Multiple libraries found for version 2.6. Remove all unnecessary files and rebuild if necessary.\n";
-		exit -1;
-	}
-}
+#if ( $distro eq "debian" || $distro eq "suse" || $distro eq "fedora" )
+#{
+#	my $libbeid_dir="../../beid-2.6/src/eidlib";
+#	my $libbeid="libbeid.so";
+#	my @tmp = split(/\n/,`ls $libbeid_dir/$libbeid.*.*.*`);
+#	my $nrLibs = @tmp;
+#	if ( $nrLibs==0 )
+#	{
+#		print STDERR "[Error] $libbeid_dir/$libbeid.X.Y.Z not found. Please build first\n";
+#		exit -1;
+#	}
+#	if ( $nrLibs>1 )
+#	{
+#		print STDERR "[Error] Multiple libraries found for version 2.6. Remove all unnecessary files and rebuild if necessary.\n";
+#		exit -1;
+#	}
+#}
 
 #######################################################################
 my $tarfile = "beid-middleware";
@@ -240,9 +242,9 @@ foreach (@languages)
 
 if ($distro eq "debian" || $distro eq "suse" || $distro eq "fedora" )
 {
-	$dirToCreate = "$baseDir/install/beid-2.6";
-	print STDOUT "[Info ] Creating directory $dirToCreate\n";
-	mkpath ($dirToCreate) or die "[Error] Cannot create directory $dirToCreate.\n";
+#	$dirToCreate = "$baseDir/install/beid-2.6";
+#	print STDOUT "[Info ] Creating directory $dirToCreate\n";
+#	mkpath ($dirToCreate) or die "[Error] Cannot create directory $dirToCreate.\n";
 	$dirToCreate = "$baseDir/install/thirdparty";
 	mkpath ($dirToCreate) or die "[Error] Cannot create directory $dirToCreate.\n";
 }
@@ -396,141 +398,141 @@ copy("$fromDir/beid.conf.3.5","$toDir") or die "[Error] Cannot copy file: $_.\n"
 #######################################################################
 ## get the beid 2.6 files compiled on this machine
 #######################################################################
-if ( $distro eq "debian" || $distro eq "suse" || $distro eq "fedora" )
-{
-	my $fileToCopy;
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/eidlib";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/libbeid.so.2.?.?`;
-	chomp($fileToCopy);
-
-	print STDOUT "[Info ] Copying files from $fromDir to $toDir.\n";
-
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/beidcommon";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/libbeidcommon.so.?.?.?`;
-	chomp($fileToCopy);
-
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/beidcommlib";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/libbeidcomm.so.?.?.?`;
-	chomp($fileToCopy);
-
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/winscarp";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/libbeidpcsclite.so.?.?.?`;
-	chomp($fileToCopy);
-
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/eidlibjni";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/libbeidlibjni.so.?.?.?`;
-	chomp($fileToCopy);
-
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/eidlibjni/eidlib";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/beidlib.jar`;
-	chomp($fileToCopy);
-
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/belpicgui";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/libbeidgui.so.?.?.?`;
-	chomp($fileToCopy);
-
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/newpkcs11/src/pkcs11";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/libbeidpkcs11.so.?.?.?`;
-	chomp($fileToCopy);
-
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/newpkcs11/src/libopensc";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/libbeidlibopensc.so.?.?.?`;
-	chomp($fileToCopy);
-
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	#######################################################################
+#if ( $distro eq "debian" || $distro eq "suse" || $distro eq "fedora" )
+#{
+#	my $fileToCopy;
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/eidlib";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/libbeid.so.2.?.?`;
+#	chomp($fileToCopy);
+#
+#	print STDOUT "[Info ] Copying files from $fromDir to $toDir.\n";
+#
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/beidcommon";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/libbeidcommon.so.?.?.?`;
+#	chomp($fileToCopy);
+#
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/beidcommlib";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/libbeidcomm.so.?.?.?`;
+#	chomp($fileToCopy);
+#
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/winscarp";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/libbeidpcsclite.so.?.?.?`;
+#	chomp($fileToCopy);
+#
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/eidlibjni";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/libbeidlibjni.so.?.?.?`;
+#	chomp($fileToCopy);
+#
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/eidlibjni/eidlib";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/beidlib.jar`;
+#	chomp($fileToCopy);
+#
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/belpicgui";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/libbeidgui.so.?.?.?`;
+#	chomp($fileToCopy);
+#
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/newpkcs11/src/pkcs11";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/libbeidpkcs11.so.?.?.?`;
+#	chomp($fileToCopy);
+#
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/newpkcs11/src/libopensc";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/libbeidlibopensc.so.?.?.?`;
+#	chomp($fileToCopy);
+#
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	#######################################################################
 	## only on debian install a new version of the beidgui
 	#######################################################################
-	if ( $distro eq "debian" )
-	{
-	
-		$baseDir = "../install";
-		$fromDir = "../../beid-2.6/src/eidviewer";
-		$toDir   = "$baseDir/install/beid-2.6";
-		$fileToCopy = `ls $fromDir/beidgui`;
-		chomp($fileToCopy);
-
-		copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-	}
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/eidviewer/certs";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = "$fromDir/beid-cert-belgiumrca.der";
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-	$fileToCopy = "$fromDir/beid-cert-government.der";
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-	$fileToCopy = "$fromDir/beid-cert-government2004.der";
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-	$fileToCopy = "$fromDir/beid-cert-government2005.der";
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-	$fromDir = "../misc/certs";
-	$fileToCopy = "$fromDir/beid-cert-belgiumrca2.der";
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/eidviewer";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = "$fromDir/beidgui_de.mo";
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-	$fileToCopy = "$fromDir/beidgui_fr.mo";
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-	$fileToCopy = "$fromDir/beidgui_nl.mo";
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../../beid-2.6/src/newpkcs11/etc";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = `ls $fromDir/beid-pkcs11-register.html`;
-	chomp($fileToCopy);
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$fileToCopy = `ls $fromDir/beid-pkcs11-unregister.html`;
-	chomp($fileToCopy);
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-
-	$baseDir = "../install";
-	$fromDir = "../install";
-	$toDir   = "$baseDir/install/beid-2.6";
-	$fileToCopy = "$fromDir/beidgui.conf.2.6";
-	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
-}
+#	if ( $distro eq "debian" )
+#	{
+#	
+#		$baseDir = "../install";
+#		$fromDir = "../../beid-2.6/src/eidviewer";
+#		$toDir   = "$baseDir/install/beid-2.6";
+#		$fileToCopy = `ls $fromDir/beidgui`;
+#		chomp($fileToCopy);
+#
+#		copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#	}
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/eidviewer/certs";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = "$fromDir/beid-cert-belgiumrca.der";
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#	$fileToCopy = "$fromDir/beid-cert-government.der";
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#	$fileToCopy = "$fromDir/beid-cert-government2004.der";
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#	$fileToCopy = "$fromDir/beid-cert-government2005.der";
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#	$fromDir = "../misc/certs";
+#	$fileToCopy = "$fromDir/beid-cert-belgiumrca2.der";
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/eidviewer";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = "$fromDir/beidgui_de.mo";
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#	$fileToCopy = "$fromDir/beidgui_fr.mo";
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#	$fileToCopy = "$fromDir/beidgui_nl.mo";
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../../beid-2.6/src/newpkcs11/etc";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = `ls $fromDir/beid-pkcs11-register.html`;
+#	chomp($fileToCopy);
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$fileToCopy = `ls $fromDir/beid-pkcs11-unregister.html`;
+#	chomp($fileToCopy);
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#
+#	$baseDir = "../install";
+#	$fromDir = "../install";
+#	$toDir   = "$baseDir/install/beid-2.6";
+#	$fileToCopy = "$fromDir/beidgui.conf.2.6";
+#	copy("$fileToCopy","$toDir/") or die "[Error] Cannot copy file: $fileToCopy.\n";
+#}
 #######################################################################
 # thirdparty libraries:
 # - Qt X.Y.Z
@@ -553,7 +555,7 @@ if ( $distro eq "debian" || $distro eq "suse" || $distro eq "fedora" )
 	##$fileToCopy = $1;
 	#$fileToCopy = `ls $1.*.*.[0-9]`;
 	#chomp($fileToCopy);
-	$QtFileLocation = `../qmake -v`;
+	$QtFileLocation = `qmake -v`;
 	$QtFileLocation =~ /(\/.+\/lib)/;
 	$fileToCopy = "$1/libQtGui.so";
 
@@ -562,7 +564,14 @@ if ( $distro eq "debian" || $distro eq "suse" || $distro eq "fedora" )
 	$fileToCopy = "$1/libQtCore.so";
 	copy("$fileToCopy","$toDir") or die "[Error] Cannot copy file: $fileToCopy.\n";
 
-	$fileToCopy = "$1/../plugins/imageformats/libqjpeg.so";
+	if (-e "$1/../plugins/imageformats/libqjpeg.so")
+	{
+		$fileToCopy = "$1/../plugins/imageformats/libqjpeg.so";
+	}
+	else
+	{
+		$fileToCopy = "/usr/lib/qt4/plugins/imageformats/libqjpeg.so";
+	}
 	copy("$fileToCopy","$toDir") or die "[Error] Cannot copy file: $fileToCopy.\n";
 
 	#$baseDir = "../install";

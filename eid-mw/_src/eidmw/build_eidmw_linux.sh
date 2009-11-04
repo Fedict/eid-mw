@@ -19,7 +19,7 @@ TARBALLDISTRO=none
 DIR_CURR=`pwd`
 PROJ_NAME=eidmw
 DIR_PROJ=~${DIR_CURR}
-TARGETDIR="~/.gvfs/eidmwbuilds\ on\ 10.2.250.42"
+#TARGETDIR="~/.gvfs/eidmwbuilds\ on\ 10.2.250.42"
 PROCESSOR=`uname -p`
 TESTFILE=test.txt
 LOCALBUILD=0
@@ -71,7 +71,7 @@ then
 	DISTRO=debian
 	TARBALLDISTRO=debian
 	PROCESSOR=i686
-	TARGETDIR=/mnt/eidmwbuilds
+#	TARGETDIR=/mnt/eidmwbuilds
 else
 	echo "[Error] Unsupported Linux distribution."
 	echo "[Error] Done..."
@@ -83,12 +83,12 @@ fi
 #-----------------------------------------
 # check that the eID MW 2.6 is available
 #-----------------------------------------
-echo "[Info ] checking eID MW 2.6 directory ../beid-2.6"
-if [ ! -d ../beid-2.6 ]
-then
-	echo "[Error] eID MW 2.6 directory ../beid-2.6 not found "
-	exit -1
-fi
+#echo "[Info ] checking eID MW 2.6 directory ../beid-2.6"
+#if [ ! -d ../beid-2.6 ]
+#then
+#	echo "[Error] eID MW 2.6 directory ../beid-2.6 not found "
+#	exit -1
+#fi
 #-----------------------------------------
 # make sure all scripts are executable
 #-----------------------------------------
@@ -101,10 +101,10 @@ chmod +x misc/*.pl
 #-----------------------------------------
 # make sure all beid-2.6 scripts are executable
 #-----------------------------------------
-chmod +x ../beid-2.6/*.sh
-chmod +x ../beid-2.6/*.pl
-chmod +x ../beid-2.6/configure
-
+#chmod +x ../beid-2.6/*.sh
+#chmod +x ../beid-2.6/*.pl
+#chmod +x ../beid-2.6/configure
+#
 mkdir -p _DocsInternal/API
 mkdir -p _DocsInternal/C++_Api/html
 mkdir -p _DocsExternal/Java_Api/html
@@ -155,10 +155,10 @@ echo "[Info] Logging to file: " ${LOGFILE}
 #-----------------------------------------
 # first build the 2.6 version
 #-----------------------------------------
-source ${DIR_CURR}/build_${PROJ_NAME}_${DISTRO}.source
-cd ../beid-2.6
-./build_eidmw_linux.sh ${LOCALBUILD} 2>&1 | tee ${LOGFILE}
-cd ${DIR_CURR} 
+#source ${DIR_CURR}/build_${PROJ_NAME}_${DISTRO}.source
+#cd ../beid-2.6
+#./build_eidmw_linux.sh ${LOCALBUILD} 2>&1 | tee ${LOGFILE}
+#cd ${DIR_CURR} 
 
 #-----------------------------------------
 # perform all steps to do a complete build
@@ -198,13 +198,14 @@ then
 	./prepareBinTarball.pl >> ${LOGFILE}
 	cd ${DIR_CURR} 
 	cd install
-	BINTARBALL=`ls beid-middleware-3.?.*-${TARBALLDISTRO}-*-${PROCESSOR}-${BUILD_NR}.tgz 2> /dev/null`
+	BINTARBALL=`ls beid-middleware-3.?.*-${PROCESSOR}-${BUILD_NR}.tgz 2> /dev/null`
 	if [ -e "${BINTARBALL}" ]
 	then
-		BINTARBALL=`ls beid-middleware-3.?.*-${TARBALLDISTRO}-*-${PROCESSOR}-${BUILD_NR}.tgz`
+		BINTARBALL=`ls beid-middleware-3.?.*-${PROCESSOR}-${BUILD_NR}.tgz`
 		cd ${DIR_CURR} 
 		echo "[Info] Tarball generated: " ${BINTARBALL}
 	else
+		echo "beid-middleware-3.?.*-${PROCESSOR}-${BUILD_NR}.tgz not found"
 		echo "[Error] Bin tarball creation failed. See logfile 'misc/${LOGFILE}'"
 		exit -1	
 	fi
@@ -216,14 +217,14 @@ fi
 #-----------------------------------------
 # copy the tarball to the machine such everybody can access it
 #-----------------------------------------
-if [ ${LOCALBUILD} != "local" ]
-then
-	if [ ${GENERATETAR} != "notar"  ]
-	then
-		echo "[Info] Copy ${BINTARBALL} to ${TARGETDIR}"
-		cd install
-		eval cp ${BINTARBALL} ${TARGETDIR}
-		cd ${DIR_CURR} 
-	fi
-fi
+#if [ ${LOCALBUILD} != "local" ]
+#then
+#	if [ ${GENERATETAR} != "notar"  ]
+#	then
+#		echo "[Info] Copy ${BINTARBALL} to ${TARGETDIR}"
+#		cd install
+#		eval cp ${BINTARBALL} ${TARGETDIR}
+#		cd ${DIR_CURR} 
+#	fi
+#fi
 echo "[Info] Done"

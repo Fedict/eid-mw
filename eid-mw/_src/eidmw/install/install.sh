@@ -39,34 +39,34 @@ then
 	# This check is only on debian because this can have the daemons
 	# running
 	#######
-	if [ -e "/etc/debian_version" ]
-	then
-		apt-get install 2> /dev/null
-		if [ $? != 0 ]
-		then
-			echo "Package installer is running. Please stop the package installer and start again"
-			exit -1
-		fi
-		echo "Checking eID MW 2.X daemons (beidpcscd,beidcrld) running..."
-		DAEMON1=`ps -C beidpcscd | grep beid`
-		DAEMON2=`ps -C beidcrld  | grep beid`
-		if [[ "$DAEMON1" != "" || "$DAEMON2" != "" ]]
-		then
-			/etc/init.d/beid stop
-		fi
-		if [ -e "$INSTALL_DIR_26_BIN/beidpcscd" ]
-		then
-			echo "Removing daemon '$INSTALL_DIR_26_BIN/beidpcscd' from disk..."
-			rm $INSTALL_DIR_26_BIN/beidpcscd
-		fi
-		if [ -e "$INSTALL_DIR_26_BIN/beidcrld" ]
-		then
-			echo "Removing daemon '$INSTALL_DIR_26_BIN/beidcrld' from disk..."
-			rm $INSTALL_DIR_26_BIN/beidcrld
-		fi
-	fi
-	if [ -e "/etc/debian_version" ] || [ -e "/etc/SuSE-release" ] || [ -e "/etc/fedora-release" ]
-	then
+	#if [ -e "/etc/debian_version" ]
+	#then
+	#	apt-get install 2> /dev/null
+	#	if [ $? != 0 ]
+	#	then
+	#		echo "Package installer is running. Please stop the package installer and start again"
+	#		exit -1
+	#	fi
+	#	echo "Checking eID MW 2.X daemons (beidpcscd,beidcrld) running..."
+	#	DAEMON1=`ps -C beidpcscd | grep beid`
+	#	DAEMON2=`ps -C beidcrld  | grep beid`
+	#	if [[ "$DAEMON1" != "" || "$DAEMON2" != "" ]]
+	#	then
+	#		/etc/init.d/beid stop
+	#	fi
+	#	if [ -e "$INSTALL_DIR_26_BIN/beidpcscd" ]
+	#	then
+	#		echo "Removing daemon '$INSTALL_DIR_26_BIN/beidpcscd' from disk..."
+	#		rm $INSTALL_DIR_26_BIN/beidpcscd
+	#	fi
+	#	if [ -e "$INSTALL_DIR_26_BIN/beidcrld" ]
+	#	then
+	#		echo "Removing daemon '$INSTALL_DIR_26_BIN/beidcrld' from disk..."
+	#		rm $INSTALL_DIR_26_BIN/beidcrld
+	#	fi
+	#fi
+	#if [ -e "/etc/debian_version" ] || [ -e "/etc/SuSE-release" ] || [ -e "/etc/fedora-release" ]
+	#then
 		#######
 		## Check if a eIDMW 2.6 exists.
 		##    if so:
@@ -75,89 +75,89 @@ then
 		##    if not:
 		##	install all the files of eIDMW2.6
 		#######
-		echo "Checking installation of eIDMW 2.X."
-		if [ -e "$INSTALL_DIR_26_LIB/libbeid.so.2" ]
-		then
+	#	echo "Checking installation of eIDMW 2.X."
+	#	if [ -e "$INSTALL_DIR_26_LIB/libbeid.so.2" ]
+	#	then
 			#######
 			## install the new libbeid of version 2.6
 			#######
-			echo "Installation of eIDMW 2.X found."
-			echo "Updating installation of eIDMW 2.X."
-			install beid-2.6/libbeid.so.2.?.?   		$INSTALL_DIR_26_LIB
-		else
-			#######
+	#		echo "Installation of eIDMW 2.X found."
+	#		echo "Updating installation of eIDMW 2.X."
+	#		install beid-2.6/libbeid.so.2.?.?   		$INSTALL_DIR_26_LIB
+	#	else
+	#		#######
 			# install complete the new version 2.6
 			#######
-			echo "Installation of eIDMW 2.X not found."
-			echo "Installation of eIDMW 2.X to $INSTALL_DIR_26_LIB"
-			install beid-2.6/libbeid.so.2.?.?   		$INSTALL_DIR_26_LIB
-			install beid-2.6/libbeidcomm.so.?.?.?   	$INSTALL_DIR_26_LIB
-			install beid-2.6/libbeidcommon.so.?.?.? 	$INSTALL_DIR_26_LIB
-			install beid-2.6/libbeidgui.so.?.?.?   		$INSTALL_DIR_26_LIB
-			install beid-2.6/libbeidlibjni.so.?.?.? 	$INSTALL_DIR_26_LIB
-			install beid-2.6/libbeidlibopensc.so.?.?.?  	$INSTALL_DIR_26_LIB
-			install beid-2.6/libbeidpcsclite.so.?.?.?   	$INSTALL_DIR_26_LIB
-			install beid-2.6/libbeidpkcs11.so.?.?.? 	$INSTALL_DIR_26_LIB
-			if [ -e "beid-2.6/beidgui" ]
-			then
-				install beid-2.6/beidgui 		$INSTALL_DIR_26_BIN
-			fi
+	#		echo "Installation of eIDMW 2.X not found."
+	#		echo "Installation of eIDMW 2.X to $INSTALL_DIR_26_LIB"
+	#		install beid-2.6/libbeid.so.2.?.?   		$INSTALL_DIR_26_LIB
+	#		install beid-2.6/libbeidcomm.so.?.?.?   	$INSTALL_DIR_26_LIB
+	#		install beid-2.6/libbeidcommon.so.?.?.? 	$INSTALL_DIR_26_LIB
+	#		install beid-2.6/libbeidgui.so.?.?.?   		$INSTALL_DIR_26_LIB
+	#		install beid-2.6/libbeidlibjni.so.?.?.? 	$INSTALL_DIR_26_LIB
+	#		install beid-2.6/libbeidlibopensc.so.?.?.?  	$INSTALL_DIR_26_LIB
+	#		install beid-2.6/libbeidpcsclite.so.?.?.?   	$INSTALL_DIR_26_LIB
+	#		install beid-2.6/libbeidpkcs11.so.?.?.? 	$INSTALL_DIR_26_LIB
+	#		if [ -e "beid-2.6/beidgui" ]
+	#		then
+	#			install beid-2.6/beidgui 		$INSTALL_DIR_26_BIN
+	#		fi
 
 			#######
 			# install the language files for 2.X
 			#######
-			install beid-2.6/beidgui_nl.mo			$INSTALL_DIR_26_LOCALE
-			install beid-2.6/beidgui_fr.mo			$INSTALL_DIR_26_LOCALE
-			install beid-2.6/beidgui_de.mo			$INSTALL_DIR_26_LOCALE
+	#		install beid-2.6/beidgui_nl.mo			$INSTALL_DIR_26_LOCALE
+	#		install beid-2.6/beidgui_fr.mo			$INSTALL_DIR_26_LOCALE
+	#		install beid-2.6/beidgui_de.mo			$INSTALL_DIR_26_LOCALE
 
 			#######
 			# install the certificates for 2.X
 			#######
-			mkdir -p $INSTALL_DIR_26_CERTS
-			install beid-2.6/beid-cert-belgiumrca.der 	$INSTALL_DIR_26_CERTS
-			install beid-2.6/beid-cert-government2004.der 	$INSTALL_DIR_26_CERTS
-			install beid-2.6/beid-cert-government2005.der 	$INSTALL_DIR_26_CERTS
-			install beid-2.6/beid-cert-government.der 	$INSTALL_DIR_26_CERTS
-			install beid-2.6/beid-cert-belgiumrca2.der 	$INSTALL_DIR_26_CERTS
+	#		mkdir -p $INSTALL_DIR_26_CERTS
+	#		install beid-2.6/beid-cert-belgiumrca.der 	$INSTALL_DIR_26_CERTS
+	#		install beid-2.6/beid-cert-government2004.der 	$INSTALL_DIR_26_CERTS
+	#		install beid-2.6/beid-cert-government2005.der 	$INSTALL_DIR_26_CERTS
+	#		install beid-2.6/beid-cert-government.der 	$INSTALL_DIR_26_CERTS
+	#		install beid-2.6/beid-cert-belgiumrca2.der 	$INSTALL_DIR_26_CERTS
 
 			#######
 			# install a default configuration file (all users) for 2.X
 			#######
-			mkdir -p $INSTALL_DIR_26_CONF
-			install beid-2.6/beidgui.conf.2.6 		$INSTALL_DIR_26_CONF/beidgui.conf
+	#		mkdir -p $INSTALL_DIR_26_CONF
+	#		install beid-2.6/beidgui.conf.2.6 		$INSTALL_DIR_26_CONF/beidgui.conf
 
 			#######
 			# install pkcs11 install files for 2.X
 			#######
-			install beid-2.6/*.html 			$INSTALL_DIR_26_SHARE/beid
+	#		install beid-2.6/*.html 			$INSTALL_DIR_26_SHARE/beid
 
 			#######
 			# make sure the CRL directory exists with correct RW rights for 2.X
 			#######
-			mkdir -p $INSTALL_DIR_26_CRL
-			chmod 777 $INSTALL_DIR_26_CRL
+	#		mkdir -p $INSTALL_DIR_26_CRL
+	#		chmod 777 $INSTALL_DIR_26_CRL
 
 			#######
 			# make sure the CRL cache directory exists with RW access
 			#######
 			#mkdir -p $INSTALL_DIR_26_CRL_CACHE
 			#chmod 777 $INSTALL_DIR_26_CRL_CACHE
-		fi
+	#	fi
 
 		#######
 		## this link must be there in order to have the GUI load properly the library
 		#######
-		echo "Checking link: /usr/lib/libbeidgui.so."
-		if [ -e  "/usr/lib/libbeidgui.so" ]
-		then
-			rm /usr/lib/libbeidgui.so 
-		fi
+	#	echo "Checking link: /usr/lib/libbeidgui.so."
+	#	if [ -e  "/usr/lib/libbeidgui.so" ]
+	#	then
+	#		rm /usr/lib/libbeidgui.so 
+	#	fi
 
-		ln -s /usr/lib/libbeidgui.so.1 /usr/lib/libbeidgui.so
+	#	ln -s /usr/lib/libbeidgui.so.1 /usr/lib/libbeidgui.so
 
-	        echo "$INSTALL_DIR_26_LIB" >> /etc/ld.so.conf
-		/sbin/ldconfig
-	fi
+	#       echo "$INSTALL_DIR_26_LIB" >> /etc/ld.so.conf
+	#	/sbin/ldconfig
+	#fi
 
 	#######
 	## Check if a previous 3.X installation exists. if so, this has to be replaced by this
@@ -222,7 +222,7 @@ then
 	echo "Installing 3rd party files from package updater."
 	if [ -e "/etc/debian_version" ]
 	then
-		apt-get install libxerces27
+		apt-get install libxerces-c28
 		apt-get install libpcsclite1
 		apt-get install libacr38u
 		apt-get install pcscd
