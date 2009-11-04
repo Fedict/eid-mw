@@ -2,7 +2,7 @@
 
 DOXYGEN_CONFIG_FILE=$1
 
-if [ "$DOXYGEN_CONFIG_FILE" == "" ]
+if [ "$DOXYGEN_CONFIG_FILE" = "" ]
 then
 	echo "No doxygen configuration file given."
 	echo "Usage: "$0 "<doxygen_config_file.ext>"
