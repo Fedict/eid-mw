@@ -27,6 +27,8 @@ then
 		   libwxgtk2.6-0
 		   libwxgtk2.6-dev
 		   libwxbase2.4-1
+		   qt4-dev-tools
+		   sun-java6-jdk
 		 )
 	for pkg in ${PACKAGES[@]}
 	do
