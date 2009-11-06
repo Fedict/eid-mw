@@ -22,7 +22,6 @@ then
 		   swig
 		   libacr38u
 		   doxygen
-		   libqt3-mt-dev
 		   libwxbase2.6-0
 		   libwxgtk2.6-0
 		   libwxgtk2.6-dev

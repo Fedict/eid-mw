@@ -159,7 +159,6 @@ then
 			   swig
 			   libacr38u
 			   doxygen
-			   libqt3-mt-dev
 			   libwxbase2.6-0
 			   libwxgtk2.6-0
 			   libwxgtk2.6-dev
@@ -331,13 +330,13 @@ cd ${CURRDIR}
 BUILD_NR=`cat ../_src/eidmw/svn_revision | tr -d "\r"`
 
 
-BINTARBALL=`ls ../_src/eidmw/install/beid-middleware-3.?.*-${DISTRO}-*-${PROCESSOR}-${BUILD_NR}.tgz 2> /dev/null`
+BINTARBALL=`ls ../_src/eidmw/install/beid-middleware-3.?.*-${PROCESSOR}-${BUILD_NR}.tgz 2> /dev/null`
 
 echo "[Info ] Checking tarball $BINTARBALL"
 if [ -e "$BINTARBALL" ]
 then
 	echo "[Info ] Moving tarball $BINTARBALL to ${CURRDIR}"
-	BINTARBALL=`ls ../_src/eidmw/install/beid-middleware-3.?.*-${DISTRO}-*-${PROCESSOR}-${BUILD_NR}.tgz`
+	BINTARBALL=`ls ../_src/eidmw/install/beid-middleware-3.?.*-${PROCESSOR}-${BUILD_NR}.tgz`
 	mv ${BINTARBALL} .
 fi
 echo "[Info ] Done..."
