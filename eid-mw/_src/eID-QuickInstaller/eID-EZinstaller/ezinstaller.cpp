@@ -544,10 +544,10 @@ void ezInstaller::setMessages(){
 
     msgOk_successfullInstall = tr("<html><body><b>De installatie is succesvol afgelopen.</b> <br/>Je kunt de eID en kaartlezer nu gebruiken.</body></html>");
     msgOK_successfullSignature = tr("<html><body><b>De Quick Installer heeft de elektronische authenticatie succesvol getest.</b><br/>De authenticatie werkt naar behoren. Je kunt de elektronische handtekening nu gebruiken.</body></html>");
-    msgError_PinBlocked = tr("<html><body><b>De authenticatie is niet getest.</b><br/>U heeft een verkeerde PIN ingegeven of u heeft de PIN operatie afgebroken. <br/>Indien u problemen blijft hebben met het gebruik van uw PIN-code, neem dan contact op met de Servicedesk (+32 (0) 78 15 03 11 of servicedesk@fedict.be)</body></html>");
+    msgError_PinBlocked = tr("<html><body><b>De authenticatie is niet getest.</b><br/>U heeft een verkeerde PIN ingegeven of u heeft de PIN operatie afgebroken. <br/>Indien u problemen blijft hebben met het gebruik van uw PIN-code, neem dan contact op met de Servicedesk</body></html>");
     msgError_installMWFailed = tr("<html><body><b>De Quick Installer heeft een probleem gevonden bij het installeren van de eID software.</b></body></html>");
     msgReferenceToReport = tr("Je kunt een rapport openen waar je een gedetailleerde omschrijving van het probleem terugvindt.");
-    msgContactDataHelpdesk = tr("Open het rapport en bel naar de Servicedesk +32 (0) 78 15 03 11 om het probleem op te lossen of stuur een email naar servicedesk@fedict.be.");
+    msgContactDataHelpdesk = tr("Open het rapport en contacteer de Servicedesk om het probleem op te lossen.");
     msgError_smartcard = tr("<html><body><b>De Quick Installer kan geen kaartlezer detecteren.</b> <br/>Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt, kun je de servicedesk contacteren.</body></html>");
     msgError_eIDnotfound = tr("<html><body><b>De Quick Installer kan de identiteitskaart niet vinden.</b> <br/>Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.</body></html>");
     msgError_eIDnotReadable= tr("<html><body><b>De Quick Installer heeft een probleem met het lezen van de identiteitskaart.</b> <br/>Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.</body></html>");
