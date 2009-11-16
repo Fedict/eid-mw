@@ -243,7 +243,7 @@ then
 	fi
 	if [ -e "/etc/fedora-release" ]
 	then
-		yum install xerces-c27
+		yum install xerces-c-2.8.0
 		yum install pcsc-lite-libs
 		yum install pcsc-lite
 	fi

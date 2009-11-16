@@ -145,8 +145,16 @@ if($distro eq "gentoo")
 }
 else
 {
+	if ($distro eq "fedora")
+ 	{
+		$javac_link = "/usr/lib/jvm/java-1.6.0-openjdk/bin/javac";
+	}
+	else
+	{
 	$javac_link = `which javac`;
+	}
 }
+
 chomp($javac_link);
 
 if($javac_link eq "") {die "java not found, please adjust PATH: export PATH=<path_to_javac>:\$PATH\n"};

@@ -14,7 +14,8 @@ fi
 ####################################
 # set the path to Qt4.5.0 if it exists
 ####################################
-QTBINDIR=/usr/local/Trolltech/Qt-4.5.0/bin
+#QTBINDIR=/usr/local/Trolltech/Qt-4.5.0/bin
+QTBINDIR=/usr/lib/qt4/bin
 if [ ! -d "$QTBINDIR" ]
 then
 	echo "Directory $QTBINDIR does not exist. Please verify."

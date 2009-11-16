@@ -17,13 +17,14 @@ then
 		 gcc-c++
 		 make
 		 openssl-devel
-		 xerces-c27-devel-2.7.0
+		 xerces-c-devel-2.8.0
 		 swig
 		 pcsc-lite
 		 doxygen
-		 qt3-devel
+	 	 qt-devel-4.5.3
 		 compat-wxGTK26-devel-2.6.4
 		 ccid
+		 java-1.6.0-openjdk-devel
 		 )
 	for pkg in ${PACKAGES[@]}
 	do

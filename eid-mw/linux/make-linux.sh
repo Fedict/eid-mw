@@ -73,14 +73,15 @@ then
 			 gcc-c++-4.3.0
 			 make
 			 openssl-devel
-			 xerces-c27-devel-2.7.0
+			 xerces-c-devel-2.8.0
 			 swig-1.3.33
 			 pcsc-lite-1.4.4
 			 doxygen
-			 qt3-devel
+			 qt-devel-4.5.3
 			 compat-wxGTK26-devel-2.6.4
 			 ccid
 			 ACR38UDriver-1.8.0
+			 java-1.6.0-openjdk-devel
 			 )
 		for pkg in ${PACKAGES[@]}
 		do
