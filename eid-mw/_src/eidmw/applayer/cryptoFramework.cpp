@@ -709,7 +709,7 @@ bool APL_CryptoFwk::VerifyOid(const CByteArray &cert, const char *const *oids)
         
 	//Get the satck of policy info
 	STACK_OF(POLICYINFO) *pol = NULL;
-	if(NULL == (pol = (struct stack_st *) X509_get_ext_d2i(pX509, NID_certificate_policies, NULL, NULL)))
+	if(NULL == (pol = (STACK_OF(POLICYINFO) *) X509_get_ext_d2i(pX509, NID_certificate_policies, NULL, NULL)))
 		return false;
 
 	POLICYINFO *pinfo = NULL;
@@ -1265,11 +1265,11 @@ bool APL_CryptoFwk::GetOCSPUrl(const CByteArray &cert, std::string &url)
 
 char *APL_CryptoFwk::GetOCSPUrl(X509 *pX509_Cert) 
 {
-    struct stack_st *pStack = NULL;
+    STACK_OF(ACCESS_DESCRIPTION)*pStack = NULL;
     const char *pData = NULL;
     bool bFound = false;
 
-	pStack = (struct stack_st *) X509_get_ext_d2i(pX509_Cert, NID_info_access, NULL, NULL);
+	pStack = (STACK_OF(ACCESS_DESCRIPTION)*) X509_get_ext_d2i(pX509_Cert, NID_info_access, NULL, NULL);
 
     if(pStack == NULL)
 #ifdef WIN32
@@ -1343,11 +1343,11 @@ bool APL_CryptoFwk::GetCDPUrl(const CByteArray &cert, std::string &url)
 
 char *APL_CryptoFwk::GetCDPUrl(X509 *pX509_Cert) 
 {
-    struct stack_st *pStack = NULL;
+    STACK_OF(DIST_POINT)* pStack = NULL;
     const char *pData = NULL;
     bool bFound = false;
 
-	pStack = (struct stack_st *) X509_get_ext_d2i(pX509_Cert, NID_crl_distribution_points, NULL, NULL);
+	pStack = (STACK_OF(DIST_POINT)*) X509_get_ext_d2i(pX509_Cert, NID_crl_distribution_points, NULL, NULL);
 
     if(pStack == NULL)
 #ifdef WIN32
