@@ -123,7 +123,7 @@ my @files_unsignedjar =	("beid35libJava.jar"
 			);
 
 #my @files_wrap=	("libbeidlibJava_Wrapper.so.3.5.0"
-my @files_wrap=		("libbeidlibJava_Wrapper.so.3.5.2"
+my @files_wrap=		("libbeidlibJava_Wrapper.so.3.5.3"
 			);
 
 my @files_doc =		("readme.txt"
@@ -320,11 +320,11 @@ foreach (@files_wrap)
 
 my $cmd;
 
-$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.2 libbeidlibJava_Wrapper.so.3.5";
+$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.3 libbeidlibJava_Wrapper.so.3.5";
 system($cmd);
-$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.2 libbeidlibJava_Wrapper.so.3";
+$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.3 libbeidlibJava_Wrapper.so.3";
 system($cmd);
-$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.2 libbeidlibJava_Wrapper.so";
+$cmd = "cd $toDir; ln -s libbeidlibJava_Wrapper.so.3.5.3 libbeidlibJava_Wrapper.so";
 system($cmd);
 
 #######################################################################
