@@ -22,7 +22,7 @@ then
 		 pcsc-lite
 		 doxygen
 	 	 qt-devel-4.5.3
-		 compat-wxGTK26-devel-2.6.4
+		 wxGTK-devel
 		 ccid
 		 java-1.6.0-openjdk-devel
 		 )
@@ -59,8 +59,15 @@ QT4=`which $pkg 2> /dev/null | wc -l`
 if [ $QT4 -eq 0 ]
 then
 	echo "[Error] qmake can not be found."
-	echo "[Error] Set the PATH environment variable or download/install Qt4 and try again."
-	exit -1
+	if [ -e "/usr/lib/qt4/bin/qmake" ]
+	then
+		echo "prepending /usr/lib/qt4/bin/ to PATH"
+		export PATH=/usr/lib/qt4/bin/:$PATH
+	else
+		echo "[Error] Set the PATH environment variable or download/install Qt4 and try again."
+		exit -1
+	fi
+	
 else
 	#-----------------------------------------
 	# parse the version string assumed to be in the format: XXX.YYY.ZZZ

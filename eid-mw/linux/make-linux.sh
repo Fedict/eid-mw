@@ -110,7 +110,11 @@ then
 				echo "[Error] Login as root and create the link $lnk"
 			fi
 		done
-
+		if [ -e "/usr/lib/qt4/bin/qmake" ]
+		then
+			echo "prepending /usr/lib/qt4/bin/ to PATH"
+			export PATH=/usr/lib/qt4/bin/:$PATH
+		fi
 	else
 	if [ -e "/etc/SuSE-release" ]
 	then
