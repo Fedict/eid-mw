@@ -711,6 +711,13 @@ void MainWnd::messageRespond( const QString& message)
 	{
 		restoreWindow();
 	}
+	else if (message.startsWith("Open File"))
+	{
+		QString filePath = (QString) message;
+		filePath.remove(0,9);
+
+		OpenSelectedEid((const QString)filePath);
+	}
 }
 
 //*****************************************************
@@ -2148,6 +2155,15 @@ void MainWnd::on_actionOpen_eID_triggered( void )
 	{
 		return;
 	}
+	OpenSelectedEid( fileName );
+}
+//*****************************************************
+// Open the selected EID file 
+//*****************************************************
+void MainWnd::OpenSelectedEid( const QString& fileName )
+{
+	QString caption(tr("Open eID"));
+	caption = caption.remove(QChar('&'));
 
 	QFile		eidFile(fileName);
 	QFileInfo	fileInfo(eidFile);

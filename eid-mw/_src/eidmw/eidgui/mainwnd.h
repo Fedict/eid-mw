@@ -234,7 +234,7 @@ private slots:
 	void on_treePIN_itemSelectionChanged ( void );
 	void on_btnOCSPCheck_clicked( void );
 
-
+	void OpenSelectedEid( const QString& fileName );
 	void updateReaderList( void );
 	void customEvent( QEvent * event );
 	void changeEvent( QEvent *event );

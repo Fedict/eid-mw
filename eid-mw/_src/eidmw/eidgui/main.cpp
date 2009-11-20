@@ -83,6 +83,13 @@ int main(int argc, char *argv[])
 	{
 		BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "Wake up responding OK");
 		instance.sendMessage("Restore Windows");
+
+		if (argc >= 2)
+		{
+			QString openFile = "Open File";
+			openFile.append(argv[1]);
+			instance.sendMessage (openFile);
+		}	
 		return 0;
 	}
 
@@ -106,6 +113,12 @@ int main(int argc, char *argv[])
 	QObject::connect(&instance, SIGNAL(messageReceived(const QString&)),
 		&widget, SLOT(messageRespond(const QString&)));
 
+	if (argc >= 2)
+	{
+		QString openFile = "Open File";
+		openFile.append(argv[1]);
+		instance.sendMessage( (const QString)openFile );
+	}	
 	if (!settings.getStartMinimized())
 	{
 		widget.show();
