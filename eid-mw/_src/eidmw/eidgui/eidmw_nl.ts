@@ -773,7 +773,7 @@ Please specify .xml, .csv or .eid</source>
     <message>
         <location filename="mainwnd.cpp" line="4446"/>
         <source>E+ Verklaring van inschrijving</source>
-        <translation>E+ Verklaring van inschrijving</translation>
+        <translation>E+ Document ter staving van duurzaam verblijf</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4449"/>
@@ -783,7 +783,7 @@ Please specify .xml, .csv or .eid</source>
     <message>
         <location filename="mainwnd.cpp" line="4452"/>
         <source>F+ Verblijfskaart van een familielid van een burger van de Unie</source>
-        <translation>F+ Verblijfskaart van een familielid van een burger van de Unie</translation>
+        <translation>F+ Duurzaam verblijfskaart van een familielid van een burger van de Unie</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="1561"/>

@@ -748,42 +748,42 @@ Please specify .xml, .csv or .eid</source>
     <message>
         <location filename="mainwnd.cpp" line="4431"/>
         <source>A. Bewijs van inschrijving in het vreemdelingenregister - Tijdelijk verblijf</source>
-        <translation>A. Proof of enrolment in the Aliens Register - Temporary residence</translation>
+        <translation>A. Certificate of inscription in the aliens&apos; register – Temporary stay</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4434"/>
         <source>B. Bewijs van inschrijving in het vreemdelingenregister</source>
-        <translation>B. Proof of enrolment in the Aliens Register</translation>
+        <translation>B. Certificate of inscription in the aliens&apos; register</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4437"/>
         <source>C. Identiteitskaart voor vreemdeling</source>
-        <translation>C. Indentity card for foreigner</translation>
+        <translation>C. Aliens&apos; identity card</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4440"/>
         <source>D. EG - langdurig ingezetene</source>
-        <translation>D. EC - long term resident</translation>
+        <translation>D. Long-term resident – EC</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4443"/>
         <source>E. Verklaring van inschrijving</source>
-        <translation>E. Declaration of enrolment</translation>
+        <translation>E. Registration certificate</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4446"/>
         <source>E+ Verklaring van inschrijving</source>
-        <translation>E+ Declaration of enrolment</translation>
+        <translation>E+ Document certifying permanent residence</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4449"/>
         <source>F. Verblijfskaart van een familielid van een burger van de Unie</source>
-        <translation>F. Residence card of a family member of a EU citizen</translation>
+        <translation>F. Residence card of a family member of a Union citizen</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4452"/>
         <source>F+ Verblijfskaart van een familielid van een burger van de Unie</source>
-        <translation>F+ Residence card of a family member of a EU citizen</translation>
+        <translation>F+ Permanent residence card of a family member of a Union citizen</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="1561"/>

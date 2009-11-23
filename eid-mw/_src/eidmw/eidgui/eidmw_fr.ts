@@ -775,17 +775,17 @@ Spécifiez .xml, .csv ou .eid</translation>
     <message>
         <location filename="mainwnd.cpp" line="4446"/>
         <source>E+ Verklaring van inschrijving</source>
-        <translation>E+ Attestation d’enregistrement</translation>
+        <translation>E+ Document attestant de la permanence du séjour</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4449"/>
         <source>F. Verblijfskaart van een familielid van een burger van de Unie</source>
-        <translation>F. Carte de séjour de membre de la famille d’un citoyen de l’Union</translation>
+        <translation>F. Carte de séjour de membre de famille d’un citoyen de l&apos;Union</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4452"/>
         <source>F+ Verblijfskaart van een familielid van een burger van de Unie</source>
-        <translation>F+ Carte de séjour de membre de la famille d’un citoyen de l’Union</translation>
+        <translation>F+ Carte de séjour permanent de membre de famille d’un citoyen de l&apos;Union</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="1561"/>

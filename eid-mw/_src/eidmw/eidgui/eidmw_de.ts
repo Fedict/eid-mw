@@ -750,7 +750,7 @@ Bitte .xml, .csv oder .eid angeben</translation>
     <message>
         <location filename="mainwnd.cpp" line="4431"/>
         <source>A. Bewijs van inschrijving in het vreemdelingenregister - Tijdelijk verblijf</source>
-        <translation>A. Bescheinigung der Eintragung im Ausländerregister - Vorübergehender Aufenthalt</translation>
+        <translation>A. Bescheinigung der Eintragung im Ausländerregister – Vorübergehender Aufenthalt</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4434"/>
@@ -775,7 +775,7 @@ Bitte .xml, .csv oder .eid angeben</translation>
     <message>
         <location filename="mainwnd.cpp" line="4446"/>
         <source>E+ Verklaring van inschrijving</source>
-        <translation>E+ Anmeldebescheinigung</translation>
+        <translation>E+ Dokument zur Bescheininung des Daueraufenthalts</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4449"/>
@@ -785,7 +785,7 @@ Bitte .xml, .csv oder .eid angeben</translation>
     <message>
         <location filename="mainwnd.cpp" line="4452"/>
         <source>F+ Verblijfskaart van een familielid van een burger van de Unie</source>
-        <translation>F+ Aufenthaltskarte für Familienangehörige eines Unionsbürgers</translation>
+        <translation>F+ Daueraufenthaltskarte für Familienangehörige eines Unionsbürgers</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="1561"/>
