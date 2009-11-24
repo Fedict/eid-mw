@@ -757,7 +757,7 @@ void diagnoseThread::extractSCDrivers(QString inputXml) {
         if ( myOS == "Windows XP") {myOS = "XP";}
         else if ( myOS == "Windows Vista") {myOS = "VISTA";}
         else if ( myOS == "Windows 2000") {myOS = "WIN2000";}
-
+		else if ( myOS == "Windows 7") {myOS = "WIN7";}
 
 
         char* data = zarch.ReadFileData(hdr->get_Filesize());

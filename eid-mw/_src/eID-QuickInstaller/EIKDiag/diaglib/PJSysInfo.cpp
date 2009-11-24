@@ -292,6 +292,10 @@ CPJOSProduct CPJSysInfo::GetOSProductEnum() {
             Result = osWinVista;
         else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 0) && (this->_OSV.wProductType == 3))
             Result = OsWin2008;
+		else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 1) && (this->_OSV.wProductType != VER_NT_WORKSTATION))
+            Result = OsWinSvr2008;
+		else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 1) && (this->_OSV.wProductType == VER_NT_WORKSTATION))
+            Result = osWin7;
         else
             Result = osUnknownWinNT; 
         break;
