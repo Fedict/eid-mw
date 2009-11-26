@@ -44,6 +44,7 @@ int systemReportInfo(Report_TYPE type, const System_INFO &info)
 	reportPrint(type,L"     ProductName = %ls\n", info.ProductName.c_str());
 	reportPrint(type,L"     Description = %ls\n", info.Description.c_str());
 	reportPrint(type,L" DefaultLanguage = %ls\n", info.DefaultLanguage.c_str());
+	reportPrint(type,L" Architecture = %ls\n", info.Architecture.c_str());
 	reportPrintSeparator(type, REPORT_SYSTEM_SEPARATOR);
 
 	return iReturnCode;

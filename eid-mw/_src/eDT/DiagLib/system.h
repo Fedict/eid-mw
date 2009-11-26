@@ -38,6 +38,7 @@ typedef struct t_System_INFO {
     std::wstring ProductName;
     std::wstring Description;
     std::wstring DefaultLanguage;
+	std::wstring Architecture;
 } System_INFO;
 
 int systemGetInfo(System_INFO *info);

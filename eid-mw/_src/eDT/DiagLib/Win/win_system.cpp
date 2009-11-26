@@ -26,6 +26,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
+typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+
 typedef enum e_Platform {
   ospUnknow,      // unknown platform
   ospWinNT,       // Windows NT platform
@@ -47,7 +49,9 @@ typedef enum e_OSProduct {
   osUnknownWin32s,  // Unknown OS running Win32s
   osWinSvr2003,     // Windows Server 2003
   osWinVista,
-  OsWin2008
+  OsWin2008,
+  OsWinSvr2008,		// Windows Server 2008
+  osWin7			// Windows 7
 } OSProduct;
 
 static const wchar_t *g_OSProductNames[] = {
@@ -64,7 +68,9 @@ static const wchar_t *g_OSProductNames[] = {
     L"Win32s",
     L"Windows Server 2003",
     L"Windows Vista",
-    L"Windows 2008"
+    L"Windows 2008",
+	L"Windows Server 2008",
+	L"Windows 7"
 };
 
 int systemGetLang(std::wstring *lang);
@@ -74,6 +80,7 @@ OSProduct GetOSProductEnum(const OSVERSIONINFOEX &osv);
 std::wstring GetOSProductType(const OSVERSIONINFOEX &osv);
 std::wstring GetOSDesc(const OSVERSIONINFOEX &osv);
 std::wstring GetOSServicePack(const OSVERSIONINFOEX &osv);
+std::wstring GetOSArchitecture();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PUBLIC FUNCTIONS /////////////////////////////////////////////////
@@ -141,6 +148,7 @@ int systemGetInfo(System_INFO *info)
 	info->ProductName=g_OSProductNames[GetOSProductEnum(osv)];
 	info->ServicePack=GetOSServicePack(osv);
 	info->Description=GetOSDesc(osv);
+	info->Architecture=GetOSArchitecture();
 
 	systemGetLang(&info->DefaultLanguage);
 
@@ -538,4 +546,41 @@ std::wstring GetOSDesc(const OSVERSIONINFOEX &osv)
 	}
 
 	return Result;
+}
+
+std::wstring GetOSArchitecture()
+{
+	LPFN_ISWOW64PROCESS fnIsWow64Process;
+    BOOL bIsWow64 = FALSE;
+	std::wstring Result = L"";
+
+#ifdef WIN64
+	Result = L"64 bit application";
+#elif WIN32
+    fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(
+        GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
+
+    if (NULL != fnIsWow64Process)
+    {
+        if (!fnIsWow64Process(GetCurrentProcess(),&bIsWow64))
+        {
+            LOG_LASTERROR(L"fnIsWow64Process failed");
+			Result = L"Could not determine architecture";
+        }
+		if(bIsWow64)
+		{
+			Result = L"32 bit application running on 64 bit Windows";
+		}
+		else
+		{
+			Result = L"32 bit application running on 32 bit Windows";
+		}
+    }
+	else
+	{
+		Result = L"32 bit application running on 32 bit Windows";
+	}
+	
+#endif
+    return Result;
 }
