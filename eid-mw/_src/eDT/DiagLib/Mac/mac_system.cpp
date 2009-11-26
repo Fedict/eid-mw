@@ -137,6 +137,26 @@ int systemGetInfo(System_INFO *info)
 	info->Description.append(info->BuildNumber);
 	info->Description.append(L")");
 
+	// Get Architecture	
+	command = "system_profiler SPSoftwareDataType -detaillevel mini | grep 64";
+	pF = popen(command, "r");
+	if (pF == NULL )
+	{
+		LOG_LASTERROR(L"popen failed");
+	}
+	else
+	{
+		if(0 == (bytesRead = fread(streamBuffer, sizeof(char), 64, pF)))
+		{
+			LOG_LASTERROR(L"fread failed");
+		}
+		else
+		{
+			streamBuffer[bytesRead-1] = 0x00;
+			info->Architecture.assign(wstring_From_string(streamBuffer));
+		}
+		pclose (pF);
+	}
 	LOG(L"DONE\n");
 
 	return iReturnCode;
