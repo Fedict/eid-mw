@@ -144,7 +144,7 @@
 				LinkIncremental="0"
 				SuppressStartupBanner="false"
 				AdditionalLibraryDirectories="&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\lib;&quot;..\$(ConfigurationName)&quot;"
-				IgnoreDefaultLibraryNames=""
+				IgnoreDefaultLibraryNames="LIBCMTD.lib;msvcprtd.lib"
 				DelayLoadDLLs="beid35libCpp.dll"
 				AssemblyLinkResource=""
 				GenerateDebugInformation="true"
