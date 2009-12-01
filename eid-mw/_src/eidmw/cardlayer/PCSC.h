@@ -112,6 +112,7 @@ public:
     void Disconnect(unsigned long hCard, tDisconnectMode disconnectMode);
 
 	CByteArray GetATR(unsigned long hCard);
+	CByteArray GetIFDVersion(unsigned long hCard);
 
 	/**
 	 * Returns true if the same card is still present,

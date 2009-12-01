@@ -35,6 +35,7 @@ CPinpad::CPinpad(void)
 {
 	m_bNewCard = true;
 	m_ulLangCode = 0;
+	m_usReaderFirmVers = 0;
 }
 
 void CPinpad::Init(CContext *poContext, unsigned long hCard,
@@ -51,6 +52,15 @@ void CPinpad::Init(CContext *poContext, unsigned long hCard,
 		UnloadPinpadLib();
 
 	m_csPinpadPrefix = csPinpadPrefix;
+}
+
+void CPinpad::Init(CContext *poContext, unsigned long hCard,
+	const std::string & csReader, const std::string & csPinpadPrefix,
+	CByteArray usReaderFirmVers)
+{
+	this->Init(poContext, hCard,csReader,csPinpadPrefix);
+
+	m_usReaderFirmVers = usReaderFirmVers.GetByte(3)*256 + usReaderFirmVers.GetByte(2);
 }
 
 bool CPinpad::UsePinpad(tPinOperation operation)
@@ -91,8 +101,11 @@ unsigned char CPinpad::ToFormatString(const tPin & pin)
 		// READER FIX:
 		// The SPR532 reader wants this value to be as for BCD
 		const char *csReader = m_csReader.c_str();
-		if (strstr(csReader, "SPRx32 USB") != NULL)
+		if ( (m_usReaderFirmVers != 0x0000) && (m_usReaderFirmVers < 0x0416) && 
+			(strstr(csReader, "SPRx32 USB") != NULL) )
+		{
 			return 0x00 | 0x00 | 0x00 | 0x01;
+		}
 		return 0x80 | 0x08 | 0x00 | 0x01;
 	}
 	return 0;

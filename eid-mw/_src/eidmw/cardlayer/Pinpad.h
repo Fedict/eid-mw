@@ -44,8 +44,11 @@ class EIDMW_CAL_API CPinpad
 public:
     CPinpad(void);
 
+	void CPinpad::Init(CContext *poContext, unsigned long hCard,
+		const std::string & csReader, const std::string & csPinpadPrefix);
 	void Init(CContext *poContext, unsigned long hCard,
-	const std::string & csReader, const std::string & csPinpadPrefix);
+		const std::string & csReader, const std::string & csPinpadPrefix,
+		CByteArray usReaderFirmVers);
 
     bool UsePinpad(tPinOperation operation);
 
@@ -79,6 +82,7 @@ protected:
 	CContext *m_poContext;
     unsigned long m_hCard;
 	std::string m_csReader;
+	unsigned short m_usReaderFirmVers;
 	std::string m_csPinpadPrefix;
 	bool m_bNewCard;
 	bool m_bUsePinpadLib;

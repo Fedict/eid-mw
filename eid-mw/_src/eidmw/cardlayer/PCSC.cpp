@@ -297,6 +297,20 @@ CByteArray CPCSC::GetATR(unsigned long hCard)
 	return CByteArray(tucATR, dwATRLen);
 }
 
+CByteArray CPCSC::GetIFDVersion(unsigned long hCard)
+{
+	DWORD dwReaderLen = 0;
+	DWORD dwState, dwProtocol;
+	unsigned char tucIFDVers[4] = {0,0,0,0};
+	DWORD dwIFDVersLen = sizeof(tucIFDVers);
+
+	long lRet = SCardGetAttrib(hCard, SCARD_ATTR_VENDOR_IFD_VERSION,
+		tucIFDVers, &dwIFDVersLen);
+	MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardGetAttrib(0x%0x): 0x%0x", hCard, lRet);
+
+	return CByteArray(tucIFDVers, dwIFDVersLen);
+}
+
 bool CPCSC::Status(unsigned long hCard)
 {
 	DWORD dwReaderLen = 0;

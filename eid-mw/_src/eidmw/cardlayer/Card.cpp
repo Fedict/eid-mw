@@ -49,6 +49,11 @@ CByteArray CCard::GetATR()
 	return m_poContext->m_oPCSC.GetATR(m_hCard);
 }
 
+CByteArray CCard::GetIFDVersion()
+{
+	return m_poContext->m_oPCSC.GetIFDVersion(m_hCard);
+}
+
 bool CCard::Status()
 {
 	return  m_poContext->m_oPCSC.Status(m_hCard);
