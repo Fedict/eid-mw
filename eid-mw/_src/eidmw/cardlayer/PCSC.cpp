@@ -299,8 +299,6 @@ CByteArray CPCSC::GetATR(unsigned long hCard)
 
 CByteArray CPCSC::GetIFDVersion(unsigned long hCard)
 {
-	DWORD dwReaderLen = 0;
-	DWORD dwState, dwProtocol;
 	unsigned char tucIFDVers[4] = {0,0,0,0};
 	DWORD dwIFDVersLen = sizeof(tucIFDVers);
 

@@ -56,6 +56,9 @@ Takes care of
 #ifndef SCARD_E_NO_ACCESS
 #define SCARD_E_NO_ACCESS                ((DWORD)0x80100027)
 #endif
+#ifndef SCARD_ATTR_VENDOR_IFD_VERSION
+#define SCARD_ATTR_VENDOR_IFD_VERSION	 ((DWORD)0x00010102)
+#endif
 
 #endif
 
