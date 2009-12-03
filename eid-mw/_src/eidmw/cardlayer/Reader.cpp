@@ -187,6 +187,7 @@ bool CReader::Connect()
 	if (m_poCard != NULL)
 	{
 		m_oPKCS15.SetCard(m_poCard);
+#ifdef WIN32
 		if((strstr(m_csReader.c_str(), "SPRx32 USB") != NULL))
 		{
 			m_oPinpad.Init(m_poContext, m_poCard->m_hCard,
@@ -194,9 +195,12 @@ bool CReader::Connect()
 		}
 		else
 		{
+#endif
 			m_oPinpad.Init(m_poContext, m_poCard->m_hCard,
 				m_csReader, m_poCard->GetPinpadPrefix());
+#ifdef WIN32
 		}
+#endif
 		MWLOG(LEV_INFO, MOD_CAL, L" Connected to %ls card in reader %ls",
 			Type2String(m_poCard->GetType()), m_wsReader.c_str());
 	}
