@@ -53,6 +53,22 @@ public:
 		  }
 		  return false;
 	  }
+#elif __MACH__
+    bool event(QEvent *event)
+    {
+		QString openFile = "Open File";
+        switch (event->type()) {
+			case QEvent::FileOpen:
+				//loadFile(static_cast<QFileOpenEvent *>(event)->file());  
+				openFile.append(static_cast<QFileOpenEvent *>(event)->file()); 
+				sendMessage( (const QString)openFile );
+				sendMessage("Restore Windows");
+				return true;
+			default:
+				return QApplication::event(event);
+        }
+    }
+	
 #endif
 };
 
@@ -84,8 +100,9 @@ int main(int argc, char *argv[])
 		BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "Wake up responding OK");
 		instance.sendMessage("Restore Windows");
 
-		if (argc >= 2)
+		if ( (argc >= 2) && (argv[1] != NULL) )
 		{
+			BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "argc = %i argv[1] = %s",argc,argv[1]);
 			QString openFile = "Open File";
 			openFile.append(argv[1]);
 			instance.sendMessage (openFile);
@@ -113,8 +130,11 @@ int main(int argc, char *argv[])
 	QObject::connect(&instance, SIGNAL(messageReceived(const QString&)),
 		&widget, SLOT(messageRespond(const QString&)));
 
-	if (argc >= 2)
+	
+	
+	if ( (argc >= 2) && (argv[1] != NULL) )
 	{
+		BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "argc = %i argv[1] = %s",argc,argv[1]);
 		QString openFile = "Open File";
 		openFile.append(argv[1]);
 		instance.sendMessage( (const QString)openFile );
