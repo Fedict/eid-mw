@@ -1004,7 +1004,11 @@ bool ezInstaller::mInstallReaders() {
     for (it = driverParameters.begin(); it != driverParameters.end(); ++it) {
         string params = *it;
 #ifdef WIN32
-        scl.installDevice(params);
+		string myOS = ezw.GetExtraInfoItem(scl.getSystemInfo(""),"osProductName");
+		if( myOS != "Windows 7")
+		{
+			scl.installDevice(params);
+		}
 #endif WIN32
     }
     Sleep(2000);
