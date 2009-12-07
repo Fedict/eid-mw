@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 		BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "Wake up responding OK");
 		instance.sendMessage("Restore Windows");
 
-		if ( (argc >= 2) && (argv[1] != NULL) )
+		if ( (argc >= 2) && (strcmp(argv[1],"/startup")!=0) && (argv[1] != NULL) )
 		{
 			BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "argc = %i argv[1] = %s",argc,argv[1]);
 			QString openFile = "Open File";
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 
 	
 	
-	if ( (argc >= 2) && (argv[1] != NULL) )
+	if ( (argc >= 2) && (strcmp(argv[1],"/startup")!=0) && (argv[1] != NULL) )
 	{
 		BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "argc = %i argv[1] = %s",argc,argv[1]);
 		QString openFile = "Open File";
