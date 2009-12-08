@@ -50,9 +50,24 @@
 		  </Component>
 		</Directory>
 	  </Directory>
+    <!-- Not on all OS'ses the inf installation works OK, so we put the minidriver in system32 and SysWow64 ourselves -->
+	  <Directory Id="SystemFolder">
+	      <!-- C:\Windows\SysWow64: 32 bit -->
+          <Component Id="beidmdrvsystem32" Guid="14957321-e40d-11de-8a39-0800200c9a66" Permanent="yes">
+            <File Id="system32_beidmdrv.dll" Name="beidmdrv.dll" Source="$(sys.SOURCEFILEDIR)Debug\beidmdrv.dll" KeyPath="yes" DiskId="1" />
+          </Component>
+  	  </Directory>
+	  <Directory Id="System64Folder">
+	      <!-- C:\Windows\System32: 64 bit dll -->
+          <Component Id="beidmdrvsystem64" Guid="0ed60b70-e40d-11de-8a39-0800200c9a66" Permanent="yes" Win64="yes">
+            <File Id="system64_beidmdrv.dll" Name="beidmdrv.dll" Source="$(sys.SOURCEFILEDIR)Debug\beidmdrv64.dll" KeyPath="yes" DiskId="1" />
+          </Component>
+  	  </Directory>
 	</Directory>
     <Feature Id="DefaultFeature" Level="1">
       <ComponentRef Id="beidmdrv" />
+      <ComponentRef Id="beidmdrvsystem32" />
+      <ComponentRef Id="beidmdrvsystem64" />
 	  <ComponentRef Id="CertPropService" />
     </Feature>
     <Media Id="1" EmbedCab="yes" Cabinet="_d41490c0dd8511de8a390800200c9a66" />

@@ -1,5 +1,5 @@
 ::@echo off
-set VERSION=4.0.2
+set VERSION=4.0.3
 
 set WIX_PATH="C:\Program Files\Windows Installer XML v3\bin"
 :: Inf2cat and signtool are installed by Windows Driver Kit:
