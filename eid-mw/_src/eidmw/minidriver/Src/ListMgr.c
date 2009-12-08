@@ -248,10 +248,10 @@ int             new_pos ;
 
 /****************************************************************************************************/
 
-boolean_type Insert_item_in_list (head_ptr, new_ptr, insert_f)
-head_type       *head_ptr ;
-head_type       *new_ptr ;
-boolean_type    (*insert_f) () ;
+//boolean_type Insert_item_in_list (head_ptr, new_ptr, insert_f)
+//head_type       *head_ptr ;
+//head_type       *new_ptr ;
+//boolean_type    (*insert_f) () ;
 
 /*
 +----------------------------------------------------------------------
@@ -285,101 +285,101 @@ boolean_type    (*insert_f) () ;
 +----------------------------------------------------------------------
 */
 
-{
-   boolean_type    successor_found  = false ;
-   head_type       save_head ;     /* dummy list head. Used for saving
-                                      original list head               */
-   head_type       *pred_ptr ;     /* pointer to predecessor in list   */
-   head_type       *succ_ptr ;     /* pointer to successor   in list   */
-
-   /* First we need to find the successor in the list */
-   if ( head_ptr->item_count == 0 )
-   {
-      /* first item in list */
-      succ_ptr = head_ptr ;
-   }
-   else
-   {
-      /* save original situation */
-      save_head = *head_ptr ;
-
-      if ( insert_f == NULL )
-      {
-    /* insert at current position */
-         succ_ptr = head_ptr->curr_ptr ;
-      }
-      else
-      {
-         /* scan through list and for each item
-            ask function insert_f () if it is the successor */
-         /* start scan at first item in list */
-         head_ptr->curr_pos = 1 ;
-         head_ptr->curr_ptr = head_ptr->next_ptr ;
-
-         while (! successor_found )
-         {
-            /* ask insert_f() if curr_ptr points to successor */
-            if ( (*insert_f) (head_ptr->curr_ptr) )
-            {
-               /* successor found */
-               succ_ptr = head_ptr->curr_ptr ;
-               successor_found = true ;
-            }
-            else
-            {
-               /* first check if end of list reached */
-               if ( head_ptr->curr_pos < head_ptr->item_count )
-               {
-                  /* try next item in list */
-                  Next_item_in_list (head_ptr) ;
-               }
-               else
-               {
-                  /* all items scanned but no successor found
-                     Restore original situation and return error */
-                  *head_ptr = save_head ;
-                  return (false) ;
-               }
-            } /* if insert_f == true */
-         }  /* while */
-      } /* if insert_f == NULL */
-   }
-
-   /*
-   +----------------------------------------------------------------
-   | successor found.
-   | succ_ptr points to successor
-   | new_ptr            new item
-   |
-   | head_ptr->curr_ptr and
-   | head_ptr->curr_pos point to insert position
-   |
-   | Insert new item before successor
-   +----------------------------------------------------------------
-   */
-
-   pred_ptr = succ_ptr->prev_ptr ;  /* predecessor  */
-
-   /* link predecessor with new item */
-   pred_ptr->next_ptr = new_ptr ;
-   new_ptr->prev_ptr  = pred_ptr ;
-
-   /* link successor with new item */
-   succ_ptr->prev_ptr = new_ptr ;
-   new_ptr->next_ptr  = succ_ptr ;
-
-   /* update current pointer and position */
-   head_ptr->curr_ptr = new_ptr ;
-   if ( head_ptr->item_count == 0 )
-   {
-      head_ptr->curr_pos = 1 ;
-   }
-
-   /* update item count */
-   head_ptr->item_count++ ;
-
-   return (true) ;
-}
+//{
+//   boolean_type    successor_found  = false ;
+//   head_type       save_head ;     /* dummy list head. Used for saving
+//                                      original list head               */
+//   head_type       *pred_ptr ;     /* pointer to predecessor in list   */
+//   head_type       *succ_ptr ;     /* pointer to successor   in list   */
+//
+//   /* First we need to find the successor in the list */
+//   if ( head_ptr->item_count == 0 )
+//   {
+//      /* first item in list */
+//      succ_ptr = head_ptr ;
+//   }
+//   else
+//   {
+//      /* save original situation */
+//      save_head = *head_ptr ;
+//
+//      if ( insert_f == NULL )
+//      {
+//    /* insert at current position */
+//         succ_ptr = head_ptr->curr_ptr ;
+//      }
+//      else
+//      {
+//         /* scan through list and for each item
+//            ask function insert_f () if it is the successor */
+//         /* start scan at first item in list */
+//         head_ptr->curr_pos = 1 ;
+//         head_ptr->curr_ptr = head_ptr->next_ptr ;
+//
+//         while (! successor_found )
+//         {
+//            /* ask insert_f() if curr_ptr points to successor */
+//            if ( (*insert_f) (head_ptr->curr_ptr) )
+//            {
+//               /* successor found */
+//               succ_ptr = head_ptr->curr_ptr ;
+//               successor_found = true ;
+//            }
+//            else
+//            {
+//               /* first check if end of list reached */
+//               if ( head_ptr->curr_pos < head_ptr->item_count )
+//               {
+//                  /* try next item in list */
+//                  Next_item_in_list (head_ptr) ;
+//               }
+//               else
+//               {
+//                  /* all items scanned but no successor found
+//                     Restore original situation and return error */
+//                  *head_ptr = save_head ;
+//                  return (false) ;
+//               }
+//            } /* if insert_f == true */
+//         }  /* while */
+//      } /* if insert_f == NULL */
+//   }
+//
+//   /*
+//   +----------------------------------------------------------------
+//   | successor found.
+//   | succ_ptr points to successor
+//   | new_ptr            new item
+//   |
+//   | head_ptr->curr_ptr and
+//   | head_ptr->curr_pos point to insert position
+//   |
+//   | Insert new item before successor
+//   +----------------------------------------------------------------
+//   */
+//
+//   pred_ptr = succ_ptr->prev_ptr ;  /* predecessor  */
+//
+//   /* link predecessor with new item */
+//   pred_ptr->next_ptr = new_ptr ;
+//   new_ptr->prev_ptr  = pred_ptr ;
+//
+//   /* link successor with new item */
+//   succ_ptr->prev_ptr = new_ptr ;
+//   new_ptr->next_ptr  = succ_ptr ;
+//
+//   /* update current pointer and position */
+//   head_ptr->curr_ptr = new_ptr ;
+//   if ( head_ptr->item_count == 0 )
+//   {
+//      head_ptr->curr_pos = 1 ;
+//   }
+//
+//   /* update item count */
+//   head_ptr->item_count++ ;
+//
+//   return (true) ;
+//}
 
 /****************************************************************************************************/
 
@@ -550,46 +550,46 @@ head_type *head_ptr ;
 
 /****************************************************************************************************/
 
-int Move_list (source_head_ptr, target_head_ptr)
-head_type      *source_head_ptr ;
-head_type      *target_head_ptr ;
-
-/*
-+----------------------------------------------------------------------
-| ABSTRACT: Moves all items of a linked list from source_head_ptr to
-|           target_head_ptr.
-|           The target_list must be empty!!!
-|           After the move, the source list is empty.
-+----------------------------------------------------------------------
-| RETURN  : none
-| INPUT : - source_head_ptr : ptr to source list head
-|         - target_head_ptr :        target
-| OUTPUT: - *source_head_ptr : empty list header
-|         - *target_head_ptr : copy of original *source_head_ptr
-+----------------------------------------------------------------------
-*/
-
-{
-   /* check if target list empty */
-   if ( ITEM_CNT (target_head_ptr) > 0 )
-   {
-      return (LM_NOK);
-   }
-
-   /* copy list header */
-   *target_head_ptr = *source_head_ptr ;
-
-   /* link first item with target head */
-   target_head_ptr->next_ptr->prev_ptr = target_head_ptr ;
-
-   /* link last item with target head */
-   target_head_ptr->prev_ptr->next_ptr = target_head_ptr ;
-
-   /* empty source list */
-   Init_list (source_head_ptr) ;
-
-   return (LM_OK);
-}
+//int Move_list (source_head_ptr, target_head_ptr)
+//head_type      *source_head_ptr ;
+//head_type      *target_head_ptr ;
+//
+///*
+//+----------------------------------------------------------------------
+//| ABSTRACT: Moves all items of a linked list from source_head_ptr to
+//|           target_head_ptr.
+//|           The target_list must be empty!!!
+//|           After the move, the source list is empty.
+//+----------------------------------------------------------------------
+//| RETURN  : none
+//| INPUT : - source_head_ptr : ptr to source list head
+//|         - target_head_ptr :        target
+//| OUTPUT: - *source_head_ptr : empty list header
+//|         - *target_head_ptr : copy of original *source_head_ptr
+//+----------------------------------------------------------------------
+//*/
+//
+//{
+//   /* check if target list empty */
+//   if ( ITEM_CNT (target_head_ptr) > 0 )
+//   {
+//      return (LM_NOK);
+//   }
+//
+//   /* copy list header */
+//   *target_head_ptr = *source_head_ptr ;
+//
+//   /* link first item with target head */
+//   target_head_ptr->next_ptr->prev_ptr = target_head_ptr ;
+//
+//   /* link last item with target head */
+//   target_head_ptr->prev_ptr->next_ptr = target_head_ptr ;
+//
+//   /* empty source list */
+//   Init_list (source_head_ptr) ;
+//
+//   return (LM_OK);
+//}
 
 //Unused
 ///****************************************************************************************************/
@@ -785,13 +785,13 @@ head_type      *target_head_ptr ;
 
 /****************************************************************************************************/
 
-static int Quick_sort (head_ptr, sort_f, l, l_ptr, r, r_ptr)
-head_type   *head_ptr;
-int          (*sort_f) ();
-int          l;
-head_type   *l_ptr;
-int          r;
-head_type   *r_ptr;
+//static int Quick_sort (head_ptr, sort_f, l, l_ptr, r, r_ptr)
+//head_type   *head_ptr;
+//int          (*sort_f) ();
+//int          l;
+//head_type   *l_ptr;
+//int          r;
+//head_type   *r_ptr;
 
 /*
 +----------------------------------------------------------------------
@@ -802,129 +802,129 @@ head_type   *r_ptr;
 | OUTPUT  :
 +----------------------------------------------------------------------
 */
-{
-   int            i;
-   head_type     *i_ptr;
-   int            j;
-   head_type     *j_ptr;
-   int            m;
-   head_type      tmp;
-
-   i     = l     ;
-   i_ptr = l_ptr ;
-   j     = r     ;
-   j_ptr = r_ptr ;
-   m     = (l + r) / 2 ;  /* The middle element */
-   Goto_item_in_list (head_ptr, m) ;
-
-   do
-   {
-      while ( (*sort_f) (i_ptr, head_ptr->curr_ptr) < 0 )
-      {
-    i     = i + 1 ;
-    i_ptr = i_ptr->next_ptr ;
-      }
-      while ( (*sort_f) (head_ptr->curr_ptr, j_ptr) < 0 )
-      {
-    j     = j - 1 ;
-    j_ptr = j_ptr->prev_ptr ;
-      }
-
-      if ( i < j )
-      {
-    /* swap i_ptr and j_ptr */
-    if ( (j - i) == 1 )
-    {
-       /* Two neighbours have to be exchanged */
-       tmp.prev_ptr = i_ptr->prev_ptr ;
-       tmp.next_ptr = j_ptr->next_ptr ;
-
-       tmp.prev_ptr->next_ptr    = j_ptr ;
-       tmp.next_ptr->prev_ptr    = i_ptr ;
-       i_ptr->prev_ptr           = j_ptr ;
-       i_ptr->next_ptr           = tmp.next_ptr ;
-       j_ptr->prev_ptr           = tmp.prev_ptr ;
-       j_ptr->next_ptr           = i_ptr ;
-    }
-    else
-    {
-       tmp.prev_ptr = i_ptr->prev_ptr ;
-       tmp.next_ptr = i_ptr->next_ptr ;
-
-       tmp.prev_ptr->next_ptr    = j_ptr ;
-       tmp.next_ptr->prev_ptr    = j_ptr ;
-       j_ptr->prev_ptr->next_ptr = i_ptr ;
-       j_ptr->next_ptr->prev_ptr = i_ptr ;
-
-       i_ptr->prev_ptr           = j_ptr->prev_ptr ;
-       i_ptr->next_ptr           = j_ptr->next_ptr ;
-       j_ptr->prev_ptr           = tmp.prev_ptr ;
-       j_ptr->next_ptr           = tmp.next_ptr ;
-    }
-
-         tmp.prev_ptr = j_ptr        ;
-    j_ptr        = i_ptr        ;
-    i_ptr        = tmp.prev_ptr ;
-
-    i     = i + 1           ;
-    i_ptr = i_ptr->next_ptr ;
-    j     = j - 1           ;
-    j_ptr = j_ptr->prev_ptr ;
-      }
-      else if ( i == j )
-      {
-    i     = i + 1           ;
-    i_ptr = i_ptr->next_ptr ;
-    j     = j - 1           ;
-    j_ptr = j_ptr->prev_ptr ;
-      }
-
-   } while ( i <= j ) ;
-
-
-   if ( l < j )
-   {
-      /* Make sure that the header of the linked list is consistent*/
-      head_ptr->curr_ptr = head_ptr->next_ptr ;
-      head_ptr->curr_pos = 1                  ;
-      /*
-      +------------------------------------------------------------
-      | Item "l" may have been swapped, make sure that l_ptr does
-      | point at the l-th element.
-      +------------------------------------------------------------
-      */
-      Goto_item_in_list (head_ptr, l) ;
-      l_ptr = head_ptr->curr_ptr ;
-      Quick_sort (head_ptr, sort_f, l, l_ptr, j, j_ptr) ;
-   }
-
-   if ( i < r )
-   {
-      /* Make sure that the header of the linked list is consistent*/
-      head_ptr->curr_ptr = head_ptr->next_ptr ;
-      head_ptr->curr_pos = 1                  ;
-      /*
-      +------------------------------------------------------------
-      | Item "r" may have been swapped, make sure that r_ptr does
-      | point at the r-th element.
-      +------------------------------------------------------------
-      */
-      Goto_item_in_list (head_ptr, r) ;
-      r_ptr = head_ptr->curr_ptr ;
-      Quick_sort (head_ptr, sort_f, i, i_ptr, r, r_ptr) ;
-   }
-   /* Make sure that the header of the linked list is consistent*/
-   head_ptr->curr_ptr = head_ptr->next_ptr ;
-   head_ptr->curr_pos = 1                  ;
-
-   return (LM_OK);
-}
+//{
+//   int            i;
+//   head_type     *i_ptr;
+//   int            j;
+//   head_type     *j_ptr;
+//   int            m;
+//   head_type      tmp;
+//
+//   i     = l     ;
+//   i_ptr = l_ptr ;
+//   j     = r     ;
+//   j_ptr = r_ptr ;
+//   m     = (l + r) / 2 ;  /* The middle element */
+//   Goto_item_in_list (head_ptr, m) ;
+//
+//   do
+//   {
+//      while ( (*sort_f) (i_ptr, head_ptr->curr_ptr) < 0 )
+//      {
+//    i     = i + 1 ;
+//    i_ptr = i_ptr->next_ptr ;
+//      }
+//      while ( (*sort_f) (head_ptr->curr_ptr, j_ptr) < 0 )
+//      {
+//    j     = j - 1 ;
+//    j_ptr = j_ptr->prev_ptr ;
+//      }
+//
+//      if ( i < j )
+//      {
+//    /* swap i_ptr and j_ptr */
+//    if ( (j - i) == 1 )
+//    {
+//       /* Two neighbours have to be exchanged */
+//       tmp.prev_ptr = i_ptr->prev_ptr ;
+//       tmp.next_ptr = j_ptr->next_ptr ;
+//
+//       tmp.prev_ptr->next_ptr    = j_ptr ;
+//       tmp.next_ptr->prev_ptr    = i_ptr ;
+//       i_ptr->prev_ptr           = j_ptr ;
+//       i_ptr->next_ptr           = tmp.next_ptr ;
+//       j_ptr->prev_ptr           = tmp.prev_ptr ;
+//       j_ptr->next_ptr           = i_ptr ;
+//    }
+//    else
+//    {
+//       tmp.prev_ptr = i_ptr->prev_ptr ;
+//       tmp.next_ptr = i_ptr->next_ptr ;
+//
+//       tmp.prev_ptr->next_ptr    = j_ptr ;
+//       tmp.next_ptr->prev_ptr    = j_ptr ;
+//       j_ptr->prev_ptr->next_ptr = i_ptr ;
+//       j_ptr->next_ptr->prev_ptr = i_ptr ;
+//
+//       i_ptr->prev_ptr           = j_ptr->prev_ptr ;
+//       i_ptr->next_ptr           = j_ptr->next_ptr ;
+//       j_ptr->prev_ptr           = tmp.prev_ptr ;
+//       j_ptr->next_ptr           = tmp.next_ptr ;
+//    }
+//
+//         tmp.prev_ptr = j_ptr        ;
+//    j_ptr        = i_ptr        ;
+//    i_ptr        = tmp.prev_ptr ;
+//
+//    i     = i + 1           ;
+//    i_ptr = i_ptr->next_ptr ;
+//    j     = j - 1           ;
+//    j_ptr = j_ptr->prev_ptr ;
+//      }
+//      else if ( i == j )
+//      {
+//    i     = i + 1           ;
+//    i_ptr = i_ptr->next_ptr ;
+//    j     = j - 1           ;
+//    j_ptr = j_ptr->prev_ptr ;
+//      }
+//
+//   } while ( i <= j ) ;
+//
+//
+//   if ( l < j )
+//   {
+//      /* Make sure that the header of the linked list is consistent*/
+//      head_ptr->curr_ptr = head_ptr->next_ptr ;
+//      head_ptr->curr_pos = 1                  ;
+//      /*
+//      +------------------------------------------------------------
+//      | Item "l" may have been swapped, make sure that l_ptr does
+//      | point at the l-th element.
+//      +------------------------------------------------------------
+//      */
+//      Goto_item_in_list (head_ptr, l) ;
+//      l_ptr = head_ptr->curr_ptr ;
+//      Quick_sort (head_ptr, sort_f, l, l_ptr, j, j_ptr) ;
+//   }
+//
+//   if ( i < r )
+//   {
+//      /* Make sure that the header of the linked list is consistent*/
+//      head_ptr->curr_ptr = head_ptr->next_ptr ;
+//      head_ptr->curr_pos = 1                  ;
+//      /*
+//      +------------------------------------------------------------
+//      | Item "r" may have been swapped, make sure that r_ptr does
+//      | point at the r-th element.
+//      +------------------------------------------------------------
+//      */
+//      Goto_item_in_list (head_ptr, r) ;
+//      r_ptr = head_ptr->curr_ptr ;
+//      Quick_sort (head_ptr, sort_f, i, i_ptr, r, r_ptr) ;
+//   }
+//   /* Make sure that the header of the linked list is consistent*/
+//   head_ptr->curr_ptr = head_ptr->next_ptr ;
+//   head_ptr->curr_pos = 1                  ;
+//
+//   return (LM_OK);
+//}
 
 /****************************************************************************************************/
 
-int Merge_lists (first_list_head_ptr, second_list_head_ptr)
-head_type    *first_list_head_ptr ;
-head_type    *second_list_head_ptr ;
+//int Merge_lists (first_list_head_ptr, second_list_head_ptr)
+//head_type    *first_list_head_ptr ;
+//head_type    *second_list_head_ptr ;
 
 /*
 +----------------------------------------------------------------------
@@ -942,40 +942,40 @@ head_type    *second_list_head_ptr ;
 +----------------------------------------------------------------------
 */
 
-{
-   if ( LIST_EMPTY (second_list_head_ptr) )
-   {
-      return(LM_OK) ;
-   }
-
-   second_list_head_ptr->prev_ptr->next_ptr =
-          first_list_head_ptr->curr_ptr->next_ptr ;
-   first_list_head_ptr->curr_ptr->next_ptr->prev_ptr =
-          second_list_head_ptr->prev_ptr ;
-   first_list_head_ptr->curr_ptr->next_ptr =
-          second_list_head_ptr->next_ptr ;
-   second_list_head_ptr->next_ptr->prev_ptr =
-          first_list_head_ptr->curr_ptr ;
-
-   first_list_head_ptr->curr_ptr    = first_list_head_ptr->next_ptr ;
-   first_list_head_ptr->curr_pos    = 1 ;
-   first_list_head_ptr->item_count += second_list_head_ptr->item_count ;
-
-   second_list_head_ptr->prev_ptr   = second_list_head_ptr ;
-   second_list_head_ptr->next_ptr   = second_list_head_ptr ;
-   second_list_head_ptr->curr_ptr   = second_list_head_ptr ;
-   second_list_head_ptr->curr_pos   = 0 ;
-   second_list_head_ptr->item_count = 0 ;
-
-   return (LM_OK);
-}
+//{
+//   if ( LIST_EMPTY (second_list_head_ptr) )
+//   {
+//      return(LM_OK) ;
+//   }
+//
+//   second_list_head_ptr->prev_ptr->next_ptr =
+//          first_list_head_ptr->curr_ptr->next_ptr ;
+//   first_list_head_ptr->curr_ptr->next_ptr->prev_ptr =
+//          second_list_head_ptr->prev_ptr ;
+//   first_list_head_ptr->curr_ptr->next_ptr =
+//          second_list_head_ptr->next_ptr ;
+//   second_list_head_ptr->next_ptr->prev_ptr =
+//          first_list_head_ptr->curr_ptr ;
+//
+//   first_list_head_ptr->curr_ptr    = first_list_head_ptr->next_ptr ;
+//   first_list_head_ptr->curr_pos    = 1 ;
+//   first_list_head_ptr->item_count += second_list_head_ptr->item_count ;
+//
+//   second_list_head_ptr->prev_ptr   = second_list_head_ptr ;
+//   second_list_head_ptr->next_ptr   = second_list_head_ptr ;
+//   second_list_head_ptr->curr_ptr   = second_list_head_ptr ;
+//   second_list_head_ptr->curr_pos   = 0 ;
+//   second_list_head_ptr->item_count = 0 ;
+//
+//   return (LM_OK);
+//}
 
 /****************************************************************************************************/
 
-int Sort_list (head_ptr, sort_f)
+/*int Sort_list (head_ptr, sort_f)
 head_type   *head_ptr ;
 int          (*sort_f) () ;
-
+*/
 /*
 +----------------------------------------------------------------------
 | ABSTRACT: Sorts a linked list in memory.
@@ -999,55 +999,55 @@ int          (*sort_f) () ;
 |                       to the first element in the list.
 +----------------------------------------------------------------------
 */
-
-{
-   head_type     *i_ptr ;
-   head_type     *j_ptr ;
-   int nr_of_items = ITEM_CNT (head_ptr) ;
-
-   if ( nr_of_items > 2 )
-   {
-      Quick_sort (head_ptr, sort_f, 1,
-                  head_ptr->next_ptr,
-                  nr_of_items,
-                  head_ptr->prev_ptr) ;
-
-      return(LM_OK) ;
-   }
-   else if ( nr_of_items == 2 )
-   {
-      Goto_item_in_list (head_ptr, 1) ;
-      i_ptr = head_ptr->next_ptr ;
-      j_ptr = head_ptr->prev_ptr ;
-
-      /* call application-dependent compare-function */
-      if ( (*sort_f) (i_ptr, j_ptr) > 0 )
-      {
-         /* swap i_ptr and j_ptr */
-         j_ptr->next_ptr           = i_ptr ;
-         i_ptr->next_ptr           = i_ptr->prev_ptr ;
-         i_ptr->prev_ptr->next_ptr = j_ptr ;
-
-         j_ptr->prev_ptr           = i_ptr->prev_ptr ;
-         i_ptr->prev_ptr->prev_ptr = i_ptr ;
-         i_ptr->prev_ptr           = j_ptr ;
-
-         head_ptr->curr_ptr        = head_ptr->next_ptr ;
-         head_ptr->curr_pos        = 1 ;
-      }
-      return(LM_OK) ;
-   }
-   else if ( nr_of_items == 1 )
-   {
-      return(LM_OK) ;
-   }
-   else if ( nr_of_items == 0 )
-   {
-      return(LM_OK) ;
-   }
-
-   return (LM_OK);
-}
-
+//
+//{
+//   head_type     *i_ptr ;
+//   head_type     *j_ptr ;
+//   int nr_of_items = ITEM_CNT (head_ptr) ;
+//
+//   if ( nr_of_items > 2 )
+//   {
+//      Quick_sort (head_ptr, sort_f, 1,
+//                  head_ptr->next_ptr,
+//                  nr_of_items,
+//                  head_ptr->prev_ptr) ;
+//
+//      return(LM_OK) ;
+//   }
+//   else if ( nr_of_items == 2 )
+//   {
+//      Goto_item_in_list (head_ptr, 1) ;
+//      i_ptr = head_ptr->next_ptr ;
+//      j_ptr = head_ptr->prev_ptr ;
+//
+//      /* call application-dependent compare-function */
+//      if ( (*sort_f) (i_ptr, j_ptr) > 0 )
+//      {
+//         /* swap i_ptr and j_ptr */
+//         j_ptr->next_ptr           = i_ptr ;
+//         i_ptr->next_ptr           = i_ptr->prev_ptr ;
+//         i_ptr->prev_ptr->next_ptr = j_ptr ;
+//
+//         j_ptr->prev_ptr           = i_ptr->prev_ptr ;
+//         i_ptr->prev_ptr->prev_ptr = i_ptr ;
+//         i_ptr->prev_ptr           = j_ptr ;
+//
+//         head_ptr->curr_ptr        = head_ptr->next_ptr ;
+//         head_ptr->curr_pos        = 1 ;
+//      }
+//      return(LM_OK) ;
+//   }
+//   else if ( nr_of_items == 1 )
+//   {
+//      return(LM_OK) ;
+//   }
+//   else if ( nr_of_items == 0 )
+//   {
+//      return(LM_OK) ;
+//   }
+//
+//   return (LM_OK);
+//}
+//
 /****************************************************************************************************/
 

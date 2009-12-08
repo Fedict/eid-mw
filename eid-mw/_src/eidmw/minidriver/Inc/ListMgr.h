@@ -101,12 +101,12 @@ extern int Goto_item_in_list
       int             new_pos
    );
 
-extern boolean_type Insert_item_in_list 
-   (
-      head_type       *head_ptr,
-      head_type       *new_ptr,
-      boolean_type    (*insert_f) ()
-   );
+//extern boolean_type Insert_item_in_list 
+//   (
+//      head_type       *head_ptr,
+//      head_type       *new_ptr,
+//      boolean_type    (*insert_f) ()
+//   );
 
 extern int Append_item_in_list
    (
@@ -129,11 +129,11 @@ extern int Destroy_list
       head_type *head_ptr
    );
 
-extern int Move_list
-   (
-      head_type      *source_head_ptr,
-      head_type      *target_head_ptr
-   );
+//extern int Move_list
+//   (
+//      head_type      *source_head_ptr,
+//      head_type      *target_head_ptr
+//   );
 
 
 /*extern boolean_type Find_item_in_list
@@ -143,18 +143,18 @@ extern int Move_list
       char       *(*field_f) ()
    );
 */
-extern int Merge_lists
-   (
-      head_type    *first_list_head_ptr ,
-      head_type    *second_list_head_ptr
-   );
+//extern int Merge_lists
+//   (
+//      head_type    *first_list_head_ptr ,
+//      head_type    *second_list_head_ptr
+//   );
 
-extern int Sort_list
+/*extern int Sort_list
    (
       head_type   *head_ptr,
       int          (*sort_f)()
    );
-         
+  */       
 /************/
 /* Clean up */
 /************/
