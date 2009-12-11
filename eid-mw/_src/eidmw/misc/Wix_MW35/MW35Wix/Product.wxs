@@ -434,6 +434,58 @@
             Name="Signature"
             Value="4ca7da22f79d4c8db3acaaf626b757929ff28cd2d205615323885f542f38d9ddfccd1b74d2ccbd99ad0a0a530e22b91dda3f3967ff7846f43a4fa263b41fbdb35976c68d64c3ff931036e009f3d3090d9afdbe8a9f942d1adc8791d5522644d1842bb802907737baa4b318a21554ecc3b25db0f42d7f5cdd3f58269703ffed300000000000000000" />
         </RegistryKey>
+        <RegistryKey Root="HKLM"
+                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card v1.0"
+                     Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
+          <RegistryValue
+            Type="binary"
+            Name="ATR"
+            Value="3B989440FFA503010101AD1310" />
+          <RegistryValue
+            Type="binary"
+            Name="ATRMask"
+            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
+        </RegistryKey>
+        <RegistryKey Root="HKLM"
+                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card v1.5"
+                     Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
+          <RegistryValue
+            Type="binary"
+            Name="ATR"
+            Value="3B9813402AD000480101AD1311" />
+          <RegistryValue
+            Type="binary"
+            Name="ATRMask"
+            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
+        </RegistryKey>
+        <RegistryKey Root="HKLM"
+                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Kids Identity Card v1.0"
+                     Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
+          <RegistryValue
+            Type="binary"
+            Name="ATR"
+            Value="3B9894400AA503010101AD1310" />
+          <RegistryValue
+            Type="binary"
+            Name="ATRMask"
+            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
+        </RegistryKey>
+        <RegistryKey Root="HKLM"
+                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Kids Identity Card v1.1"
+                     Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
+          <RegistryValue
+            Type="binary"
+            Name="ATR"
+            Value="3B9813400AA503010101AD1311" />
+          <RegistryValue
+            Type="binary"
+            Name="ATRMask"
+            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
+        </RegistryKey>
       </Component>
 
       <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}">
