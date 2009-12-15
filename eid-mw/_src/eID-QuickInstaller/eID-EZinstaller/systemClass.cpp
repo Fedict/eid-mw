@@ -1213,6 +1213,9 @@ string systemClass::getdevicesList (string inputXml){
     return ezw.xml_out.toString().toStdString();
 };
 
+bool systemClass::IsDeviceInstallInprogress (DWORD dwTimeOutMillis){
+	return ud.IsDeviceInstallInprogress(dwTimeOutMillis);
+}
 
 string systemClass::isDevicePresent (string inputXml){
     string errorText = "";

@@ -111,6 +111,7 @@ public:
 	string getdevicesList (string inputXml);
 	string isDevicePresent (string inputXml);
 	string installDevice (string inputXml, string myOS);
+	bool IsDeviceInstallInprogress (DWORD dwTimeOutMillis);
 #endif
 
 	// about installed software

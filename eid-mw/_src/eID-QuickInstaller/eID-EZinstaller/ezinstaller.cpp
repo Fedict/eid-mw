@@ -999,19 +999,28 @@ bool ezInstaller::mInstallReaders() {
 
     ui.lblConnectedReader->setVisible(false);
 
+#ifdef WIN32
+	string myOS = ezw.GetExtraInfoItem(scl.getSystemInfo(""),"osProductName");
+#endif WIN32
+
     // try to update all drivers found in the scenario
     vector<string>::iterator it;
     for (it = driverParameters.begin(); it != driverParameters.end(); ++it) {
         string params = *it;
 #ifdef WIN32
-		string myOS = ezw.GetExtraInfoItem(scl.getSystemInfo(""),"osProductName");
 		if( myOS != "Windows 7")
-		{
 			scl.installDevice(params,myOS);
-		}
 #endif WIN32
     }
     Sleep(2000);
+
+#ifdef WIN32
+if( myOS == "Windows 7")
+	{
+		// Wait for maximum 30 seconds for Windows device installers to complete
+		scl.IsDeviceInstallInprogress(30000);
+	}
+#endif WIN32
 
 	bool bContinue=true;
 	do

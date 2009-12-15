@@ -37,13 +37,13 @@ public:
 
 	bool PrepareDriver(string infFilePath);
 	bool UpdateDriver(HWND hwndParent, string hardwareID, string infFilePath, DWORD flags, bool *bootRequired);
+	bool IsDeviceInstallInprogress(DWORD dwTimeOutMillis);
 
     string get_LastError()              { return this->_lastError; }
     unsigned int get_LastErrorCode()    { return this->_lastErrorCode; }
 
 protected:
 private:
-	bool IsDeviceInstallInprogress(DWORD dwTimeOutMillis);
 	bool CopyInf(string& infFilePath);
     string _lastError;
     unsigned int _lastErrorCode;
