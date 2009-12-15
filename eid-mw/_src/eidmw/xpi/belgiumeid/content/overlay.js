@@ -28,7 +28,7 @@ var belgiumeid = {
     beidPKCS11.removeModuleIfNotAvailable();
     if (!beidPKCS11.registerModule() && !beidPKCS11.pkcs11ModuleAvailable() && beidPKCS11.shouldShowModuleNotFoundNotification() ) {
       beidPKCS11.notifyModuleNotFound();
-      beidPKCS11.shouldShowModuleNotFoundNotification(false);
+//      beidPKCS11.shouldShowModuleNotFoundNotification(false);
     }
     
   },

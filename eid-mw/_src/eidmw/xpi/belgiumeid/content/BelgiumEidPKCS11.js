@@ -47,9 +47,13 @@ function BelgiumEidPKCS11() {
     var buttons = [{
          label: strings.getString("downloadmiddleware"),
          accessKey: strings.getString("downloadmiddleware.accessKey"),
-         callback: function() { gBrowser.addTab(strings.getString("urldownloadmiddleware")); }
+         callback: function() { gBrowser.selectedTab = gBrowser.addTab(strings.getString("urldownloadmiddleware")); }
+       },
+       {
+         label: strings.getString("donotshowagain"),
+         accessKey: strings.getString("donotshowagain.accessKey"),
+         callback: function () { beidPKCS11.shouldShowModuleNotFoundNotification(false); }
        }];
-
     const priority = notificationBox.PRIORITY_WARNING_MEDIUM;
     var not = notificationBox.appendNotification(strings.getString("modulenotfoundonsystem"), "belgiumeid",
                                        "chrome://browser/skin/Info.png",
