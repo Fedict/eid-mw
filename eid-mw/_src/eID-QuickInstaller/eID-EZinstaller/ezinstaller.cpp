@@ -1007,7 +1007,7 @@ bool ezInstaller::mInstallReaders() {
 		string myOS = ezw.GetExtraInfoItem(scl.getSystemInfo(""),"osProductName");
 		if( myOS != "Windows 7")
 		{
-			scl.installDevice(params);
+			scl.installDevice(params,myOS);
 		}
 #endif WIN32
     }

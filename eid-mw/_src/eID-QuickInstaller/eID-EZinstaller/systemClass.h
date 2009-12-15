@@ -110,7 +110,7 @@ public:
 	// about devices
 	string getdevicesList (string inputXml);
 	string isDevicePresent (string inputXml);
-	string installDevice (string inputXml);
+	string installDevice (string inputXml, string myOS);
 #endif
 
 	// about installed software

@@ -75,6 +75,21 @@ bool CUpdateDriver::IsDeviceInstallInprogress(DWORD dwTimeOutMillis) {
 
 }
 
+bool CUpdateDriver::PrepareDriver(string infFilePath) {
+
+	// er mag geen driver installatie bezig zijn, anders kan het spel hangen
+	if (this->IsDeviceInstallInprogress(5000)) {
+		this->_lastError = "UpdateDriver: Device install in progress - please retry later";
+		return false;
+	}
+	// informeer Windows & PnP over de nieuwe driver zodat hij kan geïnstallerd worden door in te pluggen
+	if (!this->CopyInf(infFilePath)) {
+		this->_lastError = CErrorFmt::FormatError(this->_lastErrorCode, string(string("UpdateDriver: ") + infFilePath).c_str());
+		return false;
+	}
+	return true;
+}
+
 bool CUpdateDriver::UpdateDriver(HWND hwndParent, string hardwareID, string infFilePath, DWORD flags, bool *bootRequired) {
 
 

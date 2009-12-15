@@ -1295,7 +1295,7 @@ string systemClass::isDevicePresent (string inputXml){
 };
 
 
-string systemClass::installDevice (string inputXml){
+string systemClass::installDevice (string inputXml, string myOS){
 
     string errorText = "";
     string returnValue = "";
@@ -1313,11 +1313,23 @@ string systemClass::installDevice (string inputXml){
         string pathToDriverFiles = ezw.GetNamedItem(Params,"pathToDriverFiles");
         string infFile = ezw.GetNamedItem(Params,"infFile");
         string readerUnzipCode = ezw.GetNamedItem(Params,"readerUnzipCode");
+
         if (errorText == "") {
             bool bootreqd;
+			bool retVal;
 
             string pathToInfFile = infFile;
-            if (!ud.UpdateDriver(NULL,hardwareID.c_str() , pathToInfFile, 0, &bootreqd))  {
+			if (myOS == "Windows 7")
+			{
+				bootreqd = false;
+				retVal = ud.PrepareDriver(pathToInfFile);
+			}
+			else
+			{
+				retVal = ud.UpdateDriver(NULL,hardwareID.c_str() , pathToInfFile, 0, &bootreqd);
+			}
+
+            if (!retVal)  {
                 returnValue = "FAILURE";
                 errorText = ud.get_LastError();
             } 

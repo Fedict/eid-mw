@@ -35,7 +35,8 @@ public:
     CUpdateDriver();
     virtual ~CUpdateDriver(void);
 
-    bool UpdateDriver(HWND hwndParent, string hardwareID, string infFilePath, DWORD flags, bool *bootRequired);
+	bool PrepareDriver(string infFilePath);
+	bool UpdateDriver(HWND hwndParent, string hardwareID, string infFilePath, DWORD flags, bool *bootRequired);
 
     string get_LastError()              { return this->_lastError; }
     unsigned int get_LastErrorCode()    { return this->_lastErrorCode; }

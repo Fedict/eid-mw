@@ -605,7 +605,11 @@ LOGSTR(paramsAsString.c_str())
 
 #ifdef WIN32
     else if (ElementName == QString("INSTALLDEVICE")) 
-        {returnString = scl.installDevice(paramsAsString);addDriverParams(paramsAsString); }
+        {string myOS = ezw.GetExtraInfoItem(scl.getSystemInfo(""),"osProductName");
+		returnString = scl.installDevice(paramsAsString,myOS);
+		if( myOS != "Windows 7")
+			addDriverParams(paramsAsString);
+		}
     else if (ElementName == QString("ENUMERATEDEVICES")) 
         {returnString = scl.getdevicesList(paramsAsString); }
     else if (ElementName == QString("IS_DEVICE_PRESENT")) 
@@ -696,10 +700,12 @@ QByteArray getFileBytes (QString filename) {
 
 void saveByteArrayToFile(QByteArray ba, QString filename) {
     QFile outfile(filename);
-    outfile.open(QIODevice::WriteOnly);
-    QDataStream dsout(&outfile);
-    dsout.writeRawData(ba.data(),ba.length());
-    outfile.close();
+    if (outfile.open(QIODevice::WriteOnly) == TRUE);
+	{
+		QDataStream dsout(&outfile);
+		dsout.writeRawData(ba.data(),ba.length());
+	    outfile.close();
+	}
 }
 
 void diagnoseThread::extractSCDrivers(QString inputXml) {
