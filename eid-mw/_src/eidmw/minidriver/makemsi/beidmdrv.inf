@@ -39,7 +39,17 @@ CopyFiles=wow64_CopyFiles
 AddReg=AddRegWOW64
 AddReg=AddRegDefault
 
+[DefaultInstall.ntamd64.6.1]
+CopyFiles=amd64_CopyFiles
+CopyFiles=wow64_CopyFiles
+AddReg=AddRegWOW64
+AddReg=AddRegDefault
+
 [DefaultInstall.NTx86]
+CopyFiles=x86_CopyFiles
+AddReg=AddRegDefault
+
+[DefaultInstall.NTx86.6.1]
 CopyFiles=x86_CopyFiles
 AddReg=AddRegDefault
 
