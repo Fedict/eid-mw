@@ -22,7 +22,7 @@ Follow these steps:
    
 2. Test cards
 
-For the test you need two 'identical' test cards. It looks like it is OK when the cards have the same PIN code. You'll need also two card readers.
+For the test you need two 'identical' test cards. It looks it is OK when the cards have the same PIN code. You'll need also two card readers.
 
 3. Configuration
 
@@ -31,13 +31,16 @@ For the test you need two 'identical' test cards. It looks like it is OK when th
 * Edit cmck_config.xml in order to configure the PIN code of your test cards:
    for PIN 1234 the value is 
    0x31 0x32 0x33 0x34 
-
+* Install the minidriver 
+ 
 4. Run the test
+
+Insert the smart cards and wait until the cards are "installed"
 
 cd <testdir>
 cmck exec
 
-the results are written in cmck_config.xml in the same folder of the executable.
+the results are written in CMCK_Log.xml in the same folder of the executable.
 
 5. Test result log viewer
 
