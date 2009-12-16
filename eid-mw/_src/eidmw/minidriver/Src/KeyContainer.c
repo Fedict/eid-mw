@@ -21,6 +21,7 @@
 
 #include "Log.h"
 #include "util.h"
+#include "smartcard.h"
 
 /****************************************************************************************************/
 //
@@ -116,7 +117,9 @@ DWORD WINAPI   CardGetContainerInfo
 {
    DWORD                dwReturn  = 0;
    DWORD                dwVersion = 0;
-
+   DWORD                cbCertif = 0;
+   DWORD				dwCertSpec = 0;
+   PBYTE				pbCertif = NULL;
    PCARD_LIST_TYPE      pCardItem = NULL;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...[%d]", bContainerIndex);
@@ -156,64 +159,119 @@ DWORD WINAPI   CardGetContainerInfo
       CLEANUP(ERROR_REVISION_MISMATCH );
    }
 
-   pCardItem = GetCardListItem(pCardData);
-   if ( pCardItem == NULL )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Card context and handle not Found...");
-      CLEANUP(SCARD_E_UNEXPECTED);
-   }
+   //pCardItem = GetCardListItem(pCardData);
+   //if ( pCardItem == NULL )
+   //{
+   //   LogTrace(LOGTYPE_ERROR, WHERE, "Card context and handle not Found...");
+   //   CLEANUP(SCARD_E_UNEXPECTED);
+   //}
 
-   pContainerInfo->dwVersion        = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.dwVersion;
-   pContainerInfo->dwReserved       = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.dwReserved;
-   pContainerInfo->cbSigPublicKey   = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.cbSigPublicKey;
-   if ( pContainerInfo->cbSigPublicKey > 0 )
-   {
-      pContainerInfo->pbSigPublicKey = pCardData->pfnCspAlloc(pContainerInfo->cbSigPublicKey);
-      if ( pContainerInfo->pbSigPublicKey == NULL )
-      {
-         LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [pContainerInfo->pbSigPublicKey]");
-         CLEANUP(SCARD_E_NO_MEMORY);
-      }
+//////   pContainerInfo->dwVersion        = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.dwVersion;
+//   pContainerInfo->dwReserved       = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.dwReserved;
+//   pContainerInfo->cbSigPublicKey   = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.cbSigPublicKey;
+//   if ( pContainerInfo->cbSigPublicKey > 0 )
+//   {
+//      pContainerInfo->pbSigPublicKey = pCardData->pfnCspAlloc(pContainerInfo->cbSigPublicKey);
+//      if ( pContainerInfo->pbSigPublicKey == NULL )
+//      {
+//         LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [pContainerInfo->pbSigPublicKey]");
+//         CLEANUP(SCARD_E_NO_MEMORY);
+//      }
+//
+//      memcpy(pContainerInfo->pbSigPublicKey, pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.pbSigPublicKey, pContainerInfo->cbSigPublicKey); 
+//
+//      LogTrace(LOGTYPE_INFO, WHERE, "SigPublicKey [%d]", pContainerInfo->cbSigPublicKey);
+//#ifdef _DEBUG
+//   LogDump (pContainerInfo->cbSigPublicKey, (char *)pContainerInfo->pbSigPublicKey);
+//#endif
+//   }
+//   else
+//   {
+//      pContainerInfo->cbSigPublicKey = 0;
+//      pContainerInfo->pbSigPublicKey = NULL;
+//   }
+//
+//   pContainerInfo->cbKeyExPublicKey = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.cbKeyExPublicKey;
+//   if ( pContainerInfo->cbKeyExPublicKey > 0 )
+//   {
+//      pContainerInfo->pbKeyExPublicKey = pCardData->pfnCspAlloc(pContainerInfo->cbKeyExPublicKey);
+//      if ( pContainerInfo->pbKeyExPublicKey == NULL )
+//      {
+//         LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [pContainerInfo->pbKeyExPublicKey]");
+//         CLEANUP(SCARD_E_NO_MEMORY);
+//      }
+//
+//      memcpy(pContainerInfo->pbKeyExPublicKey, pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.pbKeyExPublicKey, pContainerInfo->cbKeyExPublicKey); 
+//
+//      LogTrace(LOGTYPE_INFO, WHERE, "KeyExPublicKey [%d]", pContainerInfo->cbKeyExPublicKey);
+//#ifdef _DEBUG
+//   LogDump (pContainerInfo->cbSigPublicKey, (char *)pContainerInfo->pbKeyExPublicKey);
+//#endif
+//   }
+//   else
+//   {
+//      pContainerInfo->cbKeyExPublicKey = 0;
+//      pContainerInfo->pbKeyExPublicKey = NULL;
+//   }
 
-      memcpy(pContainerInfo->pbSigPublicKey, pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.pbSigPublicKey, pContainerInfo->cbSigPublicKey); 
+    /*
+    * Authentication Certificate
+    */
+	if (bContainerIndex == 0) {
+		LogTrace(LOGTYPE_INFO, WHERE, "Creating Authentication Certif...");
+		dwCertSpec = CERT_AUTH;
+	}
+	if (bContainerIndex == 1) {
+		LogTrace(LOGTYPE_INFO, WHERE, "Creating Non-Repudiation Certif...");
+		dwCertSpec = CERT_NONREP;
+	}
 
-      LogTrace(LOGTYPE_INFO, WHERE, "SigPublicKey [%d]", pContainerInfo->cbSigPublicKey);
+	dwReturn = BeidReadCert(pCardData, dwCertSpec, &cbCertif, &pbCertif);
+	if ( dwReturn != SCARD_S_SUCCESS )
+	{
+		if (bContainerIndex == 0)
+			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
+		if (bContainerIndex == 1)
+			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
+		CLEANUP(SCARD_E_UNEXPECTED);
+	}
+
 #ifdef _DEBUG
-   LogDump (pContainerInfo->cbSigPublicKey, (char *)pContainerInfo->pbSigPublicKey);
+	LogDump (cbCertif, (char *)pbCertif);
+	if (bContainerIndex == 0)
+		LogDumpBin ("C:\\SmartCardMinidriverTest\\auth.crt", cbCertif, (char *)pbCertif);
+	if (bContainerIndex == 1)
+		LogDumpBin ("C:\\SmartCardMinidriverTest\\nonrep.crt", cbCertif, (char *)pbCertif);
 #endif
-   }
-   else
-   {
-      pContainerInfo->cbSigPublicKey = 0;
-      pContainerInfo->pbSigPublicKey = NULL;
-   }
+   
+   /* Container Info */
+	pContainerInfo->dwVersion  = CONTAINER_INFO_CURRENT_VERSION;
+	pContainerInfo->dwReserved = 0;
+	dwReturn = BeidGetPubKey(pCardData, 
+                            cbCertif, 
+                            pbCertif, 
+                            &(pContainerInfo->cbSigPublicKey), 
+                            &(pContainerInfo->pbSigPublicKey));
+	if ( dwReturn != SCARD_S_SUCCESS )
+	{
+		LogTrace(LOGTYPE_ERROR, WHERE, "BeidGetPubKey returned [%d]", dwReturn);
+		CLEANUP(SCARD_E_UNEXPECTED);
+	}
+	pContainerInfo->cbKeyExPublicKey = 0;
+	pContainerInfo->pbKeyExPublicKey = NULL;
 
-   pContainerInfo->cbKeyExPublicKey = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.cbKeyExPublicKey;
-   if ( pContainerInfo->cbKeyExPublicKey > 0 )
-   {
-      pContainerInfo->pbKeyExPublicKey = pCardData->pfnCspAlloc(pContainerInfo->cbKeyExPublicKey);
-      if ( pContainerInfo->pbKeyExPublicKey == NULL )
-      {
-         LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [pContainerInfo->pbKeyExPublicKey]");
-         CLEANUP(SCARD_E_NO_MEMORY);
-      }
-
-      memcpy(pContainerInfo->pbKeyExPublicKey, pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.pbKeyExPublicKey, pContainerInfo->cbKeyExPublicKey); 
-
-      LogTrace(LOGTYPE_INFO, WHERE, "KeyExPublicKey [%d]", pContainerInfo->cbKeyExPublicKey);
 #ifdef _DEBUG
-   LogDump (pContainerInfo->cbSigPublicKey, (char *)pContainerInfo->pbKeyExPublicKey);
+	if (bContainerIndex == 0)
+  		LogDumpBin("C:\\SmartCardMinidriverTest\\authpk.bin", pContainerInfo->cbSigPublicKey
+                                                       , (char *)pContainerInfo->pbSigPublicKey);
+	if (bContainerIndex == 1)
+  		LogDumpBin("C:\\SmartCardMinidriverTest\\nonreppk.bin", pContainerInfo->cbSigPublicKey
+                                                       , (char *)pContainerInfo->pbSigPublicKey);
 #endif
-   }
-   else
-   {
-      pContainerInfo->cbKeyExPublicKey = 0;
-      pContainerInfo->pbKeyExPublicKey = NULL;
-   }
-
+	
 cleanup:
-   LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
-   return(dwReturn);
+	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
+	return(dwReturn);
 }
 #undef WHERE
 

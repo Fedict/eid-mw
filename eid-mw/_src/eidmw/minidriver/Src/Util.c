@@ -490,24 +490,24 @@ DWORD AddContextInList(PCARD_DATA pCardData)
    pCardItem->ContainerInfo[0].dwPinId = ROLE_DIGSIG;
    
    /* Container Info */
-   pCardItem->ContainerInfo[0].ContainerInfo.dwVersion  = CONTAINER_INFO_CURRENT_VERSION;
-   pCardItem->ContainerInfo[0].ContainerInfo.dwReserved = 0;
-   dwReturn = BeidGetPubKey(pCardData, 
-                            pObjectItem->ObjectDataSize, 
-                            pObjectItem->pObjectData, 
-                            &(pCardItem->ContainerInfo[0].ContainerInfo.cbSigPublicKey), 
-                            &(pCardItem->ContainerInfo[0].ContainerInfo.pbSigPublicKey));
-   if ( dwReturn != SCARD_S_SUCCESS )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "BeidGetPubKey returned [%d]", dwReturn);
-      CLEANUP(SCARD_E_UNEXPECTED);
-   }
-   pCardItem->ContainerInfo[0].ContainerInfo.cbKeyExPublicKey = 0;
-   pCardItem->ContainerInfo[0].ContainerInfo.pbKeyExPublicKey = NULL;
-#ifdef _DEBUG
-   LogDumpBin("C:\\SmartCardMinidriverTest\\authpk.bin", pCardItem->ContainerInfo[0].ContainerInfo.cbSigPublicKey
-                                                       , (char *)pCardItem->ContainerInfo[0].ContainerInfo.pbSigPublicKey);
-#endif
+//   pCardItem->ContainerInfo[0].ContainerInfo.dwVersion  = CONTAINER_INFO_CURRENT_VERSION;
+//   pCardItem->ContainerInfo[0].ContainerInfo.dwReserved = 0;
+//   dwReturn = BeidGetPubKey(pCardData, 
+//                            pObjectItem->ObjectDataSize, 
+//                            pObjectItem->pObjectData, 
+//                            &(pCardItem->ContainerInfo[0].ContainerInfo.cbSigPublicKey), 
+//                            &(pCardItem->ContainerInfo[0].ContainerInfo.pbSigPublicKey));
+//   if ( dwReturn != SCARD_S_SUCCESS )
+//   {
+//      LogTrace(LOGTYPE_ERROR, WHERE, "BeidGetPubKey returned [%d]", dwReturn);
+//      CLEANUP(SCARD_E_UNEXPECTED);
+//   }
+//   pCardItem->ContainerInfo[0].ContainerInfo.cbKeyExPublicKey = 0;
+//   pCardItem->ContainerInfo[0].ContainerInfo.pbKeyExPublicKey = NULL;
+//#ifdef _DEBUG
+//   LogDumpBin("C:\\SmartCardMinidriverTest\\authpk.bin", pCardItem->ContainerInfo[0].ContainerInfo.cbSigPublicKey
+//                                                       , (char *)pCardItem->ContainerInfo[0].ContainerInfo.pbSigPublicKey);
+//#endif
 
    /*
     * Non-repudiation Certificate
@@ -543,20 +543,20 @@ DWORD AddContextInList(PCARD_DATA pCardData)
    pCardItem->ContainerInfo[1].dwPinId = ROLE_NONREP;
 
    /* Container Info */
-   pCardItem->ContainerInfo[1].ContainerInfo.dwVersion        = CONTAINER_INFO_CURRENT_VERSION;
-   pCardItem->ContainerInfo[1].ContainerInfo.dwReserved       = 0;
-   dwReturn = BeidGetPubKey(pCardData, 
-                            pObjectItem->ObjectDataSize, 
-                            pObjectItem->pObjectData, 
-                            &(pCardItem->ContainerInfo[1].ContainerInfo.cbSigPublicKey), 
-                            &(pCardItem->ContainerInfo[1].ContainerInfo.pbSigPublicKey));
-   if ( dwReturn != SCARD_S_SUCCESS )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "BeidGetPubKey returned [%d]", dwReturn);
-      CLEANUP(SCARD_E_UNEXPECTED);
-   }
-   pCardItem->ContainerInfo[1].ContainerInfo.cbKeyExPublicKey = 0;
-   pCardItem->ContainerInfo[1].ContainerInfo.pbKeyExPublicKey = NULL;
+   //pCardItem->ContainerInfo[1].ContainerInfo.dwVersion        = CONTAINER_INFO_CURRENT_VERSION;
+   //pCardItem->ContainerInfo[1].ContainerInfo.dwReserved       = 0;
+   //dwReturn = BeidGetPubKey(pCardData, 
+   //                         pObjectItem->ObjectDataSize, 
+   //                         pObjectItem->pObjectData, 
+   //                         &(pCardItem->ContainerInfo[1].ContainerInfo.cbSigPublicKey), 
+   //                         &(pCardItem->ContainerInfo[1].ContainerInfo.pbSigPublicKey));
+   //if ( dwReturn != SCARD_S_SUCCESS )
+   //{
+   //   LogTrace(LOGTYPE_ERROR, WHERE, "BeidGetPubKey returned [%d]", dwReturn);
+   //   CLEANUP(SCARD_E_UNEXPECTED);
+   //}
+   //pCardItem->ContainerInfo[1].ContainerInfo.cbKeyExPublicKey = 0;
+   //pCardItem->ContainerInfo[1].ContainerInfo.pbKeyExPublicKey = NULL;
 
 #ifdef _DEBUG
    LogDumpBin("C:\\SmartCardMinidriverTest\\nonreppk.bin", pCardItem->ContainerInfo[1].ContainerInfo.cbSigPublicKey

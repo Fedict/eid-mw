@@ -21,6 +21,7 @@
 
 #include "Log.h"
 #include "util.h"
+#include "smartcard.h"
 
 /****************************************************************************************************/
 
@@ -43,7 +44,10 @@ DWORD WINAPI   CardGetContainerProperty
    DWORD             dwReturn = 0;
    PCARD_LIST_TYPE   pCurrentCard  = NULL;
    CONTAINER_INFO    ContInfo;
-
+   DWORD             cbCertif = 0;
+   DWORD			 dwCertSpec = 0;
+   PBYTE			 pbCertif = NULL;
+   PIN_ID            dwPinId = 0;
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
    memset(&ContInfo, '\0', sizeof(ContInfo));
@@ -106,22 +110,50 @@ DWORD WINAPI   CardGetContainerProperty
          LogTrace(LOGTYPE_ERROR, WHERE, "Insufficient buffer[%d]<[%d]", cbData, sizeof(CONTAINER_INFO));
          CLEANUP(ERROR_INSUFFICIENT_BUFFER);
       }
-
+	  if (bContainerIndex == 0) {
+		  LogTrace(LOGTYPE_INFO, WHERE, "Creating Authentication Certif...");
+		  dwCertSpec = CERT_AUTH;
+	  }
+	  if (bContainerIndex == 1) {
+	  	  LogTrace(LOGTYPE_INFO, WHERE, "Creating Non-Repudiation Certif...");
+		  dwCertSpec = CERT_NONREP;
+	  }
+	  dwReturn = BeidReadCert(pCardData, dwCertSpec, &cbCertif, &pbCertif);
+	  if ( dwReturn != SCARD_S_SUCCESS )
+	  {
+		  if (bContainerIndex == 0)
+			  LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
+		  if (bContainerIndex == 1)
+			  LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
+		  CLEANUP(SCARD_E_UNEXPECTED);
+	  }
       ContInfo.dwVersion      = CONTAINER_INFO_CURRENT_VERSION;
       ContInfo.dwReserved     = 0;
-      ContInfo.cbSigPublicKey = pCurrentCard->ContainerInfo[bContainerIndex].ContainerInfo.cbSigPublicKey;
-      ContInfo.pbSigPublicKey = pCardData->pfnCspAlloc(ContInfo.cbSigPublicKey);
+   //   ContInfo.cbSigPublicKey = pCurrentCard->ContainerInfo[bContainerIndex].ContainerInfo.cbSigPublicKey;
+   //   ContInfo.pbSigPublicKey = pCardData->pfnCspAlloc(ContInfo.cbSigPublicKey);
+  	  dwReturn = BeidGetPubKey(pCardData, 
+                            cbCertif, 
+                            pbCertif, 
+                            &(ContInfo.cbSigPublicKey), 
+                            &(ContInfo.pbSigPublicKey));
+	  if ( dwReturn != SCARD_S_SUCCESS )
+	  {
+		  LogTrace(LOGTYPE_ERROR, WHERE, "BeidGetPubKey returned [%d]", dwReturn);
+		  CLEANUP(SCARD_E_UNEXPECTED);
+	  }
+
       if ( ContInfo.pbSigPublicKey == NULL )
       {
          LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for public key data (pbSigPublicKey)...");
          CLEANUP(SCARD_E_NO_MEMORY);
       }
 
-      memcpy (ContInfo.pbSigPublicKey,
-              pCurrentCard->ContainerInfo[bContainerIndex].ContainerInfo.pbSigPublicKey,
-              ContInfo.cbSigPublicKey);
+//      memcpy (ContInfo.pbSigPublicKey,
+//              pCurrentCard->ContainerInfo[bContainerIndex].ContainerInfo.pbSigPublicKey,
+//              ContInfo.cbSigPublicKey);
 
       memcpy (pbData, &ContInfo, sizeof(CONTAINER_INFO));
+
       *pdwDataLen = sizeof(CONTAINER_INFO);
    }
    else
@@ -133,8 +165,14 @@ DWORD WINAPI   CardGetContainerProperty
          LogTrace(LOGTYPE_ERROR, WHERE, "Insufficient buffer[%d]<[%d]", cbData, sizeof(PIN_ID));
          CLEANUP(ERROR_INSUFFICIENT_BUFFER);
       }
-
-      memcpy (pbData, &(pCurrentCard->ContainerInfo[bContainerIndex].dwPinId), sizeof(PIN_ID));
+	  if (bContainerIndex == 0) {
+		  dwPinId = ROLE_DIGSIG;
+	  }
+	  if (bContainerIndex == 1) {
+		  dwPinId = ROLE_NONREP;
+	  }
+      
+      memcpy (pbData, &(dwPinId), sizeof(PIN_ID));
       *pdwDataLen = sizeof(PIN_ID);
    }
 
@@ -299,11 +337,10 @@ DWORD CardGetKeysizes(PCARD_LIST_TYPE pCurrentCard, PBYTE pbData, DWORD cbData, 
    case AT_ECDSA_P256 :
    case AT_ECDSA_P384 :
    case AT_ECDSA_P521 :
+   case AT_KEYEXCHANGE:
       iUnSupported++;
       break;
    case AT_SIGNATURE  :
-   case AT_KEYEXCHANGE:
-      /* The minidriver has to announce the AT_KEYEXCHANGE as supported, otherwhise AD logon does not work... */
       break;
    default:
       iInValid++;
