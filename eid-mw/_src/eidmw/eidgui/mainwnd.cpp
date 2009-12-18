@@ -4478,13 +4478,13 @@ QString MainWnd::GetCardTypeText(QString const& cardType)
 		strCardType	= tr("E. Verklaring van inschrijving");
 		break;
 	case 16:
-		strCardType	= tr("E+ Verklaring van inschrijving");
+		strCardType	= tr("E+. Verklaring van inschrijving");
 		break;
 	case 17:
 		strCardType	= tr("F. Verblijfskaart van een familielid van een burger van de Unie");
 		break;
 	case 18:
-		strCardType	= tr("F+ Verblijfskaart van een familielid van een burger van de Unie");
+		strCardType	= tr("F+. Verblijfskaart van een familielid van een burger van de Unie");
 		break;
 	default:
 		strCardType = tr("Unknown");

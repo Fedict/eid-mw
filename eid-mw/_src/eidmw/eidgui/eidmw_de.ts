@@ -774,8 +774,8 @@ Bitte .xml, .csv oder .eid angeben</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4446"/>
-        <source>E+ Verklaring van inschrijving</source>
-        <translation>E+ Dokument zur Bescheininung des Daueraufenthalts</translation>
+        <source>E+. Verklaring van inschrijving</source>
+        <translation>E+. Dokument zur Bescheininung des Daueraufenthalts</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4449"/>
@@ -784,8 +784,8 @@ Bitte .xml, .csv oder .eid angeben</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4452"/>
-        <source>F+ Verblijfskaart van een familielid van een burger van de Unie</source>
-        <translation>F+ Daueraufenthaltskarte für Familienangehörige eines Unionsbürgers</translation>
+        <source>F+. Verblijfskaart van een familielid van een burger van de Unie</source>
+        <translation>F+. Daueraufenthaltskarte für Familienangehörige eines Unionsbürgers</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="1561"/>

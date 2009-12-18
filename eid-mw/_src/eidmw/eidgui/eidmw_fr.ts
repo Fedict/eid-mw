@@ -774,8 +774,8 @@ Spécifiez .xml, .csv ou .eid</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4446"/>
-        <source>E+ Verklaring van inschrijving</source>
-        <translation>E+ Document attestant de la permanence du séjour</translation>
+        <source>E+. Verklaring van inschrijving</source>
+        <translation>E+. Document attestant de la permanence du séjour</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4449"/>
@@ -784,8 +784,8 @@ Spécifiez .xml, .csv ou .eid</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="4452"/>
-        <source>F+ Verblijfskaart van een familielid van een burger van de Unie</source>
-        <translation>F+ Carte de séjour permanent de membre de famille d’un citoyen de l&apos;Union</translation>
+        <source>F+. Verblijfskaart van een familielid van een burger van de Unie</source>
+        <translation>F+. Carte de séjour permanent de membre de famille d’un citoyen de l&apos;Union</translation>
     </message>
     <message>
         <location filename="mainwnd.cpp" line="1561"/>
