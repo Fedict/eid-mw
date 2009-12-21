@@ -99,14 +99,15 @@ int main(int argc, char *argv[])
 	{
 		BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "Wake up responding OK");
 		instance.sendMessage("Restore Windows");
-
+#ifndef __MACH__
 		if ( (argc >= 2) && (strcmp(argv[1],"/startup")!=0) && (argv[1] != NULL) )
 		{
 			BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "argc = %i argv[1] = %s",argc,argv[1]);
 			QString openFile = "Open File";
 			openFile.append(argv[1]);
 			instance.sendMessage (openFile);
-		}	
+		}
+#endif
 		return 0;
 	}
 
@@ -131,14 +132,15 @@ int main(int argc, char *argv[])
 		&widget, SLOT(messageRespond(const QString&)));
 
 	
-	
+#ifndef __MACH__	
 	if ( (argc >= 2) && (strcmp(argv[1],"/startup")!=0) && (argv[1] != NULL) )
 	{
 		BEID_LOG(BEID_LOG_LEVEL_DEBUG, "eidgui", "argc = %i argv[1] = %s",argc,argv[1]);
 		QString openFile = "Open File";
 		openFile.append(argv[1]);
 		instance.sendMessage( (const QString)openFile );
-	}	
+	}
+#endif
 	if (!settings.getStartMinimized())
 	{
 		widget.show();
