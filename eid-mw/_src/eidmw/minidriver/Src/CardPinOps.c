@@ -233,6 +233,8 @@ DWORD WINAPI   CardAuthenticateEx
                )
 {
    DWORD dwReturn = SCARD_S_SUCCESS;
+   PIN_INFO pbPinInfo;
+   DWORD dwDataLen;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
@@ -250,11 +252,7 @@ DWORD WINAPI   CardAuthenticateEx
       LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [PinId]:[0x%02X]", PinId);
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
-   if ( pbPinData == NULL )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pbPinData]");
-      CLEANUP(SCARD_E_INVALID_PARAMETER);
-   }
+
    if ( ( (dwFlags & CARD_AUTHENTICATE_SESSION_PIN         ) == CARD_AUTHENTICATE_SESSION_PIN         ) ||
         ( (dwFlags & CARD_AUTHENTICATE_GENERATE_SESSION_PIN) == CARD_AUTHENTICATE_GENERATE_SESSION_PIN) )
    {
@@ -270,6 +268,8 @@ DWORD WINAPI   CardAuthenticateEx
          CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
       }
    }
+
+
    /*
    else if ( dwFlags != 0 )
    {
@@ -277,15 +277,31 @@ DWORD WINAPI   CardAuthenticateEx
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
    */
-
+	
    dwReturn = BeidMSE(pCardData, PinId);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "MSE: [0x%02X]", dwReturn);
       CLEANUP(dwReturn);
    }
+   /* External Pin?  */
+   dwReturn = CardGetProperty(pCardData, 
+								CP_CARD_PIN_INFO, 
+								(PBYTE) &pbPinInfo, 
+								sizeof(pbPinInfo), 
+								&dwDataLen, 
+								PinId);
+   if (dwReturn != 0) {
+	   LogTrace(LOGTYPE_ERROR, WHERE, "CardGetProperty Failed: %02X", dwReturn);
+      CLEANUP(SCARD_E_INVALID_PARAMETER);
+   }
 
-   dwReturn = BeidAuthenticate(pCardData, pbPinData, cbPinData, pcAttemptsRemaining);
+   if (pbPinInfo.PinType == ExternalPinType) {	
+	   dwReturn = BeidAuthenticateExternal(pCardData, pcAttemptsRemaining);
+   } else {
+	   dwReturn = BeidAuthenticate(pCardData, pbPinData, cbPinData, pcAttemptsRemaining);
+   }
+
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Logon: [0x%02X]", dwReturn);

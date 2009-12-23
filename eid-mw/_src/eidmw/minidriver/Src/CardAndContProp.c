@@ -337,9 +337,9 @@ DWORD CardGetKeysizes(PCARD_LIST_TYPE pCurrentCard, PBYTE pbData, DWORD cbData, 
    case AT_ECDSA_P256 :
    case AT_ECDSA_P384 :
    case AT_ECDSA_P521 :
-   case AT_KEYEXCHANGE:
       iUnSupported++;
       break;
+   case AT_KEYEXCHANGE:
    case AT_SIGNATURE  :
       break;
    default:

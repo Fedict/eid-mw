@@ -487,7 +487,7 @@ DWORD AddContextInList(PCARD_DATA pCardData)
     * Container Info
     */
    /* Pin ID */
-   pCardItem->ContainerInfo[0].dwPinId = ROLE_DIGSIG;
+//   pCardItem->ContainerInfo[0].dwPinId = ROLE_DIGSIG;
    
    /* Container Info */
 //   pCardItem->ContainerInfo[0].ContainerInfo.dwVersion  = CONTAINER_INFO_CURRENT_VERSION;
@@ -540,7 +540,7 @@ DWORD AddContextInList(PCARD_DATA pCardData)
     * Container Info
     */
    /* Pin Id */
-   pCardItem->ContainerInfo[1].dwPinId = ROLE_NONREP;
+//   pCardItem->ContainerInfo[1].dwPinId = ROLE_NONREP;
 
    /* Container Info */
    //pCardItem->ContainerInfo[1].ContainerInfo.dwVersion        = CONTAINER_INFO_CURRENT_VERSION;
@@ -620,8 +620,13 @@ DWORD AddContextInList(PCARD_DATA pCardData)
    pinCachePolicy.PinCachePolicyType   = PinCacheNormal;
    pinCachePolicy.dwPinCachePolicyInfo = 0;
    /* Pin Info */
-   pCardItem->PinInfo[ROLE_DIGSIG].dwVersion           = PIN_INFO_CURRENT_VERSION;
-   pCardItem->PinInfo[ROLE_DIGSIG].PinType             = AlphaNumericPinType;
+   pCardItem->PinInfo[ROLE_DIGSIG].dwVersion           = PIN_INFO_CURRENT_VERSION; 
+   if (CCIDgetFeature(FEATURE_VERIFY_PIN_START, pCardData->hScard) != 0 || 
+       CCIDgetFeature(FEATURE_VERIFY_PIN_DIRECT, pCardData->hScard) != 0 )
+       pCardItem->PinInfo[ROLE_DIGSIG].PinType             = ExternalPinType;
+   else
+       pCardItem->PinInfo[ROLE_DIGSIG].PinType             = AlphaNumericPinType;
+   
    pCardItem->PinInfo[ROLE_DIGSIG].PinPurpose          = AuthenticationPin;
    pCardItem->PinInfo[ROLE_DIGSIG].dwChangePermission  = CREATE_PIN_SET(ROLE_DIGSIG);
    pCardItem->PinInfo[ROLE_DIGSIG].dwUnblockPermission = 0;
@@ -633,12 +638,17 @@ DWORD AddContextInList(PCARD_DATA pCardData)
    pinCachePolicy.PinCachePolicyType   = PinCacheNone;
    pinCachePolicy.dwPinCachePolicyInfo = 0;
    pCardItem->PinInfo[ROLE_NONREP].dwVersion           = PIN_INFO_CURRENT_VERSION;
-   pCardItem->PinInfo[ROLE_NONREP].PinType             = AlphaNumericPinType;
+   if (CCIDgetFeature(FEATURE_VERIFY_PIN_START, pCardData->hScard) != 0 || 
+       CCIDgetFeature(FEATURE_VERIFY_PIN_DIRECT, pCardData->hScard) != 0 )
+       pCardItem->PinInfo[ROLE_NONREP].PinType             = ExternalPinType;
+   else
+	   pCardItem->PinInfo[ROLE_NONREP].PinType             = AlphaNumericPinType;
    pCardItem->PinInfo[ROLE_NONREP].PinPurpose          = NonRepudiationPin;
    pCardItem->PinInfo[ROLE_NONREP].dwChangePermission  = CREATE_PIN_SET(ROLE_NONREP);
    pCardItem->PinInfo[ROLE_NONREP].dwUnblockPermission = 0;
    memcpy (&(pCardItem->PinInfo[ROLE_NONREP].PinCachePolicy), &pinCachePolicy, sizeof(pinCachePolicy));
    pCardItem->PinInfo[ROLE_NONREP].dwFlags             = 0;
+
 
    LogTrace(LOGTYPE_INFO, WHERE, "ADDED new card for the context: [0x%08X][0x%08X]", pCardData->hSCardCtx, pCardData->hScard);
 
@@ -886,4 +896,3 @@ cleanup:
    return (dwReturn);
 }
 
-/****************************************************************************************************/

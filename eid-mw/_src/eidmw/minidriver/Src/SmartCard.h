@@ -20,6 +20,77 @@
 #ifndef __SMARTCARD_H__
 #define __SMARTCARD_H__
 
+
+#pragma pack(1)
+typedef struct _PIN_VERIFY_STRUCTURE
+{
+	BYTE bTimeOut; // timeout in seconds (00 means use default timeout)
+	BYTE bTimeOut2; // timeout in seconds after first key stroke
+	BYTE bmFormatString; // formatting options
+	BYTE bmPINBlockString; 
+		// bits 7-4 bit size of PIN length in APDU, bits 3-0 PIN
+		// block size in bytes after justification and formatting
+	BYTE bmPINLengthFormat; 
+		// bits 7-5 RFU, bit 4 set if system units are bytes 
+		// clear if system units are bits,
+		// bits 3-0 PIN length position in system units
+	USHORT wPINMaxExtraDigit; 
+		// XXYY, where XX is minimum PIN size in digits,
+		// YY is maximum
+	BYTE bEntryValidationCondition; 
+		// Conditions under which PIN entry should be
+		// considered complete
+	BYTE bNumberMessage; // Number of messages to display for PIN verification
+	USHORT wLangId; // Language for messages
+	BYTE bMsgIndex; // Message index (should be 00)
+	BYTE bTeoPrologue[3]; // T=1 I-block prologue field to use (fill with 00)
+	ULONG ulDataLength; // length of Data to be sent to the ICC
+	BYTE abData[13]; // Data to send to the ICC
+} PIN_VERIFY_STRUCTURE, *PPIN_VERIFY_STRUCTURE;
+#pragma pack()
+
+#define FEATURE_VERIFY_PIN_START         0x01 
+#define FEATURE_VERIFY_PIN_FINISH        0x02 
+#define FEATURE_MODIFY_PIN_START         0x03 
+#define FEATURE_MODIFY_PIN_FINISH        0x04 
+#define FEATURE_GET_KEY_PRESSED          0x05 
+#define FEATURE_VERIFY_PIN_DIRECT        0x06 
+#define FEATURE_MODIFY_PIN_DIRECT        0x07 
+#define FEATURE_MCT_READERDIRECT         0x08 
+#define FEATURE_MCT_UNIVERSAL            0x09 
+#define FEATURE_IFD_PIN_PROPERTIES       0x0A 
+#define FEATURE_ABORT                    0x0B 
+
+
+extern DWORD BeidGetCardSN
+			(
+			   PCARD_DATA  pCardData, 
+			   unsigned int iSerNumLg, 
+			   unsigned char *pa_cSerNum
+			);
+extern DWORD BeidSignData
+			(
+				PCARD_DATA  pCardData, 
+				unsigned int HashAlgo, 
+				DWORD cbToBeSigned, 
+				PBYTE pbToBeSigned, 
+				DWORD *pcbSignature, 
+				PBYTE *ppbSignature
+			);
+extern DWORD BeidReadFile
+			(
+				PCARD_DATA  pCardData, 
+				DWORD dwOffset, 
+				DWORD *cbStream, 
+				PBYTE pbStream
+			);
+extern DWORD BeidReadCert
+			(
+				PCARD_DATA  pCardData, 
+				DWORD dwCertSpec, 
+				DWORD *pcbCertif, 
+				PBYTE *ppbCertif
+			);
 extern DWORD   BeidAuthenticate
                (
                   PCARD_DATA     pCardData, 
@@ -27,7 +98,11 @@ extern DWORD   BeidAuthenticate
                   DWORD          cbPin, 
                   PDWORD         pcAttemptsRemaining
                );
-
+extern DWORD   BeidAuthenticateExternal
+               (
+                  PCARD_DATA     pCardData, 
+                  PDWORD         pcAttemptsRemaining
+               );
 extern DWORD   BeidDeAuthenticate
                (
                   PCARD_DATA     pCardData
@@ -49,9 +124,21 @@ extern DWORD   BeidChangePIN
                   PDWORD         pcAttemptsRemaining
                );
 
-extern DWORD BeidGetCardSN(PCARD_DATA  pCardData, unsigned int iSerNumLg, unsigned char *pa_cSerNum);
-extern DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSigned, PBYTE pbToBeSigned, DWORD *pcbSignature, PBYTE *ppbSignature);
-extern DWORD BeidReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD *cbStream, PBYTE pbStream);
-extern DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PBYTE *ppbCertif);
+
+extern DWORD CCIDfindFeature
+				(
+					BYTE featureTag, 
+					BYTE* features, 
+					DWORD featuresLength
+				);
+extern DWORD CCIDgetFeature
+				(
+					BYTE featureTag, 
+					SCARDHANDLE hCard
+				);
+extern DWORD createVerifyCommand
+				(
+					PPIN_VERIFY_STRUCTURE pVerifyCommand
+				);
 
 #endif

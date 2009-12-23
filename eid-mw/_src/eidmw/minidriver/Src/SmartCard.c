@@ -156,6 +156,150 @@ cleanup:
 
 /****************************************************************************************************/
 
+#define WHERE "BeidAuthenticateExternal"
+DWORD BeidAuthenticateExternal(PCARD_DATA   pCardData, 
+                       PDWORD       pcAttemptsRemaining) 
+{
+   DWORD             dwReturn  = 0;
+
+   SCARD_IO_REQUEST  ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
+   SCARD_IO_REQUEST  ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
+
+   PIN_VERIFY_STRUCTURE verifyCommand;
+
+   unsigned int      uiCmdLg   = 0;
+   unsigned char     recvbuf[256];
+   unsigned long     recvlen   = sizeof(recvbuf);
+   BYTE              SW1, SW2;
+   int               i         = 0;
+   int				 offset		= 0;
+   DWORD verifyPinStartIoctl, verifyPinFinishIoctl,getKeyPressedIoctl;
+
+   LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+
+   /********************/
+   /* Check Parameters */
+   /********************/
+   if ( pCardData == NULL )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pCardData]");
+      CLEANUP(SCARD_E_INVALID_PARAMETER);
+   }
+
+   /**********/
+   /* Log On */
+   /**********/
+
+   createVerifyCommand(&verifyCommand);
+
+   uiCmdLg = sizeof(verifyCommand);
+   recvlen = sizeof(recvbuf);
+
+   verifyPinStartIoctl = CCIDgetFeature(FEATURE_VERIFY_PIN_START, pCardData->hScard);
+   dwReturn = SCardControl(pCardData->hScard, 
+                            verifyPinStartIoctl, 
+                            &verifyCommand, 
+                            uiCmdLg,                              
+                            recvbuf, 
+							recvlen,
+                            &recvlen);
+   if ( dwReturn != SCARD_S_SUCCESS )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+      CLEANUP(dwReturn);
+   }
+
+   	while (true) {
+		getKeyPressedIoctl = CCIDgetFeature(FEATURE_GET_KEY_PRESSED, pCardData->hScard);
+		dwReturn = SCardControl(pCardData->hScard,
+			getKeyPressedIoctl,
+			NULL,
+			0,
+			recvbuf,
+			recvlen,
+			&recvlen);
+		if ( dwReturn != SCARD_S_SUCCESS )
+		{
+		   LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+           CLEANUP(dwReturn);
+        }
+
+		switch (recvbuf[0]) {
+			case 0x00:
+				Sleep(200);
+				break;
+			case 0x0d:
+				//printf("PIN Confirmed...\n");
+				goto endkeypress;
+			case 0x1b:
+				//printf("PIN Cancelled...\n");
+				goto endkeypress;
+			case 0x40:
+				//printf("PIN Aborted...\n");
+				goto endkeypress;
+			case 0x2b:
+				//printf("*");
+				break;
+			case 0x08:	
+				//printf("Backspace...\n");
+				break;
+			case 0x0a:
+				//printf("All keys cleared...\n");
+				break;
+			default:
+				//printf("Key pressed: 0x%x\n", bRecvBuffer[0]);
+				;
+		}
+	}
+endkeypress:
+	verifyPinFinishIoctl = CCIDgetFeature(FEATURE_VERIFY_PIN_FINISH, pCardData->hScard);
+	dwReturn = SCardControl(pCardData->hScard,
+			verifyPinFinishIoctl,
+			NULL,
+			0,
+			recvbuf,
+			sizeof(recvbuf),
+			&recvlen);
+	if ( dwReturn != SCARD_S_SUCCESS )
+		{
+		   LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+           CLEANUP(dwReturn);
+        }
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
+   {
+      dwReturn = SCARD_W_WRONG_CHV;
+      LogTrace(LOGTYPE_ERROR, WHERE, "CardAuthenticateEx Failed: [0x%02X][0x%02X]", SW1, SW2);
+
+      if ( ((SW1 == 0x63) && ((SW2 & 0xF0) == 0xC0)) )
+      {
+         if ( pcAttemptsRemaining != NULL )
+         {
+            /* -1: Don't support returning the count of remaining authentication attempts */
+            *pcAttemptsRemaining = (SW2 & 0x0F);
+         }
+      }
+      else if ( (SW1 == 0x69) && (SW2 == 0x83) )
+      {
+         dwReturn = SCARD_W_CHV_BLOCKED;
+      }
+   }
+   else
+   {
+      LogTrace(LOGTYPE_INFO, WHERE, "Logged on...");
+   }
+
+cleanup:
+
+   LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
+
+   return(dwReturn);
+}
+#undef WHERE
+
+/****************************************************************************************************/
+
 #define WHERE "BeidDeAuthenticate"
 DWORD BeidDeAuthenticate(PCARD_DATA    pCardData) 
 {
@@ -919,4 +1063,139 @@ cleanup:
 }
 #undef WHERE
 
+/****************************************************************************************************/
+
+/* CCID Features */
+DWORD CCIDfindFeature(BYTE featureTag, BYTE* features, DWORD featuresLength) {
+	DWORD idx = 0;
+	int count;
+    while (idx < featuresLength) {
+		BYTE tag = features[idx];
+        idx++;
+        idx++;
+        if (featureTag == tag) {
+			DWORD feature = 0;
+            for (count = 0; count < 3; count++) {
+				feature |= features[idx] & 0xff;
+                idx++;
+                feature <<= 8;
+            }
+			feature |= features[idx] & 0xff;
+            return feature;
+        }
+        idx += 4;
+    }
+	return 0;
+}
+
+DWORD CCIDgetFeature(BYTE featureTag, SCARDHANDLE hCard) {
+	BYTE pbRecvBuffer[200];
+	DWORD dwRecvLength, dwReturn;
+	dwReturn = SCardControl(hCard, 
+		SCARD_CTL_CODE(3400),
+		NULL,
+		0,
+		pbRecvBuffer,
+		sizeof(pbRecvBuffer),
+		&dwRecvLength);
+	if ( SCARD_S_SUCCESS != dwReturn ) {
+		printf("Failed SCardControl\n");
+	    return 0;
+	}
+	return CCIDfindFeature(featureTag, pbRecvBuffer, dwRecvLength);
+}
+
+DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
+	pVerifyCommand->bTimeOut = 30;
+	pVerifyCommand->bTimeOut2 = 30;
+	pVerifyCommand->bmFormatString = 0x80 | 0x08 | 0x00 | 0x01;
+    /*
+     * bmFormatString. 
+	 *  01234567
+	 *  10001001
+	 *
+     * bit 7: 1 = system units are bytes
+	 *
+     * bit 6-3: 1 = PIN position in APDU command after Lc, so just after the
+     * 0x20 | pinSize.
+     * 
+     * bit 2: 0 = left justify data
+     * 
+     * bit 1-0: 01 = BCD
+     */
+
+	pVerifyCommand->bmPINBlockString = 0x47;
+	/*
+     * bmPINBlockString
+     * 
+	 * bit 7-4: 4 = PIN length
+     * 
+     * bit 3-0: 7 = PIN block size (7 times 0xff)
+     */
+
+	pVerifyCommand->bmPINLengthFormat = 0x04;
+    /*
+     * bmPINLengthFormat. weird... the values do not make any sense to me.
+     * 
+     * bit 7-5: 0 = RFU
+     * 
+     * bit 4: 0 = system units are bits
+     * 
+     * bit 3-0: 4 = PIN length position in APDU
+     */
+
+
+	pVerifyCommand->wPINMaxExtraDigit = BELPIC_MIN_USER_PIN_LEN << 8 | BELPIC_MAX_USER_PIN_LEN ;
+	/*
+     * First byte:  minimum PIN size in digit
+     * 
+     * Second byte: maximum PIN size in digit.
+     */
+
+	pVerifyCommand->bEntryValidationCondition = 0x02;
+    /*
+     * 0x02 = validation key pressed. So the user must press the green
+     * button on his pinpad.
+     */
+
+	pVerifyCommand->bNumberMessage = 0x01;
+    /*
+     * 0x01 = message with index in bMsgIndex
+     */
+
+	pVerifyCommand->wLangId = 0x1308;
+	/*
+	 * We should support multiple languages for CCID devices with LCD screen
+	 */
+
+	pVerifyCommand->bMsgIndex = 0x00;
+    /*
+     * 0x00 = PIN insertion prompt
+     */
+
+	pVerifyCommand->bTeoPrologue[0] = 0x00;
+	pVerifyCommand->bTeoPrologue[1] = 0x00;
+	pVerifyCommand->bTeoPrologue[2] = 0x00;
+    /*
+     * bTeoPrologue : only significant for T=1 protocol.
+     */
+
+	pVerifyCommand->abData[0] = 0x00; // CLA
+	pVerifyCommand->abData[1] = 0x20; // INS Verify
+	pVerifyCommand->abData[2] = 0x00; // P1
+	pVerifyCommand->abData[3] = 0x01; // P2
+	pVerifyCommand->abData[4] = 0x08; // Lc = 8 bytes in command data
+	pVerifyCommand->abData[5] = 0x20 ; // 
+	pVerifyCommand->abData[6] = BELPIC_PAD_CHAR; // Pin[1]
+	pVerifyCommand->abData[7] = BELPIC_PAD_CHAR; // Pin[2]
+	pVerifyCommand->abData[8] = BELPIC_PAD_CHAR; // Pin[3]
+	pVerifyCommand->abData[9] = BELPIC_PAD_CHAR; // Pin[4]
+	pVerifyCommand->abData[10] = BELPIC_PAD_CHAR; // Pin[5]
+	pVerifyCommand->abData[11] = BELPIC_PAD_CHAR; // Pin[6]
+	pVerifyCommand->abData[12] = BELPIC_PAD_CHAR; // Pin[7]
+
+	pVerifyCommand->ulDataLength = 13;
+
+	return 0;
+}
 /****************************************************************************************************/
