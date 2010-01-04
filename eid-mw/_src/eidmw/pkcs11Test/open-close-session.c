@@ -25,26 +25,46 @@
  */
 
 #include <stdio.h>
+#ifdef WIN32
+//allign at 1 byte
+#pragma pack(push, cryptoki, 1)
+#include <win32.h>
+#include <pkcs11.h>
+#pragma pack(pop, cryptoki)
+//back to default allignment
+
+#include <windows.h>
+#include <conio.h>
+
+#define dlopen(lib,h) LoadLibrary(lib)
+#define dlsym(h, function) GetProcAddress(h, function)
+#define dlclose(h) FreeLibrary(h)
+#define PKCS11_LIB "..\\_Binaries35\\Debug\\beid35pkcs11D.dll"
+#define RTLD_LAZY	1
+#define RTLD_NOW	2
+#define RTLD_GLOBAL 4
+
+#else
 #include <opensc/pkcs11.h>
 #include <dlfcn.h>
 #include <unistd.h>
-#include <stdlib.h>
-
 #define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
-//#define PKCS11_LIB "/home/fcorneli/beid-2.6.0/src/newpkcs11/src/pkcs11/libbeidpkcs11.so.2.1.0" 
+#endif
+#include <stdlib.h>
 
 int main() {
     	void *handle;
     	CK_C_GetFunctionList pC_GetFunctionList;
     	CK_RV rv;
     	CK_FUNCTION_LIST_PTR functions;
-	CK_INFO info;
+		CK_INFO info;
     	CK_SESSION_HANDLE session_handle;
     	CK_SLOT_ID_PTR slot_list;
     	long slot_count;
     	CK_SLOT_ID_PTR slotIds;
 	int slotIdx;
     	printf("PKCS11 test\n");
+
     	handle = dlopen(PKCS11_LIB, RTLD_LAZY); // RTLD_NOW is slower
     	if (NULL == handle) {
     	    fprintf(stderr, "dlopen error\n");
@@ -57,12 +77,14 @@ int main() {
     	    printf("failure\n");
     	    exit(1);
     	}
+
     	// invoke C_GetFunctionList
     	rv = (*pC_GetFunctionList) (&functions);
     	if (rv != CKR_OK) {
     	    fprintf(stderr, "C_GetFunctionList failed\n");
     	    exit(1);    
     	}
+
     	// C_Initialize
     	rv = (*functions->C_Initialize) (NULL);
     	if (CKR_OK != rv) {
@@ -128,6 +150,6 @@ finalize:
 		fprintf(stderr, "C_Finalize error\n");
 		exit(1);
 	}
-    	dlclose(handle);
+    dlclose(handle);
 }
 
