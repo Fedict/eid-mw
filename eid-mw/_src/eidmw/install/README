@@ -13,9 +13,9 @@ You do not need root privileges to run the application.
 To uninstall the software, execute 'uninstall.sh' as root, e.g.:
 $ sudo ./uninstall.sh
 
-Fedora 9
---------
-It is possible that the OpenCT package disturnbs the working of the cardreader.
+Fedora 12
+---------
+It is possible that the OpenCT package disturb the working of the cardreader.
 Check if the packages openct and pcsc-lite-openct are installed and remove them
 in the following way:
 	rpm -e --nodeps openct

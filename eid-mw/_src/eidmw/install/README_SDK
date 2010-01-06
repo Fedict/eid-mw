@@ -13,7 +13,7 @@ Software dependencies
 ---------------------
 This software depends upon the following libs:
 - Qt 4.3.1 or higher
-- Xerces-c 2.7
+- Xerces-c 2.8
 - pcscd
 
 
