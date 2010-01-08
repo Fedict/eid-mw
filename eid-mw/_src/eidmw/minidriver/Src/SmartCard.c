@@ -23,6 +23,9 @@
 
 #include "Log.h"
 #include "smartcard.h"
+#include "ExternalPinUI.h"
+
+#include <commctrl.h>
 
 /****************************************************************************************************/
 
@@ -32,8 +35,8 @@
 #define BELPIC_PIN_BUF_SIZE         8
 #define BELPIC_MIN_USER_PIN_LEN     4
 #define BELPIC_MAX_USER_PIN_LEN     12
-#define BELPIC_PAD_CHAR			      0xFF
-#define BELPIC_KEY_REF_NONREP		   0x83
+#define BELPIC_PAD_CHAR			    0xFF
+#define BELPIC_KEY_REF_NONREP		0x83
 
 /****************************************************************************************************/
 
@@ -157,26 +160,40 @@ cleanup:
 /****************************************************************************************************/
 
 #define WHERE "BeidAuthenticateExternal"
-DWORD BeidAuthenticateExternal(PCARD_DATA   pCardData, 
-                       PDWORD       pcAttemptsRemaining) 
+DWORD BeidAuthenticateExternal(
+					PCARD_DATA   pCardData, 
+                    PDWORD       pcAttemptsRemaining,
+					BOOL		 bSilent
+					) 
 {
-   DWORD             dwReturn  = 0;
+   DWORD						dwReturn  = 0;
 
-   SCARD_IO_REQUEST  ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
-   SCARD_IO_REQUEST  ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
+   SCARD_IO_REQUEST				ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
+   SCARD_IO_REQUEST				ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
 
-   PIN_VERIFY_STRUCTURE verifyCommand;
+   PIN_VERIFY_STRUCTURE			verifyCommand;
 
-   unsigned int      uiCmdLg   = 0;
-   unsigned char     recvbuf[256];
-   unsigned long     recvlen   = sizeof(recvbuf);
-   BYTE              SW1, SW2;
-   int               i         = 0;
-   int				 offset		= 0;
-   DWORD verifyPinStartIoctl, verifyPinFinishIoctl,getKeyPressedIoctl;
+   unsigned int					uiCmdLg   = 0;
+   unsigned char				recvbuf[256];
+   unsigned char				ucLastKey;
+   unsigned long				recvlen     = sizeof(recvbuf);
+   BYTE							SW1, SW2;
+   int							i           = 0;
+   int							offset		= 0;
+   DWORD						dwRetriesLeft;
+   BOOL							bRetry      = TRUE;
+   int							nButton;
+   HRESULT						hResult;
 
+   EXTERNAL_PIN_INFORMATION		externalPinInfo;
+   HANDLE						DialogThreadHandle;
+
+   wchar_t						wchErrorMessage[500];
+   wchar_t						wchMainInstruction[100];
+
+   
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
-
+    
    /********************/
    /* Check Parameters */
    /********************/
@@ -186,114 +203,225 @@ DWORD BeidAuthenticateExternal(PCARD_DATA   pCardData,
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
 
+
+   /*********************/
+   /* External PIN Info */
+   /*********************/
+
+    externalPinInfo.hCardHandle = pCardData->hScard;
+	CCIDgetFeatures(&(externalPinInfo.features), externalPinInfo.hCardHandle);
+
    /**********/
    /* Log On */
    /**********/
 
-   createVerifyCommand(&verifyCommand);
+    createVerifyCommand(&verifyCommand);
 
-   uiCmdLg = sizeof(verifyCommand);
-   recvlen = sizeof(recvbuf);
+    uiCmdLg = sizeof(verifyCommand);
+    recvlen = sizeof(recvbuf);
+	   
+    while (bRetry) {
+	    bRetry = FALSE;
+	    nButton = -1;
 
-   verifyPinStartIoctl = CCIDgetFeature(FEATURE_VERIFY_PIN_START, pCardData->hScard);
-   dwReturn = SCardControl(pCardData->hScard, 
-                            verifyPinStartIoctl, 
+		// We introduce a short sleep before starting the PIN VERIFY procedure
+		// Reason: we do this for users with a combined keyboard/secure PIN pad smartcard reader
+		//   "enter" key far right on the keyboard ==  "OK" button of the PIN pad
+		//   Problem: key becomes PIN-pad button before key is released. Result: the keyup event is not sent.
+		//   This sleep gives the user some time to release the Enter key.
+
+		Sleep(100);
+		dwReturn = SCardControl(pCardData->hScard, 
+							externalPinInfo.features.VERIFY_PIN_START, 
                             &verifyCommand, 
                             uiCmdLg,                              
                             recvbuf, 
-							recvlen,
+                            recvlen,
                             &recvlen);
-   if ( dwReturn != SCARD_S_SUCCESS )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
-      CLEANUP(dwReturn);
-   }
-
-   	while (true) {
-		getKeyPressedIoctl = CCIDgetFeature(FEATURE_GET_KEY_PRESSED, pCardData->hScard);
-		dwReturn = SCardControl(pCardData->hScard,
-			getKeyPressedIoctl,
-			NULL,
-			0,
-			recvbuf,
-			recvlen,
-			&recvlen);
 		if ( dwReturn != SCARD_S_SUCCESS )
 		{
-		   LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+			LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+			CLEANUP(dwReturn);
+		}
+		externalPinInfo.iPinCharacters = 0;
+		externalPinInfo.cardState = CS_PINENTRY;
+
+		// show dialog
+		if (!bSilent)
+			DialogThreadHandle = CreateThread(NULL, 0, DialogThreadPinEntry, &externalPinInfo, 0, NULL);
+		while (1) {
+			dwReturn = SCardControl(pCardData->hScard,
+				externalPinInfo.features.GET_KEY_PRESSED,
+				NULL,
+				0,
+				recvbuf,
+				recvlen,
+				&recvlen);
+			if ( dwReturn != SCARD_S_SUCCESS )
+			{
+			   LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+			   CLEANUP(dwReturn);
+			}
+			ucLastKey = recvbuf[0];
+			switch (recvbuf[0]) {
+				case 0x00:
+					// No key 
+					Sleep(200);
+					break;
+				case 0x0d:
+					// OK button
+					goto endkeypress;
+				case 0x1b:
+					// Cancel button
+					goto endkeypress;
+				case 0x40:
+					// Aborted/timeout
+					goto endkeypress;
+				case 0x2b:
+					// 0-9
+					externalPinInfo.iPinCharacters++;
+					break;
+				case 0x08:	
+					// Backspace
+					externalPinInfo.iPinCharacters--;
+					break;
+				case 0x0a:
+					// Clear
+					externalPinInfo.iPinCharacters = 0;
+					break;
+				default:
+					//printf("Key pressed: 0x%x\n", bRecvBuffer[0]);
+					;
+			}
+
+		}
+endkeypress:
+		
+		externalPinInfo.cardState = CS_PINENTERED;
+		dwReturn = SCardControl(pCardData->hScard,
+			externalPinInfo.features.VERIFY_PIN_FINISH,
+            NULL,
+            0,
+            recvbuf,
+            sizeof(recvbuf),
+            &recvlen);
+		if ( dwReturn != SCARD_S_SUCCESS )
+        {
+           LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
            CLEANUP(dwReturn);
         }
+		SW1 = recvbuf[recvlen-2];
+		SW2 = recvbuf[recvlen-1];
+		if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
+		{
+			dwReturn = SCARD_W_WRONG_CHV;
+			LogTrace(LOGTYPE_ERROR, WHERE, "CardAuthenticateEx Failed: [0x%02X][0x%02X]", SW1, SW2);
+			if (SW1 == 0x64) {
+				//error during pin entry
+				switch(SW2){
+					case 0x00:
+						// Timeout
+						if (ucLastKey == 0x0d) {
+							// OK button preceded by no other keys also results in 0x64 0x00
+							swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_TOO_SHORT_MAININSTRUCTIONS][getLanguage()]);
+							swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_TOO_SHORT_CONTENT][getLanguage()] );
+						} else {
+							swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_TIMED_OUT_MAININSTRUCTIONS][getLanguage()]);
+							// the user entered something but probably forgot to push OK.
+							swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_TIMED_OUT_CONTENT][getLanguage()]);
+						}
+						break;
+					case 0x01:
+						// Cancelled
+						swprintf(wchMainInstruction, sizeof(wchMainInstruction),  t[PIN_CANCELLED_MAININSTRUCTIONS][getLanguage()]);
+						swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_CANCELLED_CONTENT][getLanguage()]);
+						break;
+					case 0x02:
+						// PINs do not match
+						swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_DO_NOT_MATCH_MAININSTRUCTIONS][getLanguage()]);
+						swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_DO_NOT_MATCH_CONTENT][getLanguage()]);
+						break;
+					case 0x03:
+						// PIN size error
+						if (externalPinInfo.iPinCharacters > 0 && externalPinInfo.iPinCharacters < BELPIC_MIN_USER_PIN_LEN) {
+							// PIN too short
+							swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_TOO_SHORT_MAININSTRUCTIONS][getLanguage()]);
+							swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_TOO_SHORT_CONTENT][getLanguage()]);
+						} else {
+							if (externalPinInfo.iPinCharacters >= BELPIC_MAX_USER_PIN_LEN) {
+							// PIN too long
+							swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_TOO_LONG_MAININSTRUCTIONS][getLanguage()]);
+							swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_TOO_LONG_CONTENT][getLanguage()]);
+							} else {
+							// no info about PIN chars
+							swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_SIZE_MAININSTRUCTIONS][getLanguage()]);
+							swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_SIZE_CONTENT][getLanguage()]);
+							}
+						}
+						break;
+					default:
+						// Should not happen
+						swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_UNKNOWN_MAININSTRUCTIONS][getLanguage()]);
+						swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_UNKNOWN_CONTENT][getLanguage()], SW1,SW2);
+						break;
+				}
+				if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
+					hResult = TaskDialog(NULL, 
+							NULL, 
+							t[WINDOW_TITLE][getLanguage()], 
+							wchMainInstruction, 
+							wchErrorMessage, 
+							TDCBF_RETRY_BUTTON  | TDCBF_CANCEL_BUTTON ,
+							TD_ERROR_ICON,
+							&nButton);
+			}
+			if (SW1 == 0x63) {
+				// Invalid PIN
+				dwRetriesLeft = SW2 & 0x0F;
+				if ( pcAttemptsRemaining != NULL )
+				{
+					/* -1: Don't support returning the count of remaining authentication attempts */
+					*pcAttemptsRemaining = dwRetriesLeft;
+				}
+				swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_INVALID_MAININSTRUCTIONS][getLanguage()]);
+				swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_INVALID_CONTENT][getLanguage()], dwRetriesLeft);
+				if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
+					hResult = TaskDialog(NULL, 
+								NULL, 
+								t[WINDOW_TITLE][getLanguage()], 
+								wchMainInstruction, 
+								wchErrorMessage, 
+								TDCBF_RETRY_BUTTON  | TDCBF_CANCEL_BUTTON,
+								TD_ERROR_ICON,
+								&nButton);
+			}
 
-		switch (recvbuf[0]) {
-			case 0x00:
-				Sleep(200);
-				break;
-			case 0x0d:
-				//printf("PIN Confirmed...\n");
-				goto endkeypress;
-			case 0x1b:
-				//printf("PIN Cancelled...\n");
-				goto endkeypress;
-			case 0x40:
-				//printf("PIN Aborted...\n");
-				goto endkeypress;
-			case 0x2b:
-				//printf("*");
-				break;
-			case 0x08:	
-				//printf("Backspace...\n");
-				break;
-			case 0x0a:
-				//printf("All keys cleared...\n");
-				break;
-			default:
-				//printf("Key pressed: 0x%x\n", bRecvBuffer[0]);
-				;
+			if (SW1 == 0x69 && SW2 == 0x83) {
+				// PIN blocked
+				swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_BLOCKED_MAININSTRUCTIONS][getLanguage()]);
+				swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_BLOCKED_CONTENT][getLanguage()]);
+				if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
+					hResult = TaskDialog(NULL, 
+								NULL, 
+								t[WINDOW_TITLE][getLanguage()], 
+								wchMainInstruction, 
+								wchErrorMessage, 
+								TDCBF_OK_BUTTON,
+								TD_ERROR_ICON,
+								&nButton);
+				dwReturn = SCARD_W_CHV_BLOCKED;
+			}
+			bRetry = (nButton == IDRETRY);
+
+		}
+		else
+		{
+			LogTrace(LOGTYPE_INFO, WHERE, "Logged on...");
 		}
 	}
-endkeypress:
-	verifyPinFinishIoctl = CCIDgetFeature(FEATURE_VERIFY_PIN_FINISH, pCardData->hScard);
-	dwReturn = SCardControl(pCardData->hScard,
-			verifyPinFinishIoctl,
-			NULL,
-			0,
-			recvbuf,
-			sizeof(recvbuf),
-			&recvlen);
-	if ( dwReturn != SCARD_S_SUCCESS )
-		{
-		   LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
-           CLEANUP(dwReturn);
-        }
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
-   if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
-   {
-      dwReturn = SCARD_W_WRONG_CHV;
-      LogTrace(LOGTYPE_ERROR, WHERE, "CardAuthenticateEx Failed: [0x%02X][0x%02X]", SW1, SW2);
-
-      if ( ((SW1 == 0x63) && ((SW2 & 0xF0) == 0xC0)) )
-      {
-         if ( pcAttemptsRemaining != NULL )
-         {
-            /* -1: Don't support returning the count of remaining authentication attempts */
-            *pcAttemptsRemaining = (SW2 & 0x0F);
-         }
-      }
-      else if ( (SW1 == 0x69) && (SW2 == 0x83) )
-      {
-         dwReturn = SCARD_W_CHV_BLOCKED;
-      }
-   }
-   else
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "Logged on...");
-   }
-
 cleanup:
 
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
-
    return(dwReturn);
 }
 #undef WHERE
@@ -517,7 +645,7 @@ DWORD    BeidChangePIN
    Cmd [5] = 0x20 + (unsigned char)cbCurrentAuthenticator;  /* 0x20 + length of pin */
    for ( i = 0 ; i < (unsigned char) cbCurrentAuthenticator ; i++ )
    {
-   	offset = 6 + (i/2);
+    offset = 6 + (i/2);
 
       if ( (i % 2) == 0 )
       {
@@ -531,7 +659,7 @@ DWORD    BeidChangePIN
    Cmd [13] = 0x20 + (unsigned char)cbNewAuthenticator;  /* 0x20 + length of pin */
    for ( i = 0 ; i < (unsigned char) cbNewAuthenticator ; i++ )
    {
-   	offset = 14 + (i/2);
+    offset = 14 + (i/2);
 
       if ( (i % 2) == 0 )
       {
@@ -679,46 +807,46 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
          0x04, 0x10
    };
    static const unsigned char MD5_AID[] = {
-	   0x30, 0x20,
-		   0x30, 0x0c,
-			   0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x05,
-			   0x05, 0x00,
-		   0x04, 0x10
+       0x30, 0x20,
+           0x30, 0x0c,
+               0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x05,
+               0x05, 0x00,
+           0x04, 0x10
    };
    static const unsigned char SHA1_AID[] = {
-	   0x30, 0x21,
-		   0x30, 0x09,
-			   0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a,
-		   0x05, 0x00,
-		   0x04, 0x14
+       0x30, 0x21,
+           0x30, 0x09,
+               0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a,
+           0x05, 0x00,
+           0x04, 0x14
    };
    static const unsigned char SHA256_AID[] = {
-	   0x30, 0x31,
-		   0x30, 0x0d,
-			   0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01,
-		   0x05, 0x00,
-		   0x04, 0x20
+       0x30, 0x31,
+           0x30, 0x0d,
+               0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01,
+           0x05, 0x00,
+           0x04, 0x20
    };
    static const unsigned char SHA384_AID[] = {
-	   0x30, 0x41,
-		   0x30, 0x0d,
-			   0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x02,
-		   0x05,0x00,
-		   0x04, 0x30
+       0x30, 0x41,
+           0x30, 0x0d,
+               0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x02,
+           0x05,0x00,
+           0x04, 0x30
    };
    static const unsigned char SHA512_AID[] = {
-	   0x30, 0x51,
-		   0x30, 0x0d,
-			   0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03,
-		   0x05, 0x00,
-		   0x04, 0x40
+       0x30, 0x51,
+           0x30, 0x0d,
+               0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03,
+           0x05, 0x00,
+           0x04, 0x40
    };
    static const unsigned char RIPEMD160_AID[] = {
-	   0x30, 0x21,
-		   0x30, 0x09,
-			   0x06, 0x05, 0x2B, 0x24,	0x03, 0x02, 0x01,
-		   0x05, 0x00,
-		   0x04, 0x14
+       0x30, 0x21,
+           0x30, 0x09,
+               0x06, 0x05, 0x2B, 0x24,	0x03, 0x02, 0x01,
+           0x05, 0x00,
+           0x04, 0x14
    };
 
    unsigned int            i          = 0;
@@ -913,17 +1041,17 @@ DWORD BeidReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD *cbStream, PBYTE
 
    while ( ( *cbStream - cbRead ) > 0 )
    {
-		Cmd[2] = (BYTE)((dwOffset + cbRead) >> 8);   /* set reading startpoint     */
-		Cmd[3] = (BYTE)(dwOffset + cbRead);
+        Cmd[2] = (BYTE)((dwOffset + cbRead) >> 8);   /* set reading startpoint     */
+        Cmd[3] = (BYTE)(dwOffset + cbRead);
 
       cbPartRead = *cbStream - cbRead;
-		if(cbPartRead > BEID_READ_BINARY_MAX_LEN)    /*if more than maximum length */
+        if(cbPartRead > BEID_READ_BINARY_MAX_LEN)    /*if more than maximum length */
       {
          Cmd[4] = BEID_READ_BINARY_MAX_LEN;        /* is requested, than read    */
       }
-		else                                         /* maximum length             */
+        else                                         /* maximum length             */
       {
-			Cmd[4] = (BYTE)(cbPartRead);
+            Cmd[4] = (BYTE)(cbPartRead);
       }
       dwReturn = SCardTransmit(pCardData->hScard, 
                                &ioSendPci, 
@@ -1067,28 +1195,45 @@ cleanup:
 
 /* CCID Features */
 DWORD CCIDfindFeature(BYTE featureTag, BYTE* features, DWORD featuresLength) {
-	DWORD idx = 0;
-	int count;
+    DWORD idx = 0;
+    int count;
     while (idx < featuresLength) {
-		BYTE tag = features[idx];
+        BYTE tag = features[idx];
         idx++;
         idx++;
         if (featureTag == tag) {
-			DWORD feature = 0;
+            DWORD feature = 0;
             for (count = 0; count < 3; count++) {
-				feature |= features[idx] & 0xff;
+                feature |= features[idx] & 0xff;
                 idx++;
                 feature <<= 8;
             }
-			feature |= features[idx] & 0xff;
+            feature |= features[idx] & 0xff;
             return feature;
         }
         idx += 4;
     }
-	return 0;
+    return 0;
 }
 
 DWORD CCIDgetFeature(BYTE featureTag, SCARDHANDLE hCard) {
+    BYTE pbRecvBuffer[200];
+    DWORD dwRecvLength, dwReturn;
+    dwReturn = SCardControl(hCard, 
+        SCARD_CTL_CODE(3400),
+        NULL,
+        0,
+        pbRecvBuffer,
+        sizeof(pbRecvBuffer),
+        &dwRecvLength);
+    if ( SCARD_S_SUCCESS != dwReturn ) {
+        printf("Failed SCardControl\n");
+        return 0;
+    }
+    return CCIDfindFeature(featureTag, pbRecvBuffer, dwRecvLength);
+}
+
+DWORD CCIDgetFeatures(PFEATURES pFeatures, SCARDHANDLE hCard) {
 	BYTE pbRecvBuffer[200];
 	DWORD dwRecvLength, dwReturn;
 	dwReturn = SCardControl(hCard, 
@@ -1102,20 +1247,28 @@ DWORD CCIDgetFeature(BYTE featureTag, SCARDHANDLE hCard) {
 		printf("Failed SCardControl\n");
 	    return 0;
 	}
-	return CCIDfindFeature(featureTag, pbRecvBuffer, dwRecvLength);
+	pFeatures->VERIFY_PIN_START = CCIDfindFeature(FEATURE_VERIFY_PIN_START, pbRecvBuffer, dwRecvLength);
+	pFeatures->VERIFY_PIN_FINISH = CCIDfindFeature(FEATURE_VERIFY_PIN_FINISH, pbRecvBuffer, dwRecvLength);
+	pFeatures->VERIFY_PIN_DIRECT = CCIDfindFeature(FEATURE_VERIFY_PIN_DIRECT, pbRecvBuffer, dwRecvLength);
+	pFeatures->MODIFY_PIN_START = CCIDfindFeature(FEATURE_MODIFY_PIN_START, pbRecvBuffer, dwRecvLength);
+	pFeatures->MODIFY_PIN_FINISH = CCIDfindFeature(FEATURE_MODIFY_PIN_FINISH, pbRecvBuffer, dwRecvLength);
+	pFeatures->MODIFY_PIN_DIRECT = CCIDfindFeature(FEATURE_MODIFY_PIN_DIRECT, pbRecvBuffer, dwRecvLength);
+	pFeatures->GET_KEY_PRESSED = CCIDfindFeature(FEATURE_GET_KEY_PRESSED, pbRecvBuffer, dwRecvLength);
+	pFeatures->ABORT = CCIDfindFeature(FEATURE_ABORT, pbRecvBuffer, dwRecvLength);
+	return 1;
 }
 
 DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
-	pVerifyCommand->bTimeOut = 30;
-	pVerifyCommand->bTimeOut2 = 30;
-	pVerifyCommand->bmFormatString = 0x80 | 0x08 | 0x00 | 0x01;
+    pVerifyCommand->bTimeOut = 30;
+    pVerifyCommand->bTimeOut2 = 30;
+    pVerifyCommand->bmFormatString = 0x80 | 0x08 | 0x00 | 0x01;
     /*
      * bmFormatString. 
-	 *  01234567
-	 *  10001001
-	 *
+     *  01234567
+     *  10001001
+     *
      * bit 7: 1 = system units are bytes
-	 *
+     *
      * bit 6-3: 1 = PIN position in APDU command after Lc, so just after the
      * 0x20 | pinSize.
      * 
@@ -1124,16 +1277,16 @@ DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
      * bit 1-0: 01 = BCD
      */
 
-	pVerifyCommand->bmPINBlockString = 0x47;
-	/*
+    pVerifyCommand->bmPINBlockString = 0x47;
+    /*
      * bmPINBlockString
      * 
-	 * bit 7-4: 4 = PIN length
+     * bit 7-4: 4 = PIN length
      * 
      * bit 3-0: 7 = PIN block size (7 times 0xff)
      */
 
-	pVerifyCommand->bmPINLengthFormat = 0x04;
+    pVerifyCommand->bmPINLengthFormat = 0x04;
     /*
      * bmPINLengthFormat. weird... the values do not make any sense to me.
      * 
@@ -1145,57 +1298,57 @@ DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
      */
 
 
-	pVerifyCommand->wPINMaxExtraDigit = BELPIC_MIN_USER_PIN_LEN << 8 | BELPIC_MAX_USER_PIN_LEN ;
-	/*
-     * First byte:  minimum PIN size in digit
+    pVerifyCommand->wPINMaxExtraDigit = BELPIC_MIN_USER_PIN_LEN << 8 | BELPIC_MAX_USER_PIN_LEN ;
+    /*
+     * First byte:  maximum PIN size in digit
      * 
-     * Second byte: maximum PIN size in digit.
+     * Second byte: minimum PIN size in digit
      */
 
-	pVerifyCommand->bEntryValidationCondition = 0x02;
+    pVerifyCommand->bEntryValidationCondition = 0x02;
     /*
      * 0x02 = validation key pressed. So the user must press the green
      * button on his pinpad.
      */
 
-	pVerifyCommand->bNumberMessage = 0x01;
+    pVerifyCommand->bNumberMessage = 0x01;
     /*
      * 0x01 = message with index in bMsgIndex
      */
 
-	pVerifyCommand->wLangId = 0x1308;
-	/*
-	 * We should support multiple languages for CCID devices with LCD screen
-	 */
+    pVerifyCommand->wLangId = 0x1308;
+    /*
+     * We should support multiple languages for CCID devices with LCD screen
+     */
 
-	pVerifyCommand->bMsgIndex = 0x00;
+    pVerifyCommand->bMsgIndex = 0x00;
     /*
      * 0x00 = PIN insertion prompt
      */
 
-	pVerifyCommand->bTeoPrologue[0] = 0x00;
-	pVerifyCommand->bTeoPrologue[1] = 0x00;
-	pVerifyCommand->bTeoPrologue[2] = 0x00;
+    pVerifyCommand->bTeoPrologue[0] = 0x00;
+    pVerifyCommand->bTeoPrologue[1] = 0x00;
+    pVerifyCommand->bTeoPrologue[2] = 0x00;
     /*
      * bTeoPrologue : only significant for T=1 protocol.
      */
 
-	pVerifyCommand->abData[0] = 0x00; // CLA
-	pVerifyCommand->abData[1] = 0x20; // INS Verify
-	pVerifyCommand->abData[2] = 0x00; // P1
-	pVerifyCommand->abData[3] = 0x01; // P2
-	pVerifyCommand->abData[4] = 0x08; // Lc = 8 bytes in command data
-	pVerifyCommand->abData[5] = 0x20 ; // 
-	pVerifyCommand->abData[6] = BELPIC_PAD_CHAR; // Pin[1]
-	pVerifyCommand->abData[7] = BELPIC_PAD_CHAR; // Pin[2]
-	pVerifyCommand->abData[8] = BELPIC_PAD_CHAR; // Pin[3]
-	pVerifyCommand->abData[9] = BELPIC_PAD_CHAR; // Pin[4]
-	pVerifyCommand->abData[10] = BELPIC_PAD_CHAR; // Pin[5]
-	pVerifyCommand->abData[11] = BELPIC_PAD_CHAR; // Pin[6]
-	pVerifyCommand->abData[12] = BELPIC_PAD_CHAR; // Pin[7]
+    pVerifyCommand->abData[0] = 0x00; // CLA
+    pVerifyCommand->abData[1] = 0x20; // INS Verify
+    pVerifyCommand->abData[2] = 0x00; // P1
+    pVerifyCommand->abData[3] = 0x01; // P2
+    pVerifyCommand->abData[4] = 0x08; // Lc = 8 bytes in command data
+    pVerifyCommand->abData[5] = 0x20 ; // 
+    pVerifyCommand->abData[6] = BELPIC_PAD_CHAR; // Pin[1]
+    pVerifyCommand->abData[7] = BELPIC_PAD_CHAR; // Pin[2]
+    pVerifyCommand->abData[8] = BELPIC_PAD_CHAR; // Pin[3]
+    pVerifyCommand->abData[9] = BELPIC_PAD_CHAR; // Pin[4]
+    pVerifyCommand->abData[10] = BELPIC_PAD_CHAR; // Pin[5]
+    pVerifyCommand->abData[11] = BELPIC_PAD_CHAR; // Pin[6]
+    pVerifyCommand->abData[12] = BELPIC_PAD_CHAR; // Pin[7]
 
-	pVerifyCommand->ulDataLength = 13;
+    pVerifyCommand->ulDataLength = 13;
 
-	return 0;
+    return 0;
 }
 /****************************************************************************************************/

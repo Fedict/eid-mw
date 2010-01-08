@@ -25,7 +25,7 @@
 
 //#include "Log.h"
 //#include "util.h"
-
+#include "stdafx.h"
 #include "ListMgr.h"
 
 #define CLEANUP(i)                        {dwReturn=(i);goto cleanup;}

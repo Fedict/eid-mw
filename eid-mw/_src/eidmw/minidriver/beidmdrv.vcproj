@@ -269,7 +269,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winscard.lib Rpcrt4.lib Crypt32.lib"
+				AdditionalDependencies="winscard.lib Rpcrt4.lib Crypt32.lib comctl32.lib"
 				OutputFile="$(OutDir)\beidmdrv.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -560,6 +560,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Src\ExternalPinUI.c"
+				>
+			</File>
+			<File
 				RelativePath="Src\InitAndDeconstruct.c"
 				>
 				<FileConfiguration
@@ -753,6 +757,10 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
+				RelativePath=".\Src\ExternalPinUI.h"
+				>
+			</File>
+			<File
 				RelativePath="Inc\GlobMdrv.h"
 				>
 			</File>
@@ -766,6 +774,10 @@
 			</File>
 			<File
 				RelativePath=".\Src\SmartCard.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\stdafx.h"
 				>
 			</File>
 			<File

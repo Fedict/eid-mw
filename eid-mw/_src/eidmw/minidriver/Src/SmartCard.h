@@ -62,6 +62,18 @@ typedef struct _PIN_VERIFY_STRUCTURE
 #define FEATURE_ABORT                    0x0B 
 
 
+typedef struct _FEATURES
+{
+	DWORD VERIFY_PIN_START;
+	DWORD VERIFY_PIN_FINISH;
+	DWORD VERIFY_PIN_DIRECT;
+	DWORD MODIFY_PIN_START;
+	DWORD MODIFY_PIN_FINISH;
+	DWORD MODIFY_PIN_DIRECT;
+	DWORD ABORT;
+	DWORD GET_KEY_PRESSED;
+} FEATURES, *PFEATURES;
+
 extern DWORD BeidGetCardSN
 			(
 			   PCARD_DATA  pCardData, 
@@ -101,7 +113,8 @@ extern DWORD   BeidAuthenticate
 extern DWORD   BeidAuthenticateExternal
                (
                   PCARD_DATA     pCardData, 
-                  PDWORD         pcAttemptsRemaining
+                  PDWORD         pcAttemptsRemaining,
+				  BOOL			 bSilent
                );
 extern DWORD   BeidDeAuthenticate
                (
@@ -136,6 +149,13 @@ extern DWORD CCIDgetFeature
 					BYTE featureTag, 
 					SCARDHANDLE hCard
 				);
+
+extern DWORD CCIDgetFeatures
+				( 
+					PFEATURES pFeatures,
+					SCARDHANDLE hCard
+				);
+
 extern DWORD createVerifyCommand
 				(
 					PPIN_VERIFY_STRUCTURE pVerifyCommand

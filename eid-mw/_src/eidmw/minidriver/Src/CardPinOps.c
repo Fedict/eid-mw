@@ -269,7 +269,6 @@ DWORD WINAPI   CardAuthenticateEx
       }
    }
 
-
    /*
    else if ( dwFlags != 0 )
    {
@@ -296,8 +295,9 @@ DWORD WINAPI   CardAuthenticateEx
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
 
-   if (pbPinInfo.PinType == ExternalPinType) {	
-	   dwReturn = BeidAuthenticateExternal(pCardData, pcAttemptsRemaining);
+   if (pbPinInfo.PinType == ExternalPinType && 
+	   (dwFlags & CARD_PIN_SILENT_CONTEXT ) != CARD_PIN_SILENT_CONTEXT ) {	
+	   dwReturn = BeidAuthenticateExternal(pCardData, pcAttemptsRemaining, (dwFlags & CARD_PIN_SILENT_CONTEXT ) == CARD_PIN_SILENT_CONTEXT);
    } else {
 	   dwReturn = BeidAuthenticate(pCardData, pbPinData, cbPinData, pcAttemptsRemaining);
    }
