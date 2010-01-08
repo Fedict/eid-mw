@@ -78,7 +78,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winscard.lib Rpcrt4.lib Crypt32.lib"
+				AdditionalDependencies="winscard.lib Rpcrt4.lib Crypt32.lib comctl32.lib"
 				OutputFile="$(OutDir)\beidmdrv.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -174,7 +174,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winscard.lib Rpcrt4.lib Crypt32.lib"
+				AdditionalDependencies="winscard.lib Rpcrt4.lib Crypt32.lib comctl32.lib"
 				OutputFile="$(OutDir)\beidmdrv64.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -365,7 +365,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winscard.lib Rpcrt4.lib Crypt32.lib"
+				AdditionalDependencies="winscard.lib Rpcrt4.lib Crypt32.lib comctl32.lib"
 				OutputFile="$(OutDir)\beidmdrv64.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
