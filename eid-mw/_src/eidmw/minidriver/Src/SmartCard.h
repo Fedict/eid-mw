@@ -144,11 +144,6 @@ extern DWORD CCIDfindFeature
 					BYTE* features, 
 					DWORD featuresLength
 				);
-extern DWORD CCIDgetFeature
-				(
-					BYTE featureTag, 
-					SCARDHANDLE hCard
-				);
 
 extern DWORD CCIDgetFeatures
 				( 

@@ -28,10 +28,10 @@
         <LoadingUnderCAPI>True</LoadingUnderCAPI>
         <LoadingUnderCNG>True</LoadingUnderCNG>
         <KeyImport>True</KeyImport>
-        <KeyTypes>AT_SIGNATURE</KeyTypes>
+        <KeyTypes>AT_SIGNATURE AT_KEYEXCHANGE</KeyTypes>
         <OnCardPadding>True</OnCardPadding>
         <PaddingAlgorithms>CARD_PADDING_PKCS1</PaddingAlgorithms>
-        <SignHashAlgorithms>CALG_MD2 CALG_MD4 CALG_MD5 CALG_SHA1 CALG_SHA_256 CALG_SHA_384 CALG_SHA_512</SignHashAlgorithms>
+        <SignHashAlgorithms>CALG_SHA1 CALG_SHA_256 CALG_SHA_384 CALG_SHA_512</SignHashAlgorithms>
         <SignHashFlags />
      <!--   <SignReturnBufferSize>True</SignReturnBufferSize>-->
         <KDFTypes></KDFTypes>

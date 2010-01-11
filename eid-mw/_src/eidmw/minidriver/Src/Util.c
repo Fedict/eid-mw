@@ -230,6 +230,7 @@ DWORD AddContextInList(PCARD_DATA pCardData)
    unsigned char        a_ucSerNum  [64];
    unsigned char        a_ucContName[64];
    int                  iOutLg = 0;
+   FEATURES				CCIDfeatures;
 
    if ( pCardData == NULL )
    {
@@ -615,14 +616,15 @@ DWORD AddContextInList(PCARD_DATA pCardData)
       pCardItem->PinInfo[i].dwFlags             = 0;
    }
 
-   /* Pin Cach Policy */
+   /* Pin Cache Policy */
    pinCachePolicy.dwVersion            = PIN_CACHE_POLICY_CURRENT_VERSION;
    pinCachePolicy.PinCachePolicyType   = PinCacheNormal;
    pinCachePolicy.dwPinCachePolicyInfo = 0;
    /* Pin Info */
    pCardItem->PinInfo[ROLE_DIGSIG].dwVersion           = PIN_INFO_CURRENT_VERSION; 
-   if (CCIDgetFeature(FEATURE_VERIFY_PIN_START, pCardData->hScard) != 0 || 
-       CCIDgetFeature(FEATURE_VERIFY_PIN_DIRECT, pCardData->hScard) != 0 )
+   CCIDgetFeatures(&(CCIDfeatures), pCardData->hScard);
+
+   if (CCIDfeatures.VERIFY_PIN_START != 0)
        pCardItem->PinInfo[ROLE_DIGSIG].PinType             = ExternalPinType;
    else
        pCardItem->PinInfo[ROLE_DIGSIG].PinType             = AlphaNumericPinType;
@@ -638,8 +640,7 @@ DWORD AddContextInList(PCARD_DATA pCardData)
    pinCachePolicy.PinCachePolicyType   = PinCacheNone;
    pinCachePolicy.dwPinCachePolicyInfo = 0;
    pCardItem->PinInfo[ROLE_NONREP].dwVersion           = PIN_INFO_CURRENT_VERSION;
-   if (CCIDgetFeature(FEATURE_VERIFY_PIN_START, pCardData->hScard) != 0 || 
-       CCIDgetFeature(FEATURE_VERIFY_PIN_DIRECT, pCardData->hScard) != 0 )
+   if (CCIDfeatures.VERIFY_PIN_START != 0)
        pCardItem->PinInfo[ROLE_NONREP].PinType             = ExternalPinType;
    else
 	   pCardItem->PinInfo[ROLE_NONREP].PinType             = AlphaNumericPinType;

@@ -102,11 +102,13 @@ DWORD BeidAuthenticate(PCARD_DATA   pCardData,
    {
       if ( (i % 2) == 0 )
       {
-         Cmd [6 + (i/2)] = (((pbPin[i] - 48) << 4) & 0xF0);
+			// 0x30 = ASCII '0'
+			Cmd [6 + (i/2)] = (((pbPin[i] - 0x30) << 4) & 0xF0);
       }
       else
       {
-         Cmd [6 + (i/2)] = (Cmd[6 + (i/2)] & 0xF0) + ((pbPin[i] - 48) & 0x0F);
+		  // 0x30 = ASCII '0'
+          Cmd [6 + (i/2)] = (Cmd[6 + (i/2)] & 0xF0) + ((pbPin[i] - 0x30) & 0x0F);
       }
    }
    uiCmdLg = 13;
@@ -180,7 +182,7 @@ DWORD BeidAuthenticateExternal(
    BYTE							SW1, SW2;
    int							i           = 0;
    int							offset		= 0;
-   DWORD						dwRetriesLeft;
+   DWORD						dwRetriesLeft, dwDataLen;
    BOOL							bRetry      = TRUE;
    int							nButton;
    HRESULT						hResult;
@@ -188,9 +190,10 @@ DWORD BeidAuthenticateExternal(
    EXTERNAL_PIN_INFORMATION		externalPinInfo;
    HANDLE						DialogThreadHandle;
 
+
    wchar_t						wchErrorMessage[500];
    wchar_t						wchMainInstruction[100];
-
+     
    
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
     
@@ -207,9 +210,37 @@ DWORD BeidAuthenticateExternal(
    /*********************/
    /* External PIN Info */
    /*********************/
-
     externalPinInfo.hCardHandle = pCardData->hScard;
 	CCIDgetFeatures(&(externalPinInfo.features), externalPinInfo.hCardHandle);
+
+	/*********************/
+    /* Get Parent Window */
+	/*********************/
+	dwReturn = CardGetProperty(pCardData, 
+								CP_PARENT_WINDOW, 
+								(PBYTE) &(externalPinInfo.hwndParentWindow), 
+								sizeof(externalPinInfo.hwndParentWindow), 
+								&dwDataLen, 
+								0);
+	if (dwReturn != 0) {
+		LogTrace(LOGTYPE_ERROR, WHERE, "CardGetProperty Failed: %02X", dwReturn);
+		externalPinInfo.hwndParentWindow = NULL;
+	}
+
+
+	/*********************/
+    /* Get Pin Context String */
+	/*********************/		
+	dwReturn = CardGetProperty(pCardData, 
+								CP_PIN_CONTEXT_STRING, 
+								(PBYTE) externalPinInfo.lpstrPinContextString, 
+								sizeof(externalPinInfo.lpstrPinContextString), 
+								&dwDataLen, 
+								0);
+	if (dwReturn != 0) {
+		LogTrace(LOGTYPE_ERROR, WHERE, "CardGetProperty Failed: %02X", dwReturn);
+		wcscpy(externalPinInfo.lpstrPinContextString, L"");
+	}
 
    /**********/
    /* Log On */
@@ -245,7 +276,7 @@ DWORD BeidAuthenticateExternal(
 		}
 		externalPinInfo.iPinCharacters = 0;
 		externalPinInfo.cardState = CS_PINENTRY;
-
+		
 		// show dialog
 		if (!bSilent)
 			DialogThreadHandle = CreateThread(NULL, 0, DialogThreadPinEntry, &externalPinInfo, 0, NULL);
@@ -366,7 +397,7 @@ endkeypress:
 						break;
 				}
 				if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-					hResult = TaskDialog(NULL, 
+					hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
 							NULL, 
 							t[WINDOW_TITLE][getLanguage()], 
 							wchMainInstruction, 
@@ -386,7 +417,7 @@ endkeypress:
 				swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_INVALID_MAININSTRUCTIONS][getLanguage()]);
 				swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_INVALID_CONTENT][getLanguage()], dwRetriesLeft);
 				if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-					hResult = TaskDialog(NULL, 
+					hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
 								NULL, 
 								t[WINDOW_TITLE][getLanguage()], 
 								wchMainInstruction, 
@@ -401,7 +432,7 @@ endkeypress:
 				swprintf(wchMainInstruction, sizeof(wchMainInstruction), t[PIN_BLOCKED_MAININSTRUCTIONS][getLanguage()]);
 				swprintf(wchErrorMessage, sizeof(wchErrorMessage), t[PIN_BLOCKED_CONTENT][getLanguage()]);
 				if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-					hResult = TaskDialog(NULL, 
+					hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
 								NULL, 
 								t[WINDOW_TITLE][getLanguage()], 
 								wchMainInstruction, 
@@ -1194,6 +1225,7 @@ cleanup:
 /****************************************************************************************************/
 
 /* CCID Features */
+#define WHERE "CCIDfindFeature"
 DWORD CCIDfindFeature(BYTE featureTag, BYTE* features, DWORD featuresLength) {
     DWORD idx = 0;
     int count;
@@ -1215,27 +1247,23 @@ DWORD CCIDfindFeature(BYTE featureTag, BYTE* features, DWORD featuresLength) {
     }
     return 0;
 }
+#undef WHERE
 
-DWORD CCIDgetFeature(BYTE featureTag, SCARDHANDLE hCard) {
-    BYTE pbRecvBuffer[200];
-    DWORD dwRecvLength, dwReturn;
-    dwReturn = SCardControl(hCard, 
-        SCARD_CTL_CODE(3400),
-        NULL,
-        0,
-        pbRecvBuffer,
-        sizeof(pbRecvBuffer),
-        &dwRecvLength);
-    if ( SCARD_S_SUCCESS != dwReturn ) {
-        printf("Failed SCardControl\n");
-        return 0;
-    }
-    return CCIDfindFeature(featureTag, pbRecvBuffer, dwRecvLength);
-}
+/****************************************************************************************************/
 
+#define WHERE "CCIDgetFeatures"
 DWORD CCIDgetFeatures(PFEATURES pFeatures, SCARDHANDLE hCard) {
 	BYTE pbRecvBuffer[200];
 	DWORD dwRecvLength, dwReturn;
+	pFeatures->VERIFY_PIN_START = 0;
+	pFeatures->VERIFY_PIN_FINISH = 0;
+	pFeatures->VERIFY_PIN_DIRECT = 0;
+	pFeatures->MODIFY_PIN_START = 0;
+	pFeatures->MODIFY_PIN_FINISH = 0;
+	pFeatures->MODIFY_PIN_DIRECT = 0;
+	pFeatures->GET_KEY_PRESSED = 0;
+	pFeatures->ABORT = 0;
+
 	dwReturn = SCardControl(hCard, 
 		SCARD_CTL_CODE(3400),
 		NULL,
@@ -1244,8 +1272,8 @@ DWORD CCIDgetFeatures(PFEATURES pFeatures, SCARDHANDLE hCard) {
 		sizeof(pbRecvBuffer),
 		&dwRecvLength);
 	if ( SCARD_S_SUCCESS != dwReturn ) {
-		printf("Failed SCardControl\n");
-	    return 0;
+		LogTrace(LOGTYPE_ERROR, WHERE, "CCIDgetFeatures errorcode: [0x%02X]", dwReturn);
+        CLEANUP(dwReturn);
 	}
 	pFeatures->VERIFY_PIN_START = CCIDfindFeature(FEATURE_VERIFY_PIN_START, pbRecvBuffer, dwRecvLength);
 	pFeatures->VERIFY_PIN_FINISH = CCIDfindFeature(FEATURE_VERIFY_PIN_FINISH, pbRecvBuffer, dwRecvLength);
@@ -1255,8 +1283,11 @@ DWORD CCIDgetFeatures(PFEATURES pFeatures, SCARDHANDLE hCard) {
 	pFeatures->MODIFY_PIN_DIRECT = CCIDfindFeature(FEATURE_MODIFY_PIN_DIRECT, pbRecvBuffer, dwRecvLength);
 	pFeatures->GET_KEY_PRESSED = CCIDfindFeature(FEATURE_GET_KEY_PRESSED, pbRecvBuffer, dwRecvLength);
 	pFeatures->ABORT = CCIDfindFeature(FEATURE_ABORT, pbRecvBuffer, dwRecvLength);
-	return 1;
+cleanup:
+   return (dwReturn);
 }
+
+#undef WHERE
 
 DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
     pVerifyCommand->bTimeOut = 30;

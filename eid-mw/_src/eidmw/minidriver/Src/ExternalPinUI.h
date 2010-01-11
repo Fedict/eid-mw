@@ -20,11 +20,13 @@ typedef enum _UI_STATE
 //struct to communicate between logic an UI
 typedef struct _EXTERNAL_PIN_INFORMATION
 {
-	SCARDHANDLE hCardHandle;
-	FEATURES	features;
-	CARD_STATE  cardState;
-	UI_STATE	uiState;
-	int			iPinCharacters;
+	SCARDHANDLE		hCardHandle;
+	FEATURES		features;
+	CARD_STATE		cardState;
+	UI_STATE		uiState;
+	int				iPinCharacters;
+	HWND			hwndParentWindow;
+	wchar_t			lpstrPinContextString[256];
 } EXTERNAL_PIN_INFORMATION, *PEXTERNAL_PIN_INFORMATION;
 
 typedef enum _LOCALIZATION_STRINGS

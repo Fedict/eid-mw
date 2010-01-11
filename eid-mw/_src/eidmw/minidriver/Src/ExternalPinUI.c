@@ -75,14 +75,14 @@ DWORD WINAPI DialogThreadPinEntry(LPVOID lpParam)
 
 	PEXTERNAL_PIN_INFORMATION pExternalPinInfo = (PEXTERNAL_PIN_INFORMATION) lpParam;
 	
-	tc.hwndParent = NULL;
+	tc.hwndParent = pExternalPinInfo->hwndParentWindow;
 	tc.hInstance = GetModuleHandle(NULL);
 	tc.dwFlags = TDF_ALLOW_DIALOG_CANCELLATION | TDF_SHOW_PROGRESS_BAR | TDF_CALLBACK_TIMER;
     tc.dwCommonButtons = TDCBF_CANCEL_BUTTON;
 	tc.pszWindowTitle = t[WINDOW_TITLE][getLanguage()];
 	tc.pszMainInstruction = t[ENTER_PIN_MAININSTRUCTIONS][getLanguage()];
 	tc.pszContent = t[ENTER_PIN_CONTENT][getLanguage()];
-	tc.pszVerificationText = NULL;
+	tc.pszVerificationText = pExternalPinInfo->lpstrPinContextString;
 	tc.pszFooter = NULL;
 	tc.pszMainIcon = MAKEINTRESOURCE(TD_INFORMATION_ICON);
     tc.cButtons = 0;
