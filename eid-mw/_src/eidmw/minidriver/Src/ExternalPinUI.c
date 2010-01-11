@@ -82,7 +82,7 @@ DWORD WINAPI DialogThreadPinEntry(LPVOID lpParam)
 	tc.pszWindowTitle = t[WINDOW_TITLE][getLanguage()];
 	tc.pszMainInstruction = t[ENTER_PIN_MAININSTRUCTIONS][getLanguage()];
 	tc.pszContent = t[ENTER_PIN_CONTENT][getLanguage()];
-	tc.pszVerificationText = pExternalPinInfo->lpstrPinContextString;
+	tc.pszVerificationText = NULL;
 	tc.pszFooter = NULL;
 	tc.pszMainIcon = MAKEINTRESOURCE(TD_INFORMATION_ICON);
     tc.cButtons = 0;
