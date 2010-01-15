@@ -18,7 +18,7 @@
 
 **************************************************************************** */
 #ifdef _WIN32
-//  #include <windows.h>
+  #include <windows.h>
 #else
   #define MAX_PATH 260
 #endif
@@ -80,7 +80,7 @@ void log_init(char *pszLogFile, unsigned int uiLogLevel)
 
   //this will empty the logfile automatically
 #ifdef WIN32
-  if ((fopen_s(&fp,g_szLogFile, "w")) == 0)
+  if ((fopen_s(&fp,g_szLogFile, "a")) == 0)
 #else
   if ((fp = fopen(g_szLogFile, "w")) != NULL)
 #endif
@@ -176,8 +176,11 @@ void log_trace(const char *where, const char *string,... )
                     stime.tm_hour,
                     stime.tm_min,
                     stime.tm_sec); 
-  
+#ifdef WIN32
+  fprintf(fp, "%d %d %19s %-26s | %s\n",GetCurrentProcessId(), GetCurrentThreadId(), asctime, where, buf);
+#else
   fprintf(fp, "%19s %-26s | %s\n", asctime, where, buf);
+#endif
   fclose(fp);
 
 cleanup:
