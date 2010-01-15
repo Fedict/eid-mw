@@ -159,52 +159,62 @@ for (iIndex=1; iIndex < iPath; iIndex++)
 //   iClassTag = *p_cDat & CLASS_MASK;
 //   iTypeTag  = *p_cDat & TYPE_MASK;
 
-   //--- get tag-value
-   iNumTag   = *p_cDat & TAG_MASK;          //tag-value  
+	if((*p_cDat == 0)&&(*(p_cDat+1) == 0))
+	{
+		p_cDat += 2;
+		while((*p_cDat == 0) && (p_cDat <= p_cEnd))
+		{
+			p_cDat++;
+		}
+	}
+	else
+	{
+	   //--- get tag-value
+	   iNumTag   = *p_cDat & TAG_MASK;          //tag-value  
 
-   if (iNumTag == TAG_MASK)
-      {
-      //decode multibyte tag; iNumTag = sequence of 7 bit values
-      iNumTag = 0;
-      l_tag = 0;
-      do 
-         {
-         p_cDat++;
-         l_tag++;
-         if (l_tag > 4)                                     /* iNumTag has max 4 bytes length; 4 times 7 bit */
-            return (E_ASN_TAG_LEN);
-         iNumTag = (iNumTag << 7) | (*p_cDat & LEN_MASK);   //add extra length-byte
-         } while ((*p_cDat & EXT_LEN) && (p_cDat < p_cEnd));
-      }
+	   if (iNumTag == TAG_MASK)
+		  {
+		  //decode multibyte tag; iNumTag = sequence of 7 bit values
+		  iNumTag = 0;
+		  l_tag = 0;
+		  do 
+			 {
+			 p_cDat++;
+			 l_tag++;
+			 if (l_tag > 4)                                     /* iNumTag has max 4 bytes length; 4 times 7 bit */
+				return (E_ASN_TAG_LEN);
+			 iNumTag = (iNumTag << 7) | (*p_cDat & LEN_MASK);   //add extra length-byte
+			 } while ((*p_cDat & EXT_LEN) && (p_cDat < p_cEnd));
+		  }
 
-   if (p_cDat > p_cEnd) //???check this: if p_cDat==p_cEnd and length = 0, this could be the case for a NULL element, otherwise p_cDat should be < p_cEnd
-      return (E_ASN_INCOMPLETE);
-   
-   /*--- get length of asn1_item */
-   p_cDat++;
-   iLengthLen = l_len = (unsigned int) *p_cDat;
-   if (l_len & EXT_LEN)             //test if multi length-byte
-      {
-      if ((l_len &= LEN_MASK) > 4)  //max 4 length-bytes
-         return (E_ASN_BAD_LEN);
-/*      if (l_len == 0)
-         indefinite = 1; */
-      iLengthLen = 0;   
-      for (j=0; j < l_len; j++)     //add all length-bytes
-         {
-         p_cDat++;
-         if (p_cDat > p_cEnd)
-            return (E_ASN_INCOMPLETE);
-         iLengthLen += (iLengthLen << 8) | *p_cDat;
-         }
-      }
+	   if (p_cDat > p_cEnd) //???check this: if p_cDat==p_cEnd and length = 0, this could be the case for a NULL element, otherwise p_cDat should be < p_cEnd
+		  return (E_ASN_INCOMPLETE);
+	   
+	   /*--- get length of asn1_item */
+	   p_cDat++;
+	   iLengthLen = l_len = (unsigned int) *p_cDat;
+	   if (l_len & EXT_LEN)             //test if multi length-byte
+		  {
+		  if ((l_len &= LEN_MASK) > 4)  //max 4 length-bytes
+			 return (E_ASN_BAD_LEN);
+	/*      if (l_len == 0)
+			 indefinite = 1; */
+		  iLengthLen = 0;   
+		  for (j=0; j < l_len; j++)     //add all length-bytes
+			 {
+			 p_cDat++;
+			 if (p_cDat > p_cEnd)
+				return (E_ASN_INCOMPLETE);
+			 iLengthLen += (iLengthLen << 8) | *p_cDat;
+			 }
+		  }
 
-   /* skip iNumTag, length and data to get next item */
-   p_cDat = p_cDat + iLengthLen + 1;
-   if (p_cDat > p_cEnd)
-      return (E_ASN_ITEM_NOT_FOUND);
-   }
-
+	   /* skip iNumTag, length and data to get next item */
+	   p_cDat = p_cDat + iLengthLen + 1;
+	   if (p_cDat > p_cEnd)
+		  return (E_ASN_ITEM_NOT_FOUND);
+		}
+	}
 *pp_cOutDat = p_cDat;
 *l_out = iInLen - (*pp_cOutDat-p_cInDat);
 
@@ -255,46 +265,59 @@ for (; *p_cPath; p_cPath++)
    iTypeTag  = *p_cDat & TYPE_MASK;
    iNumTag   = *p_cDat & TAG_MASK;
 
-   if (iNumTag == TAG_MASK)
-      {
-      //decode multibyte tag; iNumTag = sequence of 7 bit values
-      /* iNumTag = sequence of 7 bit values */
-      iNumTag = 0;
-      do 
-         {
-         p_cDat++; iRawLen++;
-//         if (p_cDat > p_cInDat + 4)     //multi-byte tag should be one of first 4 bytes ???????????
-         if (p_cDat > p_cRawDat + 4)     //multi-byte tag should be max 4 bytes with this implementation (ifnot overflow iNumTag)
-            return (E_ASN_TAG_LEN);
-         iNumTag = (iNumTag << 7) | (*p_cDat & LEN_MASK);
-         } while ((*p_cDat & EXT_LEN) && (p_cDat < p_cEnd));
-      }			
+	if((*p_cDat == 0)&&(*(p_cDat+1) == 0))
+	{
+		iRawLen = 2;
+		p_cDat += 2;
+		iLen = 0;
+		while((*p_cDat == 0) && (p_cDat <= p_cEnd))
+		{
+			p_cDat++;
+			iLen++;
+		}
+	}
+	else
+	{
+	   if (iNumTag == TAG_MASK)
+		  {
+		  //decode multibyte tag; iNumTag = sequence of 7 bit values
+		  /* iNumTag = sequence of 7 bit values */
+		  iNumTag = 0;
+		  do 
+			 {
+			 p_cDat++; iRawLen++;
+	//         if (p_cDat > p_cInDat + 4)     //multi-byte tag should be one of first 4 bytes ???????????
+			 if (p_cDat > p_cRawDat + 4)     //multi-byte tag should be max 4 bytes with this implementation (ifnot overflow iNumTag)
+				return (E_ASN_TAG_LEN);
+			 iNumTag = (iNumTag << 7) | (*p_cDat & LEN_MASK);
+			 } while ((*p_cDat & EXT_LEN) && (p_cDat < p_cEnd));
+		  }			
 
-   if (p_cDat == p_cEnd)                    //check if length-byte present
-      return (E_ASN_INCOMPLETE);
+	   if (p_cDat == p_cEnd)                    //check if length-byte present
+		  return (E_ASN_INCOMPLETE);
 
-  //--- decode multi-byte length
-   p_cDat++; iRawLen++;
-   iLen = iLengthLen = (unsigned int) *p_cDat;
+	  //--- decode multi-byte length
+	   p_cDat++; iRawLen++;
+	   iLen = iLengthLen = (unsigned int) *p_cDat;
 
-   if (iLengthLen & EXT_LEN)
-      {
-      if ((iLengthLen &= LEN_MASK) > 4)     //max 4 length bytes supported
-         return (E_ASN_BAD_LEN);
-/*      if (iLengthLen == 0)
-         indefinite = 1; */
-      iLen = 0;
-      while (iLengthLen--)      
-         {
-         p_cDat++; iRawLen++;
-         if (p_cDat > p_cEnd)               //check if promissed extra length-bytes present
-            return (E_ASN_INCOMPLETE);
-         iLen = (iLen << 8) | *p_cDat;
-         }
-      }
-   p_cDat++; iRawLen++;
-   }
-
+	   if (iLengthLen & EXT_LEN)
+		  {
+		  if ((iLengthLen &= LEN_MASK) > 4)     //max 4 length bytes supported
+			 return (E_ASN_BAD_LEN);
+	/*      if (iLengthLen == 0)
+			 indefinite = 1; */
+		  iLen = 0;
+		  while (iLengthLen--)      
+			 {
+			 p_cDat++; iRawLen++;
+			 if (p_cDat > p_cEnd)               //check if promissed extra length-bytes present
+				return (E_ASN_INCOMPLETE);
+			 iLen = (iLen << 8) | *p_cDat;
+			 }
+		  }
+	   p_cDat++; iRawLen++;
+	   }
+	}
 /* p_data points to element itself after length encoding, not the iNumTag */
 p_xItem->p_data = p_cDat;
 p_xItem->l_data = iLen;
