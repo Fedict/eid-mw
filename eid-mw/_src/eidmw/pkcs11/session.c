@@ -40,10 +40,13 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
    P11_SESSION *pSession = NULL;
 
 //   CAutoMutex(&g_oSlotMutex);
-
+log_trace(WHERE, "I: enter");
    ret = p11_lock(slotID);   /* mutex per slot slot 0 tot 9 FF=global slot*/
    if (ret != CKR_OK)
-      return ret;
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+   return ret;
+}
 
    log_trace(WHERE, "S: C_OpenSession (slot %d)", slotID);
 
@@ -109,6 +112,7 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 
 cleanup:
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -121,10 +125,13 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 P11_SESSION *pSession = NULL;
 P11_SLOT *pSlot = NULL;
 CK_RV ret;
-
+log_trace(WHERE, "I: enter");
 ret = p11_lock();
 if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
    return ret;
+}
 
 log_trace(WHERE, "S: C_CloseSession (session %d)", hSession);
 
@@ -170,6 +177,7 @@ pSession->pfNotify = NULL;
 
 cleanup:
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -181,16 +189,20 @@ cleanup:
 CK_RV C_CloseAllSessions(CK_SLOT_ID slotID) /* the token's slot */
 {
    int ret;
-
+log_trace(WHERE, "I: enter");
    ret = p11_lock();
-   if (ret != CKR_OK)
-      return ret;
+if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+   return ret;
+}
 
    log_trace(WHERE, "S: C_CloseAllSessions(slot %d)", slotID);
 
    ret = p11_close_all_sessions(slotID);
 
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -205,10 +217,13 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
    P11_SESSION *pSession = NULL;
    P11_SLOT *pSlot = NULL;
    CK_TOKEN_INFO tokeninfo;
-
+log_trace(WHERE, "I: enter");
    ret = p11_lock();
-   if (ret != CKR_OK)
-      return ret;
+if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+   return ret;
+}
 
    log_trace(WHERE, "S: C_GetSessionInfo(session %d)", hSession);
 
@@ -259,6 +274,7 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 cleanup:
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE 
@@ -301,10 +317,13 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
    CK_TOKEN_INFO tokeninfo;
 
    //return(CKR_OK);
-
+log_trace(WHERE, "I: enter");
    ret = p11_lock();
-   if (ret != CKR_OK)
-      return ret;
+if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+   return ret;
+}
 
    memset(&tokeninfo, 0, sizeof(CK_TOKEN_INFO));
 
@@ -357,6 +376,7 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 cleanup:
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -369,10 +389,13 @@ CK_RV C_Logout(CK_SESSION_HANDLE hSession) /* the session's handle */
 int ret = CKR_OK;
 P11_SESSION *pSession = NULL;
 P11_SLOT *pSlot = NULL;
-
+log_trace(WHERE, "I: enter");
 ret = p11_lock();
 if (ret != CKR_OK)
-   return ret;  
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+   return ret;
+} 
 
 log_trace(WHERE, "S: Logout (session %d)", hSession);
 
@@ -405,6 +428,7 @@ else
 
 cleanup:
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -432,10 +456,13 @@ CK_RV C_SetPIN(CK_SESSION_HANDLE hSession,
 {
    int ret;
    P11_SESSION *pSession = NULL;
-
+log_trace(WHERE, "I: enter");
    ret = p11_lock();
-   if (ret != CKR_OK)
-      return ret;
+if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+   return ret;
+}
 
    log_trace(WHERE, "S: C_SetPIN(session %d)", hSession);
 
@@ -449,6 +476,7 @@ CK_RV C_SetPIN(CK_SESSION_HANDLE hSession,
    ret = cal_change_pin(pSession->hslot, ulOldLen, pOldPin, ulNewLen, pNewPin);
 cleanup:
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE

@@ -58,7 +58,7 @@ CK_C_INITIALIZE_ARGS_PTR p_args;
 #else
    log_init(DEFAULT_LOG_FILE, LOG_LEVEL_WARNING);
 #endif
-
+	log_trace(WHERE, "I: enter pReserved = %p",pReserved);
    if (g_init)
       {
       ret = CKR_CRYPTOKI_ALREADY_INITIALIZED;
@@ -76,7 +76,7 @@ CK_C_INITIALIZE_ARGS_PTR p_args;
       log_trace(WHERE, "S: Initialize this PKCS11 Module");
       log_trace(WHERE, "S: =============================");
       }
-  
+  log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -86,14 +86,21 @@ CK_C_INITIALIZE_ARGS_PTR p_args;
 #define WHERE "C_Finalize()"
 CK_RV C_Finalize(CK_VOID_PTR pReserved)
 {
-CK_RV ret = CKR_OK;
 
+CK_RV ret = CKR_OK;
+	log_trace(WHERE, "I: enter");
 if (!g_init)
+{
+	log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
    return (CKR_CRYPTOKI_NOT_INITIALIZED);
+}
 
 ret = p11_lock();
 if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
    return ret;
+}
 
 log_trace(WHERE, "S: C_Finalize()");
 
@@ -113,7 +120,10 @@ cleanup:
   /* Release and destroy the mutex */
 //  p11_free_lock();
 //   util_clean_lock(&logmutex);
-
+log_trace(WHERE, "I: p11_unlock()");
+   p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
+log_trace(WHERE, "I: leave, ret = %i",ret);
 return ret;
 }
 #undef WHERE
@@ -124,8 +134,9 @@ return ret;
 #define WHERE "C_GetInfo()"
 CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 {
-   CK_RV ret = CKR_OK;
 
+   CK_RV ret = CKR_OK;
+	log_trace(WHERE, "I: enter");
    if (pInfo == NULL_PTR)
       {
       ret = CKR_ARGUMENTS_BAD;
@@ -143,6 +154,7 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
    pInfo->libraryVersion.minor = 0;
 
    cleanup:
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }       
 #undef WHERE
@@ -152,13 +164,18 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 #define WHERE "C_GetFunctionList()"
 CK_RV C_GetFunctionList(CK_FUNCTION_LIST_PTR_PTR ppFunctionList)
 {
+	log_trace(WHERE, "I: enter");
    log_trace(WHERE, "S: C_GetFunctionList()");
 
    if (ppFunctionList == NULL_PTR)
+   {
+	   log_trace(WHERE, "I: leave, CKR_ARGUMENTS_BAD");
       return CKR_ARGUMENTS_BAD;
+   }
 
    *ppFunctionList = &pkcs11_function_list;
 
+   log_trace(WHERE, "I: leave, CKR_OK");
    return CKR_OK;
 }
 #undef WHERE
@@ -170,18 +187,26 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
                     CK_SLOT_ID_PTR pSlotList,     /* receives the array of slot IDs */
                     CK_ULONG_PTR   pulCount)      /* receives the number of slots */
 {
+
 P11_SLOT *pSlot;
 CK_RV ret = CKR_OK;
 int h;
 CK_ULONG c = 0; 
 static int l=0;
 
+	log_trace(WHERE, "I: enter");
 if (!g_init)
+{
+	log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
    return (CKR_CRYPTOKI_NOT_INITIALIZED);
-
+}
 ret = p11_lock();
+log_trace(WHERE, "I: p11_lock() acquiered");
 if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
    return (ret);
+}
 
 if (++l<LOG_MAX_REC)
    log_trace(WHERE, "S: C_GetSlotList()");
@@ -198,8 +223,11 @@ if (pulCount == NULL_PTR)
 //a second time Adobe calls this, pSlotList still is NULL, so the array with SlotIDs cannot be returned, again, nr of slots is returned.
 //Adobe just assumes that the first slot has ID=0 !!! and uses this ID=0 for all further actions.
 //to overcome this problem, we start our SlotIDs from 0 and not 1 !!!
+
+log_trace(WHERE, "I: h=0");
 for (h=0; h < p11_get_nreaders(); h++)
    {
+	   log_trace(WHERE, "I: h=%i",h);
    pSlot = p11_get_slot(h);
 
    if (l < LOG_MAX_REC) 
@@ -209,6 +237,7 @@ for (h=0; h < p11_get_nreaders(); h++)
       {
       if (cal_token_present(h))
          {
+			 log_trace(WHERE, "I: cal_token_present");
          c++;
          if ((pSlotList != NULL_PTR) && (c <= *pulCount) )
             pSlotList[c-1] =  h;
@@ -234,8 +263,10 @@ if ((c > *pulCount) && (pSlotList != NULL_PTR) )
 //number of slots should always be returned.
 *pulCount = c;
 
-cleanup:      
+cleanup:   
+log_trace(WHERE, "I: p11_unlock()");
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
 return ret;
 }
 #undef WHERE
@@ -247,13 +278,20 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
    CK_RV ret;
    P11_SLOT *slot;
    static int l=0;
+	log_trace(WHERE, "I: enter");
 
    if (!g_init)
+   {
+	   log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
       return(CKR_CRYPTOKI_NOT_INITIALIZED);
+   }
 
    ret = p11_lock();
    if (ret != CKR_OK)
+   {
+	   log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
       return ret;
+   }
 
    if (++l < LOG_MAX_REC)  
       log_trace(WHERE, "S: C_GetSlotInfo(slot %d)", slotID);
@@ -287,6 +325,7 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 
 cleanup:
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -297,13 +336,19 @@ cleanup:
 CK_RV C_GetTokenInfo(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 {
 CK_RV ret;
-
+log_trace(WHERE, "I: enter");
 if (!g_init)
+{
+	log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
       return (CKR_CRYPTOKI_NOT_INITIALIZED);
+}
 
    ret = p11_lock();
    if (ret != CKR_OK)
+   {
+	   log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
       return ret;
+   }
 
    log_trace(WHERE, "S: C_GetTokenInfo(slot %d)", slotID);
    if (pInfo == NULL_PTR) 
@@ -321,6 +366,7 @@ if (!g_init)
 
 cleanup:        
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -333,13 +379,16 @@ CK_RV C_GetMechanismList(CK_SLOT_ID slotID,
                          CK_ULONG_PTR pulCount)
 {
 CK_RV ret;
-
+log_trace(WHERE, "I: enter");
 if (!g_init)
    return (CKR_CRYPTOKI_NOT_INITIALIZED);
 
 ret = p11_lock();
 if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
    return ret;
+}
 
 log_trace(WHERE, "S: C_GetMechanismList(slot %d)", slotID);
 
@@ -353,6 +402,7 @@ if (ret != CKR_OK)
 cleanup:
 
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -364,13 +414,19 @@ CK_RV C_GetMechanismInfo(CK_SLOT_ID slotID,
                          CK_MECHANISM_INFO_PTR pInfo)
 {
 CK_RV ret;
-
+log_trace(WHERE, "I: enter");
 if (!g_init)
+{
+	log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
    return (CKR_CRYPTOKI_NOT_INITIALIZED);
+}
 
 ret = p11_lock();
 if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
    return ret;
+}
 
 log_trace(WHERE, "S: C_GetMechanismInfo(slot %d)", slotID);
 
@@ -388,6 +444,7 @@ if (ret != CKR_OK)
 
 cleanup:        
    p11_unlock();
+   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
 #undef WHERE
@@ -402,6 +459,7 @@ CK_RV C_InitToken(CK_SLOT_ID slotID,
                   CK_ULONG ulPinLen,
                   CK_CHAR_PTR pLabel)
 {
+	log_trace(WHERE, "I: CKR_FUNCTION_NOT_SUPPORTED");
 log_trace(WHERE, "S: C_InitToken(slot %d)", slotID);
 return (CKR_FUNCTION_NOT_SUPPORTED);
 }
@@ -421,10 +479,14 @@ P11_SLOT *p11Slot = NULL;
 int i = 0;
 int locked = 0;
 
+log_trace(WHERE, "I: enter");
 ret = p11_lock();
 if (ret != CKR_OK)
+{
+	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
   return ret;
-locked = 1;
+}
+  locked = 1;
 
 log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
 
@@ -479,6 +541,7 @@ cleanup:
 if (locked)
    p11_unlock();
 
+log_trace(WHERE, "I: leave, ret = %i",ret);
 return ret;
 }
 #undef WHERE
