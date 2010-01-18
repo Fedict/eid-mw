@@ -1,0 +1,5 @@
+Special thanks to following people for helping us improve the EID middleware project:
+
+Vincent.LeToux
+-) Windows installer registering the CSP with the belgium identity card by populating the
+Calais registry.
