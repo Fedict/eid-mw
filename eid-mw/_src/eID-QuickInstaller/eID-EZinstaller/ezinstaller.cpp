@@ -695,7 +695,7 @@ void ezInstaller::initImages(void) {
     ui.clbSaveAsPdf->setVisible(false);
     mQLsaveAsPdf.setVisible(false);
 
-    ui.lblRemoveReader->setText(tr("<html><body>Alvorens te starten met de installatie, zorg ervoor dat de kaartlezer NIET verbonden is met de computer.<br>Avant de commencer l'installation, assurer-vous que le lecteur de cartes N'EST PAS connect&eacute; &agrave; l'ordinateur.</html></body>"));
+    ui.lblRemoveReader->setText(tr("<html><body>Alvorens te starten met de installatie, zorg ervoor dat de kaartlezer NIET verbonden is met de computer.<br>Avant de commencer l'installation, assurez-vous que le lecteur de cartes N'EST PAS connect&eacute; &agrave; l'ordinateur.</html></body>"));
 	QBrush bgreen(QColor(50, 75, 50, 255));
 	QPalette pal = ui.lblRemoveReader->palette();
 	pal.setBrush(QPalette::Active, QPalette::WindowText, bgreen);

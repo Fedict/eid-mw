@@ -233,7 +233,7 @@
 		<CheckOnOS>
 			<OperatingSystem>WINALL</OperatingSystem>
 		</CheckOnOS>
-		<DescriptionNl>Geinstalleerde middleware</DescriptionNl>
+		<DescriptionNl>Geïnstalleerde middleware</DescriptionNl>
 		<DescriptionFr>Middleware installé</DescriptionFr>
 		<ActionInfoNl>Niets</ActionInfoNl>
 		<ActionInfoFr>Niets</ActionInfoFr>
@@ -242,7 +242,7 @@
 			<CheckOnOS>
 				<OperatingSystem>WINALL</OperatingSystem>
 			</CheckOnOS>
-			<DescriptionNl>Controle op eerder geinstalleerde middleware (ouder dan V 3.5)</DescriptionNl>
+			<DescriptionNl>Controle op eerder geïnstalleerde middleware (ouder dan V 3.5)</DescriptionNl>
 			<DescriptionFr>Contrôle des versions anciennes du middleware (avant V 3.5)</DescriptionFr>
 			<ActionInfoNl/>
 			<ActionInfoFr/>
@@ -250,7 +250,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 2.3 geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 2.3 geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 2.3 installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -264,7 +264,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 2.4 geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 2.4 geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 2.4 installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -281,7 +281,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 2.5 geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 2.5 geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 2.5 installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -298,7 +298,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 2.6 geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 2.6 geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 2.6 installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -315,7 +315,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.0 geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 3.0 geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 3.0 installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -333,7 +333,7 @@
 			<CheckOnOS>
 				<OperatingSystem>WINALL</OperatingSystem>
 			</CheckOnOS>
-			<DescriptionNl>Controle op eerder geinstalleerde middleware (versie 3.5)</DescriptionNl>
+			<DescriptionNl>Controle op eerder geïnstalleerde middleware (versie 3.5)</DescriptionNl>
 			<DescriptionFr>Contrôle d'une version middleware actuelle (version 3.5)</DescriptionFr>
 			<ActionInfoNl/>
 			<ActionInfoFr/>
@@ -344,7 +344,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5 pro geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 3.5 pro geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 3.5 pro installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -361,7 +361,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5 Basic (Quick-installer-versie) geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 3.5 Basic (Quick-installer-versie) geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 3.5 Basic (version Quick-Installer) installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -378,7 +378,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5 Basic geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 3.5 Basic geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 3.5 Basic installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -394,7 +394,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5 Pro (Msi-versie) geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 3.5 Pro (Msi-versie) geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 3.5 Pro (version Msi) installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -411,7 +411,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5.1 Basic (Quick-installer-versie) geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 3.5.1 Basic (Quick-installer-versie) geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 3.5.1 Basic (version Quick-Installer) installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -427,7 +427,7 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5.1 Pro geinstalleerd ?</DescriptionNl>
+				<DescriptionNl>Is Middleware versie 3.5.1 Pro geïnstalleerd ?</DescriptionNl>
 				<DescriptionFr>Middleware version 3.5.1 Pro installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
@@ -826,7 +826,7 @@
       <CheckOnOS>
         <OperatingSystem>WINALL</OperatingSystem>
       </CheckOnOS>
-      <DescriptionNl>Controle running processes,  geinstalleerde software en devices</DescriptionNl>
+      <DescriptionNl>Controle running processes,  geïnstalleerde software en devices</DescriptionNl>
       <DescriptionFr>Contrôle des applications en mémoire, logiciels installés etc.</DescriptionFr>
       <ActionInfoNl/>
       <ActionInfoFr/>
