@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 				int retVal = dlg->exec();
 				if( retVal == QDialog::Accepted ) 
 				{
-					swprintf(oData->pin,sizeof(oData->pin),dlg->getPIN().c_str());
+					wcscpy_s(oData->pin, sizeof(oData->pin)/sizeof(wchar_t), dlg->getPIN().c_str());
 					oData->returnValue = DLG_OK;
 				}
 				else	// we'll consider as cancel
@@ -274,8 +274,8 @@ int main(int argc, char *argv[])
 										DlgGetKeyPad() );
 				if( dlg->exec() ) 
 				{
-					swprintf(oData->pin1,sizeof(oData->pin1),dlg->getPIN1().c_str());
-					swprintf(oData->pin2,sizeof(oData->pin2),dlg->getPIN2().c_str());
+				        wcscpy_s(oData->pin1, sizeof(oData->pin1)/sizeof(wchar_t), dlg->getPIN1().c_str());
+					wcscpy_s(oData->pin2, sizeof(oData->pin2)/sizeof(wchar_t), dlg->getPIN2().c_str());
 					delete dlg;
 					dlg = NULL;
 					oData->returnValue = DLG_OK;

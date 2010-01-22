@@ -22,7 +22,6 @@
 *	dlgs.cpp
 *
 ********************************************************************************/
-
 #include <stdlib.h>
 #include <signal.h>
 #include "errno.h"
@@ -56,8 +55,8 @@ static bool g_bSystemCallsFail = false;
 
 //TODO: Add Keypad possibility in DlgAskPin(s)                                      
 DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
-			DlgPinUsage usage, const wchar_t *csPinName,
-			DlgPinInfo pinInfo, wchar_t *csPin, unsigned long ulPinBufferLen)
+     DlgPinUsage usage, const wchar_t *wsPinName,
+     DlgPinInfo pinInfo, wchar_t *wsPin, unsigned long ulPinBufferLen)
 { 
   DlgRet lRet = DLG_CANCEL;
 
@@ -76,15 +75,15 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
     // on the shared memory segment
     oData->operation = operation;
     oData->usage = usage;
-    swprintf(oData->pinName,sizeof(oData->pinName),csPinName);
+    wcscpy_s(oData->pinName, sizeof(oData->pinName)/sizeof(wchar_t), wsPinName);
     oData->pinInfo = pinInfo;
-    swprintf(oData->pin,sizeof(oData->pin),csPin);
+    wcscpy_s(oData->pin, sizeof(oData->pin)/sizeof(wchar_t), wsPin);
     
     CallQTServer(DLG_ASK_PIN,csReadableFilePath.c_str());
     lRet = oData->returnValue;
 
     if(lRet == DLG_OK) {
-      wcscpy_s(csPin,ulPinBufferLen,oData->pin);
+      wcscpy_s(wsPin, ulPinBufferLen, oData->pin);
     }
 
     // detach from the segment
@@ -110,9 +109,9 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 
 
 DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
-			DlgPinUsage usage, const wchar_t *csPinName,
-			DlgPinInfo pin1Info, wchar_t *csPin1, unsigned long ulPin1BufferLen,
-			DlgPinInfo pin2Info, wchar_t *csPin2, unsigned long ulPin2BufferLen)
+      DlgPinUsage usage, const wchar_t *wsPinName,
+      DlgPinInfo pin1Info, wchar_t *wsPin1, unsigned long ulPin1BufferLen,
+      DlgPinInfo pin2Info, wchar_t *wsPin2, unsigned long ulPin2BufferLen)
 {
 
   DlgRet lRet = DLG_CANCEL;
@@ -132,18 +131,18 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
     // on the shared memory segment
     oData->operation = operation;
     oData->usage = usage;
-    swprintf(oData->pinName,sizeof(oData->pinName),csPinName);
+    wcscpy_s(oData->pinName,sizeof(oData->pinName)/sizeof(wchar_t),wsPinName);
     oData->pin1Info = pin1Info;
     oData->pin2Info = pin2Info;
-    swprintf(oData->pin1,sizeof(oData->pin1),csPin1);
-    swprintf(oData->pin2,sizeof(oData->pin2),csPin2);
+    wcscpy_s(oData->pin1,sizeof(oData->pin1)/sizeof(wchar_t),wsPin1);
+    wcscpy_s(oData->pin2,sizeof(oData->pin2)/sizeof(wchar_t),wsPin2);
     
     CallQTServer(DLG_ASK_PINS,csReadableFilePath.c_str());
     lRet = oData->returnValue;
 
     if(lRet == DLG_OK) {
-      wcscpy_s(csPin1,ulPin1BufferLen,oData->pin1);
-      wcscpy_s(csPin2,ulPin2BufferLen,oData->pin2);
+      wcscpy_s(wsPin1,ulPin1BufferLen,oData->pin1);
+      wcscpy_s(wsPin2,ulPin2BufferLen,oData->pin2);
     }
 
     // detach from the segment
@@ -166,7 +165,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
 
 
 DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
-			DlgPinUsage usage, const wchar_t *csPinName,
+      DlgPinUsage usage, const wchar_t *wsPinName,
 			unsigned long ulRemainingTries)
 {
   DlgRet lRet = DLG_CANCEL;
@@ -187,7 +186,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
     // collect the arguments into the struct placed 
     // on the shared memory segment
     oData->usage = usage;
-    swprintf(oData->pinName,sizeof(oData->pinName),csPinName);
+    wcscpy_s(oData->pinName,sizeof(oData->pinName)/sizeof(wchar_t),wsPinName);
     oData->ulRemainingTries = ulRemainingTries;
     
     CallQTServer(DLG_BAD_PIN,csReadableFilePath.c_str());
@@ -212,8 +211,8 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
 }
 
 DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
-			const wchar_t *csReader, DlgPinUsage usage, const wchar_t *csPinName,
-			const wchar_t *csMessage,
+      const wchar_t *wsReader, DlgPinUsage usage, const wchar_t *wsPinName,
+      const wchar_t *wsMessage,
 			unsigned long *pulHandle)
 {
   DlgRet lRet = DLG_CANCEL;
@@ -232,10 +231,10 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
     // on the shared memory segment
 
     oData->operation = operation;
-    swprintf(oData->reader,sizeof(oData->reader),csReader);
+    wcscpy_s(oData->reader,sizeof(oData->reader)/sizeof(wchar_t),wsReader);
     oData->usage = usage;
-    swprintf(oData->pinName,sizeof(oData->pinName),csPinName);
-    swprintf(oData->message,sizeof(oData->message),csMessage);
+    wcscpy_s(oData->pinName,sizeof(oData->pinName)/sizeof(wchar_t),wsPinName);
+    wcscpy_s(oData->message,sizeof(oData->message)/sizeof(wchar_t),wsMessage);
     oData->infoCollectorIndex = ++dlgPinPadInfoCollectorIndex;
 
     CallQTServer(DLG_DISPLAY_PINPAD_INFO,csReadableFilePath.c_str());
@@ -383,11 +382,11 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
     oData->icon = icon;
     if(wcslen(csMesg)==0)
     {
-        wcscpy_s(oData->mesg,sizeof(oData->mesg),CLang::GetMessageFromID(messageID).c_str());
+        wcscpy_s(oData->mesg,wcslen(oData->mesg),CLang::GetMessageFromID(messageID).c_str());
     }
     else
     {
-        wcscpy_s(oData->mesg,sizeof(oData->mesg),csMesg);
+        wcscpy_s(oData->mesg,wcslen(oData->mesg),csMesg);
     }
     oData->buttons = ulButtons;
     oData->EnterButton = ulEnterButton;
@@ -418,7 +417,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
 
 
 DLGS_EXPORT DlgRet eIDMW::DlgAskAccess(
-	const wchar_t *csAppPath, const wchar_t *csReaderName,
+  const wchar_t *wsAppPath, const wchar_t *wsReaderName,
 	DlgPFOperation ulOperation, int *piForAllOperations)
 {
 
@@ -434,8 +433,8 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskAccess(
     // attach to the segment and get a pointer
     oShMemory.Attach( sizeof(DlgAskAccessArguments), csReadableFilePath.c_str(),(void **) &oData);
 
-    swprintf(oData->appPath,sizeof(oData->appPath),csAppPath);
-    swprintf(oData->readerName,sizeof(oData->readerName),csReaderName);
+    wcscpy_s(oData->appPath,sizeof(oData->appPath)/sizeof(wchar_t),wsAppPath);
+    wcscpy_s(oData->readerName,sizeof(oData->readerName)/sizeof(wchar_t),wsReaderName);
     oData->operation = ulOperation;
     oData->forAllOperations = *piForAllOperations;
 
@@ -504,7 +503,7 @@ std::string eIDMW::CreateRandomFile(){
 	g_bSystemCallsFail = true;
 	MWLOG(LEV_WARN, MOD_DLG, L"  eIDMW::CreateRandomFile %s : %s (%d)", 
 	  csFilePath.c_str(), strerror(errno), errno );
-    }
+    } 
     else {
 	MWLOG(LEV_ERROR, MOD_DLG, L"  eIDMW::CreateRandomFile %s : %s (%d)", 
 	  csFilePath.c_str(), strerror(errno), errno );

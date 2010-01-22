@@ -44,7 +44,7 @@ void SharedMem::Attach(size_t tMemorySize,
 
 	// create a key on the base of the file name passed
 	m_tKey = ftok(csReadableFilePath, 0666 | IPC_CREAT);
-	if(m_tKey == -1)
+	if(m_tKey == (key_t)-1)
 	{
 		MWLOG(LEV_ERROR, MOD_DLG, L"  SharedMem::Attach ftok: %s", strerror(errno) );
 		throw CMWEXCEPTION(EIDMW_ERR_MEMORY);
@@ -59,7 +59,10 @@ void SharedMem::Attach(size_t tMemorySize,
 	}
 
 	// attach the pointer
-	*content = shmat(m_iShmid,0,0) ;
+	if ((*content = (void*)shmat(m_iShmid, 0, 0)) == (void*)-1) {
+		MWLOG(LEV_ERROR, MOD_DLG,   L"  SharedMem::Attach shmat: %s",strerror(errno));
+		throw CMWEXCEPTION(EIDMW_ERR_MEMORY);
+	}
 	
 	MWLOG(LEV_DEBUG, MOD_DLG, L"  SharedMem::Attach attached segment with ID %d",m_iShmid);
 }
