@@ -130,6 +130,9 @@
           <Directory Id="DIRECTORYCACHE" Name=".cache"/>
           <Directory Id="LOGDIR" Name="log"/>
         </Directory>
+        <Directory Id="FIREFOXROOTFOLDER" Name="Mozilla Firefox">
+          <Directory Id="FIREFOXEXTENSIONS" Name="extensions"/>
+        </Directory>
       </Directory>
 
       <Directory Id="DesktopFolder"/>
@@ -145,7 +148,7 @@
       <Merge Id="VCRT_POLICY" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
 
     </Directory>
-
+    
     <DirectoryRef Id="EIDSTORE">
       <Component Id="EidStore" Guid="{F30FFFBD-4F50-4e4d-86D2-90F192A3F01B}" KeyPath="yes">
         <CreateFolder>
@@ -212,6 +215,20 @@
       </Component>
     </DirectoryRef>
 
+    <DirectoryRef Id="FIREFOXEXTENSIONS">
+      <Component Id="Extensions" Guid="{DBEFB6AD-3282-4625-8257-2CF7EA4E7264}">
+        <File Id="belgiumeid.xpi" Name="belgiumeid.xpi" KeyPath="yes" Source="..\..\..\xpi\belgiumeid.xpi" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="FIREFOXROOTFOLDER">
+      <Component Id="FireFoxRoot" Guid="{3F6140E7-B25A-41c5-BACE-9DBCDE8019D9}" KeyPath="no">
+        <CreateFolder>
+          <util:PermissionEx GenericAll="yes" User="Users" />
+        </CreateFolder>
+      </Component>
+    </DirectoryRef>
+    
     <DirectoryRef Id="APPLICATIONROOTFOLDER">
       
       <Component Id="RootFolder" Guid="{2FB5D279-50BD-49ed-98D9-3D043520F450}">
@@ -590,6 +607,8 @@
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
       <ComponentRef Id="BWCompatibilityJava_Jar" />
+      <ComponentRef Id="Extensions"/>
+      <ComponentRef Id="FireFoxRoot"/>
 
       <!-- System32 -->
       <ComponentRef Id="Runtime35"/>

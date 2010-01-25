@@ -34,6 +34,10 @@
 ::=============
 ::@set BEID_DIR_XERCES_280=...
 
+::7zip
+::=============
+::@set BEID_DIR_7ZIP=...
+
 ::MS Platform SDK 2003 
 ::====================
 ::(To avoid conflict with OpenSSL this version 

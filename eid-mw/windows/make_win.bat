@@ -180,8 +180,22 @@
 @echo [INFO] Using BEID_DIR_XERCES_280=%BEID_DIR_XERCES_280%
 
 
+:: Check 7zip
+:: ==================
+@call "%~dp0..\_src\eidmw\SetPath7zip.bat"
+@if %ERRORLEVEL%==0 goto find_7zip
+
+@echo [TIP] Use set_path.bat script to define BEID_DIR_7ZIP
+@goto end
+
+:find_7zip
+@echo [INFO] Using BEID_DIR_7ZIP=%BEID_DIR_7ZIP%
+
+
 :: BUILD
 :: =====
+
+@call "%~dp0..\_src\eidmw\xpi\build.bat"
 
 @if "%DEBUG%"=="1" goto debug
 
