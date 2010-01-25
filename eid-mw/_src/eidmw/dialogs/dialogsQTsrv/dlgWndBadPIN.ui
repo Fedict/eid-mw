@@ -20,9 +20,6 @@
        <property name="text" >
         <string/>
        </property>
-       <property name="pixmap" >
-        <pixmap/>
-       </property>
       </widget>
      </item>
      <item>

@@ -21,9 +21,6 @@
   <property name="windowTitle" >
    <string>eid</string>
   </property>
-  <property name="windowIcon" >
-   <iconset/>
-  </property>
   <property name="autoFillBackground" >
    <bool>true</bool>
   </property>
@@ -2879,9 +2876,6 @@
    </property>
   </action>
   <action name="actionHelp" >
-   <property name="icon" >
-    <iconset/>
-   </property>
    <property name="text" >
     <string>&amp;Help / Manual</string>
    </property>
