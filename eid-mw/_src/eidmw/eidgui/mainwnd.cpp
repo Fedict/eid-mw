@@ -3075,7 +3075,7 @@ void MainWnd::fillCertTree(BEID_Certificate *cert, short level, QTreeCertItem* i
 	QString	strKeyLen;
 	strKeyLen=strKeyLen.setNum(cert->getKeyLength());
 	item->setKeyLen(strKeyLen);
-	item->setOcspStatus((BEID_CertifStatus)0xFFFF);
+	item->setOcspStatus(BEID_CERTIF_STATUS_OCSP_NOT_CHECKED);
 
 	BEID_Certificate*	child	= NULL;
 	

@@ -94,7 +94,7 @@ enum BEID_ValidationLevel
 
 enum BEID_CertifStatus
 {
-	BEID_CERTIF_STATUS_UNKNOWN=0,	/**< Validity unknown */
+	BEID_CERTIF_STATUS_UNKNOWN=0,		/**< Validity unknown */
 	BEID_CERTIF_STATUS_REVOKED,		/**< Revoked certificate */
 	BEID_CERTIF_STATUS_TEST,		/**< Test certificate */
 	BEID_CERTIF_STATUS_DATE,		/**< Certificate no more valid */
@@ -102,8 +102,9 @@ enum BEID_CertifStatus
 	BEID_CERTIF_STATUS_ISSUER,		/**< An issuer is missing in the chain */
 	BEID_CERTIF_STATUS_ERROR,		/**< Error during validation */
 	BEID_CERTIF_STATUS_VALID,		/**< Valid certificate */
-	BEID_CERTIF_STATUS_VALID_CRL,	/**< Valid certificate through CRL process */
-	BEID_CERTIF_STATUS_VALID_OCSP	/**< Valid certificate through OCSP process */
+	BEID_CERTIF_STATUS_VALID_CRL,		/**< Valid certificate through CRL process */
+	BEID_CERTIF_STATUS_VALID_OCSP,		/**< Valid certificate through OCSP process */
+	BEID_CERTIF_STATUS_OCSP_NOT_CHECKED	/**< OCSP was not performed */
 };
 
 enum BEID_CertifType
