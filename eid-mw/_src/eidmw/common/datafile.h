@@ -180,7 +180,7 @@ public:
 				// GetInt: Return the value as an int
 	int			GetInt(t_Str szKey, t_Str szSection = t_Str(L""));
 				// GetInt: Return the value as a long
-	int			GetLong(t_Str szKey, t_Str szSection = t_Str(L""));
+	long 		GetLong(t_Str szKey, t_Str szSection = t_Str(L""));
 				// GetBool: Return the value as a bool
 	bool		GetBool(t_Str szKey, t_Str szSection = t_Str(L""));
 

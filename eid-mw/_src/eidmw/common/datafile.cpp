@@ -642,7 +642,7 @@ int	CDataFile::GetInt(t_Str szKey, t_Str szSection)
 // GetLong
 // Returns the key value as a long type. Returns LONG_MIN if the key is
 // not found.
-int	CDataFile::GetLong(t_Str szKey, t_Str szSection)
+long CDataFile::GetLong(t_Str szKey, t_Str szSection)
 {
 	t_Str szValue = GetValue(szKey, szSection);
 
