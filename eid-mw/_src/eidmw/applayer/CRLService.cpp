@@ -1204,7 +1204,7 @@ bool APL_CrlDownloadingCache::loadCacheFile()
 	// and check for the lock, otherwise they can do whatever they like ..
 	
 	if( fcntl(fileno(m_f), F_SETLKW, &m_tFlCache) == -1){  /* set the lock, waiting if necessary */
-	  printf("APL_CrlDownloadingCache::loadCacheFile file 0x%0x fcntl: %s\n",(unsigned int)m_f,strerror(errno));
+	  printf("APL_CrlDownloadingCache::loadCacheFile file 0x%p fcntl: %s\n",m_f,strerror(errno));
 	  exit(1);
 	}
 #endif
