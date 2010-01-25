@@ -788,7 +788,7 @@ APL_EidFile_RRN *APL_EIDCard::getFileRRN()
 			m_FileRrn=new APL_EidFile_RRN(this);
 			//If status ok, we add the certificate to the store
 			if(m_FileRrn->getStatus(true)==CARDFILESTATUS_OK)
-				if(NULL == (m_CertRrn = getCertificates()->addCert(m_FileRrn,APL_CERTIF_TYPE_RRN,true,true,NO_INDEX,NULL,NULL)))
+				if(NULL == (m_CertRrn = getCertificates()->addCert(m_FileRrn,APL_CERTIF_TYPE_RRN,true,true,ANY_INDEX,NULL,NULL)))
 					throw CMWEXCEPTION(EIDMW_ERR_CHECK);
 		}
 	}
@@ -819,7 +819,7 @@ APL_EidFile_RRNCA *APL_EIDCard::setFileRRNCA(const CByteArray *data)
 	m_FileRrnCa=new APL_EidFile_RRNCA(this,data);
 	//If status ok, we add the certificate to the store
 	if(m_FileRrnCa->getStatus(true)==CARDFILESTATUS_OK)
-		if(NULL == (m_CertRrnCa = getCertificates()->addCert(m_FileRrnCa,APL_CERTIF_TYPE_UNKNOWN,true,true,NO_INDEX,NULL,NULL)))
+		if(NULL == (m_CertRrnCa = getCertificates()->addCert(m_FileRrnCa,APL_CERTIF_TYPE_UNKNOWN,true,true,ANY_INDEX,NULL,NULL)))
 			throw CMWEXCEPTION(EIDMW_ERR_CHECK);
 
 	return m_FileRrnCa;

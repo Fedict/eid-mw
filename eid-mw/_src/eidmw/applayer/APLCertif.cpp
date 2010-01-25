@@ -466,7 +466,7 @@ APL_Certif *APL_Certifs::getCert(APL_CertifType type,unsigned long ulIndex,bool 
 		if((!bOnlyVisible || !cert->isHidden()) && cert->isType(type))
 		{
 			//If no index we return the first root from the card
-			if(ulIndex==NO_INDEX)
+			if(ulIndex==ANY_INDEX)
 			{
 				if(cert->isFromCard())
 					return cert;
@@ -871,7 +871,7 @@ APL_Certif::APL_Certif(APL_Certifs *store,const CByteArray &cert,APL_CertifType 
 	m_cryptoFwk=AppLayer.getCryptoFwk();
 	m_statusCache=AppLayer.getCertStatusCache();
 
-	m_ulIndex=NO_INDEX;
+	m_ulIndex=ANY_INDEX;
 
 	m_type=type;
 
