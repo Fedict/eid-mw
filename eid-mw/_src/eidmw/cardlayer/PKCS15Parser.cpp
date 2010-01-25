@@ -845,7 +845,10 @@ return(lBits);
 	        // tag 5:  CV Certificate
           */
         }    
-        oResult.push_back(cert);
+		if(xLev1Item.tag != 0)//0 means a removed certificate
+		{
+			oResult.push_back(cert);
+		}
     }
 
     return oResult;
