@@ -1759,7 +1759,7 @@ end:
 
 bool APL_CryptoFwk::b64Encode(const CByteArray &baIn, CByteArray &baOut,bool bWithLineFeed)
 {
-	unsigned int iLenOut=0;
+	XMLSize_t iLenOut=0;
 	XMLByte *pOut=NULL;
 
 	//Encode the baIn
@@ -1771,7 +1771,7 @@ bool APL_CryptoFwk::b64Encode(const CByteArray &baIn, CByteArray &baOut,bool bWi
 	baOut.ClearContents();
 	baOut.Append(pOut,iLenOut);
 
-	XERCES_CPP_NAMESPACE::XMLString::release(&pOut);
+	XERCES_CPP_NAMESPACE::XMLString::release((char**)&pOut);
 
 	//If we don't want linefeed, we have to replace them by space
 	if(!bWithLineFeed)
@@ -1783,7 +1783,7 @@ bool APL_CryptoFwk::b64Encode(const CByteArray &baIn, CByteArray &baOut,bool bWi
 bool APL_CryptoFwk::b64Decode(const CByteArray &baIn, CByteArray &baOut)
 {
 	unsigned char *pIn=NULL;
-	unsigned int iLenOut=0;
+	XMLSize_t iLenOut=0;
 	XMLByte *pOut=NULL;
 
 	//The byte array must be zero terminated
@@ -1802,7 +1802,7 @@ bool APL_CryptoFwk::b64Decode(const CByteArray &baIn, CByteArray &baOut)
 	//Put the result in baOut
 	baOut.ClearContents();
 	baOut.Append(pOut,iLenOut);
-	XERCES_CPP_NAMESPACE::XMLString::release(&pOut);
+	XERCES_CPP_NAMESPACE::XMLString::release((char**)&pOut);
 	delete[] pIn;
 
 	return true;
