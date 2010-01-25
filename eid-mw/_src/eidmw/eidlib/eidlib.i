@@ -1090,7 +1090,7 @@ return $jnicall;
 		JavaVM *jvm;
 		jenv->GetJavaVM(&jvm);		// recover the JVM pointer
 		
-		SetEventCallback_WrapperCppData* callbackData = new SetEventCallback_WrapperCppData(jvm,(int)arg3);
+		SetEventCallback_WrapperCppData* callbackData = new SetEventCallback_WrapperCppData(jvm,(long)arg3);
 		WrapperCppDataContainer.push_back(callbackData);
 		
 		//------------------------------------------------------		
