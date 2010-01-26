@@ -112,7 +112,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Copyright © 2009</string>
+    <string>Copyright © 2010</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

@@ -1214,8 +1214,8 @@ Please specify .xml, .csv or .eid</source>
     </message>
     <message encoding="UTF-8">
         <location filename="dlgAbout.ui" line="115"/>
-        <source>Copyright © 2009</source>
-        <translation>Copyright © 2009</translation>
+        <source>Copyright © 2010</source>
+        <translation>Copyright © 2010</translation>
     </message>
 </context>
 <context>
