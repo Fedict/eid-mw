@@ -382,11 +382,12 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
     oData->icon = icon;
     if(wcslen(csMesg)==0)
     {
-        wcscpy_s(oData->mesg,wcslen(oData->mesg),CLang::GetMessageFromID(messageID).c_str());
+	std::wstring translatedMessage(CLang::GetMessageFromID(messageID));
+        wcscpy_s(oData->mesg,sizeof(oData->mesg)/sizeof(wchar_t),translatedMessage.c_str());
     }
     else
     {
-        wcscpy_s(oData->mesg,wcslen(oData->mesg),csMesg);
+        wcscpy_s(oData->mesg,sizeof(oData->mesg)/sizeof(wchar_t),csMesg);
     }
     oData->buttons = ulButtons;
     oData->EnterButton = ulEnterButton;
