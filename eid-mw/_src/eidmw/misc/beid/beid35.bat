@@ -44,15 +44,15 @@ if not exist "%TARGET1%" goto print_err
 xcopy /D /Y "%TARGET1%" "%~dp0..\..\_Binaries35\Debug\"
 xcopy /D /Y "%TARGET1%" "%~dp0..\..\_Binaries35\Release\"
 
-::Xercess 2.8.0
+::Xercess 3.1.0
 ::=============
-if exist "%BEID_DIR_XERCES_280%" goto find_xerces
-set BEID_DIR_XERCES_280=%~dp0..\..\..\ThirdParty\xerces\Xerces-2.8.0
-if exist "%BEID_DIR_XERCES_280%" goto find_xerces
+if exist "%BEID_DIR_XERCES_310%" goto find_xerces
+set BEID_DIR_XERCES_310=%~dp0..\..\..\ThirdParty\xerces\Xerces-3.1.0
+if exist "%BEID_DIR_XERCES_310%" goto find_xerces
 goto print_err_xerces
 
 :find_xerces
-set TARGET1=%BEID_DIR_XERCES_280%\bin\xerces-c_2_8.dll
+set TARGET1=%BEID_DIR_XERCES_310%\bin\xerces-c_3_1.dll
 if not exist "%TARGET1%" goto print_err
 xcopy /D /Y "%TARGET1%" "%~dp0..\..\_Binaries35\Release\"
 xcopy /D /Y "%TARGET1%" "%~dp0..\..\_Binaries35\Debug\"

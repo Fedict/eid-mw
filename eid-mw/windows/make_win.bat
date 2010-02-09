@@ -168,16 +168,16 @@
 @echo [INFO] Using BEID_DIR_OPENSSL_098G=%BEID_DIR_OPENSSL_098G%
 
 
-:: Check Xerces 2.8.0
+:: Check Xerces 3.1.0
 :: ==================
-@call "%~dp0..\_src\eidmw\SetPathXerces280.bat"
-@if %ERRORLEVEL%==0 goto find_xerces_280
+@call "%~dp0..\_src\eidmw\SetPathXerces310.bat"
+@if %ERRORLEVEL%==0 goto find_xerces_310
 
-@echo [TIP] Use set_path.bat script to define BEID_DIR_XERCES_280
+@echo [TIP] Use set_path.bat script to define BEID_DIR_XERCES_310
 @goto end
 
-:find_xerces_280
-@echo [INFO] Using BEID_DIR_XERCES_280=%BEID_DIR_XERCES_280%
+:find_xerces_310
+@echo [INFO] Using BEID_DIR_XERCES_310=%BEID_DIR_XERCES_310%
 
 
 :: Check 7zip

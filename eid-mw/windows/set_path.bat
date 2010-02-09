@@ -30,9 +30,9 @@
 ::==============
 ::@set BEID_DIR_OPENSSL_098G=...
 
-::Xercess 2.8.0
+::Xercess 3.1.0
 ::=============
-::@set BEID_DIR_XERCES_280=...
+::@set BEID_DIR_XERCES_310=...
 
 ::7zip
 ::=============
