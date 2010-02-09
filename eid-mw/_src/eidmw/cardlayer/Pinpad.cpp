@@ -101,7 +101,7 @@ unsigned char CPinpad::ToFormatString(const tPin & pin)
 		// READER FIX:
 		// The SPR532 reader wants this value to be as for BCD
 		const char *csReader = m_csReader.c_str();
-		if ( (m_usReaderFirmVers != 0x0000) && (m_usReaderFirmVers < 0x0416) && 
+		if ( (m_usReaderFirmVers != 0x0000) && (m_usReaderFirmVers < 0x0506) && 
 			(strstr(csReader, "SPRx32 USB") != NULL) )
 		{
 			return 0x00 | 0x00 | 0x00 | 0x01;

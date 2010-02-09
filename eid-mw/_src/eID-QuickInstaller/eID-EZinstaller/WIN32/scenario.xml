@@ -130,9 +130,8 @@
 				<RequiredValue RequiredValueType="STRING"/>
 			</CheckProperty>
 
-
 		
-			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3105" CheckPropertyName="INSTALLDEVICE">
+			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3106" CheckPropertyName="INSTALLDEVICE">
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
@@ -148,7 +147,7 @@
 				<RequiredValue RequiredValueType="STRING"/>
 			</CheckProperty>
 
-			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3106" CheckPropertyName="INSTALLDEVICE">
+			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3107" CheckPropertyName="INSTALLDEVICE">
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
@@ -164,7 +163,7 @@
 				<RequiredValue RequiredValueType="STRING"/>
 			</CheckProperty>
 
-			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3107" CheckPropertyName="INSTALLDEVICE">
+			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3108" CheckPropertyName="INSTALLDEVICE">
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
@@ -180,7 +179,7 @@
 				<RequiredValue RequiredValueType="STRING"/>
 			</CheckProperty>
 
-			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3108" CheckPropertyName="INSTALLDEVICE">
+			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3109" CheckPropertyName="INSTALLDEVICE">
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
@@ -196,7 +195,7 @@
 				<RequiredValue RequiredValueType="STRING"/>
 			</CheckProperty>
 
-      <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3109" CheckPropertyName="INSTALLDEVICE">
+      <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3110" CheckPropertyName="INSTALLDEVICE">
         <CheckOnOS>
           <OperatingSystem>WINALL</OperatingSystem>
         </CheckOnOS>
@@ -212,7 +211,7 @@
         <RequiredValue RequiredValueType="STRING"/>
       </CheckProperty>
 
-      <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3110" CheckPropertyName="EXTRACTISSFILES">
+      <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3111" CheckPropertyName="EXTRACTISSFILES">
         <CheckOnOS>
           <OperatingSystem>WINALL</OperatingSystem>
         </CheckOnOS>
@@ -411,8 +410,8 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5.1 Basic (Quick-installer-versie) geïnstalleerd ?</DescriptionNl>
-				<DescriptionFr>Middleware version 3.5.1 Basic (version Quick-Installer) installé ?</DescriptionFr>
+				<DescriptionNl>Is Middleware versie 3.5.2 Basic (Quick-installer-versie) geïnstalleerd ?</DescriptionNl>
+				<DescriptionFr>Middleware version 3.5.2 Basic (version Quick-Installer) installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
 				<InputParams>
@@ -427,8 +426,8 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5.1 Pro geïnstalleerd ?</DescriptionNl>
-				<DescriptionFr>Middleware version 3.5.1 Pro installé ?</DescriptionFr>
+				<DescriptionNl>Is Middleware versie 3.5.2 Pro geïnstalleerd ?</DescriptionNl>
+				<DescriptionFr>Middleware version 3.5.2 Pro installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
 				<InputParams>
@@ -665,8 +664,8 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Verwijderen Middleware versie 3.5.1 Basic (Quick-Install)</DescriptionNl>
-				<DescriptionFr>Enlever le Middleware version 3.5.1 Basic (Quick-Install)</DescriptionFr>
+				<DescriptionNl>Verwijderen Middleware versie 3.5.x Basic (Quick-Install)</DescriptionNl>
+				<DescriptionFr>Enlever le Middleware version 3.5.x Basic (Quick-Install)</DescriptionFr>
           <ActionInfoNl/>
 				<ActionInfoFr/>
         <InputParams>
@@ -683,8 +682,8 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Verwijderen Middleware versie 3.5.1 Pro</DescriptionNl>
-				<DescriptionFr>Enlever le Middleware version 3.5.1 Pro</DescriptionFr>
+				<DescriptionNl>Verwijderen Middleware versie 3.5.x Pro</DescriptionNl>
+				<DescriptionFr>Enlever le Middleware version 3.5.x Pro</DescriptionFr>
           <ActionInfoNl/>
 				<ActionInfoFr/>
         <InputParams>
@@ -768,8 +767,8 @@
 			<CheckOnOS>
 				<OperatingSystem>WINALL</OperatingSystem>
 			</CheckOnOS>
-			<DescriptionNl>Installatie van Middleware versie 3.5 Basic (Quick-Install)</DescriptionNl>
-			<DescriptionFr>Installaton du Middleware version 3.5 Basic (Quick-Install)</DescriptionFr>
+			<DescriptionNl>Installatie van Middleware versie 3.5.3 (Quick-Install)</DescriptionNl>
+			<DescriptionFr>Installaton du Middleware version 3.5.3 (Quick-Install)</DescriptionFr>
 			<ActionInfoNl/>
 			<ActionInfoFr/>
   		<InputParams>
@@ -778,8 +777,8 @@
             <CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Installatie van Middleware 3.5 Basic (Quick-Install)</DescriptionNl>
-				<DescriptionFr>Démarrer l'installation MSI Middleware 3.5 Basic (Quick-Install)</DescriptionFr>
+				<DescriptionNl>Installatie van Middleware 3.5.3 (Quick-Install)</DescriptionNl>
+				<DescriptionFr>Démarrer l'installation MSI Middleware 3.5.3 (Quick-Install)</DescriptionFr>
 				<ActionInfoNl>Probeer opnieuw</ActionInfoNl>
 				<ActionInfoFr>Essayer de nouveau</ActionInfoFr>
 				<InputParams>
@@ -790,7 +789,7 @@
  				<RequiredValue RequiredValueType="STRING" >SUCCESS</RequiredValue>
 			</CheckProperty>
       
-			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="2302" CheckPropertyName="READREGISTRY">
+			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="2306" CheckPropertyName="READREGISTRY">
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>

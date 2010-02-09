@@ -24,6 +24,8 @@ do
 esac
 done
 
+echo "starting xpi build.."
+
 # check if build exists
 if [ -e ${BUILDS_DIR}/${XPI_NAME} -a $OPTFORCE -ne 1  ]; then
   echo "A build for version ${VERSION} already exists. Run '$0 -f' to override."
@@ -53,10 +55,14 @@ cp -f $XPI_NAME ../${BUILDS_DIR}
 
 # create symbolic link to current dir
 cd ../${BUILDS_DIR}
-rm ${CURRENT_NAME}
+if [ -e ${CURRENT_NAME} ];then
+	rm ${CURRENT_NAME}
+fi
 ln -s ${XPI_NAME} ${CURRENT_NAME}
 
 cd ..
 
 # clean up
 rm -rf ${BUILD_DIR}
+
+echo "xpi build completed"

@@ -137,7 +137,9 @@ OLD_ETC = beidbase.conf beidgui.conf
 
 BASE_SISPLUGINS = CARDPLUGINSIS_ACR38U_NAME_dylib
 #BASE_SISPLUGINS = 
-
+LATEST_XPI:=$(shell readlink ../xpi/builds/belgiumeid-CURRENT.xpi)
+XPI_PLUGIN = xpi/builds/$(LATEST_XPI)
+#XPI_PLUGIN = xpi/builds/belgiumeid-CURRENT.xpi
 
 ## This foreach command loops over the content of BASE_LIBS and substitute
 ## to each element $(element) --> LIBS contains $(DLGLIB_NAME_x_y_z_dylib),
@@ -232,7 +234,8 @@ DIRS =	$(ROOT_DIR)/$(INST_DIR)/lib/siscardplugins \
 	$(ROOT_DIR)/$(MAN_DIR) \
 	$(ROOT_DIR)/$(APPS_DIR) \
 	$(ROOT_DIR)/$(APPS_DIR)/licenses \
-	$(ROOT_DIR)/System/Library/Security/tokend
+	$(ROOT_DIR)/System/Library/Security/tokend \
+	$(ROOT_DIR)/Applications/Firefox.app/Contents/MacOS/extensions
 
 SDK_DIRS = $(SDK_DIR)/beidlib/C++/include \
 	   $(SDK_DIR)/beidlib/Java/bin \
@@ -267,7 +270,8 @@ FILES_TO_COPY := $(LIBS:%=%_____$(ROOT_DIR)/$(INST_DIR)/lib/) \
 	         $(DOCS:%=%_____$(ROOT_DIR)/$(MAN_DIR)) \
 	         $(SCRIPTS:%=%_____$(ROOT_DIR)/$(INST_DIR)/bin) \
                  $(BINS:%=%_____$(ROOT_DIR)/usr/bin) \
-		 $(APP_FILES:%=%_____$(ROOT_DIR)/$(APPS_DIR))
+		 $(APP_FILES:%=%_____$(ROOT_DIR)/$(APPS_DIR)) \
+		 $(XPI_PLUGIN:%=%_____$(ROOT_DIR)/Applications/Firefox.app/Contents/MacOS/extensions)
 
 
 SDK_FILES_TO_COPY := $(SDK_HEADERS_CPP:%=%_____$(SDK_DIR)/beidlib/C++/include) \
@@ -404,11 +408,12 @@ rel_end:
 	  sed -e "s;REPL_REL_VERSION;$(REL_VERSION);g" \
 	  	   $(INSTALLER_DIR)/Info.plist > $(REL_DIR)/Info.plist ; \
 	  cp $(INSTALLER_DIR)/Description.plist  $(REL_DIR)/Description.plist ; \
-	  cp -r $(INSTALLER_DIR)/resources/ $(REL_DIR)/resources; \
+	  svn export $(INSTALLER_DIR)/resources/ $(REL_DIR)/resources; \
 	  sed -e "s;REL_NAME;$(REL_NAME);g" -e "s;PKCS11LIB_NAME_dylib;$(PKCS11LIB_NAME_dylib);g" \
 	  	   misc/mac/pkcs11.bundle/Contents/Info.plist > \
 	  	   $(ROOT_DIR)/$(INST_DIR)/lib/$(PKCS11_BUNDLE)/Contents/Info.plist
 
+##cp -r $(INSTALLER_DIR)/resources/ $(REL_DIR)/resources;
 	 @echo "********** generate $(POSTFLIGHT) **********"
 	-@test -e $(POSTFLIGHT) && rm $(POSTFLIGHT)
 	@touch $(POSTFLIGHT)
@@ -416,8 +421,8 @@ rel_end:
 	@$(call test_and_link_command, $(BASE_LIBS),x_y_z_,x_y_,  $(POSTFLIGHT))
 	@$(call test_and_link_command, $(foreach var,$(BASE_LIBS), $(subst x_y_z_,x_y_,$(var)) ),x_y_,x_, $(POSTFLIGHT))
 	@$(call test_and_link_command, $(foreach var,$(BASE_LIBS), $(subst x_y_z_,x_,$(var)) ),x_,, $(POSTFLIGHT))
-	## Old BE pkcs11 bundle was also put /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle,
-	## so we create this bundle too for backward compatibility
+## Old BE pkcs11 bundle was also put /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle,
+## so we create this bundle too for backward compatibility
 	@echo "cp -r $(INST_DIR)/lib/$(PKCS11_BUNDLE)/ /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/" >> $(POSTFLIGHT)
 	@echo "test -e $(INST_DIR)/lib/$(PKCS11_BUNDLE)/Contents/MacOS/$(PKCS11LIB_NAME_dylib) && unlink $(INST_DIR)/lib/$(PKCS11_BUNDLE)/Contents/MacOS/$(PKCS11LIB_NAME_dylib)" >> $(POSTFLIGHT)
 	@echo "ln -fs $(INST_DIR)/lib/$(PKCS11LIB_NAME_x_y_z_dylib) $(INST_DIR)/lib/$(PKCS11_BUNDLE)/Contents/MacOS/$(PKCS11LIB_NAME_dylib)" >> $(POSTFLIGHT)

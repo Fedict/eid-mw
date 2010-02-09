@@ -1,7 +1,5 @@
 // Microsoft Visual C++ generated resource script.
 //
-#include "svn_revision.h"
-#include "_Builds/beidversions.h" 
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -29,24 +27,25 @@ LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE
+3 TEXTINCLUDE 
 BEGIN
     "\r\n"
     "\0"
 END
 
 #endif    // APSTUDIO_INVOKED
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -56,7 +55,6 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_ICON1               ICON                    "Resources\\Setup.ico"
-
 #endif    // Dutch (Netherlands) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -70,28 +68,12 @@ LANGUAGE LANG_DUTCH, SUBLANG_DUTCH_BELGIAN
 #pragma code_page(1252)
 #endif //_WIN32
 
-// #define MSI_FILEX "BeidMW35-"
-// #define MSI_FILEA(x) "BeidMW35-"##x
-// #define MSI_FILEB(x) MSI_FILEA(x)
-#define MSI_FILE_DASH "-"
-//#define MSI_FILEX(x) BeidMW35_##x.msi
-//// #define MSI_MINUS(x)	-x
-//// #define MSI_FILE(x) MSI_FILEX( MSI_MINUS(x) )
-// #define MSI_FILE(x) MSI_FILEX( x )
-
-#define MSI_MINUS(x)	-x
-#define MSI_FILEX(x,y,z) #x##y#z
-// #define MSI_FILE(x) MSI_FILEX( MSI_MINUS(x) )
- #define MSI_FILE(x) MSI_FILEX( "BeidMW35" , x , ".msi")
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // MSI
 //
 
 IDR_MSI1                MSI                     "BeidMW35.msi"
-//IDR_MSI1                MSI                     MSI_FILE( SVN_REVISION )
-//IDR_MSI1                MSI                     "BeidMW35.msi"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -106,9 +88,9 @@ IDR_SMARTCARDDRIVERS1   SMARTCARDDRIVERS        "ArchiveFile.zrc"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION WIN_QI_VERSION1,WIN_QI_VERSION2,WIN_QI_VERSION3,WIN_QI_VERSION4
- PRODUCTVERSION WIN_QI_VERSION1,WIN_QI_VERSION2,WIN_QI_VERSION3,WIN_QI_VERSION4
-FILEFLAGSMASK 0x17L
+ FILEVERSION 3,0,1,6184
+ PRODUCTVERSION 3,0,1,6184
+ FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
 #else
@@ -123,14 +105,14 @@ BEGIN
         BLOCK "081304b0"
         BEGIN
             VALUE "Comments", "Belgium eID Middleware QuickInstaller"
-            VALUE "CompanyName", BEID_COMPANY_NAME
+            VALUE "CompanyName", "Belgian Government"
             VALUE "FileDescription", "eID-QuickInstaller"
-            VALUE "FileVersion", WIN_QI_VERSION_STRING
+            VALUE "FileVersion", "3, 0, 1, 6184"
             VALUE "InternalName", "eID-QuickInstaller"
-            VALUE "LegalCopyright", BEID_COPYRIGHT
+            VALUE "LegalCopyright", "Copyright (C) 2009 - 2010"
             VALUE "OriginalFilename", "eID-QuickInstaller.exe"
-            VALUE "ProductName", BEID_PRODUCT_NAME
-            VALUE "ProductVersion", BEID_PRODUCT_VERSION
+            VALUE "ProductName", "Belgium eID MiddleWare"
+            VALUE "ProductVersion", "3.0"
         END
     END
     BLOCK "VarFileInfo"

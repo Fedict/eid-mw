@@ -226,6 +226,7 @@ then
 		apt-get install libpcsclite1
 		apt-get install libacr38u
 		apt-get install pcscd
+		apt-get install libaudio2
 	fi
 	if [ -e "/etc/SuSE-release" ]
 	then

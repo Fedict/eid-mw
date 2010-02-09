@@ -110,6 +110,7 @@ private:
     void signalCompletion();
     void disableCancel();
     void enableCancel();
+	void translateOsString(string* myOS);
 
 public:
 

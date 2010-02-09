@@ -4,7 +4,7 @@
 MINJAVAVER=1.5
 MACHINETYPE=i386
 OSXVER=10.6.1
-MWVER=3.5.2
+MWVER=3.5.3
 
 #########################################
 # we must be running on intel
@@ -220,10 +220,17 @@ mv ./BEID.tokend ../bin
 cd -
 
 #-----------------------------------------
-# 
+# create the OOoRegister
 #-----------------------------------------
 cd ../_src/eidmw/misc/mac/OOoRegister
 make
+cd -
+
+#-----------------------------------------
+# create the xpi
+#-----------------------------------------
+cd ../_src/eidmw/xpi
+./build.sh -f
 cd -
 
 #-----------------------------------------

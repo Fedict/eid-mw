@@ -49,7 +49,12 @@ void diagnoseThread::insertStringReport(string str, int weight) {
     QApplication::postEvent(objectToUpdate,ve);
     QApplication::sendPostedEvents();
 } 
-
+void diagnoseThread::translateOsString(string* myOS) {
+    if ( *myOS == "Windows XP") {*myOS = "XP";}
+    else if ( *myOS == "Windows Vista") {*myOS = "VISTA";}
+    else if ( *myOS == "Windows 2000") {*myOS = "WIN2000";}
+	else if ( *myOS == "Windows 7") {*myOS = "WIN7";}
+}
 
 void diagnoseThread::setPercentage(int int1) {
     verboseEvent * ve = new verboseEvent();
@@ -167,6 +172,10 @@ void diagnoseThread::runScenario() {
 
 #pragma endregion Declare_variables
 
+#ifdef WIN32
+	this->thisOS = ezw.GetExtraInfoItem(scl.getSystemInfo(""),"osProductName");
+	translateOsString(&(this->thisOS));
+#endif
 
     statusList.insertBefore(statusList.createProcessingInstruction(QString("xml"),QString("version='1.0' encoding='UTF-8'")),statusList.firstChild());
     root = statusList.createElement("statusList");
@@ -385,7 +394,7 @@ bool diagnoseThread::TestOnThisOS(const QDomNode OSNode){
     innerNode = OSNode.firstChild();
     while (!innerNode.isNull()) {
 
-        if ((ezw.TextFromNode(innerNode) == OS_ALL) || (ezw.TextFromNode(innerNode) == thisOS)) {
+        if ((ezw.TextFromNode(innerNode) == OS_ALL) || (ezw.TextFromNode(innerNode) == this->thisOS)) {
             returnValue = true;
             break;
         };
@@ -700,7 +709,7 @@ QByteArray getFileBytes (QString filename) {
 
 void saveByteArrayToFile(QByteArray ba, QString filename) {
     QFile outfile(filename);
-    if (outfile.open(QIODevice::WriteOnly) == TRUE);
+    if (outfile.open(QIODevice::WriteOnly) == TRUE)
 	{
 		QDataStream dsout(&outfile);
 		dsout.writeRawData(ba.data(),ba.length());

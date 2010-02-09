@@ -55,7 +55,7 @@ BEGIN
             VALUE "FileDescription", "eDT executable"
             VALUE "FileVersion", "1,0,0,0"
             VALUE "InternalName", "eDTGui"
-            VALUE "LegalCopyright", "Copyright (C) 2009"
+            VALUE "LegalCopyright", "Copyright (C) 2009 - 2010"
             VALUE "OriginalFilename", "eDTGui.exe"
             VALUE "ProductName", "eDTGui"
             VALUE "ProductVersion", "1,0,0,0"
