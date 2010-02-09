@@ -71,10 +71,10 @@
     <?define var.BEID_DIR_OPENSSL_098G=$(env.BEID_DIR_OPENSSL_098G)?>
     <?endif?>
     
-    <?ifndef env.BEID_DIR_XERCES_280?>
-    <?define var.BEID_DIR_XERCES_280=..\..\..\..\ThirdParty\Xerces\Xerces-2.8.0?>
+    <?ifndef env.BEID_DIR_XERCES_310?>
+    <?define var.BEID_DIR_XERCES_310=..\..\..\..\ThirdParty\Xerces\Xerces-3.1.0?>
     <?else?>
-    <?define var.BEID_DIR_XERCES_280=$(env.BEID_DIR_XERCES_280)?>
+    <?define var.BEID_DIR_XERCES_310=$(env.BEID_DIR_XERCES_310)?>
     <?endif?>
 
     <?if $(var.Lang) = "nl"?>
@@ -317,7 +317,7 @@
       </Component>
       
       <Component Id="Runtime35ThirdPartyXerces" Guid="{B1EBF9C5-1A6F-44d4-AA80-DE55AAF052FE}" SharedDllRefCount="yes">
-        <File Id="xercesc_2_8.dll" Name="xerces-c_2_8.dll" KeyPath="yes" Source="$(var.BEID_DIR_XERCES_280)\bin\xerces-c_2_8.dll" />
+        <File Id="xercesc_3_1.dll" Name="xerces-c_3_1.dll" KeyPath="yes" Source="$(var.BEID_DIR_XERCES_310)\bin\xerces-c_3_1.dll" />
       </Component>
 
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes">
