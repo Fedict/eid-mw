@@ -375,7 +375,7 @@ rel_3rd_party:
 	 cp $(QTFRAMEWORKSDIR)/QtGui.framework/Versions/4/QtGui	$(ROOT_DIR)/$(INST_DIR)/lib/beidqt/
 	 cp $(QTFRAMEWORKSDIR)/QtCore.framework/Versions/4/QtCore  $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/
 	 mkdir -p $(ROOT_DIR)/$(INST_DIR)/lib
-	 cp ../../ThirdParty/Xerces/Xerces-2.8.0-mac/lib/libxerces-c.28.0.dylib $(ROOT_DIR)/$(INST_DIR)/lib/libxerces-c.28.0.dylib 
+	 cp ../../ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib $(ROOT_DIR)/$(INST_DIR)/lib/libxerces-c-3.1.dylib 
 	 mkdir -p $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats/
 	 cp $(QTPLUGINDIR)/imageformats/libqjpeg.dylib $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats/libbeidjpeg.dylib
 	 mkdir -p $(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/Resources
@@ -429,8 +429,8 @@ rel_end:
 	@echo "test -e /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/$(PKCS11LIB_NAME_dylib) && unlink /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/$(PKCS11LIB_NAME_dylib)" >> $(POSTFLIGHT)
 	@echo "ln -fs $(INST_DIR)/lib/$(PKCS11LIB_NAME_x_y_z_dylib) /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/$(PKCS11LIB_NAME_dylib)" >> $(POSTFLIGHT)
 	@echo "" >> $(POSTFLIGHT)
-	@echo "test -e $(INST_DIR)/lib/libxerces-c.28.dylib && unlink $(INST_DIR)/lib/libxerces-c.28.dylib" >> $(POSTFLIGHT)
-	@echo "ln -fs $(INST_DIR)/lib/libxerces-c.28.0.dylib $(INST_DIR)/lib/libxerces-c.28.dylib" >> $(POSTFLIGHT)
+	@echo "test -e $(INST_DIR)/lib/libxerces-c-3.dylib && unlink $(INST_DIR)/lib/libxerces-c-3.dylib" >> $(POSTFLIGHT)
+	@echo "ln -fs $(INST_DIR)/lib/libxerces-c-3.1.dylib $(INST_DIR)/lib/libxerces-c-3.dylib" >> $(POSTFLIGHT)
 	@echo "test -e /Library/Java/Extensions/$(JAVALIB_NAME).jnilib && unlink /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
 	@echo "ln -fs /usr/local/lib/$(JAVALIB_NAME_x_y_z_dylib) /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
 	@echo "mv $(APPS_DIR)/$(EIDGUI).app $(APPS_DIR)/$(EIDGUI_NAME).app" >> $(POSTFLIGHT)

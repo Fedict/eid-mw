@@ -65,10 +65,10 @@ else
 fi
 
 #########################################
-# check xerces installed
+# check xerces installed 
 #########################################
-XERCESCLIB=libxerces-c.28.0.dylib
-XERCESCPATH=../_src/ThirdParty/Xerces/Xerces-2.8.0-mac
+XERCESCLIB=libxerces-c-3.1.dylib
+XERCESCPATH=../_src/ThirdParty/Xerces/Xerces-3.1.0-mac
 echo "[Info ] Verifying xerces libraries..."
 if [ ! -e $XERCESCPATH/lib/$XERCESCLIB ]
 then

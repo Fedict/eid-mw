@@ -78,7 +78,6 @@
 		7F90111D0F850342004A5FCC /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F90111C0F850342004A5FCC /* libssl.dylib */; };
 		7F90111E0F85034F004A5FCC /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9011190F8502F8004A5FCC /* libcrypto.dylib */; };
 		7F90111F0F850363004A5FCC /* libbeidapplayer.3.5.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F900E540F84FB07004A5FCC /* libbeidapplayer.3.5.3.dylib */; };
-		7F9011250F8503CC004A5FCC /* libxerces-c.28.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9011240F8503CC004A5FCC /* libxerces-c.28.dylib */; };
 		7F9011270F8503F1004A5FCC /* libbeiddialogsQT.3.5.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.3.5.3.dylib */; };
 		7F90112D0F850450004A5FCC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F90112C0F850450004A5FCC /* SystemConfiguration.framework */; };
 		7F9011320F85047E004A5FCC /* libbeidcommon.3.5.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.3.dylib */; };
@@ -182,6 +181,7 @@
 		7FC535EF0F84BD6300BA96EE /* dlgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535EC0F84BD6300BA96EE /* dlgs.cpp */; };
 		7FC535F00F84BD6300BA96EE /* SharedMem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535ED0F84BD6300BA96EE /* SharedMem.cpp */; };
 		7FD8B9FA0F9DBCA10074BE3C /* qrc_qtconf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B9F90F9DBCA10074BE3C /* qrc_qtconf.cpp */; };
+		86A9430D1122D6E50011C6A8 /* libxerces-c-3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -598,6 +598,8 @@
 		7FC536160F84BDF500BA96EE /* ui_dlgWndModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_dlgWndModal.h; path = ../dialogs/dialogsQTsrv/ui_dlgWndModal.h; sourceTree = SOURCE_ROOT; };
 		7FC536170F84BDF500BA96EE /* ui_dlgWndPinpadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_dlgWndPinpadInfo.h; path = ../dialogs/dialogsQTsrv/ui_dlgWndPinpadInfo.h; sourceTree = SOURCE_ROOT; };
 		7FD8B9F90F9DBCA10074BE3C /* qrc_qtconf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_qtconf.cpp; path = ../eidgui/qrc_qtconf.cpp; sourceTree = SOURCE_ROOT; };
+		86A90A2B1122D6880011C6A8 /* trunk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trunk; path = "/beid-mw/trunk"; sourceTree = "<absolute>"; };
+		86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libxerces-c-3.1.dylib"; path = "/beid-mw/trunk/eid-mw/_src/ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -622,8 +624,8 @@
 				7F90110E0F850090004A5FCC /* libbeidcardlayer.3.5.3.dylib in Frameworks */,
 				7F9010630F84FEC3004A5FCC /* CoreServices.framework in Frameworks */,
 				7F90111D0F850342004A5FCC /* libssl.dylib in Frameworks */,
-				7F9011250F8503CC004A5FCC /* libxerces-c.28.dylib in Frameworks */,
 				7F90112D0F850450004A5FCC /* SystemConfiguration.framework in Frameworks */,
+				86A9430D1122D6E50011C6A8 /* libxerces-c-3.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,6 +742,8 @@
 				08FB77ACFE841707C02AAC07 /* Source */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DDFF38A45A11DB9C8B /* Products */,
+				86A90A2B1122D6880011C6A8 /* trunk */,
+				86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */,
 			);
 			name = beidmw;
 			sourceTree = "<group>";
@@ -1807,6 +1811,7 @@
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -1851,6 +1856,7 @@
 				);
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../lib";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-finput-charset=cp1252",
 					"-fno-strict-aliasing",
@@ -1882,6 +1888,10 @@
 					"${PROJECT_DIR}/../../ThirdParty/Xerces/Xerces-2.8.0-mac/include",
 				);
 				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ThirdParty/Xerces/Xerces-3.1.0-mac/lib\"",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidapplayer.$(CURRENT_PROJECT_VERSION)";
 			};
@@ -1905,9 +1915,14 @@
 					"${PROJECT_DIR}/../cardlayer",
 					/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework/Headers,
 					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
-					"${PROJECT_DIR}/../../ThirdParty/Xerces/Xerces-2.8.0-mac/include",
+					"${PROJECT_DIR}/../../ThirdParty/Xerces/Xerces-3.1.0-mac/include",
 				);
 				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ThirdParty/Xerces/Xerces-3.1.0-mac/lib\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidapplayer.$(CURRENT_PROJECT_VERSION)";
 				ZERO_LINK = NO;
@@ -1945,6 +1960,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/lib;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidlib.$(CURRENT_PROJECT_VERSION)";
 				ZERO_LINK = NO;
@@ -1998,6 +2014,7 @@
 				);
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../lib";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -2047,6 +2064,7 @@
 					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/JavaVM.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidlibJava_Wrapper.$(CURRENT_PROJECT_VERSION)";
 				ZERO_LINK = NO;
@@ -2093,6 +2111,7 @@
 					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidpkcs11.$(CURRENT_PROJECT_VERSION)";
@@ -2145,6 +2164,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2155,8 +2175,10 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcommon.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
 				VERSION_INFO_SUFFIX = "";
 				ZERO_LINK = NO;
 			};
@@ -2222,7 +2244,7 @@
 				INSTALL_PATH = "";
 				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-O2";
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcardlayer.$(CURRENT_PROJECT_VERSION)";
@@ -2263,6 +2285,7 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib/siscardplugins;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = siscardplugin1__ACS__;
 				ZERO_LINK = NO;
@@ -2306,6 +2329,7 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../common/**";
 				INSTALL_PATH = /usr/local/lib;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-finput-charset=cp1252",
 					"-fno-strict-aliasing",
