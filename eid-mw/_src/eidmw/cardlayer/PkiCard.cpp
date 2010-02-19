@@ -396,6 +396,10 @@ tFileInfo CPkiCard::SelectFile(const std::string & csPath, bool bReturnFileInfo)
 			// The file wasn't found in this DF, so let's select by full path
 			oResp = SelectByPath(csPath, bReturnFileInfo);
 		}
+		else
+		{
+			getSW12(oResp, 0x9000);
+		}
 	}
 
     if (bReturnFileInfo)
