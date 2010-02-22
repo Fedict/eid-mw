@@ -168,11 +168,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\hardware.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\log.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\middleware.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\module.cpp"
 				>
 			</File>
 			<File
@@ -201,6 +209,10 @@
 			</File>
 			<File
 				RelativePath=".\report.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\repository.cpp"
 				>
 			</File>
 			<File
@@ -271,6 +283,10 @@
 				RelativePath=".\Win\win_user.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\WinRegKey.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -310,11 +326,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\hardware.h"
+				>
+			</File>
+			<File
 				RelativePath=".\log.h"
 				>
 			</File>
 			<File
 				RelativePath=".\middleware.h"
+				>
+			</File>
+			<File
+				RelativePath=".\module.h"
 				>
 			</File>
 			<File
@@ -350,11 +374,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\repository.h"
+				>
+			</File>
+			<File
 				RelativePath=".\services.h"
 				>
 			</File>
 			<File
 				RelativePath=".\software.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StdAfx.h"
 				>
 			</File>
 			<File
@@ -371,6 +403,10 @@
 			</File>
 			<File
 				RelativePath=".\util.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WinRegKey.h"
 				>
 			</File>
 		</Filter>

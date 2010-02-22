@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -33,6 +33,8 @@
 #include "device.h"
 #include "pcsc.h"
 #include "middleware.h"
+
+#include "Repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -110,6 +112,14 @@ int readerReportInfo(Report_TYPE type, const Reader_INFO &info)
 	return iReturnCode;
 }
 
+void readerContributeInfo(const Reader_INFO &info)
+{
+	REP_PREFIX(							info.id.Name.c_str());
+	REP_CONTRIBUTE(L"id",				info.id.Name.c_str());
+	REP_CONTRIBUTE(L"sourceName",		getSourceName(info.id.Source));
+	REP_UNPREFIX();
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int readerReportList(Report_TYPE type, const Reader_LIST &readerList, const wchar_t *TitleIn)
 {
@@ -147,6 +157,7 @@ int readerReportList(Report_TYPE type, const Reader_LIST &readerList, const wcha
 		if(DIAGLIB_OK == readerGetInfo(*itr,&info))
 		{
 			readerReportInfo(type,info);
+			readerContributeInfo(info);
 		}
 		progressIncrement();
 	}

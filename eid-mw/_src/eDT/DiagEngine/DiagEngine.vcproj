@@ -172,6 +172,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\AnalyseHardware.h"
+				>
+			</File>
+			<File
+				RelativePath=".\AnalyseMeta.h"
+				>
+			</File>
+			<File
+				RelativePath=".\AnalyseModuleInfo.h"
+				>
+			</File>
+			<File
 				RelativePath=".\AnalyseMWAccessInfo.h"
 				>
 			</File>
@@ -253,6 +265,10 @@
 			</File>
 			<File
 				RelativePath=".\diagengine.h"
+				>
+			</File>
+			<File
+				RelativePath="..\DiagLib\tostr.h"
 				>
 			</File>
 		</Filter>

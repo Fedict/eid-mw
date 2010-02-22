@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -184,8 +184,6 @@ int processGetInfo(Proc_ID process, Proc_INFO *info)
 		info->Name=g_buffer;
 	}
 
-	//info->Line.clear();
-
 	bufferSize = G_BUFFER_SIZE;
 	if(!GetModuleFileNameEx(hHandle,NULL,g_buffer,bufferSize)) 
 	{
@@ -206,6 +204,27 @@ int processGetInfo(Proc_ID process, Proc_INFO *info)
 	else
 	{
 		info->FullPath=g_buffer;
+	}
+
+	HMODULE modulesFound[1024];
+	DWORD spaceActuallyRequired;
+
+	if(!EnumProcessModules(hHandle,modulesFound,1024,&spaceActuallyRequired))
+	{
+		LOG_LASTERROR(L"EnumProcessModules failed");
+	}
+	else
+	{
+		info->modulesLoaded.clear();
+		for(unsigned int i=0;i<(spaceActuallyRequired/sizeof(HMODULE));i++)
+		{
+			TCHAR szModName[MAX_PATH];
+
+			if(GetModuleBaseName(hHandle,modulesFound[i],szModName,sizeof(szModName)/sizeof(TCHAR)))
+				info->modulesLoaded.insert(szModName);
+            //if(GetModuleFileNameEx(hHandle,modulesFound[i],szModName,sizeof(szModName)/sizeof(TCHAR)))
+				//modInfo.path=szModName;
+		}
 	}
 
 	if(!CloseHandle( hHandle ))

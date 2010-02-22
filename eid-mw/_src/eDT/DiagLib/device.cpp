@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -29,6 +29,8 @@
 #include "error.h"
 #include "log.h"
 #include "progress.h"
+
+#include "Repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -108,6 +110,23 @@ int deviceReportInfo(Report_TYPE type, const Device_INFO &info)
 
 	return iReturnCode;
 }
+void deviceContributeInfo(const Device_INFO &info)
+{
+	REP_PREFIX(		L"%ls.%ls.%ls",	info.ClassType.c_str(),info.Enumerator.c_str(),info.Service.empty()?L"None":info.Service.c_str());
+	REP_CONTRIBUTE(	L"id",			info.id.c_str());
+	REP_CONTRIBUTE(	L"Name",		info.Name.c_str());
+	REP_CONTRIBUTE(	L"ClassTypen",	info.ClassType.c_str());
+	REP_CONTRIBUTE(	L"ClassGUID",	info.ClassGUID.c_str());
+	REP_CONTRIBUTE(	L"FriendlyName",info.FriendlyName.c_str());
+	REP_CONTRIBUTE(	L"Enumerator",	info.Enumerator.c_str());
+	REP_CONTRIBUTE(	L"DriverInfo",	info.DriverInfo.c_str());
+	REP_CONTRIBUTE(	L"HardwareID",	info.HardwareID.c_str());
+	REP_CONTRIBUTE(	L"Mfg",			info.Mfg.c_str());
+	REP_CONTRIBUTE(	L"Location",	info.Location.c_str());
+	REP_CONTRIBUTE(	L"Service",		info.Service.c_str());
+	REP_UNPREFIX();
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int deviceReportList(Report_TYPE type, const Device_LIST &deviceList, const wchar_t *TitleIn)
@@ -146,6 +165,7 @@ int deviceReportList(Report_TYPE type, const Device_LIST &deviceList, const wcha
 		if(DIAGLIB_OK == deviceGetInfo(*itr,&info))
 		{
 			deviceReportInfo(type,info);
+			deviceContributeInfo(info);
 		}
 
 		progressIncrement();

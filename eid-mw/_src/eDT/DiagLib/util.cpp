@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -18,6 +18,8 @@
 
 **************************************************************************** */
 #include "util.h"
+#include <string>
+#include <algorithm>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 std::wstring wstring_From_string(std::string const& in)
@@ -120,3 +122,30 @@ void TokenizeW (const std::wstring& str, std::vector<std::wstring>& tokens, cons
 		count++;
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+void wstring_to_lower(std::wstring& str)
+{
+       std::transform(str.begin(),str.end(),str.begin(),tolower);
+}
+
+wchar_t clean_char(wchar_t in)
+{
+       switch(in)
+       {
+               case L'.':
+                       return '_';
+               case L' ':
+                       return '_';
+               default:
+                       return in;
+       }
+}
+
+
+void wstring_clean(std::wstring& str)
+{
+       std::transform(str.begin(),str.end(),str.begin(),clean_char);
+}
+

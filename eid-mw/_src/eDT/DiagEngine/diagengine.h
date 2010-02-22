@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -57,7 +57,7 @@ public:
 	DiagEngine(void);
 	virtual ~DiagEngine(void);
 
-	int					init( void );				// initialize the diagnostic engine
+	int					init( void );						// initialize the diagnostic engine
 	tTestNames const&	getAvailableTestNames( void );		// get the list of sequential tests
 	tTestNames const&	getTestFriendlyNames();
 	size_t				getNrAvailableTests( void );

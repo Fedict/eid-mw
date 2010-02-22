@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -23,6 +23,7 @@
 #include <vector>
 #include "error.h"
 #include "process.h"
+#include "module.h"
 #include "analysis.h"
 
 //******************************************
@@ -39,9 +40,11 @@ public:
 		m_testName = "process_info";
 		m_friendlyName = "Process info";
 	}
+
 	virtual ~AnalyseProcessInfo()
 	{
 	}
+
 	virtual int run()
 	{
 		m_bPassed = false;
@@ -56,20 +59,21 @@ public:
 			return retVal;
 		}
 		setProgress(50);
+
 		retVal = processReportList(REPORT_TYPE_COMPLEMENT, m_processList);
 		if (DIAGLIB_OK!=retVal)
 		{
 			setEndTime();
 			return retVal;
 		}
+
 		setEndTime();
 		setProgress(100);
 		m_bPassed = true;
 		return 0;
 	}
 private:
-	Proc_LIST m_processList;
-
+	Proc_LIST	m_processList;
 };
 
 #endif

@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -22,6 +22,8 @@
 #include "system.h"
 #include "error.h"
 #include "log.h"
+
+#include "Repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -50,6 +52,21 @@ int systemReportInfo(Report_TYPE type, const System_INFO &info)
 	return iReturnCode;
 }
 
+void systemContributeInfo(const System_INFO &info)
+{
+	REP_CONTRIBUTE(L"osType",			L"%ls",	info.OsType.c_str());
+	REP_CONTRIBUTE(L"platformId",		L"%ld",	info.PlatformId);
+	REP_CONTRIBUTE(L"majorVersion",		L"%ls",	info.MajorVersion.c_str());
+	REP_CONTRIBUTE(L"minorVersion",		L"%ls",	info.MinorVersion.c_str());
+	REP_CONTRIBUTE(L"buildNumber",		L"%ls",	info.BuildNumber.c_str());
+	REP_CONTRIBUTE(L"productType",		L"%ld",	info.ProductType);
+	REP_CONTRIBUTE(L"servicePack",		L"%ls",	info.ServicePack.c_str());
+	REP_CONTRIBUTE(L"productName",		L"%ls",	info.ProductName.c_str());
+	REP_CONTRIBUTE(L"description",		L"%ls",	info.Description.c_str());
+	REP_CONTRIBUTE(L"defaultLanguage",	L"%ls", info.DefaultLanguage.c_str());
+	REP_CONTRIBUTE(L"architecture",		L"%ls",	info.Architecture.c_str());
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int systemReport(Report_TYPE type, const wchar_t *Title)
 {
@@ -64,6 +81,7 @@ int systemReport(Report_TYPE type, const wchar_t *Title)
 	if(DIAGLIB_OK == (iReturnCode = systemGetInfo(&info)))
 	{
 		systemReportInfo(type,info);
+		systemContributeInfo(info);
 	}
 
 	return iReturnCode;

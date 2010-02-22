@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -22,20 +22,27 @@
 
 #include <iostream>
 #include <string.h>
+#include <string>
 #include <vector>
-
+#include <set>
+#include <map>
 #include "report.h"
+#include "module.h"
 
-typedef unsigned long Proc_ID;
-typedef std::vector<Proc_ID> Proc_LIST;
-typedef std::wstring Proc_NAME;
+typedef unsigned long						Proc_ID;
+typedef std::wstring						Proc_NAME;
+typedef std::set<Proc_NAME>					ProcNameSet;
+typedef std::vector<Proc_ID>				Proc_LIST;
+typedef std::wstring						ModuleName;
+typedef std::set<ModuleName>				ModuleSet;
 
-typedef struct t_Proc_INFO {
-	Proc_ID id;
-    Proc_NAME Name;
-	//std::wstring Line; //Command line argument???
-	std::wstring Path;
-	std::wstring FullPath;
+typedef struct t_Proc_INFO
+{
+	Proc_ID			id;
+    Proc_NAME		Name;
+	std::wstring	Path;
+	std::wstring	FullPath;
+	ModuleSet		modulesLoaded;
 } Proc_INFO;
 
 typedef std::wstring Lib_ID;

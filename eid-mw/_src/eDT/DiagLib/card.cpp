@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -33,6 +33,8 @@
 #include "reader.h"
 #include "pcsc.h"
 #include "middleware.h"
+
+#include "Repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -86,7 +88,6 @@ int cardReportInfo(Report_TYPE type, const Card_INFO &info)
 
 	reportPrint(type,L"          Serial = %ls\n",info.id.Serial.c_str());
 	reportPrint(type,L"          Reader = %ls (%ls view)\n",info.id.Reader.Name.c_str(),getSourceName(info.id.Reader.Source));
-	//reportPrint(type,L"             Atr = %ls\n",info.Atr.c_str());
 	reportPrint(type,L"       FirstName = %ls\n",info.FirstName.c_str());
 	reportPrint(type,L"        LastName = %ls\n",info.LastName.c_str());
 	reportPrint(type,L"          Street = %ls\n",info.Street.c_str());
@@ -102,6 +103,27 @@ int cardReportInfo(Report_TYPE type, const Card_INFO &info)
 	reportPrintSeparator(type, REPORT_CARD_SEPARATOR);
 
 	return iReturnCode;
+}
+
+int cardContributeInfo(const Card_INFO &info)
+{
+	REP_PREFIX(						 info.id.Serial.		c_str());
+	REP_CONTRIBUTE(L"Serial"		,info.id.Serial.		c_str());
+	REP_CONTRIBUTE(L"Reader"		,info.id.Reader.Name.	c_str());
+	REP_CONTRIBUTE(L"FirstName"		,info.FirstName.		c_str());
+	REP_CONTRIBUTE(L"LastName"		,info.LastName.			c_str());
+	REP_CONTRIBUTE(L"Street"		,info.Street.			c_str());
+	REP_CONTRIBUTE(L"ReadIdOK"		,info.ReadIdOk?			L"true":L"false");
+	REP_CONTRIBUTE(L"ReadAddressOK"	,info.ReadAddressOk?	L"true":L"false");
+	REP_CONTRIBUTE(L"ReadPictureOK"	,info.ReadPictureOk?	L"true":L"false");
+	REP_CONTRIBUTE(L"ReadVersionOK"	,info.ReadTokenInfoOk?	L"true":L"false");
+	REP_CONTRIBUTE(L"ReadCertRrnOK"	,info.ReadCertRrnOk?	L"true":L"false");
+	REP_CONTRIBUTE(L"ReadCertRootOK",info.ReadCertRootOk?	L"true":L"false");
+	REP_CONTRIBUTE(L"ReadCertCAOK"	,info.ReadCertCaOk?		L"true":L"false");
+	REP_CONTRIBUTE(L"ReadCertSignOK",info.ReadCertSignOk?	L"true":L"false");
+	REP_CONTRIBUTE(L"ReadCertAuthOK",info.ReadCertAuthOk?	L"true":L"false");
+	REP_UNPREFIX();
+	return DIAGLIB_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,6 +163,7 @@ int cardReportList(Report_TYPE type, const Card_LIST &cardList, const wchar_t *T
 		if(DIAGLIB_OK == cardGetInfo(*itr,&info))
 		{
 			cardReportInfo(type,info);
+			cardContributeInfo(info);
 		}
 		progressIncrement();
 	}

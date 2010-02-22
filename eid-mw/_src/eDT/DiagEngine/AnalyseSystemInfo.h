@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -25,6 +25,7 @@
 #include "error.h"
 #include "analysis.h"
 #include "system.h"
+#include "Repository.h"
 
 //******************************************
 // Get the system info and report it
@@ -36,14 +37,16 @@
 class AnalyseSystemInfo : public Analysis
 {
 public:
-	AnalyseSystemInfo(void)
+	AnalyseSystemInfo()
 	{
 		m_testName = "system_info";
 		m_friendlyName = "System info";
 	}
+
 	virtual ~AnalyseSystemInfo(void)
 	{
 	}
+
 	virtual int run()
 	{
 		m_bPassed = false;

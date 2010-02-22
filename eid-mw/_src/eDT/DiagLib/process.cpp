@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -19,6 +19,7 @@
 **************************************************************************** */
 #ifdef WIN32
 #include <windows.h>
+
 #elif __APPLE__
 #include "Mac/mac_helper.h"
 #endif
@@ -29,6 +30,8 @@
 #include "error.h"
 #include "log.h"
 #include "progress.h"
+
+#include "Repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -90,24 +93,44 @@ int processKillByName(Proc_NAME process)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int processReportInfo(Report_TYPE type, const Proc_INFO &info)
 {
-	int iReturnCode = DIAGLIB_OK;
+	int							iReturnCode = DIAGLIB_OK;
+	unsigned int				count;
+	ModuleSet::const_iterator	iter;
 
 	reportPrint(type,L"        id = %ld\n",info.id);
 	reportPrint(type,L"      Name = %ls\n", info.Name.c_str());
-	//reportPrint(type,L"      Line = %ls\n", info.Line.c_str());
 	reportPrint(type,L"      Path = %ls\n", info.Path.c_str());
 	reportPrint(type,L" Full path = %ls\n", info.FullPath.c_str());
+	for(iter=info.modulesLoaded.begin(),count=0;iter!=info.modulesLoaded.end();iter++,count++)
+		reportPrint(REPORT_TYPE_COMPLEMENT,L"Uses Library [%ls]\n",iter->c_str());
 	reportPrintSeparator(type, REPORT_PROCESS_SEPARATOR);
-
 	return iReturnCode;
+}
+
+void processContributeInfo(const Proc_INFO &info)
+{
+	unsigned int				count;
+	ModuleSet::const_iterator	iter;
+	wchar_t						usesKey[16];
+
+	REP_PREFIX(							info.Name.c_str());
+	REP_CONTRIBUTE(	L"id",	L"%ld",		info.id);
+	REP_CONTRIBUTE(	L"Name",			info.Name.c_str());
+	REP_CONTRIBUTE(	L"Path",			info.Path.c_str());
+	REP_CONTRIBUTE(	L"FullPath",		info.FullPath.c_str());
+	for(iter=info.modulesLoaded.begin(),count=0;iter!=info.modulesLoaded.end();iter++,count++)
+	{
+		wsprintf(usesKey,L"Uses[%08ld]",count);
+		REP_CONTRIBUTE(usesKey,iter->c_str());
+	}
+	REP_UNPREFIX();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int processReportList(Report_TYPE type, const Proc_LIST &processList, const wchar_t *TitleIn)
 {
-	int iReturnCode = DIAGLIB_OK;
-
-	std::wstring Title;
+	int				iReturnCode=DIAGLIB_OK;
+	std::wstring	Title;
 
 	if(TitleIn!=NULL)
 		Title=TitleIn;
@@ -139,6 +162,7 @@ int processReportList(Report_TYPE type, const Proc_LIST &processList, const wcha
 		if(DIAGLIB_OK == processGetInfo(*itr,&info))
 		{
 			processReportInfo(type,info);
+			processContributeInfo(info);
 		}
 		progressIncrement();
 	}

@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -29,6 +29,8 @@
 #include "error.h"
 #include "log.h"
 #include "progress.h"
+
+#include "Repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -61,6 +63,17 @@ int serviceReportInfo(Report_TYPE type, const Service_INFO &info)
 	reportPrintSeparator(type, REPORT_SERVICE_SEPARATOR);
 
 	return iReturnCode;
+}
+
+void serviceContributeInfo(const Service_INFO &info)
+{
+	REP_PREFIX(							info.id.c_str());
+	REP_CONTRIBUTE(L"id",				info.id.c_str());
+	REP_CONTRIBUTE(L"DisplayName",		info.DisplayName.c_str());
+	REP_CONTRIBUTE(L"Status",L"%ld",	info.Status);
+	REP_CONTRIBUTE(L"StatusLabel",		info.StatusLabel.c_str());
+	REP_CONTRIBUTE(L"ProcessId",L"%ld",	info.ProcessId);
+	REP_UNPREFIX();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,6 +113,7 @@ int serviceReportList(Report_TYPE type, const Service_LIST &serviceList, const w
 		if(DIAGLIB_OK == serviceGetInfo(*itr,&info))
 		{
 			serviceReportInfo(type,info);
+			serviceContributeInfo(info);
 		}
 		progressIncrement();
 	}

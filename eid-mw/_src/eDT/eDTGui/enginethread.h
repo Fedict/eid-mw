@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -43,40 +43,49 @@ static struct testSequence tstSequence[]=
 	// current test				, passed					, failed
 	//-------------------------------------------------------------
 	//------ begin info part ----
-	 {"system_info"				, "device_info"				, ""}
-	,{"device_info"				, "software_info"			, ""}
+	 {"system_info"				, "device_info"				, "diagnostics"}
+	,{"device_info"				, "software_info"			, "diagnostics"}
 #ifdef WIN32
-	,{"software_info"			, "service_info"			, ""}
+	,{"software_info"			, "service_info"			, "diagnostics"}
 #else
-	,{"software_info"			, "process_info"			, ""}
+	,{"software_info"			, "process_info"			, "diagnostics"}
 #endif
-	,{"service_info"			, "process_info"			, ""}
+
+	,{"service_info"			, "process_info"			, "diagnostics"}
+
 #ifdef WIN32
-	,{"process_info"			, "reader_detect"			, ""}
+	,{"process_info"			, "module_info"				, "diagnostics"}
+	,{"module_info"				, "hardware_info"			, "diagnostics"}
+	,{"hardware_info"			, "reader_detect"			, "diagnostics"}
 #else
-	,{"process_info"			, "pcsc_detect"				, ""}	// skip reader detect on Mac because devices are not grouped 
+	,{"process_info"			, "module_info"				, "diagnostics"}	// skip reader detect on Mac because devices are not grouped 
+	,{"module_info"				, "hardware_info"			, "diagnostics"}
+	,{"hardware_info"			, "pcsc_detect"				, "diagnostics"}
 #endif
+
 	//------ end info part ----
 
 	//------ begin infrastructure part ----
-	,{"reader_detect"			, "pcsc_detect"				, ""}
-	,{"pcsc_detect"				, "pcsc_readerlist"			, ""}
-	,{"pcsc_readerlist"			, "card_detect"				, ""}
-	,{"card_detect"				, "middleware_info"			, ""}
+	,{"reader_detect"			, "pcsc_detect"				, "diagnostics"}
+	,{"pcsc_detect"				, "pcsc_readerlist"			, "diagnostics"}
+	,{"pcsc_readerlist"			, "card_detect"				, "diagnostics"}
+	,{"card_detect"				, "middleware_info"			, "diagnostics"}
 	//------ end infrastructure part ----
 
 	//------ begin middleware part ----
-	,{"middleware_info"			, "middleware_files"		, ""}
-	,{"middleware_files"		, "middleware_readerlist"	, ""}
+	,{"middleware_info"			, "middleware_files"		, "diagnostics"}
+	,{"middleware_files"		, "middleware_readerlist"	, "diagnostics"}
 	,{"middleware_readerlist"	, "middleware_cardlist"		, "pcsc_readerlist"}
 	,{"middleware_cardlist"		, "middleware_access"		, "pcsc_cardlist"}
-	,{"middleware_access"		, ""						, ""}
+	,{"middleware_access"		, ""						, "diagnostics"}
 
-	,{"pcsc_readerlist"			, "pcsc_cardlist"			, ""}
-	,{"pcsc_cardlist"			, "pcsc_access"				, ""}
-	,{"pcsc_access"				, ""						, "pcsc_timing"}
-	,{"pcsc_timing"				, ""						, ""}
+	,{"pcsc_readerlist"			, "pcsc_cardlist"			, "diagnostics"}
+	,{"pcsc_cardlist"			, "pcsc_access"				, "diagnostics"}
+	,{"pcsc_access"				, "diagnostics"				, "pcsc_timing"}
+	,{"pcsc_timing"				, "diagnostics"				, "diagnostics"}
+	,{"diagnostics"				, ""						, "diagnostics"}
 	//------ end middleware part ----
+	
 };
 
 class ProcessEvent : public QEvent
@@ -274,7 +283,7 @@ public:
 		{
 			runTest(testsToRun,callbackList,currentTest);
 			std::string nextTest = getNextTest(m_currTestIdx);
-			if (0 == nextTest.length())
+			if (0 == nextTest.length() || currentTest.compare("diagnostics")==0)
 			{
 				bDone = true;
 			}

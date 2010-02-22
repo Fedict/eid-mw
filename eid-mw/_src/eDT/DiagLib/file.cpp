@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -32,6 +32,8 @@
 #include "error.h"
 #include "log.h"
 #include "progress.h"
+
+#include "Repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -112,6 +114,16 @@ int fileReportInfo(Report_TYPE type, const File_INFO &info)
 	return iReturnCode;
 }
 
+void fileContributeInfo(const File_INFO &info)
+{
+	REP_PREFIX(							info.id.c_str());
+	REP_CONTRIBUTE(L"id",				info.id.c_str());
+	REP_CONTRIBUTE(L"ProductVersion",	info.ProductVersion.c_str());
+	REP_CONTRIBUTE(L"FileVersion",		info.FileVersion.c_str());
+	REP_CONTRIBUTE(L"Size",L"%ld\n",	info.FileSize);
+	REP_UNPREFIX();
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int fileReportList(Report_TYPE type, const File_LIST &fileList, const wchar_t *TitleIn)
 {
@@ -149,6 +161,7 @@ int fileReportList(Report_TYPE type, const File_LIST &fileList, const wchar_t *T
 		if(DIAGLIB_OK == fileGetInfo(*itr,&info))
 		{
 			fileReportInfo(type,info);
+			fileContributeInfo(info);
 		}
 		progressIncrement();
 	}

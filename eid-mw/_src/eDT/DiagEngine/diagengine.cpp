@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -48,6 +48,10 @@
 #include "AnalyseSignTokendInfo.h"
 #endif
 
+#include "AnalyseHardware.h"
+#include "AnalyseModuleInfo.h"
+#include "AnalyseMeta.h"
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +81,14 @@ DiagEngine::DiagEngine()
 	test = new AnalyseServiceInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
 #endif
-	test = new AnalyseProcessInfo;
+
+	test =new AnalyseProcessInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+
+	test = new AnalyseModuleInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+
+	test = new AnalyseHardware;
 	m_availableTests.insert(m_availableTests.end(),test );
 
 	test = new AnalyseReaderDetectInfo;
@@ -127,6 +138,9 @@ DiagEngine::DiagEngine()
 	test = new AnalyseSignTokendInfo;
 	m_availableTests.insert(m_availableTests.end(),test );	
 #endif
+
+	test = new AnalyseMeta;
+	m_availableTests.insert(m_availableTests.end(),test );
 
 	for (size_t idx=0;idx<m_availableTests.size();idx++)
 	{
@@ -247,7 +261,6 @@ int DiagEngine::run(tTestNames const& requestedTests,tTestCallbackList const& ca
 			m_executeTests.insert(m_executeTests.end(),m_availableTests.at(testIdx));
 			m_executeCallbackList.insert(m_executeCallbackList.end(),NULL);
 		}
-		
 	}
 
 	int result = DIAGLIB_OK;
@@ -263,8 +276,13 @@ int DiagEngine::run(tTestNames const& requestedTests,tTestCallbackList const& ca
 	{
 		(*it)->setCallback(callbackList.at(idx));
 		m_progressPercent = 0;
-		result = (*it)->run();
 
+		REP_PREFIX((*it)->getTestName());	// set Repository root Prefix
+
+		result = (*it)->run();				// run the test
+
+		REP_AVAILABLE((*it)->testPassed());	// contribute "available" if test passed
+		REP_UNPREFIX();						// remove Repository root Prefix
 		idx++;
 	}
 

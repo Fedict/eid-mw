@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -29,6 +29,8 @@
 #include "error.h"
 #include "log.h"
 #include "progress.h"
+
+#include "Repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -63,6 +65,19 @@ int softwareReportInfo(Report_TYPE type, const Soft_INFO &info)
 	reportPrintSeparator(type, REPORT_SOFTWARE_SEPARATOR);
 
 	return iReturnCode;
+}
+
+void softwareContributeInfo(const Soft_INFO &info)
+{
+	REP_PREFIX(										info.id.Guid.c_str());
+	REP_CONTRIBUTE(L"id",							info.id.Guid.c_str());
+	REP_CONTRIBUTE(L"PerUserSoftType",				info.id.Type==PER_USER_SOFT_TYPE?L"PerUser":L"PerMachine");
+	REP_CONTRIBUTE(L"DisplayName",					info.DisplayName.c_str());
+	REP_CONTRIBUTE(L"DisplayVersion",				info.DisplayVersion.c_str());
+	REP_CONTRIBUTE(L"UninstallString",				info.UninstallString.c_str());
+	REP_CONTRIBUTE(L"Publisher",					info.Publisher.c_str());
+	REP_CONTRIBUTE(L"InstallLocation",				info.InstallLocation.c_str());
+	REP_UNPREFIX();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,6 +117,7 @@ int softwareReportList(Report_TYPE type, const Soft_LIST &softwareList, const wc
 		if(DIAGLIB_OK == softwareGetInfo(*itr,&info))
 		{
 			softwareReportInfo(type,info);
+			softwareContributeInfo(info);
 		}
 		progressIncrement();
 	}

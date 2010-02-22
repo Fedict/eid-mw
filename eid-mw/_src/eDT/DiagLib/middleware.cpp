@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -32,6 +32,8 @@
 #include "progress.h"
 
 #include "beidlib.h"
+
+#include "Repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -150,6 +152,17 @@ int mwReportInfo(Report_TYPE type, const MW_INFO &info)
 	return iReturnCode;
 }
 
+void mwContributeInfo(const MW_INFO &info)
+{
+	REP_PREFIX(							info.id.Guid.c_str());
+	REP_CONTRIBUTE(L"id",				info.id.Guid.c_str());
+	REP_CONTRIBUTE(L"PerUserSoftType",	info.id.Type==PER_USER_SOFT_TYPE?L"PerUser":L"PerMachine");
+	REP_CONTRIBUTE(L"Version",			info.LabelVersion.c_str());
+	REP_CONTRIBUTE(L"DisplayName",		info.DisplayName.c_str());
+	REP_UNPREFIX();
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int mwReportList(Report_TYPE type, const MW_LIST &middlewareList, const wchar_t *TitleIn)
 {
@@ -187,6 +200,7 @@ int mwReportList(Report_TYPE type, const MW_LIST &middlewareList, const wchar_t 
 		if(DIAGLIB_OK == mwGetInfo(*itr,&info))
 		{
 			mwReportInfo(type,info);
+			mwContributeInfo(info);
 		}
 		progressIncrement();
 	}
