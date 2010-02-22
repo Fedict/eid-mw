@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   - eID Middleware Project.
-  - Copyright (C) 2008-2009 FedICT.
+  - Copyright (C) 2008-2010 FedICT.
  
   - This is free software; you can redistribute it and/or modify it
   - under the terms of the GNU Lesser General Public License version
@@ -23,7 +23,6 @@
   <script src="chrome://global/content/strres.js"/>
     
   <script src="overlay.js"/>
-  <script src="util.js"/>
   <script src="BelgiumEidPKCS11.js"/>
   
   <stringbundleset id="stringbundleset">

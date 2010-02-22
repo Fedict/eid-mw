@@ -16,12 +16,12 @@
  * http://www.gnu.org/licenses/.
  */
 
-const nsPKCS11ContractID = "@mozilla.org/security/pkcs11;1";
-const nsPKCS11ModuleDB = "@mozilla.org/security/pkcs11moduledb;1";
-const nsIPKCS11ModuleDB = Components.interfaces.nsIPKCS11ModuleDB;
-const nsIPKCS11Module = Components.interfaces.nsIPKCS11Module;
+function BELGIUMEIDPKCS11(){
+  const nsPKCS11ContractID = "@mozilla.org/security/pkcs11;1";
+  const nsPKCS11ModuleDB = "@mozilla.org/security/pkcs11moduledb;1";
+  const nsIPKCS11ModuleDB = Components.interfaces.nsIPKCS11ModuleDB;
+  const nsIPKCS11Module = Components.interfaces.nsIPKCS11Module;
 
-function BelgiumEidPKCS11() {
   // Private Members
   var strings = document.getElementById("belgiumeid-strings");
 
@@ -39,6 +39,36 @@ function BelgiumEidPKCS11() {
   }
   function getModuleName() {
     return getPrefs().getCharPref("modulename");
+  }
+  function fileExists(filename) {
+    var file = Components.classes["@mozilla.org/file/local;1"].
+                       createInstance(Components.interfaces.nsILocalFile);
+    try {
+      file.initWithPath(filename);
+    } catch (e) {
+      return false;
+    }
+    return file.exists();
+  }
+  function searchFile(filename) {
+    // searches for a file at certain folders.
+    // returns "" if file not found
+    // returns full path if file found
+    if (fileExists(filename)) {
+      return filename;
+    }
+  
+    //Windows System32
+    try {
+      var winpath = Components.classes["@mozilla.org/file/directory_service;1"].
+                       getService(Components.interfaces.nsIProperties).
+                       get("WinD", Components.interfaces.nsIFile);
+      winpath.append("system32");
+      winpath.append(filename);
+      if (winpath.exists()) return winpath.path;
+    } catch (e) {
+    }
+    return null;
   }
   
   // Public Functions
@@ -177,6 +207,12 @@ function BelgiumEidPKCS11() {
     }
     return getPrefs().getBoolPref("showmodulenotfoundnotification");
   }
-}
 
-
+  // initialization code
+  this.initialized = true;
+   
+  this.removeModuleIfNotAvailable();
+  if (!this.registerModule() && !this.pkcs11ModuleAvailable() && this.shouldShowModuleNotFoundNotification() ) {
+    this.notifyModuleNotFound();   
+  }
+};

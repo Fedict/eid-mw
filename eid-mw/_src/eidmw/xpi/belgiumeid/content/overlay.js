@@ -1,6 +1,6 @@
 /*
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -16,21 +16,4 @@
  * http://www.gnu.org/licenses/.
  */
 
-
-
-var belgiumeid = {
-  onLoad: function() {
-    // initialization code
-    this.initialized = true;
-    //this.strings = document.getElementById("belgiumeid-strings");
-    
-    beidPKCS11 = new BelgiumEidPKCS11();
-    beidPKCS11.removeModuleIfNotAvailable();
-    if (!beidPKCS11.registerModule() && !beidPKCS11.pkcs11ModuleAvailable() && beidPKCS11.shouldShowModuleNotFoundNotification() ) {
-      beidPKCS11.notifyModuleNotFound();
-//      beidPKCS11.shouldShowModuleNotFoundNotification(false);
-    }
-    
-  },
-};
-window.addEventListener("load", function(e) { belgiumeid.onLoad(e); }, false);
+window.addEventListener("load", function(e) { BELGIUMEIDPKCS11(e); }, false);
