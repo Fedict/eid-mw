@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "tostr.h"
+#include "util.h"
 #include "WinRegKey.h"
 using namespace std;
 

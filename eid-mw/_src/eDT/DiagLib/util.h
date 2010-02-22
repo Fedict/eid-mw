@@ -20,6 +20,7 @@
 #ifndef __DIAGLIB_UTIL_H__
 #define __DIAGLIB_UTIL_H__
 
+#include <string>
 #include <string.h>
 #include <iostream>
 #include <vector>
@@ -36,6 +37,16 @@ void TokenizeW (const std::wstring& str, std::vector<std::wstring>& tokens, cons
 void wstring_to_lower(std::wstring& str);
 wchar_t clean_char(wchar_t in);
 void wstring_clean(std::wstring& str);
+
+using namespace std;
+
+template <class T>
+inline wstring tostr (const T& t)
+{
+	wstringstream ss;
+	ss << t;
+	return ss.str();
+}
 
 #endif //__DIAGLIB_UTIL_H__
 
