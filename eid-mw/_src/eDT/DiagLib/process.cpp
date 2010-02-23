@@ -30,6 +30,7 @@
 #include "error.h"
 #include "log.h"
 #include "progress.h"
+#include "util.h"
 
 #include "Repository.h"
 
@@ -111,7 +112,6 @@ void processContributeInfo(const Proc_INFO &info)
 {
 	unsigned int				count;
 	ModuleSet::const_iterator	iter;
-	wchar_t						usesKey[16];
 
 	REP_PREFIX(							info.Name.c_str());
 	REP_CONTRIBUTE(	L"id",	L"%ld",		info.id);
@@ -120,8 +120,10 @@ void processContributeInfo(const Proc_INFO &info)
 	REP_CONTRIBUTE(	L"FullPath",		info.FullPath.c_str());
 	for(iter=info.modulesLoaded.begin(),count=0;iter!=info.modulesLoaded.end();iter++,count++)
 	{
-		wsprintf(usesKey,L"Uses[%08ld]",count);
-		REP_CONTRIBUTE(usesKey,iter->c_str());
+		std::wstring	usesKey(L"Uses[");
+						usesKey.append(tostr<unsigned int>(count));
+						usesKey.append(L"]");
+		REP_CONTRIBUTE( usesKey,iter->c_str());
 	}
 	REP_UNPREFIX();
 }

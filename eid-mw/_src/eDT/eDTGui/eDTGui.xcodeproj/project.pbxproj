@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		015DDB471133D4A30041940A /* module.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB461133D4A30041940A /* module.h */; };
+		015DDB491133D4B50041940A /* repository.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB481133D4B50041940A /* repository.h */; };
+		015DDB4B1133D4E20041940A /* repository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 015DDB4A1133D4E20041940A /* repository.cpp */; };
+		015DDB4D1133D5100041940A /* hardware_win.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB4C1133D5100041940A /* hardware_win.h */; };
+		015DDB4F1133D5200041940A /* hardware_win.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 015DDB4E1133D5200041940A /* hardware_win.cpp */; };
+		015DDB9B1133D8CE0041940A /* AnalyseHardware.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB981133D8CE0041940A /* AnalyseHardware.h */; };
+		015DDB9C1133D8CE0041940A /* AnalyseMeta.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB991133D8CE0041940A /* AnalyseMeta.h */; };
+		015DDB9D1133D8CE0041940A /* AnalyseModuleInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB9A1133D8CE0041940A /* AnalyseModuleInfo.h */; };
 		069D05B0128AE5DC7EE31738 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 7BC2E65A5E699A5E5D834CA2 /* QtCore.framework */; };
 		2B093CA6F071B023A473CED0 /* main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 118FCBAABA162BA17933C789 /* main.cpp */; settings = {ATTRIBUTES = (); }; };
 		393E0B62B645E23A5AC7F3C0 /* moc_edtgui.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 33726D8BA5E972CDB2EA01B7 /* moc_edtgui.cpp */; settings = {ATTRIBUTES = (); }; };
@@ -140,6 +148,14 @@
 
 /* Begin PBXFileReference section */
 		00674DA24697E860685833F0 /* enginethread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = enginethread.h; sourceTree = "<group>"; };
+		015DDB461133D4A30041940A /* module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = module.h; path = DiagLib/module.h; sourceTree = "<group>"; };
+		015DDB481133D4B50041940A /* repository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = repository.h; path = DiagLib/repository.h; sourceTree = "<group>"; };
+		015DDB4A1133D4E20041940A /* repository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = repository.cpp; path = DiagLib/repository.cpp; sourceTree = "<group>"; };
+		015DDB4C1133D5100041940A /* hardware_win.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hardware_win.h; path = DiagLib/hardware_win.h; sourceTree = "<group>"; };
+		015DDB4E1133D5200041940A /* hardware_win.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hardware_win.cpp; path = DiagLib/hardware_win.cpp; sourceTree = "<group>"; };
+		015DDB981133D8CE0041940A /* AnalyseHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalyseHardware.h; path = ../DiagEngine/AnalyseHardware.h; sourceTree = SOURCE_ROOT; };
+		015DDB991133D8CE0041940A /* AnalyseMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalyseMeta.h; path = ../DiagEngine/AnalyseMeta.h; sourceTree = SOURCE_ROOT; };
+		015DDB9A1133D8CE0041940A /* AnalyseModuleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalyseModuleInfo.h; path = ../DiagEngine/AnalyseModuleInfo.h; sourceTree = SOURCE_ROOT; };
 		10E9EFFB92181C84EE52F47E /* ui_edtgui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ui_edtgui.h; sourceTree = "<group>"; };
 		118FCBAABA162BA17933C789 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		27AE7A480FD6C52FCA80FECD /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
@@ -367,6 +383,8 @@
 		838CA1740F67F37900F52788 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				015DDB4E1133D5200041940A /* hardware_win.cpp */,
+				015DDB4A1133D4E20041940A /* repository.cpp */,
 				7F89A3B10F70F2D300C2D319 /* beidlib.cpp */,
 				838CA1E20F67F57B00F52788 /* mac_device.cpp */,
 				838CA1E30F67F57B00F52788 /* mac_csp.cpp */,
@@ -404,6 +422,9 @@
 		838CA1750F67F38300F52788 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				015DDB4C1133D5100041940A /* hardware_win.h */,
+				015DDB481133D4B50041940A /* repository.h */,
+				015DDB461133D4A30041940A /* module.h */,
 				7F89A3B20F70F2D300C2D319 /* beidlib.h */,
 				838CA1FC0F67F58800F52788 /* mac_helper.h */,
 				838CA1CE0F67F49300F52788 /* eidlib.h */,
@@ -464,6 +485,9 @@
 		838CA2010F67F5AE00F52788 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				015DDB981133D8CE0041940A /* AnalyseHardware.h */,
+				015DDB991133D8CE0041940A /* AnalyseMeta.h */,
+				015DDB9A1133D8CE0041940A /* AnalyseModuleInfo.h */,
 				838CA26D0F67F6E300F52788 /* AnalyseMWAccessInfo.h */,
 				838CA26E0F67F6E300F52788 /* AnalyseDeviceInfo.h */,
 				838CA26F0F67F6E300F52788 /* AnalyseCardDetectInfo.h */,
@@ -485,9 +509,9 @@
 				838CA27F0F67F6E300F52788 /* AnalysePCSCReaderlistInfo.h */,
 				838CA2800F67F6E300F52788 /* AnalysePCSCDetectInfo.h */,
 				838CA2810F67F6E300F52788 /* diagengine.h */,
+				838CA2840F67F6E300F52788 /* analysis.h */,
 				838CA2820F67F6E300F52788 /* CallbackData.h */,
 				838CA2830F67F6E300F52788 /* AnalysisError.h */,
-				838CA2840F67F6E300F52788 /* analysis.h */,
 				838CA2850F67F6E300F52788 /* AnalyseSystemInfo.h */,
 			);
 			name = Headers;
@@ -573,6 +597,9 @@
 				7F3049440F710E30002D5B34 /* AnalysisError.h in Headers */,
 				7F3049450F710E30002D5B34 /* analysis.h in Headers */,
 				7F3049460F710E30002D5B34 /* AnalyseSystemInfo.h in Headers */,
+				015DDB9B1133D8CE0041940A /* AnalyseHardware.h in Headers */,
+				015DDB9C1133D8CE0041940A /* AnalyseMeta.h in Headers */,
+				015DDB9D1133D8CE0041940A /* AnalyseModuleInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +634,9 @@
 				838CA1D10F67F49300F52788 /* eidlibException.h in Headers */,
 				838CA1FD0F67F58800F52788 /* mac_helper.h in Headers */,
 				7F89A3B40F70F2D300C2D319 /* beidlib.h in Headers */,
+				015DDB471133D4A30041940A /* module.h in Headers */,
+				015DDB491133D4B50041940A /* repository.h in Headers */,
+				015DDB4D1133D5100041940A /* hardware_win.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -801,6 +831,8 @@
 				838CA1FA0F67F57B00F52788 /* mac_folder.cpp in Sources */,
 				838CA1FB0F67F57B00F52788 /* mac_file.cpp in Sources */,
 				7F89A3B30F70F2D300C2D319 /* beidlib.cpp in Sources */,
+				015DDB4B1133D4E20041940A /* repository.cpp in Sources */,
+				015DDB4F1133D5200041940A /* hardware_win.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,7 +1164,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};

@@ -44,12 +44,12 @@
 #include "AnalysePCSCReaderlistInfo.h"
 #include "AnalysePCSCCardlistInfo.h"
 #include "AnalysePCSCCardInfo.h"
+#include "AnalyseHardware.h"
+#include "AnalyseModuleInfo.h"
 #ifdef __APPLE__
 #include "AnalyseSignTokendInfo.h"
 #endif
 
-#include "AnalyseHardware.h"
-#include "AnalyseModuleInfo.h"
 #include "AnalyseMeta.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,30 +66,33 @@ DiagEngine::DiagEngine()
 
 	//---------------------------------
 	// setup a list with all tests. The sequence of the list dictates the sequence of
-	// the tests in case all tests are requested at the same time.
+	// the tests in case all tests are requested at the same time.	
 	//---------------------------------
+	
 	Analysis* test = NULL;
+	
 	test = new AnalyseSystemInfo;
 	m_availableTests.insert(m_availableTests.end(), test );
-
+	
 	test = new AnalyseDeviceInfo;
 	m_availableTests.insert(m_availableTests.end(),test  );
-
+	
 	test = new AnalyseSoftwareInfo;
-	m_availableTests.insert(m_availableTests.end(),test  );
+	m_availableTests.insert(m_availableTests.end(),test  );	
+	
 #ifdef WIN32
-	test = new AnalyseServiceInfo;
+	
+	test = new AnalyseServiceInfo;								// services only on Windows
 	m_availableTests.insert(m_availableTests.end(),test );
-#endif
 
 	test =new AnalyseProcessInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
-
+	
 	test = new AnalyseModuleInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
-
+	
 	test = new AnalyseHardware;
-	m_availableTests.insert(m_availableTests.end(),test );
+	m_availableTests.insert(m_availableTests.end(),test );		// Hardware analysis only for Windows (so far)
 
 	test = new AnalyseReaderDetectInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
@@ -118,7 +121,7 @@ DiagEngine::DiagEngine()
 	test = new AnalysePCSCDetectInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
 
-	test = new AnalysePCSCReaderlistInfo;
+	test = new AnalysePCSCReaderlistInfo;						// reader list only on Windows
 	m_availableTests.insert(m_availableTests.end(),test );
 
 	test = new AnalysePCSCCardlistInfo;
@@ -130,17 +133,60 @@ DiagEngine::DiagEngine()
 	test = new AnalyseSignPKCS11Info;
 	m_availableTests.insert(m_availableTests.end(),test );
 
-#ifdef WIN32
-	test = new AnalyseSignCSPInfo;
+	test = new AnalyseSignCSPInfo;								// signature test via CSP, on Windows
 	m_availableTests.insert(m_availableTests.end(),test );
-#endif
-#ifdef __APPLE__
-	test = new AnalyseSignTokendInfo;
-	m_availableTests.insert(m_availableTests.end(),test );	
-#endif
 
-	test = new AnalyseMeta;
+#else // OSX
+	
+	test =new AnalyseProcessInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseReaderDetectInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalysePCSCTimingInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseCardDetectInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseMWCardlistInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseMWFileInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseMWDetectInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseMWReaderlistInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseMWAccessInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalysePCSCDetectInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalysePCSCReaderlistInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalysePCSCCardlistInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalysePCSCCardInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseSignPKCS11Info;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseSignTokendInfo;							// signature test on OSX is via tokend
+	m_availableTests.insert(m_availableTests.end(),test );	
+	
+#endif 
+	
+	test = new AnalyseMeta;
+	m_availableTests.insert(m_availableTests.end(),test );		// analyse results from other modules together
 
 	for (size_t idx=0;idx<m_availableTests.size();idx++)
 	{

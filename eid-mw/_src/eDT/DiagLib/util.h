@@ -23,6 +23,7 @@
 #include <string>
 #include <string.h>
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 std::wstring wstring_From_string(std::string const& in);

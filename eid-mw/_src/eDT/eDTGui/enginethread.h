@@ -39,39 +39,22 @@ struct testSequence
 };
 static struct testSequence tstSequence[]=
 {
-	//-------------------------------------------------------------
-	// current test				, passed					, failed
-	//-------------------------------------------------------------
-	//------ begin info part ----
+	
+#ifdef WIN32	
 	 {"system_info"				, "device_info"				, "diagnostics"}
 	,{"device_info"				, "software_info"			, "diagnostics"}
-#ifdef WIN32
 	,{"software_info"			, "service_info"			, "diagnostics"}
-#else
-	,{"software_info"			, "process_info"			, "diagnostics"}
-#endif
-
 	,{"service_info"			, "process_info"			, "diagnostics"}
-
-#ifdef WIN32
 	,{"process_info"			, "module_info"				, "diagnostics"}
-	,{"module_info"				, "hardware_info"			, "diagnostics"}
+	,{"module_info"				, "hardware_info"			, "diagnostics"}	
 	,{"hardware_info"			, "reader_detect"			, "diagnostics"}
-#else
-	,{"process_info"			, "module_info"				, "diagnostics"}	// skip reader detect on Mac because devices are not grouped 
-	,{"module_info"				, "hardware_info"			, "diagnostics"}
-	,{"hardware_info"			, "pcsc_detect"				, "diagnostics"}
-#endif
-
 	//------ end info part ----
-
 	//------ begin infrastructure part ----
 	,{"reader_detect"			, "pcsc_detect"				, "diagnostics"}
 	,{"pcsc_detect"				, "pcsc_readerlist"			, "diagnostics"}
 	,{"pcsc_readerlist"			, "card_detect"				, "diagnostics"}
 	,{"card_detect"				, "middleware_info"			, "diagnostics"}
 	//------ end infrastructure part ----
-
 	//------ begin middleware part ----
 	,{"middleware_info"			, "middleware_files"		, "diagnostics"}
 	,{"middleware_files"		, "middleware_readerlist"	, "diagnostics"}
@@ -85,7 +68,35 @@ static struct testSequence tstSequence[]=
 	,{"pcsc_timing"				, "diagnostics"				, "diagnostics"}
 	,{"diagnostics"				, ""						, "diagnostics"}
 	//------ end middleware part ----
+#else //OSX: no service, hardware, modules info, no reader_detect
+	//-------------------------------------------------------------
+	// current test				, passed					, failed
+	//-------------------------------------------------------------
+	//------ begin info part ----
+	 {"system_info"				, "device_info"				, "diagnostics"}
+	,{"device_info"				, "software_info"			, "diagnostics"}
+	,{"software_info"			, "process_info"			, "diagnostics"}
+	,{"process_info"			, "pcsc_detect"				, "diagnostics"}
+	//------ end info part ----
+	//------ begin infrastructure part ----
+	,{"pcsc_detect"				, "pcsc_readerlist"			, "diagnostics"}
+	,{"pcsc_readerlist"			, "card_detect"				, "diagnostics"}
+	,{"card_detect"				, "middleware_info"			, "diagnostics"}
+	//------ end infrastructure part ----
+	//------ begin middleware part ----
+	,{"middleware_info"			, "middleware_files"		, "diagnostics"}
+	,{"middleware_files"		, "middleware_readerlist"	, "diagnostics"}
+	,{"middleware_readerlist"	, "middleware_cardlist"		, "pcsc_readerlist"}
+	,{"middleware_cardlist"		, "middleware_access"		, "pcsc_cardlist"}
+	,{"middleware_access"		, ""						, "diagnostics"}
 	
+	,{"pcsc_readerlist"			, "pcsc_cardlist"			, "diagnostics"}
+	,{"pcsc_cardlist"			, "pcsc_access"				, "diagnostics"}
+	,{"pcsc_access"				, "diagnostics"				, "pcsc_timing"}
+	,{"pcsc_timing"				, "diagnostics"				, "diagnostics"}
+	,{"diagnostics"				, ""						, "diagnostics"}
+	//------ end middleware part ----	
+#endif
 };
 
 class ProcessEvent : public QEvent

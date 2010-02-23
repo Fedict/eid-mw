@@ -127,7 +127,7 @@ void TokenizeW (const std::wstring& str, std::vector<std::wstring>& tokens, cons
 
 void wstring_to_lower(std::wstring& str)
 {
-       std::transform(str.begin(),str.end(),str.begin(),tolower);
+       std::transform(str.begin(),str.end(),str.begin(),(int(*)(int))tolower);
 }
 
 wchar_t clean_char(wchar_t in)
