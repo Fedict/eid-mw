@@ -20,6 +20,8 @@
 #ifndef __DIAGLIB_HW_H__
 #define __DIAGLIB_HW_H__
 
+#ifdef WIN32
+
 #include <iostream>
 #include <string.h>
 #include <vector>
@@ -36,4 +38,5 @@ int hardwareGetInfo(Hardware_INFO *info);
 int hardwareReportInfo(Report_TYPE type, const Hardware_INFO *info);
 int hardwareReport(Report_TYPE type);
 
+#endif
 #endif //__DIAGLIB_HW_H__

@@ -18,21 +18,15 @@
 
 **************************************************************************** */
 #ifdef WIN32
+
 #include <windows.h>
-#elif __APPLE__
-#include "Mac/mac_helper.h"
-#endif
-
 #include "diaglib.h"
-
 #include "process.h"
 #include "error.h"
 #include "log.h"
 #include "hardware.h"
-
 #include "WinRegKey.h"
 #include "Repository.h"
-
 
 int hardwareGetInfo(Hardware_INFO *info)
 {
@@ -79,3 +73,5 @@ int hardwareReport(Report_TYPE type)
 	}
 	return iReturnCode;
 }
+
+#endif

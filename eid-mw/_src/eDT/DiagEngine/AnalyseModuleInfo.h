@@ -20,6 +20,8 @@
 #ifndef _ANALYSEMODULEINFO_H_
 #define _ANALYSEMODULEINFO_H_
 
+#ifdef WIN32
+
 #include <vector>
 #include "error.h"
 #include "module.h"
@@ -69,5 +71,6 @@ private:
 	Proc_LIST	m_processList;
 };
 
+#endif // WIN32
 
 #endif //_ANALYSEMODULEINFO_H_

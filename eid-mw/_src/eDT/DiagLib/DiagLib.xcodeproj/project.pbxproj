@@ -994,7 +994,7 @@
 				LIBRARY_SEARCH_PATHS = "../../ThirdParty/unittest-cpp-1.3/UnitTest++";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = eDT;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "ppc64 ppc7400 ppc970 i386 x86_64 ppc";
