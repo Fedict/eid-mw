@@ -23,7 +23,7 @@
 #ifdef WIN32
 
 #include "analysis.h"
-#include "hardware_win.h"
+#include "hardware.h"
 #include "Repository.h"
 
 class AnalyseHardware : public Analysis
