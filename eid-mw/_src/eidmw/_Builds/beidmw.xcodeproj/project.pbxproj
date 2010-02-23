@@ -1837,6 +1837,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beiddialogsQTsrv;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -1885,7 +1886,7 @@
 					"${PROJECT_DIR}/../cardlayer",
 					/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework/Headers,
 					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
-					"${PROJECT_DIR}/../../ThirdParty/Xerces/Xerces-2.8.0-mac/include",
+					"${PROJECT_DIR}/../../ThirdParty/Xerces/Xerces-3.1.0-mac/include",
 				);
 				INSTALL_PATH = /usr/local/lib;
 				LIBRARY_SEARCH_PATHS = (
@@ -1894,6 +1895,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidapplayer.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -1944,6 +1946,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidlib.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -1992,6 +1995,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beidgui;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -2044,6 +2048,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidlibJava_Wrapper.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -2091,6 +2096,7 @@
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidpkcs11.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -2156,6 +2162,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcommon.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
 				VERSION_INFO_SUFFIX = "";
 			};
 			name = Debug;
@@ -2197,7 +2204,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					__OLD_PCSC_API__,
 					EIDMW_CAL_EXPORT,
 					CAL_BEID,
 					CARDPLUGIN_IN_CAL,
@@ -2214,6 +2220,7 @@
 				OTHER_CFLAGS = "-O2";
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcardlayer.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -2257,6 +2264,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -2268,6 +2276,7 @@
 				INSTALL_PATH = /usr/local/lib/siscardplugins;
 				PREBINDING = NO;
 				PRODUCT_NAME = siscardplugin1__ACS__;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -2312,6 +2321,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "beiddialogsQT.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
