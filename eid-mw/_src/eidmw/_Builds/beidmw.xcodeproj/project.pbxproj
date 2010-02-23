@@ -379,7 +379,6 @@
 		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		7F9011190F8502F8004A5FCC /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		7F90111C0F850342004A5FCC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
-		7F9011240F8503CC004A5FCC /* libxerces-c.28.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libxerces-c.28.dylib"; path = "/usr/local/lib/libxerces-c.28.dylib"; sourceTree = "<absolute>"; };
 		7F90112C0F850450004A5FCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7F9011380F85057A004A5FCC /* beidgui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beidgui.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F90113F0F85060A004A5FCC /* CardInformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardInformation.cpp; path = ../eidgui/CardInformation.cpp; sourceTree = SOURCE_ROOT; };
@@ -743,7 +742,6 @@
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DDFF38A45A11DB9C8B /* Products */,
 				86A90A2B1122D6880011C6A8 /* trunk */,
-				86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */,
 			);
 			name = beidmw;
 			sourceTree = "<group>";
@@ -751,9 +749,9 @@
 		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */,
 				7F90D5620F9F38EC00BB8F23 /* JavaVM.framework */,
 				7F90112C0F850450004A5FCC /* SystemConfiguration.framework */,
-				7F9011240F8503CC004A5FCC /* libxerces-c.28.dylib */,
 				7F90111C0F850342004A5FCC /* libssl.dylib */,
 				7F9011190F8502F8004A5FCC /* libcrypto.dylib */,
 				7F9010620F84FEC3004A5FCC /* CoreServices.framework */,
