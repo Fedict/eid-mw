@@ -132,7 +132,7 @@
 
       <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3105" CheckPropertyName="EXTRACTMINIDRIVER">
         <CheckOnOS>
-          <OperatingSystem>WINALL</OperatingSystem>
+          <OperatingSystem>WIN7</OperatingSystem>
         </CheckOnOS>
         <DescriptionNl>Extract minidriver naar schijf.</DescriptionNl>
         <DescriptionFr>Extraire le logiciel Belgium eID minidriver sur disque dur</DescriptionFr>
@@ -803,7 +803,7 @@
 
       <CheckProperty SeverityWhenFailure="FATAL_ERROR" Accuracy="EXACTLY" TestID="2303" CheckPropertyName="STARTPROCESS">
         <CheckOnOS>
-          <OperatingSystem>WINALL</OperatingSystem>
+          <OperatingSystem>WIN7</OperatingSystem>
         </CheckOnOS>
         <DescriptionNl>Installatie van MSI BeidMinidriver (Quick-Install)</DescriptionNl>
         <DescriptionFr>Démarrer l'installation MSI BeidMinidrivers (Quick-Install)</DescriptionFr>
