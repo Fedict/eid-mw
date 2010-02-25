@@ -33,6 +33,10 @@ WinSCardDllLocksRule::WinSCardDllLocksRule()
 	m_expected.insert	(L"Firefox.exe");
 }
 
+WinSCardDllLocksRule::~WinSCardDllLocksRule() throw()
+{
+}
+
 MetaRuleVerdict WinSCardDllLocksRule::verdict(Repository evidence) const
 {
 	ContributionSet found=evidence.values(m_key);

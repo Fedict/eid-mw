@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		011C50B711368B1800D69AF8 /* MetaRuleVerdict.h in Headers */ = {isa = PBXBuildFile; fileRef = 011C50B611368B1800D69AF8 /* MetaRuleVerdict.h */; };
+		011C50BA11368B4900D69AF8 /* MetaRuleVerdict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 011C50B811368B4900D69AF8 /* MetaRuleVerdict.cpp */; };
+		011C50BB11368B4900D69AF8 /* WinSCardDllLocksRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 011C50B911368B4900D69AF8 /* WinSCardDllLocksRule.cpp */; };
+		011C50BD11368B5600D69AF8 /* MetaRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 011C50BC11368B5600D69AF8 /* MetaRule.cpp */; };
 		015DDB471133D4A30041940A /* module.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB461133D4A30041940A /* module.h */; };
 		015DDB491133D4B50041940A /* repository.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB481133D4B50041940A /* repository.h */; };
 		015DDB4B1133D4E20041940A /* repository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 015DDB4A1133D4E20041940A /* repository.cpp */; };
@@ -149,6 +153,10 @@
 
 /* Begin PBXFileReference section */
 		00674DA24697E860685833F0 /* enginethread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = enginethread.h; sourceTree = "<group>"; };
+		011C50B611368B1800D69AF8 /* MetaRuleVerdict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MetaRuleVerdict.h; path = ../DiagEngine/MetaRuleVerdict.h; sourceTree = SOURCE_ROOT; };
+		011C50B811368B4900D69AF8 /* MetaRuleVerdict.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MetaRuleVerdict.cpp; path = ../DiagEngine/MetaRuleVerdict.cpp; sourceTree = SOURCE_ROOT; };
+		011C50B911368B4900D69AF8 /* WinSCardDllLocksRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WinSCardDllLocksRule.cpp; path = ../DiagEngine/WinSCardDllLocksRule.cpp; sourceTree = SOURCE_ROOT; };
+		011C50BC11368B5600D69AF8 /* MetaRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MetaRule.cpp; path = ../DiagEngine/MetaRule.cpp; sourceTree = SOURCE_ROOT; };
 		015DDB461133D4A30041940A /* module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = module.h; path = ../DiagLib/module.h; sourceTree = "<group>"; };
 		015DDB481133D4B50041940A /* repository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = repository.h; path = ../DiagLib/repository.h; sourceTree = "<group>"; };
 		015DDB4A1133D4E20041940A /* repository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = repository.cpp; path = ../DiagLib/repository.cpp; sourceTree = "<group>"; };
@@ -479,6 +487,9 @@
 		838CA2000F67F5A600F52788 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				011C50BC11368B5600D69AF8 /* MetaRule.cpp */,
+				011C50B811368B4900D69AF8 /* MetaRuleVerdict.cpp */,
+				011C50B911368B4900D69AF8 /* WinSCardDllLocksRule.cpp */,
 				838CA2690F67F6D100F52788 /* diagengine.cpp */,
 				838CA26A0F67F6D100F52788 /* analysis.cpp */,
 			);
@@ -488,6 +499,7 @@
 		838CA2010F67F5AE00F52788 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				011C50B611368B1800D69AF8 /* MetaRuleVerdict.h */,
 				015DDB981133D8CE0041940A /* AnalyseHardware.h */,
 				015DDB991133D8CE0041940A /* AnalyseMeta.h */,
 				015DDB9A1133D8CE0041940A /* AnalyseModuleInfo.h */,
@@ -603,6 +615,7 @@
 				015DDB9B1133D8CE0041940A /* AnalyseHardware.h in Headers */,
 				015DDB9C1133D8CE0041940A /* AnalyseMeta.h in Headers */,
 				015DDB9D1133D8CE0041940A /* AnalyseModuleInfo.h in Headers */,
+				011C50B711368B1800D69AF8 /* MetaRuleVerdict.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,6 +810,9 @@
 			files = (
 				7F3049470F710E49002D5B34 /* diagengine.cpp in Sources */,
 				7F3049480F710E49002D5B34 /* analysis.cpp in Sources */,
+				011C50BA11368B4900D69AF8 /* MetaRuleVerdict.cpp in Sources */,
+				011C50BB11368B4900D69AF8 /* WinSCardDllLocksRule.cpp in Sources */,
+				011C50BD11368B5600D69AF8 /* MetaRule.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
