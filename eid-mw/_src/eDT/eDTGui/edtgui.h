@@ -74,8 +74,8 @@ private:
 
 private slots:
 	void on_pb_Cancel_clicked();
-	void on_pb_SendReport_2_clicked();
-	void on_pb_SendReport_clicked();
+//	void on_pb_SendReport_2_clicked();
+//	void on_pb_SendReport_clicked();
 	void on_pb_SaveReport_clicked();
 	void on_pb_SaveReport_2_clicked();
 	void on_pb_testAuthentication_clicked();

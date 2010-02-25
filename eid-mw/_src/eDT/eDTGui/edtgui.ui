@@ -392,7 +392,7 @@
        <string>Save</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pb_SendReport" >
+   <!--  <widget class="QPushButton" name="pb_SendReport" >
       <property name="geometry" >
        <rect>
         <x>300</x>
@@ -404,7 +404,7 @@
       <property name="text" >
        <string>Send</string>
       </property>
-     </widget>
+     </widget> -->
      <widget class="QPushButton" name="pb_Details" >
       <property name="geometry" >
        <rect>
@@ -554,7 +554,7 @@
        <string>Quit</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pb_SendReport_2" >
+  <!--   <widget class="QPushButton" name="pb_SendReport_2" >
       <property name="geometry" >
        <rect>
         <x>300</x>
@@ -566,7 +566,7 @@
       <property name="text" >
        <string>Send</string>
       </property>
-     </widget>
+     </widget> -->
     </widget>
    </widget>
   </widget>

@@ -578,6 +578,7 @@ void eDTGui::loadReport( void )
 	ui.te_Report->setTextCursor(cursor);
 }
 
+/*
 
 void eDTGui::on_pb_SendReport_clicked()
 {
@@ -637,12 +638,14 @@ void eDTGui::on_pb_SendReport_clicked()
 		QMessageBox::information(this,tr("Mail client"),tr("Default mail client cannot be opened"));
 	}
 
-}
+} 
 
 void eDTGui::on_pb_SendReport_2_clicked()
 {
 	on_pb_SendReport_clicked();
 }
+
+*/
 
 void eDTGui::on_pb_Cancel_clicked()
 {
