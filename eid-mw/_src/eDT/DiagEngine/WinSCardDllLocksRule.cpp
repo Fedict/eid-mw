@@ -20,16 +20,19 @@
 
 #include <algorithm>
 #include "repository.h"
+#include "util.h"
 #include "WinSCardDllLocksRule.h"
 
 WinSCardDllLocksRule::WinSCardDllLocksRule()
 :MetaRule(L"winscard.dll.lockers",L"Are Unexpected Processes Locking winscard.dll?"),
 	m_key(L"module_info.winscard_dll.lockedby"),
 	m_expected()
+
+// list of applications expected to open winscard.dll
 {
 	m_expected.insert	(L"winlogon.exe");
 	m_expected.insert	(L"Explorer.EXE");
-	m_expected.insert	(L"svchost.exe");
+	m_expected.insert	(L"svcost.exe");
 	m_expected.insert	(L"Firefox.exe");
 }
 
@@ -39,24 +42,24 @@ WinSCardDllLocksRule::~WinSCardDllLocksRule() throw()
 
 MetaRuleVerdict WinSCardDllLocksRule::verdict(Repository evidence) const
 {
+	// get all processes that use winscard.dll (from the contributed output of the module_info module)
 	ContributionSet found=evidence.values(m_key);
+
+	// subtract all expected applications from the ones we found
 	ContributionSet un_expected;
 	std::set_difference(found.begin(),found.end(),m_expected.begin(),m_expected.end(),std::inserter(un_expected,un_expected.end()));
+
+	// if any are none, winscard.dll appears OK, and so this rule judges "not guilty"
 	if(un_expected.empty())
 	{
 		return MetaRuleVerdict(false);
 	}
+	// if any are some, winscard.dll may be unduly locked and so this rule judges "guilty"
 	else
 	{
-		std::wstring guilties(L"[");
-		for(ContributionSet::const_iterator i=un_expected.begin();i!=un_expected.end();)
-		{
-			guilties.append(*i++);
-			if(i!=un_expected.end())
-				guilties.append(L",");
-		}
-		guilties.append(L"]");
-
+		std::wstring	guilties(L"[");
+						guilties.append(join<std::wstring,ContributionSet>(un_expected,L","));
+						guilties.append(L"]");
 		return MetaRuleVerdict(true,L"The following processes were unexpectedly locking winscard.dll : " + guilties,L"Find out if these are necessary and/or try stopping them");
 	}
 }

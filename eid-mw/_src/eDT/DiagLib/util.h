@@ -49,5 +49,19 @@ inline wstring tostr (const T& t)
 	return ss.str();
 }
 
-#endif //__DIAGLIB_UTIL_H__
+template <typename rT, typename cT>
+inline rT join (const cT& list, const rT& sep)
+{
+	rT result;
+	cT::const_iterator i=list.begin();
+	if(i!=list.end())
+		result.append(*i++);
+	for(;i!=list.end();i++)
+	{
+		result.append(sep);
+		result.append(*i);
+	}
+	return result;
+}
 
+#endif //__DIAGLIB_UTIL_H__
