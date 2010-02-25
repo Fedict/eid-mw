@@ -130,6 +130,18 @@
 				<RequiredValue RequiredValueType="STRING"/>
 			</CheckProperty>
 
+      <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3105" CheckPropertyName="EXTRACTMINIDRIVER">
+        <CheckOnOS>
+          <OperatingSystem>WINALL</OperatingSystem>
+        </CheckOnOS>
+        <DescriptionNl>Extract minidriver naar schijf.</DescriptionNl>
+        <DescriptionFr>Extraire le logiciel Belgium eID minidriver sur disque dur</DescriptionFr>
+        <ActionInfoNl/>
+        <ActionInfoFr/>
+        <InputParams>
+        </InputParams>
+        <RequiredValue RequiredValueType="STRING"/>
+      </CheckProperty>
 		
 			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3106" CheckPropertyName="INSTALLDEVICE">
 				<CheckOnOS>
@@ -788,6 +800,22 @@
         </InputParams>
  				<RequiredValue RequiredValueType="STRING" >SUCCESS</RequiredValue>
 			</CheckProperty>
+
+      <CheckProperty SeverityWhenFailure="FATAL_ERROR" Accuracy="EXACTLY" TestID="2303" CheckPropertyName="STARTPROCESS">
+        <CheckOnOS>
+          <OperatingSystem>WINALL</OperatingSystem>
+        </CheckOnOS>
+        <DescriptionNl>Installatie van MSI BeidMinidriver (Quick-Install)</DescriptionNl>
+        <DescriptionFr>Démarrer l'installation MSI BeidMinidrivers (Quick-Install)</DescriptionFr>
+        <ActionInfoNl>Probeer opnieuw</ActionInfoNl>
+        <ActionInfoFr>Essayer de nouveau</ActionInfoFr>
+        <InputParams>
+          <commandLine>msiexec /i %osTempFolder%BeidMinidriver.msi /norestart  CLEANUP_NO=1</commandLine>
+          <!--<commandLine>Notepad.exe</commandLine>-->
+          <waitForTermination>YES</waitForTermination>
+        </InputParams>
+        <RequiredValue RequiredValueType="STRING" >SUCCESS</RequiredValue>
+      </CheckProperty>
       
 			<CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="2306" CheckPropertyName="READREGISTRY">
 				<CheckOnOS>

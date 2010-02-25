@@ -160,6 +160,7 @@ public:
 	void extractSCDrivers(QString OS);
     void extractISSFiles(QString param);
 	void extractMiddleWare();
+	void extractMiniDriver();
 	void verboseExtraInfoItems(string theXml);
 	void buildReport(string theXml);
 };

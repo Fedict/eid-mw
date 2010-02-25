@@ -60,6 +60,26 @@ IDI_ICON1               ICON                    "Resources\\Setup.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////
+// English (U.K.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// MSI
+//
+
+IDR_MSI_M_86            MSI                     "BeidMinidriver-x86.msi"
+IDR_MSI_M_64            MSI                     "BeidMinidriver-x64.msi"
+#endif    // English (U.K.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
 // Dutch (Belgium) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLB)

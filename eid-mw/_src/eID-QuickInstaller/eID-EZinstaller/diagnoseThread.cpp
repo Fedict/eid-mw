@@ -18,6 +18,11 @@
 
 **************************************************************************** */
 #include "diagnoseThread.h"
+#include <windows.h>
+
+#ifdef WIN32
+typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+#endif
 
 #define LOGSTR(msg) 
 #define LOGINT(format, i) 
@@ -611,6 +616,8 @@ LOGSTR(paramsAsString.c_str())
         {extractISSFiles(QString(paramsAsString.c_str())); }
     else if (ElementName == QString("EXTRACTMIDDLEWARE")) 
         {extractMiddleWare(); }
+	else if (ElementName == QString("EXTRACTMINIDRIVER")) 
+        {extractMiniDriver(); }
 
 #ifdef WIN32
     else if (ElementName == QString("INSTALLDEVICE")) 
@@ -826,6 +833,46 @@ void diagnoseThread::extractMiddleWare() {
     
 #endif
 
+}
+
+void diagnoseThread::extractMiniDriver() {
+    
+	LPFN_ISWOW64PROCESS fnIsWow64Process;
+    BOOL bIsWow64 = FALSE;
+    QString result;
+    QString FileName(substituteResVars("%osTempFolder%BeidMinidriver.msi").c_str());
+
+#ifdef WIN64
+	appendString("64 bit application",QFont::Normal);
+	WinRes::SaveBinaryResource("Msi",IDR_MSI_M_64,FileName.toStdString());
+
+#elif WIN32
+    fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(
+        GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
+
+    if (NULL != fnIsWow64Process)
+    {
+        if (!fnIsWow64Process(GetCurrentProcess(),&bIsWow64))
+        {
+			appendString("Could not determine architecture",QFont::Normal);
+        }
+		if(bIsWow64)
+		{
+			appendString("32 bit application running on 64 bit Windows",QFont::Normal);
+			WinRes::SaveBinaryResource("Msi",IDR_MSI_M_64,FileName.toStdString());
+		}
+		else
+		{
+			appendString("32 bit application running on 32 bit Windows",QFont::Normal);
+			WinRes::SaveBinaryResource("Msi",IDR_MSI_M_86,FileName.toStdString());
+		}
+    }
+	else
+	{
+		appendString("32 bit application running on 32 bit Windows",QFont::Normal);
+		WinRes::SaveBinaryResource("Msi",IDR_MSI_M_86,FileName.toStdString());
+	}  
+#endif
 }
 
 void diagnoseThread::extractISSFiles(QString param) {

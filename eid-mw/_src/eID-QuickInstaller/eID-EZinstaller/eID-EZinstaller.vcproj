@@ -797,7 +797,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\BeidMW35.msi"
+			RelativePath=".\BeidMinidriver-x64.msi"
+			>
+		</File>
+		<File
+			RelativePath=".\BeidMinidriver-x86.msi"
 			>
 		</File>
 		<File
