@@ -37,7 +37,7 @@
 #include "log.h"
 #include "folder.h"
 #include <map>
-#include "Repository.h"
+#include "repository.h"
 #include "util.h"
 
 Repository::Repository()
@@ -102,12 +102,12 @@ void Repository::contribute(const std::wstring key, const std::wstring format, .
 	}
 }
 
-const std::wstring Repository::retrieve(const std::wstring fullKey) const
+ContributionSet	Repository::values(const std::wstring key) const
 {
-	ContributionMap::const_iterator pos=m_contributions.find(fullKey);
-	if(pos==m_contributions.end())
-		return NULL;
-	return pos->second;
+	std::set<std::wstring> vls;
+	for(ContributionMap::const_iterator i=m_contributions.lower_bound(key);i!=m_contributions.upper_bound(key);i++)
+		vls.insert(i->second);
+	return vls;
 }
 
 const ContributionMap& Repository::results(void) const

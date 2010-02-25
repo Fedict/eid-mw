@@ -22,26 +22,27 @@
 
 #include <stdio.h>
 #include <map>
+#include <set>
 #include <vector>
 #include <string>
 using namespace std;
 
-typedef std::map<std::wstring,std::wstring>			ContributionMap;	
+typedef std::multimap<std::wstring,std::wstring>	ContributionMap;
+typedef std::set<std::wstring>						ContributionSet;
 typedef std::pair<std::wstring,std::wstring>		ContributionEntry;
 typedef std::vector<std::wstring>					PrefixList;
 
 class Repository
 {
 public:
-	void prefix		(const std::wstring format, ...);
-	void prefix		(const std::string newPrefix);
-	void unprefix	(void);
-	void available	(bool avail);
+	void					prefix		(const std::wstring format, ...);
+	void					prefix		(const std::string newPrefix);
+	void					unprefix	(void);
+	void					available	(bool avail);
+	void					contribute	(const std::wstring key, const std::wstring format, ...);
 
-	void				contribute (const std::wstring key, const std::wstring format, ...);
-	const std::wstring	retrieve(const std::wstring fullKey) const;
-
-	const ContributionMap& results(void) const;
+	ContributionSet			values (const std::wstring key) const;
+	const ContributionMap&	results(void) const;
 
 	// Meyers Singleton
 	static Repository& instance()	
@@ -65,5 +66,7 @@ private:
 #define REP_UNPREFIX	Repository::instance().unprefix
 #define REP_AVAILABLE	Repository::instance().available
 #define REP_RESULTS		Repository::instance().results
+#define REP_VALUES		Repository::instance().values
+#define REPOSITORY		Repository::instance()
 
 #endif //__DIAGLIB_REPOSITORY_H__

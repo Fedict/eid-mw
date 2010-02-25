@@ -31,29 +31,18 @@
 
 int moduleReportInfo(Report_TYPE type,ModuleName name,ProcNameSet names)
 {
-	int							iReturnCode = DIAGLIB_OK;
-	unsigned int				count;
-	ModuleSet::const_iterator	iter;
-
-	reportPrint(type,L"     Name = %ls\n", name.c_str());
-	for(iter=names.begin(),count=0;iter!=names.end();iter++,count++)
+	reportPrint(type,L"Name = %ls\n", name.c_str());
+	for(ModuleSet::const_iterator iter=names.begin();iter!=names.end();iter++)
 		reportPrint(REPORT_TYPE_COMPLEMENT,	L"Locked By = [%ls]\n",iter->c_str());
 	reportPrintSeparator(type, REPORT_PROCESS_SEPARATOR);
-	return iReturnCode;
+	return DIAGLIB_OK;
 }
 
 void moduleContributeInfo(ModuleName name,ProcNameSet names)
 {
-	unsigned int				count;
-	ProcNameSet::const_iterator	iter;
-	wchar_t						usesKey[32];
-
 	REP_PREFIX(name.c_str());
-	for(iter=names.begin(),count=0;iter!=names.end();iter++,count++)
-	{
-		wsprintf(usesKey,L"LockedBy[%08ld]",count);
-		REP_CONTRIBUTE(usesKey,iter->c_str());
-	}
+	for(ProcNameSet::const_iterator	iter=names.begin();iter!=names.end();iter++)
+		REP_CONTRIBUTE(L"lockedBy",iter->c_str());
 	REP_UNPREFIX();
 }
 

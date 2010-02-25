@@ -20,8 +20,12 @@
 #ifndef _ANALYSEMETA_H_
 #define _ANALYSEMETA_H_
 
+#include <map>
 #include "analysis.h"
 #include "Repository.h"
+#include "MetaRule.h"
+#include "MetaRuleVerdict.h"
+#include "WinSCardDllLocksRule.h"
 
 class AnalyseMeta : public Analysis
 {
@@ -36,6 +40,17 @@ public:
 	{
 	}
 
+	void judge(MetaRule* rule)
+	{
+		MetaRuleVerdict verdict=rule->verdict(REPOSITORY);
+		if(verdict.guilty())
+		{
+			commentToReport(REPORT_TYPE_RESULT,rule->name());
+			commentToReport(REPORT_TYPE_RESULT,verdict.verdict());
+			commentToReport(REPORT_TYPE_RESULT,verdict.corrective());
+		}
+	}
+
 	virtual int run()
 	{
 		int retVal = DIAGLIB_OK;
@@ -48,6 +63,9 @@ public:
 		{
 			progressInit(1);
 			reportPrintHeader2(reportType, L"Meta Diagnostics",L'#');
+			
+			judge(&WinSCardDllLocksRule());
+
 			ContributionMap contributions=REP_RESULTS();
 			for(ContributionMap::const_iterator i=contributions.begin();i!=contributions.end();i++)
 			{

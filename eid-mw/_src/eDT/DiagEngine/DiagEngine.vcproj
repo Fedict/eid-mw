@@ -157,6 +157,18 @@
 				RelativePath=".\diagengine.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\MetaRule.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MetaRuleVerdict.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\WinSCardDllLocksRule.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -268,7 +280,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MetaRule.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MetaRuleVerdict.h"
+				>
+			</File>
+			<File
 				RelativePath="..\DiagLib\tostr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WinSCardDllLocksRule.h"
 				>
 			</File>
 		</Filter>
