@@ -19,20 +19,17 @@
 **************************************************************************** */
 #ifdef WIN32
 #include <windows.h>
-
 #elif __APPLE__
 #include "Mac/mac_helper.h"
 #endif
 
 #include "diaglib.h"
-
 #include "process.h"
 #include "error.h"
 #include "log.h"
 #include "progress.h"
 #include "util.h"
-
-#include "Repository.h"
+#include "repository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
@@ -94,37 +91,25 @@ int processKillByName(Proc_NAME process)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int processReportInfo(Report_TYPE type, const Proc_INFO &info)
 {
-	int							iReturnCode = DIAGLIB_OK;
-	unsigned int				count;
-	ModuleSet::const_iterator	iter;
-
 	reportPrint(type,L"        id = %ld\n",info.id);
 	reportPrint(type,L"      Name = %ls\n", info.Name.c_str());
 	reportPrint(type,L"      Path = %ls\n", info.Path.c_str());
 	reportPrint(type,L" Full path = %ls\n", info.FullPath.c_str());
-	for(iter=info.modulesLoaded.begin(),count=0;iter!=info.modulesLoaded.end();iter++,count++)
+	for(ModuleIterator iter=info.modulesLoaded.begin();iter!=info.modulesLoaded.end();iter++)
 		reportPrint(REPORT_TYPE_COMPLEMENT,L"Uses Library [%ls]\n",iter->c_str());
 	reportPrintSeparator(type, REPORT_PROCESS_SEPARATOR);
-	return iReturnCode;
+	return DIAGLIB_OK;
 }
 
 void processContributeInfo(const Proc_INFO &info)
 {
-	unsigned int				count;
-	ModuleSet::const_iterator	iter;
-
 	REP_PREFIX(							info.Name.c_str());
 	REP_CONTRIBUTE(	L"id",	L"%ld",		info.id);
 	REP_CONTRIBUTE(	L"Name",			info.Name.c_str());
 	REP_CONTRIBUTE(	L"Path",			info.Path.c_str());
 	REP_CONTRIBUTE(	L"FullPath",		info.FullPath.c_str());
-	for(iter=info.modulesLoaded.begin(),count=0;iter!=info.modulesLoaded.end();iter++,count++)
-	{
-		std::wstring	usesKey(L"Uses[");
-						usesKey.append(tostr<unsigned int>(count));
-						usesKey.append(L"]");
-		REP_CONTRIBUTE( usesKey,iter->c_str());
-	}
+	for(ModuleIterator iter=info.modulesLoaded.begin();iter!=info.modulesLoaded.end();iter++)
+		REP_CONTRIBUTE( L"Uses",iter->c_str());
 	REP_UNPREFIX();
 }
 
@@ -173,7 +158,3 @@ int processReportList(Report_TYPE type, const Proc_LIST &processList, const wcha
 
 	return iReturnCode;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////// PRIVATE FUNCTIONS ////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////

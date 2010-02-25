@@ -288,10 +288,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\DiagLib\tostr.h"
-				>
-			</File>
-			<File
 				RelativePath=".\WinSCardDllLocksRule.h"
 				>
 			</File>

@@ -35,6 +35,7 @@ typedef std::set<Proc_NAME>					ProcNameSet;
 typedef std::vector<Proc_ID>				Proc_LIST;
 typedef std::wstring						ModuleName;
 typedef std::set<ModuleName>				ModuleSet;
+typedef ModuleSet::const_iterator			ModuleIterator;
 
 typedef struct t_Proc_INFO
 {

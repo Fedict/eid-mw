@@ -45,6 +45,10 @@ Repository::Repository()
 {
 }
 
+/*
+	prefixChanged recalculates the textual dot-separated label prefix.
+	private.
+*/
 void Repository::prefixChanged(void)
 {
 	m_current_prefix.clear();
@@ -56,6 +60,11 @@ void Repository::prefixChanged(void)
 	}	
 }
 
+/*
+	enter a deeper level in the namespace, indicating that between here and the corresponding call to ünprefix(),
+	all keys contributed should be grouped under this subkey. This version allows printf-like templating.
+	Every prefix call should be balanced by a corresponding unprefix() call
+*/
 void Repository::prefix(const std::wstring format, ...)
 {
 	wchar_t val[1024];
@@ -68,22 +77,41 @@ void Repository::prefix(const std::wstring format, ...)
 	prefixChanged();
 }
 
+/*
+	enter a deeper level in the namespace, indicating that between here and the corresponding call to ünprefix(),
+	all keys contributed should be grouped under this subkey. 
+	Every prefix call should be balanced by a corresponding unprefix() call
+*/
 void Repository::prefix(const std::string newPrefix)
 {
 	prefix(wstring_From_string(newPrefix));
 }
 
+/* 
+	return to a more shallow level in the namespace. complementary to the prefix() calls
+	call when finished contributing a series of keys that were grouped under a subkey, as initiated by a prefix() call.
+*/
 void Repository::unprefix()
 {
 	m_prefixes.pop_back();
 	prefixChanged();
 }
 
+/*
+	indicate whether the current subkey in the namespace contains useful information.
+	call with parameter false, when after entering a deeper subkey level using prefix(), there are no useful values to contribute.
+	call with true when useful values have been contributed.
+	This allows us to see that a certain test ran, even if there are no results.
+*/
 void Repository::available(bool avail)
 {
 	contribute(L"available",avail?L"true":L"false");
 }
 
+/*
+	contribute a value, under the current subkey. Several values may be contributed under the same key
+	This version allows printf-like templating.
+*/
 void Repository::contribute(const std::wstring key, const std::wstring format, ...)
 {
 	wchar_t _val[1024];
@@ -102,6 +130,10 @@ void Repository::contribute(const std::wstring key, const std::wstring format, .
 	}
 }
 
+/* 
+	retrieve all values for a certain key
+	returns: a set of values, empty set if none found
+*/
 ContributionSet	Repository::values(const std::wstring key) const
 {
 	std::set<std::wstring> vls;
@@ -110,6 +142,9 @@ ContributionSet	Repository::values(const std::wstring key) const
 	return vls;
 }
 
+/*
+	returns all the contributions
+*/
 const ContributionMap& Repository::results(void) const
 {
 	return m_contributions;
