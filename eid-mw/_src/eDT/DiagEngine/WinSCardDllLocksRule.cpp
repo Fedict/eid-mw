@@ -32,7 +32,7 @@ WinSCardDllLocksRule::WinSCardDllLocksRule()
 {
 	m_expected.insert	(L"winlogon.exe");
 	m_expected.insert	(L"Explorer.EXE");
-	m_expected.insert	(L"svcost.exe");
+	m_expected.insert	(L"svchost.exe");
 	m_expected.insert	(L"Firefox.exe");
 }
 
@@ -46,20 +46,20 @@ MetaRuleVerdict WinSCardDllLocksRule::verdict(Repository evidence) const
 	ContributionSet found=evidence.values(m_key);
 
 	// subtract all expected applications from the ones we found
-	ContributionSet un_expected;
-	std::set_difference(found.begin(),found.end(),m_expected.begin(),m_expected.end(),std::inserter(un_expected,un_expected.end()));
+	ContributionSet unexpected;
+	std::set_difference(found.begin(),found.end(),m_expected.begin(),m_expected.end(),std::inserter(unexpected,unexpected.end()));
 
 	// if any are none, winscard.dll appears OK, and so this rule judges "not guilty"
-	if(un_expected.empty())
+	if(unexpected.empty())
 	{
 		return MetaRuleVerdict(false);
 	}
 	// if any are some, winscard.dll may be unduly locked and so this rule judges "guilty"
 	else
 	{
-		std::wstring	guilties(L"[");
-						guilties.append(join<std::wstring,ContributionSet>(un_expected,L","));
-						guilties.append(L"]");
+		std::wstring	guilties		(L"[");
+						guilties.append	(join<std::wstring,ContributionSet>(unexpected,L","));
+						guilties.append	(L"]");
 		return MetaRuleVerdict(true,L"The following processes were unexpectedly locking winscard.dll : " + guilties,L"Find out if these are necessary and/or try stopping them");
 	}
 }

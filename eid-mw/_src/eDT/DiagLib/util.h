@@ -49,11 +49,12 @@ inline wstring tostr (const T& t)
 	return ss.str();
 }
 
+// template for joining elements into textual lists (but we should use boost instead)
 template <typename rT, typename cT>
 inline rT join (const cT& list, const rT& sep)
 {
 	rT result;
-	cT::const_iterator i=list.begin();
+	typename cT::const_iterator i=list.begin();
 	if(i!=list.end())
 		result.append(*i++);
 	for(;i!=list.end();i++)
@@ -63,5 +64,7 @@ inline rT join (const cT& list, const rT& sep)
 	}
 	return result;
 }
+
+
 
 #endif //__DIAGLIB_UTIL_H__
