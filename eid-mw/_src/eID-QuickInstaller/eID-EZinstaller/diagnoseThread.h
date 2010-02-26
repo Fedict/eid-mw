@@ -195,3 +195,29 @@ public:
 
 	virtual void run();
 };
+
+class detectReaderThread : public QThread {
+private:
+	systemClass scl;
+	ezWorker ezw;
+	QObject * objectToUpdate;
+public:
+	void setobjectToUpdate(QObject * qo ) {
+		objectToUpdate = qo;
+	}
+
+	virtual void run();
+};
+
+class detectCardThread : public QThread {
+private:
+	systemClass scl;
+	ezWorker ezw;
+	QObject * objectToUpdate;
+public:
+	void setobjectToUpdate(QObject * qo ) {
+		objectToUpdate = qo;
+	}
+
+	virtual void run();
+};

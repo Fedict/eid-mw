@@ -1076,3 +1076,53 @@ void delayThread::run() {
     QApplication::sendPostedEvents();
 }
 
+void detectReaderThread::run() {
+    string readersXml = scl.pcscEnumerateCardReaders("");
+    QDomNode resultNode = ezw.xmlToNode(readersXml);
+    QDomNode listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
+
+    while (listItem.isNull()) {
+		msleep(500);
+		readersXml = scl.pcscEnumerateCardReaders("");
+		resultNode = ezw.xmlToNode(readersXml);
+		listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
+	}
+
+	verboseEvent * ve = new verboseEvent();
+    ve->setParams("detectedReader","","","",0,0,0);
+    QApplication::postEvent(objectToUpdate,ve);
+    QApplication::sendPostedEvents();
+}
+
+void detectCardThread::run() {
+    // Rebuild readerlist.
+	string readersXml;
+	string selectedReader = "";
+	QDomNode resultNode;
+	QDomNode listItem;
+	string _readerName;
+	string cardData;
+	do
+	{
+		msleep(500);
+		readersXml = scl.pcscEnumerateCardReaders("");
+		resultNode = ezw.xmlToNode(readersXml);
+		listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
+
+		while (!listItem.isNull()) {
+			_readerName = ezw.TextFromNode(listItem);
+			cardData = scl.readCard("<InputParams><method>PCSC</method><readerName>" + _readerName + "</readerName><fileName>TOKENINFO</fileName></InputParams>");
+			if (ezw.GetNamedItem(cardData,"QueriedResult") ==  "SUCCESS") {
+				selectedReader = _readerName;
+				break;
+			}
+			listItem = listItem.nextSibling();
+		}
+	}while(selectedReader=="");
+
+	verboseEvent * ve = new verboseEvent();
+    ve->setParams("detectedCard","","","",0,0,0);
+    QApplication::postEvent(objectToUpdate,ve);
+    QApplication::sendPostedEvents();
+
+};

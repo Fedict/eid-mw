@@ -93,7 +93,13 @@ void ezInstaller::customEvent(QEvent * qe )
     } else if (ve->getAction() == "enableCancel") {
         ui.clbCancel->setEnabled(true);
     }
-
+	else  if (ve->getAction() == "detectedReader") {
+		ui.clbBack->setEnabled(false);
+		ui.stackedWidget->setCurrentIndex(3);
+	}
+	else  if (ve->getAction() == "detectedCard") {
+		ui.stackedWidget->setCurrentIndex(4);
+	}
 }
 
 ezInstaller::ezInstaller(QWidget *parent, Qt::WFlags flags)
@@ -302,8 +308,8 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 
             setStepButtons(false,true,false);
 
-            ui.clbNext->setVisible(true);
-            mQLNext.setVisible(true);
+            ui.clbNext->setVisible(false);
+            mQLNext.setVisible(false);
 
             ui.clbBack->setEnabled(false);  // ** was true
 
@@ -312,7 +318,8 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
             ui.lblWarningTestSignature->setText(msglbl_WarningTestSig);
             ui.lbleIDInserted->setText(msglbl_EidInserted);
             previousPage = 2;               // ** was 1
-
+			drt.setobjectToUpdate(this);
+			drt.start();
         }
         else {
             if (pagename.contains("welcomePage")) { // 0
@@ -327,7 +334,11 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
             }
             else {
                 if (pagename.contains("pageConnectedReader")) {  //  3
-					;
+					ui.clbNext->setVisible(false);
+					mQLNext.setVisible(false);
+					ui.clbBack->setEnabled(false);  // ** was true
+					dct.setobjectToUpdate(this);
+					dct.start();
                 }
                 else {
                     if (pagename.contains("pageVieweIDData")) {  // 4

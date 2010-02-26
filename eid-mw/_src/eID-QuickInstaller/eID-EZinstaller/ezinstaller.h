@@ -95,6 +95,8 @@ private:
     string GroupWorstTestResult;
 	diagnoseThread dt;
 	readCardThread rct;
+	detectReaderThread drt;
+	detectCardThread dct;
 	delayThread delaythread;
 	ReaderList readers;
 	QString transparentstyle;
