@@ -26,6 +26,7 @@
 #include "MetaRule.h"
 #include "MetaRuleVerdict.h"
 #include "WinSCardDllLocksRule.h"
+#include "HPProtectToolsRule.h"
 
 class AnalyseMeta : public Analysis
 {
@@ -65,6 +66,7 @@ public:
 			reportPrintHeader2(reportType, L"Meta Diagnostics",L'#');
 			
 			judge(&WinSCardDllLocksRule());
+			judge(&HPProtectToolsRule());
 
 			ContributionMap contributions=REP_RESULTS();
 			for(ContributionMap::const_iterator i=contributions.begin();i!=contributions.end();i++)

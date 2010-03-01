@@ -142,6 +142,14 @@ ContributionSet	Repository::values(const std::wstring key) const
 	return vls;
 }
 
+/* 
+	return true if key exists (at least once)
+*/
+bool Repository::exists(const std::wstring key) const
+{
+	return (m_contributions.find(key)!=m_contributions.end());
+}
+
 /*
 	returns all the contributions
 */

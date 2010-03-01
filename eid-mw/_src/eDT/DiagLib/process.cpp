@@ -90,8 +90,9 @@ int processKillByName(Proc_NAME process)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int processReportInfo(Report_TYPE type, const Proc_INFO &info)
-{
+{ 
 	reportPrint(type,L"        id = %ld\n",info.id);
+	reportPrint(type,L"   Running = true\n");
 	reportPrint(type,L"      Name = %ls\n", info.Name.c_str());
 	reportPrint(type,L"      Path = %ls\n", info.Path.c_str());
 	reportPrint(type,L" Full path = %ls\n", info.FullPath.c_str());
@@ -104,6 +105,7 @@ int processReportInfo(Report_TYPE type, const Proc_INFO &info)
 void processContributeInfo(const Proc_INFO &info)
 {
 	REP_PREFIX(							info.Name.c_str());
+	REP_CONTRIBUTE( L"running",			L"true");
 	REP_CONTRIBUTE(	L"id",	L"%ld",		info.id);
 	REP_CONTRIBUTE(	L"Name",			info.Name.c_str());
 	REP_CONTRIBUTE(	L"Path",			info.Path.c_str());

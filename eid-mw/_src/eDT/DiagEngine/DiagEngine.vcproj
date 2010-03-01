@@ -158,6 +158,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\HPProtectToolsRule.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MetaRule.cpp"
 				>
 			</File>
@@ -277,6 +281,10 @@
 			</File>
 			<File
 				RelativePath=".\diagengine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HPProtectToolsRule.h"
 				>
 			</File>
 			<File

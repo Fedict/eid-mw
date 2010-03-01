@@ -42,6 +42,7 @@ public:
 	void					contribute	(const std::wstring key, const std::wstring format, ...);
 
 	ContributionSet			values (const std::wstring key) const;
+	bool					exists (const std::wstring key) const;
 	const ContributionMap&	results(void) const;
 
 	// Meyers Singleton

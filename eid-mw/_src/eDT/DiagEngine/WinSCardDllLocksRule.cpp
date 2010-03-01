@@ -34,6 +34,7 @@ WinSCardDllLocksRule::WinSCardDllLocksRule()
 	m_expected.insert	(L"Explorer.EXE");
 	m_expected.insert	(L"svchost.exe");
 	m_expected.insert	(L"Firefox.exe");
+	m_expected.insert	(L"beid35gui.exe");
 }
 
 WinSCardDllLocksRule::~WinSCardDllLocksRule() throw()
