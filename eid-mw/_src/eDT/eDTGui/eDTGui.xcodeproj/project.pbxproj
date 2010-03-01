@@ -20,6 +20,9 @@
 		015DDB9C1133D8CE0041940A /* AnalyseMeta.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB991133D8CE0041940A /* AnalyseMeta.h */; };
 		015DDB9D1133D8CE0041940A /* AnalyseModuleInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB9A1133D8CE0041940A /* AnalyseModuleInfo.h */; };
 		01B7488E11341DE6002A073B /* module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01B7488D11341DE6002A073B /* module.cpp */; };
+		01FDC75A113BC45A00E8C708 /* HPProtectToolsRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 01FDC759113BC45A00E8C708 /* HPProtectToolsRule.h */; };
+		01FDC75C113BC46A00E8C708 /* HPProtectToolsRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01FDC75B113BC46A00E8C708 /* HPProtectToolsRule.cpp */; };
+		01FDC75E113BC47800E8C708 /* MetaRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 01FDC75D113BC47800E8C708 /* MetaRule.h */; };
 		069D05B0128AE5DC7EE31738 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 7BC2E65A5E699A5E5D834CA2 /* QtCore.framework */; };
 		2B093CA6F071B023A473CED0 /* main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 118FCBAABA162BA17933C789 /* main.cpp */; settings = {ATTRIBUTES = (); }; };
 		393E0B62B645E23A5AC7F3C0 /* moc_edtgui.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 33726D8BA5E972CDB2EA01B7 /* moc_edtgui.cpp */; settings = {ATTRIBUTES = (); }; };
@@ -166,6 +169,9 @@
 		015DDB991133D8CE0041940A /* AnalyseMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalyseMeta.h; path = ../DiagEngine/AnalyseMeta.h; sourceTree = SOURCE_ROOT; };
 		015DDB9A1133D8CE0041940A /* AnalyseModuleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalyseModuleInfo.h; path = ../DiagEngine/AnalyseModuleInfo.h; sourceTree = SOURCE_ROOT; };
 		01B7488D11341DE6002A073B /* module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = module.cpp; path = ../DiagLib/module.cpp; sourceTree = SOURCE_ROOT; };
+		01FDC759113BC45A00E8C708 /* HPProtectToolsRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPProtectToolsRule.h; path = ../DiagEngine/HPProtectToolsRule.h; sourceTree = SOURCE_ROOT; };
+		01FDC75B113BC46A00E8C708 /* HPProtectToolsRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HPProtectToolsRule.cpp; path = ../DiagEngine/HPProtectToolsRule.cpp; sourceTree = SOURCE_ROOT; };
+		01FDC75D113BC47800E8C708 /* MetaRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MetaRule.h; path = ../DiagEngine/MetaRule.h; sourceTree = SOURCE_ROOT; };
 		10E9EFFB92181C84EE52F47E /* ui_edtgui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ui_edtgui.h; sourceTree = "<group>"; };
 		118FCBAABA162BA17933C789 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		27AE7A480FD6C52FCA80FECD /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
@@ -487,6 +493,7 @@
 		838CA2000F67F5A600F52788 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				01FDC75B113BC46A00E8C708 /* HPProtectToolsRule.cpp */,
 				011C50BC11368B5600D69AF8 /* MetaRule.cpp */,
 				011C50B811368B4900D69AF8 /* MetaRuleVerdict.cpp */,
 				011C50B911368B4900D69AF8 /* WinSCardDllLocksRule.cpp */,
@@ -499,6 +506,8 @@
 		838CA2010F67F5AE00F52788 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				01FDC75D113BC47800E8C708 /* MetaRule.h */,
+				01FDC759113BC45A00E8C708 /* HPProtectToolsRule.h */,
 				011C50B611368B1800D69AF8 /* MetaRuleVerdict.h */,
 				015DDB981133D8CE0041940A /* AnalyseHardware.h */,
 				015DDB991133D8CE0041940A /* AnalyseMeta.h */,
@@ -616,6 +625,8 @@
 				015DDB9C1133D8CE0041940A /* AnalyseMeta.h in Headers */,
 				015DDB9D1133D8CE0041940A /* AnalyseModuleInfo.h in Headers */,
 				011C50B711368B1800D69AF8 /* MetaRuleVerdict.h in Headers */,
+				01FDC75A113BC45A00E8C708 /* HPProtectToolsRule.h in Headers */,
+				01FDC75E113BC47800E8C708 /* MetaRule.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +824,7 @@
 				011C50BA11368B4900D69AF8 /* MetaRuleVerdict.cpp in Sources */,
 				011C50BB11368B4900D69AF8 /* WinSCardDllLocksRule.cpp in Sources */,
 				011C50BD11368B5600D69AF8 /* MetaRule.cpp in Sources */,
+				01FDC75C113BC46A00E8C708 /* HPProtectToolsRule.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
