@@ -18,8 +18,11 @@
 
 **************************************************************************** */
 #ifdef WIN32
-
 #include <windows.h>
+#elif __APPLE__
+#include "Mac/mac_helper.h"
+#endif
+
 #include "diaglib.h"
 #include "module.h"
 #include "process.h"
@@ -85,5 +88,3 @@ int moduleReportList(Report_TYPE type, const Proc_LIST &processList, const wchar
 
 	return iReturnCode;
 }
-
-#endif

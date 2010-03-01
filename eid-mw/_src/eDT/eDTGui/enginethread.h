@@ -76,7 +76,8 @@ static struct testSequence tstSequence[]=
 	 {"system_info"				, "device_info"				, "diagnostics"}
 	,{"device_info"				, "software_info"			, "diagnostics"}
 	,{"software_info"			, "process_info"			, "diagnostics"}
-	,{"process_info"			, "pcsc_detect"				, "diagnostics"}
+	,{"process_info"			, "module_info"				, "diagnostics"}
+	,{"module_info"				, "pcsc_detect"				, "diagnostics"}
 	//------ end info part ----
 	//------ begin infrastructure part ----
 	,{"pcsc_detect"				, "pcsc_readerlist"			, "diagnostics"}

@@ -20,8 +20,6 @@
 #ifndef __DIAGLIB_MODULE_H__
 #define __DIAGLIB_MODULE_H__
 
-#ifdef WIN32
-
 #include <iostream>
 #include <string.h>
 #include <string>
@@ -43,7 +41,5 @@ typedef std::vector<Proc_ID>				Proc_LIST;
 int moduleReportInfo(Report_TYPE type,ModuleName name,ProcNameSet names);
 void moduleContributeInfo(ModuleName name,ProcNameSet names);
 int moduleReportList(Report_TYPE type, const Proc_LIST& processList, const wchar_t *TitleIn=NULL);
-
-#endif
 
 #endif

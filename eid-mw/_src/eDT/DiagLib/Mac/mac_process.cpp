@@ -185,6 +185,18 @@ int processGetInfo(Proc_ID process, Proc_INFO *info)
 	info->Name = wstring_From_string(path[path.size()-1]);
 	info->Path = wstring_From_string(proc[1]);
 	info->FullPath = info->Path;
+	
+	info->modulesLoaded.clear();
+	sprintf(g_buffer,"lsof -p %ld -Fn",process);
+	FILE* ps=popen(g_buffer,"r");
+	while(fgets(g_buffer,G_BUFFER_SIZE,ps) != NULL)
+	{
+		g_buffer[strlen(g_buffer)-1]='\0';
+		if(g_buffer[0]=='n' && strstr(g_buffer,".dylib")!=NULL)
+			info->modulesLoaded.insert(wstring_From_string(g_buffer+1));
+	}
+	pclose(ps);
+	
 
 	LOG(L"DONE\n");
 
