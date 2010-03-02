@@ -176,6 +176,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\md5.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MD5Sum.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\middleware.cpp"
 				>
 			</File>
@@ -302,6 +310,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\checksum.h"
+				>
+			</File>
+			<File
 				RelativePath=".\csp.h"
 				>
 			</File>
@@ -331,6 +343,14 @@
 			</File>
 			<File
 				RelativePath=".\log.h"
+				>
+			</File>
+			<File
+				RelativePath=".\md5.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MD5Sum.h"
 				>
 			</File>
 			<File

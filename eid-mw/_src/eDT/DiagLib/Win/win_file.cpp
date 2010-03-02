@@ -26,6 +26,8 @@
 #include "log.h"
 
 #include "registry.h"
+#include "MD5Sum.h"
+#include "util.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS DECLARATION ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,8 +141,11 @@ int fileGetInfo(const File_ID file, File_INFO *info)
 				}
 			}
 		}
-
 	}
+
+	//MD5Sum sum;										this never gets called.. win_file is dead code.
+	//	   sum.add_file(string_From_wstring(file));		// added md5sum directly in AnalyseMWFileInfo
+	//	   sum.get_sum(info->md5sum);
 
 	if(infoBuffer)
 	{

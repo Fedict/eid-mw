@@ -61,6 +61,9 @@ MetaRuleVerdict WinSCardDllLocksRule::verdict(Repository evidence) const
 		std::wstring	guilties		(L"[");
 						guilties.append	(join<std::wstring,ContributionSet>(unexpected,L","));
 						guilties.append	(L"]");
-		return MetaRuleVerdict(true,L"The following processes were unexpectedly locking winscard.dll : " + guilties,L"Find out if these are necessary and/or try stopping them");
+		return MetaRuleVerdict(true,
+								L"The following processes were unexpectedly locking winscard.dll : " + 
+								guilties,
+								L"Find out if these are necessary and/or try stopping them");
 	}
 }

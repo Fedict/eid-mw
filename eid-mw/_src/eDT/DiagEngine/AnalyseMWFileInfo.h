@@ -31,6 +31,7 @@
 #include "AnalysisError.h"
 #include "folder.h"
 #include "util.h"
+#include "MD5Sum.h"
 #ifdef __APPLE__
 #include "mac_helper.h"
 #endif
@@ -179,9 +180,10 @@ public:
 			bool bTmpPass = true;
 			std::wstring fullPath;
 			
-
+			REP_PREFIX(L"system");
 			for (size_t idx=0;idx<sizeof(FilesSystem)/sizeof(wchar_t*);idx++)
 			{
+				REP_PREFIX(FilesSystem[idx]);
 				bool exist = false;
 				fullPath = system;
 				fullPath += FilesSystem[idx];
@@ -199,13 +201,29 @@ public:
 				}
 				text << L"found: "; 
 				text << FilesSystem[idx] << L"";
+
+				REP_CONTRIBUTE(L"exists",exist?L"true":L"false");
+
+				if(exist)
+				{
+					std::wstring	sumstr;
+					MD5Sum			sum;
+									sum.add_file(string_From_wstring(fullPath));
+									sumstr=sum.get_sum();
+					text << L" md5=[" << sumstr << L"]";
+					REP_CONTRIBUTE(L"md5",sumstr);
+				}
+
 				resultToReport(reportType,text);
+				REP_UNPREFIX();
 			}
 
+			REP_UNPREFIX();
 			resultToReport(reportType,L"[Info ] Detecting application files");
-
+			REP_PREFIX(L"application");
 			for (size_t idx=0;idx<sizeof(FilesApp)/sizeof(wchar_t*);idx++)
 			{
+				REP_PREFIX(FilesApp[idx]);
 				bool exist = false;
 				fullPath = appfolder;
 				fullPath += FilesApp[idx];
@@ -221,10 +239,26 @@ public:
 					bTmpPass = false;
 					text << L"not "; 
 				}
-				text << L"found: "; 
+				text << L"found: ";
 				text << FilesApp[idx] << L"";
+
+				REP_CONTRIBUTE(L"exists",exist?L"true":L"false");
+
+				if(exist)
+				{
+					std::wstring	sumstr;
+					MD5Sum			sum;
+									sum.add_file(string_From_wstring(fullPath));
+									sumstr=sum.get_sum();
+					text << L" md5=[" << sumstr << L"]";
+					REP_CONTRIBUTE(L"md5",sumstr);
+				}
+
 				resultToReport(reportType,text);
+				REP_UNPREFIX();
 			}
+			REP_UNPREFIX();
+
 #ifdef __APPLE__	
 			
 			resultToReport(reportType,L"[Info ] Detecting other files");

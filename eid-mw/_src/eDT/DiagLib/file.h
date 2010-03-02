@@ -29,11 +29,13 @@
 typedef std::wstring File_ID;
 typedef std::vector<File_ID> File_LIST;
 
-typedef struct t_File_INFO {
-	File_ID id;
-    std::wstring ProductVersion;
-    std::wstring FileVersion;
-    size_t FileSize;
+typedef struct t_File_INFO
+{
+	File_ID			id;
+    std::wstring	ProductVersion;
+    std::wstring	FileVersion;
+    size_t			FileSize;
+	unsigned char	md5sum[16];
 } File_INFO;
 
 int fileExists(const File_ID file, bool *exist);
