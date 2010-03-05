@@ -104,14 +104,15 @@ int readerGetCardInfo(Card_ID id, Card_INFO *info)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int readerReportInfo(Report_TYPE type, const Reader_INFO &info)
 {
-	int iReturnCode = DIAGLIB_OK;
-
 	reportPrint(type,L"          id = %ls (%ls view)\n",info.id.Name.c_str(),getSourceName(info.id.Source));
 	reportPrintSeparator(type, REPORT_READER_SEPARATOR);
 
-	return iReturnCode;
+	REP_CONTRIBUTE(L"id",				info.id.Name.c_str());
+	REP_CONTRIBUTE(L"sourceName",		getSourceName(info.id.Source));
+	return DIAGLIB_OK;
 }
 
+/* DEAD CODE 
 void readerContributeInfo(const Reader_INFO &info)
 {
 	REP_PREFIX(							info.id.Name.c_str());
@@ -166,6 +167,8 @@ int readerReportList(Report_TYPE type, const Reader_LIST &readerList, const wcha
 
 	return iReturnCode;
 }
+
+*/
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS ////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////

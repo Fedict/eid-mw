@@ -112,7 +112,7 @@ void Repository::available(bool avail)
 	contribute a value, under the current subkey. Several values may be contributed under the same key
 	This version allows printf-like templating.
 */
-void Repository::contribute(const std::wstring key, const std::wstring format, ...)
+void Repository::contribute(const ContributionKey key, const std::wstring format, ...)
 {
 	wchar_t _val[1024];
 	va_list args;
@@ -134,7 +134,7 @@ void Repository::contribute(const std::wstring key, const std::wstring format, .
 	retrieve all values for a certain key
 	returns: a set of values, empty set if none found
 */
-ContributionSet	Repository::values(const std::wstring key) const
+ContributionSet	Repository::values(const ContributionKey key) const
 {
 	std::set<std::wstring> vls;
 	for(ContributionMap::const_iterator i=m_contributions.lower_bound(key);i!=m_contributions.upper_bound(key);i++)
@@ -142,10 +142,19 @@ ContributionSet	Repository::values(const std::wstring key) const
 	return vls;
 }
 
+Contribution Repository::value(const ContributionKey key) const
+{
+	ContributionMap::const_iterator i=m_contributions.lower_bound(key);
+	if(i==m_contributions.end())
+		return NULL;
+	else
+		return i->second;
+}
+
 /* 
 	return true if key exists (at least once)
 */
-bool Repository::exists(const std::wstring key) const
+bool Repository::exists(const ContributionKey key) const
 {
 	return (m_contributions.find(key)!=m_contributions.end());
 }

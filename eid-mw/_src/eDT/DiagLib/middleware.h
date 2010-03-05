@@ -65,6 +65,7 @@ int mwGetCardInfo (Card_ID id, Card_INFO *info);
 
 int mwUninstall (MW_ID middleware);
 
+void cardContributeInfo(const Card_INFO &info);
 int mwReportInfo(Report_TYPE type, const MW_INFO &info);
 int mwReportList(Report_TYPE type, const MW_LIST &mwList, const wchar_t *Title=NULL);
 

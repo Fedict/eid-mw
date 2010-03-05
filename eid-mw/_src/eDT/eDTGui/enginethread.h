@@ -60,15 +60,15 @@ static struct testSequence tstSequence[]=
 	,{"middleware_files"		, "middleware_readerlist"	, "diagnostics"}
 	,{"middleware_readerlist"	, "middleware_cardlist"		, "pcsc_readerlist"}
 	,{"middleware_cardlist"		, "middleware_access"		, "pcsc_cardlist"}
-	,{"middleware_access"		, ""						, "diagnostics"}
+	,{"middleware_access"		, "pcsc_readerlist"			, "diagnostics"}
 
 	,{"pcsc_readerlist"			, "pcsc_cardlist"			, "diagnostics"}
 	,{"pcsc_cardlist"			, "pcsc_access"				, "diagnostics"}
 	,{"pcsc_access"				, "diagnostics"				, "pcsc_timing"}
 	,{"pcsc_timing"				, "diagnostics"				, "diagnostics"}
-	,{"diagnostics"				, ""						, "diagnostics"}
+	,{"diagnostics"				, ""						, ""}
 	//------ end middleware part ----
-#else //OSX: no service, hardware, modules info, no reader_detect
+#else //OSX: no service, hardware, reader_detect
 	//-------------------------------------------------------------
 	// current test				, passed					, failed
 	//-------------------------------------------------------------
@@ -89,13 +89,13 @@ static struct testSequence tstSequence[]=
 	,{"middleware_files"		, "middleware_readerlist"	, "diagnostics"}
 	,{"middleware_readerlist"	, "middleware_cardlist"		, "pcsc_readerlist"}
 	,{"middleware_cardlist"		, "middleware_access"		, "pcsc_cardlist"}
-	,{"middleware_access"		, ""						, "diagnostics"}
+	,{"middleware_access"		, "pcsc_readerlist"			, "diagnostics"}
 	
 	,{"pcsc_readerlist"			, "pcsc_cardlist"			, "diagnostics"}
 	,{"pcsc_cardlist"			, "pcsc_access"				, "diagnostics"}
 	,{"pcsc_access"				, "diagnostics"				, "pcsc_timing"}
 	,{"pcsc_timing"				, "diagnostics"				, "diagnostics"}
-	,{"diagnostics"				, ""						, "diagnostics"}
+	,{"diagnostics"				, ""						, ""}
 	//------ end middleware part ----	
 #endif
 };
@@ -340,15 +340,20 @@ public:
 #else
 		testsToRun.insert(testsToRun.end(),std::string("sign_tokend"));
 #endif
+
+		testsToRun.insert(testsToRun.end(),std::string("diagnostics"));
 		m_NrRequestedTests = testsToRun.size();
 
 		DiagEngine::tTestNames		  requestList;
 		DiagEngine::tTestCallbackList callbackList;
 
-		MyCallbackData* myCallbackData	= new MyCallbackData;
-		myCallbackData->m_callback		= (int(*)(void*,std::string,size_t))&fn1;
-		myCallbackData->m_userData		= m_pMainWnd;
-		callbackList.insert(callbackList.end(),myCallbackData);
+		for(int i=0;i<2;i++)
+		{
+			MyCallbackData* myCallbackData	= new MyCallbackData;
+			myCallbackData->m_callback		= (int(*)(void*,std::string,size_t))&fn1;
+			myCallbackData->m_userData		= m_pMainWnd;
+			callbackList.insert(callbackList.end(),myCallbackData);
+		}
 
 		for (size_t testNr = 0; testNr<testsToRun.size(); testNr++)
 		{

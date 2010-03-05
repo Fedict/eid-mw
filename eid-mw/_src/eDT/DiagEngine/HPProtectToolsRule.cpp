@@ -28,11 +28,13 @@ HPProtectToolsRule::HPProtectToolsRule()
 
 // list of processes belonging to ProtectTools
 {
-	m_ptkeys.insert	(L"pthosttr_exe");
+	m_ptkeys.insert	(L"accoca_exe");	// ActivCard Cache Server
+	m_ptkeys.insert	(L"pthosttr_exe");	// ProtectTools Host..?
 	m_ptkeys.insert	(L"accrdsub_exe");
-	m_ptkeys.insert	(L"acevents_exe");
+	m_ptkeys.insert	(L"acevents_exe");	// ActivCard Events..?
 	m_ptkeys.insert	(L"asghost_exe");
 	m_ptkeys.insert	(L"ac_sharedstore_exe");
+
 }
 
 HPProtectToolsRule::~HPProtectToolsRule() throw()

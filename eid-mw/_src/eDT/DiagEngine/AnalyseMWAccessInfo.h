@@ -1,4 +1,4 @@
-/* ****************************************************************************
+/*****************************************************************************
 
  * eID Middleware Project.
  * Copyright (C) 2008-2010 FedICT.
@@ -96,16 +96,20 @@ public:
 					switch(retVal)
 					{
 					case DIAGLIB_ERR_BAD_CALL:
-						std::wstring(L"[Error] Bad function call to mwGetReaderList()");
+						resultToReport(reportType,L"[Error] Bad function call to mwGetReaderList()");
+						REP_CONTRIBUTE(L"error",L"bad_function_call_to_mwgetreaderlist");
 						break;
 					case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
-						std::wstring(L"[Error] Could not load Middleware");
+						resultToReport(reportType,L"[Error] Could not load Middleware");
+						REP_CONTRIBUTE(L"error",L"could_not_load_middleware");
 						break;
 					case DIAGLIB_ERR_INTERNAL:
-						std::wstring(L"[Error] Internal error calling mwGetReaderList()");
+						resultToReport(reportType,L"[Error] Internal error calling mwGetReaderList()");
+						REP_CONTRIBUTE(L"error",L"internal_error_calling_mwgetreaderlist");
 					    break;
 					default:
-						std::wstring(L"[Error] Unknown error: mwGetReaderList()");
+						resultToReport(reportType,L"[Error] Unknown error: mwGetReaderList()");
+						REP_CONTRIBUTE(L"error",L"unknown_error_calling_mwgetreaderlist");
 					    break;
 					}
 				}
@@ -114,6 +118,7 @@ public:
 					std::wstringstream text;
 					text << L"[Info] Nr of card readers detected by Middleware: " << readerList.size();
 					resultToReport(reportType,text);
+					REP_CONTRIBUTE(L"readercount",L"%ld",readerList.size());
 					for (size_t idx=0;idx<readerList.size();idx++)
 					{
 						Reader_INFO info;
@@ -129,6 +134,8 @@ public:
 			//------------------------------------------
 			// Loop over all the card readers that have a card inserted
 			//------------------------------------------
+
+			REP_CONTRIBUTE(L"cardcount",L"%ld",cardList.size());
 			for (size_t cardIdx=0; cardIdx<cardList.size(); cardIdx++)
 			{
 				std::wstringstream text;
@@ -147,18 +154,21 @@ public:
 				//------------------------------------------------
 				case DIAGLIB_ERR_NOT_AVAILABLE:
 					text << L"[Error] Internal error retrieving info from card";
+					REP_CONTRIBUTE(L"error",L"internal_error_retrieving_info_from_card");
 					break;
 				//------------------------------------------------
 				// user clicked 'NO" when asking to grant access to cards
 				//------------------------------------------------
 				case DIAGLIB_ERR_NOT_ALLOWED_BY_USER:
 					text << L"[Warn ] Access to cards refused by user";
+					REP_CONTRIBUTE(L"error",L"access_to_card_refused_by_user");
 					break;
 				//------------------------------------------------
 				// eidlib could not be loaded
 				//------------------------------------------------
 				case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 					text << L"[Error] Middleware library could not be loaded.";
+					REP_CONTRIBUTE(L"error",L"middleware_library_could_not_be_loaded");
 					resultToReport(reportType,text);
 					processParamsToStop();
 					return retVal;
@@ -168,12 +178,14 @@ public:
 				//------------------------------------------------
 				case DIAGLIB_ERR_CARD_NOT_FOUND:
 					text << L"[Error] Card could not be found.";
+					REP_CONTRIBUTE(L"error",L"card_could_not_be_found");
 					break;
 				//------------------------------------------------
 				// card type not recognized
 				//------------------------------------------------
 				case DIAGLIB_ERR_CARD_BAD_TYPE:
 					text << L"[Warn ] Card not recognized.";
+					REP_CONTRIBUTE(L"error",L"card_not_recognized");
 					break;
 				//------------------------------------------------
 				// internal error
@@ -183,6 +195,7 @@ public:
 				}
 				resultToReport(reportType,text);
 				retVal = cardReportInfo(reportType, info);
+				cardContributeInfo(info);
 				if (retVal != DIAGLIB_OK)
 				{
 					setEndTime();
@@ -225,15 +238,19 @@ private:
 			{
 			case DIAGLIB_ERR_BAD_CALL:
 				text << L"Bad function call ";
+				REP_CONTRIBUTE(L"error",L"bad_function_call_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 				text << L"Library not found ";
+				REP_CONTRIBUTE(L"error",L"library_not_found_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_INTERNAL:
 				text << L"Internal error ";
+				REP_CONTRIBUTE(L"error",L"internal_error_retrieving_card_list");
 				break;
 			default:
 				text << L"Unknown error ";
+				REP_CONTRIBUTE(L"error",L"unknown_error_retrieving_card_list");
 				break;
 			}
 		}

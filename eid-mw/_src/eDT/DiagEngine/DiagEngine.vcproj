@@ -170,6 +170,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MiddleWareFilesIntegrityRule.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\WinSCardDllLocksRule.cpp"
 				>
 			</File>
@@ -293,6 +297,10 @@
 			</File>
 			<File
 				RelativePath=".\MetaRuleVerdict.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MiddleWareFilesIntegrityRule.h"
 				>
 			</File>
 			<File

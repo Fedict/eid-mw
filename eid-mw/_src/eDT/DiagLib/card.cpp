@@ -85,7 +85,6 @@ int cardGetInfo(Card_ID id, Card_INFO *info)
 int cardReportInfo(Report_TYPE type, const Card_INFO &info)
 {
 	int iReturnCode = DIAGLIB_OK;
-
 	reportPrint(type,L"          Serial = %ls\n",info.id.Serial.c_str());
 	reportPrint(type,L"          Reader = %ls (%ls view)\n",info.id.Reader.Name.c_str(),getSourceName(info.id.Reader.Source));
 	reportPrint(type,L"       FirstName = %ls\n",info.FirstName.c_str());
@@ -101,11 +100,10 @@ int cardReportInfo(Report_TYPE type, const Card_INFO &info)
 	reportPrint(type,L" Read Cert Sign is %ls\n",info.ReadCertSignOk?L"OK":L"NOT OK");
 	reportPrint(type,L" Read Cert Auth is %ls\n",info.ReadCertAuthOk?L"OK":L"NOT OK");
 	reportPrintSeparator(type, REPORT_CARD_SEPARATOR);
-
 	return iReturnCode;
 }
 
-int cardContributeInfo(const Card_INFO &info)
+void cardContributeInfo(const Card_INFO &info)
 {
 	REP_PREFIX(						 info.id.Serial.		c_str());
 	REP_CONTRIBUTE(L"Serial"		,info.id.Serial.		c_str());
@@ -123,7 +121,6 @@ int cardContributeInfo(const Card_INFO &info)
 	REP_CONTRIBUTE(L"ReadCertSignOK",info.ReadCertSignOk?	L"true":L"false");
 	REP_CONTRIBUTE(L"ReadCertAuthOK",info.ReadCertAuthOk?	L"true":L"false");
 	REP_UNPREFIX();
-	return DIAGLIB_OK;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

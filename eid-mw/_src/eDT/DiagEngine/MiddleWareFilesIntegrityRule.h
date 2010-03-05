@@ -18,24 +18,22 @@
 
 **************************************************************************** */
 
-#ifndef __METARULE__
-#define __METARULE__
-
-#include <string>
+#include <set>
 #include "repository.h"
+#include "MetaRule.h"
 #include "MetaRuleVerdict.h"
 
-class MetaRule
+typedef std::map<std::wstring,std::wstring> FileMD5Map;
+typedef std::set<std::wstring>				FileNameSet;
+
+class MiddleWareFilesIntegrityRule : public MetaRule
 {
 public:
-								MetaRule(const std::wstring name, const std::wstring description);
-	virtual					   ~MetaRule() throw();
-	virtual MetaRuleVerdict		verdict (Repository evidence) const=0;
-	const	std::wstring&		name(void) const;
-	const	std::wstring&		description(void) const;
+	MiddleWareFilesIntegrityRule();
+	~MiddleWareFilesIntegrityRule() throw();
+	MetaRuleVerdict verdict(Repository evidence) const;
 private:
-	std::wstring				m_name;
-	std::wstring				m_description;
+	void			testCategory(Repository evidence, std::wstring category, FileMD5Map data, FileNameSet& missing, FileNameSet& corrupt) const;
+	FileMD5Map		m_sys_files;
+	FileMD5Map		m_app_files;
 };
-
-#endif

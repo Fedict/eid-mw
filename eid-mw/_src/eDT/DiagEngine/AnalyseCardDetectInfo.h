@@ -71,16 +71,20 @@ public:
 				switch(retVal)
 				{
 				case DIAGLIB_ERR_BAD_CALL:
-					std::wstring(L"[Error] Bad function call to getPCSCCardList()");
+					resultToReport(reportType,L"[Error] Bad function call to getPCSCCardList()");
+					REP_CONTRIBUTE(L"error",L"bad_function_call_to_getpcsccardlist");
 					break;
 				case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
-					std::wstring(L"[Error] Could not load PCSC");
+					resultToReport(reportType,L"[Error] Could not load PCSC");
+					REP_CONTRIBUTE(L"error",L"could_not_load_pcsc");
 					break;
 				case DIAGLIB_ERR_INTERNAL:
-					std::wstring(L"[Error] Internal error calling getPCSCCardList()");
+					resultToReport(reportType,L"[Error] Internal error calling getPCSCCardList()");
+					REP_CONTRIBUTE(L"error",L"internal_error_calling_getpcsccardlist");
 					break;
 				default:
-					std::wstring(L"[Error] Unknown error: getPCSCCardList()");
+					resultToReport(reportType,L"[Error] Unknown error: getPCSCCardList()");
+					REP_CONTRIBUTE(L"error",L"unkown_error_calling_getpcsccardlist");
 					break;
 				}
 				processParamsToStop();
@@ -96,12 +100,14 @@ public:
 				processParamsToStop();
 				resultToReport(reportType,L"[Error] No eID card found");
 				resultToReport(reportType,m_bPassed);
+				REP_CONTRIBUTE(L"error",L"no_eid_card_found");
 				return retVal;
 			}
 
 			std::wstringstream text;
 			text << L"[Info ] Nr of cardreaders with eID card inserted: " << cardList.size();
 			resultToReport(reportType,text);
+			REP_CONTRIBUTE(L"readercount",L"%ld",cardList.size());
 
 			bool bPassed = true;
 
@@ -117,6 +123,7 @@ public:
 					std::wstringstream txt;
 					txt << L"[Error] Reader:" << reader.Name;
 					resultToReport(reportType,txt);
+					REP_CONTRIBUTE(L"error",L"could_not_get_reader_information");
 					bPassed = false;
 				}
 
@@ -128,15 +135,18 @@ public:
 					std::wstringstream txt;
 					txt << L"[Error] Reader:" << reader.Name;
 					resultToReport(reportType,txt);
+					REP_CONTRIBUTE(L"error",L"could_not_report_reader_information");
 					bPassed = false;
 				}
 			}
+
 			if (1<cardList.size())
 			{
 				bPassed = false;
 				processParamsToStop();
 				resultToReport(reportType,L"[Error] More than 1 (one) card detected");
 				resultToReport(reportType,bPassed);
+				REP_CONTRIBUTE(L"error",L"more_than_one_card_detected");
 				return retVal;
 			}
 
@@ -165,23 +175,29 @@ private:
 		if (retVal != DIAGLIB_OK)
 		{
 			resultToReport(reportType,L"[Error] Card list could not be retrieved");
+			REP_CONTRIBUTE(L"error",L"card_list_count_not_be_retrieved");
 
 			switch(retVal)
 			{
 			case DIAGLIB_ERR_BAD_CALL:
 				text << L"[Error] Bad function call";
+				REP_CONTRIBUTE(L"error",L"bad_function_call");
 				break;
 			case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 				text << L"[Error] Library not found";
+				REP_CONTRIBUTE(L"error",L"library_not_found");
 				break;
 			case DIAGLIB_ERR_READER_NOT_FOUND:
 				text << L"[Error] No Reader found";
+				REP_CONTRIBUTE(L"error",L"no_reader_found");
 				break;
 			case DIAGLIB_ERR_INTERNAL:
 				text << L"[Error] Internal error";
+				REP_CONTRIBUTE(L"error",L"no_reader_found");
 				break;
 			default:
 				text << L"[Error] Unknown error";
+				REP_CONTRIBUTE(L"error",L"unknown_error");
 				break;
 			}
 		}

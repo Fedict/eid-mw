@@ -27,9 +27,11 @@
 #include <string>
 using namespace std;
 
-typedef std::multimap<std::wstring,std::wstring>	ContributionMap;
-typedef std::set<std::wstring>						ContributionSet;
-typedef std::pair<std::wstring,std::wstring>		ContributionEntry;
+typedef	std::wstring								ContributionKey;
+typedef	std::wstring								Contribution;
+typedef std::multimap<ContributionKey,Contribution>	ContributionMap;
+typedef std::set<Contribution>						ContributionSet;
+typedef std::pair<ContributionKey,Contribution>		ContributionEntry;
 typedef std::vector<std::wstring>					PrefixList;
 
 class Repository
@@ -39,11 +41,12 @@ public:
 	void					prefix		(const std::string newPrefix);
 	void					unprefix	(void);
 	void					available	(bool avail);
-	void					contribute	(const std::wstring key, const std::wstring format, ...);
+	void					contribute	(const ContributionKey key, const std::wstring format, ...);
 
-	ContributionSet			values (const std::wstring key) const;
-	bool					exists (const std::wstring key) const;
-	const ContributionMap&	results(void) const;
+	Contribution			value	(const ContributionKey key) const;
+	ContributionSet			values	(const ContributionKey key) const;
+	bool					exists	(const ContributionKey key) const;
+	const ContributionMap&	results	(void) const;
 
 	// Meyers Singleton
 	static Repository& instance()	
