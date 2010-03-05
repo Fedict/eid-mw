@@ -36,4 +36,7 @@ private:
 	void			testCategory(Repository evidence, std::wstring category, FileMD5Map data, FileNameSet& missing, FileNameSet& corrupt) const;
 	FileMD5Map		m_sys_files;
 	FileMD5Map		m_app_files;
+#ifndef WIN32
+	FileMD5Map		m_oth_files;
+#endif
 };

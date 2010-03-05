@@ -67,19 +67,19 @@ static wchar_t* FilesApp []=
 #else
 static wchar_t* FilesSystem[]=
 {
-	  L"libbeidapplayer.3.5.2.dylib"
+	  L"libbeidapplayer.3.5.3.dylib"
 	, L"libbeidapplayer.3.5.dylib"
 	, L"libbeidapplayer.3.dylib"
 	, L"libbeidapplayer.dylib"
-	, L"libbeidcardlayer.3.5.2.dylib"
+	, L"libbeidcardlayer.3.5.3.dylib"
 	, L"libbeidcardlayer.3.5.dylib"
 	, L"libbeidcardlayer.3.dylib"
 	, L"libbeidcardlayer.dylib"
-	, L"libbeidcommon.3.5.2.dylib"
+	, L"libbeidcommon.3.5.3.dylib"
 	, L"libbeidcommon.3.5.dylib"
 	, L"libbeidcommon.3.dylib"
 	, L"libbeidcommon.dylib"
-	, L"libbeiddialogsQT.3.5.2.dylib"
+	, L"libbeiddialogsQT.3.5.3.dylib"
 	, L"libbeiddialogsQT.3.5.dylib"
 	, L"libbeiddialogsQT.3.dylib"
 	, L"libbeiddialogsQT.dylib"
@@ -88,11 +88,11 @@ static wchar_t* FilesSystem[]=
 //	, L"ssleay32_0_9_8g.dll"
 	, L"libxerces-c.28.0.dylib"
 	, L"libxerces-c.28.dylib"
-	, L"libbeidpkcs11.3.5.2.dylib"
+	, L"libbeidpkcs11.3.5.3.dylib"
 	, L"libbeidpkcs11.3.5.dylib"
 	, L"libbeidpkcs11.3.dylib"
 	, L"libbeidpkcs11.dylib"
-	, L"libbeidlib.3.5.2.dylib"
+	, L"libbeidlib.3.5.3.dylib"
 	, L"libbeidlib.3.5.dylib"
 	, L"libbeidlib.3.dylib"
 	, L"libbeidlib.dylib"
@@ -361,8 +361,10 @@ private:
 		int retVal = DIAGLIB_OK;
 		bool bTmpPass = true;
 		
+		REP_PREFIX(L"other");
 		for (size_t idx=0;idx<sizeof(FilesOther)/sizeof(wchar_t*);idx++)
 		{
+			REP_PREFIX(FilesOther[idx]);
 			bool exist = false;
 			retVal = fileExists(FilesOther[idx],&exist);
 			if (DIAGLIB_OK != retVal)
@@ -378,8 +380,23 @@ private:
 			}
 			text << L"found: "; 
 			text << FilesOther[idx] << L"";
+			
+			REP_CONTRIBUTE(L"exists",exist?L"true":L"false");
+			
+			if(exist)
+			{
+				std::wstring	sumstr;
+				MD5Sum			sum;
+				sum.add_file(string_From_wstring(FilesOther[idx]));
+				sumstr=sum.get_sum();
+				text << L" md5=[" << sumstr << L"]";
+				REP_CONTRIBUTE(L"md5",sumstr);
+			}
+			
 			resultToReport(reportType,text);
+			REP_UNPREFIX();
 		}
+		REP_UNPREFIX();
 		
 /*		
 		std::wstring fullPath;

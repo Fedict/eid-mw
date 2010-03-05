@@ -48,6 +48,7 @@
 #include "AnalyseModuleInfo.h"
 #ifdef __APPLE__
 #include "AnalyseSignTokendInfo.h"
+#include "AnalyseModuleInfo.h"
 #endif
 
 #include "AnalyseMeta.h"
@@ -139,6 +140,9 @@ DiagEngine::DiagEngine()
 #else // OSX
 	
 	test =new AnalyseProcessInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+	
+	test = new AnalyseModuleInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
 	
 	test = new AnalyseReaderDetectInfo;

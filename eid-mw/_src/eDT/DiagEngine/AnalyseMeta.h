@@ -29,7 +29,7 @@
 #include "HPProtectToolsRule.h"
 #include "MiddleWareFilesIntegrityRule.h"
 
-typedef std::multimap<double,MetaRule*> MetaRuleMap;
+typedef std::multimap<double,MetaRule*,greater<double> > MetaRuleMap;			// map of double,MetaRule - sorted DESCENDING to get higher-weight rules first
 
 class AnalyseMeta : public Analysis
 {
@@ -65,7 +65,7 @@ public:
 			reportPrintHeader2(REPORT_TYPE_RESULT, L"Meta Diagnostics",L'#');
 
 			// reverse iterator on rules, so we get rules high before rules with low weights
-			for(MetaRuleMap::const_reverse_iterator rule=m_rules.rbegin();rule!=m_rules.rend();rule++)
+			for(MetaRuleMap::const_iterator rule=m_rules.begin();rule!=m_rules.end();rule++)
 			{
 				REP_PREFIX(rule->second->name());
 
@@ -78,13 +78,13 @@ public:
 						resultToReport(REPORT_TYPE_RESULT,verdict.verdict().									c_str());
 						resultToReport(REPORT_TYPE_RESULT,verdict.corrective().									c_str());
 						REP_AVAILABLE(true);
-						REP_CONTRIBUTE(L"diagnosis",L"true");
+						REP_CONTRIBUTE(L"diagnosis",L"problem");
 					}
 					else
 					{
 						resultToReport(REPORT_TYPE_RESULT,(rule->second->name() + L":Fine").c_str());
 						REP_AVAILABLE(true);
-						REP_CONTRIBUTE(L"diagnosis",L"false");
+						REP_CONTRIBUTE(L"diagnosis",L"fine");
 					}
 				}
 				catch(...)	// Sweeping catch so whatever rules do the exceptions end here.
