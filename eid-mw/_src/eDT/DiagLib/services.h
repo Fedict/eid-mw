@@ -46,6 +46,7 @@ int serviceStart (Service_ID service, unsigned long lTimeout=60);
 int serviceStop (Service_ID service, unsigned long lTimeout=60);
 int serviceRemove (Service_ID service);
 
+void serviceContributeInfo(const Service_INFO &info);
 int serviceReportInfo(Report_TYPE type, const Service_INFO &info);
 int serviceReportList(Report_TYPE type, const Service_LIST &serviceList, const wchar_t *Title=NULL);
 

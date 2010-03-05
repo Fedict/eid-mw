@@ -22,6 +22,7 @@
 
 #include "analysis.h"
 #include "csp.h"
+#include "Repository.h"
 
 //******************************************
 // Perform a signing operation using CSP (windows only)
@@ -67,6 +68,7 @@ public:
 			{
 				processParamsToStop();
 				resultToReport(reportType,L"[Error] Error calling cspIsAvailable()");
+				REP_CONTRIBUTE(L"error",L"calling_cspisavailable");
 				resultToReport(reportType,m_bPassed);
 				progressRelease();
 				return retVal;
@@ -76,6 +78,7 @@ public:
 			{
 				processParamsToStop();
 				resultToReport(reportType,L"[Error] CSP not available, could not acquire context.");
+				REP_CONTRIBUTE(L"error",L"csp_not_available");
 				resultToReport(reportType,m_bPassed);
 				progressRelease();
 				return retVal;
@@ -89,6 +92,7 @@ public:
 			{
 				processParamsToStop();
 				resultToReport(reportType,L"[Error] Could not get card list using PCSC.");
+				REP_CONTRIBUTE(L"error",L"error_getting_card_list_from_pcsc");
 				resultToReport(reportType,m_bPassed);
 				progressRelease();
 				return retVal;
@@ -100,6 +104,7 @@ public:
 			{
 				processParamsToStop();
 				resultToReport(reportType,L"[Error] No eID card present in cardreader(s).");
+				REP_CONTRIBUTE(L"error",L"no_eid_card_present");
 				resultToReport(reportType,m_bPassed);
 				progressRelease();
 				return retVal;
@@ -109,6 +114,7 @@ public:
 			{
 				processParamsToStop();
 				resultToReport(reportType,L"[Error] More than one eID card inserted");
+				REP_CONTRIBUTE(L"error",L"multiple_eid_cards_present");
 				resultToReport(reportType,m_bPassed);
 				progressRelease();
 				return retVal;
@@ -130,36 +136,45 @@ public:
 					//------------------------------------------
 					case DIAGLIB_ERR_INTERNAL:
 						msg << L"[Error] CSP internal error";
+						REP_CONTRIBUTE(L"error",L"csp_internal_error");
 						break;
 					//------------------------------------------
 					// CSP errors
 					//------------------------------------------
 					case DIAGLIB_ERR_CSP_REGISTRATION_FAILED:
 						msg << L"[Error] CSP certificate registration failed";
+						REP_CONTRIBUTE(L"error",L"csp_certificate_operation_failed");
 						break;
 					case DIAGLIB_ERR_CSP_CONTEXT_FAILED:
 						msg << L"[Error] CSP acquire context failed";
+						REP_CONTRIBUTE(L"error",L"csp_acquire_context_failed");
 						break;
 					case DIAGLIB_ERR_CSP_FAILED:
 						msg << L"[Error] CSP operation hashing/signing failed";
+						REP_CONTRIBUTE(L"error",L"csp_hashing_signing_failed");
 					    break;
 					//------------------------------------------
 					// PIN errors
 					//------------------------------------------
 					case DIAGLIB_ERR_PIN_CANCEL:
 						msg << L"[Error] CSP PIN code entry canceled";
+						REP_CONTRIBUTE(L"error",L"csp_pin_entry_cancelled");
 						break;
 					case DIAGLIB_ERR_PIN_BLOCKED:
 						msg << L"[Error] CSP PIN code blocked";
+						REP_CONTRIBUTE(L"error",L"csp_pin_blocked");
 						break;
 					case DIAGLIB_ERR_PIN_WRONG:
 						msg << L"[Error] CSP PIN code wrong";
+						REP_CONTRIBUTE(L"error",L"csp_pin_wrong");
 						break;
 					case DIAGLIB_ERR_PIN_FAILED:
 						msg << L"[Error] CSP PIN code entry failed";
+						REP_CONTRIBUTE(L"error",L"csp_pin_failed");
 						break;
 					default:
 						msg << L"[Error] CSP unknown error";
+						REP_CONTRIBUTE(L"error",L"csp_unknown_error");
 					    break;
 					}
 					processParamsToStop();
@@ -172,6 +187,7 @@ public:
 				{
 					processParamsToStop();
 					resultToReport(reportType,L"[Error] CSP did not succeed");
+					REP_CONTRIBUTE(L"result",L"failed");
 					resultToReport(reportType,m_bPassed);
 					progressRelease();
 					return retVal;
@@ -182,6 +198,7 @@ public:
 			processParamsToStop();
 			m_bPassed = true;
 			resultToReport(reportType,L"[Info ] CSP verification succeeded");
+			REP_CONTRIBUTE(L"result",L"passed");
 			resultToReport(reportType,m_bPassed);
 			progressRelease();
 			return retVal;

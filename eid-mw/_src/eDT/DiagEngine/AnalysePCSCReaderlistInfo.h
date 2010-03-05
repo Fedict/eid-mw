@@ -26,6 +26,7 @@
 #include "analysis.h"
 #include "pcsc.h"
 #include "AnalysisError.h"
+#include "Repository.h"
 
 
 //******************************************
@@ -79,18 +80,23 @@ public:
 				{
 				case DIAGLIB_ERR_BAD_CALL:
 					text << L"[Error] Bad function call to pcscGetReaderList()";
+					REP_CONTRIBUTE(L"error",L"bad_function_call_to_pcscgetreaderlist");
 					break;
 				case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 					text << L"[Error] Could not load PCSC library";
+					REP_CONTRIBUTE(L"error",L"could_not_load_pcsc_library");
 					break;
 				case DIAGLIB_ERR_INTERNAL:
 					text <<  L"[Error] Internal error calling pcscGetReaderList()";
+					REP_CONTRIBUTE(L"error",L"internal_error_calling_pcscgetreaderlist");
 					break;
 				case DIAGLIB_ERR_READER_NOT_FOUND:
 					text << L"[Error] No Reader found";
+					REP_CONTRIBUTE(L"error",L"no_reader_found");
 					break;
 				default:
 					text << L"[Error] Unknown error: pcscGetReaderList()";
+					REP_CONTRIBUTE(L"error",L"unknown_error_calling_pcscgetreaderlist");
 					break;
 				}
 				resultToReport(reportType,text);
@@ -101,6 +107,8 @@ public:
 				text << L"[Info] Nr of card readers detected by PCSC: " << readerList.size();
 				resultToReport(reportType,text);
 				bool bPassed = true;
+				REP_CONTRIBUTE(L"count",L"%ld",readerList.size());
+
 
 				if (0==readerList.size())
 				{
@@ -116,6 +124,7 @@ public:
 						Reader_ID reader = readerList.at(idx);
 						std::wstringstream txt;
 						txt << L"[Error] Error get info from reader:" << reader.Name;
+						REP_CONTRIBUTE(L"error",L"getting_info_from_reader");
 						resultToReport(reportType,txt);
 						bPassed = false;
 					}

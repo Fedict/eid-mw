@@ -26,6 +26,7 @@
 #include "middleware.h"
 #include "AnalysisError.h"
 #include "pcsc.h"
+#include "Repository.h"
 
 //******************************************
 // Check if PCSC is available
@@ -79,15 +80,18 @@ public:
 				//------------------------------------------
 				case DIAGLIB_ERR_BAD_CALL:
 					msg = L"[Error] Internal error calling pcscIsAvailable()";
+					REP_CONTRIBUTE(L"error",L"bad_call_calling_pcscisavailable");
 					break;
 				//------------------------------------------
 				// the winscard dll could not be loaded
 				//------------------------------------------
 				case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 					msg = L"[Error] PCSC library not found";
+					REP_CONTRIBUTE(L"error",L"pcsc_library_not_found");
 					break;
 				default:
 					msg = L"[Error] Unknown error calling pcscIsAvailable()";
+					REP_CONTRIBUTE(L"error",L"unknown_error_calling_pcscisavailable");
 					break;
 				}
 				processParamsToStop();
@@ -99,6 +103,7 @@ public:
 			if (false == bPCSCAvailable)
 			{
 				resultToReport(reportType,L"[Error] Could not establish context to PCSC");
+				REP_CONTRIBUTE(L"error",L"establishing_context_to_pcsc");
 				//retVal = DIAGLIB_ERR_PCSC_CONTEXT_FAILED;
 
 				resultToReport(reportType,L"[Info ] Checking service");
@@ -136,12 +141,15 @@ public:
 				{
 				case DIAGLIB_ERR_BAD_CALL:
 					resultToReport(reportType,L"[Error] Error calling serviceGetInfo()");
+					REP_CONTRIBUTE(L"error",L"error_calling_servicegetinfo");
 					break;
 				case DIAGLIB_ERR_INTERNAL:
 					resultToReport(reportType,L"[Error] Internal error serviceGetInfo()");
+					REP_CONTRIBUTE(L"error",L"internal_error_calling_servicegetinfo");
 					break;
 				default:
 					resultToReport(reportType,L"[Error] Unknown error serviceGetInfo()");
+					REP_CONTRIBUTE(L"error",L"unknown_error_calling_servicegetinfo");
 					break;
 				}
 				processParamsToStop();
@@ -149,6 +157,7 @@ public:
 			}
 			resultToReport(reportType,L"[Info ] SCardSvr info:");
 			retVal = serviceReportInfo(reportType, info);
+			serviceContributeInfo(info);
 			m_bPassed = bPCSCAvailable;
 #endif			
 			processParamsToStop();

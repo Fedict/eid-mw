@@ -22,6 +22,7 @@
 
 #include "analysis.h"
 #include "pcsc.h"
+#include "Repository.h"
 
 //******************************************
 // Check the smartcard service (SCardSvr) running
@@ -76,15 +77,18 @@ public:
 					//------------------------------------------
 				case DIAGLIB_ERR_BAD_CALL:
 					msg = L"[Error] Internal error calling pcscIsAvailable()";
+					REP_CONTRIBUTE(L"error",L"internal_error_calling_pcscisavailable");
 					break;
 					//------------------------------------------
 					// the winscard dll could not be loaded
 					//------------------------------------------
 				case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 					msg = L"[Error] PCSC service/daemon not found";
+					REP_CONTRIBUTE(L"error",L"pcsc_service_not_found");
 					break;
 				default:
 					msg = L"[Error] Unknown error calling pcscIsAvailable()";
+					REP_CONTRIBUTE(L"error",L"unknown_error_calling_pcscisavailable");
 					break;
 				}
 				processParamsToStop();
@@ -96,6 +100,7 @@ public:
 			if (false == bPCSCAvailable)
 			{
 				resultToReport(reportType,L"[Error] Could not establish context to PCSC");
+				REP_CONTRIBUTE(L"error",L"establishing_context_to_pcsc");
 				resultToReport(reportType,L"[Info ] Checking service");
 
 				Service_ID		service=L"SCardSvr";
@@ -108,18 +113,22 @@ public:
 					{
 					case DIAGLIB_ERR_BAD_CALL:
 						resultToReport(reportType,L"[Error] Error calling serviceGetInfo()");
+						REP_CONTRIBUTE(L"error",L"error_calling_servicegetinfo");
 						break;
 					case DIAGLIB_ERR_INTERNAL:
 						resultToReport(reportType,L"[Error] Internal error serviceGetInfo()");
+						REP_CONTRIBUTE(L"error",L"internal_error_calling_servicegetinfo");
 						break;
 					default:
 						resultToReport(reportType,L"[Error] Unknown error serviceGetInfo()");
+						REP_CONTRIBUTE(L"error",L"unknown_error_calling_servicegetinfo");
 						break;
 					}
 					processParamsToStop();
 					return retVal;
 				}
 				retVal = serviceReportInfo(reportType, info);
+				serviceContributeInfo(info);
 				processParamsToStop();
 				resultToReport(reportType,m_bPassed);
 				return retVal;

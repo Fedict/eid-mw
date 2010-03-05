@@ -84,11 +84,15 @@ public:
 			//------------------------------------------
 			// card list can be generated, check if a card is inserted (size>0)
 			//------------------------------------------
+
+			REP_CONTRIBUTE(L"count",L"%ld",cardList.size());
+
 			if (0==cardList.size())
 			{
 				resultToReport(reportType,L"[Error] No Belgian eID card detected by Middleware");
 				processParamsToStop();
 				resultToReport(reportType,m_bPassed);
+				REP_CONTRIBUTE(L"error",L"no_eid_detected");
 				return retVal;
 			}
 			else
@@ -100,6 +104,7 @@ public:
 				bool bPassed = true;
 				for (size_t cardIdx=0;cardIdx<cardList.size();cardIdx++)
 				{
+
 					Reader_ID reader = cardList.at(cardIdx).Reader;
 					Reader_INFO info;
 					retVal = readerGetInfo(reader, &info);
@@ -110,6 +115,7 @@ public:
 						std::wstringstream txt;
 						txt << L"[Error] Reader:" << reader.Name;
 						resultToReport(reportType,txt);
+						REP_CONTRIBUTE(L"error",L"getting_reader_information");
 						bPassed = false;
 					}
 
@@ -121,6 +127,7 @@ public:
 						std::wstringstream txt;
 						txt << L"[Error] Reader:" << reader.Name;
 						resultToReport(reportType,txt);
+						REP_CONTRIBUTE(L"error",L"reporting_reader_info");
 						bPassed = false;
 					}
 				}
@@ -160,18 +167,23 @@ private:
 			{
 			case DIAGLIB_ERR_BAD_CALL:
 				text << L"Bad function call ";
+				REP_CONTRIBUTE(L"error",L"bad_function_call");
 				break;
 			case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 				text << L"Library not found ";
+				REP_CONTRIBUTE(L"error",L"library_not_found");
 				break;
 			case DIAGLIB_ERR_INTERNAL:
 				text << L"Internal error ";
+				REP_CONTRIBUTE(L"error",L"internal_error");
 				break;
 			case DIAGLIB_ERR_READER_NOT_FOUND:
 				text << L"No Reader found ";
+				REP_CONTRIBUTE(L"error",L"no_reader_found");
 				break;
 			default:
 				text << L"Unknown error ";
+				REP_CONTRIBUTE(L"error",L"unknown_error");
 				break;
 			}
 		}

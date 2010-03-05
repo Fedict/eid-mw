@@ -26,6 +26,7 @@
 #include "analysis.h"
 #include "pcsc.h"
 #include "AnalysisError.h"
+#include "Repository.h"
 
 
 //******************************************
@@ -78,18 +79,23 @@ public:
 				{
 				case DIAGLIB_ERR_BAD_CALL:
 					text << L"[Error] Bad function call to pcscGetCardList()";
+					REP_CONTRIBUTE(L"error",L"bad_function_call_to_pcscgetcardlist");
 					break;
 				case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 					text << L"[Error] Could not load PCSC";
+					REP_CONTRIBUTE(L"error",L"loading_pcsc");
 					break;
 				case DIAGLIB_ERR_INTERNAL:
 					text << L"[Error] Internal error calling pcscGetCardList()";
+					REP_CONTRIBUTE(L"error",L"internal_error_calling_pcscgetcardlist");
 					break;
 				case DIAGLIB_ERR_READER_NOT_FOUND:
 					text << L"[Error] No Reader found ";
+					REP_CONTRIBUTE(L"error",L"no_reader_found");
 					break;
 				default:
 					text << L"[Error] Unknown error: pcscGetCardList()";
+					REP_CONTRIBUTE(L"error",L"unknown_error_calling_pcscgetcardlist");
 					break;
 				}
 				resultToReport(reportType,text);
@@ -102,6 +108,7 @@ public:
 				std::wstringstream text;
 				text << L"[Info] Nr of cards detected by PCSC: " << cardList.size();
 				resultToReport(reportType,text);
+				REP_CONTRIBUTE(L"count",L"%ld",cardList.size());
 
 				if (0==cardList.size())
 				{
@@ -125,18 +132,21 @@ public:
 						//------------------------------------------------
 					case DIAGLIB_ERR_NOT_AVAILABLE:
 						text << L"[Error] Internal error retrieving info from card";
+						REP_CONTRIBUTE(L"error",L"internal_error_retrieving_info_from_card");
 						break;
 						//------------------------------------------------
 						// user clicked 'NO" when asking to grant access to cards
 						//------------------------------------------------
 					case DIAGLIB_ERR_NOT_ALLOWED_BY_USER:
 						text << L"[Warn ] Access to cards refused by user";
+						REP_CONTRIBUTE(L"error",L"access_to_cards_refused_by_user");
 						break;
 						//------------------------------------------------
 						// eidlib could not be loaded
 						//------------------------------------------------
 					case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 						text << L"[Error] Middleware library could not be loaded.";
+						REP_CONTRIBUTE(L"error",L"loading_middleware_library");
 						resultToReport(reportType,text);
 						processParamsToStop();
 						return retVal;
@@ -146,12 +156,14 @@ public:
 						//------------------------------------------------
 					case DIAGLIB_ERR_CARD_NOT_FOUND:
 						text << L"[Error] Card could not be found.";
+						REP_CONTRIBUTE(L"error",L"card_not_found");
 						break;
 						//------------------------------------------------
 						// card type not recognized
 						//------------------------------------------------
 					case DIAGLIB_ERR_CARD_BAD_TYPE:
 						text << L"[Warn ] Card not recognized.";
+						REP_CONTRIBUTE(L"error",L"card_not_recognized");
 						break;
 						//------------------------------------------------
 						// internal error
@@ -168,6 +180,7 @@ public:
 					}
 
 					retVal = cardReportInfo(reportType, info);
+					cardContributeInfo(info);
 				}
 				m_bPassed = true;
 			}
@@ -202,18 +215,23 @@ private:
 			{
 			case DIAGLIB_ERR_BAD_CALL:
 				text << L"Bad function call ";
+				REP_CONTRIBUTE(L"error",L"bad_function_call_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 				text << L"Library not found ";
+				REP_CONTRIBUTE(L"error",L"library_not_found_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_INTERNAL:
 				text << L"Internal error ";
+				REP_CONTRIBUTE(L"error",L"internal_error_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_READER_NOT_FOUND:
 				text << L"No Reader found ";
+				REP_CONTRIBUTE(L"error",L"no_reader_found_retrieving_card_list");
 				break;
 			default:
 				text << L"Unknown error ";
+				REP_CONTRIBUTE(L"error",L"unknown_error_retrieving_card_list");
 				break;
 			}
 		}

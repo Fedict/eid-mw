@@ -22,6 +22,7 @@
 
 #include "analysis.h"
 #include "reader.h"
+#include "Repository.h"
 
 //******************************************
 // Get a list of available readers detected by the OS
@@ -64,11 +65,13 @@ public:
 			if (DIAGLIB_OK!=retVal)
 			{
 				resultToReport(reportType,L"[Error] Error calling deviceGetIDsByClass()");
+				REP_CONTRIBUTE(L"error",L"calling_devicegetidbyclass");
 				switch(retVal)
 				{
 				case DIAGLIB_ERR_INTERNAL:
 				default:
 					resultToReport(reportType,L"[Error] Internal error");
+					REP_CONTRIBUTE(L"error",L"internal_error");
 				    break;
 				}
 				setEndTime();
@@ -85,6 +88,7 @@ public:
 				setEndTime();
 				setProgress(100);
 				resultToReport(reportType,L"[Warn ] No card reader detected");
+				REP_CONTRIBUTE(L"error",L"no_card_readers_detected");
 				return retVal;
 			}
 			//------------------------------------------

@@ -26,6 +26,7 @@
 #include "middleware.h"
 #include "AnalysisError.h"
 #include "pcsc.h"
+#include "Repository.h"
 
 //******************************************
 // Perform a timing check if PCSC is running
@@ -86,15 +87,18 @@ public:
 				//------------------------------------------
 				case DIAGLIB_ERR_BAD_CALL:
 					msg = L"[Error] Internal error calling pcscIsAvailable()";
+					REP_CONTRIBUTE(L"error",L"internal_error_calling_pcscisavailable");
 					break;
 				//------------------------------------------
 				// the winscard dll could not be loaded
 				//------------------------------------------
 				case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 					msg = L"[Error] PCSC service/daemon not found";
+					REP_CONTRIBUTE(L"error",L"pcsc_service_not_found");
 					break;
 				default:
 					msg = L"[Error] Unknown error calling pcscIsAvailable()";
+					REP_CONTRIBUTE(L"error",L"unknown_error_calling_pcscisavailable");
 					break;
 				}
 				processParamsToStop();
@@ -106,6 +110,7 @@ public:
 			if (false == bPCSCAvailable)
 			{
 				resultToReport(reportType,L"[Error] Could not establish context to PCSC");
+				REP_CONTRIBUTE(L"error",L"could_not_establish_context_to_pcsc");
 				processParamsToStop();
 				resultToReport(reportType,m_bPassed);
 				return retVal;
@@ -130,6 +135,7 @@ public:
 			{
 				processParamsToStop();
 				resultToReport(reportType,L"[Error] No card(s) inserted in cardreader(s)");
+				REP_CONTRIBUTE(L"error",L"no_cards_inserted");
 				resultToReport(reportType,m_bPassed);
 				return retVal;
 			}
@@ -137,6 +143,8 @@ public:
 			std::wstringstream text;
 			text << L"[Info ] Nr of cardreaders with card inserted: " << cardList.size();
 			resultToReport(reportType,text);
+
+			REP_CONTRIBUTE(L"count",L"%ld",cardList.size());
 
 			resultToReport(reportType,L"[Info ] Checking timings using PCSC");
 
@@ -158,7 +166,8 @@ public:
 
 					if (DIAGLIB_OK!=retVal)
 					{
-						resultToReport(reportType,L"[Error] Optimize transmit delay failed");
+						resultToReport(reportType,L"[Error] Optimize connect delay failed");
+						REP_CONTRIBUTE(L"error",L"optimize_connect_delay_failed");
 						bCheckTimings = false;
 						break;
 					}
@@ -169,6 +178,7 @@ public:
 						text << "[Info ] Optimum connect delay:  " << delayOptimum;
 						resultToReport(reportType,text);
 						retVal = pcscSetConnectTiming(delayOptimum);
+						REP_CONTRIBUTE(L"optimum_connect_delay",L"%d",delayOptimum);
 					}
 
 				}
@@ -184,6 +194,7 @@ public:
 					if (DIAGLIB_OK!=retVal)
 					{
 						resultToReport(reportType,L"[Error] Optimize transmit delay failed");
+						REP_CONTRIBUTE(L"error",L"optimize_transmit_delay_failed");
 						bCheckTimings = false;
 						break;
 					}
@@ -194,6 +205,7 @@ public:
 						text << "[Info ] Optimum transmit delay:  " << delayOptimum;
 						resultToReport(reportType,text);
 						retVal = pcscSetTransmitTiming(delayOptimum);
+						REP_CONTRIBUTE(L"optimum_transmit_delay",L"%d",delayOptimum);
 					}
 				}
 			}
@@ -233,15 +245,19 @@ private:
 			{
 			case DIAGLIB_ERR_BAD_CALL:
 				text << L"[Error] Bad function call";
+				REP_CONTRIBUTE(L"error",L"bad_function_call_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 				text << L"[Error] Library not found";
+				REP_CONTRIBUTE(L"error",L"library_not_found_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_INTERNAL:
 				text << L"[Error] Internal error";
+				REP_CONTRIBUTE(L"error",L"internal_error_retrieving_card_list");
 				break;
 			default:
 				text << L"[Error] Unknown error";
+				REP_CONTRIBUTE(L"error",L"unknown_error_retrieving_card_list");
 				break;
 			}
 			resultToReport(reportType,text);

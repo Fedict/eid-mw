@@ -154,7 +154,7 @@ int mwReportInfo(Report_TYPE type, const MW_INFO &info)
 
 void mwContributeInfo(const MW_INFO &info)
 {
-	REP_PREFIX(							info.id.Guid.c_str());
+	REP_PREFIX(L"%ls",						info.id.Guid.c_str());
 	REP_CONTRIBUTE(L"id",				info.id.Guid.c_str());
 	REP_CONTRIBUTE(L"PerUserSoftType",	info.id.Type==PER_USER_SOFT_TYPE?L"PerUser":L"PerMachine");
 	REP_CONTRIBUTE(L"Version",			info.LabelVersion.c_str());

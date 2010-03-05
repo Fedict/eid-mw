@@ -26,6 +26,7 @@
 #include "analysis.h"
 #include "pcsc.h"
 #include "AnalysisError.h"
+#include "Repository.h"
 
 
 //******************************************
@@ -86,6 +87,7 @@ public:
 			if (0==cardList.size())
 			{
 				resultToReport(reportType,L"[Error] No cards detected by PCSC");
+				REP_CONTRIBUTE(L"error",L"no_cards_detected");
 				processParamsToStop();
 				resultToReport(reportType,m_bPassed);
 				return retVal;
@@ -95,6 +97,8 @@ public:
 				std::wstringstream text;
 				text << L"[Info ] Nr cards inserted in cardreaders: " << cardList.size();
 				resultToReport(reportType,text);
+
+				REP_CONTRIBUTE(L"count",L"%ld",cardList.size());
 
 				bool bPassed = true;
 				for (size_t cardIdx=0;cardIdx<cardList.size();cardIdx++)
@@ -106,6 +110,7 @@ public:
 					if (DIAGLIB_OK!=retVal)
 					{
 						resultToReport(reportType,L"[Error] Error getting reader information");
+						REP_CONTRIBUTE(L"error",L"getting_reader_information");
 						std::wstringstream txt;
 						txt << L"[Error] Reader:" << reader.Name;
 						resultToReport(reportType,txt);
@@ -159,18 +164,23 @@ private:
 			{
 			case DIAGLIB_ERR_BAD_CALL:
 				text << L"Bad function call ";
+				REP_CONTRIBUTE(L"error",L"bad_function_call_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 				text << L"Library not found ";
+				REP_CONTRIBUTE(L"error",L"library_not_found_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_INTERNAL:
 				text << L"Internal error ";
+				REP_CONTRIBUTE(L"error",L"internal_error_retrieving_card_list");
 				break;
 			case DIAGLIB_ERR_READER_NOT_FOUND:
 				text << L"No Reader found ";
+				REP_CONTRIBUTE(L"error",L"reader_not_found_retrieving_card_list");
 				break;
 			default:
 				text << L"Unknown error ";
+				REP_CONTRIBUTE(L"error",L"unknown_error_retrieving_card_list");
 				break;
 			}
 		}

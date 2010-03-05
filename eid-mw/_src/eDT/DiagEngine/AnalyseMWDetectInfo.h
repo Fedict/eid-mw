@@ -26,6 +26,7 @@
 #include "analysis.h"
 #include "middleware.h"
 #include "AnalysisError.h"
+#include "Repository.h"
 
 
 //******************************************
@@ -83,6 +84,7 @@ public:
 				processParamsToStop();
 				commentToReport(reportType,L"[Error] Error generating Middleware list");
 				resultToReport(reportType,m_bPassed);
+				REP_CONTRIBUTE(L"error",L"generating_middleware_list");
 				return retVal;
 			}
 
@@ -95,6 +97,7 @@ public:
 				std::wstringstream text;
 				text << msgType << L"Nr of installed Middlewares found: " << middlewareList.size();
 				resultToReport(reportType,text);
+				REP_CONTRIBUTE(L"count",L"%ld",middlewareList.size());
 			}
 
 			switch(middlewareList.size())
@@ -115,6 +118,7 @@ public:
 						processParamsToStop();
 						resultToReport(reportType,L"[Error] Retrieve Middleware info failed");
 						resultToReport(reportType,m_bPassed);
+						REP_CONTRIBUTE(L"error",L"retrieving_middleware_info");
 						return retVal;
 					}
 
@@ -126,6 +130,7 @@ public:
 						resultToReport(reportType,text);
 						resultToReport(reportType,m_bPassed);
 						retVal = ANALYSE_MW_VERSION_NOK;
+						REP_CONTRIBUTE(L"error",L"wrong_middleware_version");
 						return retVal;
 					}
 					retVal = mwReportList(reportType, middlewareList);
@@ -140,9 +145,11 @@ public:
 						{
 						case DIAGLIB_ERR_BAD_CALL:
 							text << L"Bad function call ";
+							REP_CONTRIBUTE(L"error",L"bad_function_call");
 							break;
 						default:
 							text << L"Unknown error ";
+							REP_CONTRIBUTE(L"error",L"unknown_error");
 						    break;
 						}
 						resultToReport(reportType,text);
@@ -169,6 +176,7 @@ public:
 						std::wstringstream text;
 						text << L"[Info ] Found Middleware version: " << info.LabelVersion;
 						resultToReport(reportType,text);
+						REP_CONTRIBUTE(L"version",info.LabelVersion);
 					}
 					retVal = mwReportList(REPORT_TYPE_MAIN, middlewareList);
 					if (retVal != DIAGLIB_OK)
@@ -215,15 +223,19 @@ private:
 			{
 			case DIAGLIB_ERR_BAD_CALL:
 				text << L"Bad function call ";
+				REP_CONTRIBUTE(L"error",L"bad_function_call");
 				break;
 			case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 				text << L"library not found ";
+				REP_CONTRIBUTE(L"error",L"library_not_found");
 				break;
 			case DIAGLIB_ERR_INTERNAL:
 				text << L"Internal error ";
+				REP_CONTRIBUTE(L"error",L"internal_error");
 				break;
 			default:
 				text << L"Unknown error ";
+				REP_CONTRIBUTE(L"error",L"unknown_error");
 				break;
 			}
 		}

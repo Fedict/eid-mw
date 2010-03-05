@@ -67,7 +67,7 @@ int serviceReportInfo(Report_TYPE type, const Service_INFO &info)
 
 void serviceContributeInfo(const Service_INFO &info)
 {
-	REP_PREFIX(							info.id.c_str());
+	REP_PREFIX(L"%ls",					info.id.c_str());
 	REP_CONTRIBUTE(L"id",				info.id.c_str());
 	REP_CONTRIBUTE(L"DisplayName",		info.DisplayName.c_str());
 	REP_CONTRIBUTE(L"Status",L"%ld",	info.Status);

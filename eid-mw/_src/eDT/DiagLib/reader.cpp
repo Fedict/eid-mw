@@ -107,12 +107,14 @@ int readerReportInfo(Report_TYPE type, const Reader_INFO &info)
 	reportPrint(type,L"          id = %ls (%ls view)\n",info.id.Name.c_str(),getSourceName(info.id.Source));
 	reportPrintSeparator(type, REPORT_READER_SEPARATOR);
 
+	REP_PREFIX(L"%ls",					info.id.Name.c_str());
 	REP_CONTRIBUTE(L"id",				info.id.Name.c_str());
 	REP_CONTRIBUTE(L"sourceName",		getSourceName(info.id.Source));
+	REP_UNPREFIX();
 	return DIAGLIB_OK;
 }
 
-/* DEAD CODE 
+/* DEAD CODE - not called from anywhere..
 void readerContributeInfo(const Reader_INFO &info)
 {
 	REP_PREFIX(							info.id.Name.c_str());

@@ -26,6 +26,7 @@
 #include "analysis.h"
 #include "middleware.h"
 #include "AnalysisError.h"
+#include "Repository.h"
 
 
 //******************************************
@@ -78,15 +79,19 @@ public:
 				{
 				case DIAGLIB_ERR_BAD_CALL:
 					std::wstring(L"[Error] Bad function call to mwGetReaderList()");
+					REP_CONTRIBUTE(L"error",L"bad_function_call_to_mwreadergetlist");
 					break;
 				case DIAGLIB_ERR_LIBRARY_NOT_FOUND:
 					std::wstring(L"[Error] Could not load Middleware");
+					REP_CONTRIBUTE(L"error",L"could_not_load_middleware");
 					break;
 				case DIAGLIB_ERR_INTERNAL:
 					std::wstring(L"[Error] Internal error calling mwGetReaderList()");
+					REP_CONTRIBUTE(L"error",L"internal_error_calling_mwgetreaderlist");
 					break;
 				default:
 					std::wstring(L"[Error] Unknown error: mwGetReaderList()");
+					REP_CONTRIBUTE(L"error",L"unknown_error_calling_mwgetreaderlist");
 					break;
 				}
 			}
@@ -95,6 +100,7 @@ public:
 				std::wstringstream text;
 				text << L"[Info] Nr of card readers detected by Middleware: " << readerList.size();
 				resultToReport(reportType,text);
+				REP_CONTRIBUTE(L"count",L"%ld",readerList.size());
 
 				if (0==readerList.size())
 				{
@@ -118,6 +124,7 @@ public:
 							resultToReport(reportType,txt);
 							processParamsToStop();
 							resultToReport(reportType,m_bPassed);
+							REP_CONTRIBUTE(L"error",L"retrieving_info_from_reader");
 							return retVal;
 						}
 
@@ -134,6 +141,7 @@ public:
 							resultToReport(reportType,txt);
 							processParamsToStop();
 							resultToReport(reportType,m_bPassed);
+							REP_CONTRIBUTE(L"error",L"readerreportinfo_failed");
 							return retVal;
 						}
 					}
