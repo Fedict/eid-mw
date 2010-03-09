@@ -629,7 +629,7 @@ bool EIDMW_XMLParser::parse( MemBufInputSource* pMemBufIS				//<! The memory inp
 	{
 		std::string msg;
 		XML_DefHandler::formatError(e,m_xmlFile,msg);
-		throw e;
+		//throw e; 
 		return false;
 	}
 	return true;
@@ -687,7 +687,7 @@ bool EIDMW_XMLParser::parse( void )
 	{
 		std::string msg;
 		XML_DefHandler::formatError(e,m_xmlFile,msg);
-		throw e;
+		//throw e;
 		return false;
 	}
 	return true;
@@ -957,10 +957,16 @@ XML_DefHandler::~XML_DefHandler( void )
 void XML_DefHandler::formatError(const SAXParseException& e, const char* filename, std::string& errMsg )
 {
 	std::stringstream str(std::stringstream::out);
-
 	char* msg = XMLString::transcode(e.getMessage());
-	str << filename
-		<< ":"
+
+	if(filename){
+		str << filename ;
+	}
+	else {
+		str << "file" ;
+	}
+
+	str	<< ":"
 		<< std::dec << e.getLineNumber()
 		<< ":"
 		<< std::dec <<e.getColumnNumber()
