@@ -368,6 +368,11 @@ protected:
 	void GeneralTimeToString(ASN1_GENERALIZEDTIME *asn1Time, struct tm &timeinfo);
 
 	/**
+	  * Convert ASN1_GENERALIZEDTIME into char*
+	  */
+	void GeneralTimeToBuffer(ASN1_GENERALIZEDTIME *asn1Time, char* buffer,size_t bufferSize);
+
+	/**
 	  * Convert ASN1_UTCTIME into struct tm
 	  */
 	void UtcTimeToString(ASN1_UTCTIME *asn1Time, struct tm &timeinfo);

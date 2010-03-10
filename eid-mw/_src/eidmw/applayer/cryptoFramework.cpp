@@ -1813,14 +1813,17 @@ void APL_CryptoFwk::TimeToString(ASN1_TIME *asn1Time, std::string &strTime, cons
     struct tm timeinfo;
 	char buffer [50];
 
-	if(asn1Time->type == V_ASN1_UTCTIME)
-        UtcTimeToString(asn1Time, timeinfo);
-
-	if(asn1Time->type == V_ASN1_GENERALIZEDTIME)
-		GeneralTimeToString(asn1Time, timeinfo);
 	try
 	{
-		strftime (buffer,sizeof(buffer),dateFormat,&timeinfo);
+		if(asn1Time->type == V_ASN1_UTCTIME)
+		{
+			UtcTimeToString(asn1Time, timeinfo);
+			strftime (buffer,sizeof(buffer),dateFormat,&timeinfo);
+		}
+		if(asn1Time->type == V_ASN1_GENERALIZEDTIME)
+		{
+			GeneralTimeToBuffer(asn1Time, buffer, sizeof(buffer));
+		}
 		strTime.assign(buffer);
 	}
 	catch(...)
@@ -1828,6 +1831,36 @@ void APL_CryptoFwk::TimeToString(ASN1_TIME *asn1Time, std::string &strTime, cons
 		strTime.clear();
 	}
 } 
+
+void APL_CryptoFwk::GeneralTimeToBuffer(ASN1_GENERALIZEDTIME *asn1Time, char* buffer,size_t bufferSize)
+{
+	char *v;
+	int i;
+
+	i=asn1Time->length;
+	v=(char *)asn1Time->data;
+
+	if ((bufferSize < 12) || (i < 12))
+		return;
+
+	for (i=0; i<12; i++)
+	{
+		if ((v[i] > '9') || (v[i] < '0')) 
+			return;
+	}
+	buffer[0] = v[6];//day
+	buffer[1] = v[7];//day
+	buffer[2] = '/';
+	buffer[3] = v[4];//month
+	buffer[4] = v[5];//month
+	buffer[5] = '/';
+	buffer[6] = v[0];//year
+	buffer[7] = v[1];//year
+	buffer[8] = v[2];//year
+	buffer[9] = v[3];//year
+	buffer[10] = 0;
+
+}
 
 void APL_CryptoFwk::GeneralTimeToString(ASN1_GENERALIZEDTIME *asn1Time, struct tm &timeinfo)
 {
