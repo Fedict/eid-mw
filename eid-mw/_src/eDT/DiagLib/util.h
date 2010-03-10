@@ -42,9 +42,17 @@ void wstring_clean(std::wstring& str);
 using namespace std;
 
 template <class T>
-inline wstring tostr (const T& t)
+inline wstring towstring (const T& t)
 {
 	wstringstream ss;
+	ss << t;
+	return ss.str();
+}
+
+template <class T>
+inline string tostring (const T& t)
+{
+	stringstream ss;
 	ss << t;
 	return ss.str();
 }
@@ -64,6 +72,9 @@ inline rT join (const cT& list, const rT& sep)
 	}
 	return result;
 }
+
+
+
 
 
 

@@ -40,10 +40,11 @@ public:
 		m_testName = "diagnostics";
 		m_friendlyName = "Diagnostics";
 
-		m_rules.insert(make_pair(	.5,	new MiddleWareFilesIntegrityRule()));	// are middleware files all present and intact?
+		m_rules.insert(make_pair(	.7,	new MiddleWareFilesIntegrityRule()));	// are middleware files all present and intact?
 #ifdef WIN32
-		m_rules.insert(make_pair(	.5,	new WinSCardDllLocksRule()));			// winscard.dll locked by unexpected processes?
 		m_rules.insert(make_pair(	.5,	new HPProtectToolsRule()));				// HP ProtectTools ("ActivCard") running?
+		m_rules.insert(make_pair(	.3,	new WinSCardDllLocksRule()));			// winscard.dll locked by unexpected processes?
+
 #endif
 	}
 
@@ -79,6 +80,7 @@ public:
 						resultToReport(REPORT_TYPE_RESULT,verdict.corrective().									c_str());
 						REP_AVAILABLE(true);
 						REP_CONTRIBUTE(L"diagnosis",L"problem");
+						REP_CONTRIBUTE(verdict);
 					}
 					else
 					{
@@ -87,7 +89,7 @@ public:
 						REP_CONTRIBUTE(L"diagnosis",L"fine");
 					}
 				}
-				catch(...)	// Sweeping catch so whatever rules do the exceptions end here.
+				catch(...)	// Sweeping catch so whatever bad things rules do, the buck stops here.
 				{
 					resultToReport(REPORT_TYPE_RESULT,(rule->second->name() + L":Failed To Run").c_str());
 					REP_AVAILABLE(false);

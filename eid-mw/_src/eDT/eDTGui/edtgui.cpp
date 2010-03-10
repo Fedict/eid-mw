@@ -23,12 +23,14 @@
 #include "edtgui.h"
 #include "util.h"
 #include "diaglib.h"
+#include "repository.h"
 //------------------------------------------
 // main window ctor
 //------------------------------------------
 eDTGui::eDTGui(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
 	, m_currTestNr(0)
+	, m_resolved(false)
 {
 
 	m_engineThread.setMainWnd(this);			// set main window pointer in the engine thread to allow callbacks
@@ -238,17 +240,121 @@ void eDTGui::on_pb_Summary_clicked()
 	ui.stackedWidget->setCurrentIndex (SCR_SUMMARY);
 }
 
+void eDTGui::on_pb_Summary_2_clicked()
+{
+	on_pb_Summary_clicked();
+}
+
 //------------------------------------------
 // Quit the application
 //------------------------------------------
-void eDTGui::on_pb_Quit_2_clicked()
+void eDTGui::on_pbDiag2_clicked()
 {
-	qApp->quit();
+	m_currDiag=0;
+	ui.stackedWidget->setCurrentIndex(SCR_DIAGNOSTICS);
+}
+
+void eDTGui::on_pb_Diag_clicked()
+{
+	on_pbDiag2_clicked();
 }
 
 void eDTGui::on_pb_Quit_clicked()
 {
 	qApp->quit();
+}
+
+void eDTGui::on_pb_solved_clicked()
+{
+	solved();
+}
+
+void eDTGui::on_pb_not_solved_clicked()
+{
+	if(REP_VERDICT_COUNT()==0)
+	{
+		qApp->quit();
+	}
+	else
+	{
+		if(m_currDiag<REP_VERDICT_COUNT()-1)
+			nextVerdict();
+		else
+			gettingHelp();
+	}
+}
+
+void eDTGui::on_pb_previous_clicked()
+{
+	previousVerdict();
+}
+
+void eDTGui::on_pb_next_clicked()
+{
+	nextVerdict();
+}
+
+void eDTGui::on_pb_needhelp_clicked()
+{
+	gettingHelp();
+}
+
+void eDTGui::previousVerdict(void)
+{
+	if(m_currDiag>0)
+	{
+		m_currDiag--;
+		updateVerdict();
+	}
+}
+
+void eDTGui::nextVerdict(void)
+{
+	if(m_currDiag<REP_VERDICT_COUNT()-1)
+	{
+		m_currDiag++;
+		updateVerdict();
+	}
+}
+
+void eDTGui::gettingHelp(void)
+{
+	ui.lbl_remedy->setText(tr("To get help in resolving this problem, please: \n\n- Click the \"Save\" button below and save the eDT report.\n- Send the saved report via e-mail to the service desk (if you received eDT via email, reply to that email)\n- Contact the service desk."));
+}
+
+void eDTGui::solved(void)
+{
+	ui.lbl_remedy->setText(tr("We're delighted the eDT helped solve your problem\n\nIf you want to help us improve the eDT, please click the \"Send\" button below to share the good news."));
+	m_resolved=true;
+	ui.pb_previous->setEnabled(false);
+	ui.pb_next->setEnabled(false);
+	ui.pb_solved->setEnabled(false);
+	ui.pb_not_solved->setEnabled(false);
+	ui.pb_needhelp->setEnabled(false);
+	ui.pb_SaveSend->setText(tr("Send"));
+
+}
+
+void eDTGui::not_solved(void)
+{
+	ui.lbl_remedy->setText(tr("We're sorry the eDT couldn't help solve your problem rightaway.\n\nTo get help in resolving this problem, please: \n\n- Click the \"Save\" button below and save the eDT report.\n- Send the saved report via e-mail to the service desk (if you received eDT via email, reply to that email)\n- Contact the service desk."));
+	m_resolved=false;
+	ui.pb_previous->setEnabled(false);
+	ui.pb_next->setEnabled(false);
+	ui.pb_solved->setEnabled(false);
+	ui.pb_not_solved->setEnabled(false);
+	ui.pb_needhelp->setEnabled(false);
+}
+
+
+void eDTGui::updateVerdict(void)
+{
+	MetaRuleVerdict verdict=REP_VERDICT(m_currDiag);
+	ui.lbl_conclusion->	setText(w2qstr(verdict.verdict()));
+	ui.lbl_remedy->setText(w2qstr(verdict.corrective()));
+	ui.pb_previous->setEnabled(REP_VERDICT_COUNT()>1 && m_currDiag!=0);
+	ui.pb_next->setEnabled(REP_VERDICT_COUNT()>1 && m_currDiag!=(REP_VERDICT_COUNT()-1));
+	ui.lbl_which_diag->setText((tostring<size_t>(m_currDiag+1) + "/" + tostring<size_t>(REP_VERDICT_COUNT())).c_str());
 }
 
 void eDTGui::closeEvent(QCloseEvent* event)
@@ -263,6 +369,7 @@ void eDTGui::closeEvent(QCloseEvent* event)
 		event->ignore();
 	}
 }
+
 //------------------------------------------
 // we changed to another screen
 //------------------------------------------
@@ -355,7 +462,29 @@ void eDTGui::on_stackedWidget_currentChanged(int index)
 		}
 
 		break;
-	default:
+	case SCR_DIAGNOSTICS:
+	{
+		if(REP_VERDICT_COUNT()>0)
+		{
+			m_currDiag=0;
+			updateVerdict();
+			ui.pb_solved->setEnabled(true);
+			ui.pb_not_solved->setEnabled(true);
+			ui.pb_needhelp->setEnabled(true);
+			ui.pb_not_solved->setText(tr("No, it didn't"));
+		}
+		else
+		{
+			ui.lbl_conclusion->setText(tr("The Diagnostics Module found no obvious or known issues with your system and/or eID installation."));
+			ui.pb_solved->setEnabled(false);
+			ui.pb_not_solved->setEnabled(true);
+			ui.pb_needhelp->setEnabled(false);
+			ui.pb_not_solved->setText(tr("No.. Quit"));
+		}
+	}
+
+	break;
+		default:
 	    break;
 	}
 }
@@ -470,7 +599,8 @@ void eDTGui::on_pb_testAuthentication_clicked()
 //------------------------------------------
 // save the report
 //------------------------------------------
-void eDTGui::on_pb_SaveReport_2_clicked()
+
+void eDTGui::on_pb_SaveReport_clicked()
 {
 	if (ui.te_Report->document()->isEmpty())
 	{
@@ -526,10 +656,77 @@ void eDTGui::on_pb_SaveReport_2_clicked()
 	}
 }
 
-void eDTGui::on_pb_SaveReport_clicked()
+void eDTGui::on_pb_SaveReport_2_clicked()
 {
-	on_pb_SaveReport_2_clicked();
+	on_pb_SaveReport_clicked();
 }
+
+void eDTGui::on_pb_SaveSend_clicked()
+{
+	if(!m_resolved)
+		on_pb_SaveReport_clicked();
+	else
+		send_resolution();
+}
+
+void eDTGui::send_resolution(void)
+{
+        //QString mailaddress("kevin.vanwilder@fedict.be");
+		QString mailaddress("frank@apsu.be");
+        QString subject("eDT diagnostic self-resolution");
+        QString body("Report generated by eDT\n");
+
+        std::wstring reportFile;
+        m_engineThread.getReportFilename(reportFile,true);
+
+        QString qstrReportFile;
+       
+        for (size_t idx=0;idx<reportFile.length();idx++)
+        {
+                qstrReportFile += reportFile.at(idx);
+        }
+
+        QFile file(qstrReportFile);
+        file.open(QIODevice::ReadOnly);
+        body.append((char*)file.readAll().data());
+        file.close();
+       
+        QString mailCmd("mailto:");
+        mailCmd += mailaddress;
+        mailCmd += "?";
+        mailCmd += "subject=";
+        mailCmd += subject;
+
+
+        QString encodedBody;
+        encodedBody.clear();
+
+        for (int idx=0;idx<body.length();idx++)
+        {
+                if(body.at(idx) == '&')
+                {
+                        encodedBody += "%26";
+                }
+                else if(body.at(idx) == '%')
+                {
+                        encodedBody += "%25";
+                }
+                else
+                {
+                        encodedBody += body.at(idx);
+                }
+        }
+
+        QUrl url(mailCmd);
+        url.addQueryItem("body",encodedBody);
+
+        bool bOpen = QDesktopServices::openUrl(url);
+
+        if(!bOpen)
+        {
+                QMessageBox::information(this,tr("Mail client"),tr("Default mail client cannot be opened"));
+        }
+} 
 
 //------------------------------------------
 // load the test report 
@@ -578,75 +775,6 @@ void eDTGui::loadReport( void )
 	ui.te_Report->setTextCursor(cursor);
 }
 
-/*
-
-void eDTGui::on_pb_SendReport_clicked()
-{
-	loadReport();
-
-	QString mailaddress("servicedesk@fedict.be");
-	QString subject("eDT report");
-	QString body("Report generated by eDT\n");
-
-	std::wstring reportFile;
-	m_engineThread.getReportFilename(reportFile,true);
-
-	QString qstrReportFile;
-	
-	for (size_t idx=0;idx<reportFile.length();idx++)
-	{
-		qstrReportFile += reportFile.at(idx);
-	} 
-
-	QFile file(qstrReportFile);
-	file.open(QIODevice::ReadOnly);
-	body.append((char*)file.readAll().data());
-	file.close(); 
-	
-	QString mailCmd("mailto:");
-	mailCmd += mailaddress;
-	mailCmd += "?";
-	mailCmd += "subject=";
-	mailCmd += subject;
-
-	QString encodedBody;
-	encodedBody.clear();
-
-	for (int idx=0;idx<body.length();idx++)
-	{
-		if(body.at(idx) == '&')
-		{
-			encodedBody += "%26";
-		}
-		else if(body.at(idx) == '%')
-		{
-			encodedBody += "%25";
-		}
-		else
-		{
-			encodedBody += body.at(idx);
-		}
-	} 
-
-	QUrl url(mailCmd);
-	url.addQueryItem("body",encodedBody);
-
-	bool bOpen = QDesktopServices::openUrl(url);
-
-	if(!bOpen)
-	{
-		QMessageBox::information(this,tr("Mail client"),tr("Default mail client cannot be opened"));
-	}
-
-} 
-
-void eDTGui::on_pb_SendReport_2_clicked()
-{
-	on_pb_SendReport_clicked();
-}
-
-*/
-
 void eDTGui::on_pb_Cancel_clicked()
 {
 	m_engineThread.setRequest(EngineThread::ENGINETHREAD_REQUEST_STOP);
@@ -665,4 +793,9 @@ bool eDTGui::allTestsPassed()
 		}
 	}
 	return true;
+}
+
+QString eDTGui::w2qstr(const std::wstring wstr)
+{
+	return QString(string_From_wstring(wstr).c_str());
 }

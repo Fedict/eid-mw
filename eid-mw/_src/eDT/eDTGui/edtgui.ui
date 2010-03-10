@@ -23,7 +23,7 @@
      </rect>
     </property>
     <property name="currentIndex" >
-     <number>5</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="pg_presentation" >
      <widget class="QPushButton" name="pb_Analyse_nl" >
@@ -392,19 +392,6 @@
        <string>Save</string>
       </property>
      </widget>
-   <!--  <widget class="QPushButton" name="pb_SendReport" >
-      <property name="geometry" >
-       <rect>
-        <x>300</x>
-        <y>340</y>
-        <width>121</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text" >
-       <string>Send</string>
-      </property>
-     </widget> -->
      <widget class="QPushButton" name="pb_Details" >
       <property name="geometry" >
        <rect>
@@ -418,7 +405,7 @@
        <string>Details</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pb_Quit" >
+     <widget class="QPushButton" name="pb_Diag" >
       <property name="geometry" >
        <rect>
         <x>430</x>
@@ -428,7 +415,7 @@
        </rect>
       </property>
       <property name="text" >
-       <string>Quit</string>
+       <string>Diagnostics</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="tbl_Summary" >
@@ -541,7 +528,7 @@
        <string>Summary</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pb_Quit_2" >
+     <widget class="QPushButton" name="pb_Diag2" >
       <property name="geometry" >
        <rect>
         <x>430</x>
@@ -551,22 +538,297 @@
        </rect>
       </property>
       <property name="text" >
-       <string>Quit</string>
+       <string>Diagnostics</string>
       </property>
      </widget>
-  <!--   <widget class="QPushButton" name="pb_SendReport_2" >
+    </widget>
+    <widget class="QWidget" name="pg_diagnostics" >
+     <widget class="QGroupBox" name="groupBox" >
       <property name="geometry" >
        <rect>
-        <x>300</x>
+        <x>180</x>
+        <y>10</y>
+        <width>381</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title" >
+       <string>Conclusion:</string>
+      </property>
+      <widget class="QLabel" name="lbl_conclusion" >
+       <property name="geometry" >
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>341</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <property name="palette" >
+        <palette>
+         <active>
+          <colorrole role="Text" >
+           <brush brushstyle="SolidPattern" >
+            <color alpha="255" >
+             <red>170</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Text" >
+           <brush brushstyle="SolidPattern" >
+            <color alpha="255" >
+             <red>170</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Text" >
+           <brush brushstyle="SolidPattern" >
+            <color alpha="255" >
+             <red>118</red>
+             <green>116</green>
+             <blue>108</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="text" >
+        <string>conclusion</string>
+       </property>
+       <property name="alignment" >
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_2" >
+      <property name="geometry" >
+       <rect>
+        <x>180</x>
+        <y>150</y>
+        <width>381</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <property name="title" >
+       <string>Suggestion:</string>
+      </property>
+      <widget class="QLabel" name="lbl_remedy" >
+       <property name="geometry" >
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>341</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="text" >
+        <string>suggestion</string>
+       </property>
+       <property name="alignment" >
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="label_did_it_solve" >
+      <property name="geometry" >
+       <rect>
+        <x>330</x>
+        <y>318</y>
+        <width>231</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Did the suggestion above solve your problem?</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4" >
+      <property name="geometry" >
+       <rect>
+        <x>20</x>
+        <y>90</y>
+        <width>151</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string/>
+      </property>
+      <property name="pixmap" >
+       <pixmap resource="edtgui.qrc" >:/Resources/Resources/ICO_CARD_EID_DIAGNOSIS_128x128.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_needhelp" >
+      <property name="geometry" >
+       <rect>
+        <x>530</x>
         <y>340</y>
-        <width>121</width>
+        <width>23</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize" >
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text" >
+       <string>?</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_solved" >
+      <property name="geometry" >
+       <rect>
+        <x>350</x>
+        <y>340</y>
+        <width>75</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text" >
-       <string>Send</string>
+       <string>Yes, it did!</string>
       </property>
-     </widget> -->
+     </widget>
+     <widget class="QPushButton" name="pb_not_solved" >
+      <property name="geometry" >
+       <rect>
+        <x>440</x>
+        <y>340</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>No,it didn't.</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_Summary_2" >
+      <property name="geometry" >
+       <rect>
+        <x>40</x>
+        <y>340</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>&lt; Summary</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_which_diag" >
+      <property name="geometry" >
+       <rect>
+        <x>501</x>
+        <y>132</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>1/1</string>
+      </property>
+      <property name="alignment" >
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_previous" >
+      <property name="geometry" >
+       <rect>
+        <x>490</x>
+        <y>135</y>
+        <width>17</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="minimumSize" >
+       <size>
+        <width>17</width>
+        <height>17</height>
+       </size>
+      </property>
+      <property name="maximumSize" >
+       <size>
+        <width>17</width>
+        <height>17</height>
+       </size>
+      </property>
+      <property name="text" >
+       <string>&lt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_next" >
+      <property name="geometry" >
+       <rect>
+        <x>537</x>
+        <y>135</y>
+        <width>17</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="minimumSize" >
+       <size>
+        <width>17</width>
+        <height>17</height>
+       </size>
+      </property>
+      <property name="maximumSize" >
+       <size>
+        <width>17</width>
+        <height>17</height>
+       </size>
+      </property>
+      <property name="text" >
+       <string>></string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_Quit" >
+      <property name="geometry" >
+       <rect>
+        <x>220</x>
+        <y>340</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Quit</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pb_SaveSend" >
+      <property name="geometry" >
+       <rect>
+        <x>130</x>
+        <y>340</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Save</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

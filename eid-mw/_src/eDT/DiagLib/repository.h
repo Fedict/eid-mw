@@ -25,6 +25,8 @@
 #include <set>
 #include <vector>
 #include <string>
+#include "MetaRuleVerdict.h"
+
 using namespace std;
 
 typedef	std::wstring								ContributionKey;
@@ -33,6 +35,7 @@ typedef std::multimap<ContributionKey,Contribution>	ContributionMap;
 typedef std::set<Contribution>						ContributionSet;
 typedef std::pair<ContributionKey,Contribution>		ContributionEntry;
 typedef std::vector<std::wstring>					PrefixList;
+typedef std::vector<MetaRuleVerdict>				VerdictList;
 
 class Repository
 {
@@ -42,11 +45,14 @@ public:
 	void					unprefix	(void);
 	void					available	(bool avail);
 	void					contribute	(const ContributionKey key, const std::wstring format, ...);
+	void					contribute	(const MetaRuleVerdict verdict);
 
-	Contribution			value	(const ContributionKey key) const;
-	ContributionSet			values	(const ContributionKey key) const;
-	bool					exists	(const ContributionKey key) const;
-	const ContributionMap&	results	(void) const;
+	Contribution			value		(const ContributionKey key) const;
+	ContributionSet			values		(const ContributionKey key) const;
+	bool					exists		(const ContributionKey key) const;
+	const ContributionMap&	results		(void) const;
+	size_t					verdictCount(void) const;
+	MetaRuleVerdict			verdict		(unsigned int which) const;
 
 	// Meyers Singleton
 	static Repository& instance()	
@@ -61,16 +67,19 @@ private:
 	std::wstring		m_current_prefix;
 	PrefixList			m_prefixes;
 	ContributionMap		m_contributions;
+	VerdictList			m_verdicts;
 	static Repository*	m_singleton;
 };
 
 // readability convenience macros
-#define REP_CONTRIBUTE	Repository::instance().contribute
-#define REP_PREFIX		Repository::instance().prefix
-#define REP_UNPREFIX	Repository::instance().unprefix
-#define REP_AVAILABLE	Repository::instance().available
-#define REP_RESULTS		Repository::instance().results
-#define REP_VALUES		Repository::instance().values
-#define REPOSITORY		Repository::instance()
+#define REPOSITORY			Repository::instance()
+#define REP_CONTRIBUTE		Repository::instance().contribute
+#define REP_PREFIX			Repository::instance().prefix
+#define REP_UNPREFIX		Repository::instance().unprefix
+#define REP_AVAILABLE		Repository::instance().available
+#define REP_RESULTS			Repository::instance().results
+#define REP_VALUES			Repository::instance().values
+#define REP_VERDICT_COUNT	Repository::instance().verdictCount
+#define REP_VERDICT			Repository::instance().verdict
 
 #endif //__DIAGLIB_REPOSITORY_H__

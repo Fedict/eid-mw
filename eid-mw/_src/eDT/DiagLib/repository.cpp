@@ -130,6 +130,11 @@ void Repository::contribute(const ContributionKey key, const std::wstring format
 	}
 }
 
+void Repository::contribute(const MetaRuleVerdict verdict)
+{
+	m_verdicts.push_back(verdict);
+}
+
 /* 
 	retrieve all values for a certain key
 	returns: a set of values, empty set if none found
@@ -165,4 +170,21 @@ bool Repository::exists(const ContributionKey key) const
 const ContributionMap& Repository::results(void) const
 {
 	return m_contributions;
+}
+
+/*
+	count of verdicts
+*/
+
+size_t Repository::verdictCount(void) const
+{
+	return m_verdicts.size();
+}
+
+/*
+	return any verdicts
+*/
+MetaRuleVerdict Repository::verdict(unsigned int which) const
+{
+	return m_verdicts[which];
 }

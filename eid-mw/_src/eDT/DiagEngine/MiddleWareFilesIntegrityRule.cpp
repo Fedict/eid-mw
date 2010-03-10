@@ -95,12 +95,6 @@ MiddleWareFilesIntegrityRule::MiddleWareFilesIntegrityRule()
 
 MiddleWareFilesIntegrityRule::~MiddleWareFilesIntegrityRule() throw()
 {
-	m_app_files.clear();	
-	m_sys_files.clear();
-	
-#ifndef WIN32
-	m_oth_files.clear();
-#endif
 }
 
 void MiddleWareFilesIntegrityRule::testCategory(Repository evidence, std::wstring category, FileMD5Map data, FileNameSet& missing, FileNameSet& corrupt) const

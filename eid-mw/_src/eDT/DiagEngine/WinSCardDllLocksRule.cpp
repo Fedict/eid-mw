@@ -1,5 +1,4 @@
 /* ****************************************************************************
-
  * eID Middleware Project.
  * Copyright (C) 2008-2010 FedICT.
  *
@@ -33,7 +32,7 @@ WinSCardDllLocksRule::WinSCardDllLocksRule()
 	m_expected.insert	(L"winlogon.exe");
 	m_expected.insert	(L"Explorer.EXE");
 	m_expected.insert	(L"svchost.exe");
-	m_expected.insert	(L"Firefox.exe");
+	m_expected.insert	(L"irefox.exe");
 	m_expected.insert	(L"beid35gui.exe");
 }
 

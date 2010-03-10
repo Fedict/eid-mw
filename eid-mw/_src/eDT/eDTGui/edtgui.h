@@ -41,6 +41,7 @@ public:
 		, SCR_SIGNING
 		, SCR_SUMMARY
 		, SCR_DETAILS
+		, SCR_DIAGNOSTICS
 	};
 	enum
 	{
@@ -57,11 +58,19 @@ public:
 	~eDTGui();
 
 private:
-	void closeEvent(QCloseEvent *event);
-	void loadReport( void );
-	bool loadTranslationResources(QString const& m_Language);
-	bool allTestsPassed();
-	void fillTestTableGrid();
+			void	updateVerdict(void);
+			void	previousVerdict();
+			void	nextVerdict();
+			void	gettingHelp(void);
+			void	solved(void);
+			void	send_resolution(void);
+			void	not_solved(void);
+			void	closeEvent(QCloseEvent *event);
+			void	loadReport( void );
+			bool	loadTranslationResources(QString const& m_Language);
+			bool	allTestsPassed();
+			void	fillTestTableGrid();
+	static	QString w2qstr(const std::wstring wstr);
 
 private:
 	Ui::eDTGuiClass			 ui;
@@ -71,18 +80,26 @@ private:
 	size_t					 m_currTestNr;			// current test nr running
 	QTimer*					 m_processingTimer;
 	QTimer*					 m_heartbeatTimer;
+	size_t					 m_currDiag;
+	bool					 m_resolved;
 
 private slots:
 	void on_pb_Cancel_clicked();
-//	void on_pb_SendReport_2_clicked();
-//	void on_pb_SendReport_clicked();
 	void on_pb_SaveReport_clicked();
 	void on_pb_SaveReport_2_clicked();
 	void on_pb_testAuthentication_clicked();
 	void on_stackedWidget_currentChanged(int);
+	void on_pbDiag2_clicked();
+	void on_pb_Diag_clicked();
 	void on_pb_Quit_clicked();
-	void on_pb_Quit_2_clicked();
+	void on_pb_SaveSend_clicked();
+	void on_pb_solved_clicked();
+	void on_pb_needhelp_clicked();
+	void on_pb_not_solved_clicked();
+	void on_pb_previous_clicked();
+	void on_pb_next_clicked();
 	void on_pb_Summary_clicked();
+	void on_pb_Summary_2_clicked();
 	void on_pb_Details_clicked();
 	void on_pb_Continue_clicked();
 	void on_pb_Continue_2_clicked();
@@ -92,7 +109,6 @@ private slots:
 	void customEvent( QEvent* pEvent );
 	void checkProgress();
 	void checkHeartbeat();
-
 };
 
 #endif // EDTGUI_H

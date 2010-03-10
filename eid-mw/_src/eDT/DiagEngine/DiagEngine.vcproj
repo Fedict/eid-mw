@@ -162,14 +162,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\MetaRule.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MetaRuleVerdict.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\MiddleWareFilesIntegrityRule.cpp"
 				>
 			</File>
@@ -289,14 +281,6 @@
 			</File>
 			<File
 				RelativePath=".\HPProtectToolsRule.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MetaRule.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MetaRuleVerdict.h"
 				>
 			</File>
 			<File

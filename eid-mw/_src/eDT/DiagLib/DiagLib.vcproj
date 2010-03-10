@@ -184,6 +184,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MetaRule.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MetaRuleVerdict.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\middleware.cpp"
 				>
 			</File>
@@ -351,6 +359,14 @@
 			</File>
 			<File
 				RelativePath=".\MD5Sum.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MetaRule.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MetaRuleVerdict.h"
 				>
 			</File>
 			<File
