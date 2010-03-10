@@ -526,8 +526,8 @@ bool APL_CertStatusCache::writeFile()
 		if(0 != remove(m_cachefilename.c_str()))
 			err = errno;
 
-		//If the remove succed or the file does not exist, we open it in write mode
-		if(err == 0 | err == ENOENT)
+		//If the remove succeeded or the file does not exist, we open it in write mode
+		if(err == 0 || err == ENOENT)
 			err = fopen_s(&m_f, m_cachefilename.c_str(), "w");
 
 		//If this is an unknown error, we quit

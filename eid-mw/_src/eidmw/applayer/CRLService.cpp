@@ -1113,7 +1113,7 @@ bool APL_CrlDownloadingCache::loadCacheFile()
 			err = errno;
 
 		//If the remove succed or the file does not exist, we open it in write mode
-		if(err == 0 | err == ENOENT)
+		if(err == 0 || err == ENOENT)
 			err = fopen_s(&m_flock, m_cachefilelock.c_str(), "w");
 
 		//If this is an unknown error, we quit
@@ -1241,7 +1241,7 @@ bool APL_CrlDownloadingCache::writeCacheFile(bool bCleanUp)
 			err = errno;
 
 		//If the remove succed or the file does not exist, we open it in write mode
-		if(err == 0 | err == ENOENT)
+		if(err == 0 || err == ENOENT)
 			err = fopen_s(&m_f, m_cachefilename.c_str(), "w");
 
 		//If this is an unknown error, we quit
