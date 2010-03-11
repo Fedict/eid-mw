@@ -198,9 +198,12 @@ To get help in resolving this problem, please:
 - Click the &quot;Save&quot; button below and save the eDT report.
 - Send the saved report via e-mail to the service desk (if you received eDT via email, reply to that email)
 - Contact the service desk.</source>
-        <translation>Nous nommes navrés que le eDT n&apos;ai pu vous aider a résoudre votre problème de suite.
+        <translation type="unfinished">Nous nommes navrés que le eDT n&apos;ai pu vous aider a résoudre votre problème immediatement.
 
-Si vous désirez de l&apos;aide avec la résolution de ce problème, veuillez:- Cliquer &quot;Enregistrer&quot; ci-dessous, et enregistrer le rapport eDT.- Envoyer le rapport enregistré via courriel au service desk (si vous avez recu eDT via courriel, veuillez répondre a celui-ci)- Contacter le service desk.</translation>
+Si vous désirez de l&apos;aide avec la résolution de ce problème, veuillez:
+- Cliquer &quot;Enregistrer&quot; ci-dessous, et enregistrer le rapport eDT.
+- Envoyer le rapport enregistré via courriel au service desk (si vous avez recu eDT via courriel, veuillez répondre a celui-ci)
+- Contacter le service desk.</translation>
     </message>
     <message>
         <location filename="edtgui.cpp" line="470"/>
@@ -323,7 +326,7 @@ Si vous désirez de l&apos;aide avec la résolution de ce problème, veuillez:- 
     <message>
         <location filename="edtgui.ui" line="589"/>
         <source>Diagnostics</source>
-        <translation>Diagnostiques</translation>
+        <translation type="unfinished">Diagnostic</translation>
     </message>
     <message>
         <location filename="edtgui.ui" line="613"/>

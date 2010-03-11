@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>615</width>
+    <width>614</width>
     <height>396</height>
    </rect>
   </property>
@@ -603,9 +603,9 @@
      <widget class="QGroupBox" name="groupBox" >
       <property name="geometry" >
        <rect>
-        <x>180</x>
+        <x>10</x>
         <y>10</y>
-        <width>381</width>
+        <width>551</width>
         <height>121</height>
        </rect>
       </property>
@@ -617,7 +617,7 @@
         <rect>
          <x>20</x>
          <y>20</y>
-         <width>341</width>
+         <width>521</width>
          <height>91</height>
         </rect>
        </property>
@@ -658,6 +658,12 @@
          </disabled>
         </palette>
        </property>
+       <property name="font" >
+        <font>
+         <pointsize>8</pointsize>
+         <stylestrategy>PreferDefault</stylestrategy>
+        </font>
+       </property>
        <property name="text" >
         <string>conclusion</string>
        </property>
@@ -667,14 +673,17 @@
        <property name="wordWrap" >
         <bool>true</bool>
        </property>
+       <property name="margin" >
+        <number>0</number>
+       </property>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_2" >
       <property name="geometry" >
        <rect>
-        <x>180</x>
+        <x>10</x>
         <y>150</y>
-        <width>381</width>
+        <width>551</width>
         <height>151</height>
        </rect>
       </property>
@@ -686,12 +695,20 @@
         <rect>
          <x>20</x>
          <y>30</y>
-         <width>341</width>
+         <width>521</width>
          <height>101</height>
         </rect>
        </property>
+       <property name="font" >
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text" >
         <string>suggestion</string>
+       </property>
+       <property name="textFormat" >
+        <enum>Qt::AutoText</enum>
        </property>
        <property name="alignment" >
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -704,30 +721,17 @@
      <widget class="QLabel" name="label_did_it_solve" >
       <property name="geometry" >
        <rect>
-        <x>322</x>
+        <x>30</x>
         <y>318</y>
-        <width>231</width>
-        <height>16</height>
+        <width>531</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text" >
        <string>Did the suggestion solve your problem?</string>
       </property>
-     </widget>
-     <widget class="QLabel" name="label_4" >
-      <property name="geometry" >
-       <rect>
-        <x>20</x>
-        <y>90</y>
-        <width>151</width>
-        <height>151</height>
-       </rect>
-      </property>
-      <property name="text" >
-       <string/>
-      </property>
-      <property name="pixmap" >
-       <pixmap resource="edtgui.qrc" >:/Resources/Resources/ICO_CARD_EID_DIAGNOSIS_128x128.png</pixmap>
+      <property name="alignment" >
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_needhelp" >
@@ -813,7 +817,7 @@
        </rect>
       </property>
       <property name="text" >
-       <string>1/1</string>
+       <string/>
       </property>
       <property name="alignment" >
        <set>Qt::AlignCenter</set>
