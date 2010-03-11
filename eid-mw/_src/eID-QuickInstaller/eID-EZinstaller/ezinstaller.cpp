@@ -85,8 +85,10 @@ void ezInstaller::customEvent(QEvent * qe )
         }
     } else if (ve->getAction() == "done") {
         this->mdiagthread_active = false;
-        ui.clbNext->setEnabled(true);
-        mQLNext.setEnabled(true);
+		Sleep(2000);
+		ui.stackedWidget->setCurrentIndex(2);
+        //ui.clbNext->setEnabled(true);
+        //mQLNext.setEnabled(true);
         //ui.clbBack->setEnabled(true);
     } else if (ve->getAction() == "disableCancel") {
         ui.clbCancel->setEnabled(false);
@@ -107,7 +109,6 @@ ezInstaller::ezInstaller(QWidget *parent, Qt::WFlags flags)
 
     transparentstyle = "color: rgba(0, 0, 0, 0);background-color: rgb(0, 0, 0,0);alternate-background-color: rgb(0, 0, 0,0);border-color: rgba(0, 0, 0, 0);border-top-color: rgba(0, 0, 0, 0);border-right-color: rgba(0, 0, 0, 0);border-left-color: rgba(0, 0, 0, 0);border-bottom-color: rgba(0, 0, 0, 0);gridline-color: rgba(0, 0, 0, 0);selection-color: rgba(0, 0, 0, 0);selection-background-color: rgba(0, 0, 0, 0);";
 
-    authenticationWasSuccessfull = 0; // 0=Not Tested/1=success/2=failure
     mhave_readers = false;
     this->mdiagthread_active = false;
     this->mSignatureOK = false;
@@ -208,18 +209,18 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
     ui.clbSaveAsPdf->setVisible(false);
     mQLsaveAsPdf.setVisible(false);
 
-    ui.clbTestSignature->setVisible(false);
-    mQLTestSignature.setVisible(false);
-
     ui.clbClose->setVisible(false);
 	ui.clbClose->setEnabled(false);
     mQLClose.setVisible(false);
 	mQLClose.setEnabled(false);
 
-    ui.clbNext->setVisible(true);
-	ui.clbNext->setEnabled(true);
-	mQLNext.setVisible(true);
-	mQLNext.setEnabled(true);
+    ui.clbNext->setVisible(false);
+	ui.clbNext->setEnabled(false);
+	mQLNext.setVisible(false);
+	mQLNext.setEnabled(false);
+
+	ui.clbOpenReport->setVisible(false);
+	mQLOpenReport.setVisible(false);
 
     if (pagename.contains("pageProgress")) {  // 1
 
@@ -282,10 +283,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 		}
 #endif
 
-        ui.clbNext->setVisible(true);
-        ui.clbNext->setEnabled(false);
-        mQLNext.setVisible(true);
-        mQLNext.setEnabled(false);
 
         this->mdiagthread_active = true;
 
@@ -315,7 +312,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 
             ui.lblConnectReaders->setText(msglbl_ConnectReaders);
             ui.lblReadingCard->setText(msglbl_ReadingCard);
-            ui.lblWarningTestSignature->setText(msglbl_WarningTestSig);
             ui.lbleIDInserted->setText(msglbl_EidInserted);
             previousPage = 2;               // ** was 1
 			drt.setobjectToUpdate(this);
@@ -324,8 +320,7 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
         else {
             if (pagename.contains("welcomePage")) { // 0
 
-                ui.clbNext->setVisible(false);
-                mQLNext.setVisible(false);
+
 
                 ui.clbBack->setEnabled(false);
 
@@ -341,20 +336,19 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 					dct.start();
                 }
                 else {
-                    if (pagename.contains("pageVieweIDData")) {  // 4
+                    if (pagename.contains("pageVieweIDData")) {  // 5
 
                         setStepButtons(false,false,true);
+
+						ui.lblTextSummary_4->setVisible(false);
+						ui.lblIconSummary_3->setVisible(false);
 
                         ui.clbNext->setEnabled(false);
                         ui.clbNext->setVisible(false);
                         mQLNext.setEnabled(false);
                         mQLNext.setVisible(false);
-                        ui.clbTestSignature->setVisible(false);
-                        ui.clbTestSignature->setEnabled(false);
-                        mQLTestSignature.setVisible(false);
-                        mQLTestSignature.setEnabled(false);
-                        ui.lblWarningTestSignature->setVisible(false);
-
+						ui.clbOpenReport->setVisible(true);
+						mQLOpenReport.setVisible(true);
 
                         ui.leName->setText(msglbl_name);
                         ui.leFirstname->setText(msglbl_firstname);
@@ -373,6 +367,7 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 
 						ui.clbBack->setEnabled(false);
 
+
                         // start de eid readcard thread
                         rct.setobjectToUpdate(this);
                         rct.inputparameters = "<InputParams><method>PCSC</method><readerName>" + selectedReader + "</readerName><fileName>ALL</fileName></InputParams>";
@@ -381,11 +376,12 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 
                     }
                     else {
-                        if (pagename.contains("pageeIDinserted")) { // 5
+                        if (pagename.contains("pageeIDinserted")) { // 4
 
                             ui.clbCancel->setEnabled(false);
                             ui.clbCancel->update();
                             ui.clbCancel->repaint();
+
                             //QApplication::processEvents();
 
                             // Rebuild readerlist.
@@ -446,7 +442,9 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 
                                 ui.clbNext->setVisible(false);
                                 mQLNext.setVisible(false);
-
+										
+								previousPage = 5;
+								ui.clbBack->setEnabled(true);
 
                             }
                             else {
@@ -499,13 +497,6 @@ bool ezInstaller::showCardData(string theXml) {
 
     if (ezw.GetNamedItem(cardData,"QueriedResult") ==  "SUCCESS") {
 
-        if (! this->mSignatureOK) {
-        ui.lblWarningTestSignature->setVisible(true);
-        ui.clbTestSignature->setEnabled(true);
-        mQLTestSignature.setEnabled(true);
-        mQLTestSignature.setVisible(true);
-        }
-
         ui.leName->setText(msglbl_name+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"LastName").c_str())));
         ui.leFirstname->setText(msglbl_firstname+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"FirstName").c_str())));
         ui.lePlaceOfBirth->setText(msglbl_placeOfBirth+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"BirthPlace").c_str())));
@@ -518,23 +509,30 @@ bool ezInstaller::showCardData(string theXml) {
             ui.lblPhoto->setPixmap(fotopixmap);
         }
         else {
-            ui.lblPhoto->setText(QString(tr("fout")));
+            ui.lblPhoto->setText(QString(tr(" ")));
         }
 
-		if (!mSignatureOK)
-		{
-			ui.clbTestSignature->setVisible(true);
-			ui.clbTestSignature->setEnabled(true);
-			mQLTestSignature.setVisible(true);
-			mQLTestSignature.setEnabled(true);
+		ui.lblTextSummary_4->setText(msgOk_successfullInstall);
+        ui.lblIconSummary_3->setPixmap(QPixmap(":/images/groene_vink"));
+		ui.lblTextSummary_4->setVisible(true);
+		ui.lblIconSummary_3->setVisible(true);
 
-			ui.lblWarningTestSignature->setVisible(true);
-        }
+        ui.clbClose->setGeometry(ui.clbNext->geometry());
+        mQLClose.setGeometry(mQLNext.geometry());
+        ui.clbClose->setVisible(true);
+        ui.clbClose->setEnabled(true);
+        mQLClose.setVisible(true);
+        mQLClose.setEnabled(true);
 
-        ui.clbNext->setVisible(true);
-        ui.clbNext->setEnabled(true);
-        mQLNext.setVisible(true);
-        mQLNext.setEnabled(true);
+        // hack: Close button does not respond to click until mouse has left it momentarily
+
+        QPoint pos;
+        pos.setX(0);
+        pos.setY(0);
+        QMouseEvent mevent(QEvent::Leave, pos, Qt::NoButton, 0, 0);
+        QApplication::sendEvent(&mQLClose, &mevent);
+        QMouseEvent mevent2 (QEvent::Enter, pos, Qt::NoButton, 0, 0);
+        QApplication::sendEvent(&mQLClose, &mevent2);
 
 		appendStringReport(tr("         Read data : SUCCESS").toStdString(),QFont::Normal);
 		return true;
@@ -663,7 +661,6 @@ void ezInstaller::initImages(void) {
     ui.lblPicEID->setPixmap(QPixmap(":/images/eidSymbol"));
     ui.lblPicEidBackground->setPixmap(QPixmap(":/images/eidBackGround"));
     ui.clbViewDetails->setIcon(QIcon(":/images/knop_breed"));ui.clbViewDetails->setStyleSheet(transparentstyle);
-    ui.clbTestSignature->setIcon(QIcon(":/images/annuleren"));ui.clbTestSignature->setStyleSheet(transparentstyle);
     ui.clbOpenReport->setIcon(QIcon(":/images/knop_breed"));ui.clbOpenReport->setStyleSheet(transparentstyle);
     ui.clbSaveAsPdf->setIcon(QIcon(":/images/knop_breed"));ui.clbSaveAsPdf->setStyleSheet(transparentstyle);
     ui.clbClose->setIcon(QIcon(":/images/annuleren")); ui.clbClose->setStyleSheet(transparentstyle);mQLClose.setVisible(false);
@@ -689,12 +686,6 @@ void ezInstaller::initImages(void) {
     mQLNext.setIcons(QString(":/images/annuleren"),QString(":/images/annuleren_down"));
     mQLNext.setunderlyingButton(ui.clbNext);
     mQLNext.setPalette(palLabelsWhite);
-
-    mQLTestSignature.setIcons(QString(":/images/annuleren"),QString(":/images/annuleren_down"));
-    mQLTestSignature.setunderlyingButton(ui.clbTestSignature);
-    mQLTestSignature.setPalette(palLabelsWhite);
-    ui.clbTestSignature->setVisible(false);
-    mQLTestSignature.setVisible(false);
 
     mQLOpenReport.setIcons(QString(":/images/knop_breed"),QString(":/images/knop_breed_down"));
     mQLOpenReport.setunderlyingButton(ui.clbOpenReport);
@@ -865,7 +856,6 @@ void ezInstaller::on_clbFrancais_clicked(){
     mQLChooseFrancais.resetLabelText();
     mQLNext.resetLabelText();
 
-    mQLTestSignature.resetLabelText();
     mQLOpenReport.resetLabelText();
     mQLsaveAsPdf.resetLabelText();
     mQLClose.resetLabelText();
@@ -1307,164 +1297,6 @@ void ezInstaller::on_lblNext_linkHovered(QString)
 
 }
 
-#pragma region SIGNATURETEST
-
-void ezInstaller::mdoAuthSign() {
-
-    ui.clbNext->setVisible(false);
-    mQLNext.setVisible(false);
-
-    ui.clbTestSignature->setVisible(false);
-    mQLTestSignature.setVisible(false);
-
-    ui.lblWarningTestSignature->setVisible(false);
-
-    confirmDialogBox cdb;
-    cdb.setLabels(msgconf_title,msgconf_AreYouSure,msgconf_OnlyTest, msgconf_Warning, msgconf_btnTest, msgconf_btnNoTest);
-    if (cdb.exec() == QDialog::Accepted) {
-
-#ifdef _OLD_STUFF_OBSOLETE_
-        // we'll start de gui, if it's not already running, so that certificates can be imported authomatically.
-        string runningprocesses = scl.findRunningProcess("<InputParams><processName>beid35gui.exe</processName></InputParams>");
-        QString rp(runningprocesses.c_str());
-        if (!rp.contains("beid35gui.exe",Qt::CaseInsensitive)) {
-
-            // disable photo reading, disable OCSP
-            scl.writeRegistryEntry("<InputParams><rootName>HKEY_CURRENT_USER</rootName><path>SOFTWARE\\BEID\\configuretool</path><keyName>show_picture</keyName><value>0</value><keyType>DWORD</keyType></InputParams>");
-            scl.writeRegistryEntry("<InputParams><rootName>HKEY_CURRENT_USER</rootName><path>SOFTWARE\\BEID\\certificatevalidation</path><keyName>cert_validation_ocsp</keyName><value>0</value><keyType>DWORD</keyType></InputParams>");
-
-            // do not wait, return immediately
-            string paramstring = dt.substituteResVars("<InputParams><commandLine>%BEID_INSTALL_DIRNAME%\\beid35gui.exe</commandLine><waitForTermination>0</waitForTermination></InputParams>");
-            scl.startProcess(paramstring);
-
-        }
-
-        // wait long enough to make sure that the beid gui imported the certificates
-        qApp->setOverrideCursor(Qt::WaitCursor);
-        bool vis = false;
-        for (int i = 0; i < 1000; ++i) {
-            Sleep(10);
-            if ((i % 50) == 0) {
-                if (vis) {
-                    vis = false;
-                    ui.clbTestSignature->setVisible(false);
-                    mQLTestSignature.setVisible(false);
-                } else {
-                    vis = true;
-                    ui.clbTestSignature->setVisible(true);
-                    mQLTestSignature.setVisible(true);
-                }
-            }
-            QApplication::processEvents(QEventLoop::AllEvents);
-        }
-
-        // the beid gui shoud have imported the certs by now we hope
-        // re-enable photo reading, re-enable OCSP, for next start
-        scl.writeRegistryEntry("<InputParams><rootName>HKEY_CURRENT_USER</rootName><path>SOFTWARE\\BEID\\configuretool</path><keyName>show_picture</keyName><value>1</value><keyType>DWORD</keyType></InputParams>");
-        scl.writeRegistryEntry("<InputParams><rootName>HKEY_CURRENT_USER</rootName><path>SOFTWARE\\BEID\\certificatevalidation</path><keyName>cert_validation_ocsp</keyName><value>1</value><keyType>DWORD</keyType></InputParams>");
-
-#endif _OLD_STUFF_OBSOLETE_
-
-        ui.clbTestSignature->setVisible(true);
-        mQLTestSignature.setVisible(true);
-        ui.clbTestSignature->setEnabled(false);
-        mQLTestSignature.setEnabled(false);
-        QApplication::setOverrideCursor(Qt::WaitCursor);
-        QApplication::processEvents(QEventLoop::AllEvents);
-#ifdef WIN32
-        string x = scl.AuthSign("<InputParams><readerName>" + selectedReader + "</readerName></InputParams>");
-#else
-         string x = scl.AuthSign("<InputParams><readerName>/usr/local/lib/libbeidpkcs11.dylib</readerName></InputParams>");
-#endif
-
-
-        QApplication::restoreOverrideCursor();
-        QApplication::processEvents(QEventLoop::AllEvents);
-
-        if (QString(x.c_str()).contains("FAILURE")) {
-
-            this->authenticationWasSuccessfull = 2;
-
-            this->appendStringReport(msgBox_SigNOK.toStdString(), QFont::Bold);
-            QString errmsg = QString(scl.ErrorMsg().c_str());
-            this->appendStringReport(errmsg.toStdString(), QFont::Normal);
-
-            ui.lblWarningTestSignature->setVisible(true);
-
-            ui.clbNext->setVisible(true);
-            mQLNext.setVisible(true);
-            ui.clbTestSignature->setVisible(true);
-            mQLTestSignature.setVisible(true);
-            ui.clbTestSignature->setEnabled(true);
-            mQLTestSignature.setEnabled(true);
-
-            QMessageBox::critical(this, msgbox_SigTitle, msgBox_SigNOK, QMessageBox::Ok);
-
-            return;
-		}
-		else if (QString(x.c_str()).contains("CANCELLED")) {
-
-            this->authenticationWasSuccessfull = 2;
-
-            this->appendStringReport(msgBox_SigCancelled.toStdString(), QFont::Bold);
-            QString errmsg = QString(scl.ErrorMsg().c_str());
-            this->appendStringReport(errmsg.toStdString(), QFont::Normal);
-
-            ui.lblWarningTestSignature->setVisible(true);
-
-
-            ui.clbNext->setVisible(true);
-            mQLNext.setVisible(true);
-            ui.clbTestSignature->setVisible(true);
-            mQLTestSignature.setVisible(true);
-            ui.clbTestSignature->setEnabled(true);
-            mQLTestSignature.setEnabled(true);
-
-            QMessageBox::critical(this, msgbox_SigTitle, msgBox_SigCancelled, QMessageBox::Ok);
-
-            return;
-
-        } else {  // SUCCESS
-            this->authenticationWasSuccessfull = 1;
-            this->mSignatureOK = true;
-
-            this->appendStringReport(msgBox_SigOK.toStdString(), QFont::Bold);
-
-            ui.clbTestSignature->setEnabled(false);
-            mQLTestSignature.setEnabled(false);
-            ui.clbTestSignature->setVisible(false);
-            mQLTestSignature.setVisible(false);
-
-            ui.clbNext->setVisible(true);
-            mQLNext.setVisible(true);
-
-            QMessageBox::information(this, msgbox_SigTitle, msgBox_SigOK, QMessageBox::Ok);
-
-            return;
-
-        }
-    } else { // not QDialog::accepted()
-        ui.clbNext->setVisible(true);
-        mQLNext.setVisible(true);
-        ui.clbTestSignature->setVisible(true);
-        mQLTestSignature.setVisible(true);
-        ui.lblWarningTestSignature->setVisible(true);
-
-        return;
-
-    }
-}
-
-void ezInstaller::on_pbTestSignature_clicked() {
-    try {
-        this->mdoAuthSign();
-    } catch(...) {
-        ;
-    }
-}
-
-#pragma endregion SIGNATURETEST
-
 #pragma region DETAIL_VIEW
 
 void ezInstaller::on_clbViewDetails_clicked() {
@@ -1486,20 +1318,6 @@ void ezInstaller::on_clbViewDetails_released() {
 
 #pragma endregion DETAIL_VIEW
 
-
-#pragma region TESTSIGNATURE
-
-void ezInstaller::on_clbTestSignature_clicked() {
-    this->mdoAuthSign();
-}
-void ezInstaller::on_clbTestSignature_pressed() {
-    ui.clbTestSignature->setIcon(QIcon(":/images/annuleren_down"));
-}
-void ezInstaller::on_clbTestSignature_released() {
-    ui.clbTestSignature->setIcon(QIcon(":/images/annuleren"));
-}
-
-#pragma endregion TESTSIGNATURE
 
 #pragma region SUMMARYPAGE
 
@@ -1526,24 +1344,6 @@ void ezInstaller::buildSummaryPage(string pageType) {
                 // alles ok.
                 ui.lblTextSummary_1->setText(msgOk_successfullInstall);
                 ui.lblIconSummary_1->setPixmap(QPixmap(":/images/groene_vink"));
-
-                switch (authenticationWasSuccessfull) {// 0=Not Tested/1=success/2=failure
-          case 0: {
-              ui.lblTextSummary_2->setText("");
-              ui.lblIconSummary_2->setPixmap(QPixmap(""));
-              break;
-                  }
-          case 1: {
-              ui.lblTextSummary_2->setText(msgOK_successfullSignature);
-              ui.lblIconSummary_2->setPixmap(QPixmap(":/images/groene_vink"));
-              break;
-                  }
-          case 2: {
-              ui.lblTextSummary_2->setText(msgError_PinBlocked);
-              ui.lblIconSummary_2->setPixmap(QPixmap(":/images/kleine_x"));
-              break;
-                  }
-                }
                 ui.lblTextSummary_3->setText("");
             }
             else
@@ -1552,7 +1352,7 @@ void ezInstaller::buildSummaryPage(string pageType) {
                     ui.lblTextSummary_2->setText(msgReferenceToReport);
                     ui.lblTextSummary_3->setText(msgContactDataHelpdesk);
 
-                    ui.lblIconSummary_1->setPixmap(QPixmap(":/images/foutmelding"));
+                    ui.lblIconSummary_1->setPixmap(QPixmap("images/foutmelding"));
                     ui.lblIconSummary_2->setPixmap(QPixmap(""));
                 }
 

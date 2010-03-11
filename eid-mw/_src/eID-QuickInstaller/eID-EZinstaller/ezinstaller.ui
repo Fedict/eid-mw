@@ -124,7 +124,7 @@
     <number>0</number>
    </property>
    <property name="currentIndex">
-    <number>6</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="welcomePage">
     <widget class="QFrame" name="frame">
@@ -962,38 +962,6 @@ p, li { white-space: pre-wrap; }
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="lblWarningTestSignature">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>270</y>
-       <width>591</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Tahoma</family>
-       <pointsize>12</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-       <underline>false</underline>
-       <strikeout>false</strikeout>
-      </font>
-     </property>
-     <property name="text">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Tahoma'; font-size:8pt;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Om nu te weten of je elektronische handtekening werkt, klik je hieronder op&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt; Handtekening testen&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Tahoma'; font-size:12pt;&quot;&gt;De Quick Installer zal je vervolgens vragen om je pincode in te geven.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="leName">
      <property name="geometry">
       <rect>
@@ -1461,6 +1429,49 @@ p, li { white-space: pre-wrap; }
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="lblIconSummary_3">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>270</y>
+       <width>71</width>
+       <height>72</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Icon2</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblTextSummary_4">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>280</y>
+       <width>581</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Tahoma</family>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+       <underline>false</underline>
+       <strikeout>false</strikeout>
+      </font>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="pageSummary">
     <widget class="QLabel" name="lblTitleSummaryPage">
@@ -1606,42 +1617,6 @@ p, li { white-space: pre-wrap; }
      </property>
      <property name="wordWrap">
       <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QCommandLinkButton" name="clbOpenReport">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>240</y>
-       <width>176</width>
-       <height>75</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Tahoma</family>
-       <pointsize>12</pointsize>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-       <underline>false</underline>
-       <strikeout>false</strikeout>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="text">
-      <string>Open rapport</string>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>166</width>
-       <height>65</height>
-      </size>
      </property>
     </widget>
    </widget>
@@ -2301,42 +2276,6 @@ selection-background-color: rgba(170, 0, 0, 0);
     </size>
    </property>
   </widget>
-  <widget class="QCommandLinkButton" name="clbTestSignature">
-   <property name="geometry">
-    <rect>
-     <x>205</x>
-     <y>510</y>
-     <width>171</width>
-     <height>75</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tahoma</family>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <italic>false</italic>
-     <bold>true</bold>
-     <underline>false</underline>
-     <strikeout>false</strikeout>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;body&gt;Authenticatie&lt;br/&gt;testen&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>166</width>
-     <height>65</height>
-    </size>
-   </property>
-  </widget>
   <widget class="QCommandLinkButton" name="clbClose">
    <property name="geometry">
     <rect>
@@ -2365,6 +2304,42 @@ selection-background-color: rgba(170, 0, 0, 0);
    </property>
    <property name="text">
     <string>Sluit</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>166</width>
+     <height>65</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QCommandLinkButton" name="clbOpenReport">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>510</y>
+     <width>176</width>
+     <height>75</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Tahoma</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+     <underline>false</underline>
+     <strikeout>false</strikeout>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="text">
+    <string>Open rapport</string>
    </property>
    <property name="iconSize">
     <size>

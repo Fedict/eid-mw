@@ -57,7 +57,6 @@ public:
 	ezWorker ezw;
 	int nbrOfSteps;
 	string selectedReader;
-	int authenticationWasSuccessfull;
 	void setPercentage(int step);
 	void appendString(string str, int weight);
 	void insertString(string str, int weight);
@@ -78,7 +77,6 @@ private:
 	myQLabel mQLChooseNederlands;
 	myQLabel mQLChooseFrancais;
 	myQLabel mQLNext;
-    myQLabel mQLTestSignature;
 	myQLabel mQLOpenReport;
 	myQLabel mQLsaveAsPdf;
 	myQLabel mQLClose;
@@ -199,13 +197,9 @@ private slots:
 	void on_clbOpenReport_clicked();
 	void on_clbBack_released();
 	void on_clbBack_pressed();
-	void on_clbTestSignature_released();
-	void on_clbTestSignature_pressed();
-	void on_clbTestSignature_clicked();
 	void on_clbViewDetails_released();
 	void on_clbViewDetails_pressed();
 	void on_clbViewDetails_clicked();
-	void on_pbTestSignature_clicked();
 	void on_lblNext_linkHovered(QString);
 	void on_lblNext_linkActivated(QString);
 	void on_clbNext_clicked();
