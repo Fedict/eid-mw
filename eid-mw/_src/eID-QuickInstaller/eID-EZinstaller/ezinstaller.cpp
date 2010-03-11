@@ -509,7 +509,7 @@ bool ezInstaller::showCardData(string theXml) {
             ui.lblPhoto->setPixmap(fotopixmap);
         }
         else {
-            ui.lblPhoto->setText(QString(tr(" ")));
+            ui.lblPhoto->setText(QString(" "));
         }
 
 		ui.lblTextSummary_4->setText(msgOk_successfullInstall);
@@ -552,8 +552,8 @@ bool ezInstaller::showCardData(string theXml) {
 void ezInstaller::setMessages(){
 
     msgOk_successfullInstall = tr("<html><body><b>De installatie is succesvol afgelopen.</b> <br/>Je kunt de eID en kaartlezer nu gebruiken.</body></html>");
-    msgOK_successfullSignature = tr("<html><body><b>De Quick Installer heeft de elektronische authenticatie succesvol getest.</b><br/>De authenticatie werkt naar behoren. Je kunt de elektronische handtekening nu gebruiken.</body></html>");
-    msgError_PinBlocked = tr("<html><body><b>De authenticatie is niet getest.</b><br/>U heeft een verkeerde PIN ingegeven of u heeft de PIN operatie afgebroken. <br/>Indien u problemen blijft hebben met het gebruik van uw PIN-code, neem dan contact op met de Servicedesk</body></html>");
+//    msgOK_successfullSignature = tr("<html><body><b>De Quick Installer heeft de elektronische authenticatie succesvol getest.</b><br/>De authenticatie werkt naar behoren. Je kunt de elektronische handtekening nu gebruiken.</body></html>");
+//    msgError_PinBlocked = tr("<html><body><b>De authenticatie is niet getest.</b><br/>U heeft een verkeerde PIN ingegeven of u heeft de PIN operatie afgebroken. <br/>Indien u problemen blijft hebben met het gebruik van uw PIN-code, neem dan contact op met de Servicedesk</body></html>");
     msgError_installMWFailed = tr("<html><body><b>De Quick Installer heeft een probleem gevonden bij het installeren van de eID software.</b></body></html>");
     msgReferenceToReport = tr("Je kunt een rapport openen waar je een gedetailleerde omschrijving van het probleem terugvindt.");
     msgContactDataHelpdesk = tr("Open het rapport en contacteer de Servicedesk om het probleem op te lossen.");
@@ -577,25 +577,25 @@ void ezInstaller::setMessages(){
 
     msglbl_ReadCard = tr("Kaart lezen");
 
-    msglbl_ConnectReaders = tr("<html><body>De eID software is succesvol ge&iuml;nstalleerd.<br>De Quick Installer zal vervolgens controleren of de kaartlezer correct functioneert. Verbind nu je kaartlezer(s) met de computer.<br>Klik daarna op <b>Volgende</b>.</html></body>");
-    msglbl_ReaderConnected = tr("<html><body>De kaartlezer is met de computer verbonden.<br>Quick installer zal nu de goede werking controleren. Steek de elektronische identiteitskaart in een kaartlezer.<br>Klik daarna op <b>Volgende</b></body></html>");
+    msglbl_ConnectReaders = tr("<html><body>De eID software is succesvol geïnstalleerd.<br>De Quick Installer zal vervolgens controleren of de kaartlezer correct functioneert. Verbind nu je kaartlezer(s) met de computer.</html></body>");
+    msglbl_ReaderConnected = tr("<html><body>De kaartlezer is met de computer verbonden.<br>Quick installer zal nu de goede werking controleren. Steek de elektronische identiteitskaart in een kaartlezer.</body></html>");
     msglbl_ReadingCard = tr("<html><body><b>De kaartlezer werkt!</b><br>De Quick Installer leest nu de belangrijkste gegevens van je identiteitskaart:</body></html>");
-    msglbl_WarningTestSig = tr("<html><body>Om nu te weten of je elektronische authenticatie werkt, klik je hieronder op <b>Authenticatie testen</b>. De Quick Installer zal je vervolgens vragen om je pincode in te geven.</body></html>");
-    msglbl_EidInserted = tr("<html><body>De Quick Installer heeft de elektronische identiteitskaart gevonden en is nu klaar om de gegevens te lezen. Klik op <b>Volgende</b></body></html>");
+//    msglbl_WarningTestSig = tr("<html><body>Om nu te weten of je elektronische authenticatie werkt, klik je hieronder op <b>Authenticatie testen</b>. De Quick Installer zal je vervolgens vragen om je pincode in te geven.</body></html>");
+    msglbl_EidInserted = tr("<html><body>De Quick Installer heeft de elektronische identiteitskaart gevonden en is nu klaar om de gegevens te lezen.</body></html>");
 
-    msgconf_title = tr("<html><body>Authenticatie testen</body></html>");
-    msgconf_Warning = tr("<html><body><b>Let op : </b>als je de verkeerde pincode ingeeft, kun je de elektronische identiteitskaart blokkeren.</body></html>");
-    msgconf_OnlyTest = tr("<html><body>Het authenticatie process wordt enkel getest, er wordt niets opgeslagen of gebruikt voor andere doeleinden.</body></html>");
-    msgconf_AreYouSure = tr("<html><body><b>Ben je zeker dat je de elektronische authenticatie wil testen ?</b></body></html>");
-    msgconf_btnTest = tr("Testen");
-    msgconf_btnNoTest = tr("Niet testen");
+//    msgconf_title = tr("<html><body>Authenticatie testen</body></html>");
+//    msgconf_Warning = tr("<html><body><b>Let op : </b>als je de verkeerde pincode ingeeft, kun je de elektronische identiteitskaart blokkeren.</body></html>");
+//    msgconf_OnlyTest = tr("<html><body>Het authenticatie process wordt enkel getest, er wordt niets opgeslagen of gebruikt voor andere doeleinden.</body></html>");
+//    msgconf_AreYouSure = tr("<html><body><b>Ben je zeker dat je de elektronische authenticatie wil testen ?</b></body></html>");
+//    msgconf_btnTest = tr("Testen");
+//    msgconf_btnNoTest = tr("Niet testen");
 
-    msgbox_MW35 = tr("Een andere versie van de eID Middleware 3.5 is reeds ge&iuml;nstalleerd.\r\n\nOm deze versie te kunnen installeren moet u eerst de andere versie verwijderen.");
-    msgBox_SigNOK = tr("De test met de authenticatie is niet geslaagd.");
-    msgBox_SigCancelled = tr("De test met de handtekening is geannuleerd door de gebruiker.");
+    msgbox_MW35 = tr("Een andere versie van de eID Middleware 3.5 is reeds geïnstalleerd.\r\n\nOm deze versie te kunnen installeren moet u eerst de andere versie verwijderen.");
+//    msgBox_SigNOK = tr("De test met de authenticatie is niet geslaagd.");
+//    msgBox_SigCancelled = tr("De test met de handtekening is geannuleerd door de gebruiker.");
 
-    msgBox_SigOK = tr("De test met de authenticatie is geslaagd.");
-    msgbox_SigTitle = tr("Authenticatie testen");
+//    msgBox_SigOK = tr("De test met de authenticatie is geslaagd.");
+//    msgbox_SigTitle = tr("Authenticatie testen");
     msginfo_NOEID = tr("Geen eID kaart gedetecteerd.");
     msginfo_EID = tr("eID kaart correct gedetecteerd.");
     msginfo_NoReaders = tr("Probleem: geen smartcardlezers aangetroffen.");
@@ -697,7 +697,7 @@ void ezInstaller::initImages(void) {
     ui.clbSaveAsPdf->setVisible(false);
     mQLsaveAsPdf.setVisible(false);
 
-    ui.lblRemoveReader->setText(tr("<html><body>Alvorens te starten met de installatie, zorg ervoor dat de kaartlezer NIET verbonden is met de computer.<br>Avant de commencer l'installation, assurez-vous que le lecteur de cartes N'EST PAS connect&eacute; &agrave; l'ordinateur.</html></body>"));
+    ui.lblRemoveReader->setText("<html><body>Alvorens te starten met de installatie, zorg ervoor dat de kaartlezer NIET verbonden is met de computer.<br>Avant de commencer l'installation, assurez-vous que le lecteur de cartes N'EST PAS connect&eacute; &agrave; l'ordinateur.</html></body>");
 	QBrush bgreen(QColor(50, 75, 50, 255));
 	QPalette pal = ui.lblRemoveReader->palette();
 	pal.setBrush(QPalette::Active, QPalette::WindowText, bgreen);
