@@ -788,14 +788,14 @@
      <widget class="QPushButton" name="pb_Summary_2" >
       <property name="geometry" >
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>340</y>
-        <width>91</width>
+        <width>27</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text" >
-       <string>Summary</string>
+       <string/>
       </property>
       <property name="icon" >
        <iconset resource="edtgui.qrc" >:/Resources/Resources/wizarrow_left.png</iconset>
@@ -826,9 +826,9 @@
      <widget class="QPushButton" name="pb_Quit" >
       <property name="geometry" >
        <rect>
-        <x>210</x>
+        <x>170</x>
         <y>340</y>
-        <width>81</width>
+        <width>111</width>
         <height>23</height>
        </rect>
       </property>
@@ -839,9 +839,9 @@
      <widget class="QPushButton" name="pb_SaveSend" >
       <property name="geometry" >
        <rect>
-        <x>120</x>
+        <x>50</x>
         <y>340</y>
-        <width>81</width>
+        <width>111</width>
         <height>23</height>
        </rect>
       </property>
