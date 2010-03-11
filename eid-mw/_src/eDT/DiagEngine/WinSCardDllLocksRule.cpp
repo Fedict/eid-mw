@@ -30,11 +30,11 @@ WinSCardDllLocksRule::WinSCardDllLocksRule()
 // list of applications expected to open winscard.dll
 {
 	m_expected.insert	(L"winlogon.exe");
-	m_expected.insert	(L"Explorer.EXE");
+	m_expected.insert	(L"explorer.exe");
 	m_expected.insert	(L"svchost.exe");
-	m_expected.insert	(L"Firefox.exe");
+	m_expected.insert	(L"firefox.exe");
 	m_expected.insert	(L"beid35gui.exe");
-	m_expected.insert	(L"Thunderbird.exe");
+	m_expected.insert	(L"thunderbird.exe");
 }
 
 WinSCardDllLocksRule::~WinSCardDllLocksRule() throw()

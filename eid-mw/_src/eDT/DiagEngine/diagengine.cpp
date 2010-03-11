@@ -95,6 +95,9 @@ DiagEngine::DiagEngine()
 	test = new AnalyseHardware;
 	m_availableTests.insert(m_availableTests.end(),test );		// Hardware analysis only for Windows (so far)
 
+	test = new AnalyseMWFileInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
+
 	test = new AnalyseReaderDetectInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
 
@@ -105,9 +108,6 @@ DiagEngine::DiagEngine()
 	m_availableTests.insert(m_availableTests.end(),test );
 
 	test = new AnalyseMWCardlistInfo;
-	m_availableTests.insert(m_availableTests.end(),test );
-
-	test = new AnalyseMWFileInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
 
 	test = new AnalyseMWDetectInfo;
@@ -144,6 +144,9 @@ DiagEngine::DiagEngine()
 	
 	test = new AnalyseModuleInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
+
+	test = new AnalyseMWFileInfo;
+	m_availableTests.insert(m_availableTests.end(),test );
 	
 	test = new AnalyseReaderDetectInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
@@ -155,9 +158,6 @@ DiagEngine::DiagEngine()
 	m_availableTests.insert(m_availableTests.end(),test );
 	
 	test = new AnalyseMWCardlistInfo;
-	m_availableTests.insert(m_availableTests.end(),test );
-	
-	test = new AnalyseMWFileInfo;
 	m_availableTests.insert(m_availableTests.end(),test );
 	
 	test = new AnalyseMWDetectInfo;

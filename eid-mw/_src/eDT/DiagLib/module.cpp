@@ -29,6 +29,7 @@
 #include "log.h"
 #include "progress.h"
 #include "Repository.h"
+#include "util.h"
 
 
 int moduleReportInfo(Report_TYPE type,ModuleName name,ProcNameSet names)
@@ -42,9 +43,14 @@ int moduleReportInfo(Report_TYPE type,ModuleName name,ProcNameSet names)
 
 void moduleContributeInfo(ModuleName name,ProcNameSet names)
 {
+	std::wstring procName;
 	REP_PREFIX(name.c_str());
 	for(ProcNameSet::const_iterator	iter=names.begin();iter!=names.end();iter++)
-		REP_CONTRIBUTE(L"lockedBy",iter->c_str());
+	{
+		procName=*iter;
+		wstring_to_lower(procName);
+		REP_CONTRIBUTE(L"lockedBy",procName.c_str());
+	}
 	REP_UNPREFIX();
 }
 

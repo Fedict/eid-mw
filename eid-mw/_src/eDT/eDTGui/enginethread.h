@@ -47,7 +47,8 @@ static struct testSequence tstSequence[]=
 	,{"service_info"			, "process_info"			, "diagnostics"}
 	,{"process_info"			, "module_info"				, "diagnostics"}
 	,{"module_info"				, "hardware_info"			, "diagnostics"}	
-	,{"hardware_info"			, "reader_detect"			, "diagnostics"}
+	,{"hardware_info"			, "middleware_files"		, "diagnostics"}
+	,{"middleware_files"		, "reader_detect"			, "diagnostics"}
 	//------ end info part ----
 	//------ begin infrastructure part ----
 	,{"reader_detect"			, "pcsc_detect"				, "diagnostics"}
@@ -56,8 +57,7 @@ static struct testSequence tstSequence[]=
 	,{"card_detect"				, "middleware_info"			, "diagnostics"}
 	//------ end infrastructure part ----
 	//------ begin middleware part ----
-	,{"middleware_info"			, "middleware_files"		, "diagnostics"}
-	,{"middleware_files"		, "middleware_readerlist"	, "diagnostics"}
+	,{"middleware_info"			, "middleware_readerlist"	, "diagnostics"}
 	,{"middleware_readerlist"	, "middleware_cardlist"		, "pcsc_readerlist"}
 	,{"middleware_cardlist"		, "middleware_access"		, "pcsc_cardlist"}
 	,{"middleware_access"		, "pcsc_readerlist"			, "diagnostics"}
@@ -77,7 +77,8 @@ static struct testSequence tstSequence[]=
 	,{"device_info"				, "software_info"			, "diagnostics"}
 	,{"software_info"			, "process_info"			, "diagnostics"}
 	,{"process_info"			, "module_info"				, "diagnostics"}
-	,{"module_info"				, "pcsc_detect"				, "diagnostics"}
+	,{"module_info"				, "middleware_files"		, "diagnostics"}
+	,{"middleware_files"		, "pcsc_detect"				, "diagnostics"}
 	//------ end info part ----
 	//------ begin infrastructure part ----
 	,{"pcsc_detect"				, "pcsc_readerlist"			, "diagnostics"}
@@ -85,8 +86,7 @@ static struct testSequence tstSequence[]=
 	,{"card_detect"				, "middleware_info"			, "diagnostics"}
 	//------ end infrastructure part ----
 	//------ begin middleware part ----
-	,{"middleware_info"			, "middleware_files"		, "diagnostics"}
-	,{"middleware_files"		, "middleware_readerlist"	, "diagnostics"}
+	,{"middleware_info"			, "middleware_readerlist"	, "diagnostics"}
 	,{"middleware_readerlist"	, "middleware_cardlist"		, "pcsc_readerlist"}
 	,{"middleware_cardlist"		, "middleware_access"		, "pcsc_cardlist"}
 	,{"middleware_access"		, "pcsc_readerlist"			, "diagnostics"}
