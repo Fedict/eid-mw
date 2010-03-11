@@ -318,6 +318,7 @@ void eDTGui::gettingHelp(void)
 void eDTGui::solved(void)
 {
 	MetaRuleVerdict verdict=REP_VERDICT(m_currDiag);
+
 	ui.lbl_remedy->setText(tr("We're delighted the eDT helped solve your problem\n\nIf you want to help us improve the eDT, please click the \"Send\" button below to share the good news."));
 	m_resolved=true;
 	ui.pb_previous->setEnabled(false);
@@ -326,14 +327,18 @@ void eDTGui::solved(void)
 	ui.pb_not_solved->setEnabled(false);
 	ui.pb_needhelp->setEnabled(false);
 	ui.pb_SaveSend->setText(tr("Send"));
-	REP_PREFIX(verdict.rulename());
-	REP_CONTRIBUTE(L"customer_solved",L"true");
+
+	REP_PREFIX(L"diagnostics");
+		REP_PREFIX(verdict.rulename());
+			REP_CONTRIBUTE(L"customer_solved",L"true");
+		REP_UNPREFIX();
 	REP_UNPREFIX();
 }
 
 void eDTGui::not_solved(void)
 {
 	MetaRuleVerdict verdict=REP_VERDICT(m_currDiag);
+
 	ui.lbl_remedy->setText(tr("We're sorry the eDT couldn't help solve your problem rightaway.\n\nTo get help in resolving this problem, please: \n\n- Click the \"Save\" button below and save the eDT report.\n- Send the saved report via e-mail to the service desk (if you received eDT via email, reply to that email)\n- Contact the service desk."));
 	m_resolved=false;
 	ui.pb_previous->setEnabled(false);
@@ -341,8 +346,11 @@ void eDTGui::not_solved(void)
 	ui.pb_solved->setEnabled(false);
 	ui.pb_not_solved->setEnabled(false);
 	ui.pb_needhelp->setEnabled(false);
-	REP_PREFIX(verdict.rulename());
-	REP_CONTRIBUTE(L"customer_solved",L"false");
+
+	REP_PREFIX(L"diagnostics");
+		REP_PREFIX(verdict.rulename());
+			REP_CONTRIBUTE(L"customer_solved",L"false");
+		REP_UNPREFIX();
 	REP_UNPREFIX();
 }
 
@@ -674,8 +682,7 @@ void eDTGui::on_pb_SaveSend_clicked()
 void eDTGui::send_resolution(void)
 {
 		MetaRuleVerdict verdict=REP_VERDICT(m_currDiag);
-      //QString mailaddress("kevin.vanwilder@fedict.be");
-		QString mailaddress("frank@apsu.be");
+		QString mailaddress("servicedesk@fedict.be");
 		QString subject("eDT::Diagnostics Self-Resolution");
 		QString body(w2qstr(L"rule: " + verdict.rulename() + L"\n\n"));
 				body.append(w2qstr(L"verdict:\n" + verdict.verdict() + L"\n"));

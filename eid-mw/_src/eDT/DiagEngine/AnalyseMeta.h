@@ -97,16 +97,6 @@ public:
 
 				REP_UNPREFIX();
 			}
-
-			reportPrintHeader2(REPORT_TYPE_RESULT, L"Meta Diagnostics Raw Data",L'#');
-			ContributionMap contributions=REP_RESULTS();
-			for(ContributionMap::const_iterator i=contributions.begin();i!=contributions.end();i++)
-			{
-				std::wstring	contribStr(i->first);
-								contribStr.append(L"=");
-								contribStr.append(i->second);
-				commentToReport(REPORT_TYPE_RESULT,contribStr.c_str());
-			}
 				
 			progressIncrement();
 		}

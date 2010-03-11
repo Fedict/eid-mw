@@ -36,6 +36,7 @@
 #include "error.h"
 #include "log.h"
 #include "folder.h"
+#include "repository.h"
 
 #define REPORT_TOTAL L"diagreport.txt"
 #define REPORT_ABSTRACT L"diagabstract.txt"
@@ -693,6 +694,17 @@ int reportFinalize(const wchar_t *wzReportAbstract,const wchar_t *wzReportTotal)
 		}
 		fRead=NULL;
 	}
+
+	fwprintf_s(fWrite,L"\n\n");
+	fwprintf_s(fWrite,L"----------------\n");
+	fwprintf_s(fWrite,L"--- RAW DATA ---\n");
+	fwprintf_s(fWrite,L"----------------\n\n");
+
+	fwprintf_s(fWrite,L"<repository>\n");
+	ContributionMap contributions=REP_RESULTS();
+	for(ContributionMap::const_iterator i=contributions.begin();i!=contributions.end();i++)
+		fwprintf_s(fWrite,(L"\t<contribution label=\"" + i->first + L"\"> <![CDATA[" + i->second + L"]] </contribution>\n").c_str());
+	fwprintf_s(fWrite,L"<repository>\n");
 
 	//close FinalReport
 	if(0 != fclose(fWrite))

@@ -26,7 +26,7 @@ typedef enum e_Report_TYPE
 {
 	REPORT_TYPE_RESULT,
 	REPORT_TYPE_MAIN,
-	REPORT_TYPE_COMPLEMENT
+	REPORT_TYPE_COMPLEMENT,
 } Report_TYPE;
 
 int reportGetFileName(const wchar_t **fileName, bool bAbstractOnly = false);
