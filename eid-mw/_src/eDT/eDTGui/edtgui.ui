@@ -168,6 +168,15 @@
       <property name="text" >
        <string>Start</string>
       </property>
+      <property name="icon" >
+       <iconset resource="edtgui.qrc" >:/Resources/Resources/wizarrow_right.png</iconset>
+      </property>
+      <property name="iconSize" >
+       <size>
+        <width>15</width>
+        <height>15</height>
+       </size>
+      </property>
      </widget>
      <widget class="QLabel" name="lbl_instructions" >
       <property name="geometry" >
@@ -244,6 +253,15 @@
       <property name="text" >
        <string>Continue</string>
       </property>
+      <property name="icon" >
+       <iconset resource="edtgui.qrc" >:/Resources/Resources/wizarrow_right.png</iconset>
+      </property>
+      <property name="iconSize" >
+       <size>
+        <width>15</width>
+        <height>15</height>
+       </size>
+      </property>
      </widget>
      <widget class="QLabel" name="label" >
       <property name="geometry" >
@@ -313,6 +331,15 @@
       </property>
       <property name="text" >
        <string>Continue</string>
+      </property>
+      <property name="icon" >
+       <iconset resource="edtgui.qrc" >:/Resources/Resources/wizarrow_right.png</iconset>
+      </property>
+      <property name="iconSize" >
+       <size>
+        <width>15</width>
+        <height>15</height>
+       </size>
       </property>
      </widget>
      <widget class="QLabel" name="label_2" >
@@ -677,14 +704,14 @@
      <widget class="QLabel" name="label_did_it_solve" >
       <property name="geometry" >
        <rect>
-        <x>312</x>
+        <x>322</x>
         <y>318</y>
         <width>231</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text" >
-       <string>Did the suggestion above solve your problem?</string>
+       <string>Did the suggestion solve your problem?</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_4" >
@@ -706,7 +733,7 @@
      <widget class="QPushButton" name="pb_needhelp" >
       <property name="geometry" >
        <rect>
-        <x>530</x>
+        <x>540</x>
         <y>340</y>
         <width>23</width>
         <height>23</height>
@@ -731,7 +758,7 @@
      <widget class="QPushButton" name="pb_solved" >
       <property name="geometry" >
        <rect>
-        <x>310</x>
+        <x>320</x>
         <y>340</y>
         <width>101</width>
         <height>23</height>
@@ -744,7 +771,7 @@
      <widget class="QPushButton" name="pb_not_solved" >
       <property name="geometry" >
        <rect>
-        <x>420</x>
+        <x>430</x>
         <y>340</y>
         <width>101</width>
         <height>23</height>
@@ -757,9 +784,9 @@
      <widget class="QPushButton" name="pb_Summary_2" >
       <property name="geometry" >
        <rect>
-        <x>30</x>
+        <x>20</x>
         <y>340</y>
-        <width>81</width>
+        <width>91</width>
         <height>23</height>
        </rect>
       </property>

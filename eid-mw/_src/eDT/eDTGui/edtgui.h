@@ -89,7 +89,7 @@ private slots:
 	void on_pb_SaveReport_2_clicked();
 	void on_pb_testAuthentication_clicked();
 	void on_stackedWidget_currentChanged(int);
-	void on_pbDiag2_clicked();
+	void on_pb_Diag2_clicked();
 	void on_pb_Diag_clicked();
 	void on_pb_Quit_clicked();
 	void on_pb_SaveSend_clicked();

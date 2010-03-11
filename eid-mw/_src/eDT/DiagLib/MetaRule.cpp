@@ -42,6 +42,6 @@ const std::wstring& MetaRule::description(void) const
 /* example
 MetaRuleVerdict MetaRule::verdict (Repository evidence) const
 {
-	return MetaRuleVerdict(TRUE,"eidmw not installed","install eid-mw");
+	return MetaRuleVerdict(TRUE,"eidmw not installed","install eid-mw",name());
 };
 */

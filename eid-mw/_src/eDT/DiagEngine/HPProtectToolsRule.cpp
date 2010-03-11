@@ -63,6 +63,7 @@ MetaRuleVerdict HPProtectToolsRule::verdict(Repository evidence) const
 													 guilties + 
 													 L"\n\n"
 													 L"ProtectTools/ActivCard is known to lock resources required by Belgian e-ID components..",
-													 L"Stop and Disable ProtectTools/ActivCard");
+													 L"Stop and Disable ProtectTools/ActivCard",
+													 name());
 	}
 }

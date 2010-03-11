@@ -140,6 +140,6 @@ MetaRuleVerdict MiddleWareFilesIntegrityRule::verdict(Repository evidence) const
 			
 		curetext << L"- Re-install eID Middleware from http://eid.belgium.be/\n";
 
-		return MetaRuleVerdict(true,diagtext.str(),curetext.str());
+		return MetaRuleVerdict(true,diagtext.str(),curetext.str(),name());
 	}
 }

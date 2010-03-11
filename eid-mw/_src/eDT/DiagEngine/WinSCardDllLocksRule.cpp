@@ -32,8 +32,9 @@ WinSCardDllLocksRule::WinSCardDllLocksRule()
 	m_expected.insert	(L"winlogon.exe");
 	m_expected.insert	(L"Explorer.EXE");
 	m_expected.insert	(L"svchost.exe");
-	m_expected.insert	(L"irefox.exe");
+	m_expected.insert	(L"Firefox.exe");
 	m_expected.insert	(L"beid35gui.exe");
+	m_expected.insert	(L"Thunderbird.exe");
 }
 
 WinSCardDllLocksRule::~WinSCardDllLocksRule() throw()
@@ -63,6 +64,7 @@ MetaRuleVerdict WinSCardDllLocksRule::verdict(Repository evidence) const
 		return MetaRuleVerdict(true,
 								L"The following processes were unexpectedly locking winscard.dll : " + 
 								guilties,
-								L"Find out if these are necessary and/or try stopping them");
+								L"Find out if these are necessary and/or try stopping them",
+								name());
 	}
 }
