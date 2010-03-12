@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <errno.h>
+#include <algorithm>
 
 #include "diaglib.h"
 #include "report.h"
@@ -132,6 +133,9 @@ void Repository::contribute(const ContributionKey key, const std::wstring format
 
 void Repository::contribute(const MetaRuleVerdict verdict)
 {
+	for(VerdictList::const_iterator v=m_verdicts.begin();v!=m_verdicts.end();v++)	// every MetaRule gets to contribute one verdict only.
+		if((*v).rulename()==verdict.rulename())
+			return;
 	m_verdicts.push_back(verdict);
 }
 
