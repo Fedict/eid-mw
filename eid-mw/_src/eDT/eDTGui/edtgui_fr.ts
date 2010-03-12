@@ -169,20 +169,18 @@ Le code PIN est utilisé pour vérifier le fonctionnement du module cryptographi
 - Click the &quot;Save&quot; button below and save the eDT report.
 - Send the saved report via e-mail to the service desk (if you received eDT via email, reply to that email)
 - Contact the service desk.</source>
-        <translation>Si vous désirez de l&apos;aide avec la résolution de ce problème, veuillez:
-
-- Cliquer &quot;Enregistrer&quot; ci-dessous, et enregistrer le rapport eDT.
-- Envoyer le rapport enregistré via courriel au service desk (si vous avez recu eDT via courriel, veuillez répondre a celui-ci)
-- Contacter le service desk.</translation>
+        <translation>Si vous désirez de l&apos;aide afin de résoudre ce problème, veuillez:
+- Cliquer sur « Enregistrer » ci-dessous et enregistrer le rapport eDT.
+- Envoyer ce rapport enregistré par e-mail au Service Desk (si vous avez reçu l’eDT par e-mail, veuillez répondre à cet e-mail).
+- Contacter le Service Desk.</translation>
     </message>
     <message>
         <location filename="edtgui.cpp" line="320"/>
         <source>We&apos;re delighted the eDT helped solve your problem
 
 If you want to help us improve the eDT, please click the &quot;Send&quot; button below to share the good news.</source>
-        <translation>Nous sommes enchantés que le eDT c&apos;est avéré utile dans la résolution de votre problème.
-
-Si vous souhaitez nous aider à améliorer le eDT, veuillez clicquer &quot;Envoyer&quot; ci-dessous pour nous mettre au courant de la bonne nouvelle.</translation>
+        <translation>Nous nous réjouissons que l’eDT se soit avéré utile dans la résolution de votre problème.
+Si vous souhaitez nous aider à améliorer l’eDT, veuillez cliquer sur « Envoyer » ci-dessous.</translation>
     </message>
     <message>
         <location filename="edtgui.cpp" line="327"/>
@@ -198,17 +196,16 @@ To get help in resolving this problem, please:
 - Click the &quot;Save&quot; button below and save the eDT report.
 - Send the saved report via e-mail to the service desk (if you received eDT via email, reply to that email)
 - Contact the service desk.</source>
-        <translation type="unfinished">Nous nommes navrés que le eDT n&apos;ai pu vous aider a résoudre votre problème immediatement.
-
-Si vous désirez de l&apos;aide avec la résolution de ce problème, veuillez:
-- Cliquer &quot;Enregistrer&quot; ci-dessous, et enregistrer le rapport eDT.
-- Envoyer le rapport enregistré via courriel au service desk (si vous avez recu eDT via courriel, veuillez répondre a celui-ci)
-- Contacter le service desk.</translation>
+        <translation>Nous sommes navrés que l’eDT n&apos;ait pu vous aider à résoudre votre problème immédiatement.
+Si vous désirez de l&apos;aide afin de résoudre ce problème, veuillez:
+- Cliquer  « Enregistrer » ci-dessous et enregistrer le rapport eDT.
+- Envoyer ce rapport enregistré par e-mail au Service Desk (si vous avez reçu l’eDT par e-mail, veuillez répondre à cet e-mail).
+- Contacter le Service Desk.</translation>
     </message>
     <message>
         <location filename="edtgui.cpp" line="470"/>
         <source>The Diagnostics Module found no obvious or known issues with your system and/or eID installation.</source>
-        <translation>Le module diagnostique n&apos;a pu trouver de problème évident et/ou connu avec votre système et/ou votre installation eID.</translation>
+        <translation>Le module diagnostique n&apos;a pas pu trouver de problème évident et/ou connu avec votre système et/ou votre installation eID.</translation>
     </message>
     <message>
         <location filename="edtgui.cpp" line="477"/>
@@ -326,7 +323,7 @@ Si vous désirez de l&apos;aide avec la résolution de ce problème, veuillez:
     <message>
         <location filename="edtgui.ui" line="589"/>
         <source>Diagnostics</source>
-        <translation type="unfinished">Diagnostic</translation>
+        <translation>Diagnostic</translation>
     </message>
     <message>
         <location filename="edtgui.ui" line="613"/>
@@ -351,7 +348,7 @@ Si vous désirez de l&apos;aide avec la résolution de ce problème, veuillez:
     <message>
         <location filename="edtgui.ui" line="714"/>
         <source>Did the suggestion solve your problem?</source>
-        <translation>Est-ce que la suggestion a résolu votre problème?</translation>
+        <translation>Avez-vous pu résoudre votre problème à la suite de notre suggestion ?</translation>
     </message>
     <message>
         <location filename="edtgui.ui" line="755"/>

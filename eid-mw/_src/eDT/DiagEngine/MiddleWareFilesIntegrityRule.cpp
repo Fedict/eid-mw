@@ -126,20 +126,19 @@ MetaRuleVerdict MiddleWareFilesIntegrityRule::verdict(Repository evidence) const
 	else														// if any are some, expose them.
 	{
 		std::wstringstream curetext;
-		std::wstringstream diagtext;
-						   diagtext << L"There are problems with the eID Middleware installation:\n";
+		std::wstringstream detailtext;
 
 		if(!corrupt.empty())
 		{
-			diagtext << L"The following file" << (corrupt.size()==1?L" is":L"s are") << L" corrupted: [" << join<std::wstring,FileNameSet>(corrupt,L",") << L"]\n";
+			detailtext << L"The following file" << (corrupt.size()==1?L" is":L"s are") << L" corrupted: [" << join<std::wstring,FileNameSet>(corrupt,L",") << L"]\n";
 			curetext << L"- Make sure your system is free of Malware before proceeding!\n";
 		}
 
 		if(!missing.empty())
-			diagtext << L"The following file" << (missing.size()==1?L" is":L"s are") << L" missing: [" + join<std::wstring,FileNameSet>(missing,L",") << L"]\n";
+			detailtext << L"The following file" << (missing.size()==1?L" is":L"s are") << L" missing: [" + join<std::wstring,FileNameSet>(missing,L",") << L"]\n";
 			
 		curetext << L"- Re-install eID Middleware from http://eid.belgium.be/\n";
 
-		return MetaRuleVerdict(true,diagtext.str(),curetext.str(),name());
+		return MetaRuleVerdict(true,L"There are problems with the eID Middleware installation",detailtext.str(),curetext.str(),name());
 	}
 }

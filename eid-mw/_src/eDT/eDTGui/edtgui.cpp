@@ -357,12 +357,17 @@ void eDTGui::not_solved(void)
 
 void eDTGui::updateVerdict(void)
 {
-	MetaRuleVerdict verdict=REP_VERDICT(m_currDiag);
-	ui.lbl_conclusion->	setText(w2qstr(verdict.verdict()));
-	ui.lbl_remedy->setText(w2qstr(verdict.corrective()));
-	ui.pb_previous->setEnabled(REP_VERDICT_COUNT()>1 && m_currDiag!=0);
-	ui.pb_next->setEnabled(REP_VERDICT_COUNT()>1 && m_currDiag!=(REP_VERDICT_COUNT()-1));
-	ui.lbl_which_diag->setText((tostring<size_t>(m_currDiag+1) + "/" + tostring<size_t>(REP_VERDICT_COUNT())).c_str());
+	MetaRuleVerdict		verdict=REP_VERDICT(m_currDiag);
+	std::wstringstream	titleText;
+						titleText << L"Diagnostic:" << verdict.verdict() << L" (click for details)";
+						
+	ui.toolBox->setItemText(0,w2qstr(titleText.str()));
+	ui.lbl_details->	setText(w2qstr(verdict.details()));
+	ui.lbl_remedy->		setText(w2qstr(verdict.corrective()));
+
+	ui.pb_previous->	setEnabled(REP_VERDICT_COUNT()>1 && m_currDiag!=0);
+	ui.pb_next->		setEnabled(REP_VERDICT_COUNT()>1 && m_currDiag!=(REP_VERDICT_COUNT()-1));
+	ui.lbl_which_diag->	setText((tostring<size_t>(m_currDiag+1) + "/" + tostring<size_t>(REP_VERDICT_COUNT())).c_str());
 }
 
 void eDTGui::closeEvent(QCloseEvent* event)
@@ -482,7 +487,8 @@ void eDTGui::on_stackedWidget_currentChanged(int index)
 		}
 		else
 		{
-			ui.lbl_conclusion->	setText(tr("The Diagnostics Module found no obvious or known issues with your system and/or eID installation."));
+			ui.toolBox->setItemText(0,tr("Diagnostic: No Known Issues"));
+			ui.lbl_details->	setText(tr("The Diagnostics Module found no obvious or known issues with your system and/or eID installation."));
 			ui.lbl_remedy->		setText(tr("We're sorry the eDT couldn't help solve your problem rightaway.\n\nTo get help in resolving this problem, please: \n\n- Click the \"Save\" button below and save the eDT report.\n- Send the saved report via e-mail to the service desk (if you received eDT via email, reply to that email)\n- Contact the service desk."));
 			ui.pb_solved->		setEnabled(false);
 			ui.pb_not_solved->	setEnabled(false);
@@ -686,6 +692,7 @@ void eDTGui::send_resolution(void)
 		QString subject("eDT::Diagnostics Self-Resolution");
 		QString body(w2qstr(L"rule: " + verdict.rulename() + L"\n\n"));
 				body.append(w2qstr(L"verdict:\n" + verdict.verdict() + L"\n"));
+				body.append(w2qstr(L"details:\n" + verdict.details() + L"\n"));
 				body.append(w2qstr(L"suggestion:\n" + verdict.corrective() + L"\n"));
 				body.append("The customer indicates that the above suggestion solved the problem.");
 

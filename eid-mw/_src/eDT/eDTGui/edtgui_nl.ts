@@ -168,20 +168,20 @@ De PIN code wordt alleen gebruikt om de werking van de cryptografische modules t
 - Click the &quot;Save&quot; button below and save the eDT report.
 - Send the saved report via e-mail to the service desk (if you received eDT via email, reply to that email)
 - Contact the service desk.</source>
-        <translation>Indien u hulp wenst bij het oplossen van dit probleem:
+        <translation type="unfinished">Indien u hulp wenst bij het oplossen van dit probleem:
 
-- Klik &quot;Bewaren&quot; onderdaan, en bewaar het eDT rapport.
-- Stuur het bewaarde rapport via e-mail naar de service desk (indien u eDT via email ontving, beantwoord dan die e-mail)
-- Contacteer de service desk.</translation>
+- Klik &quot;Bewaren&quot; onderdaan en bewaar het eDT-rapport.
+- Stuur het bewaarde rapport via e-mail naar de Service Desk (indien u eDT via e-mail ontving, beantwoord dan die e-mail).
+- Contacteer de Service Desk.</translation>
     </message>
     <message>
         <location filename="edtgui.cpp" line="320"/>
         <source>We&apos;re delighted the eDT helped solve your problem
 
 If you want to help us improve the eDT, please click the &quot;Send&quot; button below to share the good news.</source>
-        <translation>Het verheugt ons dat de eDT uw probleem hielp oplossen.
+        <translation type="unfinished">Het verheugt ons dat de eDT uw probleem hielp oplossen.
 
-Indien u ons wenst te helpen de eDT verder te verbeteren, gelieve dan de &quot;Versturen&quot; knop onderaan te gebruiken, om ons het goede nieuws te melden.</translation>
+Indien u ons wenst te helpen de eDT verder te verbeteren, gelieve dan de knop &quot;Versturen&quot; onderaan te gebruiken.</translation>
     </message>
     <message>
         <location filename="edtgui.cpp" line="327"/>
@@ -197,9 +197,13 @@ To get help in resolving this problem, please:
 - Click the &quot;Save&quot; button below and save the eDT report.
 - Send the saved report via e-mail to the service desk (if you received eDT via email, reply to that email)
 - Contact the service desk.</source>
-        <translation>Het spijt ons dat de eDT uw probleem niet onmiddellijk kon helpen oplossen.
+        <translation type="unfinished">Het spijt ons dat de eDT uw probleem niet onmiddellijk kon helpen oplossen.
 
-Indien u hulp wenst bij het oplossen van dit probleem:- Klik &quot;Bewaren&quot; onderdaan, en bewaar het eDT rapport.- Stuur het bewaarde rapport via e-mail naar de service desk (indien u eDT via email ontving, beantwoord dan die e-mail)- Contacteer de service desk.</translation>
+Indien u hulp wenst bij het oplossen van dit probleem:
+
+- Klik &quot;Bewaren&quot; onderdaan en bewaar het eDT-rapport.
+- Stuur het bewaarde rapport via e-mail naar de Service Desk (indien u eDT via e-mail ontving, beantwoord dan die e-mail).
+- Contacteer de Service Desk.de service desk.</translation>
     </message>
     <message>
         <location filename="edtgui.cpp" line="470"/>

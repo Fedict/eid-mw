@@ -26,15 +26,17 @@
 class MetaRuleVerdict
 {
 public:
-							MetaRuleVerdict(bool guilty, std::wstring verdict=L"none", std::wstring corrective=L"none", std::wstring rulename=L"none");
+							MetaRuleVerdict(bool guilty, std::wstring verdict=L"none", std::wstring details=L"none", std::wstring corrective=L"none", std::wstring rulename=L"none");
 	virtual				   ~MetaRuleVerdict() throw();
 			bool			guilty		(void) const;
 			std::wstring	verdict		(void) const;
+			std::wstring	details		(void) const;
 			std::wstring	corrective	(void) const;
 			std::wstring	rulename	(void) const;
 private:
 	bool			m_guilty;
 	std::wstring	m_verdict;
+	std::wstring	m_details;
 	std::wstring	m_corrective;
 	std::wstring	m_rulename;
 };

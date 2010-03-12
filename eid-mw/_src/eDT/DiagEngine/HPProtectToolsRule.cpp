@@ -34,7 +34,6 @@ HPProtectToolsRule::HPProtectToolsRule()
 	m_ptkeys.insert	(L"acevents_exe");	// ActivCard Events..?
 	m_ptkeys.insert	(L"asghost_exe");
 	m_ptkeys.insert	(L"ac_sharedstore_exe");
-
 }
 
 HPProtectToolsRule::~HPProtectToolsRule() throw()
@@ -59,11 +58,12 @@ MetaRuleVerdict HPProtectToolsRule::verdict(Repository evidence) const
 		std::wstring	guilties		(L"[");
 						guilties.append	(join<std::wstring,ContributionSet>(pt_processes_running,L","));
 						guilties.append	(L"]");
-						return MetaRuleVerdict(true,L"HP ProtectTools (a.k.a. \"ActivCard\"  is Running as indicated by the following running processes:\n" + 
-													 guilties + 
-													 L"\n\n"
-													 L"ProtectTools/ActivCard is known to lock resources required by Belgian e-ID components..",
-													 L"Stop and Disable ProtectTools/ActivCard",
-													 name());
+						return MetaRuleVerdict(true,	L"HP ProtectTools (a.k.a. \"ActivCard\"  is Running",	// verdict
+														L"The following running processes:\n\n" +				// details
+														guilties + 
+														 L"\n\n"
+														L"Indicate the presence of the ProtectTools/ActivCard software, which is known to lock resources required by Belgian e-ID components.",
+														L"Stop and Disable ProtectTools/ActivCard",				// suggestion
+														name());
 	}
 }

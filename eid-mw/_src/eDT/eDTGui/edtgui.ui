@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>614</width>
-    <height>396</height>
+    <width>619</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -600,124 +600,6 @@
      </widget>
     </widget>
     <widget class="QWidget" name="pg_diagnostics" >
-     <widget class="QGroupBox" name="groupBox" >
-      <property name="geometry" >
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>551</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="title" >
-       <string>Conclusion:</string>
-      </property>
-      <widget class="QLabel" name="lbl_conclusion" >
-       <property name="geometry" >
-        <rect>
-         <x>20</x>
-         <y>20</y>
-         <width>521</width>
-         <height>91</height>
-        </rect>
-       </property>
-       <property name="palette" >
-        <palette>
-         <active>
-          <colorrole role="Text" >
-           <brush brushstyle="SolidPattern" >
-            <color alpha="255" >
-             <red>170</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Text" >
-           <brush brushstyle="SolidPattern" >
-            <color alpha="255" >
-             <red>170</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled>
-          <colorrole role="Text" >
-           <brush brushstyle="SolidPattern" >
-            <color alpha="255" >
-             <red>118</red>
-             <green>116</green>
-             <blue>108</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
-        </palette>
-       </property>
-       <property name="font" >
-        <font>
-         <pointsize>8</pointsize>
-         <stylestrategy>PreferDefault</stylestrategy>
-        </font>
-       </property>
-       <property name="text" >
-        <string>conclusion</string>
-       </property>
-       <property name="alignment" >
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-       </property>
-       <property name="wordWrap" >
-        <bool>true</bool>
-       </property>
-       <property name="margin" >
-        <number>0</number>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_2" >
-      <property name="geometry" >
-       <rect>
-        <x>10</x>
-        <y>150</y>
-        <width>551</width>
-        <height>151</height>
-       </rect>
-      </property>
-      <property name="title" >
-       <string>Suggestion:</string>
-      </property>
-      <widget class="QLabel" name="lbl_remedy" >
-       <property name="geometry" >
-        <rect>
-         <x>20</x>
-         <y>30</y>
-         <width>521</width>
-         <height>101</height>
-        </rect>
-       </property>
-       <property name="font" >
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text" >
-        <string>suggestion</string>
-       </property>
-       <property name="textFormat" >
-        <enum>Qt::AutoText</enum>
-       </property>
-       <property name="alignment" >
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-       </property>
-       <property name="wordWrap" >
-        <bool>true</bool>
-       </property>
-      </widget>
-     </widget>
      <widget class="QLabel" name="label_did_it_solve" >
       <property name="geometry" >
        <rect>
@@ -807,22 +689,6 @@
        </size>
       </property>
      </widget>
-     <widget class="QLabel" name="lbl_which_diag" >
-      <property name="geometry" >
-       <rect>
-        <x>501</x>
-        <y>132</y>
-        <width>41</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text" >
-       <string/>
-      </property>
-      <property name="alignment" >
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pb_Quit" >
       <property name="geometry" >
        <rect>
@@ -849,27 +715,198 @@
        <string>Save</string>
       </property>
      </widget>
-     <widget class="QToolButton" name="pb_previous" >
+     <widget class="QToolBox" name="toolBox" >
       <property name="geometry" >
        <rect>
-        <x>488</x>
-        <y>134</y>
-        <width>19</width>
-        <height>19</height>
+        <x>10</x>
+        <y>30</y>
+        <width>551</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <property name="currentIndex" >
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="page" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>551</width>
+         <height>215</height>
+        </rect>
+       </property>
+       <attribute name="label" >
+        <string>Diagnostic:</string>
+       </attribute>
+       <widget class="QFrame" name="frame_3" >
+        <property name="geometry" >
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>551</width>
+          <height>221</height>
+         </rect>
+        </property>
+        <property name="frameShape" >
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow" >
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <widget class="QLabel" name="lbl_details" >
+         <property name="geometry" >
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>531</width>
+           <height>201</height>
+          </rect>
+         </property>
+         <property name="palette" >
+          <palette>
+           <active>
+            <colorrole role="Text" >
+             <brush brushstyle="SolidPattern" >
+              <color alpha="255" >
+               <red>170</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </active>
+           <inactive>
+            <colorrole role="Text" >
+             <brush brushstyle="SolidPattern" >
+              <color alpha="255" >
+               <red>170</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </inactive>
+           <disabled>
+            <colorrole role="Text" >
+             <brush brushstyle="SolidPattern" >
+              <color alpha="255" >
+               <red>118</red>
+               <green>116</green>
+               <blue>108</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </disabled>
+          </palette>
+         </property>
+         <property name="font" >
+          <font>
+           <pointsize>8</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+           <stylestrategy>PreferDefault</stylestrategy>
+          </font>
+         </property>
+         <property name="text" >
+          <string>details</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+         <property name="margin" >
+          <number>0</number>
+         </property>
+         <property name="textInteractionFlags" >
+          <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::NoTextInteraction|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="suggestion" >
+       <attribute name="label" >
+        <string>Suggestion:</string>
+       </attribute>
+       <widget class="QFrame" name="frame" >
+        <property name="geometry" >
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>551</width>
+          <height>211</height>
+         </rect>
+        </property>
+        <property name="frameShape" >
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow" >
+         <enum>QFrame::Sunken</enum>
+        </property>
+        <property name="lineWidth" >
+         <number>1</number>
+        </property>
+        <property name="midLineWidth" >
+         <number>0</number>
+        </property>
+        <widget class="QLabel" name="lbl_remedy" >
+         <property name="geometry" >
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>531</width>
+           <height>191</height>
+          </rect>
+         </property>
+         <property name="font" >
+          <font>
+           <pointsize>8</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text" >
+          <string>suggestion</string>
+         </property>
+         <property name="textFormat" >
+          <enum>Qt::AutoText</enum>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+         <property name="textInteractionFlags" >
+          <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::NoTextInteraction|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="lbl_which_diag" >
+      <property name="geometry" >
+       <rect>
+        <x>510</x>
+        <y>0</y>
+        <width>41</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="text" >
        <string/>
       </property>
-      <property name="arrowType" >
-       <enum>Qt::LeftArrow</enum>
+      <property name="alignment" >
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QToolButton" name="pb_next" >
       <property name="geometry" >
        <rect>
-        <x>535</x>
-        <y>134</y>
+        <x>544</x>
+        <y>2</y>
         <width>19</width>
         <height>19</height>
        </rect>
@@ -879,6 +916,22 @@
       </property>
       <property name="arrowType" >
        <enum>Qt::RightArrow</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="pb_previous" >
+      <property name="geometry" >
+       <rect>
+        <x>497</x>
+        <y>2</y>
+        <width>19</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string/>
+      </property>
+      <property name="arrowType" >
+       <enum>Qt::LeftArrow</enum>
       </property>
      </widget>
     </widget>

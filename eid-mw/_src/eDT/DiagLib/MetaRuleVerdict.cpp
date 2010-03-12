@@ -20,8 +20,8 @@
 
 #include "MetaRuleVerdict.h"
 
-MetaRuleVerdict::MetaRuleVerdict(bool guilty, std::wstring verdict, std::wstring corrective, std::wstring rulename)
-:m_guilty(guilty),m_verdict(verdict),m_corrective(corrective),m_rulename(rulename)
+MetaRuleVerdict::MetaRuleVerdict(bool guilty, std::wstring verdict, std::wstring details, std::wstring corrective, std::wstring rulename)
+:m_guilty(guilty),m_verdict(verdict),m_details(details),m_corrective(corrective),m_rulename(rulename)
 {
 };
 
@@ -37,6 +37,11 @@ bool MetaRuleVerdict::guilty(void) const
 std::wstring MetaRuleVerdict::verdict(void) const
 {
 	return m_verdict;
+};
+
+std::wstring MetaRuleVerdict::details(void) const
+{
+	return m_details;
 };
 
 std::wstring MetaRuleVerdict::corrective(void) const
