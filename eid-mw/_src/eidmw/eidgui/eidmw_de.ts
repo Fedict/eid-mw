@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="de">
+<!DOCTYPE TS>
+<TS version="2.0" language="de">
 <defaultcodec></defaultcodec>
 <context>
     <name>MainWnd</name>
@@ -43,7 +44,7 @@
         <source>Name</source>
         <translation>Name</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="mainwnd.ui" line="888"/>
         <source>Belgische verblijfstitel - Titre de séjour belge</source>
         <translation>Belgische Aufenthaltsgenehmigung - Titre de séjour belge</translation>
@@ -266,17 +267,17 @@
     <message>
         <location filename="mainwnd.ui" line="2854"/>
         <source>&amp;English</source>
-        <translation>&amp;Englisch</translation>
+        <translation>&amp;English</translation>
     </message>
     <message>
         <location filename="mainwnd.ui" line="2862"/>
         <source>&amp;Nederlands</source>
-        <translation>&amp;Niederländisch</translation>
+        <translation>&amp;Nederlands</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="mainwnd.ui" line="2870"/>
         <source>&amp;Français</source>
-        <translation>&amp;Französisch</translation>
+        <translation>&amp;Français</translation>
     </message>
     <message>
         <location filename="mainwnd.ui" line="2878"/>
@@ -1213,7 +1214,7 @@ Bitte .xml, .csv oder .eid angeben</translation>
         <source>Belgian eID Runtime</source>
         <translation>Belgian eID Runtime</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="dlgAbout.ui" line="115"/>
         <source>Copyright © 2009-2010</source>
         <translation>Copyright © 2009-2010</translation>
