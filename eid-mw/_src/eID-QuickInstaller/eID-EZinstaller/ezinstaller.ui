@@ -2204,42 +2204,6 @@ selection-background-color: rgba(170, 0, 0, 0);
     <set>Qt::AlignCenter|Qt::AlignHCenter|Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QCommandLinkButton" name="clbNext">
-   <property name="geometry">
-    <rect>
-     <x>607</x>
-     <y>507</y>
-     <width>176</width>
-     <height>75</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Tahoma</family>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <italic>false</italic>
-     <bold>true</bold>
-     <underline>false</underline>
-     <strikeout>false</strikeout>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="text">
-    <string>Volgende</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>166</width>
-     <height>65</height>
-    </size>
-   </property>
-  </widget>
   <widget class="QCommandLinkButton" name="clbSaveAsPdf">
    <property name="geometry">
     <rect>
@@ -2279,8 +2243,8 @@ selection-background-color: rgba(170, 0, 0, 0);
   <widget class="QCommandLinkButton" name="clbClose">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>507</y>
+     <x>580</x>
+     <y>510</y>
      <width>176</width>
      <height>75</height>
     </rect>

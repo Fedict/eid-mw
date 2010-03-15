@@ -112,6 +112,7 @@ private:
     bool mdiagthread_active;
     bool mhave_readers;
     bool mSignatureOK;
+	bool mInstallSucceeded;
 
 	QString msgOk_successfullInstall;
 	QString msgOK_successfullSignature;
@@ -202,9 +203,6 @@ private slots:
 	void on_clbViewDetails_clicked();
 	void on_lblNext_linkHovered(QString);
 	void on_lblNext_linkActivated(QString);
-	void on_clbNext_clicked();
-	void on_clbNext_released();
-	void on_clbNext_pressed();
 	void on_clbBack_clicked();
 	void on_clbFrancais_released();
 	void on_clbFrancais_pressed();

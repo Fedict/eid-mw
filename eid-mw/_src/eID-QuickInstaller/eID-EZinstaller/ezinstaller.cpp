@@ -66,15 +66,6 @@ void ezInstaller::customEvent(QEvent * qe )
         ui.clbBack->setEnabled(true);
         ui.clbCancel->setEnabled(true);
 
-		// hack: Close button does not respond to click until mouse has left it momentarily
-		QPoint pos;
-		pos.setX(0);
-		pos.setY(0);
-		QMouseEvent mevent(QEvent::Leave, pos, Qt::NoButton, 0, 0);
-		QApplication::sendEvent(&mQLNext, &mevent);
-		QMouseEvent mevent2 (QEvent::Enter, pos, Qt::NoButton, 0, 0);
-		QApplication::sendEvent(&mQLNext, &mevent2);
-
     } else  if (ve->getAction() == "addDriverParams") {
         driverParameters.push_back(ve->getstr1().toStdString());
     } else  if (ve->getAction() == "delayedAction") {
@@ -86,10 +77,18 @@ void ezInstaller::customEvent(QEvent * qe )
     } else if (ve->getAction() == "done") {
         this->mdiagthread_active = false;
 		Sleep(2000);
-		ui.stackedWidget->setCurrentIndex(2);
-        //ui.clbNext->setEnabled(true);
-        //mQLNext.setEnabled(true);
-        //ui.clbBack->setEnabled(true);
+
+		if (dt.fatalErrorOccurred) {
+            buildSummaryPage("diagnosticError");
+            previousPage = ui.stackedWidget->currentIndex();
+            ui.stackedWidget->setCurrentIndex(6); // goto warningpage.
+        }
+        else {
+			mInstallSucceeded = true;
+			ui.stackedWidget->setCurrentIndex(2);
+            previousPage = ui.stackedWidget->currentIndex();
+            ui.stackedWidget->setCurrentIndex(ui.stackedWidget->currentIndex()+1);
+        }
     } else if (ve->getAction() == "disableCancel") {
         ui.clbCancel->setEnabled(false);
     } else if (ve->getAction() == "enableCancel") {
@@ -110,13 +109,13 @@ ezInstaller::ezInstaller(QWidget *parent, Qt::WFlags flags)
     transparentstyle = "color: rgba(0, 0, 0, 0);background-color: rgb(0, 0, 0,0);alternate-background-color: rgb(0, 0, 0,0);border-color: rgba(0, 0, 0, 0);border-top-color: rgba(0, 0, 0, 0);border-right-color: rgba(0, 0, 0, 0);border-left-color: rgba(0, 0, 0, 0);border-bottom-color: rgba(0, 0, 0, 0);gridline-color: rgba(0, 0, 0, 0);selection-color: rgba(0, 0, 0, 0);selection-background-color: rgba(0, 0, 0, 0);";
 
     mhave_readers = false;
+	mInstallSucceeded = false; 
     this->mdiagthread_active = false;
     this->mSignatureOK = false;
 
     ui.setupUi(this);
     this->initImages();
     ui.teProgress->setVisible(false);
-    ui.clbNext->setVisible(false);
     ui.clbBack->setEnabled(false);
     mQLNext.setVisible(false);
     mQLNext.setEnabled(false);
@@ -214,11 +213,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
     mQLClose.setVisible(false);
 	mQLClose.setEnabled(false);
 
-    ui.clbNext->setVisible(false);
-	ui.clbNext->setEnabled(false);
-	mQLNext.setVisible(false);
-	mQLNext.setEnabled(false);
-
 	ui.clbOpenReport->setVisible(false);
 	mQLOpenReport.setVisible(false);
 
@@ -296,7 +290,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
         dt.setobjectToUpdate(this);
         dt.setCurrentLanguage(currentLanguage);
         dt.start();
-
     }
     else {
         if (pagename.contains("pageReaderImages")) {  // 2
@@ -304,9 +297,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
             this->appendStringReport(dt.eindeDiagWithoutError.toStdString(), QFont::Bold);
 
             setStepButtons(false,true,false);
-
-            ui.clbNext->setVisible(false);
-            mQLNext.setVisible(false);
 
             ui.clbBack->setEnabled(false);  // ** was true
 
@@ -319,18 +309,12 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
         }
         else {
             if (pagename.contains("welcomePage")) { // 0
-
-
-
                 ui.clbBack->setEnabled(false);
-
                 setStepButtons(true,true,true);
                 previousPage = 0;
             }
             else {
                 if (pagename.contains("pageConnectedReader")) {  //  3
-					ui.clbNext->setVisible(false);
-					mQLNext.setVisible(false);
 					ui.clbBack->setEnabled(false);  // ** was true
 					dct.setobjectToUpdate(this);
 					dct.start();
@@ -343,10 +327,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 						ui.lblTextSummary_4->setVisible(false);
 						ui.lblIconSummary_3->setVisible(false);
 
-                        ui.clbNext->setEnabled(false);
-                        ui.clbNext->setVisible(false);
-                        mQLNext.setEnabled(false);
-                        mQLNext.setVisible(false);
 						ui.clbOpenReport->setVisible(true);
 						mQLOpenReport.setVisible(true);
 
@@ -398,9 +378,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
                                 //ui.lblConnectedReader->setText(ui.lblConnectedReader->text()+ QString(" ") + QString(_readerName.c_str()));
                             }
 
-                            //
-
-
                             ui.lbleIDInserted->setVisible(false);
                             setStepButtons(false,true,false);
                             previousPage = 3;
@@ -417,7 +394,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
                             if (selectedReader != "") {
                                 this->appendStringReport(msginfo_EID.toStdString(), QFont::Bold);
                                 ui.lbleIDInserted->setVisible(true);
-                                //ui.clbNext->setEnabled(true);
                                 previousPage = ui.stackedWidget->currentIndex();
                                 ui.stackedWidget->setCurrentIndex(ui.stackedWidget->currentIndex()+1);
 
@@ -440,44 +416,26 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
                                 ui.clbSaveAsPdf->setVisible(true);
                                 mQLsaveAsPdf.setVisible(true);
 
-                                ui.clbNext->setVisible(false);
-                                mQLNext.setVisible(false);
-										
-								previousPage = 5;
+								previousPage = 6;
 								ui.clbBack->setEnabled(true);
-
                             }
                             else {
                                 if (pagename.contains("pageSummary")) { // 6
 
-
-                                    ui.clbNext->setVisible(false);
-									ui.clbNext->setEnabled(false);
-                                    mQLNext.setVisible(false);
-                                    mQLNext.setEnabled(false);
-
-                                    ui.clbClose->setGeometry(ui.clbNext->geometry());
-                                    mQLClose.setGeometry(mQLNext.geometry());
                                     ui.clbClose->setVisible(true);
                                     ui.clbClose->setEnabled(true);
                                     mQLClose.setVisible(true);
                                     mQLClose.setEnabled(true);
 
-                                    // hack: Close button does not respond to click until mouse has left it momentarily
+									ui.clbOpenReport->setVisible(true);
+									mQLOpenReport.setVisible(true);
 
-                                    QPoint pos;
-                                    pos.setX(0);
-                                    pos.setY(0);
-                                    QMouseEvent mevent(QEvent::Leave, pos, Qt::NoButton, 0, 0);
-                                    QApplication::sendEvent(&mQLClose, &mevent);
-                                    QMouseEvent mevent2 (QEvent::Enter, pos, Qt::NoButton, 0, 0);
-                                    QApplication::sendEvent(&mQLClose, &mevent2);
-
-                                    if (mhave_readers)
-                                        previousPage = 3;
-                                    else
-                                        previousPage = 2;
-
+									if(!mInstallSucceeded)
+										ui.clbBack->setEnabled(false);
+									if (mhave_readers)
+										previousPage = 3;
+									else
+										previousPage = 2;
                                 }
                             }
                         }
@@ -489,9 +447,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 }
 
 bool ezInstaller::showCardData(string theXml) {
-
-    ui.clbNext->setEnabled(true);
-    mQLNext.setEnabled(true);
 
     string cardData = theXml;
 
@@ -517,22 +472,10 @@ bool ezInstaller::showCardData(string theXml) {
 		ui.lblTextSummary_4->setVisible(true);
 		ui.lblIconSummary_3->setVisible(true);
 
-        ui.clbClose->setGeometry(ui.clbNext->geometry());
-        mQLClose.setGeometry(mQLNext.geometry());
         ui.clbClose->setVisible(true);
         ui.clbClose->setEnabled(true);
         mQLClose.setVisible(true);
         mQLClose.setEnabled(true);
-
-        // hack: Close button does not respond to click until mouse has left it momentarily
-
-        QPoint pos;
-        pos.setX(0);
-        pos.setY(0);
-        QMouseEvent mevent(QEvent::Leave, pos, Qt::NoButton, 0, 0);
-        QApplication::sendEvent(&mQLClose, &mevent);
-        QMouseEvent mevent2 (QEvent::Enter, pos, Qt::NoButton, 0, 0);
-        QApplication::sendEvent(&mQLClose, &mevent2);
 
 		appendStringReport(tr("         Read data : SUCCESS").toStdString(),QFont::Normal);
 		return true;
@@ -654,7 +597,6 @@ void ezInstaller::initImages(void) {
     ui.clbCancel->setIcon(QIcon(":/images/xknop")); ui.clbCancel->setStyleSheet(transparentstyle);
     ui.clbNederlands->setIcon(QIcon(":/images/installeer_nl")); ui.clbNederlands->setStyleSheet(transparentstyle);
     ui.clbFrancais->setIcon(QIcon(":/images/installeer_fr")); ui.clbFrancais->setStyleSheet(transparentstyle);
-    ui.clbNext->setIcon(QIcon(":/images/annuleren")); ui.clbNext->setStyleSheet(transparentstyle);mQLNext.setVisible(false);
     ui.lblPicUnconnectedReader->setPixmap(QPixmap(":/images/reader_disconnected"));
     ui.lblPicCardReaderConnected->setPixmap(QPixmap(":/images/reader_connected"));
     ui.lblPicCardReaderCardInserted->setPixmap(QPixmap(":/images/reader_and_eid"));
@@ -682,10 +624,6 @@ void ezInstaller::initImages(void) {
     mQLChooseFrancais.setIcons(QString(":/images/installeer_fr"),QString(":/images/installeer_fr_down"));
     mQLChooseFrancais.setunderlyingButton(ui.clbFrancais);
     mQLChooseFrancais.setPalette(palLabelsBlack);
-
-    mQLNext.setIcons(QString(":/images/annuleren"),QString(":/images/annuleren_down"));
-    mQLNext.setunderlyingButton(ui.clbNext);
-    mQLNext.setPalette(palLabelsWhite);
 
     mQLOpenReport.setIcons(QString(":/images/knop_breed"),QString(":/images/knop_breed_down"));
     mQLOpenReport.setunderlyingButton(ui.clbOpenReport);
@@ -981,20 +919,10 @@ bool ezInstaller::mInstallReaders() {
     ui.clbCancel->update();
     ui.clbCancel->repaint();
 
-    ui.clbNext->setEnabled(false);
-    ui.clbNext->update();
-    ui.clbNext->repaint();
-    mQLNext.setEnabled(false);
-
 	mhave_readers = false;
 
 	setStepButtons(false,true,false);
 	ui.lblPicCardReaderConnected->setText("");
-
-    ui.clbNext->setVisible(true);
-    ui.clbNext->setEnabled(false);
-    mQLNext.setVisible(true);
-    mQLNext.setEnabled(false);
 
     ui.clbBack->setEnabled(true);
 
@@ -1106,16 +1034,10 @@ LOGSTR(readersXml.c_str());
 
 	if (readers.size() > 0) {
         ui.clbCancel->setEnabled(true);
-
         ui.lblConnectedReader->setVisible(true);
         ui.lblConnectedReader->setText(msglbl_ReaderConnected);
 
-        ui.clbNext->setEnabled(true);
-        mQLNext.setEnabled(true);
         mhave_readers = true;
-        ui.clbNext->setEnabled(true);
-        mQLNext.setEnabled(true);
-
         return true;
     } else {
         buildSummaryPage("noReaderFound");
@@ -1124,8 +1046,6 @@ LOGSTR(readersXml.c_str());
         // wait a second or two before going to warningpage
         delaythread.action = "goToPage"; delaythread.int1 = 6;delaythread.int2 = 0;delaythread.start();
         ui.clbCancel->setEnabled(true);
-        ui.clbNext->setEnabled(true);
-        mQLNext.setEnabled(true);
 
         return false;
     }
@@ -1201,7 +1121,7 @@ void ezInstaller::on_clbCancel_released()
     ui.clbCancel->setIcon(QIcon(":/images/xknop"));
 
 }
-
+/*
 #pragma region NEXTBUTTON
 
 void ezInstaller::on_clbNext_pressed()
@@ -1228,7 +1148,7 @@ void ezInstaller::on_clbNext_clicked()
         return;
     }
 
-    // If whe're on the diagnostic page, check if there where fatal errors to see if
+    // If we're on the diagnostic page, check if there were fatal errors to see if
     // Next should go to warningpage.
 
     QString pagename;
@@ -1256,7 +1176,7 @@ void ezInstaller::on_clbNext_clicked()
 }
 
 #pragma endregion NEXTBUTTON
-
+*/
 #pragma region BACKBUTTON
 
 void ezInstaller::on_clbBack_clicked()
