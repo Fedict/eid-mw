@@ -117,8 +117,6 @@ ezInstaller::ezInstaller(QWidget *parent, Qt::WFlags flags)
     this->initImages();
     ui.teProgress->setVisible(false);
     ui.clbBack->setEnabled(false);
-    mQLNext.setVisible(false);
-    mQLNext.setEnabled(false);
 
     ui.stackedWidget->setCurrentIndex(0);
     previousPage = 0;
@@ -416,7 +414,6 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
                                 ui.clbSaveAsPdf->setVisible(true);
                                 mQLsaveAsPdf.setVisible(true);
 
-								previousPage = 6;
 								ui.clbBack->setEnabled(true);
                             }
                             else {
@@ -792,7 +789,6 @@ void ezInstaller::on_clbFrancais_clicked(){
     mQLShowDetail.resetLabelText();
     mQLChooseNederlands.resetLabelText();
     mQLChooseFrancais.resetLabelText();
-    mQLNext.resetLabelText();
 
     mQLOpenReport.resetLabelText();
     mQLsaveAsPdf.resetLabelText();

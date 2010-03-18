@@ -76,7 +76,6 @@ private:
 	myQLabel mQLShowDetail;
 	myQLabel mQLChooseNederlands;
 	myQLabel mQLChooseFrancais;
-	myQLabel mQLNext;
 	myQLabel mQLOpenReport;
 	myQLabel mQLsaveAsPdf;
 	myQLabel mQLClose;
