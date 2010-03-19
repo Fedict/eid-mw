@@ -77,17 +77,15 @@ void ezInstaller::customEvent(QEvent * qe )
     } else if (ve->getAction() == "done") {
         this->mdiagthread_active = false;
 		Sleep(2000);
+		previousPage = ui.stackedWidget->currentIndex();
 
 		if (dt.fatalErrorOccurred) {
             buildSummaryPage("diagnosticError");
-            previousPage = ui.stackedWidget->currentIndex();
             ui.stackedWidget->setCurrentIndex(6); // goto warningpage.
         }
         else {
 			mInstallSucceeded = true;
-			ui.stackedWidget->setCurrentIndex(2);
-            previousPage = ui.stackedWidget->currentIndex();
-            ui.stackedWidget->setCurrentIndex(ui.stackedWidget->currentIndex()+1);
+			ui.stackedWidget->setCurrentIndex(2);         
         }
     } else if (ve->getAction() == "disableCancel") {
         ui.clbCancel->setEnabled(false);
