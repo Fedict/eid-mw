@@ -348,11 +348,10 @@ bool APL_ReaderContext::connectCard()
 		catch(CMWException &e)
 		{
 			unsigned long err = e.GetError();
-			if(err!=EIDMW_ERR_CANT_CONNECT)
-				throw e;
-			//If we can't connect, the may hold a card that it can't read
-			//so we return an unknown card type
-			m_status=CARD_INSERTED;
+			if(err==EIDMW_ERR_CANT_CONNECT)
+				m_status=CARD_INSERTED;
+
+			throw e;
 		}
 	}
 
