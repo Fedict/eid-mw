@@ -439,7 +439,13 @@
     </DirectoryRef>
 
     <DirectoryRef Id="TARGETDIR">
-
+      <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes">
+        <!-- Start SCardSvr Service during startup -->
+        <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
+        <!-- Start SCardSvr Service now -->
+        <ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" />
+      </Component>
+     
       <Component Id="REGISTERCSP" Guid="{3DF6D19A-C268-4D97-B605-1F3E29DC15DC}">
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Belgium Identity Card CSP"
@@ -650,6 +656,7 @@
                 Description="!(loc.CryptoDescr)"
                 Level="1"
                 >
+        <ComponentRef Id="SCardSvrService"/>
         <ComponentRef Id="CSP"/>
         <ComponentRef Id="REGISTERCSP"/>
         <ComponentRef Id="pkcs11"/>
