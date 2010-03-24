@@ -23,7 +23,8 @@ enum FolderType
 {
 	FOLDER_SYSTEM32,
 	FOLDER_TEMP,
-	FOLDER_APP
+	FOLDER_APP,
+	FOLDER_WOWSYS64
 };
 
 int GetFolderPath(FolderType folder,wchar_t *path,unsigned int pathsize);

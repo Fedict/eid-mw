@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -19,6 +19,7 @@
 **************************************************************************** */
 #include <windows.h>
 #include <iostream>
+#include <stdio.h>
 
 #include "file.h"
 #include "error.h"
@@ -26,11 +27,23 @@
 
 #include "registry.h"
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PRIVATE FUNCTIONS ////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+typedef bool (WINAPI *LPFN_ISWOW64PROCESS) (void*, bool*);
+LPFN_ISWOW64PROCESS fnIsWow64Process;
+
+bool IsWow64Proc()
+{
+    bool bIsWow64 = false;
+
+    fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(GetModuleHandle(TEXT("kernel32")),"IsWow64Process");  
+	if(fnIsWow64Process != NULL)
+        fnIsWow64Process(GetCurrentProcess(),&bIsWow64);
+
+    return bIsWow64;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// PUBLIC FUNCTIONS /////////////////////////////////////////////////
@@ -47,6 +60,28 @@ int GetFolderPath(FolderType folder,wchar_t *path,unsigned int pathsize)
 			LOG(L" --> ERROR - GetFolderPath - System32 folder not found (LastError=%d)\n", GetLastError());
 			iReturnCode = RETURN_ERR_INTERNAL;
 		}
+		break;
+	case FOLDER_WOWSYS64:
+#ifdef WIN64
+		if(0==GetSystemWow64Directory(path,pathsize))
+		{
+			LOG(L" --> ERROR - GetFolderPath - SystemWow64 folder not found (LastError=%d)\n", GetLastError());
+			iReturnCode = RETURN_ERR_INTERNAL;
+		}
+#else
+		if(IsWow64Proc())
+		{
+			if(0==GetSystemWow64Directory(path,pathsize))
+			{
+				LOG(L" --> ERROR - GetFolderPath - SystemWow64 folder not found (LastError=%d)\n", GetLastError());
+				iReturnCode = RETURN_ERR_INTERNAL;
+			}
+		}
+		else
+		{
+			iReturnCode = RETURN_SKIP_FOLDER;
+		}
+#endif
 		break;
 	case FOLDER_APP:
 		if(-1==swprintf_s(path,pathsize,L"C:\\Program Files\\Belgium Identity Card"))
@@ -137,7 +172,10 @@ int DeleteFile(FolderType folder, const wchar_t *file)
 	}
 	else
 	{
-		LOG(L"\n");
+		if (nReturnCode == RETURN_SKIP_FOLDER)
+			nReturnCode = RETURN_OK;
+		else
+			LOG(L"\n");
 	}
 
 	return nReturnCode;

@@ -21,6 +21,7 @@
 
 #define RETURN_OK						0
 #define RETURN_NEED_REBOOT				1
+#define RETURN_SKIP_FOLDER				2
 
 #define RETURN_ERR_COMMANDLINE			10
 #define RETURN_ERR_ADMIN_REQUIRED		11	

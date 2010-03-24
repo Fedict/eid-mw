@@ -92,6 +92,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	if(RETURN_OK!= (nRetCode = KillProcess(L"beid35xsign.exe")))	goto end;
 
 	//Check if the library are used (if g_bForceRemove kill the using process)
+	if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidmdrv.dll",					g_bForceRemove)))	goto end;	//minidriver
 	if(RETURN_OK!= (nRetCode = LibraryUsage(L"beid35common.dll",				g_bForceRemove)))	goto end;	//3.5
 	if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidcommon.dll",					g_bForceRemove)))	goto end;	//3.0
 	if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidwinscard.dll",				g_bForceRemove)))	goto end;	//2.5, 2.6
@@ -112,6 +113,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	if(RETURN_OK!= (nRetCode = SearchAndUninstall(L"3.5",    L"{824563DE-75AD-4166-9DC0-B6482F2?????}",	g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
 	if(RETURN_OK!= (nRetCode = SearchAndUninstall(L"3.5 Pro",L"{FBB5D096-1158-4e5e-8EA3-C73B3F3?????}",	g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
+	if(RETURN_OK!= (nRetCode = SearchAndUninstall(L"minidriver",L"{842C2A79-289B-4cfa-9158-349B73F?????}", g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
 
 	if(g_bForceRemove && wcscmp(g_csKeepGuid,L"")==0)
 	{
@@ -199,6 +201,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"xercesc_2_7.dll")))			goto end;
 		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"xsec_1_4_0.dll")))			goto end;
 		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"libeay32.dll")))				goto end;
+
+		//Delete the remaining files minidriver
+		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidmdrv.dll")))				goto end;
+		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_WOWSYS64,	L"beidmdrv.dll")))				goto end;
 	}
 
 end:
