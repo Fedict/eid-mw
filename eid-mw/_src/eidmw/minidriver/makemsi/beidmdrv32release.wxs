@@ -2,7 +2,7 @@
 <?include $(sys.SOURCEFILEDIR)beidmdrv-include.wxs ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:difx='http://schemas.microsoft.com/wix/DifxAppExtension'>	 
-  <Product UpgradeCode="$(var.UpgradeCode)" Name="Belgium eID Smartcard minidriver (x86)" Id="*" Version="$(var.Version)" Manufacturer="Fedict" Language="1033">
+  <Product UpgradeCode="$(var.UpgradeCode)" Name="Belgium eID Smartcard minidriver (x86)" Id="$(var.ProductGuid)" Version="$(var.Version)" Manufacturer="Fedict" Language="1033">
     <Package Id="*" Manufacturer="Fedict" InstallerVersion="200" Platform="x86" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 	
 	<!-- do not edit the rtf file with word! The installer will be unable to read the license -->
