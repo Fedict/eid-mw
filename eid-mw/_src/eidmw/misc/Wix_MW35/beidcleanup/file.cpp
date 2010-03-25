@@ -31,12 +31,12 @@
 ///////////////////////////// PRIVATE FUNCTIONS ////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-typedef bool (WINAPI *LPFN_ISWOW64PROCESS) (void*, bool*);
+typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (void*, BOOL*);
 LPFN_ISWOW64PROCESS fnIsWow64Process;
 
-bool IsWow64Proc()
+BOOL IsWow64Proc()
 {
-    bool bIsWow64 = false;
+    BOOL bIsWow64 = false;
 
     fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(GetModuleHandle(TEXT("kernel32")),"IsWow64Process");  
 	if(fnIsWow64Process != NULL)
