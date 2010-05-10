@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2009-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,88 +17,55 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-
+#include "basetest.h"
+#include "logtest.h"
 /*
  * Integration test for the PKCS#11 library.
  * Tests the opening and closing of a PKCS#11 session.
  * Required interaction: none.
  */
 
-#include <stdio.h>
-#ifdef WIN32
-//allign at 1 byte
-#pragma pack(push, cryptoki, 1)
-#include <win32.h>
-#include <pkcs11.h>
-#pragma pack(pop, cryptoki)
-//back to default allignment
-
-
-#include <windows.h>
-#include <conio.h>
-#include <tchar.h>
-#include <strsafe.h>
-
-#define dlopen(lib,h) LoadLibrary(lib)
-#define dlsym(h, function) GetProcAddress(h, function)
-#define dlclose(h) FreeLibrary(h)
-#define PKCS11_LIB "..\\_Binaries35\\Debug\\beid35pkcs11D.dll"
-#define RTLD_LAZY	1
-#define RTLD_NOW	2
-#define RTLD_GLOBAL 4
-
-#else
-#include <opensc/pkcs11.h>
-#include <dlfcn.h>
-#include <unistd.h>
-#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
-#endif
-#include <stdlib.h>
-
-
-
-
 int readslots(CK_FUNCTION_LIST_PTR functions) {
 
 	CK_RV rv;
 	CK_C_INITIALIZE_ARGS init_args;
-	CK_SLOT_ID_PTR slot_list;
 	long slot_count;
 	CK_SLOT_ID_PTR slotIds;
 	int slotIdx;
 	CK_INFO info;
 	CK_SESSION_HANDLE session_handle;
 
+	testlog(LVL_INFO,"readslots enter\n");
 	init_args.flags = CKF_OS_LOCKING_OK;
 	init_args.pReserved = NULL;
 
-    	// C_Initialize
-    	rv = (*functions->C_Initialize) ( (CK_VOID_PTR)&init_args );
-    	if (CKR_OK != rv) {
-    	    fprintf(stderr, "C_Initialize error\n");
-    	    exit(1);    
-    	}
+	// C_Initialize
+	rv = (*functions->C_Initialize) ( (CK_VOID_PTR)&init_args );
+	if (CKR_OK != rv) {
+	    testlog(LVL_ERROR, "C_Initialize error\n");
+	    testlog(LVL_INFO,"readslots leave\n");
+		return 1;  
+	}
 	// C_GetInfo
 	rv = (*functions->C_GetInfo) (&info);
 	if (CKR_OK != rv) {
-		fprintf(stderr, "C_GetInfo error\n");
+		testlog(LVL_ERROR, "C_GetInfo error\n");
 		goto finalize;
 	}
-	printf("library version: %d.%d\n", info.libraryVersion.major, info.libraryVersion.minor);
-	printf("PKCS#11 version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
-
+	testlog(LVL_INFO,"library version: %d.%d\n", info.libraryVersion.major, info.libraryVersion.minor);
+	testlog(LVL_INFO,"PKCS#11 version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
 
 	// C_GetSlotList
 	rv = (*functions->C_GetSlotList) (0, 0, &slot_count);
 	if (CKR_OK != rv) {
-		fprintf(stderr, "C_GetSlotList error\n");
+		testlog(LVL_ERROR, "C_GetSlotList error\n");
 		goto finalize;
 	}
-	printf("slot count: %i\n", slot_count);
+	testlog(LVL_DEBUG,"slot count: %i\n", slot_count);
 	slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
 	rv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
 	if (CKR_OK != rv) {
-		fprintf(stderr, "C_GetSlotList (2) error\n");
+		testlog(LVL_ERROR, "C_GetSlotList (2) error\n");
 		goto finalize;
 	}
 
@@ -108,7 +75,7 @@ int readslots(CK_FUNCTION_LIST_PTR functions) {
 		int idx;
 		rv = (*functions->C_GetSlotInfo) (slotId, &slotInfo);
 		if (CKR_OK != rv) {
-			fprintf(stderr, "C_GetSlotInfo error\n");
+			testlog(LVL_ERROR, "C_GetSlotInfo error\n");
 			goto finalize;		
 		}
 		for (idx = 64 - 1; idx > 0; idx--) {
@@ -118,18 +85,18 @@ int readslots(CK_FUNCTION_LIST_PTR functions) {
 				break;
 			}		
 		}
-		printf("slot Id: %d\n", slotId);
-		printf("slot description: %s\n", slotInfo.slotDescription);
+		testlog(LVL_DEBUG,"slot Id: %d\n", slotId);
+		testlog(LVL_DEBUG,"slot description: %s\n", slotInfo.slotDescription);
 		// C_OpenSession
 			rv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
 			if (CKR_OK != rv) {
-				fprintf(stderr, "C_OpenSession error\n");
+				testlog(LVL_ERROR, "C_OpenSession error\n");
 				goto finalize;
 			}
 		// C_CloseSession
 		rv = (*functions->C_CloseSession) (session_handle);
 		if (CKR_OK != rv) {
-			fprintf(stderr, "C_CloseSession error\n");
+			testlog(LVL_ERROR, "C_CloseSession error\n");
 			goto finalize;
 		}
 	}//end of for
@@ -138,72 +105,80 @@ int readslots(CK_FUNCTION_LIST_PTR functions) {
 finalize:
 	rv = (*functions->C_Finalize) (NULL_PTR);
 	if (CKR_OK != rv) {
-		fprintf(stderr, "C_Finalize error\n");
+		testlog(LVL_ERROR, "C_Finalize error\n");
 		exit(1);
 	}
+	testlog(LVL_INFO,"readslots leave\n");
+	return 0;
 }
 
+typedef struct test_finalize_initialize_threadvars
+{
+	int threadRetVal;
+	CK_FUNCTION_LIST_PTR functions;
+} *LP_TEST_FIN_INI_VARS;
 
-
-DWORD WINAPI pkcs11Thread( LPVOID pkcs11functions ) 
+DWORD WINAPI pkcs11Thread( LPVOID testThreadVars ) 
 { 
+	LP_TEST_FIN_INI_VARS threadVars = (LP_TEST_FIN_INI_VARS)testThreadVars;
 	CK_FUNCTION_LIST_PTR functions;
 
-    functions = (CK_FUNCTION_LIST_PTR)pkcs11functions;
+    functions = threadVars->functions;
 
-	readslots(functions);
+	threadVars->threadRetVal = readslots(functions);
+
     return 0; 
 } 
 
-int main() {
+int test_finalize_initialize(FILE* logfile) {
 	void *handle;
-	CK_C_GetFunctionList pC_GetFunctionList;
-	CK_RV rv;
 	CK_FUNCTION_LIST_PTR functions;
     DWORD   dwThreadId;
 	HANDLE  hThreadHandle; 
-
-
-	printf("PKCS11 test\n");
-
+	int retVal = 0;
+	struct test_finalize_initialize_threadvars threadVars;
+	
+	testlog(LVL_INFO, "test_finalize_initialize enter\n");
 	handle = dlopen(PKCS11_LIB, RTLD_LAZY); // RTLD_NOW is slower
 	if (NULL == handle) {
-	    fprintf(stderr, "dlopen error\n");
- 	   exit(1);    
+	    testlog(LVL_ERROR, "dlopen error\n");
+ 		testlog(LVL_INFO, "test_finalize_initialize leave\n");
+		return 1;
 	}
-	// get function pointer to C_GetFunctionList
-	pC_GetFunctionList = (CK_C_GetFunctionList) dlsym(handle, "C_GetFunctionList");
-	if (pC_GetFunctionList == NULL) {
-	    dlclose(handle);
-	    printf("failure\n");
-	    exit(1);
-	}
-
-	// invoke C_GetFunctionList
-	rv = (*pC_GetFunctionList) (&functions);
-	if (rv != CKR_OK) {
-	    fprintf(stderr, "C_GetFunctionList failed\n");
-	    exit(1);    
-	}
+	GetPKCS11FunctionList(&functions, handle);
 
 	readslots(functions);
+
+	threadVars.functions = functions;
+	threadVars.threadRetVal = 0;
 
 	// Create pkcs11 thread
     hThreadHandle = CreateThread( 
         NULL,                   // default security attributes
         0,                      // use default stack size  
         pkcs11Thread,			// thread function name
-        functions,				// argument to thread function 
+        &threadVars,				// argument to thread function 
         0,                      // use default creation flags 
         &dwThreadId);			// returns the thread identifier 
 
-	// Wait until pkcs11 thread is terminated.
-    WaitForSingleObject(hThreadHandle, INFINITE);
-	
+	if (hThreadHandle == NULL)
+	{
+		retVal = -1;
+	}
+	else
+	{
+		// Wait until pkcs11 thread is terminated.
+		if (WAIT_OBJECT_0 != WaitForSingleObject(hThreadHandle, INFINITE))
+		{
+			testlog(LVL_ERROR, "WaitForSingleObject failed\n");
+		}	
+	}
 	dlclose(handle);
-	// Wait for user to end this test
-	getchar();
 
+	testlog(LVL_DEBUG, "second thread returned %d\n",threadVars.threadRetVal);
+	testlog(LVL_INFO, "test_finalize_initialize leave\n");
+
+	return retVal;
 }
 
 
