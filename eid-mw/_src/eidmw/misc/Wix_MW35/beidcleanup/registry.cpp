@@ -80,7 +80,7 @@ int checkStringPattern(const wchar_t *wzPattern, const wchar_t *wzString)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-int RegDeleteTree(HKEY hRootKey,const wchar_t *wzKey) 
+int MyRegDeleteTree(HKEY hRootKey,const wchar_t *wzKey) 
 { 
 	int iReturnCode = RETURN_OK;
 
@@ -100,7 +100,7 @@ int RegDeleteTree(HKEY hRootKey,const wchar_t *wzKey)
 
 	if(f==NULL || err!=0)
 	{
-		LOG(L" --> ERROR - RegDeleteTree failed while opening temp file for write (err=%d)\n", err);
+		LOG(L" --> ERROR - MyRegDeleteTree failed while opening temp file for write (err=%d)\n", err);
 		iReturnCode = RETURN_ERR_INTERNAL;
 		goto cleaning;
 	}
@@ -149,9 +149,9 @@ int RemoveRegistryKey(HKEY hRootKey,const wchar_t *wzKey)
 	LOG(L"Ask for removing registry key (%s\\%s)\n",hRootKey==HKEY_CURRENT_USER?L"HKCU":L"HKLM",wzKey);
 
 	LONG lErr = ERROR_SUCCESS; 
-	if(ERROR_SUCCESS != (lErr=RegDeleteTree(hRootKey,wzKey)))
+	if(ERROR_SUCCESS != (lErr=MyRegDeleteTree(hRootKey,wzKey)))
 	{
-		LOG(L" --> ERROR - RegDeleteTree  (return=%ld)\n",lErr);
+		LOG(L" --> ERROR - MyRegDeleteTree  (return=%ld)\n",lErr);
 		nReturnCode = RETURN_ERR_DELETEREG_FAILED;
 	}
 	else
