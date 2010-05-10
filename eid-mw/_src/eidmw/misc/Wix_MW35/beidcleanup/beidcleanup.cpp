@@ -34,7 +34,7 @@ using namespace std;
 
 static int g_bHelp = 0;
 static const wchar_t *g_csLogFile = L"";
-static bool g_bForceRemove = false;
+static bool g_bForceRemove = true;
 static long g_lTimeout=2*60;
 static const wchar_t *g_csKeepGuid =  L"";
 static bool g_bQuiet = false;
