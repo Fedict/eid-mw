@@ -213,7 +213,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\zrc\zrclib;&quot;$(BEID_DIR_QT_450_INCLUDE)\include&quot;;&quot;$(BEID_DIR_QT_450_INCLUDE)\include\QtCore&quot;;..\..\ThirdParty\Qt\4.5.0\include;..\..\ThirdParty\Qt\4.5.0\include\QtCore;c:\Qt\4.5.0\include;c:\Qt\4.5.0\include\QtCore"
+				AdditionalIncludeDirectories="..\zrc\zrclib;&quot;$(BEID_DIR_QT_462_INCLUDE)\include&quot;;&quot;$(BEID_DIR_QT_462_INCLUDE)\include\QtCore&quot;;..\..\ThirdParty\Qt\4.6.2\include;..\..\ThirdParty\Qt\4.6.2\include\QtCore;c:\Qt\4.6.2\include;c:\Qt\4.6.2\include\QtCore"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;QT_NODLL"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
