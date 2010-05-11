@@ -90,9 +90,10 @@ static HWND findWindow(const QString &id)
 
     HWND hwnd;
     QString wid = id + "_QtSingleApplicationWindow";
+	QString qwidget = "QWidget";
 
     QT_WA( {
-	hwnd = ::FindWindow(L"QWidget", (TCHAR*)wid.utf16());
+	hwnd = ::FindWindowW(L"QWidget", (WCHAR*)wid.utf16());
     }, {
 	hwnd = ::FindWindowA("QWidget", wid.toLocal8Bit().data());
     } )
