@@ -382,7 +382,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="beidcleanup.exe.manifest.admin"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
