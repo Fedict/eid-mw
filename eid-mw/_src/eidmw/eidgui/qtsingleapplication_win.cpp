@@ -154,10 +154,10 @@ bool QtSingleApplication::sendMessage( const QString &message, int timeout )
     LRESULT res;
     QT_WA( {
 	res = SendMessageTimeout(hwnd, WM_COPYDATA, 0/*hwnd sender*/, (LPARAM)&data,
-				 SMTO_ABORTIFHUNG,timeout,&result);
+				 SMTO_ABORTIFHUNG,timeout,(PDWORD_PTR)&result);
     }, {
 	res = SendMessageTimeoutA(hwnd, WM_COPYDATA, 0/*hwnd sender*/, (LPARAM)&data,
-				  SMTO_ABORTIFHUNG,timeout,&result);
+				  SMTO_ABORTIFHUNG,timeout,(PDWORD_PTR)&result);
     } )
     //return res != 0;
 
