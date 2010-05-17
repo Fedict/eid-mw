@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\zrc\zrclib;&quot;$(BEID_DIR_QT_450_INCLUDE)\include&quot;;&quot;$(BEID_DIR_QT_450_INCLUDE)\include\QtCore&quot;;..\..\ThirdParty\Qt\4.5.0\include;..\..\ThirdParty\Qt\4.5.0\include\QtCore;c:\Qt\4.5.0\include;c:\Qt\4.5.0\include\QtCore"
+				AdditionalIncludeDirectories="..\zrc\zrclib;&quot;$(BEID_DIR_QT_462_INCLUDE)\include&quot;;&quot;$(BEID_DIR_QT_462_INCLUDE)\include\QtCore&quot;;..\..\ThirdParty\Qt\4.6.2\include;..\..\ThirdParty\Qt\4.6.2\include\QtCore;c:\Qt\4.6.2\include;c:\Qt\4.6.2\include\QtCore"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;QT_NODLL"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -72,7 +72,7 @@
 				ShowProgress="2"
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\zrc\zrclib\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\lib"
+				AdditionalLibraryDirectories="&quot;..\zrc\zrclib\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_462_STATIC)\lib&quot;;..\..\ThirdParty\Qt\4.6.2_static\lib;C:\Qt\4.6.2_static\lib"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="LIBCMTD.lib libcpmtd.lib"
 				GenerateDebugInformation="true"
@@ -129,7 +129,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\zrc\zrclib;&quot;$(BEID_DIR_QT_450_INCLUDE)\include&quot;;&quot;$(BEID_DIR_QT_450_INCLUDE)\include\QtCore&quot;;..\..\ThirdParty\Qt\4.5.0\include;..\..\ThirdParty\Qt\4.5.0\include\QtCore;c:\Qt\4.5.0\include;c:\Qt\4.5.0\include\QtCore"
+				AdditionalIncludeDirectories="..\zrc\zrclib;&quot;$(BEID_DIR_QT_462_INCLUDE)\include&quot;;&quot;$(BEID_DIR_QT_462_INCLUDE)\include\QtCore&quot;;..\..\ThirdParty\Qt\4.6.2\include;..\..\ThirdParty\Qt\4.6.2\include\QtCore;c:\Qt\4.6.2\include;c:\Qt\4.6.2\include\QtCore"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;QT_NODLL"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -157,7 +157,7 @@
 				ShowProgress="2"
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\zrc\zrclib\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\lib"
+				AdditionalLibraryDirectories="&quot;..\zrc\zrclib\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_462_STATIC)\lib&quot;;..\..\ThirdParty\Qt\4.6.2_static\lib;C:\Qt\4.6.2_static\lib"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="LIBCMTD.lib libcpmtd.lib"
 				GenerateDebugInformation="true"
@@ -295,7 +295,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\zrc\zrclib;&quot;$(BEID_DIR_QT_450_INCLUDE)\include&quot;;&quot;$(BEID_DIR_QT_450_INCLUDE)\include\QtCore&quot;;..\..\ThirdParty\Qt\4.5.0\include;..\..\ThirdParty\Qt\4.5.0\include\QtCore;c:\Qt\4.5.0\include;c:\Qt\4.5.0\include\QtCore"
+				AdditionalIncludeDirectories="..\zrc\zrclib;&quot;$(BEID_DIR_QT_462_INCLUDE)\include&quot;;&quot;$(BEID_DIR_QT_462_INCLUDE)\include\QtCore&quot;;..\..\ThirdParty\Qt\4.6.2\include;..\..\ThirdParty\Qt\4.6.2\include\QtCore;c:\Qt\4.6.2\include;c:\Qt\4.6.2\include\QtCore"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;QT_NODLL"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -318,7 +318,7 @@
 				AdditionalDependencies="QtCore.lib  Ws2_32.lib zrclib.lib"
 				OutputFile="$(ProjectDir)\$(PlatformName)\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\zrc\zrclib\$(PlatformName)\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\lib;..\..\ThirdParty\Qt\4.5.0\lib"
+				AdditionalLibraryDirectories="&quot;..\zrc\zrclib\$(PlatformName)\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_462_STATIC)\lib&quot;;..\..\ThirdParty\Qt\4.6.2_static\lib;C:\Qt\4.6.2_static\lib;..\..\ThirdParty\Qt\4.6.2_64\lib"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="LIBCMT.lib;msvcprt.lib"
 				GenerateDebugInformation="true"

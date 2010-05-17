@@ -265,7 +265,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(ProjectDir)\$(ConfigurationName)\diaglib.lib"
+				OutputFile="$(ProjectDir)\$(PlatformName)\$(ConfigurationName)\diaglib.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"

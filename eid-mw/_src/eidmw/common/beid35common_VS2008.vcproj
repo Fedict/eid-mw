@@ -342,7 +342,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="..\misc\beid\beid35.bat"
+				CommandLine="..\misc\beid\beid35_64.bat"
 			/>
 		</Configuration>
 	</Configurations>

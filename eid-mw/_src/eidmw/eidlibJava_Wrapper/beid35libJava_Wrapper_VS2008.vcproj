@@ -259,7 +259,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="2"
@@ -330,7 +330,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy /Y ..\_Binaries35\$(ConfigurationName)\beid35$(ProjectName).dll ..\..\ThirdParty\beid_sdk\3.5\Java\beid35$(ProjectName).dll"
+				CommandLine="copy /Y ..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beid35$(ProjectName).dll ..\..\ThirdParty\beid_sdk\3.5\Java\beid35$(ProjectName).dll"
 			/>
 		</Configuration>
 	</Configurations>

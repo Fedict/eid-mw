@@ -242,7 +242,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				OutputFile="$(OutDir)$(PlatformName)\$(ProjectName).exe"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
