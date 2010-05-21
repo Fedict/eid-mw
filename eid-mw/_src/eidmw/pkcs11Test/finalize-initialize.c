@@ -21,7 +21,7 @@
 #include "logtest.h"
 /*
  * Integration test for the PKCS#11 library.
- * Tests the opening and closing of a PKCS#11 session.
+ * Tests the finalize/initialize sequence in multiple threads
  * Required interaction: none.
  */
 
@@ -130,7 +130,7 @@ DWORD WINAPI pkcs11Thread( LPVOID testThreadVars )
     return 0; 
 } 
 
-int test_finalize_initialize(FILE* logfile) {
+int test_finalize_initialize() {
 	void *handle;
 	CK_FUNCTION_LIST_PTR functions;
     DWORD   dwThreadId;

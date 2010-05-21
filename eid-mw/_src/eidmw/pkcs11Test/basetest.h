@@ -37,7 +37,11 @@
 #define dlopen(lib,h) LoadLibrary(lib)
 #define dlsym(h, function) GetProcAddress(h, function)
 #define dlclose(h) FreeLibrary(h)
+#ifdef WIN64
+#define PKCS11_LIB "..\\_Binaries35\\x64\\Debug\\beid35pkcs11D.dll"
+#else
 #define PKCS11_LIB "..\\_Binaries35\\Debug\\beid35pkcs11D.dll"
+#endif
 #define RTLD_LAZY	1
 #define RTLD_NOW	2
 #define RTLD_GLOBAL 4

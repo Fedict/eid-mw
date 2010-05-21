@@ -37,7 +37,10 @@ typedef enum pkcs11test_log_level
  * Logging macro's
  ***************************************************************************/
 #define pkcs11test_filename "test_pkcs11.log"
-#define testlog(LOGLEVEL,...) logPrefix(LOGLEVEL), fprintf(pkcs11test_logfile, __VA_ARGS__)
+//#define testlog(LOGLEVEL,...) logPrefix(LOGLEVEL), fprintf(pkcs11test_logfile, __VA_ARGS__)
+#define testlog(LOGLEVEL,...) logPrefix(LOGLEVEL), printf(__VA_ARGS__)
+//#define printlogprefic(LOGLEVEL,LOGPREFIX) fprintf(LOGLEVEL,LOGPREFIX)
+#define printlogprefic(LOGLEVEL,LOGPREFIX) printf(LOGPREFIX)
 
 /****************************************************************************
  * Log Function global variables

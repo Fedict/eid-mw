@@ -43,16 +43,16 @@ void logPrefix(PKCS11TEST_LOG_LEVEL level)
 	switch (level)
 	{
 	case LVL_DEBUG:
-		fprintf(pkcs11test_logfile,"    DEBUG: ");
+		printlogprefic(pkcs11test_logfile,"    DEBUG: ");
 		break;
 	case LVL_INFO:
-		fprintf(pkcs11test_logfile,"  INFO: ");
+		printlogprefic(pkcs11test_logfile,"  INFO: ");
 		break;
 	case LVL_WARNING:
-		fprintf(pkcs11test_logfile,"WARNING: ");
+		printlogprefic(pkcs11test_logfile,"WARNING: ");
 		break;
 	case LVL_ERROR:
-		fprintf(pkcs11test_logfile,"<<ERROR>>: ");
+		printlogprefic(pkcs11test_logfile,"<<ERROR>>: ");
 		break;
 	}
 }

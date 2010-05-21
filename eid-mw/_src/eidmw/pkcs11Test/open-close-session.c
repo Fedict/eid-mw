@@ -17,7 +17,13 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-
+#include "basetest.h"
+#include "logtest.h"
+/*
+ * Integration test for the PKCS#11 library.
+ * Tests the opening and closing of a PKCS#11 session.
+ * Required interaction: none.
+ */
 /*
  * Integration test for the PKCS#11 library.
  * Tests the opening and closing of a PKCS#11 session.
@@ -39,7 +45,7 @@
 #define dlopen(lib,h) LoadLibrary(lib)
 #define dlsym(h, function) GetProcAddress(h, function)
 #define dlclose(h) FreeLibrary(h)
-#define PKCS11_LIB "..\\_Binaries35\\Debug\\beid35pkcs11D.dll"
+
 #define RTLD_LAZY	1
 #define RTLD_NOW	2
 #define RTLD_GLOBAL 4
@@ -52,73 +58,62 @@
 #endif
 #include <stdlib.h>
 
-int main() {
-    	void *handle;
-    	CK_C_GetFunctionList pC_GetFunctionList;
-    	CK_RV rv;
-    	CK_FUNCTION_LIST_PTR functions;
-		CK_INFO info;
-    	CK_SESSION_HANDLE session_handle;
-    	CK_SLOT_ID_PTR slot_list;
-    	long slot_count;
-    	CK_SLOT_ID_PTR slotIds;
+int test_open_close_session() {
+	void *handle;
+	CK_FUNCTION_LIST_PTR functions;
+	int retVal = 0;
+	CK_RV rv;
+	CK_INFO info;
+	CK_SESSION_HANDLE session_handle;
+	long slot_count;
+	CK_SLOT_ID_PTR slotIds;
 	int slotIdx;
-    	printf("PKCS11 test\n");
 
-    	handle = dlopen(PKCS11_LIB, RTLD_LAZY); // RTLD_NOW is slower
-    	if (NULL == handle) {
-    	    fprintf(stderr, "dlopen error\n");
-     	   exit(1);    
-    	}
-    	// get function pointer to C_GetFunctionList
-    	pC_GetFunctionList = (CK_C_GetFunctionList) dlsym(handle, "C_GetFunctionList");
-    	if (pC_GetFunctionList == NULL) {
-    	    dlclose(handle);
-    	    printf("failure\n");
-    	    exit(1);
-    	}
+	testlog(LVL_INFO, "test_open_close_session enter\n");
+	handle = dlopen(PKCS11_LIB, RTLD_LAZY); // RTLD_NOW is slower
+	if (NULL == handle) {
+	    testlog(LVL_ERROR, "dlopen error\n");
+ 		testlog(LVL_INFO, "test_finalize_initialize leave\n");
+		return 1;
+	}
+	GetPKCS11FunctionList(&functions, handle);
 
-    	// invoke C_GetFunctionList
-    	rv = (*pC_GetFunctionList) (&functions);
-    	if (rv != CKR_OK) {
-    	    fprintf(stderr, "C_GetFunctionList failed\n");
-    	    exit(1);    
-    	}
 
-    	// C_Initialize
-    	rv = (*functions->C_Initialize) (NULL);
-    	if (CKR_OK != rv) {
-    	    fprintf(stderr, "C_Initialize error\n");
-    	    exit(1);    
-    	}
+	// C_Initialize
+	rv = (*functions->C_Initialize) (NULL);
+	if (CKR_OK != rv) {
+	    testlog(LVL_ERROR, "C_Initialize error\n");
+	    return 1;  
+	}
 	// C_GetInfo
 	rv = (*functions->C_GetInfo) (&info);
 	if (CKR_OK != rv) {
-		fprintf(stderr, "C_GetInfo error\n");
+		testlog(LVL_ERROR, "C_GetInfo error\n");
 		goto finalize;
 	}
-	printf("library version: %d.%d\n", info.libraryVersion.major, info.libraryVersion.minor);
-	printf("PKCS#11 version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
+	testlog(LVL_INFO,"library version: %d.%d\n", info.libraryVersion.major, info.libraryVersion.minor);
+	testlog(LVL_INFO,"PKCS#11 version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
+
 	// C_GetSlotList
-    	rv = (*functions->C_GetSlotList) (0, 0, &slot_count);
-    	if (CKR_OK != rv) {
-    		fprintf(stderr, "C_GetSlotList error\n");
-    		goto finalize;
-    	}
-    	printf("slot count: %i\n", slot_count);
-    	slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
-    	rv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
-    	if (CKR_OK != rv) {
-    		fprintf(stderr, "C_GetSlotList (2) error\n");
-    		goto finalize;
-    	}
+	rv = (*functions->C_GetSlotList) (0, 0, &slot_count);
+	if (CKR_OK != rv) {
+		testlog(LVL_ERROR,"C_GetSlotList error\n");
+		goto finalize;
+	}
+	testlog(LVL_INFO,"slot count: %i\n", slot_count);
+	slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
+	rv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
+	if (CKR_OK != rv) {
+		testlog(LVL_ERROR,"C_GetSlotList (2) error\n");
+		goto finalize;
+	}
 	for (slotIdx = 0; slotIdx < slot_count; slotIdx++) {
 		CK_SLOT_INFO slotInfo;		
 		CK_SLOT_ID slotId = slotIds[slotIdx];
 		int idx;
 		rv = (*functions->C_GetSlotInfo) (slotId, &slotInfo);
 		if (CKR_OK != rv) {
-			fprintf(stderr, "C_GetSlotInfo error\n");
+			testlog(LVL_ERROR,"C_GetSlotInfo error\n");
 			goto finalize;		
 		}
 		for (idx = 64 - 1; idx > 0; idx--) {
@@ -128,18 +123,20 @@ int main() {
 				break;
 			}		
 		}
-		printf("slot Id: %d\n", slotId);
-		printf("slot description: %s\n", slotInfo.slotDescription);
+		testlog(LVL_INFO,"slot Id: %d\n", slotId);
+		testlog(LVL_INFO,"slot description: %s\n", slotInfo.slotDescription);
+
 		// C_OpenSession
-    		rv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
-    		if (CKR_OK != rv) {
-    		    fprintf(stderr, "C_OpenSession error\n");
-    		    goto finalize;
-    		}
+		rv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
+		if (CKR_OK != rv) {
+		    testlog(LVL_ERROR,"C_OpenSession error\n");
+		    goto finalize;
+		}
+
 		// C_CloseSession
 		rv = (*functions->C_CloseSession) (session_handle);
 		if (CKR_OK != rv) {
-			fprintf(stderr, "C_CloseSession error\n");
+			testlog(LVL_ERROR,"C_CloseSession error\n");
 			goto finalize;
 		}
 	}
@@ -147,9 +144,10 @@ int main() {
 finalize:
 	rv = (*functions->C_Finalize) (NULL_PTR);
 	if (CKR_OK != rv) {
-		fprintf(stderr, "C_Finalize error\n");
-		exit(1);
+		testlog(LVL_ERROR,"C_Finalize error\n");
+		return 1;
 	}
     dlclose(handle);
+	return 0;
 }
 

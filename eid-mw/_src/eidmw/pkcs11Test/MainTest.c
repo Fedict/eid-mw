@@ -37,6 +37,12 @@ int main() {
 
 	initLog();
 
+	testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
+	result[testCounter] = test_open_close_session();
+	testCounter++;
+	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
+	result[testCounter] = test_show_mechanismsinfo();
+	testCounter++;
 	testDescription[testCounter] = "Test multiple finalize/initialize sessions in different threads";
 	result[testCounter] = test_finalize_initialize();
 	testCounter++;
@@ -49,6 +55,6 @@ int main() {
 	
 	endLog();
 	// Wait for user to end this test
-	//getchar();
+	getchar();
 }
 
