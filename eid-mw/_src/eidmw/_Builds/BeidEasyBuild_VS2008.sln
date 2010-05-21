@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C++ Express 2008
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eidlib-2.6", "..\..\beid-2.6\src\eidlib\eidlib_VS2008.vcproj", "{8E69780F-48D9-4CD6-9A51-4BB3C1B084D1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "..\common\beid35common_VS2008.vcproj", "{39710980-B40E-4B06-B8E8-D86B125007F3}"
@@ -464,6 +464,7 @@ Global
 		{49962208-2A65-41A4-9EC2-ABB95DC041F4}.Release|Win32.ActiveCfg = Release|x86
 		{49962208-2A65-41A4-9EC2-ABB95DC041F4}.Release|Win32.Build.0 = Release|x86
 		{49962208-2A65-41A4-9EC2-ABB95DC041F4}.Release|x64.ActiveCfg = Release|x86
+		{49962208-2A65-41A4-9EC2-ABB95DC041F4}.Release|x64.Build.0 = Release|x86
 		{49962208-2A65-41A4-9EC2-ABB95DC041F4}.Release|x86.ActiveCfg = Release|x86
 		{49962208-2A65-41A4-9EC2-ABB95DC041F4}.Release|x86.Build.0 = Release|x86
 		{65FE7CF6-CAF6-4104-8320-58801209E5DA}.Debug|Any CPU.ActiveCfg = Debug|x86
@@ -482,6 +483,7 @@ Global
 		{65FE7CF6-CAF6-4104-8320-58801209E5DA}.Release|Win32.ActiveCfg = Release|x86
 		{65FE7CF6-CAF6-4104-8320-58801209E5DA}.Release|Win32.Build.0 = Release|x86
 		{65FE7CF6-CAF6-4104-8320-58801209E5DA}.Release|x64.ActiveCfg = Release|x86
+		{65FE7CF6-CAF6-4104-8320-58801209E5DA}.Release|x64.Build.0 = Release|x86
 		{65FE7CF6-CAF6-4104-8320-58801209E5DA}.Release|x86.ActiveCfg = Release|x86
 		{65FE7CF6-CAF6-4104-8320-58801209E5DA}.Release|x86.Build.0 = Release|x86
 		{62481BE6-49B5-48EA-A11E-BC77761ED0E2}.Debug|Any CPU.ActiveCfg = Debug|x86
@@ -500,6 +502,7 @@ Global
 		{62481BE6-49B5-48EA-A11E-BC77761ED0E2}.Release|Win32.ActiveCfg = Release|x86
 		{62481BE6-49B5-48EA-A11E-BC77761ED0E2}.Release|Win32.Build.0 = Release|x86
 		{62481BE6-49B5-48EA-A11E-BC77761ED0E2}.Release|x64.ActiveCfg = Release|x86
+		{62481BE6-49B5-48EA-A11E-BC77761ED0E2}.Release|x64.Build.0 = Release|x86
 		{62481BE6-49B5-48EA-A11E-BC77761ED0E2}.Release|x86.ActiveCfg = Release|x86
 		{62481BE6-49B5-48EA-A11E-BC77761ED0E2}.Release|x86.Build.0 = Release|x86
 		{7B4D3F36-6FB1-423D-A71F-822AF8DA3036}.Debug|Any CPU.ActiveCfg = Debug|x86
@@ -518,6 +521,7 @@ Global
 		{7B4D3F36-6FB1-423D-A71F-822AF8DA3036}.Release|Win32.ActiveCfg = Release|x86
 		{7B4D3F36-6FB1-423D-A71F-822AF8DA3036}.Release|Win32.Build.0 = Release|x86
 		{7B4D3F36-6FB1-423D-A71F-822AF8DA3036}.Release|x64.ActiveCfg = Release|x86
+		{7B4D3F36-6FB1-423D-A71F-822AF8DA3036}.Release|x64.Build.0 = Release|x86
 		{7B4D3F36-6FB1-423D-A71F-822AF8DA3036}.Release|x86.ActiveCfg = Release|x86
 		{7B4D3F36-6FB1-423D-A71F-822AF8DA3036}.Release|x86.Build.0 = Release|x86
 		{5F3DCF78-5A47-4CFD-844D-F3FEFB4E5CAB}.Debug|Any CPU.ActiveCfg = Debug|Win32

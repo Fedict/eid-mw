@@ -29,8 +29,8 @@ echo Copying 3rd party libs etc. (if not yet copied)
 ::OpenSSL 1.0.0
 ::==============
 if exist "%BEID_DIR_OPENSSL_100%" goto find_openssl
-set BEID_DIR_OPENSSL_098G=%~dp0..\..\..\ThirdParty\openssl-1.0.0_64
-if exist "%BEID_DIR_OPENSSL_098G%" goto find_openssl
+set BEID_DIR_OPENSSL_100=%~dp0..\..\..\ThirdParty\openssl-1.0.0_64
+if exist "%BEID_DIR_OPENSSL_100%" goto find_openssl
 goto print_err_openssl
 
 :find_openssl
@@ -46,13 +46,13 @@ xcopy /D /Y "%TARGET1%" "%~dp0..\..\_Binaries35\x64\Release\"
 
 ::Xercess 3.1.1
 ::=============
-if exist "%BEID_DIR_XERCES_311%" goto find_xerces
-set BEID_DIR_XERCES_311=%~dp0..\..\..\ThirdParty\xerces\xerces-c-3.1.1_64
-if exist "%BEID_DIR_XERCES_311%" goto find_xerces
+if exist "%BEID_DIR_XERCES_311_64%" goto find_xerces
+set BEID_DIR_XERCES_311_64=%~dp0..\..\..\ThirdParty\xerces\xerces-c-3.1.1_64
+if exist "%BEID_DIR_XERCES_311_64%" goto find_xerces
 goto print_err_xerces
 
 :find_xerces
-set TARGET1=%BEID_DIR_XERCES_310%\bin\xerces-c_3_1.dll
+set TARGET1=%BEID_DIR_XERCES_311_64%\bin\xerces-c_3_1.dll
 if not exist "%TARGET1%" goto print_err
 xcopy /D /Y "%TARGET1%" "%~dp0..\..\_Binaries35\x64\Release\"
 xcopy /D /Y "%TARGET1%" "%~dp0..\..\_Binaries35\x64\Debug\"

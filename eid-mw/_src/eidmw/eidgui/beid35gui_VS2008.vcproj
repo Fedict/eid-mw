@@ -343,7 +343,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm200 -w34100 -w34189 -Zm200 -w34100 -w34189 -w34100 -w34189"
 				Optimization="2"
-				AdditionalIncludeDirectories="&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;..\eidlib;&quot;$(BEID_DIR_QT_462_INCLUDE)\include&quot;;&quot;$(BEID_DIR_QT_462_INCLUDE)\include\QtCore&quot;;&quot;$(BEID_DIR_QT_462_INCLUDE)\include\QtGui&quot;;..\..\ThirdParty\Qt\4.6.2\include;..\..\ThirdParty\Qt\4.6.2\include\QtCore;..\..\ThirdParty\Qt\4.6.2\include\QtGui;c:\Qt\4.6.2\include;c:\Qt\4.6.2\include\QtCore;c:\Qt\4.6.2\include\QtGui"
+				AdditionalIncludeDirectories="&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;..\eidlib;&quot;$(BEID_DIR_QT_462_64)\include&quot;;&quot;$(BEID_DIR_QT_462_64)\include\QtCore&quot;;&quot;$(BEID_DIR_QT_462_64)\include\QtGui&quot;;..\..\ThirdParty\Qt\4.6.2_64\include;..\..\ThirdParty\Qt\4.6.2_64\include\QtCore;..\..\ThirdParty\Qt\4.6.2_64\include\QtGui;c:\Qt\4.6.2_64\include;c:\Qt\4.6.2_64\include\QtCore;c:\Qt\4.6.2_64\include\QtGui"
 				PreprocessorDefinitions="BEID_35;QT_NO_DEBUG;NDEBUG;_WINDOWS;WIN32;QT_LARGEFILE_SUPPORT;QT_DLL;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT"
 				GeneratePreprocessedFile="0"
 				ExceptionHandling="1"
@@ -376,7 +376,7 @@
 				OutputFile="..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beid35$(ProjectName).exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="false"
-				AdditionalLibraryDirectories="&quot;..\_Binaries35\$(PlatformName)\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_462_DYNAMIC)\lib&quot;;..\..\ThirdParty\Qt\4.6.2\lib;C:\Qt\4.6.2\lib"
+				AdditionalLibraryDirectories="&quot;..\_Binaries35\$(PlatformName)\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_462_64)\lib&quot;;..\..\ThirdParty\Qt\4.6.2_64\lib;C:\Qt\4.6.2_64\lib"
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile=""
 				SubSystem="2"
@@ -508,7 +508,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputPath)... "
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;call ..\SetPathQt462_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;call ..\SetPathQt462_64_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -556,7 +556,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputPath)..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;call ..\SetPathQt462_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;call ..\SetPathQt462_64_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -604,7 +604,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputPath)..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;call ..\SetPathQt462_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;call ..\SetPathQt462_64_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -660,7 +660,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing mainwnd.h..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;call ..\SetPathQt462_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; -I&quot;.\..\..\ThirdParty\Qt\4.6.2\include&quot; -I&quot;.\..\..\ThirdParty\Qt\4.6.2\include\QtCore&quot; -I&quot;.\..\..\ThirdParty\Qt\4.6.2\include\QtGui&quot; -I&quot;c:\Qt\4.6.2\include&quot; -I&quot;c:\Qt\4.6.2\include\QtCore&quot; -I&quot;c:\Qt\4.6.2\include\QtGui&quot; &quot;mainwnd.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_mainwnd.cpp&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;call ..\SetPathQt462_64_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; -I&quot;.\..\..\ThirdParty\Qt\4.6.2\include&quot; -I&quot;.\..\..\ThirdParty\Qt\4.6.2\include\QtCore&quot; -I&quot;.\..\..\ThirdParty\Qt\4.6.2\include\QtGui&quot; -I&quot;c:\Qt\4.6.2\include&quot; -I&quot;c:\Qt\4.6.2\include\QtCore&quot; -I&quot;c:\Qt\4.6.2\include\QtGui&quot; &quot;mainwnd.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_mainwnd.cpp&quot;&#x0D;&#x0A;"
 						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;mainwnd.h"
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)\moc_mainwnd.cpp&quot;"
 					/>
@@ -708,7 +708,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputPath)..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;call ..\SetPathQt462_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;call ..\SetPathQt462_64_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -756,7 +756,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputPath)..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;call ..\SetPathQt462_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;call ..\SetPathQt462_64_Include&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\moc.exe&quot;  -DBEID_35 -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;.\GeneratedFiles\$(ConfigurationName)&quot; -I&quot;.\..\eidlib&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtCore&quot; -I&quot;%BEID_DIR_QT_462_INCLUDE%\include\QtGui&quot; &quot;$(InputName).h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -776,26 +776,6 @@
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
-			<File
-				RelativePath="GeneratedFiles\release\moc_dlgAbout.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
 			<File
 				RelativePath="GeneratedFiles\debug\moc_dlgAbout.cpp"
 				>
@@ -817,7 +797,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GeneratedFiles\release\moc_dlgOptions.cpp"
+				RelativePath="GeneratedFiles\release\moc_dlgAbout.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -857,10 +837,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\GeneratedFiles\debug\moc_dlgprint.cpp"
+				RelativePath="GeneratedFiles\release\moc_dlgOptions.cpp"
 				>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -868,7 +848,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|x64"
+					Name="Debug|x64"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -915,6 +895,26 @@
 						Name="VCCLCompilerTool"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\GeneratedFiles\debug\moc_dlgprint.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>
@@ -981,26 +981,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\GeneratedFiles\debug\moc_picturepopup.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\GeneratedFiles\release\moc_picturepopup.cpp"
 				>
 				<FileConfiguration
@@ -1043,7 +1023,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\GeneratedFiles\debug\moc_qtsingleapplication.cpp"
+				RelativePath=".\GeneratedFiles\debug\moc_picturepopup.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -1101,6 +1081,26 @@
 						Name="VCCLCompilerTool"
 						ObjectFile="$(IntDir)\$(InputName)1.obj"
 						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\GeneratedFiles\debug\moc_qtsingleapplication.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>
@@ -1167,26 +1167,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\release\ui_dlgAbout.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\generatedfiles\debug\ui_dlgAbout.h"
 				>
 				<FileConfiguration
@@ -1207,10 +1187,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\debug\ui_dlgOptions.h"
+				RelativePath=".\generatedfiles\release\ui_dlgAbout.h"
 				>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -1218,7 +1198,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|x64"
+					Name="Debug|x64"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -1239,6 +1219,26 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\generatedfiles\debug\ui_dlgOptions.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -1287,26 +1287,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\release\ui_mainwnd.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\generatedfiles\debug\ui_mainwnd.h"
 				>
 				<FileConfiguration
@@ -1327,7 +1307,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\release\ui_picturepopup.h"
+				RelativePath=".\generatedfiles\release\ui_mainwnd.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -1359,6 +1339,26 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\generatedfiles\release\ui_picturepopup.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -1415,7 +1415,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Uic&apos;ing $(InputPath)..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot;"
 					/>
@@ -1463,7 +1463,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Uic&apos;ing $(InputPath)..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot;"
 					/>
@@ -1511,7 +1511,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Uic&apos;ing $(InputPath)..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot;"
 					/>
@@ -1559,7 +1559,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Uic&apos;ing $(InputPath)..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot;"
 					/>
@@ -1607,7 +1607,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Uic&apos;ing $(InputPath)..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\uic.exe&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
 						AdditionalDependencies=""
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\ui_$(InputName).h&quot;"
 					/>
@@ -1714,7 +1714,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Rcc&apos;ing eidgui.qrc..."
-						CommandLine="call ..\SetPathQt462_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;.\$(InputName).qrc&quot; -o .\GeneratedFiles\$(ConfigurationName)\qrc_$(InputName).cpp&#x0D;&#x0A;"
+						CommandLine="call ..\SetPathQt462_64_Exe&#x0D;&#x0A;&quot;%BEID_DIR_QT_462_EXE%\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;.\$(InputName).qrc&quot; -o .\GeneratedFiles\$(ConfigurationName)\qrc_$(InputName).cpp&#x0D;&#x0A;"
 						AdditionalDependencies=".\eidgui.qrc;.\Images\Background_ForeignersBack.jpg;.\Images\Background_ForeignersFront.jpg;.\Images\Background_IDBack.jpg;.\Images\Background_IDFront.jpg;.\Images\Background_KidsBack.jpg;.\Images\Background_KidsFront.jpg;.\Images\Background_SisBack.jpg;.\Images\Background_SisFront.jpg;.\Images\Female.png;.\Images\Icons\Chip.png;.\Images\Icons\Clear.png;.\Images\Icons\Exit.png;.\Images\Icons\ICO_CARD_EID_PLAIN_16x16.png;.\Images\Icons\Open.png;.\Images\Icons\Options.png;.\Images\Icons\Print.png;.\Images\Icons\Save.png;.\Images\Icons\Zoom_IN.png;.\Images\Icons\Zoom_OUT.png;.\Images\Icons\reader_card.png;.\Images\Icons\reader_error.png;.\Images\Icons\reader_nocard.png;.\Images\Icons\reader_question.png;.\Images\Male.png;.\Images\a-z_identiteitskaart_logo.png;.\Images\schild_de.jpg;.\Images\schild_en.jpg;.\Images\schild_fr.jpg;.\Images\schild_nl.jpg"
 						Outputs=".\GeneratedFiles\$(ConfigurationName)\qrc_$(InputName).cpp"
 					/>
