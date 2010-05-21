@@ -236,7 +236,7 @@ bool CPCSC::Status(const std::string &csReader)
 	return (xReaderState.dwEventState & SCARD_STATE_PRESENT) == SCARD_STATE_PRESENT;
 }
 
-unsigned long CPCSC::Connect(const std::string &csReader,
+SCARDHANDLE CPCSC::Connect(const std::string &csReader,
 	unsigned long ulShareMode, unsigned long ulPreferredProtocols)
 {
     DWORD dwProtocol;
@@ -267,21 +267,21 @@ unsigned long CPCSC::Connect(const std::string &csReader,
 		CThread::SleepMillisecs(200);
 	}
 
-    return (unsigned long) hCard;
+    return hCard;
 }
 
-void CPCSC::Disconnect(unsigned long hCard, tDisconnectMode disconnectMode)
+void CPCSC::Disconnect(SCARDHANDLE hCard, tDisconnectMode disconnectMode)
 {
     DWORD dwDisposition = disconnectMode == DISCONNECT_RESET_CARD ?
         SCARD_RESET_CARD : SCARD_LEAVE_CARD;
 
-    long lRet = SCardDisconnect((SCARDHANDLE) hCard, dwDisposition);
+    long lRet = SCardDisconnect(hCard, dwDisposition);
 	MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardDisconnect(0x%0x): 0x%0x ; mode: %d", hCard, lRet, dwDisposition);
     if (SCARD_S_SUCCESS != lRet)
         throw CMWEXCEPTION(PcscToErr(lRet));
 }
 
-CByteArray CPCSC::GetATR(unsigned long hCard)
+CByteArray CPCSC::GetATR(SCARDHANDLE hCard)
 {
 	DWORD dwReaderLen = 0;
 	DWORD dwState, dwProtocol;
@@ -297,7 +297,7 @@ CByteArray CPCSC::GetATR(unsigned long hCard)
 	return CByteArray(tucATR, dwATRLen);
 }
 
-CByteArray CPCSC::GetIFDVersion(unsigned long hCard)
+CByteArray CPCSC::GetIFDVersion(SCARDHANDLE hCard)
 {
 	unsigned char tucIFDVers[4] = {0,0,0,0};
 	DWORD dwIFDVersLen = sizeof(tucIFDVers);
@@ -309,7 +309,7 @@ CByteArray CPCSC::GetIFDVersion(unsigned long hCard)
 	return CByteArray(tucIFDVers, dwIFDVersLen);
 }
 
-bool CPCSC::Status(unsigned long hCard)
+bool CPCSC::Status(SCARDHANDLE hCard)
 {
 	DWORD dwReaderLen = 0;
 	DWORD dwState, dwProtocol;
@@ -329,7 +329,7 @@ bool CPCSC::Status(unsigned long hCard)
 	return SCARD_S_SUCCESS == lRet;
 }
 
-CByteArray CPCSC::Transmit(unsigned long hCard, const CByteArray &oCmdAPDU,
+CByteArray CPCSC::Transmit(SCARDHANDLE hCard, const CByteArray &oCmdAPDU,
 	void *pSendPci, void *pRecvPci)
 {
 	unsigned char tucRecv[APDU_BUF_LEN];
@@ -355,7 +355,7 @@ CByteArray CPCSC::Transmit(unsigned long hCard, const CByteArray &oCmdAPDU,
 	int iRetryCount = 0;
 try_again:
 #endif
-	long lRet = SCardTransmit((SCARDHANDLE) hCard,
+	long lRet = SCardTransmit(hCard,
 		pioSendPci, oCmdAPDU.GetBytes(), (DWORD) oCmdAPDU.Size(),
  		pioRecvPci, tucRecv, &dwRecvLen);
 	if (SCARD_S_SUCCESS != lRet)
@@ -379,7 +379,7 @@ try_again:
 	return CByteArray(tucRecv, (unsigned long) dwRecvLen);
 }
 
-CByteArray CPCSC::Control(unsigned long hCard, unsigned long ulControl, const CByteArray &oCmd,
+CByteArray CPCSC::Control(SCARDHANDLE hCard, unsigned long ulControl, const CByteArray &oCmd,
 	unsigned long ulMaxResponseSize)
 {
 	MWLOG(LEV_DEBUG, MOD_CAL, L"      SCardControl(ctrl=0x%0x, %ls)",
@@ -391,7 +391,7 @@ CByteArray CPCSC::Control(unsigned long hCard, unsigned long ulControl, const CB
     DWORD dwRecvLen = ulMaxResponseSize;
 
 #ifndef __OLD_PCSC_API__
-    long lRet = SCardControl((SCARDHANDLE)hCard, ulControl,
+    long lRet = SCardControl(hCard, ulControl,
         oCmd.GetBytes(), (DWORD) oCmd.Size(),
         pucRecv, dwRecvLen, &dwRecvLen);
 #else
@@ -420,17 +420,17 @@ CByteArray CPCSC::Control(unsigned long hCard, unsigned long ulControl, const CB
 	return oResp;
 }
 
-void CPCSC::BeginTransaction(unsigned long hCard)
+void CPCSC::BeginTransaction(SCARDHANDLE hCard)
 {
-    long lRet = SCardBeginTransaction((SCARDHANDLE) hCard);
+    long lRet = SCardBeginTransaction(hCard);
 	MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardBeginTransaction(0x%0x): 0x%0x", hCard, lRet);
     if (SCARD_S_SUCCESS != lRet)
         throw CMWEXCEPTION(PcscToErr(lRet));
 }
 
-void CPCSC::EndTransaction(unsigned long hCard)
+void CPCSC::EndTransaction(SCARDHANDLE hCard)
 {
-    long lRet = SCardEndTransaction((SCARDHANDLE) hCard, SCARD_LEAVE_CARD);
+    long lRet = SCardEndTransaction(hCard, SCARD_LEAVE_CARD);
 	MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardEndTransaction(0x%0x): 0x%0x", hCard, lRet);
 }
 

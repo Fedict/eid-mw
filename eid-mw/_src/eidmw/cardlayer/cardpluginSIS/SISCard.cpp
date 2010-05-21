@@ -58,7 +58,7 @@ CCard * ConnectGetCardInstance(unsigned long ulVersion,const char *csReader,
 }
 
 CCard *GetCardInstance(unsigned long ulVersion, const char *csReader,
-	unsigned long hCard, CContext *poContext, CPinpad *poPinpad)
+	SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad)
 {
 	return SISCardGetInstance(ulVersion, csReader, hCard, poContext, poPinpad);
 }
@@ -75,7 +75,7 @@ CCard * SISCardConnectGetInstance(unsigned long ulVersion,const char *csReader,
 		try
 		{
 			// Synchr. cards require temporary direct-connection set the card-type in the card-reader
-			unsigned long hCard = poPCSC->Connect(csReader, SCARD_SHARE_DIRECT, SIS_PROTOCOL);
+			SCARDHANDLE hCard = poPCSC->Connect(csReader, SCARD_SHARE_DIRECT, SIS_PROTOCOL);
 
 #ifdef __APPLE__
 			// Set cardtype in card-reader to accept synch cards
@@ -111,7 +111,7 @@ CCard * SISCardConnectGetInstance(unsigned long ulVersion,const char *csReader,
 	return poCard;
 }
 
-static CByteArray ReadInternal(CPCSC *poPCSC, unsigned long hCard, unsigned long ulOffset, unsigned long ulMaxLen)
+static CByteArray ReadInternal(CPCSC *poPCSC, SCARDHANDLE hCard, unsigned long ulOffset, unsigned long ulMaxLen)
 {
 	unsigned long ulLen = ulMaxLen > 252 ? 252 : ulMaxLen;
 
@@ -150,7 +150,7 @@ static CByteArray ReadInternal(CPCSC *poPCSC, unsigned long hCard, unsigned long
 	return oData;
 }
 
-static inline void BackToAsyncMode(unsigned long &hCard, CPCSC *poPCSC, const char *csReader)
+static inline void BackToAsyncMode(SCARDHANDLE &hCard, CPCSC *poPCSC, const char *csReader)
 {
 #ifdef __APPLE__
 	int32_t tSetAsyncCard[2] = {0, 0};
@@ -169,7 +169,7 @@ static inline void BackToAsyncMode(unsigned long &hCard, CPCSC *poPCSC, const ch
 }
 
 CCard *SISCardGetInstance(unsigned long ulVersion, const char *csReader,
-	unsigned long hCard, CContext *poContext, CPinpad *poPinpad)
+	SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad)
 {
 	CCard *poCard = NULL;
 	bool bIsSisCard = false;
@@ -218,7 +218,7 @@ CCard *SISCardGetInstance(unsigned long ulVersion, const char *csReader,
 ///////////////////////////////////////////////////////////////////////////////////
 
 CSISCard::CSISCard(
-        unsigned long       hCard, 
+        SCARDHANDLE       hCard, 
         CContext            *poContext,
 	    CPinpad             *poPinpad, 
         const CByteArray    &  oData    // is either the first 26 bytes, or the whole 404 bytes

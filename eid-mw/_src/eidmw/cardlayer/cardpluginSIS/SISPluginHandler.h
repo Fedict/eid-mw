@@ -28,7 +28,7 @@
 namespace eIDMW
 {
 
-CCard * SISPluginReadData(const char *csReader, unsigned long hCard,
+CCard * SISPluginReadData(const char *csReader, SCARDHANDLE hCard,
 	CContext *poContext, CPinpad *poPinpad,
 	CDynamicLib &oCardPluginLib);
 

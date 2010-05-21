@@ -46,7 +46,7 @@ const unsigned long PLUGIN_VERSION = 100;
 class EIDMW_CAL_API CCard
 {
 public:
-	CCard(unsigned long hCard, CContext *poContext, CPinpad *poPinpad);
+	CCard(SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad);
     virtual ~CCard(void);
 
     /** Find out which card is present and return the appropriate subclass */
@@ -122,7 +122,7 @@ public:
     /* retrieve the correction class for PINs, certificates and private keys */
     virtual CP15Correction* GetP15Correction();
 
-    unsigned long m_hCard;
+    SCARDHANDLE m_hCard;
 
 protected:
 	// How long to wait (msec) before re-sending an APDU when SW12 = 6CXX is returned
@@ -162,14 +162,14 @@ public:
 	 *  the CAutoLock(CCard *poCard) ctor; so make sure this
 	 *  object gets out of scope before making a new one for
 	 *  the same card handle! */
-	CAutoLock(CPCSC *poPCSC, unsigned long hCard);
+	CAutoLock(CPCSC *poPCSC, SCARDHANDLE hCard);
 
 	~CAutoLock();
 
 private:
 	CCard *m_poCard;
 	CPCSC *m_poPCSC;
-	unsigned long m_hCard;
+	SCARDHANDLE m_hCard;
 };
 
 }

@@ -51,7 +51,7 @@ typedef long (*SISPLUGINREADCARD)(unsigned long, void *,
 
 /** Obtain the SIS-data via the plugin library
 */
-CCard * SISPluginReadData(const char *csReader, unsigned long hCard,
+CCard * SISPluginReadData(const char *csReader, SCARDHANDLE hCard,
 	CContext *poContext, CPinpad *poPinpad,
 	CDynamicLib &oCardPluginLib)
 {

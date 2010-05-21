@@ -40,7 +40,7 @@ EIDMW_CAL_API CCard *GetCardInstance(unsigned long ulVersion, const char *csRead
 CCard * SISCardConnectGetInstance(unsigned long ulVersion,const char *csReader,
 	CContext *poContext, CPinpad *poPinpad);
 CCard *SISCardGetInstance(unsigned long ulVersion, const char *csReader,
-	unsigned long hCard, CContext *poContext, CPinpad *poPinpad);
+	SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad);
 
 namespace eIDMW
 {
@@ -48,7 +48,7 @@ namespace eIDMW
 class CSISCard : public CCard
 {
 public:
-	CSISCard(unsigned long hCard, CContext *poContext,
+	CSISCard(SCARDHANDLE hCard, CContext *poContext,
 		CPinpad *poPinpad, const CByteArray & oData);
     ~CSISCard(void);
 
