@@ -23,5 +23,5 @@
  ***************************************************************************/
 int test_finalize_initialize();
 int test_open_close_session();
-int test_show_mechanismsinfo();
+int test_show_mechanisms();
 

@@ -345,7 +345,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\getmechanismsinfo.c"
+				RelativePath=".\getmechanisms.c"
 				>
 			</File>
 			<File

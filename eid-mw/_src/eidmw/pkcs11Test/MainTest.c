@@ -41,7 +41,7 @@ int main() {
 	result[testCounter] = test_open_close_session();
 	testCounter++;
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
-	result[testCounter] = test_show_mechanismsinfo();
+	result[testCounter] = test_show_mechanisms();
 	testCounter++;
 	testDescription[testCounter] = "Test multiple finalize/initialize sessions in different threads";
 	result[testCounter] = test_finalize_initialize();
