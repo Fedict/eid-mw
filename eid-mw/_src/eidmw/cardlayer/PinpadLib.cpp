@@ -285,7 +285,7 @@ bool CPinpadLib::Load(unsigned long hContext, SCARDHANDLE hCard,
 
 #include <dirent.h>
 
-bool CPinpadLib::Load(unsigned long hContext, unsigned long hCard,
+bool CPinpadLib::Load(unsigned long hContext, SCARDHANDLE hCard,
 		      const std::string & strReader, const std::string & csPinpadPrefix,
 		      unsigned long ulLanguage)
 {
