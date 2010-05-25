@@ -43,6 +43,12 @@
 
 #include "ThreadDefines.h"
 
+#ifdef WIN32
+typedef DWORD beid_thread_id;
+#else
+typedef pthread_t beid_thread_id;
+#endif
+
 namespace eIDMW
 {
 
@@ -86,7 +92,7 @@ public:
 	bool m_bStopRequest;	/** Can be taken into account in the run method to end the thread properly before normal ending */
 
 	static int getCurrentPid();
-	static int getCurrentThreadId();
+	static beid_thread_id getCurrentThreadId();
 
 };
 

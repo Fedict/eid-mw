@@ -162,12 +162,12 @@ int CThread::getCurrentPid()
 #endif	
 }
 
-int CThread::getCurrentThreadId()
+beid_thread_id CThread::getCurrentThreadId()
 {
 #ifdef WIN32
 	return GetCurrentThreadId();
 #else
-	return (int) pthread_self();
+	return pthread_self();
 #endif	
 }
 
