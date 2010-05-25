@@ -28,7 +28,6 @@
 		7F22A36F0F84C588001AD228 /* libbeidcommon.3.5.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.3.dylib */; };
 		7F22A3780F84C5A1001AD228 /* libbeiddialogsQT.3.5.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.3.5.3.dylib */; };
 		7F22A3C40F84D4A1001AD228 /* libbeidcommon.3.5.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.3.dylib */; };
-		7F22A4120F84D948001AD228 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		7F872F7B0F84E58300DE6627 /* libbeiddialogsQT.3.5.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.3.5.3.dylib */; };
 		7F872F7C0F84E58E00DE6627 /* dlgWndAskAccess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535F50F84BDF500BA96EE /* dlgWndAskAccess.cpp */; };
 		7F872F7D0F84E58E00DE6627 /* dlgWndAskPIN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535F80F84BDF500BA96EE /* dlgWndAskPIN.cpp */; };
@@ -125,7 +124,6 @@
 		7FA1AA3E0F85F439000D9EE1 /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2B0F85F439000D9EE1 /* session.c */; };
 		7FA1AA3F0F85F439000D9EE1 /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2C0F85F439000D9EE1 /* sign.c */; };
 		7FA1AA400F85F439000D9EE1 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2D0F85F439000D9EE1 /* util.cpp */; };
-		7FA1AA5A0F85F586000D9EE1 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		7FA1AA620F85F6C1000D9EE1 /* libbeidcommon.3.5.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.3.dylib */; };
 		7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer.3.5.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.3.5.3.dylib */; };
 		7FA1AA920F860748000D9EE1 /* object.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA910F860748000D9EE1 /* object.c */; };
@@ -182,6 +180,8 @@
 		7FC535F00F84BD6300BA96EE /* SharedMem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535ED0F84BD6300BA96EE /* SharedMem.cpp */; };
 		7FD8B9FA0F9DBCA10074BE3C /* qrc_qtconf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD8B9F90F9DBCA10074BE3C /* qrc_qtconf.cpp */; };
 		86A9430D1122D6E50011C6A8 /* libxerces-c-3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */; };
+		86D0915311ABF313007BC75E /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D0915211ABF313007BC75E /* PCSC.framework */; };
+		86D0918011ABFA40007BC75E /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D0915211ABF313007BC75E /* PCSC.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -599,6 +599,7 @@
 		7FD8B9F90F9DBCA10074BE3C /* qrc_qtconf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_qtconf.cpp; path = ../eidgui/qrc_qtconf.cpp; sourceTree = SOURCE_ROOT; };
 		86A90A2B1122D6880011C6A8 /* trunk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trunk; path = "/beid-mw/trunk"; sourceTree = "<absolute>"; };
 		86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libxerces-c-3.1.dylib"; path = "/beid-mw/trunk/eid-mw/_src/ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib"; sourceTree = "<absolute>"; };
+		86D0915211ABF313007BC75E /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -662,7 +663,7 @@
 			files = (
 				7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer.3.5.3.dylib in Frameworks */,
 				7FA1AA620F85F6C1000D9EE1 /* libbeidcommon.3.5.3.dylib in Frameworks */,
-				7FA1AA5A0F85F586000D9EE1 /* PCSC.framework in Frameworks */,
+				86D0918011ABFA40007BC75E /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,7 +681,7 @@
 			files = (
 				7F22A3780F84C5A1001AD228 /* libbeiddialogsQT.3.5.3.dylib in Frameworks */,
 				7FC535BE0F84BADB00BA96EE /* libbeidcommon.3.5.3.dylib in Frameworks */,
-				7F22A4120F84D948001AD228 /* PCSC.framework in Frameworks */,
+				86D0915311ABF313007BC75E /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -742,6 +743,7 @@
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DDFF38A45A11DB9C8B /* Products */,
 				86A90A2B1122D6880011C6A8 /* trunk */,
+				86D0915211ABF313007BC75E /* PCSC.framework */,
 			);
 			name = beidmw;
 			sourceTree = "<group>";
@@ -1765,7 +1767,7 @@
 		1DEB916508733D950010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CURRENT_PROJECT_VERSION = 3.5.3;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1791,7 +1793,7 @@
 		1DEB916608733D950010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CURRENT_PROJECT_VERSION = 3.5.3;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PFE_FILE_C_DIALECTS = "c c++";
@@ -1805,9 +1807,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				VALID_ARCHS = "i386 x86_64";
 			};
@@ -2082,6 +2085,10 @@
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -2108,11 +2115,15 @@
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
-					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2169,7 +2180,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2178,11 +2189,13 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
-				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcommon.$(CURRENT_PROJECT_VERSION)";
+				SDKROOT = macosx10.6;
 				VALID_ARCHS = "i386 x86_64";
 				VERSION_INFO_SUFFIX = "";
 				ZERO_LINK = NO;
@@ -2197,6 +2210,10 @@
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -2232,6 +2249,10 @@
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -2244,7 +2265,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
-					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = "";
 				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
@@ -2337,6 +2358,7 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../common/**";
 				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-finput-charset=cp1252",
@@ -2344,6 +2366,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "beiddialogsQT.$(CURRENT_PROJECT_VERSION)";
+				SDKROOT = macosx10.6;
 				ZERO_LINK = NO;
 			};
 			name = Release;
