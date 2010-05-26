@@ -6,3 +6,6 @@ Calais registry.
 
 geert.jordaens
 -)Bugfixes and 64 bit port of eid-mw for Fedora 12 x86_64 
+
+david carliez
+-)Bugfix in pkcs11 (for 64 bit port of pkcs11)
