@@ -415,7 +415,7 @@ if (ret)
    }
 
 //CKA_CLASS
-ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_CLASS, (CK_VOID_PTR) &type, sizeof(CKA_CLASS));
+ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_CLASS, (CK_VOID_PTR) &type, sizeof(CK_ULONG));
 if (ret)
    {
    log_trace(WHERE, "E: p11_set_attribute_value(CKA_CLASS) returned %d", ret);
@@ -423,7 +423,7 @@ if (ret)
    }
 
 //CKA_ID
-ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_ID, (CK_VOID_PTR) &id, sizeof(CKA_ID));
+ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_ID, (CK_VOID_PTR) &id, sizeof(CK_ULONG));
 if (ret)
    {
    log_trace(WHERE, "E: p11_set_attribute_value(CKA_ID) returned %d", ret);
