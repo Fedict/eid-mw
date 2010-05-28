@@ -9,3 +9,6 @@ geert.jordaens
 
 david carliez
 -)Bugfix in pkcs11 (for 64 bit port of pkcs11)
+
+simonvos
+-)patch for the buildsystem of debian 64 bit

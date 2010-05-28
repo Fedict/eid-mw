@@ -45,7 +45,7 @@ else
 		if [ -e "/etc/debian_version" ]
 		then
 			DISTRO=debian
-			PROCESSOR=i686
+			PROCESSOR=`uname -m`
 		else
 			echo "[Error] Unknown linux distribution."
 			exit -1
@@ -333,7 +333,6 @@ cd ${CURRDIR}
 # move the tarball here
 #-----------------------------------------
 BUILD_NR=`cat ../_src/eidmw/svn_revision | tr -d "\r"`
-
 
 BINTARBALL=`ls ../_src/eidmw/install/beid-middleware-3.?.*-${PROCESSOR}-${BUILD_NR}.tgz 2> /dev/null`
 

@@ -21,7 +21,7 @@ else
 		if [ -e "/etc/debian_version" ]
 		then
 			DISTRO=debian
-			PROCESSOR=i686
+			PROCESSOR=`uname -m`
 		else
 			echo "[Error] Unknown linux distribution."
 			exit -1

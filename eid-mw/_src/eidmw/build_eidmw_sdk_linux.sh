@@ -84,7 +84,7 @@ if [ -e "/etc/debian_version" ]
 then
 	DISTRO=debian
 	TARBALLDISTRO=debian
-	PROCESSOR=i686
+	PROCESSOR=`uname -m`
 	TARGETDIR=/mnt/eidmwbuilds
 else
 	echo "[Error] Unsupported Linux distribution."

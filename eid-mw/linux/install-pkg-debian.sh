@@ -12,20 +12,19 @@ echo "[Info ] Verifying installed packages..."
 #-----------------------------------------
 if [ -e "/etc/debian_version" ]
 then
-	PACKAGES=( gcc-4.1
-		   g++-4.1
+	PACKAGES=( gcc
+		   g++
 		   libpcsclite-dev
 		   make
 		   libx11-dev
 		   libssl-dev
-		   libxerces-c2-dev
+		   libxerces-c-dev
 		   swig
 		   libacr38u
 		   doxygen
 		   libwxbase2.6-0
 		   libwxgtk2.6-0
 		   libwxgtk2.6-dev
-		   libwxbase2.4-1
 		   qt4-dev-tools
 		   sun-java6-jdk
 		 )
