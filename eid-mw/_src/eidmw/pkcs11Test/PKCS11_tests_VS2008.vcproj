@@ -143,7 +143,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="..\_Binaries35\Debug\$(ProjectName).exe"
+				OutputFile="..\_Binaries35\$(PlatformName)\Debug\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\_Binaries35\Debug\"
 				GenerateDebugInformation="true"
@@ -295,6 +295,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				OutputFile="..\_Binaries35\$(PlatformName)\Release\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
@@ -349,6 +350,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\getprivatekeys.c"
+				>
+			</File>
+			<File
 				RelativePath=".\logtest.c"
 				>
 			</File>
@@ -358,6 +363,14 @@
 			</File>
 			<File
 				RelativePath=".\open-close-session.c"
+				>
+			</File>
+			<File
+				RelativePath=".\sign.c"
+				>
+			</File>
+			<File
+				RelativePath=".\verifysignature.c"
 				>
 			</File>
 		</Filter>

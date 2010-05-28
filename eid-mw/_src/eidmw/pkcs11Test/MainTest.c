@@ -41,17 +41,34 @@ int main() {
 	result[testCounter] = test_open_close_session();
 	testCounter++;
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
-	result[testCounter] = test_show_mechanisms();
+	result[testCounter] = test_getmechanisms();
 	testCounter++;
 	testDescription[testCounter] = "Test multiple finalize/initialize sessions in different threads";
 	result[testCounter] = test_finalize_initialize();
 	testCounter++;
+	testDescription[testCounter] = "tests getting the signature key from the card";
+	result[testCounter] = test_getprivatekeys();
+	testCounter++;
+	testDescription[testCounter] = "tests signing with the card";
+	result[testCounter] = test_sign();
+	testCounter++;
 
+	testlog(LVL_NOLEVEL,"\n\n_______________________________________________\n");
 	for (i = 0; i < testCounter; i++)
 	{
-		testlog(LVL_INFO,"\nTest %d %s \n", testCounter, testDescription[i]);
-		testlog(LVL_INFO,"Result : %d \n", result[i]);
+		testlog(LVL_NOLEVEL,"\nTest %d %s \n", i, testDescription[i]);
+		if(result[i] != CKR_OK)
+		{
+			testlog(LVL_NOLEVEL,"FAILED\n", result[i]);	
+			testlog(LVL_NOLEVEL,"Result : 0x%.8x \n", result[i]);
+		}
+		else
+		{
+			testlog(LVL_NOLEVEL,"PASSED\n");
+		}
+		testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
 	}
+	
 	
 	endLog();
 	// Wait for user to end this test

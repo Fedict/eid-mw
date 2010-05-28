@@ -30,7 +30,8 @@ typedef enum pkcs11test_log_level
 	LVL_DEBUG = 0,
 	LVL_INFO,
 	LVL_WARNING,
-	LVL_ERROR
+	LVL_ERROR,
+	LVL_NOLEVEL
 }PKCS11TEST_LOG_LEVEL;
 
 /****************************************************************************

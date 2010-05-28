@@ -54,6 +54,9 @@ void logPrefix(PKCS11TEST_LOG_LEVEL level)
 	case LVL_ERROR:
 		printlogprefic(pkcs11test_logfile,"<<ERROR>>: ");
 		break;
+	case LVL_NOLEVEL:
+	default:
+		break;
 	}
 }
 

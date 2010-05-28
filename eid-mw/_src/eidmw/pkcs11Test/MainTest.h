@@ -17,11 +17,18 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+#include "basetest.h"
 
 /****************************************************************************
  * Test Functions prototypes
  ***************************************************************************/
-int test_finalize_initialize();
-int test_open_close_session();
-int test_show_mechanisms();
+CK_RV test_finalize_initialize();
+CK_RV test_open_close_session();
+CK_RV test_getmechanisms();
+CK_RV test_getprivatekeys();
+CK_RV test_sign();
+CK_RV test_verify_signature();
+
+
+
 

@@ -29,7 +29,7 @@
 
 int GetPKCS11FunctionList(CK_FUNCTION_LIST_PTR *pFunctions, void *handle){
 	CK_C_GetFunctionList pC_GetFunctionList;
-	CK_RV rv;
+	CK_RV frv;
 
 	testlog(LVL_INFO,"GetPKCS11FunctionList enter\n");
 
@@ -43,8 +43,8 @@ int GetPKCS11FunctionList(CK_FUNCTION_LIST_PTR *pFunctions, void *handle){
 	}
 
 	// invoke C_GetFunctionList
-	rv = (*pC_GetFunctionList) (pFunctions);
-	if (rv != CKR_OK) {
+	frv = (*pC_GetFunctionList) (pFunctions);
+	if (frv != CKR_OK) {
 	    testlog(LVL_ERROR,"C_GetFunctionList failed\n");
 	    testlog(LVL_INFO,"GetPKCS11FunctionList leave\n");
 		return 1;  
@@ -52,4 +52,33 @@ int GetPKCS11FunctionList(CK_FUNCTION_LIST_PTR *pFunctions, void *handle){
 
 	testlog(LVL_INFO,"GetPKCS11FunctionList leave\n");
 	return 0;
+}
+
+CK_BBOOL ReturnedSuccesfull(CK_RV frv, CK_RV *ptrv, char* pkcs11function, char* test_name )
+{
+	if (CKR_OK != frv) {
+	  testlog(LVL_ERROR, "%s error frv = 0x%.8x \n",pkcs11function,frv);
+		testlog(LVL_INFO, "%s leave\n",test_name);
+		if(*ptrv == CKR_OK)
+		{
+			*ptrv = frv;
+		}
+	  return CK_FALSE;  
+	}
+	return CK_TRUE;
+}
+
+CK_BBOOL InitializeTest(void **phandle,CK_FUNCTION_LIST_PTR *pfunctions)
+{
+	testlog(LVL_INFO, "InitializeTest enter\n");
+	*phandle = dlopen(PKCS11_LIB, RTLD_LAZY); // RTLD_NOW is slower
+	if (NULL == *phandle) {
+		testlog(LVL_ERROR, "dlopen error, couldn't open pkcs11 lib\n");
+		testlog(LVL_INFO, "InitializeTest leave\n");
+		return CK_FALSE;
+	}
+	GetPKCS11FunctionList(pfunctions, *phandle);
+
+	testlog(LVL_INFO, "InitializeTest leave\n");
+	return CK_TRUE;
 }

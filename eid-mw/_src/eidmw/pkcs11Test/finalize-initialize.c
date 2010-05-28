@@ -27,7 +27,7 @@
 
 int readslots(CK_FUNCTION_LIST_PTR functions) {
 
-	CK_RV rv;
+	CK_RV frv;
 	CK_C_INITIALIZE_ARGS init_args;
 	long slot_count;
 	CK_SLOT_ID_PTR slotIds;
@@ -40,15 +40,15 @@ int readslots(CK_FUNCTION_LIST_PTR functions) {
 	init_args.pReserved = NULL;
 
 	// C_Initialize
-	rv = (*functions->C_Initialize) ( (CK_VOID_PTR)&init_args );
-	if (CKR_OK != rv) {
+	frv = (*functions->C_Initialize) ( (CK_VOID_PTR)&init_args );
+	if (CKR_OK != frv) {
 	    testlog(LVL_ERROR, "C_Initialize error\n");
 	    testlog(LVL_INFO,"readslots leave\n");
 		return 1;  
 	}
 	// C_GetInfo
-	rv = (*functions->C_GetInfo) (&info);
-	if (CKR_OK != rv) {
+	frv = (*functions->C_GetInfo) (&info);
+	if (CKR_OK != frv) {
 		testlog(LVL_ERROR, "C_GetInfo error\n");
 		goto finalize;
 	}
@@ -56,15 +56,15 @@ int readslots(CK_FUNCTION_LIST_PTR functions) {
 	testlog(LVL_INFO,"PKCS#11 version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
 
 	// C_GetSlotList
-	rv = (*functions->C_GetSlotList) (0, 0, &slot_count);
-	if (CKR_OK != rv) {
+	frv = (*functions->C_GetSlotList) (0, 0, &slot_count);
+	if (CKR_OK != frv) {
 		testlog(LVL_ERROR, "C_GetSlotList error\n");
 		goto finalize;
 	}
 	testlog(LVL_DEBUG,"slot count: %i\n", slot_count);
 	slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
-	rv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
-	if (CKR_OK != rv) {
+	frv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
+	if (CKR_OK != frv) {
 		testlog(LVL_ERROR, "C_GetSlotList (2) error\n");
 		goto finalize;
 	}
@@ -73,8 +73,8 @@ int readslots(CK_FUNCTION_LIST_PTR functions) {
 		CK_SLOT_INFO slotInfo;		
 		CK_SLOT_ID slotId = slotIds[slotIdx];
 		int idx;
-		rv = (*functions->C_GetSlotInfo) (slotId, &slotInfo);
-		if (CKR_OK != rv) {
+		frv = (*functions->C_GetSlotInfo) (slotId, &slotInfo);
+		if (CKR_OK != frv) {
 			testlog(LVL_ERROR, "C_GetSlotInfo error\n");
 			goto finalize;		
 		}
@@ -88,14 +88,14 @@ int readslots(CK_FUNCTION_LIST_PTR functions) {
 		testlog(LVL_DEBUG,"slot Id: %d\n", slotId);
 		testlog(LVL_DEBUG,"slot description: %s\n", slotInfo.slotDescription);
 		// C_OpenSession
-			rv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
-			if (CKR_OK != rv) {
+			frv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
+			if (CKR_OK != frv) {
 				testlog(LVL_ERROR, "C_OpenSession error\n");
 				goto finalize;
 			}
 		// C_CloseSession
-		rv = (*functions->C_CloseSession) (session_handle);
-		if (CKR_OK != rv) {
+		frv = (*functions->C_CloseSession) (session_handle);
+		if (CKR_OK != frv) {
 			testlog(LVL_ERROR, "C_CloseSession error\n");
 			goto finalize;
 		}
@@ -103,8 +103,8 @@ int readslots(CK_FUNCTION_LIST_PTR functions) {
 
 	// C_Finalize
 finalize:
-	rv = (*functions->C_Finalize) (NULL_PTR);
-	if (CKR_OK != rv) {
+	frv = (*functions->C_Finalize) (NULL_PTR);
+	if (CKR_OK != frv) {
 		testlog(LVL_ERROR, "C_Finalize error\n");
 		exit(1);
 	}
@@ -130,7 +130,7 @@ DWORD WINAPI pkcs11Thread( LPVOID testThreadVars )
     return 0; 
 } 
 
-int test_finalize_initialize() {
+CK_RV test_finalize_initialize() {
 	void *handle;
 	CK_FUNCTION_LIST_PTR functions;
     DWORD   dwThreadId;
