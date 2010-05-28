@@ -28,6 +28,7 @@ CK_RV test_getmechanisms();
 CK_RV test_getprivatekeys();
 CK_RV test_sign();
 CK_RV test_verify_signature();
+CK_RV test_getallobjects();
 
 
 

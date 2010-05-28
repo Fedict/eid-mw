@@ -49,6 +49,9 @@ int main() {
 	testDescription[testCounter] = "tests getting the signature key from the card";
 	result[testCounter] = test_getprivatekeys();
 	testCounter++;
+	testDescription[testCounter] = "tests getting all the objects from the card";
+	result[testCounter] = test_getallobjects();
+	testCounter++;
 	testDescription[testCounter] = "tests signing with the card";
 	result[testCounter] = test_sign();
 	testCounter++;

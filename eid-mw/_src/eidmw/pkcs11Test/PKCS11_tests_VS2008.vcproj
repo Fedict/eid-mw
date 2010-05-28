@@ -346,6 +346,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\getallobjects.c"
+				>
+			</File>
+			<File
 				RelativePath=".\getmechanisms.c"
 				>
 			</File>
@@ -367,10 +371,6 @@
 			</File>
 			<File
 				RelativePath=".\sign.c"
-				>
-			</File>
-			<File
-				RelativePath=".\verifysignature.c"
 				>
 			</File>
 		</Filter>
