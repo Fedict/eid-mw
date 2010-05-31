@@ -1,12 +1,3 @@
-Needed from svn:
-  in <rootdir>\eidtestinfra:
-    http://10.2.250.30/svn/eidmw/trunk/eidtestinfra
-  in <rootdir>\ThirdParty
-    http://10.2.250.30/svn/ThirdParty/wix (only for Windows)
-    http://10.2.250.30/svn/ThirdParty/ant
-    http://10.2.250.30/svn/ThirdParty/unittest-cpp-1.3
-
-
 Windows
 =======
 
