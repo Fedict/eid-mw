@@ -4,6 +4,6 @@ if [[ "$JAVA_EXE" == "" ]]
 then
 	echo "java not found. Set PATH to java and try again"
 else
-	java -classpath . sign_p11
+	java -d32 -classpath . sign_p11
 fi
 
