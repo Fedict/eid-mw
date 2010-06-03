@@ -1652,7 +1652,8 @@ bool APL_CryptoFwk::downloadFile(const char *pszUri, CByteArray &baData,bool &bS
 				if ((pszTmp = strstr(pszHeaders, "\r\n\r\n")) != 0) 
 				{
 					*(pszTmp + 2) = '\0';
-					ulLen = ulHeaderLen - ((pszTmp + 4) - pszHeaders);
+					//((pszTmp + 4) - pszHeaders) is max 1028 bytes
+					ulLen = ulHeaderLen - (unsigned long)((pszTmp + 4) - pszHeaders);
 					ulHeaderLen -= (ulLen + 2);
 					if (ulLen > 0) 
 					{
@@ -1764,12 +1765,14 @@ bool APL_CryptoFwk::b64Encode(const CByteArray &baIn, CByteArray &baOut,bool bWi
 
 	//Encode the baIn
 	pOut=XERCES_CPP_NAMESPACE::Base64::encode((XMLByte *)baIn.GetBytes(),baIn.Size(),&iLenOut);
-	if(!pOut)
+
+	//4000000000 is huge, but just checking in case of the unlickely truncation
+	if(!pOut || iLenOut > 4000000000)
 		return false;
 
 	//Put the result in baOut
 	baOut.ClearContents();
-	baOut.Append(pOut,iLenOut);
+	baOut.Append(pOut,(unsigned long)iLenOut);//truncation checked above
 
 	XERCES_CPP_NAMESPACE::XMLString::release((char**)&pOut);
 
@@ -1793,7 +1796,7 @@ bool APL_CryptoFwk::b64Decode(const CByteArray &baIn, CByteArray &baOut)
 
 	//Decode the pIn
 	pOut=XERCES_CPP_NAMESPACE::Base64::decode((XMLByte *)pIn,&iLenOut);
-	if(!pOut)
+	if(!pOut || iLenOut > 4000000000)
 	{
 		delete[] pIn;
 		return false;
@@ -1801,7 +1804,7 @@ bool APL_CryptoFwk::b64Decode(const CByteArray &baIn, CByteArray &baOut)
 
 	//Put the result in baOut
 	baOut.ClearContents();
-	baOut.Append(pOut,iLenOut);
+	baOut.Append(pOut,(unsigned long)iLenOut);//truncation checked above : 
 	XERCES_CPP_NAMESPACE::XMLString::release((char**)&pOut);
 	delete[] pIn;
 

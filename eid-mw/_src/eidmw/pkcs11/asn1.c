@@ -215,8 +215,10 @@ for (iIndex=1; iIndex < iPath; iIndex++)
 		  return (E_ASN_ITEM_NOT_FOUND);
 		}
 	}
+//p_cDat can never be bigger then p_cEnd (p_cEnd=p_cInDat + iInLen - 1;) 
+//so p_cDat-p_cInDat < iInLen - 1
 *pp_cOutDat = p_cDat;
-*l_out = iInLen - (*pp_cOutDat-p_cInDat);
+*l_out = iInLen - (unsigned int)(*pp_cOutDat-p_cInDat);
 
 return (0);
 }
