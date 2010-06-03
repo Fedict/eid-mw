@@ -291,12 +291,9 @@ extern "C" LONG __stdcall __E__19__(IN SCARDCONTEXT hContext, IN LPVOID pvMem)
 }
 
 // SCardGetAttrib
-extern "C" __declspec(naked) void __stdcall __E__20__()
+extern "C" LONG __stdcall __E__20__(IN SCARDHANDLE hCard, IN DWORD dwAttrId, OUT LPBYTE pbAttr, IN OUT LPDWORD pcbAttrLen)
 {
-	__asm
-	{
-		jmp p[20 * 4];
-	}
+	return impl->SCardGetAttrib(hCard,dwAttrId,pbAttr,pcbAttrLen);
 }
 
 // SCardGetCardTypeProviderNameA

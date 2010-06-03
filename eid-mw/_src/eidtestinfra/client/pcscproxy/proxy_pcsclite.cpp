@@ -232,8 +232,10 @@ extern "C" LONG SCardSetTimeout(SCARDCONTEXT hContext, DWORD dwTimeout)
 
 extern "C" LONG SCardGetAttrib(SCARDHANDLE hCard, DWORD dwAttrId, LPBYTE pbAttr, LPDWORD pcbAttrLen)
 {
-	eidmw::pcscproxy::t_SCardGetAttrib pps = (eidmw::pcscproxy::t_SCardGetAttrib) p[16];
-	return pps(hCard, dwAttrId, pbAttr, pcbAttrLen);
+	return impl->SCardGetAttrib(hCard, dwAttrId, pbAttr, pcbAttrLen);
+
+	//eidmw::pcscproxy::t_SCardGetAttrib pps = (eidmw::pcscproxy::t_SCardGetAttrib) p[16];
+	//return pps(hCard, dwAttrId, pbAttr, pcbAttrLen);
 }
 
 extern "C" LONG SCardSetAttrib(SCARDHANDLE hCard, DWORD dwAttrId, LPCBYTE pbAttr, DWORD cbAttrLen)

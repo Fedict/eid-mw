@@ -85,6 +85,8 @@ namespace eidmw { namespace pcscproxy {
 														   OUT LPDWORD pdwProtocol, OUT LPBYTE pbAtr, OUT LPDWORD pcbAtrLen);
 				  typedef LONG (__stdcall * t_SCardGetStatusChange)(IN SCARDCONTEXT hContext, IN DWORD dwTimeout, IN OUT LPSCARD_READERSTATE_A rgReaderStates,
 																	IN DWORD cReaders);
+				  typedef LONG (__stdcall * t_SCardGetAttrib)(IN SCARDHANDLE hCard,IN DWORD dwAttrId,OUT LPBYTE pbAttr,IN OUT LPDWORD pcbAttrLen);
+
 #ifndef __OLD_PCSC_API__
 				  typedef LONG (__stdcall * t_SCardControl)(IN SCARDHANDLE hCard, IN DWORD dwControlCode,
 															IN LPCVOID lpInBuffer, IN DWORD nInBufferSize,
@@ -106,6 +108,7 @@ namespace eidmw { namespace pcscproxy {
 					  iSCardDisconnect       = 10,
 					  iSCardEndTransaction   = 11,
 					  iSCardFreeMemory       = 19,
+					  iSCardGetAttrib	     = 20,
 					  iSCardGetStatusChange  = 25,
 					  iSCardListReaders      = 40,
 					  iSCardReconnect        = 46,
@@ -122,6 +125,7 @@ namespace eidmw { namespace pcscproxy {
 					  iSCardDisconnect       = 7,
 					  iSCardEndTransaction   = 9,
 					  iSCardFreeMemory       = 18,
+					  iSCardGetAttrib	     = 16,
 					  iSCardGetStatusChange  = 13,
 					  iSCardListReaders      = 3,
 					  iSCardReconnect        = 6,
@@ -196,6 +200,7 @@ public:
 
 				  LONG SCardGetStatusChange(IN SCARDCONTEXT hContext, IN DWORD dwTimeout, IN OUT LPSCARD_READERSTATE_A rgReaderStates, IN DWORD cReaders);
 
+				  LONG SCardGetAttrib(IN SCARDHANDLE hCard,IN DWORD dwAttrId,OUT LPBYTE pbAttr,IN OUT LPDWORD pcbAttrLen);
 #ifndef __OLD_PCSC_API__
 				  LONG SCardControl(IN SCARDHANDLE hCard, IN DWORD dwControlCode, IN LPCVOID lpInBuffer, IN DWORD nInBufferSize, OUT LPVOID lpOutBuffer,
 					  IN DWORD nOutBufferSize, OUT LPDWORD lpBytesReturned);

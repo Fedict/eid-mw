@@ -285,6 +285,24 @@ LONG WinscardImpl::SCardFreeMemory(SCARDCONTEXT hContext, LPVOID pvMem)
 	return SCARD_S_SUCCESS;
 }
 
+LONG WinscardImpl::SCardGetAttrib(IN SCARDHANDLE hCard,IN DWORD dwAttrId,OUT LPBYTE pbAttr,IN OUT LPDWORD pcbAttrLen)
+{
+	LONG           result = 0;
+	t_SCardGetAttrib pps  = (t_SCardGetAttrib) fps[iSCardGetAttrib];
+
+	SoftReader    *sr    = srmngr->getSoftReaderByCardHandle(hCard, H_SOFT);
+	if (sr)
+	{
+		result = pps(sr->getSoftCard()->getHardHandle(), dwAttrId, pbAttr, pcbAttrLen);
+	}
+	else //there is no softreader
+	{
+		//send to the HARD reader
+		result = pps( hCard, dwAttrId, pbAttr, pcbAttrLen);
+	}
+	return result;
+}
+
 LONG WinscardImpl::SCardStatus(IN SCARDHANDLE hCard, OUT LPSTR szReaderName, IN OUT LPDWORD pcchReaderLen, OUT LPDWORD pdwState,
 	OUT LPDWORD pdwProtocol, OUT LPBYTE pbAtr, OUT LPDWORD pcbAtrLen)
 {
