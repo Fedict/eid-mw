@@ -60,6 +60,7 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
-    <PreBuildEvent>..\..\clean.cmd $(Configuration) nl-nl</PreBuildEvent>
+    <PreBuildEvent>call ..\..\..\..\..\xpi\build.bat
+call ..\..\clean.cmd $(Configuration) nl-nl</PreBuildEvent>
   </PropertyGroup>
 </Project>

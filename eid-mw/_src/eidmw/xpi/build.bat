@@ -4,6 +4,8 @@ set thecurrentdir=%cd%
 
 cd %~dp0 
 
+call ..\SetPath7zip.bat
+
 set x=belgiumeid
 xcopy %x% build /i /e
 
