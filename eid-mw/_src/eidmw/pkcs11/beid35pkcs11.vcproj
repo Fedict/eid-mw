@@ -347,7 +347,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\_Binaries35\$(ConfigurationName)\beid35pkcs11.dll ..\_Binaries35\$(ConfigurationName)\beidpkcs11.dll&#x0D;&#x0A;copy ..\_Binaries35\$(ConfigurationName)\beid35pkcs11.dll &quot;..\_Binaries35\$(ConfigurationName)\Belgium Identity Card PKCS11.dll&quot;&#x0D;&#x0A;"
+				CommandLine="copy ..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beid35pkcs11.dll ..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beidpkcs11.dll&#x0D;&#x0A;copy ..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beid35pkcs11.dll &quot;..\_Binaries35\$(PlatformName)\$(ConfigurationName)\Belgium Identity Card PKCS11.dll&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
