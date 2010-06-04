@@ -1,0 +1,5 @@
+#!/bin/bash
+make clean 
+./configure --prefix=$DIST_PREFIX --host=i686-w64-mingw32 --with-qt=/data/fedict/Qt/qt/
+make -j12
+sudo make install

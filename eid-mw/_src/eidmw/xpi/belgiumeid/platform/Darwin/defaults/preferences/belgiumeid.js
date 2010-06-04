@@ -1,1 +1,0 @@
-pref("extensions.belgiumeid.modulelocation", "/usr/local/lib/beid-pkcs11.bundle");

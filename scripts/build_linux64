@@ -1,0 +1,5 @@
+#!/bin/bash
+make clean 
+./configure --prefix=$DIST_PREFIX --with-qt=/usr/local/Trolltech/Qt-4.6.2/ --with-pcsclite=/usr
+make -j12
+sudo make install

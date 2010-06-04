@@ -1,0 +1,30 @@
+ACLOCAL_AMFLAGS     = -I m4
+COMMON_SOURCES 		= src/mw_util.cpp src/libtomcrypt/md5.c src/libtomcrypt/rmd160.c src/libtomcrypt/sha1.c src/libtomcrypt/sha256.c src/libtomcrypt/sha384.c src/libtomcrypt/sha512.c src/socket/socketclient.cpp src/socket/socket.cpp src/socket/socketserver.cpp src/bytearray.cpp src/bytearrayreader.cpp src/configcommon.cpp src/datafile.cpp src/dynamiclib.cpp src/hash.cpp src/logbase.cpp src/log.cpp src/mutex.cpp src/mwexception.cpp src/thread.cpp src/tlvbuffer.cpp src/tlv.cpp src/util.cpp 
+AM_CPPFLAGS 		= -DLTC_NO_ASM
+
+lib_LTLIBRARIES		= libbeidcommon.la
+
+################################################################################################################################
+
+if LINUX
+libbeidcommon_la_SOURCES  	= $(COMMON_SOURCES) src/configuration.cpp
+libbeidcommon_la_CXXFLAGS   = -DUSING_DL_OPEN $(COMMON_CXXFLAGS)
+endif
+
+################################################################################################################################
+
+if OSX
+libbeidcommon_la_SOURCES  	= $(COMMON_SOURCES) src/configuration.cpp
+libbeidcommon_la_LDFLAGS	= -Wl,-framework -Wl,Carbon
+libbeidcommon_la_CXXFLAGS	= $(COMMON_CXXFLAGS)
+endif
+
+################################################################################################################################
+
+if WIN32
+libbeidcommon_la_SOURCES  	= $(COMMON_SOURCES) src/configreg.cpp
+libbeidcommon_la_LDFLAGS	= -lwsock32 -lwinscard -no-undefined -static-libstdc++ -static-libgcc -avoid-version
+libbeidcommon_la_CXXFLAGS	= -municode -DMINGW_HAS_SECURE_API -DEIDMW_CMN_EXPORT -DLTC_NO_ASM
+endif
+
+################################################################################################################################

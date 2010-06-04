@@ -1,0 +1,6 @@
+#!/bin/bash
+make clean
+./configure CFLAGS="-arch i386" LDFLAGS="-arch i386" CXXFLAGS="-arch i386" --prefix=$DIST_PREFIX
+make CFLAGS="-arch i386" LDFLAGS="-arch i386" CXXFLAGS="-arch i386"
+sudo make install
+
