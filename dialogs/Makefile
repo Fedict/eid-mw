@@ -34,9 +34,9 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
-host_triplet = i686-w64-mingw32
-#bin_PROGRAMS = beiddialogsQTsrv$(EXEEXT)
-#bin_PROGRAMS = beiddialogsQTsrv$(EXEEXT)
+host_triplet = x86_64-unknown-linux-gnu
+##bin_PROGRAMS = beiddialogsQTsrv$(EXEEXT)
+bin_PROGRAMS = beiddialogsQTsrv$(EXEEXT)
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
@@ -80,11 +80,11 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libbeiddialogs_la_DEPENDENCIES =  \
-	$(COMMON_LIBADD)
-#libbeiddialogs_la_DEPENDENCIES =  \
-#	$(COMMON_LIBADD)
-#libbeiddialogs_la_DEPENDENCIES = $(COMMON_LIBADD)
+##libbeiddialogs_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD)
+##libbeiddialogs_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD)
+libbeiddialogs_la_DEPENDENCIES = $(COMMON_LIBADD)
 am__libbeiddialogs_la_SOURCES_DIST =  \
 	$(srcdir)/../common/src/mw_util.cpp src/langutil.cpp \
 	src/dialogsqt/dlgs.cpp src/sharedmem.cpp \
@@ -99,24 +99,24 @@ am__libbeiddialogs_la_SOURCES_DIST =  \
 	src/dialogswin32/stdafx.cpp
 am__objects_1 = libbeiddialogs_la-mw_util.lo \
 	libbeiddialogs_la-langutil.lo
-am_libbeiddialogs_la_OBJECTS =  \
-	$(am__objects_1) \
-	libbeiddialogs_la-dlgswin32.lo \
-	libbeiddialogs_la-dlgwndaskaccess.lo \
-	libbeiddialogs_la-dlgwndaskpin.lo \
-	libbeiddialogs_la-dlgwndaskpins.lo \
-	libbeiddialogs_la-dlgwndbadpin.lo \
-	libbeiddialogs_la-dlgwndbase.lo \
-	libbeiddialogs_la-dlgwndmodal.lo \
-	libbeiddialogs_la-dlgwndpinpadinfo.lo \
-	libbeiddialogs_la-stdafx.lo
-#am_libbeiddialogs_la_OBJECTS =  \
-#	$(am__objects_1) \
-#	libbeiddialogs_la-dlgs.lo \
-#	libbeiddialogs_la-sharedmem.lo
-#am_libbeiddialogs_la_OBJECTS = $(am__objects_1) \
-#	libbeiddialogs_la-dlgs.lo \
-#	libbeiddialogs_la-sharedmem.lo
+##am_libbeiddialogs_la_OBJECTS =  \
+##	$(am__objects_1) \
+##	libbeiddialogs_la-dlgswin32.lo \
+##	libbeiddialogs_la-dlgwndaskaccess.lo \
+##	libbeiddialogs_la-dlgwndaskpin.lo \
+##	libbeiddialogs_la-dlgwndaskpins.lo \
+##	libbeiddialogs_la-dlgwndbadpin.lo \
+##	libbeiddialogs_la-dlgwndbase.lo \
+##	libbeiddialogs_la-dlgwndmodal.lo \
+##	libbeiddialogs_la-dlgwndpinpadinfo.lo \
+##	libbeiddialogs_la-stdafx.lo
+##am_libbeiddialogs_la_OBJECTS =  \
+##	$(am__objects_1) \
+##	libbeiddialogs_la-dlgs.lo \
+##	libbeiddialogs_la-sharedmem.lo
+am_libbeiddialogs_la_OBJECTS = $(am__objects_1) \
+	libbeiddialogs_la-dlgs.lo \
+	libbeiddialogs_la-sharedmem.lo
 libbeiddialogs_la_OBJECTS = $(am_libbeiddialogs_la_OBJECTS)
 libbeiddialogs_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
@@ -141,46 +141,46 @@ am__beiddialogsQTsrv_SOURCES_DIST =  \
 	src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp src/sharedmem.cpp
 am__objects_2 = beiddialogsQTsrv-mw_util.$(OBJEXT) \
 	beiddialogsQTsrv-langutil.$(OBJEXT)
-#am_beiddialogsQTsrv_OBJECTS = $(am__objects_2) \
-#	beiddialogsQTsrv-dlgs.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndaskaccess.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndaskpin.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndaskpins.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndbadpin.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndbase.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndmodal.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndpinpadinfo.$(OBJEXT) \
-#	beiddialogsQTsrv-main.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndbase.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndmodal.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndaskaccess.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndaskpin.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndaskpins.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndbadpin.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndpinpadinfo.$(OBJEXT) \
-#	beiddialogsQTsrv-sharedmem.$(OBJEXT)
-#am_beiddialogsQTsrv_OBJECTS = $(am__objects_2) \
-#	beiddialogsQTsrv-dlgs.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndaskaccess.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndaskpin.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndaskpins.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndbadpin.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndbase.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndmodal.$(OBJEXT) \
-#	beiddialogsQTsrv-dlgwndpinpadinfo.$(OBJEXT) \
-#	beiddialogsQTsrv-main.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndbase.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndmodal.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndaskaccess.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndaskpin.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndaskpins.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndbadpin.$(OBJEXT) \
-#	beiddialogsQTsrv-moc_dlgwndpinpadinfo.$(OBJEXT) \
-#	beiddialogsQTsrv-sharedmem.$(OBJEXT)
+##am_beiddialogsQTsrv_OBJECTS = $(am__objects_2) \
+##	beiddialogsQTsrv-dlgs.$(OBJEXT) \
+##	beiddialogsQTsrv-dlgwndaskaccess.$(OBJEXT) \
+##	beiddialogsQTsrv-dlgwndaskpin.$(OBJEXT) \
+##	beiddialogsQTsrv-dlgwndaskpins.$(OBJEXT) \
+##	beiddialogsQTsrv-dlgwndbadpin.$(OBJEXT) \
+##	beiddialogsQTsrv-dlgwndbase.$(OBJEXT) \
+##	beiddialogsQTsrv-dlgwndmodal.$(OBJEXT) \
+##	beiddialogsQTsrv-dlgwndpinpadinfo.$(OBJEXT) \
+##	beiddialogsQTsrv-main.$(OBJEXT) \
+##	beiddialogsQTsrv-moc_dlgwndbase.$(OBJEXT) \
+##	beiddialogsQTsrv-moc_dlgwndmodal.$(OBJEXT) \
+##	beiddialogsQTsrv-moc_dlgwndaskaccess.$(OBJEXT) \
+##	beiddialogsQTsrv-moc_dlgwndaskpin.$(OBJEXT) \
+##	beiddialogsQTsrv-moc_dlgwndaskpins.$(OBJEXT) \
+##	beiddialogsQTsrv-moc_dlgwndbadpin.$(OBJEXT) \
+##	beiddialogsQTsrv-moc_dlgwndpinpadinfo.$(OBJEXT) \
+##	beiddialogsQTsrv-sharedmem.$(OBJEXT)
+am_beiddialogsQTsrv_OBJECTS = $(am__objects_2) \
+	beiddialogsQTsrv-dlgs.$(OBJEXT) \
+	beiddialogsQTsrv-dlgwndaskaccess.$(OBJEXT) \
+	beiddialogsQTsrv-dlgwndaskpin.$(OBJEXT) \
+	beiddialogsQTsrv-dlgwndaskpins.$(OBJEXT) \
+	beiddialogsQTsrv-dlgwndbadpin.$(OBJEXT) \
+	beiddialogsQTsrv-dlgwndbase.$(OBJEXT) \
+	beiddialogsQTsrv-dlgwndmodal.$(OBJEXT) \
+	beiddialogsQTsrv-dlgwndpinpadinfo.$(OBJEXT) \
+	beiddialogsQTsrv-main.$(OBJEXT) \
+	beiddialogsQTsrv-moc_dlgwndbase.$(OBJEXT) \
+	beiddialogsQTsrv-moc_dlgwndmodal.$(OBJEXT) \
+	beiddialogsQTsrv-moc_dlgwndaskaccess.$(OBJEXT) \
+	beiddialogsQTsrv-moc_dlgwndaskpin.$(OBJEXT) \
+	beiddialogsQTsrv-moc_dlgwndaskpins.$(OBJEXT) \
+	beiddialogsQTsrv-moc_dlgwndbadpin.$(OBJEXT) \
+	beiddialogsQTsrv-moc_dlgwndpinpadinfo.$(OBJEXT) \
+	beiddialogsQTsrv-sharedmem.$(OBJEXT)
 beiddialogsQTsrv_OBJECTS = $(am_beiddialogsQTsrv_OBJECTS)
-#beiddialogsQTsrv_DEPENDENCIES =  \
-#	$(COMMON_LDADD)
-#beiddialogsQTsrv_DEPENDENCIES = $(COMMON_LDADD)
+##beiddialogsQTsrv_DEPENDENCIES =  \
+##	$(COMMON_LDADD)
+beiddialogsQTsrv_DEPENDENCIES = $(COMMON_LDADD)
 beiddialogsQTsrv_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(beiddialogsQTsrv_CXXFLAGS) $(CXXFLAGS) \
@@ -214,34 +214,34 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/frank/OLDTRUNK/eid-mw/dialogs/build-aux/missing --run aclocal-1.11
-AMTAR = ${SHELL} /home/frank/OLDTRUNK/eid-mw/dialogs/build-aux/missing --run tar
-AR = i686-w64-mingw32-ar
-AS = i686-w64-mingw32-as
-AUTOCONF = ${SHELL} /home/frank/OLDTRUNK/eid-mw/dialogs/build-aux/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/frank/OLDTRUNK/eid-mw/dialogs/build-aux/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/frank/OLDTRUNK/eid-mw/dialogs/build-aux/missing --run automake-1.11
+ACLOCAL = ${SHELL} /home/frank/eid-mw/dialogs/build-aux/missing --run aclocal-1.11
+AMTAR = ${SHELL} /home/frank/eid-mw/dialogs/build-aux/missing --run tar
+AR = ar
+AS = as
+AUTOCONF = ${SHELL} /home/frank/eid-mw/dialogs/build-aux/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/frank/eid-mw/dialogs/build-aux/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/frank/eid-mw/dialogs/build-aux/missing --run automake-1.11
 AWK = gawk
-CC = i686-w64-mingw32-gcc
+CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
-CPP = i686-w64-mingw32-gcc -E
+CPP = gcc -E
 CPPFLAGS = 
-CXX = i686-w64-mingw32-g++
-CXXCPP = i686-w64-mingw32-g++ -E
+CXX = g++
+CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
-DLLTOOL = i686-w64-mingw32-dlltool
+DLLTOOL = dlltool
 DSYMUTIL = 
 DUMPBIN = 
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
 EGREP = /bin/grep -E
-EXEEXT = .exe
+EXEEXT = 
 FGREP = /bin/grep -F
 GREP = /bin/grep
 INSTALL = /bin/install -c
@@ -249,7 +249,7 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LD = /home/frank/w32/i686-w64-mingw32/bin/ld
+LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
 LIBOBJS = 
 LIBS = 
@@ -257,11 +257,11 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/frank/OLDTRUNK/eid-mw/dialogs/build-aux/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/frank/eid-mw/dialogs/build-aux/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
-NM = /home/frank/w32/bin/i686-w64-mingw32-nm -B
+NM = /usr/bin/nm -B
 NMEDIT = 
-OBJDUMP = i686-w64-mingw32-objdump
+OBJDUMP = objdump
 OBJEXT = o
 OTOOL = 
 OTOOL64 = 
@@ -273,21 +273,21 @@ PACKAGE_TARNAME = libbeiddialogs
 PACKAGE_URL = 
 PACKAGE_VERSION = 0.0.1
 PATH_SEPARATOR = :
-QT_BINDIR = 
-QT_INCS = 
-QT_LIBS = 
-RANLIB = i686-w64-mingw32-ranlib
+QT_BINDIR = /usr/local/Trolltech/Qt-4.6.2//bin
+QT_INCS = -I/usr/local/Trolltech/Qt-4.6.2//include
+QT_LIBS = -L/usr/local/Trolltech/Qt-4.6.2//lib
+RANLIB = ranlib
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
-STRIP = i686-w64-mingw32-strip
+STRIP = strip
 VERSION = 0.0.1
-abs_builddir = /home/frank/OLDTRUNK/eid-mw/dialogs
-abs_srcdir = /home/frank/OLDTRUNK/eid-mw/dialogs
-abs_top_builddir = /home/frank/OLDTRUNK/eid-mw/dialogs
-abs_top_srcdir = /home/frank/OLDTRUNK/eid-mw/dialogs
-ac_ct_CC = 
-ac_ct_CXX = 
+abs_builddir = /home/frank/eid-mw/dialogs
+abs_srcdir = /home/frank/eid-mw/dialogs
+abs_top_builddir = /home/frank/eid-mw/dialogs
+abs_top_srcdir = /home/frank/eid-mw/dialogs
+ac_ct_CC = gcc
+ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
@@ -306,15 +306,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i686-w64-mingw32
-host_alias = i686-w64-mingw32
-host_cpu = i686
-host_os = mingw32
-host_vendor = w64
+host = x86_64-unknown-linux-gnu
+host_alias = 
+host_cpu = x86_64
+host_os = linux-gnu
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/frank/OLDTRUNK/eid-mw/dialogs/build-aux/install-sh
+install_sh = ${SHELL} /home/frank/eid-mw/dialogs/build-aux/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -323,7 +323,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = 
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -341,7 +341,7 @@ COMMON_SOURCES = $(srcdir)/../common/src/mw_util.cpp src/langutil.cpp
 lib_LTLIBRARIES = libbeiddialogs.la
 
 #
-#libbeiddialogs_la_SOURCES = $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/sharedmem.cpp
+libbeiddialogs_la_SOURCES = $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/sharedmem.cpp
 #
 
 ###################################################################################################################################################################################
@@ -353,35 +353,35 @@ lib_LTLIBRARIES = libbeiddialogs.la
 ###############################################################################################################################################
 
 #
-libbeiddialogs_la_SOURCES = $(COMMON_SOURCES) src/dialogswin32/dlgswin32.cpp src/dialogswin32/dlgwndaskaccess.cpp src/dialogswin32/dlgwndaskpin.cpp src/dialogswin32/dlgwndaskpins.cpp src/dialogswin32/dlgwndbadpin.cpp src/dialogswin32/dlgwndbase.cpp src/dialogswin32/dlgwndmodal.cpp src/dialogswin32/dlgwndpinpadinfo.cpp src/dialogswin32/stdafx.cpp
-#libbeiddialogs_la_CPPFLAGS = -I$(srcdir)/src/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src $(QT_INCS)
+#libbeiddialogs_la_SOURCES = $(COMMON_SOURCES) src/dialogswin32/dlgswin32.cpp src/dialogswin32/dlgwndaskaccess.cpp src/dialogswin32/dlgwndaskpin.cpp src/dialogswin32/dlgwndaskpins.cpp src/dialogswin32/dlgwndbadpin.cpp src/dialogswin32/dlgwndbase.cpp src/dialogswin32/dlgwndmodal.cpp src/dialogswin32/dlgwndpinpadinfo.cpp src/dialogswin32/stdafx.cpp
+libbeiddialogs_la_CPPFLAGS = -I$(srcdir)/src/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src $(QT_INCS)
 #libbeiddialogs_la_CPPFLAGS = -I$(srcdir)/src/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src
-libbeiddialogs_la_CPPFLAGS = -I$(srcdir)/src/dialogswin32 -I$(srcdir)/../common/src
-#libbeiddialogs_la_LDFLAGS = $(QT_LIBS) -avoid-version
+#libbeiddialogs_la_CPPFLAGS = -I$(srcdir)/src/dialogswin32 -I$(srcdir)/../common/src
+libbeiddialogs_la_LDFLAGS = $(QT_LIBS) -avoid-version
 #libbeiddialogs_la_LDFLAGS = -avoid-version
-libbeiddialogs_la_LDFLAGS = -lpsapi -lgdi32 -no-undefined -shared -static-libstdc++ -static-libgcc -avoid-version
-#libbeiddialogs_la_CXXFLAGS = -finput-charset=cp1252 -fno-strict-aliasing
+#libbeiddialogs_la_LDFLAGS = -lpsapi -lgdi32 -no-undefined -shared -static-libstdc++ -static-libgcc -avoid-version
+libbeiddialogs_la_CXXFLAGS = -finput-charset=cp1252 -fno-strict-aliasing
 #libbeiddialogs_la_CXXFLAGS = -finput-charset=cp1252 -fno-strict-aliasing 
-libbeiddialogs_la_CXXFLAGS = -municode -DMINGW_HAS_SECURE_API -DDLGSWIN32_EXPORTS
-#libbeiddialogs_la_LIBADD = $(COMMON_LIBADD)
-#libbeiddialogs_la_LIBADD = $(COMMON_LIBADD) 
+#libbeiddialogs_la_CXXFLAGS = -municode -DMINGW_HAS_SECURE_API -DDLGSWIN32_EXPORTS
 libbeiddialogs_la_LIBADD = $(COMMON_LIBADD)
+#libbeiddialogs_la_LIBADD = $(COMMON_LIBADD) 
+#libbeiddialogs_la_LIBADD = $(COMMON_LIBADD)
+beiddialogsQTsrv_SOURCES = $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/dialogsqtsrv/dlgwndaskaccess.cpp src/dialogsqtsrv/dlgwndaskpin.cpp src/dialogsqtsrv/dlgwndaskpins.cpp src/dialogsqtsrv/dlgwndbadpin.cpp src/dialogsqtsrv/dlgwndbase.cpp src/dialogsqtsrv/dlgwndmodal.cpp src/dialogsqtsrv/dlgwndpinpadinfo.cpp src/dialogsqtsrv/main.cpp src/dialogsqtsrv/moc_dlgwndbase.cpp src/dialogsqtsrv/moc_dlgwndmodal.cpp src/dialogsqtsrv/moc_dlgwndaskaccess.cpp src/dialogsqtsrv/moc_dlgwndaskpin.cpp src/dialogsqtsrv/moc_dlgwndaskpins.cpp src/dialogsqtsrv/moc_dlgwndbadpin.cpp src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp src/sharedmem.cpp
 #beiddialogsQTsrv_SOURCES = $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/dialogsqtsrv/dlgwndaskaccess.cpp src/dialogsqtsrv/dlgwndaskpin.cpp src/dialogsqtsrv/dlgwndaskpins.cpp src/dialogsqtsrv/dlgwndbadpin.cpp src/dialogsqtsrv/dlgwndbase.cpp src/dialogsqtsrv/dlgwndmodal.cpp src/dialogsqtsrv/dlgwndpinpadinfo.cpp src/dialogsqtsrv/main.cpp src/dialogsqtsrv/moc_dlgwndbase.cpp src/dialogsqtsrv/moc_dlgwndmodal.cpp src/dialogsqtsrv/moc_dlgwndaskaccess.cpp src/dialogsqtsrv/moc_dlgwndaskpin.cpp src/dialogsqtsrv/moc_dlgwndaskpins.cpp src/dialogsqtsrv/moc_dlgwndbadpin.cpp src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp src/sharedmem.cpp
-#beiddialogsQTsrv_SOURCES = $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/dialogsqtsrv/dlgwndaskaccess.cpp src/dialogsqtsrv/dlgwndaskpin.cpp src/dialogsqtsrv/dlgwndaskpins.cpp src/dialogsqtsrv/dlgwndbadpin.cpp src/dialogsqtsrv/dlgwndbase.cpp src/dialogsqtsrv/dlgwndmodal.cpp src/dialogsqtsrv/dlgwndpinpadinfo.cpp src/dialogsqtsrv/main.cpp src/dialogsqtsrv/moc_dlgwndbase.cpp src/dialogsqtsrv/moc_dlgwndmodal.cpp src/dialogsqtsrv/moc_dlgwndaskaccess.cpp src/dialogsqtsrv/moc_dlgwndaskpin.cpp src/dialogsqtsrv/moc_dlgwndaskpins.cpp src/dialogsqtsrv/moc_dlgwndbadpin.cpp src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp src/sharedmem.cpp
-#beiddialogsQTsrv_CPPFLAGS = -I$(srcdir)/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src -I
+beiddialogsQTsrv_CPPFLAGS = -I$(srcdir)/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src -I
 #beiddialogsQTsrv_CPPFLAGS = -I$(srcdir)/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src
-#beiddialogsQTsrv_LDFLAGS = $(QT_LIBS) -lpthread -lQtCore -lQtGui -avoid-version
+beiddialogsQTsrv_LDFLAGS = $(QT_LIBS) -lpthread -lQtCore -lQtGui -avoid-version
 #beiddialogsQTsrv_LDFLAGS = -lpthread -avoid-version
-#beiddialogsQTsrv_CXXFLAGS = -finput-charset=cp1252 -fno-strict-aliasing
+beiddialogsQTsrv_CXXFLAGS = -finput-charset=cp1252 -fno-strict-aliasing
 #beiddialogsQTsrv_CXXFLAGS = -finput-charset=cp1252 -fno-strict-aliasing -framework QtCore -framework QtGui 
-#beiddialogsQTsrv_LDADD = $(COMMON_LDADD)
+beiddialogsQTsrv_LDADD = $(COMMON_LDADD)
 #beiddialogsQTsrv_LDADD = $(COMMON_LDADD)
 #
 
 #
-#MOC_CPPFLAGS = $(dialogsqtsrv_CPPFLAGS)
-#BUILT_SOURCES = qrc_dlgs.cpp ui_dlgwndaskaccess.h ui_dlgwndaskpins.h ui_dlgwndaskpin.h ui_dlgwndbadpin.h ui_dlgwndmodal.h ui_dlgwndpinpadinfo.h moc_dlgwndbase.cpp moc_dlgwndmodal.cpp moc_dlgwndaskaccess.cpp moc_dlgwndaskpin.cpp moc_dlgwndaskpins.cpp moc_dlgwndbadpin.cpp moc_dlgwndpinpadinfo.cpp
-#CLEANFILES = $(BUILT_SOURCES)
+MOC_CPPFLAGS = $(dialogsqtsrv_CPPFLAGS)
+BUILT_SOURCES = qrc_dlgs.cpp ui_dlgwndaskaccess.h ui_dlgwndaskpins.h ui_dlgwndaskpin.h ui_dlgwndbadpin.h ui_dlgwndmodal.h ui_dlgwndpinpadinfo.h moc_dlgwndbase.cpp moc_dlgwndmodal.cpp moc_dlgwndaskaccess.cpp moc_dlgwndaskpin.cpp moc_dlgwndaskpins.cpp moc_dlgwndbadpin.cpp moc_dlgwndpinpadinfo.cpp
+CLEANFILES = $(BUILT_SOURCES)
 all: $(BUILT_SOURCES) config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -1275,34 +1275,34 @@ uninstall-am: uninstall-binPROGRAMS uninstall-libLTLIBRARIES
 	tags uninstall uninstall-am uninstall-binPROGRAMS \
 	uninstall-libLTLIBRARIES
 
-#qrc_dlgs.cpp: src/dialogsqtsrv/dlgs.qrc
-#	$(QT_BINDIR)/rcc -name src/dialogsqtsrv/dialogsqtsrv src/dialogsqtsrv/dlgs.qrc -o src/dialogsqtsrv/qrc_dlgs.cpp
-#ui_dlgwndaskaccess.h : src/dialogsqtsrv/dlgwndaskaccess.ui
-#	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndaskaccess.ui -o src/dialogsqtsrv/ui_dlgwndaskaccess.h
-#ui_dlgwndaskpins.h : src/dialogsqtsrv/dlgwndaskpins.ui
-#	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndaskpins.ui -o src/dialogsqtsrv/ui_dlgwndaskpins.h
-#ui_dlgwndaskpin.h : src/dialogsqtsrv/dlgwndaskpin.ui
-#	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndaskpin.ui -o src/dialogsqtsrv/ui_dlgwndaskpin.h
-#ui_dlgwndbadpin.h : src/dialogsqtsrv/dlgwndbadpin.ui
-#	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndbadpin.ui -o src/dialogsqtsrv/ui_dlgwndbadpin.h
-#ui_dlgwndmodal.h : src/dialogsqtsrv/dlgwndmodal.ui
-#	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndmodal.ui -o src/dialogsqtsrv/ui_dlgwndmodal.h
-#ui_dlgwndpinpadinfo.h : src/dialogsqtsrv/dlgwndpinpadinfo.ui
-#	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndpinpadinfo.ui -o src/dialogsqtsrv/ui_dlgwndpinpadinfo.h
-#moc_dlgwndbase.cpp: src/dialogsqtsrv/dlgwndbase.h
-#	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndbase.h -o src/dialogsqtsrv/moc_dlgwndbase.cpp
-#moc_dlgwndmodal.cpp: src/dialogsqtsrv/dlgwndmodal.h
-#	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndmodal.h -o src/dialogsqtsrv/moc_dlgwndmodal.cpp
-#moc_dlgwndaskaccess.cpp: src/dialogsqtsrv/dlgwndaskaccess.h
-#	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskaccess.h -o src/dialogsqtsrv/moc_dlgwndaskaccess.cpp
-#moc_dlgwndaskpin.cpp: src/dialogsqtsrv/dlgwndaskpin.h
-#	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskpin.h -o src/dialogsqtsrv/moc_dlgwndaskpin.cpp
-#moc_dlgwndaskpins.cpp: src/dialogsqtsrv/dlgwndaskpins.h
-#	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskpins.h -o src/dialogsqtsrv/moc_dlgwndaskpins.cpp
-#moc_dlgwndbadpin.cpp: src/dialogsqtsrv/dlgwndbadpin.h
-#	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndbadpin.h -o src/dialogsqtsrv/moc_dlgwndbadpin.cpp
-#moc_dlgwndpinpadinfo.cpp: src/dialogsqtsrv/dlgwndpinpadinfo.h
-#	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndpinpadinfo.h -o src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp
+qrc_dlgs.cpp: src/dialogsqtsrv/dlgs.qrc
+	$(QT_BINDIR)/rcc -name src/dialogsqtsrv/dialogsqtsrv src/dialogsqtsrv/dlgs.qrc -o src/dialogsqtsrv/qrc_dlgs.cpp
+ui_dlgwndaskaccess.h : src/dialogsqtsrv/dlgwndaskaccess.ui
+	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndaskaccess.ui -o src/dialogsqtsrv/ui_dlgwndaskaccess.h
+ui_dlgwndaskpins.h : src/dialogsqtsrv/dlgwndaskpins.ui
+	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndaskpins.ui -o src/dialogsqtsrv/ui_dlgwndaskpins.h
+ui_dlgwndaskpin.h : src/dialogsqtsrv/dlgwndaskpin.ui
+	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndaskpin.ui -o src/dialogsqtsrv/ui_dlgwndaskpin.h
+ui_dlgwndbadpin.h : src/dialogsqtsrv/dlgwndbadpin.ui
+	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndbadpin.ui -o src/dialogsqtsrv/ui_dlgwndbadpin.h
+ui_dlgwndmodal.h : src/dialogsqtsrv/dlgwndmodal.ui
+	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndmodal.ui -o src/dialogsqtsrv/ui_dlgwndmodal.h
+ui_dlgwndpinpadinfo.h : src/dialogsqtsrv/dlgwndpinpadinfo.ui
+	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndpinpadinfo.ui -o src/dialogsqtsrv/ui_dlgwndpinpadinfo.h
+moc_dlgwndbase.cpp: src/dialogsqtsrv/dlgwndbase.h
+	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndbase.h -o src/dialogsqtsrv/moc_dlgwndbase.cpp
+moc_dlgwndmodal.cpp: src/dialogsqtsrv/dlgwndmodal.h
+	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndmodal.h -o src/dialogsqtsrv/moc_dlgwndmodal.cpp
+moc_dlgwndaskaccess.cpp: src/dialogsqtsrv/dlgwndaskaccess.h
+	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskaccess.h -o src/dialogsqtsrv/moc_dlgwndaskaccess.cpp
+moc_dlgwndaskpin.cpp: src/dialogsqtsrv/dlgwndaskpin.h
+	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskpin.h -o src/dialogsqtsrv/moc_dlgwndaskpin.cpp
+moc_dlgwndaskpins.cpp: src/dialogsqtsrv/dlgwndaskpins.h
+	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskpins.h -o src/dialogsqtsrv/moc_dlgwndaskpins.cpp
+moc_dlgwndbadpin.cpp: src/dialogsqtsrv/dlgwndbadpin.h
+	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndbadpin.h -o src/dialogsqtsrv/moc_dlgwndbadpin.cpp
+moc_dlgwndpinpadinfo.cpp: src/dialogsqtsrv/dlgwndpinpadinfo.h
+	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndpinpadinfo.h -o src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp
 #
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

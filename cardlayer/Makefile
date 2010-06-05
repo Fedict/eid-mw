@@ -33,7 +33,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
-host_triplet = i686-w64-mingw32
+host_triplet = x86_64-unknown-linux-gnu
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
@@ -76,11 +76,11 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libbeidcardlayer_la_DEPENDENCIES =  \
-	$(COMMON_LIBADD)
-#libbeidcardlayer_la_DEPENDENCIES =  \
-#	$(COMMON_LIBADD)
-#libbeidcardlayer_la_DEPENDENCIES = $(COMMON_LIBADD)
+##libbeidcardlayer_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD)
+##libbeidcardlayer_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD)
+libbeidcardlayer_la_DEPENDENCIES = $(COMMON_LIBADD)
 am__libbeidcardlayer_la_SOURCES_DIST = ../common/src/mw_util.cpp \
 	src/cache.cpp src/card.cpp src/cardfactory.cpp \
 	src/cardlayer.cpp src/cardreaderinfo.cpp src/context.cpp \
@@ -93,7 +93,54 @@ am__libbeidcardlayer_la_SOURCES_DIST = ../common/src/mw_util.cpp \
 	src/cardpluginsis/siscard.cpp \
 	src/cardpluginsis/sispluginhandler.cpp \
 	old/pinpadliboldbeid.cpp
-am_libbeidcardlayer_la_OBJECTS = libbeidcardlayer_la-mw_util.lo \
+##am_libbeidcardlayer_la_OBJECTS = libbeidcardlayer_la-mw_util.lo \
+##	libbeidcardlayer_la-cache.lo \
+##	libbeidcardlayer_la-card.lo \
+##	libbeidcardlayer_la-cardfactory.lo \
+##	libbeidcardlayer_la-cardlayer.lo \
+##	libbeidcardlayer_la-cardreaderinfo.lo \
+##	libbeidcardlayer_la-context.lo \
+##	libbeidcardlayer_la-p15correction.lo \
+##	libbeidcardlayer_la-pcsc.lo \
+##	libbeidcardlayer_la-pinpad.lo \
+##	libbeidcardlayer_la-pinpadlib.lo \
+##	libbeidcardlayer_la-pkcs15.lo \
+##	libbeidcardlayer_la-pkcs15parser.lo \
+##	libbeidcardlayer_la-pkicard.lo \
+##	libbeidcardlayer_la-reader.lo \
+##	libbeidcardlayer_la-readersinfo.lo \
+##	libbeidcardlayer_la-threadpool.lo \
+##	libbeidcardlayer_la-unknowncard.lo \
+##	libbeidcardlayer_la-pinpadliboldbeid.lo \
+##	libbeidcardlayer_la-beidcard.lo \
+##	libbeidcardlayer_la-beidp15correction.lo \
+##	libbeidcardlayer_la-siscard.lo \
+##	libbeidcardlayer_la-sispluginhandler.lo
+##am_libbeidcardlayer_la_OBJECTS =  \
+##	libbeidcardlayer_la-mw_util.lo \
+##	libbeidcardlayer_la-cache.lo \
+##	libbeidcardlayer_la-card.lo \
+##	libbeidcardlayer_la-cardfactory.lo \
+##	libbeidcardlayer_la-cardlayer.lo \
+##	libbeidcardlayer_la-cardreaderinfo.lo \
+##	libbeidcardlayer_la-context.lo \
+##	libbeidcardlayer_la-p15correction.lo \
+##	libbeidcardlayer_la-pcsc.lo \
+##	libbeidcardlayer_la-pinpad.lo \
+##	libbeidcardlayer_la-pinpadlib.lo \
+##	libbeidcardlayer_la-pkcs15.lo \
+##	libbeidcardlayer_la-pkcs15parser.lo \
+##	libbeidcardlayer_la-pkicard.lo \
+##	libbeidcardlayer_la-reader.lo \
+##	libbeidcardlayer_la-readersinfo.lo \
+##	libbeidcardlayer_la-threadpool.lo \
+##	libbeidcardlayer_la-unknowncard.lo \
+##	libbeidcardlayer_la-beidcard.lo \
+##	libbeidcardlayer_la-beidp15correction.lo \
+##	libbeidcardlayer_la-siscard.lo \
+##	libbeidcardlayer_la-sispluginhandler.lo
+am_libbeidcardlayer_la_OBJECTS =  \
+	libbeidcardlayer_la-mw_util.lo \
 	libbeidcardlayer_la-cache.lo \
 	libbeidcardlayer_la-card.lo \
 	libbeidcardlayer_la-cardfactory.lo \
@@ -111,143 +158,96 @@ am_libbeidcardlayer_la_OBJECTS = libbeidcardlayer_la-mw_util.lo \
 	libbeidcardlayer_la-readersinfo.lo \
 	libbeidcardlayer_la-threadpool.lo \
 	libbeidcardlayer_la-unknowncard.lo \
-	libbeidcardlayer_la-pinpadliboldbeid.lo \
 	libbeidcardlayer_la-beidcard.lo \
 	libbeidcardlayer_la-beidp15correction.lo \
 	libbeidcardlayer_la-siscard.lo \
 	libbeidcardlayer_la-sispluginhandler.lo
-#am_libbeidcardlayer_la_OBJECTS =  \
-#	libbeidcardlayer_la-mw_util.lo \
-#	libbeidcardlayer_la-cache.lo \
-#	libbeidcardlayer_la-card.lo \
-#	libbeidcardlayer_la-cardfactory.lo \
-#	libbeidcardlayer_la-cardlayer.lo \
-#	libbeidcardlayer_la-cardreaderinfo.lo \
-#	libbeidcardlayer_la-context.lo \
-#	libbeidcardlayer_la-p15correction.lo \
-#	libbeidcardlayer_la-pcsc.lo \
-#	libbeidcardlayer_la-pinpad.lo \
-#	libbeidcardlayer_la-pinpadlib.lo \
-#	libbeidcardlayer_la-pkcs15.lo \
-#	libbeidcardlayer_la-pkcs15parser.lo \
-#	libbeidcardlayer_la-pkicard.lo \
-#	libbeidcardlayer_la-reader.lo \
-#	libbeidcardlayer_la-readersinfo.lo \
-#	libbeidcardlayer_la-threadpool.lo \
-#	libbeidcardlayer_la-unknowncard.lo \
-#	libbeidcardlayer_la-beidcard.lo \
-#	libbeidcardlayer_la-beidp15correction.lo \
-#	libbeidcardlayer_la-siscard.lo \
-#	libbeidcardlayer_la-sispluginhandler.lo
-#am_libbeidcardlayer_la_OBJECTS =  \
-#	libbeidcardlayer_la-mw_util.lo \
-#	libbeidcardlayer_la-cache.lo \
-#	libbeidcardlayer_la-card.lo \
-#	libbeidcardlayer_la-cardfactory.lo \
-#	libbeidcardlayer_la-cardlayer.lo \
-#	libbeidcardlayer_la-cardreaderinfo.lo \
-#	libbeidcardlayer_la-context.lo \
-#	libbeidcardlayer_la-p15correction.lo \
-#	libbeidcardlayer_la-pcsc.lo \
-#	libbeidcardlayer_la-pinpad.lo \
-#	libbeidcardlayer_la-pinpadlib.lo \
-#	libbeidcardlayer_la-pkcs15.lo \
-#	libbeidcardlayer_la-pkcs15parser.lo \
-#	libbeidcardlayer_la-pkicard.lo \
-#	libbeidcardlayer_la-reader.lo \
-#	libbeidcardlayer_la-readersinfo.lo \
-#	libbeidcardlayer_la-threadpool.lo \
-#	libbeidcardlayer_la-unknowncard.lo \
-#	libbeidcardlayer_la-beidcard.lo \
-#	libbeidcardlayer_la-beidp15correction.lo \
-#	libbeidcardlayer_la-siscard.lo \
-#	libbeidcardlayer_la-sispluginhandler.lo
 libbeidcardlayer_la_OBJECTS = $(am_libbeidcardlayer_la_OBJECTS)
 libbeidcardlayer_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(libbeidcardlayer_la_CXXFLAGS) $(CXXFLAGS) \
 	$(libbeidcardlayer_la_LDFLAGS) $(LDFLAGS) -o $@
-libcardpluginbeid_la_DEPENDENCIES =  \
-	$(COMMON_LIBADD) \
+##libcardpluginbeid_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD) \
+##	libbeidcardlayer.la
+##libcardpluginbeid_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD) libbeidcardlayer.la
+libcardpluginbeid_la_DEPENDENCIES = $(COMMON_LIBADD) \
 	libbeidcardlayer.la
-#libcardpluginbeid_la_DEPENDENCIES =  \
-#	$(COMMON_LIBADD) libbeidcardlayer.la
-#libcardpluginbeid_la_DEPENDENCIES = $(COMMON_LIBADD) \
-#	libbeidcardlayer.la
 am__libcardpluginbeid_la_SOURCES_DIST = ../common/src/mw_util.cpp \
 	src/cardpluginbeid/beidcard.cpp \
 	src/cardpluginbeid/beidp15correction.cpp src/cache.cpp \
 	src/card.cpp src/pkicard.cpp
-am_libcardpluginbeid_la_OBJECTS = libcardpluginbeid_la-mw_util.lo \
+##am_libcardpluginbeid_la_OBJECTS = libcardpluginbeid_la-mw_util.lo \
+##	libcardpluginbeid_la-beidcard.lo \
+##	libcardpluginbeid_la-beidp15correction.lo \
+##	libcardpluginbeid_la-cache.lo \
+##	libcardpluginbeid_la-card.lo \
+##	libcardpluginbeid_la-pkicard.lo
+##am_libcardpluginbeid_la_OBJECTS =  \
+##	libcardpluginbeid_la-mw_util.lo \
+##	libcardpluginbeid_la-beidcard.lo \
+##	libcardpluginbeid_la-beidp15correction.lo \
+##	libcardpluginbeid_la-cache.lo \
+##	libcardpluginbeid_la-card.lo \
+##	libcardpluginbeid_la-pkicard.lo
+am_libcardpluginbeid_la_OBJECTS =  \
+	libcardpluginbeid_la-mw_util.lo \
 	libcardpluginbeid_la-beidcard.lo \
 	libcardpluginbeid_la-beidp15correction.lo \
 	libcardpluginbeid_la-cache.lo \
 	libcardpluginbeid_la-card.lo \
 	libcardpluginbeid_la-pkicard.lo
-#am_libcardpluginbeid_la_OBJECTS =  \
-#	libcardpluginbeid_la-mw_util.lo \
-#	libcardpluginbeid_la-beidcard.lo \
-#	libcardpluginbeid_la-beidp15correction.lo \
-#	libcardpluginbeid_la-cache.lo \
-#	libcardpluginbeid_la-card.lo \
-#	libcardpluginbeid_la-pkicard.lo
-#am_libcardpluginbeid_la_OBJECTS =  \
-#	libcardpluginbeid_la-mw_util.lo \
-#	libcardpluginbeid_la-beidcard.lo \
-#	libcardpluginbeid_la-beidp15correction.lo \
-#	libcardpluginbeid_la-cache.lo \
-#	libcardpluginbeid_la-card.lo \
-#	libcardpluginbeid_la-pkicard.lo
 libcardpluginbeid_la_OBJECTS = $(am_libcardpluginbeid_la_OBJECTS)
 libcardpluginbeid_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(libcardpluginbeid_la_CXXFLAGS) $(CXXFLAGS) \
 	$(libcardpluginbeid_la_LDFLAGS) $(LDFLAGS) -o $@
-libcardpluginsis_la_DEPENDENCIES =  \
-	$(COMMON_LIBADD) \
+##libcardpluginsis_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD) \
+##	libbeidcardlayer.la
+##libcardpluginsis_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD) libbeidcardlayer.la
+libcardpluginsis_la_DEPENDENCIES = $(COMMON_LIBADD) \
 	libbeidcardlayer.la
-#libcardpluginsis_la_DEPENDENCIES =  \
-#	$(COMMON_LIBADD) libbeidcardlayer.la
-#libcardpluginsis_la_DEPENDENCIES = $(COMMON_LIBADD) \
-#	libbeidcardlayer.la
 am__libcardpluginsis_la_SOURCES_DIST = ../common/src/mw_util.cpp \
 	src/cardpluginsis/siscard.cpp src/cache.cpp src/card.cpp
-am_libcardpluginsis_la_OBJECTS = libcardpluginsis_la-mw_util.lo \
+##am_libcardpluginsis_la_OBJECTS = libcardpluginsis_la-mw_util.lo \
+##	libcardpluginsis_la-siscard.lo \
+##	libcardpluginsis_la-cache.lo \
+##	libcardpluginsis_la-card.lo
+##am_libcardpluginsis_la_OBJECTS =  \
+##	libcardpluginsis_la-mw_util.lo \
+##	libcardpluginsis_la-siscard.lo \
+##	libcardpluginsis_la-cache.lo \
+##	libcardpluginsis_la-card.lo
+am_libcardpluginsis_la_OBJECTS =  \
+	libcardpluginsis_la-mw_util.lo \
 	libcardpluginsis_la-siscard.lo \
 	libcardpluginsis_la-cache.lo \
 	libcardpluginsis_la-card.lo
-#am_libcardpluginsis_la_OBJECTS =  \
-#	libcardpluginsis_la-mw_util.lo \
-#	libcardpluginsis_la-siscard.lo \
-#	libcardpluginsis_la-cache.lo \
-#	libcardpluginsis_la-card.lo
-#am_libcardpluginsis_la_OBJECTS =  \
-#	libcardpluginsis_la-mw_util.lo \
-#	libcardpluginsis_la-siscard.lo \
-#	libcardpluginsis_la-cache.lo \
-#	libcardpluginsis_la-card.lo
 libcardpluginsis_la_OBJECTS = $(am_libcardpluginsis_la_OBJECTS)
 libcardpluginsis_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(libcardpluginsis_la_CXXFLAGS) $(CXXFLAGS) \
 	$(libcardpluginsis_la_LDFLAGS) $(LDFLAGS) -o $@
+##libcardpluginsis_acr38u_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD) \
+##	libbeidcardlayer.la
+##libcardpluginsis_acr38u_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD) libbeidcardlayer.la
 libcardpluginsis_acr38u_la_DEPENDENCIES =  \
-	$(COMMON_LIBADD) \
-	libbeidcardlayer.la
-#libcardpluginsis_acr38u_la_DEPENDENCIES =  \
-#	$(COMMON_LIBADD) libbeidcardlayer.la
-#libcardpluginsis_acr38u_la_DEPENDENCIES =  \
-#	$(COMMON_LIBADD) libbeidcardlayer.la
+	$(COMMON_LIBADD) libbeidcardlayer.la
 am__libcardpluginsis_acr38u_la_SOURCES_DIST =  \
 	../common/src/mw_util.cpp src/cardpluginsis_acr38u/siscard.cpp
-am_libcardpluginsis_acr38u_la_OBJECTS = libcardpluginsis_acr38u_la-mw_util.lo \
+##am_libcardpluginsis_acr38u_la_OBJECTS = libcardpluginsis_acr38u_la-mw_util.lo \
+##	libcardpluginsis_acr38u_la-siscard.lo
+##am_libcardpluginsis_acr38u_la_OBJECTS =  \
+##	libcardpluginsis_acr38u_la-mw_util.lo \
+##	libcardpluginsis_acr38u_la-siscard.lo
+am_libcardpluginsis_acr38u_la_OBJECTS =  \
+	libcardpluginsis_acr38u_la-mw_util.lo \
 	libcardpluginsis_acr38u_la-siscard.lo
-#am_libcardpluginsis_acr38u_la_OBJECTS =  \
-#	libcardpluginsis_acr38u_la-mw_util.lo \
-#	libcardpluginsis_acr38u_la-siscard.lo
-#am_libcardpluginsis_acr38u_la_OBJECTS =  \
-#	libcardpluginsis_acr38u_la-mw_util.lo \
-#	libcardpluginsis_acr38u_la-siscard.lo
 libcardpluginsis_acr38u_la_OBJECTS =  \
 	$(am_libcardpluginsis_acr38u_la_OBJECTS)
 libcardpluginsis_acr38u_la_LINK = $(LIBTOOL) --tag=CXX \
@@ -287,34 +287,34 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/frank/OLDTRUNK/eid-mw/cardlayer/build-aux/missing --run aclocal-1.11
-AMTAR = ${SHELL} /home/frank/OLDTRUNK/eid-mw/cardlayer/build-aux/missing --run tar
-AR = i686-w64-mingw32-ar
-AS = i686-w64-mingw32-as
-AUTOCONF = ${SHELL} /home/frank/OLDTRUNK/eid-mw/cardlayer/build-aux/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/frank/OLDTRUNK/eid-mw/cardlayer/build-aux/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/frank/OLDTRUNK/eid-mw/cardlayer/build-aux/missing --run automake-1.11
+ACLOCAL = ${SHELL} /home/frank/eid-mw/cardlayer/build-aux/missing --run aclocal-1.11
+AMTAR = ${SHELL} /home/frank/eid-mw/cardlayer/build-aux/missing --run tar
+AR = ar
+AS = as
+AUTOCONF = ${SHELL} /home/frank/eid-mw/cardlayer/build-aux/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/frank/eid-mw/cardlayer/build-aux/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/frank/eid-mw/cardlayer/build-aux/missing --run automake-1.11
 AWK = gawk
-CC = i686-w64-mingw32-gcc
+CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
-CPP = i686-w64-mingw32-gcc -E
+CPP = gcc -E
 CPPFLAGS = 
-CXX = i686-w64-mingw32-g++
-CXXCPP = i686-w64-mingw32-g++ -E
+CXX = g++
+CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
-DLLTOOL = i686-w64-mingw32-dlltool
+DLLTOOL = dlltool
 DSYMUTIL = 
 DUMPBIN = 
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
 EGREP = /bin/grep -E
-EXEEXT = .exe
+EXEEXT = 
 FGREP = /bin/grep -F
 GREP = /bin/grep
 INSTALL = /bin/install -c
@@ -322,19 +322,19 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LD = /home/frank/w32/i686-w64-mingw32/bin/ld
+LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
-LIBOBJS =  ${LIBOBJDIR}error$U.o
+LIBOBJS = 
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
-LTLIBOBJS =  ${LIBOBJDIR}error$U.lo
-MAKEINFO = ${SHELL} /home/frank/OLDTRUNK/eid-mw/cardlayer/build-aux/missing --run makeinfo
+LTLIBOBJS = 
+MAKEINFO = ${SHELL} /home/frank/eid-mw/cardlayer/build-aux/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
-NM = /home/frank/w32/bin/i686-w64-mingw32-nm -B
+NM = /usr/bin/nm -B
 NMEDIT = 
-OBJDUMP = i686-w64-mingw32-objdump
+OBJDUMP = objdump
 OBJEXT = o
 OTOOL = 
 OTOOL64 = 
@@ -346,20 +346,20 @@ PACKAGE_TARNAME = libbeidcardlayer
 PACKAGE_URL = 
 PACKAGE_VERSION = 0.0.1
 PATH_SEPARATOR = :
-PCSCLITE_INCS = 
-PCSCLITE_LIBS = 
-RANLIB = i686-w64-mingw32-ranlib
+PCSCLITE_INCS = -I/usr/include/PCSC
+PCSCLITE_LIBS = -L/lib
+RANLIB = ranlib
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
-STRIP = i686-w64-mingw32-strip
+STRIP = strip
 VERSION = 0.0.1
-abs_builddir = /home/frank/OLDTRUNK/eid-mw/cardlayer
-abs_srcdir = /home/frank/OLDTRUNK/eid-mw/cardlayer
-abs_top_builddir = /home/frank/OLDTRUNK/eid-mw/cardlayer
-abs_top_srcdir = /home/frank/OLDTRUNK/eid-mw/cardlayer
-ac_ct_CC = 
-ac_ct_CXX = 
+abs_builddir = /home/frank/eid-mw/cardlayer
+abs_srcdir = /home/frank/eid-mw/cardlayer
+abs_top_builddir = /home/frank/eid-mw/cardlayer
+abs_top_srcdir = /home/frank/eid-mw/cardlayer
+ac_ct_CC = gcc
+ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
@@ -378,15 +378,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i686-w64-mingw32
-host_alias = i686-w64-mingw32
-host_cpu = i686
-host_os = mingw32
-host_vendor = w64
+host = x86_64-unknown-linux-gnu
+host_alias = 
+host_cpu = x86_64
+host_os = linux-gnu
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/frank/OLDTRUNK/eid-mw/cardlayer/build-aux/install-sh
+install_sh = ${SHELL} /home/frank/eid-mw/cardlayer/build-aux/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -395,7 +395,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = 
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -410,70 +410,70 @@ ACLOCAL_AMFLAGS = -I m4
 COMMON_CXXFLAGS = -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM
 COMMON_LIBADD = ../common/libbeidcommon.la ../dialogs/libbeiddialogs.la
 lib_LTLIBRARIES = libbeidcardlayer.la libcardpluginbeid.la libcardpluginsis.la libcardpluginsis_acr38u.la
-#libbeidcardlayer_la_SOURCES = ../common/src/mw_util.cpp src/cache.cpp src/card.cpp src/cardfactory.cpp src/cardlayer.cpp src/cardreaderinfo.cpp src/context.cpp src/p15correction.cpp src/pcsc.cpp src/pinpad.cpp src/pinpadlib.cpp src/pkcs15.cpp src/pkcs15parser.cpp src/pkicard.cpp src/reader.cpp src/readersinfo.cpp src/threadpool.cpp src/unknowncard.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cardpluginsis/siscard.cpp src/cardpluginsis/sispluginhandler.cpp
+libbeidcardlayer_la_SOURCES = ../common/src/mw_util.cpp src/cache.cpp src/card.cpp src/cardfactory.cpp src/cardlayer.cpp src/cardreaderinfo.cpp src/context.cpp src/p15correction.cpp src/pcsc.cpp src/pinpad.cpp src/pinpadlib.cpp src/pkcs15.cpp src/pkcs15parser.cpp src/pkicard.cpp src/reader.cpp src/readersinfo.cpp src/threadpool.cpp src/unknowncard.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cardpluginsis/siscard.cpp src/cardpluginsis/sispluginhandler.cpp
 
 ###############################################################################################################################################################################
 #libbeidcardlayer_la_SOURCES = ../common/src/mw_util.cpp src/cache.cpp src/card.cpp src/cardfactory.cpp src/cardlayer.cpp src/cardreaderinfo.cpp src/context.cpp src/p15correction.cpp src/pcsc.cpp src/pinpad.cpp src/pinpadlib.cpp src/pkcs15.cpp src/pkcs15parser.cpp src/pkicard.cpp src/reader.cpp src/readersinfo.cpp src/threadpool.cpp src/unknowncard.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cardpluginsis/siscard.cpp src/cardpluginsis/sispluginhandler.cpp
 
 ##############################################################################################################################################################################
-libbeidcardlayer_la_SOURCES = ../common/src/mw_util.cpp src/cache.cpp src/card.cpp src/cardfactory.cpp src/cardlayer.cpp src/cardreaderinfo.cpp src/context.cpp src/p15correction.cpp src/pcsc.cpp src/pinpad.cpp src/pinpadlib.cpp src/pkcs15.cpp src/pkcs15parser.cpp src/pkicard.cpp src/reader.cpp src/readersinfo.cpp src/threadpool.cpp src/unknowncard.cpp old/pinpadliboldbeid.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cardpluginsis/siscard.cpp src/cardpluginsis/sispluginhandler.cpp
-#libbeidcardlayer_la_CPPFLAGS = $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid -I$(srcdir)/src/cardpluginsis -I$(srcdir)/src/cardpluginsis_acr38u
+#libbeidcardlayer_la_SOURCES = ../common/src/mw_util.cpp src/cache.cpp src/card.cpp src/cardfactory.cpp src/cardlayer.cpp src/cardreaderinfo.cpp src/context.cpp src/p15correction.cpp src/pcsc.cpp src/pinpad.cpp src/pinpadlib.cpp src/pkcs15.cpp src/pkcs15parser.cpp src/pkicard.cpp src/reader.cpp src/readersinfo.cpp src/threadpool.cpp src/unknowncard.cpp old/pinpadliboldbeid.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cardpluginsis/siscard.cpp src/cardpluginsis/sispluginhandler.cpp
+libbeidcardlayer_la_CPPFLAGS = $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid -I$(srcdir)/src/cardpluginsis -I$(srcdir)/src/cardpluginsis_acr38u
 #libbeidcardlayer_la_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid -I$(srcdir)/src/cardpluginsis -I$(srcdir)/src/cardpluginsis_acr38u -I/System/Library/Frameworks/PCSC.framework/Headers/
-libbeidcardlayer_la_CPPFLAGS = -I$(srcdir)/../common -I$(srcdir)/src/cardpluginbeid -I$(srcdir)/src/cardpluginsis -I$(srcdir)/src/cardpluginsis_acr38u
-#libbeidcardlayer_la_LDFLAGS = $(PCSCLITE_LIBS) -lpcsclite -avoid-version
+#libbeidcardlayer_la_CPPFLAGS = -I$(srcdir)/../common -I$(srcdir)/src/cardpluginbeid -I$(srcdir)/src/cardpluginsis -I$(srcdir)/src/cardpluginsis_acr38u
+libbeidcardlayer_la_LDFLAGS = $(PCSCLITE_LIBS) -lpcsclite -avoid-version
 #libbeidcardlayer_la_LDFLAGS = -avoid-version
-libbeidcardlayer_la_LDFLAGS = -lwinscard -no-undefined -shared -static-libstdc++ -static-libgcc -avoid-version
-#libbeidcardlayer_la_LIBADD = $(COMMON_LIBADD)
-#libbeidcardlayer_la_LIBADD = $(COMMON_LIBADD)
+#libbeidcardlayer_la_LDFLAGS = -lwinscard -no-undefined -shared -static-libstdc++ -static-libgcc -avoid-version
 libbeidcardlayer_la_LIBADD = $(COMMON_LIBADD)
-#libbeidcardlayer_la_CXXFLAGS = $(COMMON_CXXFLAGS)
+#libbeidcardlayer_la_LIBADD = $(COMMON_LIBADD)
+#libbeidcardlayer_la_LIBADD = $(COMMON_LIBADD)
+libbeidcardlayer_la_CXXFLAGS = $(COMMON_CXXFLAGS)
 #libbeidcardlayer_la_CXXFLAGS = $(COMMON_CXXFLAGS) -framework PCSC
-libbeidcardlayer_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API 
-#libcardpluginbeid_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cache.cpp src/card.cpp src/pkicard.cpp
-#libcardpluginbeid_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cache.cpp src/card.cpp src/pkicard.cpp
+#libbeidcardlayer_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API 
 libcardpluginbeid_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cache.cpp src/card.cpp src/pkicard.cpp
-#libcardpluginbeid_la_CPPFLAGS = $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid 
+#libcardpluginbeid_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cache.cpp src/card.cpp src/pkicard.cpp
+#libcardpluginbeid_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cache.cpp src/card.cpp src/pkicard.cpp
+libcardpluginbeid_la_CPPFLAGS = $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid 
 #libcardpluginbeid_la_CPPFLAGS = -I$(srcdir)/src -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid -I/System/Library/Frameworks/PCSC.framework/Headers/
-libcardpluginbeid_la_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid 
-#libcardpluginbeid_la_LDFLAGS = $(PCSCLITE_LIBS) -lpcsclite -avoid-version
+#libcardpluginbeid_la_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid 
+libcardpluginbeid_la_LDFLAGS = $(PCSCLITE_LIBS) -lpcsclite -avoid-version
 #libcardpluginbeid_la_LDFLAGS = -avoid-version
-libcardpluginbeid_la_LDFLAGS = -no-undefined -shared -static-libstdc++ -static-libgcc -avoid-version
-#libcardpluginbeid_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
-#libcardpluginbeid_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
+#libcardpluginbeid_la_LDFLAGS = -no-undefined -shared -static-libstdc++ -static-libgcc -avoid-version
 libcardpluginbeid_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
-#libcardpluginbeid_la_CXXFLAGS = $(COMMON_CXXFLAGS)
+#libcardpluginbeid_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
+#libcardpluginbeid_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
+libcardpluginbeid_la_CXXFLAGS = $(COMMON_CXXFLAGS)
 #libcardpluginbeid_la_CXXFLAGS = $(COMMON_CXXFLAGS) -framework PCSC
-libcardpluginbeid_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API
-#libcardpluginsis_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis/siscard.cpp src/cache.cpp src/card.cpp
-#libcardpluginsis_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis/siscard.cpp src/cache.cpp src/card.cpp
+#libcardpluginbeid_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API
 libcardpluginsis_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis/siscard.cpp src/cache.cpp src/card.cpp
-#libcardpluginsis_la_CPPFLAGS = $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis 
+#libcardpluginsis_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis/siscard.cpp src/cache.cpp src/card.cpp
+#libcardpluginsis_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis/siscard.cpp src/cache.cpp src/card.cpp
+libcardpluginsis_la_CPPFLAGS = $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis 
 #libcardpluginsis_la_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis -I/System/Library/Frameworks/PCSC.framework/Headers/
-libcardpluginsis_la_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis 
-#libcardpluginsis_la_LDFLAGS = $(PCSCLITE_LIBS) -lpcsclite -avoid-version
+#libcardpluginsis_la_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis 
+libcardpluginsis_la_LDFLAGS = $(PCSCLITE_LIBS) -lpcsclite -avoid-version
 #libcardpluginsis_la_LDFLAGS = -avoid-version
-libcardpluginsis_la_LDFLAGS = -no-undefined -static-libstdc++ -static-libgcc -shared -avoid-version
-#libcardpluginsis_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
-#libcardpluginsis_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
+#libcardpluginsis_la_LDFLAGS = -no-undefined -static-libstdc++ -static-libgcc -shared -avoid-version
 libcardpluginsis_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
-#libcardpluginsis_la_CXXFLAGS = $(COMMON_CXXFLAGS)
+#libcardpluginsis_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
+#libcardpluginsis_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
+libcardpluginsis_la_CXXFLAGS = $(COMMON_CXXFLAGS)
 #libcardpluginsis_la_CXXFLAGS = $(COMMON_CXXFLAGS) -framework PCSC
-libcardpluginsis_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API
-#libcardpluginsis_acr38u_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis_acr38u/siscard.cpp 
-#libcardpluginsis_acr38u_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis_acr38u/siscard.cpp 
+#libcardpluginsis_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API
 libcardpluginsis_acr38u_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis_acr38u/siscard.cpp 
-#libcardpluginsis_acr38u_la_CPPFLAGS = $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis_acr38u
+#libcardpluginsis_acr38u_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis_acr38u/siscard.cpp 
+#libcardpluginsis_acr38u_la_SOURCES = ../common/src/mw_util.cpp src/cardpluginsis_acr38u/siscard.cpp 
+libcardpluginsis_acr38u_la_CPPFLAGS = $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis_acr38u
 #libcardpluginsis_acr38u_la_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis_acr38u -I/System/Library/Frameworks/PCSC.framework/Headers/
-libcardpluginsis_acr38u_la_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis_acr38u
-#libcardpluginsis_acr38u_la_LDFLAGS = $(PCSCLITE_LIBS) -lpcsclite -avoid-version
+#libcardpluginsis_acr38u_la_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis_acr38u
+libcardpluginsis_acr38u_la_LDFLAGS = $(PCSCLITE_LIBS) -lpcsclite -avoid-version
 #libcardpluginsis_acr38u_la_LDFLAGS = -avoid-version
-libcardpluginsis_acr38u_la_LDFLAGS = -no-undefined -shared -static-libstdc++ -static-libgcc -avoid-version
-#libcardpluginsis_acr38u_la_CXXFLAGS = $(COMMON_CXXFLAGS) -DCARDPLUGINSIS_EXPORTS -DEIDMW_CMN_EXPORT
+#libcardpluginsis_acr38u_la_LDFLAGS = -no-undefined -shared -static-libstdc++ -static-libgcc -avoid-version
+libcardpluginsis_acr38u_la_CXXFLAGS = $(COMMON_CXXFLAGS) -DCARDPLUGINSIS_EXPORTS -DEIDMW_CMN_EXPORT
 #libcardpluginsis_acr38u_la_CXXFLAGS = $(COMMON_CXXFLAGS) -DCARDPLUGINSIS_EXPORTS -DEIDMW_CMN_EXPORT -framework PCSC
-libcardpluginsis_acr38u_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API -DCARDPLUGINSIS_EXPORTS -DEIDMW_CMN_EXPORT
-#libcardpluginsis_acr38u_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
-#libcardpluginsis_acr38u_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
+#libcardpluginsis_acr38u_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API -DCARDPLUGINSIS_EXPORTS -DEIDMW_CMN_EXPORT
 libcardpluginsis_acr38u_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
+#libcardpluginsis_acr38u_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
+#libcardpluginsis_acr38u_la_LIBADD = $(COMMON_LIBADD) libbeidcardlayer.la
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 

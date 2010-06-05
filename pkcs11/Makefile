@@ -33,7 +33,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
-host_triplet = i686-w64-mingw32
+host_triplet = x86_64-unknown-linux-gnu
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
@@ -76,11 +76,11 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libbeidpkcs11_la_DEPENDENCIES =  \
-	$(COMMON_LIBADD)
-#libbeidpkcs11_la_DEPENDENCIES =  \
-#	$(COMMON_LIBADD)
-#libbeidpkcs11_la_DEPENDENCIES = $(COMMON_LIBADD)
+##libbeidpkcs11_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD)
+##libbeidpkcs11_la_DEPENDENCIES =  \
+##	$(COMMON_LIBADD)
+libbeidpkcs11_la_DEPENDENCIES = $(COMMON_LIBADD)
 am_libbeidpkcs11_la_OBJECTS = libbeidpkcs11_la-mw_util.lo \
 	libbeidpkcs11_la-asn1.lo libbeidpkcs11_la-cal.lo \
 	libbeidpkcs11_la-cert.lo libbeidpkcs11_la-encrypt.lo \
@@ -130,34 +130,34 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/frank/OLDTRUNK/eid-mw/pkcs11/build-aux/missing --run aclocal-1.11
-AMTAR = ${SHELL} /home/frank/OLDTRUNK/eid-mw/pkcs11/build-aux/missing --run tar
-AR = i686-w64-mingw32-ar
-AS = i686-w64-mingw32-as
-AUTOCONF = ${SHELL} /home/frank/OLDTRUNK/eid-mw/pkcs11/build-aux/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/frank/OLDTRUNK/eid-mw/pkcs11/build-aux/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/frank/OLDTRUNK/eid-mw/pkcs11/build-aux/missing --run automake-1.11
+ACLOCAL = ${SHELL} /home/frank/eid-mw/pkcs11/build-aux/missing --run aclocal-1.11
+AMTAR = ${SHELL} /home/frank/eid-mw/pkcs11/build-aux/missing --run tar
+AR = ar
+AS = as
+AUTOCONF = ${SHELL} /home/frank/eid-mw/pkcs11/build-aux/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/frank/eid-mw/pkcs11/build-aux/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/frank/eid-mw/pkcs11/build-aux/missing --run automake-1.11
 AWK = gawk
-CC = i686-w64-mingw32-gcc
+CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
-CPP = i686-w64-mingw32-gcc -E
+CPP = gcc -E
 CPPFLAGS = 
-CXX = i686-w64-mingw32-g++
-CXXCPP = i686-w64-mingw32-g++ -E
+CXX = g++
+CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
-DLLTOOL = i686-w64-mingw32-dlltool
+DLLTOOL = dlltool
 DSYMUTIL = 
 DUMPBIN = 
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
 EGREP = /bin/grep -E
-EXEEXT = .exe
+EXEEXT = 
 FGREP = /bin/grep -F
 GREP = /bin/grep
 INSTALL = /bin/install -c
@@ -165,19 +165,19 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LD = /home/frank/w32/i686-w64-mingw32/bin/ld
+LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
-LIBOBJS =  ${LIBOBJDIR}error$U.o
+LIBOBJS = 
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
-LTLIBOBJS =  ${LIBOBJDIR}error$U.lo
-MAKEINFO = ${SHELL} /home/frank/OLDTRUNK/eid-mw/pkcs11/build-aux/missing --run makeinfo
+LTLIBOBJS = 
+MAKEINFO = ${SHELL} /home/frank/eid-mw/pkcs11/build-aux/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
-NM = /home/frank/w32/bin/i686-w64-mingw32-nm -B
+NM = /usr/bin/nm -B
 NMEDIT = 
-OBJDUMP = i686-w64-mingw32-objdump
+OBJDUMP = objdump
 OBJEXT = o
 OTOOL = 
 OTOOL64 = 
@@ -189,20 +189,20 @@ PACKAGE_TARNAME = libbeidpkcs11
 PACKAGE_URL = 
 PACKAGE_VERSION = 0.0.1
 PATH_SEPARATOR = :
-PCSCLITE_INCS = 
-PCSCLITE_LIBS = 
-RANLIB = i686-w64-mingw32-ranlib
+PCSCLITE_INCS = -I/usr/include/PCSC
+PCSCLITE_LIBS = -L/lib
+RANLIB = ranlib
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
-STRIP = i686-w64-mingw32-strip
+STRIP = strip
 VERSION = 0.0.1
-abs_builddir = /home/frank/OLDTRUNK/eid-mw/pkcs11
-abs_srcdir = /home/frank/OLDTRUNK/eid-mw/pkcs11
-abs_top_builddir = /home/frank/OLDTRUNK/eid-mw/pkcs11
-abs_top_srcdir = /home/frank/OLDTRUNK/eid-mw/pkcs11
-ac_ct_CC = 
-ac_ct_CXX = 
+abs_builddir = /home/frank/eid-mw/pkcs11
+abs_srcdir = /home/frank/eid-mw/pkcs11
+abs_top_builddir = /home/frank/eid-mw/pkcs11
+abs_top_srcdir = /home/frank/eid-mw/pkcs11
+ac_ct_CC = gcc
+ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
@@ -221,15 +221,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i686-w64-mingw32
-host_alias = i686-w64-mingw32
-host_cpu = i686
-host_os = mingw32
-host_vendor = w64
+host = x86_64-unknown-linux-gnu
+host_alias = 
+host_cpu = x86_64
+host_os = linux-gnu
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/frank/OLDTRUNK/eid-mw/pkcs11/build-aux/install-sh
+install_sh = ${SHELL} /home/frank/eid-mw/pkcs11/build-aux/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -238,7 +238,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = 
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -252,12 +252,12 @@ top_srcdir = .
 ACLOCAL_AMFLAGS = -I m4
 COMMON_CXXFLAGS = -DBEIDPKCS11_EXPORTS -DBEID_35 -DDEBUG -DLTC_NO_ASM
 COMMON_LIBADD = ../common/libbeidcommon.la ../dialogs/libbeiddialogs.la ../cardlayer/libbeidcardlayer.la
-AM_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/../cardlayer/src -I$(srcdir)/../dialogs/src -I$(srcdir)/src/include/rsaref220
+COMMON_CPPFLAGS = -I$(srcdir)/../common/src -I$(srcdir)/../cardlayer/src -I$(srcdir)/../dialogs/src -I$(srcdir)/src/include/rsaref220
 lib_LTLIBRARIES = libbeidpkcs11.la 
 libbeidpkcs11_la_SOURCES = ../common/src/mw_util.cpp src/asn1.c src/cal.cpp src/cert.c src/encrypt.c src/general.c src/log.c src/object.c src/p11.c src/phash.cpp src/session.c src/sign.c src/util.cpp
 
 #
-#libbeidpkcs11_la_CPPFLAGS = $(PCSCLITE_INCS) $(AM_CPPFLAGS)
+libbeidpkcs11_la_CPPFLAGS = $(PCSCLITE_INCS) $(COMMON_CPPFLAGS)
 #
 
 #################################################################################################################################################################################
@@ -269,15 +269,15 @@ libbeidpkcs11_la_SOURCES = ../common/src/mw_util.cpp src/asn1.c src/cal.cpp src/
 ###########################################################################################################################3
 
 #
-libbeidpkcs11_la_CPPFLAGS = $(AM_CPPFLAGS)
-#libbeidpkcs11_la_LDFLAGS = $(PCSCLITE_LIBS)
-libbeidpkcs11_la_LDFLAGS = -lwinscard -no-undefined -static-libstdc++ -static-libgcc -avoid-version
-#libbeidpkcs11_la_CXXFLAGS = $(COMMON_CXXFLAGS)
+#libbeidpkcs11_la_CPPFLAGS = $(COMMON_CPPFLAGS)
+libbeidpkcs11_la_LDFLAGS = $(PCSCLITE_LIBS)
+#libbeidpkcs11_la_LDFLAGS = -lwinscard -no-undefined -static-libstdc++ -static-libgcc -avoid-version
+libbeidpkcs11_la_CXXFLAGS = $(COMMON_CXXFLAGS)
 #libbeidpkcs11_la_CXXFLAGS = $(COMMON_CXXFLAGS) -framework PCSC
-libbeidpkcs11_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API
-#libbeidpkcs11_la_LIBADD = $(COMMON_LIBADD)
-#libbeidpkcs11_la_LIBADD = $(COMMON_LIBADD)
+#libbeidpkcs11_la_CXXFLAGS = $(COMMON_CXXFLAGS) -municode -DMINGW_HAS_SECURE_API
 libbeidpkcs11_la_LIBADD = $(COMMON_LIBADD)
+#libbeidpkcs11_la_LIBADD = $(COMMON_LIBADD)
+#libbeidpkcs11_la_LIBADD = $(COMMON_LIBADD)
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 

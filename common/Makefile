@@ -33,7 +33,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
-host_triplet = i686-w64-mingw32
+host_triplet = x86_64-unknown-linux-gnu
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
@@ -99,13 +99,13 @@ am__objects_1 = libbeidcommon_la-mw_util.lo md5.lo rmd160.lo sha1.lo \
 	libbeidcommon_la-mutex.lo libbeidcommon_la-mwexception.lo \
 	libbeidcommon_la-thread.lo libbeidcommon_la-tlvbuffer.lo \
 	libbeidcommon_la-tlv.lo libbeidcommon_la-util.lo
-am_libbeidcommon_la_OBJECTS =  \
-	$(am__objects_1) \
-	libbeidcommon_la-configreg.lo
-#am_libbeidcommon_la_OBJECTS = $(am__objects_1) \
-#	libbeidcommon_la-configuration.lo
-#am_libbeidcommon_la_OBJECTS = $(am__objects_1) \
-#	libbeidcommon_la-configuration.lo
+##am_libbeidcommon_la_OBJECTS =  \
+##	$(am__objects_1) \
+##	libbeidcommon_la-configreg.lo
+##am_libbeidcommon_la_OBJECTS = $(am__objects_1) \
+##	libbeidcommon_la-configuration.lo
+am_libbeidcommon_la_OBJECTS = $(am__objects_1) \
+	libbeidcommon_la-configuration.lo
 libbeidcommon_la_OBJECTS = $(am_libbeidcommon_la_OBJECTS)
 libbeidcommon_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
@@ -148,34 +148,34 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/frank/OLDTRUNK/eid-mw/common/build-aux/missing --run aclocal-1.11
-AMTAR = ${SHELL} /home/frank/OLDTRUNK/eid-mw/common/build-aux/missing --run tar
-AR = i686-w64-mingw32-ar
-AS = i686-w64-mingw32-as
-AUTOCONF = ${SHELL} /home/frank/OLDTRUNK/eid-mw/common/build-aux/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/frank/OLDTRUNK/eid-mw/common/build-aux/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/frank/OLDTRUNK/eid-mw/common/build-aux/missing --run automake-1.11
+ACLOCAL = ${SHELL} /home/frank/eid-mw/common/build-aux/missing --run aclocal-1.11
+AMTAR = ${SHELL} /home/frank/eid-mw/common/build-aux/missing --run tar
+AR = ar
+AS = as
+AUTOCONF = ${SHELL} /home/frank/eid-mw/common/build-aux/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/frank/eid-mw/common/build-aux/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/frank/eid-mw/common/build-aux/missing --run automake-1.11
 AWK = gawk
-CC = i686-w64-mingw32-gcc
+CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
-CPP = i686-w64-mingw32-gcc -E
-CPPFLAGS = 
-CXX = i686-w64-mingw32-g++
-CXXCPP = i686-w64-mingw32-g++ -E
+CPP = gcc -E
+CPPFLAGS = -I/usr/include 
+CXX = g++
+CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
-DLLTOOL = i686-w64-mingw32-dlltool
+DLLTOOL = dlltool
 DSYMUTIL = 
 DUMPBIN = 
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
 EGREP = /bin/grep -E
-EXEEXT = .exe
+EXEEXT = 
 FGREP = /bin/grep -F
 GREP = /bin/grep
 INSTALL = /bin/install -c
@@ -183,19 +183,19 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LD = /home/frank/w32/i686-w64-mingw32/bin/ld
-LDFLAGS = 
+LD = /usr/bin/ld -m elf_x86_64
+LDFLAGS = -L/lib 
 LIBOBJS = 
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/frank/OLDTRUNK/eid-mw/common/build-aux/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/frank/eid-mw/common/build-aux/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
-NM = /home/frank/w32/bin/i686-w64-mingw32-nm -B
+NM = /usr/bin/nm -B
 NMEDIT = 
-OBJDUMP = i686-w64-mingw32-objdump
+OBJDUMP = objdump
 OBJEXT = o
 OTOOL = 
 OTOOL64 = 
@@ -207,18 +207,18 @@ PACKAGE_TARNAME = libbeidcommon
 PACKAGE_URL = 
 PACKAGE_VERSION = 0.0.1
 PATH_SEPARATOR = :
-RANLIB = i686-w64-mingw32-ranlib
+RANLIB = ranlib
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
-STRIP = i686-w64-mingw32-strip
+STRIP = strip
 VERSION = 0.0.1
-abs_builddir = /home/frank/OLDTRUNK/eid-mw/common
-abs_srcdir = /home/frank/OLDTRUNK/eid-mw/common
-abs_top_builddir = /home/frank/OLDTRUNK/eid-mw/common
-abs_top_srcdir = /home/frank/OLDTRUNK/eid-mw/common
-ac_ct_CC = 
-ac_ct_CXX = 
+abs_builddir = /home/frank/eid-mw/common
+abs_srcdir = /home/frank/eid-mw/common
+abs_top_builddir = /home/frank/eid-mw/common
+abs_top_srcdir = /home/frank/eid-mw/common
+ac_ct_CC = gcc
+ac_ct_CXX = g++
 ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
@@ -237,15 +237,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i686-w64-mingw32
-host_alias = i686-w64-mingw32
-host_cpu = i686
-host_os = mingw32
-host_vendor = w64
+host = x86_64-unknown-linux-gnu
+host_alias = 
+host_cpu = x86_64
+host_os = linux-gnu
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/frank/OLDTRUNK/eid-mw/common/build-aux/install-sh
+install_sh = ${SHELL} /home/frank/eid-mw/common/build-aux/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -254,7 +254,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = 
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -271,18 +271,18 @@ AM_CPPFLAGS = -DLTC_NO_ASM
 lib_LTLIBRARIES = libbeidcommon.la
 
 ################################################################################################################################
-#libbeidcommon_la_SOURCES = $(COMMON_SOURCES) src/configuration.cpp
+libbeidcommon_la_SOURCES = $(COMMON_SOURCES) src/configuration.cpp
 
 ################################################################################################################################
 #libbeidcommon_la_SOURCES = $(COMMON_SOURCES) src/configuration.cpp
 
 ################################################################################################################################
-libbeidcommon_la_SOURCES = $(COMMON_SOURCES) src/configreg.cpp
-#libbeidcommon_la_CXXFLAGS = -DUSING_DL_OPEN $(COMMON_CXXFLAGS)
+#libbeidcommon_la_SOURCES = $(COMMON_SOURCES) src/configreg.cpp
+libbeidcommon_la_CXXFLAGS = -DUSING_DL_OPEN $(COMMON_CXXFLAGS)
 #libbeidcommon_la_CXXFLAGS = $(COMMON_CXXFLAGS)
-libbeidcommon_la_CXXFLAGS = -municode -DMINGW_HAS_SECURE_API -DEIDMW_CMN_EXPORT -DLTC_NO_ASM
+#libbeidcommon_la_CXXFLAGS = -municode -DMINGW_HAS_SECURE_API -DEIDMW_CMN_EXPORT -DLTC_NO_ASM
 #libbeidcommon_la_LDFLAGS = -Wl,-framework -Wl,Carbon
-libbeidcommon_la_LDFLAGS = -lwsock32 -lwinscard -no-undefined -static-libstdc++ -static-libgcc -avoid-version
+#libbeidcommon_la_LDFLAGS = -lwsock32 -lwinscard -no-undefined -static-libstdc++ -static-libgcc -avoid-version
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
