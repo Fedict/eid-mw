@@ -1,0 +1,16 @@
+autom4te.cache
+m4
+*.m4
+build-aux
+config.*
+configure
+Makefile
+Makefile.in
+stamp-h1
+libtool
+build_*
+depcomp
+missing
+ltmain.sh
+install-sh
+
