@@ -48,6 +48,12 @@ AC_ARG_WITH(pcsclite, AC_HELP_STRING([--with-pcsclite=DIR],
                     [pcsc-lite install location]))
 AC_MSG_RESULT([$with_pcsclite])
 
+###### openssl ##########
+AC_MSG_CHECKING([openssl installation])
+AC_ARG_WITH(openssl, AC_HELP_STRING([--with-openssl=DIR],
+                    [openssl install location]))
+AC_MSG_RESULT([$with_openssl])
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
 AC_C_INLINE

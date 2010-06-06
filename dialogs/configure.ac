@@ -48,7 +48,7 @@ if test "${win32}" = "yes"; then
     AC_CHECK_LIB([msvcr], [main])
 fi
 
-# on GNU/Linux and OSX, enable --with-qt
+# on GNU/Linux and OSX, enable --with-qt and --with-openssl
 if test "${win32}" = "no"; then
 	AC_MSG_CHECKING([Qt installation])
 	AC_ARG_WITH(qt, AC_HELP_STRING([--with-qt=DIR],
@@ -57,10 +57,21 @@ if test "${win32}" = "no"; then
 	QT_LIBS="-L$with_qt/lib"
 	QT_BINDIR="$with_qt/bin"
 	AC_MSG_RESULT([$with_qt])
+
+###### openssl ##########
+AC_MSG_CHECKING([openssl installation])
+AC_ARG_WITH(openssl, AC_HELP_STRING([--with-openssl=DIR],
+                    [openssl install location]))
+	OPENSSL_INCS="-I$with_openssl/include"
+	OPENSSL_LIBS="-L$with_openssl/lib"
+AC_MSG_RESULT([$with_openssl])
+
 fi
 
 AC_SUBST([QT_INCS])
 AC_SUBST([QT_LIBS])
+AC_SUBST([OPENSSL_INCS])
+AC_SUBST([OPENSSL_LIBS])
 AC_SUBST([QT_BINDIR])
 
 # Checks for header files.

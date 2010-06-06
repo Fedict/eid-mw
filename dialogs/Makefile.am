@@ -9,15 +9,15 @@ if LINUX
 
 #
 libbeiddialogs_la_SOURCES  	 = $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/sharedmem.cpp
-libbeiddialogs_la_CPPFLAGS   = -I$(srcdir)/src/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src $(QT_INCS)
-libbeiddialogs_la_LDFLAGS	 = $(QT_LIBS) -avoid-version
+libbeiddialogs_la_CPPFLAGS   = -I$(srcdir)/src/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src $(QT_INCS) $(OPENSSL_INCS)
+libbeiddialogs_la_LDFLAGS	 = $(QT_LIBS) $(OPENSSL_LIBS)-avoid-version
 libbeiddialogs_la_CXXFLAGS	 = -finput-charset=cp1252 -fno-strict-aliasing
 libbeiddialogs_la_LIBADD     = $(COMMON_LIBADD)
 
 bin_PROGRAMS			 	= beiddialogsQTsrv
 beiddialogsQTsrv_SOURCES   	= $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/dialogsqtsrv/dlgwndaskaccess.cpp src/dialogsqtsrv/dlgwndaskpin.cpp src/dialogsqtsrv/dlgwndaskpins.cpp src/dialogsqtsrv/dlgwndbadpin.cpp src/dialogsqtsrv/dlgwndbase.cpp src/dialogsqtsrv/dlgwndmodal.cpp src/dialogsqtsrv/dlgwndpinpadinfo.cpp src/dialogsqtsrv/main.cpp src/dialogsqtsrv/moc_dlgwndbase.cpp src/dialogsqtsrv/moc_dlgwndmodal.cpp src/dialogsqtsrv/moc_dlgwndaskaccess.cpp src/dialogsqtsrv/moc_dlgwndaskpin.cpp src/dialogsqtsrv/moc_dlgwndaskpins.cpp src/dialogsqtsrv/moc_dlgwndbadpin.cpp src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp src/sharedmem.cpp
-beiddialogsQTsrv_CPPFLAGS   = -I$(srcdir)/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src $(QT_INCS)
-beiddialogsQTsrv_LDFLAGS    = $(QT_LIBS) -lpthread -lQtCore -lQtGui -avoid-version
+beiddialogsQTsrv_CPPFLAGS   = -I$(srcdir)/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src $(QT_INCS) $(OPENSSL_INCS)
+beiddialogsQTsrv_LDFLAGS    = $(QT_LIBS) $(OPENSSL_LIBS) -lpthread -lQtCore -lQtGui -avoid-version
 beiddialogsQTsrv_CXXFLAGS   = -finput-charset=cp1252 -fno-strict-aliasing
 beiddialogsQTsrv_LDADD      = $(COMMON_LDADD)
 #
