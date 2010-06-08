@@ -162,23 +162,12 @@ int CThread::getCurrentPid()
 #endif	
 }
 
-int CThread::getCurrentThreadId()
+beid_thread_id CThread::getCurrentThreadId()
 {
-#ifdef LINUX
-// what is really strange, though, is that on 64-bit Linux this only yields a warning.
-// but it's innocuous under the circumstances
-	return (int) pthread_self();
-#endif
-
-#ifdef __APPLE__
-// the result is only used in logging, and only to visually differentiate between threads.
-// hence, the strange masking operation to make sure this still fits an int even on 64-bit platforms
-// gcc on OSX made this an ERROR
-	return ((unsigned long) pthread_self()) & 0x00000000ffffffff;
-#endif	
-
 #ifdef WIN32
 	return GetCurrentThreadId();
+#else
+	return pthread_self();
 #endif
 
 }
