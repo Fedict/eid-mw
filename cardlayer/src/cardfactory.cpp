@@ -135,8 +135,7 @@ CCard * CardConnect(const std::string &csReader,
 			tPluginInfo &plugin = m_Plugins.at(i);
 			if (plugin.csReader.size() != 0 && !StartsWith(strReader, plugin.csReader.c_str()))
 				continue;
-			poCard = GetCardInstance(strReader, hCard, poContext, poPinpad,
-				plugin.csPath, oCardPluginLib);
+			poCard = GetCardInstance(strReader, hCard, poContext, poPinpad, plugin.csPath, oCardPluginLib);
 		}
 
 #ifdef CAL_BEID
@@ -234,7 +233,7 @@ done:
 #define csConnectGetCardInstanceName "_Z22ConnectGetCardInstancemPKcPN5eIDMW8CContextEPNS1_7CPinpadE"
 #endif
 
-static CCard *GetCardInstance(const char *csReader, SCARDHANDLE long hCard,
+static CCard *GetCardInstance(const char *csReader, SCARDHANDLE hCard,
 	CContext *poContext, CPinpad *poPinpad,
 	const std::string &csPluginPath, CDynamicLib &oCardPluginLib)
 {
