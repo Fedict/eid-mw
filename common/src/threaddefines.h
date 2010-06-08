@@ -156,7 +156,7 @@
                 uintptr_t oThread; \
                 oThread = _beginthreadex( NULL, 0, ( function ), ( arg ), 0, \
                                           &hThread ); \
-                syncHandle = ( MUTEX_OBJ ) oThread; \
+                syncHandle =oThread; \
                 status = ( oThread == 0 ) ? CRYPT_ERROR : CRYPT_OK; \
                 }
   #else
