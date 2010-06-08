@@ -345,7 +345,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\_Binaries35\$(ConfigurationName)\beid35CSPlib.dll ..\_Binaries35\$(ConfigurationName)\beidCSPlib.dll"
+				CommandLine="copy ..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beid35CSPlib.dll ..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beidCSPlib.dll"
 			/>
 		</Configuration>
 	</Configurations>

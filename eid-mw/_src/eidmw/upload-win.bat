@@ -14,6 +14,7 @@ if %MSI_TYPE%==is35-pro goto %MSI_TYPE%
 if %MSI_TYPE%==is35-sdk goto %MSI_TYPE%
 
 if %MSI_TYPE%==msi35     goto %MSI_TYPE%
+if %MSI_TYPE%==msi35-64  goto %MSI_TYPE%
 if %MSI_TYPE%==msi35-pro goto %MSI_TYPE%
 if %MSI_TYPE%==msi35-sdk goto %MSI_TYPE%
 if %MSI_TYPE%==msi35-pro-sdk goto %MSI_TYPE%
@@ -56,6 +57,11 @@ set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\Release\BeidMW35.msi
 set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW35-%BUILD_NR%.msi
 goto UPLOAD
 
+:msi35-64
+set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\Release\BeidMW35-64.msi
+set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW35-64-%BUILD_NR%.msi
+goto UPLOAD
+
 :msi35-pro
 set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\Release\BeidMW35-Pro.msi
 set LOCAL=%~dp0misc\setup_win\_output\msi_runtime_pro\BeidMW35-Pro-%BUILD_NR%.msi
@@ -89,7 +95,6 @@ goto UPLOAD
 :UPLOAD
 if not exist "%SRC%" goto FILE_NOT_EXIST
 copy /Y "%SRC%" "%LOCAL%"
-call "%~dp0upload-network.bat" "%LOCAL%"
 
 if not exist "%~dp0..\..\_src" goto END
 if not exist "%~dp0..\..\windows" goto END
