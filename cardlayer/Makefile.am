@@ -1,6 +1,7 @@
 ACLOCAL_AMFLAGS         				= -I m4
 COMMON_CXXFLAGS							= -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM
 COMMON_LIBADD     						= ../common/libbeidcommon.la ../dialogs/libbeiddialogs.la
+noinst_HEADERS							= old/scr.h old/pinpadliboldbeid.h src/cardlayer.h src/pkcs15parser.h src/internalconst.h src/card.h src/cardfactory.h src/pkcs15.h src/cache.h src/context.h src/cardpluginbeid/beidp15correction.h src/cardpluginbeid/beidcard.h src/cardreaderinfo.h src/pinpadlib.h src/threadpool.h src/pcsc.h src/cardlayerconst.h src/cardpluginsis/siscard.h src/cardpluginsis/sispluginhandler.h src/cardpluginsis/sisplugin1.h src/pinpad2.h src/pinpad.h src/p15objects.h src/p15correction.h src/readersinfo.h src/pkicard.h src/unknowncard.h src/reader.h config.h
 
 lib_LTLIBRARIES    						= libbeidcardlayer.la libcardpluginbeid.la libcardpluginsis.la libcardpluginsis_acr38u.la
 
