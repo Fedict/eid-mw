@@ -47,9 +47,15 @@
 
 #ifdef WIN32
 typedef DWORD beid_thread_id;
-#else
+#endif
+
+#ifdef __UNIX__
 #include <stdint.h>
 typedef pthread_t beid_thread_id;
+#endif
+
+#ifdef __APPLE__
+typedef _opaque_pthread_t* beid_thread_id;
 #endif
 
 namespace eIDMW
@@ -90,7 +96,7 @@ public:
 				2 = force the thread to stop*/
 	virtual bool WaitTimeout(unsigned long ulTimeout,int iStopMode=0);
 
-	uintptr_t m_SyncHandle;
+	beid_thread_id m_SyncHandle;
 	bool m_isRunning;
 	bool m_bStopRequest;	/** Can be taken into account in the run method to end the thread properly before normal ending */
 
