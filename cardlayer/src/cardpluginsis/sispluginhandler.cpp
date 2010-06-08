@@ -187,7 +187,8 @@ static void AddPluginName(const char *csPluginName, const std::string & csPath)
 			char csReaderName[200];
 			memcpy(csReaderName, ptr1, ptr2 - ptr1);
 			csReaderName[ptr2 - ptr1] = '\0';
-
+			if (memcmp(csReaderName, "ACS_ACR38U", sizeof("ACS_ACR38U"))==0)	// r269
+				memcpy(csReaderName, "ACS ACR38U", sizeof("ACS ACR38U"));
 			AddPluginInfo(csPath, csReaderName);
 		}
 	}
