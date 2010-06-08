@@ -38,13 +38,13 @@ static const tFileInfo PREFS_FILE_INFO_V2 = {-1, -1, 0x85};
 // can't be present because it's the same for all plugins
 #ifndef CARDPLUGIN_IN_CAL
 CCard *GetCardInstance(unsigned long ulVersion, const char *csReader,
-	unsigned long hCard, CContext *poContext, CPinpad *poPinpad)
+	SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad)
 {
 	return BeidCardGetInstance(ulVersion, csReader, hCard, poContext, poPinpad);
 }
 #endif
 
-static bool BeidCardSelectApplet(CContext *poContext, unsigned long hCard)
+static bool BeidCardSelectApplet(CContext *poContext, SCARDHANDLE hCard)
 {
 	unsigned char tucSelectApp[] = {0x00, 0xA4, 0x04, 0x00};
 	CByteArray oCmd(40);
@@ -58,7 +58,7 @@ static bool BeidCardSelectApplet(CContext *poContext, unsigned long hCard)
 }
 
 CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
-	unsigned long hCard, CContext *poContext, CPinpad *poPinpad)
+	SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad)
 {
 	CCard *poCard = NULL;
 
@@ -120,7 +120,7 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 	return poCard;
 }
 
-CBeidCard::CBeidCard(unsigned long hCard, CContext *poContext,
+CBeidCard::CBeidCard(SCARDHANDLE hCard, CContext *poContext,
 	CPinpad *poPinpad, const CByteArray & oData, tSelectAppletMode selectAppletMode) :
 CPkiCard(hCard, poContext, poPinpad)
 {

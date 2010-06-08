@@ -35,7 +35,7 @@ namespace eIDMW
 class CPkiCard : public CCard
 {
 public:
-    CPkiCard(unsigned long hCard, CContext *poContext, CPinpad *poPinpad);
+    CPkiCard(SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad);
     virtual ~CPkiCard(void);
 
     virtual bool IsPinpadReader();

@@ -50,7 +50,7 @@ void CPinpadLib::Unload()
 #endif
 }
 
-CByteArray CPinpadLib::PinCmd(unsigned long hCard, unsigned long ulControl,
+CByteArray CPinpadLib::PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 	CByteArray oCmd, unsigned char ucPintype, unsigned char ucOperation)
 {
 #if defined WIN32 && defined BEID_OLD_PINPAD
@@ -74,7 +74,7 @@ CByteArray CPinpadLib::PinCmd(unsigned long hCard, unsigned long ulControl,
 
 bool CPinpadLib::CheckLib(const std::string & csPinpadDir, const char *csFileName,
 	unsigned long ulLanguage, int iVersion,
-	unsigned long hContext, unsigned long hCard, const char *csReader)
+	unsigned long hContext, SCARDHANDLE hCard, const char *csReader)
 {
 	bool bRet = false;
 	// Load the pinpad lib
@@ -220,7 +220,7 @@ static inline std::string GetSearchString(const std::string & csDir,
 #include <io.h>
 #include <windows.h>
 
-bool CPinpadLib::Load(unsigned long hContext, unsigned long hCard,
+bool CPinpadLib::Load(unsigned long hContext, SCARDHANDLE hCard,
 		const std::string & strReader, const std::string & csPinpadPrefix,
 		unsigned long ulLanguage)
 {
@@ -286,7 +286,7 @@ bool CPinpadLib::Load(unsigned long hContext, unsigned long hCard,
 
 #include <dirent.h>
 
-bool CPinpadLib::Load(unsigned long hContext, unsigned long hCard,
+bool CPinpadLib::Load(unsigned long hContext, SCARDHANDLE hCard,
 		      const std::string & strReader, const std::string & csPinpadPrefix,
 		      unsigned long ulLanguage)
 {

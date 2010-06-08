@@ -52,13 +52,13 @@ public:
 	CPinpadLibOldBeid();
 	~CPinpadLibOldBeid();
 
-	bool Load(unsigned long hContext, unsigned long hCard,
+	bool Load(unsigned long hContext, SCARDHANDLE hCard,
 		const std::string & csReader, const std::string & csPinpadPrefix,
 		unsigned long ulLanguage);
 
 	void UnLoad();
 
-    CByteArray PinCmd(unsigned long hCard, unsigned long ulControl,
+    CByteArray PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 		CByteArray oCmd, unsigned char ucPintype, unsigned char ucOperation);
 
 	bool UseOldLib();
@@ -66,7 +66,7 @@ public:
 private:
 	bool CheckLib(const std::string & csPinpadDir, const char *csFileName,
 		unsigned long ulLanguage, unsigned long hContext,
-		unsigned long hCard, const char *csReader);
+		SCARDHANDLE hCard, const char *csReader);
 
 	CDynamicLib m_oPinpadLib;
 	int m_iLangIdx;

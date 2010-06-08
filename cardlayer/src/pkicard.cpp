@@ -25,7 +25,7 @@
 namespace eIDMW
 {
 
-CPkiCard::CPkiCard(unsigned long hCard, CContext *poContext, CPinpad *poPinpad) :
+CPkiCard::CPkiCard(SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad) :
 CCard(hCard, poContext, poPinpad)
 {
     m_ucCLA = 0;

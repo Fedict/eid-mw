@@ -56,7 +56,7 @@ public:
 	~CPinpadLib();
 
 	/** Search for a pinpad lib that supports this reader and load it */
-	bool Load(unsigned long hContext, unsigned long hCard,
+	bool Load(unsigned long hContext, SCARDHANDLE hCard,
 		const std::string & csReader, const std::string & csPinpadPrefix,
 		unsigned long ulLanguage);
 
@@ -64,7 +64,7 @@ public:
 	void Unload();
 
 	/** Send a command to the pinpad lib */
-    CByteArray PinCmd(unsigned long hCard, unsigned long ulControl,
+    CByteArray PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 		CByteArray oCmd, unsigned char ucPintype, unsigned char ucOperation);
 
 	/** This method is also called when no pinpad lib is used */
@@ -78,7 +78,7 @@ public:
 private:
 	bool CheckLib(const std::string & csPinpadDir, const char *csFileName,
 		unsigned long ulLanguage, int iVersion,
-		unsigned long hContext, unsigned long hCard, const char *csReader);
+		unsigned long hContext, SCARDHANDLE hCard, const char *csReader);
 	tGuiInfo *InitGuiInfo();
 	void ClearGuiInfo();
 	const char *GetGuiMesg(unsigned char ucOperation);

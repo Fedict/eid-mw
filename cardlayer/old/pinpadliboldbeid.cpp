@@ -73,7 +73,7 @@ CPinpadLibOldBeid::~CPinpadLibOldBeid()
 {
 }
 
-bool CPinpadLibOldBeid::Load(unsigned long hContext, unsigned long hCard,
+bool CPinpadLibOldBeid::Load(unsigned long hContext, SCARDHANDLE hCard,
 	const std::string & strReader, const std::string & strPinpadPrefix,
 	unsigned long ulLanguage)
 {
@@ -158,7 +158,7 @@ static unsigned char tucErrCancel[] = {0x64, 0x01};
 static unsigned char tucErrPinsDiffer[] = {0x64, 0x02};
 static unsigned char tucErrGeneral[] = {0x6B, 0x80};
 
-CByteArray CPinpadLibOldBeid::PinCmd(unsigned long hCard, unsigned long ulControl,
+CByteArray CPinpadLibOldBeid::PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 	CByteArray oCmd, unsigned char ucPintype, unsigned char ucOperation)
 {
 	if (ulControl == CCID_IOCTL_GET_FEATURE_REQUEST)
@@ -231,7 +231,7 @@ bool CPinpadLibOldBeid::UseOldLib()
 bool CPinpadLibOldBeid::CheckLib(
 	const std::string & csPinpadDir, const char *csFileName,
 	unsigned long ulLanguage, unsigned long hContext,
-	unsigned long hCard, const char *csReader)
+	SCARDHANDLE hCard, const char *csReader)
 {
 	bool bRet = false;
 

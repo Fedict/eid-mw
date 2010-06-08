@@ -38,7 +38,7 @@ CPinpad::CPinpad(void)
 	m_usReaderFirmVers = 0;
 }
 
-void CPinpad::Init(CContext *poContext, unsigned long hCard,
+void CPinpad::Init(CContext *poContext, SCARDHANDLE hCard,
 	const std::string & csReader, const std::string & csPinpadPrefix)
 {
     m_poContext = poContext;
@@ -54,7 +54,7 @@ void CPinpad::Init(CContext *poContext, unsigned long hCard,
 	m_csPinpadPrefix = csPinpadPrefix;
 }
 
-void CPinpad::Init(CContext *poContext, unsigned long hCard,
+void CPinpad::Init(CContext *poContext, SCARDHANDLE hCard,
 	const std::string & csReader, const std::string & csPinpadPrefix,
 	CByteArray usReaderFirmVers)
 {

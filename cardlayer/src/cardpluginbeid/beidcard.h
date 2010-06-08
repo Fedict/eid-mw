@@ -29,11 +29,11 @@ using namespace eIDMW;
 // can't be present because it's the same for all plugins
 #ifndef CARDPLUGIN_IN_CAL
 EIDMW_CAL_API CCard *GetCardInstance(unsigned long ulVersion, const char *csReader,
-	unsigned long hCard, CContext *poContext, CPinpad *poPinpad);
+	SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad);
 #endif
 
 CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
-	unsigned long hCard, CContext *poContext, CPinpad *poPinpad);
+	SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad);
 
 namespace eIDMW
 {
@@ -47,7 +47,7 @@ typedef enum {
 class CBeidCard : public CPkiCard
 {
 public:
-	CBeidCard(unsigned long hCard, CContext *poContext, CPinpad *poPinpad,
+	CBeidCard(SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad,
 		const CByteArray & oData, tSelectAppletMode selectAppletMode);
     ~CBeidCard(void);
 

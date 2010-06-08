@@ -30,10 +30,10 @@ namespace eIDMW
 class CUnknownCard : public CCard
 {
 public:
-	static bool IsUnknownCard(unsigned long hCard, CContext *poContext,
+	static bool IsUnknownCard(SCARDHANDLE hCard, CContext *poContext,
 		CByteArray & oData);
 
-	CUnknownCard(unsigned long hCard, CContext *poContext,
+	CUnknownCard(SCARDHANDLE hCard, CContext *poContext,
 		CPinpad *poPinpad, const CByteArray & oData);
     ~CUnknownCard(void);
 

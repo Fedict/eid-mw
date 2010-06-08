@@ -109,28 +109,28 @@ public:
 
 	bool Status(const std::string &csReader);
 
-    unsigned long Connect(const std::string &csReader,
+    SCARDHANDLE Connect(const std::string &csReader,
 		unsigned long ulShareMode = SCARD_SHARE_SHARED,
 		unsigned long ulPreferredProtocols = SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1);
-    void Disconnect(unsigned long hCard, tDisconnectMode disconnectMode);
+    void Disconnect(SCARDHANDLE hCard, tDisconnectMode disconnectMode);
 
-	CByteArray GetATR(unsigned long hCard);
-	CByteArray GetIFDVersion(unsigned long hCard);
+	CByteArray GetATR(SCARDHANDLE hCard);
+	CByteArray GetIFDVersion(SCARDHANDLE hCard);
 
 	/**
 	 * Returns true if the same card is still present,
 	 * false if the card has been removed (and perhaps
 	 * the same or antoher card has been inserted).
 	 */
-	bool Status(unsigned long hCard);
+	bool Status(SCARDHANDLE hCard);
 
-	CByteArray Transmit(unsigned long hCard, const CByteArray &oCmdAPDU,
+	CByteArray Transmit(SCARDHANDLE hCard, const CByteArray &oCmdAPDU,
 		void *pSendPci = NULL, void *pRecvPci = NULL);
-	CByteArray Control(unsigned long hCard, unsigned long ulControl,
+	CByteArray Control(SCARDHANDLE hCard, unsigned long ulControl,
 		const CByteArray &oCmd, unsigned long ulMaxResponseSize = CTRL_BUF_LEN);
 
-    void BeginTransaction(unsigned long hCard);
-    void EndTransaction(unsigned long hCard);
+    void BeginTransaction(SCARDHANDLE hCard);
+    void EndTransaction(SCARDHANDLE hCard);
 
 	//unsigned long GetContext();
 	SCARDCONTEXT GetContext();

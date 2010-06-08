@@ -23,7 +23,7 @@
 namespace eIDMW
 {
 
-CCard::CCard(unsigned long hCard, CContext *poContext, CPinpad *poPinpad) :
+CCard::CCard(SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad) :
 	m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad),
 	m_oCache(poContext), m_ulLockCount(0), m_bSerialNrString(false)
 {
@@ -38,7 +38,7 @@ void CCard::Disconnect(tDisconnectMode disconnectMode)
 {
     if (m_hCard != 0)
     {
-		unsigned long hTemp = m_hCard;
+		SCARDHANDLE hTemp = m_hCard;
 		m_hCard = 0;
 		m_poContext->m_oPCSC.Disconnect(hTemp, disconnectMode);
     }
@@ -484,7 +484,7 @@ CAutoLock::CAutoLock(CCard *poCard) : m_poCard(poCard), m_poPCSC(NULL), m_hCard(
 	m_poCard->Lock();
 }
 
-CAutoLock::CAutoLock(CPCSC *poPCSC, unsigned long hCard) : m_poCard(NULL), m_poPCSC(poPCSC), m_hCard(hCard)
+CAutoLock::CAutoLock(CPCSC *poPCSC, SCARDHANDLE hCard) : m_poCard(NULL), m_poPCSC(poPCSC), m_hCard(hCard)
 {
 	poPCSC->BeginTransaction(hCard);
 }

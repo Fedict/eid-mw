@@ -1,4 +1,4 @@
-/* ****************************************************************************
+		/* ****************************************************************************
 
  * eID Middleware Project.
  * Copyright (C) 2008-2010 FedICT.
@@ -66,7 +66,7 @@
 #include <vector>
 #include <string>
 
-typedef class eIDMW::CCard * (*GETCARDINSTANCE)(unsigned long,char const*,unsigned long,class eIDMW::CContext *,class eIDMW::CPinpad *);
+typedef class eIDMW::CCard * (*GETCARDINSTANCE)(unsigned long,char const*,SCARDHANDLE,class eIDMW::CContext *,class eIDMW::CPinpad *);
 typedef class eIDMW::CCard * (*CONNECTGETCARDINSTANCE)(unsigned long,char const*,class eIDMW::CContext *,class eIDMW::CPinpad *);
 
 namespace eIDMW
@@ -84,7 +84,7 @@ typedef struct {
 
 static std::vector <tPluginInfo> m_Plugins;
 
-static CCard *GetCardInstance(const char *csReader, unsigned long hCard,
+static CCard *GetCardInstance(const char *csReader, SCARDHANDLE hCard,
 	CContext *poContext, CPinpad *poPinpad,
 	const std::string &csPluginPath, CDynamicLib &oCardPluginLib);
 
@@ -103,7 +103,7 @@ CCard * CardConnect(const std::string &csReader,
 		CThread::SleepMillisecs(poContext->m_ulConnectionDelay);
 
 	// Try if we can connect to the card via a normal SCardConnect()
-	unsigned long hCard = 0;
+	SCARDHANDLE hCard = 0;
 	try 
 	{
 		hCard = poContext->m_oPCSC.Connect(csReader);
@@ -234,7 +234,7 @@ done:
 #define csConnectGetCardInstanceName "_Z22ConnectGetCardInstancemPKcPN5eIDMW8CContextEPNS1_7CPinpadE"
 #endif
 
-static CCard *GetCardInstance(const char *csReader, unsigned long hCard,
+static CCard *GetCardInstance(const char *csReader, SCARDHANDLE long hCard,
 	CContext *poContext, CPinpad *poPinpad,
 	const std::string &csPluginPath, CDynamicLib &oCardPluginLib)
 {
