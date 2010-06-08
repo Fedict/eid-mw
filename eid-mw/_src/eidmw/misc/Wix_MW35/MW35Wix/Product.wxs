@@ -4,7 +4,7 @@
 
   <?include ..\..\..\svn_revision.wxs ?>
 
-  <?define var.OfficialProductVersion =3.5.3?>
+  <?define var.OfficialProductVersion =3.5.4?>
   <?define var.ProductVersion =3.5.$(var.RevisionNumber)?>
   <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
 
@@ -434,7 +434,7 @@
     
     <DirectoryRef Id="SISCARDPLUGINSDIR">
       <Component Id="Siscardplugin" Guid="{821ED2E0-9FDB-4a08-9686-DDE65EE3D5E5}" SharedDllRefCount="yes">
-        <File Id="siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" Name="siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" />
+        <File Id="siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" Name="siscardplugin1_BE_EID_35__ACS ACR38U__.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" />
       </Component>
     </DirectoryRef>
 
