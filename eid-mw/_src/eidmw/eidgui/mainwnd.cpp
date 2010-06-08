@@ -2173,15 +2173,15 @@ void MainWnd::OpenSelectedEid( const QString& fileName )
 		QString		  fileSuffix    = fileInfo.completeSuffix();
 		BEID_FileType fileType		= BEID_FILETYPE_UNKNOWN;
 
-		if ( "xml" == fileSuffix )
+		if ( "xml" == fileSuffix.toLower() )
 		{
 			fileType = BEID_FILETYPE_XML;
 		} 
-		else if ( "csv" == fileSuffix )
+		else if ( "csv" == fileSuffix.toLower() )
 		{
 			fileType = BEID_FILETYPE_CSV;
 		} 
-		else if ( "eid" == fileSuffix )
+		else if ( "eid" == fileSuffix.toLower() )
 		{
 			fileType = BEID_FILETYPE_TLV;
 		} 
@@ -2502,15 +2502,15 @@ bool MainWnd::saveCardDataToFile(QString const& fileName, BEID_Card& card )
 	{
 		BEID_XMLDoc&	doc		 = card.getDocument(BEID_DOCTYPE_FULL);
 
-		if ("xml" == fileSuffix)
+		if ("xml" == fileSuffix.toLower())
 		{
 			fileData = new BEID_ByteArray(doc.getXML());
 		}
-		else if ("csv" == fileSuffix)
+		else if ("csv" == fileSuffix.toLower())
 		{
 			fileData = new BEID_ByteArray(doc.getCSV());
 		} 
-		else if ("eid" == fileSuffix)
+		else if ("eid" == fileSuffix.toLower())
 		{
 			fileData = new BEID_ByteArray(doc.getTLV());
 		} 
