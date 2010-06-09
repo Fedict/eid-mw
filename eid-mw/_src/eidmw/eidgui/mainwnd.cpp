@@ -1329,14 +1329,48 @@ bool MainWnd::StoreUserCerts (BEID_EIDCard& Card, PCCERT_CONTEXT pCertContext, u
 #ifdef WIN32
 	unsigned long	dwFlags			= CERT_STORE_NO_CRYPT_RELEASE_FLAG;
 	PCCERT_CONTEXT  pDesiredCert	= NULL;
+	PCCERT_CONTEXT  pPrevCert		= NULL;
 	HCERTSTORE		hMyStore		= CertOpenSystemStore(NULL, "MY");
 
 	if ( NULL != hMyStore )
 	{
 		// ----------------------------------------------------
-		// look if we already have the certificate in the store
+		// look if we already have a certificate with the same 
+		// subject (contains name and NNR) in the store
 		// If the certificate is not found --> NULL
 		// ----------------------------------------------------
+		do
+		{
+			if( NULL != (pDesiredCert = CertFindCertificateInStore(hMyStore, X509_ASN_ENCODING, 0, CERT_FIND_SUBJECT_NAME, &(pCertContext->pCertInfo->Subject) , pPrevCert)))
+			{
+				// ----------------------------------------------------
+				// If the certificates are identical and function 
+				// succeeds, the return value is nonzero, or TRUE.
+				// ----------------------------------------------------
+				if(NULL == CertCompareCertificate(X509_ASN_ENCODING,pCertContext->pCertInfo,pDesiredCert->pCertInfo))
+				{
+					// ----------------------------------------------------
+					// certificates are not identical, but have the same 
+					// subject (contains name and NNR),
+					// so we remove the one that was already in the store
+					// ----------------------------------------------------
+					if(NULL == CertDeleteCertificateFromStore(pDesiredCert))
+					{
+						if (E_ACCESSDENIED == GetLastError())
+						{
+							QString strCaption(tr("Deleting former certificate"));
+							QString strMessage(tr("Error deleting former certificate"));
+							QMessageBox::information(NULL,strCaption,strMessage);
+						}
+					}
+					pPrevCert = NULL;
+					continue;
+				}
+			}
+			pPrevCert = pDesiredCert;
+		}while (NULL != pDesiredCert);
+
+
 		if( NULL != (pDesiredCert = CertFindCertificateInStore(hMyStore, X509_ASN_ENCODING, 0, CERT_FIND_EXISTING, pCertContext , NULL))
 		  )
 		{
