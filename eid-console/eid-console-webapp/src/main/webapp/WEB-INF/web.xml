@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<display-name>eID Console</display-name>
+
+	<servlet>
+		<servlet-name>AppletServiceServlet</servlet-name>
+		<servlet-class>be.fedict.eid.applet.service.AppletServiceServlet</servlet-class>
+		<init-param>
+			<param-name>SkipSecureConnectionCheck</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>IncludeAddress</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AppletServiceServlet</servlet-name>
+		<url-pattern>/be.fedict.eid.console.Application/applet-service</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>JSONServlet</servlet-name>
+		<servlet-class>be.fedict.eid.applet.service.JSONServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JSONServlet</servlet-name>
+		<url-pattern>/be.fedict.eid.console.Application/identity.json</url-pattern>
+	</servlet-mapping>
+
+</web-app>

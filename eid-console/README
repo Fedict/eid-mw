@@ -1,0 +1,15 @@
+README for eID Console
+======================
+
+=== 1. Requirements
+
+Maven 2.2
+Java 6
+An internet connection since Maven uses different online repositories.
+
+
+=== 2. Building
+
+mvn clean install
+
+Result artifact under: eid-console-package/target
