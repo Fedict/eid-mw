@@ -52,6 +52,25 @@ public class Main implements Runnable {
 
 	private String consoleUrl;
 
+	public void showConsole() {
+		if (null == this.consoleUrl) {
+			LOG.warn("console URL not yet set");
+			return;
+		}
+		if (false == Desktop.isDesktopSupported()) {
+			LOG.error("Desktop not supported");
+			return;
+		}
+		Desktop desktop = Desktop.getDesktop();
+		try {
+			desktop.browse(new URI(Main.this.consoleUrl));
+		} catch (IOException e) {
+			LOG.error("I/O error: " + e.getMessage(), e);
+		} catch (URISyntaxException e) {
+			LOG.error("URI error: " + e.getMessage(), e);
+		}
+	}
+
 	public Main() {
 		SystemTray systemTray = SystemTray.getSystemTray();
 		URL trayImageUrl = Main.class.getResource("tray.png");
@@ -61,18 +80,7 @@ public class Main implements Runnable {
 		this.consoleMenuItem.setEnabled(false);
 		this.consoleMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if (false == Desktop.isDesktopSupported()) {
-					LOG.error("Desktop not supported");
-					return;
-				}
-				Desktop desktop = Desktop.getDesktop();
-				try {
-					desktop.browse(new URI(Main.this.consoleUrl));
-				} catch (IOException e) {
-					LOG.error("I/O error: " + e.getMessage(), e);
-				} catch (URISyntaxException e) {
-					LOG.error("URI error: " + e.getMessage(), e);
-				}
+				Main.this.showConsole();
 			}
 		});
 		popup.add(this.consoleMenuItem);
@@ -100,7 +108,8 @@ public class Main implements Runnable {
 		}
 		trayIcon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				// TODO: show eID Console
+				// double-click
+				Main.this.showConsole();
 			}
 		});
 		Thread runtimeThread = new Thread(this);

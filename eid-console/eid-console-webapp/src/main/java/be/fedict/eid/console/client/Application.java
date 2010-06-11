@@ -88,19 +88,32 @@ public class Application implements EntryPoint {
 
 	Command readCommand = new Command() {
 		public void execute() {
-			Application.this.contentFrame.setUrl(GWT.getModuleBaseURL()
-					+ "read-eid.html");
-			Application.this.contentPanel.showWidget(DECK_FRAME);
+			Application.this.showHtmlPage("read-eid.html");
 		}
 	};
 
 	Command validateCommand = new Command() {
 		public void execute() {
-			Application.this.contentFrame
-					.setUrl("https://www.e-contract.be/eid-trust-service-portal/");
-			Application.this.contentPanel.showWidget(DECK_FRAME);
+			Application.this
+					.showHtmlUrl("https://www.e-contract.be/eid-trust-service-portal/");
 		}
 	};
+
+	Command applicationsCommand = new Command() {
+		public void execute() {
+			Application.this.showHtmlPage("applications.html");
+		}
+	};
+
+	private void showHtmlPage(String htmlPage) {
+		String htmlUrl = GWT.getModuleBaseURL() + htmlPage;
+		showHtmlUrl(htmlUrl);
+	}
+
+	private void showHtmlUrl(String htmlUrl) {
+		this.contentFrame.setUrl(htmlUrl);
+		this.contentPanel.showWidget(DECK_FRAME);
+	}
 
 	public void onModuleLoad() {
 		exportStaticMethod();
@@ -114,6 +127,7 @@ public class Application implements EntryPoint {
 		MenuBar fileMenuBar = new MenuBar(true);
 		fileMenuBar.addItem("Read eID", this.readCommand);
 		fileMenuBar.addItem("Validate Certificates", this.validateCommand);
+		fileMenuBar.addItem("eID Applications", this.applicationsCommand);
 		menuBar.addItem("File", fileMenuBar);
 
 		MenuBar helpMenuBar = new MenuBar(true);
