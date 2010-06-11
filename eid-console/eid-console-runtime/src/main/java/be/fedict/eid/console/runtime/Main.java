@@ -132,6 +132,7 @@ public class Main implements Runnable {
 			System.exit(1);
 			return;
 		}
+		tmpWarFile.deleteOnExit();
 		try {
 			FileUtils.copyURLToFile(webappURL, tmpWarFile);
 		} catch (IOException e) {

@@ -16,6 +16,10 @@
 			<param-name>IncludeAddress</param-name>
 			<param-value>true</param-value>
 		</init-param>
+		<init-param>
+			<param-name>IncludePhoto</param-name>
+			<param-value>true</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AppletServiceServlet</servlet-name>
@@ -29,6 +33,15 @@
 	<servlet-mapping>
 		<servlet-name>JSONServlet</servlet-name>
 		<url-pattern>/be.fedict.eid.console.Application/identity.json</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PhotoServlet</servlet-name>
+		<servlet-class>be.fedict.eid.applet.service.PhotoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PhotoServlet</servlet-name>
+		<url-pattern>/be.fedict.eid.console.Application/photo.jpg</url-pattern>
 	</servlet-mapping>
 
 </web-app>

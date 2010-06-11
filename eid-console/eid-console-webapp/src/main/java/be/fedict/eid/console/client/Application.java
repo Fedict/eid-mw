@@ -38,6 +38,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -52,6 +53,7 @@ public class Application implements EntryPoint {
 	private DeckPanel contentPanel;
 	private FlexTable identityTable;
 	private FlexTable addressTable;
+	private FlexTable cardTable;
 
 	private static Application application;
 
@@ -133,18 +135,38 @@ public class Application implements EntryPoint {
 
 		TabPanel identificationPanel = new TabPanel();
 		this.contentPanel.add(identificationPanel);
+
 		VerticalPanel identityPanel = new VerticalPanel();
 		identificationPanel.add(identityPanel, "Identity");
 		this.identityTable = new FlexTable();
 		this.identityTable.setText(0, 0, "Name");
 		this.identityTable.setText(1, 0, "First Name");
+		this.identityTable.setText(2, 0, "Photo");
+		this.identityTable.setText(3, 0, "Gender");
+		this.identityTable.setText(4, 0, "Date of birth");
+		this.identityTable.setText(5, 0, "National Number");
+		this.identityTable.setText(6, 0, "Middle Name");
+		this.identityTable.setText(7, 0, "Place of birth");
 		identityPanel.add(this.identityTable);
+
 		this.addressTable = new FlexTable();
 		VerticalPanel addressPanel = new VerticalPanel();
 		addressPanel.add(this.addressTable);
 		identificationPanel.add(addressPanel, "Address");
 		this.addressTable.setText(0, 0, "Street and number");
 		this.addressTable.setText(1, 0, "Municipality");
+		this.addressTable.setText(2, 0, "ZIP");
+
+		this.cardTable = new FlexTable();
+		VerticalPanel cardPanel = new VerticalPanel();
+		cardPanel.add(this.cardTable);
+		identificationPanel.add(cardPanel, "Card");
+		this.cardTable.setText(0, 0, "Card Number");
+		this.cardTable.setText(1, 0, "Chip Number");
+		this.cardTable.setText(2, 0, "Delivery Municipality");
+		this.cardTable.setText(3, 0, "Validity Begin Date");
+		this.cardTable.setText(4, 0, "Validity End Date");
+
 		identificationPanel.selectTab(0);
 
 		Application.application = this;
@@ -170,8 +192,25 @@ public class Application implements EntryPoint {
 					.stringValue();
 			String firstName = identityJSONObject.get("firstName").isString()
 					.stringValue();
+			String gender = identityJSONObject.get("gender").isString()
+					.stringValue();
+			String dateOfBirth = identityJSONObject.get("dateOfBirth")
+					.isString().stringValue();
+			String nationalNumber = identityJSONObject.get("nationalNumber")
+					.isString().stringValue();
+			String middleName = identityJSONObject.get("middleName").isString()
+					.stringValue();
+			String placeOfBirth = identityJSONObject.get("placeOfBirth")
+					.isString().stringValue();
 			Application.application.identityTable.setText(0, 1, name);
 			Application.application.identityTable.setText(1, 1, firstName);
+			Image image = new Image(GWT.getModuleBaseURL() + "photo.jpg");
+			Application.application.identityTable.setWidget(2, 1, image);
+			Application.application.identityTable.setText(3, 1, gender);
+			Application.application.identityTable.setText(4, 1, dateOfBirth);
+			Application.application.identityTable.setText(5, 1, nationalNumber);
+			Application.application.identityTable.setText(6, 1, middleName);
+			Application.application.identityTable.setText(7, 1, placeOfBirth);
 
 			JSONValue addressJSONValue = jsonObject.get("address");
 			JSONObject addressJSONObject = addressJSONValue.isObject();
@@ -179,8 +218,31 @@ public class Application implements EntryPoint {
 					.isString().stringValue();
 			String municipality = addressJSONObject.get("municipality")
 					.isString().stringValue();
+			String zip = addressJSONObject.get("zip").isString().stringValue();
 			Application.application.addressTable.setText(0, 1, streetAndNumber);
 			Application.application.addressTable.setText(1, 1, municipality);
+			Application.application.addressTable.setText(2, 1, zip);
+
+			JSONValue cardJSONValue = jsonObject.get("card");
+			JSONObject cardJSONObject = cardJSONValue.isObject();
+			String cardNumber = cardJSONObject.get("cardNumber").isString()
+					.stringValue();
+			String chipNumber = cardJSONObject.get("chipNumber").isString()
+					.stringValue();
+			String cardDeliveryMunicipality = cardJSONObject.get(
+					"cardDeliveryMunicipality").isString().stringValue();
+			String cardValidityDateBegin = cardJSONObject.get(
+					"cardValidityDateBegin").isString().stringValue();
+			String cardValidityDateEnd = cardJSONObject.get(
+					"cardValidityDateEnd").isString().stringValue();
+			Application.application.cardTable.setText(0, 1, cardNumber);
+			Application.application.cardTable.setText(1, 1, chipNumber);
+			Application.application.cardTable.setText(2, 1,
+					cardDeliveryMunicipality);
+			Application.application.cardTable.setText(3, 1,
+					cardValidityDateBegin);
+			Application.application.cardTable
+					.setText(4, 1, cardValidityDateEnd);
 		}
 	}
 
