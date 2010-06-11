@@ -311,7 +311,7 @@ std::string CCache::GetCacheDir(bool bAddSlash)
 	}
 
 	struct stat buffer;
-	if ( stat(csCacheDir.c_str(),&buffer))
+	if ( eIDMW::stat(csCacheDir.c_str(),&buffer))
 	{
 		mkdir(csCacheDir.c_str(), 0700);
 	}

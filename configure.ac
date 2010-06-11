@@ -12,12 +12,15 @@ LT_PREREQ([2.2.7c])
 AM_INIT_AUTOMAKE([subdir-objects foreign])
 
 # Checks for programs.
-AC_PROG_CXX
+AC_PROG_CXX([g++])
+AC_PROG_CPP
 AC_PROG_CC
 AC_PROG_LIBTOOL
-AC_PROG_CPP
 AC_PROG_INSTALL
 AC_PROG_LN_S
+
+AS_VAR_IF([GXX],[yes],[],AC_MSG_ERROR([GNU C++ compiler (g++) is required.]))
+
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lbeidcardlayer':

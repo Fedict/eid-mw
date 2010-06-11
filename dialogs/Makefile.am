@@ -61,33 +61,33 @@ if QT
 MOC_CPPFLAGS=$(dialogsqtsrv_CPPFLAGS)
 BUILT_SOURCES = qrc_dlgs.cpp ui_dlgwndaskaccess.h ui_dlgwndaskpins.h ui_dlgwndaskpin.h ui_dlgwndbadpin.h ui_dlgwndmodal.h ui_dlgwndpinpadinfo.h moc_dlgwndbase.cpp moc_dlgwndmodal.cpp moc_dlgwndaskaccess.cpp moc_dlgwndaskpin.cpp moc_dlgwndaskpins.cpp moc_dlgwndbadpin.cpp moc_dlgwndpinpadinfo.cpp
 qrc_dlgs.cpp: src/dialogsqtsrv/dlgs.qrc
-	$(QT_BINDIR)/rcc -name src/dialogsqtsrv/dialogsqtsrv src/dialogsqtsrv/dlgs.qrc -o src/dialogsqtsrv/qrc_dlgs.cpp
+	$(RCC) -name src/dialogsqtsrv/dialogsqtsrv src/dialogsqtsrv/dlgs.qrc -o src/dialogsqtsrv/qrc_dlgs.cpp
 ui_dlgwndaskaccess.h : src/dialogsqtsrv/dlgwndaskaccess.ui
-	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndaskaccess.ui -o src/dialogsqtsrv/ui_dlgwndaskaccess.h
+	$(UIC) src/dialogsqtsrv/dlgwndaskaccess.ui -o src/dialogsqtsrv/ui_dlgwndaskaccess.h
 ui_dlgwndaskpins.h : src/dialogsqtsrv/dlgwndaskpins.ui
-	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndaskpins.ui -o src/dialogsqtsrv/ui_dlgwndaskpins.h
+	$(UIC) src/dialogsqtsrv/dlgwndaskpins.ui -o src/dialogsqtsrv/ui_dlgwndaskpins.h
 ui_dlgwndaskpin.h : src/dialogsqtsrv/dlgwndaskpin.ui
-	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndaskpin.ui -o src/dialogsqtsrv/ui_dlgwndaskpin.h
+	$(UIC) src/dialogsqtsrv/dlgwndaskpin.ui -o src/dialogsqtsrv/ui_dlgwndaskpin.h
 ui_dlgwndbadpin.h : src/dialogsqtsrv/dlgwndbadpin.ui
-	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndbadpin.ui -o src/dialogsqtsrv/ui_dlgwndbadpin.h
+	$(UIC) src/dialogsqtsrv/dlgwndbadpin.ui -o src/dialogsqtsrv/ui_dlgwndbadpin.h
 ui_dlgwndmodal.h : src/dialogsqtsrv/dlgwndmodal.ui
-	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndmodal.ui -o src/dialogsqtsrv/ui_dlgwndmodal.h
+	$(UIC) src/dialogsqtsrv/dlgwndmodal.ui -o src/dialogsqtsrv/ui_dlgwndmodal.h
 ui_dlgwndpinpadinfo.h : src/dialogsqtsrv/dlgwndpinpadinfo.ui
-	$(QT_BINDIR)/uic src/dialogsqtsrv/dlgwndpinpadinfo.ui -o src/dialogsqtsrv/ui_dlgwndpinpadinfo.h
+	$(UIC) src/dialogsqtsrv/dlgwndpinpadinfo.ui -o src/dialogsqtsrv/ui_dlgwndpinpadinfo.h
 moc_dlgwndbase.cpp: src/dialogsqtsrv/dlgwndbase.h
-	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndbase.h -o src/dialogsqtsrv/moc_dlgwndbase.cpp
+	$(MOC) -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndbase.h -o src/dialogsqtsrv/moc_dlgwndbase.cpp
 moc_dlgwndmodal.cpp: src/dialogsqtsrv/dlgwndmodal.h
-	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndmodal.h -o src/dialogsqtsrv/moc_dlgwndmodal.cpp
+	$(MOC) -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndmodal.h -o src/dialogsqtsrv/moc_dlgwndmodal.cpp
 moc_dlgwndaskaccess.cpp: src/dialogsqtsrv/dlgwndaskaccess.h
-	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskaccess.h -o src/dialogsqtsrv/moc_dlgwndaskaccess.cpp
+	$(MOC) -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskaccess.h -o src/dialogsqtsrv/moc_dlgwndaskaccess.cpp
 moc_dlgwndaskpin.cpp: src/dialogsqtsrv/dlgwndaskpin.h
-	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskpin.h -o src/dialogsqtsrv/moc_dlgwndaskpin.cpp
+	$(MOC) -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskpin.h -o src/dialogsqtsrv/moc_dlgwndaskpin.cpp
 moc_dlgwndaskpins.cpp: src/dialogsqtsrv/dlgwndaskpins.h
-	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskpins.h -o src/dialogsqtsrv/moc_dlgwndaskpins.cpp
+	$(MOC) -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndaskpins.h -o src/dialogsqtsrv/moc_dlgwndaskpins.cpp
 moc_dlgwndbadpin.cpp: src/dialogsqtsrv/dlgwndbadpin.h
-	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndbadpin.h -o src/dialogsqtsrv/moc_dlgwndbadpin.cpp
+	$(MOC) -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndbadpin.h -o src/dialogsqtsrv/moc_dlgwndbadpin.cpp
 moc_dlgwndpinpadinfo.cpp: src/dialogsqtsrv/dlgwndpinpadinfo.h
-	$(QT_BINDIR)/moc -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndpinpadinfo.h -o src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp
+	$(MOC) -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED $(MOCCPPFLAGS) src/dialogsqtsrv/dlgwndpinpadinfo.h -o src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp
 CLEANFILES = $(BUILT_SOURCES)
 #
 endif

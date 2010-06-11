@@ -20,27 +20,25 @@ osx="no"
 win32="no"
 qt="no"
 
-case "${host}" in
-
-    *-*-linux*)
-        linux=true
-		qt=true
-        ;;  
-
-    *-*-darwin*)
-        osx=true
-		qt=true
-        ;;
-
-    *-mingw*|*-winnt*)
-        win32=true
-        ;;
-esac
+AS_CASE([$host],
+  [*-*-linux*],[linux=true qt=true],
+  [*-*-darwin*],[osx=true qt=true],
+  [*-mingw*|*-winnt*],[win32=true])
 
 AM_CONDITIONAL(LINUX,test x$linux = xtrue)
 AM_CONDITIONAL(OSX,test x$osx = xtrue)
 AM_CONDITIONAL(WIN32,test x$win32 = xtrue)
 AM_CONDITIONAL(QT,test x$qt = xtrue)
+
+AS_VAR_IF([qt],[true],
+[
+	AC_CHECK_PROGS(RCC,[rcc],[missing])
+	AC_CHECK_PROGS(UIC,[uic uic-qt4],[missing])
+	AC_CHECK_PROGS(MOC,[moc moc-qt4],[missing])
+	AS_VAR_IF([RCC],[missing],AC_MSG_ERROR([Qt4 Resource Compiler (rcc) is required.]),AC_SUBST(RCC))
+	AS_VAR_IF([UIC],[missing],AC_MSG_ERROR([Qt4 User Interface Compiler (uic or uic-qt4) is required.]),AC_SUBST(UIC))
+	AS_VAR_IF([MOC],[missing],AC_MSG_ERROR([Qt4 Meta Object Compiler (moc or moc-qt4) is required.]),AC_SUBST(MOC))
+])
 
 ########### libraries ##################
 # on Windows, check for msvcr
