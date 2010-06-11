@@ -22,6 +22,16 @@
 #include "../common/src/configuration.h"
 #include "../common/src/mw_util.h"
 
+#ifdef WIN32
+#include <io.h>
+#include <direct.h>
+#include <windows.h>
+#else
+#include <sys/stat.h>
+#include <dirent.h>
+#endif
+
+
 namespace eIDMW
 {
 #ifdef WIN32
@@ -204,10 +214,6 @@ void CCache::DiskStoreFile(const std::string & csName,
 
 #ifdef WIN32
 
-#include <io.h>
-#include <direct.h>
-#include <windows.h>
-
 std::string CCache::GetCacheDir(bool bAddSlash)
 {
 	std::string csCacheDir;
@@ -294,10 +300,6 @@ bool CCache::Delete(const std::string & csName)
 
 #else
 
-#include <sys/stat.h>
-#include <dirent.h>
-
-
 std::string CCache::GetCacheDir(bool bAddSlash)
 {
 	std::string csCacheDir;
@@ -311,7 +313,7 @@ std::string CCache::GetCacheDir(bool bAddSlash)
 	}
 
 	struct stat buffer;
-	if ( eIDMW::stat(csCacheDir.c_str(),&buffer))
+	if ( stat(csCacheDir.c_str(),&buffer))
 	{
 		mkdir(csCacheDir.c_str(), 0700);
 	}
@@ -375,7 +377,8 @@ bool CCache::Delete(const std::string & strName)
 
 	return bDeleted;
 }
-#endif
+
+#endif // !WIN32
 
 /////////////////////////  Disk cache header + CRC ////////////////////////
 
