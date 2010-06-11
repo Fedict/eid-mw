@@ -39,6 +39,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -48,6 +49,7 @@ public class Application implements EntryPoint {
 
 	private static final int DECK_FRAME = 0;
 	private static final int DECK_IDENTIFICATION_RESULT = 1;
+	private static final int DECK_PIN_VERIFY_RESULT = 2;
 
 	private Frame contentFrame;
 	private DeckPanel contentPanel;
@@ -92,6 +94,18 @@ public class Application implements EntryPoint {
 		}
 	};
 
+	Command verifyPinCommand = new Command() {
+		public void execute() {
+			Application.this.showHtmlPage("verify-pin.html");
+		}
+	};
+
+	Command changePinCommand = new Command() {
+		public void execute() {
+			Application.this.showHtmlPage("change-pin.html");
+		}
+	};
+
 	Command validateCommand = new Command() {
 		public void execute() {
 			Application.this
@@ -129,6 +143,11 @@ public class Application implements EntryPoint {
 		fileMenuBar.addItem("Validate Certificates", this.validateCommand);
 		fileMenuBar.addItem("eID Applications", this.applicationsCommand);
 		menuBar.addItem("File", fileMenuBar);
+
+		MenuBar pinMenuBar = new MenuBar(true);
+		menuBar.addItem("PIN", pinMenuBar);
+		pinMenuBar.addItem("Verify PIN", this.verifyPinCommand);
+		pinMenuBar.addItem("Change PIN", this.changePinCommand);
 
 		MenuBar helpMenuBar = new MenuBar(true);
 		helpMenuBar.addItem("About", this.aboutCommand);
@@ -182,6 +201,10 @@ public class Application implements EntryPoint {
 		this.cardTable.setText(4, 0, "Validity End Date");
 
 		identificationPanel.selectTab(0);
+
+		VerticalPanel pinVerifyResultPanel = new VerticalPanel();
+		this.contentPanel.add(pinVerifyResultPanel);
+		pinVerifyResultPanel.add(new Label("PIN verification was successful."));
 
 		Application.application = this;
 	}
@@ -274,7 +297,19 @@ public class Application implements EntryPoint {
 		application.contentPanel.showWidget(DECK_IDENTIFICATION_RESULT);
 	}
 
+	public static void showMain() {
+		Application application = Application.application;
+		application.showHtmlPage("main.html");
+	}
+
+	public static void showPinVerifyResult() {
+		Application application = Application.application;
+		application.contentPanel.showWidget(DECK_PIN_VERIFY_RESULT);
+	}
+
 	public static native void exportStaticMethod() /*-{
 													$wnd.showIdentity = $entry(@be.fedict.eid.console.client.Application::showIdentity());
+													$wnd.showMain = $entry(@be.fedict.eid.console.client.Application::showMain());
+													$wnd.showPinVerifyResult = $entry(@be.fedict.eid.console.client.Application::showPinVerifyResult());
 													}-*/;
 }

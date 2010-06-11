@@ -1,0 +1,20 @@
+<html>
+<body>
+<h1>Verifying the PIN of your eID card...</h1>
+<script src="https://www.java.com/js/deployJava.js"></script>
+<script type="text/javascript">
+   var attributes = {
+      code : 'be.fedict.eid.applet.Applet.class',
+      archive : 'eid-applet.jar',
+      width : 450,
+      height : 400
+   };
+   var parameters = {
+      TargetPage : 'javascript:parent.showPinVerifyResult();',
+      AppletService : 'applet-service-authn'
+   };
+   var version = '1.6';
+   deployJava.runApplet(attributes, parameters, version);
+</script>
+</body>
+</html>

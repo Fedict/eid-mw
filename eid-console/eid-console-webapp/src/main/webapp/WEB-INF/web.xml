@@ -44,4 +44,46 @@
 		<url-pattern>/be.fedict.eid.console.Application/photo.jpg</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>AuthnAppletServiceServlet</servlet-name>
+		<servlet-class>be.fedict.eid.applet.service.AppletServiceServlet</servlet-class>
+		<init-param>
+			<param-name>AuthenticationServiceClass</param-name>
+			<param-value>be.fedict.eid.console.server.AuthenticationServiceImpl</param-value>
+		</init-param>
+		<init-param>
+			<param-name>SkipSecureConnectionCheck</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Logoff</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>PreLogoff</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthnAppletServiceServlet</servlet-name>
+		<url-pattern>/be.fedict.eid.console.Application/applet-service-authn</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ChangePINAppletServiceServlet</servlet-name>
+		<servlet-class>be.fedict.eid.applet.service.AppletServiceServlet</servlet-class>
+		<init-param>
+			<param-name>ChangePin</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>SkipSecureConnectionCheck</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChangePINAppletServiceServlet</servlet-name>
+		<url-pattern>/be.fedict.eid.console.Application/applet-service-change-pin</url-pattern>
+	</servlet-mapping>
+
 </web-app>
