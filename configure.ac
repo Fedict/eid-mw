@@ -1,5 +1,6 @@
 AC_PREREQ([2.65])
-AC_INIT([eid-mw], [0.0.1], [servicedesk@fedict.be])
+AC_INIT([eid-mw], m4_esyscmd([echo -n 3.99.`svnversion -n`]), [servicedesk@fedict.be])
+
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([common])
 AC_CONFIG_HEADERS([config.h])
