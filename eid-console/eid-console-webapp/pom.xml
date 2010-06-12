@@ -14,7 +14,7 @@
 	<name>eID Console Web Application</name>
 
 	<properties>
-
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.5</maven.compiler.source>
 		<maven.compiler.target>1.5</maven.compiler.target>
 	</properties>
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<scope>runtime</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -83,7 +83,29 @@
 
 	<build>
 		<outputDirectory>war/WEB-INF/classes</outputDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/public/*.*</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<style>DETAILED</style>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -100,26 +122,10 @@
 									<groupId>be.fedict.eid-applet</groupId>
 									<artifactId>eid-applet-package</artifactId>
 									<type>jar</type>
-									<outputDirectory>war/WEB-INF/classes/be/fedict/eid/console/public</outputDirectory>
+									<outputDirectory>target/resources</outputDirectory>
 									<destFileName>eid-applet.jar</destFileName>
 								</artifactItem>
 							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>generateAsync</goal>
-							<goal>test</goal>
-						</goals>
-						<configuration>
-							<style>DETAILED</style>
 						</configuration>
 					</execution>
 				</executions>
@@ -130,6 +136,21 @@
 				<configuration>
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
+					<excludes>
+						<exclude>**/client/*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>target/resources</directory>
+							<targetPath>be.fedict.eid.console.Application</targetPath>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>

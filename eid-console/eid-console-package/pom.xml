@@ -41,7 +41,7 @@
 								<minVersion>1.6.0</minVersion>
 							</jre>
 							<jar>target/dependency/eid-console-runtime-1.0.0-SNAPSHOT.jar</jar>
-							<dontWrapJar>false</dontWrapJar>
+							<dontWrapJar>true</dontWrapJar>
 							<outfile>target/eid-console.exe</outfile>
 							<versionInfo>
 								<fileVersion>1.0.0.0</fileVersion>
