@@ -31,6 +31,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DeckPanel;
@@ -126,7 +127,7 @@ public class Application implements EntryPoint {
 
 	private void showHtmlUrl(String htmlUrl) {
 		this.contentFrame.setUrl(htmlUrl);
-		this.contentPanel.showWidget(DECK_FRAME);
+		// DECK_FRAME shown via onBrowserEvent
 	}
 
 	public void onModuleLoad() {
@@ -163,7 +164,18 @@ public class Application implements EntryPoint {
 		this.contentPanel.setHeight("100%"); // IE8 doesn't support inherent
 		RootPanel.get().add(this.contentPanel);
 
-		this.contentFrame = new Frame();
+		this.contentFrame = new Frame() {
+			@Override
+			public void onBrowserEvent(Event event) {
+				/*
+				 * We do this trick to be sure that an Applet on the previous
+				 * loaded page won't be activated again by the JRE plugin.
+				 */
+				super.onBrowserEvent(event);
+				Application.this.contentPanel.showWidget(DECK_FRAME);
+			}
+		};
+		this.contentFrame.sinkEvents(Event.ONLOAD);
 		this.contentPanel.add(this.contentFrame);
 
 		TabPanel identificationPanel = new TabPanel();
