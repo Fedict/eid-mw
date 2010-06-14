@@ -37,6 +37,9 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <WixExtension Include="WixDifxAppExtension">
+      <HintPath>$(WixExtDir)\WixDifxAppExtension.dll</HintPath>
+    </WixExtension>
     <WixExtension Include="WixUtilExtension">
       <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
     </WixExtension>
@@ -47,6 +50,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Strings-nl.wxl" />
     <EmbeddedResource Include="WixUI_nl-nl.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixLibrary Include="difxapp_x86">
+      <HintPath>C:\Program Files\Windows Installer XML v3\bin\difxapp_x86.wixlib</HintPath>
+    </WixLibrary>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

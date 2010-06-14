@@ -56,6 +56,9 @@
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <WixExtension Include="WixDifxAppExtension">
+      <HintPath>$(WixExtDir)\WixDifxAppExtension.dll</HintPath>
+    </WixExtension>
     <WixExtension Include="WixUtilExtension">
       <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
     </WixExtension>
@@ -68,6 +71,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Product64.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixLibrary Include="difxapp_x64">
+      <HintPath>C:\Program Files\Windows Installer XML v3\bin\difxapp_x64.wixlib</HintPath>
+    </WixLibrary>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--
