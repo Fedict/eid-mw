@@ -93,8 +93,8 @@ AS_VAR_IF([linux],[true],
 AS_VAR_IF([qt],[true],
 [
 	AC_CHECK_PROGS(RCC,[rcc],[missing])
-	AC_CHECK_PROGS(UIC,[uic uic-qt4],[missing])
-	AC_CHECK_PROGS(MOC,[moc moc-qt4],[missing])
+	AC_CHECK_PROGS(UIC,[uic-qt4 uic],[missing])
+	AC_CHECK_PROGS(MOC,[moc-qt4 moc],[missing])
 	AS_VAR_IF([RCC],[missing],AC_MSG_ERROR([Qt4 Resource Compiler (rcc) is required.]),AC_SUBST(RCC))
 	AS_VAR_IF([UIC],[missing],AC_MSG_ERROR([Qt4 User Interface Compiler (uic or uic-qt4) is required.]),AC_SUBST(UIC))
 	AS_VAR_IF([MOC],[missing],AC_MSG_ERROR([Qt4 Meta Object Compiler (moc or moc-qt4) is required.]),AC_SUBST(MOC))
