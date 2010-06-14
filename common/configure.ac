@@ -38,35 +38,34 @@ AM_CONDITIONAL([WIN32],[test x$win32 = xtrue])
 ####### read user-specific dependecy requests from --with directives ######
 ###########################################################################
 
-AC_MSG_CHECKING([user-specified pscs-lite installation])
-AC_ARG_WITH([pcsclite],
-  AC_HELP_STRING([--with-pcsclite=DIR],[specific pcsc-lite install location]),
-  [],
-  [with_pcsclite=no])
-AC_MSG_RESULT([$with_pcsclite])
+AS_VAR_IF([linux],[true],
+[
+	AC_MSG_CHECKING([user-specified pscs-lite installation])
+	AC_ARG_WITH([pcsclite],
+	  AC_HELP_STRING([--with-pcsclite=DIR],[specific pcsc-lite install location]),
+	  [],
+	  [with_pcsclite=no])
+	AC_MSG_RESULT([$with_pcsclite])
 
-AS_VAR_IF([with_pcsclite],[no],
-[
-	PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.5],
-    [
-        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
-        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
-    ])
-],
-[
-  AS_VAR_IF([win32],[no],[
-    CPPFLAGS="-I$with_pcsclite/include $CPPFLAGS"
-    LDFLAGS="-L$with_pcsclite/lib $LDFLAGS"
-  ],[
-    AC_MSG_WARN([--with-pcsclite specified on MS Windows host, ignoring])
-  ])
+	AS_VAR_IF([with_pcsclite],[no],
+	[
+		PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.5],
+	   	[
+	       	CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
+	       	LDFLAGS="$PCSC_LIBS $CPPFLAGS"
+	   	])
+	],
+	[
+    	CPPFLAGS="-I$with_pcsclite/include $CPPFLAGS"
+    	LDFLAGS="-L$with_pcsclite/lib $LDFLAGS"
+  	])
 ])
 
 #############################################################################################
 # Checks for libraries
 #############################################################################################
 
-AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcr],[getpid])])
+AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcrt],[_getpid])])
 AS_VAR_IF([win32],[no],  [AC_CHECK_LIB([pcsclite],[SCardConnect])])
 
 #############################################################################################

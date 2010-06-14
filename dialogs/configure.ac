@@ -39,54 +39,51 @@ AM_CONDITIONAL(QT,test x$qt = xtrue)
 ####### read user-specific dependecy requests from --with directives ######
 ###########################################################################
 
-AC_MSG_CHECKING([user-specified Qt installation])
-AC_ARG_WITH([pcsclite],
-  AC_HELP_STRING([--with-qt=DIR],[specific Qt install location]),
-  [],
-  [with_qt=no])
-AC_MSG_RESULT([$with_qt])
-
-AS_VAR_IF([with_qt],[no],
+AS_VAR_IF([linux],[true],
 [
-	PKG_CHECK_MODULES([QTGUI], [QtGui >= 4.5.0],
+	AC_MSG_CHECKING([user-specified Qt installation])
+	AC_ARG_WITH([pcsclite],
+	  AC_HELP_STRING([--with-qt=DIR],[specific Qt install location]),
+	  [],
+	  [with_qt=no])
+	AC_MSG_RESULT([$with_qt])
+
+	AS_VAR_IF([with_qt],[no],
 	[
-		CPPFLAGS="$QTGUI_CFLAGS $CPPFLAGS"
-		LDFLAGS="$QTGUI_LIBS $CPPFLAGS"
+		PKG_CHECK_MODULES([QTGUI], [QtGui >= 4.5.0],
+		[
+			CPPFLAGS="$QTGUI_CFLAGS $CPPFLAGS"
+			LDFLAGS="$QTGUI_LIBS $CPPFLAGS"
+		])
+	],
+	[
+	  AS_VAR_IF([win32],[no],[
+	    CPPFLAGS="-I$with_qt/include $CPPFLAGS"
+	    LDFLAGS="-L$with_qt/lib $LDFLAGS"
+	  ],[
+	    AC_MSG_WARN([--with-qt specified on MS Windows host, ignoring])
+	  ])
 	])
-],
-[
-  AS_VAR_IF([win32],[no],[
-    CPPFLAGS="-I$with_qt/include $CPPFLAGS"
-    LDFLAGS="-L$with_qt/lib $LDFLAGS"
-  ],[
-    AC_MSG_WARN([--with-qt specified on MS Windows host, ignoring])
-  ])
-])
 
-#################################################################################
+	AC_MSG_CHECKING([user-specified OpenSSL installation])
+	AC_ARG_WITH([openssl],
+	  AC_HELP_STRING([--with-openssl=DIR],[specific OpenSSL install location]),
+	  [],
+	  [with_openssl=no])
+	AC_MSG_RESULT([$with_openssl])
 
-AC_MSG_CHECKING([user-specified OpenSSL installation])
-AC_ARG_WITH([openssl],
-  AC_HELP_STRING([--with-openssl=DIR],[specific OpenSSL install location]),
-  [],
-  [with_openssl=no])
-AC_MSG_RESULT([$with_openssl])
-
-AS_VAR_IF([with_openssl],[no],
-[
-    PKG_CHECK_MODULES([OPENSSL], [openssl >= 1.0.0],
-    [
-        CPPFLAGS="$OPENSSL_CFLAGS $CPPFLAGS"
-        LDFLAGS="$OPENSSL_LIBS $CPPFLAGS"
-    ])
-],
-[
-  AS_VAR_IF([win32],[no],[
-    CPPFLAGS="-I$with_openssl/include $CPPFLAGS"
-    LDFLAGS="-L$with_openssl/lib $LDFLAGS"
-  ],[
-    AC_MSG_WARN([--with-openssl specified on MS Windows host, ignoring])
-  ])
+	AS_VAR_IF([with_openssl],[no],
+	[
+    	PKG_CHECK_MODULES([OPENSSL], [openssl >= 1.0.0],
+    	[
+        	CPPFLAGS="$OPENSSL_CFLAGS $CPPFLAGS"
+        	LDFLAGS="$OPENSSL_LIBS $CPPFLAGS"
+    	])
+	],
+	[
+    	CPPFLAGS="-I$with_openssl/include $CPPFLAGS"
+    	LDFLAGS="-L$with_openssl/lib $LDFLAGS"
+	])
 ])
 
 ##################################################################
@@ -108,12 +105,11 @@ AS_VAR_IF([qt],[true],
 ])
 
 ########### libraries ##################
-AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcr],[getpid],[],AC_MSG_ERROR([msvcr library is required.]))])
 AS_VAR_IF([win32],[no],  [AC_CHECK_LIB([ssl],[SSL_get_version],[],AC_MSG_ERROR([OpenSSL Library is required.]))])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h])
-AC_CHECK_HEADER([openssl/opensslconf.h],[],AC_MSG_ERROR([OpenSSL headers are required.]))
+AS_VAR_IF([win32],[no],[AC_CHECK_HEADER([openssl/opensslconf.h],[],AC_MSG_ERROR([OpenSSL headers are required.]))])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
