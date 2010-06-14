@@ -8,26 +8,26 @@ lib_LTLIBRARIES    						= libbeidcardlayer.la libcardpluginbeid.la libcardplugi
 if LINUX
 
 libbeidcardlayer_la_SOURCES  			= ../common/src/mw_util.cpp src/cache.cpp src/card.cpp src/cardfactory.cpp src/cardlayer.cpp src/cardreaderinfo.cpp src/context.cpp src/p15correction.cpp src/pcsc.cpp src/pinpad.cpp src/pinpadlib.cpp src/pkcs15.cpp src/pkcs15parser.cpp src/pkicard.cpp src/reader.cpp src/readersinfo.cpp src/threadpool.cpp src/unknowncard.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cardpluginsis/siscard.cpp src/cardpluginsis/sispluginhandler.cpp
-libbeidcardlayer_la_CPPFLAGS   			= $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid -I$(srcdir)/src/cardpluginsis -I$(srcdir)/src/cardpluginsis_acr38u
-libbeidcardlayer_la_LDFLAGS				= $(PCSCLITE_LIBS) -lpcsclite -avoid-version
+libbeidcardlayer_la_CPPFLAGS   			= -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid -I$(srcdir)/src/cardpluginsis -I$(srcdir)/src/cardpluginsis_acr38u
+libbeidcardlayer_la_LDFLAGS				= -avoid-version
 libbeidcardlayer_la_LIBADD				= $(COMMON_LIBADD)
 libbeidcardlayer_la_CXXFLAGS			= $(COMMON_CXXFLAGS)
 
 libcardpluginbeid_la_SOURCES  			= ../common/src/mw_util.cpp src/cardpluginbeid/beidcard.cpp src/cardpluginbeid/beidp15correction.cpp src/cache.cpp src/card.cpp src/pkicard.cpp
-libcardpluginbeid_la_CPPFLAGS  			= $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid 
-libcardpluginbeid_la_LDFLAGS			= $(PCSCLITE_LIBS) -lpcsclite -avoid-version
+libcardpluginbeid_la_CPPFLAGS  			= -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginbeid 
+libcardpluginbeid_la_LDFLAGS			= -avoid-version
 libcardpluginbeid_la_LIBADD             = $(COMMON_LIBADD) libbeidcardlayer.la
 libcardpluginbeid_la_CXXFLAGS           = $(COMMON_CXXFLAGS)
 
 libcardpluginsis_la_SOURCES  			= ../common/src/mw_util.cpp src/cardpluginsis/siscard.cpp src/cache.cpp src/card.cpp
-libcardpluginsis_la_CPPFLAGS  			= $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis 
-libcardpluginsis_la_LDFLAGS				= $(PCSCLITE_LIBS) -lpcsclite -avoid-version
+libcardpluginsis_la_CPPFLAGS  			= -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis 
+libcardpluginsis_la_LDFLAGS				= -avoid-version
 libcardpluginsis_la_LIBADD              = $(COMMON_LIBADD) libbeidcardlayer.la
 libcardpluginsis_la_CXXFLAGS            = $(COMMON_CXXFLAGS)
 
 libcardpluginsis_acr38u_la_SOURCES  	= ../common/src/mw_util.cpp src/cardpluginsis_acr38u/siscard.cpp 
-libcardpluginsis_acr38u_la_CPPFLAGS  	= $(PCSCLITE_INCS) -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis_acr38u
-libcardpluginsis_acr38u_la_LDFLAGS		= $(PCSCLITE_LIBS) -lpcsclite -avoid-version
+libcardpluginsis_acr38u_la_CPPFLAGS  	= -I$(srcdir)/../common/src -I$(srcdir)/src/cardpluginsis_acr38u
+libcardpluginsis_acr38u_la_LDFLAGS		= -avoid-version
 libcardpluginsis_acr38u_la_CXXFLAGS  	= $(COMMON_CXXFLAGS) -DCARDPLUGINSIS_EXPORTS -DEIDMW_CMN_EXPORT
 libcardpluginsis_acr38u_la_LIBADD       = $(COMMON_LIBADD) libbeidcardlayer.la
 

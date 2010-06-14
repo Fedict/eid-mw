@@ -10,10 +10,15 @@ LT_INIT([win32-dll])
 
 AC_LIBTOOL_WIN32_DLL
 
-# Checks for programs.
+# Checks for programs (1)
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_LIBTOOL
+PKG_PROG_PKG_CONFIG
+
+############################################################################
+# Test for platform and set corresponding AM_CONDITIONALs for Makefile.am  #
+############################################################################
 
 linux="no"
 osx="no"
@@ -30,6 +35,64 @@ AM_CONDITIONAL(OSX,test x$osx = xtrue)
 AM_CONDITIONAL(WIN32,test x$win32 = xtrue)
 AM_CONDITIONAL(QT,test x$qt = xtrue)
 
+###########################################################################
+####### read user-specific dependecy requests from --with directives ######
+###########################################################################
+
+AC_MSG_CHECKING([user-specified Qt installation])
+AC_ARG_WITH([pcsclite],
+  AC_HELP_STRING([--with-qt=DIR],[specific Qt install location]),
+  [],
+  [with_qt=no])
+AC_MSG_RESULT([$with_qt])
+
+AS_VAR_IF([with_qt],[no],
+[
+	PKG_CHECK_MODULES([QTGUI], [QtGui >= 4.5.0],
+	[
+		CPPFLAGS="$QTGUI_CFLAGS $CPPFLAGS"
+		LDFLAGS="$QTGUI_LIBS $CPPFLAGS"
+	])
+],
+[
+  AS_VAR_IF([win32],[no],[
+    CPPFLAGS="-I$with_qt/include $CPPFLAGS"
+    LDFLAGS="-L$with_qt/lib $LDFLAGS"
+  ],[
+    AC_MSG_WARN([--with-qt specified on MS Windows host, ignoring])
+  ])
+])
+
+#################################################################################
+
+AC_MSG_CHECKING([user-specified OpenSSL installation])
+AC_ARG_WITH([openssl],
+  AC_HELP_STRING([--with-openssl=DIR],[specific OpenSSL install location]),
+  [],
+  [with_openssl=no])
+AC_MSG_RESULT([$with_openssl])
+
+AS_VAR_IF([with_openssl],[no],
+[
+    PKG_CHECK_MODULES([OPENSSL], [openssl >= 1.0.0],
+    [
+        CPPFLAGS="$OPENSSL_CFLAGS $CPPFLAGS"
+        LDFLAGS="$OPENSSL_LIBS $CPPFLAGS"
+    ])
+],
+[
+  AS_VAR_IF([win32],[no],[
+    CPPFLAGS="-I$with_openssl/include $CPPFLAGS"
+    LDFLAGS="-L$with_openssl/lib $LDFLAGS"
+  ],[
+    AC_MSG_WARN([--with-openssl specified on MS Windows host, ignoring])
+  ])
+])
+
+##################################################################
+####### check for Qt build utilities, libraries and headers ######
+##################################################################
+
 AS_VAR_IF([qt],[true],
 [
 	AC_CHECK_PROGS(RCC,[rcc],[missing])
@@ -38,42 +101,19 @@ AS_VAR_IF([qt],[true],
 	AS_VAR_IF([RCC],[missing],AC_MSG_ERROR([Qt4 Resource Compiler (rcc) is required.]),AC_SUBST(RCC))
 	AS_VAR_IF([UIC],[missing],AC_MSG_ERROR([Qt4 User Interface Compiler (uic or uic-qt4) is required.]),AC_SUBST(UIC))
 	AS_VAR_IF([MOC],[missing],AC_MSG_ERROR([Qt4 Meta Object Compiler (moc or moc-qt4) is required.]),AC_SUBST(MOC))
+	AC_CHECK_LIB(	 [QtCore],[_ZNK4QUrl4hostEv],[], AC_MSG_ERROR([Qt4 Core Library (libQtCore) is required.]))
+	AC_CHECK_LIB(	 [QtGui], [_ZN7QPixmap12defaultDepthEv],[],AC_MSG_ERROR([Qt4 Gui Library (libQtGui) is required.]))
+#	AC_CHECK_HEADER([QtCore],[],AC_MSG_ERROR([Qt4 Core Headers (QtCore etc.) are required.]))
+#	AC_CHECK_HEADER([QtGui], [],AC_MSG_ERROR([Qt4 Gui Headers (QtGui etc.) are required.]))
 ])
 
 ########### libraries ##################
-# on Windows, check for msvcr
-if test "${win32}" = "yes"; then
-    AC_CHECK_LIB([msvcr], [main])
-fi
-
-# on GNU/Linux and OSX, enable --with-qt and --with-openssl
-if test "${win32}" = "no"; then
-	AC_MSG_CHECKING([Qt installation])
-	AC_ARG_WITH(qt, AC_HELP_STRING([--with-qt=DIR],
-	                [Qt install location]),,with_qt=/usr)
-	QT_INCS="-I$with_qt/include"
-	QT_LIBS="-L$with_qt/lib"
-	QT_BINDIR="$with_qt/bin"
-	AC_MSG_RESULT([$with_qt])
-
-###### openssl ##########
-AC_MSG_CHECKING([openssl installation])
-AC_ARG_WITH(openssl, AC_HELP_STRING([--with-openssl=DIR],
-                    [openssl install location]))
-	OPENSSL_INCS="-I$with_openssl/include"
-	OPENSSL_LIBS="-L$with_openssl/lib"
-AC_MSG_RESULT([$with_openssl])
-
-fi
-
-AC_SUBST([QT_INCS])
-AC_SUBST([QT_LIBS])
-AC_SUBST([OPENSSL_INCS])
-AC_SUBST([OPENSSL_LIBS])
-AC_SUBST([QT_BINDIR])
+AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcr],[getpid],[],AC_MSG_ERROR([msvcr library is required.]))])
+AS_VAR_IF([win32],[no],  [AC_CHECK_LIB([ssl],[SSL_get_version],[],AC_MSG_ERROR([OpenSSL Library is required.]))])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h])
+AC_CHECK_HEADER([openssl/opensslconf.h],[],AC_MSG_ERROR([OpenSSL headers are required.]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

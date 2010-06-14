@@ -13,50 +13,78 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_LIBTOOL
 AM_PROG_CC_C_O
+PKG_PROG_PKG_CONFIG
+
+############################################################################
+# Test for platform and set corresponding AM_CONDITIONALs for Makefile.am  #
+############################################################################
 
 linux="no"
 osx="no"
 win32="no"
 
-case "${host}" in
+AS_CASE([$host],
+  [*-*-linux*],[linux=true],
+  [*-*-darwin*],[osx=true],
+  [*-mingw*|*-winnt*],[win32=true])
 
-    *-*-linux*)
-        linux=true
-        ;;  
+AM_CONDITIONAL([LINUX],[test x$linux = xtrue])
+AM_CONDITIONAL([OSX],[test x$osx = xtrue])
+AM_CONDITIONAL([WIN32],[test x$win32 = xtrue])
 
-    *-*-darwin*)
-        osx=true
-        ;;
+###########################################################################
+####### read user-specific dependecy requests from --with directives ######
+###########################################################################
 
-    *-mingw*|*-winnt*)
-        win32=true
-        ;;
-esac
+AC_MSG_CHECKING([user-specified pscs-lite installation])
+AC_ARG_WITH([pcsclite],
+  AC_HELP_STRING([--with-pcsclite=DIR],[specific pcsc-lite install location]),
+  [],
+  [with_pcsclite=no])
+AC_MSG_RESULT([$with_pcsclite])
 
-AM_CONDITIONAL(LINUX,test x$linux = xtrue)
-AM_CONDITIONAL(OSX,test x$osx = xtrue)
-AM_CONDITIONAL(WIN32,test x$win32 = xtrue)
+AS_VAR_IF([with_pcsclite],[no],
+[
+	PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.5],
+    [
+        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
+        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
+    ])
+],
+[
+  AS_VAR_IF([win32],[no],[
+    CPPFLAGS="-I$with_pcsclite/include $CPPFLAGS"
+    LDFLAGS="-L$with_pcsclite/lib $LDFLAGS"
+  ],[
+    AC_MSG_WARN([--with-pcsclite specified on MS Windows host, ignoring])
+  ])
+])
+
+AC_MSG_CHECKING([user-specified opensc installation])
+AC_ARG_WITH([opensc],
+  AC_HELP_STRING([--with-opensc=DIR],[specific opensc install location]),
+  [],
+  [with_opensc=no])
+AC_MSG_RESULT([$with_opensc])
+
+AS_VAR_IF([with_opensc],[no],[],[
+  AS_VAR_IF([win32],[no],[
+    CPPFLAGS="-I$with_opensc/include $CPPFLAGS"
+    LDFLAGS="-L$with_opensc/lib $LDFLAGS"
+  ],[
+    AC_MSG_WARN([--with-opensc specified on MS Windows host, ignoring])
+  ])
+])
 
 
 ########### libraries ##################
 # on Windows, check for msvcr
-if test "${win32}" = "yes"; then
-    AC_CHECK_LIB([msvcr], [main])
-fi
-
-# on GNU/Linux and OSX, enable --with-opensc-headers
-if test "${win32}" = "no"; then
-    AC_MSG_CHECKING([opensc headers])
-    AC_ARG_WITH(opensc-headers, AC_HELP_STRING([--with-opensc-headers=DIR],
-                    [opensc headers install location]))
-    OPENSC_INCS="-I$with_opensc_headers/"
-    AC_MSG_RESULT([$with_opensc_headers])
-fi
-
-AC_SUBST([OPENSC_INCS])
+AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcr],[getpid])])
+AS_VAR_IF([win32],[no],  [AC_CHECK_LIB([pcsclite],[SCardConnect])])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h string.h])
+AC_CHECK_HEADER([winscard.h],[],AC_MSG_ERROR([PCSC headers are required.]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

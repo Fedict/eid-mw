@@ -23,20 +23,6 @@ AC_PROG_LN_S
 AS_VAR_IF([GXX],[yes],[],AC_MSG_ERROR([GNU C++ compiler (g++) is required.]))
 
 
-# Checks for libraries.
-# FIXME: Replace `main' with a function in `-lbeidcardlayer':
-AC_CHECK_LIB([beidcardlayer], [main])
-# FIXME: Replace `main' with a function in `-lbeidcommon':
-AC_CHECK_LIB([beidcommon], [main])
-# FIXME: Replace `main' with a function in `-lbeidlib':
-AC_CHECK_LIB([beidlib], [main])
-# FIXME: Replace `main' with a function in `-lbeidlibC':
-AC_CHECK_LIB([beidlibC], [main])
-# FIXME: Replace `main' with a function in `-ldl':
-AC_CHECK_LIB([dl], [main])
-# FIXME: Replace `main' with a function in `-lpcsclite':
-AC_CHECK_LIB([pcsclite], [main])
-
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/file.h sys/ioctl.h sys/time.h unistd.h malloc.h memory.h sys/timeb.h])
 
@@ -57,6 +43,9 @@ AC_MSG_CHECKING([openssl installation])
 AC_ARG_WITH(openssl, AC_HELP_STRING([--with-openssl=DIR],
                     [openssl install location]))
 AC_MSG_RESULT([$with_openssl])
+
+# on Windows, check for msvcr
+AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcr],[getpid])])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

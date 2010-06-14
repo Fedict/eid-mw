@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS         		= -I m4
-AM_CPPFLAGS       				= $(OPENSC_INCS) -I../../pkcs11/src/include/rsaref220/
+AM_CPPFLAGS       				= -I../../pkcs11/src/include/rsaref220/
 
 bin_PROGRAMS   					= openclosesession finalizeinitialize sign
 

@@ -9,8 +9,7 @@ libbeidpkcs11_la_SOURCES  	= ../common/src/mw_util.cpp src/asn1.c src/cal.cpp sr
 
 if LINUX
 #
-libbeidpkcs11_la_CPPFLAGS  	= $(PCSCLITE_INCS) $(COMMON_CPPFLAGS)
-libbeidpkcs11_la_LDFLAGS	= $(PCSCLITE_LIBS)
+libbeidpkcs11_la_CPPFLAGS  	= $(COMMON_CPPFLAGS)
 libbeidpkcs11_la_CXXFLAGS	= $(COMMON_CXXFLAGS)
 libbeidpkcs11_la_LIBADD		= $(COMMON_LIBADD)
 #

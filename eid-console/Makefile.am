@@ -4,7 +4,7 @@ all : eid-console
 
 .PHONY: eid-console
 eid-console:
-	$(MVN) install
+	$(MVN) -e install
 
 clean-local:
 	$(MVN) clean
