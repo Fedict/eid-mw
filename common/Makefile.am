@@ -16,7 +16,7 @@ endif
 
 if OSX
 libbeidcommon_la_SOURCES  	= $(COMMON_SOURCES) src/configuration.cpp
-libbeidcommon_la_LDFLAGS	= -Wl,-framework -Wl,Carbon
+libbeidcommon_la_LDFLAGS	= -Wl,-framework -Wl,Carbon -framework PCSC
 libbeidcommon_la_CXXFLAGS	= $(COMMON_CXXFLAGS)
 endif
 

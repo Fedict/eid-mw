@@ -66,7 +66,7 @@ AS_VAR_IF([win32],[no],  [AC_CHECK_LIB([pcsclite],[SCardConnect])])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h string.h])
-AC_CHECK_HEADER([winscard.h],[],AC_MSG_ERROR([PCSC headers are required.]))
+AS_VAR_IF([osx],[no],[AC_CHECK_HEADER([winscard.h],[],AC_MSG_ERROR([PCSC headers are required.])]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

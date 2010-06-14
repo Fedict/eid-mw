@@ -98,10 +98,14 @@ AS_VAR_IF([qt],[true],
 	AS_VAR_IF([RCC],[missing],AC_MSG_ERROR([Qt4 Resource Compiler (rcc) is required.]),AC_SUBST(RCC))
 	AS_VAR_IF([UIC],[missing],AC_MSG_ERROR([Qt4 User Interface Compiler (uic or uic-qt4) is required.]),AC_SUBST(UIC))
 	AS_VAR_IF([MOC],[missing],AC_MSG_ERROR([Qt4 Meta Object Compiler (moc or moc-qt4) is required.]),AC_SUBST(MOC))
-	AC_CHECK_LIB(	 [QtCore],[_ZNK4QUrl4hostEv],[], AC_MSG_ERROR([Qt4 Core Library (libQtCore) is required.]))
-	AC_CHECK_LIB(	 [QtGui], [_ZN7QPixmap12defaultDepthEv],[],AC_MSG_ERROR([Qt4 Gui Library (libQtGui) is required.]))
-#	AC_CHECK_HEADER([QtCore],[],AC_MSG_ERROR([Qt4 Core Headers (QtCore etc.) are required.]))
-#	AC_CHECK_HEADER([QtGui], [],AC_MSG_ERROR([Qt4 Gui Headers (QtGui etc.) are required.]))
+
+	AS_VAR_IF([linux],[true],
+	[
+		AC_CHECK_LIB(	 [QtCore],[_ZNK4QUrl4hostEv],[], AC_MSG_ERROR([Qt4 Core Library (libQtCore) is required.]))
+		AC_CHECK_LIB(	 [QtGui], [_ZN7QPixmap12defaultDepthEv],[],AC_MSG_ERROR([Qt4 Gui Library (libQtGui) is required.]))
+#		AC_CHECK_HEADER([QtCore],[],AC_MSG_ERROR([Qt4 Core Headers (QtCore etc.) are required.]))
+#		AC_CHECK_HEADER([QtGui], [],AC_MSG_ERROR([Qt4 Gui Headers (QtGui etc.) are required.]))
+	])
 ])
 
 ########### libraries ##################
