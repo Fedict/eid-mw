@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:difx="http://schemas.microsoft.com/wix/DifxAppExtension"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-
   <?include ..\..\..\svn_revision.wxs ?>
 
   <?define var.OfficialProductVersion =3.5.4?>
@@ -25,7 +25,7 @@
            UpgradeCode="$(var.UpgradeCode)">
 
     <Package Id="$(var.PackageCode)"
-             InstallerVersion="300"
+             InstallerVersion="200"
              Keywords="Belgium e-ID Middleware Installer"
              Platform="x64"
              Manufacturer="Belgian Government"
@@ -134,7 +134,9 @@
           <Directory Id="FIREFOXEXTENSIONS" Name="extensions"/>
         </Directory>
       </Directory>
-
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
+      </Directory>
       <Directory Id="DesktopFolder"/>
 
       <Directory Id="WindowsFolder"/>
@@ -144,11 +146,10 @@
         <Directory Id="SISCARDPLUGINSDIR" Name="siscardplugins"/>
       </Directory>
 
-      <Directory Id="System64Folder"/>
+      <Directory Id="SystemFolder64"/>
 
       <Merge Id="VCRT" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
       <Merge Id="VCRT_POLICY" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
-
     </Directory>
     
     <DirectoryRef Id="EIDSTORE">
@@ -230,6 +231,25 @@
         </CreateFolder>
       </Component>
     </DirectoryRef>
+
+    <DirectoryRef Id="MINIDRIVERROOTFOLDER">
+      <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Win64="yes">
+        <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
+        <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv64.dll" KeyPath="no" DiskId="1" />
+        <difx:Driver ForceInstall="no" PlugAndPlayPrompt="no" DeleteFiles="yes" />
+      </Component>
+      <!-- Certificate Propagation Service is a standard Windows service available in from Windows Vista on. In order to use the minidriver
+			   it is necessary that this service is running. When a smart card reader is inserted this service should be started  by the smart card
+			   driver. As not all drivers are following this guidance, we start CertPropSvc during the minidriver install -->
+      <Component Id="CertPropService" Guid="932459d0-df59-11de-8a39-0800200c9a66" Permanent="yes" Win64="yes">
+        <!-- Start Certificate Propagation Service during startup -->
+        <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\CertPropSvc" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
+        <!-- Start Certificate Propagation Service now -->
+        <ServiceControl Id="StartCertPropSvc" Name="CertPropSvc" Start="install" />
+      </Component>
+    </DirectoryRef>
     
     <DirectoryRef Id="APPLICATIONROOTFOLDER">
       
@@ -272,11 +292,6 @@
         <File Id="THIRDPARTY_LICENSES.txt" Name="THIRDPARTY-LICENSES.txt" KeyPath="no" Source="..\..\..\misc\licenses_files\THIRDPARTY-LICENSES.txt" />
       </Component>
       
-      <Component Id="pkcs11_register" Guid="{4A415D88-0C1F-4322-8DFE-9A2528C47B2F}" SharedDllRefCount="yes">
-        <File Id="beidpkcs11register.html" Name="beid-pkcs11-register.html" KeyPath="yes" Source="..\..\..\misc\beid\beid-pkcs11-register.html" />
-        <File Id="beidpkcs11unregister.html" Name="beid-pkcs11-unregister.html" KeyPath="no" Source="..\..\..\misc\beid\beid-pkcs11-unregister.html" />
-      </Component>
-      
       <Component Id="BWCompatibilityJava_Jar" Guid="{9431FC24-8C6B-46FE-A2C2-8C8CD4A50A3D}" SharedDllRefCount="yes">
         <File Id="beidlib.jar" Name="beidlib.jar" KeyPath="yes" Source="..\..\..\misc\bw_compatibility\beidlib.jar" />
         <File Id="eidlib.jar" Name="eidlib.jar" KeyPath="no" Source="..\..\..\misc\bw_compatibility\eidlib.jar" />
@@ -297,14 +312,17 @@
           Section="BEID_default" Action="addLine" Key="crl"  Value="[ProgramFilesFolder]Belgium Identity Card\eidstore\crl\http\crl.eid.belgium.be\"
           />
       </Component>
-      
-      <Component Id="pkcs11_cfg" Guid="{30C0E273-8E4E-4C39-8EA5-98CA4F6D86B5}">
-        <File Id="Belgian_eID_PKCS11_java.cfg" Name="Belgian_eID_PKCS11_java.cfg" KeyPath="yes" Source="..\..\..\misc\setup_win\Belgian_eID_PKCS11_java.cfg" />
-      </Component>
 
     </DirectoryRef>
-     
-    <DirectoryRef Id="System64Folder">
+
+    <DirectoryRef Id="SystemFolder64">
+
+      <Component Id="Runtime35_64" Guid="{8FE1C7FB-F06A-40db-8454-88D9E8BDD626}" SharedDllRefCount="yes" Win64="yes">
+        <File Id="beid35cardlayer_64.dll" Name="beid35cardlayer.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beid35cardlayer.dll" />
+        <File Id="beid35common_64.dll" Name="beid35common.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beid35common.dll" />
+        <File Id="beid35DlgsWin32_64.dll" Name="beid35DlgsWin32.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beid35DlgsWin32.dll" />
+      </Component>
+      
       <Component Id="CSP_64" Guid="{AFAFDD01-375C-4599-84C5-6E5B9D3E151B}" SharedDllRefCount="yes" Win64="yes">
         <File Id="beidCSP_64.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\_Binaries35\x64\Release\beidCSP.dll" />
         <File Id="beidCSPlib_64.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beidCSPlib.dll" />
@@ -314,6 +332,11 @@
         <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\_Binaries35\x64\Release\beidpkcs11.dll" />
         <File Id="BelgiumIdentityCardPKCS11_64.dll" Name="Belgium Identity Card PKCS11.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\Belgium Identity Card PKCS11.dll" />
       </Component>
+
+      <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="yes" Win64="yes">
+        <File Id="MINIDRIVER_64.dll" Name="beidmdrv.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv64.dll" />
+      </Component>
+      
     </DirectoryRef>
     
     <DirectoryRef Id="SystemFolder">
@@ -334,6 +357,10 @@
         <File Id="xercesc_3_1.dll" Name="xerces-c_3_1.dll" KeyPath="yes" Source="$(var.BEID_DIR_XERCES_310)\bin\xerces-c_3_1.dll" />
       </Component>
 
+      <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes">
+        <File Id="MINIDRIVER.dll" Name="beidmdrv.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.dll" />
+      </Component>
+      
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes">
         <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\beidCSP.dll" />
         <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beidCSPlib.dll" />
@@ -459,6 +486,30 @@
         <!-- Start SCardSvr Service now -->
         <ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" />
       </Component>
+   
+      <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}">
+        <RegistryKey Root="HKLM"
+                     Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\Beid"
+                     Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="80000001" Value="[SystemFolder]beidmdrv.dll" KeyPath="yes"/>
+          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
+          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no"/>
+          <RegistryValue Type="string" Name="Smart Card Key Storage Provider" Value="Microsoft Smart Card Key Storage Provider" KeyPath="no"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="REGISTERMINIDRIVER_64" Guid="{3BCA1B2C-08AF-4727-AD85-1C60025656EA}" Win64="yes">
+        <RegistryKey Root="HKLM"
+          Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
+          Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="80000001" Value="[SystemFolder64]beidmdrv.dll" KeyPath="yes"/>
+          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
+          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no"/>
+          <RegistryValue Type="string" Name="Smart Card Key Storage Provider" Value="Microsoft Smart Card Key Storage Provider" KeyPath="no"/>
+        </RegistryKey>
+      </Component> 
      
       <Component Id="REGISTERCSP" Guid="{3DF6D19A-C268-4D97-B605-1F3E29DC15DC}">
         <RegistryKey Root="HKLM"
@@ -472,56 +523,12 @@
             Value="4ca7da22f79d4c8db3acaaf626b757929ff28cd2d205615323885f542f38d9ddfccd1b74d2ccbd99ad0a0a530e22b91dda3f3967ff7846f43a4fa263b41fbdb35976c68d64c3ff931036e009f3d3090d9afdbe8a9f942d1adc8791d5522644d1842bb802907737baa4b318a21554ecc3b25db0f42d7f5cdd3f58269703ffed300000000000000000" />
         </RegistryKey>
         <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card v1.0"
+                     Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card"
                      Action="createAndRemoveOnUninstall">
           <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue
-            Type="binary"
-            Name="ATR"
-            Value="3B989440FFA503010101AD1310" />
-          <RegistryValue
-            Type="binary"
-            Name="ATRMask"
-            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card v1.5"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue
-            Type="binary"
-            Name="ATR"
-            Value="3B9813402AD000480101AD1311" />
-          <RegistryValue
-            Type="binary"
-            Name="ATRMask"
-            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\Belgium Kids Identity Card v1.0"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue
-            Type="binary"
-            Name="ATR"
-            Value="3B9894400AA503010101AD1310" />
-          <RegistryValue
-            Type="binary"
-            Name="ATRMask"
-            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\Belgium Kids Identity Card v1.1"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue
-            Type="binary"
-            Name="ATR"
-            Value="3B9813400AA503010101AD1311" />
-          <RegistryValue
-            Type="binary"
-            Name="ATRMask"
-            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
+          <RegistryValue Type="string" Name="80000001" Value="[SystemFolder]beidmdrv.dll" KeyPath="no"/>
+          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
+          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
         </RegistryKey>
       </Component>
 
@@ -529,7 +536,7 @@
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Belgium Identity Card CSP"
                       Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Image Path" Value="[System64Folder]beidcsp.dll" KeyPath="yes"/>
+          <RegistryValue Type="string" Name="Image Path" Value="[SystemFolder64]beidcsp.dll" KeyPath="yes"/>
           <RegistryValue Type="integer" Name="Type" Value="1" />
           <RegistryValue
             Type="binary"
@@ -537,56 +544,12 @@
             Value="4ca7da22f79d4c8db3acaaf626b757929ff28cd2d205615323885f542f38d9ddfccd1b74d2ccbd99ad0a0a530e22b91dda3f3967ff7846f43a4fa263b41fbdb35976c68d64c3ff931036e009f3d3090d9afdbe8a9f942d1adc8791d5522644d1842bb802907737baa4b318a21554ecc3b25db0f42d7f5cdd3f58269703ffed300000000000000000" />
         </RegistryKey>
         <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card v1.0"
+                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card"
                      Action="createAndRemoveOnUninstall">
           <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue
-            Type="binary"
-            Name="ATR"
-            Value="3B989440FFA503010101AD1310" />
-          <RegistryValue
-            Type="binary"
-            Name="ATRMask"
-            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card v1.5"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue
-            Type="binary"
-            Name="ATR"
-            Value="3B9813402AD000480101AD1311" />
-          <RegistryValue
-            Type="binary"
-            Name="ATRMask"
-            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Kids Identity Card v1.0"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue
-            Type="binary"
-            Name="ATR"
-            Value="3B9894400AA503010101AD1310" />
-          <RegistryValue
-            Type="binary"
-            Name="ATRMask"
-            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Kids Identity Card v1.1"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue
-            Type="binary"
-            Name="ATR"
-            Value="3B9813400AA503010101AD1311" />
-          <RegistryValue
-            Type="binary"
-            Name="ATRMask"
-            Value="FFFFFFFFFFFFFFFFFFFFFFFFFF" />
+          <RegistryValue Type="string" Name="80000001" Value="[SystemFolder64]beidmdrv.dll" KeyPath="no"/>
+          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
+          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
         </RegistryKey>
       </Component>      
      
@@ -697,6 +660,7 @@
 
       <!-- System32 -->
       <ComponentRef Id="Runtime35"/>
+      <ComponentRef Id="Runtime35_64"/>
       <ComponentRef Id="Runtime35ThirdPartyOpenSSL"/>
       <ComponentRef Id="Runtime35ThirdPartyXerces"/>
       <ComponentRef Id="BWCompatibility"/>
@@ -736,18 +700,27 @@
                 Level="1"
                 >
         <ComponentRef Id="SCardSvrService"/>
-        <ComponentRef Id="CSP"/>
-        <ComponentRef Id="REGISTERCSP"/>
         <ComponentRef Id="pkcs11"/>
-        <ComponentRef Id="pkcs11_cfg"/>
-        <ComponentRef Id="pkcs11_register" />
-        <ComponentRef Id="OutlookTool" />
-        <ComponentRef Id="CSP_64"/>
-        <ComponentRef Id="REGISTERCSP_64"/>
         <ComponentRef Id="pkcs11_64"/>
+        <ComponentRef Id="OutlookTool" />
         <!-- Shortcuts -->
         <ComponentRef Id ="OutlookShortcut"/>
-        
+        <Feature Id="Install_Minidriver" Level="0">
+          <ComponentRef Id="beidmdrv"/>
+          <ComponentRef Id="CertPropService"/>
+          <ComponentRef Id="MINIDRIVER"/>
+          <ComponentRef Id="MINIDRIVER_64"/>
+          <ComponentRef Id="REGISTERMINIDRIVER"/>
+          <ComponentRef Id="REGISTERMINIDRIVER_64"/>
+          <Condition Level="1">VersionNT >= 600</Condition>
+        </Feature>
+        <Feature Id="Install_CSP" Level="1">
+          <ComponentRef Id="CSP"/>
+          <ComponentRef Id="CSP_64"/>
+          <ComponentRef Id="REGISTERCSP"/>
+          <ComponentRef Id="REGISTERCSP_64"/>
+          <Condition Level="0">"VersionNT >= 600"</Condition>
+        </Feature>
       </Feature>
     </Feature>
 
