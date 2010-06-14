@@ -4,7 +4,7 @@
   <String Id="Langpref" Overridable="yes">nl</String>
   <String Id="LicenseFile" Overridable="yes"></String>
   <String Id="StartApp" Overridable="yes">Start de Eid Viewer toepassing</String>
-  <String Id="MinOs" Overridable="yes">Windows 2000 of hoger is vereist</String>
+  <String Id="MinOs" Overridable="yes">Windows XP of hoger is vereist</String>
   <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 3.5</String>
   <String Id="BeidRuntimeDesc" Overridable="yes">Deze modules zijn noodzakelijk voor het gebruik van de eID kaart.</String>
   <String Id="BeidGui" Overridable="yes">eID beheersinstrument</String>
