@@ -22,11 +22,13 @@
 #include "../export.h"
 
 #ifdef WIN32
-#include <windows.h> // needed for Sleep() amongst others
-typedef int socklen_t;
+	#include <windows.h>
+	typedef int socklen_t;
 #else
-#include "../win_macros.h"
-#include "sys/socket.h"
+	typedef unsigned long int UINT_PTR, *PUINT_PTR;
+	typedef UINT_PTR  SOCKET;
+	#define INVALID_SOCKET  (SOCKET)(~0)
+	#include "sys/socket.h"
 #endif
 
 #include <string>
