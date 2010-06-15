@@ -57,6 +57,7 @@
 
 
 #define THREAD_OBJ			pthread_t
+#define THREAD_ID		pthread_t
 #define THREAD_INITFUNCTION( parm1, arg )	void *parm1( void *arg )
 #define THREAD_START( function, arg, hThread, syncHandle, status ) { \
             status = pthread_create( &hThread, NULL, function, arg ) ? \
@@ -95,6 +96,7 @@
 #include <taskLib.h>
 
 
+#define THREAD_ID			int
 #define THREAD_OBJ			int
 
 /* if building for PPC: create tasks with FP register saving enabled */
@@ -137,7 +139,8 @@
 
 
 //#define THREAD_OBJ			DWORD           //object handle
-#define THREAD_OBJ			unsigned int           //object handle
+#define THREAD_ID			unsigned int          //object handle
+#define THREAD_OBJ			uintptr_t           //object handle
 #define MUTEX_OBJ			unsigned int    // STH: HANDLE is a void * on VS2005 - WinXP
 
 /*
@@ -186,7 +189,7 @@
 
 #elif defined( __WIN32__ ) && defined( NT_DRIVER )
 
-
+#define THREAD_ID				HANDLE
 #define THREAD_OBJ				HANDLE
 #define MUTEX_OBJ				HANDLE
 
@@ -198,6 +201,7 @@
 
 #define MUTEX_OBJ							int
 #define THREAD_OBJ							int
+#define THREAD_ID						int
 #define THREAD_START( function, arg, hThread, syncHandle, status ) \
                                                 status = CRYPT_ERROR
 #define THREAD_END( sync )

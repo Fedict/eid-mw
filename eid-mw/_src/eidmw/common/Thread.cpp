@@ -53,7 +53,7 @@ CThread::~CThread()
 int CThread::Start()
 {
 	int status;
-	THREAD_OBJ threadHandle;
+	THREAD_ID threadHandle;
 
 	m_isRunning = true;
 
