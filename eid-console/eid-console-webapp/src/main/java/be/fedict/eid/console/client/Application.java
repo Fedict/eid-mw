@@ -51,12 +51,14 @@ public class Application implements EntryPoint {
 	private static final int DECK_FRAME = 0;
 	private static final int DECK_IDENTIFICATION_RESULT = 1;
 	private static final int DECK_PIN_VERIFY_RESULT = 2;
+	private static final int DECK_DIAGNOSTIC = 3;
 
 	private Frame contentFrame;
 	private DeckPanel contentPanel;
 	private FlexTable identityTable;
 	private FlexTable addressTable;
 	private FlexTable cardTable;
+	private FlexTable diagnosticTable;
 
 	private static Application application;
 
@@ -120,6 +122,36 @@ public class Application implements EntryPoint {
 		}
 	};
 
+	Command diagnosticCommand = new Command() {
+		public void execute() {
+			Application.this.contentPanel.showWidget(DECK_DIAGNOSTIC);
+			Application.this.clearDiagnosticResults();
+		}
+	};
+
+	private int diagnosticIdx;
+
+	private void clearDiagnosticResults() {
+		this.diagnosticTable.removeAllRows();
+		this.diagnosticTable.setHTML(0, 0, "<b>Test ID</b>");
+		this.diagnosticTable.setHTML(0, 1, "<b>Test Description</b>");
+		this.diagnosticTable.setHTML(0, 2, "<b>Test Result</b>");
+		this.diagnosticTable.setHTML(0, 3, "<b>Test Result Description</b>");
+		this.diagnosticIdx = 1;
+	}
+
+	private void addDiagnosticResult(String testId, String testDescription,
+			boolean testResult, String testResultDescription) {
+		this.diagnosticTable.setText(this.diagnosticIdx, 0, testId);
+		this.diagnosticTable.setText(this.diagnosticIdx, 1, testDescription);
+		this.diagnosticTable.setHTML(this.diagnosticIdx, 2,
+				testResult ? "<font color=\"green\">success</font>"
+						: "<font color=\"red\">failure</font>");
+		this.diagnosticTable.setText(this.diagnosticIdx, 3,
+				testResultDescription);
+		this.diagnosticIdx++;
+	}
+
 	private void showHtmlPage(String htmlPage) {
 		String htmlUrl = GWT.getModuleBaseURL() + htmlPage;
 		showHtmlUrl(htmlUrl);
@@ -143,6 +175,7 @@ public class Application implements EntryPoint {
 		fileMenuBar.addItem("Read eID", this.readCommand);
 		fileMenuBar.addItem("Validate Certificates", this.validateCommand);
 		fileMenuBar.addItem("eID Applications", this.applicationsCommand);
+		fileMenuBar.addItem("eID Diagnostic Tests", this.diagnosticCommand);
 		menuBar.addItem("File", fileMenuBar);
 
 		MenuBar pinMenuBar = new MenuBar(true);
@@ -165,20 +198,24 @@ public class Application implements EntryPoint {
 		RootPanel.get().add(this.contentPanel);
 
 		this.contentFrame = new Frame() {
+			// http://code.google.com/p/google-web-toolkit/issues/detail?id=1720
 			@Override
 			public void onBrowserEvent(Event event) {
 				/*
 				 * We do this trick to be sure that an Applet on the previous
 				 * loaded page won't be activated again by the JRE plugin.
 				 */
+				if (Event.ONLOAD == event.getTypeInt()) {
+					Application.this.contentPanel.showWidget(DECK_FRAME);
+				}
 				super.onBrowserEvent(event);
-				Application.this.contentPanel.showWidget(DECK_FRAME);
 			}
 		};
 		this.contentFrame.sinkEvents(Event.ONLOAD);
 		this.contentPanel.add(this.contentFrame);
 
 		TabPanel identificationPanel = new TabPanel();
+		identificationPanel.setAnimationEnabled(true);
 		this.contentPanel.add(identificationPanel);
 
 		VerticalPanel identityPanel = new VerticalPanel();
@@ -217,6 +254,17 @@ public class Application implements EntryPoint {
 		VerticalPanel pinVerifyResultPanel = new VerticalPanel();
 		this.contentPanel.add(pinVerifyResultPanel);
 		pinVerifyResultPanel.add(new Label("PIN verification was successful."));
+
+		VerticalPanel diagnosticPanel = new VerticalPanel();
+		this.contentPanel.add(diagnosticPanel);
+		diagnosticPanel.add(new HTML("<h1>eID Diagnostic Tests</h1>"));
+		Frame diagnosticFrame = new Frame(GWT.getModuleBaseURL()
+				+ "diagnostic.html");
+		diagnosticFrame.setWidth("100%");
+		diagnosticFrame.setHeight("450px");
+		diagnosticPanel.add(diagnosticFrame);
+		this.diagnosticTable = new FlexTable();
+		diagnosticPanel.add(this.diagnosticTable);
 
 		Application.application = this;
 	}
@@ -319,9 +367,23 @@ public class Application implements EntryPoint {
 		application.contentPanel.showWidget(DECK_PIN_VERIFY_RESULT);
 	}
 
+	public static void diagnosticDone() {
+		// TODO
+	}
+
+	public static void diagnosticCallback(String testId,
+			String testDescription, boolean testResult,
+			String testResultDescription) {
+		Application application = Application.application;
+		application.addDiagnosticResult(testId, testDescription, testResult,
+				testResultDescription);
+	}
+
 	public static native void exportStaticMethod() /*-{
 													$wnd.showIdentity = $entry(@be.fedict.eid.console.client.Application::showIdentity());
 													$wnd.showMain = $entry(@be.fedict.eid.console.client.Application::showMain());
 													$wnd.showPinVerifyResult = $entry(@be.fedict.eid.console.client.Application::showPinVerifyResult());
+													$wnd.diagnosticDone = $entry(@be.fedict.eid.console.client.Application::diagnosticDone());
+													$wnd.diagnosticCallback = $entry(@be.fedict.eid.console.client.Application::diagnosticCallback(Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;));
 													}-*/;
 }

@@ -1,0 +1,25 @@
+<html>
+<body>
+<script src="https://www.java.com/js/deployJava.js"></script>
+<script type="text/javascript">
+   var attributes = {
+      code : 'be.fedict.eid.applet.Applet.class',
+      archive : 'eid-applet.jar',
+      width : 450,
+      height : 400
+   };
+   var parameters = {
+      AppletService : 'applet-diagnostic-service',
+      TargetPage : 'javascript:parent.diagnosticDone();',
+      DiagnosticTestCallback :'diagnosticCallback'
+   };
+   var version = '1.6';
+   deployJava.runApplet(attributes, parameters, version);
+</script>
+<script type="text/javascript">
+	function diagnosticCallback(testId, testDescription, testResult, testResultDescription) {
+		parent.diagnosticCallback(testId, testDescription, testResult, testResultDescription);
+	}
+</script>
+</body>
+</html>
