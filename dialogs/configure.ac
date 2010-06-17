@@ -14,7 +14,6 @@ AC_LIBTOOL_WIN32_DLL
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_LIBTOOL
-PKG_PROG_PKG_CONFIG
 
 ############################################################################
 # Test for platform and set corresponding AM_CONDITIONALs for Makefile.am  #
@@ -34,6 +33,8 @@ AM_CONDITIONAL(LINUX,test x$linux = xtrue)
 AM_CONDITIONAL(OSX,test x$osx = xtrue)
 AM_CONDITIONAL(WIN32,test x$win32 = xtrue)
 AM_CONDITIONAL(QT,test x$qt = xtrue)
+
+AS_VAR_IF([qt],[true],[PKG_PROG_PKG_CONFIG])
 
 ###########################################################################
 ####### read user-specific dependecy requests from --with directives ######
