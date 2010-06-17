@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		011C50B711368B1800D69AF8 /* MetaRuleVerdict.h in Headers */ = {isa = PBXBuildFile; fileRef = 011C50B611368B1800D69AF8 /* MetaRuleVerdict.h */; };
-		011C50BA11368B4900D69AF8 /* MetaRuleVerdict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 011C50B811368B4900D69AF8 /* MetaRuleVerdict.cpp */; };
 		011C50BB11368B4900D69AF8 /* WinSCardDllLocksRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 011C50B911368B4900D69AF8 /* WinSCardDllLocksRule.cpp */; };
-		011C50BD11368B5600D69AF8 /* MetaRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 011C50BC11368B5600D69AF8 /* MetaRule.cpp */; };
 		015DDB471133D4A30041940A /* module.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB461133D4A30041940A /* module.h */; };
 		015DDB491133D4B50041940A /* repository.h in Headers */ = {isa = PBXBuildFile; fileRef = 015DDB481133D4B50041940A /* repository.h */; };
 		015DDB4B1133D4E20041940A /* repository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 015DDB4A1133D4E20041940A /* repository.cpp */; };
@@ -29,7 +26,6 @@
 		01EA459B11410CEF00B54D18 /* WinSCardDllLocksRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 01EA459A11410CEF00B54D18 /* WinSCardDllLocksRule.h */; };
 		01FDC75A113BC45A00E8C708 /* HPProtectToolsRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 01FDC759113BC45A00E8C708 /* HPProtectToolsRule.h */; };
 		01FDC75C113BC46A00E8C708 /* HPProtectToolsRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01FDC75B113BC46A00E8C708 /* HPProtectToolsRule.cpp */; };
-		01FDC75E113BC47800E8C708 /* MetaRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 01FDC75D113BC47800E8C708 /* MetaRule.h */; };
 		069D05B0128AE5DC7EE31738 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 7BC2E65A5E699A5E5D834CA2 /* QtCore.framework */; };
 		2B093CA6F071B023A473CED0 /* main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 118FCBAABA162BA17933C789 /* main.cpp */; settings = {ATTRIBUTES = (); }; };
 		393E0B62B645E23A5AC7F3C0 /* moc_edtgui.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 33726D8BA5E972CDB2EA01B7 /* moc_edtgui.cpp */; settings = {ATTRIBUTES = (); }; };
@@ -139,6 +135,10 @@
 		838CA1FB0F67F57B00F52788 /* mac_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838CA1EE0F67F57B00F52788 /* mac_file.cpp */; };
 		838CA1FD0F67F58800F52788 /* mac_helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 838CA1FC0F67F58800F52788 /* mac_helper.h */; };
 		838CA2BF0F67F94300F52788 /* libDiagLib.dylib in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 838CA16F0F67F36200F52788 /* libDiagLib.dylib */; };
+		86CD5CBE11CA0F3400B6358E /* MetaRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 86CD5CBD11CA0F3400B6358E /* MetaRule.h */; };
+		86CD5CC411CA0F5800B6358E /* MetaRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86CD5CC111CA0F5800B6358E /* MetaRule.cpp */; };
+		86CD5CC511CA0F5800B6358E /* MetaRuleVerdict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86CD5CC211CA0F5800B6358E /* MetaRuleVerdict.cpp */; };
+		86CD5CC611CA0F5800B6358E /* MetaRuleVerdict.h in Headers */ = {isa = PBXBuildFile; fileRef = 86CD5CC311CA0F5800B6358E /* MetaRuleVerdict.h */; };
 		B83834F528F7DB06F9C84F8D /* qrc_edtgui.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = A49FE3CB886BC1495C67278C /* qrc_edtgui.cpp */; settings = {ATTRIBUTES = (); }; };
 		C8FD4A1AAA37CF2CA2824CCF /* Carbon.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = DA138F75C9F545CDAE7FB264 /* Carbon.framework */; };
 		F9E76E570E10AF14870553A7 /* ApplicationServices.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 27AE7A480FD6C52FCA80FECD /* ApplicationServices.framework */; };
@@ -297,6 +297,10 @@
 		838CA2830F67F6E300F52788 /* AnalysisError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalysisError.h; path = ../DiagEngine/AnalysisError.h; sourceTree = SOURCE_ROOT; };
 		838CA2840F67F6E300F52788 /* analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = analysis.h; path = ../DiagEngine/analysis.h; sourceTree = SOURCE_ROOT; };
 		838CA2850F67F6E300F52788 /* AnalyseSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnalyseSystemInfo.h; path = ../DiagEngine/AnalyseSystemInfo.h; sourceTree = SOURCE_ROOT; };
+		86CD5CBD11CA0F3400B6358E /* MetaRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MetaRule.h; path = ../DiagLib/MetaRule.h; sourceTree = SOURCE_ROOT; };
+		86CD5CC111CA0F5800B6358E /* MetaRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MetaRule.cpp; path = ../DiagLib/MetaRule.cpp; sourceTree = SOURCE_ROOT; };
+		86CD5CC211CA0F5800B6358E /* MetaRuleVerdict.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MetaRuleVerdict.cpp; path = ../DiagLib/MetaRuleVerdict.cpp; sourceTree = SOURCE_ROOT; };
+		86CD5CC311CA0F5800B6358E /* MetaRuleVerdict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MetaRuleVerdict.h; path = ../DiagLib/MetaRuleVerdict.h; sourceTree = SOURCE_ROOT; };
 		8FF3F76D89C63140D90905B5 /* edtgui.ui */ = {isa = PBXFileReference; lastKnownFileType = text; path = edtgui.ui; sourceTree = "<group>"; };
 		9B36DA7E32F0304E780E7972 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /Library/Frameworks/QtGui.framework; sourceTree = "<absolute>"; };
 		A49FE3CB886BC1495C67278C /* qrc_edtgui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = qrc_edtgui.cpp; sourceTree = "<group>"; };
@@ -346,6 +350,10 @@
 		05596AB53D8D521C69802C27 /* eDTGui */ = {
 			isa = PBXGroup;
 			children = (
+				86CD5CC111CA0F5800B6358E /* MetaRule.cpp */,
+				86CD5CC211CA0F5800B6358E /* MetaRuleVerdict.cpp */,
+				86CD5CC311CA0F5800B6358E /* MetaRuleVerdict.h */,
+				86CD5CBD11CA0F3400B6358E /* MetaRule.h */,
 				7FA5BA930F9CC35500CBC6F6 /* qt.conf */,
 				7F30498D0F71128E002D5B34 /* appicon.icns */,
 				838CA1FF0F67F59C00F52788 /* DiagEngine */,
@@ -645,9 +653,7 @@
 				015DDB9B1133D8CE0041940A /* AnalyseHardware.h in Headers */,
 				015DDB9C1133D8CE0041940A /* AnalyseMeta.h in Headers */,
 				015DDB9D1133D8CE0041940A /* AnalyseModuleInfo.h in Headers */,
-				011C50B711368B1800D69AF8 /* MetaRuleVerdict.h in Headers */,
 				01FDC75A113BC45A00E8C708 /* HPProtectToolsRule.h in Headers */,
-				01FDC75E113BC47800E8C708 /* MetaRule.h in Headers */,
 				01EA459711410CB400B54D18 /* MiddleWareFilesIntegrityRule.h in Headers */,
 				01EA459B11410CEF00B54D18 /* WinSCardDllLocksRule.h in Headers */,
 			);
@@ -689,6 +695,8 @@
 				015DDB4D1133D5100041940A /* hardware.h in Headers */,
 				018A22B4113D1FAB0045B5D7 /* md5.h in Headers */,
 				018A22B5113D1FAB0045B5D7 /* MD5Sum.h in Headers */,
+				86CD5CBE11CA0F3400B6358E /* MetaRule.h in Headers */,
+				86CD5CC611CA0F5800B6358E /* MetaRuleVerdict.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,9 +854,7 @@
 			files = (
 				7F3049470F710E49002D5B34 /* diagengine.cpp in Sources */,
 				7F3049480F710E49002D5B34 /* analysis.cpp in Sources */,
-				011C50BA11368B4900D69AF8 /* MetaRuleVerdict.cpp in Sources */,
 				011C50BB11368B4900D69AF8 /* WinSCardDllLocksRule.cpp in Sources */,
-				011C50BD11368B5600D69AF8 /* MetaRule.cpp in Sources */,
 				01FDC75C113BC46A00E8C708 /* HPProtectToolsRule.cpp in Sources */,
 				01EA459911410CD000B54D18 /* MiddleWareFilesIntegrityRule.cpp in Sources */,
 			);
@@ -893,6 +899,8 @@
 				01B7488E11341DE6002A073B /* module.cpp in Sources */,
 				018A22B8113D1FD50045B5D7 /* md5.cpp in Sources */,
 				018A22B9113D1FD50045B5D7 /* MD5Sum.cpp in Sources */,
+				86CD5CC411CA0F5800B6358E /* MetaRule.cpp in Sources */,
+				86CD5CC511CA0F5800B6358E /* MetaRuleVerdict.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
