@@ -435,7 +435,9 @@ rel_end:
 	@echo "ln -fs /usr/local/lib/$(JAVALIB_NAME_x_y_z_dylib) /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
 	@echo "mv $(APPS_DIR)/$(EIDGUI).app $(APPS_DIR)/$(EIDGUI_NAME).app" >> $(POSTFLIGHT)
 	@echo "mv $(APPS_DIR) \"$(APPS_DIR_NAME)\"" >> $(POSTFLIGHT)
+	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der" >> $(POSTFLIGHT)
 	-@test -e tmp && rm temp
+
 	@cat $(POSTFLIGHT) ../../beid-2.6/mac/postflight > temp
 	@mv temp $(POSTFLIGHT)
 	@chmod a+x $(POSTFLIGHT)
@@ -469,6 +471,7 @@ rel_end:
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/lib/beid-pkcs11.bundle/Contents/Info.plist
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/lib/beid-pkcs11.bundle/Contents/PkgInfo
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca.der
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government.der
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government2004.der
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government2005.der
