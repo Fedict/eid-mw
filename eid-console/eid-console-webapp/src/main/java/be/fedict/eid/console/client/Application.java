@@ -36,6 +36,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
@@ -45,6 +46,7 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
 
 public class Application implements EntryPoint {
 
@@ -255,16 +257,17 @@ public class Application implements EntryPoint {
 		this.contentPanel.add(pinVerifyResultPanel);
 		pinVerifyResultPanel.add(new Label("PIN verification was successful."));
 
-		VerticalPanel diagnosticPanel = new VerticalPanel();
+		DockPanel diagnosticPanel = new DockPanel();
 		this.contentPanel.add(diagnosticPanel);
-		diagnosticPanel.add(new HTML("<h1>eID Diagnostic Tests</h1>"));
+		diagnosticPanel.add(new HTML("<h1>eID Diagnostic Tests</h1>"),
+				DockPanel.NORTH);
 		Frame diagnosticFrame = new Frame(GWT.getModuleBaseURL()
 				+ "diagnostic.html");
 		diagnosticFrame.setWidth("100%");
 		diagnosticFrame.setHeight("450px");
-		diagnosticPanel.add(diagnosticFrame);
+		diagnosticPanel.add(diagnosticFrame, DockPanel.SOUTH);
 		this.diagnosticTable = new FlexTable();
-		diagnosticPanel.add(this.diagnosticTable);
+		diagnosticPanel.add(this.diagnosticTable, DockPanel.NORTH);
 
 		Application.application = this;
 	}

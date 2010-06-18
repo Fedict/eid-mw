@@ -26,6 +26,8 @@ import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -49,6 +51,8 @@ public class Main implements Runnable {
 	private final static Log LOG = LogFactory.getLog(Main.class);
 
 	private final MenuItem consoleMenuItem;
+
+	private final MenuItem copyMenuItem;
 
 	private String consoleUrl;
 
@@ -76,6 +80,7 @@ public class Main implements Runnable {
 		URL trayImageUrl = Main.class.getResource("tray.png");
 		Image image = Toolkit.getDefaultToolkit().getImage(trayImageUrl);
 		PopupMenu popup = new PopupMenu();
+
 		this.consoleMenuItem = new MenuItem("eID Console");
 		this.consoleMenuItem.setEnabled(false);
 		this.consoleMenuItem.addActionListener(new ActionListener() {
@@ -84,6 +89,18 @@ public class Main implements Runnable {
 			}
 		});
 		popup.add(this.consoleMenuItem);
+
+		this.copyMenuItem = new MenuItem("Copy eID Console URL");
+		this.copyMenuItem.setEnabled(false);
+		this.copyMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+				StringSelection stringSelection = new StringSelection(Main.this.consoleUrl);
+				clipboard.setContents(stringSelection, null);
+			}
+		});
+		popup.add(this.copyMenuItem);
+
 		MenuItem aboutMenuItem = new MenuItem("About");
 		popup.add(aboutMenuItem);
 		aboutMenuItem.addActionListener(new ActionListener() {
@@ -93,6 +110,7 @@ public class Main implements Runnable {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
+
 		MenuItem exitMenuItem = new MenuItem("Exit");
 		exitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -100,6 +118,7 @@ public class Main implements Runnable {
 			}
 		});
 		popup.add(exitMenuItem);
+
 		TrayIcon trayIcon = new TrayIcon(image, "eID Console", popup);
 		try {
 			systemTray.add(trayIcon);
@@ -112,6 +131,7 @@ public class Main implements Runnable {
 				Main.this.showConsole();
 			}
 		});
+
 		Thread runtimeThread = new Thread(this);
 		runtimeThread.start();
 	}
@@ -179,6 +199,7 @@ public class Main implements Runnable {
 		LOG.debug("URL: " + this.consoleUrl);
 
 		this.consoleMenuItem.setEnabled(true);
+		this.copyMenuItem.setEnabled(true);
 	}
 
 	private int getFreePort() throws Exception {
