@@ -48,7 +48,7 @@ AS_VAR_IF([linux],[true],
 
 	AS_VAR_IF([with_pcsclite],[no],
 	[
-		PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.5],
+		PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.3],
    	 	[
 	        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
 	        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
