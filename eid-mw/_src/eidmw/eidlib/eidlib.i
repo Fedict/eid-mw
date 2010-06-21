@@ -1090,7 +1090,7 @@ return $jnicall;
 		JavaVM *jvm;
 		jenv->GetJavaVM(&jvm);		// recover the JVM pointer
 		
-		SetEventCallback_WrapperCppData* callbackData = new SetEventCallback_WrapperCppData(jvm,(long)arg3);
+		SetEventCallback_WrapperCppData* callbackData = new SetEventCallback_WrapperCppData(jvm,(long int)arg3);
 		WrapperCppDataContainer.push_back(callbackData);
 		
 		//------------------------------------------------------		
@@ -1272,14 +1272,14 @@ public:
 	, m_handle(-1)
 	{
 	}
-	SetEventCallback_WrapperCppData(JavaVM *jvm, int index)
+	SetEventCallback_WrapperCppData(JavaVM *jvm, long int index)
 	: m_jvm(jvm)
 	, m_index(index)
 	, m_handle(-1)
 	{
 	}
 	JavaVM*		  m_jvm;		// JVM pointer storage, to be used at callback time to call the JAVA side
-	int			  m_index;		// index of the callback at the JAVA side
+	long int	  m_index;		// index of the callback at the JAVA side
 	unsigned long m_handle;		// handle the SetEventCallback() will generate
 };
 
