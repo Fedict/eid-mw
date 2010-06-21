@@ -75,7 +75,7 @@ AS_VAR_IF([linux],[true],
 
 	AS_VAR_IF([with_openssl],[no],
 	[
-    	PKG_CHECK_MODULES([OPENSSL], [openssl >= 1.0.0],
+    	PKG_CHECK_MODULES([OPENSSL], [openssl >= 0.9.8],
     	[
         	CPPFLAGS="$OPENSSL_CFLAGS $CPPFLAGS"
         	LDFLAGS="$OPENSSL_LIBS $CPPFLAGS"
