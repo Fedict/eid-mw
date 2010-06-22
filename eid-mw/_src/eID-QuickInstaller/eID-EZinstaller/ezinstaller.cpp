@@ -241,7 +241,8 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 
 			if(!QuietTry)
 			{
-				if(scl.isMiddlewareLocked())
+			// Let the cleanuptool handle this
+/*				if(scl.isMiddlewareLocked())
 				{
 					QString _title = msgbox_closeApplicationsTitle;
 					QString _body = msgbox_closeApplicationsBody;
@@ -261,9 +262,9 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 					bFirst = false;
 				}
 				else
-				{
+				{*/
 					break;
-				}
+//				}
 			}
 			else
 			{
