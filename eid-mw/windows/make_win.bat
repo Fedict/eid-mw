@@ -199,10 +199,10 @@
 
 :build
 @echo [INFO] Building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln"
-@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|Win32"
 @"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|x64"
-@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|Win32"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|Win32"
 @"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|x64"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|Win32"
 
 
 @echo [INFO] Done...
