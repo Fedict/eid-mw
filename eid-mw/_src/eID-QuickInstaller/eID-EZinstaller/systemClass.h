@@ -67,6 +67,7 @@ public:
 	bool isMiddlewareLocked(void) {return _SD.isMiddlewareLocked();};
 	bool IsUserAdmin(void) {return _SD.IsUserAdmin();};
 #endif
+	bool is64bitOS();
 
 	// about pcsc
 	string pcscContextIsAvailable(string inputXml); 

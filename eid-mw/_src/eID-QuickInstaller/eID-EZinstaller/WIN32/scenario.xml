@@ -130,12 +130,12 @@
 				<RequiredValue RequiredValueType="STRING"/>
 			</CheckProperty>
 
-      <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3105" CheckPropertyName="EXTRACTMINIDRIVER">
+      <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3105" CheckPropertyName="EXTRACTBEIDMW64">
         <CheckOnOS>
-          <OperatingSystem>WIN7</OperatingSystem>
+          <OperatingSystem>WINALL</OperatingSystem>
         </CheckOnOS>
-        <DescriptionNl>Extract minidriver naar schijf.</DescriptionNl>
-        <DescriptionFr>Extraire le logiciel Belgium eID minidriver sur disque dur</DescriptionFr>
+        <DescriptionNl>Extract middleware 64 naar schijf.</DescriptionNl>
+        <DescriptionFr>Extraire le logiciel Belgium eID middleware 64 sur disque dur</DescriptionFr>
         <ActionInfoNl/>
         <ActionInfoFr/>
         <InputParams>
@@ -422,8 +422,8 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5.2 Basic (Quick-installer-versie) geïnstalleerd ?</DescriptionNl>
-				<DescriptionFr>Middleware version 3.5.2 Basic (version Quick-Installer) installé ?</DescriptionFr>
+				<DescriptionNl>Is Middleware versie 3.5.x Basic (Quick-installer-versie) geïnstalleerd ?</DescriptionNl>
+				<DescriptionFr>Middleware version 3.5.x Basic (version Quick-Installer) installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
 				<InputParams>
@@ -438,8 +438,8 @@
 				<CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Is Middleware versie 3.5.2 Pro geïnstalleerd ?</DescriptionNl>
-				<DescriptionFr>Middleware version 3.5.2 Pro installé ?</DescriptionFr>
+				<DescriptionNl>Is Middleware versie 3.5.x Pro geïnstalleerd ?</DescriptionNl>
+				<DescriptionFr>Middleware version 3.5.x Pro installé ?</DescriptionFr>
 				<ActionInfoNl/>
 				<ActionInfoFr/>
 				<InputParams>
@@ -779,8 +779,8 @@
 			<CheckOnOS>
 				<OperatingSystem>WINALL</OperatingSystem>
 			</CheckOnOS>
-			<DescriptionNl>Installatie van Middleware versie 3.5.3 (Quick-Install)</DescriptionNl>
-			<DescriptionFr>Installaton du Middleware version 3.5.3 (Quick-Install)</DescriptionFr>
+			<DescriptionNl>Installatie van Middleware versie 3.5.4 (Quick-Install)</DescriptionNl>
+			<DescriptionFr>Installaton du Middleware version 3.5.4 (Quick-Install)</DescriptionFr>
 			<ActionInfoNl/>
 			<ActionInfoFr/>
   		<InputParams>
@@ -789,31 +789,33 @@
             <CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Installatie van Middleware 3.5.3 (Quick-Install)</DescriptionNl>
-				<DescriptionFr>Démarrer l'installation MSI Middleware 3.5.3 (Quick-Install)</DescriptionFr>
+				<DescriptionNl>Installatie van Middleware 3.5.4 32bit(Quick-Install)</DescriptionNl>
+				<DescriptionFr>Démarrer l'installation MSI Middleware 3.5.4 32bit(Quick-Install)</DescriptionFr>
 				<ActionInfoNl>Probeer opnieuw</ActionInfoNl>
 				<ActionInfoFr>Essayer de nouveau</ActionInfoFr>
 				<InputParams>
            <commandLine>msiexec /i %osTempFolder%BeidMW.msi /quiet /norestart  CLEANUP_NO=1 %msi_language%</commandLine>
            <!--<commandLine>Notepad.exe</commandLine>-->
           <waitForTermination>YES</waitForTermination>
+          <bitness>ONLY32</bitness>
         </InputParams>
  				<RequiredValue RequiredValueType="STRING" >SUCCESS</RequiredValue>
 			</CheckProperty>
 
       <CheckProperty SeverityWhenFailure="FATAL_ERROR" Accuracy="EXACTLY" TestID="2303" CheckPropertyName="STARTPROCESS">
         <CheckOnOS>
-          <OperatingSystem>WIN7</OperatingSystem>
+          <OperatingSystem>WINALL</OperatingSystem>
         </CheckOnOS>
-        <DescriptionNl>Installatie van MSI BeidMinidriver (Quick-Install)</DescriptionNl>
-        <DescriptionFr>Démarrer l'installation MSI BeidMinidrivers (Quick-Install)</DescriptionFr>
+        <DescriptionNl>Installatie van Middleware 3.5.4 64bit (Quick-Install)</DescriptionNl>
+        <DescriptionFr>Démarrer l'installation MSI Middleware 3.5.4 64bit(Quick-Install)</DescriptionFr>
         <ActionInfoNl>Probeer opnieuw</ActionInfoNl>
         <ActionInfoFr>Essayer de nouveau</ActionInfoFr>
         <InputParams>
-          <commandLine>msiexec /i %osTempFolder%BeidMinidriver.msi /norestart  CLEANUP_NO=1</commandLine>
+          <commandLine>msiexec /i %osTempFolder%BeidMW64.msi /quiet /norestart  CLEANUP_NO=1 %msi_language%</commandLine>
           <!--<commandLine>Notepad.exe</commandLine>-->
           <waitForTermination>YES</waitForTermination>
-        </InputParams>
+          <bitness>ONLY64</bitness>
+      </InputParams>
         <RequiredValue RequiredValueType="STRING" >SUCCESS</RequiredValue>
       </CheckProperty>
       

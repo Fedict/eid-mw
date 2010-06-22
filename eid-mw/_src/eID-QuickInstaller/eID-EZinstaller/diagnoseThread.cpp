@@ -20,10 +20,6 @@
 #include "diagnoseThread.h"
 #include <windows.h>
 
-#ifdef WIN32
-typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
-#endif
-
 #define LOGSTR(msg) 
 #define LOGINT(format, i) 
 
@@ -560,7 +556,7 @@ QDomNode diagnoseThread::InvestigateElement( const QString ElementName , const Q
         {returnString = scl.isSoftwareInstalled(paramsAsString); }
 #ifdef WIN32
     else if (ElementName == QString("WAITFORUNINSTALL"))
-    {returnString = scl.WaitForUninstall(paramsAsString); }
+		{returnString = scl.WaitForUninstall(paramsAsString); }
 #endif
     else if (ElementName == QString("ENUMERATE_INSTALLED_SOFTWARE")) 
         {returnString = scl.getSoftwareList(paramsAsString); }
@@ -616,10 +612,12 @@ LOGSTR(paramsAsString.c_str())
         {extractISSFiles(QString(paramsAsString.c_str())); }
     else if (ElementName == QString("EXTRACTMIDDLEWARE")) 
         {extractMiddleWare(); }
-	else if (ElementName == QString("EXTRACTMINIDRIVER")) 
-        {extractMiniDriver(); }
 
 #ifdef WIN32
+	else if (ElementName == QString("EXTRACTBEIDMW64")) 
+		{
+		if(scl.is64bitOS())
+			extractBeidMW64(); }
     else if (ElementName == QString("INSTALLDEVICE")) 
         {string myOS = ezw.GetExtraInfoItem(scl.getSystemInfo(""),"osProductName");
 		returnString = scl.installDevice(paramsAsString,myOS);
@@ -835,44 +833,10 @@ void diagnoseThread::extractMiddleWare() {
 
 }
 
-void diagnoseThread::extractMiniDriver() {
-    
-	LPFN_ISWOW64PROCESS fnIsWow64Process;
-    BOOL bIsWow64 = FALSE;
-    QString result;
-    QString FileName(substituteResVars("%osTempFolder%BeidMinidriver.msi").c_str());
+void diagnoseThread::extractBeidMW64() {
 
-#ifdef WIN64
-	appendString("64 bit application",QFont::Normal);
-	WinRes::SaveBinaryResource("Msi",IDR_MSI_M_64,FileName.toStdString());
-
-#elif WIN32
-    fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(
-        GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
-
-    if (NULL != fnIsWow64Process)
-    {
-        if (!fnIsWow64Process(GetCurrentProcess(),&bIsWow64))
-        {
-			appendString("Could not determine architecture",QFont::Normal);
-        }
-		if(bIsWow64)
-		{
-			appendString("32 bit application running on 64 bit Windows",QFont::Normal);
-			WinRes::SaveBinaryResource("Msi",IDR_MSI_M_64,FileName.toStdString());
-		}
-		else
-		{
-			appendString("32 bit application running on 32 bit Windows",QFont::Normal);
-			WinRes::SaveBinaryResource("Msi",IDR_MSI_M_86,FileName.toStdString());
-		}
-    }
-	else
-	{
-		appendString("32 bit application running on 32 bit Windows",QFont::Normal);
-		WinRes::SaveBinaryResource("Msi",IDR_MSI_M_86,FileName.toStdString());
-	}  
-#endif
+	QString FileName(substituteResVars("%osTempFolder%BeidMW64.msi").c_str());
+	WinRes::SaveBinaryResource("Msi",IDR_MSI2,FileName.toStdString());
 }
 
 void diagnoseThread::extractISSFiles(QString param) {

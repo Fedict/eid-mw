@@ -28,6 +28,8 @@
 #include <tchar.h>
 #include <stdio.h>
 
+typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+
 BOOL IsDots(const TCHAR* str) 
 {
 	if(_tcscmp(str,_T(".")) && _tcscmp(str,_T(".."))) return FALSE;
@@ -556,73 +558,81 @@ LOGSTR(inputXml.c_str())
         ezw.xml_in.setContent(QString(inputXml.c_str()));	
         ezw.xml_out.setContent(QString("<Result></Result>"));
 
-        QDomNode Params = ezw.xml_in.documentElement().toElement();
-        string commandLine = ezw.GetNamedItem(Params,"commandLine");
-        string waitForTermination = ezw.GetNamedItem(Params,"waitForTermination");
+		QDomNode Params = ezw.xml_in.documentElement().toElement();
+		string commandLine = ezw.GetNamedItem(Params,"commandLine");
+		string waitForTermination = ezw.GetNamedItem(Params,"waitForTermination");
+		string bitness = ezw.GetNamedItem(Params,"bitness");
 
-        int waitTime = 0;
-        if (waitForTermination == "YES") {
-            waitTime = 10 * 60;          // 600 seconden = 10 minuten
-        } else {
-            try {
-                int n = atoi(waitForTermination.c_str());
-                if (n > 0)
-                    waitTime = n;
-            } catch (...) {
-                ;
-            }
-        }
-
-        DWORD exitCode = 0;
-	
-#ifdef WIN32
-		if (this->_SD.startProcess(commandLine, exitCode, waitTime)) 
-		{
-			if (exitCode == STILL_ACTIVE) 
-			{
-				ExtraInfo.appendChild(ezw.CreateInfoTextNode("ExitCode", "Program still running... Can't wait anymore..."));
-				returnValue = "UNKNOWN";
-			} 
-			else if (exitCode != 0) 
-			{
-				ExtraInfo.appendChild(ezw.CreateInfoTextNode("ExitCode","Program ended with code " + ezw.inttostr(dwExitCode)));
-				returnValue = "FAILURE";
-LOGINT("FAILURE error=%ld",exitCode)
-			} else {
-				if (waitTime > 0)
-					returnValue = "SUCCESS";
-				else 
-					returnValue = "STARTED";
-			}
+		if ( ((is64bitOS()== FALSE) && (bitness == "ONLY64")) ||
+			 ((is64bitOS()== TRUE) && (bitness == "ONLY32"))	) {
+			//We don't need to install this, so return success
+			returnValue = "SUCCESS";
 		}
+		else
+		{ 
+			int waitTime = 0;
+			if (waitForTermination == "YES") {
+				waitTime = 10 * 60;          // 600 seconden = 10 minuten
+			} else {
+				try {
+					int n = atoi(waitForTermination.c_str());
+					if (n > 0)
+						waitTime = n;
+				} catch (...) {
+					;
+				}
+			}
+
+			DWORD exitCode = 0;
+
+#ifdef WIN32
+			if (this->_SD.startProcess(commandLine, exitCode, waitTime)) 
+			{
+				if (exitCode == STILL_ACTIVE) 
+				{
+					ExtraInfo.appendChild(ezw.CreateInfoTextNode("ExitCode", "Program still running... Can't wait anymore..."));
+					returnValue = "UNKNOWN";
+				} 
+				else if (exitCode != 0) 
+				{
+					ExtraInfo.appendChild(ezw.CreateInfoTextNode("ExitCode","Program ended with code " + ezw.inttostr(dwExitCode)));
+					returnValue = "FAILURE";
+					LOGINT("FAILURE error=%ld",exitCode)
+				} else {
+					if (waitTime > 0)
+						returnValue = "SUCCESS";
+					else 
+						returnValue = "STARTED";
+				}
+			}
 #else
-		//-----------------------
-		// get the absolute path of where the application resides.
-		// Use this to determine the path of the shell scripts for the installation
-		//-----------------------
-		QString currdirpath = QCoreApplication::applicationDirPath();
-		std::string newCommandLine = "";
-		newCommandLine += currdirpath.toStdString();
-		newCommandLine += "/";
-		newCommandLine += commandLine;
-		commandLine = newCommandLine;
-		LOGSTR(commandLine.c_str())
-		if (this->_SD.doAsAdmin(commandLine, (waitForTermination == "YES"))) 
-		{
-			if (waitForTermination == "YES")
-				returnValue = "SUCCESS";
-			else 
-				returnValue = "STARTED";
-		} 
+			//-----------------------
+			// get the absolute path of where the application resides.
+			// Use this to determine the path of the shell scripts for the installation
+			//-----------------------
+			QString currdirpath = QCoreApplication::applicationDirPath();
+			std::string newCommandLine = "";
+			newCommandLine += currdirpath.toStdString();
+			newCommandLine += "/";
+			newCommandLine += commandLine;
+			commandLine = newCommandLine;
+			LOGSTR(commandLine.c_str())
+				if (this->_SD.doAsAdmin(commandLine, (waitForTermination == "YES"))) 
+				{
+					if (waitForTermination == "YES")
+						returnValue = "SUCCESS";
+					else 
+						returnValue = "STARTED";
+				} 
 #endif
-		else 
-		{
-            errorText = "StartProcess failure code: " + ezw.inttostr(exitCode);
-            returnValue = "FAILURE";
-LOGINT("FAILURE error=%ld",exitCode)
-        }
+				else 
+				{
+					errorText = "StartProcess failure code: " + ezw.inttostr(exitCode);
+					returnValue = "FAILURE";
+					LOGINT("FAILURE error=%ld",exitCode)
+				}
 
-
+		}
     }
     catch (...) {
 
@@ -1628,4 +1638,29 @@ string systemClass::AuthSign(string inputXml){
     return ezw.xml_out.toString().toStdString();
 };
 
+bool systemClass::is64bitOS() {
+	LPFN_ISWOW64PROCESS fnIsWow64Process;
+    BOOL bIsWow64 = FALSE;
+	bool bIsOS64 = FALSE;
+// not used by mac as universal libs are used there
+#ifdef WIN64
+	bIsOS64 = TRUE;
+#elif WIN32
+    fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(
+        GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
 
+    if (NULL != fnIsWow64Process)
+    {
+        fnIsWow64Process(GetCurrentProcess(),&bIsWow64);
+		if(bIsWow64)
+		{
+			//"32 bit application running on 64 bit Windows"
+			bIsOS64 = TRUE;
+		}
+		//else "32 bit application running on 32 bit Windows"
+    }
+	//else "32 bit application running on 32 bit Windows"
+  
+#endif
+	return bIsOS64;
+};
