@@ -226,8 +226,7 @@ DlgPinUsage CBeidCard::PinUsage2Dlg(const tPin & Pin, const tPrivKey *pKey)
 	return usage;
 }
 
-void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin,
-        std::string & csPin1, std::string & csPin2,	const tPrivKey *pKey)
+void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin, std::string & csPin1, std::string & csPin2,	const tPrivKey *pKey)
 {
 
 	// Convert params
@@ -240,18 +239,11 @@ void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin,
 	// The actual call
 	DlgRet ret;
 	std::wstring wideLabel = utilStringWiden(Pin.csLabel);
-	if (operation != PIN_OP_CHANGE)
-	{
-		ret = DlgAskPin(pinOperation,
-			usage, wideLabel.c_str(), pinInfo, wsPin1,PIN_MAX_LENGTH+1);
-	}
+
+	if(operation==PIN_OP_CHANGE)
+		ret=DlgAskPins(pinOperation,usage,wideLabel.c_str(),pinInfo,wsPin1,PIN_MAX_LENGTH+1,pinInfo,wsPin2,PIN_MAX_LENGTH+1);
 	else
-	{
-		ret = DlgAskPins(pinOperation,
-			usage, wideLabel.c_str(),
-			pinInfo, wsPin1,PIN_MAX_LENGTH+1, 
-			pinInfo, wsPin2,PIN_MAX_LENGTH+1);
-	}
+		ret=DlgAskPin(pinOperation,usage,wideLabel.c_str(),pinInfo,wsPin1,PIN_MAX_LENGTH+1);
 
 	// Convert back
 	if (ret == DLG_OK)
@@ -266,7 +258,6 @@ void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin,
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 	else
 		throw CMWEXCEPTION(EIDMW_ERR_UNKNOWN);
-
 }
 
 bool CBeidCard::PinCmd(tPinOperation operation, const tPin & Pin,

@@ -14,6 +14,9 @@ AC_LIBTOOL_WIN32_DLL
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_LIBTOOL
+#AC_PROG_INTLTOOL([0.41])
+#AM_GLIB_GNU_GETTEXT
+PKG_PROG_PKG_CONFIG
 
 ############################################################################
 # Test for platform and set corresponding AM_CONDITIONALs for Makefile.am  #
@@ -25,7 +28,7 @@ win32="no"
 qt="no"
 
 AS_CASE([$host],
-  [*-*-linux*],[linux=true qt=true],
+  [*-*-linux*],[linux=true gtk=true],
   [*-*-darwin*],[osx=true qt=true],
   [*-mingw*|*-winnt*],[win32=true])
 
@@ -33,14 +36,14 @@ AM_CONDITIONAL(LINUX,test x$linux = xtrue)
 AM_CONDITIONAL(OSX,test x$osx = xtrue)
 AM_CONDITIONAL(WIN32,test x$win32 = xtrue)
 AM_CONDITIONAL(QT,test x$qt = xtrue)
-
-AS_VAR_IF([qt],[true],[PKG_PROG_PKG_CONFIG])
+AM_CONDITIONAL(GTK,test x$gtk = xtrue)
 
 ###########################################################################
 ####### read user-specific dependecy requests from --with directives ######
 ###########################################################################
 
-AS_VAR_IF([linux],[true],
+# if qt dialogs, enable checking for Qt
+AS_VAR_IF([qt],[true],
 [
 	AC_MSG_CHECKING([user-specified Qt installation])
 	AC_ARG_WITH([pcsclite],
@@ -65,27 +68,42 @@ AS_VAR_IF([linux],[true],
 	    AC_MSG_WARN([--with-qt specified on MS Windows host, ignoring])
 	  ])
 	])
+])
 
-	AC_MSG_CHECKING([user-specified OpenSSL installation])
-	AC_ARG_WITH([openssl],
-	  AC_HELP_STRING([--with-openssl=DIR],[specific OpenSSL install location]),
+# if gtk dialogs, enable checking for GTK2
+AS_VAR_IF([gtk],[true],
+[
+	AC_MSG_CHECKING([user-specified GTK installation])
+	AC_ARG_WITH([gtk],
+	  AC_HELP_STRING([--with-gtk=DIR],[specific GTK install location]),
 	  [],
-	  [with_openssl=no])
-	AC_MSG_RESULT([$with_openssl])
+	  [with_gtk=no])
+	AC_MSG_RESULT([$with_gtk])
 
-	AS_VAR_IF([with_openssl],[no],
+	AS_VAR_IF([with_gtk],[no],
 	[
-    	PKG_CHECK_MODULES([OPENSSL], [openssl >= 0.9.8],
-    	[
-        	CPPFLAGS="$OPENSSL_CFLAGS $CPPFLAGS"
-        	LDFLAGS="$OPENSSL_LIBS $CPPFLAGS"
-    	])
+    	PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0],
+		[
+			CPPFLAGS="$GTK_CFLAGS $CPPFLAGS"
+            LDFLAGS="$GTK_LIBS $CPPFLAGS"
+ 		],
+		[
+        	AC_MSG_RESULT(no)
+        	AC_MSG_ERROR([You must have GTK+ 2.10.0 or newer development headers installed.])
+		])
 	],
 	[
-    	CPPFLAGS="-I$with_openssl/include $CPPFLAGS"
-    	LDFLAGS="-L$with_openssl/lib $LDFLAGS"
+		AS_VAR_IF([linux],[true],
+		[
+	    	CPPFLAGS="-I$with_gtk/include $CPPFLAGS"
+	    	LDFLAGS="-L$with_gtk/lib $LDFLAGS"
+	  	],
+		[
+	    	AC_MSG_WARN([--with-gtk specified on non-GNU/Linux host, ignoring])
+	  	])
 	])
 ])
+
 
 ##################################################################
 ####### check for Qt build utilities, libraries and headers ######
@@ -99,22 +117,14 @@ AS_VAR_IF([qt],[true],
 	AS_VAR_IF([RCC],[missing],AC_MSG_ERROR([Qt4 Resource Compiler (rcc) is required.]),AC_SUBST(RCC))
 	AS_VAR_IF([UIC],[missing],AC_MSG_ERROR([Qt4 User Interface Compiler (uic or uic-qt4) is required.]),AC_SUBST(UIC))
 	AS_VAR_IF([MOC],[missing],AC_MSG_ERROR([Qt4 Meta Object Compiler (moc or moc-qt4) is required.]),AC_SUBST(MOC))
-
-	AS_VAR_IF([linux],[true],
-	[
-		AC_CHECK_LIB(	 [QtCore],[_ZNK4QUrl4hostEv],[], AC_MSG_ERROR([Qt4 Core Library (libQtCore) is required.]))
-		AC_CHECK_LIB(	 [QtGui], [_ZN7QPixmap12defaultDepthEv],[],AC_MSG_ERROR([Qt4 Gui Library (libQtGui) is required.]))
-#		AC_CHECK_HEADER([QtCore],[],AC_MSG_ERROR([Qt4 Core Headers (QtCore etc.) are required.]))
-#		AC_CHECK_HEADER([QtGui], [],AC_MSG_ERROR([Qt4 Gui Headers (QtGui etc.) are required.]))
-	])
 ])
 
 ########### libraries ##################
-AS_VAR_IF([win32],[no],  [AC_CHECK_LIB([ssl],[SSL_get_version],[],AC_MSG_ERROR([OpenSSL Library is required.]))])
+AS_VAR_IF([qt],[true],  [AC_CHECK_LIB([ssl],[SSL_get_version],[],AC_MSG_ERROR([OpenSSL Library is required.]))])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h])
-AS_VAR_IF([win32],[no],[AC_CHECK_HEADER([openssl/opensslconf.h],[],AC_MSG_ERROR([OpenSSL headers are required.]))])
+AS_VAR_IF([qt],[true],[AC_CHECK_HEADER([openssl/opensslconf.h],[],AC_MSG_ERROR([OpenSSL headers are required.]))])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
