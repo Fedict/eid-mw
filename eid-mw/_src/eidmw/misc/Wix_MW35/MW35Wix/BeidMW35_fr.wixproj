@@ -50,6 +50,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Strings-fr.wxl" />
   </ItemGroup>
+  <ItemGroup>
+    <WixLibrary Include="difxapp_x86">
+      <HintPath>C:\Program Files\Windows Installer XML v3\bin\difxapp_x86.wixlib</HintPath>
+    </WixLibrary>
+  </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
