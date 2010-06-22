@@ -322,11 +322,7 @@
         <File Id="Belgian_eID_PKCS11_java.cfg" Name="Belgian_eID_PKCS11_java.cfg" KeyPath="yes" Source="..\..\..\misc\setup_win\Belgian_eID_PKCS11_java.cfg" />
       </Component>
 -->
-      <Component Id="beidmdrvsystem32" Guid="a8259480-e408-11de-8a39-0800200c9a66" Permanent="no">
-        <File Id="system32_beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.dll" KeyPath="yes" DiskId="1" />
-      </Component>
-      
-      
+
     </DirectoryRef>
 
     <DirectoryRef Id="SystemFolder">
@@ -337,14 +333,18 @@
         <File Id="beid35common.dll" Name="beid35common.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35common.dll" />
         <File Id="beid35DlgsWin32.dll" Name="beid35DlgsWin32.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35DlgsWin32.dll" />
       </Component>
-      
+
       <Component Id="Runtime35ThirdPartyOpenSSL" Guid="{A98B4895-7CCF-4A91-ACE2-433B8D4363F9}" SharedDllRefCount="yes">
         <File Id="libeay32_0_9_8g.dll" Name="libeay32_0_9_8g.dll" KeyPath="yes" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\libeay32_0_9_8g.dll" />
         <File Id="ssleay32_0_9_8g.dll" Name="ssleay32_0_9_8g.dll" KeyPath="no" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\ssleay32_0_9_8g.dll" />
       </Component>
-      
+
       <Component Id="Runtime35ThirdPartyXerces" Guid="{B1EBF9C5-1A6F-44d4-AA80-DE55AAF052FE}" SharedDllRefCount="yes">
         <File Id="xercesc_3_1.dll" Name="xerces-c_3_1.dll" KeyPath="yes" Source="$(var.BEID_DIR_XERCES_310)\bin\xerces-c_3_1.dll" />
+      </Component>
+
+      <Component Id="beidmdrvsystem32" Guid="a8259480-e408-11de-8a39-0800200c9a66" Permanent="no">
+        <File Id="system32_beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.dll" KeyPath="yes" DiskId="1" />
       </Component>
 
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes">
