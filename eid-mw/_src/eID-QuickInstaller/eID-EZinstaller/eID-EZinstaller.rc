@@ -73,8 +73,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 // MSI
 //
 
-IDR_MSI_M_86            MSI                     "BeidMinidriver-x86.msi"
-IDR_MSI_M_64            MSI                     "BeidMinidriver-x64.msi"
+IDR_MSI2                MSI                     "BeidMW35-64.msi"
 #endif    // English (U.K.) resources
 /////////////////////////////////////////////////////////////////////////////
 
