@@ -6,6 +6,7 @@
 	<inherits name='com.google.gwt.http.HTTP' />
 	<inherits name='com.google.gwt.json.JSON' />
 	<inherits name="com.google.gwt.user.theme.standard.Standard" />
+	<inherits name='com.google.gwt.maps.GoogleMaps' />
 	<source path="client" />
 	<entry-point class="be.fedict.eid.console.client.Application" />
 	<stylesheet src="Application.css" />

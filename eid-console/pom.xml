@@ -56,6 +56,11 @@
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
+				<groupId>com.google.gwt.google-apis</groupId>
+				<artifactId>gwt-maps</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
 				<version>1.1.1</version>

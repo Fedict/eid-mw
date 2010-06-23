@@ -22,6 +22,8 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -30,11 +32,20 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.maps.client.InfoWindowContent;
+import com.google.gwt.maps.client.MapWidget;
+import com.google.gwt.maps.client.Maps;
+import com.google.gwt.maps.client.control.LargeMapControl;
+import com.google.gwt.maps.client.geocode.Geocoder;
+import com.google.gwt.maps.client.geocode.LatLngCallback;
+import com.google.gwt.maps.client.geom.LatLng;
+import com.google.gwt.maps.client.overlay.Marker;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DeckPanel;
+import com.google.gwt.user.client.ui.DecoratedTabPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -44,9 +55,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
 
 public class Application implements EntryPoint {
 
@@ -61,6 +70,7 @@ public class Application implements EntryPoint {
 	private FlexTable addressTable;
 	private FlexTable cardTable;
 	private FlexTable diagnosticTable;
+	private MapWidget map;
 
 	private static Application application;
 
@@ -216,7 +226,7 @@ public class Application implements EntryPoint {
 		this.contentFrame.sinkEvents(Event.ONLOAD);
 		this.contentPanel.add(this.contentFrame);
 
-		TabPanel identificationPanel = new TabPanel();
+		DecoratedTabPanel identificationPanel = new DecoratedTabPanel();
 		identificationPanel.setAnimationEnabled(true);
 		this.contentPanel.add(identificationPanel);
 
@@ -253,6 +263,28 @@ public class Application implements EntryPoint {
 
 		identificationPanel.selectTab(0);
 
+		final VerticalPanel dock = new VerticalPanel();
+		identificationPanel.add(dock, "Location");
+		dock.setHeight("500px");
+		dock.setWidth("500px");
+		Maps.loadMapsApi("", "2", false, new Runnable() {
+			public void run() {
+				Application.this.map = new MapWidget();
+				Application.this.map.setSize("500px", "500px");
+				Application.this.map.addControl(new LargeMapControl());
+				dock.add(Application.this.map);
+			}
+		});
+		identificationPanel
+				.addSelectionHandler(new SelectionHandler<Integer>() {
+
+					public void onSelection(SelectionEvent<Integer> tabIdx) {
+						if (3 == tabIdx.getSelectedItem()) {
+							Application.this.map.checkResizeAndCenter();
+						}
+					}
+				});
+
 		VerticalPanel pinVerifyResultPanel = new VerticalPanel();
 		this.contentPanel.add(pinVerifyResultPanel);
 		pinVerifyResultPanel.add(new Label("PIN verification was successful."));
@@ -288,10 +320,10 @@ public class Application implements EntryPoint {
 			JSONObject jsonObject = jsonValue.isObject();
 			JSONValue identityJSONValue = jsonObject.get("identity");
 			JSONObject identityJSONObject = identityJSONValue.isObject();
-			String name = identityJSONObject.get("name").isString()
+			final String name = identityJSONObject.get("name").isString()
 					.stringValue();
-			String firstName = identityJSONObject.get("firstName").isString()
-					.stringValue();
+			final String firstName = identityJSONObject.get("firstName")
+					.isString().stringValue();
 			String gender = identityJSONObject.get("gender").isString()
 					.stringValue();
 			String dateOfBirth = identityJSONObject.get("dateOfBirth")
@@ -343,6 +375,29 @@ public class Application implements EntryPoint {
 					cardValidityDateBegin);
 			Application.application.cardTable
 					.setText(4, 1, cardValidityDateEnd);
+
+			Geocoder geocoder = new Geocoder();
+			final String address = streetAndNumber + ", " + zip + " "
+					+ municipality;
+			geocoder.getLatLng(address, new LatLngCallback() {
+
+				public void onSuccess(LatLng point) {
+					MapWidget map = Application.application.map;
+					map.clearOverlays();
+					Marker marker = new Marker(point);
+					map.addOverlay(marker);
+					map.setCenter(point, 16);
+					map.getInfoWindow().open(
+							marker,
+							new InfoWindowContent(new HTML(firstName + " "
+									+ name + "<br>" + address)));
+				}
+
+				public void onFailure() {
+					MapWidget map = Application.application.map;
+					map.clearOverlays();
+				}
+			});
 		}
 	}
 
