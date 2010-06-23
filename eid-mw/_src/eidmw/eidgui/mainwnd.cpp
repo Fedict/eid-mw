@@ -39,6 +39,8 @@
 #include "eidlibException.h"
 #include "picturepopup.h"
 #ifdef WIN32
+#include <windows.h>
+#include <stdio.h>
 #include "verinfo.h"
 #else
 #include "beidversions.h"
@@ -1347,7 +1349,8 @@ bool MainWnd::StoreUserCerts (BEID_EIDCard& Card, PCCERT_CONTEXT pCertContext, u
 				// If the certificates are identical and function 
 				// succeeds, the return value is nonzero, or TRUE.
 				// ----------------------------------------------------
-				if(NULL == CertCompareCertificate(X509_ASN_ENCODING,pCertContext->pCertInfo,pDesiredCert->pCertInfo))
+				if(NULL == CertCompareCertificate(X509_ASN_ENCODING,pCertContext->pCertInfo,pDesiredCert->pCertInfo) ||
+					!ProviderNameCorrect(pDesiredCert) )
 				{
 					// ----------------------------------------------------
 					// certificates are not identical, but have the same 
@@ -1399,26 +1402,42 @@ bool MainWnd::StoreUserCerts (BEID_EIDCard& Card, PCCERT_CONTEXT pCertContext, u
 		
 		QString				  strContainerName;
 		
-		if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
+		if (UseMinidriver())
 		{
-			strContainerName = "Signature";
+			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
+			{
+				strContainerName = "NR_";
+			}
+			else
+			{
+				strContainerName = "DS_";
+			}
+			strContainerName += pSerialKey;
+			pCryptKeyProvInfo->pwszProvName			= L"Microsoft Base Smart Card Crypto Provider";
+			pCryptKeyProvInfo->dwKeySpec			= AT_SIGNATURE;
 		}
 		else
 		{
-			strContainerName = "Authentication";
+			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
+			{
+				strContainerName = "Signature";
+			}
+			else
+			{
+				strContainerName = "Authentication";
+			}
+
+			strContainerName += "(";
+			strContainerName += pSerialKey;
+			strContainerName += ")";
+			pCryptKeyProvInfo->pwszProvName		= L"Belgium Identity Card CSP";
+			pCryptKeyProvInfo->dwKeySpec		= AT_KEYEXCHANGE;
 		}
-
-		strContainerName += "(";
-		strContainerName += pSerialKey;
-		strContainerName += ")";
-
 		pCryptKeyProvInfo->pwszContainerName	= (LPWSTR)strContainerName.utf16();
-		pCryptKeyProvInfo->pwszProvName			= L"Belgium Identity Card CSP";
 		pCryptKeyProvInfo->dwProvType			= PROV_RSA_FULL;
 		pCryptKeyProvInfo->dwFlags				= 0;
 		pCryptKeyProvInfo->cProvParam			= 0;
 		pCryptKeyProvInfo->rgProvParam			= NULL;
-		pCryptKeyProvInfo->dwKeySpec			= AT_KEYEXCHANGE;
 
 		// Set the property.
 		if (CertSetCertificateContextProperty(
@@ -5391,7 +5410,7 @@ void MainWnd::on_actionE_xit_triggered(void)
 void MainWnd::setEventCallbacks( void )
 {
 	//----------------------------------------
-	// for all the reader, create a callback such we can now
+	// for all the reader, create a callback such we can know
 	// afterwards, which reader called us
 	//----------------------------------------
 	try
@@ -5434,4 +5453,56 @@ void MainWnd::ShowBEIDError( unsigned long ErrCode, QString const& msg )
 	strMessage += ": ";
 	strMessage += msg;
 	QMessageBox::warning( this, strCaption,  strMessage, QMessageBox::Ok );
+}
+
+//**************************************************
+// Use Minidriver if OS is Vista or later
+//**************************************************
+BOOL MainWnd::UseMinidriver( void )
+{
+    OSVERSIONINFO osvi;
+    BOOL bIsWindowsVistaorLater;
+
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+
+    GetVersionEx(&osvi);
+
+    bIsWindowsVistaorLater = (osvi.dwMajorVersion >= 6);
+
+	return bIsWindowsVistaorLater;
+}
+
+//**************************************************
+// Checks of older registered certificates are not
+// still bound to the CSP when the minidriver is used
+//**************************************************
+bool MainWnd::ProviderNameCorrect (PCCERT_CONTEXT pCertContext )
+{
+	unsigned long dwPropId= CERT_KEY_PROV_INFO_PROP_ID; 
+	DWORD cbData = 0;
+	CRYPT_KEY_PROV_INFO * pCryptKeyProvInfo;
+
+	if (!UseMinidriver())
+		return true;
+
+	if(!(CertGetCertificateContextProperty(
+		pCertContext,		// A pointer to the certificate where the property will be set.
+		dwPropId,           // An identifier of the property to get.
+		NULL,               // NULL on the first call to get the length.
+		&cbData)))          // The number of bytes that must be allocated for the structure.
+	{
+		if (GetLastError() != CRYPT_E_NOT_FOUND) // The certificate does not have the specified property.
+			return false;
+	}
+	if(!(pCryptKeyProvInfo = (CRYPT_KEY_PROV_INFO *)malloc(cbData)))
+	{
+		return true;
+	}
+	if(CertGetCertificateContextProperty(pCertContext, dwPropId, pCryptKeyProvInfo, &cbData))
+	{
+		if (!wcscmp(pCryptKeyProvInfo->pwszProvName, L"Belgium Identity Card CSP"))
+			return false;
+	}
+	return true;
 }
