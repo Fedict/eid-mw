@@ -90,7 +90,6 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>..\..\clean.cmd $(Configuration) nl-nl</PreBuildEvent>
   </PropertyGroup>
 </Project>
