@@ -8,12 +8,21 @@ lib_LTLIBRARIES    	 	= libbeiddialogs.la
 
 if LINUX
 #
-libbeiddialogs_la_SOURCES  	 = $(COMMON_SOURCES) src/dialogsgtk/pindialog.c src/dialogsgtk/dlgs_gtk.cpp
+libbeiddialogs_la_SOURCES  	 = $(COMMON_SOURCES) src/dialogsgtk/dlgs_gtk.cpp
 libbeiddialogs_la_CPPFLAGS   = -I$(srcdir)/src/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
-libbeiddialogs_la_LDFLAGS	 = -avoid-version -g
+libbeiddialogs_la_LDFLAGS	 = -avoid-version -g 
 libbeiddialogs_la_CXXFLAGS	 = -fno-strict-aliasing -ggdb -g
-libbeiddialogs_la_LIBADD     = $(COMMON_LIBADD)
+libbeiddialogs_la_LIBADD     = $(COMMON_LIBADD) default-beid-askpin.o
 #
+bin_PROGRAMS		   = beid-askpin
+beid_askpin_SOURCES    = $(COMMON_SOURCES) src/dialogsgtk/pindialog.c
+beid_askpin_CPPFLAGS   = -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
+beid_askpin_LDFLAGS    = -lpthread -avoid-version 
+beid_askpin_LDADD      = $(COMMON_LDADD)
+
+default-beid-askpin.o: beid-askpin
+	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-askpin default-beid-askpin.o
+
 endif
 
 ###################################################################################################################################################################################

@@ -181,24 +181,25 @@ void pindialog_init(PinDialogInfo* pindialog)
 	pindialog->bullet[bullet_size]='\0';
 }
 
-int get_pin(const char* title, const char* message)
+int main(int argc, char* argv[])
 {
 	int 			return_value=EXIT_ERROR;
 	PinDialogInfo 	pindialog;									// this struct contains all objects
 	GdkColor 		color;					
-	int				fake_zero_arguments=0;						// we don't have access to the app's argc and argv
-	char*			fake_arguments=NULL;						// so we produce fakes that are empty
 
-    if(!gtk_init_check(&fake_zero_arguments,(char***)NULL))		// attempt to initialize GTK+
-		exit(EXIT_ERROR);										// on failure, exit
+	fprintf(stderr,"--- gtk_init()\n");
+    gtk_init(&argc,&argv);										// initialize gtk+
+	
+	fprintf(stderr,"--- pindialog_init()\n");
 	pindialog_init(&pindialog);									// setup PinDialogInfo structure
 
 	// create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,message);
+	
+	fprintf(stderr,"--- creating dialog\n");
+    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,argv[1]);
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
-    gtk_window_set_title(GTK_WINDOW(pindialog.dialog),title);
+    gtk_window_set_title(GTK_WINDOW(pindialog.dialog),"beid PIN Request");
     gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
     g_signal_connect (pindialog.dialog, "delete-event", G_CALLBACK (on_delete_event),&pindialog);
 
@@ -272,7 +273,10 @@ int get_pin(const char* title, const char* message)
 	// show all these widgets, and run the dialog as a modal dialog until it is closed by the user
 	//////////////////////////////////////////////////////////////////////////////////////////////    
 
+	fprintf(stderr,"--- showing dialog\n");
     gtk_widget_show_all(GTK_WIDGET(pindialog.dialog));
+	
+	fprintf(stderr,"--- modal dialog\n");
     switch(gtk_dialog_run(GTK_DIALOG(pindialog.dialog)))
 	{
 		case GTK_RESPONSE_OK:					// if the use chose OK
@@ -288,6 +292,7 @@ int get_pin(const char* title, const char* message)
 	// properly dispose of the dialog (which disposes of all it's children), and exit with specific return value
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	fprintf(stderr,"--- dispose of dialog\n");
 	gtk_widget_destroy(pindialog.dialog);
 	exit(return_value);
 }

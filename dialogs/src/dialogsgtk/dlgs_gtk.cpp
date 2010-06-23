@@ -17,20 +17,53 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-/********************************************************************************
-*
-*	dlgs.cpp (GTK+ version)
-*
-********************************************************************************/
+
+/* the askpin function borrows from readpass.c in the OpenSSH distribution, whose Copyright is as follows: 
+ *
+ * START OF (C) NOTICE FOR askpin() 
+
+/* $OpenBSD: readpass.c,v 1.47 2006/08/03 03:34:42 deraadt Exp $ */
+/*
+ * Copyright (c) 2001 Markus Friedl.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * END OF (C) NOTICE for askpin()
+ */
+
+
 #include <stdlib.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <cstdlib>
 #include "errno.h"
 
 #include "mw_util.h"
 #include "dialogs.h"
 #include "langutil.h"
+
+#include <stdio.h>
+#include <limits.h>
+#include <unistd.h>
 
 #include "log.h"
 #include "util.h"
@@ -40,20 +73,25 @@
 
 #include "pindialog.c"
 
-int drop_suid(void)
+#define POSIX_SOURCE 1
+
+void close_all_fd_except(int exempt)
 {
-	uid_t uid=getuid();
+  int i,max;
+	return;
 
-	if(setuid(uid)<0)
-		return errno;
+#if defined(OPEN_MAX)
+  max=OPEN_MAX;
+#else
+  max=sysconf(_SC_OPEN_MAX);
+#endif
 
-	if(getuid()!=uid||geteuid()!=uid)
-		return errno;
-
-	return 0;
+  for(i=3;i<max;i++)
+	if(i!=exempt)
+    	close(i);
 }
 
-static char *askpin(const char *msg)
+char* askpin(const char* msg)
 {
     pid_t pid;
     size_t len;
@@ -61,32 +99,33 @@ static char *askpin(const char *msg)
     int p[2], status, ret;
     char buf[1024];
 
-    if(fflush(stdout) != 0)
+	fprintf(stderr,"... fflush\n");
+    if(fflush(stdout)!=0)
 	{
         perror("askpin/fflush");
 		return NULL;
 	}
 
+	fprintf(stderr,"... pipe\n");
     if(pipe(p)<0)
 	{
 		perror("askpin/pipe");
         return NULL;
     }
 
+	fprintf(stderr,"... fork\n");
     if((pid=fork())<0)
 	{
 		perror("askpin/fork");
         return NULL;
     }
 
-    if(pid == 0)
+    if(pid==0)
 	{
-        if(drop_suid()<0)
-		{
-			perror("askpin/child/drop_suid");
-			exit(1);
-		}
-			
+		fprintf(stderr,"*** in child\n");
+		fprintf(stderr,"*** DISPLAY=%s\n",getenv("DISPLAY"));
+       	umask(0);
+		chdir("/");
         close(p[0]);
 
         if(dup2(p[1],STDOUT_FILENO)<0)
@@ -95,39 +134,44 @@ static char *askpin(const char *msg)
 			exit(1);
 		}
 
-		get_pin("beID PIN",msg);
-
+		fprintf(stderr,"*** exec beid-askpin\n");
+		execlp("/usr/local/bin/beid-askpin","/usr/local/bin/beid-askpin", msg, (char *) 0);
+		perror("askpin/child/execlp");
     }
-    close(p[1]);
 
-    len = ret = 0;
+	fprintf(stderr,"... child PID=%d\n",pid);
+
+	fprintf(stderr,"... reading result\n");
+    close(p[1]);
+    len=ret=0;
     do
 	{
         ret=read(p[0],buf+len,sizeof(buf)-1-len);
         if(ret==-1 && errno==EINTR)
             continue;
-
         if(ret<=0)
             break;
-
         len+=ret;
     }
 	while(sizeof(buf)-1-len>0);
 
-    buf[len] = '\0';
+    buf[len]='\0';
     close(p[0]);
 
+	fprintf(stderr,"... waiting for child to die\n");
     while(waitpid(pid,&status,0)<0)
-        if (errno != EINTR)
+        if(errno!=EINTR)
             break;
 
-    if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
+    if(!WIFEXITED(status) || WEXITSTATUS(status)!=0)
 	{
+		fprintf(stderr,"... child died badly\n");
         memset(buf,0,sizeof(buf));
         return NULL;
     }
 
-    buf[strcspn(buf, "\r\n")]='\0';
+	fprintf(stderr,"... child died peacefully\n");
+    buf[strcspn(buf,"\r\n")]='\0';
     pass=strdup(buf);
     memset(buf,0,sizeof(buf));
     return pass;
@@ -152,6 +196,7 @@ using namespace eIDMW;
 DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation, DlgPinUsage usage, const wchar_t *wsPinName, DlgPinInfo pinInfo, wchar_t *wsPin, unsigned long ulPinBufferLen)
 {
 	printf("DlgAskPin called\n");
+	
 	char* pin=askpin("please enter your PIN code");
 
 	if(pin!=NULL)

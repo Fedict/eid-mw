@@ -459,7 +459,7 @@ PKCS15 defines existance of attributes that should be readable from token
             break;
             }
 
-	printf("pData->pSearch[%d].ulValueLen=%d <> len=%d\n",j,pData->pSearch[j].ulValueLen,len);
+	// printf("pData->pSearch[%d].ulValueLen=%d <> len=%d\n",j,pData->pSearch[j].ulValueLen,len);
 
          if (pData->pSearch[j].ulValueLen != len)
             {

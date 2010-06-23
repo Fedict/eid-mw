@@ -47,7 +47,7 @@
 #include <opensc/pkcs11.h>
 #include <dlfcn.h>
 #include <unistd.h>
-#define PKCS11_LIB "/usr/local/lib/libpkcs11.so" 
+#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
 #endif
 #include <stdlib.h>
 
