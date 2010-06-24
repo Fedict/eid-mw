@@ -184,6 +184,7 @@ public:
 	//return true if the Middleware is in used
 
 #ifdef WIN32
+	bool RegCerts(const string readerName); 
 	bool IsUserAdmin();
 	//return true if the user is administrator
 #endif

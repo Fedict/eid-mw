@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -34,14 +34,19 @@ class CCapiSign {
 public:
     CCapiSign();
     virtual ~CCapiSign(void);
-    static string SignMessage(const Buffer& cert, const string& msg);
+    //static string SignMessage(const Buffer& cert, const string& msg);
+#ifdef WIN32
     static bool ImportCert(const Buffer& cert, const Buffer& tokenInfo);
-
+#endif
 protected:
 
 private:
+#ifdef WIN32
+	static BOOL UseMinidriver( void );
+	static bool ProviderNameCorrect (PCCERT_CONTEXT pCertContext );
+	static bool _StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits,  const std::wstring& containerserial) ;
+#endif
     static std::wstring _ToUnicode(const string& utf8string);
-	static bool _StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, const std::wstring& containerserial);
 };
 
 #endif __CAPISIGN__

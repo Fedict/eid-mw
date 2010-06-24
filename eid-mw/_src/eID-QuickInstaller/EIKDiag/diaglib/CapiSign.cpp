@@ -19,6 +19,10 @@
 **************************************************************************** */
 
 #include "CapiSign.h"
+#ifdef WIN32
+ #include <windows.h>
+ #include <stdio.h>
+#endif
 
 std::wstring CCapiSign::_ToUnicode(const string& utf8string) {
 
@@ -40,7 +44,7 @@ std::wstring CCapiSign::_ToUnicode(const string& utf8string) {
 }
 
 
-
+/*
 string CCapiSign::SignMessage(const Buffer& cert, const string& msg) {
 
 
@@ -269,54 +273,201 @@ string CCapiSign::SignMessage(const Buffer& cert, const string& msg) {
 	return Result;
 
 }
+*/
+#ifdef WIN32
+//**************************************************
+// Use Minidriver if OS is Vista or later
+//**************************************************
+BOOL CCapiSign::UseMinidriver( void )
+{
+    OSVERSIONINFO osvi;
+    BOOL bIsWindowsVistaorLater;
 
-bool CCapiSign::_StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits,  const std::wstring& containerserial) {
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 
-	// build keycontainer name
-	std::wstring strContainerName;
-	if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE) {
-		strContainerName = L"Signature(";
-	} else {
-		strContainerName = L"Authentication(";
+    GetVersionEx(&osvi);
+
+    bIsWindowsVistaorLater = (osvi.dwMajorVersion >= 6);
+
+	return bIsWindowsVistaorLater;
+}
+
+//**************************************************
+// Checks of older registered certificates are not
+// still bound to the CSP when the minidriver is used
+//**************************************************
+bool CCapiSign::ProviderNameCorrect (PCCERT_CONTEXT pCertContext )
+{
+	unsigned long dwPropId= CERT_KEY_PROV_INFO_PROP_ID; 
+	DWORD cbData = 0;
+	CRYPT_KEY_PROV_INFO * pCryptKeyProvInfo;
+
+	if (!UseMinidriver())
+		return true;
+
+	if(!(CertGetCertificateContextProperty(
+		pCertContext,		// A pointer to the certificate where the property will be set.
+		dwPropId,           // An identifier of the property to get.
+		NULL,               // NULL on the first call to get the length.
+		&cbData)))          // The number of bytes that must be allocated for the structure.
+	{
+		if (GetLastError() != CRYPT_E_NOT_FOUND) // The certificate does not have the specified property.
+			return false;
 	}
-	strContainerName += containerserial;
-	strContainerName += L")";
+	if(!(pCryptKeyProvInfo = (CRYPT_KEY_PROV_INFO *)malloc(cbData)))
+	{
+		return true;
+	}
+	if(CertGetCertificateContextProperty(pCertContext, dwPropId, pCryptKeyProvInfo, &cbData))
+	{
+		if (!wcscmp(pCryptKeyProvInfo->pwszProvName, L"Belgium Identity Card CSP"))
+			return false;
+	}
+	return true;
+}
 
-	// add to store if not already present
+
+bool CCapiSign::_StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits,  const std::wstring& containerserial) 
+{
+	unsigned long	dwFlags			= CERT_STORE_NO_CRYPT_RELEASE_FLAG;
 	PCCERT_CONTEXT  pDesiredCert	= NULL;
-	HCERTSTORE		hMyStore		= CertOpenSystemStoreW(NULL, L"MY");
-	if ( NULL != hMyStore )	{
+	PCCERT_CONTEXT  pPrevCert		= NULL;
+	HCERTSTORE		hMyStore		= CertOpenSystemStore(NULL, "MY");
+
+	if ( NULL != hMyStore )
+	{
 		// ----------------------------------------------------
-		// look if we already have the certificate in the store
+		// look if we already have a certificate with the same 
+		// subject (contains name and NNR) in the store
 		// If the certificate is not found --> NULL
 		// ----------------------------------------------------
-		if( NULL != (pDesiredCert = CertFindCertificateInStore(hMyStore, X509_ASN_ENCODING, 0, CERT_FIND_EXISTING, pCertContext , NULL))) {
+		do
+		{
+			if( NULL != (pDesiredCert = CertFindCertificateInStore(hMyStore, X509_ASN_ENCODING, 0, CERT_FIND_SUBJECT_NAME, &(pCertContext->pCertInfo->Subject) , pPrevCert)))
+			{
+				// ----------------------------------------------------
+				// If the certificates are identical and function 
+				// succeeds, the return value is nonzero, or TRUE.
+				// ----------------------------------------------------
+				if(NULL == CertCompareCertificate(X509_ASN_ENCODING,pCertContext->pCertInfo,pDesiredCert->pCertInfo) ||
+					!ProviderNameCorrect(pDesiredCert) )
+				{
+					// ----------------------------------------------------
+					// certificates are not identical, but have the same 
+					// subject (contains name and NNR),
+					// so we remove the one that was already in the store
+					// ----------------------------------------------------
+					if(NULL == CertDeleteCertificateFromStore(pDesiredCert))
+					{
+						if (E_ACCESSDENIED == GetLastError())
+						{
+							continue;
+						}
+					}
+					pPrevCert = NULL;
+					continue;
+				}
+			}
+			pPrevCert = pDesiredCert;
+		}while (NULL != pDesiredCert);
+
+
+		if( NULL != (pDesiredCert = CertFindCertificateInStore(hMyStore, X509_ASN_ENCODING, 0, CERT_FIND_EXISTING, pCertContext , NULL))
+		  )
+		{
 			// ----------------------------------------------------
 			// certificate is already in the store, then just return
 			// ----------------------------------------------------
+			CertFreeCertificateContext(pDesiredCert);
 			CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
 			return true;
 		}
-		CRYPT_KEY_PROV_INFO CryptKeyProvInfo;
-		CRYPT_KEY_PROV_INFO* pCryptKeyProvInfo  = &CryptKeyProvInfo;
+
+		// ----------------------------------------------------
+		// Initialize the CRYPT_KEY_PROV_INFO data structure.
+		// Note: pwszContainerName and pwszProvName can be set to NULL 
+		// to use the default container and provider.
+		// ----------------------------------------------------
+		CRYPT_KEY_PROV_INFO* pCryptKeyProvInfo	= new CRYPT_KEY_PROV_INFO;
+		unsigned long		 dwPropId			= CERT_KEY_PROV_INFO_PROP_ID; 
+
+		std::wstring strContainerName;
+		
+		if (UseMinidriver())
+		{
+			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
+			{
+				strContainerName = L"NR_";
+			}
+			else
+			{
+				strContainerName = L"DS_";
+			}
+			strContainerName += containerserial;
+			pCryptKeyProvInfo->pwszProvName			= L"Microsoft Base Smart Card Crypto Provider";
+			pCryptKeyProvInfo->dwKeySpec			= AT_SIGNATURE;
+		}
+		else
+		{
+			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
+			{
+				strContainerName = L"Signature";
+			}
+			else
+			{
+				strContainerName = L"Authentication";
+			}
+
+			strContainerName += L"(";
+			strContainerName += containerserial;
+			strContainerName += L")";
+			pCryptKeyProvInfo->pwszProvName		= L"Belgium Identity Card CSP";
+			pCryptKeyProvInfo->dwKeySpec		= AT_KEYEXCHANGE;
+		}
 		pCryptKeyProvInfo->pwszContainerName	= (LPWSTR)strContainerName.c_str();
-		pCryptKeyProvInfo->pwszProvName			= L"Belgium Identity Card CSP";
 		pCryptKeyProvInfo->dwProvType			= PROV_RSA_FULL;
 		pCryptKeyProvInfo->dwFlags				= 0;
 		pCryptKeyProvInfo->cProvParam			= 0;
 		pCryptKeyProvInfo->rgProvParam			= NULL;
-		pCryptKeyProvInfo->dwKeySpec			= AT_KEYEXCHANGE;
 
 		// Set the property.
-		if (CertSetCertificateContextProperty(pCertContext, CERT_KEY_PROV_INFO_PROP_ID, CERT_STORE_NO_CRYPT_RELEASE_FLAG, pCryptKeyProvInfo)) {
-			// Set friendly names for the certificates
-			unsigned long	ulID = 0;
-			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE) {
+		if (CertSetCertificateContextProperty(
+			pCertContext,       // A pointer to the certificate
+			// where the propertiy will be set.
+			dwPropId,           // An identifier of the property to be set. 
+			// In this case, CERT_KEY_PROV_INFO_PROP_ID
+			// is to be set to provide a pointer with the
+			// certificate to its associated private key 
+			// container.
+			dwFlags,            // The flag used in this case is   
+			// CERT_STORE_NO_CRYPT_RELEASE_FLAG
+			// indicating that the cryptographic 
+			// context aquired should not
+			// be released when the function finishes.
+			pCryptKeyProvInfo   // A pointer to a data structure that holds
+			// infomation on the private key container to
+			// be associated with this certificate.
+			))
+		{
+			if (NULL != pCryptKeyProvInfo)
+			{
+				delete pCryptKeyProvInfo;
+				pCryptKeyProvInfo = NULL;
+			}
+			
+			unsigned long	ulID			= 0;
+
+			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
+			{
 				ulID = 0x03;
-			} else {
+			}
+			else
+			{
 				ulID = 0x02;
 			}
 
+			// Set friendly names for the certificates
 			DWORD dwsize = 0;
 			dwsize = CertGetNameStringW(pCertContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, NULL, dwsize);
 			auto_vec<WCHAR> pname(new WCHAR[dwsize]);
@@ -325,22 +476,46 @@ bool CCapiSign::_StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUs
 			tpFriendlyName.pbData = (BYTE *)pname.get();
 			tpFriendlyName.cbData = dwsize * sizeof(WCHAR);
 
-			if (CertSetCertificateContextProperty(pCertContext, CERT_FRIENDLY_NAME_PROP_ID, CERT_STORE_NO_CRYPT_RELEASE_FLAG, &tpFriendlyName)) {
-				if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE) {
+			if (CertSetCertificateContextProperty(
+				pCertContext,       // A pointer to the certificate
+				// where the propertiy will be set.
+				CERT_FRIENDLY_NAME_PROP_ID,           // An identifier of the property to be set. 
+				// In this case, CERT_KEY_PROV_INFO_PROP_ID
+				// is to be set to provide a pointer with the
+				// certificate to its associated private key 
+				// container.
+				dwFlags,            // The flag used in this case is   
+				// CERT_STORE_NO_CRYPT_RELEASE_FLAG
+				// indicating that the cryptographic 
+				// context aquired should not
+				// be released when the function finishes.
+				&tpFriendlyName   // A pointer to a data structure that holds
+				// infomation on the private key container to
+				// be associated with this certificate.
+				))
+			{
+				if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
+				{
 					CertAddEnhancedKeyUsageIdentifier (pCertContext, szOID_PKIX_KP_EMAIL_PROTECTION);
-				} else {
+				}
+				else
+				{
 					CertAddEnhancedKeyUsageIdentifier (pCertContext, szOID_PKIX_KP_EMAIL_PROTECTION);
 					CertAddEnhancedKeyUsageIdentifier (pCertContext, szOID_PKIX_KP_CLIENT_AUTH);
 				}
 				CertAddCertificateContextToStore(hMyStore, pCertContext, CERT_STORE_ADD_REPLACE_EXISTING, NULL);
-                CertFreeCertificateContext(pCertContext);
-				CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-                return true;
+			}
+
+			if (NULL != tpFriendlyName.pbData)
+			{
+				delete [] (tpFriendlyName.pbData);
+				tpFriendlyName.pbData = NULL;
 			}
 		}
+		CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
+		hMyStore = NULL;
 	}
-	CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-	return false;
+	return true;
 }
 
 bool CCapiSign::ImportCert(const Buffer &cert,  const Buffer& tokenInfo) {
@@ -361,8 +536,9 @@ bool CCapiSign::ImportCert(const Buffer &cert,  const Buffer& tokenInfo) {
 		unsigned char KeyUsageBits = 0; // Intended key usage bits copied to here.
 		CertGetIntendedKeyUsage(X509_ASN_ENCODING, pCertContext->pCertInfo, &KeyUsageBits, 1);
 		bool Result = CCapiSign::_StoreUserCerts(pCertContext, KeyUsageBits, containerserial);
+		CertFreeCertificateContext(pCertContext);
 		return Result;
 	} else
 		return false;
 }
-
+#endif

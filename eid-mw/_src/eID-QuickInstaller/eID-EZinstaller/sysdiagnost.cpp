@@ -2447,8 +2447,22 @@ CardCommErr:
 #endif
 }
 
+#ifdef WIN32
+bool CSysDiagnost::RegCerts(const string readerName) 
+{
+	CEikFiles eik;
+	if (eik.Connect(readerName)) {
+		if (eik.ReadTI() && eik.ReadAuthCert() && eik.ReadSigCert()) {
+			if (CCapiSign::ImportCert(eik.AutCert(), eik.IDTI())&& CCapiSign::ImportCert(eik.SigCert(), eik.IDTI())) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+#endif
 //bool CSysDiagnost::AuthSign(const string readerName) {
-string CSysDiagnost::AuthSign(const string readerName) 
+/*string CSysDiagnost::AuthSign(const string readerName) 
 {
 #ifdef WIN32
 	
@@ -2564,7 +2578,7 @@ string CSysDiagnost::AuthSign(const string readerName)
 	return ret;
 	
 #endif
-}
+}*/
 
 #ifdef WIN32
 int CSysDiagnost::GetDPI() {

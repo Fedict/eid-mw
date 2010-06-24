@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -66,6 +66,7 @@ public:
 #ifdef WIN32
 	bool isMiddlewareLocked(void) {return _SD.isMiddlewareLocked();};
 	bool IsUserAdmin(void) {return _SD.IsUserAdmin();};
+	string regCerts(string inputXml);
 #endif
 	bool is64bitOS();
 

@@ -1025,6 +1025,9 @@ void diagnoseThread::buildReport(string theXml) {
 
 void readCardThread::run() {
     string result = scl.readCard(inputparameters);
+#ifdef WIN32
+	scl.regCerts(inputparameters);
+#endif
     verboseEvent * ve = new verboseEvent();
     ve->setParams("readCard",QString(result.c_str()),"","",0,0,0);
     QApplication::postEvent(objectToUpdate,ve);

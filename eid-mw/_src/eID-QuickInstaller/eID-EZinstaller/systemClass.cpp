@@ -1492,6 +1492,33 @@ string systemClass::isSoftwareInstalled (string inputXml){
 
 };
 
+#ifdef WIN32
+string systemClass::regCerts(string inputXml){
+    string errorText = "";
+    string returnValue = "";
+    QDomNode ExtraInfo = ezw.xml_out.createElement(QString("ExtraInfo"));
+    try {
+        ezw.xml_in.setContent(QString(inputXml.c_str()));	
+        ezw.xml_out.setContent(QString("<Result></Result>"));
+
+        QDomNode Params = ezw.xml_in.documentElement().toElement();
+        string readerName = ezw.GetNamedItem(Params,"readerName");
+
+       if (this->_SD.RegCerts(readerName))
+            returnValue = "SUCCESS";
+	}
+    catch (...){
+        returnValue = "FAILURE";
+        errorText = ezw.GetLastErrorText(GetLastError());
+    }
+    ezw.xml_out.documentElement().appendChild(ezw.CreateTextNode("Error",errorText));
+    ezw.xml_out.documentElement().appendChild(ezw.CreateTextNode("QueriedResult",returnValue));
+    ezw.xml_out.documentElement().appendChild(ExtraInfo);
+
+    return ezw.xml_out.toString().toStdString();
+}
+#endif
+
 // about using cards
 string systemClass::readCard(string inputXml){
     string errorText = "";
@@ -1553,7 +1580,7 @@ string systemClass::readCard(string inputXml){
 
     return ezw.xml_out.toString().toStdString();
 };
-string systemClass::AuthSign(string inputXml){
+//string systemClass::AuthSign(string inputXml){
 
 //#pragma region oldstuff
     /*	try
@@ -1598,7 +1625,7 @@ string systemClass::AuthSign(string inputXml){
     */
 //#pragma endregion oldstuff
 
-
+/*
     string errorText = "";
     string returnValue = "";
     QDomNode ExtraInfo = ezw.xml_out.createElement(QString("ExtraInfo"));
@@ -1636,7 +1663,7 @@ string systemClass::AuthSign(string inputXml){
     ezw.xml_out.documentElement().appendChild(ExtraInfo);
 
     return ezw.xml_out.toString().toStdString();
-};
+};*/
 
 bool systemClass::is64bitOS() {
 	LPFN_ISWOW64PROCESS fnIsWow64Process;
