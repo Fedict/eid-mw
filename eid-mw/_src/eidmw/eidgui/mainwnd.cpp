@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -1375,7 +1375,7 @@ bool MainWnd::StoreUserCerts (BEID_EIDCard& Card, PCCERT_CONTEXT pCertContext, u
 
 
 		if( NULL != (pDesiredCert = CertFindCertificateInStore(hMyStore, X509_ASN_ENCODING, 0, CERT_FIND_EXISTING, pCertContext , NULL))
-		  )
+			)
 		{
 			m_certContexts[readerName].push_back(pCertContext);
 			// ----------------------------------------------------
@@ -1399,9 +1399,9 @@ bool MainWnd::StoreUserCerts (BEID_EIDCard& Card, PCCERT_CONTEXT pCertContext, u
 		// ----------------------------------------------------
 		BEID_CardVersionInfo& versionInfo = Card.getVersionInfo();
 		const char*			  pSerialKey  = versionInfo.getSerialNumber();
-		
+
 		QString				  strContainerName;
-		
+
 		if (UseMinidriver())
 		{
 			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
@@ -1516,8 +1516,6 @@ bool MainWnd::StoreUserCerts (BEID_EIDCard& Card, PCCERT_CONTEXT pCertContext, u
 				}
 				CertAddCertificateContextToStore(hMyStore, pCertContext, CERT_STORE_ADD_REPLACE_EXISTING, NULL);
 				m_certContexts[readerName].push_back(pCertContext);
-				CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-				hMyStore = NULL;
 			}
 
 			if (NULL != tpFriendlyName.pbData)
@@ -1526,6 +1524,8 @@ bool MainWnd::StoreUserCerts (BEID_EIDCard& Card, PCCERT_CONTEXT pCertContext, u
 				tpFriendlyName.pbData = NULL;
 			}
 		}
+		CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
+		hMyStore = NULL;
 	}
 #endif
 	return true;
