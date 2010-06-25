@@ -223,7 +223,8 @@ catch (...)
 
 strcpy_n(pInfo->manufacturerID, "Belgium Government", 32, ' ');
 strcpy_n(pInfo->model, "Belgium eID", 16, ' ');
-strcpy_n(pInfo->label, "Belgian eID", 16, ' ');
+// strcpy_n(pInfo->label, "Belgian eID", 16, ' '); // FRANK TEST
+
 /* Take the last 16 chars of the serial number (if the are more then 16).
    _Assuming_ that the serial number is a Big Endian counter, this will
    assure that the serial within each type of card will be unique in pkcs11
