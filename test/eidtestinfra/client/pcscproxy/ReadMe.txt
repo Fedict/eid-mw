@@ -2,8 +2,8 @@
     DYNAMIC LINK LIBRARY : winscard Project Overview
 ========================================================================
 
-The winscard.cpp file was generated using the wrappit.exe tool found in
-this project. See  http://www.codeproject.com/KB/DLL/CreateYourProxyDLLs.aspx
+The winscard.cpp file was generated using the wrappit tool.
+See  http://www.codeproject.com/KB/DLL/CreateYourProxyDLLs.aspx
 
 This project creates the winscard.dll. It acts as a proxy to the winscard.dll
 that already exists on your windows OS inside the systems32 directory.

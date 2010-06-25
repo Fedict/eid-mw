@@ -10,7 +10,6 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.5"/>
     <property name="source" value="1.5"/>
-    <import file="makeJarFile.xml"/>
     <path id="JUnit 3.libraryclasspath">
         <pathelement location="src.junit/junit.jar"/>
     </path>
@@ -27,26 +26,6 @@
         <pathelement location="pcsccontrol.jar"/>
         <path refid="pcsccontrol.classpath"/>
     </path>
-    <path id="run.gui 5 no jpcsc.classpath">
-        <pathelement location="pcsccontrol.jar"/>
-        <pathelement location="lib/log4j-1.2.8.jar"/>
-        <pathelement location="lib/activation.jar"/>
-        <pathelement location="lib/jaxb_api.jar"/>
-        <pathelement location="lib/jaxb_impl.jar"/>
-        <pathelement location="lib/jsr173_1.0_api.jar"/>
-    </path>
-    <path id="run.gui 5.classpath">
-        <pathelement location="pcsccontrol.jar"/>
-        <pathelement location="lib/log4j-1.2.8.jar"/>
-        <pathelement location="lib/activation.jar"/>
-        <pathelement location="lib/jaxb_api.jar"/>
-        <pathelement location="lib/jaxb_impl.jar"/>
-        <pathelement location="lib/jsr173_1.0_api.jar"/>
-        <pathelement location="lib/jpcsc.jar"/>
-    </path>
-    <path id="run.gui 6.classpath">
-        <pathelement location="pcsccontrol.jar"/>
-    </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -58,17 +37,18 @@
     </target>
     <target name="clean">
         <delete dir="bin"/>
+		<delete file="pcsccontrol.jar"/>
     </target>
     <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
+    <target depends="build-subprojects,build-project,build-jar" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src"/>
             <classpath refid="pcsccontrol.classpath"/>
         </javac>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src.junit"/>
             <classpath refid="pcsccontrol.classpath"/>
         </javac>
@@ -95,24 +75,6 @@
             <classpath refid="run.ControlModelTest.classpath"/>
         </junit>
     </target>
-    <target name="gui 5 no jpcsc">
-        <java classname="be.eid.eidtestinfra.pcsccontrol.Main" failonerror="true" fork="yes">
-            <jvmarg line="-DPROPS=&quot;C:\Documents and Settings\All Users\props.pcsc&quot; -DALLUSERSPROFILE=&quot;C:\Documents and Settings\All Users&quot;"/>
-            <classpath refid="run.gui 5 no jpcsc.classpath"/>
-        </java>
-    </target>
-    <target name="gui 5">
-        <java classname="be.eid.eidtestinfra.pcsccontrol.Main" failonerror="true" fork="yes">
-            <jvmarg line="-DPROPS=&quot;C:\Documents and Settings\All Users\props.pcsc&quot; -DALLUSERSPROFILE=&quot;C:\Documents and Settings\All Users&quot;"/>
-            <classpath refid="run.gui 5.classpath"/>
-        </java>
-    </target>
-    <target name="gui 6">
-        <java classname="be.eid.eidtestinfra.pcsccontrol.Main" failonerror="true" fork="yes">
-            <jvmarg line="-DPROPS=&quot;C:\Documents and Settings\All Users\props.pcsc&quot; -DALLUSERSPROFILE=&quot;C:\Documents and Settings\All Users&quot;"/>
-            <classpath refid="run.gui 6.classpath"/>
-        </java>
-    </target>
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">
             <fileset dir="${junit.output.dir}">
@@ -121,4 +83,22 @@
             <report format="frames" todir="${junit.output.dir}"/>
         </junitreport>
     </target>
+    <target name ="build-jar" description="Create a jar for the pcsccontrol project">
+       <jar destfile="pcsccontrol.jar">
+           <fileset dir="lib" includes="*.jar"/>
+           <fileset dir="bin" includes="be/eid/eidtestinfra/pcsccontrol/*.class"/>
+           <fileset dir="bin" includes="be/eid/eidtestinfra/pcsccontrol/gui/*.class"/>
+           <fileset dir="bin" includes="be/eid/eidtestinfra/pcsccontrol/gui/jpcsc/*.class"/>
+           <fileset dir="." includes="icons/**"/>
+           <fileset dir="." includes="*.xsd"/>
+           <manifest>
+               <attribute name="Main-Class" value="be.eid.eidtestinfra.pcsccontrol.Main" />
+               <attribute name="Built-By" value="${user.name}"/>
+               <attribute name="Implementation-Vendor" value="Belgian Government/nv"/>
+               <attribute name="Implementation-Title" value="BE eID PCSC Control"/>
+               <attribute name="Implementation-Version" value="3.99.7"/>
+           </manifest>
+       </jar>
+    </target>
+
 </project>
