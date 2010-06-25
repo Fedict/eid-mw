@@ -207,6 +207,23 @@ int main()
 
 	read_private_keys(functions,session_handle);
 
+/*	printf("invoke C_SetPIN\n");
+	rv = (*functions->C_SetPIN)(session_handle, "1234",4,"4321",4);
+    check_return_value(rv, "setpin (1)");
+
+	printf("invoke C_Logout\n");
+	rv=(*functions->C_Logout)(session_handle);
+     	check_return_value(rv, "logout");
+
+	char pin2[4]="4321";
+	printf("invoke C_Login\n");
+       	rv = (*functions->C_Login)(session_handle, CKU_USER, pin2, 4);
+     	check_return_value(rv, "login");
+
+	printf("invoke C_SetPIN again\n");
+	rv = (*functions->C_SetPIN)(session_handle, "4321",4,"1234",4);
+    check_return_value(rv, "setpin (2)"); */
+
 	printf("invoke C_Logout\n");
 	rv=(*functions->C_Logout)(session_handle);
      	check_return_value(rv, "logout");

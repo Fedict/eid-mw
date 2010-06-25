@@ -175,7 +175,7 @@ int status;
 long lRet = 0;
 P11_SLOT *pSlot = NULL;
 
-pInfo->flags = 0;
+pInfo->flags = 0; // CKF_LOGIN_REQUIRED;   // FRANK TEST
 
 pSlot = p11_get_slot(hSlot);
 if (pSlot == NULL)
@@ -208,7 +208,7 @@ try
    strcpy_n(pInfo->serialNumber, oSerialNr.c_str() + snoffset, snlen, ' ');
    strcpy_n(pInfo->label, oReader.GetCardLabel().c_str(), 32, ' '); 
    if(oReader.IsPinpadReader())
-      pInfo->flags = CKF_PROTECTED_AUTHENTICATION_PATH;
+      pInfo->flags = CKF_PROTECTED_AUTHENTICATION_PATH;    // FRANK TEST || CKF_LOGIN_REQUIRED
    }
 catch (CMWException e)
    {
@@ -223,6 +223,7 @@ catch (...)
 
 strcpy_n(pInfo->manufacturerID, "Belgium Government", 32, ' ');
 strcpy_n(pInfo->model, "Belgium eID", 16, ' ');
+strcpy_n(pInfo->label, "Belgian eID", 16, ' ');
 /* Take the last 16 chars of the serial number (if the are more then 16).
    _Assuming_ that the serial number is a Big Endian counter, this will
    assure that the serial within each type of card will be unique in pkcs11

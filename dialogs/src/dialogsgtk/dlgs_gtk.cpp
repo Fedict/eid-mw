@@ -91,6 +91,50 @@ void close_all_fd_except(int exempt)
     	close(i);
 }
 
+void secureaskpin(char* msg)
+{
+    pid_t pid;
+    size_t len;
+    char *pass;
+    int status, ret;
+
+	fprintf(stderr,"... fork\n");
+    if((pid=fork())<0)
+	{
+		perror("secureaskpin/fork");
+        return;
+    }
+
+    if(pid==0)
+	{
+		fprintf(stderr,"*** in child\n");
+		fprintf(stderr,"*** DISPLAY=%s\n",getenv("DISPLAY"));
+       	umask(0);
+		chdir("/");
+		fprintf(stderr,"*** exec beid-secure-askpin\n");
+		execlp("/usr/local/bin/beid-secure-askpin","/usr/local/bin/beid-secure-askpin", msg, (char *) 0);
+		perror("secureaskpin/child/execlp");
+    }
+
+	fprintf(stderr,"... child PID=%d\n",pid);
+
+	fprintf(stderr,"... waiting for child to die\n");
+    while(waitpid(pid,&status,0)<0)
+        if(errno!=EINTR)
+            break;
+
+    if(!WIFEXITED(status) || WEXITSTATUS(status)!=0)
+	{
+		fprintf(stderr,"... child died badly\n");
+        return;
+    }
+
+	fprintf(stderr,"... child died peacefully\n");
+}
+
+
+using namespace eIDMW;
+
 char* askpin(const char* msg)
 {
     pid_t pid;
@@ -226,8 +270,11 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin( DlgPinUsage usage, const wchar_t *wsPinName
 
 DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation, const wchar_t *wsReader, DlgPinUsage usage, const wchar_t *wsPinName, const wchar_t *wsMessage, unsigned long *pulHandle)
 {
+	char message[1024];
 	printf("DlgDisplayPinPadInfo called\n");
-    return DLG_ERR;
+	wcstombs(message,wsReader,1024);
+	secureaskpin(message);
+    return DLG_OK;
 }
 
 
