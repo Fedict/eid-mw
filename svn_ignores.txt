@@ -10,7 +10,9 @@ stamp-h1
 libtool
 build_*
 depcomp
+compile
 missing
 ltmain.sh
 install-sh
-
+.deps
+*.log
