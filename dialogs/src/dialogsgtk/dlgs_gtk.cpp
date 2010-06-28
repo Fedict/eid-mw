@@ -75,31 +75,10 @@
 
 #define POSIX_SOURCE 1
 
-void close_all_fd_except(int exempt)
-{
-  int i,max;
-	return;
-
-#if defined(OPEN_MAX)
-  max=OPEN_MAX;
-#else
-  max=sysconf(_SC_OPEN_MAX);
-#endif
-
-  for(i=3;i<max;i++)
-	if(i!=exempt)
-    	close(i);
-}
-
 void secureaskpin(char* msg)
 {
-    pid_t pid;
-    size_t len;
-    char *pass;
-    int status, ret;
-
-	fprintf(stderr,"... fork\n");
-    if((pid=fork())<0)
+    pid_t pid=fork();
+    if(pid<0)
 	{
 		perror("secureaskpin/fork");
         return;
@@ -117,19 +96,29 @@ void secureaskpin(char* msg)
     }
 
 	fprintf(stderr,"... child PID=%d\n",pid);
+}
 
-	fprintf(stderr,"... waiting for child to die\n");
-    while(waitpid(pid,&status,0)<0)
-        if(errno!=EINTR)
-            break;
-
-    if(!WIFEXITED(status) || WEXITSTATUS(status)!=0)
+void close_secureaskpin()
+{
+    pid_t pid=fork();
+    if(pid<0)
 	{
-		fprintf(stderr,"... child died badly\n");
+		perror("close_secureaskpin/fork");
         return;
     }
 
-	fprintf(stderr,"... child died peacefully\n");
+    if(pid==0)
+	{
+		fprintf(stderr,"*** in child\n");
+		fprintf(stderr,"*** DISPLAY=%s\n",getenv("DISPLAY"));
+       	umask(0);
+		chdir("/");
+		fprintf(stderr,"*** exec beid-secure-askpin\n");
+		execlp("/usr/local/bin/beid-close-secure-askpin","/usr/local/bin/beid-close-secure-askpin", (char *) 0);
+		perror("close_secureaskpin/child/execlp");
+    }
+
+	fprintf(stderr,"... child PID=%d\n",pid);
 }
 
 
@@ -214,7 +203,7 @@ char* askpin(const char* msg)
         return NULL;
     }
 
-	fprintf(stderr,"... child died peacefully\n");
+	fprintf(stderr,"... child died normally\n");
     buf[strcspn(buf,"\r\n")]='\0';
     pass=strdup(buf);
     memset(buf,0,sizeof(buf));
@@ -282,6 +271,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation, const 
 DLGS_EXPORT void eIDMW::DlgClosePinpadInfo( unsigned long ulHandle )
 {
 	printf("DlgClosePinpadInfo called\n");
+	close_secureaskpin();
 }
 
 

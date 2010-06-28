@@ -8,28 +8,36 @@ lib_LTLIBRARIES    	 	= libbeiddialogs.la
 
 if LINUX
 #
-libbeiddialogs_la_SOURCES  	 = $(COMMON_SOURCES) src/dialogsgtk/dlgs_gtk.cpp
+libbeiddialogs_la_SOURCES  	 = $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/dlgs_gtk.cpp
 libbeiddialogs_la_CPPFLAGS   = -I$(srcdir)/src/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
 libbeiddialogs_la_LDFLAGS	 = -avoid-version -g 
 libbeiddialogs_la_CXXFLAGS	 = -fno-strict-aliasing -ggdb -g
 libbeiddialogs_la_LIBADD     = $(COMMON_LIBADD) default-beid-askpin.o default-beid-secure-askpin.o
 #
-bin_PROGRAMS		   			= beid-askpin beid-secure-askpin
-beid_askpin_SOURCES    			= $(COMMON_SOURCES) src/dialogsgtk/pindialog.c
-beid_askpin_CPPFLAGS   			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
+bin_PROGRAMS		   			= beid-askpin beid-secure-askpin beid-close-secure-askpin
+beid_askpin_SOURCES    			= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/pindialog.c
+beid_askpin_CPPFLAGS   			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -O0 -ggdb
 beid_askpin_LDFLAGS    			= -avoid-version 
 beid_askpin_LDADD      			= $(COMMON_LDADD)
 
-beid_secure_askpin_SOURCES    	= $(COMMON_SOURCES) src/dialogsgtk/secure_pindialog.c
-beid_secure_askpin_CPPFLAGS   	= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
-beid_secure_askpin_LDFLAGS    	= -avoid-version 
-beid_secure_askpin_LDADD      	= $(COMMON_LDADD)
+beid_secure_askpin_SOURCES    		= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/secure_pindialog.c
+beid_secure_askpin_CPPFLAGS   		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
+beid_secure_askpin_LDFLAGS    		= -avoid-version 
+beid_secure_askpin_LDADD      		= $(COMMON_LDADD)
+
+beid_close_secure_askpin_SOURCES   	= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/close_secure_pindialog.c
+beid_close_secure_askpin_CPPFLAGS  	= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
+beid_close_secure_askpin_LDFLAGS   	= -avoid-version 
+beid_close_secure_askpin_LDADD     	= $(COMMON_LDADD)
 
 default-beid-askpin.o: beid-askpin
 	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-askpin default-beid-askpin.o
 
 default-beid-secure-askpin.o: beid-secure-askpin
 	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-secure-askpin default-beid-secure-askpin.o
+
+default-beid-close-secure-askpin.o: beid-close-secure-askpin
+	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-close-secure-askpin default-beid-close-secure-askpin.o
 
 endif
 

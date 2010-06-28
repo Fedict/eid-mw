@@ -169,7 +169,7 @@ int main()
      	check_return_value(rv, "getslotlist (to get info)");
 
 	CK_SLOT_INFO slotInfo;		
-	CK_SLOT_ID slotId = slotIds[0];
+	CK_SLOT_ID slotId = slotIds[1];
 	int idx;
 
 	printf("invoke C_GetSlotInfo\n");
