@@ -39,6 +39,8 @@ import com.google.gwt.maps.client.control.LargeMapControl;
 import com.google.gwt.maps.client.geocode.Geocoder;
 import com.google.gwt.maps.client.geocode.LatLngCallback;
 import com.google.gwt.maps.client.geom.LatLng;
+import com.google.gwt.maps.client.overlay.GeoXmlLoadCallback;
+import com.google.gwt.maps.client.overlay.GeoXmlOverlay;
 import com.google.gwt.maps.client.overlay.Marker;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Event;
@@ -71,6 +73,7 @@ public class Application implements EntryPoint {
 	private FlexTable cardTable;
 	private FlexTable diagnosticTable;
 	private MapWidget map;
+	private Frame diagnosticFrame;
 
 	private static Application application;
 
@@ -136,6 +139,11 @@ public class Application implements EntryPoint {
 
 	Command diagnosticCommand = new Command() {
 		public void execute() {
+			String diagnosticUrl = GWT.getModuleBaseURL() + "diagnostic.html";
+			if (false == diagnosticUrl.equals(Application.this.diagnosticFrame
+					.getUrl())) {
+				Application.this.diagnosticFrame.setUrl(diagnosticUrl);
+			}
 			Application.this.contentPanel.showWidget(DECK_DIAGNOSTIC);
 			Application.this.clearDiagnosticResults();
 		}
@@ -293,11 +301,10 @@ public class Application implements EntryPoint {
 		this.contentPanel.add(diagnosticPanel);
 		diagnosticPanel.add(new HTML("<h1>eID Diagnostic Tests</h1>"),
 				DockPanel.NORTH);
-		Frame diagnosticFrame = new Frame(GWT.getModuleBaseURL()
-				+ "diagnostic.html");
-		diagnosticFrame.setWidth("100%");
-		diagnosticFrame.setHeight("450px");
-		diagnosticPanel.add(diagnosticFrame, DockPanel.SOUTH);
+		this.diagnosticFrame = new Frame();
+		this.diagnosticFrame.setWidth("100%");
+		this.diagnosticFrame.setHeight("450px");
+		diagnosticPanel.add(this.diagnosticFrame, DockPanel.SOUTH);
 		this.diagnosticTable = new FlexTable();
 		diagnosticPanel.add(this.diagnosticTable, DockPanel.NORTH);
 
@@ -391,6 +398,19 @@ public class Application implements EntryPoint {
 							marker,
 							new InfoWindowContent(new HTML(firstName + " "
 									+ name + "<br>" + address)));
+					String eidFeed = "http://reap.rovin.be/eid.xml";
+					GeoXmlOverlay.load(eidFeed, new GeoXmlLoadCallback() {
+						@Override
+						public void onSuccess(String url, GeoXmlOverlay overlay) {
+							MapWidget map = Application.application.map;
+							map.addOverlay(overlay);
+						}
+
+						@Override
+						public void onFailure(String url, Throwable caught) {
+							// woops
+						}
+					});
 				}
 
 				public void onFailure() {
