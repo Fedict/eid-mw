@@ -5455,6 +5455,7 @@ void MainWnd::ShowBEIDError( unsigned long ErrCode, QString const& msg )
 	QMessageBox::warning( this, strCaption,  strMessage, QMessageBox::Ok );
 }
 
+#ifdef WIN32
 //**************************************************
 // Use Minidriver if OS is Vista or later
 //**************************************************
@@ -5506,3 +5507,4 @@ bool MainWnd::ProviderNameCorrect (PCCERT_CONTEXT pCertContext )
 	}
 	return true;
 }
+#endif

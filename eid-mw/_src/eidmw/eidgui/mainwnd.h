@@ -391,8 +391,10 @@ private:
 	static bool StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, const char* readerName);
 	static void forgetCertificates( QString const& readerName );
 	static void forgetAllCertificates( void );
+#ifdef WIN32
 	static BOOL UseMinidriver( void );
 	static bool ProviderNameCorrect (PCCERT_CONTEXT pCertContext );
+#endif
 	void showCertImportMessage(bool bImported);
 	bool saveCardDataToFile(QString const& fileName, BEID_Card& card );
 	bool saveCardDataToFile(QString const& fileName, BEID_EIDCard& card );
