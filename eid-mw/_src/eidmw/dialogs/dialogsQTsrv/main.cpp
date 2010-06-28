@@ -588,6 +588,8 @@ int main(int argc, char *argv[])
 									qsMessage += "\"";
 								}
 								qsMessage += "\n";
+								qsMessage += GETQSTRING_DLG(EnterOldNewVerify);
+								qsMessage += "\n";
 								break;
 							case DLG_PIN_OP_UNBLOCK_CHANGE:
 								qsMessage = GETQSTRING_DLG(ChangeYourPuk);

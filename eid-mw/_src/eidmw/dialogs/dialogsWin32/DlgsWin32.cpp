@@ -418,6 +418,8 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 					sMessage += L"\"";
 				}
 				sMessage += L"\n";
+				sMessage += GETSTRING_DLG(EnterOldNewVerify);
+				sMessage += L"\n";
 				break;
 			case DLG_PIN_OP_UNBLOCK_CHANGE:
 				sMessage = GETSTRING_DLG(ChangeYourPuk);
