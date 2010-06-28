@@ -14,7 +14,8 @@ libbeiddialogs_la_LDFLAGS	 = -avoid-version -g
 libbeiddialogs_la_CXXFLAGS	 = -fno-strict-aliasing -ggdb -g
 libbeiddialogs_la_LIBADD     = $(COMMON_LIBADD) default-beid-askpin.o default-beid-secure-askpin.o
 #
-bin_PROGRAMS		   			= beid-askpin beid-secure-askpin beid-close-secure-askpin
+bin_PROGRAMS		   			= beid-askpin beid-secure-askpin beid-close-secure-askpin beid-changepin
+
 beid_askpin_SOURCES    			= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/pindialog.c
 beid_askpin_CPPFLAGS   			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -O0 -ggdb
 beid_askpin_LDFLAGS    			= -avoid-version 
@@ -30,6 +31,11 @@ beid_close_secure_askpin_CPPFLAGS  	= -I$(srcdir)/dialogsgtk -I$(srcdir)/../comm
 beid_close_secure_askpin_LDFLAGS   	= -avoid-version 
 beid_close_secure_askpin_LDADD     	= $(COMMON_LDADD)
 
+beid_changepin_SOURCES   		= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/changepindialog.c
+beid_changepin_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
+beid_changepin_LDFLAGS   		= -avoid-version 
+beid_changepin_LDADD     		= $(COMMON_LDADD)
+
 default-beid-askpin.o: beid-askpin
 	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-askpin default-beid-askpin.o
 
@@ -38,6 +44,9 @@ default-beid-secure-askpin.o: beid-secure-askpin
 
 default-beid-close-secure-askpin.o: beid-close-secure-askpin
 	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-close-secure-askpin default-beid-close-secure-askpin.o
+
+default-beid-changepin.o: beid-changepin
+	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-changepin default-beid-changepin.o
 
 endif
 
