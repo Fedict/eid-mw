@@ -14,7 +14,7 @@ libbeiddialogs_la_LDFLAGS	 = -avoid-version -g
 libbeiddialogs_la_CXXFLAGS	 = -fno-strict-aliasing -ggdb -g
 libbeiddialogs_la_LIBADD     = $(COMMON_LIBADD) default-beid-askpin.o default-beid-secure-askpin.o
 #
-bin_PROGRAMS		   			= beid-askpin beid-secure-askpin beid-close-secure-askpin beid-changepin
+bin_PROGRAMS		   			= beid-askpin beid-secure-askpin beid-close-secure-askpin beid-changepin beid-badpin beid-askaccess
 
 beid_askpin_SOURCES    			= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/pindialog.c
 beid_askpin_CPPFLAGS   			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -O0 -ggdb
@@ -36,6 +36,16 @@ beid_changepin_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I
 beid_changepin_LDFLAGS   		= -avoid-version 
 beid_changepin_LDADD     		= $(COMMON_LDADD)
 
+beid_badpin_SOURCES   		= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/badpindialog.c
+beid_badpin_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
+beid_badpin_LDFLAGS   		= -avoid-version 
+beid_badpin_LDADD     		= $(COMMON_LDADD)
+
+beid_askaccess_SOURCES   	= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/askaccessdialog.c
+beid_askaccess_CPPFLAGS  	= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
+beid_askaccess_LDFLAGS   	= -avoid-version 
+beid_askaccess_LDADD     	= $(COMMON_LDADD)
+
 default-beid-askpin.o: beid-askpin
 	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-askpin default-beid-askpin.o
 
@@ -47,6 +57,12 @@ default-beid-close-secure-askpin.o: beid-close-secure-askpin
 
 default-beid-changepin.o: beid-changepin
 	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-changepin default-beid-changepin.o
+
+default-beid-badpin.o: beid-badpin
+	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-badpin default-beid-badpin.o
+
+default-beid-askaccess.o: beid-askaccess
+	objcopy --input binary --output elf64-x86-64 --binary-architecture i386 .libs/beid-askaccess default-beid-askaccess.o
 
 endif
 

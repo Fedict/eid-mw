@@ -17,6 +17,7 @@
 **************************************************************************** */
 
 #include <limits.h>
+#include <unistd.h>
 
 #define	MIN_CMDLINE_PATH_BYTES 14
 #define	MAX_UID_LENGTH		   64
@@ -27,3 +28,16 @@ typedef struct
 	char unique_id[MAX_UID_LENGTH];
 } SingleDialog;
 
+
+void 	sdialog_init(SingleDialog* sdialog, char* did);
+int 	sdialog_write_pid(SingleDialog* sdialog);
+pid_t 	sdialog_read_pid(SingleDialog* sdialog);
+int 	sdialog_terminate(SingleDialog* sdialog, pid_t target);
+int 	sdialog_terminate_active(SingleDialog* sdialog);
+int 	sdialog_lock(SingleDialog* sdialog);
+int 	sdialog_unlock(SingleDialog* sdialog);
+
+#define POSIX_SOURCE 1
+
+void 	sdialog_call(char* path, char* msg);
+char* 	sdialog_call_modal(char* path,const char* msg);

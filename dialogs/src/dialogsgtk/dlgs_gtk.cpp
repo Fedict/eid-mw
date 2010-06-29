@@ -18,38 +18,6 @@
 
 **************************************************************************** */
 
-/* the askpin function borrows from readpass.c in the OpenSSH distribution, whose Copyright is as follows: 
- *
- * START OF (C) NOTICE FOR askpin() 
-
-/* $OpenBSD: readpass.c,v 1.47 2006/08/03 03:34:42 deraadt Exp $ */
-/*
- * Copyright (c) 2001 Markus Friedl.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * END OF (C) NOTICE for askpin()
- */
-
-
 #include <stdlib.h>
 #include <signal.h>
 #include <sys/wait.h>
@@ -71,303 +39,64 @@
 #include "eiderrors.h"
 #include "config.h"
 
-#include "pindialog.c"
-
-#define POSIX_SOURCE 1
-
-void secureaskpin(char* msg)
+extern "C"
 {
-    pid_t pid=fork();
-    if(pid<0)
-	{
-		perror("secureaskpin/fork");
-        return;
-    }
-
-    if(pid==0)
-	{
-		fprintf(stderr,"*** in child\n");
-		fprintf(stderr,"*** DISPLAY=%s\n",getenv("DISPLAY"));
-       	umask(0);
-		chdir("/");
-		fprintf(stderr,"*** exec beid-secure-askpin\n");
-		execlp("/usr/local/bin/beid-secure-askpin","/usr/local/bin/beid-secure-askpin", msg, (char *) 0);
-		perror("secureaskpin/child/execlp");
-    }
-
-	fprintf(stderr,"... child PID=%d\n",pid);
-}
-
-void close_secureaskpin()
-{
-    pid_t pid=fork();
-    if(pid<0)
-	{
-		perror("close_secureaskpin/fork");
-        return;
-    }
-
-    if(pid==0)
-	{
-		fprintf(stderr,"*** in child\n");
-		fprintf(stderr,"*** DISPLAY=%s\n",getenv("DISPLAY"));
-       	umask(0);
-		chdir("/");
-		fprintf(stderr,"*** exec beid-secure-askpin\n");
-		execlp("/usr/local/bin/beid-close-secure-askpin","/usr/local/bin/beid-close-secure-askpin", (char *) 0);
-		perror("close_secureaskpin/child/execlp");
-    }
-
-	fprintf(stderr,"... child PID=%d\n",pid);
-}
-
-
-using namespace eIDMW;
-
-char* askpin(const char* msg)
-{
-    pid_t pid;
-    size_t len;
-    char *pass;
-    int p[2], status, ret;
-    char buf[1024];
-
-	fprintf(stderr,"... fflush\n");
-    if(fflush(stdout)!=0)
-	{
-        perror("askpin/fflush");
-		return NULL;
-	}
-
-	fprintf(stderr,"... pipe\n");
-    if(pipe(p)<0)
-	{
-		perror("askpin/pipe");
-        return NULL;
-    }
-
-	fprintf(stderr,"... fork\n");
-    if((pid=fork())<0)
-	{
-		perror("askpin/fork");
-        return NULL;
-    }
-
-    if(pid==0)
-	{
-		fprintf(stderr,"*** in child\n");
-		fprintf(stderr,"*** DISPLAY=%s\n",getenv("DISPLAY"));
-       	umask(0);
-		chdir("/");
-        close(p[0]);
-
-        if(dup2(p[1],STDOUT_FILENO)<0)
-		{
-			perror("askpin/child/dup2");
-			exit(1);
-		}
-
-		fprintf(stderr,"*** exec beid-askpin\n");
-		execlp("/usr/local/bin/beid-askpin","/usr/local/bin/beid-askpin", msg, (char *) 0);
-		perror("askpin/child/execlp");
-    }
-
-	fprintf(stderr,"... child PID=%d\n",pid);
-
-	fprintf(stderr,"... reading result\n");
-    close(p[1]);
-    len=ret=0;
-    do
-	{
-        ret=read(p[0],buf+len,sizeof(buf)-1-len);
-        if(ret==-1 && errno==EINTR)
-            continue;
-        if(ret<=0)
-            break;
-        len+=ret;
-    }
-	while(sizeof(buf)-1-len>0);
-
-    buf[len]='\0';
-    close(p[0]);
-
-	fprintf(stderr,"... waiting for child to die\n");
-    while(waitpid(pid,&status,0)<0)
-        if(errno!=EINTR)
-            break;
-
-    if(!WIFEXITED(status) || WEXITSTATUS(status)!=0)
-	{
-		fprintf(stderr,"... child died badly\n");
-        memset(buf,0,sizeof(buf));
-        return NULL;
-    }
-
-	fprintf(stderr,"... child died normally\n");
-    buf[strcspn(buf,"\r\n")]='\0';
-    pass=strdup(buf);
-    memset(buf,0,sizeof(buf));
-    return pass;
-}
-
-
-// FIXME code duplication, refactor!
-
-int askpins(const char* msg, char** oldpin, char** newpin)
-{
-    pid_t pid;
-    size_t len;
-    int p[2], status, ret;
-    char buf[1024];
-
-	fprintf(stderr,"... fflush\n");
-    if(fflush(stdout)!=0)
-	{
-        perror("askpins/fflush");
-		return NULL;
-	}
-
-	fprintf(stderr,"... pipe\n");
-    if(pipe(p)<0)
-	{
-		perror("askpins/pipe");
-        return NULL;
-    }
-
-	fprintf(stderr,"... fork\n");
-    if((pid=fork())<0)
-	{
-		perror("askpins/fork");
-        return NULL;
-    }
-
-    if(pid==0)
-	{
-		fprintf(stderr,"*** in child\n");
-		fprintf(stderr,"*** DISPLAY=%s\n",getenv("DISPLAY"));
-       	umask(0);
-		chdir("/");
-        close(p[0]);
-
-        if(dup2(p[1],STDOUT_FILENO)<0)
-		{
-			perror("askpins/child/dup2");
-			exit(1);
-		}
-
-		fprintf(stderr,"*** exec beid-changepin\n");
-		execlp("/usr/local/bin/beid-changepin","/usr/local/bin/beid-changepin", msg, (char *) 0);
-		perror("askpins/child/execlp");
-    }
-
-	fprintf(stderr,"... child PID=%d\n",pid);
-
-	fprintf(stderr,"... reading result\n");
-    close(p[1]);
-    len=ret=0;
-    do
-	{
-        ret=read(p[0],buf+len,sizeof(buf)-1-len);
-        if(ret==-1 && errno==EINTR)
-            continue;
-        if(ret<=0)
-            break;
-        len+=ret;
-    }
-	while(sizeof(buf)-1-len>0);
-
-    buf[len]='\0';
-    close(p[0]);
-
-	fprintf(stderr,"... waiting for child to die\n");
-    while(waitpid(pid,&status,0)<0)
-        if(errno!=EINTR)
-            break;
-
-    if(!WIFEXITED(status) || WEXITSTATUS(status)!=0)
-	{
-		fprintf(stderr,"... child died badly\n");
-        memset(buf,0,sizeof(buf));
-        return NULL;
-    }
-
-	fprintf(stderr,"... child died normally\n");
-
-
-    buf[strcspn(buf,"\r\n")]='\0';
-	char* sep_pos=strchr(buf,':');
-	if(sep_pos!=NULL)
-	{
-		*sep_pos='\0';
-		*oldpin=strdup(buf);
-		*newpin=strdup(sep_pos+1);
-	}
-	else
-	{
-		return -1;
-	}
-
-    memset(buf,0,sizeof(buf));
-	return 0;
+#include "single_dialog.h"
 }
 
 using namespace eIDMW;
-
-/**
- * Ask for 1 PIN (e.g. to verify or unblock without changing the old PIN)
- * This dialog is modal (returns after the dlg is closed)
- * - operation: DLG_PIN_OP_VERIFY or DLG_PIN_OP_UNBLOCK_NO_CHANGE
- * - pinName: should only be used if 'usage' == DLG_PIN_UNKNOWN
- * - pinInfo: should be used to verify the format of the PIN
- *     (valid length, valid characters, ...); as long as this
- *     isn't the case, the OK button should be disabled.
- * Returns: DLG_OK if the OK button was pressed,
- *          DLG_CANCEL if the Cancel button was pressed,
- *          DLG_BAD_PARAM or DLG_ERR otherwise
- */
 
 DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation, DlgPinUsage usage, const wchar_t *wsPinName, DlgPinInfo pinInfo, wchar_t *wsPin, unsigned long ulPinBufferLen)
 {
 	printf("DlgAskPin called\n");
-	
-	char* pin=askpin("please enter your PIN code");
-
-	if(pin!=NULL)
+	char* response=sdialog_call_modal("/usr/local/bin/beid-askpin","Please enter your PIN code.");	
+	if(response==NULL)
 	{
-		mbstowcs(wsPin,pin,ulPinBufferLen);
-		free(pin);
-		return DLG_OK;
+		return DLG_CANCEL;
 	}
 	else
 	{
-		return DLG_CANCEL;
+		mbstowcs(wsPin,response,ulPinBufferLen);
+		free(response);
+		return DLG_OK;
 	}
 }
 
 DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usage, const wchar_t *wsPinName, DlgPinInfo pin1Info, wchar_t *wsPin1, unsigned long ulPin1BufferLen, DlgPinInfo pin2Info, wchar_t *wsPin2, unsigned long ulPin2BufferLen)
 {
-	char *oldpin, *newpin;
+	DlgRet result=DLG_ERR;
 
 	printf("DlgAskPins called\n");
 
-	if(askpins("please enter your current PIN code, and your new PIN code (twice)",&oldpin,&newpin)==0)
+	char* response=sdialog_call_modal("/usr/local/bin/beid-changepin","Please enter your current PIN, followed by your new PIN (twice)");
+	if(response==NULL)
 	{
-		mbstowcs(wsPin1,oldpin,ulPin1BufferLen);
-		mbstowcs(wsPin2,newpin,ulPin2BufferLen);
-		free(oldpin);
-		free(newpin);
-		return DLG_OK;
+		result=DLG_CANCEL;
 	}
 	else
 	{
-    	return DLG_CANCEL;
+		char* sep_pos=strchr(response,':');
+		if(sep_pos!=NULL)
+		{
+			*sep_pos='\0';
+			mbstowcs(wsPin1,response,ulPin1BufferLen);
+			mbstowcs(wsPin2,sep_pos+1,ulPin2BufferLen);
+			result=DLG_OK;
+		}
+		free(response);
 	}
+	
+	return result;
 }
 
 DLGS_EXPORT DlgRet eIDMW::DlgBadPin( DlgPinUsage usage, const wchar_t *wsPinName, unsigned long ulRemainingTries)
 {
+	char message[1024];
 	printf("DlgBadPin called\n");
-    return DLG_ERR;
+	wcstombs(message,wsPinName,1024);
+	char* response=sdialog_call_modal("/usr/local/bin/beid-badpin",message);	
+	free(response);
+    return DLG_OK;
 }
 
 DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation, const wchar_t *wsReader, DlgPinUsage usage, const wchar_t *wsPinName, const wchar_t *wsMessage, unsigned long *pulHandle)
@@ -375,23 +104,35 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation, const 
 	char message[1024];
 	printf("DlgDisplayPinPadInfo called\n");
 	wcstombs(message,wsReader,1024);
-	secureaskpin(message);
+	sdialog_call("/usr/local/bin/beid-secure-askpin",message);
     return DLG_OK;
 }
-
 
 
 DLGS_EXPORT void eIDMW::DlgClosePinpadInfo( unsigned long ulHandle )
 {
 	printf("DlgClosePinpadInfo called\n");
-	close_secureaskpin();
+	sdialog_call("/usr/local/bin/beid-close-secure-askpin","close");
 }
-
 
 
 DLGS_EXPORT DlgRet eIDMW::DlgAskAccess( const wchar_t *wsAppPath, const wchar_t *wsReaderName, DlgPFOperation ulOperation, int *piForAllOperations)
 {
-  return DLG_ERR;
+	char 	message[1024];
+	DlgRet 	result=DLG_CANCEL;
+
+	printf("DlgAskAccess called\n");
+
+	wcstombs(message,wsAppPath,1024);
+	char* response=sdialog_call_modal("/usr/local/bin/beid-ask-access",message);
+	if(response!=NULL)
+	{
+		if(strcmp(response,"OK")==0)
+			result=DLG_OK;
+		free(response);
+	}
+	
+	return result;
 }
 
 
