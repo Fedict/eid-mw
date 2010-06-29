@@ -26,7 +26,7 @@
 #include <glib/gi18n.h>
 
 #define MIN_PIN_LENGTH 4
-#define MAX_PIN_LENGTH 12
+#define MAX_PIN_LENGTH 16
 
 #define EXIT_OK		0
 #define EXIT_CANCEL 1
@@ -36,41 +36,79 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 typedef struct
 {
-	GtkWidget  *dialog,*pinLabel,*table,*pinFrame,*backspace,*clear,*eventBox,*digits[10];
+	GtkWidget  *dialog;
 	GtkWidget  *newPinsTable, *originalPinLabel, *newPin0Label, *newPin1Label, *originalPinEntry, *newPin0Entry, *newPin1Entry;
 } PinDialogInfo;
 
-// if MIN_PIN_LENGTH or more digits have been entered, enable the OK button
-///////////////////////////////////////////////////////////////////////////
-
-
+// check validity of 3 fields
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int entries_are_valid(PinDialogInfo* pindialog)
 {
-	gchar* original_pin	=gtk_entry_get_text(GTK_ENTRY(pindialog->originalPinEntry));
-	gchar* new_pin0		=gtk_entry_get_text(GTK_ENTRY(pindialog->newPin0Entry));
-	gchar* new_pin1		=gtk_entry_get_text(GTK_ENTRY(pindialog->newPin1Entry));
+	const gchar* original_pin	=gtk_entry_get_text(GTK_ENTRY(pindialog->originalPinEntry));
+	const gchar* new_pin0		=gtk_entry_get_text(GTK_ENTRY(pindialog->newPin0Entry));
+	const gchar* new_pin1		=gtk_entry_get_text(GTK_ENTRY(pindialog->newPin1Entry));
 
+	// no fields have pins that are too short in them?
 	if(strlen(original_pin)<MIN_PIN_LENGTH || strlen(new_pin0)<MIN_PIN_LENGTH || strlen(new_pin1)<MIN_PIN_LENGTH)
-		return 0;
+		return -1;
+	
+	// no fields have pins that are too long in them?
+	if(strlen(original_pin)>MAX_PIN_LENGTH || strlen(new_pin0)>MAX_PIN_LENGTH || strlen(new_pin1)>MAX_PIN_LENGTH)
+        return -2;
+
+	// the verify new pin equals the new pin field contents?
+	if(strcmp(new_pin0,new_pin1)!=0)
+		return -4;
+
+	// the new pin is not the same as the old pin?
+	if(strcmp(original_pin,new_pin1)==0)
+		return -5;
+
+	// if no failures above, approve fields
+	return 1;
 }
 
 
-void update_ok_button(PinDialogInfo *pindialog)
+// singal handler to attach to GtkEntry, that will limit input to base-10 digits
+////////////////////////////////////////////////////////////////////////////////
+void insert_only_digits(GtkEntry* entry, const gchar* text, gint length, gint* position, gpointer data)
 {
-/*	if(strlen(pindialog->newPin1Entry)>=MIN_PIN_LENGTH)
+	GtkEditable* editable=GTK_EDITABLE(entry);
+	int i, count=0;
+	gchar* result=g_new(gchar,length);
+
+	for (i=0;i<length;i++)
+		if(isdigit(text[i]))
+			result[count++]=text[i];
+  
+	if(count>0)
+	{
+    	g_signal_handlers_block_by_func(G_OBJECT (editable),G_CALLBACK(insert_only_digits),data);
+    	gtk_editable_insert_text(editable,result,count,position);
+    	g_signal_handlers_unblock_by_func(G_OBJECT(editable),G_CALLBACK(insert_only_digits),data);
+	}
+
+	g_signal_stop_emission_by_name (G_OBJECT (editable), "insert_text");
+	g_free (result);
+}
+
+
+// if a reasonable number of digits have been entered in all 3 fields, the new pin equals the new pin's check field, *and* the new pin is not the old pin,
+// enable the OK button
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void update_ok_button(PinDialogInfo* pindialog)
+{
+	if(entries_are_valid(pindialog)>0)
 	{
 		GtkWidget* okButton=gtk_dialog_get_widget_for_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK);
 		gtk_dialog_set_response_sensitive(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK, TRUE);
 		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK);
-		gtk_widget_grab_focus(okButton);
-		
 	}
 	else
 	{
 		gtk_dialog_set_response_sensitive(GTK_DIALOG(pindialog->dialog), GTK_RESPONSE_OK, FALSE);
 		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_REJECT);
-		gtk_widget_grab_focus(pindialog->pinLabel);
-	} */
+	} 
 }
 
 
@@ -83,35 +121,6 @@ void pins_changed(GtkEntry *entry, gpointer _pindialog)
 	update_ok_button(pindialog);
 }
 
-static void add_digit(PinDialogInfo* pindialog, int digit)
-{
-/*	if(strlen(pindialog->pin)<MAX_PIN_LENGTH)
-	{
-		char tmp[MAX_PIN_LENGTH+1];
-		snprintf(tmp,MAX_PIN_LENGTH+1,"%s%1d",pindialog->pin,digit);
-		strcpy(pindialog->pin,tmp);
-		pin_changed(pindialog);
-	} */
-}
-
-// remove one digit from the current pin
-////////////////////////////////////////
-static void backspace(PinDialogInfo* pindialog)
-{
-/*	if(strlen(pindialog->pin)>0)
-	{
-		pindialog->pin[strlen(pindialog->pin)-1]='\0';
-		pin_changed(pindialog);
-	} */
-}
-
-// remove current pin entirely
-///////////////////////////////////////
-static void clear(PinDialogInfo* pindialog)
-{
-//	pin_changed(pindialog);
-}
-
 // event handler for delete-event. always approves the deletion
 ///////////////////////////////////////////////////////////////
 static gboolean on_delete_event( GtkWidget *widget, GdkEvent* event, gpointer pindialog)
@@ -119,87 +128,23 @@ static gboolean on_delete_event( GtkWidget *widget, GdkEvent* event, gpointer pi
     return TRUE;
 }
 
-// event handler for all numerical buttons on the virtual keypad
-//////////////////////////////////////////////////////////////// 
-static void on_key_digit(GtkWidget* kie, gpointer _pindialog)
-{
-	PinDialogInfo* pindialog=(PinDialogInfo*)_pindialog;
-	add_digit(pindialog,atoi(((char*)gtk_button_get_label(GTK_BUTTON(kie)))));
-}
-
-// event handler for backspace button on virtual keypad
-/////////////////////////////////////////////////////////////////
-static void on_key_backspace(GtkWidget* kie, gpointer _pindialog)
-{
-	PinDialogInfo* pindialog=(PinDialogInfo*)_pindialog;
-	backspace(pindialog);
-}
-
-// event handler for clear button on virtual keypad
-///////////////////////////////////////////////////
-static void on_key_clear(GtkWidget* kie, gpointer _pindialog)
-{
-	PinDialogInfo* pindialog=(PinDialogInfo*)_pindialog;
-	clear(pindialog);
-}
-
+// main program
+///////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
 	int 			return_value=EXIT_ERROR;
-	PinDialogInfo 	pindialog;									// this struct contains all objects
-	GdkColor 		color;					
+	PinDialogInfo 	pindialog;
 
-	fprintf(stderr,"--- gtk_init()\n");
     gtk_init(&argc,&argv);										// initialize gtk+
 
 	// create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	fprintf(stderr,"--- creating dialog\n");
     pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,argv[1]);
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(pindialog.dialog),"beid PIN Request");
     gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
     g_signal_connect (pindialog.dialog, "delete-event", G_CALLBACK (on_delete_event),&pindialog);
-
-	// create on-screen numeric keypad, connect the digit and action keys to their event handlers
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	pindialog.table=gtk_table_new(4,3,TRUE);	// table of 4 rows, 3 columns
-
-	// digit 0
-	pindialog.digits[0]=gtk_button_new_with_label("0");
-	gtk_table_attach(GTK_TABLE(pindialog.table),pindialog.digits[0],1,2,3,4,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_widget_set_can_focus(pindialog.digits[0],FALSE);
-	g_signal_connect(pindialog.digits[0],"clicked",G_CALLBACK(on_key_digit),(gpointer)&pindialog);
-
-	// digits 1 to 9	
-	int i;
-	for(i=1;i<=9;i++)
-	{
-		char label[2];
-		snprintf(label,2,"%1d",i);
-		pindialog.digits[i]=gtk_button_new_with_label(label);
-		int col=(i-1)%3;
-		int row=(i-1)/3;
-		gtk_table_attach(GTK_TABLE(pindialog.table),pindialog.digits[i],col,col+1,row,row+1,(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),2,2);
-		gtk_widget_set_can_focus(pindialog.digits[i],FALSE);
-		g_signal_connect(pindialog.digits[i],"clicked",G_CALLBACK(on_key_digit),(gpointer)&pindialog);
-	}
-
-	// backspace button
-	pindialog.backspace=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(pindialog.backspace),gtk_image_new_from_stock(GTK_STOCK_GO_BACK,GTK_ICON_SIZE_SMALL_TOOLBAR));
-	gtk_table_attach(GTK_TABLE(pindialog.table),pindialog.backspace,0,1,3,4,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_widget_set_can_focus(pindialog.backspace,FALSE);
-	g_signal_connect(pindialog.backspace,"clicked",G_CALLBACK(on_key_backspace),(gpointer)&pindialog);
-
-	// clear button
-	pindialog.clear=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(pindialog.clear),gtk_image_new_from_stock(GTK_STOCK_CLEAR,GTK_ICON_SIZE_SMALL_TOOLBAR));
-	gtk_table_attach(GTK_TABLE(pindialog.table),pindialog.clear,2,3,3,4,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_widget_set_can_focus(pindialog.clear,FALSE);
-	g_signal_connect(pindialog.clear,"clicked",G_CALLBACK(on_key_clear),(gpointer)&pindialog);
 
 	// create original, new, and verify new pin entry fields with labels, in a table
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,42 +154,60 @@ int main(int argc, char* argv[])
 	pindialog.originalPinLabel	=gtk_label_new("Current PIN:");
 	pindialog.newPin0Label		=gtk_label_new("New PIN:");
 	pindialog.newPin1Label		=gtk_label_new("New PIN (again):");
-
 	pindialog.originalPinEntry	=gtk_entry_new();
 	pindialog.newPin0Entry		=gtk_entry_new();
 	pindialog.newPin1Entry		=gtk_entry_new();
 
-	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.originalPinLabel,0,1,0,1,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.newPin0Label,	  0,1,1,2,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.newPin1Label,	  0,1,2,3,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
+	// set max lengths
+	gtk_entry_set_max_length(GTK_ENTRY(pindialog.originalPinEntry),	MAX_PIN_LENGTH);
+	gtk_entry_set_max_length(GTK_ENTRY(pindialog.newPin0Entry),		MAX_PIN_LENGTH);
+	gtk_entry_set_max_length(GTK_ENTRY(pindialog.newPin1Entry),		MAX_PIN_LENGTH);
 
-	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.originalPinEntry,1,2,0,1,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.newPin0Entry,1,2,1,2,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.newPin1Entry,1,2,2,3,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
+    // disable visibilities
+    gtk_entry_set_visibility(GTK_ENTRY(pindialog.originalPinEntry),    FALSE);
+    gtk_entry_set_visibility(GTK_ENTRY(pindialog.newPin0Entry),        FALSE);
+    gtk_entry_set_visibility(GTK_ENTRY(pindialog.newPin1Entry),        FALSE);
+	
+	// put labels and entries in a table
+	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.originalPinLabel,	0,1,0,1,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
+	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.newPin0Label,	  	0,1,1,2,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
+	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.newPin1Label,	  	0,1,2,3,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
+	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.originalPinEntry,	1,2,0,1,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
+	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.newPin0Entry,		1,2,1,2,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
+	gtk_table_attach(GTK_TABLE(pindialog.newPinsTable),pindialog.newPin1Entry,		1,2,2,3,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
 
-	g_signal_connect(pindialog.originalPinEntry,"changed",G_CALLBACK(pins_changed),(gpointer)&pindialog);
-	g_signal_connect(pindialog.newPin0Entry,"changed",G_CALLBACK(pins_changed),(gpointer)&pindialog);
-	g_signal_connect(pindialog.newPin1Entry,"changed",G_CALLBACK(pins_changed),(gpointer)&pindialog);
+	// connect signals to filter and read inputs
+	g_signal_connect(pindialog.originalPinEntry, 	"insert_text", 	G_CALLBACK(insert_only_digits),	(gpointer)&pindialog);
+	g_signal_connect(pindialog.newPin0Entry, 		"insert_text", 	G_CALLBACK(insert_only_digits),	(gpointer)&pindialog);
+	g_signal_connect(pindialog.newPin1Entry, 		"insert_text", 	G_CALLBACK(insert_only_digits),	(gpointer)&pindialog);
+	g_signal_connect(pindialog.originalPinEntry,	"changed",		G_CALLBACK(pins_changed),		(gpointer)&pindialog);
+	g_signal_connect(pindialog.newPin0Entry,		"changed",		G_CALLBACK(pins_changed),		(gpointer)&pindialog);
+	g_signal_connect(pindialog.newPin1Entry,		"changed",		G_CALLBACK(pins_changed),		(gpointer)&pindialog);
 
 	// add all these objects to the dialog
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    	gtk_container_set_border_width(GTK_CONTAINER(pindialog.dialog),10);
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(pindialog.dialog)->vbox),pindialog.newPinsTable, TRUE, TRUE,2);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(pindialog.dialog)->vbox),pindialog.table, FALSE, FALSE,2);
+
+	// initial state for OK button
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	update_ok_button(&pindialog);
 
 	// show all these widgets, and run the dialog as a modal dialog until it is closed by the user
 	//////////////////////////////////////////////////////////////////////////////////////////////    
 
-	fprintf(stderr,"--- showing dialog\n");
     gtk_widget_show_all(GTK_WIDGET(pindialog.dialog));
-	
-	fprintf(stderr,"--- modal dialog\n");
     switch(gtk_dialog_run(GTK_DIALOG(pindialog.dialog)))
 	{
-		case GTK_RESPONSE_OK:					// if the use chose OK
-		//	printf("%s\n",pindialog.pin);		// output the PIN to stdout
+		case GTK_RESPONSE_OK:					// if the user chose OK
+		{
+			char* oldpin=gtk_entry_get_text(GTK_ENTRY(pindialog.originalPinEntry));
+			char* newpin=gtk_entry_get_text(GTK_ENTRY(pindialog.newPin0Entry));
+			printf("%s:%s\n",oldpin,newpin);	// output the PINs to stdout
 			return_value=EXIT_OK;				// and return OK
+		}
 		break;
 
 		default:								// otherwise
@@ -255,7 +218,6 @@ int main(int argc, char* argv[])
 	// properly dispose of the dialog (which disposes of all it's children), and exit with specific return value
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	fprintf(stderr,"--- dispose of dialog\n");
 	gtk_widget_destroy(pindialog.dialog);
 	exit(return_value);
 }

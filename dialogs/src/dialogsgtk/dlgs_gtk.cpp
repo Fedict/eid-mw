@@ -211,6 +211,106 @@ char* askpin(const char* msg)
 }
 
 
+// FIXME code duplication, refactor!
+
+int askpins(const char* msg, char** oldpin, char** newpin)
+{
+    pid_t pid;
+    size_t len;
+    int p[2], status, ret;
+    char buf[1024];
+
+	fprintf(stderr,"... fflush\n");
+    if(fflush(stdout)!=0)
+	{
+        perror("askpins/fflush");
+		return NULL;
+	}
+
+	fprintf(stderr,"... pipe\n");
+    if(pipe(p)<0)
+	{
+		perror("askpins/pipe");
+        return NULL;
+    }
+
+	fprintf(stderr,"... fork\n");
+    if((pid=fork())<0)
+	{
+		perror("askpins/fork");
+        return NULL;
+    }
+
+    if(pid==0)
+	{
+		fprintf(stderr,"*** in child\n");
+		fprintf(stderr,"*** DISPLAY=%s\n",getenv("DISPLAY"));
+       	umask(0);
+		chdir("/");
+        close(p[0]);
+
+        if(dup2(p[1],STDOUT_FILENO)<0)
+		{
+			perror("askpins/child/dup2");
+			exit(1);
+		}
+
+		fprintf(stderr,"*** exec beid-changepin\n");
+		execlp("/usr/local/bin/beid-changepin","/usr/local/bin/beid-changepin", msg, (char *) 0);
+		perror("askpins/child/execlp");
+    }
+
+	fprintf(stderr,"... child PID=%d\n",pid);
+
+	fprintf(stderr,"... reading result\n");
+    close(p[1]);
+    len=ret=0;
+    do
+	{
+        ret=read(p[0],buf+len,sizeof(buf)-1-len);
+        if(ret==-1 && errno==EINTR)
+            continue;
+        if(ret<=0)
+            break;
+        len+=ret;
+    }
+	while(sizeof(buf)-1-len>0);
+
+    buf[len]='\0';
+    close(p[0]);
+
+	fprintf(stderr,"... waiting for child to die\n");
+    while(waitpid(pid,&status,0)<0)
+        if(errno!=EINTR)
+            break;
+
+    if(!WIFEXITED(status) || WEXITSTATUS(status)!=0)
+	{
+		fprintf(stderr,"... child died badly\n");
+        memset(buf,0,sizeof(buf));
+        return NULL;
+    }
+
+	fprintf(stderr,"... child died normally\n");
+
+
+    buf[strcspn(buf,"\r\n")]='\0';
+	char* sep_pos=strchr(buf,':');
+	if(sep_pos!=NULL)
+	{
+		*sep_pos='\0';
+		*oldpin=strdup(buf);
+		*newpin=strdup(sep_pos+1);
+	}
+	else
+	{
+		return -1;
+	}
+
+    memset(buf,0,sizeof(buf));
+	return 0;
+}
+
 using namespace eIDMW;
 
 /**
@@ -235,6 +335,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation, DlgPinUsage usage
 	if(pin!=NULL)
 	{
 		mbstowcs(wsPin,pin,ulPinBufferLen);
+		free(pin);
 		return DLG_OK;
 	}
 	else
@@ -245,11 +346,23 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation, DlgPinUsage usage
 
 DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usage, const wchar_t *wsPinName, DlgPinInfo pin1Info, wchar_t *wsPin1, unsigned long ulPin1BufferLen, DlgPinInfo pin2Info, wchar_t *wsPin2, unsigned long ulPin2BufferLen)
 {
+	char *oldpin, *newpin;
+
 	printf("DlgAskPins called\n");
-    return DLG_ERR;
+
+	if(askpins("please enter your current PIN code, and your new PIN code (twice)",&oldpin,&newpin)==0)
+	{
+		mbstowcs(wsPin1,oldpin,ulPin1BufferLen);
+		mbstowcs(wsPin2,newpin,ulPin2BufferLen);
+		free(oldpin);
+		free(newpin);
+		return DLG_OK;
+	}
+	else
+	{
+    	return DLG_CANCEL;
+	}
 }
-
-
 
 DLGS_EXPORT DlgRet eIDMW::DlgBadPin( DlgPinUsage usage, const wchar_t *wsPinName, unsigned long ulRemainingTries)
 {
