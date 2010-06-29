@@ -139,6 +139,7 @@ BASE_SISPLUGINS = CARDPLUGINSIS_ACR38U_NAME_dylib
 #BASE_SISPLUGINS = 
 LATEST_XPI:=$(shell readlink ../xpi/builds/belgiumeid-CURRENT.xpi)
 XPI_PLUGIN = xpi/builds/$(LATEST_XPI)
+XPI_PLUGIN_DIR = "/Library/Application\ Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
 #XPI_PLUGIN = xpi/builds/belgiumeid-CURRENT.xpi
 
 ## This foreach command loops over the content of BASE_LIBS and substitute
@@ -167,7 +168,8 @@ BINS = $(APP_BINS:%= bin/%)
 
 ## to be put in the APPS_DIR
 APP_FILES = misc/$(REL_NAME)/$(REL_NAME)-pkcs11-register.html \
-	misc/$(REL_NAME)/$(REL_NAME)-pkcs11-unregister.html
+	misc/$(REL_NAME)/$(REL_NAME)-pkcs11-unregister.html \
+	$(XPI_PLUGIN)
 
 
 ## Language files for the GUI
@@ -234,9 +236,8 @@ DIRS =	$(ROOT_DIR)/$(INST_DIR)/lib/siscardplugins \
 	$(ROOT_DIR)/$(MAN_DIR) \
 	$(ROOT_DIR)/$(APPS_DIR) \
 	$(ROOT_DIR)/$(APPS_DIR)/licenses \
-	$(ROOT_DIR)/System/Library/Security/tokend \
-	$(ROOT_DIR)/Applications/Firefox.app/Contents/MacOS/extensions
-
+	$(ROOT_DIR)/System/Library/Security/tokend
+	
 SDK_DIRS = $(SDK_DIR)/beidlib/C++/include \
 	   $(SDK_DIR)/beidlib/Java/bin \
 	   $(SDK_DIR)/beidlib/Java/unsigned \
@@ -270,8 +271,7 @@ FILES_TO_COPY := $(LIBS:%=%_____$(ROOT_DIR)/$(INST_DIR)/lib/) \
 	         $(DOCS:%=%_____$(ROOT_DIR)/$(MAN_DIR)) \
 	         $(SCRIPTS:%=%_____$(ROOT_DIR)/$(INST_DIR)/bin) \
                  $(BINS:%=%_____$(ROOT_DIR)/usr/bin) \
-		 $(APP_FILES:%=%_____$(ROOT_DIR)/$(APPS_DIR)) \
-		 $(XPI_PLUGIN:%=%_____$(ROOT_DIR)/Applications/Firefox.app/Contents/MacOS/extensions)
+		 $(APP_FILES:%=%_____$(ROOT_DIR)/$(APPS_DIR))
 
 
 SDK_FILES_TO_COPY := $(SDK_HEADERS_CPP:%=%_____$(SDK_DIR)/beidlib/C++/include) \
@@ -433,11 +433,15 @@ rel_end:
 	@echo "ln -fs $(INST_DIR)/lib/libxerces-c-3.1.dylib $(INST_DIR)/lib/libxerces-c-3.dylib" >> $(POSTFLIGHT)
 	@echo "test -e /Library/Java/Extensions/$(JAVALIB_NAME).jnilib && unlink /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
 	@echo "ln -fs /usr/local/lib/$(JAVALIB_NAME_x_y_z_dylib) /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
+	@echo "mkdir \"$(XPI_PLUGIN_DIR)\"" >> $(POSTFLIGHT)
+	@echo "cp $(APPS_DIR)/$(LATEST_XPI) \"$(XPI_PLUGIN_DIR)"\" >> $(POSTFLIGHT)
+	@echo "unzip -qq -o \"$(XPI_PLUGIN_DIR)/$(LATEST_XPI)\" -d \"$(XPI_PLUGIN_DIR)/\"" >> $(POSTFLIGHT)
 	@echo "mv $(APPS_DIR)/$(EIDGUI).app $(APPS_DIR)/$(EIDGUI_NAME).app" >> $(POSTFLIGHT)
 	@echo "mv $(APPS_DIR) \"$(APPS_DIR_NAME)\"" >> $(POSTFLIGHT)
 	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der" >> $(POSTFLIGHT)
+	
+	
 	-@test -e tmp && rm temp
-
 	@cat $(POSTFLIGHT) ../../beid-2.6/mac/postflight > temp
 	@mv temp $(POSTFLIGHT)
 	@chmod a+x $(POSTFLIGHT)

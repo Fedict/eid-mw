@@ -3,8 +3,8 @@
 # java 1.4.2 is not supported any more since oct 2008
 MINJAVAVER=1.5
 MACHINETYPE=i386
-OSXVER=10.6.1
-MWVER=3.5.3
+OSXVER=10.5.0
+MWVER=3.5.4
 
 #########################################
 # we must be running on intel
@@ -20,13 +20,13 @@ else
 fi
 
 #########################################
-# we must be on a 10.5
+# we must be on a 10.5 or later
 #########################################
 echo "[Info ] Verifying OSX version..."
 IFS=$'\n' ver=($(sw_vers))
 ver=(${ver[1]})
 
-if [[ $ver != *$OSXVER* ]]
+if [[ $ver < *$OSXVER* ]]
 then
 	echo "[Error] Incorrect OS version: $ver. Must be $OSXVER."
 	exit -1	
