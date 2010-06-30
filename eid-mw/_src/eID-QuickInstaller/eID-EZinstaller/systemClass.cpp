@@ -1666,8 +1666,10 @@ string systemClass::readCard(string inputXml){
 };*/
 
 bool systemClass::is64bitOS() {
+#ifdef WIN32
 	LPFN_ISWOW64PROCESS fnIsWow64Process;
     BOOL bIsWow64 = FALSE;
+#endif
 	bool bIsOS64 = FALSE;
 // not used by mac as universal libs are used there
 #ifdef WIN64

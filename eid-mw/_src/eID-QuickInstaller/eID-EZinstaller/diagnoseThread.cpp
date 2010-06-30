@@ -18,7 +18,9 @@
 
 **************************************************************************** */
 #include "diagnoseThread.h"
+#ifdef WIN32
 #include <windows.h>
+#endif
 
 #define LOGSTR(msg) 
 #define LOGINT(format, i) 
@@ -834,9 +836,10 @@ void diagnoseThread::extractMiddleWare() {
 }
 
 void diagnoseThread::extractBeidMW64() {
-
+#ifdef WIN32
 	QString FileName(substituteResVars("%osTempFolder%BeidMW64.msi").c_str());
 	WinRes::SaveBinaryResource("Msi",IDR_MSI2,FileName.toStdString());
+#endif
 }
 
 void diagnoseThread::extractISSFiles(QString param) {
