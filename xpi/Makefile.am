@@ -2,18 +2,17 @@ ACLOCAL_AMFLAGS         = -I m4
 
 XPI_ID = belgiumeid@eid.belgium.be
 
-if LINUX
-XPI_INSTALL_DIR   ?= /usr/share/mozilla/extensions/
-endif
+xpidir = $(mozext)$(XPI_ID)/
 
-if OSX
-XPI_INSTALL_DIR   ?= "/Library/Application Support/Mozilla Firefox/Extensions/"
-endif
-
-if WIN32
-XPI_INSTALL_DIR   ?= "/c/Program Files/Mozilla Firefox/Extensions/"
-endif
-
+# For now no make install on Windows
+#if WIN32
+#if PROGRAMFILES_86_EXISTS
+#xpidir=$(prefix)/$(PROGRAMW6432)\ (x86)/Mozilla\ Firefox/Extensions/
+#endif
+#if PROGRAMFILES_EXISTS
+#xpidir=$(prefix)/$(PROGRAMFILES)/Mozilla\ Firefox/Extensions/
+#endif
+#endif
 
 XPI_FILES = $(srcdir)/src/content/BelgiumEidPKCS11.js \
 			$(srcdir)/src/content/firefoxOverlay.xul \
@@ -56,6 +55,7 @@ belgiumeid.xpi: $(XPI_FILES)
 	rm -f $(abs_builddir)/$@; \
 	cd $$tmp$(scrdir)/src && \
 	@ZIP@ -r $(abs_builddir)/$@ .; \
+	cd $(abs_builddir); \
 	rm -rf $$tmp
 	 
 install-data-local: $(XPI_FILES)
@@ -75,7 +75,7 @@ install-data-local: $(XPI_FILES)
 		mkdir -p $$tmp/`dirname $$xpifile`/; \
 		cp $$xpifile $$tmp/`dirname $$xpifile`/; \
 	done; \
-	test -z "$(XPI_INSTALL_DIR)$(XPI_ID)" || mkdir -p $(XPI_INSTALL_DIR)$(XPI_ID)/; \
-	cp -R $$tmp$(scrdir)/src/* $(XPI_INSTALL_DIR)$(XPI_ID)/;
+	test -z "$(xpidir)" || mkdir -p $(xpidir); \
+	cp -R $$tmp$(scrdir)/src/* $(xpidir);
 	
 	
