@@ -69,20 +69,20 @@ AS_IF(
 AS_IF(
 	[test "x$with_mozext" = "xno"],  				  		
 	[AM_COND_IF(  									  		
-		[WIN32], 									  		
-		[[mozext]=[${installprefix}/share/mozilla/extensions/]	  		
+		[LINUX], 									  		
+		[[mozext]=[${installprefix}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}]	  		
 		AC_CHECK_FILE(
 			[${installprefix}/lib/mozilla],	  		
-			[mozext]=[${installprefix}/lib/mozilla/extensions/], 	
+			[mozext]=[${installprefix}/lib/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}], 	
 			AC_CHECK_FILE(
 				[${installprefix}/lib64/mozilla], 
-				[mozext]=[${installprefix}/lib64/mozilla/extensions/] 
+				[mozext]=[${installprefix}/lib64/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}] 
 			)
 		)]
 	)
 	AM_COND_IF(												
 		[OSX],												
-		[[mozext]=[/Library/Application Support/Mozilla Firefox/Extensions/]] 
+		[[mozext]=[/Library/Application Support/Mozilla Firefox/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}]] 
 	)]
 )
 AC_SUBST([ZIP])
