@@ -56,7 +56,7 @@ AC_MSG_RESULT(no)
 fi
 
 AC_ARG_WITH([mozext],
-	  AC_HELP_STRING([--with-mozext=DIR],[Mozilla extension directory]),
+	  AS_HELP_STRING([--with-mozext=DIR],[Mozilla extension directory]),
 	  [],
 	  [with_mozext=no])
 
@@ -67,22 +67,26 @@ AS_IF(
 )
 
 AS_IF(
-	[test "x$with_mozext" = "xno"],  				  		
-	[AM_COND_IF(  									  		
-		[LINUX], 									  		
-		[[mozext]=[${installprefix}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}]	  		
-		AC_CHECK_FILE(
-			[${installprefix}/lib/mozilla],	  		
-			[mozext]=[${installprefix}/lib/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}], 	
-			AC_CHECK_FILE(
-				[${installprefix}/lib64/mozilla], 
-				[mozext]=[${installprefix}/lib64/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}] 
-			)
+	[test "x$with_mozext" = "xno"],
+	[AM_COND_IF(
+		[LINUX],
+		[AC_CHECK_FILE(
+			[${installprefix}/share/mozilla],
+			[mozext]=[${installprefix}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/],
+			[AC_CHECK_FILE(
+				[${installprefix}/lib/mozilla],
+				[mozext]=[${installprefix}/lib/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/],
+				[AC_CHECK_FILE(
+					[${installprefix}/lib64/mozilla],
+					[mozext]=[${installprefix}/lib64/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/],
+					[mozext]=[${installprefix}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/]
+				)]
+			)]
 		)]
 	)
-	AM_COND_IF(												
-		[OSX],												
-		[[mozext]=[/Library/Application Support/Mozilla Firefox/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}]] 
+	AM_COND_IF(
+		[OSX],
+		[mozext]=[/Library/Application Support/Mozilla Firefox/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/]
 	)]
 )
 AC_SUBST([ZIP])
