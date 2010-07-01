@@ -1047,6 +1047,17 @@ void delayThread::run() {
 }
 
 void detectReaderThread::run() {
+	
+#ifdef __APPLE__
+	{
+		QString currdirpath = QCoreApplication::applicationDirPath();
+		std::string commandLine = "";
+		commandLine += currdirpath.toStdString();
+		commandLine += "/../Resources/preparePcscd.sh";
+		CSysDiagnost::doAsAdmin(commandLine, true);
+	}
+#endif
+	
     string readersXml = scl.pcscEnumerateCardReaders("");
     QDomNode resultNode = ezw.xmlToNode(readersXml);
     QDomNode listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");

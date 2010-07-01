@@ -2,6 +2,7 @@
 LANG=$1
 DIRNAME=`dirname $0`
 
+launchctl load /Library/LaunchDaemons/org.opensc.pcscd.autostart
 
 DAEMON=`ps -A -c -o pid,command | grep pcscd`
 if [[ "$DAEMON" == "" ]]
