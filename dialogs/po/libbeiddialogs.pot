@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+
+#: src/dialogsgtk/askaccessdialog.c:56
+msgid "beID Card Information Access Request"
+msgstr ""
+
+#: src/dialogsgtk/badpindialog.c:55
+msgid "beID: Incorrect PIN Code"
+msgstr ""
+
+#: src/dialogsgtk/changepindialog.c:152
+msgid "beID: Change PIN Code"
+msgstr ""
+
+#: src/dialogsgtk/changepindialog.c:161
+msgid "Current PIN:"
+msgstr ""
+
+#: src/dialogsgtk/changepindialog.c:162
+msgid "New PIN:"
+msgstr ""
+
+#: src/dialogsgtk/changepindialog.c:163
+msgid "New PIN (again):"
+msgstr ""
+
+#: src/dialogsgtk/dlgs_gtk.cpp:55
+msgid "Please enter your PIN code."
+msgstr ""
+
+#: src/dialogsgtk/dlgs_gtk.cpp:74
+msgid "Please enter your current PIN, followed by your new PIN (twice)"
+msgstr ""
+
+#: src/dialogsgtk/pindialog.c:209 src/dialogsgtk/secure_pindialog.c:84
+msgid "beID: PIN Code Required"
+msgstr ""
+
+msgid: "You have entered an incorrect PIN code.\nPlease note that you have only %s attempts left before your PIN is blocked."
+msgstr ""
+
+msgid: "You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."
+msgstr ""
+
+msgid: "Please enter your PIN code on the secure pinpad reader:\n[%s].."
+msgstr: ""
+
+msgid: "Please change your PIN code on the secure pinpad reader:\n[%s].."
+msgstr: ""
