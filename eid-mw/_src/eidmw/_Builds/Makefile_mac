@@ -235,8 +235,7 @@ DIRS =	$(ROOT_DIR)/$(INST_DIR)/lib/siscardplugins \
 	$(ROOT_DIR)/usr/bin \
 	$(ROOT_DIR)/$(MAN_DIR) \
 	$(ROOT_DIR)/$(APPS_DIR) \
-	$(ROOT_DIR)/$(APPS_DIR)/licenses \
-	$(ROOT_DIR)/System/Library/Security/tokend
+	$(ROOT_DIR)/$(APPS_DIR)/licenses
 	
 SDK_DIRS = $(SDK_DIR)/beidlib/C++/include \
 	   $(SDK_DIR)/beidlib/Java/bin \
@@ -297,7 +296,7 @@ SDK_FILES_TO_COPY := $(SDK_HEADERS_CPP:%=%_____$(SDK_DIR)/beidlib/C++/include) \
 DIRS_TO_COPY := bin/$(EIDGUI).app_____$(ROOT_DIR)/$(APPS_DIR) \
 		misc/mac/OOoRegister/OpenOffice_Register.pkg_____$(ROOT_DIR)/$(APPS_DIR) \
 		misc/mac/OOo.default_____$(ROOT_DIR)/$(INST_DIR)/lib \
-		bin/BEID.tokend_____$(ROOT_DIR)/System/Library/Security/tokend \
+		bin/BEID.tokend_____$(ROOT_DIR)/$(APPS_DIR) \
 		../beid-2.6/mac/share/_____$(ROOT_DIR)/$(INST_DIR)/share
 
 r1=$(ROOT_DIR)
@@ -310,8 +309,7 @@ r3=$(UDIR)/$(ROOT_DIR)
 UNIVERSAL = $(LIBS:%=$(r3)/$(INST_DIR)/%) \
 	    $(SISPLUGINS_BARE:%=$(r3)/$(INST_DIR)/lib/siscardplugins/%) \
 	    $(BASE_BINS:%=$(r3)/usr/bin/%) \
-	    $(r3)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/$(EIDGUI) \
-	    $(r3)/System/Library/Security/tokend/BEID.tokend/Contents/MacOS/BEID
+	    $(r3)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/$(EIDGUI)
 
 
 #####################################################################
@@ -436,11 +434,14 @@ rel_end:
 	@echo "mkdir \"$(XPI_PLUGIN_DIR)\"" >> $(POSTFLIGHT)
 	@echo "cp $(APPS_DIR)/$(LATEST_XPI) \"$(XPI_PLUGIN_DIR)"\" >> $(POSTFLIGHT)
 	@echo "unzip -qq -o \"$(XPI_PLUGIN_DIR)/$(LATEST_XPI)\" -d \"$(XPI_PLUGIN_DIR)/\"" >> $(POSTFLIGHT)
+	@echo 'if [[ $$(sw_vers -productVersion) == *10.5* ]]; then' >> $(POSTFLIGHT)
+	@echo "mv /Applications/BelgiumIdentityCard/beid.tokend /System/Library/Security/tokend/; else" >> $(POSTFLIGHT)
+	@echo "rm -R /Applications/BelgiumIdentityCard/beid.tokend; fi" >> $(POSTFLIGHT)
+
 	@echo "mv $(APPS_DIR)/$(EIDGUI).app $(APPS_DIR)/$(EIDGUI_NAME).app" >> $(POSTFLIGHT)
 	@echo "mv $(APPS_DIR) \"$(APPS_DIR_NAME)\"" >> $(POSTFLIGHT)
 	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der" >> $(POSTFLIGHT)
-	
-	
+
 	-@test -e tmp && rm temp
 	@cat $(POSTFLIGHT) ../../beid-2.6/mac/postflight > temp
 	@mv temp $(POSTFLIGHT)
@@ -481,7 +482,7 @@ rel_end:
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government2005.der
 	@chmod a+x  $(ROOT_DIR)/$(INST_DIR)/lib/libbeid*.dylib
 	@chmod a+x  $(ROOT_DIR)/$(INST_DIR)/lib/libqt-mt*.dylib
-	@chgrp -R wheel  $(ROOT_DIR)/System
+	#@chgrp -R wheel  $(ROOT_DIR)/System
 	@chgrp    wheel  $(ROOT_DIR)/usr
 	@chgrp    wheel  $(ROOT_DIR)/usr/bin
 	@chgrp    wheel  $(ROOT_DIR)/usr/local
@@ -492,7 +493,7 @@ rel_end:
 	@chgrp    wheel  $(ROOT_DIR)/usr/local/lib/beidqt
 	@chgrp    wheel  $(ROOT_DIR)/usr/local/lib/beidqt/plugins
 	@chgrp    wheel  $(ROOT_DIR)/usr/share/man/man1
-	@chgrp -R admin  $(ROOT_DIR)/System/Library/Security/tokend/BEID.tokend
+	@chgrp -R admin  $(ROOT_DIR)/$(APPS_DIR)/BEID.tokend
 
 	$(PKG_MAKER) -build -p $(PKG_NAME) -f $(r1) -ds -i $(REL_DIR)/Info.plist \
 		 -d $(REL_DIR)/Description.plist -r $(REL_DIR)/resources  -v
