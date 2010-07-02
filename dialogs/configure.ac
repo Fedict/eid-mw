@@ -6,6 +6,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE
 AC_CANONICAL_HOST
+AC_GNU_SOURCE
 LT_INIT([win32-dll])
 
 AC_LIBTOOL_WIN32_DLL
@@ -13,11 +14,15 @@ AC_LIBTOOL_WIN32_DLL
 # Checks for programs (1)
 AC_PROG_CXX
 AC_PROG_CC
-AC_PROG_LIBTOOL
 AM_PROG_CC_C_O
-#AC_PROG_INTLTOOL([0.41])
-#AM_GLIB_GNU_GETTEXT
+
+AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
+
+AM_GNU_GETTEXT_VERSION([0.18])
+AM_GNU_GETTEXT
+
+AC_SUBST(LOCALEDIR)
 
 ############################################################################
 # Test for platform and set corresponding AM_CONDITIONALs for Makefile.am  #
@@ -74,6 +79,7 @@ AS_VAR_IF([qt],[true],
 # if gtk dialogs, enable checking for GTK2
 AS_VAR_IF([gtk],[true],
 [
+
 	AC_MSG_CHECKING([user-specified GTK installation])
 	AC_ARG_WITH([gtk],
 	  AC_HELP_STRING([--with-gtk=DIR],[specific GTK install location]),
@@ -136,5 +142,5 @@ AC_TYPE_SIZE_T
 AC_FUNC_FORK
 AC_CHECK_FUNCS([strerror vasprintf])
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile intl/Makefile po/Makefile.in])
 AC_OUTPUT
