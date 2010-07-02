@@ -18,13 +18,11 @@
 
 #include "single_dialog.h"
 
-#define BEID_SECURE_PIN_DIALOG	"beid-secure-askpin"
-
 int main(int argc, char* argv[])
 {
 	SingleDialog sdialog;								// the single_dialog meta-info
 
-	sdialog_init(&sdialog,BEID_SECURE_PIN_DIALOG);		// set up for single dialog
+	sdialog_init(&sdialog);								// set up for single dialog
 	sdialog_terminate_active(&sdialog);					// remove any active dialog
 
 	exit(0);

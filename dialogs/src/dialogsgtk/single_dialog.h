@@ -25,11 +25,10 @@
 typedef struct
 {
 	char pid_path[PATH_MAX];
-	char unique_id[MAX_UID_LENGTH];
 } SingleDialog;
 
 
-void 	sdialog_init(SingleDialog* sdialog, char* did);
+void 	sdialog_init(SingleDialog* sdialog);
 int 	sdialog_write_pid(SingleDialog* sdialog);
 pid_t 	sdialog_read_pid(SingleDialog* sdialog);
 int 	sdialog_terminate(SingleDialog* sdialog, pid_t target);

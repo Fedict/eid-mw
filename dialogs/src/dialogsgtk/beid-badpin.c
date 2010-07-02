@@ -20,25 +20,16 @@
 #include <gtk/gtkenums.h>
 #include <gdk/gdkkeysyms.h>
 #include <glib.h>
-#include <string.h>
 #include <stdlib.h>
 #include <glib/gi18n.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include "single_dialog.h"
+#include <libintl.h>
+#include <locale.h>
+#include "config.h"
 
-#define EXIT_OK		0
-#define EXIT_CANCEL 1
-#define EXIT_ERROR	2
+#define _(String) gettext (String)
 
-#define BEID_SECURE_PIN_DIALOG	"beid-secure-askpin"
-
-// struct holding all the runtime data, so we can use callbacks without global variables
-/////////////////////////////////////////////////////////////////////////////////////////
-typedef struct
-{
-	GtkWidget  *dialog;
-} PinDialogInfo;
+#define EXIT_OK			0
+#define EXIT_ERROR		2
 
 // event handler for delete-event. always approves the deletion
 ///////////////////////////////////////////////////////////////
@@ -49,46 +40,46 @@ static gboolean on_delete_event( GtkWidget *widget, GdkEvent* event, gpointer pi
 
 int main(int argc, char* argv[])
 {
-	char			pid_path[PATH_MAX];
-	int 			return_value=EXIT_ERROR;
-	PinDialogInfo 	pindialog;									// this struct contains all dialog objects
-	SingleDialog	sdialog;									// the single_dialog meta-info
+	int 		return_value=EXIT_ERROR;
+	GtkWidget*	dialog;
 
-	sdialog_init(&sdialog,BEID_SECURE_PIN_DIALOG);				// set up for single dialog
+	setlocale(LC_MESSAGES,"");
+    bindtextdomain(PACKAGE,LOCALEDIR);
+    textdomain(PACKAGE);
 
-	if(argv[1]==NULL || strcmp(argv[1],"close")==0)				// called with "close" or nothing, 
-	{
-		sdialog_terminate_active(&sdialog);						// we remove any existing dialog and exit
-		exit(0);
-	}
-		
-	if(sdialog_lock(&sdialog)==-1)								// establish single lock
-		exit(1);												// or abort if this is not possible
-
-	fprintf(stderr,"--- gtk_init()\n");
     gtk_init(&argc,&argv);										// initialize gtk+
 	
 	// create new message dialog with CANCEL button in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	fprintf(stderr,"--- creating dialog\n");
-    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,argv[1]);
-	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
-    gtk_window_set_title(GTK_WINDOW(pindialog.dialog),"beid PIN Request");
-    gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
-    g_signal_connect (pindialog.dialog, "delete-event", G_CALLBACK (on_delete_event),&pindialog);
+	char message[1024];
+	if((argc==2) && (argv[1]!=NULL) && (strlen(argv[1])==1) && isdigit(*(argv[1])))
+	{
+		int attempts=atoi(argv[1]);
+		if(attempts>1)
+			snprintf(message,sizeof(message)-2,_("You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked."),attempts);
+		else
+			snprintf(message,sizeof(message)-2,_("You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."));
+	}
+	else
+	{
+		fprintf(stderr,"Incorrect Parameter for <number of attempts left>\n");
+		exit(1);
+	}
+	
+    dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_WARNING,GTK_BUTTONS_OK,message);
+	gtk_dialog_set_default_response(GTK_DIALOG(dialog),GTK_RESPONSE_OK);
+    gtk_window_set_title(GTK_WINDOW(dialog),_("beID: Incorrect PIN Code"));
+    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
 	// show all these widgets, and run the dialog as a modal dialog until it is closed by the user
 	//////////////////////////////////////////////////////////////////////////////////////////////    
 
-	fprintf(stderr,"--- showing dialog\n");
-    gtk_widget_show_all(GTK_WIDGET(pindialog.dialog));
-	
-	fprintf(stderr,"--- modal dialog\n");
-    switch(gtk_dialog_run(GTK_DIALOG(pindialog.dialog)))
+    gtk_widget_show_all(GTK_WIDGET(dialog));
+    switch(gtk_dialog_run(GTK_DIALOG(dialog)))
 	{
-		case GTK_RESPONSE_CANCEL:				// if the use chose CANCEL
-			return_value=EXIT_CANCEL;
+		case GTK_RESPONSE_OK:					// if the use chose OK
+			return_value=EXIT_OK;
 		break;
 
 		default:								// otherwise
@@ -99,9 +90,6 @@ int main(int argc, char* argv[])
 	// properly dispose of the dialog (which disposes of all it's children), and exit with specific return value
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	fprintf(stderr,"--- dispose of dialog\n");
-	gtk_widget_destroy(pindialog.dialog);
-
-	sdialog_unlock(&sdialog);		// unlock the dialog
+	gtk_widget_destroy(dialog);
 	exit(return_value);
 }

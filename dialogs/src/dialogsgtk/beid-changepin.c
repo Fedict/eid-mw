@@ -24,6 +24,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <glib/gi18n.h>
+#include <libintl.h>
+#include <locale.h>
+#include "config.h"
+
+#define _(String) gettext (String)
 
 #define MIN_PIN_LENGTH 4
 #define MAX_PIN_LENGTH 16
@@ -135,14 +140,18 @@ int main(int argc, char* argv[])
 	int 			return_value=EXIT_ERROR;
 	PinDialogInfo 	pindialog;
 
+	setlocale (LC_MESSAGES, "");
+    bindtextdomain (PACKAGE, LOCALEDIR);
+	textdomain (PACKAGE);
+
     gtk_init(&argc,&argv);										// initialize gtk+
 
 	// create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,argv[1]);
+    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,_("Please enter your current PIN, followed by your new PIN (twice)"));
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
-    gtk_window_set_title(GTK_WINDOW(pindialog.dialog),"beid PIN Request");
+    gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_("beID: Change PIN Code"));
     gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
     g_signal_connect (pindialog.dialog, "delete-event", G_CALLBACK (on_delete_event),&pindialog);
 
@@ -151,9 +160,9 @@ int main(int argc, char* argv[])
 
 	pindialog.newPinsTable		=gtk_table_new(3,2,TRUE);    // table of 4 rows, 3 columns
 
-	pindialog.originalPinLabel	=gtk_label_new("Current PIN:");
-	pindialog.newPin0Label		=gtk_label_new("New PIN:");
-	pindialog.newPin1Label		=gtk_label_new("New PIN (again):");
+	pindialog.originalPinLabel	=gtk_label_new(_("Current PIN:"));
+	pindialog.newPin0Label		=gtk_label_new(_("New PIN:"));
+	pindialog.newPin1Label		=gtk_label_new(_("New PIN (again):"));
 	pindialog.originalPinEntry	=gtk_entry_new();
 	pindialog.newPin0Entry		=gtk_entry_new();
 	pindialog.newPin1Entry		=gtk_entry_new();

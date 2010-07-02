@@ -29,18 +29,22 @@
 #include <glib/gi18n.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <libgen.h>
+#include <signal.h>
 #include "single_dialog.h"
 
 #define	MIN_CMDLINE_PATH_BYTES 14
 
-void sdialog_init(SingleDialog* sdialog, char* did)
+#define QUOTEME_(x) #x
+#define QUOTEME(x) QUOTEME_(x)
+
+void sdialog_init(SingleDialog* sdialog)
 {
 	char default_tempdir[]="/tmp";
     char* tmpdir=getenv("TMPDIR");
     if(tmpdir==NULL)
         tmpdir=default_tempdir;
-    snprintf(sdialog->pid_path,sizeof(sdialog->pid_path)-2,"%s/.%s-%d.pid",tmpdir,did,getuid());
-	strncpy(sdialog->unique_id,did,sizeof(sdialog->unique_id)-2);
+    snprintf(sdialog->pid_path,sizeof(sdialog->pid_path)-2,"%s/.%s-%d.pid",tmpdir,QUOTEME(SDIALOG_ID),getuid());
 }
 
 int sdialog_write_pid(SingleDialog* sdialog)
@@ -132,9 +136,9 @@ int sdialog_terminate(SingleDialog* sdialog, pid_t target)
 	char 	tmp_str[PATH_MAX];
 	int 	attempts;
 	
-	fprintf(stderr,"sdialog_terminate %d\n",target);
+	fprintf(stderr,"sdialog_terminate %d comparing to %s\n",target,QUOTEME(SDIALOG_ID));
 
-	if(running(target)==0 && (read_proc_cmdline(tmp_str,sizeof(tmp_str),target)==0) && (strstr(tmp_str,sdialog->unique_id)!=NULL))			// if it contains our command-line, it's a former instance
+	if(running(target)==0 && (read_proc_cmdline(tmp_str,sizeof(tmp_str),target)==0) && (strstr(tmp_str,QUOTEME(SDIALOG_ID))!=NULL))			// if it contains SDIALOG_ID it's a former instance
 	{
 		fprintf(stderr,"ours to kill\n");
 		for(attempts=0;attempts<3 && running(target)==0;attempts++)
@@ -170,7 +174,6 @@ int sdialog_terminate(SingleDialog* sdialog, pid_t target)
 int sdialog_terminate_active(SingleDialog* sdialog)
 {
 	pid_t active=sdialog_read_pid(sdialog);
-	fprintf(stderr,"sdialog_read_pid returns %d\n",active);
 	if(active>0)
 	{
 		fprintf(stderr,"active dialog found - terminating\n");
@@ -180,26 +183,32 @@ int sdialog_terminate_active(SingleDialog* sdialog)
 			if(unlink(sdialog->pid_path)==0)	
 				fprintf(stderr,"active pid file removed\n");
 			else
-				fprintf(stderr,"can't unlink interloper pid file\n");
+				fprintf(stderr,"can't unlink active pid file\n");
 		}
 	}
 }
 
 int sdialog_lock(SingleDialog* sdialog)
 {
-
 	int	pid_fd,attempts=3;
+
+	signal(SIGCHLD,SIG_IGN);	// auto-reap kids
+	if(fork())					// fork to detach from whatever called us
+		exit(0);
+	chdir("/");					// don't block mounted volumes
+	setsid();					// get our own process group
 
 	while((pid_fd=sdialog_write_pid(sdialog))<0 && attempts-->0)								// while we can't acquire exclusive lock
 	{
 		fprintf(stderr,"sdialog_write_pid fails (pid_fd=%d) - getting interloper\n",pid_fd);	
-		sdialog_terminate_active(sdialog);									// attempts to destroy interlopers
+		sdialog_terminate_active(sdialog);														// attempts to destroy interlopers
 	}
 
 	if(pid_fd>=0)
 	{
 		fprintf(stderr,"lock acquired\n");
 		close(pid_fd);
+		setsid();
 		return 0;
 	}
 
@@ -249,20 +258,12 @@ int sdialog_unlock(SingleDialog* sdialog)
 ///////////////////////////////////////////////////////////
 void sdialog_call(char* path, char* msg)
 {
-    pid_t pid=fork();
-    if(pid<0)
+	char cmdline[1024];
+	snprintf(cmdline, sizeof(cmdline)-2,"%s \"%s\"",path,msg);
+	if(system(cmdline)<0)
 	{
-		perror("call_dialog/fork");
+		perror("sdialog_call/system");
         return;
-    }
-
-    if(pid==0)
-	{
-       	umask(0);
-		chdir("/");
-		execlp(path,path,msg,(char*)0);
-		perror("call_dialog/child/execlp");
-		exit(1);
     }
 }
 

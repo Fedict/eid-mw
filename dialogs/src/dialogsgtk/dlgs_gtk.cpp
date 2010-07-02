@@ -32,6 +32,9 @@
 #include <stdio.h>
 #include <limits.h>
 #include <unistd.h>
+#include <libintl.h>
+
+#define _(String) gettext (String)
 
 #include "log.h"
 #include "util.h"
@@ -49,7 +52,7 @@ using namespace eIDMW;
 DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation, DlgPinUsage usage, const wchar_t *wsPinName, DlgPinInfo pinInfo, wchar_t *wsPin, unsigned long ulPinBufferLen)
 {
 	printf("DlgAskPin called\n");
-	char* response=sdialog_call_modal("/usr/local/bin/beid-askpin","Please enter your PIN code.");	
+	char* response=sdialog_call_modal("/usr/local/bin/beid-askpin",_("Please enter your PIN code."));	
 	if(response==NULL)
 	{
 		return DLG_CANCEL;
@@ -68,7 +71,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usag
 
 	printf("DlgAskPins called\n");
 
-	char* response=sdialog_call_modal("/usr/local/bin/beid-changepin","Please enter your current PIN, followed by your new PIN (twice)");
+	char* response=sdialog_call_modal("/usr/local/bin/beid-changepin","");
 	if(response==NULL)
 	{
 		result=DLG_CANCEL;
@@ -91,10 +94,10 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usag
 
 DLGS_EXPORT DlgRet eIDMW::DlgBadPin( DlgPinUsage usage, const wchar_t *wsPinName, unsigned long ulRemainingTries)
 {
-	char message[1024];
+	char count[4];
 	printf("DlgBadPin called\n");
-	wcstombs(message,wsPinName,1024);
-	char* response=sdialog_call_modal("/usr/local/bin/beid-badpin",message);	
+	snprintf(count,sizeof(count)-2,"%1d",ulRemainingTries);
+	char* response=sdialog_call_modal("/usr/local/bin/beid-badpin",count);	
 	free(response);
     return DLG_OK;
 }
@@ -104,7 +107,13 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation, const 
 	char message[1024];
 	printf("DlgDisplayPinPadInfo called\n");
 	wcstombs(message,wsReader,1024);
-	sdialog_call("/usr/local/bin/beid-secure-askpin",message);
+
+	printf("operation=%d\n",operation);
+
+	if(operation==DLG_PIN_OP_VERIFY)
+		sdialog_call("/usr/local/bin/beid-spr-askpin",message);
+	else
+		sdialog_call("/usr/local/bin/beid-spr-changepin",message);
     return DLG_OK;
 }
 
@@ -112,7 +121,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation, const 
 DLGS_EXPORT void eIDMW::DlgClosePinpadInfo( unsigned long ulHandle )
 {
 	printf("DlgClosePinpadInfo called\n");
-	sdialog_call("/usr/local/bin/beid-close-secure-askpin","close");
+	sdialog_call("/usr/local/bin/beid-spr-close","");
 }
 
 
@@ -124,7 +133,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskAccess( const wchar_t *wsAppPath, const wchar_t 
 	printf("DlgAskAccess called\n");
 
 	wcstombs(message,wsAppPath,1024);
-	char* response=sdialog_call_modal("/usr/local/bin/beid-ask-access",message);
+	char* response=sdialog_call_modal("/usr/local/bin/beid-askaccess",message);
 	if(response!=NULL)
 	{
 		if(strcmp(response,"OK")==0)
@@ -134,17 +143,3 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskAccess( const wchar_t *wsAppPath, const wchar_t 
 	
 	return result;
 }
-
-
-
-/////////////////////////////////// NOT CALLED /////////////////////////////////////////////////////////////
-
-DLGS_EXPORT void eIDMW::DlgCloseAllPinpadInfo()
-{
-}
-
-DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon, DlgMessageID messageID, const wchar_t *csMesg, unsigned char ulButtons, unsigned char ulEnterButton, unsigned char ulCancelButton)
-{
-    return DLG_ERR;
-}
-

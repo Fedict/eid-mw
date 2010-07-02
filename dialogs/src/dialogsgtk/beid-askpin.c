@@ -24,6 +24,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <glib/gi18n.h>
+#include <libintl.h>
+#include <locale.h>
+#include "config.h"
+
+#define _(String) gettext (String)
 
 #define MIN_PIN_LENGTH 4
 #define MAX_PIN_LENGTH 12
@@ -187,6 +192,10 @@ int main(int argc, char* argv[])
 	PinDialogInfo 	pindialog;									// this struct contains all objects
 	GdkColor 		color;					
 
+	setlocale (LC_MESSAGES, "");
+    bindtextdomain (PACKAGE, LOCALEDIR);
+    textdomain (PACKAGE);
+
 	fprintf(stderr,"--- gtk_init()\n");
     gtk_init(&argc,&argv);										// initialize gtk+
 	
@@ -197,9 +206,9 @@ int main(int argc, char* argv[])
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	fprintf(stderr,"--- creating dialog\n");
-    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,argv[1]);
+    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,_("Please enter your PIN code."));
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
-    gtk_window_set_title(GTK_WINDOW(pindialog.dialog),"beid PIN Request");
+    gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_("beID: PIN Code Required"));
     gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
     g_signal_connect (pindialog.dialog, "delete-event", G_CALLBACK (on_delete_event),&pindialog);
 
