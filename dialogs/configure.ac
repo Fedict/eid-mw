@@ -15,10 +15,8 @@ AC_LIBTOOL_WIN32_DLL
 AC_PROG_CXX
 AC_PROG_CC
 AM_PROG_CC_C_O
-
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
-
 AM_GNU_GETTEXT_VERSION([0.18])
 AM_GNU_GETTEXT
 
@@ -79,6 +77,8 @@ AS_VAR_IF([qt],[true],
 # if gtk dialogs, enable checking for GTK2
 AS_VAR_IF([gtk],[true],
 [
+	AC_CHECK_PROGS(OBJCOPY,[objcopy],[missing])
+	AS_VAR_IF([OBJCOPY],[missing],AC_MSG_ERROR([objcopy tool is required.]),AC_SUBST(OBJCOPY))
 
 	AC_MSG_CHECKING([user-specified GTK installation])
 	AC_ARG_WITH([gtk],
