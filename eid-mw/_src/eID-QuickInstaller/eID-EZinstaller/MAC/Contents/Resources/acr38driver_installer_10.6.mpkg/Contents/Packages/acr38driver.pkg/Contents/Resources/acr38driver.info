@@ -1,0 +1,17 @@
+Title acr38driver
+Version 1.7.10
+Description Installs ACR38 PC/SC Driver.
+DefaultLocation /
+DeleteWarning 
+
+### Package Flags
+
+NeedsAuthorization YES
+Required NO
+Relocatable NO
+RequiresReboot NO
+UseUserMask NO
+OverwritePermissions NO
+AllowBackRev NO
+RootVolumeOnly YES
+OnlyUpdateInstalledLanguages NO
