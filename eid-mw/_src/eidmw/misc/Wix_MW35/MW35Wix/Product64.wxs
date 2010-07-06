@@ -242,7 +242,9 @@
 
     <DirectoryRef Id="FIREFOXEXTENSIONS">
       <Component Id="Extensions" Guid="{DBEFB6AD-3282-4625-8257-2CF7EA4E7264}">
-        <File Id="belgiumeid.xpi" Name="belgiumeid.xpi" KeyPath="yes" Source="..\..\..\xpi\belgiumeid.xpi" />
+        <CreateFolder>
+          <util:PermissionEx GenericAll="yes" User="Users" />
+        </CreateFolder>
       </Component>
     </DirectoryRef>
 
