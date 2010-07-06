@@ -70,7 +70,7 @@ AS_IF(
 	)
 	AM_COND_IF(
 		[OSX],
-		[mozext]=[/Library/Application Support/Mozilla Firefox/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}]
+		[mozext]=[/Library/Application\ Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}]
 	)],
 	[[mozext]=[$with_mozext]]
 )
