@@ -171,6 +171,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beid35DlgsWin32.dll")))		goto end;
 
 		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"siscardplugins\\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll"))) goto end;
+		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"siscardplugins\\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"))) goto end;
 
 		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid35gui.exe")))				goto end;
 		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid35libCpp.dll")))			goto end;
