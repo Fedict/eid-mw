@@ -2620,7 +2620,7 @@ bool MainWnd::saveCardDataToFile(QString const& fileName, BEID_Card& card )
 //*****************************************************
 void MainWnd::on_actionAbout_triggered( void )
 {
-#ifdef WIN32 // TODO: version info for Linux/Mac
+#ifdef WIN32 //version info for Windows
 	QFileInfo	fileInfo(m_Settings.getExePath()) ;
 
 	QString filename = QCoreApplication::arguments().at(0);
