@@ -74,6 +74,13 @@ void ezInstaller::customEvent(QEvent * qe )
             ui.clbBack->setEnabled(true);
             qApp->restoreOverrideCursor();
         }
+		else if (ve->getstr1() == QString("restartdrthread")) {
+			if (drt.isRunning()) {
+				drt.terminate();
+				drt.start();
+				delaythread.start();
+			}
+        }
     } else if (ve->getAction() == "done") {
         this->mdiagthread_active = false;
 		Sleep(2000);
@@ -303,6 +310,15 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
             previousPage = 2;               // ** was 1
 			drt.setobjectToUpdate(this);
 			drt.start();
+#ifdef __APPLE__
+			// wait 8 seconds before restarting the drt Thread
+			// This is to circumvent a bug on mac 64 scardlayer,
+			// which can cause SCardEstablishContext to hang indefinatelly
+            delaythread.action = "restartdrthread"; 
+			delaythread.int1 = 0;
+			delaythread.int2 = 8;
+			delaythread.start();		
+#endif
         }
         else {
             if (pagename.contains("welcomePage")) { // 0
