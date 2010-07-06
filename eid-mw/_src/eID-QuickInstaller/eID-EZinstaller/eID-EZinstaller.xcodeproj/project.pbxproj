@@ -372,6 +372,7 @@
 		7BFD76ED0E76C68200BC4F02 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUILD_ROOT = .;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
@@ -379,11 +380,11 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
-					/Library/Frameworks/QtCore.framework/Versions/4/Headers,
+					/Library/Frameworks/QtCore.framework/Headers,
 					/usr/include/QtCore,
-					/Library/Frameworks/QtGui.framework/Versions/4/Headers,
+					/Library/Frameworks/QtGui.framework/Headers,
 					/usr/include/QtGui,
-					/Library/Frameworks/QtXml.framework/Versions/4/Headers,
+					/Library/Frameworks/QtXml.framework/Headers,
 					/usr/include/QtXml,
 					/usr/include,
 					GeneratedFiles,
@@ -404,11 +405,11 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 				);
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/QtGui.framework/Versions/4\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/QtCore.framework/Versions/4\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/QtXml.framework/Versions/4\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/QtGui.framework\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/QtCore.framework\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/QtXml.framework\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(DEVELOPER_DIR)/Applications/Qt/plugins/imageformats\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OBJROOT = obj/debug/;
 				OTHER_CFLAGS = (
 					"-pipe",
@@ -440,8 +441,9 @@
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "eID-QuickInstaller";
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 				SECTORDER_FLAGS = "";
+				VALID_ARCHS = i386;
 				WARNING_CFLAGS = "";
 				YACCFLAGS = "-d";
 			};
@@ -450,17 +452,18 @@
 		7BFD76EE0E76C68200BC4F02 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = i386;
 				BUILD_ROOT = .;
 				COPY_PHASE_STRIP = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0.0;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				HEADER_SEARCH_PATHS = (
-					/Library/Frameworks/QtCore.framework/Versions/4/Headers,
+					/Library/Frameworks/QtCore.framework/Headers,
 					/usr/include/QtCore,
-					/Library/Frameworks/QtGui.framework/Versions/4/Headers,
+					/Library/Frameworks/QtGui.framework/Headers,
 					/usr/include/QtGui,
-					/Library/Frameworks/QtXml.framework/Versions/4/Headers,
+					/Library/Frameworks/QtXml.framework/Headers,
 					/usr/include/QtXml,
 					/usr/include,
 					GeneratedFiles,
@@ -485,7 +488,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/QtCore.framework/Versions/4\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/QtXml.framework/Versions/4\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(DEVELOPER_DIR)/Applications/Qt/plugins/imageformats\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OBJROOT = obj/release/;
 				OTHER_CFLAGS = (
 					"-pipe",
@@ -517,8 +520,9 @@
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "eID-Quickinstaller";
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 				SECTORDER_FLAGS = "";
+				VALID_ARCHS = i386;
 				WARNING_CFLAGS = "";
 				YACCFLAGS = "-d";
 			};
