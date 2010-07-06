@@ -1047,26 +1047,42 @@ void delayThread::run() {
 }
 
 void detectReaderThread::run() {
-	
+	string readersXml;
+	QDomNode resultNode;
+	QDomNode listItem; 
 #ifdef __APPLE__
+	setTerminationEnabled(true);
+	QString currdirpath = QCoreApplication::applicationDirPath();
+	std::string commandLine = "";
+	commandLine += currdirpath.toStdString();
+	commandLine += "/../Resources/preparePcscd.sh";
+	if(CSysDiagnost::doAsAdmin(commandLine, false))
 	{
-		QString currdirpath = QCoreApplication::applicationDirPath();
-		std::string commandLine = "";
-		commandLine += currdirpath.toStdString();
-		commandLine += "/../Resources/preparePcscd.sh";
-		CSysDiagnost::doAsAdmin(commandLine, true);
-	}
 #endif
 	
-    string readersXml = scl.pcscEnumerateCardReaders("");
-    QDomNode resultNode = ezw.xmlToNode(readersXml);
-    QDomNode listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
+	readersXml = scl.pcscEnumerateCardReaders("");
+	resultNode = ezw.xmlToNode(readersXml);
+	listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
+#ifdef __APPLE__
+		}
+	else {
+		listItem.clear();
+	}
 
+#endif		
+			
     while (listItem.isNull()) {
 		msleep(500);
-		readersXml = scl.pcscEnumerateCardReaders("");
-		resultNode = ezw.xmlToNode(readersXml);
-		listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
+#ifdef __APPLE__
+		if(CSysDiagnost::doAsAdmin(commandLine, false))
+		{
+#endif
+			readersXml = scl.pcscEnumerateCardReaders("");
+			resultNode = ezw.xmlToNode(readersXml);
+			listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
+#ifdef __APPLE__
+		}
+#endif	
 	}
 
 	verboseEvent * ve = new verboseEvent();
