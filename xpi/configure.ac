@@ -3,6 +3,8 @@ AC_INIT([xpi], [0.0.1], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/content/BelgiumEidPKCS11.js])
 AC_CONFIG_MACRO_DIR([m4])
+
+
 AM_INIT_AUTOMAKE
 AC_CANONICAL_HOST
 
@@ -61,34 +63,18 @@ AC_ARG_WITH([mozext],
 	  [with_mozext=no])
 
 AS_IF(
-	[test "x$prefix" = "xNONE"],
-	[installprefix=$ac_default_prefix],
-	[installprefix=$prefix]
-)
-
-AS_IF(
 	[test "x$with_mozext" = "xno"],
 	[AM_COND_IF(
 		[LINUX],
-		[AC_CHECK_FILE(
-			[${installprefix}/share/mozilla],
-			[mozext]=[${installprefix}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/],
-			[AC_CHECK_FILE(
-				[${installprefix}/lib/mozilla],
-				[mozext]=[${installprefix}/lib/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/],
-				[AC_CHECK_FILE(
-					[${installprefix}/lib64/mozilla],
-					[mozext]=[${installprefix}/lib64/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/],
-					[mozext]=[${installprefix}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/]
-				)]
-			)]
-		)]
+		[mozext]=[${datadir}/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}]
 	)
 	AM_COND_IF(
 		[OSX],
-		[mozext]=[/Library/Application Support/Mozilla Firefox/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/]
-	)]
+		[mozext]=[/Library/Application Support/Mozilla Firefox/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}]
+	)],
+	[[mozext]=[$with_mozext]]
 )
+
 AC_SUBST([ZIP])
 AC_SUBST([DEBUG])
 AC_SUBST([DEBUG_POSTFIX])
@@ -100,5 +86,8 @@ AC_SUBST([mozext])
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([
+	Makefile
+	src/Makefile
+])
 AC_OUTPUT
