@@ -11,6 +11,7 @@ AC_CANONICAL_HOST
 # Checks for programs.
 # Check for zip
 AC_PATH_PROG([ZIP], [zip])
+AC_PROG_SED
 
 ############################################################################
 # Test for platform and set corresponding AM_CONDITIONALs for Makefile.am  #

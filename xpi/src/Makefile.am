@@ -2,7 +2,7 @@ XPI_NAME=belgiumeid.xpi
 
 noinst_DATA = $(XPI_NAME)
 
-CLEANFILES = $(XPI_NAME)
+CLEANFILES = $(XPI_NAME) platform/Linux/defaults/preferences/belgiumeid.js
 
 xpi_files = $(dist_content_DATA) \
 			$(dist_defaults_preferences_DATA) \
@@ -33,11 +33,11 @@ dist_locale_frfr_DATA = locale/fr-fr/belgiumeid.properties
 
 dist_locale_nlnl_DATA = locale/nl-nl/belgiumeid.properties
 
-dist_platform_darwin_defaults_preferences_DATA = platform/darwin/defaults/preferences/belgiumeid.js
+dist_platform_darwin_defaults_preferences_DATA = platform/Darwin/defaults/preferences/belgiumeid.js
 
-dist_platform_linux_defaults_preferences_DATA = platform/linux/defaults/preferences/belgiumeid.js
+dist_platform_linux_defaults_preferences_DATA = platform/Linux/defaults/preferences/belgiumeid.js
 
-dist_platform_winnt_defaults_preferences_DATA = platform/winnt/defaults/preferences/belgiumeid.js
+dist_platform_winnt_defaults_preferences_DATA = platform/WINNT/defaults/preferences/belgiumeid.js
 
 dist_skin_DATA = skin/icon.png \
 			skin/overlay.css
@@ -48,9 +48,9 @@ defaults_preferencesdir=$(extensionrootdir)/defaults/preferences
 locale_enusdir=$(extensionrootdir)/locale/en-us
 locale_frfrdir=$(extensionrootdir)/locale/fr-fr
 locale_nlnldir=$(extensionrootdir)/locale/nl-nl
-platform_darwin_defaults_preferencesdir=$(extensionrootdir)/platform/darwin/defaults/preferences
-platform_linux_defaults_preferencesdir=$(extensionrootdir)/platform/linux/defaults/preferences
-platform_winnt_defaults_preferencesdir=$(extensionrootdir)/platform/winnt/defaults/preferences
+platform_darwin_defaults_preferencesdir=$(extensionrootdir)/platform/Darwin/defaults/preferences
+platform_linux_defaults_preferencesdir=$(extensionrootdir)/platform/Linux/defaults/preferences
+platform_winnt_defaults_preferencesdir=$(extensionrootdir)/platform/WINNT/defaults/preferences
 skindir=$(extensionrootdir)/skin
 
 $(XPI_NAME): $(xpi_files)
@@ -59,15 +59,15 @@ $(XPI_NAME): $(xpi_files)
 #	 with $RANDOM to make collisions less likely.
 	{ \
 		tmp=` \
-			(umask 077 && mktemp -d $(TMPDIR)/xpiXXXXXX) 2>/dev/null \
+			(umask 077 && mktemp -t -d "xpiXXXXXX") 2>/dev/null \
 		` && \
 		test -n "$$tmp" && test -d "$$tmp"; \
 	} || { \
-		tmp=$(TMPDIR)/xpi$$RANDOM; \
-		umask 077 && mkdir -p "$$tmp"; \
+		tmp=$$TMPDIR/xpi$$RANDOM; \
+		umask 077 && $(mkinstalldirs) "$$tmp"; \
 	} || exit $$?; \
 	for xpifile in $^; do \
-		mkdir -p $$tmp/`dirname $$xpifile`/; \
+		$(mkinstalldirs) $$tmp/`dirname $$xpifile`/; \
 		cp $$xpifile $$tmp/`dirname $$xpifile`/; \
 	done; \
 	rm -f $(abs_builddir)/$@; \
@@ -76,3 +76,12 @@ $(XPI_NAME): $(xpi_files)
 	cd $(abs_builddir); \
 	rm -rf $$tmp
 
+if LINUX
+platform/Linux/defaults/preferences/belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
+	$(SED) "s|__libdir__|@libdir@|g" $< > $@
+else
+# on other platforms libdir is unknown for Linux
+# we default to /usr/local/lib
+platform/Linux/defaults/preferences/belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
+	$(SED) "s|__libdir__|/usr/local/lib|g" $< > $@
+endif

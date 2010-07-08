@@ -1,0 +1,1 @@
+pref("extensions.belgiumeid.modulelocation", "__libdir__/libbeidpkcs11.so");

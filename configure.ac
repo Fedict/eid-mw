@@ -64,8 +64,5 @@ AC_CHECK_FUNCS([gethostbyname socket strerror ftime memchr memset mkdir select s
 
 AC_CONFIG_FILES([Makefile])
 
-AC_CONFIG_SUBDIRS([common
-                   dialogs
-				   cardlayer
-                   pkcs11])
+AC_CONFIG_SUBDIRS([common dialogs cardlayer pkcs11 xpi])
 AC_OUTPUT
