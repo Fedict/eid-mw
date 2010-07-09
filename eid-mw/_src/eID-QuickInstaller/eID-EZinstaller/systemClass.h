@@ -67,6 +67,8 @@ public:
 	bool isMiddlewareLocked(void) {return _SD.isMiddlewareLocked();};
 	bool IsUserAdmin(void) {return _SD.IsUserAdmin();};
 	string regCerts(string inputXml);
+#elif __APPLE__
+	string pcscWaitForCardReaders(string inputXml);
 #endif
 	bool is64bitOS();
 

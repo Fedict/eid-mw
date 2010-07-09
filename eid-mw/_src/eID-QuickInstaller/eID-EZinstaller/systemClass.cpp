@@ -207,7 +207,33 @@ string systemClass::pcscContextIsAvailable(string inputXml){
     ezw.xml_out.documentElement().appendChild(ezw.CreateTextNode("ExtraInfo",""));
     return ezw.xml_out.toString().toStdString();
 }; 
-
+#ifdef __APPLE__
+string systemClass::pcscWaitForCardReaders(string inputXml){
+    ezw.xml_in.setContent(QString(inputXml.c_str()));	
+	
+    ezw.xml_out.setContent(QString("<Result></Result>"));
+	
+    string returnValue = "", errorText = "";
+	
+    QDomNode List = ezw.xml_in.createElement("List");
+	
+    vector<std::string> readers;
+    if (this->_SD.pcscWaitForCardReaders(readers)) {
+        for (vector<std::string>::iterator it = readers.begin() ; it != readers.end(); ++it) {
+            string &readername =  *it;
+            List.appendChild(ezw.CreateAttribTextNode("ListItem",readername,"ListItemName","smartCardReader"));
+        }
+		
+    }
+    QDomNode ExtraInfo = ezw.xml_out.createElement("ExtraInfo");
+    ExtraInfo.appendChild(List);
+	
+    ezw.xml_out.documentElement().appendChild(ezw.CreateTextNode("Error", errorText));
+    ezw.xml_out.documentElement().appendChild(ezw.CreateTextNode("QueriedResult", returnValue));
+    ezw.xml_out.documentElement().appendChild(ExtraInfo);
+    return ezw.xml_out.toString().toStdString();
+};
+#endif
 string systemClass::pcscEnumerateCardReaders(string inputXml){
     ezw.xml_in.setContent(QString(inputXml.c_str()));	
 

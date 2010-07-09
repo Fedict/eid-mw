@@ -694,6 +694,96 @@ FILE *			sys_profile;
 
 };
 
+#ifdef __APPLE__
+// Waits for a PCSC Smard Card Reader to be connected and returns it in the list.
+bool CSysDiagnost::pcscWaitForCardReaders (vector <string>& readersList)			
+{
+	SCARDCONTEXT	hContext = NULL;
+	long			rv;
+	uint32_t		dwReaders;
+	char *			pReaders = NULL;
+	char *			pReader;
+	
+	bool bTryFails=false;
+	bool bContinue=true;
+	int iTryCount=0;
+	do
+	{
+		bTryFails=false;
+		rv = SCardEstablishContext (SCARD_SCOPE_SYSTEM, NULL, NULL, &hContext);
+		if ( rv != SCARD_S_SUCCESS )
+		{
+			bTryFails=true;
+		}
+		else
+		{
+			rv = SCardGetStatusChange(hContext, INFINITE, 0, 0);
+			if ( rv != SCARD_S_SUCCESS )
+			{
+				bTryFails=true;
+			}
+			else
+			{			
+				rv = SCardListReaders (hContext, NULL, NULL, &dwReaders);
+				if ( rv != SCARD_S_SUCCESS )
+				{
+					bTryFails=true;
+				}
+				else
+				{
+					pReaders = (char *)malloc (sizeof(char)*dwReaders);
+				
+					rv = SCardListReaders (hContext, NULL, pReaders, &dwReaders);
+					if ( rv != SCARD_S_SUCCESS )
+					{
+						bTryFails=true;
+					}
+				}
+			}
+		}
+		if(hContext) SCardReleaseContext (hContext);
+		
+		if(bTryFails)
+		{
+			if(pReaders) 
+			{
+				free(pReaders);
+				pReaders=NULL;
+			}
+			if(iTryCount<20)
+			{
+				usleep(500000);
+				iTryCount++;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			bContinue=false;
+		}
+	} while(bContinue);		
+	
+	// loop
+	pReader = pReaders;
+	while ( '\0' != *pReader )
+	{
+		readersList.push_back (string (pReader));
+		pReader = pReader + strlen (pReader) + 1;
+	}
+	if(pReaders) 
+	{
+		free(pReaders);
+		pReaders=NULL;
+	}
+	
+	return true;
+
+};
+#endif
+
 // Returns the list of connected PCSC Smard Card Readers.
 bool CSysDiagnost::pcscEnumerateCardReaders (vector <string>& readersList)						// *
 {

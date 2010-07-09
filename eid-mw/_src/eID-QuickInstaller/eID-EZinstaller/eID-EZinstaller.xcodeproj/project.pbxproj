@@ -19,7 +19,7 @@
 		7B7592290E92861900C0B9E8 /* moc_ezinstaller.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 7B7592270E92861900C0B9E8 /* moc_ezinstaller.cpp */; };
 		7B8C5D560E81365600C56DE7 /* IOKit.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 7B8C5D550E81365600C56DE7 /* IOKit.framework */; };
 		7BF6BCD30F5C260100A519EB /* sysdiagnost.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 7BF6BCD20F5C260100A519EB /* sysdiagnost.cpp */; };
-		7BFD76EA0E76C68100BC4F02 /* eID-Quickinstaller.app in Project Copy */ = {isa = PBXBuildFile; fileRef = 7BFD76E70E76C68100BC4F02 /* eID-Quickinstaller.app */; };
+		7BFD76EA0E76C68100BC4F02 /* eID-QuickInstaller.app in Project Copy */ = {isa = PBXBuildFile; fileRef = 7BFD76E70E76C68100BC4F02 /* eID-QuickInstaller.app */; };
 		7BFD771C0E76C8E400BC4F02 /* PCSC.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 7BFD771B0E76C8E400BC4F02 /* PCSC.framework */; };
 		7F15955D0F9757D6006BBE85 /* QtXml in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 7F82729D0F7D326300562D6B /* QtXml */; };
 		7F8272960F7D320800562D6B /* QtGui in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 7F8272950F7D320800562D6B /* QtGui */; };
@@ -44,7 +44,7 @@
 			dstPath = .;
 			dstSubfolderSpec = 0;
 			files = (
-				7BFD76EA0E76C68100BC4F02 /* eID-Quickinstaller.app in Project Copy */,
+				7BFD76EA0E76C68100BC4F02 /* eID-QuickInstaller.app in Project Copy */,
 			);
 			name = "Project Copy";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,7 +77,7 @@
 		7B9AD4890E924ABA00CA09FE /* SysDiagnost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SysDiagnost.h; sourceTree = "<group>"; };
 		7BC2E65A5E699A5E5D834CA2 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /Library/Frameworks/QtCore.framework; sourceTree = "<absolute>"; };
 		7BF6BCD20F5C260100A519EB /* sysdiagnost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sysdiagnost.cpp; sourceTree = "<group>"; };
-		7BFD76E70E76C68100BC4F02 /* eID-Quickinstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID-Quickinstaller.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BFD76E70E76C68100BC4F02 /* eID-QuickInstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID-QuickInstaller.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BFD771B0E76C8E400BC4F02 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = /System/Library/Frameworks/PCSC.framework; sourceTree = "<absolute>"; };
 		7F8272950F7D320800562D6B /* QtGui */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = QtGui; path = /Library/Frameworks/QtGui.framework/Versions/4/QtGui; sourceTree = "<absolute>"; };
 		7F82729B0F7D323400562D6B /* QtCore */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = QtCore; path = /Library/Frameworks/QtCore.framework/Versions/4/QtCore; sourceTree = "<absolute>"; };
@@ -169,7 +169,7 @@
 		7BFD76E80E76C68100BC4F02 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7BFD76E70E76C68100BC4F02 /* eID-Quickinstaller.app */,
+				7BFD76E70E76C68100BC4F02 /* eID-QuickInstaller.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -271,7 +271,7 @@
 			);
 			name = "eID-Quickinstaller";
 			productName = "eID-EZinstaller";
-			productReference = 7BFD76E70E76C68100BC4F02 /* eID-Quickinstaller.app */;
+			productReference = 7BFD76E70E76C68100BC4F02 /* eID-QuickInstaller.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -626,6 +626,7 @@
 				);
 				COPY_PHASE_STRIP = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_VERSION = 4.0;
 				SDKROOT = macosx10.5;
 			};
 			name = Release;

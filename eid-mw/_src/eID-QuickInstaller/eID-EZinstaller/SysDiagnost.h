@@ -187,9 +187,13 @@ public:
 	bool RegCerts(const string readerName); 
 	bool IsUserAdmin();
 	//return true if the user is administrator
+
+	// PCSC functions
+#elif __APPLE__
+	bool pcscWaitForCardReaders (vector <string>& readersList);		
+	// Waits for a PCSC Smard Card Reader to be connected and returns it in the list.
 #endif
 
-// PCSC functions
 	bool pcscContextIsAvailable (void);										// done
 	// Checks if PCSC Daemon is running - 'check if PCSC system reacts as expected'
 

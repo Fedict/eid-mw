@@ -1058,9 +1058,10 @@ void detectReaderThread::run() {
 	commandLine += "/../Resources/preparePcscd.sh";
 	if(CSysDiagnost::doAsAdmin(commandLine, false))
 	{
-#endif
-	
-	readersXml = scl.pcscEnumerateCardReaders("");
+		readersXml = scl.pcscWaitForCardReaders("");
+#else
+		readersXml = scl.pcscEnumerateCardReaders("");
+#endif	
 	resultNode = ezw.xmlToNode(readersXml);
 	listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
 #ifdef __APPLE__
@@ -1076,8 +1077,10 @@ void detectReaderThread::run() {
 #ifdef __APPLE__
 		if(CSysDiagnost::doAsAdmin(commandLine, false))
 		{
-#endif
+			readersXml = scl.pcscWaitForCardReaders("");
+#else
 			readersXml = scl.pcscEnumerateCardReaders("");
+#endif			
 			resultNode = ezw.xmlToNode(readersXml);
 			listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
 #ifdef __APPLE__
