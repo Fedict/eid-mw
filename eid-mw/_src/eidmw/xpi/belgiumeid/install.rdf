@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
   - eID Middleware Project.
-  - Copyright (C) 2008-2009 FedICT.
+  - Copyright (C) 2009-2010 FedICT.
  
   - This is free software; you can redistribute it and/or modify it
   - under the terms of the GNU Lesser General Public License version
@@ -51,7 +51,7 @@
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- firefox -->
         <em:minVersion>3.0</em:minVersion>
-        <em:maxVersion>3.6.*</em:maxVersion>
+        <em:maxVersion>4.*.*</em:maxVersion>
       </Description>
     </em:targetApplication>
   </Description>
