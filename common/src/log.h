@@ -77,10 +77,4 @@ EIDMW_CMN_API bool MWLOG(tLevel level, tModule mod, const wchar_t *format, ...);
 EIDMW_CMN_API bool MWLOG(tLevel level, tModule mod, CMWException theException);
 
 
-/**
- * Log a message + the textual representation of errno
- *
- */
-EIDMW_CMN_API bool MW_PERROR(tLevel level, tModule mod, char* comment);
-
 }

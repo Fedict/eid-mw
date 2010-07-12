@@ -25,6 +25,7 @@ PKG_PROG_PKG_CONFIG
 linux="no"
 osx="no"
 win32="no"
+gtk="no"
 qt="no"
 
 AS_CASE([$host],
@@ -139,5 +140,7 @@ AC_TYPE_SIZE_T
 AC_FUNC_FORK
 AC_CHECK_FUNCS([strerror vasprintf])
 
-AC_CONFIG_FILES([Makefile intl/Makefile po/Makefile.in])
+AC_CONFIG_FILES([Makefile])
+AS_VAR_IF([gtk],[true],[AC_CONFIG_FILES([intl/Makefile po/Makefile.in])])
+
 AC_OUTPUT
