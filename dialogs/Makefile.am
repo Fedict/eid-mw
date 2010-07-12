@@ -7,13 +7,15 @@ lib_LTLIBRARIES    	 	= libbeiddialogs.la
 
 if LINUX
 #
-libbeiddialogs_la_SOURCES  	 	= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/dlgs_gtk.cpp default-beid-askpin.cpp
+BUILT_SOURCES 					= default-beid-askpin.cpp default-beid-askaccess.cpp default-beid-badpin.cpp default-beid-changepin.cpp default-beid-spr-askpin.cpp default-beid-spr-changepin.cpp default-beid-spr-close.cpp
+
+libbeiddialogs_la_SOURCES  	 	= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/dlgs_gtk.cpp default-beid-askpin.cpp default-beid-askaccess.cpp
 libbeiddialogs_la_CPPFLAGS   	= -I$(srcdir)/src/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DSDIALOG_ID=beid-spr
 libbeiddialogs_la_LDFLAGS	 	= -avoid-version -g 
 libbeiddialogs_la_CXXFLAGS	 	= -fno-strict-aliasing -ggdb -g
 libbeiddialogs_la_LIBADD     	= $(COMMON_LIBADD) 
 #
-bin_PROGRAMS		   			= beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin beid-spr-close
+noinst_PROGRAMS		   			= beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin beid-spr-close
 
 beid_askpin_SOURCES    			= $(COMMON_SOURCES) src/dialogsgtk/beid-askpin.c
 beid_askpin_CPPFLAGS   			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DLOCALEDIR=\"$(localedir)\" -I../intl
@@ -49,11 +51,6 @@ beid_spr_close_SOURCES   		= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c sr
 beid_spr_close_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DLOCALEDIR=\"$(localedir)\" -I../intl -DSDIALOG_ID=beid-spr
 beid_spr_close_LDFLAGS   		= -avoid-version
 beid_spr_close_LDADD     		= $(COMMON_LDADD) @LIBINTL@
-
-beid_testembedded_SOURCES   	= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/embedded_dialog.c
-beid_testembedded_CPPFLAGS  	= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -ggdb -fPIC
-beid_testembedded_LDFLAGS   	= -avoid-version
-beid_testembedded_LDADD     	= $(COMMON_LDADD) libbeiddialogs.la
 
 
 default-beid-%.cpp: beid-%

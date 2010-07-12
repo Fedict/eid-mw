@@ -43,6 +43,7 @@ typedef struct
 {
 	GtkWidget  *dialog;
 	GtkWidget  *newPinsTable, *originalPinLabel, *newPin0Label, *newPin1Label, *originalPinEntry, *newPin0Entry, *newPin1Entry;
+	GtkButton  *okbutton,*cancelbutton;
 } PinDialogInfo;
 
 // check validity of 3 fields
@@ -105,14 +106,13 @@ void update_ok_button(PinDialogInfo* pindialog)
 {
 	if(entries_are_valid(pindialog)>0)
 	{
-		GtkWidget* okButton=gtk_dialog_get_widget_for_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK);
 		gtk_dialog_set_response_sensitive(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK, TRUE);
 		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK);
 	}
 	else
 	{
 		gtk_dialog_set_response_sensitive(GTK_DIALOG(pindialog->dialog), GTK_RESPONSE_OK, FALSE);
-		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_REJECT);
+		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_CANCEL);
 	} 
 }
 
@@ -149,7 +149,10 @@ int main(int argc, char* argv[])
 	// create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,_("Please enter your current PIN, followed by your new PIN (twice)"));
+    pindialog.dialog		=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_("Please enter your current PIN, followed by your new PIN (twice)"));
+	pindialog.cancelbutton	=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
+    pindialog.okbutton    	=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_OK,     GTK_RESPONSE_OK);
+
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_("beID: Change PIN Code"));
     gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);

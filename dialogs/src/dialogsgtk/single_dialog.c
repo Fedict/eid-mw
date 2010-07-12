@@ -38,6 +38,15 @@
 #define QUOTEME_(x) #x
 #define QUOTEME(x) QUOTEME_(x)
 
+#ifdef DEBUG
+#define DPRINTF(format,args...) fprintf(stderr, format , ## args)
+#define DERROR(label) perror(label)
+#else
+#define DPRINTF
+#define DERROR
+#endif
+
+
 void sdialog_init(SingleDialog* sdialog)
 {
 	char default_tempdir[]="/tmp";
@@ -52,7 +61,7 @@ int sdialog_write_pid(SingleDialog* sdialog)
 	int 	pid_fd,result=-1;
 	char 	tmp_str[32];
 
-	fprintf(stderr,"I'm %d\n",getpid());
+	DPRINTF("sdialog pid=%d",getpid());
 
 	do { pid_fd=open(sdialog->pid_path,O_WRONLY|O_EXCL|O_CREAT|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH); } while (pid_fd==-1 && errno==EINTR);
 	if(pid_fd>0)
@@ -64,7 +73,7 @@ int sdialog_write_pid(SingleDialog* sdialog)
 			result=0;
 	}
 
-	fprintf(stderr,"sdialog_write_pid about to return %d\n",result);
+	DPRINTF("sdialog_write_pid about to return %d",result);
 	return result;
 }
 
@@ -74,10 +83,10 @@ pid_t sdialog_read_pid(SingleDialog* sdialog)
 	int 	pid_fd;
 	pid_t	pid;
 
-	fprintf(stderr,"sdialog_read_pid\n");
+	DPRINTF("sdialog_read_pid");
 	do { pid_fd=open(sdialog->pid_path,O_RDONLY); } while (pid_fd==-1 && errno==EINTR);
 
-	fprintf(stderr,"open returns %d\n",pid_fd);
+	DPRINTF("sdialog_read_pid: open returns %d",pid_fd);
 	if(pid_fd>0)
 	{
 		size_t nread=0;
@@ -100,26 +109,26 @@ int read_proc_cmdline(char* cmdline, size_t max_cmd_size, pid_t pid)
 	char 	tmp_str[32];
 	ssize_t nread=0;
 
-	fprintf(stderr,"read_proc_cmdline[%d]\n",pid);
+	DPRINTF("read_proc_cmdline[%d]",pid);
 	
 	if(snprintf(tmp_str,sizeof(tmp_str)-2,"/proc/%d/cmdline",pid) >= MIN_CMDLINE_PATH_BYTES)
 	{
-		fprintf(stderr,"opening [%s]\n",tmp_str);
+		DPRINTF("opening [%s]",tmp_str);
 
 		int proc_fd;
 		do { proc_fd=open(tmp_str,O_RDONLY); } while (proc_fd==-1 && errno==EINTR);
 
 		if(proc_fd>0)
 		{
-			fprintf(stderr,"reading from [%s]\n",tmp_str);
+			DPRINTF("reading from [%s]",tmp_str);
 			do { nread=read(proc_fd,cmdline,max_cmd_size); } while (proc_fd==-1 && errno==EINTR);
 
 			
-			fprintf(stderr,"read [%d] bytes from %s\n",nread,tmp_str);
+			DPRINTF("read [%d] bytes from %s",nread,tmp_str);
 			if(nread>0)
 				cmdline[nread]='\0';			// but make sure the whole is properly sdialog_terminated
 			close(proc_fd);
-			fprintf(stderr,"commandline=[%s]\n",cmdline);
+			DPRINTF("commandline=[%s]",cmdline);
 			return 0;
 		}
 	}
@@ -136,11 +145,9 @@ int sdialog_terminate(SingleDialog* sdialog, pid_t target)
 	char 	tmp_str[PATH_MAX];
 	int 	attempts;
 	
-	fprintf(stderr,"sdialog_terminate %d comparing to %s\n",target,QUOTEME(SDIALOG_ID));
-
 	if(running(target)==0 && (read_proc_cmdline(tmp_str,sizeof(tmp_str),target)==0) && (strstr(tmp_str,QUOTEME(SDIALOG_ID))!=NULL))			// if it contains SDIALOG_ID it's a former instance
 	{
-		fprintf(stderr,"ours to kill\n");
+		DPRINTF("sdialog_terminale: ours to kill");
 		for(attempts=0;attempts<3 && running(target)==0;attempts++)
 		{
 			kill(target,SIGTERM);									// tell it to make room for the living
@@ -155,17 +162,17 @@ int sdialog_terminate(SingleDialog* sdialog, pid_t target)
 	}
 	else
 	{
-		fprintf(stderr,"not ours to kill\n");
+		DPRINTF("sdialog_terminate: not ours to kill");
 	}
 
 	if(running(target)==-1 && errno==ESRCH)
 	{
-		fprintf(stderr,"Kill succeeds\n");
+		DPRINTF("sdailog_terminate: kill succeeds");
 		return 0;
 	}
 	else
 	{
-		fprintf(stderr,"Kill failed\n");
+		DPRINTF("sdialog_terminate: kill failed");
 	}
 
 	return -1;
@@ -176,14 +183,14 @@ int sdialog_terminate_active(SingleDialog* sdialog)
 	pid_t active=sdialog_read_pid(sdialog);
 	if(active>0)
 	{
-		fprintf(stderr,"active dialog found - terminating\n");
+		DPRINTF("sdialog_terminate_active: active dialog found - terminating");
 		if(sdialog_terminate(sdialog,active)==0)	
 		{
-			fprintf(stderr,"removing active pid file\n");
+			DPRINTF("removing active pid file");
 			if(unlink(sdialog->pid_path)==0)	
-				fprintf(stderr,"active pid file removed\n");
+				DPRINTF("active pid file removed");
 			else
-				fprintf(stderr,"can't unlink active pid file\n");
+				DPRINTF("can't unlink active pid file");
 		}
 	}
 }
@@ -200,19 +207,19 @@ int sdialog_lock(SingleDialog* sdialog)
 
 	while((pid_fd=sdialog_write_pid(sdialog))<0 && attempts-->0)								// while we can't acquire exclusive lock
 	{
-		fprintf(stderr,"sdialog_write_pid fails (pid_fd=%d) - getting interloper\n",pid_fd);	
+		DPRINTF("sdialog_lock: sdialog_write_pid fails (pid_fd=%d)-getting interloper",pid_fd);	
 		sdialog_terminate_active(sdialog);														// attempts to destroy interlopers
 	}
 
 	if(pid_fd>=0)
 	{
-		fprintf(stderr,"lock acquired\n");
+		DPRINTF("sdialog_lock: lock acquired");
 		close(pid_fd);
 		setsid();
 		return 0;
 	}
 
-	fprintf(stderr,"lock failed\n");
+	DPRINTF("sdialog_lock: lock failed");
 	return -1;
 }
 
@@ -262,7 +269,7 @@ void sdialog_call(char* path, char* msg)
 	snprintf(cmdline, sizeof(cmdline)-2,"%s \"%s\"",path,msg);
 	if(system(cmdline)<0)
 	{
-		perror("sdialog_call/system");
+		DERROR("sdialog_call/system");
         return;
     }
 }
@@ -277,50 +284,51 @@ char* sdialog_call_modal(char* path,const char* msg)
     int p[2], status, ret;
     char buf[1024];
 
-	fprintf(stderr,"... fflush\n");
+	DPRINTF("... fflush\n");
     if(fflush(stdout)!=0)
 	{
-        perror("call_dialog_result/fflush");
+		DERROR("sdialog_call_modal/fflush");
 		return NULL;
 	}
 
-	fprintf(stderr,"... pipe\n");
+	DPRINTF("... pipe\n");
     if(pipe(p)<0)
 	{
-		perror("call_dialog_result/pipe");
+		DERROR("sdialog_call_modal/pipe");
         return NULL;
     }
 
-	fprintf(stderr,"... fork\n");
+	DPRINTF("... fork\n");
     if((pid=fork())<0)
 	{
-		perror("call_dialog_result/fork");
+		DERROR("sdialog_call_modal/fork");
         return NULL;
     }
 
     if(pid==0)
 	{
-		fprintf(stderr,"*** in child\n");
-		fprintf(stderr,"*** DISPLAY=%s\n",getenv("DISPLAY"));
+		DPRINTF("sdialog_call_modal: in child\n");
+		DPRINTF("sdialog_call_modal: DISPLAY=%s\n",getenv("DISPLAY"));
        	umask(0);
 		chdir("/");
         close(p[0]);
 
         if(dup2(p[1],STDOUT_FILENO)<0)
 		{
-			perror("call_dialog_result/child/dup2");
+			DPRINTF("sdialog_call_modal/child/dup2");
 			exit(1);
 		}
 
-		fprintf(stderr,"*** exec %s\n",path);
+		DPRINTF("call_dialog_result: about to exec %s\n",path);
 		execlp(path,path,msg,(char*)0);
-		perror("call_dialog_result/child/execlp");
+
+		DERROR("sdialog_call_modal/execlp");
 		exit(1);
     }
 
-	fprintf(stderr,"... child PID=%d\n",pid);
+	DPRINTF("sdialog_call_modal: child PID=%d\n",pid);
+	DPRINTF("sdialog_call_modal: reading result\n");
 
-	fprintf(stderr,"... reading result\n");
     close(p[1]);
     len=ret=0;
     do
@@ -337,19 +345,19 @@ char* sdialog_call_modal(char* path,const char* msg)
     buf[len]='\0';
     close(p[0]);
 
-	fprintf(stderr,"... waiting for child to die\n");
+	DPRINTF("sdialog_call_modal: waiting for child to die\n");
     while(waitpid(pid,&status,0)<0)
         if(errno!=EINTR)
             break;
 
     if(!WIFEXITED(status) || WEXITSTATUS(status)!=0)
 	{
-		fprintf(stderr,"... child died badly\n");
+		DPRINTF("sdialog_call_modal: child died badly\n");
         memset(buf,0,sizeof(buf));
         return NULL;
     }
 
-	fprintf(stderr,"... child died normally\n");
+	DPRINTF("sdialog_call_modal: child died normally\n");
     buf[strcspn(buf,"\r\n")]='\0';
     response=strdup(buf);
     memset(buf,0,sizeof(buf));

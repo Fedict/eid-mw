@@ -42,6 +42,7 @@
 typedef struct
 {
 	GtkWidget  *dialog,*pinLabel,*table,*pinFrame,*backspace,*clear,*eventBox,*digits[10];
+	GtkButton  *okbutton,*cancelbutton;	
 	char	   	pin[MAX_PIN_LENGTH+1];
 	gchar		bullet[6];
 } PinDialogInfo;
@@ -64,17 +65,16 @@ void update_ok_button(PinDialogInfo *pindialog)
 {
 	if(strlen(pindialog->pin)>=MIN_PIN_LENGTH)
 	{
-		GtkWidget* okButton=gtk_dialog_get_widget_for_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK);
 		gtk_dialog_set_response_sensitive(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK, TRUE);
 		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK);
-		gtk_widget_grab_focus(okButton);
+		gtk_widget_grab_focus(pindialog->okbutton);
 		
 	}
 	else
 	{
 		gtk_dialog_set_response_sensitive(GTK_DIALOG(pindialog->dialog), GTK_RESPONSE_OK, FALSE);
-		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_REJECT);
-		gtk_widget_grab_focus(pindialog->pinLabel);
+		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_CANCEL);
+		gtk_widget_grab_focus(pindialog->cancelbutton);
 	}
 }
 
@@ -196,21 +196,21 @@ int main(int argc, char* argv[])
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
 
-	fprintf(stderr,"--- gtk_init()\n");
     gtk_init(&argc,&argv);										// initialize gtk+
-	
-	fprintf(stderr,"--- pindialog_init()\n");
 	pindialog_init(&pindialog);									// setup PinDialogInfo structure
 
 	// create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	fprintf(stderr,"--- creating dialog\n");
-    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,_("Please enter your PIN code."));
+    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_("Please enter your PIN code."));
+
+	pindialog.cancelbutton=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_CANCEL,	GTK_RESPONSE_CANCEL);	
+	pindialog.okbutton	  =gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_OK,		GTK_RESPONSE_OK);	
+
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_("beID: PIN Code Required"));
     gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
-    g_signal_connect (pindialog.dialog, "delete-event", G_CALLBACK (on_delete_event),&pindialog);
+    g_signal_connect (pindialog.dialog,"delete-event",G_CALLBACK(on_delete_event),&pindialog);
 
 	// create on-screen numeric keypad, connect the digit and action keys to their event handlers
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -282,10 +282,8 @@ int main(int argc, char* argv[])
 	// show all these widgets, and run the dialog as a modal dialog until it is closed by the user
 	//////////////////////////////////////////////////////////////////////////////////////////////    
 
-	fprintf(stderr,"--- showing dialog\n");
     gtk_widget_show_all(GTK_WIDGET(pindialog.dialog));
 	
-	fprintf(stderr,"--- modal dialog\n");
     switch(gtk_dialog_run(GTK_DIALOG(pindialog.dialog)))
 	{
 		case GTK_RESPONSE_OK:					// if the use chose OK
@@ -301,7 +299,6 @@ int main(int argc, char* argv[])
 	// properly dispose of the dialog (which disposes of all it's children), and exit with specific return value
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	fprintf(stderr,"--- dispose of dialog\n");
 	gtk_widget_destroy(pindialog.dialog);
 	exit(return_value);
 }

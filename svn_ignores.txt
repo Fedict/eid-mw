@@ -16,3 +16,4 @@ ltmain.sh
 install-sh
 .deps
 *.log
+default-*

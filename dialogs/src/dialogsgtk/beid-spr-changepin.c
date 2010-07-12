@@ -66,7 +66,6 @@ int main(int argc, char* argv[])
 	if(sdialog_lock(&sdialog)==-1)								// establish single lock
 		exit(1);												// or abort if this is not possible
 
-	fprintf(stderr,"--- gtk_init()\n");
     gtk_init(&argc,&argv);										// initialize gtk+
 	
 	// create new message dialog with CANCEL button in standard places, in center of user's screen
@@ -83,7 +82,6 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
-	fprintf(stderr,"--- creating dialog\n");
     pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,message);
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_("beID: PIN Code Required"));
@@ -93,10 +91,8 @@ int main(int argc, char* argv[])
 	// show all these widgets, and run the dialog as a modal dialog until it is closed by the user
 	//////////////////////////////////////////////////////////////////////////////////////////////    
 
-	fprintf(stderr,"--- showing dialog\n");
     gtk_widget_show_all(GTK_WIDGET(pindialog.dialog));
 	
-	fprintf(stderr,"--- modal dialog\n");
     switch(gtk_dialog_run(GTK_DIALOG(pindialog.dialog)))
 	{
 		case GTK_RESPONSE_CANCEL:				// if the use chose CANCEL
@@ -111,7 +107,6 @@ int main(int argc, char* argv[])
 	// properly dispose of the dialog (which disposes of all it's children), and exit with specific return value
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	fprintf(stderr,"--- dispose of dialog\n");
 	gtk_widget_destroy(pindialog.dialog);
 
 	sdialog_unlock(&sdialog);		// unlock the dialog

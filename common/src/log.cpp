@@ -23,6 +23,8 @@
 #include "mwexception.h"
 #include "util.h"
 #include <string>
+#include <errno.h>
+#include <stdlib.h>
 
 #define DO_LOGGING
 
@@ -168,5 +170,16 @@ bool MWLOG(tLevel level, tModule mod, CMWException theException)
 
 	return true;
 } 
+
+bool MW_PERROR(tLevel level, tModule mod, char* comment)
+{
+    char 	err_txt[256],log_txt[1024];
+	wchar_t	wide_log_txt[1024];
+
+    snprintf(log_txt,sizeof(log_txt),"%s:%s",comment,strerror_r(errno,err_txt,sizeof(err_txt)));
+    mbstowcs(wide_log_txt,log_txt,sizeof(wide_log_txt));
+    return MWLOG(level,mod,wide_log_txt);
+}
+
 
 }
