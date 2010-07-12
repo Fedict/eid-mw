@@ -52,23 +52,6 @@ AS_VAR_IF([qt],[true],
 	  [],
 	  [with_qt=no])
 	AC_MSG_RESULT([$with_qt])
-
-	AS_VAR_IF([with_qt],[no],
-	[
-		PKG_CHECK_MODULES([QTGUI], [QtGui >= 4.5.0],
-		[
-			CPPFLAGS="$QTGUI_CFLAGS $CPPFLAGS"
-			LDFLAGS="$QTGUI_LIBS $CPPFLAGS"
-		])
-	],
-	[
-	  AS_VAR_IF([win32],[no],[
-	    CPPFLAGS="-I$with_qt/include $CPPFLAGS"
-	    LDFLAGS="-L$with_qt/lib $LDFLAGS"
-	  ],[
-	    AC_MSG_WARN([--with-qt specified on MS Windows host, ignoring])
-	  ])
-	])
 ])
 
 # if gtk dialogs, enable checking for GNU GetText and GTK2
