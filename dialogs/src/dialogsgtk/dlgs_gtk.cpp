@@ -72,7 +72,7 @@ extern "C"
 	    if(fd>0)
 	    {
 	        int nwritten=write(fd,start,size);
-	        DPRINTF("sdialog_raise: wrote %d/%d bytes",nwritten,size);
+	        DPRINTF("sdialog_raise: wrote %d/%d bytes\n",nwritten,size);
 	        close(fd);
 			return 0;
 	    }
@@ -85,7 +85,7 @@ extern "C"
 	{
 		char path[PATH_MAX];
 	    snprintf(path,sizeof(path)-2,"/tmp/.raised-%s",name);
-		DPRINTF("laying [%s] to rest",path);
+		DPRINTF("laying [%s] to rest\n",path);
 		if(unlink(path)<0)
 			DERROR("sdialog_rest: unlink");
 	}
