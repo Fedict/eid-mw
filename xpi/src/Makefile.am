@@ -76,8 +76,11 @@ $(XPI_NAME): $(xpi_files)
 	cd $(abs_builddir); \
 	rm -rf $$tmp
 
+# should be updated every time - there should be a better way...
+.PHONY: platform/Linux/defaults/preferences/belgiumeid.js
+
 if LINUX
-platform/Linux/defaults/preferences/belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
+platform/Linux/defaults/preferences/belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in 
 	$(SED) "s|__libdir__|@libdir@|g" $< > $@
 else
 # on other platforms libdir is unknown for Linux

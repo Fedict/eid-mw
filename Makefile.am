@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = common dialogs cardlayer pkcs11 
+SUBDIRS = common dialogs cardlayer pkcs11 xpi
 
 #BUILT_SOURCES = svn_revision.h
 #REVISION=$Revision: 23 $
