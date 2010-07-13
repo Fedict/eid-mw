@@ -46,7 +46,7 @@ msgstr "beID: Code PIN Necessaire"
 
 #: src/dialogsgtk/dlgs_gtk.cpp:55
 msgid "Please enter your PIN code."
-msgstr "Veuillez enter votre code PIN"
+msgstr "Veuillez enter votre code PAN"
 
 #: src/dialogsgtk/dlgs_gtk.cpp:74
 msgid "Please enter your current PIN, followed by your new PIN (twice)"

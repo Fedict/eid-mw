@@ -8,7 +8,7 @@ lib_LTLIBRARIES    	 	= libbeiddialogs.la
 if LINUX
 #
 
-SUBDIRS = intl po
+SUBDIRS = po
 BUILT_SOURCES 					= default-beid-askpin.cpp default-beid-askaccess.cpp default-beid-badpin.cpp default-beid-changepin.cpp default-beid-spr-askpin.cpp default-beid-spr-changepin.cpp default-beid-spr-close.cpp
 
 libbeiddialogs_la_SOURCES  	 	= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/dlgs_gtk.cpp default-beid-askpin.cpp default-beid-askaccess.cpp
@@ -71,7 +71,7 @@ libbeiddialogs_la_CXXFLAGS	 = -finput-charset=cp1252 -fno-strict-aliasing
 libbeiddialogs_la_LIBADD     = $(COMMON_LIBADD) 
 
 bin_PROGRAMS			 	= beiddialogsQTsrv
-beiddialogsQTsrv_SOURCES   	= $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/dialogsqtsrv/dlgwndaskaccess.cpp src/dialogsqtsrv/dlgwndaskpin.cpp src/dialogsqtsrv/dlgwndaskpins.cpp src/dialogsqtsrv/dlgwndbadpin.cpp src/dialogsqtsrv/dlgwndbase.cpp src/dialogsqtsrv/dlgwndmodal.cpp src/dialogsqtsrv/dlgwndpinpadinfo.cpp src/dialogsqtsrv/main.cpp src/dialogsqtsrv/moc_dlgwndbase.cpp src/dialogsqtsrv/moc_dlgwndmodal.cpp src/dialogsqtsrv/moc_dlgwndaskaccess.cpp src/dialogsqtsrv/moc_dlgwndaskpin.cpp src/dialogsqtsrv/moc_dlgwndaskpins.cpp src/dialogsqtsrv/moc_dlgwndbadpin.cpp src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp src/sharedmem.cpp
+beiddialogsQTsrv_SOURCES   	= $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/dialogsqtsrv/dlgwndaskaccess.cpp src/dialogsqtsrv/dlgwndaskpin.cpp src/dialogsqtsrv/dlgwndaskpins.cpp src/dialogsqtsrv/dlgwndbadpin.cpp src/dialogsqtsrv/dlgwndbase.cpp src/dialogsqtsrv/dlgwndmodal.cpp src/dialogsqtsrv/dlgwndpinpadinfo.cpp src/dialogsqtsrv/main.cpp src/dialogsqtsrv/moc_dlgwndbase.cpp src/dialogsqtsrv/moc_dlgwndmodal.cpp src/dialogsqtsrv/moc_dlgwndaskaccess.cpp src/dialogsqtsrv/moc_dlgwndaskpin.cpp src/dialogsqtsrv/moc_dlgwndaskpins.cpp src/dialogsqtsrv/moc_dlgwndbadpin.cpp src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp src/sharedmem.cpp src/langutil.cpp
 beiddialogsQTsrv_CPPFLAGS   = -I$(srcdir)/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src
 beiddialogsQTsrv_LDFLAGS    = -lpthread -avoid-version
 beiddialogsQTsrv_CXXFLAGS   = -finput-charset=cp1252 -fno-strict-aliasing -framework QtCore -framework QtGui 
@@ -127,6 +127,4 @@ moc_dlgwndpinpadinfo.cpp: src/dialogsqtsrv/dlgwndpinpadinfo.h
 CLEANFILES = $(BUILT_SOURCES)
 #
 endif
-
-EXTRA_DIST = build-aux/config.rpath
 

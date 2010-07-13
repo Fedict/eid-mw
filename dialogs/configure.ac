@@ -57,8 +57,8 @@ AS_VAR_IF([qt],[true],
 # if gtk dialogs, enable checking for GNU GetText and GTK2
 AS_VAR_IF([gtk],[true],
 [
-AM_GNU_GETTEXT_VERSION([0.17])
-AM_GNU_GETTEXT
+AM_GNU_GETTEXT_VERSION([0.18])
+AM_GNU_GETTEXT([external])
 AC_SUBST(LOCALEDIR)
 
 	AC_MSG_CHECKING([user-specified GTK installation])
@@ -124,6 +124,5 @@ AC_FUNC_FORK
 AC_CHECK_FUNCS([strerror vasprintf])
 
 AC_CONFIG_FILES([Makefile])
-AS_VAR_IF([gtk],[true],[AC_CONFIG_FILES([intl/Makefile po/Makefile.in])])
 
 AC_OUTPUT

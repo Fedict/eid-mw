@@ -1,3 +1,8 @@
+2010-07-12  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* Makefile.am (SUBDIRS): Remove intl.
+	* configure.ac (AM_GNU_GETTEXT_VERSION): Bump to 0.18.
+
 2010-07-01  gettextize  <bug-gnu-gettext@gnu.org>
 
 	* m4/codeset.m4: New file, from gettext-0.18.
