@@ -54,13 +54,9 @@ AS_VAR_IF([qt],[true],
 	AC_MSG_RESULT([$with_qt])
 ])
 
-# if gtk dialogs, enable checking for GNU GetText and GTK2
+# if gtk dialogs, enable checking GTK2
 AS_VAR_IF([gtk],[true],
 [
-AM_GNU_GETTEXT_VERSION([0.18])
-AM_GNU_GETTEXT([external])
-AC_SUBST(LOCALEDIR)
-
 	AC_MSG_CHECKING([user-specified GTK installation])
 	AC_ARG_WITH([gtk],
 	  AC_HELP_STRING([--with-gtk=DIR],[specific GTK install location]),

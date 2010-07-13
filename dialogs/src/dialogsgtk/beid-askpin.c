@@ -23,12 +23,7 @@
 #include <glib.h>
 #include <string.h>
 #include <stdlib.h>
-#include <glib/gi18n.h>
-#include <libintl.h>
-#include <locale.h>
 #include "config.h"
-
-#define _(String) gettext (String)
 
 #define MIN_PIN_LENGTH 4
 #define MAX_PIN_LENGTH 12
@@ -36,6 +31,16 @@
 #define EXIT_OK		0
 #define EXIT_CANCEL 1
 #define EXIT_ERROR	2
+
+enum { MSG_PIN_CODE_REQUIRED=1, MSG_PLEASE_ENTER_PIN };
+char* beid_messages[4][3]={
+									"en",	"beID: PIN Code Required",		"Please enter your PIN code.",
+									"nl",	"beID: PINcode Vereist", 		"Gelieve Uw PINcode in te voeren",
+									"fr",	"beID: Code PIN Necessaire",	"Veuillez enter votre code PIN",
+									"de",	"beID: PIN Code Required",		"Please enter your PIN code."
+							  };
+
+#include "beid-i18n.h"
 
 // struct holding all the runtime data, so we can use callbacks without global variables
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -192,23 +197,19 @@ int main(int argc, char* argv[])
 	PinDialogInfo 	pindialog;									// this struct contains all objects
 	GdkColor 		color;					
 
-	setlocale (LC_MESSAGES, "");
-    bindtextdomain (PACKAGE, LOCALEDIR);
-    textdomain (PACKAGE);
-
     gtk_init(&argc,&argv);										// initialize gtk+
 	pindialog_init(&pindialog);									// setup PinDialogInfo structure
 
 	// create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_("Please enter your PIN code."));
+    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_MSG_(MSG_PLEASE_ENTER_PIN));
 
 	pindialog.cancelbutton=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_CANCEL,	GTK_RESPONSE_CANCEL);	
 	pindialog.okbutton	  =gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_OK,		GTK_RESPONSE_OK);	
 
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
-    gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_("beID: PIN Code Required"));
+    gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_MSG_(MSG_PIN_CODE_REQUIRED));
     gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
     g_signal_connect (pindialog.dialog,"delete-event",G_CALLBACK(on_delete_event),&pindialog);
 

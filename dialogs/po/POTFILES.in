@@ -1,8 +1,0 @@
-# List of source files which contain translatable strings.
-src/dialogsgtk/askaccessdialog.c
-src/dialogsgtk/badpindialog.c
-src/dialogsgtk/changepindialog.c
-src/dialogsgtk/close_secure_pindialog.c
-src/dialogsgtk/pindialog.c
-src/dialogsgtk/secure_pindialog.c
-src/dialogsgtk/dlgs_gtk.cpp

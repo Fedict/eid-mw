@@ -8,7 +8,6 @@ lib_LTLIBRARIES    	 	= libbeiddialogs.la
 if LINUX
 #
 
-SUBDIRS = po
 BUILT_SOURCES 					= default-beid-askpin.cpp default-beid-askaccess.cpp default-beid-badpin.cpp default-beid-changepin.cpp default-beid-spr-askpin.cpp default-beid-spr-changepin.cpp default-beid-spr-close.cpp
 
 libbeiddialogs_la_SOURCES  	 	= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/dlgs_gtk.cpp default-beid-askpin.cpp default-beid-askaccess.cpp
@@ -20,39 +19,39 @@ libbeiddialogs_la_LIBADD     	= $(COMMON_LIBADD)
 noinst_PROGRAMS		   			= beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin beid-spr-close
 
 beid_askpin_SOURCES    			= $(COMMON_SOURCES) src/dialogsgtk/beid-askpin.c
-beid_askpin_CPPFLAGS   			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DLOCALEDIR=\"$(localedir)\" -I../intl
+beid_askpin_CPPFLAGS   			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src 
 beid_askpin_LDFLAGS    			= -avoid-version
-beid_askpin_LDADD      			= $(COMMON_LDADD) @LIBINTL@
+beid_askpin_LDADD      			= $(COMMON_LDADD) 
 
 beid_changepin_SOURCES   		= $(COMMON_SOURCES) src/dialogsgtk/beid-changepin.c
-beid_changepin_CPPFLAGS   		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DLOCALEDIR=\"$(localedir)\" -I../intl
+beid_changepin_CPPFLAGS   		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
 beid_changepin_LDFLAGS   		= -avoid-version
-beid_changepin_LDADD     		= $(COMMON_LDADD) @LIBINTL@
+beid_changepin_LDADD     		= $(COMMON_LDADD)
 
 beid_badpin_SOURCES   			= $(COMMON_SOURCES) src/dialogsgtk/beid-badpin.c
-beid_badpin_CPPFLAGS  			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DLOCALEDIR=\"$(localedir)\" -I../intl
+beid_badpin_CPPFLAGS  			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
 beid_badpin_LDFLAGS   			= -avoid-version
-beid_badpin_LDADD     			= $(COMMON_LDADD) @LIBINTL@
+beid_badpin_LDADD     			= $(COMMON_LDADD)
 
 beid_askaccess_SOURCES   		= $(COMMON_SOURCES) src/dialogsgtk/beid-askaccess.c
-beid_askaccess_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DLOCALEDIR=\"$(localedir)\" -I../intl
+beid_askaccess_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
 beid_askaccess_LDFLAGS   		= -avoid-version
-beid_askaccess_LDADD     		= $(COMMON_LDADD) @LIBINTL@
+beid_askaccess_LDADD     		= $(COMMON_LDADD)
 
 beid_spr_askpin_SOURCES    		= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/beid-spr-askpin.c
-beid_spr_askpin_CPPFLAGS   		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DLOCALEDIR=\"$(localedir)\" -I../intl -DSDIALOG_ID=beid-spr
+beid_spr_askpin_CPPFLAGS   		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DSDIALOG_ID=beid-spr
 beid_spr_askpin_LDFLAGS    		= -avoid-version
-beid_spr_askpin_LDADD      		= $(COMMON_LDADD) @LIBINTL@
+beid_spr_askpin_LDADD      		= $(COMMON_LDADD)
 
 beid_spr_changepin_SOURCES  	= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/beid-spr-changepin.c	
-beid_spr_changepin_CPPFLAGS 	= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DLOCALEDIR=\"$(localedir)\" -I../intl -DSDIALOG_ID=beid-spr
+beid_spr_changepin_CPPFLAGS 	= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DSDIALOG_ID=beid-spr
 beid_spr_changepin_LDFLAGS  	= -avoid-version
-beid_spr_changepin_LDADD    	= $(COMMON_LDADD) @LIBINTL@
+beid_spr_changepin_LDADD    	= $(COMMON_LDADD)
 
 beid_spr_close_SOURCES   		= $(COMMON_SOURCES) src/dialogsgtk/single_dialog.c src/dialogsgtk/beid-spr-close.c
-beid_spr_close_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DLOCALEDIR=\"$(localedir)\" -I../intl -DSDIALOG_ID=beid-spr
+beid_spr_close_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DSDIALOG_ID=beid-spr
 beid_spr_close_LDFLAGS   		= -avoid-version
-beid_spr_close_LDADD     		= $(COMMON_LDADD) @LIBINTL@
+beid_spr_close_LDADD     		= $(COMMON_LDADD)
 
 
 default-beid-%.cpp: beid-%
@@ -70,12 +69,13 @@ libbeiddialogs_la_LDFLAGS	 = -avoid-version
 libbeiddialogs_la_CXXFLAGS	 = -finput-charset=cp1252 -fno-strict-aliasing 
 libbeiddialogs_la_LIBADD     = $(COMMON_LIBADD) 
 
-bin_PROGRAMS			 	= beiddialogsQTsrv
-beiddialogsQTsrv_SOURCES   	= $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/dialogsqtsrv/dlgwndaskaccess.cpp src/dialogsqtsrv/dlgwndaskpin.cpp src/dialogsqtsrv/dlgwndaskpins.cpp src/dialogsqtsrv/dlgwndbadpin.cpp src/dialogsqtsrv/dlgwndbase.cpp src/dialogsqtsrv/dlgwndmodal.cpp src/dialogsqtsrv/dlgwndpinpadinfo.cpp src/dialogsqtsrv/main.cpp src/dialogsqtsrv/moc_dlgwndbase.cpp src/dialogsqtsrv/moc_dlgwndmodal.cpp src/dialogsqtsrv/moc_dlgwndaskaccess.cpp src/dialogsqtsrv/moc_dlgwndaskpin.cpp src/dialogsqtsrv/moc_dlgwndaskpins.cpp src/dialogsqtsrv/moc_dlgwndbadpin.cpp src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp src/sharedmem.cpp src/langutil.cpp
-beiddialogsQTsrv_CPPFLAGS   = -I$(srcdir)/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src
-beiddialogsQTsrv_LDFLAGS    = -lpthread -avoid-version
-beiddialogsQTsrv_CXXFLAGS   = -finput-charset=cp1252 -fno-strict-aliasing -framework QtCore -framework QtGui 
-beiddialogsQTsrv_LDADD      = $(COMMON_LDADD)
+bin_PROGRAMS			 		= beiddialogsQTsrv
+beiddialogsQTsrv_SOURCES   		= $(COMMON_SOURCES) src/dialogsqt/dlgs.cpp src/dialogsqtsrv/dlgwndaskaccess.cpp src/dialogsqtsrv/dlgwndaskpin.cpp src/dialogsqtsrv/dlgwndaskpins.cpp src/dialogsqtsrv/dlgwndbadpin.cpp src/dialogsqtsrv/dlgwndbase.cpp src/dialogsqtsrv/dlgwndmodal.cpp src/dialogsqtsrv/dlgwndpinpadinfo.cpp src/dialogsqtsrv/main.cpp src/sharedmem.cpp src/langutil.cpp
+nodist_beiddialogsQTsrv_SOURCES = src/dialogsqtsrv/moc_dlgwndbase.cpp src/dialogsqtsrv/moc_dlgwndmodal.cpp src/dialogsqtsrv/moc_dlgwndaskaccess.cpp src/dialogsqtsrv/moc_dlgwndaskpin.cpp src/dialogsqtsrv/moc_dlgwndaskpins.cpp src/dialogsqtsrv/moc_dlgwndbadpin.cpp src/dialogsqtsrv/moc_dlgwndpinpadinfo.cpp
+beiddialogsQTsrv_CPPFLAGS   	= -I$(srcdir)/dialogsqt -I$(srcdir)/../common/src -I$(srcdir)/src
+beiddialogsQTsrv_LDFLAGS    	= -lpthread -avoid-version
+beiddialogsQTsrv_CXXFLAGS   	= -finput-charset=cp1252 -fno-strict-aliasing -framework QtCore -framework QtGui 
+beiddialogsQTsrv_LDADD      	= $(COMMON_LDADD)
 #
 endif
 
