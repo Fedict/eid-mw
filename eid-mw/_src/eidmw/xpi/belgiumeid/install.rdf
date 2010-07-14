@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   - eID Middleware Project.
   - Copyright (C) 2009-2010 FedICT.
@@ -43,7 +43,7 @@
     </em:localized>
     <em:name>Belgium eID</em:name>
     <em:description>Use the Belgian electronic identity card (eID) in Firefox</em:description>
-    <em:version>1.0.7</em:version>
+    <em:version>1.0.8</em:version>
     <em:creator>FedICT</em:creator>
     <em:homepageURL>http://eid.belgium.be/</em:homepageURL>
     <em:iconURL>chrome://belgiumeid/skin/icon.png</em:iconURL>
