@@ -1,6 +1,6 @@
 /*
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2009-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -90,6 +90,14 @@ function BELGIUMEIDPKCS11(){
                                        priority, buttons);
     not.persistence = 3;
   } 
+  this.notifyOldModuleLocationFound = function() {
+    var notificationBox = gBrowser.getNotificationBox();
+    const priority = notificationBox.PRIORITY_WARNING_MEDIUM;
+    var not = notificationBox.appendNotification(strings.getString("oldmodulelocationfoundonsystem"), "belgiumeid",
+                                       "chrome://browser/skin/Info.png",
+                                       priority, null);
+    not.persistence = 3;
+  }  
   this.registerModule = function() {
     /* 
        Registers PKCS11 module
@@ -207,10 +215,26 @@ function BELGIUMEIDPKCS11(){
     }
     return getPrefs().getBoolPref("showmodulenotfoundnotification");
   }
+  this.removeModuleWithOldLocation = function () {
+    /* If 
+        * pkcs11 module with module name is registered in Firefox
+        * pkcs11 module with module location is not registered in Firefox
+       Then
+         remove module from PKCS11 module DB
+    */
+    if (this.findModuleByName(getModuleName()) != null && this.findModuleByLibName(getModuleLocation()) == null) {
+      this.unregisterModule(getModuleName());
+      return true;
+    }
+    return false;
+  }
 
   // initialization code
   this.initialized = true;
    
+  if (this.removeModuleWithOldLocation()){
+    this.notifyOldModuleLocationFound();
+  }
   this.removeModuleIfNotAvailable();
   if (!this.registerModule() && !this.pkcs11ModuleAvailable() && this.shouldShowModuleNotFoundNotification() ) {
     this.notifyModuleNotFound();   
