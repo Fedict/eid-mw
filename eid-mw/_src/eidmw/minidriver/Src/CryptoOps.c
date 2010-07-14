@@ -338,7 +338,8 @@ DWORD WINAPI   CardSignData
       else
       {
          LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->pPaddingInfo] unsupported...");
-         CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+         /*CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);*/
+         uiHashAlgo = HASH_ALGO_NONE;
       }
 
       break;
