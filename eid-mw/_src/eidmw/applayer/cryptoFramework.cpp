@@ -1766,8 +1766,8 @@ bool APL_CryptoFwk::b64Encode(const CByteArray &baIn, CByteArray &baOut,bool bWi
 	//Encode the baIn
 	pOut=XERCES_CPP_NAMESPACE::Base64::encode((XMLByte *)baIn.GetBytes(),baIn.Size(),&iLenOut);
 
-	//4000000000 is huge, but just checking in case of the unlickely truncation
-	if(!pOut || iLenOut > 4000000000)
+	//2000000000 is huge, but just checking in case of the unlickely truncation
+	if(!pOut || iLenOut > 2000000000)
 		return false;
 
 	//Put the result in baOut
@@ -1796,7 +1796,7 @@ bool APL_CryptoFwk::b64Decode(const CByteArray &baIn, CByteArray &baOut)
 
 	//Decode the pIn
 	pOut=XERCES_CPP_NAMESPACE::Base64::decode((XMLByte *)pIn,&iLenOut);
-	if(!pOut || iLenOut > 4000000000)
+	if(!pOut || iLenOut > 2000000000)
 	{
 		delete[] pIn;
 		return false;
