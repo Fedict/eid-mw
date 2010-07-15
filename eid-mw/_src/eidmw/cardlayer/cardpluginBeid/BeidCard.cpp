@@ -627,11 +627,11 @@ unsigned long CBeidCard::Get6CDelay()
 tCacheInfo CBeidCard::GetCacheInfo(const std::string &csPath)
 {
 	tCacheInfo dontCache = {DONT_CACHE, 0};
-	tCacheInfo simpleCache = {SIMPLE_CACHE, 0};
+/*	tCacheInfo simpleCache = {SIMPLE_CACHE, 0};
 	tCacheInfo certCache = {CERT_CACHE, 0};
 	tCacheInfo check16Cache = {CHECK_16_CACHE, 0}; // Check 16 bytes at offset 0
 	tCacheInfo checkSerial = {CHECK_SERIAL, 0}; // Check if the card serial nr is present
-/*
+
 	// csPath -> file ID
 	unsigned int uiFileID = 0;
 	unsigned long ulLen = (unsigned long) (csPath.size() / 2);
