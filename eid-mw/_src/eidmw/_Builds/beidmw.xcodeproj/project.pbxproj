@@ -1821,6 +1821,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 3.5.4;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -2383,7 +2384,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "beiddialogsQT.$(CURRENT_PROJECT_VERSION)";
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.5;
 				ZERO_LINK = NO;
 			};
 			name = Release;
