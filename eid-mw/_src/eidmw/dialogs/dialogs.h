@@ -78,13 +78,21 @@ typedef enum {
 } DlgPinUsage;
 
 const unsigned char PIN_FLAG_DIGITS = 1;
-
+	
+#ifdef WIN32
 typedef struct {
 	unsigned long ulMinLen;
 	unsigned long ulMaxLen;    // should be 16 at most
 	unsigned long ulFlags;     // PIN_FLAG_DIGITS, ...
 } DlgPinInfo;
-
+#else
+typedef struct {
+	unsigned long long ulMinLen;
+	unsigned long long ulMaxLen;    // should be 16 at most
+	unsigned long long ulFlags;     // PIN_FLAG_DIGITS, ...
+} DlgPinInfo;	
+#endif
+	
 typedef enum {
 	DLG_ICON_NONE,
 	DLG_ICON_INFO,
@@ -280,7 +288,7 @@ struct DlgAskPINArguments {
  struct DlgBadPinArguments {
    DlgPinUsage usage;
    wchar_t pinName[50];
-   unsigned long ulRemainingTries;
+   unsigned long long ulRemainingTries;
    DlgRet returnValue;
  } ;
 
@@ -297,7 +305,7 @@ struct DlgAskPINArguments {
    wchar_t appPath[100];
    wchar_t readerName[100];
    DlgPFOperation operation;
-   int forAllOperations;
+   long long forAllOperations;
    DlgRet returnValue;
  };
 
@@ -308,7 +316,7 @@ struct DlgAskPINArguments {
    DlgPinUsage usage;
    wchar_t pinName[50];
    wchar_t message[200];
-   unsigned long infoCollectorIndex;
+   unsigned long long infoCollectorIndex;
    pid_t tRunningProcess;
    DlgRet returnValue;
  } ;
