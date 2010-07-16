@@ -632,7 +632,7 @@
    
       <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}">
         <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\Beid"
+                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
                      Action="createAndRemoveOnUninstall">
           <RegistryValue Type="string" Name="80000001" Value="[SystemFolder]beidmdrv.dll" KeyPath="yes"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
