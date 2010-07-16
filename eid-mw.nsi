@@ -6,7 +6,7 @@
 !include "MUI2.nsh"
 !include "x64.nsh"
 Name "Belgian eID Middleware"
-OutFile "beid-mw-3.99.exe"
+OutFile "beid-mw-3.99.M2.exe"
 
 InstallDir "$SYSDIR"
 InstallDirRegKey HKCU "Software\beid-middleware" ""
@@ -16,19 +16,15 @@ RequestExecutionLevel admin
 
 ;--------------------------------
 ;Interface Settings
-
   !define MUI_ABORTWARNING
-
   ;Show all languages, despite user's codepage
   !define MUI_LANGDLL_ALLLANGUAGES
-
 !define MUI_ICON "eid-mw-install.ico"
 !define MUI_UNICON "eid-mw-uninstall.ico"
 
 
 ;--------------------------------
 ;Language Selection Dialog Settings
-
   ;Remember the installer language
   !define MUI_LANGDLL_REGISTRY_ROOT "HKCU" 
   !define MUI_LANGDLL_REGISTRY_KEY "Software\beid-middleware" 
@@ -36,17 +32,14 @@ RequestExecutionLevel admin
 
 ;--------------------------------
 ;Pages
-
   !insertmacro MUI_PAGE_LICENSE "COPYING"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_INSTFILES
-  
   !insertmacro MUI_UNPAGE_CONFIRM
   !insertmacro MUI_UNPAGE_INSTFILES
 
 ;--------------------------------
 ;Languages
-
   !insertmacro MUI_LANGUAGE "Dutch"   ;first language is the default language
   !insertmacro MUI_LANGUAGE "French"
   !insertmacro MUI_LANGUAGE "German"
@@ -72,72 +65,53 @@ Section "beID Core" SecCoreLibs
   File /home/frank/dist/win32/bin/libbeidcommon.dll
   File /home/frank/dist/win32/bin/libbeiddialogs.dll
   File /home/frank/dist/win32/bin/libbeidcardlayer.dll
-  
   ;Store installation folder
   WriteRegStr HKCU "Software\beid-corelibs" "" $INSTDIR
-  
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-
 SectionEnd
 
 Section "minidriver" SecMiniDriver
-
   SetOutPath "$INSTDIR"
   File /home/frank/dist/win32/bin/libbeidpkcs11.dll
-  
   ;Store installation folder
   WriteRegStr HKCU "Software\beid-minidriver" "" $INSTDIR
-  
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-
 SectionEnd
 
 
 Section "pkcs#11 Module" SecPkcs11
-
   SetOutPath "$INSTDIR"
   File /home/frank/dist/win32/bin/libbeidpkcs11.dll
-  
   ;Store installation folder
   WriteRegStr HKCU "Software\beid-pkcs11" "" $INSTDIR
-  
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-
 SectionEnd
 
 Section "SIS Card Modules" SecSisCard
-
   SetOutPath "$INSTDIR"
   File /home/frank/dist/win32/bin/libcardpluginbeid.dll
   File /home/frank/dist/win32/bin/libcardpluginsis_acr38u.dll
   File /home/frank/dist/win32/bin/libcardpluginsis.dll
-
   ;Store installation folder
   WriteRegStr HKCU "Software\beid-sis" "" $INSTDIR
-  
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-
 SectionEnd
 
 Section Test
-
 	SetOutPath $SYSDIR
-
 	; 32-bit install:
 	${EnableX64FSRedirection}
 	File /home/frank/dist/win32/bin/libbeidmdrv32.dll  # extracts to C:\Windows\SysWOW64 
-
 	; 64-bit install:
 	${If} ${RunningX64}
 		MessageBox MB_OK "Running on X64"
 		${DisableX64FSRedirection}
 		File /home/frank/dist/win64/bin/libbeidmdrv64.dll  # extracts to C:\Windows\System32 
 	${EndIf}
-
 SectionEnd
 
 ;--------------------------------
