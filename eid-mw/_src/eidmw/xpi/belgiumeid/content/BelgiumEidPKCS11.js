@@ -216,6 +216,8 @@ function BELGIUMEIDPKCS11(){
     return getPrefs().getBoolPref("showmodulenotfoundnotification");
   }
   this.removeModuleWithOldLocation = function () {
+    if (getModuleLocation() == "") return false; // unsupported platform
+
     /* If 
         * pkcs11 module with module name is registered in Firefox
         * pkcs11 module with module location is not registered in Firefox
