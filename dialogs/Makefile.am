@@ -86,7 +86,7 @@ endif
 
 if WIN32
 #
-libbeiddialogs_la_SOURCES  	 = $(COMMON_SOURCES) src/dialogswin32/dlgswin32.cpp src/dialogswin32/dlgwndaskaccess.cpp src/dialogswin32/dlgwndaskpin.cpp src/dialogswin32/dlgwndaskpins.cpp src/dialogswin32/dlgwndbadpin.cpp src/dialogswin32/dlgwndbase.cpp src/dialogswin32/dlgwndmodal.cpp src/dialogswin32/dlgwndpinpadinfo.cpp src/dialogswin32/stdafx.cpp
+libbeiddialogs_la_SOURCES  	 = $(COMMON_SOURCES) src/dialogswin32/dlgswin32.cpp src/dialogswin32/dlgwndaskaccess.cpp src/dialogswin32/dlgwndaskpin.cpp src/dialogswin32/dlgwndaskpins.cpp src/dialogswin32/dlgwndbadpin.cpp src/dialogswin32/dlgwndbase.cpp src/dialogswin32/dlgwndmodal.cpp src/dialogswin32/dlgwndpinpadinfo.cpp src/dialogswin32/stdafx.cpp src/langutil.cpp
 libbeiddialogs_la_CPPFLAGS   = -I$(srcdir)/src/dialogswin32 -I$(srcdir)/../common/src
 libbeiddialogs_la_LDFLAGS	 = -lpsapi -lgdi32 -no-undefined -shared -static-libstdc++ -static-libgcc -avoid-version
 libbeiddialogs_la_CXXFLAGS	 = -municode -DMINGW_HAS_SECURE_API -DDLGSWIN32_EXPORTS
