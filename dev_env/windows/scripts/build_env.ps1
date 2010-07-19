@@ -21,7 +21,7 @@
 # example install script to create Windows build environment
 Import-Module BitsTransfer
 
-$packagesfolder = "c:\buildbot\packages\"
+$packagesfolder = "c:\eid_dev_env\packages\"
 $packagesfolderurl = "http://dl.dropbox.com/u/2715381/buildbot/"
 
 Write-Host "- Creating $packagesfolder"
@@ -34,7 +34,7 @@ Write-Host "- Installing Slik-Subversion"
 $toolfilename = "Slik-Subversion-1.6.12-x64.msi"
 $tooltarget = "$packagesfolder\$toolfilename"
 
-Start-BitsTransfer -Source $packagesfolderurl + $toolfilename -Destination $packagesfolder
+Start-BitsTransfer -Source "$packagesfolderurl$toolfilename" -Destination $packagesfolder
 
 $args = "/passive"
 [diagnostics.process]::start($tooltarget, $args).WaitForExit()
@@ -46,7 +46,7 @@ $args = "/passive"
 #$toolfilename = "MSYS-1.0.11.exe"
 #$tooltarget = "$packagesfolder\$toolfilename"
 
-#Start-BitsTransfer -Source $packagesfolderurl + $toolfilename -Destination $packagesfolder
+#Start-BitsTransfer -Source "$packagesfolderurl$toolfilename" -Destination $packagesfolder
 
 #$args = "/SILENT /SP-"
 #[diagnostics.process]::start($tooltarget, $args).WaitForExit()
