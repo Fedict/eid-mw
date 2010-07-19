@@ -1051,7 +1051,7 @@ void detectReaderThread::run() {
 	QDomNode resultNode;
 	QDomNode listItem; 
 #ifdef __APPLE__
-	setTerminationEnabled(true);
+	signal(SIGPIPE,SIG_IGN);
 	QString currdirpath = QCoreApplication::applicationDirPath();
 	std::string commandLine = "";
 	commandLine += currdirpath.toStdString();
