@@ -79,14 +79,18 @@ $(XPI_NAME): $(xpi_files)
 EXTRA_DIST=platform/Linux/defaults/preferences/belgiumeid.js.in
 
 # should be updated every time - there should be a better way...
-.PHONY: platform/Linux/defaults/preferences/belgiumeid.js
+#.PHONY: platform/Linux/defaults/preferences/belgiumeid.js
+BUILT_SOURCES=platform/Linux/defaults/preferences/belgiumeid.js
+
+
+# platform/Linux/defaults/preferences/belgiumeid.js
 
 if LINUX
-belgiumeid.js: belgiumeid.js.in 
+platform/Linux/defaults/preferences/belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
 	$(SED) "s|__libdir__|@libdir@|g" $< > $@
 else
 # on other platforms libdir is unknown for Linux
 # we default to /usr/local/lib
-platform/Linux/defaults/preferences/belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
+belgiumeid.js: belgiumeid.js.in
 	$(SED) "s|__libdir__|/usr/local/lib|g" $< > $@
 endif
