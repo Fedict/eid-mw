@@ -21,6 +21,7 @@ function BELGIUMEIDPKCS11(){
   const nsPKCS11ModuleDB = "@mozilla.org/security/pkcs11moduledb;1";
   const nsIPKCS11ModuleDB = Components.interfaces.nsIPKCS11ModuleDB;
   const nsIPKCS11Module = Components.interfaces.nsIPKCS11Module;
+  PKCS11_PUB_READABLE_CERT_FLAG  =  0x1<<28; //Stored certs can be read off the token w/o logging in
 
   // Private Members
   var strings = document.getElementById("belgiumeid-strings");
@@ -104,7 +105,7 @@ function BELGIUMEIDPKCS11(){
       try {
         pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIPKCS11);
         try {
-          pkcs11module.addModule(getModuleName(), getModuleLocation(), 0,0);
+          pkcs11module.addModule(getModuleName(), getModuleLocation(), PKCS11_PUB_READABLE_CERT_FLAG,0);
         } catch (e) {
           return false; 
         }
@@ -112,7 +113,7 @@ function BELGIUMEIDPKCS11(){
         try {
           pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIDOMPkcs11);
           try {
-            pkcs11module.addmodule(getModuleName(), getModuleLocation(), 0,0);
+            pkcs11module.addmodule(getModuleName(), getModuleLocation(), PKCS11_PUB_READABLE_CERT_FLAG,0);
           } catch (e) {
             return false; 
           }

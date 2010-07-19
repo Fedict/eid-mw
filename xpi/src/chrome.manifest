@@ -5,3 +5,4 @@ locale	belgiumeid	nl-NL	locale/nl-NL/
 locale	belgiumeid	fr-FR	locale/fr-FR/
 skin	belgiumeid	classic/1.0	skin/
 overlay	chrome://browser/content/browser.xul	chrome://belgiumeid/content/firefoxOverlay.xul
+overlay	chrome://global/content/commonDialog.xul	chrome://belgiumeid/content/belgiumeidprompt.xul
