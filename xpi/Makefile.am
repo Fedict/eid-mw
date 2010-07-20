@@ -8,3 +8,6 @@ export TMPDIR ?= /tmp
 export LINUX
 export WIN32
 export OSX
+
+xpipackage:
+	$(MAKE) -C src xpipackage

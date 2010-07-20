@@ -1,6 +1,6 @@
 XPI_NAME=belgiumeid.xpi
 
-noinst_DATA = $(XPI_NAME)
+#noinst_DATA = $(XPI_NAME)
 
 CLEANFILES = $(XPI_NAME) platform/Linux/defaults/preferences/belgiumeid.js
 
@@ -9,6 +9,7 @@ xpi_files = $(dist_content_DATA) \
 			$(dist_locale_enus_DATA) \
 			$(dist_locale_frfr_DATA) \
 			$(dist_locale_nlnl_DATA) \
+			$(dist_locale_dede_DATA) \
 			$(dist_platform_darwin_defaults_preferences_DATA) \
 			$(dist_platform_linux_defaults_preferences_DATA) \
 			$(dist_platform_winnt_defaults_preferences_DATA) \
@@ -19,19 +20,21 @@ dist_extensionroot_DATA = chrome.manifest \
 			icon.png \
 			install.rdf
 
-dist_content_DATA = content/BelgiumEidPKCS11.js \
-			content/firefoxOverlay.xul \
-			content/overlay.js \
+dist_content_DATA = content/belgiumeidpkcs11.js \
+			content/belgiumeidpkcs11.xul \
+			content/belgiumeidprompt.js \
+			content/belgiumeidprompt.xul \
 			content/util.js
 
 dist_defaults_preferences_DATA = defaults/preferences/belgiumeid.js
 
-dist_locale_enus_DATA = locale/en-us/belgiumeid.dtd \
-	locale/en-us/belgiumeid.properties
+dist_locale_enus_DATA = locale/en-US/belgiumeid.properties
 
-dist_locale_frfr_DATA = locale/fr-fr/belgiumeid.properties
+dist_locale_frfr_DATA = locale/fr-FR/belgiumeid.properties
 
-dist_locale_nlnl_DATA = locale/nl-nl/belgiumeid.properties
+dist_locale_nlnl_DATA = locale/nl-NL/belgiumeid.properties
+
+dist_locale_dede_DATA = locale/de-DE/belgiumeid.properties
 
 dist_platform_darwin_defaults_preferences_DATA = platform/Darwin/defaults/preferences/belgiumeid.js
 
@@ -40,20 +43,22 @@ dist_platform_linux_defaults_preferences_DATA = platform/Linux/defaults/preferen
 dist_platform_winnt_defaults_preferences_DATA = platform/WINNT/defaults/preferences/belgiumeid.js
 
 dist_skin_DATA = skin/icon.png \
+			skin/icon40x40.png \
 			skin/overlay.css
 
 extensionrootdir=$(mozext)/$(XPI_ID)
 contentdir=$(extensionrootdir)/content
 defaults_preferencesdir=$(extensionrootdir)/defaults/preferences
-locale_enusdir=$(extensionrootdir)/locale/en-us
-locale_frfrdir=$(extensionrootdir)/locale/fr-fr
-locale_nlnldir=$(extensionrootdir)/locale/nl-nl
+locale_enusdir=$(extensionrootdir)/locale/en-US
+locale_frfrdir=$(extensionrootdir)/locale/fr-FR
+locale_nlnldir=$(extensionrootdir)/locale/nl-NL
+locale_dededir=$(extensionrootdir)/locale/de-DE
 platform_darwin_defaults_preferencesdir=$(extensionrootdir)/platform/Darwin/defaults/preferences
 platform_linux_defaults_preferencesdir=$(extensionrootdir)/platform/Linux/defaults/preferences
 platform_winnt_defaults_preferencesdir=$(extensionrootdir)/platform/WINNT/defaults/preferences
 skindir=$(extensionrootdir)/skin
 
-$(XPI_NAME): $(xpi_files)
+xpipackage: $(xpi_files)
 #	 Create a temporary directory $tmp in $TMPDIR (default /tmp).
 #	 Use mktemp if possible; otherwise fall back on mkdir,
 #	 with $RANDOM to make collisions less likely.
@@ -66,20 +71,16 @@ $(XPI_NAME): $(xpi_files)
 		tmp=$$TMPDIR/xpi$$RANDOM; \
 		umask 077 && $(mkinstalldirs) "$$tmp"; \
 	} || exit $$?; \
-	for xpifile in $^; do \
-		$(mkinstalldirs) $$tmp/`dirname $$xpifile`/; \
-		cp $$xpifile $$tmp/`dirname $$xpifile`/; \
-	done; \
-	rm -f $(abs_builddir)/$@; \
-	cd $$tmp && \
-	@ZIP@ -r $(abs_builddir)/$@ .; \
-	cd $(abs_builddir); \
-	rm -rf $$tmp
+	$(MAKE) DESTDIR=$$tmp mozext= install; \
+	cd $$tmp; \
+	@ZIP@ -rq $(abs_builddir)/belgiumeid.xpi .; \
+	cd -; \
+	rm -rf $$tmp;
 
 EXTRA_DIST=platform/Linux/defaults/preferences/belgiumeid.js.in
 
 # should be updated every time - there should be a better way...
-#.PHONY: platform/Linux/defaults/preferences/belgiumeid.js
+.PHONY: platform/Linux/defaults/preferences/belgiumeid.js
 BUILT_SOURCES=platform/Linux/defaults/preferences/belgiumeid.js
 
 

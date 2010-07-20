@@ -74,3 +74,6 @@ To change the install location:
  
  ./configure --with-mozext=/mozilla/firefox/extensions/directory
 
+To create an XPI package, run:
+ 
+  make xpipackage
