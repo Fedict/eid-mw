@@ -50,64 +50,52 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ezInstaller</name>
     <message>
-        <location filename="ezinstaller.cpp" line="505"/>
+        <location filename="ezinstaller.cpp" line="504"/>
         <source>eID software installeren</source>
         <translation>Installer le Logiciel eID</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="506"/>
+        <location filename="ezinstaller.cpp" line="505"/>
         <source>Kaartlezer verbinden</source>
         <translation>Connecter le lecteur</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="507"/>
+        <location filename="ezinstaller.cpp" line="506"/>
         <source>Gegevens bekijken</source>
         <translation>Afficher les données</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="494"/>
+        <location filename="ezinstaller.cpp" line="493"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;b&gt;De installatie is succesvol afgelopen.&lt;/b&gt; &lt;br/&gt;Je kunt de eID en kaartlezer nu gebruiken.&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;&lt;b&gt;Le lecteur de cartes et le logiciel eID ont été installés correctement.&lt;/b&gt;&lt;br&gt; Vous pouvez utiliser le lecteur de cartes.&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="497"/>
+        <location filename="ezinstaller.cpp" line="496"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;b&gt;De Quick Installer heeft een probleem gevonden bij het installeren van de eID software.&lt;/b&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;&lt;b&gt;Quick Installer a rencontré un problème pendant l&apos;installation du logiciel eID.&lt;/b&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="498"/>
+        <location filename="ezinstaller.cpp" line="497"/>
         <source>Je kunt een rapport openen waar je een gedetailleerde omschrijving van het probleem terugvindt.</source>
         <translation>Vous pouvez ouvrir un rapport dans lequel vous retrouvez une description détaillée du problème.</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="500"/>
+        <location filename="ezinstaller.cpp" line="499"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;b&gt;De Quick Installer kan geen kaartlezer detecteren.&lt;/b&gt; &lt;br/&gt;Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt, kun je de servicedesk contacteren.&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;&lt;b&gt;Quick Installer a rencontré un problème pendant la détection du lecteur de cartes.&lt;/b&gt; &lt;br/&gt;Retournez à la page précédente et essayez à nouveau. Si cela ne fonctionne pas contactez le servicedesk.&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="501"/>
+        <location filename="ezinstaller.cpp" line="500"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;b&gt;De Quick Installer kan de identiteitskaart niet vinden.&lt;/b&gt; &lt;br/&gt;Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;&lt;b&gt;Quick Installer a rencontré un problème pendant la détection de la carte d&apos;identité.&lt;/b&gt; &lt;br/&gt;Retournez à la page précédente et essayez à nouveau. Si cela ne fonctionne pas contactez le servicedesk.&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message utf8="true">
-        <location filename="ezinstaller.cpp" line="533"/>
-        <source>Een andere versie van de eID Middleware 3.5 is reeds geïnstalleerd.
-
-Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.</source>
-        <oldsource>Een andere versie van de eID Middleware 3.5 is reeds geïnstalleerd.
-
-Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.</oldsource>
-        <translation type="unfinished">Une autre version du eID Middleware 3.5 est déjà installée.
-
-Pour pouvoir installer cette version-ci, vous devez désinstaller l&apos;ancienne.</translation>
-    </message>
     <message>
-        <location filename="ezinstaller.cpp" line="1317"/>
+        <location filename="ezinstaller.cpp" line="1316"/>
         <source>Kies een map om het rapport in op te slaan.</source>
         <translation>Choisissez un répertoire pour sauver le rapport.</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="503"/>
+        <location filename="ezinstaller.cpp" line="502"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;b&gt;De Quick Installer heeft een probleem gevonden met de configuratie van uw computer, of het installeren van de middleware.&lt;/b&gt; &lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;&lt;b&gt;Quick Installer a rencontré un problème pendant l&apos;installation du logiciel eID.&lt;/b&gt; &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -124,7 +112,7 @@ Pour pouvoir installer cette version-ci, vous devez désinstaller l&apos;ancienn
         <translation type="obsolete">Ne pas tester</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="569"/>
+        <location filename="ezinstaller.cpp" line="568"/>
         <source>De installatie van de software is geslaagd.</source>
         <translation>L&apos;installation du logiciel s&apos;est déroulé avec succès.</translation>
     </message>
@@ -133,7 +121,7 @@ Pour pouvoir installer cette version-ci, vous devez désinstaller l&apos;ancienn
         <translation type="obsolete">&lt;html&gt;&lt;body&gt;Le lecteur de carte est connecté correctement.&lt;br&gt;Quick Installer va vérifier la lecture de la carte d&apos;identité électronique. Introduisez la carte d&apos;identité électronique dans le lecteur de cartes.&lt;br&gt;Ensuite cliquez sur &lt;b&gt;Suivant&lt;/b&gt;.&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="522"/>
+        <location filename="ezinstaller.cpp" line="521"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;b&gt;De kaartlezer werkt!&lt;/b&gt;&lt;br&gt;De Quick Installer leest nu de belangrijkste gegevens van je identiteitskaart:&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;&lt;b&gt;Le lecteur de cartes fonctionne correctement.&lt;/b&gt;&lt;br&gt;Quick Installer lit les données de la carte d&apos;identité.&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -146,133 +134,127 @@ Pour pouvoir installer cette version-ci, vous devez désinstaller l&apos;ancienn
         <translation type="obsolete">erreur</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="518"/>
+        <location filename="ezinstaller.cpp" line="517"/>
         <source>Kaart lezen</source>
         <translation>Lire la carte</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="539"/>
+        <location filename="ezinstaller.cpp" line="538"/>
         <source>Geen eID kaart gedetecteerd.</source>
         <translation>Aucune Carte eID détectée.</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="541"/>
+        <location filename="ezinstaller.cpp" line="540"/>
         <source>Probleem: geen smartcardlezers aangetroffen.</source>
         <translation>Problème: aucun lecteur de cartes détecté.</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="512"/>
+        <location filename="ezinstaller.cpp" line="511"/>
         <source>Naam:   </source>
         <translation>Nom:   </translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="513"/>
+        <location filename="ezinstaller.cpp" line="512"/>
         <source>Voornamen:   </source>
         <translation>Prénoms:   </translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="514"/>
+        <location filename="ezinstaller.cpp" line="513"/>
         <source>Geboorteplaats:   </source>
         <translation>Lieu de naissance:   </translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="515"/>
+        <location filename="ezinstaller.cpp" line="514"/>
         <source>Geboortedatum:   </source>
         <translation>Date de naissance:   </translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="516"/>
+        <location filename="ezinstaller.cpp" line="515"/>
         <source>Nationaal nummer:   </source>
         <translation>Numéro National:   </translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="568"/>
+        <location filename="ezinstaller.cpp" line="567"/>
         <source>De installatie van de software is niet geslaagd.</source>
         <translation>L&apos;installation du logiciel a échoué.</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="540"/>
+        <location filename="ezinstaller.cpp" line="539"/>
         <source>eID kaart correct gedetecteerd.</source>
         <translation>Une carte eID a été détectée.</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="509"/>
+        <location filename="ezinstaller.cpp" line="508"/>
         <source>Toon details</source>
         <translation>Consulter les détails</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="510"/>
+        <location filename="ezinstaller.cpp" line="509"/>
         <source>Verberg details</source>
         <translation>Masquer les détails</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="546"/>
+        <location filename="ezinstaller.cpp" line="545"/>
         <source>U wilt de eID Quick Installer afsluiten ?</source>
         <translation>Vous voulez fermer Quick Installer ?</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="543"/>
+        <location filename="ezinstaller.cpp" line="542"/>
         <source>Afsluiten ?</source>
         <translation>Fermer ?</translation>
     </message>
-    <message utf8="true">
-        <location filename="ezinstaller.cpp" line="520"/>
+    <message>
+        <location filename="ezinstaller.cpp" line="519"/>
         <source>&lt;html&gt;&lt;body&gt;De eID software is succesvol geïnstalleerd.&lt;br&gt;De Quick Installer zal vervolgens controleren of de kaartlezer correct functioneert. Verbind nu je kaartlezer(s) met de computer.&lt;/html&gt;&lt;/body&gt;</source>
         <oldsource>&lt;html&gt;&lt;body&gt;De eID software is succesvol ge&amp;iuml;nstalleerd.&lt;br&gt;De Quick Installer zal vervolgens controleren of de kaartlezer correct functioneert. Verbind nu je kaartlezer(s) met de computer.&lt;/html&gt;&lt;/body&gt;</oldsource>
         <translation>&lt;html&gt;&lt;body&gt;Le logiciel eID est installé correctement. &lt;br&gt;Quick Installer va contrôler si le lecteur de cartes fonctionne correctement. Connectez le(s) lecteur(s) de cartes à l&apos;ordinateur.&lt;/html&gt;&lt;/body&gt;</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="521"/>
+        <location filename="ezinstaller.cpp" line="520"/>
         <source>&lt;html&gt;&lt;body&gt;De kaartlezer is met de computer verbonden.&lt;br&gt;Quick installer zal nu de goede werking controleren. Steek de elektronische identiteitskaart in een kaartlezer.&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;Le lecteur de carte est connecté correctement.&lt;br&gt;Quick Installer va vérifier la lecture de la carte d&apos;identité électronique. Introduisez la carte d&apos;identité électronique dans le lecteur de cartes.&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message utf8="true">
-        <source>Een andere versie van de eID Middleware 3.5 is reeds geïnstalleerd.
-
-Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.</source>
-        <oldsource>Een andere versie van de eID Middleware 3.5 is reeds geïnstalleerd.
+    <message>
+        <location filename="ezinstaller.cpp" line="532"/>
+        <source>&lt;html&gt;&lt;body&gt;Een andere versie van de eID Middleware 3.5 is reeds geïnstalleerd.&lt;br&gt;&lt;br&gt;Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>Een andere versie van de eID Middleware 3.5 is reeds geinstalleerd.
 
 Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.</oldsource>
-        <translation type="obsolete">Une autre version du eID Middleware 3.5 est déjà installée.
-
-Pour pouvoir installer cette version-ci, vous devez désinstaller l&apos;ancienne.</translation>
+        <translation>&lt;html&gt;&lt;body&gt;Une autre version du eID Middleware 3.5 est déjà installée.&lt;br&gt;&lt;br&gt;Pour pouvoir installer cette version-ci, vous devez désinstaller l&apos;ancienne.&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="544"/>
+        <location filename="ezinstaller.cpp" line="543"/>
         <source>Afsluiten ? / Fermer ?</source>
         <translation>Afsluiten ? /Fermer ?</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="547"/>
+        <location filename="ezinstaller.cpp" line="546"/>
         <source>U wilt de eID Quick Installer afsluiten? / Vous voulez fermer eID Quick Installer ?</source>
         <translation>U wilt de eID Quick Installer afsluiten? / Vous voulez fermer eID Quick Installer ?</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="557"/>
+        <location filename="ezinstaller.cpp" line="556"/>
         <source>&amp;Ja</source>
         <translation>&amp;Oui</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="558"/>
+        <location filename="ezinstaller.cpp" line="557"/>
         <source>&amp;Nee</source>
         <translation>&amp;Non</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="564"/>
+        <location filename="ezinstaller.cpp" line="563"/>
         <source>Ja / Oui</source>
         <translation>Ja / Oui</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="565"/>
+        <location filename="ezinstaller.cpp" line="564"/>
         <source>Nee / Non</source>
         <translation>Nee / Non</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="524"/>
+        <location filename="ezinstaller.cpp" line="523"/>
         <source>&lt;html&gt;&lt;body&gt;De Quick Installer heeft de elektronische identiteitskaart gevonden en is nu klaar om de gegevens te lezen.&lt;/body&gt;&lt;/html&gt;</source>
-        <oldsource>Een andere versie van de eID Middleware 3.5 is reeds ge&amp;iuml;nstalleerd.
-
-Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.</oldsource>
         <translation>&lt;html&gt;&lt;body&gt;Quick Installer a détecté la carte d&apos;identité électronique et peut procéder à la lecture des données.&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -280,12 +262,12 @@ Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.<
         <translation type="obsolete">&lt;html&gt;&lt;body&gt;Le logiciel eID est installé correctement. &lt;br&gt;Quick Installer va contrôler si le lecteur de cartes fonctionne correctement. Connectez le(s) lecteur(s) de cartes à l&apos;ordinateur. &lt;br&gt;Ensuite, cliquez sur &lt;b&gt;Suivant&lt;/b&gt;.&lt;/html&gt;&lt;/body&gt;</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="499"/>
+        <location filename="ezinstaller.cpp" line="498"/>
         <source>Open het rapport en contacteer de Servicedesk om het probleem op te lossen.</source>
         <translation>Pour résoudre le problème, ouvrez le rapport et contactez le Servicedesk.</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="502"/>
+        <location filename="ezinstaller.cpp" line="501"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;b&gt;De Quick Installer heeft een probleem met het lezen van de identiteitskaart.&lt;/b&gt; &lt;br/&gt;Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;&lt;b&gt;Quick Installer a rencontré un problème avec la lecture de la carte d&apos;identité.&lt;/b&gt; &lt;br/&gt;Retournez à l&apos;écran précédent et réessayez. Si le problème persiste, contactez le servicedesk.&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -294,27 +276,27 @@ Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.<
         <translation type="obsolete">Le test de la signature est annulé par l&apos;utilisateur.</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="549"/>
+        <location filename="ezinstaller.cpp" line="548"/>
         <source>&lt;html&gt;&lt;body&gt;Het is aangeraden om de computer te herstarten.&lt;br/&gt;&lt;br/&gt;Wilt u nu herstarten?&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;Il est recommandé de redémarrer l&apos;ordinateur.&lt;br/&gt;&lt;br/&gt;Voulez-vous redémarrer maintenant?&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="552"/>
+        <location filename="ezinstaller.cpp" line="551"/>
         <source>&lt;html&gt;&lt;body&gt;Er werd geen kaartlezer aangetroffen.&lt;br/&gt;&lt;br/&gt;Probeer opnieuw door:&lt;ul&gt;&lt;li&gt;de kaartlezer los te koppelen&lt;/li&gt;&lt;li&gt;de kaartlezer terug te verbinden&lt;/li&gt;&lt;li&gt;op &quot;Ok&quot; te klikken&lt;/li&gt;&lt;/ul&gt;&lt;br/&gt;&lt;br/&gt;Suggesties:&lt;ul&gt;&lt;li&gt;probeer eventueel een andere USB-poort&lt;/li&gt;&lt;li&gt;vermijd het gebruik van een USB hub&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;body&gt;Aucun lecteur de cartes n&apos;a été détecté&lt;br/&gt;&lt;br/&gt;Essayez à nouveau de:&lt;ul&gt;&lt;li&gt;déconnecter le lecteur de cartes&lt;/li&gt;&lt;li&gt;reconnecter le lecteur de cartes&lt;/li&gt;&lt;li&gt;cliquer sur &quot;Ok&quot;&lt;/li&gt;&lt;/ul&gt;&lt;br/&gt;&lt;br/&gt;Suggestions:&lt;ul&gt;&lt;li&gt;essayez un autre port USB&lt;/li&gt;&lt;li&gt;évitez l&apos;utilisation de hub USB&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="559"/>
+        <location filename="ezinstaller.cpp" line="558"/>
         <source>&amp;Ok</source>
         <translation>&amp;Ok</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="560"/>
+        <location filename="ezinstaller.cpp" line="559"/>
         <source>&amp;Annuleren</source>
         <translation>&amp;Annuler</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="551"/>
+        <location filename="ezinstaller.cpp" line="550"/>
         <source>Probeer opnieuw</source>
         <translation>Réessayer</translation>
     </message>
@@ -355,37 +337,37 @@ Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.<
         <translation type="obsolete">Tester l&apos;authentification</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="477"/>
+        <location filename="ezinstaller.cpp" line="476"/>
         <source>         Read data : SUCCESS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="484"/>
+        <location filename="ezinstaller.cpp" line="483"/>
         <source>         Read data : FAILS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="553"/>
+        <location filename="ezinstaller.cpp" line="552"/>
         <source>eID Middleware in gebruik!</source>
         <translation>eID Middleware en cours d&apos;utilisation!</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="554"/>
+        <location filename="ezinstaller.cpp" line="553"/>
         <source>Minstens één applicatie gebruikt de eID middleware. Sluit de applicatie af vooraleer verder te gaan.</source>
         <translation>Une application, au moins, utilise le middleware. Fermez cette application pour continuer.</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="561"/>
+        <location filename="ezinstaller.cpp" line="560"/>
         <source>&amp;Opnieuw</source>
         <translation>&amp;Réessayer</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="562"/>
+        <location filename="ezinstaller.cpp" line="561"/>
         <source>&amp;Afsluiten</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
-        <location filename="ezinstaller.cpp" line="555"/>
+        <location filename="ezinstaller.cpp" line="554"/>
         <source>Indien u de applicatie niet kan sluiten, klik dan op &quot;Afsluiten&quot;, 
 herstart uw systeem en probeer opnieuw.</source>
         <translation>Si vous ne parvenez pas à fermer cette application, 

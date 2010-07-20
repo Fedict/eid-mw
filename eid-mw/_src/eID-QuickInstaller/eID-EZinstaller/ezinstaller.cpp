@@ -529,7 +529,7 @@ void ezInstaller::setMessages(){
 //    msgconf_btnTest = tr("Testen");
 //    msgconf_btnNoTest = tr("Niet testen");
 
-    msgbox_MW35 = tr("Een andere versie van de eID Middleware 3.5 is reeds geïnstalleerd.\r\n\nOm deze versie te kunnen installeren moet u eerst de andere versie verwijderen.");
+    msgbox_MW35 = tr("<html><body>Een andere versie van de eID Middleware 3.5 is reeds geïnstalleerd.<br><br>Om deze versie te kunnen installeren moet u eerst de andere versie verwijderen.</body></html>");
 //    msgBox_SigNOK = tr("De test met de authenticatie is niet geslaagd.");
 //    msgBox_SigCancelled = tr("De test met de handtekening is geannuleerd door de gebruiker.");
 
