@@ -84,10 +84,8 @@ EXTRA_DIST=platform/Linux/defaults/preferences/belgiumeid.js.in
 BUILT_SOURCES=platform/Linux/defaults/preferences/belgiumeid.js
 
 
-# platform/Linux/defaults/preferences/belgiumeid.js
-
 if LINUX
-platform/Linux/defaults/preferences/belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
+belgiumeid.js: belgiumeid.js.in
 	$(SED) "s|__libdir__|@libdir@|g" $< > $@
 else
 # on other platforms libdir is unknown for Linux

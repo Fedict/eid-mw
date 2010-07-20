@@ -100,21 +100,28 @@ function BELGIUMEIDPKCS11(){
           false  if the registration failed
     */
     if (getModuleLocation() == "") return true; // unsupported platform
+    // error log "belgiumeid.modulelocation is not set"
     if (this.findModuleByName(getModuleName()) == null && this.findModuleByLibName(getModuleLocation()) == null) {
       // no installed module found - we will try to install the module
       try {
         pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIPKCS11);
         try {
+          // PKCS11_PUB_READABLE_CERT_FLAG: we instruct FF not to ask for PIN when reading certificates
+          // This only makes sense when the CKF_LOGIN_REQUIRED flag is set on the token in P11 module
           pkcs11module.addModule(getModuleName(), getModuleLocation(), PKCS11_PUB_READABLE_CERT_FLAG,0);
         } catch (e) {
+          // error log "failed to load module" + getModuleLocation()
           return false; 
         }
       } catch (e) {
         try {
           pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIDOMPkcs11);
           try {
+            // PKCS11_PUB_READABLE_CERT_FLAG: we instruct FF not to ask for PIN when reading certificates
+            // This only makes sense when the CKF_LOGIN_REQUIRED flag is set on the token in P11 module
             pkcs11module.addmodule(getModuleName(), getModuleLocation(), PKCS11_PUB_READABLE_CERT_FLAG,0);
           } catch (e) {
+            // error log "failed to load module" + getModuleLocation()
             return false; 
           }
         } catch (f) {
@@ -133,6 +140,7 @@ function BELGIUMEIDPKCS11(){
         try {
           pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIDOMPkcs11).deletemodule(modulename);
         } catch (f) {
+           // error log "failed to delete module"
            return false; 
         }
       }
@@ -217,3 +225,5 @@ function BELGIUMEIDPKCS11(){
     this.notifyModuleNotFound();   
   }
 };
+
+window.addEventListener("load", function(e) { BELGIUMEIDPKCS11(e); }, false);

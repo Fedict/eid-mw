@@ -1,7 +1,7 @@
 AC_PREREQ([2.63])
-AC_INIT([xpi], [0.0.1], [servicedesk@fedict.be])
+AC_INIT([xpi], [1.0.9], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_SRCDIR([src/content/BelgiumEidPKCS11.js])
+AC_CONFIG_SRCDIR([src/content/belgiumeidpkcs11.js])
 AC_CONFIG_MACRO_DIR([m4])
 
 

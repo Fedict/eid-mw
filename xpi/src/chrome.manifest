@@ -3,6 +3,7 @@ locale	belgiumeid	en-US	locale/en-US/
 locale	belgiumeid	en-GB	locale/en-US/
 locale	belgiumeid	nl-NL	locale/nl-NL/
 locale	belgiumeid	fr-FR	locale/fr-FR/
+locale	belgiumeid	de-DE	locale/de-DE/
 skin	belgiumeid	classic/1.0	skin/
-overlay	chrome://browser/content/browser.xul	chrome://belgiumeid/content/firefoxOverlay.xul
+overlay	chrome://browser/content/browser.xul		chrome://belgiumeid/content/belgiumeidpkcs11.xul
 overlay	chrome://global/content/commonDialog.xul	chrome://belgiumeid/content/belgiumeidprompt.xul

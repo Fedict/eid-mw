@@ -22,8 +22,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="chrome://global/content/strres.js"/>
     
-  <script src="overlay.js"/>
-  <script src="BelgiumEidPKCS11.js"/>
+  <script src="belgiumeidpkcs11.js"/>
   
   <stringbundleset id="stringbundleset">
     <stringbundle id="belgiumeid-strings" src="chrome://belgiumeid/locale/belgiumeid.properties"/>
