@@ -37,7 +37,6 @@ dist_locale_dede_DATA = locale/de-DE/belgiumeid.properties
 dist_platform_darwin_defaults_preferences_DATA = platform/Darwin/defaults/preferences/belgiumeid.js
 
 platform_linux_defaults_preferences_DATA = belgiumeid.js
-platform_linux_defaults_preferences_SOURCES = platform/Linux/defaults/preferences/belgiumeid.js.in
 
 dist_platform_winnt_defaults_preferences_DATA = platform/WINNT/defaults/preferences/belgiumeid.js
 
@@ -80,8 +79,8 @@ xpipackage: $(xpi_files)
 EXTRA_DIST=platform/Linux/defaults/preferences/belgiumeid.js.in
 
 # should be updated every time - there should be a better way...
-.PHONY: platform/Linux/defaults/preferences/belgiumeid.js
-BUILT_SOURCES=platform/Linux/defaults/preferences/belgiumeid.js
+.PHONY: belgiumeid.js
+BUILT_SOURCES=belgiumeid.js
 
 
 if LINUX
