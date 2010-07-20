@@ -1,8 +1,6 @@
 XPI_NAME=belgiumeid.xpi
 
-#noinst_DATA = $(XPI_NAME)
-
-CLEANFILES = $(XPI_NAME) platform/Linux/defaults/preferences/belgiumeid.js
+CLEANFILES = $(XPI_NAME) belgiumeid.js
 
 xpi_files = $(dist_content_DATA) \
 			$(dist_defaults_preferences_DATA) \
@@ -11,7 +9,7 @@ xpi_files = $(dist_content_DATA) \
 			$(dist_locale_nlnl_DATA) \
 			$(dist_locale_dede_DATA) \
 			$(dist_platform_darwin_defaults_preferences_DATA) \
-			$(dist_platform_linux_defaults_preferences_DATA) \
+			$(platform_linux_defaults_preferences_DATA) \
 			$(dist_platform_winnt_defaults_preferences_DATA) \
 			$(dist_skin_DATA) \
 			$(dist_root_DATA)
@@ -38,7 +36,8 @@ dist_locale_dede_DATA = locale/de-DE/belgiumeid.properties
 
 dist_platform_darwin_defaults_preferences_DATA = platform/Darwin/defaults/preferences/belgiumeid.js
 
-dist_platform_linux_defaults_preferences_DATA = platform/Linux/defaults/preferences/belgiumeid.js
+platform_linux_defaults_preferences_DATA = belgiumeid.js
+platform_linux_defaults_preferences_SOURCES = platform/Linux/defaults/preferences/belgiumeid.js.in
 
 dist_platform_winnt_defaults_preferences_DATA = platform/WINNT/defaults/preferences/belgiumeid.js
 
@@ -71,9 +70,10 @@ xpipackage: $(xpi_files)
 		tmp=$$TMPDIR/xpi$$RANDOM; \
 		umask 077 && $(mkinstalldirs) "$$tmp"; \
 	} || exit $$?; \
-	$(MAKE) DESTDIR=$$tmp mozext= install; \
+	$(MAKE) DESTDIR=$$tmp extensionrootdir= install; \
 	cd $$tmp; \
-	@ZIP@ -rq $(abs_builddir)/belgiumeid.xpi .; \
+        rm -f $(abs_builddir)/$(XPI_NAME); \
+	@ZIP@ -rq $(abs_builddir)/$(XPI_NAME) .; \
 	cd -; \
 	rm -rf $$tmp;
 
@@ -85,11 +85,11 @@ BUILT_SOURCES=platform/Linux/defaults/preferences/belgiumeid.js
 
 
 if LINUX
-belgiumeid.js: belgiumeid.js.in
-	$(SED) "s|__libdir__|@libdir@|g" $< > $@
+belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
+	$(SED) "s|__libdir__|@libdir@|g" $< >$@
 else
 # on other platforms libdir is unknown for Linux
 # we default to /usr/local/lib
-belgiumeid.js: belgiumeid.js.in
-	$(SED) "s|__libdir__|/usr/local/lib|g" $< > $@
+belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
+	$(SED) "s|__libdir__|/usr/local/lib|g" $< >$@
 endif
