@@ -20,6 +20,19 @@ AC_PROG_LIBTOOL
 AC_PROG_INSTALL
 AC_PROG_LN_S
 
+linux="no"
+osx="no"
+win32="no"
+
+AS_CASE([$host],
+  [*-*-linux*],[linux=true],
+  [*-*-darwin*],[osx=true],
+  [*-mingw*|*-winnt*],[win32=true])
+
+AM_CONDITIONAL([LINUX],[test x$linux = xtrue])
+AM_CONDITIONAL([OSX],[test x$osx = xtrue])
+AM_CONDITIONAL([WIN32],[test x$win32 = xtrue])
+
 AS_VAR_IF([GXX],[yes],[],AC_MSG_ERROR([GNU C++ compiler (g++) is required.]))
 
 # Checks for header files.
@@ -63,5 +76,5 @@ AC_CHECK_FUNCS([gethostbyname socket strerror ftime memchr memset mkdir select s
 
 AC_CONFIG_FILES([Makefile])
 
-AC_CONFIG_SUBDIRS([common dialogs cardlayer pkcs11 xpi])
+AC_CONFIG_SUBDIRS([common dialogs cardlayer pkcs11 minidriver nsis])
 AC_OUTPUT

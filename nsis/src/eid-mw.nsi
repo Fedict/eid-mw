@@ -64,6 +64,8 @@ Section "beID Core" SecCoreLibs
 
   ; 32-bit install:
   ${EnableX64FSRedirection}
+  File dist/win32/bin/libgcc_s_sjlj-1.dll
+  File dist/win32/bin/libstdc++-6.dll
   File dist/win32/bin/libbeidcommon.dll
   File dist/win32/bin/libbeiddialogs.dll
   File dist/win32/bin/libbeidcardlayer.dll
@@ -71,6 +73,8 @@ Section "beID Core" SecCoreLibs
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
+  		File dist/win32/bin/libgcc_s_sjlj-1.dll
+  		File dist/win32/bin/libstdc++-6.dll
   		File dist/win64/bin/libbeidcommon.dll
   		File dist/win64/bin/libbeiddialogs.dll
   		File dist/win64/bin/libbeidcardlayer.dll
