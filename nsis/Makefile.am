@@ -2,13 +2,18 @@ all : nsis
 
 .PHONY: nsis
 nsis:
+
+# make sure the dist dirs exist
+	mkdir -p src/dist/win32/usr/local/bin
+	mkdir -p src/dist/win64/usr/local/bin
+
 # Copy current mingw (gcc) runtime libs
-	cp "`dirname \`which i686-w64-mingw32-gcc\``/libgcc_s_sjlj-1.dll" src/dist/win32/bin
-	cp "`dirname \`which i686-w64-mingw32-gcc\``/libstdc++-6.dll"     src/dist/win32/bin
+	cp "`dirname \`which i686-w64-mingw32-gcc\``/libgcc_s_sjlj-1.dll" src/dist/win32/usr/local/bin
+	cp "`dirname \`which i686-w64-mingw32-gcc\``/libstdc++-6.dll"     src/dist/win32/usr/local/bin
 
 # FIXME replace with correct 64-bit libs
-	cp "`dirname \`which i686-w64-mingw32-gcc\``/libgcc_s_sjlj-1.dll" src/dist/win64/bin
-	cp "`dirname \`which i686-w64-mingw32-gcc\``/libstdc++-6.dll"     src/dist/win64/bin
+	cp "`dirname \`which i686-w64-mingw32-gcc\``/libgcc_s_sjlj-1.dll" src/dist/win64/usr/local/bin
+	cp "`dirname \`which i686-w64-mingw32-gcc\``/libstdc++-6.dll"     src/dist/win64/usr/local/bin
 
 	$(MAKENSIS) src/eid-mw.nsi
 
