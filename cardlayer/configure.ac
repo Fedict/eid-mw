@@ -48,7 +48,11 @@ AS_VAR_IF([linux],[true],
 
 	AS_VAR_IF([with_pcsclite],[no],
 	[
-		PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.3],
+		# Arguments should be on the next line
+		# By doing this, the syntax check of ./configure succeeds even if
+		# PKG_CHECK_MODULES is not defined
+		PKG_CHECK_MODULES
+		([PCSC], [libpcsclite >= 1.5.3],
    	 	[
 	        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
 	        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
