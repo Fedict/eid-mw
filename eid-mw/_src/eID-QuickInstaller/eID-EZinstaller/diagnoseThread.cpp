@@ -1056,7 +1056,7 @@ void detectReaderThread::run() {
 	std::string commandLine = "";
 	commandLine += currdirpath.toStdString();
 	commandLine += "/../Resources/preparePcscd.sh";
-	if(CSysDiagnost::doAsAdmin(commandLine, false))
+	if(CSysDiagnost::doAsAdmin(commandLine, true))
 	{
 		readersXml = scl.pcscWaitForCardReaders("");
 #else
@@ -1075,7 +1075,7 @@ void detectReaderThread::run() {
     while (listItem.isNull()) {
 		msleep(500);
 #ifdef __APPLE__
-		if(CSysDiagnost::doAsAdmin(commandLine, false))
+		if(CSysDiagnost::doAsAdmin(commandLine, true))
 		{
 			readersXml = scl.pcscWaitForCardReaders("");
 #else
