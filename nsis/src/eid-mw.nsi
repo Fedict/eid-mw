@@ -64,20 +64,20 @@ Section "beID Core" SecCoreLibs
 
   ; 32-bit install:
   ${EnableX64FSRedirection}
-  File dist/win32/bin/libgcc_s_sjlj-1.dll
-  File dist/win32/bin/libstdc++-6.dll
-  File dist/win32/bin/libbeidcommon.dll
-  File dist/win32/bin/libbeiddialogs.dll
-  File dist/win32/bin/libbeidcardlayer.dll
+  File dist/win32/usr/local/bin/libgcc_s_sjlj-1.dll
+  File dist/win32/usr/local/bin/libstdc++-6.dll
+  File dist/win32/usr/local/bin/libbeidcommon.dll
+  File dist/win32/usr/local/bin/libbeiddialogs.dll
+  File dist/win32/usr/local/bin/libbeidcardlayer.dll
 
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-  		File dist/win32/bin/libgcc_s_sjlj-1.dll
-  		File dist/win32/bin/libstdc++-6.dll
-  		File dist/win64/bin/libbeidcommon.dll
-  		File dist/win64/bin/libbeiddialogs.dll
-  		File dist/win64/bin/libbeidcardlayer.dll
+  		File dist/win32/usr/local/bin/libgcc_s_sjlj-1.dll
+  		File dist/win32/usr/local/bin/libstdc++-6.dll
+  		File dist/win64/usr/local/bin/libbeidcommon.dll
+  		File dist/win64/usr/local/bin/libbeiddialogs.dll
+  		File dist/win64/usr/local/bin/libbeidcardlayer.dll
 	${EndIf}
 
   ;Store installation folder
@@ -94,12 +94,12 @@ Section "minidriver" SecMiniDriver
 
 	; 32-bit install:
 	${EnableX64FSRedirection}
-	File dist/win32/bin/libbeidmdrv32.dll  # extracts to C:\Windows\SysWOW64 
+	File dist/win32/usr/local/bin/libbeidmdrv32.dll  # extracts to C:\Windows\SysWOW64 
 
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-		File dist/win64/bin/libbeidmdrv64.dll  # extracts to C:\Windows\System32 
+		File dist/win64/usr/local/bin/libbeidmdrv64.dll  # extracts to C:\Windows\System32 
 	${EndIf}
 
   ;Store installation folder
@@ -116,12 +116,12 @@ Section "pkcs#11 Module" SecPkcs11
 
 	; 32-bit install:
 	${EnableX64FSRedirection}
-  	File dist/win32/bin/libbeidpkcs11.dll
+  	File dist/win32/usr/local/bin/libbeidpkcs11.dll
 
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-  		File dist/win64/bin/libbeidpkcs11.dll
+  		File dist/win64/usr/local/bin/libbeidpkcs11.dll
 	${EndIf}
 
   ;Store installation folder
@@ -138,16 +138,16 @@ Section "SIS Card Modules" SecSisCard
 	SetOutPath $INSTDIR
 	; 32-bit install:
 	${EnableX64FSRedirection}
-  	File dist/win32/bin/libcardpluginbeid.dll
-  	File dist/win32/bin/libcardpluginsis_acr38u.dll
-  	File dist/win32/bin/libcardpluginsis.dll
+  	File dist/win32/usr/local/bin/libcardpluginbeid.dll
+  	File dist/win32/usr/local/bin/libcardpluginsis_acr38u.dll
+  	File dist/win32/usr/local/bin/libcardpluginsis.dll
 
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-  		File dist/win64/bin/libcardpluginbeid.dll
-  		File dist/win64/bin/libcardpluginsis_acr38u.dll
-  		File dist/win64/bin/libcardpluginsis.dll
+  		File dist/win64/usr/local/bin/libcardpluginbeid.dll
+  		File dist/win64/usr/local/bin/libcardpluginsis_acr38u.dll
+  		File dist/win64/usr/local/bin/libcardpluginsis.dll
 	${EndIf}
 
   ;Store installation folder
