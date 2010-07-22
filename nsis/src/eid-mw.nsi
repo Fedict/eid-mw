@@ -1,7 +1,7 @@
 !include "MUI2.nsh"
 !include "x64.nsh"
 Name "Belgian eID Middleware"
-OutFile "beid-mw-3.99.M2.exe"
+OutFile "beid-mw.exe"
 
 InstallDir "$SYSDIR"
 InstallDirRegKey HKCU "Software\beid-middleware" ""
