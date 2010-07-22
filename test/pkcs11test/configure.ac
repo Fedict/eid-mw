@@ -1,5 +1,5 @@
 AC_PREREQ([2.65])
-AC_INIT([pkcs11tests], [0.0.1], [servicedesk@fedict.be])
+AC_INIT([pkcs11tests], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/open-close-session.c])
 AC_CONFIG_HEADERS([config.h])

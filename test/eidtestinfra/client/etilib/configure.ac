@@ -1,5 +1,5 @@
 AC_PREREQ([2.65])
-AC_INIT([etilib], [3.99.0], [servicedesk@fedict.be])
+AC_INIT([etilib], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
 AC_CONFIG_SRCDIR([src/virtualcardaccess.h])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])

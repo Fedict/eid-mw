@@ -1,5 +1,5 @@
 AC_PREREQ([2.65])
-AC_INIT([pcsccontrol], [3.99.7], [servicedesk@fedict.be])
+AC_INIT([pcsccontrol], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
 AM_INIT_AUTOMAKE([foreign])
 
 AC_CHECK_PROGS(JAVAC,[javac],[missing])
