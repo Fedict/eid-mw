@@ -70,10 +70,9 @@ AS_VAR_IF([gtk],[true],
 			CPPFLAGS="$GTK_CFLAGS $CPPFLAGS"
             LDFLAGS="$GTK_LIBS $CPPFLAGS"
  		],
-		[
-        	AC_MSG_RESULT(no)
-        	AC_MSG_ERROR([You must have GTK+ 2.10.0 or newer development headers installed.])
-		])
+		AC_MSG_RESULT([no])
+		AC_MSG_ERROR([you must have GTK+ 2.10.0 or newer development headers installed.])
+		)
 	],
 	[
 		AS_VAR_IF([linux],[true],
