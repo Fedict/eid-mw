@@ -48,15 +48,16 @@ AS_VAR_IF([linux],[true],
 
 	AS_VAR_IF([with_pcsclite],[no],
 	[
-		# Arguments should be on the next line
-		# By doing this, the syntax check of ./configure succeeds even if
-		# PKG_CHECK_MODULES is not defined
-		m4_pattern_allow([^_PKG_ERRORS$])
-		PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.3],
-	    [
-	        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
-	        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
-	    ])
+                # PKG_CHECK_MODULES is possibly undefined
+                # as we do not use pkgconfig on Windows and Mac
+                m4_ifdef([PKG_CHECK_MODULES],
+                [
+			PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.3],
+	    		[
+			        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
+	        		LDFLAGS="$PCSC_LIBS $CPPFLAGS"
+			])
+		])
 	],
 	[
 	    CPPFLAGS="-I$with_pcsclite/include $CPPFLAGS"

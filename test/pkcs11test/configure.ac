@@ -45,11 +45,16 @@ AC_MSG_RESULT([$with_pcsclite])
 
 AS_VAR_IF([with_pcsclite],[no],
 [
-	PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.5],
-    [
-        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
-        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
-    ])
+	# PKG_CHECK_MODULES is possibly undefined
+	# as we do not use pkgconfig on Windows and Mac
+	m4_ifdef([PKG_CHECK_MODULES],
+	[
+		PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.5],
+		[
+		        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
+		        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
+		])
+	])
 ],
 [
   AS_VAR_IF([win32],[no],[
