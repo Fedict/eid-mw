@@ -68,8 +68,8 @@ AS_VAR_IF([gtk],[true],
 		# Arguments should be on the next line
 		# By doing this, the syntax check of ./configure succeeds even if
 		# PKG_CHECK_MODULES is not defined
-		PKG_CHECK_MODULES 
-		([GTK], [gtk+-2.0 >= 2.10.0],
+		m4_pattern_allow([^_PKG_ERRORS$])
+		PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.10.0],
 		[
 			CPPFLAGS="$GTK_CFLAGS $CPPFLAGS"
             LDFLAGS="$GTK_LIBS $CPPFLAGS"
