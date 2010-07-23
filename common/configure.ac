@@ -7,7 +7,11 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
 
 LT_INIT([win32-dll])
-LT_PREREQ([2.2.7c])
+LT_PREREQ([2.2.7c],
+      [LT_PREREQ([2.2.6])],
+      [AC_MSG_WARN([Libtool Version 2.2.7c is required to build for Windows])]
+      )
+
 
 AM_INIT_AUTOMAKE
 

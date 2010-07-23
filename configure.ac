@@ -1,4 +1,4 @@
-AC_PREREQ([2.65])
+AC_PREREQ([2.63])
 AC_INIT([eid-mw], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
 
 AC_CONFIG_AUX_DIR([build-aux])
@@ -8,7 +8,11 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
 
 LT_INIT
-LT_PREREQ([2.2.7c])
+LT_PREREQ([2.2.7c],
+      [LT_PREREQ([2.2.6])],
+      [AC_MSG_WARN([Libtool Version 2.2.7c is required to build for Windows])]
+      )
+
 
 AM_INIT_AUTOMAKE([subdir-objects foreign])
 
