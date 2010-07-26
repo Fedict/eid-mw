@@ -21,6 +21,6 @@
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 mkdir c:\tmp
 :: download build_env.ps1 script
-powershell.exe -NonInteractive -ExecutionPolicy unrestricted -command "Import-Module BitsTransfer; Start-BitsTransfer -Source http://eid-mw.googlecode.com/svn-history/r497/trunk/dev_env/windows/scripts/build_env.ps1 -Destination c:\tmp\build_env.ps1"
+powershell.exe -NonInteractive -ExecutionPolicy unrestricted -command "Import-Module BitsTransfer; Start-BitsTransfer -Source http://eid-mw.googlecode.com/svn-history/trunk/dev_env/windows/scripts/build_env.ps1 -Destination c:\tmp\build_env.ps1"
 :: run build_env.ps1
 powershell.exe -NonInteractive -ExecutionPolicy unrestricted -File c:\tmp\build_env.ps1
