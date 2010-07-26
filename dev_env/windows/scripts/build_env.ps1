@@ -88,7 +88,7 @@ $toolfilename = "7za.exe"
 Write-Host "- Installing 7zip Command Line Version"
 
 # Download file
-$tooltarget = "$packagesfolder\$toolfilename"
+$tooltarget = "$toolsfolder\$toolfilename"
 Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
 
 ##############################################################################
