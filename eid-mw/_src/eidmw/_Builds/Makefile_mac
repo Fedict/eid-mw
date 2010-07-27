@@ -167,9 +167,7 @@ endif
 BINS = $(APP_BINS:%= bin/%) 
 
 ## to be put in the APPS_DIR
-APP_FILES = misc/$(REL_NAME)/$(REL_NAME)-pkcs11-register.html \
-	misc/$(REL_NAME)/$(REL_NAME)-pkcs11-unregister.html \
-	$(XPI_PLUGIN)
+APP_FILES = $(XPI_PLUGIN)
 
 
 ## Language files for the GUI
