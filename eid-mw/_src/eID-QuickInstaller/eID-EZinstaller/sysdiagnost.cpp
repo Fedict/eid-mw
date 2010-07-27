@@ -2209,14 +2209,14 @@ char *			pReaders = NULL;
 	ResetData (&cd);
 	
 	// Run prepareReadData.sh
-	QString currdirpath = QCoreApplication::applicationDirPath();
-	std::string commandLine = "";
-	commandLine += currdirpath.toStdString();
-	commandLine += "/../Resources/prepareReadData.sh";
-	if (!CSysDiagnost::doAsAdmin(commandLine, true))
-	{
-		return false;
-	}
+	//QString currdirpath = QCoreApplication::applicationDirPath();
+	//std::string commandLine = "";
+	//commandLine += currdirpath.toStdString();
+	//commandLine += "/../Resources/prepareReadData.sh";
+	//if (!CSysDiagnost::doAsAdmin(commandLine, true))
+	//{
+	//	return false;
+	//}
 
 	bool bTryFails=false;
 	bool bContinue=true;
