@@ -27,9 +27,9 @@
 $packagesfolder = "c:\eid_dev_env\packages"
 $packagesfolderurl = "http://dl.dropbox.com/u/2715381/buildbot/"
 $toolsfolder = "c:\eid_dev_env\tools"
-$msysfolder = "c:\msys\1.0"
-$mingw32folder = "c:\mingw64-32"
-$mingw64folder = "c:\mingw64-64"
+$msysfolder = "c:\eid_dev_env\msys"
+$mingw32folder = "c:\eid_dev_env\mingw64-32"
+$mingw64folder = "c:\v-eid_dev_env\mingw64-64"
 
 #
 # end Config Section
@@ -67,8 +67,14 @@ function Extract
 # install subversion
 # can be found on http://www.sliksvn.com/en/download
 ##############################################################################
-$toolfilename = "Slik-Subversion-1.6.12-x64.msi"
-
+if ($ENV:Processor_Architecture -eq 'AMD64')
+{
+	$toolfilename = "Slik-Subversion-1.6.12-x64.msi"
+}
+else
+{
+	$toolfilename = "Slik-Subversion-1.6.12-win32.msi"
+}
 Write-Host "- Installing Slik-Subversion"
 
 # Download file
