@@ -436,6 +436,7 @@ rel_end:
 	@echo "unzip -qq -o \"$(XPI_PLUGIN_DIR)/$(LATEST_XPI)\" -d \"$(XPI_PLUGIN_DIR)/\"" >> $(POSTFLIGHT)
 	@echo 'if [[ $$(sw_vers -productVersion) == *10.5* ]]; then' >> $(POSTFLIGHT)
 	@echo "mv /Applications/BelgiumIdentityCard/BEID.tokend /System/Library/Security/tokend/; else" >> $(POSTFLIGHT)
+	@echo "test -e /System/Library/Security/tokend/BEID.tokend && rm -R /System/Library/Security/tokend/BEID.tokend;" >> $(POSTFLIGHT)
 	@echo "rm -R /Applications/BelgiumIdentityCard/BEID.tokend; fi" >> $(POSTFLIGHT)
 
 	@echo "mv $(APPS_DIR)/$(EIDGUI).app $(APPS_DIR)/$(EIDGUI_NAME).app" >> $(POSTFLIGHT)
