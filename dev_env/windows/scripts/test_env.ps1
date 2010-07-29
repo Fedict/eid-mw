@@ -24,10 +24,10 @@
 # start Config Section
 #
 
-$packagesfolder = "c:\eid_dev_env\packages"
+$packagesfolder = "c:\eid_test_env\packages"
 $packagesfolderurl = "http://dl.dropbox.com/u/2715381/buildbot/"
-$toolsfolder = "c:\eid_dev_env\tools"
-$rubyfolder = "c:\eid_dev_env\ruby"
+$toolsfolder = "c:\eid_test_env\tools"
+$rubyfolder = "c:\eid_test_env\ruby"
 
 
 #
@@ -60,22 +60,19 @@ function Extract
 		invoke-expression "$tool x -y -o$destination $zipfilename"
 	}
 }
-
-##############################################################################
-# install subversion
-# can be found on http://www.sliksvn.com/en/download
-##############################################################################
-$toolfilename = "Slik-Subversion-1.6.12-x64.msi"
-
-Write-Host "- Installing Slik-Subversion"
-
-# Download file
-$tooltarget = "$packagesfolder\$toolfilename"
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
-
-# Run installer
-$args = "/passive"
-[diagnostics.process]::start($tooltarget, $args).WaitForExit()
+function Download
+{
+	param([string]$url, [string] $destination)
+	if (! (test-path($destination)))
+	{
+		# file does not exists
+		Start-BitsTransfer -Source $url -Destination $destination
+	}
+	else 
+	{
+		Write-Host "   $destination already exists. Skipping..."
+	}
+}
 
 ##############################################################################
 # install 7zip command line version 9.15
@@ -89,6 +86,27 @@ Write-Host "- Installing 7zip Command Line Version"
 $tooltarget = "$toolsfolder\$toolfilename"
 Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
 
+##############################################################################
+# install subversion
+# can be found on http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=11151&expandFolder=11151&folderID=91
+##############################################################################
+$toolfilename = "svn-win32-1.6.6.zip"
+
+Write-Host "- Installing Subversion"
+
+# Download file
+$tooltarget = "$packagesfolder\$toolfilename"
+Download "$packagesfolderurl/$toolfilename" $tooltarget
+
+# cleanup rubyfolder first
+Remove-Item -Recurse "$svnfolder\*"
+
+# extract
+Extract $tooltarget $svnfolder
+
+# move files
+Move-Item -Force "$svnfolder\svn-win32-1.6.6\*" $svnfolder
+Remove-Item "$svnfolder\svn-win32-1.6.6"
 
 ##############################################################################
 # install ruby 1.9.1 p429
