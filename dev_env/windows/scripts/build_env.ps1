@@ -29,8 +29,8 @@ $packagesfolderurl = "http://dl.dropbox.com/u/2715381/buildbot/"
 $toolsfolder = "c:\eid_dev_env\tools"
 $msysfolder = "c:\eid_dev_env\msys"
 $mingw32folder = "c:\eid_dev_env\mingw64-32"
-$mingw64folder = "c:\v-eid_dev_env\mingw64-64"
-
+$mingw64folder = "c:\eid_dev_env\mingw64-64"
+$svnfolder = "c:\eid_dev_env\svn"
 #
 # end Config Section
 ###############################################################################
@@ -62,29 +62,19 @@ function Extract
 	}
 }
 
-
-##############################################################################
-# install subversion
-# can be found on http://www.sliksvn.com/en/download
-##############################################################################
-if ($ENV:Processor_Architecture -eq 'AMD64')
+function Download
 {
-	$toolfilename = "Slik-Subversion-1.6.12-x64.msi"
+	param([string]$url, [string] $destination)
+	if (! (test-path($destination)))
+	{
+		# file does not exists
+		Start-BitsTransfer -Source $url -Destination $destination
+	}
+	else 
+	{
+		Write-Host "   $destination already exists. Skipping..."
+	}
 }
-else
-{
-	$toolfilename = "Slik-Subversion-1.6.12-win32.msi"
-}
-Write-Host "- Installing Slik-Subversion"
-
-# Download file
-$tooltarget = "$packagesfolder\$toolfilename"
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
-
-# Run installer
-$args = "/passive"
-[diagnostics.process]::start($tooltarget, $args).WaitForExit()
-
 ##############################################################################
 # install 7zip command line version 9.15
 # can be found on http://sourceforge.net/projects/sevenzip/files/7-Zip/9.15/7za915.zip/download
@@ -95,7 +85,33 @@ Write-Host "- Installing 7zip Command Line Version"
 
 # Download file
 $tooltarget = "$toolsfolder\$toolfilename"
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
+
+##############################################################################
+# install subversion
+# can be found on http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=11151&expandFolder=11151&folderID=91
+##############################################################################
+$toolfilename = "svn-win32-1.6.6.zip"
+
+Write-Host "- Installing Subversion"
+
+# Download file
+$tooltarget = "$packagesfolder\$toolfilename"
+Download "$packagesfolderurl/$toolfilename" $tooltarget
+
+# Run installer
+Extract $tooltarget $svnfolder
+
+# cleanup rubyfolder first
+Remove-Item -Recurse "$svnfolder\*"
+
+# extract
+Extract $tooltarget $svnfolder
+
+# move files
+Move-Item -Force "$svnfolder\svn-win32-1.6.6\*" $svnfolder
+Remove-Item "$svnfolder\svn-win32-1.6.6"
+
 
 ##############################################################################
 # install MSYS packages
@@ -113,7 +129,7 @@ $toolfilenametar = "msysCORE-1.0.15-1-msys-1.0.15-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -130,7 +146,7 @@ $toolfilenametar = "coreutils-5.97-3-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download -Source "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -148,7 +164,7 @@ $toolfilenametar = "libregex-1.20090805-2-msys-1.0.13-dll-1.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -165,7 +181,7 @@ $toolfilenametar = "libtermcap-0.20050421_1-2-msys-1.0.13-dll-0.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -182,7 +198,7 @@ $toolfilenametar = "libintl-0.17-2-msys-dll-8.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -199,7 +215,7 @@ $toolfilenametar = "libiconv-1.13.1-2-msys-1.0.13-dll-2.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -216,7 +232,7 @@ $toolfilenametar = "libcrypt-1.1_1-3-msys-1.0.13-dll-0.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -233,7 +249,7 @@ $toolfilenametar = "grep-2.5.4-2-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -250,7 +266,7 @@ $toolfilenametar = "sed-4.2.1-2-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -267,7 +283,7 @@ $toolfilenametar = "gawk-3.1.7-2-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -285,7 +301,7 @@ $toolfilenametar = "binutils-2.19.51-3-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -302,7 +318,7 @@ $toolfilenametar = "bash-3.1.17-3-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -319,7 +335,7 @@ $toolfilenametar = "perl-5.6.1_2-2-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -336,7 +352,7 @@ $toolfilenametar = "autoconf-2.65-1-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -353,7 +369,7 @@ $toolfilenametar = "automake-1.11.1-1-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -370,7 +386,7 @@ $toolfilenametar = "m4-1.4.14-1-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -387,7 +403,7 @@ $toolfilenametar = "make-3.81-3-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -405,7 +421,7 @@ $toolfilenametar = "tar-1.23-1-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -423,7 +439,7 @@ $toolfilenametar = "libtool-2.2.7c-fedict.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
@@ -445,7 +461,7 @@ $toolfilename = "mingw-w32-1.0-bin_i686-mingw_20100702.zip"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $mingw32folder
@@ -459,7 +475,7 @@ $toolfilename = "mingw-w64-1.0-bin_i686-mingw_20100702.zip"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $mingw64folder
