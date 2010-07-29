@@ -99,9 +99,6 @@ Write-Host "- Installing Subversion"
 $tooltarget = "$packagesfolder\$toolfilename"
 Download "$packagesfolderurl/$toolfilename" $tooltarget
 
-# Run installer
-Extract $tooltarget $svnfolder
-
 # cleanup rubyfolder first
 Remove-Item -Recurse "$svnfolder\*"
 
@@ -146,7 +143,7 @@ $toolfilenametar = "coreutils-5.97-3-msys-1.0.13-bin.tar"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
-Download -Source "$packagesfolderurl/$toolfilename" $tooltarget
+Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $packagesfolder
