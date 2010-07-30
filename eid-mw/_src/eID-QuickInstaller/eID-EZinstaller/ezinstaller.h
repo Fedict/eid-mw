@@ -32,6 +32,7 @@
 #include <QDir>
 #include "myQLabel.h"
 #include <QTranslator>
+#include <QAccessible>
 
 #include "ui_ezinstaller.h"
 #include "diagnoseThread.h"
@@ -114,15 +115,21 @@ private:
 	bool mInstallSucceeded;
 
 	QString msgOk_successfullInstall;
-	QString msgOK_successfullSignature;
-	QString msgError_PinBlocked;
-	QString msgError_installMWFailed;
+	QString msgOk_successfullInstallAcc;
+	//QString msgOK_successfullSignature;
+	//QString msgError_PinBlocked;
+	//QString msgError_installMWFailed;
+	//QString msgError_installMWFailedAcc;
 	QString msgReferenceToReport;
 	QString msgContactDataHelpdesk;
 	QString msgError_smartcard;
+	QString msgError_smartcardAcc;
 	QString msgError_eIDnotfound;
-	QString msgError_eIDnotReadable;
+	QString msgError_eIDnotfoundAcc;
+	//QString msgError_eIDnotReadable;
+	//QString msgError_eIDnotReadableAcc;
 	QString msgError_diagnosticError;
+	QString msgError_diagnosticErrorAcc;
 
 	QString msglbl_InstallSoft;
 	QString msglbl_ConnectCard;
@@ -137,10 +144,14 @@ private:
 	QString msglbl_natNumber;
 
     QString msglbl_ConnectReaders;
+	QString msglbl_ConnectReadersAcc;
     QString msglbl_ReaderConnected;
+	QString msglbl_ReaderConnectedAcc;
     QString msglbl_ReadingCard;
+	QString msglbl_ReadingCardAcc;
     QString msglbl_WarningTestSig;
     QString msglbl_EidInserted;
+	QString msglbl_EidInsertedAcc;
 
 	QString msgconf_title;
 	QString msgconf_Warning;

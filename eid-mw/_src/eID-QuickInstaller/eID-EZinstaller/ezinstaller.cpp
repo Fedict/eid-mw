@@ -135,6 +135,7 @@ void ezInstaller::appendString(string str, int weight) {
     tq.movePosition(QTextCursor::End,QTextCursor::MoveAnchor,1);
     QString stringToDisplay (str.c_str());
     ui.leProgress->setText(stringToDisplay.trimmed());
+	ui.leProgress->setAccessibleName(stringToDisplay.trimmed());
 }
 void ezInstaller::insertString(string str, int weight) {
     QTextCursor  tq = ui.teProgress->textCursor();
@@ -147,6 +148,7 @@ void ezInstaller::insertString(string str, int weight) {
     tq.movePosition(QTextCursor::End,QTextCursor::MoveAnchor,1);
     QString stringToDisplay(ui.leProgress->text() + QString(str.c_str()));
     ui.leProgress->setText(stringToDisplay.trimmed());
+	ui.leProgress->setAccessibleName(stringToDisplay.trimmed());
 }
 
 void ezInstaller::appendStringReport(string str, int weight) {
@@ -298,8 +300,11 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
             ui.clbBack->setEnabled(false);  // ** was true
 
             ui.lblConnectReaders->setText(msglbl_ConnectReaders);
+			ui.lblConnectReaders->setAccessibleName(msglbl_ConnectReadersAcc);
             ui.lblReadingCard->setText(msglbl_ReadingCard);
+			ui.lblReadingCard->setAccessibleName(msglbl_ReadingCardAcc);
             ui.lbleIDInserted->setText(msglbl_EidInserted);
+			ui.lbleIDInserted->setAccessibleName(msglbl_EidInsertedAcc);
             previousPage = 2;               // ** was 1
 			drt.setobjectToUpdate(this);
 			drt.start();
@@ -328,10 +333,15 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 						mQLOpenReport.setVisible(true);
 
                         ui.leName->setText(msglbl_name);
+						ui.leName->setAccessibleName(msglbl_name);
                         ui.leFirstname->setText(msglbl_firstname);
+						ui.leFirstname->setAccessibleName(msglbl_firstname);
                         ui.lePlaceOfBirth->setText(msglbl_placeOfBirth);
+						ui.lePlaceOfBirth->setAccessibleName(msglbl_placeOfBirth);
                         ui.leDateOfBirth->setText(msglbl_BirthDate);
+						ui.leDateOfBirth->setAccessibleName(msglbl_BirthDate);
                         ui.leNationalNumber->setText(msglbl_natNumber);
+						ui.leNationalNumber->setAccessibleName(msglbl_natNumber);
                         // NN niet tonen
                         ui.leNationalNumber->setHidden(true);
 
@@ -449,21 +459,33 @@ bool ezInstaller::showCardData(string theXml) {
     if (ezw.GetNamedItem(cardData,"QueriedResult") ==  "SUCCESS") {
 
         ui.leName->setText(msglbl_name+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"LastName").c_str())));
-        ui.leFirstname->setText(msglbl_firstname+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"FirstName").c_str())));
-        ui.lePlaceOfBirth->setText(msglbl_placeOfBirth+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"BirthPlace").c_str())));
-        ui.leDateOfBirth->setText(msglbl_BirthDate+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"BirthDate").c_str())));
-        ui.leNationalNumber->setText(msglbl_natNumber+QString(ezw.GetExtraInfoItem(cardData,"NationalNumber").c_str()));
-        string strPhoto = ezw.GetExtraInfoItem(cardData,"Photo");
+		if (QAccessible::isActive())
+		{
+			ui.leName->setAccessibleName(msglbl_name+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"LastName").c_str())));
+			ui.leName->setFocus();
+			QAccessible::updateAccessibility(ui.leName,0,QAccessible::NameChanged);
+		}
+		ui.leFirstname->setText(msglbl_firstname+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"FirstName").c_str())));
+		ui.leFirstname->setAccessibleName(msglbl_firstname+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"FirstName").c_str())));
+		ui.lePlaceOfBirth->setText(msglbl_placeOfBirth+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"BirthPlace").c_str())));
+        ui.lePlaceOfBirth->setAccessibleName(msglbl_placeOfBirth+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"BirthPlace").c_str())));
+		ui.leDateOfBirth->setText(msglbl_BirthDate+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"BirthDate").c_str())));
+        ui.leDateOfBirth->setAccessibleName(msglbl_BirthDate+QString(QString::fromUtf8(ezw.GetExtraInfoItem(cardData,"BirthDate").c_str())));
+		ui.leNationalNumber->setText(msglbl_natNumber+QString(ezw.GetExtraInfoItem(cardData,"NationalNumber").c_str()));
+        ui.leNationalNumber->setAccessibleName(msglbl_natNumber+QString(ezw.GetExtraInfoItem(cardData,"NationalNumber").c_str()));
+		string strPhoto = ezw.GetExtraInfoItem(cardData,"Photo");
         QByteArray ba = QByteArray::fromHex(QByteArray(strPhoto.c_str()));
         QPixmap fotopixmap;
         if (fotopixmap.loadFromData(ba)) {
             ui.lblPhoto->setPixmap(fotopixmap);
+			ui.lblPhoto->setAccessibleName(QString("foto"));
         }
         else {
             ui.lblPhoto->setText(QString(" "));
         }
 
 		ui.lblTextSummary_4->setText(msgOk_successfullInstall);
+		ui.lblTextSummary_4->setAccessibleName(msgOk_successfullInstallAcc);
         ui.lblIconSummary_3->setPixmap(QPixmap(":/images/groene_vink"));
 		ui.lblTextSummary_4->setVisible(true);
 		ui.lblIconSummary_3->setVisible(true);
@@ -491,15 +513,23 @@ bool ezInstaller::showCardData(string theXml) {
 void ezInstaller::setMessages(){
 
     msgOk_successfullInstall = tr("<html><body><b>De installatie is succesvol afgelopen.</b> <br/>Je kunt de eID en kaartlezer nu gebruiken.</body></html>");
-//    msgOK_successfullSignature = tr("<html><body><b>De Quick Installer heeft de elektronische authenticatie succesvol getest.</b><br/>De authenticatie werkt naar behoren. Je kunt de elektronische handtekening nu gebruiken.</body></html>");
+	msgOk_successfullInstallAcc = tr("De installatie is succesvol afgelopen. Je kunt de eID en kaartlezer nu gebruiken.");
+	
+	//    msgOK_successfullSignature = tr("<html><body><b>De Quick Installer heeft de elektronische authenticatie succesvol getest.</b><br/>De authenticatie werkt naar behoren. Je kunt de elektronische handtekening nu gebruiken.</body></html>");
+
 //    msgError_PinBlocked = tr("<html><body><b>De authenticatie is niet getest.</b><br/>U heeft een verkeerde PIN ingegeven of u heeft de PIN operatie afgebroken. <br/>Indien u problemen blijft hebben met het gebruik van uw PIN-code, neem dan contact op met de Servicedesk</body></html>");
-    msgError_installMWFailed = tr("<html><body><b>De Quick Installer heeft een probleem gevonden bij het installeren van de eID software.</b></body></html>");
+//    msgError_installMWFailed = tr("<html><body><b>De Quick Installer heeft een probleem gevonden bij het installeren van de eID software.</b></body></html>");
+ //   msgError_installMWFailedAcc = tr("De Quick Installer heeft een probleem gevonden bij het installeren van de eID software.");
     msgReferenceToReport = tr("Je kunt een rapport openen waar je een gedetailleerde omschrijving van het probleem terugvindt.");
-    msgContactDataHelpdesk = tr("Open het rapport en contacteer de Servicedesk om het probleem op te lossen.");
-    msgError_smartcard = tr("<html><body><b>De Quick Installer kan geen kaartlezer detecteren.</b> <br/>Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt, kun je de servicedesk contacteren.</body></html>");
-    msgError_eIDnotfound = tr("<html><body><b>De Quick Installer kan de identiteitskaart niet vinden.</b> <br/>Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.</body></html>");
-    msgError_eIDnotReadable= tr("<html><body><b>De Quick Installer heeft een probleem met het lezen van de identiteitskaart.</b> <br/>Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.</body></html>");
+	msgContactDataHelpdesk = tr("Open het rapport en contacteer de Servicedesk om het probleem op te lossen.");
+	msgError_smartcard = tr("<html><body><b>De Quick Installer kan geen kaartlezer detecteren.</b> <br/>Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt, kun je de servicedesk contacteren.</body></html>");
+	msgError_smartcardAcc = tr("De Quick Installer kan geen kaartlezer detecteren. Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt, kun je de servicedesk contacteren.");   
+	msgError_eIDnotfound = tr("<html><body><b>De Quick Installer kan de identiteitskaart niet vinden.</b> <br/>Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.</body></html>");
+	msgError_eIDnotfoundAcc = tr("De Quick Installer kan de identiteitskaart niet vinden. Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.");
+//    msgError_eIDnotReadable= tr("<html><body><b>De Quick Installer heeft een probleem met het lezen van de identiteitskaart.</b> <br/>Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.</body></html>");
+//	msgError_eIDnotReadableAcc= tr("De Quick Installer heeft een probleem met het lezen van de identiteitskaart. Keer terug naar de vorige pagina en probeer het nogmaals. Als dat niet werkt kun je de servicedesk contacteren.");
     msgError_diagnosticError = tr("<html><body><b>De Quick Installer heeft een probleem gevonden met de configuratie van uw computer, of het installeren van de middleware.</b> </body></html>");
+	msgError_diagnosticErrorAcc = tr("De Quick Installer heeft een probleem gevonden met de configuratie van uw computer, of het installeren van de middleware.");
 
     msglbl_InstallSoft = tr("eID software installeren");
     msglbl_ConnectCard =  tr("Kaartlezer verbinden");
@@ -517,10 +547,15 @@ void ezInstaller::setMessages(){
     msglbl_ReadCard = tr("Kaart lezen");
 
     msglbl_ConnectReaders = tr("<html><body>De eID software is succesvol geïnstalleerd.<br>De Quick Installer zal vervolgens controleren of de kaartlezer correct functioneert. Verbind nu je kaartlezer(s) met de computer.</html></body>");
-    msglbl_ReaderConnected = tr("<html><body>De kaartlezer is met de computer verbonden.<br>Quick installer zal nu de goede werking controleren. Steek de elektronische identiteitskaart in een kaartlezer.</body></html>");
-    msglbl_ReadingCard = tr("<html><body><b>De kaartlezer werkt!</b><br>De Quick Installer leest nu de belangrijkste gegevens van je identiteitskaart:</body></html>");
-//    msglbl_WarningTestSig = tr("<html><body>Om nu te weten of je elektronische authenticatie werkt, klik je hieronder op <b>Authenticatie testen</b>. De Quick Installer zal je vervolgens vragen om je pincode in te geven.</body></html>");
+    msglbl_ConnectReadersAcc = tr("De eID software is succesvol geïnstalleerd. De Quick Installer zal vervolgens controleren of de kaartlezer correct functioneert. Verbind nu je kaartlezer met de computer.");
+
+	msglbl_ReaderConnected = tr("<html><body>De kaartlezer is met de computer verbonden.<br>Quick installer zal nu de goede werking controleren. Steek de elektronische identiteitskaart in een kaartlezer.</body></html>");
+	msglbl_ReaderConnectedAcc = tr("De kaartlezer is met de computer verbonden. Quick installer zal nu de goede werking controleren. Steek de elektronische identiteitskaart in een kaartlezer.");
+	msglbl_ReadingCard = tr("<html><body><b>De kaartlezer werkt!</b><br>De Quick Installer leest nu de belangrijkste gegevens van je identiteitskaart:</body></html>");
+	msglbl_ReadingCardAcc = tr("De kaartlezer werkt! De Quick Installer leest nu de belangrijkste gegevens van je identiteitskaart:");
+	//    msglbl_WarningTestSig = tr("<html><body>Om nu te weten of je elektronische authenticatie werkt, klik je hieronder op <b>Authenticatie testen</b>. De Quick Installer zal je vervolgens vragen om je pincode in te geven.</body></html>");
     msglbl_EidInserted = tr("<html><body>De Quick Installer heeft de elektronische identiteitskaart gevonden en is nu klaar om de gegevens te lezen.</body></html>");
+	msglbl_EidInsertedAcc = tr("De Quick Installer heeft de elektronische identiteitskaart gevonden en is nu klaar om de gegevens te lezen.");
 
 //    msgconf_title = tr("<html><body>Authenticatie testen</body></html>");
 //    msgconf_Warning = tr("<html><body><b>Let op : </b>als je de verkeerde pincode ingeeft, kun je de elektronische identiteitskaart blokkeren.</body></html>");
@@ -632,6 +667,7 @@ void ezInstaller::initImages(void) {
     mQLsaveAsPdf.setVisible(false);
 
     ui.lblRemoveReader->setText("<html><body>Alvorens te starten met de installatie, zorg ervoor dat de kaartlezer NIET verbonden is met de computer.<br>Avant de commencer l'installation, assurez-vous que le lecteur de cartes N'EST PAS connect&eacute; &agrave; l'ordinateur.</html></body>");
+	ui.lblRemoveReader->setAccessibleName("Alvorens te starten met de installatie, zorg ervoor dat de kaartlezer NIET verbonden is met de computer. Avant de commencer l'installation, assurez-vous que le lecteur de cartes N'EST PAS connecté à l'ordinateur.");
 	QBrush bgreen(QColor(50, 75, 50, 255));
 	QPalette pal = ui.lblRemoveReader->palette();
 	pal.setBrush(QPalette::Active, QPalette::WindowText, bgreen);
@@ -652,8 +688,11 @@ void ezInstaller::setStepButtons(bool ldown, bool mdown, bool rdown){
 
     if (ldown && mdown && rdown) {
         ui.lblInstallSoft->setText(tr(""));
+		ui.lblInstallSoft->setAccessibleName(tr(""));
         ui.lblConnectReader->setText(tr(""));
+		ui.lblConnectReader->setAccessibleName(tr(""));
         ui.lblViewData->setText("");
+		ui.lblViewData->setAccessibleName("");
         ui.lblPicL->setPixmap(QPixmap(""));
         ui.lblPicM->setPixmap(QPixmap(""));
         ui.lblPicR->setPixmap(QPixmap(""));
@@ -709,10 +748,14 @@ void ezInstaller::setStepButtons(bool ldown, bool mdown, bool rdown){
         }
 
         ui.lblInstallSoft->setText(msglbl_InstallSoft);
+		ui.lblInstallSoft->setAccessibleName(msglbl_InstallSoft);
         ui.lblConnectReader->setText(msglbl_ConnectCard);
+		ui.lblConnectReader->setAccessibleName(msglbl_ConnectCard);
         ui.lblViewData->setText(msglbl_ViewData);
+		ui.lblViewData->setAccessibleName(msglbl_ViewData);
 
         ui.lblTitleInstallSoftware_3->setText(msglbl_ReadCard);
+		ui.lblTitleInstallSoftware_3->setAccessibleName(msglbl_ReadCard);
 
     }
 
@@ -800,6 +843,7 @@ void ezInstaller::on_clbFrancais_clicked(){
     ui.lblPicEidBackground->setPixmap(QPixmap(":/images/eidBackGround"));
 
     mQLShowDetail.setText(msglbl_showDetails);
+	mQLShowDetail.setAccessibleName(msglbl_showDetails);
 
 
     ui.stackedWidget->setCurrentIndex(ui.stackedWidget->currentIndex()+1);
@@ -1031,6 +1075,7 @@ LOGSTR(readersXml.c_str());
         ui.clbCancel->setEnabled(true);
         ui.lblConnectedReader->setVisible(true);
         ui.lblConnectedReader->setText(msglbl_ReaderConnected);
+		ui.lblConnectedReader->setAccessibleName(msglbl_ReaderConnectedAcc);
 
         mhave_readers = true;
         return true;
@@ -1080,30 +1125,30 @@ void ezInstaller::on_commandLinkButton_clicked()
 void ezInstaller::on_clbCancel_clicked()
 {
 
-    QString _title;
-    QString _body;
-    QString _yesButton;
-    QString _noButton;
+    //QString _title;
+    //QString _body;
+    //QString _yesButton;
+    //QString _noButton;
 
-    if (ui.stackedWidget->currentIndex() == 0) {
-        _title = msgbox_closeTitle2talig;
-        _body = msgbox_closeBody2talig;
-        _yesButton = msgbox_yes2talig;
-        _noButton = msgbox_no2talig;
+    //if (ui.stackedWidget->currentIndex() == 0) {
+    //    _title = msgbox_closeTitle2talig;
+    //    _body = msgbox_closeBody2talig;
+    //    _yesButton = msgbox_yes2talig;
+    //    _noButton = msgbox_no2talig;
 
-    }
-    else {
-        _title = msgbox_closeTitle;
-        _body = msgbox_closeBody;
-        _yesButton = msgbox_yes;
-        _noButton = msgbox_no;
-    }
+    //}
+    //else {
+    //    _title = msgbox_closeTitle;
+    //    _body = msgbox_closeBody;
+    //    _yesButton = msgbox_yes;
+    //    _noButton = msgbox_no;
+    //}
 
-    int answer = QMessageBox::question(this,_title,_body,_yesButton,_noButton,QString::null,QMessageBox::Yes,QMessageBox::No);
-    if ( answer == 0)
-    {
+    //int answer = QMessageBox::question(this,_title,_body,_yesButton,_noButton,QString::null,QMessageBox::Yes,QMessageBox::No);
+    //if ( answer == 0)
+    //{
     this->close();
-}
+	//}
 }
 
 void ezInstaller::on_clbCancel_pressed()
@@ -1217,10 +1262,12 @@ void ezInstaller::on_lblNext_linkHovered(QString)
 void ezInstaller::on_clbViewDetails_clicked() {
     if (!ui.teProgress->isVisible()) {
         mQLShowDetail.setText(msglbl_hideDetails);
+		mQLShowDetail.setAccessibleName(msglbl_hideDetails);
         ui.teProgress->setVisible(true);
     }
     else {
         mQLShowDetail.setText(msglbl_showDetails);
+		mQLShowDetail.setAccessibleName(msglbl_showDetails);
         ui.teProgress->setVisible(false);
     }
 }
@@ -1239,8 +1286,11 @@ void ezInstaller::on_clbViewDetails_released() {
 void ezInstaller::buildSummaryPage(string pageType) {
     if (pageType == "eIDNotFound") {
         ui.lblTextSummary_1->setText(msgError_eIDnotfound);
+		ui.lblTextSummary_1->setAccessibleName(msgError_eIDnotfoundAcc);
         ui.lblTextSummary_2->setText(msgReferenceToReport);
+		ui.lblTextSummary_2->setAccessibleName(msgReferenceToReport);
         ui.lblTextSummary_3->setText(msgContactDataHelpdesk);
+		ui.lblTextSummary_3->setAccessibleName(msgContactDataHelpdesk);
 
         ui.lblIconSummary_1->setPixmap(QPixmap(":/images/foutmelding"));
         ui.lblIconSummary_2->setPixmap(QPixmap(""));
@@ -1248,8 +1298,11 @@ void ezInstaller::buildSummaryPage(string pageType) {
     else
         if (pageType == "noReaderFound") {
             ui.lblTextSummary_1->setText(msgError_smartcard);
+			ui.lblTextSummary_1->setAccessibleName(msgError_smartcardAcc);
             ui.lblTextSummary_2->setText(msgReferenceToReport);
+			ui.lblTextSummary_2->setAccessibleName(msgReferenceToReport);
             ui.lblTextSummary_3->setText(msgContactDataHelpdesk);
+			ui.lblTextSummary_3->setAccessibleName(msgContactDataHelpdesk);
 
             ui.lblIconSummary_1->setPixmap(QPixmap(":/images/foutmelding"));
             ui.lblIconSummary_2->setPixmap(QPixmap(""));
@@ -1258,14 +1311,19 @@ void ezInstaller::buildSummaryPage(string pageType) {
             if (pageType == "endPage") {
                 // alles ok.
                 ui.lblTextSummary_1->setText(msgOk_successfullInstall);
+				ui.lblTextSummary_1->setAccessibleName(msgOk_successfullInstallAcc);
                 ui.lblIconSummary_1->setPixmap(QPixmap(":/images/groene_vink"));
                 ui.lblTextSummary_3->setText("");
+				ui.lblTextSummary_3->setAccessibleName("");
             }
             else
                 if (pageType == "diagnosticError") {
                     ui.lblTextSummary_1->setText(msgError_diagnosticError);
+					ui.lblTextSummary_1->setAccessibleName(msgError_diagnosticErrorAcc);
                     ui.lblTextSummary_2->setText(msgReferenceToReport);
+					ui.lblTextSummary_2->setAccessibleName(msgReferenceToReport);
                     ui.lblTextSummary_3->setText(msgContactDataHelpdesk);
+					ui.lblTextSummary_3->setAccessibleName(msgContactDataHelpdesk);
 
                     ui.lblIconSummary_1->setPixmap(QPixmap("images/foutmelding"));
                     ui.lblIconSummary_2->setPixmap(QPixmap(""));
