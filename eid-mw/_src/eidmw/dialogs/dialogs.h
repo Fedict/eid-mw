@@ -86,6 +86,9 @@ typedef struct {
 	unsigned long ulFlags;     // PIN_FLAG_DIGITS, ...
 } DlgPinInfo;
 #else
+#pragma pack(push)  /* push current alignment to stack */
+#pragma pack(1)     /* set alignment to 1 byte boundary */
+	
 typedef struct {
 	unsigned long long ulMinLen;
 	unsigned long long ulMaxLen;    // should be 16 at most
@@ -334,7 +337,7 @@ struct DlgAskPINArguments {
  void CallQTServer(const DlgFunctionIndex index,
 		     const char *csFilename);
 
-
+#pragma pack(pop)   /* restore original alignment from stack */
 #endif
 
 
