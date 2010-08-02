@@ -822,7 +822,7 @@
         <Feature Id="Install_CSP" Level="1">
           <ComponentRef Id="CSP"/>
           <ComponentRef Id="REGISTERCSP"/>
-          <Condition Level="0">"VersionNT >= 600"</Condition>
+          <Condition Level="0">VersionNT >= 600</Condition>
         </Feature>
       </Feature>
 
