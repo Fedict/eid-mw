@@ -20,12 +20,12 @@ Given /I am on a clean Windows system/ do
 end
 
 When /I run the build_env installer script (.+)/ do |url|
-#	result = system "powershell  " +
-#						"-ExecutionPolicy Unrestricted " + 
-#	                    "Import-Module BitsTransfer; " +
-#	                    "New-Item  c:\\tmp\ -ItemType Directory -ErrorAction SilentlyContinue; " +
-#	                    "Start-BitsTransfer -Source " + url + " -Destination c:\\tmp\\build_env.ps1; " +
-#	                    "c:\\tmp\\build_env.ps1 > build_env_output.txt" 
+	result = system "powershell  " +
+						"-ExecutionPolicy Unrestricted " + 
+	                    "Import-Module BitsTransfer; " +
+	                    "New-Item  c:\\tmp\ -ItemType Directory -ErrorAction SilentlyContinue; " +
+	                    "Start-BitsTransfer -Source " + url + " -Destination c:\\tmp\\build_env.ps1; " +
+	                    "c:\\tmp\\build_env.ps1 > build_env_output.txt" 
 end
 
 Then /I should be able to check out from trunk/ do
