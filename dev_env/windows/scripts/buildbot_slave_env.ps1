@@ -132,27 +132,6 @@ Write-Host "- Installing 7zip Command Line Version"
 $tooltarget = "$toolsfolder\$toolfilename"
 Download "$packagesfolderurl/$toolfilename" $tooltarget
 
-##############################################################################
-# install subversion
-# can be found on http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=11151&expandFolder=11151&folderID=91
-##############################################################################
-$toolfilename = "svn-win32-1.6.6.zip"
-
-Write-Host "- Installing Subversion"
-
-# Download file
-$tooltarget = "$packagesfolder\$toolfilename"
-Download "$packagesfolderurl/$toolfilename" $tooltarget
-
-# cleanup rubyfolder first
-Remove-Item -Recurse "$svnfolder\*"
-
-# extract
-Extract $tooltarget $svnfolder
-
-# move files
-Move-Item -Force "$svnfolder\svn-win32-1.6.6\*" $svnfolder
-Remove-Item "$svnfolder\svn-win32-1.6.6"
 
 ##############################################################################
 # install python 2.6.5

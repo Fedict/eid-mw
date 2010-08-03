@@ -46,6 +46,8 @@ New-Item  $toolsfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-N
 Write-Host "- Creating $msysfolder"
 New-Item  $msysfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 
+Write-Host "- Creating $svnfolder"
+New-Item  $svnfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 
 ##############################################################################
 # functions
@@ -99,16 +101,21 @@ Write-Host "- Installing Subversion"
 $tooltarget = "$packagesfolder\$toolfilename"
 Download "$packagesfolderurl/$toolfilename" $tooltarget
 
-# cleanup rubyfolder first
-Remove-Item -Recurse "$svnfolder\*"
+if ($svnfolder -ne "") 
+{
+	# cleanup svnfolder first
+	Remove-Item -Recurse "$svnfolder\*"
+	# extract
+	Extract $tooltarget $env:Temp
 
-# extract
-Extract $tooltarget $svnfolder
-
-# move files
-Move-Item -Force "$svnfolder\svn-win32-1.6.6\*" $svnfolder
-Remove-Item "$svnfolder\svn-win32-1.6.6"
-
+	# move files
+	Move-Item -Force "$env:Temp\svn-win32-1.6.6\*" $svnfolder
+	Remove-Item "$env:Temp\svn-win32-1.6.6"
+}
+else 
+{
+	Write-Host "    Unable to install Subversion. \$svnfolder is not set"
+}
 
 ##############################################################################
 # install MSYS packages

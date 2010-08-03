@@ -28,7 +28,7 @@ $packagesfolder = "c:\eid_test_env\packages"
 $packagesfolderurl = "http://dl.dropbox.com/u/2715381/buildbot/"
 $toolsfolder = "c:\eid_test_env\tools"
 $rubyfolder = "c:\eid_test_env\ruby"
-
+$svnfolder = "c:\eid_test_env\svn"
 #
 # end Config Section
 ###############################################################################
@@ -44,6 +44,8 @@ New-Item  $toolsfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-N
 Write-Host "- Creating $rubyfolder"
 New-Item  $rubyfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 
+Write-Host "- Creating $svnfolder"
+New-Item  $svnfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 
 ##############################################################################
 # functions
@@ -97,16 +99,21 @@ Write-Host "- Installing Subversion"
 $tooltarget = "$packagesfolder\$toolfilename"
 Download "$packagesfolderurl/$toolfilename" $tooltarget
 
-# cleanup rubyfolder first
-Remove-Item -Recurse "$svnfolder\*"
+if ($svnfolder -ne "") 
+{
+	# cleanup svnfolder first
+	Remove-Item -Recurse "$svnfolder\*"
+	# extract
+	Extract $tooltarget $env:Temp
 
-# extract
-Extract $tooltarget $svnfolder
-
-# move files
-Move-Item -Force "$svnfolder\svn-win32-1.6.6\*" $svnfolder
-Remove-Item "$svnfolder\svn-win32-1.6.6"
-
+	# move files
+	Move-Item -Force "$env:Temp\svn-win32-1.6.6\*" $svnfolder
+	Remove-Item "$env:Temp\svn-win32-1.6.6"
+}
+else 
+{
+	Write-Host "    Unable to install Subversion. \$svnfolder is not set"
+}
 ##############################################################################
 # install ruby 1.9.1 p429
 # found on http://files.rubyforge.vm.bytemark.co.uk/rubyinstaller/ruby-1.9.1-p429-i386-mingw32.7z
@@ -118,16 +125,22 @@ $tooltarget = "$packagesfolder\$toolfilename"
 # download file
 Start-BitsTransfer -Source "$packagesfolderurl/$toolfilename" -Destination $tooltarget
 
-# cleanup rubyfolder first
-Remove-Item -Recurse "$rubyfolder\*"
+if ($rubyfolder -ne "") 
+{
+	# cleanup rubyfolder first
+	Remove-Item -Recurse "$rubyfolder\*"
 
-# extract
-Extract $tooltarget $rubyfolder
+	# extract
+	Extract $tooltarget $env:Temp
 
-# move files
-Move-Item -Force "$rubyfolder\ruby-1.9.1-p429-i386-mingw32\*" $rubyfolder
-Remove-Item "$rubyfolder\ruby-1.9.1-p429-i386-mingw32"
-
+	# move files
+	Move-Item -Force "$env:Temp\ruby-1.9.1-p429-i386-mingw32\*" $rubyfolder
+	Remove-Item "$env:Temp\ruby-1.9.1-p429-i386-mingw32"
+}
+else 
+{
+	Write-Host "    Unable to install Ruby. \$rubyfolder is not set"
+}
 ##############################################################################
 # install cucumber 
 ##############################################################################
