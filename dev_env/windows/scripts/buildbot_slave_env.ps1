@@ -68,6 +68,15 @@ New-Item  $svnfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-Nul
 Write-Host "- Creating $buildslavefolder"
 New-Item  $buildslavefolder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 
+Write-Host "- Creating $pythonbinaryfolder"
+New-Item  $pythonbinaryfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+
+Write-Host "- Creating $pythonscriptsfolder"
+New-Item  $pythonscriptsfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+
+Write-Host "- Creating $pythonsitepackagesfolder"
+New-Item  $pythonsitepackagesfolder -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
+
 ##############################################################################
 # functions
 ##############################################################################
