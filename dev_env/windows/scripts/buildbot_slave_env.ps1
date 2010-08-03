@@ -162,7 +162,6 @@ InstallMSI $tooltarget
 # add python paths to path environmental variable
 ##############################################################################
 Write-Host "- Add python paths ($pythonbinaryfolder and $pythonscriptsfolder) to Path environmental variable."
-Write-Host "    Path before: $env:Path"
 If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($pythonbinaryfolder) + "(;|`$)") -Quiet)) 
 {
 	$env:Path = $env:Path + ";$pythonbinaryfolder"
@@ -171,11 +170,8 @@ If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($
 {
 	$env:Path = $env:Path + ";$pythonscriptsfolder"
 }
-Write-Host "    Path after: $env:Path"
 ### Modify system environment variable ###
-[Environment]::SetEnvironmentVariable( "Path", "$env:Path;$pythonbinaryfolder;$pythonscriptsfolder;", [System.EnvironmentVariableTarget]::Machine )
-### In case we are not running as administrator ###
-[Environment]::SetEnvironmentVariable( "Path", "$env:Path;$pythonbinaryfolder;$pythonscriptsfolder;", [System.EnvironmentVariableTarget]::User )
+[Environment]::SetEnvironmentVariable( "Path", "$env:Path", [System.EnvironmentVariableTarget]::Machine )
 
 ##############################################################################
 # install setuptools 0.6c11
