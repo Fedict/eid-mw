@@ -16,7 +16,7 @@
 # http://www.gnu.org/licenses/.
 ###############################################################################
 ###############################################################################
-# this is an example install script to create Windows build environment
+# this is an example install script to create Windows test environment
 # for eID MW development
 ###############################################################################
 
@@ -28,7 +28,6 @@ $packagesfolder = "c:\eid_test_env\packages"
 $packagesfolderurl = "http://dl.dropbox.com/u/2715381/buildbot/"
 $toolsfolder = "c:\eid_test_env\tools"
 $rubyfolder = "c:\eid_test_env\ruby"
-
 
 #
 # end Config Section
