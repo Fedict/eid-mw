@@ -429,7 +429,7 @@ rel_end:
 	@echo "ln -fs $(INST_DIR)/lib/libxerces-c-3.1.dylib $(INST_DIR)/lib/libxerces-c-3.dylib" >> $(POSTFLIGHT)
 	@echo "test -e /Library/Java/Extensions/$(JAVALIB_NAME).jnilib && unlink /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
 	@echo "ln -fs /usr/local/lib/$(JAVALIB_NAME_x_y_z_dylib) /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
-	@echo "mkdir \"$(XPI_PLUGIN_DIR)\"" >> $(POSTFLIGHT)
+	@echo "mkdir -p \"$(XPI_PLUGIN_DIR)\"" >> $(POSTFLIGHT)
 	@echo "cp $(APPS_DIR)/$(LATEST_XPI) \"$(XPI_PLUGIN_DIR)"\" >> $(POSTFLIGHT)
 	@echo "unzip -qq -o \"$(XPI_PLUGIN_DIR)/$(LATEST_XPI)\" -d \"$(XPI_PLUGIN_DIR)/\"" >> $(POSTFLIGHT)
 	@echo 'if [[ $$(sw_vers -productVersion) == *10.5* ]]; then' >> $(POSTFLIGHT)
