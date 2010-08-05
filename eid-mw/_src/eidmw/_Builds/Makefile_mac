@@ -138,6 +138,7 @@ OLD_ETC = beidbase.conf beidgui.conf
 BASE_SISPLUGINS = CARDPLUGINSIS_ACR38U_NAME_dylib
 #BASE_SISPLUGINS = 
 LATEST_XPI:=$(shell readlink ../xpi/builds/belgiumeid-CURRENT.xpi)
+XPI_107 = /Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi
 XPI_PLUGIN = xpi/builds/$(LATEST_XPI)
 XPI_PLUGIN_DIR = "/Library/Application\ Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
 #XPI_PLUGIN = xpi/builds/belgiumeid-CURRENT.xpi
@@ -430,8 +431,10 @@ rel_end:
 	@echo "test -e /Library/Java/Extensions/$(JAVALIB_NAME).jnilib && unlink /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
 	@echo "ln -fs /usr/local/lib/$(JAVALIB_NAME_x_y_z_dylib) /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
 	@echo "mkdir -p \"$(XPI_PLUGIN_DIR)\"" >> $(POSTFLIGHT)
-	@echo "cp $(APPS_DIR)/$(LATEST_XPI) \"$(XPI_PLUGIN_DIR)"\" >> $(POSTFLIGHT)
+	@echo "mv $(APPS_DIR)/$(LATEST_XPI) \"$(XPI_PLUGIN_DIR)\"" >> $(POSTFLIGHT)
 	@echo "unzip -qq -o \"$(XPI_PLUGIN_DIR)/$(LATEST_XPI)\" -d \"$(XPI_PLUGIN_DIR)/\"" >> $(POSTFLIGHT)
+	@echo "rm \"$(XPI_PLUGIN_DIR)/$(LATEST_XPI)\"" >> $(POSTFLIGHT)
+	@echo "rm \"$(XPI_107)\"" >> $(POSTFLIGHT)
 	@echo 'if [[ $$(sw_vers -productVersion) == *10.5* ]]; then' >> $(POSTFLIGHT)
 	@echo "mv /Applications/BelgiumIdentityCard/BEID.tokend /System/Library/Security/tokend/; else" >> $(POSTFLIGHT)
 	@echo "test -e /System/Library/Security/tokend/BEID.tokend && rm -R /System/Library/Security/tokend/BEID.tokend;" >> $(POSTFLIGHT)
