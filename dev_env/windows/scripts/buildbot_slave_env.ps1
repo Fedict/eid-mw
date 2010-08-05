@@ -129,6 +129,18 @@ function InstallEXEdistinst
 	# cleanup
 	Remove-Item -Recurse "$env:Temp\$randomdir"
 }
+
+function AddToPathEnv
+{
+	param([string]$folder)
+	If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
+	{
+		Write-Host "    $folder not yet in Path. Adding..."
+		$env:Path = $env:Path + ";$folder"
+		### Modify system environment variable ###
+		[Environment]::SetEnvironmentVariable( "Path", "$env:Path", [System.EnvironmentVariableTarget]::Machine )
+	}
+}
 ##############################################################################
 # install 7zip command line version 9.15
 # can be found on http://sourceforge.net/projects/sevenzip/files/7-Zip/9.15/7za915.zip/download
@@ -157,21 +169,12 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 # install
 InstallMSI $tooltarget
 
-
 ##############################################################################
 # add python paths to path environmental variable
 ##############################################################################
 Write-Host "- Add python paths ($pythonbinaryfolder and $pythonscriptsfolder) to Path environmental variable."
-If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($pythonbinaryfolder) + "(;|`$)") -Quiet)) 
-{
-	$env:Path = $env:Path + ";$pythonbinaryfolder"
-}
-If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($pythonscriptsfolder) + "(;|`$)") -Quiet))
-{
-	$env:Path = $env:Path + ";$pythonscriptsfolder"
-}
-### Modify system environment variable ###
-[Environment]::SetEnvironmentVariable( "Path", "$env:Path", [System.EnvironmentVariableTarget]::Machine )
+AddToPathEnv $pythonbinaryfolder
+AddToPathEnv $pythonscriptsfolder
 
 ##############################################################################
 # install setuptools 0.6c11

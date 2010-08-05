@@ -63,7 +63,6 @@ function Extract
 		invoke-expression "$tool x -y -o$destination $zipfilename"
 	}
 }
-
 function Download
 {
 	param([string]$url, [string] $destination)
@@ -75,6 +74,17 @@ function Download
 	else 
 	{
 		Write-Host "   $destination already exists. Skipping..."
+	}
+}
+function AddToPathEnv
+{
+	param([string]$folder)
+	If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
+	{
+		Write-Host "    $folder not yet in Path. Adding..."
+		$env:Path = $env:Path + ";$folder"
+		### Modify system environment variable ###
+		[Environment]::SetEnvironmentVariable( "Path", "$env:Path", [System.EnvironmentVariableTarget]::Machine )
 	}
 }
 ##############################################################################
@@ -111,6 +121,9 @@ if ($svnfolder -ne "")
 	# move files
 	Move-Item -Force "$env:Temp\svn-win32-1.6.6\*" $svnfolder
 	Remove-Item "$env:Temp\svn-win32-1.6.6"
+	
+	Write-Host "Add svn path ($svnfolder\bin) to Path environmental variable."
+	AddToPathEnv "$svnfolder\bin"	
 }
 else 
 {
@@ -139,6 +152,10 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 Extract $tooltarget $packagesfolder
 # untar
 Extract "$packagesfolder\$toolfilenametar" $msysfolder
+
+
+Write-Host "Add svn path ($msysfolder\bin) to Path environmental variable."
+AddToPathEnv "$msysfolder\bin"
 
 ##############################################################################
 # install MSYS coreutils 1.0.13
@@ -470,6 +487,9 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 # extract
 Extract $tooltarget $mingw32folder
 
+Write-Host "Add svn path ($mingw32folder\bin) to Path environmental variable."
+AddToPathEnv "$mingw32folder\bin"
+
 ##############################################################################
 # install mingw64 for 64 bit
 # found on http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Automated%20Builds/mingw-w64-1.0-bin_i686-mingw_20100702.zip/download
@@ -483,3 +503,6 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 # extract
 Extract $tooltarget $mingw64folder
+
+Write-Host "Add svn path ($mingw64folder\bin) to Path environmental variable."
+AddToPathEnv "$mingw64folder\bin"

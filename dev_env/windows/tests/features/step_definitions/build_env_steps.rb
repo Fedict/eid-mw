@@ -3,7 +3,6 @@ require 'cucumber/formatter/unicode'
 require 'tmpdir'
 
 Before do
-	ENV['PATH'] = "C:\\eid_dev_env\\svn\\bin;C:\\eid_dev_env\\tools;C:\\eid_dev_env\\msys\\bin;C:\\eid_dev_env\\mingw64-32\\bin;C:\\eid_dev_env\\mingw64-64\\bin;" + ENV['PATH']
 	@checkoutdir = Dir.tmpdir + "/eid-mw" + rand(10000).to_s
 	Dir.mkdir @checkoutdir
 end

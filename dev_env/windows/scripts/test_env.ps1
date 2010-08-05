@@ -74,7 +74,17 @@ function Download
 		Write-Host "   $destination already exists. Skipping..."
 	}
 }
-
+function AddToPathEnv
+{
+	param([string]$folder)
+	If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
+	{
+		Write-Host "    $folder not yet in Path. Adding..."
+		$env:Path = $env:Path + ";$folder"
+		### Modify system environment variable ###
+		[Environment]::SetEnvironmentVariable( "Path", "$env:Path", [System.EnvironmentVariableTarget]::Machine )
+	}
+}
 ##############################################################################
 # install 7zip command line version 9.15
 # can be found on http://sourceforge.net/projects/sevenzip/files/7-Zip/9.15/7za915.zip/download
@@ -109,11 +119,16 @@ if ($svnfolder -ne "")
 	# move files
 	Move-Item -Force "$env:Temp\svn-win32-1.6.6\*" $svnfolder
 	Remove-Item "$env:Temp\svn-win32-1.6.6"
+
+	Write-Host "Add svn path ($svnfolder\bin) to Path environmental variable."
+	AddToPathEnv "$svnfolder\bin"
 }
 else 
 {
 	Write-Host "    Unable to install Subversion. \$svnfolder is not set"
 }
+
+
 ##############################################################################
 # install ruby 1.9.1 p429
 # found on http://files.rubyforge.vm.bytemark.co.uk/rubyinstaller/ruby-1.9.1-p429-i386-mingw32.7z
@@ -135,7 +150,10 @@ if ($rubyfolder -ne "")
 
 	# move files
 	Move-Item -Force "$env:Temp\ruby-1.9.1-p429-i386-mingw32\*" $rubyfolder
-	Remove-Item "$env:Temp\ruby-1.9.1-p429-i386-mingw32"
+	Remove-Item -Recurse "$env:Temp\ruby-1.9.1-p429-i386-mingw32"
+	Write-Host "Add Ruby path ($rubyfolder\bin) to Path environmental variable."
+	AddToPathEnv "$rubyfolder\bin"
+
 }
 else 
 {
