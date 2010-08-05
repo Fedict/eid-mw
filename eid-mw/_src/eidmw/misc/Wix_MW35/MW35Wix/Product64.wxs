@@ -634,7 +634,7 @@
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
                      Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="80000001" Value="[SystemFolder]beidmdrv.dll" KeyPath="yes"/>
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv.dll" KeyPath="yes"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
           <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no"/>
@@ -658,7 +658,7 @@
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Defaults\Provider\Belgium Identity Card CSP"
                       Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Image Path" Value="[SystemFolder]beidcsp.dll" KeyPath="yes"/>
+          <RegistryValue Type="string" Name="Image Path" Value="beidcsp.dll" KeyPath="yes"/>
           <RegistryValue Type="integer" Name="Type" Value="1" />
           <RegistryValue
             Type="binary"
@@ -669,7 +669,7 @@
                      Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card"
                      Action="createAndRemoveOnUninstall">
           <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue Type="string" Name="80000001" Value="[SystemFolder]beidmdrv.dll" KeyPath="no"/>
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv.dll" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
         </RegistryKey>
