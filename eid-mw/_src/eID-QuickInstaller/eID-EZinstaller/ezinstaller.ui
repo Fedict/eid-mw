@@ -2067,6 +2067,9 @@ selection-background-color: rgba(170, 0, 0, 0);
      <height>62</height>
     </size>
    </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
    <property name="flat">
     <bool>false</bool>
    </property>
@@ -2383,6 +2386,9 @@ selection-background-color: rgba(170, 0, 0, 0);
      <height>65</height>
     </size>
    </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QCommandLinkButton" name="clbClose">
    <property name="geometry">
@@ -2421,6 +2427,9 @@ selection-background-color: rgba(170, 0, 0, 0);
      <width>166</width>
      <height>65</height>
     </size>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QCommandLinkButton" name="clbOpenReport">
@@ -2463,6 +2472,9 @@ selection-background-color: rgba(170, 0, 0, 0);
      <width>166</width>
      <height>65</height>
     </size>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
    </property>
   </widget>
  </widget>
