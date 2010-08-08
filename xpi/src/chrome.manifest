@@ -7,3 +7,4 @@ locale	belgiumeid	de-DE	locale/de-DE/
 skin	belgiumeid	classic/1.0	skin/
 overlay	chrome://browser/content/browser.xul		chrome://belgiumeid/content/belgiumeidpkcs11.xul
 overlay	chrome://global/content/commonDialog.xul	chrome://belgiumeid/content/belgiumeidprompt.xul
+overlay	chrome://pippki/content/protectedAuth.xul	chrome://belgiumeid/content/belgiumeidpromptsecure.xul

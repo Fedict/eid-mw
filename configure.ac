@@ -63,6 +63,24 @@ AC_MSG_RESULT([$with_openssl])
 # on Windows, check for msvcr
 AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcr],[getpid])])
 
+###########################################################################
+####### read user-specific requests from --enable directives         ######
+###########################################################################
+dnl this macro is used to get the arguments supplied
+dnl to the configure script (./configure --enable-dialogs)
+dnl Check if we have enable dialogs support.
+AC_MSG_CHECKING(whether to enable dialogs)
+default="yes"
+NO_DIALOGS=
+AC_ARG_ENABLE(dialogs, [  --enable-dialogs=[yes/no] turn off dialogs
+                               [default=$default]],, enable_dialogs=$default)
+if test "x$enable_dialogs" = "xno"; then
+AC_MSG_RESULT(no)
+else
+AC_MSG_RESULT(yes)
+fi
+AM_CONDITIONAL([NO_DIALOGS],[test x$enable_dialogs = xno])
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
 AC_C_INLINE
@@ -79,6 +97,8 @@ AC_FUNC_REALLOC
 AC_CHECK_FUNCS([gethostbyname socket strerror ftime memchr memset mkdir select strchr strdup strerror strncasecmp strrchr strstr strtol strtoul vasprintf])
 
 AC_CONFIG_FILES([Makefile])
-
-AC_CONFIG_SUBDIRS([common dialogs cardlayer pkcs11 xpi minidriver nsis])
+AC_CONFIG_SUBDIRS([common cardlayer pkcs11 xpi minidriver nsis])
+if test "x$enable_dialogs" = "xyes"; then
+	AC_CONFIG_SUBDIRS([dialogs])
+fi
 AC_OUTPUT

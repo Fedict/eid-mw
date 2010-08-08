@@ -41,7 +41,9 @@
 #if defined WIN32 && defined BEID_OLD_PINPAD
 #include "old/pinpadliboldbeid.h"
 #endif
+#ifndef NO_DIALOGS
 #include "../dialogs/src/dialogs.h"
+#endif
 
 namespace eIDMW
 {

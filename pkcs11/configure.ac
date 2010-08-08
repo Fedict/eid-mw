@@ -1,4 +1,4 @@
-AC_PREREQ([2.65])
+AC_PREREQ([2.63])
 AC_INIT([libbeidpkcs11], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/beid_p11.h])
@@ -64,6 +64,23 @@ AS_VAR_IF([linux],[true],
 	    LDFLAGS="-L$with_pcsclite/lib $LDFLAGS"
   	])
 ])
+
+###########################################################################
+####### read user-specific requests from --enable directives         ######
+###########################################################################
+dnl this macro is used to get the arguments supplied
+dnl to the configure script (./configure --enable-dialogs)
+dnl Check if we have enable dialogs support.
+AC_MSG_CHECKING(whether to enable dialogs)
+default="yes"
+AC_ARG_ENABLE(dialogs, [  --enable-dialogs=[yes/no] turn off dialogs
+                               [default=$default]],, enable_dialogs=$default)
+if test "x$enable_dialogs" = "xno"; then
+AC_MSG_RESULT(no)
+else
+AC_MSG_RESULT(yes)
+fi
+AM_CONDITIONAL([NO_DIALOGS],[test x$enable_dialogs = xno])
 
 ########### libraries ##################
 AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcrt],[_getpid])])

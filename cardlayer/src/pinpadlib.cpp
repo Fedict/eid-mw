@@ -107,6 +107,7 @@ bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 	const std::string & csPinLabel, const std::string & csReader,
 	unsigned long *pulDlgHandle)
 {
+#ifndef NO_DIALOGS
 	const char *csMesg = GetGuiMesg(pinpadOperation);
 	if (csMesg == NULL)
 		csMesg = "";
@@ -138,11 +139,14 @@ bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 			wideReader.c_str(), dlgUsage,
 			widePinLabel.c_str(), wideMesg.c_str(), pulDlgHandle);
 	}
+#endif
 }
 
 void CPinpadLib::CloseDlg(unsigned long ulDlgHandle)
 {
+#ifndef NO_DIALOGS
 	DlgClosePinpadInfo(ulDlgHandle);
+#endif
 }
 
 const char *CPinpadLib::GetGuiMesg(unsigned char ucOperation)

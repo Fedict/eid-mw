@@ -322,7 +322,6 @@ DlgPinUsage CCard::PinUsage2Dlg(const tPin & Pin, const tPrivKey *pKey)
 {
 	return DLG_PIN_UNKNOWN;
 }
-
 unsigned long CCard::GetSupportedAlgorithms()
 {
 	return 0;

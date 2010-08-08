@@ -228,7 +228,7 @@ DlgPinUsage CBeidCard::PinUsage2Dlg(const tPin & Pin, const tPrivKey *pKey)
 
 void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin, std::string & csPin1, std::string & csPin2,	const tPrivKey *pKey)
 {
-
+#ifndef NO_DIALOGS
 	// Convert params
 	wchar_t wsPin1[PIN_MAX_LENGTH+1];
 	wchar_t wsPin2[PIN_MAX_LENGTH+1];
@@ -258,6 +258,7 @@ void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin, std::st
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 	else
 		throw CMWEXCEPTION(EIDMW_ERR_UNKNOWN);
+#endif
 }
 
 bool CBeidCard::PinCmd(tPinOperation operation, const tPin & Pin,

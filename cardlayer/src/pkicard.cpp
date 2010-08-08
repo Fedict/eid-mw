@@ -240,6 +240,7 @@ bad_pin:
 	else
 		throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
 
+#ifndef NO_DIALOGS
 	// Bad PIN: show a dialog to ask the user to try again
 	// PIN blocked: show a dialog to tell the user
 	if (bAskPIN && !bRet)
@@ -249,6 +250,7 @@ bad_pin:
 		if (0 != ulRemaining && DLG_RETRY == dlgret)
 			goto bad_pin;
 	}
+#endif
 
 	// If PIN command OK and no SSO, then state that we have now
 	// verified this PIN, this info is needed in the Sign() method

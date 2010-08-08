@@ -61,7 +61,13 @@ c) 32-bit MS Windows
 
 (TODO: complete these instructions)
 
-d) Firefox
+d) Dialogs
+----------
+Pin dialogs can be disabled eg for applications that have their own dialogs:
+
+ ./configure --enable-dialogs=no # the default is yes
+
+e) Firefox
 ----------
 
 To use the Belgian eID in Firefox, we recommend the Firefox extension to handle configuration automatically. 

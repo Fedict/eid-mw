@@ -250,7 +250,9 @@ pInfo->ulMinPinLen = 4;
 strcpy_s((char*)pInfo->utcTime,sizeof(pInfo->utcTime), "20080101000000");
 
 pInfo->flags |= CKF_WRITE_PROTECTED | CKF_TOKEN_INITIALIZED | CKF_USER_PIN_INITIALIZED;// check for pin change capabilitypInfo->flags |= /*CKF_LOGIN_REQUIRED |  CKF_USER_PIN_INITIALIZED |*/; //CAL does logon, so no CKF_LOGIN_REQUIRED nor CKF_USER_PIN_INITIALIZED
-
+#ifdef NO_DIALOGS
+pInfo->flags |= CKF_LOGIN_REQUIRED;   // no dialogs, so we ask the calling program to ask for PIN 
+#endif
 cleanup:
 
 return (ret);

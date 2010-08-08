@@ -1,7 +1,15 @@
 ACLOCAL_AMFLAGS         	= -I m4
 COMMON_CXXFLAGS				= -DBEIDPKCS11_EXPORTS -DBEID_35 -DDEBUG -DLTC_NO_ASM
-COMMON_LIBADD   			= ../common/libbeidcommon.la ../dialogs/libbeiddialogs.la ../cardlayer/libbeidcardlayer.la
-COMMON_CPPFLAGS  			= -I$(srcdir)/../common/src -I$(srcdir)/../cardlayer/src -I$(srcdir)/../dialogs/src -I$(srcdir)/src/include/rsaref220
+if NO_DIALOGS
+MAYBE_CPPFLAGS_DIALOGS			= -DNO_DIALOGS
+else
+MAYBE_LIBADD_DIALOGS   			= ../dialogs/libbeiddialogs.la 
+MAYBE_CPPFLAGS_DIALOGS			= -I$(srcdir)/../dialogs/src
+endif
+
+COMMON_LIBADD   			= ../common/libbeidcommon.la $(MAYBE_LIBADD_DIALOGS) ../cardlayer/libbeidcardlayer.la
+
+COMMON_CPPFLAGS  			= -I$(srcdir)/../common/src -I$(srcdir)/../cardlayer/src $(MAYBE_CPPFLAGS_DIALOGS) -I$(srcdir)/src/include/rsaref220
 noinst_HEADERS				= src/p11.h src/phash.h src/cal.h src/beid_p11.h src/cert.h src/include/rsaref210/win32.h src/include/rsaref210/pkcs11f.h src/include/rsaref210/pkcs11t.h src/include/rsaref210/pkcs11.h src/include/rsaref210/unix.h src/include/rsaref220/win32.h src/include/rsaref220/pkcs11f.h src/include/rsaref220/pkcs11t.h src/include/rsaref220/pkcs11.h src/include/rsaref220/unix.h src/asn1.h src/util.h src/log.h config.h
 
 lib_LTLIBRARIES    			= libbeidpkcs11.la 
