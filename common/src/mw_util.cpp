@@ -34,10 +34,6 @@
 #include <time.h>
 #include "util.h"
 
-#ifndef __APPLE__
-#include "error.h"
-#endif
-
 #include <errno.h>
 
 #ifndef HAVE_VASPRINTF
