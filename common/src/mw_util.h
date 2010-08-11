@@ -28,7 +28,7 @@
 #include <vector>
 #include <stdarg.h>
 
-#ifndef __APPLE__
+#if !defined __APPLE__ && !defined USE_WINERROR
 #include "error.h"
 #endif
 
