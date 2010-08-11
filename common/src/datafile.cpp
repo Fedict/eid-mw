@@ -70,16 +70,7 @@
 
 #include "util.h"
 
-// Compatibility Defines ////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
 
-#ifdef WIN32
-  #define snprintf  _snprintf
-  #define vsnprintf  _vsnprintf
-#else
-  #define _snprintf_s snprintf
-  #define _vsnprintf_s vsnprintf
-#endif
 
 namespace eIDMW
 {
