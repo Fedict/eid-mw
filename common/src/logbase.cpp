@@ -389,12 +389,7 @@ void CLog::getFilename(std::wstring &filename)
 #else
 	//	--> TODO : Test if the directory exist
 	directory = m_directory;
-
-#ifdef WIN32
-	struct _stat buffer;
-#else
 	struct stat buffer;
-#endif
 
 	if ( stat(utilStringNarrow(directory).c_str(),&buffer)){
 	  // check error code
