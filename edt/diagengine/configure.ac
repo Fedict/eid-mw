@@ -1,0 +1,34 @@
+AC_PREREQ([2.65])
+AC_INIT([diagengine], [3.5.3], [servicedesk@fedict.be])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_SRCDIR([diagengine.cpp])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
+AM_INIT_AUTOMAKE
+AC_CANONICAL_HOST
+LT_INIT
+
+# Checks for programs.
+AC_PROG_CXX
+AC_PROG_CC
+AC_PROG_LIBTOOL
+
+# Checks for libraries.
+
+AC_ARG_WITH([diaglib],
+  [AS_HELP_STRING([--with-diaglib],
+    [Build diaglib and use it])],
+  [],
+  [])
+
+
+# Checks for header files.
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_STDBOOL
+AC_TYPE_SIZE_T
+
+# Checks for library functions.
+
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
