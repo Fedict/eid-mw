@@ -64,7 +64,10 @@ void systemContributeInfo(const System_INFO &info)
 	REP_CONTRIBUTE(L"productName",		L"%ls",	info.ProductName.c_str());
 	REP_CONTRIBUTE(L"description",		L"%ls",	info.Description.c_str());
 	REP_CONTRIBUTE(L"defaultLanguage",	L"%ls", info.DefaultLanguage.c_str());
-	REP_CONTRIBUTE(L"architecture",		L"%ls",	info.Architecture.c_str());
+	if(info.Architecture.find(L"running on 64 bit")!=wstring::npos)
+		REP_CONTRIBUTE(L"arch",L"64");
+	else
+		REP_CONTRIBUTE(L"arch",L"32");
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
