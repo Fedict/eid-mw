@@ -59,7 +59,8 @@ typedef void*			LPVOID;
 
 #define INFINITE 0
 #define WINAPI
-#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
+//#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
+#define PKCS11_LIB "/Library/Frameworks/BeIdPKCS11.framework/Versions/Current/lib/libbeidpkcs11.dylib"
 
 #endif
 

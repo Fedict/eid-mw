@@ -9,7 +9,7 @@ xpi_files = $(dist_content_DATA) \
 			$(dist_locale_nlnl_DATA) \
 			$(dist_locale_dede_DATA) \
 			$(dist_platform_darwin_defaults_preferences_DATA) \
-			$(platform_linux_defaults_preferences_DATA) \
+			$(dist_platform_linux_defaults_preferences_DATA) \
 			$(dist_platform_winnt_defaults_preferences_DATA) \
 			$(dist_skin_DATA) \
 			$(dist_root_DATA)
@@ -36,7 +36,7 @@ dist_locale_dede_DATA = locale/de-DE/belgiumeid.properties
 
 dist_platform_darwin_defaults_preferences_DATA = platform/Darwin/defaults/preferences/belgiumeid.js
 
-platform_linux_defaults_preferences_DATA = belgiumeid.js
+dist_platform_linux_defaults_preferences_DATA = platform/Linux/defaults/preferences/belgiumeid.js
 
 dist_platform_winnt_defaults_preferences_DATA = platform/WINNT/defaults/preferences/belgiumeid.js
 
@@ -76,19 +76,17 @@ xpipackage: $(xpi_files)
 	cd -; \
 	rm -rf $$tmp;
 
-EXTRA_DIST=platform/Linux/defaults/preferences/belgiumeid.js.in
+EXTRA_DIST = \
+	platform/Linux/defaults/preferences/belgiumeid.js.in \
+	platform/Darwin/defaults/preferences/belgiumeid.js.in
 
 # should be updated every time - there should be a better way...
-.PHONY: belgiumeid.js
-BUILT_SOURCES=belgiumeid.js
+#.PHONY: belgiumeid.js
 
-
-if LINUX
-belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
+BUILT_SOURCES=platform/Linux/defaults/preferences/belgiumeid.js.in platform/Darwin/defaults/preferences/belgiumeid.js.in
+platform/Linux/defaults/preferences/belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
 	$(SED) "s|__libdir__|@libdir@|g" $< >$@
-else
-# on other platforms libdir is unknown for Linux
-# we default to /usr/local/lib
-belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
-	$(SED) "s|__libdir__|/usr/local/lib|g" $< >$@
-endif
+
+platform/Darwin/defaults/preferences/belgiumeid.js: platform/Darwin/defaults/preferences/belgiumeid.js.in
+	$(SED) "s|__libdir__|@libdir@|g" $< >$@
+

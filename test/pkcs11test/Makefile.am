@@ -13,6 +13,13 @@ AM_LDFLAGS						= -avoid-version -ldl -pthread
 #
 endif
 
+if OSX
+#
+AM_LDFLAGS						= -avoid-version -ldl -pthread -framework PCSC
+AM_CXXFLAGS    					= -framework PCSC
+#
+endif
+
 if WIN32
 #
 AM_LDFLAGS						= -lwinscard -no-undefined -static-libstdc++ -static-libgcc -avoid-version -static

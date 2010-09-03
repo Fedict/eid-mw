@@ -47,7 +47,8 @@
 #include <opensc/pkcs11.h>
 #include <dlfcn.h>
 #include <unistd.h>
-#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
+//#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
+#define PKCS11_LIB "/Library/Frameworks/BeId.framework/Versions/3.99.M1/lib/libbeidpkcs11.dylib"
 #endif
 #include <stdlib.h>
 
@@ -120,7 +121,7 @@ int main()
    	handle = dlopen(PKCS11_LIB, RTLD_LAZY); // RTLD_NOW is slower
    	if (NULL == handle)
 	{
-   	    fprintf(stderr, "dlopen error\n");
+		perror("dlopen");
 		exit(1);    
    	}
 
@@ -169,7 +170,7 @@ int main()
      	check_return_value(rv, "getslotlist (to get info)");
 
 	CK_SLOT_INFO slotInfo;		
-	CK_SLOT_ID slotId = slotIds[1];
+	CK_SLOT_ID slotId = slotIds[0];
 	int idx;
 
 	printf("invoke C_GetSlotInfo\n");

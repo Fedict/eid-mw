@@ -49,10 +49,13 @@ AS_VAR_IF([with_pcsclite],[no],
 	# as we do not use pkgconfig on Windows and Mac
 	m4_ifdef([PKG_CHECK_MODULES],
 	[
-		PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.5],
+		AS_VAR_IF([linux],[true],
 		[
-		        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
-		        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
+			PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.5],
+			[
+		   	     CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
+		  	     LDFLAGS="$PCSC_LIBS $CPPFLAGS"
+			])
 		])
 	])
 ],
@@ -85,11 +88,11 @@ AS_VAR_IF([with_opensc],[no],[],[
 ########### libraries ##################
 # on Windows, check for msvcr
 AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcr],[getpid])])
-AS_VAR_IF([win32],[no],  [AC_CHECK_LIB([pcsclite],[SCardConnect])])
+AS_VAR_IF([linux],[true],[AC_CHECK_LIB([pcsclite],[SCardConnect])])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h string.h])
-AC_CHECK_HEADER([winscard.h],[],AC_MSG_ERROR([PCSC headers are required.]))
+AS_VAR_IF([osx],[no],[AC_CHECK_HEADER([winscard.h],[],AC_MSG_ERROR([PCSC headers are required.]))])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

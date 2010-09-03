@@ -30,7 +30,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
+//#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
+#define PKCS11_LIB "/Library/Frameworks/BeIdPKCS11.framework/Versions/Current/lib/libbeidpkcs11.dylib"
 //#define PKCS11_LIB "/home/fcorneli/beid-2.6.0/src/newpkcs11/src/pkcs11/libbeidpkcs11.so.2.1.0" 
 
 int main() {

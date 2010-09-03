@@ -1,1 +1,1 @@
-pref("extensions.belgiumeid.modulelocation", "/usr/local/lib/beid-pkcs11.bundle");
+pref("extensions.belgiumeid.modulelocation", "/Library/Frameworks/BeId.framework/Versions/3.99.M1/lib/libbeidpkcs11.dylib");
