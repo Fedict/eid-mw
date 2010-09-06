@@ -1,0 +1,55 @@
+#!/bin/bash
+
+DIST32="osx32"
+DIST64="osx64"
+DIST96="osx96"
+APPSUPPORT="Library/Application Support"
+FRAMEWORKS="Library/Frameworks"
+
+rm -Rf $DIST96
+mkdir $DIST96
+
+# Firefox Add-On should be bitwise the same independent of platform bitness
+###################################################################################
+diff -r "${DIST32}/${APPSUPPORT}" \
+	"${DIST64}/${APPSUPPORT}"
+
+if [ $? != "0" ]; then
+	echo "Brain Damage! The Application Support directories are Architecture-Independent and should be *equal* in both architectures"
+	exit 2
+fi
+
+# ..so just copy one of both
+###################################################################################
+cp -pR 	"${DIST64}/${APPSUPPORT}" \
+      	"${DIST96}"
+
+
+# Operate the rest from the 64-bit frameworks dir
+###################################################################################
+cd ${DIST64}/${FRAMEWORKS}
+
+# Create /Library/Frameworks directory structure according to 64-bit version
+###################################################################################
+for dir in `find . -type d`; do
+	mkdir -p ../../../${DIST96}/${FRAMEWORKS}/${dir}
+done
+
+# Merge Dynamic Libraries
+###################################################################################
+for dylib in `find . -name *.dylib`; do
+	lipo ${dylib} \
+	../../../${DIST32}/${FRAMEWORKS}/${dylib} \
+	-output ../../../${DIST96}/${FRAMEWORKS}/${dylib} \
+	-create
+done
+
+# Merge executables
+###################################################################################
+BINDIR=`find . -name bin`
+for bin in `ls -1 $BINDIR`; do
+	lipo ${BINDIR}/${bin} \
+	../../../${DIST32}/${FRAMEWORKS}/${BINDIR}/${bin} \
+	-output ../../../${DIST96}/${FRAMEWORKS}/${BINDIR}/${bin} \
+	-create
+done
