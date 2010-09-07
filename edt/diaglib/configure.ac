@@ -1,5 +1,5 @@
 AC_PREREQ([2.66])
-AC_INIT([libdiag],[3.99.99], [servicedesk@fedict.be])
+AC_INIT([libdiag],[4.0.0], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/progress.cpp])
 AC_CONFIG_HEADERS([config.h])

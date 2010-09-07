@@ -1,5 +1,5 @@
 AC_PREREQ([2.65])
-AC_INIT([diagengine], [3.5.3], [servicedesk@fedict.be])
+AC_INIT([diagengine], [4.0.0], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([diagengine.cpp])
 AC_CONFIG_HEADERS([config.h])

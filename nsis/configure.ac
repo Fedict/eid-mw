@@ -1,5 +1,5 @@
 AC_PREREQ([2.65])
-AC_INIT([eid-mw-nsis-installer], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
+AC_INIT([eid-mw-nsis-installer],[4.0.0], [servicedesk@fedict.be])
 AM_INIT_AUTOMAKE([foreign])
 
 linux="no"

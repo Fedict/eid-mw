@@ -1,5 +1,5 @@
 AC_PREREQ([2.63])
-AC_INIT([libbeidpkcs11], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
+AC_INIT([libbeidpkcs11],[4.0.0], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/beid_p11.h])
 AC_CONFIG_HEADERS([config.h])

@@ -1,6 +1,6 @@
 
 AC_PREREQ([2.63])
-AC_INIT([sccertprop], [0.1], [servicedesk@fedict.be])
+AC_INIT([sccertprop], [4.0.0], [servicedesk@fedict.be])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/main.cpp])

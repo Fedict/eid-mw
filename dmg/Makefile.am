@@ -2,8 +2,9 @@ export DIST=src/dist
 export DIST32=${DIST}/osx32
 export DIST64=${DIST}/osx64
 export DIST96=${DIST}/osx96
-export APPSUPPORT=Library/Application Support
-export FRAMEWORKS=Library/Frameworks
+export LIBRARY=Library
+export APPSUPPORT=${LIBRARY}/Application Support
+export FRAMEWORKS=${LIBRARY}/Frameworks
 
 all : dmg
 
@@ -14,8 +15,9 @@ dmg:
 
 # Copy Firefox Add-On from the 64-bit platform
 ###################################################################################
-	cp -pR 	"${DIST64}/${APPSUPPORT}" \
-	      	"${DIST96}"
+	mkdir "${DIST96}/${LIBRARY}"
+	cp -r 	"${DIST64}/${APPSUPPORT}" \
+	      	"${DIST96}/${LIBRARY}"
 
 # Create /Library/Frameworks directory structure according to 64-bit version
 ###################################################################################
