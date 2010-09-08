@@ -33,6 +33,7 @@
 #include <QThread>
 #include <QMessageBox>
 #include <QDir>
+#include "accessibleDialogbox.h"
 
 #define LOGSTR(msg)
 #define LOGINT(format, i)
@@ -784,7 +785,12 @@ bool ezInstaller::mCheckMW35(void) {
     //    cantproceed = true;
     //}
     if (cantproceed) {
-        QMessageBox::critical(this, "Quick-Installer", msgbox_MW35, QMessageBox::Ok);
+		if(QAccessible::isActive())
+		{
+			accessibleDialogbox::showDialogBox(QString("Quick-Installer"),msgbox_MW35,"OK",NULL,this);
+		} else {
+			QMessageBox::critical(this, "Quick-Installer", msgbox_MW35, QMessageBox::Ok);	
+		}        
         this->close();
     }
     return cantproceed;
@@ -1061,13 +1067,22 @@ LOGSTR(readersXml.c_str());
 			QString _body = msgbox_retryReader;
 			QString _okButton = msgbox_ok;
 			QString _cancelButton = msgbox_cancel;
+			int respons = 0;
 
 			qApp->restoreOverrideCursor();
 
-			if(0!=QMessageBox::question(this,_title,_body,_okButton,_cancelButton,QString::null,0,1))
+			if(QAccessible::isActive())
 			{
-				bContinue=false;
-			}
+				if (0 == accessibleDialogbox::showDialogBox(_title,_body,_okButton,_cancelButton,this))
+				{
+					bContinue=false;
+				}
+			} else {
+				if (0 != QMessageBox::question(this,_title,_body,_okButton,_cancelButton,QString::null,0,1))
+				{
+					bContinue=false;
+				}
+			}  
 		}
 	} while(bContinue);
 
@@ -1125,30 +1140,40 @@ void ezInstaller::on_commandLinkButton_clicked()
 void ezInstaller::on_clbCancel_clicked()
 {
 
-    //QString _title;
-    //QString _body;
-    //QString _yesButton;
-    //QString _noButton;
+    QString _title;
+    QString _body;
+    QString _yesButton;
+    QString _noButton;
 
-    //if (ui.stackedWidget->currentIndex() == 0) {
-    //    _title = msgbox_closeTitle2talig;
-    //    _body = msgbox_closeBody2talig;
-    //    _yesButton = msgbox_yes2talig;
-    //    _noButton = msgbox_no2talig;
+    if (ui.stackedWidget->currentIndex() == 0) {
+        _title = msgbox_closeTitle2talig;
+        _body = msgbox_closeBody2talig;
+        _yesButton = msgbox_yes2talig;
+        _noButton = msgbox_no2talig;
 
-    //}
-    //else {
-    //    _title = msgbox_closeTitle;
-    //    _body = msgbox_closeBody;
-    //    _yesButton = msgbox_yes;
-    //    _noButton = msgbox_no;
-    //}
+    }
+    else {
+        _title = msgbox_closeTitle;
+        _body = msgbox_closeBody;
+        _yesButton = msgbox_yes;
+        _noButton = msgbox_no;
+    }
 
-    //int answer = QMessageBox::question(this,_title,_body,_yesButton,_noButton,QString::null,QMessageBox::Yes,QMessageBox::No);
-    //if ( answer == 0)
-    //{
-    this->close();
-	//}
+	//int answer = QMessageBox::question(this,_title,_body,_yesButton,_noButton,QString::null,QMessageBox::Yes,QMessageBox::No);
+	if(QAccessible::isActive())
+	{
+		//returnvalues: accepted = 1, rejected = 0
+		if (0 != accessibleDialogbox::showDialogBox(_title,_body,_yesButton,_noButton,this))
+		{
+			this->close();
+		}
+	} else 
+	{
+		if (0 == QMessageBox::question(this,_title,_body,_yesButton,_noButton,QString::null,QMessageBox::Yes,QMessageBox::No))
+		{
+			this->close();
+		}  	
+	}
 }
 
 void ezInstaller::on_clbCancel_pressed()
@@ -1396,23 +1421,38 @@ void ezInstaller::on_clbSaveAsPdf_clicked()
 void ezInstaller::on_clbClose_clicked() {
 
 #ifdef WIN32
-	bool bReboot=scl.isRebootNeeded();
-	if(bReboot)
-	{
-		QString _title = msgbox_closeTitle;
-		QString _body = msgbox_closeReboot;
-		QString _yesButton = msgbox_yes;
-		QString _noButton = msgbox_no;
+bool bReboot=scl.isRebootNeeded();
+if(bReboot)
+{
+	QString _title = msgbox_closeTitle;
+	QString _body = msgbox_closeReboot;
+	QString _yesButton = msgbox_yes;
+	QString _noButton = msgbox_no;
 
+	if(QAccessible::isActive())
+	{
+		//returnvalues: accepted = 1, rejected = 0
+		if (0 != accessibleDialogbox::showDialogBox(_title,_body,_yesButton,_noButton,this))
+		{
+			scl.reboot();
+		}  	
+		else
+		{
+			bReboot=false;
+		}
+	} else 
+	{	//returnvalues : _yesButton=0
 		if(0==QMessageBox::question(this,_title,_body,_yesButton,_noButton,QString::null,0,1))
 		{
 			scl.reboot();
-		}
+		}  	
 		else
 		{
 			bReboot=false;
 		}
 	}
+
+}
 
 /*
 	if(!bReboot)
@@ -1431,10 +1471,34 @@ void ezInstaller::on_clbClose_clicked() {
 		QString _body = msgbox_closeReboot;
 		QString _yesButton = msgbox_yes;
 		QString _noButton = msgbox_no;
+		bool bReboot;
 
-		if(0==QMessageBox::question(this,_title,_body,_yesButton,_noButton,QString::null,0,1))
+		if(QAccessible::isActive())
 		{
-LOGSTR("Restarting")
+			//returnvalues: accepted = 1, rejected = 0
+			if (0 != accessibleDialogbox::showDialogBox(_title,_body,_yesButton,_noButton,this))
+			{
+				bReboot=true;
+			}  	
+			else
+			{
+				bReboot=false;
+			}
+		} else 
+		{	//returnvalues : _yesButton=0
+			if(0==QMessageBox::question(this,_title,_body,_yesButton,_noButton,QString::null,0,1))
+			{
+				bReboot=true;
+			}  	
+			else
+			{
+				bReboot=false;
+			}
+		}
+
+		if(bReboot==true)
+		{
+			LOGSTR("Restarting")
 			QString currdirpath = QCoreApplication::applicationDirPath();
 			std::string commandLine = "";
 			commandLine += currdirpath.toStdString();

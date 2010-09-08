@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include "ezinstaller.h"
 #include "confirmdialogbox.h"
+#include "accessibleDialogbox.h"
 
 #include "Platform.h"
 #ifdef WIN32
@@ -77,7 +78,11 @@ int main(int argc, char *argv[])
 		QString _body = "U moet Administrator zijn om deze applicatie uit te voeren.\n\nVous devez être administrateur du sysème pour exécuter cette application.";
 		QString _closeButton = "Afsluiten / Quitter";
 
-		QMessageBox::question(NULL,_title,_body,_closeButton,QString::null,QString::null,0,0);
+		//if(QAccessible::isActive()){//doesn't work before a.exec is called
+			accessibleDialogbox::showDialogBox(_title,_body,_closeButton,NULL,0);
+		//} else {
+		//	QMessageBox::question(NULL,_title,_body,_closeButton,QString::null,QString::null,0,0);	
+		//}
 		return 0;
 	}
 #else
