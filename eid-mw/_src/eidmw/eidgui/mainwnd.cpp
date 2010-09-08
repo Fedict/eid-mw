@@ -481,6 +481,7 @@ void MainWnd::createTrayMenu()
 	if (!m_pTrayIcon)
 	{
 		m_pTrayIcon = new QSystemTrayIcon( this );
+		m_pTrayIcon->setToolTip(QString("EID Viewer"));
 	}
 	m_pTrayIcon->setContextMenu( m_pTrayIconMenu );
 	if (isHidden())
@@ -571,6 +572,7 @@ MainWnd::MainWnd( GUISettings& settings, QWidget *parent )
 	//SysTray
 	//------------------------------------
 	m_pTrayIcon = new QSystemTrayIcon( this );
+	m_pTrayIcon->setToolTip(QString("EID Viewer"));
 	createTrayMenu();
 
 	connect(m_pTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
@@ -948,6 +950,12 @@ GenPur::UI_LANGUAGE MainWnd::LoadTranslationFile(GenPur::UI_LANGUAGE NewLanguage
 void MainWnd::on_tabWidget_Identity_currentChanged( int index )
 {
 	index = index;
+
+	if ((index >= 0) && (index < m_ui.tabWidget_Identity->count()))
+	{
+		QWidget *currentWidget=	m_ui.tabWidget_Identity->currentWidget();
+		m_ui.tabWidget_Identity->setAccessibleName(currentWidget->objectName());
+	}
 }
 
 void MainWnd::showEvent( QShowEvent * event )
@@ -1569,6 +1577,7 @@ void MainWnd::on_btnOCSPCheck_clicked( void )
 						QString strCertStatus = "";
 						getCertStatusText(status, strCertStatus);
 						m_ui.txtCert_Status->setText(strCertStatus);
+						m_ui.txtCert_Status->setAccessibleName(strCertStatus);
 					}
 				}
 			}
@@ -1745,14 +1754,20 @@ void MainWnd::on_treeCert_itemClicked(QTreeWidgetItem* baseItem, int column)
 	// fill in the GUI
 	//------------------------------------
 	m_ui.txtCert_Issuer->setText( item->getIssuer());
+	m_ui.txtCert_Issuer->setAccessibleName( item->getIssuer());
 	m_ui.txtCert_Owner->setText( item->getOwner());
+	m_ui.txtCert_Owner->setAccessibleName( item->getOwner());
 	m_ui.txtCert_ValidFrom->setText(item->getValidityBegin());
+	m_ui.txtCert_ValidFrom->setAccessibleName(item->getValidityBegin());
 	m_ui.txtCert_ValidUntil->setText(item->getValidityEnd());
+	m_ui.txtCert_ValidUntil->setAccessibleName(item->getValidityEnd());
 	m_ui.txtCert_KeyLenght->setText(item->getKeyLen());
+	m_ui.txtCert_KeyLenght->setAccessibleName(item->getKeyLen());
 
 	QString strCertStatus;
 	getCertStatusText(item->getOcspStatus(), strCertStatus);
 	m_ui.txtCert_Status->setText(strCertStatus);
+	m_ui.txtCert_Status->setAccessibleName(strCertStatus);
 
 	if(!ReaderContext.isCardPresent())
 	{
@@ -1820,8 +1835,11 @@ void MainWnd::on_treePIN_itemClicked(QTreeWidgetItem* item, int column)
 			// fill in the fields
 			//------------------------------------
 			m_ui.txtPIN_Name->setText(CurrPinName);
+			m_ui.txtPIN_Name->setAccessibleName(CurrPinName);
 			m_ui.txtPIN_ID->setText(PINId);
+			m_ui.txtPIN_ID->setAccessibleName(PINId);
 			m_ui.txtPIN_Status->setText(PINStatus);
+			m_ui.txtPIN_Status->setAccessibleName(PINStatus);
 			setEnabledPinButtons(true);
 
 			break;
@@ -2757,6 +2775,7 @@ void MainWnd::on_actionPINRequest_triggered()
 							msg += "( ";
 							msg += tr("Number of tries left: ") + nrTriesLeft + " )";
 							m_ui.txtPIN_Status->setText(msg);
+							m_ui.txtPIN_Status->setAccessibleName(msg);
 						}
 						else
 						{
@@ -2768,6 +2787,7 @@ void MainWnd::on_actionPINRequest_triggered()
  						QString nrTriesLeft;
  						nrTriesLeft.setNum(triesLeft);
  						m_ui.txtPIN_Status->setText(tr("Not available"));
+						m_ui.txtPIN_Status->setAccessibleName(tr("Not available"));
  					}
 					QMessageBox::information( this, caption,  msg, QMessageBox::Ok );
 					break;
@@ -2847,6 +2867,7 @@ void MainWnd::on_actionPINChange_triggered()
 							QString nrTriesLeft;nrTriesLeft.setNum(triesLeft);
 							msg += tr("\n( Number of tries left: ") + nrTriesLeft + " )";
 							m_ui.txtPIN_Status->setText(msg);
+							m_ui.txtPIN_Status->setAccessibleName(msg);
 						}
 						else
 						{
@@ -3644,7 +3665,9 @@ void MainWnd::setStatus( unsigned int Status )
 	}
 
 	m_ui.txtSpecialStatus->setText( tmp );
+	m_ui.txtSpecialStatus->setAccessibleName( tmp );
 	m_ui.txtForeignerSpecialStatus->setText( tmp );
+	m_ui.txtForeignerSpecialStatus->setAccessibleName( tmp );
 }
 
 //**************************************************
@@ -4425,16 +4448,23 @@ void MainWnd::refreshTabIdentity( void )
 	tFieldMap& PersonFields = m_CI_Data.m_PersonInfo.getFields();
 
 	m_ui.txtIdentity_Name->setText		 ( PersonFields[NAME] );
+	m_ui.txtIdentity_Name->setAccessibleName ( PersonFields[NAME] );
 	m_ui.txtIdentity_GivenNames->setText ( PersonFields[FIRSTNAME] );
+	m_ui.txtIdentity_GivenNames->setAccessibleName ( PersonFields[FIRSTNAME] );
 	m_ui.txtIdentity_Nationality->setText( PersonFields[NATIONALITY] );
+	m_ui.txtIdentity_Nationality->setAccessibleName( PersonFields[NATIONALITY] );
 	m_ui.txtIdentity_BirthPlace->setText ( PersonFields[BIRTHPLACE] + " " + PersonFields[BIRTHDATE] );
+	m_ui.txtIdentity_BirthPlace->setAccessibleName ( PersonFields[BIRTHPLACE] + " " + PersonFields[BIRTHDATE] );
 	m_ui.txtIdentity_Sex->setText        ( PersonFields[SEX] );
+	m_ui.txtIdentity_Sex->setAccessibleName ( PersonFields[SEX] );
 
 	tFieldMap& CardFields = m_CI_Data.m_CardInfo.getFields();
 
 	QString cardNumber = m_CI_Data.m_CardInfo.formatCardNumber(CardFields[CARD_NUMBER],m_CI_Data.m_pCard->getType());
 	m_ui.txtIdentity_Card_Number->setText	 ( cardNumber );
+	m_ui.txtIdentity_Card_Number->setAccessibleName	 ( cardNumber );
 	m_ui.txtIdentity_ValidFrom_Until->setText( CardFields[CARD_VALIDFROM] + " - " + CardFields[CARD_VALIDUNTIL] );
+	m_ui.txtIdentity_ValidFrom_Until->setAccessibleName( CardFields[CARD_VALIDFROM] + " - " + CardFields[CARD_VALIDUNTIL] );
 }
 
 //*****************************************************
@@ -4445,19 +4475,25 @@ void MainWnd::refreshTabIdentityExtra()
 	tFieldMap& CardFields = m_CI_Data.m_CardInfo.getFields();
 
 	m_ui.txtIdentityExtra_PlaceOfIssue->setText	( CardFields[CARD_PLACEOFISSUE] );
+	m_ui.txtIdentityExtra_PlaceOfIssue->setAccessibleName	( CardFields[CARD_PLACEOFISSUE] );
 	m_ui.txtIdentityExtra_ChipNumber->setText	( CardFields[CHIP_NUMBER] );
+	m_ui.txtIdentityExtra_ChipNumber->setAccessibleName	( CardFields[CHIP_NUMBER] );
 
 	QString cardNumber = m_CI_Data.m_CardInfo.formatCardNumber(CardFields[CARD_NUMBER],m_CI_Data.m_CardInfo.getType());
 
 	m_ui.txtIdentityExtra_Card_Number->setText	( cardNumber );
+	m_ui.txtIdentityExtra_Card_Number->setAccessibleName	( cardNumber );
 
 	tFieldMap& PersonFields = m_CI_Data.m_PersonInfo.getFields();
 
 	QString nationalNumber = m_CI_Data.m_PersonInfo.formatNationalNumber( PersonFields[NATIONALNUMBER],m_CI_Data.m_CardInfo.getType() );
 
 	m_ui.txtIdentityExtra_NationalNumber->setText( nationalNumber );
-	m_ui.txtIdentityExtra_Title->setText		 ( PersonFields[TITLE] );
+	m_ui.txtIdentityExtra_NationalNumber->setAccessibleName( nationalNumber );
+	m_ui.txtIdentityExtra_Title->setText( PersonFields[TITLE] );
+	m_ui.txtIdentityExtra_Title->setAccessibleName( PersonFields[TITLE] );
 	m_ui.txtIdentityExtra_ValidFrom_Until->setText( CardFields[CARD_VALIDFROM] + " - " + CardFields[CARD_VALIDUNTIL] );
+	m_ui.txtIdentityExtra_ValidFrom_Until->setAccessibleName( CardFields[CARD_VALIDFROM] + " - " + CardFields[CARD_VALIDUNTIL] );
 
 	tFieldMap& PersonExtraFields = m_CI_Data.m_PersonInfo.m_PersonExtraInfo.getFields();
 	
@@ -4470,37 +4506,48 @@ void MainWnd::refreshTabIdentityExtra()
 	SpecialStatus["5"] = tr("yellow cane/extended minority");
 
 	m_ui.txtSpecialStatus->setText(SpecialStatus[PersonExtraFields[SPECIALSTATUS]]);
+	m_ui.txtSpecialStatus->setAccessibleName(SpecialStatus[PersonExtraFields[SPECIALSTATUS]]);
 
 	tFieldMap& AddressFields = m_CI_Data.m_PersonInfo.m_AddressInfo.getFields();
 
 	m_ui.txtIdentityExtra_Adress_Street->setText	( AddressFields[ADDRESS_STREET] );
+	m_ui.txtIdentityExtra_Adress_Street->setAccessibleName	( AddressFields[ADDRESS_STREET] );
 	m_ui.txtIdentityExtra_Adress_PostalCode->setText( AddressFields[ADDRESS_ZIPCODE] );
+	m_ui.txtIdentityExtra_Adress_PostalCode->setAccessibleName( AddressFields[ADDRESS_ZIPCODE] );
 	m_ui.txtIdentityExtra_Adress_Muncipality->setText( AddressFields[ADDRESS_CITY] );
+	m_ui.txtIdentityExtra_Adress_Muncipality->setAccessibleName( AddressFields[ADDRESS_CITY] );
 	m_ui.txtIdentityExtra_Adress_Country->setText	( AddressFields[ADDRESS_COUNTRY] );
+	m_ui.txtIdentityExtra_Adress_Country->setAccessibleName	( AddressFields[ADDRESS_COUNTRY] );
 
 	tFieldMap& MiscFields = m_CI_Data.m_MiscInfo.getFields();
 
 	QStringList Remarks = fillRemarksField(MiscFields);
 
 	m_ui.txtIdentityExtra_Remarks1->setText("");
+	m_ui.txtIdentityExtra_Remarks1->setAccessibleName("");
 	m_ui.txtIdentityExtra_Remarks2->setText("");
+	m_ui.txtIdentityExtra_Remarks2->setAccessibleName("");
 	m_ui.txtIdentityExtra_Remarks3->setText("");
+	m_ui.txtIdentityExtra_Remarks3->setAccessibleName("");
 
 	int idx=0;
 	int FieldCnt = Remarks.size();
 	if (FieldCnt>0)
 	{
 		m_ui.txtIdentityExtra_Remarks1->setText(Remarks[idx++]);
+		m_ui.txtIdentityExtra_Remarks1->setAccessibleName(Remarks[idx++]);
 		FieldCnt--;
 	}
 	if (FieldCnt>0)
 	{
 		m_ui.txtIdentityExtra_Remarks2->setText(Remarks[idx++]);
+		m_ui.txtIdentityExtra_Remarks2->setAccessibleName(Remarks[idx++]);
 		FieldCnt--;
 	}
 	if (FieldCnt>0)
 	{
 		m_ui.txtIdentityExtra_Remarks3->setText(Remarks[idx++]);
+		m_ui.txtIdentityExtra_Remarks3->setAccessibleName(Remarks[idx++]);
 		FieldCnt--;
 	}
 
@@ -4601,18 +4648,23 @@ void MainWnd::refreshTabForeigners( void )
 	tFieldMap& PersonFields = m_CI_Data.m_PersonInfo.getFields();
 
 	m_ui.txtForeigners_Name->setText		( PersonFields[NAME] );
+	m_ui.txtForeigners_Name->setAccessibleName( PersonFields[NAME] );
 	m_ui.txtForeigners_GivenNames->setText	( PersonFields[FIRSTNAME] );
+	m_ui.txtForeigners_GivenNames->setAccessibleName( PersonFields[FIRSTNAME] );
 
 	tFieldMap& CardFields = m_CI_Data.m_CardInfo.getFields();
 
 	QString cardNumber = m_CI_Data.m_CardInfo.formatCardNumber(CardFields[CARD_NUMBER],m_CI_Data.m_CardInfo.getType());
 
 	m_ui.txtForeigners_Card_Number->setText ( cardNumber );
+	m_ui.txtForeigners_Card_Number->setAccessibleName ( cardNumber );
 	QString cardTypeText = GetCardTypeText(CardFields[CARD_TYPE]);
 	m_ui.txtForeigners_CardType->setText    ( cardTypeText );
+	m_ui.txtForeigners_CardType->setAccessibleName( cardTypeText );
 	m_ui.txtForeigners_ValidTot->setText    ( CardFields[CARD_VALIDUNTIL] );
+	m_ui.txtForeigners_ValidTot->setAccessibleName( CardFields[CARD_VALIDUNTIL] );
 	m_ui.txtForeigners_PlaceOfIssue->setText( CardFields[CARD_PLACEOFISSUE] + " " + CardFields[CARD_VALIDFROM]);
-
+	m_ui.txtForeigners_PlaceOfIssue->setAccessibleName( CardFields[CARD_PLACEOFISSUE] + " " + CardFields[CARD_VALIDFROM]);
 }
 
 //*****************************************************
@@ -4623,47 +4675,62 @@ void MainWnd::refreshTabForeignersExtra( void )
 	tFieldMap& PersonFields = m_CI_Data.m_PersonInfo.getFields();
 
 	m_ui.txtForeignersExtra_BirthDate->setText		( PersonFields[BIRTHDATE] + " " + PersonFields[BIRTHPLACE]);
+	m_ui.txtForeignersExtra_BirthDate->setAccessibleName ( PersonFields[BIRTHDATE] + " " + PersonFields[BIRTHPLACE]);
 	m_ui.txtForeignersExtra_Nationality->setText	( PersonFields[NATIONALITY] );
+	m_ui.txtForeignersExtra_Nationality->setAccessibleName( PersonFields[NATIONALITY] );
 	m_ui.txtForeignersExtra_Sex->setText			( PersonFields[SEX] );
+	m_ui.txtForeignersExtra_Sex->setAccessibleName	( PersonFields[SEX] );
 
 	QString nationalNumber = m_CI_Data.m_PersonInfo.formatNationalNumber(PersonFields[NATIONALNUMBER],m_CI_Data.m_CardInfo.getType());
 	m_ui.txtForeignersExtra_NationalNumber->setText ( nationalNumber );
+	m_ui.txtForeignersExtra_NationalNumber->setAccessibleName ( nationalNumber );
 
 	tFieldMap& AddressFields = m_CI_Data.m_PersonInfo.m_AddressInfo.getFields();
 
 	m_ui.txtForeignersExtra_Adress_Street->setText	( AddressFields[ADDRESS_STREET] );
+	m_ui.txtForeignersExtra_Adress_Street->setAccessibleName( AddressFields[ADDRESS_STREET] );
 	m_ui.txtForeignersExtra_Adress_PostalCode->setText( AddressFields[ADDRESS_ZIPCODE] );
+	m_ui.txtForeignersExtra_Adress_PostalCode->setAccessibleName( AddressFields[ADDRESS_ZIPCODE] );
 	m_ui.txtForeignersExtra_Adress_Muncipality->setText( AddressFields[ADDRESS_CITY] );
+	m_ui.txtForeignersExtra_Adress_Muncipality->setAccessibleName( AddressFields[ADDRESS_CITY] );
 	m_ui.txtForeignersExtra_Adress_Country->setText	( AddressFields[ADDRESS_COUNTRY] );
+	m_ui.txtForeignersExtra_Adress_Country->setAccessibleName( AddressFields[ADDRESS_COUNTRY] );
 
 	tFieldMap& MiscFields = m_CI_Data.m_MiscInfo.getFields();
 
 	QStringList Remarks = fillRemarksField(MiscFields);
 
 	m_ui.txtForeignersExtra_Remarks1->setText("");
+	m_ui.txtForeignersExtra_Remarks1->setAccessibleName("");
 	m_ui.txtForeignersExtra_Remarks2->setText("");
+	m_ui.txtForeignersExtra_Remarks2->setAccessibleName("");
 	m_ui.txtForeignersExtra_Remarks3->setText("");
+	m_ui.txtForeignersExtra_Remarks3->setAccessibleName("");
 
 	int idx=0;
 	int FieldCnt = Remarks.size();
 	if (FieldCnt>0)
 	{
 		m_ui.txtForeignersExtra_Remarks1->setText(Remarks[idx++]);
+		m_ui.txtForeignersExtra_Remarks1->setAccessibleName(Remarks[idx++]);
 		FieldCnt--;
 	}
 	if (FieldCnt>0)
 	{
 		m_ui.txtForeignersExtra_Remarks2->setText(Remarks[idx++]);
+		m_ui.txtForeignersExtra_Remarks2->setAccessibleName(Remarks[idx++]);
 		FieldCnt--;
 	}
 	if (FieldCnt>0)
 	{
 		m_ui.txtForeignersExtra_Remarks3->setText(Remarks[idx++]);
+		m_ui.txtForeignersExtra_Remarks3->setAccessibleName(Remarks[idx++]);
 		FieldCnt--;
 	}
 
 	tFieldMap& CardFields = m_CI_Data.m_CardInfo.getFields();
 	m_ui.txtForeignersExtra_ChipNumber->setText( CardFields[CHIP_NUMBER] );
+	m_ui.txtForeignersExtra_ChipNumber->setAccessibleName( CardFields[CHIP_NUMBER] );
 
 	tFieldMap& PersonExtraFields = m_CI_Data.m_PersonInfo.m_PersonExtraInfo.getFields();
 
@@ -4676,6 +4743,7 @@ void MainWnd::refreshTabForeignersExtra( void )
 	SpecialStatus["5"] = tr("yellow cane/extended minority");
 
 	m_ui.txtForeignerSpecialStatus->setText(SpecialStatus[PersonExtraFields[SPECIALSTATUS]]);
+	m_ui.txtForeignerSpecialStatus->setAccessibleName(SpecialStatus[PersonExtraFields[SPECIALSTATUS]]);
 
 }
 
@@ -4688,6 +4756,7 @@ void MainWnd::refreshTabSis( void )
 	QString FirstName;
 
 	m_ui.txtSis_Name->setText			( PersonFields[NAME] );
+	m_ui.txtSis_Name->setAccessibleName	( PersonFields[NAME] );
 
 	FirstName=PersonFields[FIRSTNAME];
 	if(PersonFields[INITIALS]!="")
@@ -4696,19 +4765,22 @@ void MainWnd::refreshTabSis( void )
 		FirstName+=PersonFields[INITIALS];
 	}
 	m_ui.txtSis_GivenNames->setText		( FirstName );
-
+	m_ui.txtSis_GivenNames->setAccessibleName		( FirstName );
 	m_ui.txtSis_BirthDate->setText		( PersonFields[BIRTHDATE] );
-
+	m_ui.txtSis_BirthDate->setAccessibleName		( PersonFields[BIRTHDATE] );
 	tFieldMap& PersonExtraFields = m_CI_Data.m_PersonInfo.m_PersonExtraInfo.getFields();
 
 	m_ui.txtSis_SocialSecurityNumber->setText( PersonExtraFields[SOCIALSECURITYNUMBER] );
+	m_ui.txtSis_SocialSecurityNumber->setAccessibleName( PersonExtraFields[SOCIALSECURITYNUMBER] );
 
 	tFieldMap& CardFields = m_CI_Data.m_CardInfo.getFields();
 
 	QString cardNumber = m_CI_Data.m_CardInfo.formatCardNumber(CardFields[CARD_NUMBER],m_CI_Data.m_CardInfo.getType());
 
 	m_ui.txtSis_LogicalNumber->setText	( cardNumber );
+	m_ui.txtSis_LogicalNumber->setAccessibleName	( cardNumber );
 	m_ui.txtSis_ValidFrom->setText		( CardFields[CARD_VALIDFROM] );
+	m_ui.txtSis_ValidFrom->setAccessibleName		( CardFields[CARD_VALIDFROM] );
 
 	if (m_CI_Data.m_PersonInfo.isFemale())
 	{
@@ -4733,6 +4805,7 @@ void MainWnd::refreshTabSisExtra( void )
 {
 	tFieldMap& CardFields = m_CI_Data.m_CardInfo.getFields();
 	m_ui.txtSisExtra_ValidFrom_Until->setText( CardFields[CARD_VALIDFROM] + " - " + CardFields[CARD_VALIDUNTIL] );
+	m_ui.txtSisExtra_ValidFrom_Until->setAccessibleName( CardFields[CARD_VALIDFROM] + " - " + CardFields[CARD_VALIDUNTIL] );
 }
 
 //*****************************************************
@@ -4743,11 +4816,17 @@ void MainWnd::clearTabCertificates( void )
 	m_ui.treeCert->clear();
 
 	m_ui.txtCert_Owner->setText( "" );
+	m_ui.txtCert_Owner->setAccessibleName( "" );
 	m_ui.txtCert_Issuer->setText( "" );
+	m_ui.txtCert_Issuer->setAccessibleName( "" );
 	m_ui.txtCert_ValidFrom->setText( "" );
+	m_ui.txtCert_ValidFrom->setAccessibleName( "" );
 	m_ui.txtCert_ValidUntil->setText( "" );
+	m_ui.txtCert_ValidUntil->setAccessibleName( "" );
 	m_ui.txtCert_KeyLenght->setText( "" );
+	m_ui.txtCert_KeyLenght->setAccessibleName( "" );
 	m_ui.txtCert_Status->setText( "" );
+	m_ui.txtCert_Status->setAccessibleName( "" );
 }
 
 //*****************************************************
@@ -4758,8 +4837,11 @@ void MainWnd::clearTabPins( void )
 	m_ui.treePIN->clear();
 
 	m_ui.txtPIN_Name->setText( "" );
+	m_ui.txtPIN_Name->setAccessibleName( "" );
 	m_ui.txtPIN_ID->setText( "" );
+	m_ui.txtPIN_ID->setAccessibleName( "" );
 	m_ui.txtPIN_Status->setText( "" );
+	m_ui.txtPIN_Status->setAccessibleName( "" );
 }
 
 
@@ -4805,6 +4887,7 @@ void MainWnd::refreshTabCardPin( void )
 					BEID_EIDCard&		Card		   = ReaderContext.getEIDCard();
 					fillCardVersionInfo( Card );
 					m_ui.txtPIN_Status->setText(tr("Not available"));
+					m_ui.txtPIN_Status->setAccessibleName(tr("Not available"));
 				}
 			case BEID_CARDTYPE_SIS:
 			case BEID_CARDTYPE_UNKNOWN:

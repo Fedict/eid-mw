@@ -1,47 +1,48 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>MainWnd</class>
- <widget class="QMainWindow" name="MainWnd" >
-  <property name="windowModality" >
+ <widget class="QMainWindow" name="MainWnd">
+  <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
-  <property name="geometry" >
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>616</height>
+    <height>619</height>
    </rect>
   </property>
-  <property name="sizePolicy" >
-   <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>eid</string>
   </property>
-  <property name="autoFillBackground" >
+  <property name="autoFillBackground">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="centralwidget" >
-   <layout class="QGridLayout" >
-    <item row="0" column="0" >
-     <widget class="QStackedWidget" name="stackedWidget" >
-      <property name="currentIndex" >
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout">
+    <item row="0" column="0">
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
        <number>1</number>
       </property>
-      <widget class="QWidget" name="page" >
-       <layout class="QVBoxLayout" >
+      <widget class="QWidget" name="page">
+       <layout class="QVBoxLayout">
         <item>
-         <widget class="QWidget" native="1" name="SplashWidget" >
-          <layout class="QGridLayout" >
-           <item row="0" column="1" >
+         <widget class="QWidget" name="SplashWidget" native="true">
+          <layout class="QGridLayout">
+           <item row="0" column="1">
             <spacer>
-             <property name="orientation" >
+             <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
-             <property name="sizeHint" >
+             <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
                <height>40</height>
@@ -49,12 +50,12 @@
              </property>
             </spacer>
            </item>
-           <item row="1" column="0" >
+           <item row="1" column="0">
             <spacer>
-             <property name="orientation" >
+             <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
-             <property name="sizeHint" >
+             <property name="sizeHint" stdset="0">
               <size>
                <width>40</width>
                <height>20</height>
@@ -62,40 +63,40 @@
              </property>
             </spacer>
            </item>
-           <item row="1" column="1" >
-            <widget class="QLabel" name="lblSplashImg_4" >
-             <property name="sizePolicy" >
-              <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+           <item row="1" column="1">
+            <widget class="QLabel" name="lblSplashImg_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="minimumSize" >
+             <property name="minimumSize">
               <size>
                <width>128</width>
                <height>92</height>
               </size>
              </property>
-             <property name="frameShape" >
+             <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
              </property>
-             <property name="text" >
+             <property name="text">
               <string/>
              </property>
-             <property name="pixmap" >
-              <pixmap resource="eidgui.qrc" >:/images/Images/a-z_identiteitskaart_logo.png</pixmap>
+             <property name="pixmap">
+              <pixmap resource="eidgui.qrc">:/images/Images/a-z_identiteitskaart_logo.png</pixmap>
              </property>
-             <property name="alignment" >
+             <property name="alignment">
               <set>Qt::AlignCenter|Qt::AlignHCenter|Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
-           <item row="1" column="2" >
+           <item row="1" column="2">
             <spacer>
-             <property name="orientation" >
+             <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
-             <property name="sizeHint" >
+             <property name="sizeHint" stdset="0">
               <size>
                <width>40</width>
                <height>20</height>
@@ -103,12 +104,12 @@
              </property>
             </spacer>
            </item>
-           <item row="2" column="1" >
+           <item row="2" column="1">
             <spacer>
-             <property name="orientation" >
+             <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
-             <property name="sizeHint" >
+             <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
                <height>40</height>
@@ -121,37 +122,49 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_2" >
-       <layout class="QVBoxLayout" >
+      <widget class="QWidget" name="page_2">
+       <layout class="QVBoxLayout">
         <item>
-         <widget class="QTabWidget" name="tabWidget_Identity" >
-          <property name="sizePolicy" >
-           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+         <widget class="QTabWidget" name="tabWidget_Identity">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="sizeIncrement" >
+          <property name="sizeIncrement">
            <size>
             <width>0</width>
             <height>0</height>
            </size>
           </property>
-          <property name="font" >
+          <property name="font">
            <font/>
           </property>
-          <property name="tabShape" >
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="accessibleName">
+           <string>card contents</string>
+          </property>
+          <property name="tabShape">
            <enum>QTabWidget::Rounded</enum>
           </property>
-          <property name="currentIndex" >
-           <number>4</number>
+          <property name="currentIndex">
+           <number>3</number>
           </property>
-          <widget class="QWidget" name="tabIdentity" >
-           <attribute name="title" >
+          <widget class="QWidget" name="tabIdentity">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="accessibleName">
+            <string>Tab Identity</string>
+           </property>
+           <attribute name="title">
             <string>&amp;Identity</string>
            </attribute>
-           <widget class="QLabel" name="lblIdentity_Head2_2" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Head2_2">
+            <property name="geometry">
              <rect>
               <x>197</x>
               <y>32</y>
@@ -159,18 +172,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>txtIdentityCard_2</string>
             </property>
-            <property name="textFormat" >
+            <property name="textFormat">
              <enum>Qt::PlainText</enum>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Head2_4" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Head2_4">
+            <property name="geometry">
              <rect>
               <x>570</x>
               <y>32</y>
@@ -178,18 +191,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>txtIdentityCard_4</string>
             </property>
-            <property name="textFormat" >
+            <property name="textFormat">
              <enum>Qt::PlainText</enum>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Head2_1" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Head2_1">
+            <property name="geometry">
              <rect>
               <x>10</x>
               <y>32</y>
@@ -197,18 +210,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>txtIdentityCard_1</string>
             </property>
-            <property name="textFormat" >
+            <property name="textFormat">
              <enum>Qt::PlainText</enum>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Head1_2" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Head1_2">
+            <property name="geometry">
              <rect>
               <x>200</x>
               <y>0</y>
@@ -216,18 +229,18 @@
               <height>30</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>txtCountry_2</string>
             </property>
-            <property name="textFormat" >
+            <property name="textFormat">
              <enum>Qt::PlainText</enum>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Head1_3" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Head1_3">
+            <property name="geometry">
              <rect>
               <x>380</x>
               <y>0</y>
@@ -235,18 +248,18 @@
               <height>30</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>txtCountry_3</string>
             </property>
-            <property name="textFormat" >
+            <property name="textFormat">
              <enum>Qt::PlainText</enum>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Head1_4" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Head1_4">
+            <property name="geometry">
              <rect>
               <x>570</x>
               <y>0</y>
@@ -254,18 +267,18 @@
               <height>30</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>txtCountry_4</string>
             </property>
-            <property name="textFormat" >
+            <property name="textFormat">
              <enum>Qt::PlainText</enum>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Head2_3" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Head2_3">
+            <property name="geometry">
              <rect>
               <x>383</x>
               <y>32</y>
@@ -273,18 +286,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>txtIdentityCard_3</string>
             </property>
-            <property name="textFormat" >
+            <property name="textFormat">
              <enum>Qt::PlainText</enum>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentity_Name" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentity_Name">
+            <property name="geometry">
              <rect>
               <x>222</x>
               <y>79</y>
@@ -292,18 +305,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_GivenNames" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_GivenNames">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>101</y>
@@ -311,15 +324,15 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
-             <string>Voornamen / &lt;i>Given names&lt;/i></string>
+            <property name="text">
+             <string>Voornamen / &lt;i&gt;Given names&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentity_GivenNames" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentity_GivenNames">
+            <property name="geometry">
              <rect>
               <x>222</x>
               <y>101</y>
@@ -327,21 +340,21 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading</set>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_BirthPlace" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_BirthPlace">
+            <property name="geometry">
              <rect>
               <x>222</x>
               <y>123</y>
@@ -349,15 +362,15 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
-             <string>Geboorteplaats en -datum / &lt;i>Place and date of Birth&lt;/i></string>
+            <property name="text">
+             <string>Geboorteplaats en -datum / &lt;i&gt;Place and date of Birth&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentity_BirthPlace" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentity_BirthPlace">
+            <property name="geometry">
              <rect>
               <x>222</x>
               <y>151</y>
@@ -365,18 +378,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Card_Number" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Card_Number">
+            <property name="geometry">
              <rect>
               <x>224</x>
               <y>210</y>
@@ -384,15 +397,15 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
-             <string>Kaartnr. / &lt;i>Card No&lt;/i></string>
+            <property name="text">
+             <string>Kaartnr. / &lt;i&gt;Card No&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentity_Card_Number" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentity_Card_Number">
+            <property name="geometry">
              <rect>
               <x>224</x>
               <y>230</y>
@@ -400,18 +413,18 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_ValidFrom_Until" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_ValidFrom_Until">
+            <property name="geometry">
              <rect>
               <x>10</x>
               <y>347</y>
@@ -419,12 +432,12 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="text" >
-             <string>Geldig van - tot / &lt;i>Valid from - until&lt;/i></string>
+            <property name="text">
+             <string>Geldig van - tot / &lt;i&gt;Valid from - until&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentity_ValidFrom_Until" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentity_ValidFrom_Until">
+            <property name="geometry">
              <rect>
               <x>10</x>
               <y>367</y>
@@ -432,21 +445,21 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="minimumSize" >
+            <property name="minimumSize">
              <size>
               <width>240</width>
               <height>0</height>
              </size>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Parents" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Parents">
+            <property name="geometry">
              <rect>
               <x>10</x>
               <y>389</y>
@@ -454,12 +467,12 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="text" >
-             <string>Ouders / &lt;i>Parents&lt;/i></string>
+            <property name="text">
+             <string>Ouders / &lt;i&gt;Parents&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Parents_2" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Parents_2">
+            <property name="geometry">
              <rect>
               <x>10</x>
               <y>409</y>
@@ -467,30 +480,30 @@
               <height>23</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Information not available</string>
             </property>
-            <property name="scaledContents" >
+            <property name="scaledContents">
              <bool>true</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Head1_1" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Head1_1">
+            <property name="geometry">
              <rect>
               <x>10</x>
               <y>0</y>
@@ -498,18 +511,18 @@
               <height>30</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>txtCountry_1</string>
             </property>
-            <property name="textFormat" >
+            <property name="textFormat">
              <enum>Qt::PlainText</enum>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentity_Nationality" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentity_Nationality">
+            <property name="geometry">
              <rect>
               <x>290</x>
               <y>170</y>
@@ -517,18 +530,18 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Sex" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Sex">
+            <property name="geometry">
              <rect>
               <x>650</x>
               <y>120</y>
@@ -536,15 +549,15 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="text" >
-             <string>Geslacht / &lt;i>Sex&lt;/i> </string>
+            <property name="text">
+             <string>Geslacht / &lt;i&gt;Sex&lt;/i&gt; </string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentity_Sex" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentity_Sex">
+            <property name="geometry">
              <rect>
               <x>645</x>
               <y>151</y>
@@ -552,18 +565,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Name" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Name">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>79</y>
@@ -571,18 +584,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="text" >
-             <string>Naam / &lt;i>Name&lt;/i></string>
+            <property name="text">
+             <string>Naam / &lt;i&gt;Name&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Nationality" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Nationality">
+            <property name="geometry">
              <rect>
               <x>222</x>
               <y>175</y>
@@ -590,18 +603,18 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="text" >
-             <string>Nationaliteit&lt;br>&lt;i>Nationality&lt;/i></string>
+            <property name="text">
+             <string>Nationaliteit&lt;br&gt;&lt;i&gt;Nationality&lt;/i&gt;</string>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_ImgPerson" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_ImgPerson">
+            <property name="geometry">
              <rect>
               <x>590</x>
               <y>210</y>
@@ -609,41 +622,47 @@
               <height>224</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize" >
+            <property name="minimumSize">
              <size>
               <width>140</width>
               <height>200</height>
              </size>
             </property>
-            <property name="autoFillBackground" >
+            <property name="autoFillBackground">
              <bool>false</bool>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string/>
             </property>
-            <property name="scaledContents" >
+            <property name="scaledContents">
              <bool>true</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </widget>
-          <widget class="QWidget" name="tabForeigners" >
-           <attribute name="title" >
+          <widget class="QWidget" name="tabForeigners">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="accessibleName">
+            <string>Tab Foreigners</string>
+           </property>
+           <attribute name="title">
             <string>Foreigners</string>
            </attribute>
-           <widget class="QLineEdit" name="txtForeigners_Card_Number" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeigners_Card_Number">
+            <property name="geometry">
              <rect>
               <x>463</x>
               <y>11</y>
@@ -651,24 +670,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="font" >
+            <property name="font">
              <font/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="label" >
-            <property name="geometry" >
+           <widget class="QLabel" name="label">
+            <property name="geometry">
              <rect>
               <x>37</x>
               <y>61</y>
@@ -676,12 +695,12 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Name</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeigners_Name" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeigners_Name">
+            <property name="geometry">
              <rect>
               <x>219</x>
               <y>63</y>
@@ -689,21 +708,21 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>1</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeigners_GivenNames" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeigners_GivenNames">
+            <property name="geometry">
              <rect>
               <x>219</x>
               <y>89</y>
@@ -711,24 +730,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading</set>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="label_2" >
-            <property name="geometry" >
+           <widget class="QLabel" name="label_2">
+            <property name="geometry">
              <rect>
               <x>37</x>
               <y>113</y>
@@ -736,12 +755,12 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Valid until</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeigners_ValidTot" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeigners_ValidTot">
+            <property name="geometry">
              <rect>
               <x>219</x>
               <y>115</y>
@@ -749,21 +768,21 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="label_3" >
-            <property name="geometry" >
+           <widget class="QLabel" name="label_3">
+            <property name="geometry">
              <rect>
               <x>37</x>
               <y>139</y>
@@ -771,12 +790,12 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Issuing place and begin of validity</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeigners_PlaceOfIssue" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeigners_PlaceOfIssue">
+            <property name="geometry">
              <rect>
               <x>260</x>
               <y>141</y>
@@ -784,21 +803,21 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="label_4" >
-            <property name="geometry" >
+           <widget class="QLabel" name="label_4">
+            <property name="geometry">
              <rect>
               <x>219</x>
               <y>165</y>
@@ -806,12 +825,12 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Type of title</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeigners_ImgPerson" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeigners_ImgPerson">
+            <property name="geometry">
              <rect>
               <x>63</x>
               <y>191</y>
@@ -819,33 +838,33 @@
               <height>270</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize" >
+            <property name="minimumSize">
              <size>
               <width>150</width>
               <height>270</height>
              </size>
             </property>
-            <property name="frameShape" >
+            <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="text" >
+            <property name="text">
              <string/>
             </property>
-            <property name="scaledContents" >
+            <property name="scaledContents">
              <bool>true</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeigners_CardType" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeigners_CardType">
+            <property name="geometry">
              <rect>
               <x>219</x>
               <y>193</y>
@@ -853,21 +872,21 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeigners_Footer_1" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeigners_Footer_1">
+            <property name="geometry">
              <rect>
               <x>219</x>
               <y>413</y>
@@ -875,18 +894,18 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Belgische verblijfstitel - Titre de séjour belge</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeigners_Footer_2" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeigners_Footer_2">
+            <property name="geometry">
              <rect>
               <x>219</x>
               <y>439</y>
@@ -894,23 +913,29 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Belgischer Aufenthaltstitel - Belgian residence permit</string>
             </property>
            </widget>
           </widget>
-          <widget class="QWidget" name="tabSis" >
-           <attribute name="title" >
+          <widget class="QWidget" name="tabSis">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="accessibleName">
+            <string>Tab Sis</string>
+           </property>
+           <attribute name="title">
             <string>Sis</string>
            </attribute>
-           <widget class="QLineEdit" name="txtSis_SocialSecurityNumber" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtSis_SocialSecurityNumber">
+            <property name="geometry">
              <rect>
               <x>286</x>
               <y>71</y>
@@ -918,18 +943,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading</set>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtSis_Name" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtSis_Name">
+            <property name="geometry">
              <rect>
               <x>286</x>
               <y>155</y>
@@ -937,15 +962,15 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtSis_GivenNames" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtSis_GivenNames">
+            <property name="geometry">
              <rect>
               <x>286</x>
               <y>177</y>
@@ -953,18 +978,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading</set>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtSis_BirthDate" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtSis_BirthDate">
+            <property name="geometry">
              <rect>
               <x>286</x>
               <y>201</y>
@@ -972,18 +997,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading</set>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblSis_Sex" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblSis_Sex">
+            <property name="geometry">
              <rect>
               <x>444</x>
               <y>199</y>
@@ -991,30 +1016,30 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="maximumSize" >
+            <property name="maximumSize">
              <size>
               <width>20</width>
               <height>20</height>
              </size>
             </property>
-            <property name="pixmap" >
-             <pixmap resource="eidgui.qrc" >:/images/Images/Male.png</pixmap>
+            <property name="pixmap">
+             <pixmap resource="eidgui.qrc">:/images/Images/Male.png</pixmap>
             </property>
-            <property name="scaledContents" >
+            <property name="scaledContents">
              <bool>true</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtSis_LogicalNumber" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtSis_LogicalNumber">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>374</y>
@@ -1022,18 +1047,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading</set>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtSis_ValidFrom" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtSis_ValidFrom">
+            <property name="geometry">
              <rect>
               <x>566</x>
               <y>374</y>
@@ -1041,23 +1066,29 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading</set>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </widget>
-          <widget class="QWidget" name="tabIdentity_extention" >
-           <attribute name="title" >
+          <widget class="QWidget" name="tabIdentity_extention">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="accessibleName">
+            <string>Tab Identity Extra</string>
+           </property>
+           <attribute name="title">
             <string>Identity &amp;Extra</string>
            </attribute>
-           <widget class="QLabel" name="lblIdentity_NationalNumber" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_NationalNumber">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>46</y>
@@ -1065,21 +1096,21 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
-             <string>Identificatienummer&lt;br>&lt;i>National Number&lt;/i></string>
+            <property name="text">
+             <string>Identificatienummer&lt;br&gt;&lt;i&gt;National Number&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_PlaceOfIssue" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_PlaceOfIssue">
+            <property name="geometry">
              <rect>
               <x>216</x>
               <y>46</y>
@@ -1087,21 +1118,21 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
-             <string>Plaats van afgifte&lt;br>&lt;i>Place of issue&lt;/i></string>
+            <property name="text">
+             <string>Plaats van afgifte&lt;br&gt;&lt;i&gt;Place of issue&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblChip_Number" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblChip_Number">
+            <property name="geometry">
              <rect>
               <x>398</x>
               <y>53</y>
@@ -1109,21 +1140,21 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
-             <string>Chip nummer / &lt;i>Chip number&lt;/i></string>
+            <property name="text">
+             <string>Chip nummer / &lt;i&gt;Chip number&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_NationalNumber" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_NationalNumber">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>80</y>
@@ -1131,24 +1162,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>1</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_PlaceOfIssue" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_PlaceOfIssue">
+            <property name="geometry">
              <rect>
               <x>216</x>
               <y>80</y>
@@ -1156,30 +1187,30 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>1</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="sizeIncrement" >
+            <property name="sizeIncrement">
              <size>
               <width>0</width>
               <height>0</height>
              </size>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_ChipNumber" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_ChipNumber">
+            <property name="geometry">
              <rect>
               <x>398</x>
               <y>80</y>
@@ -1187,30 +1218,30 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>2</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize" >
+            <property name="minimumSize">
              <size>
               <width>100</width>
               <height>0</height>
              </size>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblAdress_Street" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblAdress_Street">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>102</y>
@@ -1218,21 +1249,21 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
-             <string>Straat &lt;br>&lt;i>Street&lt;/i></string>
+            <property name="text">
+             <string>Straat &lt;br&gt;&lt;i&gt;Street&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblAdress_PostalCode" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblAdress_PostalCode">
+            <property name="geometry">
              <rect>
               <x>216</x>
               <y>102</y>
@@ -1240,21 +1271,21 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
-             <string>Postcode&lt;br>&lt;i>Postal Code&lt;/i></string>
+            <property name="text">
+             <string>Postcode&lt;br&gt;&lt;i&gt;Postal Code&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblCard_Number" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblCard_Number">
+            <property name="geometry">
              <rect>
               <x>398</x>
               <y>102</y>
@@ -1262,21 +1293,21 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
-             <string>Kaart nummer / &lt;i>Card number&lt;/i></string>
+            <property name="text">
+             <string>Kaart nummer / &lt;i&gt;Card number&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_Adress_Street" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_Adress_Street">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>136</y>
@@ -1284,24 +1315,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_Adress_PostalCode" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_Adress_PostalCode">
+            <property name="geometry">
              <rect>
               <x>216</x>
               <y>136</y>
@@ -1309,24 +1340,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_Card_Number" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_Card_Number">
+            <property name="geometry">
              <rect>
               <x>398</x>
               <y>136</y>
@@ -1334,24 +1365,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblAdress_Muncipality" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblAdress_Muncipality">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>158</y>
@@ -1359,21 +1390,21 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
-             <string>Gemeente &lt;br> &lt;i>Municipality&lt;/i></string>
+            <property name="text">
+             <string>Gemeente &lt;br&gt; &lt;i&gt;Municipality&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblAdress_Country" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblAdress_Country">
+            <property name="geometry">
              <rect>
               <x>216</x>
               <y>158</y>
@@ -1381,21 +1412,21 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
-             <string>Land&lt;br>&lt;i>Country&lt;/i></string>
+            <property name="text">
+             <string>Land&lt;br&gt;&lt;i&gt;Country&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblCard_ValidFrom_Until" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblCard_ValidFrom_Until">
+            <property name="geometry">
              <rect>
               <x>398</x>
               <y>158</y>
@@ -1403,21 +1434,21 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
-             <string>Geldig van - tot / &lt;i>Valid from - until&lt;/i></string>
+            <property name="text">
+             <string>Geldig van - tot / &lt;i&gt;Valid from - until&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_Adress_Muncipality" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_Adress_Muncipality">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>192</y>
@@ -1425,24 +1456,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_Adress_Country" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_Adress_Country">
+            <property name="geometry">
              <rect>
               <x>216</x>
               <y>192</y>
@@ -1450,24 +1481,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_ValidFrom_Until" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_ValidFrom_Until">
+            <property name="geometry">
              <rect>
               <x>398</x>
               <y>192</y>
@@ -1475,24 +1506,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblSpecialStatus" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblSpecialStatus">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>214</y>
@@ -1500,21 +1531,21 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Special Status</string>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Title" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Title">
+            <property name="geometry">
              <rect>
               <x>216</x>
               <y>214</y>
@@ -1522,18 +1553,18 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="text" >
-             <string>Titel&lt;br>&lt;i>Title&lt;/i></string>
+            <property name="text">
+             <string>Titel&lt;br&gt;&lt;i&gt;Title&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtSpecialStatus" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtSpecialStatus">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>250</y>
@@ -1541,24 +1572,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_Title" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_Title">
+            <property name="geometry">
              <rect>
               <x>216</x>
               <y>250</y>
@@ -1566,24 +1597,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblIdentity_Remarks" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblIdentity_Remarks">
+            <property name="geometry">
              <rect>
               <x>400</x>
               <y>210</y>
@@ -1591,18 +1622,18 @@
               <height>28</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="text" >
-             <string>Opmerkingen&lt;br>&lt;i>Remarks&lt;/i></string>
+            <property name="text">
+             <string>Opmerkingen&lt;br&gt;&lt;i&gt;Remarks&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_Remarks1" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_Remarks1">
+            <property name="geometry">
              <rect>
               <x>400</x>
               <y>250</y>
@@ -1610,24 +1641,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_Remarks2" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_Remarks2">
+            <property name="geometry">
              <rect>
               <x>400</x>
               <y>270</y>
@@ -1635,24 +1666,24 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtIdentityExtra_Remarks3" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtIdentityExtra_Remarks3">
+            <property name="geometry">
              <rect>
               <x>400</x>
               <y>290</y>
@@ -1660,29 +1691,35 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </widget>
-          <widget class="QWidget" name="tabForeigners_Back" >
-           <attribute name="title" >
+          <widget class="QWidget" name="tabForeigners_Back">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="accessibleName">
+            <string>Tab Foreigners Extra</string>
+           </property>
+           <attribute name="title">
             <string>Foreigners Extra</string>
            </attribute>
-           <widget class="QLineEdit" name="txtForeignersExtra_Nationality" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_Nationality">
+            <property name="geometry">
              <rect>
               <x>173</x>
               <y>74</y>
@@ -1690,18 +1727,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_Sex" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_Sex">
+            <property name="geometry">
              <rect>
               <x>173</x>
               <y>96</y>
@@ -1709,18 +1746,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_Remarks1" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_Remarks1">
+            <property name="geometry">
              <rect>
               <x>170</x>
               <y>200</y>
@@ -1728,18 +1765,18 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_Remarks2" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_Remarks2">
+            <property name="geometry">
              <rect>
               <x>173</x>
               <y>222</y>
@@ -1747,18 +1784,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_ChipNumber" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_ChipNumber">
+            <property name="geometry">
              <rect>
               <x>141</x>
               <y>318</y>
@@ -1766,15 +1803,15 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_Nationality" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_Nationality">
+            <property name="geometry">
              <rect>
               <x>57</x>
               <y>74</y>
@@ -1782,18 +1819,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Nationality</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_Sex" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_Sex">
+            <property name="geometry">
              <rect>
               <x>57</x>
               <y>96</y>
@@ -1801,18 +1838,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Sex</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_Remarks1" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_Remarks1">
+            <property name="geometry">
              <rect>
               <x>57</x>
               <y>198</y>
@@ -1820,18 +1857,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Remarks</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_ChipNumber" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_ChipNumber">
+            <property name="geometry">
              <rect>
               <x>56</x>
               <y>318</y>
@@ -1839,18 +1876,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Chip number</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_BirthDate" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_BirthDate">
+            <property name="geometry">
              <rect>
               <x>188</x>
               <y>52</y>
@@ -1858,30 +1895,30 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>1</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize" >
+            <property name="minimumSize">
              <size>
               <width>0</width>
               <height>0</height>
              </size>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_NationalNumber" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_NationalNumber">
+            <property name="geometry">
              <rect>
               <x>56</x>
               <y>296</y>
@@ -1889,18 +1926,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>National Number</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_NationalNumber" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_NationalNumber">
+            <property name="geometry">
              <rect>
               <x>141</x>
               <y>296</y>
@@ -1908,30 +1945,30 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="sizeIncrement" >
+            <property name="sizeIncrement">
              <size>
               <width>0</width>
               <height>0</height>
              </size>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_BirthDate" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_BirthDate">
+            <property name="geometry">
              <rect>
               <x>46</x>
               <y>52</y>
@@ -1939,18 +1976,18 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Date and place of birth</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_Remarks3" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_Remarks3">
+            <property name="geometry">
              <rect>
               <x>170</x>
               <y>250</y>
@@ -1958,18 +1995,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignerSpecialStatus" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignerSpecialStatus">
+            <property name="geometry">
              <rect>
               <x>170</x>
               <y>280</y>
@@ -1977,24 +2014,24 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet" >
+            <property name="styleSheet">
              <string/>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_street" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_street">
+            <property name="geometry">
              <rect>
               <x>65</x>
               <y>120</y>
@@ -2002,15 +2039,15 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Street</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_Adress_Street" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_Adress_Street">
+            <property name="geometry">
              <rect>
               <x>170</x>
               <y>120</y>
@@ -2018,18 +2055,18 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="acceptDrops" >
+            <property name="acceptDrops">
              <bool>false</bool>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_PostalCode" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_PostalCode">
+            <property name="geometry">
              <rect>
               <x>75</x>
               <y>150</y>
@@ -2037,15 +2074,15 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Postal code</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_Adress_PostalCode" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_Adress_PostalCode">
+            <property name="geometry">
              <rect>
               <x>170</x>
               <y>150</y>
@@ -2053,15 +2090,15 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_Adress_Muncipality" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_Adress_Muncipality">
+            <property name="geometry">
              <rect>
               <x>380</x>
               <y>150</y>
@@ -2069,15 +2106,15 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_municipality" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_municipality">
+            <property name="geometry">
              <rect>
               <x>300</x>
               <y>150</y>
@@ -2085,15 +2122,15 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Municipality</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtForeignersExtra_Adress_Country" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtForeignersExtra_Adress_Country">
+            <property name="geometry">
              <rect>
               <x>170</x>
               <y>170</y>
@@ -2101,15 +2138,15 @@
               <height>20</height>
              </rect>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
-           <widget class="QLabel" name="lblForeignersExtra_country" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblForeignersExtra_country">
+            <property name="geometry">
              <rect>
               <x>110</x>
               <y>170</y>
@@ -2117,20 +2154,26 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Country</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </widget>
-          <widget class="QWidget" name="tabSis_Back" >
-           <attribute name="title" >
+          <widget class="QWidget" name="tabSis_Back">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="accessibleName">
+            <string>Tab Sis Extra</string>
+           </property>
+           <attribute name="title">
             <string>Sis Extra</string>
            </attribute>
-           <widget class="QLabel" name="lblSisExtra_Card_ValidFrom_Until" >
-            <property name="geometry" >
+           <widget class="QLabel" name="lblSisExtra_Card_ValidFrom_Until">
+            <property name="geometry">
              <rect>
               <x>9</x>
               <y>63</y>
@@ -2138,18 +2181,18 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>4</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="text" >
-             <string>Geldig van - tot / &lt;i>Valid from - until&lt;/i></string>
+            <property name="text">
+             <string>Geldig van - tot / &lt;i&gt;Valid from - until&lt;/i&gt;</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="txtSisExtra_ValidFrom_Until" >
-            <property name="geometry" >
+           <widget class="QLineEdit" name="txtSisExtra_ValidFrom_Until">
+            <property name="geometry">
              <rect>
               <x>258</x>
               <y>63</y>
@@ -2157,190 +2200,196 @@
               <height>16</height>
              </rect>
             </property>
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>4</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="frame" >
+            <property name="frame">
              <bool>false</bool>
             </property>
-            <property name="readOnly" >
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </widget>
-          <widget class="QWidget" name="tabCertificates" >
-           <attribute name="title" >
+          <widget class="QWidget" name="tabCertificates">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="accessibleName">
+            <string>Tab Certificates</string>
+           </property>
+           <attribute name="title">
             <string>&amp;Certificates</string>
            </attribute>
-           <layout class="QGridLayout" >
-            <item rowspan="2" row="0" column="0" >
-             <widget class="QTreeWidget" name="treeCert" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+           <layout class="QGridLayout">
+            <item row="0" column="0" rowspan="2">
+             <widget class="QTreeWidget" name="treeCert">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>20</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="minimumSize" >
+              <property name="minimumSize">
                <size>
                 <width>300</width>
                 <height>0</height>
                </size>
               </property>
-              <property name="sortingEnabled" >
+              <property name="sortingEnabled">
                <bool>true</bool>
               </property>
               <column>
-               <property name="text" >
+               <property name="text">
                 <string>Certificates Overview</string>
                </property>
               </column>
              </widget>
             </item>
-            <item row="0" column="1" >
-             <layout class="QGridLayout" >
-              <item row="0" column="0" colspan="4" >
-               <widget class="QLabel" name="lblCert_Owner" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+            <item row="0" column="1">
+             <layout class="QGridLayout">
+              <item row="0" column="0" colspan="4">
+               <widget class="QLabel" name="lblCert_Owner">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Owner</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0" colspan="4" >
-               <widget class="QLineEdit" name="txtCert_Owner" >
-                <property name="readOnly" >
+              <item row="1" column="0" colspan="4">
+               <widget class="QLineEdit" name="txtCert_Owner">
+                <property name="readOnly">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="2" column="0" colspan="4" >
-               <widget class="QLabel" name="lblCert_Issuer" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+              <item row="2" column="0" colspan="4">
+               <widget class="QLabel" name="lblCert_Issuer">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Issuer</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="0" colspan="4" >
-               <widget class="QLineEdit" name="txtCert_Issuer" >
-                <property name="readOnly" >
+              <item row="3" column="0" colspan="4">
+               <widget class="QLineEdit" name="txtCert_Issuer">
+                <property name="readOnly">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="4" column="0" colspan="4" >
-               <widget class="QLabel" name="lblCert_KeyLenght" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+              <item row="4" column="0" colspan="4">
+               <widget class="QLabel" name="lblCert_KeyLenght">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Key Lenght</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="0" colspan="4" >
-               <widget class="QLineEdit" name="txtCert_KeyLenght" >
-                <property name="styleSheet" >
+              <item row="5" column="0" colspan="4">
+               <widget class="QLineEdit" name="txtCert_KeyLenght">
+                <property name="styleSheet">
                  <string/>
                 </property>
-                <property name="readOnly" >
+                <property name="readOnly">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="6" column="0" >
-               <widget class="QLabel" name="lblCert_ValidFrom" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+              <item row="6" column="0">
+               <widget class="QLabel" name="lblCert_ValidFrom">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Valid From</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="2" >
-               <widget class="QLabel" name="lblCert_ValidUntil" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+              <item row="6" column="2">
+               <widget class="QLabel" name="lblCert_ValidUntil">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Valid Until</string>
                 </property>
                </widget>
               </item>
-              <item row="7" column="0" colspan="2" >
-               <widget class="QLineEdit" name="txtCert_ValidFrom" >
-                <property name="readOnly" >
+              <item row="7" column="0" colspan="2">
+               <widget class="QLineEdit" name="txtCert_ValidFrom">
+                <property name="readOnly">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="7" column="2" colspan="2" >
-               <widget class="QLineEdit" name="txtCert_ValidUntil" >
-                <property name="readOnly" >
+              <item row="7" column="2" colspan="2">
+               <widget class="QLineEdit" name="txtCert_ValidUntil">
+                <property name="readOnly">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="8" column="0" colspan="4" >
-               <widget class="QLabel" name="lblCert_Status" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+              <item row="8" column="0" colspan="4">
+               <widget class="QLabel" name="lblCert_Status">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>OCSP Status</string>
                 </property>
                </widget>
               </item>
-              <item row="9" column="0" colspan="3" >
-               <widget class="QLineEdit" name="txtCert_Status" >
-                <property name="readOnly" >
+              <item row="9" column="0" colspan="3">
+               <widget class="QLineEdit" name="txtCert_Status">
+                <property name="readOnly">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="9" column="3" >
-               <widget class="QPushButton" name="btnOCSPCheck" >
-                <property name="font" >
+              <item row="9" column="3">
+               <widget class="QPushButton" name="btnOCSPCheck">
+                <property name="font">
                  <font/>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>OCSP check</string>
                 </property>
                </widget>
               </item>
-              <item row="10" column="1" >
+              <item row="10" column="1">
                <spacer>
-                <property name="orientation" >
+                <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
                   <height>108</height>
@@ -2348,35 +2397,35 @@
                 </property>
                </spacer>
               </item>
-              <item row="11" column="0" colspan="4" >
-               <widget class="QLabel" name="lblCert_InfoAdd" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+              <item row="11" column="0" colspan="4">
+               <widget class="QLabel" name="lblCert_InfoAdd">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="text" >
-                 <string>To use your identity card with applications like Internet Explorer, Microsoft Offfice,OpenOffice.org, Adobe Reader, Outlook, ... you first have to register the card in Windows. Select a certificate and click the "Register" button to register your certificates</string>
+                <property name="text">
+                 <string>To use your identity card with applications like Internet Explorer, Microsoft Offfice,OpenOffice.org, Adobe Reader, Outlook, ... you first have to register the card in Windows. Select a certificate and click the &quot;Register&quot; button to register your certificates</string>
                 </property>
-                <property name="wordWrap" >
+                <property name="wordWrap">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
-            <item row="1" column="1" >
-             <layout class="QHBoxLayout" >
-              <property name="spacing" >
+            <item row="1" column="1">
+             <layout class="QHBoxLayout">
+              <property name="spacing">
                <number>6</number>
               </property>
               <item>
                <spacer>
-                <property name="orientation" >
+                <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
                   <height>31</height>
@@ -2385,22 +2434,22 @@
                </spacer>
               </item>
               <item>
-               <widget class="QPushButton" name="btnCert_Register" >
-                <property name="font" >
+               <widget class="QPushButton" name="btnCert_Register">
+                <property name="font">
                  <font/>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>&amp;Register</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btnCert_Details" >
-                <property name="font" >
+               <widget class="QPushButton" name="btnCert_Details">
+                <property name="font">
                  <font/>
                 </property>
-                <property name="text" >
-                 <string>&amp;Details >></string>
+                <property name="text">
+                 <string>&amp;Details &gt;&gt;</string>
                 </property>
                </widget>
               </item>
@@ -2408,32 +2457,38 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tabCardPin" >
-           <attribute name="title" >
+          <widget class="QWidget" name="tabCardPin">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="accessibleName">
+            <string>Tab Card and Pin</string>
+           </property>
+           <attribute name="title">
             <string>Card &amp;&amp; &amp;PIN</string>
            </attribute>
-           <layout class="QGridLayout" >
-            <item row="0" column="0" >
-             <widget class="QGroupBox" name="grbPIN_VersionInfo" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+           <layout class="QGridLayout">
+            <item row="0" column="0">
+             <widget class="QGroupBox" name="grbPIN_VersionInfo">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>2</verstretch>
                </sizepolicy>
               </property>
-              <property name="styleSheet" >
+              <property name="styleSheet">
                <string/>
               </property>
-              <property name="title" >
+              <property name="title">
                <string>Version Info</string>
               </property>
-              <layout class="QGridLayout" >
-               <item row="0" column="0" >
-                <widget class="QTableWidget" name="tblCardAndPIN" >
-                 <property name="horizontalScrollBarPolicy" >
+              <layout class="QGridLayout">
+               <item row="0" column="0">
+                <widget class="QTableWidget" name="tblCardAndPIN">
+                 <property name="horizontalScrollBarPolicy">
                   <enum>Qt::ScrollBarAlwaysOff</enum>
                  </property>
-                 <property name="showGrid" >
+                 <property name="showGrid">
                   <bool>false</bool>
                  </property>
                 </widget>
@@ -2441,56 +2496,56 @@
               </layout>
              </widget>
             </item>
-            <item row="1" column="0" >
-             <widget class="QGroupBox" name="grbPIN_PINInfo" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <item row="1" column="0">
+             <widget class="QGroupBox" name="grbPIN_PINInfo">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>2</verstretch>
                </sizepolicy>
               </property>
-              <property name="styleSheet" >
+              <property name="styleSheet">
                <string/>
               </property>
-              <property name="title" >
+              <property name="title">
                <string>PIN Info</string>
               </property>
-              <layout class="QGridLayout" >
-               <item row="0" column="0" >
-                <widget class="QTreeWidget" name="treePIN" >
+              <layout class="QGridLayout">
+               <item row="0" column="0">
+                <widget class="QTreeWidget" name="treePIN">
                  <column>
-                  <property name="text" >
+                  <property name="text">
                    <string>PINs</string>
                   </property>
                  </column>
                 </widget>
                </item>
-               <item row="0" column="1" >
-                <layout class="QVBoxLayout" >
+               <item row="0" column="1">
+                <layout class="QVBoxLayout">
                  <item>
-                  <layout class="QHBoxLayout" >
+                  <layout class="QHBoxLayout">
                    <item>
-                    <widget class="QLabel" name="lblPIN_Name" >
-                     <property name="sizePolicy" >
-                      <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+                    <widget class="QLabel" name="lblPIN_Name">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="text" >
+                     <property name="text">
                       <string>PIN  Name</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="lblPIN_ID" >
-                     <property name="sizePolicy" >
-                      <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+                    <widget class="QLabel" name="lblPIN_ID">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="text" >
+                     <property name="text">
                       <string>PIN  ID</string>
                      </property>
                     </widget>
@@ -2498,17 +2553,17 @@
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" >
+                  <layout class="QHBoxLayout">
                    <item>
-                    <widget class="QLineEdit" name="txtPIN_Name" >
-                     <property name="readOnly" >
+                    <widget class="QLineEdit" name="txtPIN_Name">
+                     <property name="readOnly">
                       <bool>true</bool>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="txtPIN_ID" >
-                     <property name="readOnly" >
+                    <widget class="QLineEdit" name="txtPIN_ID">
+                     <property name="readOnly">
                       <bool>true</bool>
                      </property>
                     </widget>
@@ -2516,31 +2571,31 @@
                   </layout>
                  </item>
                  <item>
-                  <widget class="QLabel" name="lblPIN_Status" >
-                   <property name="sizePolicy" >
-                    <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+                  <widget class="QLabel" name="lblPIN_Status">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <property name="text" >
+                   <property name="text">
                     <string>PIN  Status</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="txtPIN_Status" >
-                   <property name="readOnly" >
+                  <widget class="QLineEdit" name="txtPIN_Status">
+                   <property name="readOnly">
                     <bool>true</bool>
                    </property>
                   </widget>
                  </item>
                  <item>
                   <spacer>
-                   <property name="orientation" >
+                   <property name="orientation">
                     <enum>Qt::Vertical</enum>
                    </property>
-                   <property name="sizeHint" >
+                   <property name="sizeHint" stdset="0">
                     <size>
                      <width>431</width>
                      <height>31</height>
@@ -2549,29 +2604,29 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QLabel" name="lblPIN_InfoAdd" >
-                   <property name="sizePolicy" >
-                    <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+                  <widget class="QLabel" name="lblPIN_InfoAdd">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <property name="text" >
-                    <string>When you give a wrong PIN number 3 times, the connected services will be blocked. If so please contact your local goverment inctance. Press "Cancel" if you are unscertain.</string>
+                   <property name="text">
+                    <string>When you give a wrong PIN number 3 times, the connected services will be blocked. If so please contact your local goverment inctance. Press &quot;Cancel&quot; if you are unscertain.</string>
                    </property>
-                   <property name="wordWrap" >
+                   <property name="wordWrap">
                     <bool>true</bool>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" >
+                  <layout class="QHBoxLayout">
                    <item>
                     <spacer>
-                     <property name="orientation" >
+                     <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
-                     <property name="sizeHint" >
+                     <property name="sizeHint" stdset="0">
                       <size>
                        <width>251</width>
                        <height>20</height>
@@ -2580,21 +2635,21 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="btnPIN_Test" >
-                     <property name="font" >
+                    <widget class="QPushButton" name="btnPIN_Test">
+                     <property name="font">
                       <font/>
                      </property>
-                     <property name="text" >
+                     <property name="text">
                       <string>Test PIN</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="btnPIN_Change" >
-                     <property name="font" >
+                    <widget class="QPushButton" name="btnPIN_Change">
+                     <property name="font">
                       <font/>
                      </property>
-                     <property name="text" >
+                     <property name="text">
                       <string>Change PIN</string>
                      </property>
                     </widget>
@@ -2608,59 +2663,65 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tabInfo" >
-           <attribute name="title" >
+          <widget class="QWidget" name="tabInfo">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="accessibleName">
+            <string>Tab Info</string>
+           </property>
+           <attribute name="title">
             <string>In&amp;fo</string>
            </attribute>
-           <layout class="QGridLayout" >
-            <item row="0" column="0" >
-             <widget class="QLabel" name="lblInfo_Img1" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+           <layout class="QGridLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="lblInfo_Img1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>1</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text" >
+              <property name="text">
                <string/>
               </property>
-              <property name="pixmap" >
-               <pixmap resource="eidgui.qrc" >:/images/Images/a-z_identiteitskaart_logo.png</pixmap>
+              <property name="pixmap">
+               <pixmap resource="eidgui.qrc">:/images/Images/a-z_identiteitskaart_logo.png</pixmap>
               </property>
-              <property name="scaledContents" >
+              <property name="scaledContents">
                <bool>false</bool>
               </property>
              </widget>
             </item>
-            <item row="0" column="1" >
-             <widget class="QLabel" name="lblInfo_Top" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <item row="0" column="1">
+             <widget class="QLabel" name="lblInfo_Top">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>4</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Belgian eID Runtime</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0" colspan="2" >
-             <widget class="QTableWidget" name="tblInfo" >
-              <property name="selectionMode" >
+            <item row="1" column="0" colspan="2">
+             <widget class="QTableWidget" name="tblInfo">
+              <property name="selectionMode">
                <enum>QAbstractItemView::NoSelection</enum>
               </property>
-              <property name="showGrid" >
+              <property name="showGrid">
                <bool>false</bool>
               </property>
              </widget>
             </item>
-            <item row="2" column="0" colspan="2" >
-             <widget class="QLabel" name="lblInfo_bottom" >
-              <property name="text" >
+            <item row="2" column="0" colspan="2">
+             <widget class="QLabel" name="lblInfo_bottom">
+              <property name="text">
                <string>Developed by the Belgian Government</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
              </widget>
@@ -2675,315 +2736,326 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar" >
-   <property name="geometry" >
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_File" >
-    <property name="title" >
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
      <string>&amp;Card</string>
     </property>
-    <addaction name="actionReload_eID" />
-    <addaction name="actionClear" />
-    <addaction name="separator" />
-    <addaction name="actionOpen_eID" />
-    <addaction name="actionSave_eID" />
-    <addaction name="actionSave_eID_as" />
-    <addaction name="separator" />
-    <addaction name="actionPrint_eID" />
-    <addaction name="actionPrinter_Settings" />
-    <addaction name="separator" />
-    <addaction name="actionE_xit" />
+    <addaction name="actionReload_eID"/>
+    <addaction name="actionClear"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen_eID"/>
+    <addaction name="actionSave_eID"/>
+    <addaction name="actionSave_eID_as"/>
+    <addaction name="separator"/>
+    <addaction name="actionPrint_eID"/>
+    <addaction name="actionPrinter_Settings"/>
+    <addaction name="separator"/>
+    <addaction name="actionE_xit"/>
    </widget>
-   <widget class="QMenu" name="menu_Tools" >
-    <property name="title" >
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="separator" />
-    <addaction name="actionOptions" />
-    <addaction name="separator" />
-    <addaction name="actionZoom_In" />
-    <addaction name="actionZoom_Out" />
+    <addaction name="separator"/>
+    <addaction name="actionOptions"/>
+    <addaction name="separator"/>
+    <addaction name="actionZoom_In"/>
+    <addaction name="actionZoom_Out"/>
    </widget>
-   <widget class="QMenu" name="menuLanguage" >
-    <property name="title" >
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
      <string>Language</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menuHelp" >
-    <property name="title" >
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionAbout" />
+    <addaction name="actionAbout"/>
    </widget>
-   <addaction name="menu_File" />
-   <addaction name="menu_Tools" />
-   <addaction name="menuLanguage" />
-   <addaction name="menuHelp" />
+   <addaction name="menu_File"/>
+   <addaction name="menu_Tools"/>
+   <addaction name="menuLanguage"/>
+   <addaction name="menuHelp"/>
   </widget>
-  <widget class="QToolBar" name="toolBar" >
-   <property name="enabled" >
+  <widget class="QToolBar" name="toolBar">
+   <property name="enabled">
     <bool>true</bool>
    </property>
-   <property name="windowTitle" >
+   <property name="windowTitle">
     <string>toolBar</string>
    </property>
-   <property name="styleSheet" >
+   <property name="styleSheet">
     <string/>
    </property>
-   <property name="movable" >
+   <property name="movable">
     <bool>false</bool>
    </property>
-   <property name="floatable" >
+   <property name="floatable">
     <bool>false</bool>
    </property>
-   <attribute name="toolBarArea" >
+   <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
-   <attribute name="toolBarBreak" >
+   <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionReload_eID" />
-   <addaction name="actionClear" />
-   <addaction name="separator" />
-   <addaction name="actionOpen_eID" />
-   <addaction name="actionSave_eID" />
-   <addaction name="actionPrint_eID" />
-   <addaction name="separator" />
-   <addaction name="actionZoom_In" />
-   <addaction name="actionZoom_Out" />
+   <addaction name="actionReload_eID"/>
+   <addaction name="actionClear"/>
+   <addaction name="separator"/>
+   <addaction name="actionOpen_eID"/>
+   <addaction name="actionSave_eID"/>
+   <addaction name="actionPrint_eID"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoom_In"/>
+   <addaction name="actionZoom_Out"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar" />
-  <action name="actionE_xit" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Exit.png</iconset>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionE_xit">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Exit.png</normaloff>:/images/Images/Icons/Exit.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>E&amp;xit</string>
    </property>
   </action>
-  <action name="actionReload_eID" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Chip.png</iconset>
+  <action name="actionReload_eID">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Chip.png</normaloff>:/images/Images/Icons/Chip.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Reload eID</string>
    </property>
-   <property name="iconText" >
+   <property name="iconText">
     <string>Reload eID</string>
    </property>
   </action>
-  <action name="actionSave_eID" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Save.png</iconset>
+  <action name="actionSave_eID">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Save.png</normaloff>:/images/Images/Icons/Save.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Save eID</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionSave_eID_as" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/save_as.png</iconset>
+  <action name="actionSave_eID_as">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/save_as.png</normaloff>:/images/Images/Icons/save_as.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Save eID as...</string>
    </property>
   </action>
-  <action name="actionOpen_eID" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Open.png</iconset>
+  <action name="actionOpen_eID">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Open.png</normaloff>:/images/Images/Icons/Open.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Open eID</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionClear" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Clear.png</iconset>
+  <action name="actionClear">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Clear.png</normaloff>:/images/Images/Icons/Clear.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Clear</string>
    </property>
   </action>
-  <action name="actionPrint_eID" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Print.png</iconset>
+  <action name="actionPrint_eID">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Print.png</normaloff>:/images/Images/Icons/Print.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Print eID</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Ctrl+P</string>
    </property>
   </action>
-  <action name="actionPrinter_Settings" >
-   <property name="text" >
+  <action name="actionPrinter_Settings">
+   <property name="text">
     <string>Printer Settings</string>
    </property>
-   <property name="visible" >
+   <property name="visible">
     <bool>false</bool>
    </property>
   </action>
-  <action name="actionOptions" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Options.png</iconset>
+  <action name="actionOptions">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Options.png</normaloff>:/images/Images/Icons/Options.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Options</string>
    </property>
   </action>
-  <action name="actionEnglish" >
-   <property name="checkable" >
+  <action name="actionEnglish">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;English</string>
    </property>
   </action>
-  <action name="actionNederlands" >
-   <property name="checkable" >
+  <action name="actionNederlands">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Nederlands</string>
    </property>
   </action>
-  <action name="actionFrench" >
-   <property name="checkable" >
+  <action name="actionFrench">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Français</string>
    </property>
   </action>
-  <action name="actionDeutch" >
-   <property name="checkable" >
+  <action name="actionDeutch">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Deutsch</string>
    </property>
   </action>
-  <action name="actionHelp" >
-   <property name="text" >
+  <action name="actionHelp">
+   <property name="text">
     <string>&amp;Help / Manual</string>
    </property>
   </action>
-  <action name="actionAbout" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Help.png</iconset>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Help.png</normaloff>:/images/Images/Icons/Help.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;About</string>
    </property>
   </action>
-  <action name="actionShow_Toolbar" >
-   <property name="checkable" >
+  <action name="actionShow_Toolbar">
+   <property name="checkable">
     <bool>true</bool>
    </property>
-   <property name="checked" >
+   <property name="checked">
     <bool>true</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Show Toolbar</string>
    </property>
   </action>
-  <action name="actionPINRequest" >
-   <property name="text" >
+  <action name="actionPINRequest">
+   <property name="text">
     <string>Test PIN</string>
    </property>
   </action>
-  <action name="actionPINChange" >
-   <property name="text" >
+  <action name="actionPINChange">
+   <property name="text">
     <string>Change PIN</string>
    </property>
   </action>
-  <action name="actionPINRenew" >
-   <property name="enabled" >
+  <action name="actionPINRenew">
+   <property name="enabled">
     <bool>true</bool>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>PIN renew (PUK)</string>
    </property>
   </action>
-  <action name="actionZoom_In" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Zoom_IN.png</iconset>
+  <action name="actionZoom_In">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Zoom_IN.png</normaloff>:/images/Images/Icons/Zoom_IN.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>Zoom &amp;In</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>+</string>
    </property>
-   <property name="visible" >
+   <property name="visible">
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionZoom_Out" >
-   <property name="icon" >
-    <iconset resource="eidgui.qrc" >:/images/Images/Icons/Zoom_OUT.png</iconset>
+  <action name="actionZoom_Out">
+   <property name="icon">
+    <iconset resource="eidgui.qrc">
+     <normaloff>:/images/Images/Icons/Zoom_OUT.png</normaloff>:/images/Images/Icons/Zoom_OUT.png</iconset>
    </property>
-   <property name="text" >
+   <property name="text">
     <string>&amp;Zoom Out</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>-</string>
    </property>
-   <property name="visible" >
+   <property name="visible">
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionDisplay_Pinpad_Info" >
-   <property name="text" >
+  <action name="actionDisplay_Pinpad_Info">
+   <property name="text">
     <string>Display pinpad info</string>
    </property>
   </action>
-  <action name="actionClose_Pinpad_Info" >
-   <property name="text" >
+  <action name="actionClose_Pinpad_Info">
+   <property name="text">
     <string>Close pinpad info</string>
    </property>
   </action>
-  <action name="actionIdentity_Card" >
-   <property name="text" >
+  <action name="actionIdentity_Card">
+   <property name="text">
     <string>&amp;Identity Card</string>
    </property>
   </action>
-  <action name="actionSIS_Card" >
-   <property name="text" >
+  <action name="actionSIS_Card">
+   <property name="text">
     <string>SIS Card</string>
    </property>
-   <property name="iconText" >
+   <property name="iconText">
     <string>SIS Card</string>
    </property>
-   <property name="toolTip" >
+   <property name="toolTip">
     <string>SIS Card</string>
    </property>
   </action>
-  <action name="actionKids_Card" >
-   <property name="text" >
+  <action name="actionKids_Card">
+   <property name="text">
     <string>Kids Card</string>
    </property>
   </action>
-  <action name="actionForeigner_Card" >
-   <property name="text" >
+  <action name="actionForeigner_Card">
+   <property name="text">
     <string>Foreigner Card</string>
    </property>
   </action>
  </widget>
  <resources>
-  <include location="eidgui.qrc" />
+  <include location="eidgui.qrc"/>
  </resources>
  <connections/>
 </ui>
