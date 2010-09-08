@@ -17,7 +17,11 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+#define _WIN32_WINNT 0x0502
+
 #include <iostream>
+#include <Windows.h>
+#include <Winbase.h>
 #include "qtsingleapplication.h"
 
 #include "Settings.h"
@@ -79,6 +83,10 @@ int main(int argc, char *argv[])
 	#ifdef WIN32
 		_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 	#endif
+#endif
+
+#ifdef WIN32
+		SetDllDirectory("");
 #endif
 
 	int iRetValue = 0;
