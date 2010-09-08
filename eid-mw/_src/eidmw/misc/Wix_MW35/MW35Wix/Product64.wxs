@@ -468,7 +468,6 @@
       
       <Component Id="CSP_64" Guid="{AFAFDD01-375C-4599-84C5-6E5B9D3E151B}" SharedDllRefCount="yes" Win64="yes">
         <File Id="beidCSP_64.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\_Binaries35\x64\Release\beidCSP.dll" />
-        <File Id="beidCSPlib_64.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beidCSPlib.dll" />
       </Component>
 
       <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="yes" Win64="yes">
@@ -669,7 +668,7 @@
                      Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card"
                      Action="createAndRemoveOnUninstall">
           <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue Type="string" Name="80000001" Value="beidmdrv.dll" KeyPath="no"/>
+          <RegistryValue Type="string" Name="80000001" Value="beidcsp.dll" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
         </RegistryKey>
