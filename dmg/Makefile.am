@@ -11,6 +11,9 @@ all : dmg
 .PHONY: dmg
 dmg:
 
+# Start with an empty directory
+###################################################################################
+	rm -Rf ${DIST96}
 	mkdir ${DIST96}
 
 # Copy Firefox Add-On from the 64-bit platform
@@ -43,10 +46,16 @@ dmg:
 	-create; \
 	done
 
-# Remove linux and Windows config
+# Remove linux and Windows config which is of little use on OSX (we're making an OSX-only installer)
 ###################################################################################
 	find ${DIST96} -path *platform/Linux* -delete
 	find ${DIST96} -path *platform/WINNT* -delete
 
+# run PackageMaker to make this into an installable package (according to eid-mw.pmdoc)
+###################################################################################
+	$(PACKAGEMAKER) --doc src/beid-mw.pmdoc --out ./beid-mw.pkg
+
+# make clean simply removes the osx96 directory
+###################################################################################
 clean:
 	rm -Rf ${DIST96}
