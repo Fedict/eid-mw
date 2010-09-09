@@ -10,7 +10,7 @@ MAYBE_DIALOGS=dialogs
 endif
 
 SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi $(MAYBE_MINIDRIVER)
-DIST_SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi nsis $(MAYBE_MINIDRIVER)
+DIST_SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi nsis dmg $(MAYBE_MINIDRIVER) 
 
 xpipackage:
 	$(MAKE) -C xpi xpipackage
