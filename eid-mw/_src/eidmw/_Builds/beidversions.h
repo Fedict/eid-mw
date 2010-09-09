@@ -15,11 +15,11 @@
 #define BEID_PRODUCT_NAME    	"Belgium eID MiddleWare"
 
 #ifdef BEID_35
-	#define BEID_PRODUCT_VERSION    "3.5.4"
-	#define BASE_VERSION_STRING    "3, 5, 4, "
+	#define BEID_PRODUCT_VERSION    "3.5.5"
+	#define BASE_VERSION_STRING    "3, 5, 5, "
 	#define BASE_VERSION1          3
 	#define BASE_VERSION2          5
-	#define BASE_VERSION3          4
+	#define BASE_VERSION3          5
 #else
 	#define BEID_PRODUCT_VERSION    "3.0"
 	#define BASE_VERSION_STRING    "3, 0, 1, "

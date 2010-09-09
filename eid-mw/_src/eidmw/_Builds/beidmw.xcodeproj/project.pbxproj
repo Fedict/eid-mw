@@ -25,10 +25,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		7F22A36F0F84C588001AD228 /* libbeidcommon.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */; };
-		7F22A3780F84C5A1001AD228 /* libbeiddialogsQT.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.3.5.4.dylib */; };
-		7F22A3C40F84D4A1001AD228 /* libbeidcommon.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */; };
-		7F872F7B0F84E58300DE6627 /* libbeiddialogsQT.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.3.5.4.dylib */; };
+		7F22A36F0F84C588001AD228 /* libbeidcommon..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon..dylib */; };
+		7F22A3780F84C5A1001AD228 /* libbeiddialogsQT..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT..dylib */; };
+		7F22A3C40F84D4A1001AD228 /* libbeidcommon..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon..dylib */; };
+		7F872F7B0F84E58300DE6627 /* libbeiddialogsQT..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT..dylib */; };
 		7F872F7C0F84E58E00DE6627 /* dlgWndAskAccess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535F50F84BDF500BA96EE /* dlgWndAskAccess.cpp */; };
 		7F872F7D0F84E58E00DE6627 /* dlgWndAskPIN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535F80F84BDF500BA96EE /* dlgWndAskPIN.cpp */; };
 		7F872F7E0F84E58E00DE6627 /* dlgWndAskPINs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535FB0F84BDF500BA96EE /* dlgWndAskPINs.cpp */; };
@@ -46,7 +46,7 @@
 		7F872F8B0F84E58E00DE6627 /* qrc_dlgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC536110F84BDF500BA96EE /* qrc_dlgs.cpp */; };
 		7F872F8F0F84E5E000DE6627 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F872F8E0F84E5E000DE6627 /* QtGui.framework */; };
 		7F872F930F84E5F800DE6627 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F872F920F84E5F800DE6627 /* QtCore.framework */; };
-		7F900E0A0F84EE15004A5FCC /* libbeidcommon.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */; };
+		7F900E0A0F84EE15004A5FCC /* libbeidcommon..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon..dylib */; };
 		7F900E340F84F709004A5FCC /* moc_dlgWndBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F900E330F84F709004A5FCC /* moc_dlgWndBase.cpp */; };
 		7F900E900F84FC37004A5FCC /* APLCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F900E650F84FC37004A5FCC /* APLCard.cpp */; };
 		7F900E920F84FC37004A5FCC /* APLCardBeid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F900E670F84FC37004A5FCC /* APLCardBeid.cpp */; };
@@ -72,14 +72,14 @@
 		7F900ECE0F84FC89004A5FCC /* eidlibReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F900EC40F84FC89004A5FCC /* eidlibReader.cpp */; };
 		7F900ECF0F84FC89004A5FCC /* InternalUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F900EC50F84FC89004A5FCC /* InternalUtil.cpp */; };
 		7F9010630F84FEC3004A5FCC /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9010620F84FEC3004A5FCC /* CoreServices.framework */; };
-		7F90110E0F850090004A5FCC /* libbeidcardlayer.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.3.5.4.dylib */; };
-		7F9011100F8500CA004A5FCC /* libbeidcommon.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */; };
+		7F90110E0F850090004A5FCC /* libbeidcardlayer..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer..dylib */; };
+		7F9011100F8500CA004A5FCC /* libbeidcommon..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon..dylib */; };
 		7F90111D0F850342004A5FCC /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F90111C0F850342004A5FCC /* libssl.dylib */; };
 		7F90111E0F85034F004A5FCC /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F9011190F8502F8004A5FCC /* libcrypto.dylib */; };
-		7F90111F0F850363004A5FCC /* libbeidapplayer.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F900E540F84FB07004A5FCC /* libbeidapplayer.3.5.4.dylib */; };
-		7F9011270F8503F1004A5FCC /* libbeiddialogsQT.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.3.5.4.dylib */; };
+		7F90111F0F850363004A5FCC /* libbeidapplayer..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F900E540F84FB07004A5FCC /* libbeidapplayer..dylib */; };
+		7F9011270F8503F1004A5FCC /* libbeiddialogsQT..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT..dylib */; };
 		7F90112D0F850450004A5FCC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F90112C0F850450004A5FCC /* SystemConfiguration.framework */; };
-		7F9011320F85047E004A5FCC /* libbeidcommon.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */; };
+		7F9011320F85047E004A5FCC /* libbeidcommon..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon..dylib */; };
 		7F90116A0F85060A004A5FCC /* CardInformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F90113F0F85060A004A5FCC /* CardInformation.cpp */; };
 		7F90116B0F85060A004A5FCC /* dlgAbout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F9011410F85060A004A5FCC /* dlgAbout.cpp */; };
 		7F90116D0F85060A004A5FCC /* dlgOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F9011440F85060A004A5FCC /* dlgOptions.cpp */; };
@@ -111,8 +111,8 @@
 		7F90D5900F9F3B4800BB8F23 /* eidlibException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F900EC20F84FC89004A5FCC /* eidlibException.cpp */; };
 		7F90D5910F9F3B4800BB8F23 /* eidlibReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F900EC40F84FC89004A5FCC /* eidlibReader.cpp */; };
 		7F90D5920F9F3B4800BB8F23 /* InternalUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F900EC50F84FC89004A5FCC /* InternalUtil.cpp */; };
-		7F90D5B00F9F3F7C00BB8F23 /* libbeidcommon.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */; };
-		7F90D5B10F9F3F8A00BB8F23 /* libbeidapplayer.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F900E540F84FB07004A5FCC /* libbeidapplayer.3.5.4.dylib */; };
+		7F90D5B00F9F3F7C00BB8F23 /* libbeidcommon..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon..dylib */; };
+		7F90D5B10F9F3F8A00BB8F23 /* libbeidapplayer..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F900E540F84FB07004A5FCC /* libbeidapplayer..dylib */; };
 		7FA1AA2F0F85F439000D9EE1 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA1C0F85F439000D9EE1 /* asn1.c */; };
 		7FA1AA320F85F439000D9EE1 /* cal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA1F0F85F439000D9EE1 /* cal.cpp */; };
 		7FA1AA340F85F439000D9EE1 /* cert.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA210F85F439000D9EE1 /* cert.c */; };
@@ -124,8 +124,8 @@
 		7FA1AA3E0F85F439000D9EE1 /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2B0F85F439000D9EE1 /* session.c */; };
 		7FA1AA3F0F85F439000D9EE1 /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2C0F85F439000D9EE1 /* sign.c */; };
 		7FA1AA400F85F439000D9EE1 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2D0F85F439000D9EE1 /* util.cpp */; };
-		7FA1AA620F85F6C1000D9EE1 /* libbeidcommon.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */; };
-		7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.3.5.4.dylib */; };
+		7FA1AA620F85F6C1000D9EE1 /* libbeidcommon..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon..dylib */; };
+		7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer..dylib */; };
 		7FA1AA920F860748000D9EE1 /* object.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA910F860748000D9EE1 /* object.c */; };
 		7FBB02830F839412009B751F /* ByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02610F839412009B751F /* ByteArray.cpp */; };
 		7FBB02850F839412009B751F /* ByteArrayReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02630F839412009B751F /* ByteArrayReader.cpp */; };
@@ -174,7 +174,7 @@
 		7FC535A30F84B97400BA96EE /* SISCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC5359E0F84B97400BA96EE /* SISCard.cpp */; };
 		7FC535A60F84B97400BA96EE /* SISPluginHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535A10F84B97400BA96EE /* SISPluginHandler.cpp */; };
 		7FC535B80F84BA2E00BA96EE /* SISCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535B70F84BA2E00BA96EE /* SISCard.cpp */; };
-		7FC535BE0F84BADB00BA96EE /* libbeidcommon.3.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */; };
+		7FC535BE0F84BADB00BA96EE /* libbeidcommon..dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon..dylib */; };
 		7FC535EA0F84BD3F00BA96EE /* langUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535E60F84BD3F00BA96EE /* langUtil.cpp */; };
 		7FC535EF0F84BD6300BA96EE /* dlgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535EC0F84BD6300BA96EE /* dlgs.cpp */; };
 		7FC535F00F84BD6300BA96EE /* SharedMem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535ED0F84BD6300BA96EE /* SharedMem.cpp */; };
@@ -321,7 +321,7 @@
 		7F872F8E0F84E5E000DE6627 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Library/Frameworks/QtGui.framework; sourceTree = SDKROOT; };
 		7F872F920F84E5F800DE6627 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = Library/Frameworks/QtCore.framework; sourceTree = SDKROOT; };
 		7F900E330F84F709004A5FCC /* moc_dlgWndBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_dlgWndBase.cpp; path = ../dialogs/dialogsQTsrv/moc_dlgWndBase.cpp; sourceTree = SOURCE_ROOT; };
-		7F900E540F84FB07004A5FCC /* libbeidapplayer.3.5.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidapplayer.3.5.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F900E540F84FB07004A5FCC /* libbeidapplayer..dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidapplayer..dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F900E5B0F84FB1A004A5FCC /* libbeidlib.3.5.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidlib.3.5.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F900E650F84FC37004A5FCC /* APLCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = APLCard.cpp; path = ../applayer/APLCard.cpp; sourceTree = SOURCE_ROOT; };
 		7F900E660F84FC37004A5FCC /* APLCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APLCard.h; path = ../applayer/APLCard.h; sourceTree = SOURCE_ROOT; };
@@ -424,10 +424,10 @@
 		7F9011670F85060A004A5FCC /* ui_picturepopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ui_picturepopup.h; path = ../eidgui/ui_picturepopup.h; sourceTree = SOURCE_ROOT; };
 		7F9011680F85060A004A5FCC /* verinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = verinfo.cpp; path = ../eidgui/verinfo.cpp; sourceTree = SOURCE_ROOT; };
 		7F9011690F85060A004A5FCC /* verinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = verinfo.h; path = ../eidgui/verinfo.h; sourceTree = SOURCE_ROOT; };
-		7F90D54E0F9F36F500BB8F23 /* libbeidlibJava_Wrapper.3.5.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidlibJava_Wrapper.3.5.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F90D54E0F9F36F500BB8F23 /* libbeidlibJava_Wrapper..dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidlibJava_Wrapper..dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F90D5520F9F377500BB8F23 /* eidlibJava_Wrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = eidlibJava_Wrapper.cpp; path = ../eidlibJava_Wrapper/GeneratedFiles/eidlibJava_Wrapper.cpp; sourceTree = SOURCE_ROOT; };
 		7F90D5620F9F38EC00BB8F23 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = System/Library/Frameworks/JavaVM.framework; sourceTree = SDKROOT; };
-		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.3.5.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.3.5.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11..dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11..dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA1AA1C0F85F439000D9EE1 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = ../pkcs11/asn1.c; sourceTree = SOURCE_ROOT; };
 		7FA1AA1D0F85F439000D9EE1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = ../pkcs11/asn1.h; sourceTree = SOURCE_ROOT; };
 		7FA1AA1E0F85F439000D9EE1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = ../pkcs11/beid_p11.h; sourceTree = SOURCE_ROOT; };
@@ -452,7 +452,7 @@
 		7FA1AA4A0F85F47D000D9EE1 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = ../pkcs11/include/rsaref220/unix.h; sourceTree = SOURCE_ROOT; };
 		7FA1AA720F85FEE3000D9EE1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = ../pkcs11/util.h; sourceTree = SOURCE_ROOT; };
 		7FA1AA910F860748000D9EE1 /* object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = object.c; path = ../pkcs11/object.c; sourceTree = SOURCE_ROOT; };
-		7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcommon.3.5.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FBB02530F839352009B751F /* libbeidcommon..dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcommon..dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBB02610F839412009B751F /* ByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ByteArray.cpp; path = ../common/ByteArray.cpp; sourceTree = SOURCE_ROOT; };
 		7FBB02620F839412009B751F /* ByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ByteArray.h; path = ../common/ByteArray.h; sourceTree = SOURCE_ROOT; };
 		7FBB02630F839412009B751F /* ByteArrayReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ByteArrayReader.cpp; path = ../common/ByteArrayReader.cpp; sourceTree = SOURCE_ROOT; };
@@ -504,7 +504,7 @@
 		7FBB02D40F839514009B751F /* SocketServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SocketServer.cpp; path = ../common/Socket/SocketServer.cpp; sourceTree = SOURCE_ROOT; };
 		7FBB02D50F839514009B751F /* SocketServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketServer.h; path = ../common/Socket/SocketServer.h; sourceTree = SOURCE_ROOT; };
 		7FBB02F20F839622009B751F /* win_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win_macros.h; path = ../common/win_macros.h; sourceTree = SOURCE_ROOT; };
-		7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.3.5.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcardlayer.3.5.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FC5353B0F84B83B00BA96EE /* libbeidcardlayer..dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcardlayer..dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC535410F84B88600BA96EE /* Cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cache.cpp; path = ../cardlayer/Cache.cpp; sourceTree = SOURCE_ROOT; };
 		7FC535420F84B88600BA96EE /* Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cache.h; path = ../cardlayer/Cache.h; sourceTree = SOURCE_ROOT; };
 		7FC535430F84B88600BA96EE /* Card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Card.cpp; path = ../cardlayer/Card.cpp; sourceTree = SOURCE_ROOT; };
@@ -554,7 +554,7 @@
 		7FC535A20F84B97400BA96EE /* SISPluginHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SISPluginHandler.h; path = ../cardlayer/cardpluginSIS/SISPluginHandler.h; sourceTree = SOURCE_ROOT; };
 		7FC535AC0F84B9EF00BA96EE /* libsiscardplugin1__ACS__.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsiscardplugin1__ACS__.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC535B70F84BA2E00BA96EE /* SISCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SISCard.cpp; path = ../cardlayer/cardpluginSIS_ACR38U/SISCard.cpp; sourceTree = SOURCE_ROOT; };
-		7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.3.5.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsQT.3.5.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT..dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsQT..dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC535E40F84BD3F00BA96EE /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialogs.h; path = ../dialogs/dialogs.h; sourceTree = SOURCE_ROOT; };
 		7FC535E50F84BD3F00BA96EE /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = language.h; path = ../dialogs/language.h; sourceTree = SOURCE_ROOT; };
 		7FC535E60F84BD3F00BA96EE /* langUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = langUtil.cpp; path = ../dialogs/langUtil.cpp; sourceTree = SOURCE_ROOT; };
@@ -607,8 +607,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F900E0A0F84EE15004A5FCC /* libbeidcommon.3.5.4.dylib in Frameworks */,
-				7F872F7B0F84E58300DE6627 /* libbeiddialogsQT.3.5.4.dylib in Frameworks */,
+				7F900E0A0F84EE15004A5FCC /* libbeidcommon..dylib in Frameworks */,
+				7F872F7B0F84E58300DE6627 /* libbeiddialogsQT..dylib in Frameworks */,
 				7F872F8F0F84E5E000DE6627 /* QtGui.framework in Frameworks */,
 				7F872F930F84E5F800DE6627 /* QtCore.framework in Frameworks */,
 			);
@@ -618,10 +618,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F9011270F8503F1004A5FCC /* libbeiddialogsQT.3.5.4.dylib in Frameworks */,
+				7F9011270F8503F1004A5FCC /* libbeiddialogsQT..dylib in Frameworks */,
 				7F90111E0F85034F004A5FCC /* libcrypto.dylib in Frameworks */,
-				7F9011100F8500CA004A5FCC /* libbeidcommon.3.5.4.dylib in Frameworks */,
-				7F90110E0F850090004A5FCC /* libbeidcardlayer.3.5.4.dylib in Frameworks */,
+				7F9011100F8500CA004A5FCC /* libbeidcommon..dylib in Frameworks */,
+				7F90110E0F850090004A5FCC /* libbeidcardlayer..dylib in Frameworks */,
 				7F9010630F84FEC3004A5FCC /* CoreServices.framework in Frameworks */,
 				7F90111D0F850342004A5FCC /* libssl.dylib in Frameworks */,
 				7F90112D0F850450004A5FCC /* SystemConfiguration.framework in Frameworks */,
@@ -633,8 +633,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F9011320F85047E004A5FCC /* libbeidcommon.3.5.4.dylib in Frameworks */,
-				7F90111F0F850363004A5FCC /* libbeidapplayer.3.5.4.dylib in Frameworks */,
+				7F9011320F85047E004A5FCC /* libbeidcommon..dylib in Frameworks */,
+				7F90111F0F850363004A5FCC /* libbeidapplayer..dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,8 +652,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F90D5B10F9F3F8A00BB8F23 /* libbeidapplayer.3.5.4.dylib in Frameworks */,
-				7F90D5B00F9F3F7C00BB8F23 /* libbeidcommon.3.5.4.dylib in Frameworks */,
+				7F90D5B10F9F3F8A00BB8F23 /* libbeidapplayer..dylib in Frameworks */,
+				7F90D5B00F9F3F7C00BB8F23 /* libbeidcommon..dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,8 +661,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer.3.5.4.dylib in Frameworks */,
-				7FA1AA620F85F6C1000D9EE1 /* libbeidcommon.3.5.4.dylib in Frameworks */,
+				7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer..dylib in Frameworks */,
+				7FA1AA620F85F6C1000D9EE1 /* libbeidcommon..dylib in Frameworks */,
 				86D0918011ABFA40007BC75E /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -679,8 +679,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F22A3780F84C5A1001AD228 /* libbeiddialogsQT.3.5.4.dylib in Frameworks */,
-				7FC535BE0F84BADB00BA96EE /* libbeidcommon.3.5.4.dylib in Frameworks */,
+				7F22A3780F84C5A1001AD228 /* libbeiddialogsQT..dylib in Frameworks */,
+				7FC535BE0F84BADB00BA96EE /* libbeidcommon..dylib in Frameworks */,
 				86D0915311ABF313007BC75E /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -689,7 +689,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F22A3C40F84D4A1001AD228 /* libbeidcommon.3.5.4.dylib in Frameworks */,
+				7F22A3C40F84D4A1001AD228 /* libbeidcommon..dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,7 +697,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F22A36F0F84C588001AD228 /* libbeidcommon.3.5.4.dylib in Frameworks */,
+				7F22A36F0F84C588001AD228 /* libbeidcommon..dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,16 +707,16 @@
 		034768DDFF38A45A11DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */,
-				7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.3.5.4.dylib */,
+				7FBB02530F839352009B751F /* libbeidcommon..dylib */,
+				7FC5353B0F84B83B00BA96EE /* libbeidcardlayer..dylib */,
 				7FC535AC0F84B9EF00BA96EE /* libsiscardplugin1__ACS__.dylib */,
-				7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.3.5.4.dylib */,
+				7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT..dylib */,
 				7F872F680F84E53000DE6627 /* beiddialogsQTsrv */,
-				7F900E540F84FB07004A5FCC /* libbeidapplayer.3.5.4.dylib */,
+				7F900E540F84FB07004A5FCC /* libbeidapplayer..dylib */,
 				7F900E5B0F84FB1A004A5FCC /* libbeidlib.3.5.4.dylib */,
 				7F9011380F85057A004A5FCC /* beidgui.app */,
-				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.3.5.4.dylib */,
-				7F90D54E0F9F36F500BB8F23 /* libbeidlibJava_Wrapper.3.5.4.dylib */,
+				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11..dylib */,
+				7F90D54E0F9F36F500BB8F23 /* libbeidlibJava_Wrapper..dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -726,7 +726,6 @@
 			children = (
 				7FBB025A0F83937F009B751F /* Common */,
 				7FBB02DC0F839518009B751F /* Common_Socket */,
-				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
 				7F90113E0F85058E004A5FCC /* Beidgui */,
 				7F900EBC0F84FC50004A5FCC /* Beidlib */,
 				7F900EBB0F84FC40004A5FCC /* Applayer */,
@@ -999,6 +998,7 @@
 		7FBB02DC0F839518009B751F /* Common_Socket */ = {
 			isa = PBXGroup;
 			children = (
+				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
 				7FBB02D00F839514009B751F /* Socket.cpp */,
 				7FBB02D10F839514009B751F /* Socket.h */,
 				7FBB02D20F839514009B751F /* SocketClient.cpp */,
@@ -1239,7 +1239,7 @@
 			);
 			name = beidapplayer;
 			productName = beidapplayer;
-			productReference = 7F900E540F84FB07004A5FCC /* libbeidapplayer.3.5.4.dylib */;
+			productReference = 7F900E540F84FB07004A5FCC /* libbeidapplayer..dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7F900E5A0F84FB1A004A5FCC /* beidlib */ = {
@@ -1295,7 +1295,7 @@
 			);
 			name = beidlibJava_Wrapper;
 			productName = beidlibJava_Wrapper;
-			productReference = 7F90D54E0F9F36F500BB8F23 /* libbeidlibJava_Wrapper.3.5.4.dylib */;
+			productReference = 7F90D54E0F9F36F500BB8F23 /* libbeidlibJava_Wrapper..dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */ = {
@@ -1313,7 +1313,7 @@
 			);
 			name = beidpkcs11;
 			productName = beidpkcs11;
-			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.3.5.4.dylib */;
+			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11..dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FBB02520F839352009B751F /* beidcommon */ = {
@@ -1330,7 +1330,7 @@
 			);
 			name = beidcommon;
 			productName = beidcommon;
-			productReference = 7FBB02530F839352009B751F /* libbeidcommon.3.5.4.dylib */;
+			productReference = 7FBB02530F839352009B751F /* libbeidcommon..dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FC5353A0F84B83B00BA96EE /* beidcardlayer */ = {
@@ -1349,7 +1349,7 @@
 			);
 			name = beidcardlayer;
 			productName = beidcardlayer;
-			productReference = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.3.5.4.dylib */;
+			productReference = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer..dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FC535AB0F84B9EF00BA96EE /* siscardplugin */ = {
@@ -1385,7 +1385,7 @@
 			);
 			name = beiddialogsQT;
 			productName = beiddialogsQT;
-			productReference = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.3.5.4.dylib */;
+			productReference = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT..dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -1768,7 +1768,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CURRENT_PROJECT_VERSION = 3.5.3;
+				CURRENT_PROJECT_VERSION = 3.5.5;
+				DEBUG_INFORMATION_FORMAT = stabs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PFE_FILE_C_DIALECTS = "c c++";
@@ -1794,7 +1795,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CURRENT_PROJECT_VERSION = 3.5.4;
+				CURRENT_PROJECT_VERSION = "";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PFE_FILE_C_DIALECTS = "c c++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1802,7 +1804,7 @@
 					BEID_35,
 				);
 				GCC_THREADSAFE_STATICS = YES;
-				GCC_VERSION = 4.0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
@@ -1820,12 +1822,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.5.4;
+				CURRENT_PROJECT_VERSION = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
 					/Library/Frameworks/QtCore.framework/Headers,
@@ -1833,13 +1837,14 @@
 				);
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../lib";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-finput-charset=cp1252",
 					"-fno-strict-aliasing",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beiddialogsQTsrv;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -1850,7 +1855,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../bin";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
@@ -1884,6 +1889,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
 					"${PROJECT_DIR}/../dialogs",
@@ -1910,8 +1916,8 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.5.4;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CURRENT_PROJECT_VERSION = "";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -1950,6 +1956,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidlib.$(CURRENT_PROJECT_VERSION)";
@@ -1965,7 +1972,7 @@
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 3.5.4;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -1991,6 +1998,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../_Builds",
 					"${PROJECT_DIR}/../eidlib",
@@ -2017,7 +2025,7 @@
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../bin";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 3.5.4;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2054,6 +2062,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../eidlib",
 					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/JavaVM.framework/Headers,
@@ -2072,7 +2081,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -2096,6 +2105,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "";
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -2107,6 +2117,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
 					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
@@ -2125,8 +2136,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.5.4;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CURRENT_PROJECT_VERSION = "";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -2155,6 +2166,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
 				PRODUCT_NAME = Beidmw;
 			};
 			name = Debug;
@@ -2163,8 +2175,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.5.4;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CURRENT_PROJECT_VERSION = "";
+				DEBUG_INFORMATION_FORMAT = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = Beidmw;
 				VALID_ARCHS = i386;
@@ -2200,8 +2212,8 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.5.4;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				CURRENT_PROJECT_VERSION = "";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -2243,9 +2255,10 @@
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
 				);
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
-					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = "";
 				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
@@ -2263,7 +2276,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -2301,7 +2313,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -2309,7 +2321,8 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;
+				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib/siscardplugins;
 				PREBINDING = NO;
 				PRODUCT_NAME = siscardplugin1__ACS__;
@@ -2323,13 +2336,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
-				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib/siscardplugins;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
@@ -2343,6 +2356,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -2350,6 +2364,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../common/**";
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_CFLAGS = (
@@ -2368,7 +2383,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
