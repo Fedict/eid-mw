@@ -17,11 +17,13 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+#ifdef WIN32
 #define _WIN32_WINNT 0x0502
-
-#include <iostream>
 #include <Windows.h>
 #include <Winbase.h>
+#endif
+
+#include <iostream>
 #include "qtsingleapplication.h"
 
 #include "Settings.h"
