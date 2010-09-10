@@ -40,7 +40,7 @@ dmg:
 # Merge executables
 ###################################################################################
 	for bin in `find \`find ${DIST64}/${FRAMEWORKS} -name bin\` -type f | sed -e "s|${DIST64}/||"`; do \
-	lipo ${DIST64}/$${bin} \
+	$(LIPO) ${DIST64}/$${bin} \
 	${DIST32}/$${bin} \
 	-output ${DIST96}/$${bin} \
 	-create; \
