@@ -7,8 +7,6 @@ linux="no"
 osx="no"
 win32="no"
 
-AC_MSG_ERROR($host)
-
 AS_CASE([$host],
   [*-*-linux*],[linux=true gtk=true],
   [*-*-darwin*],[osx=true qt=true],
