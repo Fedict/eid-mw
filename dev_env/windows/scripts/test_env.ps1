@@ -29,6 +29,7 @@ $packagesfolderurl = "http://dl.dropbox.com/u/2715381/buildbot/"
 $toolsfolder = "c:\eid_test_env\tools"
 $rubyfolder = "c:\eid_test_env\ruby"
 $svnfolder = "c:\eid_test_env\svn"
+$userpath = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::User)
 #
 # end Config Section
 ###############################################################################
@@ -77,12 +78,18 @@ function Download
 function AddToPathEnv
 {
 	param([string]$folder)
-	If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
+
+	$path = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::User) + 
+		";" + [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::Machine) + 
+		";" + $Env:Path
+		
+	If (!(select-string -InputObject $path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
 	{
 		Write-Host "    $folder not yet in Path. Adding..."
 		$env:Path = $env:Path + ";$folder"
-		### Modify system environment variable ###
-		[Environment]::SetEnvironmentVariable( "Path", "$env:Path", [System.EnvironmentVariableTarget]::Machine )
+		Set-Variable -Name userpath -value "$userpath;$folder" -Scope Global
+		### Modify user environment variable ###
+		[Environment]::SetEnvironmentVariable( "Path", $userpath , [System.EnvironmentVariableTarget]::User )
 	}
 }
 ##############################################################################
@@ -165,3 +172,10 @@ else
 Write-Host "-- Installing cucumber"
 
 invoke-expression "$rubyfolder\bin\gem install cucumber"
+
+##############################################################################
+# install rspec 
+##############################################################################
+Write-Host "-- Installing rspec"
+
+invoke-expression "$rubyfolder\bin\gem install rspec"

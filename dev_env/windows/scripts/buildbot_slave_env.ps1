@@ -45,6 +45,7 @@ $pythonsitepackagesfolder="c:\Python26\Lib\site-packages"
 $pythonscriptsfolder="c:\Python26\Scripts"
 $pythonbinaryfolder="c:\Python26"
 $buildslavefolder="c:\eid_buildbot_env\slave\$slavename"
+$userpath = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::User)
 #
 # end Config Section
 ###############################################################################
@@ -133,12 +134,18 @@ function InstallEXEdistinst
 function AddToPathEnv
 {
 	param([string]$folder)
-	If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
+
+	$path = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::User) + 
+		";" + [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::Machine) + 
+		";" + $Env:Path
+		
+	If (!(select-string -InputObject $path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
 	{
 		Write-Host "    $folder not yet in Path. Adding..."
 		$env:Path = $env:Path + ";$folder"
-		### Modify system environment variable ###
-		[Environment]::SetEnvironmentVariable( "Path", "$env:Path", [System.EnvironmentVariableTarget]::Machine )
+		Set-Variable -Name userpath -value "$userpath;$folder" -Scope Global
+		### Modify user environment variable ###
+		[Environment]::SetEnvironmentVariable( "Path", $userpath , [System.EnvironmentVariableTarget]::User )
 	}
 }
 ##############################################################################

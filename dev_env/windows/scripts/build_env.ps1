@@ -31,6 +31,7 @@ $msysfolder = "c:\eid_dev_env\msys"
 $mingw32folder = "c:\eid_dev_env\mingw64-32"
 $mingw64folder = "c:\eid_dev_env\mingw64-64"
 $svnfolder = "c:\eid_dev_env\svn"
+$userpath = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::User)
 #
 # end Config Section
 ###############################################################################
@@ -79,12 +80,18 @@ function Download
 function AddToPathEnv
 {
 	param([string]$folder)
-	If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
+
+	$path = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::User) + 
+		";" + [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::Machine) + 
+		";" + $Env:Path
+		
+	If (!(select-string -InputObject $path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
 	{
 		Write-Host "    $folder not yet in Path. Adding..."
 		$env:Path = $env:Path + ";$folder"
-		### Modify system environment variable ###
-		[Environment]::SetEnvironmentVariable( "Path", "$env:Path", [System.EnvironmentVariableTarget]::Machine )
+		Set-Variable -Name userpath -value "$userpath;$folder" -Scope Global
+		### Modify user environment variable ###
+		[Environment]::SetEnvironmentVariable( "Path", $userpath , [System.EnvironmentVariableTarget]::User )
 	}
 }
 ##############################################################################
@@ -470,12 +477,11 @@ Extract "$packagesfolder\$toolfilenametar" $msysfolder
 
 ##############################################################################
 # install mingw64
-# found on http://sourceforge.net/projects/mingw/files/MSYS/make/make-3.81-3/make-3.81-3-msys-1.0.13-bin.tar.lzma/download
 ##############################################################################
 Write-Host "- Installing mingw64"
 ##############################################################################
 # install mingw64 for 32 bit
-# found on http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Automated%20Builds/mingw-w32-1.0-bin_i686-mingw_20100702.zip/download
+# found on http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/
 ##############################################################################
 Write-Host "-- Installing mingw64 targetting 32 bit 1.0 - 20100702"
 $toolfilename = "mingw-w32-1.0-bin_i686-mingw_20100702.zip"
@@ -487,15 +493,18 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 # extract
 Extract $tooltarget $mingw32folder
 
-Write-Host "Add svn path ($mingw32folder\bin) to Path environmental variable."
+# The compiler does not look in i686-w64-mingw32\lib for libraries so we copy libole32 it to lib32
+Copy-Item $mingw32folder\i686-w64-mingw32\lib\libole32.a $mingw32folder\i686-w64-mingw32\lib32
+
+Write-Host "Add mingw32 path ($mingw32folder\bin) to Path environmental variable."
 AddToPathEnv "$mingw32folder\bin"
 
 ##############################################################################
 # install mingw64 for 64 bit
-# found on http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Automated%20Builds/mingw-w64-1.0-bin_i686-mingw_20100702.zip/download
+# found on http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/
 ##############################################################################
-Write-Host "-- Installing mingw64 targetting 64 bit 1.0 - 20100702"
-$toolfilename = "mingw-w64-1.0-bin_i686-mingw_20100702.zip"
+Write-Host "-- Installing mingw64 targetting 64 bit 1.0 - 20100913"
+$toolfilename = "mingw-w64-1.0-bin_i686-mingw_20100913.zip"
 $tooltarget = "$packagesfolder\$toolfilename"
 
 # download file
@@ -504,5 +513,8 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 # extract
 Extract $tooltarget $mingw64folder
 
-Write-Host "Add svn path ($mingw64folder\bin) to Path environmental variable."
+# The compiler does not look in x86_64-w64-mingw32\lib32 for libraries so we copy libole32 it to lib64
+Copy-Item $mingw64folder\x86_64-w64-mingw32\lib32\libole32.a $mingw64folder\x86_64-w64-mingw32\lib64
+
+Write-Host "Add mingw64 path ($mingw64folder\bin) to Path environmental variable."
 AddToPathEnv "$mingw64folder\bin"
