@@ -68,11 +68,11 @@ function Download
 	if (! (test-path($destination)))
 	{
 		# file does not exists
-		Start-BitsTransfer -Source $url -Destination $destination
+		Start-BitsTransfer -Source $url -Destination $destination -ErrorAction "Stop"
 	}
 	else 
 	{
-		Write-Host "   $destination already exists. Skipping..."
+		Write-Host "   $destination already downloaded. Skip download..."
 	}
 }
 function AddToPathEnv
@@ -92,6 +92,7 @@ function AddToPathEnv
 		[Environment]::SetEnvironmentVariable( "Path", $userpath , [System.EnvironmentVariableTarget]::User )
 	}
 }
+try {
 ##############################################################################
 # install 7zip command line version 9.15
 # can be found on http://sourceforge.net/projects/sevenzip/files/7-Zip/9.15/7za915.zip/download
@@ -179,3 +180,8 @@ invoke-expression "$rubyfolder\bin\gem install cucumber"
 Write-Host "-- Installing rspec"
 
 invoke-expression "$rubyfolder\bin\gem install rspec"
+} # end try
+catch{
+  "Error: $_"
+  exit 1
+}
