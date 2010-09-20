@@ -18,10 +18,16 @@ AS_CASE([$host],
 
 AS_VAR_IF([linux],[true],
 [
+	AC_CHECK_PROGS(WGET,[wget],[missing])
 	AC_CHECK_PROGS(RPMBUILD,[rpmbuild],[missing])
 	AC_CHECK_PROGS(RPMDEVSETUPTREE,[rpmdev-setuptree],[missing])
-	AS_VAR_IF([RPMBUILD],[missing],AC_MSG_WARN([To build RPM packages please install rpmdevtools (rpmbuild command not found)]),AC_SUBST(RPMBUILD))
-	AS_VAR_IF([RPMDEVSETUPTREE],[missing],AC_MSG_WARN([To build RPM packages please install rpmdevtools (rpmdev-setuptree command not found)]),AC_SUBST(RPMDEVSETUPTREE))
+
+	AS_VAR_IF([WGET],[missing],AC_MSG_ERROR([the wget command is required]),AC_SUBST(WGET))
+	AS_VAR_IF([RPMBUILD],[missing],AC_MSG_ERROR([the rpmbuild command is required. Please install rpmdevtools]),AC_SUBST(RPMBUILD))
+	AS_VAR_IF([RPMDEVSETUPTREE],[missing],AC_MSG_ERROR([the rpmdev-setuptree command is required. Please install rpmdevtools]),AC_SUBST(RPMDEVSETUPTREE))
+],
+[
+	AC_MSG_ERROR([building RPM only makes sense on RPM-based Linux distributions])
 ])
 
 AC_CONFIG_FILES([Makefile])
