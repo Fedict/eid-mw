@@ -1,6 +1,6 @@
 Name:           eid-mw
 Version:        4.0.0
-Release:        M2M2%{?dist}
+Release:        0%{?dist}
 Summary:        Belgium Electronic Identity Card PKCS#11 Module and Firefox Plugin
 
 Group:          Applications/Communications
