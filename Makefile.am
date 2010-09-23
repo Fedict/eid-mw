@@ -1,4 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4
+EXTRA_DIST = rpm debian
 
 if WIN32
 MAYBE_MINIDRIVER=minidriver

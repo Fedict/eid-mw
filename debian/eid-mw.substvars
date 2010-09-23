@@ -1,0 +1,2 @@
+shlibs:Depends=eid-mw, libatk1.0-0 (>= 1.29.3), libc6 (>= 2.3.6-6~), libc6 (>= 2.8), libcairo2 (>= 1.2.4), libfontconfig1 (>= 2.8.0), libfreetype6 (>= 2.2.1), libgcc1 (>= 1:4.1.1), libglib2.0-0 (>= 2.16.0), libgtk2.0-0 (>= 2.8.0), libpango1.0-0 (>= 1.14.0), libpcsclite1 (>= 1.5.3), libstdc++6 (>= 4.2.1), zlib1g (>= 1:1.1.4)
+misc:Depends=
