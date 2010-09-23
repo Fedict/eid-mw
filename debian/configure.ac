@@ -14,10 +14,8 @@ AS_CASE([$host],
 
 AS_VAR_IF([linux],[true],
 [
-	AC_CHECK_PROGS(WGET,[wget],[missing])
 	AC_CHECK_PROGS(BUILDPACKAGE,[dpkg-buildpackage],[missing])
-	AS_VAR_IF([WGET],[missing],AC_MSG_ERROR([the wget command is required]),AC_SUBST(WGET))
-	AS_VAR_IF([BUILDPACKAGE],[missing],AC_MSG_ERROR([the dpkg-buildpackage command is required. Please install build-essential.]),AC_SUBST(BUILDPACKAGE))
+	AS_VAR_IF([BUILDPACKAGE],[missing],AC_MSG_ERROR([the dpkg-buildpackage command is required. Please install build-essentials.]),AC_SUBST(BUILDPACKAGE))
 ])
 
 AC_CONFIG_FILES([Makefile])
