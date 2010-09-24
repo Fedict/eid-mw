@@ -11,7 +11,7 @@ if LINUX
 BUILT_SOURCES 					= default-beid-askpin.cpp default-beid-askaccess.cpp default-beid-badpin.cpp default-beid-changepin.cpp default-beid-spr-askpin.cpp default-beid-spr-changepin.cpp default-beid-spr-close.cpp
 CLEANFILES 						= $(BUILT_SOURCES)
 
-libbeiddialogs_la_SOURCES  	 	= src/dialogsgtk/single_dialog.c src/dialogsgtk/dlgs_gtk.cpp default-beid-askpin.cpp default-beid-askaccess.cpp
+libbeiddialogs_la_SOURCES  	 	= src/dialogsgtk/single_dialog.c src/dialogsgtk/dlgs_gtk.cpp
 libbeiddialogs_la_CPPFLAGS   	= -I$(srcdir)/src/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DSDIALOG_ID=beid-spr -DDEBUG
 libbeiddialogs_la_LDFLAGS	 	= -avoid-version -g 
 libbeiddialogs_la_CXXFLAGS	 	= -fno-strict-aliasing -ggdb -g
