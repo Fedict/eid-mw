@@ -1,4 +1,5 @@
-AM_CXXFLAGS								= -DLTC_NO_ASM
+ACLOCAL_AMFLAGS     = -I m4
+AM_CXXFLAGS	    = -DLTC_NO_ASM
 
 bin_PROGRAMS = certprop
 

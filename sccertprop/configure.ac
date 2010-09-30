@@ -1,15 +1,22 @@
-
 AC_PREREQ([2.63])
 AC_INIT([sccertprop], [4.0.0], [servicedesk@fedict.be])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
-AC_CONFIG_MACRO_DIR([m4])
+
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/main.cpp])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CANONICAL_HOST
+
+LT_INIT
+LT_PREREQ([2.2.7c],
+      [LT_PREREQ([2.2.6])],
+      [AC_MSG_WARN([Libtool Version 2.2.7c is required])]
+      )
+
+AM_INIT_AUTOMAKE([-Wall -Werror])
 
 # Checks for programs.
-LT_INIT
 AC_PROG_CXX
-
 
 dnl this macro is used to get the arguments supplied
 dnl to the configure script (./configure --enable-debug)
