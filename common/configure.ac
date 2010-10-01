@@ -38,6 +38,43 @@ AM_CONDITIONAL([LINUX],[test x$linux = xtrue])
 AM_CONDITIONAL([OSX],[test x$osx = xtrue])
 AM_CONDITIONAL([WIN32],[test x$win32 = xtrue])
 
+###########################################################################
+####### read user-specific dependecy requests from --with directives ######
+###########################################################################
+
+AS_VAR_IF([linux],[true],
+[
+    AC_MSG_CHECKING([user-specified pscs-lite installation])
+    AC_ARG_WITH([pcsclite],
+    AC_HELP_STRING([--with-pcsclite=DIR],[specific pcsc-lite install location]),
+      [],
+      [with_pcsclite=no])
+    AC_MSG_RESULT([$with_pcsclite])
+
+    AS_VAR_IF([with_pcsclite],[no],
+    [
+                # PKG_CHECK_MODULES is possibly undefined
+                # as we do not use pkgconfig on Windows and Mac
+                m4_ifdef([PKG_CHECK_MODULES],
+                [
+            PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.3],
+            [
+                    CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
+                    LDFLAGS="$PCSC_LIBS $CPPFLAGS"
+            ])
+        ])
+    ],
+    [
+      AS_VAR_IF([win32],[no],[
+        CPPFLAGS="-I$with_pcsclite/include/PCSC $CPPFLAGS"
+        LDFLAGS="-L$with_pcsclite/lib $LDFLAGS"
+      ],[
+        AC_MSG_WARN([--with-pcsclite specified on MS Windows host, ignoring])
+      ])
+    ])
+])
+
+
 # Checks for libraries
 AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcrt],[_getpid])])
 

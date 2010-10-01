@@ -40,6 +40,13 @@ Takes care of
 
 #include "wintypes.h"
 #include "reader.h"
+
+// fix for gc issue #47 - compatible with pcsc-lite-1.6.4
+// but still works on older pcsc-lite versions which *do* define SCARD_READERSTATE_A themselves
+#ifndef SCARD_READERSTATE_A
+#define SCARD_READERSTATE_A SCARD_READERSTATE
+#endif
+
 #ifndef SCARD_READERSTATEA
 #define SCARD_READERSTATEA SCARD_READERSTATE_A
 #endif

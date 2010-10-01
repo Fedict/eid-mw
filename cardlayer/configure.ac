@@ -61,7 +61,7 @@ AS_VAR_IF([linux],[true],
 	],
 	[
 	  AS_VAR_IF([win32],[no],[
-	    CPPFLAGS="-I$with_pcsclite/include $CPPFLAGS"
+	    CPPFLAGS="-I$with_pcsclite/include/PCSC $CPPFLAGS"
 	    LDFLAGS="-L$with_pcsclite/lib $LDFLAGS"
 	  ],[
 	    AC_MSG_WARN([--with-pcsclite specified on MS Windows host, ignoring])

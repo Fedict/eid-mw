@@ -60,7 +60,7 @@ AS_VAR_IF([linux],[true],
 		])
 	],
 	[
-	    CPPFLAGS="-I$with_pcsclite/include $CPPFLAGS"
+	    CPPFLAGS="-I$with_pcsclite/include/PCSC $CPPFLAGS"
 	    LDFLAGS="-L$with_pcsclite/lib $LDFLAGS"
   	])
 ])
