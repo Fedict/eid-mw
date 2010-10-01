@@ -23,8 +23,4 @@
 extern DWORD            BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD *pcbPubKey, PBYTE *ppbPubKey);
 extern DWORD            BeidCreateMSRoots(PCARD_DATA  pCardData, DWORD *pcbMSRoots, PBYTE *ppbMSRoots);
 
-extern PCARD_LIST_TYPE  GetCardListItem(PCARD_DATA pCardData);
-extern DWORD            AddContextInList(PCARD_DATA pCardData);
-extern DWORD            DeleteContextFromList(PCARD_DATA pCardData);
-
 #endif

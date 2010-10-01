@@ -120,7 +120,6 @@ DWORD WINAPI   CardGetContainerInfo
    DWORD                cbCertif = 0;
    DWORD				dwCertSpec = 0;
    PBYTE				pbCertif = NULL;
-   PCARD_LIST_TYPE      pCardItem = NULL;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...[%d]", bContainerIndex);
 
@@ -158,61 +157,6 @@ DWORD WINAPI   CardGetContainerInfo
       LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pContainerInfo->dwVersion]");
       CLEANUP(ERROR_REVISION_MISMATCH );
    }
-
-   //pCardItem = GetCardListItem(pCardData);
-   //if ( pCardItem == NULL )
-   //{
-   //   LogTrace(LOGTYPE_ERROR, WHERE, "Card context and handle not Found...");
-   //   CLEANUP(SCARD_E_UNEXPECTED);
-   //}
-
-//////   pContainerInfo->dwVersion        = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.dwVersion;
-//   pContainerInfo->dwReserved       = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.dwReserved;
-//   pContainerInfo->cbSigPublicKey   = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.cbSigPublicKey;
-//   if ( pContainerInfo->cbSigPublicKey > 0 )
-//   {
-//      pContainerInfo->pbSigPublicKey = pCardData->pfnCspAlloc(pContainerInfo->cbSigPublicKey);
-//      if ( pContainerInfo->pbSigPublicKey == NULL )
-//      {
-//         LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [pContainerInfo->pbSigPublicKey]");
-//         CLEANUP(SCARD_E_NO_MEMORY);
-//      }
-//
-//      memcpy(pContainerInfo->pbSigPublicKey, pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.pbSigPublicKey, pContainerInfo->cbSigPublicKey); 
-//
-//      LogTrace(LOGTYPE_INFO, WHERE, "SigPublicKey [%d]", pContainerInfo->cbSigPublicKey);
-//#ifdef _DEBUG
-//   LogDump (pContainerInfo->cbSigPublicKey, (char *)pContainerInfo->pbSigPublicKey);
-//#endif
-//   }
-//   else
-//   {
-//      pContainerInfo->cbSigPublicKey = 0;
-//      pContainerInfo->pbSigPublicKey = NULL;
-//   }
-//
-//   pContainerInfo->cbKeyExPublicKey = pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.cbKeyExPublicKey;
-//   if ( pContainerInfo->cbKeyExPublicKey > 0 )
-//   {
-//      pContainerInfo->pbKeyExPublicKey = pCardData->pfnCspAlloc(pContainerInfo->cbKeyExPublicKey);
-//      if ( pContainerInfo->pbKeyExPublicKey == NULL )
-//      {
-//         LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [pContainerInfo->pbKeyExPublicKey]");
-//         CLEANUP(SCARD_E_NO_MEMORY);
-//      }
-//
-//      memcpy(pContainerInfo->pbKeyExPublicKey, pCardItem->ContainerInfo[bContainerIndex].ContainerInfo.pbKeyExPublicKey, pContainerInfo->cbKeyExPublicKey); 
-//
-//      LogTrace(LOGTYPE_INFO, WHERE, "KeyExPublicKey [%d]", pContainerInfo->cbKeyExPublicKey);
-//#ifdef _DEBUG
-//   LogDump (pContainerInfo->cbSigPublicKey, (char *)pContainerInfo->pbKeyExPublicKey);
-//#endif
-//   }
-//   else
-//   {
-//      pContainerInfo->cbKeyExPublicKey = 0;
-//      pContainerInfo->pbKeyExPublicKey = NULL;
-//   }
 
     /*
     * Authentication Certificate

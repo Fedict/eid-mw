@@ -21,6 +21,7 @@
 
 #include "log.h"
 #include "util.h"
+#include "SmartCard.h"
 
 /****************************************************************************************************/
 
@@ -110,10 +111,16 @@ DWORD WINAPI   CardReadFile
    int                  i           = 0;
    int                  DirFound    = 0;
    int                  FileFound   = 0;
-   PCARD_LIST_TYPE      pCardItem   = NULL;
-   POBJECT_LIST_TYPE    pObjectItem = NULL;
+	CONTAINER_MAP_RECORD cmr[2];
+	BYTE                 pbSerialNumber[16];
+	DWORD				      cbSerialNumber = sizeof(pbSerialNumber);
+	DWORD				      cbDataLen;
+	char					   szSerialNumber[33];
+	char					   szContainerName[64];
+	int					   iReturn;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+
 
    /********************/
    /* Check Parameters */
@@ -169,70 +176,184 @@ DWORD WINAPI   CardReadFile
       LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
    }
 
-   /*
-    * Read file from Virtual File List 
-    */
-   pCardItem = GetCardListItem(pCardData);
-   if ( pCardItem == NULL )
+	if ( pszDirectoryName == NULL)                                 /* root */
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Card context and handle not Found...");
-      CLEANUP(SCARD_E_UNEXPECTED);
+		DirFound++;
+		if (_stricmp("cardid", pszFileName) == 0)                   /* /cardid */
+		{
+			FileFound++;
+			*ppbData = (PBYTE)pCardData->pfnCspAlloc(sizeof(GUID));
+			if ( *ppbData == NULL )
+			{
+				LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+				CLEANUP(SCARD_E_NO_MEMORY);
    }
+			dwReturn = CardGetProperty(pCardData, 
+				CP_CARD_GUID, 
+				*ppbData, 
+				sizeof(GUID),
+				pcbData,
+				0);
+			if (dwReturn != SCARD_S_SUCCESS)  {
+				LogTrace(LOGTYPE_ERROR, WHERE, "Error CardGetProperty for [CP_CARD_GUID]: 0x08X", dwReturn);
+				CLEANUP(dwReturn);
+			}
 
-   for ( i = 1 ; i <= ITEM_CNT(&pCardItem->ObjectList) ; i++)
-   {
-      Goto_item_in_list(&pCardItem->ObjectList, i);
-      pObjectItem = (POBJECT_LIST_TYPE) CURR_PTR(&pCardItem->ObjectList);
+			LogTrace(LOGTYPE_INFO, WHERE, "#bytes: [%d]", *pcbData);
+		}
 
-      if ( ( ( pszDirectoryName == NULL ) && ( pObjectItem->szDirectoryName[0]                          == '\0' ) ) ||
-           ( ( pszDirectoryName != NULL ) && ( _stricmp(pszDirectoryName, pObjectItem->szDirectoryName) == 0    ) ) )
+		if ( _stricmp("cardapps", pszFileName) == 0)				      /* /cardapps */
       {
+			FileFound++;
+			*pcbData = 5;
+			*ppbData = (PBYTE)pCardData->pfnCspAlloc(*pcbData);
+			if ( *ppbData == NULL )
+			{
+				LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+				CLEANUP(SCARD_E_NO_MEMORY);
+			}
+			memcpy (*ppbData, "mscp", *pcbData);
+		}
+		if (_stricmp("cardcf", pszFileName) == 0)					      /* /cardcf */
+		{
+			FileFound++;
+			*pcbData = 6;
+			*ppbData = (PBYTE)pCardData->pfnCspAlloc(*pcbData);
+			if ( *ppbData == NULL )
+			{
+				LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+				CLEANUP(SCARD_E_NO_MEMORY);
+			}
+			// zero-filled CARD_CACHE_FILE_FORMAT
+			memset (*ppbData, '\0', *pcbData);
+		}
+	}
+	else                         									         /* not on root */
+	{
+		if ( _stricmp("mscp", pszDirectoryName) == 0)               /* /mscp */
+		{
          DirFound++;
-
-         if ( _stricmp(pObjectItem->szFileName, pszFileName) == 0 )
+			if (_stricmp("cmapfile", pszFileName) == 0)			      /* /mscp/cmapfile */
          {
-            /* Found file */
             FileFound++;
-            break;
+				*pcbData = sizeof(cmr);
+				*ppbData = (PBYTE)pCardData->pfnCspAlloc(*pcbData);
+				if ( *ppbData == NULL )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+					CLEANUP(SCARD_E_NO_MEMORY);
          }
+				dwReturn = CardGetProperty(pCardData, 
+					CP_CARD_SERIAL_NO, 
+					pbSerialNumber, 
+					cbSerialNumber,
+					&cbDataLen,
+					0);
+				if (dwReturn != SCARD_S_SUCCESS)  {
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error CardGetProperty for [CP_CARD_SERIAL_NO]: 0x08X", dwReturn);
+					CLEANUP(dwReturn);
       }
+				for (i=0; i < 16; i++) {
+					sprintf(szSerialNumber + 2*i*sizeof(char),
+						"%02X", pbSerialNumber[i]);
    }
+				szSerialNumber[32] = '\0';
 
-   if ( ! FileFound )
+				/* Cleanup CMR first */
+				memset(&cmr, '\0', sizeof(cmr));
+
+				/***************************/
+				/* Authentication Key Info */
+				/***************************/
+				/* Container name for Authentication key */
+				sprintf (szContainerName, "DS_%s", szSerialNumber);
+				memset(cmr[0].wszGuid, '\0', sizeof(cmr[0].wszGuid));
+				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, strlen(szContainerName), cmr[0].wszGuid, sizeof(cmr[0].wszGuid));
+
+				if (iReturn == 0) 
    {
-      if ( ! DirFound )
+					dwReturn = GetLastError();
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error MultiByteToWideChar: 0x08X", dwReturn);
+					CLEANUP(dwReturn);
+				}
+				cmr[0].bFlags                     = CONTAINER_MAP_VALID_CONTAINER|CONTAINER_MAP_DEFAULT_CONTAINER;
+				cmr[0].bReserved                  = 0;
+				cmr[0].wSigKeySizeBits            = 1024;
+				cmr[0].wKeyExchangeKeySizeBits    = 0;
+
+				/****************************/
+				/* Non-Repudiation Key Info */
+				/****************************/
+				/* Container name for Non-repudiation key */
+				sprintf (szContainerName, "NR_%s", szSerialNumber);
+				memset(cmr[1].wszGuid, '\0', sizeof(cmr[1].wszGuid));
+				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, strlen(szContainerName), cmr[1].wszGuid, sizeof(cmr[1].wszGuid));
+
+				if (iReturn == 0) 
       {
-         LogTrace(LOGTYPE_ERROR, WHERE, "Dir not found");
-         CLEANUP(SCARD_E_DIR_NOT_FOUND);
+					dwReturn = GetLastError();
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error MultiByteToWideChar: 0x08X", dwReturn);
+					CLEANUP(dwReturn);
       }
-      else
+				cmr[1].bFlags                     = CONTAINER_MAP_VALID_CONTAINER;
+				cmr[1].bReserved                  = 0;
+				cmr[1].wSigKeySizeBits            = 1024;
+				cmr[1].wKeyExchangeKeySizeBits    = 0;
+				memcpy (*ppbData, &cmr, *pcbData);
+			}
+			if ( _stricmp("ksc00", pszFileName) == 0)					   /* /mscp/ksc00 */
       {
-         LogTrace(LOGTYPE_ERROR, WHERE, "File not found");
-         CLEANUP(SCARD_E_FILE_NOT_FOUND);
+				FileFound++;
+				dwReturn = BeidReadCert(pCardData, CERT_AUTH, pcbData, ppbData);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
       }
    }
-   
-   if ( ( _stricmp(pObjectItem->szFileName, "msroots") == 0 ) &&
-        ( pObjectItem->ObjectDataSize                  == 0 ) )
+			if ( _stricmp("ksc01", pszFileName) == 0)					   /* /mscp/ksc01 */
    {
-      dwReturn = BeidCreateMSRoots(pCardData, &(pObjectItem->ObjectDataSize), (PBYTE *)&(pObjectItem->pObjectData));
+				FileFound++;
+				dwReturn = BeidReadCert(pCardData, CERT_NONREP, pcbData, ppbData);
       if ( dwReturn != SCARD_S_SUCCESS )
       {
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
+			}
+			if ( _stricmp("msroots", pszFileName) == 0)					/* /mscp/msroots */
+			{
+				FileFound++;
+				dwReturn = BeidCreateMSRoots(pCardData, pcbData, ppbData);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
          LogTrace(LOGTYPE_ERROR, WHERE, "BeidCreateMSRoots returned [%d]", dwReturn);
          CLEANUP(SCARD_E_UNEXPECTED);
       }
-   }
-
-   *pcbData = pObjectItem->ObjectDataSize;
-   *ppbData = (LPVOID)pCardData->pfnCspAlloc(pObjectItem->ObjectDataSize);
    if ( *ppbData == NULL )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
       CLEANUP(SCARD_E_NO_MEMORY);
    }
-   memcpy (*ppbData, pObjectItem->pObjectData, pObjectItem->ObjectDataSize);
+			}
+		}
+	}
 
-   LogTrace(LOGTYPE_INFO, WHERE, "#bytes: [%d]", pObjectItem->ObjectDataSize);
+	if ( ! FileFound )
+	{
+		if ( ! DirFound )
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "Dir not found");
+			CLEANUP(SCARD_E_DIR_NOT_FOUND);
+		}
+		else
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "File not found");
+			CLEANUP(SCARD_E_FILE_NOT_FOUND);
+		}
+	}
+
+	LogTrace(LOGTYPE_INFO, WHERE, "#bytes: [%d]", *pcbData);
 
 #ifdef _DEBUG
    LogDump (*pcbData, (char *)*ppbData);
@@ -290,8 +411,6 @@ DWORD WINAPI   CardGetFileInfo
    int                  i           = 0;
    int                  FileFound   = 0;
    int                  DirFound    = 0;
-   PCARD_LIST_TYPE      pCardItem   = NULL;
-   POBJECT_LIST_TYPE    pObjectItem = NULL;
    DWORD                dwVersion   = 0;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
@@ -347,36 +466,69 @@ DWORD WINAPI   CardGetFileInfo
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
    }
-
-   /*
-    * Read file from Virtual File List 
-    */
-   pCardItem = GetCardListItem(pCardData);
-   if ( pCardItem == NULL )
+	if ( pszDirectoryName == NULL)                              /* root */
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Card context and handle not Found...");
-      CLEANUP(SCARD_E_UNEXPECTED);
+		DirFound++;
+		if (_stricmp("cardid", pszFileName) == 0)                   /* /cardid */
+		{
+			FileFound++;
+			pCardFileInfo->cbFileSize      = sizeof(GUID);
    }
 
-   for ( i = 1 ; i <= ITEM_CNT(&pCardItem->ObjectList) ; i++)
+		if ( _stricmp("cardapps", pszFileName) == 0)				      /* /cardapps */
    {
-      Goto_item_in_list(&pCardItem->ObjectList, i);
-      pObjectItem = (POBJECT_LIST_TYPE) CURR_PTR(&pCardItem->ObjectList);
-
-      if ( ( ( pszDirectoryName == NULL ) && ( pObjectItem->szDirectoryName[0]                          == '\0' ) ) ||
-           ( ( pszDirectoryName != NULL ) && ( _stricmp(pszDirectoryName, pObjectItem->szDirectoryName) == 0    ) ) )
+			FileFound++;
+			pCardFileInfo->cbFileSize      =  5;
+		}
+		if (_stricmp("cardcf", pszFileName) == 0)					      /* /cardcf */
       {
+			FileFound++;
+			pCardFileInfo->cbFileSize       = 6;
+		}
+	}
+	else                         									         /* not on root */
+	{
+		if ( _stricmp("mscp", pszDirectoryName) == 0)               /* /mscp */
+		{
          DirFound++;
-
-         if ( _stricmp(pObjectItem->szFileName, pszFileName) == 0 )
+			if (_stricmp("cmapfile", pszFileName) == 0)			      /* /mscp/cmapfile */
          {
-            /* Found file */
             FileFound++;
-            break;
+				pCardFileInfo->cbFileSize = sizeof(CONTAINER_MAP_RECORD) * 2;
          }
+			if ( _stricmp("ksc00", pszFileName) == 0)					   /* /mscp/ksc00 */
+			{
+				FileFound++;
+				dwReturn = BeidReadCert(pCardData, CERT_AUTH, &(pCardFileInfo->cbFileSize), NULL);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
       }
    }
+			if ( _stricmp("ksc01", pszFileName) == 0)					   /* /mscp/ksc01 */
+			{
+				FileFound++;
+				dwReturn = BeidReadCert(pCardData, CERT_NONREP, &(pCardFileInfo->cbFileSize), NULL);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
+			}
+			if ( _stricmp("msroots", pszFileName) == 0)					/* /mscp/msroots */
+			{
+				FileFound++;
+				dwReturn = BeidCreateMSRoots(pCardData, &(pCardFileInfo->cbFileSize), NULL);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidCreateMSRoots returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
 
+			}
+		}
+	}
    if ( ! FileFound )
    {
       if ( ! DirFound )
@@ -392,8 +544,7 @@ DWORD WINAPI   CardGetFileInfo
    }
 
    pCardFileInfo->dwVersion       = CARD_FILE_INFO_CURRENT_VERSION;
-   pCardFileInfo->cbFileSize      = pObjectItem->ObjectDataSize;
-   pCardFileInfo->AccessCondition = pObjectItem->bAccessCondition;
+	pCardFileInfo->AccessCondition = EveryoneReadUserWriteAc;
 
    LogTrace(LOGTYPE_INFO, WHERE, "FileInfo: [%d][%d][%d]"
                         , pCardFileInfo->dwVersion
@@ -492,13 +643,12 @@ DWORD WINAPI   CardEnumFiles
                )
 {
    DWORD                dwReturn    = 0;
-   PCARD_LIST_TYPE      pCardItem   = NULL;
-   POBJECT_LIST_TYPE    pObjectItem = NULL;
    int                  i           = 0;
 
    int                  iFileNameLg = 0;
    int                  iFileCnt    = 0;
    int                  iIndex      = 0;
+	LPSTR                szFileNames;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
@@ -534,56 +684,32 @@ DWORD WINAPI   CardEnumFiles
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
 
-   pCardItem = GetCardListItem(pCardData);
-   if ( pCardItem == NULL )
+	if ( pszDirectoryName == NULL)                              /* root */
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Card context and handle not Found...");
-      CLEANUP(SCARD_E_UNEXPECTED);
+		szFileNames = "cardid\0cardcf\0cardapps\0\0";
+		*pdwcbFileName = 24 * sizeof(CHAR);                      /* length of szFileNames */
    }
-
-   for ( i = 1 ; i <= ITEM_CNT(&pCardItem->ObjectList) ; i++)
+	else                         									      /* not on root */
    {
-      Goto_item_in_list(&pCardItem->ObjectList, i);
-      pObjectItem = (POBJECT_LIST_TYPE) CURR_PTR(&pCardItem->ObjectList);
-
-      if ( ( ( pszDirectoryName == NULL ) && ( pObjectItem->szDirectoryName[0]                          == '\0' ) ) ||
-           ( ( pszDirectoryName != NULL ) && ( _stricmp(pszDirectoryName, pObjectItem->szDirectoryName) == 0    ) ) )
+		if ( _stricmp("mscp", pszDirectoryName) == 0)            /* /mscp */
       {
-         /* Found directory - Add file to the list */
-         iFileNameLg += strlen(pObjectItem->szFileName);
-         iFileCnt++;
+			szFileNames = "cmapfile\0msroots\0ksc00\0ksc01\0\0";  /* length of szFileNames */
+			*pdwcbFileName = 30 * sizeof(CHAR);                   /* length of szFileNames */
       }
-   }
-
-   if ( ! iFileCnt )
+		else
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Directory not found");
+			LogTrace(LOGTYPE_ERROR, WHERE, "Dir not found");
       CLEANUP(SCARD_E_DIR_NOT_FOUND);
    }
+	}
 
-   *pdwcbFileName = iFileNameLg + iFileCnt + 1;
    *pmszFileNames = pCardData->pfnCspAlloc(*pdwcbFileName);
    if ( *pmszFileNames == NULL )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*pmszFileNames]");
       CLEANUP(SCARD_E_NO_MEMORY);
    }
-
-   memset(*pmszFileNames, '\0', *pdwcbFileName);
-   iIndex = 0;
-   for ( i = 1 ; i <= ITEM_CNT(&pCardItem->ObjectList) ; i++)
-   {
-      Goto_item_in_list(&pCardItem->ObjectList, i);
-      pObjectItem = (POBJECT_LIST_TYPE) CURR_PTR(&pCardItem->ObjectList);
-
-      if ( ( ( pszDirectoryName == NULL ) && ( pObjectItem->szDirectoryName[0]                          == '\0' ) ) ||
-           ( ( pszDirectoryName != NULL ) && ( _stricmp(pszDirectoryName, pObjectItem->szDirectoryName) == 0    ) ) )
-      {
-         /* Found directory - Add file to the list */
-         strcpy(*pmszFileNames + iIndex, pObjectItem->szFileName);
-         iIndex += strlen(pObjectItem->szFileName) + 1;
-      }
-   }
+	memcpy(*pmszFileNames, szFileNames, *pdwcbFileName);
 
 cleanup:
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");

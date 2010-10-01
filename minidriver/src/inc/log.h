@@ -25,7 +25,7 @@
 
 #define LOGTYPE_NONE        666
 
-extern void LogInit (char *pszLogFile, unsigned int uiLogLevel);
+extern void LogInit(void);
 extern void LogTrace(int info, const char *pWhere, const char *format,... );
 
 extern void LogDump (int iStreamLg, unsigned char *pa_cStream);

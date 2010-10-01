@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mingwbin=/c/mingw-w64/bin
+mingwbin=/c/eid_dev_env/mingw64-64/bin
 
 # 64 bit debug build
 make clean
