@@ -4,17 +4,22 @@ Early Days:
 Before June 2009 : Initial versions by various persons at ZETES S.A. We don't know your names. If you contact us, we'll list you here.
 June 29, 2009    : Checked into Google Code by "m.geerts61"
 
-Today (in order of appearance):
-===============================
+Today (all in lexical order)
+============================
 
-Maintainers:
-------------
+Maintainers 
+-----------
 
 Frank Cornelis
+Frank Marien
 Frederik Vernelen
 Koen De Causmaeker
-Frank Marien
 
-Contributors:
+Contributors 
+------------
+
+David Carliez
 Geert Jordaens
 math@umons.ac.be
+Simon Vos
+Vincent Hardy
