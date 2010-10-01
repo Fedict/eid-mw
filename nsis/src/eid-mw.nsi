@@ -75,8 +75,8 @@ Section "beID Core" SecCoreLibs
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-;  		File dist/win64/usr/local/bin/libgcc_s_sjlj-1.dll	; FIXME replace with proper 64-bit libs
-;  		File dist/win64/usr/local/bin/libstdc++-6.dll		; (2 libs)
+  		File dist/win64/usr/local/bin/w64gcc_s_sjlj-1.dll
+  		File dist/win64/usr/local/bin/libstdc++-6.dll
   		File dist/win64/usr/local/bin/libbeidcommon.dll
   		File dist/win64/usr/local/bin/libbeiddialogs.dll
   		File dist/win64/usr/local/bin/libbeidcardlayer.dll

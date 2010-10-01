@@ -7,13 +7,13 @@ nsis:
 	mkdir -p src/dist/win32/usr/local/bin
 	mkdir -p src/dist/win64/usr/local/bin
 
-# Copy current mingw (gcc) runtime libs
+# Copy current mingw (gcc) 32-bit runtime libs
 	cp "`dirname \`which i686-w64-mingw32-gcc\``/libgcc_s_sjlj-1.dll" src/dist/win32/usr/local/bin
 	cp "`dirname \`which i686-w64-mingw32-gcc\``/libstdc++-6.dll"     src/dist/win32/usr/local/bin
 
-# FIXME replace with correct 64-bit libs
-	cp "`dirname \`which i686-w64-mingw32-gcc\``/libgcc_s_sjlj-1.dll" src/dist/win64/usr/local/bin
-	cp "`dirname \`which i686-w64-mingw32-gcc\``/libstdc++-6.dll"     src/dist/win64/usr/local/bin
+# Copy current mingw (gcc) 64-bit runtime libs
+	cp "`dirname \`which x86_64-w64-mingw32-gcc\``/w64gcc_s_sjlj-1.dll" src/dist/win64/usr/local/bin
+	cp "`dirname \`which x86_64-w64-mingw32-gcc\``/libstdc++-6.dll"     src/dist/win64/usr/local/bin
 
 	$(MAKENSIS) src/eid-mw.nsi
 
