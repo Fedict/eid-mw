@@ -1,10 +1,12 @@
 !include "MUI2.nsh"
 !include "x64.nsh"
 Name "Belgian eID Middleware"
-OutFile "eid-mw.exe"
+OutFile "eid-mw-_SVN_REVISION_.exe"
 
-InstallDir "$SYSDIR"
-InstallDirRegKey HKCU "Software\beid-middleware" ""
+InstallDir "$PROGRAMFILES\Belgian eID"
+!define REG_UNINSTALL "Software\Microsoft\Windows\CurrentVersion\Uninstall\beid-middleware"
+!define BIN64 "src/dist/win64/usr/local/bin"
+!define BIN32 "src/dist/win32/usr/local/bin"
 
 ;Request application privileges for Windows Vista
 RequestExecutionLevel admin
@@ -16,8 +18,8 @@ RequestExecutionLevel admin
   !define MUI_LANGDLL_ALLLANGUAGES
 
   ; pretty icons
-!define MUI_ICON "meta/eid-mw-install.ico"
-!define MUI_UNICON "meta/eid-mw-uninstall.ico"
+!define MUI_ICON "src/meta/eid-mw-install.ico"
+!define MUI_UNICON "src/meta/eid-mw-uninstall.ico"
 
 ;--------------------------------
 ;Language Selection Dialog Settings
@@ -28,7 +30,7 @@ RequestExecutionLevel admin
 
 ;--------------------------------
 ;Pages
-  !insertmacro MUI_PAGE_LICENSE "meta/COPYING"
+  !insertmacro MUI_PAGE_LICENSE "src/meta/COPYING"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_INSTFILES
   !insertmacro MUI_UNPAGE_CONFIRM
@@ -54,103 +56,93 @@ RequestExecutionLevel admin
 ;--------------------------------
 
 
-
 ;Installer Sections
 
 
 ; Core Libraries ; needed for pkcs#11 and CSP
 ; -----------------------------------------------------------------------------------------
 Section "beID Core" SecCoreLibs
+
   SectionIn RO
-  SetOutPath "$INSTDIR"
+  SetOutPath "$SYSDIR"
 
   ; 32-bit install:
   ${EnableX64FSRedirection}
-  File dist/win32/usr/local/bin/libgcc_s_sjlj-1.dll
-  File dist/win32/usr/local/bin/libstdc++-6.dll
-  File dist/win32/usr/local/bin/libbeidcommon.dll
-  File dist/win32/usr/local/bin/libbeiddialogs.dll
-  File dist/win32/usr/local/bin/libbeidcardlayer.dll
+  File ${BIN32}/libgcc_s_sjlj-1.dll
+  File ${BIN32}/libstdc++-6.dll
+  File ${BIN32}/libbeidcommon.dll
+  File ${BIN32}/libbeiddialogs.dll
+  File ${BIN32}/libbeidcardlayer.dll
 
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-  		File dist/win64/usr/local/bin/w64gcc_s_sjlj-1.dll
-  		File dist/win64/usr/local/bin/libstdc++-6.dll
-  		File dist/win64/usr/local/bin/libbeidcommon.dll
-  		File dist/win64/usr/local/bin/libbeiddialogs.dll
-  		File dist/win64/usr/local/bin/libbeidcardlayer.dll
+  		File ${BIN64}/w64gcc_s_sjlj-1.dll
+  		File ${BIN64}/libstdc++-6.dll
+  		File ${BIN64}/libbeidcommon.dll
+  		File ${BIN64}/libbeiddialogs.dll
+  		File ${BIN64}/libbeidcardlayer.dll
 	${EndIf}
 
-  ;Store installation folder
-  WriteRegStr HKCU "Software\beid-corelibs" "" $INSTDIR
-  ;Create uninstaller
+ 
+  WriteRegStr HKLM "${REG_UNINSTALL}" "DisplayName" "Belgian Electronic Identity Middleware"
+  WriteRegStr HKLM "${REG_UNINSTALL}" "DisplayIcon" "$INSTDIR\Uninstall.exe"
+  WriteRegStr HKLM "${REG_UNINSTALL}" "DisplayVersion" "1.0"
+  WriteRegStr HKLM "${REG_UNINSTALL}" "Publisher" "FedICT"
+  WriteRegStr HKLM "${REG_UNINSTALL}" "InstallSource" "$EXEDIR\"
+  WriteRegDWord HKLM "${REG_UNINSTALL}" "NoModify" 1
+  WriteRegDWord HKLM "${REG_UNINSTALL}" "NoRepair" 1
+  WriteRegStr HKLM "${REG_UNINSTALL}" "UninstallString" '"$INSTDIR\Uninstall.exe"'
+
+  CreateDirectory "$INSTDIR"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
+  SetOutPath "$INSTDIR"
+; eid console files here
 SectionEnd
 
 
 ; minidriver ; for IE and other proprietary apps on Windows Vista and Above
 ; -----------------------------------------------------------------------------------------
 Section "minidriver" SecMiniDriver
-	SetOutPath $INSTDIR
-
+	SetOutPath $SYSDIR
 	; 32-bit install:
 	${EnableX64FSRedirection}
-	File /oname=beidmdrv.dll dist/win32/usr/local/bin/libbeidmdrv32.dll  # extracts to C:\Windows\SysWOW64 ; rename because registry reference
-
+	File /oname=beidmdrv.dll ${BIN32}/libbeidmdrv32.dll  # extracts to C:\Windows\SysWOW64 ; rename because registry reference
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-		File /oname=beidmdrv.dll dist/win64/usr/local/bin/libbeidmdrv64.dll # extracts to C:\Windows\System32 ; rename because registry reference
+		File /oname=beidmdrv.dll ${BIN64}/libbeidmdrv64.dll # extracts to C:\Windows\System32 ; rename because registry reference
 	${EndIf}
-
-  ;Store installation folder
-  WriteRegStr HKCU "Software\beid-minidriver" "" $INSTDIR
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
-; CSP+Certificate Propagation Service ; for IE and other proprietary apps on Windows XP
+
+; CSP+Certificate Propagation Service ; for IE and other proprietary apps on Windows XP ; FIXME ADD THE READ CSP AND CERTPROP BINARIES HERE
 ; -----------------------------------------------------------------------------------------
 Section "csp" SecCSPAndPropagationService
-	SetOutPath $INSTDIR
-
+	SetOutPath $SYSDIR
 	; 32-bit install:
 	${EnableX64FSRedirection}
-	File /oname=beidmdrv.dll dist/win32/usr/local/bin/libbeidmdrv32.dll  # extracts to C:\Windows\SysWOW64 ; rename because registry reference
-
+	File /oname=beidmdrv.dll ${BIN32}/libbeidmdrv32.dll  # extracts to C:\Windows\SysWOW64 ; rename because registry reference
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-		File /oname=beidmdrv.dll dist/win64/usr/local/bin/libbeidmdrv64.dll # extracts to C:\Windows\System32 ; rename because registry reference
+		File /oname=beidmdrv.dll ${BIN64}/libbeidmdrv64.dll # extracts to C:\Windows\System32 ; rename because registry reference
 	${EndIf}
-
-  ;Store installation folder
-  WriteRegStr HKCU "Software\beid-minidriver" "" $INSTDIR
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
 
 ; pkcs11 module ; for Firefox and other standards-aware apps
 ; -----------------------------------------------------------------------------------------
 Section "pkcs#11 Module" SecPkcs11
-	SetOutPath $INSTDIR
-
+	SetOutPath $SYSDIR
 	; 32-bit install:
 	${EnableX64FSRedirection}
-  	File dist/win32/usr/local/bin/libbeidpkcs11.dll
-
+  	File ${BIN32}/libbeidpkcs11.dll
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-  		File dist/win64/usr/local/bin/libbeidpkcs11.dll
+  		File ${BIN64}/libbeidpkcs11.dll
 	${EndIf}
-
-  ;Store installation folder
-  WriteRegStr HKCU "Software\beid-pkcs11" "" $INSTDIR
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
 
@@ -158,25 +150,19 @@ SectionEnd
 ; -----------------------------------------------------------------------------------------
 
 Section "SIS Card Modules" SecSisCard
-	SetOutPath $INSTDIR
+	SetOutPath $SYSDIR
 	; 32-bit install:
 	${EnableX64FSRedirection}
-  	File dist/win32/usr/local/bin/libcardpluginbeid.dll
-  	File dist/win32/usr/local/bin/libcardpluginsis_acr38u.dll
-  	File dist/win32/usr/local/bin/libcardpluginsis.dll
-
+  	File ${BIN32}/libcardpluginbeid.dll
+  	File ${BIN32}/libcardpluginsis_acr38u.dll
+  	File ${BIN32}/libcardpluginsis.dll
 	${If} ${RunningX64}
 		; 64-bit install:
 		${DisableX64FSRedirection}
-  		File dist/win64/usr/local/bin/libcardpluginbeid.dll
-  		File dist/win64/usr/local/bin/libcardpluginsis_acr38u.dll
-  		File dist/win64/usr/local/bin/libcardpluginsis.dll
+  		File ${BIN64}/libcardpluginbeid.dll
+  		File ${BIN64}/libcardpluginsis_acr38u.dll
+  		File ${BIN64}/libcardpluginsis.dll
 	${EndIf}
-
-  ;Store installation folder
-  WriteRegStr HKCU "Software\beid-sis" "" $INSTDIR
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
 
@@ -307,8 +293,17 @@ LangString DESC_SecSisCard   ${LANG_GERMAN}  "SIS-Karte Modul (ermöglicht besti
 ;Uninstaller Section
 
 Section "Uninstall"
-  Delete "$INSTDIR\Uninstall.exe"
-  DeleteRegKey /ifempty HKCU "Software\beid-middleware"
+  Delete "$SYSDIR\libbeidcommon.dll"
+  Delete "$SYSDIR\libbeiddialogs.dll"
+  Delete "$SYSDIR\libbeidcardlayer.dll"
+  Delete "$SYSDIR\beidmdrv.dll"
+  Delete "$SYSDIR\libbeidpkcs11.dll"
+  Delete "$SYSDIR\libcardpluginbeid.dll"
+  Delete "$SYSDIR\libcardpluginsis_acr38u.dll"
+  Delete "$SYSDIR\libcardpluginsis.dll"
+
+  RMDIR /r $INSTDIR
+  DeleteRegKey HKLM "${REG_UNINSTALL}"
 SectionEnd
 
 ;--------------------------------

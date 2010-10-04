@@ -18,8 +18,10 @@ AM_CONDITIONAL(WIN32,test x$win32 = xtrue)
 
 AS_VAR_IF([win32],[true],
 [
+	AC_CHECK_PROGS(SED,[sed],[missing])
 	AC_CHECK_PROGS(MAKENSIS,[makensis],[missing])
-	AS_VAR_IF([MAKENSIS],[missing],AC_MSG_WARN([makensis is missing. You won't be able to build the MS-Windows installers.]),AC_SUBST(MAKENSIS))
+    	AS_VAR_IF([SED],[missing],AC_MSG_ERROR([the sed command is required. Please install sed.]),AC_SUBST(SED))
+	AS_VAR_IF([MAKENSIS],[missing],AC_MSG_ERROR([makensis is required. Please install nsis.]),AC_SUBST(MAKENSIS))
 ])
 
 AC_CONFIG_FILES([Makefile])
