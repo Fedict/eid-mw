@@ -29,7 +29,13 @@
 #include "mw_util.h"
 
 #ifndef WIN32
+
+#ifdef LINUX
 #include "wintypes.h"
+#else
+#include "PCSC/wintypes.h"
+#endif
+
 #include "sys/stat.h"
 #include "util.h"
 
