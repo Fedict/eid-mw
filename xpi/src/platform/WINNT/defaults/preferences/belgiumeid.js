@@ -1,1 +1,1 @@
-pref("extensions.belgiumeid.modulelocation", "beidpkcs11.dll");
+pref("extensions.belgiumeid.modulelocation", "libbeidpkcs11.dll");

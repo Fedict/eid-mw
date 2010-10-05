@@ -7,6 +7,7 @@ InstallDir "$PROGRAMFILES\Belgian eID"
 !define REG_UNINSTALL "Software\Microsoft\Windows\CurrentVersion\Uninstall\beid-middleware"
 !define BIN64 "src/dist/win64/usr/local/bin"
 !define BIN32 "src/dist/win32/usr/local/bin"
+!define SHARE32 "src/dist/win32/usr/local/share"
 
 ;Request application privileges for Windows Vista
 RequestExecutionLevel admin
@@ -97,14 +98,38 @@ Section "beID Core" SecCoreLibs
   CreateDirectory "$INSTDIR"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   SetOutPath "$INSTDIR"
-; eid console files here
 SectionEnd
 
+; pkcs11 module and Firefox extension ; for Firefox and other standards-aware apps
+; -----------------------------------------------------------------------------------------
+Section "pkcs#11 Module" SecPkcs11
+
+	SetOutPath $SYSDIR
+	; 32-bit install:
+	${EnableX64FSRedirection}
+  	File ${BIN32}/libbeidpkcs11.dll
+	${If} ${RunningX64}
+		; 64-bit install:
+		${DisableX64FSRedirection}
+  		File ${BIN64}/libbeidpkcs11.dll
+	${EndIf}
+
+	SetOutPath "$PROGRAMFILES\Mozilla Firefox\extensions"
+	; 32-bit install:
+	${EnableX64FSRedirection}
+	File /r ${SHARE32}/belgiumeid@eid.belgium.be  # extracts to C:\Windows\SysWOW64 ; rename because registry reference
+	${If} ${RunningX64}
+		; 64-bit install:
+		${DisableX64FSRedirection}
+		File /r ${SHARE32}/belgiumeid@eid.belgium.be # extracts to C:\Windows\System32 ; rename because registry reference
+	${EndIf}
+
+SectionEnd
 
 ; minidriver ; for IE and other proprietary apps on Windows Vista and Above
 ; -----------------------------------------------------------------------------------------
 Section "minidriver" SecMiniDriver
-	SetOutPath $SYSDIR
+	SetOutPath "$SYSDIR"
 	; 32-bit install:
 	${EnableX64FSRedirection}
 	File /oname=beidmdrv.dll ${BIN32}/libbeidmdrv32.dll  # extracts to C:\Windows\SysWOW64 ; rename because registry reference
@@ -127,21 +152,6 @@ Section "csp" SecCSPAndPropagationService
 		; 64-bit install:
 		${DisableX64FSRedirection}
 		File /oname=beidmdrv.dll ${BIN64}/libbeidmdrv64.dll # extracts to C:\Windows\System32 ; rename because registry reference
-	${EndIf}
-SectionEnd
-
-
-; pkcs11 module ; for Firefox and other standards-aware apps
-; -----------------------------------------------------------------------------------------
-Section "pkcs#11 Module" SecPkcs11
-	SetOutPath $SYSDIR
-	; 32-bit install:
-	${EnableX64FSRedirection}
-  	File ${BIN32}/libbeidpkcs11.dll
-	${If} ${RunningX64}
-		; 64-bit install:
-		${DisableX64FSRedirection}
-  		File ${BIN64}/libbeidpkcs11.dll
 	${EndIf}
 SectionEnd
 
@@ -272,19 +282,31 @@ LangString DESC_SecCoreLibs ${LANG_DUTCH}   "Basissoftware (vereist voor de ande
 LangString DESC_SecCoreLibs ${LANG_FRENCH}  "Logiciel de base (prerequis pour les autre modules)"
 LangString DESC_SecCoreLibs ${LANG_GERMAN}  "Basis Software (erfordert für andere Module)"
 
-LangString DESC_SecPkcs11   ${LANG_ENGLISH} "PKCS#11 Module (e.g. for using TaxOnWeb in Firefox)"
-LangString DESC_SecPkcs11   ${LANG_DUTCH}   "PKCS#11 Module (b.v. om TaxOnWeb in Firefox te gebruiken)"
-LangString DESC_SecPkcs11   ${LANG_FRENCH}  "Module PKCS#11 (pour utiliser TaxOnWeb avec Firefox, par exemple.)"
-LangString DESC_SecPkcs11   ${LANG_GERMAN}  "PKCS#11 Modul (z.b. für TaxOnWeb auf Firefox.)"
+LangString DESC_SecPkcs11   ${LANG_ENGLISH} ".. for using eID from Standard Applications (e.g. Mozilla Firefox)"
+LangString DESC_SecPkcs11   ${LANG_DUTCH}   ".. om eID met standaardtoepassingen (b.v. Mozilla Firefox) te gebruiken."
+LangString DESC_SecPkcs11   ${LANG_FRENCH}  ".. pour utiliser eID avec des Applications Standard (comme Mozilla Firefox)"
+LangString DESC_SecPkcs11   ${LANG_GERMAN}  ".. um eID mit Standard-Applikazionen zu benutzen (z.b. Mozilla Firefox)"
 
-LangString DESC_SecSisCard   ${LANG_ENGLISH} "SIS Card Modules (allows reading SIS cards on particular card readers)"
-LangString DESC_SecSisCard   ${LANG_DUTCH}   "SIS-kaart modules (laat toe met bepaalde kaartlezers SIS-kaarten uit te lezen)"
-LangString DESC_SecSisCard   ${LANG_FRENCH}  "Module carte SIS (permet de lire les cartes SIS avec certains lecteurs de cartes)"
-LangString DESC_SecSisCard   ${LANG_GERMAN}  "SIS-Karte Modul (ermöglicht bestimmten Kartenlezer SIS-Karten zu lesen)" 
+LangString DESC_SecMiniDriver    ${LANG_ENGLISH} ".. for using eID for other applications (Windows Vista and above)"
+LangString DESC_SecMiniDriver    ${LANG_DUTCH}   ".. om eID in andere toepassingen te gebruiken (Windows Vista en hoger)"
+LangString DESC_SecMiniDriver    ${LANG_FRENCH}  ".. pour utiliser eID dans d'autres applications (a partir de Windows Vista)"
+LangString DESC_SecMiniDriver    ${LANG_GERMAN}  ".. um eID auf andere Applicazionen zu benutzen (Windows Vista und hoher)"
+
+LangString DESC_SecCPSAndPropagationService ${LANG_ENGLISH} ".. for using eID for other applications (Windows XP)"
+LangString DESC_SecCPSAndPropagationService ${LANG_DUTCH}   ".. om eID in andere toepassingen te gebruiken (Windows XP)"
+LangString DESC_SecCPSAndPropagationService ${LANG_FRENCH}  ".. pour utiliser eID dans d'autres applications (Windows XP)"
+LangString DESC_SecCPSAndPropagationService ${LANG_GERMAN}  ".. um eID auf andere Applicazionen zu benutzen (Windows XP)"
+
+LangString DESC_SecSisCard   ${LANG_ENGLISH} ".. for reading SIS cards (on particular card readers"
+LangString DESC_SecSisCard   ${LANG_DUTCH}   ".. om (met bepaalde kaartlezers) SIS-kaarten uit te lezen"
+LangString DESC_SecSisCard   ${LANG_FRENCH}  ".. pour lire les cartes SIS (avec certains lecteurs de cartes"
+LangString DESC_SecSisCard   ${LANG_GERMAN}  ".. um mit bestimmten Kartenlezer SIS-Karten zu lesen" 
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecCoreLibs} $(DESC_SecCoreLibs)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecPkcs11}   $(DESC_SecPkcs11)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecMiniDriver}   $(DESC_SecMiniDriver)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecCSPAndPropagationService}   $(DESC_SecCPSAndPropagationService)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecSisCard}  $(DESC_SecSisCard)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
@@ -293,6 +315,9 @@ LangString DESC_SecSisCard   ${LANG_GERMAN}  "SIS-Karte Modul (ermöglicht besti
 ;Uninstaller Section
 
 Section "Uninstall"
+
+ ; 32-bit uninstall:
+  ${EnableX64FSRedirection}
   Delete "$SYSDIR\libbeidcommon.dll"
   Delete "$SYSDIR\libbeiddialogs.dll"
   Delete "$SYSDIR\libbeidcardlayer.dll"
@@ -301,6 +326,22 @@ Section "Uninstall"
   Delete "$SYSDIR\libcardpluginbeid.dll"
   Delete "$SYSDIR\libcardpluginsis_acr38u.dll"
   Delete "$SYSDIR\libcardpluginsis.dll"
+  RmDir /r "${SHARE32}/belgiumeid@eid.belgium.be"
+
+        ${If} ${RunningX64}
+                ; 64-bit install:
+                ${DisableX64FSRedirection}
+		Delete "$SYSDIR\libbeidcommon.dll"
+		Delete "$SYSDIR\libbeiddialogs.dll"
+		Delete "$SYSDIR\libbeidcardlayer.dll"
+		Delete "$SYSDIR\beidmdrv.dll"
+		Delete "$SYSDIR\libbeidpkcs11.dll"
+		Delete "$SYSDIR\libcardpluginbeid.dll"
+		Delete "$SYSDIR\libcardpluginsis_acr38u.dll"
+		Delete "$SYSDIR\libcardpluginsis.dll"
+		RMDir /r "${SHARE32}/belgiumeid@eid.belgium.be"
+        ${EndIf}
+
 
   RMDIR /r $INSTDIR
   DeleteRegKey HKLM "${REG_UNINSTALL}"
