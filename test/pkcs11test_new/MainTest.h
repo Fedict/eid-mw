@@ -22,13 +22,13 @@
 /****************************************************************************
  * Test Functions prototypes
  ***************************************************************************/
-CK_RV test_finalize_initialize();
-CK_RV test_open_close_session();
-CK_RV test_getmechanisms();
-CK_RV test_getprivatekeys();
-CK_RV test_sign();
-CK_RV test_verify_signature();
-CK_RV test_getallobjects();
+testRet test_finalize_initialize();
+testRet test_open_close_session();
+testRet test_getmechanisms();
+testRet test_getprivatekeys();
+testRet test_sign();
+testRet test_verify_signature();
+testRet test_getallobjects();
 
 
 

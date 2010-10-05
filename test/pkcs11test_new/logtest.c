@@ -60,4 +60,16 @@ void logPrefix(PKCS11TEST_LOG_LEVEL level)
 	}
 }
 
+void testlogbytes(PKCS11TEST_LOG_LEVEL loglevel,unsigned char *pValue, unsigned long ulValueLen)
+{
+	unsigned long counter = 0;
+	//testlog(loglevel,":");
+	while (counter < ulValueLen)
+	{
+		testlog(LVL_NOLEVEL,"%c", *pValue);
+		counter++;
+		pValue++;
+	}
+	testlog(LVL_NOLEVEL,"\n");
+}
 

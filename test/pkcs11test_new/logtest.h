@@ -38,9 +38,16 @@ typedef enum pkcs11test_log_level
  * Logging macro's
  ***************************************************************************/
 #define pkcs11test_filename "test_pkcs11.log"
+/****************************************************************************
+ * macro's for logging to file
+ ***************************************************************************/
 //#define testlog(LOGLEVEL,...) logPrefix(LOGLEVEL), fprintf(pkcs11test_logfile, __VA_ARGS__)
-#define testlog(LOGLEVEL,...) logPrefix(LOGLEVEL), printf(__VA_ARGS__)
 //#define printlogprefic(LOGLEVEL,LOGPREFIX) fprintf(LOGLEVEL,LOGPREFIX)
+
+/****************************************************************************
+ * macro's for logging to stdout
+ ***************************************************************************/
+#define testlog(LOGLEVEL,...) logPrefix(LOGLEVEL), printf(__VA_ARGS__)
 #define printlogprefic(LOGLEVEL,LOGPREFIX) printf(LOGPREFIX)
 
 /****************************************************************************
@@ -55,5 +62,6 @@ void initLog();
 void endLog();
 
 void logPrefix(PKCS11TEST_LOG_LEVEL level);
+void testlogbytes(PKCS11TEST_LOG_LEVEL loglevel,unsigned char *pValue, unsigned long ulValueLen);
 
 #endif

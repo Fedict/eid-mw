@@ -37,11 +37,12 @@
 #define dlopen(lib,h) LoadLibrary(lib)
 #define dlsym(h, function) GetProcAddress(h, function)
 #define dlclose(h) FreeLibrary(h)
-#ifdef WIN64
-#define PKCS11_LIB "..\\_Binaries35\\x64\\Debug\\beid35pkcs11D.dll"
+#ifdef _DEBUG
+  #define PKCS11_LIB "beidpkcs11D.dll" //E:/trunk/eid-mw/test/_binaries35/debug/beid35pkcs11D.dll"
 #else
-#define PKCS11_LIB "..\\_Binaries35\\Debug\\beid35pkcs11D.dll"
+  #define PKCS11_LIB "beidpkcs11.dll"
 #endif
+
 #define RTLD_LAZY	1
 #define RTLD_NOW	2
 #define RTLD_GLOBAL 4
@@ -53,6 +54,18 @@
 #define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
 #endif
 #include <stdlib.h>
+
+typedef enum{
+	TEST_PASSED = 0,
+	TEST_SKIPPED,
+	TEST_ERROR,
+	TEST_FAILED
+}BASETEST_RV;
+
+typedef struct{
+	CK_RV pkcs11rv;
+	BASETEST_RV basetestrv;
+} testRet;
 
 /****************************************************************************
  * Base Test Functions prototypes

@@ -33,11 +33,11 @@ int main() {
 	int i;
 	int testCounter = 0;
 	char* testDescription[NUMBER_OF_TESTS];
-	int result[NUMBER_OF_TESTS];
+	testRet result[NUMBER_OF_TESTS];
 
 	initLog();
 
-	testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
+	/*testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
 	result[testCounter] = test_open_close_session();
 	testCounter++;
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
@@ -48,7 +48,7 @@ int main() {
 	testCounter++;
 	testDescription[testCounter] = "tests getting the signature key from the card";
 	result[testCounter] = test_getprivatekeys();
-	testCounter++;
+	testCounter++;*/
 	testDescription[testCounter] = "tests getting all the objects from the card";
 	result[testCounter] = test_getallobjects();
 	testCounter++;
@@ -60,14 +60,23 @@ int main() {
 	for (i = 0; i < testCounter; i++)
 	{
 		testlog(LVL_NOLEVEL,"\nTest %d %s \n", i, testDescription[i]);
-		if(result[i] != CKR_OK)
+		if(result[i].pkcs11rv != CKR_OK)
 		{
-			testlog(LVL_NOLEVEL,"FAILED\n", result[i]);	
-			testlog(LVL_NOLEVEL,"Result : 0x%.8x \n", result[i]);
+			testlog(LVL_NOLEVEL,"FAILED\n", result[i].pkcs11rv);	
+			testlog(LVL_NOLEVEL,"Result : 0x%.8x \n", result[i].pkcs11rv);
+		}
+		else if(result[i].basetestrv == TEST_PASSED)
+		{
+			testlog(LVL_NOLEVEL,"PASSED\n");
+		}
+		else if(result[i].basetestrv == TEST_SKIPPED)
+		{
+			testlog(LVL_NOLEVEL,"SKIPPED\n");
 		}
 		else
 		{
-			testlog(LVL_NOLEVEL,"PASSED\n");
+			testlog(LVL_NOLEVEL,"FAILED\n", result[i].pkcs11rv);	
+			testlog(LVL_NOLEVEL,"Result : 0x%.8x \n", result[i].pkcs11rv);
 		}
 		testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
 	}
