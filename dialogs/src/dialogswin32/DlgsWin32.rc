@@ -2,7 +2,7 @@
 //
 #include "resource.h"
 
-#include "../../_Builds/beidversions.h"
+#include "../../common/src/beidversions.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
