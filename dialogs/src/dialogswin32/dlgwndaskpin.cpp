@@ -181,7 +181,7 @@ void dlgWndAskPIN::GetPinResult()
 	if( len < 128 )
 	{
 		SendMessage( GetDlgItem( m_hWnd, IDC_EDIT ), WM_GETTEXT, (WPARAM)(sizeof(nameBuf)), (LPARAM)nameBuf );
-		wcscpy_s( PinResult, wcslen(nameBuf), nameBuf );
+		wcscpy_s( PinResult, DLGWIN_PINRES_LEN, nameBuf );
 	}
 }
 
