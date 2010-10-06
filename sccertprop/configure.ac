@@ -7,7 +7,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
 
-LT_INIT
+LT_INIT([win32-dll])
 LT_PREREQ([2.2.7c],
       [LT_PREREQ([2.2.6])],
       [AC_MSG_WARN([Libtool Version 2.2.7c is required])]
@@ -36,9 +36,18 @@ else
 AC_MSG_RESULT(no)
 fi
 
+# Check for 32-64 bit (ty opensc)
+AC_CHECK_SIZEOF(void *)
+if test "${ac_cv_sizeof_void_p}" = 8; then
+	LIBRARY_BITNESS="64"
+else
+	LIBRARY_BITNESS="32"
+fi
+
 AC_SUBST([CXXFLAGS])
 AC_SUBST([DEBUG])
 AC_SUBST([DEBUG_POSTFIX])
+AC_SUBST([LIBRARY_BITNESS])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

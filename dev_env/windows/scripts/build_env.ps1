@@ -494,9 +494,6 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 # extract
 Extract $tooltarget $mingw32folder
 
-# The compiler does not look in i686-w64-mingw32\lib for libraries so we copy libole32 it to lib32
-Copy-Item $mingw32folder\i686-w64-mingw32\lib\libole32.a $mingw32folder\i686-w64-mingw32\lib32
-
 Write-Host "Add mingw32 path ($mingw32folder\bin) to Path environmental variable."
 AddToPathEnv "$mingw32folder\bin"
 
@@ -514,11 +511,54 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 # extract
 Extract $tooltarget $mingw64folder
 
-# The compiler does not look in x86_64-w64-mingw32\lib32 for libraries so we copy libole32 it to lib64
-Copy-Item $mingw64folder\x86_64-w64-mingw32\lib32\libole32.a $mingw64folder\x86_64-w64-mingw32\lib64
-
 Write-Host "Add mingw64 path ($mingw64folder\bin) to Path environmental variable."
 AddToPathEnv "$mingw64folder\bin"
+
+##############################################################################
+# fix mingw64 library issues 
+# see ../readme.txt for more info
+##############################################################################
+Write-Host "-- Fixing mingw64 issues"
+Write-Host "--- Download and install missing libraries"
+
+# we need a newer version of libcomctl32
+# comctl32 v6 32-bit
+$toolfilename = "libcomctl32v6-32.a"
+$tooltarget = "$mingw32folder\i686-w64-mingw32\lib32\libcomctl32v6.a"
+
+# download file
+Download "$packagesfolderurl/$toolfilename" $tooltarget
+
+# comctl32 v6 32-bit
+$toolfilename = "libcomctl32v6-64.a"
+$tooltarget = "$mingw64folder\x86_64-w64-mingw32\lib64\libcomctl32v6.a"
+
+# download file
+Download "$packagesfolderurl/$toolfilename" $tooltarget
+
+# libwinscard.a is missing from mingw64-32
+
+$toolfilename = "libwinscard.a"
+$tooltarget = "$mingw32folder\i686-w64-mingw32\lib32\$toolfilename"
+
+# download file
+Download "$packagesfolderurl/$toolfilename" $tooltarget
+
+
+Write-Host "--- Copy mingw libraries to the right folders"
+
+# The compiler does not look in i686-w64-mingw32\lib for libraries so we copy libole32 it to lib32
+Copy-Item $mingw32folder\i686-w64-mingw32\lib\libole32.a $mingw32folder\i686-w64-mingw32\lib32
+Copy-Item $mingw32folder\i686-w64-mingw32\lib\libcrypt32.a $mingw32folder\i686-w64-mingw32\lib32
+
+# The compiler does not look in x86_64-w64-mingw32\lib for libraries so we copy libole32 it to lib64
+Copy-Item $mingw64folder\x86_64-w64-mingw32\lib\libole32.a $mingw64folder\x86_64-w64-mingw32\lib64
+Copy-Item $mingw64folder\x86_64-w64-mingw32\lib\libcrypt32.a $mingw64folder\x86_64-w64-mingw32\lib64
+Copy-Item $mingw64folder\x86_64-w64-mingw32\lib\libwinscard.a $mingw64folder\x86_64-w64-mingw32\lib64
+
+
+
+
 } # end try
 catch{
   "Error: $_"
