@@ -24,6 +24,7 @@
 			IntermediateDirectory="$(PlatformName)_$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -43,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../;../src/;../../common/src;../../dialogs/src/dialogswin32;../../cardlayer/src;../../common/VS_2005"
+				AdditionalIncludeDirectories="../;../src/;../../common/src;../../cardlayer/src;../../common/VS_2005"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
