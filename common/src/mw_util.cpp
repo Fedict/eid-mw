@@ -323,7 +323,7 @@ int strcpy_s(char *dest, size_t len, const char *src)
 	for ( ; len > 1 && *src != '\0'; dest++, src++, len--)
 		*dest = *src;
 
-	*dest = '\0';
+	*dest = *src;
 
 	return *src == '\0' ? 0 : -1; // 0: OK, -1: NOK
 }
@@ -337,7 +337,7 @@ int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src)
 	for ( ; len > 1 && *src != L'\0'; dest++, src++, len--)
 		*dest = *src;
 
-	*dest = L'\0';
+	*dest = *src;
 
 	return *src == L'\0' ? 0 : -1; // 0: OK, -1: NOK
 }
@@ -352,7 +352,7 @@ int wcscpy_s(wchar_t *dest, const wchar_t *src)
 	for ( ; len > 1 && *src != L'\0'; dest++, src++, len--)
 		*dest = *src;
 
-	*dest = L'\0';
+	*dest = *src;
 
 	return *src == L'\0' ? 0 : -1; // 0: OK, -1: NOK
 }
