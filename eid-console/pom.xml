@@ -313,7 +313,7 @@
 		</repository>
 	</repositories>
 	<properties>
-		<eid-applet.version>1.0.1-SNAPSHOT</eid-applet.version>
+		<eid-applet.version>1.0.2-SNAPSHOT</eid-applet.version>
 		<gwt.version>2.0.3</gwt.version>
 	</properties>
 </project>
