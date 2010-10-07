@@ -22,14 +22,13 @@
 /****************************************************************************
  * Test Functions prototypes
  ***************************************************************************/
-testRet test_finalize_initialize();
-testRet test_open_close_session();
-testRet test_getmechanisms();
-testRet test_getprivatekeys();
-testRet test_sign();
-testRet test_verify_signature();
-testRet test_getallobjects();
-
-
-
-
+testRet test_finalize_initialize(void);
+testRet test_finalize_initialize_st(void); 
+testRet test_finalize_initialize_ownmutex(void);
+testRet test_getinfo(void);
+testRet test_open_close_session(void);
+testRet test_getmechanisms(void);
+testRet test_getprivatekeys(void);
+testRet test_sign(void);
+testRet test_verify_signature(void);
+testRet test_getallobjects(void);

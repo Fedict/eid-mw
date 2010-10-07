@@ -25,12 +25,13 @@
 * Required interaction: none.
 */
 
-int readslots(CK_FUNCTION_LIST_PTR functions) {
+int readslots(CK_FUNCTION_LIST_PTR functions, CK_FLAGS flags) {
 
 	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
 	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
 
-	CK_C_INITIALIZE_ARGS init_args;
+	CK_C_INITIALIZE_ARGS init_args ={NULL,NULL,NULL,NULL,flags,NULL};
+
 	long slot_count;
 	CK_SLOT_ID_PTR slotIds;
 	int slotIdx;
@@ -38,8 +39,6 @@ int readslots(CK_FUNCTION_LIST_PTR functions) {
 	CK_SESSION_HANDLE session_handle;
 
 	testlog(LVL_INFO,"readslots enter\n");
-	init_args.flags = CKF_OS_LOCKING_OK;
-	init_args.pReserved = NULL;
 
 	frv = (*functions->C_Initialize) ( (CK_VOID_PTR)&init_args );
 	if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Initialize", "readslots" ))
@@ -110,6 +109,7 @@ typedef struct test_finalize_initialize_threadvars
 {
 	int threadRetVal;
 	CK_FUNCTION_LIST_PTR functions;
+	CK_FLAGS initflags;
 } *LP_TEST_FIN_INI_VARS;
 
 DWORD WINAPI pkcs11Thread( LPVOID testThreadVars ) 
@@ -119,12 +119,12 @@ DWORD WINAPI pkcs11Thread( LPVOID testThreadVars )
 
 	functions = threadVars->functions;
 
-	threadVars->threadRetVal = readslots(functions);
+	threadVars->threadRetVal = readslots(functions,threadVars->initflags);
 
 	return 0; 
 } 
 
-testRet test_finalize_initialize() {
+testRet test_finalize_initialize_flag(CK_FLAGS flags) {
 	void *handle;						//handle to the pkcs11 library
 	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
 
@@ -138,10 +138,11 @@ testRet test_finalize_initialize() {
 	testlog(LVL_INFO, "test_finalize_initialize enter\n");
 	if (InitializeTest(&handle,&functions))
 	{
-		readslots(functions);	// run the sequence a first time
+		readslots(functions,flags);	// run the sequence a first time 
 
 		threadVars.functions = functions;
 		threadVars.threadRetVal = 0;
+		threadVars.initflags = flags;
 
 		// Create pkcs11 thread
 		hThreadHandle = CreateThread( 
@@ -174,5 +175,110 @@ testRet test_finalize_initialize() {
 	return retVal;
 }
 
+testRet test_finalize_initialize(void ) {
+	testRet retVal = {CKR_OK,TEST_PASSED};
+	// use pkcs11 locking mechanisms
+	// pkcs11 is allowed to use threads
+	retVal = test_finalize_initialize_flag((CK_FLAGS)CKF_OS_LOCKING_OK);
+	if ((retVal.basetestrv == TEST_PASSED) && (retVal.pkcs11rv == CKR_OK) )
+	{
+		// use no locking mechanisms (so we shouldn't access pkcs11 simultanious in multiple threads)
+		// also use no threads within pkcs11
+		retVal = test_finalize_initialize_flag((CK_FLAGS)CKF_LIBRARY_CANT_CREATE_OS_THREADS);
+		if ((retVal.basetestrv == TEST_PASSED) && (retVal.pkcs11rv == CKR_OK || retVal.pkcs11rv == CKR_NEED_TO_CREATE_THREADS) )
+		{
+			// use pkcs11 locking mechanisms (so we shouldn't access pkcs11 simultanious in multiple threads)
+			// also use no threads within pkcs11
+			retVal = test_finalize_initialize_flag((CK_FLAGS)(CKF_LIBRARY_CANT_CREATE_OS_THREADS & CKF_OS_LOCKING_OK) );
+			if ((retVal.basetestrv == TEST_PASSED) && (retVal.pkcs11rv == CKR_OK || retVal.pkcs11rv == CKR_NEED_TO_CREATE_THREADS) )
+			{
+				// use no locking mechanisms (so we shouldn't access pkcs11 simultanious in multiple threads)
+				// pkcs11 is allowed to use threads
+				retVal = test_finalize_initialize_flag((CK_FLAGS)0);
+			}
+		}
+	}
+	return retVal;
+}
 
 
+
+
+testRet test_finalize_initialize_st() 
+{
+	void *handle;						//handle to the pkcs11 library
+	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
+
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
+	int counter = 200;
+
+	testlog(LVL_INFO, "test_finalize_initialize_st enter\n");
+	if (InitializeTest(&handle,&functions))
+	{
+		while ((counter > 0) && (frv = CKR_OK) )
+		{
+			frv = (*functions->C_Initialize) (NULL);
+			if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Initialize", "test_finalize_initialize_st" ))
+			{	
+				frv = (*functions->C_Finalize) (NULL_PTR);
+				ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Finalize", "test_finalize_initialize_st" );
+			}		
+		}
+		dlclose(handle);
+	}
+	else
+	{
+		retVal.basetestrv = TEST_ERROR;
+	}
+	testlog(LVL_INFO, "test_getallobjects leave\n");
+	return retVal;
+}
+
+HANDLE ghMutex;
+unsigned long CreateaMutex(CK_VOID_PTR_PTR ppMutex)
+{
+	ghMutex = CreateMutex( 
+        NULL,              // default security attributes
+        FALSE,             // initially not owned
+        NULL); 
+
+	*ppMutex = (CK_VOID_PTR)ghMutex;
+}
+
+testRet test_finalize_initialize_ownmutex() 
+{
+	void *handle;						//handle to the pkcs11 library
+	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
+
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
+
+
+	CK_C_INITIALIZE_ARGS init_args ={CreateaMutex,NULL,NULL,NULL,0,NULL};
+
+	testlog(LVL_INFO, "test_finalize_initialize_ownmutex enter\n");
+	if (InitializeTest(&handle,&functions))
+	{
+		frv = (*functions->C_Initialize) ((CK_VOID_PTR)&init_args);
+		//retVal.pkcs11rv should be CKR_ARGUMENTS_BAD as some, but not all, 
+		//of the supplied function pointers to C_Initialize are non-NULL_PTR
+		if (retVal.pkcs11rv != CKR_ARGUMENTS_BAD)
+		{
+			ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Initialize", "test_finalize_initialize_ownmutex" );
+			retVal.basetestrv = TEST_ERROR;			
+		}
+		else
+		{	
+			frv = (*functions->C_Finalize) (NULL_PTR);
+			ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Finalize", "test_finalize_initialize_ownmutex" );
+		}	
+		dlclose(handle);
+	}
+	else
+	{
+		retVal.basetestrv = TEST_ERROR;
+	}
+	testlog(LVL_INFO, "test_finalize_initialize_ownmutex leave\n");
+	return retVal;
+}

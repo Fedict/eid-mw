@@ -27,28 +27,42 @@
 #include <MainTest.h>
 #include "logtest.h"
 
-#define NUMBER_OF_TESTS 10
+#define NUMBER_OF_TESTS 100
 
 int main() {
-	int i;
+	int i=0;
 	int testCounter = 0;
 	char* testDescription[NUMBER_OF_TESTS];
 	testRet result[NUMBER_OF_TESTS];
 
 	initLog();
 
-	/*testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
+	while (i<NUMBER_OF_TESTS)
+	{
+		testDescription[i] = NULL;
+		i++;
+	}
+	testDescription[testCounter] = "Test multiple finalize/initialize sessions in a single thread";
+	result[testCounter] = test_finalize_initialize();
+	testCounter++;
+	testDescription[testCounter] = "Test multiple finalize/initialize sessions in a single thread";
+	result[testCounter] = test_finalize_initialize_ownmutex();
+	testCounter++;
+	testDescription[testCounter] = "Test finalize/initialize in a single thread with own mutexes";
+	result[testCounter] = test_finalize_initialize();
+	testCounter++;
+	testDescription[testCounter] = "Test C_getinfo results in a single thread";
+	result[testCounter] = test_getinfo();
+	testCounter++;
+	testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
 	result[testCounter] = test_open_close_session();
 	testCounter++;
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
 	result[testCounter] = test_getmechanisms();
 	testCounter++;
-	testDescription[testCounter] = "Test multiple finalize/initialize sessions in different threads";
-	result[testCounter] = test_finalize_initialize();
-	testCounter++;
 	testDescription[testCounter] = "tests getting the signature key from the card";
 	result[testCounter] = test_getprivatekeys();
-	testCounter++;*/
+	testCounter++;
 	testDescription[testCounter] = "tests getting all the objects from the card";
 	result[testCounter] = test_getallobjects();
 	testCounter++;
@@ -59,7 +73,10 @@ int main() {
 	testlog(LVL_NOLEVEL,"\n\n_______________________________________________\n");
 	for (i = 0; i < testCounter; i++)
 	{
-		testlog(LVL_NOLEVEL,"\nTest %d %s \n", i, testDescription[i]);
+		if (testDescription[i] != NULL)
+		{
+			testlog(LVL_NOLEVEL,"\nTest %d %s \n", i, testDescription[i]);
+		}
 		if(result[i].pkcs11rv != CKR_OK)
 		{
 			testlog(LVL_NOLEVEL,"FAILED\n", result[i].pkcs11rv);	
