@@ -38,7 +38,7 @@
 #define dlopen(lib,h) LoadLibrary(lib)
 #define dlsym(h, function) GetProcAddress(h, function)
 #define dlclose(h) FreeLibrary(h)
-#define PKCS11_LIB "libpkcs11.dll"
+#define PKCS11_LIB "libbeidpkcs11.dll"
 #define RTLD_LAZY	1
 #define RTLD_NOW	2
 #define RTLD_GLOBAL 4

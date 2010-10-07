@@ -108,7 +108,7 @@ if test "x$osx" = "xtrue" ; then
 fi
 
 if test "x$win32" = "xtrue" ; then
-	AC_CONFIG_SUBDIRS([minidriver sccertprop nsis])
+	AC_CONFIG_SUBDIRS([minidriver sccertprop])
 fi
 
 AC_OUTPUT
