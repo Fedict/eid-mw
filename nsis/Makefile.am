@@ -11,7 +11,7 @@ all:
 	cp "`dirname \`which i686-w64-mingw32-gcc\``/libstdc++-6.dll"     src/dist/win32/usr/local/bin
 
 # Copy current mingw (gcc) 64-bit runtime libs
-	cp "`dirname \`which x86_64-w64-mingw32-gcc\``/w64gcc_s_sjlj-1.dll" src/dist/win64/usr/local/bin
+	cp "`dirname \`which x86_64-w64-mingw32-gcc\``/libgcc_s_sjlj-1.dll" src/dist/win64/usr/local/bin
 	cp "`dirname \`which x86_64-w64-mingw32-gcc\``/libstdc++-6.dll"     src/dist/win64/usr/local/bin
 
 # Run nsis to create installer
