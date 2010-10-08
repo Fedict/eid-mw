@@ -78,6 +78,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../VS_2010/Binaries/$(Platform)_$(Configuration)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">beid$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">beid$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">beid$(ProjectName)D</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
