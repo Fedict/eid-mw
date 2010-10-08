@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4
-EXTRA_DIST = rpm debian svn_revision minidriver sccertprop nsis dmg
+EXTRA_DIST = arch debian rpm svn_revision minidriver sccertprop nsis dmg
 
 BUILT_SOURCES=svn_revision
 
