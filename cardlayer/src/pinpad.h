@@ -81,9 +81,17 @@ protected:
 
 	CContext *m_poContext;
     SCARDHANDLE m_hCard;
+#ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable:4251)// these strings do not need a dll interface
+#endif
 	std::string m_csReader;
-	unsigned short m_usReaderFirmVers;
 	std::string m_csPinpadPrefix;
+#ifdef WIN32
+#pragma warning(pop)
+#endif
+
+	unsigned short m_usReaderFirmVers;
 	bool m_bNewCard;
 	bool m_bUsePinpadLib;
 	unsigned long m_ulLangCode;

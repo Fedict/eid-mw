@@ -49,7 +49,15 @@ public:
 private:
 	bool m_bStop;
 	CPCSC *m_poPCSC;
+#ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable:4251)// m_csReader does not need to have dll-interface
+#endif
 	std::string m_csReader;
+#ifdef WIN32
+#pragma warning(pop)
+#endif
+	
 	void (* m_callback)(long lRet, unsigned long ulState, void *pvRef);
 	unsigned long m_ulCurrentState;
 	bool m_bRunning;

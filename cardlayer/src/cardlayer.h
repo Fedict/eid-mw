@@ -136,7 +136,15 @@ private:
 
     CContext m_oContext;
 
+#ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable:4251)//m_szDefaultReaderName does not need a dll interface
+#endif
 	std::string m_szDefaultReaderName;
+#ifdef WIN32
+#pragma warning(pop)
+#endif
+
 	unsigned long m_ulReaderCount;
 	CReader *m_tpReaders[MAX_READERS];
 };

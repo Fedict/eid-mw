@@ -44,8 +44,16 @@ public:
     long GetLine()const {return m_lLine;};
 
 protected:
-    long m_lError;
-    std::string m_sFile;
+#ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable:4251)//m_sFile should not be exported by the beidcommon.dll
+#endif
+	std::string m_sFile;
+#ifdef WIN32
+#pragma warning(pop)
+#endif
+
+    long m_lError;   
     long m_lLine;
 };
 

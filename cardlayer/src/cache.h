@@ -99,13 +99,12 @@ protected:
 
 	unsigned char *m_pucTemp;
 	CContext *m_poContext;
-	std::string m_csCacheDir;
-
 #ifdef WIN32
 // See http://groups.google.com/group/microsoft.public.vc.stl/msg/c4dfeb8987d7b8f0
 #pragma warning(push)
 #pragma warning(disable:4251)
 #endif
+	std::string m_csCacheDir;
 	tCacheMap m_MemCache;
 #ifdef WIN32
 #pragma warning(pop)

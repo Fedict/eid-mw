@@ -174,8 +174,16 @@ private:
     CReader & operator = (const CReader & oReader);
 
 	bool m_bIgnoreRemoval;
+#ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable:4251)// these strings do not need a dll interface
+#endif
     std::string m_csReader;
 	std::wstring m_wsReader;
+#ifdef WIN32
+#pragma warning(pop)
+#endif
+
     CCard *m_poCard;
     CPKCS15 m_oPKCS15;
     CPinpad m_oPinpad;

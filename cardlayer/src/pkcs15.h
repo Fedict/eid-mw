@@ -93,9 +93,6 @@ namespace eIDMW
     CContext *m_poContext;
     PKCS15Parser *m_poParser;
 
-    std::string m_csSerial;
-    std::string m_csLabel;
-
 #ifdef WIN32
 // Get rid of warnings like "warning C4251: 'eIDMW::CPKCS15::m_oPins' : class 'std::vector<_Ty>'
 // needs to have dll-interface to be used by clients of class 'eIDMW::CPKCS15'"
@@ -103,6 +100,8 @@ namespace eIDMW
 #pragma warning(push)
 #pragma warning(disable:4251)
 #endif
+    std::string m_csSerial;
+    std::string m_csLabel;
 	std::vector<tPin> m_oPins;
     std::vector<tCert> m_oCertificates;
     std::vector<tPrivKey> m_oPrKeys;

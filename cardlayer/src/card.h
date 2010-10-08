@@ -142,7 +142,14 @@ protected:
 	CCache m_oCache;
     unsigned long m_ulLockCount;
 	bool m_bSerialNrString;
+#ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable:4251)// m_csSerialNr does not need to have dll-interface
+#endif
 	std::string m_csSerialNr;
+#ifdef WIN32
+#pragma warning(pop)
+#endif
 
     unsigned char m_ucCLA;
 
