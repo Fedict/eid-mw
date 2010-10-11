@@ -366,6 +366,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\getslotlist.c"
+				>
+			</File>
+			<File
 				RelativePath=".\logtest.c"
 				>
 			</File>

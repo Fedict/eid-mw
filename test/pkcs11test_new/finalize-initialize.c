@@ -231,7 +231,7 @@ testRet test_finalize_initialize_st()
 	{
 		retVal.basetestrv = TEST_ERROR;
 	}
-	testlog(LVL_INFO, "test_getallobjects leave\n");
+	testlog(LVL_INFO, "test_finalize_initialize_st leave\n");
 	return retVal;
 }
 
@@ -246,7 +246,7 @@ unsigned long CreateaMutex(CK_VOID_PTR_PTR ppMutex)
 	*ppMutex = (CK_VOID_PTR)ghMutex;
 }
 
-testRet test_finalize_initialize_ownmutex() 
+testRet test_initialize_bad_args(CK_C_INITIALIZE_ARGS* pinit_args) 
 {
 	void *handle;						//handle to the pkcs11 library
 	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
@@ -257,21 +257,21 @@ testRet test_finalize_initialize_ownmutex()
 
 	CK_C_INITIALIZE_ARGS init_args ={CreateaMutex,NULL,NULL,NULL,0,NULL};
 
-	testlog(LVL_INFO, "test_finalize_initialize_ownmutex enter\n");
+	testlog(LVL_INFO, "test_initialize_bad_args enter\n");
 	if (InitializeTest(&handle,&functions))
 	{
-		frv = (*functions->C_Initialize) ((CK_VOID_PTR)&init_args);
+		frv = (*functions->C_Initialize) ((CK_VOID_PTR)pinit_args);
 		//retVal.pkcs11rv should be CKR_ARGUMENTS_BAD as some, but not all, 
 		//of the supplied function pointers to C_Initialize are non-NULL_PTR
 		if (retVal.pkcs11rv != CKR_ARGUMENTS_BAD)
 		{
-			ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Initialize", "test_finalize_initialize_ownmutex" );
+			ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Initialize", "test_initialize_bad_args" );
 			retVal.basetestrv = TEST_ERROR;			
 		}
 		else
 		{	
 			frv = (*functions->C_Finalize) (NULL_PTR);
-			ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Finalize", "test_finalize_initialize_ownmutex" );
+			ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Finalize", "test_initialize_bad_args" );
 		}	
 		dlclose(handle);
 	}
@@ -279,6 +279,71 @@ testRet test_finalize_initialize_ownmutex()
 	{
 		retVal.basetestrv = TEST_ERROR;
 	}
-	testlog(LVL_INFO, "test_finalize_initialize_ownmutex leave\n");
+	testlog(LVL_INFO, "test_initialize_bad_args leave\n");
 	return retVal;
 }
+
+testRet test_initialize_ownmutex() 
+{
+	CK_C_INITIALIZE_ARGS init_args ={CreateaMutex,NULL,NULL,NULL,0,NULL};
+	return test_initialize_bad_args(&init_args);
+}
+
+testRet test_initialize_preserved() 
+{
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	int wrongvalue = 12;
+
+	CK_C_INITIALIZE_ARGS init_args ={NULL,NULL,NULL,NULL,0,(CK_VOID_PTR)&wrongvalue};//pReserved should be zero
+	CK_C_INITIALIZE_ARGS init_args2 ={NULL,NULL,NULL,NULL,CKF_OS_LOCKING_OK,(CK_VOID_PTR)&wrongvalue};//pReserved should be zero
+	CK_C_INITIALIZE_ARGS init_args3 ={NULL,NULL,NULL,NULL,CKF_LIBRARY_CANT_CREATE_OS_THREADS,(CK_VOID_PTR)&wrongvalue};//pReserved should be zero
+	CK_C_INITIALIZE_ARGS init_args4 ={NULL,NULL,NULL,NULL,CKF_OS_LOCKING_OK & CKF_LIBRARY_CANT_CREATE_OS_THREADS,(CK_VOID_PTR)&wrongvalue};//pReserved should be zero
+	retVal = test_initialize_bad_args(&init_args);
+	if ((retVal.basetestrv == TEST_PASSED) && (retVal.pkcs11rv == CKR_OK) )
+	{
+		retVal = test_initialize_bad_args(&init_args2);
+		if ((retVal.basetestrv == TEST_PASSED) && (retVal.pkcs11rv == CKR_OK) )
+		{
+			retVal = test_initialize_bad_args(&init_args3);
+			if ((retVal.basetestrv == TEST_PASSED) && (retVal.pkcs11rv == CKR_OK) )
+			{
+				retVal = test_initialize_bad_args(&init_args4);
+			}
+		}
+	}
+	return retVal;
+}
+
+
+testRet test_finalize_preserved() 
+{
+	void *handle;						//handle to the pkcs11 library
+	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
+
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
+	int	wrongvalue = 0;
+
+	testlog(LVL_INFO, "test_finalize_preserved enter\n");
+	if (InitializeTest(&handle,&functions))
+	{
+		frv = (*functions->C_Initialize) (NULL);
+		if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Initialize", "test_finalize_preserved" ))
+		{	
+			frv = (*functions->C_Finalize) (&wrongvalue);
+			if (frv != CKR_ARGUMENTS_BAD)
+			{
+				ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Initialize", "test_finalize_preserved" );
+				retVal.basetestrv = TEST_ERROR;			
+			}
+		}		
+		dlclose(handle);
+	}
+	else
+	{
+		retVal.basetestrv = TEST_ERROR;
+	}
+	testlog(LVL_INFO, "test_finalize_preserved leave\n");
+	return retVal;
+}
+

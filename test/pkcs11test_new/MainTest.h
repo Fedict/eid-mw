@@ -24,8 +24,12 @@
  ***************************************************************************/
 testRet test_finalize_initialize(void);
 testRet test_finalize_initialize_st(void); 
-testRet test_finalize_initialize_ownmutex(void);
+testRet test_initialize_ownmutex(void);
+testRet test_initialize_preserved(void); 
+testRet test_finalize_preserved(void); 
 testRet test_getinfo(void);
+testRet test_getslotlist(void);
+testRet test_getslotlist_multiple_slots(void);
 testRet test_open_close_session(void);
 testRet test_getmechanisms(void);
 testRet test_getprivatekeys(void);

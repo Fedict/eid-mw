@@ -68,6 +68,19 @@ CK_BBOOL ReturnedSuccesfull(CK_RV frv, CK_RV *ptrv, char* pkcs11function, char* 
 	return CK_TRUE;
 }
 
+CK_BBOOL ReturnedSucces(CK_RV frv, CK_RV *ptrv, char* pkcs11function)
+{
+	if (CKR_OK != frv) {
+	  testlog(LVL_ERROR, "%s error frv = 0x%.8x \n",pkcs11function,frv);
+		if(*ptrv == CKR_OK)
+		{
+			*ptrv = frv;
+		}
+	  return CK_FALSE;  
+	}
+	return CK_TRUE;
+}
+
 CK_BBOOL InitializeTest(void **phandle,CK_FUNCTION_LIST_PTR *pfunctions)
 {
 	testlog(LVL_INFO, "InitializeTest enter\n");

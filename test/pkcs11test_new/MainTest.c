@@ -42,17 +42,27 @@ int main() {
 		testDescription[i] = NULL;
 		i++;
 	}
-	testDescription[testCounter] = "Test multiple finalize/initialize sessions in a single thread";
+	testDescription[testCounter] = "Test multiple finalize/initialize sessions in multiple threads with different args";
 	result[testCounter] = test_finalize_initialize();
 	testCounter++;
 	testDescription[testCounter] = "Test multiple finalize/initialize sessions in a single thread";
-	result[testCounter] = test_finalize_initialize_ownmutex();
+	result[testCounter] = test_finalize_initialize_st();
 	testCounter++;
-	testDescription[testCounter] = "Test finalize/initialize in a single thread with own mutexes";
-	result[testCounter] = test_finalize_initialize();
+	testDescription[testCounter] = "Test initialize when bad parameters are supplied";
+	result[testCounter] = test_initialize_ownmutex();
+	testCounter++;
+	result[testCounter] = test_initialize_preserved();
+	testCounter++;
+	result[testCounter] = test_finalize_preserved();
 	testCounter++;
 	testDescription[testCounter] = "Test C_getinfo results in a single thread";
 	result[testCounter] = test_getinfo();
+	testCounter++;
+	testDescription[testCounter] = "Test C_getslotlist in single and two call usage";
+	result[testCounter] = test_getslotlist();
+	testCounter++;
+	testDescription[testCounter] = "Test C_getslotlist when insufficient memory is reserved";
+	result[testCounter] = test_getslotlist_multiple_slots();
 	testCounter++;
 	testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
 	result[testCounter] = test_open_close_session();
@@ -70,17 +80,17 @@ int main() {
 	result[testCounter] = test_sign();
 	testCounter++;
 
-	testlog(LVL_NOLEVEL,"\n\n_______________________________________________\n");
+	//testlog(LVL_NOLEVEL,"\n\n_______________________________________________\n");
 	for (i = 0; i < testCounter; i++)
 	{
 		if (testDescription[i] != NULL)
 		{
+			testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
 			testlog(LVL_NOLEVEL,"\nTest %d %s \n", i, testDescription[i]);
 		}
 		if(result[i].pkcs11rv != CKR_OK)
 		{
-			testlog(LVL_NOLEVEL,"FAILED\n", result[i].pkcs11rv);	
-			testlog(LVL_NOLEVEL,"Result : 0x%.8x \n", result[i].pkcs11rv);
+			testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", result[i].pkcs11rv);
 		}
 		else if(result[i].basetestrv == TEST_PASSED)
 		{
@@ -91,11 +101,10 @@ int main() {
 			testlog(LVL_NOLEVEL,"SKIPPED\n");
 		}
 		else
-		{
-			testlog(LVL_NOLEVEL,"FAILED\n", result[i].pkcs11rv);	
-			testlog(LVL_NOLEVEL,"Result : 0x%.8x \n", result[i].pkcs11rv);
+		{	
+			testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", result[i].pkcs11rv);
 		}
-		testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
+		
 	}
 	
 	

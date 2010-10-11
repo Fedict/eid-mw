@@ -72,6 +72,7 @@ typedef struct{
  ***************************************************************************/
 int GetPKCS11FunctionList(CK_FUNCTION_LIST_PTR *pFunctions,void *handle);
 CK_BBOOL ReturnedSuccesfull(CK_RV frv, CK_RV *ptrv, char* pkcs11function, char* test_name );
+CK_BBOOL ReturnedSucces(CK_RV frv, CK_RV *ptrv, char* pkcs11function);
 CK_BBOOL InitializeTest(void **phandle,CK_FUNCTION_LIST_PTR *pfunctions);
 
 #endif
