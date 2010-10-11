@@ -20,7 +20,7 @@
 #include "basetest.h"
 #include "logtest.h"
 
-testRet test_open_close_session() {
+testRet test_open_close_session_info() {
 	void *handle;						//handle to the pkcs11 library
 	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
 
@@ -33,7 +33,7 @@ testRet test_open_close_session() {
 	CK_SLOT_ID_PTR slotIds;
 	int slotIdx;
 
-	testlog(LVL_INFO, "test_open_close_session enter\n");
+	testlog(LVL_INFO, "test_open_close_session_info enter\n");
 	if (InitializeTest(&handle,&functions))
 	{
 		frv = (*functions->C_Initialize) (NULL);
@@ -42,13 +42,13 @@ testRet test_open_close_session() {
 			frv = (*functions->C_GetInfo) (&info);
 			if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetInfo", "test_open_close_session enter" ))
 			{
-				testlog(LVL_INFO,"library version: %d.%d\n", info.libraryVersion.major, info.libraryVersion.minor);
-				testlog(LVL_INFO,"PKCS#11 version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
+				testlog(LVL_DEBUG,"library version: %d.%d\n", info.libraryVersion.major, info.libraryVersion.minor);
+				testlog(LVL_DEBUG,"PKCS#11 version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
 
 				frv = (*functions->C_GetSlotList) (0, 0, &slot_count);
 				if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetSlotList", "test_open_close_session enter" ))
 				{
-					testlog(LVL_INFO,"slot count: %i\n", slot_count);
+					testlog(LVL_DEBUG,"slot count: %i\n", slot_count);
 					slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
 					if(slotIds != NULL)
 					{
@@ -74,8 +74,8 @@ testRet test_open_close_session() {
 											break;
 										}		
 									}
-									testlog(LVL_INFO,"slot Id: %d\n", slotId);
-									testlog(LVL_INFO,"slot description: %s\n", slotInfo.slotDescription);
+									testlog(LVL_DEBUG,"slot Id: %d\n", slotId);
+									testlog(LVL_DEBUG,"slot description: %s\n", slotInfo.slotDescription);
 
 									frv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
 									if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_OpenSession", "test_open_close_session enter" ))
@@ -104,7 +104,51 @@ testRet test_open_close_session() {
 		retVal.basetestrv = TEST_ERROR;
 	}
 
-	testlog(LVL_INFO, "test_open_close_session enter leave\n");
+	testlog(LVL_INFO, "test_open_close_session_info leave\n");
 	return retVal;
 }
 
+testRet test_open_close_session() 
+{
+	void *handle = NULL;				//handle to the pkcs11 library
+	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
+
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
+
+	CK_ULONG ulCount = 0;
+	CK_ULONG slotIdx = 0;
+	CK_ULONG ulCounter = 10;
+	CK_SLOT_ID_PTR slotIds = NULL;
+	CK_SESSION_HANDLE session_handle;
+
+	testlog(LVL_INFO, "test_open_close_session enter\n");
+
+	retVal = PrepareSlotListTest(&handle,&functions, &slotIds, &ulCount,CK_TRUE );
+	if((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED))
+	{
+		for (slotIdx = 0; slotIdx < ulCount; slotIdx++) 
+		{
+			while(ulCounter > 0)
+			{
+				ulCounter--;
+				if (frv == CKR_OK)
+				{
+					frv = (*functions->C_OpenSession)(slotIdx, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
+					if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_OpenSession", "test_open_close_session enter" ))
+					{
+						frv = (*functions->C_CloseSession) (session_handle);
+						ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_CloseSession", "test_open_close_session enter" );
+					}
+				}
+			}
+		}
+
+		frv = (*functions->C_Finalize) (NULL_PTR);
+		ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Finalize", "test_open_close_session enter" );
+	}
+	EndSlotListTest(handle,slotIds );
+
+	testlog(LVL_INFO, "test_open_close_session leave\n");
+	return retVal;
+}

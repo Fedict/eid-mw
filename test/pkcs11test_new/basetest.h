@@ -73,6 +73,13 @@ typedef struct{
 int GetPKCS11FunctionList(CK_FUNCTION_LIST_PTR *pFunctions,void *handle);
 CK_BBOOL ReturnedSuccesfull(CK_RV frv, CK_RV *ptrv, char* pkcs11function, char* test_name );
 CK_BBOOL ReturnedSucces(CK_RV frv, CK_RV *ptrv, char* pkcs11function);
+
+//fills in the c_functionlist and gives back a handle to the pkcs11 library
 CK_BBOOL InitializeTest(void **phandle,CK_FUNCTION_LIST_PTR *pfunctions);
+
+//fills in the c_functionlist and gives back a handle to the pkcs11 library
+//uses the pkcs11 library to retrieve the slotlist and slotcount
+testRet PrepareSlotListTest(void **phandle,CK_FUNCTION_LIST_PTR *pfunctions, CK_SLOT_ID_PTR* pslotIds, CK_ULONG_PTR pulCount,CK_BBOOL tokenPresent );
+void EndSlotListTest(void *handle, CK_SLOT_ID_PTR slotIds );
 
 #endif

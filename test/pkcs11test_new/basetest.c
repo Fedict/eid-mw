@@ -95,3 +95,61 @@ CK_BBOOL InitializeTest(void **phandle,CK_FUNCTION_LIST_PTR *pfunctions)
 	testlog(LVL_INFO, "InitializeTest leave\n");
 	return CK_TRUE;
 }
+
+testRet PrepareSlotListTest(void **phandle,CK_FUNCTION_LIST_PTR *pfunctions, CK_SLOT_ID_PTR* pslotIds, CK_ULONG_PTR pulCount,CK_BBOOL tokenPresent )
+{
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
+	*phandle = NULL;
+	if (InitializeTest(phandle,pfunctions))
+	{
+		frv = ((*pfunctions)->C_Initialize) (NULL);
+		if (ReturnedSucces(frv,&(retVal.pkcs11rv), "C_Initialize" ))
+		{	
+			frv = ((*pfunctions)->C_GetSlotList) (0, 0, pulCount);
+			if (ReturnedSucces(frv,&(retVal.pkcs11rv), "C_GetSlotList" ))
+			{
+				*pslotIds = malloc(*pulCount * sizeof(CK_SLOT_INFO));
+				if(*pslotIds != NULL)
+				{
+					frv = ((*pfunctions)->C_GetSlotList) (tokenPresent, *pslotIds, pulCount);
+					if (ReturnedSucces(frv,&(retVal.pkcs11rv), "C_GetSlotList (X2)" ))
+					{
+						if(*pulCount == 0)
+						{
+							retVal.basetestrv = TEST_SKIPPED;
+						}
+					}
+				}
+				else //malloc failed
+				{
+					testlog(LVL_INFO,"malloc failed");
+					retVal.basetestrv = TEST_ERROR;
+				}
+			}
+			// C_Finalize
+			if((retVal.basetestrv != TEST_PASSED) || (retVal.pkcs11rv != CKR_OK) )
+			{
+				frv = ((*pfunctions)->C_Finalize) (NULL_PTR);
+			}
+		}	
+	}
+	else
+	{
+		retVal.basetestrv = TEST_ERROR;
+	}
+	return retVal;
+}
+
+void EndSlotListTest(void *handle,CK_SLOT_ID_PTR slotIds )
+{
+	if(handle != NULL)
+	{
+		if(slotIds != NULL)
+		{
+			free(slotIds);
+		}
+		dlclose(handle);
+	}
+	return;
+}
