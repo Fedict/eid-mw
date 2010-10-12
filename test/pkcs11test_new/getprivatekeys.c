@@ -93,6 +93,7 @@ testRet test_getprivatekeys() {
 								}
 								frv = (*functions->C_CloseSession) (session_handle);
 								ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_CloseSession", "test_getprivatekeys" );
+								free(pValue);
 							}
 							else //malloc failed
 							{

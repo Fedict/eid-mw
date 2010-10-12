@@ -106,6 +106,7 @@ testRet test_getallobjects() {
 							}
 						}
 					}
+					free(slotIds);
 				}
 				else //malloc failed
 				{

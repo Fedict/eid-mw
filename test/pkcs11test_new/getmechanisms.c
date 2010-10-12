@@ -137,6 +137,7 @@ testRet test_getmechanisms() {
 								}
 							}
 						}
+						free(slotIds);
 					}
 					else //malloc failed
 					{

@@ -102,6 +102,7 @@ testRet test_sign() {
 							}
 						}
 					}
+					free(slotIds);
 				}
 				else //malloc failed
 				{
