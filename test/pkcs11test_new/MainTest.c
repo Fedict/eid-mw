@@ -1,27 +1,27 @@
 /* ****************************************************************************
 
- * eID Middleware Project.
- * Copyright (C) 2009-2010 FedICT.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License version
- * 3.0 as published by the Free Software Foundation.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, see
- * http://www.gnu.org/licenses/.
+* eID Middleware Project.
+* Copyright (C) 2009-2010 FedICT.
+*
+* This is free software; you can redistribute it and/or modify it
+* under the terms of the GNU Lesser General Public License version
+* 3.0 as published by the Free Software Foundation.
+*
+* This software is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with this software; if not, see
+* http://www.gnu.org/licenses/.
 
 **************************************************************************** */
 
 /*
- * Integration test for the PKCS#11 library.
- * Required interaction: none.
- */
+* Integration test for the PKCS#11 library.
+* Required interaction: PIN entry.
+*/
 
 #include <stdio.h>
 #include <MainTest.h>
@@ -67,6 +67,12 @@ int main() {
 	testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
 	result[testCounter] = test_open_close_session();
 	testCounter++;
+	result[testCounter] = test_open_close_session_info();
+	testCounter++;
+	result[testCounter] = test_open_close_session_bad_params();
+	testCounter++;
+	result[testCounter] = test_open_close_session_limits();
+	testCounter++;
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
 	result[testCounter] = test_getmechanisms();
 	testCounter++;
@@ -92,22 +98,61 @@ int main() {
 		{
 			testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", result[i].pkcs11rv);
 		}
-		else if(result[i].basetestrv == TEST_PASSED)
+		else
 		{
-			testlog(LVL_NOLEVEL,"PASSED\n");
+			switch(result[i].basetestrv)
+			{
+			case TEST_PASSED:
+				testlog(LVL_NOLEVEL,"PASSED\n");
+				break;
+			case TEST_SKIPPED:
+				testlog(LVL_NOLEVEL,"SKIPPED\n");
+				break;
+			case TEST_WARNING:
+				testlog(LVL_NOLEVEL,"WARNING\n");
+				break;
+			case TEST_ERROR:
+				testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", result[i].pkcs11rv);
+				break;
+			default:
+				testlog(LVL_NOLEVEL,"UNKNOWN : Result = 0x%.8x \n", result[i].pkcs11rv);
+				break;
+			};
 		}
-		else if(result[i].basetestrv == TEST_SKIPPED)
+	}
+
+	testlog(LVL_NOLEVEL,"\n===============================================\n");
+	//short summary
+	for (i = 0; i < testCounter; i++)
+	{
+		if(result[i].pkcs11rv != CKR_OK)
 		{
-			testlog(LVL_NOLEVEL,"SKIPPED\n");
+			testlog(LVL_NOLEVEL,"F");
 		}
 		else
-		{	
-			testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", result[i].pkcs11rv);
+		{
+			switch(result[i].basetestrv)
+			{
+			case TEST_PASSED:
+				testlog(LVL_NOLEVEL,"P");
+				break;
+			case TEST_SKIPPED:
+				testlog(LVL_NOLEVEL," S ");
+				break;
+			case TEST_WARNING:
+				testlog(LVL_NOLEVEL," W ");
+				break;
+			case TEST_ERROR:
+				testlog(LVL_NOLEVEL," F ");
+				break;
+			default:
+				testlog(LVL_NOLEVEL," X ");
+				break;
+			};
 		}
-		
 	}
-	
-	
+	testlog(LVL_NOLEVEL,"\n===============================================\n");
+
 	endLog();
 	// Wait for user to end this test
 	getchar();

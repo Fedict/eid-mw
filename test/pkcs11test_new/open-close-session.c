@@ -152,3 +152,139 @@ testRet test_open_close_session()
 	testlog(LVL_INFO, "test_open_close_session leave\n");
 	return retVal;
 }
+
+testRet test_open_close_session_bad_param(CK_FLAGS flags) 
+{
+	void *handle = NULL;				//handle to the pkcs11 library
+	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
+
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
+
+	CK_ULONG ulCount = 0;
+	CK_ULONG slotIdx = 0;
+	CK_SLOT_ID_PTR slotIds = NULL;
+	CK_SESSION_HANDLE session_handle;
+
+	testlog(LVL_INFO, "test_open_close_session_bad_param enter\n");
+
+	retVal = PrepareSlotListTest(&handle,&functions, &slotIds, &ulCount,CK_TRUE );
+	if((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED))
+	{
+		for (slotIdx = 0; slotIdx < ulCount; slotIdx++) 
+		{
+			frv = (*functions->C_OpenSession)(slotIdx, flags, NULL_PTR, NULL_PTR, &session_handle);
+			if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_OpenSession", "test_open_close_session enter" ))
+			{
+				frv = (*functions->C_CloseSession) (session_handle);
+				ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_CloseSession", "test_open_close_session enter" );
+			}
+			else
+			{
+				slotIdx = ulCount;//end the loop
+			}
+		}
+		frv = (*functions->C_Finalize) (NULL_PTR);
+		ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Finalize", "test_open_close_session enter" );
+	}
+	EndSlotListTest(handle,slotIds );
+
+	testlog(LVL_INFO, "test_open_close_session_bad_param leave\n");
+	return retVal;
+}
+
+testRet test_open_close_session_bad_params(void) 
+{
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+
+	retVal = test_open_close_session_bad_param(0); //CKF_SERIAL_SESSION not set
+	if ((retVal.pkcs11rv == CKR_SESSION_PARALLEL_NOT_SUPPORTED) && (retVal.basetestrv == TEST_PASSED) )
+	{
+		retVal = test_open_close_session_bad_param(CKF_RW_SESSION | CKF_SERIAL_SESSION); //CKF_SERIAL_SESSION not set
+		if ((retVal.pkcs11rv != CKR_TOKEN_WRITE_PROTECTED) && (retVal.basetestrv == TEST_PASSED) )
+		{
+			retVal.basetestrv = TEST_WARNING;
+		}
+	}
+	else if ((retVal.pkcs11rv == CKR_OK))
+	{
+		retVal.basetestrv = TEST_ERROR;
+	}
+	return retVal;
+}
+
+//this function returns the session limit for the first card found
+//do not return CKR_SESSION_COUNT as error, return CKR_OK instead
+
+testRet test_open_close_session_limit(CK_FLAGS flags, CK_ULONG *pcounter) 
+{
+	void *handle = NULL;				//handle to the pkcs11 library
+	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
+
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
+
+	CK_ULONG ulCount = 0;
+	CK_ULONG slotIdx = 0;
+	CK_ULONG lcounter = 0;
+	CK_ULONG maxcount = *pcounter;
+	CK_SLOT_ID_PTR slotIds = NULL;
+	CK_SESSION_HANDLE session_handle;
+
+	testlog(LVL_INFO, "test_open_close_session_bad_param enter\n");
+	*pcounter = 0;
+
+	retVal = PrepareSlotListTest(&handle,&functions, &slotIds, &ulCount,CK_TRUE );
+	if((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED))
+	{
+		slotIdx = 0;
+		if ( slotIdx < ulCount) 
+		{
+			//see how many sessions we can open
+			while( (lcounter < maxcount) && ( frv == CKR_OK) )
+			{
+				lcounter++;
+				frv = (*functions->C_OpenSession)(slotIdx, flags, NULL_PTR, NULL_PTR, &session_handle);
+			}
+			if(frv == CKR_SESSION_COUNT)
+			{
+				*pcounter = lcounter;
+				//do not return CKR_SESSION_COUNT as error
+			}
+			else
+			{
+				ReturnedSucces(frv,&(retVal.pkcs11rv), "C_OpenSession");
+			}
+			if(( lcounter > 1)||(retVal.pkcs11rv == CKR_OK) ) // at least one session was opened
+			{
+				frv = (*functions->C_CloseAllSessions)(slotIdx);
+				ReturnedSucces(frv,&(retVal.pkcs11rv), "C_CloseAllSessions");
+			}
+		}
+		frv = (*functions->C_Finalize) (NULL_PTR);
+		ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Finalize", "test_open_close_session enter" );
+	}
+	EndSlotListTest(handle,slotIds );
+
+	testlog(LVL_INFO, "test_open_close_session_bad_param leave\n");
+	return retVal;
+}
+
+testRet test_open_close_session_limits() 
+{
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	CK_ULONG counter = 200;
+
+	retVal = test_open_close_session_limit(CKF_SERIAL_SESSION, &counter); 
+	if ((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED) )
+	{
+		testlog(LVL_INFO, "session_limits read-only = %d\n",counter);
+		counter = 50;
+		retVal = test_open_close_session_limit(CKF_RW_SESSION | CKF_SERIAL_SESSION, &counter); //CKF_SERIAL_SESSION not set
+		if ((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED) )
+		{
+			testlog(LVL_INFO, "session_limits read-write = %d\n",counter);
+		}
+	}
+	return retVal;
+}
