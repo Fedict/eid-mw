@@ -385,6 +385,10 @@
 				RelativePath=".\sign.c"
 				>
 			</File>
+			<File
+				RelativePath=".\waitforslotevent.c"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

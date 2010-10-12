@@ -72,6 +72,8 @@ testRet test_getmechanisms() {
 								frv = (*functions->C_GetSlotInfo) (slotId, &slotInfo);
 								if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetSlotInfo", "test_show_mechanismsinfo" ))
 								{
+									//chop off last character
+									slotInfo.slotDescription[63] = '\0';
 									for (idx = 64 - 1; idx > 0; idx--) {
 										if (slotInfo.slotDescription[idx] == ' ') {
 											slotInfo.slotDescription[idx] = '\0';			

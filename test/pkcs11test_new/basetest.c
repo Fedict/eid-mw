@@ -153,3 +153,30 @@ void EndSlotListTest(void *handle,CK_SLOT_ID_PTR slotIds )
 	}
 	return;
 }
+
+testRet bt_logslotdescription(CK_FUNCTION_LIST_PTR *pfunctions, CK_ULONG slotId)
+{
+	testRet retVal = {CKR_OK,TEST_PASSED};
+	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
+
+	CK_SLOT_INFO slotInfo;	
+
+	frv = ((*pfunctions)->C_GetSlotInfo) (slotId, &slotInfo);
+	if (ReturnedSucces(frv,&(retVal.pkcs11rv), "C_GetSlotInfo" ))
+	{
+		CK_UTF8CHAR   slotDescription[65];
+		int idx;
+		memcpy(slotDescription,slotInfo.slotDescription,64);
+		slotDescription[64] = '\0';
+		//remove padded spaces
+		for (idx = 64 - 1; idx > 0; idx--) {
+			if (slotDescription[idx] == ' ') {
+				slotDescription[idx] = '\0';			
+			} else {
+				break;
+			}		
+		}
+		testlog(LVL_NOLEVEL,"slot description: %s", slotDescription);
+	}
+	return retVal;
+}

@@ -28,6 +28,7 @@
 #include "logtest.h"
 
 #define NUMBER_OF_TESTS 100
+//#define USER_INTERACTION
 
 int main() {
 	int i=0;
@@ -73,6 +74,15 @@ int main() {
 	testCounter++;
 	result[testCounter] = test_open_close_session_limits();
 	testCounter++;
+	testDescription[testCounter] = "Tests waiting for slot event";
+	result[testCounter] = test_waitforslotevent_noblock();
+	testCounter++;
+#ifdef USER_INTERACTION
+	result[testCounter] = test_waitforslotevent_userinteraction();
+	testCounter++;
+#endif
+	result[testCounter] = test_waitforslotevent_whilefinalize();
+	testCounter++;
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
 	result[testCounter] = test_getmechanisms();
 	testCounter++;
@@ -82,10 +92,11 @@ int main() {
 	testDescription[testCounter] = "tests getting all the objects from the card";
 	result[testCounter] = test_getallobjects();
 	testCounter++;
+#ifdef USER_INTERACTION
 	testDescription[testCounter] = "tests signing with the card";
 	result[testCounter] = test_sign();
 	testCounter++;
-
+#endif
 	//testlog(LVL_NOLEVEL,"\n\n_______________________________________________\n");
 	for (i = 0; i < testCounter; i++)
 	{
@@ -127,7 +138,7 @@ int main() {
 	{
 		if(result[i].pkcs11rv != CKR_OK)
 		{
-			testlog(LVL_NOLEVEL,"F");
+			testlog(LVL_NOLEVEL," F ");
 		}
 		else
 		{

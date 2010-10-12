@@ -83,4 +83,6 @@ CK_BBOOL InitializeTest(void **phandle,CK_FUNCTION_LIST_PTR *pfunctions);
 testRet PrepareSlotListTest(void **phandle,CK_FUNCTION_LIST_PTR *pfunctions, CK_SLOT_ID_PTR* pslotIds, CK_ULONG_PTR pulCount,CK_BBOOL tokenPresent );
 void EndSlotListTest(void *handle, CK_SLOT_ID_PTR slotIds );
 
+//function to print the slotdescription of a certain slot, specified by its slotId
+testRet bt_logslotdescription(CK_FUNCTION_LIST_PTR *pfunctions, CK_ULONG slotId);
 #endif
