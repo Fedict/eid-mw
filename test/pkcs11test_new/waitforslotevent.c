@@ -133,7 +133,7 @@ testRet test_waitforslotevent_whilefinalize() {
 	CK_SLOT_ID_PTR slotIds = NULL;
 	CK_SLOT_ID slotId = 0;
 
-	testlog(LVL_INFO, "test_waitforslotevent enter\n");
+	testlog(LVL_INFO, "test_waitforslotevent_whilefinalize enter\n");
 
 	retVal = PrepareSlotListTest(&handle,&functions, &slotIds, &ulCount,CK_TRUE );
 	if((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED))
@@ -154,15 +154,24 @@ testRet test_waitforslotevent_whilefinalize() {
 			testlog(LVL_ERROR, "CreateThread failed\n");
 			retVal.basetestrv = TEST_ERROR;
 		}
-		frv = (*functions->C_WaitForSlotEvent)(0, &slotId,NULL_PTR);
-		if (frv != CKR_CRYPTOKI_NOT_INITIALIZED)
+		else
 		{
-			ReturnedSucces(frv,&(retVal.pkcs11rv), "C_WaitForSlotEvent");
-			retVal.basetestrv = TEST_ERROR;
+			frv = (*functions->C_WaitForSlotEvent)(0, &slotId,NULL_PTR);
+			if (frv != CKR_CRYPTOKI_NOT_INITIALIZED)
+			{
+				ReturnedSucces(frv,&(retVal.pkcs11rv), "C_WaitForSlotEvent");
+				retVal.basetestrv = TEST_ERROR;
+			}
+			// Wait until thread is terminated.
+			if (WAIT_OBJECT_0 != WaitForSingleObject(hThreadHandle, INFINITE))
+			{
+				testlog(LVL_ERROR, "WaitForSingleObject failed\n");
+				retVal.basetestrv = TEST_ERROR;
+			}	
 		}
 	}
 	EndSlotListTest(handle,slotIds );
 
-	testlog(LVL_INFO, "test_waitforslotevent leave\n");
+	testlog(LVL_INFO, "test_waitforslotevent_whilefinalize leave\n");
 	return retVal;
 }
