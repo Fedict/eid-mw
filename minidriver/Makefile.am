@@ -11,7 +11,7 @@ libbeidmdrv@LIBRARY_BITNESS@@DEBUG_POSTFIX@_la_SOURCES = $(srcdir)/src/CardAndCo
 	$(srcdir)/src/SmartCard.c $(srcdir)/src/Util.c $(srcdir)/src/ExternalPinUI.c $(srcdir)/src/res/beidmdrv@LIBRARY_BITNESS@.rc
 
 libbeidmdrv@LIBRARY_BITNESS@@DEBUG_POSTFIX@_la_LDFLAGS = -no-undefined -avoid-version \
-	--verbose -export-symbols "$(srcdir)/src/inc/beidmdrv.exports" 
+	--verbose -export-symbols "$(srcdir)/src/res/beidmdrv.def" 
 
 # libcomctl32v6.a is self-built. See dev_env/windows/readme.txt for more information about how to create this lib
 libbeidmdrv@LIBRARY_BITNESS@@DEBUG_POSTFIX@_la_LIBADD = -lwinscard -lcrypt32 -lole32 -lcomctl32v6 -L. 
