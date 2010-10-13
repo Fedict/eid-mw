@@ -244,6 +244,7 @@ unsigned long CreateaMutex(CK_VOID_PTR_PTR ppMutex)
         NULL); 
 
 	*ppMutex = (CK_VOID_PTR)ghMutex;
+	return 0;
 }
 
 testRet test_initialize_bad_args(CK_C_INITIALIZE_ARGS* pinit_args) 

@@ -119,6 +119,8 @@ DWORD WINAPI test_waitforslotevent_finalize( LPVOID thefunctions )
 
 	Sleep(500);
 	functions->C_Finalize(NULL_PTR);
+
+	return 0;
 }
 
 testRet test_waitforslotevent_whilefinalize() {

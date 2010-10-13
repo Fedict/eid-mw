@@ -28,10 +28,6 @@ testRet test_getinfo() {
 	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
 
 	CK_INFO info;
-	CK_SESSION_HANDLE session_handle;
-	long slot_count;
-	CK_SLOT_ID_PTR slotIds;
-	int slotIdx;
 
 	testlog(LVL_DEBUG, "test_getinfo enter\n");
 	if (InitializeTest(&handle,&functions))

@@ -38,9 +38,9 @@
 #define dlsym(h, function) GetProcAddress(h, function)
 #define dlclose(h) FreeLibrary(h)
 #ifdef _DEBUG
-  #define PKCS11_LIB "beidpkcs11D.dll" //E:/trunk/eid-mw/test/_binaries35/debug/beid35pkcs11D.dll"
+  #define PKCS11_LIB TEXT("beidpkcs11D.dll") //E:/trunk/eid-mw/test/_binaries35/debug/beid35pkcs11D.dll"
 #else
-  #define PKCS11_LIB "beidpkcs11.dll"
+  #define PKCS11_LIB TEXT("beidpkcs11.dll")
 #endif
 
 #define RTLD_LAZY	1
