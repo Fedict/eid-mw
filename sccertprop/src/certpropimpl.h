@@ -29,8 +29,8 @@
 
 using std::string;
 using std::wstring;
-#include "log.h"
-#include "configuration.h"
+#include "../common/src/log.h"
+#include "../common/src/configuration.h"
 #include "../cardlayer/src/p15objects.h"
 #include "../cardlayer/src/cardlayer.h"
 #include "../cardlayer/src/context.h"

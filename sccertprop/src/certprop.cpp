@@ -21,13 +21,33 @@
 #include "certpropimpl.h"
 #include "certprop.h"
 
+#include <string.h>
+
+
 using namespace eIDMW;
 
-DWORD ImportCertificates(const char* readerName, char * pCardSerialNumber, size_t cCardSerialNumber)
+DWORD ImportCertificates(LPCTSTR readerName, char * pCardSerialNumber, size_t cCardSerialNumber)
 {
-	if ( !readerName || 0 == strlen(readerName) )
+	
+	char    * szReaderName;
+
+#ifdef UNICODE
+	size_t count;
+	count = wcstombs(NULL, readerName, 0);
+	if (count == -1)
 	{
-		MWLOG(LEV_INFO, MOD_CSP, L"ImportCertificates: No reader name supplied.");
+		MWLOG(LEV_INFO, MOD_CSP, TEXT("ImportCertificates: Error in card reader name."));
+		return false;
+	}
+	szReaderName = (char *)malloc( count );
+	count = wcstombs(szReaderName, readerName, 4096);
+#else
+	szReaderName = readerName;
+#endif
+
+	if ( !readerName || 0 == strlen(szReaderName) )
+	{
+		MWLOG(LEV_INFO, MOD_CSP, TEXT("ImportCertificates: No reader name supplied."));
 		return SCARD_E_UNKNOWN_READER;
 	}
 
@@ -44,29 +64,29 @@ DWORD ImportCertificates(const char* readerName, char * pCardSerialNumber, size_
 	unsigned long 		dwPropId;
 	CRYPT_KEY_PROV_INFO *pCryptKeyProvInfo;
 	DWORD            	cbData, dwLastError;
-
+	
 	try
 	{
 		CCardLayer * cardlayer = new CCardLayer;
-		CReader & 	cardreader = cardlayer->getReader(readerName);
+		CReader & 	cardreader = cardlayer->getReader(szReaderName);
 
 		if (!cardreader.Connect())
 		{
-			MWLOG(LEV_INFO, MOD_CSP, L"ImportCertificates: Unable to connect to card reader %s.",
+			MWLOG(LEV_INFO, MOD_CSP, TEXT("ImportCertificates: Unable to connect to card reader %s."),
 				readerName);
 			return SCARD_E_READER_UNAVAILABLE;
 		}
 
 		pInternalCardSerialNumber = cardreader.GetSerialNr().c_str();
 		MWLOG(LEV_DEBUG, MOD_CSP,
-				L"ImportCertificates: Card serial number retrieved: %s.",
+				TEXT("ImportCertificates: Card serial number retrieved: %s."),
 				pInternalCardSerialNumber);
 
 		if (cCardSerialNumber < strlen(pInternalCardSerialNumber) + 1)
 		{
 			// buffer too small!
 			MWLOG(LEV_INFO, MOD_CSP,
-					L"ImportCertificates: Buffer for card serial number too small. Buffer: %d, serial number length: %d",
+					TEXT("ImportCertificates: Buffer for card serial number too small. Buffer: %d, serial number length: %d"),
 					cCardSerialNumber,
 					strlen(pInternalCardSerialNumber) + 1);
 		}
@@ -82,19 +102,19 @@ DWORD ImportCertificates(const char* readerName, char * pCardSerialNumber, size_
 		pContainerNameAuthentication    = new wchar_t[strlen(pInternalCardSerialNumber)+17];
 
 		swprintf(pContainerNameSignature,                 // Signature key container name to look for
-				L"Signature(%S)", pInternalCardSerialNumber);
+				TEXT("Signature(%S)"), pInternalCardSerialNumber);
 		swprintf(pContainerNameAuthentication,            // Authentication key container name to look for
-				L"Authentication(%S)", pInternalCardSerialNumber);
+				TEXT("Authentication(%S)"), pInternalCardSerialNumber);
 
 		dwPropId = CERT_KEY_PROV_INFO_PROP_ID;
 		pCertContextIterator = NULL;
 
-		hMyStore = CertOpenSystemStore(NULL, "MY");
+		hMyStore = CertOpenSystemStore(NULL, TEXT("MY"));
 		if (hMyStore == NULL)
 		{
 			dwLastError = GetLastError();
 			MWLOG(LEV_INFO, MOD_CSP,
-					L"ImportCertificates: Unable to open the system certificate store 'MY'. Error code: %d.",
+					TEXT("ImportCertificates: Unable to open the system certificate store 'MY'. Error code: %d."),
 					dwLastError);
 			return dwLastError;
 		}
@@ -118,14 +138,14 @@ DWORD ImportCertificates(const char* readerName, char * pCardSerialNumber, size_
 	                            			// allocated for the structure.
 	          {
 	        	  dwLastError = GetLastError();
-	        	  MWLOG(LEV_INFO, MOD_CSP, L"ImportCertificates: The property length for CERT_KEY_PROV_INFO_PROP_ID was not retrieved. Error code %d.",
+	        	  MWLOG(LEV_INFO, MOD_CSP, TEXT("ImportCertificates: The property length for CERT_KEY_PROV_INFO_PROP_ID was not retrieved. Error code %d."),
 	        			  dwLastError);
 	        	  return dwLastError;
 	          }
 	          if(!(pCryptKeyProvInfo =
 	                   (CRYPT_KEY_PROV_INFO *)malloc(cbData)))
 	          {
-	        	  MWLOG(LEV_INFO, MOD_CSP, L"ImportCertificates: Error in allocation of memory.");
+	        	  MWLOG(LEV_INFO, MOD_CSP, TEXT("ImportCertificates: Error in allocation of memory."));
 	        	  return SCARD_E_NO_MEMORY;
 	          }
 	          if(CertGetCertificateContextProperty(
@@ -134,14 +154,14 @@ DWORD ImportCertificates(const char* readerName, char * pCardSerialNumber, size_
 	               pCryptKeyProvInfo,
 	               &cbData))
 	          {
-	        	   MWLOG(LEV_DEBUG, MOD_CSP, L"ImportCertificates: We are investigating key container %s.",
+	        	   MWLOG(LEV_DEBUG, MOD_CSP, TEXT("ImportCertificates: We are investigating key container %s."),
 	            		   pCryptKeyProvInfo->pwszContainerName);
 	        	   // look for signature key container
 	               bSignatureContainerFound =
 	            		   (0 == wcscmp(pCryptKeyProvInfo->pwszContainerName, pContainerNameSignature)) ||      // Signature key container name found
 	            		   bSignatureContainerFound;
 	               if (bSignatureContainerFound)
-		        	   MWLOG(LEV_DEBUG, MOD_CSP, L"ImportCertificates: We found key container %s.",
+		        	   MWLOG(LEV_DEBUG, MOD_CSP, TEXT("ImportCertificates: We found key container %s."),
 		        			   pContainerNameSignature);
 
 	               // look for authentication key container
@@ -149,7 +169,7 @@ DWORD ImportCertificates(const char* readerName, char * pCardSerialNumber, size_
 	            		   (0 == wcscmp(pCryptKeyProvInfo->pwszContainerName, pContainerNameAuthentication)) || // Authentication key container name
 	            		   bAuthenticationContainerFound;
 	               if (bAuthenticationContainerFound)
-		        	   MWLOG(LEV_DEBUG, MOD_CSP, L"ImportCertificates: We found key container %s.",
+		        	   MWLOG(LEV_DEBUG, MOD_CSP, TEXT("ImportCertificates: We found key container %s."),
 		        			   pContainerNameAuthentication);
 
     			   if (pCryptKeyProvInfo)
@@ -164,14 +184,14 @@ DWORD ImportCertificates(const char* readerName, char * pCardSerialNumber, size_
 	           {
     			   if (pCryptKeyProvInfo)
     				   free(pCryptKeyProvInfo);
-		           MWLOG(LEV_INFO, MOD_CSP, L"ImportCertificates: The property CERT_KEY_PROV_INFO_PROP_ID was not retrieved.");
+		           MWLOG(LEV_INFO, MOD_CSP, TEXT("ImportCertificates: The property CERT_KEY_PROV_INFO_PROP_ID was not retrieved."));
 	           }
 
 		} // End of while.
 		if(!CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG))
 		{
 			MWLOG(LEV_INFO, MOD_CSP,
-					L"ImportCertificates: Unable to close the system certificate store 'MY'. Error code: %d.",
+					TEXT("ImportCertificates: Unable to close the system certificate store 'MY'. Error code: %d."),
 					GetLastError());
 		}
 
@@ -196,11 +216,11 @@ DWORD ImportCertificates(const char* readerName, char * pCardSerialNumber, size_
 					dwLastError = GetLastError();
 					if (dwLastError == E_INVALIDARG)
 						MWLOG(LEV_INFO, MOD_CSP,
-							L"ImportCertificates: Unable to create certificate context. The certificate encoding type is not supported.",
+							TEXT("ImportCertificates: Unable to create certificate context. The certificate encoding type is not supported."),
 							dwLastError);
 					 else
 						MWLOG(LEV_INFO, MOD_CSP,
-							L"ImportCertificates: Unable to create certificate context. Error code: %d.",
+							TEXT("ImportCertificates: Unable to create certificate context. Error code: %d."),
 							dwLastError);
 
 				}
@@ -233,7 +253,7 @@ DWORD ImportCertificates(const char* readerName, char * pCardSerialNumber, size_
 	{
 		long err = e.GetError();
 		MWLOG(LEV_INFO, MOD_CSP,
-			L"ImportCertificates: An eID Middleware error was thrown. Error code: %d.",
+			TEXT("ImportCertificates: An eID Middleware error was thrown. Error code: %d."),
 			err);
 		return err;
 	}
@@ -258,22 +278,22 @@ DWORD RemoveCertificates (char * pSerialNumber)
 	HKEY hkSubKey;
 	bool settingFound = false;
 
-    if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER,"Software\\BEID\\configuretool",0,KEY_READ,&hkSubKey))
+    if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER,TEXT("Software\\BEID\\configuretool"),0,KEY_READ,&hkSubKey))
     {
     	cbData = sizeof(DWORD);
 		if (ERROR_SUCCESS == RegQueryValueEx (hkSubKey,
-			"remove_certificate", NULL, NULL,
+			TEXT("remove_certificate"), NULL, NULL,
 			(LPBYTE) &RemoveCert, &cbData))
 			settingFound = true;
 		RegCloseKey(hkSubKey);
     }
     if (!settingFound)
     {
-        if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE,"Software\\BEID\\configuretool",0,KEY_READ,&hkSubKey))
+        if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE,TEXT("Software\\BEID\\configuretool"),0,KEY_READ,&hkSubKey))
         {
         	cbData = sizeof(DWORD);
     		if (ERROR_SUCCESS == RegQueryValueEx (hkSubKey,
-    			"remove_certificate", NULL, NULL,
+    			TEXT("remove_certificate"), NULL, NULL,
     			(LPBYTE) &RemoveCert, &cbData))
     			settingFound = true;
     		RegCloseKey(hkSubKey);
@@ -288,12 +308,12 @@ DWORD RemoveCertificates (char * pSerialNumber)
 	}
 	pContainerNameSignature    		= new wchar_t[strlen(pSerialNumber)+12];
 	pContainerNameAuthentication    = new wchar_t[strlen(pSerialNumber)+17];
-	hMyStore = CertOpenSystemStore(NULL, "MY");
+	hMyStore = CertOpenSystemStore(NULL, TEXT("MY"));
 
 	swprintf(pContainerNameSignature,                 // Signature key container name to look for
-			L"Signature(%S)", pSerialNumber);
+			TEXT("Signature(%S)"), pSerialNumber);
 	swprintf(pContainerNameAuthentication,            // Authentication key container name to look for
-			L"Authentication(%S)", pSerialNumber);
+			TEXT("Authentication(%S)"), pSerialNumber);
 
 	dwPropId = CERT_KEY_PROV_INFO_PROP_ID;
 	pCertContextIterator = NULL;
@@ -319,14 +339,14 @@ DWORD RemoveCertificates (char * pSerialNumber)
                             		// allocated for the structure.
           {
         	  dwLastError = GetLastError();
-        	  MWLOG(LEV_INFO, MOD_CSP, L"RemoveCertificates: The property length for CERT_KEY_PROV_INFO_PROP_ID was not retrieved. Error code %d.",
+        	  MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: The property length for CERT_KEY_PROV_INFO_PROP_ID was not retrieved. Error code %d."),
         			  dwLastError);
         	  return dwLastError;
           }
           if(!(pCryptKeyProvInfo =
                    (CRYPT_KEY_PROV_INFO *)malloc(cbData)))
           {
-        	  MWLOG(LEV_INFO, MOD_CSP, L"RemoveCertificates: Error in allocation of memory.");
+        	  MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: Error in allocation of memory."));
         	  return SCARD_E_NO_MEMORY;
           }
           if(CertGetCertificateContextProperty(
@@ -335,7 +355,7 @@ DWORD RemoveCertificates (char * pSerialNumber)
                pCryptKeyProvInfo,
                &cbData))
           {
-        	  MWLOG(LEV_DEBUG, MOD_CSP, L"RemoveCertificates: We are investigating key container %s.",
+        	  MWLOG(LEV_DEBUG, MOD_CSP, TEXT("RemoveCertificates: We are investigating key container %s."),
            		   pCryptKeyProvInfo->pwszContainerName);
         	  if (0 == wcscmp(pCryptKeyProvInfo->pwszContainerName, pContainerNameSignature) ||      // Signature key container name found
             	   0 == wcscmp(pCryptKeyProvInfo->pwszContainerName, pContainerNameAuthentication) )  // Authentication key container name found
@@ -343,7 +363,7 @@ DWORD RemoveCertificates (char * pSerialNumber)
         		  if (!(pCertContextDup = CertDuplicateCertificateContext(pCertContextIterator)))
         		   {
         			   dwLastError = GetLastError();
-        			   MWLOG(LEV_INFO, MOD_CSP, L"RemoveCertificates: Duplication of the certificate pointer failed. Error code: %d",
+        			   MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: Duplication of the certificate pointer failed. Error code: %d"),
         					   dwLastError);
 
         			   // Free resources
@@ -359,7 +379,7 @@ DWORD RemoveCertificates (char * pSerialNumber)
         		   if(!CertDeleteCertificateFromStore(pCertContextDup))
         		   {
         			   dwLastError = GetLastError();
-        			   MWLOG(LEV_INFO, MOD_CSP, L"RemoveCertificates: The deletion of the certificate failed. Error code: %d",
+        			   MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: The deletion of the certificate failed. Error code: %d"),
         					   dwLastError);
 
         			   // Free resources
@@ -369,13 +389,13 @@ DWORD RemoveCertificates (char * pSerialNumber)
         					CertFreeCertificateContext(pCertContextIterator);
         			   return dwLastError;
         		   }
-    			   MWLOG(LEV_DEBUG, MOD_CSP, L"RemoveCertificates: Certificate removed from store.");
+    			   MWLOG(LEV_DEBUG, MOD_CSP, TEXT("RemoveCertificates: Certificate removed from store."));
 
               }
            }
            else
            {
-	           MWLOG(LEV_INFO, MOD_CSP, L"RemoveCertificates: The property CERT_KEY_PROV_INFO_PROP_ID was not retrieved.");
+	           MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: The property CERT_KEY_PROV_INFO_PROP_ID was not retrieved."));
            }
 		   if (pCryptKeyProvInfo)
 			   free(pCryptKeyProvInfo);
@@ -398,18 +418,18 @@ bool StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits
 	)
 	)
 	{
-		hMemoryStore = CertOpenSystemStore (NULL, "ROOT");
+		hMemoryStore = CertOpenSystemStore (NULL, TEXT("ROOT"));
 	}
 	else
 	{
-		hMemoryStore = CertOpenSystemStore (NULL, "CA");
+		hMemoryStore = CertOpenSystemStore (NULL, TEXT("CA"));
 	}
 
 	if (hMemoryStore == NULL)
 	{
 		dwLastError = GetLastError();
 		MWLOG(LEV_INFO, MOD_CSP,
-				L"StoreAuthorityCerts: Unable to open the system certificate store. Error code: %d.",
+				TEXT("StoreAuthorityCerts: Unable to open the system certificate store. Error code: %d."),
 				dwLastError);
 		return dwLastError;
 	}
@@ -432,14 +452,14 @@ bool StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits
 		if(CertAddCertificateContextToStore(hMemoryStore, pCertContext, CERT_STORE_ADD_NEWER, NULL))
 		{
 			MWLOG(LEV_INFO, MOD_CSP,
-					L"StoreUserCerts: Certificate context added to store.");
+					TEXT("StoreUserCerts: Certificate context added to store."));
 			bRet = true;
 		}
 		else
 		{
 			dwLastError = GetLastError();
 			MWLOG(LEV_INFO, MOD_CSP,
-					L"StoreAuthorityCerts: Unable to add certificate context to store. Error code: %d.",
+					TEXT("StoreAuthorityCerts: Unable to add certificate context to store. Error code: %d."),
 					dwLastError);
 		}
 	}
@@ -459,13 +479,13 @@ bool StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 	bool bRet					= false;
 	DWORD dwLastError;
 	PCCERT_CONTEXT pDesiredCert = NULL;
-	HCERTSTORE hMyStore 		= CertOpenSystemStore(NULL, "MY");
+	HCERTSTORE hMyStore 		= CertOpenSystemStore(NULL, TEXT("MY"));
 
 	if (hMyStore == NULL)
 	{
 		dwLastError = GetLastError();
 		MWLOG(LEV_INFO, MOD_CSP,
-				L"StoreUserCerts: Unable to open the system certificate store. Error code: %d.",
+				TEXT("StoreUserCerts: Unable to open the system certificate store. Error code: %d."),
 				dwLastError);
 		return dwLastError;
 	}
@@ -497,16 +517,16 @@ bool StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 	wchar_t* 	 pContainerName = new wchar_t[strlen(cardSerialNumber)+17];
 
 	if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
-		swprintf(pContainerName,L"Signature(%S)", cardSerialNumber);
+		swprintf(pContainerName,TEXT("Signature(%S)"), cardSerialNumber);
 	else
-		swprintf(pContainerName,L"Authentication(%S)", cardSerialNumber);
+		swprintf(pContainerName,TEXT("Authentication(%S)"), cardSerialNumber);
 
 	MWLOG(LEV_INFO, MOD_CSP,
-			L"StoreUserCerts: Try to add certificate to store with key container name %s.",
+			TEXT("StoreUserCerts: Try to add certificate to store with key container name %s."),
 			pContainerName);
 
 	pCryptKeyProvInfo->pwszContainerName = pContainerName;
-	pCryptKeyProvInfo->pwszProvName = L"Belgium Identity Card CSP";
+	pCryptKeyProvInfo->pwszProvName = TEXT("Belgium Identity Card CSP");
 	pCryptKeyProvInfo->dwProvType = PROV_RSA_FULL;
 	pCryptKeyProvInfo->dwFlags = 0;
 	pCryptKeyProvInfo->cProvParam = 0;
@@ -549,14 +569,14 @@ bool StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 		if (CertAddCertificateContextToStore(hMyStore, pCertContext, CERT_STORE_ADD_REPLACE_EXISTING, NULL))
 		{
 			MWLOG(LEV_INFO, MOD_CSP,
-					L"StoreUserCerts: Certificate context added to store.");
+					TEXT("StoreUserCerts: Certificate context added to store."));
 			bRet = true;
 		}
 		else
 		{
 			dwLastError = GetLastError();
 			MWLOG(LEV_INFO, MOD_CSP,
-					L"StoreUserCerts: Unable to add certificate context to store. Error code: %d.",
+					TEXT("StoreUserCerts: Unable to add certificate context to store. Error code: %d."),
 					dwLastError);
 		}
 		CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
@@ -587,7 +607,7 @@ DWORD CertProp() {
 			NULL,
 			&hSC);
 	if ( SCARD_S_SUCCESS != lReturn ) {
-		MWLOG(LEV_INFO, MOD_CSP, L"CertProp: Failed SCardEstablishContext: 0x%08X", lReturn);
+		MWLOG(LEV_INFO, MOD_CSP, TEXT("CertProp: Failed SCardEstablishContext: 0x%08X"), lReturn);
 		return lReturn;
 	}
 	for (;;) {
@@ -652,7 +672,7 @@ DWORD CertProp() {
 						//
 						// Card inserted
 						//
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card inserted in reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card inserted in reader '%s'.\n"),
 								rgscState[dwI].szReader );
 						rgscState[dwI].pvUserData = malloc (MAX_CARD_SERIAL_SIZE);
 						ImportCertificates(rgscState[dwI].szReader, (char*)rgscState[dwI].pvUserData, MAX_CARD_SERIAL_SIZE);
@@ -665,7 +685,7 @@ DWORD CertProp() {
 						//
 						// Card or card reader removed
 						//
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card or card reader '%s' removed.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card or card reader '%s' removed.\n"),
 								rgscState[dwI].szReader );
 						if (rgscState[dwI].pvUserData != NULL)
 						{
@@ -678,47 +698,47 @@ DWORD CertProp() {
 #ifdef DEBUG
 					if (  SCARD_STATE_PRESENT & rgscState[dwI].dwEventState & dwChanges)
 					{
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card status changed to SCARD_STATE_PRESENT     for reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card status changed to SCARD_STATE_PRESENT     for reader '%s'.\n"),
 								rgscState[dwI].szReader );
 					}
 					if (  SCARD_STATE_IGNORE & rgscState[dwI].dwEventState & dwChanges)
 					{
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card status changed to SCARD_STATE_IGNORE      for reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card status changed to SCARD_STATE_IGNORE      for reader '%s'.\n"),
 								rgscState[dwI].szReader );
 					}
 					if (  SCARD_STATE_CHANGED & rgscState[dwI].dwEventState & dwChanges)
 					{
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card status changed to SCARD_STATE_CHANGED     for reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card status changed to SCARD_STATE_CHANGED     for reader '%s'.\n"),
 								rgscState[dwI].szReader );
 					}
 					if (  SCARD_STATE_UNKNOWN & rgscState[dwI].dwEventState & dwChanges)
 					{
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card status changed to SCARD_STATE_UNKNOWN     for reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card status changed to SCARD_STATE_UNKNOWN     for reader '%s'.\n"),
 								rgscState[dwI].szReader );
 					}
 					if (  SCARD_STATE_UNAVAILABLE & rgscState[dwI].dwEventState & dwChanges)
 					{
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card status changed to SCARD_STATE_UNAVAILABLE for reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card status changed to SCARD_STATE_UNAVAILABLE for reader '%s'.\n"),
 								rgscState[dwI].szReader );
 					}
 					if (  SCARD_STATE_EMPTY & rgscState[dwI].dwEventState & dwChanges)
 					{
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card status changed to SCARD_STATE_EMPTY       for reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card status changed to SCARD_STATE_EMPTY       for reader '%s'.\n"),
 								rgscState[dwI].szReader );
 					}
 					if (  SCARD_STATE_EXCLUSIVE & rgscState[dwI].dwEventState & dwChanges)
 					{
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card status changed to SCARD_STATE_EXCLUSIVE   for reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card status changed to SCARD_STATE_EXCLUSIVE   for reader '%s'.\n"),
 								rgscState[dwI].szReader );
 					}
 					if (  SCARD_STATE_INUSE & rgscState[dwI].dwEventState & dwChanges)
 					{
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card status changed to SCARD_STATE_INUSE       for reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card status changed to SCARD_STATE_INUSE       for reader '%s'.\n"),
 								rgscState[dwI].szReader );
 					}
 					if (  SCARD_STATE_MUTE & rgscState[dwI].dwEventState & dwChanges)
 					{
-						MWLOG(LEV_DEBUG, MOD_CSP, L"CertProp: Card status changed to SCARD_STATE_MUTE        for reader '%s'.\n",
+						MWLOG(LEV_DEBUG, MOD_CSP, TEXT("CertProp: Card status changed to SCARD_STATE_MUTE        for reader '%s'.\n"),
 								rgscState[dwI].szReader );
 					}
 #endif
@@ -729,7 +749,7 @@ DWORD CertProp() {
 			break;
 		default:
 			// SCardListReaders failed.
-			MWLOG(LEV_INFO, MOD_CSP, L"CertProp: Failed SCardListReaders: 0x%08X", lReturn);
+			MWLOG(LEV_INFO, MOD_CSP, TEXT("CertProp: Failed SCardListReaders: 0x%08X"), lReturn);
 			return lReturn;
 			break;
 		}
@@ -740,7 +760,7 @@ DWORD CertProp() {
 					pmszReadersPrev );
 			if ( SCARD_S_SUCCESS != lReturn2 )
 			{
-				MWLOG(LEV_INFO, MOD_CSP, L"CertProp: Failed SCardFreeMemory: 0x%08X", lReturn2);
+				MWLOG(LEV_INFO, MOD_CSP, TEXT("CertProp: Failed SCardFreeMemory: 0x%08X"), lReturn2);
 			}
 		}
 		// keep previous readers pointer to free the memory later on
@@ -756,7 +776,7 @@ DWORD CertProp() {
 				pmszReadersPrev );
 		if ( SCARD_S_SUCCESS != lReturn2 )
 		{
-			MWLOG(LEV_INFO, MOD_CSP, L"CertProp: Failed SCardFreeMemory: 0x%08X", lReturn2);
+			MWLOG(LEV_INFO, MOD_CSP, TEXT("CertProp: Failed SCardFreeMemory: 0x%08X"), lReturn2);
 		}
 	}
 	// free previous readers
@@ -765,7 +785,7 @@ DWORD CertProp() {
 				pmszReaders );
 		if ( SCARD_S_SUCCESS != lReturn2 )
 		{
-			MWLOG(LEV_INFO, MOD_CSP, L"CertProp: Failed SCardFreeMemory: 0x%08X", lReturn2);
+			MWLOG(LEV_INFO, MOD_CSP, TEXT("CertProp: Failed SCardFreeMemory: 0x%08X"), lReturn2);
 		}
 	}
 	// free memory allocated for pvUserData
