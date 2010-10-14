@@ -10,7 +10,7 @@ Source0:        http://eidmw.yourict.net/dist/sources/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: pcsc-lite-devel gtk2-devel
-Requires: pcsc-lite gtk2
+Requires: pcsc-lite gtk2 ccid
 
 %description
 Belgium Electronic Identity Card PKCS#11 Module and Firefox Plugin
@@ -32,6 +32,18 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+if [ -S /var/run/pcscd.comm ]; then
+        %{initdir}/pcscd restart 1>&2
+else
+        %{initdir}/pcscd start 1>&2
+fi
+
+if [ -f /var/run/openct/status ]; then
+	echo "OpenCT is running but eid-mw requires pcscd instead, and both cannot work at the same time."
+	echo "Please stop OpenCT (%{initdir}/openct stop) and restart pcscd (%{initdir}/pcscd restart before using eid-mw"
+fi
 
 
 %files
