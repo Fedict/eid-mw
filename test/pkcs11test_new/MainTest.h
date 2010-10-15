@@ -37,6 +37,7 @@ testRet test_open_close_session_limits(void);
 testRet test_waitforslotevent_noblock(void);
 testRet test_waitforslotevent_userinteraction(void);
 testRet test_waitforslotevent_whilefinalize(void);
+testRet test_get_token_info(void); 
 testRet test_getmechanisms(void);
 testRet test_getprivatekeys(void);
 testRet test_sign(void);

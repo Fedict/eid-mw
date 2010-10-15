@@ -370,6 +370,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\gettokeninfo.c"
+				>
+			</File>
+			<File
 				RelativePath=".\logtest.c"
 				>
 			</File>

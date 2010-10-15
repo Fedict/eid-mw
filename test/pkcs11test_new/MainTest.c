@@ -83,6 +83,9 @@ int main() {
 #endif
 	result[testCounter] = test_waitforslotevent_whilefinalize();
 	testCounter++;
+	testDescription[testCounter] = "Tests the retrieval of slot and token info";
+	result[testCounter] = test_get_token_info();
+	testCounter++;
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
 	result[testCounter] = test_getmechanisms();
 	testCounter++;
@@ -97,6 +100,7 @@ int main() {
 	result[testCounter] = test_sign();
 	testCounter++;
 #endif
+	
 	//testlog(LVL_NOLEVEL,"\n\n_______________________________________________\n");
 	for (i = 0; i < testCounter; i++)
 	{
