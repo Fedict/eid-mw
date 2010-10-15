@@ -6,7 +6,7 @@ Summary:        Belgium Electronic Identity Card PKCS#11 Module and Firefox Plug
 Group:          Applications/Communications
 License:        LGPL
 URL:            http://eid.belgium.be/
-Source0:        http://eidmw.yourict.net/dist/sources/%{name}-%{version}.tar.gz
+Source0:        http://eidmw.yourict.net/dist/sources/%{name}-%{version}-_SVN_REVISION_.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: pcsc-lite-devel gtk2-devel
@@ -33,16 +33,21 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+
 %post
 if [ -S /var/run/pcscd.comm ]; then
-        %{initdir}/pcscd restart 1>&2
+        /etc/init.d/pcscd restart 
 else
-        %{initdir}/pcscd start 1>&2
+        /etc/init.d/pcscd start
 fi
-
-if [ -f /var/run/openct/status ]; then
-	echo "OpenCT is running but eid-mw requires pcscd instead, and both cannot work at the same time."
-	echo "Please stop OpenCT (%{initdir}/openct stop) and restart pcscd (%{initdir}/pcscd restart before using eid-mw"
+if [ -f /var/lock/subsys/openct ]; then
+	echo
+	echo "************************************************ WARNING **********************************************************"
+	echo "OpenCT is running but the eID Middleware requires pcsc-lite instead, and both cannot work at the same time."
+	echo "Your will probably have problems accessing your card reader."
+	echo "Please stop OpenCT (/etc/init.d/openct stop) and restart pcsc-lite (/etc/init.d/pcscd restart) before using eid-mw."
+	echo "*******************************************************************************************************************"
+	echo
 fi
 
 
