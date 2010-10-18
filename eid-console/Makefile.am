@@ -1,5 +1,7 @@
 # Auto-makefile for the eID Console.
 
+EXTRA_DIST = eid-console-package eid-console-webapp eid-console-runtime pom.xml
+
 all : eid-console
 
 .PHONY: eid-console
