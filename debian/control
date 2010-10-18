@@ -9,5 +9,5 @@ Homepage: http://code.google.com/p/eid-mw/
 Package: eid-mw
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends} pcscd ccid libgtk2.0-0
 Description: PKCS#11 Module and Console for Belgian Electronic Identity Card
