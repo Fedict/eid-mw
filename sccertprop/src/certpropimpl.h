@@ -37,7 +37,7 @@ using std::wstring;
 
 DWORD ImportCertificates( const char* readerName, char* pSerialNumber, size_t cSerialNumber );
 DWORD RemoveCertificates( char* pSerialNumber );
-bool StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits);
-bool StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, const char* cardSerialNumber);
+DWORD StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits);
+DWORD StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, const char* cardSerialNumber);
 
 #endif /* IMPORTCERTIMPL_H_ */

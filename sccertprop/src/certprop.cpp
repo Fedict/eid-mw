@@ -21,6 +21,7 @@
 #include "certpropimpl.h"
 #include "certprop.h"
 
+#include <tchar.h>
 #include <string.h>
 
 
@@ -29,35 +30,42 @@ using namespace eIDMW;
 DWORD ImportCertificates(LPCTSTR readerName, char * pCardSerialNumber, size_t cCardSerialNumber)
 {
 	
-	char    * szReaderName;
+	char    * szReaderName = NULL;
 
 #ifdef UNICODE
 	size_t count;
-	count = wcstombs(NULL, readerName, 0);
+	count = wcstombs(NULL, readerName, 0) + 1; // number of bytes + 1 byte extra
 	if (count == -1)
 	{
 		MWLOG(LEV_INFO, MOD_CSP, TEXT("ImportCertificates: Error in card reader name."));
 		return false;
 	}
 	szReaderName = (char *)malloc( count );
-	count = wcstombs(szReaderName, readerName, 4096);
+	count = wcstombs(szReaderName, readerName, count);
 #else
 	szReaderName = readerName;
 #endif
 
-	if ( !readerName || 0 == strlen(szReaderName) )
+	if ( !szReaderName || 0 == strlen(szReaderName) )
 	{
+#ifdef UNICODE
+		if (szReaderName != NULL) {
+			free(szReaderName);
+			szReaderName = NULL;
+		}
+
+#endif
 		MWLOG(LEV_INFO, MOD_CSP, TEXT("ImportCertificates: No reader name supplied."));
 		return SCARD_E_UNKNOWN_READER;
 	}
 
 	PCCERT_CONTEXT		pCertContext = NULL;
 	PCCERT_CONTEXT  	pCertContextIterator = NULL;
-	bool				bImported	= false;
-    bool				bSignatureContainerFound = false;
-    bool				bAuthenticationContainerFound = false;
+	DWORD				dwRet	= 1;
+   bool				bSignatureContainerFound = false;
+   bool				bAuthenticationContainerFound = false;
 
-    const char * 		pInternalCardSerialNumber;
+   const char * 		pInternalCardSerialNumber;
 	wchar_t* 	 		pContainerNameSignature;
 	wchar_t* 	 		pContainerNameAuthentication;
 	HCERTSTORE 			hMyStore;
@@ -76,8 +84,8 @@ DWORD ImportCertificates(LPCTSTR readerName, char * pCardSerialNumber, size_t cC
 				readerName);
 			return SCARD_E_READER_UNAVAILABLE;
 		}
-
-		pInternalCardSerialNumber = cardreader.GetSerialNr().c_str();
+		std::string strSerial = cardreader.GetSerialNr();
+		pInternalCardSerialNumber = strSerial.c_str();
 		MWLOG(LEV_DEBUG, MOD_CSP,
 				TEXT("ImportCertificates: Card serial number retrieved: %s."),
 				pInternalCardSerialNumber);
@@ -235,13 +243,11 @@ DWORD ImportCertificates(LPCTSTR readerName, char * pCardSerialNumber, size_t cC
 					// ----------------------------------------------------
 					if((KeyUsageBits & CERT_KEY_CERT_SIGN_KEY_USAGE) == CERT_KEY_CERT_SIGN_KEY_USAGE)
 					{
-						if(StoreAuthorityCerts (pCertContext, KeyUsageBits))
-							bImported = true;
+						dwRet = StoreAuthorityCerts (pCertContext, KeyUsageBits);
 					}
 					else
 					{
-						if(StoreUserCerts (pCertContext, KeyUsageBits, pInternalCardSerialNumber))
-							bImported = true;
+						dwRet = StoreUserCerts (pCertContext, KeyUsageBits, pInternalCardSerialNumber);
 					}
 					if (pCertContext)
 						CertFreeCertificateContext(pCertContext);
@@ -252,13 +258,24 @@ DWORD ImportCertificates(LPCTSTR readerName, char * pCardSerialNumber, size_t cC
 	catch (eIDMW::CMWException e)
 	{
 		long err = e.GetError();
+#ifdef UNICODE
+		if (szReaderName != NULL) {
+			free(szReaderName);
+			szReaderName = NULL;
+		}
+#endif
 		MWLOG(LEV_INFO, MOD_CSP,
 			TEXT("ImportCertificates: An eID Middleware error was thrown. Error code: %d."),
 			err);
 		return err;
 	}
-
-	return bImported;
+#ifdef UNICODE
+	if (szReaderName != NULL) {
+			free(szReaderName);
+			szReaderName = NULL;
+	}
+#endif
+	return dwRet;
 }
 
 DWORD RemoveCertificates (char * pSerialNumber)
@@ -403,11 +420,10 @@ DWORD RemoveCertificates (char * pSerialNumber)
 	return true;
 }
 
-bool StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits)
+DWORD StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits)
 {
 
-	bool bRet = false;
-	DWORD dwLastError;
+	DWORD dwRet = 0;
 	HCERTSTORE hMemoryStore = NULL; // memory store handle
 	PCCERT_CONTEXT pDesiredCert = NULL;
 
@@ -427,11 +443,11 @@ bool StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits
 
 	if (hMemoryStore == NULL)
 	{
-		dwLastError = GetLastError();
+		dwRet = GetLastError();
 		MWLOG(LEV_INFO, MOD_CSP,
 				TEXT("StoreAuthorityCerts: Unable to open the system certificate store. Error code: %d."),
-				dwLastError);
-		return dwLastError;
+				dwRet);
+		return dwRet;
 	}
 
 	pDesiredCert = CertFindCertificateInStore( hMemoryStore
@@ -453,41 +469,41 @@ bool StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits
 		{
 			MWLOG(LEV_INFO, MOD_CSP,
 					TEXT("StoreUserCerts: Certificate context added to store."));
-			bRet = true;
+			dwRet = 0;
 		}
 		else
 		{
-			dwLastError = GetLastError();
+			dwRet = GetLastError();
 			MWLOG(LEV_INFO, MOD_CSP,
 					TEXT("StoreAuthorityCerts: Unable to add certificate context to store. Error code: %d."),
-					dwLastError);
+					dwRet);
 		}
 	}
 	CertCloseStore (hMemoryStore, CERT_CLOSE_STORE_FORCE_FLAG);
 	hMemoryStore = NULL;
 
-	return bRet;
+	return dwRet;
 
 }
 
 //*****************************************************
 // store the user certificates of the card in a specific reader
 //*****************************************************
-bool StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, const char* cardSerialNumber)
+DWORD StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, const char* cardSerialNumber)
 {
 	unsigned long dwFlags 		= CERT_STORE_NO_CRYPT_RELEASE_FLAG;
-	bool bRet					= false;
-	DWORD dwLastError;
+	DWORD dwRet					= 0;
+
 	PCCERT_CONTEXT pDesiredCert = NULL;
 	HCERTSTORE hMyStore 		= CertOpenSystemStore(NULL, TEXT("MY"));
 
 	if (hMyStore == NULL)
 	{
-		dwLastError = GetLastError();
+		dwRet = GetLastError();
 		MWLOG(LEV_INFO, MOD_CSP,
 				TEXT("StoreUserCerts: Unable to open the system certificate store. Error code: %d."),
-				dwLastError);
-		return dwLastError;
+				dwRet);
+		return dwRet;
 	}
 	// ----------------------------------------------------
 	// look if we already have the certificate in the store
@@ -500,7 +516,7 @@ bool StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 		// ----------------------------------------------------
 		CertFreeCertificateContext(pDesiredCert);
 		CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-		return true;
+		return 0;
 	}
 
 	// ----------------------------------------------------
@@ -570,20 +586,20 @@ bool StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 		{
 			MWLOG(LEV_INFO, MOD_CSP,
 					TEXT("StoreUserCerts: Certificate context added to store."));
-			bRet = true;
+			dwRet = 0;
 		}
 		else
 		{
-			dwLastError = GetLastError();
+			dwRet = GetLastError();
 			MWLOG(LEV_INFO, MOD_CSP,
 					TEXT("StoreUserCerts: Unable to add certificate context to store. Error code: %d."),
-					dwLastError);
+					dwRet);
 		}
 		CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
 		hMyStore = NULL;
 
 	}
-	return bRet;
+	return dwRet;
 }
 
 DWORD CertProp() {
@@ -646,7 +662,7 @@ DWORD CertProp() {
 						break;
 					}
 				}
-				pReader = pReader + strlen((char *)pReader) + 1;
+				pReader = pReader + _tcslen(pReader) + 1;
 			}
 			dwRdrCount = dwI;
 			// If any readers are available, proceed.
