@@ -1019,6 +1019,24 @@ cleanup:
 }
 #undef WHERE
 
+
+/****************************************************************************************************/
+
+/****************************************************************************************************/
+
+#define WHERE "CardGetFirstName"
+DWORD CardGetFirstName(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+
+   LogTrace(LOGTYPE_INFO, WHERE, "GET Property: [CP_PIN_CONTEXT_STRING]");
+
+   CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
 /****************************************************************************************************/
 
 typedef struct CardPropertyFnct

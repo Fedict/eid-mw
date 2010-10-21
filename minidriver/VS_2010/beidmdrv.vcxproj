@@ -97,7 +97,6 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
-
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
@@ -111,7 +110,6 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
@@ -122,20 +120,11 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-
-
-
-
-
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\src\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-
-
-
-
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -150,20 +139,13 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0813</Culture>
     </ResourceCompile>
-
-
-
     <Link>
       <AdditionalDependencies>winscard.lib;Rpcrt4.lib;Crypt32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-
       <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)D.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-
-
-
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
@@ -174,7 +156,6 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -270,6 +251,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="..\src\ExternalPinUI.c" />
+    <ClCompile Include="..\src\tlv.c" />
     <ClCompile Include="..\src\InitAndDeconstruct.c">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -311,6 +293,7 @@
     <ClInclude Include="..\src\inc\log.h" />
     <ClInclude Include="..\src\inc\smartcard.h" />
     <ClInclude Include="..\src\inc\stdafx.h" />
+    <ClInclude Include="..\src\inc\tlv.h" />
     <ClInclude Include="..\src\inc\util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
