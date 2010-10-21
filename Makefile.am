@@ -13,7 +13,7 @@ MAYBE_DIALOGS=dialogs
 endif
 
 SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi eid-console $(WINDOWS_ONLY)
-DIST_SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi 
+DIST_SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi eid-console
 
 svn_revision:
 	svnversion > svn_revision

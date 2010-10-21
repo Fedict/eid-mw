@@ -1,8 +1,8 @@
 AC_PREREQ([2.63])
 AC_INIT([eid-console],[4.0.0],[servicedesk@fedict.be])
-AC_CONFIG_SRCDIR([eid-console-webapp])
+AC_CONFIG_SRCDIR([pom.xml])
 AC_CANONICAL_HOST
-AM_INIT_AUTOMAKE([foreign])
+AM_INIT_AUTOMAKE([1.9 foreign tar-pax])
 
 # Checks for programs.
 AC_CHECK_PROGS(JAVAC,[javac],[missing])

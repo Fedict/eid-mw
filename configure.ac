@@ -14,7 +14,7 @@ LT_PREREQ([2.2.7c],
       )
 
 
-AM_INIT_AUTOMAKE([subdir-objects foreign])
+AM_INIT_AUTOMAKE([subdir-objects foreign tar-pax])
 
 # Checks for programs.
 AC_PROG_CXX([g++])
