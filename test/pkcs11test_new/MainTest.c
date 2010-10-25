@@ -89,12 +89,22 @@ int main() {
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
 	result[testCounter] = test_getmechanisms();
 	testCounter++;
-	testDescription[testCounter] = "tests getting the signature key from the card";
-	result[testCounter] = test_getprivatekeys();
+	testDescription[testCounter] = "tests getting the keys from the card";
+	result[testCounter] = test_getkeys();
+	testCounter++;
+	testDescription[testCounter] = "tests the return values of the getattributes function";
+	result[testCounter] = test_getkeys_retvals();
 	testCounter++;
 	testDescription[testCounter] = "tests getting all the objects from the card";
 	result[testCounter] = test_getallobjects();
 	testCounter++;
+	testDescription[testCounter] = "tests getting object's attributes from the card";
+	result[testCounter] = test_getattributevalue_all();
+	testCounter++;
+	testDescription[testCounter] = "tests getting the lastname object's attributes from the card";
+	result[testCounter] = test_getattributevalue_lastname();
+	testCounter++;
+
 #ifdef USER_INTERACTION
 	testDescription[testCounter] = "tests signing with the card";
 	result[testCounter] = test_sign();

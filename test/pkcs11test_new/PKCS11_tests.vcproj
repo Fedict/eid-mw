@@ -23,7 +23,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -354,15 +354,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\getattributevalue.c"
+				>
+			</File>
+			<File
 				RelativePath=".\getinfo.c"
 				>
 			</File>
 			<File
-				RelativePath=".\getmechanisms.c"
+				RelativePath=".\getkeys.c"
 				>
 			</File>
 			<File
-				RelativePath=".\getprivatekeys.c"
+				RelativePath=".\getmechanisms.c"
 				>
 			</File>
 			<File

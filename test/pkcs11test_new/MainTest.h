@@ -39,7 +39,11 @@ testRet test_waitforslotevent_userinteraction(void);
 testRet test_waitforslotevent_whilefinalize(void);
 testRet test_get_token_info(void); 
 testRet test_getmechanisms(void);
-testRet test_getprivatekeys(void);
+testRet test_getkeys(void);
 testRet test_sign(void);
 testRet test_verify_signature(void);
 testRet test_getallobjects(void);
+testRet test_getattributevalue_all(void);
+testRet test_getattributevalue_lastname(void);
+testRet test_getkeys_retvals(void);
+
