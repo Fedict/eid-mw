@@ -76,19 +76,6 @@ xpipackage: $(xpi_files)
 	cd -; \
 	rm -rf $$tmp;
 
-EXTRA_DIST = \
-	platform/Linux/defaults/preferences/belgiumeid.js.in \
-	platform/Darwin/defaults/preferences/belgiumeid.js.in
-
-# should be updated every time - there should be a better way...
-#.PHONY: belgiumeid.js
-
-BUILT_SOURCES=platform/Linux/defaults/preferences/belgiumeid.js platform/Darwin/defaults/preferences/belgiumeid.js
-platform/Linux/defaults/preferences/belgiumeid.js: platform/Linux/defaults/preferences/belgiumeid.js.in
-	$(SED) "s|__libdir__|@libdir@|g" $< >$@
-
-platform/Darwin/defaults/preferences/belgiumeid.js: platform/Darwin/defaults/preferences/belgiumeid.js.in
-	$(SED) "s|__libdir__|@libdir@|g" $< >$@
 
 clean:
 	rm -f platform/Darwin/defaults/preferences/belgiumeid.js
