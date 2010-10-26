@@ -23,6 +23,7 @@
 #include "util.h"
 #include "smartcard.h"
 #include "beidmdrv.h"
+#include "tlv.h"
 
 /****************************************************************************************************/
 
@@ -1024,14 +1025,274 @@ cleanup:
 
 /****************************************************************************************************/
 
-#define WHERE "CardGetFirstName"
-DWORD CardGetFirstName(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+#define WHERE "CardSetPropertyUnsupported"
+DWORD CardSetPropertyUnsupported(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, DWORD dwFlags)
+{
+   DWORD dwReturn = 0;
+
+   LogTrace(LOGTYPE_INFO, WHERE, "SET Property: []");
+
+   CLEANUP(SCARD_W_SECURITY_VIOLATION);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+
+/****************************************************************************************************/
+/****************************************************************************************************/
+
+#define WHERE "CardGetFirstTwoGivenNames"
+DWORD CardGetFirstTwoGivenNames(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
 {
    DWORD    dwReturn       = 0;
+	PBYTE*   ppbFile;
+	DWORD    cbFile         = 0;
 
-   LogTrace(LOGTYPE_INFO, WHERE, "GET Property: [CP_PIN_CONTEXT_STRING]");
+   LogTrace(LOGTYPE_INFO, WHERE, "GET Property: [CP_ID_FIRST_TWO_GIVEN_NAMES]");
 
-   CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+	dwReturn = pCardData->pfnCardReadFile(pCardData, "id", "id", 0, ppbFile, &cbFile);
+
+	if (dwReturn != SCARD_S_SUCCESS) {
+		LogTrace(LOGTYPE_ERROR, WHERE, "CardRead File Failed [0x%x]",dwReturn);
+		CLEANUP(dwReturn);
+	}
+
+	dwReturn = TLVGetField(*ppbFile, cbFile, pbData, cbData, pdwDataLen, ID_FIRST_TWO_GIVEN_NAMES);
+
+   if (dwReturn != SCARD_S_SUCCESS) {
+		LogTrace(LOGTYPE_ERROR, WHERE, "TLVGetField Failed [0x%x]",dwReturn);
+		CLEANUP(dwReturn);
+	}
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetCardNumber"
+DWORD CardGetCardNumber(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetChipNumber"
+DWORD CardGetChipNumber(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetValidityBegin"
+DWORD CardGetValidityBegin(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetValidityEnd"
+DWORD CardGetValidityEnd(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetDeliveryMunicipality"
+DWORD CardGetDeliveryMunicipality(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetNationalNumber"
+DWORD CardGetNationalNumber(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetName"
+DWORD CardGetName(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetFirstLetterThirdGivenName"
+DWORD CardGetFirstLetterThirdGivenName(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetNationality"
+DWORD CardGetNationality(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetBirthLocation"
+DWORD CardGetBirthLocation(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetBirthDate"
+DWORD CardGetBirthDate(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetGender"
+DWORD CardGetGender(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetNobility"
+DWORD CardGetNobility(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetDocumentType"
+DWORD CardGetDocumentType(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetSpecialStatus"
+DWORD CardGetSpecialStatus(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetPhotoHash"
+DWORD CardGetPhotoHash(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetAddressStreetAndNumber"
+DWORD CardGetAddressStreetAndNumber(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetAddressZip"
+DWORD CardGetAddressZip(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
+
+cleanup:
+   return(dwReturn);
+}
+#undef WHERE
+/****************************************************************************************************/
+
+#define WHERE "CardGetAddressMunicipality"
+DWORD CardGetAddressMunicipality(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
+{
+   DWORD    dwReturn       = 0;
+   CLEANUP(SCARD_S_SUCCESS);
 
 cleanup:
    return(dwReturn);
@@ -1048,22 +1309,43 @@ typedef struct CardPropertyFnct
 
 CardPropertyFnct PropFnct [] = 
 {
-   {CP_CARD_FREE_SPACE             , CardGetFreeSpace                , CardSetFreeSpace                },
-   {CP_CARD_CAPABILITIES           , CardGetCapabilities             , CardSetCapabilities             },
-   {CP_CARD_KEYSIZES               , CardGetKeysizes                 , CardSetKeysizes                 },
-   {CP_CARD_READ_ONLY              , CardGetReadOnly                 , CardSetReadOnly                 },
-   {CP_CARD_CACHE_MODE             , CardGetCacheMode                , CardSetCacheMode                },
-   {CP_SUPPORTS_WIN_X509_ENROLLMENT, CardGetSupportsWinX509Enrollment, CardSetSupportsWinX509Enrollment},
-   {CP_CARD_GUID                   , CardGetGuid                     , CardSetGuid                     },
-   {CP_CARD_SERIAL_NO              , CardGetSerialNo                 , CardSetSerialNo                 },
-   {CP_CARD_PIN_INFO               , CardGetPinInfo                  , CardSetPinInfo                  },
-   {CP_CARD_LIST_PINS              , CardGetListPins                 , CardSetListPins                 },
-   {CP_CARD_AUTHENTICATED_STATE    , CardGetAuthenticatedState       , CardSetAuthenticatedState       },
-   {CP_CARD_PIN_STRENGTH_VERIFY    , CardGetPinStrengthVerify        , CardSetPinStrengthVerify        },
-   {CP_CARD_PIN_STRENGTH_CHANGE    , CardGetPinStrengthChange        , CardSetPinStrengthChange        },
-   {CP_CARD_PIN_STRENGTH_UNBLOCK   , CardGetPinStrengthUnblock       , CardSetPinStrengthUnblock       },
-   {CP_PARENT_WINDOW               , CardGetParentWindow             , CardSetParentWindow             },
-   {CP_PIN_CONTEXT_STRING          , CardGetPinContextString         , CardSetPinContextString         },
+   {CP_CARD_FREE_SPACE                 , CardGetFreeSpace                , CardSetFreeSpace                },
+   {CP_CARD_CAPABILITIES               , CardGetCapabilities             , CardSetCapabilities             },
+   {CP_CARD_KEYSIZES                   , CardGetKeysizes                 , CardSetKeysizes                 },
+   {CP_CARD_READ_ONLY                  , CardGetReadOnly                 , CardSetReadOnly                 },
+   {CP_CARD_CACHE_MODE                 , CardGetCacheMode                , CardSetCacheMode                },
+   {CP_SUPPORTS_WIN_X509_ENROLLMENT    , CardGetSupportsWinX509Enrollment, CardSetSupportsWinX509Enrollment},
+   {CP_CARD_GUID                       , CardGetGuid                     , CardSetGuid                     },
+   {CP_CARD_SERIAL_NO                  , CardGetSerialNo                 , CardSetSerialNo                 },
+   {CP_CARD_PIN_INFO                   , CardGetPinInfo                  , CardSetPinInfo                  },
+   {CP_CARD_LIST_PINS                  , CardGetListPins                 , CardSetListPins                 },
+   {CP_CARD_AUTHENTICATED_STATE        , CardGetAuthenticatedState       , CardSetAuthenticatedState       },
+   {CP_CARD_PIN_STRENGTH_VERIFY        , CardGetPinStrengthVerify        , CardSetPinStrengthVerify        },
+   {CP_CARD_PIN_STRENGTH_CHANGE        , CardGetPinStrengthChange        , CardSetPinStrengthChange        },
+   {CP_CARD_PIN_STRENGTH_UNBLOCK       , CardGetPinStrengthUnblock       , CardSetPinStrengthUnblock       },
+   {CP_PARENT_WINDOW                   , CardGetParentWindow             , CardSetParentWindow             },
+   {CP_PIN_CONTEXT_STRING              , CardGetPinContextString         , CardSetPinContextString         },
+	{CP_ID_CARD_NUMBER                  , CardGetCardNumber               , CardSetPropertyUnsupported      },
+	{CP_ID_CHIP_NUMBER                  , CardGetChipNumber               , CardSetPropertyUnsupported      },
+	{CP_ID_CARD_VALIDITY_BEGIN          , CardGetValidityBegin            , CardSetPropertyUnsupported      },
+	{CP_ID_CARD_VALIDITY_END            , CardGetValidityEnd              , CardSetPropertyUnsupported      },
+	{CP_ID_CARD_DELIVIRY_MUNICIPALITY   , CardGetDeliveryMunicipality     , CardSetPropertyUnsupported      },
+	{CP_ID_NATIONAL_NUMBER              , CardGetNationalNumber           , CardSetPropertyUnsupported      },
+	{CP_ID_NAME                         , CardGetName                     , CardSetPropertyUnsupported      },
+	{CP_ID_FIRST_TWO_GIVEN_NAMES        , CardGetFirstTwoGivenNames       , CardSetPropertyUnsupported      },
+	{CP_ID_FIRST_LETTER_THIRD_GIVEN_NAME, CardGetFirstLetterThirdGivenName, CardSetPropertyUnsupported      },
+	{CP_ID_NATIONALITY                  , CardGetNationality              , CardSetPropertyUnsupported      },
+	{CP_ID_BIRTH_LOCATION               , CardGetBirthLocation            , CardSetPropertyUnsupported      },
+	{CP_ID_BIRTH_DATE                   , CardGetBirthDate                , CardSetPropertyUnsupported      },
+	{CP_ID_GENDER                       , CardGetGender                   , CardSetPropertyUnsupported      },
+	{CP_ID_NOBILITY                     , CardGetNobility                 , CardSetPropertyUnsupported      },
+	{CP_ID_DOCUMENT_TYPE                , CardGetDocumentType             , CardSetPropertyUnsupported      },
+	{CP_ID_SPECIAL_STATUS               , CardGetSpecialStatus            , CardSetPropertyUnsupported      },
+	{CP_ID_PHOTO_HASH                   , CardGetPhotoHash                , CardSetPropertyUnsupported      },
+	{CP_ID_ADDRESS_STREET_AND_NUMBER    , CardGetAddressStreetAndNumber   , CardSetPropertyUnsupported      },
+	{CP_ID_ADDRESS_ZIP                  , CardGetAddressZip               , CardSetPropertyUnsupported      },
+	{CP_ID_ADDRESS_MUNICIPALITY         , CardGetAddressMunicipality      , CardSetPropertyUnsupported      },
+
    {NULL, NULL, NULL}
 };
 

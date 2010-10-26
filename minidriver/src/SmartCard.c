@@ -1166,19 +1166,104 @@ DWORD BeidReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD *cbStream, PBYTE
       if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
       {
 
-         LogTrace(LOGTYPE_ERROR, WHERE, "Select Failed: [0x%02X][0x%02X]", SW1, SW2);
+         LogTrace(LOGTYPE_ERROR, WHERE, "Read Binary Failed: [0x%02X][0x%02X]", SW1, SW2);
          CLEANUP(dwReturn);
       }
 
       memcpy (pbStream + cbRead, recvbuf, recvlen - 2);
       cbRead += recvlen - 2;
    }
-
+	*cbStream = cbRead;
 cleanup:
    return (dwReturn);
 }
 #undef WHERE
 
+/****************************************************************************************************/
+
+#define WHERE "BeidSelectAndReadFile"
+DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD cbFileID, PBYTE pbFileID, DWORD *cbStream, PBYTE * ppbStream)
+{
+   DWORD             dwReturn = 0;
+
+   SCARD_IO_REQUEST  ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
+   SCARD_IO_REQUEST  ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
+
+   unsigned char     Cmd[128];
+   unsigned int      uiCmdLg = 0;
+
+   unsigned char     recvbuf[256];
+   unsigned long     recvlen = sizeof(recvbuf);
+   BYTE              SW1, SW2;
+
+	DWORD             cbReadBuf;
+
+
+   BYTE              bRead [255];
+   DWORD             cbRead;
+
+   DWORD             cbCertif;
+
+   /***************/
+   /* Select File */
+   /***************/
+   Cmd [0] = 0x00;
+   Cmd [1] = 0xA4; /* SELECT COMMAND */
+   Cmd [2] = 0x08;
+   Cmd [3] = 0x0C;
+   Cmd [4] = cbFileID;
+   uiCmdLg = 5;
+
+   memcpy(&Cmd[5], pbFileID, cbFileID);
+   uiCmdLg += cbFileID;
+
+   dwReturn = SCardTransmit(pCardData->hScard, 
+                            &ioSendPci, 
+                            Cmd, 
+                            uiCmdLg, 
+                            &ioRecvPci, 
+                            recvbuf, 
+                            &recvlen);
+   if ( dwReturn != SCARD_S_SUCCESS )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
+      CLEANUP(dwReturn);
+   }
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Select Failed: [0x%02X][0x%02X]", SW1, SW2);
+      CLEANUP(dwReturn);
+   }
+
+	*cbStream = 0;
+	*ppbStream = NULL;
+	cbReadBuf = 1024;
+	while (cbReadBuf == 1024) {
+		if (*ppbStream == NULL)
+			*ppbStream = (PBYTE) pCardData->pfnCspAlloc(*cbStream + cbReadBuf);
+		else
+			*ppbStream = (PBYTE) pCardData->pfnCspReAlloc(*ppbStream, *cbStream + cbReadBuf);
+		
+		if (*ppbStream == NULL) {
+			LogTrace(LOGTYPE_ERROR, WHERE, "pfnCsp(Re)Alloc failed");
+			CLEANUP(dwReturn);
+		}
+
+		dwReturn = BeidReadFile(pCardData, dwOffset, &cbReadBuf, *ppbStream + *cbStream * sizeof(BYTE));
+		if ( dwReturn != SCARD_S_SUCCESS )
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadFile errorcode: [0x%02X]", dwReturn);
+			pCardData->pfnCspFree(*ppbStream);
+			CLEANUP(dwReturn);
+		}
+		*cbStream = *cbStream + cbReadBuf;
+	}
+cleanup:
+   return (dwReturn);
+}
+#undef WHERE
 /****************************************************************************************************/
 
 #define WHERE "BeidReadCert"

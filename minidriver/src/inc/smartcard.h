@@ -97,6 +97,15 @@ extern DWORD BeidReadFile
 				DWORD *cbStream, 
 				PBYTE pbStream
 			);
+extern DWORD BeidSelectAndReadFile
+	      (
+			   PCARD_DATA  pCardData, 
+				DWORD dwOffset, 
+				DWORD cbFileID,
+				PBYTE pbFileID, 
+				DWORD *cbStream, 
+				PBYTE* pbStream
+);
 extern DWORD BeidReadCert
 			(
 				PCARD_DATA  pCardData, 

@@ -242,7 +242,7 @@ DWORD WINAPI   CardReadFile
 				{
 					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
 					CLEANUP(SCARD_E_NO_MEMORY);
-         }
+				}
 				dwReturn = CardGetProperty(pCardData, 
 					CP_CARD_SERIAL_NO, 
 					pbSerialNumber, 
@@ -252,11 +252,11 @@ DWORD WINAPI   CardReadFile
 				if (dwReturn != SCARD_S_SUCCESS)  {
 					LogTrace(LOGTYPE_ERROR, WHERE, "Error CardGetProperty for [CP_CARD_SERIAL_NO]: 0x08X", dwReturn);
 					CLEANUP(dwReturn);
-      }
+				}
 				for (i=0; i < 16; i++) {
 					sprintf(szSerialNumber + 2*i*sizeof(char),
 						"%02X", pbSerialNumber[i]);
-   }
+				}
 				szSerialNumber[32] = '\0';
 
 				/* Cleanup CMR first */
@@ -271,7 +271,7 @@ DWORD WINAPI   CardReadFile
 				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, strlen(szContainerName), cmr[0].wszGuid, sizeof(cmr[0].wszGuid));
 
 				if (iReturn == 0) 
-   {
+				{
 					dwReturn = GetLastError();
 					LogTrace(LOGTYPE_ERROR, WHERE, "Error MultiByteToWideChar: 0x08X", dwReturn);
 					CLEANUP(dwReturn);
@@ -290,11 +290,11 @@ DWORD WINAPI   CardReadFile
 				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, strlen(szContainerName), cmr[1].wszGuid, sizeof(cmr[1].wszGuid));
 
 				if (iReturn == 0) 
-      {
+				{
 					dwReturn = GetLastError();
 					LogTrace(LOGTYPE_ERROR, WHERE, "Error MultiByteToWideChar: 0x08X", dwReturn);
 					CLEANUP(dwReturn);
-      }
+				}
 				cmr[1].bFlags                     = CONTAINER_MAP_VALID_CONTAINER;
 				cmr[1].bReserved                  = 0;
 				cmr[1].wSigKeySizeBits            = 1024;
@@ -302,21 +302,21 @@ DWORD WINAPI   CardReadFile
 				memcpy (*ppbData, &cmr, *pcbData);
 			}
 			if ( _stricmp("ksc00", pszFileName) == 0)					   /* /mscp/ksc00 */
-      {
+			{
 				FileFound++;
 				dwReturn = BeidReadCert(pCardData, CERT_AUTH, pcbData, ppbData);
 				if ( dwReturn != SCARD_S_SUCCESS )
 				{
 					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
 					CLEANUP(SCARD_E_UNEXPECTED);
-      }
-   }
+				}
+			}
 			if ( _stricmp("ksc01", pszFileName) == 0)					   /* /mscp/ksc01 */
-   {
+			{
 				FileFound++;
 				dwReturn = BeidReadCert(pCardData, CERT_NONREP, pcbData, ppbData);
-      if ( dwReturn != SCARD_S_SUCCESS )
-      {
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
 					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
 					CLEANUP(SCARD_E_UNEXPECTED);
 				}
@@ -327,14 +327,102 @@ DWORD WINAPI   CardReadFile
 				dwReturn = BeidCreateMSRoots(pCardData, pcbData, ppbData);
 				if ( dwReturn != SCARD_S_SUCCESS )
 				{
-         LogTrace(LOGTYPE_ERROR, WHERE, "BeidCreateMSRoots returned [%d]", dwReturn);
-         CLEANUP(SCARD_E_UNEXPECTED);
-      }
-   if ( *ppbData == NULL )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
-      CLEANUP(SCARD_E_NO_MEMORY);
-   }
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidCreateMSRoots returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
+				if ( *ppbData == NULL )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
+			}
+		} 
+		if ( _stricmp("id", pszDirectoryName) == 0)               /* /id */
+		{
+			if ( _stricmp("id", pszFileName) == 0)					    /* /id/id */
+			{
+				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x31};
+				DWORD cbFileID  = sizeof(pbFileID);
+				FileFound++;
+				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidSelectAndReadFile returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
+				if ( *ppbData == NULL )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
+			}
+			if ( _stricmp("id_sgn", pszFileName) == 0)					    /* /id/id_sgn */
+			{
+				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x32};
+				DWORD cbFileID  = sizeof(pbFileID);
+				FileFound++;
+				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidSelectAndReadFile returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
+				if ( *ppbData == NULL )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
+			}
+			if ( _stricmp("addr", pszFileName) == 0)					    /* /id/addr */
+			{
+				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x33};
+				DWORD cbFileID  = sizeof(pbFileID);
+				FileFound++;
+				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidSelectAndReadFile returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
+				if ( *ppbData == NULL )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
+			}
+			if ( _stricmp("addr_sgn", pszFileName) == 0)					    /* /id/addr_sgn */
+			{
+				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x34};
+				DWORD cbFileID  = sizeof(pbFileID);
+				FileFound++;
+				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidSelectAndReadFile returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
+				if ( *ppbData == NULL )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
+			}
+			if ( _stricmp("photo", pszFileName) == 0)					    /* /id/photo */
+			{
+				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x35};
+				DWORD cbFileID  = sizeof(pbFileID);
+				FileFound++;
+				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidSelectAndReadFile returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
+				if ( *ppbData == NULL )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
 			}
 		}
 	}
