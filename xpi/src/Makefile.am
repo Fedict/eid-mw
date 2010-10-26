@@ -1,6 +1,6 @@
 XPI_NAME=belgiumeid.xpi
 
-CLEANFILES = $(XPI_NAME) belgiumeid.js
+CLEANFILES = $(XPI_NAME)
 
 xpi_files = $(dist_content_DATA) \
 			$(dist_defaults_preferences_DATA) \
@@ -76,8 +76,3 @@ xpipackage: $(xpi_files)
 	cd -; \
 	rm -rf $$tmp;
 
-
-clean:
-	rm -f platform/Darwin/defaults/preferences/belgiumeid.js
-	rm -f platform/Linux/defaults/preferences/belgiumeid.js
-	
