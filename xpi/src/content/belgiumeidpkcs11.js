@@ -220,7 +220,7 @@ function BELGIUMEIDPKCS11(){
   // initialization code
   this.initialized = true;
    
-  this.removeModuleIfNotAvailable();
+  //this.removeModuleIfNotAvailable();
   if (!this.registerModule() && !this.pkcs11ModuleAvailable() && this.shouldShowModuleNotFoundNotification() ) {
     this.notifyModuleNotFound();   
   }
