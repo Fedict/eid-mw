@@ -12,7 +12,7 @@ xpi_files = $(dist_content_DATA) \
 			$(dist_platform_linux_defaults_preferences_DATA) \
 			$(dist_platform_winnt_defaults_preferences_DATA) \
 			$(dist_skin_DATA) \
-			$(dist_root_DATA)
+			$(dist_extensionroot_DATA)
 
 dist_extensionroot_DATA = chrome.manifest \
 			icon.png \
@@ -44,17 +44,17 @@ dist_skin_DATA = skin/icon.png \
 			skin/icon40x40.png \
 			skin/overlay.css
 
-extensionrootdir=$(mozext)/$(XPI_ID)
-contentdir=$(extensionrootdir)/content
-defaults_preferencesdir=$(extensionrootdir)/defaults/preferences
-locale_enusdir=$(extensionrootdir)/locale/en-US
-locale_frfrdir=$(extensionrootdir)/locale/fr-FR
-locale_nlnldir=$(extensionrootdir)/locale/nl-NL
-locale_dededir=$(extensionrootdir)/locale/de-DE
-platform_darwin_defaults_preferencesdir=$(extensionrootdir)/platform/Darwin/defaults/preferences
-platform_linux_defaults_preferencesdir=$(extensionrootdir)/platform/Linux/defaults/preferences
-platform_winnt_defaults_preferencesdir=$(extensionrootdir)/platform/WINNT/defaults/preferences
-skindir=$(extensionrootdir)/skin
+extensionrootdir=$(mozext)/$(XPI_ID)/
+contentdir=$(extensionrootdir)content
+defaults_preferencesdir=$(extensionrootdir)defaults/preferences
+locale_enusdir=$(extensionrootdir)locale/en-US
+locale_frfrdir=$(extensionrootdir)locale/fr-FR
+locale_nlnldir=$(extensionrootdir)locale/nl-NL
+locale_dededir=$(extensionrootdir)locale/de-DE
+platform_darwin_defaults_preferencesdir=$(extensionrootdir)platform/Darwin/defaults/preferences
+platform_linux_defaults_preferencesdir=$(extensionrootdir)platform/Linux/defaults/preferences
+platform_winnt_defaults_preferencesdir=$(extensionrootdir)platform/WINNT/defaults/preferences
+skindir=$(extensionrootdir)skin
 
 xpipackage: $(xpi_files)
 #	 Create a temporary directory $tmp in $TMPDIR (default /tmp).
@@ -69,7 +69,7 @@ xpipackage: $(xpi_files)
 		tmp=$$TMPDIR/xpi$$RANDOM; \
 		umask 077 && $(mkinstalldirs) "$$tmp"; \
 	} || exit $$?; \
-	$(MAKE) DESTDIR=$$tmp extensionrootdir= install; \
+	$(MAKE) DESTDIR=$$tmp extensionrootdir=/ install; \
 	cd $$tmp; \
         rm -f $(abs_builddir)/$(XPI_NAME); \
 	@ZIP@ -rq $(abs_builddir)/$(XPI_NAME) .; \
