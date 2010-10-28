@@ -9,5 +9,6 @@ Homepage: http://code.google.com/p/eid-mw/
 Package: eid-mw
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libccid (>=1.3.11)
-Description: PKCS#11 Module and Console for Belgian Electronic Identity Card
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: libccid
+Description: PKCS#11 Module and Firefox add-on for Belgian Electronic Identity Card
