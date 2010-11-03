@@ -1,6 +1,6 @@
 /*
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -71,6 +71,11 @@ function BELGIUMEIDPKCS11(){
     }
     return null;
   }
+  function errorLog(aMessage) {
+	var consoleService = Components.classes["@mozilla.org/consoleservice;1"]
+                                 .getService(Components.interfaces.nsIConsoleService);
+	consoleService.logStringMessage("Belgium eID: " + aMessage);
+  }
   
   // Public Functions
   this.notifyModuleNotFound = function() {
@@ -99,35 +104,49 @@ function BELGIUMEIDPKCS11(){
                  -or- if the module is already found
           false  if the registration failed
     */
-    if (getModuleLocation() == "") return true; // unsupported platform
-    // error log "belgiumeid.modulelocation is not set"
-    if (this.findModuleByName(getModuleName()) == null && this.findModuleByLibName(getModuleLocation()) == null) {
-      // no installed module found - we will try to install the module
-      try {
-        pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIPKCS11);
-        try {
-          // PKCS11_PUB_READABLE_CERT_FLAG: we instruct FF not to ask for PIN when reading certificates
-          // This only makes sense when the CKF_LOGIN_REQUIRED flag is set on the token in P11 module
-          pkcs11module.addModule(getModuleName(), getModuleLocation(), PKCS11_PUB_READABLE_CERT_FLAG,0);
-        } catch (e) {
-          // error log "failed to load module" + getModuleLocation()
-          return false; 
-        }
-      } catch (e) {
-        try {
-          pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIDOMPkcs11);
-          try {
-            // PKCS11_PUB_READABLE_CERT_FLAG: we instruct FF not to ask for PIN when reading certificates
-            // This only makes sense when the CKF_LOGIN_REQUIRED flag is set on the token in P11 module
-            pkcs11module.addmodule(getModuleName(), getModuleLocation(), PKCS11_PUB_READABLE_CERT_FLAG,0);
-          } catch (e) {
-            // error log "failed to load module" + getModuleLocation()
-            return false; 
-          }
-        } catch (f) {
-          return false; 
-        }
-      }
+
+    if (getModuleLocation() == "") {
+		errorLog("belgiumeid.modulelocation is not set");
+		return true; // unsupported platform
+	}
+    
+
+    if (this.findModuleByName(getModuleName()) == null) {
+		// no installed module found - we will try to install the module
+		var moduleLocations = getModuleLocation().split(";");
+
+		for (x in moduleLocations) {
+			try {
+				pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIPKCS11);
+				try {
+					// PKCS11_PUB_READABLE_CERT_FLAG: we instruct FF not to ask for PIN when reading certificates
+					// This only makes sense when the CKF_LOGIN_REQUIRED flag is set on the token in P11 module
+					pkcs11module.addModule(getModuleName(), moduleLocations[x], PKCS11_PUB_READABLE_CERT_FLAG,0);
+					errorLog("added PKCS11 module " + getModuleName() + "Location: " + moduleLocations[x]);
+					return true;
+				} catch (e) {
+				    errorLog("failed to load module" + moduleLocations[x]);
+					continue; 
+				}
+			} catch (e) {
+				try {
+					pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIDOMPkcs11);
+					try {
+						// PKCS11_PUB_READABLE_CERT_FLAG: we instruct FF not to ask for PIN when reading certificates
+						// This only makes sense when the CKF_LOGIN_REQUIRED flag is set on the token in P11 module
+						pkcs11module.addmodule(getModuleName(), moduleLocations[x], PKCS11_PUB_READABLE_CERT_FLAG,0);
+						errorLog("added PKCS11 module " + getModuleName() + "Location: " + moduleLocations[x]);
+						return true;
+					} catch (e) {
+						errorLog("failed to load module" + moduleLocations[x]);
+						// module not found, try the next
+						continue; 
+					}
+				} catch (f) {
+					return false; 
+				}
+			}
+		}
     }
     return true;
   }
@@ -156,6 +175,7 @@ function BELGIUMEIDPKCS11(){
     try {
       return getPKCS11ModuleDB().findModuleByName(modulename);
     } catch (e) {
+		errorLog("module with name " + modulename + " not found");
       return null;
     }
   }
@@ -185,31 +205,32 @@ function BELGIUMEIDPKCS11(){
     }
     return null;
   }
-  this.pkcs11ModuleAvailable = function (modulelocation) {
-    /* Checks if the pkcs11 Module is available on the system
-       arguments
-          modulelocation: location of the PKCS11 module on the system; if null: the module location in the preferences
-       returns true  if module found
-               false if module not found
-    */ 
-    if (modulelocation == null) modulelocation = getModuleLocation();
-    return searchFile(modulelocation) != null;
-  }
-  this.removeModuleIfNotAvailable = function () {
-    /* If 
-        * pkcs11 module is not available on the system
-        * pkcs11 module is registered in Firefox
+  this.removeOldModuleIfNotAvailable = function () {
+    /* When 
+        pkcs11 module is registered in Firefox
+		 and it is an old module
+		 and the libary does not exist on the system
        Then
-         remove module from PKCS11 module DB
-    */
-    if (!this.pkcs11ModuleAvailable(getModuleLocation())) {
-      
-      var module = this.findModuleByLibName(getModuleLocation());
-      if (module != null) {
-        this.unregisterModule(module.name);
-      }
+         remove module from PKCS11 module DB	
+	*/
+	var oldLibraries = [
+		"/usr/local/lib/beid-pkcs11.bundle",                                    // OSX default
+		"/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib", // OSX alternative
+		"/usr/local/lib/libbeidpkcs11.so"                                       // Linux default
+																				// For now, the windows library location does not change
+		];
+    var module = this.findModuleByName(getModuleName());
+    if (module != null) {
+	    // there is already a module with the name we use
+		if (oldLibraries.indexOf(module.libName) != -1) {
+			// the registered module is using an old library
+			if (!fileExists(module.libName))
+			errorLog("PKCS11 library for " + getModuleName() + " is unavailable. We delete the module");
+			this.unregisterModule(module.name);
+		}
     }
   }
+
   this.shouldShowModuleNotFoundNotification = function (shouldshow) {
     if (shouldshow != undefined) {
       getPrefs().setBoolPref("showmodulenotfoundnotification", shouldshow);
@@ -219,11 +240,12 @@ function BELGIUMEIDPKCS11(){
 
   // initialization code
   this.initialized = true;
-   
-  //this.removeModuleIfNotAvailable();
-  if (!this.registerModule() && !this.pkcs11ModuleAvailable() && this.shouldShowModuleNotFoundNotification() ) {
-    this.notifyModuleNotFound();   
-  }
+  this.removeOldModuleIfNotAvailable();
+  if (!this.registerModule()) {
+	if (this.shouldShowModuleNotFoundNotification()) {
+		this.notifyModuleNotFound();   
+    }
+ }
 };
 
 window.addEventListener("load", function(e) { BELGIUMEIDPKCS11(e); }, false);
