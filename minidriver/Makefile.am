@@ -7,7 +7,7 @@ all-local: .libs/libbeidmdrv@LIBRARY_BITNESS@@DEBUG_POSTFIX@.dll
 lib_LTLIBRARIES = libbeidmdrv@LIBRARY_BITNESS@@DEBUG_POSTFIX@.la
 libbeidmdrv@LIBRARY_BITNESS@@DEBUG_POSTFIX@_la_SOURCES = $(srcdir)/src/CardAndContProp.c $(srcdir)/src/CardCap.c $(srcdir)/src/CardPinOps.c \
 	$(srcdir)/src/CryptoOps.c $(srcdir)/src/DllMain.c $(srcdir)/src/InitAndDeconstruct.c \
-	$(srcdir)/src/KeyContainer.c $(srcdir)/src/Log.c $(srcdir)/src/PubDataOps.c \
+	$(srcdir)/src/KeyContainer.c $(srcdir)/src/Log.c $(srcdir)/src/PubDataOps.c $(srcdir)/src/tlv.c \
 	$(srcdir)/src/SmartCard.c $(srcdir)/src/Util.c $(srcdir)/src/ExternalPinUI.c $(srcdir)/src/res/beidmdrv@LIBRARY_BITNESS@.rc
 
 libbeidmdrv@LIBRARY_BITNESS@@DEBUG_POSTFIX@_la_LDFLAGS = -no-undefined -avoid-version \
