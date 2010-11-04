@@ -102,27 +102,27 @@ DWORD CardSetPinContextString(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, 
 
 
 DWORD CardSetPropertyUnsupported(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, DWORD dwFlags);
-DWORD CardGetCardNumber(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetCardNumber(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
 
-DWORD CardGetChipNumber (PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetValidityBegin(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetValidityEnd(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetDeliveryMunicipality(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetNationalNumber(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetName(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetFirstTwoGivenNames(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetFirstLetterThirdGivenName(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetNationality(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetBirthLocation(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetBirthDate(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetGender(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetNobility(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetDocumentType(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetSpecialStatus(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetPhotoHash(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetAddressStreetAndNumber(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetAddressZip(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
-DWORD CardGetAddressMunicipality(PCARD_DATA pCardData, PBYTE pbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetChipNumber (PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetValidityBegin(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetValidityEnd(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetDeliveryMunicipality(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetNationalNumber(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetName(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetFirstTwoGivenNames(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetFirstLetterThirdGivenName(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetNationality(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetBirthLocation(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetBirthDate(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetGender(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetNobility(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetDocumentType(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetSpecialStatus(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetPhotoHash(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetAddressStreetAndNumber(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetAddressZip(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
+DWORD CardGetAddressMunicipality(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags);
 DWORD WINAPI   CardGetProperty
 (
    __in                                         PCARD_DATA  pCardData,
