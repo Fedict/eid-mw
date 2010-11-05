@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="3.692" errors="0" skipped="0" tests="1" name="be.fedict.eidviewer.lib.AppTest">
+  <properties>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-6-openjdk/jre/lib/amd64"/>
+    <property name="java.vm.version" value="14.0-b16"/>
+    <property name="java.vm.vendor" value="Sun Microsystems Inc."/>
+    <property name="java.vendor.url" value="http://java.sun.com/"/>
+    <property name="sun.security.smartcardio.library" value="/usr/lib/libpcsclite.so.1"/>
+    <property name="path.separator" value=":"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/home/frank/eid-mw/eid-viewer/eid-viewer-lib"/>
+    <property name="java.runtime.version" value="1.6.0_18-b18"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="basedir" value="/home/frank/eid-mw/eid-viewer/eid-viewer-lib"/>
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-6-openjdk/jre/lib/endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="surefire.real.class.path" value="/tmp/surefirebooter8311361502196655705.jar"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="os.name" value="Linux"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/lib/jvm/java-6-openjdk/jre/lib/amd64/server:/usr/lib/jvm/java-6-openjdk/jre/lib/amd64:/usr/lib/jvm/java-6-openjdk/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="surefire.test.class.path" value="/home/frank/eid-mw/eid-viewer/eid-viewer-lib/target/test-classes:/home/frank/eid-mw/eid-viewer/eid-viewer-lib/target/classes:/home/frank/.m2/repository/junit/junit/4.7/junit-4.7.jar:/home/frank/.m2/repository/be/fedict/eid-applet/eid-applet-core/1.0.2-SNAPSHOT/eid-applet-core-1.0.2-SNAPSHOT.jar:/home/frank/.m2/repository/be/fedict/eid-applet/eid-applet-shared/1.0.2-SNAPSHOT/eid-applet-shared-1.0.2-SNAPSHOT.jar:/home/frank/.m2/repository/be/fedict/eid-applet/eid-applet-service/1.0.2-SNAPSHOT/eid-applet-service-1.0.2-SNAPSHOT.jar:/home/frank/.m2/repository/be/fedict/eid-applet/eid-applet-service-spi/1.0.2-SNAPSHOT/eid-applet-service-spi-1.0.2-SNAPSHOT.jar:/home/frank/.m2/repository/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar:/home/frank/.m2/repository/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar:/home/frank/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar:/home/frank/.m2/repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar:/home/frank/.m2/repository/org/bouncycastle/bcprov-jdk16/1.45/bcprov-jdk16-1.45.jar:/home/frank/.m2/repository/com/lowagie/itext/2.1.7/itext-2.1.7.jar:/home/frank/.m2/repository/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar:/home/frank/.m2/repository/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar:/home/frank/.m2/repository/org/bouncycastle/bctsp-jdk14/1.38/bctsp-jdk14-1.38.jar:/home/frank/.m2/repository/org/bouncycastle/bcprov-jdk14/1.38/bcprov-jdk14-1.38.jar:/home/frank/.m2/repository/org/bouncycastle/bcmail-jdk14/1.38/bcmail-jdk14-1.38.jar:/home/frank/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar:"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="50.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Server Compiler"/>
+    <property name="os.version" value="2.6.34-ARCH"/>
+    <property name="user.home" value="/home/frank"/>
+    <property name="user.timezone" value="Europe/Brussels"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="java.specification.version" value="1.6"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="frank"/>
+    <property name="java.class.path" value="/home/frank/eid-mw/eid-viewer/eid-viewer-lib/target/test-classes:/home/frank/eid-mw/eid-viewer/eid-viewer-lib/target/classes:/home/frank/.m2/repository/junit/junit/4.7/junit-4.7.jar:/home/frank/.m2/repository/be/fedict/eid-applet/eid-applet-core/1.0.2-SNAPSHOT/eid-applet-core-1.0.2-SNAPSHOT.jar:/home/frank/.m2/repository/be/fedict/eid-applet/eid-applet-shared/1.0.2-SNAPSHOT/eid-applet-shared-1.0.2-SNAPSHOT.jar:/home/frank/.m2/repository/be/fedict/eid-applet/eid-applet-service/1.0.2-SNAPSHOT/eid-applet-service-1.0.2-SNAPSHOT.jar:/home/frank/.m2/repository/be/fedict/eid-applet/eid-applet-service-spi/1.0.2-SNAPSHOT/eid-applet-service-spi-1.0.2-SNAPSHOT.jar:/home/frank/.m2/repository/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar:/home/frank/.m2/repository/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar:/home/frank/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar:/home/frank/.m2/repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar:/home/frank/.m2/repository/org/bouncycastle/bcprov-jdk16/1.45/bcprov-jdk16-1.45.jar:/home/frank/.m2/repository/com/lowagie/itext/2.1.7/itext-2.1.7.jar:/home/frank/.m2/repository/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar:/home/frank/.m2/repository/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar:/home/frank/.m2/repository/org/bouncycastle/bctsp-jdk14/1.38/bctsp-jdk14-1.38.jar:/home/frank/.m2/repository/org/bouncycastle/bcprov-jdk14/1.38/bcprov-jdk14-1.38.jar:/home/frank/.m2/repository/org/bouncycastle/bcmail-jdk14/1.38/bcmail-jdk14-1.38.jar:/home/frank/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar:"/>
+    <property name="java.vm.specification.version" value="1.0"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/usr/lib/jvm/java-6-openjdk/jre"/>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.language" value="en"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.6.0_18"/>
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-6-openjdk/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-6-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/rhino.jar:/usr/lib/jvm/java-6-openjdk/jre/classes"/>
+    <property name="java.vendor" value="Sun Microsystems Inc."/>
+    <property name="localRepository" value="/home/frank/.m2/repository"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase time="3.64" classname="be.fedict.eidviewer.lib.AppTest" name="testApp"/>
+</testsuite>

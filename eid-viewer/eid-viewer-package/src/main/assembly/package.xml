@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/assembly-1.1.0-SNAPSHOT.xsd">
+	<formats>
+		<format>zip</format>
+		<format>tar.gz</format>
+	</formats>
+	<baseDirectory>eid-viewer</baseDirectory>
+	<files>
+		<file>
+			<source>src/main/assembly/README.txt</source>
+			<fileMode>0644</fileMode>
+		</file>
+		<file>
+			<source>target/eid-viewer.exe</source>
+		</file>
+		<file>
+			<source>src/main/assembly/eid-viewer.sh</source>
+			<fileMode>0544</fileMode>
+		</file>
+	</files>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+			<excludes>
+				<exclude>be.fedict.eid-viewer:eid-viewer-gui</exclude>
+			</excludes>
+		</dependencySet>
+		<dependencySet>
+			<includes>
+				<include>be.fedict.eid-viewer:eid-viewer-gui</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
+</assembly>
