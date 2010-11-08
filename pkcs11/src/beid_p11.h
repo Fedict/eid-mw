@@ -39,7 +39,38 @@
 #endif
 
 
+#define BEID_FILE_ID					"3F00DF014031"
+#define BEID_FILE_ID_SIGN				"3F00DF014032"
+#define BEID_FILE_ADDRESS				"3F00DF014033"
+#define BEID_FILE_ADDRESS_SIGN			"3F00DF014034"
+#define BEID_FILE_PHOTO					"3F00DF014035"
 
+#define BEID_FIELD_TAG_ID_Version				0x00
+#define BEID_FIELD_TAG_ID_CardNr				0x01
+#define BEID_FIELD_TAG_ID_ChipNr				0x02
+#define BEID_FIELD_TAG_ID_ValidityBeginDate		0x03
+#define BEID_FIELD_TAG_ID_ValidityEndDate		0x04
+#define BEID_FIELD_TAG_ID_IssuingMunicipality	0x05
+#define BEID_FIELD_TAG_ID_NationalNr			0x06
+#define BEID_FIELD_TAG_ID_Surname				0x07
+#define BEID_FIELD_TAG_ID_FirstName_1			0x08
+#define BEID_FIELD_TAG_ID_FirstName_2			0x09
+#define BEID_FIELD_TAG_ID_Nationality			0x0A
+#define BEID_FIELD_TAG_ID_LocationOfBirth		0x0B
+#define BEID_FIELD_TAG_ID_DateOfBirth			0x0C
+#define BEID_FIELD_TAG_ID_Gender				0x0D
+#define BEID_FIELD_TAG_ID_Nobility				0x0E
+#define BEID_FIELD_TAG_ID_DocumentType			0x0F
+#define BEID_FIELD_TAG_ID_SpecialStatus			0x10
+#define BEID_FIELD_TAG_ID_PhotoHash				0x11
+#define BEID_FIELD_TAG_ID_Duplicata				0x12
+#define BEID_FIELD_TAG_ID_SpecialOrganization	0x13
+#define BEID_FIELD_TAG_ID_MemberOfFamily		0x14
+
+#define BEID_FIELD_TAG_ADDR_Version				0x00
+#define BEID_FIELD_TAG_ADDR_Street				0x01
+#define BEID_FIELD_TAG_ADDR_ZipCode             0x02
+#define BEID_FIELD_TAG_ADDR_Municipality        0x03
 /************************/
 /* differences with 2.20*/
 /************************/

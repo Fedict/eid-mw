@@ -28,6 +28,7 @@
 #include "log.h"
 #include "cert.h"
 #include "mw_util.h"
+#include "tlvbuffer.h"
 
 
 #define strcpy_s(a,b,c)         strcpy((a),(c))
@@ -767,6 +768,126 @@ return (ret);
 
 
 
+
+
+
+
+
+
+
+#define WHERE "cal_read_ID_files()"
+int cal_read_ID_files(CK_SLOT_ID hSlot)
+{
+	int ret = 0;
+	CByteArray oFileData;
+	std::string szReader;
+	char cBuffer[250];
+	unsigned char ucBuffer[250];
+	char* plabel = NULL;
+	unsigned long ulLen=0;
+	CTLVBuffer oTLVBuffer;
+	P11_SLOT *pSlot = NULL;
+	CK_ATTRIBUTE ID_DATA[]= BEID_TEMPLATE_ID_DATA;
+	BEID_DATA_LABELS_NAME ID_LABELS[]=BEID_ID_DATA_LABELS;
+	BEID_DATA_LABELS_NAME ADDRESS_LABELS[]=BEID_ADDRESS_DATA_LABELS;
+
+	CK_ULONG hObject = 0;
+	P11_OBJECT *pObject = NULL;
+
+	pSlot = p11_get_slot(hSlot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		return (CKR_SLOT_ID_INVALID);
+	}
+
+	szReader = pSlot->name;
+	try
+	{
+		CReader &oReader = oCardLayer->getReader(szReader);
+		oFileData = oReader.ReadFile(BEID_FILE_ID);
+
+		plabel = BEID_FIELD_TAG_DATA_FILE;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, 0, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+		if (ret) goto cleanup;
+
+		oTLVBuffer.ParseTLV(oFileData.GetBytes(), oFileData.Size());
+
+		int i;
+		int nrOfItems = sizeof(ID_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
+
+		for(i = 0; i < nrOfItems ;i++)
+		{
+			ulLen = sizeof(cBuffer);
+			memset(cBuffer,0,ulLen);
+			oTLVBuffer.FillUTF8Data(ID_LABELS[i].tag, cBuffer, &ulLen);
+			plabel = ID_LABELS[i].name;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, 0, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen);
+			if (ret) goto cleanup;
+		}
+
+		oFileData = oReader.ReadFile(BEID_FILE_ADDRESS);
+		plabel = BEID_FIELD_TAG_ADDRESS_FILE;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, 0, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+		if (ret) goto cleanup;
+		oTLVBuffer.ParseTLV(oFileData.GetBytes(), oFileData.Size());
+		nrOfItems = sizeof(ADDRESS_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
+		for(i = 0; i < nrOfItems ;i++)
+		{
+			ulLen = sizeof(cBuffer);
+			memset(cBuffer,0,ulLen);
+			oTLVBuffer.FillUTF8Data(ADDRESS_LABELS[i].tag, cBuffer, &ulLen);
+			plabel = ADDRESS_LABELS[i].name;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, 0, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen);
+			if (ret) goto cleanup;
+		}
+
+			plabel = BEID_FIELD_TAG_SGN_RN;
+			oFileData = oReader.ReadFile(BEID_FILE_ID_SIGN);
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, 0, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+			if (ret) goto cleanup;
+
+			plabel = BEID_FIELD_TAG_SGN_ADDRESS;
+			oFileData = oReader.ReadFile(BEID_FILE_ADDRESS_SIGN);
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, 0, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+			if (ret) goto cleanup;
+
+			plabel = BEID_FIELD_TAG_PHOTO;
+			oFileData = oReader.ReadFile(BEID_FILE_PHOTO);
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, 0, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+			if (ret) goto cleanup;
+
+	}
+	catch (CMWException e)
+	{
+		return(cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...) 
+	{
+		ret = -1;
+		log_trace(WHERE, "E: unkown exception thrown");
+		return (CKR_FUNCTION_FAILED);
+	}
+
+	if (ret != 0)
+	{
+		return (CKR_DEVICE_ERROR);
+	}
+
+cleanup:
+	return (ret);
+}
+#undef WHERE
+
+
+
 #define WHERE "cal_read_object()"
 int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 {
@@ -810,6 +931,9 @@ if (ret) goto cleanup;
 
 ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_CLASS, (CK_VOID_PTR*) &pClass, &len);
 if (ret) goto cleanup;
+
+//do not refresh the ID files here
+if (pClass == CKO_DATA ) goto cleanup;
 
 //get all objects related to this ID
 ret = p11_find_slot_object(pSlot, CKO_CERTIFICATE, *pID, &pCertObject);

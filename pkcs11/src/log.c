@@ -47,7 +47,7 @@
  * Globals
  *
  ******************************************************************************/
-#ifdef DEBUG
+#ifdef _DEBUG
 unsigned int g_uiLogLevel          = LOG_LEVEL_SPY;
 #else
 unsigned int g_uiLogLevel          = LOG_LEVEL_WARNING;

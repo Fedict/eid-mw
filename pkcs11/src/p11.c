@@ -447,6 +447,111 @@ return (ret);
 
 
 
+
+#define WHERE "p11_add_slot_ID_object()"
+int p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
+						   CK_ULONG type, CK_ULONG id,  CK_BBOOL bPrivate, CK_ULONG *phObject,
+						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen)
+{
+int ret = CKR_OK;
+P11_OBJECT *pObject = NULL;
+//unsigned int hObject = 0;
+
+*phObject = 0;
+
+ret = p11_new_slot_object(pSlot, phObject);
+if ((ret != 0) || (*phObject == 0))
+   {
+   log_trace(WHERE, "E: could not add new slot object during init of objects");
+   return(ret);
+   }
+
+pObject = p11_get_slot_object(pSlot, *phObject);
+
+//add room for attributes as in template
+pObject->pAttr = (CK_ATTRIBUTE_PTR) malloc(ulCount * sizeof(CK_ATTRIBUTE));
+if (pObject->pAttr == NULL)
+   {
+   log_trace(WHERE, "E: alloc error for attribute");
+   return (CKR_HOST_MEMORY);
+   }
+
+//set the size of the object attributes
+pObject->count = ulCount;
+
+//copy the template to the new object
+ret = p11_copy_object(pTemplate, ulCount, pObject->pAttr);
+if (ret)
+   {
+   log_trace(WHERE, "E: p11_copy_object() returned %d", ret);
+   goto cleanup;
+   }
+
+//CKA_TOKEN
+ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_TOKEN, (CK_VOID_PTR) &bToken, sizeof(CK_BBOOL));
+if (ret)
+   {
+   log_trace(WHERE, "E: p11_set_attribute_value(CKA_TOKEN) returned %d", ret);
+   goto cleanup;
+   }
+
+//CKA_CLASS
+ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_CLASS, (CK_VOID_PTR) &type, sizeof(CK_ULONG));
+if (ret)
+   {
+   log_trace(WHERE, "E: p11_set_attribute_value(CKA_CLASS) returned %d", ret);
+   goto cleanup;
+   }
+
+//CKA_ID
+ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_OBJECT_ID, (CK_VOID_PTR) &id, sizeof(CK_ULONG));
+if (ret)
+   {
+   log_trace(WHERE, "E: p11_set_attribute_value(CKA_ID) returned %d", ret);
+   goto cleanup;
+   }
+ 
+//CKA_PRIVATE
+ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_PRIVATE, (CK_VOID_PTR) &bPrivate, sizeof(CK_BBOOL));
+if (ret)
+   {
+   log_trace(WHERE, "E: p11_set_attribute_value(CKA_PRIVATE) returned %d", ret);
+   goto cleanup;
+   }
+
+//CKA_LABEL
+ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, plabel, labelLen);
+if (ret)
+   {
+   log_trace(WHERE, "E: p11_set_attribute_value(CKA_LABEL) returned %d", ret);
+   goto cleanup;
+   }
+
+//CKA_VALUE
+ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_VALUE, pvalue, valueLen);
+if (ret)
+   {
+   log_trace(WHERE, "E: p11_set_attribute_value(CKA_VALUE) returned %d", ret);
+   goto cleanup;
+   }
+
+//CKA_VALUE_LEN
+ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_VALUE_LEN, &valueLen, sizeof(CK_ULONG));
+if (ret)
+   {
+   log_trace(WHERE, "E: p11_set_attribute_value(CKA_VALUE) returned %d", ret);
+   goto cleanup;
+   }
+
+pObject->state=P11_CACHED;
+
+cleanup:
+
+return (ret);
+}
+#undef WHERE 
+
+
 int p11_clean_object(P11_OBJECT *pObject)
 {
 if (pObject == NULL)
