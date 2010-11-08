@@ -458,125 +458,91 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\cardpluginBeid\BeidCard.h"
+				RelativePath="..\src\cardpluginbeid\beidcard.h"
 				>
 			</File>
 			<File
-				RelativePath=".\cardpluginBeid\BeidP15Correction.h"
+				RelativePath="..\src\cardpluginbeid\beidp15correction.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Cache.h"
+				RelativePath="..\src\cache.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Card.h"
+				RelativePath="..\src\card.h"
 				>
 			</File>
 			<File
-				RelativePath=".\CardFactory.h"
+				RelativePath="..\src\cardfactory.h"
 				>
 			</File>
 			<File
-				RelativePath=".\CardLayer.h"
+				RelativePath="..\src\cardlayer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\CardLayerConst.h"
+				RelativePath="..\src\cardlayerconst.h"
 				>
 			</File>
 			<File
-				RelativePath=".\CardReaderInfo.h"
+				RelativePath="..\src\cardreaderinfo.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Context.h"
+				RelativePath="..\src\context.h"
 				>
 			</File>
 			<File
-				RelativePath=".\InternalConst.h"
+				RelativePath="..\src\internalconst.h"
 				>
 			</File>
 			<File
-				RelativePath=".\P15Correction.h"
+				RelativePath="..\src\p15correction.h"
 				>
 			</File>
 			<File
-				RelativePath=".\P15Objects.h"
+				RelativePath="..\src\p15objects.h"
 				>
 			</File>
 			<File
-				RelativePath=".\PCSC.h"
+				RelativePath="..\src\pcsc.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Pinpad.h"
+				RelativePath="..\src\pinpad.h"
 				>
 			</File>
 			<File
-				RelativePath=".\pinpad2.h"
+				RelativePath="..\src\pinpadlib.h"
 				>
 			</File>
 			<File
-				RelativePath=".\PinpadLib.h"
+				RelativePath="..\src\pkcs15.h"
 				>
 			</File>
 			<File
-				RelativePath=".\old\PinpadLibOldBeid.h"
+				RelativePath="..\src\pkcs15parser.h"
 				>
 			</File>
 			<File
-				RelativePath=".\PKCS15.h"
+				RelativePath="..\src\pkicard.h"
 				>
 			</File>
 			<File
-				RelativePath=".\PKCS15Parser.h"
+				RelativePath="..\src\reader.h"
 				>
 			</File>
 			<File
-				RelativePath=".\PkiCard.h"
+				RelativePath="..\src\readersinfo.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Reader.h"
+				RelativePath="..\src\threadpool.h"
 				>
 			</File>
 			<File
-				RelativePath=".\ReadersInfo.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\cardpluginSIS\SISCard.h"
-				>
-			</File>
-			<File
-				RelativePath=".\cardpluginSIS\SISplugin1.h"
-				>
-			</File>
-			<File
-				RelativePath=".\cardpluginSIS\SISPluginHandler.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ThreadPool.h"
-				>
-			</File>
-			<File
-				RelativePath=".\UnknownCard.h"
+				RelativePath="..\src\unknowncard.h"
 				>
 			</File>
 		</Filter>
