@@ -53,8 +53,8 @@
 #define BEID_FIELD_TAG_ID_IssuingMunicipality	0x05
 #define BEID_FIELD_TAG_ID_NationalNr			0x06
 #define BEID_FIELD_TAG_ID_Surname				0x07
-#define BEID_FIELD_TAG_ID_FirstName_1			0x08
-#define BEID_FIELD_TAG_ID_FirstName_2			0x09
+#define BEID_FIELD_TAG_ID_FirstNames			0x08	
+#define BEID_FIELD_TAG_ID_FirstLetterOfThirdGivenName 0x09
 #define BEID_FIELD_TAG_ID_Nationality			0x0A
 #define BEID_FIELD_TAG_ID_LocationOfBirth		0x0B
 #define BEID_FIELD_TAG_ID_DateOfBirth			0x0C
