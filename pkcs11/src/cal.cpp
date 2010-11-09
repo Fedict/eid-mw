@@ -596,6 +596,8 @@ try
       if (ret) goto cleanup;
       ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EXTRACTABLE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
       if (ret) goto cleanup;
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
+      if (ret) goto cleanup;
       /**************************************************/
       /* Public key corresponding to private key object */
       /**************************************************/
@@ -611,6 +613,8 @@ try
       ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) &keytype, sizeof(CK_KEY_TYPE));
       if (ret) goto cleanup;
       ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) &modsize, sizeof(CK_ULONG));
+      if (ret) goto cleanup;
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
       if (ret) goto cleanup;
       }
 
