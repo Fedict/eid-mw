@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="3.692" errors="0" skipped="0" tests="1" name="be.fedict.eidviewer.lib.AppTest">
+<testsuite failures="0" time="2.744" errors="0" skipped="0" tests="1" name="be.fedict.eidviewer.lib.AppTest">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-6-openjdk/jre/lib/amd64"/>
@@ -20,7 +20,7 @@
     <property name="basedir" value="/home/frank/eid-mw/eid-viewer/eid-viewer-lib"/>
     <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-6-openjdk/jre/lib/endorsed"/>
     <property name="os.arch" value="amd64"/>
-    <property name="surefire.real.class.path" value="/tmp/surefirebooter8311361502196655705.jar"/>
+    <property name="surefire.real.class.path" value="/tmp/surefirebooter4652134933866862874.jar"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="line.separator" value="
 "/>
@@ -57,5 +57,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="3.64" classname="be.fedict.eidviewer.lib.AppTest" name="testApp"/>
+  <testcase time="2.725" classname="be.fedict.eidviewer.lib.AppTest" name="testApp"/>
 </testsuite>

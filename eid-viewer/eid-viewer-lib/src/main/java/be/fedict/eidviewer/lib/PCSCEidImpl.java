@@ -15,7 +15,7 @@ import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import javax.imageio.ImageIO;
 
-public class PCSCEidImpl extends IdentityDataProvider implements Eid
+public class PCSCEidImpl implements Eid
 {
     private final View          mView;
     private final Messages      mMessages;
@@ -77,38 +77,21 @@ public class PCSCEidImpl extends IdentityDataProvider implements Eid
 
     public Address getAddress() throws Exception
     {
-        if(mAddress==null)
-        {
-            byte[] data=readFile(PcscEid.ADDRESS_FILE_ID);
-            mAddress = TlvParser.parse(data, Address.class);
-        }
-        
-        return mAddress;
+        byte[] data=readFile(PcscEid.ADDRESS_FILE_ID);
+        return TlvParser.parse(data, Address.class);
     }
 
     public Identity getIdentity() throws Exception
     {
-        if(mIdentity==null)
-        {
-            byte[] data=readFile(PcscEid.IDENTITY_FILE_ID);
-            mIdentity = TlvParser.parse(data, Identity.class);
-        }
-
-        return mIdentity;
+       byte[] data=readFile(PcscEid.IDENTITY_FILE_ID);
+       return TlvParser.parse(data, Identity.class);
     }
 
     public Image getPhoto() throws Exception
     {
-        if(mPhoto==null)
-        {
-            byte[] data=readFile(PcscEid.PHOTO_FILE_ID);
-            mPhoto=ImageIO.read(new ByteArrayInputStream(data));
-        }
-
-        return mPhoto;
+        byte[] data=readFile(PcscEid.PHOTO_FILE_ID);
+        return ImageIO.read(new ByteArrayInputStream(data));
     }
-
-
 
     public void close()
     {

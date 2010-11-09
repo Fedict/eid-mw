@@ -8,7 +8,7 @@
         <version>4.0.0-SNAPSHOT</version>
     </parent>
     <groupId>be.fedict.eid-viewer</groupId>
-    <artifactId>lib</artifactId>
+    <artifactId>eid-viewer-lib</artifactId>
     <version>4.0.0-SNAPSHOT</version>
     <name>eID Viewer Library</name>
     <url>http://maven.apache.org</url>

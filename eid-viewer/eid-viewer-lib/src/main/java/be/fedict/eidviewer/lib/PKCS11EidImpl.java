@@ -23,7 +23,7 @@ import javax.smartcardio.CardException;
  *
  * @author frank
  */
-class PKCS11EidImpl extends IdentityDataProvider implements Eid
+class PKCS11EidImpl implements Eid
 {
 
     private final View mView;
