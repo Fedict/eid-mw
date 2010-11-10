@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="SDK_Data"
-	ProjectGUID="{C74A0DBD-0973-4B62-92B6-77645B3A0E44}"
+	Name="SDK_GetSignMechanisms"
+	ProjectGUID="{FE898194-D53E-40B7-8CCB-F75FA70AE847}"
 	RootNamespace="PKCS11_tests"
 	Keyword="Win32Proj"
 	>
@@ -344,7 +344,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\data.c"
+				RelativePath="..\get_signmechanisms.c"
 				>
 			</File>
 		</Filter>

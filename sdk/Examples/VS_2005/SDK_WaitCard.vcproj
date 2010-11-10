@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="SDK_Data"
-	ProjectGUID="{C74A0DBD-0973-4B62-92B6-77645B3A0E44}"
+	Name="SDK_WaitCard"
+	ProjectGUID="{92EEBBB8-D142-4ABF-B8BD-75B42D3EC13E}"
 	RootNamespace="PKCS11_tests"
 	Keyword="Win32Proj"
 	>
@@ -344,7 +344,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\data.c"
+				RelativePath="..\wait_card.c"
 				>
 			</File>
 		</Filter>

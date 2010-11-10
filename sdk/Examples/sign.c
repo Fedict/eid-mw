@@ -109,11 +109,9 @@ CK_ULONG beidsdk_sign(CK_CHAR_PTR textToSign)
 												retVal = (pFunctions->C_FindObjectsFinal)(session_handle); 
 												if (retVal == CKR_OK)
 												{
-													//use the CKM_RSA_PKCS mechanism for signing
+													//use the CKM_SHA1_RSA_PKCS mechanism for signing
 													CK_MECHANISM mechanism = {CKM_SHA1_RSA_PKCS, NULL_PTR, 0};
-													//the data to be signed
-													//CK_BYTE_PTR data = "testsignthis"; 
-													CK_BYTE signature[128];		//
+													CK_BYTE signature[128];
 													CK_ULONG signLength = 128;
 													//initialize the signature operation
 													retVal = (pFunctions->C_SignInit)(session_handle, &mechanism, hKey); 
