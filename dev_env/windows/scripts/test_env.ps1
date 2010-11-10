@@ -180,6 +180,15 @@ invoke-expression "$rubyfolder\bin\gem install cucumber"
 Write-Host "-- Installing rspec"
 
 invoke-expression "$rubyfolder\bin\gem install rspec"
+
+##############################################################################
+# install firewatir 
+##############################################################################
+Write-Host "-- Installing firewatir"
+
+invoke-expression "$rubyfolder\bin\gem install firewatir"
+
+
 } # end try
 catch{
   "Error: $_"
