@@ -5,7 +5,6 @@ import be.fedict.eid.applet.service.Identity;
 import be.fedict.eidviewer.lib.Eid;
 import java.awt.Image;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,12 +15,12 @@ import java.util.logging.Logger;
 public class EidController extends Observable implements Runnable
 {
 
-    private boolean     mRunning = false;
-    private Eid         mEid;
-    private STATE       mState;
-    private Identity    mIdentity;
-    private Address     mAddress;
-    private Image       mPhoto;
+    private boolean                 mRunning = false;
+    private Eid                     mEid;
+    private STATE                   mState;
+    private Identity                mIdentity;
+    private Address                 mAddress;
+    private Image                   mPhoto;
 
     private void clearCardInformation()
     {

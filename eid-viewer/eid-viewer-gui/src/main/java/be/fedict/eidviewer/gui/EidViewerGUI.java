@@ -97,7 +97,7 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
         cardValidFromLabel = new javax.swing.JLabel();
         cardValidToLabel = new javax.swing.JLabel();
         cardChipNumberLabel = new javax.swing.JLabel();
-        CardPlaceOfIssueLabel = new javax.swing.JLabel();
+        cardPlaceOfIssueLabel = new javax.swing.JLabel();
         cardLabel = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -110,7 +110,6 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        jLabel2.setIcon(null);
         jLabel2.setName("jLabel2"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -223,7 +222,6 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
         idIdentityBusyIcon.setIcon(resourceMap.getIcon("idIdentityBusyIcon.icon")); // NOI18N
         idIdentityBusyIcon.setText(resourceMap.getString("idIdentityBusyIcon.text")); // NOI18N
         idIdentityBusyIcon.setName("idIdentityBusyIcon"); // NOI18N
-        idIdentityBusyIcon.setPreferredSize(new java.awt.Dimension(16, 16));
 
         idAddressBusyIcon.setIcon(resourceMap.getIcon("idAddressBusyIcon.icon")); // NOI18N
         idAddressBusyIcon.setName("idAddressBusyIcon"); // NOI18N
@@ -375,8 +373,8 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
         cardChipNumberLabel.setText(resourceMap.getString("cardChipNumberLabel.text")); // NOI18N
         cardChipNumberLabel.setName("cardChipNumberLabel"); // NOI18N
 
-        CardPlaceOfIssueLabel.setText(resourceMap.getString("CardPlaceOfIssueLabel.text")); // NOI18N
-        CardPlaceOfIssueLabel.setName("CardPlaceOfIssueLabel"); // NOI18N
+        cardPlaceOfIssueLabel.setText(resourceMap.getString("cardPlaceOfIssueLabel.text")); // NOI18N
+        cardPlaceOfIssueLabel.setName("cardPlaceOfIssueLabel"); // NOI18N
 
         cardLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         cardLabel.setEnabled(false);
@@ -400,7 +398,7 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
                     .addComponent(cardNumberLabel)
                     .addComponent(cardValidToLabel)
                     .addComponent(cardChipNumberLabel)
-                    .addComponent(CardPlaceOfIssueLabel))
+                    .addComponent(cardPlaceOfIssueLabel))
                 .addContainerGap(544, Short.MAX_VALUE))
         );
         cardPaneLayout.setVerticalGroup(
@@ -417,7 +415,7 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
                         .addGap(12, 12, 12)
                         .addComponent(cardChipNumberLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(CardPlaceOfIssueLabel))
+                        .addComponent(cardPlaceOfIssueLabel))
                     .addGroup(cardPaneLayout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addComponent(cardLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -605,12 +603,12 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel CardPlaceOfIssueLabel;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JLabel cardChipNumberLabel;
     private javax.swing.JLabel cardLabel;
     private javax.swing.JLabel cardNumberLabel;
     private javax.swing.JPanel cardPane;
+    private javax.swing.JLabel cardPlaceOfIssueLabel;
     private javax.swing.JLabel cardValidFromLabel;
     private javax.swing.JLabel cardValidToLabel;
     private javax.swing.JMenuItem copyMenuItem;
@@ -660,7 +658,6 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
     private Eid             mEid;
     private EidController   mEidController;
     private DateFormat      mDateFormat;
-    private IconAnimator    mIconAnimator;
 
     private void initCardHandler()
     {
@@ -672,7 +669,7 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
 
     public void addDetailMessage(String detailMessage)
     {
-        //System.err.println(detailMessage);
+        System.err.println(detailMessage);
     }
 
     public void setStatusMessage(Status status, MESSAGE_ID messageId)
@@ -781,12 +778,5 @@ public class EidViewerGUI extends javax.swing.JFrame implements View, Observer
 
     private void initOtherComponents()
     {
-        mIconAnimator=new IconAnimator(idPhotoLabel);
-        for(int i=0;i<16;i++)
-        {
-            URL url=EidViewerGUI.class.getResource("resources/busyicons/busy-icon" + i + ".png");
-            if(url!=null)
-                mIconAnimator.addIcon(new ImageIcon(url));
-        }
     }
 }
