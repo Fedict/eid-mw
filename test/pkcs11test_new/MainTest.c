@@ -175,6 +175,7 @@ int main() {
 				testlog(LVL_NOLEVEL," W ");
 				break;
 			case TEST_ERROR:
+			case TEST_FAILED:
 				testlog(LVL_NOLEVEL," F ");
 				break;
 			default:
