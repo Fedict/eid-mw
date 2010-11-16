@@ -47,4 +47,6 @@ testRet test_getattributevalue_all(void);
 testRet test_getattributevalue_lastname(void);
 testRet test_getkeys_retvals(void);
 testRet test_findPrivateKeyWithoutLoginShouldFail(void);
+testRet test_findObjectsFinalNotInitialized(void); 
+
 

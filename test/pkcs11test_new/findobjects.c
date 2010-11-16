@@ -99,6 +99,62 @@ testRet test_findPrivateKeyWithoutLoginShouldFail()
 }
 
 
+testRet test_findObjectsFinalNotInitialized() 
+{
+	void *handle = NULL;				//handle to the pkcs11 library
+	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
+
+	testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
+
+	CK_ULONG ulCount = 0;
+	CK_ULONG slotIdx = 0;
+	CK_ULONG ulCounter = 10;
+	CK_SLOT_ID_PTR slotIds = NULL;
+	CK_SESSION_HANDLE session;
+
+	testlog(LVL_INFO, "test_findObjectsFinalNotInitialized enter\n");
+
+	retVal = PrepareSlotListTest(&handle,&functions, &slotIds, &ulCount,CK_TRUE );
+	if((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED))
+	{
+		for (slotIdx = 0; slotIdx < ulCount; slotIdx++) 
+		{
+			if ( (frv == CKR_OK) && (retVal.basetestrv == TEST_PASSED) )
+			{
+				frv = (*functions->C_OpenSession)(slotIds[slotIdx], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
+				if (ReturnedSucces(frv,&(retVal.pkcs11rv), "C_OpenSession"))
+				{
+					frv = (*functions->C_FindObjectsFinal)(session);
+					ReturnedSucces(frv,&(retVal.pkcs11rv), "C_FindObjectsFinal");
+					if (frv == CKR_OK)
+					{
+						retVal.basetestrv = TEST_FAILED;
+						testlog(LVL_ERROR, "C_FindObjectsFinal didn't return an error when used without C_FindObjectsInit\n");
+
+						(*functions->C_CloseSession) (session);
+						ReturnedSucces(frv,&(retVal.pkcs11rv), "C_FindObjectsFinal");
+					}
+					else
+					{
+						frv = (*functions->C_CloseSession) (session);
+						ReturnedSucces(frv,&(retVal.pkcs11rv), "C_CloseSession");
+					}
+				}
+			}
+		}//end of for loop
+	}
+
+	frv = (*functions->C_Finalize) (NULL_PTR);
+	ReturnedSucces(frv,&(retVal.pkcs11rv), "C_Finalize");
+
+	EndSlotListTest(handle,slotIds );
+
+	testlog(LVL_INFO, "test_findObjectsFinalNotInitialized leave\n");
+	return retVal;
+}
+
+
 /*
 testRet test_findobjects() {
 

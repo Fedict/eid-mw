@@ -103,9 +103,12 @@ int main() {
 	testCounter++;
 	testDescription[testCounter] = "tests getting the lastname object's attributes from the card";
 	result[testCounter] = test_getattributevalue_lastname();
-	testCounter++;]
+	testCounter++;
 	testDescription[testCounter] = "tests getting the private object's from the card without logging in";
 	result[testCounter] = test_findPrivateKeyWithoutLoginShouldFail();
+	testCounter++;
+	testDescription[testCounter] = "tests the return value of C_FindObjectsFinal when called without C_FindObjectsInit";
+	result[testCounter] = test_findObjectsFinalNotInitialized();
 	testCounter++;
 
 #ifdef USER_INTERACTION
