@@ -103,6 +103,9 @@ int main() {
 	testCounter++;
 	testDescription[testCounter] = "tests getting the lastname object's attributes from the card";
 	result[testCounter] = test_getattributevalue_lastname();
+	testCounter++;]
+	testDescription[testCounter] = "tests getting the private object's from the card without logging in";
+	result[testCounter] = test_findPrivateKeyWithoutLoginShouldFail();
 	testCounter++;
 
 #ifdef USER_INTERACTION
@@ -137,6 +140,7 @@ int main() {
 				testlog(LVL_NOLEVEL,"WARNING\n");
 				break;
 			case TEST_ERROR:
+			case TEST_FAILED:
 				testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", result[i].pkcs11rv);
 				break;
 			default:

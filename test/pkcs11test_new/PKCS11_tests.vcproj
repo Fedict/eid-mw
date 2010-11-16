@@ -350,6 +350,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\findobjects.c"
+				>
+			</File>
+			<File
 				RelativePath=".\getallobjects.c"
 				>
 			</File>
