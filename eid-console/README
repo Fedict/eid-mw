@@ -6,6 +6,7 @@ README for eID Console
 Maven 2.2
 Java 6
 An internet connection since Maven uses different online repositories.
+A local build of the eID Applet subversion trunk.
 
 
 === 2. Building
