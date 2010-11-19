@@ -101,6 +101,7 @@ public class EidController extends Observable implements Runnable
             }
             catch(Exception ex)
             {
+                clearCardInformation();
                 Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex);
                 try
                 {
