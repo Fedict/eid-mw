@@ -139,6 +139,7 @@ log_trace(WHERE, "S: C_CloseSession (session %d)", hSession);
 ret = p11_get_session(hSession, &pSession);
 if (pSession == NULL)
    {
+		 ret = CKR_SESSION_HANDLE_INVALID;
    log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
    goto cleanup;
    }
