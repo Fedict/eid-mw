@@ -546,7 +546,7 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 	{
 		log_trace(WHERE, "I: For this session no search operation is active");
 		//we return without problem
-		ret = CKR_OK;
+		ret = CKR_OPERATION_NOT_INITIALIZED;
 		goto cleanup;
 	}
 
