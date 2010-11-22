@@ -127,7 +127,7 @@ testRet test_findObjectsFinalNotInitialized()
 				{
 					frv = (*functions->C_FindObjectsFinal)(session);
 					ReturnedSucces(frv,&(retVal.pkcs11rv), "C_FindObjectsFinal");
-					if (frv == CKR_OK)
+					if (frv != CKR_OPERATION_NOT_INITIALIZED)
 					{
 						retVal.basetestrv = TEST_FAILED;
 						testlog(LVL_ERROR, "C_FindObjectsFinal didn't return an error when used without C_FindObjectsInit\n");
@@ -137,6 +137,7 @@ testRet test_findObjectsFinalNotInitialized()
 					}
 					else
 					{
+						retVal.pkcs11rv = CKR_OK;//don't show the error in the test results, it was supposed to happen
 						frv = (*functions->C_CloseSession) (session);
 						ReturnedSucces(frv,&(retVal.pkcs11rv), "C_CloseSession");
 					}

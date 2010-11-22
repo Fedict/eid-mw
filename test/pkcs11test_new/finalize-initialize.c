@@ -256,7 +256,7 @@ testRet test_initialize_bad_args(CK_C_INITIALIZE_ARGS* pinit_args)
 	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
 
 
-	CK_C_INITIALIZE_ARGS init_args ={CreateaMutex,NULL,NULL,NULL,0,NULL};
+	//CK_C_INITIALIZE_ARGS init_args ={CreateaMutex,NULL,NULL,NULL,0,NULL};
 
 	testlog(LVL_INFO, "test_initialize_bad_args enter\n");
 	if (InitializeTest(&handle,&functions))
@@ -264,7 +264,7 @@ testRet test_initialize_bad_args(CK_C_INITIALIZE_ARGS* pinit_args)
 		frv = (*functions->C_Initialize) ((CK_VOID_PTR)pinit_args);
 		//retVal.pkcs11rv should be CKR_ARGUMENTS_BAD as some, but not all, 
 		//of the supplied function pointers to C_Initialize are non-NULL_PTR
-		if (retVal.pkcs11rv != CKR_ARGUMENTS_BAD)
+		if (frv != CKR_ARGUMENTS_BAD)
 		{
 			ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Initialize", "test_initialize_bad_args" );
 			retVal.basetestrv = TEST_ERROR;			
