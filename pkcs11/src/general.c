@@ -70,12 +70,32 @@ CK_C_INITIALIZE_ARGS_PTR p_args;
       if (pReserved != NULL)
          {
          p_args = (CK_C_INITIALIZE_ARGS *)pReserved;
-         p11_init_lock(p_args);
-         }
+
+				 if(p_args->pReserved != NULL)
+				 {
+					 ret = CKR_ARGUMENTS_BAD;
+					 goto cleanup;
+				 }
+				 if(	(p_args->CreateMutex == NULL) || (p_args->DestroyMutex == NULL) || \
+					 (p_args->LockMutex == NULL) || (p_args->UnlockMutex == NULL)	)
+				 {
+					 //If some, but not all, of the supplied function pointers to C_Initialize are non-NULL_PTR, 
+					 //then C_Initialize should return with the value CKR_ARGUMENTS_BAD.
+					 if(!((p_args->CreateMutex == NULL) && (p_args->DestroyMutex == NULL) && \
+						 (p_args->LockMutex == NULL) && (p_args->UnlockMutex == NULL)))
+					 {
+							ret = CKR_ARGUMENTS_BAD;
+							goto cleanup;
+					 }
+				 }
+				 p11_init_lock(p_args);
+			}
       cal_init();
       log_trace(WHERE, "S: Initialize this PKCS11 Module");
       log_trace(WHERE, "S: =============================");
       }
+
+cleanup:
   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
