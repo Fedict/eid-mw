@@ -4,15 +4,23 @@
  * Created on Nov 18, 2010, 3:22:56 PM
  */
 package be.fedict.eidviewer.gui;
+
 import be.fedict.eid.applet.service.Address;
+import be.fedict.eid.applet.service.Gender;
 import be.fedict.eid.applet.service.Identity;
+import be.fedict.eid.applet.service.SpecialStatus;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 
 /**
@@ -21,31 +29,30 @@ import javax.swing.ImageIcon;
  */
 public class IdentityPanel extends javax.swing.JPanel implements Observer
 {
-    private static final String UNKNOWN_VALUE_TEXT="-";
 
-    private DateFormat      mDateFormat;
-    private ImageIcon       largeBusyIcon;
+    private ResourceBundle      bundle;
+    private static final String UNKNOWN_VALUE_TEXT = "-";
+    private DateFormat          dateFormat;
+    private ImageIcon           largeBusyIcon;
 
     public IdentityPanel()
     {
+        bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/IdentityPanel");
         initComponents();
         initIcons();
-        mDateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
-
+        dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
     }
 
     public void update(Observable o, Object o1)
     {
-        EidController controller=(EidController)o;
+        EidController controller = (EidController) o;
 
-        System.err.println("STATE [" + controller.getState().getState() +"]");
-
-        if(controller.getState()==EidController.STATE.EID_PRESENT)
+        if (controller.getState() == EidController.STATE.EID_PRESENT)
         {
             if(controller.hasIdentity())
                 fillIdentity(controller.getIdentity(),false);
             else
-               fillIdentity(null,true);
+                fillIdentity(null,true);
 
             if(controller.hasAddress())
                 fillAddress(controller.getAddress(),false);
@@ -56,48 +63,117 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                 fillPhoto(controller.getPhoto(),false);
             else
                 fillPhoto(null,true);
-
         }
         else
         {
-            fillIdentity(null,false);
-            fillAddress(null,false);
-            fillPhoto(null,false);
+            fillIdentity(null, false);
+            fillAddress(null, false);
+            fillPhoto(null, false);
         }
     }
 
     private void fillIdentity(final Identity identity, final boolean loading)
-    {
+    {         
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-
             public void run()
             {
                 identityBusyIcon.setVisible(loading);
                 if(identity!=null)
-                {  
-                    name.setText(identity.getName());                                               nameLabel.setEnabled(true);
-                    givenNames.setText(identity.getFirstName() + " " + identity.getMiddleName());   givenNamesLabel.setEnabled(true);
-                    placeOfBirth.setText(identity.getPlaceOfBirth());                               placeOfBirthLabel.setEnabled(true);
-                    dateOfBirth.setText(mDateFormat.format(identity.getDateOfBirth().getTime()));   dateOfBirthlabel.setEnabled(true);
-                    sex.setText(identity.getGender().name());                                       sexLabel.setEnabled(true);
-                    nationality.setText(identity.getNationality());                                 nationalitylabel.setEnabled(true);
-                    nationalNumber.setText(identity.getNationalNumber());                           nationalNumberLabel.setEnabled(true);
-                    title.setText(identity.getNobleCondition());                                    titleLabel.setEnabled(true);
-                    specialStatus.setText(identity.getSpecialStatus().name());                      specialStatusLabel.setEnabled(true);
+                {
+                    name.setText(identity.getName());
+                    name.setEnabled(true);
+                    nameLabel.setEnabled(true);
+
+                    givenNames.setText(identity.getFirstName() + " " + identity.getMiddleName());
+                    givenNames.setEnabled(true);
+                    givenNamesLabel.setEnabled(true);
+
+                    placeOfBirth.setText(identity.getPlaceOfBirth());
+                    placeOfBirth.setEnabled(true);
+                    placeOfBirthLabel.setEnabled(true);
+
+                    dateOfBirth.setText(dateFormat.format(identity.getDateOfBirth().getTime()));
+                    dateOfBirth.setEnabled(true);
+                    dateOfBirthLabel.setEnabled(true);
+
+                    sex.setText(identity.getGender() == Gender.FEMALE ? bundle.getString("genderFemale") : bundle.getString("genderMale"));
+                    sex.setEnabled(true);
+                    sexLabel.setEnabled(true);
+
+                    nationality.setText(identity.getNationality());
+                    nationality.setEnabled(true);
+                    nationalityLabel.setEnabled(true);
+
+                    nationalNumber.setText(identity.getNationalNumber());
+                    nationalNumber.setEnabled(true);
+                    nationalNumberLabel.setEnabled(true);
+
+                    String nobleCondition = identity.getNobleCondition();
+                    if (!nobleCondition.isEmpty())
+                    {
+                        title.setText(identity.getNobleCondition());
+                        title.setEnabled(true);
+                        titleLabel.setEnabled(true);
+                    }
+                    else
+                    {
+                        title.setText(UNKNOWN_VALUE_TEXT);
+                        title.setEnabled(false);
+                        titleLabel.setEnabled(false);
+                    }
+
+                    String specialStatusStr=getSpecialStatusString(identity.getSpecialStatus());
+                    if(!specialStatusStr.isEmpty())
+                    {
+                        specialStatus.setText(specialStatusStr);
+                        specialStatus.setEnabled(true);
+                        specialStatusLabel.setEnabled(true);
+                    }
+                    else
+                    {
+                        specialStatus.setText(UNKNOWN_VALUE_TEXT);
+                        specialStatus.setEnabled(false);
+                        specialStatusLabel.setEnabled(false);
+                    }
                 }
                 else
                 {
-                    name.setText          (UNKNOWN_VALUE_TEXT); nameLabel.setEnabled(false);
-                    givenNames.setText    (UNKNOWN_VALUE_TEXT); givenNamesLabel.setEnabled(false);
-                    placeOfBirth.setText  (UNKNOWN_VALUE_TEXT); placeOfBirthLabel.setEnabled(false);
-                    dateOfBirth.setText   (UNKNOWN_VALUE_TEXT); dateOfBirthlabel.setEnabled(false);
-                    sex.setText           (UNKNOWN_VALUE_TEXT); sexLabel.setEnabled(false);
-                    nationality.setText   (UNKNOWN_VALUE_TEXT); nationalitylabel.setEnabled(false);
-                    nationalNumber.setText(UNKNOWN_VALUE_TEXT); nationalNumberLabel.setEnabled(false);
-                    title.setText         (UNKNOWN_VALUE_TEXT); titleLabel.setEnabled(false);
-                    specialStatus.setText (UNKNOWN_VALUE_TEXT); specialStatusLabel.setEnabled(false);
+                    name.setText(UNKNOWN_VALUE_TEXT);
+                    name.setEnabled(false);
+                    nameLabel.setEnabled(false);
 
+                    givenNames.setText(UNKNOWN_VALUE_TEXT);
+                    givenNames.setEnabled(false);
+                    givenNamesLabel.setEnabled(false);
+
+                    placeOfBirth.setText(UNKNOWN_VALUE_TEXT);
+                    placeOfBirth.setEnabled(false);
+                    placeOfBirthLabel.setEnabled(false);
+
+                    dateOfBirth.setText(UNKNOWN_VALUE_TEXT);
+                    dateOfBirth.setEnabled(false);
+                    dateOfBirthLabel.setEnabled(false);
+
+                    sex.setText(UNKNOWN_VALUE_TEXT);
+                    sex.setEnabled(false);
+                    sexLabel.setEnabled(false);
+
+                    nationality.setText(UNKNOWN_VALUE_TEXT);
+                    nationality.setEnabled(false);
+                    nationalityLabel.setEnabled(false);
+
+                    nationalNumber.setText(UNKNOWN_VALUE_TEXT);
+                    nationalNumber.setEnabled(false);
+                    nationalNumberLabel.setEnabled(false);
+
+                    title.setText(UNKNOWN_VALUE_TEXT);
+                    title.setEnabled(false);
+                    titleLabel.setEnabled(false);
+
+                    specialStatus.setText(UNKNOWN_VALUE_TEXT);
+                    specialStatus.setEnabled(false);
+                    specialStatusLabel.setEnabled(false);
                 }
             }
         });
@@ -110,25 +186,40 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
             public void run()
             {
                 addressBusyIcon.setVisible(loading);
-                if(address!=null)
+                if (address != null)
                 {
-                    street.setText(address.getStreetAndNumber());       streetLabel.setEnabled(true);
-                    postalCode.setText(address.getZip());               postalCodeLabel.setEnabled(true);
-                    municipality.setText(address.getMunicipality());    municipalityLabel.setEnabled(true);
+                    street.setText(address.getStreetAndNumber());
+                    street.setEnabled(true);
+                    streetLabel.setEnabled(true);
+
+                    postalCode.setText(address.getZip());
+                    postalCode.setEnabled(true);
+                    postalCodeLabel.setEnabled(true);
+
+                    municipality.setText(address.getMunicipality());
+                    municipality.setEnabled(true);
+                    municipalityLabel.setEnabled(true);
                 }
                 else
                 {
-                    street.setText        (UNKNOWN_VALUE_TEXT);         streetLabel.setEnabled(false);
-                    postalCode.setText       (UNKNOWN_VALUE_TEXT);      postalCodeLabel.setEnabled(false);
-                    municipality.setText  (UNKNOWN_VALUE_TEXT);         municipalityLabel.setEnabled(false);
+                    street.setText(UNKNOWN_VALUE_TEXT);
+                    street.setEnabled(false);
+                    streetLabel.setEnabled(false);
 
+                    postalCode.setText(UNKNOWN_VALUE_TEXT);
+                    postalCode.setEnabled(false);
+                    postalCodeLabel.setEnabled(false);
+
+                    municipality.setText(UNKNOWN_VALUE_TEXT);
+                    municipality.setEnabled(false);
+                    municipalityLabel.setEnabled(false);
                 }
             }
         });
     }
 
     private void fillPhoto(final Image image, final boolean loading)
-    {
+    {        
         java.awt.EventQueue.invokeLater(new Runnable()
         {
             public void run()
@@ -155,8 +246,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         nameLabel = new javax.swing.JLabel();
         givenNamesLabel = new javax.swing.JLabel();
         placeOfBirthLabel = new javax.swing.JLabel();
-        dateOfBirthlabel = new javax.swing.JLabel();
-        nationalitylabel = new javax.swing.JLabel();
+        dateOfBirthLabel = new javax.swing.JLabel();
+        nationalityLabel = new javax.swing.JLabel();
         nationalNumberLabel = new javax.swing.JLabel();
         sexLabel = new javax.swing.JLabel();
         titleLabel = new javax.swing.JLabel();
@@ -186,8 +277,6 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
 
         photo.setBackground(new java.awt.Color(255, 255, 255));
         photo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/IdentityPanel"); // NOI18N
-        photo.setText(bundle.getString("IdentityPanel.photo.text")); // NOI18N
         photo.setMaximumSize(new java.awt.Dimension(140, 200));
         photo.setMinimumSize(new java.awt.Dimension(140, 200));
         photo.setName("photo"); // NOI18N
@@ -197,10 +286,11 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 13;
-        gridBagConstraints.insets = new java.awt.Insets(23, 23, 23, 31);
+        gridBagConstraints.insets = new java.awt.Insets(23, 8, 23, 29);
         add(photo, gridBagConstraints);
 
-        nameLabel.setText(bundle.getString("IdentityPanel.nameLabel.text")); // NOI18N
+        nameLabel.setText(bundle.getString("nameLabel")); // NOI18N
+        nameLabel.setEnabled(false);
         nameLabel.setName("nameLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -209,7 +299,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(nameLabel, gridBagConstraints);
 
-        givenNamesLabel.setText(bundle.getString("IdentityPanel.givenNamesLabel.text")); // NOI18N
+        givenNamesLabel.setText(bundle.getString("givenNamesLabel")); // NOI18N
+        givenNamesLabel.setEnabled(false);
         givenNamesLabel.setName("givenNamesLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -218,7 +309,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(givenNamesLabel, gridBagConstraints);
 
-        placeOfBirthLabel.setText(bundle.getString("IdentityPanel.placeOfBirthLabel.text")); // NOI18N
+        placeOfBirthLabel.setText(bundle.getString("placeOfBirthLabel")); // NOI18N
+        placeOfBirthLabel.setEnabled(false);
         placeOfBirthLabel.setName("placeOfBirthLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -227,25 +319,28 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(placeOfBirthLabel, gridBagConstraints);
 
-        dateOfBirthlabel.setText(bundle.getString("IdentityPanel.dateOfBirthlabel.text")); // NOI18N
-        dateOfBirthlabel.setName("dateOfBirthlabel"); // NOI18N
+        dateOfBirthLabel.setText(bundle.getString("dateOfBirthLabel")); // NOI18N
+        dateOfBirthLabel.setEnabled(false);
+        dateOfBirthLabel.setName("dateOfBirthLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        add(dateOfBirthlabel, gridBagConstraints);
+        add(dateOfBirthLabel, gridBagConstraints);
 
-        nationalitylabel.setText(bundle.getString("IdentityPanel.nationalitylabel.text")); // NOI18N
-        nationalitylabel.setName("nationalitylabel"); // NOI18N
+        nationalityLabel.setText(bundle.getString("nationalityLabel")); // NOI18N
+        nationalityLabel.setEnabled(false);
+        nationalityLabel.setName("nationalityLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        add(nationalitylabel, gridBagConstraints);
+        add(nationalityLabel, gridBagConstraints);
 
-        nationalNumberLabel.setText(bundle.getString("IdentityPanel.nationalNumberLabel.text")); // NOI18N
+        nationalNumberLabel.setText(bundle.getString("nationalNumberLabel")); // NOI18N
+        nationalNumberLabel.setEnabled(false);
         nationalNumberLabel.setName("nationalNumberLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -254,7 +349,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(nationalNumberLabel, gridBagConstraints);
 
-        sexLabel.setText(bundle.getString("IdentityPanel.sexLabel.text")); // NOI18N
+        sexLabel.setText(bundle.getString("sexLabel")); // NOI18N
+        sexLabel.setEnabled(false);
         sexLabel.setName("sexLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -263,7 +359,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(sexLabel, gridBagConstraints);
 
-        titleLabel.setText(bundle.getString("IdentityPanel.titleLabel.text")); // NOI18N
+        titleLabel.setText(bundle.getString("titleLabel")); // NOI18N
+        titleLabel.setEnabled(false);
         titleLabel.setName("titleLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -272,7 +369,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(titleLabel, gridBagConstraints);
 
-        specialStatusLabel.setText(bundle.getString("IdentityPanel.specialStatusLabel.text")); // NOI18N
+        specialStatusLabel.setText(bundle.getString("specialStatusLabel")); // NOI18N
+        specialStatusLabel.setEnabled(false);
         specialStatusLabel.setName("specialStatusLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -281,7 +379,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(specialStatusLabel, gridBagConstraints);
 
-        streetLabel.setText(bundle.getString("IdentityPanel.streetLabel.text")); // NOI18N
+        streetLabel.setText(bundle.getString("streetLabel")); // NOI18N
+        streetLabel.setEnabled(false);
         streetLabel.setName("streetLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -290,7 +389,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(streetLabel, gridBagConstraints);
 
-        postalCodeLabel.setText(bundle.getString("IdentityPanel.postalCodeLabel.text")); // NOI18N
+        postalCodeLabel.setText(bundle.getString("postalCodeLabel")); // NOI18N
+        postalCodeLabel.setEnabled(false);
         postalCodeLabel.setName("postalCodeLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -299,7 +399,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(postalCodeLabel, gridBagConstraints);
 
-        municipalityLabel.setText(bundle.getString("IdentityPanel.municipalityLabel.text")); // NOI18N
+        municipalityLabel.setText(bundle.getString("municipalityLabel")); // NOI18N
+        municipalityLabel.setEnabled(false);
         municipalityLabel.setName("municipalityLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -308,6 +409,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(municipalityLabel, gridBagConstraints);
 
+        idAddressSeparator.setEnabled(false);
         idAddressSeparator.setName("idAddressSeparator"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -317,7 +419,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
         add(idAddressSeparator, gridBagConstraints);
 
-        name.setText(bundle.getString("IdentityPanel.name.text")); // NOI18N
+        name.setEnabled(false);
         name.setName("name"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -326,7 +428,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(name, gridBagConstraints);
 
-        givenNames.setText(bundle.getString("IdentityPanel.givenNames.text")); // NOI18N
+        givenNames.setEnabled(false);
         givenNames.setName("givenNames"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -335,7 +437,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(givenNames, gridBagConstraints);
 
-        placeOfBirth.setText(bundle.getString("IdentityPanel.placeOfBirth.text")); // NOI18N
+        placeOfBirth.setEnabled(false);
         placeOfBirth.setName("placeOfBirth"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -344,7 +446,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(placeOfBirth, gridBagConstraints);
 
-        dateOfBirth.setText(bundle.getString("IdentityPanel.dateOfBirth.text")); // NOI18N
+        dateOfBirth.setEnabled(false);
         dateOfBirth.setName("dateOfBirth"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -353,7 +455,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(dateOfBirth, gridBagConstraints);
 
-        sex.setText(bundle.getString("IdentityPanel.sex.text")); // NOI18N
+        sex.setEnabled(false);
         sex.setName("sex"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -362,7 +464,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(sex, gridBagConstraints);
 
-        nationalNumber.setText(bundle.getString("IdentityPanel.nationalNumber.text")); // NOI18N
+        nationalNumber.setEnabled(false);
         nationalNumber.setName("nationalNumber"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -371,7 +473,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(nationalNumber, gridBagConstraints);
 
-        nationality.setText(bundle.getString("IdentityPanel.nationality.text")); // NOI18N
+        nationality.setEnabled(false);
         nationality.setName("nationality"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -380,7 +482,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(nationality, gridBagConstraints);
 
-        title.setText(bundle.getString("IdentityPanel.title.text")); // NOI18N
+        title.setEnabled(false);
         title.setName("title"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -389,7 +491,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(title, gridBagConstraints);
 
-        specialStatus.setText(bundle.getString("IdentityPanel.specialStatus.text")); // NOI18N
+        specialStatus.setEnabled(false);
         specialStatus.setName("specialStatus"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -398,7 +500,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(specialStatus, gridBagConstraints);
 
-        street.setText(bundle.getString("IdentityPanel.street.text")); // NOI18N
+        street.setEnabled(false);
         street.setName("street"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -407,7 +509,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(street, gridBagConstraints);
 
-        postalCode.setText(bundle.getString("IdentityPanel.postalCode.text")); // NOI18N
+        postalCode.setEnabled(false);
         postalCode.setName("postalCode"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -416,7 +518,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(postalCode, gridBagConstraints);
 
-        municipality.setText(bundle.getString("IdentityPanel.municipality.text")); // NOI18N
+        municipality.setEnabled(false);
         municipality.setName("municipality"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -426,11 +528,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         add(municipality, gridBagConstraints);
 
         addressBusyIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/busyicons/busy_anim_small.gif"))); // NOI18N
-        addressBusyIcon.setText(bundle.getString("IdentityPanel.identityBusyIcon.text")); // NOI18N
-        addressBusyIcon.setMaximumSize(new java.awt.Dimension(16, 16));
-        addressBusyIcon.setMinimumSize(new java.awt.Dimension(16, 16));
         addressBusyIcon.setName("identityBusyIcon"); // NOI18N
-        addressBusyIcon.setPreferredSize(new java.awt.Dimension(16, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 11;
@@ -438,18 +536,13 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         add(addressBusyIcon, gridBagConstraints);
 
         identityBusyIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/busyicons/busy_anim_small.gif"))); // NOI18N
-        identityBusyIcon.setText(bundle.getString("IdentityPanel.identityBusyIcon.text")); // NOI18N
-        identityBusyIcon.setMaximumSize(new java.awt.Dimension(16, 16));
-        identityBusyIcon.setMinimumSize(new java.awt.Dimension(16, 16));
         identityBusyIcon.setName("identityBusyIcon"); // NOI18N
-        identityBusyIcon.setPreferredSize(new java.awt.Dimension(16, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         add(identityBusyIcon, gridBagConstraints);
 
-        spacer.setText(bundle.getString("IdentityPanel.spacer.text")); // NOI18N
         spacer.setMaximumSize(new java.awt.Dimension(16, 16));
         spacer.setMinimumSize(new java.awt.Dimension(16, 16));
         spacer.setName("spacer"); // NOI18N
@@ -463,7 +556,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressBusyIcon;
     private javax.swing.JLabel dateOfBirth;
-    private javax.swing.JLabel dateOfBirthlabel;
+    private javax.swing.JLabel dateOfBirthLabel;
     private javax.swing.JLabel givenNames;
     private javax.swing.JLabel givenNamesLabel;
     private javax.swing.JSeparator idAddressSeparator;
@@ -475,7 +568,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     private javax.swing.JLabel nationalNumber;
     private javax.swing.JLabel nationalNumberLabel;
     private javax.swing.JLabel nationality;
-    private javax.swing.JLabel nationalitylabel;
+    private javax.swing.JLabel nationalityLabel;
     private javax.swing.JLabel photo;
     private javax.swing.JLabel placeOfBirth;
     private javax.swing.JLabel placeOfBirthLabel;
@@ -494,9 +587,38 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
 
     private void initIcons()
     {
-         URL url=BelgianEidViewer.class.getResource("resources/busyicons/busy_anim_large.gif");
-         if(url!=null)
-         largeBusyIcon=new ImageIcon(Toolkit.getDefaultToolkit().getImage(url));
+        URL url = BelgianEidViewer.class.getResource("resources/busyicons/busy_anim_large.gif");
+        if (url != null)
+        {
+            largeBusyIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(url));
+        }
+    }
+
+    private String join(Collection s, String delimiter)
+    {
+        StringBuilder buffer = new StringBuilder();
+        Iterator iter = s.iterator();
+        if (iter.hasNext())
+        {
+            buffer.append(iter.next());
+            while (iter.hasNext())
+            {
+                buffer.append(delimiter);
+                buffer.append(iter.next());
+            }
+        }
+        return buffer.toString();
+    }
+
+    private String getSpecialStatusString(SpecialStatus specialStatus)
+    {
+        List specials = new ArrayList();
+        if(specialStatus.hasWhiteCane())
+            specials.add(bundle.getString("special_status_white_cane"));
+        if(specialStatus.hasYellowCane())
+            specials.add(bundle.getString("special_status_yellow_cane"));
+        if(specialStatus.hasExtendedMinority())
+            specials.add(bundle.getString("special_status_extended_minority"));
+        return join(specials, ",");
     }
 }
-

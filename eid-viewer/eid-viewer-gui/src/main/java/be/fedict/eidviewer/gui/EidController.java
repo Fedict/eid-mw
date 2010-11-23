@@ -18,6 +18,7 @@ public class EidController extends Observable implements Runnable
     private boolean                 mRunning = false;
     private Eid                     mEid;
     private STATE                   mState;
+    private ACTIVITY                mActivity;
     private Identity                mIdentity;
     private Address                 mAddress;
     private Image                   mPhoto;
@@ -31,22 +32,40 @@ public class EidController extends Observable implements Runnable
 
     public static enum STATE
     { 
-        IDLE("idle"), NO_READERS("noreaders"), NO_EID_PRESENT("noeidpresent"),EID_PRESENT("eidpresent");
+        IDLE("state_idle"), ERROR("state_error"), NO_READERS("state_noreaders"), NO_EID_PRESENT("state_noeidpresent"),EID_PRESENT("state_eidpresent");
 
         private final String state;
         private STATE(String state) { this.state = state; }
-        public String getState() { return this.state; }
+        @Override
+        public String toString() { return this.state; }
     };
+
+    public static enum ACTIVITY
+    {
+         IDLE("activity_idle"), READING_IDENTITY("reading_identity"), READING_ADDRESS("reading_address"), READING_PHOTO("reading_photo");
+
+        private final String state;
+        private ACTIVITY(String state) { this.state = state; }
+        @Override
+        public String toString() { return this.state; }
+    }
 
     public EidController(Eid eid)
     {
         mEid = eid;
         setState(STATE.IDLE);
+        setActivity(ACTIVITY.IDLE);
     }
 
     private void setState(STATE newState)
     {
         mState=newState;
+        setState();
+    }
+
+    private void setActivity(ACTIVITY newActivity)
+    {
+        mActivity=newActivity;
         setState();
     }
 
@@ -86,15 +105,19 @@ public class EidController extends Observable implements Runnable
                 }
           
                 setState(STATE.EID_PRESENT);
-
+                
+                setActivity(ACTIVITY.READING_IDENTITY);
                 mIdentity=mEid.getIdentity();
                 setState();
-                
+
+                setActivity(ACTIVITY.READING_ADDRESS);
                 mAddress=mEid.getAddress();
                 setState();
 
+                setActivity(ACTIVITY.READING_PHOTO);
                 mPhoto=mEid.getPhoto();
                 setState();
+                setActivity(ACTIVITY.IDLE);
 
                 mEid.removeCard();
                 clearCardInformation();
@@ -102,15 +125,19 @@ public class EidController extends Observable implements Runnable
             catch(Exception ex)
             {
                 clearCardInformation();
+                setState(STATE.ERROR);  
                 Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex);
+
                 try
                 {
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 }
                 catch (InterruptedException ex1)
                 {
                     Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex1);
                 }
+                
+                setState(STATE.IDLE);
             }
         }
     }
@@ -133,6 +160,11 @@ public class EidController extends Observable implements Runnable
     public STATE getState()
     {
         return mState;
+    }
+
+    public ACTIVITY getActivity()
+    {
+        return mActivity;
     }
     
     public boolean hasAddress()

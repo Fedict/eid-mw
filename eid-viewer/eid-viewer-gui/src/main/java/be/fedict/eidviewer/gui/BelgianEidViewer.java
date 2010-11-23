@@ -11,7 +11,10 @@
 package be.fedict.eidviewer.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
 
@@ -20,6 +23,7 @@ import be.fedict.eid.applet.Messages;
 import be.fedict.eid.applet.Messages.MESSAGE_ID;
 import be.fedict.eid.applet.Status;
 import be.fedict.eid.applet.View;
+import be.fedict.eidviewer.gui.EidController.STATE;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.eidviewer.lib.EidFactory;
 import java.awt.Component;
@@ -44,8 +48,7 @@ import javax.swing.WindowConstants;
  */
 public class BelgianEidViewer extends javax.swing.JFrame implements View, Observer
 {
-    /** Creates new form BelgianEidViewer */
-
+    private ResourceBundle bundle;
     private static final String EXTENSION_PNG = ".png";
     private static final String ICONS = "resources/icons/";
     private Messages mMessages;
@@ -57,7 +60,8 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
     public BelgianEidViewer()
     {
-        Locale.setDefault(new Locale("nl", "BE"));
+        Locale.setDefault(new Locale("nl","BE"));
+        bundle=ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/BelgianEidViewer");
         initComponents();
         initPanels();
         initIcons();
@@ -79,9 +83,14 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     {
         EidController controller = (EidController) o;
 
-        System.err.println("STATE [" + controller.getState().getState() + "]");
-
+        System.err.println("STATE [" + controller.getState() + "]");
+        
         statusIcon.setIcon(mCardStatusIcons.get(controller.getState()));
+
+        if(controller.getState()==STATE.EID_PRESENT)
+            statusText.setText(bundle.getString(controller.getActivity().toString()));
+        else
+            statusText.setText(bundle.getString(controller.getState().toString()));
     }
 
     /** This method is called from within the constructor to
@@ -102,6 +111,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         fileMenuQuitItem = new JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new Color(255, 255, 255));
         setMinimumSize(new Dimension(640, 480));
 
         tabPanel.setName("tabPanel"); // NOI18N
@@ -114,12 +124,10 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         statusIcon.setMaximumSize(new Dimension(72, 72));
         statusIcon.setMinimumSize(new Dimension(72, 72));
         statusIcon.setName("statusIcon"); // NOI18N
-        statusIcon.setPreferredSize(new Dimension(72, 72));
+        statusIcon.setPreferredSize(new Dimension(90, 72));
         statusPanel.add(statusIcon, BorderLayout.EAST);
 
         statusText.setHorizontalAlignment(SwingConstants.RIGHT);
-        ResourceBundle bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/BelgianEidViewer"); // NOI18N
-        statusText.setText(bundle.getString("BelgianEidViewer.statusText.text")); // NOI18N
         statusText.setName("statusText"); // NOI18N
         statusPanel.add(statusText, BorderLayout.CENTER);
 
@@ -127,12 +135,17 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
         menuBar.setName("menuBar"); // NOI18N
 
-        fileMenu.setText(bundle.getString("BelgianEidViewer.fileMenu.text")); // NOI18N
+        fileMenu.setText(bundle.getString("fileMenuTitle")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
         fileMenuQuitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0));
-        fileMenuQuitItem.setText(bundle.getString("BelgianEidViewer.fileMenuQuitItem.text")); // NOI18N
+        fileMenuQuitItem.setText(bundle.getString("fileMenuQuitItem")); // NOI18N
         fileMenuQuitItem.setName("fileMenuQuitItem"); // NOI18N
+        fileMenuQuitItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                fileMenuQuitItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(fileMenuQuitItem);
 
         menuBar.add(fileMenu);
@@ -141,6 +154,11 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void fileMenuQuitItemActionPerformed(ActionEvent evt)//GEN-FIRST:event_fileMenuQuitItemActionPerformed
+    {//GEN-HEADEREND:event_fileMenuQuitItemActionPerformed
+        
+    }//GEN-LAST:event_fileMenuQuitItemActionPerformed
     public void addDetailMessage(String detailMessage)
     {
         System.err.println(detailMessage);
@@ -242,9 +260,10 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private void initIcons()
     {
         mCardStatusIcons = new EnumMap<EidController.STATE, ImageIcon>(EidController.STATE.class);
-        mCardStatusIcons.put(EidController.STATE.NO_READERS, getIcon(EidController.STATE.NO_READERS.getState() + EXTENSION_PNG));
-        mCardStatusIcons.put(EidController.STATE.NO_EID_PRESENT, getIcon(EidController.STATE.NO_EID_PRESENT.getState() + EXTENSION_PNG));
-        mCardStatusIcons.put(EidController.STATE.EID_PRESENT, getIcon(EidController.STATE.EID_PRESENT.getState() + EXTENSION_PNG));
+        mCardStatusIcons.put(EidController.STATE.NO_READERS, getIcon(EidController.STATE.NO_READERS + EXTENSION_PNG));
+        mCardStatusIcons.put(EidController.STATE.ERROR, getIcon(EidController.STATE.ERROR + EXTENSION_PNG));
+        mCardStatusIcons.put(EidController.STATE.NO_EID_PRESENT, getIcon(EidController.STATE.NO_EID_PRESENT + EXTENSION_PNG));
+        mCardStatusIcons.put(EidController.STATE.EID_PRESENT, getIcon(EidController.STATE.EID_PRESENT + EXTENSION_PNG));
     }
 
     private ImageIcon getIcon(String name)

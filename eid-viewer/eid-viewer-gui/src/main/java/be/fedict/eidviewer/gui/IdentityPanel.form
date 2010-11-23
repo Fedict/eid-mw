@@ -11,12 +11,12 @@
     </Property>
   </Properties>
   <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_formBundle" type="java.lang.String" value="be/fedict/eidviewer/gui/resources/IdentityPanel"/>
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="2"/>
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
@@ -32,9 +32,6 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.photo.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[140, 200]"/>
         </Property>
@@ -49,15 +46,16 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-          <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="13" fill="0" ipadX="0" ipadY="0" insetsTop="23" insetsLeft="23" insetsBottom="23" insetsRight="31" anchor="10" weightX="0.0" weightY="0.0"/>
+          <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="13" fill="0" ipadX="0" ipadY="0" insetsTop="23" insetsLeft="8" insetsBottom="23" insetsRight="29" anchor="10" weightX="0.0" weightY="0.0"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="nameLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.nameLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="nameLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="nameLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -69,8 +67,9 @@
     <Component class="javax.swing.JLabel" name="givenNamesLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.givenNamesLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="givenNamesLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="givenNamesLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -82,8 +81,9 @@
     <Component class="javax.swing.JLabel" name="placeOfBirthLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.placeOfBirthLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="placeOfBirthLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="placeOfBirthLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -92,12 +92,13 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="dateOfBirthlabel">
+    <Component class="javax.swing.JLabel" name="dateOfBirthLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.dateOfBirthlabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="dateOfBirthLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="dateOfBirthlabel" noResource="true"/>
+        <Property name="enabled" type="boolean" value="false"/>
+        <Property name="name" type="java.lang.String" value="dateOfBirthLabel" noResource="true"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -105,12 +106,13 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="nationalitylabel">
+    <Component class="javax.swing.JLabel" name="nationalityLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.nationalitylabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="nationalityLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="nationalitylabel" noResource="true"/>
+        <Property name="enabled" type="boolean" value="false"/>
+        <Property name="name" type="java.lang.String" value="nationalityLabel" noResource="true"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -121,8 +123,9 @@
     <Component class="javax.swing.JLabel" name="nationalNumberLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.nationalNumberLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="nationalNumberLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="nationalNumberLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -134,8 +137,9 @@
     <Component class="javax.swing.JLabel" name="sexLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.sexLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="sexLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="sexLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -147,8 +151,9 @@
     <Component class="javax.swing.JLabel" name="titleLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.titleLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="titleLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="titleLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -160,8 +165,9 @@
     <Component class="javax.swing.JLabel" name="specialStatusLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.specialStatusLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="specialStatusLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="specialStatusLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -173,8 +179,9 @@
     <Component class="javax.swing.JLabel" name="streetLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.streetLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="streetLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="streetLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -186,8 +193,9 @@
     <Component class="javax.swing.JLabel" name="postalCodeLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.postalCodeLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="postalCodeLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="postalCodeLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -199,8 +207,9 @@
     <Component class="javax.swing.JLabel" name="municipalityLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.municipalityLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="municipalityLabel" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="municipalityLabel" noResource="true"/>
       </Properties>
       <Constraints>
@@ -211,6 +220,7 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="idAddressSeparator">
       <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="idAddressSeparator" noResource="true"/>
       </Properties>
       <Constraints>
@@ -221,9 +231,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="name">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.name.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="name" noResource="true"/>
       </Properties>
       <Constraints>
@@ -234,9 +242,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="givenNames">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.givenNames.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="givenNames" noResource="true"/>
       </Properties>
       <Constraints>
@@ -247,9 +253,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="placeOfBirth">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.placeOfBirth.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="placeOfBirth" noResource="true"/>
       </Properties>
       <Constraints>
@@ -260,9 +264,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="dateOfBirth">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.dateOfBirth.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="dateOfBirth" noResource="true"/>
       </Properties>
       <Constraints>
@@ -273,9 +275,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="sex">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.sex.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="sex" noResource="true"/>
       </Properties>
       <Constraints>
@@ -286,9 +286,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="nationalNumber">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.nationalNumber.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="nationalNumber" noResource="true"/>
       </Properties>
       <Constraints>
@@ -299,9 +297,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="nationality">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.nationality.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="nationality" noResource="true"/>
       </Properties>
       <Constraints>
@@ -312,9 +308,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="title">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.title.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="title" noResource="true"/>
       </Properties>
       <Constraints>
@@ -325,9 +319,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="specialStatus">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.specialStatus.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="specialStatus" noResource="true"/>
       </Properties>
       <Constraints>
@@ -338,9 +330,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="street">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.street.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="street" noResource="true"/>
       </Properties>
       <Constraints>
@@ -351,9 +341,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="postalCode">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.postalCode.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="postalCode" noResource="true"/>
       </Properties>
       <Constraints>
@@ -364,9 +352,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="municipality">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.municipality.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="municipality" noResource="true"/>
       </Properties>
       <Constraints>
@@ -380,19 +366,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/be/fedict/eidviewer/gui/resources/busyicons/busy_anim_small.gif"/>
         </Property>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.identityBusyIcon.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[16, 16]"/>
-        </Property>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[16, 16]"/>
-        </Property>
         <Property name="name" type="java.lang.String" value="identityBusyIcon" noResource="true"/>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[16, 16]"/>
-        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -405,19 +379,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/be/fedict/eidviewer/gui/resources/busyicons/busy_anim_small.gif"/>
         </Property>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.identityBusyIcon.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[16, 16]"/>
-        </Property>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[16, 16]"/>
-        </Property>
         <Property name="name" type="java.lang.String" value="identityBusyIcon" noResource="true"/>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[16, 16]"/>
-        </Property>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -427,9 +389,6 @@
     </Component>
     <Component class="javax.swing.JLabel" name="spacer">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="be/fedict/eidviewer/gui/resources/IdentityPanel.properties" key="IdentityPanel.spacer.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[16, 16]"/>
         </Property>
