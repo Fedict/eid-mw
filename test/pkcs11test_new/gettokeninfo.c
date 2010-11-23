@@ -54,7 +54,7 @@ testRet test_get_token_info()
 				frv = (*functions->C_GetTokenInfo)(slotIds[slotIdx], &tokenInfo);
 				if (ReturnedSucces(frv,&(retVal.pkcs11rv), "C_GetTokenInfo"))
 				{
-					PrintTokenInfo(&slotInfo);
+					PrintTokenInfo(&tokenInfo);
 				}
 			}
 		}
