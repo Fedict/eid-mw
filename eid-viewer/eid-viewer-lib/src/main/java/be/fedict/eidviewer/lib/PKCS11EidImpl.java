@@ -205,4 +205,9 @@ class PKCS11EidImpl implements Eid
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public boolean isCardStillPresent() throws Exception
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

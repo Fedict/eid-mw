@@ -93,15 +93,10 @@ public interface Eid
      *
      * @throws Exception
      */
-    void changePin() throws Exception;
 
-    /**
-     * Unblock the eID card. The PUK1 and PUK2 codes will be queried to the
-     * citizen via some GUI dialog.
-     *
-     * @throws Exception
-     */
-    void unblockPin() throws Exception;
+    boolean isCardStillPresent() throws Exception;
+    
+    void changePin() throws Exception;
 
     /**
      * Change the PIN code of the eID card. The PIN will be queried to the
@@ -111,66 +106,10 @@ public interface Eid
      * @throws Exception
      */
     void changePin(boolean requireSecureReader) throws Exception;
-
-    /**
-     * Unblock the eID card. The PUK1 and PUK2 codes will be queried to the
-     * citizen via some GUI dialog.
-     *
-     * @param requireSecureReader
-     * @throws Exception
-     */
-    void unblockPin(boolean requireSecureReader) throws Exception;
-
-    /**
-     * Creates an authentication signature.
-     *
-     * @param toBeSigned
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws CardException
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    byte[] signAuthn(byte[] toBeSigned) throws Exception;
-
-    /**
-     * Creates an authentication signature.
-     *
-     * @param toBeSigned
-     * @param requireSecureReader
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws CardException
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    byte[] signAuthn(byte[] toBeSigned, boolean requireSecureReader) throws Exception;
-
-    /**
-     * Creates a non-repudiation signature starting from a hashed value of the
-     * data to be signed.
-     *
-     * @param digestValue
-     * @param digestAlgo
-     * @param requireSecureReader
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws CardException
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    byte[] sign(byte[] digestValue, String digestAlgo, boolean requireSecureReader) throws Exception;
-
+    
     List<X509Certificate> getAuthnCertificateChain() throws Exception;
 
     List<X509Certificate> getSignCertificateChain() throws Exception;
-
-    /**
-     * De-authenticate.
-     *
-     * @throws Exception
-     */
-    void logoff() throws Exception;
 
     /**
      * Adds an observer for eID file readout progress monitoring.
@@ -178,18 +117,4 @@ public interface Eid
      * @param observer
      */
     void addObserver(Observer observer);
-
-    /**
-     * Log-off the eID card that's present in the named smart card reader.
-     *
-     * @param readerName
-     *            the PC/SC name of the smart card reader.
-     * @throws Exception
-     */
-    void logoff(String readerName) throws Exception;
-
-    /**
-     * Selects the BELPIC JavaCard Applet on the active eID card.
-     */
-    void selectBelpicJavaCardApplet();
 }

@@ -15,19 +15,30 @@
             <Property name="name" type="java.lang.String" value="fileMenu" noResource="true"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="be.fedict.eidviewer.gui.BelgianEidViewer" id="print" methodName="print"/>
+                </Property>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="be/fedict/eidviewer/gui/resources/BelgianEidViewer.properties" key="fileMenuPrintItem" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="fileMenuQuitItem">
               <Properties>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="be.fedict.eidviewer.gui.BelgianEidViewer" id="quit" methodName="quit"/>
+                </Property>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Q"/>
+                  <KeyStroke key="Ctrl+Q"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="be/fedict/eidviewer/gui/resources/BelgianEidViewer.properties" key="fileMenuQuitItem" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="fileMenuQuitItem" noResource="true"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fileMenuQuitItemActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

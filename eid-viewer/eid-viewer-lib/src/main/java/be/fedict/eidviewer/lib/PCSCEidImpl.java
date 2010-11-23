@@ -123,39 +123,19 @@ public class PCSCEidImpl implements Eid
         mPcscEidSpi.removeCard();
     }
 
+    public boolean isCardStillPresent() throws Exception
+    {
+        return mPcscEidSpi.isCardStillPresent();
+    }
+
     public void changePin() throws Exception
     {
         mPcscEidSpi.changePin();
     }
 
-    public void unblockPin() throws Exception
-    {
-        mPcscEidSpi.unblockPin();
-    }
-
     public void changePin(boolean requireSecureReader) throws Exception
     {
         mPcscEidSpi.changePin();
-    }
-
-    public void unblockPin(boolean requireSecureReader) throws Exception
-    {
-        mPcscEidSpi.unblockPin(requireSecureReader);
-    }
-
-    public byte[] signAuthn(byte[] toBeSigned) throws Exception
-    {
-        return mPcscEidSpi.signAuthn(toBeSigned);
-    }
-
-    public byte[] signAuthn(byte[] toBeSigned, boolean requireSecureReader) throws Exception
-    {
-        return mPcscEidSpi.signAuthn(toBeSigned, requireSecureReader);
-    }
-
-    public byte[] sign(byte[] digestValue, String digestAlgo, boolean requireSecureReader) throws Exception
-    {
-        return mPcscEidSpi.sign(digestValue, digestAlgo, requireSecureReader);
     }
 
     public List<X509Certificate> getAuthnCertificateChain() throws Exception
@@ -168,23 +148,8 @@ public class PCSCEidImpl implements Eid
         return mPcscEidSpi.getSignCertificateChain();
     }
 
-    public void logoff() throws Exception
-    {
-        mPcscEidSpi.logoff();
-    }
-
     public void addObserver(Observer observer)
     {
         mPcscEidSpi.addObserver(observer);
     }
-
-    public void logoff(String readerName) throws Exception
-    {
-        mPcscEidSpi.logoff(readerName);
-    }
-
-    public void selectBelpicJavaCardApplet()
-    {
-        mPcscEidSpi.selectBelpicJavaCardApplet();
-    }   
 }

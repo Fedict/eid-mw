@@ -15,57 +15,111 @@ import java.util.logging.Logger;
 public class EidController extends Observable implements Runnable
 {
 
-    private boolean                 mRunning = false;
-    private Eid                     mEid;
-    private STATE                   mState;
-    private ACTIVITY                mActivity;
-    private Identity                mIdentity;
-    private Address                 mAddress;
-    private Image                   mPhoto;
-
-    private void clearCardInformation()
-    {
-        mIdentity=null;
-        mAddress=null;
-        mPhoto=null;
-    }
-
-    public static enum STATE
-    { 
-        IDLE("state_idle"), ERROR("state_error"), NO_READERS("state_noreaders"), NO_EID_PRESENT("state_noeidpresent"),EID_PRESENT("state_eidpresent");
-
-        private final String state;
-        private STATE(String state) { this.state = state; }
-        @Override
-        public String toString() { return this.state; }
-    };
-
-    public static enum ACTIVITY
-    {
-         IDLE("activity_idle"), READING_IDENTITY("reading_identity"), READING_ADDRESS("reading_address"), READING_PHOTO("reading_photo");
-
-        private final String state;
-        private ACTIVITY(String state) { this.state = state; }
-        @Override
-        public String toString() { return this.state; }
-    }
+    private boolean mRunning = false;
+    private Eid mEid;
+    private STATE mState;
+    private ACTIVITY mActivity;
+    private Identity mIdentity;
+    private Address mAddress;
+    private Image mPhoto;
+    private ACTION mRunningAction;
 
     public EidController(Eid eid)
     {
         mEid = eid;
         setState(STATE.IDLE);
         setActivity(ACTIVITY.IDLE);
+        mRunningAction=ACTION.NONE;
     }
+
+    private void eid_changePin() throws Exception
+    {
+        try
+        {
+            mEid.changePin();
+        }
+        catch(RuntimeException rte)
+        {
+           Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
+        }
+        
+        mRunningAction = ACTION.NONE;
+    }
+    
+
+    private void clearCardInformation()
+    {
+        mIdentity = null;
+        mAddress = null;
+        mPhoto = null;
+    }
+
+    public static enum STATE
+    {
+
+        IDLE("state_idle"), ERROR("state_error"), NO_READERS("state_noreaders"), NO_EID_PRESENT("state_noeidpresent"), EID_PRESENT("state_eidpresent");
+        private final String state;
+
+        private STATE(String state)
+        {
+            this.state = state;
+        }
+
+        @Override
+        public String toString()
+        {
+            return this.state;
+        }
+    };
+
+    public static enum ACTIVITY
+    {
+
+        IDLE("activity_idle"), READING_IDENTITY("reading_identity"), READING_ADDRESS("reading_address"), READING_PHOTO("reading_photo");
+        private final String state;
+
+        private ACTIVITY(String state)
+        {
+            this.state = state;
+        }
+
+        @Override
+        public String toString()
+        {
+            return this.state;
+        }
+    }
+
+    public static enum ACTION
+    {
+
+        NONE(0), CHANGE_PIN(1);
+        private final int order;
+
+        private ACTION(int order)
+        {
+            this.order = order;
+        }
+    }
+
+   
 
     private void setState(STATE newState)
     {
-        mState=newState;
+        mState = newState;
         setState();
     }
 
     private void setActivity(ACTIVITY newActivity)
     {
-        mActivity=newActivity;
+        mActivity = newActivity;
+        setState();
+    }
+
+    private void setStateAndActivity(STATE newState,ACTIVITY newActivity)
+    {
+        mState = newState;
+        mActivity = newActivity;
         setState();
     }
 
@@ -77,18 +131,20 @@ public class EidController extends Observable implements Runnable
 
     public void start()
     {
-        new Thread(this).start();
+        Thread me=new Thread(this);
+               me.setDaemon(true);
+               me.start();
     }
 
     public void stop()
     {
-        mRunning = false;
+        mRunning=false;
     }
 
     public void run()
     {
         mRunning = true;
-        while(mRunning)
+        while (mRunning)
         {
             try
             {
@@ -103,29 +159,45 @@ public class EidController extends Observable implements Runnable
                     setState(STATE.NO_EID_PRESENT);
                     mEid.waitForEidPresent();
                 }
-          
-                setState(STATE.EID_PRESENT);
-                
-                setActivity(ACTIVITY.READING_IDENTITY);
-                mIdentity=mEid.getIdentity();
+
+                setStateAndActivity(STATE.EID_PRESENT,ACTIVITY.READING_IDENTITY);
+                mIdentity = mEid.getIdentity();
                 setState();
 
                 setActivity(ACTIVITY.READING_ADDRESS);
-                mAddress=mEid.getAddress();
+                mAddress = mEid.getAddress();
                 setState();
 
                 setActivity(ACTIVITY.READING_PHOTO);
-                mPhoto=mEid.getPhoto();
-                setState();
+                mPhoto = mEid.getPhoto();
                 setActivity(ACTIVITY.IDLE);
 
-                mEid.removeCard();
+                while(mEid.isCardStillPresent())
+                {
+                    if(mRunningAction == ACTION.CHANGE_PIN)
+                    {
+                        eid_changePin();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Thread.sleep(200);
+                        }
+                        catch (InterruptedException ex1)
+                        {
+                            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex1);
+                        }
+                    }
+                }
+
                 clearCardInformation();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 clearCardInformation();
-                setState(STATE.ERROR);  
+                mRunningAction = ACTION.NONE;
+                setState(STATE.ERROR);
                 Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex);
 
                 try
@@ -136,7 +208,7 @@ public class EidController extends Observable implements Runnable
                 {
                     Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-                
+
                 setState(STATE.IDLE);
             }
         }
@@ -166,19 +238,30 @@ public class EidController extends Observable implements Runnable
     {
         return mActivity;
     }
-    
+
     public boolean hasAddress()
     {
-        return (mAddress!=null);
+        return (mAddress != null);
     }
 
     public boolean hasIdentity()
     {
-        return (mIdentity!=null);
+        return (mIdentity != null);
     }
 
     public boolean hasPhoto()
     {
-        return (mPhoto!=null);
+        return (mPhoto != null);
+    }
+
+    public EidController changePin()
+    {
+        mRunningAction = ACTION.CHANGE_PIN;
+        return this;
+    }
+
+    public boolean isReadyForCommand()
+    {
+        return (mState==STATE.EID_PRESENT) && (mActivity==ACTIVITY.IDLE) && (mRunningAction==ACTION.NONE);
     }
 }

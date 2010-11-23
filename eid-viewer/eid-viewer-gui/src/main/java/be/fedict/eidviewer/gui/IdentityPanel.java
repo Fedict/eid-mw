@@ -11,7 +11,6 @@ import be.fedict.eid.applet.service.Identity;
 import be.fedict.eid.applet.service.SpecialStatus;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.net.URL;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,16 +37,16 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     public IdentityPanel()
     {
         bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/IdentityPanel");
-        initComponents();
-        initIcons();
         dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
+        initComponents();
+        initIcons();    
     }
 
     public void update(Observable o, Object o1)
     {
         EidController controller = (EidController) o;
 
-        if (controller.getState() == EidController.STATE.EID_PRESENT)
+        if(controller.getState()==EidController.STATE.EID_PRESENT)
         {
             if(controller.hasIdentity())
                 fillIdentity(controller.getIdentity(),false);
@@ -270,7 +269,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         municipality = new javax.swing.JLabel();
         addressBusyIcon = new javax.swing.JLabel();
         identityBusyIcon = new javax.swing.JLabel();
-        spacer = new javax.swing.JLabel();
+        spacer1 = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
         setLayout(new java.awt.GridBagLayout());
@@ -543,15 +542,16 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         add(identityBusyIcon, gridBagConstraints);
 
-        spacer.setMaximumSize(new java.awt.Dimension(16, 16));
-        spacer.setMinimumSize(new java.awt.Dimension(16, 16));
-        spacer.setName("spacer"); // NOI18N
-        spacer.setPreferredSize(new java.awt.Dimension(16, 16));
+        spacer1.setEnabled(false);
+        spacer1.setMaximumSize(new java.awt.Dimension(16, 16));
+        spacer1.setMinimumSize(new java.awt.Dimension(16, 16));
+        spacer1.setName("spacer1"); // NOI18N
+        spacer1.setPreferredSize(new java.awt.Dimension(16, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        add(spacer, gridBagConstraints);
+        add(spacer1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressBusyIcon;
@@ -576,7 +576,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     private javax.swing.JLabel postalCodeLabel;
     private javax.swing.JLabel sex;
     private javax.swing.JLabel sexLabel;
-    private javax.swing.JLabel spacer;
+    private javax.swing.JLabel spacer1;
     private javax.swing.JLabel specialStatus;
     private javax.swing.JLabel specialStatusLabel;
     private javax.swing.JLabel street;
@@ -587,11 +587,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
 
     private void initIcons()
     {
-        URL url = BelgianEidViewer.class.getResource("resources/busyicons/busy_anim_large.gif");
-        if (url != null)
-        {
-            largeBusyIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(url));
-        }
+        largeBusyIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(BelgianEidViewer.class.getResource("resources/busyicons/busy_anim_large.gif")));
     }
 
     private String join(Collection s, String delimiter)

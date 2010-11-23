@@ -4,6 +4,7 @@
  * Created on Nov 18, 2010, 3:22:56 PM
  */
 package be.fedict.eidviewer.gui;
+
 import be.fedict.eid.applet.service.Identity;
 import java.text.DateFormat;
 import java.util.Locale;
@@ -17,45 +18,59 @@ import java.util.ResourceBundle;
  */
 public class CardPanel extends javax.swing.JPanel implements Observer
 {
-    private ResourceBundle bundle;
-    private static final String UNKNOWN_VALUE_TEXT="";
 
-    private DateFormat      mDateFormat;
+    private static final String UNKNOWN_VALUE_TEXT = "";
+    private ResourceBundle bundle;
+    private DateFormat dateFormat;
+    private EidController eidController;
 
     public CardPanel()
     {
-        bundle=ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/CardPanel");
+        bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/CardPanel");
+        dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
         initComponents();
-        mDateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
+    }
 
+    public CardPanel setEidController(EidController eidController)
+    {
+        this.eidController = eidController;
+        return this;
     }
 
     public void update(Observable o, Object o1)
     {
-        EidController controller=(EidController)o;
+        if (eidController == null)
+            return;
 
-        if(controller.getState()==EidController.STATE.EID_PRESENT)
+        if (eidController.getState() == EidController.STATE.EID_PRESENT)
         {
-            if(controller.hasIdentity())
-               fillCardInfo(controller.getIdentity(),false);
+            if(eidController.hasIdentity())
+            {
+                fillCardInfo(eidController.getIdentity(), false);
+            }
             else
-               fillCardInfo(null,true);
+            {
+                fillCardInfo(null, true);
+            }
         }
         else
         {
-            fillCardInfo(null,false);
+            fillCardInfo(null, false);
         }
+
+        changePinButton.setEnabled(eidController.isReadyForCommand());
     }
 
     private void fillCardInfo(final Identity identity, final boolean loading)
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
+
             public void run()
             {
                 cardInfoBusyIcon.setVisible(loading);
-                if(identity!=null)
-                {  
+                if (identity != null)
+                {
                     cardNumber.setText(identity.getCardNumber());
                     cardNumber.setEnabled(true);
                     cardNumberLabel.setEnabled(true);
@@ -68,37 +83,37 @@ public class CardPanel extends javax.swing.JPanel implements Observer
                     chipNumber.setEnabled(true);
                     chipNumberLabel.setEnabled(true);
 
-                    validFrom.setText(mDateFormat.format(identity.getCardValidityDateBegin().getTime()));
+                    validFrom.setText(dateFormat.format(identity.getCardValidityDateBegin().getTime()));
                     validFrom.setEnabled(true);
                     validFromLabel.setEnabled(true);
 
-                    validUntil.setText(mDateFormat.format(identity.getCardValidityDateEnd().getTime()));
+                    validUntil.setText(dateFormat.format(identity.getCardValidityDateEnd().getTime()));
                     validUntil.setEnabled(true);
                     validUntilLabel.setEnabled(true);
                 }
                 else
                 {
-                    cardNumber.setText          (UNKNOWN_VALUE_TEXT);
+                    cardNumber.setText(UNKNOWN_VALUE_TEXT);
                     cardNumber.setEnabled(false);
                     cardNumberLabel.setEnabled(false);
 
-                    placeOfIssue.setText        (UNKNOWN_VALUE_TEXT);
+                    placeOfIssue.setText(UNKNOWN_VALUE_TEXT);
                     placeOfIssue.setEnabled(false);
                     placeOfIssueLabel.setEnabled(false);
 
-                    chipNumber.setText          (UNKNOWN_VALUE_TEXT);
+                    chipNumber.setText(UNKNOWN_VALUE_TEXT);
                     chipNumber.setEnabled(false);
                     chipNumberLabel.setEnabled(false);
 
-                    validFrom.setText           (UNKNOWN_VALUE_TEXT);
+                    validFrom.setText(UNKNOWN_VALUE_TEXT);
                     validFrom.setEnabled(false);
                     validFromLabel.setEnabled(false);
 
-                    validUntil.setText          (UNKNOWN_VALUE_TEXT);
+                    validUntil.setText(UNKNOWN_VALUE_TEXT);
                     validUntil.setEnabled(false);
                     validUntilLabel.setEnabled(false);
                 }
-            } 
+            }
         });
     }
 
@@ -124,6 +139,8 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         spacer = new javax.swing.JLabel();
         validUntilLabel = new javax.swing.JLabel();
         validFrom = new javax.swing.JLabel();
+        changePinButton = new javax.swing.JButton();
+        spacer1 = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
         setLayout(new java.awt.GridBagLayout());
@@ -219,7 +236,7 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         spacer.setPreferredSize(new java.awt.Dimension(16, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         add(spacer, gridBagConstraints);
 
@@ -241,20 +258,53 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(validFrom, gridBagConstraints);
+
+        changePinButton.setText(bundle.getString("changePinButton")); // NOI18N
+        changePinButton.setEnabled(false);
+        changePinButton.setName("changePinButton"); // NOI18N
+        changePinButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePinButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        add(changePinButton, gridBagConstraints);
+
+        spacer1.setEnabled(false);
+        spacer1.setMaximumSize(new java.awt.Dimension(16, 16));
+        spacer1.setMinimumSize(new java.awt.Dimension(16, 16));
+        spacer1.setName("spacer1"); // NOI18N
+        spacer1.setPreferredSize(new java.awt.Dimension(16, 16));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        add(spacer1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void changePinButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_changePinButtonActionPerformed
+    {//GEN-HEADEREND:event_changePinButtonActionPerformed
+        eidController.changePin();
+    }//GEN-LAST:event_changePinButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cardInfoBusyIcon;
     private javax.swing.JLabel cardNumber;
     private javax.swing.JLabel cardNumberLabel;
+    private javax.swing.JButton changePinButton;
     private javax.swing.JLabel chipNumber;
     private javax.swing.JLabel chipNumberLabel;
     private javax.swing.JLabel placeOfIssue;
     private javax.swing.JLabel placeOfIssueLabel;
     private javax.swing.JLabel spacer;
+    private javax.swing.JLabel spacer1;
     private javax.swing.JLabel validFrom;
     private javax.swing.JLabel validFromLabel;
     private javax.swing.JLabel validUntil;
     private javax.swing.JLabel validUntilLabel;
     // End of variables declaration//GEN-END:variables
 }
-
