@@ -1,0 +1,59 @@
+IMPORTANT -- READ CAREFULLY BEFORE USING THIS SOFTWARE: Do not install, download or use the eID Toolkit software until you have read and accepted this Agreement (including its Exhibit). By clicking on the "Accept" button, installing, downloading or otherwise using the eID Toolkit you agree to to be bound by the terms of this Agreement (including its Exhibit). If you do not agree to the terms of this Agreement (and/or its Exhibit), click on the "cancel" button and/or do not install the eID Toolkit software.
+
+eID Toolkit Software License
+
+Whereas this eID Toolkit software is released in a final version;
+
+Whereas this eID Toolkit is being provided by Fedict for no fee and for wide use by any third party under the terms and conditions of this Agreement;
+
+Whereas this Agreement refers to an open-source library, being itself based on open-source software, the terms and conditions of which are included in the Exhibit, which need to be complied with by any party using, reproducing, copying, modifying, displaying and distributing the eID Toolkit;
+
+Whereas this Agreement does not take away your freedom to share the eID Toolkit and change it in order to enable its widest possible roll-out to other potential users, provided that such use in relation to the eID Toolkit complies with the terms and conditions set out in this Agreement (including its Exhibit).
+
+
+Article 1: Grant of license
+
+The terms of this License Agreement (“License Agreement”) between you, the licensee, and the Belgian Federal Government (“Fedict"), the licensor, allow you, subject to the terms and limits set forth in this License Agreement and its Exhibit (collectively "Agreement"), to receive from Fedict a world-wide, royalty-free, non-exclusive, perpetual and transferable right of using, reproducing, copying, modifying, displaying and distributing the software set out in the Exhibit ("eID Toolkit ").
+
+
+Article 2: Warranties of Licensor and Disclaimers
+
+2.1. Since the eID Toolkit has not specifically been created and tailored to address, and has not been based on, your specific needs, Fedict does not warrant that the eID Toolkit will meet your specific requirements or that the operation of the eID Toolkit will operate in the specific combinations which you may select for use. As no software is error-free, Fedict cannot guarantee that the eID Toolkit will operate without interruption or be error free. 
+
+2.2. Without prejudice to the above paragraph, this eID Toolkit is provided by Fedict "AS IS" and any expressed or implied warranties other than those laid down in provision 2.1, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. 
+
+2.3 This Agreement does not entitle you to receive any maintenance, support (be it telephone, fax or email) or any other assistance with respect to the eID Toolkit or with respect to any alteration made on the eID Toolkit in any form whatsoever, including, but not limited to additions, upgrades, improvements to the substance and structure of the software ("Modifications").
+
+Article 3: Licensee obligations
+
+3.1. Any use, including, but not limited to, reproduction, copy, modification, display and distribution, is subject to compliance with the terms of this Agreement. You warrant that you will comply with the terms of this Agreement including the licenses governing the libraries or codes developed (and protected by intellectual property rights as the case may be) by third parties, which have been used wholly or in part for the development of the eID Toolkit, being embedded in the eID application, linked to, being integrated into or compiled with other libraries and codes to form the eID Toolkit ("Third-Party Work").
+
+3.2. You may not copy, modify, sublicense, or distribute the eID Toolkit otherwise than as expressly provided under this Agreement. Any attempt otherwise to copy, modify, sublicense or distribute the eID Toolkit is void, and will automatically terminate your rights under this Agreement.
+
+3.3. Redistributions in source and binary forms, with our without modification, must reproduce this Agreement including the licenses governing the libraries or codes developed by third parties, which have been used wholly or in part for the development of the eID Toolkit.
+
+3.4. The name of Fedict may not be used to endorse or promote products derived from this eID Toolkit without specific prior written permission.
+
+3.5. Third parties who have received copies, or rights, from you under this Agreement will not have their licenses terminated if you infringe the terms of this Agreement, so long as such parties remain in full compliance with these terms. 
+
+Article 4: Liability
+
+4.1. Under this Agreement, Fedict shall under no circumstances, except for fraud or wilful misconduct, be liable for any indirect, special, incidental or consequential damages, or for any loss of profits, loss of data, loss of savings or business opportunity, trading losses, staff costs or costs of staff turnover, computer failure or malfunction, IT system break-down, business interruption or other technical or operational damage of any dimension whatever, or other indirect, consequential or punitive damages arising from or in connection with the use of the eID Toolkit or of any modified or derivative work, or for any other commercial damages or losses arising from the use of it. 
+
+4.2. Fedict shall not be liable to indemnify you for any claims of intellectual property right infringement, including contributory infringement or inducement to infringe, of any intellectual property claimed in the eID Toolkit by the authors of the Third-Party Works as identified in the special notices in the Exhibit. You agree to indemnify, defend and hold harmless Fedict against any and all claims, demands, penalties, proceedings, losses, liabilities, damages of whatsoever nature, costs, fees and expenses of any kind relating to in any way directly or indirectly out of Modifications and/or the use of the eID Toolkit alone or in combination with other devices, products, software, services and/or materials, provided that Fedict notifies you in writing of the claim and allows you to control and reasonably cooperates with you in the defense of the claim and any related settlement negotiations.  
+
+4.3. Fedict shall not be responsible for (i) the consequences of modifying the eID Toolkit, integrating the eID Toolkit in proprietary products, or using the eID Toolkit in combination with other devices, products, software, services and/or materials or (ii) determining whether you require a license to or additonal rights from any of the Third Party Works, obtaining any such license on its behalf, or paying any fees relating to any such licenses, to the extent that such Third Party Works are claimed to be open source products.
+
+Article 5: Termination
+
+5.1 The Agreement and all licenses granted by the Licensor hereunder shall automatically terminate by law if you breach this Agreement. 
+
+5.2 Upon termination of the Agreement, you shall cease all use of the eID Toolkit and shall destroy all copies of the eID Toolkit within your possession or control.
+
+Article 6: General
+
+6.1 If any term or provision of this Agreement is determined to be illegal or unenforceable, such term or provision shall be deemed stricken, and all other terms and provisions shall remain in full force and effect. Each such provision shall be modified by the parties to the extent necessary to make it valid, legal and enforceable whilst preserving the intent of and balance between the parties. 
+
+6.2 This Agreement constitutes the entire understanding and agreement with respect to the eID Toolkit and supersedes all prior oral and written communications.
+
+6.3 This Agreement shall be governed by the laws of Belgium. Any dispute that cannot be settled amicably shall be subject to the courts of Brussels. 
