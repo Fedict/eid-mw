@@ -27,6 +27,7 @@ import be.fedict.eid.applet.View;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.eidviewer.lib.EidFactory;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -38,6 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -50,29 +52,30 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
+
 /**
  *
  * @author frank
  */
 public class BelgianEidViewer extends javax.swing.JFrame implements View, Observer
 {
+
     private ResourceBundle bundle;
     private static final String EXTENSION_PNG = ".png";
     private static final String ICONS = "resources/icons/";
-            
-    private Messages                                coreMessages;
-    private Eid                                     eid;
-    private EidController                           eidController;
+    private Messages coreMessages;
+    private Eid eid;
+    private EidController eidController;
     private EnumMap<EidController.STATE, ImageIcon> cardStatusIcons;
-    private EnumMap<EidController.STATE, String>    cardStatusTexts;
+    private EnumMap<EidController.STATE, String> cardStatusTexts;
     private EnumMap<EidController.ACTIVITY, String> activityTexts;
-    private IdentityPanel                           identityPanel;
-    private CardPanel                               cardPanel;
+    private IdentityPanel identityPanel;
+    private CardPanel cardPanel;
 
     public BelgianEidViewer()
     {
-        Locale.setDefault(new Locale("nl","BE"));
-        bundle=ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/BelgianEidViewer");
+        Locale.setDefault(new Locale("nl", "BE"));
+        bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/BelgianEidViewer");
         coreMessages = new Messages(Locale.getDefault());
         initComponents();
         initPanels();
@@ -104,13 +107,17 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         EidController controller = (EidController) o;
 
         System.err.println("STATE [" + controller.getState() + "]");
-        
+
         statusIcon.setIcon(cardStatusIcons.get(controller.getState()));
 
-        if(controller.getState()==EidController.STATE.EID_PRESENT)
+        if (controller.getState() == EidController.STATE.EID_PRESENT)
+        {
             statusText.setText(activityTexts.get(controller.getActivity()));
+        }
         else
+        {
             statusText.setText(cardStatusTexts.get(controller.getState()));
+        }
     }
 
     /** This method is called from within the constructor to
@@ -166,7 +173,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         fileMenu.add(jMenuItem1);
 
         fileMenuQuitItem.setAction(actionMap.get("quit")); // NOI18N
-        fileMenuQuitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
         fileMenuQuitItem.setText(bundle.getString("fileMenuQuitItem")); // NOI18N
         fileMenuQuitItem.setName("fileMenuQuitItem"); // NOI18N
         fileMenu.add(fileMenuQuitItem);
@@ -254,7 +260,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     JMenu fileMenu;
     JMenuItem fileMenuQuitItem;
@@ -266,12 +271,11 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     JTabbedPane tabPanel;
     // End of variables declaration//GEN-END:variables
 
-
     private void initPanels()
     {
-        ResourceBundle res  =java.util.ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/BelgianEidViewer");
-        identityPanel      = new IdentityPanel();
-        cardPanel          = new CardPanel();
+        ResourceBundle res = java.util.ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/BelgianEidViewer");
+        identityPanel = new IdentityPanel();
+        cardPanel = new CardPanel();
         tabPanel.add(identityPanel, res.getString("IDENTITY"));
         tabPanel.add(cardPanel, res.getString("CARD"));
 
@@ -304,7 +308,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         return new ImageIcon(Toolkit.getDefaultToolkit().getImage(BelgianEidViewer.class.getResource(ICONS + name)));
     }
 
-        /**
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[])
@@ -322,30 +326,27 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     @Action
     public void print()
     {
-         PrinterJob job = PrinterJob.getPrinterJob();
-         IDPrintout printout=new IDPrintout();
-                    printout.setIdentity(eidController.getIdentity());
-                    printout.setAddress(eidController.getAddress());
-                    printout.setPhoto(eidController.getPhoto());
+        PrinterJob job = PrinterJob.getPrinterJob();
+        IDPrintout printout = new IDPrintout();
+        printout.setIdentity(eidController.getIdentity());
+        printout.setAddress(eidController.getAddress());
+        printout.setPhoto(eidController.getPhoto());
 
-        JFrame frame=new JFrame("print preview");
-               frame.add(printout);
-               frame.show();
-
-         job.setPrintable(printout);
-                 
-         boolean ok = job.printDialog();
-         if (ok)
-         {
-             try
-             {
-                  job.print();
-             }
-             catch (PrinterException pex)
-             {
+        job.setPrintable(printout);
+        boolean ok = job.printDialog();
+        //job.setJobName(eidController.getIdentity().getNationalNumber());
+        
+        if (ok)
+        {
+            try
+            {
+                job.print();
+            }
+            catch (PrinterException pex)
+            {
                 Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, pex);
-             }
-         }
+            }
+        } 
     }
 
     @Action

@@ -80,6 +80,9 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                 identityBusyIcon.setVisible(loading);
                 if(identity!=null)
                 {
+                    type.setText(bundle.getString("type_" + identity.getDocumentType().toString()));
+                    type.setEnabled(true);
+
                     name.setText(identity.getName());
                     name.setEnabled(true);
                     nameLabel.setEnabled(true);
@@ -138,6 +141,9 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                 }
                 else
                 {
+                    type.setText(UNKNOWN_VALUE_TEXT);
+                    type.setEnabled(false);
+                    
                     name.setText(UNKNOWN_VALUE_TEXT);
                     name.setEnabled(false);
                     nameLabel.setEnabled(false);
@@ -242,7 +248,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         java.awt.GridBagConstraints gridBagConstraints;
 
         photo = new javax.swing.JLabel();
-        nameLabel = new javax.swing.JLabel();
+        type = new javax.swing.JLabel();
         givenNamesLabel = new javax.swing.JLabel();
         placeOfBirthLabel = new javax.swing.JLabel();
         dateOfBirthLabel = new javax.swing.JLabel();
@@ -270,6 +276,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         addressBusyIcon = new javax.swing.JLabel();
         identityBusyIcon = new javax.swing.JLabel();
         spacer1 = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
+        idAddressSeparator1 = new javax.swing.JSeparator();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
         setLayout(new java.awt.GridBagLayout());
@@ -283,27 +291,30 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         photo.setPreferredSize(new java.awt.Dimension(140, 200));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridheight = 13;
         gridBagConstraints.insets = new java.awt.Insets(23, 8, 23, 29);
         add(photo, gridBagConstraints);
 
-        nameLabel.setText(bundle.getString("nameLabel")); // NOI18N
-        nameLabel.setEnabled(false);
-        nameLabel.setName("nameLabel"); // NOI18N
+        type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        type.setText(bundle.getString("nameLabel")); // NOI18N
+        type.setEnabled(false);
+        type.setName("type"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        add(nameLabel, gridBagConstraints);
+        add(type, gridBagConstraints);
 
         givenNamesLabel.setText(bundle.getString("givenNamesLabel")); // NOI18N
         givenNamesLabel.setEnabled(false);
         givenNamesLabel.setName("givenNamesLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(givenNamesLabel, gridBagConstraints);
@@ -313,7 +324,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         placeOfBirthLabel.setName("placeOfBirthLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(placeOfBirthLabel, gridBagConstraints);
@@ -323,7 +334,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         dateOfBirthLabel.setName("dateOfBirthLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(dateOfBirthLabel, gridBagConstraints);
@@ -333,7 +344,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         nationalityLabel.setName("nationalityLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(nationalityLabel, gridBagConstraints);
@@ -343,7 +354,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         nationalNumberLabel.setName("nationalNumberLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(nationalNumberLabel, gridBagConstraints);
@@ -353,7 +364,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         sexLabel.setName("sexLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(sexLabel, gridBagConstraints);
@@ -363,7 +374,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         titleLabel.setName("titleLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(titleLabel, gridBagConstraints);
@@ -373,7 +384,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         specialStatusLabel.setName("specialStatusLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(specialStatusLabel, gridBagConstraints);
@@ -383,7 +394,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         streetLabel.setName("streetLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(streetLabel, gridBagConstraints);
@@ -393,7 +404,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         postalCodeLabel.setName("postalCodeLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(postalCodeLabel, gridBagConstraints);
@@ -403,7 +414,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         municipalityLabel.setName("municipalityLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(municipalityLabel, gridBagConstraints);
@@ -411,9 +422,9 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         idAddressSeparator.setEnabled(false);
         idAddressSeparator.setName("idAddressSeparator"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
         add(idAddressSeparator, gridBagConstraints);
@@ -422,7 +433,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         name.setName("name"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(name, gridBagConstraints);
@@ -431,7 +442,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         givenNames.setName("givenNames"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(givenNames, gridBagConstraints);
@@ -440,7 +451,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         placeOfBirth.setName("placeOfBirth"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(placeOfBirth, gridBagConstraints);
@@ -449,7 +460,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         dateOfBirth.setName("dateOfBirth"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(dateOfBirth, gridBagConstraints);
@@ -458,7 +469,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         sex.setName("sex"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(sex, gridBagConstraints);
@@ -467,7 +478,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         nationalNumber.setName("nationalNumber"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(nationalNumber, gridBagConstraints);
@@ -476,7 +487,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         nationality.setName("nationality"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(nationality, gridBagConstraints);
@@ -485,7 +496,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         title.setName("title"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(title, gridBagConstraints);
@@ -494,7 +505,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         specialStatus.setName("specialStatus"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(specialStatus, gridBagConstraints);
@@ -503,16 +514,17 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         street.setName("street"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(street, gridBagConstraints);
 
+        postalCode.setText("---");
         postalCode.setEnabled(false);
         postalCode.setName("postalCode"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(postalCode, gridBagConstraints);
@@ -521,7 +533,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         municipality.setName("municipality"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(municipality, gridBagConstraints);
@@ -530,7 +542,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         addressBusyIcon.setName("identityBusyIcon"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         add(addressBusyIcon, gridBagConstraints);
 
@@ -552,6 +564,26 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         add(spacer1, gridBagConstraints);
+
+        nameLabel.setText(bundle.getString("nameLabel")); // NOI18N
+        nameLabel.setEnabled(false);
+        nameLabel.setName("nameLabel"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        add(nameLabel, gridBagConstraints);
+
+        idAddressSeparator1.setEnabled(false);
+        idAddressSeparator1.setName("idAddressSeparator1"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
+        add(idAddressSeparator1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressBusyIcon;
@@ -560,6 +592,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     private javax.swing.JLabel givenNames;
     private javax.swing.JLabel givenNamesLabel;
     private javax.swing.JSeparator idAddressSeparator;
+    private javax.swing.JSeparator idAddressSeparator1;
     private javax.swing.JLabel identityBusyIcon;
     private javax.swing.JLabel municipality;
     private javax.swing.JLabel municipalityLabel;
@@ -583,6 +616,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     private javax.swing.JLabel streetLabel;
     private javax.swing.JLabel title;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel type;
     // End of variables declaration//GEN-END:variables
 
     private void initIcons()
