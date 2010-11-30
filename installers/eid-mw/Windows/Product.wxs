@@ -86,11 +86,11 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
 
-      <!--      <Directory Id="ProgramMenuFolder" Name="Menu">
+      <Directory Id="ProgramMenuFolder" Name="Menu">
         <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID">
           <Directory Id="ApplicationProgramsFolderUtilities" Name="Utilities"/>
         </Directory>
-      </Directory>-->
+      </Directory>
 
       <Directory Id="ProgramFilesFolder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
@@ -346,10 +346,10 @@
         <Environment Id="CLASSPATH" Action="set" Part="last" Permanent="no" System="yes" Name="CLASSPATH" Value="[ProgramFilesFolder]Belgium Identity Card"/>
       </Component>
 
-<!--      <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}">
-        <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoutlooksnc.exe" />
+      <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}">
+        <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\Outlook_snc\beidoutlooksnc.exe" />
       </Component>
--->
+
       <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="yes">
         <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\misc\licenses_files\English\License_en.rtf" />
         <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\Dutch\License_nl.rtf" />
@@ -493,17 +493,17 @@
       </Component>
     </DirectoryRef>
 -->
-    <!--    <DirectoryRef Id="ApplicationProgramsFolderUtilities">
+    <DirectoryRef Id="ApplicationProgramsFolderUtilities">
       <Component Id="OutlookShortcut" Guid="{813C0984-0401-4604-9D7F-E13BDD28FBD7}">
         <Shortcut Id="OutlookStartMenuShortcut"
           Name="MS Outlook registry configuration"
-          Description="!(loc.OutlookDescr)"
+          Description="!(loc.OutlooksncDescr)"
           Target="[APPLICATIONROOTFOLDER]beidoutlooksnc.exe"
           WorkingDirectory="APPLICATIONROOTFOLDER"/>
         <RemoveFolder Id="ApplicationProgramsFolderUtilities" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="OutlookShortcut" Type="integer" Value="1" KeyPath="yes" />
       </Component>
-    </DirectoryRef>-->
+    </DirectoryRef>
 
 
     <Feature Id="BeidRuntime"
@@ -542,6 +542,9 @@
       <ComponentRef Id="XPIPlatformNTDefaults"/>
       <ComponentRef Id="XPIPlatformNTDefaultsPreferences"/>
       <ComponentRef Id="XPIskin"/>
+      <ComponentRef Id="OutlookTool" />
+      <!-- Shortcuts -->
+      <ComponentRef Id ="OutlookShortcut"/>
 
       <!-- Registry -->
       <ComponentRef Id="RegistryBeidSystem"/>
