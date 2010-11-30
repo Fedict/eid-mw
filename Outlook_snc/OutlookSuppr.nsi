@@ -2,9 +2,9 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Outlook Suppress NameChecks"
-!define PRODUCT_VERSION "1.2"
-!define PRODUCT_PUBLISHER "Zetes"
-!define PRODUCT_WEB_SITE "http://www.zetes.be"
+!define PRODUCT_VERSION "1.3"
+!define PRODUCT_PUBLISHER "Fedict"
+!define PRODUCT_WEB_SITE "http://www.fedict.belgium.be"
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -55,6 +55,7 @@ Section "MainSection" SEC01
                 Goto +2
                 WriteRegDWORD HKCU "Software\Microsoft\Office\$1.0\Outlook\Security" "SupressNameChecks" 1
         ${Else}
+                WriteRegDWORD HKCU "Software\Microsoft\Office\14.0\Outlook\Security" "SupressNameChecks" 1
                 WriteRegDWORD HKCU "Software\Microsoft\Office\12.0\Outlook\Security" "SupressNameChecks" 1
                 WriteRegDWORD HKCU "Software\Microsoft\Office\11.0\Outlook\Security" "SupressNameChecks" 1
                 WriteRegDWORD HKCU "Software\Microsoft\Office\10.0\Outlook\Security" "SupressNameChecks" 1
