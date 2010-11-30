@@ -1,22 +1,26 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * eID Middleware Project.
+ * Copyright (C) 2010 FedICT.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License version
+ * 3.0 as published by the Free Software Foundation.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, see
+ * http://www.gnu.org/licenses/.
  */
 
-/*
- * BelgianEidViewer.java
- *
- * Created on Nov 18, 2010, 2:25:04 PM
- */
 package be.fedict.eidviewer.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
 
 import be.fedict.eid.applet.DiagnosticTests;
@@ -27,7 +31,6 @@ import be.fedict.eid.applet.View;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.eidviewer.lib.EidFactory;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -39,7 +42,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -47,7 +49,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import org.jdesktop.application.Action;

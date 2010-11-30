@@ -16,31 +16,15 @@
  * http://www.gnu.org/licenses/.
  */
 
-package be.fedict.eidviewer.lib;
+package be.fedict.eidviewer.gui;
+
+import java.awt.geom.Dimension2D;
 
 /**
  *
  * @author frank
  */
-public class EidException extends RuntimeException
+public interface SpaceRequiredCalculator
 {
-    public EidException()
-    {
-        super();
-    }
-
-    public EidException(String message)
-    {
-        super(message);
-    }
-
-    public EidException(String message, Throwable cause)
-    {
-        super(message,cause);
-    }
-
-    public EidException(Throwable cause)
-    {
-        super(cause);
-    }
+    Dimension2D getSpaceRequired();
 }
