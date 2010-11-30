@@ -1,0 +1,1 @@
+nsis can be downloaded from http://sourceforge.net/projects/nsis/files/NSIS%202/2.46/nsis-2.46-setup.exe/download
