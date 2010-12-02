@@ -324,7 +324,7 @@
       <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" >
         <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
         <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
-        <File Id="beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\vs_2005\binaries\win32_release\beidmdrv.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv.dll" KeyPath="no" DiskId="1" />
 <!-- re-enable this       <difx:Driver ForceInstall="no" PlugAndPlayPrompt="no" DeleteFiles="yes"  /> -->
       </Component>
       <!-- Certificate Propagation Service is a standard Windows service available in from Windows Vista on. In order to use the minidriver
@@ -363,22 +363,22 @@
     <DirectoryRef Id="SystemFolder">
 
       <Component Id="Runtime35" Guid="{13BD63DB-BFCC-4971-BB31-F9AABDFDEBF8}" SharedDllRefCount="yes">
-        <File Id="beidcardlayer.dll" Name="beidcardlayer.dll" KeyPath="no" Source="..\..\..\vs_2005\binaries\win32_release\beidcardlayer.dll" />
-        <File Id="beidcommon.dll" Name="beidcommon.dll" KeyPath="no" Source="..\..\..\vs_2005\binaries\win32_release\beidcommon.dll" />
-        <File Id="beidDlgsWin32.dll" Name="beidDlgsWin32.dll" KeyPath="no" Source="..\..\..\vs_2005\binaries\win32_release\beidDlgsWin32.dll" />
+        <File Id="beidcardlayer.dll" Name="beidcardlayer.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beidcardlayer.dll" />
+        <File Id="beidcommon.dll" Name="beidcommon.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beidcommon.dll" />
+        <File Id="beidDlgsWin32.dll" Name="beidDlgsWin32.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beidDlgsWin32.dll" />
       </Component>
 
       <Component Id="beidmdrvsystem32" Guid="a8259480-e408-11de-8a39-0800200c9a66" Permanent="no">
-        <File Id="system32_beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\vs_2005\binaries\win32_release\beidmdrv.dll" KeyPath="yes" DiskId="1" />
+        <File Id="system32_beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv.dll" KeyPath="yes" DiskId="1" />
       </Component>
 
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes">
-        <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\vs_2005\binaries\win32_release\beidCSP.dll" />
-        <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\vs_2005\binaries\win32_release\beidCSPlib.dll" />
+        <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidCSP.dll" />
+        <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beidCSPlib.dll" />
       </Component>
 
       <Component Id="pkcs11" Guid="{DC6A9288-34CF-4f56-B17B-35F40EC09B75}" SharedDllRefCount="yes">
-        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2005\binaries\win32_release\beidpkcs11.dll" />
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidpkcs11.dll" />
       </Component>
 
     </DirectoryRef>
