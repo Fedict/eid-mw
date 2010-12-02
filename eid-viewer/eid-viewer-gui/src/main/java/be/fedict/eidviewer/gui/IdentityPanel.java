@@ -21,14 +21,10 @@ package be.fedict.eidviewer.gui;
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Gender;
 import be.fedict.eid.applet.service.Identity;
-import be.fedict.eid.applet.service.SpecialStatus;
+import be.fedict.eidviewer.gui.helper.IdFormatHelper;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
@@ -43,7 +39,6 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
 {
 
     private ResourceBundle      bundle;
-    private static final String UNKNOWN_VALUE_TEXT = "-";
     private DateFormat          dateFormat;
     private ImageIcon           largeBusyIcon;
 
@@ -133,12 +128,12 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                     }
                     else
                     {
-                        title.setText(UNKNOWN_VALUE_TEXT);
+                        title.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                         title.setEnabled(false);
                         titleLabel.setEnabled(false);
                     }
 
-                    String specialStatusStr=getSpecialStatusString(identity.getSpecialStatus());
+                    String specialStatusStr=IdFormatHelper.getSpecialStatusString(bundle,identity.getSpecialStatus());
                     if(!specialStatusStr.isEmpty())
                     {
                         specialStatus.setText(specialStatusStr);
@@ -147,49 +142,49 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                     }
                     else
                     {
-                        specialStatus.setText(UNKNOWN_VALUE_TEXT);
+                        specialStatus.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                         specialStatus.setEnabled(false);
                         specialStatusLabel.setEnabled(false);
                     }
                 }
                 else
                 {
-                    type.setText(UNKNOWN_VALUE_TEXT);
+                    type.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     type.setEnabled(false);
                     
-                    name.setText(UNKNOWN_VALUE_TEXT);
+                    name.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     name.setEnabled(false);
                     nameLabel.setEnabled(false);
 
-                    givenNames.setText(UNKNOWN_VALUE_TEXT);
+                    givenNames.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     givenNames.setEnabled(false);
                     givenNamesLabel.setEnabled(false);
 
-                    placeOfBirth.setText(UNKNOWN_VALUE_TEXT);
+                    placeOfBirth.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     placeOfBirth.setEnabled(false);
                     placeOfBirthLabel.setEnabled(false);
 
-                    dateOfBirth.setText(UNKNOWN_VALUE_TEXT);
+                    dateOfBirth.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     dateOfBirth.setEnabled(false);
                     dateOfBirthLabel.setEnabled(false);
 
-                    sex.setText(UNKNOWN_VALUE_TEXT);
+                    sex.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     sex.setEnabled(false);
                     sexLabel.setEnabled(false);
 
-                    nationality.setText(UNKNOWN_VALUE_TEXT);
+                    nationality.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     nationality.setEnabled(false);
                     nationalityLabel.setEnabled(false);
 
-                    nationalNumber.setText(UNKNOWN_VALUE_TEXT);
+                    nationalNumber.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     nationalNumber.setEnabled(false);
                     nationalNumberLabel.setEnabled(false);
 
-                    title.setText(UNKNOWN_VALUE_TEXT);
+                    title.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     title.setEnabled(false);
                     titleLabel.setEnabled(false);
 
-                    specialStatus.setText(UNKNOWN_VALUE_TEXT);
+                    specialStatus.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     specialStatus.setEnabled(false);
                     specialStatusLabel.setEnabled(false);
                 }
@@ -220,15 +215,15 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                 }
                 else
                 {
-                    street.setText(UNKNOWN_VALUE_TEXT);
+                    street.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     street.setEnabled(false);
                     streetLabel.setEnabled(false);
 
-                    postalCode.setText(UNKNOWN_VALUE_TEXT);
+                    postalCode.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     postalCode.setEnabled(false);
                     postalCodeLabel.setEnabled(false);
 
-                    municipality.setText(UNKNOWN_VALUE_TEXT);
+                    municipality.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     municipality.setEnabled(false);
                     municipalityLabel.setEnabled(false);
                 }
@@ -635,33 +630,5 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     private void initIcons()
     {
         largeBusyIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(BelgianEidViewer.class.getResource("resources/busyicons/busy_anim_large.gif")));
-    }
-
-    private String join(Collection s, String delimiter)
-    {
-        StringBuilder buffer = new StringBuilder();
-        Iterator iter = s.iterator();
-        if (iter.hasNext())
-        {
-            buffer.append(iter.next());
-            while (iter.hasNext())
-            {
-                buffer.append(delimiter);
-                buffer.append(iter.next());
-            }
-        }
-        return buffer.toString();
-    }
-
-    private String getSpecialStatusString(SpecialStatus specialStatus)
-    {
-        List specials = new ArrayList();
-        if(specialStatus.hasWhiteCane())
-            specials.add(bundle.getString("special_status_white_cane"));
-        if(specialStatus.hasYellowCane())
-            specials.add(bundle.getString("special_status_yellow_cane"));
-        if(specialStatus.hasExtendedMinority())
-            specials.add(bundle.getString("special_status_extended_minority"));
-        return join(specials, ",");
     }
 }

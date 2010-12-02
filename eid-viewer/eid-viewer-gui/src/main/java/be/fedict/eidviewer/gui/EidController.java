@@ -22,9 +22,11 @@ import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
 import be.fedict.eidviewer.lib.Eid;
 import java.awt.Image;
+import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.security.cert.X509Certificate;
 
 /**
  *
@@ -40,6 +42,8 @@ public class EidController extends Observable implements Runnable
     private Identity mIdentity;
     private Address mAddress;
     private Image mPhoto;
+    private List<X509Certificate> mAuthCertChain;
+    private List<X509Certificate> mSignCertChain;
     private ACTION mRunningAction;
 
     public EidController(Eid eid)
@@ -70,6 +74,8 @@ public class EidController extends Observable implements Runnable
         mIdentity = null;
         mAddress = null;
         mPhoto = null;
+        mAuthCertChain = null;
+        mSignCertChain = null;
     }
 
     public static enum STATE
@@ -93,7 +99,7 @@ public class EidController extends Observable implements Runnable
     public static enum ACTIVITY
     {
 
-        IDLE("activity_idle"), READING_IDENTITY("reading_identity"), READING_ADDRESS("reading_address"), READING_PHOTO("reading_photo");
+        IDLE("activity_idle"), READING_IDENTITY("reading_identity"), READING_ADDRESS("reading_address"), READING_PHOTO("reading_photo"), READING_AUTH_CHAINS("reading_auth_chain"), READING_SIGN_CHAIN("reading_sign_chain");
         private final String state;
 
         private ACTIVITY(String state)
@@ -190,6 +196,14 @@ public class EidController extends Observable implements Runnable
                 mPhoto = mEid.getPhoto();
                 setActivity(ACTIVITY.IDLE);
 
+                setActivity(ACTIVITY.READING_AUTH_CHAINS);
+                mAuthCertChain=mEid.getAuthnCertificateChain();
+                setState();
+
+                setActivity(ACTIVITY.READING_SIGN_CHAIN);
+                mSignCertChain=mEid.getSignCertificateChain();
+                setActivity(ACTIVITY.IDLE);
+
                 while(mEid.isCardStillPresent())
                 {
                     if(mRunningAction == ACTION.CHANGE_PIN)
@@ -200,7 +214,7 @@ public class EidController extends Observable implements Runnable
                     {
                         try
                         {
-                            Thread.sleep(200);
+                            Thread.sleep(1000);
                         }
                         catch (InterruptedException ex1)
                         {
@@ -270,6 +284,26 @@ public class EidController extends Observable implements Runnable
     public boolean hasPhoto()
     {
         return (mPhoto != null);
+    }
+
+    public boolean hasAuthCertChain()
+    {
+        return (mAuthCertChain != null);
+    }
+
+    public List<X509Certificate> getAuthCertChain()
+    {
+        return mAuthCertChain;
+    }
+
+    public boolean hasSignCertChain()
+    {
+        return (mSignCertChain != null);
+    }
+
+    List<X509Certificate> getSignCertChain()
+    {
+        return mSignCertChain;
     }
 
     public EidController changePin()

@@ -68,10 +68,11 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private Eid eid;
     private EidController eidController;
     private EnumMap<EidController.STATE, ImageIcon> cardStatusIcons;
-    private EnumMap<EidController.STATE, String> cardStatusTexts;
+    private EnumMap<EidController.STATE, String>    cardStatusTexts;
     private EnumMap<EidController.ACTIVITY, String> activityTexts;
-    private IdentityPanel identityPanel;
-    private CardPanel cardPanel;
+    private IdentityPanel                           identityPanel;
+    private CertificatesPanel                       certificatesPanel;
+    private CardPanel                               cardPanel;
 
     public BelgianEidViewer()
     {
@@ -92,6 +93,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         cardPanel.setEidController(eidController);
         eidController.addObserver(identityPanel);
         eidController.addObserver(cardPanel);
+        eidController.addObserver(certificatesPanel);
         eidController.addObserver(this);
         eidController.start();
         setVisible(true);
@@ -277,8 +279,10 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         ResourceBundle res = java.util.ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/BelgianEidViewer");
         identityPanel = new IdentityPanel();
         cardPanel = new CardPanel();
+        certificatesPanel = new CertificatesPanel();
         tabPanel.add(identityPanel, res.getString("IDENTITY"));
         tabPanel.add(cardPanel, res.getString("CARD"));
+        tabPanel.add(certificatesPanel, res.getString("CERTIFICATES"));
 
     }
 
@@ -302,6 +306,8 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         activityTexts.put(EidController.ACTIVITY.READING_IDENTITY, bundle.getString(EidController.ACTIVITY.READING_IDENTITY.toString()));
         activityTexts.put(EidController.ACTIVITY.READING_ADDRESS, bundle.getString(EidController.ACTIVITY.READING_ADDRESS.toString()));
         activityTexts.put(EidController.ACTIVITY.READING_PHOTO, bundle.getString(EidController.ACTIVITY.READING_PHOTO.toString()));
+        activityTexts.put(EidController.ACTIVITY.READING_AUTH_CHAINS, bundle.getString(EidController.ACTIVITY.READING_AUTH_CHAINS.toString()));
+        activityTexts.put(EidController.ACTIVITY.READING_SIGN_CHAIN, bundle.getString(EidController.ACTIVITY.READING_SIGN_CHAIN.toString()));
     }
 
     private ImageIcon getIcon(String name)

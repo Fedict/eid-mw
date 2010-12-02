@@ -18,13 +18,12 @@
 
 package be.fedict.eidviewer.gui;
 
+import be.fedict.eidviewer.gui.helper.IdFormatHelper;
 import be.fedict.eid.applet.service.Address;
-import be.fedict.eid.applet.service.Gender;
 import be.fedict.eid.applet.service.Identity;
-import be.fedict.eid.applet.service.SpecialStatus;
+import be.fedict.eidviewer.gui.helper.PrintingUtilities;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -34,8 +33,7 @@ import java.awt.image.BufferedImage;
 import java.awt.print.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -47,25 +45,23 @@ import javax.swing.ImageIcon;
  */
 public class IDPrintout implements Printable
 {
+    private static final int                MINIMAL_FONT_SIZE = 6;
+    private static final int                MAXIMAL_FONT_SIZE = 48;
+    private static final String             ICONS = "resources/icons/";
+    private static final float              SPACE_BETWEEN_ITEMS = 16;
+    private static final String             FONT = "Lucida";
+    private static final IdentityAttribute  SEPARATOR = null;
+    
+    private ResourceBundle  bundle;
+    private DateFormat      dateFormat;
+    private Identity        identity;
+    private Address         address;
+    private BufferedImage   photo, coatOfArms;
 
-    private static final int MINIMAL_FONT_SIZE = 6;
-    private static final int MAXIMAL_FONT_SIZE = 48;
-    private static final String ICONS = "resources/icons/";
-    private static final String UNKNOWN_VALUE_TEXT = "-";
-    private static final float SPACE_BETWEEN_ITEMS = 16;
-    private static final String FONT = "Lucida";
-    private static final IdentityAttribute SEPARATOR = null;
-    private ResourceBundle bundle;
-    private DateFormat dateFormat;
-    private Identity identity;
-    private Address address;
-    private BufferedImage photo, coatOfArms;
-
-    /** Creates new form IDPrintout */
     public IDPrintout()
     {
         bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/IDPrintout");
-        dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
+        dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
         coatOfArms = getImage(bundle.getString("coatOfArms"));
     }
 
@@ -81,78 +77,94 @@ public class IDPrintout implements Printable
 
     public void setPhoto(Image photo)
     {
-        this.photo = getBufferedImage(photo);
+        this.photo = PrintingUtilities.getBufferedImage(photo);
     }
 
     public int print(Graphics graphics, PageFormat pageFormat, int pageNumber) throws PrinterException
     {
+        // we only support printing all in one single page
         if (pageNumber > 0)
             return Printable.NO_SUCH_PAGE;
 
+        // translate graphics2D with origin at top left first imageable location
         Graphics2D graphics2D = (Graphics2D) graphics;
         graphics2D.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
+        // keep imageable width and height as variables for clarity (we use them often)
         float imageableWidth = (float) pageFormat.getImageableWidth();
         float imageableHeight = (float) pageFormat.getImageableHeight();
 
+        // Coat of Arms images are stored at approx 36 DPI, scale 1/2 to get to Java default of 72DPI
         AffineTransform coatOfArmsTransform = new AffineTransform();
         coatOfArmsTransform.scale(0.5, 0.5);
 
+        // photo images are stored at approx 36 DPI, scale 1/2 to get to Java default of 72DPI
         AffineTransform photoTransform = new AffineTransform();
         photoTransform.scale(0.5, 0.5);
         photoTransform.translate((imageableWidth*2)-(photo.getWidth()),0);
 
+        // make sure foreground is black, and draw coat of Arms and photo at the top of the page
+        // using the transforms to scale them to 72DPI.
         graphics2D.setColor(Color.BLACK);
         graphics2D.drawImage(coatOfArms, coatOfArmsTransform, null);
         graphics2D.drawImage(photo, photoTransform, null);
 
+        // calculate some sizes that need to take into account the scaling of the graphics, to avoid dragging
+        // those non-intuitive "/2" further along in the code.
         float headerHeight=coatOfArms.getHeight()/2;
         float coatOfArmsWidth=coatOfArms.getWidth()/2;
         float photoWidth=photo.getWidth()/2;
         float headerSpaceBetweenImages = imageableWidth - (coatOfArmsWidth + photoWidth + (SPACE_BETWEEN_ITEMS * 2));
-        float headerSpaceHeight = (coatOfArms.getHeight() / 2);
 
+        // get localised strings for card type. We'll take a new line every time a ";" is found in the resource
         String[] cardTypeStr = (bundle.getString("type_" + this.identity.getDocumentType().toString())).split(";");
 
-
+        // iterate from MAXIMAL_FONT_SIZE, calculating how much space would be required to fit the card type strings
+        // stop when a font size is found where they all fit the space between the graphics in an orderly manner
         boolean sizeFound = false;
         int fontSize;
-
-        for (fontSize = MAXIMAL_FONT_SIZE; (fontSize >= MINIMAL_FONT_SIZE) && (!sizeFound); fontSize--)  // count down slowly until we find one that fits nicely
+        for(fontSize = MAXIMAL_FONT_SIZE; (fontSize >= MINIMAL_FONT_SIZE) && (!sizeFound); fontSize--)  // count down slowly until we find one that fits nicely
         {
             System.err.println("fontSize=" + fontSize);
             graphics2D.setFont(new Font(FONT, Font.PLAIN, fontSize));
-            sizeFound = (getTotalStringWidth(graphics2D, cardTypeStr) < headerSpaceBetweenImages)
-                        && (getTotalStringHeight(graphics2D, cardTypeStr) < headerHeight);
+            sizeFound = (PrintingUtilities.getTotalStringWidth(graphics2D, cardTypeStr) < headerSpaceBetweenImages)
+                        && (PrintingUtilities.getTotalStringHeight(graphics2D, cardTypeStr) < headerHeight);
         }
 
-        if (sizeFound)
+        // unless with extremely small papers, a size should always have been found.
+        // draw the card type strings, centered, between the images at the top of the page
+        if(sizeFound)
         {
             graphics2D.setFont(new Font(FONT, Font.PLAIN, fontSize + 1));
-            float cardTypeHeight = cardTypeStr.length * getStringHeight(graphics2D);
-            float cardTypeBaseLine = ((headerHeight - cardTypeHeight) / 2) + getAscent(graphics2D);
-            float cardTypeLineHeight = getStringHeight(graphics2D);
+            float cardTypeHeight = cardTypeStr.length * PrintingUtilities.getStringHeight(graphics2D);
+            float cardTypeBaseLine = ((headerHeight - cardTypeHeight) / 2) + PrintingUtilities.getAscent(graphics2D);
+            float cardTypeLineHeight = PrintingUtilities.getStringHeight(graphics2D);
 
             for (int i = 0; i < cardTypeStr.length; i++)
             {
-                float left = (coatOfArmsWidth + SPACE_BETWEEN_ITEMS + (headerSpaceBetweenImages - getStringWidth(graphics2D, cardTypeStr[i])) / 2);
+                float left = (coatOfArmsWidth + SPACE_BETWEEN_ITEMS + (headerSpaceBetweenImages - PrintingUtilities.getStringWidth(graphics2D, cardTypeStr[i])) / 2);
                 float leading = (float) cardTypeLineHeight * i;
                 graphics2D.drawString(cardTypeStr[i], left, cardTypeBaseLine + leading);
             }
         }
-        ArrayList<IdentityAttribute> idAttributes = populateAttributeList();
 
+        // populate idAttributes with all the information from identity and address
+        // as well as date printed and some separators
+        List<IdentityAttribute> idAttributes = populateAttributeList();
 
+        // draw a horizontal line just below the header (images + card type titles)
         graphics2D.drawLine(0, (int) headerHeight, (int) imageableWidth, (int) headerHeight);
 
-
+        // calculate how much space is left between the header and the bottom of the imageable area
         float imageableDataHeight = imageableHeight - headerHeight;
         float totalDataWidth = 0, totalDataHeight = 0;
         float labelWidth, widestLabelWidth = 0;
         float valueWidth, widestValueWidth = 0;
 
+        // iterate from MAXIMAL_FONT_SIZE, calculating how much space would be required to fit the information in idAttributes into
+        // the space between the header and the bottom of the imageable area
+        // stop when a font size is found where it all fits in an orderly manner
         sizeFound = false;
-
         for (fontSize = MAXIMAL_FONT_SIZE; (fontSize >= MINIMAL_FONT_SIZE) && (!sizeFound); fontSize--)  // count down slowly until we find one that fits nicely
         {
             System.err.println("fontSize=" + fontSize);
@@ -166,8 +178,8 @@ public class IDPrintout implements Printable
                 if (attribute == SEPARATOR)
                     continue;
 
-                labelWidth = getStringWidth(graphics2D, attribute.getLabel());
-                valueWidth = getStringWidth(graphics2D, attribute.getValue());
+                labelWidth = PrintingUtilities.getStringWidth(graphics2D, attribute.getLabel());
+                valueWidth = PrintingUtilities.getStringWidth(graphics2D, attribute.getValue());
                 if (labelWidth > widestLabelWidth)
                     widestLabelWidth = labelWidth;
                 if (valueWidth > widestValueWidth)
@@ -175,19 +187,22 @@ public class IDPrintout implements Printable
             }
 
             totalDataWidth = widestLabelWidth + SPACE_BETWEEN_ITEMS + widestValueWidth;
-            totalDataHeight = getStringHeight(graphics2D) * idAttributes.size();
+            totalDataHeight = PrintingUtilities.getStringHeight(graphics2D) * idAttributes.size();
 
             if ((totalDataWidth < imageableWidth) && (totalDataHeight < imageableDataHeight))
                 sizeFound = true;
         }
 
-        if (sizeFound)
+        // unless with extremely small papers, a size should always have been found.
+        // draw the identity, addess and date printed information, in 2 columns, centered inside the
+        // space between the header and the bottom of the imageable area
+        if(sizeFound)
         {
             graphics2D.setFont(new Font(FONT, Font.PLAIN, fontSize));
             float labelsLeft = (imageableWidth - totalDataWidth) / 2;
             float valuesLeft = labelsLeft + widestLabelWidth + SPACE_BETWEEN_ITEMS;
-            float dataTop = headerHeight + (((imageableHeight - headerHeight) - totalDataHeight) / 2);
-            float dataLineHeight = getStringHeight(graphics2D);
+            float dataTop = headerHeight + ((imageableDataHeight-totalDataHeight) / 2);
+            float dataLineHeight = PrintingUtilities.getStringHeight(graphics2D);
             float lineNumber = 0;
 
             for (IdentityAttribute attribute : idAttributes)
@@ -200,7 +215,7 @@ public class IDPrintout implements Printable
                 }
                 else // separator
                 {
-                    int y = (int) (((dataTop + (lineNumber * dataLineHeight) + (dataLineHeight / 2))) - getAscent(graphics2D));
+                    int y = (int) (((dataTop + (lineNumber * dataLineHeight) + (dataLineHeight / 2))) - PrintingUtilities.getAscent(graphics2D));
                     graphics2D.setColor(Color.BLACK);
                     graphics2D.drawLine((int) labelsLeft, y, (int) totalDataWidth, y);
                 }
@@ -208,138 +223,57 @@ public class IDPrintout implements Printable
             }
         }
 
-        graphics2D.setColor(Color.BLACK);
+        // tell Java printing that all this makes for a page worth printing :-)
         return Printable.PAGE_EXISTS;
     }
-   
-    private ArrayList<IdentityAttribute> populateAttributeList()
+
+    /*
+     * pull the information using getters, store it in a List, so that we can easily iterate over it
+     * to determine sizes etc.. we add separators here, because they have to be included in vertical space calculations.
+     */
+    private List<IdentityAttribute> populateAttributeList()
     {
         ArrayList<IdentityAttribute> idAttributes = new ArrayList();
-        addIdAttribute(idAttributes, "nameLabel", identity.getName());
-        addIdAttribute(idAttributes, "givenNamesLabel", identity.getFirstName() + " " + identity.getMiddleName());
-        addIdAttribute(idAttributes, "placeOfBirthLabel", identity.getPlaceOfBirth());
-        addIdAttribute(idAttributes, "dateOfBirthLabel", dateFormat.format(identity.getDateOfBirth().getTime()));
-        addIdAttribute(idAttributes, "sexLabel", identity.getGender() == Gender.FEMALE ? bundle.getString("genderFemale") : bundle.getString("genderMale"));
-        addIdAttribute(idAttributes, "nationalityLabel", identity.getNationality());
+
+        addIdAttribute(idAttributes, "nameLabel",           identity.getName());
+        addIdAttribute(idAttributes, "givenNamesLabel",     identity.getFirstName() + " " + identity.getMiddleName());
+        addIdAttribute(idAttributes, "placeOfBirthLabel",   identity.getPlaceOfBirth());
+        addIdAttribute(idAttributes, "dateOfBirthLabel",    dateFormat.format(identity.getDateOfBirth().getTime()));
+        addIdAttribute(idAttributes, "sexLabel",            IdFormatHelper.getGenderString(bundle,identity.getGender()));
+        addIdAttribute(idAttributes, "nationalityLabel",    identity.getNationality());
         addIdAttribute(idAttributes, "nationalNumberLabel", identity.getNationalNumber());
+
         idAttributes.add(SEPARATOR);
+
         String nobleCondition = identity.getNobleCondition();
-        if (!nobleCondition.isEmpty())
-        {
-            addIdAttribute(idAttributes, "titleLabel", identity.getNationalNumber());
-        }
-        else
-        {
-            addIdAttribute(idAttributes, "titleLabel", UNKNOWN_VALUE_TEXT, false);
-        }
-        String specialStatusStr = getSpecialStatusString(identity.getSpecialStatus());
-        if (!specialStatusStr.isEmpty())
-        {
-            addIdAttribute(idAttributes, "specialStatusLabel", specialStatusStr);
-        }
-        else
-        {
-            addIdAttribute(idAttributes, "specialStatusLabel", UNKNOWN_VALUE_TEXT, false);
-        }
+        addIdAttribute(idAttributes, "titleLabel",          nobleCondition.isEmpty()?IdFormatHelper.UNKNOWN_VALUE_TEXT:nobleCondition, (!nobleCondition.isEmpty()));
+        String specialStatusStr = IdFormatHelper.getSpecialStatusString(bundle,identity.getSpecialStatus());
+        addIdAttribute(idAttributes, "specialStatusLabel",  specialStatusStr.isEmpty()?IdFormatHelper.UNKNOWN_VALUE_TEXT:specialStatusStr, (!specialStatusStr.isEmpty()));
+       
         idAttributes.add(SEPARATOR);
-        addIdAttribute(idAttributes, "streetLabel", address.getStreetAndNumber());
-        addIdAttribute(idAttributes, "postalCodeLabel", address.getZip());
-        addIdAttribute(idAttributes, "municipalityLabel", address.getMunicipality());
+
+        addIdAttribute(idAttributes, "streetLabel",         address.getStreetAndNumber());
+        addIdAttribute(idAttributes, "postalCodeLabel",     address.getZip());
+        addIdAttribute(idAttributes, "municipalityLabel",   address.getMunicipality());
+
         idAttributes.add(SEPARATOR);
-        addIdAttribute(idAttributes, "cardNumberLabel", identity.getCardNumber());
-        addIdAttribute(idAttributes, "placeOfIssueLabel", identity.getCardDeliveryMunicipality());
-        addIdAttribute(idAttributes, "validFromLabel", dateFormat.format(identity.getCardValidityDateBegin().getTime()));
-        addIdAttribute(idAttributes, "validUntilLabel", dateFormat.format(identity.getCardValidityDateEnd().getTime()));
+
+        addIdAttribute(idAttributes, "cardNumberLabel",     identity.getCardNumber());
+        addIdAttribute(idAttributes, "placeOfIssueLabel",   identity.getCardDeliveryMunicipality());
+        addIdAttribute(idAttributes, "validFromLabel",      dateFormat.format(identity.getCardValidityDateBegin().getTime()));
+        addIdAttribute(idAttributes, "validUntilLabel",     dateFormat.format(identity.getCardValidityDateEnd().getTime()));
+
+        idAttributes.add(SEPARATOR);
+
+        addIdAttribute(idAttributes, "printedDateLabel",    dateFormat.format(new Date()));
+        
         return idAttributes;
     }
 
-    private String join(Collection s, String delimiter)
-    {
-        StringBuilder buffer = new StringBuilder();
-        Iterator iter = s.iterator();
-        if (iter.hasNext())
-        {
-            buffer.append(iter.next());
-            while (iter.hasNext())
-            {
-                buffer.append(delimiter);
-                buffer.append(iter.next());
-            }
-        }
-        return buffer.toString();
-    }
-
-    private String getSpecialStatusString(SpecialStatus specialStatus)
-    {
-        List specials = new ArrayList();
-        if (specialStatus.hasWhiteCane())
-        {
-            specials.add(bundle.getString("special_status_white_cane"));
-        }
-        if (specialStatus.hasYellowCane())
-        {
-            specials.add(bundle.getString("special_status_yellow_cane"));
-        }
-        if (specialStatus.hasExtendedMinority())
-        {
-            specials.add(bundle.getString("special_status_extended_minority"));
-        }
-        return join(specials, ",");
-    }
-
-    private BufferedImage getImage(String name)
+    private static BufferedImage getImage(String name)
     {
         Image image = new ImageIcon(Toolkit.getDefaultToolkit().getImage(BelgianEidViewer.class.getResource(ICONS + name))).getImage();
-        return getBufferedImage(image);
-    }
-
-    private BufferedImage getBufferedImage(Image image)
-    {
-        int width = image.getWidth(null);
-        int height = image.getHeight(null);
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
-        Graphics2D g2d = bufferedImage.createGraphics();
-        g2d.drawImage(image, 0, 0, width, height, null);
-        return bufferedImage;
-    }
-
-    private int getTotalStringWidth(Graphics2D graphics2D, String[] strings)
-    {
-        FontMetrics fontMetrics = graphics2D.getFontMetrics();
-        int widest = 0;
-        for (int i = 0; i < strings.length; i++)
-        {
-            int width = fontMetrics.stringWidth(strings[i]);
-            if (width > widest)
-            {
-                widest = width;
-            }
-        }
-        return widest;
-    }
-
-    private int getStringWidth(Graphics2D graphics2D, String string)
-    {
-        FontMetrics fontMetrics = graphics2D.getFontMetrics();
-        return fontMetrics.stringWidth(string);
-    }
-
-    private float getTotalStringHeight(Graphics2D graphics2D, String[] strings)
-    {
-        FontMetrics fontMetrics = graphics2D.getFontMetrics();
-        return fontMetrics.getHeight() * strings.length;
-    }
-
-    private float getStringHeight(Graphics2D graphics2D)
-    {
-        FontMetrics fontMetrics = graphics2D.getFontMetrics();
-        return fontMetrics.getHeight();
-    }
-
-    private float getAscent(Graphics2D graphics2D)
-    {
-        FontMetrics fontMetrics = graphics2D.getFontMetrics();
-        return fontMetrics.getAscent();
+        return PrintingUtilities.getBufferedImage(image);
     }
 
     private void addIdAttribute(List list, String labelName, String value)
@@ -352,5 +286,52 @@ public class IDPrintout implements Printable
     {
         String labelStr = bundle.getString(labelName);
         list.add(new IdentityAttribute(labelStr, value).setRelevant(relevant));
+    }
+
+    private class IdentityAttribute
+    {
+        private String label;
+        private String value;
+        private boolean relevant;
+
+        public IdentityAttribute(String label, String value)
+        {
+            this.label = label;
+            this.value = value;
+            this.relevant = true;
+        }
+
+        public String getLabel()
+        {
+            return label;
+        }
+
+        public IdentityAttribute setLabel(String label)
+        {
+            this.label = label;
+            return this;
+        }
+
+        public String getValue()
+        {
+            return value;
+        }
+
+        public IdentityAttribute setValue(String value)
+        {
+            this.value = value;
+            return this;
+        }
+
+        public boolean isRelevant()
+        {
+            return relevant;
+        }
+
+        public IdentityAttribute setRelevant(boolean relevant)
+        {
+            this.relevant = relevant;
+            return this;
+        }
     }
 }

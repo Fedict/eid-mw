@@ -19,6 +19,7 @@
 package be.fedict.eidviewer.gui;
 
 import be.fedict.eid.applet.service.Identity;
+import be.fedict.eidviewer.gui.helper.IdFormatHelper;
 import java.text.DateFormat;
 import java.util.Locale;
 import java.util.Observable;
@@ -31,11 +32,9 @@ import java.util.ResourceBundle;
  */
 public class CardPanel extends javax.swing.JPanel implements Observer
 {
-
-    private static final String UNKNOWN_VALUE_TEXT = "";
-    private ResourceBundle bundle;
-    private DateFormat dateFormat;
-    private EidController eidController;
+    private ResourceBundle  bundle;
+    private DateFormat      dateFormat;
+    private EidController   eidController;
 
     public CardPanel()
     {
@@ -106,23 +105,23 @@ public class CardPanel extends javax.swing.JPanel implements Observer
                 }
                 else
                 {
-                    cardNumber.setText(UNKNOWN_VALUE_TEXT);
+                    cardNumber.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     cardNumber.setEnabled(false);
                     cardNumberLabel.setEnabled(false);
 
-                    placeOfIssue.setText(UNKNOWN_VALUE_TEXT);
+                    placeOfIssue.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     placeOfIssue.setEnabled(false);
                     placeOfIssueLabel.setEnabled(false);
 
-                    chipNumber.setText(UNKNOWN_VALUE_TEXT);
+                    chipNumber.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     chipNumber.setEnabled(false);
                     chipNumberLabel.setEnabled(false);
 
-                    validFrom.setText(UNKNOWN_VALUE_TEXT);
+                    validFrom.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     validFrom.setEnabled(false);
                     validFromLabel.setEnabled(false);
 
-                    validUntil.setText(UNKNOWN_VALUE_TEXT);
+                    validUntil.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     validUntil.setEnabled(false);
                     validUntilLabel.setEnabled(false);
                 }
