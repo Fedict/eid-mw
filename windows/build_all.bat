@@ -17,9 +17,9 @@
 :: build pkcs11, minidriver, cleanuptool and sccertprop
 :: ====================================================
 @echo [INFO] Building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln"
-:::::::@"%BEID_DIR_VS_2010%\Common7\IDE\VCExpress.exe" "%~dp0..\VS_2010\beid.sln" /clean "Release|Win32"
+@"%BEID_DIR_VS_2010%\Common7\IDE\VCExpress.exe" "%~dp0..\VS_2010\beid.sln" /clean "Release|Win32"
 ::@"%BEID_DIR_VS_2010%\Common7\IDE\VCExpress.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|x64"
-::::::::::::::@"%BEID_DIR_VS_2010%\Common7\IDE\VCExpress.exe" "%~dp0..\VS_2010\beid.sln" /build "Release|Win32"
+@"%BEID_DIR_VS_2010%\Common7\IDE\VCExpress.exe" "%~dp0..\VS_2010\beid.sln" /build "Release|Win32"
 ::@"%BEID_DIR_VS_2010%\Common7\IDE\VCExpress.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|x64"
 
 
@@ -27,7 +27,6 @@
 :: ==================================
 @call "%~dp0.\build_minidriver_cat_file.bat"
 @call "%~dp0.\testsign_minidriver_cat_file.bat"
-
 
 :: create the MSI installers
 :: =========================
