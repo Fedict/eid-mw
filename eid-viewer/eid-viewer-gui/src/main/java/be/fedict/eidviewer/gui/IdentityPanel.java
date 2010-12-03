@@ -37,7 +37,6 @@ import javax.swing.ImageIcon;
  */
 public class IdentityPanel extends javax.swing.JPanel implements Observer
 {
-
     private ResourceBundle      bundle;
     private DateFormat          dateFormat;
     private ImageIcon           largeBusyIcon;

@@ -21,6 +21,8 @@ package be.fedict.eidviewer.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
 
 import be.fedict.eid.applet.DiagnosticTests;
@@ -42,6 +44,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -73,6 +76,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private IdentityPanel                           identityPanel;
     private CertificatesPanel                       certificatesPanel;
     private CardPanel                               cardPanel;
+    private javax.swing.Action                      printAction;
 
     public BelgianEidViewer()
     {
@@ -88,6 +92,9 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
     private void start()
     {
+        ActionMap actionMap = Application.getInstance().getContext().getActionMap(BelgianEidViewer.class, this);
+        printAction=actionMap.get("print"); // NOI18N
+        
         eid = EidFactory.getEidImpl(this, coreMessages);
         eidController = new EidController(eid);
         cardPanel.setEidController(eidController);
@@ -96,6 +103,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         eidController.addObserver(certificatesPanel);
         eidController.addObserver(this);
         eidController.start();
+        
         setVisible(true);
     }
 
@@ -121,6 +129,8 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         {
             statusText.setText(cardStatusTexts.get(controller.getState()));
         }
+
+        printAction.setEnabled(controller.hasIdentity() && controller.hasAddress() && controller.hasPhoto());
     }
 
     /** This method is called from within the constructor to
@@ -136,6 +146,8 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         statusPanel = new JPanel();
         statusIcon = new JLabel();
         statusText = new JLabel();
+        printPanel = new JPanel();
+        printButton = new JButton();
         menuBar = new JMenuBar();
         fileMenu = new JMenu();
         jMenuItem1 = new JMenuItem();
@@ -146,12 +158,14 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         setMinimumSize(new Dimension(640, 480));
 
         tabPanel.setName("tabPanel"); // NOI18N
+        tabPanel.setPreferredSize(new Dimension(600, 512));
         getContentPane().add(tabPanel, BorderLayout.CENTER);
 
         statusPanel.setName("statusPanel"); // NOI18N
         statusPanel.setLayout(new BorderLayout());
 
         statusIcon.setHorizontalAlignment(SwingConstants.CENTER);
+        statusIcon.setIcon(new ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/icons/state_noeidpresent.png"))); // NOI18N
         statusIcon.setMaximumSize(new Dimension(72, 72));
         statusIcon.setMinimumSize(new Dimension(72, 72));
         statusIcon.setName("statusIcon"); // NOI18N
@@ -162,6 +176,25 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         statusText.setName("statusText"); // NOI18N
         statusPanel.add(statusText, BorderLayout.CENTER);
 
+        printPanel.setMinimumSize(new Dimension(72, 72));
+        printPanel.setName("printPanel"); // NOI18N
+        printPanel.setPreferredSize(new Dimension(72, 72));
+        printPanel.setLayout(new GridBagLayout());
+
+        ActionMap actionMap = Application.getInstance().getContext().getActionMap(BelgianEidViewer.class, this);
+        printButton.setAction(actionMap.get("print")); // NOI18N
+        printButton.setIcon(new ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/icons/print.png"))); // NOI18N
+        printButton.setMnemonic('p');
+        printButton.setEnabled(false);
+        printButton.setHideActionText(true);
+        printButton.setMaximumSize(new Dimension(200, 50));
+        printButton.setMinimumSize(new Dimension(50, 50));
+        printButton.setName("printButton"); // NOI18N
+        printButton.setPreferredSize(new Dimension(200, 50));
+        printPanel.add(printButton, new GridBagConstraints());
+
+        statusPanel.add(printPanel, BorderLayout.WEST);
+
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
         menuBar.setName("menuBar"); // NOI18N
@@ -169,7 +202,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         fileMenu.setText(bundle.getString("fileMenuTitle")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
-        ActionMap actionMap = Application.getInstance().getContext().getActionMap(BelgianEidViewer.class, this);
         jMenuItem1.setAction(actionMap.get("print")); // NOI18N
         jMenuItem1.setText(bundle.getString("fileMenuPrintItem")); // NOI18N
         jMenuItem1.setName("jMenuItem1"); // NOI18N
@@ -268,6 +300,8 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     JMenuItem fileMenuQuitItem;
     JMenuItem jMenuItem1;
     JMenuBar menuBar;
+    JButton printButton;
+    JPanel printPanel;
     JLabel statusIcon;
     JPanel statusPanel;
     JLabel statusText;

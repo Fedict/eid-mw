@@ -21,13 +21,13 @@ package be.fedict.eidviewer.gui;
 import be.fedict.eidviewer.gui.helper.IdFormatHelper;
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
+import be.fedict.eidviewer.gui.helper.ImageUtilities;
 import be.fedict.eidviewer.gui.helper.PrintingUtilities;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.print.*;
@@ -37,7 +37,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -62,7 +61,7 @@ public class IDPrintout implements Printable
     {
         bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/IDPrintout");
         dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
-        coatOfArms = getImage(bundle.getString("coatOfArms"));
+        coatOfArms = ImageUtilities.getBufferedImage(IDPrintout.class, ICONS, bundle.getString("coatOfArms"));
     }
 
     public void setIdentity(Identity identity)
@@ -77,7 +76,7 @@ public class IDPrintout implements Printable
 
     public void setPhoto(Image photo)
     {
-        this.photo = PrintingUtilities.getBufferedImage(photo);
+        this.photo = ImageUtilities.makeBufferedImage(photo);
     }
 
     public int print(Graphics graphics, PageFormat pageFormat, int pageNumber) throws PrinterException
@@ -270,11 +269,7 @@ public class IDPrintout implements Printable
         return idAttributes;
     }
 
-    private static BufferedImage getImage(String name)
-    {
-        Image image = new ImageIcon(Toolkit.getDefaultToolkit().getImage(BelgianEidViewer.class.getResource(ICONS + name))).getImage();
-        return PrintingUtilities.getBufferedImage(image);
-    }
+    
 
     private void addIdAttribute(List list, String labelName, String value)
     {
