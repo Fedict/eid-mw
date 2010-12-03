@@ -35,6 +35,3 @@ copy %IMG_PATH%\beid.ico %BUILDPATH%\Release\
 @echo [INFO] Done...
 @goto end
 
-
-:end
-@if NOT "%DEBUG%"=="1" pause

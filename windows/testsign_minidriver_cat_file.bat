@@ -30,7 +30,3 @@ set CERTIFICATESTORE=PrivateCertStore
 
 :: Sign the catalog
 %SIGNTOOL_PATH%\SignTool.exe sign /v /s %CERTIFICATESTORE% /n "%CERTIFICATENAME%"  /t http://timestamp.verisign.com/scripts/timestamp.dll %BUILDPATH%\Release\beidmdrv.cat
-
-
-:end
-@if NOT "%DEBUG%"=="1" pause

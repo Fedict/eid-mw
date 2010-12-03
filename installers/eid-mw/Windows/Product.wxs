@@ -620,7 +620,7 @@
     <!--SetARPINSTALLLOCATION sets the location in the registry entries of the Add & Remove Panel-->
     <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
 
-    <Binary Id="BEID_CLEANUP" SourceFile="..\..\..\beidcleanup\Release\beidcleanup.exe"/>
+    <Binary Id="BEID_CLEANUP" SourceFile="..\..\..\vs_2010\binaries\win32_release\beidcleanup.exe"/>
 
     <!--
     Cleanup parameters supported:
