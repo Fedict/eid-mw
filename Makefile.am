@@ -4,7 +4,7 @@ EXTRA_DIST = arch debian rpm svn_revision minidriver sccertprop nsis dmg VS_2010
 BUILT_SOURCES=svn_revision
 
 if WIN32
-WINDOWS_ONLY=minidriver sccertprop 
+WINDOWS_ONLY=minidriver sccertprop beidcleanup
 endif
 
 if NO_DIALOGS
