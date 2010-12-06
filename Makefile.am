@@ -1,10 +1,10 @@
 ACLOCAL_AMFLAGS = -I m4
-EXTRA_DIST = arch debian rpm svn_revision minidriver sccertprop nsis dmg VS_2010
+EXTRA_DIST = arch debian rpm svn_revision minidriver sccertprop nsis dmg VS_2010 beidcleanup
 
 BUILT_SOURCES=svn_revision
 
 if WIN32
-WINDOWS_ONLY=minidriver sccertprop beidcleanup
+WINDOWS_ONLY=minidriver sccertprop 
 endif
 
 if NO_DIALOGS
