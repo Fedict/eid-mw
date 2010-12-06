@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <?include ..\..\svn_revision.wxs ?>
+  
+  <?define var.OfficialProductVersion =4.0.0?>
+  <?define var.ProductVersion =4.0.$(var.RevisionNumber)?>
+  <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
+
+  <?define var.UpgradeCode ={71791A6C-BEC9-45d4-8765-88E617C57D45}?>
+  <?define var.ProductGuid ={66909A0B-A9C2-4481-871D-E3014FC0$(var.RevisionNumber)}?>
+  <?define var.ProductGuidGeneric ={{66909A0B-A9C2-4481-871D-E3014FC?????}}?>
+  <?define var.ProductName =Belgium e-ID middleware $(var.OfficialProductVersion) Sdk (build $(var.RevisionNumber))?>
+
+  <Product Id="$(var.ProductGuid)"
+           Name="$(var.ProductName)"
+           Language="!(loc.Lang)"
+           Codepage="1252"
+           Version="$(var.ProductVersion)"
+           Manufacturer="Belgian Government"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <Package InstallerVersion="300"
+             Keywords="Belgium e-ID Middleware SDK Installer"
+             Platform="x86"
+             Manufacturer="Belgian Government"
+             Compressed="yes" 
+             InstallPrivileges="limited"
+    />
+    
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"
+                      Property="NEWPRODUCTFOUND"
+      />
+      <UpgradeVersion Minimum="3.5.0"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.ProductVersion)"
+                      IncludeMaximum="no"
+                      Property="UPGRADEFOUND"
+      />
+    </Upgrade>
+
+    <?if $(var.Lang) = "nl"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\Dutch\License_sdk_nl.rtf" />
+    <?elseif $(var.Lang) = "fr"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\French\License_sdk_fr.rtf" />
+    <?elseif $(var.Lang) = "de"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\German\License_sdk_de.rtf" />
+    <?else?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\English\License_sdk_en.rtf" />
+    <?endif?>
+
+    <WixVariable Id="WixUIBannerBmp" Value="..\..\bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\..\dlgbmp.bmp" />
+
+    <Condition Message="!(loc.MinOs)">
+      <![CDATA[
+      Installed
+      OR ((VersionNT = 500) and (ServicePackLevel > 3))
+      OR ((VersionNT = 501) and (ServicePackLevel > 1))
+      OR (VersionNT > 501)
+      ]]>
+    </Condition>
+
+    <Media Id="1" Cabinet="Middleware.cab" EmbedCab="yes" />
+
+    <Icon Id="eidsdk.ico" SourceFile="..\..\eidsdk.ico"/>
+    
+    <Property Id="ARPPRODUCTICON" Value="eidsdk.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
+
+    <Property Id="ALLUSERS" Secure="yes"/>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      
+     <Directory Id="ProgramMenuFolder" Name="Menu">
+        <Directory Id="SdkProgramMenuFolder" Name="Belgium - eID - SDK" /> 
+      </Directory>
+    
+      <Directory Id="PersonalFolder" Name="MyDocuments">
+        <Directory Id="INSTALLLOCATION" Name="Belgium Identity Card SDK 4.0">
+          <Directory Id="DOC" Name="doc">
+          </Directory>
+          <Directory Id="PKCS11" Name="pkcs11">
+            <Directory Id="PKCS11_CPP" Name="C++">
+              <Directory Id="PKCS11_CPP_INCLUDE" Name="include" />
+            </Directory>
+          </Directory>
+          <Directory Id="EXAMPLES" Name="Examples">
+            <Directory Id="EXAMPLES_DATA" Name="data">
+            </Directory>
+            <Directory Id="EXAMPLES_SIGNMECHANISMS" Name="signmechanisms">
+            </Directory>
+            <Directory Id="EXAMPLES_SIGN" Name="sign">
+            </Directory>
+            <Directory Id="EXAMPLES_WAIT_CARD" Name="wait_card">
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      
+    </Directory>
+
+    <!-- To remove the folder on uninstall if the user does not use the default value -->
+    <Property Id='INSTALLLOCATION'>
+      <RegistrySearch Id="PreviousInstallDirname"
+        Root="HKCU" Key="SOFTWARE\BEID\SDK40"
+        Name="install_sdk_dirname" Type="raw"/>
+    </Property>
+
+    <DirectoryRef Id="INSTALLLOCATION">
+      <Component Id="SdkBasis" Guid="{5148F893-6EB2-4edf-8C2B-B78F7C9BCA14}">
+        <CreateFolder/>
+        <RemoveFolder Id="INSTALLLOCATION" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="SdkBasis" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="eidsdk.ico" Name="eidsdk.ico" KeyPath="no" Source="..\..\eidsdk.ico" />
+        <File Id="readme.txt" Name="readme.txt" KeyPath="no" Source="..\..\..\sdk\readme.txt" />
+        <File Id="License_sdk_en.rtf" Name="License_sdk_en.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\English\License_sdk_en.rtf" />
+        <File Id="License_sdk_nl.rtf" Name="License_sdk_nl.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\Dutch\License_sdk_nl.rtf" />
+        <File Id="License_sdk_fr.rtf" Name="License_sdk_fr.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\French\License_sdk_fr.rtf" />
+        <File Id="License_sdk_de.rtf" Name="License_sdk_de.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\German\License_sdk_de.rtf" />
+        <RegistryKey Root="HKCU"
+            Key="SOFTWARE\BEID\SDK40"
+            Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Name="install_sdk_dirname" Value="[INSTALLLOCATION]"/>
+            <RegistryValue Type="string" Name="language" Value="!(loc.Langpref)"/>
+        </RegistryKey> 
+      </Component>
+
+      <Component Id="SdkShortcut" Guid="{B591F076-6C1A-40c9-884F-C0D03603DEEC}">
+        <RemoveFolder Id="SdkProgramMenuFolder" Directory="SdkProgramMenuFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="SdkShortcut" Type="integer" Value="1" KeyPath="yes" />
+<!-- Problem with uninstall
+        <Shortcut Id="SdkFolderShortcut"
+                  Name="Sdk Folder"
+                  Description="!(loc.OpenFolderDescr)"
+                  Directory="SdkProgramMenuFolder"
+                  Target="[INSTALLLOCATION]"
+                  WorkingDirectory="INSTALLLOCATION" />
+        <RemoveFile  Id="RemoveSdkFolderShortcut"  Name="[SdkProgramMenuFolder]Sdk Folder.lnk"  On="uninstall" />
+-->
+      </Component>
+    </DirectoryRef>
+    
+    <!-- SDK -->
+    <!--   <DirectoryRef Id="BEIDLIB">
+      <Component Id="Sdk" Guid="{75B29A4B-50B5-4494-9F87-671A58657F4A}">
+        <CreateFolder/>
+        <RemoveFolder Id="BEIDLIB" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="Sdk" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    -->
+    <!-- SDK CPP ">
+      <Component Id="SdkCpp" Guid="{13599DBC-6FF3-407C-9958-4AAF328AA22D}">
+        <CreateFolder/>
+        <RemoveFolder Id="BEIDLIB_CPP" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="SdkCpp" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="BEIDLIB_CPP_BIN">
+      <Component Id="SdkCppBin" Guid="{3E09EBB0-AAA3-4471-865F-EEED6EAD1807}">
+        <CreateFolder/>
+        <RemoveFolder Id="BEIDLIB_CPP_BIN" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="SdkCppBin" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="SdkCppBin01" Name="beid35libCpp.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35libCpp.dll" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="BEIDLIB_CPP_INCLUDE">
+      <Component Id="SdkCppInclude" Guid="{9FD3DE03-7AD8-4AC2-92CE-C885A82BCF53}">
+        <CreateFolder/>
+        <RemoveFolder Id="BEIDLIB_CPP_INCLUDE" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="SdkCppInclude" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="SdkCppInclude01" Name="eidErrors.h" KeyPath="no" Source="..\..\..\common\eidErrors.h" />
+        <File Id="SdkCppInclude02" Name="eidlib.h" KeyPath="no" Source="..\..\..\eidlib\eidlib.h" />
+        <File Id="SdkCppInclude03" Name="eidlibdefines.h" KeyPath="no" Source="..\..\..\eidlib\eidlibdefines.h" />
+        <File Id="SdkCppInclude04" Name="eidlibException.h" KeyPath="no" Source="..\..\..\eidlib\eidlibException.h" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="BEIDLIB_CPP_LIB">
+      <Component Id="SdkCppLib" Guid="{714B0B2C-8240-4622-B4D9-915CDA58BF91}">
+        <CreateFolder/>
+        <RemoveFolder Id="BEIDLIB_CPP_LIB" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="SdkCppLib" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="SdkCppLib01" Name="beid35libCpp.lib" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35libCpp.lib" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="BEIDLIB_CPP"<ComponentGroup Id="SdkCpp">
+      <ComponentRef Id="Sdk" />
+      <ComponentRef Id="SdkCpp" />
+      <ComponentRef Id="SdkCppBin" />
+      <ComponentRef Id="SdkCppInclude" />
+      <ComponentRef Id="SdkCppLib" />
+    </ComponentGroup>
+-->
+    <!-- SDK PKCS11 -->
+    <DirectoryRef Id="PKCS11">
+      <Component Id="SdkPkcs11" Guid="{2104BEEB-202B-4658-BB95-1FFD8333CEA2}">
+        <CreateFolder/>
+        <RemoveFolder Id="PKCS11" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="SdkPkcs11" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- SDK PKCS11 CPP -->
+    <DirectoryRef Id="PKCS11_CPP">
+      <Component Id="SdkPkcs11Cpp" Guid="{CFC4B710-317B-414c-AF79-1E77E57C6252}">
+        <CreateFolder/>
+        <RemoveFolder Id="PKCS11_CPP" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="SdkPkcs11Cpp" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="PKCS11_CPP_INCLUDE">
+      <Component Id="SdkPkcs11CppInclude" Guid="{CD64450B-0BD7-4D7E-914E-37BAFAD940A7}">
+        <CreateFolder/>
+        <RemoveFolder Id="PKCS11_CPP_INCLUDE" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="SdkPkcs11CppInclude" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="Pkcs11CppInclude01" Name="win32.h" KeyPath="no" Source="..\..\..\pkcs11\src\include\rsaref220\win32.h" />
+        <File Id="Pkcs11CppInclude02" Name="pkcs11.h" KeyPath="no" Source="..\..\..\pkcs11\src\include\rsaref220\pkcs11.h" />
+        <File Id="Pkcs11CppInclude03" Name="pkcs11f.h" KeyPath="no" Source="..\..\..\pkcs11\src\include\rsaref220\pkcs11f.h" />
+        <File Id="Pkcs11CppInclude04" Name="pkcs11t.h" KeyPath="no" Source="..\..\..\pkcs11\src\include\rsaref220\pkcs11t.h" />
+      </Component>
+    </DirectoryRef>
+    
+    <ComponentGroup Id="SdkPkcs11Cpp">
+      <ComponentRef Id="SdkPkcs11" />
+      <ComponentRef Id="SdkPkcs11Cpp" />
+      <ComponentRef Id="SdkPkcs11CppInclude" />
+    </ComponentGroup>
+
+    <!-- DOC -->
+    <DirectoryRef Id="DOC">
+      <Component Id="Doc" Guid="{400E4467-ED83-48c7-9674-AB451E3305D3}">
+        <CreateFolder/>
+        <RemoveFolder Id="DOC" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="Doc" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!--   <DirectoryRef Id="DOC_EIDLIB">
+      <Component Id="DocEidlib" Guid="{7F9EB2F7-8698-45F7-ACE0-2619A9FAF5EC}">
+        <CreateFolder/>
+        <RemoveFolder Id="DOC_EIDLIB" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="DocEidlib" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="DOC_EIDLIB_CPP">
+      <Component Id="DocEidlibCpp" Guid="{AE28D8D6-7B5E-4780-B3E7-92196FBD3534}">
+        <CreateFolder/>
+        <RemoveFolder Id="DOC_EIDLIB_CPP" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="DocEidlibCpp" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>-->
+       
+    <ComponentGroup Id="DocCpp">
+      <ComponentRef Id="Doc" />
+      <!--<ComponentRef Id="DocEidlib" />
+      <ComponentRef Id="DocEidlibCpp" />
+      <ComponentRef Id="DoxygenCppFolder"/>-->
+    </ComponentGroup>
+
+    <!-- EXAMPLES -->
+    <DirectoryRef Id="EXAMPLES">
+      <Component Id="Examples" Guid="{DF3A9806-A41B-4a2b-A3F1-5108E829E54E}">
+        <CreateFolder/>
+        <RemoveFolder Id="EXAMPLES" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="Examples" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="EXAMPLES_DATA">
+      <Component Id="ExamplesData" Guid="{FF01FB53-F25E-4a27-AD69-C1793A9B9543}">
+        <CreateFolder/>
+        <RemoveFolder Id="EXAMPLES_DATA" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="ExamplesData" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="ExamplesData01" Name="base.h" KeyPath="no" Source="..\..\..\sdk\Examples\base.h" />
+        <File Id="ExamplesData02" Name="SDK_Data.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\VS_2005\SDK_Data.vcproj" />
+        <File Id="ExamplesData03" Name="data.c" KeyPath="no" Source="..\..\..\sdk\Examples\data.c" />
+      </Component>
+    </DirectoryRef>  
+
+    <DirectoryRef Id="EXAMPLES_SIGNMECHANISMS">
+      <Component Id="ExamplesSignMechanisms" Guid="{778DCCD5-DE03-4f4c-942D-7D39745FC630}">
+        <CreateFolder/>
+        <RemoveFolder Id="EXAMPLES_SIGNMECHANISMS" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="ExamplesSignMechanisms" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="ExamplesSignMechanisms01" Name="base.h" KeyPath="no" Source="..\..\..\sdk\Examples\base.h" />
+        <File Id="ExamplesSignMechanisms02" Name="SDK_GetSignMechanisms.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\VS_2005\SDK_GetSignMechanisms.vcproj" />
+        <File Id="ExamplesSignMechanisms03" Name="get_signmechanisms.c" KeyPath="no" Source="..\..\..\sdk\Examples\get_signmechanisms.c" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="EXAMPLES_SIGN">
+      <Component Id="ExamplesSign" Guid="{1FB8F7CE-D78F-44a2-8F0D-AF268A750FD9}">
+        <CreateFolder/>
+        <RemoveFolder Id="EXAMPLES_SIGN" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="ExamplesSign" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="ExamplesSign01" Name="base.h" KeyPath="no" Source="..\..\..\sdk\Examples\base.h" />
+        <File Id="ExamplesSign02" Name="SDK_GetSignMechanisms.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\VS_2005\SDK_GetSignMechanisms.vcproj" />
+        <File Id="ExamplesSign03" Name="get_signmechanisms.c" KeyPath="no" Source="..\..\..\sdk\Examples\get_signmechanisms.c" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="EXAMPLES_WAIT_CARD">
+      <Component Id="ExamplesWaitCard" Guid="{FFCD7007-81D3-4b65-914D-28B00EBA79BA}">
+        <CreateFolder/>
+        <RemoveFolder Id="EXAMPLES_WAIT_CARD" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="ExamplesWaitCard" Type="integer" Value="1" KeyPath="yes" />
+        <File Id="ExamplesWaitCard01" Name="base.h" KeyPath="no" Source="..\..\..\sdk\Examples\base.h" />
+        <File Id="ExamplesWaitCard02" Name="SDK_WaitCard.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\VS_2005\SDK_WaitCard.vcproj" />
+        <File Id="ExamplesWaitCard03" Name="wait_card.cpp" KeyPath="no" Source="..\..\..\sdk\Examples\wait_card.c" />
+      </Component>
+    </DirectoryRef>
+        
+    <ComponentGroup Id="TheExamples">
+      <ComponentRef Id="Examples" />
+      <ComponentRef Id="ExamplesData" />
+      <ComponentRef Id="ExamplesSignMechanisms" />
+      <ComponentRef Id="ExamplesSign" />
+      <ComponentRef Id="ExamplesWaitCard" />
+    </ComponentGroup>
+
+    
+    <Feature Id="Common"
+             Title="!(loc.Common)"
+             Description="!(loc.CommonDescr)"
+             Absent="disallow"
+             Display="expand"
+             InstallDefault="local"
+             Level="1"
+             ConfigurableDirectory="INSTALLLOCATION"
+             >
+     
+      <!-- Shortcut --> 
+      <ComponentRef Id="SdkShortcut"/>
+     
+      <!-- Program Files -->
+      <ComponentRef Id="SdkBasis"/>
+
+      <Feature Id="Cpp"
+               Title="!(loc.Cpp)"
+               Description="!(loc.CppDescr)"
+               Absent="allow"
+               InstallDefault="local"
+               Level="1"
+               >
+
+        <!--<ComponentGroupRef Id="SdkCpp"/>-->
+        <ComponentGroupRef Id="SdkPkcs11Cpp"/>
+        <ComponentGroupRef Id="DocCpp"/>
+        <ComponentGroupRef Id="TheExamples"/>
+        
+      </Feature>
+
+    </Feature>
+
+    <UI>
+      <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" ></Property>
+      <UIRef Id="WixUI_FeatureTree" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+    </UI>
+    
+    <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[INSTALLLOCATION]" />
+
+    <CustomAction Id="PreventDowngrading" Error="!(loc.NoDowngrade)" />
+
+    <InstallUISequence>
+      <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+    </InstallUISequence>
+
+
+    <InstallExecuteSequence>
+     <!-- <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>-->
+      <RemoveExistingProducts After="InstallFinalize" />
+      
+      <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>
