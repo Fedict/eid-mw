@@ -583,12 +583,14 @@
       <Feature  Id="Install_Utilities"
                 Title="!(loc.UtilsTitle)"
                 Description="!(loc.UtilsDesc)"
+                Absent="allow"
                 Level="1"
                 >
 
         <Feature Id="Install_Outlooksnc"
                  Title="!(loc.OutlooksncTitle)"
                  Description="!(loc.OutlooksncDescr)"
+                 Absent="allow"
                  Level="1">
           <!-- Shortcuts -->
           <ComponentRef Id="RegistryOutlookSupressNameChecks"/>
