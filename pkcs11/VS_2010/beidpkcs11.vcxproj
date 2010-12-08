@@ -149,7 +149,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../;../src/;../../common/src;../../dialogs/src/dialogswin32;../../cardlayer/src;../../common/VS_2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../;../src/;../../common/src;../../dialogs/src/dialogswin32;../../cardlayer/src;../../common/VS_2010;../../dialogs/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -181,7 +181,7 @@
     </Midl>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../;../src/;../../common/src;../../dialogs/src/dialogswin32;../../cardlayer/src;../../common/VS_2005;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../;../src/;../../common/src;../../dialogs/src/dialogswin32;../../cardlayer/src;../../common/VS_2010;../../dialogs/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BEID_35;WIN32;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -215,6 +215,7 @@
     <ClCompile Include="..\src\asn1.c" />
     <ClCompile Include="..\src\cal.cpp" />
     <ClCompile Include="..\src\cert.c" />
+    <ClCompile Include="..\src\display.cpp" />
     <ClCompile Include="..\src\encrypt.c" />
     <ClCompile Include="..\src\general.c" />
     <ClCompile Include="..\src\log.c" />
@@ -230,6 +231,7 @@
     <ClInclude Include="..\src\beid_p11.h" />
     <ClInclude Include="..\src\cal.h" />
     <ClInclude Include="..\src\cert.h" />
+    <ClInclude Include="..\src\display.h" />
     <ClInclude Include="..\src\log.h" />
     <ClInclude Include="..\src\p11.h" />
     <ClInclude Include="..\src\phash.h" />
