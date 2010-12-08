@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="pkcs11"
 	ProjectGUID="{12F6CD4F-FC01-4E0A-AE06-F7A315094DFE}"
 	RootNamespace="beidpkcs11"
@@ -209,7 +209,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="../;../src/;../../common/src;../../dialogs/src/dialogswin32;../../cardlayer/src;../../common/VS_2005"
+				AdditionalIncludeDirectories="../;../src/;../../common/src;../../dialogs/src/dialogswin32;../../cardlayer/src;../../common/VS_2005;../../dialogs/src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -371,6 +371,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\display.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\encrypt.c"
 				>
 			</File>
@@ -385,6 +389,14 @@
 			<File
 				RelativePath="..\src\object.c"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAs="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\p11.c"
@@ -426,6 +438,10 @@
 			</File>
 			<File
 				RelativePath="..\src\cert.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\display.h"
 				>
 			</File>
 			<File

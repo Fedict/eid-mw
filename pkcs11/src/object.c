@@ -24,6 +24,7 @@
 #include "util.h"
 #include "p11.h"
 #include "cal.h"
+#include "display.h"
 
 #define WHERE "C_CreateObject()"
 CK_RV C_CreateObject(CK_SESSION_HANDLE hSession,    /* the session's handle */
@@ -220,6 +221,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	CK_ULONG      *pclass = NULL;
 	CK_ULONG       len = 0;
 	CK_BBOOL		addIdObjects = CK_FALSE;
+	CK_BYTE allowCardRead = P11_DISPLAY_NO;
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -281,6 +283,28 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		log_trace(WHERE, "W: Session %d: search operation allready exists", hSession);
 		ret = CKR_OPERATION_ACTIVE;
 		goto cleanup;
+	}
+
+	if(addIdObjects == CK_TRUE)
+	{
+		if (pSession->bReadDataAllowed == P11_READDATA_ASK)
+		{
+			allowCardRead = AllowCardReading();
+			if (allowCardRead == P11_DISPLAY_YES)
+			{
+				pSession->bReadDataAllowed = P11_READDATA_ALLOWED;
+			}
+			else
+			{
+				if(allowCardRead == P11_DISPLAY_NO)
+				{
+					pSession->bReadDataAllowed = P11_READDATA_REFUSED;
+				}				
+				log_trace(WHERE, "I: User does not allow reading from the card");
+				ret = CKR_FUNCTION_FAILED;
+				goto cleanup;
+			}
+		}
 	}
 
 	/* init search operation */

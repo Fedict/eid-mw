@@ -146,6 +146,11 @@ void           *pReader;  //CReader
 #define P11_OPERATION_DIGEST  1
 #define P11_OPERATION_SIGN    2
 
+#define P11_READDATA_ASK				0
+#define P11_READDATA_ALLOWED		1
+#define P11_READDATA_REFUSED    2
+
+
 typedef struct P11_OPERATION
 {
 int   type;
@@ -164,6 +169,7 @@ int               state;
 //int               nObjects;
 //P11_OBJECT        **ppObjects;
 P11_OPERATION     Operation[P11_NUM_OPERATIONS];
+CK_BYTE						bReadDataAllowed;
 } P11_SESSION;
 
 
