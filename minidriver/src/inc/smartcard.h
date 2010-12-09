@@ -101,7 +101,7 @@ extern DWORD BeidSelectAndReadFile
 	      (
 			   PCARD_DATA  pCardData, 
 				DWORD dwOffset, 
-				DWORD cbFileID,
+				BYTE cbFileID,
 				PBYTE pbFileID, 
 				DWORD *cbStream, 
 				PBYTE* pbStream

@@ -441,9 +441,6 @@ int strncpy_s(char *dest, size_t len, const char *src, long count)
 	return -1;
 }
 
-#endif
-
-
 int fopen_s(FILE** pFile, const char *filename, const char *mode)
 {
 	int r = 0;
@@ -460,9 +457,6 @@ int fopen_s(FILE** pFile, const char *filename, const char *mode)
 
 	return r;
 }
-
-
-#ifndef WIN32
 
 EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...)
 {
@@ -498,8 +492,6 @@ EIDMW_CMN_API int vfprintf_s(FILE *stream, const char *format, va_list argptr)
 
 	return r;}
 
-#endif
-
 EIDMW_CMN_API errno_t freopen_s(FILE **pFile, const char *filename, const char *mode, FILE* stream)
 {
     FILE *fd;
@@ -511,3 +503,4 @@ EIDMW_CMN_API errno_t freopen_s(FILE **pFile, const char *filename, const char *
     return 0;
 }
 
+#endif

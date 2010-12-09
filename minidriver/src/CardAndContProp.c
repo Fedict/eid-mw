@@ -1046,7 +1046,7 @@ cleanup:
 DWORD CardGetFirstTwoGivenNames(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
 {
    DWORD    dwReturn       = 0;
-	PBYTE*   ppbFile;
+	PBYTE*   ppbFile = NULL;
 	DWORD    cbFile         = 0;
 
    LogTrace(LOGTYPE_INFO, WHERE, "GET Property: [CP_ID_FIRST_TWO_GIVEN_NAMES]");

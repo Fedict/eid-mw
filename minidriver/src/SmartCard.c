@@ -1182,7 +1182,7 @@ cleanup:
 /****************************************************************************************************/
 
 #define WHERE "BeidSelectAndReadFile"
-DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD cbFileID, PBYTE pbFileID, DWORD *cbStream, PBYTE * ppbStream)
+DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID, PBYTE pbFileID, DWORD *cbStream, PBYTE * ppbStream)
 {
    DWORD             dwReturn = 0;
 
@@ -1199,10 +1199,10 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD cbFileI
 	DWORD             cbReadBuf;
 
 
-   BYTE              bRead [255];
-   DWORD             cbRead;
+//   BYTE              bRead [255];
+//   DWORD             cbRead;
 
-   DWORD             cbCertif;
+//   DWORD             cbCertif;
 
    /***************/
    /* Select File */
@@ -1282,7 +1282,7 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
    BYTE              SW1, SW2;
 
    BYTE              bFileID[6] = {0x3F, 0x00, 0xDF, 0x00, 0x50, 0x00};
-   BYTE              cbFileID   = sizeof(bFileID);
+   BYTE              cbFileID   = (BYTE)sizeof(bFileID);
 
    BYTE              bRead [255];
    DWORD             cbRead;

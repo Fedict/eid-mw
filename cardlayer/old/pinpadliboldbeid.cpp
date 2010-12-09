@@ -178,9 +178,13 @@ CByteArray CPinpadLibOldBeid::PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 
 	if (ucOperation == EIDMW_PP_OP_VERIFY)
 	{
+#ifdef WIN32
+		char* sig=_strdup("SIG");
+		char* aut=_strdup("AUT");
+#else
 		char* sig=strdup("SIG");	// FIXME memory leak
 		char* aut=strdup("AUT");
-
+#endif
 		SCR_PinUsage xPinUsage = {
 			ucPintype == EIDMW_PP_TYPE_SIGN ? SCR_USAGE_SIGN: SCR_USAGE_AUTH,
 			ucPintype == EIDMW_PP_TYPE_SIGN ? sig : aut,

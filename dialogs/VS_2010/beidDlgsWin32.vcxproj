@@ -171,7 +171,7 @@
     </BuildLog>
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\common\src;.\;..\..\common\VS_2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>BEID_35;WIN32;NDEBUG;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BEID_35;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeader>
@@ -215,7 +215,7 @@
     </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\common\src;.\;..\..\common\VS_2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>BEID_35;WIN32;NDEBUG;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BEID_35;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeader>

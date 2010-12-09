@@ -342,7 +342,7 @@ DWORD WINAPI   CardReadFile
 			if ( _stricmp("id", pszFileName) == 0)					    /* /id/id */
 			{
 				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x31};
-				DWORD cbFileID  = sizeof(pbFileID);
+				BYTE cbFileID  = (BYTE)sizeof(pbFileID);
 				FileFound++;
 				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
 				if ( dwReturn != SCARD_S_SUCCESS )
@@ -359,7 +359,7 @@ DWORD WINAPI   CardReadFile
 			if ( _stricmp("id_sgn", pszFileName) == 0)					    /* /id/id_sgn */
 			{
 				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x32};
-				DWORD cbFileID  = sizeof(pbFileID);
+				BYTE cbFileID  = (BYTE)sizeof(pbFileID);
 				FileFound++;
 				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
 				if ( dwReturn != SCARD_S_SUCCESS )
@@ -376,7 +376,7 @@ DWORD WINAPI   CardReadFile
 			if ( _stricmp("addr", pszFileName) == 0)					    /* /id/addr */
 			{
 				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x33};
-				DWORD cbFileID  = sizeof(pbFileID);
+				BYTE cbFileID  = (BYTE)sizeof(pbFileID);
 				FileFound++;
 				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
 				if ( dwReturn != SCARD_S_SUCCESS )
@@ -393,7 +393,7 @@ DWORD WINAPI   CardReadFile
 			if ( _stricmp("addr_sgn", pszFileName) == 0)					    /* /id/addr_sgn */
 			{
 				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x34};
-				DWORD cbFileID  = sizeof(pbFileID);
+				BYTE cbFileID  = (BYTE)sizeof(pbFileID);
 				FileFound++;
 				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
 				if ( dwReturn != SCARD_S_SUCCESS )
@@ -410,7 +410,7 @@ DWORD WINAPI   CardReadFile
 			if ( _stricmp("photo", pszFileName) == 0)					    /* /id/photo */
 			{
 				BYTE  pbFileID [] = { 0x3f, 0x00, 0xdf, 0x01, 0x40, 0x35};
-				DWORD cbFileID  = sizeof(pbFileID);
+				BYTE cbFileID  = (BYTE)sizeof(pbFileID);
 				FileFound++;
 				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
 				if ( dwReturn != SCARD_S_SUCCESS )

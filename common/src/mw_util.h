@@ -87,12 +87,16 @@ inline rT join (const cT& list, const rT& sep)
 int vasprintf(char **strp, const char *fmt, va_list ap);
 #endif
 
+#ifndef WIN32
 int _wfopen_s(FILE** pFile, const wchar_t *filename, const wchar_t *mode);
 int fwprintf_s(FILE *stream, const wchar_t *format, ...);
 int strcpy_s(char *dest, size_t len, const char *src);
 int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src);
-int wcscpy_s(wchar_t *dest, const wchar_t *src);
 int wcscat_s(wchar_t* dst, size_t elem, const wchar_t* src);
+#endif
+
+int wcscpy_s(wchar_t *dest, const wchar_t *src);
+
 
 errno_t _localtime_s(struct tm* _tm, const time_t *time);
 int 	_swprintf_s(wchar_t *buffer, size_t sizeOfBuffer, const wchar_t *format, ...);

@@ -239,6 +239,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 }
 #endif
 
+#ifndef WIN32
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int _wfopen_s(FILE** pFile, const wchar_t *filename, const wchar_t *mode)
 {
@@ -279,7 +280,7 @@ int fwprintf_s(FILE *stream, const wchar_t *format, ...)
 
 	return r;
 }
-
+#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int _vfwprintf_s(FILE *stream, const wchar_t *format, va_list argptr)
 {
@@ -314,6 +315,7 @@ int _vfprintf_s(FILE *stream, const char* format, va_list argptr)
 	return r;
 } 
 
+#ifndef WIN32
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int strcpy_s(char *dest, size_t len, const char *src)
 {
@@ -341,7 +343,7 @@ int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src)
 
 	return *src == L'\0' ? 0 : -1; // 0: OK, -1: NOK
 }
-
+#endif
 int wcscpy_s(wchar_t *dest, const wchar_t *src)
 {
 	size_t len=wcslen(src);
@@ -379,6 +381,7 @@ int _swprintf_s(wchar_t *buffer, size_t sizeOfBuffer, const wchar_t *format, ...
 	return r;
 } 
 
+#ifndef WIN32
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int wcscat_s(wchar_t* dst, size_t elem, const wchar_t* src)
 {
@@ -401,17 +404,21 @@ int wcscat_s(wchar_t* dst, size_t elem, const wchar_t* src)
     dst[0] = '\0';
     return ERANGE;
 }
-
+#endif
 // after https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=2981930
 
 int dupenv_s(char **buffer, size_t *numberOfElements, const char *varname)
 {
-	size_t required;
+//	size_t required;
 	char* data=getenv(varname);
 	if(!data)
 		return EINVAL;
 	*numberOfElements=strlen(data);
+#ifdef WIN32
+	(*buffer)=_strdup(data);
+#else
 	(*buffer)=strdup(data);
+#endif
 	if (!*buffer)
 		return ENOMEM;
 	return 0;

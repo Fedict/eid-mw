@@ -987,11 +987,11 @@ int WriteLn(FILE * stream, wchar_t* fmt, ...)
 
 	va_start (args, fmt);
 
-#ifdef WIN32
-	  nLength = vswprintf(buf, fmt, args);
-#else
+//#ifdef WIN32
+//	  nLength = vswprintf(buf, fmt, args);
+//#else
 	  nLength = vswprintf(buf,MAX_BUFFER_LEN,fmt,args);
-#endif
+//#endif
 
 	va_end (args);
 

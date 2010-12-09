@@ -60,26 +60,23 @@ EIDMW_CMN_API char *bin2AsciiHex(const unsigned char * pData, unsigned long ulLe
 EIDMW_CMN_API void GetProcessName(wchar_t *wBuffer,unsigned long ulLen);
 }
 
-//#ifndef WIN32
+#ifndef WIN32
 
 //#define _TRUNCATE -1
 
 EIDMW_CMN_API int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...);
-
 EIDMW_CMN_API int strcat_s(char *dest, size_t len, const char *src);
+EIDMW_CMN_API int fopen_s(FILE** pFile, const char *filename, const char *mode);
+EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...);
+#endif
 
 EIDMW_CMN_API int strncpy_s(char *dest, size_t len, const char *src, long count);
 
-//#endif
 
-EIDMW_CMN_API int fopen_s(FILE** pFile, const char *filename, const char *mode);
-EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...);
 
 
 #ifndef WIN32
 EIDMW_CMN_API int vfprintf_s(FILE *stream, const char *format, va_list argptr);
-
-#endif
-
 EIDMW_CMN_API errno_t freopen_s(FILE **pFile, const char *filename, const char *mode, FILE* stream);
+#endif
 
