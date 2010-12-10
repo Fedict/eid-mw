@@ -786,7 +786,7 @@ int cal_read_ID_files(CK_SLOT_ID hSlot)
 	CByteArray oFileData;
 	std::string szReader;
 	char cBuffer[250];
-	unsigned char ucBuffer[250];
+//	unsigned char ucBuffer[250];
 	char* plabel = NULL;
 	unsigned long ulLen=0;
 	CTLVBuffer oTLVBuffer;

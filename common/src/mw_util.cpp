@@ -58,7 +58,7 @@ std::wstring wstring_From_string(std::string const& in)
 
 std::string string_From_wstring(std::wstring const& in)
 {
-  int length = in.length();
+  int length = (int)(in.length());
   char* pc = new char [length+1];
   use_facet< ctype<wchar_t> >(std::locale()).narrow (in.c_str(),in.c_str()+length+1,'?',pc);
   return std::string(pc);
@@ -231,7 +231,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 	if(written==size)				// if we did write and filled the buffer, set strp and return number of bytes written
 	{
 		*strp=buf;
-		return written;
+		return (int)written;
 			
 	}
 

@@ -86,7 +86,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../common/VS_2010;../src/cardpluginBeid;../src/cardpluginSIS;../;../old;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>BEID_35;WIN32;_DEBUG;_WINDOWS;_USRDLL;EIDMW_CAL_EXPORT;CARDPLUGIN_IN_CAL;CAL_BEID;BEID_OLD_PINPAD;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BEID_35;WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;EIDMW_CAL_EXPORT;CARDPLUGIN_IN_CAL;CAL_BEID;BEID_OLD_PINPAD;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -118,7 +118,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../common/VS_2005;../src/cardpluginBeid;../src/cardpluginSIS;../;../old;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>BEID_35;WIN32;_DEBUG;_WINDOWS;_USRDLL;EIDMW_CAL_EXPORT;CARDPLUGIN_IN_CAL;CAL_BEID;BEID_OLD_PINPAD;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BEID_35;WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;EIDMW_CAL_EXPORT;CARDPLUGIN_IN_CAL;CAL_BEID;BEID_OLD_PINPAD;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
