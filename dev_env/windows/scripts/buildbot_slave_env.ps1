@@ -236,12 +236,12 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 invoke-expression "easy_install $tooltarget"
 
 ##############################################################################
-# install buildbot-slave 0.8.1
+# install buildbot-slave 0.8.2
 # can be found on http://buildbot.net/trac
 ##############################################################################
 Write-Host "- Installing buildbot-slave"
 
-$toolfilename = "buildbot-slave-0.8.1.zip"
+$toolfilename = "buildbot-slave-0.8.2.zip"
 
 # Download file
 $tooltarget = "$packagesfolder\$toolfilename"
@@ -250,51 +250,18 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 Extract $tooltarget $env:Temp
 
 # cd to directory of buildbot-slave source as setup fails if ran from other directory
-cd "$env:Temp\buildbot-slave-0.8.1\"
+cd "$env:Temp\buildbot-slave-0.8.2\"
 invoke-expression "python setup.py install"
 
-##############################################################################
-# Buildbot slave PWD issue with msys
-# PWD is set during buildbot-slave's startCommand. As the PWD value is a 
-# 'Windows style' path, scripts that rely on this value will fail. For now, 
-# we solve this by not setting PWD in 
-# C:\Python26\Lib\site-packages\buildbot_slave-0.8.1-py2.6.egg\buildslave\commands\base.py
-##############################################################################
 
-#Comment out lines 452 and 453:
-        #if not self.environ.get('MACHTYPE', None) == 'i686-pc-msys':
-         #   self.environ['PWD'] = os.path.abspath(self.workdir)
-$sourcefile = "C:\Python26\Lib\site-packages\buildbot_slave-0.8.1-py2.6.egg\buildslave\commands\base.py"
-Move-Item -Force $sourcefile "$sourcefile.orig"
-$content = Get-Content -Path "$sourcefile.orig"
-$content | foreach {
-	$string = $_ -Replace [regex]::escape("if not self.environ.get('MACHTYPE', None) == 'i686-pc-msys':"), "#if not self.environ.get('MACHTYPE', None) == 'i686-pc-msys':" 
-	$string = $string -Replace [regex]::escape("self.environ['PWD'] = os.path.abspath(self.workdir)"), "#self.environ['PWD'] = os.path.abspath(self.workdir)"
-	$string
-} | Set-Content $sourcefile
-
-##############################################################################
-# download and extract buildbot 0.8.1
-# we only need the service install script which is not available in buildbot-slave
-# can be found on http://buildbot.net/trac
-##############################################################################
-Write-Host "- Downloading buildbot-slave"
-
-$toolfilename = "buildbot-0.8.1.zip"
-
-# Download file
-$tooltarget = "$packagesfolder\$toolfilename"
-Download "$packagesfolderurl/$toolfilename" $tooltarget
-
-Extract $tooltarget $env:Temp
 
 # read out file, replace "buildbot.scripts" with "buildslave.scripts"
 # and save it in the python-scripts folder
-$sourcefile = "$env:Temp\buildbot-0.8.1\contrib\windows\buildbot_service.py"
+$sourcefile = "$env:Temp\buildbot-slave-0.8.2\contrib\windows\buildbot_service.py"
 $destinationfile = "$pythonscriptsfolder\buildbot_service.py"
 $content = Get-Content -Path "$sourcefile"
 $content | foreach {
-	$string = $_ -Replace [regex]::escape("buildbot.scripts"), "buildslave.scripts" 
+#	$string = $_ -Replace [regex]::escape("buildbot.scripts"), "buildslave.scripts" 
 	$string
 } | Set-Content $destinationfile
 
