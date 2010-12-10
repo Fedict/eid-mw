@@ -90,7 +90,8 @@ function Extract
 	if(test-path($zipfilename))
 	{
 		Write-Host "   Extract $zipfilename to $destination..."
-		invoke-expression "$tool x -y -o$destination $zipfilename"
+		New-Item $destination -type directory
+		cmd /c "$tool x -y -o$destination $zipfilename"
 	}
 }
 
@@ -219,7 +220,7 @@ InstallMSI $tooltarget
 # can be found on http://twistedmatrix.com/trac/wiki/Downloads
 ##############################################################################
 Write-Host "- Installing Zope.Interface"
-invoke-expression "easy_install zope.interface"
+cmd /c easy_install zope.interface
 
 ##############################################################################
 # install pywin32
@@ -233,7 +234,7 @@ $toolfilename = "pywin32-214.win32-py2.6.exe"
 $tooltarget = "$packagesfolder\$toolfilename"
 Download "$packagesfolderurl/$toolfilename" $tooltarget
 
-invoke-expression "easy_install $tooltarget"
+cmd /c easy_install $tooltarget
 
 ##############################################################################
 # install buildbot-slave 0.8.2
@@ -251,7 +252,7 @@ Extract $tooltarget $env:Temp
 
 # cd to directory of buildbot-slave source as setup fails if ran from other directory
 cd "$env:Temp\buildbot-slave-0.8.2\"
-invoke-expression "python setup.py install"
+cmd /c python setup.py install
 
 
 
@@ -268,11 +269,11 @@ $content | foreach {
 ##############################################################################
 # create buildslave config directory
 ##############################################################################
-Invoke-Expression "$pythonscriptsfolder\buildslave create-slave $buildslavefolder $buildmasterhostnameandport $slavename $slavepassword"
+cmd /c $pythonscriptsfolder\buildslave create-slave $buildslavefolder $buildmasterhostnameandport $slavename $slavepassword
 
 cd $pythonscriptsfolder
-Invoke-Expression "python buildbot_service.py --username .\LocalSystem --password nevermind --startup auto install"
-Invoke-Expression "python buildbot_service.py start '$buildslavefolder'"
+cmd /c python buildbot_service.py --username .\LocalSystem --password nevermind --startup auto install
+cmd /c python buildbot_service.py start '$buildslavefolder'
 
 # return to pwd
 cd $oldpwd
