@@ -45,7 +45,7 @@ $pythonsitepackagesfolder="c:\Python26\Lib\site-packages"
 $pythonscriptsfolder="c:\Python26\Scripts"
 $pythonbinaryfolder="c:\Python26"
 $buildslavefolder="c:\eid_buildbot_env\slave\$slavename"
-$userpath = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::User)
+$machinepath = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::Machine)
 #
 # end Config Section
 ###############################################################################
@@ -142,15 +142,14 @@ function AddToPathEnv
 		$env:Path = $env:Path + ";$folder"
 	}
 
-	$path = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::User) + 
-		";" + [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::Machine)
+	$path =  [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::Machine)
 		
 	If (!(select-string -InputObject $path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
 	{
-		Write-Host "    $folder not yet in System Path. Adding..."
-		Set-Variable -Name userpath -value "$userpath;$folder" -Scope Global
+		Write-Host "    $folder not yet in Machine Path. Adding..."
+		Set-Variable -Name machinepath -value "$machinepath;$folder" -Scope Global
 		### Modify user environment variable ###
-		[Environment]::SetEnvironmentVariable( "Path", $userpath , [System.EnvironmentVariableTarget]::User )
+		[Environment]::SetEnvironmentVariable( "Path", $machinepath , [System.EnvironmentVariableTarget]::Machine )
 	}
 }
 try {
@@ -265,11 +264,9 @@ cmd /c python setup.py install
 # and save it in the python-scripts folder
 $sourcefile = "$env:Temp\buildbot-slave-0.8.2\contrib\windows\buildbot_service.py"
 $destinationfile = "$pythonscriptsfolder\buildbot_service.py"
-$content = Get-Content -Path "$sourcefile"
-$content | foreach {
-#	$string = $_ -Replace [regex]::escape("buildbot.scripts"), "buildslave.scripts" 
-	$string
-} | Set-Content $destinationfile
+
+Copy-Item $sourcefile -destination $destinationfile
+
 
 ##############################################################################
 # create buildslave config directory
@@ -278,7 +275,7 @@ cmd /c $pythonscriptsfolder\buildslave create-slave $buildslavefolder $buildmast
 
 cd $pythonscriptsfolder
 cmd /c python buildbot_service.py --username .\LocalSystem --password nevermind --startup auto install
-cmd /c python buildbot_service.py start '$buildslavefolder'
+cmd /c python buildbot_service.py start $buildslavefolder
 
 # return to pwd
 cd $oldpwd
