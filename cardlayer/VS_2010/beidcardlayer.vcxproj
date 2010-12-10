@@ -77,10 +77,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">beid$(ProjectName)D</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid$(ProjectName)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">beid$(ProjectName)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">beid$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">beid40$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid40$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">beid40$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">beid40$(ProjectName)D</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -103,8 +103,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>WS2_32.Lib;beidDlgsWin32D.lib;beidcommonD.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)D.dll</OutputFile>
+      <AdditionalDependencies>WS2_32.Lib;beid40DlgsWin32D.lib;beid40commonD.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -135,8 +135,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>WS2_32.Lib;beidDlgsWin32D.lib;beidcommonD.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)D.dll</OutputFile>
+      <AdditionalDependencies>WS2_32.Lib;beid40DlgsWin32D.lib;beid40commonD.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -162,8 +162,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>WS2_32.Lib;beidDlgsWin32.lib;beidcommon.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName).dll</OutputFile>
+      <AdditionalDependencies>WS2_32.Lib;beid40DlgsWin32.lib;beid40common.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -194,8 +194,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>WS2_32.Lib;beidDlgsWin32.lib;beidcommon.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName).dll</OutputFile>
+      <AdditionalDependencies>WS2_32.Lib;beid40DlgsWin32.lib;beid40common.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>

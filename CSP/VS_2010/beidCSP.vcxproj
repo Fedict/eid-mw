@@ -103,7 +103,7 @@
     </ProjectReference>
     <Link>
       <AdditionalOptions>/def:"..\beidlib.def" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Crypt32.lib;beidDlgsWin32D.lib;beidcommonD.lib;beidcardlayerD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Crypt32.lib;beid40DlgsWin32D.lib;beid40commonD.lib;beid40cardlayerD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)libD.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -132,7 +132,7 @@
     </ProjectReference>
     <Link>
       <AdditionalOptions>/def:"..\beidlib.def" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Crypt32.lib;beidDlgsWin32.lib;beidcommon.lib;beidcardlayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Crypt32.lib;beid40DlgsWin32.lib;beid40common.lib;beid40cardlayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)lib.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -169,7 +169,7 @@
     </ProjectReference>
     <Link>
       <AdditionalOptions>/def:"..\beidlib.def" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Crypt32.lib;beidDlgsWin32D.lib;beidcommonD.lib;beidcardlayerD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Crypt32.lib;beid40DlgsWin32D.lib;beid40commonD.lib;beid40cardlayerD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)libD.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -202,7 +202,7 @@
     </ProjectReference>
     <Link>
       <AdditionalOptions>/def:"..\beidlib.def" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Crypt32.lib;beidDlgsWin32.lib;beidcommon.lib;beidcardlayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Crypt32.lib;beid40DlgsWin32.lib;beid40common.lib;beid40cardlayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)lib.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>

@@ -77,10 +77,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid$(ProjectName)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">beid$(ProjectName)D</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">beid$(ProjectName)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">beid$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid40$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">beid40$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">beid40$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">beid40$(ProjectName)D</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
@@ -107,7 +107,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>WS2_32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)D.dll</OutputFile>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName)D.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -145,7 +145,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>WS2_32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)D.dll</OutputFile>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName)D.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
@@ -178,7 +178,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>WS2_32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName).dll</OutputFile>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -216,7 +216,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>WS2_32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName).dll</OutputFile>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>

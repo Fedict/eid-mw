@@ -77,10 +77,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">beid$(ProjectName)D</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">beid$(ProjectName)D</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid$(ProjectName)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">beid$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">beid40$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">beid40$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid40$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">beid40$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <BuildLog>
@@ -107,8 +107,8 @@
       <PreprocessorDefinitions>BEID_35;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>beidcommonD.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)D.dll</OutputFile>
+      <AdditionalDependencies>beid40commonD.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ManifestFile>$(IntDir)$(TargetFileName).intermediate.manifest</ManifestFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -150,8 +150,8 @@
       <PreprocessorDefinitions>BEID_35;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>beidcommonD.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)D.dll</OutputFile>
+      <AdditionalDependencies>beid40commonD.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ManifestFile>$(IntDir)$(TargetFileName).intermediate.manifest</ManifestFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -189,8 +189,8 @@
       <PreprocessorDefinitions>BEID_35;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>beidcommon.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName).dll</OutputFile>
+      <AdditionalDependencies>beid40common.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ManifestFile>$(IntDir)$(TargetFileName).intermediate.manifest</ManifestFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -233,8 +233,8 @@
       <PreprocessorDefinitions>BEID_35;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>beidcommon.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName).dll</OutputFile>
+      <AdditionalDependencies>beid40common.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid40$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\VS_2010\Binaries\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ManifestFile>$(IntDir)$(TargetFileName).intermediate.manifest</ManifestFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>

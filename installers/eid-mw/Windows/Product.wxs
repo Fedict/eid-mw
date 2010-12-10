@@ -97,9 +97,6 @@
           <Directory Id="IMAGEFORMATS" Name="imageformats" />
           <Directory Id="EIDSTORE" Name="eidstore">
             <Directory Id="CERTSDIR" Name="certs"/>
-              <Directory Id="HTTPDIR" Name="http">
-                <Directory Id="CRLEIDBELGIUMBE" Name="crl.eid.belgium.be"/>
-              </Directory>
           </Directory>
           <Directory Id="LOGDIR" Name="log"/>
         </Directory>
@@ -158,18 +155,6 @@
       <Component Id="Certs" Guid="{750F471B-6A83-4118-A0AF-2A138B770AC6}">
         <File Id="beidcertbelgiumrca.der" Name="beid-cert-belgiumrca.der" KeyPath="yes" Source="..\..\..\misc\certs\beid-cert-belgiumrca.der" />
         <File Id="beidcertbelgiumrca2.der" Name="beid-cert-belgiumrca2.der" KeyPath="no" Source="..\..\..\misc\certs\beid-cert-belgiumrca2.der" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="HTTPDIR">
-      <Component Id="HttpDir" Guid="{24B807B8-E1F2-42BB-976D-C98B7F52A119}" KeyPath="yes">
-        <CreateFolder />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="CRLEIDBELGIUMBE">
-      <Component Id="CrlEidBelgiumBe" Guid="{26BEC283-40A5-43A8-BC57-351DA9F79B33}" KeyPath="yes">
-        <CreateFolder />
       </Component>
     </DirectoryRef>
 
@@ -355,17 +340,16 @@
         <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\Dutch\License_nl.rtf" />
         <File Id="License_fr.rtf" Name="License_fr.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\French\License_fr.rtf" />
         <File Id="License_de.rtf" Name="License_de.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\German\License_de.rtf" />
-
       </Component>
 
     </DirectoryRef>
 
     <DirectoryRef Id="SystemFolder">
 
-      <Component Id="Runtime35" Guid="{13BD63DB-BFCC-4971-BB31-F9AABDFDEBF8}" SharedDllRefCount="yes">
-        <File Id="beidcardlayer.dll" Name="beidcardlayer.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beidcardlayer.dll" />
-        <File Id="beidcommon.dll" Name="beidcommon.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beidcommon.dll" />
-        <File Id="beidDlgsWin32.dll" Name="beidDlgsWin32.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beidDlgsWin32.dll" />
+      <Component Id="Runtime40" Guid="{13BD63DB-BFCC-4971-BB31-F9AABDFDEBF8}" SharedDllRefCount="yes">
+        <File Id="beid40cardlayer.dll" Name="beid40cardlayer.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beid40cardlayer.dll" />
+        <File Id="beid40common.dll" Name="beid40common.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beid40common.dll" />
+        <File Id="beid40DlgsWin32.dll" Name="beid40DlgsWin32.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beid40DlgsWin32.dll" />
       </Component>
 
       <Component Id="beidmdrvsystem32" Guid="a8259480-e408-11de-8a39-0800200c9a66" Permanent="no">
@@ -446,53 +430,8 @@
         </RegistryKey>
       </Component>
 
-      <Component Id="RegistryOutlookSupressNameChecks" Guid="{6E5B6B87-01F7-4a72-B87C-7CD4927E7CD7}">
-        <RegistryKey Root="HKLM"
-            Key="Software\Microsoft\Office\14.0\Outlook\Security"
-            Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="integer"  Name="SupressNameChecks" Value="1" KeyPath="no"/>
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-            Key="Software\Microsoft\Office\12.0\Outlook\Security"
-            Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="integer"  Name="SupressNameChecks" Value="1" KeyPath="no"/>
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-            Key="Software\Microsoft\Office\11.0\Outlook\Security"
-            Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="integer"  Name="SupressNameChecks" Value="1" KeyPath="no"/>
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-            Key="Software\Microsoft\Office\10.0\Outlook\Security"
-            Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="integer"  Name="SupressNameChecks" Value="1" KeyPath="no"/>
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-            Key="Software\Microsoft\Office\9.0\Outlook\Security"
-            Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="integer"  Name="SupressNameChecks" Value="1" KeyPath="no"/>
-        </RegistryKey>
-      </Component>
     </DirectoryRef>
 
-<!--    <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="BeidGuiShortcut" Guid="{CBD0F388-EAE5-4FA1-8C38-EC223928FF13}">
-        <Shortcut Id="BeidGuiStartMenuShortcut"
-                  Name="eID-Viewer"
-                  Description="!(loc.BeidGuiDescr)"
-                  Target="[APPLICATIONROOTFOLDER]beid35gui.exe"
-                  WorkingDirectory="APPLICATIONROOTFOLDER"/>
-        <Shortcut Id="EidViewerShortcut"
-                  Name="eID-Viewer"
-                  Directory="DesktopFolder"
-                  Description="!(loc.BeidGuiDescr)"
-                  Target="[APPLICATIONROOTFOLDER]beid35gui.exe"
-                  WorkingDirectory="APPLICATIONROOTFOLDER"/>
-        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="GuiShortcut" Type="integer" Value="1" KeyPath="yes" />
-      </Component>
-    </DirectoryRef>
--->
     <DirectoryRef Id="ApplicationProgramsFolderUtilities">
       <Component Id="OutlookShortcut" Guid="{813C0984-0401-4604-9D7F-E13BDD28FBD7}">
         <Shortcut Id="OutlookStartMenuShortcut"
@@ -520,11 +459,8 @@
 -->
       <!-- Program Files -->
       <ComponentRef Id="RootFolder"/>
-      <!--<ComponentRef Id="Icon" />-->
       <ComponentRef Id="EidStore"/>
       <ComponentRef Id="Certs"/>
-      <ComponentRef Id="HttpDir"/>
-      <ComponentRef Id="CrlEidBelgiumBe"/>
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
       <ComponentRef Id="Extensions"/>
@@ -542,20 +478,15 @@
       <ComponentRef Id="XPIPlatformNTDefaults"/>
       <ComponentRef Id="XPIPlatformNTDefaultsPreferences"/>
       <ComponentRef Id="XPIskin"/>
-      <ComponentRef Id="OutlookTool" />
-      <!-- Shortcuts -->
-      <ComponentRef Id ="OutlookShortcut"/>
+
+      <!-- Beid pinpad dir-->
+      <!--<ComponentRef Id="PinpadLib"/>-->
+
+      <!-- Beid Siscardplugin dir-->
+      <!--<ComponentRef Id="Siscardplugin"/>-->
 
       <!-- Registry -->
       <ComponentRef Id="RegistryBeidSystem"/>
-
-      <!--<Feature Id="GUI"
-                Title="!(loc.BeidGui)"
-                Description="!(loc.BeidGuiDescr)"
-                Level="1"
-                >
-      <ComponentRef Id="BeidGuiShortcut"/>
-    </Feature>-->
 
     <Feature Id="Crypto"
                 Title="!(loc.Crypto)"
@@ -564,8 +495,8 @@
                 >
         <ComponentRef Id="SCardSvrService"/>
         <ComponentRef Id="pkcs11"/>
-        <ComponentRef Id="Runtime35"/>
-      <!-- Shortcuts -->
+        <ComponentRef Id="Runtime40"/>
+
         <Feature Id="Install_Minidriver" Level="0">
           <ComponentRef Id="beidmdrv"/>
           <ComponentRef Id="CertPropService"/>
@@ -592,20 +523,13 @@
                  Description="!(loc.OutlooksncDescr)"
                  Absent="allow"
                  Level="1">
-          <!-- Shortcuts -->
-          <ComponentRef Id="RegistryOutlookSupressNameChecks"/>
+          <ComponentRef Id ="OutlookShortcut"/>
+          <ComponentRef Id="OutlookTool" />
         </Feature>
       </Feature>
 
     </Feature>
 
-    <!--    <CustomAction Id="LaunchApplication" 
-                  FileKey="beid35gui.exe" 
-                  ExeCommand="" 
-                  Execute="immediate" 
-                  Impersonate="yes" 
-                  Return="asyncNoWait" />
--->
     <!--    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.StartApp)" />-->
 
     <UI>
