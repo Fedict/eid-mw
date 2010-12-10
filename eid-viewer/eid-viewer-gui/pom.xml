@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
         <artifactId>eid-viewer</artifactId>
         <groupId>be.fedict</groupId>
         <version>4.0.0-SNAPSHOT</version>
     </parent>
-  <groupId>be.fedict.eid-viewer</groupId>
-  <artifactId>eid-viewer-gui</artifactId>
-  <packaging>jar</packaging>
-  <version>4.0.0-SNAPSHOT</version>
-  <name>Belgian eID Viewer</name>
+    <groupId>be.fedict.eid-viewer</groupId>
+    <artifactId>eid-viewer-gui</artifactId>
+    <packaging>jar</packaging>
+    <version>4.0.0-SNAPSHOT</version>
+    <name>Belgian eID Viewer</name>
     <build>
         <plugins>
 
@@ -30,7 +30,7 @@
                 </configuration>
             </plugin>
 
-			<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -41,49 +41,64 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin> 
+            </plugin>
 
         </plugins>
     </build>
+
+
+
     <repositories>
         <repository>
             <id>unknown-jars-temp-repo</id>
             <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
             <url>file:${project.basedir}/lib</url>
         </repository>
+
+         <repository>
+            <id>e-contract</id>
+            <url>http://www.e-contract.be/maven2/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        
     </repositories>
+
+    
+
     <dependencies>
-         <dependency>
-      <groupId>be.fedict.eid-viewer</groupId>
-      <artifactId>eid-viewer-lib</artifactId>
-      <version>4.0.0-SNAPSHOT</version>
-    </dependency>
-<dependency>
- <groupId>org.jdesktop</groupId>
-    <artifactId>appframework</artifactId>
-    <version>1.0.3</version>
-    </dependency>
-<dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.java.dev.appframework</groupId>
-      <artifactId>appframework</artifactId>
-      <version>1.03</version>
-    </dependency>
-    <dependency>
-      <groupId>org.swinglabs</groupId>
-      <artifactId>swing-worker</artifactId>
-      <version>1.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.swinglabs</groupId>
-      <artifactId>swing-layout</artifactId>
-      <version>1.0.3</version>
-    </dependency>
+        <dependency>
+            <groupId>be.fedict.eid-viewer</groupId>
+            <artifactId>eid-viewer-lib</artifactId>
+            <version>4.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdesktop</groupId>
+            <artifactId>appframework</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.appframework</groupId>
+            <artifactId>appframework</artifactId>
+            <version>1.03</version>
+        </dependency>
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swing-worker</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swing-layout</artifactId>
+            <version>1.0.3</version>
+        </dependency>
         <dependency>
             <groupId>unknown.binary</groupId>
             <artifactId>AbsoluteLayout</artifactId>
@@ -94,5 +109,19 @@
             <artifactId>beansbinding</artifactId>
             <version>1.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>be.fedict.eid-trust-service</groupId>
+            <artifactId>eid-trust-service-client</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>be.fedict.eid-trust-service</groupId>
+            <artifactId>eid-trust-service-xkms2-ws</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+
+
     </dependencies>
 </project>
