@@ -136,14 +136,18 @@ function AddToPathEnv
 {
 	param([string]$folder)
 
+	If (!(select-string -InputObject $env:Path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
+	{
+		Write-Host "    $folder not yet in Current Path. Adding..."
+		$env:Path = $env:Path + ";$folder"
+	}
+
 	$path = [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::User) + 
-		";" + [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::Machine) + 
-		";" + $Env:Path
+		";" + [Environment]::GetEnvironmentVariable("Path",[System.EnvironmentVariableTarget]::Machine)
 		
 	If (!(select-string -InputObject $path -Pattern ("(^|;)" + [regex]::escape($folder) + "(;|`$)") -Quiet)) 
 	{
-		Write-Host "    $folder not yet in Path. Adding..."
-		$env:Path = $env:Path + ";$folder"
+		Write-Host "    $folder not yet in System Path. Adding..."
 		Set-Variable -Name userpath -value "$userpath;$folder" -Scope Global
 		### Modify user environment variable ###
 		[Environment]::SetEnvironmentVariable( "Path", $userpath , [System.EnvironmentVariableTarget]::User )
@@ -252,6 +256,7 @@ Extract $tooltarget $env:Temp
 
 # cd to directory of buildbot-slave source as setup fails if ran from other directory
 cd "$env:Temp\buildbot-slave-0.8.2\"
+cmd /c echo %PATH%
 cmd /c python setup.py install
 
 
