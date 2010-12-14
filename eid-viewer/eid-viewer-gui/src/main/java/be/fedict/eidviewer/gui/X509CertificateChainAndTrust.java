@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  *
- * @author frank
+ * @author Frank Marien
  */
 public class X509CertificateChainAndTrust
 {
@@ -34,10 +34,11 @@ public class X509CertificateChainAndTrust
     private Exception                       validationException;
     private RevocationValuesType            revocationValues;
     private List<String>                    invalidReasons;
-    private boolean                         validated,trusted;
+    private boolean                         validating, validated,trusted;
 
     public X509CertificateChainAndTrust(String trustDomain, List<X509Certificate> certificates)
     {
+        this.trustDomain=trustDomain;
         this.certificates=certificates;
         this.certificatesAndTrusts=new ArrayList<X509CertificateAndTrust>();
         for(X509Certificate certificate : certificates)
@@ -71,6 +72,11 @@ public class X509CertificateChainAndTrust
         return revocationValues;
     }
 
+    public boolean isValidating()
+    {
+        return validating;
+    }
+    
     public boolean isTrusted()
     {
         return trusted;
@@ -91,46 +97,52 @@ public class X509CertificateChainAndTrust
     public void setValidationException(Exception validationException)
     {
         this.validationException = validationException;
+        this.validating=false;
         this.validated=true;
         this.trusted=false;
-        for(X509CertificateAndTrust certificate : certificatesAndTrusts)
-        {
-            certificate.setValidated(true);
-            certificate.setTrusted(false);
-        }
+        propagate();
     }
 
     public void setInvalidReasons(List<String> invalidReasons)
     {
         this.invalidReasons = invalidReasons;
+        this.validating=false;
         this.validated=true;
         this.trusted=false;
-        for(X509CertificateAndTrust certificate : certificatesAndTrusts)
-        {
-            certificate.setValidated(true);
-            certificate.setTrusted(false);
-        }
+        propagate();
     }
 
     public void setRevocationValues(RevocationValuesType revocationValues)
     {
-        this.revocationValues = revocationValues;
+        this.revocationValues=revocationValues;
+        this.validating=false;
         this.validated=true;
-        for(X509CertificateAndTrust certificate : certificatesAndTrusts)
-        {
-            certificate.setValidated(true);
-            certificate.setTrusted(false);
-        }
+        this.trusted=false;
+        propagate();
+    }
+
+    public void setValidating()
+    {
+        this.validating=true;
+        propagate();
     }
     
     public void setTrusted()
     {
+        this.validating=false;
         this.validated=true;
-        this.trusted = true;
+        this.trusted=true;
+        propagate();
+    }
+
+    private void propagate()
+    {
         for(X509CertificateAndTrust certificate : certificatesAndTrusts)
         {
-            certificate.setValidated(true);
-            certificate.setTrusted(true);
+            certificate.setValidating(this.isValidating());
+            certificate.setValidated(this.isValidated());
+            certificate.setInvalidReasons(this.getInvalidReasons());
+            certificate.setTrusted(this.isTrusted());
         }
     }
 }

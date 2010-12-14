@@ -25,14 +25,19 @@ import be.fedict.trust.client.exception.ValidationFailedException;
 import java.security.PublicKey;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//trust.ta.belgium.be
+//trust.services.belgium.be
+
 /**
  *
- * @author frank
+ * @author Frank Marien
  */
 public class TrustServiceController extends Observable implements Runnable
 {   
@@ -76,9 +81,14 @@ public class TrustServiceController extends Observable implements Runnable
         return this;
     }
 
-    void stop()
+    public void stop()
     {
         running=false;
+    }
+
+    public boolean isValidating()
+    {
+        return !(chainsToBeValidated.isEmpty());
     }
 
     public void run()
@@ -92,14 +102,14 @@ public class TrustServiceController extends Observable implements Runnable
                 
                 try
                 {
+                    chain.setValidating();
                     trustServiceClient.validate(chain.getTrustDomain(), chain.getCertificates(), true);
                     chain.setTrusted();
                 }
                 catch(CertificateEncodingException ex)
                 {
                     Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, null, ex);
-                    chain.setValidationException(ex);
-                    
+                    chain.setValidationException(ex);     
                 }
                 catch(TrustDomainNotFoundException ex)
                 {
@@ -117,7 +127,7 @@ public class TrustServiceController extends Observable implements Runnable
                     Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, null, ex);
                     chain.setValidationException(ex);
                     chain.setRevocationValues(trustServiceClient.getRevocationValues());
-                    chain.setInvalidReasons(trustServiceClient.getInvalidReasons());
+                    chain.setInvalidReasons(trimInvalidReasons(trustServiceClient.getInvalidReasons()));
                 }
 
                 setChanged();
@@ -129,5 +139,15 @@ public class TrustServiceController extends Observable implements Runnable
                 running=false;
             }
         }
+    }
+
+    private List<String> trimInvalidReasons(List<String> reasons)
+    {
+        List<String> trimmed=new ArrayList<String>(reasons.size());
+        for(String reason : reasons)
+        {
+            trimmed.add(reason.substring(31)); //FIX ME seek # instead
+        }
+        return trimmed;
     }
 }

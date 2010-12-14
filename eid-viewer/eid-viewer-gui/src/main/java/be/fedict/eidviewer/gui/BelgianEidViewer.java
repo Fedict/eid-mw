@@ -97,6 +97,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         
         eid = EidFactory.getEidImpl(this, coreMessages);
         eidController = new EidController(eid);
+        eidController.setAutoValidateTrust(true);
         cardPanel.setEidController(eidController);
         eidController.addObserver(identityPanel);
         eidController.addObserver(cardPanel);
@@ -317,7 +318,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         tabPanel.add(identityPanel, res.getString("IDENTITY"));
         tabPanel.add(cardPanel, res.getString("CARD"));
         tabPanel.add(certificatesPanel, res.getString("CERTIFICATES"));
-
+        certificatesPanel.start();
     }
 
     private void initIcons()

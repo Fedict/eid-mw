@@ -20,13 +20,15 @@ package be.fedict.eidviewer.gui;
 import be.fedict.eidviewer.gui.helper.X509Utilities;
 import java.security.Principal;
 import java.security.cert.X509Certificate;
+import java.util.List;
 
 public class X509CertificateAndTrust
 {
 
     private X509Certificate certificate;
-    private String trustDomain;
-    private boolean validated, trusted;
+    private String          trustDomain;
+    private List<String>    invalidReasons;
+    private boolean         validating, validated, trusted;
 
     public X509CertificateAndTrust(X509Certificate certificate, String trustDomain)
     {
@@ -52,6 +54,16 @@ public class X509CertificateAndTrust
     public void setTrustDomain(String trustDomain)
     {
         this.trustDomain = trustDomain;
+    }
+
+    public boolean isValidating()
+    {
+        return validating;
+    }
+
+    public void setValidating(boolean validating)
+    {
+        this.validating = validating;
     }
 
     public boolean isTrusted()
@@ -82,6 +94,16 @@ public class X509CertificateAndTrust
     public Principal getIssuerDN()
     {
         return certificate.getIssuerDN();
+    }
+
+    public List<String> getInvalidReasons()
+    {
+        return invalidReasons;
+    }
+
+    public void setInvalidReasons(List<String> invalidReasons)
+    {
+        this.invalidReasons = invalidReasons;
     }
 
     @Override

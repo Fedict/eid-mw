@@ -44,7 +44,9 @@ public class EidController extends Observable implements Runnable,Observer
     private Image                           mPhoto;
     private X509CertificateChainAndTrust    mAuthCertChain;
     private X509CertificateChainAndTrust    mSignCertChain;
+    private String                          mTrustServiceURL;
     private TrustServiceController          mTrustServiceController;
+    private boolean                         mAutoValidateTrust;
 
     public EidController(Eid eid)
     {
@@ -52,11 +54,15 @@ public class EidController extends Observable implements Runnable,Observer
         setState(STATE.IDLE);
         setActivity(ACTIVITY.IDLE);
         mRunningAction=ACTION.NONE;
-        mTrustServiceController =new TrustServiceController("http://www.e-contract.be/eid-trust-service-ws/xkms2");
+        mTrustServiceURL="http://www.e-contract.be/eid-trust-service-ws/xkms2";         // TODO should be in config
+        mAutoValidateTrust=false;
     }
+
+    
 
     public void start()
     {
+        mTrustServiceController =new TrustServiceController(mTrustServiceURL);
         mTrustServiceController.addObserver(this);
         mTrustServiceController.start();
 
@@ -69,6 +75,11 @@ public class EidController extends Observable implements Runnable,Observer
     {
         mRunning=false;
         mTrustServiceController.stop();
+    }
+
+    public void setAutoValidateTrust(boolean autoValidateTrust)
+    {
+        mAutoValidateTrust=autoValidateTrust;
     }
 
     private void eid_changePin() throws Exception
@@ -84,6 +95,21 @@ public class EidController extends Observable implements Runnable,Observer
         
         mRunningAction = ACTION.NONE;
     }
+
+    private void trustService_validateLater() throws Exception
+    {
+        try
+        {
+            mTrustServiceController.validateLater(mAuthCertChain);
+            mTrustServiceController.validateLater(mSignCertChain);
+        }
+        catch(RuntimeException rte)
+        {
+           Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
+        }
+
+        mRunningAction = ACTION.NONE;
+    }
     
 
     private void clearCardInformation()
@@ -95,6 +121,7 @@ public class EidController extends Observable implements Runnable,Observer
         mSignCertChain = null;
     }
 
+    @Override
     public void update(Observable o, Object o1)
     {
         setState();
@@ -129,7 +156,7 @@ public class EidController extends Observable implements Runnable,Observer
         READING_IDENTITY        ("reading_identity"),
         READING_ADDRESS         ("reading_address"),
         READING_PHOTO           ("reading_photo"),
-        READING_AUTH_CHAIN     ("reading_auth_chain"),
+        READING_AUTH_CHAIN      ("reading_auth_chain"),
         READING_SIGN_CHAIN      ("reading_sign_chain"),
         VERIFYING_AUTH_CHAINS   ("verifying_auth_chains"),
         VERIFYING_SIGN_CHAINS   ("verifying_sign_chains");
@@ -150,8 +177,7 @@ public class EidController extends Observable implements Runnable,Observer
 
     public static enum ACTION
     {
-
-        NONE(0), CHANGE_PIN(1);
+        NONE(0), CHANGE_PIN(1), VALIDATELATER(2);
         private final int order;
 
         private ACTION(int order)
@@ -218,12 +244,14 @@ public class EidController extends Observable implements Runnable,Observer
 
                 setActivity(ACTIVITY.READING_AUTH_CHAIN);
                 mAuthCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN,mEid.getAuthnCertificateChain());
-                mTrustServiceController.validateLater(mAuthCertChain);
+                if(mAutoValidateTrust)
+                    mTrustServiceController.validateLater(mAuthCertChain);
                 setState();
 
                 setActivity(ACTIVITY.READING_SIGN_CHAIN);
                 mSignCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN,mEid.getSignCertificateChain());
-                mTrustServiceController.validateLater(mSignCertChain);
+                if(mAutoValidateTrust)
+                    mTrustServiceController.validateLater(mSignCertChain);
                 setActivity(ACTIVITY.IDLE);
 
                 while(mEid.isCardStillPresent())
@@ -231,6 +259,10 @@ public class EidController extends Observable implements Runnable,Observer
                     if(mRunningAction == ACTION.CHANGE_PIN)
                     {
                         eid_changePin();
+                    }
+                    else if(mRunningAction == ACTION.VALIDATELATER)
+                    {
+                        trustService_validateLater();
                     }
                     else
                     {
@@ -337,5 +369,10 @@ public class EidController extends Observable implements Runnable,Observer
     public boolean isReadyForCommand()
     {
         return (mState==STATE.EID_PRESENT) && (mActivity==ACTIVITY.IDLE) && (mRunningAction==ACTION.NONE);
+    }
+
+    public boolean isValidatingTrust()
+    {
+        return mTrustServiceController.isValidating();
     }
 }
