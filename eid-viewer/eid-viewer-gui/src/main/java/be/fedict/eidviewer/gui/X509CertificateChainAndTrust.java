@@ -103,6 +103,15 @@ public class X509CertificateChainAndTrust
         propagate();
     }
 
+    void setTrustServiceException(Exception trustServiceException)
+    {
+        this.validationException = trustServiceException;
+        this.validating=false;
+        this.validated=false;
+        this.trusted=false;
+        propagate();
+    }
+
     public void setInvalidReasons(List<String> invalidReasons)
     {
         this.invalidReasons = invalidReasons;
@@ -141,6 +150,7 @@ public class X509CertificateChainAndTrust
         {
             certificate.setValidating(this.isValidating());
             certificate.setValidated(this.isValidated());
+            certificate.setValidationException(this.getValidationException());
             certificate.setInvalidReasons(this.getInvalidReasons());
             certificate.setTrusted(this.isTrusted());
         }

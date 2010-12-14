@@ -214,10 +214,11 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="-" noResource="true"/>
                 <Property name="name" type="java.lang.String" value="trustStatus" noResource="true"/>
+                <Property name="opaque" type="boolean" value="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                  <GridBagConstraints gridX="3" gridY="7" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="4" anchor="17" weightX="0.0" weightY="0.0"/>
+                  <GridBagConstraints gridX="3" gridY="7" gridWidth="1" gridHeight="1" fill="2" ipadX="2" ipadY="2" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="4" anchor="17" weightX="0.0" weightY="0.0"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -226,6 +227,7 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="99" red="ff" type="rgb"/>
                 </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="(trusterrors)"/>
                 <Property name="name" type="java.lang.String" value="trustErrors" noResource="true"/>
                 <Property name="opaque" type="boolean" value="true"/>
@@ -319,13 +321,17 @@
       <SubComponents>
         <Component class="javax.swing.JCheckBox" name="alwaysValidateCheckbox">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Always Validate Certificate Trust"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="be/fedict/eidviewer/gui/resources/CertificatesPanel.properties" key="alwaysValidateCheckbox" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
             <Property name="name" type="java.lang.String" value="alwaysValidateCheckbox" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="validateNowButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Validate Now.."/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="be/fedict/eidviewer/gui/resources/CertificatesPanel.properties" key="validateNowButton" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
             <Property name="name" type="java.lang.String" value="validateNowButton" noResource="true"/>
           </Properties>
         </Component>

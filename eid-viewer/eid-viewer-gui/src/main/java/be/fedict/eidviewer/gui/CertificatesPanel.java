@@ -23,6 +23,8 @@ import be.fedict.eidviewer.gui.helper.X509Utilities;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.security.Principal;
 import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateNotYetValidException;
@@ -45,6 +47,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 /**
@@ -59,7 +62,9 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
     private Map<Principal, DefaultMutableTreeNode>  certificatesInTree;
     private DefaultMutableTreeNode                  rootNode;
     private DefaultTreeModel                        treeModel;
-    private Color                                   defaultLabelForeground;
+    private Color                                   defaultLabelForeground,defaultLabelBackground;
+    private EidController                           eidController;
+    private DefaultMutableTreeNode                  authenticationCertificateNode;
 
     public CertificatesPanel()
     {
@@ -67,12 +72,22 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
         initComponents();
         trustErrors.setVisible(false);
-        defaultLabelForeground = validFromLabel.getForeground();
+        defaultLabelForeground = UIManager.getColor("Label.foreground");
+        defaultLabelBackground = UIManager.getColor("Label.background");
+        authenticationCertificateNode=null;
         initCertsTree();
+        
+    }
+
+    public CertificatesPanel setEidController(EidController eidController)
+    {
+        this.eidController = eidController;
+        return this;
     }
 
     public CertificatesPanel start()
     {
+        initTrustPrefsPanel();
         certsBusyIcon.setVisible(false);
         certsTree.addTreeSelectionListener(this);
         clearCertsTree();
@@ -81,25 +96,24 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
 
     public void update(Observable o, Object o1)
     {
-        EidController controller = (EidController) o;
+        if (eidController == null)
+            return;
 
-        if (controller.getState() == EidController.STATE.EID_PRESENT)
+        updateVisibleState();
+
+        if(eidController.getState() == EidController.STATE.EID_PRESENT)
         {
-            certsBusyIcon.setVisible(controller.getActivity() == EidController.ACTIVITY.READING_AUTH_CHAIN ||
-                                     controller.getActivity() == EidController.ACTIVITY.READING_SIGN_CHAIN ||
-                                     controller.isValidatingTrust());
+            if(eidController.hasAuthCertChain())
+                addCerts(eidController.getAuthCertChain());
 
-            if(controller.hasAuthCertChain())
-                addCerts(controller.getAuthCertChain());
-
-            if(controller.hasSignCertChain())
-                addCerts(controller.getSignCertChain());
+            if(eidController.hasSignCertChain())
+                addCerts(eidController.getSignCertChain());
         }
         else
         {
             clearCertsTree();
             rootNode = null;
-        }
+        }   
     }
 
     private void addCerts(X509CertificateChainAndTrust chain)
@@ -130,6 +144,24 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         }
     }
 
+    private void updateVisibleState()
+    {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                validateNowButton.setEnabled(eidController.isReadyForCommand());
+
+                if(eidController.getState()==EidController.STATE.EID_PRESENT)
+                    certsBusyIcon.setVisible(eidController.getActivity() == EidController.ACTIVITY.READING_AUTH_CHAIN ||
+                                             eidController.getActivity() == EidController.ACTIVITY.READING_SIGN_CHAIN ||
+                                             eidController.isValidatingTrust());
+                else
+                    certsBusyIcon.setVisible(false);
+            }
+        });
+    }
+
     private void updateTreeNode(final DefaultMutableTreeNode changedNode)
     {
         java.awt.EventQueue.invokeLater(new Runnable()
@@ -158,9 +190,10 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
                 {
                     treeModel.insertNodeInto(child, parent, parent.getChildCount());
                     for (int row = 0; row < certsTree.getRowCount(); row++)  // and auto-expand to display it
-                    {
                         certsTree.expandRow(row);
-                    }
+                    X509CertificateAndTrust certAndTrust=(X509CertificateAndTrust)child.getUserObject();
+                    if(certAndTrust!=null && X509Utilities.keyHasDigitalSignatureConstraint(certAndTrust.getCertificate()))
+                        certsTree.setSelectionPath(new TreePath(child.getPath()));
                 }
             }
         });
@@ -204,17 +237,42 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
                         {
                             trustStatus.setText(bundle.getString("trustStatus_trusted"));
                             trustErrors.setVisible(false);
+                            trustStatus.setForeground(greener(defaultLabelForeground));
+                            trustStatusLabel.setForeground(greener(defaultLabelForeground));
+                            trustStatus.setBackground(greener(defaultLabelBackground));
+                            trustStatusLabel.setBackground(greener(defaultLabelBackground));
                         }
                         else
                         {
                             trustStatus.setText(bundle.getString("trustStatus_untrusted"));
                             trustErrors.setText(getMultilineLabelBundleText(bundle,"trustError_", certAndTrust.getInvalidReasons()));
                             trustErrors.setVisible(true);
+                            trustStatus.setForeground(redder(defaultLabelForeground));
+                            trustStatusLabel.setForeground(redder(defaultLabelForeground));
+                            trustStatus.setBackground(redder(defaultLabelBackground));
+                            trustStatusLabel.setBackground(redder(defaultLabelBackground));
                         }
                     }
                     else
                     {
-                        trustStatus.setText(bundle.getString(certAndTrust.isValidating()?"trustStatus_validating":"trustStatus_unknown"));
+                        trustStatus.setForeground(defaultLabelForeground);
+                        trustStatusLabel.setForeground(defaultLabelForeground);
+                        trustStatus.setBackground(defaultLabelBackground);
+                        trustStatusLabel.setBackground(defaultLabelBackground);
+                            
+                        if(certAndTrust.getValidationException()!=null)
+                        {
+                            trustStatus.setText(getMultilinelabelText(bundle.getString("trustStatus_unobtainable")));
+                            trustErrors.setText(certAndTrust.getValidationException().getMessage());
+                            trustErrors.setVisible(true);
+                            
+                        }
+                        else
+                        {
+                            trustStatus.setText(bundle.getString(certAndTrust.isValidating()?"trustStatus_validating":"trustStatus_unknown"));
+                            trustStatus.setForeground(defaultLabelForeground);
+                            trustErrors.setVisible(false);
+                        }
                     }
 
                     dn.setText(getMultilineDN(certificate.getSubjectDN().getName()));
@@ -237,14 +295,14 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
                         validFromLabel.setForeground(defaultLabelForeground);
                         validFrom.setForeground(defaultLabelForeground);
                         validFrom.setText(dateFormat.format(certificate.getNotBefore().getTime()));
-                        validUntilLabel.setForeground(Color.red);
-                        validUntil.setForeground(Color.red);
+                        validUntilLabel.setForeground(redder(defaultLabelForeground));
+                        validUntil.setForeground(redder(defaultLabelForeground));
                         validUntil.setText(dateFormat.format(certificate.getNotAfter().getTime()) + " " + bundle.getString("notAfterWarning"));
                     }
                     catch (CertificateNotYetValidException ex)
                     {
-                        validFromLabel.setForeground(Color.red);
-                        validFrom.setForeground(Color.red);
+                        validFromLabel.setForeground(redder(defaultLabelForeground));
+                        validFrom.setForeground(redder(defaultLabelForeground));
                         validFrom.setText(dateFormat.format(certificate.getNotBefore().getTime()) + " " + bundle.getString("notBeforeWarning"));
                         validUntilLabel.setForeground(defaultLabelForeground);
                         validUntil.setForeground(defaultLabelForeground);
@@ -269,6 +327,11 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
                     validFrom.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     validUntil.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     trustStatus.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
+
+                    trustStatus.setForeground(defaultLabelForeground);
+                    trustStatusLabel.setForeground(defaultLabelForeground);
+                    trustStatus.setBackground(defaultLabelBackground);
+                    trustStatusLabel.setBackground(defaultLabelBackground);
 
                     dn.setEnabled(false);
                     keyUsage.setEnabled(false);
@@ -427,15 +490,19 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
 
         trustStatus.setText("-"); // NOI18N
         trustStatus.setName("trustStatus"); // NOI18N
+        trustStatus.setOpaque(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 2;
+        gridBagConstraints.ipady = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 4);
         certDetailsPanel.add(trustStatus, gridBagConstraints);
 
         trustErrors.setBackground(new java.awt.Color(255, 153, 102));
+        trustErrors.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         trustErrors.setText("(trusterrors)");
         trustErrors.setName("trustErrors"); // NOI18N
         trustErrors.setOpaque(true);
@@ -504,11 +571,11 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         trustPrefspanel.setName("trustPrefspanel"); // NOI18N
         trustPrefspanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 32, 5));
 
-        alwaysValidateCheckbox.setText("Always Validate Certificate Trust");
+        alwaysValidateCheckbox.setText(bundle.getString("alwaysValidateCheckbox")); // NOI18N
         alwaysValidateCheckbox.setName("alwaysValidateCheckbox"); // NOI18N
         trustPrefspanel.add(alwaysValidateCheckbox);
 
-        validateNowButton.setText("Validate Now..");
+        validateNowButton.setText(bundle.getString("validateNowButton")); // NOI18N
         validateNowButton.setName("validateNowButton"); // NOI18N
         trustPrefspanel.add(validateNowButton);
 
@@ -546,6 +613,32 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         certsTree.setCellRenderer(new CertAndTrustCellRenderer());
         certsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         certsTree.setRootVisible(true);
+    }
+
+    private void initTrustPrefsPanel()
+    {
+        alwaysValidateCheckbox.setSelected(eidController.isAutoValidatingTrust());
+
+        alwaysValidateCheckbox.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent ae)
+            {
+                eidController.setAutoValidateTrust(alwaysValidateCheckbox.isSelected());
+                ViewerPrefs.setAutoValidating(alwaysValidateCheckbox.isSelected());
+                if(alwaysValidateCheckbox.isSelected() && eidController.isReadyForCommand())
+                    eidController.validateTrust();
+
+            }
+        });
+
+        validateNowButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent ae)
+            {
+                if(eidController.isReadyForCommand())
+                    eidController.validateTrust();
+            }
+        });
     }
 
     private class CertAndTrustCellRenderer extends DefaultTreeCellRenderer
@@ -613,20 +706,20 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
                 
             return this;
         }
+    }
 
-        private Color greener(Color originalColor)
-        {
-            Color less = originalColor.darker().darker();
-            Color more = originalColor.brighter().brighter();
-            return new Color(less.getRed(), more.getGreen(), less.getBlue());
-        }
+    private Color greener(Color originalColor)
+    {
+        Color less = originalColor.darker().darker();
+        Color more = originalColor.brighter().brighter();
+        return new Color(less.getRed(), more.getGreen(), less.getBlue());
+    }
 
-        private Color redder(Color originalColor)
-        {
-            Color less = originalColor.darker().darker();
-            Color more = originalColor.brighter().brighter();
-            return new Color(more.getRed(), less.getGreen(), less.getBlue());
-        }
+    private Color redder(Color originalColor)
+    {
+        Color less = originalColor.darker().darker();
+        Color more = originalColor.brighter().brighter();
+        return new Color(more.getRed(), less.getGreen(), less.getBlue());
     }
 
     private void clearCertsTree()
@@ -636,6 +729,7 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         certificatesInTree.clear();
         treeModel = new DefaultTreeModel(new DefaultMutableTreeNode("-"));
         certsTree.setModel(treeModel);
+        authenticationCertificateNode=null;
     }
 
     private String getMultilineDN(String dnStr)
@@ -645,6 +739,19 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         for (String dnPart : dnParts)
         {
             html.append(dnPart);
+            html.append("<br/>");
+        }
+        html.append("</html>");
+        return html.toString();
+    }
+
+     private String getMultilinelabelText(String string)
+    {
+        StringBuilder html = new StringBuilder("<html>");
+        String[] parts = string.split(";");
+        for (String part : parts)
+        {
+            html.append(part);
             html.append("<br/>");
         }
         html.append("</html>");

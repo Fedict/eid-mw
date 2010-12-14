@@ -30,42 +30,34 @@ import java.util.Observer;
 
 /**
  *
- * @author frank
+ * @author Frank Marien
  */
 public class EidController extends Observable implements Runnable,Observer
 {
-    private boolean                         mRunning = false;
-    private Eid                             mEid;
-    private STATE                           mState;
-    private ACTIVITY                        mActivity;
-    private ACTION                          mRunningAction;
-    private Identity                        mIdentity;
-    private Address                         mAddress;
-    private Image                           mPhoto;
-    private X509CertificateChainAndTrust    mAuthCertChain;
-    private X509CertificateChainAndTrust    mSignCertChain;
-    private String                          mTrustServiceURL;
-    private TrustServiceController          mTrustServiceController;
-    private boolean                         mAutoValidateTrust;
+    private boolean                         running = false;
+    private Eid                             eid;
+    private STATE                           state;
+    private ACTIVITY                        activity;
+    private ACTION                          runningAction;
+    private Identity                        identity;
+    private Address                         address;
+    private Image                           photo;
+    private X509CertificateChainAndTrust    authCertChain;
+    private X509CertificateChainAndTrust    signCertChain;
+    private TrustServiceController          trustServiceController;
+    private boolean                         autoValidatingTrust;
 
     public EidController(Eid eid)
     {
-        mEid = eid;
+        this.eid = eid;
         setState(STATE.IDLE);
         setActivity(ACTIVITY.IDLE);
-        mRunningAction=ACTION.NONE;
-        mTrustServiceURL="http://www.e-contract.be/eid-trust-service-ws/xkms2";         // TODO should be in config
-        mAutoValidateTrust=false;
+        this.runningAction=ACTION.NONE;
+        this.autoValidatingTrust=false;
     }
-
-    
 
     public void start()
     {
-        mTrustServiceController =new TrustServiceController(mTrustServiceURL);
-        mTrustServiceController.addObserver(this);
-        mTrustServiceController.start();
-
         Thread me=new Thread(this);
                me.setDaemon(true);
                me.start();
@@ -73,52 +65,69 @@ public class EidController extends Observable implements Runnable,Observer
 
     public void stop()
     {
-        mRunning=false;
-        mTrustServiceController.stop();
+        running=false;
+        if(trustServiceController!=null)
+            trustServiceController.stop();
+    }
+
+    public EidController setTrustServiceController(TrustServiceController trustServiceController)
+    {
+        this.trustServiceController=trustServiceController;
+        this.trustServiceController.addObserver(this);
+        this.trustServiceController.start();
+        return this;
     }
 
     public void setAutoValidateTrust(boolean autoValidateTrust)
     {
-        mAutoValidateTrust=autoValidateTrust;
+        if(trustServiceController!=null)
+            this.autoValidatingTrust=autoValidateTrust;
     }
 
     private void eid_changePin() throws Exception
     {
         try
         {
-            mEid.changePin();
+            eid.changePin();
         }
         catch(RuntimeException rte)
         {
            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
         }
         
-        mRunningAction = ACTION.NONE;
+        runningAction = ACTION.NONE;
     }
 
-    private void trustService_validateLater() throws Exception
+    private void trustController_validateTrust() throws Exception
     {
+        if(trustServiceController==null)
+            return;
+        
         try
         {
-            mTrustServiceController.validateLater(mAuthCertChain);
-            mTrustServiceController.validateLater(mSignCertChain);
+            trustServiceController.validateLater(authCertChain);
+            trustServiceController.validateLater(signCertChain);
+            setState();
         }
         catch(RuntimeException rte)
         {
            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
         }
 
-        mRunningAction = ACTION.NONE;
+        runningAction = ACTION.NONE;
     }
     
 
-    private void clearCardInformation()
+    private void securityClear()
     {
-        mIdentity = null;
-        mAddress = null;
-        mPhoto = null;
-        mAuthCertChain = null;
-        mSignCertChain = null;
+        identity = null;
+        address = null;
+        photo = null;
+        authCertChain = null;
+        signCertChain = null;
+
+        if(trustServiceController!=null)
+            trustServiceController.clear();
     }
 
     @Override
@@ -177,7 +186,7 @@ public class EidController extends Observable implements Runnable,Observer
 
     public static enum ACTION
     {
-        NONE(0), CHANGE_PIN(1), VALIDATELATER(2);
+        NONE(0), CHANGE_PIN(1), VALIDATETRUST(2);
         private final int order;
 
         private ACTION(int order)
@@ -188,20 +197,20 @@ public class EidController extends Observable implements Runnable,Observer
 
     private void setState(STATE newState)
     {
-        mState = newState;
+        state = newState;
         setState();
     }
 
     private void setActivity(ACTIVITY newActivity)
     {
-        mActivity = newActivity;
+        activity = newActivity;
         setState();
     }
 
     private void setStateAndActivity(STATE newState,ACTIVITY newActivity)
     {
-        mState = newState;
-        mActivity = newActivity;
+        state = newState;
+        activity = newActivity;
         setState();
     }
 
@@ -213,62 +222,62 @@ public class EidController extends Observable implements Runnable,Observer
 
     public void run()
     {
-        mRunning = true;
-        while (mRunning)
+        running = true;
+        while (running)
         {
             try
             {
-                if(!mEid.hasCardReader())
+                if(!eid.hasCardReader())
                 {
                     setState(STATE.NO_READERS);
-                    mEid.waitForCardReader();
+                    eid.waitForCardReader();
                 }
 
-                if(!mEid.isEidPresent())
+                if(!eid.isEidPresent())
                 {
                     setState(STATE.NO_EID_PRESENT);
-                    mEid.waitForEidPresent();
+                    eid.waitForEidPresent();
                 }
 
                 setStateAndActivity(STATE.EID_PRESENT,ACTIVITY.READING_IDENTITY);
-                mIdentity = mEid.getIdentity();
+                identity = eid.getIdentity();
                 setState();
 
                 setActivity(ACTIVITY.READING_ADDRESS);
-                mAddress = mEid.getAddress();
+                address = eid.getAddress();
                 setState();
 
                 setActivity(ACTIVITY.READING_PHOTO);
-                mPhoto = mEid.getPhoto();
+                photo = eid.getPhoto();
                 setState();
 
                 setActivity(ACTIVITY.READING_AUTH_CHAIN);
-                mAuthCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN,mEid.getAuthnCertificateChain());
-                if(mAutoValidateTrust)
-                    mTrustServiceController.validateLater(mAuthCertChain);
+                authCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN,eid.getAuthnCertificateChain());
+                if(trustServiceController!=null && autoValidatingTrust)
+                    trustServiceController.validateLater(authCertChain);
                 setState();
 
                 setActivity(ACTIVITY.READING_SIGN_CHAIN);
-                mSignCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN,mEid.getSignCertificateChain());
-                if(mAutoValidateTrust)
-                    mTrustServiceController.validateLater(mSignCertChain);
+                signCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN,eid.getSignCertificateChain());
+                if(trustServiceController!=null && autoValidatingTrust)
+                    trustServiceController.validateLater(signCertChain);
                 setActivity(ACTIVITY.IDLE);
 
-                while(mEid.isCardStillPresent())
+                while(eid.isCardStillPresent())
                 {
-                    if(mRunningAction == ACTION.CHANGE_PIN)
+                    if(runningAction == ACTION.CHANGE_PIN)
                     {
                         eid_changePin();
                     }
-                    else if(mRunningAction == ACTION.VALIDATELATER)
+                    else if(runningAction == ACTION.VALIDATETRUST)
                     {
-                        trustService_validateLater();
+                        trustController_validateTrust();
                     }
                     else
                     {
                         try
                         {
-                            Thread.sleep(1000);
+                            Thread.sleep(200);
                         }
                         catch (InterruptedException ex1)
                         {
@@ -277,12 +286,13 @@ public class EidController extends Observable implements Runnable,Observer
                     }
                 }
 
-                clearCardInformation();
+                securityClear();
+                setState(STATE.IDLE);
             }
             catch (Exception ex)   // something failed. Clear out all data for security
             {
-                clearCardInformation();
-                mRunningAction = ACTION.NONE;
+                securityClear();
+                runningAction = ACTION.NONE;
                 setState(STATE.ERROR);
                 Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -302,77 +312,90 @@ public class EidController extends Observable implements Runnable,Observer
 
     public Address getAddress()
     {
-        return mAddress;
+        return address;
     }
 
     public Identity getIdentity()
     {
-        return mIdentity;
+        return identity;
     }
 
     public Image getPhoto()
     {
-        return mPhoto;
+        return photo;
     }
 
     public STATE getState()
     {
-        return mState;
+        return state;
     }
 
     public ACTIVITY getActivity()
     {
-        return mActivity;
+        return activity;
     }
 
     public boolean hasAddress()
     {
-        return (mAddress != null);
+        return (address != null);
     }
 
     public boolean hasIdentity()
     {
-        return (mIdentity != null);
+        return (identity != null);
     }
 
     public boolean hasPhoto()
     {
-        return (mPhoto != null);
+        return (photo != null);
     }
 
     public boolean hasAuthCertChain()
     {
-        return (mAuthCertChain != null);
+        return (authCertChain != null);
     }
 
     public X509CertificateChainAndTrust getAuthCertChain()
     {
-        return mAuthCertChain;
+        return authCertChain;
     }
 
     public boolean hasSignCertChain()
     {
-        return (mSignCertChain != null);
+        return (signCertChain != null);
     }
 
     public X509CertificateChainAndTrust getSignCertChain()
     {
-        return mSignCertChain;
+        return signCertChain;
     }
 
     public EidController changePin()
     {
-        mRunningAction = ACTION.CHANGE_PIN;
+        runningAction = ACTION.CHANGE_PIN;
+        return this;
+    }
+
+    public EidController validateTrust()
+    {
+        if(trustServiceController==null)
+            return this;
+        runningAction = ACTION.VALIDATETRUST;
         return this;
     }
 
     public boolean isReadyForCommand()
     {
-        return (mState==STATE.EID_PRESENT) && (mActivity==ACTIVITY.IDLE) && (mRunningAction==ACTION.NONE);
+        return (state==STATE.EID_PRESENT) && (activity==ACTIVITY.IDLE) && (runningAction==ACTION.NONE) && (!isValidatingTrust());
     }
 
     public boolean isValidatingTrust()
     {
-        return mTrustServiceController.isValidating();
+        return trustServiceController!=null?trustServiceController.isValidating():false;
+    }
+
+    public boolean isAutoValidatingTrust()
+    {
+        return autoValidatingTrust;
     }
 }

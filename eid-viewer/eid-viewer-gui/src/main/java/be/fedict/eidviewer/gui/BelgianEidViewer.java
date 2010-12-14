@@ -15,7 +15,6 @@
  * License along with this software; if not, see
  * http://www.gnu.org/licenses/.
  */
-
 package be.fedict.eidviewer.gui;
 
 import java.awt.BorderLayout;
@@ -59,7 +58,7 @@ import org.jdesktop.application.Application;
 
 /**
  *
- * @author frank
+ * @author Frank Marien
  */
 public class BelgianEidViewer extends javax.swing.JFrame implements View, Observer
 {
@@ -70,13 +69,14 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private Messages coreMessages;
     private Eid eid;
     private EidController eidController;
+    private TrustServiceController trustServiceController;
     private EnumMap<EidController.STATE, ImageIcon> cardStatusIcons;
-    private EnumMap<EidController.STATE, String>    cardStatusTexts;
+    private EnumMap<EidController.STATE, String> cardStatusTexts;
     private EnumMap<EidController.ACTIVITY, String> activityTexts;
-    private IdentityPanel                           identityPanel;
-    private CertificatesPanel                       certificatesPanel;
-    private CardPanel                               cardPanel;
-    private javax.swing.Action                      printAction;
+    private IdentityPanel identityPanel;
+    private CertificatesPanel certificatesPanel;
+    private CardPanel cardPanel;
+    private javax.swing.Action printAction;
 
     public BelgianEidViewer()
     {
@@ -93,18 +93,21 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private void start()
     {
         ActionMap actionMap = Application.getInstance().getContext().getActionMap(BelgianEidViewer.class, this);
-        printAction=actionMap.get("print"); // NOI18N
-        
+        printAction = actionMap.get("print"); // NOI18N
         eid = EidFactory.getEidImpl(this, coreMessages);
         eidController = new EidController(eid);
-        eidController.setAutoValidateTrust(true);
+        trustServiceController = new TrustServiceController(ViewerPrefs.getTrustServiceURL());
+        eidController.setTrustServiceController(trustServiceController);
+        eidController.setAutoValidateTrust(ViewerPrefs.getIsAutoValidating());
         cardPanel.setEidController(eidController);
+        certificatesPanel.setEidController(eidController);
+        certificatesPanel.start();
         eidController.addObserver(identityPanel);
         eidController.addObserver(cardPanel);
         eidController.addObserver(certificatesPanel);
         eidController.addObserver(this);
         eidController.start();
-        
+
         setVisible(true);
     }
 
@@ -116,22 +119,28 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
     public void update(Observable o, Object o1)
     {
-        EidController controller = (EidController) o;
+        updateVisibleState();
+    }
 
-        System.err.println("STATE [" + controller.getState() + "]");
-
-        statusIcon.setIcon(cardStatusIcons.get(controller.getState()));
-
-        if (controller.getState() == EidController.STATE.EID_PRESENT)
+    private void updateVisibleState()
+    {
+        java.awt.EventQueue.invokeLater(new Runnable()
         {
-            statusText.setText(activityTexts.get(controller.getActivity()));
-        }
-        else
-        {
-            statusText.setText(cardStatusTexts.get(controller.getState()));
-        }
+            public void run()
+            {
+                printAction.setEnabled(eidController.hasIdentity() && eidController.hasAddress() && eidController.hasPhoto());
+                statusIcon.setIcon(cardStatusIcons.get(eidController.getState()));
 
-        printAction.setEnabled(controller.hasIdentity() && controller.hasAddress() && controller.hasPhoto());
+                if (eidController.getState() == EidController.STATE.EID_PRESENT)
+                {
+                    statusText.setText(activityTexts.get(eidController.getActivity()));
+                }
+                else
+                {
+                    statusText.setText(cardStatusTexts.get(eidController.getState()));
+                }
+            }
+        });
     }
 
     /** This method is called from within the constructor to
@@ -318,7 +327,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         tabPanel.add(identityPanel, res.getString("IDENTITY"));
         tabPanel.add(cardPanel, res.getString("CARD"));
         tabPanel.add(certificatesPanel, res.getString("CERTIFICATES"));
-        certificatesPanel.start();
     }
 
     private void initIcons()
@@ -377,7 +385,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         job.setPrintable(printout);
         boolean ok = job.printDialog();
         //job.setJobName(eidController.getIdentity().getNationalNumber());
-        
+
         if (ok)
         {
             try
@@ -388,7 +396,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
             {
                 Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, pex);
             }
-        } 
+        }
     }
 
     @Action

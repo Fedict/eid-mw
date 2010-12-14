@@ -28,6 +28,7 @@ public class X509CertificateAndTrust
     private X509Certificate certificate;
     private String          trustDomain;
     private List<String>    invalidReasons;
+    private Exception       validationException;
     private boolean         validating, validated, trusted;
 
     public X509CertificateAndTrust(X509Certificate certificate, String trustDomain)
@@ -104,6 +105,16 @@ public class X509CertificateAndTrust
     public void setInvalidReasons(List<String> invalidReasons)
     {
         this.invalidReasons = invalidReasons;
+    }
+
+    public Exception getValidationException()
+    {
+        return validationException;
+    }
+
+    public void setValidationException(Exception validationException)
+    {
+        this.validationException = validationException;
     }
 
     @Override

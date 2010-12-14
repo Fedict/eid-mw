@@ -40,15 +40,19 @@ import java.util.logging.Logger;
  * @author Frank Marien
  */
 public class TrustServiceController extends Observable implements Runnable
-{   
+{
+    private final static String                                 XKMS2_REASONURI_PREFIX="http://www.w3.org/2002/03/xkms#";
+    private String                                              trustServiceURL;
     private XKMS2Client                                         trustServiceClient;
     private LinkedBlockingQueue<X509CertificateChainAndTrust>   chainsToBeValidated;
-    private boolean                                             running;
+    private boolean                                             running,validating;
 
-    public TrustServiceController(String url)
+    public TrustServiceController(String trustServiceURL)
     {
-        trustServiceClient=new XKMS2Client(url);
+        this.trustServiceURL=trustServiceURL;
+        trustServiceClient=new XKMS2Client(this.trustServiceURL);
         chainsToBeValidated=new LinkedBlockingQueue<X509CertificateChainAndTrust>();
+        validating=false;
     }
 
     public TrustServiceController setServicePublicKey(PublicKey publicKey)
@@ -75,6 +79,12 @@ public class TrustServiceController extends Observable implements Runnable
         return this;
     }
 
+    public synchronized TrustServiceController clear()
+    {
+        chainsToBeValidated.clear();
+        return this;
+    }
+
     public TrustServiceController start()
     {
         new Thread(this).start();
@@ -88,7 +98,7 @@ public class TrustServiceController extends Observable implements Runnable
 
     public boolean isValidating()
     {
-        return !(chainsToBeValidated.isEmpty());
+        return validating || (!chainsToBeValidated.isEmpty());
     }
 
     public void run()
@@ -102,6 +112,7 @@ public class TrustServiceController extends Observable implements Runnable
                 
                 try
                 {
+                    validating=true;
                     chain.setValidating();
                     trustServiceClient.validate(chain.getTrustDomain(), chain.getCertificates(), true);
                     chain.setTrusted();
@@ -129,7 +140,13 @@ public class TrustServiceController extends Observable implements Runnable
                     chain.setRevocationValues(trustServiceClient.getRevocationValues());
                     chain.setInvalidReasons(trimInvalidReasons(trustServiceClient.getInvalidReasons()));
                 }
+                catch(Exception ex)
+                {
+                    Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, null, ex);
+                    chain.setTrustServiceException(ex);
+                }
 
+                validating=false;
                 setChanged();
                 notifyObservers(chain);
             }
@@ -145,9 +162,8 @@ public class TrustServiceController extends Observable implements Runnable
     {
         List<String> trimmed=new ArrayList<String>(reasons.size());
         for(String reason : reasons)
-        {
-            trimmed.add(reason.substring(31)); //FIX ME seek # instead
-        }
+            if(reason.startsWith(XKMS2_REASONURI_PREFIX))
+                trimmed.add(reason.substring(XKMS2_REASONURI_PREFIX.length()));
         return trimmed;
     }
 }

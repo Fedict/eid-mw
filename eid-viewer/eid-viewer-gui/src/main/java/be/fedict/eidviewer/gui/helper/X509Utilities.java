@@ -26,7 +26,8 @@ import java.util.ResourceBundle;
 
 public class X509Utilities
 {
-    private static final List<String> keyUsageStringNames;
+    private static final int            CONSTRAINT_DIGITALSIGNATURE=0;
+    private static final List<String>   keyUsageStringNames;
 
     static
     {
@@ -72,16 +73,9 @@ public class X509Utilities
                 uses.add(bundle.getString(keyUsageStringNames.get(i)));
         return uses;
     }
-}
 
-/*
-constraint_digitalSignature=Digital Signature
-constraint_nonRepudiation=Non-Repudiation
-constraint_keyEncipherment=Key Encipherment
-constraint_dataEncipherment=Data Encipherment
-constraint_keyAgreement=Key Agreement
-constraint_keyCertSign=Key Certificate Signing
-constraint_cRLSignKey=Revocation List Signing
-constraint_encipherOnly=Encipher Only
-constraint_decipherOnly=Decipher Only
-*/
+    public static boolean keyHasDigitalSignatureConstraint(X509Certificate certificate)
+    {
+        return certificate.getKeyUsage()[CONSTRAINT_DIGITALSIGNATURE];
+    }
+}

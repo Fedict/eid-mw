@@ -54,6 +54,8 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         if (eidController == null)
             return;
 
+        updateVisibleState();
+
         if (eidController.getState() == EidController.STATE.EID_PRESENT)
         {
             if(eidController.hasIdentity())
@@ -68,9 +70,18 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         else
         {
             fillCardInfo(null, false);
-        }
+        }    
+    }
 
-        changePinButton.setEnabled(eidController.isReadyForCommand());
+    private void updateVisibleState()
+    {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+               changePinButton.setEnabled(eidController.isReadyForCommand());
+            }
+        });
     }
 
     private void fillCardInfo(final Identity identity, final boolean loading)

@@ -33,7 +33,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author frank
+ * @author Frank Marien
  */
 public class IdentityPanel extends javax.swing.JPanel implements Observer
 {
