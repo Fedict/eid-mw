@@ -8,7 +8,7 @@ if NOT %ERRORLEVEL%==0 goto END
 set OUT_PATH=%~dp0bin\
 echo [INFO] OUT_PATH=%OUT_PATH%
 
-set MSI_FILE_IN=BeidMW35-Basic
+set MSI_FILE_IN=BeidMW32-Basic
 set MSI_FILE_OUT=BeidMW_32
 set MST_DIR=%OUT_PATH%\mst
 
