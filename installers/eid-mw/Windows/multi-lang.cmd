@@ -10,9 +10,6 @@ echo [INFO] OUT_PATH=%OUT_PATH%
 
 set MSI_FILE_IN=BeidMW32-Basic
 set MSI_FILE_OUT=BeidMW_32
-set MST_DIR=%OUT_PATH%\mst
-
-mkdir "%MST_DIR%"
 
 ::------------------------------------
 :: check if all the MSI files were built
@@ -58,22 +55,19 @@ goto END
 
 :NOT_en-us
 echo [ERR ] Missing file '%OUT_PATH%\%LANG%\%MSI_FILE_IN%-en.msi'
-exit 1
 goto END
 
 :NOT_nl-nl
 echo [ERR ] Missing file '%OUT_PATH%\%LANG%\%MSI_FILE_IN%-nl.msi'
-exit 1
 goto END
 
 :NOT_fr-fr
 echo [ERR ] Missing file '%OUT_PATH%\%LANG%\%MSI_FILE_IN%-fr.msi'
-exit 1
 goto END
 
 :NOT_de-de
 echo [ERR ] Missing file '%OUT_PATH%\%LANG%\%MSI_FILE_IN%-de.msi'
-exit 1
 goto END
 
 :END
+echo [INFO] Done creating multi-lang msi installers

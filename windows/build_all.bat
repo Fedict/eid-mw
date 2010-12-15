@@ -48,32 +48,35 @@ copy %~dp0..\minidriver\img\beid.ico %INSTALLPATH%\Release\
 set CERTIFICATENAME=Fedict eID(test)
 set CERTIFICATESTORE=PrivateCertStore
 :: To create a test certificate: 
-@if exist "fedicteidtest.cer" goto cert_exist
+@if exist "%~dp0fedicteidtest.cer" goto cert_exist
 
 @echo [INFO] Make cert
-%SIGNTOOL_PATH%\MakeCert.exe -r -pe -ss  %CERTIFICATESTORE% -n "CN=%CERTIFICATENAME%" fedicteidtest.cer
+%SIGNTOOL_PATH%\MakeCert.exe -r -pe -ss  %CERTIFICATESTORE% -n "CN=%CERTIFICATENAME%" %~dp0fedicteidtest.cer
 
 :cert_exist
 
 :: Sign the catalog
 @echo [INFO] Sign the catalog
-%SIGNTOOL_PATH%\SignTool.exe sign /v /s %CERTIFICATESTORE% /n "%CERTIFICATENAME%"  /t http://timestamp.verisign.com/scripts/timestamp.dll %INSTALLPATH%\Release\beidmdrv.cat
+%SIGNTOOL_PATH%\SignTool.exe sign /a /v /s %CERTIFICATESTORE% /n "%CERTIFICATENAME%"  /t http://timestamp.verisign.com/scripts/timestamp.dll %INSTALLPATH%\Release\beidmdrv.cat
 
 
 
 :: create the MSI installers
 :: =========================
-@set OUR_CURRENT_PATH = "%cd%"
+set OUR_CURRENT_PATH="%cd%"
+@echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
 @cd %~dp0..\installers
 
 @call "%~dp0..\installers\getsvnrevision.bat"
 @cd %~dp0..\installers\eid-mw\Windows
 
 @call "%~dp0..\installers\eid-mw\Windows\candle_light.cmd"
-@cd "%OUR_CURRENT_PATH%"
+@call "%~dp0..\installers\eid-mw\Windows\candle_light64.cmd"
+
+@cd %OUR_CURRENT_PATH%
 
 
-@echo [INFO] Done...
+@echo [INFO] Build_all Done...
 @goto end
 
 
