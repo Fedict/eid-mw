@@ -68,7 +68,6 @@ mkdir workshop
 cd workshop
 echo $4 > info/admin
 hostinfo > info/host
-/usr/local/bin/buildslave start
 "
 
 ################################################
@@ -115,3 +114,5 @@ sudo cat > /Library/LaunchDaemons/net.sourceforge.buildbot.slave.snowie.autostar
 </dict>
 </plist>
 EOD
+
+launchctl start net.sourceforge.buildbot.slave.snowie
