@@ -19,7 +19,8 @@
 :: ==================================
 
 :: BuildPath
-set INSTALLPATH=..\minidriver\makemsi
+set INSTALLPATH=%~dp0..\minidriver\makemsi
+
 
 md %INSTALLPATH%\Release
 @echo [INFO] Copying minidriver files..
@@ -28,11 +29,11 @@ md %INSTALLPATH%\Release
 copy %INSTALLPATH%\beidmdrv.inf %INSTALLPATH%\Release
 
 :: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-copy ..\VS_2010\Binaries\Win32_Release\beidmdrv.dll %BUILDPATH%\Release\beidmdrv32.dll
-copy ..\VS_2010\Binaries\x64_Release\beidmdrv.dll %BUILDPATH%\Release\beidmdrv64.dll
+copy %~dp0..\VS_2010\Binaries\Win32_Release\beidmdrv.dll %INSTALLPATH%\Release\beidmdrv32.dll
+copy %~dp0..\VS_2010\Binaries\x64_Release\beidmdrv.dll %INSTALLPATH%\Release\beidmdrv64.dll
 
 :: copy icon
-copy ..\minidriver\img\beid.ico %INSTALLPATH%\Release\
+copy %~dp0..\minidriver\img\beid.ico %INSTALLPATH%\Release\
 
 @echo [INFO] Creating cat file
 :: Create catalog
@@ -62,13 +63,13 @@ set CERTIFICATESTORE=PrivateCertStore
 
 :: create the MSI installers
 :: =========================
-@set OUR_CURRENT_PATH = "%~dp0"
+@set OUR_CURRENT_PATH = "%cd%"
 @cd %~dp0..\installers
 
-@call "getsvnrevision.bat"
+@call "%~dp0..\installers\getsvnrevision.bat"
 @cd %~dp0..\installers\eid-mw\Windows
 
-@call "candle_light.cmd"
+@call "%~dp0..\installers\eid-mw\Windows\candle_light.cmd"
 @cd "%OUR_CURRENT_PATH%"
 
 
