@@ -85,6 +85,12 @@ function AddToPathEnv
 		[Environment]::SetEnvironmentVariable( "Path", $userpath , [System.EnvironmentVariableTarget]::User )
 	}
 }
+function InstallMSI
+{
+	param([string]$msifile)
+	$product = [WMIClass] "\\.\root\cimv2:Win32_Product"
+	$product.Install($msifile, "", $TRUE)
+}
 try {
 ##############################################################################
 # install 7zip command line version 9.15
@@ -97,6 +103,19 @@ Write-Host "- Installing 7zip Command Line Version"
 # Download file
 $tooltarget = "$toolsfolder\$toolfilename"
 Download "$packagesfolderurl/$toolfilename" $tooltarget
+
+##############################################################################
+# install Wix 3.5 # can be found on http://sourceforge.net/projects/sevenzip/files/7-Zip/9.15/7za915.zip/download
+##############################################################################
+$toolfilename = "Wix35.msi"
+
+Write-Host "- Installing Wix 3.5"
+
+# Download file
+$tooltarget = "$packagesfolder\$toolfilename"
+Download "$packagesfolderurl/$toolfilename" $tooltarget
+
+InstallMSI("$tooltarget")
 
 
 } # end try
