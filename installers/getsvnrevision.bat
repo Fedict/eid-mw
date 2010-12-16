@@ -1,9 +1,14 @@
 @echo on
 
-svn info | FindStr /L Revision > svn_info.txt
+set SVNREvision=
+svr info || echo | FindStr /L Revision > svn_info.txt
 
 for /f "tokens=2" %%T in (svn_info.txt) do set SVNRevision=%%T
 
+if not "%SVNRevision%"=="" goto skiptarfile
+Set /P SVNRevision=<..\svn_revision                                                      
+
+:skiptarfile
 Set /A SVNRevision+=6000
 
 echo %SVNRevision%> svn_revision
@@ -41,3 +46,4 @@ echo ^<?define RevisionNumber=%SVNRevision%?^>>>svn_revision.wxs
 echo ^</Include^>>>svn_revision.wxs
 
 @echo off
+
