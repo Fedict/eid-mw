@@ -11,7 +11,7 @@
 
 @echo [ERROR] WiX could not be found (recommanded version 3.0.4415)
 @echo         Please install ProjectAggregator2.msi and Wix3-3.0.4415.msi.
-@exit /B 1
+@exit 1
 
 :find_wix
 @echo        Found in "%BEID_DIR_WIX%"
