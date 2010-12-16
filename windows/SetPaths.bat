@@ -2,6 +2,9 @@
 @set SEARCH_BEID_DIR_MSBUILD=C:\Windows\Microsoft.NET\Framework\v4.0.30319
 @set SEARCH_SIGNTOOL_PATH=C:\WinDDK\7600.16385.1\bin\x86
 @set SEARCH_INF2CAT_PATH=C:\WinDDK\7600.16385.1\bin\selfsign
+@set SEARCH_BEID_DIR_PLATFORMSDK_1=%~dp0..\ThirdParty\MSPlatformSDK
+@set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files\Microsoft Platform SDK
+@set SEARCH_BEID_DIR_PLATFORMSDK_3=C:\Program Files\Microsoft SDKs\Windows\v7.1
 ::end of search paths
 
 
@@ -81,4 +84,60 @@
 
 :find_inf2cat
 @echo        Found in "%INF2CAT_PATH%"
+
+
+@echo [INFO] Define default value for BEID_DIR_PLATFORMSDK if not defined yet
+@echo [INFO] Input BEID_DIR_PLATFORMSDK=%BEID_DIR_PLATFORMSDK%
+@set FILE_TO_FIND="bin\msitran.exe" "bin\msidb.exe" "Include\newdev.h"
+@echo [INFO] Looking for files: %FILE_TO_FIND%
+
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@echo        Not found in "%BEID_DIR_PLATFORMSDK%"
+
+@set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_1%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@echo        Not found in "%BEID_DIR_PLATFORMSDK%"
+
+@set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_2%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@echo        Not found in "%BEID_DIR_PLATFORMSDK%"
+
+@set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_3%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@echo        Not found in "%BEID_DIR_PLATFORMSDK%"
+
+@echo [ERROR] MS Platform SDK 2008 or Windows SDK v7.1 could not be found
+@echo         If the path is different from "C:\Program Files\Microsoft SDKs\Windows\v7.1" or "C:\Program Files\Microsoft Platform SDK"
+@echo         please define BEID_DIR_PLATFORMSDK environment variable.
+@exit /B 1
+
+:find_mssdk
+@echo        Found in "%BEID_DIR_PLATFORMSDK%"
+
+
+@echo [INFO] Check if WiX is installed
+@set FILE_TO_FIND="bin\candle.exe"
+@echo [INFO] Looking for files: %FILE_TO_FIND%
+
+@set BEID_DIR_WIX=%WIX%
+
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_WIX%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_wix
+@echo        Not found in "%BEID_DIR_WIX%"
+
+@echo [ERROR] WiX could not be found (recommended version 3.0.4415)
+@echo         Please install ProjectAggregator2.msi and Wix3-3.0.4415.msi.
+@exit 1
+
+:find_wix
+@echo        Found in "%BEID_DIR_WIX%"
 @exit /B 0

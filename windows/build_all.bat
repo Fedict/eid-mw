@@ -40,7 +40,6 @@ copy %~dp0..\minidriver\img\beid.ico %INSTALLPATH%\Release\
 %INF2CAT_PATH%\inf2cat.exe /driver:%INSTALLPATH%\Release\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
 
 
-
 :: sign minidriver driver cat file
 :: ===============================
 
@@ -60,19 +59,22 @@ set CERTIFICATESTORE=PrivateCertStore
 %SIGNTOOL_PATH%\SignTool.exe sign /a /v /s %CERTIFICATESTORE% /n "%CERTIFICATENAME%"  /t http://timestamp.verisign.com/scripts/timestamp.dll %INSTALLPATH%\Release\beidmdrv.cat
 
 
-
 :: create the MSI installers
 :: =========================
 set OUR_CURRENT_PATH="%cd%"
 @echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
-@cd %~dp0..\installers
 
-@call "%~dp0..\installers\getsvnrevision.bat"
 @cd %~dp0..\installers\eid-mw\Windows
 
-@call "%~dp0..\installers\eid-mw\Windows\candle_light.cmd"
-@call "%~dp0..\installers\eid-mw\Windows\candle_light64.cmd"
+@call "%~dp0..\installers\eid-mw\Windows\build_msi_eidmw32.cmd"
+@if %ERRORLEVEL%==1 goto end_resetpath
+@call "%~dp0..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
+@if %ERRORLEVEL%==1 goto end_resetpath
+@cd "%~dp0..\installers\sdk\Windows"
+@call "%~dp0..\installers\sdk\Windows\build_msi_sdk.cmd"
+@if %ERRORLEVEL%==1 goto end_resetpath
 
+:end_resetpath
 @cd %OUR_CURRENT_PATH%
 
 

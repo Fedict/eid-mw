@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:difx="http://schemas.microsoft.com/wix/DifxAppExtension"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-  <?include ..\..\svn_revision.wxs ?>
+  <?include svn_revision.wxs ?>
 
   <?define var.OfficialProductVersion =4.0.0?>
   <?define var.ProductVersion =4.0.$(var.RevisionNumber)?>
