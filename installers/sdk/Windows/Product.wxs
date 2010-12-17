@@ -279,7 +279,7 @@
         <RemoveFolder Id="EXAMPLES_DATA" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="ExamplesData" Type="integer" Value="1" KeyPath="yes" />
         <File Id="ExamplesData01" Name="base.h" KeyPath="no" Source="..\..\..\sdk\Examples\base.h" />
-        <File Id="ExamplesData02" Name="SDK_Data.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\VS_2005\SDK_Data.vcproj" />
+        <File Id="ExamplesData02" Name="SDK_Data.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\SDK_Data.vcxproj" />
         <File Id="ExamplesData03" Name="data.c" KeyPath="no" Source="..\..\..\sdk\Examples\data.c" />
       </Component>
     </DirectoryRef>  
@@ -290,7 +290,7 @@
         <RemoveFolder Id="EXAMPLES_SIGNMECHANISMS" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="ExamplesSignMechanisms" Type="integer" Value="1" KeyPath="yes" />
         <File Id="ExamplesSignMechanisms01" Name="base.h" KeyPath="no" Source="..\..\..\sdk\Examples\base.h" />
-        <File Id="ExamplesSignMechanisms02" Name="SDK_GetSignMechanisms.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\VS_2005\SDK_GetSignMechanisms.vcproj" />
+        <File Id="ExamplesSignMechanisms02" Name="SDK_GetSignMechanisms.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\SDK_GetSignMechanisms.vcxproj" />
         <File Id="ExamplesSignMechanisms03" Name="get_signmechanisms.c" KeyPath="no" Source="..\..\..\sdk\Examples\get_signmechanisms.c" />
       </Component>
     </DirectoryRef>
@@ -301,8 +301,8 @@
         <RemoveFolder Id="EXAMPLES_SIGN" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="ExamplesSign" Type="integer" Value="1" KeyPath="yes" />
         <File Id="ExamplesSign01" Name="base.h" KeyPath="no" Source="..\..\..\sdk\Examples\base.h" />
-        <File Id="ExamplesSign02" Name="SDK_GetSignMechanisms.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\VS_2005\SDK_GetSignMechanisms.vcproj" />
-        <File Id="ExamplesSign03" Name="get_signmechanisms.c" KeyPath="no" Source="..\..\..\sdk\Examples\get_signmechanisms.c" />
+        <File Id="ExamplesSign02" Name="SDK_Signature.vcxproj" KeyPath="no" Source="..\..\..\sdk\Examples\SDK_Signature.vcxproj" />
+        <File Id="ExamplesSign03" Name="sign.c" KeyPath="no" Source="..\..\..\sdk\Examples\sign.c" />
       </Component>
     </DirectoryRef>
 
@@ -312,7 +312,7 @@
         <RemoveFolder Id="EXAMPLES_WAIT_CARD" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\SDK40" Name="ExamplesWaitCard" Type="integer" Value="1" KeyPath="yes" />
         <File Id="ExamplesWaitCard01" Name="base.h" KeyPath="no" Source="..\..\..\sdk\Examples\base.h" />
-        <File Id="ExamplesWaitCard02" Name="SDK_WaitCard.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\VS_2005\SDK_WaitCard.vcproj" />
+        <File Id="ExamplesWaitCard02" Name="SDK_WaitCard.vcproj" KeyPath="no" Source="..\..\..\sdk\Examples\SDK_WaitCard.vcxproj" />
         <File Id="ExamplesWaitCard03" Name="wait_card.cpp" KeyPath="no" Source="..\..\..\sdk\Examples\wait_card.c" />
       </Component>
     </DirectoryRef>

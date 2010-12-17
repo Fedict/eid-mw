@@ -7,7 +7,7 @@
 :: Create the revision number
 :: ==========================
 set SVNREvision=
-svr info || echo | FindStr /L Revision > svn_info.txt
+svn info || echo | FindStr /L Revision > svn_info.txt
 
 for /f "tokens=2" %%T in (svn_info.txt) do set SVNRevision=%%T
 
