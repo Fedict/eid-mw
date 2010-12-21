@@ -30,7 +30,7 @@ public class ViewerPrefs
     public static final String TRUSTSERVICE_URL                 = "trustServiceURL";
 
     public static final boolean DEFAULT_AUTO_VALIDATE_TRUST     = false;
-    public static final String  DEFAULT_TRUSTSERVICE_URL        ="http://trust.services.belgium.be"; // FIXME check offcial URL
+    public static final String  DEFAULT_TRUSTSERVICE_URL        ="http://trust.services.belgium.be"; 
     
     private static Preferences preferences;
 
