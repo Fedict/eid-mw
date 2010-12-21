@@ -24,6 +24,8 @@ using namespace eIDMW;
 
 CK_BYTE AllowCardReading(void)
 {
+	return P11_DISPLAY_YES; 		// FIXME DlgDisplayModal is deprecated, we should use DlgAskAccess which was created for this ; stubbed until then because this breaks the Linux build. see Bug #1030
+/*
 	CK_BYTE bDispResp = P11_DISPLAY_NO;
 	DlgRet retVal = DlgDisplayModal(DLG_ICON_WARN,DLG_MESSAGE_USER_WARNING,L"",DLG_BUTTON_YES + DLG_BUTTON_NO, DLG_BUTTON_YES, DLG_BUTTON_NO);
 
@@ -35,5 +37,5 @@ CK_BYTE AllowCardReading(void)
 	{
 		bDispResp = P11_DISPLAY_CANCEL;
 	}		
-	return bDispResp;
+	return bDispResp; */
 }
