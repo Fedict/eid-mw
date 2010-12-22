@@ -4,7 +4,7 @@
   <String Id="Langpref" Overridable="yes">de</String>
   <String Id="StartApp" Overridable="yes">Start Eid Viewer</String>
   <String Id="MinOs" Overridable="yes"> Dieser Aufbau muss mindestens Windows 2000</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 3.5</String>
+  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 4.0</String>
   <String Id="BeidRuntimeDesc" Overridable="yes">Dieses Modul ist notwendig, um elektronische Personalausweis.</String>
   <String Id="BeidGui" Overridable="yes">eID-Verwaltungsinstrument</String>
   <String Id="BeidGuiDescr" Overridable="yes">Lesen Sie den Inhalt einer e-ID Karte</String>

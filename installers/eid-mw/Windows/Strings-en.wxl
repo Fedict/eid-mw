@@ -4,7 +4,7 @@
   <String Id="Langpref" Overridable="yes">en</String>
   <String Id="StartApp" Overridable="yes">Start Eid Viewer</String>
   <String Id="MinOs" Overridable="yes">This setup need at least Windows 2000</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 3.5</String>
+  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 4.0</String>
   <String Id="BeidRuntimeDesc" Overridable="yes">This module is needed to use electronic Identity card.</String>
   <String Id="BeidGui" Overridable="yes">Management Tool</String>
   <String Id="BeidGuiDescr" Overridable="yes">Read the content of an e-ID card</String>
