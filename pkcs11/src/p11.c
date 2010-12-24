@@ -450,7 +450,7 @@ return (ret);
 
 #define WHERE "p11_add_slot_ID_object()"
 int p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
-						   CK_ULONG type, CK_ULONG id,  CK_BBOOL bPrivate, CK_ULONG *phObject,
+						   CK_ULONG type, CK_BBOOL bPrivate, CK_ULONG *phObject,
 						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen)
 {
 int ret = CKR_OK;
@@ -500,14 +500,6 @@ ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_CLASS, (CK_VOID_PTR) 
 if (ret)
    {
    log_trace(WHERE, "E: p11_set_attribute_value(CKA_CLASS) returned %d", ret);
-   goto cleanup;
-   }
-
-//CKA_ID
-ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_OBJECT_ID, (CK_VOID_PTR) &id, sizeof(CK_ULONG));
-if (ret)
-   {
-   log_trace(WHERE, "E: p11_set_attribute_value(CKA_ID) returned %d", ret);
    goto cleanup;
    }
  

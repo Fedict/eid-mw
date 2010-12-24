@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../;../src/;../../common/src;../../cardlayer/src;../../common/VS_2005"
+				AdditionalIncludeDirectories="../;../src/;../../common/src;../../cardlayer/src;../../common/VS_2005;../../dialogs/src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

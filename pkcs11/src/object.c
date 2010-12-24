@@ -352,7 +352,13 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		ret = cal_read_ID_files(pSession->hslot);
 		if (ret != 0)
 		{
-			log_trace(WHERE, "E: p11_read_object() returned %d", ret);
+			log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+			goto cleanup;
+		}
+		ret = cal_get_card_data(pSession->hslot);
+		if (ret != 0)
+		{
+			log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
 			goto cleanup;
 		}
 	}

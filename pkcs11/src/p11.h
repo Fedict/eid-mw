@@ -243,7 +243,7 @@ CK_RV p11_get_attribute_value(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_A
 CK_RV p11_set_attribute_value(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_TYPE type, CK_VOID_PTR pVoid, CK_ULONG len);
 int p11_copy_object(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_PTR pObject);
 int p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
-						   CK_ULONG type, CK_ULONG id,  CK_BBOOL bPrivate, CK_ULONG *phObject,
+						   CK_ULONG type, CK_BBOOL bPrivate, CK_ULONG *phObject,
 						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen);
 int p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken, CK_ULONG type, CK_ULONG id, CK_BBOOL bPrivate, CK_ULONG *phObject);
 int p11_clean_object(P11_OBJECT *pObject);

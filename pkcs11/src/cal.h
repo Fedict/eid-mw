@@ -113,8 +113,6 @@ extern "C" {
 	{ CKA_VALUE,            ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_VALUE_LEN,        ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_LABEL,            ( CK_VOID_PTR )    NULL, 0 },  \
-	{ CKA_OBJECT_ID,        ( CK_VOID_PTR )    NULL, 0 },  \
-	{ CKA_APPLICATION,      ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_MODIFIABLE,       ( CK_VOID_PTR )    NULL, 0 }   \
 }
 
@@ -149,17 +147,36 @@ extern "C" {
 	{ BEID_FIELD_TAG_ADDR_Municipality,		"Address_Municipality"}  \
 }
 
+#define BEID_FIELD_TAG_DATA_SerialNr				"CardData_SerialNumber"
+#define BEID_FIELD_TAG_DATA_CompCode				"CardData_CompCode"
+#define BEID_FIELD_TAG_DATA_OSNr						"CardData_OSNumber"
+#define BEID_FIELD_TAG_DATA_OSVersion				"CardData_OSVersion"
+#define BEID_FIELD_TAG_DATA_SoftMaskNumber	"CardData_SoftMaskNumber"
+#define BEID_FIELD_TAG_DATA_SoftMaskVersion	"CardData_SoftMaskVersion"
+#define BEID_FIELD_TAG_DATA_ApplVersion			"CardData_ApplVersion"
+#define BEID_FIELD_TAG_DATA_GlobOSVersion		"CardData_GlobOSVersion"
+#define BEID_FIELD_TAG_DATA_ApplIntVersion	"CardData_ApplIntVersion"
+#define BEID_FIELD_TAG_DATA_PKCS1Support		"CardData_PKCS1Support"
+#define BEID_FIELD_TAG_DATA_ApplLifeCycle		"CardData_ApplLifeCycle"
+#define BEID_FIELD_TAG_DATA_KeyExchangeVersion	"CardData_KeyExchangeVersion"
+#define BEID_FIELD_TAG_DATA_Signature				"CardData_Signature"
+
+#define BEID_FIELD_TAG_ATR									"ATR"
+
 typedef struct BEID_DATA_LABELS_NAME {
 	unsigned char	tag;
 	char*			name;
 }BEID_DATA_LABELS_NAME;
 
-#define BEID_FIELD_TAG_DATA_FILE	"DATA_FILE"
-#define BEID_FIELD_TAG_ADDRESS_FILE	"ADDRESS_FILE"
-#define BEID_FIELD_TAG_PHOTO		"PHOTO"
+#define BEID_FIELD_TAG_DATA_FILE		"DATA_FILE"
+#define BEID_FIELD_TAG_ADDRESS_FILE		"ADDRESS_FILE"
+#define BEID_FIELD_TAG_PHOTO			"PHOTO"
+#define BEID_FIELD_TAG_CARD_DATA		"CARD_DATA"
+#define BEID_FIELD_TAG_CERT_RN			"CERT_RN_FILE"
+#define BEID_FIELD_TAG_CERT_RNCA		"CERT_RNCA_FILE"
 
-#define BEID_FIELD_TAG_SGN_RN		"SGN_RN"
-#define BEID_FIELD_TAG_SGN_ADDRESS	"SGN_ADDRESS"
+#define BEID_FIELD_TAG_SGN_RN			"SGN_DATA_FILE"
+#define BEID_FIELD_TAG_SGN_ADDRESS	"SGN_ADDRESS_FILE"
 
 
 
@@ -176,6 +193,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type, CK_MECHAN
 int cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging);
 int cal_logout(CK_SLOT_ID hSlot);
 int cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_newpin, CK_CHAR_PTR newpin);
+int cal_get_card_data(CK_SLOT_ID hSlot);
 int cal_read_ID_files(CK_SLOT_ID hSlot);
 int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject);
 int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out);
