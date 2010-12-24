@@ -29,19 +29,29 @@ using Net.Sf.Pkcs11;
 using Net.Sf.Pkcs11.Objects;
 using Net.Sf.Pkcs11.Wrapper;
 
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
 
-
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Signers;
+using Org.BouncyCastle.Crypto.Digests;
+using Org.BouncyCastle.Crypto.Parameters;
 namespace EidSamples
 {
     class Integrity
     {
-   
         public Integrity()
         {
         }
         public bool CheckFileIntegrity(byte[] data, byte[] signature, byte[] certificate) 
         {
-            return true;
+            X509Certificate x509Certificate;
+            x509Certificate = new X509Certificate(certificate);
+            
+            RsaDigestSigner signer = new RsaDigestSigner(new Sha1Digest());
+            signer.Init(false, new KeyParameter(x509Certificate.GetPublicKey()));
+            signer.BlockUpdate(data, 0, data.Length);
+            return signer.VerifySignature(signature);
         }
    
     }
