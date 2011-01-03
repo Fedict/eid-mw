@@ -164,6 +164,15 @@
     </pluginRepositories>
     
     <repositories>
+
+        <repository>
+            <id>Apache</id>
+            <url>http://ftp.cica.es/mirrors/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
         <repository>
             <id>java.net</id>
             <url>http://download.java.net/maven/2/</url>
@@ -171,6 +180,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <repository>
             <id>openqa</id>
             <name>OpenQA</name>
@@ -182,6 +192,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <repository>
             <id>openqa-snapshots</id>
             <name>OpenQA Snapshots</name>
@@ -190,6 +201,7 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
         <repository>
             <id>caucho</id>
             <name>Caucho Repository</name>
@@ -201,14 +213,17 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
         <repository>
             <id>Codehaus SVN Repository</id>
             <url>http://svn.codehaus.org/fest/m2/repo/</url>
         </repository>
+
         <repository>
             <id>shibboleth</id>
             <url>http://shibboleth.internet2.edu/downloads/maven2/</url>
         </repository>
+
         <repository>
             <id>jboss-snapshot</id>
             <url>http://snapshots.jboss.org/maven2/</url>
@@ -224,7 +239,17 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
+         <repository>
+            <id>e-contract</id>
+            <url>http://www.e-contract.be/maven2/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        
     </repositories>
+
     <properties>
         <eid-applet.version>1.0.2-SNAPSHOT</eid-applet.version>
     </properties>

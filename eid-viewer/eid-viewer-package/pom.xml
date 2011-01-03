@@ -49,7 +49,6 @@
                                 <windowTitle>Belgian eID Viewer</windowTitle>
                             </singleInstance>
 
-s
                             <dontWrapJar>true</dontWrapJar>
                             <outfile>target/eid-viewer.exe</outfile>
                             <icon>src/main/assembly/eid.ico</icon>
