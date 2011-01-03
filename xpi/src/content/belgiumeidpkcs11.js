@@ -88,14 +88,36 @@ function BELGIUMEIDPKCS11(){
        {
          label: strings.getString("donotshowagain"),
          accessKey: strings.getString("donotshowagain.accessKey"),
-         callback: function () { beidPKCS11.shouldShowModuleNotFoundNotification(false); }
+         callback: function () { var beidPKCS11 = new BELGIUMEIDPKCS11(); return beidPKCS11.shouldShowModuleNotFoundNotification(false);}
        }];
     const priority = notificationBox.PRIORITY_WARNING_MEDIUM;
     var not = notificationBox.appendNotification(strings.getString("modulenotfoundonsystem"), "belgiumeid",
                                        "chrome://browser/skin/Info.png",
                                        priority, buttons);
     not.persistence = 3;
-  } 
+  }
+  this.slotFound = function(modulename){
+	// searches for module with the given name
+	// and returns true if the module and a slot is found
+	// otherwise, returns false
+	var found;
+	var belgiumEidPKCS11Module = this.findModuleByName(modulename)
+	try {
+	   slot = belgiumEidPKCS11Module.listSlots().currentItem();
+	   found = true;
+	} catch (e)
+	{
+		found = false;
+	}
+	return found;
+  }
+  try {
+	this.addModule = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIPKCS11).addModule;
+  }
+  catch (e) {
+	// pre-firefox 3.5 interface
+	this.addModule = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIDOMPkcs11).addmodule;
+  }
   this.registerModule = function() {
     /* 
        Registers PKCS11 module
@@ -109,45 +131,52 @@ function BELGIUMEIDPKCS11(){
 		errorLog("belgiumeid.modulelocation is not set");
 		return true; // unsupported platform
 	}
-    
-
-    if (this.findModuleByName(getModuleName()) == null) {
-		// no installed module found - we will try to install the module
+	
+    var installSucceeded = false;
+    if ( !this.slotFound(getModuleName()) ) {
+	    // no installed module found
+        //		-OR-
+	    // the installed module has no slots, 
+		//   possible causes: 
+		//       1. the library is not found on the system
+		//       2. the library is found and installed, but has no slots
+		// Either way, we can safely remove this module from the database
+		// and try to install others
+		
 		var moduleLocations = getModuleLocation().split(";");
-
+		var currentmodulelocation;
+		try {
+			currentmodulelocation = 
+				this.findModuleByName(getModuleName()).libName;
+		} catch(e) {
+			currentmodulelocation = "";
+		}
+		this.unregisterModule(getModuleName());	
 		for (x in moduleLocations) {
-			try {
-				pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIPKCS11);
+			if (moduleLocations[x] !== currentmodulelocation) {
+				// we can't reinstall the same module twice. So we skip the currently installed module
 				try {
 					// PKCS11_PUB_READABLE_CERT_FLAG: we instruct FF not to ask for PIN when reading certificates
 					// This only makes sense when the CKF_LOGIN_REQUIRED flag is set on the token in P11 module
-					pkcs11module.addModule(getModuleName(), moduleLocations[x], PKCS11_PUB_READABLE_CERT_FLAG,0);
-					errorLog("added PKCS11 module " + getModuleName() + "Location: " + moduleLocations[x]);
-					return true;
+					this.addModule(getModuleName(), moduleLocations[x], PKCS11_PUB_READABLE_CERT_FLAG,0);
+					errorLog("Added PKCS11 module " + getModuleName() + " Location: " + moduleLocations[x]);
+					installSucceeded = true;
+					break;
 				} catch (e) {
-				    errorLog("failed to load module" + moduleLocations[x]);
-					continue; 
+					errorLog("Failed to load module " + moduleLocations[x] + 
+							": Error " + e.name + ": " + e.message);
+					continue;
 				}
-			} catch (e) {
-				try {
-					pkcs11module = Components.classes[nsPKCS11ContractID].getService(Components.interfaces.nsIDOMPkcs11);
-					try {
-						// PKCS11_PUB_READABLE_CERT_FLAG: we instruct FF not to ask for PIN when reading certificates
-						// This only makes sense when the CKF_LOGIN_REQUIRED flag is set on the token in P11 module
-						pkcs11module.addmodule(getModuleName(), moduleLocations[x], PKCS11_PUB_READABLE_CERT_FLAG,0);
-						errorLog("added PKCS11 module " + getModuleName() + "Location: " + moduleLocations[x]);
-						return true;
-					} catch (e) {
-						errorLog("failed to load module" + moduleLocations[x]);
-						// module not found, try the next
-						continue; 
-					}
-				} catch (f) {
-					return false; 
-				}
+			} else {
+				// as the module we removed in this procedure, could have been 
+				// a good one, we mark the installation as successful, in order to
+				// prevent false negatives.
+				installSucceeded = true;
 			}
 		}
+		return installSucceeded;
     }
+	// module was already installed
     return true;
   }
   this.unregisterModule = function (modulename) {
@@ -240,12 +269,15 @@ function BELGIUMEIDPKCS11(){
 
   // initialization code
   this.initialized = true;
-  this.removeOldModuleIfNotAvailable();
-  if (!this.registerModule()) {
-	if (this.shouldShowModuleNotFoundNotification()) {
-		this.notifyModuleNotFound();   
-    }
- }
+
 };
 
-window.addEventListener("load", function(e) { BELGIUMEIDPKCS11(e); }, false);
+window.addEventListener("load", function(e) { 
+  var beidPKCS11 = new BELGIUMEIDPKCS11(e);   
+  beidPKCS11.removeOldModuleIfNotAvailable();
+  if (!beidPKCS11.registerModule()) {
+	if (beidPKCS11.shouldShowModuleNotFoundNotification()) {
+	  beidPKCS11.notifyModuleNotFound();   
+    }
+  }
+}, false);
