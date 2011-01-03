@@ -97,7 +97,7 @@ AC_FUNC_REALLOC
 AC_CHECK_FUNCS([gethostbyname socket strerror ftime memchr memset mkdir select strchr strdup strerror strncasecmp strrchr strstr strtol strtoul vasprintf])
 
 AC_CONFIG_FILES([Makefile])
-AC_CONFIG_SUBDIRS([common cardlayer pkcs11 xpi eid-viewer])
+AC_CONFIG_SUBDIRS([common cardlayer pkcs11 xpi])
 
 if test "x$enable_dialogs" = "xyes"; then
 	AC_CONFIG_SUBDIRS([dialogs])
