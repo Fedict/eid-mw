@@ -8,9 +8,6 @@ xpi_files = $(dist_content_DATA) \
 			$(dist_locale_frfr_DATA) \
 			$(dist_locale_nlnl_DATA) \
 			$(dist_locale_dede_DATA) \
-			$(dist_platform_darwin_defaults_preferences_DATA) \
-			$(dist_platform_linux_defaults_preferences_DATA) \
-			$(dist_platform_winnt_defaults_preferences_DATA) \
 			$(dist_skin_DATA) \
 			$(dist_extensionroot_DATA)
 
@@ -36,12 +33,6 @@ dist_locale_nlnl_DATA = locale/nl-NL/belgiumeid.properties
 
 dist_locale_dede_DATA = locale/de-DE/belgiumeid.properties
 
-dist_platform_darwin_defaults_preferences_DATA = platform/Darwin/defaults/preferences/belgiumeid.js
-
-dist_platform_linux_defaults_preferences_DATA = platform/Linux/defaults/preferences/belgiumeid.js
-
-dist_platform_winnt_defaults_preferences_DATA = platform/WINNT/defaults/preferences/belgiumeid.js
-
 dist_skin_DATA = skin/icon.png \
 			skin/icon40x40.png \
 			skin/overlay.css
@@ -53,9 +44,6 @@ locale_enusdir=$(extensionrootdir)locale/en-US
 locale_frfrdir=$(extensionrootdir)locale/fr-FR
 locale_nlnldir=$(extensionrootdir)locale/nl-NL
 locale_dededir=$(extensionrootdir)locale/de-DE
-platform_darwin_defaults_preferencesdir=$(extensionrootdir)platform/Darwin/defaults/preferences
-platform_linux_defaults_preferencesdir=$(extensionrootdir)platform/Linux/defaults/preferences
-platform_winnt_defaults_preferencesdir=$(extensionrootdir)platform/WINNT/defaults/preferences
 skindir=$(extensionrootdir)skin
 
 xpipackage: $(xpi_files)
