@@ -69,13 +69,15 @@ public class TrustServiceController extends Observable implements Runnable
 
     public TrustServiceController setProxy(String proxyHost, int proxyPort)
     {
+        Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, "Set Proxy Host To {0}", proxyHost);
+        Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, "Set Proxy Port To {0}", proxyPort);
         trustServiceClient.setProxy(proxyHost, proxyPort);
         return this;
     }
 
-    public synchronized TrustServiceController validateLater(X509CertificateChainAndTrust certififateChain) throws InterruptedException
+    public synchronized TrustServiceController validateLater(X509CertificateChainAndTrust certificateChain) throws InterruptedException
     {
-        chainsToBeValidated.put(certififateChain);
+        chainsToBeValidated.put(certificateChain);
         return this;
     }
 

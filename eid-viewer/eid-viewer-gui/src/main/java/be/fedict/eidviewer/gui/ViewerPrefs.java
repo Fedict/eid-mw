@@ -28,41 +28,115 @@ public class ViewerPrefs
 {
     public static final String AUTO_VALIDATE_TRUST              = "autoValidateTrust";
     public static final String TRUSTSERVICE_URL                 = "trustServiceURL";
+    public static final String HTTP_PROXY_ENABLE                = "enableHTTPProxy";
+    public static final String HTTP_PROXY_HOST                  = "httpProxyHost";
+    public static final String HTTP_PROXY_PORT                  = "httpProxyPort";
 
+    public static final boolean DEFAULT_HTTP_PROXY_ENABLE       = false;
     public static final boolean DEFAULT_AUTO_VALIDATE_TRUST     = false;
-    public static final String  DEFAULT_TRUSTSERVICE_URL        ="http://trust.services.belgium.be"; 
+    public static final String  DEFAULT_TRUSTSERVICE_URL        = "http://trust.services.belgium.be";
+    public static final String  DEFAULT_HTTP_PROXY_HOST        = "";
+    public static final int     DEFAULT_HTTP_PROXY_PORT         = 8080;
     
-    private static Preferences preferences;
+    private static Preferences  preferences;
+    private static String       startupHttpProxyHost;
+    private static int          startupHttpProxyPort;
+    private static boolean      startupUseHttpProxy;
 
-    private static Preferences getPreferences()
+    static
     {
-        if(preferences==null)
-            preferences=Preferences.userNodeForPackage(ViewerPrefs.class);
-        return preferences;
+       preferences=Preferences.userNodeForPackage(ViewerPrefs.class);
+       
+       try
+       {
+           startupHttpProxyHost=System.getProperty("http.proxyHost");
+           if(startupHttpProxyHost!=null)
+                startupHttpProxyPort=Integer.parseInt(System.getProperty("http.proxyPort"));
+           startupUseHttpProxy=true;
+       }
+       catch(NullPointerException npe)
+       {
+           startupUseHttpProxy=false;
+       }
+       catch(NumberFormatException nfe)
+       {
+           startupUseHttpProxy=false;
+       }
     }
 
     public static boolean getIsAutoValidating()
     {
-        return getPreferences()!=null?getPreferences().getBoolean(AUTO_VALIDATE_TRUST, DEFAULT_AUTO_VALIDATE_TRUST):DEFAULT_AUTO_VALIDATE_TRUST;
+        return preferences!=null?preferences.getBoolean(AUTO_VALIDATE_TRUST, DEFAULT_AUTO_VALIDATE_TRUST):DEFAULT_AUTO_VALIDATE_TRUST;
     }
 
     public static void setAutoValidating(boolean state)
     {
-        if(getPreferences()==null)
+        if(preferences==null)
             return;
-        getPreferences().putBoolean(AUTO_VALIDATE_TRUST, state);
+        preferences.putBoolean(AUTO_VALIDATE_TRUST, state);
     }
 
     public static String getTrustServiceURL()
     {
-        return getPreferences()!=null?getPreferences().get(TRUSTSERVICE_URL, DEFAULT_TRUSTSERVICE_URL):DEFAULT_TRUSTSERVICE_URL;
+        return preferences!=null?preferences.get(TRUSTSERVICE_URL, DEFAULT_TRUSTSERVICE_URL):DEFAULT_TRUSTSERVICE_URL;
     }
 
     public static void setTrustServiceURL(String url)
     {
-        if(getPreferences()==null)
+        if(preferences==null)
             return;
-        getPreferences().put(TRUSTSERVICE_URL, url);
+        preferences.put(TRUSTSERVICE_URL, url);
+    }
+
+    public static void setUseHTTPProxy(boolean use)
+    {
+        if(preferences==null)
+            return;
+        preferences.putBoolean(HTTP_PROXY_ENABLE, use);
+    }
+
+    public static boolean getUseHTTPProxy()
+    {
+        return preferences!=null?preferences.getBoolean(HTTP_PROXY_ENABLE, DEFAULT_HTTP_PROXY_ENABLE):DEFAULT_HTTP_PROXY_ENABLE;
+    }
+
+    public static void setHTTPProxyHost(String host)
+    {
+         if(preferences==null)
+            return;
+        preferences.put(HTTP_PROXY_HOST, host);
+    }
+
+    public static String getHTTPProxyHost()
+    {
+        return preferences!=null?preferences.get(HTTP_PROXY_HOST, DEFAULT_HTTP_PROXY_HOST):DEFAULT_HTTP_PROXY_HOST;
+    }
+
+     public static void setHTTPProxyPort(int port)
+    {
+         if(preferences==null)
+            return;
+        preferences.putInt(HTTP_PROXY_PORT, port);
+    }
+
+    public static int getHTTPProxyPort()
+    {
+        return preferences!=null?preferences.getInt(HTTP_PROXY_PORT, DEFAULT_HTTP_PROXY_PORT):DEFAULT_HTTP_PROXY_PORT;
+    }
+
+    public static String getStartupHttpProxyHost()
+    {
+        return startupHttpProxyHost;
+    }
+
+    public static int getStartupHttpProxyPort()
+    {
+        return startupHttpProxyPort;
+    }
+
+    public static boolean getStartupUseHttpProxy()
+    {
+        return startupUseHttpProxy;
     }
 }
 

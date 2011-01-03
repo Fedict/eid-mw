@@ -76,11 +76,11 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private IdentityPanel identityPanel;
     private CertificatesPanel certificatesPanel;
     private CardPanel cardPanel;
+    private PreferencesPanel preferencesPanel;
     private javax.swing.Action printAction;
 
     public BelgianEidViewer()
     {
-        Locale.setDefault(new Locale("nl", "BE"));
         bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/BelgianEidViewer");
         coreMessages = new Messages(Locale.getDefault());
         initComponents();
@@ -97,11 +97,17 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         eid = EidFactory.getEidImpl(this, coreMessages);
         eidController = new EidController(eid);
         trustServiceController = new TrustServiceController(ViewerPrefs.getTrustServiceURL());
+
+        if(ViewerPrefs.getUseHTTPProxy())
+            trustServiceController.setProxy(ViewerPrefs.getHTTPProxyHost(),ViewerPrefs.getHTTPProxyPort());
+
         eidController.setTrustServiceController(trustServiceController);
         eidController.setAutoValidateTrust(ViewerPrefs.getIsAutoValidating());
         cardPanel.setEidController(eidController);
         certificatesPanel.setEidController(eidController);
         certificatesPanel.start();
+        preferencesPanel.setTrustServiceController(trustServiceController);
+        preferencesPanel.start();
         eidController.addObserver(identityPanel);
         eidController.addObserver(cardPanel);
         eidController.addObserver(certificatesPanel);
@@ -324,9 +330,11 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         identityPanel = new IdentityPanel();
         cardPanel = new CardPanel();
         certificatesPanel = new CertificatesPanel();
+        preferencesPanel = new PreferencesPanel();
         tabPanel.add(identityPanel, res.getString("IDENTITY"));
         tabPanel.add(cardPanel, res.getString("CARD"));
         tabPanel.add(certificatesPanel, res.getString("CERTIFICATES"));
+        tabPanel.add(preferencesPanel, res.getString("PREFERENCES"));
     }
 
     private void initIcons()
@@ -365,7 +373,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-
             public void run()
             {
                 new BelgianEidViewer().start();

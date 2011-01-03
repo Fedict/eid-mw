@@ -64,7 +64,6 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
     private DefaultTreeModel                        treeModel;
     private Color                                   defaultLabelForeground,defaultLabelBackground;
     private EidController                           eidController;
-    private DefaultMutableTreeNode                  authenticationCertificateNode;
 
     public CertificatesPanel()
     {
@@ -74,7 +73,6 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         trustErrors.setVisible(false);
         defaultLabelForeground = UIManager.getColor("Label.foreground");
         defaultLabelBackground = UIManager.getColor("Label.background");
-        authenticationCertificateNode=null;
         initCertsTree();
         
     }
@@ -729,7 +727,6 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         certificatesInTree.clear();
         treeModel = new DefaultTreeModel(new DefaultMutableTreeNode("-"));
         certsTree.setModel(treeModel);
-        authenticationCertificateNode=null;
     }
 
     private String getMultilineDN(String dnStr)
