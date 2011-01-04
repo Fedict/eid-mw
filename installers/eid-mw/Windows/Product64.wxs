@@ -112,13 +112,6 @@
                 <Directory Id="XPILOCALEFRFOLDER" Name="fr-FR"/>
                 <Directory Id="XPILOCALENLFOLDER" Name="nl-NL"/>
               </Directory>
-              <Directory Id="XPIPLATFORMFOLDER" Name="platform">
-                <Directory Id="XPIPLATFORMNTFOLDER" Name="WINNT">
-                  <Directory Id="XPIPLATFORMNTDEFAULTSFOLDER" Name="defaults">
-                    <Directory Id="XPIPLATFORMNTDEFAULTSPREFSFOLDER" Name="preferences"/>
-                  </Directory>
-                </Directory>
-              </Directory>
               <Directory Id="XPISKINFOLDER" Name="skin"/>
             </Directory>
           </Directory>
@@ -262,39 +255,6 @@
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
         <File Id="belgiumeid.properties.nl" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\nl-NL\belgiumeid.properties" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIPLATFORMFOLDER">
-      <Component Id="XPIPlatform" Guid="{617602EE-3E9C-477d-84AC-1EE7E773AF62}" KeyPath="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIPLATFORMNTFOLDER">
-      <Component Id="XPIPlatformNT" Guid="{1EC2E9BD-C9C0-420a-85F0-055F065C426D}" KeyPath="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIPLATFORMNTDEFAULTSFOLDER">
-      <Component Id="XPIPlatformNTDefaults" Guid="{B8578E26-302B-4d5e-98BC-04E7D4E61627}" KeyPath="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIPLATFORMNTDEFAULTSPREFSFOLDER">
-      <Component Id="XPIPlatformNTDefaultsPreferences" Guid="{1C5103A3-36CD-46b7-B3EE-64E8EC83B115}" KeyPath="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
-        <File Id="belgiumeid.defaultsprefs.js" Name="belgiumeid.js" KeyPath="no" Source="..\..\..\xpi\src\platform\WINNT\defaults\preferences\belgiumeid.js" />
       </Component>
     </DirectoryRef>
 
