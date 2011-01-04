@@ -50,6 +50,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu.Separator;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -88,6 +89,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         initIcons();
         initTexts();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ViewerPrefs.getStartupProxySettings();
     }
 
     private void start()
@@ -172,7 +174,11 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         printButton = new JButton();
         menuBar = new JMenuBar();
         fileMenu = new JMenu();
+        jMenuItem2 = new JMenuItem();
+        jMenuItem3 = new JMenuItem();
+        jSeparator2 = new Separator();
         jMenuItem1 = new JMenuItem();
+        jSeparator1 = new Separator();
         fileMenuQuitItem = new JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -205,9 +211,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
         ActionMap actionMap = Application.getInstance().getContext().getActionMap(BelgianEidViewer.class, this);
         printButton.setAction(actionMap.get("print")); // NOI18N
-        printButton.setIcon(new ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/icons/print.png"))); // NOI18N
-        printButton.setMnemonic('p');
-        printButton.setEnabled(false);
         printButton.setHideActionText(true);
         printButton.setMaximumSize(new Dimension(200, 50));
         printButton.setMinimumSize(new Dimension(50, 50));
@@ -224,10 +227,24 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         fileMenu.setText(bundle.getString("fileMenuTitle")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
+        jMenuItem2.setAction(actionMap.get("openFile")); // NOI18N
+        jMenuItem2.setName("jMenuItem2"); // NOI18N
+        fileMenu.add(jMenuItem2);
+
+        jMenuItem3.setAction(actionMap.get("save")); // NOI18N
+        jMenuItem3.setName("jMenuItem3"); // NOI18N
+        fileMenu.add(jMenuItem3);
+
+        jSeparator2.setName("jSeparator2"); // NOI18N
+        fileMenu.add(jSeparator2);
+
         jMenuItem1.setAction(actionMap.get("print")); // NOI18N
         jMenuItem1.setText(bundle.getString("fileMenuPrintItem")); // NOI18N
         jMenuItem1.setName("jMenuItem1"); // NOI18N
         fileMenu.add(jMenuItem1);
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
+        fileMenu.add(jSeparator1);
 
         fileMenuQuitItem.setAction(actionMap.get("quit")); // NOI18N
         fileMenuQuitItem.setText(bundle.getString("fileMenuQuitItem")); // NOI18N
@@ -321,6 +338,10 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     JMenu fileMenu;
     JMenuItem fileMenuQuitItem;
     JMenuItem jMenuItem1;
+    JMenuItem jMenuItem2;
+    JMenuItem jMenuItem3;
+    Separator jSeparator1;
+    Separator jSeparator2;
     JMenuBar menuBar;
     JButton printButton;
     JPanel printPanel;
@@ -416,5 +437,15 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     public void quit()
     {
         this.stop();
+    }
+
+    @Action
+    public void openFile()
+    {
+    }
+
+    @Action
+    public void save()
+    {
     }
 }

@@ -183,7 +183,7 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
         setLayout(new java.awt.BorderLayout());
 
-        proxyPrefsPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16), javax.swing.BorderFactory.createTitledBorder("Configure Proxies to Access the Internet:")));
+        proxyPrefsPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
         proxyPrefsPanel.setName("proxyPrefsPanel"); // NOI18N
         proxyPrefsPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -209,7 +209,6 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
 
         httpProxyHost.setMinimumSize(new java.awt.Dimension(128, 18));
         httpProxyHost.setName("httpProxyHost"); // NOI18N
-        httpProxyHost.setOpaque(false);
         httpProxyHost.setPreferredSize(new java.awt.Dimension(256, 18));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
