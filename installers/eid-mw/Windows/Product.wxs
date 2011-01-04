@@ -434,10 +434,6 @@
       <ComponentRef Id="XPIlocaleen"/>
       <ComponentRef Id="XPIlocalefr"/>
       <ComponentRef Id="XPIlocalenl"/>
-      <ComponentRef Id="XPIPlatform"/>
-      <ComponentRef Id="XPIPlatformNT"/>
-      <ComponentRef Id="XPIPlatformNTDefaults"/>
-      <ComponentRef Id="XPIPlatformNTDefaultsPreferences"/>
       <ComponentRef Id="XPIskin"/>
 
       <!-- Beid pinpad dir-->
