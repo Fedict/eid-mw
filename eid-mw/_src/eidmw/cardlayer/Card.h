@@ -141,6 +141,7 @@ protected:
 	CContext *m_poContext;
 	CPinpad *m_poPinpad;
 	CCache m_oCache;
+	tCardType m_cardType;
     unsigned long m_ulLockCount;
 	bool m_bSerialNrString;
 	std::string m_csSerialNr;

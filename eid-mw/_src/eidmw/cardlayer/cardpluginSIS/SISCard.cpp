@@ -114,13 +114,13 @@ CCard * SISCardConnectGetInstance(unsigned long ulVersion,const char *csReader,
 static CByteArray ReadInternal(CPCSC *poPCSC, SCARDHANDLE hCard, unsigned long ulOffset, unsigned long ulMaxLen)
 {
 	unsigned long ulLen = ulMaxLen > 252 ? 252 : ulMaxLen;
-
+	long lretVal = 0;
 	unsigned char tucReadDat[5] = {0xFF, 0xB2};
 	tucReadDat[2] = (unsigned char)(ulOffset/256);
 	tucReadDat[3] = (unsigned char)(ulOffset%256);
 	tucReadDat[4] = (unsigned char)(ulLen);
 	CByteArray oCmd(tucReadDat, sizeof(tucReadDat));
-	CByteArray oData = poPCSC->Transmit(hCard, oCmd);
+	CByteArray oData = poPCSC->Transmit(hCard, oCmd, &lretVal);
 
 	oData.Chop(2); // remove SW12
 
@@ -139,7 +139,7 @@ static CByteArray ReadInternal(CPCSC *poPCSC, SCARDHANDLE hCard, unsigned long u
 	tucReadDat[3] = (unsigned char)(ulOffset%256);
 	tucReadDat[4] = (unsigned char)(ulLen);
 	oCmd = CByteArray(tucReadDat, sizeof(tucReadDat));
-	CByteArray oData2 = poPCSC->Transmit(hCard, oCmd);
+	CByteArray oData2 = poPCSC->Transmit(hCard, oCmd,&lretVal);
 
 	oData2.Chop(2); // remove SW12
 
@@ -179,7 +179,6 @@ CCard *SISCardGetInstance(unsigned long ulVersion, const char *csReader,
 	try
 	{
 		poContext->m_oPCSC.BeginTransaction(hCard);
-
 #ifndef SWITCH_TO_ASYNC_AFTER_READ
 		unsigned long ulReadLen = 26;  // read only the first part
 #else

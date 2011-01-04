@@ -125,7 +125,8 @@ public:
 	bool Status(SCARDHANDLE hCard);
 
 	CByteArray Transmit(SCARDHANDLE hCard, const CByteArray &oCmdAPDU,
-		void *pSendPci = NULL, void *pRecvPci = NULL);
+		long *plRetVal, void *pSendPci = NULL, void *pRecvPci = NULL);
+	void Recover(SCARDHANDLE hCard, unsigned long *pulLockCount);
 	CByteArray Control(SCARDHANDLE hCard, unsigned long ulControl,
 		const CByteArray &oCmd, unsigned long ulMaxResponseSize = CTRL_BUF_LEN);
 
