@@ -22,12 +22,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -44,8 +38,6 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
     private ResourceBundle          bundle;
     private TrustServiceController  trustServiceController;
     private EidController           eidController;
-    private String                  lastValidHostName;
-    private int                     lastValidPortNumber;
 
     public PreferencesPanel()
     {
@@ -115,7 +107,7 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
             public void actionPerformed(ActionEvent ae)
             {
                 applyProxyPrefs();
-                fillProxyPrefs();
+                updateApplyButtonEnabled();
             }
         });
 
@@ -273,32 +265,6 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         });
     }
 
-    private boolean testProxy()
-    {
-        try
-        {
-            Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(httpProxyHost.getText(), Integer.parseInt(httpProxyPort.getText())),500);
-            socket.close();
-            return true;
-        }
-        catch (SocketException e)
-        {
-            System.err.println("Socket error : " + e);
-            return false;
-        }
-        catch (UnknownHostException e)
-        {
-            System.err.println("Invalid host [" + httpProxyHost.getText() + "]");
-            return false;
-        }
-        catch (IOException e)
-        {
-            System.err.println("I/O error : " + e);
-            return false;
-        }
-    }
-
     private void updateApplyButtonEnabled()
     {
         applyProxyButton.setEnabled(canApply());
@@ -309,11 +275,6 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         if (!eidController.isReadyForCommand())
         {
             return false;
-        }
-
-        if (!useProxyCheckbox.isSelected())
-        {
-            return true;
         }
 
         if (httpProxyHost.getText().isEmpty())
@@ -327,27 +288,18 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         try
         {
             portNumber=Integer.parseInt(httpProxyPort.getText());
+            if(portNumber<1 || portNumber>65535)
+                return false;
         }
         catch(NumberFormatException nfe)
         {
             return false;
         }
 
-        if(lastValidHostName != null && hostName.equals(lastValidHostName) && portNumber==lastValidPortNumber)
-        {
-            return true;
-        }
-
-        if(testProxy())
-        {
-            lastValidHostName = hostName;
-            lastValidPortNumber = portNumber;
-            return true;
-        }
+        if(useProxyCheckbox.isSelected())
+            return (!hostName.equals(ViewerPrefs.getHTTPProxyHost()) || (portNumber!=ViewerPrefs.getHTTPProxyPort()) || (!ViewerPrefs.getUseHTTPProxy()));
         else
-        {
-            return false;
-        }
+            return ViewerPrefs.getUseHTTPProxy();
     }
 
     public void componentShown(ComponentEvent componentEvent)
