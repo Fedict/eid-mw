@@ -26,42 +26,43 @@ import java.util.prefs.Preferences;
  */
 public class ViewerPrefs
 {
-    public static final String AUTO_VALIDATE_TRUST              = "autoValidateTrust";
-    public static final String TRUSTSERVICE_URL                 = "trustServiceURL";
-    public static final String HTTP_PROXY_ENABLE                = "enableHTTPProxy";
-    public static final String HTTP_PROXY_HOST                  = "httpProxyHost";
-    public static final String HTTP_PROXY_PORT                  = "httpProxyPort";
+    public static final String          AUTO_VALIDATE_TRUST              = "autoValidateTrust";
+    public static final String          TRUSTSERVICE_URL                 = "trustServiceURL";
+    public static final String          HTTP_PROXY_ENABLE                = "enableHTTPProxy";
+    public static final String          HTTP_PROXY_HOST                  = "httpProxyHost";
+    public static final String          HTTP_PROXY_PORT                  = "httpProxyPort";
 
-    public static final boolean DEFAULT_HTTP_PROXY_ENABLE       = false;
-    public static final boolean DEFAULT_AUTO_VALIDATE_TRUST     = false;
-    public static final String  DEFAULT_TRUSTSERVICE_URL        = "http://trust.services.belgium.be";
-    public static final String  DEFAULT_HTTP_PROXY_HOST        = "";
-    public static final int     DEFAULT_HTTP_PROXY_PORT         = 8080;
+    public static final boolean         DEFAULT_HTTP_PROXY_ENABLE       = false;
+    public static final boolean         DEFAULT_AUTO_VALIDATE_TRUST     = false;
+    public static final String          DEFAULT_TRUSTSERVICE_URL        = "http://trust.services.belgium.be";
+    public static final String          DEFAULT_HTTP_PROXY_HOST        = "";
+    public static final int             DEFAULT_HTTP_PROXY_PORT         = 8080;
     
-    private static Preferences  preferences;
-    private static String       startupHttpProxyHost;
-    private static int          startupHttpProxyPort;
-    private static boolean      startupUseHttpProxy;
+    private static Preferences          preferences;
+    private static String               startupHttpProxyHost;
+    private static int                  startupHttpProxyPort;
+    private static boolean              startupUseHttpProxy;
 
     static
     {
        preferences=Preferences.userNodeForPackage(ViewerPrefs.class);
        
-       try
-       {
-           startupHttpProxyHost=System.getProperty("http.proxyHost");
-           if(startupHttpProxyHost!=null)
-                startupHttpProxyPort=Integer.parseInt(System.getProperty("http.proxyPort"));
-           startupUseHttpProxy=true;
-       }
-       catch(NullPointerException npe)
-       {
-           startupUseHttpProxy=false;
-       }
-       catch(NumberFormatException nfe)
-       {
-           startupUseHttpProxy=false;
-       }
+        startupHttpProxyHost=System.getProperty("http.proxyHost");
+        if(startupHttpProxyHost!=null)
+        {
+            if(System.getProperty("http.proxyPort")!=null)
+            {
+                try
+                {
+                    startupHttpProxyPort=Integer.parseInt(System.getProperty("http.proxyPort"));
+                    startupUseHttpProxy=true;
+                }
+                catch(NumberFormatException nfe)
+                {
+                    // if the system property has a non-numerical value, we just don't set startupUseHttpProxy
+                }
+            }
+        }
     }
 
     public static boolean getIsAutoValidating()

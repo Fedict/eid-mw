@@ -45,7 +45,8 @@ public class TrustServiceController extends Observable implements Runnable
     private String                                              trustServiceURL;
     private XKMS2Client                                         trustServiceClient;
     private LinkedBlockingQueue<X509CertificateChainAndTrust>   chainsToBeValidated;
-    private boolean                                             running,validating;
+    private boolean                                             running,validating,settingProxy;
+    private Thread                                              worker;
 
     public TrustServiceController(String trustServiceURL)
     {
@@ -69,9 +70,47 @@ public class TrustServiceController extends Observable implements Runnable
 
     public TrustServiceController setProxy(String proxyHost, int proxyPort)
     {
-        Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, "Set Proxy Host To {0}", proxyHost);
-        Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, "Set Proxy Port To {0}", proxyPort);
-        trustServiceClient.setProxy(proxyHost, proxyPort);
+        /*
+         * The Trust Service Client (1.0.0) uses System.setProperty("http.proxyHost", proxyHost); etc.. to set proxy
+         * But this will not set the working proxy: that one is read when the client is instantiated, and, apparently cached
+         * in one of the lower layer services used.
+         * Therefore, to set the proxy, we stop our worker thread, wait for it to end, set the system properties,
+         * instantiate a new XKMS2Client (which then picks up the right proxy), and restart our worker thread.
+         */
+
+        settingProxy=true;
+        Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, "Set Proxy Host To {0}:{1}", new Object[]{proxyHost, proxyPort});
+
+        stop();
+        
+        while(running)
+        {
+            try
+            {
+                Thread.sleep(100);
+            }
+            catch(InterruptedException iex)
+            {
+                Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, "Interrupted While Waiting for Worker To End",iex);
+            }
+        }
+
+        if(proxyHost!=null)
+        {
+            System.setProperty("http.proxyHost", proxyHost);
+            System.setProperty("http.proxyPort", Integer.toString(proxyPort));
+        }
+        else
+        {
+            System.clearProperty("http.proxyHost");
+            System.clearProperty("http.proxyPort");
+        }
+
+        trustServiceClient=new XKMS2Client(this.trustServiceURL);
+
+        start();
+        settingProxy=false;
+        
         return this;
     }
 
@@ -89,15 +128,15 @@ public class TrustServiceController extends Observable implements Runnable
 
     public TrustServiceController start()
     {
-         Thread me=new Thread(this);
-                me.setDaemon(true);
-                me.start();
+        worker=new Thread(this);
+        worker.setDaemon(true);
+        worker.start();
         return this;
     }
 
     public void stop()
     {
-        running=false;
+        worker.interrupt();
     }
 
     public boolean isValidating()
@@ -156,7 +195,9 @@ public class TrustServiceController extends Observable implements Runnable
             }
             catch (InterruptedException ex)
             {
-                Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, null, ex);
+                if(settingProxy)
+                    Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, "(Planned Interruption for Setting Proxy)");
+                Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, "TrustServiceController Worker Interrupted");
                 running=false;
             }
         }

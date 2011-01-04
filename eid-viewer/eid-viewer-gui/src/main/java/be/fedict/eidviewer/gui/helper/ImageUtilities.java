@@ -15,6 +15,7 @@
  * License along with this software; if not, see
  * http://www.gnu.org/licenses/.
  */
+
 package be.fedict.eidviewer.gui.helper;
 
 import java.awt.Graphics2D;

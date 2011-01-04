@@ -17,29 +17,41 @@
  */
 package be.fedict.eidviewer.gui;
 
+import be.fedict.eidviewer.gui.helper.PositiveIntegerDocument;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
  * @author Frank Marien
  */
-public class PreferencesPanel extends javax.swing.JPanel implements ComponentListener
+public class PreferencesPanel extends javax.swing.JPanel implements Observer, ComponentListener
 {
+
     private ResourceBundle          bundle;
     private TrustServiceController  trustServiceController;
-    
+    private EidController           eidController;
+    private String                  lastValidHostName;
+    private int                     lastValidPortNumber;
+
     public PreferencesPanel()
     {
         bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/PreferencesPanel");
         initComponents();
-        initProxyPrefsPanel();
-        httpProxyPortSpinner.setModel(new SpinnerNumberModel(ViewerPrefs.getHTTPProxyPort(),1,65535,1));
-        
+        initProxyPrefsPanel();    
     }
 
     public void start()
@@ -47,64 +59,121 @@ public class PreferencesPanel extends javax.swing.JPanel implements ComponentLis
         addComponentListener(this);
     }
 
-    public void setTrustServiceController(TrustServiceController trustServiceController)
+    public PreferencesPanel setEidController(EidController eidController)
+    {
+        this.eidController = eidController;
+        return this;
+    }
+
+    public PreferencesPanel setTrustServiceController(TrustServiceController trustServiceController)
     {
         this.trustServiceController = trustServiceController;
+        return this;
     }
 
     private void fillProxyPrefs()
     {
-        boolean proxyEnabled=ViewerPrefs.getUseHTTPProxy();
-        
-        httpProxyHost.setEnabled(proxyEnabled);
-        httpProxyPortLabel.setEnabled(proxyEnabled);
-        httpProxyPortSpinner.setEnabled(proxyEnabled);
-        
+        boolean proxyEnabled = ViewerPrefs.getUseHTTPProxy();
+
         useProxyCheckbox.setSelected(proxyEnabled);
         httpProxyHost.setText(ViewerPrefs.getHTTPProxyHost());
-        httpProxyPortSpinner.setValue(ViewerPrefs.getHTTPProxyPort());
+        httpProxyPort.setText(String.valueOf(ViewerPrefs.getHTTPProxyPort()));
+
+        updateProxyComponentsEnabled();
     }
 
     private void applyProxyPrefs()
     {
         ViewerPrefs.setHTTPProxyHost(httpProxyHost.getText());
-        ViewerPrefs.setHTTPProxyPort((Integer)httpProxyPortSpinner.getValue());
+        ViewerPrefs.setHTTPProxyPort(Integer.parseInt(httpProxyPort.getText()));
         ViewerPrefs.setUseHTTPProxy(useProxyCheckbox.isSelected());
-        
-        if(ViewerPrefs.getUseHTTPProxy())
+
+        // if we have our own proxy settings, apply them
+        if (ViewerPrefs.getUseHTTPProxy())
         {
-              trustServiceController.setProxy(ViewerPrefs.getHTTPProxyHost(), ViewerPrefs.getHTTPProxyPort());
+            trustServiceController.setProxy(ViewerPrefs.getHTTPProxyHost(), ViewerPrefs.getHTTPProxyPort());
         }
         else
         {
-            if(ViewerPrefs.getStartupUseHttpProxy())
+            // if we captured default proxy settings at startup, reset to those, otherwise clear proxy settings
+            if (ViewerPrefs.getStartupUseHttpProxy())
             {
-               trustServiceController.setProxy(ViewerPrefs.getStartupHttpProxyHost(), ViewerPrefs.getStartupHttpProxyPort());
+                trustServiceController.setProxy(ViewerPrefs.getStartupHttpProxyHost(), ViewerPrefs.getStartupHttpProxyPort());
             }
             else
             {
-                System.clearProperty("http.proxyHost");
-                System.clearProperty("https.proxyHost");
-                System.clearProperty("http.proxyPort");
-                System.clearProperty("https.proxyPort");
+                trustServiceController.setProxy(null, 0);
             }
         }
     }
 
     private void initProxyPrefsPanel()
-    {
-        useProxyCheckbox.addActionListener(new ActionListener()
+    {  
+        applyProxyButton.addActionListener(new ActionListener()
         {
+
             public void actionPerformed(ActionEvent ae)
             {
-                ViewerPrefs.setUseHTTPProxy(useProxyCheckbox.isSelected());
                 applyProxyPrefs();
                 fillProxyPrefs();
             }
         });
+
+        useProxyCheckbox.addActionListener(new ActionListener()
+        {
+
+            public void actionPerformed(ActionEvent ae)
+            {
+                updateProxyComponentsEnabled();
+                updateApplyButtonEnabled();
+            }
+        });
+
+        httpProxyPort.setDocument(new PositiveIntegerDocument(5));
+        httpProxyPort.getDocument().addDocumentListener(new DocumentListener()
+        {
+            public void insertUpdate(DocumentEvent de)
+            {
+                updateApplyButtonEnabled();
+            }
+
+            public void removeUpdate(DocumentEvent de)
+            {
+                updateApplyButtonEnabled();
+            }
+
+            public void changedUpdate(DocumentEvent de)
+            {
+                updateApplyButtonEnabled();
+            }
+        });
+
+        httpProxyHost.getDocument().addDocumentListener(new DocumentListener()
+        {
+            public void insertUpdate(DocumentEvent de)
+            {
+                updateApplyButtonEnabled();
+            }
+
+            public void removeUpdate(DocumentEvent de)
+            {
+                updateApplyButtonEnabled();
+            }
+
+            public void changedUpdate(DocumentEvent de)
+            {
+                updateApplyButtonEnabled();
+            }
+        });    
     }
 
-
+    private void updateProxyComponentsEnabled()
+    {
+        boolean enabled = useProxyCheckbox.isSelected();
+        httpProxyHost.setEnabled(enabled);
+        httpProxyPortLabel.setEnabled(enabled);
+        httpProxyPort.setEnabled(enabled);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -113,9 +182,11 @@ public class PreferencesPanel extends javax.swing.JPanel implements ComponentLis
 
         proxyPrefsPanel = new javax.swing.JPanel();
         httpProxyPortLabel = new javax.swing.JLabel();
-        httpProxyPortSpinner = new javax.swing.JSpinner();
         useProxyCheckbox = new javax.swing.JCheckBox();
         httpProxyHost = new javax.swing.JTextField();
+        applyProxyButton = new javax.swing.JButton();
+        spacer = new javax.swing.JLabel();
+        httpProxyPort = new javax.swing.JTextField();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
         setLayout(new java.awt.BorderLayout());
@@ -124,7 +195,7 @@ public class PreferencesPanel extends javax.swing.JPanel implements ComponentLis
         proxyPrefsPanel.setName("proxyPrefsPanel"); // NOI18N
         proxyPrefsPanel.setLayout(new java.awt.GridBagLayout());
 
-        httpProxyPortLabel.setText("Port:");
+        httpProxyPortLabel.setText(bundle.getString("portLabel")); // NOI18N
         httpProxyPortLabel.setName("httpProxyPortLabel"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -134,16 +205,7 @@ public class PreferencesPanel extends javax.swing.JPanel implements ComponentLis
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         proxyPrefsPanel.add(httpProxyPortLabel, gridBagConstraints);
 
-        httpProxyPortSpinner.setName("httpProxyPortSpinner"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 4;
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        proxyPrefsPanel.add(httpProxyPortSpinner, gridBagConstraints);
-
-        useProxyCheckbox.setText("HTTP Proxy:");
+        useProxyCheckbox.setText(bundle.getString("proxyCheckbox")); // NOI18N
         useProxyCheckbox.setName("useProxyCheckbox"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -163,27 +225,145 @@ public class PreferencesPanel extends javax.swing.JPanel implements ComponentLis
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         proxyPrefsPanel.add(httpProxyHost, gridBagConstraints);
 
+        applyProxyButton.setText(bundle.getString("applyButton")); // NOI18N
+        applyProxyButton.setEnabled(false);
+        applyProxyButton.setName("applyProxyButton"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        proxyPrefsPanel.add(applyProxyButton, gridBagConstraints);
+
+        spacer.setName("spacer"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(8, 8, 8, 8);
+        proxyPrefsPanel.add(spacer, gridBagConstraints);
+
+        httpProxyPort.setText("8080");
+        httpProxyPort.setMinimumSize(new java.awt.Dimension(48, 18));
+        httpProxyPort.setName("httpProxyPort"); // NOI18N
+        httpProxyPort.setPreferredSize(new java.awt.Dimension(48, 18));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        proxyPrefsPanel.add(httpProxyPort, gridBagConstraints);
+
         add(proxyPrefsPanel, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton applyProxyButton;
     private javax.swing.JTextField httpProxyHost;
+    private javax.swing.JTextField httpProxyPort;
     private javax.swing.JLabel httpProxyPortLabel;
-    private javax.swing.JSpinner httpProxyPortSpinner;
     private javax.swing.JPanel proxyPrefsPanel;
+    private javax.swing.JLabel spacer;
     private javax.swing.JCheckBox useProxyCheckbox;
     // End of variables declaration//GEN-END:variables
 
+    public void update(Observable o, Object o1)
+    {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
 
-    public void componentShown(ComponentEvent ce)
+            public void run()
+            {
+                updateApplyButtonEnabled();
+            }
+        });
+    }
+
+    private boolean testProxy()
+    {
+        try
+        {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(httpProxyHost.getText(), Integer.parseInt(httpProxyPort.getText())),500);
+            socket.close();
+            return true;
+        }
+        catch (SocketException e)
+        {
+            System.err.println("Socket error : " + e);
+            return false;
+        }
+        catch (UnknownHostException e)
+        {
+            System.err.println("Invalid host [" + httpProxyHost.getText() + "]");
+            return false;
+        }
+        catch (IOException e)
+        {
+            System.err.println("I/O error : " + e);
+            return false;
+        }
+    }
+
+    private void updateApplyButtonEnabled()
+    {
+        applyProxyButton.setEnabled(canApply());
+    }
+
+    private boolean canApply()
+    {
+        if (!eidController.isReadyForCommand())
+        {
+            return false;
+        }
+
+        if (!useProxyCheckbox.isSelected())
+        {
+            return true;
+        }
+
+        if (httpProxyHost.getText().isEmpty())
+        {
+            return false;
+        }
+
+        String hostName=httpProxyHost.getText();
+        int    portNumber;
+
+        try
+        {
+            portNumber=Integer.parseInt(httpProxyPort.getText());
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+
+        if(lastValidHostName != null && hostName.equals(lastValidHostName) && portNumber==lastValidPortNumber)
+        {
+            return true;
+        }
+
+        if(testProxy())
+        {
+            lastValidHostName = hostName;
+            lastValidPortNumber = portNumber;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void componentShown(ComponentEvent componentEvent)
     {
         fillProxyPrefs();
     }
 
-    public void componentHidden(ComponentEvent ce)
+    public void componentResized(ComponentEvent ce)
     {
-        applyProxyPrefs();
     }
 
-    public void componentResized(ComponentEvent ce){}
-    public void componentMoved(ComponentEvent ce){}
+    public void componentMoved(ComponentEvent ce)
+    {
+    }
+
+    public void componentHidden(ComponentEvent ce)
+    {
+    }
 }

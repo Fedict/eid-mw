@@ -96,7 +96,9 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         printAction = actionMap.get("print"); // NOI18N
         eid = EidFactory.getEidImpl(this, coreMessages);
         eidController = new EidController(eid);
+        
         trustServiceController = new TrustServiceController(ViewerPrefs.getTrustServiceURL());
+        trustServiceController.start();
 
         if(ViewerPrefs.getUseHTTPProxy())
             trustServiceController.setProxy(ViewerPrefs.getHTTPProxyHost(),ViewerPrefs.getHTTPProxyPort());
@@ -106,11 +108,15 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         cardPanel.setEidController(eidController);
         certificatesPanel.setEidController(eidController);
         certificatesPanel.start();
+        
         preferencesPanel.setTrustServiceController(trustServiceController);
+        preferencesPanel.setEidController(eidController);
         preferencesPanel.start();
+
         eidController.addObserver(identityPanel);
         eidController.addObserver(cardPanel);
         eidController.addObserver(certificatesPanel);
+        eidController.addObserver(preferencesPanel);
         eidController.addObserver(this);
         eidController.start();
 
