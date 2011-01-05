@@ -32,10 +32,6 @@ using Net.Sf.Pkcs11.Wrapper;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
 
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Signers;
-using Org.BouncyCastle.Crypto.Digests;
-using Org.BouncyCastle.Crypto.Parameters;
 namespace EidSamples
 {
     class Integrity
@@ -45,13 +41,32 @@ namespace EidSamples
         }
         public bool CheckFileIntegrity(byte[] data, byte[] signature, byte[] certificate) 
         {
-            X509Certificate x509Certificate;
-            x509Certificate = new X509Certificate(certificate);
-            
-            RsaDigestSigner signer = new RsaDigestSigner(new Sha1Digest());
-            signer.Init(false, new KeyParameter(x509Certificate.GetPublicKey()));
-            signer.BlockUpdate(data, 0, data.Length);
-            return signer.VerifySignature(signature);
+            try
+            {
+                X509Certificate2 x509Certificate;
+                x509Certificate = new X509Certificate2(certificate);
+                RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)x509Certificate.PublicKey.Key;
+                return rsa.VerifyData(data,"SHA1",signature);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+                return false;
+            }
+        }
+        public bool CheckCertificateChain(List <byte[]> CACertificates, byte[] leafCertificate)
+        {
+            X509Chain chain = new X509Chain();
+            chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+            foreach (byte[] CACert in CACertificates)
+                chain.ChainPolicy.ExtraStore.Add(new X509Certificate2(CACert));
+            bool chainIsValid = chain.Build(new X509Certificate2(leafCertificate));
+            for (int i = 0; i < chain.ChainStatus.Length; i++)
+            {
+                Console.WriteLine("Chain status: " + chain.ChainStatus[i].Status 
+                    + " (" + chain.ChainStatus[i].StatusInformation + ")");
+            }
+            return chainIsValid;
         }
    
     }

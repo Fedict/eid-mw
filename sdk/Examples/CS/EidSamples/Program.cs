@@ -19,6 +19,7 @@
 **************************************************************************** */
 using System.Collections.Generic;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace EidSamples
 {
@@ -26,13 +27,7 @@ namespace EidSamples
     {
         static void Main(string[] args)
         {
-            ReadData dataTest = new ReadData();
-            Console.WriteLine(dataTest.GetSurname());
-            List<string> labels = dataTest.GetCertificateLabels();
-            foreach (string label in labels)
-            {
-                Console.WriteLine(label);
-            }
+            
         }
     }
 }

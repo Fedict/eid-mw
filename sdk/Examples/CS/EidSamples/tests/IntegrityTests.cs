@@ -35,6 +35,36 @@ namespace EidSamples.tests
             byte[] certificateRRN = null;
             Assert.False(integrityTest.CheckFileIntegrity(idFile, idSignatureFile, certificateRRN));
         }
+        [Test]
+        public void IntegrityIdentityFile()
+        {
+            ReadData dataTest = new ReadData();
+            Integrity integrityTest = new Integrity();
+            byte[] idFile = dataTest.GetIdFile();
+            byte[] idSignatureFile = dataTest.GetIdSignatureFile();
+            byte[] certificateRRN = dataTest.GetCertificateRNFile();
+            Assert.True(integrityTest.CheckFileIntegrity(idFile, idSignatureFile, certificateRRN));
+        }
+        [Test]
+        public void IntegrityIdentityFileWrongSignature()
+        {
+            ReadData dataTest = new ReadData();
+            Integrity integrityTest = new Integrity();
+            byte[] idFile = dataTest.GetIdFile();
+            byte[] idSignatureFile = dataTest.GetAddressSignatureFile();
+            byte[] certificateRRN = dataTest.GetCertificateRNFile();
+            Assert.False(integrityTest.CheckFileIntegrity(idFile, idSignatureFile, certificateRRN));
+        }
+        [Test]
+        public void IntegrityIdentityFileWrongCertificate()
+        {
+            ReadData dataTest = new ReadData();
+            Integrity integrityTest = new Integrity();
+            byte[] idFile = dataTest.GetIdFile();
+            byte[] idSignatureFile = dataTest.GetAddressSignatureFile();
+            byte[] certificateRoot = dataTest.GetCertificateRootFile();
+            Assert.False(integrityTest.CheckFileIntegrity(idFile, idSignatureFile, certificateRoot));
+        }
     }
 
 }

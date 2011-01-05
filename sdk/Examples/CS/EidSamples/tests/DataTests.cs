@@ -21,6 +21,9 @@ using NUnit.Framework;
 using EidSamples;
 using System.Collections.Generic;
 using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Drawing;
+using System.IO;
 
 namespace EidSamples.tests
 {
@@ -72,9 +75,39 @@ namespace EidSamples.tests
             ReadData dataTest = new ReadData();
             List<string> labels = dataTest.GetCertificateLabels();
             Assert.True(labels.Contains("Authentication"),"Find Authentication certificate");
-            Assert.True(labels.Contains("RRN"), "Find RRN certificate");
         }
-
+        [Test]
+        public void GetCertificateRNFile()
+        {
+            ReadData dataTest = new ReadData();
+            byte[] certificateRNFile = dataTest.GetCertificateRNFile();
+            X509Certificate certificateRN;
+            Assert.DoesNotThrow(delegate { certificateRN = new X509Certificate(certificateRNFile); });
+            certificateRN = new X509Certificate(certificateRNFile);
+            Assert.True(certificateRN.Issuer.Contains("Root"));
+        }
+        [Test]
+        public void GetCertificateRootFile()
+        {
+            ReadData dataTest = new ReadData();
+            byte[] certificateFile = dataTest.GetCertificateRootFile();
+            X509Certificate certificateRoot;
+            Assert.DoesNotThrow(delegate { certificateRoot = new X509Certificate(certificateFile); });
+            certificateRoot = new X509Certificate(certificateFile);
+            Assert.AreEqual(certificateRoot.Subject, certificateRoot.Issuer, "Should be a self-signed root certificate");
+            Assert.True(certificateRoot.Subject.Contains("Root"));
+        }
+        
+        [Test]
+        public void GetPhotoFile()
+        {
+            ReadData dataTest = new ReadData();
+            byte[] photoFile = dataTest.GetPhotoFile();
+            Bitmap photo = new Bitmap(new MemoryStream(photoFile));
+            Assert.AreEqual(140, photo.Width);
+            Assert.AreEqual(200, photo.Height);
+            
+        }
     }
 
 }

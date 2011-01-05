@@ -41,7 +41,7 @@ namespace EidSamples
         {
             if (m == null)
             {
-                m = Module.GetInstance("beidpkcs11-test.dll");
+                m = Module.GetInstance("beidpkcs11D.dll");
             }
         }
 
@@ -130,7 +130,6 @@ namespace EidSamples
                     );
 
                 Data dateOfBirth = session.FindObjects(1)[0] as Data;
-                //surname.ReadAttributes(session);
                 value = System.Text.Encoding.UTF8.GetString(dateOfBirth.Value.Value);
                 session.FindObjectsFinal();
             }
@@ -144,29 +143,46 @@ namespace EidSamples
         {
             return GetFile("DATA_FILE");
         }
+        public byte[] GetAddressFile()
+        {
+            return GetFile("ADDRESS_FILE");
+        }
+        public byte[] GetPhotoFile()
+        {
+            return GetFile("PHOTO");
+        }
         public byte[] GetIdSignatureFile()
         {
-            return GetFile("SGN_RN");
+            return GetFile("SGN_DATA_FILE");
         }
-
+        public byte[] GetAddressSignatureFile()
+        {
+            return GetFile("SGN_ADDRESS_FILE");
+        }
+        public byte[] GetCertificateRNFile()
+        {
+            return GetFile("CERT_RN_FILE");
+        }
+        
         private byte[] GetFile(String Filename)
         {
-            byte[] value;
+            byte[] value = null;
             m.Initialize();
             try
             {
                 Slot slot = m.GetSlotList(false)[0];
                 Session session = slot.Token.OpenSession(true);
-                ByteArrayAttribute idFileLabel = new ByteArrayAttribute(CKA.LABEL);
-                idFileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Filename);
+                ByteArrayAttribute fileLabel = new ByteArrayAttribute(CKA.LABEL);
+                fileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Filename);
                 session.FindObjectsInit(new P11Attribute[] {
-                    idFileLabel
+                        fileLabel
+                    });
+                P11Object[] foundObjects = session.FindObjects(1);
+                if (foundObjects.Length != 0)
+                {
+                    Data file = foundObjects[0] as Data;
+                    value = file.Value.Value;
                 }
-                    );
-
-                Data idFile = session.FindObjects(1)[0] as Data;
-                //surname.ReadAttributes(session);
-                value = idFile.Value.Value;
                 session.FindObjectsFinal();
             }
             finally
@@ -175,13 +191,65 @@ namespace EidSamples
             }
             return value;
         }
+        public byte[] GetCertificateAuthenticationFile()
+        {
+            // Return the "authentication" leaf certificate file
+            return GetCertificateFile("Authentication");
+        }
+        public byte[] GetCertificateSignatureFile()
+        {
+            // Return the "signature" leaf certificate file
+            return GetCertificateFile("Signature");
+        }
+        public byte[] GetCertificateCAFile()
+        {
+            // return the Intermediate CA certificate file
+            return GetCertificateFile("CA");
+        }
+        public byte[] GetCertificateRootFile()
+        {
+            // return the root certificate file
+            return GetCertificateFile("Root");
+        }
+        private byte[] GetCertificateFile(String Certificatename)
+        {
+            // returns Root Certificate on the eid.
+            byte[] value = null;
+            m.Initialize();
+            try
+            {
+                Slot slot = m.GetSlotList(false)[0];
+                Session session = slot.Token.OpenSession(true);
+                ByteArrayAttribute fileLabel = new ByteArrayAttribute(CKA.LABEL);
+                ObjectClassAttribute certificateAttribute = new ObjectClassAttribute(CKO.CERTIFICATE);
+                fileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Certificatename);
+                session.FindObjectsInit(new P11Attribute[] {
+                        certificateAttribute,
+                        fileLabel
+                    });
+                P11Object[] foundObjects = session.FindObjects(1);
+                if (foundObjects.Length != 0)
+                {
+                    X509PublicKeyCertificate cert = foundObjects[0] as X509PublicKeyCertificate;
+                    value = cert.Value.Value;
+                }
+                session.FindObjectsFinal();
+            }
+            finally
+            {
+                m.Finalize_();
+            }
+            return value;
 
+        }
         public List <string> GetCertificateLabels()
         {
+            // Returns a list of PKCS11 labels of the certificate on the card
             m.Initialize();
             List<string> labels = new List<string>();
             try
             {
+
                 Slot slot = m.GetSlotList(false)[0];
                 Session session = slot.Token.OpenSession(true);
                 ObjectClassAttribute certificateAttribute = new ObjectClassAttribute(CKO.CERTIFICATE);
