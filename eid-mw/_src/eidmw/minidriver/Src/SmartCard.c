@@ -44,11 +44,51 @@
 
 /****************************************************************************************************/
 
-#define WHERE "BeidDelay"
-void BeidDelayAndRecover(BYTE   SW1, 
+#define WHERE "BeidDelayAndRecover"
+void BeidDelayAndRecover(PCARD_DATA  pCardData,
+						 BYTE   SW1, 
 						 BYTE   SW2,
 						 DWORD  dwReturn)
 {
+	if( (dwReturn == SCARD_E_COMM_DATA_LOST) || (dwReturn == SCARD_E_NOT_TRANSACTED) )
+	{
+		DWORD ap = 0;
+		int i = 0;
+
+		LogTrace(LOGTYPE_WARNING, WHERE, "Card is confused, trying to recover...");
+
+		for (i = 0; (i < 10) && (dwReturn != SCARD_S_SUCCESS); i++)
+		{
+			if (i != 0)
+				Sleep(1000);
+
+			dwReturn = SCardReconnect(pCardData->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &ap);
+			if ( dwReturn != SCARD_S_SUCCESS )
+			{
+				LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] SCardReconnect errorcode: [0x%02X]", i, dwReturn);
+				continue;
+			}
+			// transaction is lost after an SCardReconnect()
+			dwReturn = SCardBeginTransaction(pCardData->hScard);
+			if ( dwReturn != SCARD_S_SUCCESS )
+			{
+				LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] SCardBeginTransaction errorcode: [0x%02X]", i, dwReturn);
+				continue;
+			}
+			dwReturn = BeidSelectApplet(pCardData);
+			if ( dwReturn != SCARD_S_SUCCESS )
+			{
+				LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] SCardSelectApplet errorcode: [0x%02X]", i, dwReturn);
+				continue;
+			}
+
+			LogTrace(LOGTYPE_INFO, WHERE, "  Card recovered in loop %d", i);
+		}
+		if(i >=10)
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X], Failed to recover", dwReturn);
+		}
+	}
 	if ( (( SW1 == 0x90 ) && ( SW2 == 0x00 )) ||
 		 ( SW1 == 0x61 ) ||
 		 ( SW1 == 0x6c ) )
@@ -145,13 +185,15 @@ DWORD BeidAuthenticate(PCARD_DATA   pCardData,
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
       CLEANUP(dwReturn);
    }
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
+
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
    {
       dwReturn = SCARD_W_WRONG_CHV;
@@ -530,13 +572,14 @@ DWORD BeidDeAuthenticate(PCARD_DATA    pCardData)
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
       CLEANUP(dwReturn);
    }
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
    if ( (SW1 != 0x90) || (SW2 != 0x00) )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit status bytes: [0x%02X][0x%02X]", SW1, SW2);
@@ -609,13 +652,14 @@ DWORD BeidMSE(PCARD_DATA   pCardData,
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (SET) errorcode: [0x%02X]", dwReturn);
       CLEANUP(dwReturn);
    }
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SET Failed: [0x%02X][0x%02X]", SW1, SW2);
@@ -740,13 +784,15 @@ DWORD    BeidChangePIN
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
       CLEANUP(dwReturn);
    }
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
+
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
    {
       dwReturn = SCARD_W_WRONG_CHV;
@@ -824,6 +870,9 @@ DWORD BeidGetCardSN(PCARD_DATA  pCardData,
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+		SW1 = recvbuf[recvlen-2];
+		SW2 = recvbuf[recvlen-1];
+		BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
 		i = i + 1;
 		bRetry = 0;
 		if (dwReturn == SCARD_E_COMM_DATA_LOST)
@@ -833,8 +882,6 @@ DWORD BeidGetCardSN(PCARD_DATA  pCardData,
 		}
 		if (dwReturn == SCARD_S_SUCCESS)
 		{
-			SW1 = recvbuf[recvlen-2];
-			SW2 = recvbuf[recvlen-1];
 			// 6d = "command not available in current life cycle"
 			if ( SW1 == 0x6d )
 			{
@@ -1022,13 +1069,14 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (SIGN) errorcode: [0x%02X]", dwReturn);
       CLEANUP(dwReturn);
    }
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
 
    if ( (SW1 != 0x61) || (SW2 != 0x80) )
    {
@@ -1060,13 +1108,14 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (Get Response) errorcode: [0x%02X]", dwReturn);
       CLEANUP(dwReturn);
    }
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Get Response Failed: [0x%02X][0x%02X]", SW1, SW2);
@@ -1151,13 +1200,14 @@ DWORD BeidReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD *cbStream, PBYTE
                                &ioRecvPci, 
                                recvbuf, 
                                &recvlen);
+		SW1 = recvbuf[recvlen-2];
+		SW2 = recvbuf[recvlen-1];
+		BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
       if ( dwReturn != SCARD_S_SUCCESS )
       {
          LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
          CLEANUP(dwReturn);
       }
-      SW1 = recvbuf[recvlen - 2];
-      SW2 = recvbuf[recvlen - 1];
 
 		/* Special case: when SW1 == 0x6C (=incorrect value of Le), we will
 		retransmit with SW2 as Le, if SW2 is smaller then the 
@@ -1244,13 +1294,14 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
       CLEANUP(dwReturn);
    }
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Select Failed: [0x%02X][0x%02X]", SW1, SW2);
@@ -1345,13 +1396,14 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+   SW1 = recvbuf[recvlen-2];
+   SW2 = recvbuf[recvlen-1];
+   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
       CLEANUP(dwReturn);
    }
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Select Failed: [0x%02X][0x%02X]", SW1, SW2);
@@ -1417,7 +1469,7 @@ DWORD BeidSelectApplet(PCARD_DATA  pCardData)
 	BYTE              SW1, SW2;
 	BYTE              bBELPIC_AID[12] = { 0xA0, 0x00, 0x00, 0x01, 0x77, 0x50, 0x4B, 0x43, 0x53, 0x2D, 0x31, 0x35 };  
 	BYTE              cbBELPIC_AID = sizeof(bBELPIC_AID);
-	BYTE				 bAPPLET_AID[15] = { 0xA0, 0x00, 0x00, 0x00, 0x30, 0x29, 0x05, 0x70, 0x00, 0xAD, 0x13, 0x10, 0x01, 0x01, 0xFF };
+	BYTE			  bAPPLET_AID[15] = { 0xA0, 0x00, 0x00, 0x00, 0x30, 0x29, 0x05, 0x70, 0x00, 0xAD, 0x13, 0x10, 0x01, 0x01, 0xFF };
 	BYTE              cbAPPLET_AID = sizeof(bAPPLET_AID);
 
 	int               i = 0;
@@ -1441,13 +1493,15 @@ DWORD BeidSelectApplet(PCARD_DATA  pCardData)
 		&ioRecvPci, 
 		recvbuf, 
 		&recvlen);
+	SW1 = recvbuf[recvlen-2];
+	SW2 = recvbuf[recvlen-1];
+	BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
 	if ( dwReturn != SCARD_S_SUCCESS )
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
 		CLEANUP(dwReturn);
-	}
-	SW1 = recvbuf[recvlen-2];
-	SW2 = recvbuf[recvlen-1];
+    }
+
 	if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "Select Failed: [0x%02X][0x%02X]", SW1, SW2);
@@ -1468,13 +1522,15 @@ DWORD BeidSelectApplet(PCARD_DATA  pCardData)
 			&ioRecvPci, 
 			recvbuf, 
 			&recvlen);
+		SW1 = recvbuf[recvlen-2];
+		SW2 = recvbuf[recvlen-1];
+		BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
 		if ( dwReturn != SCARD_S_SUCCESS )
 		{
 			LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
 			CLEANUP(dwReturn);
 		}
-		SW1 = recvbuf[recvlen-2];
-		SW2 = recvbuf[recvlen-1];
+
 		if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
 		{
 			LogTrace(LOGTYPE_ERROR, WHERE, "Select Failed: [0x%02X][0x%02X]", SW1, SW2);
