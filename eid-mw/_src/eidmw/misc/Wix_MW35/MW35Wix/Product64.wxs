@@ -379,7 +379,7 @@
       <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Win64="yes">
         <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
         <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
-        <File Id="beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="no" DiskId="1" />
         <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv64.dll" KeyPath="no" DiskId="1" />
         <difx:Driver ForceInstall="no" PlugAndPlayPrompt="no" DeleteFiles="yes" />
       </Component>
@@ -465,10 +465,6 @@
         <File Id="beid35common_64.dll" Name="beid35common.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beid35common.dll" />
         <File Id="beid35DlgsWin32_64.dll" Name="beid35DlgsWin32.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beid35DlgsWin32.dll" />
       </Component>
-      
-      <Component Id="CSP_64" Guid="{AFAFDD01-375C-4599-84C5-6E5B9D3E151B}" SharedDllRefCount="yes" Win64="yes">
-        <File Id="beidCSP_64.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\_Binaries35\x64\Release\beidCSP.dll" />
-      </Component>
 
       <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="yes" Win64="yes">
         <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\_Binaries35\x64\Release\beidpkcs11.dll" />
@@ -476,7 +472,7 @@
       </Component>
 
       <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="yes" Win64="yes">
-        <File Id="MINIDRIVER_64.dll" Name="beidmdrv.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv64.dll" />
+        <File Id="MINIDRIVER_64.dll" Name="beidmdrv64.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv64.dll" />
       </Component>
       
     </DirectoryRef>
@@ -500,7 +496,7 @@
       </Component>
 
       <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes">
-        <File Id="MINIDRIVER.dll" Name="beidmdrv.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.dll" />
+        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" />
       </Component>
       
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes">
@@ -633,7 +629,7 @@
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
                      Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="80000001" Value="beidmdrv.dll" KeyPath="yes"/>
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="yes"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
           <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no"/>
@@ -645,7 +641,7 @@
         <RegistryKey Root="HKLM"
           Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
           Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="80000001" Value="[System64Folder]beidmdrv.dll" KeyPath="yes"/>
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv64.dll" KeyPath="yes"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
           <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no"/>
@@ -672,28 +668,7 @@
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
         </RegistryKey>
-      </Component>
-
-      <Component Id="REGISTERCSP_64" Guid="{5459CA16-89C0-44f2-ADE2-7911A8D68379}" Win64="yes">
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Belgium Identity Card CSP"
-                      Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Image Path" Value="[System64Folder]beidcsp.dll" KeyPath="yes"/>
-          <RegistryValue Type="integer" Name="Type" Value="1" />
-          <RegistryValue
-            Type="binary"
-            Name="Signature"
-            Value="4ca7da22f79d4c8db3acaaf626b757929ff28cd2d205615323885f542f38d9ddfccd1b74d2ccbd99ad0a0a530e22b91dda3f3967ff7846f43a4fa263b41fbdb35976c68d64c3ff931036e009f3d3090d9afdbe8a9f942d1adc8791d5522644d1842bb802907737baa4b318a21554ecc3b25db0f42d7f5cdd3f58269703ffed300000000000000000" />
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue Type="string" Name="80000001" Value="[System64Folder]beidmdrv.dll" KeyPath="no"/>
-          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
-          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
-        </RegistryKey>
-      </Component>      
+      </Component>   
      
       <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}">
         <RegistryKey Root="HKLM"
@@ -873,9 +848,7 @@
         </Feature>
         <Feature Id="Install_CSP" Level="1" Display="hidden">
           <ComponentRef Id="CSP"/>
-          <ComponentRef Id="CSP_64"/>
           <ComponentRef Id="REGISTERCSP"/>
-          <ComponentRef Id="REGISTERCSP_64"/>
           <Condition Level="0">"VersionNT >= 600"</Condition>
         </Feature>
       </Feature>

@@ -377,7 +377,7 @@
       <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" >
         <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
         <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
-        <File Id="beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="no" DiskId="1" />
         <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv64.dll" KeyPath="no" DiskId="1" />
         <difx:Driver ForceInstall="no" PlugAndPlayPrompt="no" DeleteFiles="yes"  />
       </Component>
@@ -485,7 +485,7 @@
       </Component>
 
       <Component Id="beidmdrvsystem32" Guid="a8259480-e408-11de-8a39-0800200c9a66" Permanent="no">
-        <File Id="system32_beidmdrv.dll" Name="beidmdrv.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.dll" KeyPath="yes" DiskId="1" />
+        <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
       </Component>
 
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes">
@@ -618,7 +618,7 @@
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
                      Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="80000001" Value="beidmdrv.dll" KeyPath="yes"/>
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="yes"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
           <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no"/>
