@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?include $(sys.SOURCEFILEDIR)beidmdrv-include.wxs ?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:difx='http://schemas.microsoft.com/wix/DifxAppExtension'>
-  <Product UpgradeCode="$(var.UpgradeCode)" Name="Belgium eID Smartcard minidriver - Debug Version(x86) " Id="$(var.ProductGuid)" Version="$(var.Version)" Manufacturer="Fedict" Language="1033">
+  <Product UpgradeCode="$(var.UpgradeCode)" Name="Belgium eID Smartcard minidriver - Debug Version(x86) " Id="*" Version="$(var.Version)" Manufacturer="Fedict" Language="1033">
     <Package Id="*" Manufacturer="Fedict" InstallerVersion="200" Platform="x86" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
 	<!-- do not edit the rtf file with word! The installer will be unable to read the license -->
@@ -33,10 +33,9 @@
           <Component Id="beidmdrv" Guid="c26ac6a0-dd85-11de-8a39-0800200c9a66" >
             <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="$(sys.SOURCEFILEDIR)Debug\beidmdrv.inf" KeyPath="yes" DiskId="1" />
             <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="$(sys.SOURCEFILEDIR)Debug\beidmdrv.cat" KeyPath="no" DiskId="1" />
-            <File Id="beidmdrv.dll" Name="beidmdrv.dll" Source="$(sys.SOURCEFILEDIR)Debug\beidmdrv.dll" KeyPath="no" DiskId="1" />
-            <File Id="beidmdrv.pdb" Name="beidmdrv.pdb" Source="$(sys.SOURCEFILEDIR)Debug\beidmdrv.pdb" KeyPath="no" DiskId="1" />
+            <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="$(sys.SOURCEFILEDIR)Debug\beidmdrv32.dll" KeyPath="no" DiskId="1" />
             <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="$(sys.SOURCEFILEDIR)Debug\beidmdrv64.dll" KeyPath="no" DiskId="1" />
-	        <difx:Driver ForceInstall="no" PlugAndPlayPrompt="no" DeleteFiles="yes" />
+	        <difx:Driver ForceInstall="no" PlugAndPlayPrompt="no" DeleteFiles="yes"  />
           </Component>
 		  <!-- Certificate Propagation Service is a standard Windows service available in from Windows Vista on. In order to use the minidriver
 			   it is necessary that this service is running. When a smart card reader is inserted this service should be started  by the smart card
@@ -45,14 +44,28 @@
 		    <!-- Start Certificate Propagation Service during startup -->
 			<RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\CertPropSvc" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
 			<!-- Start Certificate Propagation Service now -->
-			<ServiceControl Id="StartCertPropSvc" Name="CertPropSvc" Start="install" />
+			<ServiceControl Id="StartCertPropSvc" Name="CertPropSvc" Start="install"  Wait="no" />
 		  </Component>
-      </Directory>
 		</Directory>
 	  </Directory>
+    <!-- Not on all OS'ses the inf installation works OK, so we put the minidriver in system32 ourselves -->
+	  <Directory Id="SystemFolder">
+          <Component Id="beidmdrvsystem32" Guid="d8638eb0-e40b-11de-8a39-0800200c9a66" Permanent="yes">
+            <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="$(sys.SOURCEFILEDIR)Debug\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
+          </Component>
+  	  </Directory>
+	</Directory>
     <Feature Id="DefaultFeature" Level="1">
-      <ComponentRef Id="beidmdrv" />
-	  <ComponentRef Id="CertPropService" />
+      <Feature Id="DriverInstall" Level="1">
+        <ComponentRef Id="beidmdrv" />
+        <ComponentRef Id="beidmdrvsystem32" />
+      </Feature>
+      
+      <Feature Id="CertPropStart" Level="1">
+	    <ComponentRef Id="CertPropService" />
+        <!-- This service only exists on Windows Vista and higher-->
+		<Condition Level="0">VersionNT &lt; 600</Condition>	  	  
+	  </Feature>
     </Feature>
     <Media Id="1" EmbedCab="yes" Cabinet="_c26ac6a0dd8511de8a390800200c9a66" />
 	<Icon Id="beid.ico" SourceFile="Debug\beid.ico" />

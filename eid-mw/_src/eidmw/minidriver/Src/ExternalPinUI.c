@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,12 +17,12 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-#include "GlobMdrv.h"
+#include "globmdrv.h"
 
-#include "Log.h"
+#include "log.h"
 #include "smartcard.h"
-#include "ExternalPinUI.h"
-#include <commctrl.h>
+#include "externalpinui.h"
+#include <commctrl-mingw.h>
 
 // Callback function used by taskdialog
 HRESULT CALLBACK TaskDialogCallbackProcPinEntry(      

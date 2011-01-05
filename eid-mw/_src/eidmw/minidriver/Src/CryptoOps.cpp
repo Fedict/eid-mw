@@ -1,7 +1,7 @@
 extern "C"
 {
-#include "GlobMdrv.h"
-#include "Bcrypt.h"
+#include "globmdrv.h"
+#include "bcrypt.h"
 }
 
 

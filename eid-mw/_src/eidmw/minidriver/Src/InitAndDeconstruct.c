@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -19,14 +19,14 @@
 **************************************************************************** */
 /****************************************************************************************************/
 
-#include "GlobMdrv.h"
+#include "globmdrv.h"
 
-#include "Log.h"
+#include "log.h"
 #include "util.h"
 
 /****************************************************************************************************/
 
-#define MINIMUM_VERSION_SUPPORTED      CARD_DATA_VERSION_SIX
+#define MINIMUM_VERSION_SUPPORTED      CARD_DATA_VERSION_FOUR
 #define CURRENT_VERSION_SUPPORTED      CARD_DATA_VERSION_SIX
 
 #define SUPPORTED_CARDS                3
@@ -41,9 +41,6 @@ CARD_ATR    CardAtr[] =
 
 /****************************************************************************************************/
 
-extern head_type        gContextCardList;
-
-/****************************************************************************************************/
 
 //
 // Function: CardAcquireContext
@@ -218,16 +215,9 @@ DWORD WINAPI   CardAcquireContext
    /* Not defined */
    pCardData->pfnCspGetDHAgreement           = NULL;
 
-   /****************/
-   /* Context list */
-   /****************/
-
-   dwReturn = AddContextInList(pCardData);
-   if ( dwReturn != 0 )
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "Error creating context...");
-   }
-
+	/* Vendor specific */
+	pCardData->pvVendorSpecific               = pCardData->pfnCspAlloc(sizeof(VENDOR_SPECIFIC));
+	memset(pCardData->pvVendorSpecific, 0, sizeof(VENDOR_SPECIFIC));
 cleanup:
 
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
@@ -265,8 +255,8 @@ DWORD WINAPI   CardDeleteContext
 
    LogTrace(LOGTYPE_INFO, WHERE, "Context:[0x%08X]", pCardData->hSCardCtx);
 
-   dwReturn = DeleteContextFromList(pCardData);
-
+	pCardData->pfnCspFree(pCardData->pvVendorSpecific);
+	pCardData->pvVendorSpecific = NULL;
 cleanup:
 
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
