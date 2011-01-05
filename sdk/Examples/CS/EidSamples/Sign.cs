@@ -37,14 +37,24 @@ namespace EidSamples
     {
         private Module m = null;
 
+        /// <summary>
+        /// Default constructor. Will instantiate the beidpkcs11.dll pkcs11 module
+        /// </summary>
         public Sign()
         {
             if (m == null)
             {
-                m = Module.GetInstance("beidpkcs11D.dll");
+                // link with the pkcs11 DLL
+                m = Module.GetInstance("beidpkcs11.dll");
             }
         }
 
+        /// <summary>
+        /// Sign data with a named private key
+        /// </summary>
+        /// <param name="data">Data to be signed</param>
+        /// <param name="privatekeylabel">Label for private key. Can be "Signature" or "Authentication"</param>
+        /// <returns>Signed data.</returns>
         public byte[] DoSign(byte[] data, string privatekeylabel)
         { 
              // Returns a list of PKCS11 labels of the certificate on the card

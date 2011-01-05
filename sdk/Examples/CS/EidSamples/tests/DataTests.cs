@@ -97,7 +97,6 @@ namespace EidSamples.tests
             Assert.AreEqual(certificateRoot.Subject, certificateRoot.Issuer, "Should be a self-signed root certificate");
             Assert.True(certificateRoot.Subject.Contains("Root"));
         }
-        
         [Test]
         public void GetPhotoFile()
         {
@@ -107,6 +106,17 @@ namespace EidSamples.tests
             Assert.AreEqual(140, photo.Width);
             Assert.AreEqual(200, photo.Height);
             
+        }
+        [Test]
+        public void StoreCertificateRNFile()
+        {
+            ReadData dataTest = new ReadData();
+            byte[] certificateRNFile = dataTest.GetCertificateRNFile();
+            X509Certificate2 certificateRN = new X509Certificate2(certificateRNFile);
+            
+            X509Store mystore = new X509Store(StoreName.My);
+            mystore.Open(OpenFlags.ReadWrite);
+            mystore.Add(certificateRN);
         }
     }
 

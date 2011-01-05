@@ -37,9 +37,9 @@ namespace EidSamples.tests
             // Verification
             ReadData dataTest = new ReadData();
             Integrity integrityTest = new Integrity();
-            Assert.True(integrityTest.CheckFileIntegrity(testdata, signeddata,
+            Assert.True(integrityTest.Verify(testdata, signeddata,
                 dataTest.GetCertificateAuthenticationFile()));
-            Assert.False(integrityTest.CheckFileIntegrity(testdata, signeddata,
+            Assert.False(integrityTest.Verify(testdata, signeddata,
                 dataTest.GetCertificateSignatureFile()));
 
         }
@@ -55,9 +55,9 @@ namespace EidSamples.tests
             // Verification
             ReadData dataTest = new ReadData();
             Integrity integrityTest = new Integrity();
-            Assert.False(integrityTest.CheckFileIntegrity(testdata, signeddata,
+            Assert.False(integrityTest.Verify(testdata, signeddata,
                 dataTest.GetCertificateAuthenticationFile()));
-            Assert.True(integrityTest.CheckFileIntegrity(testdata, signeddata,
+            Assert.True(integrityTest.Verify(testdata, signeddata,
                 dataTest.GetCertificateSignatureFile()));
 
         }

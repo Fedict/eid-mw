@@ -36,15 +36,21 @@ namespace EidSamples
     class ReadData
     {
         private Module m = null;
-
+        /// <summary>
+        /// Default constructor. Will instantiate the beidpkcs11.dll pkcs11 module
+        /// </summary>
         public ReadData()
         {
             if (m == null)
             {
-                m = Module.GetInstance("beidpkcs11D.dll");
+                m = Module.GetInstance("beidpkcs11.dll");
             }
         }
 
+        /// <summary>
+        /// Gets the description of the first slot (cardreader) found
+        /// </summary>
+        /// <returns>Description of the first slot found</returns>
         public string GetSlotDescription()
         { 
             String slotID;
@@ -65,6 +71,10 @@ namespace EidSamples
             return slotID;
         }
 
+        /// <summary>
+        /// Gets label of token found in the first non-empty slot (cardreader)
+        /// </summary>
+        /// <returns></returns>
         public string GetTokenInfoLabel()
         {
             String tokenInfoLabel;
@@ -83,6 +93,11 @@ namespace EidSamples
             return tokenInfoLabel;
             
         }
+
+        /// <summary>
+        /// Get surname of the owner of the token (eid) in the first non-empty slot (cardreader)
+        /// </summary>
+        /// <returns></returns>
         public string GetSurname()
         {
             String name;
@@ -163,7 +178,10 @@ namespace EidSamples
         {
             return GetFile("CERT_RN_FILE");
         }
-        
+        public byte[] GetCertificateRNCAFile()
+        {
+            return GetFile("CERT_RNCA_FILE");
+        }        
         private byte[] GetFile(String Filename)
         {
             byte[] value = null;

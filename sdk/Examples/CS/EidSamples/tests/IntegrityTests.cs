@@ -33,7 +33,7 @@ namespace EidSamples.tests
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
             byte[] certificateRRN = null;
-            Assert.False(integrityTest.CheckFileIntegrity(idFile, idSignatureFile, certificateRRN));
+            Assert.False(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
         }
         [Test]
         public void IntegrityIdentityFile()
@@ -43,7 +43,7 @@ namespace EidSamples.tests
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
             byte[] certificateRRN = dataTest.GetCertificateRNFile();
-            Assert.True(integrityTest.CheckFileIntegrity(idFile, idSignatureFile, certificateRRN));
+            Assert.True(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
         }
         [Test]
         public void IntegrityIdentityFileWrongSignature()
@@ -53,7 +53,7 @@ namespace EidSamples.tests
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetAddressSignatureFile();
             byte[] certificateRRN = dataTest.GetCertificateRNFile();
-            Assert.False(integrityTest.CheckFileIntegrity(idFile, idSignatureFile, certificateRRN));
+            Assert.False(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
         }
         [Test]
         public void IntegrityIdentityFileWrongCertificate()
@@ -63,7 +63,7 @@ namespace EidSamples.tests
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetAddressSignatureFile();
             byte[] certificateRoot = dataTest.GetCertificateRootFile();
-            Assert.False(integrityTest.CheckFileIntegrity(idFile, idSignatureFile, certificateRoot));
+            Assert.False(integrityTest.Verify(idFile, idSignatureFile, certificateRoot));
         }
     }
 

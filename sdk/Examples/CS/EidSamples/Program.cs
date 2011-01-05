@@ -20,6 +20,7 @@
 using System.Collections.Generic;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using EidSamples.tests;
 
 namespace EidSamples
 {
@@ -27,7 +28,8 @@ namespace EidSamples
     {
         static void Main(string[] args)
         {
-            
+            DataTests dt = new DataTests();
+            dt.StoreCertificateRNFile();
         }
     }
 }
