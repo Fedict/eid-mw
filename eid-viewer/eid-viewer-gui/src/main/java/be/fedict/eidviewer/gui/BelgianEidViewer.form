@@ -181,6 +181,9 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="be.fedict.eidviewer.gui.BelgianEidViewer" id="print" methodName="print"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/be/fedict/eidviewer/gui/resources/icons/print.png"/>
+                </Property>
                 <Property name="hideActionText" type="boolean" value="true"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[200, 50]"/>

@@ -35,15 +35,19 @@ import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.FileOutputStream;
 import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -67,18 +71,18 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private ResourceBundle bundle;
     private static final String EXTENSION_PNG = ".png";
     private static final String ICONS = "resources/icons/";
-    private Messages coreMessages;
-    private Eid eid;
-    private EidController eidController;
-    private TrustServiceController trustServiceController;
-    private EnumMap<EidController.STATE, ImageIcon> cardStatusIcons;
-    private EnumMap<EidController.STATE, String> cardStatusTexts;
-    private EnumMap<EidController.ACTIVITY, String> activityTexts;
-    private IdentityPanel identityPanel;
-    private CertificatesPanel certificatesPanel;
-    private CardPanel cardPanel;
-    private PreferencesPanel preferencesPanel;
-    private javax.swing.Action printAction;
+    private Messages                                    coreMessages;
+    private Eid                                         eid;
+    private EidController                               eidController;
+    private TrustServiceController                      trustServiceController;
+    private EnumMap<EidController.STATE, ImageIcon>     cardStatusIcons;
+    private EnumMap<EidController.STATE, String>        cardStatusTexts;
+    private EnumMap<EidController.ACTIVITY, String>     activityTexts;
+    private IdentityPanel                               identityPanel;
+    private CertificatesPanel                           certificatesPanel;
+    private CardPanel                                   cardPanel;
+    private PreferencesPanel                            preferencesPanel;
+    private javax.swing.Action                          printAction;
 
     public BelgianEidViewer()
     {
@@ -98,19 +102,21 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         printAction = actionMap.get("print"); // NOI18N
         eid = EidFactory.getEidImpl(this, coreMessages);
         eidController = new EidController(eid);
-        
+
         trustServiceController = new TrustServiceController(ViewerPrefs.getTrustServiceURL());
         trustServiceController.start();
 
-        if(ViewerPrefs.getUseHTTPProxy())
-            trustServiceController.setProxy(ViewerPrefs.getHTTPProxyHost(),ViewerPrefs.getHTTPProxyPort());
+        if (ViewerPrefs.getUseHTTPProxy())
+        {
+            trustServiceController.setProxy(ViewerPrefs.getHTTPProxyHost(), ViewerPrefs.getHTTPProxyPort());
+        }
 
         eidController.setTrustServiceController(trustServiceController);
         eidController.setAutoValidateTrust(ViewerPrefs.getIsAutoValidating());
         cardPanel.setEidController(eidController);
         certificatesPanel.setEidController(eidController);
         certificatesPanel.start();
-        
+
         preferencesPanel.setTrustServiceController(trustServiceController);
         preferencesPanel.setEidController(eidController);
         preferencesPanel.start();
@@ -140,6 +146,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
+
             public void run()
             {
                 printAction.setEnabled(eidController.hasIdentity() && eidController.hasAddress() && eidController.hasPhoto());
@@ -211,6 +218,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
         ActionMap actionMap = Application.getInstance().getContext().getActionMap(BelgianEidViewer.class, this);
         printButton.setAction(actionMap.get("print")); // NOI18N
+        printButton.setIcon(new ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/icons/print.png"))); // NOI18N
         printButton.setHideActionText(true);
         printButton.setMaximumSize(new Dimension(200, 50));
         printButton.setMinimumSize(new Dimension(50, 50));
@@ -400,6 +408,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
+
             public void run()
             {
                 new BelgianEidViewer().start();
@@ -447,5 +456,30 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     @Action
     public void save()
     {
+     /*   final JFileChooser fileChooser = new JFileChooser();
+
+        fileChooser.showSaveDialog(this);
+
+        try
+        {
+            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(fileChooser.getSelectedFile()));
+
+
+            out.putNextEntry(new ZipEntry(filenames[i]));
+
+            eidController.read
+
+                
+            out.write(buf, 0, len);
+    
+            out.closeEntry();
+
+            // Complete the ZIP file
+            out.close();
+        }
+        catch (IOException e)
+        {
+        } */
+
     }
 }
