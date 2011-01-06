@@ -26,15 +26,18 @@ import java.util.prefs.Preferences;
  */
 public class ViewerPrefs
 {
-    public static final String          AUTO_VALIDATE_TRUST              = "autoValidateTrust";
-    public static final String          TRUSTSERVICE_URL                 = "trustServiceURL";
-    public static final String          HTTP_PROXY_ENABLE                = "enableHTTPProxy";
-    public static final String          HTTP_PROXY_HOST                  = "httpProxyHost";
-    public static final String          HTTP_PROXY_PORT                  = "httpProxyPort";
+    public static final String          AUTO_VALIDATE_TRUST              = "auto_validate_trust";
+    public static final String          TRUSTSERVICE_PROTO               = "trust_service_proto";
+    public static final String          TRUSTSERVICE_URI                 = "trust_service_uri";
+    public static final String          HTTP_PROXY_ENABLE                = "enable_http_proxy";
+    public static final String          HTTP_PROXY_HOST                  = "http_proxy_host";
+    public static final String          HTTP_PROXY_PORT                  = "http_proxy_port";
 
     public static final boolean         DEFAULT_HTTP_PROXY_ENABLE       = false;
     public static final boolean         DEFAULT_AUTO_VALIDATE_TRUST     = false;
-    public static final String          DEFAULT_TRUSTSERVICE_URL        = "http://trust.services.belgium.be";
+
+    public static final String          DEFAULT_TRUSTSERVICE_PROTO      = "http";
+    public static final String          DEFAULT_TRUSTSERVICE_URI        = "trust.services.belgium.be";
     public static final String          DEFAULT_HTTP_PROXY_HOST         = "";
     public static final int             DEFAULT_HTTP_PROXY_PORT         = 8080;
     
@@ -85,9 +88,19 @@ public class ViewerPrefs
         getPrefs().putBoolean(AUTO_VALIDATE_TRUST, state);
     }
 
+    public static String getTrustServiceProto()
+    {
+        return getPrefs()!=null?getPrefs().get(TRUSTSERVICE_PROTO, DEFAULT_TRUSTSERVICE_PROTO):DEFAULT_TRUSTSERVICE_PROTO;
+    }
+  
+    public static String getTrustServiceURI()
+    {
+        return getPrefs()!=null?getPrefs().get(TRUSTSERVICE_URI, DEFAULT_TRUSTSERVICE_URI):DEFAULT_TRUSTSERVICE_URI;
+    }
+
     public static String getTrustServiceURL()
     {
-        return getPrefs()!=null?getPrefs().get(TRUSTSERVICE_URL, DEFAULT_TRUSTSERVICE_URL):DEFAULT_TRUSTSERVICE_URL;
+        return getTrustServiceProto() + "://" + getTrustServiceURI();
     }
 
     public static void setUseHTTPProxy(boolean use)

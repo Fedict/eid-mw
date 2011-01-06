@@ -261,9 +261,8 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
                         if(certAndTrust.getValidationException()!=null)
                         {
                             trustStatus.setText(getMultilinelabelText(bundle.getString("trustStatus_unobtainable")));
-                            trustErrors.setText(certAndTrust.getValidationException().getMessage());
-                            trustErrors.setVisible(true);
-                            
+                            trustErrors.setText(certAndTrust.getValidationException().getLocalizedMessage());
+                            trustErrors.setVisible(true);  
                         }
                         else
                         {
