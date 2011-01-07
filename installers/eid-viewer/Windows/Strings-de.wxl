@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="de-de" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="Lang" Overridable="yes">1031</String>
+  <String Id="Langpref" Overridable="yes">de</String>
+  <String Id="StartApp" Overridable="yes">Start Eid Viewer</String>
+  <String Id="MinOs" Overridable="yes"> Dieser Aufbau muss mindestens Windows 2000</String>
+  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 4.0</String>
+  <String Id="BeidRuntimeDesc" Overridable="yes">Dieses Modul ist notwendig, um elektronische Personalausweis.</String>
+  <String Id="BeidGui" Overridable="yes">eID-Verwaltungsinstrument</String>
+  <String Id="BeidGuiDescr" Overridable="yes">Lesen Sie den Inhalt einer e-ID Karte</String>
+  <String Id="Users" Overridable="yes">Users</String>
+  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Could not create security descriptor [3]\[4], error: [2]</String>
+  <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Could not apply object security descriptor [3], error: [2]</String>
+  <String Id="msierrSecureObjectsUnknownType" Overridable="yes">Unknown object type [3], error: [2]</String>
+  <String Id="AdminNeeded" Overridable="yes">Sie müssen Administrator sein, um dieses Produkt zu installieren</String>
+  <String Id="NoDowngrade" Overridable="yes">Neuere Version bereits installiert ist.</String>
+</WixLocalization>
