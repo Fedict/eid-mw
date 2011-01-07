@@ -82,21 +82,9 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
 
         // if we have our own proxy settings, apply them
         if (ViewerPrefs.getUseHTTPProxy())
-        {
             trustServiceController.setProxy(ViewerPrefs.getHTTPProxyHost(), ViewerPrefs.getHTTPProxyPort());
-        }
         else
-        {
-            // if we captured default proxy settings at startup, reset to those, otherwise clear proxy settings
-            if (ViewerPrefs.getStartupUseHttpProxy())
-            {
-                trustServiceController.setProxy(ViewerPrefs.getStartupHttpProxyHost(), ViewerPrefs.getStartupHttpProxyPort());
-            }
-            else
-            {
-                trustServiceController.setProxy(null, 0);
-            }
-        }
+            trustServiceController.setProxy(null, 0);
     }
 
     private void initProxyPrefsPanel()

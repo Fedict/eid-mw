@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 import be.fedict.eid.applet.DiagnosticTests;
@@ -29,6 +30,7 @@ import be.fedict.eid.applet.Messages;
 import be.fedict.eid.applet.Messages.MESSAGE_ID;
 import be.fedict.eid.applet.Status;
 import be.fedict.eid.applet.View;
+import be.fedict.eidviewer.gui.helper.CloseResistantZipOutputStream;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.eidviewer.lib.EidFactory;
 import java.awt.Component;
@@ -36,6 +38,7 @@ import java.awt.Toolkit;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Observable;
@@ -43,7 +46,6 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -93,7 +95,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         initIcons();
         initTexts();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ViewerPrefs.getStartupProxySettings();
     }
 
     private void start()
@@ -106,10 +107,10 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         trustServiceController = new TrustServiceController(ViewerPrefs.getTrustServiceURL());
         trustServiceController.start();
 
-        if (ViewerPrefs.getUseHTTPProxy())
-        {
+        if(ViewerPrefs.getUseHTTPProxy())
             trustServiceController.setProxy(ViewerPrefs.getHTTPProxyHost(), ViewerPrefs.getHTTPProxyPort());
-        }
+        else
+            trustServiceController.setProxy(null,0);
 
         eidController.setTrustServiceController(trustServiceController);
         eidController.setAutoValidateTrust(ViewerPrefs.getIsAutoValidating());
@@ -379,6 +380,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         cardStatusIcons.put(EidController.STATE.ERROR, getIcon(EidController.STATE.ERROR + EXTENSION_PNG));
         cardStatusIcons.put(EidController.STATE.NO_EID_PRESENT, getIcon(EidController.STATE.NO_EID_PRESENT + EXTENSION_PNG));
         cardStatusIcons.put(EidController.STATE.EID_PRESENT, getIcon(EidController.STATE.EID_PRESENT + EXTENSION_PNG));
+        cardStatusIcons.put(EidController.STATE.EID_YIELDED, getIcon(EidController.STATE.EID_YIELDED + EXTENSION_PNG));
     }
 
     private void initTexts()
@@ -387,6 +389,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         cardStatusTexts.put(EidController.STATE.NO_READERS, bundle.getString(EidController.STATE.NO_READERS.toString()));
         cardStatusTexts.put(EidController.STATE.ERROR, bundle.getString(EidController.STATE.ERROR.toString()));
         cardStatusTexts.put(EidController.STATE.NO_EID_PRESENT, bundle.getString(EidController.STATE.NO_EID_PRESENT.toString()));
+        cardStatusTexts.put(EidController.STATE.EID_YIELDED, bundle.getString(EidController.STATE.EID_YIELDED.toString()));
         activityTexts = new EnumMap<EidController.ACTIVITY, String>(EidController.ACTIVITY.class);
         activityTexts.put(EidController.ACTIVITY.IDLE, bundle.getString(EidController.ACTIVITY.IDLE.toString()));
         activityTexts.put(EidController.ACTIVITY.READING_IDENTITY, bundle.getString(EidController.ACTIVITY.READING_IDENTITY.toString()));
@@ -456,30 +459,62 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     @Action
     public void save()
     {
-     /*   final JFileChooser fileChooser = new JFileChooser();
+        CloseResistantZipOutputStream       zos                 = null;
+        ObjectOutputStream                  oos                 = null;
+        final JFileChooser                  fileChooser         = new JFileChooser();
 
-        fileChooser.showSaveDialog(this);
-
+        
+        if(fileChooser.showSaveDialog(this)!=JFileChooser.APPROVE_OPTION)
+            return;
+            
         try
         {
-            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(fileChooser.getSelectedFile()));
+            zos = new CloseResistantZipOutputStream(new FileOutputStream(fileChooser.getSelectedFile()));
+            zos.putNextEntry(new ZipEntry("identity"));
+            oos = new ObjectOutputStream(zos);
+            oos.writeObject(eidController.getIdentity());
+            oos.close();
+            zos.closeEntry();
 
+            zos.putNextEntry(new ZipEntry("address"));
+            oos = new ObjectOutputStream(zos);
+            oos.writeObject(eidController.getAddress());
+            oos.close();
+            zos.closeEntry();
 
-            out.putNextEntry(new ZipEntry(filenames[i]));
+            zos.putNextEntry(new ZipEntry("photo"));
+            oos = new ObjectOutputStream(zos);
+            oos.writeObject(new ImageIcon(eidController.getPhoto()));
+            oos.close();
+            zos.closeEntry();
 
-            eidController.read
-
-                
-            out.write(buf, 0, len);
-    
-            out.closeEntry();
-
-            // Complete the ZIP file
-            out.close();
+            zos.putNextEntry(new ZipEntry("authcertchain"));
+            oos = new ObjectOutputStream(zos);
+            oos.writeObject(eidController.getAuthCertChain().getCertificates());
+            oos.close();
+            zos.closeEntry();
+            
+            zos.putNextEntry(new ZipEntry("signcertchain"));
+            oos = new ObjectOutputStream(zos);
+            oos.writeObject(eidController.getSignCertChain().getCertificates());
+            oos.close();
+            zos.closeEntry();
         }
-        catch (IOException e)
+        catch (IOException ex)
         {
-        } */
-
+            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            try
+            {
+                zos.setCloseAllowed(true);
+                zos.close();
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

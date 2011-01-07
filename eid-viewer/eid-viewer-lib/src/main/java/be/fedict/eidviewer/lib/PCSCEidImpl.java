@@ -31,6 +31,7 @@ import java.util.Observer;
 import be.fedict.eid.applet.service.impl.tlv.TlvParser;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
+import java.util.Map;
 import javax.imageio.ImageIO;
 
 public class PCSCEidImpl implements Eid
@@ -38,6 +39,7 @@ public class PCSCEidImpl implements Eid
     private final View          mView;
     private final Messages      mMessages;
     private final PcscEidSpi    mPcscEidSpi;
+    private Map<String,byte[]>  mRawFiles;
 
     @SuppressWarnings("unchecked")
     public PCSCEidImpl(View view, Messages messages)
@@ -169,5 +171,10 @@ public class PCSCEidImpl implements Eid
     public void addObserver(Observer observer)
     {
         mPcscEidSpi.addObserver(observer);
+    }
+
+    public void yieldExclusive(boolean yield) throws Exception
+    {
+        mPcscEidSpi.yieldExclusive(yield);
     }
 }

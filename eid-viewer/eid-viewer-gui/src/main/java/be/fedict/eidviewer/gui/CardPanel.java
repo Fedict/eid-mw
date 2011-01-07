@@ -56,7 +56,7 @@ public class CardPanel extends javax.swing.JPanel implements Observer
 
         updateVisibleState();
 
-        if (eidController.getState() == EidController.STATE.EID_PRESENT)
+        if (eidController.getState() == EidController.STATE.EID_PRESENT  || eidController.getState()==EidController.STATE.EID_YIELDED)
         {
             if(eidController.hasIdentity())
             {

@@ -95,6 +95,8 @@ public interface Eid
      */
 
     boolean isCardStillPresent() throws Exception;
+
+    public void yieldExclusive(boolean yield) throws Exception;
     
     void changePin() throws Exception;
 

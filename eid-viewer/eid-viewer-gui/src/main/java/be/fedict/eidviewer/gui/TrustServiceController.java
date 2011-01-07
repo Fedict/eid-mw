@@ -32,9 +32,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//trust.ta.belgium.be
-//trust.services.belgium.be
-
 /**
  *
  * @author Frank Marien

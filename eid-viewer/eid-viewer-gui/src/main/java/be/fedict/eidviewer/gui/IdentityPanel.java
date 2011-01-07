@@ -53,7 +53,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     {
         EidController controller = (EidController) o;
 
-        if(controller.getState()==EidController.STATE.EID_PRESENT)
+        if(controller.getState()==EidController.STATE.EID_PRESENT || controller.getState()==EidController.STATE.EID_YIELDED)
         {
             if(controller.hasIdentity())
                 fillIdentity(controller.getIdentity(),false);

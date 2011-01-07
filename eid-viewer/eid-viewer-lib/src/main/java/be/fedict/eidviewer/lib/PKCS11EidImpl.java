@@ -224,4 +224,9 @@ class PKCS11EidImpl implements Eid
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public void yieldExclusive(boolean yield) throws Exception
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

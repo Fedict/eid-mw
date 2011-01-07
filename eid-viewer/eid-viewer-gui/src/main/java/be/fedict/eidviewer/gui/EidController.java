@@ -15,7 +15,6 @@
  * License along with this software; if not, see
  * http://www.gnu.org/licenses/.
  */
-
 package be.fedict.eidviewer.gui;
 
 import be.fedict.eid.applet.service.Address;
@@ -27,52 +26,83 @@ import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Observer;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.smartcardio.CardException;
 
 /**
  *
  * @author Frank Marien
  */
-public class EidController extends Observable implements Runnable,Observer
+public class EidController extends Observable implements Runnable, Observer
 {
-    private boolean                         running = false;
-    private Eid                             eid;
-    private STATE                           state;
-    private ACTIVITY                        activity;
-    private ACTION                          runningAction;
-    private Identity                        identity;
-    private Address                         address;
-    private Image                           photo;
-    private X509CertificateChainAndTrust    authCertChain;
-    private X509CertificateChainAndTrust    signCertChain;
-    private TrustServiceController          trustServiceController;
-    private boolean                         autoValidatingTrust;
+
+    private boolean running = false;
+    private Eid eid;
+    private STATE state;
+    private ACTIVITY activity;
+    private ACTION runningAction;
+    private Identity identity;
+    private Address address;
+    private Image photo;
+    private X509CertificateChainAndTrust authCertChain;
+    private X509CertificateChainAndTrust signCertChain;
+    private TrustServiceController trustServiceController;
+    private Timer   yieldLockedTimer;
+    private long    yieldConsideredLockedAt;
+    private boolean autoValidatingTrust, yielding;
+    private boolean loadedFromFile;
 
     public EidController(Eid eid)
     {
         this.eid = eid;
         setState(STATE.IDLE);
         setActivity(ACTIVITY.IDLE);
-        this.runningAction=ACTION.NONE;
-        this.autoValidatingTrust=false;
+        this.runningAction = ACTION.NONE;
+        this.autoValidatingTrust = false;
+        yieldLockedTimer = new Timer("yieldLockerTimer", true);
+        yieldConsideredLockedAt=Long.MAX_VALUE;
     }
 
     public void start()
     {
-        Thread me=new Thread(this);
-               me.setDaemon(true);
-               me.start();
+        Thread me = new Thread(this);
+        me.setDaemon(true);
+        me.start();
+        
+        yieldLockedTimer.schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                if(state==STATE.EID_PRESENT && (System.currentTimeMillis()>yieldConsideredLockedAt))
+                {
+                   setState(STATE.EID_YIELDED);
+                }
+                else
+                {
+                    if(state==STATE.EID_YIELDED && (System.currentTimeMillis()<yieldConsideredLockedAt))
+                    {
+                        setState(STATE.EID_PRESENT);
+                    }
+                }
+            }   
+        },
+        1000, 500);
     }
 
     public void stop()
     {
-        running=false;
-        if(trustServiceController!=null)
+        running = false;
+        if (trustServiceController != null)
+        {
             trustServiceController.stop();
+        }
     }
 
     public EidController setTrustServiceController(TrustServiceController trustServiceController)
     {
-        this.trustServiceController=trustServiceController;
+        this.trustServiceController = trustServiceController;
         this.trustServiceController.addObserver(this);
         this.trustServiceController.start();
         return this;
@@ -80,8 +110,10 @@ public class EidController extends Observable implements Runnable,Observer
 
     public void setAutoValidateTrust(boolean autoValidateTrust)
     {
-        if(trustServiceController!=null)
-            this.autoValidatingTrust=autoValidateTrust;
+        if (trustServiceController != null)
+        {
+            this.autoValidatingTrust = autoValidateTrust;
+        }
     }
 
     private void eid_changePin() throws Exception
@@ -90,33 +122,34 @@ public class EidController extends Observable implements Runnable,Observer
         {
             eid.changePin();
         }
-        catch(RuntimeException rte)
+        catch (RuntimeException rte)
         {
-           Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
+            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
         }
-        
+
         runningAction = ACTION.NONE;
     }
 
     private void trustController_validateTrust() throws Exception
     {
-        if(trustServiceController==null)
+        if (trustServiceController == null)
+        {
             return;
-        
+        }
+
         try
         {
             trustServiceController.validateLater(authCertChain);
             trustServiceController.validateLater(signCertChain);
             setState();
         }
-        catch(RuntimeException rte)
+        catch (RuntimeException rte)
         {
-           Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
+            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
         }
 
         runningAction = ACTION.NONE;
     }
-    
 
     private void securityClear()
     {
@@ -126,8 +159,10 @@ public class EidController extends Observable implements Runnable,Observer
         authCertChain = null;
         signCertChain = null;
 
-        if(trustServiceController!=null)
+        if (trustServiceController != null)
+        {
             trustServiceController.clear();
+        }
     }
 
     @Override
@@ -138,12 +173,13 @@ public class EidController extends Observable implements Runnable,Observer
 
     public static enum STATE
     {
-        IDLE            ("state_idle"),
-        ERROR           ("state_error"),
-        NO_READERS      ("state_noreaders"),
-        NO_EID_PRESENT  ("state_noeidpresent"),
-        EID_PRESENT     ("state_eidpresent");
-        
+
+        IDLE("state_idle"),
+        ERROR("state_error"),
+        NO_READERS("state_noreaders"),
+        NO_EID_PRESENT("state_noeidpresent"),
+        EID_PRESENT("state_eidpresent"),
+        EID_YIELDED("state_eidyielded");
         private final String state;
 
         private STATE(String state)
@@ -161,15 +197,12 @@ public class EidController extends Observable implements Runnable,Observer
     public static enum ACTIVITY
     {
 
-        IDLE                    ("activity_idle"),
-        READING_IDENTITY        ("reading_identity"),
-        READING_ADDRESS         ("reading_address"),
-        READING_PHOTO           ("reading_photo"),
-        READING_AUTH_CHAIN      ("reading_auth_chain"),
-        READING_SIGN_CHAIN      ("reading_sign_chain"),
-        VERIFYING_AUTH_CHAINS   ("verifying_auth_chains"),
-        VERIFYING_SIGN_CHAINS   ("verifying_sign_chains");
-        
+        IDLE("activity_idle"),
+        READING_IDENTITY("reading_identity"),
+        READING_ADDRESS("reading_address"),
+        READING_PHOTO("reading_photo"),
+        READING_AUTH_CHAIN("reading_auth_chain"),
+        READING_SIGN_CHAIN("reading_sign_chain");
         private final String state;
 
         private ACTIVITY(String state)
@@ -186,7 +219,8 @@ public class EidController extends Observable implements Runnable,Observer
 
     public static enum ACTION
     {
-        NONE(0), CHANGE_PIN(1), VALIDATETRUST(2);
+
+        NONE(0), CHANGE_PIN(1), VALIDATETRUST(2), READ_RAW_FILES(3);
         private final int order;
 
         private ACTION(int order)
@@ -207,7 +241,7 @@ public class EidController extends Observable implements Runnable,Observer
         setState();
     }
 
-    private void setStateAndActivity(STATE newState,ACTIVITY newActivity)
+    private void setStateAndActivity(STATE newState, ACTIVITY newActivity)
     {
         state = newState;
         activity = newActivity;
@@ -239,7 +273,7 @@ public class EidController extends Observable implements Runnable,Observer
                     eid.waitForEidPresent();
                 }
 
-                setStateAndActivity(STATE.EID_PRESENT,ACTIVITY.READING_IDENTITY);
+                setStateAndActivity(STATE.EID_PRESENT, ACTIVITY.READING_IDENTITY);
                 identity = eid.getIdentity();
                 setState();
 
@@ -252,24 +286,28 @@ public class EidController extends Observable implements Runnable,Observer
                 setState();
 
                 setActivity(ACTIVITY.READING_AUTH_CHAIN);
-                authCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN,eid.getAuthnCertificateChain());
-                if(trustServiceController!=null && autoValidatingTrust)
+                authCertChain = new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, eid.getAuthnCertificateChain());
+                if (trustServiceController != null && autoValidatingTrust)
+                {
                     trustServiceController.validateLater(authCertChain);
+                }
                 setState();
 
                 setActivity(ACTIVITY.READING_SIGN_CHAIN);
-                signCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN,eid.getSignCertificateChain());
-                if(trustServiceController!=null && autoValidatingTrust)
+                signCertChain = new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, eid.getSignCertificateChain());
+                if (trustServiceController != null && autoValidatingTrust)
+                {
                     trustServiceController.validateLater(signCertChain);
+                }
                 setActivity(ACTIVITY.IDLE);
 
-                while(eid.isCardStillPresent())
+                while (eid.isCardStillPresent())
                 {
-                    if(runningAction == ACTION.CHANGE_PIN)
+                    if (runningAction == ACTION.CHANGE_PIN)
                     {
                         eid_changePin();
                     }
-                    else if(runningAction == ACTION.VALIDATETRUST)
+                    else if (runningAction == ACTION.VALIDATETRUST)
                     {
                         trustController_validateTrust();
                     }
@@ -277,11 +315,23 @@ public class EidController extends Observable implements Runnable,Observer
                     {
                         try
                         {
+                            setYielding(true);
+                            eid.yieldExclusive(true);
                             Thread.sleep(200);
+                            eid.yieldExclusive(false);   
                         }
-                        catch (InterruptedException ex1)
+                        catch(InterruptedException iex)
                         {
-                            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex1);
+                            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, "Activity Loop was Interrupted");
+                        }
+                        catch(CardException cex)
+                        {
+                            if(eid.isCardStillPresent())
+                                Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, "CardException in activity loop", cex);
+                        }
+                        finally
+                        {
+                            setYielding(false);
                         }
                     }
                 }
@@ -378,24 +428,55 @@ public class EidController extends Observable implements Runnable,Observer
 
     public EidController validateTrust()
     {
-        if(trustServiceController==null)
+        if (trustServiceController == null)
+        {
             return this;
+        }
         runningAction = ACTION.VALIDATETRUST;
         return this;
     }
 
+    public boolean isYielding()
+    {
+        return yielding;
+    }
+
+    public void setYielding(boolean yielding)
+    {
+        this.yielding = yielding;
+
+        if(yielding)
+        {
+            yieldConsideredLockedAt=1000+System.currentTimeMillis();
+        }
+        else
+        {
+            yieldConsideredLockedAt=Long.MAX_VALUE;
+        }
+    }
+
     public boolean isReadyForCommand()
     {
-        return (state==STATE.EID_PRESENT) && (activity==ACTIVITY.IDLE) && (runningAction==ACTION.NONE) && (!isValidatingTrust());
+        return (state == STATE.EID_PRESENT) && (activity == ACTIVITY.IDLE) && (runningAction == ACTION.NONE) && (!isValidatingTrust());
     }
 
     public boolean isValidatingTrust()
     {
-        return trustServiceController!=null?trustServiceController.isValidating():false;
+        return trustServiceController != null ? trustServiceController.isValidating() : false;
     }
 
     public boolean isAutoValidatingTrust()
     {
         return autoValidatingTrust;
+    }
+
+    public boolean isLoadedFromFile()
+    {
+        return loadedFromFile;
+    }
+
+    public void setLoadedFromFile(boolean loadedFromFile)
+    {
+        this.loadedFromFile = loadedFromFile;
     }
 }

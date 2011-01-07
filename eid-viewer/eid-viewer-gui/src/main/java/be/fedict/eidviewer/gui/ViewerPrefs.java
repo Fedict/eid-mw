@@ -40,40 +40,15 @@ public class ViewerPrefs
     public static final String          DEFAULT_TRUSTSERVICE_URI        = "trust.services.belgium.be";
     public static final String          DEFAULT_HTTP_PROXY_HOST         = "";
     public static final int             DEFAULT_HTTP_PROXY_PORT         = 8080;
+    private static final String         COLON_SLASH_SLASH               = "://";
     
     private static Preferences          preferences;
-    private static String               startupHttpProxyHost;
-    private static int                  startupHttpProxyPort;
-    private static boolean              startupUseHttpProxy;
 
     public static Preferences getPrefs()
     {
         if(preferences==null)
             preferences=Preferences.userNodeForPackage(ViewerPrefs.class);
         return preferences;
-    }
-
-    public static void getStartupProxySettings()
-    {
-        if(startupHttpProxyHost!=null)
-            return;
-
-        startupHttpProxyHost=System.getProperty("http.proxyHost");
-        if(startupHttpProxyHost!=null)
-        {
-            if(System.getProperty("http.proxyPort")!=null)
-            {
-                try
-                {
-                    startupHttpProxyPort=Integer.parseInt(System.getProperty("http.proxyPort"));
-                    startupUseHttpProxy=true;
-                }
-                catch(NumberFormatException nfe)
-                {
-                    // if the system property has a non-numerical value, we just don't set startupUseHttpProxy
-                }
-            }
-        }
     }
 
     public static boolean getIsAutoValidating()
@@ -100,7 +75,7 @@ public class ViewerPrefs
 
     public static String getTrustServiceURL()
     {
-        return getTrustServiceProto() + "://" + getTrustServiceURI();
+        return getTrustServiceProto() + COLON_SLASH_SLASH + getTrustServiceURI();
     }
 
     public static void setUseHTTPProxy(boolean use)
@@ -138,23 +113,7 @@ public class ViewerPrefs
     {
         return getPrefs()!=null?getPrefs().getInt(HTTP_PROXY_PORT, DEFAULT_HTTP_PROXY_PORT):DEFAULT_HTTP_PROXY_PORT;
     }
-
-    public static String getStartupHttpProxyHost()
-    {
-        getStartupProxySettings();
-        return startupHttpProxyHost;
-    }
-
-    public static int getStartupHttpProxyPort()
-    {
-        getStartupProxySettings();
-        return startupHttpProxyPort;
-    }
-
-    public static boolean getStartupUseHttpProxy()
-    {
-        getStartupProxySettings();
-        return startupUseHttpProxy;
-    }
 }
+
+//trust.ta.belgium.be
 
