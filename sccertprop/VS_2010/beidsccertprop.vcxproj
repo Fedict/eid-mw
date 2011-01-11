@@ -45,7 +45,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8196603C-AB95-4383-8675-81FA67441FE5}</ProjectGuid>
-    <RootNamespace>beidsccertprop</RootNamespace>
+    <RootNamespace>sccertprop</RootNamespace>
+    <ProjectName>sccertprop</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
