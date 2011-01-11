@@ -15,6 +15,11 @@
             <Property name="name" type="java.lang.String" value="fileMenu" noResource="true"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="jSeparator2" noResource="true"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
@@ -26,14 +31,22 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                  <action class="be.fedict.eidviewer.gui.BelgianEidViewer" id="save" methodName="save"/>
+                  <action class="be.fedict.eidviewer.gui.BelgianEidViewer" id="saveFile" methodName="saveFile"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="jMenuItem3" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
               <Properties>
-                <Property name="name" type="java.lang.String" value="jSeparator2" noResource="true"/>
+                <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                  <action class="be.fedict.eidviewer.gui.BelgianEidViewer" id="closeFile" methodName="closeFile"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="jMenuItem4" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="jSeparator3" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">

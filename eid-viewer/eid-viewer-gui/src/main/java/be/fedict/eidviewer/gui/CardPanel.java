@@ -41,6 +41,7 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/CardPanel");
         dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
         initComponents();
+        fillCardInfo(null,false);
     }
 
     public CardPanel setEidController(EidController eidController)
@@ -56,7 +57,7 @@ public class CardPanel extends javax.swing.JPanel implements Observer
 
         updateVisibleState();
 
-        if (eidController.getState() == EidController.STATE.EID_PRESENT  || eidController.getState()==EidController.STATE.EID_YIELDED)
+        if (eidController.getState() == EidController.STATE.EID_PRESENT  || eidController.getState()==EidController.STATE.EID_YIELDED || eidController.getState()==EidController.STATE.FILE_LOADED)
         {
             if(eidController.hasIdentity())
             {
@@ -79,7 +80,7 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         {
             public void run()
             {
-               changePinButton.setEnabled(eidController.isReadyForCommand());
+               changePinButton.setEnabled(eidController.isReadyForCommand() && eidController.getState()==EidController.STATE.EID_PRESENT);
             }
         });
     }

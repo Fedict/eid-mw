@@ -99,7 +99,7 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
 
         updateVisibleState();
 
-        if(eidController.getState() == EidController.STATE.EID_PRESENT || eidController.getState()==EidController.STATE.EID_YIELDED)
+        if(eidController.getState() == EidController.STATE.EID_PRESENT || eidController.getState()==EidController.STATE.EID_YIELDED || eidController.getState()==EidController.STATE.FILE_LOADED)
         {
             if(eidController.hasAuthCertChain())
                 addCerts(eidController.getAuthCertChain());

@@ -46,14 +46,15 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/IdentityPanel");
         dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
         initComponents();
-        initIcons();    
+        initIcons();
+        clearIdentity();
     }
 
     public void update(Observable o, Object o1)
     {
         EidController controller = (EidController) o;
 
-        if(controller.getState()==EidController.STATE.EID_PRESENT || controller.getState()==EidController.STATE.EID_YIELDED)
+        if(controller.getState()==EidController.STATE.EID_PRESENT || controller.getState()==EidController.STATE.EID_YIELDED || controller.getState()==EidController.STATE.FILE_LOADED )
         {
             if(controller.hasIdentity())
                 fillIdentity(controller.getIdentity(),false);
@@ -72,10 +73,15 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         }
         else
         {
-            fillIdentity(null, false);
-            fillAddress(null, false);
-            fillPhoto(null, false);
+            clearIdentity();
         }
+    }
+
+    private void clearIdentity()
+    {
+        fillIdentity(null, false);
+        fillAddress(null, false);
+        fillPhoto(null, false);
     }
 
     private void fillIdentity(final Identity identity, final boolean loading)

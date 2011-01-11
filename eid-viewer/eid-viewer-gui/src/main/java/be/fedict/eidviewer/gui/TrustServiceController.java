@@ -111,9 +111,17 @@ public class TrustServiceController extends Observable implements Runnable
         return this;
     }
 
-    public synchronized TrustServiceController validateLater(X509CertificateChainAndTrust certificateChain) throws InterruptedException
+    public synchronized TrustServiceController validateLater(X509CertificateChainAndTrust certificateChain)
     {
-        chainsToBeValidated.put(certificateChain);
+        try
+        {
+            chainsToBeValidated.put(certificateChain);
+        }
+        catch (InterruptedException iex)
+        {
+            Logger.getLogger(TrustServiceController.class.getName()).log(Level.SEVERE, "TrustServiceController Interruped while adding certificates to be validated", iex);
+        }
+        
         return this;
     }
 

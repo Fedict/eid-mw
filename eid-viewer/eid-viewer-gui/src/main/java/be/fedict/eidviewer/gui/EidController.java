@@ -19,16 +19,33 @@ package be.fedict.eidviewer.gui;
 
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
+import be.fedict.eidviewer.gui.helper.CloseResistantZipInputStream;
+import be.fedict.eidviewer.gui.helper.CloseResistantZipOutputStream;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.trust.client.TrustServiceDomains;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.security.cert.CertificateEncodingException;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.zip.ZipEntry;
 import javax.smartcardio.CardException;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -36,6 +53,13 @@ import javax.smartcardio.CardException;
  */
 public class EidController extends Observable implements Runnable, Observer
 {
+    private static final String ZIPFILE_ADDRESS_FILENAME = "address.ser";
+    private static final String ZIPFILE_AUTHCERT_FILENAME = "authcert.der";
+    private static final String ZIPFILE_CITIZENCERT_FILENAME = "citicert.der";
+    private static final String ZIPFILE_IDENTITY_FILENAME = "identity.ser";
+    private static final String ZIPFILE_PHOTO_FILENAME = "photo.ser";
+    private static final String ZIPFILE_ROOTCERT_FILENAME = "rootcert.der";
+    private static final String ZIPFILE_SIGNCERT_FILENAME = "signcert.der";
 
     private boolean running = false;
     private Eid eid;
@@ -60,7 +84,7 @@ public class EidController extends Observable implements Runnable, Observer
         setActivity(ACTIVITY.IDLE);
         this.runningAction = ACTION.NONE;
         this.autoValidatingTrust = false;
-        yieldLockedTimer = new Timer("yieldLockerTimer", true);
+        yieldLockedTimer = new Timer("yieldLockedTimer", true);
         yieldConsideredLockedAt=Long.MAX_VALUE;
     }
 
@@ -133,9 +157,7 @@ public class EidController extends Observable implements Runnable, Observer
     private void trustController_validateTrust() throws Exception
     {
         if (trustServiceController == null)
-        {
             return;
-        }
 
         try
         {
@@ -151,18 +173,16 @@ public class EidController extends Observable implements Runnable, Observer
         runningAction = ACTION.NONE;
     }
 
-    private void securityClear()
+    public void securityClear()
     {
         identity = null;
         address = null;
         photo = null;
         authCertChain = null;
         signCertChain = null;
-
         if (trustServiceController != null)
-        {
             trustServiceController.clear();
-        }
+        setState();
     }
 
     @Override
@@ -171,14 +191,17 @@ public class EidController extends Observable implements Runnable, Observer
         setState();
     }
 
+    
+
     public static enum STATE
     {
-
         IDLE("state_idle"),
         ERROR("state_error"),
         NO_READERS("state_noreaders"),
         NO_EID_PRESENT("state_noeidpresent"),
         EID_PRESENT("state_eidpresent"),
+        FILE_LOADING("state_fileloading"),
+        FILE_LOADED("state_fileloaded"),
         EID_YIELDED("state_eidyielded");
         private final String state;
 
@@ -273,7 +296,14 @@ public class EidController extends Observable implements Runnable, Observer
                     eid.waitForEidPresent();
                 }
 
+                if(isLoadedFromFile())
+                {
+                    securityClear();
+                    setState(STATE.IDLE);
+                }
+
                 setStateAndActivity(STATE.EID_PRESENT, ACTIVITY.READING_IDENTITY);
+                setLoadedFromFile(false);
                 identity = eid.getIdentity();
                 setState();
 
@@ -288,17 +318,13 @@ public class EidController extends Observable implements Runnable, Observer
                 setActivity(ACTIVITY.READING_AUTH_CHAIN);
                 authCertChain = new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, eid.getAuthnCertificateChain());
                 if (trustServiceController != null && autoValidatingTrust)
-                {
                     trustServiceController.validateLater(authCertChain);
-                }
                 setState();
 
                 setActivity(ACTIVITY.READING_SIGN_CHAIN);
                 signCertChain = new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, eid.getSignCertificateChain());
                 if (trustServiceController != null && autoValidatingTrust)
-                {
                     trustServiceController.validateLater(signCertChain);
-                }
                 setActivity(ACTIVITY.IDLE);
 
                 while (eid.isCardStillPresent())
@@ -336,8 +362,11 @@ public class EidController extends Observable implements Runnable, Observer
                     }
                 }
 
-                securityClear();
-                setState(STATE.IDLE);
+                if(!isLoadedFromFile())
+                {
+                    securityClear();
+                    setState(STATE.IDLE);
+                }
             }
             catch (Exception ex)   // something failed. Clear out all data for security
             {
@@ -428,11 +457,25 @@ public class EidController extends Observable implements Runnable, Observer
 
     public EidController validateTrust()
     {
-        if (trustServiceController == null)
-        {
+        if(trustServiceController == null)
             return this;
+        
+        if(state==STATE.FILE_LOADED)
+        {
+            try
+            {
+                trustController_validateTrust();
+            }
+            catch (Exception ex)
+            {
+                Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, "Problem Validating Trust From Saved Identity", ex);
+            }
         }
-        runningAction = ACTION.VALIDATETRUST;
+        else
+        {
+            runningAction = ACTION.VALIDATETRUST;
+        }
+        
         return this;
     }
 
@@ -457,7 +500,7 @@ public class EidController extends Observable implements Runnable, Observer
 
     public boolean isReadyForCommand()
     {
-        return (state == STATE.EID_PRESENT) && (activity == ACTIVITY.IDLE) && (runningAction == ACTION.NONE) && (!isValidatingTrust());
+        return (state == STATE.EID_PRESENT || state == STATE.FILE_LOADED) && (activity == ACTIVITY.IDLE) && (runningAction == ACTION.NONE) && (!isValidatingTrust());
     }
 
     public boolean isValidatingTrust()
@@ -475,8 +518,255 @@ public class EidController extends Observable implements Runnable, Observer
         return loadedFromFile;
     }
 
-    public void setLoadedFromFile(boolean loadedFromFile)
+    public synchronized EidController setLoadedFromFile(boolean loadedFromFile)
+    {       
+        this.loadedFromFile=loadedFromFile;
+        return this;
+    }
+    
+    public synchronized EidController setAddress(Address address)
     {
-        this.loadedFromFile = loadedFromFile;
+        this.address = address;
+        return this;
+    }
+
+    public synchronized EidController setAuthCertChain(X509CertificateChainAndTrust authCertChain)
+    {
+        this.authCertChain = authCertChain;
+        if (trustServiceController != null && autoValidatingTrust)
+            trustServiceController.validateLater(authCertChain);
+        return this;
+    }
+
+    public synchronized EidController setIdentity(Identity identity)
+    {
+        this.identity = identity;
+        return this;
+    }
+
+    public synchronized EidController setPhoto(Image photo)
+    {
+        this.photo = photo;
+        return this;
+    }
+
+    public synchronized EidController setSignCertChain(X509CertificateChainAndTrust signCertChain)
+    {
+        this.signCertChain = signCertChain;
+        if (trustServiceController != null && autoValidatingTrust)
+            trustServiceController.validateLater(signCertChain);
+        return this;
+    }
+
+    public void loadFromFile(File file)
+    {
+        CloseResistantZipInputStream    zipInputStream      = null;
+        ObjectInputStream               objectInputStream   = null;
+        X509Certificate                 rootCert            = null;
+        X509Certificate                 citizenCert         = null;
+        X509Certificate                 authenticationCert  = null;
+        X509Certificate                 signingCert         = null;
+        CertificateFactory              certificateFactory  = null;
+
+        setState(STATE.FILE_LOADING);
+
+        try
+        {
+            zipInputStream=new CloseResistantZipInputStream(new FileInputStream(file));
+            certificateFactory = CertificateFactory.getInstance("X.509");
+            ZipEntry entry;
+
+            while((entry=zipInputStream.getNextEntry())!=null)
+            {
+                if(entry.getName().equals(ZIPFILE_IDENTITY_FILENAME))
+                {
+                    objectInputStream=new ObjectInputStream(zipInputStream);
+                    setIdentity((Identity)objectInputStream.readObject());
+                    objectInputStream.close();
+
+                }
+                else if(entry.getName().equals(ZIPFILE_ADDRESS_FILENAME))
+                {
+                    objectInputStream=new ObjectInputStream(zipInputStream);
+                    setAddress((Address)objectInputStream.readObject());
+                    objectInputStream.close();
+
+                }
+                else if(entry.getName().equals(ZIPFILE_PHOTO_FILENAME))
+                {
+                    objectInputStream=new ObjectInputStream(zipInputStream);
+                    setPhoto(((ImageIcon)objectInputStream.readObject()).getImage());
+                    objectInputStream.close();
+                }
+                else if(entry.getName().equals(ZIPFILE_AUTHCERT_FILENAME))
+                {
+                    authenticationCert=(X509Certificate) certificateFactory.generateCertificate(zipInputStream);
+                }
+                else if(entry.getName().equals(ZIPFILE_SIGNCERT_FILENAME))
+                {
+                    signingCert=(X509Certificate) certificateFactory.generateCertificate(zipInputStream);
+                }
+                else if(entry.getName().equals(ZIPFILE_CITIZENCERT_FILENAME))
+                {
+                    citizenCert=(X509Certificate) certificateFactory.generateCertificate(zipInputStream);
+                }
+                else if(entry.getName().equals(ZIPFILE_ROOTCERT_FILENAME))
+                {
+                    rootCert=(X509Certificate) certificateFactory.generateCertificate(zipInputStream);
+                }
+                
+                zipInputStream.closeEntry();
+            }
+
+            if(rootCert!=null && citizenCert!=null)
+            {
+                if(authenticationCert!=null)
+                {
+                    List authChain=new LinkedList<X509Certificate>();
+                         authChain.add(authenticationCert);
+                         authChain.add(citizenCert);
+                         authChain.add(rootCert);
+                    authCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, authChain);
+                }
+
+                if(signingCert!=null)
+                {
+                    List signChain=new LinkedList<X509Certificate>();
+                         signChain.add(signingCert);
+                         signChain.add(citizenCert);
+                         signChain.add(rootCert);
+                         
+                    signCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain);
+                }
+
+            }
+
+            setState(STATE.FILE_LOADED);
+            setLoadedFromFile(true);
+            zipInputStream.setCloseAllowed(true);
+            zipInputStream.close();
+        }
+        catch (CertificateException ex)
+        {
+            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(FileNotFoundException ex)
+        {
+            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException cnfe)
+        {
+            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, cnfe);
+        }
+    }
+
+    public void saveToFile(File file)
+    {
+        CloseResistantZipOutputStream   zipOutputStream     =null;
+        ObjectOutputStream              objectOutputStream  =null;
+      
+        try
+        {
+            zipOutputStream = new CloseResistantZipOutputStream(new FileOutputStream(file));
+
+            if(hasIdentity())
+            {
+                zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_IDENTITY_FILENAME));
+                objectOutputStream = new ObjectOutputStream(zipOutputStream);
+                objectOutputStream.writeObject(getIdentity());
+                objectOutputStream.close();
+                zipOutputStream.closeEntry();
+            }
+
+            if(hasAddress())
+            {
+                zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_ADDRESS_FILENAME));
+                objectOutputStream = new ObjectOutputStream(zipOutputStream);
+                objectOutputStream.writeObject(getAddress());
+                objectOutputStream.close();
+                zipOutputStream.closeEntry();
+            }
+
+            if(hasPhoto())
+            {
+                zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_PHOTO_FILENAME));
+                objectOutputStream = new ObjectOutputStream(zipOutputStream);
+                objectOutputStream.writeObject(new ImageIcon(getPhoto()));
+                objectOutputStream.close();
+                zipOutputStream.closeEntry();
+            }
+
+            if(hasAuthCertChain())
+            {
+                List<X509Certificate> authChain=getAuthCertChain().getCertificates();
+                if(authChain.size()==3)
+                {
+                    X509Certificate authCert=authChain.get(0);
+                    zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_AUTHCERT_FILENAME));
+                    byte[] derEncoded=authCert.getEncoded();
+                    zipOutputStream.write(derEncoded);
+                    zipOutputStream.closeEntry();
+
+                    authCert=authChain.get(1);
+                    zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_CITIZENCERT_FILENAME));
+                    derEncoded=authCert.getEncoded();
+                    zipOutputStream.write(derEncoded);
+                    zipOutputStream.closeEntry();
+
+                    authCert=authChain.get(2);
+                    zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_ROOTCERT_FILENAME));
+                    derEncoded=authCert.getEncoded();
+                    zipOutputStream.write(derEncoded);
+                    zipOutputStream.closeEntry();
+                }    
+            }
+
+            if(hasSignCertChain())
+            {
+                List<X509Certificate> signChain=getSignCertChain().getCertificates();
+                if(signChain.size()==3)
+                {
+                    X509Certificate signCert=signChain.get(0);
+                    zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_SIGNCERT_FILENAME));
+                    byte[] derEncoded=signCert.getEncoded();
+                    zipOutputStream.write(derEncoded);
+                    zipOutputStream.closeEntry();
+                }
+            }
+        }
+        catch (CertificateEncodingException ex)
+        {
+            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            try
+            {
+                zipOutputStream.setCloseAllowed(true);
+                zipOutputStream.close();
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void closeFile()
+    {
+        if(isLoadedFromFile())
+        {
+            setLoadedFromFile(false);
+            securityClear();
+            setState(STATE.IDLE);
+        }
     }
 }
