@@ -1,4 +1,26 @@
-function belgiumeidprompt() {
+/*
+ * eID Middleware Project.
+ * Copyright (C) 2008-2011 FedICT.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License version
+ * 3.0 as published by the Free Software Foundation.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, see
+ * http://www.gnu.org/licenses/.
+ */
+
+if(!be) var be={};
+if(!be.fedict) be.fedict={};
+if(!be.fedict.belgiumeidpkcs11) be.fedict.belgiumeidpkcs11={};
+
+be.fedict.belgiumeidpkcs11.belgiumeidprompt = function() {
 
   var infobody = document.getElementById("info.body");
 
@@ -9,8 +31,6 @@ function belgiumeidprompt() {
                    .getService(Components.interfaces.nsIWindowMediator);
     var mainWindow = wm.getMostRecentWindow("navigator:browser");
     var strings = mainWindow.document.getElementById("belgiumeid-strings");
-
-
     var infoicon = document.getElementById("info.icon");
     var commondialog = document.getElementById("commonDialog");
     
@@ -24,4 +44,4 @@ function belgiumeidprompt() {
 }
 
 // add on load event handler
-window.addEventListener("load", function() { belgiumeidprompt(); }, false);
+window.addEventListener("load", function() { be.fedict.belgiumeidpkcs11.belgiumeidprompt(); }, false);
