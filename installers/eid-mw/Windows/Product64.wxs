@@ -202,7 +202,6 @@
         <File Id="belgiumeidprompt.xul" Name="belgiumeidprompt.xul" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidprompt.xul" />
         <File Id="belgiumeidpromptsecure.js" Name="belgiumeidpromptsecure.js" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidpromptsecure.js" />
         <File Id="belgiumeidpromptsecure.xul" Name="belgiumeidpromptsecure.xul" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidpromptsecure.xul" />
-        <File Id="util.js" Name="util.js" KeyPath="no" Source="..\..\..\xpi\src\content\util.js" />
       </Component>
     </DirectoryRef>
 
