@@ -54,6 +54,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu.Separator;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
@@ -64,22 +65,23 @@ import org.jdesktop.application.Application;
  */
 public class BelgianEidViewer extends javax.swing.JFrame implements View, Observer
 {
-
+    private static final Logger logger = Logger.getLogger(BelgianEidViewer.class.getName());
     private ResourceBundle bundle;
     private static final String EXTENSION_PNG = ".png";
     private static final String ICONS = "resources/icons/";
-    private Messages                                    coreMessages;
-    private Eid                                         eid;
-    private EidController                               eidController;
-    private TrustServiceController                      trustServiceController;
-    private EnumMap<EidController.STATE, ImageIcon>     cardStatusIcons;
-    private EnumMap<EidController.STATE, String>        cardStatusTexts;
-    private EnumMap<EidController.ACTIVITY, String>     activityTexts;
-    private IdentityPanel                               identityPanel;
-    private CertificatesPanel                           certificatesPanel;
-    private CardPanel                                   cardPanel;
-    private PreferencesPanel                            preferencesPanel;
-    private javax.swing.Action                          printAction,openAction,saveAction,closeAction;
+    private Messages coreMessages;
+    private Eid eid;
+    private EidController eidController;
+    private TrustServiceController trustServiceController;
+    private EnumMap<EidController.STATE, ImageIcon> cardStatusIcons;
+    private EnumMap<EidController.STATE, String> cardStatusTexts;
+    private EnumMap<EidController.ACTIVITY, String> activityTexts;
+    private IdentityPanel identityPanel;
+    private CertificatesPanel certificatesPanel;
+    private CardPanel cardPanel;
+    private PreferencesPanel preferencesPanel;
+    private LogPanel logPanel;
+    private javax.swing.Action printAction, openAction, saveAction, closeAction;
 
     public BelgianEidViewer()
     {
@@ -94,21 +96,26 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
     private void start()
     {
+        logger.fine("starting..");
         ActionMap actionMap = Application.getInstance().getContext().getActionMap(BelgianEidViewer.class, this);
-        printAction = actionMap.get("print"); // NOI18N
-        openAction = actionMap.get("openFile"); // NOI18N
-        closeAction = actionMap.get("closeFile"); // NOI18N
-        saveAction = actionMap.get("saveFile"); // NOI18N
+        printAction = actionMap.get("print");       // NOI18N
+        openAction = actionMap.get("openFile");    // NOI18N
+        closeAction = actionMap.get("closeFile");   // NOI18N
+        saveAction = actionMap.get("saveFile");    // NOI18N
         eid = EidFactory.getEidImpl(this, coreMessages);
         eidController = new EidController(eid);
 
         trustServiceController = new TrustServiceController(ViewerPrefs.getTrustServiceURL());
         trustServiceController.start();
 
-        if(ViewerPrefs.getUseHTTPProxy())
+        if (ViewerPrefs.getUseHTTPProxy())
+        {
             trustServiceController.setProxy(ViewerPrefs.getHTTPProxyHost(), ViewerPrefs.getHTTPProxyPort());
+        }
         else
-            trustServiceController.setProxy(null,0);
+        {
+            trustServiceController.setProxy(null, 0);
+        }
 
         eidController.setTrustServiceController(trustServiceController);
         eidController.setAutoValidateTrust(ViewerPrefs.getIsAutoValidating());
@@ -132,6 +139,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
     private void stop()
     {
+        logger.fine("stopping..");
         eidController.stop();
         this.dispose();
     }
@@ -145,24 +153,25 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
+
             public void run()
             {
                 printAction.setEnabled(eidController.hasIdentity() && eidController.hasAddress() && eidController.hasPhoto());
-                saveAction. setEnabled(eidController.hasIdentity() && eidController.hasAddress() && eidController.hasPhoto() && eidController.hasAuthCertChain() && eidController.hasSignCertChain());
-                openAction. setEnabled(eidController.getState()!=EidController.STATE.EID_PRESENT && eidController.getState()!=EidController.STATE.FILE_LOADED);
+                saveAction.setEnabled(eidController.hasIdentity() && eidController.hasAddress() && eidController.hasPhoto() && eidController.hasAuthCertChain() && eidController.hasSignCertChain());
+                openAction.setEnabled(eidController.getState() != EidController.STATE.EID_PRESENT && eidController.getState() != EidController.STATE.FILE_LOADED);
                 closeAction.setEnabled(eidController.isLoadedFromFile() && eidController.hasAddress() && eidController.hasPhoto() && eidController.hasAuthCertChain() && eidController.hasSignCertChain());
 
                 statusIcon.setIcon(cardStatusIcons.get(eidController.getState()));
 
-                switch(eidController.getState())
+                switch (eidController.getState())
                 {
                     case EID_PRESENT:
-                    statusText.setText(activityTexts.get(eidController.getActivity()));
-                    break;
+                        statusText.setText(activityTexts.get(eidController.getActivity()));
+                        break;
 
                     case FILE_LOADED:
                     default:
-                    statusText.setText(cardStatusTexts.get(eidController.getState()));
+                        statusText.setText(cardStatusTexts.get(eidController.getState()));
                 }
             }
         });
@@ -281,27 +290,13 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
     public void addDetailMessage(String detailMessage)
     {
-        System.err.println(detailMessage);
+        logger.finest(detailMessage);
     }
 
     public void setStatusMessage(Status status, MESSAGE_ID messageId)
     {
         String message = coreMessages.getMessage(messageId);
-        System.err.println(message);
-
-        setStatusMessage(message);
-    }
-
-    private void setStatusMessage(final String message)
-    {
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-
-            public void run()
-            {
-                //idStatus.setText(message);
-            }
-        });
+        logger.info(message);
     }
 
     public boolean privacyQuestion(boolean includeAddress, boolean includePhoto, String identityDataUsage)
@@ -381,10 +376,16 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         cardPanel = new CardPanel();
         certificatesPanel = new CertificatesPanel();
         preferencesPanel = new PreferencesPanel();
-        tabPanel.add(identityPanel,     res.getString("IDENTITY"));
-        tabPanel.add(cardPanel,         res.getString("CARD"));
+        tabPanel.add(identityPanel, res.getString("IDENTITY"));
+        tabPanel.add(cardPanel, res.getString("CARD"));
         tabPanel.add(certificatesPanel, res.getString("CERTIFICATES"));
-        tabPanel.add(preferencesPanel,  res.getString("PREFERENCES"));
+        tabPanel.add(preferencesPanel, res.getString("PREFERENCES"));
+
+        if(ViewerPrefs.getShowLogTab())
+        {
+            logPanel = new LogPanel();
+            tabPanel.add(logPanel, res.getString("LOG"));
+        }
     }
 
     private void initIcons()
@@ -421,12 +422,11 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     {
         return new ImageIcon(Toolkit.getDefaultToolkit().getImage(BelgianEidViewer.class.getResource(ICONS + name)));
     }
-    
-   
 
     @Action
     public void print()
     {
+        logger.fine("print action chosen..");
         PrinterJob job = PrinterJob.getPrinterJob();
         IDPrintout printout = new IDPrintout();
         printout.setIdentity(eidController.getIdentity());
@@ -435,17 +435,19 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
         job.setPrintable(printout);
         boolean ok = job.printDialog();
-        //job.setJobName(eidController.getIdentity().getNationalNumber());
+        job.setJobName(eidController.getIdentity().getNationalNumber());
 
         if (ok)
         {
             try
             {
+                logger.finest("print job started..");
                 job.print();
+                logger.finest("print job completed..");
             }
             catch (PrinterException pex)
             {
-                Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, pex);
+                logger.log(Level.SEVERE, "Print Job Failed", pex);
             }
         }
     }
@@ -453,35 +455,52 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     @Action
     public void quit()
     {
+        logger.fine("quit action chosen..");
         this.stop();
     }
 
     @Action
     public void openFile()
     {
+        logger.fine("Open action chosen..");
         final JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-            eidController.loadFromFile(fileChooser.getSelectedFile());
+        {
+            eidController.loadFromTLVFile(fileChooser.getSelectedFile());
+        }
     }
 
     @Action
     public void saveFile()
     {
-        final JFileChooser fileChooser  = new JFileChooser();
-        if(fileChooser.showSaveDialog(this)==JFileChooser.APPROVE_OPTION)
-            eidController.saveToFile(fileChooser.getSelectedFile());
+        logger.fine("Save action chosen..");
+        final JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+        {
+            eidController.saveToBinFile(fileChooser.getSelectedFile());
+        }
     }
 
     @Action
     public void closeFile()
     {
+        logger.fine("Close action chosen..");
         eidController.closeFile();
     }
 
     /* ---------------------------------------------------------------------------------------- */
-
     public static void main(String args[])
     {
+        try
+        {
+            logger.finest("Setting System Look And Feel");
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch(Exception e)
+        {
+            logger.log(Level.WARNING,"Can't Set SystemLookAndFeel", e);
+        }
+
         new BelgianEidViewer().start();
     }
 }

@@ -25,16 +25,18 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 /**
  *
- * @author frank
+ * @author Frank Marien
  */
 public class CardPanel extends javax.swing.JPanel implements Observer
 {
-    private ResourceBundle  bundle;
-    private DateFormat      dateFormat;
-    private EidController   eidController;
+    private static final Logger logger = Logger.getLogger(CardPanel.class.getName());
+    private ResourceBundle      bundle;
+    private DateFormat          dateFormat;
+    private EidController       eidController;
 
     public CardPanel()
     {
@@ -46,6 +48,7 @@ public class CardPanel extends javax.swing.JPanel implements Observer
 
     public CardPanel setEidController(EidController eidController)
     {
+        logger.finest("Setting eidController");
         this.eidController = eidController;
         return this;
     }
@@ -55,21 +58,25 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         if (eidController == null)
             return;
 
+        logger.finest("Updating..");
         updateVisibleState();
 
         if (eidController.getState() == EidController.STATE.EID_PRESENT  || eidController.getState()==EidController.STATE.EID_YIELDED || eidController.getState()==EidController.STATE.FILE_LOADED)
         {
             if(eidController.hasIdentity())
             {
+                logger.finest("Filling Out Card Data..");
                 fillCardInfo(eidController.getIdentity(), false);
             }
             else
             {
+                logger.finest("Clear Card Data But Loading..");
                 fillCardInfo(null, true);
             }
         }
         else
         {
+            logger.finest("Clear Card Data And Not Loading");
             fillCardInfo(null, false);
         }    
     }
@@ -89,7 +96,6 @@ public class CardPanel extends javax.swing.JPanel implements Observer
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-
             public void run()
             {
                 cardInfoBusyIcon.setVisible(loading);

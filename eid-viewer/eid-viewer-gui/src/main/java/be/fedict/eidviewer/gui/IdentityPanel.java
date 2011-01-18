@@ -15,7 +15,6 @@
  * License along with this software; if not, see
  * http://www.gnu.org/licenses/.
  */
-
 package be.fedict.eidviewer.gui;
 
 import be.fedict.eid.applet.service.Address;
@@ -29,6 +28,7 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -37,9 +37,11 @@ import javax.swing.ImageIcon;
  */
 public class IdentityPanel extends javax.swing.JPanel implements Observer
 {
-    private ResourceBundle      bundle;
-    private DateFormat          dateFormat;
-    private ImageIcon           largeBusyIcon;
+
+    private static final Logger logger = Logger.getLogger(IdentityPanel.class.getName());
+    private ResourceBundle bundle;
+    private DateFormat dateFormat;
+    private ImageIcon largeBusyIcon;
 
     public IdentityPanel()
     {
@@ -54,25 +56,46 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     {
         EidController controller = (EidController) o;
 
-        if(controller.getState()==EidController.STATE.EID_PRESENT || controller.getState()==EidController.STATE.EID_YIELDED || controller.getState()==EidController.STATE.FILE_LOADED )
+        logger.finest("Update..");
+
+        if (controller.getState() == EidController.STATE.EID_PRESENT || controller.getState() == EidController.STATE.EID_YIELDED || controller.getState() == EidController.STATE.FILE_LOADED)
         {
-            if(controller.hasIdentity())
-                fillIdentity(controller.getIdentity(),false);
+            if (controller.hasIdentity())
+            {
+                logger.finest("Filling out Identity Data");
+                fillIdentity(controller.getIdentity(), false);
+            }
             else
-                fillIdentity(null,true);
+            {
+                logger.finest("No Identity Data But Loading");
+                fillIdentity(null, true);
+            }
 
-            if(controller.hasAddress())
-                fillAddress(controller.getAddress(),false);
+            if (controller.hasAddress())
+            {
+                logger.finest("Filling Address Data");
+                fillAddress(controller.getAddress(), false);
+            }
             else
-                fillAddress(null,true);
+            {
+                logger.finest("No Identity Data But Loading");
+                fillAddress(null, true);
+            }
 
-            if(controller.hasPhoto())
-                fillPhoto(controller.getPhoto(),false);
+            if (controller.hasPhoto())
+            {
+                logger.finest("Filling Picture");
+                fillPhoto(controller.getPhoto(), false);
+            }
             else
-                fillPhoto(null,true);
+            {
+                logger.finest("No Picture But Loading");
+                fillPhoto(null, true);
+            }
         }
         else
         {
+            logger.finest("Clearing all data because source is not available");
             clearIdentity();
         }
     }
@@ -85,13 +108,14 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     }
 
     private void fillIdentity(final Identity identity, final boolean loading)
-    {         
+    {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
+
             public void run()
             {
                 identityBusyIcon.setVisible(loading);
-                if(identity!=null)
+                if (identity != null)
                 {
                     type.setText(bundle.getString("type_" + identity.getDocumentType().toString()));
                     type.setEnabled(true);
@@ -138,8 +162,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                         titleLabel.setEnabled(false);
                     }
 
-                    String specialStatusStr=IdFormatHelper.getSpecialStatusString(bundle,identity.getSpecialStatus());
-                    if(!specialStatusStr.isEmpty())
+                    String specialStatusStr = IdFormatHelper.getSpecialStatusString(bundle, identity.getSpecialStatus());
+                    if (!specialStatusStr.isEmpty())
                     {
                         specialStatus.setText(specialStatusStr);
                         specialStatus.setEnabled(true);
@@ -156,7 +180,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                 {
                     type.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     type.setEnabled(false);
-                    
+
                     name.setText(IdFormatHelper.UNKNOWN_VALUE_TEXT);
                     name.setEnabled(false);
                     nameLabel.setEnabled(false);
@@ -201,6 +225,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
+
             public void run()
             {
                 addressBusyIcon.setVisible(loading);
@@ -237,15 +262,20 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     }
 
     private void fillPhoto(final Image image, final boolean loading)
-    {        
+    {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
+
             public void run()
             {
-                if(image!=null)
+                if (image != null)
+                {
                     photo.setIcon(new ImageIcon(image));
+                }
                 else
-                    photo.setIcon(loading?largeBusyIcon:null);
+                {
+                    photo.setIcon(loading ? largeBusyIcon : null);
+                }
             }
         });
     }

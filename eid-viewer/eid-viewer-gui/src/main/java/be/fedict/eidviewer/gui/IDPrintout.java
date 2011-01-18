@@ -37,13 +37,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author frank
+ * @author Frank Marien
  */
 public class IDPrintout implements Printable
 {
+    private static final Logger             logger=Logger.getLogger(CertificatesPanel.class.getName());
+    
     private static final int                MINIMAL_FONT_SIZE = 6;
     private static final int                MAXIMAL_FONT_SIZE = 48;
     private static final String             ICONS = "resources/icons/";
@@ -124,7 +128,7 @@ public class IDPrintout implements Printable
         int fontSize;
         for(fontSize = MAXIMAL_FONT_SIZE; (fontSize >= MINIMAL_FONT_SIZE) && (!sizeFound); fontSize--)  // count down slowly until we find one that fits nicely
         {
-            System.err.println("fontSize=" + fontSize);
+            logger.log(Level.FINE, "fontSize={0}", fontSize);
             graphics2D.setFont(new Font(FONT, Font.PLAIN, fontSize));
             sizeFound = (PrintingUtilities.getTotalStringWidth(graphics2D, cardTypeStr) < headerSpaceBetweenImages)
                         && (PrintingUtilities.getTotalStringHeight(graphics2D, cardTypeStr) < headerHeight);
@@ -166,7 +170,7 @@ public class IDPrintout implements Printable
         sizeFound = false;
         for (fontSize = MAXIMAL_FONT_SIZE; (fontSize >= MINIMAL_FONT_SIZE) && (!sizeFound); fontSize--)  // count down slowly until we find one that fits nicely
         {
-            System.err.println("fontSize=" + fontSize);
+            logger.log(Level.FINE, "fontSize={0}", fontSize);
             graphics2D.setFont(new Font(FONT, Font.PLAIN, fontSize));
 
             widestLabelWidth = 0;

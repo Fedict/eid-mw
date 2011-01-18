@@ -17,6 +17,7 @@
  */
 package be.fedict.eidviewer.gui;
 
+import be.fedict.eidviewer.gui.helper.IdFormatHelper;
 import be.fedict.trust.client.jaxb.xades132.RevocationValuesType;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -154,5 +155,11 @@ public class X509CertificateChainAndTrust
             certificate.setInvalidReasons(this.getInvalidReasons());
             certificate.setTrusted(this.isTrusted());
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        return IdFormatHelper.join(certificatesAndTrusts," signed by ");
     }
 }

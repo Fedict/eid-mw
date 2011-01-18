@@ -24,7 +24,7 @@ import javax.swing.text.PlainDocument;
 
 /*
  * PositiveIntegerDocument implements a PlainDocument, overriding insertString
- * to pre-process inputs, limiting inpout to maxSize digits. Set this as Document for
+ * to pre-process inputs, limiting input to maxSize digits. Set this as Document for
  * any text components ot limit their input.
  */
 public class PositiveIntegerDocument extends PlainDocument

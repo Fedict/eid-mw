@@ -38,6 +38,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
@@ -56,6 +58,7 @@ import javax.swing.tree.TreeSelectionModel;
  */
 public class CertificatesPanel extends javax.swing.JPanel implements Observer, TreeSelectionListener
 {
+    private static final Logger                     logger=Logger.getLogger(CertificatesPanel.class.getName());
     private static final String                     ICONS = "resources/icons/";
     private ResourceBundle                          bundle;
     private DateFormat                              dateFormat;
@@ -73,8 +76,7 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         trustErrors.setVisible(false);
         defaultLabelForeground = UIManager.getColor("Label.foreground");
         defaultLabelBackground = UIManager.getColor("Label.background");
-        initCertsTree();
-        
+        initCertsTree();  
     }
 
     public CertificatesPanel setEidController(EidController eidController)
@@ -97,10 +99,12 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         if (eidController == null)
             return;
 
+        logger.finest("Updating..");
         updateVisibleState();
 
         if(eidController.getState() == EidController.STATE.EID_PRESENT || eidController.getState()==EidController.STATE.EID_YIELDED || eidController.getState()==EidController.STATE.FILE_LOADED)
         {
+            logger.finest("Filling Out Certificate Data..");
             if(eidController.hasAuthCertChain())
                 addCerts(eidController.getAuthCertChain());
 
@@ -109,6 +113,7 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
         }
         else
         {
+            logger.finest("Clearing Certificate Data..");
             clearCertsTree();
             rootNode = null;
         }   
@@ -136,7 +141,7 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
                 {
                     updateTreeNode(existingNode);
                     updateCertificateDetail();
-                    System.err.println("UPDATE [" + (((X509CertificateAndTrust)(existingNode.getUserObject())).getSubjectDN().toString()) + "]");
+                    logger.log(Level.FINEST, "UPDATE [{0}]", (((X509CertificateAndTrust) (existingNode.getUserObject())).getSubjectDN().toString()));
                 }
             }
         }

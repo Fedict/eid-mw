@@ -32,9 +32,11 @@ public class ViewerPrefs
     public static final String          HTTP_PROXY_ENABLE                = "enable_http_proxy";
     public static final String          HTTP_PROXY_HOST                  = "http_proxy_host";
     public static final String          HTTP_PROXY_PORT                  = "http_proxy_port";
+    public static final String          SHOW_LOG_TAB                     = "show_log_tab";
 
     public static final boolean         DEFAULT_HTTP_PROXY_ENABLE       = false;
     public static final boolean         DEFAULT_AUTO_VALIDATE_TRUST     = false;
+    public static final boolean         DEFAULT_SHOW_LOG_TAB            = false;
 
     public static final String          DEFAULT_TRUSTSERVICE_PROTO      = "http";
     public static final String          DEFAULT_TRUSTSERVICE_URI        = "trust.services.belgium.be";
@@ -112,6 +114,18 @@ public class ViewerPrefs
     public static int getHTTPProxyPort()
     {
         return getPrefs()!=null?getPrefs().getInt(HTTP_PROXY_PORT, DEFAULT_HTTP_PROXY_PORT):DEFAULT_HTTP_PROXY_PORT;
+    }
+
+    public static boolean getShowLogTab()
+    {
+        return getPrefs()!=null?getPrefs().getBoolean(SHOW_LOG_TAB, DEFAULT_SHOW_LOG_TAB):DEFAULT_SHOW_LOG_TAB;
+    }
+
+    public static void setShowLogTab(boolean state)
+    {
+        if(getPrefs()==null)
+            return;
+        getPrefs().putBoolean(SHOW_LOG_TAB, state);
     }
 }
 

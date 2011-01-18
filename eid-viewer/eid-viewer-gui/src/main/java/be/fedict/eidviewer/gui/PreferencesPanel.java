@@ -43,7 +43,8 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
     {
         bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/PreferencesPanel");
         initComponents();
-        initProxyPrefsPanel();    
+        initProxyPrefsPanel();
+        initDiagnosticsPrefsPanel();
     }
 
     public void start()
@@ -160,6 +161,7 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jPanel1 = new javax.swing.JPanel();
         proxyPrefsPanel = new javax.swing.JPanel();
         httpProxyPortLabel = new javax.swing.JLabel();
         useProxyCheckbox = new javax.swing.JCheckBox();
@@ -167,11 +169,19 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         applyProxyButton = new javax.swing.JButton();
         spacer = new javax.swing.JLabel();
         httpProxyPort = new javax.swing.JTextField();
+        diagnosticsPrefsPanel = new javax.swing.JPanel();
+        showLogCheckbox = new javax.swing.JCheckBox();
+        showDiagnosticsCheckbox = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        spacer1 = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
         setLayout(new java.awt.BorderLayout());
 
-        proxyPrefsPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16));
+        jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setLayout(new java.awt.GridLayout(2, 1));
+
+        proxyPrefsPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
         proxyPrefsPanel.setName("proxyPrefsPanel"); // NOI18N
         proxyPrefsPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -228,15 +238,67 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         gridBagConstraints.gridy = 0;
         proxyPrefsPanel.add(httpProxyPort, gridBagConstraints);
 
-        add(proxyPrefsPanel, java.awt.BorderLayout.CENTER);
+        jPanel1.add(proxyPrefsPanel);
+
+        diagnosticsPrefsPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createEmptyBorder(16, 16, 16, 16)));
+        diagnosticsPrefsPanel.setName("diagnosticsPrefsPanel"); // NOI18N
+        diagnosticsPrefsPanel.setLayout(new java.awt.GridBagLayout());
+
+        showLogCheckbox.setText(bundle.getString("proxyCheckbox")); // NOI18N
+        showLogCheckbox.setName("showLogCheckbox"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        diagnosticsPrefsPanel.add(showLogCheckbox, gridBagConstraints);
+
+        showDiagnosticsCheckbox.setText("Show Diagnostics Tab");
+        showDiagnosticsCheckbox.setEnabled(false);
+        showDiagnosticsCheckbox.setName("showDiagnosticsCheckbox"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        diagnosticsPrefsPanel.add(showDiagnosticsCheckbox, gridBagConstraints);
+
+        jLabel1.setText("(Diagnostics preferences take effect at the next restart of the application)");
+        jLabel1.setName("jLabel1"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        diagnosticsPrefsPanel.add(jLabel1, gridBagConstraints);
+
+        spacer1.setName("spacer1"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(8, 8, 8, 8);
+        diagnosticsPrefsPanel.add(spacer1, gridBagConstraints);
+
+        jPanel1.add(diagnosticsPrefsPanel);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyProxyButton;
+    private javax.swing.JPanel diagnosticsPrefsPanel;
     private javax.swing.JTextField httpProxyHost;
     private javax.swing.JTextField httpProxyPort;
     private javax.swing.JLabel httpProxyPortLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel proxyPrefsPanel;
+    private javax.swing.JCheckBox showDiagnosticsCheckbox;
+    private javax.swing.JCheckBox showLogCheckbox;
     private javax.swing.JLabel spacer;
+    private javax.swing.JLabel spacer1;
     private javax.swing.JCheckBox useProxyCheckbox;
     // End of variables declaration//GEN-END:variables
 
@@ -292,6 +354,7 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
     public void componentShown(ComponentEvent componentEvent)
     {
         fillProxyPrefs();
+        fillDiagnosticsPrefs();
     }
 
     public void componentResized(ComponentEvent ce)
@@ -304,5 +367,21 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
 
     public void componentHidden(ComponentEvent ce)
     {
+    }
+
+    private void initDiagnosticsPrefsPanel()
+    {
+        showLogCheckbox.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent actionEvent)
+            {
+                ViewerPrefs.setShowLogTab(showLogCheckbox.isSelected());
+            }
+        });
+    }
+
+    private void fillDiagnosticsPrefs()
+    {
+        showLogCheckbox.setSelected(ViewerPrefs.getShowLogTab());
     }
 }
