@@ -77,12 +77,12 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
   SetOutPath "$INSTDIR"
 
   WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
-  File ".\BeidMW.msi"
-  ExecWait 'msiexec /quiet /i "$INSTDIR\BeidMW.msi"'
+  File "..\eid-mw\Windows\bin\BeidMW_32.msi"
+  ExecWait 'msiexec /quiet /i "$INSTDIR\BeidMW_32.msi"'
   ${If} ${RunningX64}
      ;MessageBox MB_OK "running on x64"
-	 File ".\BeidMW-64.msi"
-	 ExecWait 'msiexec /quiet /i "$INSTDIR\BeidMW-64.msi"'
+	 File "..\eid-mw\Windows\bin\BeidMW_64.msi"
+	 ExecWait 'msiexec /quiet /i "$INSTDIR\BeidMW_64.msi"'
 	 WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
   ${EndIf}
 
@@ -98,7 +98,7 @@ Section "Belgium Eid Viewer" BeidViewer
 
   SetOutPath "$INSTDIR"
   
-  File ".\BeidViewer.msi"
+  File "..\eid-viewer\Windows\bin\BeidViewer.msi"
   ExecWait 'msiexec /quiet /i "$INSTDIR\BeidViewer.msi"'
   WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidViewer" 0x1
   ;ADD YOUR OWN FILES HERE...
@@ -134,16 +134,15 @@ FunctionEnd
 ;--------------------------------
 ;Descriptions
 
-  ;USE A LANGUAGE STRING IF YOU WANT YOUR DESCRIPTIONS TO BE LANGAUGE SPECIFIC
-	LangString BeidCryptoMessage ${LANG_ENGLISH} "English message"
- LangString BeidCryptoMessage ${LANG_FRENCH} "French message"
- LangString BeidCryptoMessage ${LANG_GERMAN} "German message"
- LangString BeidCryptoMessage ${LANG_DUTCH} "Dutch message"
+	LangString BeidCryptoMessage ${LANG_ENGLISH} "This module is required for using the eID card as an electronic identity card in Internet Explorer, Firefox, etc. or for creating digital signatures in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc."
+ LangString BeidCryptoMessage ${LANG_FRENCH} "Ces modules permettent d'utiliser la carte eID comme preuve d'identité dans Internet Explorer, Firefox, etc. ou pour créer des signatures numériques dans Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc."
+ LangString BeidCryptoMessage ${LANG_GERMAN} "Diese Module sind für die Benutzung der eID-Karte als elektronischen Personalausweis in Internet Explorer, Firefox, usw. oder zum Erstellen von digitalen Unterschriften in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird usw. notwendig."
+ LangString BeidCryptoMessage ${LANG_DUTCH} "Deze modules zijn noodzakelijk voor het gebruik van de eID kaart als elektronisch identiteitsbewijs in Internet Explorer, Firefox, etc. of voor het maken van digitale handtekeningen in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc."
 
- 	LangString BeidViewerMessage ${LANG_ENGLISH} "English message"
- LangString BeidViewerMessage ${LANG_FRENCH} "French message"
- LangString BeidViewerMessage ${LANG_GERMAN} "German message"
- LangString BeidViewerMessage ${LANG_DUTCH} "Dutch message"
+ 	LangString BeidViewerMessage ${LANG_ENGLISH} "Read the content of an e-ID card"
+ LangString BeidViewerMessage ${LANG_FRENCH} "Lire le contenu de la carte e-ID"
+ LangString BeidViewerMessage ${LANG_GERMAN} "Lesen Sie den Inhalt einer e-ID Karte"
+ LangString BeidViewerMessage ${LANG_DUTCH} "Uitlezen van de e-ID"
  
   ;Assign descriptions to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN

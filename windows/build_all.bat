@@ -68,11 +68,25 @@ set OUR_CURRENT_PATH="%cd%"
 
 @call "%~dp0..\installers\eid-mw\Windows\build_msi_eidmw32.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath
+@echo [INFO] copy 32 bit msi installer
+copy %~dp0..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 @call "%~dp0..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath
+@echo [INFO] copy 64 bit msi installer
+copy %~dp0..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 @cd "%~dp0..\installers\sdk\Windows"
 @call "%~dp0..\installers\sdk\Windows\build_msi_sdk.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath
+@echo [INFO] copy eid Viewer msi installer
+copy %~dp0..\installers\eid-mw\Windows\bin\BeidViewer.msi %~dp0
+
+
+:: create the NSIS installer
+:: =========================
+@echo [INFO] Make nsis installer
+"%NSIS_PATH%\makensis.exe" "%~dp0..\installers\quickinstaller\Quickinstaller.nsi"
+@echo [INFO] copy nsis installer
+copy %~dp0..\installers\quickinstaller\eID-QuickInstaller*.exe %~dp0
 
 :end_resetpath
 @cd %OUR_CURRENT_PATH%

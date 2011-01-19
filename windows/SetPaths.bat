@@ -5,6 +5,8 @@
 @set SEARCH_BEID_DIR_PLATFORMSDK_1=%~dp0..\ThirdParty\MSPlatformSDK
 @set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files\Microsoft Platform SDK
 @set SEARCH_BEID_DIR_PLATFORMSDK_3=C:\Program Files\Microsoft SDKs\Windows\v7.1
+@set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS\makensis.exe
+@set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS\makensis.exe
 ::end of search paths
 
 
@@ -140,4 +142,34 @@
 
 :find_wix
 @echo        Found in "%BEID_DIR_WIX%"
+
+@echo [INFO] Define default value for NSIS_PATH if not defined yet
+@echo [INFO] Input BEID_DIR_MSBUILD=%NSIS_PATH%
+@set FILE_TO_FIND="makensis.exe"
+@echo [INFO] Looking for files: %FILE_TO_FIND%
+
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%NSIS_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_nsis
+@echo        Not found in "%NSIS_PATH%"
+
+@set NSIS_PATH=%SEARCH_NSIS_PATH%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%NSIS_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_nsis
+@echo        Not found in "%NSIS_PATH%"
+
+@set NSIS_PATH=%SEARCH_NSIS_PATH_2%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%NSIS_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_nsis
+@echo        Not found in "%NSIS_PATH%"
+
+@echo [ERROR] %FILE_TO_FIND% could not be found
+@echo         If the path is different from %NSIS_PATH%
+@echo         please define NSIS_PATH environment variable or adjust SetPaths.bat
 @exit /B 0
+
+:find_nsis
+@echo        Found in "%NSIS_PATH%"
+@exit /B 1
