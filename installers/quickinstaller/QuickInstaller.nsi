@@ -47,7 +47,7 @@
 
   !insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
   !insertmacro MUI_PAGE_COMPONENTS
-  !insertmacro MUI_PAGE_DIRECTORY
+  ;!insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
   
   !insertmacro MUI_UNPAGE_CONFIRM
@@ -72,34 +72,12 @@
 
 ;--------------------------------
 ;Installer Sections
-
-Section "Belgium Eid Crypto Modules" BeidCrypto
-  SetOutPath "$INSTDIR"
-
-  WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
-  File "..\eid-mw\Windows\bin\BeidMW_32.msi"
-  ExecWait 'msiexec /quiet /i "$INSTDIR\BeidMW_32.msi"'
-  ${If} ${RunningX64}
-     ;MessageBox MB_OK "running on x64"
-	 File "..\eid-mw\Windows\bin\BeidMW_64.msi"
-	 ExecWait 'msiexec /quiet /i "$INSTDIR\BeidMW_64.msi"'
-	 WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
-  ${EndIf}
-
-  ;Store installation folder
-  ;WriteRegStr HKCU "Software\UninstallBeidMiddleWare" $INSTDIR
-  
-  ;Create uninstaller
-  ;WriteUninstaller "$INSTDIR\UninstallBeidMiddleWare.exe"
-
-SectionEnd
-
 Section "Belgium Eid Viewer" BeidViewer
 
   SetOutPath "$INSTDIR"
   
   File "..\eid-viewer\Windows\bin\BeidViewer.msi"
-  ExecWait 'msiexec /quiet /i "$INSTDIR\BeidViewer.msi"'
+  ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidViewer.msi"'
   WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidViewer" 0x1
   ;ADD YOUR OWN FILES HERE...
   
@@ -110,6 +88,31 @@ Section "Belgium Eid Viewer" BeidViewer
   ;WriteUninstaller "$INSTDIR\UninstallBeidViewer.exe"
 
 SectionEnd
+
+Section "Belgium Eid Crypto Modules" BeidCrypto
+  SetOutPath "$INSTDIR"
+
+
+  ${If} ${RunningX64}
+     ;MessageBox MB_OK "running on x64"
+	 File "..\eid-mw\Windows\bin\BeidMW_64.msi"
+	 ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_64.msi"'
+	 WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
+  ${EndIf}
+
+    WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
+  File "..\eid-mw\Windows\bin\BeidMW_32.msi"
+  ExecWait 'msiexec /quiet /promptrestart /i "$INSTDIR\BeidMW_32.msi"'
+  
+  ;Store installation folder
+  ;WriteRegStr HKCU "Software\UninstallBeidMiddleWare" $INSTDIR
+  
+  ;Create uninstaller
+  ;WriteUninstaller "$INSTDIR\UninstallBeidMiddleWare.exe"
+
+SectionEnd
+
+
 
 
 
