@@ -5,8 +5,8 @@
 @set SEARCH_BEID_DIR_PLATFORMSDK_1=%~dp0..\ThirdParty\MSPlatformSDK
 @set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files\Microsoft Platform SDK
 @set SEARCH_BEID_DIR_PLATFORMSDK_3=C:\Program Files\Microsoft SDKs\Windows\v7.1
-@set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS\makensis.exe
-@set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS\makensis.exe
+@set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
+@set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
 ::end of search paths
 
 
@@ -35,7 +35,6 @@
 
 :find_msbuild
 @echo        Found in "%BEID_DIR_MSBUILD%"
-
 
 
 @echo [INFO] Define default value for SIGNTOOL_PATH if not defined yet
@@ -168,8 +167,8 @@
 @echo [ERROR] %FILE_TO_FIND% could not be found
 @echo         If the path is different from %NSIS_PATH%
 @echo         please define NSIS_PATH environment variable or adjust SetPaths.bat
-@exit /B 0
+@exit /B 1
 
 :find_nsis
 @echo        Found in "%NSIS_PATH%"
-@exit /B 1
+@exit /B 0
