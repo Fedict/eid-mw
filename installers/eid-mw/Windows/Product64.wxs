@@ -126,7 +126,6 @@
 
       <Directory Id="SystemFolder">
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
-        <Directory Id="SISCARDPLUGINSDIR" Name="siscardplugins"/>
       </Directory>
 
       <Directory Id="System64Folder"/>
@@ -343,12 +342,6 @@
       </Component>
 
     </DirectoryRef>
-    
-<!--    <DirectoryRef Id="SISCARDPLUGINSDIR">
-      <Component Id="Siscardplugin" Guid="{821ED2E0-9FDB-4a08-9686-DDE65EE3D5E5}" SharedDllRefCount="yes">
-        <File Id="siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" Name="siscardplugin1_BE_EID_35__ACS ACR38U__.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" />
-      </Component>
-    </DirectoryRef>-->
 
     <DirectoryRef Id="TARGETDIR">
       <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes">
@@ -507,7 +500,8 @@
                Value="LaunchApplication" Order="1">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
 -->
     </UI>
-    
+
+    <!--SetARPINSTALLLOCATION sets the location in the registry entries of the Add & Remove Panel-->
     <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
     
     <Binary Id="BEID_CLEANUP" SourceFile="..\..\..\vs_2010\binaries\win32_release\beidcleanup.exe"/>
