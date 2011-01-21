@@ -486,7 +486,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         final JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
         {
-            eidController.saveToXMLFile(fileChooser.getSelectedFile());
+            eidController.saveToZIPFile(fileChooser.getSelectedFile());
         }
     }
 

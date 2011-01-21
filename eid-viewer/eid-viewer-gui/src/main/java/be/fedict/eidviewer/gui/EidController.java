@@ -36,6 +36,7 @@ import java.util.logging.Logger;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
 import javax.smartcardio.CardException;
 
@@ -606,18 +607,6 @@ public class EidController extends Observable implements Runnable, Observer
         } 
     }
 
-    public void saveToBinFile(File file)
-    {
-        try
-        {
-            Version4EidFile.save(file,this);
-        }
-        catch (Exception ex)
-        {
-            logger.log(Level.SEVERE, "Failed To Save To Version 4.x.x ZIP-Based .eid File", ex);
-        }
-    }
-
     public void saveToXMLFile(File file)
     {
         try
@@ -629,6 +618,24 @@ public class EidController extends Observable implements Runnable, Observer
         catch (Exception ex)
         {
             logger.log(Level.SEVERE, "Failed To Save To Version 4.x.x XML-Based .eid File", ex);
+        }
+    }
+
+    public void saveToZIPFile(File file)
+    {
+        try
+        {
+            ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(file));
+            Version4File    version4file=new Version4File();
+                            version4file.fromIdentityAddressPhotoAndCertificates(getIdentity(),getAddress(),getPhoto(),getAuthCertChain().getCertificates(),getSignCertChain().getCertificates());
+                            version4file.writeToZipOutputStream(zipOutputStream);
+                            zipOutputStream.flush();
+                            zipOutputStream.close();
+
+        }
+        catch (Exception ex)
+        {
+            logger.log(Level.SEVERE, "Failed To Save To Version 4.x.x ZIP-Based .eid File", ex);
         }
     }
 

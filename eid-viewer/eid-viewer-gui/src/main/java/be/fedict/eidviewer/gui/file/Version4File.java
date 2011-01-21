@@ -20,12 +20,16 @@ package be.fedict.eidviewer.gui.file;
 
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
@@ -94,15 +98,17 @@ public class Version4File
         return getCertificates().toSignChain();
     }
 
+    public void writeToZipOutputStream(ZipOutputStream zos) throws IOException
+    {
+        identity.writeToZipOutputStream(zos);
+        card.writeToZipOutputStream(zos);
+        address.writeToZipOutputStream(zos);
+        certificates.writeToZipOutputStream(zos);
+    }
+
     public byte[] toPhoto()
     {
         return identity.toPhoto();
-    }
-    
-    public void toXML(OutputStream outputStream) throws Exception
-    {
-        Serializer  serializer = new Persister();
-                    serializer.write(this, outputStream);
     }
 
     public Version4FileAddress getAddress()
@@ -143,5 +149,17 @@ public class Version4File
     public void setCertificates(Version4FileCertificates certificates)
     {
         this.certificates = certificates;
+    }
+
+    public static void writeZipEntry(ZipOutputStream zos, Charset charSet, String label, String value) throws IOException
+    {
+        writeZipEntry(zos,label, value.getBytes(charSet));
+    }
+
+    public static void writeZipEntry(ZipOutputStream zos, String label, byte[] value) throws IOException
+    {
+        zos.putNextEntry(new ZipEntry(label));
+        zos.write(value);
+        zos.closeEntry();
     }
 }

@@ -33,7 +33,6 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.LinkedList;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 /**
  *

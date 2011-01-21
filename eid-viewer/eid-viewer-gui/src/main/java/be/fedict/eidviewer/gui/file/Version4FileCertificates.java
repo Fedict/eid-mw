@@ -19,12 +19,15 @@
 package be.fedict.eidviewer.gui.file;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.zip.ZipOutputStream;
 import org.apache.commons.codec.binary.Base64;
 import org.simpleframework.xml.Element;
 
@@ -119,6 +122,14 @@ public final class Version4FileCertificates
        signChain.add(rootCert);
 
        return signChain;
+    }
+
+    public void writeToZipOutputStream(ZipOutputStream zos) throws IOException
+    {
+        Version4File.writeZipEntry(zos,"rootcertificate",Base64.decodeBase64(getRootCertificate()));
+        Version4File.writeZipEntry(zos,"cacertificate",Base64.decodeBase64(getCitizenCACertificate()));
+        Version4File.writeZipEntry(zos,"authenticationcertificate",Base64.decodeBase64(getAuthenticationCertificate()));
+        Version4File.writeZipEntry(zos,"signingcertificate",Base64.decodeBase64(getSigningCertificate())); 
     }
 
     public String getAuthenticationCertificate()

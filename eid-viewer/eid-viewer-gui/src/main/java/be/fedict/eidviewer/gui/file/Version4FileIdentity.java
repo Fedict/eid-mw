@@ -21,12 +21,16 @@ import be.fedict.eid.applet.service.Gender;
 import be.fedict.eid.applet.service.Identity;
 import be.fedict.eid.applet.service.SpecialStatus;
 import be.fedict.eidviewer.gui.helper.IdFormatHelper;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.apache.commons.codec.binary.Base64;
@@ -38,33 +42,32 @@ import org.apache.commons.codec.binary.Base64;
 public final class Version4FileIdentity
 {
     @Attribute(name="nationalnumber")
-    public String nationalNumber;
+    private String nationalNumber;
     @Attribute(name="dateofbirth")
-    public String dateOfBirth;
+    private String dateOfBirth;
     @Attribute(name="gender")
-    public String gender;
+    private String gender;
     
     @Attribute(name="noblecondition",required=false)
-    public String nobleCondition;
+    private String nobleCondition;
     @Attribute(name="specialstatus",required=false)
-    public String specialStatus;
+    private String specialStatus;
     @Attribute(name="duplicate",required=false)
-    public String duplicate;
+    private String duplicate;
 
     @Element(name="name")
-    public String name;
+    private String name;
     @Element(name="firstname")
-    public String firstName;
+    private String firstName;
     @Element(name="middlename")
-    public String middleName;
+    private String middleName;
     @Element(name="nationality")
-    public String nationality;
+    private String nationality;
     @Element(name="placeofbirth")
-    public String placeOfBirth;
+    private String placeOfBirth;
     @Element(name="photo")
-    public String photo;
-    @Element(name="photodigest")
-    public String photoDigest;
+    private String photo;
+
 
     public Version4FileIdentity(Identity identity, byte[] photo)
     {
@@ -103,13 +106,12 @@ public final class Version4FileIdentity
         if(eidIdentity.getDuplicate() != null && (!eidIdentity.getDuplicate().equals("")))
                 setDuplicate(eidIdentity.getDuplicate());
 
-        setName(eidIdentity.getName());
-        setFirstName(eidIdentity.getFirstName());
-        setMiddleName(eidIdentity.getMiddleName());
-        setNationality(eidIdentity.getNationality());
-        setPlaceOfBirth(eidIdentity.getPlaceOfBirth());
-        setPhotoDigest(Base64.encodeBase64String(eidIdentity.getPhotoDigest()).trim());
-        setPhoto(new String(Base64.encodeBase64(eidPhoto,false,false,8192)).trim());
+        setName(                eidIdentity.getName());
+        setFirstName(           eidIdentity.getFirstName());
+        setMiddleName(          eidIdentity.getMiddleName());
+        setNationality(         eidIdentity.getNationality());
+        setPlaceOfBirth(        eidIdentity.getPlaceOfBirth());
+        setPhotoJPEG(           eidPhoto);
     }
 
     public void toIdentity(Identity eidIdentity) throws ParseException
@@ -138,13 +140,39 @@ public final class Version4FileIdentity
         eidIdentity.middleName=getMiddleName();
         eidIdentity.nationality=getNationality();
         eidIdentity.placeOfBirth=getPlaceOfBirth();
-        eidIdentity.photoDigest=Base64.decodeBase64(getPhotoDigest());
     }
 
     public byte[] toPhoto()
     {
-        return Base64.decodeBase64(getPhoto());
+        return getPhotoJPEG();
     }
+
+    public void writeToZipOutputStream(ZipOutputStream zos) throws IOException
+    {
+        Charset utf8=Charset.forName("utf-8");
+        
+        Version4File.writeZipEntry(zos,utf8,"nationalnumber",getNationalNumber());
+        Version4File.writeZipEntry(zos,utf8,"dateofbirth",getDateOfBirth());
+        Version4File.writeZipEntry(zos,utf8,"gender",getGender());
+       
+        if(getNobleCondition()!=null)
+            Version4File.writeZipEntry(zos,utf8,"noblecondition",getNobleCondition());
+
+        if(getSpecialStatus()!=null)
+            Version4File.writeZipEntry(zos,utf8,"specialstatus",getSpecialStatus());
+
+        if(getDuplicate()!=null)
+            Version4File.writeZipEntry(zos,utf8,"duplicate", getDuplicate());
+
+        Version4File.writeZipEntry(zos,utf8,"name",          getName());
+        Version4File.writeZipEntry(zos,utf8,"firstname",     getFirstName());
+        Version4File.writeZipEntry(zos,utf8,"middlename",    getMiddleName());
+        Version4File.writeZipEntry(zos,utf8,"nationality",   getNationality());
+        Version4File.writeZipEntry(zos,utf8,"placeofbirth",  getPlaceOfBirth());
+        Version4File.writeZipEntry(zos,     "photo",         getPhotoJPEG());
+    }
+
+   
     
     public String getDateOfBirth()
     {
@@ -236,16 +264,6 @@ public final class Version4FileIdentity
         this.nobleCondition = nobleCondition;
     }
 
-    public String getPhotoDigest()
-    {
-        return photoDigest;
-    }
-
-    public void setPhotoDigest(String photoDigest)
-    {
-        this.photoDigest = photoDigest;
-    }
-
     public String getPlaceOfBirth()
     {
         return placeOfBirth;
@@ -274,5 +292,15 @@ public final class Version4FileIdentity
     public void setPhoto(String photo)
     {
         this.photo = photo;
+    }
+
+    public byte[] getPhotoJPEG()
+    {
+        return Base64.decodeBase64(getPhoto());
+    }
+
+    public void setPhotoJPEG(byte[] photo)
+    {
+        setPhoto(new String(Base64.encodeBase64(photo, false, false)));
     }
 }

@@ -37,7 +37,6 @@ import java.security.cert.X509Certificate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.ZipEntry;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -152,10 +151,12 @@ public class Version4EidFile
 
             if(controller.hasIdentity())
             {
-                zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_IDENTITY_FILENAME));
-                objectOutputStream = new ObjectOutputStream(zipOutputStream);
-                objectOutputStream.writeObject(controller.getIdentity());
-                objectOutputStream.close();
+                zipOutputStream.putNextEntry(new ZipEntry("nationalnumber"));
+                zipOutputStream.write(controller.getIdentity().getNationalNumber().getBytes("utf-8"));
+                zipOutputStream.closeEntry();
+                
+                zipOutputStream.putNextEntry(new ZipEntry("nationalnumber"));
+                zipOutputStream.write(controller.getIdentity().getNationalNumber().getBytes("utf-8"));
                 zipOutputStream.closeEntry();
             }
 

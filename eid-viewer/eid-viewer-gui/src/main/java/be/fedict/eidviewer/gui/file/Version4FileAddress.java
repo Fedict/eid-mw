@@ -18,6 +18,9 @@
 package be.fedict.eidviewer.gui.file;
 
 import be.fedict.eid.applet.service.Address;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.zip.ZipOutputStream;
 import org.simpleframework.xml.Element;
 
 /**
@@ -56,6 +59,14 @@ public final class Version4FileAddress
         eidAddress.streetAndNumber=getStreetAndNumber();
         eidAddress.zip=getZip();
         eidAddress.municipality=getMunicipality();
+    }
+
+    public void writeToZipOutputStream(ZipOutputStream zos) throws IOException
+    {
+        Charset utf8=Charset.forName("utf-8");
+        Version4File.writeZipEntry(zos,utf8,"streetandnumber",getStreetAndNumber());
+        Version4File.writeZipEntry(zos,utf8,"zip",getZip());
+        Version4File.writeZipEntry(zos,utf8,"municipality",getMunicipality());
     }
     
     public String getMunicipality()

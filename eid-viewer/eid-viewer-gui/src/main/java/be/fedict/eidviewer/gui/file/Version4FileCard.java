@@ -19,10 +19,13 @@ package be.fedict.eidviewer.gui.file;
 
 import be.fedict.eid.applet.service.DocumentType;
 import be.fedict.eid.applet.service.Identity;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.zip.ZipOutputStream;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 
@@ -85,6 +88,17 @@ public final class Version4FileCard
         eidIdentity.cardValidityDateEnd=    validityEndCalendar;
 
         eidIdentity.cardDeliveryMunicipality=getDeliveryMunicipality();
+    }
+
+    public void writeToZipOutputStream(ZipOutputStream zos) throws IOException
+    {
+        Charset utf8=Charset.forName("utf-8");
+        Version4File.writeZipEntry(zos,utf8,"carddocumenttype",getDocumentType());
+        Version4File.writeZipEntry(zos,utf8,"cardnumber",getCardNumber());
+        Version4File.writeZipEntry(zos,utf8,"cardchipnumber",getChipNumber());
+        Version4File.writeZipEntry(zos,utf8,"cardvaliditydatebegin",getValidityDateBegin());
+        Version4File.writeZipEntry(zos,utf8,"cardvaliditydateend",getValidityDateEnd());
+        Version4File.writeZipEntry(zos,utf8,"carddeliveringmunicipality",getDeliveryMunicipality());
     }
 
     public String getDeliveryMunicipality()
