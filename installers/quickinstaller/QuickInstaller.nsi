@@ -27,7 +27,7 @@
   InstallDir "$PROGRAMFILES\Belgium Identity Card"
 
   ;Get installation folder from registry if available
-  InstallDirRegKey HKCU "Software\BEID\Installer\InstallDir" ""
+  ;InstallDirRegKey HKCU "Software\BEID\Installer\InstallDir" ""
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
@@ -86,44 +86,27 @@ Section "Belgium Eid Viewer" BeidViewer
   SetOutPath "$INSTDIR"
   
   File "..\eid-viewer\Windows\bin\BeidViewer.msi"
-  ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidViewer.msi"'
+  ExecWait 'msiexec /quiet /norestart /l* "$INSTDIR\log\install_eidviewer_log.txt" /i "$INSTDIR\BeidViewer.msi"'
   WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidViewer" 0x1
-  ;ADD YOUR OWN FILES HERE...
-  
-  ;Store installation folder
-  ;WriteRegStr HKCU "Software\UninstallBeidViewer" "" $INSTDIR
-  
-  ;Create uninstaller
-  ;WriteUninstaller "$INSTDIR\UninstallBeidViewer.exe"
-
+  Delete "$INSTDIR\BeidViewer.msi"
 SectionEnd
 
 Section "Belgium Eid Crypto Modules" BeidCrypto
   SetOutPath "$INSTDIR"
-
-
   ${If} ${RunningX64}
      ;MessageBox MB_OK "running on x64"
 	 File "..\eid-mw\Windows\bin\BeidMW_64.msi"
-	 ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_64.msi"'
+	 ExecWait 'msiexec /quiet /norestart /l* "$INSTDIR\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
 	 WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
+	 Delete "$INSTDIR\BeidMW_64.msi"
+  ${Else}
+	WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
+	File "..\eid-mw\Windows\bin\BeidMW_32.msi"
+	ExecWait 'msiexec /quiet /promptrestart /l* "$INSTDIR\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
+	Delete "$INSTDIR\BeidMW_32.msi"
   ${EndIf}
 
-    WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
-  File "..\eid-mw\Windows\bin\BeidMW_32.msi"
-  ExecWait 'msiexec /quiet /promptrestart /i "$INSTDIR\BeidMW_32.msi"'
-  
-  ;Store installation folder
-  ;WriteRegStr HKCU "Software\UninstallBeidMiddleWare" $INSTDIR
-  
-  ;Create uninstaller
-  ;WriteUninstaller "$INSTDIR\UninstallBeidMiddleWare.exe"
-
 SectionEnd
-
-
-
-
 
 ;--------------------------------
 ;Installer Functions
@@ -134,14 +117,6 @@ Function .onInit
 
 FunctionEnd
 
-Function .onGUIEnd
-
-  ;Store installation folder
-  WriteRegStr HKCU "Software\BEID\Installer\UninstallBeid" "" $INSTDIR
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\UninstallBeid.exe"
-
-FunctionEnd
 
 ;--------------------------------
 ;Descriptions
@@ -164,36 +139,6 @@ FunctionEnd
 
 ;--------------------------------
 ;Uninstaller Section
-
-Section "Uninstall"
-
-  ;ADD YOUR OWN FILES HERE...
-  ReadRegDWORD $0 HKCU Software\BEID\Installer\Components BeidViewer
-  IntCmp $0 0x0 noviewer
-	ExecWait 'msiexec /uninstall "$INSTDIR\BeidViewer.msi"'
-	WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidViewer" 0x0
-	Delete "$INSTDIR\BeidViewer.msi"
-  noviewer:
-  
-  ReadRegDWORD $0 HKCU Software\BEID\Installer\Components BeidCrypto32
-  IntCmp $0 0x0 noCrypto32
-	ExecWait 'msiexec /uninstall "$INSTDIR\BeidMW.msi"'
-	WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x0
-	Delete "$INSTDIR\BeidMW.msi"
-  noCrypto32:
-  
-  ReadRegDWORD $0 HKCU Software\BEID\Installer\Components BeidCrypto64
-  IntCmp $0 0x0 noCrypto64
-	ExecWait 'msiexec /uninstall "$INSTDIR\BeidMW-64.msi"'
-	WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x0
-	Delete "$INSTDIR\BeidMW-64.msi"
-  noCrypto64:
-  
-  Delete "$INSTDIR\UninstallBeid.exe"
-  RMDir "$INSTDIR"
-  DeleteRegKey /ifempty HKCU "Software\BEID\Installer\UninstallBeid"
-
-SectionEnd
 
 ;--------------------------------
 ;Uninstaller Functions
