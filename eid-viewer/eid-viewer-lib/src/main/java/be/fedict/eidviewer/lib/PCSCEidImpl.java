@@ -111,6 +111,18 @@ public class PCSCEidImpl implements Eid
         return ImageIO.read(new ByteArrayInputStream(data));
     }
 
+    public Image getPhotoImage() throws Exception
+    {
+        byte[] data=readFile(PcscEid.PHOTO_FILE_ID);
+        return ImageIO.read(new ByteArrayInputStream(data));
+    }
+    
+    public byte[] getPhotoJPEG() throws Exception
+    {
+        return readFile(PcscEid.PHOTO_FILE_ID);
+    }
+
+
     public void close()
     {
         mPcscEidSpi.close();

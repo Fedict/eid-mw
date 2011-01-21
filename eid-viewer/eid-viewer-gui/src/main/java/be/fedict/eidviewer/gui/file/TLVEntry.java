@@ -16,34 +16,44 @@
  * http://www.gnu.org/licenses/.
  */
 
-package be.fedict.eidviewer.gui.helper;
+package be.fedict.eidviewer.gui.file;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.zip.ZipInputStream;
 
 /**
  *
  * @author Frank Marien
  */
-public class CloseResistantZipInputStream extends ZipInputStream
+public class TLVEntry
 {
-    private boolean closeAllowed;
+    public byte    tag;
+    public int     length;
+    public byte[]  data;
 
-    public CloseResistantZipInputStream(InputStream in)
+    public static TLVEntry next(InputStream is) throws IOException
     {
-        super(in);
-    }
+        byte tag = (byte) is.read();
 
-    @Override
-    public void close() throws IOException
-    {
-        if(closeAllowed)
-            super.close();
-    }
+        if(tag==-1)
+            return null;
 
-    public void setCloseAllowed(boolean closeAllowed)
-    {
-        this.closeAllowed = closeAllowed;
+        byte lengthByte = (byte) is.read();
+
+        int length = lengthByte & 0x7f;
+        while ((lengthByte & 0x80) == 0x80)
+        {
+                lengthByte = (byte) is.read();
+                length = (length << 7) + (lengthByte & 0x7f);
+        }
+
+        TLVEntry entry=new TLVEntry();
+                 entry.tag=tag;
+                 entry.length=length;
+                 entry.data=new byte[length];
+
+        is.read(entry.data);
+
+       return entry;
     }
 }

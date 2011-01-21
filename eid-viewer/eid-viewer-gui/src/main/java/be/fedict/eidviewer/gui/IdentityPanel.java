@@ -20,14 +20,17 @@ package be.fedict.eidviewer.gui;
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Gender;
 import be.fedict.eid.applet.service.Identity;
+import be.fedict.eid.applet.service.SpecialStatus;
 import be.fedict.eidviewer.gui.helper.IdFormatHelper;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
@@ -85,7 +88,15 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
             if (controller.hasPhoto())
             {
                 logger.finest("Filling Picture");
-                fillPhoto(controller.getPhoto(), false);
+                
+                try
+                {
+                    fillPhoto(controller.getPhotoImage(), false);
+                }
+                catch (IOException ex)
+                {
+                    logger.log(Level.SEVERE, "Photo Conversion from JPEG Failed", ex);
+                }
             }
             else
             {
@@ -148,8 +159,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                     nationalNumber.setEnabled(true);
                     nationalNumberLabel.setEnabled(true);
 
-                    String nobleCondition = identity.getNobleCondition();
-                    if (!nobleCondition.isEmpty())
+                    if(identity.getNobleCondition()!=null && (!identity.getNobleCondition().isEmpty()))
                     {
                         title.setText(identity.getNobleCondition());
                         title.setEnabled(true);
@@ -162,10 +172,10 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                         titleLabel.setEnabled(false);
                     }
 
-                    String specialStatusStr = IdFormatHelper.getSpecialStatusString(bundle, identity.getSpecialStatus());
-                    if (!specialStatusStr.isEmpty())
+                    
+                    if(identity.getSpecialStatus()!=null && identity.getSpecialStatus()!=SpecialStatus.NO_STATUS)
                     {
-                        specialStatus.setText(specialStatusStr);
+                        specialStatus.setText(IdFormatHelper.getSpecialStatusString(bundle, identity.getSpecialStatus()));
                         specialStatus.setEnabled(true);
                         specialStatusLabel.setEnabled(true);
                     }

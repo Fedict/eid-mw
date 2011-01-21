@@ -93,7 +93,7 @@ class PKCS11EidImpl implements Eid
         throw new UnsupportedOperationException("Not supported.");
     }
 
-    public Image getPhoto() throws Exception
+    public Image getPhotoImage() throws Exception
     {
        throw new UnsupportedOperationException("Not supported.");
     }
@@ -226,6 +226,11 @@ class PKCS11EidImpl implements Eid
     }
 
     public void yieldExclusive(boolean yield) throws Exception
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public byte[] getPhotoJPEG() throws Exception
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }

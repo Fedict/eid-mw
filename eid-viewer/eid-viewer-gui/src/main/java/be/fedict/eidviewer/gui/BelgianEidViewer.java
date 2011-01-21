@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 import be.fedict.eid.applet.DiagnosticTests;
@@ -431,7 +432,15 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         IDPrintout printout = new IDPrintout();
         printout.setIdentity(eidController.getIdentity());
         printout.setAddress(eidController.getAddress());
-        printout.setPhoto(eidController.getPhoto());
+        
+        try
+        {
+            printout.setPhoto(eidController.getPhotoImage());
+        }
+        catch (IOException ex)
+        {
+            logger.log(Level.SEVERE, "Photo conversion from JPEG Failed", ex);
+        }
 
         job.setPrintable(printout);
         boolean ok = job.printDialog();
@@ -466,7 +475,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         final JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
         {
-            eidController.loadFromTLVFile(fileChooser.getSelectedFile());
+            eidController.loadFromXMLFile(fileChooser.getSelectedFile());
         }
     }
 
@@ -477,15 +486,32 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         final JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
         {
-            eidController.saveToBinFile(fileChooser.getSelectedFile());
+            eidController.saveToXMLFile(fileChooser.getSelectedFile());
         }
     }
+
+    /*@Action
+    public void saveFile()
+    {
+        logger.fine("Save action chosen..");
+        final JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+        {
+            eidController.saveToBinFile(fileChooser.getSelectedFile());
+        }
+    } */
 
     @Action
     public void closeFile()
     {
         logger.fine("Close action chosen..");
         eidController.closeFile();
+    }
+
+    public void enableLogTab(boolean state)
+    {
+        logPanel=new LogPanel();
+        logPanel.setViewer(this);
     }
 
     /* ---------------------------------------------------------------------------------------- */

@@ -19,38 +19,25 @@ package be.fedict.eidviewer.gui;
 
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
-import be.fedict.eid.applet.service.impl.tlv.TlvParser;
-import be.fedict.eidviewer.gui.helper.CloseResistantZipInputStream;
-import be.fedict.eidviewer.gui.helper.CloseResistantZipOutputStream;
-import be.fedict.eidviewer.gui.helper.TLVEntry;
+import be.fedict.eidviewer.gui.file.Version35EidFile;
+import be.fedict.eidviewer.gui.file.Version4EidFile;
+import be.fedict.eidviewer.gui.file.Version4File;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.trust.client.TrustServiceDomains;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.security.cert.CertificateEncodingException;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.zip.ZipEntry;
 import javax.imageio.ImageIO;
 import javax.smartcardio.CardException;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -58,28 +45,6 @@ import javax.swing.ImageIcon;
  */
 public class EidController extends Observable implements Runnable, Observer
 {
-    private static final String ZIPFILE_ADDRESS_FILENAME                    = "address.ser";
-    private static final String ZIPFILE_AUTHCERT_FILENAME                   = "authcert.der";
-    private static final String ZIPFILE_CITIZENCERT_FILENAME                = "citicert.der";
-    private static final String ZIPFILE_IDENTITY_FILENAME                   = "identity.ser";
-    private static final String ZIPFILE_PHOTO_FILENAME                      = "photo.ser";
-    private static final String ZIPFILE_ROOTCERT_FILENAME                   = "rootcert.der";
-    private static final String ZIPFILE_SIGNCERT_FILENAME                   = "signcert.der";
-    private static final byte BEID_TLV_TAG_VERSION                          = 0x00;
-    private static final byte BEID_TLV_TAG_FILE_ID                          = 0x01;
-    private static final byte BEID_TLV_TAG_FILE_IDSIGN                      = 0x02;
-    private static final byte BEID_TLV_TAG_FILE_ADDR                        = 0x03;
-    private static final byte BEID_TLV_TAG_FILE_ADDRSIGN                    = 0x04;
-    private static final byte BEID_TLV_TAG_FILE_PHOTO                       = 0x05;
-    private static final byte BEID_TLV_TAG_FILE_CARDINFO                    = 0x06;
-    private static final byte BEID_TLV_TAG_FILE_TOKENINFO                   = 0x07;
-    private static final byte BEID_TLV_TAG_FILE_RRN                         = 0x08;
-    private static final byte BEID_TLV_TAG_FILE_CHALLENGE                   = 0x09;
-    private static final byte BEID_TLV_TAG_FILE_CHALLENGE_RESPONSE          = 0x0A;
-    private static final byte BEID_TLV_TAG_CARDTYPE                         = 0x0B;
-    private static final byte BEID_TLV_TAG_FILE_CERTS                       = 0x0C;
-    private static final byte BEID_TLV_TAG_FILE_PINS                        = 0x0D;
-
     private static final Logger logger = Logger.getLogger(EidController.class.getName());
     private boolean running = false;
     private Eid eid;
@@ -88,7 +53,7 @@ public class EidController extends Observable implements Runnable, Observer
     private ACTION runningAction;
     private Identity identity;
     private Address address;
-    private Image photo;
+    private byte[] photo;
     private X509CertificateChainAndTrust authCertChain;
     private X509CertificateChainAndTrust signCertChain;
     private TrustServiceController trustServiceController;
@@ -346,7 +311,7 @@ public class EidController extends Observable implements Runnable, Observer
 
                 logger.fine("reading photo from card..");
                 setActivity(ACTIVITY.READING_PHOTO);
-                photo = eid.getPhoto();
+                photo = eid.getPhotoJPEG();
                 setState();
 
                 logger.fine("reading authentication chain from card..");
@@ -364,7 +329,7 @@ public class EidController extends Observable implements Runnable, Observer
                 setActivity(ACTIVITY.IDLE);
 
 
-                logger.fine("monitoring card for removal..");
+                logger.fine("waiting for actions or card removal..");
 
                 while (eid.isCardStillPresent())
                 {
@@ -443,9 +408,14 @@ public class EidController extends Observable implements Runnable, Observer
         return identity;
     }
 
-    public Image getPhoto()
+    public byte[] getPhoto()
     {
         return photo;
+    }
+
+    public Image getPhotoImage() throws IOException
+    {
+        return ImageIO.read(new ByteArrayInputStream(getPhoto()));
     }
 
     public STATE getState()
@@ -586,7 +556,7 @@ public class EidController extends Observable implements Runnable, Observer
         return this;
     }
 
-    public synchronized EidController setPhoto(Image photo)
+    public synchronized EidController setPhoto(byte[] photo)
     {
         this.photo = photo;
         return this;
@@ -600,376 +570,88 @@ public class EidController extends Observable implements Runnable, Observer
         return this;
     }
 
-    private TLVEntry nextTLVEntry(InputStream is) throws IOException
-    {
-        byte tag = (byte) is.read();
-
-        if(tag==-1)
-            return null;
-
-        byte lengthByte = (byte) is.read();
-
-        int length = lengthByte & 0x7f;
-        while ((lengthByte & 0x80) == 0x80)
-        {
-                lengthByte = (byte) is.read();
-                length = (length << 7) + (lengthByte & 0x7f);
-        }
-
-        TLVEntry entry=new TLVEntry();
-                 entry.tag=tag;
-                 entry.length=length;
-                 entry.data=new byte[length];
-
-        is.read(entry.data);
-
-       return entry;
-    }
-
-
-
-
     public void loadFromTLVFile(File file)
     {
-        CertificateFactory certificateFactory   = null;
-        X509Certificate    rootCert             = null;
-        X509Certificate    citizenCert          = null;
-        X509Certificate    authenticationCert   = null;
-        X509Certificate    signingCert          = null;
-        
         setState(STATE.FILE_LOADING);
 
         try
         {
-            certificateFactory = CertificateFactory.getInstance("X.509");
-            FileInputStream fis=new FileInputStream(file);
-            TLVEntry entry;
-
-            while((entry=nextTLVEntry(fis))!=null)
-            {
-                System.out.println("  Type: " + entry.tag + ":");
-                System.out.println("Length: " + entry.length);
-
-                switch(entry.tag)
-                {
-                    case BEID_TLV_TAG_FILE_ID:
-                    setIdentity(TlvParser.parse(entry.data, Identity.class));
-                    break;
-
-                    case BEID_TLV_TAG_FILE_ADDR:
-                    setAddress(TlvParser.parse(entry.data, Address.class));
-                    break;
-
-                    case BEID_TLV_TAG_FILE_PHOTO:
-                    setPhoto(ImageIO.read(new ByteArrayInputStream(entry.data)));
-                    break;
-
-                    case BEID_TLV_TAG_FILE_CERTS:
-                    {
-                        TLVEntry certEntry=null;
-                        ByteArrayInputStream bis=new ByteArrayInputStream(entry.data);
-                        X509Certificate cert=null;
-
-                        while((certEntry=nextTLVEntry(bis))!=null)
-                        {
-                            System.err.println("**   Type: " + certEntry.tag + ":");
-                            System.err.println("** Length: " + certEntry.length);
-                            
-                            switch(certEntry.tag)
-                            {
-                                case 1:
-                                case 2:
-                                case 3:
-                                case 4:
-                                {
-                                    TLVEntry certEntry2=null;
-                                    ByteArrayInputStream bis2=new ByteArrayInputStream(certEntry.data);
-
-                                    while((certEntry2=nextTLVEntry(bis2))!=null)
-                                    {
-                                        System.err.println("**** " + certEntry.tag + "  Type: " + certEntry2.tag + ":");
-                                        System.err.println("**** " + certEntry.tag + "Length: " + certEntry2.length);
-
-                                        switch(certEntry2.tag)
-                                        {
-                                            case 0:
-                                            {
-                                               cert=(X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(certEntry2.data));
-                                               System.err.println(cert.getSubjectDN().getName());
-
-                                               switch(certEntry.tag)
-                                               {
-                                                   case 1:
-                                                   authenticationCert=(X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(certEntry2.data));
-                                                   break;
-
-                                                   case 2:
-                                                   signingCert=(X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(certEntry2.data));
-                                                   break;
-
-                                                   case 3:
-                                                   citizenCert=(X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(certEntry2.data));
-                                                   break;
-
-                                                   case 4:
-                                                   rootCert=(X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(certEntry2.data));
-                                                   break;
-
-                                               }
-
-                                            }
-                                            break;
-                                        }
-                                    }
-
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-
-            if(rootCert!=null && citizenCert!=null)
-            {
-                if(authenticationCert!=null)
-                {
-                    List authChain=new LinkedList<X509Certificate>();
-                         authChain.add(authenticationCert);
-                         authChain.add(citizenCert);
-                         authChain.add(rootCert);
-                    authCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, authChain);
-                }
-
-                if(signingCert!=null)
-                {
-                    List signChain=new LinkedList<X509Certificate>();
-                         signChain.add(signingCert);
-                         signChain.add(citizenCert);
-                         signChain.add(rootCert);
-
-                    signCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain);
-                }
-
-            }
-           
+            Version35EidFile.load(file,this);
             setState(STATE.FILE_LOADED);
+            setLoadedFromFile(true);
         }
-        catch (CertificateException ex)
+        catch (Exception ex)
         {
-            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex);
-        }        catch(FileNotFoundException ex)
-        {
-            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex)
-        {
-            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            logger.log(Level.SEVERE, "Failed To Open Version 3.5.x TLV-Based .eid File", ex);
+            securityClear();
+            setState(STATE.IDLE);
+        }        
     }
 
     public void loadFromBinFile(File file)
     {
-        CloseResistantZipInputStream    zipInputStream      = null;
-        ObjectInputStream               objectInputStream   = null;
-        X509Certificate                 rootCert            = null;
-        X509Certificate                 citizenCert         = null;
-        X509Certificate                 authenticationCert  = null;
-        X509Certificate                 signingCert         = null;
-        CertificateFactory              certificateFactory  = null;
-
         setState(STATE.FILE_LOADING);
 
         try
         {
-            zipInputStream=new CloseResistantZipInputStream(new FileInputStream(file));
-            certificateFactory = CertificateFactory.getInstance("X.509");
-            ZipEntry entry;
-
-            while((entry=zipInputStream.getNextEntry())!=null)
-            {
-                if(entry.getName().equals(ZIPFILE_IDENTITY_FILENAME))
-                {
-                    objectInputStream=new ObjectInputStream(zipInputStream);
-                    setIdentity((Identity)objectInputStream.readObject());
-                    objectInputStream.close();
-
-                }
-                else if(entry.getName().equals(ZIPFILE_ADDRESS_FILENAME))
-                {
-                    objectInputStream=new ObjectInputStream(zipInputStream);
-                    setAddress((Address)objectInputStream.readObject());
-                    objectInputStream.close();
-
-                }
-                else if(entry.getName().equals(ZIPFILE_PHOTO_FILENAME))
-                {
-                    objectInputStream=new ObjectInputStream(zipInputStream);
-                    setPhoto(((ImageIcon)objectInputStream.readObject()).getImage());
-                    objectInputStream.close();
-                }
-                else if(entry.getName().equals(ZIPFILE_AUTHCERT_FILENAME))
-                {
-                    authenticationCert=(X509Certificate) certificateFactory.generateCertificate(zipInputStream);
-                }
-                else if(entry.getName().equals(ZIPFILE_SIGNCERT_FILENAME))
-                {
-                    signingCert=(X509Certificate) certificateFactory.generateCertificate(zipInputStream);
-                }
-                else if(entry.getName().equals(ZIPFILE_CITIZENCERT_FILENAME))
-                {
-                    citizenCert=(X509Certificate) certificateFactory.generateCertificate(zipInputStream);
-                }
-                else if(entry.getName().equals(ZIPFILE_ROOTCERT_FILENAME))
-                {
-                    rootCert=(X509Certificate) certificateFactory.generateCertificate(zipInputStream);
-                }
-                
-                zipInputStream.closeEntry();
-            }
-
-            if(rootCert!=null && citizenCert!=null)
-            {
-                if(authenticationCert!=null)
-                {
-                    List authChain=new LinkedList<X509Certificate>();
-                         authChain.add(authenticationCert);
-                         authChain.add(citizenCert);
-                         authChain.add(rootCert);
-                    authCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, authChain);
-                }
-
-                if(signingCert!=null)
-                {
-                    List signChain=new LinkedList<X509Certificate>();
-                         signChain.add(signingCert);
-                         signChain.add(citizenCert);
-                         signChain.add(rootCert);
-                         
-                    signCertChain=new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain);
-                }
-
-            }
-
+            Version4EidFile.load(file,this);
             setState(STATE.FILE_LOADED);
             setLoadedFromFile(true);
-            zipInputStream.setCloseAllowed(true);
-            zipInputStream.close();
         }
-        catch (CertificateException ex)
+        catch (Exception ex)
         {
-            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch(FileNotFoundException ex)
-        {
-            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex)
-        {
-            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException cnfe)
-        {
-            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, cnfe);
-        }
+            logger.log(Level.SEVERE, "Failed To Open Version 4.x.x ZIP-Based .eid File", ex);
+            securityClear();
+            setState(STATE.IDLE);
+        } 
     }
-
-    
 
     public void saveToBinFile(File file)
     {
-        CloseResistantZipOutputStream   zipOutputStream     =null;
-        ObjectOutputStream              objectOutputStream  =null;
-      
         try
         {
-            zipOutputStream = new CloseResistantZipOutputStream(new FileOutputStream(file));
-           
-            if(hasIdentity())
-            {
-                zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_IDENTITY_FILENAME));
-                objectOutputStream = new ObjectOutputStream(zipOutputStream);
-                objectOutputStream.writeObject(getIdentity());
-                objectOutputStream.close();
-                zipOutputStream.closeEntry();
-            }
-
-            if(hasAddress())
-            {
-                zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_ADDRESS_FILENAME));
-                objectOutputStream = new ObjectOutputStream(zipOutputStream);
-                objectOutputStream.writeObject(getAddress());
-                objectOutputStream.close();
-                zipOutputStream.closeEntry();
-            }
-
-            if(hasPhoto())
-            {
-                zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_PHOTO_FILENAME));
-                objectOutputStream = new ObjectOutputStream(zipOutputStream);
-                objectOutputStream.writeObject(new ImageIcon(getPhoto()));
-                objectOutputStream.close();
-                zipOutputStream.closeEntry();
-            }
-
-            if(hasAuthCertChain())
-            {
-                List<X509Certificate> authChain=getAuthCertChain().getCertificates();
-                if(authChain.size()==3)
-                {
-                    X509Certificate authCert=authChain.get(0);
-                    zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_AUTHCERT_FILENAME));
-                    byte[] derEncoded=authCert.getEncoded();
-                    zipOutputStream.write(derEncoded);
-                    zipOutputStream.closeEntry();
-
-                    authCert=authChain.get(1);
-                    zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_CITIZENCERT_FILENAME));
-                    derEncoded=authCert.getEncoded();
-                    zipOutputStream.write(derEncoded);
-                    zipOutputStream.closeEntry();
-
-                    authCert=authChain.get(2);
-                    zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_ROOTCERT_FILENAME));
-                    derEncoded=authCert.getEncoded();
-                    zipOutputStream.write(derEncoded);
-                    zipOutputStream.closeEntry();
-                }    
-            }
-
-            if(hasSignCertChain())
-            {
-                List<X509Certificate> signChain=getSignCertChain().getCertificates();
-                if(signChain.size()==3)
-                {
-                    X509Certificate signCert=signChain.get(0);
-                    zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_SIGNCERT_FILENAME));
-                    byte[] derEncoded=signCert.getEncoded();
-                    zipOutputStream.write(derEncoded);
-                    zipOutputStream.closeEntry();
-                }
-            }
+            Version4EidFile.save(file,this);
         }
-        catch (CertificateEncodingException ex)
+        catch (Exception ex)
         {
-            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, "Failed To Save To Version 4.x.x ZIP-Based .eid File", ex);
         }
-        catch (IOException ex)
+    }
+
+    public void saveToXMLFile(File file)
+    {
+        try
         {
-            Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
+            Version4File version4file=new Version4File();
+                         version4file.fromIdentityAddressPhotoAndCertificates(getIdentity(),getAddress(),getPhoto(),getAuthCertChain().getCertificates(),getSignCertChain().getCertificates());
+                         Version4File.toXML(version4file, new FileOutputStream(file));
         }
-        finally
+        catch (Exception ex)
         {
-            try
-            {
-                zipOutputStream.setCloseAllowed(true);
-                zipOutputStream.close();
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(BelgianEidViewer.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            logger.log(Level.SEVERE, "Failed To Save To Version 4.x.x XML-Based .eid File", ex);
+        }
+    }
+
+     public void loadFromXMLFile(File file)
+    {
+        setState(STATE.FILE_LOADING);
+
+        try
+        {
+            Version4File v4File=Version4File.fromXML(new FileInputStream(file));
+            setIdentity(v4File.toIdentity());
+            setAddress(v4File.toAddress());
+            setPhoto(v4File.toPhoto());
+            setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, v4File.toAuthChain()));
+            setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, v4File.toSignChain()));
+            setState(STATE.FILE_LOADED);
+            setLoadedFromFile(true);
+        }
+        catch (Exception ex)
+        {
+            logger.log(Level.SEVERE, "Failed To Open Version 4.x.x XML-Based .eid File", ex);
+            securityClear();
+            setState(STATE.IDLE);
         }
     }
 

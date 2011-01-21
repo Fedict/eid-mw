@@ -172,7 +172,7 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         diagnosticsPrefsPanel = new javax.swing.JPanel();
         showLogCheckbox = new javax.swing.JCheckBox();
         showDiagnosticsCheckbox = new javax.swing.JCheckBox();
-        jLabel1 = new javax.swing.JLabel();
+        restartNotice = new javax.swing.JLabel();
         spacer1 = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
@@ -244,7 +244,7 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         diagnosticsPrefsPanel.setName("diagnosticsPrefsPanel"); // NOI18N
         diagnosticsPrefsPanel.setLayout(new java.awt.GridBagLayout());
 
-        showLogCheckbox.setText(bundle.getString("proxyCheckbox")); // NOI18N
+        showLogCheckbox.setText(bundle.getString("showLogTab")); // NOI18N
         showLogCheckbox.setName("showLogCheckbox"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -266,14 +266,14 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         diagnosticsPrefsPanel.add(showDiagnosticsCheckbox, gridBagConstraints);
 
-        jLabel1.setText("(Diagnostics preferences take effect at the next restart of the application)");
-        jLabel1.setName("jLabel1"); // NOI18N
+        restartNotice.setText(bundle.getString("changesTakeEffectAfterRestart")); // NOI18N
+        restartNotice.setName("restartNotice"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        diagnosticsPrefsPanel.add(jLabel1, gridBagConstraints);
+        diagnosticsPrefsPanel.add(restartNotice, gridBagConstraints);
 
         spacer1.setName("spacer1"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -292,9 +292,9 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
     private javax.swing.JTextField httpProxyHost;
     private javax.swing.JTextField httpProxyPort;
     private javax.swing.JLabel httpProxyPortLabel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel proxyPrefsPanel;
+    private javax.swing.JLabel restartNotice;
     private javax.swing.JCheckBox showDiagnosticsCheckbox;
     private javax.swing.JCheckBox showLogCheckbox;
     private javax.swing.JLabel spacer;

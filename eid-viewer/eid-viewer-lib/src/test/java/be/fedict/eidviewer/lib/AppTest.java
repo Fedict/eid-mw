@@ -70,7 +70,7 @@ public class AppTest extends TestCase
                 System.err.println(address.getZip());
                 System.err.println(address.getMunicipality());
 
-                Image photo=eid.getPhoto();
+                Image photo=eid.getPhotoImage();
                 System.err.println(photo);
             }
 

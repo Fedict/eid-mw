@@ -166,7 +166,7 @@
             <Component class="javax.swing.JCheckBox" name="showLogCheckbox">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="be/fedict/eidviewer/gui/resources/PreferencesPanel.properties" key="proxyCheckbox" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="be/fedict/eidviewer/gui/resources/PreferencesPanel.properties" key="showLogTab" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="showLogCheckbox" noResource="true"/>
               </Properties>
@@ -188,10 +188,12 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel1">
+            <Component class="javax.swing.JLabel" name="restartNotice">
               <Properties>
-                <Property name="text" type="java.lang.String" value="(Diagnostics preferences take effect at the next restart of the application)"/>
-                <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="be/fedict/eidviewer/gui/resources/PreferencesPanel.properties" key="changesTakeEffectAfterRestart" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="restartNotice" noResource="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

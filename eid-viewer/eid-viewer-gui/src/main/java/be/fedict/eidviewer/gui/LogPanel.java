@@ -34,6 +34,8 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
     private Document                                logDocument;
     private Map<Level, EnumMap<ATTR,AttributeSet>>  attributes;
     private ComboBoxModel                           levelComboModel;
+    private String                                  lastMessage;
+    private long                                    repeatCount;
 
     public LogPanel()
     {
@@ -210,19 +212,40 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
         levelCombo.setSelectedItem(Level.INFO);
     }
 
-    private synchronized  void append(String message, AttributeSet attributes)
+    private synchronized void append(String message, AttributeSet attributes)
     {
         try
         {
-            logDocument.insertString(logDocument.getLength(), message, attributes);
-            logDocument.insertString(logDocument.getLength(), "\n", null);
-            logTextPanel.scrollRectToVisible(new Rectangle(0, logTextPanel.getHeight() - 2, 1, 1));
+            if(lastMessage!=null && message.equals(lastMessage))
+            {
+                if(++repeatCount%1000==0)
+                {
+                    logDocument.insertString(logDocument.getLength(), "(Last Message Repeated " + repeatCount + " Times)\n",attributes);
+                    scrollToBottom();
+                }
+            }
+            else
+            {
+                logDocument.insertString(logDocument.getLength(), message, attributes);
+                logDocument.insertString(logDocument.getLength(), "\n", null);
+                scrollToBottom();
+                lastMessage=message;
+                repeatCount=0;
+            }
         }
         catch (BadLocationException ex)
         {
             System.err.println("Logger Failed: " + ex.getLocalizedMessage());
         }
     }
+
+    private void scrollToBottom()
+    {
+        Rectangle visible = logTextPanel.getVisibleRect();
+        visible.y = logTextPanel.getBounds().height - visible.height;
+        logTextPanel.scrollRectToVisible(visible);
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -253,10 +276,7 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        logTextPanel.setEditable(false);
-        logTextPanel.setFocusable(false);
         logTextPanel.setName("logTextPanel"); // NOI18N
-        logTextPanel.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(logTextPanel);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -278,6 +298,11 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
     private void clearLog()
     {
         logTextPanel.setText("");
+    }
+
+    void setViewer(BelgianEidViewer aThis)
+    {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public static enum ATTR

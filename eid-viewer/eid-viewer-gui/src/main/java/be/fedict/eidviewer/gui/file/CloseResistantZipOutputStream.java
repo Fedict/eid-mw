@@ -16,7 +16,7 @@
  * http://www.gnu.org/licenses/.
  */
 
-package be.fedict.eidviewer.gui.helper;
+package be.fedict.eidviewer.gui.file;
 
 import java.io.IOException;
 import java.io.OutputStream;

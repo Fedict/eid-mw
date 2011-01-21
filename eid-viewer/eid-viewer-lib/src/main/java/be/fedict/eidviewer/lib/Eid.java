@@ -43,7 +43,8 @@ public interface Eid
     
     Identity getIdentity() throws Exception;
 
-    Image getPhoto() throws Exception;
+    Image getPhotoImage() throws Exception;
+    byte[] getPhotoJPEG() throws Exception;
 
     void close() throws Exception;
 
