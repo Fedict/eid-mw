@@ -1764,7 +1764,7 @@ bool APL_CryptoFwk::b64Encode(const CByteArray &baIn, CByteArray &baOut,bool bWi
 	XMLByte *pOut=NULL;
 
 	//Encode the baIn
-	pOut=XERCES_CPP_NAMESPACE::Base64::encode((XMLByte *)baIn.GetBytes(),baIn.Size(),&iLenOut);
+	pOut=XERCES_CPP_NAMESPACE::Base64::encode((XMLByte *)baIn.GetBytes(),baIn.Size(),&iLenOut );
 
 	//2000000000 is huge, but just checking in case of the unlickely truncation
 	if(!pOut || iLenOut > 2000000000)
@@ -1774,7 +1774,8 @@ bool APL_CryptoFwk::b64Encode(const CByteArray &baIn, CByteArray &baOut,bool bWi
 	baOut.ClearContents();
 	baOut.Append(pOut,(unsigned long)iLenOut);//truncation checked above
 
-	XERCES_CPP_NAMESPACE::XMLString::release((char**)&pOut);
+	//XERCES_CPP_NAMESPACE::XMLString::release((char**)&pOut);
+	delete [] pOut;
 
 	//If we don't want linefeed, we have to replace them by space
 	if(!bWithLineFeed)
@@ -1805,7 +1806,8 @@ bool APL_CryptoFwk::b64Decode(const CByteArray &baIn, CByteArray &baOut)
 	//Put the result in baOut
 	baOut.ClearContents();
 	baOut.Append(pOut,(unsigned long)iLenOut);//truncation checked above : 
-	XERCES_CPP_NAMESPACE::XMLString::release((char**)&pOut);
+	//XERCES_CPP_NAMESPACE::XMLString::release((char**)&pOut);
+	delete [] pOut;
 	delete[] pIn;
 
 	return true;
