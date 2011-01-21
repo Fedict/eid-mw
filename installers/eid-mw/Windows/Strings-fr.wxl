@@ -13,9 +13,9 @@
   <String Id="XSign" Overridable="yes">Xsign</String>
   <String Id="XSignDescr" Overridable="yes">Application XSign</String>
   <String Id="OutlooksncTitle" Overridable="yes">Configuration de MS Outlook pour la carte eID</String>
-  <String Id="OutlooksncDescr" Overridable="yes">*********************************************************************************************************************************</String>
-  <String Id="UtilsTitle" Overridable="yes">***************************************</String>
-  <String Id="UtilsDesc" Overridable="yes">********************************************************************************************************************************.</String>
+  <String Id="OutlooksncDescr" Overridable="yes">Veille à ce que MS Outlook accepte également les certificats qui ne comprennent pas d’adresse e-mail, comme c’est le cas pour les certificats de la carte d’identité belge.</String>
+  <String Id="UtilsTitle" Overridable="yes">Ressources utiles à l’utilisation de la carte eID</String>
+  <String Id="UtilsDesc" Overridable="yes">Ces ressources peuvent être utilisées pour la configuration automatique d’applications existantes faisant appel à la carte eID.</String>
   <String Id="Users" Overridable="yes">Utilisateurs</String>
   <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Impossible de créer le security descriptor [3]\[4], erreur: [2]</String>
   <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Impossible d'appliquer le security descriptor de l'objet [3], erreur: [2]</String>
