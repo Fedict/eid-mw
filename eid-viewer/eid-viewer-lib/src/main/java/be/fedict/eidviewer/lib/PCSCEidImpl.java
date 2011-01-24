@@ -185,6 +185,6 @@ public class PCSCEidImpl implements Eid
 
     public void yieldExclusive(boolean yield) throws Exception
     {
-        mPcscEidSpi.yieldExclusive(yield);
+        mPcscEidSpi.get yieldExclusive(yield);
     }
 }

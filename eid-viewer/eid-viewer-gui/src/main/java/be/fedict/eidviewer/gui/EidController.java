@@ -19,6 +19,7 @@ package be.fedict.eidviewer.gui;
 
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
+import be.fedict.eidviewer.gui.file.Version35CSVFile;
 import be.fedict.eidviewer.gui.file.Version35EidFile;
 import be.fedict.eidviewer.gui.file.Version35XMLFile;
 import be.fedict.eidviewer.gui.file.Version4EidFile;
@@ -677,6 +678,25 @@ public class EidController extends Observable implements Runnable, Observer
         catch (Exception ex)
         {
             logger.log(Level.SEVERE, "Failed To Open Version 4.x.x XML-Based .eid File", ex);
+            securityClear();
+            setState(STATE.IDLE);
+        }
+    }
+
+    public void loadFromV35CSVFile(File file)
+    {
+        setState(STATE.FILE_LOADING);
+
+        try
+        {
+            Version35CSVFile v35csvFile=new Version35CSVFile(this);
+            v35csvFile.load(file);
+            setState(STATE.FILE_LOADED);
+            setLoadedFromFile(true);
+        }
+        catch (Exception ex)
+        {
+            logger.log(Level.SEVERE, "Failed To Open Version 4.x.x CSV-Based .eid File", ex);
             securityClear();
             setState(STATE.IDLE);
         }

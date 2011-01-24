@@ -100,7 +100,7 @@ public class Version35XMLFile extends DefaultHandler
 
     public void load(File file) throws CertificateException, FileNotFoundException, SAXException, IOException
     {
-        logger.fine("Loading Version 35X XML File");
+        logger.fine("Loading Version 35X CSV File");
         
         XMLReader reader = null;
 
