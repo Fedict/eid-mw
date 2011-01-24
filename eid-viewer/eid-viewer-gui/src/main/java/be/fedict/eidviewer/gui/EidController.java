@@ -20,6 +20,7 @@ package be.fedict.eidviewer.gui;
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
 import be.fedict.eidviewer.gui.file.Version35EidFile;
+import be.fedict.eidviewer.gui.file.Version35XMLFile;
 import be.fedict.eidviewer.gui.file.Version4EidFile;
 import be.fedict.eidviewer.gui.file.Version4File;
 import be.fedict.eidviewer.lib.Eid;
@@ -639,7 +640,7 @@ public class EidController extends Observable implements Runnable, Observer
         }
     }
 
-     public void loadFromXMLFile(File file)
+    public void loadFromXMLFile(File file)
     {
         setState(STATE.FILE_LOADING);
 
@@ -651,6 +652,25 @@ public class EidController extends Observable implements Runnable, Observer
             setPhoto(v4File.toPhoto());
             setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, v4File.toAuthChain()));
             setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, v4File.toSignChain()));
+            setState(STATE.FILE_LOADED);
+            setLoadedFromFile(true);
+        }
+        catch (Exception ex)
+        {
+            logger.log(Level.SEVERE, "Failed To Open Version 4.x.x XML-Based .eid File", ex);
+            securityClear();
+            setState(STATE.IDLE);
+        }
+    }
+
+    public void loadFromV35XMLFile(File file)
+    {
+        setState(STATE.FILE_LOADING);
+
+        try
+        {
+            Version35XMLFile v35xmlFile=new Version35XMLFile(this);
+            v35xmlFile.load(file);
             setState(STATE.FILE_LOADED);
             setLoadedFromFile(true);
         }
