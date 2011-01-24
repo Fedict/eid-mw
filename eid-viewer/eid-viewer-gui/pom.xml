@@ -91,16 +91,17 @@
             <artifactId>beansbinding</artifactId>
             <version>1.2.1</version>
         </dependency>
+        
         <dependency>
             <groupId>be.fedict.eid-trust-service</groupId>
             <artifactId>eid-trust-service-client</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0-20110120.094452-6</version>
         </dependency>
         
         <dependency>
             <groupId>be.fedict.eid-trust-service</groupId>
             <artifactId>eid-trust-service-xkms2-ws</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0-20110120.094446-6</version>
         </dependency>
 
         <dependency>
