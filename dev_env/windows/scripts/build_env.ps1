@@ -91,6 +91,17 @@ function InstallMSI
 	$product = [WMIClass] "\\.\root\cimv2:Win32_Product"
 	$product.Install($msifile, "", $TRUE)
 }
+function InstallNSIS
+{
+	param([string]$installerfilename)
+
+	if(test-path($installerfilename))
+	{
+		Write-Host "   Install $zipfilename..."
+		cmd /c "$installerfilename /S"
+	}
+}
+
 try {
 ##############################################################################
 # install 7zip command line version 9.15
@@ -116,6 +127,20 @@ $tooltarget = "$packagesfolder\$toolfilename"
 Download "$packagesfolderurl/$toolfilename" $tooltarget
 
 InstallMSI("$tooltarget")
+
+##############################################################################
+# install NSIS 2.46 # can be found on http://nsis.sourceforge.net/Download
+##############################################################################
+$toolfilename = "nsis-2.46-setup.exe"
+
+Write-Host "- Installing NSIS 2.46"
+
+# Download file
+$tooltarget = "$packagesfolder\$toolfilename"
+Download "$packagesfolderurl/$toolfilename" $tooltarget
+
+InstallNSIS("$tooltarget")
+
 
 
 } # end try
