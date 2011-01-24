@@ -611,7 +611,7 @@
         <!-- Start SCardSvr Service during startup -->
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
         <!-- Start SCardSvr Service now -->
-        <ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" />
+        <!--<ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" />-->
       </Component>
 
       <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}">
