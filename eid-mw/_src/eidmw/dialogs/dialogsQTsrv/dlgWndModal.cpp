@@ -40,18 +40,23 @@ dlgWndModal::dlgWndModal( DlgIcon icon, QString Msg, unsigned char ulButtons,
 	setMaximumSize( 380,200 );
 
 	ui.btnOk->setText( QString::fromWCharArray(GETSTRING_DLG(Ok)) );
+	ui.btnOk->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Ok)) );
 	ui.btnOk->setDefault( ulEnterButton==DLG_BUTTON_OK);
 
 	ui.btnCancel->setText( QString::fromWCharArray(GETSTRING_DLG(Cancel)) );
+	ui.btnCancel->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Cancel)) );
 	ui.btnCancel->setDefault( ulEnterButton==DLG_BUTTON_CANCEL);
 
 	ui.btnRetry->setText( QString::fromWCharArray(GETSTRING_DLG(Retry)) );
+	ui.btnRetry->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Retry)) );
 	ui.btnRetry->setDefault( ulEnterButton==DLG_BUTTON_RETRY);
 
 	ui.btnYes->setText( QString::fromWCharArray(GETSTRING_DLG(Yes)) );
+	ui.btnYes->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Yes)) );
 	ui.btnYes->setDefault( ulEnterButton==DLG_BUTTON_YES);
 
 	ui.btnNo->setText( QString::fromWCharArray(GETSTRING_DLG(No)) );
+	ui.btnNo->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(No)) );
 	ui.btnNo->setDefault( ulEnterButton==DLG_BUTTON_NO);
 
 	switch( icon )
@@ -74,6 +79,7 @@ dlgWndModal::dlgWndModal( DlgIcon icon, QString Msg, unsigned char ulButtons,
 	}
 
 	ui.lblMessage->setText( Msg );
+	ui.lblMessage->setAccessibleName( Msg );
 
 	ui.btnOk->setVisible( ulButtons & DLG_BUTTON_OK );
 	ui.btnCancel->setVisible( ulButtons & DLG_BUTTON_CANCEL );

@@ -51,35 +51,50 @@ dlgWndAskAccess::dlgWndAskAccess( QString AppPath, QString ReaderName,
 	ui.lblIcon->setPixmap( QPixmap( ":/Resources/ICO_CARD_QUESTION_64x64.png" ) );
 
 	ui.lblMessage_1->setText( QString::fromWCharArray(GETSTRING_DLG(AnApplicationWantsToAccessTheCard)) );
+	ui.lblMessage_1->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(AnApplicationWantsToAccessTheCard)) );
 	ui.lblMessage_2->setText( QString::fromWCharArray(GETSTRING_DLG(Application)) );
+	ui.lblMessage_2->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Application)) );
 	ui.lblMessage_3->setText( AppPath );
+	ui.lblMessage_3->setAccessibleName( AppPath );
 	ui.lblMessage_4->setText( QString::fromWCharArray(GETSTRING_DLG(Function)) );
+	ui.lblMessage_4->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Function)) );
 	switch(ulOperation)
 	{
 	case 	DLG_PF_OP_READ_ID:
 		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadIdentityData)) );
+		ui.lblMessage_5->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(ReadIdentityData)) );
 		break;
 	case 	DLG_PF_OP_READ_PHOTO:
 		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadPhoto)) );
+		ui.lblMessage_5->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(ReadPhoto)) );
 		break;
 	case 	DLG_PF_OP_READ_ADDRESS:
 		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadAddressData)) );
+		ui.lblMessage_5->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(ReadAddressData)) );	
 		break;
 	case 	DLG_PF_OP_READ_CERTS:
 		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadCertificates)) );
+		ui.lblMessage_5->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(ReadCertificates)) );	
 		break;
 	default:
 		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadUnknownData)) );
+		ui.lblMessage_5->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(ReadUnknownData)) );	
 		break;
 	}
 	ui.lblMessage_6->setText( QString::fromWCharArray(GETSTRING_DLG(DoYouWantToAcceptIt)) );
+	ui.lblMessage_6->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(DoYouWantToAcceptIt)) );
 
 	ui.chkForAll->setText( QString::fromWCharArray(GETSTRING_DLG(ForAllOperations)) );
+	ui.chkForAll->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(ForAllOperations)) );
 
 	ui.btnYes->setText( QString::fromWCharArray(GETSTRING_DLG(Yes)) );
+	ui.btnYes->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Yes)) );
 	ui.btnNo->setText( QString::fromWCharArray(GETSTRING_DLG(CancelNo)) );
+	ui.btnNo->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(CancelNo)) );
 	ui.btnAlways->setText( QString::fromWCharArray(GETSTRING_DLG(Always)) );
+	ui.btnAlways->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Always)) );
 	ui.btnNever->setText( QString::fromWCharArray(GETSTRING_DLG(Never)) );
+	ui.btnNever->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Never)) );
 
 	dlgResult = DLG_ERR;
 }

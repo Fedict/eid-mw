@@ -73,14 +73,21 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, QString 
 	this->setWindowTitle( Title );
 
 	ui.lblHeader->setText( QString::fromWCharArray(GETSTRING_DLG(EnterYourPin)) );
+	ui.lblHeader->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(EnterYourPin)) );
 	ui.lblPINName_2->setText( QString::fromWCharArray(GETSTRING_DLG(Pin)) );
+	ui.lblPINName_2->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Pin)) );
 
 	ui.lblOldPINName->setText( QString::fromWCharArray(GETSTRING_DLG(CurrentPin)) );
+	ui.lblOldPINName->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(CurrentPin)) );
 	ui.lblNewPIN1->setText( QString::fromWCharArray(GETSTRING_DLG(NewPin)) );
+	ui.lblNewPIN1->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(NewPin)) );
 	ui.lblNewPIN2->setText( QString::fromWCharArray(GETSTRING_DLG(ConfirmNewPin)) );
+	ui.lblNewPIN2->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(ConfirmNewPin)) );
 
 	ui.btnOk->setText( QString::fromWCharArray(GETSTRING_DLG(Ok)) );
+	ui.btnOk->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Ok)) );
 	ui.btnCancel->setText( QString::fromWCharArray(GETSTRING_DLG(Cancel)) );
+	ui.btnCancel->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Cancel)) );
 
 	ui.lblIcon->setPixmap( QPixmap( ":/Resources/ICO_CARD_PIN_128x128.png" ) );
 
@@ -116,7 +123,10 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, QString 
 
 
 		if( !PINName.isEmpty() )
+		{
 			ui.lblHeader->setText( QString::fromWCharArray(GETSTRING_DLG(EnterYour)) + " " + PINName + " " + QString::fromWCharArray(GETSTRING_DLG(Code)) );
+			ui.lblHeader->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(EnterYour)) + " " + PINName + " " + QString::fromWCharArray(GETSTRING_DLG(Code)) );
+		}
 	}
 	else
 	{
@@ -124,9 +134,15 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, QString 
 		connect( ui.btnOk, SIGNAL( clicked() ), this, SLOT( FinalCheck() ) );
 
 		if( !Header.isEmpty() )
+		{
 			ui.lblHeader->setText( Header );
+			ui.lblHeader->setAccessibleName( Header );
+		}
 		if( !PINName.isEmpty() )
+		{
 			ui.lblOldPINName->setText( PINName );
+			ui.lblOldPINName->setAccessibleName( PINName );
+		}
 	}
 
 	ui.lblError->setVisible( false );
@@ -200,10 +216,12 @@ void dlgWndAskPINs::NextField()
 {
 	switch( m_UK_InputField )
 	{
-		case INPUTFIELD_OLD: // 0
+		case INPUTFIELD_OLD: // 0 
 		{
 			ui.txtOldPIN->setText( ui.txtPIN_Keypad->text() );
+			ui.txtOldPIN->setAccessibleName( ui.txtPIN_Keypad->text() );
 			ui.lblHeader->setText( QString::fromWCharArray(GETSTRING_DLG(EnterYourNewPinCode)) );
+			ui.lblHeader->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(EnterYourNewPinCode)) );
 			m_ulPinMaxLen=m_ulPin2MaxLen;
 			if( m_ulPin2Flags & PIN_FLAG_DIGITS )
 				ui.txtPIN_Keypad->setValidator(m_Pin2Validator);
@@ -216,7 +234,9 @@ void dlgWndAskPINs::NextField()
 		case INPUTFIELD_NEW: // 1
 		{
 			ui.txtNewPIN1->setText( ui.txtPIN_Keypad->text() );
+			ui.txtNewPIN1->setAccessibleName( ui.txtPIN_Keypad->text() );
 			ui.lblHeader->setText( QString::fromWCharArray(GETSTRING_DLG(EnterYourNewPinCodeAgainToConfirm)));
+			ui.lblHeader->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(EnterYourNewPinCodeAgainToConfirm)));
 			ui.lblError->setVisible( false );
 			break;
 		}
@@ -224,6 +244,7 @@ void dlgWndAskPINs::NextField()
 		case INPUTFIELD_CONFIRM: // 2
 		{
 			ui.txtNewPIN2->setText( ui.txtPIN_Keypad->text() );
+			ui.txtNewPIN2->setAccessibleName( ui.txtPIN_Keypad->text() );
 			FinalCheck();
 			return;
 		}		
@@ -241,12 +262,14 @@ void dlgWndAskPINs::FinalCheck()
 	else
 	{
 		ui.lblError->setText( QString::fromWCharArray(GETSTRING_DLG(ErrorTheNewPinCodesAreNotIdentical)) );
+		ui.lblError->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(ErrorTheNewPinCodesAreNotIdentical)) );
 		ui.lblError->setVisible( true );
 		if( m_UseKeypad )
 		{
 			m_UK_InputField = INPUTFIELD_NEW;
 			ui.txtPIN_Keypad->clear();
 			ui.lblHeader->setText( QString::fromWCharArray(GETSTRING_DLG(RetryEnterYourNewPinCode)) );
+			ui.lblHeader->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(RetryEnterYourNewPinCode)) );
 		}
 	}
 }

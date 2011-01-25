@@ -49,7 +49,9 @@ dlgWndPinpadInfo::dlgWndPinpadInfo( unsigned long ulHandle,
 	tmpHeader = PINName;
 
 	ui.label_2->setText( tmpHeader );
+	ui.label_2->setAccessibleName( tmpHeader );
 	ui.label->setText( Message );
+	ui.label->setAccessibleName( Message );
 	m_ulHandle = ulHandle;
 	ui.lblIcon->setPixmap( QPixmap( ":/Resources/ICO_CARD_PIN_128x128.png" ) );
 

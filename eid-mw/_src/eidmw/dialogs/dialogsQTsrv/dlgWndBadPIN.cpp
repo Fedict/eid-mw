@@ -43,8 +43,11 @@ dlgWndBadPIN::dlgWndBadPIN( QString & PINName, unsigned long RemainingTries, QWi
 	this->setWindowTitle( Title );
 
 	ui.btnOk->setText( QString::fromWCharArray(GETSTRING_DLG(Ok)) );
+	ui.btnOk->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Ok)) );
 	ui.btnCancel->setText( QString::fromWCharArray(GETSTRING_DLG(Cancel)) );
+	ui.btnCancel->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Cancel)) );
 	ui.btnRetry->setText( QString::fromWCharArray(GETSTRING_DLG(Retry)) );
+	ui.btnRetry->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Retry)) );
 	ui.lblIcon->setPixmap( QPixmap( ":/Resources/ICO_CARD_NOK_64x64.png" ) );
 
 	QString sHeader;
@@ -56,6 +59,7 @@ dlgWndBadPIN::dlgWndBadPIN( QString & PINName, unsigned long RemainingTries, QWi
 	sHeader+=" ";
 	sHeader+=QString::fromWCharArray(GETSTRING_DLG(RemainingAttempts));
 	ui.lblHeader->setText( sHeader );
+	ui.lblHeader->setAccessibleName( sHeader );
 
 	QString sCenter="";
 	if( RemainingTries == 0 )
@@ -73,7 +77,7 @@ dlgWndBadPIN::dlgWndBadPIN( QString & PINName, unsigned long RemainingTries, QWi
 	}
 
 	ui.lblCenter->setText(sCenter);
-
+	ui.lblCenter->setAccessibleName(sCenter);
 }
 
 dlgWndBadPIN::~dlgWndBadPIN()

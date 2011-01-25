@@ -63,13 +63,19 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, QString &
 	}
 	Title+= PINName;
 	this->setWindowTitle(Title);
+	this->setAccessibleName(Title);
 
 	ui.lblHeader->setText( QString::fromWCharArray(GETSTRING_DLG(EnterYourPin)) );
+	ui.lblHeader->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(EnterYourPin)) );
 	ui.lblPINName->setText( QString::fromWCharArray(GETSTRING_DLG(Pin)) );
+	ui.lblPINName->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Pin)) );
 	ui.lblPINName_2->setText( QString::fromWCharArray(GETSTRING_DLG(Pin)) );
+	ui.lblPINName_2->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Pin)) );
 
 	ui.btnOk->setText( QString::fromWCharArray(GETSTRING_DLG(Ok)) );
+	ui.btnOk->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Ok)) );
 	ui.btnCancel->setText( QString::fromWCharArray(GETSTRING_DLG(Cancel)) );
+	ui.btnCancel->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Cancel)) );
 
 	if( PinPusage == DLG_PIN_SIGN )
 		ui.lblIcon->setPixmap( QPixmap( ":/Resources/ICO_CARD_DIGSIG_128x128.png" ) );
@@ -107,8 +113,10 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, QString &
 		ui.lblHeader->setVisible( false );
 
 		if( !PINName.isEmpty() )
+		{
 			ui.lblPINName_2->setText( PINName );
-
+			ui.lblPINName_2->setAccessibleName( PINName );
+		}
 		if( pinInfo.ulFlags & PIN_FLAG_DIGITS )
 			ui.txtPIN_2->setValidator(m_PinValidator);
 		else
@@ -119,10 +127,15 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, QString &
 		 ui.fraPIN_Keypad->setVisible( false );
 
 		if( !PINName.isEmpty() )
+		{
 			ui.lblPINName->setText( PINName );
+			ui.lblPINName->setAccessibleName( PINName );
+		}
 		if( !Header.isEmpty() )
+		{
 			ui.lblHeader->setText( Header );
-	
+			ui.lblHeader->setAccessibleName( Header );
+		}
 		if( pinInfo.ulFlags & PIN_FLAG_DIGITS )
 			ui.txtPIN->setValidator(m_PinValidator);
 		else
