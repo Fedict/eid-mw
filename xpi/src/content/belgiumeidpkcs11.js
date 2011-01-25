@@ -47,6 +47,7 @@ be.fedict.belgiumeidpkcs11.notifyModuleNotFound = function() {
 
 window.addEventListener("load", function(e) {
   try {
+  
     var beidPKCS11 = Components.classes['@eid.belgium.be/belgiumeidpkcs11;1']
                                     .getService().wrappedJSObject;
 	if (!beidPKCS11.notificationHasBeenShown && beidPKCS11.initDone)
@@ -56,6 +57,8 @@ window.addEventListener("load", function(e) {
 		  beidPKCS11.notificationHasBeenShown = true;
         }
   } catch (anError) {
-        dump("ERROR: " + anError);
+    Components.classes["@mozilla.org/consoleservice;1"]
+      .getService(Components.interfaces.nsIConsoleService).logStringMessage("Belgium eID: " + anError);
+
   }
 }, false);

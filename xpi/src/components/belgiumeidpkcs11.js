@@ -29,36 +29,14 @@ function BelgiumEidPKCS11() {
 
 // class definition
 BelgiumEidPKCS11.prototype = {
-
   // properties required for XPCOM registration:
   classDescription: "Belgium eID PKCS11 module registration",
   classID:          Components.ID("{26c4340c-ec4a-4173-bc6e-3d2023012177}"),
   contractID:       "@eid.belgium.be/belgiumeidpkcs11;1",
 
-  // [optional] custom factory (an object implementing nsIFactory). If not
-  // provided, the default factory is used, which returns
-  // |(new MyComponent()).QueryInterface(iid)| in its createInstance().
-//  _xpcom_factory: { ... },
-
-  // [optional] an array of categories to register this component in.
-  _xpcom_categories: [{
-
-    // Each object in the array specifies the parameters to pass to
-    // nsICategoryManager.addCategoryEntry(). 'true' is passed for both
-    // aPersist and aReplace params.
-    category: "profile-after-change",
-
-    // optional, defaults to the object's classDescription
-  //  entry: "Belgium eID PKCS11",
-
-    // optional, defaults to the object's contractID (unless 'service' is specified)
- //   value: "....",
-
-    // optional, defaults to false. When set to true, and only if 'value' is not
-    // specified, the concatenation of the string "service," and the object's contractID
-    // is passed as aValue parameter of addCategoryEntry.
-     service: true
-  }],
+  _xpcom_categories: [{category: "profile-after-change", service: true }, // Gecko 2.0 (FF 4.0)
+					  {category: "final-ui-startup", service: true },     // Gecko <2.0 (FF <4.0)
+                      {category: "app-startup", service: true }],         // Gecko <2.0 (FF <4.0)
 
   // QueryInterface implementation, e.g. using the generateQI helper (remove argument if skipped steps above)
   QueryInterface: XPCOMUtils.generateQI([Components.interfaces.nsIObserver]),
@@ -66,10 +44,15 @@ BelgiumEidPKCS11.prototype = {
   // ...component implementation...
   // define the function we want to expose in our interface
   observe: function(aSubject, aTopic, aData) {
-	switch(aTopic) {
-       case "profile-after-change":
-       this.init();
-       break;
+ 	switch(aTopic) {
+	   case "profile-after-change":  // Gecko 2.0 (FF 4.0)
+       case "final-ui-startup":      // Gecko <2.0 (FF <4.0)
+	     this.init();
+         break;
+	   case "app-startup":           // Gecko <2.0 (FF <4.0)
+	     Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
+		   .addObserver(this,"final-ui-startup",false);
+	     break;
     }
   },
   getPrefs: function() {
@@ -109,7 +92,6 @@ BelgiumEidPKCS11.prototype = {
    * otherwise, returns false
    */
   slotFound: function(modulename){
-
 	var found;
 	var belgiumEidPKCS11Module = this.findModuleByName(modulename)
 	try {
@@ -148,8 +130,8 @@ BelgiumEidPKCS11.prototype = {
 				installSucceeded = true;
 				break;
 			} catch (e) {
-				this.errorLog("Failed to load module " + moduleLocations[x] + 
-						": Error " + e.name + ": " + e.message);
+				this.errorLog("Failed to load module " + moduleLocations[x] + " with the name " + 
+						modulename + ": Error " + e.name + ": " + e.message);
 				continue;
 			}
 		} 
