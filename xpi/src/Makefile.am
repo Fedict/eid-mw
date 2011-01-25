@@ -9,6 +9,7 @@ xpi_files = $(dist_content_DATA) \
 			$(dist_locale_nlnl_DATA) \
 			$(dist_locale_dede_DATA) \
 			$(dist_skin_DATA) \
+			$(dist_components_DATA) \
 			$(dist_extensionroot_DATA)
 
 dist_extensionroot_DATA = chrome.manifest \
@@ -35,7 +36,9 @@ dist_locale_dede_DATA = locale/de-DE/belgiumeid.properties
 dist_skin_DATA = skin/icon.png \
 			skin/icon40x40.png \
 			skin/overlay.css
-
+			
+dist_components_DATA = components/belgiumeidpkcs11.js
+			
 extensionrootdir=$(mozext)/$(XPI_ID)/
 contentdir=$(extensionrootdir)content
 defaults_preferencesdir=$(extensionrootdir)defaults/preferences
@@ -44,6 +47,7 @@ locale_frfrdir=$(extensionrootdir)locale/fr-FR
 locale_nlnldir=$(extensionrootdir)locale/nl-NL
 locale_dededir=$(extensionrootdir)locale/de-DE
 skindir=$(extensionrootdir)skin
+skindir=$(extensionrootdir)components
 
 xpipackage: $(xpi_files)
 #	 Create a temporary directory $tmp in $TMPDIR (default /tmp).
