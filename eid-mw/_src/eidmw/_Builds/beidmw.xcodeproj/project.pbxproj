@@ -427,7 +427,7 @@
 		7F90D54E0F9F36F500BB8F23 /* libbeidlibJava_Wrapper.3.5.5.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidlibJava_Wrapper.3.5.5.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F90D5520F9F377500BB8F23 /* eidlibJava_Wrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = eidlibJava_Wrapper.cpp; path = ../eidlibJava_Wrapper/GeneratedFiles/eidlibJava_Wrapper.cpp; sourceTree = SOURCE_ROOT; };
 		7F90D5620F9F38EC00BB8F23 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = System/Library/Frameworks/JavaVM.framework; sourceTree = SDKROOT; };
-		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11..dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11..dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.3.5.5.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.3.5.5.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA1AA1C0F85F439000D9EE1 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = ../pkcs11/asn1.c; sourceTree = SOURCE_ROOT; };
 		7FA1AA1D0F85F439000D9EE1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = ../pkcs11/asn1.h; sourceTree = SOURCE_ROOT; };
 		7FA1AA1E0F85F439000D9EE1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = ../pkcs11/beid_p11.h; sourceTree = SOURCE_ROOT; };
@@ -715,7 +715,7 @@
 				7F900E540F84FB07004A5FCC /* libbeidapplayer.3.5.5.dylib */,
 				7F900E5B0F84FB1A004A5FCC /* libbeidlib.3.5.5.dylib */,
 				7F9011380F85057A004A5FCC /* beidgui.app */,
-				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11..dylib */,
+				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.3.5.5.dylib */,
 				7F90D54E0F9F36F500BB8F23 /* libbeidlibJava_Wrapper.3.5.5.dylib */,
 			);
 			name = Products;
@@ -724,6 +724,7 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
+				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
 				7FBB025A0F83937F009B751F /* Common */,
 				7FBB02DC0F839518009B751F /* Common_Socket */,
 				7F90113E0F85058E004A5FCC /* Beidgui */,
@@ -998,7 +999,6 @@
 		7FBB02DC0F839518009B751F /* Common_Socket */ = {
 			isa = PBXGroup;
 			children = (
-				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
 				7FBB02D00F839514009B751F /* Socket.cpp */,
 				7FBB02D10F839514009B751F /* Socket.h */,
 				7FBB02D20F839514009B751F /* SocketClient.cpp */,
@@ -1313,7 +1313,7 @@
 			);
 			name = beidpkcs11;
 			productName = beidpkcs11;
-			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11..dylib */;
+			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.3.5.5.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FBB02520F839352009B751F /* beidcommon */ = {
@@ -1865,6 +1865,7 @@
 				);
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../lib";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-finput-charset=cp1252",
@@ -1928,7 +1929,7 @@
 					"${PROJECT_DIR}/../dialogs",
 					"${PROJECT_DIR}/../cardlayer",
 					/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework/Headers,
-					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 					"${PROJECT_DIR}/../../ThirdParty/Xerces/Xerces-3.1.0-mac/include",
 				);
 				INSTALL_PATH = /usr/local/lib;
@@ -1936,6 +1937,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../ThirdParty/Xerces/Xerces-3.1.0-mac/lib\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidapplayer.$(CURRENT_PROJECT_VERSION)";
@@ -1979,6 +1981,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidlib.$(CURRENT_PROJECT_VERSION)";
@@ -2013,7 +2016,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beidgui;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -2024,7 +2027,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../bin";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.5.4;
+				CURRENT_PROJECT_VERSION = 3.5.5;
 				DEBUG_INFORMATION_FORMAT = stabs;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
@@ -2038,6 +2041,7 @@
 				);
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../lib";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2092,6 +2096,7 @@
 					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidlibJava_Wrapper.$(CURRENT_PROJECT_VERSION)";
@@ -2105,7 +2110,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = "";
+				CURRENT_PROJECT_VERSION = 3.5.5;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;
@@ -2136,7 +2141,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = "";
+				CURRENT_PROJECT_VERSION = 3.5.5;
 				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
@@ -2152,6 +2157,7 @@
 					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PREBINDING = NO;
@@ -2175,7 +2181,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = "";
+				CURRENT_PROJECT_VERSION = 3.5.5;
 				DEBUG_INFORMATION_FORMAT = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = Beidmw;
@@ -2219,7 +2225,7 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
-				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
@@ -2300,6 +2306,7 @@
 				INSTALL_PATH = "";
 				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-O2";
 				PREBINDING = NO;
@@ -2342,8 +2349,9 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
-				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib/siscardplugins;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = siscardplugin1__ACS__;
