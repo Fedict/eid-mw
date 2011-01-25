@@ -47,7 +47,7 @@ locale_frfrdir=$(extensionrootdir)locale/fr-FR
 locale_nlnldir=$(extensionrootdir)locale/nl-NL
 locale_dededir=$(extensionrootdir)locale/de-DE
 skindir=$(extensionrootdir)skin
-skindir=$(extensionrootdir)components
+componentsdir=$(extensionrootdir)components
 
 xpipackage: $(xpi_files)
 #	 Create a temporary directory $tmp in $TMPDIR (default /tmp).
