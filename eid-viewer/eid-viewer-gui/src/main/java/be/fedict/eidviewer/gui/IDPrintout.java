@@ -50,6 +50,7 @@ public class IDPrintout implements Printable
     
     private static final int                MINIMAL_FONT_SIZE = 6;
     private static final int                MAXIMAL_FONT_SIZE = 48;
+    private static final int                TITLE_MAXIMAL_FONT_SIZE = 32;
     private static final String             ICONS = "resources/icons/";
     private static final float              SPACE_BETWEEN_ITEMS = 16;
     private static final String             FONT = "Lucida";
@@ -120,13 +121,13 @@ public class IDPrintout implements Printable
         float headerSpaceBetweenImages = imageableWidth - (coatOfArmsWidth + photoWidth + (SPACE_BETWEEN_ITEMS * 2));
 
         // get localised strings for card type. We'll take a new line every time a ";" is found in the resource
-        String[] cardTypeStr = (bundle.getString("type_" + this.identity.getDocumentType().toString())).split(";");
+        String[] cardTypeStr = (bundle.getString("type_" + this.identity.getDocumentType().toString()).toUpperCase()).split(";");
 
         // iterate from MAXIMAL_FONT_SIZE, calculating how much space would be required to fit the card type strings
         // stop when a font size is found where they all fit the space between the graphics in an orderly manner
         boolean sizeFound = false;
         int fontSize;
-        for(fontSize = MAXIMAL_FONT_SIZE; (fontSize >= MINIMAL_FONT_SIZE) && (!sizeFound); fontSize--)  // count down slowly until we find one that fits nicely
+        for(fontSize = TITLE_MAXIMAL_FONT_SIZE; (fontSize >= MINIMAL_FONT_SIZE) && (!sizeFound); fontSize--)  // count down slowly until we find one that fits nicely
         {
             logger.log(Level.FINE, "fontSize={0}", fontSize);
             graphics2D.setFont(new Font(FONT, Font.PLAIN, fontSize));
@@ -190,7 +191,7 @@ public class IDPrintout implements Printable
             }
 
             totalDataWidth = widestLabelWidth + SPACE_BETWEEN_ITEMS + widestValueWidth;
-            totalDataHeight = PrintingUtilities.getStringHeight(graphics2D) * idAttributes.size();
+            totalDataHeight = PrintingUtilities.getStringHeight(graphics2D) + (PrintingUtilities.getStringHeight(graphics2D) * idAttributes.size());
 
             if ((totalDataWidth < imageableWidth) && (totalDataHeight < imageableDataHeight))
                 sizeFound = true;
@@ -204,8 +205,8 @@ public class IDPrintout implements Printable
             graphics2D.setFont(new Font(FONT, Font.PLAIN, fontSize));
             float labelsLeft = (imageableWidth - totalDataWidth) / 2;
             float valuesLeft = labelsLeft + widestLabelWidth + SPACE_BETWEEN_ITEMS;
-            float dataTop = headerHeight + ((imageableDataHeight-totalDataHeight) / 2);
             float dataLineHeight = PrintingUtilities.getStringHeight(graphics2D);
+            float dataTop =  dataLineHeight+headerHeight + ((imageableDataHeight-totalDataHeight) / 2);
             float lineNumber = 0;
 
             for (IdentityAttribute attribute : idAttributes)
@@ -220,7 +221,7 @@ public class IDPrintout implements Printable
                 {
                     int y = (int) (((dataTop + (lineNumber * dataLineHeight) + (dataLineHeight / 2))) - PrintingUtilities.getAscent(graphics2D));
                     graphics2D.setColor(Color.BLACK);
-                    graphics2D.drawLine((int) labelsLeft, y, (int) totalDataWidth, y);
+                    graphics2D.drawLine((int) labelsLeft, y, (int)(labelsLeft+totalDataWidth), y);
                 }
                 lineNumber++;
             }
@@ -249,7 +250,7 @@ public class IDPrintout implements Printable
         idAttributes.add(SEPARATOR);
 
         String nobleCondition = identity.getNobleCondition();
-        addIdAttribute(idAttributes, "titleLabel",          nobleCondition.isEmpty()?IdFormatHelper.UNKNOWN_VALUE_TEXT:nobleCondition, (!nobleCondition.isEmpty()));
+        addIdAttribute(idAttributes, "titleLabel",          (nobleCondition==null || nobleCondition.isEmpty())?IdFormatHelper.UNKNOWN_VALUE_TEXT:nobleCondition, (!nobleCondition.isEmpty()));
         String specialStatusStr = IdFormatHelper.getSpecialStatusString(bundle,identity.getSpecialStatus());
         addIdAttribute(idAttributes, "specialStatusLabel",  specialStatusStr.isEmpty()?IdFormatHelper.UNKNOWN_VALUE_TEXT:specialStatusStr, (!specialStatusStr.isEmpty()));
        

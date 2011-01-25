@@ -29,9 +29,11 @@ import be.fedict.trust.client.TrustServiceDomains;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -86,6 +88,7 @@ public class Version35CSVFile
     private X509Certificate     citizenCert         = null;
     private X509Certificate     authenticationCert  = null;
     private X509Certificate     signingCert         = null;
+    private X509Certificate     rrnCert             = null;
     private EidController       controller;
     DateFormat                  dateFormat;
 
@@ -104,7 +107,8 @@ public class Version35CSVFile
         String              line,token  =null;
         
         certificateFactory = CertificateFactory.getInstance("X.509");
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        InputStreamReader inputStreamReader=new InputStreamReader(new FileInputStream(file),"utf-8");
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         line=bufferedReader.readLine();
         if(line!=null)
         {
@@ -158,6 +162,15 @@ public class Version35CSVFile
                 signChain.add(citizenCert);
                 signChain.add(rootCert);
                 controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain));
+            }
+
+            if (rrnCert != null)
+            {
+                logger.fine("Setting RRN Certificate Chain");
+                List rrnChain = new LinkedList<X509Certificate>();
+                rrnChain.add(rrnCert);
+                rrnChain.add(rootCert);
+                controller.setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, rrnChain));
             }
         }
     }
@@ -335,6 +348,15 @@ public class Version35CSVFile
             break;
 
             case RRNCERTIFICATE:
+                 logger.finer("Gathering RRN Certificate");
+                    try
+                    {
+                        rrnCert  = (X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(Base64.decodeBase64(token)));
+                    }
+                    catch (CertificateException ex)
+                    {
+                        logger.log(Level.SEVERE, "Failed to RRN Certificate", ex);
+                    }
             break;
 
         }

@@ -40,12 +40,16 @@ public class IdFormatHelper
     public static String getSpecialStatusString(ResourceBundle bundle, SpecialStatus specialStatus)
     {
         List specials = new ArrayList();
-        if (specialStatus.hasWhiteCane())
-            specials.add(bundle.getString("special_status_white_cane"));
-        if (specialStatus.hasYellowCane())
-            specials.add(bundle.getString("special_status_yellow_cane"));
-        if (specialStatus.hasExtendedMinority())
-            specials.add(bundle.getString("special_status_extended_minority"));
+
+        if(specialStatus!=null)
+        {
+            if (specialStatus.hasWhiteCane())
+                specials.add(bundle.getString("special_status_white_cane"));
+            if (specialStatus.hasYellowCane())
+                specials.add(bundle.getString("special_status_yellow_cane"));
+            if (specialStatus.hasExtendedMinority())
+                specials.add(bundle.getString("special_status_extended_minority"));
+        }
         return IdFormatHelper.join(specials, ",");
     }
     

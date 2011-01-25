@@ -234,4 +234,24 @@ class PKCS11EidImpl implements Eid
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public X509Certificate getNRNCertificate() throws Exception
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<X509Certificate> getRRNCertificateChain()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean isIdentityTrusted()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean isAddressTrusted()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

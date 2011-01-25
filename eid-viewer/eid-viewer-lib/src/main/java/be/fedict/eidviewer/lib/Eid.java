@@ -109,6 +109,12 @@ public interface Eid
      * @throws Exception
      */
     void changePin(boolean requireSecureReader) throws Exception;
+
+
+    public boolean isIdentityTrusted();
+    public boolean isAddressTrusted();
+
+    List<X509Certificate> getRRNCertificateChain() throws Exception;
     
     List<X509Certificate> getAuthnCertificateChain() throws Exception;
 
@@ -120,4 +126,6 @@ public interface Eid
      * @param observer
      */
     void addObserver(Observer observer);
+
+    
 }

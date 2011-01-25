@@ -65,12 +65,12 @@ public class Version4File
 
     }
 
-    public void fromIdentityAddressPhotoAndCertificates(Identity eidIdentity, Address eidAddress, byte[] photo,List<X509Certificate> authChain, List<X509Certificate> signChain) throws Exception
+    public void fromIdentityAddressPhotoAndCertificates(Identity eidIdentity, Address eidAddress, byte[] photo,List<X509Certificate> authChain, List<X509Certificate> signChain, List<X509Certificate> rrnChain) throws Exception
     {
         identity    =new Version4FileIdentity(eidIdentity,photo);
         card        =new Version4FileCard(eidIdentity);
         address     =new Version4FileAddress(eidAddress);
-        certificates=new Version4FileCertificates(authChain, signChain);
+        certificates=new Version4FileCertificates(authChain, signChain, rrnChain);
     }
 
     public Identity toIdentity() throws ParseException
@@ -96,6 +96,11 @@ public class Version4File
     public List<X509Certificate> toSignChain() throws CertificateException
     {
         return getCertificates().toSignChain();
+    }
+
+    public List<X509Certificate> toRRNChain() throws CertificateException
+    {
+        return getCertificates().toRRNChain();
     }
 
     public void writeToZipOutputStream(ZipOutputStream zos) throws IOException

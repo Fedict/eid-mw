@@ -51,7 +51,6 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
             public void actionPerformed(ActionEvent actionEvent)
             {
                 viewerLogger.setLevel((Level) levelCombo.getSelectedItem());
-                clearLog();
             }
         });
 
@@ -124,7 +123,7 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
 
     private void initLevelAttributes()
     {
-        Level[]                     comboItems = new Level[4];
+        Level[]                     comboItems = new Level[7];
         SimpleAttributeSet          sas;
         EnumMap<ATTR,AttributeSet>  attribute;
 
@@ -181,7 +180,7 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
         StyleConstants.setFontSize(sas, 11);
         attribute.put(ATTR.BOLD, sas);
         attributes.put(Level.FINE, attribute);
-        comboItems[3] = Level.ALL;
+        comboItems[3] = Level.FINE;
 
         attribute = new EnumMap<ATTR, AttributeSet>(ATTR.class);
         sas=new SimpleAttributeSet();
@@ -194,6 +193,7 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
         StyleConstants.setFontSize(sas, 10);
         attribute.put(ATTR.BOLD, sas);
         attributes.put(Level.FINER, attribute);
+        comboItems[4] = Level.FINER;
 
         attribute = new EnumMap<ATTR, AttributeSet>(ATTR.class);
         sas=new SimpleAttributeSet();
@@ -206,6 +206,8 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
         StyleConstants.setFontSize(sas, 9);
         attribute.put(ATTR.BOLD, sas);
         attributes.put(Level.FINEST, attribute);
+        comboItems[5] = Level.FINEST;
+        comboItems[6] = Level.ALL;
 
         levelComboModel = new DefaultComboBoxModel(comboItems);
         levelCombo.setModel(levelComboModel);
@@ -235,7 +237,7 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
         }
         catch (BadLocationException ex)
         {
-            System.err.println("Logger Failed: " + ex.getLocalizedMessage());
+            System.err.println("Logger Failed To Insert: " + ex.getLocalizedMessage());
         }
     }
 
@@ -292,17 +294,11 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
     public void actionPerformed(ActionEvent actionEvent)
     {
         viewerLogger.setLevel((Level) levelCombo.getSelectedItem());
-        clearLog();
     }
 
     private void clearLog()
     {
         logTextPanel.setText("");
-    }
-
-    void setViewer(BelgianEidViewer aThis)
-    {
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public static enum ATTR

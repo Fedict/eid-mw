@@ -48,10 +48,10 @@ public final class Version4FileCertificates
     @Element(name="rrn",required=false)
     private String rrnCertificate;
 
-    public Version4FileCertificates(List<X509Certificate> authChain, List<X509Certificate> signChain) throws CertificateEncodingException
+    public Version4FileCertificates(List<X509Certificate> authChain, List<X509Certificate> signChain, List<X509Certificate> rrnChain) throws CertificateEncodingException
     {
         super();
-        fromCertChains(authChain, signChain);
+        fromCertChains(authChain, signChain,rrnChain);
     }
 
     public Version4FileCertificates()
@@ -59,7 +59,7 @@ public final class Version4FileCertificates
         super();
     }
 
-    public void fromCertChains(List<X509Certificate> authChain, List<X509Certificate> signChain) throws CertificateEncodingException
+    public void fromCertChains(List<X509Certificate> authChain, List<X509Certificate> signChain, List<X509Certificate> rrnChain) throws CertificateEncodingException
     {
         if(authChain!=null && authChain.size()==3)
         {   
@@ -69,9 +69,10 @@ public final class Version4FileCertificates
         }
 
         if(signChain!=null && signChain.size()==3)
-        {
             setSigningCertificate(new String(Base64.encodeBase64(signChain.get(0).getEncoded(), false, false, 4096)).trim());
-        }
+
+        if(rrnChain!=null && rrnChain.size()==2)
+            setRRNCertificate(new String(Base64.encodeBase64(rrnChain.get(0).getEncoded(), false, false, 4096)).trim());
     }
 
     public List<X509Certificate> toAuthChain() throws CertificateException
@@ -122,6 +123,28 @@ public final class Version4FileCertificates
        signChain.add(rootCert);
 
        return signChain;
+    }
+
+    public List<X509Certificate> toRRNChain() throws CertificateException
+    {
+        CertificateFactory      certificateFactory = null;
+        X509Certificate         rootCert = null;
+        X509Certificate         rrnCert = null;
+        List                    rrnChain=null;
+
+        if(getRootCertificate()==null || getCitizenCACertificate()==null || getSigningCertificate()==null || getRRNCertificate()==null)
+            return null;
+
+       certificateFactory = CertificateFactory.getInstance("X.509");
+
+       rootCert=(X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(Base64.decodeBase64(getRootCertificate())));
+       rrnCert=(X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(Base64.decodeBase64(getRRNCertificate())));
+
+       rrnChain = new LinkedList<X509Certificate>();
+       rrnChain.add(rrnCert);
+       rrnChain.add(rootCert);
+
+       return rrnChain;
     }
 
     public void writeToZipOutputStream(ZipOutputStream zos) throws IOException

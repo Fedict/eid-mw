@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
@@ -57,6 +58,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.filechooser.FileFilter;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 
@@ -120,7 +122,11 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
         eidController.setTrustServiceController(trustServiceController);
         eidController.setAutoValidateTrust(ViewerPrefs.getIsAutoValidating());
+
+        identityPanel.setEidController(eidController);
+
         cardPanel.setEidController(eidController);
+        
         certificatesPanel.setEidController(eidController);
         certificatesPanel.start();
 
@@ -148,19 +154,19 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     public void update(Observable o, Object o1)
     {
         updateVisibleState();
+
     }
 
     private void updateVisibleState()
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-
             public void run()
             {
-                printAction.setEnabled(eidController.hasIdentity() && eidController.hasAddress() && eidController.hasPhoto());
-                saveAction.setEnabled(eidController.hasIdentity() && eidController.hasAddress() && eidController.hasPhoto() && eidController.hasAuthCertChain() && eidController.hasSignCertChain());
-                openAction.setEnabled(eidController.getState() != EidController.STATE.EID_PRESENT && eidController.getState() != EidController.STATE.FILE_LOADED);
-                closeAction.setEnabled(eidController.isLoadedFromFile() && eidController.hasAddress() && eidController.hasPhoto() && eidController.hasAuthCertChain() && eidController.hasSignCertChain());
+                printAction.setEnabled(eidController.hasIdentity() && eidController.hasAddress() && eidController.hasPhoto() && (PrinterJob.lookupPrintServices().length>0));
+                saveAction.setEnabled(eidController.hasIdentity() && eidController.hasAddress() && eidController.hasPhoto() && eidController.hasAuthCertChain());
+                openAction.setEnabled(eidController.getState() != EidController.STATE.EID_PRESENT && eidController.getState()!=EidController.STATE.EID_YIELDED);
+                closeAction.setEnabled(eidController.isLoadedFromFile() && (eidController.hasAddress() || eidController.hasPhoto() || eidController.hasAuthCertChain() || eidController.hasSignCertChain()));
 
                 statusIcon.setIcon(cardStatusIcons.get(eidController.getState()));
 
@@ -302,6 +308,9 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
     public boolean privacyQuestion(boolean includeAddress, boolean includePhoto, String identityDataUsage)
     {
+        // this app's only purpose being to read eID cards.. asking "are you sure" is merely annoying to the user
+        // and gives no extra security whatsoever
+        // (the privacyQuestion was designed for Applets, where it makes a *lot* of sense)
         return true;
     }
 
@@ -312,45 +321,29 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
     public void addTestResult(DiagnosticTests diagnosticTest, boolean success, String description)
     {
-        System.err.println(description);
+        // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
     }
 
     public void resetProgress(int max)
     {
-        setProgress(0);
-        System.err.println("|<<");
+        // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
     }
 
     public void increaseProgress()
     {
-        //setProgress(idProgressBar.getValue() + 1);
-        System.err.println(">>");
+        // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
     }
 
     private void setProgress(final int progress)
     {
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-
-            public void run()
-            {
-                //idProgressBar.setValue(progress);
-            }
-        });
+       // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
     }
 
     public void setProgressIndeterminate()
     {
-        System.err.println("???");
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-
-            public void run()
-            {
-                //idProgressBar.setIndeterminate(true);
-            }
-        });
+        // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     JMenu fileMenu;
     JMenuItem fileMenuQuitItem;
@@ -415,8 +408,11 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         activityTexts.put(EidController.ACTIVITY.READING_IDENTITY, bundle.getString(EidController.ACTIVITY.READING_IDENTITY.toString()));
         activityTexts.put(EidController.ACTIVITY.READING_ADDRESS, bundle.getString(EidController.ACTIVITY.READING_ADDRESS.toString()));
         activityTexts.put(EidController.ACTIVITY.READING_PHOTO, bundle.getString(EidController.ACTIVITY.READING_PHOTO.toString()));
+        activityTexts.put(EidController.ACTIVITY.READING_RRN_CHAIN, bundle.getString(EidController.ACTIVITY.READING_RRN_CHAIN.toString()));
         activityTexts.put(EidController.ACTIVITY.READING_AUTH_CHAIN, bundle.getString(EidController.ACTIVITY.READING_AUTH_CHAIN.toString()));
         activityTexts.put(EidController.ACTIVITY.READING_SIGN_CHAIN, bundle.getString(EidController.ACTIVITY.READING_SIGN_CHAIN.toString()));
+        activityTexts.put(EidController.ACTIVITY.VALIDATING_IDENTITY, bundle.getString(EidController.ACTIVITY.VALIDATING_IDENTITY.toString()));
+        activityTexts.put(EidController.ACTIVITY.VALIDATING_ADDRESS, bundle.getString(EidController.ACTIVITY.VALIDATING_ADDRESS.toString()));
     }
 
     private ImageIcon getIcon(String name)
@@ -429,6 +425,8 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     {
         logger.fine("print action chosen..");
         PrinterJob job = PrinterJob.getPrinterJob();
+        job.setJobName(eidController.getIdentity().getNationalNumber());
+        
         IDPrintout printout = new IDPrintout();
         printout.setIdentity(eidController.getIdentity());
         printout.setAddress(eidController.getAddress());
@@ -443,16 +441,17 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         }
 
         job.setPrintable(printout);
+        
         boolean ok = job.printDialog();
-        job.setJobName(eidController.getIdentity().getNationalNumber());
+
 
         if (ok)
         {
             try
             {
-                logger.finest("print job started..");
+                logger.finest("starting print job..");
                 job.print();
-                logger.finest("print job completed..");
+                logger.finest("print job completed.");
             }
             catch (PrinterException pex)
             {
@@ -473,9 +472,85 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     {
         logger.fine("Open action chosen..");
         final JFileChooser fileChooser = new JFileChooser();
-        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        fileChooser.addChoosableFileFilter(new FileFilter()
         {
-            eidController.loadFromV35CSVFile(fileChooser.getSelectedFile());
+            public boolean accept(File file)
+            {
+                if(!file.canRead())
+                    return false;
+
+                if((!file.getName().endsWith(".eid")) && (!file.getName().endsWith(".EID")))
+                    return false;
+
+                return true;
+            }
+
+            @Override
+            public String getDescription()
+            {
+                return "eID 3.5.x .eid files";
+            }
+        });
+
+        fileChooser.addChoosableFileFilter(new FileFilter()
+        {
+            public boolean accept(File file)
+            {
+                if(!file.canRead())
+                    return false;
+
+                if((!file.getName().endsWith(".csv")) && (!file.getName().endsWith(".CSV")))
+                    return false;
+
+                return true;
+            }
+
+            @Override
+            public String getDescription()
+            {
+                return "eID 3.5.x .csv files";
+            }
+        });
+
+        fileChooser.addChoosableFileFilter(new FileFilter()
+        {
+            public boolean accept(File file)
+            {
+                if(!file.canRead())
+                    return false;
+
+                if((!file.getName().endsWith(".xml")) && (!file.getName().endsWith(".XML")))
+                    return false;
+
+                return true;
+            }
+
+            @Override
+            public String getDescription()
+            {
+                return "eID 3.5.x and 4.0 XML files";
+            }
+        });
+
+        if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+        {
+            File file=fileChooser.getSelectedFile();
+
+            if(file.getName().toLowerCase().endsWith(".eid"))
+            {
+                eidController.loadFromTLVFile(file);
+            }
+            else if(file.getName().toLowerCase().endsWith(".csv"))
+            {
+                eidController.loadFromV35CSVFile(file);
+            }
+            else if(file.getName().toLowerCase().endsWith(".xml"))
+            {
+                eidController.loadFromXMLFile(file);
+            }
         }
     }
 
@@ -486,7 +561,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         final JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
         {
-            eidController.saveToZIPFile(fileChooser.getSelectedFile());
+            eidController.saveToXMLFile(fileChooser.getSelectedFile());
         }
     }
 
@@ -506,12 +581,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     {
         logger.fine("Close action chosen..");
         eidController.closeFile();
-    }
-
-    public void enableLogTab(boolean state)
-    {
-        logPanel=new LogPanel();
-        logPanel.setViewer(this);
     }
 
     /* ---------------------------------------------------------------------------------------- */

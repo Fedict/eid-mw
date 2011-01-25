@@ -62,6 +62,7 @@ public class Version35EidFile
         X509Certificate citizenCert = null;
         X509Certificate authenticationCert = null;
         X509Certificate signingCert = null;
+        X509Certificate rrnCert = null;
         
         certificateFactory = CertificateFactory.getInstance("X.509");
         FileInputStream fis = new FileInputStream(file);
@@ -121,6 +122,10 @@ public class Version35EidFile
 
                                             switch (certEntry.tag)
                                             {
+                                                case 0:
+                                                    rrnCert = (X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(certEntry2.data));
+                                                    break;
+                                                    
                                                 case 1:
                                                     authenticationCert = (X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(certEntry2.data));
                                                     break;
@@ -174,6 +179,13 @@ public class Version35EidFile
                 controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain));
             }
 
+            if (rrnCert != null)
+            {
+                List signChain = new LinkedList<X509Certificate>();
+                signChain.add(rrnCert);
+                signChain.add(rootCert);
+                controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, signChain));
+            }
         }
     }
 }

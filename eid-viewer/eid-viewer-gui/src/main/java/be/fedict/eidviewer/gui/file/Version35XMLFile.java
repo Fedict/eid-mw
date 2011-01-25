@@ -90,6 +90,7 @@ public class Version35XMLFile extends DefaultHandler
     private X509Certificate     citizenCert = null;
     private X509Certificate     authenticationCert = null;
     private X509Certificate     signingCert = null;
+    private X509Certificate     rrnCert = null;
     private STATE               state;
     private EidController       controller;
 
@@ -135,6 +136,14 @@ public class Version35XMLFile extends DefaultHandler
                 signChain.add(citizenCert);
                 signChain.add(rootCert);
                 controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain));
+            }
+
+            if (rrnCert != null)
+            {
+                List signChain = new LinkedList<X509Certificate>();
+                signChain.add(rrnCert);
+                signChain.add(rootCert);
+                controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, signChain));
             }
         }
     }
@@ -228,6 +237,14 @@ public class Version35XMLFile extends DefaultHandler
 
                 case RRNCERT:
                     logger.finer("Gathering RRN Certificate");
+                    try
+                    {
+                        rrnCert = (X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(data));
+                    }
+                    catch (CertificateException ex)
+                    {
+                        logger.log(Level.SEVERE, "Failed to Convert RRN Certificate", ex);
+                    }
                     break;
 
             }

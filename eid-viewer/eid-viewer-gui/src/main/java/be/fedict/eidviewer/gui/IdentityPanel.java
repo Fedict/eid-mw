@@ -40,33 +40,40 @@ import javax.swing.ImageIcon;
  */
 public class IdentityPanel extends javax.swing.JPanel implements Observer
 {
-
     private static final Logger logger = Logger.getLogger(IdentityPanel.class.getName());
-    private ResourceBundle bundle;
-    private DateFormat dateFormat;
-    private ImageIcon largeBusyIcon;
+    private ResourceBundle      bundle;
+    private DateFormat          dateFormat;
+    private ImageIcon           largeBusyIcon;
+    private EidController       eidController;
 
     public IdentityPanel()
     {
-        bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/IdentityPanel");
-        dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
+        bundle          = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/IdentityPanel");
+        dateFormat      = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
         initComponents();
         initIcons();
         clearIdentity();
+        identityBusyIcon.setVisible     (false);
+        identityTrustedIcon.setVisible  (false);
+        addressTrustedIcon.setVisible   (false);
+    }
+
+    public IdentityPanel setEidController(EidController eidController)
+    {
+        this.eidController = eidController;
+        return this;
     }
 
     public void update(Observable o, Object o1)
     {
-        EidController controller = (EidController) o;
-
         logger.finest("Update..");
 
-        if (controller.getState() == EidController.STATE.EID_PRESENT || controller.getState() == EidController.STATE.EID_YIELDED || controller.getState() == EidController.STATE.FILE_LOADED)
+        if (eidController.getState() == EidController.STATE.EID_PRESENT || eidController.getState() == EidController.STATE.EID_YIELDED || eidController.getState() == EidController.STATE.FILE_LOADED)
         {
-            if (controller.hasIdentity())
+            if (eidController.hasIdentity())
             {
                 logger.finest("Filling out Identity Data");
-                fillIdentity(controller.getIdentity(), false);
+                fillIdentity(eidController.getIdentity(), false);
             }
             else
             {
@@ -74,10 +81,10 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                 fillIdentity(null, true);
             }
 
-            if (controller.hasAddress())
+            if (eidController.hasAddress())
             {
                 logger.finest("Filling Address Data");
-                fillAddress(controller.getAddress(), false);
+                fillAddress(eidController.getAddress(), false);
             }
             else
             {
@@ -85,13 +92,13 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
                 fillAddress(null, true);
             }
 
-            if (controller.hasPhoto())
+            if (eidController.hasPhoto())
             {
                 logger.finest("Filling Picture");
                 
                 try
                 {
-                    fillPhoto(controller.getPhotoImage(), false);
+                    fillPhoto(eidController.getPhotoImage(), false);
                 }
                 catch (IOException ex)
                 {
@@ -113,19 +120,22 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
 
     private void clearIdentity()
     {
-        fillIdentity(null, false);
-        fillAddress(null, false);
-        fillPhoto(null, false);
+        fillIdentity                    (null, false);
+        fillAddress                     (null, false);
+        fillPhoto                       (null, false);
     }
 
     private void fillIdentity(final Identity identity, final boolean loading)
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-
             public void run()
             {
-                identityBusyIcon.setVisible(loading);
+                identityBusyIcon.setVisible     (loading);
+                identityTrustedIcon.setVisible  ((!eidController.isIdentityTrusted()) && eidController.isIdentityValidated() && eidController.hasRRNCertChain() && eidController.getRRNCertChain().isTrusted());
+                addressTrustedIcon.setVisible   ((!eidController.isAddressTrusted()) && eidController.isAddressValidated() && eidController.hasRRNCertChain() && eidController.getRRNCertChain().isTrusted());
+
+
                 if (identity != null)
                 {
                     type.setText(bundle.getString("type_" + identity.getDocumentType().toString()));
@@ -331,6 +341,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         spacer1 = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         idAddressSeparator1 = new javax.swing.JSeparator();
+        addressTrustedIcon = new javax.swing.JLabel();
+        identityTrustedIcon = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
         setLayout(new java.awt.GridBagLayout());
@@ -485,7 +497,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         name.setEnabled(false);
         name.setName("name"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -494,7 +506,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         givenNames.setEnabled(false);
         givenNames.setName("givenNames"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -503,7 +515,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         placeOfBirth.setEnabled(false);
         placeOfBirth.setName("placeOfBirth"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -512,7 +524,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         dateOfBirth.setEnabled(false);
         dateOfBirth.setName("dateOfBirth"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -521,7 +533,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         sex.setEnabled(false);
         sex.setName("sex"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -530,7 +542,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         nationalNumber.setEnabled(false);
         nationalNumber.setName("nationalNumber"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -539,7 +551,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         nationality.setEnabled(false);
         nationality.setName("nationality"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -548,7 +560,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         title.setEnabled(false);
         title.setName("title"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -557,7 +569,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         specialStatus.setEnabled(false);
         specialStatus.setName("specialStatus"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -566,7 +578,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         street.setEnabled(false);
         street.setName("street"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 12;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -576,7 +588,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         postalCode.setEnabled(false);
         postalCode.setName("postalCode"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -585,7 +597,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         municipality.setEnabled(false);
         municipality.setName("municipality"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -594,7 +606,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         addressBusyIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/busyicons/busy_anim_small.gif"))); // NOI18N
         addressBusyIcon.setName("identityBusyIcon"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 13;
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         add(addressBusyIcon, gridBagConstraints);
@@ -602,8 +614,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         identityBusyIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/busyicons/busy_anim_small.gif"))); // NOI18N
         identityBusyIcon.setName("identityBusyIcon"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         add(identityBusyIcon, gridBagConstraints);
 
@@ -613,8 +625,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         spacer1.setName("spacer1"); // NOI18N
         spacer1.setPreferredSize(new java.awt.Dimension(16, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         add(spacer1, gridBagConstraints);
 
@@ -637,9 +649,26 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
         add(idAddressSeparator1, gridBagConstraints);
+
+        addressTrustedIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/icons/warning_small.png"))); // NOI18N
+        addressTrustedIcon.setName("addressTrustedIcon"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 13;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        add(addressTrustedIcon, gridBagConstraints);
+
+        identityTrustedIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/be/fedict/eidviewer/gui/resources/icons/warning_small.png"))); // NOI18N
+        identityTrustedIcon.setName("identityTrustedIcon"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        add(identityTrustedIcon, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressBusyIcon;
+    private javax.swing.JLabel addressTrustedIcon;
     private javax.swing.JLabel dateOfBirth;
     private javax.swing.JLabel dateOfBirthLabel;
     private javax.swing.JLabel givenNames;
@@ -647,6 +676,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     private javax.swing.JSeparator idAddressSeparator;
     private javax.swing.JSeparator idAddressSeparator1;
     private javax.swing.JLabel identityBusyIcon;
+    private javax.swing.JLabel identityTrustedIcon;
     private javax.swing.JLabel municipality;
     private javax.swing.JLabel municipalityLabel;
     private javax.swing.JLabel name;
@@ -674,6 +704,6 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
 
     private void initIcons()
     {
-        largeBusyIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(BelgianEidViewer.class.getResource("resources/busyicons/busy_anim_large.gif")));
+        largeBusyIcon   = new ImageIcon(Toolkit.getDefaultToolkit().getImage(BelgianEidViewer.class.getResource("resources/busyicons/busy_anim_large.gif")));
     }
 }

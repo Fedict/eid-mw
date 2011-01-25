@@ -30,8 +30,10 @@ import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.cert.CertificateException;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +43,8 @@ import java.util.TimerTask;
 import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
 import javax.smartcardio.CardException;
+import org.simpleframework.xml.core.ElementException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -57,6 +61,8 @@ public class EidController extends Observable implements Runnable, Observer
     private Identity identity;
     private Address address;
     private byte[] photo;
+    private boolean identityTrusted,addressTrusted,identityValidated,addressValidated;
+    private X509CertificateChainAndTrust rrnCertChain;
     private X509CertificateChainAndTrust authCertChain;
     private X509CertificateChainAndTrust signCertChain;
     private TrustServiceController trustServiceController;
@@ -152,6 +158,7 @@ public class EidController extends Observable implements Runnable, Observer
 
         try
         {
+            trustServiceController.validateLater(rrnCertChain);
             trustServiceController.validateLater(authCertChain);
             trustServiceController.validateLater(signCertChain);
             setState();
@@ -173,8 +180,13 @@ public class EidController extends Observable implements Runnable, Observer
         photo = null;
         authCertChain = null;
         signCertChain = null;
+        rrnCertChain = null;
         if (trustServiceController != null)
             trustServiceController.clear();
+        identityValidated=false;
+        addressValidated=false;
+        identityTrusted=false;
+        addressTrusted=false;
         setState();
     }
 
@@ -210,12 +222,16 @@ public class EidController extends Observable implements Runnable, Observer
 
     public static enum ACTIVITY
     {
-        IDLE("activity_idle"),
-        READING_IDENTITY("reading_identity"),
-        READING_ADDRESS("reading_address"),
-        READING_PHOTO("reading_photo"),
-        READING_AUTH_CHAIN("reading_auth_chain"),
-        READING_SIGN_CHAIN("reading_sign_chain");
+        IDLE                ("activity_idle"),
+        READING_IDENTITY    ("reading_identity"),
+        READING_ADDRESS     ("reading_address"),
+        READING_PHOTO       ("reading_photo"),
+        READING_RRN_CHAIN   ("reading_rrn_chain"),
+        READING_AUTH_CHAIN  ("reading_auth_chain"),
+        READING_SIGN_CHAIN  ("reading_sign_chain"),
+        VALIDATING_IDENTITY ("validating_identity"),
+        VALIDATING_ADDRESS  ("validating_address");
+        
         private final String state;
 
         private ACTIVITY(String state)
@@ -311,10 +327,29 @@ public class EidController extends Observable implements Runnable, Observer
                 setActivity(ACTIVITY.READING_ADDRESS);
                 address = eid.getAddress();
                 setState();
-
+                
                 logger.fine("reading photo from card..");
                 setActivity(ACTIVITY.READING_PHOTO);
                 photo = eid.getPhotoJPEG();
+                setState();
+                
+                logger.fine("reading rrn chain from card..");
+                setActivity(ACTIVITY.READING_RRN_CHAIN);
+                rrnCertChain = new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN,eid.getRRNCertificateChain());
+                if (trustServiceController != null && autoValidatingTrust)
+                    trustServiceController.validateLater(rrnCertChain);
+                setState();
+
+                logger.fine("validating identity");
+                setActivity(ACTIVITY.VALIDATING_IDENTITY);
+                identityTrusted=eid.isIdentityTrusted();
+                identityValidated=true;
+                setState();
+
+                logger.fine("validating address");
+                setActivity(ACTIVITY.VALIDATING_ADDRESS);
+                addressTrusted=eid.isAddressTrusted();
+                addressValidated=true;
                 setState();
 
                 logger.fine("reading authentication chain from card..");
@@ -330,7 +365,6 @@ public class EidController extends Observable implements Runnable, Observer
                 if (trustServiceController != null && autoValidatingTrust)
                     trustServiceController.validateLater(signCertChain);
                 setActivity(ACTIVITY.IDLE);
-
 
                 logger.fine("waiting for actions or card removal..");
 
@@ -466,6 +500,16 @@ public class EidController extends Observable implements Runnable, Observer
         return signCertChain;
     }
 
+    public boolean hasRRNCertChain()
+    {
+        return (rrnCertChain != null);
+    }
+
+    public X509CertificateChainAndTrust getRRNCertChain()
+    {
+        return rrnCertChain;
+    }
+
     public EidController changePin()
     {
         runningAction = ACTION.CHANGE_PIN;
@@ -533,6 +577,26 @@ public class EidController extends Observable implements Runnable, Observer
         return loadedFromFile;
     }
 
+    public boolean isAddressTrusted()
+    {
+        return addressTrusted;
+    }
+
+    public boolean isIdentityTrusted()
+    {
+        return identityTrusted;
+    }
+
+    public boolean isAddressValidated()
+    {
+        return addressValidated;
+    }
+
+    public boolean isIdentityValidated()
+    {
+        return identityValidated;
+    }
+    
     public synchronized EidController setLoadedFromFile(boolean loadedFromFile)
     {       
         this.loadedFromFile=loadedFromFile;
@@ -553,6 +617,22 @@ public class EidController extends Observable implements Runnable, Observer
         return this;
     }
 
+    public synchronized EidController setSignCertChain(X509CertificateChainAndTrust signCertChain)
+    {
+        this.signCertChain = signCertChain;
+        if (trustServiceController != null && autoValidatingTrust)
+            trustServiceController.validateLater(signCertChain);
+        return this;
+    }
+
+    public synchronized EidController setRRNCertChain(X509CertificateChainAndTrust rrnCertChain)
+    {
+        this.rrnCertChain = rrnCertChain;
+        if (trustServiceController != null && autoValidatingTrust)
+            trustServiceController.validateLater(rrnCertChain);
+        return this;
+    }
+
     public synchronized EidController setIdentity(Identity identity)
     {
         this.identity = identity;
@@ -562,14 +642,6 @@ public class EidController extends Observable implements Runnable, Observer
     public synchronized EidController setPhoto(byte[] photo)
     {
         this.photo = photo;
-        return this;
-    }
-
-    public synchronized EidController setSignCertChain(X509CertificateChainAndTrust signCertChain)
-    {
-        this.signCertChain = signCertChain;
-        if (trustServiceController != null && autoValidatingTrust)
-            trustServiceController.validateLater(signCertChain);
         return this;
     }
 
@@ -614,7 +686,7 @@ public class EidController extends Observable implements Runnable, Observer
         try
         {
             Version4File version4file=new Version4File();
-                         version4file.fromIdentityAddressPhotoAndCertificates(getIdentity(),getAddress(),getPhoto(),getAuthCertChain().getCertificates(),getSignCertChain().getCertificates());
+                         version4file.fromIdentityAddressPhotoAndCertificates(getIdentity(),getAddress(),getPhoto(),getAuthCertChain().getCertificates(),getSignCertChain().getCertificates(),getRRNCertChain().getCertificates());
                          Version4File.toXML(version4file, new FileOutputStream(file));
         }
         catch (Exception ex)
@@ -629,7 +701,7 @@ public class EidController extends Observable implements Runnable, Observer
         {
             ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(file));
             Version4File    version4file=new Version4File();
-                            version4file.fromIdentityAddressPhotoAndCertificates(getIdentity(),getAddress(),getPhoto(),getAuthCertChain().getCertificates(),getSignCertChain().getCertificates());
+                            version4file.fromIdentityAddressPhotoAndCertificates(getIdentity(),getAddress(),getPhoto(),getAuthCertChain().getCertificates(),getSignCertChain().getCertificates(),getRRNCertChain().getCertificates());
                             version4file.writeToZipOutputStream(zipOutputStream);
                             zipOutputStream.flush();
                             zipOutputStream.close();
@@ -647,18 +719,46 @@ public class EidController extends Observable implements Runnable, Observer
 
         try
         {
+            logger.fine("parsing as 4.0 .XML file");
             Version4File v4File=Version4File.fromXML(new FileInputStream(file));
+            logger.fine("parsed as 4.0 .XML file");
             setIdentity(v4File.toIdentity());
             setAddress(v4File.toAddress());
             setPhoto(v4File.toPhoto());
             setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, v4File.toAuthChain()));
             setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, v4File.toSignChain()));
+            setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, v4File.toRRNChain()));
             setState(STATE.FILE_LOADED);
+            logger.fine("4.0 XML data loaded ok");
             setLoadedFromFile(true);
+        }
+        catch (ElementException eex)
+        {
+            logger.log(Level.FINE, "This is not a Version 4.0 XML Based File", eex);
+            setState(STATE.IDLE);
         }
         catch (Exception ex)
         {
-            logger.log(Level.SEVERE, "Failed To Open Version 4.x.x XML-Based .eid File", ex);
+            logger.log(Level.SEVERE, "Failed To Read Version 4.x.x XML-Based eID File", ex);
+            securityClear();
+            setState(STATE.IDLE);
+        }
+
+        if(isLoadedFromFile())
+            return;
+
+        try
+        {
+            logger.fine("parsing as 3.5.X .XML file");
+            Version35XMLFile v35xmlFile = new Version35XMLFile(this);
+            v35xmlFile.load(file);
+            logger.fine("3.5.x XML data loaded ok");
+            setState(STATE.FILE_LOADED);
+            setLoadedFromFile(true);
+        }
+        catch(Exception ex)
+        {
+            logger.log(Level.SEVERE, "Failed To Read Version 3.5.x XML-Based eID File", ex);
             securityClear();
             setState(STATE.IDLE);
         }
