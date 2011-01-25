@@ -82,9 +82,9 @@ CCard * SISCardConnectGetInstance(unsigned long ulVersion,const char *csReader,
 			int32_t tSetSyncCard[2] = {0, 5};
 			{
 				CAutoLock oAutoLock(poPCSC, hCard);
-
+				long lretVal = 0;
 				CByteArray oCmd((unsigned char *)tSetSyncCard, sizeof(tSetSyncCard));
-				poPCSC->Transmit(hCard, oCmd, SCARD_PCI_RAW);
+				poPCSC->Transmit(hCard, oCmd, &lretVal, SCARD_PCI_RAW);
 
 			}
 
@@ -154,13 +154,14 @@ static inline void BackToAsyncMode(SCARDHANDLE &hCard, CPCSC *poPCSC, const char
 {
 #ifdef __APPLE__
 	int32_t tSetAsyncCard[2] = {0, 0};
+	long lretVal = 0;
 	CByteArray oCmd((unsigned char *) tSetAsyncCard, sizeof(tSetAsyncCard));
 	SCARD_IO_REQUEST ioRecvPci;
 	poPCSC->EndTransaction(hCard);
 	poPCSC->Disconnect(hCard, SIS_DISPOSITION);
 	hCard = poPCSC->Connect(csReader, SCARD_SHARE_DIRECT, SIS_PROTOCOL);
 	poPCSC->BeginTransaction(hCard);
-	poPCSC->Transmit(hCard, oCmd, SCARD_PCI_RAW, &ioRecvPci);
+	poPCSC->Transmit(hCard, oCmd, &lretVal, SCARD_PCI_RAW, &ioRecvPci);
 #else
 	const unsigned char tucSetAyncCard[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 	CByteArray oCmd(tucSetAyncCard, sizeof(tucSetAyncCard));

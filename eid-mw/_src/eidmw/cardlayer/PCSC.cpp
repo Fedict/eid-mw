@@ -404,7 +404,7 @@ void CPCSC::Recover(SCARDHANDLE hCard, unsigned long * pulLockCount )
 	for (i = 0; (i < 10) && (lRet != SCARD_S_SUCCESS); i++)
 	{
 		if (i != 0)
-			Sleep(1000);
+			CThread::SleepMillisecs(1000);
 
 		lRet = SCardReconnect(hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &ap);
 		if ( lRet != SCARD_S_SUCCESS )
