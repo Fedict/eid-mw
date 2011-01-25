@@ -29,7 +29,7 @@ namespace EidSamples.tests
         [Test]
         public void ValidityAuthenticationChain()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             Integrity integrityTest = new Integrity();
             List<byte[]> caCerts = new List <byte[]>();
             caCerts.Add(dataTest.GetCertificateCAFile());
@@ -40,7 +40,7 @@ namespace EidSamples.tests
         [Test]
         public void ValiditySignatureChain()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             Integrity integrityTest = new Integrity();
             List<byte[]> caCerts = new List<byte[]>();
             caCerts.Add(dataTest.GetCertificateCAFile());

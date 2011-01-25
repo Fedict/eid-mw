@@ -33,53 +33,54 @@ namespace EidSamples.tests
         [Test]
         public void GetSlotDescription()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             Assert.AreEqual("ACS CCID USB Reader 0", dataTest.GetSlotDescription());
         }
         [Test]
         public void GetTokenInfoLabel()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             Assert.AreEqual("BELPIC", dataTest.GetTokenInfoLabel().Trim());
         }
 
         [Test]
         public void GetSurname()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             Assert.AreEqual("SPECIMEN", dataTest.GetSurname());
         }
         [Test]
         public void GetDateOfBirth()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             Assert.AreEqual("01 JAN 1971", dataTest.GetDateOfBirth());
         }
 
         [Test]
         public void GetIdFile()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             byte [] idFile = dataTest.GetIdFile();
             int i = 0;
             
             // poor man's tlv parser...
             // we'll check the first two tag fields (01 and 02)
             Assert.AreEqual(0x01, idFile[i++]); // Tag
-            i += idFile[i++];                   // Length - skip value
-            Assert.AreEqual(0x02, idFile[i++]); // Tag
+            i += idFile[i];                     // Length - skip value
+            i++;
+            Assert.AreEqual(0x02, idFile[i]); // Tag
         }
         [Test]
         public void GetCertificateLabels()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             List<string> labels = dataTest.GetCertificateLabels();
             Assert.True(labels.Contains("Authentication"),"Find Authentication certificate");
         }
         [Test]
         public void GetCertificateRNFile()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             byte[] certificateRNFile = dataTest.GetCertificateRNFile();
             X509Certificate certificateRN;
             Assert.DoesNotThrow(delegate { certificateRN = new X509Certificate(certificateRNFile); });
@@ -89,7 +90,7 @@ namespace EidSamples.tests
         [Test]
         public void GetCertificateRootFile()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             byte[] certificateFile = dataTest.GetCertificateRootFile();
             X509Certificate certificateRoot;
             Assert.DoesNotThrow(delegate { certificateRoot = new X509Certificate(certificateFile); });
@@ -100,7 +101,7 @@ namespace EidSamples.tests
         [Test]
         public void GetPhotoFile()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             byte[] photoFile = dataTest.GetPhotoFile();
             Bitmap photo = new Bitmap(new MemoryStream(photoFile));
             Assert.AreEqual(140, photo.Width);
@@ -110,7 +111,7 @@ namespace EidSamples.tests
         [Test]
         public void StoreCertificateRNFile()
         {
-            ReadData dataTest = new ReadData();
+            ReadData dataTest = new ReadData("beidpkcs11D.dll");
             byte[] certificateRNFile = dataTest.GetCertificateRNFile();
             X509Certificate2 certificateRN = new X509Certificate2(certificateRNFile);
             

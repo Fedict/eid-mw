@@ -36,17 +36,18 @@ namespace EidSamples
     class ReadData
     {
         private Module m = null;
+        private String mFileName;
         /// <summary>
         /// Default constructor. Will instantiate the beidpkcs11.dll pkcs11 module
         /// </summary>
         public ReadData()
         {
-            if (m == null)
-            {
-                m = Module.GetInstance("beidpkcs11.dll");
-            }
+            mFileName = "beidpkcs11.dll";
         }
-
+        public ReadData(String moduleFileName)
+        {
+            mFileName = moduleFileName;
+        }
         /// <summary>
         /// Gets the description of the first slot (cardreader) found
         /// </summary>
@@ -54,6 +55,10 @@ namespace EidSamples
         public string GetSlotDescription()
         { 
             String slotID;
+            if (m == null)
+            {
+                m = Module.GetInstance(mFileName);
+            } 
             m.Initialize();
             try
             {
@@ -78,6 +83,10 @@ namespace EidSamples
         public string GetTokenInfoLabel()
         {
             String tokenInfoLabel;
+            if (m == null)
+            {
+                m = Module.GetInstance(mFileName);
+            }
             m.Initialize();
             try
             {
@@ -100,96 +109,137 @@ namespace EidSamples
         /// <returns></returns>
         public string GetSurname()
         {
-            String name;
+            return GetData("Surname");
+        }
+
+        /// <summary>
+        /// Get date of birth of the owner. This is a language specific string
+        /// More info about the format can be found in the eid specs.
+        /// </summary>
+        /// <returns></returns>
+        public string GetDateOfBirth()
+        {
+            return GetData("Date_Of_Birth");
+        }
+        /// <summary>
+        /// Generic function to get string data objects from label
+        /// </summary>
+        /// <param name="label">Value of label attribute of the object</param>
+        /// <returns></returns>
+        public string GetData(String label)
+        {
+            String value = "";
+            if (m == null)
+            {
+                m = Module.GetInstance(mFileName);
+            }
+            // pkcs11 module init
             m.Initialize();
             try
             {
                 // Get the first slot (cardreader) with a token
-                Slot slot = m.GetSlotList(true)[0];
-                Session session = slot.Token.OpenSession(true);
-                
-                // Search for objects
-                // First, define a search template 
-                ByteArrayAttribute surnameLabel = new ByteArrayAttribute(CKA.LABEL);
-                surnameLabel.Value = System.Text.Encoding.UTF8.GetBytes("Surname");
-                session.FindObjectsInit(new P11Attribute[] {
-                        surnameLabel
-                    }
-                    );
-
-                Net.Sf.Pkcs11.Objects.Data surname = session.FindObjects(1)[0] as Net.Sf.Pkcs11.Objects.Data;
-
-                name = System.Text.Encoding.UTF8.GetString(surname.Value.Value);
-                session.FindObjectsFinal();
-            }
-            finally
-            {
-                m.Finalize_();
-            }
-            return name;
-
-        }
-        public string GetDateOfBirth()
-        {
-            String value;
-            m.Initialize();
-            try
-            {
                 Slot slot = m.GetSlotList(false)[0];
                 Session session = slot.Token.OpenSession(true);
-                ByteArrayAttribute dateOfBirthLabel = new ByteArrayAttribute(CKA.LABEL);
-                dateOfBirthLabel.Value = System.Text.Encoding.UTF8.GetBytes("Date_Of_Birth");
-                session.FindObjectsInit(new P11Attribute[] {
-                    dateOfBirthLabel
-                }
-                    );
 
-                Data dateOfBirth = session.FindObjects(1)[0] as Data;
-                value = System.Text.Encoding.UTF8.GetString(dateOfBirth.Value.Value);
+                // Search for objects
+                // First, define a search template 
+
+                // "The label attribute of the objects should equal ..."
+                ByteArrayAttribute labelAttribute = new ByteArrayAttribute(CKA.LABEL);
+                labelAttribute.Value = System.Text.Encoding.UTF8.GetBytes(label);
+                session.FindObjectsInit(new P11Attribute[] {
+                        labelAttribute
+                    }
+                 );
+                P11Object[] foundObjects = session.FindObjects(1);
+                if (foundObjects.Length != 0)
+                {
+                    Data data = foundObjects[0] as Data;
+                    value = System.Text.Encoding.UTF8.GetString(data.Value.Value);
+                }
                 session.FindObjectsFinal();
             }
             finally
             {
+                // pkcs11 finalize
                 m.Finalize_();
             }
             return value;
         }
+        /// <summary>
+        /// Return ID data file contents
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetIdFile()
         {
             return GetFile("DATA_FILE");
         }
+        /// <summary>
+        /// Return Address file contents
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetAddressFile()
         {
             return GetFile("ADDRESS_FILE");
         }
+        /// <summary>
+        /// Return Photo file contents
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetPhotoFile()
         {
             return GetFile("PHOTO");
         }
+        /// <summary>
+        /// Return ID file signature
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetIdSignatureFile()
         {
             return GetFile("SGN_DATA_FILE");
         }
+        /// <summary>
+        /// Return Address file signature
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetAddressSignatureFile()
         {
             return GetFile("SGN_ADDRESS_FILE");
         }
+        /// <summary>
+        /// Return RRN Certificate. This certificate is used to validate
+        /// the file signatures
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetCertificateRNFile()
         {
             return GetFile("CERT_RN_FILE");
         }
-        public byte[] GetCertificateRNCAFile()
-        {
-            return GetFile("CERT_RNCA_FILE");
-        }        
+
+        /// <summary>
+        /// Return raw byte data from objects
+        /// </summary>
+        /// <param name="Filename">Label value of the object</param>
+        /// <returns>byte array with file</returns>
         private byte[] GetFile(String Filename)
         {
             byte[] value = null;
+            // pkcs11 module init
+            if (m == null)
+            {
+                m = Module.GetInstance(mFileName);
+            }
             m.Initialize();
             try
             {
+                // Get the first slot (cardreader) with a token
                 Slot slot = m.GetSlotList(false)[0];
                 Session session = slot.Token.OpenSession(true);
+
+                // Search for objects
+                // First, define a search template 
+
+                // "The label attribute of the objects should equal ..."                
                 ByteArrayAttribute fileLabel = new ByteArrayAttribute(CKA.LABEL);
                 fileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Filename);
                 session.FindObjectsInit(new P11Attribute[] {
@@ -205,39 +255,67 @@ namespace EidSamples
             }
             finally
             {
+                // pkcs11 finalize
                 m.Finalize_();
             }
             return value;
         }
+        /// <summary>
+        /// Return the "authentication" leaf certificate file
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetCertificateAuthenticationFile()
         {
-            // Return the "authentication" leaf certificate file
             return GetCertificateFile("Authentication");
         }
+        /// <summary>
+        /// Return the "signature" leaf certificate file
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetCertificateSignatureFile()
         {
-            // Return the "signature" leaf certificate file
             return GetCertificateFile("Signature");
         }
+        /// <summary>
+        /// Return the Intermediate CA certificate file
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetCertificateCAFile()
         {
-            // return the Intermediate CA certificate file
             return GetCertificateFile("CA");
         }
+        /// <summary>
+        /// Return the root certificate file
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetCertificateRootFile()
         {
-            // return the root certificate file
             return GetCertificateFile("Root");
         }
+        /// <summary>
+        /// Return raw byte data from objects of object class Certificate
+        /// </summary>
+        /// <param name="Certificatename">Label value of the certificate object</param>
+        /// <returns>byte array with certificate file</returns>
         private byte[] GetCertificateFile(String Certificatename)
         {
             // returns Root Certificate on the eid.
             byte[] value = null;
+            // pkcs11 module init
+            if (m == null)
+            {
+                m = Module.GetInstance(mFileName);
+            }
             m.Initialize();
             try
             {
+                // Get the first slot (cardreader) with a token
                 Slot slot = m.GetSlotList(false)[0];
                 Session session = slot.Token.OpenSession(true);
+                // Search for objects
+                // First, define a search template 
+
+                // "The label attribute of the objects should equal ..."      
                 ByteArrayAttribute fileLabel = new ByteArrayAttribute(CKA.LABEL);
                 ObjectClassAttribute certificateAttribute = new ObjectClassAttribute(CKO.CERTIFICATE);
                 fileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Certificatename);
@@ -255,21 +333,34 @@ namespace EidSamples
             }
             finally
             {
+                // pkcs11 finalize
                 m.Finalize_();
             }
             return value;
 
         }
+        /// <summary>
+        /// Returns a list of PKCS11 labels of the certificate on the card
+        /// </summary>
+        /// <returns>List of labels of certificate objects</returns>
         public List <string> GetCertificateLabels()
         {
-            // Returns a list of PKCS11 labels of the certificate on the card
+            // pkcs11 module init
+            if (m == null)
+            {
+                m = Module.GetInstance(mFileName);
+            }
             m.Initialize();
             List<string> labels = new List<string>();
             try
             {
-
+                // Get the first slot (cardreader) with a token
                 Slot slot = m.GetSlotList(false)[0];
                 Session session = slot.Token.OpenSession(true);
+                // Search for objects
+                // First, define a search template 
+
+                // "The object class of the objects should be "certificate"" 
                 ObjectClassAttribute certificateAttribute = new ObjectClassAttribute(CKO.CERTIFICATE);
                 session.FindObjectsInit(new P11Attribute[] {
                      certificateAttribute
@@ -282,13 +373,11 @@ namespace EidSamples
                 {
                     labels.Add (new string (((X509PublicKeyCertificate)certificate).Label.Value));
                 }
-                
-                //certs. new X509Certificate(certificate.Value.Value);
-                
                 session.FindObjectsFinal();
             }
             finally
             {
+                // pkcs11 finalize
                 m.Finalize_();
             }
             return labels;
