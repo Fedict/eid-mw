@@ -25,6 +25,7 @@
 		7F8272960F7D320800562D6B /* QtGui in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 7F8272950F7D320800562D6B /* QtGui */; };
 		7F82729C0F7D323400562D6B /* QtCore in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 7F82729B0F7D323400562D6B /* QtCore */; };
 		7F8272A00F7D328800562D6B /* libqjpeg.dylib in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 7F82729F0F7D328800562D6B /* libqjpeg.dylib */; };
+		860DA2311238CFD5005BF430 /* accessibleDialogbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 860DA2301238CFD5005BF430 /* accessibleDialogbox.cpp */; };
 		8A902E27A74E84C101386F26 /* confirmdialogbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 967EC3875E76CF0764A16CBC /* confirmdialogbox.cpp */; settings = {ATTRIBUTES = (); }; };
 		9C4EB9463FAB6EA95A648A54 /* ezinstaller.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 4F09AA4D05E1208F13828DDC /* ezinstaller.cpp */; settings = {ATTRIBUTES = (); }; };
 		C2643FEB592DBFD1429BE4E1 /* QtXml.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 8EE92F8FA333C9E415C5B34E /* QtXml.framework */; };
@@ -84,6 +85,8 @@
 		7F82729D0F7D326300562D6B /* QtXml */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = QtXml; path = /Library/Frameworks/QtXml.framework/Versions/4/QtXml; sourceTree = "<absolute>"; };
 		7F82729F0F7D328800562D6B /* libqjpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqjpeg.dylib; path = Applications/Qt/plugins/imageformats/libqjpeg.dylib; sourceTree = DEVELOPER_DIR; };
 		821416211D63F190AAAD016A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		860DA2301238CFD5005BF430 /* accessibleDialogbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = accessibleDialogbox.cpp; sourceTree = "<group>"; };
+		860DA2321238CFF5005BF430 /* accessibleDialogbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = accessibleDialogbox.h; sourceTree = "<group>"; };
 		8EE92F8FA333C9E415C5B34E /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtXml.framework; path = /Library/Frameworks/QtXml.framework; sourceTree = "<absolute>"; };
 		8F275E9ED88AF4F4EEA9AAB7 /* qrc_ezResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_ezResources.cpp; path = GeneratedFiles/qrc_ezResources.cpp; sourceTree = "<group>"; };
 		932DC0543AC706CF4F45F444 /* wildcards.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wildcards.h; sourceTree = "<group>"; };
@@ -185,6 +188,7 @@
 		883D7615C4D2DE3FA1218F12 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				860DA2321238CFF5005BF430 /* accessibleDialogbox.h */,
 				7B9AD4890E924ABA00CA09FE /* SysDiagnost.h */,
 				AAB6DA0FBE09B552AD3F90BD /* ezinstaller.h */,
 				E9345AA1234C49A91E5C86C7 /* ezWorker.h */,
@@ -236,6 +240,7 @@
 		FB61758D0F0FDA4BA867C3D5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				860DA2301238CFD5005BF430 /* accessibleDialogbox.cpp */,
 				7BF6BCD20F5C260100A519EB /* sysdiagnost.cpp */,
 				4F09AA4D05E1208F13828DDC /* ezinstaller.cpp */,
 				F165FDB690E3A2FA0911E8A5 /* ezWorker.cpp */,
@@ -362,6 +367,7 @@
 				7B7592280E92861900C0B9E8 /* moc_confirmdialogbox.cpp in Build Sources */,
 				7B7592290E92861900C0B9E8 /* moc_ezinstaller.cpp in Build Sources */,
 				7BF6BCD30F5C260100A519EB /* sysdiagnost.cpp in Build Sources */,
+				860DA2311238CFD5005BF430 /* accessibleDialogbox.cpp in Build Sources */,
 			);
 			name = "Build Sources";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,14 +612,12 @@
 		8DB1DD96F65B1BF1FFC506E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					ppc,
-				);
+				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				SDKROOT = macosx10.5;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
