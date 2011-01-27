@@ -24,6 +24,7 @@ import be.fedict.eidviewer.gui.file.Version35EidFile;
 import be.fedict.eidviewer.gui.file.Version35XMLFile;
 import be.fedict.eidviewer.gui.file.Version4EidFile;
 import be.fedict.eidviewer.gui.file.Version4File;
+import be.fedict.eidviewer.gui.file.Versions;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.trust.client.TrustServiceDomains;
 import java.awt.Image;
@@ -43,8 +44,6 @@ import java.util.TimerTask;
 import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
 import javax.smartcardio.CardException;
-import org.simpleframework.xml.core.ElementException;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -713,54 +712,54 @@ public class EidController extends Observable implements Runnable, Observer
         }
     }
 
-    public void loadFromXMLFile(File file)
+    public void loadFromXMLFile(File file) throws FileNotFoundException, IOException
     {
         setState(STATE.FILE_LOADING);
 
-        try
+        switch(Versions.getXMLFileVersion(file))
         {
-            logger.fine("parsing as 4.0 .XML file");
-            Version4File v4File=Version4File.fromXML(new FileInputStream(file));
-            logger.fine("parsed as 4.0 .XML file");
-            setIdentity(v4File.toIdentity());
-            setAddress(v4File.toAddress());
-            setPhoto(v4File.toPhoto());
-            setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, v4File.toAuthChain()));
-            setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, v4File.toSignChain()));
-            setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, v4File.toRRNChain()));
-            setState(STATE.FILE_LOADED);
-            logger.fine("4.0 XML data loaded ok");
-            setLoadedFromFile(true);
-        }
-        catch (ElementException eex)
-        {
-            logger.log(Level.FINE, "This is not a Version 4.0 XML Based File", eex);
-            setState(STATE.IDLE);
-        }
-        catch (Exception ex)
-        {
-            logger.log(Level.SEVERE, "Failed To Read Version 4.x.x XML-Based eID File", ex);
-            securityClear();
-            setState(STATE.IDLE);
-        }
+            case 4:
+            try
+            {
+                logger.fine("parsing as 4.0 .XML file");
+                Version4File v4File=Version4File.fromXML(new FileInputStream(file));
+                logger.fine("parsed as 4.0 .XML file");
+                setIdentity(v4File.toIdentity());
+                setAddress(v4File.toAddress());
+                setPhoto(v4File.toPhoto());
+                setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, v4File.toAuthChain()));
+                setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, v4File.toSignChain()));
+                setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, v4File.toRRNChain()));
+                setState(STATE.FILE_LOADED);
+                logger.fine("4.0 XML data loaded ok");
+                setLoadedFromFile(true);
+            }
+            catch (Exception ex)
+            {
+                logger.log(Level.SEVERE, "Failed To Read Version 4.x.x XML-Based eID File", ex);
+                securityClear();
+                setState(STATE.IDLE);
+                return;
+            }
+            break;
 
-        if(isLoadedFromFile())
-            return;
-
-        try
-        {
-            logger.fine("parsing as 3.5.X .XML file");
-            Version35XMLFile v35xmlFile = new Version35XMLFile(this);
-            v35xmlFile.load(file);
-            logger.fine("3.5.x XML data loaded ok");
-            setState(STATE.FILE_LOADED);
-            setLoadedFromFile(true);
-        }
-        catch(Exception ex)
-        {
-            logger.log(Level.SEVERE, "Failed To Read Version 3.5.x XML-Based eID File", ex);
-            securityClear();
-            setState(STATE.IDLE);
+            case 3:
+            try
+            {
+                logger.fine("parsing as 3.5.X .XML file");
+                Version35XMLFile v35xmlFile = new Version35XMLFile(this);
+                v35xmlFile.load(file);
+                logger.fine("3.5.x XML data loaded ok");
+                setState(STATE.FILE_LOADED);
+                setLoadedFromFile(true);
+            }
+            catch(Exception ex)
+            {
+                logger.log(Level.SEVERE, "Failed To Read Version 3.5.x XML-Based eID File", ex);
+                securityClear();
+                setState(STATE.IDLE);
+            }
+            break;
         }
     }
 

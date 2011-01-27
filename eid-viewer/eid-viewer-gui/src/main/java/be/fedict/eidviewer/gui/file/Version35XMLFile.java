@@ -140,10 +140,10 @@ public class Version35XMLFile extends DefaultHandler
 
             if (rrnCert != null)
             {
-                List signChain = new LinkedList<X509Certificate>();
-                signChain.add(rrnCert);
-                signChain.add(rootCert);
-                controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, signChain));
+                List rrnChain = new LinkedList<X509Certificate>();
+                rrnChain.add(rrnCert);
+                rrnChain.add(rootCert);
+                controller.setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, rrnChain));
             }
         }
     }

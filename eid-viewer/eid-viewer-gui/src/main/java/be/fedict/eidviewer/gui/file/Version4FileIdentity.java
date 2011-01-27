@@ -121,7 +121,7 @@ public final class Version4FileIdentity
         GregorianCalendar       birthDateCalendar=new GregorianCalendar();
                                 birthDateCalendar.setTime(dateFormat.parse(getDateOfBirth()));
         eidIdentity.dateOfBirth=birthDateCalendar;
-        eidIdentity.gender=getGender().equals("M")?Gender.MALE:Gender.FEMALE;
+        eidIdentity.gender=getGender().equals("male")?Gender.MALE:Gender.FEMALE;
 
         if(getNobleCondition()!=null)
             eidIdentity.nobleCondition=getNobleCondition();
@@ -135,7 +135,7 @@ public final class Version4FileIdentity
             eidIdentity.duplicate=getDuplicate();
 
         eidIdentity.name=getName();
-        eidIdentity.firstName=getName();
+        eidIdentity.firstName=getFirstName();
         eidIdentity.middleName=getMiddleName();
         eidIdentity.nationality=getNationality();
         eidIdentity.placeOfBirth=getPlaceOfBirth();

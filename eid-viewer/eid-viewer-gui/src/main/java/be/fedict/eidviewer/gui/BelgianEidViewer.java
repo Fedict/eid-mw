@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
@@ -31,6 +32,7 @@ import be.fedict.eid.applet.Messages;
 import be.fedict.eid.applet.Messages.MESSAGE_ID;
 import be.fedict.eid.applet.Status;
 import be.fedict.eid.applet.View;
+import be.fedict.eidviewer.gui.file.Versions;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.eidviewer.lib.EidFactory;
 import java.awt.Component;
@@ -468,44 +470,45 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     }
 
     @Action
-    public void openFile()
+    public void openFile() throws FileNotFoundException, IOException
     {
         logger.fine("Open action chosen..");
         final JFileChooser fileChooser = new JFileChooser();
 
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        fileChooser.setAcceptAllFileFilterUsed(false);
 
         fileChooser.addChoosableFileFilter(new FileFilter()
         {
             public boolean accept(File file)
             {
-                if(!file.canRead())
-                    return false;
+                if(file.isDirectory())
+                    return true;
 
-                if((!file.getName().endsWith(".eid")) && (!file.getName().endsWith(".EID")))
-                    return false;
-
-                return true;
+                int xmlVersion=Versions.getXMLFileVersion(file);
+                return (xmlVersion==3 || xmlVersion==4 || Versions.getCSVFileVersion(file)==1 || Versions.isTLVEidFile(file)==true);
             }
 
             @Override
             public String getDescription()
             {
-                return "eID 3.5.x .eid files";
+                return "All eID files";
             }
+        });
+
+        fileChooser.addChoosableFileFilter(new FileFilter()
+        {
+            public boolean  accept(File file) { return file.isDirectory() || Versions.isTLVEidFile(file);  }
+            
+            @Override
+            public String   getDescription()  { return "eID 3.5.x .eid files"; }
         });
 
         fileChooser.addChoosableFileFilter(new FileFilter()
         {
             public boolean accept(File file)
             {
-                if(!file.canRead())
-                    return false;
-
-                if((!file.getName().endsWith(".csv")) && (!file.getName().endsWith(".CSV")))
-                    return false;
-
-                return true;
+                return (file.isDirectory() || Versions.getCSVFileVersion(file)==1);
             }
 
             @Override
@@ -519,13 +522,17 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         {
             public boolean accept(File file)
             {
-                if(!file.canRead())
-                    return false;
-
-                if((!file.getName().endsWith(".xml")) && (!file.getName().endsWith(".XML")))
-                    return false;
-
-                return true;
+                if(file.isDirectory())
+                    return true;
+                    
+                switch (Versions.getXMLFileVersion(file))
+                {
+                    case 3:
+                    case 4:
+                        return true;
+                }
+                
+                return false;
             }
 
             @Override
@@ -535,9 +542,14 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
             }
         });
 
+
+
         if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
         {
             File file=fileChooser.getSelectedFile();
+
+            if(file.isDirectory())
+                return;
 
             if(file.getName().toLowerCase().endsWith(".eid"))
             {
