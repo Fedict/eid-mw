@@ -139,7 +139,10 @@ bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 			wideReader.c_str(), dlgUsage,
 			widePinLabel.c_str(), wideMesg.c_str(), pulDlgHandle);
 	}
+#else
+  return false;
 #endif
+
 }
 
 void CPinpadLib::CloseDlg(unsigned long ulDlgHandle)
