@@ -24,9 +24,8 @@ using namespace eIDMW;
 
 CK_BYTE AllowCardReading(void)
 {
-	CK_BYTE bDispResp = P11_DISPLAY_NO;
 #ifndef NO_DIALOGS
-
+	CK_BYTE bDispResp = P11_DISPLAY_NO;
 #if defined(WIN32) || defined (__APPLE__)
 	DlgRet retVal = DlgDisplayModal(DLG_ICON_WARN,DLG_MESSAGE_USER_WARNING,L"",DLG_BUTTON_YES + DLG_BUTTON_NO, DLG_BUTTON_YES, DLG_BUTTON_NO);
 #else
@@ -42,7 +41,9 @@ CK_BYTE AllowCardReading(void)
 	else if (retVal == DLG_CANCEL)
 	{
 		bDispResp = P11_DISPLAY_CANCEL;
-	}		
-#endif
+	}
 	return bDispResp;
+#else
+  	return P11_DISPLAY_YES;
+#endif
 }
