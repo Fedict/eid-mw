@@ -52,13 +52,13 @@
 	  <Directory Id="SystemFolder">
 	      <!-- C:\Windows\SysWow64: 32 bit -->
           <Component Id="beidmdrvsystem32" Guid="6237d420-e40c-11de-8a39-0800200c9a66" Permanent="yes">
-            <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="$(sys.SOURCEFILEDIR)Release\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
+            <File Id="system32_beidmdrv.dll" Name="beidmdrv.dll" Source="$(sys.SOURCEFILEDIR)Release\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
           </Component>
   	  </Directory>
 	  <Directory Id="System64Folder">
 	      <!-- C:\Windows\System32: 64 bit dll -->
           <Component Id="beidmdrvsystem64" Guid="65721790-e40c-11de-8a39-0800200c9a66" Permanent="yes" Win64="yes">
-            <File Id="system64_beidmdrv.dll" Name="beidmdrv64.dll" Source="$(sys.SOURCEFILEDIR)Release\beidmdrv64.dll" KeyPath="yes" DiskId="1" />
+            <File Id="system64_beidmdrv.dll" Name="beidmdrv.dll" Source="$(sys.SOURCEFILEDIR)Release\beidmdrv64.dll" KeyPath="yes" DiskId="1" />
           </Component>
   	  </Directory>
 	</Directory>

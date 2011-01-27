@@ -51,7 +51,7 @@
     <!-- Not on all OS'ses the inf installation works OK, so we put the minidriver in system32 ourselves -->
 	  <Directory Id="SystemFolder">
           <Component Id="beidmdrvsystem32" Guid="a8259480-e408-11de-8a39-0800200c9a66" Permanent="yes">
-            <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="$(sys.SOURCEFILEDIR)Release\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
+            <File Id="system32_beidmdrv.dll" Name="beidmdrv.dll" Source="$(sys.SOURCEFILEDIR)Release\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
           </Component>
   	  </Directory>
 	</Directory>
