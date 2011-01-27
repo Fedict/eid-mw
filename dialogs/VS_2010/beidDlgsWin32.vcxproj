@@ -195,7 +195,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\common\src;.\;..\..\common\VS_2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NO_DIALOG;BEID_35;WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -281,7 +281,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\common\src;.\;..\..\common\VS_2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NO_DIALOG;BEID_35;WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -361,7 +361,7 @@
     </BuildLog>
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\common\src;.\;..\..\common\VS_2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NO_DIALOG;BEID_35;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeader>
@@ -449,7 +449,7 @@
     </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\common\src;.\;..\..\common\VS_2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NO_DIALOG;BEID_35;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;DLGSWIN32_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeader>
