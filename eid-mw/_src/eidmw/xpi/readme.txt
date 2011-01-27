@@ -9,7 +9,7 @@ How to create a development environment
 	* Create a profile (Name=dev)
 2. Start Firefox with the new profile
 3. Close Firefox
-4. Edit the file belgiumeid@eid.belgium.be: Change the path to your extension dir: <path>\belgiumeid
+4. Create a file belgiumeid@eid.belgium.be. This file should contain the path to the your development directory where install.rdf can be found. 
 5. Search the profile directory. In Windows it is something like <User Folder>\AppData\Roaming\Mozilla\Firefox\Profiles\xxxxxxx.dev
      * Windows Vista, 7        Users\<UserName>\AppData\Roaming\Mozilla\Firefox\Profiles\xxxxxxx.dev
      * Windows 2000, XP 	    Documents and Settings\<UserName>\Application Data\Mozilla\Firefox\Profiles\xxxxxxx.dev

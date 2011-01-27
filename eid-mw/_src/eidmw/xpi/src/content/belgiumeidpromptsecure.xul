@@ -16,17 +16,12 @@
   - License along with this software; if not, see
   - http://www.gnu.org/licenses/.
 -->
-<?xml-stylesheet href="chrome://belgiumeid/skin/overlay.css" type="text/css"?>
 <!DOCTYPE overlay SYSTEM "chrome://belgiumeid/locale/belgiumeid.dtd">
 <overlay id="belgiumeid-overlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="chrome://global/content/strres.js"/>
-    
-  <script src="overlay.js"/>
-  <script src="BelgiumEidPKCS11.js"/>
+
+  <script src="chrome://belgiumeid/content/belgiumeidpromptsecure.js"/>
+
   
-  <stringbundleset id="stringbundleset">
-    <stringbundle id="belgiumeid-strings" src="chrome://belgiumeid/locale/belgiumeid.properties"/>
-  </stringbundleset>
 
 </overlay>
