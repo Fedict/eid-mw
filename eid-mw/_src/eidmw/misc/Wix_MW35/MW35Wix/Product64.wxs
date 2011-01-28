@@ -142,6 +142,7 @@
                 <Directory Id="XPILOCALEENFOLDER" Name="en-US"/>
                 <Directory Id="XPILOCALEFRFOLDER" Name="fr-FR"/>
                 <Directory Id="XPILOCALENLFOLDER" Name="nl-NL"/>
+				        <Directory Id="XPILOCALEDEFOLDER" Name="de-DE"/>
               </Directory>
               <Directory Id="XPISKINFOLDER" Name="skin"/>
             </Directory>
@@ -336,6 +337,15 @@
       </Component>
     </DirectoryRef>
 
+	<DirectoryRef Id="XPILOCALEDEFOLDER">
+      <Component Id="XPIlocalede" Guid="{54BC660D-7C9D-4ddc-AA96-29D7A5DD0E53}" KeyPath="no">
+        <CreateFolder>
+          <util:PermissionEx GenericAll="yes" User="Users" />
+        </CreateFolder>
+        <File Id="belgiumeid.properties.de" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\de-DE\belgiumeid.properties" />
+      </Component>
+    </DirectoryRef>
+	
     <DirectoryRef Id="XPISKINFOLDER">
       <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no">
         <CreateFolder>
@@ -343,6 +353,7 @@
         </CreateFolder>
         <File Id="overlay.css" Name="overlay.css" KeyPath="no" Source="..\..\..\xpi\src\skin\overlay.css" />
         <File Id="icon.png" Name="icon.png" KeyPath="no" Source="..\..\..\xpi\src\skin\icon.png" />
+		<File Id="icon40x40.png" Name="icon40x40.png" KeyPath="no" Source="..\..\..\xpi\src\skin\icon40x40.png" />
       </Component>
     </DirectoryRef>
     
@@ -756,6 +767,7 @@
       <ComponentRef Id="XPIlocaleen"/>
       <ComponentRef Id="XPIlocalefr"/>
       <ComponentRef Id="XPIlocalenl"/>
+      <ComponentRef Id="XPIlocalede"/>
       <ComponentRef Id="XPIskin"/>         
 
       <!-- System32 -->
