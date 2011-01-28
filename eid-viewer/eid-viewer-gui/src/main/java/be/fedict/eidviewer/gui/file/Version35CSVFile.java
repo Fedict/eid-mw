@@ -23,7 +23,7 @@ import be.fedict.eid.applet.service.Gender;
 import be.fedict.eid.applet.service.Identity;
 import be.fedict.eid.applet.service.impl.tlv.DataConvertorException;
 import be.fedict.eid.applet.service.impl.tlv.DateOfBirthDataConvertor;
-import be.fedict.eidviewer.gui.EidController;
+import be.fedict.eidviewer.gui.EidData;
 import be.fedict.eidviewer.gui.X509CertificateChainAndTrust;
 import be.fedict.trust.client.TrustServiceDomains;
 import java.io.BufferedReader;
@@ -88,12 +88,18 @@ public class Version35CSVFile
     private X509Certificate     authenticationCert  = null;
     private X509Certificate     signingCert         = null;
     private X509Certificate     rrnCert             = null;
-    private EidController       controller;
+    private EidData             eidData;
     DateFormat                  dateFormat;
 
-    public Version35CSVFile(EidController controller)
+    public static void load(File file, EidData eidData) throws CertificateException, IOException
     {
-        this.controller=controller;
+        Version35CSVFile v35CVSFile=new Version35CSVFile(eidData);
+                         v35CVSFile.load(file);
+    }
+
+    public Version35CSVFile(EidData eidData)
+    {
+        this.eidData=eidData;
         dateFormat=new SimpleDateFormat("dd.MM.yyyy");
     }
 
@@ -133,10 +139,10 @@ public class Version35CSVFile
             }
 
             if(identity!=null)
-                controller.setIdentity(identity);
+                eidData.setIdentity(identity);
 
             if(address!=null)
-                controller.setAddress(address);
+                eidData.setAddress(address);
         }
 
         if(rootCert != null && citizenCert != null)
@@ -150,7 +156,7 @@ public class Version35CSVFile
                 authChain.add(authenticationCert);
                 authChain.add(citizenCert);
                 authChain.add(rootCert);
-                controller.setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, authChain));
+                eidData.setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, authChain));
             }
 
             if (signingCert != null)
@@ -160,7 +166,7 @@ public class Version35CSVFile
                 signChain.add(signingCert);
                 signChain.add(citizenCert);
                 signChain.add(rootCert);
-                controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain));
+                eidData.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain));
             }
 
             if (rrnCert != null)
@@ -169,7 +175,7 @@ public class Version35CSVFile
                 List rrnChain = new LinkedList<X509Certificate>();
                 rrnChain.add(rrnCert);
                 rrnChain.add(rootCert);
-                controller.setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, rrnChain));
+                eidData.setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, rrnChain));
             }
         }
     }
@@ -295,7 +301,7 @@ public class Version35CSVFile
             break;
 
             case PHOTO:
-            controller.setPhoto(Base64.decodeBase64(token));
+            eidData.setPhoto(Base64.decodeBase64(token));
             break;
 
             case AUTHCERTIFICATE:

@@ -29,7 +29,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.awt.print.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ import java.util.logging.Logger;
  *
  * @author Frank Marien
  */
-public class IDPrintout implements Printable
+public class IDPrintout implements Printable,ImageObserver
 {
     private static final Logger             logger=Logger.getLogger(CertificatesPanel.class.getName());
     
@@ -60,13 +60,13 @@ public class IDPrintout implements Printable
     private DateFormat      dateFormat;
     private Identity        identity;
     private Address         address;
-    private BufferedImage   photo, coatOfArms;
+    private Image           photo, coatOfArms;
 
     public IDPrintout()
     {
         bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/IDPrintout");
         dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
-        coatOfArms = ImageUtilities.getBufferedImage(IDPrintout.class, ICONS, bundle.getString("coatOfArms"));
+        coatOfArms = ImageUtilities.getImage(IDPrintout.class, ICONS+bundle.getString("coatOfArms"));
     }
 
     public void setIdentity(Identity identity)
@@ -81,7 +81,7 @@ public class IDPrintout implements Printable
 
     public void setPhoto(Image photo)
     {
-        this.photo = ImageUtilities.makeBufferedImage(photo);
+        this.photo = photo;
     }
 
     public int print(Graphics graphics, PageFormat pageFormat, int pageNumber) throws PrinterException
@@ -105,7 +105,7 @@ public class IDPrintout implements Printable
         // photo images are stored at approx 36 DPI, scale 1/2 to get to Java default of 72DPI
         AffineTransform photoTransform = new AffineTransform();
         photoTransform.scale(0.5, 0.5);
-        photoTransform.translate((imageableWidth*2)-(photo.getWidth()),0);
+        photoTransform.translate((imageableWidth*2)-(photo.getWidth(this)),0);
 
         // make sure foreground is black, and draw coat of Arms and photo at the top of the page
         // using the transforms to scale them to 72DPI.
@@ -115,9 +115,9 @@ public class IDPrintout implements Printable
 
         // calculate some sizes that need to take into account the scaling of the graphics, to avoid dragging
         // those non-intuitive "/2" further along in the code.
-        float headerHeight=coatOfArms.getHeight()/2;
-        float coatOfArmsWidth=coatOfArms.getWidth()/2;
-        float photoWidth=photo.getWidth()/2;
+        float headerHeight=coatOfArms.getHeight(this)/2;
+        float coatOfArmsWidth=coatOfArms.getWidth(this)/2;
+        float photoWidth=photo.getWidth(this)/2;
         float headerSpaceBetweenImages = imageableWidth - (coatOfArmsWidth + photoWidth + (SPACE_BETWEEN_ITEMS * 2));
 
         // get localised strings for card type. We'll take a new line every time a ";" is found in the resource
@@ -286,6 +286,12 @@ public class IDPrintout implements Printable
     {
         String labelStr = bundle.getString(labelName);
         list.add(new IdentityAttribute(labelStr, value).setRelevant(relevant));
+    }
+
+    public boolean imageUpdate(Image image, int i, int i1, int i2, int i3, int i4)
+    {
+        logger.log(Level.FINEST, "ImageUpdate{0}{1}{2}{3}{4}", new Object[]{i, i1, i2, i3, i4});
+        return true;
     }
 
     private class IdentityAttribute

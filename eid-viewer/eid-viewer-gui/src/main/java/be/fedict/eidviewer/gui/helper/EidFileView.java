@@ -18,22 +18,42 @@
 
 package be.fedict.eidviewer.gui.helper;
 
-import java.awt.Image;
+import java.io.File;
+import java.util.ResourceBundle;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.filechooser.FileView;
 
 /**
  *
  * @author Frank Marien
  */
-public class ImageUtilities
+public class EidFileView extends FileView
 {
-    public static Image getImage(Class clazz, String path)
+    private static final String ICONS = "resources/icons/";
+    private ResourceBundle bundle;
+    private ImageIcon      eidIcon;
+
+    public EidFileView(ResourceBundle bundle)
     {
-        return getIcon(clazz,path).getImage();
+        super();
+        this.bundle = bundle;
+        eidIcon=ImageUtilities.getIcon(this.getClass(),ICONS+"eid_small.png");
     }
 
-    public static ImageIcon getIcon(Class clazz, String path)
+    @Override
+    public Icon getIcon(File file)
     {
-        return (new ImageIcon(clazz.getResource(path)));
+        if(!file.isFile())
+            return null;
+        return eidIcon;
+    }
+
+    @Override
+    public String getTypeDescription(File file)
+    {
+        if(!file.isFile())
+            return null;
+        return bundle.getString("eidFileDescription");
     }
 }

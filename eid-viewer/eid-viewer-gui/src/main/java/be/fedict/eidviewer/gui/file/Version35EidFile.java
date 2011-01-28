@@ -21,6 +21,7 @@ import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
 import be.fedict.eid.applet.service.impl.tlv.TlvParser;
 import be.fedict.eidviewer.gui.EidController;
+import be.fedict.eidviewer.gui.EidData;
 import be.fedict.eidviewer.gui.X509CertificateChainAndTrust;
 import be.fedict.trust.client.TrustServiceDomains;
 import java.io.ByteArrayInputStream;
@@ -55,7 +56,7 @@ public class Version35EidFile
     private static final byte BEID_TLV_TAG_FILE_CERTS = 0x0C;
     private static final byte BEID_TLV_TAG_FILE_PINS = 0x0D;
 
-    public static void load(File file, EidController controller) throws CertificateException, FileNotFoundException, IOException
+    public static void load(File file, EidData eidData) throws CertificateException, FileNotFoundException, IOException
     {
         CertificateFactory certificateFactory = null;
         X509Certificate rootCert = null;
@@ -76,15 +77,15 @@ public class Version35EidFile
             switch (entry.tag)
             {
                 case BEID_TLV_TAG_FILE_ID:
-                    controller.setIdentity(TlvParser.parse(entry.data, Identity.class));
+                    eidData.setIdentity(TlvParser.parse(entry.data, Identity.class));
                     break;
 
                 case BEID_TLV_TAG_FILE_ADDR:
-                    controller.setAddress(TlvParser.parse(entry.data, Address.class));
+                    eidData.setAddress(TlvParser.parse(entry.data, Address.class));
                     break;
 
                 case BEID_TLV_TAG_FILE_PHOTO:
-                    controller.setPhoto(entry.data);
+                    eidData.setPhoto(entry.data);
                     break;
 
                 case BEID_TLV_TAG_FILE_CERTS:
@@ -166,7 +167,7 @@ public class Version35EidFile
                 authChain.add(authenticationCert);
                 authChain.add(citizenCert);
                 authChain.add(rootCert);
-                controller.setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, authChain));
+                eidData.setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, authChain));
             }
 
             if (signingCert != null)
@@ -176,7 +177,7 @@ public class Version35EidFile
                 signChain.add(citizenCert);
                 signChain.add(rootCert);
 
-                controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain));
+                eidData.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain));
             }
 
             if (rrnCert != null)
@@ -184,7 +185,7 @@ public class Version35EidFile
                 List signChain = new LinkedList<X509Certificate>();
                 signChain.add(rrnCert);
                 signChain.add(rootCert);
-                controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, signChain));
+                eidData.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, signChain));
             }
         }
     }

@@ -653,9 +653,9 @@ public class CertificatesPanel extends javax.swing.JPanel implements Observer, T
 
         public CertAndTrustCellRenderer()
         {
-            certIcon                    = new ImageIcon(ImageUtilities.getImage(CertificatesPanel.class, ICONS, "certificate_small.png"));
-            certTrustedIcon             = new ImageIcon(ImageUtilities.getImage(CertificatesPanel.class, ICONS, "certificate_trusted_small.png"));
-            certInvalidIcon             = new ImageIcon(ImageUtilities.getImage(CertificatesPanel.class, ICONS, "certificate_invalid_small.png"));
+            certIcon                    = ImageUtilities.getIcon(CertificatesPanel.class, ICONS+"certificate_small.png");
+            certTrustedIcon             = ImageUtilities.getIcon(CertificatesPanel.class, ICONS+"certificate_trusted_small.png");
+            certInvalidIcon             = ImageUtilities.getIcon(CertificatesPanel.class, ICONS+"certificate_invalid_small.png");
             defaultSelectedForeground   =UIManager.getColor("Tree.selectionForeground");
             defaultForeground           =UIManager.getColor("Tree.textForeground");
             redForeground               =redder(defaultForeground);

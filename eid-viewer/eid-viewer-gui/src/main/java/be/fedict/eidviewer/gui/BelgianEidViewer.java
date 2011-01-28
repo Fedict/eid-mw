@@ -32,11 +32,13 @@ import be.fedict.eid.applet.Messages;
 import be.fedict.eid.applet.Messages.MESSAGE_ID;
 import be.fedict.eid.applet.Status;
 import be.fedict.eid.applet.View;
-import be.fedict.eidviewer.gui.file.Versions;
+import be.fedict.eidviewer.gui.helper.EidFileFilter;
+import be.fedict.eidviewer.gui.helper.EidFilePreviewAccessory;
+import be.fedict.eidviewer.gui.helper.EidFileView;
+import be.fedict.eidviewer.gui.helper.ImageUtilities;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.eidviewer.lib.EidFactory;
 import java.awt.Component;
-import java.awt.Toolkit;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.EnumMap;
@@ -60,7 +62,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.filechooser.FileFilter;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 
@@ -86,6 +87,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private CardPanel cardPanel;
     private PreferencesPanel preferencesPanel;
     private LogPanel logPanel;
+    private ImageIcon eidIcon;
     private javax.swing.Action printAction, openAction, saveAction, closeAction;
 
     public BelgianEidViewer()
@@ -297,54 +299,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void addDetailMessage(String detailMessage)
-    {
-        logger.finest(detailMessage);
-    }
-
-    public void setStatusMessage(Status status, MESSAGE_ID messageId)
-    {
-        String message = coreMessages.getMessage(messageId);
-        logger.info(message);
-    }
-
-    public boolean privacyQuestion(boolean includeAddress, boolean includePhoto, String identityDataUsage)
-    {
-        // this app's only purpose being to read eID cards.. asking "are you sure" is merely annoying to the user
-        // and gives no extra security whatsoever
-        // (the privacyQuestion was designed for Applets, where it makes a *lot* of sense)
-        return true;
-    }
-
-    public Component getParentComponent()
-    {
-        return this;
-    }
-
-    public void addTestResult(DiagnosticTests diagnosticTest, boolean success, String description)
-    {
-        // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
-    }
-
-    public void resetProgress(int max)
-    {
-        // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
-    }
-
-    public void increaseProgress()
-    {
-        // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
-    }
-
-    private void setProgress(final int progress)
-    {
-       // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
-    }
-
-    public void setProgressIndeterminate()
-    {
-        // we're not using the Applet Core's diagnostics, but the interface forces us to implement this
-    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     JMenu fileMenu;
@@ -387,13 +342,13 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private void initIcons()
     {
         cardStatusIcons = new EnumMap<EidController.STATE, ImageIcon>(EidController.STATE.class);
-        cardStatusIcons.put(EidController.STATE.NO_READERS, getIcon(EidController.STATE.NO_READERS + EXTENSION_PNG));
-        cardStatusIcons.put(EidController.STATE.ERROR, getIcon(EidController.STATE.ERROR + EXTENSION_PNG));
-        cardStatusIcons.put(EidController.STATE.NO_EID_PRESENT, getIcon(EidController.STATE.NO_EID_PRESENT + EXTENSION_PNG));
-        cardStatusIcons.put(EidController.STATE.EID_PRESENT, getIcon(EidController.STATE.EID_PRESENT + EXTENSION_PNG));
-        cardStatusIcons.put(EidController.STATE.FILE_LOADING, getIcon(EidController.STATE.FILE_LOADING + EXTENSION_PNG));
-        cardStatusIcons.put(EidController.STATE.FILE_LOADED, getIcon(EidController.STATE.FILE_LOADED + EXTENSION_PNG));
-        cardStatusIcons.put(EidController.STATE.EID_YIELDED, getIcon(EidController.STATE.EID_YIELDED + EXTENSION_PNG));
+        cardStatusIcons.put(EidController.STATE.NO_READERS,     ImageUtilities.getIcon(this.getClass(),ICONS+EidController.STATE.NO_READERS + EXTENSION_PNG));
+        cardStatusIcons.put(EidController.STATE.ERROR,          ImageUtilities.getIcon(this.getClass(),ICONS+EidController.STATE.ERROR + EXTENSION_PNG));
+        cardStatusIcons.put(EidController.STATE.NO_EID_PRESENT, ImageUtilities.getIcon(this.getClass(),ICONS+EidController.STATE.NO_EID_PRESENT + EXTENSION_PNG));
+        cardStatusIcons.put(EidController.STATE.EID_PRESENT,    ImageUtilities.getIcon(this.getClass(),ICONS+EidController.STATE.EID_PRESENT + EXTENSION_PNG));
+        cardStatusIcons.put(EidController.STATE.FILE_LOADING,   ImageUtilities.getIcon(this.getClass(),ICONS+EidController.STATE.FILE_LOADING + EXTENSION_PNG));
+        cardStatusIcons.put(EidController.STATE.FILE_LOADED,    ImageUtilities.getIcon(this.getClass(),ICONS+EidController.STATE.FILE_LOADED + EXTENSION_PNG));
+        cardStatusIcons.put(EidController.STATE.EID_YIELDED,    ImageUtilities.getIcon(this.getClass(),ICONS+EidController.STATE.EID_YIELDED + EXTENSION_PNG));
     }
 
     private void initTexts()
@@ -417,10 +372,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         activityTexts.put(EidController.ACTIVITY.VALIDATING_ADDRESS, bundle.getString(EidController.ACTIVITY.VALIDATING_ADDRESS.toString()));
     }
 
-    private ImageIcon getIcon(String name)
-    {
-        return new ImageIcon(Toolkit.getDefaultToolkit().getImage(BelgianEidViewer.class.getResource(ICONS + name)));
-    }
+   
 
     @Action
     public void print()
@@ -478,91 +430,22 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileChooser.setAcceptAllFileFilterUsed(false);
 
-        fileChooser.addChoosableFileFilter(new FileFilter()
-        {
-            public boolean accept(File file)
-            {
-                if(file.isDirectory())
-                    return true;
+        fileChooser.addChoosableFileFilter(new EidFileFilter(true, true, true,  bundle.getString("allEIDFiles")));
+        fileChooser.addChoosableFileFilter(new EidFileFilter(true, false,false, bundle.getString("xmlEIDFiles")));
+        fileChooser.addChoosableFileFilter(new EidFileFilter(false,true, false, bundle.getString("csvEIDFiles")));
+        fileChooser.addChoosableFileFilter(new EidFileFilter(false,false,true,  bundle.getString("tlvEIDFiles")));
 
-                int xmlVersion=Versions.getXMLFileVersion(file);
-                return (xmlVersion==3 || xmlVersion==4 || Versions.getCSVFileVersion(file)==1 || Versions.isTLVEidFile(file)==true);
-            }
+        fileChooser.setFileView(new EidFileView(bundle));
 
-            @Override
-            public String getDescription()
-            {
-                return "All eID files";
-            }
-        });
-
-        fileChooser.addChoosableFileFilter(new FileFilter()
-        {
-            public boolean  accept(File file) { return file.isDirectory() || Versions.isTLVEidFile(file);  }
-            
-            @Override
-            public String   getDescription()  { return "eID 3.5.x .eid files"; }
-        });
-
-        fileChooser.addChoosableFileFilter(new FileFilter()
-        {
-            public boolean accept(File file)
-            {
-                return (file.isDirectory() || Versions.getCSVFileVersion(file)==1);
-            }
-
-            @Override
-            public String getDescription()
-            {
-                return "eID 3.5.x .csv files";
-            }
-        });
-
-        fileChooser.addChoosableFileFilter(new FileFilter()
-        {
-            public boolean accept(File file)
-            {
-                if(file.isDirectory())
-                    return true;
-                    
-                switch (Versions.getXMLFileVersion(file))
-                {
-                    case 3:
-                    case 4:
-                        return true;
-                }
-                
-                return false;
-            }
-
-            @Override
-            public String getDescription()
-            {
-                return "eID 3.5.x and 4.0 XML files";
-            }
-        });
-
-
+        EidFilePreviewAccessory preview=new EidFilePreviewAccessory(bundle);
+        fileChooser.setAccessory(preview);
+        fileChooser.addPropertyChangeListener(preview);
 
         if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
         {
             File file=fileChooser.getSelectedFile();
-
-            if(file.isDirectory())
-                return;
-
-            if(file.getName().toLowerCase().endsWith(".eid"))
-            {
-                eidController.loadFromTLVFile(file);
-            }
-            else if(file.getName().toLowerCase().endsWith(".csv"))
-            {
-                eidController.loadFromV35CSVFile(file);
-            }
-            else if(file.getName().toLowerCase().endsWith(".xml"))
-            {
-                eidController.loadFromXMLFile(file);
-            }
+            if(file.isFile())
+                eidController.loadFromFile(file);
         }
     }
 
@@ -577,17 +460,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         }
     }
 
-    /*@Action
-    public void saveFile()
-    {
-        logger.fine("Save action chosen..");
-        final JFileChooser fileChooser = new JFileChooser();
-        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-        {
-            eidController.saveToBinFile(fileChooser.getSelectedFile());
-        }
-    } */
-
     @Action
     public void closeFile()
     {
@@ -595,7 +467,57 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         eidController.closeFile();
     }
 
+ 
+    /* ------------------------ Interaction meant for Applets ---------------------------------------------------------------- */
+
+    public void addDetailMessage(String detailMessage)
+    {
+        logger.finest(detailMessage);
+    }
+
+    public void setStatusMessage(Status status, MESSAGE_ID messageId)
+    {
+        String message = coreMessages.getMessage(messageId);
+        logger.info(message);
+    }
+
+    public boolean privacyQuestion(boolean includeAddress, boolean includePhoto, String identityDataUsage)
+    {
+        // this app's only purpose being to read eID cards.. asking "are you sure" is merely annoying to the user
+        // and gives no extra security whatsoever
+        // (the privacyQuestion was designed for Applets, where it makes a *lot* of sense)
+        return true;
+    }
+
+    public Component getParentComponent()
+    {
+        return this;
+    }
+
+    /* ------------------------Unused from Applet Core ---------------------------------------------------------------- */
+
+    public void addTestResult(DiagnosticTests diagnosticTest, boolean success, String description)
+    {
+    }
+
+    public void resetProgress(int max)
+    {
+    }
+
+    public void increaseProgress()
+    {
+    }
+
+    private void setProgress(final int progress)
+    {
+    }
+
+    public void setProgressIndeterminate()
+    {
+    }
+
     /* ---------------------------------------------------------------------------------------- */
+
     public static void main(String args[])
     {
         try

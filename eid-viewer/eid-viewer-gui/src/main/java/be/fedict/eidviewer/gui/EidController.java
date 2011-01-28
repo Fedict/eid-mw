@@ -19,29 +19,20 @@ package be.fedict.eidviewer.gui;
 
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
-import be.fedict.eidviewer.gui.file.Version35CSVFile;
-import be.fedict.eidviewer.gui.file.Version35EidFile;
-import be.fedict.eidviewer.gui.file.Version35XMLFile;
-import be.fedict.eidviewer.gui.file.Version4EidFile;
-import be.fedict.eidviewer.gui.file.Version4File;
-import be.fedict.eidviewer.gui.file.Versions;
+import be.fedict.eidviewer.gui.file.EidFiles;
+import be.fedict.eidviewer.gui.helper.EidFilePreviewAccessory;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.trust.client.TrustServiceDomains;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.cert.CertificateException;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
 import javax.smartcardio.CardException;
 
@@ -49,7 +40,7 @@ import javax.smartcardio.CardException;
  *
  * @author Frank Marien
  */
-public class EidController extends Observable implements Runnable, Observer
+public class EidController extends Observable implements Runnable, Observer, EidData
 {
     private static final Logger logger = Logger.getLogger(EidController.class.getName());
     private boolean running = false;
@@ -142,7 +133,7 @@ public class EidController extends Observable implements Runnable, Observer
         }
         catch (RuntimeException rte)
         {
-            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
+            logger.log(Level.SEVERE, "ChangePin Operation Failed", rte);
         }
 
         runningAction = ACTION.NONE;
@@ -164,7 +155,7 @@ public class EidController extends Observable implements Runnable, Observer
         }
         catch (RuntimeException rte)
         {
-            Logger.getLogger(EidController.class.getName()).log(Level.SEVERE, null, rte);
+            logger.log(Level.SEVERE, "Failed To Enqueue Trust Validations", rte);
         }
 
         runningAction = ACTION.NONE;
@@ -193,6 +184,29 @@ public class EidController extends Observable implements Runnable, Observer
     public void update(Observable o, Object o1)
     {
         setState();
+    }
+
+    void loadFromFile(File file)
+    {
+        setState(STATE.FILE_LOADING);
+        
+        try
+        {
+            EidFiles.loadFromFile(file, this);
+            setLoadedFromFile(true);
+            setState(STATE.FILE_LOADED);
+        }
+        catch(Exception ex)
+        {
+            logger.log(Level.SEVERE, "Failed To Load EID File", ex);
+            securityClear();
+            setState(STATE.IDLE);
+        }
+    }
+
+    void saveToXMLFile(File selectedFile)
+    {
+        EidFiles.saveToXMLFile(selectedFile, this);
     }
 
     public static enum STATE
@@ -644,162 +658,7 @@ public class EidController extends Observable implements Runnable, Observer
         return this;
     }
 
-    public void loadFromTLVFile(File file)
-    {
-        setState(STATE.FILE_LOADING);
-
-        try
-        {
-            Version35EidFile.load(file,this);
-            setState(STATE.FILE_LOADED);
-            setLoadedFromFile(true);
-        }
-        catch (Exception ex)
-        {
-            logger.log(Level.SEVERE, "Failed To Open Version 3.5.x TLV-Based .eid File", ex);
-            securityClear();
-            setState(STATE.IDLE);
-        }        
-    }
-
-    public void loadFromBinFile(File file)
-    {
-        setState(STATE.FILE_LOADING);
-
-        try
-        {
-            Version4EidFile.load(file,this);
-            setState(STATE.FILE_LOADED);
-            setLoadedFromFile(true);
-        }
-        catch (Exception ex)
-        {
-            logger.log(Level.SEVERE, "Failed To Open Version 4.x.x ZIP-Based .eid File", ex);
-            securityClear();
-            setState(STATE.IDLE);
-        } 
-    }
-
-    public void saveToXMLFile(File file)
-    {
-        try
-        {
-            Version4File version4file=new Version4File();
-                         version4file.fromIdentityAddressPhotoAndCertificates(getIdentity(),getAddress(),getPhoto(),getAuthCertChain().getCertificates(),getSignCertChain().getCertificates(),getRRNCertChain().getCertificates());
-                         Version4File.toXML(version4file, new FileOutputStream(file));
-        }
-        catch (Exception ex)
-        {
-            logger.log(Level.SEVERE, "Failed To Save To Version 4.x.x XML-Based .eid File", ex);
-        }
-    }
-
-    public void saveToZIPFile(File file)
-    {
-        try
-        {
-            ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(file));
-            Version4File    version4file=new Version4File();
-                            version4file.fromIdentityAddressPhotoAndCertificates(getIdentity(),getAddress(),getPhoto(),getAuthCertChain().getCertificates(),getSignCertChain().getCertificates(),getRRNCertChain().getCertificates());
-                            version4file.writeToZipOutputStream(zipOutputStream);
-                            zipOutputStream.flush();
-                            zipOutputStream.close();
-
-        }
-        catch (Exception ex)
-        {
-            logger.log(Level.SEVERE, "Failed To Save To Version 4.x.x ZIP-Based .eid File", ex);
-        }
-    }
-
-    public void loadFromXMLFile(File file) throws FileNotFoundException, IOException
-    {
-        setState(STATE.FILE_LOADING);
-
-        switch(Versions.getXMLFileVersion(file))
-        {
-            case 4:
-            try
-            {
-                logger.fine("parsing as 4.0 .XML file");
-                Version4File v4File=Version4File.fromXML(new FileInputStream(file));
-                logger.fine("parsed as 4.0 .XML file");
-                setIdentity(v4File.toIdentity());
-                setAddress(v4File.toAddress());
-                setPhoto(v4File.toPhoto());
-                setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, v4File.toAuthChain()));
-                setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, v4File.toSignChain()));
-                setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, v4File.toRRNChain()));
-                setState(STATE.FILE_LOADED);
-                logger.fine("4.0 XML data loaded ok");
-                setLoadedFromFile(true);
-            }
-            catch (Exception ex)
-            {
-                logger.log(Level.SEVERE, "Failed To Read Version 4.x.x XML-Based eID File", ex);
-                securityClear();
-                setState(STATE.IDLE);
-                return;
-            }
-            break;
-
-            case 3:
-            try
-            {
-                logger.fine("parsing as 3.5.X .XML file");
-                Version35XMLFile v35xmlFile = new Version35XMLFile(this);
-                v35xmlFile.load(file);
-                logger.fine("3.5.x XML data loaded ok");
-                setState(STATE.FILE_LOADED);
-                setLoadedFromFile(true);
-            }
-            catch(Exception ex)
-            {
-                logger.log(Level.SEVERE, "Failed To Read Version 3.5.x XML-Based eID File", ex);
-                securityClear();
-                setState(STATE.IDLE);
-            }
-            break;
-        }
-    }
-
-    public void loadFromV35XMLFile(File file)
-    {
-        setState(STATE.FILE_LOADING);
-
-        try
-        {
-            Version35XMLFile v35xmlFile=new Version35XMLFile(this);
-            v35xmlFile.load(file);
-            setState(STATE.FILE_LOADED);
-            setLoadedFromFile(true);
-        }
-        catch (Exception ex)
-        {
-            logger.log(Level.SEVERE, "Failed To Open Version 4.x.x XML-Based .eid File", ex);
-            securityClear();
-            setState(STATE.IDLE);
-        }
-    }
-
-    public void loadFromV35CSVFile(File file)
-    {
-        setState(STATE.FILE_LOADING);
-
-        try
-        {
-            Version35CSVFile v35csvFile=new Version35CSVFile(this);
-            v35csvFile.load(file);
-            setState(STATE.FILE_LOADED);
-            setLoadedFromFile(true);
-        }
-        catch (Exception ex)
-        {
-            logger.log(Level.SEVERE, "Failed To Open Version 4.x.x CSV-Based .eid File", ex);
-            securityClear();
-            setState(STATE.IDLE);
-        }
-    }
+    
 
     public void closeFile()
     {

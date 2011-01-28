@@ -20,7 +20,7 @@ package be.fedict.eidviewer.gui.file;
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
 import be.fedict.eid.applet.service.impl.tlv.TlvParser;
-import be.fedict.eidviewer.gui.EidController;
+import be.fedict.eidviewer.gui.EidData;
 import be.fedict.eidviewer.gui.X509CertificateChainAndTrust;
 import be.fedict.trust.client.TrustServiceDomains;
 import java.io.BufferedReader;
@@ -53,7 +53,7 @@ public class Version35XMLFile extends DefaultHandler
 {
     private static final Logger logger=Logger.getLogger(Version35XMLFile.class.getName());
     
-    public static enum STATE
+    public static enum STAGE
     {
         NONE        ("none"),
         AUTHCERT    ("authenticationCertificate"),
@@ -67,7 +67,7 @@ public class Version35XMLFile extends DefaultHandler
         
         private final String state;
 
-        private STATE(String state)
+        private STAGE(String state)
         {
             this.state = state;
         }
@@ -91,12 +91,18 @@ public class Version35XMLFile extends DefaultHandler
     private X509Certificate     authenticationCert = null;
     private X509Certificate     signingCert = null;
     private X509Certificate     rrnCert = null;
-    private STATE               state;
-    private EidController       controller;
+    private STAGE               stage;
+    private EidData             eidData;
 
-    public Version35XMLFile(EidController controller)
+    public static void load(File file, EidData eidData) throws CertificateException, IOException, FileNotFoundException, SAXException
     {
-        this.controller=controller;
+        Version35XMLFile v35XMLFile=new Version35XMLFile(eidData);
+                         v35XMLFile.load(file);
+    }
+
+    public Version35XMLFile(EidData eidData)
+    {
+        this.eidData=eidData;
     }
 
     public void load(File file) throws CertificateException, FileNotFoundException, SAXException, IOException
@@ -125,7 +131,7 @@ public class Version35XMLFile extends DefaultHandler
                 authChain.add(authenticationCert);
                 authChain.add(citizenCert);
                 authChain.add(rootCert);
-                controller.setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, authChain));
+                eidData.setAuthCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_AUTH_TRUST_DOMAIN, authChain));
             }
 
             if (signingCert != null)
@@ -135,7 +141,7 @@ public class Version35XMLFile extends DefaultHandler
                 signChain.add(signingCert);
                 signChain.add(citizenCert);
                 signChain.add(rootCert);
-                controller.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain));
+                eidData.setSignCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NON_REPUDIATION_TRUST_DOMAIN, signChain));
             }
 
             if (rrnCert != null)
@@ -143,7 +149,7 @@ public class Version35XMLFile extends DefaultHandler
                 List rrnChain = new LinkedList<X509Certificate>();
                 rrnChain.add(rrnCert);
                 rrnChain.add(rootCert);
-                controller.setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, rrnChain));
+                eidData.setRRNCertChain(new X509CertificateChainAndTrust(TrustServiceDomains.BELGIAN_EID_NATIONAL_REGISTRY_TRUST_DOMAIN, rrnChain));
             }
         }
     }
@@ -170,21 +176,21 @@ public class Version35XMLFile extends DefaultHandler
             byte[] data=Base64.decodeBase64(getCDATA().trim());
             logger.finest("Base64 Data Decoded");
             
-            switch (state)
+            switch (stage)
             {
                 case IDFILE:
                     logger.fine("Setting Identity");
-                    controller.setIdentity(TlvParser.parse(data, Identity.class));
+                    eidData.setIdentity(TlvParser.parse(data, Identity.class));
                     break;
 
                 case ADDRFILE:
                     logger.fine("Setting Address");
-                    controller.setAddress(TlvParser.parse(data, Address.class));
+                    eidData.setAddress(TlvParser.parse(data, Address.class));
                     break;
 
                 case PHOTOFILE:
                     logger.fine("Setting Photo");
-                    controller.setPhoto(data);
+                    eidData.setPhoto(data);
                     break;
 
                 case AUTHCERT:
@@ -251,7 +257,7 @@ public class Version35XMLFile extends DefaultHandler
         }
         else
         {
-            state = STATE.NONE;
+            stage = STAGE.NONE;
         }
 
         resetCDATA();
@@ -262,7 +268,7 @@ public class Version35XMLFile extends DefaultHandler
     {
         logger.finest("XML Document Starts");
         resetCDATA();
-        state = STATE.NONE;
+        stage = STAGE.NONE;
     }
 
     @Override
@@ -270,44 +276,44 @@ public class Version35XMLFile extends DefaultHandler
     {
         logger.log(Level.FINEST, "<{0}>", localName);
 
-        if (localName.equalsIgnoreCase(STATE.IDFILE.getState()))
+        if (localName.equalsIgnoreCase(STAGE.IDFILE.getState()))
         {
-            state = STATE.IDFILE;
+            stage = STAGE.IDFILE;
             logger.finest("Expecting Identity File Data");
         }
-        else if (localName.equalsIgnoreCase(STATE.ADDRFILE.getState()))
+        else if (localName.equalsIgnoreCase(STAGE.ADDRFILE.getState()))
         {
-            state = STATE.ADDRFILE;
+            stage = STAGE.ADDRFILE;
             logger.finest("Expecting Address File Data");
         }
-        else if (localName.equalsIgnoreCase(STATE.PHOTOFILE.getState()))
+        else if (localName.equalsIgnoreCase(STAGE.PHOTOFILE.getState()))
         {
-            state = STATE.PHOTOFILE;
+            stage = STAGE.PHOTOFILE;
             logger.finest("Expecting JPEG Photo Data");
         }
-        else if (localName.equalsIgnoreCase(STATE.AUTHCERT.getState()))
+        else if (localName.equalsIgnoreCase(STAGE.AUTHCERT.getState()))
         {
-            state = STATE.AUTHCERT;
+            stage = STAGE.AUTHCERT;
             logger.finest("Expecting Authentication Certificate");
         }
-        else if (localName.equalsIgnoreCase(STATE.SIGNCERT.getState()))
+        else if (localName.equalsIgnoreCase(STAGE.SIGNCERT.getState()))
         {
-            state = STATE.SIGNCERT;
+            stage = STAGE.SIGNCERT;
             logger.finest("Expecting Signing Certificate");
         }
-        else if (localName.equalsIgnoreCase(STATE.CACERT.getState()))
+        else if (localName.equalsIgnoreCase(STAGE.CACERT.getState()))
         {
-            state = STATE.CACERT;
+            stage = STAGE.CACERT;
             logger.finest("Expecting Citizen CA Certificate");
         }
-        else if (localName.equalsIgnoreCase(STATE.ROOTCERT.getState()))
+        else if (localName.equalsIgnoreCase(STAGE.ROOTCERT.getState()))
         {
-            state = STATE.ROOTCERT;
+            stage = STAGE.ROOTCERT;
             logger.finest("Expecting Belgian root Certificate");
         }
-        else if (localName.equalsIgnoreCase(STATE.RRNCERT.getState()))
+        else if (localName.equalsIgnoreCase(STAGE.RRNCERT.getState()))
         {
-            state = STATE.RRNCERT;
+            stage = STAGE.RRNCERT;
             logger.finest("Expecting RRN Certificate");
         }
     }
