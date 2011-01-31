@@ -9,7 +9,6 @@ import java.text.MessageFormat;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -26,22 +25,24 @@ import javax.swing.text.StyleConstants;
  *
  * @author Frank Marien
  */
-public class LogPanel extends javax.swing.JPanel implements ActionListener
+public class LogPanel extends javax.swing.JPanel
 {
-
-    private final static Logger                     viewerLogger = Logger.getLogger("be.fedict");
-    private ResourceBundle                          bundle;
+    private static final Logger                     viewerLogger = Logger.getLogger("be.fedict");
     private Document                                logDocument;
     private Map<Level, EnumMap<ATTR,AttributeSet>>  attributes;
     private ComboBoxModel                           levelComboModel;
     private String                                  lastMessage;
     private long                                    repeatCount;
+    private Handler                                 logHandler;
 
     public LogPanel()
     {
-        bundle = ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/LogPanel");
         initComponents();
+        logTextPanel.setEditable(false);
+        
         initLevelAttributes();
+        levelCombo.setSelectedItem(ViewerPrefs.getLogLevel());
+        viewerLogger.setLevel(ViewerPrefs.getLogLevel());
 
         logDocument = logTextPanel.getDocument();
 
@@ -51,6 +52,7 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
             public void actionPerformed(ActionEvent actionEvent)
             {
                 viewerLogger.setLevel((Level) levelCombo.getSelectedItem());
+                ViewerPrefs.setLogLevel((Level) levelCombo.getSelectedItem());
             }
         });
 
@@ -58,11 +60,11 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
         {
             public void actionPerformed(ActionEvent ae)
             {
-                clearLog();
+                logTextPanel.setText("");
             }
         });
 
-        viewerLogger.addHandler(new Handler()
+        logHandler=new Handler()
         {
             @Override
             public void publish(LogRecord logRecord)
@@ -95,10 +97,10 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
 
                 if(viewerLogger.getLevel()!=Level.ALL)
                     return;
-                
+
                 Throwable throwable=logRecord.getThrown();
 
-                if(throwable!=null)
+                if(throwable!=null && throwable.getMessage()!=null)
                 {
                     append(throwable.getMessage(),currentAttr.get(ATTR.BOLD));
                     StackTraceElement[] trace=throwable.getStackTrace();
@@ -116,9 +118,19 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
             public void close() throws SecurityException
             {
             }
-        });
+        };
+    }
 
-        viewerLogger.setLevel(Level.INFO);
+    public LogPanel start()
+    {
+        viewerLogger.addHandler(logHandler);
+        return this;
+    }
+
+    public LogPanel stop()
+    {
+        viewerLogger.removeHandler(logHandler);
+        return this;
     }
 
     private void initLevelAttributes()
@@ -211,7 +223,6 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
 
         levelComboModel = new DefaultComboBoxModel(comboItems);
         levelCombo.setModel(levelComboModel);
-        levelCombo.setSelectedItem(Level.INFO);
     }
 
     private synchronized void append(String message, AttributeSet attributes)
@@ -247,7 +258,6 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
         visible.y = logTextPanel.getBounds().height - visible.height;
         logTextPanel.scrollRectToVisible(visible);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -290,16 +300,6 @@ public class LogPanel extends javax.swing.JPanel implements ActionListener
     private javax.swing.JComboBox levelCombo;
     private javax.swing.JTextPane logTextPanel;
     // End of variables declaration//GEN-END:variables
-
-    public void actionPerformed(ActionEvent actionEvent)
-    {
-        viewerLogger.setLevel((Level) levelCombo.getSelectedItem());
-    }
-
-    private void clearLog()
-    {
-        logTextPanel.setText("");
-    }
 
     public static enum ATTR
     {

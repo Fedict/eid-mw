@@ -132,8 +132,8 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
             public void run()
             {
                 identityBusyIcon.setVisible     (loading);
-                identityTrustedIcon.setVisible  ((!eidController.isIdentityTrusted()) && eidController.isIdentityValidated() && eidController.hasRRNCertChain() && eidController.getRRNCertChain().isTrusted());
-                addressTrustedIcon.setVisible   ((!eidController.isAddressTrusted()) && eidController.isAddressValidated() && eidController.hasRRNCertChain() && eidController.getRRNCertChain().isTrusted());
+                identityTrustedIcon.setVisible  (eidController!=null && (!eidController.isIdentityTrusted()) && eidController.isIdentityValidated() && eidController.hasRRNCertChain() && eidController.getRRNCertChain().isTrusted());
+                addressTrustedIcon.setVisible   (eidController!=null && (!eidController.isAddressTrusted()) && eidController.isAddressValidated() && eidController.hasRRNCertChain() && eidController.getRRNCertChain().isTrusted());
 
 
                 if (identity != null)
@@ -245,7 +245,6 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-
             public void run()
             {
                 addressBusyIcon.setVisible(loading);
@@ -368,7 +367,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
@@ -489,7 +488,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
         add(idAddressSeparator, gridBagConstraints);
@@ -645,7 +644,7 @@ public class IdentityPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(7, 0, 7, 0);
         add(idAddressSeparator1, gridBagConstraints);

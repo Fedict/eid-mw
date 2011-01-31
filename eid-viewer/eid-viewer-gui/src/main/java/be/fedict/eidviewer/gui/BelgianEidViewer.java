@@ -69,7 +69,7 @@ import org.jdesktop.application.Application;
  *
  * @author Frank Marien
  */
-public class BelgianEidViewer extends javax.swing.JFrame implements View, Observer
+public class BelgianEidViewer extends javax.swing.JFrame implements View, Observer, DiagnosticsContainer
 {
     private static final Logger logger = Logger.getLogger(BelgianEidViewer.class.getName());
     private ResourceBundle bundle;
@@ -87,7 +87,6 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
     private CardPanel cardPanel;
     private PreferencesPanel preferencesPanel;
     private LogPanel logPanel;
-    private ImageIcon eidIcon;
     private javax.swing.Action printAction, openAction, saveAction, closeAction;
 
     public BelgianEidViewer()
@@ -136,6 +135,7 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
         preferencesPanel.setTrustServiceController(trustServiceController);
         preferencesPanel.setEidController(eidController);
+        preferencesPanel.setDiagnosticsContainer(this);
         preferencesPanel.start();
 
         eidController.addObserver(identityPanel);
@@ -322,21 +322,17 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
 
     private void initPanels()
     {
-        ResourceBundle res = java.util.ResourceBundle.getBundle("be/fedict/eidviewer/gui/resources/BelgianEidViewer");
         identityPanel = new IdentityPanel();
         cardPanel = new CardPanel();
         certificatesPanel = new CertificatesPanel();
         preferencesPanel = new PreferencesPanel();
-        tabPanel.add(identityPanel, res.getString("IDENTITY"));
-        tabPanel.add(cardPanel, res.getString("CARD"));
-        tabPanel.add(certificatesPanel, res.getString("CERTIFICATES"));
-        tabPanel.add(preferencesPanel, res.getString("PREFERENCES"));
+        tabPanel.add(identityPanel, bundle.getString("IDENTITY"));
+        tabPanel.add(cardPanel, bundle.getString("CARD"));
+        tabPanel.add(certificatesPanel, bundle.getString("CERTIFICATES"));
+        tabPanel.add(preferencesPanel, bundle.getString("PREFERENCES"));
 
         if(ViewerPrefs.getShowLogTab())
-        {
-            logPanel = new LogPanel();
-            tabPanel.add(logPanel, res.getString("LOG"));
-        }
+            showLog(true);
     }
 
     private void initIcons()
@@ -531,5 +527,33 @@ public class BelgianEidViewer extends javax.swing.JFrame implements View, Observ
         }
 
         new BelgianEidViewer().start();
+    }
+
+    public void showLog(boolean show)
+    {
+        if(show)
+        {
+            if(logPanel==null)
+            {
+                logPanel=new LogPanel();
+                logPanel.start();
+                tabPanel.add(logPanel, bundle.getString("LOG"));
+                tabPanel.insertTab(bundle.getString("LOG"),null,logPanel,bundle.getString("LOG"),4);
+            }
+        }
+        else
+        {
+            if(logPanel!=null)
+            {
+                logPanel.stop();
+                tabPanel.remove(logPanel);
+                logPanel=null;
+            }
+        }
+    }
+
+    public void showDiagnostics(boolean show)
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

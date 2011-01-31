@@ -87,7 +87,9 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         {
             public void run()
             {
-               changePinButton.setEnabled(eidController.isReadyForCommand() && eidController.getState()==EidController.STATE.EID_PRESENT);
+                boolean enablePinActions=eidController.isReadyForCommand() && eidController.getState()==EidController.STATE.EID_PRESENT;
+               verifyPinButton.setEnabled(enablePinActions);
+               changePinButton.setEnabled(enablePinActions);
             }
         });
     }
@@ -169,8 +171,9 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         spacer = new javax.swing.JLabel();
         validUntilLabel = new javax.swing.JLabel();
         validFrom = new javax.swing.JLabel();
-        changePinButton = new javax.swing.JButton();
         spacer1 = new javax.swing.JLabel();
+        changePinButton = new javax.swing.JButton();
+        verifyPinButton = new javax.swing.JButton();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
         setLayout(new java.awt.GridBagLayout());
@@ -289,22 +292,6 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(validFrom, gridBagConstraints);
 
-        changePinButton.setText(bundle.getString("changePinButton")); // NOI18N
-        changePinButton.setEnabled(false);
-        changePinButton.setName("changePinButton"); // NOI18N
-        changePinButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changePinButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
-        add(changePinButton, gridBagConstraints);
-
         spacer1.setEnabled(false);
         spacer1.setMaximumSize(new java.awt.Dimension(16, 16));
         spacer1.setMinimumSize(new java.awt.Dimension(16, 16));
@@ -315,12 +302,50 @@ public class CardPanel extends javax.swing.JPanel implements Observer
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         add(spacer1, gridBagConstraints);
+
+        changePinButton.setText(bundle.getString("changePinButton")); // NOI18N
+        changePinButton.setEnabled(false);
+        changePinButton.setName("changePinButton"); // NOI18N
+        changePinButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePinButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        add(changePinButton, gridBagConstraints);
+
+        verifyPinButton.setText(bundle.getString("verifyPinButton")); // NOI18N
+        verifyPinButton.setEnabled(false);
+        verifyPinButton.setName("verifyPinButton"); // NOI18N
+        verifyPinButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verifyPinButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        add(verifyPinButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void changePinButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_changePinButtonActionPerformed
     {//GEN-HEADEREND:event_changePinButtonActionPerformed
         eidController.changePin();
     }//GEN-LAST:event_changePinButtonActionPerformed
+
+    private void verifyPinButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_verifyPinButtonActionPerformed
+    {//GEN-HEADEREND:event_verifyPinButtonActionPerformed
+        eidController.verifyPin();
+    }//GEN-LAST:event_verifyPinButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cardInfoBusyIcon;
     private javax.swing.JLabel cardNumber;
@@ -336,5 +361,6 @@ public class CardPanel extends javax.swing.JPanel implements Observer
     private javax.swing.JLabel validFromLabel;
     private javax.swing.JLabel validUntil;
     private javax.swing.JLabel validUntilLabel;
+    private javax.swing.JButton verifyPinButton;
     // End of variables declaration//GEN-END:variables
 }

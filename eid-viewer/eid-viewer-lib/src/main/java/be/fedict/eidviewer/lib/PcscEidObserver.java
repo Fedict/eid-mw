@@ -20,21 +20,19 @@ package be.fedict.eidviewer.lib;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author frank
+ * @author Frank Marien
  */
 class PcscEidObserver implements Observer
 {
-    public PcscEidObserver()
-    {
-    }
+    private static final Logger logger=Logger.getLogger(PcscEidObserver.class.getName());
 
     public void update(Observable o, Object o1)
     {
-        String oStr=(o!=null?o.toString():"null");
-        String o1Str=(o1!=null?o1.toString():"null");
-        System.err.println("update [" + oStr + "," + o1Str + "]");
+        logger.log(Level.FINEST, "update [{0},{1}]", new Object[]{o, o1});
     }
 }

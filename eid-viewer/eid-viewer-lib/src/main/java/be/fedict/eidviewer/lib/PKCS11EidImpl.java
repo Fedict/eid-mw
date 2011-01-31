@@ -254,4 +254,9 @@ class PKCS11EidImpl implements Eid
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public void verifyPin(boolean requireSecureReader) throws Exception
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

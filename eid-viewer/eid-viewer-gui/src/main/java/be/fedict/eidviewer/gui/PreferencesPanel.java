@@ -34,10 +34,10 @@ import javax.swing.event.DocumentListener;
  */
 public class PreferencesPanel extends javax.swing.JPanel implements Observer, ComponentListener
 {
-
     private ResourceBundle          bundle;
     private TrustServiceController  trustServiceController;
     private EidController           eidController;
+    private DiagnosticsContainer    diagnosticsContainer;
 
     public PreferencesPanel()
     {
@@ -61,6 +61,12 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
     public PreferencesPanel setTrustServiceController(TrustServiceController trustServiceController)
     {
         this.trustServiceController = trustServiceController;
+        return this;
+    }
+
+    public PreferencesPanel setDiagnosticsContainer(DiagnosticsContainer diagnosticsContainer)
+    {
+        this.diagnosticsContainer = diagnosticsContainer;
         return this;
     }
 
@@ -172,7 +178,6 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         diagnosticsPrefsPanel = new javax.swing.JPanel();
         showLogCheckbox = new javax.swing.JCheckBox();
         showDiagnosticsCheckbox = new javax.swing.JCheckBox();
-        restartNotice = new javax.swing.JLabel();
         spacer1 = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 255, 204), 24, true));
@@ -266,15 +271,6 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         diagnosticsPrefsPanel.add(showDiagnosticsCheckbox, gridBagConstraints);
 
-        restartNotice.setText(bundle.getString("changesTakeEffectAfterRestart")); // NOI18N
-        restartNotice.setName("restartNotice"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        diagnosticsPrefsPanel.add(restartNotice, gridBagConstraints);
-
         spacer1.setName("spacer1"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -294,7 +290,6 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
     private javax.swing.JLabel httpProxyPortLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel proxyPrefsPanel;
-    private javax.swing.JLabel restartNotice;
     private javax.swing.JCheckBox showDiagnosticsCheckbox;
     private javax.swing.JCheckBox showLogCheckbox;
     private javax.swing.JLabel spacer;
@@ -376,6 +371,8 @@ public class PreferencesPanel extends javax.swing.JPanel implements Observer, Co
             public void actionPerformed(ActionEvent actionEvent)
             {
                 ViewerPrefs.setShowLogTab(showLogCheckbox.isSelected());
+                if(diagnosticsContainer!=null)
+                    diagnosticsContainer.showLog(showLogCheckbox.isSelected());
             }
         });
     }

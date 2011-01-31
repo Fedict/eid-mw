@@ -110,6 +110,8 @@ public interface Eid
      */
     void changePin(boolean requireSecureReader) throws Exception;
 
+    void verifyPin(boolean requireSecureReader) throws Exception;
+
 
     public boolean isIdentityTrusted();
     public boolean isAddressTrusted();

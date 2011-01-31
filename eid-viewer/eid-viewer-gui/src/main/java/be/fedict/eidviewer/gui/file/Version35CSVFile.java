@@ -182,7 +182,7 @@ public class Version35CSVFile
 
     private void handleToken(int tokenNumber, String token) throws UnsupportedEncodingException, DataConvertorException
     {
-        System.out.println("token #" + tokenNumber + " : [" + token + "]");
+        logger.log(Level.FINEST, "token #{0} : [{1}]", new Object[]{tokenNumber, token});
         switch(tokenNumber)
         {
             case DOCUMENTTYPE:
@@ -197,16 +197,19 @@ public class Version35CSVFile
             switch(nameParts.length)
             {
                 case 1:
+                logger.finest("First Name: One Token -> firstname, no middleName");
                 identity.firstName=nameParts[0];
                 break;
 
                 case 2:
+                logger.finest("First Name: Two Tokens -> one in firstName, second in middleName");
                 identity.firstName=nameParts[0];
                 identity.middleName=nameParts[1];
                 break;
 
                 default:
                 {
+                    logger.finest("First Name: More Than Two Tokens -> all but last part in firstname, last part in middleName");
                     StringBuilder firstName=new StringBuilder();
                     for(int i=0;i<=nameParts.length-2;i++)
                     {
@@ -230,6 +233,7 @@ public class Version35CSVFile
 
             case BIRTHDATE:
             {
+                logger.fine("field BIRTHDATE");
                 DateOfBirthDataConvertor dateOfBirthConvertor=new DateOfBirthDataConvertor();
                 identity.dateOfBirth=dateOfBirthConvertor.convert(token.getBytes("utf-8"));
             }

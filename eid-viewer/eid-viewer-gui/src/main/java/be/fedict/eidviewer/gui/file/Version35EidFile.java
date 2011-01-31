@@ -20,7 +20,6 @@ package be.fedict.eidviewer.gui.file;
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
 import be.fedict.eid.applet.service.impl.tlv.TlvParser;
-import be.fedict.eidviewer.gui.EidController;
 import be.fedict.eidviewer.gui.EidData;
 import be.fedict.eidviewer.gui.X509CertificateChainAndTrust;
 import be.fedict.trust.client.TrustServiceDomains;
@@ -34,6 +33,8 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,6 +42,8 @@ import java.util.List;
  */
 public class Version35EidFile
 {
+    private static final Logger logger=Logger.getLogger(Version35EidFile.class.getName());
+    
     private static final byte BEID_TLV_TAG_VERSION = 0x00;
     private static final byte BEID_TLV_TAG_FILE_ID = 0x01;
     private static final byte BEID_TLV_TAG_FILE_IDSIGN = 0x02;
@@ -71,8 +74,7 @@ public class Version35EidFile
 
         while ((entry = TLVEntry.next(fis)) != null)
         {
-            System.out.println("  Type: " + entry.tag + ":");
-            System.out.println("Length: " + entry.length);
+            logger.log(Level.FINEST,"L1:Type["+entry.tag+"]:Len["+entry.length+"]");
 
             switch (entry.tag)
             {
@@ -96,8 +98,7 @@ public class Version35EidFile
 
                     while ((certEntry = TLVEntry.next(bis)) != null)
                     {
-                        System.err.println("**   Type: " + certEntry.tag + ":");
-                        System.err.println("** Length: " + certEntry.length);
+                        logger.log(Level.FINEST,"L2:Type["+certEntry.tag+"]:Len["+certEntry.length+"]");
 
                         switch (certEntry.tag)
                         {
@@ -111,8 +112,7 @@ public class Version35EidFile
 
                                 while ((certEntry2 = TLVEntry.next(bis2)) != null)
                                 {
-                                    System.err.println("**** " + certEntry.tag + "  Type: " + certEntry2.tag + ":");
-                                    System.err.println("**** " + certEntry.tag + "Length: " + certEntry2.length);
+                                    logger.log(Level.FINEST,"L3:Type["+certEntry2.tag+"]:Len["+certEntry2.length+"]");
 
                                     switch (certEntry2.tag)
                                     {

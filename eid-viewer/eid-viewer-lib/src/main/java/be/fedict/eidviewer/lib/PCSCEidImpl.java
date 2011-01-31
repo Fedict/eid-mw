@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class PCSCEidImpl implements Eid
 {
@@ -106,7 +107,6 @@ public class PCSCEidImpl implements Eid
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-
     public Address getAddress() throws Exception
     {
         logger.fine("getAddress");
@@ -121,12 +121,11 @@ public class PCSCEidImpl implements Eid
 
     public Image getPhoto() throws Exception
     {
-       logger.fine("getPhoto");
+        logger.fine("getPhoto");
         byte[] data = readFile(PcscEid.PHOTO_FILE_ID);
         return ImageIO.read(new ByteArrayInputStream(data));
     }
 
-    
     public Image getPhotoImage() throws Exception
     {
         logger.fine("getPhotoImage");
@@ -174,7 +173,9 @@ public class PCSCEidImpl implements Eid
     public boolean isCardStillPresent() throws Exception
     {
         if (mPcscEidSpi.isCardStillPresent())
+        {
             return true;
+        }
         clear();
         return false;
     }
@@ -189,6 +190,11 @@ public class PCSCEidImpl implements Eid
         mPcscEidSpi.changePin();
     }
 
+    public void verifyPin(boolean requireSecureReader) throws Exception
+    {
+        mPcscEidSpi.verifyPin(requireSecureReader);
+    }
+
     public void addObserver(Observer observer)
     {
         mPcscEidSpi.addObserver(observer);
@@ -199,8 +205,7 @@ public class PCSCEidImpl implements Eid
         mPcscEidSpi.yieldExclusive(yield);
     }
 
-
-    public boolean isIdentityTrusted() 
+    public boolean isIdentityTrusted()
     {
         logger.fine("isIdentityTrusted");
         try
@@ -210,7 +215,7 @@ public class PCSCEidImpl implements Eid
         }
         catch (Exception ex)
         {
-            logger.log(Level.SEVERE,"Identity Signature Validation Failed",ex);
+            logger.log(Level.SEVERE, "Identity Signature Validation Failed", ex);
             return false;
         }
     }
@@ -221,11 +226,11 @@ public class PCSCEidImpl implements Eid
         try
         {
             logger.finest("isValidSignature");
-            return Validation.isValidSignature(getRRNCert(),trimRight(getFile(PcscEid.ADDRESS_FILE_ID)),getIdentitySignature(), getAddressSignature());
+            return Validation.isValidSignature(getRRNCert(), trimRight(getFile(PcscEid.ADDRESS_FILE_ID)), getIdentitySignature(), getAddressSignature());
         }
         catch (Exception ex)
         {
-            logger.log(Level.SEVERE,"Address Signature Validation Failed",ex);
+            logger.log(Level.SEVERE, "Address Signature Validation Failed", ex);
             return false;
         }
     }
@@ -307,10 +312,10 @@ public class PCSCEidImpl implements Eid
     private byte[] getFile(byte[] fileID) throws Exception
     {
         byte[] data = fileCache.get(fileID);
-        if(data == null)
+        if (data == null)
         {
-            data=readFile(fileID);
-            fileCache.put(fileID,data);
+            data = readFile(fileID);
+            fileCache.put(fileID, data);
         }
         return data;
     }
@@ -320,14 +325,15 @@ public class PCSCEidImpl implements Eid
         int idx;
         for (idx = 0; idx < addressFile.length; idx++)
         {
-            if(addressFile[idx]==0)
+            if (addressFile[idx] == 0)
+            {
                 break;
+            }
         }
         byte[] result = new byte[idx];
         System.arraycopy(addressFile, 0, result, 0, idx);
         return result;
     }
-
 
     private void clear()
     {

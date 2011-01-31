@@ -15,12 +15,12 @@
  * License along with this software; if not, see
  * http://www.gnu.org/licenses/.
  */
+
 package be.fedict.eidviewer.gui;
 
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
 import be.fedict.eidviewer.gui.file.EidFiles;
-import be.fedict.eidviewer.gui.helper.EidFilePreviewAccessory;
 import be.fedict.eidviewer.lib.Eid;
 import be.fedict.trust.client.TrustServiceDomains;
 import java.awt.Image;
@@ -139,6 +139,22 @@ public class EidController extends Observable implements Runnable, Observer, Eid
         runningAction = ACTION.NONE;
     }
 
+    private void eid_verifyPin() throws Exception
+    {
+        logger.fine("eid_verifyPin");
+
+        try
+        {
+            eid.verifyPin(false);
+        }
+        catch (RuntimeException rte)
+        {
+            logger.log(Level.SEVERE, "VerifyPin Operation Failed", rte);
+        }
+
+        runningAction = ACTION.NONE;
+    }
+
     private void trustController_validateTrust() throws Exception
     {
         logger.fine("trustController_validateTrust");
@@ -209,6 +225,8 @@ public class EidController extends Observable implements Runnable, Observer, Eid
         EidFiles.saveToXMLFile(selectedFile, this);
     }
 
+
+
     public static enum STATE
     {
         IDLE("state_idle"),
@@ -261,7 +279,7 @@ public class EidController extends Observable implements Runnable, Observer, Eid
 
     public static enum ACTION
     {
-        NONE("none"), CHANGE_PIN("change_pin"), VALIDATETRUST("validatetrust");
+        NONE("none"), CHANGE_PIN("change_pin"), VALIDATETRUST("validatetrust"), VERIFY_PIN("verify_pin");
         private final String order;
 
         private ACTION(String order)
@@ -387,6 +405,11 @@ public class EidController extends Observable implements Runnable, Observer, Eid
                     {
                         logger.fine("requesting change_pin action");
                         eid_changePin();
+                    }
+                    else if(runningAction == ACTION.VERIFY_PIN)
+                    {
+                        logger.fine("requesting verify_pin action");
+                        eid_verifyPin();
                     }
                     else if (runningAction == ACTION.VALIDATETRUST)
                     {
@@ -526,6 +549,12 @@ public class EidController extends Observable implements Runnable, Observer, Eid
     public EidController changePin()
     {
         runningAction = ACTION.CHANGE_PIN;
+        return this;
+    }
+
+    public EidController verifyPin()
+    {
+        runningAction = ACTION.VERIFY_PIN;
         return this;
     }
 

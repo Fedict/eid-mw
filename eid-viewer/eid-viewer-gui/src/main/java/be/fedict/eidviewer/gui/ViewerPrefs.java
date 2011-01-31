@@ -18,6 +18,7 @@
 
 package be.fedict.eidviewer.gui;
 
+import java.util.logging.Level;
 import java.util.prefs.Preferences;
 
 /**
@@ -33,15 +34,20 @@ public class ViewerPrefs
     public static final String          HTTP_PROXY_HOST                  = "http_proxy_host";
     public static final String          HTTP_PROXY_PORT                  = "http_proxy_port";
     public static final String          SHOW_LOG_TAB                     = "show_log_tab";
+    public static final String          LOG_LEVEL                        = "log_level";
 
     public static final boolean         DEFAULT_HTTP_PROXY_ENABLE       = false;
     public static final boolean         DEFAULT_AUTO_VALIDATE_TRUST     = false;
-    public static final boolean         DEFAULT_SHOW_LOG_TAB            = false;
 
+    public static final boolean         DEFAULT_SHOW_LOG_TAB            = false;
+    public static final String          DEFAULT_LOG_LEVEL_STR           = "INFO";
+    public static final Level           DEFAULT_LOG_LEVEL               = Level.INFO;
+    
     public static final String          DEFAULT_TRUSTSERVICE_PROTO      = "http";
     public static final String          DEFAULT_TRUSTSERVICE_URI        = "trust.services.belgium.be";
     public static final String          DEFAULT_HTTP_PROXY_HOST         = "";
     public static final int             DEFAULT_HTTP_PROXY_PORT         = 8080;
+    
     private static final String         COLON_SLASH_SLASH               = "://";
     
     private static Preferences          preferences;
@@ -126,6 +132,18 @@ public class ViewerPrefs
         if(getPrefs()==null)
             return;
         getPrefs().putBoolean(SHOW_LOG_TAB, state);
+    }
+
+    public static Level getLogLevel()
+    {
+        return getPrefs()!=null?Level.parse(getPrefs().get(LOG_LEVEL, DEFAULT_LOG_LEVEL_STR)):DEFAULT_LOG_LEVEL;
+    }
+
+    public static void setLogLevel(Level level)
+    {
+        if(getPrefs()==null)
+            return;
+        getPrefs().put(LOG_LEVEL, level.toString());
     }
 }
 

@@ -20,7 +20,7 @@ package be.fedict.eidviewer.gui.file;
 
 import be.fedict.eid.applet.service.Address;
 import be.fedict.eid.applet.service.Identity;
-import be.fedict.eidviewer.gui.EidController;
+import be.fedict.eidviewer.gui.EidData;
 import be.fedict.eidviewer.gui.X509CertificateChainAndTrust;
 import be.fedict.trust.client.TrustServiceDomains;
 import java.io.File;
@@ -52,7 +52,7 @@ public class Version4EidFile
     private static final String ZIPFILE_ROOTCERT_FILENAME                   = "rootcert.der";
     private static final String ZIPFILE_SIGNCERT_FILENAME                   = "signcert.der";
     
-    public static void load(File file, EidController controller) throws FileNotFoundException, CertificateException, IOException, ClassNotFoundException
+    public static void load(File file, EidData controller) throws FileNotFoundException, CertificateException, IOException, ClassNotFoundException
     {
         CloseResistantZipInputStream    zipInputStream      = null;
         ObjectInputStream               objectInputStream   = null;
@@ -140,7 +140,7 @@ public class Version4EidFile
     }
 
     
-    public static void save(File file, EidController controller) throws IOException, CertificateEncodingException
+    public static void save(File file, EidData eidData) throws IOException, CertificateEncodingException
     {
         CloseResistantZipOutputStream   zipOutputStream     =null;
         ObjectOutputStream              objectOutputStream  =null;
@@ -149,38 +149,38 @@ public class Version4EidFile
         {
             zipOutputStream = new CloseResistantZipOutputStream(new FileOutputStream(file));
 
-            if(controller.hasIdentity())
+            if(eidData.hasIdentity())
             {
                 zipOutputStream.putNextEntry(new ZipEntry("nationalnumber"));
-                zipOutputStream.write(controller.getIdentity().getNationalNumber().getBytes("utf-8"));
+                zipOutputStream.write(eidData.getIdentity().getNationalNumber().getBytes("utf-8"));
                 zipOutputStream.closeEntry();
                 
                 zipOutputStream.putNextEntry(new ZipEntry("nationalnumber"));
-                zipOutputStream.write(controller.getIdentity().getNationalNumber().getBytes("utf-8"));
+                zipOutputStream.write(eidData.getIdentity().getNationalNumber().getBytes("utf-8"));
                 zipOutputStream.closeEntry();
             }
 
-            if(controller.hasAddress())
+            if(eidData.hasAddress())
             {
                 zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_ADDRESS_FILENAME));
                 objectOutputStream = new ObjectOutputStream(zipOutputStream);
-                objectOutputStream.writeObject(controller.getAddress());
+                objectOutputStream.writeObject(eidData.getAddress());
                 objectOutputStream.close();
                 zipOutputStream.closeEntry();
             }
 
-            if(controller.hasPhoto())
+            if(eidData.hasPhoto())
             {
                 zipOutputStream.putNextEntry(new ZipEntry(ZIPFILE_PHOTO_FILENAME));
                 objectOutputStream = new ObjectOutputStream(zipOutputStream);
-                objectOutputStream.writeObject(controller.getPhoto());
+                objectOutputStream.writeObject(eidData.getPhoto());
                 objectOutputStream.close();
                 zipOutputStream.closeEntry();
             }
 
-            if(controller.hasAuthCertChain())
+            if(eidData.hasAuthCertChain())
             {
-                List<X509Certificate> authChain=controller.getAuthCertChain().getCertificates();
+                List<X509Certificate> authChain=eidData.getAuthCertChain().getCertificates();
                 if(authChain.size()==3)
                 {
                     X509Certificate authCert=authChain.get(0);
@@ -203,9 +203,9 @@ public class Version4EidFile
                 }
             }
 
-            if(controller.hasSignCertChain())
+            if(eidData.hasSignCertChain())
             {
-                List<X509Certificate> signChain=controller.getSignCertChain().getCertificates();
+                List<X509Certificate> signChain=eidData.getSignCertChain().getCertificates();
                 if(signChain.size()==3)
                 {
                     X509Certificate signCert=signChain.get(0);

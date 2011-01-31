@@ -134,4 +134,11 @@ public class EidFilePreviewAccessory extends JPanel implements PropertyChangeLis
     public X509CertificateChainAndTrust getAuthCertChain()                      { return null; }
     public X509CertificateChainAndTrust getSignCertChain()                      { return null; }
     public X509CertificateChainAndTrust getRRNCertChain()                       { return null; }
+    public boolean hasAddress()                                                 { return false; }
+    public boolean hasIdentity()                                                { return false; }
+    public boolean hasPhoto()                                                   { return false; }
+    public boolean hasAuthCertChain()                                           { return false; }
+    public boolean hasSignCertChain()                                           { return false; }
+    public boolean hasRRNCertChain()                                            { return false; }
+  
 }

@@ -40,4 +40,11 @@ public interface EidData
     public X509CertificateChainAndTrust getAuthCertChain();
     public X509CertificateChainAndTrust getSignCertChain();
     public X509CertificateChainAndTrust getRRNCertChain();
+
+    public boolean hasAddress();
+    public boolean hasIdentity();
+    public boolean hasPhoto();
+    public boolean hasAuthCertChain();
+    public boolean hasSignCertChain();
+    public boolean hasRRNCertChain();
 }
