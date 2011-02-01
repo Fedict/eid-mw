@@ -329,7 +329,7 @@ bool CPCSC::Status(SCARDHANDLE hCard)
 	return SCARD_S_SUCCESS == lRet;
 }
 
-CByteArray CPCSC::Transmit(SCARDHANDLE hCard, const CByteArray &oCmdAPDU,
+CByteArray CPCSC::Transmit(SCARDHANDLE hCard, const CByteArray &oCmdAPDU, long *plRetVal,
 	void *pSendPci, void *pRecvPci)
 {
 	unsigned char tucRecv[APDU_BUF_LEN];
@@ -357,7 +357,9 @@ try_again:
 #endif
 	long lRet = SCardTransmit((SCARDHANDLE) hCard,
 		pioSendPci, oCmdAPDU.GetBytes(), (DWORD) oCmdAPDU.Size(),
- 		pioRecvPci, tucRecv, &dwRecvLen);
+		pioRecvPci, tucRecv, &dwRecvLen);
+
+	*plRetVal = lRet;
 	if (SCARD_S_SUCCESS != lRet)
 	{
 #ifdef __APPLE__
@@ -369,15 +371,59 @@ try_again:
 		}
 #endif
 		MWLOG(LEV_DEBUG, MOD_CAL, L"        SCardTransmit(): 0x%0x", lRet);
-		throw CMWEXCEPTION(PcscToErr(lRet));
+		//throw CMWEXCEPTION(PcscToErr(lRet));
 	}
 	// Don't log the full response for privacy reasons, only SW1-SW2
 	//MWLOG(LEV_DEBUG, MOD_CAL, L"        SCardTransmit(): %ls", CByteArray(tucRecv, (unsigned long) dwRecvLen).ToWString(true, true, 0, (unsigned long) dwRecvLen).c_str() );
 	MWLOG(LEV_DEBUG, MOD_CAL, L"        SCardTransmit(): SW12 = %02X %02X",
 		tucRecv[dwRecvLen - 2], tucRecv[dwRecvLen - 1]);
+	//check response, and add 25 ms delay when error was returned
 
+	if( (tucRecv[dwRecvLen - 2] != 0x90) && (tucRecv[dwRecvLen - 1]!=0x00) &&
+		(tucRecv[dwRecvLen - 2] != 0x61) &&
+		(tucRecv[dwRecvLen - 2] != 0x6C) )
+	{
+		CThread::SleepMillisecs(25);
+	}
 	return CByteArray(tucRecv, (unsigned long) dwRecvLen);
 }
+void CPCSC::Recover(SCARDHANDLE hCard, unsigned long * pulLockCount )
+{
+	//try to recover when the card is not responding (properly) anymore
+
+	DWORD ap = 0;
+	int i = 0;
+	long lRet = SCARD_F_INTERNAL_ERROR;
+
+	MWLOG(LEV_WARN, MOD_CAL, L"Card is not responding properly, trying to recover...");
+
+	for (i = 0; (i < 10) && (lRet != SCARD_S_SUCCESS); i++)
+	{
+		if (i != 0)
+			CThread::SleepMillisecs(1000);
+
+		lRet = SCardReconnect(hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &ap);
+		if ( lRet != SCARD_S_SUCCESS )
+		{
+			MWLOG(LEV_DEBUG, MOD_CAL, L"        [%d] SCardReconnect errorcode: [0x%02X]", i, lRet);
+			continue;
+		}
+		// transaction is lost after an SCardReconnect()
+		if(*pulLockCount > 0)
+		{
+			lRet = SCardBeginTransaction(hCard);
+			if ( lRet != SCARD_S_SUCCESS )
+			{
+				MWLOG(LEV_DEBUG, MOD_CAL, L"        [%d] SCardBeginTransaction errorcode: [0x%02X]", i, lRet);
+				continue;
+			}
+			*pulLockCount=1;
+		}
+
+		MWLOG(LEV_INFO, MOD_CAL, L"        Card recovered in loop %d", i);
+	}
+}
+
 
 CByteArray CPCSC::Control(SCARDHANDLE hCard, unsigned long ulControl, const CByteArray &oCmd,
 	unsigned long ulMaxResponseSize)

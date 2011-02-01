@@ -25,7 +25,7 @@ namespace eIDMW
 
 CCard::CCard(SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad) :
 	m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad),
-	m_oCache(poContext), m_ulLockCount(0), m_bSerialNrString(false)
+	m_oCache(poContext), m_ulLockCount(0), m_bSerialNrString(false),m_cardType(CARD_UNKNOWN)
 {
 }
 
@@ -322,6 +322,7 @@ DlgPinUsage CCard::PinUsage2Dlg(const tPin & Pin, const tPrivKey *pKey)
 {
 	return DLG_PIN_UNKNOWN;
 }
+
 unsigned long CCard::GetSupportedAlgorithms()
 {
 	return 0;
@@ -353,8 +354,29 @@ CByteArray CCard::GetRandom(unsigned long ulLen)
 CByteArray CCard::SendAPDU(const CByteArray & oCmdAPDU)
 {
 	CAutoLock oAutoLock(this);
+	long lRetVal = 0;
 
-	CByteArray oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmdAPDU);
+	CByteArray oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmdAPDU,&lRetVal);
+
+	if ( m_cardType == CARD_BEID &&
+			(lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED) )
+	{
+		m_poContext->m_oPCSC.Recover(m_hCard, &m_ulLockCount);
+		// try again to select the applet
+		CByteArray oData;
+		CByteArray oCmd(40);
+		const unsigned char Cmd[] = {0x00,0xA4,0x04,0x00,0x0F,0xA0,0x00,0x00,0x00,0x30,0x29,0x05,0x70,0x00,0xAD,0x13,0x10,0x01,0x01,0xFF};
+		oCmd.Append(Cmd,sizeof(Cmd));
+
+		oData = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd,&lRetVal);
+
+		if( (oData.Size() == 2) && 
+				( (oData.GetByte(0) == 0x61) || ((oData.GetByte(0) == 0x90) && (oData.GetByte(1) == 0x00)) ) )
+		{
+			//try again, now that the card has been reset
+			oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmdAPDU,&lRetVal);
+		}
+	}
 
 	if (oResp.Size() == 2)
 	{

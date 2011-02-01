@@ -46,13 +46,14 @@ CCard *GetCardInstance(unsigned long ulVersion, const char *csReader,
 
 static bool BeidCardSelectApplet(CContext *poContext, SCARDHANDLE hCard)
 {
+	long lRetVal = 0; 
 	unsigned char tucSelectApp[] = {0x00, 0xA4, 0x04, 0x00};
 	CByteArray oCmd(40);
 	oCmd.Append(tucSelectApp, sizeof(tucSelectApp));
 	oCmd.Append((unsigned char) sizeof(APPLET_AID));
 	oCmd.Append(APPLET_AID, sizeof(APPLET_AID));
 
-	CByteArray oResp = poContext->m_oPCSC.Transmit(hCard, oCmd);
+	CByteArray oResp = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
 
 	return (oResp.Size() == 2 && (oResp.GetByte(0) == 0x61 || oResp.GetByte(0) == 0x90));
 }
@@ -72,13 +73,21 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 			oCmd.Append(tucSelectApp, sizeof(tucSelectApp));
 			oCmd.Append((unsigned char) sizeof(BELPIC_AID));
 			oCmd.Append(BELPIC_AID, sizeof(BELPIC_AID));
-
+			long lRetVal;
 			// Don't remove these brackets, CAutoLock dtor must be called!
 			{
 				CAutoLock oAutLock(&poContext->m_oPCSC, hCard);
 
-				oData = poContext->m_oPCSC.Transmit(hCard, oCmd);
-
+				oData = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
+				if (lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED)
+				{
+					unsigned long ulLockCount = 0;
+					poContext->m_oPCSC.Recover(hCard, &ulLockCount);
+					
+					bNeedToSelectApplet = BeidCardSelectApplet(poContext, hCard);
+					if (bNeedToSelectApplet)// try again to select the belpic app
+						oData = poContext->m_oPCSC.Transmit(hCard, oCmd,&lRetVal);
+				}
 				if (oData.Size() == 2 && oData.GetByte(0) == 0x6A &&
 					(oData.GetByte(1) == 0x82 || oData.GetByte(1) == 0x86))
 				{
@@ -86,7 +95,7 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 					// first; and if successfull then try to select the Belpic AID again
 					bNeedToSelectApplet = BeidCardSelectApplet(poContext, hCard);
 					if (bNeedToSelectApplet)
-						oData = poContext->m_oPCSC.Transmit(hCard, oCmd);
+						oData = poContext->m_oPCSC.Transmit(hCard, oCmd,&lRetVal);
 				}
 
 				bool bIsBeidCard = oData.Size() == 2 && oData.GetByte(0) == 0x90 && oData.GetByte(1) == 0x00;
@@ -124,6 +133,7 @@ CBeidCard::CBeidCard(SCARDHANDLE hCard, CContext *poContext,
 	CPinpad *poPinpad, const CByteArray & oData, tSelectAppletMode selectAppletMode) :
 CPkiCard(hCard, poContext, poPinpad)
 {
+		m_cardType = CARD_BEID;
     try {
 		m_ucCLA = 0x80;
         m_oCardData = SendAPDU(0xE4, 0x00, 0x00, 0x1C);

@@ -92,6 +92,7 @@ public:
     virtual bool PinCmd(tPinOperation operation, const tPin & Pin,
         const std::string & csPin1, const std::string & csPin2,
         unsigned long & ulRemaining, const tPrivKey *pKey = NULL);
+
 	virtual DlgPinUsage PinUsage2Dlg(const tPin & Pin, const tPrivKey *pKey);
 
 	virtual unsigned long GetSupportedAlgorithms();
@@ -140,6 +141,7 @@ protected:
 	CContext *m_poContext;
 	CPinpad *m_poPinpad;
 	CCache m_oCache;
+	tCardType m_cardType;
     unsigned long m_ulLockCount;
 	bool m_bSerialNrString;
 #ifdef WIN32
