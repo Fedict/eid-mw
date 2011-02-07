@@ -221,7 +221,8 @@ int main(int argc, char* argv[])
 	// digit 0
 	pindialog.digits[0]=gtk_button_new_with_label("0");
 	gtk_table_attach(GTK_TABLE(pindialog.table),pindialog.digits[0],1,2,3,4,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_widget_set_can_focus(pindialog.digits[0],FALSE);
+	GTK_WIDGET_UNSET_FLAGS(pindialog.digits[0],GTK_CAN_FOCUS);
+//	gtk_widget_set_can_focus(pindialog.digits[0],FALSE);
 	g_signal_connect(pindialog.digits[0],"clicked",G_CALLBACK(on_key_digit),(gpointer)&pindialog);
 
 	// digits 1 to 9	
@@ -234,7 +235,8 @@ int main(int argc, char* argv[])
 		int col=(i-1)%3;
 		int row=(i-1)/3;
 		gtk_table_attach(GTK_TABLE(pindialog.table),pindialog.digits[i],col,col+1,row,row+1,(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),2,2);
-		gtk_widget_set_can_focus(pindialog.digits[i],FALSE);
+		GTK_WIDGET_UNSET_FLAGS(pindialog.digits[i],GTK_CAN_FOCUS);
+//		gtk_widget_set_can_focus(pindialog.digits[i],FALSE);
 		g_signal_connect(pindialog.digits[i],"clicked",G_CALLBACK(on_key_digit),(gpointer)&pindialog);
 	}
 
@@ -242,14 +244,16 @@ int main(int argc, char* argv[])
 	pindialog.backspace=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(pindialog.backspace),gtk_image_new_from_stock(GTK_STOCK_GO_BACK,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_table_attach(GTK_TABLE(pindialog.table),pindialog.backspace,0,1,3,4,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_widget_set_can_focus(pindialog.backspace,FALSE);
+	GTK_WIDGET_UNSET_FLAGS(pindialog.backspace,GTK_CAN_FOCUS);
+//	gtk_widget_set_can_focus(pindialog.backspace,FALSE);
 	g_signal_connect(pindialog.backspace,"clicked",G_CALLBACK(on_key_backspace),(gpointer)&pindialog);
 
 	// clear button
 	pindialog.clear=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(pindialog.clear),gtk_image_new_from_stock(GTK_STOCK_CLEAR,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_table_attach(GTK_TABLE(pindialog.table),pindialog.clear,2,3,3,4,(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),(GtkAttachOptions)(GTK_SHRINK | GTK_FILL),2,2);
-	gtk_widget_set_can_focus(pindialog.clear,FALSE);
+	GTK_WIDGET_UNSET_FLAGS(pindialog.clear,GTK_CAN_FOCUS);
+//	gtk_widget_set_can_focus(pindialog.clear,FALSE);
 	g_signal_connect(pindialog.clear,"clicked",G_CALLBACK(on_key_clear),(gpointer)&pindialog);
 
 	// create special label with opaque background
