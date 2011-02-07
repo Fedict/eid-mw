@@ -1,4 +1,4 @@
-AC_PREREQ([2.63])
+AC_PREREQ([2.61])
 AC_INIT([libbeidcommon],[4.0.0],[servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/mwexception.h])
@@ -7,12 +7,6 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
 
 LT_INIT([win32-dll])
-LT_PREREQ([2.2.7c],
-      [LT_PREREQ([2.2.6])],
-      [AC_MSG_WARN([Libtool Version 2.2.7c is required to build for Windows])]
-      )
-
-
 AM_INIT_AUTOMAKE
 
 # Checks for programs.
@@ -57,7 +51,7 @@ AS_VAR_IF([linux],[true],
                 # as we do not use pkgconfig on Windows and Mac
                 m4_ifdef([PKG_CHECK_MODULES],
                 [
-            PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.3],
+            PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.4.102],
             [
                     CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
                     LDFLAGS="$PCSC_LIBS $CPPFLAGS"

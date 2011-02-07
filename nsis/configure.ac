@@ -1,4 +1,4 @@
-AC_PREREQ([2.65])
+AC_PREREQ([2.61])
 AC_INIT([eid-mw-nsis-installer],[4.0.0], [servicedesk@fedict.be])
 AM_INIT_AUTOMAKE([foreign])
 AC_CANONICAL_HOST

@@ -1,4 +1,4 @@
-AC_PREREQ([2.63])
+AC_PREREQ([2.61])
 AC_INIT([sccertprop], [4.0.0], [servicedesk@fedict.be])
 
 AC_CONFIG_AUX_DIR([build-aux])
@@ -8,11 +8,6 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
 
 LT_INIT([win32-dll])
-LT_PREREQ([2.2.7c],
-      [LT_PREREQ([2.2.6])],
-      [AC_MSG_WARN([Libtool Version 2.2.7c is required])]
-      )
-
 AM_INIT_AUTOMAKE([-Wall -Werror])
 
 # Checks for programs.

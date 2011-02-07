@@ -1,4 +1,4 @@
-AC_PREREQ([2.65])
+AC_PREREQ([2.61])
 AC_INIT([etilib], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
 AC_CONFIG_SRCDIR([src/virtualcardaccess.h])
 AC_CONFIG_HEADERS([config.h])
@@ -6,7 +6,6 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
 
 LT_INIT([win32-dll])
-LT_PREREQ([2.2.7c])
 
 AM_INIT_AUTOMAKE
 

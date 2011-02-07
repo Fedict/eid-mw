@@ -1,4 +1,4 @@
-AC_PREREQ([2.63])
+AC_PREREQ([2.61])
 AC_INIT([beidmdrv],[4.0.0] [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/CardAndContProp.c])

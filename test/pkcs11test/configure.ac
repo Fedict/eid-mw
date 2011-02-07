@@ -1,4 +1,4 @@
-AC_PREREQ([2.65])
+AC_PREREQ([2.61])
 AC_INIT([pkcs11tests], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/open-close-session.c])
@@ -6,7 +6,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE
 AC_CANONICAL_HOST
-LT_INIT()
+LT_INIT
 
 # Checks for programs.
 AC_PROG_CXX
@@ -51,7 +51,7 @@ AS_VAR_IF([with_pcsclite],[no],
 	[
 		AS_VAR_IF([linux],[true],
 		[
-			PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.5],
+			PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.4.102],
 			[
 		   	     CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
 		  	     LDFLAGS="$PCSC_LIBS $CPPFLAGS"

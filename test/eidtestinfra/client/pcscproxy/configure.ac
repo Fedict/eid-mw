@@ -1,4 +1,4 @@
-AC_PREREQ([2.65])
+AC_PREREQ([2.61])
 AC_INIT([pcscproxy], m4_esyscmd([echo -n 3.99.M1-`svnversion -n` | tr -d '\n' | tr -d '\r']), [servicedesk@fedict.be])
 AC_CONFIG_SRCDIR([src/softcard.h])
 AC_CONFIG_HEADERS([config.h])
@@ -6,7 +6,6 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
 
 LT_INIT([win32-dll])
-LT_PREREQ([2.2.7c])
 
 AM_INIT_AUTOMAKE
 
@@ -48,7 +47,7 @@ AS_VAR_IF([linux],[true],
 
     AS_VAR_IF([with_pcsclite],[no],
     [
-        PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.3],
+        PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.4.102],
         [
             CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
             LDFLAGS="$PCSC_LIBS $CPPFLAGS"

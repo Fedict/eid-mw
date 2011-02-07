@@ -1,4 +1,4 @@
-AC_PREREQ([2.63])
+AC_PREREQ([2.61])
 AC_INIT([libbeidpkcs11],[4.0.0], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/beid_p11.h])
@@ -52,7 +52,7 @@ AS_VAR_IF([linux],[true],
                 # as we do not use pkgconfig on Windows and Mac
                 m4_ifdef([PKG_CHECK_MODULES],
                 [
-			PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.5.3],
+			PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.4.102],
 	    		[
 			        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
 	        		LDFLAGS="$PCSC_LIBS $CPPFLAGS"
