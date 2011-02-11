@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4
-EXTRA_DIST = arch debian rpm svn_revision minidriver sccertprop nsis dmg VS_2010 beidcleanup CSP installers windows misc Outlook_snc sdk eid-viewer
+EXTRA_DIST = arch debian rpm svn_revision minidriver sccertprop nsis dmg VS_2010 beidcleanup CSP installers windows misc Outlook_snc sdk
 
 BUILT_SOURCES=svn_revision
 
@@ -12,8 +12,8 @@ else
 MAYBE_DIALOGS=dialogs
 endif
 
-SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi $(WINDOWS_ONLY)
-DIST_SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi 
+SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi $(WINDOWS_ONLY) eid-viewer
+DIST_SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi eid-viewer
 
 svn_revision:
 	svnversion > svn_revision
