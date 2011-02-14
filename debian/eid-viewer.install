@@ -1,0 +1,4 @@
+usr/share/eid-viewer/lib
+usr/share/eid-viewer/eid-viewer.sh
+usr/share/eid-viewer/*jar
+usr/bin/eid-viewer

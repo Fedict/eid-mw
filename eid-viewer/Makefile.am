@@ -9,7 +9,8 @@ clean-local:
 
 install-data-local:
 	cd $(srcdir) ; cp -r eid-viewer-package/target/package-4.0.0/eid-viewer $(DESTDIR)$(datadir)
-	ln -sf $(DESTDIR)$(datadir)/eid-viewer/eid-viewer.sh $(DESTDIR)$(bindir)/eid-viewer ; chmod 755 $(DESTDIR)$(bindir)/eid-viewer
+	ln -sf $(datadir)/eid-viewer/eid-viewer.sh $(DESTDIR)$(bindir)/eid-viewer
 
 uninstall-local:
-	rm -Rf $(DESTDIR)$(datadir)/eid-viewer
+	rm -Rf $(DESTDIR)$(bindir)/eid-viewer
+	rm -Rf $(DESTDIR)$(datadir)/eid-viewer/eid-viewer.sh

@@ -1,54 +1,28 @@
 This work was packaged for Debian by:
 
-    Build Slave <eidmw@yourict.net> on Thu, 23 Sep 2010 15:17:52 +0200
-
-It was downloaded from:
-
-    <url://example.com>
+    Frank Mariën <frank.marien@fedict.be> on Thu, 23 Sep 2010 15:17:52 +0200
 
 Upstream Author(s):
 
-    <put author's name and email here>
-    <likewise for another author>
+    FedICT
 
 Copyright:
 
-    <Copyright (C) YYYY Firtname Lastname>
-    <likewise for another author>
+    Copyright (C) 2010-2011 FedICT
 
 License:
 
-### SELECT: ###
-    This package is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-### OR ###
    This package is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 2 as
-   published by the Free Software Foundation.
-##########
+   it under the terms of the GNU Lesser General Public License, version
+   3, as published by the Free Software Foundation.
 
-    This package is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this package; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-On Debian systems, the complete text of the GNU General
-Public License version 2 can be found in `/usr/share/common-licenses/GPL-2'.
+On Debian systems, the complete text of the GNU Lesser General Public
+License version 3 can be found in `/usr/share/common-licenses/LGPL-3'.
 
 The Debian packaging is:
 
-    Copyright (C) 2010 Build Slave <eidmw@yourict.net>
+    Copyright (C) 2010 Frank Mariën <frank.marien@fedict.be>
 
-you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-# Please also look if there are files or directories which have a
-# different copyright/license attached and list them here.
+you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation;
+either version 2 of the License, or (at your option) any later version.

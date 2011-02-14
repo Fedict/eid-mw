@@ -11,3 +11,6 @@
 
 %:
 	dh  $@
+
+override_dh_installexamples:
+	dh_installexamples -X.svn
