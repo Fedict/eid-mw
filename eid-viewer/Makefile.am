@@ -13,4 +13,4 @@ install-data-local:
 
 uninstall-local:
 	rm -Rf $(DESTDIR)$(bindir)/eid-viewer
-	rm -Rf $(DESTDIR)$(datadir)/eid-viewer/eid-viewer.sh
+	rm -Rf $(DESTDIR)$(datadir)/eid-viewer

@@ -34,6 +34,7 @@ import java.security.cert.CertificateFactory;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -192,7 +193,14 @@ public class PCSCEidImpl implements Eid
 
     public void verifyPin(boolean requireSecureReader) throws Exception
     {
-        mPcscEidSpi.verifyPin(requireSecureReader);
+        byte[] dummyData=new byte[128];
+        logger.fine("Logging Off To Make Sure PIN Cache is Cleared");
+        mPcscEidSpi.logoff();
+        logger.fine("Signing 128 Zero Bytes to Trigger PIN Check");
+        mPcscEidSpi.signAuthn(dummyData);
+        logger.fine("Logging Off To Clear PIN Cache");
+        mPcscEidSpi.logoff();
+        logger.fine("##### PIN Check OK");
     }
 
     public void addObserver(Observer observer)
@@ -319,6 +327,7 @@ public class PCSCEidImpl implements Eid
         }
         return data;
     }
+
 
     private byte[] trimRight(byte[] addressFile)
     {
