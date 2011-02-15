@@ -6,7 +6,7 @@
 # Can't use svn_revision, since that is only rebuilt as part of the
 # build step below (which means it currently contains the 'old' version
 # number)
-SVNREV=$(svnversion)
+SVNREV=$(cat svn_version)
 # Upstream
 MAINVER=$(./configure --version|grep ^eid-mw|cut -d' ' -f3)
 
@@ -19,6 +19,6 @@ debuild -uc -us -i -I.svn -b
 STATE=$?
 
 # Reset changelog to keep working directory clean
-svn revert debian/changelog
+#svn revert debian/changelog
 
 exit $STATE
