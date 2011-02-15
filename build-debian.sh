@@ -6,7 +6,7 @@
 # Can't use svn_revision, since that is only rebuilt as part of the
 # build step below (which means it currently contains the 'old' version
 # number)
-SVNREV=$(cat svn_version)
+SVNREV=$(cat svn_revision)
 # Upstream
 MAINVER=$(./configure --version|grep ^eid-mw|cut -d' ' -f3)
 
