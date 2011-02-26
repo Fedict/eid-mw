@@ -251,6 +251,6 @@
     </repositories>
 
     <properties>
-        <eid-applet.version>1.0.2-SNAPSHOT</eid-applet.version>
+        <eid-applet.version>1.0.2.GA</eid-applet.version>
     </properties>
 </project>
