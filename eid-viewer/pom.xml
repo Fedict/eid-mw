@@ -156,11 +156,6 @@
             </snapshots>
         </pluginRepository>
 
-        <pluginRepository>
-            <id>codehaus-snapshots</id>
-            <url>https://nexus.codehaus.org/content/repositories/snapshots/</url>
-        </pluginRepository>
-        
     </pluginRepositories>
     
     <repositories>
