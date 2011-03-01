@@ -258,7 +258,7 @@ APL_Certif *APL_Certifs::getCertFromCard(unsigned long ulIndex)
 
 		cert = new APL_Certif(m_card,this,ulIndex);
 
-		unsigned long ulUniqueId=cert->getUniqueId();
+		unsigned long ulUniqueId=ulIndex;//cert->getUniqueId();
 		itr = m_certifs.find(ulUniqueId);
 		if(itr==m_certifs.end())
 		{
@@ -273,7 +273,8 @@ APL_Certif *APL_Certifs::getCertFromCard(unsigned long ulIndex)
 
 APL_Certif *APL_Certifs::addCert(const CByteArray &certIn,APL_CertifType type,bool bHidden)
 {
-
+	return NULL;
+	/*
 	std::map<unsigned long,APL_Certif *>::const_iterator itr;
 
 	unsigned long ulUniqueId=m_cryptoFwk->GetCertUniqueID(certIn);
@@ -317,11 +318,13 @@ APL_Certif *APL_Certifs::addCert(const CByteArray &certIn,APL_CertifType type,bo
 		resetFlags();
 
 		return cert;
-	}
+	}*/
 }
 
 APL_Certif *APL_Certifs::addCert(APL_CardFile_Certificate *file,APL_CertifType type,bool bOnCard,bool bHidden,unsigned long ulIndex,const CByteArray *cert_data,const CByteArray *cert_tlv_struct)
 {
+	return NULL;
+	/*
 	if(!file && !cert_data)
 		throw CMWEXCEPTION(EIDMW_ERR_CHECK);
 
@@ -380,7 +383,7 @@ APL_Certif *APL_Certifs::addCert(APL_CardFile_Certificate *file,APL_CertifType t
 		resetFlags();
 
 		return cert;
-	}
+	}*/
 }
 
 APL_Certif *APL_Certifs::getCert(unsigned long ulIndex, bool bOnlyVisible)
@@ -1275,42 +1278,47 @@ void APL_Certif::resetTest()
 
 APL_Certif *APL_Certif::getIssuer()
 {
+	return NULL;
 	//If this is the root, there is no issuer
-	if(m_root)
+	/*if(m_root)
 		return NULL;
 
-	return m_issuer;
+	return m_issuer;*/
 }
 
 APL_Certif *APL_Certif::getRoot()
 {
-	if(m_root)
+	return NULL;
+	/*if(m_root)
 		return this;
 
 	if(m_issuer)
 		return m_issuer->getRoot();
 
-	return this;
+	return this;*/
 }
 
 unsigned long APL_Certif::countChildren(bool bForceRecount)
 {
+	return 0;/*
 	if(bForceRecount || m_countChildren == 0xFFFFFFFF)
 	{
 		m_countChildren=m_store->countChildren(this);
 	}
 
-	return m_countChildren;
+	return m_countChildren;*/
 }
 
 APL_Certif *APL_Certif::getChildren(unsigned long ulIndex)
 {
-	return m_store->getChildren(this,ulIndex);
+	return NULL;
+	//return m_store->getChildren(this,ulIndex);
 }
 
 bool APL_Certif::isTest()
 {
-	return (m_test!=0);
+	return false;
+	//return (m_test!=0);
 }
 
 bool APL_Certif::isType(APL_CertifType type)
@@ -1320,7 +1328,8 @@ bool APL_Certif::isType(APL_CertifType type)
 
 bool APL_Certif::isRoot()
 {
-	return (m_root==1);
+	return false;
+	//return (m_root==1);
 }
 
 bool APL_Certif::isAuthentication()
@@ -1345,7 +1354,8 @@ bool APL_Certif::isRrn()
 
 bool APL_Certif::isFromBeidValidChain()
 {
-	APL_Certif *root=getRoot();
+	return false;
+	/*APL_Certif *root=getRoot();
 
 	if(root)
 	{
@@ -1355,7 +1365,7 @@ bool APL_Certif::isFromBeidValidChain()
 			return true;
 	}
 	else
-		return false;
+		return false;*/
 }
 
 tCardFileStatus APL_Certif::getFileStatus()
@@ -1615,44 +1625,50 @@ APL_Certifs *APL_Certif::getCertificates()
 
 const char *APL_Certif::getSerialNumber()
 {
-	initInfo();
+	return NULL;
+	//initInfo();
 
-	return m_info->serialNumber.c_str();
+	//return m_info->serialNumber.c_str();
 }
 
 const char *APL_Certif::getOwnerName()
 {
-	initInfo();
+	return NULL;
+	//initInfo();
 
-	return m_info->ownerName.c_str();
+	//return m_info->ownerName.c_str();
 }
 
 const char *APL_Certif::getIssuerName()
 {
-	initInfo();
+	return NULL;
+	//initInfo();
 
-	return m_info->issuerName.c_str();
+	//return m_info->issuerName.c_str();
 }
 
 const char *APL_Certif::getValidityBegin()
 {
-	initInfo();
+	return NULL;
+	//initInfo();
 
-	return m_info->validityNotBefore.c_str();
+	//return m_info->validityNotBefore.c_str();
 }
 
 const char *APL_Certif::getValidityEnd()
 {
-	initInfo();
+	return NULL;
+	//initInfo();
 
-	return m_info->validityNotAfter.c_str();
+	//return m_info->validityNotAfter.c_str();
 }
 
 unsigned long APL_Certif::getKeyLength()
 {
-	initInfo();
+	return NULL;
+	//initInfo();
 
-	return m_info->keyLength;
+	//return m_info->keyLength;
 }
 
 /*****************************************************************************************
@@ -1709,7 +1725,8 @@ void APL_Crl::init()
 
 const char *APL_Crl::getUri()
 {
-	return m_uri.c_str();
+	return NULL;
+	//return m_uri.c_str();
 }
 
 APL_CertifStatus APL_Crl::verifyCert(bool forceDownload)
@@ -1889,19 +1906,23 @@ APL_CrlStatus APL_Crl::getData(CByteArray &data,bool forceDownload)
 
 APL_Certif *APL_Crl::getIssuer()
 {
+	return NULL;
+/*
 	if(!m_certif)
 		throw CMWEXCEPTION(EIDMW_ERR_BAD_USAGE);
 
 	init();
 
-	return m_issuer;
+	return m_issuer;*/
 }
 
 const char *APL_Crl::getIssuerName()
 {
-	init();
+	return NULL;
+	
+	//init();
 
-	return m_info->issuerName.c_str();
+	//return m_info->issuerName.c_str();
 }
 
 /*****************************************************************************************
@@ -1969,7 +1990,8 @@ APL_OcspResponse::~APL_OcspResponse(void)
 
 const char *APL_OcspResponse::getUri()
 {
-	return m_uri.c_str();
+	return NULL;
+	//return m_uri.c_str();
 }
 
 APL_CertifStatus APL_OcspResponse::verifyCert()
@@ -1984,8 +2006,9 @@ APL_CertifStatus APL_OcspResponse::getResponse(CByteArray &response)
 
 APL_CertifStatus APL_OcspResponse::getResponse(CByteArray *response)
 {
+	return APL_CERTIF_STATUS_UNCHECK;
 	//If we already have a response, we check if the status was acceptable and if it's still valid
-	if(m_response)
+	/*if(m_response)
 	{
 		if( (m_status==APL_CERTIF_STATUS_VALID_OCSP 
 			|| m_status==APL_CERTIF_STATUS_REVOKED 
@@ -2030,7 +2053,7 @@ APL_CertifStatus APL_OcspResponse::getResponse(CByteArray *response)
 	CTimestampUtil::getTimestamp(m_validity,m_delay,CSC_VALIDITY_FORMAT);
 	m_status=ConvertStatus(status,APL_VALIDATION_PROCESS_OCSP);
 
-	return m_status;
+	return m_status;*/
 }
 
 }
