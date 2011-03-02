@@ -25,7 +25,7 @@
 
 using namespace eIDMW;
 
-static char *tcsLangs[4] = {"nl", "fr", "de", "en"};
+static char *tcsLangs[4] = {"en", "nl", "fr", "de"};
 
 static char *tcsUsageSig[4] = {
 	"Signature",
@@ -53,9 +53,9 @@ static int LangToId(unsigned long ulLanguage)
 {
 	switch(ulLanguage)
 	{
-	case 0x0813: return 1;
-	case 0x080c: return 2;
-	case 0x0407: return 3;
+	case 0x0813: return 1;//LANG_NL
+	case 0x080c: return 2;//LANG_FR
+	case 0x0407: return 3;//LANG_DE
 	}
 	return 0;
 }
