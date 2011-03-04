@@ -380,8 +380,7 @@ try_again:
 	//check response, and add 25 ms delay when error was returned
 
 	if( (tucRecv[dwRecvLen - 2] != 0x90) && (tucRecv[dwRecvLen - 1]!=0x00) &&
-		(tucRecv[dwRecvLen - 2] != 0x61) &&
-		(tucRecv[dwRecvLen - 2] != 0x6C) )
+		(tucRecv[dwRecvLen - 2] != 0x61) )
 	{
 		CThread::SleepMillisecs(25);
 	}
