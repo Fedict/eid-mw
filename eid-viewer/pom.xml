@@ -30,11 +30,14 @@
             <email>frank.marien@fedict.be</email>
         </developer>
     </developers>
-    <modules>
-        <module>eid-viewer-package</module>
-        <module>eid-viewer-gui</module>
-        <module>eid-viewer-lib</module>
-    </modules>
+
+
+	<modules>
+		<module>eid-viewer-package</module>
+        	<module>eid-viewer-gui</module>
+        	<module>eid-viewer-lib</module>
+    	</modules>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

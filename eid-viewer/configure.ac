@@ -11,6 +11,19 @@ AS_VAR_IF([JAVAC],[missing],AC_MSG_ERROR([Java compiler is required.]),AC_SUBST(
 AC_CHECK_PROGS(MVN,[mvn],[missing])
 AS_VAR_IF([MVN],[missing],AC_MSG_ERROR([Maven2 is required.]),AC_SUBST(MVN))
 
+AC_MSG_CHECKING(whether to enable windows executable wrapper)
+default="no"
+WIN32EXE=
+AC_ARG_ENABLE(win32exe, [  --enable-win32exe=[yes/no] turn on windows exe wrapper 
+                               [default=$default]],, enable_win32exe=$default)
+if test "x$enable_win32exe" = "xno"; then
+AC_MSG_RESULT(no)
+else
+AC_MSG_RESULT(yes)
+fi
+AM_CONDITIONAL([WIN32EXE],[test x$enable_win32exe = xyes])
+AM_CONDITIONAL([UNIXEXE],[test x$enable_win32exe = xno])
+
 linux="no"
 osx="no"
 win32="no"

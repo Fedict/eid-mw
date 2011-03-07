@@ -14,19 +14,12 @@ II. Code from a source package, or code you just bootstrapped at item I.
 a) GNU/Linux
 ------------
 
-- Make sure you have Qt SDK, pcsc-lite and OpenSSL installed.
+- Make sure you have pcsc-lite and gtk2 and and their development libraries installed
+  after that it's just:
 
-- ./configure --with-qt=<QT_INSTALL_DIR> --with-pcsclite=<PCSCLITE_INSTALL_DIR> --with-openssl=<OPENSSL_INSTALL_DIR>
-
-  for example, on my Arch 64 system, I built a Qt and installed it in it's default location /usr/local/Trolltech/<version>, 
-  and I installed pcsc-lite and openssl using Arch's package manager, putting them in /usr/include and /usr/lib, so my configure
-  command becomes:
-
-  ./configure --with-qt=/usr/local/Trolltech/Qt-4.6.2/ --with-pcsclite=/usr --with-openssl=/usr
-
-- make
-
-- sudo make install
+  	./configure 
+  	make
+ 	sudo make install
 
 You should now have beid* libraries in /usr/local/lib and one beid* executable in /usr/local/bin
 
@@ -42,24 +35,7 @@ b) OSX
 
 (TODO: complete these instructions)
 
-
-c) 32-bit MS Windows
---------------------
-
-- Make sure you have the appropriate toolchain installed. We use MinGW-w64 to build on Windows.
-
-- Make sure the decorated tools from your toolchain are on your PATH.
-
-- Run ./configure --host=<YOUR_TOOLCHAIN_TRIGRAM>
-  for example, we would use:
-
-  ./configure --host=i686-w64-mingw32
-
-- make
-
-- make install
-
-(TODO: complete these instructions)
+c) MS Windows: TODO: Write README chapter
 
 d) Dialogs
 ----------

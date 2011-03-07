@@ -26,6 +26,15 @@
                     </execution>
                 </executions>
             </plugin>
+	</plugins>
+   </build>
+
+<profiles>
+  <profile>
+    <id>win32package</id>
+	<build>
+	<plugins>
+
             <plugin>
                 <groupId>org.bluestemsoftware.open.maven.plugin</groupId>
                 <artifactId>launch4j-plugin</artifactId>
@@ -67,12 +76,13 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+
+	    <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
-                        <descriptor>src/main/assembly/package.xml</descriptor>
+                        <descriptor>src/main/assembly/package-win32.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>
@@ -85,8 +95,37 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
-    </build>
+	</plugins>
+	</build>
+  </profile>
+
+  <profile>
+    <id>unixpackage</id>
+	<build>
+	<plugins>
+	    <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/package-unix.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+	</plugins>
+	</build>
+    </profile>
+</profiles>
+
     <dependencies>
         <dependency>
             <groupId>be.fedict.eid-viewer</groupId>

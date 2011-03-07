@@ -14,10 +14,6 @@
 			<source>src/main/assembly/eid-viewer.sh</source>
 			<fileMode>0544</fileMode>
 		</file>
-                <file>
-			<source>target/eid-viewer.exe</source>
-			<fileMode>0544</fileMode>
-		</file>
 	</files>
 	<dependencySets>
 		<dependencySet>
