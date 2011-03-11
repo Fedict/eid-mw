@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4
-EXTRA_DIST = arch debian build-debian.sh rpm svn_revision minidriver sccertprop nsis dmg VS_2010 beidcleanup CSP installers windows misc Outlook_snc sdk eid-viewer
+EXTRA_DIST = arch debian build-debian.sh rpm svn_revision minidriver sccertprop nsis dmg VS_2010 beidcleanup CSP installers windows misc Outlook_snc sdk
 
 BUILT_SOURCES=svn_revision
 
