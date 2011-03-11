@@ -48,12 +48,6 @@ AC_ARG_WITH(pcsclite, AC_HELP_STRING([--with-pcsclite=DIR],
                     [pcsc-lite install location]))
 AC_MSG_RESULT([$with_pcsclite])
 
-###### openssl ##########
-AC_MSG_CHECKING([openssl installation])
-AC_ARG_WITH(openssl, AC_HELP_STRING([--with-openssl=DIR],
-                    [openssl install location]))
-AC_MSG_RESULT([$with_openssl])
-
 # on Windows, check for msvcr
 AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcr],[getpid])])
 
@@ -75,19 +69,6 @@ AC_MSG_RESULT(yes)
 fi
 AM_CONDITIONAL([NO_DIALOGS],[test x$enable_dialogs = xno])
 
-AC_MSG_CHECKING(whether to enable windows executable wrapper)
-default="no"
-WIN32EXE=
-AC_ARG_ENABLE(win32exe, [  --enable-win32exe=[yes/no] turn on windows exe wrapper 
-                               [default=$default]],, enable_win32exe=$default)
-if test "x$enable_win32exe" = "xno"; then
-AC_MSG_RESULT(no)
-else
-AC_MSG_RESULT(yes)
-fi
-AM_CONDITIONAL([WIN32EXE],[test x$enable_win32exe = xyes])
-AM_CONDITIONAL([UNIXEXE],[test x$enable_win32exe = xno])
-
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
 AC_C_INLINE
@@ -104,7 +85,7 @@ AC_FUNC_REALLOC
 AC_CHECK_FUNCS([gethostbyname socket strerror ftime memchr memset mkdir select strchr strdup strerror strncasecmp strrchr strstr strtol strtoul vasprintf])
 
 AC_CONFIG_FILES([Makefile])
-AC_CONFIG_SUBDIRS([common cardlayer pkcs11 xpi eid-viewer])
+AC_CONFIG_SUBDIRS([common cardlayer pkcs11 xpi])
 
 if test "x$enable_dialogs" = "xyes"; then
 	AC_CONFIG_SUBDIRS([dialogs])

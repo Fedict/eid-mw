@@ -26,14 +26,6 @@
                     </execution>
                 </executions>
             </plugin>
-	</plugins>
-   </build>
-
-<profiles>
-  <profile>
-    <id>win32package</id>
-	<build>
-	<plugins>
 
             <plugin>
                 <groupId>org.bluestemsoftware.open.maven.plugin</groupId>
@@ -82,7 +74,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
-                        <descriptor>src/main/assembly/package-win32.xml</descriptor>
+                        <descriptor>src/main/assembly/package.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>
@@ -97,34 +89,6 @@
             </plugin>
 	</plugins>
 	</build>
-  </profile>
-
-  <profile>
-    <id>unixpackage</id>
-	<build>
-	<plugins>
-	    <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/package-unix.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>package</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attached</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-	</plugins>
-	</build>
-    </profile>
-</profiles>
 
     <dependencies>
         <dependency>

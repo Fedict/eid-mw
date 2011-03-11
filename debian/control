@@ -25,7 +25,7 @@ Provides: beidgui
 Replaces: beidgui
 Conflicts: beidgui
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, eid-mw
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Graphical interface to Belgian Electronic Identity Card
  This package contains a graphical application to read data from the
  Belgian electronic identity card.
