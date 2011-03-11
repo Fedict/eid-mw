@@ -2758,9 +2758,9 @@ void MainWnd::on_actionPINRequest_triggered()
 				{
 					unsigned long triesLeft = -1;
 					bool		  bResult   = Pin.verifyPin("",triesLeft);
-					QString		  msg(tr("PIN verification "));
+					//QString		  msg(tr("PIN verification "));
 
-					msg += bResult?tr("passed"):tr("failed");
+					QString msg = bResult?tr("PIN verification passed"):tr("PIN verification failed");
 					if (!bResult)
 					{
 						//--------------------------
