@@ -18,3 +18,14 @@ Description: low-level support for Belgian Electronic Identity Card
  Belgian electronic identity card. You should install it if you wish to
  use your electronic identity card to log on to online websites, or to
  sign your mail and documents with it.
+
+Package: eid-viewer
+Section: java
+Provides: beidgui
+Replaces: beidgui
+Conflicts: beidgui
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Graphical interface to Belgian Electronic Identity Card
+ This package contains a graphical application to read data from the
+ Belgian electronic identity card.
