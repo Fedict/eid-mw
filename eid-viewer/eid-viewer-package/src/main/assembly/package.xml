@@ -6,12 +6,17 @@
 	</formats>
 	<baseDirectory>eid-viewer</baseDirectory>
 	<files>
-		<file>
-			<source>src/main/assembly/README.txt</source>
-			<fileMode>0544</fileMode>
-		</file>
-		<file>
-			<source>src/main/assembly/eid-viewer.sh</source>
+	         <file>
+                        <source>src/main/assembly/README.txt</source>
+                        <fileMode>0544</fileMode>
+                </file>
+                <file>
+                        <source>src/main/assembly/eid-viewer.sh</source>
+                        <fileMode>0544</fileMode>
+                </file>
+
+                <file>
+			<source>target/eid-viewer.exe</source>
 			<fileMode>0544</fileMode>
 		</file>
 	</files>
