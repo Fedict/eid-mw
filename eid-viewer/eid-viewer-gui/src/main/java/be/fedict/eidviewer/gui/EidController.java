@@ -35,6 +35,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.imageio.ImageIO;
 import javax.smartcardio.CardException;
+import javax.swing.JOptionPane;
 
 /**
  *

@@ -34,7 +34,7 @@ import java.security.cert.CertificateFactory;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -42,11 +42,12 @@ import javax.swing.JOptionPane;
 
 public class PCSCEidImpl implements Eid
 {
-    private static final Logger logger = Logger.getLogger(PCSCEidImpl.class.getName());
-    private final View mView;
-    private final Messages mMessages;
-    private final PcscEidSpi mPcscEidSpi;
-    private Map<byte[], byte[]> fileCache;
+    private static final Logger         logger = Logger.getLogger(PCSCEidImpl.class.getName());
+    private final View                  mView;
+    private final Messages              mMessages;
+    private ResourceBundle              bundle;
+    private final PcscEidSpi            mPcscEidSpi;
+    private Map<byte[], byte[]>         fileCache;
     private Map<byte[], X509Certificate> certCache;
 
     @SuppressWarnings("unchecked")
@@ -54,6 +55,7 @@ public class PCSCEidImpl implements Eid
     {
         mView = view;
         mMessages = messages;
+        bundle = ResourceBundle.getBundle("be/fedict/eidviewer/lib/resources/PCSCEidImpl");
         if (!System.getProperty("java.version").startsWith("1.5"))
         {
             /*
@@ -201,6 +203,7 @@ public class PCSCEidImpl implements Eid
         logger.fine("Logging Off To Clear PIN Cache");
         mPcscEidSpi.logoff();
         logger.fine("##### PIN Check OK");
+        JOptionPane.showMessageDialog(mView.getParentComponent(),bundle.getString("pinVerifiedOKDialogMessage"),bundle.getString("pinVerifiedOKDialogTitle"), JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void addObserver(Observer observer)
