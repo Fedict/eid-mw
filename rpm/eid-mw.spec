@@ -27,10 +27,6 @@ websites and/or sign documents.
 %prep
 %setup
 
-### Disable the maven build when requested
-echo -e "all:\n\ninstall:" >eid-viewer/Makefile
-echo "#!/bin/true" >eid-viewer/configure
-
 %build
 %configure --disable-static
 %{__make} %{?_smp_mflags}
