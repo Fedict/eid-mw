@@ -51,7 +51,7 @@ AS_VAR_IF([linux],[true],
                 # as we do not use pkgconfig on Windows and Mac
                 m4_ifdef([PKG_CHECK_MODULES],
                 [
-            PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.4.102],
+            PKG_CHECK_MODULES([PCSC], [libpcsclite >= 1.4.4],
             [
                     CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
                     LDFLAGS="$PCSC_LIBS $CPPFLAGS"
