@@ -58,4 +58,4 @@ To change the install location:
 
 To create an XPI package, run:
  
-  make xpipackage
+  make xpipackage   
