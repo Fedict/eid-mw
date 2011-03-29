@@ -1,4 +1,4 @@
-Source: eid-mw
+Homepage: http://code.google.com/p/eid-mw/
 Priority: optional
 Maintainer: Frank Mariën <frank.marien@fedict.be>
 Build-Depends: debhelper (>= 7.0.50), autotools-dev, libpcsclite-dev, libgtk2.0-dev, libtool, maven2 (>= 2.2.1)
@@ -11,7 +11,7 @@ Section: libs
 Replaces: libbeidlibopensc2, libbeidlib3
 Conflicts: libbeidlibopensc2, libbeidlib3
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, pcscd
 Recommends: libccid, libacr38u
 Description: low-level support for Belgian Electronic Identity Card
  This package contains a PKCS#11 module and a Firefox plugin for the
