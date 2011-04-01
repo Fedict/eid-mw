@@ -1,4 +1,4 @@
-# $Id$
+Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
 # Authority: dag
 
 Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
@@ -17,7 +17,6 @@ BuildRequires: pcsc-lite-devel
 Requires(pre): /sbin/chkconfig
 Requires(pre): /sbin/service
 Requires: ccid
-Requires: pcsc-lite-acr38u
 
 %description
 The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
