@@ -98,8 +98,8 @@ fi
 %{_libdir}/libcardpluginbeid.so
 %{_libdir}/libcardpluginsis.so
 %{_libdir}/libcardpluginsis_acr38u.so
-%exclude %{_libdir}/libbeidcommon.so
-%exclude %{_libdir}/libbeidpkcs11.so
+#%exclude %{_libdir}/libbeidcommon.so
+#%exclude %{_libdir}/libbeidpkcs11.so
 %exclude %{_libdir}/*.la
 
 %changelog
