@@ -4,7 +4,7 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?include ..\..\..\svn_revision.wxs ?>
 
-  <?define var.OfficialProductVersion =3.5.5?>
+  <?define var.OfficialProductVersion =3.5.6?>
   <?define var.ProductVersion =3.5.$(var.RevisionNumber)?>
   <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
 
