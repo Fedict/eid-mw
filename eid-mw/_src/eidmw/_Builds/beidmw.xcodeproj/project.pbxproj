@@ -1878,7 +1878,6 @@
 				);
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../lib";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-finput-charset=cp1252",
@@ -1949,7 +1948,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../ThirdParty/Xerces/Xerces-3.1.0-mac/lib\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidapplayer.$(CURRENT_PROJECT_VERSION)";
@@ -1992,7 +1990,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidlib.$(CURRENT_PROJECT_VERSION)";
@@ -2051,7 +2048,6 @@
 				);
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../lib";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2106,7 +2102,6 @@
 					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidlibJava_Wrapper.$(CURRENT_PROJECT_VERSION)";
@@ -2166,7 +2161,6 @@
 					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PREBINDING = NO;
@@ -2226,7 +2220,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.5.6;
 				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
@@ -2235,11 +2228,9 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcommon.$(CURRENT_PROJECT_VERSION)";
-				SDKROOT = macosx10.5;
 				VALID_ARCHS = "i386 x86_64";
 				VERSION_INFO_SUFFIX = "";
 				ZERO_LINK = NO;
@@ -2311,10 +2302,9 @@
 					"${PROJECT_DIR}/../common",
 					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
-				INSTALL_PATH = "";
+				INSTALL_PATH = /usr/local/lib;
 				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-O2";
 				PREBINDING = NO;
@@ -2359,7 +2349,6 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib/siscardplugins;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = siscardplugin1__ACS__;
@@ -2407,7 +2396,6 @@
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../common/**";
 				INSTALL_PATH = /usr/local/lib;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-finput-charset=cp1252",
@@ -2415,7 +2403,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "beiddialogsQT.$(CURRENT_PROJECT_VERSION)";
-				SDKROOT = macosx10.5;
 				ZERO_LINK = NO;
 			};
 			name = Release;
