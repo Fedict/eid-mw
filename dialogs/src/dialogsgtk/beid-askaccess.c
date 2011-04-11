@@ -29,12 +29,13 @@
 #define EXIT_CANCEL		1	
 #define EXIT_ERROR		2
 
-enum { MSG_ACCESS_CARD_INFO=1 };
-char* beid_messages[4][2]={
-                                    "en",   "beID: PIN Code Required",     
-                                    "nl",   "beID Toestemming Lezen Kaart",
-                                    "fr",   "beID: Authorisation Lecture de Carte",
-                                    "de",   "beID: PIN Code Required" 
+
+enum { MSG_ACCESS_CARD_TITLE=1, MSG_ACCESS_CARD_QUESTION };
+char* beid_messages[4][3]={
+                                    "en",   "beID: Card Access", "An Application wants to access the card. Do you want to accept it?",     
+                                    "nl",   "beID: Lezen Kaart", "Een Programma wil toegang tot de kaart. Wil U dit toelaten?",
+                                    "fr",   "beID: Lecture de Carte", "Une application essaye d'accéder à la carte. Acceptez-vous?",
+                                    "de",   "beID: Kartenzugriff", "Eine Anwendung will auf die Karte zugreifen. Möchten Sie akzeptieren?"
                           };
 
 #include "beid-i18n.h"
@@ -56,9 +57,9 @@ int main(int argc, char* argv[])
 	// create new message dialog with CANCEL button in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-    dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,argv[1]);
+    dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,_MSG_(MSG_ACCESS_CARD_QUESTION));
 	gtk_dialog_set_default_response(GTK_DIALOG(dialog),GTK_RESPONSE_OK);
-    gtk_window_set_title(GTK_WINDOW(dialog),_MSG_(MSG_ACCESS_CARD_INFO));
+    gtk_window_set_title(GTK_WINDOW(dialog),_MSG_(MSG_ACCESS_CARD_TITLE));
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
 	// show all these widgets, and run the dialog as a modal dialog until it is closed by the user
