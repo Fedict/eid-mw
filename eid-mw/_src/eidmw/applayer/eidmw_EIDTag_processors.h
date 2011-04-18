@@ -42,7 +42,6 @@ public:
 	virtual ~EIDDocVersion_Processor();
 
 	virtual void process( const XMLCh *const  chars
-						, const unsigned int  length 
 						, DataStorage&		  dataStorage
 						);
 };
@@ -62,7 +61,6 @@ public:
 	virtual ~EIDTag_Processor( void );
 
 	virtual void process( const XMLCh* const  chars
-						, const unsigned int  length 
 						, DataStorage&		  dataStorage
 						);
 };
@@ -82,7 +80,6 @@ public:
 	virtual ~EIDCardType_Processor();
 
 	virtual void process( const XMLCh *const  chars
-		, const unsigned int  length 
 		, DataStorage&		  dataStorage
 		);
 };

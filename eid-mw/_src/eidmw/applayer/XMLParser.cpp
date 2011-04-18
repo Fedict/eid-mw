@@ -119,7 +119,6 @@ TagProcessor::~TagProcessor()
 // Process the tag data
 //***************************************************
 void TagProcessor::process( const XMLCh *const  chars
-					, const unsigned int  length 
 					, DataStorage&        dataStorage
 					)
 {
@@ -179,7 +178,6 @@ EIDDocVersion_Processor::~EIDDocVersion_Processor()
 }
 
 void EIDDocVersion_Processor::process( const XMLCh *const  chars
-					, const unsigned int  length 
 					, DataStorage&		  dataStorage
 					)
 {
@@ -214,7 +212,6 @@ EIDTag_Processor::~EIDTag_Processor( void )
 }
 
 void EIDTag_Processor::process( const XMLCh* const  chars
-					, const unsigned int  length 
 					, DataStorage&		  dataStorage
 					)
 {
@@ -257,7 +254,6 @@ EIDCardType_Processor::~EIDCardType_Processor()
 }
 
 void EIDCardType_Processor::process( const XMLCh *const  chars
-	, const unsigned int  length 
 	, DataStorage&		  dataStorage
 	)
 {
@@ -1095,7 +1091,7 @@ void XML_EIDTagHandler::endElement ( const XMLCh *const   uri,
 // processor on the processor stack
 //***************************************************
 void XML_EIDTagHandler::characters (	const XMLCh *const  chars,  
-					const unsigned int  length   
+					const XMLSize_t  length   
 				) 
 {
 	std::wstring str = FromXMLCh( chars );
@@ -1105,7 +1101,7 @@ void XML_EIDTagHandler::characters (	const XMLCh *const  chars,
 		return;
 	}
 
-	m_ProcessorStack.top()->process( chars, length, m_DataStorage);
+	m_ProcessorStack.top()->process( chars, m_DataStorage);
 }
 
 //***************************************************

@@ -96,7 +96,7 @@ public:
 	// processor on the processor stack
 	//***************************************************
 	void characters (	const XMLCh *const  chars,  
-						const unsigned int  length   
+						const XMLSize_t length   
 					);
 
 	//***************************************************

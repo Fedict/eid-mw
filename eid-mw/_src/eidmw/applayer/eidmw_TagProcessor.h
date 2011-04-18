@@ -49,7 +49,6 @@ public:
 	// Process the tag data
 	//***************************************************
 	virtual void process( const XMLCh *const  chars
-						, const unsigned int  length 
 						, DataStorage&        dataStorage
 						);
 
