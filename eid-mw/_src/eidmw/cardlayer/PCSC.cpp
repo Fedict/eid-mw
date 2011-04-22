@@ -30,6 +30,8 @@
 #include "../common/Util.h"
 #include <exception>
 
+#define EID_RECOVER_RETRIES	10
+
 namespace eIDMW
 {
 static SCARD_IO_REQUEST m_ioSendPci;
@@ -240,6 +242,7 @@ SCARDHANDLE CPCSC::Connect(const std::string &csReader,
 	unsigned long ulShareMode, unsigned long ulPreferredProtocols)
 {
 	DWORD dwProtocol;
+//	DWORD dwCounter = 0;
 	SCARDHANDLE hCard = 0;
 
 	dwProtocol = 1;
@@ -249,6 +252,19 @@ SCARDHANDLE CPCSC::Connect(const std::string &csReader,
 	long lRet = SCardConnect(m_hContext, csReader.c_str(),
 		ulShareMode, ulPreferredProtocols, &hCard, &dwProtocol);
 
+/*	if (SCARD_S_SUCCESS != lRet)
+	{
+		long eidError = PcscToErr(lRet);
+		while ( ((EIDMW_ERR_CANT_CONNECT == eidError) || (EIDMW_ERR_CARD_COMM != eidError)) && (dwCounter < 10) )
+		{
+			lRet = SCardConnect(m_hContext, csReader.c_str(),
+				ulShareMode, ulPreferredProtocols, &hCard, &dwProtocol);
+			eidError = PcscToErr(lRet);
+			dwCounter++;
+			CThread::SleepMillisecs(200);
+		}
+	}
+*/
 	MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardConnect(%ls): 0x%0x", utilStringWiden(csReader).c_str(), lRet);
 
 	if ((long)SCARD_E_NO_SMARTCARD == lRet)
@@ -400,7 +416,7 @@ void CPCSC::Recover(SCARDHANDLE hCard, unsigned long * pulLockCount )
 
 	MWLOG(LEV_WARN, MOD_CAL, L"Card is not responding properly, trying to recover...");
 
-	for (i = 0; (i < 10) && (lRet != SCARD_S_SUCCESS); i++)
+	for (i = 0; (i < EID_RECOVER_RETRIES) && (lRet != SCARD_S_SUCCESS); i++)
 	{
 		if (i != 0)
 			CThread::SleepMillisecs(1000);
@@ -418,6 +434,10 @@ void CPCSC::Recover(SCARDHANDLE hCard, unsigned long * pulLockCount )
 			if ( lRet != SCARD_S_SUCCESS )
 			{
 				MWLOG(LEV_DEBUG, MOD_CAL, L"        [%d] SCardBeginTransaction errorcode: [0x%02X]", i, lRet);
+				if(i == (EID_RECOVER_RETRIES - 1))
+				{
+					*pulLockCount=0;//failed starting a new transaction
+				}
 				continue;
 			}
 			*pulLockCount=1;
