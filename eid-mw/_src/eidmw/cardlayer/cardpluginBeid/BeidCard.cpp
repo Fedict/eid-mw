@@ -74,13 +74,13 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 			oCmd.Append(BELPIC_AID, sizeof(BELPIC_AID));
 			long lRetVal;
 			// Don't remove these brackets, CAutoLock dtor must be called!
-			{
-				CAutoLock oAutLock(&poContext->m_oPCSC, hCard);
-
+			//{
+				//CAutoLock oAutLock(&poContext->m_oPCSC, hCard);
+				unsigned long ulLockCount = 1;
+				poContext->m_oPCSC.BeginTransaction(hCard);
 				oData = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
 				if (lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED)
 				{
-					unsigned long ulLockCount = 0;
 					poContext->m_oPCSC.Recover(hCard, &ulLockCount);
 					
 					bNeedToSelectApplet = BeidCardSelectApplet(poContext, hCard);
@@ -117,6 +117,10 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 					return new CUnknownCard(hCard, poContext, poPinpad, CByteArray());
 				}
 #endif
+			//}
+			if(ulLockCount)
+			{
+				poContext->m_oPCSC.EndTransaction(hCard);
 			}
 		}
 		catch(...)
