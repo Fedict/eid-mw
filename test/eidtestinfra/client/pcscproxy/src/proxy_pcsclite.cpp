@@ -55,7 +55,7 @@ extern void __attribute__((constructor)) _init()
 #ifdef __APPLE__
 	const char *pcscLibPath = "/System/Library/Frameworks/PCSC.framework/PCSC";
 #else
-	const char *pcscLibPath = "/usr/lib/libpcsclite.so";
+	const char *pcscLibPath = "/usr/lib/libpcsclite.so.1";
 #endif
 
 	lib = dlopen("REALPCSCLIB", RTLD_LAZY);
@@ -209,6 +209,8 @@ extern "C" LONG SCardStatus(SCARDHANDLE hCard, LPSTR szReaderName, LPDWORD pcchR
 	//eidmw::pcscproxy::t_SCardStatus pps = (eidmw::pcscproxy::t_SCardStatus) p[12];
 	//return pps(hCard, szReaderName, pcchReaderLen, pdwState, pdwProtocol, pbAtr, pcbAtrLen);
 }
+
+typedef SCARD_READERSTATE* LPSCARD_READERSTATE_A;
 
 extern "C" LONG SCardGetStatusChange(SCARDCONTEXT hContext, DWORD dwTimeout, LPSCARD_READERSTATE_A rgReaderStates, DWORD cReaders)
 {

@@ -42,6 +42,10 @@
 #endif
 
 namespace eidmw { namespace pcscproxy {
+
+typedef SCARD_READERSTATE* LPSCARD_READERSTATE_A;
+
+
 #ifndef _WIN32
 				  typedef LONG (*t_SCardEstablishContext)(IN DWORD dwScope, IN LPCVOID pvReserved1, IN LPCVOID pvReserved2, OUT LPSCARDCONTEXT phContext);
 				  typedef LONG (*t_SCardReleaseContext)(IN SCARDCONTEXT hContext);

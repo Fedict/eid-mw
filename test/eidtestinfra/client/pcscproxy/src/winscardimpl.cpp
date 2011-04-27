@@ -34,6 +34,8 @@
 #ifndef SCARD_AUTOALLOCATE
 #define SCARD_AUTOALLOCATE    (DWORD) -1
 #endif
+#define SCARD_READERSTATE_A SCARD_READERSTATE
+#define LPSCARD_READERSTATE_A LPSCARD_READERSTATE
 #endif
 
 using namespace eidmw::pcscproxy;

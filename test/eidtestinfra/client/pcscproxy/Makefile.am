@@ -3,7 +3,7 @@ lib_LTLIBRARIES				= libpcscproxy.la
 
 if LINUX
 #
-libpcscproxy_la_SOURCES		= src/apdurequest.cpp src/carddata.cpp src/control.cpp src/filestructure.cpp src/hexutils.cpp src/proxy_pcsclite.cpp src/softcard.cpp src/softreader.cpp src/softreadermanager.cpp src/transaction.cpp src/winscardimpl.cp
+libpcscproxy_la_SOURCES		= src/apdurequest.cpp src/carddata.cpp src/control.cpp src/filestructure.cpp src/hexutils.cpp src/proxy_pcsclite.cpp src/softcard.cpp src/softreader.cpp src/softreadermanager.cpp src/transaction.cpp src/winscardimpl.cpp
 libpcscproxy_la_CPPFLAGS 	= -I$(srcdir)/../etilib/src -Wall -O3 -Wno-deprecated-declarations
 libpcscproxy_la_LDFLAGS		= -avoid-version -ldl -pthread 
 libpcscproxy_la_LIBADD		= ../etilib/libeti.la

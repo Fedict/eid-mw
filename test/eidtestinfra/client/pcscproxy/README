@@ -3,10 +3,44 @@ and the actual PCSC implementation on the platform. It passes on data for
 physical card readers, but is also capable of generating virtual card readers
 for testing purposes.
 
+GNU/Linux:
+==========
 
-========================================================================
-    DYNAMIC LINK LIBRARY : winscard Project Overview
-========================================================================
+0. Building: 
+------------
+
+./configure ; make ; make install
+
+(you may want to adjust --prefix for your system, in the ./configure command ; see ./configure --help)
+
+
+1. Using with applications that link to or dynamically load libpcsclite using the ldd library path (majority of applications, eid middleware included)
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+a) Next to the binary
+
+- copy libpcscproxy.so from the libdir where make install placed it, to the same directory as where the application binary resides, renaming it to "libpcsclite.so.1".
+- when the application tries to load pcsclite, it will find it inside it's own directory first, making it use the proxy. The proxy itself will seek the real libpcsclite.so.1 in the libdir it was ./configured with
+
+b) Ahead in the library path
+
+- copy libpcscproxy.so from the libdir where make install placed it, to a directory that is before the one containing the actual libpcsclite.so.1,  renaming it to "libpcsclite.so.1"
+- you can find the library search path from or in /etc/ld.so.conf on most GNU/Linux systems.
+
+
+2. Using with application that link to or dynamically load libpcsclite using a full path (e.g. Java applications such as eid-viewer)
+------------------------------------------------------------------------------------------------------------------------------------
+
+- Some applications don't properly use the library path. For example, there is a long-standing bug in the Java PCSC wrapper that seeks libpcsclite via the development symlink "pcsclite.so" instead of the 
+  runtime symlink "libpcsclite.so.1", which any Java developer must work around to function correctly on GNU/Linux platforms that have no developer packages installed. 
+  Such workarounds may not search any library paths at all, and the only way to make sure where to place the proxy library is by inspecting their source code.
+
+- for example, with eid-viewer, eid-applet, on which it's built, uses java.library.path and on my system, it's first entry is /usr/lib/jvm/java-6-openjdk/jre/lib/amd64/, so I copy libpcscproxy.so there, as "libpcsclite.so.1"
+  YMMV.. Use the source..
+
+
+Microsoft Windows:
+==================
 
 The winscard.cpp file was generated using the wrappit tool.
 See  http://www.codeproject.com/KB/DLL/CreateYourProxyDLLs.aspx
@@ -35,4 +69,3 @@ to first look in the system directory instead of first looking inside the
 directory containing the executable. In that case the solution above will not
 work.
 
-/////////////////////////////////////////////////////////////////////////////
