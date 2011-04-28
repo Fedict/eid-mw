@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="eID-EZinstaller"
 	ProjectGUID="{BAB79918-56AD-3780-B337-0F4B72B50291}"
 	RootNamespace="eID-EZinstaller"
@@ -255,6 +255,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\regpermissions.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\sysdiagnost.cpp"
 				>
 			</File>
@@ -341,6 +345,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\regpermissions.h"
+				>
+			</File>
+			<File
 				RelativePath="resource.h"
 				>
 			</File>
@@ -359,18 +367,6 @@
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
 			<File
-				RelativePath="release\eID-EZinstaller.res"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="debug\eID-EZinstaller.res"
 				>
 				<FileConfiguration
@@ -383,14 +379,14 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\GeneratedFiles\Release\moc_confirmdialogbox.cpp"
+				RelativePath="release\eID-EZinstaller.res"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCCLCompilerTool"
+						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
 			</File>
@@ -407,7 +403,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GeneratedFiles\release\moc_ezinstaller.cpp"
+				RelativePath=".\GeneratedFiles\Release\moc_confirmdialogbox.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -423,6 +419,18 @@
 				>
 				<FileConfiguration
 					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\release\moc_ezinstaller.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -477,18 +485,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\debug\ui_confirmdialogbox.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\generatedfiles\release\ui_confirmdialogbox.h"
 				>
 				<FileConfiguration
@@ -501,7 +497,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\generatedfiles\debug\ui_ezinstaller.h"
+				RelativePath=".\generatedfiles\debug\ui_confirmdialogbox.h"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -517,6 +513,18 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\generatedfiles\debug\ui_ezinstaller.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
