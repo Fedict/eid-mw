@@ -5334,8 +5334,11 @@ void MainWnd::customEvent( QEvent* pEvent )
 				case BEID_CARDTYPE_UNKNOWN:
 					{
 						clearGuiContent();
-						QString msg(tr("Unknown card type"));
-						ShowBEIDError( 0, msg );
+						//We're not showing this warning box anymore, as due to the cardconfused fix
+						//it happens that e.g. the minidriver resets the card, causing this warning box
+						//to appear while the resetted card is being read
+						//QString msg(tr("Unknown card type"));
+						//ShowBEIDError( 0, msg );
 					}
 				default:
 					break;
