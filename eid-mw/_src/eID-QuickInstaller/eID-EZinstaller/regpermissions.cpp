@@ -9,6 +9,8 @@
 
 #include "Sddl.h"
 
+#define SUFF_KEY_ACCESS_LOC_SERV KEY_QUERY_VALUE|KEY_SET_VALUE|KEY_CREATE_SUB_KEY|KEY_ENUMERATE_SUB_KEYS|KEY_NOTIFY|DELETE|READ_CONTROL
+
 BOOL SCardSvrAsLS();
 int LSCheckAndSetReadperm(HKEY hRootKey, const wchar_t *wzKey);
 
@@ -59,25 +61,29 @@ BOOL IsLocalhostSid(PSID SidStart)
 	return retval;
 }
 
-BOOL ReadAccesSetInMask(DWORD aceMask)
+BOOL AccesSetInMask(DWORD aceMask, DWORD* pAcePermNeeded)
 {
 	BOOL retval = FALSE;
-	//we also need the rigts to query the subkeys, so READ_CONTROL or GENERIC_READ on their own are not enough
+	DWORD permStillNeeded = *pAcePermNeeded;
+	//we also need the rights to query the subkeys, so READ_CONTROL or GENERIC_READ on their own are not enough
 
-	if((KEY_READ & aceMask)==KEY_READ)
+	*pAcePermNeeded = permStillNeeded ^ (aceMask & permStillNeeded);
+
+	if(*pAcePermNeeded == 0)	
 		retval = TRUE;
 
 	return retval;
 }
 
-BOOL ReadAccessForLocalHost(PACL pDacl)
+BOOL SuffAccessForLocalHost(PACL pDacl)
 {
 	BOOL retval = FALSE;
 	DWORD i = 0;
 	LPVOID pAce = NULL;
 	PACE_HEADER pAceheader=NULL;
+	DWORD acePermNeeded=SUFF_KEY_ACCESS_LOC_SERV;
 
-	for(;i<pDacl->AceCount;i++)
+	for(;(i<pDacl->AceCount) && (retval == FALSE);i++)
 	{
 		GetAce(pDacl,i,&pAce);
 		pAceheader = (PACE_HEADER)pAce;
@@ -100,7 +106,7 @@ BOOL ReadAccessForLocalHost(PACL pDacl)
 				if (IsLocalhostSid( &(pAccessAllowedAce->SidStart)))
 				{
 					wprintf(L"Localhost");
-					if(ReadAccesSetInMask(pAccessAllowedAce->Mask))
+					if(AccesSetInMask(pAccessAllowedAce->Mask, &acePermNeeded))
 					{
 						retval = TRUE;
 					}
@@ -116,7 +122,7 @@ BOOL ReadAccessForLocalHost(PACL pDacl)
 				if (IsLocalhostSid( &(pAccessAllowedAce->SidStart)))
 				{
 					wprintf(L"Localhost");
-					if(ReadAccesSetInMask(pAccessAllowedAce->Mask))
+					if(AccesSetInMask(pAccessAllowedAce->Mask, &acePermNeeded))
 					{
 						wprintf(L"has read access\n");
 						retval = TRUE;
@@ -135,16 +141,13 @@ BOOL ReadAccessForLocalHost(PACL pDacl)
 			break;
 		};
 	}
-
 	return retval;
 }
 
-BOOL AddReadAccessForLocalHost(PACL pOldDacl, PACL *pNewDacl)
+BOOL AddSuffAccessForLocalHost(PACL pOldDacl, PACL *pNewDacl)
 {
 	BOOL retval = FALSE;
-//	DWORD i = 0;
-//	LPVOID pAce = NULL;
-//	PACE_HEADER pAceheader=NULL;
+
 	TRUSTEE trusteeLs ;
 	PSID pSidLs = NULL;
 	EXPLICIT_ACCESS readAccessls;
@@ -153,12 +156,13 @@ BOOL AddReadAccessForLocalHost(PACL pOldDacl, PACL *pNewDacl)
 	if ( ConvertStringSidToSidW(L"S-1-5-19",&pSidLs) != 0 )
 	{
 		BuildTrusteeWithSid(&trusteeLs,pSidLs);
+
 		//this one sets the trustee form to TRUSTEE_IS_NAME , while its TRUSTEE_IS_SID
 		//BuildExplicitAccessWithName(&readAccessls,trusteeLs.ptstrName,KEY_READ,GRANT_ACCESS,SUB_CONTAINERS_AND_OBJECTS_INHERIT);
 		
-		readAccessls.grfAccessPermissions = KEY_READ;
+		readAccessls.grfAccessPermissions = SUFF_KEY_ACCESS_LOC_SERV;
 		readAccessls.grfAccessMode = GRANT_ACCESS ;
-		readAccessls.grfInheritance = SUB_CONTAINERS_AND_OBJECTS_INHERIT;
+		readAccessls.grfInheritance = SUB_CONTAINERS_ONLY_INHERIT;
 		readAccessls.Trustee = trusteeLs;
 
 		err = SetEntriesInAcl(1, &readAccessls,pOldDacl,pNewDacl);
@@ -189,7 +193,7 @@ BOOL AddReadAccessForLocalHost(PACL pOldDacl, PACL *pNewDacl)
 	return retval;
 }
 
-int LSCheckAndSetReadperm(HKEY hRootKey, const wchar_t *wzKey)
+int LSCheckAndSetLocServPerm(HKEY hRootKey, const wchar_t *wzKey)
 {
 	int		retval = 0;
 
@@ -237,10 +241,10 @@ int LSCheckAndSetReadperm(HKEY hRootKey, const wchar_t *wzKey)
 				{
 					wprintf(L"A discretionary access control list (DACL) was found with Length = %d\n",pDacl->AclSize);
 					wprintf(L"Number of Access Control Elements (ACE's): %d\n",pDacl->AceCount);
-					if (ReadAccessForLocalHost(pDacl) == FALSE)
+					if (SuffAccessForLocalHost(pDacl) == FALSE)
 					{
 						PACL newDacl = NULL;
-						if (AddReadAccessForLocalHost(pDacl, &newDacl) == TRUE)
+						if (AddSuffAccessForLocalHost(pDacl, &newDacl) == TRUE)
 						{
 							err = SetSecurityInfo(hRegKey,SE_REGISTRY_KEY,DACL_SECURITY_INFORMATION,NULL,NULL,newDacl,NULL);
 							if( err != ERROR_SUCCESS )
@@ -367,7 +371,7 @@ int LSAddReadperm(HKEY hRootKey, const wchar_t *wzKey)
 				{
 					wprintf(L"A discretionary access control list (DACL) was found with Length = %d\n",pDacl->AclSize);
 					wprintf(L"Number of Access Control Elements (ACE's): %d\n",pDacl->AceCount);
-					ReadAccessForLocalHost(pDacl);
+					SuffAccessForLocalHost(pDacl);
 				}
 			}
 			else

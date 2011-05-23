@@ -21,6 +21,6 @@
 #define REGPERMISSIONS_H
 
 BOOL SCardSvrAsLS();
-int LSCheckAndSetReadperm(HKEY hRootKey, const wchar_t *wzKey);
+int LSCheckAndSetLocServPerm(HKEY hRootKey, const wchar_t *wzKey);
 
 #endif

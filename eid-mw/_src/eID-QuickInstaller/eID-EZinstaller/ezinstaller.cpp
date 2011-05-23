@@ -281,9 +281,9 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 		{
 			if (scl.is64bitOS() )
 			{
-				LSCheckAndSetReadperm(HKEY_LOCAL_MACHINE,L"SOFTWARE\\Wow6432Node\\Microsoft\\Cryptography\\Calais\\Readers");
+				LSCheckAndSetLocServPerm(HKEY_LOCAL_MACHINE,L"SOFTWARE\\Wow6432Node\\Microsoft\\Cryptography\\Calais\\Readers");
 			}
-			LSCheckAndSetReadperm(HKEY_LOCAL_MACHINE,L"SOFTWARE\\Microsoft\\Cryptography\\Calais\\Readers");
+			LSCheckAndSetLocServPerm(HKEY_LOCAL_MACHINE,L"SOFTWARE\\Microsoft\\Cryptography\\Calais\\Readers");
 		}
 #endif
 
