@@ -25,13 +25,9 @@
 
 #undef UNICODE
 
-#ifdef WIN32
 #include <winscard.h>
+
 #include <windows.h>
-#endif
-#ifdef __APPLE__
-#include "PCSC/winscard.h"
-#endif
 #include <string>
 #include <vector>
 

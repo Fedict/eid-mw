@@ -17,9 +17,9 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-//#include "StdAfx.h"
+#include "StdAfx.h"
 #include "pcsccard.h"
-//#include "ErrorFmt.h"
+#include "ErrorFmt.h"
 
 #include "autovec.h"
 using namespace sc;
@@ -42,13 +42,8 @@ PCSCCard::~PCSCCard(void) {
 
     if (this->_hSC != 0)
         _SCardReleaseContext(this->_hSC);
-
     if (this->_hWinsCard != 0)
-		#ifdef WIN32
         FreeLibrary(this->_hWinsCard);
-		#else
-		dlcose(this->_hWinsCard);
-		#endif
 }
 
 bool PCSCCard::Connect(const string &ReaderName) {
@@ -108,7 +103,7 @@ bool PCSCCard::Initialize() {
     this->_LastErrorMsg = "";
 
     // dynamically load the PCSC dll 
-#ifdef WIN32
+
 #ifdef SUPPORT_WINSCARP
     // first try "winscarp.dll", then "winscard.dll"
     this->_hWinsCard = LoadLibrary(MW_DLL);
@@ -122,14 +117,6 @@ bool PCSCCard::Initialize() {
 #ifdef SUPPORT_WINSCARP
     }
 #endif SUPPORT_WINSCARP
-#else	
-	this->_hWinsCard = dlopen("/System/Library/Frameworks/PCSC.framework/PCSC",RTLD_LAZY);
-	if (this->_hWinsCard == NULL) {
-		this->_LastErrorMsg = CErrorFmt::FormatError(GetLastError(), "/System/Library/Frameworks/PCSC.framework/PCSC");
-		return false;
-	}
-#endif //WIN32	
-	
     this->_SCardEstablishContext = reinterpret_cast<fSCardEstablishContext> (
             GetProcAddress(this->_hWinsCard, "SCardEstablishContext"));
     if (this->_SCardEstablishContext == NULL) {
