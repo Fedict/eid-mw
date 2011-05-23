@@ -20,12 +20,12 @@
 		7B8C5D560E81365600C56DE7 /* IOKit.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 7B8C5D550E81365600C56DE7 /* IOKit.framework */; };
 		7BF6BCD30F5C260100A519EB /* sysdiagnost.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 7BF6BCD20F5C260100A519EB /* sysdiagnost.cpp */; };
 		7BFD76EA0E76C68100BC4F02 /* eID-QuickInstaller.app in Project Copy */ = {isa = PBXBuildFile; fileRef = 7BFD76E70E76C68100BC4F02 /* eID-QuickInstaller.app */; };
-		7BFD771C0E76C8E400BC4F02 /* PCSC.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 7BFD771B0E76C8E400BC4F02 /* PCSC.framework */; };
 		7F15955D0F9757D6006BBE85 /* QtXml in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 7F82729D0F7D326300562D6B /* QtXml */; };
 		7F8272960F7D320800562D6B /* QtGui in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 7F8272950F7D320800562D6B /* QtGui */; };
 		7F82729C0F7D323400562D6B /* QtCore in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 7F82729B0F7D323400562D6B /* QtCore */; };
 		7F8272A00F7D328800562D6B /* libqjpeg.dylib in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 7F82729F0F7D328800562D6B /* libqjpeg.dylib */; };
 		860DA2311238CFD5005BF430 /* accessibleDialogbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 860DA2301238CFD5005BF430 /* accessibleDialogbox.cpp */; };
+		863E08601383CC2000F07D65 /* PCSC.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 863E085F1383CC2000F07D65 /* PCSC.framework */; };
 		8A902E27A74E84C101386F26 /* confirmdialogbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 967EC3875E76CF0764A16CBC /* confirmdialogbox.cpp */; settings = {ATTRIBUTES = (); }; };
 		9C4EB9463FAB6EA95A648A54 /* ezinstaller.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 4F09AA4D05E1208F13828DDC /* ezinstaller.cpp */; settings = {ATTRIBUTES = (); }; };
 		C2643FEB592DBFD1429BE4E1 /* QtXml.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 8EE92F8FA333C9E415C5B34E /* QtXml.framework */; };
@@ -79,7 +79,6 @@
 		7BC2E65A5E699A5E5D834CA2 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /Library/Frameworks/QtCore.framework; sourceTree = "<absolute>"; };
 		7BF6BCD20F5C260100A519EB /* sysdiagnost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sysdiagnost.cpp; sourceTree = "<group>"; };
 		7BFD76E70E76C68100BC4F02 /* eID-QuickInstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID-QuickInstaller.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7BFD771B0E76C8E400BC4F02 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = /System/Library/Frameworks/PCSC.framework; sourceTree = "<absolute>"; };
 		7F8272950F7D320800562D6B /* QtGui */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = QtGui; path = /Library/Frameworks/QtGui.framework/Versions/4/QtGui; sourceTree = "<absolute>"; };
 		7F82729B0F7D323400562D6B /* QtCore */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = QtCore; path = /Library/Frameworks/QtCore.framework/Versions/4/QtCore; sourceTree = "<absolute>"; };
 		7F82729D0F7D326300562D6B /* QtXml */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = QtXml; path = /Library/Frameworks/QtXml.framework/Versions/4/QtXml; sourceTree = "<absolute>"; };
@@ -87,6 +86,7 @@
 		821416211D63F190AAAD016A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		860DA2301238CFD5005BF430 /* accessibleDialogbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = accessibleDialogbox.cpp; sourceTree = "<group>"; };
 		860DA2321238CFF5005BF430 /* accessibleDialogbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = accessibleDialogbox.h; sourceTree = "<group>"; };
+		863E085F1383CC2000F07D65 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		8EE92F8FA333C9E415C5B34E /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtXml.framework; path = /Library/Frameworks/QtXml.framework; sourceTree = "<absolute>"; };
 		8F275E9ED88AF4F4EEA9AAB7 /* qrc_ezResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_ezResources.cpp; path = GeneratedFiles/qrc_ezResources.cpp; sourceTree = "<group>"; };
 		932DC0543AC706CF4F45F444 /* wildcards.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wildcards.h; sourceTree = "<group>"; };
@@ -116,9 +116,9 @@
 				51D4DBF7CB8537BE86EBD055 /* AppKit.framework in Frameworks & Libraries */,
 				069D05B0128AE5DC7EE31738 /* QtCore.framework in Frameworks & Libraries */,
 				F9E76E570E10AF14870553A7 /* ApplicationServices.framework in Frameworks & Libraries */,
-				7BFD771C0E76C8E400BC4F02 /* PCSC.framework in Frameworks & Libraries */,
 				7B24E0880E77C3C800E25A64 /* Security.framework in Frameworks & Libraries */,
 				7B8C5D560E81365600C56DE7 /* IOKit.framework in Frameworks & Libraries */,
+				863E08601383CC2000F07D65 /* PCSC.framework in Frameworks & Libraries */,
 			);
 			name = "Frameworks & Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,13 +217,13 @@
 				7F8272950F7D320800562D6B /* QtGui */,
 				7B8C5D550E81365600C56DE7 /* IOKit.framework */,
 				7B24E0870E77C3C800E25A64 /* Security.framework */,
-				7BFD771B0E76C8E400BC4F02 /* PCSC.framework */,
 				8EE92F8FA333C9E415C5B34E /* QtXml.framework */,
 				9B36DA7E32F0304E780E7972 /* QtGui.framework */,
 				DA138F75C9F545CDAE7FB264 /* Carbon.framework */,
 				821416211D63F190AAAD016A /* AppKit.framework */,
 				7BC2E65A5E699A5E5D834CA2 /* QtCore.framework */,
 				27AE7A480FD6C52FCA80FECD /* ApplicationServices.framework */,
+				863E085F1383CC2000F07D65 /* PCSC.framework */,
 			);
 			name = "External Frameworks and Libraries";
 			sourceTree = "<group>";
@@ -325,7 +325,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#Change the path to the linked library to work in standalone\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Resources/QtCore \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/QtGui\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Resources/QtCore \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/QtXml\"\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/plugins/imageformats\"\nmv \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/libqjpeg.dylib\" \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/plugins/imageformats/libqjpeg.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Resources/QtCore \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/plugins/imageformats/libqjpeg.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Resources/QtGui \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/plugins/imageformats/libqjpeg.dylib\"\n\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Resources/QtCore \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/MacOS/eID-Quickinstaller\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Resources/QtGui \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/MacOS/eID-Quickinstaller\"\ninstall_name_tool -change QtXml.framework/Versions/4/QtXml @executable_path/../Resources/QtXml \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/MacOS/eID-Quickinstaller\"\n\n#export Resources\nif [ -e \"${PROJECT_DIR}/.svn\" ]\nthen\n\tsvn export --force \"${PROJECT_DIR}/MAC/Contents/Resources\" \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources\"\nelse\n\tcp -R -f \"${PROJECT_DIR}/MAC/Contents/Resources\" \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"\nfi\n\ncp -R -f /release_build/beid.pkg \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources\"\n\ncp -f \"${PROJECT_DIR}/MAC/Contents/Info.plist\" \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"\n\nchmod +x \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources\"/*.sh\n\n### MAKE DMG\n#Get the build version\nbuild=`cat \"${PROJECT_DIR}/../../eidmw/svn_revision\" | tr -d \"\\r\\n\"`\n\n#Detach and delete existing dmg\nif [ -e /Volumes/eID-Quickinstaller ] \nthen \nhdiutil detach /Volumes/eID-Quickinstaller\nfi\n\nif [ -e \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\" ] \nthen \nrm \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\"\nfi\n\nif [ -e \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\" ] \nthen \nrm \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\nfi\n\nif [ -e \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-$build.dmg\" ] \nthen \nrm \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-$build.dmg\"\nfi\n\n#Create an uncompressed image\nhdiutil create -size 120m -type UDIF -fs HFS+ -volname eID-Quickinstaller \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\"\n\n#Open the uncompressed dmg and Copy the bundle into it\nhdiutil attach \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\"\ncp -R -f \"${BUILT_PRODUCTS_DIR}/${FULL_PRODUCT_NAME}\" /Volumes/eID-Quickinstaller/\ncp -f \"${PROJECT_DIR}/MAC/DMG/eID-Quickinstaller-Nl.pdf\" /Volumes/eID-Quickinstaller/\ncp -f \"${PROJECT_DIR}/MAC/DMG/eID-Quickinstaller-Fr.pdf\" /Volumes/eID-Quickinstaller/\ncp -f \"${PROJECT_DIR}/MAC/DMG/DMG_DS_Store\" /Volumes/eID-Quickinstaller/.DS_Store\ncp -f \"${PROJECT_DIR}/MAC/DMG/DmgBackground.jpg\" /Volumes/eID-Quickinstaller/\n/Developer/Tools/SetFile -a V /Volumes/eID-Quickinstaller/DmgBackground.jpg\ncp -f \"${PROJECT_DIR}/MAC/DMG/.VolumeIcon.icns\" /Volumes/eID-Quickinstaller/\n/Developer/Tools/SetFile -a C /Volumes/eID-Quickinstaller/\n\n#Close the uncompress dmg\nhdiutil detach /Volumes/eID-Quickinstaller\n\n\n#Convert to Read-Only/Compressed\nhdiutil convert -format UDCO \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\" -o \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\n\n#Insert the resource file\nhdiutil unflatten \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\n#The SLAResources file contain resources fork data this is not supported by svn.\n#So the sla.r file is kept in place of SLAResources\n#/Developer/Tools/DeRez \"${PROJECT_DIR}/MAC/DMG/SLAResources\" > \"${PROJECT_DIR}/MAC/DMG/sla.r\"\n/Developer/Tools/Rez -a \"${PROJECT_DIR}/MAC/DMG/sla.r\" -o \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\nhdiutil flatten \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\n\nmv \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\" \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-$build.dmg\"\n";
+			shellScript = "#Change the path to the linked library to work in standalone\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Resources/QtCore \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/QtGui\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Resources/QtCore \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/QtXml\"\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/plugins/imageformats\"\nmv \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/libqjpeg.dylib\" \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/plugins/imageformats/libqjpeg.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Resources/QtCore \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/plugins/imageformats/libqjpeg.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Resources/QtGui \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/plugins/imageformats/libqjpeg.dylib\"\n\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Resources/QtCore \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/MacOS/eID-Quickinstaller\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Resources/QtGui \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/MacOS/eID-Quickinstaller\"\ninstall_name_tool -change QtXml.framework/Versions/4/QtXml @executable_path/../Resources/QtXml \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/MacOS/eID-Quickinstaller\"\n\n#export Resources\nif [ -e \"${PROJECT_DIR}/.svn\" ]\nthen\n\tsvn export --force \"${PROJECT_DIR}/MAC/Contents/Resources\" \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources\"\nelse\n\tcp -R -f \"${PROJECT_DIR}/MAC/Contents/Resources\" \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"\nfi\n\ncp -R -f /release_build/beid.pkg \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources\"\n\ncp -f \"${PROJECT_DIR}/MAC/Contents/Info.plist\" \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"\n\nchmod +x \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources\"/*.sh\n\n### MAKE DMG\n#Get the build version\nbuild=`cat \"${PROJECT_DIR}/../../eidmw/svn_revision\" | tr -d \"\\r\\n\"`\n\n#Detach and delete existing dmg\nif [ -e /Volumes/eID-Quickinstaller ] \nthen \nhdiutil detach /Volumes/eID-Quickinstaller\nfi\n\nif [ -e \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\" ] \nthen \nrm \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\"\nfi\n\nif [ -e \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\" ] \nthen \nrm \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\nfi\n\nif [ -e \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-$build.dmg\" ] \nthen \nrm \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-$build.dmg\"\nfi\n\n#Create an uncompressed image\nhdiutil create -size 120m -type UDIF -fs HFS+ -volname eID-Quickinstaller \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\"\n\n#Open the uncompressed dmg and Copy the bundle into it\nhdiutil attach \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\"\ncp -R -f \"${BUILT_PRODUCTS_DIR}/${FULL_PRODUCT_NAME}\" /Volumes/eID-Quickinstaller/\ncp -f \"${PROJECT_DIR}/MAC/DMG/DMG_DS_Store\" /Volumes/eID-Quickinstaller/.DS_Store\ncp -f \"${PROJECT_DIR}/MAC/DMG/DmgBackground.jpg\" /Volumes/eID-Quickinstaller/\n/Developer/Tools/SetFile -a V /Volumes/eID-Quickinstaller/DmgBackground.jpg\ncp -f \"${PROJECT_DIR}/MAC/DMG/.VolumeIcon.icns\" /Volumes/eID-Quickinstaller/\n/Developer/Tools/SetFile -a C /Volumes/eID-Quickinstaller/\n\n#Close the uncompress dmg\nhdiutil detach /Volumes/eID-Quickinstaller\n\n\n#Convert to Read-Only/Compressed\nhdiutil convert -format UDCO \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-uncompressed.dmg\" -o \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\n\n#Insert the resource file\nhdiutil unflatten \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\n#The SLAResources file contain resources fork data this is not supported by svn.\n#So the sla.r file is kept in place of SLAResources\n#/Developer/Tools/DeRez \"${PROJECT_DIR}/MAC/DMG/SLAResources\" > \"${PROJECT_DIR}/MAC/DMG/sla.r\"\n/Developer/Tools/Rez -a \"${PROJECT_DIR}/MAC/DMG/sla.r\" -o \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\nhdiutil flatten \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\"\n\nmv \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller.dmg\" \"${BUILT_PRODUCTS_DIR}/eID-Quickinstaller-$build.dmg\"\n";
 		};
 		A0A52A2ADF7A1E2A99738674 /* Qt Preprocessors */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -449,6 +449,7 @@
 				PRODUCT_NAME = "eID-QuickInstaller";
 				SDKROOT = macosx10.6;
 				SECTORDER_FLAGS = "";
+				STRIP_STYLE = all;
 				VALID_ARCHS = i386;
 				WARNING_CFLAGS = "";
 				YACCFLAGS = "-d";
@@ -614,6 +615,7 @@
 			buildSettings = {
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				SDKROOT = macosx10.5;
