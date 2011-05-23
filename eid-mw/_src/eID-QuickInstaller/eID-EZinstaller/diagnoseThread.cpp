@@ -1056,36 +1056,39 @@ void detectReaderThread::run() {
 	std::string commandLine = "";
 	commandLine += currdirpath.toStdString();
 	commandLine += "/../Resources/preparePcscd.sh";
-	if(CSysDiagnost::doAsAdmin(commandLine, true))
+	
+	bool retVal = CSysDiagnost::doAsAdmin(commandLine, true);
+	while( retVal == false )
 	{
-		readersXml = scl.pcscWaitForCardReaders("");
-#else
-		readersXml = scl.pcscEnumerateCardReaders("");
-#endif	
-	resultNode = ezw.xmlToNode(readersXml);
-	listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
-#ifdef __APPLE__
-		}
-	else {
-		listItem.clear();
+//		readersXml = scl.pcscWaitForCardReaders("");
+//#else
+//#endif
+//		readersXml = scl.pcscEnumerateCardReaders("");
+//#endif	
+//	resultNode = ezw.xmlToNode(readersXml);
+//	listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
+//#ifdef __APPLE__
+		msleep(2000);
+		retVal = CSysDiagnost::doAsAdmin(commandLine, true);
 	}
 
 #endif		
 			
     while (listItem.isNull()) {
-		msleep(500);
+		//msleep(500);
 #ifdef __APPLE__
-		if(CSysDiagnost::doAsAdmin(commandLine, true))
-		{
+//		if(CSysDiagnost::doAsAdmin(commandLine, true))
+//		{
 			readersXml = scl.pcscWaitForCardReaders("");
 #else
 			readersXml = scl.pcscEnumerateCardReaders("");
 #endif			
+		msleep(500);
 			resultNode = ezw.xmlToNode(readersXml);
 			listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
-#ifdef __APPLE__
-		}
-#endif	
+//#ifdef __APPLE__
+//		}
+//#endif	
 	}
 
 	verboseEvent * ve = new verboseEvent();

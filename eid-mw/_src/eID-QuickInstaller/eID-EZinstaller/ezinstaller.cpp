@@ -1009,21 +1009,21 @@ if( myOS == "Windows 7")
 	bool bContinue=true;
 	do
 	{
-#ifdef __APPLE__
-		qApp->setOverrideCursor(Qt::WaitCursor);
-		//We had to check if ACR38 (non-CCID) dirver is plug in
-		{
-			QString currdirpath = QCoreApplication::applicationDirPath();
-			std::string commandLine = "";
-			commandLine += currdirpath.toStdString();
-			commandLine += "/../Resources/preparePcscd.sh";
-			if (!CSysDiagnost::doAsAdmin(commandLine, true))
-			{
-				qApp->restoreOverrideCursor();
-				return false;
-			}
-		}
-#endif
+//#ifdef __APPLE__
+//		qApp->setOverrideCursor(Qt::WaitCursor);
+//		//We had to check if ACR38 (non-CCID) dirver is plug in
+//		{
+//			QString currdirpath = QCoreApplication::applicationDirPath();
+//			std::string commandLine = "";
+//			commandLine += currdirpath.toStdString();
+//			commandLine += "/../Resources/preparePcscd.sh";
+//			if (!CSysDiagnost::doAsAdmin(commandLine, true))
+//			{
+//				qApp->restoreOverrideCursor();
+//				return false;
+//			}
+//		}
+//#endif
 
 		// now we try to detect the pcscreaders.
 
