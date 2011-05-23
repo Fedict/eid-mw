@@ -1,9 +1,11 @@
 #!/bin/sh
 DIRNAME=`dirname $0`
 
+echo $$
+
 IFS=$'\n' ver=($(sw_vers -productVersion))
 
-if [[ ($ver > "10.4.8") && ($ver < "10.5.6") ]]; then
+if [[ ($ver == *10.5*) && ($ver < "10.5.6") ]]; then
 		/usr/sbin/installer -pkg $DIRNAME/ACR38DriverPackage_10.5.mpkg -target /
         /usr/sbin/installer -pkg $DIRNAME/libusb.pkg -target /
         /usr/sbin/installer -pkg $DIRNAME/ifd_ccid.pkg -target /

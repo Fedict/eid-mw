@@ -1,4 +1,5 @@
 #!/bin/sh
+echo $$
 rm -rf /Library/Receipts/beid*.pkg
 rm -rf /Library/Receipts/BE-eID-MacOSX-pkcs11-v1.5.1.pkg/
 rm -f /usr/local/lib/libbeid*.dylib
