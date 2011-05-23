@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -25,9 +25,13 @@
 
 #undef UNICODE
 
+#ifdef WIN32
 #include <winscard.h>
-
 #include <windows.h>
+#endif
+#ifdef __APPLE__
+#include "PCSC/winscard.h"
+#endif
 #include <string>
 #include <vector>
 

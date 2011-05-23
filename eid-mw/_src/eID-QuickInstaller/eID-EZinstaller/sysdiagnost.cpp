@@ -26,7 +26,10 @@
 #include <stdio.h>
 #include <aclapi.h>
 #include <stdlib.h>
+#elif __APPLE__
+#include <dlfcn.h>
 #endif
+
 
 #ifdef WIN32
 	bool CSysDiagnost::m_RebootNeeded=false;
@@ -36,6 +39,17 @@
 
 CSysDiagnost::CSysDiagnost(void) 
 {
+#ifdef __APPLE__
+	handlePCSCLib = NULL;
+	pSCardEstablishContext = NULL;
+	pSCardReleaseContext = NULL;
+	pSCardConnect = NULL;
+	pSCardDisconnect = NULL;
+	pSCardControl = NULL;
+	pSCardTransmit = NULL;
+	pSCardListReaderGroups = NULL;
+	pSCardListReaders = NULL;
+#endif
 }
 
 CSysDiagnost::~CSysDiagnost(void) 
@@ -607,6 +621,8 @@ bool CSysDiagnost::pcscContextIsAvailable(void)							// *
     else
         return false;
 #elif __APPLE__
+	return true;//should not be called anymore
+	/*
 char			streamBuffer[1024];
 
 size_t			bytesRead = 0;
@@ -646,18 +662,23 @@ FILE *			sys_profile;
 		bool bTryFails=false;
 		bool bContinue=true;
 		int iTryCount=0;
+		if(handlePCSCLib == NULL)
+		{
+			if(linkPCSCLibrary() != 0)
+				return false;
+		}
 		do
 		{
 			bTryFails=false;
 			// pscs daemon running, check if card is available
-			rv = SCardEstablishContext (SCARD_SCOPE_SYSTEM, NULL, NULL, &hContext);
+			rv = pSCardEstablishContext (SCARD_SCOPE_SYSTEM, NULL, NULL, &hContext);
 			if (rv != SCARD_S_SUCCESS)
 			{
 				 bTryFails=true;
 			}
 			else
 			{
-				SCardReleaseContext (hContext);
+				pSCardReleaseContext (hContext);
 				if (rv != SCARD_S_SUCCESS)
 				{
 					 bTryFails=true;
@@ -673,23 +694,24 @@ FILE *			sys_profile;
 				}
 				else
 				{
-					SCardReleaseContext (hContext);
+					pSCardReleaseContext (hContext);
+					unlinkPCSCLibrary ();
 					return false;
 				}
 			}
 			else
 			{
-
 				bContinue=false;
 			}
 		} while(bContinue);		
 		
-		SCardReleaseContext (hContext);
+		pSCardReleaseContext (hContext);
+		unlinkPCSCLibrary ();
 		return true;
 	}
 
 	return false;
-
+*/
 #endif
 
 };
@@ -812,31 +834,38 @@ char *			pReader;
 	do
 	{
 		bTryFails=false;
-		rv = SCardEstablishContext (SCARD_SCOPE_SYSTEM, NULL, NULL, &hContext);
-		if ( rv != SCARD_S_SUCCESS )
+		
+		if(linkPCSCLibrary()!= 0)
 		{
 			bTryFails=true;
 		}
-		else
+		else 
 		{
-			rv = SCardListReaders (hContext, NULL, NULL, &dwReaders);
+			rv = pSCardEstablishContext (SCARD_SCOPE_SYSTEM, NULL, NULL, &hContext);
 			if ( rv != SCARD_S_SUCCESS )
 			{
 				bTryFails=true;
 			}
 			else
 			{
-				pReaders = (char *)malloc (sizeof(char)*dwReaders);
-	
-				rv = SCardListReaders (hContext, NULL, pReaders, &dwReaders);
+				rv = pSCardListReaders (hContext, NULL, NULL, &dwReaders);
 				if ( rv != SCARD_S_SUCCESS )
 				{
 					bTryFails=true;
 				}
+				else
+				{
+					pReaders = (char *)malloc (sizeof(char)*dwReaders);
+	
+					rv = pSCardListReaders (hContext, NULL, pReaders, &dwReaders);
+					if ( rv != SCARD_S_SUCCESS )
+					{
+						bTryFails=true;
+					}
+				}
 			}
+			if(hContext) pSCardReleaseContext (hContext);
 		}
-		if(hContext) SCardReleaseContext (hContext);
-		
 		if(bTryFails)
 		{
 			if(pReaders) 
@@ -851,6 +880,7 @@ char *			pReader;
 			}
 			else
 			{
+				unlinkPCSCLibrary();
 				return false;
 			}
 		}
@@ -1984,7 +2014,7 @@ int CSysDiagnost::selectCardFile (SCARDHANDLE hCard, unsigned char path[], int p
 		uint32_t	dwSendLength = sizeof(bSendBuffer);
 		uint32_t	dwRecvLength = sizeof(bRecvBuffer);
 
-		rv = SCardTransmit (hCard, SCARD_PCI_T0, bSendBuffer, dwSendLength, NULL, bRecvBuffer, &dwRecvLength);
+		rv = pSCardTransmit (hCard, SCARD_PCI_T0, bSendBuffer, dwSendLength, NULL, bRecvBuffer, &dwRecvLength);
 		if ( rv != SCARD_S_SUCCESS )
 		{
 			//cout << "Select FAILED !!" << endl;
@@ -2035,7 +2065,7 @@ int CSysDiagnost::readCardFile (SCARDHANDLE hCard, unsigned char path[], int pat
 		bSendBuffer[4] = bytesToGet;
 		
         dwRecvLength=255;
-		rv = SCardTransmit (hCard, SCARD_PCI_T0, bSendBuffer, dwSendLength, NULL, bRecvBuffer, &dwRecvLength);
+		rv = pSCardTransmit (hCard, SCARD_PCI_T0, bSendBuffer, dwSendLength, NULL, bRecvBuffer, &dwRecvLength);
 		if ( rv != SCARD_S_SUCCESS )
 		{
 //			cout << "Read FAILED !!" << endl;
@@ -2221,10 +2251,15 @@ char *			pReaders = NULL;
 	bool bTryFails=false;
 	bool bContinue=true;
 	int iTryCount=0;
+	if(handlePCSCLib == NULL)
+	{
+		if(linkPCSCLibrary() != 0)
+			return false;
+	}
 	do
 	{
 		bTryFails=false;
-		rv = SCardEstablishContext (SCARD_SCOPE_SYSTEM, NULL, NULL, &hContext);
+		rv = pSCardEstablishContext (SCARD_SCOPE_SYSTEM, NULL, NULL, &hContext);
 		if ( rv != SCARD_S_SUCCESS )
 		{
 			 bTryFails=true;
@@ -2235,7 +2270,7 @@ char *			pReaders = NULL;
 			if ( readerName.length() == 0)
 			{
 				// SCARD_AUTOALLOCATE is not managed
-				rv = SCardListReaders (hContext, NULL, NULL, &dwReaders);
+				rv = pSCardListReaders (hContext, NULL, NULL, &dwReaders);
 				if ( rv != SCARD_S_SUCCESS )
 				{
 					bTryFails=true;
@@ -2244,7 +2279,7 @@ char *			pReaders = NULL;
 				{
 					pReaders = (char *)malloc (sizeof(char)*dwReaders);
 	
-					rv = SCardListReaders (hContext, NULL, pReaders, &dwReaders);
+					rv = pSCardListReaders (hContext, NULL, pReaders, &dwReaders);
 					if ( rv != SCARD_S_SUCCESS )
 					{
 						bTryFails=true;
@@ -2261,7 +2296,7 @@ char *			pReaders = NULL;
 			free(pReaders);
 			pReaders=NULL;
 		}
-		if(bTryFails && hContext) SCardReleaseContext (hContext);
+		if(bTryFails && hContext) pSCardReleaseContext (hContext);
 		
 		if(bTryFails)
 		{
@@ -2272,6 +2307,7 @@ char *			pReaders = NULL;
 			}
 			else
 			{
+				unlinkPCSCLibrary();
 				return false;
 			}
 		}
@@ -2286,7 +2322,7 @@ char *			pReaders = NULL;
 	iTryCount=0;
 	do
 	{
-		rv = SCardConnect (hContext, readerName.c_str(), SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
+		rv = pSCardConnect (hContext, readerName.c_str(), SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
 						   &hCard, &dwActiveProtocol);
 		if ( rv != SCARD_S_SUCCESS )
 		{
@@ -2297,7 +2333,8 @@ char *			pReaders = NULL;
 			}
 			else
 			{
-				SCardReleaseContext (hContext);
+				pSCardReleaseContext (hContext);
+				unlinkPCSCLibrary();
 				return false;
 			}
 		}
@@ -2323,7 +2360,7 @@ uint32_t		dwAtrLen = MAX_ATR_SIZE;
 	iTryCount=0;
 	do
 	{
-		rv = SCardStatus (hCard, szReaderName, &dwReaderLen, &dwState, &dwActiveProtocol, pAtr, &dwAtrLen);
+		rv = pSCardStatus (hCard, szReaderName, &dwReaderLen, &dwState, &dwActiveProtocol, pAtr, &dwAtrLen);
 	    if ( rv != SCARD_S_SUCCESS )
 	    {
 			if(iTryCount<20)
@@ -2529,9 +2566,12 @@ uint32_t		dwAtrLen = MAX_ATR_SIZE;
 	rslt = true;
 
 CardCommErr:
-	SCardDisconnect (hCard, SCARD_LEAVE_CARD);
-	SCardReleaseContext (hContext);
-
+	pSCardDisconnect (hCard, SCARD_LEAVE_CARD);
+	pSCardReleaseContext (hContext);
+	if(handlePCSCLib)
+	{
+		unlinkPCSCLibrary();
+	}
 	return rslt;
 
 #endif
@@ -3259,6 +3299,7 @@ OSStatus CSysDiagnost::AuthorizationExecuteWithPrivilegesStdErrAndPid (
 	cmd += pathToTool;
 	result = AuthorizationExecuteWithPrivileges(authorization, cmd.c_str(),  options, arguments, &commPipe );
 */	if (result != noErr) {
+		fclose (commPipe);
 		unlink (stderrpath);
 		return result;
 	}
@@ -3276,9 +3317,20 @@ OSStatus CSysDiagnost::AuthorizationExecuteWithPrivilegesStdErrAndPid (
 		pidnum[i] = 0;
 		if (ch != '\n') {
 			// we shouldn't get there
+			fclose (commPipe);
 			unlink (stderrpath);
 			return errAuthorizationInternal;
 		}
+		
+//		char pidstring[1024];
+//		retval = fgets(pidstring, sizeof(pidstring), commPipe)
+//		if (! retval) {
+//			return;
+//		}
+//		long pid
+//		sscanf(pidstring,OUR_PID_TOKEN "%ld" OUR_PID_TOKEN "\n",&pid);
+		
+		
 		sscanf(pidnum, "%d", &pid);
 		if (processid) {
 			*processid = pid;
@@ -3303,3 +3355,48 @@ OSStatus CSysDiagnost::AuthorizationExecuteWithPrivilegesStdErrAndPid (
 }
 
 #endif
+
+#ifdef __APPLE__
+int CSysDiagnost::linkPCSCLibrary (void )
+{
+	if(handlePCSCLib != NULL)
+	{
+		return 0;
+	}
+	handlePCSCLib = dlopen("/System/Library/Frameworks/PCSC.framework/PCSC", RTLD_NOW);
+	if (!handlePCSCLib)
+	{
+		return -1;
+	}
+	else
+	{
+		pSCardEstablishContext = (t_SCardEstablishContext) dlsym(handlePCSCLib, "SCardEstablishContext");
+		pSCardReleaseContext = (t_SCardReleaseContext) dlsym(handlePCSCLib, "SCardReleaseContext");
+		pSCardConnect = (t_SCardConnect) dlsym(handlePCSCLib, "SCardConnect");
+		pSCardDisconnect = (t_SCardDisconnect) dlsym(handlePCSCLib, "SCardDisconnect");
+		pSCardControl = (t_SCardControl) dlsym(handlePCSCLib, "SCardControl");
+		pSCardTransmit = (t_SCardTransmit) dlsym(handlePCSCLib, "SCardTransmit");
+		pSCardListReaderGroups = (t_SCardListReaderGroups) dlsym(handlePCSCLib, "SCardListReaderGroups");
+		pSCardListReaders = (t_SCardListReaders) dlsym(handlePCSCLib, "SCardListReaders");
+		pSCardStatus = (t_SCardStatus) dlsym(handlePCSCLib, "SCardStatus");
+		
+		if (!(pSCardEstablishContext && pSCardReleaseContext && pSCardConnect && pSCardDisconnect && pSCardControl && 
+			  pSCardTransmit && pSCardListReaderGroups && pSCardListReaders))
+			printf("Couldn't find one or more proc addresses\n");
+	}	
+	return 0;
+}
+int CSysDiagnost::unlinkPCSCLibrary (void )
+{
+	if(handlePCSCLib != NULL)
+	{
+		if( dlclose(handlePCSCLib) != 0)
+		{
+			return -1;
+		}
+	}
+	return 0;
+}
+
+#endif
+

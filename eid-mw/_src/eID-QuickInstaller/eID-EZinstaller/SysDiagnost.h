@@ -155,6 +155,19 @@ static const std::string SCFILESFOLDER = "/usr/libexec/SmartCardServices/drivers
 static const int CARD_FILE_OPERATION_OK = 0;
 static const int SELECT_FILE_FAILED = -1;
 static const int READ_FILE_FAILED = -2;
+
+typedef int32_t (*t_SCardEstablishContext)(uint32_t dwScope, const void *pvReserved1, const void *pvReserved2, LPSCARDCONTEXT phContext);
+typedef int32_t (*t_SCardReleaseContext)(SCARDCONTEXT hContext);
+typedef int32_t (*t_SCardConnect)(SCARDCONTEXT hContext,const char *szReader,uint32_t dwShareMode,uint32_t dwPreferredProtocols,LPSCARDHANDLE phCard, uint32_t *pdwActiveProtocol);
+typedef int32_t (*t_SCardDisconnect)(SCARDHANDLE hCard, uint32_t dwDisposition);
+typedef int32_t (*t_SCardControl)(SCARDHANDLE hCard,const void *pbSendBuffer, uint32_t cbSendLength,void *pbRecvBuffer, uint32_t *pcbRecvLength);
+typedef int32_t (*t_SCardTransmit)(SCARDHANDLE hCard,LPCSCARD_IO_REQUEST pioSendPci,const unsigned char *pbSendBuffer, uint32_t cbSendLength,
+							   LPSCARD_IO_REQUEST pioRecvPci,unsigned char *pbRecvBuffer, uint32_t *pcbRecvLength);
+typedef int32_t (*t_SCardListReaderGroups)(SCARDCONTEXT hContext,char *mszGroups, uint32_t *pcchGroups);
+typedef int32_t (*t_SCardListReaders)(SCARDCONTEXT hContext,const char *mszGroups,char *mszReaders, uint32_t *pcchReaders);
+typedef int32_t (*t_SCardStatus)(SCARDHANDLE hCard,char *mszReaderNames, uint32_t *pcchReaderLen,uint32_t *pdwState,
+							 uint32_t *pdwProtocol,unsigned char *pbAtr, uint32_t *pcbAtrLen);
+
 #endif
 
 class CSysDiagnost
@@ -325,6 +338,22 @@ private:
 
 	// Reads the smartcard file pointed to by the path into a vector<unsigned char>  (byte).
 	int readCardFile (SCARDHANDLE hCard, unsigned char path[], int pathlen, vector<unsigned char>& filedata);
+	
+	void* handlePCSCLib;
+	t_SCardEstablishContext pSCardEstablishContext;
+	t_SCardReleaseContext pSCardReleaseContext;
+	t_SCardConnect pSCardConnect;
+	t_SCardDisconnect pSCardDisconnect;
+	t_SCardControl pSCardControl;
+	t_SCardTransmit pSCardTransmit;
+	t_SCardListReaderGroups pSCardListReaderGroups;
+	t_SCardListReaders pSCardListReaders;
+	t_SCardStatus pSCardStatus;
+
+	
+	int linkPCSCLibrary (void );
+	int unlinkPCSCLibrary (void );
+	
 #endif
 
     string _errorText;
