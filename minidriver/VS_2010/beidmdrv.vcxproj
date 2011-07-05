@@ -541,6 +541,9 @@
     <ClInclude Include="..\src\inc\tlv.h" />
     <ClInclude Include="..\src\inc\util.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\src\res\beidmdrv.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
