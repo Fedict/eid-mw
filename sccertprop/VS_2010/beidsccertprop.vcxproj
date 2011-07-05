@@ -43,6 +43,9 @@
     <ClInclude Include="..\src\certpropimpl.h" />
     <ClInclude Include="..\src\main.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sccertprop.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8196603C-AB95-4383-8675-81FA67441FE5}</ProjectGuid>
     <RootNamespace>sccertprop</RootNamespace>

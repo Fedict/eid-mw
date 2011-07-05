@@ -499,6 +499,9 @@
     <ClInclude Include="..\src\Socket\SocketClient.h" />
     <ClInclude Include="..\src\Socket\SocketServer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="beidcommon.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

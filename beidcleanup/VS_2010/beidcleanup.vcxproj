@@ -310,7 +310,7 @@
     <ClInclude Include="..\resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\resource.rc" />
+    <ResourceCompile Include="beidcleanup.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\uninstall24.iss" />

@@ -71,10 +71,18 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{f918a653-5935-4d65-9151-e29254b5dbd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{b1029b87-a682-47ba-a873-b42782b2d176}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\beidlib.def">
       <Filter>Source Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="beidCSP.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
