@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -24,6 +24,7 @@
 #include "util.h"
 #include "p11.h"
 #include "cal.h"
+#include "display.h"
 
 #define WHERE "C_CreateObject()"
 CK_RV C_CreateObject(CK_SESSION_HANDLE hSession,    /* the session's handle */
@@ -214,11 +215,13 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
                         CK_ATTRIBUTE_PTR  pTemplate,  /* attribute values to match */
                         CK_ULONG          ulCount)    /* attributes in search template */
 {
-   P11_SESSION *pSession = NULL;
-   P11_FIND_DATA *pData = NULL;
-   int ret;
-   CK_ULONG      *pclass = NULL;
-   CK_ULONG       len = 0;
+	P11_SESSION *pSession = NULL;
+	P11_FIND_DATA *pData = NULL;
+	int ret;
+	CK_ULONG      *pclass = NULL;
+	CK_ULONG       len = 0;
+	CK_BBOOL		addIdObjects = CK_FALSE;
+	CK_BYTE allowCardRead = P11_DISPLAY_NO;
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -230,26 +233,38 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
    else
       log_template("I: Search template:", pTemplate, ulCount);
 
-   /* add check here to avoid useless calls to C_FindObjects() */
-   /* reason to add this is that e.g. Firefox for every certificate in its store starts a find operation with CKA_CLASS_TYPE */
-   /* that is unknown by this implementation */
-   /* CKA_CLASS_TYPE we support is only CKO_CERTIFICATE, CKO_PRIVATE_KEY and CKO_PUBLIC_KEY */
-   /* Sun-PKCS11 cannot handle  CKR_ATTRIBUTE_VALUE_INVALID properly so => initialize search and findObjects will just return 0 matching objects
-      in case of CKO_DATA */
-   if (ulCount)
-      {
-      ret = p11_get_attribute_value(pTemplate, ulCount, CKA_CLASS, (CK_VOID_PTR *) &pclass, &len);
-      if ( (ret == 0) && (len == sizeof(CK_ULONG) ) )
-         {
-         //CKO_SECRET_KEY is not supported but for SUN-PKCS11 we allow a search that will result in 0 objects
-         if ( (*pclass != CKO_CERTIFICATE) && (*pclass != CKO_PRIVATE_KEY) && (*pclass != CKO_PUBLIC_KEY) && (*pclass != CKO_SECRET_KEY))
-            {
-            log_trace(WHERE, "I: CKA_CLASS (%0x) not supported by this PKCS11 module", *pclass);
-            ret = CKR_ATTRIBUTE_VALUE_INVALID;
-            goto cleanup;
-            }
-         }
-      }
+	/* add check here to avoid useless calls to C_FindObjects() */
+	/* reason to add this is that e.g. Firefox for every certificate in its store starts a find operation with CKA_CLASS_TYPE */
+	/* that is unknown by this implementation */
+	/* CKA_CLASS_TYPE we support is only CKO_CERTIFICATE, CKO_PRIVATE_KEY and CKO_PUBLIC_KEY */
+	/* Sun-PKCS11 cannot handle  CKR_ATTRIBUTE_VALUE_INVALID properly so => initialize search and findObjects will just return 0 matching objects
+	in case of CKO_DATA */
+	if (ulCount)
+	{
+		ret = p11_get_attribute_value(pTemplate, ulCount, CKA_CLASS, (CK_VOID_PTR *) &pclass, &len);
+		if ( (ret == 0) && (len == sizeof(CK_ULONG) ) )
+		{
+			//CKO_SECRET_KEY is not supported but for SUN-PKCS11 we allow a search that will result in 0 objects
+			if ( (*pclass != CKO_CERTIFICATE) && (*pclass != CKO_PRIVATE_KEY) && (*pclass != CKO_PUBLIC_KEY) && (*pclass != CKO_SECRET_KEY) && (*pclass != CKO_DATA))
+			{
+				log_trace(WHERE, "I: CKA_CLASS (%0x) not supported by this PKCS11 module", *pclass);
+				ret = CKR_ATTRIBUTE_VALUE_INVALID;
+				goto cleanup;
+			}
+			else if (*pclass == CKO_DATA)
+			{
+				addIdObjects = CK_TRUE;
+			}
+		}
+		else if (len == 0)// no CKA_CLASS attribute in the template
+		{
+			addIdObjects = CK_TRUE;
+		}
+	}
+	else
+	{
+		addIdObjects = CK_TRUE;
+	}
 
    ret = p11_get_session(hSession, &pSession);
 // if (pSession == NULL)
@@ -270,16 +285,38 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
       goto cleanup;
       }
 
-   /* init search operation */
-   if((pData = pSession->Operation[P11_OPERATION_FIND].pData) == NULL)
-      {
-      pData = pSession->Operation[P11_OPERATION_FIND].pData = (P11_FIND_DATA *) malloc (sizeof(P11_FIND_DATA));
-      if (pData == NULL)
-         {
-         log_trace( WHERE, "E: error allocating memory");
-         ret = CKR_HOST_MEMORY;
-         }
-      }
+	if(addIdObjects == CK_TRUE)
+	{
+		if (pSession->bReadDataAllowed == P11_READDATA_ASK)
+		{
+			allowCardRead = AllowCardReading();
+			if (allowCardRead == P11_DISPLAY_YES)
+			{
+				pSession->bReadDataAllowed = P11_READDATA_ALLOWED;
+			}
+			else
+			{
+				if(allowCardRead == P11_DISPLAY_NO)
+				{
+					pSession->bReadDataAllowed = P11_READDATA_REFUSED;
+				}				
+				log_trace(WHERE, "I: User does not allow reading from the card");
+				ret = CKR_FUNCTION_FAILED;
+				goto cleanup;
+			}
+		}
+	}
+
+	/* init search operation */
+	if((pData = pSession->Operation[P11_OPERATION_FIND].pData) == NULL)
+	{
+		pData = pSession->Operation[P11_OPERATION_FIND].pData = (P11_FIND_DATA *) malloc (sizeof(P11_FIND_DATA));
+		if (pData == NULL)
+		{
+			log_trace( WHERE, "E: error allocating memory");
+			ret = CKR_HOST_MEMORY;
+		}
+	}
 
    //first handle = 1
    pData->hCurrent = 1;
@@ -307,8 +344,24 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
    pData->size = ulCount;
 
-  //set search operation to active state since there can be only one
-  pSession->Operation[P11_OPERATION_FIND].active = 1;
+	//set search operation to active state since there can be only one
+	pSession->Operation[P11_OPERATION_FIND].active = 1;
+
+	if ( addIdObjects)
+	{
+		ret = cal_read_ID_files(pSession->hslot);
+		if (ret != 0)
+		{
+			log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+			goto cleanup;
+		}
+		ret = cal_get_card_data(pSession->hslot);
+		if (ret != 0)
+		{
+			log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+			goto cleanup;
+		}
+	}
 
 ret = CKR_OK;
 
@@ -376,18 +429,18 @@ PKCS15 defines existance of attributes that should be readable from token
       goto cleanup;
       }
 
-   /* VSC this code was moved to here since Sun-PKCS11 cannot handle CKR_Attribute_value_invalid in C_FindObjectsInit() properly!!! */
-   /* here we just return 0 objects in case of class type that is not supported */
-   ret = p11_get_attribute_value(pData->pSearch, pData->size, CKA_CLASS, (CK_VOID_PTR *) &pclass, &len);
-   if ( (ret == 0) && (len == sizeof(CK_ULONG) ) )
-      {
-      if ( (*pclass != CKO_CERTIFICATE) && (*pclass != CKO_PRIVATE_KEY) && (*pclass != CKO_PUBLIC_KEY) )
-         {
-         ret = CKR_OK; //ret = CKR_ATTRIBUTE_VALUE_INVALID;
-         *pulObjectCount = 0;
-         goto cleanup;
-         }
-      }
+	/* VSC this code was moved to here since Sun-PKCS11 cannot handle CKR_Attribute_value_invalid in C_FindObjectsInit() properly!!! */
+	/* here we just return 0 objects in case of class type that is not supported */
+	ret = p11_get_attribute_value(pData->pSearch, pData->size, CKA_CLASS, (CK_VOID_PTR *) &pclass, &len);
+	if ( (ret == 0) && (len == sizeof(CK_ULONG) ) )
+	{
+		if ( (*pclass != CKO_CERTIFICATE) && (*pclass != CKO_PRIVATE_KEY) && (*pclass != CKO_PUBLIC_KEY) && (*pclass != CKO_DATA) )
+		{
+			ret = CKR_OK; //ret = CKR_ATTRIBUTE_VALUE_INVALID;
+			*pulObjectCount = 0;
+			goto cleanup;
+		}
+	}
 
    //check if we have a TOKEN attribute to look for
    //in case of null search template we search for all objects
@@ -515,13 +568,13 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
       goto cleanup;
       }
 
-   if (pSession->Operation[P11_OPERATION_FIND].active == 0)
-      {
-      log_trace(WHERE, "I: For this session no search operation is active");
-      //we return without problem
-      ret = CKR_OK;
-      goto cleanup;
-      }
+	if (pSession->Operation[P11_OPERATION_FIND].active == 0)
+	{
+		log_trace(WHERE, "I: For this session no search operation is active");
+		//we return without problem
+		ret = CKR_OPERATION_NOT_INITIALIZED;
+		goto cleanup;
+	}
 
    //get search template
    pData = (P11_FIND_DATA *) pSession->Operation[P11_OPERATION_FIND].pData;

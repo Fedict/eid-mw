@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -104,6 +104,7 @@ log_trace(WHERE, "I: enter");
   pSession->pfNotify = Notify;
   //initial state 
   pSession->state = P11_CARD_STILL_PRESENT;
+	pSession->bReadDataAllowed = P11_READDATA_ASK;
 
   /* keep the nr of sessions for this slot */
   pSlot->nsessions++;
@@ -139,6 +140,7 @@ log_trace(WHERE, "S: C_CloseSession (session %d)", hSession);
 ret = p11_get_session(hSession, &pSession);
 if (pSession == NULL)
    {
+		 ret = CKR_SESSION_HANDLE_INVALID;
    log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
    goto cleanup;
    }

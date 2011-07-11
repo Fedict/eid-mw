@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -146,6 +146,11 @@ void           *pReader;  //CReader
 #define P11_OPERATION_DIGEST  1
 #define P11_OPERATION_SIGN    2
 
+#define P11_READDATA_ASK		0
+#define P11_READDATA_ALLOWED	1
+#define P11_READDATA_REFUSED    2
+
+
 typedef struct P11_OPERATION
 {
 int   type;
@@ -164,6 +169,7 @@ int               state;
 //int               nObjects;
 //P11_OBJECT        **ppObjects;
 P11_OPERATION     Operation[P11_NUM_OPERATIONS];
+CK_BYTE						bReadDataAllowed;
 } P11_SESSION;
 
 
@@ -236,6 +242,9 @@ CK_RV p11_get_free_session(CK_SESSION_HANDLE_PTR phSession, P11_SESSION **ppSess
 CK_RV p11_get_attribute_value(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_TYPE type, CK_VOID_PTR *ppVoid, CK_ULONG *len);
 CK_RV p11_set_attribute_value(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_TYPE type, CK_VOID_PTR pVoid, CK_ULONG len);
 int p11_copy_object(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_PTR pObject);
+int p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
+						   CK_ULONG type, CK_BBOOL bPrivate, CK_ULONG *phObject,
+						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen);
 int p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken, CK_ULONG type, CK_ULONG id, CK_BBOOL bPrivate, CK_ULONG *phObject);
 int p11_clean_object(P11_OBJECT *pObject);
 int p11_find_slot_object(P11_SLOT *pSlot, CK_ULONG type, CK_ULONG id,  P11_OBJECT **pphObject);

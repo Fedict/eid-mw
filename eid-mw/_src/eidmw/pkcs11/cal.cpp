@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -27,6 +27,7 @@
 #include "cal.h"
 #include "log.h"
 #include "cert.h"
+#include "tlvbuffer.h"
 
 
 #ifndef WIN32
@@ -249,7 +250,9 @@ pInfo->ulMinPinLen = 4;
 strcpy_s((char*)pInfo->utcTime,sizeof(pInfo->utcTime), "20080101000000");
 
 pInfo->flags |= CKF_WRITE_PROTECTED | CKF_TOKEN_INITIALIZED | CKF_USER_PIN_INITIALIZED;// check for pin change capabilitypInfo->flags |= /*CKF_LOGIN_REQUIRED |  CKF_USER_PIN_INITIALIZED |*/; //CAL does logon, so no CKF_LOGIN_REQUIRED nor CKF_USER_PIN_INITIALIZED
-
+#ifdef NO_DIALOGS
+pInfo->flags |= CKF_LOGIN_REQUIRED;   // no dialogs, so we ask the calling program to ask for PIN 
+#endif
 cleanup:
 
 return (ret);
@@ -610,6 +613,8 @@ try
       if (ret) goto cleanup;
       ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) &modsize, sizeof(CK_ULONG));
       if (ret) goto cleanup;
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
+      if (ret) goto cleanup;
       }
 
    /* add all certificate objects from card */
@@ -766,6 +771,280 @@ return (ret);
 
 
 
+#define WHERE "cal_get_card_data()"
+//we already know the unsigned data 
+int cal_get_card_data(CK_SLOT_ID hSlot)
+{
+int ret = 0;
+	CByteArray oATR;
+	CByteArray oAPDU(5);
+	unsigned char oByte;
+	CByteArray oCardData;
+	std::string szReader;
+	char cBuffer[250];
+	unsigned char ucBuffer[250];
+	char* plabel = NULL;
+	unsigned long ulLen=0;
+	CTLVBuffer oTLVBuffer;
+	P11_SLOT *pSlot = NULL;
+	CK_ATTRIBUTE ID_DATA[]= BEID_TEMPLATE_ID_DATA;
+	BEID_DATA_LABELS_NAME ID_LABELS[]=BEID_ID_DATA_LABELS;
+	BEID_DATA_LABELS_NAME ADDRESS_LABELS[]=BEID_ADDRESS_DATA_LABELS;
+
+	CK_ULONG hObject = 0;
+	P11_OBJECT *pObject = NULL;
+
+	pSlot = p11_get_slot(hSlot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		return (CKR_SLOT_ID_INVALID);
+	}
+
+	szReader = pSlot->name;
+	try
+	{
+		CReader &oReader = oCardLayer->getReader(szReader);
+		oATR = oReader.GetATR();
+		oCardData = oReader.GetInfo();
+
+		plabel = BEID_FIELD_TAG_ATR;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oATR.GetBytes(),(CK_ULONG)oATR.Size());
+		if (ret) goto cleanup;
+
+		plabel = BEID_FIELD_TAG_DATA_FILE;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oCardData.GetBytes(),(CK_ULONG)oCardData.Size());
+		if (ret) goto cleanup;
+
+		CByteArray data = CByteArray(oCardData.GetBytes(), 16);
+		plabel = BEID_FIELD_TAG_DATA_SerialNr;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size());
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(16);
+		plabel = BEID_FIELD_TAG_DATA_CompCode;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(17);
+		plabel = BEID_FIELD_TAG_DATA_OSNr;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(18);
+		plabel = BEID_FIELD_TAG_DATA_OSVersion;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(19);
+		plabel = BEID_FIELD_TAG_DATA_SoftMaskNumber;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(20);
+		plabel = BEID_FIELD_TAG_DATA_SoftMaskVersion;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(21);
+		plabel = BEID_FIELD_TAG_DATA_ApplVersion;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+		data.ClearContents();
+		data.Append(oCardData.GetByte(22));
+		data.Append(oCardData.GetByte(23));
+		plabel = BEID_FIELD_TAG_DATA_GlobOSVersion;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size());
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(24);
+		plabel = BEID_FIELD_TAG_DATA_ApplIntVersion;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(25);
+		plabel = BEID_FIELD_TAG_DATA_PKCS1Support;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(26);
+		plabel = BEID_FIELD_TAG_DATA_ApplLifeCycle;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+		oByte = oCardData.GetByte(27);
+		plabel = BEID_FIELD_TAG_DATA_KeyExchangeVersion;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
+		if (ret) goto cleanup;
+
+//		data.ClearContents();
+//		data = oCardData.GetBytes(28);
+//		plabel = BEID_FIELD_TAG_DATA_FILE;
+//		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, 0, CK_FALSE, &hObject,
+//		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size());
+//		if (ret) goto cleanup;
+//
+	}
+	catch (CMWException e)
+	{
+		return(cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...) 
+	{
+		ret = -1;
+		log_trace(WHERE, "E: unkown exception thrown");
+		return (CKR_FUNCTION_FAILED);
+	}
+
+	if (ret != 0)
+	{
+		return (CKR_DEVICE_ERROR);
+	}
+
+cleanup:
+	return (ret);
+}
+#undef WHERE
+
+
+
+
+
+
+#define WHERE "cal_read_ID_files()"
+int cal_read_ID_files(CK_SLOT_ID hSlot)
+{
+	int ret = 0;
+	CByteArray oFileData;
+	std::string szReader;
+	char cBuffer[250];
+//	unsigned char ucBuffer[250];
+	char* plabel = NULL;
+	unsigned long ulLen=0;
+	CTLVBuffer oTLVBuffer;
+	P11_SLOT *pSlot = NULL;
+	CK_ATTRIBUTE ID_DATA[]= BEID_TEMPLATE_ID_DATA;
+	BEID_DATA_LABELS_NAME ID_LABELS[]=BEID_ID_DATA_LABELS;
+	BEID_DATA_LABELS_NAME ADDRESS_LABELS[]=BEID_ADDRESS_DATA_LABELS;
+
+	CK_ULONG hObject = 0;
+	P11_OBJECT *pObject = NULL;
+
+	pSlot = p11_get_slot(hSlot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		return (CKR_SLOT_ID_INVALID);
+	}
+
+	szReader = pSlot->name;
+	try
+	{
+		CReader &oReader = oCardLayer->getReader(szReader);
+		oFileData = oReader.ReadFile(BEID_FILE_CERT_RRN);
+		plabel = BEID_FIELD_TAG_CERT_RN;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+		if (ret) goto cleanup;
+
+		oFileData = oReader.ReadFile(BEID_FILE_ID);
+
+		plabel = BEID_FIELD_TAG_DATA_FILE;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+		if (ret) goto cleanup;
+
+		oTLVBuffer.ParseTLV(oFileData.GetBytes(), oFileData.Size());
+
+		int i;
+		int nrOfItems = sizeof(ID_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
+
+		for(i = 0; i < nrOfItems ;i++)
+		{
+			ulLen = sizeof(cBuffer);
+			memset(cBuffer,0,ulLen);
+			oTLVBuffer.FillUTF8Data(ID_LABELS[i].tag, cBuffer, &ulLen);
+			plabel = ID_LABELS[i].name;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen);
+			if (ret) goto cleanup;
+		}
+
+		oFileData = oReader.ReadFile(BEID_FILE_ADDRESS);
+		plabel = BEID_FIELD_TAG_ADDRESS_FILE;
+		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+		if (ret) goto cleanup;
+		oTLVBuffer.ParseTLV(oFileData.GetBytes(), oFileData.Size());
+		nrOfItems = sizeof(ADDRESS_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
+		for(i = 0; i < nrOfItems ;i++)
+		{
+			ulLen = sizeof(cBuffer);
+			memset(cBuffer,0,ulLen);
+			oTLVBuffer.FillUTF8Data(ADDRESS_LABELS[i].tag, cBuffer, &ulLen);
+			plabel = ADDRESS_LABELS[i].name;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen);
+			if (ret) goto cleanup;
+		}
+
+			plabel = BEID_FIELD_TAG_SGN_RN;
+			oFileData = oReader.ReadFile(BEID_FILE_ID_SIGN);
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+			if (ret) goto cleanup;
+
+			plabel = BEID_FIELD_TAG_SGN_ADDRESS;
+			oFileData = oReader.ReadFile(BEID_FILE_ADDRESS_SIGN);
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+			if (ret) goto cleanup;
+
+			plabel = BEID_FIELD_TAG_PHOTO;
+			oFileData = oReader.ReadFile(BEID_FILE_PHOTO);
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
+			if (ret) goto cleanup;
+
+	}
+	catch (CMWException e)
+	{
+		return(cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...) 
+	{
+		ret = -1;
+		log_trace(WHERE, "E: unkown exception thrown");
+		return (CKR_FUNCTION_FAILED);
+	}
+
+	if (ret != 0)
+	{
+		return (CKR_DEVICE_ERROR);
+	}
+
+cleanup:
+	return (ret);
+}
+#undef WHERE
+
+
+
 #define WHERE "cal_read_object()"
 int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 {
@@ -803,11 +1082,14 @@ if ((status == P11_CARD_REMOVED) || (status == P11_CARD_NOT_PRESENT) )
    goto cleanup;
    }
 
-//read ID of object we want to read from token
-ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_ID, (CK_VOID_PTR*) &pID, &len);
+ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_CLASS, (CK_VOID_PTR*) &pClass, &len);
 if (ret) goto cleanup;
 
-ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_CLASS, (CK_VOID_PTR*) &pClass, &len);
+//do not refresh the ID files here
+if (pClass == CKO_DATA ) goto cleanup;
+
+//read ID of object we want to read from token
+ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_ID, (CK_VOID_PTR*) &pID, &len);
 if (ret) goto cleanup;
 
 //get all objects related to this ID

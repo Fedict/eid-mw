@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -28,12 +28,15 @@
 #include "cal.h"
 
 #define LOG_MAX_REC  10
+#define BEIDP11_NOT_INITIALIZED			0
+#define BEIDP11_INITIALIZED					1
+#define BEIDP11_DEINITIALIZING			2
 
 extern CK_FUNCTION_LIST pkcs11_function_list;
 //extern void *logmutex;
 
-static int g_final = 0; /* Belpic */
-static int g_init  = 0;
+//static int g_final = 0; /* Belpic */
+static int g_init  = BEIDP11_NOT_INITIALIZED;
 
 //  CMutex gMutex;
 //  CMutex SlotMutex[MAX_READERS];
@@ -59,23 +62,43 @@ CK_C_INITIALIZE_ARGS_PTR p_args;
    log_init(DEFAULT_LOG_FILE, LOG_LEVEL_WARNING);
 #endif
 	log_trace(WHERE, "I: enter pReserved = %p",pReserved);
-   if (g_init)
+   if (g_init != BEIDP11_NOT_INITIALIZED)
       {
       ret = CKR_CRYPTOKI_ALREADY_INITIALIZED;
       log_trace(WHERE, "I: Module is allready initialized");
       }
    else
       {
-      g_init = 1;
+      g_init = BEIDP11_INITIALIZED;
       if (pReserved != NULL)
          {
          p_args = (CK_C_INITIALIZE_ARGS *)pReserved;
-         p11_init_lock(p_args);
-         }
+
+				 if(p_args->pReserved != NULL)
+				 {
+					 ret = CKR_ARGUMENTS_BAD;
+					 goto cleanup;
+				 }
+				 if(	(p_args->CreateMutex == NULL) || (p_args->DestroyMutex == NULL) || \
+					 (p_args->LockMutex == NULL) || (p_args->UnlockMutex == NULL)	)
+				 {
+					 //If some, but not all, of the supplied function pointers to C_Initialize are non-NULL_PTR, 
+					 //then C_Initialize should return with the value CKR_ARGUMENTS_BAD.
+					 if(!((p_args->CreateMutex == NULL) && (p_args->DestroyMutex == NULL) && \
+						 (p_args->LockMutex == NULL) && (p_args->UnlockMutex == NULL)))
+					 {
+							ret = CKR_ARGUMENTS_BAD;
+							goto cleanup;
+					 }
+				 }
+				 p11_init_lock(p_args);
+			}
       cal_init();
       log_trace(WHERE, "S: Initialize this PKCS11 Module");
       log_trace(WHERE, "S: =============================");
       }
+
+cleanup:
   log_trace(WHERE, "I: leave, ret = %i",ret);
    return ret;
 }
@@ -89,7 +112,7 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 
 CK_RV ret = CKR_OK;
 	log_trace(WHERE, "I: enter");
-if (!g_init)
+if (g_init != BEIDP11_INITIALIZED)
 {
 	log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
    return (CKR_CRYPTOKI_NOT_INITIALIZED);
@@ -110,15 +133,16 @@ if (pReserved != NULL)
    goto cleanup;
    }
 
-g_final = 0; /* Belpic */
+//g_final = 0; /* Belpic */
+g_init = BEIDP11_DEINITIALIZING;
 
 ret = cal_close();
-
-g_init = 0;
 
 cleanup:
   /* Release and destroy the mutex */
   p11_free_lock();
+
+	g_init = BEIDP11_NOT_INITIALIZED;
   // util_clean_lock(&logmutex);
 log_trace(WHERE, "I: p11_free_lock()");
 log_trace(WHERE, "I: leave, ret = %i",ret);
@@ -527,8 +551,15 @@ ret = cal_wait_for_slot_event(block, &cardevent, &h);
 if (cardevent == 1)
    *pSlot = h;
 else
-   CLEANUP(CKR_NO_EVENT);
+{
+	if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
+	{
+		log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
+		CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
+	}
 
+	CLEANUP(CKR_NO_EVENT);
+}
 /* Firefox 1.5 tries to call this function (with the blocking flag)
 * in a separate thread; and this causes the pkcs11 lib to hang on Linux
 * So we might have to return "not supported" in which case Ff 1.5 defaults

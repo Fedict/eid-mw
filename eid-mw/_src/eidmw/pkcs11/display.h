@@ -17,25 +17,23 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-#if !defined(__HASH__)
-#define __HASH__
-
+#ifndef __display_h__
+#define __display_h__
 #include "beid_p11.h"
+
+#define P11_DISPLAY_YES				0
+#define P11_DISPLAY_NO				1
+#define P11_DISPLAY_CANCEL		2
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
-int hash_init(CK_MECHANISM_PTR pMechanism, void **pphashinfo, unsigned int *size);
-int hash_update(void *phashinfo, char *p, unsigned long l);
-int hash_final(void *phashinfo, unsigned char *p, unsigned long *l);
-
+CK_BYTE AllowCardReading(void);
 
 #ifdef __cplusplus
    }
 #endif
-
 
 #endif
 
