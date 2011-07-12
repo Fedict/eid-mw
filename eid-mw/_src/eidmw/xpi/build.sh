@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-EXT_NAME=belgiumeid
+EXT_NAME=src
 BUILDS_DIR=builds
 BUILD_DIR=_build
 
