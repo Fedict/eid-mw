@@ -36,7 +36,7 @@ enum { MSG_PIN_CODE_REQUIRED=1, MSG_PLEASE_ENTER_PIN };
 char* beid_messages[4][3]={
 									"en",	"beID: PIN Code Required",		"Please enter your PIN code.",
 									"nl",	"beID: PINcode Vereist", 		"Gelieve Uw PINcode in te voeren",
-									"fr",	"beID: Code PIN Necessaire",	"Veuillez enter votre code PIN",
+									"fr",	"beID: Code PIN Necessaire",	"Veuillez entrer votre code PIN",
 									"de",	"beID: PIN Code Required",		"Please enter your PIN code."
 							  };
 
