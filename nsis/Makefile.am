@@ -16,7 +16,7 @@ all:
 
 # Run nsis to create installer
 	$(MAKENSIS) eid-mw.nsi
-
+	
 eid-mw.nsi: eid-mw.nsi.tmpl
 	$(SED) -e "s|_SVN_REVISION_|$$(cat ../svn_revision)|" < eid-mw.nsi.tmpl > eid-mw.nsi
 
