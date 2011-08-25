@@ -10,7 +10,7 @@
 	};
 	013DFC6F14064433003666AD /* German */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {698, 387}}";
+			sepNavIntBoundsRect = "{{0, 0}, {698, 382}}";
 			sepNavSelRange = "{45, 39}";
 			sepNavVisRange = "{0, 84}";
 			sepNavWindowFrame = "{{15, 5}, {1245, 768}}";
@@ -51,16 +51,6 @@
 		rLoc = 61;
 		rType = 0;
 		vrLen = 83;
-		vrLoc = 0;
-	};
-	013DFD0014064AF5003666AD /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 013DFC6F14064433003666AD /* German */;
-		name = "InfoPlist.strings: 3";
-		rLen = 39;
-		rLoc = 45;
-		rType = 0;
-		vrLen = 84;
 		vrLoc = 0;
 	};
 	013DFD2A14065208003666AD /* PBXTextBookmark */ = {
@@ -164,6 +154,16 @@
 		vrLen = 785;
 		vrLoc = 1483;
 	};
+	01B33C8C140687B1000FBE99 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFC6F14064433003666AD /* German */;
+		name = "InfoPlist.strings: 3";
+		rLen = 39;
+		rLoc = 45;
+		rType = 0;
+		vrLen = 84;
+		vrLoc = 0;
+	};
 	089C165DFE840E0CC02AAC07 /* English */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {698, 397}}";
@@ -205,18 +205,18 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 335956973;
-			PBXWorkspaceStateSaveDate = 335956973;
+			PBXPerProjectTemplateStateSaveDate = 335972227;
+			PBXWorkspaceStateSaveDate = 335972227;
 		};
 		perUserProjectItems = {
 			013DFCA9140647A3003666AD /* PBXTextBookmark */ = 013DFCA9140647A3003666AD /* PBXTextBookmark */;
 			013DFCAA140647A3003666AD /* PBXTextBookmark */ = 013DFCAA140647A3003666AD /* PBXTextBookmark */;
 			013DFCFF14064AF5003666AD /* PBXTextBookmark */ = 013DFCFF14064AF5003666AD /* PBXTextBookmark */;
-			013DFD0014064AF5003666AD /* PBXTextBookmark */ = 013DFD0014064AF5003666AD /* PBXTextBookmark */;
 			013DFD2A14065208003666AD /* PBXTextBookmark */ = 013DFD2A14065208003666AD /* PBXTextBookmark */;
 			018D336514028C8200AAA6E7 /* PlistBookmark */ = 018D336514028C8200AAA6E7 /* PlistBookmark */;
 			019E2F691406437A001ECA45 /* PBXTextBookmark */ = 019E2F691406437A001ECA45 /* PBXTextBookmark */;
 			019E2F6A1406437A001ECA45 /* PBXTextBookmark */ = 019E2F6A1406437A001ECA45 /* PBXTextBookmark */;
+			01B33C8C140687B1000FBE99 /* PBXTextBookmark */ = 01B33C8C140687B1000FBE99 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 018D333C140289C800AAA6E7 /* Source Control */;
 		userBuildSettings = {
