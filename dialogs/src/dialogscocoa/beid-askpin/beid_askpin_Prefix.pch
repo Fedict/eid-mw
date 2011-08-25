@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'beid-askpin' target in the 'beid-askpin' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

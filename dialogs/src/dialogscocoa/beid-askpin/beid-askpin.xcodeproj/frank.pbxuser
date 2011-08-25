@@ -1,0 +1,236 @@
+// !$*UTF8*$!
+{
+	013DFC6E14064424003666AD /* Dutch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {698, 392}}";
+			sepNavSelRange = "{61, 20}";
+			sepNavVisRange = "{0, 83}";
+			sepNavWindowFrame = "{{15, 5}, {1245, 768}}";
+		};
+	};
+	013DFC6F14064433003666AD /* German */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {698, 387}}";
+			sepNavSelRange = "{45, 39}";
+			sepNavVisRange = "{0, 84}";
+			sepNavWindowFrame = "{{15, 5}, {1245, 768}}";
+		};
+	};
+	013DFC7014064445003666AD /* French */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {698, 397}}";
+			sepNavSelRange = "{61, 20}";
+			sepNavVisRange = "{0, 83}";
+		};
+	};
+	013DFCA9140647A3003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C165DFE840E0CC02AAC07 /* English */;
+		name = "InfoPlist.strings: 3";
+		rLen = 37;
+		rLoc = 45;
+		rType = 0;
+		vrLen = 82;
+		vrLoc = 0;
+	};
+	013DFCAA140647A3003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFC7014064445003666AD /* French */;
+		name = "InfoPlist.strings: 3";
+		rLen = 20;
+		rLoc = 61;
+		rType = 0;
+		vrLen = 83;
+		vrLoc = 0;
+	};
+	013DFCFF14064AF5003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFC6E14064424003666AD /* Dutch */;
+		name = "InfoPlist.strings: 3";
+		rLen = 20;
+		rLoc = 61;
+		rType = 0;
+		vrLen = 83;
+		vrLoc = 0;
+	};
+	013DFD0014064AF5003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFC6F14064433003666AD /* German */;
+		name = "InfoPlist.strings: 3";
+		rLen = 39;
+		rLoc = 45;
+		rType = 0;
+		vrLen = 84;
+		vrLoc = 0;
+	};
+	013DFD2A14065208003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFC6F14064433003666AD /* German */;
+		name = "InfoPlist.strings: 3";
+		rLen = 39;
+		rLoc = 45;
+		rType = 0;
+		vrLen = 84;
+		vrLoc = 0;
+	};
+	018D3334140289B100AAA6E7 /* beid-askpin */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "beid-askpin";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	018D3339140289C800AAA6E7 /* beid-askpin.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {698, 533}}";
+			sepNavSelRange = "{781, 69}";
+			sepNavVisRange = "{157, 701}";
+			sepNavWindowFrame = "{{58, 10}, {1245, 768}}";
+		};
+	};
+	018D333A140289C800AAA6E7 /* beid-askpin.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {698, 1820}}";
+			sepNavSelRange = "{1699, 0}";
+			sepNavVisRange = "{1483, 785}";
+			sepNavWindowFrame = "{{2, 7}, {1245, 768}}";
+		};
+	};
+	018D333C140289C800AAA6E7 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	018D333D140289C800AAA6E7 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	018D336514028C8200AAA6E7 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* beid_askpin-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/frank/beid-dialogs/beid-askpin/beid_askpin-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	019E2F691406437A001ECA45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 018D3339140289C800AAA6E7 /* beid-askpin.h */;
+		name = "beid-askpin.h: 36";
+		rLen = 69;
+		rLoc = 781;
+		rType = 0;
+		vrLen = 701;
+		vrLoc = 157;
+	};
+	019E2F6A1406437A001ECA45 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 018D333A140289C800AAA6E7 /* beid-askpin.m */;
+		name = "beid-askpin.m: 64";
+		rLen = 0;
+		rLoc = 1699;
+		rType = 0;
+		vrLen = 785;
+		vrLoc = 1483;
+	};
+	089C165DFE840E0CC02AAC07 /* English */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {698, 397}}";
+			sepNavSelRange = "{45, 37}";
+			sepNavVisRange = "{0, 82}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 018D3334140289B100AAA6E7 /* beid-askpin */;
+		activeTarget = 8D1107260486CEB800E47090 /* beid-askpin */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* beid-askpin */,
+		);
+		codeSenseManager = 018D333D140289C800AAA6E7 /* Code sense */;
+		executables = (
+			018D3334140289B100AAA6E7 /* beid-askpin */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					520,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 335956973;
+			PBXWorkspaceStateSaveDate = 335956973;
+		};
+		perUserProjectItems = {
+			013DFCA9140647A3003666AD /* PBXTextBookmark */ = 013DFCA9140647A3003666AD /* PBXTextBookmark */;
+			013DFCAA140647A3003666AD /* PBXTextBookmark */ = 013DFCAA140647A3003666AD /* PBXTextBookmark */;
+			013DFCFF14064AF5003666AD /* PBXTextBookmark */ = 013DFCFF14064AF5003666AD /* PBXTextBookmark */;
+			013DFD0014064AF5003666AD /* PBXTextBookmark */ = 013DFD0014064AF5003666AD /* PBXTextBookmark */;
+			013DFD2A14065208003666AD /* PBXTextBookmark */ = 013DFD2A14065208003666AD /* PBXTextBookmark */;
+			018D336514028C8200AAA6E7 /* PlistBookmark */ = 018D336514028C8200AAA6E7 /* PlistBookmark */;
+			019E2F691406437A001ECA45 /* PBXTextBookmark */ = 019E2F691406437A001ECA45 /* PBXTextBookmark */;
+			019E2F6A1406437A001ECA45 /* PBXTextBookmark */ = 019E2F6A1406437A001ECA45 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 018D333C140289C800AAA6E7 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8D1107260486CEB800E47090 /* beid-askpin */ = {
+		activeExec = 0;
+		executables = (
+			018D3334140289B100AAA6E7 /* beid-askpin */,
+		);
+	};
+	8D1107310486CEB800E47090 /* beid_askpin-Info.plist */ = {
+		uiCtxt = {
+			sepNavWindowFrame = "{{15, 5}, {1245, 768}}";
+		};
+	};
+}

@@ -1,0 +1,327 @@
+// !$*UTF8*$!
+{
+	013DFDA8140658B9003666AD /* German */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 417}}";
+			sepNavSelRange = "{79, 0}";
+			sepNavVisRange = "{0, 79}";
+			sepNavWindowFrame = "{{15, 5}, {1245, 768}}";
+		};
+	};
+	013DFDA9140658C6003666AD /* French */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1186, 640}}";
+			sepNavSelRange = "{85, 0}";
+			sepNavVisRange = "{0, 85}";
+			sepNavWindowFrame = "{{35, 4}, {1245, 768}}";
+		};
+	};
+	013DFDAA140658D3003666AD /* Dutch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 434}}";
+			sepNavSelRange = "{45, 35}";
+			sepNavVisRange = "{0, 80}";
+		};
+	};
+	013DFDF014065E51003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 089C165DFE840E0CC02AAC07 /* English */;
+		name = "InfoPlist.strings: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 77;
+		vrLoc = 0;
+	};
+	013DFDF114065E51003666AD /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* beid_changepin-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/frank/beid-dialogs/beid-changepin/beid_changepin-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	013DFDF214065E51003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFDA8140658B9003666AD /* German */;
+		name = "InfoPlist.strings: 3";
+		rLen = 0;
+		rLoc = 79;
+		rType = 0;
+		vrLen = 79;
+		vrLoc = 0;
+	};
+	013DFDF314065E51003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFDA9140658C6003666AD /* French */;
+		name = "InfoPlist.strings: 3";
+		rLen = 0;
+		rLoc = 85;
+		rType = 0;
+		vrLen = 85;
+		vrLoc = 0;
+	};
+	013DFDF814065E62003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFDAA140658D3003666AD /* Dutch */;
+		name = "InfoPlist.strings: 3";
+		rLen = 0;
+		rLoc = 80;
+		rType = 0;
+		vrLen = 80;
+		vrLoc = 0;
+	};
+	013DFDF914065E62003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFDA9140658C6003666AD /* French */;
+		name = "InfoPlist.strings: 3";
+		rLen = 0;
+		rLoc = 85;
+		rType = 0;
+		vrLen = 85;
+		vrLoc = 0;
+	};
+	013DFE3714066058003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFDAA140658D3003666AD /* Dutch */;
+		name = "InfoPlist.strings: 3";
+		rLen = 35;
+		rLoc = 45;
+		rType = 0;
+		vrLen = 80;
+		vrLoc = 0;
+	};
+	013DFE3A14066058003666AD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 013DFDA9140658C6003666AD /* French */;
+		name = "InfoPlist.strings: 3";
+		rLen = 0;
+		rLoc = 85;
+		rType = 0;
+		vrLen = 85;
+		vrLoc = 0;
+	};
+	019712141403A00300829366 /* PBXBookmarkGroup */ = {
+		isa = PBXBookmarkGroup;
+		children = (
+			019713611403CC8C00829366 /* PBXBookmark */,
+		);
+		name = Root;
+	};
+	019712521403AA3B00829366 /* beid-changepin.m:73 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 01EF7E511402988000480D67 /* beid-changepin.m */;
+		functionName = "-controlTextDidChange:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 73;
+		location = "beid-changepin";
+		modificationTime = 335961680.52007;
+		originalNumberOfMultipleMatches = 1;
+		state = 2;
+	};
+	019712631403AA8B00829366 /* beid-changepin.m:33 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 01EF7E511402988000480D67 /* beid-changepin.m */;
+		functionName = "-awakeFromNib";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 33;
+		location = "beid-changepin";
+		modificationTime = 335961680.520107;
+		originalNumberOfMultipleMatches = 1;
+		state = 2;
+	};
+	0197127B1403ABFE00829366 /* beid-changepin.m:68 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 01EF7E511402988000480D67 /* beid-changepin.m */;
+		functionName = "-controlTextDidChange:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 68;
+		location = "beid-changepin";
+		modificationTime = 335961680.5201219;
+		originalNumberOfMultipleMatches = 1;
+		state = 2;
+	};
+	019713371403C8E000829366 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 01EF7E501402988000480D67 /* beid-changepin.h */;
+		name = "beid-changepin.h: 29";
+		rLen = 0;
+		rLoc = 694;
+		rType = 0;
+		vrLen = 702;
+		vrLoc = 0;
+	};
+	019713611403CC8C00829366 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 1DDD58150DA1D0A300B32029 /* English */;
+	};
+	019713681403D45B00829366 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 01EF7E511402988000480D67 /* beid-changepin.m */;
+		name = "beid-changepin.m: 22";
+		rLen = 0;
+		rLoc = 614;
+		rType = 0;
+		vrLen = 944;
+		vrLoc = 88;
+	};
+	01EF7E331402922700480D67 /* beid-changepin */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "beid-changepin";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	01EF7E3F1402924500480D67 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	01EF7E401402924500480D67 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	01EF7E501402988000480D67 /* beid-changepin.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 452}}";
+			sepNavSelRange = "{694, 0}";
+			sepNavVisRange = "{0, 702}";
+			sepNavWindowFrame = "{{668, -29}, {1245, 768}}";
+		};
+	};
+	01EF7E511402988000480D67 /* beid-changepin.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {964, 1599}}";
+			sepNavSelRange = "{1605, 0}";
+			sepNavVisRange = "{487, 488}";
+			sepNavWindowFrame = "{{79, 10}, {1245, 768}}";
+		};
+	};
+	089C165DFE840E0CC02AAC07 /* English */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1186, 617}}";
+			sepNavSelRange = "{78, 0}";
+			sepNavVisRange = "{0, 78}";
+			sepNavWindowFrame = "{{15, 5}, {1245, 768}}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 01EF7E331402922700480D67 /* beid-changepin */;
+		activeTarget = 8D1107260486CEB800E47090 /* beid-changepin */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* beid-changepin */,
+		);
+		breakpoints = (
+			019712521403AA3B00829366 /* beid-changepin.m:73 */,
+			019712631403AA8B00829366 /* beid-changepin.m:33 */,
+			0197127B1403ABFE00829366 /* beid-changepin.m:68 */,
+		);
+		codeSenseManager = 01EF7E401402924500480D67 /* Code sense */;
+		executables = (
+			01EF7E331402922700480D67 /* beid-changepin */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					833,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 335962194;
+			PBXWorkspaceStateSaveDate = 335962194;
+		};
+		perUserProjectItems = {
+			013DFDF014065E51003666AD /* PBXTextBookmark */ = 013DFDF014065E51003666AD /* PBXTextBookmark */;
+			013DFDF114065E51003666AD /* PlistBookmark */ = 013DFDF114065E51003666AD /* PlistBookmark */;
+			013DFDF214065E51003666AD /* PBXTextBookmark */ = 013DFDF214065E51003666AD /* PBXTextBookmark */;
+			013DFDF314065E51003666AD /* PBXTextBookmark */ = 013DFDF314065E51003666AD /* PBXTextBookmark */;
+			013DFDF814065E62003666AD /* PBXTextBookmark */ = 013DFDF814065E62003666AD /* PBXTextBookmark */;
+			013DFDF914065E62003666AD /* PBXTextBookmark */ = 013DFDF914065E62003666AD /* PBXTextBookmark */;
+			013DFE3714066058003666AD /* PBXTextBookmark */ = 013DFE3714066058003666AD /* PBXTextBookmark */;
+			013DFE3A14066058003666AD /* PBXTextBookmark */ = 013DFE3A14066058003666AD /* PBXTextBookmark */;
+			019713371403C8E000829366 /* PBXTextBookmark */ = 019713371403C8E000829366 /* PBXTextBookmark */;
+			019713681403D45B00829366 /* PBXTextBookmark */ = 019713681403D45B00829366 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 01EF7E3F1402924500480D67 /* Source Control */;
+		userBookmarkGroup = 019712141403A00300829366 /* PBXBookmarkGroup */;
+		userBuildSettings = {
+		};
+	};
+	8D1107260486CEB800E47090 /* beid-changepin */ = {
+		activeExec = 0;
+		executables = (
+			01EF7E331402922700480D67 /* beid-changepin */,
+		);
+	};
+}

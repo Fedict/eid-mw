@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'beid-badpin' target in the 'beid-badpin' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
