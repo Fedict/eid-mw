@@ -278,8 +278,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>15</integer>
-									<integer>11</integer>
+									<integer>16</integer>
 									<integer>9</integer>
 									<integer>0</integer>
 								</array>
@@ -332,7 +331,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>01B33D7314068D1A000FBE99</string>
+										<string>01B33D9014069717000FBE99</string>
 										<key>history</key>
 										<array>
 											<string>013DFE9E14066A6F003666AD</string>
@@ -543,17 +542,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>01B33D7414068D1A000FBE99</string>
-		<string>01B33D7514068D1A000FBE99</string>
-		<string>01B33D7614068D1A000FBE99</string>
-		<string>01B33D7714068D1A000FBE99</string>
 		<string>01B33D4D14068BB5000FBE99</string>
 		<string>01B33D4E14068BB5000FBE99</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>0172697B13F02C2B0014B262</string>
 		<string>/Users/frank/eid-mw/dialogs/src/dialogscocoa/beid-spr-changepin/beid-spr-changepin.xcodeproj</string>
-		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>40 74 1094 695 0 0 1280 778 </string>
@@ -929,7 +924,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
