@@ -178,7 +178,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="231228853">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272633856</int>
-								<string key="NSContents">Bitte geben Sie ihren PIN-Code auf der sicheren pinpad reader</string>
+								<string key="NSContents">Bitte änderen Sie ihren PIN-Code auf der sicheren pinpad reader</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -332,9 +332,9 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="948052656"/>
-							<reference ref="219927135"/>
 							<reference ref="1072536589"/>
 							<reference ref="612217452"/>
+							<reference ref="219927135"/>
 						</object>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -445,9 +445,9 @@
 					<integer value="1"/>
 					<string>{74, 862}</string>
 					<string>{{6, 978}, {478, 20}}</string>
-					<string>{{317, 488}, {478, 106}}</string>
+					<string>{{124, 305}, {478, 106}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{317, 488}, {478, 106}}</string>
+					<string>{{124, 305}, {478, 106}}</string>
 					<boolean value="NO"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>

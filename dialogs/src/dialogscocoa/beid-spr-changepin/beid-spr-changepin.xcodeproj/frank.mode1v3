@@ -229,8 +229,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -278,6 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>18</integer>
 									<integer>16</integer>
 									<integer>9</integer>
 									<integer>0</integer>
@@ -303,7 +302,7 @@
 							<real>287</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>40 74 1094 695 0 0 1280 778 </string>
+						<string>270 -540 1094 695 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -319,7 +318,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>beid-spr-changepin.m</string>
+								<string>MainMenu.xib</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +326,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>beid-spr-changepin.m</string>
+										<string>MainMenu.xib</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>01B33D9014069717000FBE99</string>
+										<string>01B33DC61407938B000FBE99</string>
 										<key>history</key>
 										<array>
 											<string>013DFE9E14066A6F003666AD</string>
@@ -344,7 +343,9 @@
 											<string>01B33D4414068BB5000FBE99</string>
 											<string>01B33D4514068BB5000FBE99</string>
 											<string>01B33D4614068BB5000FBE99</string>
-											<string>01B33D4714068BB5000FBE99</string>
+											<string>01B33DB814078D49000FBE99</string>
+											<string>01B33DB914078D49000FBE99</string>
+											<string>01B33DC51407938B000FBE99</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -356,14 +357,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {785, 460}}</string>
+								<string>{{0, 0}, {785, 448}}</string>
 								<key>RubberWindowFrame</key>
-								<string>40 74 1094 695 0 0 1280 778 </string>
+								<string>270 -540 1094 695 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>460pt</string>
+							<string>448pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -376,14 +377,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 465}, {785, 189}}</string>
+								<string>{{0, 453}, {785, 201}}</string>
 								<key>RubberWindowFrame</key>
-								<string>40 74 1094 695 0 0 1280 778 </string>
+								<string>270 -540 1094 695 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>189pt</string>
+							<string>201pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -402,9 +403,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>01B33D4914068BB5000FBE99</string>
+				<string>01B33DC71407938B000FBE99</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>01B33D4A14068BB5000FBE99</string>
+				<string>01B33DC81407938B000FBE99</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -542,16 +543,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>01B33D4D14068BB5000FBE99</string>
-		<string>01B33D4E14068BB5000FBE99</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1C530D57069F1CE1000CFCEE</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>0172697B13F02C2B0014B262</string>
 		<string>/Users/frank/eid-mw/dialogs/src/dialogscocoa/beid-spr-changepin/beid-spr-changepin.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>40 74 1094 695 0 0 1280 778 </string>
+	<string>270 -540 1094 695 0 0 1280 778 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -572,7 +568,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>beid-spr-changepin.m</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -589,8 +585,6 @@
 							<string>303pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -630,7 +624,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>0172697B13F02C2B0014B262</string>
-				<string>01B33D1F14068AC0000FBE99</string>
+				<string>01B33DC91407938B000FBE99</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -752,13 +746,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>01B33D3514068BB2000FBE99</string>
+				<string>01B33D9F14069774000FBE99</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>01B33D3614068BB2000FBE99</string>
-				<string>01B33D3714068BB2000FBE99</string>
-				<string>01B33D3814068BB2000FBE99</string>
-				<string>01B33D3914068BB2000FBE99</string>
-				<string>01B33D3A14068BB2000FBE99</string>
+				<string>01B33DA014069774000FBE99</string>
+				<string>01B33DA114069774000FBE99</string>
+				<string>01B33DA214069774000FBE99</string>
+				<string>01B33DA314069774000FBE99</string>
+				<string>01B33DA414069774000FBE99</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -914,7 +908,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>01B33D4B14068BB5000FBE99</string>
+				<string>01B33DA514069774000FBE99</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -924,7 +918,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
