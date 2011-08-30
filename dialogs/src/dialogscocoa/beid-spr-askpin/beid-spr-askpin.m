@@ -30,7 +30,7 @@
 	{
 		NSString* basicLabel=[textField stringValue];
 		NSString* sprName=[args objectAtIndex:1];
-		[textField setObjectValue:[basicLabel stringByAppendingFormat:@"\n\"%@\"",sprName]];
+		[textField setObjectValue:[basicLabel stringByAppendingFormat:@" \"%@\"",sprName]];
 		[progress startAnimation:self];
 		[window makeKeyAndOrderFront:nil];
 		[me activateWithOptions:NSApplicationActivateIgnoringOtherApps];

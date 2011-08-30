@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="372"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -86,7 +87,7 @@
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<object class="NSView" key="NSWindowView" id="439893737">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -550,6 +551,7 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{326, 497}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -593,14 +595,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">pinWindow</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="972006081"/>
-					</object>
-					<int key="connectionID">570</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">okButton</string>
 						<reference key="source" ref="861406155"/>
 						<reference key="destination" ref="658461751"/>
@@ -614,118 +608,6 @@
 						<reference key="destination" ref="504991201"/>
 					</object>
 					<int key="connectionID">572</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_backspace:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="450742416"/>
-					</object>
-					<int key="connectionID">573</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_clear:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="907620559"/>
-					</object>
-					<int key="connectionID">574</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_ok:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="658461751"/>
-					</object>
-					<int key="connectionID">575</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_cancel:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="1067619303"/>
-					</object>
-					<int key="connectionID">576</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="67186822"/>
-					</object>
-					<int key="connectionID">577</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="523594511"/>
-					</object>
-					<int key="connectionID">578</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="696395166"/>
-					</object>
-					<int key="connectionID">579</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="972680884"/>
-					</object>
-					<int key="connectionID">580</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="704682206"/>
-					</object>
-					<int key="connectionID">581</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="1456"/>
-					</object>
-					<int key="connectionID">582</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="91796550"/>
-					</object>
-					<int key="connectionID">583</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="1468"/>
-					</object>
-					<int key="connectionID">584</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="347549177"/>
-					</object>
-					<int key="connectionID">585</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">button_digit:</string>
-						<reference key="source" ref="861406155"/>
-						<reference key="destination" ref="948722066"/>
-					</object>
-					<int key="connectionID">586</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -742,6 +624,126 @@
 						<reference key="destination" ref="907620559"/>
 					</object>
 					<int key="connectionID">588</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="67186822"/>
+					</object>
+					<int key="connectionID">589</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="523594511"/>
+					</object>
+					<int key="connectionID">590</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="696395166"/>
+					</object>
+					<int key="connectionID">591</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="972680884"/>
+					</object>
+					<int key="connectionID">592</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="704682206"/>
+					</object>
+					<int key="connectionID">593</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="1456"/>
+					</object>
+					<int key="connectionID">594</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="91796550"/>
+					</object>
+					<int key="connectionID">595</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="1468"/>
+					</object>
+					<int key="connectionID">596</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="347549177"/>
+					</object>
+					<int key="connectionID">597</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_digit:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="948722066"/>
+					</object>
+					<int key="connectionID">598</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_backspace:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="450742416"/>
+					</object>
+					<int key="connectionID">599</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_clear:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="907620559"/>
+					</object>
+					<int key="connectionID">600</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_cancel:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="1067619303"/>
+					</object>
+					<int key="connectionID">601</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">button_ok:</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="658461751"/>
+					</object>
+					<int key="connectionID">602</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">pinWindow</string>
+						<reference key="source" ref="861406155"/>
+						<reference key="destination" ref="972006081"/>
+					</object>
+					<int key="connectionID">603</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1182,9 +1184,9 @@
 					<integer value="1"/>
 					<string>{74, 862}</string>
 					<string>{{6, 978}, {478, 20}}</string>
-					<string>{{493, 134}, {326, 497}}</string>
+					<string>{{232, 148}, {326, 497}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{493, 134}, {326, 497}}</string>
+					<string>{{232, 148}, {326, 497}}</string>
 					<integer value="1"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>
@@ -1249,7 +1251,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">588</int>
+			<int key="maxID">603</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

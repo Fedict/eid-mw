@@ -13,7 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="29"/>
-			<integer value="371"/>
+			<integer value="372"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -172,13 +172,13 @@
 						<object class="NSTextField" id="219927135">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{103, 44}, {401, 42}}</string>
+							<string key="NSFrame">{{103, 44}, {358, 42}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="231228853">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272633856</int>
-								<string key="NSContents">Bitte geben Sie ihren PIN-Code auf der sicheren pinpad reader</string>
+								<string key="NSContents">Bitte geben Sie ihren PIN-Code auf der sicheren pinpad reader</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
