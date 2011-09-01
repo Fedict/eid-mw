@@ -11,8 +11,8 @@
 			<string key="NS.object.0">762</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="371"/>
 			<integer value="29"/>
+			<integer value="372"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -33,7 +33,7 @@
 				<array class="NSMutableArray" key="NSMenuItems">
 					<object class="NSMenuItem" id="361816550">
 						<reference key="NSMenu" ref="649796088"/>
-						<string key="NSTitle">Eingabe e-ID PIN Code</string>
+						<string key="NSTitle">Eingabe eID PIN-Code</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<object class="NSCustomResource" key="NSOnImage" id="271347628">
@@ -46,7 +46,7 @@
 						</object>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="555420307">
-							<string key="NSTitle">Eingabe e-ID PIN Code</string>
+							<string key="NSTitle">Eingabe eID PIN-Code</string>
 							<array class="NSMutableArray" key="NSMenuItems">
 								<object class="NSMenuItem" id="1015354846">
 									<reference key="NSMenu" ref="555420307"/>
@@ -68,7 +68,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{473, 135}, {326, 497}}</string>
 				<int key="NSWTFlags">880280576</int>
-				<string key="NSWindowTitle">Eingabe e-ID PIN Code</string>
+				<string key="NSWindowTitle">Eingabe eID PIN-Code</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -107,13 +107,13 @@
 						<object class="NSTextField" id="64814330">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{74, 447}, {235, 17}}</string>
+							<string key="NSFrame">{{67, 447}, {251, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="885264854">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Bitte geben Sie Ihren e-ID PIN-Code.</string>
+								<string key="NSContents">Bitte geben Sie Ihren eID PIN-Code ein.</string>
 								<object class="NSFont" key="NSSupport" id="148458586">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -774,8 +774,8 @@
 							<reference ref="433115540"/>
 							<reference ref="105491349"/>
 							<reference ref="681214400"/>
-							<reference ref="64814330"/>
 							<reference ref="898015238"/>
+							<reference ref="64814330"/>
 						</array>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -1073,7 +1073,7 @@
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="29.IBEditorWindowLastContentRect">{{495, 719}, {207, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{495, 719}, {202, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<integer value="1" key="29.ImportedFromIB2"/>
 				<string key="29.WindowOrigin">{74, 862}</string>

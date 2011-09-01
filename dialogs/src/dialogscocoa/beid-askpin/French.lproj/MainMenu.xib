@@ -12,7 +12,6 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<integer value="29"/>
-			<integer value="371"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -33,7 +32,7 @@
 				<array class="NSMutableArray" key="NSMenuItems">
 					<object class="NSMenuItem" id="295656051">
 						<reference key="NSMenu" ref="649796088"/>
-						<string key="NSTitle">Entrée code PIN e-ID</string>
+						<string key="NSTitle">Saisie code PIN eID</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<object class="NSCustomResource" key="NSOnImage" id="137673127">
@@ -46,7 +45,7 @@
 						</object>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="517041019">
-							<string key="NSTitle">Entrée code PIN e-ID</string>
+							<string key="NSTitle">Saisie code PIN eID</string>
 							<array class="NSMutableArray" key="NSMenuItems">
 								<object class="NSMenuItem" id="266234606">
 									<reference key="NSMenu" ref="517041019"/>
@@ -68,12 +67,12 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{473, 135}, {326, 497}}</string>
 				<int key="NSWTFlags">880280576</int>
-				<string key="NSWindowTitle">Entrée code PIN e-ID</string>
+				<string key="NSWindowTitle">Saisie code PIN eID</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<object class="NSView" key="NSWindowView" id="439893737">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSImageView" id="433115540">
@@ -107,13 +106,13 @@
 						<object class="NSTextField" id="64814330">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{81, 447}, {228, 17}}</string>
+							<string key="NSFrame">{{67, 447}, {250, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="885264854">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Veuillez entrer votre code PIN e-ID.</string>
+								<string key="NSContents">Veuillez taper le code PIN de votre eID.</string>
 								<object class="NSFont" key="NSSupport" id="148458586">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -528,7 +527,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{326, 497}</string>
-					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -758,8 +756,8 @@
 							<reference ref="433115540"/>
 							<reference ref="105491349"/>
 							<reference ref="681214400"/>
-							<reference ref="64814330"/>
 							<reference ref="898015238"/>
+							<reference ref="64814330"/>
 						</array>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -1057,7 +1055,7 @@
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="29.IBEditorWindowLastContentRect">{{599, 692}, {193, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{599, 692}, {180, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<integer value="1" key="29.ImportedFromIB2"/>
 				<string key="29.WindowOrigin">{74, 862}</string>
@@ -1119,7 +1117,6 @@
 				<string key="686.IBEditorWindowLastContentRect">{{611, 669}, {130, 23}}</string>
 				<string key="686.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="697.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="723.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>

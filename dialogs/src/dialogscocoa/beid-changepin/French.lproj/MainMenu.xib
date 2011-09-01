@@ -83,7 +83,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{335, 497}, {389, 253}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">Changement de code PIN</string>
+				<string key="NSWindowTitle">Changement de code PIN eID</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -133,7 +133,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="370865902">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
-								<string key="NSContents">Veuillez entrer votre code PIN existant, suivi de votre nouveau code (2 fois)</string>
+								<string key="NSContents">Veuillez insérer votre code PIN eID existant, suivi de votre nouveau code PIN eID (2 fois)</string>
 								<object class="NSFont" key="NSSupport" id="551250263">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>

@@ -251,6 +251,7 @@
 				INFOPLIST_FILE = "beid_changepin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "beid-changepin";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};

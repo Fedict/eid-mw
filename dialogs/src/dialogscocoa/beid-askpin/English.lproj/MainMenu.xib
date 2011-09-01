@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="29"/>
 			<integer value="372"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -82,7 +83,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{335, 253}, {326, 497}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">e-ID PIN Code Entry</string>
+				<string key="NSWindowTitle">eID PIN Code Entry</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -132,7 +133,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1030615358">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Please enter your e-ID PIN code.</string>
+								<string key="NSContents">Please enter your eID PIN code.</string>
 								<object class="NSFont" key="NSSupport" id="766578507">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>

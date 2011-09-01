@@ -247,10 +247,11 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = beid_spr_askpin_Prefix.pch;
+				GCC_PREFIX_HEADER = beid_spr_changepin_Prefix.pch;
 				INFOPLIST_FILE = "beid_spr_changepin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = "beid-spr-askpin";
+				PRODUCT_NAME = "beid-spr-changepin";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};

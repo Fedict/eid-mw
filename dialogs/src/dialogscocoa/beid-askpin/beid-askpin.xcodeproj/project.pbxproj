@@ -251,6 +251,7 @@
 				INFOPLIST_FILE = "beid_askpin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "beid-askpin";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};

@@ -6,9 +6,6 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE
 AC_CANONICAL_HOST
-LT_INIT([win32-dll])
-
-AC_LIBTOOL_WIN32_DLL
 
 # Checks for programs (1)
 AC_PROG_CXX
@@ -25,33 +22,20 @@ linux="no"
 osx="no"
 win32="no"
 gtk="no"
-qt="no"
 
 AS_CASE([$host],
   [*-*-linux*],[linux=true gtk=true],
-  [*-*-darwin*],[osx=true qt=true],
+  [*-*-darwin*],[osx=true],
   [*-mingw*|*-winnt*],[win32=true])
 
 AM_CONDITIONAL(LINUX,test x$linux = xtrue)
 AM_CONDITIONAL(OSX,test x$osx = xtrue)
 AM_CONDITIONAL(WIN32,test x$win32 = xtrue)
-AM_CONDITIONAL(QT,test x$qt = xtrue)
 AM_CONDITIONAL(GTK,test x$gtk = xtrue)
 
 ###########################################################################
 ####### read user-specific dependecy requests from --with directives ######
 ###########################################################################
-
-# if qt dialogs, enable checking for Qt
-AS_VAR_IF([qt],[true],
-[
-	AC_MSG_CHECKING([user-specified Qt installation])
-	AC_ARG_WITH([pcsclite],
-	  AC_HELP_STRING([--with-qt=DIR],[specific Qt install location]),
-	  [],
-	  [with_qt=no])
-	AC_MSG_RESULT([$with_qt])
-])
 
 # if gtk dialogs, enable checking GTK2
 AS_VAR_IF([gtk],[true],
@@ -94,25 +78,18 @@ AS_VAR_IF([gtk],[true],
 
 
 ##################################################################
-####### check for Qt build utilities, libraries and headers ######
+####### We need xcodebuild to build the OSX dialogs ##############
 ##################################################################
 
-AS_VAR_IF([qt],[true],
+AS_VAR_IF([osx],[true],
 [
-	AC_CHECK_PROGS(RCC,[rcc],[missing])
-	AC_CHECK_PROGS(UIC,[uic-qt4 uic],[missing])
-	AC_CHECK_PROGS(MOC,[moc-qt4 moc],[missing])
-	AS_VAR_IF([RCC],[missing],AC_MSG_ERROR([Qt4 Resource Compiler (rcc) is required.]),AC_SUBST(RCC))
-	AS_VAR_IF([UIC],[missing],AC_MSG_ERROR([Qt4 User Interface Compiler (uic or uic-qt4) is required.]),AC_SUBST(UIC))
-	AS_VAR_IF([MOC],[missing],AC_MSG_ERROR([Qt4 Meta Object Compiler (moc or moc-qt4) is required.]),AC_SUBST(MOC))
+	AC_CHECK_PROGS(XCODEBUILD,[xcodebuild],[missing])
+	AS_VAR_IF([XCODEBUILD],[missing],AC_MSG_ERROR([xcodebuild command-line build tool is required.]),AC_SUBST(XCODEBUILD))
 ])
 
-########### libraries ##################
-AS_VAR_IF([qt],[true],  [AC_CHECK_LIB([ssl],[SSL_get_version],[],AC_MSG_ERROR([OpenSSL Library is required.]))])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h])
-AS_VAR_IF([qt],[true],[AC_CHECK_HEADER([openssl/opensslconf.h],[],AC_MSG_ERROR([OpenSSL headers are required.]))])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

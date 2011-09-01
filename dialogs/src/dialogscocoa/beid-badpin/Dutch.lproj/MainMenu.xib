@@ -13,7 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="29"/>
-			<integer value="371"/>
+			<integer value="372"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -45,7 +45,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMenuItem" id="694149608">
 						<reference key="NSMenu" ref="649796088"/>
-						<string key="NSTitle">Foutive PIN code</string>
+						<string key="NSTitle">Foutieve eID pincode</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -59,7 +59,7 @@
 						</object>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="110575045">
-							<string key="NSTitle">Foutive PIN code</string>
+							<string key="NSTitle">Foutieve eID pincode</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="632727374">
@@ -83,7 +83,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{394, 382}, {500, 119}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">Foutive PIN code</string>
+				<string key="NSWindowTitle">Foutieve eID pincode</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -133,7 +133,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="849379730">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272633856</int>
-								<string key="NSContents">U hebt een foutieve PIN code ingegeven. Gelieve te noteren dat u nog slechts %d pogingen hebt alvorens uw PIN code geblokkeerd wordt.</string>
+								<string key="NSContents">U hebt een foutieve eID pincode ingegeven. Gelieve te noteren dat U nog slechts %d pogingen hebt alvorens uw eID pincode geblokkeerd wordt.</string>
 								<object class="NSFont" key="NSSupport" id="959347545">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -193,7 +193,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="699912828">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272633856</int>
-								<string key="NSContents">U hebt een foutive PIN code ingegeven. Gelieve te noteren dat bij de volgende incorrecte ingave uw PIN code geblokkeerd wordt.</string>
+								<string key="NSContents">U hebt een foutive pincode ingegeven. Gelieve te noteren dat bij de volgende incorrecte ingave uw eID pincode geblokkeerd wordt.</string>
 								<reference key="NSSupport" ref="959347545"/>
 								<reference key="NSControlView" ref="734824783"/>
 								<reference key="NSBackgroundColor" ref="431433544"/>
@@ -469,14 +469,14 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{311, 716}, {162, 20}}</string>
+					<string>{{311, 716}, {194, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{74, 862}</string>
 					<string>{{6, 978}, {478, 20}}</string>
-					<string>{{234, 515}, {500, 119}}</string>
+					<string>{{234, 516}, {500, 119}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{234, 515}, {500, 119}}</string>
+					<string>{{234, 516}, {500, 119}}</string>
 					<boolean value="NO"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>

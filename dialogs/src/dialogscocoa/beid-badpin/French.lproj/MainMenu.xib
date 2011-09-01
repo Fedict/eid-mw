@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="372"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -43,7 +44,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMenuItem" id="694149608">
 						<reference key="NSMenu" ref="649796088"/>
-						<string key="NSTitle">Code PIN incorrect</string>
+						<string key="NSTitle">Code PIN eID incorrect</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -57,7 +58,7 @@
 						</object>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="110575045">
-							<string key="NSTitle">Code PIN incorrect</string>
+							<string key="NSTitle">Code PIN eID incorrect</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="632727374">
@@ -81,12 +82,12 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{394, 382}, {500, 119}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">Code PIN incorrect</string>
+				<string key="NSWindowTitle">Code PIN eID incorrect</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<object class="NSView" key="NSWindowView" id="439893737">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -131,7 +132,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="849379730">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272633856</int>
-								<string key="NSContents">Vous avez entré un code PIN incorrect. Veuillez noter qu'il ne vous reste plus que %d tentatives avant que votre PIN soit bloqué. </string>
+								<string key="NSContents">Vous avez inséré un code PIN incorrect. Veuillez noter qu'il ne vous reste plus que %d tentatives avant que votre code PIN eID ne soit bloqué. </string>
 								<object class="NSFont" key="NSSupport" id="959347545">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -191,7 +192,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="699912828">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272633856</int>
-								<string key="NSContents">Vous avez entré un code PIN incorrect. Veuillez noter qu'a la prochaine entrée incorrecte votre code PIN sera bloqué. </string>
+								<string key="NSContents">Vous avez inséré un code PIN incorrect. Veuillez noter qu'à la prochaine saisie incorrecte, votre code PIN eID sera bloqué. </string>
 								<reference key="NSSupport" ref="959347545"/>
 								<reference key="NSControlView" ref="734824783"/>
 								<reference key="NSBackgroundColor" ref="431433544"/>
@@ -200,6 +201,7 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{500, 119}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -466,14 +468,14 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{130, 716}, {176, 20}}</string>
+					<string>{{130, 716}, {205, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{74, 862}</string>
 					<string>{{6, 978}, {478, 20}}</string>
-					<string>{{159, 323}, {500, 119}}</string>
+					<string>{{244, 492}, {500, 119}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{159, 323}, {500, 119}}</string>
+					<string>{{244, 492}, {500, 119}}</string>
 					<boolean value="NO"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>

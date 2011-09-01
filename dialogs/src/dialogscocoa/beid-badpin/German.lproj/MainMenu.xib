@@ -13,7 +13,6 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="29"/>
-			<integer value="371"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -45,7 +44,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMenuItem" id="694149608">
 						<reference key="NSMenu" ref="649796088"/>
-						<string key="NSTitle">Falscher PIN-Code</string>
+						<string key="NSTitle">Falscher eID PIN-Code</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -59,7 +58,7 @@
 						</object>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="110575045">
-							<string key="NSTitle">Falscher PIN-Code</string>
+							<string key="NSTitle">Falscher eID PIN-Code</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="632727374">
@@ -83,7 +82,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{394, 382}, {500, 119}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">Falscher PIN-Code</string>
+				<string key="NSWindowTitle">Falscher eID PIN-Code</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -109,6 +108,7 @@
 							</object>
 							<string key="NSFrame">{{17, 54}, {48, 48}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSImageCell" key="NSCell" id="741049104">
 								<int key="NSCellFlags">130560</int>
@@ -129,11 +129,12 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{82, 48}, {401, 51}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="849379730">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272633856</int>
-								<string key="NSContents">Sie haben einen falsche PIN-Code eingegeben. Bitte beachten Sie, dass Sie nur noch %d Versuche übrich haben, bevor ihre PIN-Code gesperrt wird.</string>
+								<string key="NSContents">Sie haben einen falschen eID PIN-Code eingegeben. Bitte beachten Sie, dass Sie nur noch %d Versuche übrich haben, bevor Ihr eID PIN-Code gesperrt wird.</string>
 								<object class="NSFont" key="NSSupport" id="959347545">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -165,6 +166,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{390, 12}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="557740137">
 								<int key="NSCellFlags">67239424</int>
@@ -189,11 +191,12 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{82, -73}, {401, 51}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="699912828">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272633856</int>
-								<string key="NSContents">Sie haben einen falsche PIN-Code eingegeben. Bitte beachten Sie, dass bei der nächsten falsche Eingabe ihr PIN-Code gesperrt wird.</string>
+								<string key="NSContents">Sie haben einen falschen eID PIN-Code eingegeben. Bitte beachten Sie, dass bei der nächsten falschen Eingabe Ihr eID PIN-Code gesperrt wird.</string>
 								<reference key="NSSupport" ref="959347545"/>
 								<reference key="NSControlView" ref="734824783"/>
 								<reference key="NSBackgroundColor" ref="431433544"/>
@@ -203,6 +206,7 @@
 					</object>
 					<string key="NSFrameSize">{500, 119}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -351,9 +355,9 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="363454601"/>
-							<reference ref="734824783"/>
 							<reference ref="580215950"/>
 							<reference ref="781482162"/>
+							<reference ref="734824783"/>
 						</object>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -469,14 +473,14 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{130, 716}, {176, 20}}</string>
+					<string>{{130, 716}, {205, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{74, 862}</string>
 					<string>{{6, 978}, {478, 20}}</string>
-					<string>{{111, 325}, {500, 119}}</string>
+					<string>{{291, 412}, {500, 119}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{111, 325}, {500, 119}}</string>
+					<string>{{291, 412}, {500, 119}}</string>
 					<boolean value="NO"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>

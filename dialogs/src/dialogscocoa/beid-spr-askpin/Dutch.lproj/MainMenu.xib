@@ -12,8 +12,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="371"/>
-			<integer value="29"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -45,7 +43,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMenuItem" id="694149608">
 						<reference key="NSMenu" ref="649796088"/>
-						<string key="NSTitle">Beveiligde PIN Ingave</string>
+						<string key="NSTitle">Beveiligde eID PIN Ingave</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -59,7 +57,7 @@
 						</object>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="110575045">
-							<string key="NSTitle">Beveiligde PIN Ingave</string>
+							<string key="NSTitle">Beveiligde eID PIN Ingave</string>
 							<object class="NSMutableArray" key="NSMenuItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSMenuItem" id="632727374">
@@ -83,7 +81,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{396, 336}, {478, 106}}</string>
 				<int key="NSWTFlags">880280576</int>
-				<string key="NSWindowTitle">Beveiligde PIN Ingave</string>
+				<string key="NSWindowTitle">Beveiligde eID PIN Ingave</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -109,6 +107,7 @@
 							</object>
 							<string key="NSFrame">{{17, 35}, {48, 48}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSImageCell" key="NSCell" id="192007027">
 								<int key="NSCellFlags">130560</int>
@@ -129,6 +128,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{103, 68}, {358, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="521407288">
 								<int key="NSCellFlags">68288064</int>
@@ -166,6 +166,7 @@
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
 							<string key="NSFrame">{{104, 16}, {356, 20}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
 							<int key="NSpiFlags">16394</int>
 							<double key="NSMaxValue">100</double>
 						</object>
@@ -174,11 +175,12 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{103, 44}, {401, 42}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="231228853">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272633856</int>
-								<string key="NSContents">Gelieve uw PIN code in de geven op de beveiligde kaartlezer</string>
+								<string key="NSContents">Gelieve uw eID pincode in te geven op de beveiligde kaartlezer "%@"</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -192,6 +194,7 @@
 					</object>
 					<string key="NSFrameSize">{478, 106}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -440,14 +443,14 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{543, 592}, {197, 20}}</string>
+					<string>{{543, 592}, {226, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{74, 862}</string>
 					<string>{{6, 978}, {478, 20}}</string>
-					<string>{{179, 286}, {478, 106}}</string>
+					<string>{{265, 386}, {478, 106}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{179, 286}, {478, 106}}</string>
+					<string>{{265, 386}, {478, 106}}</string>
 					<boolean value="NO"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>
@@ -461,7 +464,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{170, 661}, {147, 23}}</string>
+					<string>{{555, 569}, {147, 23}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{23, 794}, {245, 183}}</string>
