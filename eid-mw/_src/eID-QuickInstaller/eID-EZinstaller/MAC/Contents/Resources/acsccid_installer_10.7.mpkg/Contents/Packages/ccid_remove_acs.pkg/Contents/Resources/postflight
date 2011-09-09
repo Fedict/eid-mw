@@ -1,0 +1,10 @@
+#!/bin/sh
+
+CCID_DIR=/usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents
+ACS_VID=0x072f
+
+# Backup Info.plist
+cp -p $CCID_DIR/Info.plist $CCID_DIR/Info.plist.bak
+
+# Remove ACS readers from Info.plist
+/Library/ACS/bin/remove_readers.py $CCID_DIR/Info.plist $ACS_VID 
