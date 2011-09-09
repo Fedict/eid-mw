@@ -167,7 +167,7 @@ DWORD BeidAuthenticate(PCARD_DATA   pCardData,
       if ( (i % 2) == 0 )
       {
 			// 0x30 = ASCII '0'
-			Cmd [6 + (i/2)] = (((pbPin[i] - 0x30) << 4) & 0xF0);
+			Cmd [6 + (i/2)] = ((pbPin[i] - 0x30) << 4);
       }
       else
       {
