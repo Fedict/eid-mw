@@ -3,6 +3,10 @@
 #echo the script's pid
 echo $$
 
+IFS=$'\n' ver=($(sw_vers -productVersion))
+
+if [[ $ver == *10.5* || $ver == *10.6* ]]
+then
     for pcscdid in `ps -A -c -o pid,command | grep pcscd | grep -v grep | awk '{print $1}'` ; do
         #kill pcscd nicely if running
   
@@ -43,7 +47,7 @@ echo $$
     done
 
 
-	#Wait until pcscd is started
+	#Wait up to 10 seconds until pcscd is started
 	COUNT=0
 	IFS=$' ' pcscdlist=($(ps -A -c -o pid,command | grep pcscd))
 	pcscdid=(${pcscdlist[0]})
@@ -53,11 +57,20 @@ echo $$
 		IFS=$' ' pcscdlist=($(ps -A -c -o pid,command | grep pcscd))
 		pcscdid=(${pcscdlist[0]})
 	done
-    if [[ 10 -lt $COUNT ]]
-    then
-        /usr/sbin/pcscd -f &
-        sleep 3
-    fi
+	if [[ 10 -lt $COUNT ]]
+	then
+        	/usr/sbin/pcscd -f &
+    	    	sleep 3
+    	fi
 
-
+else
+	#try to start pcscd
+	IFS=$' ' pcscdlist=($(ps -A -c -o pid,command | grep pcscd))
+	pcscdid=(${pcscdlist[0]})
+	if  [[ "$pcscdid" == "" ]]
+    	then
+        	arch -32 /usr/sbin/pcscd -f
+    	fi
+    
+fi
 exit 0

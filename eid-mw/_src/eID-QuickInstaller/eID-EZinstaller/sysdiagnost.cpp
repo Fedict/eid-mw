@@ -3398,5 +3398,35 @@ int CSysDiagnost::unlinkPCSCLibrary (void )
 	return 0;
 }
 
+int CSysDiagnost::getOSXVersion (void )
+{
+	int retVal = 0;
+	FILE * pF;
+	size_t bytesRead = 0;
+	char streamBuffer[65];
+	const char *command=NULL;
+	
+	// Get product version
+	command = "sw_vers -productVersion";
+	pF = popen(command, "r");
+	if (pF != NULL )
+	{
+		if(0 != (bytesRead = fread(streamBuffer, sizeof(char), 64, pF)))
+		{
+			streamBuffer[bytesRead] = 0x00;
+			char *pos1=NULL;
+			pos1=strchr(streamBuffer,'.');
+			if(pos1 != NULL)
+			{
+				pos1++;
+				retVal = atoi(pos1);
+			}
+		}
+	}
+	pclose (pF);
+	return retVal;
+}
+
+
 #endif
 

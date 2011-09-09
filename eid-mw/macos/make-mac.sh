@@ -219,6 +219,24 @@ mv ./BEID.tokend ../bin
 cd -
 
 #-----------------------------------------
+# Unpack the BEID_Lion.tokend and copy to bin
+# this is the tokend version for Lion
+#-----------------------------------------
+cd ../_src/eidmw/tokend 
+if [ -d ./BEID_Lion.tokend ]
+then
+	sudo rm -rf ./BEID_Lion.tokend
+fi
+tar -xvf ./BEID_Lion.tokend.tar.gz
+
+if [ -d ../bin/BEID_Lion.tokend ] 
+then
+	sudo rm -rf ../bin/BEID_Lion.tokend
+fi
+mv ./BEID_Lion.tokend ../bin
+cd -
+
+#-----------------------------------------
 # create the OOoRegister
 #-----------------------------------------
 cd ../_src/eidmw/misc/mac/OOoRegister

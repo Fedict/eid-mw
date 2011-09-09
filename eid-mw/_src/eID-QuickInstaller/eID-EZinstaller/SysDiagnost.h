@@ -298,7 +298,7 @@ public:
      */
 	static bool doAsAdmin(string commandLine, bool waitForProcess = true);
 
-
+	static int getOSXVersion (void );
 
 private:
 #ifdef __APPLE__

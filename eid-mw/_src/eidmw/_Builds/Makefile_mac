@@ -296,6 +296,7 @@ DIRS_TO_COPY := bin/$(EIDGUI).app_____$(ROOT_DIR)/$(APPS_DIR) \
 		misc/mac/OOoRegister/OpenOffice_Register.pkg_____$(ROOT_DIR)/$(APPS_DIR) \
 		misc/mac/OOo.default_____$(ROOT_DIR)/$(INST_DIR)/lib \
 		bin/BEID.tokend_____$(ROOT_DIR)/$(APPS_DIR) \
+		bin/BEID_Lion.tokend_____$(ROOT_DIR)/$(APPS_DIR) \
 		../beid-2.6/mac/share/_____$(ROOT_DIR)/$(INST_DIR)/share
 
 r1=$(ROOT_DIR)
@@ -316,7 +317,6 @@ UNIVERSAL = $(LIBS:%=$(r3)/$(INST_DIR)/%) \
 #####################################################################
 all:
 	cd .. && ./configure BUILD_TESTS=y CONFIG+=release && $(MAKE) && cd -
-	cd ../tokend && ./buildtokend.sh && cd -
 	cd ../misc/mac/OOoRegister && make && cd -
 
 ################################################################
@@ -439,9 +439,12 @@ rel_end:
 	@echo "mv /Applications/BelgiumIdentityCard/BEID.tokend /System/Library/Security/tokend/; else" >> $(POSTFLIGHT)
 	@echo "test -e /System/Library/Security/tokend/BEID.tokend && rm -R /System/Library/Security/tokend/BEID.tokend;" >> $(POSTFLIGHT)
 	@echo "rm -R /Applications/BelgiumIdentityCard/BEID.tokend; fi" >> $(POSTFLIGHT)
-
+	@echo 'if [[ $$(sw_vers -productVersion) == *10.7* ]]; then' >> $(POSTFLIGHT)
+	@echo "mv /Applications/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi" >> $(POSTFLIGHT)
+	@echo "rm -R /Applications/BelgiumIdentityCard/BEID_Lion.tokend;" >> $(POSTFLIGHT)
 	@echo "mv $(APPS_DIR)/$(EIDGUI).app $(APPS_DIR)/$(EIDGUI_NAME).app" >> $(POSTFLIGHT)
 	@echo "mv $(APPS_DIR) \"$(APPS_DIR_NAME)\"" >> $(POSTFLIGHT)
+	@echo "test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;" >> $(POSTFLIGHT)
 	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der" >> $(POSTFLIGHT)
 
 	-@test -e tmp && rm temp
@@ -508,6 +511,7 @@ rel_end:
 	@chgrp    wheel  $(ROOT_DIR)/usr/local/lib/beidqt/plugins
 	@chgrp    wheel  $(ROOT_DIR)/usr/share/man/man1
 	@chgrp -R admin  $(ROOT_DIR)/$(APPS_DIR)/BEID.tokend
+	@chgrp -R admin  $(ROOT_DIR)/$(APPS_DIR)/BEID_Lion.tokend
 
 	$(PKG_MAKER) -build -p $(PKG_NAME) -f $(r1) -ds -i $(REL_DIR)/Info.plist \
 		 -d $(REL_DIR)/Description.plist -r $(REL_DIR)/resources  -v

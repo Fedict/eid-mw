@@ -49,7 +49,7 @@
 
 #define STR_DEF_GUILANGUAGE		"EN"
 
-#define PIN_MAX_LENGHT 8
+#define PIN_MAX_LENGHT 12
 #define PIN_MIN_LENGHT 4
 
 #define SPECIALSTATUS_NA 0

@@ -32,7 +32,7 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, QString &
 	if( pinInfo.ulFlags & PIN_FLAG_DIGITS )
 	{
 		char buffer[20];
-		sprintf(buffer,"[0-9]{%ld,%ld}",pinInfo.ulMinLen,pinInfo.ulMaxLen);
+		sprintf(buffer,"[0-9]{%llu,%llu}",pinInfo.ulMinLen,pinInfo.ulMaxLen);
 		QRegExp rx(buffer);
 		m_PinValidator=new QRegExpValidator(rx, 0);
 	}
@@ -82,8 +82,8 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, QString &
 	else
 		ui.lblIcon->setPixmap( QPixmap( ":/Resources/ICO_CARD_PIN_128x128.png" ) );
 
-	m_ulPinMinLen = pinInfo.ulMinLen;
-	m_ulPinMaxLen = pinInfo.ulMaxLen;
+	m_ulPinMinLen = (unsigned int)pinInfo.ulMinLen;
+	m_ulPinMaxLen = (unsigned int)pinInfo.ulMaxLen;
 
 	m_UseKeypad = UseKeypad;
 

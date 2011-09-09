@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2010-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -1056,39 +1056,36 @@ void detectReaderThread::run() {
 	std::string commandLine = "";
 	commandLine += currdirpath.toStdString();
 	commandLine += "/../Resources/preparePcscd.sh";
-	
+	int counter = 0;
 	bool retVal = CSysDiagnost::doAsAdmin(commandLine, true);
-	while( retVal == false )
+	
+	while( (retVal == false) && (counter < 3) )
 	{
-//		readersXml = scl.pcscWaitForCardReaders("");
-//#else
-//#endif
-//		readersXml = scl.pcscEnumerateCardReaders("");
-//#endif	
-//	resultNode = ezw.xmlToNode(readersXml);
-//	listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
-//#ifdef __APPLE__
 		msleep(2000);
 		retVal = CSysDiagnost::doAsAdmin(commandLine, true);
+		counter++;
 	}
-
 #endif		
-			
+		
     while (listItem.isNull()) {
-		//msleep(500);
 #ifdef __APPLE__
-//		if(CSysDiagnost::doAsAdmin(commandLine, true))
-//		{
+		if (CSysDiagnost::getOSXVersion() < 7)
+		{
 			readersXml = scl.pcscWaitForCardReaders("");
-#else
+		}
+		else 
+		{
+			//stall the scardestablishcontext function, as it hangs when pcscd switches bitness (32/64), 
+			//better would be to return to the press button solution, but 4.0 QI will make this obsolete
+			msleep(4000);
+#endif
 			readersXml = scl.pcscEnumerateCardReaders("");
-#endif			
+#ifdef __APPLE__
+		}
+#endif	
 		msleep(500);
 			resultNode = ezw.xmlToNode(readersXml);
-			listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");
-//#ifdef __APPLE__
-//		}
-//#endif	
+			listItem = resultNode.namedItem("ExtraInfo").namedItem("List").namedItem("ListItem");	
 	}
 
 	verboseEvent * ve = new verboseEvent();
