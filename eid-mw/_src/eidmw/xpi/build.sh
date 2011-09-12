@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-EXT_NAME=src
+EXT_NAME=belgiumeid
+SRC_DIR=src
 BUILDS_DIR=builds
 BUILD_DIR=_build
 
@@ -42,7 +43,7 @@ fi
 # create build dir
 mkdir ${BUILD_DIR}
 # copy files in build dir
-cp -r $EXT_NAME/* ${BUILD_DIR}
+cp -r ${SRC_DIR}/* ${BUILD_DIR}
 # remove svn files
 find ${BUILD_DIR} -path "*.svn" -type d -print0 | xargs -0 /bin/rm -rf
 
