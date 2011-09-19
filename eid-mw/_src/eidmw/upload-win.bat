@@ -19,7 +19,10 @@ if %MSI_TYPE%==msi35-pro goto %MSI_TYPE%
 if %MSI_TYPE%==msi35-sdk goto %MSI_TYPE%
 if %MSI_TYPE%==msi35-pro-sdk goto %MSI_TYPE%
 
-if %MSI_TYPE%==qi35     goto %MSI_TYPE%
+if %MSI_TYPE%==msi40     goto %MSI_TYPE%
+if %MSI_TYPE%==msi40-64  goto %MSI_TYPE%
+
+if %MSI_TYPE%==qi     goto %MSI_TYPE%
 
 if %MSI_TYPE%==dt35     goto %MSI_TYPE%
 
@@ -67,6 +70,16 @@ set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\Release\BeidMW35-Pro.msi
 set LOCAL=%~dp0misc\setup_win\_output\msi_runtime_pro\BeidMW35-Pro-%BUILD_NR%.msi
 goto UPLOAD
 
+:msi40
+set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\Release\BeidMW40.msi
+set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW40-%BUILD_NR%.msi
+goto UPLOAD
+
+:msi40-64
+set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\Release\BeidMW40-64.msi
+set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW40-64-%BUILD_NR%.msi
+goto UPLOAD
+
 :msi35-sdk
 set   SRC=%~dp0misc\Wix_MW35\MW35Wix-Sdk\bin\Release\BeidMW35-Sdk.msi
 set LOCAL=%~dp0misc\setup_win\_output\msi_sdk\BeidMW35-Sdk-%BUILD_NR%.msi
@@ -77,7 +90,7 @@ set   SRC=%~dp0misc\Wix_MW35\MW35Wix-Sdk\bin\Release\BeidMW35-Pro-Sdk.msi
 set LOCAL=%~dp0misc\setup_win\_output\msi_sdk_pro\BeidMW35-Pro-Sdk-%BUILD_NR%.msi
 goto UPLOAD
 
-:qi35
+:qi
 set   SRC=%~dp0..\eID-Quickinstaller\release\eID-QuickInstaller.exe
 set LOCAL=%~dp0misc\setup_win\_output\qi_runtime\eID-QuickInstaller-build-%BUILD_NR%.exe
 goto UPLOAD

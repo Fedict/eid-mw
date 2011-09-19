@@ -5,7 +5,7 @@ set LANG=%2
 set OUT_PATH=%~dp0bin\%CONFIGURATION%
 set OBJ_PATH=%~dp0obj\%CONFIGURATION%
 
-set FILE_TO_DELETE=BeidMW35-Basic*.msi
+set FILE_TO_DELETE=BeidMW40-Basic*.msi
 echo [INFO] Deleting %OUT_PATH%\%LANG%\%FILE_TO_DELETE%
 del "%OUT_PATH%\%LANG%\%FILE_TO_DELETE%"
 

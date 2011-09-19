@@ -8,7 +8,7 @@ set OUT_PATH=%~dp0bin\%CONFIGURATION%
 echo [INFO] OUT_PATH=%OUT_PATH%
 
 set MSI_FILE_IN=BeidMW35-64-Basic
-set MSI_FILE_OUT=BeidMW35-64
+set MSI_FILE_OUT=BeidMW40-64
 set MST_DIR=%OUT_PATH%\mst
 
 mkdir "%MST_DIR%"
@@ -52,7 +52,7 @@ echo ...
 :: generate the correct file name and upload file to network
 ::------------------------------------
 set /p SVN_REVISION= < "%~dp0..\..\..\svn_revision"
-"%~dp0..\..\..\upload-win.bat" msi35-64 %SVN_REVISION%
+"%~dp0..\..\..\upload-win.bat" msi40-64 %SVN_REVISION%
 
 goto END
 

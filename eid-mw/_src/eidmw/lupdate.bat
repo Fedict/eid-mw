@@ -1,2 +1,2 @@
-..\..\..\ThirdParty\Qt\4.3.1\bin\lupdate -noobsolete -verbose translation.pro
+C:\Qt\4.6.2\bin\lupdate -noobsolete -verbose translation.pro
 pause

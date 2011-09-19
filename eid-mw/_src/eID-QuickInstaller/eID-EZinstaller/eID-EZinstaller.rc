@@ -73,7 +73,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 // MSI
 //
 
-IDR_MSI2                MSI                     "BeidMW35-64.msi"
+IDR_MSI2                MSI                     "BeidMW40-64.msi"
 #endif    // English (U.K.) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -92,7 +92,7 @@ LANGUAGE LANG_DUTCH, SUBLANG_DUTCH_BELGIAN
 // MSI
 //
 
-IDR_MSI1                MSI                     "BeidMW35.msi"
+IDR_MSI1                MSI                     "BeidMW40.msi"
 
 /////////////////////////////////////////////////////////////////////////////
 //
