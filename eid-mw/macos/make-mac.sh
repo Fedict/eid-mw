@@ -3,7 +3,7 @@
 # java 1.4.2 is not supported any more since oct 2008
 MINJAVAVER=1.5
 MACHINETYPE=i386
-MWVER=3.6.0
+MWVER=4.0.0
 
 #########################################
 # we must be running on intel
