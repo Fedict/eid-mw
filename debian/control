@@ -9,7 +9,7 @@ Homepage: http://code.google.com/p/eid-mw/
 Package: eid-mw
 Section: libs
 Replaces: libbeidlibopensc2, libbeidlib3, libbeid2, libbeidlib2, beidgui
-Conflicts: libbeidlibopensc2, libbeidlib3, libbeid2, libbeidlib2, beidgui
+Conflicts: libbeidlibopensc2, libbeidlib3, libbeid2, libbeidlib2
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, pcscd
 Recommends: libccid, libacr38u
