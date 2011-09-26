@@ -169,6 +169,9 @@ std::wstring CLang::GetMessageFromID(DlgMessageID messageID)
 			csMessage+=fullpath;
 		}
 			break;
+		case DLG_MESSAGE_SDK35_WARNING:
+			csMessage+=GETSTRING_DLG(OldSDK35Notification);
+			break;
 		case DLG_MESSAGE_NONE:
 		default:
 			break;

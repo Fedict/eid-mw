@@ -641,6 +641,8 @@ CAppLayer::CAppLayer()
 	updateVersion();
 
 	startAllServices();
+
+	ShowOldSDKMessage();
 }
 
 CAppLayer::~CAppLayer(void)
@@ -662,6 +664,17 @@ CAppLayer &CAppLayer::instance()
 		}
 	}
     return *m_instance;
+}
+
+void CAppLayer::ShowOldSDKMessage()
+{
+	long showSDKWarning = CConfig::GetLong(CConfig::EIDMW_CONFIG_PARAM_MESSAGES_SHOWSDK35WARN);
+	if(showSDKWarning != 0)
+	{
+		DlgRet retVal = eIDMW::DlgDisplayModal(DLG_ICON_WARN, DLG_MESSAGE_SDK35_WARNING,
+			L"",DLG_BUTTON_OK,DLG_BUTTON_OK,0);
+		CConfig::SetLong(CConfig::USER,CConfig::EIDMW_CONFIG_PARAM_MESSAGES_SHOWSDK35WARN,0);
+	}
 }
 
 void CAppLayer::setAskForTestCard(bool bAskForTestCard)

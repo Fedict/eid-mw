@@ -242,6 +242,11 @@ private:
 	 void updateVersion();
 
 	/**
+	  * Show the message that SDK based on applayer is deprecated
+	  */
+	 void ShowOldSDKMessage();
+
+	/**
 	  * Stop all the service
 	  *
 	  * Delete card layer, crypto Fwk, caches, CRL service,...

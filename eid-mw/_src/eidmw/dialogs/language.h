@@ -124,6 +124,10 @@ DEFINE_LANG_STR(EnterOldNewVerify) = {L"1) Enter your old PIN and press 'OK'. \n
 																			L"1) Geef uw oude PIN in en druk op 'OK'. \n2) Geef uw nieuwe PIN in en druk op 'OK'.\n3) Geef uw nieuwe PIN opnieuw in en druk op 'OK'.",
 																			L"1) Insérez votre ancien code PIN et appuyez sur « OK ».\n2) Insérez votre nouveau code PIN et appuyez sur « OK ».\n3) Insérez une nouvelle fois votre nouveau code PIN et appuyez sur « OK ».",
 																			L"1) Geben Sie Ihre alte PIN ein und drücken Sie 'OK'.\n2) Geben Sie Ihre neue PIN ein und drücken Sie 'OK'.\n3) Geben Sie Ihre neue PIN erneut ein und drücken Sie 'OK'."};
+DEFINE_LANG_STR(OldSDK35Notification) = {L"This application is build with the 'Belgium Identity Card SDK, version 3.5'.\nThis version is concidered deprecated and will not be supported by future versions of the eid middleware\n\n\nTo avoid interference with the correct working of your application, this message will be shown only once",
+																			L"Deze applicatie is gebouwd met de 'Belgium Identity Card SDK, versie 3.5'. \nDeze versie is verouderd en zal door toekomstige versies van de eid middleware niet langer ondersteund worden\n\n\nOm de werking van de applicatie niet te verstoren, zal deze boodschap slechts eenmalig getoond worden",
+																			L"TRANSLATE TO FRENCH: This application uses the 'Belgium Identity Card SDK, version 3.5'.\nThis version is concidered deprecated and will not be supported by future versions of the eid middleware\n\n\nTo avoid interference with the correct working of your application, this message will be shown only once",
+																			L"TRANSLATE TO GERMAN: This application uses the 'Belgium Identity Card SDK, version 3.5'.\nThis version is concidered deprecated and will not be supported by future versions of the eid middleware\n\n\nTo avoid interference with the correct working of your application, this message will be shown only once"};
 
 #define GETSTRING_DLG(code) LANG_STR_ ## code[CLang::GetLang()]
 #ifndef WIN32

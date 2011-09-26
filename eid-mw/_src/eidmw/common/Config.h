@@ -192,6 +192,8 @@ replace $install by string in install parameter
 #define EIDMW_CNF_XSIGN_WORKINGDIR		L"working_dir"				//string working directory
 #define EIDMW_CNF_XSIGN_TIMEOUT			L"timeout"					//number; 
 
+#define EIDMW_CNF_SECTION_MESSAGES	L"messages"					//section for messages
+#define EIDMW_CNF_MESSAGES_SHOWSDK35WARN		L"show_sdk35_warning"					//number; 0=no, 1=yes
 
 namespace eIDMW
 {
@@ -324,6 +326,9 @@ public:
     static const struct Param_Num EIDMW_CONFIG_PARAM_XSIGN_ONLINE;
     static const struct Param_Str EIDMW_CONFIG_PARAM_XSIGN_WORKINGDIR;
     static const struct Param_Num EIDMW_CONFIG_PARAM_XSIGN_TIMEOUT;
+
+		//MESSAGES
+		static const struct Param_Num EIDMW_CONFIG_PARAM_MESSAGES_SHOWSDK35WARN;
 
 private:
     //below info if not needed any more when the ini-file is hard-coded.
