@@ -1,6 +1,6 @@
 /* ****************************************************************************
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -35,8 +35,6 @@
 
 #define	MIN_CMDLINE_PATH_BYTES 14
 
-#define QUOTEME_(x) #x
-#define QUOTEME(x) QUOTEME_(x)
 
 #ifdef DEBUG
 #define DPRINTF(format,args...) fprintf(stderr, format , ## args)
@@ -46,187 +44,6 @@
 #define DERROR
 #endif
 
-
-void sdialog_init(SingleDialog* sdialog)
-{
-	char default_tempdir[]="/tmp";
-    char* tmpdir=getenv("TMPDIR");
-    if(tmpdir==NULL)
-        tmpdir=default_tempdir;
-    snprintf(sdialog->pid_path,sizeof(sdialog->pid_path)-2,"%s/.%s-%d.pid",tmpdir,QUOTEME(SDIALOG_ID),getuid());
-}
-
-int sdialog_write_pid(SingleDialog* sdialog)
-{
-	int 	pid_fd,result=-1;
-	char 	tmp_str[32];
-
-	DPRINTF("sdialog pid=%d",getpid());
-
-	do { pid_fd=open(sdialog->pid_path,O_WRONLY|O_EXCL|O_CREAT|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH); } while (pid_fd==-1 && errno==EINTR);
-	if(pid_fd>0)
-	{
-		int nwritten=0;
-		snprintf(tmp_str,sizeof(tmp_str),"%d",getpid());
-		do { nwritten=write(pid_fd,tmp_str,strlen(tmp_str)); } while (nwritten==-1 && errno==EINTR);
-		if(nwritten==strlen(tmp_str))
-			result=0;
-	}
-
-	DPRINTF("sdialog_write_pid about to return %d",result);
-	return result;
-}
-
-pid_t sdialog_read_pid(SingleDialog* sdialog)
-{
-	char	tmp_str[16];
-	int 	pid_fd;
-	pid_t	pid;
-
-	DPRINTF("sdialog_read_pid");
-	do { pid_fd=open(sdialog->pid_path,O_RDONLY); } while (pid_fd==-1 && errno==EINTR);
-
-	DPRINTF("sdialog_read_pid: open returns %d",pid_fd);
-	if(pid_fd>0)
-	{
-		size_t nread=0;
-		do { nread=read(pid_fd,tmp_str,sizeof(tmp_str)-2); } while (pid_fd==-1 && errno==EINTR);
-		if(nread>0)						// if something read
-		{
-			tmp_str[nread]='\0';			// 0-sdialog_terminate to make valid C string
-			pid=strtoul(tmp_str,NULL,10);	// convert to pid_t
-		}
-
-		close(pid_fd);
-		return pid;
-	}
-	return -1;
-}
-	
-
-int read_proc_cmdline(char* cmdline, size_t max_cmd_size, pid_t pid)
-{
-	char 	tmp_str[32];
-	ssize_t nread=0;
-
-	DPRINTF("read_proc_cmdline[%d]",pid);
-	
-	if(snprintf(tmp_str,sizeof(tmp_str)-2,"/proc/%d/cmdline",pid) >= MIN_CMDLINE_PATH_BYTES)
-	{
-		DPRINTF("opening [%s]",tmp_str);
-
-		int proc_fd;
-		do { proc_fd=open(tmp_str,O_RDONLY); } while (proc_fd==-1 && errno==EINTR);
-
-		if(proc_fd>0)
-		{
-			DPRINTF("reading from [%s]",tmp_str);
-			do { nread=read(proc_fd,cmdline,max_cmd_size); } while (proc_fd==-1 && errno==EINTR);
-
-			
-			DPRINTF("read [%d] bytes from %s",nread,tmp_str);
-			if(nread>0)
-				cmdline[nread]='\0';			// but make sure the whole is properly sdialog_terminated
-			close(proc_fd);
-			DPRINTF("commandline=[%s]",cmdline);
-			return 0;
-		}
-	}
-	return -1;
-}
-
-inline int running(pid_t pid)
-{
-	return kill(pid,0);
-}
-
-int sdialog_terminate(SingleDialog* sdialog, pid_t target)
-{
-	char 	tmp_str[PATH_MAX];
-	int 	attempts;
-	
-	if(running(target)==0 && (read_proc_cmdline(tmp_str,sizeof(tmp_str),target)==0) && (strstr(tmp_str,QUOTEME(SDIALOG_ID))!=NULL))			// if it contains SDIALOG_ID it's a former instance
-	{
-		DPRINTF("sdialog_terminale: ours to kill");
-		for(attempts=0;attempts<3 && running(target)==0;attempts++)
-		{
-			kill(target,SIGTERM);									// tell it to make room for the living
-			usleep(100000);											// give it 100ms to do so
-		}
-
-		for(attempts=0;attempts<3 && running(target)==0;attempts++)
-		{
-			kill(target,SIGKILL);									// insist
-			usleep(100000);											// give it 100ms to do so
-		}
-	}
-	else
-	{
-		DPRINTF("sdialog_terminate: not ours to kill");
-	}
-
-	if(running(target)==-1 && errno==ESRCH)
-	{
-		DPRINTF("sdailog_terminate: kill succeeds");
-		return 0;
-	}
-	else
-	{
-		DPRINTF("sdialog_terminate: kill failed");
-	}
-
-	return -1;
-}
-
-int sdialog_terminate_active(SingleDialog* sdialog)
-{
-	pid_t active=sdialog_read_pid(sdialog);
-	if(active>0)
-	{
-		DPRINTF("sdialog_terminate_active: active dialog found - terminating");
-		if(sdialog_terminate(sdialog,active)==0)	
-		{
-			DPRINTF("removing active pid file");
-			if(unlink(sdialog->pid_path)==0)	
-				DPRINTF("active pid file removed");
-			else
-				DPRINTF("can't unlink active pid file");
-		}
-	}
-}
-
-int sdialog_lock(SingleDialog* sdialog)
-{
-	int	pid_fd,attempts=3;
-
-	signal(SIGCHLD,SIG_IGN);	// auto-reap kids
-	if(fork())					// fork to detach from whatever called us
-		exit(0);
-	chdir("/");					// don't block mounted volumes
-	setsid();					// get our own process group
-
-	while((pid_fd=sdialog_write_pid(sdialog))<0 && attempts-->0)								// while we can't acquire exclusive lock
-	{
-		DPRINTF("sdialog_lock: sdialog_write_pid fails (pid_fd=%d)-getting interloper",pid_fd);	
-		sdialog_terminate_active(sdialog);														// attempts to destroy interlopers
-	}
-
-	if(pid_fd>=0)
-	{
-		DPRINTF("sdialog_lock: lock acquired");
-		close(pid_fd);
-		setsid();
-		return 0;
-	}
-
-	DPRINTF("sdialog_lock: lock failed");
-	return -1;
-}
-
-int sdialog_unlock(SingleDialog* sdialog)
-{
-	return unlink(sdialog->pid_path);
-}
 
 /* the sdialog_call_modal function borrows from readpass.c in the OpenSSH distribution, whose Copyright is as follows: 
  *
@@ -259,24 +76,38 @@ int sdialog_unlock(SingleDialog* sdialog)
  * END OF (C) NOTICE for sdialog_call_modal()
  */
 
-#define POSIX_SOURCE 1
-
-// execute dialog in a child process, and leave it running
-///////////////////////////////////////////////////////////
-void sdialog_call(char* path, char* msg)
+// execute dialog in a child process, leave it running
+///////////////////////////////////////////////////////////////////////////////////////////
+pid_t sdialog_call(const char* path,const char* msg)
 {
-	char cmdline[1024];
-	snprintf(cmdline, sizeof(cmdline)-2,"%s \"%s\"",path,msg);
-	if(system(cmdline)<0)
+    pid_t pid;
+
+	DPRINTF("sdialog_call/fork\n");
+    if((pid=fork())<0)
 	{
-		DERROR("sdialog_call/system");
-        return;
+		DERROR("sdialog_call/fork");
+        return 0L;
     }
+
+    if(pid==0)
+	{
+		DPRINTF("sdialog_call: in child\n");
+		DPRINTF("sdialog_call: DISPLAY=%s\n",getenv("DISPLAY"));
+       	umask(0);
+		chdir("/");
+		DPRINTF("call_dialog: about to exec %s\n",path);
+		execlp(path,path,msg,(char*)0);
+		DERROR("sdialog_call/execlp");
+		exit(1);
+    }
+
+	DPRINTF("sdialog_call: child PID=%d\n",pid);
+    return pid;
 }
 
 // execute dialog in a child process, read back it's stdout via a pipe, wait for it to exit
 ///////////////////////////////////////////////////////////////////////////////////////////
-char* sdialog_call_modal(char* path,const char* msg)
+char* sdialog_call_modal(const char* path,const char* msg)
 {
     pid_t pid;
     size_t len;
@@ -350,7 +181,7 @@ char* sdialog_call_modal(char* path,const char* msg)
         if(errno!=EINTR)
             break;
 
-    if(!WIFEXITED(status) || WEXITSTATUS(status)!=0)
+    if(!WIFEXITED(status) || WEXITSTATUS(status)>1)
 	{
 		DPRINTF("sdialog_call_modal: child died badly\n");
         memset(buf,0,sizeof(buf));

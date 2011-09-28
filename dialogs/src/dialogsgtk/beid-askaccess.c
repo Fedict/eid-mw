@@ -1,6 +1,6 @@
 /* ****************************************************************************
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -49,7 +49,9 @@ static gboolean on_delete_event( GtkWidget *widget, GdkEvent* event, gpointer pi
 
 int main(int argc, char* argv[])
 {
-	int 		return_value=EXIT_ERROR;
+	abort_if_parent_not_considered_secure();
+	
+	int			return_value;
 	GtkWidget*	dialog;
 
     gtk_init(&argc,&argv);										// initialize gtk+
@@ -74,10 +76,12 @@ int main(int argc, char* argv[])
 		break;
 
 		case GTK_RESPONSE_CANCEL:
-			return_value=EXIT_CANCEL;
+			printf("CANCEL\n");
+			return_value=EXIT_OK;
 		break;
 
 		default:
+			printf("ERROR\n");
 			return_value=EXIT_ERROR;
 		break;
 	}

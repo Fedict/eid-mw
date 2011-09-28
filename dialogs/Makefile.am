@@ -3,61 +3,54 @@ noinst_HEADERS			= src/langutil.h src/language.h src/dialogswin32/dlgwndpinpadin
 EXTRA_DIST          	= VS_2010 VS_2005
 lib_LTLIBRARIES    		= libbeiddialogs.la
 
-dist-hook:
-	cp -p $(srcdir)/bin2c $(distdir)/bin2c
-
 if LINUX
 #
 
-BUILT_SOURCES 					= default-beid-askpin.cpp default-beid-askaccess.cpp default-beid-badpin.cpp default-beid-changepin.cpp default-beid-spr-askpin.cpp default-beid-spr-changepin.cpp default-beid-spr-close.cpp
-CLEANFILES 						= $(BUILT_SOURCES)
+if DEBUG
+DEFINE_DEBUG = -DDEBUG
+FLAG_DEBUG   = -ggdb
+else
+DEFINE_DEBUG =
+FLAG_DEBUG   =
+endif
 
 libbeiddialogs_la_SOURCES  	 	= src/dialogsgtk/single_dialog.c src/dialogsgtk/dlgs_gtk.cpp
-libbeiddialogs_la_CPPFLAGS   	= -I$(srcdir)/src/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DSDIALOG_ID=beid-spr -DDEBUG
+libbeiddialogs_la_CPPFLAGS   	= -I$(srcdir)/src/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src $(DEFINE_DEBUG) -DBEID_ASKPIN_DIALOG=$(libexecdir)/beid-askpin -DBEID_CHANGEPIN_DIALOG=$(libexecdir)/beid-changepin -DBEID_BADPIN_DIALOG=$(libexecdir)/beid-badpin -DBEID_ASKACCESS_DIALOG=$(libexecdir)/beid-askaccess -DBEID_SPR_ASKPIN_DIALOG=$(libexecdir)/beid-spr-askpin -DBEID_SPR_CHANGEPIN_DIALOG=$(libexecdir)/beid-spr-changepin
 libbeiddialogs_la_LDFLAGS	 	= -avoid-version -g 
-libbeiddialogs_la_CXXFLAGS	 	= -fno-strict-aliasing -ggdb -g
+libbeiddialogs_la_CXXFLAGS	 	= -fno-strict-aliasing $(FLAG_DEBUG)
 libbeiddialogs_la_LIBADD     	= ../common/libbeidcommon.la
 #
-noinst_PROGRAMS		   			= beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin beid-spr-close 
+libexec_PROGRAMS		 		= beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin
 
-beid_askpin_SOURCES    			= src/dialogsgtk/beid-askpin.c
+beid_askpin_SOURCES    			= src/dialogsgtk/security.c src/dialogsgtk/beid-askpin.c
 beid_askpin_CPPFLAGS   			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src 
 beid_askpin_LDFLAGS    			= -avoid-version
 beid_askpin_LDADD      			= ../common/libbeidcommon.la
 
-beid_changepin_SOURCES   		= src/dialogsgtk/beid-changepin.c
+beid_changepin_SOURCES   		= src/dialogsgtk/security.c src/dialogsgtk/beid-changepin.c
 beid_changepin_CPPFLAGS   		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
 beid_changepin_LDFLAGS   		= -avoid-version
 beid_changepin_LDADD     		= ../common/libbeidcommon.la
 
-beid_badpin_SOURCES   			= src/dialogsgtk/beid-badpin.c
+beid_badpin_SOURCES   			= src/dialogsgtk/security.c src/dialogsgtk/beid-badpin.c
 beid_badpin_CPPFLAGS  			= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
 beid_badpin_LDFLAGS   			= -avoid-version
 beid_badpin_LDADD     			= ../common/libbeidcommon.la
 
-beid_askaccess_SOURCES   		= src/dialogsgtk/beid-askaccess.c
+beid_askaccess_SOURCES   		= src/dialogsgtk/security.c src/dialogsgtk/beid-askaccess.c
 beid_askaccess_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
 beid_askaccess_LDFLAGS   		= -avoid-version
 beid_askaccess_LDADD     		= ../common/libbeidcommon.la
 
-beid_spr_askpin_SOURCES    		= src/dialogsgtk/single_dialog.c src/dialogsgtk/beid-spr-askpin.c
-beid_spr_askpin_CPPFLAGS   		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DSDIALOG_ID=beid-spr
+beid_spr_askpin_SOURCES    		= src/dialogsgtk/security.c src/dialogsgtk/single_dialog.c src/dialogsgtk/beid-spr-askpin.c
+beid_spr_askpin_CPPFLAGS   		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
 beid_spr_askpin_LDFLAGS    		= -avoid-version
 beid_spr_askpin_LDADD      		= ../common/libbeidcommon.la
 
-beid_spr_changepin_SOURCES  	= src/dialogsgtk/single_dialog.c src/dialogsgtk/beid-spr-changepin.c	
-beid_spr_changepin_CPPFLAGS 	= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DSDIALOG_ID=beid-spr
+beid_spr_changepin_SOURCES  	= src/dialogsgtk/security.c src/dialogsgtk/single_dialog.c src/dialogsgtk/beid-spr-changepin.c	
+beid_spr_changepin_CPPFLAGS 	= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src
 beid_spr_changepin_LDFLAGS  	= -avoid-version
 beid_spr_changepin_LDADD    	= ../common/libbeidcommon.la
-
-beid_spr_close_SOURCES   		= src/dialogsgtk/single_dialog.c src/dialogsgtk/beid-spr-close.c
-beid_spr_close_CPPFLAGS  		= -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src -DSDIALOG_ID=beid-spr
-beid_spr_close_LDFLAGS   		= -avoid-version
-beid_spr_close_LDADD     		= ../common/libbeidcommon.la
-
-
-default-beid-%.cpp: beid-%
-	$(srcdir)/bin2c .libs/$< default_ > $@
 
 endif
 

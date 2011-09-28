@@ -37,6 +37,15 @@ AM_CONDITIONAL(GTK,test x$gtk = xtrue)
 ####### read user-specific dependecy requests from --with directives ######
 ###########################################################################
 
+AC_ARG_ENABLE(debug,
+[  --enable-debug    Turn on debugging],
+[case "${enableval}" in
+  yes) debug=true ;;
+  no)  debug=false ;;
+  *) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
+esac],[debug=false])
+AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
+
 # if gtk dialogs, enable checking GTK2
 AS_VAR_IF([gtk],[true],
 [

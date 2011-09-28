@@ -32,7 +32,7 @@ enum { MSG_INCORRECT_PIN_CODE=1, MSG_N_ATTEMPTS_LEFT, MSG_LAST_ATTEMPT };
 char* beid_messages[4][4]={
                                     "en",   "beID: Incorrect PIN Code",    	"You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", 					"You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked.",
                                     "nl",   "beID: Foutive PINcode",    	"U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat u nog slechts %d pogingen hebt alvorens uw PIN code geblokkeerd wordt.", 	"U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat bij de volgende incorrecte ingave uw PIN code geblokkeerd wordt.",
-                                    "fr",   "beID: Code PIN incorrect",    	"Vous avez entré un code PIN incorrect.\nVieullez noter qu'il ne vous reste plus que %d tentatives avant que votre PIN soit bloqué", 		"Vous avez entré un code PIN incorrect.\nVieullez qu'a la prochaine entree incorrecte votre code PIN sera bloqué",
+                                    "fr",   "beID: Code PIN incorrect",    	"Vous avez entré un code PIN incorrect.\nVeuillez noter qu'il ne vous reste plus que %d tentatives avant que votre PIN soit bloqué", 		"Vous avez entré un code PIN incorrect.\nVieullez noter qu'a la prochaine entree incorrecte votre code PIN sera bloqué",
                                     "de",   "beID: Incorrect PIN Code",    	"You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", 					"You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."
                               };
 
@@ -47,6 +47,8 @@ static gboolean on_delete_event( GtkWidget *widget, GdkEvent* event, gpointer pi
 
 int main(int argc, char* argv[])
 {
+	abort_if_parent_not_considered_secure();
+
 	int 		return_value=EXIT_ERROR;
 	GtkWidget*	dialog;
 
@@ -82,11 +84,13 @@ int main(int argc, char* argv[])
     switch(gtk_dialog_run(GTK_DIALOG(dialog)))
 	{
 		case GTK_RESPONSE_OK:					// if the use chose OK
+			printf("OK\n");
 			return_value=EXIT_OK;
 		break;
 
 		default:								// otherwise
-			return_value=EXIT_ERROR;			// output nothing and return CANCEL
+			printf("ERROR\n");
+			return_value=EXIT_ERROR;
 		break;
 	}
 

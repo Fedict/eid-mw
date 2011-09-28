@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -24,23 +24,20 @@
 #include <sys/stat.h>
 #include <cstdlib>
 #include "errno.h"
-
 #include "mw_util.h"
 #include "dialogs.h"
 #include "langutil.h"
-
 #include <stdio.h>
 #include <limits.h>
 #include <unistd.h>
-#include <libintl.h>
-
-#define _(String) gettext (String)
-
 #include "log.h"
 #include "util.h"
 #include "mwexception.h"
 #include "eiderrors.h"
 #include "config.h"
+
+#define QUOTEME_(x) #x
+#define QUOTEME(x) QUOTEME_(x)
 
 #ifdef DEBUG
 #define DPRINTF(format,args...) fprintf(stderr, format , ## args)
@@ -50,48 +47,15 @@
 #define DERROR
 #endif
 
+using namespace eIDMW;
+
 extern "C"
 {
-	// include the embedded executables for the default dialogs, as char arrays
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	#include "single_dialog.h"
-	#include "default-beid-askaccess.cpp"
-	#include "default-beid-askpin.cpp"
-	#include "default-beid-badpin.cpp"
-	#include "default-beid-changepin.cpp"
-	#include "default-beid-spr-askpin.cpp"
-	#include "default-beid-spr-changepin.cpp"
-	#include "default-beid-spr-close.cpp"
+	pid_t   sdialog_call(const char* path,const char* msg);
+	char*   sdialog_call_modal(const char* path,const char* msg);
+}
 
-	// raise a dialog from embedded to file status
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	int sdialog_raise(char* path, size_t path_max, char* name, unsigned char* start, size_t size)
-	{
-	    snprintf(path,path_max,"/tmp/.raised-%s",name);
-	    int fd=open(path,O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IXUSR);
-	    if(fd>0)
-	    {
-	        int nwritten=write(fd,start,size);
-	        DPRINTF("sdialog_raise: wrote %d/%d bytes\n",nwritten,size);
-	        close(fd);
-			return 0;
-	    }
-		return -1;
-	}
-
-	// remove a raised dialog ; call asap after executing 
- 	////////////////////////////////////////////////////////////////////////////////////////////////
-	int sdialog_rest(char* name)
-	{
-		char path[PATH_MAX];
-	    snprintf(path,sizeof(path)-2,"/tmp/.raised-%s",name);
-		DPRINTF("laying [%s] to rest\n",path);
-		if(unlink(path)<0)
-			DERROR("sdialog_rest: unlink");
-	}
-}		
-
-using namespace eIDMW;
+	
 
 bool MW_PERROR(tLevel level, tModule mod, char* comment)
 {
@@ -107,22 +71,11 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation, DlgPinUsage usage
 {
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgAskPin called");
 
-	char path[PATH_MAX];
-	if(sdialog_raise(path,sizeof(path)-2,"beid-askpin",default_beid_askpin,sizeof(default_beid_askpin))==-1)
-	{
-		MW_PERROR(LEV_ERROR,MOD_DLG,"sdialog_raise");
-		return DLG_ERR;
-	}
-
-	char* response=sdialog_call_modal(path,_("Please enter your PIN code."));	
+	char* response=sdialog_call_modal(QUOTEME(BEID_ASKPIN_DIALOG),"");	
 	if(response==NULL)
-	{
-		sdialog_rest("beid-askpin");
 		return DLG_CANCEL;
-	}
 	else
 	{
-		sdialog_rest("beid-askpin");
 		mbstowcs(wsPin,response,ulPinBufferLen);
 		free(response);
 		return DLG_OK;
@@ -135,18 +88,9 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usag
 
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgAskPins called");
 
-	char path[PATH_MAX];
-	if(sdialog_raise(path,sizeof(path)-2,"beid-changepin",default_beid_changepin,sizeof(default_beid_changepin))==-1)
-	{
-		MW_PERROR(LEV_ERROR,MOD_DLG,"sdialog_raise");
-		return DLG_ERR;
-	}
-
-	char* response=sdialog_call_modal(path,"");
+	char* response=sdialog_call_modal(QUOTEME(BEID_CHANGEPIN_DIALOG),"");
 	if(response==NULL)
-	{
 		result=DLG_CANCEL;
-	}
 	else
 	{
 		char* sep_pos=strchr(response,':');
@@ -160,7 +104,6 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usag
 		free(response);
 	}
 
-	sdialog_rest("beid-changepin");
 	return result;
 }
 
@@ -170,17 +113,9 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin( DlgPinUsage usage, const wchar_t *wsPinName
 	char count[4];
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgBadPin called");
 
-	char path[PATH_MAX];
-	if(sdialog_raise(path,sizeof(path)-2,"beid-badpin",default_beid_badpin,sizeof(default_beid_badpin))==-1)
-	{
-		MW_PERROR(LEV_ERROR,MOD_DLG,"sdialog_raise");
-		return DLG_ERR;
-	}
-
 	snprintf(count,sizeof(count)-2,"%1d",ulRemainingTries);
-	char* response=sdialog_call_modal(path,count);	
+	char* response=sdialog_call_modal(QUOTEME(BEID_BADPIN_DIALOG),count);	
 	free(response);
-	sdialog_rest("beid-badpin");
     return DLG_OK;
 }
 
@@ -188,35 +123,21 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin( DlgPinUsage usage, const wchar_t *wsPinName
 DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation, const wchar_t *wsReader, DlgPinUsage usage, const wchar_t *wsPinName, const wchar_t *wsMessage, unsigned long *pulHandle)
 {
 	char message[1024];
-	char path[PATH_MAX];
+	pid_t dialog_pid;
 
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgDisplayPinPadInfo called");
 
-	if(operation==DLG_PIN_OP_VERIFY)
-	{
-		if(sdialog_raise(path,sizeof(path)-2,"beid-spr-askpin",default_beid_spr_askpin,sizeof(default_beid_spr_askpin))==-1)
-		{
-			MW_PERROR(LEV_ERROR,MOD_DLG,"sdialog_raise");
-			return DLG_ERR;
-		}
-	}
-	else
-	{
-		if(sdialog_raise(path,sizeof(path)-2,"beid-spr-changepin",default_beid_spr_changepin,sizeof(default_beid_spr_changepin))==-1)
-		{
-			MW_PERROR(LEV_ERROR,MOD_DLG,"sdialog_raise");
-			return DLG_ERR;
-		}
-	}
-
 	wcstombs(message,wsReader,1024);
-	sdialog_call(path,message);
 
 	if(operation==DLG_PIN_OP_VERIFY)
-		sdialog_rest("beid-spr-askpin");
+		dialog_pid=sdialog_call(QUOTEME(BEID_SPR_ASKPIN_DIALOG),message);
 	else
-		sdialog_rest("beid-spr-changepin");
+		dialog_pid=sdialog_call(QUOTEME(BEID_SPR_CHANGEPIN_DIALOG),message);
 
+	if(dialog_pid<0)
+		return DLG_ERR;
+
+	*pulHandle=(unsigned long)dialog_pid;
     return DLG_OK;
 }
 
@@ -225,13 +146,17 @@ DLGS_EXPORT void eIDMW::DlgClosePinpadInfo( unsigned long ulHandle )
 {
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgClosePinPadInfo called");
 
-	char path[PATH_MAX];
-	if(sdialog_raise(path,sizeof(path)-2,"beid-spr-close",default_beid_spr_close,sizeof(default_beid_spr_close))==-1)
-		MW_PERROR(LEV_ERROR,MOD_DLG,"sdialog_raise");
-	else
+	if(ulHandle==0L)
 	{
-		sdialog_call(path,"");
-		sdialog_rest("beid-spr-close");
+		MW_PERROR(LEV_ERROR,MOD_DLG,"no dialog pid to kill");
+		return;
+	}
+
+	pid_t dialog_pid=(pid_t)ulHandle;
+	if(kill(dialog_pid,SIGTERM)!=0)
+	{
+		MW_PERROR(LEV_ERROR,MOD_DLG,"kill");
+		return;
 	}
 }
 
@@ -243,15 +168,9 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskAccess( const wchar_t *wsAppPath, const wchar_t 
 
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgAskAccess called");
 
-	char path[PATH_MAX];
-	if(sdialog_raise(path,sizeof(path)-2,"beid-askaccess",default_beid_askaccess,sizeof(default_beid_askaccess))==-1)
-	{
-		MW_PERROR(LEV_ERROR,MOD_DLG,"sdialog_raise");
-		return DLG_ERR;
-	}
 
 	wcstombs(message,wsAppPath,1024);
-	char* response=sdialog_call_modal(path,message);
+	char* response=sdialog_call_modal(QUOTEME(BEID_ASKACCESS_DIALOG),message);
 	if(response!=NULL)
 	{
 		if(strcmp(response,"OK")==0)
@@ -259,6 +178,5 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskAccess( const wchar_t *wsAppPath, const wchar_t 
 		free(response);
 	}
 
-	sdialog_rest("beid-askaccess");
 	return result;
 }

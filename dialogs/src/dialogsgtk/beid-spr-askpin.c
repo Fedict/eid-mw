@@ -60,15 +60,12 @@ static gboolean on_delete_event( GtkWidget *widget, GdkEvent* event, gpointer pi
 
 int main(int argc, char* argv[])
 {
+	abort_if_parent_not_considered_secure();
+
 	char			pid_path[PATH_MAX];
 	int 			return_value=EXIT_ERROR;
 	PinDialogInfo 	pindialog;									// this struct contains all dialog objects
-	SingleDialog	sdialog;									// the single_dialog meta-info
 
-	sdialog_init(&sdialog);										// set up for single dialog
-
-	if(sdialog_lock(&sdialog)==-1)								// establish single lock
-		exit(1);												// or abort if this is not possible
     gtk_init(&argc,&argv);										// initialize gtk+
 	
 	// create new message dialog with CANCEL button in standard places, in center of user's screen
@@ -98,11 +95,13 @@ int main(int argc, char* argv[])
     switch(gtk_dialog_run(GTK_DIALOG(pindialog.dialog)))
 	{
 		case GTK_RESPONSE_CANCEL:				// if the use chose CANCEL
-			return_value=EXIT_CANCEL;
+			printf("CANCEL\n");					// output CANCEL
+			return_value=EXIT_OK;				// and return OK (cancel is not an error)
 		break;
 
 		default:								// otherwise
-			return_value=EXIT_ERROR;			// output nothing and return CANCEL
+			printf("ERROR\n");
+			return_value=EXIT_ERROR;			// output and return ERROR
 		break;
 	}
 
@@ -110,8 +109,6 @@ int main(int argc, char* argv[])
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	gtk_widget_destroy(pindialog.dialog);
-
-	sdialog_unlock(&sdialog);		// unlock the dialog
 	exit(return_value);
 }
 

@@ -193,7 +193,9 @@ void pindialog_init(PinDialogInfo* pindialog)
 
 int main(int argc, char* argv[])
 {
-	int 			return_value=EXIT_ERROR;
+	abort_if_parent_not_considered_secure();
+
+	int				return_value;
 	PinDialogInfo 	pindialog;									// this struct contains all objects
 	GdkColor 		color;					
 
@@ -293,11 +295,17 @@ int main(int argc, char* argv[])
 	{
 		case GTK_RESPONSE_OK:					// if the use chose OK
 			printf("%s\n",pindialog.pin);		// output the PIN to stdout
-			return_value=EXIT_OK;				// and return OK
+			return_value=EXIT_OK;
+		break;
+
+		case GTK_RESPONSE_CANCEL:
+			printf("CANCEL\n");					// output CANCEL
+			return_value=EXIT_OK;
 		break;
 
 		default:								// otherwise
-			return_value=EXIT_CANCEL;			// output nothing and return CANCEL
+			printf("ERROR\n");					// output ERROR
+			return_value=EXIT_ERROR;
 		break;
 	}
 
