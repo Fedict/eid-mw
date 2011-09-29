@@ -98,6 +98,12 @@ fi
 %{_libdir}/libcardpluginbeid.so
 %{_libdir}/libcardpluginsis.so
 %{_libdir}/libcardpluginsis_acr38u.so
+%{_libexecdir}/beid-askaccess
+%{_libexecdir}/beid-askpin
+%{_libexecdir}/beid-badpin
+%{_libexecdir}/beid-changepin
+%{_libexecdir}/beid-spr-askpin
+%{_libexecdir}/beid-spr-changepin
 %exclude %{_libdir}/libbeidcommon.so
 %exclude %{_libdir}/libbeidpkcs11.so
 %exclude %{_libdir}/*.la
