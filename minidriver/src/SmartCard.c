@@ -229,65 +229,65 @@ cleanup:
 
 #define WHERE "BeidAuthenticateExternal"
 DWORD BeidAuthenticateExternal(
-					PCARD_DATA   pCardData, 
-                    PDWORD       pcAttemptsRemaining,
-					BOOL		 bSilent
-					) 
+	PCARD_DATA   pCardData, 
+	PDWORD       pcAttemptsRemaining,
+	BOOL		 bSilent
+	) 
 {
-   DWORD						dwReturn  = 0;
-/* #ifndef __MINGW32__*/
-   SCARD_IO_REQUEST				ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
-   SCARD_IO_REQUEST				ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
+	DWORD						dwReturn  = 0;
+	/* #ifndef __MINGW32__*/
+	SCARD_IO_REQUEST				ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
+	SCARD_IO_REQUEST				ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
 
-   PIN_VERIFY_STRUCTURE			verifyCommand;
+	PIN_VERIFY_STRUCTURE			verifyCommand;
 
-   unsigned int					uiCmdLg   = 0;
-   unsigned char				recvbuf[256];
-   unsigned char				ucLastKey;
-   unsigned long				recvlen     = sizeof(recvbuf);
-   BYTE							SW1, SW2;
-   int							i           = 0;
-   int							offset		= 0;
-   DWORD						dwRetriesLeft, dwDataLen;
-   BOOL							bRetry      = TRUE;
-   int							nButton;
-   HRESULT						hResult;
+	unsigned int					uiCmdLg   = 0;
+	unsigned char				recvbuf[256];
+	unsigned char				ucLastKey;
+	unsigned long				recvlen     = sizeof(recvbuf);
+	BYTE							SW1, SW2;
+	int							i           = 0;
+	int							offset		= 0;
+	DWORD						dwRetriesLeft, dwDataLen;
+	BOOL							bRetry      = TRUE;
+	int							nButton;
+	HRESULT						hResult;
 
-   EXTERNAL_PIN_INFORMATION		externalPinInfo;
-   HANDLE						DialogThreadHandle;
-
-
-   wchar_t						wchErrorMessage[500];
-   wchar_t						wchMainInstruction[100];
-     
-   
-   LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
-    
-   /********************/
-   /* Check Parameters */
-   /********************/
-   if ( pCardData == NULL )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pCardData]");
-      CLEANUP(SCARD_E_INVALID_PARAMETER);
-   }
+	EXTERNAL_PIN_INFORMATION		externalPinInfo;
+	HANDLE						DialogThreadHandle;
 
 
-   /*********************/
-   /* External PIN Info */
-   /*********************/
-    externalPinInfo.hCardHandle = pCardData->hScard;
+	wchar_t						wchErrorMessage[500];
+	wchar_t						wchMainInstruction[100];
+
+
+	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+
+	/********************/
+	/* Check Parameters */
+	/********************/
+	if ( pCardData == NULL )
+	{
+		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pCardData]");
+		CLEANUP(SCARD_E_INVALID_PARAMETER);
+	}
+
+
+	/*********************/
+	/* External PIN Info */
+	/*********************/
+	externalPinInfo.hCardHandle = pCardData->hScard;
 	CCIDgetFeatures(&(externalPinInfo.features), externalPinInfo.hCardHandle);
 
 	/*********************/
-    /* Get Parent Window */
+	/* Get Parent Window */
 	/*********************/
 	dwReturn = CardGetProperty(pCardData, 
-								CP_PARENT_WINDOW, 
-								(PBYTE) &(externalPinInfo.hwndParentWindow), 
-								sizeof(externalPinInfo.hwndParentWindow), 
-								&dwDataLen, 
-								0);
+		CP_PARENT_WINDOW, 
+		(PBYTE) &(externalPinInfo.hwndParentWindow), 
+		sizeof(externalPinInfo.hwndParentWindow), 
+		&dwDataLen, 
+		0);
 	if (dwReturn != 0) {
 		LogTrace(LOGTYPE_ERROR, WHERE, "CardGetProperty Failed: %02X", dwReturn);
 		externalPinInfo.hwndParentWindow = NULL;
@@ -295,31 +295,31 @@ DWORD BeidAuthenticateExternal(
 
 
 	/*********************/
-    /* Get Pin Context String */
+	/* Get Pin Context String */
 	/*********************/		
 	dwReturn = CardGetProperty(pCardData, 
-								CP_PIN_CONTEXT_STRING, 
-								(PBYTE) externalPinInfo.lpstrPinContextString, 
-								sizeof(externalPinInfo.lpstrPinContextString), 
-								&dwDataLen, 
-								0);
+		CP_PIN_CONTEXT_STRING, 
+		(PBYTE) externalPinInfo.lpstrPinContextString, 
+		sizeof(externalPinInfo.lpstrPinContextString), 
+		&dwDataLen, 
+		0);
 	if (dwReturn != 0) {
 		LogTrace(LOGTYPE_ERROR, WHERE, "CardGetProperty Failed: %02X", dwReturn);
 		wcscpy(externalPinInfo.lpstrPinContextString, L"");
 	}
 
-   /**********/
-   /* Log On */
-   /**********/
+	/**********/
+	/* Log On */
+	/**********/
 
-    createVerifyCommand(&verifyCommand);
+	createVerifyCommand(&verifyCommand);
 
-    uiCmdLg = sizeof(verifyCommand);
-    recvlen = sizeof(recvbuf);
-	   
-    while (bRetry) {
-	    bRetry = FALSE;
-	    nButton = -1;
+	uiCmdLg = sizeof(verifyCommand);
+	recvlen = sizeof(recvbuf);
+
+	while (bRetry) {
+		bRetry = FALSE;
+		nButton = -1;
 
 		// We introduce a short sleep before starting the PIN VERIFY procedure
 		// Reason: we do this for users with a combined keyboard/secure PIN pad smartcard reader
@@ -328,39 +328,65 @@ DWORD BeidAuthenticateExternal(
 		//   This sleep gives the user some time to release the Enter key.
 
 		Sleep(100);
-		dwReturn = SCardControl(pCardData->hScard, 
-							externalPinInfo.features.VERIFY_PIN_START, 
-                            &verifyCommand, 
-                            uiCmdLg,                              
-                            recvbuf, 
-                            recvlen,
-                            &recvlen);
-		if ( dwReturn != SCARD_S_SUCCESS )
+
+		if(externalPinInfo.features.VERIFY_PIN_DIRECT != 0)
 		{
-			LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
-			CLEANUP(dwReturn);
+			externalPinInfo.iPinCharacters = 0;
+			externalPinInfo.cardState = CS_PINENTRY;
+			// show dialog
+			if (!bSilent)
+				DialogThreadHandle = CreateThread(NULL, 0, DialogThreadPinEntry, &externalPinInfo, 0, NULL);
+
+			dwReturn = SCardControl(pCardData->hScard, 
+				externalPinInfo.features.VERIFY_PIN_DIRECT, 
+				&verifyCommand, 
+				uiCmdLg,                              
+				recvbuf, 
+				recvlen,
+				&recvlen);
+
+			externalPinInfo.cardState = CS_PINENTERED;
+			if ( dwReturn != SCARD_S_SUCCESS )
+			{
+				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+				CLEANUP(dwReturn);
+			}
 		}
-		externalPinInfo.iPinCharacters = 0;
-		externalPinInfo.cardState = CS_PINENTRY;
-		
-		// show dialog
-		if (!bSilent)
-			DialogThreadHandle = CreateThread(NULL, 0, DialogThreadPinEntry, &externalPinInfo, 0, NULL);
-		while (1) {
-			dwReturn = SCardControl(pCardData->hScard,
-				externalPinInfo.features.GET_KEY_PRESSED,
-				NULL,
-				0,
-				recvbuf,
+		else
+		{
+			dwReturn = SCardControl(pCardData->hScard, 
+				externalPinInfo.features.VERIFY_PIN_START, 
+				&verifyCommand, 
+				uiCmdLg,                              
+				recvbuf, 
 				recvlen,
 				&recvlen);
 			if ( dwReturn != SCARD_S_SUCCESS )
 			{
-			   LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
-			   CLEANUP(dwReturn);
+				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+				CLEANUP(dwReturn);
 			}
-			ucLastKey = recvbuf[0];
-			switch (recvbuf[0]) {
+			externalPinInfo.iPinCharacters = 0;
+			externalPinInfo.cardState = CS_PINENTRY;
+
+			// show dialog
+			if (!bSilent)
+				DialogThreadHandle = CreateThread(NULL, 0, DialogThreadPinEntry, &externalPinInfo, 0, NULL);
+			while (1) {
+				dwReturn = SCardControl(pCardData->hScard,
+					externalPinInfo.features.GET_KEY_PRESSED,
+					NULL,
+					0,
+					recvbuf,
+					recvlen,
+					&recvlen);
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+					CLEANUP(dwReturn);
+				}
+				ucLastKey = recvbuf[0];
+				switch (recvbuf[0]) {
 				case 0x00:
 					// No key 
 					Sleep(200);
@@ -389,33 +415,33 @@ DWORD BeidAuthenticateExternal(
 				default:
 					//printf("Key pressed: 0x%x\n", bRecvBuffer[0]);
 					;
-			}
+				}
 
-		}
+			}
 endkeypress:
-		
-		externalPinInfo.cardState = CS_PINENTERED;
-		dwReturn = SCardControl(pCardData->hScard,
-			externalPinInfo.features.VERIFY_PIN_FINISH,
-            NULL,
-            0,
-            recvbuf,
-            sizeof(recvbuf),
-            &recvlen);
-		if ( dwReturn != SCARD_S_SUCCESS )
-        {
-           LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
-           CLEANUP(dwReturn);
-        }
-		SW1 = recvbuf[recvlen-2];
-		SW2 = recvbuf[recvlen-1];
-		if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
-		{
-			dwReturn = SCARD_W_WRONG_CHV;
-			LogTrace(LOGTYPE_ERROR, WHERE, "CardAuthenticateEx Failed: [0x%02X][0x%02X]", SW1, SW2);
-			if (SW1 == 0x64) {
-				//error during pin entry
-				switch(SW2){
+
+			externalPinInfo.cardState = CS_PINENTERED;
+			dwReturn = SCardControl(pCardData->hScard,
+				externalPinInfo.features.VERIFY_PIN_FINISH,
+				NULL,
+				0,
+				recvbuf,
+				sizeof(recvbuf),
+				&recvlen);
+			if ( dwReturn != SCARD_S_SUCCESS )
+			{
+				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+				CLEANUP(dwReturn);
+			}
+			SW1 = recvbuf[recvlen-2];
+			SW2 = recvbuf[recvlen-1];
+			if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
+			{
+				dwReturn = SCARD_W_WRONG_CHV;
+				LogTrace(LOGTYPE_ERROR, WHERE, "CardAuthenticateEx Failed: [0x%02X][0x%02X]", SW1, SW2);
+				if (SW1 == 0x64) {
+					//error during pin entry
+					switch(SW2){
 					case 0x00:
 						// Timeout
 						if (ucLastKey == 0x0d) {
@@ -447,13 +473,13 @@ endkeypress:
 							swprintf(wchErrorMessage, t[PIN_TOO_SHORT_CONTENT][getLanguage()]);
 						} else {
 							if (externalPinInfo.iPinCharacters >= BELPIC_MAX_USER_PIN_LEN) {
-							// PIN too long
-							swprintf(wchMainInstruction, t[PIN_TOO_LONG_MAININSTRUCTIONS][getLanguage()]);
-							swprintf(wchErrorMessage, t[PIN_TOO_LONG_CONTENT][getLanguage()]);
+								// PIN too long
+								swprintf(wchMainInstruction, t[PIN_TOO_LONG_MAININSTRUCTIONS][getLanguage()]);
+								swprintf(wchErrorMessage, t[PIN_TOO_LONG_CONTENT][getLanguage()]);
 							} else {
-							// no info about PIN chars
-							swprintf(wchMainInstruction,  t[PIN_SIZE_MAININSTRUCTIONS][getLanguage()]);
-							swprintf(wchErrorMessage, t[PIN_SIZE_CONTENT][getLanguage()]);
+								// no info about PIN chars
+								swprintf(wchMainInstruction,  t[PIN_SIZE_MAININSTRUCTIONS][getLanguage()]);
+								swprintf(wchErrorMessage, t[PIN_SIZE_CONTENT][getLanguage()]);
 							}
 						}
 						break;
@@ -462,68 +488,69 @@ endkeypress:
 						swprintf(wchMainInstruction, t[PIN_UNKNOWN_MAININSTRUCTIONS][getLanguage()]);
 						swprintf(wchErrorMessage,  t[PIN_UNKNOWN_CONTENT][getLanguage()], SW1,SW2);
 						break;
+					}
+					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
+						hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
+						NULL, 
+						t[WINDOW_TITLE][getLanguage()], 
+						wchMainInstruction, 
+						wchErrorMessage, 
+						TDCBF_RETRY_BUTTON  | TDCBF_CANCEL_BUTTON ,
+						TD_ERROR_ICON,
+						&nButton);
+
 				}
-				if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-					hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
-							NULL, 
-							t[WINDOW_TITLE][getLanguage()], 
-							wchMainInstruction, 
-							wchErrorMessage, 
-							TDCBF_RETRY_BUTTON  | TDCBF_CANCEL_BUTTON ,
-							TD_ERROR_ICON,
-							&nButton);
+				if (SW1 == 0x63) {
+					// Invalid PIN
+					dwRetriesLeft = SW2 & 0x0F;
+					if ( pcAttemptsRemaining != NULL )
+					{
+						/* -1: Don't support returning the count of remaining authentication attempts */
+						*pcAttemptsRemaining = dwRetriesLeft;
+					}
+					swprintf(wchMainInstruction, t[PIN_INVALID_MAININSTRUCTIONS][getLanguage()]);
+					swprintf(wchErrorMessage, t[PIN_INVALID_CONTENT][getLanguage()], dwRetriesLeft);
 
-			}
-			if (SW1 == 0x63) {
-				// Invalid PIN
-				dwRetriesLeft = SW2 & 0x0F;
-				if ( pcAttemptsRemaining != NULL )
-				{
-					/* -1: Don't support returning the count of remaining authentication attempts */
-					*pcAttemptsRemaining = dwRetriesLeft;
+					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
+						hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
+						NULL, 
+						t[WINDOW_TITLE][getLanguage()], 
+						wchMainInstruction, 
+						wchErrorMessage, 
+						TDCBF_RETRY_BUTTON  | TDCBF_CANCEL_BUTTON,
+						TD_ERROR_ICON,
+						&nButton);
 				}
-				swprintf(wchMainInstruction, t[PIN_INVALID_MAININSTRUCTIONS][getLanguage()]);
-				swprintf(wchErrorMessage, t[PIN_INVALID_CONTENT][getLanguage()], dwRetriesLeft);
 
-				if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-					hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
-								NULL, 
-								t[WINDOW_TITLE][getLanguage()], 
-								wchMainInstruction, 
-								wchErrorMessage, 
-								TDCBF_RETRY_BUTTON  | TDCBF_CANCEL_BUTTON,
-								TD_ERROR_ICON,
-								&nButton);
+				if (SW1 == 0x69 && SW2 == 0x83) {
+					// PIN blocked
+					swprintf(wchMainInstruction, t[PIN_BLOCKED_MAININSTRUCTIONS][getLanguage()]);
+					swprintf(wchErrorMessage, t[PIN_BLOCKED_CONTENT][getLanguage()]);
+					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
+						hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
+						NULL, 
+						t[WINDOW_TITLE][getLanguage()], 
+						wchMainInstruction, 
+						wchErrorMessage, 
+						TDCBF_OK_BUTTON,
+						TD_ERROR_ICON,
+						&nButton);
+					dwReturn = SCARD_W_CHV_BLOCKED;
+				}
+				bRetry = (nButton == IDRETRY);
+
 			}
-
-			if (SW1 == 0x69 && SW2 == 0x83) {
-				// PIN blocked
-				swprintf(wchMainInstruction, t[PIN_BLOCKED_MAININSTRUCTIONS][getLanguage()]);
-				swprintf(wchErrorMessage, t[PIN_BLOCKED_CONTENT][getLanguage()]);
-				if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-					hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
-								NULL, 
-								t[WINDOW_TITLE][getLanguage()], 
-								wchMainInstruction, 
-								wchErrorMessage, 
-								TDCBF_OK_BUTTON,
-								TD_ERROR_ICON,
-								&nButton);
-				dwReturn = SCARD_W_CHV_BLOCKED;
+			else
+			{
+				LogTrace(LOGTYPE_INFO, WHERE, "Logged on...");
 			}
-			bRetry = (nButton == IDRETRY);
-
-		}
-		else
-		{
-			LogTrace(LOGTYPE_INFO, WHERE, "Logged on...");
 		}
 	}
-/*#endif*/
+	/*#endif*/
 cleanup:
 
-   LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
-   return(dwReturn);
+	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
+	return(dwReturn);
 }
 #undef WHERE
 

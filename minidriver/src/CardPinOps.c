@@ -285,7 +285,8 @@ DWORD WINAPI   CardAuthenticateEx
 	if (pbPinInfo.PinType == ExternalPinType && 
 		(dwFlags & CARD_PIN_SILENT_CONTEXT ) != CARD_PIN_SILENT_CONTEXT ) {	
 			dwReturn = BeidAuthenticateExternal(pCardData, pcAttemptsRemaining, (dwFlags & CARD_PIN_SILENT_CONTEXT ) == CARD_PIN_SILENT_CONTEXT);
-	} else {
+	} 
+	else {
 		dwReturn = BeidAuthenticate(pCardData, pbPinData, cbPinData, pcAttemptsRemaining);
 	}
 
