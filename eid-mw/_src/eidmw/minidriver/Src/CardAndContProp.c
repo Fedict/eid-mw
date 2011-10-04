@@ -690,7 +690,7 @@ DWORD CardGetPinInfo(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pd
 	*  Check CCID features for external pin pad
 	**********************************************/
 	CCIDgetFeatures(&(CCIDfeatures), pCardData->hScard);
-	if (CCIDfeatures.VERIFY_PIN_START != 0)
+	if ((CCIDfeatures.VERIFY_PIN_START != 0) || (CCIDfeatures.VERIFY_PIN_DIRECT != 0))
 		pinInfo.PinType                           = ExternalPinType;
 	else
 		pinInfo.PinType                           = AlphaNumericPinType;
