@@ -20,17 +20,11 @@
 /****************************************************************************************************/
 
 #include "globmdrv.h"
-
 #include "log.h"
 #include "smartcard.h"
-
-/*#ifndef __MINGW32__*/
 #include "externalpinui.h"
-/*#endif*/
 
-/* we need to include a newer version of commctrl than the one provided by mingw*/
-#include <commctrl-mingw.h>
-
+#include <commctrl.h>
 /****************************************************************************************************/
 
 #define CHALLENGE_DATA_SIZE         16
@@ -235,7 +229,6 @@ DWORD BeidAuthenticateExternal(
 	) 
 {
 	DWORD						dwReturn  = 0;
-	/* #ifndef __MINGW32__*/
 	SCARD_IO_REQUEST				ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
 	SCARD_IO_REQUEST				ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
 
@@ -546,7 +539,7 @@ endkeypress:
 			}
 		}
 	}
-	/*#endif*/
+
 cleanup:
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");

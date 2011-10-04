@@ -22,7 +22,7 @@
 #include "log.h"
 #include "smartcard.h"
 #include "externalpinui.h"
-#include <commctrl-mingw.h>
+#include <commctrl.h>
 
 // Callback function used by taskdialog
 HRESULT CALLBACK TaskDialogCallbackProcPinEntry(      

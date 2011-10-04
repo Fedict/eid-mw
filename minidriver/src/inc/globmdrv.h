@@ -20,7 +20,6 @@
 #ifndef __GLOBMDRV__H__
 #define __GLOBMDRV__H__
 
-#include "cardmod-mingw.h"
 #include <windows.h>
 #include "bcrypt.h"
 #include <cardmod.h>

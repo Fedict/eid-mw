@@ -1392,11 +1392,7 @@ typedef struct _CARD_DATA
     PFN_CARD_GET_PROPERTY               pfnCardGetProperty;
     PFN_CARD_SET_PROPERTY               pfnCardSetProperty;
 
-#ifndef __MINGW32__
 } CARD_DATA, *PCARD_DATA;
-#else
-/* forward incomplete definition is already in place, how MSVC compiles this? */
-} dummy;
-#endif
+
 #endif
 
