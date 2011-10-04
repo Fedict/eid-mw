@@ -180,6 +180,7 @@
       </Component>
     </DirectoryRef>
 
+
     <ComponentGroup Id="BEIDVIEWERLIB">
       <Component Id="cmpF23EA0DF1C6ED1D827E30D7CD9F3D65C" Directory="BEIDVIEWERLIBDIR" Guid="{2BA77710-8FC5-439C-9422-9ADF82FAA17D}">
         <File Id="fil023F0023B19BE8BD00FD330813AD7B76" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\activation-1.1.jar" />
@@ -193,8 +194,8 @@
       <Component Id="cmpB73FBE094CF1EA9246C91D0B030594A2" Directory="BEIDVIEWERLIBDIR" Guid="{D1062B5D-5552-4F44-AACC-0C7478CF31BB}">
         <File Id="fil48DB14A4EEA9F3DBE5A863F4E5C2B824" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\bcmail-jdk16-1.45.jar" />
       </Component>
-      <Component Id="cmpbcprov-jdk16-1.45.jar" Directory="BEIDVIEWERLIBDIR" Guid="{C8858990-848D-4a8d-B71D-2009300BDF05}">
-        <File Id="filbcprov-jdk16-1.45.jar" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\bcprov-jdk16-1.45.jar" />
+      <Component Id="cmpbcprov_jdk16_1.45.jar" Directory="BEIDVIEWERLIBDIR" Guid="{C8858990-848D-4a8d-B71D-2009300BDF05}">
+        <File Id="filbcprov_jdk16_1.45.jar" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\bcprov-jdk16-1.45.jar" />
       </Component>
       <Component Id="cmp8F65A567FF8D2D692408EE1EA729F194" Directory="BEIDVIEWERLIBDIR" Guid="{14E2E30B-E71D-4790-B85B-CBCF3477223D}">
         <File Id="fil00E19405CCA64550789E657E34EFC565" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\bctsp-jdk16-1.45.jar" />

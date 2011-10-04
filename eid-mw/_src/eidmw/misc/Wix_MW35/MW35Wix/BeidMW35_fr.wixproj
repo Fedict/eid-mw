@@ -5,7 +5,7 @@
     <ProductVersion>3.0</ProductVersion>
     <ProjectGuid>{62481be6-49b5-48ea-a11e-bc77761ed0e2}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>BeidMW35-Basic-fr</OutputName>
+    <OutputName>BeidMW40-Basic-fr</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
     <Name>BeidMW35_en</Name>
