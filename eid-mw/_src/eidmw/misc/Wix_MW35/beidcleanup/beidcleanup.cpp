@@ -38,7 +38,7 @@ static bool g_bForceRemove = true;
 static long g_lTimeout=2*60;
 static const wchar_t *g_csKeepGuid =  L"";
 static bool g_bQuiet = false;
-
+static bool g_bUninstallOnly = false;
 static bool g_bRebootNeeded = false;
 
 static wstring sHelpMessage;
@@ -77,28 +77,31 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		nRetCode = RETURN_ERR_ADMIN_REQUIRED;
 		goto end;
 	}
+// in case of g_bUninstallOnly, we only use uninstall strings or msi uninstalls of previous versions
+	if(!g_bUninstallOnly)
+	{
+		//Stop and remove the services
+		if(RETURN_OK!= (nRetCode = StopAndRemoveService(L"BELGIUM_ID_CARD_SERVICE",	g_lTimeout)))	goto end;
+		if(RETURN_OK!= (nRetCode = StopAndRemoveService(L"eID Privacy Service",		g_lTimeout)))	goto end;
+		if(RETURN_OK!= (nRetCode = StopAndRemoveService(L"beidPrivacyFilter",		g_lTimeout)))	goto end;
+		if(RETURN_OK!= (nRetCode = StopAndRemoveService(L"eID CRL Service",			g_lTimeout)))	goto end;
 
-	//Stop and remove the services
-	if(RETURN_OK!= (nRetCode = StopAndRemoveService(L"BELGIUM_ID_CARD_SERVICE",	g_lTimeout)))	goto end;
-	if(RETURN_OK!= (nRetCode = StopAndRemoveService(L"eID Privacy Service",		g_lTimeout)))	goto end;
-	if(RETURN_OK!= (nRetCode = StopAndRemoveService(L"beidPrivacyFilter",		g_lTimeout)))	goto end;
-	if(RETURN_OK!= (nRetCode = StopAndRemoveService(L"eID CRL Service",			g_lTimeout)))	goto end;
+		//Kill the known process
+		if(RETURN_OK!= (nRetCode = KillProcess(L"beidgui.exe")))		goto end;
+		if(RETURN_OK!= (nRetCode = KillProcess(L"beid35gui.exe")))		goto end;
+		if(RETURN_OK!= (nRetCode = KillProcess(L"beidsystemtray.exe"))) goto end;
+		if(RETURN_OK!= (nRetCode = KillProcess(L"xsign.exe")))			goto end;
+		if(RETURN_OK!= (nRetCode = KillProcess(L"beid35xsign.exe")))	goto end;
 
-	//Kill the known process
-	if(RETURN_OK!= (nRetCode = KillProcess(L"beidgui.exe")))		goto end;
-	if(RETURN_OK!= (nRetCode = KillProcess(L"beid35gui.exe")))		goto end;
-	if(RETURN_OK!= (nRetCode = KillProcess(L"beidsystemtray.exe"))) goto end;
-	if(RETURN_OK!= (nRetCode = KillProcess(L"xsign.exe")))			goto end;
-	if(RETURN_OK!= (nRetCode = KillProcess(L"beid35xsign.exe")))	goto end;
-
-	//Check if the library are used (if g_bForceRemove kill the using process)
-	if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidmdrv.dll",					g_bForceRemove)))	goto end;	//minidriver
-	if(RETURN_OK!= (nRetCode = LibraryUsage(L"beid35common.dll",				g_bForceRemove)))	goto end;	//3.5
-	if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidcommon.dll",					g_bForceRemove)))	goto end;	//3.0
-	if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidwinscard.dll",				g_bForceRemove)))	goto end;	//2.5, 2.6
-	if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidcsp.dll",						g_bForceRemove)))	goto end;	//2.5, 2.6
-	if(RETURN_OK!= (nRetCode = LibraryUsage(L"BELGIUM IDENTITY CARD CSP.DLL",	g_bForceRemove)))	goto end;	//2.3, 2.4
-	if(RETURN_OK!= (nRetCode = LibraryUsage(L"BELPIC.DLL",						g_bForceRemove)))	goto end;	//2.3, 2.4
+		//Check if the library are used (if g_bForceRemove kill the using process)
+		if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidmdrv.dll",					g_bForceRemove)))	goto end;	//minidriver
+		if(RETURN_OK!= (nRetCode = LibraryUsage(L"beid35common.dll",				g_bForceRemove)))	goto end;	//3.5
+		if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidcommon.dll",					g_bForceRemove)))	goto end;	//3.0
+		if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidwinscard.dll",				g_bForceRemove)))	goto end;	//2.5, 2.6
+		if(RETURN_OK!= (nRetCode = LibraryUsage(L"beidcsp.dll",						g_bForceRemove)))	goto end;	//2.5, 2.6
+		if(RETURN_OK!= (nRetCode = LibraryUsage(L"BELGIUM IDENTITY CARD CSP.DLL",	g_bForceRemove)))	goto end;	//2.3, 2.4
+		if(RETURN_OK!= (nRetCode = LibraryUsage(L"BELPIC.DLL",						g_bForceRemove)))	goto end;	//2.3, 2.4
+	}
 
 	//Uninstall
 	if(RETURN_OK!= (nRetCode = Uninstall(L"2.3",    L"{44CFED0B-BF92-455B-94D3-FA967A81712E}",INSTALLTYPE_MSI,		0,			g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
@@ -111,103 +114,108 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	//if(RETURN_OK!= (nRetCode = Uninstall(L"3.5",	L"{824563DE-75AD-4166-9DC0-B6482F2DED5A}",INSTALLTYPE_MSI,		0,			g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
 	if(RETURN_OK!= (nRetCode = Uninstall(L"3.5 Pro",L"{FBB5D096-1158-4e5e-8EA3-C73B3F30780A}",INSTALLTYPE_MSI,		0,			g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
 
-	if(RETURN_OK!= (nRetCode = SearchAndUninstall(L"3.5",    L"{824563DE-75AD-4166-9DC0-B6482F2?????}",	g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
-	if(RETURN_OK!= (nRetCode = SearchAndUninstall(L"3.5 Pro",L"{FBB5D096-1158-4e5e-8EA3-C73B3F3?????}",	g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
-	if(RETURN_OK!= (nRetCode = SearchAndUninstall(L"minidriver",L"{842C2A79-289B-4cfa-9158-349B73F?????}", g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
 
-	if(g_bForceRemove && wcscmp(g_csKeepGuid,L"")==0)
+	// in case of g_bUninstallOnly, we only use uninstall strings or msi uninstalls of previous versions
+	if(!g_bUninstallOnly)
 	{
-		//Delete the remaining files 2.3
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"Belgium Identity Card CSP.dll")))		goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"Belgium Identity Card PKCS11.dll")))	goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"Belpic PCSC Service.exe")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"belpic.dll")))						goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eidlib.dll")))						goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"EIDLibCtrl.dll")))					goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eidlibj.dll")))						goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eidlibj.dll.manifest")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eid_libeay32.dll")))					goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eid_ssleay32.dll")))					goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"pinpad_emulator.dll")))				goto end;
-		//if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"winscarp.dll")))						goto end;
+		// too many guids included, our msi's UpgradeCode need to take care of this
+		if(RETURN_OK!= (nRetCode = SearchAndUninstall(L"3.5",    L"{824563DE-75AD-4166-9DC0-B6482F2?????}",	g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
+		if(RETURN_OK!= (nRetCode = SearchAndUninstall(L"3.5 Pro",L"{FBB5D096-1158-4e5e-8EA3-C73B3F3?????}",	g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
+		if(RETURN_OK!= (nRetCode = SearchAndUninstall(L"minidriver",L"{842C2A79-289B-4cfa-9158-349B73F?????}", g_lTimeout,g_csKeepGuid,&g_bRebootNeeded)))	goto end;
 
-		//Delete the remaining files 2.4
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"BelgianEID.cfg")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"belpicgui.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"shbelpicgui.exe")))			goto end;
-		
-		//Delete the remaining files 2.5/2.6
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidcsp.conf")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidcsp.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidgui.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlib.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibaxctrl.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibeay32.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibjni.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibjni.dll.manifest")))	goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibopensc.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidpkcs11.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidservicecrl.exe")))		goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidservicepcsc.exe")))		goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidssleay32.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidwinscard.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"shbeidgui.exe")))				goto end;
+		if(g_bForceRemove && wcscmp(g_csKeepGuid,L"")==0)
+		{
+			//Delete the remaining files 2.3
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"Belgium Identity Card CSP.dll")))		goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"Belgium Identity Card PKCS11.dll")))	goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"Belpic PCSC Service.exe")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"belpic.dll")))						goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eidlib.dll")))						goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"EIDLibCtrl.dll")))					goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eidlibj.dll")))						goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eidlibj.dll.manifest")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eid_libeay32.dll")))					goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"eid_ssleay32.dll")))					goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"pinpad_emulator.dll")))				goto end;
+			//if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"winscarp.dll")))						goto end;
 
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidgui.exe")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidsystemtray.exe")))		goto end;
+			//Delete the remaining files 2.4
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"BelgianEID.cfg")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"belpicgui.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"shbelpicgui.exe")))			goto end;
 
-		//Delete the remaining files 3.0
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidapplayer.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidcardlayer.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidcommon.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidCSPlib.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidDlgsWin32.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibJava_Wrapper.dll")))	goto end;
+			//Delete the remaining files 2.5/2.6
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidcsp.conf")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidcsp.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidgui.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlib.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibaxctrl.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibeay32.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibjni.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibjni.dll.manifest")))	goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibopensc.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidpkcs11.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidservicecrl.exe")))		goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidservicepcsc.exe")))		goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidssleay32.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidwinscard.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"shbeidgui.exe")))				goto end;
 
-		//Delete the remaining files 3.5
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beid35applayer.dll")))		goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beid35cardlayer.dll")))		goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beid35common.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beid35DlgsWin32.dll")))		goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidgui.exe")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidsystemtray.exe")))		goto end;
 
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"siscardplugins\\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll"))) goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"siscardplugins\\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"))) goto end;
+			//Delete the remaining files 3.0
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidapplayer.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidcardlayer.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidcommon.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidCSPlib.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidDlgsWin32.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidlibJava_Wrapper.dll")))	goto end;
 
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid35gui.exe")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid35libCpp.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eid.ico")))					goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidoutlooksnc.exe")))		goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid-pkcs11-register.html")))	goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid-pkcs11-unregister.html"))) goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidmw_en.qm")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidmw_nl.qm")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidmw_fr.qm")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidmw_de.qm")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"License_en.rtf")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"License_nl.rtf")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"License_fr.rtf")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"License_de.rtf")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"THIRDPARTY-LICENSES.txt")))	goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"QtCore4.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"QtGui4.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"imageformats\\qjpeg4.dll")))	goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidlib.jar")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidlib.jar")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"BEID_old.html")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"XAdESLib.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidlibC.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"x509ac.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"XalanC_1_10.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"XalanMessages_1_10.dll")))	goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"xercesc_2_7.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"xsec_1_4_0.dll")))			goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"libeay32.dll")))				goto end;
+			//Delete the remaining files 3.5
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beid35applayer.dll")))		goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beid35cardlayer.dll")))		goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beid35common.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beid35DlgsWin32.dll")))		goto end;
 
-		//Delete the remaining files minidriver
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidmdrv.dll")))				goto end;
-		if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_WOWSYS64,	L"beidmdrv.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"siscardplugins\\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll"))) goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"siscardplugins\\siscardplugin1_BE_EID_35__ACS ACR38U__.dll"))) goto end;
+
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid35gui.exe")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid35libCpp.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eid.ico")))					goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidoutlooksnc.exe")))		goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid-pkcs11-register.html")))	goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beid-pkcs11-unregister.html"))) goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidmw_en.qm")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidmw_nl.qm")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidmw_fr.qm")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidmw_de.qm")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"License_en.rtf")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"License_nl.rtf")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"License_fr.rtf")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"License_de.rtf")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"THIRDPARTY-LICENSES.txt")))	goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"QtCore4.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"QtGui4.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"imageformats\\qjpeg4.dll")))	goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidlib.jar")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"eidlib.jar")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"BEID_old.html")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"XAdESLib.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"beidlibC.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"x509ac.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"XalanC_1_10.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"XalanMessages_1_10.dll")))	goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"xercesc_2_7.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"xsec_1_4_0.dll")))			goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_APP,		L"libeay32.dll")))				goto end;
+
+			//Delete the remaining files minidriver
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_SYSTEM32,	L"beidmdrv.dll")))				goto end;
+			if(RETURN_OK!= (nRetCode = DeleteFile(FOLDER_WOWSYS64,	L"beidmdrv.dll")))				goto end;
+		}
 	}
-
 end:
 	if(nRetCode==RETURN_OK && g_bRebootNeeded) 
 		nRetCode = RETURN_NEED_REBOOT;
@@ -268,6 +276,9 @@ long ParseCommandLine(int argc, wchar_t **argv)
 		else if (!wcscmp(arg, L"--quiet") || !wcscmp(arg, L"-q"))
 			g_bQuiet=true;
 
+		else if (!wcscmp(arg, L"--uninstall") || !wcscmp(arg, L"-u"))
+			g_bUninstallOnly=true;
+
 		else if (!wcscmp(arg, L"--log") || !wcscmp(arg, L"-l"))
 		{
 			INCREMENT_TEST_INDEX(L"--log", L"1");
@@ -309,10 +320,12 @@ static long PrintUsage(const wchar_t *csMesg)
 	sHelpMessage+=L"  --log or -l <logfile> : log file\n";
 	sHelpMessage+=L"  --timeout or -t <timeout> : set a timeout (in second) for each uninstall execution.\n";
 	sHelpMessage+=L"  --keep or -k <guid> : keep the guid version.\n";
-	sHelpMessage+=L"    To use when unsinstalling msi. It kills processes but it doesn't mix with msi tasks.\n";
+	sHelpMessage+=L"    To use when uninstalling msi. It kills processes but it doesn't mix with msi tasks.\n";
 	sHelpMessage+=L"  --force or -f : force remove\n";
 	sHelpMessage+=L"    (kill application that used the middleware to insure uninstall achievment).\n";
 	sHelpMessage+=L"  --quiet or -q : quiet cleanup (does not show dialogs if failed)\n";
+	sHelpMessage+=L"  --uninstall or -u : use uninstallers only\n";
+	sHelpMessage+=L"    Only use registry uninstall strings or msi uninstall of previous eid-mw versions\n";
 	sHelpMessage+=L"\n";
 	sHelpMessage+=L"Error code return:\n";
 	if(ErrorMessage(RETURN_OK,						buff,sizeof(buff)/sizeof(wchar_t))) {sHelpMessage+=L"  "; sHelpMessage+=buff; sHelpMessage+=L"\n";}

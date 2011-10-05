@@ -1028,13 +1028,6 @@
       </Feature>
     </Feature>
 
-    <!--<CustomAction Id="LaunchApplication" 
-                  FileKey="beid35gui.exe" 
-                  ExeCommand="" 
-                  Execute="immediate" 
-                  Impersonate="yes" 
-                  Return="asyncNoWait" />-->
-
 <!--    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.StartApp)" />-->
 
     <UI>
@@ -1078,7 +1071,7 @@
     
     <CustomAction Id="BeidCleanup"
               BinaryKey="BEID_CLEANUP"
-              ExeCommand="[QuietMode][ForceCleanup][LogCleanup]-k $(var.ProductGuidGeneric)"
+              ExeCommand="[QuietMode][ForceCleanup][LogCleanup]-u -k $(var.ProductGuidGeneric)"
               Impersonate="no"
               Return="check"
               Execute="deferred"
