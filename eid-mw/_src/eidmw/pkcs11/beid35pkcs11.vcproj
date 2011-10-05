@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\common, ..\cardlayer"
+				AdditionalIncludeDirectories="..\common, ..\cardlayer;..\dialogs"
 				PreprocessorDefinitions="BEID_35;WIN32;_DEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -126,7 +126,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\common, ..\cardlayer"
+				AdditionalIncludeDirectories="..\common, ..\cardlayer;..\dialogs"
 				PreprocessorDefinitions="BEID_35;WIN32;_DEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
