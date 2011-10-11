@@ -102,6 +102,14 @@
     <Media Id="1" Cabinet="Middleware.cab" EmbedCab="yes" />
 
     <Icon Id="eid.ico" SourceFile="..\..\..\eidgui\eid.ico"/>
+
+    <Property Id="PROPOFFICE2010SIGNREG">
+      <RegistrySearch Id="PropOffice2010SignaturesRegistered"
+                      Root="HKCU"
+                      Key="SOFTWARE\Microsoft\Office\14.0\Common\Signatures"
+                      Name="TSALocation" 
+                      Type="raw" />
+    </Property>
     
     <Property Id="ARPPRODUCTICON" Value="eid.ico" />
     <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
@@ -759,8 +767,18 @@
         <!-- Start SCardSvr Service now -->
         <!--<ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" />-->
       </Component>
-  
-	  <Component Id="REGISTERXPI" Guid="{946B85B6-99CC-4893-8A42-E7EC6FFE0D87}">
+
+      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010" Guid="{DBD8E310-00D3-402f-A2F2-1984DD825C4D}">
+        <RegistryKey Root="HKCU"
+                     Key="Software\Microsoft\Office\14.0\Common\Signatures"
+                     Action="create" >
+          <RegistryValue Type="string" Name="TSALocation" Value="http://tsa.belgium.be/connect" KeyPath="yes"/>
+          <RegistryValue Type="integer" Name="XAdESLevel" Value="5" KeyPath="no"/>
+          <RegistryValue Type="integer" Name="MinXAdESLevel" Value="0" KeyPath="no"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="REGISTERXPI" Guid="{946B85B6-99CC-4893-8A42-E7EC6FFE0D87}">
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Mozilla\Firefox\Extensions"
                      Action="createAndRemoveOnUninstall">
@@ -968,8 +986,15 @@
                 >
         <ComponentRef Id="SCardSvrService"/>
         <ComponentRef Id="pkcs11"/>
-		<ComponentRef Id="REGISTERXPI"/>
-        <!--<ComponentRef Id="pkcs11_cfg"/>
+		  <ComponentRef Id="REGISTERXPI"/>
+      
+      <Feature Id="Office2010Signatureregistration" Level="1">
+        <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>
+        <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG]]></Condition>
+      </Feature>
+
+
+      <!--<ComponentRef Id="pkcs11_cfg"/>
         <ComponentRef Id="pkcs11_register" />-->
       <ComponentRef Id="BeidApplicationProgramsFolder"/>
       <ComponentRef Id="OutlookTool" />
