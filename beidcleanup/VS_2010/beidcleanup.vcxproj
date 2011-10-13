@@ -127,6 +127,12 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>.\Debug/beidcleanup.bsc</OutputFile>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">
     <Midl>
@@ -172,11 +178,17 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>.\Debug/beidcleanup.bsc</OutputFile>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Message>svn_revision.h</Message>
     </PreBuildEvent>
     <Midl>
       <TypeLibraryName>.\Release/beidcleanup.tlb</TypeLibraryName>
@@ -232,8 +244,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|Win32'">
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Message>svn_revision.h</Message>
     </PreBuildEvent>
     <Midl>
       <TypeLibraryName>.\Release/beidcleanup.tlb</TypeLibraryName>

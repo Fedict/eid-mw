@@ -177,6 +177,12 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">
     <ClCompile>
@@ -205,6 +211,12 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -240,6 +252,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|x64'">
     <Midl>
@@ -275,6 +293,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -304,6 +328,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|Win32'">
     <ClCompile>
@@ -333,6 +363,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -369,6 +405,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|x64'">
     <Midl>
@@ -405,6 +447,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\asn1.c" />
