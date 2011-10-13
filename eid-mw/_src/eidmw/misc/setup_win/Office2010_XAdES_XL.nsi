@@ -9,6 +9,7 @@
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
 !include "LogicLib.nsh"
+!include "x64.nsh"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
@@ -44,7 +45,13 @@ Function .onInit
 FunctionEnd
 
 Section "MainSection" SEC01
-	WriteRegStr HKCU "Software\Microsoft\Office\14.0\Common\Signatures" "TSALocation" "http://tsa.belgium.be/"
+  ${If} ${RunningX64}
+	WriteRegStr HKCU "Software\Wow6432Node\Microsoft\Office\14.0\Common\Signatures" "TSALocation" "http://tsa.belgium.be/connect"
+    WriteRegDWORD HKCU "Software\Wow6432Node\Microsoft\Office\14.0\Common\Signatures" "XAdESLevel" 5
+    WriteRegDWORD HKCU "Software\Wow6432Node\Microsoft\Office\14.0\Common\Signatures" "MinXAdESLevel" 0  
+  ${Else}
+	WriteRegStr HKCU "Software\Microsoft\Office\14.0\Common\Signatures" "TSALocation" "http://tsa.belgium.be/connect"
     WriteRegDWORD HKCU "Software\Microsoft\Office\14.0\Common\Signatures" "XAdESLevel" 5
-    WriteRegDWORD HKCU "Software\Microsoft\Office\14.0\Common\Signatures" "MinXAdESLevel" 0     
+    WriteRegDWORD HKCU "Software\Microsoft\Office\14.0\Common\Signatures" "MinXAdESLevel" 0  
+  ${EndIf}	
 SectionEnd
