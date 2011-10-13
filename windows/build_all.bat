@@ -6,6 +6,10 @@
 :: BUILD
 :: =====
 
+:: Create svn_revision.h
+:: =====================
+@call "%~dp0.\svn_revision.cmd"
+
 :: build pkcs11, minidriver, cleanuptool and sccertprop
 :: ====================================================
 @echo [INFO] Building "%~dp0..\VS_2010\beid.sln"

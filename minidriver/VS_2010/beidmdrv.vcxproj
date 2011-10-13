@@ -189,6 +189,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">
     <ClCompile>
@@ -224,6 +230,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -260,6 +272,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|x64'">
     <ClCompile>
@@ -296,6 +314,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -330,6 +354,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|Win32'">
     <ClCompile>
@@ -364,6 +394,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -398,6 +434,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|x64'">
     <ClCompile>
@@ -432,6 +474,12 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>..\..\windows\svn_revision.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create svn_revision.h</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CardAndContProp.c">
