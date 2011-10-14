@@ -791,17 +791,7 @@
         <!-- <ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" /> -->
       </Component>
 
-      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010_32" Guid="{DBD8E310-00D3-402f-A2F2-1984DD825C4D}">
-        <RegistryKey Root="HKCU"
-                     Key="Software\Microsoft\Office\14.0\Common\Signatures"
-                     Action="create" >
-          <RegistryValue Type="string" Name="TSALocation" Value="http://tsa.belgium.be/connect" KeyPath="yes"/>
-          <RegistryValue Type="integer" Name="XAdESLevel" Value="5" KeyPath="no"/>
-          <RegistryValue Type="integer" Name="MinXAdESLevel" Value="0" KeyPath="no"/>
-        </RegistryKey>
-      </Component>
-
-      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010_64" Guid="{55C7D36F-C90F-440e-890B-6F5FD3D09C90}" Win64="yes">
+      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010" Guid="{DBD8E310-00D3-402f-A2F2-1984DD825C4D}">
         <RegistryKey Root="HKCU"
                      Key="Software\Microsoft\Office\14.0\Common\Signatures"
                      Action="create" >
@@ -1056,12 +1046,8 @@
 		<ComponentRef Id="REGISTERXPI"/>
 
       <Feature Id="Office2010Signatureregistration_32" Level="1">
-        <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010_32"/>
+        <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>
         <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG_32]]></Condition>
-      </Feature>
-      <Feature Id="Office2010Signatureregistration_64" Level="1">
-        <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010_64"/>
-        <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG_64]]></Condition>
       </Feature>
       
         <ComponentRef Id="BeidApplicationProgramsFolder" />
