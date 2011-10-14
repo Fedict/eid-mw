@@ -49,9 +49,8 @@ Section "MainSection" SEC01
 	WriteRegStr HKCU "Software\Wow6432Node\Microsoft\Office\14.0\Common\Signatures" "TSALocation" "http://tsa.belgium.be/connect"
     WriteRegDWORD HKCU "Software\Wow6432Node\Microsoft\Office\14.0\Common\Signatures" "XAdESLevel" 5
     WriteRegDWORD HKCU "Software\Wow6432Node\Microsoft\Office\14.0\Common\Signatures" "MinXAdESLevel" 0  
-  ${Else}
+  ${EndIf}	
 	WriteRegStr HKCU "Software\Microsoft\Office\14.0\Common\Signatures" "TSALocation" "http://tsa.belgium.be/connect"
     WriteRegDWORD HKCU "Software\Microsoft\Office\14.0\Common\Signatures" "XAdESLevel" 5
     WriteRegDWORD HKCU "Software\Microsoft\Office\14.0\Common\Signatures" "MinXAdESLevel" 0  
-  ${EndIf}	
 SectionEnd
