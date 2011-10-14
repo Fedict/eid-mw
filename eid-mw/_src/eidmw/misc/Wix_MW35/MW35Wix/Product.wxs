@@ -562,6 +562,10 @@
         <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoutlooksnc.exe" />
       </Component>
 
+      <Component Id="Office2010XAdESTool" Guid="{B42CF78B-952A-4768-8605-2E6F3BBA340B}">
+        <File Id="beidoffice2010_XAdES_XL.exe" Name="beidoffice2010_XAdES_XL.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoffice2010_XAdES_XL.exe" />
+      </Component>
+      
       <!--<Component Id="GUI" Guid="{E45C85CA-0A5A-400C-9B86-7038C82B254D}" SharedDllRefCount="yes">
             <File Id="beid35gui.exe" Name="beid35gui.exe" KeyPath="yes" Source="..\..\..\_Binaries35\Release\beid35gui.exe" />
             <File Id="beid35libCpp.dll" Name="beid35libCpp.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35libCpp.dll" />
@@ -892,6 +896,15 @@
         <RemoveFolder Id="ApplicationProgramsFolderUtilities" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="OutlookShortcut" Type="integer" Value="1" KeyPath="yes" />
       </Component>
+      
+      <Component Id="Office2010XAdESShortcut" Guid="{B2D00383-20A7-4058-A153-80D4DC15FD42}">
+        <Shortcut Id="Office2010XAdESStartMenuShortcut"
+          Name="MS Office 2010 XAdES XL signature configuration"
+          Description="!(loc.Office2010XAdESDescr)"
+          Target="[APPLICATIONROOTFOLDER]beidoffice2010_XAdES_XL.exe"
+          WorkingDirectory="APPLICATIONROOTFOLDER"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="Office2010XAdESShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>      
     </DirectoryRef>
 
     <Feature Id="BeidRuntime"
@@ -956,39 +969,26 @@
 
 	  <Feature Id="BeidGuiInstall"
              Title="!(loc.BeidGui)"
-             Description="!(loc.BeidGuiDescr)"
-             Absent="disallow"
-             Level="1"
+           Description="!(loc.BeidGuiDescr)"
+           Level="1"
       >
 
       <!-- Program Files -->
       <ComponentRef Id="BEIDVIEWER"/>
       <ComponentGroupRef Id="BEIDVIEWERLIB"/>
       <ComponentRef Id="eidviewerShortcut"/>
-	</Feature>
-	
-      <!--<Feature Id="GUI"
-                Title="!(loc.BeidGui)"
-                Description="!(loc.BeidGuiDescr)"
-                Level="1"
-                >
-        <ComponentRef Id="GUI" />
-        <ComponentRef Id="Qt" />
-        <ComponentRef Id="QtPlugin"/>
-        <ComponentRef Id="GuiLang" />
-          <ComponentRef Id="BeidGuiShortcut"/>
-    </Feature>-->
+    </Feature>
 
     <Feature Id="Crypto"
                 Title="!(loc.Crypto)"
                 Description="!(loc.CryptoDescr)"
                 Level="1"
                 >
-        <ComponentRef Id="SCardSvrService"/>
-        <ComponentRef Id="pkcs11"/>
-		  <ComponentRef Id="REGISTERXPI"/>
-      
-      <Feature Id="Office2010Signatureregistration" Level="1">
+      <ComponentRef Id="SCardSvrService"/>
+      <ComponentRef Id="pkcs11"/>
+      <ComponentRef Id="REGISTERXPI"/>
+
+      <Feature Id="Office2010Signatureregistration" Level="1" Absent="disallow">
         <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>
         <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG]]></Condition>
       </Feature>
@@ -997,17 +997,20 @@
       <!--<ComponentRef Id="pkcs11_cfg"/>
         <ComponentRef Id="pkcs11_register" />-->
       <ComponentRef Id="BeidApplicationProgramsFolder"/>
-      <ComponentRef Id="OutlookTool" />
+      <ComponentRef Id="OutlookTool"/>
+      <ComponentRef Id="Office2010XAdESTool"/>
+
       <!-- Shortcuts -->
         <ComponentRef Id ="OutlookShortcut"/>
-        <Feature Id="Install_Minidriver" Level="0">
+        <ComponentRef Id="Office2010XAdESShortcut"/>
+        <Feature Id="Install_Minidriver" Level="0" Absent="disallow">
           <ComponentRef Id="beidmdrv"/>
           <ComponentRef Id="CertPropService"/>
           <ComponentRef Id="beidmdrvsystem32"/>
           <ComponentRef Id="REGISTERMINIDRIVER"/>
           <Condition Level="1">VersionNT >= 600</Condition>
         </Feature>
-        <Feature Id="Install_CSP" Level="1">
+        <Feature Id="Install_CSP" Level="1" Absent="disallow">
           <ComponentRef Id="CSP"/>
           <ComponentRef Id="REGISTERCSP"/>
           <Condition Level="0">VersionNT >= 600</Condition>
@@ -1020,11 +1023,6 @@
       <UIRef Id="WixUI_FeatureTree" />
       <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTFOLDER" />
       <UIRef Id="WixUI_ErrorProgressText" />
-
-<!--
-      <Publish Dialog="ExitDialog" Control="Finish"  Event="DoAction"
-               Value="LaunchApplication" Order="1">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
--->
     </UI>
     
     <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
@@ -1064,15 +1062,9 @@
     />
     
     <CustomAction Id="IsPrivileged" Error="!(loc.AdminNeeded)" />
-    <!--<CustomAction Id="PreventDowngrading" Error="!(loc.NoDowngrade)" />-->
-
-    <!--<InstallUISequence>
-      <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
-    </InstallUISequence>-->
-
 
     <InstallExecuteSequence>
-      <!--<Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>-->
+
       <RemoveExistingProducts After="InstallFinalize" />
       
       <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>

@@ -572,6 +572,10 @@
         <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoutlooksnc.exe" />
       </Component>
 
+      <Component Id="Office2010XAdESTool" Guid="{B42CF78B-952A-4768-8605-2E6F3BBA340B}">
+        <File Id="beidoffice2010_XAdES_XL.exe" Name="beidoffice2010_XAdES_XL.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoffice2010_XAdES_XL.exe" />
+      </Component>
+      
       <!--><Component Id="GUI" Guid="{E45C85CA-0A5A-400C-9B86-7038C82B254D}" SharedDllRefCount="yes">
         <File Id="beid35gui.exe" Name="beid35gui.exe" KeyPath="yes" Source="..\..\..\_Binaries35\Release\beid35gui.exe" />
         <File Id="beid35libCpp.dll" Name="beid35libCpp.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35libCpp.dll" />
@@ -943,6 +947,14 @@
         <RemoveFolder Id="ApplicationProgramsFolderUtilities" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="OutlookShortcut" Type="integer" Value="1" KeyPath="yes" />
       </Component>
+      <Component Id="Office2010XAdESShortcut" Guid="{B2D00383-20A7-4058-A153-80D4DC15FD42}">
+        <Shortcut Id="Office2010XAdESStartMenuShortcut"
+          Name="MS Office 2010 XAdES XL signature configuration"
+          Description="!(loc.Office2010XAdESDescr)"
+          Target="[APPLICATIONROOTFOLDER]beidoffice2010_XAdES_XL.exe"
+          WorkingDirectory="APPLICATIONROOTFOLDER"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="Office2010XAdESShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
     </DirectoryRef>
 
     <Feature Id="BeidRuntime"
@@ -1054,8 +1066,10 @@
       
         <ComponentRef Id="BeidApplicationProgramsFolder" />
         <ComponentRef Id="OutlookTool" />
+        <ComponentRef Id="Office2010XAdESTool"/>
         <!-- Shortcuts -->
         <ComponentRef Id ="OutlookShortcut"/>
+        <ComponentRef Id="Office2010XAdESShortcut"/>
         <Feature Id="Install_Minidriver" Level="0" Display="hidden" >
           <ComponentRef Id="beidmdrv"/>
           <ComponentRef Id="CertPropService"/>
