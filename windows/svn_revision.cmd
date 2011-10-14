@@ -10,10 +10,11 @@
 :: then, a dummy value is written (should not happen!)
 
 
-
+@SET SVN_REVISION=
 @FOR /F "tokens=1" %%i in ('svnversion.exe %~dp0..') do @SET SVN_REVISION=%%i
 
 @IF NOT DEFINED SVN_REVISION GOTO writedummy
+@IF "%SVN_REVISION%"=="" GOTO writedummy
 @IF SVN_REVISION==exported GOTO writedummy
 
 @echo %SVN_REVISION%>%~dp0..\svn_revision
