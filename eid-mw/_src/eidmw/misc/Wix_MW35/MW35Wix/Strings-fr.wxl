@@ -13,6 +13,7 @@
   <String Id="XSign" Overridable="yes">Xsign</String>
   <String Id="XSignDescr" Overridable="yes">Application XSign</String>
   <String Id="OutlookDescr" Overridable="yes">Configuration de MS Outlook pour la carte eID</String>
+  <String Id="Office2010XAdESDescr" Overridable="yes">configuration XAdES XL et TSA pour signatures</String>
   <String Id="Users" Overridable="yes">Utilisateurs</String>
   <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Impossible de créer le security descriptor [3]\[4], erreur: [2]</String>
   <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Impossible d'appliquer le security descriptor de l'objet [3], erreur: [2]</String>

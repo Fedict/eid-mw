@@ -14,6 +14,7 @@
   <String Id="XSign" Overridable="yes">Xsign</String>
   <String Id="XSignDescr" Overridable="yes">XSign Toepassing</String>
   <String Id="OutlookDescr" Overridable="yes">MS Outlook configuratie voor de eID kaart</String>
+  <String Id="Office2010XAdESDescr" Overridable="yes">MS Office 2010: XAdES XL en TSA configuratie voor handtekeningen</String>
   <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Kan de security descriptor voor [3]\[4] niet aanmaken, systeemfout: [2]</String>
   <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Kan de security descriptor niet zetten op object [3], systeemfout: [2]</String>
   <String Id="msierrSecureObjectsUnknownType" Overridable="yes">Onbekend Object Type [3], systeemfout: [2]</String>

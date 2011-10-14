@@ -13,6 +13,7 @@
   <String Id="XSign" Overridable="yes">Xsign</String>
   <String Id="XSignDescr" Overridable="yes">Application XSign</String>
   <String Id="OutlookDescr" Overridable="yes">Configure MS Outlook for eID card</String>
+  <String Id="Office2010XAdESDescr" Overridable="yes">MS Office 2010: XAdES XL and TSA configuration for signatures</String>
   <String Id="Users" Overridable="yes">Users</String>
   <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Could not create security descriptor [3]\[4], error: [2]</String>
   <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Could not apply object security descriptor [3], error: [2]</String>
