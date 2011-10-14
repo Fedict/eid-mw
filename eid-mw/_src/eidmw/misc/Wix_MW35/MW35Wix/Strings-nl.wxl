@@ -5,10 +5,10 @@
   <String Id="LicenseFile" Overridable="yes"></String>
   <String Id="StartApp" Overridable="yes">Start de Eid Viewer toepassing</String>
   <String Id="MinOs" Overridable="yes">Windows XP of hoger is vereist</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 3.5</String>
+  <String Id="BeidRuntime" Overridable="yes">Belgium EID 4.0</String>
   <String Id="BeidRuntimeDesc" Overridable="yes">Deze modules zijn noodzakelijk voor het gebruik van de eID kaart.</String>
-  <String Id="BeidGui" Overridable="yes">eID beheersinstrument</String>
-  <String Id="BeidGuiDescr" Overridable="yes">Uitlezen van de e-ID</String>
+  <String Id="BeidGui" Overridable="yes">eID Viewer</String>
+  <String Id="BeidGuiDescr" Overridable="yes">Uitlezen van de e-ID kaart</String>
   <String Id="Crypto" Overridable="yes">Cryptografische Modules</String>
   <String Id="CryptoDescr" Overridable="yes">Deze modules zijn noodzakelijk voor het gebruik van de eID kaart als elektronisch identiteitsbewijs in Internet Explorer, Firefox, etc. of voor het maken van digitale handtekeningen in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc.</String>
   <String Id="XSign" Overridable="yes">Xsign</String>

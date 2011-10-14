@@ -1022,18 +1022,6 @@
       <ComponentGroupRef Id="BEIDVIEWERLIB"/>
       <ComponentRef Id="eidviewerShortcut"/>
     </Feature>
-	  
-      <!--<Feature Id="GUI" 
-                Title="!(loc.BeidGui)" 
-                Description="!(loc.BeidGuiDescr)"
-                Level="1"
-                >
-        <ComponentRef Id="GUI" />
-        <ComponentRef Id="Qt" />
-        <ComponentRef Id="QtPlugin"/>
-        <ComponentRef Id="GuiLang" />
-        <ComponentRef Id="BeidGuiShortcut"/>
-      </Feature>-->
 
     <Feature Id="Crypto"
                 Title="!(loc.Crypto)"
@@ -1045,7 +1033,7 @@
         <ComponentRef Id="pkcs11_64"/>
 		<ComponentRef Id="REGISTERXPI"/>
 
-      <Feature Id="Office2010Signatureregistration_32" Level="1">
+      <Feature Id="Office2010Signatureregistration_32" Level="1" Display="hidden" Absent="disallow">
         <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>
         <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG_32]]></Condition>
       </Feature>
@@ -1056,7 +1044,7 @@
         <!-- Shortcuts -->
         <ComponentRef Id ="OutlookShortcut"/>
         <ComponentRef Id="Office2010XAdESShortcut"/>
-        <Feature Id="Install_Minidriver" Level="0" Display="hidden" >
+        <Feature Id="Install_Minidriver" Level="0" Display="hidden" Absent="disallow">
           <ComponentRef Id="beidmdrv"/>
           <ComponentRef Id="CertPropService"/>
           <ComponentRef Id="MINIDRIVER"/>
@@ -1065,7 +1053,7 @@
           <ComponentRef Id="REGISTERMINIDRIVER_64"/>
           <Condition Level="1">VersionNT >= 600</Condition>
         </Feature>
-        <Feature Id="Install_CSP" Level="1" Display="hidden">
+        <Feature Id="Install_CSP" Level="1" Display="hidden" Absent="disallow">
           <ComponentRef Id="CSP"/>
           <ComponentRef Id="REGISTERCSP"/>
           <Condition Level="0">"VersionNT >= 600"</Condition>

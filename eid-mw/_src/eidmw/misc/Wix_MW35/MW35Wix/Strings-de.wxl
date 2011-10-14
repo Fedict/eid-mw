@@ -3,10 +3,10 @@
   <String Id="Lang" Overridable="yes">1031</String>
   <String Id="Langpref" Overridable="yes">de</String>
   <String Id="StartApp" Overridable="yes">Start Eid Viewer</String>
-  <String Id="MinOs" Overridable="yes"> Dieser Aufbau muss mindestens Windows 2000</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 3.5</String>
+  <String Id="MinOs" Overridable="yes"> Dieser Aufbau muss mindestens Windows XP</String>
+  <String Id="BeidRuntime" Overridable="yes">Belgium Eid Viewer</String>
   <String Id="BeidRuntimeDesc" Overridable="yes">Dieses Modul ist notwendig, um elektronische Personalausweis.</String>
-  <String Id="BeidGui" Overridable="yes">eID-Verwaltungsinstrument</String>
+  <String Id="BeidGui" Overridable="yes">Eid Viewer</String>
   <String Id="BeidGuiDescr" Overridable="yes">Lesen Sie den Inhalt einer e-ID Karte</String>
   <String Id="Crypto" Overridable="yes">Kryptografische Module</String>
   <String Id="CryptoDescr" Overridable="yes">Diese Module sind für die Benutzung der eID-Karte als elektronischen Personalausweis in Internet Explorer, Firefox, usw. oder zum Erstellen von digitalen Unterschriften in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird usw. notwendig.</String>

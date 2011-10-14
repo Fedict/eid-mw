@@ -35,19 +35,21 @@ IF NOT EXIST "%OUT_PATH%\%LANG%\%MSI_FILE_IN%-de.msi" goto NOT_%LANG%
 set LANG=en-us
 copy /Y "%OUT_PATH%\%LANG%\%MSI_FILE_IN%-en.msi" "%OUT_PATH%\%MSI_FILE_OUT%.msi"
 set LANG=nl-nl
-"%BEID_DIR_PLATFORMSDK_2008%\Bin\msitran.exe" -g "%OUT_PATH%\%MSI_FILE_OUT%.msi" "%OUT_PATH%\%LANG%\%MSI_FILE_IN%-nl.msi" "%MST_DIR%\nl.mst"
+"%BEID_DIR_PLATFORMSDK_2008%\Bin\msitran.exe" -g "%OUT_PATH%\%MSI_FILE_OUT%.msi" "%OUT_PATH%\%LANG%\%MSI_FILE_IN%-nl.msi" "2067"
 echo ...
 set LANG=fr-fr
-"%BEID_DIR_PLATFORMSDK_2008%\Bin\msitran.exe" -g "%OUT_PATH%\%MSI_FILE_OUT%.msi" "%OUT_PATH%\%LANG%\%MSI_FILE_IN%-fr.msi" "%MST_DIR%\fr.mst"
+"%BEID_DIR_PLATFORMSDK_2008%\Bin\msitran.exe" -g "%OUT_PATH%\%MSI_FILE_OUT%.msi" "%OUT_PATH%\%LANG%\%MSI_FILE_IN%-fr.msi" "2060"
 echo ...
 set LANG=de-de
-"%BEID_DIR_PLATFORMSDK_2008%\Bin\msitran.exe" -g "%OUT_PATH%\%MSI_FILE_OUT%.msi" "%OUT_PATH%\%LANG%\%MSI_FILE_IN%-de.msi" "%MST_DIR%\de.mst"
+"%BEID_DIR_PLATFORMSDK_2008%\Bin\msitran.exe" -g "%OUT_PATH%\%MSI_FILE_OUT%.msi" "%OUT_PATH%\%LANG%\%MSI_FILE_IN%-de.msi" "1031"
 echo ...
 
-"%BEID_DIR_PLATFORMSDK_2008%\Bin\msidb.exe" -d "%OUT_PATH%\%MSI_FILE_OUT%.msi" -r "%MST_DIR%\nl.mst"
-"%BEID_DIR_PLATFORMSDK_2008%\Bin\msidb.exe" -d "%OUT_PATH%\%MSI_FILE_OUT%.msi" -r "%MST_DIR%\fr.mst"
-"%BEID_DIR_PLATFORMSDK_2008%\Bin\msidb.exe" -d "%OUT_PATH%\%MSI_FILE_OUT%.msi" -r "%MST_DIR%\de.mst"
+"%BEID_DIR_PLATFORMSDK_2008%\Bin\msidb.exe" -d "%OUT_PATH%\%MSI_FILE_OUT%.msi" -r "2067"
+"%BEID_DIR_PLATFORMSDK_2008%\Bin\msidb.exe" -d "%OUT_PATH%\%MSI_FILE_OUT%.msi" -r "2060"
+"%BEID_DIR_PLATFORMSDK_2008%\Bin\msidb.exe" -d "%OUT_PATH%\%MSI_FILE_OUT%.msi" -r "1031"
 
+"%BEID_DIR_PLATFORMSDK_2008%\Bin\msiInfo.exe" "%OUT_PATH%\%MSI_FILE_OUT%.msi" /p Intel;1033,2067,2060,1031
+@if "%ERROLEVEL%" == "1" goto END
 ::------------------------------------
 :: generate the correct file name and upload file to network
 ::------------------------------------
