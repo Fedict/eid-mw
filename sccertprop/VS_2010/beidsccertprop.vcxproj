@@ -41,7 +41,6 @@
   <ItemGroup>
     <ClInclude Include="..\src\certprop.h" />
     <ClInclude Include="..\src\certpropimpl.h" />
-    <ClInclude Include="..\src\main.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="sccertprop.rc" />
@@ -320,7 +319,7 @@
       <AdditionalDependencies>winscard.lib;WS2_32.Lib;Crypt32.lib;beid40common.lib;beid40cardlayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>

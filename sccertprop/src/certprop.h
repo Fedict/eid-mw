@@ -18,9 +18,10 @@
 
 **************************************************************************** */
 
-#ifndef IMPORTCERT_H_
-#define IMPORTCERT_H_
+#ifndef CERTPROP_H_
+#define CERTPROP_H_
+#include <windows.h>
 DWORD CertProp();
 extern HANDLE                  ghSvcStopEvent;
 
-#endif /* IMPORTCERT_H_ */
+#endif /* CERTPROP_H_ */
