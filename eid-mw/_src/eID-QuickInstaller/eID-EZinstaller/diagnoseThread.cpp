@@ -564,10 +564,10 @@ QDomNode diagnoseThread::InvestigateElement( const QString ElementName , const Q
         {returnString = scl.getSoftwareList(paramsAsString); }
     else if (ElementName == QString("STARTPROCESS")) {
         if (currentLanguage == "Fr") {
-            paramsAsString = QString(paramsAsString.c_str()).replace("%msi_language%","TRANSFORMS=:fr.mst").toStdString();
+            paramsAsString = QString(paramsAsString.c_str()).replace("%msi_language%","").toStdString();
         }
         else {
-            paramsAsString = QString(paramsAsString.c_str()).replace("%msi_language%","TRANSFORMS=:nl.mst").toStdString();
+            paramsAsString = QString(paramsAsString.c_str()).replace("%msi_language%","").toStdString();
         }
         try {
 			disableCancel();
