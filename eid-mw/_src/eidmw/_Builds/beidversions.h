@@ -139,4 +139,12 @@
 #define WIN_QI_VERSION3          BASE_VERSION3          
 #define WIN_QI_VERSION4          SVN_REVISION
 
+// certificate registration tool
+#define WIN_SCCERT_VERSION_STRING    BASE_VERSION_STRING SVN_REVISION_STR
+#define WIN_SCCERT_VERSION1          BASE_VERSION1          
+#define WIN_SCCERT_VERSION2          BASE_VERSION2          
+#define WIN_SCCERT_VERSION3          BASE_VERSION3          
+#define WIN_SCCERT_VERSION4          SVN_REVISION
+
+
 #endif //__BEID_VERSION_H__

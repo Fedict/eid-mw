@@ -130,6 +130,7 @@
           <Directory Id="BEIDVIEWERDIR" Name="EidViewer" >
             <Directory Id="BEIDVIEWERLIBDIR" Name="lib" />
           </Directory>
+		  <Directory Id="BEIDCERTPROPROOTFOLDER" Name="BeID Certprop"/>
 		  <Directory Id="EIDSTORE" Name="eidstore">
             <Directory Id="CERTSDIR" Name="certs"/>
             <Directory Id="CRLDIR" Name="crl">
@@ -160,7 +161,7 @@
           </Directory>
         </Directory>
         <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
-
+		
       </Directory>
 
       <Directory Id="DesktopFolder"/>
@@ -543,6 +544,18 @@
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\CertPropSvc" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
         <!-- Start Certificate Propagation Service now -->
         <!--<ServiceControl Id="StartCertPropSvc" Name="CertPropSvc" Start="install" Wait="no"/>-->
+      </Component>
+    </DirectoryRef>
+	
+	<DirectoryRef Id="BEIDCERTPROPROOTFOLDER">
+	<!-- Certificate Propagation Service is not yet available on Windows XP, therefore the beidsccertprop will register the certificates instead. -->
+      <Component Id="beidsccertproptool" Guid="8F0AC506-4863-47ac-8A92-7B8FCE9ABC64" >
+        <File Id="beidsccertprop.exe" Name="beidsccertprop.exe" Source="..\..\..\sccertprop\Release\beidsccertprop.exe" KeyPath="yes"/>
+      </Component>
+      
+	  <Component Id="beidsccertproptool_autostart" Guid="F02E7164-F7EA-4c06-A2AC-A3BEE214EF49" >
+        <!-- Start beidsccertprop.exe during startup -->
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run" Type="string" Name="beidsccertprop" Value="[BEIDCERTPROPROOTFOLDER]beidsccertprop.exe" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
     
@@ -977,7 +990,7 @@
       <ComponentRef Id="BEIDVIEWER"/>
       <ComponentGroupRef Id="BEIDVIEWERLIB"/>
       <ComponentRef Id="eidviewerShortcut"/>
-    </Feature>
+      </Feature>
 
     <Feature Id="Crypto"
                 Title="!(loc.Crypto)"
@@ -1013,11 +1026,13 @@
       <Feature Id="Install_CSP" Level="1" Display="hidden" Absent="disallow">
           <ComponentRef Id="CSP"/>
           <ComponentRef Id="REGISTERCSP"/>
+		      <ComponentRef Id="beidsccertproptool"/>
+		      <ComponentRef Id="beidsccertproptool_autostart"/>		  
           <Condition Level="0">VersionNT >= 600</Condition>
-        </Feature>
       </Feature>
-
     </Feature>
+
+  </Feature>
 
     <UI>
       <UIRef Id="WixUI_FeatureTree" />

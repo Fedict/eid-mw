@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="sccertprop"
+	Name="beidsccertprop"
 	ProjectGUID="{CEFD95EC-50EA-4A2D-BC72-2DC74F53705C}"
 	RootNamespace="sccertprop"
 	Keyword="Win32Proj"
