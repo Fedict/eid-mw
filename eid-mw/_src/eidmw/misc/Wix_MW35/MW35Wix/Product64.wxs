@@ -200,12 +200,6 @@
       <Component Id="cmpF23EA0DF1C6ED1D827E30D7CD9F3D65C" Directory="BEIDVIEWERLIBDIR" Guid="{2BA77710-8FC5-439C-9422-9ADF82FAA17D}">
         <File Id="fil023F0023B19BE8BD00FD330813AD7B76" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\activation-1.1.jar" />
       </Component>
-      <Component Id="cmp253B9B4D8F12D56E5FC82A513C182AF0" Directory="BEIDVIEWERLIBDIR" Guid="{1910B818-D632-4978-9F13-8EF1E1FD3E5A}">
-        <File Id="filC2CBC6E9B8E5281C2157733A30E409CB" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\appframework-1.0.3.jar" />
-      </Component>
-      <Component Id="cmpFDBD76DCF18ECF02C834768AC42F759D" Directory="BEIDVIEWERLIBDIR" Guid="{049D09AD-7138-49BD-A7E1-80992153D08E}">
-        <File Id="fil7E0A762B627C978C276E203B97AB0017" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\appframework-1.03.jar" />
-      </Component>
       <Component Id="cmpB73FBE094CF1EA9246C91D0B030594A2" Directory="BEIDVIEWERLIBDIR" Guid="{D1062B5D-5552-4F44-AACC-0C7478CF31BB}">
         <File Id="fil48DB14A4EEA9F3DBE5A863F4E5C2B824" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\bcmail-jdk16-1.45.jar" />
       </Component>
@@ -214,9 +208,6 @@
       </Component>
       <Component Id="cmp8F65A567FF8D2D692408EE1EA729F194" Directory="BEIDVIEWERLIBDIR" Guid="{14E2E30B-E71D-4790-B85B-CBCF3477223D}">
         <File Id="fil00E19405CCA64550789E657E34EFC565" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\bctsp-jdk16-1.45.jar" />
-      </Component>
-      <Component Id="cmpEC0D40B58224C09CAE4DA0B25AF47676" Directory="BEIDVIEWERLIBDIR" Guid="{39263CD2-EF6A-4B84-8CFF-869EB47DC116}">
-        <File Id="fil65C541B0C9D79DBFFB9297EA87B4AB14" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\beansbinding-1.2.1.jar" />
       </Component>
       <Component Id="cmpCEFF213A43E8D20B9D3C5AD619951C38" Directory="BEIDVIEWERLIBDIR" Guid="{4643EAB8-355B-4295-83BE-A9ECAF2FE134}">
         <File Id="fil9266C044F838E0FA4A00DDF586164BE3" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\commons-codec-1.4.jar" />
@@ -234,16 +225,16 @@
         <File Id="fil2796CB9696BB1A7B44607863621EB5F4" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\commons-logging-api-1.1.jar" />
       </Component>
       <Component Id="cmp239E8B911447BE06D22EA317F1DE06A3" Directory="BEIDVIEWERLIBDIR" Guid="{5D1DFA49-794C-44BA-A99B-7F269FA69892}">
-        <File Id="filA0AF1F14EA8E53BFEB716CA39955710F" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-core-1.0.4.BETA4.jar" />
+        <File Id="filA0AF1F14EA8E53BFEB716CA39955710F" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-core-1.0.4.BETA6.jar" />
       </Component>
       <Component Id="cmp276CF9B545E319DDFFB0ACF27F0C5964" Directory="BEIDVIEWERLIBDIR" Guid="{BB50304F-30A1-4EE9-8D1E-6FF1F9E08D85}">
-        <File Id="filBB02AFB828568BAF2A6D452DF74AD4BD" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-service-1.0.4.BETA4.jar" />
+        <File Id="filBB02AFB828568BAF2A6D452DF74AD4BD" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-service-1.0.4.BETA6.jar" />
       </Component>
       <Component Id="cmpF0852469A8794D803E05DAFE09383EFE" Directory="BEIDVIEWERLIBDIR" Guid="{24C8477A-2B10-47F0-BD32-496B196DE657}">
-        <File Id="fil2E46AF421ED32956AA040943F3F02627" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-service-spi-1.0.4.BETA4.jar" />
+        <File Id="fil2E46AF421ED32956AA040943F3F02627" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-service-spi-1.0.4.BETA6.jar" />
       </Component>
       <Component Id="cmp27C7B25729ED67627A4F38E23911517F" Directory="BEIDVIEWERLIBDIR" Guid="{076CB9B3-FA64-47E4-9D9A-5991AC700584}">
-        <File Id="fil0691B559AF98E87DC1BE9651AE6D9294" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-shared-1.0.4.BETA4.jar" />
+        <File Id="fil0691B559AF98E87DC1BE9651AE6D9294" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-shared-1.0.4.BETA6.jar" />
       </Component>
       <Component Id="cmp4FAC43C7565FE3A3E46E4838089F7736" Directory="BEIDVIEWERLIBDIR" Guid="{D55CF622-99EF-4C51-BB27-327CC515EFD7}">
         <File Id="fil3AF140C3F9DA8C730CB24372B8D64FE7" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-trust-service-client-1.0.0.RC10.jar" />
@@ -328,12 +319,6 @@
       </Component>
       <Component Id="cmpDACBEE9524891CCFFC73165201A326DD" Directory="BEIDVIEWERLIBDIR" Guid="{D19C6B6E-4133-4C4C-8F1E-229A13DDA646}">
         <File Id="filBE01A37364A33BC67694B3B7BF644AD7" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\streambuffer-1.1.jar" />
-      </Component>
-      <Component Id="cmp46E913E0012DB6948E346F2FFB934912" Directory="BEIDVIEWERLIBDIR" Guid="{5FD3C65A-7CF1-4910-A272-5F98B04809AA}">
-        <File Id="fil38DD48FE69C76C4D83C206A7DB5F31BB" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\swing-layout-1.0.3.jar" />
-      </Component>
-      <Component Id="cmp2755B42B7480B00C1792ACEA030A8350" Directory="BEIDVIEWERLIBDIR" Guid="{CF121552-CF8F-4DD9-AAD2-AA17AB808546}">
-        <File Id="fil3BA4017BC3F8065F0E94903664E6CEEB" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\swing-worker-1.1.jar" />
       </Component>
       <Component Id="cmp05828D507E40DA670E3A4AB13BB56391" Directory="BEIDVIEWERLIBDIR" Guid="{E980D739-E600-4E8B-B618-1288451DB3BF}">
         <File Id="fil1ED9AEB7D20F00201C59A7247F11F342" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\txw2-20090102.jar" />
