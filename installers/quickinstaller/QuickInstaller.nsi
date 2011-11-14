@@ -1,69 +1,77 @@
-;NSIS Modern User Interface
-;Multilingual Example Script
-;Written by Joost Verburg
-
 ;--------------------------------
-;Include Modern UI and 64bit checks
+;Include nsdialogs and 64bit checks
 
-  !include "MUI2.nsh"
-  !include "x64.nsh"
+!include "x64.nsh"
+!include LogicLib.nsh
+!include nsDialogs.nsh
+;!include nsDialogs_createTextMultiline.nsh
+;!include MUI2.nsh
 
 ;--------------------------------
 ;General
 
   ;defines
-  !define VERSION "4.0.0"
-  LicenseLangString license ${LANG_ENGLISH} "..\..\misc\licenses_files\English\License_en.rtf"
-  LicenseLangString license ${LANG_GERMAN} "..\..\misc\licenses_files\German\License_de.rtf"
-  LicenseLangString license ${LANG_FRENCH} "..\..\misc\licenses_files\French\License_fr.rtf"
-  LicenseLangString license ${LANG_DUTCH} "..\..\misc\licenses_files\Dutch\License_nl.rtf"
+  !define VERSION "4.0.0.f"
+;  LicenseLangString license ${LANG_ENGLISH} "..\..\misc\licenses_files\English\License_en.rtf"
+;  LicenseLangString license ${LANG_GERMAN} "..\..\misc\licenses_files\German\License_de.rtf"
+;  LicenseLangString license ${LANG_FRENCH} "..\..\misc\licenses_files\French\License_fr.rtf"
+;  LicenseLangString license ${LANG_DUTCH} "..\..\misc\licenses_files\Dutch\License_nl.rtf"
 
   ;Name and file
-  Name "eID-QuickInstaller ${VERSION}"
-  OutFile "eID-QuickInstaller ${VERSION}.exe"
+  Name "Belgium eID-QuickInstaller ${VERSION}"
+  OutFile "Belgium eID-QuickInstaller ${VERSION}.exe"
 
   ;Default installation folder
-  
   InstallDir "$PROGRAMFILES\Belgium Identity Card"
-
-  ;Get installation folder from registry if available
-  ;InstallDirRegKey HKCU "Software\BEID\Installer\InstallDir" ""
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
-  ;TargetMinimalOS 5.0
+	;TargetMinimalOS 5.0
+	;installer will run on Win2000 and newer
+  
+  XPStyle on
+	WindowIcon on
+	Icon Setup.ico
+	caption "Belgium eID-QuickInstaller ${VERSION}"
+	;SubCaption 
+	
+	Var retval
+  Var municipality
+  Var zip
+	Var street
+  Var lastname
+	Var firstletterthirdname
+  Var firstname
+	
+	Var nsdCustomDialog
+  Var Label
+	Var Background_Image
+	Var Background_Image_Handle
+	Var Button
+	Var Font_Title
+	Var Font_CardData
 
 ;--------------------------------
-;Interface Settings
-
-  !define MUI_ABORTWARNING
-
-;--------------------------------
-;Language Selection Dialog Settings
-
-  ;Remember the installer language
-  ;!define MUI_LANGDLL_REGISTRY_ROOT "HKCU" 
-  ;!define MUI_LANGDLL_REGISTRY_KEY "Software\Beid Middleware NSIS" 
-  ;!define MUI_LANGDLL_REGISTRY_VALUENAME "Installer Language"
+	;Interface Settings
+	;SilentInstall silent
+BrandingText " "
 
 ;--------------------------------
 ;Pages
-
-  !insertmacro MUI_PAGE_LICENSE $(license)
-  !insertmacro MUI_PAGE_COMPONENTS
-  ;!insertmacro MUI_PAGE_DIRECTORY
-  !insertmacro MUI_PAGE_INSTFILES
-  
-  !insertmacro MUI_UNPAGE_CONFIRM
-  !insertmacro MUI_UNPAGE_INSTFILES
+Page custom nsdWelcome nsdWelcomeLeave
+Page instfiles "" show_instfiles ""
+Page custom nsdDone nsdDoneLeave
+Page custom nsdConnectReader nsdConnectReaderLeave
+Page custom nsdInsertCard nsdInsertCardLeave
+Page custom nsdCardData
 
 ;--------------------------------
 ;Languages
-
-  !insertmacro MUI_LANGUAGE "English" ;first language is the default language
-  !insertmacro MUI_LANGUAGE "French"
-  !insertmacro MUI_LANGUAGE "German"
-  !insertmacro MUI_LANGUAGE "Dutch"
+; First is default
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Dutch.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
 
 ;--------------------------------
 ;Reserve Files
@@ -72,13 +80,42 @@
   ;the actual installation should be stored first in the data block,
   ;because this will make your installer start faster.
   
-  !insertmacro MUI_RESERVEFILE_LANGDLL
+  ;!insertmacro MUI_RESERVEFILE_LANGDLL
 
-  
-  LicenseLangString license ${LANG_ENGLISH} "..\..\misc\licenses_files\English\License_en.rtf"
-  LicenseLangString license ${LANG_GERMAN} "..\..\misc\licenses_files\German\License_de.rtf"
-  LicenseLangString license ${LANG_FRENCH} "..\..\misc\licenses_files\French\License_fr.rtf"
-  LicenseLangString license ${LANG_DUTCH} "..\..\misc\licenses_files\Dutch\License_nl.rtf"
+LangString ls_install ${LANG_ENGLISH} "Install"
+LangString ls_install ${LANG_FRENCH} "Installez"
+LangString ls_install ${LANG_DUTCH} "Installeer"
+
+LangString ls_cancel ${LANG_ENGLISH} "Cancel"
+LangString ls_cancel ${LANG_FRENCH} "Anulez"
+LangString ls_cancel ${LANG_DUTCH} "Anuleer"
+
+LangString ls_next ${LANG_ENGLISH} "Next"
+LangString ls_next ${LANG_FRENCH} "Prochaine"
+LangString ls_next ${LANG_DUTCH} "Volgende"
+
+LangString ls_back ${LANG_ENGLISH} "Back"
+LangString ls_back ${LANG_FRENCH} "Précédente"
+LangString ls_back ${LANG_DUTCH} "Vorige"
+
+LangString ls_close ${LANG_ENGLISH} "Close"
+LangString ls_close ${LANG_FRENCH} "Fermer"
+LangString ls_close ${LANG_DUTCH} "Sluiten"
+
+LangString ls_finish ${LANG_ENGLISH} "Finish"
+LangString ls_finish ${LANG_FRENCH} "OK"
+LangString ls_finish ${LANG_DUTCH} "OK"
+
+LangString ls_test ${LANG_ENGLISH} "Test"
+LangString ls_test ${LANG_FRENCH} "Tester"
+LangString ls_test ${LANG_DUTCH} "Testen"
+
+MiscButtonText $(ls_back) $(ls_next) $(ls_cancel) $(ls_close)
+; MessageBox MB_OK "A translated message: $(message)"
+;  LicenseLangString license ${LANG_ENGLISH} "..\..\misc\licenses_files\English\License_en.rtf"
+;  LicenseLangString license ${LANG_GERMAN} "..\..\misc\licenses_files\German\License_de.rtf"
+;  LicenseLangString license ${LANG_FRENCH} "..\..\misc\licenses_files\French\License_fr.rtf"
+;  LicenseLangString license ${LANG_DUTCH} "..\..\misc\licenses_files\Dutch\License_nl.rtf"
 ;--------------------------------
 ;Installer Sections
 Section "Belgium Eid Viewer" BeidViewer
@@ -87,23 +124,23 @@ Section "Belgium Eid Viewer" BeidViewer
   
   File "..\eid-viewer\Windows\bin\BeidViewer.msi"
   ExecWait 'msiexec /quiet /norestart /l* "$INSTDIR\log\install_eidviewer_log.txt" /i "$INSTDIR\BeidViewer.msi"'
-  WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidViewer" 0x1
+  ;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidViewer" 0x1
   Delete "$INSTDIR\BeidViewer.msi"
 SectionEnd
 
 Section "Belgium Eid Crypto Modules" BeidCrypto
   SetOutPath "$INSTDIR"
   ${If} ${RunningX64}
-     ;MessageBox MB_OK "running on x64"
-	 File "..\eid-mw\Windows\bin\BeidMW_64.msi"
-	 ExecWait 'msiexec /quiet /norestart /l* "$INSTDIR\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
-	 WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
-	 Delete "$INSTDIR\BeidMW_64.msi"
+   ;MessageBox MB_OK "running on x64"
+	 ;File "..\eid-mw\Windows\bin\BeidMW_64.msi"
+	 ;ExecWait 'msiexec /quiet /norestart /l* "$INSTDIR\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
+	 ;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
+	 ;Delete "$INSTDIR\BeidMW_64.msi"
   ${Else}
-	WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
-	File "..\eid-mw\Windows\bin\BeidMW_32.msi"
-	ExecWait 'msiexec /quiet /promptrestart /l* "$INSTDIR\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
-	Delete "$INSTDIR\BeidMW_32.msi"
+	;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
+	;File "..\eid-mw\Windows\bin\BeidMW_32.msi"
+	;ExecWait 'msiexec /quiet /promptrestart /l* "$INSTDIR\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
+	;Delete "$INSTDIR\BeidMW_32.msi"
   ${EndIf}
 
 SectionEnd
@@ -112,39 +149,179 @@ SectionEnd
 ;Installer Functions
 
 Function .onInit
-
-  !insertmacro MUI_LANGDLL_DISPLAY
-
 FunctionEnd
 
+Function .onInstSuccess
+FunctionEnd
 
-;--------------------------------
-;Descriptions
+Function nsdWelcome
+	File "welcome.bmp"
+	nsDialogs::Create 1018
+	Pop $nsdCustomDialog ;popped from the stack to prevent stack corruption
+	${If} $nsdCustomDialog == error
+		Abort
+	${EndIf}
 
-	LangString BeidCryptoMessage ${LANG_ENGLISH} "This module is required for using the eID card as an electronic identity card in Internet Explorer, Firefox, etc. or for creating digital signatures in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc."
- LangString BeidCryptoMessage ${LANG_FRENCH} "Ces modules permettent d'utiliser la carte eID comme preuve d'identité dans Internet Explorer, Firefox, etc. ou pour créer des signatures numériques dans Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc."
- LangString BeidCryptoMessage ${LANG_GERMAN} "Diese Module sind für die Benutzung der eID-Karte als elektronischen Personalausweis in Internet Explorer, Firefox, usw. oder zum Erstellen von digitalen Unterschriften in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird usw. notwendig."
- LangString BeidCryptoMessage ${LANG_DUTCH} "Deze modules zijn noodzakelijk voor het gebruik van de eID kaart als elektronisch identiteitsbewijs in Internet Explorer, Firefox, etc. of voor het maken van digitale handtekeningen in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc."
+	${NSD_CreateLabel} 0 0 100% 16u "Welcome to the Eid QuickInstaller"
+	Pop $Label
+	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+	CreateFont $Font_Title "Times New Roman" "18" "700" ;/UNDERLINE
+	SendMessage $Label ${WM_SETFont} $Font_Title 1
 
- 	LangString BeidViewerMessage ${LANG_ENGLISH} "Read the content of an e-ID card"
- LangString BeidViewerMessage ${LANG_FRENCH} "Lire le contenu de la carte e-ID"
- LangString BeidViewerMessage ${LANG_GERMAN} "Lesen Sie den Inhalt einer e-ID Karte"
- LangString BeidViewerMessage ${LANG_DUTCH} "Uitlezen van de e-ID"
- 
-  ;Assign descriptions to sections
-  !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${BeidCrypto} $(BeidCryptoMessage) ;"The crypto modules, used by applications to access the Belgium Eid Card"
-	!insertmacro MUI_DESCRIPTION_TEXT ${BeidViewer} $(BeidViewerMessage) ;"An application that allows to view the contents and change the PIN of a Belgium Eid Card"
-  !insertmacro MUI_FUNCTION_DESCRIPTION_END
+	${NSD_CreateBitmap} 0 18u 100% -13u ""
+	Pop $Background_Image
+    ${NSD_SetStretchedImage} $Background_Image "welcome.bmp" $Background_Image_Handle 
 
-;--------------------------------
-;Uninstaller Section
+	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
+	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_install)"
+	
+	nsDialogs::Show
+	${NSD_FreeImage} $Background_Image_Handle
+	
+FunctionEnd
 
-;--------------------------------
-;Uninstaller Functions
+Function  nsdWelcomeLeave
+FunctionEnd
 
-Function un.onInit
+Function show_instfiles
+	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
+	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_next)"
+	GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
+	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_cancel)"
+FunctionEnd
 
-  !insertmacro MUI_UNGETLANGUAGE
-  
+Function nsdDone
+	File "welcome.bmp"
+	nsDialogs::Create 1018
+	Pop $nsdCustomDialog
+	${If} $nsdCustomDialog == error
+		Abort
+	${EndIf}
+
+	;${NSD_CreateTextMultiline} 
+	${NSD_CreateLabel} 0 0 100% 16u "Installation complete" ; $\r$\n if you'd like to test reading your eidcard, press next"
+	Pop $Label
+	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+	SendMessage $Label ${WM_SETFont} $Font_Title 1
+
+	${NSD_CreateBitmap} 0 18u 100% -13u ""
+	Pop $Background_Image
+  ${NSD_SetStretchedImage} $Background_Image "welcome.bmp" $Background_Image_Handle 
+
+	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
+	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
+	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_test)"
+	GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
+	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_finish)"
+	;EnableWindow $NextButton 1 ;enable the previous button
+	;SetCtlColors $NextButton 0xFF0000 0x00FF00
+		
+	nsDialogs::Show
+	${NSD_FreeImage} $Background_Image_Handle
+	
+FunctionEnd
+
+Function  nsdDoneLeave
+FunctionEnd
+
+Function nsdConnectReader
+	File "connect_reader.bmp"
+	nsDialogs::Create 1018
+	Pop $nsdCustomDialog
+
+	${If} $nsdCustomDialog == error
+		Abort
+	${EndIf}
+
+	${NSD_CreateLabel} 0 0 100% 16u "Please connect your cardreader"
+	Pop $Label
+	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+	SendMessage $Label ${WM_SETFont} $Font_Title 1
+
+	${NSD_CreateBitmap} 0 18u 100% -13u "Type something here..."
+	Pop $Background_Image
+    ${NSD_SetStretchedImage} $Background_Image "connect_reader.bmp" $Background_Image_Handle 
+	
+	nsDialogs::Show
+	${NSD_FreeImage} $Background_Image_Handle
+FunctionEnd
+
+Function  nsdConnectReaderLeave
+FunctionEnd
+
+Function nsdInsertCard 
+	File "insert_card.bmp"
+	nsDialogs::Create 1018
+	Pop $nsdCustomDialog
+	${If} $nsdCustomDialog == error
+		Abort
+	${EndIf}
+	${NSD_CreateLabel} 0 0 100% 16u "Please insert your beid card"
+	Pop $Label
+	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+	SendMessage $Label ${WM_SETFont} $Font_Title 1
+
+	${NSD_CreateBitmap} 0 18u 100% -13u "Type something here..."
+	Pop $Background_Image
+    ${NSD_SetStretchedImage} $Background_Image "insert_card.bmp" $Background_Image_Handle 
+	
+	nsDialogs::Show
+	${NSD_FreeImage} $Background_Image_Handle
+FunctionEnd
+
+Function nsdInsertCardLeave
+FunctionEnd
+
+Function nsdCardData
+	nsDialogs::Create 1018
+	Pop $nsdCustomDialog
+	${If} $nsdCustomDialog == error
+		Abort
+	${EndIf}
+
+	beid::ReadCardData
+	Pop $retval
+	
+	${If} $retval == '0'
+  ;MessageBox MB_OK "$$retval is 0"
+  Pop $municipality
+  Pop $zip
+	Pop $street
+  Pop $lastname
+	Pop $firstletterthirdname
+  Pop $firstname
+		
+	${NSD_CreateLabel} 0 0 100% 16u "Card Read"
+	Pop $Label
+	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+	SendMessage $Label ${WM_SETFont} $Font_Title 1
+	;SendMessage $Label ${WM_SETTEXT} 0 "STR:Card Read"
+
+	CreateFont $Font_CardData "Times New Roman" "14" "500" ;/UNDERLINE
+	${NSD_CreateLabel} 0 28u 18% 10u "Name:"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 20% 28u 85% 10u "$firstname $firstletterthirdname $lastname"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 0 42u 18% 10u "Adress:"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 20% 42u 85% 10u "$street"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 20% 56u 85% 10u "$zip $municipality"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	;pop the others off the stack
+${Else}
+  ;MessageBox MB_OK "$$retval is $retval"
+	${NSD_CreateLabel} 0 0 100% 100% "Card Read"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	SendMessage $Label ${WM_SETTEXT} 0 "STR:Test failed,$\n$\ngo back and try again,$\nor reboot your pc and launch the eid viewer to continue testing"
+		;if retval != 0, dont read out values, but print a 'restart' message
+${EndIf}
+	
+	nsDialogs::Show
 FunctionEnd
