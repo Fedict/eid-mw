@@ -27,7 +27,7 @@ Software requirements
 The SDK must be used together with the eID 4.0 runtime.
 
 Windows:
-- MS Visual Studio 2005 or higher should be installed
+- MS Visual Studio 2010 express examples are included
 
 Linux:
 - default g++ should be installed
@@ -41,25 +41,24 @@ About the SDK
 This package contains all necessary files to build applications based on the eID 4.0
 middleware. The following programming languages are supported:
 
-- Windows: C, 
-- Linux:   C, 
-- Mac OSX: C, 
+- Windows: C, C++, C#
+- Linux:   C, C++
+- Mac OSX: C, C++
 
 The SDK is available in the following formats:
-- Windows: MSI file
-- Linux: tgz file
-- Mac OSX: dmg file
+- Windows: zip file
+- Linux: zip file
+- Mac OSX: zip file
 
 
 SDK Installation
 ================
-The eID MW 4.0 runtime should be installed before the SDK can be used.
+The eID MW 4.0 runtime should be installed before the SDK can be used,
+as it contains our pkcs11 implementation, which is essentially the SDK.
 
-- Windows: follow the instructions of the MSI installation
-           the SDK is installed in: 
-	C:\Documents and Settings\<user>\My Documents\Belgium Identity Card SDK 40
-- Linux: extract the files from the tgz file to the directory of your choice
-- Mac OSX: open dmg file and optionally copy the mounted directory
+- Windows: unzip the SDK package 
+- Linux: unzip the SDK package
+- Mac OSX: unzip the SDK package
 
 Contents of the SDK
 ===================
@@ -67,16 +66,21 @@ The package contains all the required files to use the eID 4.0 library.
 
 Description (depending of the platform):
 - [Belgium Identity Card SDK,beidsdk]/pkcs11/include/rsaref220	: eID C include files
-- [Belgium Identity Card SDK,beidsdk]/doc/eidlib/C		: eID lib C API documentation
+- [Belgium Identity Card SDK,beidsdk]/doc/			: eID SDK documentation
+- [Belgium Identity Card SDK,beidsdk]/examples/			: eID SDK examples
 
 API Documentation
 =================
-HTML API documentation for the Middleware is available in the 'doc' subdirectory for the 
-different languages (depending on the platform).
+The SDK 4.0 uses the pkcs11 v2.11 API. This API is explained in following document:
+“RSA Security Inc. Public-Key Cryptography Standards (PKCS)”, this document can be found
+in the doc folder (pkcs-11v2-11r1.pdf).
+
+A document that contains the list of names we gave to (search for) the eid carddata,
+can also be found in the documents folder.
 
 Samples
 =======
-The 'samples' subdirectory contains the source code for sample applications in different
+The 'examples' subdirectory contains the source code for sample applications in different
 programming languages (depending of the platform).
 
 Test cards
