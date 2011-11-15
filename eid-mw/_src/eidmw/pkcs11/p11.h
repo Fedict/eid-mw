@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2010 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -146,8 +146,8 @@ void           *pReader;  //CReader
 #define P11_OPERATION_DIGEST  1
 #define P11_OPERATION_SIGN    2
 
-#define P11_READDATA_ASK		0
-#define P11_READDATA_ALLOWED	1
+#define P11_READDATA_ASK				0
+#define P11_READDATA_ALLOWED		1
 #define P11_READDATA_REFUSED    2
 
 
@@ -170,6 +170,7 @@ int               state;
 //P11_OBJECT        **ppObjects;
 P11_OPERATION     Operation[P11_NUM_OPERATIONS];
 CK_BYTE						bReadDataAllowed;
+CK_BYTE						bCardDataCashed;
 } P11_SESSION;
 
 
