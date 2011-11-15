@@ -170,6 +170,7 @@ int               state;
 //P11_OBJECT        **ppObjects;
 P11_OPERATION     Operation[P11_NUM_OPERATIONS];
 CK_BYTE						bReadDataAllowed;
+CK_BYTE						bCardDataCashed;
 } P11_SESSION;
 
 

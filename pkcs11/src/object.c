@@ -347,7 +347,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	//set search operation to active state since there can be only one
 	pSession->Operation[P11_OPERATION_FIND].active = 1;
 
-	if ( addIdObjects)
+	if ( addIdObjects && (pSession->bCardDataCashed == FALSE) )
 	{
 		ret = cal_read_ID_files(pSession->hslot);
 		if (ret != 0)
@@ -361,6 +361,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 			log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
 			goto cleanup;
 		}
+		pSession->bCardDataCashed = TRUE;
 	}
 
 ret = CKR_OK;
