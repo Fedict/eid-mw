@@ -118,14 +118,14 @@ extern "C" {
 
 	//	{ BEID_FIELD_TAG_ID_Version,			"Version"},
 #define BEID_ID_DATA_LABELS  {  \
-	{ BEID_FIELD_TAG_ID_CardNr,				"CardNr"},  \
-	{ BEID_FIELD_TAG_ID_ChipNr,				"ChipNr"},  \
+	{ BEID_FIELD_TAG_ID_CardNr,				"Card_Number"},  \
+	{ BEID_FIELD_TAG_ID_ChipNr,				"Chip_Number"},  \
 	{ BEID_FIELD_TAG_ID_ValidityBeginDate,	"Validity_Begin_Date"},  \
 	{ BEID_FIELD_TAG_ID_ValidityEndDate,	"Validity_End_Date"},  \
 	{ BEID_FIELD_TAG_ID_IssuingMunicipality,"Issuing_Municipality"},  \
-	{ BEID_FIELD_TAG_ID_NationalNr,			"National_Nr"},  \
+	{ BEID_FIELD_TAG_ID_NationalNr,			"National_Number"},  \
 	{ BEID_FIELD_TAG_ID_Surname,			"Surname"},  \
-	{ BEID_FIELD_TAG_ID_FirstNames,		"FirstNames"},  \
+	{ BEID_FIELD_TAG_ID_FirstNames,			"Firstnames"},  \
 	{ BEID_FIELD_TAG_ID_FirstLetterOfThirdGivenName,		"First_Letter_Of_Third_Given_Name"},  \
 	{ BEID_FIELD_TAG_ID_Nationality,		"Nationality"},  \
 	{ BEID_FIELD_TAG_ID_LocationOfBirth,	"Location_Of_Birth"},  \
@@ -173,7 +173,7 @@ typedef struct BEID_DATA_LABELS_NAME {
 #define BEID_FIELD_TAG_PHOTO			"PHOTO"
 #define BEID_FIELD_TAG_CARD_DATA		"CARD_DATA"
 #define BEID_FIELD_TAG_CERT_RN			"CERT_RN_FILE"
-#define BEID_FIELD_TAG_CERT_RNCA		"CERT_RNCA_FILE"
+//#define BEID_FIELD_TAG_CERT_RNCA		"CERT_RNCA_FILE"
 
 #define BEID_FIELD_TAG_SGN_RN			"SGN_DATA_FILE"
 #define BEID_FIELD_TAG_SGN_ADDRESS	"SGN_ADDRESS_FILE"
