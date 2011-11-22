@@ -36,6 +36,8 @@
 
 #include <errno.h>
 
+#ifndef WIN32
+
 #ifndef HAVE_VASPRINTF
 #define VASPRINTF_INITIAL_SIZE	128
 #define VASPRINTF_FAILED	-1
@@ -64,10 +66,10 @@ std::string string_From_wstring(std::wstring const& in)
   return std::string(pc);
 
 }
-
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-void wstring_TrimR(std::wstring *in)
+/*void wstring_TrimR(std::wstring *in)
 {
 	if(in == NULL)
 		return;
@@ -84,10 +86,10 @@ void wstring_TrimR(std::wstring *in)
 			break;
 		}
 	}
-}
+}*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-void vector_From_bytes(std::vector<unsigned char> *out, const unsigned char *in, size_t len)
+/*void vector_From_bytes(std::vector<unsigned char> *out, const unsigned char *in, size_t len)
 {
 	out->clear();
 	out->reserve(len);
@@ -95,8 +97,8 @@ void vector_From_bytes(std::vector<unsigned char> *out, const unsigned char *in,
     for(size_t i = 0; i<len; i++)
 		out->push_back(in[i]);
 
-}
-
+}*/
+/*
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void TokenizeS (const std::string& str, std::vector<std::string>& tokens, const std::string& delimiters, unsigned long maxToken)
 {
@@ -152,14 +154,14 @@ void TokenizeW (const std::wstring& str, std::vector<std::wstring>& tokens, cons
 		count++;
     }
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-void wstring_to_lower(std::wstring& str)
+/*void wstring_to_lower(std::wstring& str)
 {
        std::transform(str.begin(),str.end(),str.begin(),(int(*)(int))tolower);
-}
-
+}*/
+/*
 wchar_t clean_char(wchar_t in)
 {
        switch(in)
@@ -172,15 +174,14 @@ wchar_t clean_char(wchar_t in)
                        return in;
        }
 }
+*/
 
-
-void wstring_clean(std::wstring& str)
+/*void wstring_clean(std::wstring& str)
 {
        std::transform(str.begin(),str.end(),str.begin(),clean_char);
-}
+}*/
 
-
-
+/*
 errno_t _localtime_s(struct tm* _tm, const time_t *time)
 {
 	struct tm* tm=localtime(time);
@@ -188,8 +189,8 @@ errno_t _localtime_s(struct tm* _tm, const time_t *time)
 		return errno;
 	memcpy((void*)_tm,(void*)tm,sizeof(struct tm));
 	return errno;
-}
-
+}*/
+#ifndef WIN32
 #ifndef HAVE_VASPRINTF
 int vasprintf(char **strp, const char *fmt, va_list ap)
 {
@@ -210,16 +211,14 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 	if(written>size)				// if written, but buffer was too small
 	{
 		size=written;				// we now know exactly which size we need
-		char* newbuf=(char*)realloc(buf,size);	// try and grow buffer
-                if(newbuf==NULL)
-                {
-                        free(buf);			// if we can't grow buffer,
+		free(buf);
+		char* buf=(char*)malloc(size);	// try and grow buffer
+		if(buf==NULL)
+		{
 			return VASPRINTF_FAILED;	// return error.
-                }
-                else
-                        buf=newbuf;			// buffer grown, write to it again
+		}
 
-                written=vsnprintf(buf, size, fmt, ap);
+		written=vsnprintf(buf, size, fmt, ap);
 	}	
 
 	if(written<0)
@@ -234,12 +233,10 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 		return (int)written;
 			
 	}
-
+	free(buf);
 	return VASPRINTF_FAILED;			// if we fall through here, return error.
 }
 #endif
-
-#ifndef WIN32
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int _wfopen_s(FILE** pFile, const wchar_t *filename, const wchar_t *mode)
 {
@@ -280,7 +277,7 @@ int fwprintf_s(FILE *stream, const wchar_t *format, ...)
 
 	return r;
 }
-#endif
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int _vfwprintf_s(FILE *stream, const wchar_t *format, va_list argptr)
 {
@@ -299,6 +296,7 @@ int _vfwprintf_s(FILE *stream, const wchar_t *format, va_list argptr)
 	return r;
 }
  
+////////////////////////////////////////////////////////////////////////////////////////////////
 int _vfprintf_s(FILE *stream, const char* format, va_list argptr)
 {
 	char *csTmp = NULL;
@@ -315,7 +313,6 @@ int _vfprintf_s(FILE *stream, const char* format, va_list argptr)
 	return r;
 } 
 
-#ifndef WIN32
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int strcpy_s(char *dest, size_t len, const char *src)
 {
@@ -343,7 +340,7 @@ int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src)
 
 	return *src == L'\0' ? 0 : -1; // 0: OK, -1: NOK
 }
-#endif
+
 int wcscpy_s(wchar_t *dest, const wchar_t *src)
 {
 	size_t len=wcslen(src);
@@ -381,7 +378,6 @@ int _swprintf_s(wchar_t *buffer, size_t sizeOfBuffer, const wchar_t *format, ...
 	return r;
 } 
 
-#ifndef WIN32
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int wcscat_s(wchar_t* dst, size_t elem, const wchar_t* src)
 {
@@ -404,9 +400,9 @@ int wcscat_s(wchar_t* dst, size_t elem, const wchar_t* src)
     dst[0] = '\0';
     return ERANGE;
 }
-#endif
-// after https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=2981930
 
+// after https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=2981930
+#else //WIN32
 int dupenv_s(char **buffer, size_t *numberOfElements, const char *varname)
 {
 //	size_t required;
@@ -423,4 +419,4 @@ int dupenv_s(char **buffer, size_t *numberOfElements, const char *varname)
 		return ENOMEM;
 	return 0;
 }
-
+#endif

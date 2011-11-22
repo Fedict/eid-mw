@@ -118,7 +118,6 @@ unsigned int i;
 
 try
    {
-   //CReadersInfo oReadersInfo = oCardLayer->ListReaders();
    nReaders = oReadersInfo->ReaderCount();
    //get readernames
    for ( i = 0; i < nReaders; i++ )
@@ -782,8 +781,8 @@ int ret = 0;
 	unsigned char oByte;
 	CByteArray oCardData;
 	std::string szReader;
-	char cBuffer[250];
-	unsigned char ucBuffer[250];
+//	char cBuffer[250];
+//	unsigned char ucBuffer[250];
 	char* plabel = NULL;
 	unsigned long ulLen=0;
 	CTLVBuffer oTLVBuffer;

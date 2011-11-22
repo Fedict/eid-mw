@@ -663,7 +663,7 @@ void CLog::getLocalTimeW(std::wstring &timestamp, const wchar_t *format)
 
 	time ( &rawtime );
 #ifdef WIN32
-	_localtime_s( &timeinfo, &rawtime );
+	localtime_s( &timeinfo, &rawtime );
 #else
 	timeinfo = *(localtime(&rawtime));
 #endif
@@ -681,7 +681,7 @@ void CLog::getLocalTimeA(std::string &timestamp, const char *format)
 
 	time ( &rawtime );
 #ifdef WIN32
-	_localtime_s( &timeinfo, &rawtime );
+	localtime_s( &timeinfo, &rawtime );
 #else
 	timeinfo = *(localtime(&rawtime));
 #endif
@@ -898,7 +898,6 @@ void CLog::writeLineMessageW(const wchar_t *format, va_list argList)
 
  	if(!m_f)	//Should not happend, as this method must only be called if the writeLineHeader succeed
 		throw CMWEXCEPTION(EIDMW_FILE_NOT_OPENED);
-
 	_vfwprintf_s(m_f, format, argList);
 	fwprintf_s(m_f,L"%c",'\n');
 	close();
@@ -909,7 +908,6 @@ void CLog::writeLineMessageA(const char *format, va_list argList)
 
  	if(!m_f)	//Should not happend, as this method must only be called if the writeLineHeader succeed
 		throw CMWEXCEPTION(EIDMW_FILE_NOT_OPENED);
-
 	_vfprintf_s(m_f, format, argList);
 	fprintf(m_f,"%c",'\n');
 	close();
