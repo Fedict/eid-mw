@@ -3,10 +3,10 @@
   <String Id="Lang" Overridable="yes">1033</String>
   <String Id="Langpref" Overridable="yes">en</String>
   <String Id="StartApp" Overridable="yes">Start Eid Viewer</String>
-  <String Id="MinOs" Overridable="yes">This setup need at least Windows 2000</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 4.0</String>
+  <String Id="MinOs" Overridable="yes">This setup need at least Windows XP</String>
+  <String Id="BeidRuntime" Overridable="yes">Belgium EID 4.0</String>
   <String Id="BeidRuntimeDesc" Overridable="yes">This module is needed to use electronic Identity card.</String>
-  <String Id="BeidGui" Overridable="yes">Management Tool</String>
+  <String Id="BeidGui" Overridable="yes">Eid Viewer</String>
   <String Id="BeidGuiDescr" Overridable="yes">Read the content of an e-ID card</String>
   <String Id="Users" Overridable="yes">Users</String>
   <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Could not create security descriptor [3]\[4], error: [2]</String>
