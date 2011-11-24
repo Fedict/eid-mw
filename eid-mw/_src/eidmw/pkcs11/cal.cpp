@@ -94,6 +94,8 @@ int ret = 0;
 //if (--gRefCount > 0)
 //   return (0);
 
+ret = cal_clean_slots();
+
 if (oCardLayer)
    delete(oCardLayer);
 if (oReadersInfo)
@@ -106,7 +108,40 @@ return (ret);
 }
 #undef WHERE
 
+#define WHERE "cal_clean_slots()"
+int cal_clean_slots()
+{
+	int ret = 0;
+	unsigned int i;
+	CK_SLOT_ID hSlot = 0;
+	P11_SLOT *pSlot = NULL;
+	P11_OBJECT *pObject = NULL;
 
+	for(;hSlot<MAX_SLOTS;hSlot++)
+	{
+		pSlot = p11_get_slot(hSlot);
+		if (pSlot == NULL)
+		{
+			//slot not in use
+			break;
+		}
+		//clean objects
+		for (i=1; i <= pSlot->nobjects; i++)
+		{
+			pObject = p11_get_slot_object(pSlot, i);
+			p11_clean_object(pObject);
+			//if (pObject != NULL)
+			// pObject->state = 0;
+		}
+		if (pSlot->pobjects != NULL)
+		{
+			free(pSlot->pobjects);
+			pSlot->pobjects = NULL;
+		}
+	}
+	return ret;
+}
+#undef WHERE
 
 
 
@@ -119,7 +154,6 @@ unsigned int i;
 
 try
    {
-   //CReadersInfo oReadersInfo = oCardLayer->ListReaders();
    nReaders = oReadersInfo->ReaderCount();
    //get readernames
    for ( i = 0; i < nReaders; i++ )
@@ -225,6 +259,8 @@ catch (...)
 
 strcpy_n(pInfo->manufacturerID, "Belgium Government", 32, ' ');
 strcpy_n(pInfo->model, "Belgium eID", 16, ' ');
+// strcpy_n(pInfo->label, "Belgian eID", 16, ' '); // FRANK TEST
+
 /* Take the last 16 chars of the serial number (if the are more then 16).
    _Assuming_ that the serial number is a Big Endian counter, this will
    assure that the serial within each type of card will be unique in pkcs11
@@ -781,8 +817,8 @@ int ret = 0;
 	unsigned char oByte;
 	CByteArray oCardData;
 	std::string szReader;
-	char cBuffer[250];
-	unsigned char ucBuffer[250];
+//	char cBuffer[250];
+//	unsigned char ucBuffer[250];
 	char* plabel = NULL;
 	unsigned long ulLen=0;
 	CTLVBuffer oTLVBuffer;

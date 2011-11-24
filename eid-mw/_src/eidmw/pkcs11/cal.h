@@ -182,6 +182,7 @@ typedef struct BEID_DATA_LABELS_NAME {
 
 int cal_init();
 int cal_close();
+int cal_clean_slots(void);
 int cal_init_slots(void);
 int cal_token_present(CK_SLOT_ID hSlot);
 CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo);

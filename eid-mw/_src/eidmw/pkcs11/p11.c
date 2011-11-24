@@ -347,7 +347,11 @@ for (i=0; i < ulCount; i++)
    //copy complete attribute
    memcpy(&pObject[i], &pTemplate[i], sizeof(CK_ATTRIBUTE));
    //clear pointer to value and allocate new space for this.
-   pObject[i].pValue = NULL;
+	 if(pObject[i].pValue != NULL)
+	 {
+		 free(pObject[i].pValue);
+		 pObject[i].pValue = NULL;
+	 }
 
    if ( pTemplate[i].ulValueLen > MAX_ATTRIBUTE_SIZE)
       return (CKR_ARGUMENTS_BAD);
@@ -394,6 +398,7 @@ if (pObject->pAttr == NULL)
    log_trace(WHERE, "E: alloc error for attribute");
    return (CKR_HOST_MEMORY);
    }
+memset(pObject->pAttr, 0, ulCount * sizeof(CK_ATTRIBUTE));
 
 //set the size of the object attributes
 pObject->count = ulCount;
@@ -475,6 +480,7 @@ if (pObject->pAttr == NULL)
    log_trace(WHERE, "E: alloc error for attribute");
    return (CKR_HOST_MEMORY);
    }
+memset(pObject->pAttr, 0, ulCount * sizeof(CK_ATTRIBUTE));
 
 //set the size of the object attributes
 pObject->count = ulCount;
@@ -546,23 +552,33 @@ return (ret);
 
 int p11_clean_object(P11_OBJECT *pObject)
 {
-if (pObject == NULL)
-   return (0);
+	if (pObject == NULL)
+		return (0);
+	if(pObject->count > MAX_OBJECT_SIZE)
+		return (0);
+	//remove attributes from object
+	if (pObject->pAttr != NULL)
+	{
+		CK_ATTRIBUTE_PTR pAttributes = pObject->pAttr;
+		int i=0;
+		for(;i<pObject->count;i++)
+		{
+			if( pAttributes[i].pValue != NULL)
+			{
+				free(pAttributes[i].pValue);
+			}
+		}
+		free(pObject->pAttr);
+		pObject->pAttr = NULL;
+	}
+	pObject->count = 0;
 
-//remove attributes from object
-if (pObject->pAttr)
-   {
-   free(pObject->pAttr);
-   pObject->pAttr = NULL;
-   }
-pObject->count = 0;
+	//set used flag to 0 so it can be reused.
+	//we don't clean the object itself
+	pObject->inuse = 0;
+	pObject->state = 0;
 
-//set used flag to 0 so it can be reused.
-//we don't clean the object itself
-pObject->inuse = 0;
-pObject->state = 0;
-
-return(0);
+	return(0);
 }
 
 
