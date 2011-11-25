@@ -344,14 +344,16 @@ if (ulCount > MAX_OBJECT_SIZE)
 
 for (i=0; i < ulCount; i++)
    {
-   //copy complete attribute
-   memcpy(&pObject[i], &pTemplate[i], sizeof(CK_ATTRIBUTE));
+
    //clear pointer to value and allocate new space for this.
 	 if(pObject[i].pValue != NULL)
 	 {
 		 free(pObject[i].pValue);
-		 pObject[i].pValue = NULL;
 	 }
+
+   //copy complete attribute
+   memcpy(&pObject[i], &pTemplate[i], sizeof(CK_ATTRIBUTE));
+	 pObject[i].pValue = NULL;
 
    if ( pTemplate[i].ulValueLen > MAX_ATTRIBUTE_SIZE)
       return (CKR_ARGUMENTS_BAD);
@@ -560,7 +562,7 @@ int p11_clean_object(P11_OBJECT *pObject)
 	if (pObject->pAttr != NULL)
 	{
 		CK_ATTRIBUTE_PTR pAttributes = pObject->pAttr;
-		int i=0;
+		CK_ULONG i=0;
 		for(;i<pObject->count;i++)
 		{
 			if( pAttributes[i].pValue != NULL)
