@@ -333,6 +333,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 			ret = CKR_HOST_MEMORY;
 			goto cleanup;
 		}
+		memset(pData->pSearch,0,sizeof(CK_ATTRIBUTE)*ulCount);
 
 		ret = p11_copy_object(pTemplate, ulCount, pData->pSearch);
 		if (ret)
