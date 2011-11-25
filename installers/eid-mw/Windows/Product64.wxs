@@ -47,12 +47,6 @@
       />
     </Upgrade>
     
-   <!-- <?ifndef env.BEID_DIR_MSM?>
-    <?define var.BEID_DIR_MSM=..\..\..\..\ThirdParty\wix\Merge Modules?>
-    <?else?>
-    <?define var.BEID_DIR_MSM=$(env.BEID_DIR_MSM)?>
-    <?endif?>-->
-
     <?if $(var.Lang) = "nl"?>
     <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\Dutch\License_nl.rtf" />
     <?elseif $(var.Lang) = "fr"?>
@@ -95,9 +89,6 @@
       <Directory Id="ProgramFilesFolder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
           <Directory Id="IMAGEFORMATS" Name="imageformats" />
-          <Directory Id="EIDSTORE" Name="eidstore">
-            <Directory Id="CERTSDIR" Name="certs"/>
-          </Directory>
           <Directory Id="LOGDIR" Name="log"/>
         </Directory>
         <Directory Id="FIREFOXROOTFOLDER" Name="Mozilla Firefox">
@@ -119,42 +110,20 @@
       </Directory>
       <Directory Id="ProgramFiles64Folder">
         <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
+        <Directory Id="LOGDIR_64" Name="log"/>
       </Directory>
       <Directory Id="DesktopFolder"/>
 
       <Directory Id="WindowsFolder"/>
 
-      <Directory Id="SystemFolder">
-        <Directory Id="BEIDPPDIR" Name="beidpp"/>
-      </Directory>
+      <Directory Id="SystemFolder"/>
 
       <Directory Id="System64Folder"/>
 
-      <!--
-      <Merge Id="VCRT" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
-      <Merge Id="VCRT_POLICY" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
-      -->
     </Directory>
     
-    <DirectoryRef Id="EIDSTORE">
-      <Component Id="EidStore" Guid="{F30FFFBD-4F50-4e4d-86D2-90F192A3F01B}" KeyPath="yes">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
-        <RemoveFile Id="RemoveEidstoreFiles" On="uninstall" Name="*"/>
-        <RemoveFolder Id="RemoveEidstoreFolder" On="uninstall"/>
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="CERTSDIR">
-      <Component Id="Certs" Guid="{750F471B-6A83-4118-A0AF-2A138B770AC6}">
-        <File Id="beidcertbelgiumrca.der" Name="beid-cert-belgiumrca.der" KeyPath="yes" Source="..\..\..\misc\certs\beid-cert-belgiumrca.der" />
-        <File Id="beidcertbelgiumrca2.der" Name="beid-cert-belgiumrca2.der" KeyPath="no" Source="..\..\..\misc\certs\beid-cert-belgiumrca2.der" />
-      </Component>
-    </DirectoryRef>
-
     <DirectoryRef Id="LOGDIR">
-      <Component Id="LogDir" Guid="{A300DA04-F8DF-4506-B654-1E5EB2782DF3}" KeyPath="yes">
+      <Component Id="LogDir" Guid="{A300DA04-F8DF-4506-B654-1E5EB2782DF3}" KeyPath="yes" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -162,9 +131,19 @@
         <RemoveFolder Id="RemoveLogFolder" On="uninstall"/>
       </Component>
     </DirectoryRef>
-
+    
+	<DirectoryRef Id="LOGDIR_64">
+      <Component Id="LogDir_64" Guid="{8d2d7f7c-64d5-43d4-905f-b52c1cf7411c}" KeyPath="yes" Win64="yes">
+        <CreateFolder>
+          <util:PermissionEx GenericAll="yes" User="Users" />
+        </CreateFolder>
+        <RemoveFile Id="RemoveLogFiles64" On="uninstall" Name="*"/>
+        <RemoveFolder Id="RemoveLogFolder64" On="uninstall"/>
+      </Component>
+    </DirectoryRef>
+	
     <DirectoryRef Id="FIREFOXEXTENSIONS">
-      <Component Id="Extensions" Guid="{DBEFB6AD-3282-4625-8257-2CF7EA4E7264}">
+      <Component Id="Extensions" Guid="{DBEFB6AD-3282-4625-8257-2CF7EA4E7264}" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -172,7 +151,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="FIREFOXROOTFOLDER">
-      <Component Id="FireFoxRoot" Guid="{3F6140E7-B25A-41c5-BACE-9DBCDE8019D9}" KeyPath="no">
+      <Component Id="FireFoxRoot" Guid="{3F6140E7-B25A-41c5-BACE-9DBCDE8019D9}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -180,7 +159,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPIROOTFOLDER">
-      <Component Id="XPIRoot" Guid="{6E56CA5C-29ED-47e0-9EEF-64FDF8A0B353}" KeyPath="no">
+      <Component Id="XPIRoot" Guid="{6E56CA5C-29ED-47e0-9EEF-64FDF8A0B353}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -191,7 +170,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPICONTENTFOLDER">
-      <Component Id="XPIContent" Guid="{DC052180-264F-4ace-ACF1-FC482715EB86}" KeyPath="no">
+      <Component Id="XPIContent" Guid="{DC052180-264F-4ace-ACF1-FC482715EB86}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -205,7 +184,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPIDEFAULTSFOLDER">
-      <Component Id="XPIdefaults" Guid="{B635FD45-0FCE-4285-9FA6-F9559C0F7EBB}" KeyPath="no">
+      <Component Id="XPIdefaults" Guid="{B635FD45-0FCE-4285-9FA6-F9559C0F7EBB}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -213,7 +192,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPIDEFAULTSPREFSFOLDER">
-      <Component Id="XPIdefaultsprefs" Guid="{FA937E34-AE32-4acd-AC77-3487EBC2ABCD}" KeyPath="no">
+      <Component Id="XPIdefaultsprefs" Guid="{FA937E34-AE32-4acd-AC77-3487EBC2ABCD}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -222,7 +201,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALEFOLDER">
-      <Component Id="XPIlocale" Guid="{B8A44A30-F2EF-44c3-BBE5-54395F47C869}" KeyPath="no">
+      <Component Id="XPIlocale" Guid="{B8A44A30-F2EF-44c3-BBE5-54395F47C869}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -230,7 +209,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALEENFOLDER">
-      <Component Id="XPIlocaleen" Guid="{F2BBAA41-E463-409d-B4AB-CE3626339663}" KeyPath="no">
+      <Component Id="XPIlocaleen" Guid="{F2BBAA41-E463-409d-B4AB-CE3626339663}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -239,7 +218,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALEFRFOLDER">
-      <Component Id="XPIlocalefr" Guid="{C0F969BB-3678-4828-BAE7-023054072A01}" KeyPath="no">
+      <Component Id="XPIlocalefr" Guid="{C0F969BB-3678-4828-BAE7-023054072A01}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -248,7 +227,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALENLFOLDER">
-      <Component Id="XPIlocalenl" Guid="{E8587941-7B32-4a9d-8F4B-23C1E8EC1126}" KeyPath="no">
+      <Component Id="XPIlocalenl" Guid="{E8587941-7B32-4a9d-8F4B-23C1E8EC1126}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -257,7 +236,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPISKINFOLDER">
-      <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no">
+      <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -268,6 +247,7 @@
     
     <DirectoryRef Id="MINIDRIVERROOTFOLDER">
       <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Win64="yes">
+	    <CreateFolder />
         <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
         <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
         <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="no" DiskId="1" />
@@ -287,17 +267,15 @@
     
     <DirectoryRef Id="APPLICATIONROOTFOLDER">
       
-      <Component Id="RootFolder" Guid="{2FB5D279-50BD-49ed-98D9-3D043520F450}">
+      <Component Id="RootFolder" Guid="{2FB5D279-50BD-49ed-98D9-3D043520F450}" Win64="no">
         <CreateFolder/>
-        <Environment Id="PATH" Action="set" Part="last" Permanent="no" System="yes" Name="PATH" Value="[ProgramFilesFolder]Belgium Identity Card"/>
-        <Environment Id="CLASSPATH" Action="set" Part="last" Permanent="no" System="yes" Name="CLASSPATH" Value="[ProgramFilesFolder]Belgium Identity Card"/>
       </Component>
       
-      <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}">
+      <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}" Win64="no">
         <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\Outlook_snc\beidoutlooksnc.exe" />
       </Component>
       
-      <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="yes">
+      <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="no" Win64="no">
         <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\misc\licenses_files\English\License_en.rtf" />
         <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\Dutch\License_nl.rtf" />
         <File Id="License_fr.rtf" Name="License_fr.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\French\License_fr.rtf" />
@@ -309,49 +287,49 @@
 
     <DirectoryRef Id="System64Folder">
 
-      <Component Id="Runtime40_64" Guid="{8FE1C7FB-F06A-40db-8454-88D9E8BDD626}" SharedDllRefCount="yes" Win64="yes">
+      <Component Id="Runtime40_64" Guid="{8FE1C7FB-F06A-40db-8454-88D9E8BDD626}" SharedDllRefCount="no" Win64="yes">
         <File Id="beid40cardlayer_64.dll" Name="beid40cardlayer.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\x64_Release\beid40cardlayer.dll" />
         <File Id="beid40common_64.dll" Name="beid40common.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\x64_Release\beid40common.dll" />
         <File Id="beid40DlgsWin32_64.dll" Name="beid40DlgsWin32.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\x64_Release\beid40DlgsWin32.dll" />
       </Component>
 
-      <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="yes" Win64="yes">
+      <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="no" Win64="yes">
         <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\x64_Release\beidpkcs11.dll" />
       </Component>
 
-      <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="yes" Win64="yes">
-        <File Id="MINIDRIVER_64.dll" Name="beidmdrv.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv64.dll" />
+      <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="no" Win64="yes">
+        <File Id="MINIDRIVER_64.dll" Name="beidmdrv.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\x64_release\beidmdrv.dll" />
       </Component>
       
     </DirectoryRef>
     
     <DirectoryRef Id="SystemFolder">
 
-      <Component Id="Runtime40" Guid="{41F033E4-0669-4FD6-8B8E-DE31FE3AAE24}" SharedDllRefCount="yes">
+      <Component Id="Runtime40" Guid="{41F033E4-0669-4FD6-8B8E-DE31FE3AAE24}" SharedDllRefCount="no" Win64="no">
         <File Id="beid40cardlayer.dll" Name="beid40cardlayer.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beid40cardlayer.dll" />
         <File Id="beid40common.dll" Name="beid40common.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beid40common.dll" />
         <File Id="beid40DlgsWin32.dll" Name="beid40DlgsWin32.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beid40DlgsWin32.dll" />
       </Component>
 
-      <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes">
-        <File Id="MINIDRIVER.dll" Name="beidmdrv.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" />
+      <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="no" Win64="no">
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidpkcs11.dll" />
       </Component>
 
-      <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes">
-        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidpkcs11.dll" />
+      <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="no" Win64="no">
+        <File Id="MINIDRIVER.dll" Name="beidmdrv.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv.dll" />
       </Component>
 
     </DirectoryRef>
 
     <DirectoryRef Id="TARGETDIR">
-      <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes">
+      <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes" Win64="yes">
         <!-- Start SCardSvr Service during startup -->
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
         <!-- Start SCardSvr Service now -->
         <ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" />
       </Component>
    
-      <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}">
+      <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}" Win64="no">
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
                      Action="createAndRemoveOnUninstall">
@@ -379,7 +357,7 @@
         </RegistryKey>
       </Component> 
      
-      <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}">
+      <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}" Win64="no">
         <RegistryKey Root="HKLM"
             Key="SOFTWARE\BEID"
             Action="createAndRemoveOnUninstall">
@@ -395,17 +373,34 @@
           
         </RegistryKey>
       </Component>
-
+	  
+      <Component Id="RegistryBeidSystem_64" Guid="{56f4c2f6-ccbb-4be7-b3cf-83a567e52a0d}" Win64="yes">
+        <RegistryKey Root="HKLM"
+            Key="SOFTWARE\BEID"
+            Action="createAndRemoveOnUninstall">
+          
+          <RegistryKey Key="general" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Name="language" Value="!(loc.Langpref)"/>
+            <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFiles64Folder]Belgium Identity Card"/>
+          </RegistryKey>
+          
+          <RegistryKey Key="logging" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Name="log_dirname" Value="[ProgramFiles64Folder]Belgium Identity Card\log"/>
+          </RegistryKey>
+          
+        </RegistryKey>
+      </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="ApplicationProgramsFolderUtilities">
-      <Component Id="OutlookShortcut" Guid="{813C0984-0401-4604-9D7F-E13BDD28FBD7}">
+      <Component Id="OutlookShortcut" Guid="{813C0984-0401-4604-9D7F-E13BDD28FBD7}" Win64="no">
         <Shortcut Id="OutlookStartMenuShortcut"
           Name="MS Outlook registry configuration"
           Description="!(loc.OutlooksncDescr)"
           Target="[APPLICATIONROOTFOLDER]beidoutlooksnc.exe"
           WorkingDirectory="APPLICATIONROOTFOLDER"/>
         <RemoveFolder Id="ApplicationProgramsFolderUtilities" On="uninstall"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="OutlookShortcut" Type="integer" Value="1" KeyPath="yes" />
       </Component>
     </DirectoryRef>
@@ -426,10 +421,9 @@
 
       <!-- Program Files -->
       <ComponentRef Id="RootFolder"/>
-      <ComponentRef Id="EidStore"/>
-      <ComponentRef Id="Certs"/>
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
+      <ComponentRef Id="LogDir_64"/>
       <ComponentRef Id="Extensions"/>
       <ComponentRef Id="FireFoxRoot"/>
       <ComponentRef Id="XPIRoot"/>
@@ -450,6 +444,7 @@
 
       <!-- Registry -->
       <ComponentRef Id="RegistryBeidSystem"/>
+      <ComponentRef Id="RegistryBeidSystem_64"/>
 
 
       <Feature Id="Crypto"
