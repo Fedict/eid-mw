@@ -1,5 +1,5 @@
-Packages needed to create the eidmw for windows:
-
+Packages needed to create the eidmw for windows
+-----------------------------------------------
 1) Visual Studio 2010 Express Edition
 For the compilation of the crypto libraries and the sccertprop tool
 http://www.microsoft.com/express/Downloads/
@@ -18,3 +18,21 @@ For the creation of the MSI installers
 
 5) Windows platform SDK 2008 or Microsoft SDK v7.1
 For the tools to create multi language MSI's
+
+Test code Signing
+-----------------
+A test code signing certificate and private key is checked in. This certificate should be used 
+for test signing only!
+
+
+How to create a new code signing certificate/key pair (only written down here for the reference)
+
+1) Make sure you have the tools makecert and pvk2pfx. These tools can be found int the Windows
+   Driver Kit (eg in C:\WinDDK\7600.16385.1\bin\amd64\)
+
+2) run:
+   MakeCert.exe -r -pe -n "CN=Fedict eID(test)" -sv fedicteidtest.pvk fedicteidtest.cer
+   Leave the pvk password blank
+
+3) run:
+   pvk2pfx.exe /pvk fedicteidtest.pvk /spc fedicteidtest.cer /pfx fedicteidtest.pfx

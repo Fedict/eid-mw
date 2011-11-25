@@ -50,21 +50,9 @@ copy %~dp0..\minidriver\img\beid.ico %INSTALLPATH%\Release\
 :: sign minidriver driver cat file
 :: ===============================
 
-:: Certificate name and store
-set CERTIFICATENAME=Fedict eID(test)
-set CERTIFICATESTORE=PrivateCertStore
-:: To create a test certificate: 
-@if exist "%~dp0fedicteidtest.cer" goto cert_exist
-
-@echo [INFO] Make cert
-%SIGNTOOL_PATH%\MakeCert.exe -r -pe -ss  %CERTIFICATESTORE% -n "CN=%CERTIFICATENAME%" %~dp0fedicteidtest.cer
-@if "%ERRORLEVEL%" == "1" goto makecert_failed
-
-:cert_exist
-
 :: Sign the catalog
 @echo [INFO] Sign the catalog
-%SIGNTOOL_PATH%\SignTool.exe sign /a /v /s %CERTIFICATESTORE% /n "%CERTIFICATENAME%"  /t http://timestamp.verisign.com/scripts/timestamp.dll %INSTALLPATH%\Release\beidmdrv.cat
+%SIGNTOOL_PATH%\SignTool.exe sign /v /f %~dp0fedicteidtest.pfx /t http://timestamp.verisign.com/scripts/timestamp.dll %INSTALLPATH%\Release\beidmdrv.cat
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 :: create the MSI installers
