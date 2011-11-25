@@ -389,8 +389,6 @@
 -->
       <!-- Program Files -->
       <ComponentRef Id="RootFolder"/>
-      <ComponentRef Id="EidStore"/>
-      <ComponentRef Id="Certs"/>
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
       <ComponentRef Id="Extensions"/>
