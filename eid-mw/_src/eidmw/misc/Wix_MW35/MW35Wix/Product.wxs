@@ -876,6 +876,12 @@
           Description="!(loc.BeidGuiDescr)"
           Target="[BEIDVIEWERDIR]eid-viewer.exe"
           WorkingDirectory="BEIDVIEWERDIR"/>
+        <Shortcut Id="EidViewerDesktopShortcut"
+                  Name="Belgium EidViewer"
+                  Directory="DesktopFolder"
+                  Description="!(loc.BeidGuiDescr)"
+                  Target="[BEIDVIEWERDIR]eid-viewer.exe"
+                  WorkingDirectory="BEIDVIEWERDIR"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="1" KeyPath="yes" />
       </Component>
       <Component Id="BeidApplicationProgramsFolder" Guid="{CBD0F388-EAE5-4FA1-8C38-EC223928FF13}">				  
