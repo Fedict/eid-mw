@@ -256,15 +256,20 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				addIdObjects = CK_TRUE;
 			}
 		}
-		else if (len == 0)// no CKA_CLASS attribute in the template
-		{
-			addIdObjects = CK_TRUE;
-		}
+		//We only return the CKO_DATA objects when specifically asked for, this to prevent webbrowsers
+		//to read the entire carddata, while they only need the certificates. 
+		//(e.g. we saw firefox do a C_FindObjectsInit with only the auth cert's CKA_VALUE and its value
+		// in the template)
+		//else if (len == 0)// no CKA_CLASS attribute in the template
+		//{
+		//	addIdObjects = CK_TRUE;
+		//}
 	}
-	else
-	{
-		addIdObjects = CK_TRUE;
-	}
+	//see comment above, We only return the CKO_DATA objects when specifically asked for
+	//else
+	//{
+	//	addIdObjects = CK_TRUE;
+	//}
 
 	ret = p11_get_session(hSession, &pSession);
 	// if (pSession == NULL)
