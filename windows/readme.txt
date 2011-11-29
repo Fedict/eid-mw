@@ -19,8 +19,8 @@ For the creation of the MSI installers
 5) Windows platform SDK 2008 or Microsoft SDK v7.1
 For the tools to create multi language MSI's
 
-Test code Signing
------------------
+Code Signing Certificate for testing
+------------------------------------
 A test code signing certificate and private key is checked in. This certificate should be used 
 for test signing only!
 
@@ -36,3 +36,10 @@ How to create a new code signing certificate/key pair (only written down here fo
 
 3) run:
    pvk2pfx.exe /pvk fedicteidtest.pvk /spc fedicteidtest.cer /pfx fedicteidtest.pfx
+
+
+Install certificate as trusted root on test machine
+---------------------------------------------------
+Run command:
+
+certutil -addstore root fedicteidtest.cer
