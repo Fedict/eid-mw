@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2009 FedICT.
+* Copyright (C) 2008-2011 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -32,7 +32,7 @@
 
 #define MAX_LOG_FILE_NAME	512
 #define MAX_LOG_DIR_NAME	480
-char    g_szLogFile[MAX_LOG_FILE_NAME]  = "C:\\SmartCardMinidriverLog\\AZEBEIDMDRV.LOG";
+TCHAR    g_szLogFile[MAX_LOG_FILE_NAME]  = TEXT("C:\\SmartCardMinidriverLog\\AZEBEIDMDRV.LOG");
 
 #ifdef _DEBUG
 unsigned int   g_uiLogLevel      = LOGTYPE_TRACE;
@@ -100,81 +100,81 @@ void LogInit()
 		// log_dirname found
 		// we are not sure the string is null-terminated
 		if (dwData == sizeof(lpData))
-			dwData--;//replace last character with \0
+			dwData--; //replace last character with \0
 
 		lpData[dwData] = '\0';
 		// put dirname in global var
-		lstrcpy(g_szLogFile, lpData);
+		memcpy(g_szLogFile, lpData, dwData);
 		// append file name
 		lstrcat(g_szLogFile, TEXT("\\beidmdrv.log"));
 	}
 }
 
 
-/****************************************************************************************************/
 
-void BeidLogInit()
-{
-    DWORD 		dwRet;
-    HKEY 		hKey;
-    BYTE        lpData[512];
-    DWORD       dwData = 0;
 
-    printf("\nRetrieving the data...");
 
-    dwRet = RegOpenKeyEx (HKEY_LOCAL_MACHINE, TEXT("Software\\BEID\\Logging"), 0, KEY_READ, &hKey);
-    if (dwRet != ERROR_SUCCESS) {
-    	// Key not found - return
-    	return;
-    }
 
-    // getting log_level
-    dwData = sizeof(lpData);
-    dwRet = RegQueryValueEx( hKey,
-                             TEXT("log_level"),
-                             NULL,
-                             NULL,
-                             (LPBYTE) lpData,
-                             &dwData );
-    if (dwRet == ERROR_SUCCESS) {
-    	// log_level found
-        // Read loglevels from registry and map on beid middleware loglevels
-    	// debug   -> LOGTYPE_TRACE
-    	// info    -> LOGTYPE_INFO
-    	// warning -> LOGTYPE_WARNING
-    	// error   -> LOGTYPE_ERROR
-        // none    -> LOGTYPE_NONE
-    	if (lstrcmp((LPTSTR)lpData,TEXT("debug")))
-    		g_uiLogLevel = LOGTYPE_TRACE;
-    	if (lstrcmp((LPTSTR)lpData,TEXT("info")))
-    		g_uiLogLevel = LOGTYPE_INFO;
-    	if (lstrcmp((LPTSTR)lpData,TEXT("warning")))
-    		g_uiLogLevel = LOGTYPE_WARNING;
-    	if (lstrcmp((LPTSTR)lpData,TEXT("error")))
-    		g_uiLogLevel = LOGTYPE_ERROR;
-    	if (lstrcmp((LPTSTR)lpData,TEXT("none")))
-    		g_uiLogLevel = LOGTYPE_NONE;
-    }
-    //getting log_dirname
-    dwData = sizeof(lpData);
-    dwRet = RegQueryValueEx( hKey,
-                             TEXT("log_dirname"),
-                             NULL,
-                             NULL,
-                             (LPBYTE) lpData,
-                             &dwData );
-    if (dwRet == ERROR_SUCCESS
-    		&& dwData != 0) {
-    	// log_dirname found
-    	// we are not sure the string is null-terminated
-    	lpData[dwData/sizeof(TCHAR) -  1] = '\0';
-    	// put dirname in global var
-    	lstrcpy(g_szLogFile, lpData);
-    	// append file name
-    	lstrcat(g_szLogFile, TEXT("\\beidmdrv.log"));
-    }
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void LogTrace(int info, const char *pWhere, const char *format,... )
 {
@@ -270,7 +270,7 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 	_vsnprintf(buffer, sizeof(buffer), format, listArg);
 	va_end(listArg);
 
-	fp = fopen(g_szLogFile, "a");
+	fp = _tfopen(g_szLogFile, TEXT("a"));
 	if ( fp != NULL )
 	{
 		fprintf (fp, "%s %d %d %s|%30s|%s\n",baseName, GetCurrentProcessId(), GetCurrentThreadId(), timebuf, pWhere, buffer);
@@ -295,7 +295,7 @@ void LogDump (int iStreamLg, unsigned char *pa_cStream)
 		return;
 	}
 
-	fp = fopen(g_szLogFile, "a");
+	fp = _tfopen(g_szLogFile, TEXT("a"));
 	if ( fp == NULL )
 	{
 		return;
