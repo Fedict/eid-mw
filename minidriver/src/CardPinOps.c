@@ -346,8 +346,7 @@ DWORD WINAPI   CardDeauthenticateEx
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
-	CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
-
+	
 	/********************/
 	/* Check Parameters */
 	/********************/
