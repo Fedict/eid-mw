@@ -116,18 +116,7 @@ Start-BitsTransfer -Source "http://eid-mw.googlecode.com/svn/trunk/windows/fedic
 
 # Add to trusted root 
 invoke-expression "certutil -addstore root $toolsfolder\$toolfilename"
-
-##############################################################################
-# download beidmdrv.inf
-# can be found on http://eid-mw.googlecode.com/svn/trunk/minidriver/certification/beidmdrv.inf
-##############################################################################
-$toolfilename = "beidmdrv.inf"
-
-Write-Host "- Download beidmdrv.inf"
-
-# Download file
-$tooltarget = "$minidrivertestfolder\$toolfilename"
-Start-BitsTransfer -Source "http://eid-mw.googlecode.com/svn/trunk/minidriver/certification/beidmdrv.inf" -Destination $tooltarget
+invoke-expression "certutil -addstore TrustedPublisher $toolsfolder\$toolfilename"
 
 ##############################################################################
 # download beidmdrv.inf

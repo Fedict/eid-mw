@@ -40,6 +40,7 @@ How to create a new code signing certificate/key pair (only written down here fo
 
 Install certificate as trusted root on test machine
 ---------------------------------------------------
-Run command:
+Run commands:
 
 certutil -addstore root fedicteidtest.cer
+certutil -addstore TrustedPublisher fedicteidtest.cer
