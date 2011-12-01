@@ -10,6 +10,13 @@
 :: then, a dummy value is written (should not happen!)
 
 
+:: tortoise subwcrev
+:subwcrev
+subwcrev %~dp0.. svn_revision_template ..\svn_revision
+IF NOT ERRORLEVEL 1 GOTO write_svn_revision_h
+
+:: svnversion
+:svnversion
 @SET SVN_REVISION=
 @FOR /F "tokens=1" %%i in ('svnversion.exe %~dp0..') do @SET SVN_REVISION=%%i
 
@@ -17,16 +24,22 @@
 @IF "%SVN_REVISION%"=="" GOTO writedummy
 @IF SVN_REVISION==exported GOTO writedummy
 
+
+@IF NOT DEFINED SVN_REVISION GOTO writedummy
+@IF "%SVN_REVISION%"=="" GOTO writedummy
+@IF SVN_REVISION==exported GOTO writedummy
+
+:writesvn_revision
 @echo %SVN_REVISION%>%~dp0..\svn_revision
 @echo [INFO] ..\svn_revision set to %SVN_REVISION%
-@GOTO svn_revision_h
+@GOTO write_svn_revision_h
 
 :writedummy
-@IF EXIST %~dp0..\svn_revision GOTO svn_revision_h
+@IF EXIST %~dp0..\svn_revision GOTO write_svn_revision_h
 @echo 666>%~dp0..\svn_revision
 @echo [INFO] ..\svn_revision set to 666
 
-:svn_revision_h
+:write_svn_revision_h
 
 :: creates svn_revision.h file
 
