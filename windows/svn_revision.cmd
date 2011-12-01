@@ -12,18 +12,13 @@
 
 :: tortoise subwcrev
 :subwcrev
-subwcrev %~dp0.. svn_revision_template ..\svn_revision
+subwcrev %~dp0.. %~dp0.\svn_revision_template %~dp0..\svn_revision
 IF NOT ERRORLEVEL 1 GOTO write_svn_revision_h
 
 :: svnversion
 :svnversion
 @SET SVN_REVISION=
 @FOR /F "tokens=1" %%i in ('svnversion.exe %~dp0..') do @SET SVN_REVISION=%%i
-
-@IF NOT DEFINED SVN_REVISION GOTO writedummy
-@IF "%SVN_REVISION%"=="" GOTO writedummy
-@IF SVN_REVISION==exported GOTO writedummy
-
 
 @IF NOT DEFINED SVN_REVISION GOTO writedummy
 @IF "%SVN_REVISION%"=="" GOTO writedummy
