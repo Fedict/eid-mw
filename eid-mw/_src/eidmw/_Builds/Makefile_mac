@@ -112,7 +112,7 @@ SDK_DIR  = sdk
 ## of the installation.
 APPS_DIR =  /Applications/BelgiumIdentityCard
 APPS_DIR_NAME = "/Applications/Belgium\ Identity\ Card"
-EIDGUI_NAME = eID-Viewer
+## EIDGUI_NAME = eID-Viewer
 
 ## List of the implicit names of the libraries. This is convenient
 ## when we want to substitue "x_y_z" with "x_y" to obtain e.g.
@@ -175,10 +175,10 @@ APP_FILES = $(XPI_PLUGIN) $(EID_VIEWER_ZIP_PATH)
 
 
 ## Language files for the GUI
-TRANSLATIONS = bin/$(EIDGUI).app/Contents/MacOS/eidmw_de.qm \
-	       bin/$(EIDGUI).app/Contents/MacOS/eidmw_en.qm \
-	       bin/$(EIDGUI).app/Contents/MacOS/eidmw_fr.qm \
-	       bin/$(EIDGUI).app/Contents/MacOS/eidmw_nl.qm 
+##TRANSLATIONS = bin/$(EIDGUI).app/Contents/MacOS/eidmw_de.qm \
+##	       bin/$(EIDGUI).app/Contents/MacOS/eidmw_en.qm \
+##	       bin/$(EIDGUI).app/Contents/MacOS/eidmw_fr.qm \
+##	       bin/$(EIDGUI).app/Contents/MacOS/eidmw_nl.qm 
 
 ## SDK files to be included in the release
 SDK_HEADERS_CPP = ../eidlib/eidlibdefines.h ../eidlib/eidlib.h ../common/eidErrors.h \
@@ -268,7 +268,6 @@ FILES_TO_COPY := $(LIBS:%=%_____$(ROOT_DIR)/$(INST_DIR)/lib/) \
 		 $(ETC:%=misc/mac/%_____$(ROOT_DIR)/$(INST_DIR)/etc/) \
 		 $(OLD_ETC:%=../beid-2.6/mac/etc/%_____$(ROOT_DIR)/$(INST_DIR)/etc/) \
 		 $(SISPLUGINS:%=%_____$(ROOT_DIR)/$(INST_DIR)/lib/siscardplugins) \
-	         $(TRANSLATIONS:%=%_____$(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/) \
 	         $(DOCS:%=%_____$(ROOT_DIR)/$(MAN_DIR)) \
 	         $(SCRIPTS:%=%_____$(ROOT_DIR)/$(INST_DIR)/bin) \
                  $(BINS:%=%_____$(ROOT_DIR)/usr/bin) \
@@ -295,8 +294,7 @@ SDK_FILES_TO_COPY := $(SDK_HEADERS_CPP:%=%_____$(SDK_DIR)/beidlib/C++/include) \
 		     $(SDK_PKCS11_FILES:%=%_____$(SDK_DIR)/pkcs11/C++/include) \
 		     $(SDK_COMMON_FILES:%=%_____$(SDK_DIR))
 
-DIRS_TO_COPY := bin/$(EIDGUI).app_____$(ROOT_DIR)/$(APPS_DIR) \
-		misc/mac/OOoRegister/OpenOffice_Register.pkg_____$(ROOT_DIR)/$(APPS_DIR) \
+DIRS_TO_COPY := misc/mac/OOoRegister/OpenOffice_Register.pkg_____$(ROOT_DIR)/$(APPS_DIR) \
 		misc/mac/OOo.default_____$(ROOT_DIR)/$(INST_DIR)/lib \
 		bin/BEID.tokend_____$(ROOT_DIR)/$(APPS_DIR) \
 		bin/BEID_Lion.tokend_____$(ROOT_DIR)/$(APPS_DIR) \
@@ -311,8 +309,7 @@ r3=$(UDIR)/$(ROOT_DIR)
 ## $(r3)/$(APPS_DIR)/ to all the elements of BASE_BINS
 UNIVERSAL = $(LIBS:%=$(r3)/$(INST_DIR)/%) \
 	    $(SISPLUGINS_BARE:%=$(r3)/$(INST_DIR)/lib/siscardplugins/%) \
-	    $(BASE_BINS:%=$(r3)/usr/bin/%) \
-	    $(r3)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/$(EIDGUI)
+	    $(BASE_BINS:%=$(r3)/usr/bin/%)
 
 
 #####################################################################
@@ -378,7 +375,7 @@ rel_3rd_party:
 	 cp ../../ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib $(ROOT_DIR)/$(INST_DIR)/lib/libxerces-c-3.1.dylib 
 	 mkdir -p $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats/
 	 cp $(QTPLUGINDIR)/imageformats/libqjpeg.dylib $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats/libbeidjpeg.dylib
-	 mkdir -p $(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/Resources
+	 ##	 mkdir -p $(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/Resources
 	 @echo "********** Changing install_names for use with the QT libs **********"
 	 install_name_tool -change $(PATH_TO_QTCORE) \
 		$(INST_DIR)/lib/beidqt/QtCore \
@@ -386,12 +383,12 @@ rel_3rd_party:
 	 install_name_tool -change $(PATH_TO_QTGUI) \
 		$(INST_DIR)/lib/beidqt/QtGui \
 		$(ROOT_DIR)/usr/bin/$(DLGSRV)
-	 install_name_tool -change $(PATH_TO_QTCORE) \
-		$(INST_DIR)/lib/beidqt/QtCore \
-		$(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/$(EIDGUI)
-	 install_name_tool -change $(PATH_TO_QTGUI) \
-		$(INST_DIR)/lib/beidqt/QtGui \
-		$(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/$(EIDGUI)
+##	 install_name_tool -change $(PATH_TO_QTCORE) \
+##		$(INST_DIR)/lib/beidqt/QtCore \
+##		$(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/$(EIDGUI)
+##	 install_name_tool -change $(PATH_TO_QTGUI) \
+##		$(INST_DIR)/lib/beidqt/QtGui \
+##		$(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/$(EIDGUI)
 	 install_name_tool -change QtCore.framework/Versions/4/QtCore \
 		$(INST_DIR)/lib/beidqt/QtCore \
 		$(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats/libbeidjpeg.dylib
@@ -448,7 +445,6 @@ rel_end:
 	@echo 'if [[ $$(sw_vers -productVersion) == *10.7* ]]; then' >> $(POSTFLIGHT)
 	@echo "mv /Applications/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi" >> $(POSTFLIGHT)
 	@echo "rm -R /Applications/BelgiumIdentityCard/BEID_Lion.tokend;" >> $(POSTFLIGHT)
-	@echo "mv $(APPS_DIR)/$(EIDGUI).app $(APPS_DIR)/$(EIDGUI_NAME).app" >> $(POSTFLIGHT)
 	@echo "mv $(APPS_DIR) \"$(APPS_DIR_NAME)\"" >> $(POSTFLIGHT)
 	@echo "test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;" >> $(POSTFLIGHT)
 	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der" >> $(POSTFLIGHT)
