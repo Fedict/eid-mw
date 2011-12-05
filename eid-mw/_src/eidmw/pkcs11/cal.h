@@ -118,48 +118,48 @@ extern "C" {
 
 	//	{ BEID_FIELD_TAG_ID_Version,			"Version"},
 #define BEID_ID_DATA_LABELS  {  \
-	{ BEID_FIELD_TAG_ID_CardNr,				"Card_Number"},  \
-	{ BEID_FIELD_TAG_ID_ChipNr,				"Chip_Number"},  \
-	{ BEID_FIELD_TAG_ID_ValidityBeginDate,	"Validity_Begin_Date"},  \
-	{ BEID_FIELD_TAG_ID_ValidityEndDate,	"Validity_End_Date"},  \
-	{ BEID_FIELD_TAG_ID_IssuingMunicipality,"Issuing_Municipality"},  \
-	{ BEID_FIELD_TAG_ID_NationalNr,			"National_Number"},  \
-	{ BEID_FIELD_TAG_ID_Surname,			"Surname"},  \
-	{ BEID_FIELD_TAG_ID_FirstNames,			"Firstnames"},  \
-	{ BEID_FIELD_TAG_ID_FirstLetterOfThirdGivenName,		"First_Letter_Of_Third_Given_Name"},  \
-	{ BEID_FIELD_TAG_ID_Nationality,		"Nationality"},  \
-	{ BEID_FIELD_TAG_ID_LocationOfBirth,	"Location_Of_Birth"},  \
-	{ BEID_FIELD_TAG_ID_DateOfBirth,		"Date_Of_Birth"},  \
-	{ BEID_FIELD_TAG_ID_Gender,				"Gender"},  \
-	{ BEID_FIELD_TAG_ID_Nobility,			"Nobility"},  \
-	{ BEID_FIELD_TAG_ID_DocumentType,		"Document_Type"},  \
-	{ BEID_FIELD_TAG_ID_SpecialStatus,		"Special_Status"},  \
-	{ BEID_FIELD_TAG_ID_PhotoHash,			"Photo_Hash"},  \
-	{ BEID_FIELD_TAG_ID_Duplicata,			"Duplicata"},  \
-	{ BEID_FIELD_TAG_ID_SpecialOrganization,"Special_Organization"},  \
-	{ BEID_FIELD_TAG_ID_MemberOfFamily,		"Member_Of_Family"}  \
+	{ BEID_FIELD_TAG_ID_CardNr,				"card_number"},  \
+	{ BEID_FIELD_TAG_ID_ChipNr,				"chip_number"},  \
+	{ BEID_FIELD_TAG_ID_ValidityBeginDate,	"validity_begin_date"},  \
+	{ BEID_FIELD_TAG_ID_ValidityEndDate,	"validity_end_date"},  \
+	{ BEID_FIELD_TAG_ID_IssuingMunicipality,"issuing_municipality"},  \
+	{ BEID_FIELD_TAG_ID_NationalNr,			"national_number"},  \
+	{ BEID_FIELD_TAG_ID_Surname,			"surname"},  \
+	{ BEID_FIELD_TAG_ID_FirstNames,			"firstnames"},  \
+	{ BEID_FIELD_TAG_ID_FirstLetterOfThirdGivenName,		"first_letter_of_third_given_name"},  \
+	{ BEID_FIELD_TAG_ID_Nationality,		"nationality"},  \
+	{ BEID_FIELD_TAG_ID_LocationOfBirth,	"location_of_birth"},  \
+	{ BEID_FIELD_TAG_ID_DateOfBirth,		"date_of_birth"},  \
+	{ BEID_FIELD_TAG_ID_Gender,				"gender"},  \
+	{ BEID_FIELD_TAG_ID_Nobility,			"nobility"},  \
+	{ BEID_FIELD_TAG_ID_DocumentType,		"document_type"},  \
+	{ BEID_FIELD_TAG_ID_SpecialStatus,		"special_status"},  \
+	{ BEID_FIELD_TAG_ID_PhotoHash,			"photo_hash"},  \
+	{ BEID_FIELD_TAG_ID_Duplicata,			"duplicata"},  \
+	{ BEID_FIELD_TAG_ID_SpecialOrganization,"special_organization"},  \
+	{ BEID_FIELD_TAG_ID_MemberOfFamily,		"member_of_family"}  \
 }
 
 	//{ BEID_FIELD_TAG_ADDR_Version,			"Address_Version"},
 #define BEID_ADDRESS_DATA_LABELS  {  \
-	{ BEID_FIELD_TAG_ADDR_Street,			"Address_Street_Number"},  \
-	{ BEID_FIELD_TAG_ADDR_ZipCode,			"Address_Zip"},  \
-	{ BEID_FIELD_TAG_ADDR_Municipality,		"Address_Municipality"}  \
+	{ BEID_FIELD_TAG_ADDR_Street,			"address_street_and_number"},  \
+	{ BEID_FIELD_TAG_ADDR_ZipCode,			"address_zip"},  \
+	{ BEID_FIELD_TAG_ADDR_Municipality,		"address_municipality"}  \
 }
 
-#define BEID_FIELD_TAG_DATA_SerialNr				"CardData_SerialNumber"
-#define BEID_FIELD_TAG_DATA_CompCode				"CardData_CompCode"
-#define BEID_FIELD_TAG_DATA_OSNr						"CardData_OSNumber"
-#define BEID_FIELD_TAG_DATA_OSVersion				"CardData_OSVersion"
-#define BEID_FIELD_TAG_DATA_SoftMaskNumber	"CardData_SoftMaskNumber"
-#define BEID_FIELD_TAG_DATA_SoftMaskVersion	"CardData_SoftMaskVersion"
-#define BEID_FIELD_TAG_DATA_ApplVersion			"CardData_ApplVersion"
-#define BEID_FIELD_TAG_DATA_GlobOSVersion		"CardData_GlobOSVersion"
-#define BEID_FIELD_TAG_DATA_ApplIntVersion	"CardData_ApplIntVersion"
-#define BEID_FIELD_TAG_DATA_PKCS1Support		"CardData_PKCS1Support"
-#define BEID_FIELD_TAG_DATA_ApplLifeCycle		"CardData_ApplLifeCycle"
-#define BEID_FIELD_TAG_DATA_KeyExchangeVersion	"CardData_KeyExchangeVersion"
-#define BEID_FIELD_TAG_DATA_Signature				"CardData_Signature"
+#define BEID_FIELD_TAG_DATA_SerialNr				"carddata_serialnumber"
+#define BEID_FIELD_TAG_DATA_CompCode				"carddata_comp_code"
+#define BEID_FIELD_TAG_DATA_OSNr						"carddata_os_number"
+#define BEID_FIELD_TAG_DATA_OSVersion				"carddata_os_version"
+#define BEID_FIELD_TAG_DATA_SoftMaskNumber	"carddata_soft_mask_number"
+#define BEID_FIELD_TAG_DATA_SoftMaskVersion	"carddata_soft_mask_version"
+#define BEID_FIELD_TAG_DATA_ApplVersion			"carddata_appl_version"
+#define BEID_FIELD_TAG_DATA_GlobOSVersion		"carddata_glob_os_version"
+#define BEID_FIELD_TAG_DATA_ApplIntVersion	"carddata_appl_int_version"
+#define BEID_FIELD_TAG_DATA_PKCS1Support		"carddata_pkcs1_support"
+#define BEID_FIELD_TAG_DATA_ApplLifeCycle		"carddata_appl_lifecycle"
+#define BEID_FIELD_TAG_DATA_KeyExchangeVersion	"carddata_key_exchange_version"
+#define BEID_FIELD_TAG_DATA_Signature				"carddata_signature"
 
 #define BEID_FIELD_TAG_ATR									"ATR"
 
@@ -170,13 +170,13 @@ typedef struct BEID_DATA_LABELS_NAME {
 
 #define BEID_FIELD_TAG_DATA_FILE		"DATA_FILE"
 #define BEID_FIELD_TAG_ADDRESS_FILE		"ADDRESS_FILE"
-#define BEID_FIELD_TAG_PHOTO			"PHOTO"
+#define BEID_FIELD_TAG_PHOTO			"PHOTO_FILE"
 #define BEID_FIELD_TAG_CARD_DATA		"CARD_DATA"
 #define BEID_FIELD_TAG_CERT_RN			"CERT_RN_FILE"
 //#define BEID_FIELD_TAG_CERT_RNCA		"CERT_RNCA_FILE"
 
-#define BEID_FIELD_TAG_SGN_RN			"SGN_DATA_FILE"
-#define BEID_FIELD_TAG_SGN_ADDRESS	"SGN_ADDRESS_FILE"
+#define BEID_FIELD_TAG_SGN_RN			"SIGN_DATA_FILE"
+#define BEID_FIELD_TAG_SGN_ADDRESS	"SIGN_ADDRESS_FILE"
 
 
 
