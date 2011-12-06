@@ -198,17 +198,22 @@
 @if "%DEBUG%"=="1" goto debug
 
 :build
-@echo [INFO] Building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln"
-@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|Win32"
-@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|x64"
-@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|Win32"
-@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|x64"
-@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eID-QuickInstaller\eID-EZinstaller\eID-EZinstaller.sln" /build "Release|Win32"
+@echo [INFO] cleaning "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln Release|Win32"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|Win32" /Out "%~dp0.\clean32.log"
+@echo [INFO] cleaning "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln Release|x64"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|x64" /Out "%~dp0.\clean64.log"
+@echo [INFO] Building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln Release|Win32"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|Win32" /Out "%~dp0.\build32.log"
+@echo [INFO] Building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln Release|x64"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|x64" /Out "%~dp0.\build64.log"
+@echo [INFO] Building "%~dp0..\_src\eID-QuickInstaller\eID-EZinstaller\eID-EZinstaller.sln Release|Win32"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eID-QuickInstaller\eID-EZinstaller\eID-EZinstaller.sln" /rebuild "Release|Win32" /Out "%~dp0.\buildQI32.log"
 
 @echo [INFO] Done...
 @goto end
 
 :debug
+@echo [INFO] building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln"
 @"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln"
 @goto end
 
