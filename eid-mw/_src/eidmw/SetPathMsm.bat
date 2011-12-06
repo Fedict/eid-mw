@@ -8,7 +8,7 @@
 @if "%FILE_NOT_FOUND%"=="" goto find_msm
 @echo        Not found in "%BEID_DIR_MSM%"
 
-@set BEID_DIR_MSM="C:\Program Files\Common Files\Merge Modules"
+@set BEID_DIR_MSM=C:\Program Files\Common Files\Merge Modules
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_MSM%\%%~i" set FILE_NOT_FOUND=%%~i
 @if "%FILE_NOT_FOUND%"=="" goto find_msm
