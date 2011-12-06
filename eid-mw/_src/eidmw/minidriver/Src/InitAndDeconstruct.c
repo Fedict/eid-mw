@@ -26,7 +26,7 @@
 
 /****************************************************************************************************/
 
-#define MINIMUM_VERSION_SUPPORTED      CARD_DATA_VERSION_FOUR
+#define MINIMUM_VERSION_SUPPORTED      CARD_DATA_VERSION_SIX
 #define CURRENT_VERSION_SUPPORTED      CARD_DATA_VERSION_SIX
 
 #define SUPPORTED_CARDS                3
