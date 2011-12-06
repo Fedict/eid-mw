@@ -181,6 +181,7 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="&quot;..\EIKDiag\diaglib\$(ConfigurationName)&quot;;&quot;..\zrc\zrclib\$(ConfigurationName)&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\lib&quot;;&quot;$(BEID_DIR_QT_450_STATIC)\plugins\imageformats&quot;;..\..\ThirdParty\Qt\4.5.0_static\lib;..\..\ThirdParty\Qt\4.5.0_static\plugins\imageformats;C:\Qt\4.5.0_static\lib;C:\Qt\4.5.0_static\plugins\imageformats;&quot;$(BEID_DIR_PLATFORMSDK_2008)\Lib&quot;;..\..\ThirdParty\MSPlatformSDK_2008\Lib;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
+				GenerateManifest="false"
 				IgnoreDefaultLibraryNames="LIBCMT.lib "
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile=""
@@ -192,6 +193,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles=".\eID-QuickInstaller.exe.intermediate.manifest"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
