@@ -231,7 +231,7 @@ cmd /c easy_install zope.interface
 ##############################################################################
 Write-Host "- Installing pywin32"
 
-$toolfilename = "pywin32-214.win32-py2.6.exe"
+$toolfilename = "pywin32-216.win32-py2.6.exe"
 
 # Download file
 $tooltarget = "$packagesfolder\$toolfilename"
@@ -245,7 +245,8 @@ cmd /c easy_install $tooltarget
 ##############################################################################
 Write-Host "- Installing buildbot-slave"
 
-$toolfilename = "buildbot-slave-0.8.2.zip"
+$version = "0.8.5"
+$toolfilename = "buildbot-slave-$version.zip"
 
 # Download file
 $tooltarget = "$packagesfolder\$toolfilename"
@@ -254,15 +255,15 @@ Download "$packagesfolderurl/$toolfilename" $tooltarget
 Extract $tooltarget $env:Temp
 
 # cd to directory of buildbot-slave source as setup fails if ran from other directory
-cd "$env:Temp\buildbot-slave-0.8.2\"
+cd "$env:Temp\buildbot-slave-$version"
 cmd /c echo %PATH%
-cmd /c python setup.py install
+cmd /c $pythonbinaryfolder\python setup.py install
 
 
 
 # read out file, replace "buildbot.scripts" with "buildslave.scripts"
 # and save it in the python-scripts folder
-$sourcefile = "$env:Temp\buildbot-slave-0.8.2\contrib\windows\buildbot_service.py"
+$sourcefile = "$env:Temp\buildbot-slave-$version\contrib\windows\buildbot_service.py"
 $destinationfile = "$pythonscriptsfolder\buildbot_service.py"
 
 Copy-Item $sourcefile -destination $destinationfile
@@ -274,8 +275,8 @@ Copy-Item $sourcefile -destination $destinationfile
 cmd /c $pythonscriptsfolder\buildslave create-slave $buildslavefolder $buildmasterhostnameandport $slavename $slavepassword
 
 cd $pythonscriptsfolder
-cmd /c python buildbot_service.py --username .\LocalSystem --password nevermind --startup auto install
-cmd /c python buildbot_service.py start $buildslavefolder
+cmd /c $pythonbinaryfolder\python buildbot_service.py --username .\LocalSystem --password nevermind --startup auto install
+cmd /c $pythonbinaryfolder\python buildbot_service.py start $buildslavefolder
 
 # return to pwd
 cd $oldpwd
