@@ -124,8 +124,9 @@
           <Directory Id="ApplicationProgramsFolderUtilities" Name="Utilities"/>
         </Directory>
       </Directory>
-      <Directory Id="ProgramFilesFolder">
+      <Directory Id="ProgramFilesFolder" Name="ProgramFilesFolder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
+          <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
           <Directory Id="BEIDVIEWERDIR" Name="EidViewer" >
             <Directory Id="BEIDVIEWERLIBDIR" Name="lib" />
           </Directory>
@@ -160,28 +161,27 @@
           </Directory>
         </Directory>
       </Directory>
-      <Directory Id="ProgramFiles64Folder">
-        <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
+      <Directory Id="ProgramFiles64Folder" Name="ProgramFiles64Folder">
         <Directory Id="LOGDIR_64" Name="log"/>
       </Directory>
 
-      <Directory Id="DesktopFolder"/>
+      <Directory Id="DesktopFolder" Name="DesktopFolder"/>
 
-      <Directory Id="WindowsFolder"/>
-      <Directory Id="SystemFolder">
+      <Directory Id="WindowsFolder" Name="WindowsFolder"/>
+      <Directory Id="SystemFolder" Name="SystemFolder">
         <Merge Id="VCRT" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
         <Merge Id="VCRT_POLICY" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
         <Directory Id="SISCARDPLUGINSDIR" Name="siscardplugins"/>
       </Directory>
-      <Directory Id="System64Folder">
+      <Directory Id="System64Folder" Name="System64Folder">
         <Merge Id="VCRT_64" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86_x64.msm" Language="0" DiskId="1" />
         <Merge Id="VCRT_POLICY_64" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86_x64.msm" Language="0" DiskId="1" />
       </Directory>
     </Directory>
 
     <DirectoryRef Id="BEIDVIEWERDIR">
-      <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
+      <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}" Win64="no">
         <File Id="eidviewer.exe" Name="eid-viewer.exe" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer.exe" />
         <File Id="eidviewerguiSNAPSHOT.jar" Name="eid-viewer-gui-4.0.0-SNAPSHOT.jar" KeyPath="no" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer-gui-4.0.0-SNAPSHOT.jar" />
         <File Id="README.txt" Name="README.txt" KeyPath="no" Source="..\..\..\..\ThirdParty\eid-viewer\README.txt" />
@@ -190,145 +190,145 @@
 
 
     <ComponentGroup Id="BEIDVIEWERLIB">
-      <Component Id="cmpF23EA0DF1C6ED1D827E30D7CD9F3D65C" Directory="BEIDVIEWERLIBDIR" Guid="{2BA77710-8FC5-439C-9422-9ADF82FAA17D}">
+      <Component Id="cmpF23EA0DF1C6ED1D827E30D7CD9F3D65C" Directory="BEIDVIEWERLIBDIR" Guid="{2BA77710-8FC5-439C-9422-9ADF82FAA17D}" Win64="no">
         <File Id="fil023F0023B19BE8BD00FD330813AD7B76" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\activation-1.1.jar" />
       </Component>
-      <Component Id="cmpB73FBE094CF1EA9246C91D0B030594A2" Directory="BEIDVIEWERLIBDIR" Guid="{D1062B5D-5552-4F44-AACC-0C7478CF31BB}">
+      <Component Id="cmpB73FBE094CF1EA9246C91D0B030594A2" Directory="BEIDVIEWERLIBDIR" Guid="{D1062B5D-5552-4F44-AACC-0C7478CF31BB}" Win64="no">
         <File Id="fil48DB14A4EEA9F3DBE5A863F4E5C2B824" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\bcmail-jdk16-1.45.jar" />
       </Component>
-      <Component Id="cmpbcprov_jdk16_1.45.jar" Directory="BEIDVIEWERLIBDIR" Guid="{C8858990-848D-4a8d-B71D-2009300BDF05}">
+      <Component Id="cmpbcprov_jdk16_1.45.jar" Directory="BEIDVIEWERLIBDIR" Guid="{C8858990-848D-4a8d-B71D-2009300BDF05}" Win64="no">
         <File Id="filbcprov_jdk16_1.45.jar" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\bcprov-jdk16-1.45.jar" />
       </Component>
-      <Component Id="cmp8F65A567FF8D2D692408EE1EA729F194" Directory="BEIDVIEWERLIBDIR" Guid="{14E2E30B-E71D-4790-B85B-CBCF3477223D}">
+      <Component Id="cmp8F65A567FF8D2D692408EE1EA729F194" Directory="BEIDVIEWERLIBDIR" Guid="{14E2E30B-E71D-4790-B85B-CBCF3477223D}" Win64="no">
         <File Id="fil00E19405CCA64550789E657E34EFC565" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\bctsp-jdk16-1.45.jar" />
       </Component>
-      <Component Id="cmpCEFF213A43E8D20B9D3C5AD619951C38" Directory="BEIDVIEWERLIBDIR" Guid="{4643EAB8-355B-4295-83BE-A9ECAF2FE134}">
+      <Component Id="cmpCEFF213A43E8D20B9D3C5AD619951C38" Directory="BEIDVIEWERLIBDIR" Guid="{4643EAB8-355B-4295-83BE-A9ECAF2FE134}" Win64="no">
         <File Id="fil9266C044F838E0FA4A00DDF586164BE3" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\commons-codec-1.4.jar" />
       </Component>
-      <Component Id="cmp840ACFF10A5B1DA4A0B89A9850DBF04B" Directory="BEIDVIEWERLIBDIR" Guid="{23BB353F-5246-43B3-8D68-C4A2538B0AAE}">
+      <Component Id="cmp840ACFF10A5B1DA4A0B89A9850DBF04B" Directory="BEIDVIEWERLIBDIR" Guid="{23BB353F-5246-43B3-8D68-C4A2538B0AAE}" Win64="no">
         <File Id="filF7CF5D40841C4B8D887BECBB77BF0940" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\commons-httpclient-3.1.jar" />
       </Component>
-      <Component Id="cmp95AFEC2CE3DFCA4A71F556E8117C080F" Directory="BEIDVIEWERLIBDIR" Guid="{F8D1CAF5-E06B-4BCD-82FD-FDBF724099ED}">
+      <Component Id="cmp95AFEC2CE3DFCA4A71F556E8117C080F" Directory="BEIDVIEWERLIBDIR" Guid="{F8D1CAF5-E06B-4BCD-82FD-FDBF724099ED}" Win64="no">
         <File Id="filBB88E9483176D018C47F6B288F1A04E5" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\commons-io-1.4.jar" />
       </Component>
-      <Component Id="cmpAFA9DC58BE216178DE0E87E43FC25455" Directory="BEIDVIEWERLIBDIR" Guid="{FEAB1705-AB67-45D1-9C64-7EE72A8BE0E5}">
+      <Component Id="cmpAFA9DC58BE216178DE0E87E43FC25455" Directory="BEIDVIEWERLIBDIR" Guid="{FEAB1705-AB67-45D1-9C64-7EE72A8BE0E5}" Win64="no">
         <File Id="fil07CCF36EC2C2DE6BDF7F65FE91823AEB" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\commons-logging-1.1.1.jar" />
       </Component>
-      <Component Id="cmp434534B67CA1FAFE59C6514FB0387B2C" Directory="BEIDVIEWERLIBDIR" Guid="{060867C1-5F6F-46DF-8F7D-761113CFDA80}">
+      <Component Id="cmp434534B67CA1FAFE59C6514FB0387B2C" Directory="BEIDVIEWERLIBDIR" Guid="{060867C1-5F6F-46DF-8F7D-761113CFDA80}" Win64="no">
         <File Id="fil2796CB9696BB1A7B44607863621EB5F4" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\commons-logging-api-1.1.jar" />
       </Component>
-      <Component Id="cmp239E8B911447BE06D22EA317F1DE06A3" Directory="BEIDVIEWERLIBDIR" Guid="{5D1DFA49-794C-44BA-A99B-7F269FA69892}">
+      <Component Id="cmp239E8B911447BE06D22EA317F1DE06A3" Directory="BEIDVIEWERLIBDIR" Guid="{5D1DFA49-794C-44BA-A99B-7F269FA69892}" Win64="no">
         <File Id="filA0AF1F14EA8E53BFEB716CA39955710F" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-core-1.0.4.BETA6.jar" />
       </Component>
-      <Component Id="cmp276CF9B545E319DDFFB0ACF27F0C5964" Directory="BEIDVIEWERLIBDIR" Guid="{BB50304F-30A1-4EE9-8D1E-6FF1F9E08D85}">
+      <Component Id="cmp276CF9B545E319DDFFB0ACF27F0C5964" Directory="BEIDVIEWERLIBDIR" Guid="{BB50304F-30A1-4EE9-8D1E-6FF1F9E08D85}" Win64="no">
         <File Id="filBB02AFB828568BAF2A6D452DF74AD4BD" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-service-1.0.4.BETA6.jar" />
       </Component>
-      <Component Id="cmpF0852469A8794D803E05DAFE09383EFE" Directory="BEIDVIEWERLIBDIR" Guid="{24C8477A-2B10-47F0-BD32-496B196DE657}">
+      <Component Id="cmpF0852469A8794D803E05DAFE09383EFE" Directory="BEIDVIEWERLIBDIR" Guid="{24C8477A-2B10-47F0-BD32-496B196DE657}" Win64="no">
         <File Id="fil2E46AF421ED32956AA040943F3F02627" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-service-spi-1.0.4.BETA6.jar" />
       </Component>
-      <Component Id="cmp27C7B25729ED67627A4F38E23911517F" Directory="BEIDVIEWERLIBDIR" Guid="{076CB9B3-FA64-47E4-9D9A-5991AC700584}">
+      <Component Id="cmp27C7B25729ED67627A4F38E23911517F" Directory="BEIDVIEWERLIBDIR" Guid="{076CB9B3-FA64-47E4-9D9A-5991AC700584}" Win64="no">
         <File Id="fil0691B559AF98E87DC1BE9651AE6D9294" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-applet-shared-1.0.4.BETA6.jar" />
       </Component>
-      <Component Id="cmp4FAC43C7565FE3A3E46E4838089F7736" Directory="BEIDVIEWERLIBDIR" Guid="{D55CF622-99EF-4C51-BB27-327CC515EFD7}">
+      <Component Id="cmp4FAC43C7565FE3A3E46E4838089F7736" Directory="BEIDVIEWERLIBDIR" Guid="{D55CF622-99EF-4C51-BB27-327CC515EFD7}" Win64="no">
         <File Id="fil3AF140C3F9DA8C730CB24372B8D64FE7" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-trust-service-client-1.0.0.RC10.jar" />
       </Component>
-      <Component Id="cmpE04D7834D1CBACB1C107D7F6A7D02E51" Directory="BEIDVIEWERLIBDIR" Guid="{49FD66EE-810A-43E0-B39C-B11F992D4AD6}">
+      <Component Id="cmpE04D7834D1CBACB1C107D7F6A7D02E51" Directory="BEIDVIEWERLIBDIR" Guid="{49FD66EE-810A-43E0-B39C-B11F992D4AD6}" Win64="no">
         <File Id="fil0272F3E125A02AD98E06D90E3EA3BDA4" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-trust-service-xkms2-ws-1.0.0.RC10.jar" />
       </Component>
-      <Component Id="cmp5E4CEE8AEB826EA5B440BEB0BDA0F815" Directory="BEIDVIEWERLIBDIR" Guid="{C0921729-E424-4C60-B4E7-1781A8367F46}">
+      <Component Id="cmp5E4CEE8AEB826EA5B440BEB0BDA0F815" Directory="BEIDVIEWERLIBDIR" Guid="{C0921729-E424-4C60-B4E7-1781A8367F46}" Win64="no">
         <File Id="fil4E234A26B6A61796576D35BFD7DDE7EE" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\eid-viewer-lib-4.0.0-SNAPSHOT.jar" />
       </Component>
-      <Component Id="cmp6DD9AD6E637338DB8528CFA5A0F9DC57" Directory="BEIDVIEWERLIBDIR" Guid="{B76B5A25-F806-45B4-9B6A-DC4F7306A713}">
+      <Component Id="cmp6DD9AD6E637338DB8528CFA5A0F9DC57" Directory="BEIDVIEWERLIBDIR" Guid="{B76B5A25-F806-45B4-9B6A-DC4F7306A713}" Win64="no">
         <File Id="filECDA0180F893307702BC252F303E974F" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\gmbal-api-only-3.0.0-b023.jar" />
       </Component>
-      <Component Id="cmpCEA848C2C5BC02F17C251B0CD834B96A" Directory="BEIDVIEWERLIBDIR" Guid="{21953832-966E-418F-ACB9-337BA6A661ED}">
+      <Component Id="cmpCEA848C2C5BC02F17C251B0CD834B96A" Directory="BEIDVIEWERLIBDIR" Guid="{21953832-966E-418F-ACB9-337BA6A661ED}" Win64="no">
         <File Id="fil6A0D9FB1CA2DDE7C3F91DF8F357D6CF7" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\istack-commons-runtime-2.2.jar" />
       </Component>
-      <Component Id="cmp4BF6331DCE6C634CF36865E2ACEDECB9" Directory="BEIDVIEWERLIBDIR" Guid="{1880F57E-2BD9-484B-9F6B-1F087A8ACA81}">
+      <Component Id="cmp4BF6331DCE6C634CF36865E2ACEDECB9" Directory="BEIDVIEWERLIBDIR" Guid="{1880F57E-2BD9-484B-9F6B-1F087A8ACA81}" Win64="no">
         <File Id="filD64D8FAED8F3DC00F3567CDF38AE4100" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\itext-2.1.7.jar" />
       </Component>
-      <Component Id="cmpF3C304DE7494BC3589C39F900048FAE1" Directory="BEIDVIEWERLIBDIR" Guid="{A12A01B6-FD58-422A-A31C-4D97DD81A053}">
+      <Component Id="cmpF3C304DE7494BC3589C39F900048FAE1" Directory="BEIDVIEWERLIBDIR" Guid="{A12A01B6-FD58-422A-A31C-4D97DD81A053}" Win64="no">
         <File Id="filE54A559833231942FBDF1205B39A4D30" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\jaxb-api-2.2.1.jar" />
       </Component>
-      <Component Id="cmpD2BF5BEF2CACCB8DEA952D5B86A2CF69" Directory="BEIDVIEWERLIBDIR" Guid="{054918FC-4F6F-4B43-810C-24F0CB105937}">
+      <Component Id="cmpD2BF5BEF2CACCB8DEA952D5B86A2CF69" Directory="BEIDVIEWERLIBDIR" Guid="{054918FC-4F6F-4B43-810C-24F0CB105937}" Win64="no">
         <File Id="fil26DBEAA078ADE3BF2D59505AFCC73AB1" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\jaxb-impl-2.2.1.1.jar" />
       </Component>
-      <Component Id="cmp17505A5D72F8E1F7B877686DA651E318" Directory="BEIDVIEWERLIBDIR" Guid="{DB57F5FE-155B-45C9-92F2-B635E6DB24EC}">
+      <Component Id="cmp17505A5D72F8E1F7B877686DA651E318" Directory="BEIDVIEWERLIBDIR" Guid="{DB57F5FE-155B-45C9-92F2-B635E6DB24EC}" Win64="no">
         <File Id="fil20A1A3AE61427DDDF00D75C0C47B6EAA" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\jaxws-api-2.2.1.jar" />
       </Component>
-      <Component Id="cmpDED759598F17658AEF5B255A80D8B540" Directory="BEIDVIEWERLIBDIR" Guid="{F8069587-10E3-4EEF-B3CD-A6147D0354FB}">
+      <Component Id="cmpDED759598F17658AEF5B255A80D8B540" Directory="BEIDVIEWERLIBDIR" Guid="{F8069587-10E3-4EEF-B3CD-A6147D0354FB}" Win64="no">
         <File Id="filC7AE544A0A991CD4BB97C1D7F5C3D7A0" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\jaxws-rt-2.2.1.jar" />
       </Component>
-      <Component Id="cmp5BB9AF08CEBE2D2E4BAEBFA796AE46EE" Directory="BEIDVIEWERLIBDIR" Guid="{8D956D56-62D7-4966-8F50-796BCF740CEF}">
+      <Component Id="cmp5BB9AF08CEBE2D2E4BAEBFA796AE46EE" Directory="BEIDVIEWERLIBDIR" Guid="{8D956D56-62D7-4966-8F50-796BCF740CEF}" Win64="no">
         <File Id="fil6330E36EEBF7F4281D83991DD1F97116" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\joda-time-1.6.2.jar" />
       </Component>
-      <Component Id="cmpA9E8BA1EF395224D2519ADBB9E7705C7" Directory="BEIDVIEWERLIBDIR" Guid="{7BC29E65-86CC-4228-8464-CFA4D0BCEDEA}">
+      <Component Id="cmpA9E8BA1EF395224D2519ADBB9E7705C7" Directory="BEIDVIEWERLIBDIR" Guid="{7BC29E65-86CC-4228-8464-CFA4D0BCEDEA}" Win64="no">
         <File Id="fil4E45303F7AD10FD92CA2D48F766B21A2" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\json-simple-1.1.jar" />
       </Component>
-      <Component Id="cmpE6499B3D1F3D01E2FCBA5431ED12D026" Directory="BEIDVIEWERLIBDIR" Guid="{CEC1922B-CEA5-4915-A9DC-5653154BC020}">
+      <Component Id="cmpE6499B3D1F3D01E2FCBA5431ED12D026" Directory="BEIDVIEWERLIBDIR" Guid="{CEC1922B-CEA5-4915-A9DC-5653154BC020}" Win64="no">
         <File Id="filC77A1EE195BFE411A09AAB94B69E4A3D" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\jsr181-api-1.0-MR1.jar" />
       </Component>
-      <Component Id="cmp75FF73405B508B07D299FC70FC2BCD38" Directory="BEIDVIEWERLIBDIR" Guid="{D86DDDDB-DFF9-48B1-BD66-5B32CF3047FC}">
+      <Component Id="cmp75FF73405B508B07D299FC70FC2BCD38" Directory="BEIDVIEWERLIBDIR" Guid="{D86DDDDB-DFF9-48B1-BD66-5B32CF3047FC}" Win64="no">
         <File Id="filE0E7D85EC6B3AE2A076D0BC0D1F46993" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\jsr250-api-1.0.jar" />
       </Component>
-      <Component Id="cmp1D316474B94D82FB19B5E87B4B18787F" Directory="BEIDVIEWERLIBDIR" Guid="{2921C2DB-7156-4685-8F9E-7ED419F600AD}">
+      <Component Id="cmp1D316474B94D82FB19B5E87B4B18787F" Directory="BEIDVIEWERLIBDIR" Guid="{2921C2DB-7156-4685-8F9E-7ED419F600AD}" Win64="no">
         <File Id="filA1CB59D5A648B28A0ABEA16D2AD41017" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\jtrust-1.1.2.jar" />
       </Component>
-      <Component Id="cmpAB5A4BD96B06404FB0EE1EB7CE32364E" Directory="BEIDVIEWERLIBDIR" Guid="{4F651A6B-589C-4A4E-9D15-E80AB4604A68}">
+      <Component Id="cmpAB5A4BD96B06404FB0EE1EB7CE32364E" Directory="BEIDVIEWERLIBDIR" Guid="{4F651A6B-589C-4A4E-9D15-E80AB4604A68}" Win64="no">
         <File Id="fil2B955748A42E3F4E93DA6087F06B9A59" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\management-api-3.0.0-b012.jar" />
       </Component>
-      <Component Id="cmpCCD435CB36F86A5A07E6B29FB1A55EF4" Directory="BEIDVIEWERLIBDIR" Guid="{2168663D-E5F6-415F-80A7-DE4C613B20F1}">
+      <Component Id="cmpCCD435CB36F86A5A07E6B29FB1A55EF4" Directory="BEIDVIEWERLIBDIR" Guid="{2168663D-E5F6-415F-80A7-DE4C613B20F1}" Win64="no">
         <File Id="fil454BEE7CDAE96A4A89C7E6F80E8A4A62" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\mimepull-1.4.jar" />
       </Component>
-      <Component Id="cmp2877C4C2A658FEB1F178A53E98B29DAF" Directory="BEIDVIEWERLIBDIR" Guid="{E90EFAB9-2983-4516-A499-472ED964C76B}">
+      <Component Id="cmp2877C4C2A658FEB1F178A53E98B29DAF" Directory="BEIDVIEWERLIBDIR" Guid="{E90EFAB9-2983-4516-A499-472ED964C76B}" Win64="no">
         <File Id="fil142D096F152D61584AEB97200917B3E6" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\policy-2.2.1.jar" />
       </Component>
-      <Component Id="cmp9D94E20DA85CAC905F2F9C0582283C7A" Directory="BEIDVIEWERLIBDIR" Guid="{68496838-2AA4-45B4-80F6-E34DF5A87920}">
+      <Component Id="cmp9D94E20DA85CAC905F2F9C0582283C7A" Directory="BEIDVIEWERLIBDIR" Guid="{68496838-2AA4-45B4-80F6-E34DF5A87920}" Win64="no">
         <File Id="fil0AA2115AE9F0F3BD21DC7B9086165AF2" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\resolver-20050927.jar" />
       </Component>
-      <Component Id="cmp0750011E5857E3D1D8DC073BD8FB84E9" Directory="BEIDVIEWERLIBDIR" Guid="{C455F55A-F119-441B-808E-273FA31C87DA}">
+      <Component Id="cmp0750011E5857E3D1D8DC073BD8FB84E9" Directory="BEIDVIEWERLIBDIR" Guid="{C455F55A-F119-441B-808E-273FA31C87DA}" Win64="no">
         <File Id="filD64650434DD8604C62A0449C80E0E21C" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\saaj-api-1.3.1.jar" />
       </Component>
-      <Component Id="cmpA7AA92C1B8A178C864C174EC2BFD76B5" Directory="BEIDVIEWERLIBDIR" Guid="{5487056A-1DEB-4A88-B179-188AC8E6AF87}">
+      <Component Id="cmpA7AA92C1B8A178C864C174EC2BFD76B5" Directory="BEIDVIEWERLIBDIR" Guid="{5487056A-1DEB-4A88-B179-188AC8E6AF87}" Win64="no">
         <File Id="fil58761502D1063A93504FF783C214769F" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\saaj-impl-1.3.4.jar" />
       </Component>
-      <Component Id="cmpBC7594FF5E02F9D6BE98513470C05A41" Directory="BEIDVIEWERLIBDIR" Guid="{F03B70DD-79D9-470A-B7E3-C9D765594A8B}">
+      <Component Id="cmpBC7594FF5E02F9D6BE98513470C05A41" Directory="BEIDVIEWERLIBDIR" Guid="{F03B70DD-79D9-470A-B7E3-C9D765594A8B}" Win64="no">
         <File Id="filA0EEF160D4F10CFEA97B4A2C57A30A10" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\servlet-api-2.4.jar" />
       </Component>
-      <Component Id="cmpsimple_xml_2.4.1.jar" Directory="BEIDVIEWERLIBDIR" Guid="{6B59A669-D1A1-46f4-94F8-D6B04A2C0586}">
+      <Component Id="cmpsimple_xml_2.4.1.jar" Directory="BEIDVIEWERLIBDIR" Guid="{6B59A669-D1A1-46f4-94F8-D6B04A2C0586}" Win64="no">
         <File Id="filsimple_xml_2.4.1.jar" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\simple-xml-2.4.1.jar" />
       </Component>
-      <Component Id="cmpstax_1.2.0.jar" Directory="BEIDVIEWERLIBDIR" Guid="{94D1EACC-AD97-470a-9999-345890707426}">
+      <Component Id="cmpstax_1.2.0.jar" Directory="BEIDVIEWERLIBDIR" Guid="{94D1EACC-AD97-470a-9999-345890707426}" Win64="no">
         <File Id="filstax_1.2.0.jar" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\stax-1.2.0.jar" />
       </Component>
-      <Component Id="cmpB711367EB3531ADFC2364655959153B2" Directory="BEIDVIEWERLIBDIR" Guid="{F7EF0140-3A83-4896-8E0A-9C174CF387D5}">
+      <Component Id="cmpB711367EB3531ADFC2364655959153B2" Directory="BEIDVIEWERLIBDIR" Guid="{F7EF0140-3A83-4896-8E0A-9C174CF387D5}" Win64="no">
         <File Id="fil8749755BA529C7357B6FFBC7C934F5E7" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\stax-api-1.0.1.jar" />
       </Component>
-      <Component Id="cmp7A470FF71602C2F3A959490311B10C3C" Directory="BEIDVIEWERLIBDIR" Guid="{2167C842-DC10-4DE9-9D6D-F370CD04B94D}">
+      <Component Id="cmp7A470FF71602C2F3A959490311B10C3C" Directory="BEIDVIEWERLIBDIR" Guid="{2167C842-DC10-4DE9-9D6D-F370CD04B94D}" Win64="no">
         <File Id="fil330058A7F3AEBCC75B327431D8156EBA" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\stax-api-1.0.jar" />
       </Component>
-      <Component Id="cmpD0CDA2EDA15C751069B8CEBDF7D120D6" Directory="BEIDVIEWERLIBDIR" Guid="{63B704F0-06EB-43BE-916B-A32535E6C412}">
+      <Component Id="cmpD0CDA2EDA15C751069B8CEBDF7D120D6" Directory="BEIDVIEWERLIBDIR" Guid="{63B704F0-06EB-43BE-916B-A32535E6C412}" Win64="no">
         <File Id="fil965C0E993A479E6F9B5AD7E9C7B0725E" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\stax-ex-1.2.jar" />
       </Component>
-      <Component Id="cmpDACBEE9524891CCFFC73165201A326DD" Directory="BEIDVIEWERLIBDIR" Guid="{D19C6B6E-4133-4C4C-8F1E-229A13DDA646}">
+      <Component Id="cmpDACBEE9524891CCFFC73165201A326DD" Directory="BEIDVIEWERLIBDIR" Guid="{D19C6B6E-4133-4C4C-8F1E-229A13DDA646}" Win64="no">
         <File Id="filBE01A37364A33BC67694B3B7BF644AD7" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\streambuffer-1.1.jar" />
       </Component>
-      <Component Id="cmp05828D507E40DA670E3A4AB13BB56391" Directory="BEIDVIEWERLIBDIR" Guid="{E980D739-E600-4E8B-B618-1288451DB3BF}">
+      <Component Id="cmp05828D507E40DA670E3A4AB13BB56391" Directory="BEIDVIEWERLIBDIR" Guid="{E980D739-E600-4E8B-B618-1288451DB3BF}" Win64="no">
         <File Id="fil1ED9AEB7D20F00201C59A7247F11F342" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\txw2-20090102.jar" />
       </Component>
-      <Component Id="cmp7547F049F8D1388BE299EDE65596E3BC" Directory="BEIDVIEWERLIBDIR" Guid="{E485AB04-5D7E-46A6-9C09-10A4FF6EE193}">
+      <Component Id="cmp7547F049F8D1388BE299EDE65596E3BC" Directory="BEIDVIEWERLIBDIR" Guid="{E485AB04-5D7E-46A6-9C09-10A4FF6EE193}" Win64="no">
         <File Id="fil19565C9AEE9A39C2691D709E971ADEED" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\wss4j-1.5.8.jar" />
       </Component>
-      <Component Id="cmpB3F3BAAB288C00885A1AB790A93D2DC2" Directory="BEIDVIEWERLIBDIR" Guid="{F3E557DF-E381-48C2-AC91-7D54CC563FCF}">
+      <Component Id="cmpB3F3BAAB288C00885A1AB790A93D2DC2" Directory="BEIDVIEWERLIBDIR" Guid="{F3E557DF-E381-48C2-AC91-7D54CC563FCF}" Win64="no">
         <File Id="fil8AA0FB7287B2C0FFA5E1FFE90F9E7D52" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\wstx-asl-3.2.1.jar" />
       </Component>
-      <Component Id="cmp8086F788780BB759E713F2D2E6EE03F6" Directory="BEIDVIEWERLIBDIR" Guid="{036B7294-E0E1-4CA7-AF9E-C511453296C4}">
+      <Component Id="cmp8086F788780BB759E713F2D2E6EE03F6" Directory="BEIDVIEWERLIBDIR" Guid="{036B7294-E0E1-4CA7-AF9E-C511453296C4}" Win64="no">
         <File Id="fil593D91F321DC8961828D167746EB86F7" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\lib\xmlsec-1.4.3.jar" />
       </Component>
     </ComponentGroup>
 
     <DirectoryRef Id="EIDSTORE">
-      <Component Id="EidStore" Guid="{F30FFFBD-4F50-4e4d-86D2-90F192A3F01B}" KeyPath="yes">
+      <Component Id="EidStore" Guid="{F30FFFBD-4F50-4e4d-86D2-90F192A3F01B}" KeyPath="yes" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -338,7 +338,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="CERTSDIR">
-      <Component Id="Certs" Guid="{750F471B-6A83-4118-A0AF-2A138B770AC6}">
+      <Component Id="Certs" Guid="{750F471B-6A83-4118-A0AF-2A138B770AC6}" Win64="no">
         <File Id="beidcertbelgiumrca.der" Name="beid-cert-belgiumrca.der" KeyPath="yes" Source="..\..\certs\beid-cert-belgiumrca.der" />
         <File Id="beidcertbelgiumrca2.der" Name="beid-cert-belgiumrca2.der" KeyPath="no" Source="..\..\certs\beid-cert-belgiumrca2.der" />
         <File Id="beidcertgovernment.der" Name="beid-cert-government.der" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\eidstore\certs\beid-cert-government.der" />
@@ -348,7 +348,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="CRLDIR">
-      <Component Id="CrlDir" Guid="{5731B322-17EE-4d08-90A5-9DB53F53EC29}">
+      <Component Id="CrlDir" Guid="{5731B322-17EE-4d08-90A5-9DB53F53EC29}" Win64="no">
         <CreateFolder/>
         <RemoveFile Id="RemoveCrlCacheFiles" On="uninstall" Name="*"/>
         <RemoveFolder Id="RemoveCrlCacheFolder" On="uninstall"/>
@@ -356,13 +356,13 @@
     </DirectoryRef>
 
     <DirectoryRef Id="HTTPDIR">
-      <Component Id="HttpDir" Guid="{24B807B8-E1F2-42BB-976D-C98B7F52A119}" KeyPath="yes">
+      <Component Id="HttpDir" Guid="{24B807B8-E1F2-42BB-976D-C98B7F52A119}" KeyPath="yes" Win64="no">
         <CreateFolder />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="CRLEIDBELGIUMBE">
-      <Component Id="CrlEidBelgiumBe" Guid="{26BEC283-40A5-43A8-BC57-351DA9F79B33}" KeyPath="yes">
+      <Component Id="CrlEidBelgiumBe" Guid="{26BEC283-40A5-43A8-BC57-351DA9F79B33}" KeyPath="yes" Win64="no">
         <CreateFolder />
       </Component>
     </DirectoryRef>
@@ -378,7 +378,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="DIRECTORYCACHE">
-      <Component Id="DirectoryCache" Guid="{7CAEB639-7068-4084-B422-D7B5E55D0FBC}" KeyPath="yes">
+      <Component Id="DirectoryCache" Guid="{7CAEB639-7068-4084-B422-D7B5E55D0FBC}" KeyPath="yes" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -500,7 +500,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALEDEFOLDER">
-      <Component Id="XPIlocalede" Guid="{54BC660D-7C9D-4ddc-AA96-29D7A5DD0E53}" KeyPath="no">
+      <Component Id="XPIlocalede" Guid="{54BC660D-7C9D-4ddc-AA96-29D7A5DD0E53}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -509,7 +509,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="XPISKINFOLDER">
-      <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no">
+      <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no" Win64="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
@@ -520,7 +520,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="MINIDRIVERROOTFOLDER">
-      <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Win64="yes">
+      <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Win64="no">
         <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
         <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
         <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="no" DiskId="1" />
@@ -530,7 +530,7 @@
       <!-- Certificate Propagation Service is a standard Windows service available in from Windows Vista on. In order to use the minidriver
 			   it is necessary that this service is running. When a smart card reader is inserted this service should be started  by the smart card
 			   driver. As not all drivers are following this guidance, we start CertPropSvc during the minidriver install -->
-      <Component Id="CertPropService" Guid="932459d0-df59-11de-8a39-0800200c9a66" Permanent="yes" Win64="yes">
+      <Component Id="CertPropService" Guid="932459d0-df59-11de-8a39-0800200c9a66" Permanent="yes" Win64="no">
         <!-- Start Certificate Propagation Service during startup -->
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\CertPropSvc" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
         <!-- Start Certificate Propagation Service now -->
@@ -546,19 +546,19 @@
         <Environment Id="CLASSPATH" Action="set" Part="last" Permanent="no" System="yes" Name="CLASSPATH" Value="[ProgramFilesFolder]Belgium Identity Card"/>
       </Component>
 
-      <Component Id="Icon" Guid="{5B657BAD-8CFC-4E42-AF8C-13338C50D784}" SharedDllRefCount="yes">
+      <Component Id="Icon" Guid="{5B657BAD-8CFC-4E42-AF8C-13338C50D784}" SharedDllRefCount="yes" Win64="no">
         <File Id="eid.ico" Name="eid.ico" KeyPath="yes" Source="..\..\..\eidgui\eid.ico" />
       </Component>
 
-      <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}">
+      <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}" Win64="no">
         <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoutlooksnc.exe" />
       </Component>
 
-      <Component Id="Office2010XAdESTool" Guid="{B42CF78B-952A-4768-8605-2E6F3BBA340B}">
+      <Component Id="Office2010XAdESTool" Guid="{B42CF78B-952A-4768-8605-2E6F3BBA340B}" Win64="no">
         <File Id="beidoffice2010_XAdES_XL.exe" Name="beidoffice2010_XAdES_XL.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoffice2010_XAdES_XL.exe" />
       </Component>
 
-      <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="yes">
+      <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="yes" Win64="no">
         <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\misc\licenses_files\License_en.rtf" />
         <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\License_nl.rtf" />
         <File Id="License_fr.rtf" Name="License_fr.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\License_fr.rtf" />
@@ -566,7 +566,7 @@
         <File Id="THIRDPARTY_LICENSES.txt" Name="THIRDPARTY-LICENSES.txt" KeyPath="no" Source="..\..\..\misc\licenses_files\THIRDPARTY-LICENSES.txt" />
       </Component>
 
-      <Component Id="BWCompatibilityJava_Jar" Guid="{9431FC24-8C6B-46FE-A2C2-8C8CD4A50A3D}" SharedDllRefCount="yes">
+      <Component Id="BWCompatibilityJava_Jar" Guid="{9431FC24-8C6B-46FE-A2C2-8C8CD4A50A3D}" SharedDllRefCount="yes" Win64="no">
         <File Id="beidlib.jar" Name="beidlib.jar" KeyPath="yes" Source="..\..\..\misc\bw_compatibility\beidlib.jar" />
         <File Id="eidlib.jar" Name="eidlib.jar" KeyPath="no" Source="..\..\..\misc\bw_compatibility\eidlib.jar" />
         <File Id="BEID_old.html" Name="BEID_old.html" KeyPath="no" Source="..\..\..\misc\bw_compatibility\BEID_old.html" />
@@ -577,7 +577,7 @@
 
     <DirectoryRef Id="WindowsFolder">
 
-      <Component Id="beidgui.conf" Guid="{D46BF825-5D1D-4FE9-AC90-5FDB45240DE0}">
+      <Component Id="beidgui.conf" Guid="{D46BF825-5D1D-4FE9-AC90-5FDB45240DE0}" Win64="no">
         <File Id="beidgui.conf" Name="beidgui.conf" KeyPath="yes" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidgui.conf" />
         <IniFile Id="beidguiconf1" Directory="WindowsFolder" Name="beidgui.conf"
           Section="BEID_default" Action="addLine" Key="certs"  Value="[ProgramFilesFolder]Belgium Identity Card\eidstore\certs\"
@@ -609,37 +609,37 @@
 
     <DirectoryRef Id="SystemFolder">
 
-      <Component Id="Runtime35" Guid="{41F033E4-0669-4FD6-8B8E-DE31FE3AAE24}" SharedDllRefCount="yes">
+      <Component Id="Runtime35" Guid="{41F033E4-0669-4FD6-8B8E-DE31FE3AAE24}" SharedDllRefCount="yes" Win64="no">
         <File Id="beid35applayer.dll" Name="beid35applayer.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\beid35applayer.dll" />
         <File Id="beid35cardlayer.dll" Name="beid35cardlayer.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35cardlayer.dll" />
         <File Id="beid35common.dll" Name="beid35common.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35common.dll" />
         <File Id="beid35DlgsWin32.dll" Name="beid35DlgsWin32.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35DlgsWin32.dll" />
       </Component>
 
-      <Component Id="Runtime35ThirdPartyOpenSSL" Guid="{A98B4895-7CCF-4A91-ACE2-433B8D4363F9}" SharedDllRefCount="yes">
+      <Component Id="Runtime35ThirdPartyOpenSSL" Guid="{A98B4895-7CCF-4A91-ACE2-433B8D4363F9}" SharedDllRefCount="yes" Win64="no">
         <File Id="libeay32_0_9_8g.dll" Name="libeay32_0_9_8g.dll" KeyPath="yes" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\libeay32_0_9_8g.dll" />
         <File Id="ssleay32_0_9_8g.dll" Name="ssleay32_0_9_8g.dll" KeyPath="no" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\ssleay32_0_9_8g.dll" />
       </Component>
 
-      <Component Id="Runtime35ThirdPartyXerces" Guid="{B1EBF9C5-1A6F-44d4-AA80-DE55AAF052FE}" SharedDllRefCount="yes">
+      <Component Id="Runtime35ThirdPartyXerces" Guid="{B1EBF9C5-1A6F-44d4-AA80-DE55AAF052FE}" SharedDllRefCount="yes" Win64="no">
         <File Id="xercesc_3_1.dll" Name="xerces-c_3_1.dll" KeyPath="yes" Source="$(var.BEID_DIR_XERCES_310)\bin\xerces-c_3_1.dll" />
       </Component>
 
-      <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes">
+      <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes" Win64="no">
         <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" />
       </Component>
 
-      <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes">
+      <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes" Win64="no">
         <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\beidCSP.dll" />
         <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beidCSPlib.dll" />
       </Component>
 
-      <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes">
+      <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes" Win64="no">
         <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\beidpkcs11.dll" />
         <File Id="BelgiumIdentityCardPKCS11.dll" Name="Belgium Identity Card PKCS11.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\Belgium Identity Card PKCS11.dll" />
       </Component>
 
-      <Component Id="BWCompatibility" Guid="{AFE2F946-0FD9-4FF4-917E-1E0970E8FCB7}" SharedDllRefCount="yes">
+      <Component Id="BWCompatibility" Guid="{AFE2F946-0FD9-4FF4-917E-1E0970E8FCB7}" SharedDllRefCount="yes" Win64="no">
         <File Id="beidlib.dll" Name="beidlib.dll" KeyPath="yes" Source="..\..\..\..\beid-2.6\src\_binaries\release\beidlib.dll" />
         <File Id="eidlib.dll" Name="eidlib.dll" KeyPath="no" Source="..\..\..\..\beid-2.6\src\_binaries\release\eidlib.dll" />
         <File Id="beidwinscard.dll" Name="beidwinscard.dll" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidwinscard.dll" />
@@ -649,11 +649,11 @@
         <File Id="beidssleay32.dll" Name="beidssleay32.dll" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidssleay32.dll" />
       </Component>
 
-      <Component Id="BWCompatibilityQt" Guid="{92FDC305-F375-4a66-9F22-9CBDEF1B0BEB}" SharedDllRefCount="yes">
+      <Component Id="BWCompatibilityQt" Guid="{92FDC305-F375-4a66-9F22-9CBDEF1B0BEB}" SharedDllRefCount="yes" Win64="no">
         <File Id="qt_mt334.dll" Name="qt-mt334.dll" KeyPath="yes" Source="$(var.BEID_DIR_QT_334)\bin\qt-mt334.dll" />
       </Component>
 
-      <Component Id="BWCompatibilityActiveX" Guid="{FE012727-F90E-4A4A-BC61-F1E93F0C82EB}">
+      <Component Id="BWCompatibilityActiveX" Guid="{FE012727-F90E-4A4A-BC61-F1E93F0C82EB}" Win64="no">
         <File Id="beidlibaxctrl.dll" Name="beidlibaxctrl.dll" KeyPath="yes" Source="..\..\..\misc\bw_compatibility\beidlibaxctrl.dll">
           <Class Id="{28310B8B-0774-4483-85AF-4966EC52D8BC}" Context="InprocServer32" Description="Certif Class" ThreadingModel="apartment">
             <ProgId Id="EIDLibCtrl.Certif.1" Description="Certif Class">
@@ -721,20 +721,20 @@
         <File Id="EIDLibCtrl.dll" Name="EIDLibCtrl.dll" KeyPath="no" Source="..\..\..\misc\bw_compatibility\EIDLibCtrl.dll" />
       </Component>
 
-      <Component Id="BWCompatibilityJava" Guid="{D9F8728F-D955-4356-9316-5050F3D36FE1}" SharedDllRefCount="yes">
+      <Component Id="BWCompatibilityJava" Guid="{D9F8728F-D955-4356-9316-5050F3D36FE1}" SharedDllRefCount="yes" Win64="no">
         <File Id="beidlibjni.dll" Name="beidlibjni.dll" KeyPath="yes" Source="..\..\..\misc\bw_compatibility\beidlibjni.dll" />
         <File Id="beidlibjni.dll.manifest" Name="beidlibjni.dll.manifest" KeyPath="no" Source="..\..\..\misc\bw_compatibility\beidlibjni.dll.manifest" />
         <File Id="eidlibj.dll" Name="eidlibj.dll" KeyPath="no" Source="..\..\..\misc\bw_compatibility\eidlibj.dll" />
         <File Id="eidlibj.dll.manifest" Name="eidlibj.dll.manifest" KeyPath="no" Source="..\..\..\misc\bw_compatibility\eidlibj.dll.manifest" />
       </Component>
 
-      <Component Id="BWPinpad" Guid="{AEB72EF2-7C5E-487E-84E3-0903140D7B74}" SharedDllRefCount="yes">
+      <Component Id="BWPinpad" Guid="{AEB72EF2-7C5E-487E-84E3-0903140D7B74}" SharedDllRefCount="yes" Win64="no">
         <File Id="belpicppgui.dll" Name="belpicppgui.dll" KeyPath="yes" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\pinpad\belpicppgui.dll" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="BEIDPPDIR">
-      <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes">
+      <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes" Win64="no">
         <!--File Id="ch44xxeid.dll" Name="ch44xxeid.dll" Source="..\..\..\pinpad\ch44xxeid.dll" /-->
         <!--File Id="sprx32eid.dll" Name="sprx32eid.dll" Source="..\..\..\pinpad\sprx32eid.dll" /-->
         <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\pinpad\xireid.dll" />
@@ -742,20 +742,20 @@
     </DirectoryRef>
 
     <DirectoryRef Id="SISCARDPLUGINSDIR">
-      <Component Id="Siscardplugin" Guid="{821ED2E0-9FDB-4a08-9686-DDE65EE3D5E5}" SharedDllRefCount="yes">
+      <Component Id="Siscardplugin" Guid="{821ED2E0-9FDB-4a08-9686-DDE65EE3D5E5}" SharedDllRefCount="yes" Win64="no">
         <File Id="siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" Name="siscardplugin1_BE_EID_35__ACS ACR38U__.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="TARGETDIR">
-      <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes">
+      <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes" Win64="no">
         <!-- Start SCardSvr Service during startup -->
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
         <!-- Start SCardSvr Service now -->
         <!-- <ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" /> -->
       </Component>
 
-      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010" Guid="{DBD8E310-00D3-402f-A2F2-1984DD825C4D}">
+      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010" Guid="{DBD8E310-00D3-402f-A2F2-1984DD825C4D}" Win64="no">
         <RegistryKey Root="HKCU"
                      Key="Software\Microsoft\Office\14.0\Common\Signatures"
                      Action="create" >
@@ -765,7 +765,7 @@
         </RegistryKey>
       </Component>
 
-      <Component Id="REGISTERXPI" Guid="{946B85B6-99CC-4893-8A42-E7EC6FFE0D87}">
+      <Component Id="REGISTERXPI" Guid="{946B85B6-99CC-4893-8A42-E7EC6FFE0D87}" Win64="no">
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Mozilla\Firefox\Extensions"
                      Action="createAndRemoveOnUninstall">
@@ -773,7 +773,7 @@
         </RegistryKey>
       </Component>
 
-      <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}">
+      <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}" Win64="no">
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
                      Action="createAndRemoveOnUninstall">
@@ -801,7 +801,7 @@
         </RegistryKey>
       </Component>
 
-      <Component Id="REGISTERCSP" Guid="{3DF6D19A-C268-4D97-B605-1F3E29DC15DC}">
+      <Component Id="REGISTERCSP" Guid="{3DF6D19A-C268-4D97-B605-1F3E29DC15DC}" Win64="no">
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Defaults\Provider\Belgium Identity Card CSP"
                       Action="createAndRemoveOnUninstall">
@@ -822,7 +822,7 @@
         </RegistryKey>
       </Component>
 
-      <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}">
+      <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}" Win64="no">
         <RegistryKey Root="HKLM"
             Key="SOFTWARE\BEID"
             Action="createAndRemoveOnUninstall">
@@ -870,7 +870,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
+      <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}" Win64="no">
         <Shortcut Id="eidviewerStartMenuShortcut"
           Name="Belgium EidViewer"
           Description="!(loc.BeidGuiDescr)"
@@ -884,7 +884,7 @@
                       Target="[BEIDVIEWERDIR]eid-viewer.exe"
                       WorkingDirectory="BEIDVIEWERDIR"/>
       </Component>
-      <Component Id="BeidApplicationProgramsFolder" Guid="{CBD0F388-EAE5-4FA1-8C38-EC223928FF13}">
+      <Component Id="BeidApplicationProgramsFolder" Guid="{CBD0F388-EAE5-4FA1-8C38-EC223928FF13}" Win64="no">
         <!--<Shortcut Id="BeidGuiStartMenuShortcut"
                   Name="eID-Viewer"
                   Description="!(loc.BeidGuiDescr)"
@@ -902,7 +902,7 @@
     </DirectoryRef>
 
     <DirectoryRef Id="ApplicationProgramsFolderUtilities">
-      <Component Id="OutlookShortcut" Guid="{813C0984-0401-4604-9D7F-E13BDD28FBD7}">
+      <Component Id="OutlookShortcut" Guid="{813C0984-0401-4604-9D7F-E13BDD28FBD7}" Win64="no">
         <Shortcut Id="OutlookStartMenuShortcut"
           Name="MS Outlook registry configuration"
           Description="!(loc.OutlookDescr)"
@@ -911,7 +911,7 @@
         <RemoveFolder Id="ApplicationProgramsFolderUtilities" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="OutlookShortcut" Type="integer" Value="1" KeyPath="yes" />
       </Component>
-      <Component Id="Office2010XAdESShortcut" Guid="{B2D00383-20A7-4058-A153-80D4DC15FD42}">
+      <Component Id="Office2010XAdESShortcut" Guid="{B2D00383-20A7-4058-A153-80D4DC15FD42}" Win64="no">
         <Shortcut Id="Office2010XAdESStartMenuShortcut"
           Name="MS Office 2010 XAdES XL signature configuration"
           Description="!(loc.Office2010XAdESDescr)"

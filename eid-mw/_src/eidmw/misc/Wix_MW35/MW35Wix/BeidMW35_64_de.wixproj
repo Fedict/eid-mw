@@ -89,6 +89,6 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
-    <PreBuildEvent>..\..\clean.cmd $(Configuration) de-de</PreBuildEvent>
+    <PreBuildEvent>..\..\..\clean64.cmd $(Configuration) de-de</PreBuildEvent>
   </PropertyGroup>
 </Project>

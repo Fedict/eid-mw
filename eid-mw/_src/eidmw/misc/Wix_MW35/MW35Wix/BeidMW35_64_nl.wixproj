@@ -54,6 +54,9 @@
     <SuppressIces>ICE09</SuppressIces>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <LeaveTemporaryFiles>True</LeaveTemporaryFiles>
+    <SuppressPdbOutput>False</SuppressPdbOutput>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product64.wxs" />
@@ -90,6 +93,6 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
-    <PreBuildEvent>..\..\clean.cmd $(Configuration) nl-nl</PreBuildEvent>
+    <PreBuildEvent>call ..\..\..\clean64.cmd $(Configuration) nl-nl</PreBuildEvent>
   </PropertyGroup>
 </Project>

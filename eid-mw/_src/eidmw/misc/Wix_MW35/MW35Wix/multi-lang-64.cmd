@@ -4,7 +4,7 @@ set CONFIGURATION=%1
 call "%~dp0..\..\..\SetPathPSdk2008.bat"
 if NOT %ERRORLEVEL%==0 exit 1
 
-set OUT_PATH=%~dp0bin\%CONFIGURATION%
+set OUT_PATH=%~dp0bin\x64\%CONFIGURATION%
 echo [INFO] OUT_PATH=%OUT_PATH%
 
 set MSI_FILE_IN=BeidMW40-64-Basic
@@ -48,7 +48,7 @@ echo ...
 "%BEID_DIR_PLATFORMSDK_2008%\Bin\msidb.exe" -d "%OUT_PATH%\%MSI_FILE_OUT%.msi" -r "2060"
 "%BEID_DIR_PLATFORMSDK_2008%\Bin\msidb.exe" -d "%OUT_PATH%\%MSI_FILE_OUT%.msi" -r "1031"
 
-"%BEID_DIR_PLATFORMSDK_2008%\Bin\msiInfo.exe" "%OUT_PATH%\%MSI_FILE_OUT%.msi" /p Intel;1033,2067,2060,1031
+"%BEID_DIR_PLATFORMSDK_2008%\Bin\msiInfo.exe" "%OUT_PATH%\%MSI_FILE_OUT%.msi" /p x64;1033,2067,2060,1031
 @if "%ERROLEVEL%" == "1" goto END
 ::------------------------------------
 :: generate the correct file name and upload file to network
