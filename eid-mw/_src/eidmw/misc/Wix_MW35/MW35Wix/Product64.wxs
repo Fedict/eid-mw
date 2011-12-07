@@ -24,9 +24,9 @@
            Manufacturer="Belgian Government"
            UpgradeCode="$(var.UpgradeCode)">
 
-	<!-- InstallerVersion="300" Released with Windows XP with Service Pack 2 (SP2) -->
+    <!-- InstallerVersion="300" Released with Windows XP with Service Pack 2 (SP2) -->
     <Package Id="$(var.PackageCode)"
-             InstallerVersion="300" 
+             InstallerVersion="300"
              Keywords="Belgium e-ID Middleware Installer"
              Platform="x64"
              Manufacturer="Belgian Government"
@@ -38,13 +38,13 @@
       <UpgradeVersion Minimum="$(var.ProductVersion)"
                       IncludeMinimum="no"
                       OnlyDetect="yes"
-                      Property="NEWPRODUCTFOUND" 
+                      Property="NEWPRODUCTFOUND"
       />
       <UpgradeVersion Minimum="3.5.0"
                       IncludeMinimum="yes"
                       Maximum="$(var.ProductVersion)"
                       IncludeMaximum="no"
-                      Property="UPGRADEFOUND" 
+                      Property="UPGRADEFOUND"
       />
     </Upgrade>
 
@@ -65,7 +65,7 @@
     <?else?>
     <?define var.BEID_DIR_OPENSSL_098G=$(env.BEID_DIR_OPENSSL_098G)?>
     <?endif?>
-    
+
     <?ifndef env.BEID_DIR_XERCES_310?>
     <?define var.BEID_DIR_XERCES_310=..\..\..\..\ThirdParty\Xerces\Xerces-3.1.0?>
     <?else?>
@@ -112,23 +112,21 @@
                       Name="TSALocation"
                       Type="raw" />
     </Property>
-    
+
     <Property Id="ARPPRODUCTICON" Value="eid.ico" />
     <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
-    
+
     <Property Id="ALLUSERS" Value="1" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-
       <Directory Id="ProgramMenuFolder" Name="Menu">
         <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID">
           <Directory Id="ApplicationProgramsFolderUtilities" Name="Utilities"/>
         </Directory>
       </Directory>
-
       <Directory Id="ProgramFilesFolder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
-		  <Directory Id="BEIDVIEWERDIR" Name="EidViewer" >
+          <Directory Id="BEIDVIEWERDIR" Name="EidViewer" >
             <Directory Id="BEIDVIEWERLIBDIR" Name="lib" />
           </Directory>
           <!--<Directory Id="IMAGEFORMATS" Name="imageformats" />-->
@@ -155,7 +153,7 @@
                 <Directory Id="XPILOCALEENFOLDER" Name="en-US"/>
                 <Directory Id="XPILOCALEFRFOLDER" Name="fr-FR"/>
                 <Directory Id="XPILOCALENLFOLDER" Name="nl-NL"/>
-				        <Directory Id="XPILOCALEDEFOLDER" Name="de-DE"/>
+                <Directory Id="XPILOCALEDEFOLDER" Name="de-DE"/>
               </Directory>
               <Directory Id="XPISKINFOLDER" Name="skin"/>
             </Directory>
@@ -166,25 +164,23 @@
         <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
         <Directory Id="LOGDIR_64" Name="log"/>
       </Directory>
+
       <Directory Id="DesktopFolder"/>
 
       <Directory Id="WindowsFolder"/>
-
       <Directory Id="SystemFolder">
-      	<Merge Id="VCRT" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
-      	<Merge Id="VCRT_POLICY" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
-
+        <Merge Id="VCRT" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
+        <Merge Id="VCRT_POLICY" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
         <Directory Id="SISCARDPLUGINSDIR" Name="siscardplugins"/>
-
       </Directory>
-
-      <Directory Id="System64Folder"/>
-      	<Merge Id="VCRT_64" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86_x64.msm" Language="0" DiskId="1" />
-      	<Merge Id="VCRT_POLICY_64" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86_x64.msm" Language="0" DiskId="1" />
+      <Directory Id="System64Folder">
+        <Merge Id="VCRT_64" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86_x64.msm" Language="0" DiskId="1" />
+        <Merge Id="VCRT_POLICY_64" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86_x64.msm" Language="0" DiskId="1" />
       </Directory>
-    	
-	<DirectoryRef Id="BEIDVIEWERDIR">
+    </Directory>
+
+    <DirectoryRef Id="BEIDVIEWERDIR">
       <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
         <File Id="eidviewer.exe" Name="eid-viewer.exe" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer.exe" />
         <File Id="eidviewerguiSNAPSHOT.jar" Name="eid-viewer-gui-4.0.0-SNAPSHOT.jar" KeyPath="no" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer-gui-4.0.0-SNAPSHOT.jar" />
@@ -391,7 +387,7 @@
       </Component>
     </DirectoryRef>
 
-	<DirectoryRef Id="LOGDIR_64">
+    <DirectoryRef Id="LOGDIR_64">
       <Component Id="LogDir_64" Guid="{8d2d7f7c-64d5-43d4-905f-b52c1cf7411c}" KeyPath="yes" Win64="yes">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
@@ -481,7 +477,7 @@
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
-          <File Id="belgiumeid.properties.en" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\en-US\belgiumeid.properties" />
+        <File Id="belgiumeid.properties.en" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\en-US\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 
@@ -490,7 +486,7 @@
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
         </CreateFolder>
-          <File Id="belgiumeid.properties.fr" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\fr-FR\belgiumeid.properties" />
+        <File Id="belgiumeid.properties.fr" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\fr-FR\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 
@@ -503,7 +499,7 @@
       </Component>
     </DirectoryRef>
 
-	<DirectoryRef Id="XPILOCALEDEFOLDER">
+    <DirectoryRef Id="XPILOCALEDEFOLDER">
       <Component Id="XPIlocalede" Guid="{54BC660D-7C9D-4ddc-AA96-29D7A5DD0E53}" KeyPath="no">
         <CreateFolder>
           <util:PermissionEx GenericAll="yes" User="Users" />
@@ -511,7 +507,7 @@
         <File Id="belgiumeid.properties.de" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\de-DE\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
-	
+
     <DirectoryRef Id="XPISKINFOLDER">
       <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no">
         <CreateFolder>
@@ -519,10 +515,10 @@
         </CreateFolder>
         <File Id="overlay.css" Name="overlay.css" KeyPath="no" Source="..\..\..\xpi\src\skin\overlay.css" />
         <File Id="icon.png" Name="icon.png" KeyPath="no" Source="..\..\..\xpi\src\skin\icon.png" />
-		<File Id="icon40x40.png" Name="icon40x40.png" KeyPath="no" Source="..\..\..\xpi\src\skin\icon40x40.png" />
+        <File Id="icon40x40.png" Name="icon40x40.png" KeyPath="no" Source="..\..\..\xpi\src\skin\icon40x40.png" />
       </Component>
     </DirectoryRef>
-    
+
     <DirectoryRef Id="MINIDRIVERROOTFOLDER">
       <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Win64="yes">
         <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
@@ -541,9 +537,9 @@
         <!--<ServiceControl Id="StartCertPropSvc" Name="CertPropSvc" Start="install" />-->
       </Component>
     </DirectoryRef>
-    
+
     <DirectoryRef Id="APPLICATIONROOTFOLDER">
-      
+
       <Component Id="RootFolder" Guid="{2FB5D279-50BD-49ed-98D9-3D043520F450}" Win64="no">
         <CreateFolder/>
         <Environment Id="PATH" Action="set" Part="last" Permanent="no" System="yes" Name="PATH" Value="[ProgramFilesFolder]Belgium Identity Card"/>
@@ -553,7 +549,7 @@
       <Component Id="Icon" Guid="{5B657BAD-8CFC-4E42-AF8C-13338C50D784}" SharedDllRefCount="yes">
         <File Id="eid.ico" Name="eid.ico" KeyPath="yes" Source="..\..\..\eidgui\eid.ico" />
       </Component>
-      
+
       <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}">
         <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoutlooksnc.exe" />
       </Component>
@@ -569,13 +565,13 @@
         <File Id="License_de.rtf" Name="License_de.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\License_de.rtf" />
         <File Id="THIRDPARTY_LICENSES.txt" Name="THIRDPARTY-LICENSES.txt" KeyPath="no" Source="..\..\..\misc\licenses_files\THIRDPARTY-LICENSES.txt" />
       </Component>
-      
+
       <Component Id="BWCompatibilityJava_Jar" Guid="{9431FC24-8C6B-46FE-A2C2-8C8CD4A50A3D}" SharedDllRefCount="yes">
         <File Id="beidlib.jar" Name="beidlib.jar" KeyPath="yes" Source="..\..\..\misc\bw_compatibility\beidlib.jar" />
         <File Id="eidlib.jar" Name="eidlib.jar" KeyPath="no" Source="..\..\..\misc\bw_compatibility\eidlib.jar" />
         <File Id="BEID_old.html" Name="BEID_old.html" KeyPath="no" Source="..\..\..\misc\bw_compatibility\BEID_old.html" />
       </Component>
-      
+
     </DirectoryRef>
 
 
@@ -595,22 +591,22 @@
 
     <DirectoryRef Id="System64Folder">
 
-      <Component Id="Runtime35_64" Guid="{8FE1C7FB-F06A-40db-8454-88D9E8BDD626}" SharedDllRefCount="yes" Win64="yes">
-        <File Id="beid35cardlayer_64.dll" Name="beid35cardlayer.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beid35cardlayer.dll" />
+      <Component Id="Runtime35_64" Guid="{8FE1C7FB-F06A-40db-8454-88D9E8BDD626}" SharedDllRefCount="no" Win64="yes">
+        <File Id="beid35cardlayer_64.dll" Name="beid35cardlayer.dll" KeyPath="yes" Source="..\..\..\_Binaries35\x64\Release\beid35cardlayer.dll" />
         <File Id="beid35common_64.dll" Name="beid35common.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beid35common.dll" />
         <File Id="beid35DlgsWin32_64.dll" Name="beid35DlgsWin32.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\Release\beid35DlgsWin32.dll" />
       </Component>
 
-      <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="yes" Win64="yes">
+      <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="no" Win64="yes">
         <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\_Binaries35\x64\Release\beidpkcs11.dll" />
       </Component>
 
-      <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="yes" Win64="yes">
+      <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="no" Win64="yes">
         <File Id="MINIDRIVER_64.dll" Name="beidmdrv64.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv64.dll" />
       </Component>
-      
+
     </DirectoryRef>
-    
+
     <DirectoryRef Id="SystemFolder">
 
       <Component Id="Runtime35" Guid="{41F033E4-0669-4FD6-8B8E-DE31FE3AAE24}" SharedDllRefCount="yes">
@@ -619,12 +615,12 @@
         <File Id="beid35common.dll" Name="beid35common.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35common.dll" />
         <File Id="beid35DlgsWin32.dll" Name="beid35DlgsWin32.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35DlgsWin32.dll" />
       </Component>
-      
+
       <Component Id="Runtime35ThirdPartyOpenSSL" Guid="{A98B4895-7CCF-4A91-ACE2-433B8D4363F9}" SharedDllRefCount="yes">
         <File Id="libeay32_0_9_8g.dll" Name="libeay32_0_9_8g.dll" KeyPath="yes" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\libeay32_0_9_8g.dll" />
         <File Id="ssleay32_0_9_8g.dll" Name="ssleay32_0_9_8g.dll" KeyPath="no" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\ssleay32_0_9_8g.dll" />
       </Component>
-      
+
       <Component Id="Runtime35ThirdPartyXerces" Guid="{B1EBF9C5-1A6F-44d4-AA80-DE55AAF052FE}" SharedDllRefCount="yes">
         <File Id="xercesc_3_1.dll" Name="xerces-c_3_1.dll" KeyPath="yes" Source="$(var.BEID_DIR_XERCES_310)\bin\xerces-c_3_1.dll" />
       </Component>
@@ -632,7 +628,7 @@
       <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes">
         <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" />
       </Component>
-      
+
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes">
         <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\beidCSP.dll" />
         <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beidCSPlib.dll" />
@@ -652,7 +648,7 @@
         <File Id="beidlibeay32.dll" Name="beidlibeay32.dll" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidlibeay32.dll" />
         <File Id="beidssleay32.dll" Name="beidssleay32.dll" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidssleay32.dll" />
       </Component>
-      
+
       <Component Id="BWCompatibilityQt" Guid="{92FDC305-F375-4a66-9F22-9CBDEF1B0BEB}" SharedDllRefCount="yes">
         <File Id="qt_mt334.dll" Name="qt-mt334.dll" KeyPath="yes" Source="$(var.BEID_DIR_QT_334)\bin\qt-mt334.dll" />
       </Component>
@@ -744,7 +740,7 @@
         <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\pinpad\xireid.dll" />
       </Component>
     </DirectoryRef>
-    
+
     <DirectoryRef Id="SISCARDPLUGINSDIR">
       <Component Id="Siscardplugin" Guid="{821ED2E0-9FDB-4a08-9686-DDE65EE3D5E5}" SharedDllRefCount="yes">
         <File Id="siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" Name="siscardplugin1_BE_EID_35__ACS ACR38U__.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" />
@@ -774,9 +770,9 @@
                      Key="SOFTWARE\Mozilla\Firefox\Extensions"
                      Action="createAndRemoveOnUninstall">
           <RegistryValue Type="string" Name="belgiumeid@eid.belgium.be" Value="C:\Program Files\Mozilla Firefox\extensions\belgiumeid@eid.belgium.be" KeyPath="yes"/>
-		</RegistryKey>
-      </Component> 
-   
+        </RegistryKey>
+      </Component>
+
       <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}">
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
@@ -803,8 +799,8 @@
           <RegistryValue Type="string" Name="80000100" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no"/>
           <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no"/>
         </RegistryKey>
-      </Component> 
-     
+      </Component>
+
       <Component Id="REGISTERCSP" Guid="{3DF6D19A-C268-4D97-B605-1F3E29DC15DC}">
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Defaults\Provider\Belgium Identity Card CSP"
@@ -824,8 +820,8 @@
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
         </RegistryKey>
-      </Component>   
-     
+      </Component>
+
       <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}">
         <RegistryKey Root="HKLM"
             Key="SOFTWARE\BEID"
@@ -834,25 +830,25 @@
             <RegistryValue Type="integer" Name="cert_validation_ocsp" Value="0"/>
             <RegistryValue Type="integer" Name="cert_validation_crl" Value="0"/>
           </RegistryKey>
-          
+
           <RegistryKey Key="certificatecache" Action="createAndRemoveOnUninstall">
             <RegistryValue Type="string" Name="cert_cachefile" Value="[ProgramFilesFolder]Belgium Identity Card\eidstore\crl\.cache.csc"/>
           </RegistryKey>
-          
+
           <RegistryKey Key="crl" Action="createAndRemoveOnUninstall">
             <RegistryValue Type="string" Name="crl_cachedir" Value="[ProgramFilesFolder]Belgium Identity Card\eidstore\crl"/>
           </RegistryKey>
-          
+
           <RegistryKey Key="general" Action="createAndRemoveOnUninstall">
             <RegistryValue Type="string" Name="language" Value="!(loc.Langpref)"/>
             <RegistryValue Type="string" Name="cache_dirname" Value="[ProgramFilesFolder]Belgium Identity Card\.cache"/>
             <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFilesFolder]Belgium Identity Card"/>
           </RegistryKey>
-          
+
           <RegistryKey Key="logging" Action="createAndRemoveOnUninstall">
             <RegistryValue Type="string" Name="log_dirname" Value="[ProgramFilesFolder]Belgium Identity Card\log"/>
           </RegistryKey>
-          
+
           <RegistryKey Key="configuretool" Action="createAndRemoveOnUninstall">
             <RegistryValue Type="integer" Name="start_with_windows" Value="1"/>
             <RegistryValue Type="integer" Name="start_minimized" Value="1"/>
@@ -864,7 +860,7 @@
             <RegistryValue Type="integer" Name="registrate_certificate" Value="1"/>
           </RegistryKey>
         </RegistryKey>
-        
+
         <RegistryKey Root="HKLM"
                     Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run">
           <RegistryValue  Type="string" Name="beid" Value="&quot;[APPLICATIONROOTFOLDER]beid35gui.exe&quot; /startup"/>
@@ -874,19 +870,19 @@
     </DirectoryRef>
 
     <DirectoryRef Id="ApplicationProgramsFolder">
-	  <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
+      <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
         <Shortcut Id="eidviewerStartMenuShortcut"
           Name="Belgium EidViewer"
           Description="!(loc.BeidGuiDescr)"
           Target="[BEIDVIEWERDIR]eid-viewer.exe"
           WorkingDirectory="BEIDVIEWERDIR"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="1" KeyPath="yes" />
-		<Shortcut Id="EidViewerDesktopShortcut"
-                  Name="Belgium EidViewer"
-                  Directory="DesktopFolder"
-                  Description="!(loc.BeidGuiDescr)"
-                  Target="[BEIDVIEWERDIR]eid-viewer.exe"
-                  WorkingDirectory="BEIDVIEWERDIR"/>
+        <Shortcut Id="EidViewerDesktopShortcut"
+                      Name="Belgium EidViewer"
+                      Directory="DesktopFolder"
+                      Description="!(loc.BeidGuiDescr)"
+                      Target="[BEIDVIEWERDIR]eid-viewer.exe"
+                      WorkingDirectory="BEIDVIEWERDIR"/>
       </Component>
       <Component Id="BeidApplicationProgramsFolder" Guid="{CBD0F388-EAE5-4FA1-8C38-EC223928FF13}">
         <!--<Shortcut Id="BeidGuiStartMenuShortcut"
@@ -928,7 +924,7 @@
     <Feature Id="BeidRuntime"
              Title="!(loc.BeidRuntime)"
              Description="!(loc.BeidRuntimeDesc)"
-             Absent="disallow" 
+             Absent="disallow"
              Level="1"
              >
 
@@ -967,7 +963,7 @@
       <ComponentRef Id="XPIlocalefr"/>
       <ComponentRef Id="XPIlocalenl"/>
       <ComponentRef Id="XPIlocalede"/>
-      <ComponentRef Id="XPIskin"/>         
+      <ComponentRef Id="XPIskin"/>
 
       <!-- System32 -->
       <ComponentRef Id="Runtime35"/>
@@ -992,34 +988,34 @@
       <!-- Registry -->
       <ComponentRef Id="RegistryBeidSystem"/>
 
-	<Feature Id="BeidGuiInstall"
-             Title="!(loc.BeidGui)"
-             Description="!(loc.BeidGuiDescr)"
-             Absent="disallow"
-             Level="1"
+      <Feature Id="BeidGuiInstall"
+                 Title="!(loc.BeidGui)"
+                 Description="!(loc.BeidGuiDescr)"
+                 Absent="disallow"
+                 Level="1"
              >
 
-      <!-- Program Files -->
-      <ComponentRef Id="BEIDVIEWER"/>
-      <ComponentGroupRef Id="BEIDVIEWERLIB"/>
-      <ComponentRef Id="eidviewerShortcut"/>
-    </Feature>
+        <!-- Program Files -->
+        <ComponentRef Id="BEIDVIEWER"/>
+        <ComponentGroupRef Id="BEIDVIEWERLIB"/>
+        <ComponentRef Id="eidviewerShortcut"/>
+      </Feature>
 
-    <Feature Id="Crypto"
-                Title="!(loc.Crypto)"
-                Description="!(loc.CryptoDescr)"
-                Level="1"
+      <Feature Id="Crypto"
+                  Title="!(loc.Crypto)"
+                  Description="!(loc.CryptoDescr)"
+                  Level="1"
                 >
         <ComponentRef Id="SCardSvrService"/>
         <ComponentRef Id="pkcs11"/>
         <ComponentRef Id="pkcs11_64"/>
-		<ComponentRef Id="REGISTERXPI"/>
+        <ComponentRef Id="REGISTERXPI"/>
 
-      <Feature Id="Office2010Signatureregistration_32" Level="1" Display="hidden" Absent="disallow">
-        <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>
-        <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG_32]]></Condition>
-      </Feature>
-      
+        <Feature Id="Office2010Signatureregistration_32" Level="1" Display="hidden" Absent="disallow">
+          <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>
+          <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG_32]]></Condition>
+        </Feature>
+
         <ComponentRef Id="BeidApplicationProgramsFolder" />
         <ComponentRef Id="OutlookTool" />
         <ComponentRef Id="Office2010XAdESTool"/>
@@ -1043,34 +1039,34 @@
       </Feature>
     </Feature>
 
-<!--    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.StartApp)" />-->
+    <!--    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.StartApp)" />-->
 
     <UI>
       <UIRef Id="WixUI_FeatureTree" />
       <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTFOLDER" />
       <UIRef Id="WixUI_ErrorProgressText" />
 
-<!--
+      <!--
       <Publish Dialog="ExitDialog" Control="Finish"  Event="DoAction"
                Value="LaunchApplication" Order="1">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
 -->
     </UI>
-    
+
     <!--SetARPINSTALLLOCATION sets the location in the registry entries of the Add & Remove Panel-->
     <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
-    
+
     <CustomAction Id="SetCacheDirHidden"
                   Impersonate="no"
-                  BinaryKey="MarkHidden" 
+                  BinaryKey="MarkHidden"
                   ExeCommand="&quot;[ProgramFilesFolder]Belgium Identity Card\.cache&quot;"
                   Execute="deferred"
                   Return="asyncNoWait"
                   />
 
-    <Binary Id="MarkHidden" SourceFile="..\..\..\misc\Wix_MW35\MarkHidden\Release\MarkHidden.exe"/>   
+    <Binary Id="MarkHidden" SourceFile="..\..\..\misc\Wix_MW35\MarkHidden\Release\MarkHidden.exe"/>
     <Binary Id="BEID_CLEANUP" SourceFile="..\..\..\misc\Wix_MW35\beidcleanup\Release\beidcleanup.exe"/>
- 
-<!--
+
+    <!--
     Cleanup parameters supported:
     - Avoid to run the cleanup process              =>  CLEANUP_NO=1
     - Force de cleanup to kill all locking process  =>  CLEANUP_FORCE=1
@@ -1084,7 +1080,7 @@
 
     <CustomAction Id="IsQuietMode" Property="QuietMode" Value="-q " />
     <CustomAction Id="NotIsQuietMode" Property="QuietMode" Value="" />
-    
+
     <CustomAction Id="BeidCleanup"
               BinaryKey="BEID_CLEANUP"
               ExeCommand="[QuietMode][ForceCleanup][LogCleanup]-u -k $(var.ProductGuidGeneric)"
@@ -1092,7 +1088,7 @@
               Return="check"
               Execute="deferred"
     />
-    
+
     <CustomAction Id="IsPrivileged" Error="!(loc.AdminNeeded)" />
     <!--<CustomAction Id="PreventDowngrading" Error="!(loc.NoDowngrade)" />-->
     <!--
@@ -1104,7 +1100,7 @@
     <InstallExecuteSequence>
       <!--<Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>-->
       <RemoveExistingProducts After="InstallFinalize" />
-      
+
       <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
 
       <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>
@@ -1114,12 +1110,12 @@
 
       <Custom Action="LogCleanup" Before="BeidCleanup">CLEANUP_LOG</Custom>
       <Custom Action="NotLogCleanup" Before="BeidCleanup">NOT CLEANUP_LOG</Custom>
-     
+
       <Custom Action="ForceCleanup" Before="BeidCleanup">CLEANUP_FORCE=1</Custom>
       <Custom Action="NotForceCleanup" Before="BeidCleanup"><![CDATA[CLEANUP_FORCE<>1 OR NOT CLEANUP_FORCE]]></Custom>
-      
+
       <Custom Action="BeidCleanup" After="InstallInitialize"><![CDATA[(CLEANUP_NO<>1 OR NOT CLEANUP_NO)]]></Custom>
-      
+
       <Custom Action="SetCacheDirHidden"  After="InstallFiles">NOT Installed</Custom>
 
       <ScheduleReboot After="InstallFinalize">NOT Installed</ScheduleReboot>
