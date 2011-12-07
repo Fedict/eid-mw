@@ -61,7 +61,7 @@ set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW35-%BUILD_NR%.msi
 goto UPLOAD
 
 :msi35-64
-set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\Release\BeidMW35-64.msi
+set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\x64\Release\BeidMW35-64.msi
 set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW35-64-%BUILD_NR%.msi
 goto UPLOAD
 
@@ -76,7 +76,7 @@ set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW40-%BUILD_NR%.msi
 goto UPLOAD
 
 :msi40-64
-set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\Release\BeidMW40-64.msi
+set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\x64\Release\BeidMW40-64.msi
 set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW40-64-%BUILD_NR%.msi
 goto UPLOAD
 
