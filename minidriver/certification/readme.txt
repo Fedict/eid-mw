@@ -27,7 +27,7 @@ For the test you need two 'identical' test cards. It looks it is OK when the car
 3. Configuration
 
 * Create C:\SmartCardMinidriverTest
-* Copy cmck_config.xml and beidmdrv.inf to C:\SmartCardMinidriverTest
+* Copy cmck_config.xml and ..\makemsi\beidmdrv.inf to C:\SmartCardMinidriverTest
 * Edit cmck_config.xml in order to configure the PIN code of your test cards:
    for PIN 1234 the value is 
    0x31 0x32 0x33 0x34 
