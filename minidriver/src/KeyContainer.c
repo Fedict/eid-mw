@@ -177,7 +177,7 @@ DWORD WINAPI   CardGetContainerInfo
 			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
 		if (bContainerIndex == 1)
 			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
-		CLEANUP(SCARD_E_UNEXPECTED);
+		CLEANUP(dwReturn);
 	}
 
 #ifdef _DEBUG
