@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -33,12 +33,19 @@
 #include "log.h"
 #include "util.h"
 
+/******************************************************************************
+ *
+ * Macros
+ *
+ ******************************************************************************/
+//#define CLEANUP(x) { err = (x); goto cleanup; } //defined in p11.h
+
 #ifndef MAX_PATH
 #define MAX_PATH 128
 #endif
 
 #ifndef WIN32
-#define _strcpy_s(a,b,c)         strcpy((a),(c))
+#define strcpy_s(a,b,c)         strcpy((a),(c))
 #define sprintf_s(a,b,c,d,e,f,g,h,i)    sprintf((a),(c),(d),(e),(f),(g),(h),(i))
 #endif
 
@@ -47,7 +54,7 @@
  * Globals
  *
  ******************************************************************************/
-#ifdef _DEBUG
+#ifdef DEBUG
 unsigned int g_uiLogLevel          = LOG_LEVEL_SPY;
 #else
 unsigned int g_uiLogLevel          = LOG_LEVEL_WARNING;
@@ -68,11 +75,15 @@ void log_init(char *pszLogFile, unsigned int uiLogLevel)
   util_init_lock(&logmutex);
   util_lock(logmutex);
 
-  strcpy(g_szLogFile, pszLogFile);
+  strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
   g_uiLogLevel = uiLogLevel;
 
   //this will empty the logfile automatically
+#ifdef WIN32
+  if ((fopen_s(&fp,g_szLogFile, "a")) == 0)
+#else
   if ((fp = fopen(g_szLogFile, "w")) != NULL)
+#endif
      fclose(fp);
 
   util_unlock(logmutex);
@@ -94,7 +105,6 @@ void log_trace(const char *where, const char *string,... )
   char          asctime[21];
   unsigned int  level = g_uiLogLevel & 0x0F;
 
-/*
    // evaluate debug level
   if (string[1] == ':')
   {
@@ -124,15 +134,28 @@ void log_trace(const char *where, const char *string,... )
 
     //string+=2;
   }
-*/
+  else
+  {
+#ifndef DEBUG            
+   // return;    => restore
+#endif
+  }
 
   util_lock(logmutex);
 
+#ifdef WIN32
+  if ((fopen_s(&fp, g_szLogFile, "a")) != 0)
+#else
   if ((fp = fopen(g_szLogFile, "a")) == NULL)
+#endif
     CLEANUP(0);
   
    va_start(args, string);                                       // get args from param-string     
+#ifdef WIN32
+    _vsnprintf_s(buf, sizeof(buf), sizeof(buf), string, args);     // convert to string    
+#else
   vsnprintf(buf, sizeof(buf), string, args);    // convert to string    
+#endif
    va_end(args);                                                               // free arguments
 
 #ifdef DEBUG
@@ -140,9 +163,13 @@ void log_trace(const char *where, const char *string,... )
 #endif
 
   time(&ltime);
+#ifdef WIN32
+	localtime_s(&stime, &ltime );
+#else
 	stime = *(localtime(&ltime ));
+#endif
   
-  sprintf(asctime, "%02d.%02d.%04d %02d:%02d:%02d", 
+  sprintf_s(asctime,sizeof(asctime), "%02d.%02d.%04d %02d:%02d:%02d", 
                     stime.tm_mday,
                     stime.tm_mon+1,
                     stime.tm_year+1900,
@@ -182,7 +209,6 @@ void log_xtrace(const char *where, char *string,void *data,int len)
   char          asctime[21];
   unsigned int  level = g_uiLogLevel & 0x0F;
   
-/*
   // evaluate debug level
   if (string != NULL && string[1] == ':')
   {
@@ -213,21 +239,27 @@ void log_xtrace(const char *where, char *string,void *data,int len)
    // return;
 #endif
   }
-
-*/
   
   util_lock(logmutex);
 #ifdef DEBUG
   _log_xtrace(string, data, len);
 #endif
 
+#ifdef WIN32
+  if ((fopen_s(&fp,g_szLogFile, "a")) != 0)
+#else
   if ((fp = fopen(g_szLogFile, "a")) == NULL)
+#endif
     goto cleanup;
         
    time(&ltime);
+#ifdef WIN32
+	localtime_s(&stime, &ltime );
+#else
 	stime = *(localtime(&ltime ));
+#endif
    
-  sprintf(asctime, "%02d.%02d.%04d %02d:%02d:%02d", 
+  sprintf_s(asctime,sizeof(asctime), "%02d.%02d.%04d %02d:%02d:%02d", 
                     stime.tm_mday,
                     stime.tm_mon+1,
                     stime.tm_year+1900,
@@ -333,7 +365,6 @@ void log_template(const char *string, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG count
 {
 unsigned int  level = g_uiLogLevel & 0x0F;
 
-/*
   // evaluate debug level
   if (string[1] == ':')
   {
@@ -368,7 +399,6 @@ unsigned int  level = g_uiLogLevel & 0x0F;
 //  if (level  < LOG_LEVEL_INFO) 
 //     return;
 
-*/
   log_trace(string, "size = %d", count);
 
   if ((pTemplate == NULL) || (count == 0))
@@ -418,7 +448,11 @@ const char* get_type_string(CK_ULONG type, CK_ULONG subtype)
          break;
       default:
          //convert to string
+#ifdef WIN32
+         sprintf_s(stype,sizeof(stype), "??? (%08X, %08X)", type, subtype);
+#else
          sprintf(stype, "??? (%08lX, %08lX)", type, subtype);
+#endif
          return (stype);
 //       return (NULL);
       }
@@ -432,7 +466,11 @@ const char* get_type_string(CK_ULONG type, CK_ULONG subtype)
       }
 
    //convert to string
+#ifdef WIN32
+   sprintf_s(stype,sizeof(stype), "??? (%08X)", subtype);
+#else
    sprintf(stype, "??? (%08lX)", subtype);
+#endif
    return (stype);
 }
 
@@ -453,7 +491,11 @@ void log_attr(CK_ATTRIBUTE_PTR pAttr)
 
   util_lock(logmutex);
 
+#ifdef WIN32
+  if ((fopen_s(&fp,g_szLogFile, "a")) != 0)
+#else
   if ((fp = fopen(g_szLogFile, "a")) == NULL)
+#endif
      goto cleanup;
 
   map_log_info(pAttr->type, &ctype, &logtype);
@@ -626,7 +668,11 @@ switch(err)
 //   case CKR_FUNCTION_REJECTED:          return("CKR_FUNCTION_REJECTED"); break;
 //   case CKR_VENDOR_DEFINED:             return("CKR_VENDOR_DEFINED"); break;
    default:
+#ifdef WIN32
+      sprintf_s(cerr,sizeof(cerr), "0x%0X", err);
+#else
       sprintf(cerr, "0x%0X", err);
+#endif
       return(cerr); break;
    }
 }

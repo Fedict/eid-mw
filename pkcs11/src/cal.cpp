@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -31,8 +31,10 @@
 #include "tlvbuffer.h"
 
 
+#ifndef WIN32
 #define strcpy_s(a,b,c)         strcpy((a),(c))
 #define sprintf_s(a,b,c,d)    sprintf((a),(c),(d))
+#endif
 
 using namespace eIDMW;
 
@@ -210,7 +212,7 @@ int status;
 long lRet = 0;
 P11_SLOT *pSlot = NULL;
 
-pInfo->flags = 0; // CKF_LOGIN_REQUIRED;   // FRANK TEST
+pInfo->flags = 0;
 
 pSlot = p11_get_slot(hSlot);
 if (pSlot == NULL)
@@ -243,7 +245,7 @@ try
    strcpy_n(pInfo->serialNumber, oSerialNr.c_str() + snoffset, snlen, ' ');
    strcpy_n(pInfo->label, oReader.GetCardLabel().c_str(), 32, ' '); 
    if(oReader.IsPinpadReader())
-      pInfo->flags = CKF_PROTECTED_AUTHENTICATION_PATH;    // FRANK TEST || CKF_LOGIN_REQUIRED
+      pInfo->flags = CKF_PROTECTED_AUTHENTICATION_PATH;
    }
 catch (CMWException e)
    {
