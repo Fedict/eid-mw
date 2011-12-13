@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -209,8 +209,7 @@ static inline std::string GetSearchString(const std::string & csDir,
 	// E.g. C:\WINDOWS\System32\beidpp\beidpp2*.*
 #ifdef WIN32
 	char csBuf[20];
-	snprintf(csBuf,sizeof(csBuf),"%d",iVersion);
-//	_itoa_s(iVersion, csBuf, sizeof(csBuf), 10);
+	_itoa_s(iVersion, csBuf, sizeof(csBuf), 10);
 	return csDir + csPinpadPrefix + csBuf + std::string("*.*");
 #else
 	return csDir ;
