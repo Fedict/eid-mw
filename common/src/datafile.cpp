@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -70,7 +70,16 @@
 
 #include "util.h"
 
+// Compatibility Defines ////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 
+#ifdef WIN32
+  #define snprintf  _snprintf
+  #define vsnprintf  _vsnprintf
+#else
+  #define _snprintf_s snprintf
+  #define _vsnprintf_s vsnprintf
+#endif
 
 namespace eIDMW
 {
@@ -198,7 +207,7 @@ bool CDataFile::Load(bool bLock)
   if(bLock)
   {
 #ifdef WIN32
-    //_lock_file(m_stream);		//Lock the file to avoid other process to access it // FIXME
+    _lock_file(m_stream);		//Lock the file to avoid other process to access it
 #else
     // on Linux/Mac we set an advisory lock, i.e. it prevents
     // other processes from using the file only if they are collaborative 
@@ -388,13 +397,13 @@ bool CDataFile::Save()
   //outStream.close();
 
 #ifdef WIN32
-  fprintf(m_stream,"%ls",outStream.str().c_str());
+  fprintf_s(m_stream,"%ls",outStream.str().c_str());
 #else
   fprintf(m_stream,"%ls",outStream.str().c_str());
 #endif
 
 #ifdef WIN32
-  //_unlock_file(m_stream); //FIXME
+  _unlock_file(m_stream);
 #else	
   m_tFl.l_type   = F_UNLCK;  /* tell it to unlock the region */
   if( fcntl(fileno(m_stream), F_SETLKW, &m_tFl) == -1)
@@ -541,8 +550,6 @@ bool CDataFile::SetValueInt(t_Str szKey, t_Str szValue, t_Str szComment, t_Str s
 
 	return false;
 }
-
-#define _snprintf_s snprintf
 
 // SetFloat
 // Passes the given float to SetValue as a string
@@ -986,13 +993,11 @@ int WriteLn(FILE * stream, wchar_t* fmt, ...)
 	va_list args;
 
 	va_start (args, fmt);
-
-//#ifdef WIN32
-//	  nLength = vswprintf(buf, fmt, args);
-//#else
-	  nLength = vswprintf(buf,MAX_BUFFER_LEN,fmt,args);
-//#endif
-
+#ifdef WIN32
+	  nLength = _vsnwprintf_s(buf, MAX_BUFFER_LEN, MAX_BUFFER_LEN, fmt, args);
+#else
+	  nLength = vswprintf(buf, MAX_BUFFER_LEN, fmt, args);
+#endif
 	va_end (args);
 
 

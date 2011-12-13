@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2009 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -29,15 +29,18 @@
 #include "mw_util.h"
 
 #ifndef WIN32
-
 #ifdef LINUX
 #include "wintypes.h"
 #else
 #include "PCSC/wintypes.h"
 #endif
-
 #include "sys/stat.h"
 #include "util.h"
+
+#define fwprintf_s fwprintf 
+#define vfwprintf_s vfwprintf 
+#define swprintf_s swprintf
+#define _stat stat
 
 #define LOG_DIRECTORY_DEFAULT  L"/tmp"
 #endif
@@ -396,7 +399,6 @@ void CLog::getFilename(std::wstring &filename)
 	//	--> TODO : Test if the directory exist
 	directory = m_directory;
 	struct stat buffer;
-
 	if ( stat(utilStringNarrow(directory).c_str(),&buffer)){
 	  // check error code
 	  m_directory=LOG_DIRECTORY_DEFAULT;
@@ -412,7 +414,7 @@ void CLog::getFilename(std::wstring &filename)
 
 	wchar_t index[5];
 
-	_swprintf_s(index,5,L"%d",0);
+	swprintf_s(index,5,L"%d",0);
 
 	//If there is a maximal file size, 
 	//  we parse the file from index 0 to m_filenr-1 
@@ -439,7 +441,7 @@ void CLog::getFilename(std::wstring &filename)
 		for(int i=0;i<m_filenr;i++)
 		{
 
-			_swprintf_s(index,5,L"%d",i);
+			swprintf_s(index,5,L"%d",i);
 
 			file=root_filename + index + L".log";
 #ifdef WIN32
@@ -455,7 +457,7 @@ void CLog::getFilename(std::wstring &filename)
 		if(!find)
 		{
 			renameFiles(root_filename.c_str());
-			_swprintf_s(index,5,L"%d",m_filenr-1);
+			swprintf_s(index,5,L"%d",m_filenr-1);
 		}
 	}
 
@@ -481,7 +483,6 @@ void CLog::renameFiles(const wchar_t *root_filename)
 	std::wstring dest;
 	wchar_t isrc[5];
 	wchar_t idest[5];
-
 #ifdef WIN32
 	struct _stat results;
 #else
@@ -495,8 +496,8 @@ void CLog::renameFiles(const wchar_t *root_filename)
 	//m_filenr-1 become m_filenr-2
 	for(int i=0;i<m_filenr;i++)
 	{
-		_swprintf_s(isrc,5,L"%d",i+1);
-		_swprintf_s(idest,5,L"%d",i);
+		swprintf_s(isrc,5,L"%d",i+1);
+		swprintf_s(idest,5,L"%d",i);
 
 		//if the source does not exist, we stop
 		src=root_filename;
@@ -831,11 +832,11 @@ bool CLog::writeLineHeaderA(tLOG_Level level_in,const int line,const char *file)
 	{
 		if(isFileMixingGroups())
 		{
-			fprintf(m_f,"%s - %ld - %s: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",timestamp.c_str(),CThread::getCurrentPid(),m_group.c_str(),lPreviousOpenFailed);
+			fprintf_s(m_f,"%s - %ld - %s: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",timestamp.c_str(),CThread::getCurrentPid(),m_group.c_str(),lPreviousOpenFailed);
 		}
 		else
 		{
-			fprintf(m_f,"%s - %ld: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",timestamp.c_str(),CThread::getCurrentPid(),lPreviousOpenFailed);
+			fprintf_s(m_f,"%s - %ld: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",timestamp.c_str(),CThread::getCurrentPid(),lPreviousOpenFailed);
 		}
 	}
 
@@ -846,16 +847,16 @@ bool CLog::writeLineHeaderA(tLOG_Level level_in,const int line,const char *file)
 		std::string group=utilStringNarrow(m_group);
 
 		if(line>0 && strlen(file)>0)
-			fprintf(m_f,"%s - %ld|%ld - %s - %s -'%s'-line=%d: ",timestamp.c_str(),CThread::getCurrentPid(),CThread::getCurrentThreadId(),group.c_str(),level.c_str(),file,line);
+			fprintf_s(m_f,"%s - %ld|%ld - %s - %s -'%s'-line=%d: ",timestamp.c_str(),CThread::getCurrentPid(),CThread::getCurrentThreadId(),group.c_str(),level.c_str(),file,line);
 		else
-			fprintf(m_f,"%s - %ld|%ld - %s - %s: ",timestamp.c_str(),CThread::getCurrentPid(),CThread::getCurrentThreadId(),group.c_str(),level.c_str());
+			fprintf_s(m_f,"%s - %ld|%ld - %s - %s: ",timestamp.c_str(),CThread::getCurrentPid(),CThread::getCurrentThreadId(),group.c_str(),level.c_str());
 	}
 	else
 	{
 		if(line>0 && strlen(file)>0)
-			fprintf(m_f,"%s - %ld|%ld - %s -'%s'-line=%d: ",timestamp.c_str(),CThread::getCurrentPid(),CThread::getCurrentThreadId(),level.c_str(),file,line);
+			fprintf_s(m_f,"%s - %ld|%ld - %s -'%s'-line=%d: ",timestamp.c_str(),CThread::getCurrentPid(),CThread::getCurrentThreadId(),level.c_str(),file,line);
 		else
-			fprintf(m_f,"%s - %ld|%ld - %s: ",timestamp.c_str(),CThread::getCurrentPid(),CThread::getCurrentThreadId(),level.c_str());
+			fprintf_s(m_f,"%s - %ld|%ld - %s: ",timestamp.c_str(),CThread::getCurrentPid(),CThread::getCurrentThreadId(),level.c_str());
 	}
 
 	return true;
@@ -898,7 +899,8 @@ void CLog::writeLineMessageW(const wchar_t *format, va_list argList)
 
  	if(!m_f)	//Should not happend, as this method must only be called if the writeLineHeader succeed
 		throw CMWEXCEPTION(EIDMW_FILE_NOT_OPENED);
-	_vfwprintf_s(m_f, format, argList);
+
+	vfwprintf_s(m_f, format, argList);
 	fwprintf_s(m_f,L"%c",'\n');
 	close();
 }
@@ -908,8 +910,9 @@ void CLog::writeLineMessageA(const char *format, va_list argList)
 
  	if(!m_f)	//Should not happend, as this method must only be called if the writeLineHeader succeed
 		throw CMWEXCEPTION(EIDMW_FILE_NOT_OPENED);
-	_vfprintf_s(m_f, format, argList);
-	fprintf(m_f,"%c",'\n');
+
+	vfprintf_s(m_f, format, argList);
+	fprintf_s(m_f,"%c",'\n');
 	close();
 }
 

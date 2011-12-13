@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,7 +17,6 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-
 #include "config.h"
 #include <algorithm>
 #include <fstream>
@@ -56,8 +55,7 @@ namespace eIDMW
 
     for(std::wstring::size_type i = 0; in.size() > i; ++i)
 #ifdef WIN32
-//      out[i] = std::use_facet<std::ctype<wchar_t> >(std::locale()).narrow(in[i]);
-      out[i] = std::use_facet<std::ctype<wchar_t> >(locale).narrow(in[i],'x');
+      out[i] = std::use_facet<std::ctype<wchar_t> >(locale).narrow(in[i]);
 #else
       // in the unix implementation of std::locale narrow needs 2 arguments
       // (the second is a default char, here the choice is random)
@@ -418,25 +416,51 @@ int strcat_s(char *dest, size_t len, const char *src)
 	return *src == '\0' ? 0 : -1; // 0: OK, -1: NOK
 }
 
+int strcpy_s(char *dest, size_t len, const char *src)
+{
+	if (dest == NULL)
+		return -1;
+
+	for ( ; len > 1 && *src != '\0'; dest++, src++, len--)
+		*dest = *src;
+
+	*dest = '\0';
+
+	return *src == '\0' ? 0 : -1; // 0: OK, -1: NOK
+}
+
 int strncpy_s(char *dest, size_t len, const char *src, long count)
 {
 
 	if (dest == NULL)
 		return -1;
 
-	char *dest_start = dest;
-	size_t orig_len = len;
+	//On windows _TRUNCATE means that we could copy the maximum of character available
+	if(count==_TRUNCATE) 	
+	{
+		for ( ; len > 1 && *src != '\0'; dest++, src++, len--)
+			*dest = *src;
 
-	for ( ; len > 1 && *src != '\0' && count > 0; dest++, src++, len--, count--)
-		*dest = *src;
+		*dest = '\0';
 
-	*dest = '\0';
+		return 0; //OK
+	}
+	else
+	{
+		char *dest_start = dest;
+		size_t orig_len = len;
 
-	if (*src == '\0' || count == 0)
-		return 0; // OK
+		for ( ; len > 1 && *src != '\0' && count > 0; dest++, src++, len--, count--)
+			*dest = *src;
 
-	if (orig_len > 0)
-		*dest_start = '\0';
+		*dest = '\0';
+
+		if (*src == '\0' || count == 0)
+			return 0; // OK
+
+		if (orig_len > 0)
+			*dest_start = '\0';
+	}
 
 	return -1;
 }
@@ -456,6 +480,19 @@ int fopen_s(FILE** pFile, const char *filename, const char *mode)
 		r = -1;
 
 	return r;
+}
+
+int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src)
+{
+	if (dest == NULL)
+		return -1;
+
+	for ( ; len > 1 && *src != '\0'; dest++, src++, len--)
+		*dest = *src;
+
+	*dest = '\0';
+
+	return *src == '\0' ? 0 : -1; // 0: OK, -1: NOK
 }
 
 EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...)
@@ -504,3 +541,4 @@ EIDMW_CMN_API errno_t freopen_s(FILE **pFile, const char *filename, const char *
 }
 
 #endif
+

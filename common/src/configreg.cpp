@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -16,7 +16,7 @@
  * License along with this software; if not, see
  * http://www.gnu.org/licenses/.
 
-**************************************************************************** *
+**************************************************************************** */
 /** \file ConfigReg.cpp
 Class to set and get configuration-data from the registry(Windows) or the ini-file(Linux and Mac).
 
@@ -177,6 +177,7 @@ std::wstring ExpandSection(
     return(czSectionOriginal);
 }
 
+
 /** Retrieve from the configuration a parameter of the type STRING in the user settings
 
 \return std::wstring            requested parameter
@@ -207,7 +208,7 @@ std::wstring CConfig::GetStringInt(
         hRegKeyRoot = HKEY_CURRENT_USER ;
 
     //--- Open the KeyInfo entry
-    _swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
+    swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
 
     lRes = RegOpenKeyEx(hRegKeyRoot, wcsKeyRegName, 0L, KEY_READ , &hRegKey);
     if (lRes != ERROR_SUCCESS){
@@ -434,7 +435,7 @@ long CConfig::GetLong(
         hRegKeyRoot = HKEY_CURRENT_USER ;
 
     //--- Open the KeyInfo entry
-    _swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
+    swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
 
     lRes = RegOpenKeyEx(hRegKeyRoot, wcsKeyRegName, 0L, KEY_READ , &hRegKey);
     if (lRes != ERROR_SUCCESS){
@@ -508,7 +509,7 @@ void CConfig::SetString(
         hRegKeyTree = HKEY_CURRENT_USER ;
 
 
-    _swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
+    swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
 
     //--- Open the KeyInfo entry
     lRes = RegCreateKeyEx(hRegKeyTree, wcsKeyRegName, 0L, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hRegKey, NULL);
@@ -561,7 +562,7 @@ void CConfig::SetLong(
         hRegKeyTree = HKEY_CURRENT_USER ;
 
 
-    _swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
+    swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
 
     //--- Open the KeyInfo entry
     lRes = RegCreateKeyEx(hRegKeyTree, wcsKeyRegName, 0L, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hRegKey, NULL);
@@ -619,7 +620,7 @@ void CConfig::DelString(
 
 
     //--- Open the KeyInfo entry
-    _swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
+    swprintf_s(wcsKeyRegName, sizeof(wcsKeyRegName)/sizeof(wchar_t), L"%s\\%s", SC_CONF_REG, czSection.c_str());
     lRes = RegOpenKeyEx(hRegKeyTree, wcsKeyRegName, 0L, KEY_SET_VALUE, &hRegKey);
     if (lRes != ERROR_SUCCESS){
         RegCloseKey(hRegKey);
@@ -663,6 +664,5 @@ void CConfig::DelLong(
 
     DelString(location, csName, czSection);
 }
+
 }
-
-

@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -37,17 +37,6 @@
 
 #ifndef WIN32
 #include <fcntl.h>
-#endif
-
-// Compatibility Defines ////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-
-#ifdef WIN32
-  #define snprintf  _snprintf
-  #define vsnprintf  _vsnprintf
-#else
-  #define _snprintf_s snprintf
-  #define _vsnprintf_s vsnprintf
 #endif
 
 namespace eIDMW

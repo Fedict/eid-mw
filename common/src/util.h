@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,7 +17,6 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-
 #pragma once
 
 #ifndef _CONFIG_H_
@@ -65,17 +64,19 @@ EIDMW_CMN_API void GetProcessName(wchar_t *wBuffer,unsigned long ulLen);
 //#define _TRUNCATE -1
 
 EIDMW_CMN_API int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...);
+
 EIDMW_CMN_API int strcat_s(char *dest, size_t len, const char *src);
-EIDMW_CMN_API int fopen_s(FILE** pFile, const char *filename, const char *mode);
-EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...);
-#endif
+
+EIDMW_CMN_API int strcpy_s(char *dest, size_t len, const char *src);
 
 EIDMW_CMN_API int strncpy_s(char *dest, size_t len, const char *src, long count);
 
+EIDMW_CMN_API int fopen_s(FILE** pFile, const char *filename, const char *mode);
 
+EIDMW_CMN_API int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src);
 
+EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...);
 
-#ifndef WIN32
 EIDMW_CMN_API int vfprintf_s(FILE *stream, const char *format, va_list argptr);
 EIDMW_CMN_API errno_t freopen_s(FILE **pFile, const char *filename, const char *mode, FILE* stream);
 #endif

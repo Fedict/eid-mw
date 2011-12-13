@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -70,7 +70,11 @@ namespace eIDMW
 
 //GUI
   const struct CConfig::Param_Num CConfig::EIDMW_CONFIG_PARAM_GUITOOL_STARTWIN		=	{EIDMW_CNF_SECTION_GUITOOL, EIDMW_CNF_GUITOOL_STARTWIN,			0};
+#ifdef __APPLE__
+  const struct CConfig::Param_Num CConfig::EIDMW_CONFIG_PARAM_GUITOOL_STARTMINI		=	{EIDMW_CNF_SECTION_GUITOOL, EIDMW_CNF_GUITOOL_STARTMINI,		0};
+#else
   const struct CConfig::Param_Num CConfig::EIDMW_CONFIG_PARAM_GUITOOL_STARTMINI		=	{EIDMW_CNF_SECTION_GUITOOL, EIDMW_CNF_GUITOOL_STARTMINI,		1};
+#endif
   const struct CConfig::Param_Num CConfig::EIDMW_CONFIG_PARAM_GUITOOL_SHOWPIC		=	{EIDMW_CNF_SECTION_GUITOOL, EIDMW_CNF_GUITOOL_SHOWPIC,			0};
   const struct CConfig::Param_Num CConfig::EIDMW_CONFIG_PARAM_GUITOOL_SHOWNOTIFICATION	=	{EIDMW_CNF_SECTION_GUITOOL, EIDMW_CNF_GUITOOL_SHOWNOTIFICATION,			1};
   const struct CConfig::Param_Num CConfig::EIDMW_CONFIG_PARAM_GUITOOL_SHOWTBAR		=	{EIDMW_CNF_SECTION_GUITOOL, EIDMW_CNF_GUITOOL_SHOWTBAR,			1};
@@ -86,5 +90,8 @@ namespace eIDMW
   const struct CConfig::Param_Num CConfig::EIDMW_CONFIG_PARAM_XSIGN_ONLINE  		=	{EIDMW_CNF_SECTION_XSIGN,	EIDMW_CNF_XSIGN_ONLINE,		1};
   const struct CConfig::Param_Str CConfig::EIDMW_CONFIG_PARAM_XSIGN_WORKINGDIR 		=	{EIDMW_CNF_SECTION_XSIGN,	EIDMW_CNF_XSIGN_WORKINGDIR,	L""};
   const struct CConfig::Param_Num CConfig::EIDMW_CONFIG_PARAM_XSIGN_TIMEOUT 		=	{EIDMW_CNF_SECTION_XSIGN,	EIDMW_CNF_XSIGN_TIMEOUT,	30};
+
+//MESSAGES
+  const struct CConfig::Param_Num CConfig::EIDMW_CONFIG_PARAM_MESSAGES_SHOWSDK35WARN =	{EIDMW_CNF_SECTION_MESSAGES,	EIDMW_CNF_MESSAGES_SHOWSDK35WARN,		1};
 
 } // namespace eidMW
