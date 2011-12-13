@@ -1,7 +1,7 @@
-		/* ****************************************************************************
+/* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -195,7 +195,7 @@ CCard * CardConnect(const std::string &csReader,
 		}
 
 #ifdef CAL_BEID
-//		if (poCard == NULL) // FIXME
+//		if (poCard == NULL)
 //			poCard = SISPluginReadData(strReader, hCard, poContext, poPinpad, oCardPluginLib);
 
 		if (poCard == NULL)
