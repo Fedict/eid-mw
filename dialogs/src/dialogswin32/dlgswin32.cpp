@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -418,6 +418,8 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 					sMessage += csReader;
 					sMessage += L"\"";
 				}
+				sMessage += L"\n";
+				sMessage += GETSTRING_DLG(EnterOldNewVerify);
 				sMessage += L"\n";
 				break;
 			case DLG_PIN_OP_UNBLOCK_CHANGE:

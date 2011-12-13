@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -169,6 +169,9 @@ std::wstring CLang::GetMessageFromID(DlgMessageID messageID)
 			csMessage+=L"\n\n";
 			csMessage+=fullpath;
 		}
+			break;
+		case DLG_MESSAGE_SDK35_WARNING:
+			csMessage+=GETSTRING_DLG(OldSDK35Notification);
 			break;
 		case DLG_MESSAGE_NONE:
 		default:

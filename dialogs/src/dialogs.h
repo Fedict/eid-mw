@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2011 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -78,13 +78,24 @@ typedef enum {
 } DlgPinUsage;
 
 const unsigned char PIN_FLAG_DIGITS = 1;
-
+	
+#ifdef WIN32
 typedef struct {
 	unsigned long ulMinLen;
 	unsigned long ulMaxLen;    // should be 16 at most
 	unsigned long ulFlags;     // PIN_FLAG_DIGITS, ...
 } DlgPinInfo;
-
+#else
+#pragma pack(push)  /* push current alignment to stack */
+#pragma pack(1)     /* set alignment to 1 byte boundary */
+	
+typedef struct {
+	unsigned long long ulMinLen;
+	unsigned long long ulMaxLen;    // should be 16 at most
+	unsigned long long ulFlags;     // PIN_FLAG_DIGITS, ...
+} DlgPinInfo;	
+#endif
+	
 typedef enum {
 	DLG_ICON_NONE,
 	DLG_ICON_INFO,
@@ -107,6 +118,7 @@ typedef enum {
 	DLG_MESSAGE_TESTCARD,
 	DLG_MESSAGE_ENTER_CORRECT_CARD,
 	DLG_MESSAGE_USER_WARNING,
+	DLG_MESSAGE_SDK35_WARNING,
 } DlgMessageID;
 
 const unsigned char DLG_BUTTON_OK = 1;
@@ -280,7 +292,7 @@ struct DlgAskPINArguments {
  struct DlgBadPinArguments {
    DlgPinUsage usage;
    wchar_t pinName[50];
-   unsigned long ulRemainingTries;
+   unsigned long long ulRemainingTries;
    DlgRet returnValue;
  } ;
 
@@ -297,7 +309,7 @@ struct DlgAskPINArguments {
    wchar_t appPath[100];
    wchar_t readerName[100];
    DlgPFOperation operation;
-   int forAllOperations;
+   long long forAllOperations;
    DlgRet returnValue;
  };
 
@@ -308,7 +320,7 @@ struct DlgAskPINArguments {
    DlgPinUsage usage;
    wchar_t pinName[50];
    wchar_t message[200];
-   unsigned long infoCollectorIndex;
+   unsigned long long infoCollectorIndex;
    pid_t tRunningProcess;
    DlgRet returnValue;
  } ;
@@ -326,7 +338,7 @@ struct DlgAskPINArguments {
  void CallQTServer(const DlgFunctionIndex index,
 		     const char *csFilename);
 
-
+#pragma pack(pop)   /* restore original alignment from stack */
 #endif
 
 
