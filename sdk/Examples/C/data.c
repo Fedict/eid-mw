@@ -45,7 +45,7 @@ CK_ULONG beidsdk_GetData()
 	if (pkcs11Handle != NULL) 
 	{
 		// get function pointer to C_GetFunctionList
-		pC_GetFunctionList = (CK_C_GetFunctionList) dlsym(pkcs11Handle, "C_GetFunctionList");
+		pC_GetFunctionList = (CK_C_GetFunctionList)dlsym(pkcs11Handle, "C_GetFunctionList");
 		if (pC_GetFunctionList != NULL) 
 		{
 			// invoke C_GetFunctionList to get the list of pkcs11 function pointers
@@ -61,7 +61,7 @@ CK_ULONG beidsdk_GetData()
 					retVal = (pFunctions->C_GetSlotList) (CK_FALSE, 0, &slot_count);
 					if ((retVal == CKR_OK) && (slot_count > 0) )
 					{
-						CK_SLOT_ID_PTR slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
+						CK_SLOT_ID_PTR slotIds = (CK_SLOT_ID_PTR)malloc(slot_count * sizeof(CK_SLOT_INFO));
 						if(slotIds != NULL)
 						{
 							// retrieve the list of slots (cardreaders)
@@ -76,9 +76,9 @@ CK_ULONG beidsdk_GetData()
 									retVal = (pFunctions->C_OpenSession)(slotIds[slotIdx], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
 									if (retVal == CKR_OK)
 									{
-										CK_CHAR_PTR pFilename = TEXT("DATA_FILE");
-										CK_CHAR_PTR pSignatureFilename = TEXT("SGN_RN");
-										CK_CHAR_PTR pLastname = TEXT("Surname");
+										CK_CHAR_PTR pFilename = (CK_CHAR_PTR)TEXT("DATA_FILE");
+										CK_CHAR_PTR pSignatureFilename = (CK_CHAR_PTR)TEXT("CERT_RN_FILE");
+										CK_CHAR_PTR pLastname = (CK_CHAR_PTR)TEXT("surname");
 										CK_VOID_PTR pFileValue = NULL;
 										CK_VOID_PTR pSignatureValue = NULL;
 										CK_VOID_PTR pLastnameValue = NULL;
@@ -88,21 +88,21 @@ CK_ULONG beidsdk_GetData()
 										//retrieve the data of the file
 										retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pFilename, &pFileValue, &FileValueLen);
 										if(retVal == CKR_OK)
-											Beidsdk_PrintValue(pFilename,pFileValue, FileValueLen);
+											Beidsdk_PrintValue(pFilename,(CK_BYTE_PTR)pFileValue, FileValueLen);
 										else
 											printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
 
 										//retrieve the data of the signature file
 										retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pSignatureFilename, &pSignatureValue, &SignatureValueLen);
 										if(retVal == CKR_OK)
-											Beidsdk_PrintValue(pSignatureFilename,pSignatureValue, SignatureValueLen);
+											Beidsdk_PrintValue(pSignatureFilename,(CK_BYTE_PTR)pSignatureValue, SignatureValueLen);
 										else
 											printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
 
 										//retrieve the lastname
 										retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pLastname, &pLastnameValue, &LastnameValueLen);
 										if(retVal == CKR_OK)
-											Beidsdk_PrintValue(pLastname,pLastnameValue, LastnameValueLen);
+											Beidsdk_PrintValue(pLastname,(CK_BYTE_PTR)pLastnameValue, LastnameValueLen);
 										else
 											printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
 

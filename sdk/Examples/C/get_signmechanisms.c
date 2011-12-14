@@ -57,7 +57,7 @@ CK_ULONG beidsdk_getsignmechanisms()
 					retVal = (pFunctions->C_GetSlotList) (CK_TRUE, 0, &slot_count);
 					if ((retVal == CKR_OK)&& (slot_count > 0))
 					{
-						CK_SLOT_ID_PTR slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
+						CK_SLOT_ID_PTR slotIds = (CK_SLOT_ID_PTR)malloc(slot_count * sizeof(CK_SLOT_INFO));
 						if(slotIds != NULL)
 						{
 							// retrieve the list of slots (cardreaders) found that hold a token (card)
