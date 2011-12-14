@@ -416,51 +416,25 @@ int strcat_s(char *dest, size_t len, const char *src)
 	return *src == '\0' ? 0 : -1; // 0: OK, -1: NOK
 }
 
-int strcpy_s(char *dest, size_t len, const char *src)
-{
-	if (dest == NULL)
-		return -1;
-
-	for ( ; len > 1 && *src != '\0'; dest++, src++, len--)
-		*dest = *src;
-
-	*dest = '\0';
-
-	return *src == '\0' ? 0 : -1; // 0: OK, -1: NOK
-}
-
 int strncpy_s(char *dest, size_t len, const char *src, long count)
 {
 
 	if (dest == NULL)
 		return -1;
 
-	//On windows _TRUNCATE means that we could copy the maximum of character available
-	if(count==_TRUNCATE) 	
-	{
-		for ( ; len > 1 && *src != '\0'; dest++, src++, len--)
-			*dest = *src;
+	char *dest_start = dest;
+	size_t orig_len = len;
 
-		*dest = '\0';
+	for ( ; len > 1 && *src != '\0' && count > 0; dest++, src++, len--, count--)
+		*dest = *src;
 
-		return 0; //OK
-	}
-	else
-	{
-		char *dest_start = dest;
-		size_t orig_len = len;
+	*dest = '\0';
 
-		for ( ; len > 1 && *src != '\0' && count > 0; dest++, src++, len--, count--)
-			*dest = *src;
+	if (*src == '\0' || count == 0)
+		return 0; // OK
 
-		*dest = '\0';
-
-		if (*src == '\0' || count == 0)
-			return 0; // OK
-
-		if (orig_len > 0)
-			*dest_start = '\0';
-	}
+	if (orig_len > 0)
+		*dest_start = '\0';
 
 	return -1;
 }
@@ -480,19 +454,6 @@ int fopen_s(FILE** pFile, const char *filename, const char *mode)
 		r = -1;
 
 	return r;
-}
-
-int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src)
-{
-	if (dest == NULL)
-		return -1;
-
-	for ( ; len > 1 && *src != '\0'; dest++, src++, len--)
-		*dest = *src;
-
-	*dest = '\0';
-
-	return *src == '\0' ? 0 : -1; // 0: OK, -1: NOK
 }
 
 EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...)
@@ -541,4 +502,3 @@ EIDMW_CMN_API errno_t freopen_s(FILE **pFile, const char *filename, const char *
 }
 
 #endif
-
