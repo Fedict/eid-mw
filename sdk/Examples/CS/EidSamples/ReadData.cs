@@ -109,7 +109,7 @@ namespace EidSamples
         /// <returns></returns>
         public string GetSurname()
         {
-            return GetData("Surname");
+            return GetData("surname");
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace EidSamples
         /// <returns></returns>
         public string GetDateOfBirth()
         {
-            return GetData("Date_Of_Birth");
+            return GetData("date_of_birth");
         }
         /// <summary>
         /// Generic function to get string data objects from label
@@ -188,7 +188,7 @@ namespace EidSamples
         /// <returns></returns>
         public byte[] GetPhotoFile()
         {
-            return GetFile("PHOTO");
+            return GetFile("PHOTO_FILE");
         }
         /// <summary>
         /// Return ID file signature
@@ -196,7 +196,7 @@ namespace EidSamples
         /// <returns></returns>
         public byte[] GetIdSignatureFile()
         {
-            return GetFile("SGN_DATA_FILE");
+            return GetFile("SIGN_DATA_FILE");
         }
         /// <summary>
         /// Return Address file signature
@@ -204,7 +204,7 @@ namespace EidSamples
         /// <returns></returns>
         public byte[] GetAddressSignatureFile()
         {
-            return GetFile("SGN_ADDRESS_FILE");
+            return GetFile("SIGN_ADDRESS_FILE");
         }
         /// <summary>
         /// Return RRN Certificate. This certificate is used to validate
@@ -242,8 +242,10 @@ namespace EidSamples
                 // "The label attribute of the objects should equal ..."                
                 ByteArrayAttribute fileLabel = new ByteArrayAttribute(CKA.LABEL);
                 fileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Filename);
+                ByteArrayAttribute fileData = new ByteArrayAttribute(CKA.CLASS);
+                fileData.Value = BitConverter.GetBytes((uint)Net.Sf.Pkcs11.Wrapper.CKO.DATA);
                 session.FindObjectsInit(new P11Attribute[] {
-                        fileLabel
+                        fileLabel,fileData
                     });
                 P11Object[] foundObjects = session.FindObjects(1);
                 if (foundObjects.Length != 0)
