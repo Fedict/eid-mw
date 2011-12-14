@@ -61,7 +61,7 @@ EIDMW_CMN_API void GetProcessName(wchar_t *wBuffer,unsigned long ulLen);
 
 #ifndef WIN32
 
-//#define _TRUNCATE -1
+#define _TRUNCATE -1
 
 EIDMW_CMN_API int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...);
 
