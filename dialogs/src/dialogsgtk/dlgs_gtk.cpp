@@ -26,7 +26,6 @@
 #include "errno.h"
 #include "mw_util.h"
 #include "dialogs.h"
-#include "langutil.h"
 #include <stdio.h>
 #include <limits.h>
 #include <unistd.h>

@@ -18,7 +18,12 @@
 
 **************************************************************************** */
 #include "display.h"
+
+#if defined(WIN32) || defined (__APPLE__)
 #include "langutil.h"
+#else
+#include "dialogs.h"
+#endif
 
 using namespace eIDMW;
 
