@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDK_Signature", "SDK_Signat
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDK_Data", "SDK_Data.vcxproj", "{C74A0DBD-0973-4B62-92B6-77645B3A0E44}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDK_CertRegistration", "SDK_CertRegistration.vcxproj", "{163EC832-3896-4C9C-B181-6FFE58BC74AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -49,6 +51,12 @@ Global
 		{C74A0DBD-0973-4B62-92B6-77645B3A0E44}.Release|Win32.Build.0 = Release|Win32
 		{C74A0DBD-0973-4B62-92B6-77645B3A0E44}.Release|x64.ActiveCfg = Release|x64
 		{C74A0DBD-0973-4B62-92B6-77645B3A0E44}.Release|x64.Build.0 = Release|x64
+		{163EC832-3896-4C9C-B181-6FFE58BC74AE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{163EC832-3896-4C9C-B181-6FFE58BC74AE}.Debug|Win32.Build.0 = Debug|Win32
+		{163EC832-3896-4C9C-B181-6FFE58BC74AE}.Debug|x64.ActiveCfg = Debug|Win32
+		{163EC832-3896-4C9C-B181-6FFE58BC74AE}.Release|Win32.ActiveCfg = Release|Win32
+		{163EC832-3896-4C9C-B181-6FFE58BC74AE}.Release|Win32.Build.0 = Release|Win32
+		{163EC832-3896-4C9C-B181-6FFE58BC74AE}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
