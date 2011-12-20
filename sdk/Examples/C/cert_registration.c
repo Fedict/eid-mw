@@ -22,6 +22,9 @@
 #include "base.h"
 #include <Wincrypt.h>
 
+
+CK_ULONG ByteArrayToString( CK_CHAR_PTR* destString ,CK_ULONG ulDestLen,CK_BYTE* byteArray, CK_ULONG ulArrayLen);
+
 //**************************************************
 // Use Minidriver if OS is Vista or later
 //**************************************************
@@ -74,257 +77,6 @@ BOOL ProviderNameCorrect (PCCERT_CONTEXT pCertContext )
 	return TRUE;
 }
 
-/*
-BOOL StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits,  const std::wstring& containerserial) 
-{
-	unsigned long	dwFlags			= CERT_STORE_NO_CRYPT_RELEASE_FLAG;
-	PCCERT_CONTEXT  pDesiredCert	= NULL;
-	PCCERT_CONTEXT  pPrevCert		= NULL;
-	HCERTSTORE		hMyStore		= CertOpenSystemStore(NULL, "MY");
-
-	if ( NULL != hMyStore )
-	{
-
-
-		// ----------------------------------------------------
-		// Initialize the CRYPT_KEY_PROV_INFO data structure.
-		// Note: pwszContainerName and pwszProvName can be set to NULL 
-		// to use the default container and provider.
-		// ----------------------------------------------------
-		CRYPT_KEY_PROV_INFO* pCryptKeyProvInfo	= new CRYPT_KEY_PROV_INFO;
-		unsigned long		 dwPropId			= CERT_KEY_PROV_INFO_PROP_ID; 
-
-		std::wstring strContainerName;
-		
-		if (UseMinidriver())
-		{
-			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
-			{
-				strContainerName = L"NR_";
-			}
-			else
-			{
-				strContainerName = L"DS_";
-			}
-			strContainerName += containerserial;
-			pCryptKeyProvInfo->pwszProvName			= L"Microsoft Base Smart Card Crypto Provider";
-			pCryptKeyProvInfo->dwKeySpec			= AT_SIGNATURE;
-		}
-		else
-		{
-			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
-			{
-				strContainerName = L"Signature";
-			}
-			else
-			{
-				strContainerName = L"Authentication";
-			}
-
-			strContainerName += L"(";
-			strContainerName += containerserial;
-			strContainerName += L")";
-			pCryptKeyProvInfo->pwszProvName		= L"Belgium Identity Card CSP";
-			pCryptKeyProvInfo->dwKeySpec		= AT_KEYEXCHANGE;
-		}
-		pCryptKeyProvInfo->pwszContainerName	= (LPWSTR)strContainerName.c_str();
-		pCryptKeyProvInfo->dwProvType			= PROV_RSA_FULL;
-		pCryptKeyProvInfo->dwFlags				= 0;
-		pCryptKeyProvInfo->cProvParam			= 0;
-		pCryptKeyProvInfo->rgProvParam			= NULL;
-
-		// Set the property.
-		if (CertSetCertificateContextProperty(
-			pCertContext,       // A pointer to the certificate
-			// where the propertiy will be set.
-			dwPropId,           // An identifier of the property to be set. 
-			// In this case, CERT_KEY_PROV_INFO_PROP_ID
-			// is to be set to provide a pointer with the
-			// certificate to its associated private key 
-			// container.
-			dwFlags,            // The flag used in this case is   
-			// CERT_STORE_NO_CRYPT_RELEASE_FLAG
-			// indicating that the cryptographic 
-			// context aquired should not
-			// be released when the function finishes.
-			pCryptKeyProvInfo   // A pointer to a data structure that holds
-			// infomation on the private key container to
-			// be associated with this certificate.
-			))
-		{
-			if (NULL != pCryptKeyProvInfo)
-			{
-				delete pCryptKeyProvInfo;
-				pCryptKeyProvInfo = NULL;
-			}
-			
-			unsigned long	ulID			= 0;
-
-			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
-			{
-				ulID = 0x03;
-			}
-			else
-			{
-				ulID = 0x02;
-			}
-
-			// Set friendly names for the certificates
-			DWORD dwsize = 0;
-			dwsize = CertGetNameStringW(pCertContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, NULL, dwsize);
-			auto_vec<WCHAR> pname(new WCHAR[dwsize]);
-			dwsize = CertGetNameStringW(pCertContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, pname.get(), dwsize);
-			CRYPT_DATA_BLOB tpFriendlyName = {0, 0};
-			tpFriendlyName.pbData = (BYTE *)pname.get();
-			tpFriendlyName.cbData = dwsize * sizeof(WCHAR);
-
-			if (CertSetCertificateContextProperty(
-				pCertContext,       // A pointer to the certificate
-				// where the propertiy will be set.
-				CERT_FRIENDLY_NAME_PROP_ID,           // An identifier of the property to be set. 
-				// In this case, CERT_KEY_PROV_INFO_PROP_ID
-				// is to be set to provide a pointer with the
-				// certificate to its associated private key 
-				// container.
-				dwFlags,            // The flag used in this case is   
-				// CERT_STORE_NO_CRYPT_RELEASE_FLAG
-				// indicating that the cryptographic 
-				// context aquired should not
-				// be released when the function finishes.
-				&tpFriendlyName   // A pointer to a data structure that holds
-				// infomation on the private key container to
-				// be associated with this certificate.
-				))
-			{
-				if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
-				{
-					CertAddEnhancedKeyUsageIdentifier (pCertContext, szOID_PKIX_KP_EMAIL_PROTECTION);
-				}
-				else
-				{
-					CertAddEnhancedKeyUsageIdentifier (pCertContext, szOID_PKIX_KP_EMAIL_PROTECTION);
-					CertAddEnhancedKeyUsageIdentifier (pCertContext, szOID_PKIX_KP_CLIENT_AUTH);
-				}
-				CertAddCertificateContextToStore(hMyStore, pCertContext, CERT_STORE_ADD_REPLACE_EXISTING, NULL);
-			}
-
-			if (NULL != tpFriendlyName.pbData)
-			{
-				delete [] (tpFriendlyName.pbData);
-				tpFriendlyName.pbData = NULL;
-			}
-		}
-		CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-		hMyStore = NULL;
-	}
-	return TRUE;
-}
-*/
-/*
-DWORD CheckCertificateExist(char * pCardSerialNumber, bool* pbSignatureContainerFound, bool* pbAuthenticationContainerFound)
-{
-	DWORD dwRet	= 1;
-	// Look in certificate store for certificates linked to the smart card
-	dwPropId = CERT_KEY_PROV_INFO_PROP_ID;
-	pCertContextIterator = NULL;
-
-	hMyStore = CertOpenSystemStore(NULL, TEXT("MY"));
-	if (hMyStore == NULL)
-	{
-		dwLastError = GetLastError();
-		printf("ImportCertificates: Unable to open the system certificate store 'MY'. Error code: %d."),dwLastError);
-		return dwLastError;
-	}
-	while((pCertContextIterator = CertEnumCertificatesInStore(hMyStore, pCertContextIterator))) 	 
-		// on the first call to the function, this parameter is NULL, on all subsequent calls,
-		// this parameter is the last pointer returned by the function
-	{
-		if(!(CertGetCertificateContextProperty( pCertContextIterator, // A pointer to the certificate where the property will be set.
-			dwPropId,      		// An identifier of the property to get. In this case CERT_KEY_PROV_INFO_PROP_ID
-			NULL,          		// NULL on the first call to get the length.
-			&cbData)))     		// The number of bytes that must be allocated for the structure.
-		{
-			dwLastError = GetLastError();
-			printf("ImportCertificates: The property length for CERT_KEY_PROV_INFO_PROP_ID was not retrieved. Error code %d."),dwLastError);
-			if(dwLastError == CRYPT_E_NOT_FOUND)
-			{
-				break;
-			}
-			CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-			return dwLastError;
-		}
-		if(!(pCryptKeyProvInfo = (CRYPT_KEY_PROV_INFO *)malloc(cbData)))
-		{
-			printf("ImportCertificates: Error in allocation of memory.");
-			CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-			return SCARD_E_NO_MEMORY;
-		}
-		if(CertGetCertificateContextProperty(pCertContextIterator,dwPropId,pCryptKeyProvInfo,&cbData))
-		{
-			printf("ImportCertificates: We are investigating key container %s."),pCryptKeyProvInfo->pwszContainerName);
-			pContainerNameSignature = (wchar_t* )malloc(2*(strlen(pInternalCardSerialNumber)+12));//new(std::nothrow) wchar_t[strlen(pInternalCardSerialNumber)+12];
-			if (pContainerNameSignature == NULL)
-			{
-				CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-				return SCARD_E_NO_MEMORY;
-			}
-
-			pContainerNameAuthentication = (wchar_t* )malloc(2*(strlen(pInternalCardSerialNumber)+17));//new(std::nothrow) wchar_t[strlen(pInternalCardSerialNumber)+17];
-			if (pContainerNameAuthentication == NULL)
-			{
-				CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-				return SCARD_E_NO_MEMORY;
-			}
-			swprintf(pContainerNameSignature,                 // Signature key container name to look for
-				TEXT("Signature(%S)"), pInternalCardSerialNumber);
-			swprintf(pContainerNameAuthentication,            // Authentication key container name to look for
-				TEXT("Authentication(%S)"), pInternalCardSerialNumber);
-
-			// look for signature key container
-			*pbSignatureContainerFound =
-				(0 == wcscmp(pCryptKeyProvInfo->pwszContainerName, pContainerNameSignature)) ||      // Signature key container name found
-				*pbSignatureContainerFound;
-			if (bSignatureContainerFound)
-				MWLOG(LEV_DEBUG, MOD_CSP, TEXT("ImportCertificates: We found key container %s."),
-				pContainerNameSignature);
-
-			// look for authentication key container
-			*pbAuthenticationContainerFound =
-				(0 == wcscmp(pCryptKeyProvInfo->pwszContainerName, pContainerNameAuthentication)) || // Authentication key container name
-				*pbAuthenticationContainerFound;
-			if (bAuthenticationContainerFound)
-				MWLOG(LEV_DEBUG, MOD_CSP, TEXT("ImportCertificates: We found key container %s."),
-				pContainerNameAuthentication);
-
-			if (pContainerNameSignature)
-				delete pContainerNameSignature;
-			if (pContainerNameAuthentication)
-				delete pContainerNameAuthentication;
-
-			if (pCryptKeyProvInfo)
-				free(pCryptKeyProvInfo);
-			// certificate with this container name found
-			if (bSignatureContainerFound &&
-				bAuthenticationContainerFound) {
-					break;
-			}
-		}
-		else
-		{
-			if (pCryptKeyProvInfo)
-				free(pCryptKeyProvInfo);
-			printf("ImportCertificates: The property CERT_KEY_PROV_INFO_PROP_ID was not retrieved.");
-		}
-
-	} // End of while.
-	if(!CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG))
-	{
-		printf("ImportCertificates: Unable to close the system certificate store 'MY'. Error code: %d.", GetLastError());
-	}
-	hMyStore = NULL;
-	return dwRet;
-}
-*/
 DWORD StoreAuthorityCert(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits)
 {
 	DWORD dwRet = 0;
@@ -343,7 +95,7 @@ DWORD StoreAuthorityCert(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits
 	if (hMemoryStore == NULL)
 	{
 		dwRet = GetLastError();
-		printf(TEXT("StoreAuthorityCerts: Unable to open the system certificate store. Error code: %d."),dwRet);
+		printf("StoreAuthorityCerts: Unable to open the system certificate store. Error code: %d.\n",dwRet);
 		return dwRet;
 	}
 
@@ -364,13 +116,13 @@ DWORD StoreAuthorityCert(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits
 		CertAddEnhancedKeyUsageIdentifier (pCertContext, szOID_PKIX_KP_SERVER_AUTH);
 		if(CertAddCertificateContextToStore(hMemoryStore, pCertContext, CERT_STORE_ADD_NEWER, NULL))
 		{
-			printf("StoreUserCerts: Certificate context added to store.");
+			printf("StoreUserCerts: Certificate context added to store.\n");
 			dwRet = 0;
 		}
 		else
 		{
 			dwRet = GetLastError();
-			printf("StoreAuthorityCerts: Unable to add certificate context to store. Error code: %d.",dwRet);
+			printf("StoreAuthorityCerts: Unable to add certificate context to store. Error code: %d.\n",dwRet);
 		}
 	}
 	CertCloseStore (hMemoryStore, CERT_CLOSE_STORE_FORCE_FLAG);
@@ -379,16 +131,19 @@ DWORD StoreAuthorityCert(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits
 
 }
 
-DWORD StoreUserCert (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, const char* cardSerialNumber, CK_ULONG cardSerialNumberLen)
+DWORD StoreUserCert (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, CK_BYTE* cardSerialNumber, CK_ULONG cardSerialNumberLen)
 {
 	unsigned long dwFlags 		= CERT_STORE_NO_CRYPT_RELEASE_FLAG;
 	PCCERT_CONTEXT  pDesiredCert	= NULL;
 	PCCERT_CONTEXT  pPrevCert		= NULL;
 	DWORD dwRet					= 0;
 	wchar_t* pContainerName		= NULL;
+	size_t pContainerNameCharLen = cardSerialNumberLen+20;
+	CK_CHAR_PTR pcardSerialNrString = NULL;
 	wchar_t* pProviderName		= NULL;
+	CK_ULONG counter=0;
 	HCERTSTORE hMyStore 		= CertOpenSystemStore((HCRYPTPROV_LEGACY)NULL, TEXT("MY"));
-	wchar_t* cardSerialNumberWideChar = NULL;
+
 
 	CRYPT_KEY_PROV_INFO cryptKeyProvInfo;
 	unsigned long dwPropId = CERT_KEY_PROV_INFO_PROP_ID;
@@ -396,7 +151,7 @@ DWORD StoreUserCert (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 	if (hMyStore == NULL)
 	{
 		dwRet = GetLastError();
-		printf(TEXT("StoreUserCerts: Unable to open the system certificate store. Error code: %d."),dwRet);
+		printf("StoreUserCerts: Unable to open the system certificate store. Error code: %d.\n",dwRet);
 		return dwRet;
 	}
 
@@ -448,53 +203,32 @@ DWORD StoreUserCert (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 		return 0;
 	}
 
-	cardSerialNumberWideChar = (wchar_t*)malloc(sizeof(wchar_t) * (cardSerialNumberLen+1));
-	pContainerName = (wchar_t*)malloc(sizeof(wchar_t) * (cardSerialNumberLen+100));
-	if( (cardSerialNumberWideChar == NULL) || (cardSerialNumberWideChar == NULL) )
+	pContainerName = (wchar_t*)malloc(sizeof(wchar_t) * (pContainerNameCharLen));
+	if(pContainerName == NULL)
+		return E_OUTOFMEMORY;
+	pcardSerialNrString = (CK_CHAR_PTR)malloc(cardSerialNumberLen*2 + 1);
+	if(pcardSerialNrString == NULL)
+		return E_OUTOFMEMORY;
+
+	if(-1 == ByteArrayToString( &pcardSerialNrString, cardSerialNumberLen*2 + 1,cardSerialNumber ,cardSerialNumberLen))
+		return -1;
+
+	if(pContainerName == NULL)
 	{
 		CertFreeCertificateContext(pDesiredCert);
 		CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
 		return -1;
 	}
-	if ( 0 == MultiByteToWideChar(CP_UTF8,0,cardSerialNumber,cardSerialNumberLen,cardSerialNumberWideChar,(cardSerialNumberLen+1)))
-	{
-		DWORD err =GetLastError();
-		switch(err)
-		{
-		case ERROR_INSUFFICIENT_BUFFER:
-			printf(TEXT("MultiByteToWideChar failed with ERROR_INSUFFICIENT_BUFFER\n"));
-			break;
-		case ERROR_INVALID_FLAGS:
-			printf(TEXT("MultiByteToWideChar failed with ERROR_INVALID_FLAGS\n"));
-			break;
-		case ERROR_INVALID_PARAMETER:
-			printf(TEXT("MultiByteToWideChar failed with ERROR_INVALID_PARAMETER\n"));
-			break;
-		case ERROR_NO_UNICODE_TRANSLATION:
-			printf(TEXT("MultiByteToWideChar failed with ERROR_NO_UNICODE_TRANSLATION\n"));
-			break;
-		}
-
-		free(cardSerialNumberWideChar);
-		free(pContainerName);
-
-		CertFreeCertificateContext(pDesiredCert);
-		CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-		return 0;
-	}
-
-
 	if (UseMinidriver())
 	{
 		if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
 		{
-			wcscpy_s(pContainerName,cardSerialNumberLen+100,L"NR_");
+			swprintf_s(pContainerName,pContainerNameCharLen,L"NR_%hS",pcardSerialNrString);
 		}
 		else
 		{
-			wcscpy_s(pContainerName,cardSerialNumberLen+100,L"DS_");
+			swprintf_s(pContainerName,pContainerNameCharLen,L"DS_%hS",pcardSerialNrString);
 		}
-		memcpy(pContainerName+3,cardSerialNumberWideChar,cardSerialNumberLen*2);
 		cryptKeyProvInfo.pwszProvName			= L"Microsoft Base Smart Card Crypto Provider";
 		cryptKeyProvInfo.dwKeySpec			= AT_SIGNATURE;
 	}
@@ -502,15 +236,11 @@ DWORD StoreUserCert (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 	{
 		if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
 		{
-			wcscpy_s(pContainerName,cardSerialNumberLen+100,L"Signature(");
-			memcpy(pContainerName+strlen("Signature("),cardSerialNumberWideChar,cardSerialNumberLen*2);
-			wcscpy_s(pContainerName+strlen("Signature(")+wcslen(cardSerialNumberWideChar),100-strlen("Authentication("),L")");
+			swprintf_s(pContainerName,pContainerNameCharLen,L"Signature(%hS)",pcardSerialNrString);
 		}
 		else
 		{
-			wcscpy_s(pContainerName,cardSerialNumberLen+100,L"Authentication(");
-			memcpy(pContainerName+strlen("Authentication("),cardSerialNumberWideChar,cardSerialNumberLen*2);
-			wcscpy_s(pContainerName+strlen("Authentication(")+wcslen(cardSerialNumberWideChar),100-strlen("Authentication("),L")");
+			swprintf_s(pContainerName,pContainerNameCharLen,L"Authentication(%hS)",pcardSerialNrString);
 		}
 
 		cryptKeyProvInfo.pwszProvName		= L"Belgium Identity Card CSP";
@@ -574,13 +304,13 @@ DWORD StoreUserCert (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 		}
 		if (CertAddCertificateContextToStore(hMyStore, pCertContext, CERT_STORE_ADD_REPLACE_EXISTING, NULL))
 		{
-			printf(TEXT("StoreUserCerts: Certificate context added to store."));
+			printf("StoreUserCerts: Certificate context added to store.");
 			dwRet = 0;
 		}
 		else
 		{
 			dwRet = GetLastError();
-			printf(TEXT("StoreUserCerts: Unable to add certificate context to store. Error code: %d."),dwRet);
+			printf("StoreUserCerts: Unable to add certificate context to store. Error code: %d.",dwRet);
 		}
 		CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
 		hMyStore = NULL;
@@ -588,15 +318,11 @@ DWORD StoreUserCert (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, co
 
 	if(pContainerName != NULL)
 		free (pContainerName);
-	if(cardSerialNumberWideChar != NULL)
-		free(cardSerialNumberWideChar);
 
 	return dwRet;
 }
 
-
-
-DWORD ImportCertificate(CK_BYTE* certData, DWORD certSize, const char* cardSerialNumber, CK_ULONG cardSerialNumberLen)
+DWORD ImportCertificate(CK_BYTE* certData, DWORD certSize, CK_BYTE* cardSerialNumber, CK_ULONG cardSerialNumberLen)
 {
 	PCCERT_CONTEXT		pCertContext = NULL;
 	DWORD				dwRet = 0;
@@ -609,9 +335,9 @@ DWORD ImportCertificate(CK_BYTE* certData, DWORD certSize, const char* cardSeria
 	{
 		dwRet = GetLastError();
 		if (dwRet == E_INVALIDARG)
-			printf("ImportCertificates: Unable to create certificate context. The certificate encoding type is not supported.Error code: %d.",dwRet);
+			printf("ImportCertificates: Unable to create certificate context. The certificate encoding type is not supported.Error code: %d.\n",dwRet);
 		else
-			printf("ImportCertificates: Unable to create certificate context. Error code: %d.",dwRet);
+			printf("ImportCertificates: Unable to create certificate context. Error code: %d.\n",dwRet);
 	}
 	else
 	{
@@ -634,176 +360,27 @@ DWORD ImportCertificate(CK_BYTE* certData, DWORD certSize, const char* cardSeria
 	}
 	return dwRet;
 }
-/*
-DWORD RemoveCertificates (char * pSerialNumber)
+
+char ToHex(CK_BYTE uc)
 {
-	PCCERT_CONTEXT  	pCertContextIterator = NULL;
-	PCCERT_CONTEXT  	pCertContextDup      = NULL;
-
-
-	wchar_t* 	 		pContainerNameSignature;
-	wchar_t* 	 		pContainerNameAuthentication;
-	HCERTSTORE 			hMyStore;
-	unsigned long 		dwPropId;
-	CRYPT_KEY_PROV_INFO *pCryptKeyProvInfo;
-	DWORD            	cbData, dwLastError;
-
-	DWORD RemoveCert;
-	HKEY hkSubKey;
-	bool settingFound = false;
-
-	if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER,TEXT("Software\\BEID\\configuretool"),0,KEY_READ,&hkSubKey))
-	{
-		cbData = sizeof(DWORD);
-		if (ERROR_SUCCESS == RegQueryValueEx(hkSubKey,TEXT("remove_certificate"), 
-			NULL, NULL,(LPBYTE) &RemoveCert, &cbData))
-		{
-			settingFound = true;
-		}
-		RegCloseKey(hkSubKey);
-	}
-	if (!settingFound)
-	{
-		if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE,TEXT("Software\\BEID\\configuretool"),0,KEY_READ,&hkSubKey))
-		{
-			cbData = sizeof(DWORD);
-			if (ERROR_SUCCESS == RegQueryValueEx (hkSubKey,TEXT("remove_certificate"), NULL, NULL,
-				(LPBYTE) &RemoveCert, &cbData))
-			{
-				settingFound = true;
-			}
-			RegCloseKey(hkSubKey);
-		}
-	}
-
-	if ( settingFound && 0 == RemoveCert )
-	{
-		// setting disabled
-		return false;
-	}
-	hMyStore = CertOpenSystemStore(NULL, TEXT("MY"));
-
-	if(hMyStore == NULL)
-	{
-		// couldn't open store
-		return false;
-	}
-	dwPropId = CERT_KEY_PROV_INFO_PROP_ID;
-	pCertContextIterator = NULL;
-
-	while((pCertContextIterator = CertEnumCertificatesInStore(
-		hMyStore,
-		pCertContextIterator))) 	 // on the first call to the function,
-		// this parameter is NULL
-		// on all subsequent calls,
-		// this parameter is the last pointer
-		// returned by the function
-	{
-		cbData = 0;
-		if(!(CertGetCertificateContextProperty(
-			pCertContextIterator, // A pointer to the certificate
-			// where the property will be set.
-			dwPropId,      	// An identifier of the property to get.
-			// In this case,
-			// CERT_KEY_PROV_INFO_PROP_ID
-			NULL,          	// NULL on the first call to get the
-			// length.
-			&cbData)))     	// The number of bytes that must be
-			// allocated for the structure.
-		{
-			dwLastError = GetLastError();
-			MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: The property length for CERT_KEY_PROV_INFO_PROP_ID was not retrieved. Error code %d."),
-				dwLastError);
-				if(dwLastError == CRYPT_E_NOT_FOUND)
-				{
-					break;
-				}
-				CertCloseStore(hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
-				return dwLastError;
-		}
-		if(!(pCryptKeyProvInfo =
-			(CRYPT_KEY_PROV_INFO *)malloc(cbData)))
-		{
-			MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: Error in allocation of memory."));
-			CertCloseStore(hMyStore,CERT_CLOSE_STORE_FORCE_FLAG);
-			return SCARD_E_NO_MEMORY;
-		}
-		if(CertGetCertificateContextProperty(
-			pCertContextIterator,
-			dwPropId,
-			pCryptKeyProvInfo,
-			&cbData))
-		{
-			MWLOG(LEV_DEBUG, MOD_CSP, TEXT("RemoveCertificates: We are investigating key container %s."),
-				pCryptKeyProvInfo->pwszContainerName);
-
-			pContainerNameSignature    		= new wchar_t[strlen(pSerialNumber)+12];
-			pContainerNameAuthentication    = new wchar_t[strlen(pSerialNumber)+17];
-
-			swprintf(pContainerNameSignature,                 // Signature key container name to look for
-				TEXT("Signature(%S)"), pSerialNumber);
-			swprintf(pContainerNameAuthentication,            // Authentication key container name to look for
-				TEXT("Authentication(%S)"), pSerialNumber);
-
-			if (0 == wcscmp(pCryptKeyProvInfo->pwszContainerName, pContainerNameSignature) ||      // Signature key container name found
-				0 == wcscmp(pCryptKeyProvInfo->pwszContainerName, pContainerNameAuthentication) )  // Authentication key container name found
-			{
-				if (!(pCertContextDup = CertDuplicateCertificateContext(pCertContextIterator)))
-				{
-					dwLastError = GetLastError();
-					MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: Duplication of the certificate pointer failed. Error code: %d"),
-						dwLastError);
-
-					// Free resources
-					if (pCryptKeyProvInfo)
-						free(pCryptKeyProvInfo);
-					if (pCertContextIterator)
-						CertFreeCertificateContext(pCertContextIterator);
-					if(pContainerNameSignature != NULL)
-						delete pContainerNameSignature;
-					if(pContainerNameAuthentication != NULL)
-						delete pContainerNameAuthentication;
-
-
-					CertCloseStore(hMyStore,CERT_CLOSE_STORE_FORCE_FLAG);
-					return dwLastError;
-				}
-				//-------------------------------------------------------------------
-				// Delete the certificate.
-				if(!CertDeleteCertificateFromStore(pCertContextDup))
-				{
-					dwLastError = GetLastError();
-					MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: The deletion of the certificate failed. Error code: %d"),
-						dwLastError);
-
-					// Free resources
-					if (pCryptKeyProvInfo)
-						free(pCryptKeyProvInfo);
-					if (pCertContextIterator)
-						CertFreeCertificateContext(pCertContextIterator);
-					if(pContainerNameSignature != NULL)
-						delete pContainerNameSignature;
-					if(pContainerNameAuthentication != NULL)
-						delete pContainerNameAuthentication;
-
-					CertCloseStore(hMyStore,CERT_CLOSE_STORE_FORCE_FLAG);
-					return dwLastError;
-				}
-				MWLOG(LEV_DEBUG, MOD_CSP, TEXT("RemoveCertificates: Certificate removed from store."));
-			}
-			if(pContainerNameSignature != NULL)
-				delete pContainerNameSignature;
-			if(pContainerNameAuthentication != NULL)
-				delete pContainerNameAuthentication;
-		}
-		else
-		{
-			MWLOG(LEV_INFO, MOD_CSP, TEXT("RemoveCertificates: The property CERT_KEY_PROV_INFO_PROP_ID was not retrieved."));
-		}
-		if (pCryptKeyProvInfo)
-			free(pCryptKeyProvInfo);
-	} // End of while.
-	CertCloseStore(hMyStore,CERT_CLOSE_STORE_FORCE_FLAG);
-	return true;
+    return (char)(uc <= 9 ? '0' + uc : 'A' - 10 + uc);
 }
-*/
+
+CK_ULONG ByteArrayToString( CK_CHAR_PTR* destString ,CK_ULONG ulDestLen,CK_BYTE* byteArray, CK_ULONG ulArrayLen)
+{
+	unsigned long ulOffset = 0;
+	CK_ULONG i;
+	CK_CHAR_PTR pcbuf = *destString;
+
+	if((ulDestLen+1) < ulArrayLen)
+		return 1;
+
+	for (i = 0; i < ulArrayLen; i++)
+	{
+		pcbuf[ulOffset++] = ToHex(byteArray[i] / 16);
+    pcbuf[ulOffset++] = ToHex(byteArray[i] % 16);
+	}
+	pcbuf[ulOffset] = '\0';
+
+	return 0;
+}

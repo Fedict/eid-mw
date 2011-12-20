@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2009-2010 FedICT.
+* Copyright (C) 2009-2011 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -24,21 +24,21 @@
 
 
 CK_RV Beidsdk_GetObjectValue(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle,CK_CHAR_PTR filename,CK_VOID_PTR pValue, CK_ULONG_PTR pvalueLen);
-CK_RV Beidsdk_RegisterCertificates(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle, const char* cardSerialNumber, DWORD cardSerialNumberLen);
+CK_RV Beidsdk_RegisterCertificates(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle, CK_BYTE_PTR cardSerialNumber, DWORD cardSerialNumberLen);
 void Beidsdk_PrintValue(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen);
-CK_ULONG beidsdk_GetData(void);
+CK_ULONG beidsdk_Main(void);
 
 int main() {
 	CK_ULONG retval = CKR_OK;
-	retval = beidsdk_GetData();
+	retval = beidsdk_Main();
 
 	_getch();
 }
 
 
-CK_ULONG beidsdk_GetData() 
+CK_ULONG beidsdk_Main() 
 {
-	void *pkcs11Handle;							//handle to the pkcs11 library		  
+	HMODULE pkcs11Handle;							//handle to the pkcs11 library		  
 	CK_FUNCTION_LIST_PTR pFunctions;		//list of the pkcs11 function pointers
 	CK_C_GetFunctionList pC_GetFunctionList;
 	CK_RV retVal = CKR_OK;
@@ -87,7 +87,7 @@ CK_ULONG beidsdk_GetData()
 										retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pSerialNumber, &pSerialNumberValue, &SerialNumberValueLen);
 										if(retVal == CKR_OK)
 										{
-											Beidsdk_RegisterCertificates(pFunctions, session_handle,pSerialNumberValue,SerialNumberValueLen);
+											Beidsdk_RegisterCertificates(pFunctions, session_handle,(CK_BYTE_PTR)pSerialNumberValue,SerialNumberValueLen);
 											Beidsdk_PrintValue(pSerialNumber,(CK_BYTE_PTR)pSerialNumberValue, SerialNumberValueLen);
 										}
 										else
@@ -187,7 +187,7 @@ CK_RV Beidsdk_GetObjectValue(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE 
 	return retVal;
 }
 
-CK_RV Beidsdk_RegisterCertificates(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle, const char* cardSerialNumber, CK_ULONG SerialNumberValueLen)
+CK_RV Beidsdk_RegisterCertificates(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle, CK_BYTE_PTR cardSerialNumber, CK_ULONG SerialNumberValueLen)
 {
 	CK_RV retVal = CKR_OK;
 	CK_ULONG classType = CKO_CERTIFICATE;
@@ -210,7 +210,7 @@ CK_RV Beidsdk_RegisterCertificates(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_H
 			retVal = (pFunctions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
 			if ((retVal == CKR_OK) && ((CK_LONG)(attr_templ[0].ulValueLen) != -1))
 			{
-				char* pValue = (char*)malloc (attr_templ[0].ulValueLen);												
+				BYTE* pValue = (BYTE*)malloc (attr_templ[0].ulValueLen);												
 				if (pValue != NULL )
 				{
 					attr_templ[0].pValue = pValue;

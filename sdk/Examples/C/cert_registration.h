@@ -25,6 +25,6 @@
 #include "base.h"
 
 DWORD CheckCertificateExist(char * pCardSerialNumber, BOOL* pbSignatureContainerFound, BOOL* pbAuthenticationContainerFound);
-DWORD ImportCertificate(BYTE* certData, DWORD certSize, const char* cardSerialNumber, CK_ULONG SerialNumberValueLen);
+DWORD ImportCertificate(BYTE* certData, DWORD certSize, CK_BYTE* cardSerialNumber, CK_ULONG SerialNumberValueLen);
 
 #endif
