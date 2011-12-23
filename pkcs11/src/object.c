@@ -596,14 +596,8 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 		ret = CKR_OK;
 		goto cleanup;
 	}
-
 	//free search template
-	if (pData->pSearch)
-		free(pData->pSearch);
-
-	pData->pSearch  = NULL;
-	pData->hCurrent = 0;
-	pData->size     = 0;
+	p11_clean_finddata(pData);	
 
 	//free find operation data
 	free(pData);

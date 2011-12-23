@@ -583,6 +583,29 @@ int p11_clean_object(P11_OBJECT *pObject)
 	return(0);
 }
 
+void p11_clean_attributelist(CK_ATTRIBUTE_PTR pAttrList, CK_ULONG ulCount)
+{
+	CK_ULONG i;
+
+	if(pAttrList == NULL)
+		return;
+
+	for (i=0; i < ulCount; i++)
+	{	
+			if(pAttrList[i].pValue != NULL)
+			{
+				free(pAttrList[i].pValue);
+			}
+	}
+	free(pAttrList);
+}
+
+void p11_clean_finddata(P11_FIND_DATA* pFindData)
+{
+	if(pFindData == NULL)
+		return;
+	p11_clean_attributelist(pFindData->pSearch,pFindData->size);
+}
 
 
 #define WHERE "p11_find_slot_object()"
