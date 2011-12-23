@@ -1103,6 +1103,7 @@ tPrivKey key;
 std::string szReader;
 P11_SLOT *pSlot = NULL;
 
+memset(&certinfo, 0, sizeof(T_CERT_INFO));
 pSlot = p11_get_slot(hSlot);
 if (pSlot == NULL)
    {
@@ -1217,22 +1218,25 @@ try
    }
 catch (CMWException e)
    {
+		 cert_free_info(&certinfo);
    return(cal_translate_error(WHERE, e.GetError()));
    }
 catch (...) 
    {
 	lRet = -1;
 	log_trace(WHERE, "E: unkown exception thrown");
+	cert_free_info(&certinfo);
    return (CKR_FUNCTION_FAILED);
 	}
 
 if (ret != 0)
    {
+		 cert_free_info(&certinfo);
    return (CKR_DEVICE_ERROR);
    }
 
 cleanup:
-
+cert_free_info(&certinfo);
 return (ret);
 }
 #undef WHERE

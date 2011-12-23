@@ -34,6 +34,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 int ret = 0;
 ASN1_ITEM item;
 
+//should be done already
 memset(info, 0, sizeof(T_CERT_INFO));
 
 //check size of cert
@@ -156,4 +157,24 @@ return (0);
 }
 
 
+void cert_free_info(T_CERT_INFO *info)
+{
+	if(info != NULL)
+	{
+		if(info->subject != NULL)
+			free(info->subject);
+		if(info->issuer != NULL)
+			free(info->issuer);
+		if(info->mod != NULL)
+			free(info->mod);
+		if(info->pkinfo != NULL)
+			free(info->pkinfo);
+		if(info->serial != NULL)
+			free(info->serial);
+		if(info->validfrom != NULL)
+			free(info->validfrom);
+		if(info->validto != NULL)
+			free(info->validto);
+	}
+}
 
