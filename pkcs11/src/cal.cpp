@@ -974,6 +974,7 @@ int cal_read_ID_files(CK_SLOT_ID hSlot)
 	char* plabel = NULL;
 	unsigned long ulLen=0;
 	CTLVBuffer oTLVBuffer;
+	CTLVBuffer oTLVBufferAddress;//need second buffer object, as memory is only freed when this object is destructed
 	P11_SLOT *pSlot = NULL;
 	CK_ATTRIBUTE ID_DATA[]= BEID_TEMPLATE_ID_DATA;
 	BEID_DATA_LABELS_NAME ID_LABELS[]=BEID_ID_DATA_LABELS;
@@ -1027,13 +1028,13 @@ int cal_read_ID_files(CK_SLOT_ID hSlot)
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size());
 		if (ret) goto cleanup;
-		oTLVBuffer.ParseTLV(oFileData.GetBytes(), oFileData.Size());
+		oTLVBufferAddress.ParseTLV(oFileData.GetBytes(), oFileData.Size());
 		nrOfItems = sizeof(ADDRESS_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
 		for(i = 0; i < nrOfItems ;i++)
 		{
 			ulLen = sizeof(cBuffer);
 			memset(cBuffer,0,ulLen);
-			oTLVBuffer.FillUTF8Data(ADDRESS_LABELS[i].tag, cBuffer, &ulLen);
+			oTLVBufferAddress.FillUTF8Data(ADDRESS_LABELS[i].tag, cBuffer, &ulLen);
 			plabel = ADDRESS_LABELS[i].name;
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen);
