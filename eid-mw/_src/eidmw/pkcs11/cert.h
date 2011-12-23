@@ -86,7 +86,7 @@ typedef struct
 
 
 int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *info);
-
+void cert_free_info(T_CERT_INFO *info);
 
 #ifdef __cplusplus
    }

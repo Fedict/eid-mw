@@ -248,6 +248,8 @@ int p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG
 						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen);
 int p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken, CK_ULONG type, CK_ULONG id, CK_BBOOL bPrivate, CK_ULONG *phObject);
 int p11_clean_object(P11_OBJECT *pObject);
+void p11_clean_attributelist(CK_ATTRIBUTE_PTR pAttr, CK_ULONG ulCount);
+void p11_clean_finddata(P11_FIND_DATA* pFindData);
 int p11_find_slot_object(P11_SLOT *pSlot, CK_ULONG type, CK_ULONG id,  P11_OBJECT **pphObject);
 int p11_attribute_present(CK_ATTRIBUTE_TYPE type, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount);
 CK_RV p11_invalidate_sessions(CK_SLOT_ID hSlot, int status);
