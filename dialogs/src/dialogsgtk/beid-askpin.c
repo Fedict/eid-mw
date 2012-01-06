@@ -24,6 +24,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "config.h"
+#include "parent.h"
+
 
 #define MIN_PIN_LENGTH 4
 #define MAX_PIN_LENGTH 12
@@ -34,10 +36,10 @@
 
 enum { MSG_PIN_CODE_REQUIRED=1, MSG_PLEASE_ENTER_PIN };
 char* beid_messages[4][3]={
-									"en",	"beID: PIN Code Required",		"Please enter your PIN code.",
-									"nl",	"beID: PINcode Vereist", 		"Gelieve Uw PINcode in te voeren",
-									"fr",	"beID: Code PIN Necessaire",	"Veuillez entrer votre code PIN",
-									"de",	"beID: PIN Code Required",		"Please enter your PIN code."
+									"en",	"beID: PIN Code Required",		"The application\n[%s]\nrequests your eID PIN code.",
+									"nl",	"beID: PINcode Vereist", 		"Het programma\n[%s]\nvraagt uw eID PINcode",
+									"fr",	"beID: Code PIN Necessaire",	"l'application\n[%s]\nvous demande votre code PIN eID",
+									"de",	"beID: PIN Code Required",		"Die Anwendung\n[%s]\nfragt um Ihren eID PIN-code" 
 							  };
 
 #include "beid-i18n.h"
@@ -195,15 +197,26 @@ int main(int argc, char* argv[])
 {
 	int				return_value;
 	PinDialogInfo 	pindialog;									// this struct contains all objects
-	GdkColor 		color;					
+	GdkColor 		color;
+	char			caller_path[1024];
 
     gtk_init(&argc,&argv);										// initialize gtk+
-	pindialog_init(&pindialog);									// setup PinDialogInfo structure
 
 	// create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_MSG_(MSG_PLEASE_ENTER_PIN));
+
+	if(get_parent_path(caller_path, sizeof(caller_path)-2)>0)
+    {
+        char message[2048];
+		pindialog_init(&pindialog);									// setup PinDialogInfo structure
+        snprintf(message, sizeof(message)-2, _MSG_(MSG_PLEASE_ENTER_PIN), caller_path);
+        pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,message);
+    }
+    else
+    {
+        fprintf(stderr,"Failed To Determine Parent Process. Aborting.\n");
+        exit(EXIT_ERROR);
+    }
 
 	pindialog.cancelbutton=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_CANCEL,	GTK_RESPONSE_CANCEL);	
 	pindialog.okbutton	  =gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_OK,		GTK_RESPONSE_OK);	

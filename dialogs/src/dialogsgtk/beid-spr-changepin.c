@@ -27,7 +27,7 @@
 #include <fcntl.h>
 #include "config.h"
 #include <locale.h>
-#include "single_dialog.h"
+#include "parent.h"
 
 #define EXIT_OK		0
 #define EXIT_CANCEL 1
@@ -35,10 +35,10 @@
 
 enum { MSG_CHANGE_PIN_CODE=1, MSG_PLEASE_CHANGE_PIN };
 char* beid_messages[4][3]={
-                                    "en",   "beID: Change PIN Code",      		"Please change your PIN code on the secure pinpad reader:\n[%s]..",
-                                    "nl",   "beID: Wijziging PINcode",        	"Gelieve uw PIN code op de beveiligde kaartlezer:\n[%s]\nte willen wijzigen.",
-                                    "fr",   "beID: Changement de code PIN",    	"Veuillez changer votre code PIN sur le lecteur securise\n[%s]..",
-                                    "de",   "beID: Change PIN Code",      		"Please change your PIN code on the secure pinpad reader:\n[%s].."
+                                    "en",   "beID: Change PIN Code",      		"Request from Application [%s]:\n\nPlease change your eID PIN code on the secure pinpad reader:\n[%s]..",
+                                    "nl",   "beID: Wijziging PINcode",        	"Verzoek van programma [%s]:\n\nGelieve uw eID PIN code op de beveiligde kaartlezer:\n[%s]\nte willen wijzigen.",
+                                    "fr",   "beID: Changement de code PIN",    	"Demande de l'application [%s]:\n\nVeuillez changer votre code PIN eID sur le lecteur securise\n[%s]..",
+                                    "de",   "beID: Change PIN Code",      		"Anfrage von Anwendug [%s]:\n\nPlease change your eID PIN code on the secure pinpad reader:\n[%s].."
                               };
 
 #include "beid-i18n.h"
@@ -63,23 +63,32 @@ int main(int argc, char* argv[])
 	char			pid_path[PATH_MAX];
 	int 			return_value=EXIT_ERROR;
 	PinDialogInfo 	pindialog;									// this struct contains all dialog objects
+	char            caller_path[1024];
+	char 			message[2048];
 
     gtk_init(&argc,&argv);										// initialize gtk+
 	
 	// create new message dialog with CANCEL button in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	char message[1024];
-	if((argc==2) && (argv[1]!=NULL) && (strlen(argv[1])>0))
-	{
-		snprintf(message,sizeof(message)-2,_MSG_(MSG_PLEASE_CHANGE_PIN),argv[1]);
-	}
-	else
-	{
-		fprintf(stderr,"Incorrect Parameter for <description of SPR>\n");
-		exit(1);
-	}
 
+	if(get_parent_path(caller_path, sizeof(caller_path)-2)>0)
+    {
+		if((argc==2) && (argv[1]!=NULL) && (strlen(argv[1])>0))
+		{
+			snprintf(message,sizeof(message)-2,_MSG_(MSG_PLEASE_CHANGE_PIN),caller_path,argv[1]);
+		}
+		else
+		{
+			fprintf(stderr,"Incorrect Parameter for <description of SPR>\n");
+			exit(EXIT_ERROR);
+		}
+    }
+    else
+    {
+        fprintf(stderr,"Failed To Determine Parent Process. Aborting.\n");
+        exit(EXIT_ERROR);
+    }
+	
     pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,message);
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_MSG_(MSG_CHANGE_PIN_CODE));

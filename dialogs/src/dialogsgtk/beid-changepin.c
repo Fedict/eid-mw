@@ -26,6 +26,7 @@
 #include <glib/gi18n.h>
 #include <locale.h>
 #include "config.h"
+#include "parent.h"
 
 #define MIN_PIN_LENGTH 4
 #define MAX_PIN_LENGTH 16
@@ -36,10 +37,10 @@
 
 enum { MSG_CHANGE_PIN_CODE=1, MSG_PLEASE_ENTER_OLD_AND_NEW_PINS, MSG_CURRENT_PIN, MSG_NEW_PIN, MSG_NEW_PIN_AGAIN };
 char* beid_messages[4][6]={
-                                    "en",   "beID: Change PIN Code",      	"Please enter your current PIN, followed by your new PIN (twice)", 						"Current PIN:", 		"New PIN:", 		"New PIN (again):",
-                                    "nl",   "beID: PIN Code Wijzigen",      "Gelieve Uw bestaande PIN code, en tweemaal uw nieuwe PINcode in te voeren.",			"Huidige PIN:",			"Nieuwe PIN:",		"Nieuwe PIN (opnieuw):",
-                                    "fr",   "beID: Changement de code PIN", "Veuillez entrer votre code PIN existant, suivi de votre nouveau code PIN (2 fois)", 	"Code PIN existant:", 	"Nouveau code PIN:","Nouveau code PIN (verification):",
-                                    "en",   "beID: Change PIN Code",      	"Please enter your current PIN, followed by your new PIN (twice)", 						"Current PIN:", 		"New PIN:", 		"New PIN (again):"
+                                    "en",   "beID: Change PIN Code",      	"Request from Application [%s]:\n\nPlease enter your current eID PIN, followed by your new eID PIN (twice)", 									"Current PIN:", 		"New PIN:", 		"New PIN (again):",
+                                    "nl",   "beID: PIN Code Wijzigen",      "Verzoek van programma [%s]:\n\nGelieve Uw bestaande eID PIN code, en tweemaal uw nieuwe eID PINcode in te voeren.",							"Huidige PIN:",			"Nieuwe PIN:",		"Nieuwe PIN (opnieuw):",
+                                    "fr",   "beID: Changement de code PIN", "Demande de l'application [%s]:\n\nVeuillez entrer votre code PIN eID existant, suivi de votre nouveau code PIN eID (2 fois)", 					"Code PIN existant:", 	"Nouveau code PIN:","Nouveau code PIN (verification):",
+                                    "de",   "beID: PIN Code ändern",      	"Anfrage von Anwendug [%s]:\n\nBitte geben Sie ihren bestehenden eID PIN-Code, gefolgt von Ihrem neuen eID PIN-Code (zwei mal), ein", 	"Aktueller PIN-Code:", 	"Neuer PIN-Code:", 	"Neuer PIN-Code (noch einmal):"
 
                               };
 
@@ -54,6 +55,7 @@ typedef struct
 	GtkWidget  *newPinsTable, *originalPinLabel, *newPin0Label, *newPin1Label, *originalPinEntry, *newPin0Entry, *newPin1Entry;
 	GtkButton  *okbutton,*cancelbutton;
 } PinDialogInfo;
+
 
 // check validity of 3 fields
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,13 +150,25 @@ int main(int argc, char* argv[])
 {
 	int 			return_value=EXIT_ERROR;
 	PinDialogInfo 	pindialog;
+	char			caller_path[1024];
 
     gtk_init(&argc,&argv);										// initialize gtk+
 
 	// create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	if(get_parent_path(caller_path, sizeof(caller_path)-2)>0)
+    {
+        char message[2048];
+        snprintf(message, sizeof(message)-2, _MSG_(MSG_PLEASE_ENTER_OLD_AND_NEW_PINS), caller_path);
+    	pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,message);
+    }
+    else
+    {
+        fprintf(stderr,"Failed To Determine Parent Process. Aborting.\n");
+        exit(EXIT_ERROR);
+    }
 	
-    pindialog.dialog		=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_MSG_(MSG_PLEASE_ENTER_OLD_AND_NEW_PINS));
 	pindialog.cancelbutton	=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
     pindialog.okbutton    	=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_OK,     GTK_RESPONSE_OK);
 

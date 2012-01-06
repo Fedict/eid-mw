@@ -24,6 +24,7 @@
 #include <glib/gi18n.h>
 #include <locale.h>
 #include "config.h"
+#include "parent.h"
 
 #define EXIT_OK			0
 #define EXIT_ERROR		2
@@ -67,7 +68,7 @@ int main(int argc, char* argv[])
 	else
 	{
 		fprintf(stderr,"Incorrect Parameter for <number of attempts left>\n");
-		exit(1);
+		exit(EXIT_ERROR);
 	}
 	
     dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_WARNING,GTK_BUTTONS_OK,message);

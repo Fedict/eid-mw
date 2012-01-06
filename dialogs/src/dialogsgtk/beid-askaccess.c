@@ -24,6 +24,7 @@
 #include <glib/gi18n.h>
 #include <locale.h>
 #include "config.h"
+#include "parent.h"
 
 #define EXIT_OK			0
 #define EXIT_CANCEL		1	
@@ -32,10 +33,10 @@
 
 enum { MSG_ACCESS_CARD_TITLE=1, MSG_ACCESS_CARD_QUESTION };
 char* beid_messages[4][3]={
-                                    "en",   "beID: Card Access", "An Application wants to access the card. Do you want to accept it?",     
-                                    "nl",   "beID: Lezen Kaart", "Een Programma wil toegang tot de kaart. Wil U dit toelaten?",
-                                    "fr",   "beID: Lecture de Carte", "Une application essaye d'accéder à la carte. Acceptez-vous?",
-                                    "de",   "beID: Kartenzugriff", "Eine Anwendung will auf die Karte zugreifen. Möchten Sie akzeptieren?"
+                                    "en",   "beID: Card Access", 		"The application [%s] wants to access the eID card. Do you want to accept it?",
+                                    "nl",   "beID: Lezen Kaart", 		"Het Programma [%s] vraagt toegang tot de eID kaart. Wil U dit toelaten?",
+                                    "fr",   "beID: Lecture de Carte", 	"l'application [%s] essaye d'accéder à la carte eID. Acceptez-vous?",
+                                    "de",   "beID: Kartenzugriff", 		"Die Anwendung [%s] will auf die eID-Karte zugreifen. Möchten Sie akzeptieren?"
                           };
 
 #include "beid-i18n.h"
@@ -51,13 +52,25 @@ int main(int argc, char* argv[])
 {
 	int			return_value;
 	GtkWidget*	dialog;
+	char 		caller_path[1024];
 
     gtk_init(&argc,&argv);										// initialize gtk+
-	
+
 	// create new message dialog with CANCEL button in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-    dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,_MSG_(MSG_ACCESS_CARD_QUESTION));
+
+	if(get_parent_path(caller_path, sizeof(caller_path)-2)>0)
+	{
+		char message[2048];
+		snprintf(message, sizeof(message)-2, _MSG_(MSG_ACCESS_CARD_QUESTION), caller_path);
+    	dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,message);
+	}
+	else
+	{
+		fprintf(stderr,"Failed To Determine Parent Process. Aborting.\n"); 
+		exit(EXIT_ERROR);
+	}
+
 	gtk_dialog_set_default_response(GTK_DIALOG(dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(dialog),_MSG_(MSG_ACCESS_CARD_TITLE));
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
