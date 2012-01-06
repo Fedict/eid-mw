@@ -193,8 +193,6 @@ void pindialog_init(PinDialogInfo* pindialog)
 
 int main(int argc, char* argv[])
 {
-	abort_if_parent_not_considered_secure();
-
 	int				return_value;
 	PinDialogInfo 	pindialog;									// this struct contains all objects
 	GdkColor 		color;					

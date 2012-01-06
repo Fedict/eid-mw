@@ -146,8 +146,6 @@ static gboolean on_delete_event( GtkWidget *widget, GdkEvent* event, gpointer pi
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
-	abort_if_parent_not_considered_secure();
-
 	int 			return_value=EXIT_ERROR;
 	PinDialogInfo 	pindialog;
 
