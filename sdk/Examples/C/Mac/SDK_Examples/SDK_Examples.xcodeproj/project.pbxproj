@@ -1,0 +1,462 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		86B8514314BC396B00756368 /* data.c in Sources */ = {isa = PBXBuildFile; fileRef = 86B8514214BC396B00756368 /* data.c */; };
+		86B8591A14BC53FD00756368 /* wait_card.c in Sources */ = {isa = PBXBuildFile; fileRef = 86B8591914BC53FD00756368 /* wait_card.c */; };
+		86B8593614BC778600756368 /* get_signmechanisms.c in Sources */ = {isa = PBXBuildFile; fileRef = 86B8593514BC778600756368 /* get_signmechanisms.c */; };
+		86B8595E14BC788B00756368 /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = 86B8595D14BC788B00756368 /* sign.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76FAF0486AB0100D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		86B8514214BC396B00756368 /* data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = data.c; path = ../../src/data.c; sourceTree = SOURCE_ROOT; };
+		86B8515C14BC3D7800756368 /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base.h; path = ../../inc/base.h; sourceTree = SOURCE_ROOT; };
+		86B8518114BC3EF800756368 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11.h; path = ../../inc/rsaref220/pkcs11.h; sourceTree = SOURCE_ROOT; };
+		86B8518214BC3EF800756368 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11f.h; path = ../../inc/rsaref220/pkcs11f.h; sourceTree = SOURCE_ROOT; };
+		86B8518314BC3EF800756368 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11t.h; path = ../../inc/rsaref220/pkcs11t.h; sourceTree = SOURCE_ROOT; };
+		86B8518414BC3EF800756368 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = ../../inc/rsaref220/unix.h; sourceTree = SOURCE_ROOT; };
+		86B8591414BC53A400756368 /* SDK_WaitCard */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDK_WaitCard; sourceTree = BUILT_PRODUCTS_DIR; };
+		86B8591914BC53FD00756368 /* wait_card.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wait_card.c; path = ../../src/wait_card.c; sourceTree = SOURCE_ROOT; };
+		86B8593114BC775F00756368 /* SDK_GetSignMechanisms */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDK_GetSignMechanisms; sourceTree = BUILT_PRODUCTS_DIR; };
+		86B8593514BC778600756368 /* get_signmechanisms.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = get_signmechanisms.c; path = ../../src/get_signmechanisms.c; sourceTree = SOURCE_ROOT; };
+		86B8595714BC785A00756368 /* SDK_Signature */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDK_Signature; sourceTree = BUILT_PRODUCTS_DIR; };
+		86B8595D14BC788B00756368 /* sign.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sign.c; path = ../../src/sign.c; sourceTree = SOURCE_ROOT; };
+		8DD76FB20486AB0100D96B5E /* SDK_Examples */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDK_Examples; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6A0FF2C0290799A04C91782 /* SDK_Examples.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = SDK_Examples.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		86B8591214BC53A400756368 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		86B8592F14BC775F00756368 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		86B8595514BC785A00756368 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76FAD0486AB0100D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* SDK_Examples */ = {
+			isa = PBXGroup;
+			children = (
+				86B8595D14BC788B00756368 /* sign.c */,
+				86B8593514BC778600756368 /* get_signmechanisms.c */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6A0FF2B0290797F04C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = SDK_Examples;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				86B8591914BC53FD00756368 /* wait_card.c */,
+				86B8518014BC3ED700756368 /* rsaref220 */,
+				86B8515C14BC3D7800756368 /* base.h */,
+				86B8514214BC396B00756368 /* data.c */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76FB20486AB0100D96B5E /* SDK_Examples */,
+				86B8591414BC53A400756368 /* SDK_WaitCard */,
+				86B8593114BC775F00756368 /* SDK_GetSignMechanisms */,
+				86B8595714BC785A00756368 /* SDK_Signature */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		86B8518014BC3ED700756368 /* rsaref220 */ = {
+			isa = PBXGroup;
+			children = (
+				86B8518114BC3EF800756368 /* pkcs11.h */,
+				86B8518214BC3EF800756368 /* pkcs11f.h */,
+				86B8518314BC3EF800756368 /* pkcs11t.h */,
+				86B8518414BC3EF800756368 /* unix.h */,
+			);
+			name = rsaref220;
+			sourceTree = "<group>";
+		};
+		C6A0FF2B0290797F04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				C6A0FF2C0290799A04C91782 /* SDK_Examples.1 */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		86B8591314BC53A400756368 /* SDK_WaitCard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 86B8591814BC53E000756368 /* Build configuration list for PBXNativeTarget "SDK_WaitCard" */;
+			buildPhases = (
+				86B8591114BC53A400756368 /* Sources */,
+				86B8591214BC53A400756368 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SDK_WaitCard;
+			productName = SDK_WaitCard;
+			productReference = 86B8591414BC53A400756368 /* SDK_WaitCard */;
+			productType = "com.apple.product-type.tool";
+		};
+		86B8593014BC775F00756368 /* SDK_GetSignMechanisms */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 86B8593714BC778600756368 /* Build configuration list for PBXNativeTarget "SDK_GetSignMechanisms" */;
+			buildPhases = (
+				86B8592E14BC775F00756368 /* Sources */,
+				86B8592F14BC775F00756368 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SDK_GetSignMechanisms;
+			productName = SDK_GetSignMechanisms;
+			productReference = 86B8593114BC775F00756368 /* SDK_GetSignMechanisms */;
+			productType = "com.apple.product-type.tool";
+		};
+		86B8595614BC785A00756368 /* SDK_Signature */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 86B8595F14BC788B00756368 /* Build configuration list for PBXNativeTarget "SDK_Signature" */;
+			buildPhases = (
+				86B8595414BC785A00756368 /* Sources */,
+				86B8595514BC785A00756368 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SDK_Signature;
+			productName = SDK_Signature;
+			productReference = 86B8595714BC785A00756368 /* SDK_Signature */;
+			productType = "com.apple.product-type.tool";
+		};
+		8DD76FA90486AB0100D96B5E /* SDK_Data */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB928508733DD80010E9CD /* Build configuration list for PBXNativeTarget "SDK_Data" */;
+			buildPhases = (
+				8DD76FAB0486AB0100D96B5E /* Sources */,
+				8DD76FAD0486AB0100D96B5E /* Frameworks */,
+				8DD76FAF0486AB0100D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SDK_Data;
+			productInstallPath = "$(HOME)/bin";
+			productName = SDK_Examples;
+			productReference = 8DD76FB20486AB0100D96B5E /* SDK_Examples */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "SDK_Examples" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* SDK_Examples */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76FA90486AB0100D96B5E /* SDK_Data */,
+				86B8591314BC53A400756368 /* SDK_WaitCard */,
+				86B8593014BC775F00756368 /* SDK_GetSignMechanisms */,
+				86B8595614BC785A00756368 /* SDK_Signature */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		86B8591114BC53A400756368 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86B8591A14BC53FD00756368 /* wait_card.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		86B8592E14BC775F00756368 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86B8593614BC778600756368 /* get_signmechanisms.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		86B8595414BC785A00756368 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86B8595E14BC788B00756368 /* sign.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76FAB0486AB0100D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86B8514314BC396B00756368 /* data.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB928608733DD80010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					../inc,
+					../inc/rsaref220,
+				);
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = SDK_Examples;
+			};
+			name = Debug;
+		};
+		1DEB928708733DD80010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				HEADER_SEARCH_PATHS = (
+					../inc,
+					../inc/rsaref220,
+				);
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = SDK_Examples;
+			};
+			name = Release;
+		};
+		1DEB928A08733DD80010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB928B08733DD80010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		86B8591614BC53A500756368 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRODUCT_NAME = SDK_WaitCard;
+			};
+			name = Debug;
+		};
+		86B8591714BC53A500756368 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRODUCT_NAME = SDK_WaitCard;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		86B8593314BC776000756368 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRODUCT_NAME = SDK_GetSignMechanisms;
+			};
+			name = Debug;
+		};
+		86B8593414BC776000756368 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRODUCT_NAME = SDK_GetSignMechanisms;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		86B8595914BC785B00756368 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRODUCT_NAME = SDK_Signature;
+			};
+			name = Debug;
+		};
+		86B8595A14BC785B00756368 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRODUCT_NAME = SDK_Signature;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928508733DD80010E9CD /* Build configuration list for PBXNativeTarget "SDK_Data" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB928608733DD80010E9CD /* Debug */,
+				1DEB928708733DD80010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "SDK_Examples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB928A08733DD80010E9CD /* Debug */,
+				1DEB928B08733DD80010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		86B8591814BC53E000756368 /* Build configuration list for PBXNativeTarget "SDK_WaitCard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				86B8591614BC53A500756368 /* Debug */,
+				86B8591714BC53A500756368 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		86B8593714BC778600756368 /* Build configuration list for PBXNativeTarget "SDK_GetSignMechanisms" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				86B8593314BC776000756368 /* Debug */,
+				86B8593414BC776000756368 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		86B8595F14BC788B00756368 /* Build configuration list for PBXNativeTarget "SDK_Signature" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				86B8595914BC785B00756368 /* Debug */,
+				86B8595A14BC785B00756368 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
