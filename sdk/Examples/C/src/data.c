@@ -58,24 +58,25 @@ CK_ULONG beidsdk_GetData()
 				{		
 					CK_ULONG slot_count = 0;
 					// retrieve the number of slots (cardreaders) found
-					retVal = (pFunctions->C_GetSlotList) (CK_FALSE, 0, &slot_count);
-					if ((retVal == CKR_OK) && (slot_count > 0) )
-					{
-						CK_SLOT_ID_PTR slotIds = (CK_SLOT_ID_PTR)malloc(slot_count * sizeof(CK_SLOT_INFO));
-						if(slotIds != NULL)
+						//set first parameter to CK_FALSE if you also want to find the slots without a card inserted
+						retVal = (pFunctions->C_GetSlotList) (CK_TRUE, 0, &slot_count);
+						if ((retVal == CKR_OK) && (slot_count > 0) )
 						{
-							// retrieve the list of slots (cardreaders)
-							retVal = (pFunctions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
-							if (retVal == CKR_OK)
-							{
-								CK_ULONG slotIdx;
-								for (slotIdx = 0; slotIdx < slot_count; slotIdx++) 
+							CK_SLOT_ID_PTR slotIds = (CK_SLOT_ID_PTR)malloc(slot_count * sizeof(CK_SLOT_INFO));
+							if(slotIds != NULL)
+						{
+								// retrieve the list of slots (cardreaders)
+								retVal = (pFunctions->C_GetSlotList) (CK_TRUE, slotIds, &slot_count);
+								if (retVal == CKR_OK)
 								{
-									CK_SESSION_HANDLE session_handle;
-									//open a session
-									retVal = (pFunctions->C_OpenSession)(slotIds[slotIdx], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
-									if (retVal == CKR_OK)
+									CK_ULONG slotIdx;
+									for (slotIdx = 0; slotIdx < slot_count; slotIdx++) 
 									{
+											CK_SESSION_HANDLE session_handle;
+											//open a session
+											retVal = (pFunctions->C_OpenSession)(slotIds[slotIdx], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
+											if (retVal == CKR_OK)
+											{
 										CK_CHAR_PTR pFilename = (CK_CHAR_PTR)TEXT("DATA_FILE");
 										CK_CHAR_PTR pSignatureFilename = (CK_CHAR_PTR)TEXT("CERT_RN_FILE");
 										CK_CHAR_PTR pLastname = (CK_CHAR_PTR)TEXT("surname");
@@ -99,12 +100,12 @@ CK_ULONG beidsdk_GetData()
 										else
 											printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
 
-										//retrieve the lastname
-										retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pLastname, &pLastnameValue, &LastnameValueLen);
-										if(retVal == CKR_OK)
-											Beidsdk_PrintValue(pLastname,(CK_BYTE_PTR)pLastnameValue, LastnameValueLen);
-										else
-											printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
+												//retrieve the lastname
+												retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pLastname, &pLastnameValue, &LastnameValueLen);
+												if(retVal == CKR_OK)
+													Beidsdk_PrintValue(pLastname,(CK_BYTE_PTR)pLastnameValue, LastnameValueLen);
+												else
+													printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
 
 										if (pFileValue != NULL)
 											free (pFileValue);
@@ -112,26 +113,26 @@ CK_ULONG beidsdk_GetData()
 											free (pSignatureValue);
 										if (pLastnameValue != NULL)
 											free (pLastnameValue);
-										//close the session
-										if (retVal == CKR_OK)
-											retVal = (pFunctions->C_CloseSession) (session_handle);
-										else
-											(pFunctions->C_CloseSession) (session_handle);
-									}
-								}//end of for loop
+												//close the session
+												if (retVal == CKR_OK)
+													retVal = (pFunctions->C_CloseSession) (session_handle);
+												else
+													(pFunctions->C_CloseSession) (session_handle);
+											}
+									}//end of for loop
+								}
+								free(slotIds);
 							}
-							free(slotIds);
-						}
-						else //malloc failed
+							else //malloc failed
+							{
+								printf("malloc failed\n");
+								retVal = CKR_GENERAL_ERROR;
+							}
+						}//no slots found
+						else if (slot_count == 0)
 						{
-							printf("malloc failed\n");
-							retVal = CKR_GENERAL_ERROR;
+							printf("no slots found\n");
 						}
-					}//no slots found
-					else if (slot_count == 0)
-					{
-						printf("no slots found\n");
-					}
 					if (retVal == CKR_OK)
 						retVal = (pFunctions->C_Finalize) (NULL_PTR);
 					else
@@ -141,6 +142,7 @@ CK_ULONG beidsdk_GetData()
 			else //CK_C_GetFunctionList failed
 			{
 				retVal = CKR_GENERAL_ERROR;
+				printf("error 0x%.8x C_GetFunctionList\n",retVal);
 			}
 		}
 		else //dlsym failed
@@ -152,6 +154,7 @@ CK_ULONG beidsdk_GetData()
 	else //dlopen failed
 	{
 		retVal = CKR_GENERAL_ERROR;
+		printf("%s not found\n",PKCS11_LIB);
 	}
 	return retVal;
 } 
