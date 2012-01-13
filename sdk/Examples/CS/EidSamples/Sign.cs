@@ -60,7 +60,7 @@ namespace EidSamples
             {
                 // link with the pkcs11 DLL
                 m = Module.GetInstance(mFileName);
-            } m.Initialize();
+            } //m.Initialize();
 
             byte[] encryptedData = null;
             try
@@ -88,7 +88,7 @@ namespace EidSamples
             }
             finally
             {
-                m.Finalize_();
+                m.Dispose();
             }
             return encryptedData;
         }

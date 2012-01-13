@@ -53,25 +53,27 @@ namespace EidSamples
         /// </summary>
         /// <returns>Description of the first slot found</returns>
         public string GetSlotDescription()
-        { 
+        {
             String slotID;
             if (m == null)
             {
                 m = Module.GetInstance(mFileName);
-            } 
-            m.Initialize();
+            }
+            //initialization now occurs within the getinstance function
+            ////m.Initialize();
             try
             {
                 // Look for slots (cardreaders)
                 // GetSlotList(false) will return all cardreaders
-                Slot []slots = m.GetSlotList(false);
+                Slot[] slots = m.GetSlotList(false);
                 if (slots.Length == 0)
                     slotID = "";
                 slotID = slots[0].SlotInfo.SlotDescription.Trim();
             }
             finally
             {
-                m.Finalize_();
+                // m.Dispose();//m.Finalize_();
+                m.Dispose();
             }
             return slotID;
         }
@@ -87,7 +89,7 @@ namespace EidSamples
             {
                 m = Module.GetInstance(mFileName);
             }
-            m.Initialize();
+            //m.Initialize();
             try
             {
                 // Look for slots (cardreaders)
@@ -97,10 +99,10 @@ namespace EidSamples
             }
             finally
             {
-                m.Finalize_();
+                m.Dispose();//m.Finalize_();
             }
             return tokenInfoLabel;
-            
+
         }
 
         /// <summary>
@@ -134,35 +136,53 @@ namespace EidSamples
                 m = Module.GetInstance(mFileName);
             }
             // pkcs11 module init
-            m.Initialize();
+            //m.Initialize();
             try
             {
                 // Get the first slot (cardreader) with a token
-                Slot slot = m.GetSlotList(false)[0];
-                Session session = slot.Token.OpenSession(true);
-
-                // Search for objects
-                // First, define a search template 
-
-                // "The label attribute of the objects should equal ..."
-                ByteArrayAttribute labelAttribute = new ByteArrayAttribute(CKA.LABEL);
-                labelAttribute.Value = System.Text.Encoding.UTF8.GetBytes(label);
-                session.FindObjectsInit(new P11Attribute[] {
-                        labelAttribute
-                    }
-                 );
-                P11Object[] foundObjects = session.FindObjects(1);
-                if (foundObjects.Length != 0)
+                Slot[] slotlist = m.GetSlotList(true);
+                if (slotlist.Length > 0)
                 {
-                    Data data = foundObjects[0] as Data;
-                    value = System.Text.Encoding.UTF8.GetString(data.Value.Value);
+                    Slot slot = slotlist[0];
+
+                    Session session = slot.Token.OpenSession(true);
+
+                    // Search for objects
+                    // First, define a search template 
+
+                    // "The label attribute of the objects should equal ..."
+                    ByteArrayAttribute classAttribute = new ByteArrayAttribute(CKA.CLASS);
+                    classAttribute.Value = BitConverter.GetBytes((uint)Net.Sf.Pkcs11.Wrapper.CKO.DATA);
+                    session.FindObjectsInit(new P11Attribute[] { classAttribute });
+                    P11Object[] foundObjects = session.FindObjects(50);
+                    int counter = foundObjects.Length;
+                    Data data;
+                    while (counter > 0)
+                    {
+                        //foundObjects[counter-1].ReadAttributes(session);
+                        //public static BooleanAttribute ReadAttribute(Session session, uint hObj, BooleanAttribute attr)
+                        data = foundObjects[counter - 1] as Data;
+                        label = data.Label.ToString();
+                        if (label != null)
+                            Console.WriteLine(label);
+                        if (data.Value.Value != null)
+                        {
+                            value = System.Text.Encoding.UTF8.GetString(data.Value.Value);
+                            Console.WriteLine(value);
+                        }
+                        counter--;
+                    }
+                    session.FindObjectsFinal();
                 }
-                session.FindObjectsFinal();
+                else
+                {
+                    Console.WriteLine("No card found\n");
+                }
             }
             finally
             {
                 // pkcs11 finalize
-                m.Finalize_();
+                m.Dispose();//m.Finalize_();
             }
             return value;
         }
@@ -229,36 +249,44 @@ namespace EidSamples
             {
                 m = Module.GetInstance(mFileName);
             }
-            m.Initialize();
+            //m.Initialize();
             try
             {
                 // Get the first slot (cardreader) with a token
-                Slot slot = m.GetSlotList(false)[0];
-                Session session = slot.Token.OpenSession(true);
+                Slot[] slotlist = m.GetSlotList(true);
+                if (slotlist.Length > 0)
+                {
+                    Slot slot = slotlist[0];
+                    Session session = slot.Token.OpenSession(true);
 
-                // Search for objects
-                // First, define a search template 
+                    // Search for objects
+                    // First, define a search template 
 
-                // "The label attribute of the objects should equal ..."                
-                ByteArrayAttribute fileLabel = new ByteArrayAttribute(CKA.LABEL);
-                fileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Filename);
-                ByteArrayAttribute fileData = new ByteArrayAttribute(CKA.CLASS);
-                fileData.Value = BitConverter.GetBytes((uint)Net.Sf.Pkcs11.Wrapper.CKO.DATA);
-                session.FindObjectsInit(new P11Attribute[] {
+                    // "The label attribute of the objects should equal ..."                
+                    ByteArrayAttribute fileLabel = new ByteArrayAttribute(CKA.LABEL);
+                    fileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Filename);
+                    ByteArrayAttribute fileData = new ByteArrayAttribute(CKA.CLASS);
+                    fileData.Value = BitConverter.GetBytes((uint)Net.Sf.Pkcs11.Wrapper.CKO.DATA);
+                    session.FindObjectsInit(new P11Attribute[] {
                         fileLabel,fileData
                     });
-                P11Object[] foundObjects = session.FindObjects(1);
-                if (foundObjects.Length != 0)
-                {
-                    Data file = foundObjects[0] as Data;
-                    value = file.Value.Value;
+                    P11Object[] foundObjects = session.FindObjects(1);
+                    if (foundObjects.Length != 0)
+                    {
+                        Data file = foundObjects[0] as Data;
+                        value = file.Value.Value;
+                    }
+                    session.FindObjectsFinal();
                 }
-                session.FindObjectsFinal();
+                else
+                {
+                    Console.WriteLine("No card found\n");
+                }
             }
             finally
             {
                 // pkcs11 finalize
-                m.Finalize_();
+                m.Dispose();//m.Finalize_();
             }
             return value;
         }
@@ -308,35 +336,43 @@ namespace EidSamples
             {
                 m = Module.GetInstance(mFileName);
             }
-            m.Initialize();
+            //m.Initialize();
             try
             {
                 // Get the first slot (cardreader) with a token
-                Slot slot = m.GetSlotList(false)[0];
-                Session session = slot.Token.OpenSession(true);
-                // Search for objects
-                // First, define a search template 
+                Slot[] slotlist = m.GetSlotList(true);
+                if (slotlist.Length > 0)
+                {
+                    Slot slot = slotlist[0];
+                    Session session = slot.Token.OpenSession(true);
+                    // Search for objects
+                    // First, define a search template 
 
-                // "The label attribute of the objects should equal ..."      
-                ByteArrayAttribute fileLabel = new ByteArrayAttribute(CKA.LABEL);
-                ObjectClassAttribute certificateAttribute = new ObjectClassAttribute(CKO.CERTIFICATE);
-                fileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Certificatename);
-                session.FindObjectsInit(new P11Attribute[] {
+                    // "The label attribute of the objects should equal ..."      
+                    ByteArrayAttribute fileLabel = new ByteArrayAttribute(CKA.LABEL);
+                    ObjectClassAttribute certificateAttribute = new ObjectClassAttribute(CKO.CERTIFICATE);
+                    fileLabel.Value = System.Text.Encoding.UTF8.GetBytes(Certificatename);
+                    session.FindObjectsInit(new P11Attribute[] {
                         certificateAttribute,
                         fileLabel
                     });
-                P11Object[] foundObjects = session.FindObjects(1);
-                if (foundObjects.Length != 0)
-                {
-                    X509PublicKeyCertificate cert = foundObjects[0] as X509PublicKeyCertificate;
-                    value = cert.Value.Value;
+                    P11Object[] foundObjects = session.FindObjects(1);
+                    if (foundObjects.Length != 0)
+                    {
+                        X509PublicKeyCertificate cert = foundObjects[0] as X509PublicKeyCertificate;
+                        value = cert.Value.Value;
+                    }
+                    session.FindObjectsFinal();
                 }
-                session.FindObjectsFinal();
+                else
+                {
+                    Console.WriteLine("No card found\n");
+                }
             }
             finally
             {
                 // pkcs11 finalize
-                m.Finalize_();
+                m.Dispose();//m.Finalize_();
             }
             return value;
 
@@ -345,42 +381,50 @@ namespace EidSamples
         /// Returns a list of PKCS11 labels of the certificate on the card
         /// </summary>
         /// <returns>List of labels of certificate objects</returns>
-        public List <string> GetCertificateLabels()
+        public List<string> GetCertificateLabels()
         {
             // pkcs11 module init
             if (m == null)
             {
                 m = Module.GetInstance(mFileName);
             }
-            m.Initialize();
+            //m.Initialize();
             List<string> labels = new List<string>();
             try
             {
                 // Get the first slot (cardreader) with a token
-                Slot slot = m.GetSlotList(false)[0];
-                Session session = slot.Token.OpenSession(true);
-                // Search for objects
-                // First, define a search template 
+                Slot[] slotlist = m.GetSlotList(true);
+                if (slotlist.Length > 0)
+                {
+                    Slot slot = slotlist[0];
+                    Session session = slot.Token.OpenSession(true);
+                    // Search for objects
+                    // First, define a search template 
 
-                // "The object class of the objects should be "certificate"" 
-                ObjectClassAttribute certificateAttribute = new ObjectClassAttribute(CKO.CERTIFICATE);
-                session.FindObjectsInit(new P11Attribute[] {
+                    // "The object class of the objects should be "certificate"" 
+                    ObjectClassAttribute certificateAttribute = new ObjectClassAttribute(CKO.CERTIFICATE);
+                    session.FindObjectsInit(new P11Attribute[] {
                      certificateAttribute
                     }
-                );
+                    );
 
 
-                P11Object[] certificates = session.FindObjects(100) as P11Object[];
-                foreach (P11Object certificate in certificates)
-                {
-                    labels.Add (new string (((X509PublicKeyCertificate)certificate).Label.Value));
+                    P11Object[] certificates = session.FindObjects(100) as P11Object[];
+                    foreach (P11Object certificate in certificates)
+                    {
+                        labels.Add(new string(((X509PublicKeyCertificate)certificate).Label.Value));
+                    }
+                    session.FindObjectsFinal();
                 }
-                session.FindObjectsFinal();
+                else
+                {
+                    Console.WriteLine("No card found\n");
+                }
             }
             finally
             {
                 // pkcs11 finalize
-                m.Finalize_();
+                m.Dispose();//m.Finalize_();
             }
             return labels;
         }

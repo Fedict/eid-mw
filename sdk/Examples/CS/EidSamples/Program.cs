@@ -28,8 +28,14 @@ namespace EidSamples
     {
         static void Main(string[] args)
         {
+            System.Diagnostics.Stopwatch duurtijd = new System.Diagnostics.Stopwatch();
+            duurtijd.Start();
             DataTests dt = new DataTests();
-            dt.StoreCertificateRNFile();
+            //dt.StoreCertificateRNFile();
+            dt.GetSurname();
+            dt.GetCertificateLabels();
+            duurtijd.Stop();
+            Console.WriteLine(duurtijd.ElapsedMilliseconds.ToString());
         }
     }
 }

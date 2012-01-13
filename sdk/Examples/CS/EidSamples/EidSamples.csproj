@@ -52,12 +52,11 @@
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.6.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>references\BouncyCastle.Crypto.dll</HintPath>
+      <HintPath>..\..\..\..\..\pkcs11net\trunk\pkcs11Wrapper\dll\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="Net.Pkcs11">
-      <HintPath>references\Net.Pkcs11.dll</HintPath>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\..\..\pkcs11net\trunk\NUnit-2.5.10.11092\bin\net-2.0\framework\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.9.10348, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -110,6 +109,19 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="tests\beidpkcs11.dll" />
+    <Content Include="tests\beidpkcs11D.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\pkcs11net\trunk\pkcs11Wrapper\Pkcs11Net.csproj">
+      <Project>{3845DF22-E6C6-482D-B38C-45C3B92FA5B7}</Project>
+      <Name>Pkcs11Net</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
