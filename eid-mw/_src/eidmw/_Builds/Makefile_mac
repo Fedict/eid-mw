@@ -110,8 +110,11 @@ SDK_DIR  = sdk
 ## the one that will be installed and the one to which this
 ## name will be renamed into in the postflight script at the end
 ## of the installation.
-APPS_DIR =  /Applications/BelgiumIdentityCard
-APPS_DIR_NAME = "/Applications/Belgium\ Identity\ Card"
+APPS_DIR =  /Applications
+LICENSES_DIR= /Library/BelgiumIdentityCard/Licenses
+BELGIUM_DIR= /Library/BelgiumIdentityCard
+BELGIUM_DIR_NAME = "/Library/Belgium\ Identity\ Card"
+
 ## EIDGUI_NAME = eID-Viewer
 
 ## List of the implicit names of the libraries. This is convenient
@@ -137,9 +140,7 @@ OLD_ETC = beidbase.conf beidgui.conf
 
 BASE_SISPLUGINS = CARDPLUGINSIS_ACR38U_NAME_dylib
 #BASE_SISPLUGINS = 
-EID_VIEWER = eid-viewer
-EID_VIEWER_ZIP = $(EID_VIEWER).zip
-EID_VIEWER_ZIP_PATH = ../ThirdParty/$(EID_VIEWER_ZIP)
+EID_VIEWER_APP_PATH = "../ThirdParty/eID\ Viewer.app"
 LATEST_XPI:=$(shell readlink ../xpi/builds/belgiumeid-CURRENT.xpi)
 XPI_107 = /Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi
 XPI_PLUGIN = xpi/builds/$(LATEST_XPI)
@@ -171,7 +172,7 @@ endif
 BINS = $(APP_BINS:%= bin/%) 
 
 ## to be put in the APPS_DIR
-APP_FILES = $(XPI_PLUGIN) $(EID_VIEWER_ZIP_PATH)
+##APP_FILES = $(EID_VIEWER_APP_PATH)
 
 
 ## Language files for the GUI
@@ -223,7 +224,7 @@ SCRIPTS =
 
 ## directories that the package installer should create
 ## on the user's machine in case they are absent
-DIRS_TO_CREATE = $(INST_DIR) $(APPS_DIR) /usr/local/lib/pkcs11
+DIRS_TO_CREATE = $(INST_DIR) $(BELGIUM_DIR) $(LICENSES_DIR) /usr/local/lib/pkcs11
 
 INSTALLER_DIR = misc/mac/mw_installer
 
@@ -236,8 +237,9 @@ DIRS =	$(ROOT_DIR)/$(INST_DIR)/lib/siscardplugins \
 	$(ROOT_DIR)/$(INST_DIR)/include/$(REL_NAME) \
 	$(ROOT_DIR)/usr/bin \
 	$(ROOT_DIR)/$(MAN_DIR) \
-	$(ROOT_DIR)/$(APPS_DIR) \
-	$(ROOT_DIR)/$(APPS_DIR)/licenses
+	$(ROOT_DIR)/$(BELGIUM_DIR) \
+	$(ROOT_DIR)/$(LICENSES_DIR) \
+	$(ROOT_DIR)/$(APPS_DIR)
 	
 SDK_DIRS = $(SDK_DIR)/beidlib/C++/include \
 	   $(SDK_DIR)/beidlib/Java/bin \
@@ -271,8 +273,7 @@ FILES_TO_COPY := $(LIBS:%=%_____$(ROOT_DIR)/$(INST_DIR)/lib/) \
 	         $(DOCS:%=%_____$(ROOT_DIR)/$(MAN_DIR)) \
 	         $(SCRIPTS:%=%_____$(ROOT_DIR)/$(INST_DIR)/bin) \
                  $(BINS:%=%_____$(ROOT_DIR)/usr/bin) \
-		 $(APP_FILES:%=%_____$(ROOT_DIR)/$(APPS_DIR))
-
+		 $(XPI_PLUGIN:%=%_____$(ROOT_DIR)/$(BELGIUM_DIR))
 
 SDK_FILES_TO_COPY := $(SDK_HEADERS_CPP:%=%_____$(SDK_DIR)/beidlib/C++/include) \
 		     $(SDK_SAMPLES1_CPP:%=%_____$(SDK_DIR)/samples/read_eid/C++) \
@@ -294,11 +295,13 @@ SDK_FILES_TO_COPY := $(SDK_HEADERS_CPP:%=%_____$(SDK_DIR)/beidlib/C++/include) \
 		     $(SDK_PKCS11_FILES:%=%_____$(SDK_DIR)/pkcs11/C++/include) \
 		     $(SDK_COMMON_FILES:%=%_____$(SDK_DIR))
 
-DIRS_TO_COPY := misc/mac/OOoRegister/OpenOffice_Register.pkg_____$(ROOT_DIR)/$(APPS_DIR) \
+DIRS_TO_COPY := misc/mac/OOoRegister/OpenOffice_Register.pkg_____$(ROOT_DIR)/$(BELGIUM_DIR) \
 		misc/mac/OOo.default_____$(ROOT_DIR)/$(INST_DIR)/lib \
-		bin/BEID.tokend_____$(ROOT_DIR)/$(APPS_DIR) \
-		bin/BEID_Lion.tokend_____$(ROOT_DIR)/$(APPS_DIR) \
-		../beid-2.6/mac/share/_____$(ROOT_DIR)/$(INST_DIR)/share
+		bin/BEID.tokend_____$(ROOT_DIR)/$(BELGIUM_DIR) \
+		bin/BEID_Lion.tokend_____$(ROOT_DIR)/$(BELGIUM_DIR) \
+		../beid-2.6/mac/share/_____$(ROOT_DIR)/$(INST_DIR)/share \
+		"$(EID_VIEWER_APP_PATH)_____$(ROOT_DIR)/$(APPS_DIR)/"
+		
 
 r1=$(ROOT_DIR)
 r2=/other/$(ROOT_DIR)
@@ -349,14 +352,14 @@ rel_start:
 	  echo "********** copy files **********"; \
 	  $(call copy_command,$(FILES_TO_COPY),-L) ; \
 	  cp misc/licenses_files/Dutch/eID-toolkit_licensingtermsconditions.txt \
-		$(ROOT_DIR)/$(APPS_DIR)/licenses/license_NL.txt ; \
+		$(ROOT_DIR)/$(LICENSES_DIR)/license_NL.txt ; \
 	  cp misc/licenses_files/English/eID-toolkit_licensingtermsconditions.txt \
-		$(ROOT_DIR)/$(APPS_DIR)/licenses/license_EN.txt ; \
+		$(ROOT_DIR)/$(LICENSES_DIR)/license_EN.txt ; \
 	  cp misc/licenses_files/French/eID-toolkit_licensingtermsconditions.txt \
-		$(ROOT_DIR)/$(APPS_DIR)/licenses/license_FR.txt ; \
+		$(ROOT_DIR)/$(LICENSES_DIR)/license_FR.txt ; \
 	  cp misc/licenses_files/German/eID-toolkit_licensingtermsconditions.txt \
-		$(ROOT_DIR)/$(APPS_DIR)/licenses/license_DE.txt ; \
-	  cp misc/licenses_files/THIRDPARTY-LICENSES.txt $(ROOT_DIR)/$(APPS_DIR)/licenses/
+		$(ROOT_DIR)/$(LICENSES_DIR)/license_DE.txt ; \
+	  cp misc/licenses_files/THIRDPARTY-LICENSES.txt $(ROOT_DIR)/$(LICENSES_DIR)/
 
 	@echo "********** copy/rename the pkcs11 bundle **********"; \
 	 cp -r ../misc/mac/pkcs11.bundle $(ROOT_DIR)/$(INST_DIR)/lib/$(PKCS11_BUNDLE)
@@ -431,21 +434,21 @@ rel_end:
 	@echo "test -e /Library/Java/Extensions/$(JAVALIB_NAME).jnilib && unlink /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
 	@echo "ln -fs /usr/local/lib/$(JAVALIB_NAME_x_y_z_dylib) /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
 	@echo "mkdir -p \"$(XPI_PLUGIN_DIR)\"" >> $(POSTFLIGHT)
-	@echo "mv $(APPS_DIR)/$(LATEST_XPI) \"$(XPI_PLUGIN_DIR)\"" >> $(POSTFLIGHT)
+	@echo "mv $(BELGIUM_DIR)/$(LATEST_XPI) \"$(XPI_PLUGIN_DIR)\"" >> $(POSTFLIGHT)
 	@echo "unzip -qq -o \"$(XPI_PLUGIN_DIR)/$(LATEST_XPI)\" -d \"$(XPI_PLUGIN_DIR)/\"" >> $(POSTFLIGHT)
 	@echo "rm \"$(XPI_PLUGIN_DIR)/$(LATEST_XPI)\"" >> $(POSTFLIGHT)
 	@echo "rm \"$(XPI_107)\"" >> $(POSTFLIGHT)
-	@echo "unzip -qq -o \"$(APPS_DIR)/$(EID_VIEWER_ZIP)\" -d \"$(APPS_DIR)/\"" >> $(POSTFLIGHT)
-	@echo "chmod -R +rx \"$(APPS_DIR)/$(EID_VIEWER)\"" >> $(POSTFLIGHT)
-	@echo "rm \"$(APPS_DIR)/$(EID_VIEWER_ZIP)\"" >> $(POSTFLIGHT)
+##	@echo "unzip -qq -o \"$(APPS_DIR)/$(EID_VIEWER_ZIP)\" -d \"$(APPS_DIR)/\"" >> $(POSTFLIGHT)
+##	@echo "chmod -R +rx \"$(APPS_DIR)\"" >> $(POSTFLIGHT)
+##	@echo "rm \"$(APPS_DIR)/$(EID_VIEWER_ZIP)\"" >> $(POSTFLIGHT)
 	@echo 'if [[ $$(sw_vers -productVersion) == *10.5* ]]; then' >> $(POSTFLIGHT)
-	@echo "mv /Applications/BelgiumIdentityCard/BEID.tokend /System/Library/Security/tokend/; else" >> $(POSTFLIGHT)
+	@echo "mv /Library/BelgiumIdentityCard/BEID.tokend /System/Library/Security/tokend/; else" >> $(POSTFLIGHT)
 	@echo "test -e /System/Library/Security/tokend/BEID.tokend && rm -R /System/Library/Security/tokend/BEID.tokend;" >> $(POSTFLIGHT)
-	@echo "rm -R /Applications/BelgiumIdentityCard/BEID.tokend; fi" >> $(POSTFLIGHT)
+	@echo "rm -R /Library/BelgiumIdentityCard/BEID.tokend; fi" >> $(POSTFLIGHT)
 	@echo 'if [[ $$(sw_vers -productVersion) == *10.7* ]]; then' >> $(POSTFLIGHT)
-	@echo "mv /Applications/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi" >> $(POSTFLIGHT)
-	@echo "rm -R /Applications/BelgiumIdentityCard/BEID_Lion.tokend;" >> $(POSTFLIGHT)
-	@echo "mv $(APPS_DIR) \"$(APPS_DIR_NAME)\"" >> $(POSTFLIGHT)
+	@echo "mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi" >> $(POSTFLIGHT)
+	@echo "rm -R /Library/BelgiumIdentityCard/BEID_Lion.tokend;" >> $(POSTFLIGHT)
+	@echo "mv $(BELGIUM_DIR) \"$(BELGIUM_DIR_NAME)\"" >> $(POSTFLIGHT)
 	@echo "test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;" >> $(POSTFLIGHT)
 	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der" >> $(POSTFLIGHT)
 
@@ -472,6 +475,7 @@ rel_end:
 	@echo "fi" >> $(PREFLIGHT)
 	@echo "## Remove parts (GUI, Tray applet, pkcs11) of the previous middleware parts if they exist" >> $(PREFLIGHT)
 	@echo "test -e \"$(APPS_DIR_NAME)\" && rm -rf \"$(APPS_DIR_NAME)\"" >> $(PREFLIGHT)
+	@echo "test -e \"$(BELGIUM_DIR_NAME)\" && rm -rf \"$(BELGIUM_DIR_NAME)\"" >> $(PREFLIGHT)
 	@echo "test -e /usr/local/lib/$(PKCS11_BUNDLE) && rm -rf /usr/local/lib/$(PKCS11_BUNDLE)" >> $(PREFLIGHT)
 	@echo "test -e /usr/local/lib/pkcs11/$(PKCS11_BUNDLE) && rm -rf /usr/local/lib/pkcs11/$(PKCS11_BUNDLE)" >> $(PREFLIGHT)
 	@echo "test -e /usr/local/lib/beid-pkcs11.bundle && rm -rf /usr/local/lib/beid-pkcs11.bundle" >> $(PREFLIGHT)
@@ -512,8 +516,8 @@ rel_end:
 	@chgrp    wheel  $(ROOT_DIR)/usr/local/lib/beidqt
 	@chgrp    wheel  $(ROOT_DIR)/usr/local/lib/beidqt/plugins
 	@chgrp    wheel  $(ROOT_DIR)/usr/share/man/man1
-	@chgrp -R admin  $(ROOT_DIR)/$(APPS_DIR)/BEID.tokend
-	@chgrp -R admin  $(ROOT_DIR)/$(APPS_DIR)/BEID_Lion.tokend
+	@chgrp -R admin  $(ROOT_DIR)/$(BELGIUM_DIR)/BEID.tokend
+	@chgrp -R admin  $(ROOT_DIR)/$(BELGIUM_DIR)/BEID_Lion.tokend
 
 	$(PKG_MAKER) -build -p $(PKG_NAME) -f $(r1) -ds -i $(REL_DIR)/Info.plist \
 		 -d $(REL_DIR)/Description.plist -r $(REL_DIR)/resources  -v
@@ -649,7 +653,7 @@ for FILE in $(1); do \
   SOURCE=$$( echo $$FILE| sed "s#\(.*\)_____.*#\1#"); \
   DESTINATION=$$(echo $$FILE | sed "s#.*_____\(.*\)#\1#"); \
   echo "copy $(2) $$SOURCE --> $$DESTINATION" ; \
-  cp $(2) $${SOURCE} $${DESTINATION}; \
+  cp $(2) "$${SOURCE}" $${DESTINATION}; \
 done 
 endef
 
