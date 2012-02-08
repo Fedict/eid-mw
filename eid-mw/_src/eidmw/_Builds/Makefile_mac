@@ -337,6 +337,8 @@ uninstall:
 ################################################################
 POSTFLIGHT=$(REL_DIR)/resources/postflight
 PREFLIGHT=$(REL_DIR)/resources/preflight
+INSTALLATIONCHECK=$(REL_DIR)/resources/InstallationCheck
+INSTALLATIONCHECKSTRINGS=$(REL_DIR)/resources/InstallationCheck.strings
 
 release: clean_release $(DIRS) rel_start rel_3rd_party rel_end
 
@@ -457,22 +459,43 @@ rel_end:
 	@mv temp $(POSTFLIGHT)
 	@chmod a+x $(POSTFLIGHT)
 
+##	 @echo "********** generate $(INSTALLATIONCHECKSTRINGS) **********"
+##	-@test -e $(INSTALLATIONCHECKSTRINGS) && rm $(INSTALLATIONCHECKSTRINGS)
+##	@touch $(INSTALLATIONCHECKSTRINGS)
+## 16 = 112-96 , 17 = 113-96	
+##	@echo "\"16\" = \"Cannot install on a Mac PPC\";" >> $(INSTALLATIONCHECKSTRINGS)
+##	@echo "\"17\" = \"This installer is not meant for mac OS X 10.5 running on a 32bit processor\";" >> $(INSTALLATIONCHECKSTRINGS)
+
+	 @echo "********** generate $(INSTALLATIONCHECK) **********"
+	-@test -e $(INSTALLATIONCHECK) && rm $(INSTALLATIONCHECK)
+	@touch $(INSTALLATIONCHECK)
+	@echo "#!/bin/bash" >> $(INSTALLATIONCHECK)
+	@echo "#########################################" >> $(INSTALLATIONCHECK)
+	@echo "# we must be running on intel" >> $(INSTALLATIONCHECK)
+	@echo "#########################################" >> $(INSTALLATIONCHECK)
+	@echo "MACHINE=\`uname -p\`" >> $(INSTALLATIONCHECK)
+	@echo 'if [[ ($$MACHINE == "ppc64") || ($$MACHINE == "ppc")]]' >> $(INSTALLATIONCHECK)
+	@echo "then" >> $(INSTALLATIONCHECK)
+	@echo "exit 112" >> $(INSTALLATIONCHECK)
+	@echo "fi" >> $(INSTALLATIONCHECK)
+	@echo "#########################################" >> $(INSTALLATIONCHECK)
+	@echo "# we must be running on 64 bit if 10.5" >> $(INSTALLATIONCHECK)
+	@echo "#########################################" >> $(INSTALLATIONCHECK)
+	@echo "OSVERSION=\`sw_vers -productVersion\`" >> $(INSTALLATIONCHECK)
+	@echo 'if [[ ($$OSVERSION > "10.4.99") && ($$OSVERSION < "10.7.0")]]' >> $(INSTALLATIONCHECK)
+	@echo "then" >> $(INSTALLATIONCHECK)
+	@echo 'if [[ ($$MACHINE == "i386") ]]' >> $(INSTALLATIONCHECK)
+	@echo "then" >> $(INSTALLATIONCHECK)
+	@echo "exit 113" >> $(INSTALLATIONCHECK)
+	@echo "fi" >> $(INSTALLATIONCHECK)
+	@echo "fi" >> $(INSTALLATIONCHECK)
+	@echo "exit 0" >> $(INSTALLATIONCHECK)
+	@chmod a+x $(INSTALLATIONCHECK)
+
 	 @echo "********** generate $(PREFLIGHT) **********"
 	-@test -e $(PREFLIGHT) && rm $(PREFLIGHT)
 	@touch $(PREFLIGHT)
 	@echo "#!/bin/bash" >> $(PREFLIGHT)
-	@echo "#########################################" >> $(PREFLIGHT)
-	@echo "# we must be running on intel" >> $(PREFLIGHT)
-	@echo "#########################################" >> $(PREFLIGHT)
-	@echo "echo \"[Info ] Verifying machine type...\"" >> $(PREFLIGHT)
-	@echo "MACHINE=\`uname -p\`" >> $(PREFLIGHT)
-	@echo 'if [[ ($$MACHINE == "ppc64") || ($$MACHINE == "ppc")]]' >> $(PREFLIGHT)
-	@echo "then" >> $(PREFLIGHT)
-	@echo "echo \"[Error] Incorrect machine type. PPC is not supported.\"" >> $(PREFLIGHT)
-	@echo "exit 1" >> $(PREFLIGHT)
-	@echo "else" >> $(PREFLIGHT)
-	@echo "echo \"[Info ] Machine type: $$MACHINE.\"" >> $(PREFLIGHT)
-	@echo "fi" >> $(PREFLIGHT)
 	@echo "## Remove parts (GUI, Tray applet, pkcs11) of the previous middleware parts if they exist" >> $(PREFLIGHT)
 	@echo "test -e \"$(APPS_DIR_NAME)\" && rm -rf \"$(APPS_DIR_NAME)\"" >> $(PREFLIGHT)
 	@echo "test -e \"$(BELGIUM_DIR_NAME)\" && rm -rf \"$(BELGIUM_DIR_NAME)\"" >> $(PREFLIGHT)
