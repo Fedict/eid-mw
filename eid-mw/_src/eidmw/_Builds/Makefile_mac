@@ -482,7 +482,7 @@ rel_end:
 	@echo "# we must be running on 64 bit if 10.5" >> $(INSTALLATIONCHECK)
 	@echo "#########################################" >> $(INSTALLATIONCHECK)
 	@echo "OSVERSION=\`sw_vers -productVersion\`" >> $(INSTALLATIONCHECK)
-	@echo 'if [[ ($$OSVERSION > "10.4.99") && ($$OSVERSION < "10.7.0")]]' >> $(INSTALLATIONCHECK)
+	@echo 'if [[ ($$OSVERSION > "10.4.99") && ($$OSVERSION < "10.6.0")]]' >> $(INSTALLATIONCHECK)
 	@echo "then" >> $(INSTALLATIONCHECK)
 	@echo 'if [[ ($$MACHINE == "i386") ]]' >> $(INSTALLATIONCHECK)
 	@echo "then" >> $(INSTALLATIONCHECK)
