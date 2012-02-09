@@ -3427,6 +3427,32 @@ int CSysDiagnost::getOSXVersion (void )
 	return retVal;
 }
 
+int CSysDiagnost::getOSXArch (void )
+{
+	int retVal = 0;
+	FILE * pF;
+	char streamBuffer[65];
+	const char *command=NULL;
+	
+	// Get product version
+	command = "uname -p";
+	pF = popen(command, "r");
+	if (pF != NULL )
+	{
+		if(0 != fread(streamBuffer, sizeof(char), 64, pF))
+		{
+			if (strncmp(streamBuffer, "i386",4) == 0) {
+				retVal = 32;
+			}
+			else {
+				retVal = 64;
+			}
+		}
+	}
+	pclose (pF);
+	return retVal;
+}
+
 
 #endif
 

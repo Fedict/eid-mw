@@ -299,6 +299,9 @@ public:
 	static bool doAsAdmin(string commandLine, bool waitForProcess = true);
 
 	static int getOSXVersion (void );
+	
+	//get the os's architecture: returns 32 for a 32 bit system, 64 for a 64 bit one, and 0 if it couldn't be determined
+	static int getOSXArch (void );
 
 private:
 #ifdef __APPLE__
