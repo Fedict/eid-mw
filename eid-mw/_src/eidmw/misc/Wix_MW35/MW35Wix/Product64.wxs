@@ -399,25 +399,19 @@
 
     <DirectoryRef Id="FIREFOXEXTENSIONS">
       <Component Id="Extensions" Guid="{DBEFB6AD-3282-4625-8257-2CF7EA4E7264}" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="FIREFOXROOTFOLDER">
       <Component Id="FireFoxRoot" Guid="{3F6140E7-B25A-41c5-BACE-9DBCDE8019D9}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPIROOTFOLDER">
       <Component Id="XPIRoot" Guid="{6E56CA5C-29ED-47e0-9EEF-64FDF8A0B353}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
         <File Id="chrome.manifest" Name="chrome.manifest" KeyPath="no" Source="..\..\..\xpi\src\chrome.manifest" />
         <File Id="icon.png.root" Name="icon.png" KeyPath="no" Source="..\..\..\xpi\src\icon.png" />
         <File Id="install.rdf" Name="install.rdf" KeyPath="no" Source="..\..\..\xpi\src\install.rdf" />
@@ -426,9 +420,7 @@
 
     <DirectoryRef Id="XPICONTENTFOLDER">
       <Component Id="XPIContent" Guid="{DC052180-264F-4ace-ACF1-FC482715EB86}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
         <File Id="belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidpkcs11.js" />
         <File Id="belgiumeidpkcs11.xul" Name="belgiumeidpkcs11.xul" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidpkcs11.xul" />
         <File Id="belgiumeidprompt.js" Name="belgiumeidprompt.js" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidprompt.js" />
@@ -440,79 +432,61 @@
 
     <DirectoryRef Id="XPICOMPONENTSFOLDER">
       <Component Id="XPIComponents" Guid="{2761C1B0-4EA2-4047-8A31-32679BB4651D}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
         <File Id="comp_belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\xpi\src\components\belgiumeidpkcs11.js" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPIDEFAULTSFOLDER">
       <Component Id="XPIdefaults" Guid="{B635FD45-0FCE-4285-9FA6-F9559C0F7EBB}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPIDEFAULTSPREFSFOLDER">
       <Component Id="XPIdefaultsprefs" Guid="{FA937E34-AE32-4acd-AC77-3487EBC2ABCD}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
         <File Id="belgiumeid.js" Name="belgiumeid.js" KeyPath="no" Source="..\..\..\xpi\src\defaults\preferences\belgiumeid.js" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALEFOLDER">
       <Component Id="XPIlocale" Guid="{B8A44A30-F2EF-44c3-BBE5-54395F47C869}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALEENFOLDER">
       <Component Id="XPIlocaleen" Guid="{F2BBAA41-E463-409d-B4AB-CE3626339663}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
         <File Id="belgiumeid.properties.en" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\en-US\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALEFRFOLDER">
       <Component Id="XPIlocalefr" Guid="{C0F969BB-3678-4828-BAE7-023054072A01}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
         <File Id="belgiumeid.properties.fr" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\fr-FR\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALENLFOLDER">
       <Component Id="XPIlocalenl" Guid="{E8587941-7B32-4a9d-8F4B-23C1E8EC1126}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
         <File Id="belgiumeid.properties.nl" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\nl-NL\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALEDEFOLDER">
       <Component Id="XPIlocalede" Guid="{54BC660D-7C9D-4ddc-AA96-29D7A5DD0E53}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
         <File Id="belgiumeid.properties.de" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\de-DE\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPISKINFOLDER">
       <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no" Win64="no">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
+        <CreateFolder />
         <File Id="overlay.css" Name="overlay.css" KeyPath="no" Source="..\..\..\xpi\src\skin\overlay.css" />
         <File Id="icon.png" Name="icon.png" KeyPath="no" Source="..\..\..\xpi\src\skin\icon.png" />
         <File Id="icon40x40.png" Name="icon40x40.png" KeyPath="no" Source="..\..\..\xpi\src\skin\icon40x40.png" />
