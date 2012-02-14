@@ -823,7 +823,7 @@
 				<Tool
 					Name="VCResourceCompilerTool"
 					PreprocessorDefinitions="BEID_35;_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QT_XML_LIB,_STATIC_CPPLIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT,_DEBUG"
-					AdditionalIncludeDirectories="..\..\eidmw\misc\Wix_MW35\MW35Wix\bin\Release;..\ReaderDrivers;..\..\eidmw"
+					AdditionalIncludeDirectories="..\..\eidmw\misc\Wix_MW35\MW35Wix\bin\Release;..\ReaderDrivers;..\..\eidmw;..\..\eidmw\misc\Wix_MW35\MW35Wix\bin\x64\Release"
 				/>
 			</FileConfiguration>
 			<FileConfiguration
@@ -832,7 +832,7 @@
 				<Tool
 					Name="VCResourceCompilerTool"
 					PreprocessorDefinitions="BEID_35;QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QT_XML_LIB,_STATIC_CPPLIB,QT_NO_DEBUG,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
-					AdditionalIncludeDirectories="..\..\eidmw\misc\Wix_MW35\MW35Wix\bin\Release;..\ReaderDrivers;..\..\eidmw"
+					AdditionalIncludeDirectories="..\..\eidmw\misc\Wix_MW35\MW35Wix\bin\Release;..\ReaderDrivers;..\..\eidmw;..\..\eidmw\misc\Wix_MW35\MW35Wix\bin\x64\Release"
 				/>
 			</FileConfiguration>
 		</File>
