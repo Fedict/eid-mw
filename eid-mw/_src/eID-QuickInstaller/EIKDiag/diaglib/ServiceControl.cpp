@@ -22,6 +22,10 @@
 #include "ServiceControl.h"
 
 CServiceControl::CServiceControl(string serviceName) {
+	CServiceControl( serviceName, SERVICE_ALL_ACCESS );
+}
+
+CServiceControl::CServiceControl(string serviceName, DWORD access ) {
 
     this->_serviceName = serviceName;
     this->_lastError = 0;
@@ -38,7 +42,7 @@ CServiceControl::CServiceControl(string serviceName) {
         return;
     }
 
-        this->_schService = ::OpenService(this->_schSCManager, serviceName.c_str(), SERVICE_ALL_ACCESS);
+        this->_schService = ::OpenService(this->_schSCManager, serviceName.c_str(), access );
     if (this->_schService != NULL) {
     } else {
         this->_lastError = ::GetLastError();

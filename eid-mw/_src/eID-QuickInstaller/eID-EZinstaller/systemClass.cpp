@@ -744,7 +744,7 @@ string systemClass::startService (string inputXml){
         QDomNode Params = ezw.xml_in.documentElement().toElement();
         string serviceName = ezw.GetNamedItem(Params,"serviceName");
 
-        CServiceControl sc(serviceName.c_str());
+        CServiceControl sc(serviceName.c_str(), GENERIC_READ | GENERIC_EXECUTE);
         ServiceInfo info = sc.DoGetServiceInfo();
 
 
@@ -1543,6 +1543,7 @@ string systemClass::regCerts(string inputXml){
 
     return ezw.xml_out.toString().toStdString();
 }
+
 #endif
 
 // about using cards

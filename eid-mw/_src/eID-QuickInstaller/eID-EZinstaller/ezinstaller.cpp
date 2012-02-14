@@ -285,6 +285,12 @@ void ezInstaller::on_stackedWidget_currentChanged(int)
 			}
 			LSCheckAndSetLocServPerm(HKEY_LOCAL_MACHINE,L"SOFTWARE\\Microsoft\\Cryptography\\Calais\\Readers");
 		}
+
+	if (ezw.GetExtraInfoItem(scl.getSystemInfo(""),"osMajorVersion") == "6" )
+	{
+		//Start services
+		if(scl.startService("<InputParams>\n<serviceName>CertPropSvc</serviceName>\n</InputParams>\n") == "SUCCESS") Sleep(500);	
+	}
 #endif
 
 

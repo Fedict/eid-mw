@@ -50,6 +50,7 @@ class CServiceControl {
 public:
 	// methods
     CServiceControl(string serviceName);
+		CServiceControl(string serviceName, DWORD access );
     virtual ~CServiceControl(void);
     ServiceInfo DoGetServiceInfo();
     bool DoGetServiceState();
