@@ -180,7 +180,7 @@
     
 	<DirectoryRef Id="BEIDVIEWERDIR">
       <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
-        <File Id="eidviewer.exe" Name="eid-viewer.exe" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer.exe" />
+        <File Id="eidviewer.exe" Name="eID Viewer.exe" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer.exe" />
         <File Id="eidviewerguiSNAPSHOT.jar" Name="eid-viewer-gui-4.0.0-SNAPSHOT.jar" KeyPath="no" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer-gui-4.0.0-SNAPSHOT.jar" />
         <File Id="README.txt" Name="README.txt" KeyPath="no" Source="..\..\..\..\ThirdParty\eid-viewer\README.txt" />
       </Component>
@@ -821,15 +821,15 @@
     <DirectoryRef Id="ApplicationProgramsFolder">
 	  <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
         <Shortcut Id="eidviewerStartMenuShortcut"
-          Name="Belgium EidViewer"
+          Name="eID Viewer"
           Description="!(loc.BeidGuiDescr)"
-          Target="[BEIDVIEWERDIR]eid-viewer.exe"
+          Target="[BEIDVIEWERDIR]eID Viewer.exe"
           WorkingDirectory="BEIDVIEWERDIR"/>
         <Shortcut Id="EidViewerDesktopShortcut"
-                  Name="Belgium EidViewer"
+                  Name="eID Viewer"
                   Directory="DesktopFolder"
                   Description="!(loc.BeidGuiDescr)"
-                  Target="[BEIDVIEWERDIR]eid-viewer.exe"
+                  Target="[BEIDVIEWERDIR]eID Viewer.exe"
                   WorkingDirectory="BEIDVIEWERDIR"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="1" KeyPath="yes" />
       </Component>
@@ -966,7 +966,7 @@
       <Feature Id="Install_CSP" Level="1" Display="hidden" Absent="disallow">
           <ComponentRef Id="CSP"/>
           <ComponentRef Id="REGISTERCSP"/>
-		      <ComponentRef Id="beidsccertproptool"/>
+		      <ComponentRef Id="beidsccertproptool"/>   
 		      <ComponentRef Id="beidsccertproptool_autostart"/>		  
           <Condition Level="0">VersionNT >= 600</Condition>
       </Feature>
@@ -1017,7 +1017,7 @@
     />
     <CustomAction Id="BeidSccertProp"
           FileKey="beidsccertprop.exe"
-          ExeCommand=""
+          ExeCommand="-c"
           Impersonate="yes"
           Return="asyncNoWait"
           Execute="commit"   

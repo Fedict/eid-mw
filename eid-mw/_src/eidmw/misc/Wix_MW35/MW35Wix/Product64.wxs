@@ -182,12 +182,11 @@
 
     <DirectoryRef Id="BEIDVIEWERDIR">
       <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}" Win64="no">
-        <File Id="eidviewer.exe" Name="eid-viewer.exe" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer.exe" />
+        <File Id="eidviewer.exe" Name="eID Viewer.exe" KeyPath="yes" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer.exe" />
         <File Id="eidviewerguiSNAPSHOT.jar" Name="eid-viewer-gui-4.0.0-SNAPSHOT.jar" KeyPath="no" Source="..\..\..\..\ThirdParty\eid-viewer\eid-viewer-gui-4.0.0-SNAPSHOT.jar" />
         <File Id="README.txt" Name="README.txt" KeyPath="no" Source="..\..\..\..\ThirdParty\eid-viewer\README.txt" />
       </Component>
     </DirectoryRef>
-
 
     <ComponentGroup Id="BEIDVIEWERLIB">
       <Component Id="cmpF23EA0DF1C6ED1D827E30D7CD9F3D65C" Directory="BEIDVIEWERLIBDIR" Guid="{2BA77710-8FC5-439C-9422-9ADF82FAA17D}" Win64="no">
@@ -846,16 +845,16 @@
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}" Win64="no">
         <Shortcut Id="eidviewerStartMenuShortcut"
-          Name="Belgium EidViewer"
+          Name="eID Viewer"
           Description="!(loc.BeidGuiDescr)"
-          Target="[BEIDVIEWERDIR]eid-viewer.exe"
+          Target="[BEIDVIEWERDIR]eID Viewer.exe"
           WorkingDirectory="BEIDVIEWERDIR"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="1" KeyPath="yes" />
         <Shortcut Id="EidViewerDesktopShortcut"
-                      Name="Belgium EidViewer"
+                      Name="eID Viewer"
                       Directory="DesktopFolder"
                       Description="!(loc.BeidGuiDescr)"
-                      Target="[BEIDVIEWERDIR]eid-viewer.exe"
+                      Target="[BEIDVIEWERDIR]eID Viewer.exe"
                       WorkingDirectory="BEIDVIEWERDIR"/>
       </Component>
       <Component Id="BeidApplicationProgramsFolder" Guid="{CBD0F388-EAE5-4FA1-8C38-EC223928FF13}" Win64="no">
