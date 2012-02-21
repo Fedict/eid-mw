@@ -917,13 +917,13 @@ int ret = 0;
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(26);
-		plabel = BEID_FIELD_TAG_DATA_ApplLifeCycle;
+		plabel = BEID_FIELD_TAG_DATA_KeyExchangeVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(27);
-		plabel = BEID_FIELD_TAG_DATA_KeyExchangeVersion;
+		plabel = BEID_FIELD_TAG_DATA_ApplLifeCycle;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 		(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1);
 		if (ret) goto cleanup;
@@ -1263,6 +1263,8 @@ if (pSlot == NULL)
    }
 std::string szReader = pSlot->name;
 
+//the caller is responsible for filling in/ checking the length
+/*
 if (out == NULL)
    {
    //get length of signature
@@ -1271,7 +1273,7 @@ if (out == NULL)
    }
 if (*l_out < 128)
    return(CKR_BUFFER_TOO_SMALL);
-
+*/
 try
    {
    CReader &oReader = oCardLayer->getReader(szReader);
