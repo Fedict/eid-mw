@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -705,7 +705,27 @@ CK_RV C_SignFinal(CK_SESSION_HANDLE hSession,        /* the session's handle */
       goto cleanup;
       }
 
-   
+	 if(pSignature == NULL)
+	 {
+			*pulSignatureLen = pSignData->l_sign;
+			ret = CKR_OK;
+			goto cleanup;
+	 }
+
+	 if(*pulSignatureLen < pSignData->l_sign)
+	 {
+			*pulSignatureLen = pSignData->l_sign;
+		 	ret = CKR_BUFFER_TOO_SMALL;
+			goto cleanup;
+	 }
+
+	    if (pSignData->l_sign > *pulSignatureLen)
+      {
+      *pulSignatureLen = pSignData->l_sign;
+      ret = CKR_BUFFER_TOO_SMALL;
+      goto cleanup;
+      }
+
    if (pSignData->phash)
       {
       /* get hash */
