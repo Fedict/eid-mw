@@ -41,12 +41,12 @@ CK_RV test_getprivatekeys() {
 	frv = (*functions->C_Initialize) (NULL);
 	if (ReturnedSuccesfull(frv,&trv, "C_Initialize", "test_getprivatekeys" ))
 	{		
-		frv = (*functions->C_GetSlotList) (0, 0, &slot_count);
+		frv = (*functions->C_GetSlotList) (CK_TRUE, 0, &slot_count);
 		if (ReturnedSuccesfull(frv,&trv, "C_GetSlotList", "test_getprivatekeys" ))
 		{
 			testlog(LVL_INFO,"slot count: %i\n", slot_count);
 			slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
-			frv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
+			frv = (*functions->C_GetSlotList) (CK_TRUE, slotIds, &slot_count);
 			if (ReturnedSuccesfull(frv,&trv, "C_GetSlotList (X2)", "test_getprivatekeys" ))
 			{
 				for (slotIdx = 0; slotIdx < slot_count; slotIdx++) 
@@ -57,7 +57,8 @@ CK_RV test_getprivatekeys() {
 					CK_VOID_PTR pValue = malloc (256);
 					CK_BYTE_PTR pByte;
 					CK_ULONG ulvalueLen = 255;//last one is for the string termination
-					CK_ATTRIBUTE attr_label_templ = {	CKA_LABEL,pValue,ulvalueLen};
+
+					CK_ATTRIBUTE attr_label_templ = {CKA_LABEL,pValue,ulvalueLen};
 					CK_OBJECT_HANDLE hKey;
 
 					frv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);

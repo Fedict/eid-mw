@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\pkcs11\include\rsaref220"
+				AdditionalIncludeDirectories="..\pkcs11\include\rsaref220;./"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\pkcs11\include\rsaref220"
+				AdditionalIncludeDirectories="..\pkcs11\include\rsaref220;./"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -180,7 +180,39 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\basetest.c"
+				>
+			</File>
+			<File
 				RelativePath=".\finalize-initialize.c"
+				>
+			</File>
+			<File
+				RelativePath=".\getallobjects.c"
+				>
+			</File>
+			<File
+				RelativePath=".\getmechanisms.c"
+				>
+			</File>
+			<File
+				RelativePath=".\getprivatekeys.c"
+				>
+			</File>
+			<File
+				RelativePath=".\logtest.c"
+				>
+			</File>
+			<File
+				RelativePath=".\MainTest.c"
+				>
+			</File>
+			<File
+				RelativePath=".\open-close-session.c"
+				>
+			</File>
+			<File
+				RelativePath=".\sign.c"
 				>
 			</File>
 		</Filter>
@@ -189,6 +221,18 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\basetest.h"
+				>
+			</File>
+			<File
+				RelativePath=".\logtest.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MainTest.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2009-2010 FedICT.
+* Copyright (C) 2009-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -41,12 +41,12 @@ CK_RV test_sign() {
 	frv = (*functions->C_Initialize) (NULL);
 	if (ReturnedSuccesfull(frv,&trv, "C_Initialize", "test_sign" ))
 	{		
-		frv = (*functions->C_GetSlotList) (0, 0, &slot_count);
+		frv = (*functions->C_GetSlotList) (CK_TRUE, 0, &slot_count);
 		if (ReturnedSuccesfull(frv,&trv, "C_GetSlotList", "test_sign" ))
 		{
 			testlog(LVL_INFO,"slot count: %i\n", slot_count);
 			slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
-			frv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
+			frv = (*functions->C_GetSlotList) (CK_TRUE, slotIds, &slot_count);
 			if (ReturnedSuccesfull(frv,&trv, "C_GetSlotList (X2)", "test_sign" ))
 			{
 				for (slotIdx = 0; slotIdx < slot_count; slotIdx++) 
@@ -60,6 +60,9 @@ CK_RV test_sign() {
 					CK_BYTE_PTR data = "testsignthis"; 
 					CK_BYTE signature[256];
 					CK_ULONG signLength = 256;
+					CK_BYTE signatureMultiPart[256];
+					CK_ULONG signMultiPartLength = 256;
+					CK_ULONG lengthNeeded = 0;
 
 					frv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
 					if (ReturnedSuccesfull(frv,&trv, "C_OpenSession", "test_sign" ))
@@ -73,16 +76,49 @@ CK_RV test_sign() {
 								frv = (*functions->C_FindObjectsFinal)(session_handle); 
 								if (ReturnedSuccesfull(frv,&trv, "C_FindObjectsFinal", "test_sign" ))
 								{
+									//sign in a single part
 									frv = (*functions->C_SignInit)(session_handle, &mechanism, hKey); 
 									if (ReturnedSuccesfull(frv,&trv, "C_SignInit", "test_sign" ))
 									{
 										frv = (*functions->C_Sign)(session_handle,data,(CK_ULONG) strlen(data),signature,&signLength);
 										ReturnedSuccesfull(frv,&trv, "C_Sign", "test_sign" );
 									}
+									//sign in multiple parts
+									frv = (*functions->C_SignInit)(session_handle, &mechanism, hKey); 
+									if (ReturnedSuccesfull(frv,&trv, "C_SignInit", "test_sign" ))
+									{
+										frv = (*functions->C_SignUpdate)(session_handle,data,4);
+										if (ReturnedSuccesfull(frv,&trv, "C_Sign", "test_sign" ))
+										{
+											data += 4;
+											frv = (*functions->C_SignUpdate)(session_handle,data,4);
+											if (ReturnedSuccesfull(frv,&trv, "C_Sign", "test_sign" ))
+											{
+												data += 4;
+												frv = (*functions->C_SignUpdate)(session_handle,data,4);
+												if (ReturnedSuccesfull(frv,&trv, "C_Sign", "test_sign" ))
+												{
+													frv = (*functions->C_SignFinal)(session_handle,NULL,&lengthNeeded);
+													if (ReturnedSuccesfull(frv,&trv, "C_Sign", "test_sign" ))
+													{
+														frv = (*functions->C_SignFinal)(session_handle,signatureMultiPart,&signMultiPartLength);
+														ReturnedSuccesfull(frv,&trv, "C_Sign", "test_sign" );
+														if(memcmp(signature,signatureMultiPart,signLength) != 0)
+														{
+															testlog(LVL_ERROR, "test_sign single_part and multi_part give different results\n");
+														}
+													}
+												}
+											}
+										}
+									}
 								}
 							}
-							frv = (*functions->C_FindObjectsFinal)(session_handle); 
-							ReturnedSuccesfull(frv,&trv, "C_FindObjectsFinal", "test_sign");
+							else
+							{
+								frv = (*functions->C_FindObjectsFinal)(session_handle); 
+								ReturnedSuccesfull(frv,&trv, "C_FindObjectsFinal", "test_sign");
+							}
 						}
 						frv = (*functions->C_CloseSession) (session_handle);
 						ReturnedSuccesfull(frv,&trv, "C_CloseSession", "test_sign" );
