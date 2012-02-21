@@ -188,6 +188,10 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\runcheck.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -200,6 +204,10 @@
 			</File>
 			<File
 				RelativePath=".\certpropimpl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\runcheck.h"
 				>
 			</File>
 		</Filter>
