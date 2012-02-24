@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define var.OfficialProductVersion =1.0.0?>
+
+  <?define var.UpgradeCode ={A89C443C-F0E8-4220-A4DF-35D6000464AA}?>
+  <?define var.ProductGuid ={A12B1278-90D6-40a4-9695-B6B32ADF6FD9}?>
+
+  <?define var.ProductName =Belgium eID SDK 3.5 Compatibility ?>
+
+  <?define var.PackageCode="*"?>
+
+  <Product Id="$(var.ProductGuid)"
+           Name="$(var.ProductName)"
+           Language="!(loc.Lang)"
+           Codepage="1252"
+           Version="$(var.OfficialProductVersion)"
+           Manufacturer="Belgian Government"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <Package Id="$(var.PackageCode)"
+             InstallerVersion="200"
+             Keywords="Belgium eID SDK 3.5 Compatibility"
+             Platform="x86"
+             Manufacturer="Belgian Government"
+             Compressed="yes"
+             InstallPrivileges="elevated"
+    />
+
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.OfficialProductVersion)"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"
+                      Property="NEWPRODUCTFOUND"
+      />
+      <UpgradeVersion Minimum="0.0.1"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.OfficialProductVersion)"
+                      IncludeMaximum="no"
+                      Property="UPGRADEFOUND"
+      />
+    </Upgrade>
+
+    <?ifndef env.BEID_DIR_OPENSSL_098G?>
+    <?define var.BEID_DIR_OPENSSL_098G=..\ThirdParty\openssl.0.9.8g?>
+    <?else?>
+    <?define var.BEID_DIR_OPENSSL_098G=$(env.BEID_DIR_OPENSSL_098G)?>
+    <?endif?>
+
+    <?ifndef env.BEID_DIR_XERCES_310?>
+    <?define var.BEID_DIR_XERCES_310=..\ThirdParty\Xerces\Xerces-3.1.0?>
+    <?else?>
+    <?define var.BEID_DIR_XERCES_310=$(env.BEID_DIR_XERCES_310)?>
+    <?endif?>    
+    
+    <WixVariable Id="WixUIBannerBmp" Value="..\..\bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\..\dlgbmp.bmp" />
+
+    <Condition Message="!(loc.MinOs)">
+      <![CDATA[
+      Installed
+      OR ((VersionNT = 500) and (ServicePackLevel > 3))
+      OR ((VersionNT = 501) and (ServicePackLevel > 1))
+      OR (VersionNT > 501)
+      ]]>
+    </Condition>
+
+    <Media Id="1" Cabinet="SDK35_compatibility.cab" EmbedCab="yes" />
+
+    <Icon Id="eid.ico" SourceFile="..\..\eid.ico"/>
+
+    <Property Id="ARPPRODUCTICON" Value="eid.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
+
+    <Property Id="ALLUSERS" Value="1" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="SystemFolder">
+        <Directory Id="BEIDPPDIR" Name="beidpp"/>
+      </Directory>
+    </Directory>
+
+    <DirectoryRef Id="SystemFolder">
+      <Component Id="Disable_SDK35_Warning" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}" Win64="no">
+        <RegistryKey Root="HKCU"
+                   Key="Software\BEID\messages"
+                   Action="create">
+          <RegistryValue Type="integer" Name="show_sdk35_warning" Value="0" KeyPath="yes"/>
+        </RegistryKey>
+      </Component>
+      
+      <Component Id="Runtime35" Guid="{41F033E4-0669-4FD6-8B8E-DE31FE3AAE24}" SharedDllRefCount="yes">
+        <File Id="beid35applayer.dll" Name="beid35applayer.dll" KeyPath="yes" Source="..\libs_35\beid35applayer.dll" />
+        <File Id="beid35cardlayer.dll" Name="beid35cardlayer.dll" KeyPath="no" Source="..\libs_35\beid35cardlayer.dll" />
+        <File Id="beid35common.dll" Name="beid35common.dll" KeyPath="no" Source="..\libs_35\beid35common.dll" />
+        <File Id="beid35DlgsWin32.dll" Name="beid35DlgsWin32.dll" KeyPath="no" Source="..\libs_35\beid35DlgsWin32.dll" />
+      </Component>
+
+      <Component Id="Runtime35ThirdPartyOpenSSL" Guid="{A98B4895-7CCF-4A91-ACE2-433B8D4363F9}" SharedDllRefCount="yes">
+        <File Id="libeay32_0_9_8g.dll" Name="libeay32_0_9_8g.dll" KeyPath="yes" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\libeay32_0_9_8g.dll" />
+        <File Id="ssleay32_0_9_8g.dll" Name="ssleay32_0_9_8g.dll" KeyPath="no" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\ssleay32_0_9_8g.dll" />
+      </Component>
+
+      <Component Id="Runtime35ThirdPartyXerces" Guid="{B1EBF9C5-1A6F-44d4-AA80-DE55AAF052FE}" SharedDllRefCount="yes">
+        <File Id="xercesc_3_1.dll" Name="xerces-c_3_1.dll" KeyPath="yes" Source="$(var.BEID_DIR_XERCES_310)\bin\xerces-c_3_1.dll" />
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id="BWC" Level="1" >
+      <Feature Id="SDK35_runtime" Level="1" >
+        <!-- System32 -->
+        <ComponentRef Id="Runtime35"/>
+        <ComponentRef Id="Runtime35ThirdPartyOpenSSL"/>
+        <ComponentRef Id="Runtime35ThirdPartyXerces"/>
+      </Feature>
+      <Feature Id="clear_SDK35_warning" Level="1" >
+        <ComponentRef Id="Disable_SDK35_Warning"/>      
+      </Feature>
+    </Feature>
+    <!--SetARPINSTALLLOCATION sets the location in the registry entries of the Add & Remove Panel-->
+    <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
+
+    <CustomAction Id="IsPrivileged" Error="!(loc.AdminNeeded)" />
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallFinalize" />
+
+      <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
+
+      <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>
