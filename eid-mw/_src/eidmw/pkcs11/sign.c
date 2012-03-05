@@ -707,24 +707,17 @@ CK_RV C_SignFinal(CK_SESSION_HANDLE hSession,        /* the session's handle */
 
 	 if(pSignature == NULL)
 	 {
-			*pulSignatureLen = pSignData->l_sign;
-			ret = CKR_OK;
-			goto cleanup;
+		*pulSignatureLen = pSignData->l_sign;
+		ret = CKR_OK;
+		goto cleanup;
 	 }
 
 	 if(*pulSignatureLen < pSignData->l_sign)
 	 {
-			*pulSignatureLen = pSignData->l_sign;
-		 	ret = CKR_BUFFER_TOO_SMALL;
-			goto cleanup;
+		*pulSignatureLen = pSignData->l_sign;
+		ret = CKR_BUFFER_TOO_SMALL;
+		goto cleanup;
 	 }
-
-	    if (pSignData->l_sign > *pulSignatureLen)
-      {
-      *pulSignatureLen = pSignData->l_sign;
-      ret = CKR_BUFFER_TOO_SMALL;
-      goto cleanup;
-      }
 
    if (pSignData->phash)
       {
