@@ -144,6 +144,8 @@ bool CPCSC::GetStatusChange(unsigned long ulTimeout,
 	SCARD_READERSTATEA txReaderStates[MAX_READERS];
 	DWORD tChangedState[MAX_READERS];
 
+	memset(txReaderStates,0,sizeof(txReaderStates));
+
 	// Convert from tReaderInfo[] -> SCARD_READERSTATE array
 	for (DWORD i = 0; i < ulReaderCount; i++)
 	{
@@ -165,21 +167,22 @@ wait_again:
 		// second SCardGetStatusChange() to get the final reader state.
 		for (DWORD i = 0; i < ulReaderCount; i++)
 		{
-#ifdef WIN32
+//#ifdef WIN32
+			//we also check for reader insertion events, so checking SCARD_STATE_EMPTY and SCARD_STATE_PRESENT swapping isn't enough
 			// There's a SCARD_STATE_EMPTY and a SCARD_STATE_PRESENT flag.
 			// So we take the exor of the current and the event state for
 			// both flags; if the exor isn't 0 then at least 1 of the flags
 			// changed value
-			DWORD exor1 =
-				(txReaderStates[i].dwCurrentState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT)) ^
-				(txReaderStates[i].dwEventState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT));
-			bool bUnpowered = false; // Ignore this state
+			//DWORD exor1 =
+			//	(txReaderStates[i].dwCurrentState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT)) ^
+			//	(txReaderStates[i].dwEventState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT));
+			//bool bUnpowered = false; // Ignore this state
 			//((txReaderStates[i].dwCurrentState & SCARD_STATE_UNPOWERED) == 0) &&
 			//((txReaderStates[i].dwEventState & SCARD_STATE_UNPOWERED) != 0);
-			tChangedState[i] = ((exor1 == 0) && !bUnpowered) ? 0 : SCARD_STATE_CHANGED;
-#else
+			//tChangedState[i] = ((exor1 == 0) && !bUnpowered) ? 0 : SCARD_STATE_CHANGED;
+//#else
 			tChangedState[i] = txReaderStates[i].dwEventState & SCARD_STATE_CHANGED;
-#endif
+//#endif
 			bChanged |= (tChangedState[i] != 0);
 		}
 
@@ -204,8 +207,8 @@ wait_again:
 		{
 			pReaderInfos[i].ulCurrentState = pReaderInfos[i].ulEventState;
 			// Clear and SCARD_STATE_CHANGED flag, and use tChangedState instead
-			pReaderInfos[i].ulEventState =
-				(txReaderStates[i].dwEventState & ~SCARD_STATE_CHANGED) | tChangedState[i];
+			pReaderInfos[i].ulEventState = txReaderStates[i].dwEventState;
+				//(txReaderStates[i].dwEventState & ~SCARD_STATE_CHANGED) | tChangedState[i];
 		}
 
 		// Sometimes, it seems we're getting here even without a status change,

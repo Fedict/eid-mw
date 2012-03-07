@@ -169,10 +169,10 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 
    memset(pInfo, 0, sizeof(CK_INFO));
    pInfo->cryptokiVersion.major = 2;
-   pInfo->cryptokiVersion.minor = 11;
+   pInfo->cryptokiVersion.minor = 20;
    strcpy_n(pInfo->manufacturerID,  "Belgium Government",  sizeof(pInfo->manufacturerID), ' ');
    strcpy_n(pInfo->libraryDescription, "Belgium eID PKCS#11 interface v2", sizeof(pInfo->libraryDescription), ' ');
-   pInfo->libraryVersion.major = 1;
+   pInfo->libraryVersion.major = 2;
    pInfo->libraryVersion.minor = 0;
 
    cleanup:
@@ -239,6 +239,15 @@ if (pulCount == NULL_PTR)
    goto cleanup;
    }
    
+if(pSlotList == NULL)
+{
+	ret = cal_close();
+	if(ret == CKR_OK)
+	{
+		cal_init();
+	}
+}
+
 //init slots allready done
 //update info on tokens in slot, could be removed if thread keeps track of these token states
 //BUG in Adobe Acrobat reader: adobe asks for slots with pSlotList = NULL, so only nr of slots will be returned. This is ok.
@@ -247,7 +256,8 @@ if (pulCount == NULL_PTR)
 //to overcome this problem, we start our SlotIDs from 0 and not 1 !!!
 
 log_trace(WHERE, "I: h=0");
-for (h=0; h < p11_get_nreaders(); h++)
+//Do not show the virtual reader (used to capture the reader connect events)
+for (h=0; h < (p11_get_nreaders()-1); h++)
    {
 	   log_trace(WHERE, "I: h=%i",h);
    pSlot = p11_get_slot(h);
@@ -579,7 +589,7 @@ return ret;
 
 
 CK_FUNCTION_LIST pkcs11_function_list = {
-   { 2, 11 },
+   { 2, 20 },
    C_Initialize,
    C_Finalize,
    C_GetInfo,

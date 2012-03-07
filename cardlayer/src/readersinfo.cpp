@@ -28,6 +28,7 @@ CReadersInfo::CReadersInfo()
 	m_ulReaderCount = 0;
 }
 
+//contains the virtual reader
 unsigned long CReadersInfo::ReaderCount()
 {
 	return m_ulReaderCount;
@@ -100,12 +101,14 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
 {
 	m_poPCSC = poPCSC;
 	bFirstTime = true;
-    m_ulReaderCount = 0;
+  m_ulReaderCount = 0;
 
 	//Parse the string reader-list into the array "m_tcsReaders"
 	const char *csReaders = (const char *) oReaders.GetBytes();
-    for (size_t i = 0;
-		csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS;
+	size_t i;
+
+    for (i = 0;
+		csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS-1;
 		i++, m_ulReaderCount++)
     {
         m_tInfos[m_ulReaderCount].csReader = csReaders;
@@ -113,6 +116,15 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
         m_tInfos[m_ulReaderCount].ulEventState = 0;
         csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
     }
+
+		//Add an extra hidden reader to detect new attached reader events
+		if(i < MAX_READERS)
+		{
+			  m_tInfos[m_ulReaderCount].csReader = "\\\\?PnP?\\Notification";
+        m_tInfos[m_ulReaderCount].ulCurrentState = 0;
+        m_tInfos[m_ulReaderCount].ulEventState = 0;
+				m_ulReaderCount++;
+		}
 }
 
 }
