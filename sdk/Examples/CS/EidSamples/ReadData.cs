@@ -60,7 +60,7 @@ namespace EidSamples
                 m = Module.GetInstance(mFileName);
             }
             //initialization now occurs within the getinstance function
-            ////m.Initialize();
+            //m.Initialize();
             try
             {
                 // Look for slots (cardreaders)
@@ -68,11 +68,12 @@ namespace EidSamples
                 Slot[] slots = m.GetSlotList(false);
                 if (slots.Length == 0)
                     slotID = "";
-                slotID = slots[0].SlotInfo.SlotDescription.Trim();
+                else
+                    slotID = slots[0].SlotInfo.SlotDescription.Trim();
             }
             finally
             {
-                // m.Dispose();//m.Finalize_();
+                //m.Finalize_();
                 m.Dispose();
             }
             return slotID;
