@@ -1,4 +1,4 @@
-sample requierments
+sample requirements
 
 In order to build the SDK C# samples, following software needs to be installed:
 
@@ -10,8 +10,9 @@ http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-csharp
 
 2) C# crypto library:
 The examples provided in the sdk, use bouncycastle as crypto library. (http://www.bouncycastle.org/)
-The C# crypto library of bouncycastle can be found on : http://www.bouncycastle.org/csharp/index.html
-copy the BouncyCastle.Crypto.dll into the "CS\References" folder
+The C# crypto library of bouncycastle is also included in the pkcs11net project (see 4)),
+but if needed, you can find the latest version at: http://www.bouncycastle.org/csharp/index.html
+(copy the BouncyCastle.Crypto.dll into the "CS\References" folder)
 
 
 3) nunit (needed by Net.pkcs11)
@@ -28,7 +29,7 @@ svn checkout https://pkcs11net.svn.sourceforge.net/svnroot/pkcs11net (homepage a
 
 Adjust the links in the 'references' folder of the projects if needed (depend on where you placed bouncycastle, nunit and our sdk samples)
 
-Some change is needed to pkcs11 as our pkcs11 library uses the CDECL calling convention
+4.1) A change is needed to pkcs11net as our pkcs11 library uses the CDECL calling convention
 add "[System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Cdecl)]"
 before each delegate function. (all delegate functions are listed in a 'delegate' folder)
 e.g.
@@ -38,9 +39,15 @@ e.g.
         uint slotID
     );
 
+4.2) A second change might also be needed to pkcs11net, as some of its pkcs11 structs do not have their alignment set to 1.
+We (beidpkcs11.dll) package the pkcs11 structs with 1-byte alignment, but the pkcs11net wrapper uses the default.
+
+How to change the alignment of the pkcs11net wrapper structs:
+e.g. for the CK_ATTRIBUTE struct:
+in CK_ATTRIBUTE.cs change [StructLayout(LayoutKind.Sequential,Charset.Unicode)] to
+[StructLayout(LayoutKind.Sequential,Charset.Unicode,Pack=1)]
 
 
-
-adjust our SDK sample, depending on what version of pkcs11net you are using
+5) adjust our SDK sample, depending on what version of pkcs11net you are using
 (Module.Initialize(); is now included in the constructor and Module.Finalize_() is replaced by Module.Dispose();)
 copy the Net.Pkcs11.dll into the "CS\References" folder
