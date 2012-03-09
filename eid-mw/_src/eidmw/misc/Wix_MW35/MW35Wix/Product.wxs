@@ -4,7 +4,7 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?include ..\..\..\svn_revision.wxs ?>
 
-  <?define var.OfficialProductVersion =4.0.0?>
+  <?define var.OfficialProductVersion =4.0.2?>
   <?define var.ProductVersion =4.0.$(var.RevisionNumber)?>
   <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
 
@@ -138,7 +138,6 @@
               </Directory>
             </Directory>
           </Directory>
-          <Directory Id="DIRECTORYCACHE" Name=".cache"/>
           <Directory Id="LOGDIR" Name="log"/>
         </Directory>
         <Directory Id="FIREFOXROOTFOLDER" Name="Mozilla Firefox">
@@ -377,16 +376,6 @@
         </CreateFolder>
         <RemoveFile Id="RemoveLogFiles" On="uninstall" Name="*"/>
         <RemoveFolder Id="RemoveLogFolder" On="uninstall"/>
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="DIRECTORYCACHE">
-      <Component Id="DirectoryCache" Guid="{7CAEB639-7068-4084-B422-D7B5E55D0FBC}" KeyPath="yes">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
-        <RemoveFile Id="RemoveCacheFiles" On="uninstall" Name="*"/>
-        <RemoveFolder Id="RemoveCacheFolder" On="uninstall"/>
       </Component>
     </DirectoryRef>
 
@@ -819,7 +808,7 @@
 
 
     <DirectoryRef Id="ApplicationProgramsFolder">
-	  <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
+      <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
         <Shortcut Id="eidviewerStartMenuShortcut"
           Name="eID Viewer"
           Description="!(loc.BeidGuiDescr)"
@@ -831,7 +820,7 @@
                   Description="!(loc.BeidGuiDescr)"
                   Target="[BEIDVIEWERDIR]eID Viewer.exe"
                   WorkingDirectory="BEIDVIEWERDIR"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="1" KeyPath="yes" />
+          <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eID Viewer" Type="integer" Value="1" KeyPath="yes" />
       </Component>
       <Component Id="BeidApplicationProgramsFolder" Guid="{CBD0F388-EAE5-4FA1-8C38-EC223928FF13}">				  
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
@@ -880,7 +869,6 @@
       <ComponentRef Id="CrlDir"/>
       <ComponentRef Id="HttpDir"/>
       <ComponentRef Id="CrlEidBelgiumBe"/>
-      <ComponentRef Id="DirectoryCache"/>
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
       <ComponentRef Id="BWCompatibilityJava_Jar" />
@@ -930,7 +918,7 @@
       <ComponentRef Id="BEIDVIEWER"/>
       <ComponentGroupRef Id="BEIDVIEWERLIB"/>
       <ComponentRef Id="eidviewerShortcut"/>
-      </Feature>
+    </Feature>
 
     <Feature Id="Crypto"
                 Title="!(loc.Crypto)"
@@ -981,40 +969,7 @@
     </UI>
     
     <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
-    
-    <CustomAction Id="SetCacheDirHidden"
-                  Impersonate="no"
-                  BinaryKey="MarkHidden" 
-                  ExeCommand="&quot;[ProgramFilesFolder]Belgium Identity Card\.cache&quot;"
-                  Execute="deferred"
-                  Return="asyncNoWait"
-                  />
 
-    <Binary Id="MarkHidden" SourceFile="..\..\..\misc\Wix_MW35\MarkHidden\Release\MarkHidden.exe"/>   
-    <Binary Id="BEID_CLEANUP" SourceFile="..\..\..\misc\Wix_MW35\beidcleanup\Release\beidcleanup.exe"/>
-
-    <!--
-    Cleanup parameters supported:
-    - Avoid to run the cleanup process              =>  CLEANUP_NO=1
-    - Force de cleanup to kill all locking process  =>  CLEANUP_FORCE=1
-    - Define a specific log file                    =>  CLEANUP_LOG=<FileName>
--->
-    <CustomAction Id="ForceCleanup" Property="ForceCleanup" Value="-f " />
-    <CustomAction Id="NotForceCleanup" Property="ForceCleanup" Value="" />
-
-    <CustomAction Id="LogCleanup" Property="LogCleanup" Value="-l &quot;[CLEANUP_LOG]&quot; " />
-    <CustomAction Id="NotLogCleanup" Property="LogCleanup" Value="" />
-
-    <CustomAction Id="IsQuietMode" Property="QuietMode" Value="-q " />
-    <CustomAction Id="NotIsQuietMode" Property="QuietMode" Value="" />
-    
-    <CustomAction Id="BeidCleanup"
-              BinaryKey="BEID_CLEANUP"
-              ExeCommand="[QuietMode][ForceCleanup][LogCleanup]-u -k $(var.ProductGuidGeneric)"
-              Impersonate="no"
-              Return="check"
-              Execute="deferred"
-    />
     <CustomAction Id="BeidSccertProp"
           FileKey="beidsccertprop.exe"
           ExeCommand="-c"
@@ -1025,30 +980,12 @@
     
     <CustomAction Id="IsPrivileged" Error="!(loc.AdminNeeded)" />
 
-    <InstallExecuteSequence>
-
-      <RemoveExistingProducts After="InstallFinalize" />
-
+    <InstallExecuteSequence>    
+      <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>  
       <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
-
-      <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>
-
-      <Custom Action="IsQuietMode" Before="BeidCleanup"><![CDATA[UILevel<5 OR NOT UILevel]]></Custom>
-      <Custom Action="NotIsQuietMode" Before="BeidCleanup"><![CDATA[UILevel>=5]]></Custom>
-
-      <Custom Action="LogCleanup" Before="BeidCleanup">CLEANUP_LOG</Custom>
-      <Custom Action="NotLogCleanup" Before="BeidCleanup">NOT CLEANUP_LOG</Custom>
-     
-      <Custom Action="ForceCleanup" Before="BeidCleanup">CLEANUP_FORCE=1</Custom>
-      <Custom Action="NotForceCleanup" Before="BeidCleanup"><![CDATA[CLEANUP_FORCE<>1 OR NOT CLEANUP_FORCE]]></Custom>
-      
-      <Custom Action="BeidCleanup" After="InstallInitialize"><![CDATA[(CLEANUP_NO<>1 OR NOT CLEANUP_NO)]]></Custom>
-      
-      <Custom Action="SetCacheDirHidden"  After="InstallFiles">NOT Installed</Custom>
       <Custom Action="BeidSccertProp" After="InstallFiles"><![CDATA[VersionNT<600]]></Custom>
-
-      <ScheduleReboot After="InstallFinalize">NOT Installed</ScheduleReboot>
-    
+      <RemoveExistingProducts After="InstallExecute"/>
+      <ScheduleReboot After="InstallFinalize">NOT Installed</ScheduleReboot>      
     </InstallExecuteSequence>
 
   </Product>
