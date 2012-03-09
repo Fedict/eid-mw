@@ -19,7 +19,7 @@ Platform Requirements
 ======================
 The Sdk is tested on the following platforms:
 - Windows: XP SP3, Vista, Windows 7
-- Linux: fedora 14, Ubuntu 10.10
+- Linux:
 - Mac: OSX 10.5 (Leopard) Intel, OSX 10.6 (SnowLeopard)
 
 Software requirements
@@ -33,7 +33,7 @@ Linux:
 - default g++ should be installed
 
 Mac OSX:
-- default g++ should be installed
+- xcodeproj c example is included
 
 
 About the SDK
