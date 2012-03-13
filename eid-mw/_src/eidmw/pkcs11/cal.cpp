@@ -820,15 +820,11 @@ int cal_get_card_data(CK_SLOT_ID hSlot)
 	//	char cBuffer[250];
 	//	unsigned char ucBuffer[250];
 	char* plabel = NULL;
-	unsigned long ulLen=0;
 	CTLVBuffer oTLVBuffer;
 	P11_SLOT *pSlot = NULL;
 	CK_ATTRIBUTE ID_DATA[]= BEID_TEMPLATE_ID_DATA;
-	BEID_DATA_LABELS_NAME ID_LABELS[]=BEID_ID_DATA_LABELS;
-	BEID_DATA_LABELS_NAME ADDRESS_LABELS[]=BEID_ADDRESS_DATA_LABELS;
 
 	CK_ULONG hObject = 0;
-	P11_OBJECT *pObject = NULL;
 
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
@@ -847,62 +843,62 @@ int cal_get_card_data(CK_SLOT_ID hSlot)
 		plabel = BEID_LABEL_ATR;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oATR.GetBytes(),(CK_ULONG)oATR.Size(),
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		plabel = BEID_LABEL_DATA_FILE;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oCardData.GetBytes(),(CK_ULONG)oCardData.Size(),
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		CByteArray data = CByteArray(oCardData.GetBytes(), 16);
 		plabel = BEID_LABEL_DATA_SerialNr;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size(),
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(16);
 		plabel = BEID_LABEL_DATA_CompCode;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(17);
 		plabel = BEID_LABEL_DATA_OSNr;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(18);
 		plabel = BEID_LABEL_DATA_OSVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(19);
 		plabel = BEID_LABEL_DATA_SoftMaskNumber;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(20);
 		plabel = BEID_LABEL_DATA_SoftMaskVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(21);
 		plabel = BEID_LABEL_DATA_ApplVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		data.ClearContents();
@@ -911,35 +907,35 @@ int cal_get_card_data(CK_SLOT_ID hSlot)
 		plabel = BEID_LABEL_DATA_GlobOSVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size(),
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(24);
 		plabel = BEID_LABEL_DATA_ApplIntVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(25);
 		plabel = BEID_LABEL_DATA_PKCS1Support;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(26);
 		plabel = BEID_LABEL_DATA_KeyExchangeVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		oByte = oCardData.GetByte(27);
 		plabel = BEID_LABEL_DATA_ApplLifeCycle;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
 		//		data.ClearContents();
@@ -997,7 +993,6 @@ int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 	int nrOfItems = 0;
 
 	CK_ULONG hObject = 0;
-	P11_OBJECT *pObject = NULL;
 
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
@@ -1081,7 +1076,7 @@ int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 			pobjectID = BEID_OBJECTID_PHOTO;
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
-				BEID_OBJECTID_RNCERT, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT));
+				(CK_VOID_PTR)BEID_OBJECTID_RNCERT, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT));
 			if (ret) goto cleanup;
 			if(dataType != CACHED_DATA_TYPE_ALL){
 				break;
@@ -1091,7 +1086,7 @@ int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 			oFileData = oReader.ReadFile(BEID_FILE_ID_SIGN);
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
-				BEID_OBJECTID_SIGN_DATA_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_DATA_FILE));
+				(CK_VOID_PTR)BEID_OBJECTID_SIGN_DATA_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_DATA_FILE));
 			if (ret) goto cleanup;
 			if(dataType != CACHED_DATA_TYPE_ALL){
 				break;
@@ -1101,7 +1096,7 @@ int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 			oFileData = oReader.ReadFile(BEID_FILE_ADDRESS_SIGN);
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
-				BEID_OBJECTID_SIGN_ADDRESS_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_ADDRESS_FILE));
+				(CK_VOID_PTR)BEID_OBJECTID_SIGN_ADDRESS_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_ADDRESS_FILE));
 			if (ret) goto cleanup;
 			if(dataType != CACHED_DATA_TYPE_ALL){
 				break;
