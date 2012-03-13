@@ -11,14 +11,14 @@
 // To specified in the .rc files
 
 #define BEID_COMPANY_NAME    	"Belgian Government"
-#define BEID_COPYRIGHT    		"Copyright (C) 2011"
+#define BEID_COPYRIGHT    		"Copyright (C) 2012"
 #define BEID_PRODUCT_NAME    	"Belgium eID MiddleWare"
 
-#define BEID_PRODUCT_VERSION    "4.0.0"
-#define BASE_VERSION_STRING    "4, 0, 0, "
+#define BEID_PRODUCT_VERSION    "4.0.2"
+#define BASE_VERSION_STRING    "4, 0, 2, "
 #define BASE_VERSION1          4
 #define BASE_VERSION2          0
-#define BASE_VERSION3          0
+#define BASE_VERSION3          2
 
 // Common Lib
 #define WIN_CL_VERSION_STRING    BASE_VERSION_STRING SVN_REVISION_STR
