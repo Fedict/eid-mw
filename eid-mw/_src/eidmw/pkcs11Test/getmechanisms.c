@@ -64,15 +64,20 @@ CK_RV test_getmechanisms() {
 	testlog(LVL_INFO,"PKCS#11 version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
 
 	// C_GetSlotList
-	frv = (*functions->C_GetSlotList) (0, 0, &slot_count);
+	frv = (*functions->C_GetSlotList) (CK_TRUE, 0, &slot_count);
 	if (CKR_OK != frv) {
 		testlog(LVL_ERROR,"C_GetSlotList error\n");
 		testlog(LVL_INFO, "test_show_mechanismsinfo leave\n");
 		goto finalize;
 	}
+	if(slot_count == 0)
+	{
+		testlog(LVL_INFO, "no card found\n");
+		goto finalize;
+	}
 	testlog(LVL_INFO,"slot count: %i\n", slot_count);
 	slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
-	frv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
+	frv = (*functions->C_GetSlotList) (CK_TRUE, slotIds, &slot_count);
 	if (CKR_OK != frv) {
 		testlog(LVL_ERROR,"C_GetSlotList (2) error\n");
 		testlog(LVL_INFO, "test_show_mechanismsinfo leave\n");
