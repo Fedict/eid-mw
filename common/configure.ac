@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([libbeidcommon],[4.0.0],[servicedesk@fedict.be])
+AC_INIT([libbeidcommon],[4.0.2],[servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/mwexception.h])
 AC_CONFIG_HEADERS([config.h])

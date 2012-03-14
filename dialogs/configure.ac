@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([libbeiddialogs],[4.0.0],[support@fedict.be])
+AC_INIT([libbeiddialogs],[4.0.2],[support@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/langutil.h])
 AC_CONFIG_HEADERS([config.h])

@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([libbeidpkcs11],[4.0.0], [servicedesk@fedict.be])
+AC_INIT([libbeidpkcs11],[4.0.2], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/beid_p11.h])
 AC_CONFIG_HEADERS([config.h])

@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([eid-mw-dmg-installer],[4.0.0],[servicedesk@fedict.be])
+AC_INIT([eid-mw-dmg-installer],[4.0.2],[servicedesk@fedict.be])
 AM_INIT_AUTOMAKE([foreign])
 AC_CANONICAL_HOST
 
