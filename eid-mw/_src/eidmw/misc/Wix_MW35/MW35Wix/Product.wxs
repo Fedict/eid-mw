@@ -560,7 +560,7 @@
         <!-- Start SCardSvr Service during startup -->
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
         <!-- Start SCardSvr Service now -->
-        <!--<ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" />-->
+        <!--<ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" Wait="no"/>-->
       </Component>
 
       <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010" Guid="{DBD8E310-00D3-402f-A2F2-1984DD825C4D}">
@@ -666,8 +666,8 @@
 
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="RemoveGui35Shortcuts" Guid="{93B9A186-E198-4a67-8AB1-6041D59BBE7F}">
-        <RemoveFile Id="RemoveBeidGuiStartMenuShortcut" Name="eID-Viewer" On="both"/>
-        <RemoveFile Id="RemoveEidViewerShortcut" Name="eID-Viewer" Directory="DesktopFolder" On="both"/>
+        <RemoveFile Id="RemoveBeidGuiStartMenuShortcut" Name="eID-Viewer.lnk" On="both"/>
+        <RemoveFile Id="RemoveEidViewerShortcut" Name="eID-Viewer.lnk" Directory="DesktopFolder" On="both"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="0" KeyPath="yes" />
       </Component>
       <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
@@ -829,7 +829,7 @@
       <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTFOLDER" />
       <UIRef Id="WixUI_ErrorProgressText" />
     </UI>
-  
+
     <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
 
     <CustomAction Id="BeidSccertProp"

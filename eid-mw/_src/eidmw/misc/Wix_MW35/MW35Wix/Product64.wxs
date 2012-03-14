@@ -690,6 +690,11 @@
     </DirectoryRef>
 
     <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="RemoveGui35Shortcuts" Guid="{93B9A186-E198-4a67-8AB1-6041D59BBE7F}">
+        <RemoveFile Id="RemoveBeidGuiStartMenuShortcut" Name="eID-Viewer.lnk" On="both"/>
+        <RemoveFile Id="RemoveEidViewerShortcut" Name="eID-Viewer.lnk" Directory="DesktopFolder" On="both"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="0" KeyPath="yes" />
+      </Component>
       <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}" Win64="no">
         <Shortcut Id="eidviewerStartMenuShortcut"
           Name="eID Viewer"
@@ -817,6 +822,7 @@
         <!-- Program Files -->
         <ComponentRef Id="BEIDVIEWER"/>
         <ComponentRef Id="eidviewerShortcut"/>
+        <ComponentRef Id="RemoveGui35Shortcuts"/>
       </Feature>
 
       <Feature Id="Crypto"
