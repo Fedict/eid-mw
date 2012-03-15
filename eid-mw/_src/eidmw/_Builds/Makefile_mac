@@ -141,6 +141,7 @@ OLD_ETC = beidbase.conf beidgui.conf
 BASE_SISPLUGINS = CARDPLUGINSIS_ACR38U_NAME_dylib
 #BASE_SISPLUGINS = 
 EID_VIEWER_APP_PATH = "../ThirdParty/eID\ Viewer.app"
+EID_VIEWER_APP_NAME = "eID\ Viewer.app"
 LATEST_XPI:=$(shell readlink ../xpi/builds/belgiumeid-CURRENT.xpi)
 XPI_107 = /Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi
 XPI_PLUGIN = xpi/builds/$(LATEST_XPI)
@@ -441,7 +442,7 @@ rel_end:
 	@echo "rm \"$(XPI_PLUGIN_DIR)/$(LATEST_XPI)\"" >> $(POSTFLIGHT)
 	@echo "rm \"$(XPI_107)\"" >> $(POSTFLIGHT)
 ##	@echo "unzip -qq -o \"$(APPS_DIR)/$(EID_VIEWER_ZIP)\" -d \"$(APPS_DIR)/\"" >> $(POSTFLIGHT)
-##	@echo "chmod -R +rx \"$(APPS_DIR)\"" >> $(POSTFLIGHT)
+	@echo "chmod -R +rx \"$(APPS_DIR)/$(EID_VIEWER_APP_NAME)\"" >> $(POSTFLIGHT)
 ##	@echo "rm \"$(APPS_DIR)/$(EID_VIEWER_ZIP)\"" >> $(POSTFLIGHT)
 	@echo 'if [[ $$(sw_vers -productVersion) == *10.5* ]]; then' >> $(POSTFLIGHT)
 	@echo "mv /Library/BelgiumIdentityCard/BEID.tokend /System/Library/Security/tokend/; else" >> $(POSTFLIGHT)
