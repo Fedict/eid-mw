@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2011 FedICT.
+* Copyright (C) 2008-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -113,7 +113,8 @@ extern "C" {
 	{ CKA_VALUE,            ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_VALUE_LEN,        ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_LABEL,            ( CK_VOID_PTR )    NULL, 0 },  \
-	{ CKA_MODIFIABLE,       ( CK_VOID_PTR )    NULL, 0 }   \
+	{ CKA_MODIFIABLE,       ( CK_VOID_PTR )    NULL, 0 },  \
+	{ CKA_OBJECT_ID,        ( CK_VOID_PTR )    NULL, 0 }   \
 }
 
 	//	{ BEID_FIELD_TAG_ID_Version,			"Version"},
@@ -147,36 +148,44 @@ extern "C" {
 	{ BEID_FIELD_TAG_ADDR_Municipality,		"address_municipality"}  \
 }
 
-#define BEID_FIELD_TAG_DATA_SerialNr				"carddata_serialnumber"
-#define BEID_FIELD_TAG_DATA_CompCode				"carddata_comp_code"
-#define BEID_FIELD_TAG_DATA_OSNr						"carddata_os_number"
-#define BEID_FIELD_TAG_DATA_OSVersion				"carddata_os_version"
-#define BEID_FIELD_TAG_DATA_SoftMaskNumber	"carddata_soft_mask_number"
-#define BEID_FIELD_TAG_DATA_SoftMaskVersion	"carddata_soft_mask_version"
-#define BEID_FIELD_TAG_DATA_ApplVersion			"carddata_appl_version"
-#define BEID_FIELD_TAG_DATA_GlobOSVersion		"carddata_glob_os_version"
-#define BEID_FIELD_TAG_DATA_ApplIntVersion	"carddata_appl_int_version"
-#define BEID_FIELD_TAG_DATA_PKCS1Support		"carddata_pkcs1_support"
-#define BEID_FIELD_TAG_DATA_ApplLifeCycle		"carddata_appl_lifecycle"
-#define BEID_FIELD_TAG_DATA_KeyExchangeVersion	"carddata_key_exchange_version"
-#define BEID_FIELD_TAG_DATA_Signature				"carddata_signature"
+#define BEID_LABEL_DATA_SerialNr				"carddata_serialnumber"
+#define BEID_LABEL_DATA_CompCode				"carddata_comp_code"
+#define BEID_LABEL_DATA_OSNr						"carddata_os_number"
+#define BEID_LABEL_DATA_OSVersion				"carddata_os_version"
+#define BEID_LABEL_DATA_SoftMaskNumber	"carddata_soft_mask_number"
+#define BEID_LABEL_DATA_SoftMaskVersion	"carddata_soft_mask_version"
+#define BEID_LABEL_DATA_ApplVersion			"carddata_appl_version"
+#define BEID_LABEL_DATA_GlobOSVersion		"carddata_glob_os_version"
+#define BEID_LABEL_DATA_ApplIntVersion	"carddata_appl_int_version"
+#define BEID_LABEL_DATA_PKCS1Support		"carddata_pkcs1_support"
+#define BEID_LABEL_DATA_ApplLifeCycle		"carddata_appl_lifecycle"
+#define BEID_LABEL_DATA_KeyExchangeVersion	"carddata_key_exchange_version"
+#define BEID_LABEL_DATA_Signature				"carddata_signature"
 
-#define BEID_FIELD_TAG_ATR									"ATR"
+#define BEID_LABEL_ATR									"ATR"
+
+#define BEID_OBJECTID_ID								"id"
+#define BEID_OBJECTID_ADDRESS							"address"
+#define BEID_OBJECTID_PHOTO								"photo"
+#define BEID_OBJECTID_CARDDATA							"carddata"
+#define BEID_OBJECTID_RNCERT							"rncert"
+#define BEID_OBJECTID_SIGN_DATA_FILE					"sign_data_file"
+#define BEID_OBJECTID_SIGN_ADDRESS_FILE					"sign_address_file"
 
 typedef struct BEID_DATA_LABELS_NAME {
 	unsigned char	tag;
 	char*			name;
 }BEID_DATA_LABELS_NAME;
 
-#define BEID_FIELD_TAG_DATA_FILE		"DATA_FILE"
-#define BEID_FIELD_TAG_ADDRESS_FILE		"ADDRESS_FILE"
-#define BEID_FIELD_TAG_PHOTO			"PHOTO_FILE"
-#define BEID_FIELD_TAG_CARD_DATA		"CARD_INFO"
-#define BEID_FIELD_TAG_CERT_RN			"CERT_RN_FILE"
-//#define BEID_FIELD_TAG_CERT_RNCA		"CERT_RNCA_FILE"
+#define BEID_LABEL_DATA_FILE		"DATA_FILE"
+#define BEID_LABEL_ADDRESS_FILE		"ADDRESS_FILE"
+#define BEID_LABEL_PHOTO			"PHOTO_FILE"
+#define BEID_LABEL_CARD_DATA		"CARD_DATA"
+#define BEID_LABEL_CERT_RN			"CERT_RN_FILE"
+//#define BEID_LABEL_CERT_RNCA		"CERT_RNCA_FILE"
 
-#define BEID_FIELD_TAG_SGN_RN			"SIGN_DATA_FILE"
-#define BEID_FIELD_TAG_SGN_ADDRESS	"SIGN_ADDRESS_FILE"
+#define BEID_LABEL_SGN_RN			"SIGN_DATA_FILE"
+#define BEID_LABEL_SGN_ADDRESS	"SIGN_ADDRESS_FILE"
 
 
 
@@ -195,7 +204,7 @@ int cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging
 int cal_logout(CK_SLOT_ID hSlot);
 int cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_newpin, CK_CHAR_PTR newpin);
 int cal_get_card_data(CK_SLOT_ID hSlot);
-int cal_read_ID_files(CK_SLOT_ID hSlot);
+int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType);
 int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject);
 int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out);
 int cal_validate_session(P11_SESSION *pSession);

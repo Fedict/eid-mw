@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2010 FedICT.
+* Copyright (C) 2008-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -26,11 +26,16 @@
 #include "cal.h"
 #include "display.h"
 
+//function declarations
+void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len);
+void SetParseFlagByObjectID(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len);
+
+
 #define WHERE "C_CreateObject()"
 CK_RV C_CreateObject(CK_SESSION_HANDLE hSession,    /* the session's handle */
-					 CK_ATTRIBUTE_PTR  pTemplate,   /* the object's template */
-					 CK_ULONG          ulCount,     /* attributes in template */
-					 CK_OBJECT_HANDLE_PTR phObject) /* receives new object's handle. */
+										 CK_ATTRIBUTE_PTR  pTemplate,   /* the object's template */
+										 CK_ULONG          ulCount,     /* attributes in template */
+										 CK_OBJECT_HANDLE_PTR phObject) /* receives new object's handle. */
 {
 	log_trace(WHERE, "S: C_CreateObject(): nop");
 	return (CKR_FUNCTION_NOT_SUPPORTED);
@@ -40,10 +45,10 @@ CK_RV C_CreateObject(CK_SESSION_HANDLE hSession,    /* the session's handle */
 
 #define WHERE "C_CopyObject()"
 CK_RV C_CopyObject(CK_SESSION_HANDLE    hSession,    /* the session's handle */
-				   CK_OBJECT_HANDLE     hObject,     /* the object's handle */
-				   CK_ATTRIBUTE_PTR     pTemplate,   /* template for new object */
-				   CK_ULONG             ulCount,     /* attributes in template */
-				   CK_OBJECT_HANDLE_PTR phNewObject) /* receives handle of copy */
+									 CK_OBJECT_HANDLE     hObject,     /* the object's handle */
+									 CK_ATTRIBUTE_PTR     pTemplate,   /* template for new object */
+									 CK_ULONG             ulCount,     /* attributes in template */
+									 CK_OBJECT_HANDLE_PTR phNewObject) /* receives handle of copy */
 {
 	log_trace(WHERE, "S: C_CopyObject(): nop");
 	return CKR_FUNCTION_NOT_SUPPORTED;
@@ -56,7 +61,7 @@ CK_RV C_CopyObject(CK_SESSION_HANDLE    hSession,    /* the session's handle */
 
 #define WHERE "C_DestroyObject()"
 CK_RV C_DestroyObject(CK_SESSION_HANDLE hSession,  /* the session's handle */
-					  CK_OBJECT_HANDLE  hObject)   /* the object's handle */
+											CK_OBJECT_HANDLE  hObject)   /* the object's handle */
 {
 	log_trace(WHERE, "S: C_DestroyObject(): nop");
 	return CKR_FUNCTION_NOT_SUPPORTED;
@@ -68,8 +73,8 @@ CK_RV C_DestroyObject(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 #define WHERE "C_GetObjectSize()"
 CK_RV C_GetObjectSize(CK_SESSION_HANDLE hSession,  /* the session's handle */
-					  CK_OBJECT_HANDLE  hObject,   /* the object's handle */
-					  CK_ULONG_PTR      pulSize)   /* receives size of object */
+											CK_OBJECT_HANDLE  hObject,   /* the object's handle */
+											CK_ULONG_PTR      pulSize)   /* receives size of object */
 {
 	log_trace(WHERE, "S: C_GetObjectSize(): nop");
 	return CKR_FUNCTION_NOT_SUPPORTED;
@@ -80,9 +85,9 @@ CK_RV C_GetObjectSize(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 #define WHERE "C_GetAttributeValue()"
 CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle */
-						  CK_OBJECT_HANDLE  hObject,    /* the object's handle */
-						  CK_ATTRIBUTE_PTR  pTemplate,  /* specifies attributes, gets values */
-						  CK_ULONG          ulCount)    /* attributes in template */
+													CK_OBJECT_HANDLE  hObject,    /* the object's handle */
+													CK_ATTRIBUTE_PTR  pTemplate,  /* specifies attributes, gets values */
+													CK_ULONG          ulCount)    /* attributes in template */
 {
 	/*
 	This function returns the values from the object.
@@ -200,9 +205,9 @@ cleanup:
 
 #define WHERE "C_SetAttributeValue()"
 CK_RV C_SetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle */
-						  CK_OBJECT_HANDLE  hObject,    /* the object's handle */
-						  CK_ATTRIBUTE_PTR  pTemplate,  /* specifies attributes and values */
-						  CK_ULONG          ulCount)    /* attributes in template */
+													CK_OBJECT_HANDLE  hObject,    /* the object's handle */
+													CK_ATTRIBUTE_PTR  pTemplate,  /* specifies attributes and values */
+													CK_ULONG          ulCount)    /* attributes in template */
 {
 	log_trace(WHERE, "S: C_SetAttributeValue(): nop");
 	return CKR_FUNCTION_NOT_SUPPORTED;
@@ -212,16 +217,17 @@ CK_RV C_SetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 
 #define WHERE "C_FindObjectsInit()"
 CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
-						CK_ATTRIBUTE_PTR  pTemplate,  /* attribute values to match */
-						CK_ULONG          ulCount)    /* attributes in search template */
+												CK_ATTRIBUTE_PTR  pTemplate,  /* attribute values to match */
+												CK_ULONG          ulCount)    /* attributes in search template */
 {
 	P11_SESSION *pSession = NULL;
 	P11_FIND_DATA *pData = NULL;
 	int ret;
 	CK_ULONG      *pclass = NULL;
 	CK_ULONG       len = 0;
-	CK_BBOOL		addIdObjects = CK_FALSE;
-	CK_BYTE allowCardRead = P11_DISPLAY_NO;
+	CK_BBOOL			addIdObjects = CK_FALSE;
+	CK_BYTE				filesToCacheFlag = CACHED_DATA_TYPE_ALL;
+	CK_BYTE				allowCardRead = P11_DISPLAY_NO;
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -346,6 +352,25 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 			log_trace(WHERE, "E: p11_copy_object() returned %d", ret);
 			goto cleanup;
 		}
+		//parse the search template
+		if(addIdObjects == CK_TRUE)
+		{
+			CK_UTF8CHAR* pLabel;
+			CK_UTF8CHAR* pObjectID;
+			ret = p11_get_attribute_value(pTemplate, ulCount, CKA_OBJECT_ID, (CK_VOID_PTR *) &pObjectID, &len);
+			if ( (ret == 0) && (len > 0 ) )
+			{
+				SetParseFlagByObjectID(&filesToCacheFlag,pObjectID,len);
+			}
+			else
+			{
+				ret = p11_get_attribute_value(pTemplate, ulCount, CKA_LABEL, (CK_VOID_PTR *) &pLabel, &len);
+				if ( (ret == 0) && (len > 0 ) )
+				{
+					SetParseFlagByLabel(&filesToCacheFlag,pLabel,len);
+				}
+			}
+		}
 	}
 
 	pData->size = ulCount;
@@ -353,37 +378,74 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	//set search operation to active state since there can be only one
 	pSession->Operation[P11_OPERATION_FIND].active = 1;
 
-	if ( addIdObjects && (pSession->bCardDataCashed == FALSE) )
+	if ( addIdObjects )
 	{
-		ret = cal_read_ID_files(pSession->hslot);
-		if (ret != 0)
+		//check if the data isn't cached already
+		if(	((filesToCacheFlag != CACHED_DATA_TYPE_ALL) && ((pSession->bCardDataCashed & filesToCacheFlag) == FALSE)) ||
+			((filesToCacheFlag == CACHED_DATA_TYPE_ALL) && (pSession->bCardDataCashed != CACHED_DATA_TYPE_ALL)) )
 		{
-			log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
-			goto cleanup;
+			CK_ULONG counter = 0;
+			CK_ULONG flagsToCheckListLen = 6;
+			CK_BYTE flagsToCheckList[6] = {CACHED_DATA_TYPE_ID,CACHED_DATA_TYPE_ADDRESS,CACHED_DATA_TYPE_PHOTO,
+				CACHED_DATA_TYPE_RNCERT,CACHED_DATA_TYPE_SIGN_DATA_FILE,CACHED_DATA_TYPE_SIGN_ADDRESS_FILE};
+
+			switch(filesToCacheFlag)
+			{
+			case CACHED_DATA_TYPE_ALL:
+				//cache and parse whatever isn't cached already
+				//first check if carddata is cashed already, if not parse and cache it
+				if( (pSession->bCardDataCashed & CACHED_DATA_TYPE_CARDDATA) == 0){
+					ret = cal_get_card_data(pSession->hslot);
+					if (ret != 0){
+						log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+						goto cleanup;
+					}
+				}
+				//check which other files are cached already, parse and cache those that aren't
+				while(counter < flagsToCheckListLen){
+					ret = cal_read_ID_files(pSession->hslot,flagsToCheckList[counter]);
+					if (ret != 0){
+						log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+						goto cleanup;
+					}
+					counter++;
+				}
+				break;
+			case CACHED_DATA_TYPE_CARDDATA:
+				//cache and parse only the carddata
+				ret = cal_get_card_data(pSession->hslot);
+				if (ret != 0){
+					log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+					goto cleanup;
+				}
+				break;
+			default:
+				//cache and parse only the requested file type
+				ret = cal_read_ID_files(pSession->hslot,filesToCacheFlag);
+				if (ret != 0){
+					log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+					goto cleanup;
+				}
+			}
+			//remember the file(s) we cashed
+			pSession->bCardDataCashed |= filesToCacheFlag;
 		}
-		ret = cal_get_card_data(pSession->hslot);
-		if (ret != 0)
-		{
-			log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
-			goto cleanup;
-		}
-		pSession->bCardDataCashed = TRUE;
 	}
 
-ret = CKR_OK;
+	ret = CKR_OK;
 
 cleanup:
-p11_unlock();
-return ret;
+	p11_unlock();
+	return ret;
 }
 #undef WHERE
 
 
 #define WHERE "C_FindObjects()"
 CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's handle */
-					CK_OBJECT_HANDLE_PTR phObject,          /* receives object handle array */
-					CK_ULONG             ulMaxObjectCount,  /* max handles to be returned */
-					CK_ULONG_PTR         pulObjectCount)    /* actual number returned */
+										CK_OBJECT_HANDLE_PTR phObject,          /* receives object handle array */
+										CK_ULONG             ulMaxObjectCount,  /* max handles to be returned */
+										CK_ULONG_PTR         pulObjectCount)    /* actual number returned */
 {
 	/*
 
@@ -613,3 +675,100 @@ cleanup:
 }
 #undef WHERE
 
+
+void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len)
+{
+	CK_ULONG nrOfItems = 0;
+	CK_ULONG counter = 0;
+	BEID_DATA_LABELS_NAME ID_LABELS[]=BEID_ID_DATA_LABELS;
+	BEID_DATA_LABELS_NAME ADDRESS_LABELS[]=BEID_ADDRESS_DATA_LABELS;
+
+	CK_ULONG carddataLabelsListLen = 14;
+	CK_UTF8CHAR_PTR carddataLabelsList[14] = {BEID_LABEL_DATA_SerialNr,BEID_LABEL_DATA_CompCode,BEID_LABEL_DATA_OSNr,
+		BEID_LABEL_DATA_OSVersion,BEID_LABEL_DATA_SoftMaskNumber,BEID_LABEL_DATA_SoftMaskVersion,
+		BEID_LABEL_DATA_ApplVersion,BEID_LABEL_DATA_GlobOSVersion,BEID_LABEL_DATA_ApplIntVersion,
+		BEID_LABEL_DATA_PKCS1Support,BEID_LABEL_DATA_ApplLifeCycle,BEID_LABEL_DATA_KeyExchangeVersion,
+		BEID_LABEL_DATA_Signature,BEID_LABEL_ATR};
+
+	//labels from identity data
+	nrOfItems = sizeof(ID_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
+	while(counter < nrOfItems)
+	{
+		if(strncmp(ID_LABELS[counter].name,pLabel,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_ID;
+			return;
+		}
+		counter++;
+	}
+	//labels from address data
+	counter = 0;
+	nrOfItems = sizeof(ADDRESS_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
+	while(counter < nrOfItems)
+	{
+		if(strncmp(ADDRESS_LABELS[counter].name,pLabel,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_ADDRESS;
+			return;
+		}
+		counter++;
+	}
+
+	//label of the foto file
+	if(strncmp(BEID_LABEL_PHOTO,pLabel,len)){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_PHOTO;
+		return;
+	}
+	//label of the RN cert
+	if(strncmp(BEID_LABEL_CERT_RN,pLabel,len)){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_RNCERT;
+		return;
+	}
+	//label of the data signature file
+	if(strncmp(BEID_LABEL_SGN_RN,pLabel,len)){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_DATA_FILE;
+		return;
+	}
+	//label of the address signature cert
+	if(strncmp(BEID_LABEL_SGN_ADDRESS,pLabel,len)){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_ADDRESS_FILE;
+		return;
+	}
+	//labels from card data
+	counter = 0;
+	while(counter < carddataLabelsListLen)
+	{
+		if(strncmp(carddataLabelsList[counter],pLabel,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_CARDDATA;
+			return;
+		}
+		counter++;
+	}
+	//unknown label
+	return;
+}
+
+
+void SetParseFlagByObjectID(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len)
+{
+	if(strncmp(BEID_OBJECTID_ID,pObjectID,len)==0){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_ID;
+	}
+	else if(strncmp(BEID_OBJECTID_ADDRESS,pObjectID,len)==0){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_ADDRESS;
+	}
+	else if(strncmp(BEID_OBJECTID_PHOTO,pObjectID,len)==0){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_PHOTO;
+	}
+	else if(strncmp(BEID_OBJECTID_CARDDATA,pObjectID,len)==0){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_CARDDATA;
+	}
+	else if(strncmp(BEID_OBJECTID_RNCERT,pObjectID,len)==0){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_RNCERT;
+	}
+	else if(strncmp(BEID_OBJECTID_SIGN_DATA_FILE,pObjectID,len)==0){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_DATA_FILE;
+	}
+	else if(strncmp(BEID_OBJECTID_SIGN_ADDRESS_FILE,pObjectID,len)==0){
+		*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_ADDRESS_FILE;
+	}
+	return;
+}

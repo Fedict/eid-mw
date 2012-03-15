@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -458,7 +458,7 @@ return (ret);
 #define WHERE "p11_add_slot_ID_object()"
 int p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
 						   CK_ULONG type, CK_BBOOL bPrivate, CK_ULONG *phObject,
-						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen)
+						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen, CK_VOID_PTR pobjectID, CK_ULONG objectIDLen)
 {
 int ret = CKR_OK;
 P11_OBJECT *pObject = NULL;
@@ -539,7 +539,15 @@ if (ret)
 ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_VALUE_LEN, &valueLen, sizeof(CK_ULONG));
 if (ret)
    {
-   log_trace(WHERE, "E: p11_set_attribute_value(CKA_VALUE) returned %d", ret);
+   log_trace(WHERE, "E: p11_set_attribute_value(CKA_VALUE_LEN) returned %d", ret);
+   goto cleanup;
+   }
+
+//CKA_OBJECT_ID
+ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_OBJECT_ID, pobjectID, objectIDLen);
+if (ret)
+   {
+   log_trace(WHERE, "E: p11_set_attribute_value(CKA_OBJECT_ID) returned %d", ret);
    goto cleanup;
    }
 

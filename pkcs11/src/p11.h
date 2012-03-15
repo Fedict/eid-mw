@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -54,6 +54,16 @@ extern "C" {
 #define CARD_TYPE_GEMPLUS			100
 
 #define CARD_TYPE_NOTSUPPORTED		   -100
+
+
+#define CACHED_DATA_TYPE_ID												0x01
+#define CACHED_DATA_TYPE_ADDRESS									0x02
+#define CACHED_DATA_TYPE_PHOTO										0x04
+#define CACHED_DATA_TYPE_CARDDATA									0x08
+#define CACHED_DATA_TYPE_RNCERT										0x10
+#define CACHED_DATA_TYPE_SIGN_DATA_FILE						0x20
+#define CACHED_DATA_TYPE_SIGN_ADDRESS_FILE				0x40
+#define CACHED_DATA_TYPE_ALL											0x7F //All the above are set
 
 #define CARD_FUNCTION_NOT_IMPLEMENTED  -101
 #define CARD_FUNCTION_NOT_SUPPORTED		-102
@@ -245,7 +255,7 @@ CK_RV p11_set_attribute_value(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_A
 int p11_copy_object(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_PTR pObject);
 int p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
 						   CK_ULONG type, CK_BBOOL bPrivate, CK_ULONG *phObject,
-						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen);
+						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen, CK_VOID_PTR pobjectID, CK_ULONG objectIDLen);
 int p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken, CK_ULONG type, CK_ULONG id, CK_BBOOL bPrivate, CK_ULONG *phObject);
 int p11_clean_object(P11_OBJECT *pObject);
 void p11_clean_attributelist(CK_ATTRIBUTE_PTR pAttr, CK_ULONG ulCount);
