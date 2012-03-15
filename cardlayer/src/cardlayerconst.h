@@ -27,7 +27,7 @@ namespace eIDMW
  * The maximum number of readers; if more readers are present
  * only the first MAX_READERS that are found will used.
  */
-const static unsigned long MAX_READERS = 9;
+const static unsigned long MAX_READERS = 8;
 
 typedef enum
 {
