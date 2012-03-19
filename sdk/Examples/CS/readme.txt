@@ -1,6 +1,6 @@
 sample requirements
 
-In order to build the SDK C# samples, following software needs to be installed:
+In order to build the SDK C# samples, the following software needs to be installed:
 
 1) development environment:
 Microsoft Visual Studio 2010 express project files are present in the sdk.
@@ -27,7 +27,7 @@ copy the nunit.framework.dll and nunit.framework.xml into the "CS\References" fo
 you'll need to rebuild the pkcs11net, download the sources:
 svn checkout https://pkcs11net.svn.sourceforge.net/svnroot/pkcs11net (homepage at http://sourceforge.net/projects/pkcs11net/)
 
-Adjust the links in the 'references' folder of the projects if needed (depend on where you placed bouncycastle, nunit and our sdk samples)
+Adjust the links in the 'references' folder of the projects if needed (depending on where you placed bouncycastle, nunit and our sdk samples)
 
 4.1) A change is needed to pkcs11net as our pkcs11 library uses the CDECL calling convention
 add "[System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Cdecl)]"

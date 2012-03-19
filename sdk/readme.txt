@@ -71,7 +71,7 @@ Description (depending of the platform):
 
 API Documentation
 =================
-The SDK 4.0 uses the pkcs11 v2.11 API. This API is explained in following document:
+The SDK 4.0 uses the pkcs11 v2.11 API. This API is explained in the following document:
 “RSA Security Inc. Public-Key Cryptography Standards (PKCS)”, this document can be found
 in the doc folder (pkcs-11v2-11r1.pdf).
 
@@ -88,7 +88,7 @@ Test cards
 Before test cards can be used, set the cert_allow_testcard configuration option to '1'
 as follows:
 
- - On Windows: create the following REG_DWORD and set it's value to 1:
+ - On Windows: create the following REG_DWORD and set its value to 1:
      HKEY_CURRENT_USER\Software\BEID\certificatevalidation\cert_allow_testcard
  - On Linux: create/edit the file ~/.config/beid.conf to add the following:
      [certificatevalidation]
@@ -105,7 +105,7 @@ Logging
 For extra logging, set the log_level configuration option to 'debug'
 as follows:
 
- - On Windows: create the following REG_DWORD and set it's value to 1:
+ - On Windows: create the following REG_DWORD and set its value to 1:
      HKEY_CURRENT_USER\Software\BEID\logging\log_level
  - On Linux: create/edit the file ~/.config/beid.conf to add the following:
      [logging]
@@ -122,5 +122,3 @@ The log files can be found:
 
 Known issues
 ============
-
-
