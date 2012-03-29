@@ -14,11 +14,11 @@
 #define BEID_COPYRIGHT    		"Copyright (C) 2012"
 #define BEID_PRODUCT_NAME    	"Belgium eID MiddleWare"
 
-#define BEID_PRODUCT_VERSION    "4.0.3"
-#define BASE_VERSION_STRING    "4, 0, 3, "
+#define BEID_PRODUCT_VERSION    "4.0.4"
+#define BASE_VERSION_STRING    "4, 0, 4, "
 #define BASE_VERSION1          4
 #define BASE_VERSION2          0
-#define BASE_VERSION3          3
+#define BASE_VERSION3          4
 
 // Common Lib
 #define WIN_CL_VERSION_STRING    BASE_VERSION_STRING SVN_REVISION_STR
