@@ -4,7 +4,7 @@
 ###### version nr of the complete package
 REL_MAJ=4
 REL_MIN=0
-REL_REV=3
+REL_REV=4
 
 ###### version nr of GUI
 EIDGUI=beidgui
