@@ -564,7 +564,7 @@ if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
 if(ret != CKR_OK)
 	goto cleanup;
 
-if(locked == CK_TRUE){
+if(locked == CK_FALSE){
 	ret = p11_lock();
 	if (ret != CKR_OK)
 	{
@@ -585,8 +585,8 @@ if (ret == CKR_OK)
 * to polling in the main thread, like before. */
 
 cleanup:
-
-p11_unlock();
+if(locked == CK_TRUE)
+	p11_unlock();
 
 log_trace(WHERE, "I: leave, ret = %i",ret);
 return ret;
