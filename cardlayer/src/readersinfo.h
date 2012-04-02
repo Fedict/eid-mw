@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -59,6 +59,16 @@ public:
 	bool CheckReaderEvents(
 		unsigned long ulTimeout = TIMEOUT_INFINITE,
 		unsigned long ulIndex = ALL_READERS);
+
+		/**
+	 * Checks if cards have been inserted/removed (by calling
+	 * the SCardGetStatusChange function).
+	 * Specify ulTimeout = TIMEOUT_INFINITE to never time out
+	 * created a new function for pkcs11, as we don't want to change the CSP's behaviour
+	 * this is temporary, pkcs11 will move away from using this cardlayer
+	 */
+	void CheckTheReaderEvents(
+		unsigned long ulTimeout = TIMEOUT_INFINITE);
 
 	/**
 	 * Whether or not the state of the reader has changed since the last Update()

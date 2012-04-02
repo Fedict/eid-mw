@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -28,6 +28,7 @@ CReadersInfo::CReadersInfo()
 	m_ulReaderCount = 0;
 }
 
+//contains the virtual reader
 unsigned long CReadersInfo::ReaderCount()
 {
 	return m_ulReaderCount;
@@ -78,7 +79,8 @@ bool CReadersInfo::ReaderStateChanged(unsigned long ulIndex)
 	if (ulIndex >= m_ulReaderCount)
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
 
-    return 0 != (m_tInfos[ulIndex].ulEventState & EIDMW_STATE_CHANGED);
+	return (m_tInfos[ulIndex].ulEventState != m_tInfos[ulIndex].ulCurrentState);
+    //return 0 != (m_tInfos[ulIndex].ulEventState & EIDMW_STATE_CHANGED);
 }
 
 bool CReadersInfo::CardPresent(unsigned long ulIndex)
@@ -100,12 +102,14 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
 {
 	m_poPCSC = poPCSC;
 	bFirstTime = true;
-    m_ulReaderCount = 0;
+  m_ulReaderCount = 0;
 
 	//Parse the string reader-list into the array "m_tcsReaders"
 	const char *csReaders = (const char *) oReaders.GetBytes();
-    for (size_t i = 0;
-		csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS;
+	size_t i;
+
+    for (i = 0;
+		csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS-1;
 		i++, m_ulReaderCount++)
     {
         m_tInfos[m_ulReaderCount].csReader = csReaders;
@@ -113,6 +117,30 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
         m_tInfos[m_ulReaderCount].ulEventState = 0;
         csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
     }
+
+		//Add an extra reader to detect new attached reader events
+		if(i < MAX_READERS)
+		{
+			  m_tInfos[m_ulReaderCount].csReader = "\\\\?PnP?\\Notification";
+        m_tInfos[m_ulReaderCount].ulCurrentState = 0;
+        m_tInfos[m_ulReaderCount].ulEventState = 0;
+				m_ulReaderCount++;
+		}
+}
+
+void CReadersInfo::CheckTheReaderEvents(unsigned long ulTimeout)
+{
+	if (bFirstTime)
+	{
+		//fill the m_tInfos with initial values
+		m_poPCSC->GetTheStatusChange(0, m_tInfos, m_ulReaderCount);
+		bFirstTime = false;
+	}
+
+	//get new status values for all readers
+	m_poPCSC->GetTheStatusChange(ulTimeout, m_tInfos, m_ulReaderCount);
+
+	return;
 }
 
 }
