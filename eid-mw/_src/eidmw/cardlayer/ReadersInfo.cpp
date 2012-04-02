@@ -78,7 +78,8 @@ bool CReadersInfo::ReaderStateChanged(unsigned long ulIndex)
 	if (ulIndex >= m_ulReaderCount)
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
 
-    return 0 != (m_tInfos[ulIndex].ulEventState & EIDMW_STATE_CHANGED);
+	return (m_tInfos[ulIndex].ulEventState != m_tInfos[ulIndex].ulCurrentState);
+    //return 0 != (m_tInfos[ulIndex].ulEventState & EIDMW_STATE_CHANGED);
 }
 
 bool CReadersInfo::CardPresent(unsigned long ulIndex)
@@ -113,6 +114,21 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
         m_tInfos[m_ulReaderCount].ulEventState = 0;
         csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
     }
+}
+
+void CReadersInfo::CheckTheReaderEvents(unsigned long ulTimeout)
+{
+	if (bFirstTime)
+	{
+		//fill the m_tInfos with initial values
+		m_poPCSC->GetTheStatusChange(0, m_tInfos, m_ulReaderCount);
+		bFirstTime = false;
+	}
+
+	//get new status values for all readers
+	m_poPCSC->GetTheStatusChange(ulTimeout, m_tInfos, m_ulReaderCount);
+
+	return;
 }
 
 }

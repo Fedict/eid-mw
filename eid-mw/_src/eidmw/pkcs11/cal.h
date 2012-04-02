@@ -209,8 +209,8 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject);
 int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out);
 int cal_validate_session(P11_SESSION *pSession);
 int cal_update_token(CK_SLOT_ID hSlot);
-int cal_wait_for_slot_event(int block, int *cardevent, int *ph);
-
+CK_RV cal_wait_for_slot_event(int block);
+CK_RV cal_get_slot_changes(int *ph);
 
 #ifdef __cplusplus
   }

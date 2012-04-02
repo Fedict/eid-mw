@@ -136,6 +136,8 @@ if (pReserved != NULL)
 //g_final = 0; /* Belpic */
 g_init = BEIDP11_DEINITIALIZING;
 
+
+
 ret = cal_close();
 
 cleanup:
@@ -494,12 +496,11 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
                          CK_VOID_PTR pReserved) /* reserved.  Should be NULL_PTR */
 {
 CK_RV ret = CKR_OK;
-int block = 0;
 int h;
 int cardevent = 0;
 P11_SLOT *p11Slot = NULL;
 int i = 0;
-int locked = 0;
+CK_BBOOL locked = CK_FALSE;
 
 log_trace(WHERE, "I: enter");
 ret = p11_lock();
@@ -508,7 +509,7 @@ if (ret != CKR_OK)
 	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
   return ret;
 }
-  locked = 1;
+locked = CK_TRUE;
 
 log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
 
@@ -532,34 +533,43 @@ for (i=0; i < p11_get_nreaders(); i++)
       }
    }
 
-
 if (flags & CKF_DONT_BLOCK)
-   block = 0;
-else
-   {
-   if (locked)
-      {
-      p11_unlock();
-      locked = 0;
-      }
-   block = 1;
-   }
-
-//log_trace(WHERE, "W: C_WaitForSlotEvent (block=%d)", block);
-ret = cal_wait_for_slot_event(block, &cardevent, &h);
-
-if (cardevent == 1)
-   *pSlot = h;
+{
+	ret = cal_wait_for_slot_event(0);//0 means don't block
+}
 else
 {
-	if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
-	{
-		log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
-		CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
-	}
-
-	CLEANUP(CKR_NO_EVENT);
+	//release lock while waiting
+	p11_unlock();
+	locked = CK_FALSE;
+	ret = cal_wait_for_slot_event(1);//1 means block
 }
+
+//ret is 0x30 when SCardGetStatusChange gets cancelled 
+if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
+{
+	log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
+	CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
+}
+
+if(ret != CKR_OK)
+	goto cleanup;
+
+if(locked == CK_TRUE){
+	ret = p11_lock();
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+		return ret;
+	}
+}
+ret = cal_get_slot_changes(&h);
+
+if (ret == CKR_OK)
+   *pSlot = h;
+
+//else CKR_NO_EVENT
+
 /* Firefox 1.5 tries to call this function (with the blocking flag)
 * in a separate thread; and this causes the pkcs11 lib to hang on Linux
 * So we might have to return "not supported" in which case Ff 1.5 defaults
@@ -567,8 +577,7 @@ else
 
 cleanup:
 
-if (locked)
-   p11_unlock();
+p11_unlock();
 
 log_trace(WHERE, "I: leave, ret = %i",ret);
 return ret;
