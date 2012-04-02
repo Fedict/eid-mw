@@ -169,10 +169,10 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 
    memset(pInfo, 0, sizeof(CK_INFO));
    pInfo->cryptokiVersion.major = 2;
-   pInfo->cryptokiVersion.minor = 11;
+   pInfo->cryptokiVersion.minor = 20;
    strcpy_n(pInfo->manufacturerID,  "Belgium Government",  sizeof(pInfo->manufacturerID), ' ');
    strcpy_n(pInfo->libraryDescription, "Belgium eID PKCS#11 interface v2", sizeof(pInfo->libraryDescription), ' ');
-   pInfo->libraryVersion.major = 1;
+   pInfo->libraryVersion.major = 2;
    pInfo->libraryVersion.minor = 0;
 
    cleanup:
@@ -238,7 +238,14 @@ if (pulCount == NULL_PTR)
    ret = CKR_ARGUMENTS_BAD;
    goto cleanup;
    }
-   
+
+if(pSlotList == NULL){
+	ret = cal_close();
+	if(ret == CKR_OK){
+		cal_init();
+	}
+}
+
 //init slots allready done
 //update info on tokens in slot, could be removed if thread keeps track of these token states
 //BUG in Adobe Acrobat reader: adobe asks for slots with pSlotList = NULL, so only nr of slots will be returned. This is ok.
@@ -247,6 +254,8 @@ if (pulCount == NULL_PTR)
 //to overcome this problem, we start our SlotIDs from 0 and not 1 !!!
 
 log_trace(WHERE, "I: h=0");
+//Do not show the virtual reader (used to capture the reader connect events)
+//for (h=0; h < (p11_get_nreaders()-1); h++)
 for (h=0; h < p11_get_nreaders(); h++)
    {
 	   log_trace(WHERE, "I: h=%i",h);
@@ -494,12 +503,11 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
                          CK_VOID_PTR pReserved) /* reserved.  Should be NULL_PTR */
 {
 CK_RV ret = CKR_OK;
-int block = 0;
 int h;
 int cardevent = 0;
 P11_SLOT *p11Slot = NULL;
 int i = 0;
-int locked = 0;
+CK_BBOOL locked = CK_FALSE;
 
 log_trace(WHERE, "I: enter");
 ret = p11_lock();
@@ -508,7 +516,7 @@ if (ret != CKR_OK)
 	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
   return ret;
 }
-  locked = 1;
+locked = CK_TRUE;
 
 log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
 
@@ -532,34 +540,43 @@ for (i=0; i < p11_get_nreaders(); i++)
       }
    }
 
-
 if (flags & CKF_DONT_BLOCK)
-   block = 0;
-else
-   {
-   if (locked)
-      {
-      p11_unlock();
-      locked = 0;
-      }
-   block = 1;
-   }
-
-//log_trace(WHERE, "W: C_WaitForSlotEvent (block=%d)", block);
-ret = cal_wait_for_slot_event(block, &cardevent, &h);
-
-if (cardevent == 1)
-   *pSlot = h;
+{
+	ret = cal_wait_for_slot_event(0);//0 means don't block
+}
 else
 {
-	if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
-	{
-		log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
-		CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
-	}
-
-	CLEANUP(CKR_NO_EVENT);
+	//release lock while waiting
+	p11_unlock();
+	locked = CK_FALSE;
+	ret = cal_wait_for_slot_event(1);//1 means block
 }
+
+//ret is 0x30 when SCardGetStatusChange gets cancelled 
+if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
+{
+	log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
+	CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
+}
+
+if(ret != CKR_OK)
+	goto cleanup;
+
+if(locked == CK_FALSE){
+	ret = p11_lock();
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+		return ret;
+	}
+}
+ret = cal_get_slot_changes(&h);
+
+if (ret == CKR_OK)
+   *pSlot = h;
+
+//else CKR_NO_EVENT
+
 /* Firefox 1.5 tries to call this function (with the blocking flag)
 * in a separate thread; and this causes the pkcs11 lib to hang on Linux
 * So we might have to return "not supported" in which case Ff 1.5 defaults
@@ -567,8 +584,8 @@ else
 
 cleanup:
 
-if (locked)
-   p11_unlock();
+if (locked == CK_TRUE)
+p11_unlock();
 
 log_trace(WHERE, "I: leave, ret = %i",ret);
 return ret;
@@ -579,7 +596,7 @@ return ret;
 
 
 CK_FUNCTION_LIST pkcs11_function_list = {
-   { 2, 11 },
+   { 2, 20 },
    C_Initialize,
    C_Finalize,
    C_GetInfo,

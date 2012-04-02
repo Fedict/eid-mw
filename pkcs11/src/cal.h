@@ -114,7 +114,7 @@ extern "C" {
 	{ CKA_VALUE_LEN,        ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_LABEL,            ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_MODIFIABLE,       ( CK_VOID_PTR )    NULL, 0 },  \
-	{ CKA_OBJECT_ID,        ( CK_VOID_PTR )    NULL, 0 }   \
+	{ CKA_OBJECT_ID,				( CK_VOID_PTR )    NULL, 0 }	 \
 }
 
 	//	{ BEID_FIELD_TAG_ID_Version,			"Version"},
@@ -164,13 +164,13 @@ extern "C" {
 
 #define BEID_LABEL_ATR									"ATR"
 
-#define BEID_OBJECTID_ID								"id"
+#define BEID_OBJECTID_ID									"id"		
 #define BEID_OBJECTID_ADDRESS							"address"
 #define BEID_OBJECTID_PHOTO								"photo"
-#define BEID_OBJECTID_CARDDATA							"carddata"
+#define BEID_OBJECTID_CARDDATA						"carddata"
 #define BEID_OBJECTID_RNCERT							"rncert"
-#define BEID_OBJECTID_SIGN_DATA_FILE					"sign_data_file"
-#define BEID_OBJECTID_SIGN_ADDRESS_FILE					"sign_address_file"
+#define BEID_OBJECTID_SIGN_DATA_FILE			"sign_data_file"
+#define BEID_OBJECTID_SIGN_ADDRESS_FILE		"sign_address_file"
 
 typedef struct BEID_DATA_LABELS_NAME {
 	unsigned char	tag;
@@ -209,8 +209,8 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject);
 int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out);
 int cal_validate_session(P11_SESSION *pSession);
 int cal_update_token(CK_SLOT_ID hSlot);
-int cal_wait_for_slot_event(int block, int *cardevent, int *ph);
-
+CK_RV cal_wait_for_slot_event(int block);
+CK_RV cal_get_slot_changes(int *ph);
 
 #ifdef __cplusplus
   }

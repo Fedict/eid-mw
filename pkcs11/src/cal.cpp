@@ -42,12 +42,12 @@ CCardLayer *oCardLayer;
 CReadersInfo *oReadersInfo;
 
 extern "C" {
-extern unsigned int   gRefCount;
-extern unsigned int   nReaders;
-extern P11_SLOT       gpSlot[MAX_SLOTS];
-//local functions
-int cal_translate_error(const char *WHERE, long err);
-int cal_map_status(tCardStatus calstatus);
+	extern unsigned int   gRefCount;
+	extern unsigned int   nReaders;
+	extern P11_SLOT       gpSlot[MAX_SLOTS];
+	//local functions
+	int cal_translate_error(const char *WHERE, long err);
+	int cal_map_status(tCardStatus calstatus);
 }
 
 #define WHERE "cal_init()"
@@ -95,8 +95,6 @@ int cal_close()
 	//if (--gRefCount > 0)
 	//   return (0);
 
-	ret = cal_clean_slots();
-
 	if (oCardLayer)
 		delete(oCardLayer);
 	if (oReadersInfo)
@@ -104,6 +102,8 @@ int cal_close()
 
 	oCardLayer = NULL;
 	oReadersInfo   = NULL;
+
+	ret = cal_clean_slots();
 
 	return (ret);
 }
@@ -1497,60 +1497,18 @@ int cal_update_token(CK_SLOT_ID hSlot)
 
 
 #define WHERE "cal_wait_for_slot_event()"
-int cal_wait_for_slot_event(int block, int *cardevent, int *ph)
+CK_RV cal_wait_for_slot_event(int block)
 {
-	int ret = 0;
-	long lRet = 0;
-	bool calevent = false;
-	int first = 1;
-	P11_SLOT *pSlot = NULL;
+	CK_RV ret = CKR_OK;
 
 	try 
 	{
-		if (block)
-		{
-			calevent = oReadersInfo->CheckReaderEvents(TIMEOUT_INFINITE, ALL_READERS);
-			log_trace(WHERE, "W: calevent (1) = %d", calevent == true ? 1:0);
-			//    if (calevent == false)
-			//       {
-			//       calevent = oReadersInfo.CheckReaderEvents(TIMEOUT_INFINITE, ALL_READERS);
-			//       log_trace(WHERE, "W: calevent (2) = %d", calevent == true ? 1:0);
-			//       }
+		if (block){
+			oReadersInfo->CheckTheReaderEvents(TIMEOUT_INFINITE);
 		}
-		else
-		{
-			calevent = oReadersInfo->CheckReaderEvents(0);
+		else{
+			oReadersInfo->CheckTheReaderEvents(0);
 		}
-
-		if (calevent)
-		{
-			*cardevent = 1;
-			//0 to nreaders match the handles of readers in slotlist
-			for (int i=0; i < p11_get_nreaders();i++)
-			{
-				if (oReadersInfo->ReaderStateChanged(i))
-				{
-					//return first reader that changed state
-					//there could be more than one reader that changed state,
-					//keep these events in the slotlist
-					if (first)
-					{
-						*ph = i;
-						first = 0;
-					}
-					else
-					{
-						pSlot = p11_get_slot(i);
-						if (oReadersInfo->CardPresent(i))
-							pSlot->ievent = 1;
-						else
-							pSlot->ievent = -1;
-					}
-				}
-			}
-		}
-		else
-			ret = CKR_NO_EVENT;
 	}
 	catch (CMWException e)
 	{
@@ -1558,7 +1516,6 @@ int cal_wait_for_slot_event(int block, int *cardevent, int *ph)
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		CLEANUP(CKR_FUNCTION_FAILED);
 	}
@@ -1568,7 +1525,39 @@ cleanup:
 }
 #undef WHERE
 
+#define WHERE "cal_get_slot_changes()"
+CK_RV cal_get_slot_changes(int *ph)
+{
+	int first = 1;
+	P11_SLOT *pSlot = NULL;
+	CK_RV ret = CKR_NO_EVENT;
 
+	for (int i=0; i < p11_get_nreaders();i++)
+	{
+		if (oReadersInfo->ReaderStateChanged(i))
+		{
+			//return first reader that changed state
+			//there could be more than one reader that changed state,
+			//keep these events in the slotlist
+			if (first)
+			{
+				*ph = i;
+				first = 0;
+				ret = CKR_OK;
+			}
+			else
+			{
+				pSlot = p11_get_slot(i);
+				if (oReadersInfo->CardPresent(i))
+					pSlot->ievent = 1;
+				else
+					pSlot->ievent = -1;
+			}
+		}
+	}
+	return ret;
+}
+#undef WHERE
 
 #define WHERE "cal_map_status()"
 int cal_map_status(tCardStatus calstatus)

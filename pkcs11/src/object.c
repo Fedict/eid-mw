@@ -694,9 +694,12 @@ void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_UL
 	nrOfItems = sizeof(ID_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
 	while(counter < nrOfItems)
 	{
-		if(strncmp(ID_LABELS[counter].name,pLabel,len)==0){
-			*pFilesToParseFlag=CACHED_DATA_TYPE_ID;
-			return;
+		if(strlen(ID_LABELS[counter].name) == len)
+		{
+			if(memcmp(ID_LABELS[counter].name,pLabel,len)==0){
+				*pFilesToParseFlag=CACHED_DATA_TYPE_ID;
+				return;
+			}
 		}
 		counter++;
 	}
@@ -704,41 +707,59 @@ void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_UL
 	counter = 0;
 	nrOfItems = sizeof(ADDRESS_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
 	while(counter < nrOfItems)
-	{
-		if(strncmp(ADDRESS_LABELS[counter].name,pLabel,len)==0){
-			*pFilesToParseFlag=CACHED_DATA_TYPE_ADDRESS;
-			return;
+	{		
+		if(strlen(ADDRESS_LABELS[counter].name) == len)
+		{
+			if(memcmp(ADDRESS_LABELS[counter].name,pLabel,len)==0){
+				*pFilesToParseFlag=CACHED_DATA_TYPE_ADDRESS;
+				return;
+			}
 		}
 		counter++;
 	}
 
 	//label of the foto file
-	if(strncmp(BEID_LABEL_PHOTO,pLabel,len)){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_PHOTO;
-		return;
+	if(strlen(BEID_LABEL_PHOTO) == len)
+	{
+		if(memcmp(BEID_LABEL_PHOTO,pLabel,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_PHOTO;
+			return;
+		}
 	}
 	//label of the RN cert
-	if(strncmp(BEID_LABEL_CERT_RN,pLabel,len)){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_RNCERT;
-		return;
+	if(strlen(BEID_LABEL_CERT_RN) == len)
+	{
+		if(memcmp(BEID_LABEL_CERT_RN,pLabel,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_RNCERT;
+			return;
+		}
 	}
 	//label of the data signature file
-	if(strncmp(BEID_LABEL_SGN_RN,pLabel,len)){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_DATA_FILE;
-		return;
+	if(strlen(BEID_LABEL_SGN_RN) == len)
+	{
+		if(memcmp(BEID_LABEL_SGN_RN,pLabel,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_DATA_FILE;
+			return;
+		}
 	}
 	//label of the address signature cert
-	if(strncmp(BEID_LABEL_SGN_ADDRESS,pLabel,len)){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_ADDRESS_FILE;
-		return;
+	if(strlen(BEID_LABEL_SGN_ADDRESS) == len)
+	{
+		if(memcmp(BEID_LABEL_SGN_ADDRESS,pLabel,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_ADDRESS_FILE;
+			return;
+		}
 	}
 	//labels from card data
 	counter = 0;
 	while(counter < carddataLabelsListLen)
 	{
-		if(strncmp(carddataLabelsList[counter],pLabel,len)==0){
-			*pFilesToParseFlag=CACHED_DATA_TYPE_CARDDATA;
-			return;
+		if(strlen(carddataLabelsList[counter]) == len)
+		{
+			if(memcmp(carddataLabelsList[counter],pLabel,len)==0){
+				*pFilesToParseFlag=CACHED_DATA_TYPE_CARDDATA;
+				return;
+			}
 		}
 		counter++;
 	}
@@ -749,26 +770,47 @@ void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_UL
 
 void SetParseFlagByObjectID(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len)
 {
-	if(strncmp(BEID_OBJECTID_ID,pObjectID,len)==0){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_ID;
+	if(strlen(BEID_OBJECTID_ID)==len){
+		if(memcmp(BEID_OBJECTID_ID,pObjectID,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_ID;
+			return;
+		}
 	}
-	else if(strncmp(BEID_OBJECTID_ADDRESS,pObjectID,len)==0){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_ADDRESS;
+	if(strlen(BEID_OBJECTID_ADDRESS)==len){
+		if(memcmp(BEID_OBJECTID_ADDRESS,pObjectID,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_ADDRESS;
+			return;
+		}
 	}
-	else if(strncmp(BEID_OBJECTID_PHOTO,pObjectID,len)==0){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_PHOTO;
+	if(strlen(BEID_OBJECTID_PHOTO)==len){
+		if(memcmp(BEID_OBJECTID_PHOTO,pObjectID,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_PHOTO;
+			return;
+		}
 	}
-	else if(strncmp(BEID_OBJECTID_CARDDATA,pObjectID,len)==0){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_CARDDATA;
+	if(strlen(BEID_OBJECTID_CARDDATA)==len){
+		if(memcmp(BEID_OBJECTID_CARDDATA,pObjectID,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_CARDDATA;
+			return;
+		}
 	}
-	else if(strncmp(BEID_OBJECTID_RNCERT,pObjectID,len)==0){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_RNCERT;
+	if(strlen(BEID_OBJECTID_RNCERT)==len){
+		if(memcmp(BEID_OBJECTID_RNCERT,pObjectID,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_RNCERT;
+			return;
+		}
 	}
-	else if(strncmp(BEID_OBJECTID_SIGN_DATA_FILE,pObjectID,len)==0){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_DATA_FILE;
+	if(strlen(BEID_OBJECTID_SIGN_DATA_FILE)==len){
+		if(memcmp(BEID_OBJECTID_SIGN_DATA_FILE,pObjectID,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_DATA_FILE;
+			return;
+		}
 	}
-	else if(strncmp(BEID_OBJECTID_SIGN_ADDRESS_FILE,pObjectID,len)==0){
-		*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_ADDRESS_FILE;
+	if(strlen(BEID_OBJECTID_SIGN_ADDRESS_FILE)==len){
+		if(memcmp(BEID_OBJECTID_SIGN_ADDRESS_FILE,pObjectID,len)==0){
+			*pFilesToParseFlag=CACHED_DATA_TYPE_SIGN_ADDRESS_FILE;
+			return;
+		}
 	}
 	return;
 }

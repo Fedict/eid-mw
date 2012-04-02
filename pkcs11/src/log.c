@@ -38,7 +38,7 @@
  * Macros
  *
  ******************************************************************************/
-//#define CLEANUP(x) { err = (x); goto cleanup; } //defined in p11.h
+//#define CLEANUP(x) { err = (x); goto cleanup; }
 
 #ifndef MAX_PATH
 #define MAX_PATH 128
