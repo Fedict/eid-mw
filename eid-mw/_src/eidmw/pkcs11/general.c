@@ -57,9 +57,9 @@ int ret = CKR_OK;
 CK_C_INITIALIZE_ARGS_PTR p_args;
 
 #if _DEBUG
-   log_init(DEFAULT_LOG_FILE, LOG_LEVEL_INFO);
+   log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_INFO);
 #else
-   log_init(DEFAULT_LOG_FILE, LOG_LEVEL_WARNING);
+   log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_WARNING);
 #endif
 	log_trace(WHERE, "I: enter pReserved = %p",pReserved);
    if (g_init != BEIDP11_NOT_INITIALIZED)

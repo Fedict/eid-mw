@@ -32,6 +32,10 @@
 #include "p11.h"
 #include "log.h"
 #include "util.h"
+#include "../common/log.h"
+#include "../common/Config.h"
+
+using namespace eIDMW;
 
 /******************************************************************************
  *
@@ -74,8 +78,30 @@ void log_init(char *pszLogFile, unsigned int uiLogLevel)
 
   util_init_lock(&logmutex);
   util_lock(logmutex);
+	char path[256];
 
-  strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
+	std::wstring regLogLevel = CConfig::GetString(CConfig::EIDMW_CONFIG_PARAM_LOGGING_LEVEL);
+	if (wcsncmp(regLogLevel.c_str(),L"debug", wcslen(L"debug")) == 0)
+		uiLogLevel = LOG_LEVEL_PKCS11_INFO;
+	else	if (wcsncmp(regLogLevel.c_str(),L"info", wcslen(L"info")) == 0)
+		uiLogLevel = LOG_LEVEL_PKCS11_INFO;
+	else	if (wcsncmp(regLogLevel.c_str(),L"warning", wcslen(L"warning")) == 0)
+		uiLogLevel = LOG_LEVEL_PKCS11_WARNING;
+	else	if (wcsncmp(regLogLevel.c_str(),L"error", wcslen(L"error")) == 0)
+		uiLogLevel = LOG_LEVEL_PKCS11_ERROR;
+
+	std::string logFile;
+	std::wstring regLogDir = CConfig::GetString(CConfig::EIDMW_CONFIG_PARAM_LOGGING_DIRNAME);
+	if (regLogDir.c_str() != NULL){
+		memset(path,0,sizeof(path));
+		WideCharToMultiByte(CP_UTF8,0,regLogDir.c_str(),-1,path,255, NULL,NULL);
+		logFile = path;
+		logFile+= "/pkcs11.log";
+		strcpy_s(g_szLogFile,sizeof(g_szLogFile), logFile.c_str());
+	}
+	else {
+		strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
+	}
   g_uiLogLevel = uiLogLevel;
 
   //this will empty the logfile automatically
@@ -111,17 +137,17 @@ void log_trace(const char *where, const char *string,... )
     switch (string[0])
     {
       case 'I':
-        if (level  < LOG_LEVEL_INFO) 
+        if (level  < LOG_LEVEL_PKCS11_INFO) 
           return;
         break;
 
       case 'S':
-        if (level  < LOG_LEVEL_SPY) 
+        if (level  < LOG_LEVEL_PKCS11_SPY) 
           return;
         break;
 
       case 'W':
-        if (level < LOG_LEVEL_WARNING) 
+        if (level < LOG_LEVEL_PKCS11_WARNING) 
           return;
         break;
 
@@ -371,17 +397,17 @@ unsigned int  level = g_uiLogLevel & 0x0F;
     switch (string[0])
       {
       case 'I':
-        if (level  < LOG_LEVEL_INFO) 
+        if (level  < LOG_LEVEL_PKCS11_INFO) 
           return;
         break;
 
       case 'S':
-        if (level  < LOG_LEVEL_SPY) 
+        if (level  < LOG_LEVEL_PKCS11_SPY) 
           return;
         break;
 
       case 'W':
-        if (level < LOG_LEVEL_WARNING) 
+        if (level < LOG_LEVEL_PKCS11_WARNING) 
           return;
         break;
 
@@ -676,4 +702,3 @@ switch(err)
       return(cerr); break;
    }
 }
-

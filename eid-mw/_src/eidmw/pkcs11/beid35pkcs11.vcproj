@@ -384,7 +384,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\log.c"
+				RelativePath=".\log.cpp"
 				>
 			</File>
 			<File
