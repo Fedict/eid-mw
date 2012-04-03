@@ -90,16 +90,22 @@ void log_init(char *pszLogFile, unsigned int uiLogLevel)
 	else	if (wcsncmp(regLogLevel.c_str(),L"error", wcslen(L"error")) == 0)
 		uiLogLevel = LOG_LEVEL_PKCS11_ERROR;
 
+
 	std::string logFile;
 	std::wstring regLogDir = CConfig::GetString(CConfig::EIDMW_CONFIG_PARAM_LOGGING_DIRNAME);
 	if (regLogDir.c_str() != NULL){
 		memset(path,0,sizeof(path));
+#ifdef WIN32
 		WideCharToMultiByte(CP_UTF8,0,regLogDir.c_str(),-1,path,255, NULL,NULL);
+#else
+		wcstombs(path, regLogDir.c_str(), 255);
+#endif
 		logFile = path;
 		logFile+= "/pkcs11.log";
 		strcpy_s(g_szLogFile,sizeof(g_szLogFile), logFile.c_str());
 	}
-	else {
+	else 
+	{
 		strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
 	}
   g_uiLogLevel = uiLogLevel;

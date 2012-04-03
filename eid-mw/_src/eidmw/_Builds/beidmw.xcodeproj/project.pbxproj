@@ -118,7 +118,6 @@
 		7FA1AA340F85F439000D9EE1 /* cert.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA210F85F439000D9EE1 /* cert.c */; };
 		7FA1AA360F85F439000D9EE1 /* encrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA230F85F439000D9EE1 /* encrypt.c */; };
 		7FA1AA370F85F439000D9EE1 /* general.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA240F85F439000D9EE1 /* general.c */; };
-		7FA1AA380F85F439000D9EE1 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA250F85F439000D9EE1 /* log.c */; };
 		7FA1AA3A0F85F439000D9EE1 /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA270F85F439000D9EE1 /* p11.c */; };
 		7FA1AA3C0F85F439000D9EE1 /* phash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA290F85F439000D9EE1 /* phash.cpp */; };
 		7FA1AA3E0F85F439000D9EE1 /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2B0F85F439000D9EE1 /* session.c */; };
@@ -185,6 +184,7 @@
 		86A9430D1122D6E50011C6A8 /* libxerces-c-3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */; };
 		86D0915311ABF313007BC75E /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D0915211ABF313007BC75E /* PCSC.framework */; };
 		86D0918011ABFA40007BC75E /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D0915211ABF313007BC75E /* PCSC.framework */; };
+		86E110DF152B3C62004197EA /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E110DE152B3C62004197EA /* log.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -612,6 +612,7 @@
 		86A90A2B1122D6880011C6A8 /* trunk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trunk; path = "/beid-mw/trunk"; sourceTree = "<absolute>"; };
 		86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libxerces-c-3.1.dylib"; path = "/beid-mw/trunk/eid-mw/_src/ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib"; sourceTree = "<absolute>"; };
 		86D0915211ABF313007BC75E /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework; sourceTree = DEVELOPER_DIR; };
+		86E110DE152B3C62004197EA /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log.cpp; path = ../pkcs11/log.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -737,6 +738,7 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
+				86E110DE152B3C62004197EA /* log.cpp */,
 				7FBB025A0F83937F009B751F /* Common */,
 				7FBB02DC0F839518009B751F /* Common_Socket */,
 				7F90113E0F85058E004A5FCC /* Beidgui */,
@@ -1598,7 +1600,6 @@
 				7FA1AA340F85F439000D9EE1 /* cert.c in Sources */,
 				7FA1AA360F85F439000D9EE1 /* encrypt.c in Sources */,
 				7FA1AA370F85F439000D9EE1 /* general.c in Sources */,
-				7FA1AA380F85F439000D9EE1 /* log.c in Sources */,
 				7FA1AA3A0F85F439000D9EE1 /* p11.c in Sources */,
 				7FA1AA3C0F85F439000D9EE1 /* phash.cpp in Sources */,
 				7FA1AA3E0F85F439000D9EE1 /* session.c in Sources */,
@@ -1606,6 +1607,7 @@
 				7FA1AA400F85F439000D9EE1 /* util.cpp in Sources */,
 				7FA1AA920F860748000D9EE1 /* object.c in Sources */,
 				8618D1ED13CAF490008E73AB /* display.cpp in Sources */,
+				86E110DF152B3C62004197EA /* log.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
