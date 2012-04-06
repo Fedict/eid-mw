@@ -106,6 +106,18 @@ public:
 	 */
 	void ForceRelease();
 
+	/* Terminates all outstanding actions within the resource manager context
+	 * (a call to SCardCancel)
+	 */
+	void CancelActions();
+
+	/* capture all status changes into txReaderStates
+	 * (a call to SCardGetStatusChange)
+	 */
+	void GetStatusChange(unsigned long ulTimeout,
+															 SCARD_READERSTATEA *txReaderStates,
+															 unsigned long ulReaderCount);
+
 	/**
 	 * Return the list of all available readers, plus info on the
 	 * presence of cards in those readers.

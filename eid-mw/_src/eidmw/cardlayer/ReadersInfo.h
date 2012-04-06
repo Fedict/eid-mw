@@ -56,19 +56,9 @@ public:
 	 * Returns true if something changed, false otherwise (this
 	 * corresponds to whether or not the timeout has been reached).
 	 */
-	bool CheckReaderEvents(
-		unsigned long ulTimeout = TIMEOUT_INFINITE,
-		unsigned long ulIndex = ALL_READERS);
-
-		/**
-	 * Checks if cards have been inserted/removed (by calling
-	 * the SCardGetStatusChange function).
-	 * Specify ulTimeout = TIMEOUT_INFINITE to never time out
-	 * created a new function for pkcs11, as we don't want to change the CSP's behaviour
-	 * this is temporary, pkcs11 will move away from using this cardlayer
-	 */
-	void CheckTheReaderEvents(
-		unsigned long ulTimeout = TIMEOUT_INFINITE);
+//	bool CheckReaderEvents(
+//		unsigned long ulTimeout = TIMEOUT_INFINITE,
+//		unsigned long ulIndex = ALL_READERS);
 
 	/**
 	 * Whether or not the state of the reader has changed since the last Update()
@@ -81,6 +71,22 @@ public:
 	 * - ulIndex ranges from 0 to (but not included) ReaderCount.
 	 */
     bool CardPresent(unsigned long ulIndex);
+
+		/* Fill in the txReaderStates array */
+		bool GetReaderStates(SCARD_READERSTATEA* txReaderStates,
+																	 unsigned long length,
+																	 unsigned long *ulnReaders);
+
+		/*update m_tInfos with the new reader states*/
+		bool UpdateReaderStates(SCARD_READERSTATEA* txReaderStates,
+																			unsigned long ulnReaders);
+
+		/* free allocated memory in txReaderStates */
+		void FreeReaderStates(SCARD_READERSTATEA* txReaderStates,
+																			unsigned long ulnReaders);
+
+		bool IsFirstTime(void);
+		void SetFirstTime(bool firstTime);
 
 private:
     CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders);

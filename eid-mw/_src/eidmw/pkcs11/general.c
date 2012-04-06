@@ -37,7 +37,6 @@ extern CK_FUNCTION_LIST pkcs11_function_list;
 
 //static int g_final = 0; /* Belpic */
 static int g_init  = BEIDP11_NOT_INITIALIZED;
-
 //  CMutex gMutex;
 //  CMutex SlotMutex[MAX_READERS];
 
@@ -242,10 +241,7 @@ if (pulCount == NULL_PTR)
    }
 
 if(pSlotList == NULL){
-	ret = cal_close();
-	if(ret == CKR_OK){
-		cal_init();
-	}
+	ret = cal_refresh_readers();
 }
 
 //init slots allready done
@@ -536,6 +532,10 @@ for (i=0; i < p11_get_nreaders(); i++)
    if (p11Slot->ievent != P11_EVENT_NONE)
       {
       *pSlot = i;
+			if( (i+1) == p11_get_nreaders())
+			{
+				i = p11_get_nreaders();
+			}
       //clear event
       p11Slot->ievent = P11_EVENT_NONE;
       CLEANUP(CKR_OK);
@@ -548,9 +548,6 @@ if (flags & CKF_DONT_BLOCK)
 }
 else
 {
-	//release lock while waiting
-	p11_unlock();
-	locked = CK_FALSE;
 	ret = cal_wait_for_slot_event(1);//1 means block
 }
 
@@ -564,15 +561,7 @@ if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
 if(ret != CKR_OK)
 	goto cleanup;
 
-if(locked == CK_FALSE){
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
-}
-ret = cal_get_slot_changes(&h);
+ret = cal_get_slot_changes(&h,&g_newSlot);
 
 if (ret == CKR_OK)
    *pSlot = h;

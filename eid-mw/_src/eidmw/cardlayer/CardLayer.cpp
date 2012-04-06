@@ -46,6 +46,18 @@ void CCardLayer::ForceRelease(void)
 	m_oContext.m_oPCSC.ReleaseContext();
 }
 
+void CCardLayer::CancelActions(void)
+{
+	m_oContext.m_oPCSC.Cancel();
+}
+
+void CCardLayer::GetStatusChange(unsigned long ulTimeout,
+															 SCARD_READERSTATEA *txReaderStates,
+															 unsigned long ulReaderCount)
+{
+	m_oContext.m_oPCSC.GetTheStatusChange(ulTimeout,txReaderStates,ulReaderCount);
+}
+
 /**
  * This is something you typically do just once, unless you
  * want to check if new readers were inserted/removed.

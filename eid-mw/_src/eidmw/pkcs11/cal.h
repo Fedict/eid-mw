@@ -210,7 +210,9 @@ int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsi
 int cal_validate_session(P11_SESSION *pSession);
 int cal_update_token(CK_SLOT_ID hSlot);
 CK_RV cal_wait_for_slot_event(int block);
-CK_RV cal_get_slot_changes(int *ph);
+CK_RV cal_wait_for_the_slot_event(int block);
+CK_RV cal_get_slot_changes(int *ph, int* pg_newSlot);
+int cal_refresh_readers();
 
 #ifdef __cplusplus
   }
