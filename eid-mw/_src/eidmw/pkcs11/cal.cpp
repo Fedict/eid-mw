@@ -76,7 +76,6 @@ int cal_init()
 	}
 
 	//init slots and token in slots
-	*pg_newSlot = MAX_READERS;
 	memset(gpSlot, 0, sizeof(gpSlot));
 	ret = cal_init_slots();
 	if (ret)

@@ -561,7 +561,7 @@ if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
 if(ret != CKR_OK)
 	goto cleanup;
 
-ret = cal_get_slot_changes(&h,&g_newSlot);
+ret = cal_get_slot_changes(&h);
 
 if (ret == CKR_OK)
    *pSlot = h;
