@@ -1585,14 +1585,28 @@ int cal_refresh_readers()
 {
 	int ret = CKR_OK;
 
-	if (oReadersInfo)
-	{
-		delete(oReadersInfo);
-	}
 	try
 	{
-		oReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
-
+		if (oReadersInfo)
+		{
+			//check if readerlist changed?
+			CReadersInfo* pNewReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
+			if(pNewReadersInfo->SameList(oReadersInfo) == TRUE)
+			{
+				//same reader list as before, so we keep the readers' status
+				delete(pNewReadersInfo);
+				return CKR_OK; 
+			}
+			else
+			{
+				delete(oReadersInfo);
+				oReadersInfo = pNewReadersInfo;
+			}
+		}
+		else
+		{
+			oReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
+		}
 		//new reader list, so please stop the scardgetstatuschange that is waiting on the old list
 		//oCardLayer->CancelActions();
 	}
@@ -1605,9 +1619,6 @@ int cal_refresh_readers()
 		log_trace(WHERE, "E: unknown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
-
-	//check if readerlist changed?
-
 
 		//init slots and token in slots
 	memset(gpSlot, 0, sizeof(gpSlot));

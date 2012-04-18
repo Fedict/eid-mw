@@ -189,6 +189,21 @@ void CReadersInfo::SetFirstTime(bool firstTime)
 	bFirstTime = firstTime;
 	return;
 }
+bool CReadersInfo::SameList(CReadersInfo* newReadersInfo)
+{
+	if(this->ReaderCount() != newReadersInfo->ReaderCount())
+	{
+		return FALSE;
+	}
+	for (DWORD i = 0; i < m_ulReaderCount; i++)
+	{
+		if ( strcmp((this->ReaderName(i)).c_str(), (newReadersInfo->ReaderName(i)).c_str()) != 0)
+		{
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
 
 
 }//end namespace

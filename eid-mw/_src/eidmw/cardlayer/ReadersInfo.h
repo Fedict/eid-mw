@@ -88,6 +88,8 @@ public:
 		bool IsFirstTime(void);
 		void SetFirstTime(bool firstTime);
 
+		bool SameList(CReadersInfo* newReadersInfo);
+
 private:
     CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders);
 
