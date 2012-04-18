@@ -37,7 +37,7 @@ int main() {
 
 	initLog();
 
-	testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
+	/*testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
 	result[testCounter] = test_open_close_session();
 	testCounter++;
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
@@ -50,11 +50,18 @@ int main() {
 	result[testCounter] = test_getprivatekeys();
 	testCounter++;
 	testDescription[testCounter] = "tests getting all the objects from the card";
-	result[testCounter] = test_getallobjects();
+	result[testCounter] = test_getallidobjects();
 	testCounter++;
+	testDescription[testCounter] = "tests adding and removing readers";
+	result[testCounter] = test_add_remove_readers();
+	testCounter++;*/
+	testDescription[testCounter] = "tests waiting for card and reader events";
+	result[testCounter] = test_add_remove_readerevents();
+	testCounter++;
+	/*
 	testDescription[testCounter] = "tests signing with the card";
 	result[testCounter] = test_sign();
-	testCounter++;
+	testCounter++;*/
 
 	testlog(LVL_NOLEVEL,"\n\n_______________________________________________\n");
 	for (i = 0; i < testCounter; i++)

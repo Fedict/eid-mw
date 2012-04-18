@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="PKCS11_tests"
 	ProjectGUID="{69E8DAB1-E417-4505-B710-75A540154F05}"
 	RootNamespace="PKCS11_tests"
@@ -179,6 +179,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\add-remove-readers.c"
+				>
+			</File>
 			<File
 				RelativePath=".\basetest.c"
 				>
