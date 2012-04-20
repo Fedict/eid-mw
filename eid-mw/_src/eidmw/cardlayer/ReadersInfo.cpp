@@ -28,7 +28,7 @@ CReadersInfo::CReadersInfo()
 	m_ulReaderCount = 0;
 }
 
-//contains the virtual reader
+//contains the virtual reader incase of #define PKCS11_V2_20
 unsigned long CReadersInfo::ReaderCount()
 {
 	return m_ulReaderCount;
@@ -109,7 +109,11 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
 	size_t i;
 
     for (i = 0;
+#ifdef PKCS11_V2_20
 		csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS-1;
+#else
+		csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS;
+#endif
 		i++, m_ulReaderCount++)
     {
         m_tInfos[m_ulReaderCount].csReader = csReaders;
@@ -117,7 +121,7 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
         m_tInfos[m_ulReaderCount].ulEventState = 0;
         csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
     }
-
+#ifdef PKCS11_V2_20
 		//Add an extra hidden reader to detect new attached reader events
 		if(i < MAX_READERS)
 		{
@@ -126,6 +130,7 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
         m_tInfos[m_ulReaderCount].ulEventState = 0;
 				m_ulReaderCount++;
 		}
+#endif
 }
 
 bool CReadersInfo::GetReaderStates(SCARD_READERSTATEA* txReaderStates,

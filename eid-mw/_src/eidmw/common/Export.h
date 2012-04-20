@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -23,6 +23,12 @@
 #define EXPORT_H
 
 #ifdef WIN32
+#ifdef EIDMW_STATIC_LIB
+#define EIDMW_CMN_API
+#define EIDMW_CAL_API
+#define EIDMW_PCSCEMU_API
+#define EIDMW_APL_API
+#else
 
 #ifdef EIDMW_CMN_EXPORT
 #define EIDMW_CMN_API __declspec(dllexport)
@@ -53,6 +59,8 @@
 #else
 #define EIDMW_APL_API __declspec(dllimport)
 #endif
+
+#endif //EIDMW_STATIC_LIB
 
 #else
 

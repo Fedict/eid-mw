@@ -419,6 +419,7 @@
 
       <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="no" Win64="yes">
         <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\_Binaries35\x64\Release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\_Binaries35\x64\pkcs11_ff_release\beid_ff_pkcs11.dll" />
       </Component>
 
       <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="no" Win64="yes">
@@ -457,6 +458,7 @@
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes" Win64="no">
         <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\beidpkcs11.dll" />
         <File Id="BelgiumIdentityCardPKCS11.dll" Name="Belgium Identity Card PKCS11.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\Belgium Identity Card PKCS11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\_Binaries35\pkcs11_ff_release\beid_ff_pkcs11.dll" />
       </Component>
 
       <Component Id="BWCompatibility" Guid="{AFE2F946-0FD9-4FF4-917E-1E0970E8FCB7}" SharedDllRefCount="yes" Win64="no">

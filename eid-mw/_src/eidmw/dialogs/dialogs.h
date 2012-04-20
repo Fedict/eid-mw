@@ -30,13 +30,17 @@
 #include <string>
 
 #ifdef WIN32
-	#ifdef DLGSWIN32_EXPORTS
-	#define DLGS_EXPORT __declspec(dllexport)
+	#ifdef EIDMW_STATIC_LIB
+		#define DLGS_EXPORT
 	#else
-	#define DLGS_EXPORT __declspec(dllimport)
+		#ifdef DLGSWIN32_EXPORTS
+			#define DLGS_EXPORT __declspec(dllexport)
+		#else
+			#define DLGS_EXPORT __declspec(dllimport)
+		#endif
 	#endif
 #else
-#define DLGS_EXPORT
+	#define DLGS_EXPORT
 #endif
 
 namespace eIDMW

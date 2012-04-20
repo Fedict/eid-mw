@@ -170,7 +170,9 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 
    memset(pInfo, 0, sizeof(CK_INFO));
    pInfo->cryptokiVersion.major = 2;
+#ifdef PKCS11_V2_20
    pInfo->cryptokiVersion.minor = 20;
+#endif
    strcpy_n(pInfo->manufacturerID,  "Belgium Government",  sizeof(pInfo->manufacturerID), ' ');
    strcpy_n(pInfo->libraryDescription, "Belgium eID PKCS#11 interface v2", sizeof(pInfo->libraryDescription), ' ');
    pInfo->libraryVersion.major = 2;
@@ -240,10 +242,11 @@ if (pulCount == NULL_PTR)
    goto cleanup;
    }
 
+#ifdef PKCS11_V2_20
 if(pSlotList == NULL){
 	ret = cal_refresh_readers();
 }
-
+#endif
 //init slots allready done
 //update info on tokens in slot, could be removed if thread keeps track of these token states
 //BUG in Adobe Acrobat reader: adobe asks for slots with pSlotList = NULL, so only nr of slots will be returned. This is ok.
@@ -532,10 +535,13 @@ for (i=0; i < p11_get_nreaders(); i++)
    if (p11Slot->ievent != P11_EVENT_NONE)
       {
       *pSlot = i;
+#ifdef PKCS11_V2_20
+			//in case the upnp reader caused the event, return a new slotnumber
 			if( (i+1) == p11_get_nreaders())
 			{
 				i = p11_get_nreaders();
 			}
+#endif
       //clear event
       p11Slot->ievent = P11_EVENT_NONE;
       CLEANUP(CKR_OK);
@@ -586,7 +592,11 @@ return ret;
 
 
 CK_FUNCTION_LIST pkcs11_function_list = {
+#ifdef PKCS11_V2_20
    { 2, 20 },
+#else
+   { 2, 11 },
+#endif
    C_Initialize,
    C_Finalize,
    C_GetInfo,

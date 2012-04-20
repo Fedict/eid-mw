@@ -6,6 +6,7 @@
 	ProjectGUID="{12F6CD4F-FC01-4E0A-AE06-F7A315094DFE}"
 	RootNamespace="beidpkcs11"
 	Keyword="Win32Proj"
+	AssemblyReferenceSearchPaths="&quot;..\_Builds\pkcs11_ff_release&quot;"
 	>
 	<Platforms>
 		<Platform
@@ -350,8 +351,188 @@
 				CommandLine="copy ..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beid35pkcs11.dll ..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beidpkcs11.dll&#x0D;&#x0A;copy ..\_Binaries35\$(PlatformName)\$(ConfigurationName)\beid35pkcs11.dll &quot;..\_Binaries35\$(PlatformName)\$(ConfigurationName)\Belgium Identity Card PKCS11.dll&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
+		<Configuration
+			Name="PKCS11_FF_Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				AdditionalIncludeDirectories="..\common, ..\cardlayer;..\dialogs"
+				PreprocessorDefinitions="PKCS11_V2_20;EIDMW_STATIC_LIB;BEID_35;WIN32;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="BEID_35;_UNICODE;UNICODE"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				UseLibraryDependencyInputs="false"
+				AdditionalDependencies="beid_ff_DlgsWin32.lib beid_ff_common.lib beid_ff_cardlayer.lib"
+				OutputFile="../_Binaries35/$(ConfigurationName)/beid_ff_$(ProjectName).dll"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;..\_Builds\pkcs11_ff_release&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy ..\_Binaries35\$(ConfigurationName)\beid_ff_pkcs11.dll ..\_Binaries35\$(ConfigurationName)\beidmod_pkcs11.dll&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="PKCS11_FF_Release|x64"
+			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				AdditionalIncludeDirectories="..\common;..\cardlayer;..\dialogs"
+				PreprocessorDefinitions="PKCS11_V2_20;EIDMW_STATIC_LIB;BEID_35;WIN32;NDEBUG;_WINDOWS;_USRDLL"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="BEID_35;_UNICODE;UNICODE"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="beid_ff_DlgsWin32.lib beid_ff_common.lib beid_ff_cardlayer.lib"
+				OutputFile="..\_Binaries35\$(PlatformName)\$(ConfigurationName)/beid_ff_$(ProjectName).dll"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;..\_Builds\x64\pkcs11_ff_release&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{C7DE2B79-F890-4ACB-804A-BDD14E1A9CAE}"
+			RelativePathToProject="..\cardlayer\beid35cardlayer.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{39710980-B40E-4B06-B8E8-D86B125007F3}"
+			RelativePathToProject="..\common\beid35common.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{E27CF8F7-E472-4966-B7D6-448B1427A0D6}"
+			RelativePathToProject="..\dialogs\dialogsWin32\beid35DlgsWin32.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
@@ -359,10 +540,6 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath=".\asn1.c"
-				>
-			</File>
 			<File
 				RelativePath=".\cal.cpp"
 				>
