@@ -139,7 +139,7 @@ bool CReadersInfo::GetReaderStates(SCARD_READERSTATEA* txReaderStates,
 {
 	*ulnReaders = m_ulReaderCount;
 	if(length < m_ulReaderCount)
-		return FALSE;
+		return false;
 	// Convert from tReaderInfo[] -> SCARD_READERSTATE array
 	for (DWORD i = 0; i < m_ulReaderCount; i++)
 	{
@@ -149,14 +149,14 @@ bool CReadersInfo::GetReaderStates(SCARD_READERSTATEA* txReaderStates,
 		memcpy((void*)txReaderStates[i].szReader,(const void*)(m_tInfos[i].csReader.c_str()),strlen(m_tInfos[i].csReader.c_str()));
 		txReaderStates[i].dwCurrentState = m_tInfos[i].ulEventState;
 	}
-	return TRUE;
+	return true;
 }
 
 bool CReadersInfo::UpdateReaderStates(SCARD_READERSTATEA* txReaderStates,
 																			unsigned long ulnReaders)
 {
 	if(m_ulReaderCount != ulnReaders)
-		return FALSE;
+		return false;
 
 	// Update the event states in m_tInfos
 	for (DWORD i = 0; i < m_ulReaderCount; i++)
@@ -165,7 +165,7 @@ bool CReadersInfo::UpdateReaderStates(SCARD_READERSTATEA* txReaderStates,
 			m_tInfos[i].ulEventState = txReaderStates[i].dwEventState & ~SCARD_STATE_CHANGED;
 	}
 
-	return TRUE;
+	return true;
 }
 
 void CReadersInfo::FreeReaderStates(SCARD_READERSTATEA* txReaderStates,
@@ -198,16 +198,16 @@ bool CReadersInfo::SameList(CReadersInfo* newReadersInfo)
 {
 	if(this->ReaderCount() != newReadersInfo->ReaderCount())
 	{
-		return FALSE;
+		return false;
 	}
 	for (DWORD i = 0; i < m_ulReaderCount; i++)
 	{
 		if ( strcmp((this->ReaderName(i)).c_str(), (newReadersInfo->ReaderName(i)).c_str()) != 0)
 		{
-			return FALSE;
+			return false;
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 
