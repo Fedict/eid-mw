@@ -197,7 +197,12 @@ cd -
 if [[ "${UNIVERSAL}" == "true" ]]
 then
 	cd ../_src/eidmw/_Builds
-	xcodebuild -configuration Release
+#	xcodebuild -configuration Release
+	xcodebuild -project beidmw.xcodeproj clean
+	xcodebuild -project beidmw.xcodeproj -target siscardplugin -configuration Release
+	xcodebuild -project beidmw.xcodeproj -target beiddialogsQTsrv -configuration Release
+	xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration Release
+	xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration PKCS11_FF_Release
 	cd -
 fi
 

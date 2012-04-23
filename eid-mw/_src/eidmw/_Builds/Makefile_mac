@@ -127,6 +127,7 @@ BASE_LIBS =  DLGLIB_NAME_x_y_z_dylib \
 	COMMONLIB_NAME_x_y_z_dylib \
 	APPLAYERLIB_NAME_x_y_z_dylib \
 	PKCS11LIB_NAME_x_y_z_dylib \
+	PKCS11_FF_LIB_NAME_x_y_z_dylib \
 	JAVALIB_NAME_x_y_z_dylib
 
 ETC = beid.conf
