@@ -198,11 +198,19 @@
 @if "%DEBUG%"=="1" goto debug
 
 :build
+@echo [INFO] cleaning "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln pkcs11_FF_release|Win32"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "pkcs11_FF_release|Win32" /Out "%~dp0.\clean_pkcs11_ff_32.log"
+@echo [INFO] cleaning "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln pkcs11_FF_release|x64"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "pkcs11_FF_release|x64" /Out "%~dp0.\clean_pkcs11_ff_64.log"
 @echo [INFO] cleaning "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln Release|Win32"
 @"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|Win32" /Out "%~dp0.\clean32.log"
 @echo [INFO] cleaning "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln Release|x64"
 @"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /clean "Release|x64" /Out "%~dp0.\clean64.log"
-@echo [INFO] Building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln Release|Win32"
+@echo [INFO] Building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln pkcs11_FF_release|Win32"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "pkcs11_FF_release|Win32" /Out "%~dp0.\build_pkcs11_ff_32.log"
+@echo [INFO] Building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln pkcs11_FF_release|x64"
+@"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "pkcs11_FF_release|x64" /Out "%~dp0.\build_pkcs11_ff_64.log"
+@echo [INFO] Building "%~dp0..\_src\eID-QuickInstaller\eID-EZinstaller\eID-EZinstaller.sln Release|Win32"
 @"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|Win32" /Out "%~dp0.\build32.log"
 @echo [INFO] Building "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln Release|x64"
 @"%BEID_DIR_VS_2005%\Common7\IDE\devenv.exe" "%~dp0..\_src\eidmw\_Builds\BeidEasyBuild.sln" /build "Release|x64" /Out "%~dp0.\build64.log"
