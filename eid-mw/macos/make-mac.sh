@@ -202,7 +202,9 @@ then
 	xcodebuild -project beidmw.xcodeproj -target siscardplugin -configuration Release
 	xcodebuild -project beidmw.xcodeproj -target beiddialogsQTsrv -configuration Release
 	xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration Release
-	xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration PKCS11_FF_Release
+    
+ 	xcodebuild -project beid_ff_pkcs11.xcodeproj clean
+	xcodebuild -project beid_ff_pkcs11.xcodeproj -target beidpkcs11 -configuration PKCS11_FF_Release
 	cd -
 fi
 
@@ -298,7 +300,7 @@ hdiutil create -size 50m -type UDIF -fs HFS+ -volname  beid-$MWVER beid-$MWVER-$
 
 #Open the uncompressed dmg and Copy the bundle into it
 hdiutil attach beid-$MWVER-$BUILDNR-uncompressed.dmg
-cp -R -f beid-$BUILDNR.pkg /Volumes/beid-$MWVER/
+sudo cp -R -f beid-$BUILDNR.pkg /Volumes/beid-$MWVER/
 
 #Close the uncompress dmg
 hdiutil detach /Volumes/beid-$MWVER

@@ -1,0 +1,1229 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		7FA1AACA0F860EDE000D9EE1 /* Beidmw */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 7FA1AADC0F860F3E000D9EE1 /* Build configuration list for PBXAggregateTarget "Beidmw" */;
+			buildPhases = (
+			);
+			dependencies = (
+				7FA1AAD40F860F12000D9EE1 /* PBXTargetDependency */,
+			);
+			name = Beidmw;
+			productName = Beidmw;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		7F22A36F0F84C588001AD228 /* libbeid_ff_common.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */; };
+		7F22A3780F84C5A1001AD228 /* libbeid_ff_dialogsQT.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */; };
+		7FA1AA320F85F439000D9EE1 /* cal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA1F0F85F439000D9EE1 /* cal.cpp */; };
+		7FA1AA340F85F439000D9EE1 /* cert.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA210F85F439000D9EE1 /* cert.c */; };
+		7FA1AA360F85F439000D9EE1 /* encrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA230F85F439000D9EE1 /* encrypt.c */; };
+		7FA1AA370F85F439000D9EE1 /* general.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA240F85F439000D9EE1 /* general.c */; };
+		7FA1AA3A0F85F439000D9EE1 /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA270F85F439000D9EE1 /* p11.c */; };
+		7FA1AA3C0F85F439000D9EE1 /* phash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA290F85F439000D9EE1 /* phash.cpp */; };
+		7FA1AA3E0F85F439000D9EE1 /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2B0F85F439000D9EE1 /* session.c */; };
+		7FA1AA3F0F85F439000D9EE1 /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2C0F85F439000D9EE1 /* sign.c */; };
+		7FA1AA400F85F439000D9EE1 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2D0F85F439000D9EE1 /* util.cpp */; };
+		7FA1AA620F85F6C1000D9EE1 /* libbeid_ff_common.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */; };
+		7FA1AA640F85F6CF000D9EE1 /* libbeid_ff_cardlayer.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.4.a */; };
+		7FA1AA920F860748000D9EE1 /* object.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA910F860748000D9EE1 /* object.c */; };
+		7FBB02830F839412009B751F /* ByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02610F839412009B751F /* ByteArray.cpp */; };
+		7FBB02850F839412009B751F /* ByteArrayReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02630F839412009B751F /* ByteArrayReader.cpp */; };
+		7FBB02870F839412009B751F /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02650F839412009B751F /* Config.cpp */; };
+		7FBB02890F839412009B751F /* ConfigCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02670F839412009B751F /* ConfigCommon.cpp */; };
+		7FBB028A0F839412009B751F /* datafile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02680F839412009B751F /* datafile.cpp */; };
+		7FBB028C0F839412009B751F /* DynamicLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB026A0F839412009B751F /* DynamicLib.cpp */; };
+		7FBB02900F839412009B751F /* Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB026E0F839412009B751F /* Hash.cpp */; };
+		7FBB02920F839412009B751F /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02700F839412009B751F /* Log.cpp */; };
+		7FBB02940F839412009B751F /* LogBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02720F839412009B751F /* LogBase.cpp */; };
+		7FBB02960F839412009B751F /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02740F839412009B751F /* Mutex.cpp */; };
+		7FBB02980F839412009B751F /* MWException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02760F839412009B751F /* MWException.cpp */; };
+		7FBB029B0F839412009B751F /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02790F839412009B751F /* Thread.cpp */; };
+		7FBB029E0F839412009B751F /* TLV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB027C0F839412009B751F /* TLV.cpp */; };
+		7FBB02A00F839412009B751F /* TLVBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB027E0F839412009B751F /* TLVBuffer.cpp */; };
+		7FBB02A30F839412009B751F /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02810F839412009B751F /* Util.cpp */; };
+		7FBB02B50F839454009B751F /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02AB0F839454009B751F /* md5.c */; };
+		7FBB02B60F839454009B751F /* rmd160.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02AC0F839454009B751F /* rmd160.c */; };
+		7FBB02B70F839454009B751F /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02AD0F839454009B751F /* sha1.c */; };
+		7FBB02B80F839454009B751F /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02AE0F839454009B751F /* sha256.c */; };
+		7FBB02B90F839454009B751F /* sha384.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02AF0F839454009B751F /* sha384.c */; };
+		7FBB02BA0F839454009B751F /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02B00F839454009B751F /* sha512.c */; };
+		7FBB02D60F839514009B751F /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02D00F839514009B751F /* Socket.cpp */; };
+		7FBB02D80F839514009B751F /* SocketClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02D20F839514009B751F /* SocketClient.cpp */; };
+		7FBB02DA0F839514009B751F /* SocketServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02D40F839514009B751F /* SocketServer.cpp */; };
+		7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+		7FC535670F84B88600BA96EE /* Cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535410F84B88600BA96EE /* Cache.cpp */; };
+		7FC535690F84B88600BA96EE /* Card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535430F84B88600BA96EE /* Card.cpp */; };
+		7FC5356B0F84B88600BA96EE /* CardFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535450F84B88600BA96EE /* CardFactory.cpp */; };
+		7FC5356D0F84B88600BA96EE /* CardLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535470F84B88600BA96EE /* CardLayer.cpp */; };
+		7FC535700F84B88600BA96EE /* CardReaderInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC5354A0F84B88600BA96EE /* CardReaderInfo.cpp */; };
+		7FC535720F84B88600BA96EE /* Context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC5354C0F84B88600BA96EE /* Context.cpp */; };
+		7FC535750F84B88600BA96EE /* P15Correction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC5354F0F84B88600BA96EE /* P15Correction.cpp */; };
+		7FC535780F84B88600BA96EE /* PCSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535520F84B88600BA96EE /* PCSC.cpp */; };
+		7FC5357A0F84B88600BA96EE /* Pinpad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535540F84B88600BA96EE /* Pinpad.cpp */; };
+		7FC5357D0F84B88600BA96EE /* PinpadLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535570F84B88600BA96EE /* PinpadLib.cpp */; };
+		7FC5357F0F84B88600BA96EE /* PKCS15.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535590F84B88600BA96EE /* PKCS15.cpp */; };
+		7FC535810F84B88600BA96EE /* PKCS15Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC5355B0F84B88600BA96EE /* PKCS15Parser.cpp */; };
+		7FC535830F84B88600BA96EE /* PkiCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC5355D0F84B88600BA96EE /* PkiCard.cpp */; };
+		7FC535850F84B88600BA96EE /* Reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC5355F0F84B88600BA96EE /* Reader.cpp */; };
+		7FC535870F84B88600BA96EE /* ReadersInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535610F84B88600BA96EE /* ReadersInfo.cpp */; };
+		7FC535890F84B88600BA96EE /* ThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535630F84B88600BA96EE /* ThreadPool.cpp */; };
+		7FC5358B0F84B88600BA96EE /* UnknownCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535650F84B88600BA96EE /* UnknownCard.cpp */; };
+		7FC5359A0F84B95600BA96EE /* BeidCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535960F84B95600BA96EE /* BeidCard.cpp */; };
+		7FC5359C0F84B95600BA96EE /* BeidP15Correction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535980F84B95600BA96EE /* BeidP15Correction.cpp */; };
+		7FC535A30F84B97400BA96EE /* SISCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC5359E0F84B97400BA96EE /* SISCard.cpp */; };
+		7FC535A60F84B97400BA96EE /* SISPluginHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535A10F84B97400BA96EE /* SISPluginHandler.cpp */; };
+		7FC535BE0F84BADB00BA96EE /* libbeid_ff_common.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */; };
+		7FC535EA0F84BD3F00BA96EE /* langUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535E60F84BD3F00BA96EE /* langUtil.cpp */; };
+		7FC535EF0F84BD6300BA96EE /* dlgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535EC0F84BD6300BA96EE /* dlgs.cpp */; };
+		7FC535F00F84BD6300BA96EE /* SharedMem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535ED0F84BD6300BA96EE /* SharedMem.cpp */; };
+		8618D1ED13CAF490008E73AB /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8618D1EB13CAF490008E73AB /* display.cpp */; };
+		8618D1EE13CAF490008E73AB /* display.h in Headers */ = {isa = PBXBuildFile; fileRef = 8618D1EC13CAF490008E73AB /* display.h */; };
+		8618D23D13CAFA16008E73AB /* libbeid_ff_dialogsQT.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */; };
+		86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+		86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+		86D0915311ABF313007BC75E /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D0915211ABF313007BC75E /* PCSC.framework */; };
+		86D0918011ABFA40007BC75E /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D0915211ABF313007BC75E /* PCSC.framework */; };
+		86E110DF152B3C62004197EA /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E110DE152B3C62004197EA /* log.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7F22A3700F84C58C001AD228 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FBB02520F839352009B751F;
+			remoteInfo = beidcommon;
+		};
+		7FA1AA4F0F85F54F000D9EE1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FC5353A0F84B83B00BA96EE;
+			remoteInfo = beidcardlayer;
+		};
+		7FA1AAD30F860F12000D9EE1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FA1A9F60F85F36E000D9EE1;
+			remoteInfo = beidpkcs11;
+		};
+		7FC5353E0F84B84300BA96EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FBB02520F839352009B751F;
+			remoteInfo = beidcommon;
+		};
+		7FC535F20F84BD6C00BA96EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FC535DE0F84BCDA00BA96EE;
+			remoteInfo = beiddialogsQT;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
+		7F872F8E0F84E5E000DE6627 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Library/Frameworks/QtGui.framework; sourceTree = SDKROOT; };
+		7F872F920F84E5F800DE6627 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = Library/Frameworks/QtCore.framework; sourceTree = SDKROOT; };
+		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		7F9011190F8502F8004A5FCC /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
+		7F90111C0F850342004A5FCC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
+		7F90112C0F850450004A5FCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		7F90D5620F9F38EC00BB8F23 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = System/Library/Frameworks/JavaVM.framework; sourceTree = SDKROOT; };
+		7FA1A9F70F85F36E000D9EE1 /* libbeid_ff_pkcs11.4.0.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_pkcs11.4.0.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA1AA1D0F85F439000D9EE1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = ../pkcs11/asn1.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA1E0F85F439000D9EE1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = ../pkcs11/beid_p11.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA1F0F85F439000D9EE1 /* cal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cal.cpp; path = ../pkcs11/cal.cpp; sourceTree = SOURCE_ROOT; };
+		7FA1AA200F85F439000D9EE1 /* cal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cal.h; path = ../pkcs11/cal.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA210F85F439000D9EE1 /* cert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cert.c; path = ../pkcs11/cert.c; sourceTree = SOURCE_ROOT; };
+		7FA1AA220F85F439000D9EE1 /* cert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cert.h; path = ../pkcs11/cert.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA230F85F439000D9EE1 /* encrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = encrypt.c; path = ../pkcs11/encrypt.c; sourceTree = SOURCE_ROOT; };
+		7FA1AA240F85F439000D9EE1 /* general.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = general.c; path = ../pkcs11/general.c; sourceTree = SOURCE_ROOT; };
+		7FA1AA250F85F439000D9EE1 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = log.c; path = ../pkcs11/log.c; sourceTree = SOURCE_ROOT; };
+		7FA1AA260F85F439000D9EE1 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log.h; path = ../pkcs11/log.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA270F85F439000D9EE1 /* p11.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = p11.c; path = ../pkcs11/p11.c; sourceTree = SOURCE_ROOT; };
+		7FA1AA280F85F439000D9EE1 /* p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p11.h; path = ../pkcs11/p11.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA290F85F439000D9EE1 /* phash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = phash.cpp; path = ../pkcs11/phash.cpp; sourceTree = SOURCE_ROOT; };
+		7FA1AA2A0F85F439000D9EE1 /* phash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = phash.h; path = ../pkcs11/phash.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA2B0F85F439000D9EE1 /* session.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = session.c; path = ../pkcs11/session.c; sourceTree = SOURCE_ROOT; };
+		7FA1AA2C0F85F439000D9EE1 /* sign.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sign.c; path = ../pkcs11/sign.c; sourceTree = SOURCE_ROOT; };
+		7FA1AA2D0F85F439000D9EE1 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = ../pkcs11/util.cpp; sourceTree = SOURCE_ROOT; };
+		7FA1AA470F85F47D000D9EE1 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11.h; path = ../pkcs11/include/rsaref220/pkcs11.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA480F85F47D000D9EE1 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11f.h; path = ../pkcs11/include/rsaref220/pkcs11f.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA490F85F47D000D9EE1 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11t.h; path = ../pkcs11/include/rsaref220/pkcs11t.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA4A0F85F47D000D9EE1 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = ../pkcs11/include/rsaref220/unix.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA720F85FEE3000D9EE1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = ../pkcs11/util.h; sourceTree = SOURCE_ROOT; };
+		7FA1AA910F860748000D9EE1 /* object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = object.c; path = ../pkcs11/object.c; sourceTree = SOURCE_ROOT; };
+		7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_common.4.0.4.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FBB02610F839412009B751F /* ByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ByteArray.cpp; path = ../common/ByteArray.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02620F839412009B751F /* ByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ByteArray.h; path = ../common/ByteArray.h; sourceTree = SOURCE_ROOT; };
+		7FBB02630F839412009B751F /* ByteArrayReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ByteArrayReader.cpp; path = ../common/ByteArrayReader.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02640F839412009B751F /* ByteArrayReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ByteArrayReader.h; path = ../common/ByteArrayReader.h; sourceTree = SOURCE_ROOT; };
+		7FBB02650F839412009B751F /* Config.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Config.cpp; path = ../common/Config.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02660F839412009B751F /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Config.h; path = ../common/Config.h; sourceTree = SOURCE_ROOT; };
+		7FBB02670F839412009B751F /* ConfigCommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigCommon.cpp; path = ../common/ConfigCommon.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02680F839412009B751F /* datafile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = datafile.cpp; path = ../common/datafile.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02690F839412009B751F /* datafile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = datafile.h; path = ../common/datafile.h; sourceTree = SOURCE_ROOT; };
+		7FBB026A0F839412009B751F /* DynamicLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DynamicLib.cpp; path = ../common/DynamicLib.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB026B0F839412009B751F /* DynamicLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicLib.h; path = ../common/DynamicLib.h; sourceTree = SOURCE_ROOT; };
+		7FBB026C0F839412009B751F /* eidErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eidErrors.h; path = ../common/eidErrors.h; sourceTree = SOURCE_ROOT; };
+		7FBB026D0F839412009B751F /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Export.h; path = ../common/Export.h; sourceTree = SOURCE_ROOT; };
+		7FBB026E0F839412009B751F /* Hash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Hash.cpp; path = ../common/Hash.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB026F0F839412009B751F /* Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hash.h; path = ../common/Hash.h; sourceTree = SOURCE_ROOT; };
+		7FBB02700F839412009B751F /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = ../common/Log.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02710F839412009B751F /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Log.h; path = ../common/Log.h; sourceTree = SOURCE_ROOT; };
+		7FBB02720F839412009B751F /* LogBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LogBase.cpp; path = ../common/LogBase.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02730F839412009B751F /* LogBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogBase.h; path = ../common/LogBase.h; sourceTree = SOURCE_ROOT; };
+		7FBB02740F839412009B751F /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mutex.cpp; path = ../common/Mutex.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02750F839412009B751F /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mutex.h; path = ../common/Mutex.h; sourceTree = SOURCE_ROOT; };
+		7FBB02760F839412009B751F /* MWException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MWException.cpp; path = ../common/MWException.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02770F839412009B751F /* MWException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MWException.h; path = ../common/MWException.h; sourceTree = SOURCE_ROOT; };
+		7FBB02780F839412009B751F /* prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prefix.h; path = ../common/prefix.h; sourceTree = SOURCE_ROOT; };
+		7FBB02790F839412009B751F /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Thread.cpp; path = ../common/Thread.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB027A0F839412009B751F /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Thread.h; path = ../common/Thread.h; sourceTree = SOURCE_ROOT; };
+		7FBB027B0F839412009B751F /* ThreadDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThreadDefines.h; path = ../common/ThreadDefines.h; sourceTree = SOURCE_ROOT; };
+		7FBB027C0F839412009B751F /* TLV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TLV.cpp; path = ../common/TLV.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB027D0F839412009B751F /* TLV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLV.h; path = ../common/TLV.h; sourceTree = SOURCE_ROOT; };
+		7FBB027E0F839412009B751F /* TLVBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TLVBuffer.cpp; path = ../common/TLVBuffer.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB027F0F839412009B751F /* TLVBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLVBuffer.h; path = ../common/TLVBuffer.h; sourceTree = SOURCE_ROOT; };
+		7FBB02800F839412009B751F /* TLVTagDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLVTagDefinitions.h; path = ../common/TLVTagDefinitions.h; sourceTree = SOURCE_ROOT; };
+		7FBB02810F839412009B751F /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = ../common/Util.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02820F839412009B751F /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = ../common/Util.h; sourceTree = SOURCE_ROOT; };
+		7FBB02AB0F839454009B751F /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = ../common/libtomcrypt/md5.c; sourceTree = SOURCE_ROOT; };
+		7FBB02AC0F839454009B751F /* rmd160.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rmd160.c; path = ../common/libtomcrypt/rmd160.c; sourceTree = SOURCE_ROOT; };
+		7FBB02AD0F839454009B751F /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = ../common/libtomcrypt/sha1.c; sourceTree = SOURCE_ROOT; };
+		7FBB02AE0F839454009B751F /* sha256.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha256.c; path = ../common/libtomcrypt/sha256.c; sourceTree = SOURCE_ROOT; };
+		7FBB02AF0F839454009B751F /* sha384.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha384.c; path = ../common/libtomcrypt/sha384.c; sourceTree = SOURCE_ROOT; };
+		7FBB02B00F839454009B751F /* sha512.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha512.c; path = ../common/libtomcrypt/sha512.c; sourceTree = SOURCE_ROOT; };
+		7FBB02B10F839454009B751F /* tomcrypt_argchk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_argchk.h; path = ../common/libtomcrypt/tomcrypt_argchk.h; sourceTree = SOURCE_ROOT; };
+		7FBB02B20F839454009B751F /* tomcrypt_cfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_cfg.h; path = ../common/libtomcrypt/tomcrypt_cfg.h; sourceTree = SOURCE_ROOT; };
+		7FBB02B30F839454009B751F /* tomcrypt_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_hash.h; path = ../common/libtomcrypt/tomcrypt_hash.h; sourceTree = SOURCE_ROOT; };
+		7FBB02B40F839454009B751F /* tomcrypt_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_macros.h; path = ../common/libtomcrypt/tomcrypt_macros.h; sourceTree = SOURCE_ROOT; };
+		7FBB02D00F839514009B751F /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = ../common/Socket/Socket.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02D10F839514009B751F /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Socket.h; path = ../common/Socket/Socket.h; sourceTree = SOURCE_ROOT; };
+		7FBB02D20F839514009B751F /* SocketClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SocketClient.cpp; path = ../common/Socket/SocketClient.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02D30F839514009B751F /* SocketClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketClient.h; path = ../common/Socket/SocketClient.h; sourceTree = SOURCE_ROOT; };
+		7FBB02D40F839514009B751F /* SocketServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SocketServer.cpp; path = ../common/Socket/SocketServer.cpp; sourceTree = SOURCE_ROOT; };
+		7FBB02D50F839514009B751F /* SocketServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketServer.h; path = ../common/Socket/SocketServer.h; sourceTree = SOURCE_ROOT; };
+		7FBB02F20F839622009B751F /* win_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win_macros.h; path = ../common/win_macros.h; sourceTree = SOURCE_ROOT; };
+		7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.4.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_cardlayer.4.0.4.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FC535410F84B88600BA96EE /* Cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cache.cpp; path = ../cardlayer/Cache.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535420F84B88600BA96EE /* Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cache.h; path = ../cardlayer/Cache.h; sourceTree = SOURCE_ROOT; };
+		7FC535430F84B88600BA96EE /* Card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Card.cpp; path = ../cardlayer/Card.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535440F84B88600BA96EE /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card.h; path = ../cardlayer/Card.h; sourceTree = SOURCE_ROOT; };
+		7FC535450F84B88600BA96EE /* CardFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardFactory.cpp; path = ../cardlayer/CardFactory.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535460F84B88600BA96EE /* CardFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardFactory.h; path = ../cardlayer/CardFactory.h; sourceTree = SOURCE_ROOT; };
+		7FC535470F84B88600BA96EE /* CardLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardLayer.cpp; path = ../cardlayer/CardLayer.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535480F84B88600BA96EE /* CardLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardLayer.h; path = ../cardlayer/CardLayer.h; sourceTree = SOURCE_ROOT; };
+		7FC535490F84B88600BA96EE /* CardLayerConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardLayerConst.h; path = ../cardlayer/CardLayerConst.h; sourceTree = SOURCE_ROOT; };
+		7FC5354A0F84B88600BA96EE /* CardReaderInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardReaderInfo.cpp; path = ../cardlayer/CardReaderInfo.cpp; sourceTree = SOURCE_ROOT; };
+		7FC5354B0F84B88600BA96EE /* CardReaderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardReaderInfo.h; path = ../cardlayer/CardReaderInfo.h; sourceTree = SOURCE_ROOT; };
+		7FC5354C0F84B88600BA96EE /* Context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Context.cpp; path = ../cardlayer/Context.cpp; sourceTree = SOURCE_ROOT; };
+		7FC5354D0F84B88600BA96EE /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Context.h; path = ../cardlayer/Context.h; sourceTree = SOURCE_ROOT; };
+		7FC5354E0F84B88600BA96EE /* InternalConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InternalConst.h; path = ../cardlayer/InternalConst.h; sourceTree = SOURCE_ROOT; };
+		7FC5354F0F84B88600BA96EE /* P15Correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = P15Correction.cpp; path = ../cardlayer/P15Correction.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535500F84B88600BA96EE /* P15Correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = P15Correction.h; path = ../cardlayer/P15Correction.h; sourceTree = SOURCE_ROOT; };
+		7FC535510F84B88600BA96EE /* P15Objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = P15Objects.h; path = ../cardlayer/P15Objects.h; sourceTree = SOURCE_ROOT; };
+		7FC535520F84B88600BA96EE /* PCSC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PCSC.cpp; path = ../cardlayer/PCSC.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535530F84B88600BA96EE /* PCSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCSC.h; path = ../cardlayer/PCSC.h; sourceTree = SOURCE_ROOT; };
+		7FC535540F84B88600BA96EE /* Pinpad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Pinpad.cpp; path = ../cardlayer/Pinpad.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535550F84B88600BA96EE /* Pinpad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pinpad.h; path = ../cardlayer/Pinpad.h; sourceTree = SOURCE_ROOT; };
+		7FC535560F84B88600BA96EE /* pinpad2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pinpad2.h; path = ../cardlayer/pinpad2.h; sourceTree = SOURCE_ROOT; };
+		7FC535570F84B88600BA96EE /* PinpadLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PinpadLib.cpp; path = ../cardlayer/PinpadLib.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535580F84B88600BA96EE /* PinpadLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinpadLib.h; path = ../cardlayer/PinpadLib.h; sourceTree = SOURCE_ROOT; };
+		7FC535590F84B88600BA96EE /* PKCS15.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PKCS15.cpp; path = ../cardlayer/PKCS15.cpp; sourceTree = SOURCE_ROOT; };
+		7FC5355A0F84B88600BA96EE /* PKCS15.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PKCS15.h; path = ../cardlayer/PKCS15.h; sourceTree = SOURCE_ROOT; };
+		7FC5355B0F84B88600BA96EE /* PKCS15Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PKCS15Parser.cpp; path = ../cardlayer/PKCS15Parser.cpp; sourceTree = SOURCE_ROOT; };
+		7FC5355C0F84B88600BA96EE /* PKCS15Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PKCS15Parser.h; path = ../cardlayer/PKCS15Parser.h; sourceTree = SOURCE_ROOT; };
+		7FC5355D0F84B88600BA96EE /* PkiCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PkiCard.cpp; path = ../cardlayer/PkiCard.cpp; sourceTree = SOURCE_ROOT; };
+		7FC5355E0F84B88600BA96EE /* PkiCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PkiCard.h; path = ../cardlayer/PkiCard.h; sourceTree = SOURCE_ROOT; };
+		7FC5355F0F84B88600BA96EE /* Reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Reader.cpp; path = ../cardlayer/Reader.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535600F84B88600BA96EE /* Reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reader.h; path = ../cardlayer/Reader.h; sourceTree = SOURCE_ROOT; };
+		7FC535610F84B88600BA96EE /* ReadersInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReadersInfo.cpp; path = ../cardlayer/ReadersInfo.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535620F84B88600BA96EE /* ReadersInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadersInfo.h; path = ../cardlayer/ReadersInfo.h; sourceTree = SOURCE_ROOT; };
+		7FC535630F84B88600BA96EE /* ThreadPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ThreadPool.cpp; path = ../cardlayer/ThreadPool.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535640F84B88600BA96EE /* ThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThreadPool.h; path = ../cardlayer/ThreadPool.h; sourceTree = SOURCE_ROOT; };
+		7FC535650F84B88600BA96EE /* UnknownCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnknownCard.cpp; path = ../cardlayer/UnknownCard.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535660F84B88600BA96EE /* UnknownCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnknownCard.h; path = ../cardlayer/UnknownCard.h; sourceTree = SOURCE_ROOT; };
+		7FC535960F84B95600BA96EE /* BeidCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BeidCard.cpp; path = ../cardlayer/cardpluginBeid/BeidCard.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535970F84B95600BA96EE /* BeidCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeidCard.h; path = ../cardlayer/cardpluginBeid/BeidCard.h; sourceTree = SOURCE_ROOT; };
+		7FC535980F84B95600BA96EE /* BeidP15Correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BeidP15Correction.cpp; path = ../cardlayer/cardpluginBeid/BeidP15Correction.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535990F84B95600BA96EE /* BeidP15Correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeidP15Correction.h; path = ../cardlayer/cardpluginBeid/BeidP15Correction.h; sourceTree = SOURCE_ROOT; };
+		7FC5359E0F84B97400BA96EE /* SISCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SISCard.cpp; path = ../cardlayer/cardpluginSIS/SISCard.cpp; sourceTree = SOURCE_ROOT; };
+		7FC5359F0F84B97400BA96EE /* SISCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SISCard.h; path = ../cardlayer/cardpluginSIS/SISCard.h; sourceTree = SOURCE_ROOT; };
+		7FC535A00F84B97400BA96EE /* SISplugin1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SISplugin1.h; path = ../cardlayer/cardpluginSIS/SISplugin1.h; sourceTree = SOURCE_ROOT; };
+		7FC535A10F84B97400BA96EE /* SISPluginHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SISPluginHandler.cpp; path = ../cardlayer/cardpluginSIS/SISPluginHandler.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535A20F84B97400BA96EE /* SISPluginHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SISPluginHandler.h; path = ../cardlayer/cardpluginSIS/SISPluginHandler.h; sourceTree = SOURCE_ROOT; };
+		7FC535B70F84BA2E00BA96EE /* SISCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SISCard.cpp; path = ../cardlayer/cardpluginSIS_ACR38U/SISCard.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_dialogsQT.4.0.4.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FC535E40F84BD3F00BA96EE /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialogs.h; path = ../dialogs/dialogs.h; sourceTree = SOURCE_ROOT; };
+		7FC535E50F84BD3F00BA96EE /* language.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; name = language.h; path = ../dialogs/language.h; sourceTree = SOURCE_ROOT; };
+		7FC535E60F84BD3F00BA96EE /* langUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = langUtil.cpp; path = ../dialogs/langUtil.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535E70F84BD3F00BA96EE /* langUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = langUtil.h; path = ../dialogs/langUtil.h; sourceTree = SOURCE_ROOT; };
+		7FC535EC0F84BD6300BA96EE /* dlgs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dlgs.cpp; path = ../dialogs/dialogsQT/dlgs.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535ED0F84BD6300BA96EE /* SharedMem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SharedMem.cpp; path = ../dialogs/dialogsQT/SharedMem.cpp; sourceTree = SOURCE_ROOT; };
+		7FC535EE0F84BD6300BA96EE /* SharedMem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedMem.h; path = ../dialogs/dialogsQT/SharedMem.h; sourceTree = SOURCE_ROOT; };
+		8618D1EB13CAF490008E73AB /* display.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 5; name = display.cpp; path = ../pkcs11/display.cpp; sourceTree = SOURCE_ROOT; };
+		8618D1EC13CAF490008E73AB /* display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = display.h; path = ../pkcs11/display.h; sourceTree = "<group>"; };
+		86A90A2B1122D6880011C6A8 /* trunk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trunk; path = "/beid-mw/trunk"; sourceTree = "<absolute>"; };
+		86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libxerces-c-3.1.dylib"; path = "/beid-mw/trunk/eid-mw/_src/ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib"; sourceTree = "<absolute>"; };
+		86D0915211ABF313007BC75E /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework; sourceTree = DEVELOPER_DIR; };
+		86E110DE152B3C62004197EA /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log.cpp; path = ../pkcs11/log.cpp; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7FA1A9F50F85F36E000D9EE1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FA1AA640F85F6CF000D9EE1 /* libbeid_ff_cardlayer.4.0.4.a in Frameworks */,
+				7FA1AA620F85F6C1000D9EE1 /* libbeid_ff_common.4.0.4.a in Frameworks */,
+				86D0918011ABFA40007BC75E /* PCSC.framework in Frameworks */,
+				8618D23D13CAFA16008E73AB /* libbeid_ff_dialogsQT.4.0.4.a in Frameworks */,
+				86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FBB02510F839352009B751F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FC535390F84B83B00BA96EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F22A3780F84C5A1001AD228 /* libbeid_ff_dialogsQT.4.0.4.a in Frameworks */,
+				7FC535BE0F84BADB00BA96EE /* libbeid_ff_common.4.0.4.a in Frameworks */,
+				86D0915311ABF313007BC75E /* PCSC.framework in Frameworks */,
+				86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FC535DD0F84BCDA00BA96EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F22A36F0F84C588001AD228 /* libbeid_ff_common.4.0.4.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */,
+				7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.4.a */,
+				7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */,
+				7FA1A9F70F85F36E000D9EE1 /* libbeid_ff_pkcs11.4.0.4.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* beidmw */ = {
+			isa = PBXGroup;
+			children = (
+				86E110DE152B3C62004197EA /* log.cpp */,
+				7FBB025A0F83937F009B751F /* Common */,
+				7FBB02DC0F839518009B751F /* Common_Socket */,
+				7FC535E20F84BCFA00BA96EE /* DialogsQt */,
+				7FC535950F84B92000BA96EE /* Cardlayer_pluginSIS_ACR38 */,
+				7FC535940F84B90C00BA96EE /* Cardlayer_pluginSIS */,
+				7FC535930F84B8E600BA96EE /* Cardlayer_pluginBeid */,
+				7FC5358D0F84B88B00BA96EE /* Cardlayer */,
+				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
+				7FBB02C20F839479009B751F /* Common_tomcrypt */,
+				5073E0CA09E734BC00EC74B6 /* Configuration Files */,
+				08FB77ACFE841707C02AAC07 /* Source */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+				86A90A2B1122D6880011C6A8 /* trunk */,
+				86D0915211ABF313007BC75E /* PCSC.framework */,
+			);
+			name = beidmw;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */,
+				7F90D5620F9F38EC00BB8F23 /* JavaVM.framework */,
+				7F90112C0F850450004A5FCC /* SystemConfiguration.framework */,
+				7F90111C0F850342004A5FCC /* libssl.dylib */,
+				7F9011190F8502F8004A5FCC /* libcrypto.dylib */,
+				7F9010620F84FEC3004A5FCC /* CoreServices.framework */,
+				7F872F920F84E5F800DE6627 /* QtCore.framework */,
+				7F872F8E0F84E5E000DE6627 /* QtGui.framework */,
+				7F22A4110F84D948001AD228 /* PCSC.framework */,
+				7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */,
+				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77ACFE841707C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		5073E0CA09E734BC00EC74B6 /* Configuration Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Configuration Files";
+			sourceTree = "<group>";
+		};
+		7FA1AA420F85F446000D9EE1 /* Pkcs11 */ = {
+			isa = PBXGroup;
+			children = (
+				8618D1EB13CAF490008E73AB /* display.cpp */,
+				8618D1EC13CAF490008E73AB /* display.h */,
+				7FA1AA910F860748000D9EE1 /* object.c */,
+				7FA1AA720F85FEE3000D9EE1 /* util.h */,
+				7FA1AA470F85F47D000D9EE1 /* pkcs11.h */,
+				7FA1AA480F85F47D000D9EE1 /* pkcs11f.h */,
+				7FA1AA490F85F47D000D9EE1 /* pkcs11t.h */,
+				7FA1AA4A0F85F47D000D9EE1 /* unix.h */,
+				7FA1AA1D0F85F439000D9EE1 /* asn1.h */,
+				7FA1AA1E0F85F439000D9EE1 /* beid_p11.h */,
+				7FA1AA1F0F85F439000D9EE1 /* cal.cpp */,
+				7FA1AA200F85F439000D9EE1 /* cal.h */,
+				7FA1AA210F85F439000D9EE1 /* cert.c */,
+				7FA1AA220F85F439000D9EE1 /* cert.h */,
+				7FA1AA230F85F439000D9EE1 /* encrypt.c */,
+				7FA1AA240F85F439000D9EE1 /* general.c */,
+				7FA1AA250F85F439000D9EE1 /* log.c */,
+				7FA1AA260F85F439000D9EE1 /* log.h */,
+				7FA1AA270F85F439000D9EE1 /* p11.c */,
+				7FA1AA280F85F439000D9EE1 /* p11.h */,
+				7FA1AA290F85F439000D9EE1 /* phash.cpp */,
+				7FA1AA2A0F85F439000D9EE1 /* phash.h */,
+				7FA1AA2B0F85F439000D9EE1 /* session.c */,
+				7FA1AA2C0F85F439000D9EE1 /* sign.c */,
+				7FA1AA2D0F85F439000D9EE1 /* util.cpp */,
+			);
+			name = Pkcs11;
+			sourceTree = "<group>";
+		};
+		7FBB025A0F83937F009B751F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB02F20F839622009B751F /* win_macros.h */,
+				7FBB027E0F839412009B751F /* TLVBuffer.cpp */,
+				7FBB02610F839412009B751F /* ByteArray.cpp */,
+				7FBB02630F839412009B751F /* ByteArrayReader.cpp */,
+				7FBB02650F839412009B751F /* Config.cpp */,
+				7FBB02670F839412009B751F /* ConfigCommon.cpp */,
+				7FBB02680F839412009B751F /* datafile.cpp */,
+				7FBB026A0F839412009B751F /* DynamicLib.cpp */,
+				7FBB026E0F839412009B751F /* Hash.cpp */,
+				7FBB02700F839412009B751F /* Log.cpp */,
+				7FBB02720F839412009B751F /* LogBase.cpp */,
+				7FBB02740F839412009B751F /* Mutex.cpp */,
+				7FBB02760F839412009B751F /* MWException.cpp */,
+				7FBB02790F839412009B751F /* Thread.cpp */,
+				7FBB027C0F839412009B751F /* TLV.cpp */,
+				7FBB027F0F839412009B751F /* TLVBuffer.h */,
+				7FBB02810F839412009B751F /* Util.cpp */,
+				7FBB02620F839412009B751F /* ByteArray.h */,
+				7FBB02640F839412009B751F /* ByteArrayReader.h */,
+				7FBB02660F839412009B751F /* Config.h */,
+				7FBB02690F839412009B751F /* datafile.h */,
+				7FBB026B0F839412009B751F /* DynamicLib.h */,
+				7FBB026C0F839412009B751F /* eidErrors.h */,
+				7FBB026D0F839412009B751F /* Export.h */,
+				7FBB026F0F839412009B751F /* Hash.h */,
+				7FBB02710F839412009B751F /* Log.h */,
+				7FBB02730F839412009B751F /* LogBase.h */,
+				7FBB02750F839412009B751F /* Mutex.h */,
+				7FBB02770F839412009B751F /* MWException.h */,
+				7FBB02780F839412009B751F /* prefix.h */,
+				7FBB027A0F839412009B751F /* Thread.h */,
+				7FBB027B0F839412009B751F /* ThreadDefines.h */,
+				7FBB027D0F839412009B751F /* TLV.h */,
+				7FBB02800F839412009B751F /* TLVTagDefinitions.h */,
+				7FBB02820F839412009B751F /* Util.h */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		7FBB02C20F839479009B751F /* Common_tomcrypt */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB02AB0F839454009B751F /* md5.c */,
+				7FBB02AC0F839454009B751F /* rmd160.c */,
+				7FBB02AD0F839454009B751F /* sha1.c */,
+				7FBB02AE0F839454009B751F /* sha256.c */,
+				7FBB02AF0F839454009B751F /* sha384.c */,
+				7FBB02B00F839454009B751F /* sha512.c */,
+				7FBB02B10F839454009B751F /* tomcrypt_argchk.h */,
+				7FBB02B20F839454009B751F /* tomcrypt_cfg.h */,
+				7FBB02B30F839454009B751F /* tomcrypt_hash.h */,
+				7FBB02B40F839454009B751F /* tomcrypt_macros.h */,
+			);
+			name = Common_tomcrypt;
+			sourceTree = "<group>";
+		};
+		7FBB02DC0F839518009B751F /* Common_Socket */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB02D00F839514009B751F /* Socket.cpp */,
+				7FBB02D10F839514009B751F /* Socket.h */,
+				7FBB02D20F839514009B751F /* SocketClient.cpp */,
+				7FBB02D30F839514009B751F /* SocketClient.h */,
+				7FBB02D40F839514009B751F /* SocketServer.cpp */,
+				7FBB02D50F839514009B751F /* SocketServer.h */,
+			);
+			name = Common_Socket;
+			sourceTree = "<group>";
+		};
+		7FC5358D0F84B88B00BA96EE /* Cardlayer */ = {
+			isa = PBXGroup;
+			children = (
+				7FC535410F84B88600BA96EE /* Cache.cpp */,
+				7FC535420F84B88600BA96EE /* Cache.h */,
+				7FC535430F84B88600BA96EE /* Card.cpp */,
+				7FC535440F84B88600BA96EE /* Card.h */,
+				7FC535450F84B88600BA96EE /* CardFactory.cpp */,
+				7FC535460F84B88600BA96EE /* CardFactory.h */,
+				7FC535470F84B88600BA96EE /* CardLayer.cpp */,
+				7FC535480F84B88600BA96EE /* CardLayer.h */,
+				7FC535490F84B88600BA96EE /* CardLayerConst.h */,
+				7FC5354A0F84B88600BA96EE /* CardReaderInfo.cpp */,
+				7FC5354B0F84B88600BA96EE /* CardReaderInfo.h */,
+				7FC5354C0F84B88600BA96EE /* Context.cpp */,
+				7FC5354D0F84B88600BA96EE /* Context.h */,
+				7FC5354E0F84B88600BA96EE /* InternalConst.h */,
+				7FC5354F0F84B88600BA96EE /* P15Correction.cpp */,
+				7FC535500F84B88600BA96EE /* P15Correction.h */,
+				7FC535510F84B88600BA96EE /* P15Objects.h */,
+				7FC535520F84B88600BA96EE /* PCSC.cpp */,
+				7FC535530F84B88600BA96EE /* PCSC.h */,
+				7FC535540F84B88600BA96EE /* Pinpad.cpp */,
+				7FC535550F84B88600BA96EE /* Pinpad.h */,
+				7FC535560F84B88600BA96EE /* pinpad2.h */,
+				7FC535570F84B88600BA96EE /* PinpadLib.cpp */,
+				7FC535580F84B88600BA96EE /* PinpadLib.h */,
+				7FC535590F84B88600BA96EE /* PKCS15.cpp */,
+				7FC5355A0F84B88600BA96EE /* PKCS15.h */,
+				7FC5355B0F84B88600BA96EE /* PKCS15Parser.cpp */,
+				7FC5355C0F84B88600BA96EE /* PKCS15Parser.h */,
+				7FC5355D0F84B88600BA96EE /* PkiCard.cpp */,
+				7FC5355E0F84B88600BA96EE /* PkiCard.h */,
+				7FC5355F0F84B88600BA96EE /* Reader.cpp */,
+				7FC535600F84B88600BA96EE /* Reader.h */,
+				7FC535610F84B88600BA96EE /* ReadersInfo.cpp */,
+				7FC535620F84B88600BA96EE /* ReadersInfo.h */,
+				7FC535630F84B88600BA96EE /* ThreadPool.cpp */,
+				7FC535640F84B88600BA96EE /* ThreadPool.h */,
+				7FC535650F84B88600BA96EE /* UnknownCard.cpp */,
+				7FC535660F84B88600BA96EE /* UnknownCard.h */,
+			);
+			name = Cardlayer;
+			sourceTree = "<group>";
+		};
+		7FC535930F84B8E600BA96EE /* Cardlayer_pluginBeid */ = {
+			isa = PBXGroup;
+			children = (
+				7FC535960F84B95600BA96EE /* BeidCard.cpp */,
+				7FC535970F84B95600BA96EE /* BeidCard.h */,
+				7FC535980F84B95600BA96EE /* BeidP15Correction.cpp */,
+				7FC535990F84B95600BA96EE /* BeidP15Correction.h */,
+			);
+			name = Cardlayer_pluginBeid;
+			sourceTree = "<group>";
+		};
+		7FC535940F84B90C00BA96EE /* Cardlayer_pluginSIS */ = {
+			isa = PBXGroup;
+			children = (
+				7FC5359E0F84B97400BA96EE /* SISCard.cpp */,
+				7FC5359F0F84B97400BA96EE /* SISCard.h */,
+				7FC535A00F84B97400BA96EE /* SISplugin1.h */,
+				7FC535A10F84B97400BA96EE /* SISPluginHandler.cpp */,
+				7FC535A20F84B97400BA96EE /* SISPluginHandler.h */,
+			);
+			name = Cardlayer_pluginSIS;
+			sourceTree = "<group>";
+		};
+		7FC535950F84B92000BA96EE /* Cardlayer_pluginSIS_ACR38 */ = {
+			isa = PBXGroup;
+			children = (
+				7FC535B70F84BA2E00BA96EE /* SISCard.cpp */,
+			);
+			name = Cardlayer_pluginSIS_ACR38;
+			sourceTree = "<group>";
+		};
+		7FC535E20F84BCFA00BA96EE /* DialogsQt */ = {
+			isa = PBXGroup;
+			children = (
+				7FC535EC0F84BD6300BA96EE /* dlgs.cpp */,
+				7FC535ED0F84BD6300BA96EE /* SharedMem.cpp */,
+				7FC535EE0F84BD6300BA96EE /* SharedMem.h */,
+				7FC535E40F84BD3F00BA96EE /* dialogs.h */,
+				7FC535E50F84BD3F00BA96EE /* language.h */,
+				7FC535E60F84BD3F00BA96EE /* langUtil.cpp */,
+				7FC535E70F84BD3F00BA96EE /* langUtil.h */,
+			);
+			name = DialogsQt;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7FA1A9F30F85F36E000D9EE1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8618D1EE13CAF490008E73AB /* display.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FBB024F0F839352009B751F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FC535370F84B83B00BA96EE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FC535DB0F84BCDA00BA96EE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7FA1AA090F85F380000D9EE1 /* Build configuration list for PBXNativeTarget "beidpkcs11" */;
+			buildPhases = (
+				7FA1A9F30F85F36E000D9EE1 /* Headers */,
+				7FA1A9F40F85F36E000D9EE1 /* Sources */,
+				7FA1A9F50F85F36E000D9EE1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7FA1AA500F85F54F000D9EE1 /* PBXTargetDependency */,
+			);
+			name = beidpkcs11;
+			productName = beidpkcs11;
+			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeid_ff_pkcs11.4.0.4.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		7FBB02520F839352009B751F /* beidcommon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7FBB02590F83936E009B751F /* Build configuration list for PBXNativeTarget "beidcommon" */;
+			buildPhases = (
+				7FBB024F0F839352009B751F /* Headers */,
+				7FBB02500F839352009B751F /* Sources */,
+				7FBB02510F839352009B751F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = beidcommon;
+			productName = beidcommon;
+			productReference = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		7FC5353A0F84B83B00BA96EE /* beidcardlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7FC535400F84B86100BA96EE /* Build configuration list for PBXNativeTarget "beidcardlayer" */;
+			buildPhases = (
+				7FC535370F84B83B00BA96EE /* Headers */,
+				7FC535380F84B83B00BA96EE /* Sources */,
+				7FC535390F84B83B00BA96EE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7FC535F30F84BD6C00BA96EE /* PBXTargetDependency */,
+				7FC5353F0F84B84300BA96EE /* PBXTargetDependency */,
+			);
+			name = beidcardlayer;
+			productName = beidcardlayer;
+			productReference = 7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.4.a */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		7FC535DE0F84BCDA00BA96EE /* beiddialogsQT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7FC535E30F84BCFA00BA96EE /* Build configuration list for PBXNativeTarget "beiddialogsQT" */;
+			buildPhases = (
+				7FC535DB0F84BCDA00BA96EE /* Headers */,
+				7FC535DC0F84BCDA00BA96EE /* Sources */,
+				7FC535DD0F84BCDA00BA96EE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7F22A3710F84C58C001AD228 /* PBXTargetDependency */,
+			);
+			name = beiddialogsQT;
+			productName = beiddialogsQT;
+			productReference = 7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beid_ff_pkcs11" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* beidmw */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7FA1AACA0F860EDE000D9EE1 /* Beidmw */,
+				7FBB02520F839352009B751F /* beidcommon */,
+				7FC535DE0F84BCDA00BA96EE /* beiddialogsQT */,
+				7FC5353A0F84B83B00BA96EE /* beidcardlayer */,
+				7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7FA1A9F40F85F36E000D9EE1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FA1AA320F85F439000D9EE1 /* cal.cpp in Sources */,
+				7FA1AA340F85F439000D9EE1 /* cert.c in Sources */,
+				7FA1AA360F85F439000D9EE1 /* encrypt.c in Sources */,
+				7FA1AA370F85F439000D9EE1 /* general.c in Sources */,
+				7FA1AA3A0F85F439000D9EE1 /* p11.c in Sources */,
+				7FA1AA3C0F85F439000D9EE1 /* phash.cpp in Sources */,
+				7FA1AA3E0F85F439000D9EE1 /* session.c in Sources */,
+				7FA1AA3F0F85F439000D9EE1 /* sign.c in Sources */,
+				7FA1AA400F85F439000D9EE1 /* util.cpp in Sources */,
+				7FA1AA920F860748000D9EE1 /* object.c in Sources */,
+				8618D1ED13CAF490008E73AB /* display.cpp in Sources */,
+				86E110DF152B3C62004197EA /* log.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FBB02500F839352009B751F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FBB02830F839412009B751F /* ByteArray.cpp in Sources */,
+				7FBB02850F839412009B751F /* ByteArrayReader.cpp in Sources */,
+				7FBB02870F839412009B751F /* Config.cpp in Sources */,
+				7FBB02890F839412009B751F /* ConfigCommon.cpp in Sources */,
+				7FBB028A0F839412009B751F /* datafile.cpp in Sources */,
+				7FBB028C0F839412009B751F /* DynamicLib.cpp in Sources */,
+				7FBB02900F839412009B751F /* Hash.cpp in Sources */,
+				7FBB02920F839412009B751F /* Log.cpp in Sources */,
+				7FBB02940F839412009B751F /* LogBase.cpp in Sources */,
+				7FBB02960F839412009B751F /* Mutex.cpp in Sources */,
+				7FBB02980F839412009B751F /* MWException.cpp in Sources */,
+				7FBB029B0F839412009B751F /* Thread.cpp in Sources */,
+				7FBB029E0F839412009B751F /* TLV.cpp in Sources */,
+				7FBB02A00F839412009B751F /* TLVBuffer.cpp in Sources */,
+				7FBB02A30F839412009B751F /* Util.cpp in Sources */,
+				7FBB02B50F839454009B751F /* md5.c in Sources */,
+				7FBB02B60F839454009B751F /* rmd160.c in Sources */,
+				7FBB02B70F839454009B751F /* sha1.c in Sources */,
+				7FBB02B80F839454009B751F /* sha256.c in Sources */,
+				7FBB02B90F839454009B751F /* sha384.c in Sources */,
+				7FBB02BA0F839454009B751F /* sha512.c in Sources */,
+				7FBB02D60F839514009B751F /* Socket.cpp in Sources */,
+				7FBB02D80F839514009B751F /* SocketClient.cpp in Sources */,
+				7FBB02DA0F839514009B751F /* SocketServer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FC535380F84B83B00BA96EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FC535670F84B88600BA96EE /* Cache.cpp in Sources */,
+				7FC535690F84B88600BA96EE /* Card.cpp in Sources */,
+				7FC5356B0F84B88600BA96EE /* CardFactory.cpp in Sources */,
+				7FC5356D0F84B88600BA96EE /* CardLayer.cpp in Sources */,
+				7FC535700F84B88600BA96EE /* CardReaderInfo.cpp in Sources */,
+				7FC535720F84B88600BA96EE /* Context.cpp in Sources */,
+				7FC535780F84B88600BA96EE /* PCSC.cpp in Sources */,
+				7FC5357A0F84B88600BA96EE /* Pinpad.cpp in Sources */,
+				7FC5357D0F84B88600BA96EE /* PinpadLib.cpp in Sources */,
+				7FC535750F84B88600BA96EE /* P15Correction.cpp in Sources */,
+				7FC5357F0F84B88600BA96EE /* PKCS15.cpp in Sources */,
+				7FC535810F84B88600BA96EE /* PKCS15Parser.cpp in Sources */,
+				7FC535830F84B88600BA96EE /* PkiCard.cpp in Sources */,
+				7FC535850F84B88600BA96EE /* Reader.cpp in Sources */,
+				7FC535870F84B88600BA96EE /* ReadersInfo.cpp in Sources */,
+				7FC535890F84B88600BA96EE /* ThreadPool.cpp in Sources */,
+				7FC5358B0F84B88600BA96EE /* UnknownCard.cpp in Sources */,
+				7FC5359A0F84B95600BA96EE /* BeidCard.cpp in Sources */,
+				7FC5359C0F84B95600BA96EE /* BeidP15Correction.cpp in Sources */,
+				7FC535A30F84B97400BA96EE /* SISCard.cpp in Sources */,
+				7FC535A60F84B97400BA96EE /* SISPluginHandler.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7FC535DC0F84BCDA00BA96EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FC535EA0F84BD3F00BA96EE /* langUtil.cpp in Sources */,
+				7FC535EF0F84BD6300BA96EE /* dlgs.cpp in Sources */,
+				7FC535F00F84BD6300BA96EE /* SharedMem.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7F22A3710F84C58C001AD228 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FBB02520F839352009B751F /* beidcommon */;
+			targetProxy = 7F22A3700F84C58C001AD228 /* PBXContainerItemProxy */;
+		};
+		7FA1AA500F85F54F000D9EE1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FC5353A0F84B83B00BA96EE /* beidcardlayer */;
+			targetProxy = 7FA1AA4F0F85F54F000D9EE1 /* PBXContainerItemProxy */;
+		};
+		7FA1AAD40F860F12000D9EE1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */;
+			targetProxy = 7FA1AAD30F860F12000D9EE1 /* PBXContainerItemProxy */;
+		};
+		7FC5353F0F84B84300BA96EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FBB02520F839352009B751F /* beidcommon */;
+			targetProxy = 7FC5353E0F84B84300BA96EE /* PBXContainerItemProxy */;
+		};
+		7FC535F30F84BD6C00BA96EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FC535DE0F84BCDA00BA96EE /* beiddialogsQT */;
+			targetProxy = 7FC535F20F84BD6C00BA96EE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB916508733D950010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CURRENT_PROJECT_VERSION = 3.6.0;
+				DEBUG_INFORMATION_FORMAT = stabs;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PFE_FILE_C_DIALECTS = "c c++";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					LTC_NO_ASM,
+					BEID_35,
+				);
+				GCC_THREADSAFE_STATICS = YES;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+			};
+			name = Debug;
+		};
+		7FA1A9F80F85F36F000D9EE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 3.5.5;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../common",
+					/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_CFLAGS = "-fno-strict-aliasing";
+				PREBINDING = NO;
+				PRODUCT_NAME = "beidpkcs11.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Debug;
+		};
+		7FA1AACB0F860EDE000D9EE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
+				PRODUCT_NAME = Beidmw;
+			};
+			name = Debug;
+		};
+		7FBB02540F839352009B751F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = "beidcommon.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
+				VERSION_INFO_SUFFIX = "";
+			};
+			name = Debug;
+		};
+		7FC5353C0F84B83C00BA96EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					EIDMW_CAL_EXPORT,
+					CAL_BEID,
+					CARDPLUGIN_IN_CAL,
+					"EIDMW_PREFIX=/usr/local",
+					BEID_35,
+				);
+				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../common",
+					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+				);
+				INSTALL_PATH = "";
+				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = "-O2";
+				PREBINDING = NO;
+				PRODUCT_NAME = "beidcardlayer.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Debug;
+		};
+		7FC535E00F84BCDA00BA96EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = stabs;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../common/**";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_CFLAGS = (
+					"-finput-charset=cp1252",
+					"-fno-strict-aliasing",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "beiddialogsQT.$(CURRENT_PROJECT_VERSION)";
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Debug;
+		};
+		86C687131541790500F53DB0 /* PKCS11_FF_Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CURRENT_PROJECT_VERSION = 4.0.4;
+				DEBUG_INFORMATION_FORMAT = stabs;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_MODEL_TUNING = "";
+				GCC_PFE_FILE_C_DIALECTS = "c c++";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					BEID_35,
+				);
+				GCC_THREADSAFE_STATICS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = PKCS11_FF_Release;
+		};
+		86C687141541790500F53DB0 /* PKCS11_FF_Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 4.0.4;
+				DEBUG_INFORMATION_FORMAT = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = Beidmw;
+				VALID_ARCHS = i386;
+				ZERO_LINK = NO;
+			};
+			name = PKCS11_FF_Release;
+		};
+		86C687151541790500F53DB0 /* PKCS11_FF_Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = stabs;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = a;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = "";
+				HEADER_SEARCH_PATHS = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				INSTALL_PATH = /usr/local/lib;
+				MACH_O_TYPE = staticlib;
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = "beid_ff_common.$(CURRENT_PROJECT_VERSION)";
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+				VALID_ARCHS = "i386 x86_64";
+				VERSION_INFO_SUFFIX = "";
+				ZERO_LINK = NO;
+			};
+			name = PKCS11_FF_Release;
+		};
+		86C687161541790500F53DB0 /* PKCS11_FF_Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = stabs;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = a;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = "";
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../common/**";
+				INSTALL_PATH = /usr/local/lib;
+				MACH_O_TYPE = staticlib;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-finput-charset=cp1252",
+					"-fno-strict-aliasing",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "beid_ff_dialogsQT.$(CURRENT_PROJECT_VERSION)";
+				ZERO_LINK = NO;
+			};
+			name = PKCS11_FF_Release;
+		};
+		86C687181541790500F53DB0 /* PKCS11_FF_Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
+				COPY_PHASE_STRIP = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = a;
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					EIDMW_CAL_EXPORT,
+					CAL_BEID,
+					CARDPLUGIN_IN_CAL,
+					"EIDMW_PREFIX=/usr/local",
+					BEID_35,
+					PKCS11_V2_20,
+				);
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../common",
+					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACH_O_TYPE = staticlib;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "-O2";
+				PREBINDING = NO;
+				PRODUCT_NAME = "beid_ff_cardlayer.$(CURRENT_PROJECT_VERSION)";
+				ZERO_LINK = NO;
+			};
+			name = PKCS11_FF_Release;
+		};
+		86C6871D1541790500F53DB0 /* PKCS11_FF_Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = stabs;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					BEID_35,
+					PKCS11_V2_20,
+				);
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../common",
+					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				MACH_O_TYPE = mh_dylib;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fno-strict-aliasing",
+					"-finput-charset=cp1252",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "beid_ff_pkcs11.$(CURRENT_PROJECT_VERSION)";
+				SDKROOT = macosx10.6;
+				ZERO_LINK = NO;
+			};
+			name = PKCS11_FF_Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beid_ff_pkcs11" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB916508733D950010E9CD /* Debug */,
+				86C687131541790500F53DB0 /* PKCS11_FF_Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = PKCS11_FF_Release;
+		};
+		7FA1AA090F85F380000D9EE1 /* Build configuration list for PBXNativeTarget "beidpkcs11" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FA1A9F80F85F36F000D9EE1 /* Debug */,
+				86C6871D1541790500F53DB0 /* PKCS11_FF_Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = PKCS11_FF_Release;
+		};
+		7FA1AADC0F860F3E000D9EE1 /* Build configuration list for PBXAggregateTarget "Beidmw" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FA1AACB0F860EDE000D9EE1 /* Debug */,
+				86C687141541790500F53DB0 /* PKCS11_FF_Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = PKCS11_FF_Release;
+		};
+		7FBB02590F83936E009B751F /* Build configuration list for PBXNativeTarget "beidcommon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FBB02540F839352009B751F /* Debug */,
+				86C687151541790500F53DB0 /* PKCS11_FF_Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = PKCS11_FF_Release;
+		};
+		7FC535400F84B86100BA96EE /* Build configuration list for PBXNativeTarget "beidcardlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FC5353C0F84B83C00BA96EE /* Debug */,
+				86C687181541790500F53DB0 /* PKCS11_FF_Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = PKCS11_FF_Release;
+		};
+		7FC535E30F84BCFA00BA96EE /* Build configuration list for PBXNativeTarget "beiddialogsQT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FC535E00F84BCDA00BA96EE /* Debug */,
+				86C687161541790500F53DB0 /* PKCS11_FF_Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = PKCS11_FF_Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
