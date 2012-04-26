@@ -65,11 +65,11 @@ BelgiumEidPKCS11.prototype = {
 	  var osString = Components.classes["@mozilla.org/xre/app-info;1"]
                  .getService(Components.interfaces.nsIXULRuntime).OS;
 	  if (osString == "WINNT")
-	    return "beidpkcs11.dll";
+	    return "beid_ff_pkcs11.dll;beidpkcs11.dll";
 	  if (osString == "Darwin")
-	    return "/Library/Frameworks/BeId.framework/Versions/4.0/lib/libbeidpkcs11.dylib;/usr/local/lib/beid-pkcs11.bundle;/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib";
+	    return "/usr/local/lib/beid_ff_pkcs11.dylib;/Library/Frameworks/BeId.framework/Versions/4.0/lib/libbeidpkcs11.dylib;/usr/local/lib/beid-pkcs11.bundle;/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib";
 	  if (osString == "Linux")
-	    return "libbeidpkcs11.so;/usr/local/lib/libbeidpkcs11.so";
+	    return "/usr/local/lib/libbeid_ff_pkcs11.so;libbeidpkcs11.so;/usr/local/lib/libbeidpkcs11.so";
 	}	
   },
   getPKCS11ModuleDB: function() {
@@ -118,9 +118,10 @@ BelgiumEidPKCS11.prototype = {
 	}
     var installSucceeded = false;
 	var moduleLocations = this.getModuleLocation().split(";");
+	var newModuleInstalled = false;
 	for (x in moduleLocations) {
 		// check if the module is already installed
-		if (this.findModuleByLibName(moduleLocations[x]) == null) {
+		if ((this.findModuleByLibName(moduleLocations[x]) == null) && (newModuleInstalled == false)) {
 			try {
 				// PKCS11_PUB_READABLE_CERT_FLAG: we instruct FF not to ask for PIN when reading certificates
 				// This only makes sense when the CKF_LOGIN_REQUIRED flag is set on the token in P11 module
@@ -128,13 +129,25 @@ BelgiumEidPKCS11.prototype = {
 				this.addModule(modulename, moduleLocations[x], PKCS11_PUB_READABLE_CERT_FLAG,0);
 				this.errorLog("Added PKCS11 module " + modulename + " Location: " + moduleLocations[x]);
 				installSucceeded = true;
-				break;
+				//in case the new module is found, remove the old one
+				if (x == 0)
+				{
+					newModuleInstalled = true;
+				}
+				else {
+					break;
+				}
 			} catch (e) {
 				this.errorLog("Failed to load module " + moduleLocations[x] + " with the name " + 
 						modulename + ": Error " + e.name + ": " + e.message);
 				continue;
 			}
 		} 
+		else{
+			var modulename = this.getModuleName() + " - " + moduleLocations[x];
+			this.deleteModule(modulename);
+			break;
+			}
 	}
 	return installSucceeded;
   },
@@ -244,6 +257,13 @@ try {
 catch (e) {
     // pre-firefox 3.5 interface
   BelgiumEidPKCS11.prototype.addModule = Components.classes["@mozilla.org/security/pkcs11;1"].getService(Components.interfaces.nsIDOMPkcs11).addmodule;
+};
+try {
+  BelgiumEidPKCS11.prototype.deleteModule = Components.classes["@mozilla.org/security/pkcs11;1"].getService(Components.interfaces.nsIPKCS11).deleteModule;
+}  
+catch (e) {
+    // pre-firefox 3.5 interface
+  BelgiumEidPKCS11.prototype.deleteModule = Components.classes["@mozilla.org/security/pkcs11;1"].getService(Components.interfaces.nsIDOMPkcs11).deletemodule;
 };
 /**
 * XPCOMUtils.generateNSGetFactory was introduced in Mozilla 2 (Firefox 4).
