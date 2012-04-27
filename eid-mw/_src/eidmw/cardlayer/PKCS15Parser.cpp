@@ -34,11 +34,11 @@
 #include "../common/Util.h"
 #include "PKCS15Parser.h"
 
-#include "../pkcs11/asn1.h"
+#include "asn1.h"
 
-extern "C" {
-#include "../pkcs11/asn1.c"
-}
+//extern "C" {
+//#include "../pkcs11/asn1.c"
+//}
 
 namespace eIDMW{
 
