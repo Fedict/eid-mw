@@ -1461,7 +1461,7 @@ int cal_update_token(CK_SLOT_ID hSlot)
 	P11_SLOT *pSlot = NULL;
 
 #ifdef PKCS11_FF
-	if(hSlot >= p11_get_nreaders())
+	if(hSlot >= (p11_get_nreaders()-1))
 	{
 		return ((int)P11_CARD_NOT_PRESENT);
 	}
