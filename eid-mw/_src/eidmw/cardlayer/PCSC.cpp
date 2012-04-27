@@ -70,7 +70,7 @@ void CPCSC::ReleaseContext()
 {
 	if (m_hContext != 0)
 	{
-		SCardCancel(m_hContext);
+//		SCardCancel(m_hContext);
 		SCardReleaseContext(m_hContext);
 		m_hContext = 0;
 	}
@@ -80,7 +80,7 @@ void CPCSC::Cancel()
 {
 	if (m_hContext != 0)
 	{
-		SCardCancel(m_hContext);
+//		SCardCancel(m_hContext);
 	}
 }
 
