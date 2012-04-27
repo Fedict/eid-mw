@@ -39,7 +39,7 @@ Takes care of
 #ifndef WIN32
 
 #include "wintypes.h"
-#include "Reader.h"
+#include "reader.h"
 
 // fix for gc issue #47 - compatible with pcsc-lite-1.6.4
 // but still works on older pcsc-lite versions which *do* define SCARD_READERSTATE_A themselves
