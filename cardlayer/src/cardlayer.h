@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -105,6 +105,18 @@ public:
 	 * cause a re-connection to the smart card resource manager.
 	 */
 	void ForceRelease();
+
+	/* Terminates all outstanding actions within the resource manager context
+	 * (a call to SCardCancel)
+	 */
+	void CancelActions();
+
+	/* capture all status changes into txReaderStates
+	 * (a call to SCardGetStatusChange)
+	 */
+	void GetStatusChange(unsigned long ulTimeout,
+															 SCARD_READERSTATEA *txReaderStates,
+															 unsigned long ulReaderCount);
 
 	/**
 	 * Return the list of all available readers, plus info on the

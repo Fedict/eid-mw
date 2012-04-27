@@ -27,6 +27,11 @@
 extern "C" {
 #endif
 
+#ifdef PKCS11_FF
+	int cal_getgnFFReaders(void);
+	void cal_setgnFFReaders(int newgnFFReaders);
+	void cal_incgnFFReaders(void);
+#endif
 
 #define CAL_MECHANISM_TABLE  { \
 	{  CKM_MD5,                128, 128  , CKF_DIGEST         }, \
@@ -210,7 +215,9 @@ int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsi
 int cal_validate_session(P11_SESSION *pSession);
 int cal_update_token(CK_SLOT_ID hSlot);
 CK_RV cal_wait_for_slot_event(int block);
+CK_RV cal_wait_for_the_slot_event(int block);
 CK_RV cal_get_slot_changes(int *ph);
+int cal_refresh_readers();
 
 #ifdef __cplusplus
   }

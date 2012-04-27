@@ -28,7 +28,7 @@ CReadersInfo::CReadersInfo()
 	m_ulReaderCount = 0;
 }
 
-//contains the virtual reader
+//contains the virtual reader incase of #define PKCS11_V2_20
 unsigned long CReadersInfo::ReaderCount()
 {
 	return m_ulReaderCount;
@@ -41,7 +41,7 @@ std::string CReadersInfo::ReaderName(unsigned long ulIndex)
 
     return m_tInfos[ulIndex].csReader;
 }
-
+/*
 bool CReadersInfo::CheckReaderEvents(unsigned long ulTimeout,
 	unsigned long ulIndex)
 {
@@ -73,7 +73,7 @@ wait_again:
 
 	return bChanged;
 }
-
+*/
 bool CReadersInfo::ReaderStateChanged(unsigned long ulIndex)
 {
 	if (ulIndex >= m_ulReaderCount)
@@ -85,11 +85,11 @@ bool CReadersInfo::ReaderStateChanged(unsigned long ulIndex)
 
 bool CReadersInfo::CardPresent(unsigned long ulIndex)
 {
-	if (bFirstTime)
+	/*if (bFirstTime)
 	{
 		m_poPCSC->GetStatusChange(0, m_tInfos, m_ulReaderCount);
 		bFirstTime = false;
-	}
+	}*/
 
 	if (ulIndex >= m_ulReaderCount)
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
@@ -102,45 +102,109 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
 {
 	m_poPCSC = poPCSC;
 	bFirstTime = true;
-  m_ulReaderCount = 0;
+	m_ulReaderCount = 0;
 
 	//Parse the string reader-list into the array "m_tcsReaders"
 	const char *csReaders = (const char *) oReaders.GetBytes();
 	size_t i;
 
-    for (i = 0;
-		csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS-1;
-		i++, m_ulReaderCount++)
-    {
-        m_tInfos[m_ulReaderCount].csReader = csReaders;
-        m_tInfos[m_ulReaderCount].ulCurrentState = 0;
-        m_tInfos[m_ulReaderCount].ulEventState = 0;
-        csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
-    }
 
-		//Add an extra reader to detect new attached reader events
-		if(i < MAX_READERS)
-		{
-			  m_tInfos[m_ulReaderCount].csReader = "\\\\?PnP?\\Notification";
-        m_tInfos[m_ulReaderCount].ulCurrentState = 0;
-        m_tInfos[m_ulReaderCount].ulEventState = 0;
-				m_ulReaderCount++;
-		}
+#ifdef PKCS11_V2_20
+	for (i = 0;csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS-1; i++, m_ulReaderCount++)
+#else
+	for (i = 0;csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS; i++, m_ulReaderCount++)
+#endif
+	{
+		m_tInfos[m_ulReaderCount].csReader = csReaders;
+		m_tInfos[m_ulReaderCount].ulCurrentState = 0;
+		m_tInfos[m_ulReaderCount].ulEventState = 0;
+		csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
+	}
+#ifdef PKCS11_V2_20
+	//Add an extra hidden reader to detect new attached reader events
+	m_tInfos[m_ulReaderCount].csReader = "\\\\?PnP?\\Notification";
+	m_tInfos[m_ulReaderCount].ulCurrentState = 0;
+	m_tInfos[m_ulReaderCount].ulEventState = 0;
+	m_ulReaderCount++;
+#endif
 }
 
-void CReadersInfo::CheckTheReaderEvents(unsigned long ulTimeout)
+bool CReadersInfo::GetReaderStates(SCARD_READERSTATEA* txReaderStates,
+																	 unsigned long length,
+																	 unsigned long *ulnReaders)
 {
-	if (bFirstTime)
+	*ulnReaders = m_ulReaderCount;
+	if(length < m_ulReaderCount)
+		return false;
+	// Convert from tReaderInfo[] -> SCARD_READERSTATE array
+	for (DWORD i = 0; i < m_ulReaderCount; i++)
 	{
-		//fill the m_tInfos with initial values
-		m_poPCSC->GetTheStatusChange(0, m_tInfos, m_ulReaderCount);
-		bFirstTime = false;
+		//copy the reader name, instead of giving the pointer, as C_GetSlotList might free it.
+		txReaderStates[i].szReader = (char*)malloc(strlen(m_tInfos[i].csReader.c_str())+1);
+		memset((void*)txReaderStates[i].szReader,0,strlen(m_tInfos[i].csReader.c_str())+1);
+		memcpy((void*)txReaderStates[i].szReader,(const void*)(m_tInfos[i].csReader.c_str()),strlen(m_tInfos[i].csReader.c_str()));
+		txReaderStates[i].dwCurrentState = m_tInfos[i].ulEventState;
+	}
+	return true;
+}
+
+bool CReadersInfo::UpdateReaderStates(SCARD_READERSTATEA* txReaderStates,
+																			unsigned long ulnReaders)
+{
+	if(m_ulReaderCount != ulnReaders)
+		return false;
+
+	// Update the event states in m_tInfos
+	for (DWORD i = 0; i < m_ulReaderCount; i++)
+	{
+			m_tInfos[i].ulCurrentState = m_tInfos[i].ulEventState;
+			m_tInfos[i].ulEventState = txReaderStates[i].dwEventState & ~SCARD_STATE_CHANGED;
 	}
 
-	//get new status values for all readers
-	m_poPCSC->GetTheStatusChange(ulTimeout, m_tInfos, m_ulReaderCount);
+	return true;
+}
+
+void CReadersInfo::FreeReaderStates(SCARD_READERSTATEA* txReaderStates,
+																			unsigned long ulnReaders)
+{
+	// Free the memory allocated for the reader names
+	for (DWORD i = 0; i < ulnReaders; i++)
+	{
+		if(txReaderStates[i].szReader != NULL)
+		{
+			free((void*)(txReaderStates[i].szReader));
+			txReaderStates[i].szReader = NULL;
+		}
+	}
 
 	return;
 }
 
+bool CReadersInfo::IsFirstTime(void)
+{
+	return bFirstTime;
 }
+
+void CReadersInfo::SetFirstTime(bool firstTime)
+{
+	bFirstTime = firstTime;
+	return;
+}
+bool CReadersInfo::SameList(CReadersInfo* newReadersInfo)
+{
+	if(this->ReaderCount() != newReadersInfo->ReaderCount())
+	{
+		return false;
+	}
+	for (DWORD i = 0; i < m_ulReaderCount; i++)
+	{
+		if ( strcmp((this->ReaderName(i)).c_str(), (newReadersInfo->ReaderName(i)).c_str()) != 0)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+
+}//end namespace

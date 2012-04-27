@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2010-2011 FedICT.
+* Copyright (C) 2010-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -73,6 +73,14 @@ void CPCSC::ReleaseContext()
 		SCardCancel(m_hContext);
 		SCardReleaseContext(m_hContext);
 		m_hContext = 0;
+	}
+}
+
+void CPCSC::Cancel()
+{
+	if (m_hContext != 0)
+	{
+		SCardCancel(m_hContext);
 	}
 }
 
@@ -401,8 +409,11 @@ try_again:
 	{
 		CThread::SleepMillisecs(25);
 	}
+
 	return CByteArray(tucRecv, (unsigned long) dwRecvLen);
 }
+
+
 
 void CPCSC::Recover(SCARDHANDLE hCard, unsigned long * pulLockCount )
 {
@@ -530,6 +541,8 @@ long CPCSC::PcscToErr(unsigned long lPcscErr)
 
 	switch(lPcscErr)
 	{
+	case SCARD_E_CANCELLED:
+		lRet = EIDMW_ERR_CANCELLED;break;
 	case SCARD_E_PROTO_MISMATCH:
 	case SCARD_E_COMM_DATA_LOST:
 	case SCARD_F_COMM_ERROR:
@@ -560,21 +573,11 @@ long CPCSC::PcscToErr(unsigned long lPcscErr)
 	return lRet;
 }
 
-
 void CPCSC::GetTheStatusChange(unsigned long ulTimeout,
-															 tReaderInfo *pReaderInfos, unsigned long ulReaderCount)
+															 SCARD_READERSTATEA *txReaderStates,
+															 unsigned long ulReaderCount)
 {
-	SCARD_READERSTATEA txReaderStates[MAX_READERS];
 	long lRet;
-
-	memset(txReaderStates,0,sizeof(txReaderStates));
-	// Convert from tReaderInfo[] -> SCARD_READERSTATE array
-	for (DWORD i = 0; i < ulReaderCount; i++)
-	{
-		txReaderStates[i].szReader = pReaderInfos[i].csReader.c_str();
-		txReaderStates[i].dwCurrentState = pReaderInfos[i].ulEventState;
-	}
-
 	do
 	{
 		lRet = SCardGetStatusChange(m_hContext,
@@ -583,13 +586,6 @@ void CPCSC::GetTheStatusChange(unsigned long ulTimeout,
 		{
 			if (SCARD_S_SUCCESS != lRet)
 				throw CMWEXCEPTION(PcscToErr(lRet));
-
-			// Update the event states in pReaderInfos
-			for (DWORD i = 0; i < ulReaderCount; i++)
-			{
-				pReaderInfos[i].ulCurrentState = pReaderInfos[i].ulEventState;
-				pReaderInfos[i].ulEventState = txReaderStates[i].dwEventState & ~SCARD_STATE_CHANGED;
-			}
 		}
 	}
 	while( (lRet == SCARD_E_TIMEOUT)&&(ulTimeout == TIMEOUT_INFINITE) );

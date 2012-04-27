@@ -37,7 +37,6 @@ extern CK_FUNCTION_LIST pkcs11_function_list;
 
 //static int g_final = 0; /* Belpic */
 static int g_init  = BEIDP11_NOT_INITIALIZED;
-
 //  CMutex gMutex;
 //  CMutex SlotMutex[MAX_READERS];
 
@@ -57,9 +56,9 @@ int ret = CKR_OK;
 CK_C_INITIALIZE_ARGS_PTR p_args;
 
 #if _DEBUG
-   log_init(DEFAULT_LOG_FILE, LOG_LEVEL_INFO);
+   log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_INFO);
 #else
-   log_init(DEFAULT_LOG_FILE, LOG_LEVEL_WARNING);
+   log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_WARNING);
 #endif
 	log_trace(WHERE, "I: enter pReserved = %p",pReserved);
    if (g_init != BEIDP11_NOT_INITIALIZED)
@@ -136,6 +135,8 @@ if (pReserved != NULL)
 //g_final = 0; /* Belpic */
 g_init = BEIDP11_DEINITIALIZING;
 
+
+
 ret = cal_close();
 
 cleanup:
@@ -169,7 +170,9 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 
    memset(pInfo, 0, sizeof(CK_INFO));
    pInfo->cryptokiVersion.major = 2;
+#ifdef PKCS11_V2_20
    pInfo->cryptokiVersion.minor = 20;
+#endif
    strcpy_n(pInfo->manufacturerID,  "Belgium Government",  sizeof(pInfo->manufacturerID), ' ');
    strcpy_n(pInfo->libraryDescription, "Belgium eID PKCS#11 interface v2", sizeof(pInfo->libraryDescription), ' ');
    pInfo->libraryVersion.major = 2;
@@ -239,13 +242,11 @@ if (pulCount == NULL_PTR)
    goto cleanup;
    }
 
+#ifdef PKCS11_V2_20
 if(pSlotList == NULL){
-	ret = cal_close();
-	if(ret == CKR_OK){
-		cal_init();
-	}
+	ret = cal_refresh_readers();
 }
-
+#endif
 //init slots allready done
 //update info on tokens in slot, could be removed if thread keeps track of these token states
 //BUG in Adobe Acrobat reader: adobe asks for slots with pSlotList = NULL, so only nr of slots will be returned. This is ok.
@@ -531,14 +532,29 @@ log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
 for (i=0; i < p11_get_nreaders(); i++)
    {
    p11Slot = p11_get_slot(i);
-   if (p11Slot->ievent != P11_EVENT_NONE)
-      {
-      *pSlot = i;
-      //clear event
-      p11Slot->ievent = P11_EVENT_NONE;
-      CLEANUP(CKR_OK);
-      }
-   }
+	 if (p11Slot->ievent != P11_EVENT_NONE)
+	 {
+#ifdef PKCS11_FF
+		 //in case the upnp reader caused the event, return a new slotnumber
+		 if( (i+1) == p11_get_nreaders())
+		 {
+			 if(cal_getgnFFReaders() == 0)
+			 {
+				 cal_setgnFFReaders(p11_get_nreaders());
+			 }
+			 else
+			 {
+				 cal_incgnFFReaders();
+			 }
+			 i = cal_getgnFFReaders();
+		 }
+#endif
+		 *pSlot = i;
+		 //clear event
+		 p11Slot->ievent = P11_EVENT_NONE;
+		 CLEANUP(CKR_OK);
+	 }
+}
 
 if (flags & CKF_DONT_BLOCK)
 {
@@ -546,9 +562,6 @@ if (flags & CKF_DONT_BLOCK)
 }
 else
 {
-	//release lock while waiting
-	p11_unlock();
-	locked = CK_FALSE;
 	ret = cal_wait_for_slot_event(1);//1 means block
 }
 
@@ -562,14 +575,6 @@ if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
 if(ret != CKR_OK)
 	goto cleanup;
 
-if(locked == CK_FALSE){
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
-}
 ret = cal_get_slot_changes(&h);
 
 if (ret == CKR_OK)
@@ -583,9 +588,8 @@ if (ret == CKR_OK)
 * to polling in the main thread, like before. */
 
 cleanup:
-
-if (locked == CK_TRUE)
-p11_unlock();
+if(locked == CK_TRUE)
+	p11_unlock();
 
 log_trace(WHERE, "I: leave, ret = %i",ret);
 return ret;
@@ -596,7 +600,11 @@ return ret;
 
 
 CK_FUNCTION_LIST pkcs11_function_list = {
+#ifdef PKCS11_V2_20
    { 2, 20 },
+#else
+   { 2, 11 },
+#endif
    C_Initialize,
    C_Finalize,
    C_GetInfo,

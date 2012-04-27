@@ -44,11 +44,28 @@ CReadersInfo *oReadersInfo;
 extern "C" {
 	extern unsigned int   gRefCount;
 	extern unsigned int   nReaders;
+	extern bool						gSlotsChanged;
 	extern P11_SLOT       gpSlot[MAX_SLOTS];
 	//local functions
 	int cal_translate_error(const char *WHERE, long err);
 	int cal_map_status(tCardStatus calstatus);
 }
+
+#ifdef PKCS11_FF
+	static int gnFFReaders;
+	int cal_getgnFFReaders(void)
+	{		
+		return gnFFReaders; 
+	}
+	void cal_setgnFFReaders(int newgnFFReaders)
+	{	
+		gnFFReaders = newgnFFReaders; 
+	}
+	void cal_incgnFFReaders(void)
+	{	
+		gnFFReaders++; 
+	}
+#endif
 
 #define WHERE "cal_init()"
 int cal_init()
@@ -76,6 +93,9 @@ int cal_init()
 	}
 
 	//init slots and token in slots
+#ifdef PKCS11_FF
+	gnFFReaders = 0;
+#endif
 	memset(gpSlot, 0, sizeof(gpSlot));
 	ret = cal_init_slots();
 	if (ret)
@@ -282,7 +302,7 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 	pInfo->firmwareVersion.major = 1;
 	pInfo->firmwareVersion.minor = 0;
 
-	pInfo->ulMaxPinLen = 8;
+	pInfo->ulMaxPinLen = 12;
 	pInfo->ulMinPinLen = 4;
 	strcpy_s((char*)pInfo->utcTime,sizeof(pInfo->utcTime), "20080101000000");
 
@@ -1441,6 +1461,13 @@ int cal_update_token(CK_SLOT_ID hSlot)
 	unsigned int i = 0;
 	P11_SLOT *pSlot = NULL;
 
+#ifdef PKCS11_FF
+	if(hSlot >= p11_get_nreaders())
+	{
+		return ((int)P11_CARD_NOT_PRESENT);
+	}
+#endif
+
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
@@ -1495,7 +1522,7 @@ int cal_update_token(CK_SLOT_ID hSlot)
 #undef WHERE
 
 
-
+/*
 #define WHERE "cal_wait_for_slot_event()"
 CK_RV cal_wait_for_slot_event(int block)
 {
@@ -1524,6 +1551,7 @@ cleanup:
 	return(ret);
 }
 #undef WHERE
+*/
 
 #define WHERE "cal_get_slot_changes()"
 CK_RV cal_get_slot_changes(int *ph)
@@ -1542,6 +1570,21 @@ CK_RV cal_get_slot_changes(int *ph)
 			if (first)
 			{
 				*ph = i;
+#ifdef PKCS11_FF
+				//incase the upnp reader detected a reader event
+				if(i == (p11_get_nreaders()-1))
+				{
+					if(gnFFReaders == 0)
+					{
+						gnFFReaders = p11_get_nreaders();
+					}
+					else
+					{
+						gnFFReaders++;
+					}
+					*ph = gnFFReaders;
+				}
+#endif
 				first = 0;
 				ret = CKR_OK;
 			}
@@ -1574,8 +1617,55 @@ int cal_map_status(tCardStatus calstatus)
 }
 #undef WHERE
 
+#define WHERE "cal_refresh_readers()"
+int cal_refresh_readers()
+{
+	int ret = CKR_OK;
 
+	try
+	{
+		if (oReadersInfo)
+		{
+			//check if readerlist changed?
+			CReadersInfo* pNewReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
+			if(pNewReadersInfo->SameList(oReadersInfo) == TRUE)
+			{
+				//same reader list as before, so we keep the readers' status
+				delete(pNewReadersInfo);
+				return CKR_OK; 
+			}
+			else
+			{
+				delete(oReadersInfo);
+				oReadersInfo = pNewReadersInfo;
+			}
+		}
+		else
+		{
+			oReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
+		}
+		//new reader list, so please stop the scardgetstatuschange that is waiting on the old list
+		//oCardLayer->CancelActions();
+	}
+	catch (CMWException e)
+	{
+		return(cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...) 
+	{
+		log_trace(WHERE, "E: unknown exception thrown");
+		return (CKR_FUNCTION_FAILED);
+	}
 
+		//init slots and token in slots
+	memset(gpSlot, 0, sizeof(gpSlot));
+	ret = cal_init_slots();
+	if (ret)
+		log_trace(WHERE, "E: p11_init_slots() returns %d", ret);
+
+	return(ret);
+}
+#undef WHERE
 
 int cal_translate_error(const char *WHERE, long err)
 {
@@ -1596,7 +1686,8 @@ int cal_translate_error(const char *WHERE, long err)
 	case EIDMW_ERR_PIN_OPERATION:             return(CKR_FUNCTION_FAILED);  break;
 		/** PIN not allowed for this card (invalid characters, too short/long) */
 	case EIDMW_ERR_PIN_FORMAT:                return(CKR_FUNCTION_FAILED);  break;
-
+		/* the action was cancelled*/
+	case EIDMW_ERR_CANCELLED:									return(CKR_FUNCTION_FAILED);  break;
 		// Card errors
 		/** Generic card error */
 	case EIDMW_ERR_CARD:                      return(CKR_DEVICE_ERROR);     break;
@@ -1715,4 +1806,72 @@ int cal_translate_error(const char *WHERE, long err)
 		return(CKR_GENERAL_ERROR);
 	}
 }
+
+#define WHERE "cal_wait_for_slot_event()"
+CK_RV cal_wait_for_slot_event(int block)
+{
+	CK_RV ret = CKR_OK;
+	if(oReadersInfo->IsFirstTime())
+	{
+		ret = cal_wait_for_the_slot_event(0);
+		if(ret != CKR_OK)
+			return ret;
+		oReadersInfo->SetFirstTime(FALSE);
+	}
+	ret = cal_wait_for_the_slot_event(block);
+	return ret;
+}
+
+#define WHERE "cal_wait_for_slot_event()"
+CK_RV cal_wait_for_the_slot_event(int block)
+{
+	SCARD_READERSTATEA txReaderStates[MAX_READERS];
+	CK_RV ret = CKR_OK;
+	unsigned long ulnReaders = 0;
+
+	memset(txReaderStates,0,sizeof(txReaderStates));
+	oReadersInfo->GetReaderStates(txReaderStates,MAX_READERS,&ulnReaders);
+
+	try 
+	{
+		if (block){
+			p11_unlock();
+			oCardLayer->GetStatusChange(TIMEOUT_INFINITE,txReaderStates,ulnReaders);
+			ret = p11_lock();
+			if (ret != CKR_OK)
+			{
+				log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+				CLEANUP(ret);
+			}
+			if(oReadersInfo->IsFirstTime())
+			{
+				//we never call GetStatusChange with blocked flag when its the first time,
+				//if we get here, C_getslotlist must have reset oReadersInfo, in which case
+				//all reader states we have here are obsolete
+				CLEANUP(CKR_FUNCTION_FAILED);
+			}
+		}
+		else{
+			oCardLayer->GetStatusChange(0,txReaderStates,ulnReaders);
+		}
+	}
+	catch (CMWException e)
+	{
+		CLEANUP(cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...) 
+	{
+		log_trace(WHERE, "E: unkown exception thrown");
+		CLEANUP(CKR_FUNCTION_FAILED);
+	}
+
+	oReadersInfo->UpdateReaderStates(txReaderStates,ulnReaders);
+
+cleanup:
+	oReadersInfo->FreeReaderStates(txReaderStates,ulnReaders);
+	return(ret);
+}
+#undef WHERE
+
+
 
