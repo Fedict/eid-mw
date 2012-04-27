@@ -1,6 +1,6 @@
 /* ****************************************************************************
 * eID Middleware Project.
-* Copyright (C) 2008-2010 FedICT.
+* Copyright (C) 2008-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -269,7 +269,8 @@
 /** User did not yet allow or disallow to read the card */
 #define EIDMW_ERR_USER_MUST_ANSWER		0xe1d00b0D
 
-
+/** User did not yet allow or disallow to read the card */
+#define EIDMW_ERR_CANCELLED				0xe1d00b0E
 // Errors in system calls
 
 /** a system call returned an error */
