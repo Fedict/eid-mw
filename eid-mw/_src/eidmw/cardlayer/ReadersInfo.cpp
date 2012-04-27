@@ -102,34 +102,30 @@ CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
 {
 	m_poPCSC = poPCSC;
 	bFirstTime = true;
-  m_ulReaderCount = 0;
+	m_ulReaderCount = 0;
 
 	//Parse the string reader-list into the array "m_tcsReaders"
 	const char *csReaders = (const char *) oReaders.GetBytes();
 	size_t i;
 
-    for (i = 0;
+
 #ifdef PKCS11_V2_20
-		csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS-1;
+	for (i = 0;csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS-1; i++, m_ulReaderCount++)
 #else
-		csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS;
+	for (i = 0;csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS; i++, m_ulReaderCount++)
 #endif
-		i++, m_ulReaderCount++)
-    {
-        m_tInfos[m_ulReaderCount].csReader = csReaders;
-        m_tInfos[m_ulReaderCount].ulCurrentState = 0;
-        m_tInfos[m_ulReaderCount].ulEventState = 0;
-        csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
-    }
+	{
+		m_tInfos[m_ulReaderCount].csReader = csReaders;
+		m_tInfos[m_ulReaderCount].ulCurrentState = 0;
+		m_tInfos[m_ulReaderCount].ulEventState = 0;
+		csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
+	}
 #ifdef PKCS11_V2_20
-		//Add an extra hidden reader to detect new attached reader events
-		if(i < MAX_READERS)
-		{
-			  m_tInfos[m_ulReaderCount].csReader = "\\\\?PnP?\\Notification";
-        m_tInfos[m_ulReaderCount].ulCurrentState = 0;
-        m_tInfos[m_ulReaderCount].ulEventState = 0;
-				m_ulReaderCount++;
-		}
+	//Add an extra hidden reader to detect new attached reader events
+	m_tInfos[m_ulReaderCount].csReader = "\\\\?PnP?\\Notification";
+	m_tInfos[m_ulReaderCount].ulCurrentState = 0;
+	m_tInfos[m_ulReaderCount].ulEventState = 0;
+	m_ulReaderCount++;
 #endif
 }
 

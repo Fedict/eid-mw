@@ -532,21 +532,29 @@ log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
 for (i=0; i < p11_get_nreaders(); i++)
    {
    p11Slot = p11_get_slot(i);
-   if (p11Slot->ievent != P11_EVENT_NONE)
-      {
-      *pSlot = i;
-#ifdef PKCS11_V2_20
-			//in case the upnp reader caused the event, return a new slotnumber
-			if( (i+1) == p11_get_nreaders())
-			{
-				i = p11_get_nreaders();
-			}
+	 if (p11Slot->ievent != P11_EVENT_NONE)
+	 {
+#ifdef PKCS11_FF
+		 //in case the upnp reader caused the event, return a new slotnumber
+		 if( (i+1) == p11_get_nreaders())
+		 {
+			 if(cal_getgnFFReaders() == 0)
+			 {
+				 cal_setgnFFReaders(p11_get_nreaders());
+			 }
+			 else
+			 {
+				 cal_incgnFFReaders();
+			 }
+			 i = cal_getgnFFReaders();
+		 }
 #endif
-      //clear event
-      p11Slot->ievent = P11_EVENT_NONE;
-      CLEANUP(CKR_OK);
-      }
-   }
+		 *pSlot = i;
+		 //clear event
+		 p11Slot->ievent = P11_EVENT_NONE;
+		 CLEANUP(CKR_OK);
+	 }
+}
 
 if (flags & CKF_DONT_BLOCK)
 {

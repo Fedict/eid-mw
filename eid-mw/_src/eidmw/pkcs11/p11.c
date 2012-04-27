@@ -59,8 +59,14 @@ P11_SLOT * p11_get_slot(unsigned int h)
 {
    //thanks to Adobe, handles have to start from 0!!!
    if (h >= nReaders)
+	 {
+#ifdef PKCS11_FF
+		 //return the upnp reader, as FF is probably asking info about the detected/removed reader
+			h = nReaders-1; 
+#else
       return NULL; //invalid handle
-
+#endif
+	 }
    return &gpSlot[h];
 }
 

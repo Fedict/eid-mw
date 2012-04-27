@@ -50,6 +50,22 @@ extern "C" {
 	int cal_map_status(tCardStatus calstatus);
 }
 
+#ifdef PKCS11_FF
+	static int gnFFReaders;
+	int cal_getgnFFReaders(void)
+	{		
+		return gnFFReaders; 
+	}
+	void cal_setgnFFReaders(int newgnFFReaders)
+	{	
+		gnFFReaders = newgnFFReaders; 
+	}
+	void cal_incgnFFReaders(void)
+	{	
+		gnFFReaders++; 
+	}
+#endif
+
 #define WHERE "cal_init()"
 int cal_init()
 {
@@ -76,6 +92,9 @@ int cal_init()
 	}
 
 	//init slots and token in slots
+#ifdef PKCS11_FF
+	gnFFReaders = 0;
+#endif
 	memset(gpSlot, 0, sizeof(gpSlot));
 	ret = cal_init_slots();
 	if (ret)
@@ -1441,6 +1460,13 @@ int cal_update_token(CK_SLOT_ID hSlot)
 	unsigned int i = 0;
 	P11_SLOT *pSlot = NULL;
 
+#ifdef PKCS11_FF
+	if(hSlot >= p11_get_nreaders())
+	{
+		return ((int)P11_CARD_NOT_PRESENT);
+	}
+#endif
+
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
@@ -1543,11 +1569,21 @@ CK_RV cal_get_slot_changes(int *ph)
 			if (first)
 			{
 				*ph = i;
+#ifdef PKCS11_FF
+				//incase the upnp reader detected a reader event
 				if(i == (p11_get_nreaders()-1))
 				{
-					*ph = p11_get_nreaders();
+					if(gnFFReaders == 0)
+					{
+						gnFFReaders = p11_get_nreaders();
+					}
+					else
+					{
+						gnFFReaders++;
+					}
+					*ph = gnFFReaders;
 				}
-
+#endif
 				first = 0;
 				ret = CKR_OK;
 			}

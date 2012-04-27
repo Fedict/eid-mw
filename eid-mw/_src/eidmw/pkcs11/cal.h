@@ -27,6 +27,11 @@
 extern "C" {
 #endif
 
+#ifdef PKCS11_FF
+	int cal_getgnFFReaders(void);
+	void cal_setgnFFReaders(int newgnFFReaders);
+	void cal_incgnFFReaders(void);
+#endif
 
 #define CAL_MECHANISM_TABLE  { \
 	{  CKM_MD5,                128, 128  , CKF_DIGEST         }, \
