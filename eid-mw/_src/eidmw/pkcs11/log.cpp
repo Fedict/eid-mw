@@ -58,10 +58,10 @@ using namespace eIDMW;
  * Globals
  *
  ******************************************************************************/
-#ifdef DEBUG
-unsigned int g_uiLogLevel          = LOG_LEVEL_SPY;
+#ifdef _DEBUG
+unsigned int g_uiLogLevel          = LOG_LEVEL_PKCS11_INFO;
 #else
-unsigned int g_uiLogLevel          = LOG_LEVEL_WARNING;
+unsigned int g_uiLogLevel          = LOG_LEVEL_PKCS11_WARNING;
 #endif
 
 void *logmutex = NULL;
