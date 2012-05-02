@@ -378,7 +378,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				AdditionalIncludeDirectories="..\common, ..\cardlayer;..\dialogs"
-				PreprocessorDefinitions="PKCS11_V2_20;EIDMW_STATIC_LIB;BEID_35;WIN32;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS"
+				PreprocessorDefinitions="PKCS11_V2_20;PKCS11_FF;EIDMW_STATIC_LIB;BEID_35;WIN32;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
