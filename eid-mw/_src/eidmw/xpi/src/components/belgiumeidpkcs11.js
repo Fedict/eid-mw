@@ -129,7 +129,9 @@ BelgiumEidPKCS11.prototype = {
 				this.addModule(modulename, moduleLocations[x], PKCS11_PUB_READABLE_CERT_FLAG,0);
 				this.errorLog("Added PKCS11 module " + modulename + " Location: " + moduleLocations[x]);
 				installSucceeded = true;
-				//in case the new module is found, remove the old one
+				//in case the new module is found, remove the old one (by continuing the moduleLocations list)
+				//for now, only the first item on the list has higher priority, if you want the entire list 
+				//to be priority ordered (highest first), remove the below 'if (x == 0)'
 				if (x == 0)
 				{
 					newModuleInstalled = true;
@@ -144,8 +146,12 @@ BelgiumEidPKCS11.prototype = {
 			}
 		} 
 		else{
-			var modulename = this.getModuleName() + " - " + moduleLocations[x];
-			this.deleteModule(modulename);
+			//if we just installed a new module, remove the old one
+			if (newModuleInstalled == true)
+			{
+				var modulename = this.getModuleName() + " - " + moduleLocations[x];
+				this.deleteModule(modulename);
+			}
 			break;
 			}
 	}
