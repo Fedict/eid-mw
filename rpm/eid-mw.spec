@@ -3,7 +3,7 @@ Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
 
 Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
 Name: eid-mw
-Version: 4.0.2
+Version: 4.0.4
 Release: 0.%{revision}%{?dist}
 License: LGPL
 Group: Applications/Communications
@@ -109,6 +109,9 @@ fi
 %exclude %{_libdir}/*.la
 
 %changelog
+* Thu May 3 2012 Frank Marien <frank@apsu.be> - 4.0.4-0.R
+- Upgrade to 4.0.4
+
 * Wed Mar 14 2012 Frank Marien <frank@apsu.be> - 4.0.2-0.R
 - Upgrade to 4.0.2
 
