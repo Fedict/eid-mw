@@ -55,7 +55,7 @@
  *
  ******************************************************************************/
 #ifdef DEBUG
-unsigned int g_uiLogLevel          = LOG_LEVEL_SPY;
+unsigned int g_uiLogLevel          = LOG_LEVEL_DEBUG;
 #else
 unsigned int g_uiLogLevel          = LOG_LEVEL_WARNING;
 #endif
@@ -116,7 +116,7 @@ void log_trace(const char *where, const char *string,... )
         break;
 
       case 'S':
-        if (level  < LOG_LEVEL_SPY) 
+        if (level  < LOG_LEVEL_DEBUG) 
           return;
         break;
 
@@ -376,7 +376,7 @@ unsigned int  level = g_uiLogLevel & 0x0F;
         break;
 
       case 'S':
-        if (level  < LOG_LEVEL_SPY) 
+        if (level  < LOG_LEVEL_DEBUG) 
           return;
         break;
 

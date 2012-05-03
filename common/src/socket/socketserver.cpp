@@ -26,6 +26,7 @@
 #include <netinet/in.h>
 #include <sys/ioctl.h>
 #include <errno.h>
+#include <unistd.h>
 #ifndef SOCKET_ERROR
 #define SOCKET_ERROR -1
 #endif

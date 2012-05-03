@@ -20,6 +20,7 @@
 #include "socket.h"
 #include "../eiderrors.h"
 #include <iostream>
+#include <unistd.h>
 
 namespace eIDMW
 {

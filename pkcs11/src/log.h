@@ -35,6 +35,14 @@ extern "C" {
 #define LOG_LEVEL_PKCS11_WARNING     1
 #define LOG_LEVEL_PKCS11_ERROR       0
 
+#define LOG_LEVEL_NOLOG              0
+#define LOG_LEVEL_CRITICAL           1
+#define LOG_LEVEL_ERROR              2
+#define LOG_LEVEL_WARNING            3
+#define LOG_LEVEL_INFO               4
+#define LOG_LEVEL_DEBUG              5
+
+
 
 #ifdef _WIN32
 #define DEFAULT_LOG_FILE "c:\\temp\\beidpkcs11\\p11.log"
