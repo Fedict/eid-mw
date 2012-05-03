@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([eid-console],[4.0.0],[servicedesk@fedict.be])
+AC_INIT([eid-console],[4.0.4],[servicedesk@fedict.be])
 AC_CONFIG_SRCDIR([pom.xml])
 AC_CANONICAL_HOST
 AM_INIT_AUTOMAKE([1.9 foreign tar-pax])
