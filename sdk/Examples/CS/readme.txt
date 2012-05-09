@@ -26,6 +26,7 @@ copy the nunit.framework.dll and nunit.framework.xml into the "CS\References" fo
 4) C# pkcs11 wrapper 
 you'll need to rebuild the pkcs11net, download the sources:
 svn checkout https://pkcs11net.svn.sourceforge.net/svnroot/pkcs11net (homepage at http://sourceforge.net/projects/pkcs11net/)
+Build the version from trunk (we tested with revision 76)
 
 Adjust the links in the 'references' folder of the projects if needed (depending on where you placed bouncycastle, nunit and our sdk samples)
 
