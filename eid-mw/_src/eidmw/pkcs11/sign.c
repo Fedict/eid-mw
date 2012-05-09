@@ -39,7 +39,7 @@ CK_RV C_DigestInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
    if (ret != CKR_OK)
           return ret;
 
-   log_trace(WHERE, "S: C_DigestInit()");
+	 log_trace(WHERE, "I: enter, hSession = %i",hSession);
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
@@ -79,6 +79,7 @@ CK_RV C_DigestInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
 cleanup:
    p11_unlock();
+	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
    return ret;
 }
 #undef WHERE
@@ -101,7 +102,7 @@ CK_RV C_Digest(CK_SESSION_HANDLE hSession,     /* the session's handle */
    if (ret != CKR_OK)
           return ret;
 
-   log_trace(WHERE, "S: C_Digest()");
+	 log_trace(WHERE, "I: enter, hSession = %i",hSession);
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
@@ -165,6 +166,7 @@ CK_RV C_Digest(CK_SESSION_HANDLE hSession,     /* the session's handle */
 
 cleanup:
    p11_unlock();
+	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
 
 return ret;
 }
@@ -185,7 +187,7 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
    if (ret != CKR_OK)
           return ret;
 
-   log_trace(WHERE, "S: C_DigestUpdate()");
+	 log_trace(WHERE, "I: enter");
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
@@ -220,6 +222,7 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 cleanup:
    p11_unlock();
+	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
 
 return ret;
 }
@@ -250,7 +253,7 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
    if (ret != CKR_OK)
           return ret;
 
-   log_trace(WHERE, "S: C_DigestFinal()");
+	 log_trace(WHERE, "I: enter, hSession = %i, pDigest=%p",hSession,pDigest);
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
@@ -305,6 +308,7 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
 
 cleanup:
    p11_unlock();
+	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
 
 return ret;
 }
@@ -335,7 +339,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    if (ret != CKR_OK)
       return ret;
 
-   log_trace(WHERE, "S: C_SignInit()");
+	 log_trace(WHERE, "I: enter");
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
@@ -463,6 +467,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 
 cleanup:       
    p11_unlock();
+	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
 
 return ret;
 }
@@ -488,7 +493,7 @@ CK_RV C_Sign(CK_SESSION_HANDLE hSession,        /* the session's handle */
    if (ret != CKR_OK)
           return ret;
 
-   log_trace(WHERE, "S: C_Sign()");
+	 log_trace(WHERE, "I: enter");
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
@@ -583,6 +588,7 @@ cleanup:
    if (pDigest)
       free(pDigest);
    p11_unlock();
+	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
 return ret;
 }
 #undef WHERE
@@ -601,7 +607,7 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
    if (ret != CKR_OK)
           return ret;
 
-   log_trace(WHERE, "S: C_SignUpdate()");
+	 log_trace(WHERE, "I: enter");
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
@@ -659,6 +665,7 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
 cleanup:
 
    p11_unlock();
+	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
 return ret;
 }
 #undef WHERE
@@ -680,8 +687,8 @@ CK_RV C_SignFinal(CK_SESSION_HANDLE hSession,        /* the session's handle */
    if (ret != CKR_OK)
           return ret;
 
-   log_trace(WHERE, "S: C_SignFinal()");
-
+	 log_trace(WHERE, "I: enter");
+ 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
       {
@@ -764,6 +771,7 @@ cleanup:
       free(pDigest);
 
    p11_unlock();
+	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
 
 return ret;
 }
