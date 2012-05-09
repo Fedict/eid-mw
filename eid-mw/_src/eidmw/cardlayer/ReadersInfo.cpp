@@ -98,9 +98,8 @@ bool CReadersInfo::CardPresent(unsigned long ulIndex)
 }
 
 /** Constructor */
-CReadersInfo::CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders)
+CReadersInfo::CReadersInfo(const CByteArray & oReaders)
 {
-	m_poPCSC = poPCSC;
 	bFirstTime = true;
 	m_ulReaderCount = 0;
 

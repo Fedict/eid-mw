@@ -91,7 +91,7 @@ public:
 		bool SameList(CReadersInfo* newReadersInfo);
 
 private:
-    CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders);
+    CReadersInfo(const CByteArray & oReaders);
 
 	bool bFirstTime;
 	unsigned long m_ulReaderCount;
@@ -99,7 +99,7 @@ private:
 
 	friend class CCardLayer; // calls the CReadersInfo constructor
 
-    CPCSC *m_poPCSC;
+    //CPCSC *m_poPCSC;
 };
 
 }
