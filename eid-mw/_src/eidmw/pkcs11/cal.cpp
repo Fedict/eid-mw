@@ -66,6 +66,8 @@ extern "C" {
 	}
 #endif
 
+void cal_free_reader_states(SCARD_READERSTATEA* txReaderStates, unsigned long ulnReaders);
+
 #define WHERE "cal_init()"
 int cal_init()
 {
@@ -1836,6 +1838,12 @@ CK_RV cal_wait_for_the_slot_event(int block)
 		if (block){
 			p11_unlock();
 			oCardLayer->GetStatusChange(TIMEOUT_INFINITE,txReaderStates,ulnReaders);
+			log_trace(WHERE, "I: status change received");
+			if(p11_get_init() == 0)
+			{
+				log_trace(WHERE, "I: leave, p11_get_init returned false");
+				CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
+			}
 			ret = p11_lock();
 			if (ret != CKR_OK)
 			{
@@ -1867,10 +1875,25 @@ CK_RV cal_wait_for_the_slot_event(int block)
 	oReadersInfo->UpdateReaderStates(txReaderStates,ulnReaders);
 
 cleanup:
-	oReadersInfo->FreeReaderStates(txReaderStates,ulnReaders);
+	cal_free_reader_states(txReaderStates,ulnReaders);
 	return(ret);
 }
 #undef WHERE
+
+void cal_free_reader_states(SCARD_READERSTATEA* txReaderStates,
+																			unsigned long ulnReaders)
+{
+	// Free the memory allocated for the reader names
+	for (DWORD i = 0; i < ulnReaders; i++)
+	{
+		if(txReaderStates[i].szReader != NULL)
+		{
+			free((void*)(txReaderStates[i].szReader));
+			txReaderStates[i].szReader = NULL;
+		}
+	}
+	return;
+}
 
 
 

@@ -32,6 +32,19 @@ CMutex g_mutex;
 //locking can be provided by app
 static CK_C_INITIALIZE_ARGS_PTR _locking;
 static void *_lock = NULL;
+static unsigned char g_initialized = 0;
+
+
+void p11_set_init(unsigned char initialized)
+{
+	g_initialized = initialized;
+	return;
+}
+
+unsigned char p11_get_init(void)
+{
+	return g_initialized;
+}
 
 
 void memwash(char *p_in, unsigned int len)
