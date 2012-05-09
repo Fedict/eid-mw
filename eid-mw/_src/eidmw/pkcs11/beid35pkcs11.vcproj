@@ -547,7 +547,7 @@
 				Optimization="0"
 				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories="..\common, ..\cardlayer;..\dialogs"
-				PreprocessorDefinitions="PKCS11_V2_20;PKCS11_FF;EIDMW_STATIC_LIB;BEID_35;WIN32;_DEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS"
+				PreprocessorDefinitions="PKCS11_V2_20;EIDMW_STATIC_LIB;BEID_35;WIN32;_DEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
