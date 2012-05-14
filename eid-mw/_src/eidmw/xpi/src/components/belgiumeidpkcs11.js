@@ -67,7 +67,7 @@ BelgiumEidPKCS11.prototype = {
 	  if (osString == "WINNT")
 	    return "beid_ff_pkcs11.dll;beidpkcs11.dll";
 	  if (osString == "Darwin")
-	    return "/usr/local/lib/beid_ff_pkcs11.dylib;/Library/Frameworks/BeId.framework/Versions/4.0/lib/libbeidpkcs11.dylib;/usr/local/lib/beid-pkcs11.bundle;/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib";
+	    return "/usr/local/lib/libbeid_ff_pkcs11.dylib;/Library/Frameworks/BeId.framework/Versions/4.0/lib/libbeidpkcs11.dylib;/usr/local/lib/beid-pkcs11.bundle;/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib";
 	  if (osString == "Linux")
 	    return "/usr/local/lib/libbeid_ff_pkcs11.so;libbeidpkcs11.so;/usr/local/lib/libbeidpkcs11.so";
 	}	
