@@ -74,6 +74,17 @@ wait_again:
 	return bChanged;
 }
 */
+bool CReadersInfo::IsReaderInserted(unsigned long ulIndex)
+{
+	unsigned long eventCount = (m_tInfos[ulIndex].ulEventState >> 16) & 0x00FF;
+	unsigned long currentCount = (m_tInfos[ulIndex].ulCurrentState >> 16) & 0x00FF;
+	if( (strcmp(m_tInfos[ulIndex].csReader.c_str(),"\\\\?PnP?\\Notification") == 0) &&
+		(eventCount > currentCount) ){
+		return true;
+	}
+	return false;
+}
+
 bool CReadersInfo::ReaderStateChanged(unsigned long ulIndex)
 {
 	if (ulIndex >= m_ulReaderCount)

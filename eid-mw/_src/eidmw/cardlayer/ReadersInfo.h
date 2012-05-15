@@ -61,6 +61,11 @@ public:
 //		unsigned long ulIndex = ALL_READERS);
 
 	/**
+	 * Did the \\?Pnp?\\Notification reader's event reported a reader insertion?
+	 * (and not a reader removal)
+	 */
+	bool IsReaderInserted(unsigned long ulIndex);
+	/**
 	 * Whether or not the state of the reader has changed since the last Update()
 	 * - ulIndex ranges from 0 to (but not included) ReaderCount.
 	 */

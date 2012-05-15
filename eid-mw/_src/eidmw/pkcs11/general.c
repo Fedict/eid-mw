@@ -294,6 +294,29 @@ for (h=0; h < p11_get_nreaders(); h++)
       }
    } //end for
 
+#ifdef PKCS11_FF
+//return the fake slotID for the attached/removed reader
+if (cal_getgnFFReaders()!= 0)
+{
+//return a higher number of slots, so FF starts waiting for slotchanges again
+	if(pSlotList == NULL)
+	{
+		c = cal_getgnFFReaders();
+	}
+	else
+	{
+		for(; h < cal_getgnFFReaders(); h++)
+		{
+			log_trace(WHERE, "I: h=%i",h);
+			c++;
+			if (c <= *pulCount )
+				pSlotList[c-1] = h;
+		}
+	}
+}
+
+#endif
+
 //if more slots are found than can be returned in slotlist, return buffer too smal 
 if ((c > *pulCount) && (pSlotList != NULL_PTR) )
    ret = CKR_BUFFER_TOO_SMALL;
@@ -555,13 +578,13 @@ for (i=0; i < p11_get_nreaders(); i++)
 		 {
 			 if(cal_getgnFFReaders() == 0)
 			 {
-				 cal_setgnFFReaders(p11_get_nreaders());
+				 cal_setgnFFReaders(p11_get_nreaders()+1);
 			 }
 			 else
 			 {
 				 cal_incgnFFReaders();
 			 }
-			 i = cal_getgnFFReaders();
+			 i = (cal_getgnFFReaders()-1);
 		 }
 #endif
 		 *pSlot = i;
