@@ -85,7 +85,7 @@ CReadersInfo CCardLayer::ListReaders()
 		throw;
 	}
 
-	theReadersInfo = CReadersInfo(&m_oContext.m_oPCSC, oReaders);
+	theReadersInfo = CReadersInfo(oReaders);
 
 	if (oReaders.Size() != 0) 
 	{

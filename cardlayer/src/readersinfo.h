@@ -61,6 +61,11 @@ public:
 //		unsigned long ulIndex = ALL_READERS);
 
 	/**
+	 * Did the \\?Pnp?\\Notification reader's event reported a reader insertion?
+	 * (and not a reader removal)
+	 */
+	bool IsReaderInserted(unsigned long ulIndex);
+	/**
 	 * Whether or not the state of the reader has changed since the last Update()
 	 * - ulIndex ranges from 0 to (but not included) ReaderCount.
 	 */
@@ -91,7 +96,7 @@ public:
 		bool SameList(CReadersInfo* newReadersInfo);
 
 private:
-    CReadersInfo(CPCSC *poPCSC, const CByteArray & oReaders);
+    CReadersInfo(const CByteArray & oReaders);
 
 	bool bFirstTime;
 	unsigned long m_ulReaderCount;
@@ -99,7 +104,7 @@ private:
 
 	friend class CCardLayer; // calls the CReadersInfo constructor
 
-    CPCSC *m_poPCSC;
+    //CPCSC *m_poPCSC;
 };
 
 }
