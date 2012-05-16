@@ -39,6 +39,8 @@ void util_lock(void *lock);
 void util_unlock(void *lock);
 void memwash(char *p_in, unsigned int len);
 void strcpy_n(unsigned char *to, const char *from, size_t n, char padding);
+void p11_set_init(unsigned char initialized);
+unsigned char p11_get_init(void);
 
 #ifdef __cplusplus
    }

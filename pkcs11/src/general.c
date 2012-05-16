@@ -69,6 +69,7 @@ CK_C_INITIALIZE_ARGS_PTR p_args;
    else
       {
       g_init = BEIDP11_INITIALIZED;
+			p11_set_init(1);
       if (pReserved != NULL)
          {
          p_args = (CK_C_INITIALIZE_ARGS *)pReserved;
@@ -81,6 +82,7 @@ CK_C_INITIALIZE_ARGS_PTR p_args;
 				 if(	(p_args->CreateMutex == NULL) || (p_args->DestroyMutex == NULL) || \
 					 (p_args->LockMutex == NULL) || (p_args->UnlockMutex == NULL)	)
 				 {
+					 log_trace(WHERE, "S: use supplied locking mechanism");
 					 //If some, but not all, of the supplied function pointers to C_Initialize are non-NULL_PTR, 
 					 //then C_Initialize should return with the value CKR_ARGUMENTS_BAD.
 					 if(!((p_args->CreateMutex == NULL) && (p_args->DestroyMutex == NULL) && \
@@ -90,6 +92,7 @@ CK_C_INITIALIZE_ARGS_PTR p_args;
 							goto cleanup;
 					 }
 				 }
+				 log_trace(WHERE, "S: p11_init_lock");
 				 p11_init_lock(p_args);
 			}
       cal_init();
@@ -110,6 +113,7 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 {
 
 CK_RV ret = CKR_OK;
+int counter = 0;
 	log_trace(WHERE, "I: enter");
 if (g_init != BEIDP11_INITIALIZED)
 {
@@ -134,8 +138,7 @@ if (pReserved != NULL)
 
 //g_final = 0; /* Belpic */
 g_init = BEIDP11_DEINITIALIZING;
-
-
+p11_set_init(0);
 
 ret = cal_close();
 
@@ -172,6 +175,8 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
    pInfo->cryptokiVersion.major = 2;
 #ifdef PKCS11_V2_20
    pInfo->cryptokiVersion.minor = 20;
+#else
+	pInfo->cryptokiVersion.minor = 11;
 #endif
    strcpy_n(pInfo->manufacturerID,  "Belgium Government",  sizeof(pInfo->manufacturerID), ' ');
    strcpy_n(pInfo->libraryDescription, "Belgium eID PKCS#11 interface v2", sizeof(pInfo->libraryDescription), ' ');
@@ -287,6 +292,29 @@ for (h=0; h < p11_get_nreaders(); h++)
       continue;
       }
    } //end for
+
+#ifdef PKCS11_FF
+//return the fake slotID for the attached/removed reader
+if (cal_getgnFFReaders()!= 0)
+{
+//return a higher number of slots, so FF starts waiting for slotchanges again
+	if(pSlotList == NULL)
+	{
+		c = cal_getgnFFReaders();
+	}
+	else
+	{
+		for(; h < cal_getgnFFReaders(); h++)
+		{
+			log_trace(WHERE, "I: h=%i",h);
+			c++;
+			if (c <= *pulCount )
+				pSlotList[c-1] = h;
+		}
+	}
+}
+
+#endif
 
 //if more slots are found than can be returned in slotlist, return buffer too smal 
 if ((c > *pulCount) && (pSlotList != NULL_PTR) )
@@ -502,6 +530,7 @@ return (CKR_FUNCTION_NOT_SUPPORTED);
 CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
                          CK_SLOT_ID_PTR pSlot,  /* location that receives the slot ID */
                          CK_VOID_PTR pReserved) /* reserved.  Should be NULL_PTR */
+
 {
 CK_RV ret = CKR_OK;
 int h;
@@ -509,6 +538,12 @@ int cardevent = 0;
 P11_SLOT *p11Slot = NULL;
 int i = 0;
 CK_BBOOL locked = CK_FALSE;
+
+if (!g_init)
+{
+	log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+   return (CKR_CRYPTOKI_NOT_INITIALIZED);
+}
 
 log_trace(WHERE, "I: enter");
 ret = p11_lock();
@@ -532,6 +567,8 @@ log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
 for (i=0; i < p11_get_nreaders(); i++)
    {
    p11Slot = p11_get_slot(i);
+	 if(p11Slot == NULL)
+			CLEANUP(CKR_FUNCTION_FAILED);
 	 if (p11Slot->ievent != P11_EVENT_NONE)
 	 {
 #ifdef PKCS11_FF
@@ -540,13 +577,13 @@ for (i=0; i < p11_get_nreaders(); i++)
 		 {
 			 if(cal_getgnFFReaders() == 0)
 			 {
-				 cal_setgnFFReaders(p11_get_nreaders());
+				 cal_setgnFFReaders(p11_get_nreaders()+1);
 			 }
 			 else
 			 {
 				 cal_incgnFFReaders();
 			 }
-			 i = cal_getgnFFReaders();
+			 i = (cal_getgnFFReaders()-1);
 		 }
 #endif
 		 *pSlot = i;
@@ -562,16 +599,18 @@ if (flags & CKF_DONT_BLOCK)
 }
 else
 {
-	ret = cal_wait_for_slot_event(1);//1 means block
-}
+	ret = cal_wait_for_slot_event(1);//1 means block, lock will get released here
 
-//ret is 0x30 when SCardGetStatusChange gets cancelled 
-if ((g_init == BEIDP11_NOT_INITIALIZED ) || (g_init == BEIDP11_DEINITIALIZING) )
-{
-	log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
-	CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
+	//ret is 0x30 when SCardGetStatusChange gets cancelled 
+	if ((g_init == BEIDP11_NOT_INITIALIZED ) || 
+			(g_init == BEIDP11_DEINITIALIZING) || 
+			(ret == CKR_CRYPTOKI_NOT_INITIALIZED) )
+	{
+		log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
+		//don't try to unlock, lock might be gone
+		return(CKR_CRYPTOKI_NOT_INITIALIZED);
+	}
 }
-
 if(ret != CKR_OK)
 	goto cleanup;
 

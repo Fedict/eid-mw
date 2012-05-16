@@ -67,6 +67,8 @@ extern "C" {
 	}
 #endif
 
+void cal_free_reader_states(SCARD_READERSTATEA* txReaderStates, unsigned long ulnReaders);
+
 #define WHERE "cal_init()"
 int cal_init()
 {
@@ -1462,7 +1464,7 @@ int cal_update_token(CK_SLOT_ID hSlot)
 	P11_SLOT *pSlot = NULL;
 
 #ifdef PKCS11_FF
-	if(hSlot >= (p11_get_nreaders()-1))
+	if(hSlot >= (CK_ULONG)(p11_get_nreaders()-1))
 	{
 		return ((int)P11_CARD_NOT_PRESENT);
 	}
@@ -1559,6 +1561,7 @@ CK_RV cal_get_slot_changes(int *ph)
 	int first = 1;
 	P11_SLOT *pSlot = NULL;
 	CK_RV ret = CKR_NO_EVENT;
+	*ph = -1;
 
 	for (int i=0; i < p11_get_nreaders();i++)
 	{
@@ -1567,35 +1570,50 @@ CK_RV cal_get_slot_changes(int *ph)
 			//return first reader that changed state
 			//there could be more than one reader that changed state,
 			//keep these events in the slotlist
-			if (first)
-			{
-				*ph = i;
 #ifdef PKCS11_FF
-				//incase the upnp reader detected a reader event
-				if(i == (p11_get_nreaders()-1))
+			//incase the upnp reader detected a reader event, we report it,
+			if(i == (p11_get_nreaders()-1))
+			{
+				//the '\\Pnp\\Notification' reader reported an event, check if number of readers is higher
+				//so the list of readers can be adjusted
+				//other reader's events will be ignored as the reader list will get refreshed
+				if(oReadersInfo->IsReaderInserted(i))//-1 as we don't count the pnp reader
 				{
 					if(gnFFReaders == 0)
 					{
-						gnFFReaders = p11_get_nreaders();
+						gnFFReaders = p11_get_nreaders()+1;
 					}
 					else
 					{
 						gnFFReaders++;
 					}
-					*ph = gnFFReaders;
+					*ph = gnFFReaders-1;
 				}
-#endif
-				first = 0;
+				//if this is the only reader change, report the reader removal as a change of the upnp slot
+				else if (*ph == -1)
+				{
+					*ph = i;
+				}
 				ret = CKR_OK;
 			}
 			else
-			{
-				pSlot = p11_get_slot(i);
-				if (oReadersInfo->CardPresent(i))
-					pSlot->ievent = 1;
-				else
-					pSlot->ievent = -1;
-			}
+#endif
+				{
+					if (first)
+					{
+						*ph = i;
+						first = 0;
+						ret = CKR_OK;
+					}
+					else
+					{
+						pSlot = p11_get_slot(i);
+						if (oReadersInfo->CardPresent(i))
+							pSlot->ievent = 1;
+						else
+							pSlot->ievent = -1;
+					}
+				}
 		}
 	}
 	return ret;
@@ -1837,6 +1855,12 @@ CK_RV cal_wait_for_the_slot_event(int block)
 		if (block){
 			p11_unlock();
 			oCardLayer->GetStatusChange(TIMEOUT_INFINITE,txReaderStates,ulnReaders);
+			log_trace(WHERE, "I: status change received");
+			if(p11_get_init() == 0)
+			{
+				log_trace(WHERE, "I: leave, p11_get_init returned false");
+				CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
+			}
 			ret = p11_lock();
 			if (ret != CKR_OK)
 			{
@@ -1868,10 +1892,25 @@ CK_RV cal_wait_for_the_slot_event(int block)
 	oReadersInfo->UpdateReaderStates(txReaderStates,ulnReaders);
 
 cleanup:
-	oReadersInfo->FreeReaderStates(txReaderStates,ulnReaders);
+	cal_free_reader_states(txReaderStates,ulnReaders);
 	return(ret);
 }
 #undef WHERE
+
+void cal_free_reader_states(SCARD_READERSTATEA* txReaderStates,
+																			unsigned long ulnReaders)
+{
+	// Free the memory allocated for the reader names
+	for (DWORD i = 0; i < ulnReaders; i++)
+	{
+		if(txReaderStates[i].szReader != NULL)
+		{
+			free((void*)(txReaderStates[i].szReader));
+			txReaderStates[i].szReader = NULL;
+		}
+	}
+	return;
+}
 
 
 
