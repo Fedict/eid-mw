@@ -1595,8 +1595,8 @@ CK_RV cal_get_slot_changes(int *ph)
 				}
 				ret = CKR_OK;
 			}
+			else
 #endif
-				else
 				{
 					if (first)
 					{
