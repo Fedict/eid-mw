@@ -151,7 +151,7 @@ CK_RV test_getallidobjects() {
 					CK_ULONG ulObjectValueLen = 255;//last one is for the string termination
 
 					CK_ATTRIBUTE attr_templ[4] = {{CKA_LABEL,pLabel,ullabelLen},{CKA_CLASS,&value,ulvalueLen},
-					{CKA_OBJECT_ID,pObjectID,ulpObjectID},{CKA_VALUE,&pObjectValue,ulObjectValueLen} };
+					{CKA_OBJECT_ID,pObjectID,ulpObjectID},{CKA_VALUE,pObjectValue,ulObjectValueLen} };
 					CK_OBJECT_HANDLE hObject;
 
 					frv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
@@ -228,6 +228,13 @@ CK_RV test_getallidobjects() {
 					}
 					frv = (*functions->C_CloseSession) (session_handle);
 					ReturnedSuccesfull(frv,&trv, "C_CloseSession", "test_getallobjects" );
+
+					if(pLabel != NULL)
+						free(pLabel);
+					if(pObjectID != NULL)
+						free(pObjectID);
+					if(pObjectValue != NULL)
+						free(pObjectValue);
 				}
 			}
 		}
@@ -236,5 +243,6 @@ CK_RV test_getallidobjects() {
 	}
 	dlclose(handle);
 	testlog(LVL_INFO, "test_getallobjects leave\n");
+
 	return trv;
 } 
