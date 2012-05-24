@@ -120,6 +120,7 @@ BELGIUM_DIR_NAME = "/Library/Belgium\ Identity\ Card"
 ## List of the implicit names of the libraries. This is convenient
 ## when we want to substitue "x_y_z" with "x_y" to obtain e.g.
 ## DLGLIB_NAME_x_y_dylib and then use its value, resulting in libdialogsQT_1.0.dylib
+## PKCS11_FF_LIB_NAME_x_y_z_dylib \ removed for now
 
 BASE_LIBS =  DLGLIB_NAME_x_y_z_dylib \
 	EIDLIB_NAME_x_y_z_dylib \
@@ -127,7 +128,6 @@ BASE_LIBS =  DLGLIB_NAME_x_y_z_dylib \
 	COMMONLIB_NAME_x_y_z_dylib \
 	APPLAYERLIB_NAME_x_y_z_dylib \
 	PKCS11LIB_NAME_x_y_z_dylib \
-	PKCS11_FF_LIB_NAME_x_y_z_dylib \
 	JAVALIB_NAME_x_y_z_dylib
 
 ETC = beid.conf
