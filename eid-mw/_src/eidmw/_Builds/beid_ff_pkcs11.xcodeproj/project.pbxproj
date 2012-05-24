@@ -1110,6 +1110,7 @@
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
 					PKCS11_V2_20,
+					PKCS11_FF,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
@@ -1147,9 +1148,11 @@
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
 					PKCS11_V2_20,
+					PKCS11_FF,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../common",
+					"${PROJECT_DIR}/../cardlayer",
 					/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
