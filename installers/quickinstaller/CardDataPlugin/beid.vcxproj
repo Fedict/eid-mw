@@ -148,11 +148,15 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="common.c" />
     <ClCompile Include="getcarddata.c" />
+    <ClCompile Include="getreadercount.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="common.h" />
     <ClInclude Include="getcarddata.h" />
+    <ClInclude Include="getreadercount.h" />
     <ClInclude Include="nsis\api.h" />
     <ClInclude Include="nsis\pluginapi.h" />
   </ItemGroup>

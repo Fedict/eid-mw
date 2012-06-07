@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2009-2010 FedICT.
+ * Copyright (C) 2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -20,21 +20,9 @@
 #ifndef plugin_getcarddata_h
 #define plugin_getcarddata_h
 
-#include <stdio.h>
-
-//allign at 1 byte
-#pragma pack(push, cryptoki, 1)
-#include <win32.h>
-#include <pkcs11.h>
-#pragma pack(pop, cryptoki)
-//back to default allignment
-
-#include <windows.h>
-
-#define PKCS11_LIB TEXT("beidpkcs11.dll")
+#include "common.h"
 
 CK_RV ReadTheCardData(void);
-CK_RV FindAndStore(CK_FUNCTION_LIST_PTR g_functions, CK_SESSION_HANDLE session_handle, const char* label, char** data_storage);
-CK_RV unloadpkcs11(void);
+CK_RV FindAndStore(CK_FUNCTION_LIST_PTR functions, CK_SESSION_HANDLE session_handle, const char* label, char** data_storage);
 
 #endif

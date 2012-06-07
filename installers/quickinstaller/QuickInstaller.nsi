@@ -11,7 +11,9 @@
 ;General
 
   ;defines
-  !define VERSION "4.0.0.f"
+  !define VERSION "4.0.4.7256g"
+	!define VERSION_SHORT "4.0.4"
+	!define LOGFILE ""
 ;  LicenseLangString license ${LANG_ENGLISH} "..\..\misc\licenses_files\English\License_en.rtf"
 ;  LicenseLangString license ${LANG_GERMAN} "..\..\misc\licenses_files\German\License_de.rtf"
 ;  LicenseLangString license ${LANG_FRENCH} "..\..\misc\licenses_files\French\License_fr.rtf"
@@ -23,19 +25,22 @@
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\Belgium Identity Card"
-
+	;InstallDir "$LOCALAPPDATA\Belgium Identity Card"
+	
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
+	;admin;user
 	;TargetMinimalOS 5.0
 	;installer will run on Win2000 and newer
   
-  XPStyle on
+  ;XPStyle on
 	WindowIcon on
 	Icon Setup.ico
-	caption "Belgium eID-QuickInstaller ${VERSION}"
+	caption "Belgium eID-QuickInstaller ${VERSION_SHORT}"
 	;SubCaption 
 	
 	Var retval
+	Var readercount
   Var municipality
   Var zip
 	Var street
@@ -55,6 +60,19 @@
 	;Interface Settings
 	;SilentInstall silent
 BrandingText " "
+;"Fedict"
+InstallColors /windows
+;InstProgressFlags smooth
+
+VIProductVersion "${VERSION}"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Belgium eID Middleware"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Software for reading the Belgium Identity Card"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Fedict"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" ""
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright © 2012"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "eID QuickInstaller"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VERSION}"
+
 
 ;--------------------------------
 ;Pages
@@ -118,29 +136,36 @@ MiscButtonText $(ls_back) $(ls_next) $(ls_cancel) $(ls_close)
 ;  LicenseLangString license ${LANG_DUTCH} "..\..\misc\licenses_files\Dutch\License_nl.rtf"
 ;--------------------------------
 ;Installer Sections
-Section "Belgium Eid Viewer" BeidViewer
+;Section "Belgium Eid Viewer" BeidViewer
 
-  SetOutPath "$INSTDIR"
+  ;SetOutPath "$INSTDIR"
   
-  File "..\eid-viewer\Windows\bin\BeidViewer.msi"
-  ExecWait 'msiexec /quiet /norestart /l* "$INSTDIR\log\install_eidviewer_log.txt" /i "$INSTDIR\BeidViewer.msi"'
+  ;File "..\eid-viewer\Windows\bin\BeidViewer.msi"
+  ;ExecWait 'msiexec /quiet /norestart /l* "$INSTDIR\log\install_eidviewer_log.txt" /i "$INSTDIR\BeidViewer.msi"'
   ;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidViewer" 0x1
-  Delete "$INSTDIR\BeidViewer.msi"
-SectionEnd
+  ;Delete "$INSTDIR\BeidViewer.msi"
+;SectionEnd
 
 Section "Belgium Eid Crypto Modules" BeidCrypto
-  SetOutPath "$INSTDIR"
+	SetOutPath "$INSTDIR"
+	CreateDirectory "$INSTDIR\log"
   ${If} ${RunningX64}
    ;MessageBox MB_OK "running on x64"
-	 ;File "..\eid-mw\Windows\bin\BeidMW_64.msi"
-	 ;ExecWait 'msiexec /quiet /norestart /l* "$INSTDIR\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
+	 File "..\..\Windows\bin\BeidMW_64.msi"
+	 ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
 	 ;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
-	 ;Delete "$INSTDIR\BeidMW_64.msi"
+	 Delete "$INSTDIR\BeidMW_64.msi"
   ${Else}
 	;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
-	;File "..\eid-mw\Windows\bin\BeidMW_32.msi"
-	;ExecWait 'msiexec /quiet /promptrestart /l* "$INSTDIR\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
-	;Delete "$INSTDIR\BeidMW_32.msi"
+	File "..\..\Windows\bin\BeidMW_32.msi"	
+	ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
+;	$0
+; /l* "$APPDATA\install_eidmw32_log.txt"
+;	${if} $0 <> 0
+;		DetailPrint "BeidMW_32.msi returned $0"
+;		MessageBox MB_OK "An error occured while trying to install the eID Middleware $\n A logfile can be found at : $APPDATA\log\install_eidmw32_log.txt"
+;	${endif}
+	Delete "$INSTDIR\BeidMW_32.msi"
   ${EndIf}
 
 SectionEnd
@@ -155,7 +180,7 @@ Function .onInstSuccess
 FunctionEnd
 
 Function nsdWelcome
-	File "welcome.bmp"
+	;File "welcome.bmp"
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog ;popped from the stack to prevent stack corruption
 	${If} $nsdCustomDialog == error
@@ -191,7 +216,7 @@ Function show_instfiles
 FunctionEnd
 
 Function nsdDone
-	File "welcome.bmp"
+	;File "welcome.bmp"
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
 	${If} $nsdCustomDialog == error
@@ -225,14 +250,14 @@ Function  nsdDoneLeave
 FunctionEnd
 
 Function nsdConnectReader
-	File "connect_reader.bmp"
+	;File "connect_reader.bmp"
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
 
 	${If} $nsdCustomDialog == error
 		Abort
 	${EndIf}
-
+	
 	${NSD_CreateLabel} 0 0 100% 16u "Please connect your cardreader"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
@@ -247,10 +272,23 @@ Function nsdConnectReader
 FunctionEnd
 
 Function  nsdConnectReaderLeave
+	beid::GetReaderCount 0
+	Pop $retval
+	${If} $retval <> '0'
+		MessageBox MB_OK "Error while searching for cardreaders"
+		Abort
+	${EndIf}
+  Pop $readercount
+	${If} $readercount > 0
+		;MessageBox MB_OK "$$readercount is $readercount"
+	${Else}
+		MessageBox MB_OK "No cardreader was found"
+		Abort
+	${EndIf}
 FunctionEnd
 
 Function nsdInsertCard 
-	File "insert_card.bmp"
+	;File "insert_card.bmp"
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
 	${If} $nsdCustomDialog == error
@@ -270,15 +308,28 @@ Function nsdInsertCard
 FunctionEnd
 
 Function nsdInsertCardLeave
+	beid::GetReaderCount 1	
+	Pop $retval
+	${If} $retval <> '0'
+		MessageBox MB_OK "Error while trying to read from card"
+		Abort
+	${EndIf}
+  Pop $readercount
+	${If} $readercount > 0
+		;MessageBox MB_OK "number of beidcards found is $readercount"
+	${Else}
+		MessageBox MB_OK "No beidcard was found"
+		Abort
+	${EndIf}
 FunctionEnd
 
 Function nsdCardData
 	nsDialogs::Create 1018
-	Pop $nsdCustomDialog
+	Pop $nsdCustomDialog	
 	${If} $nsdCustomDialog == error
 		Abort
 	${EndIf}
-
+		
 	beid::ReadCardData
 	Pop $retval
 	
@@ -290,7 +341,7 @@ Function nsdCardData
   Pop $lastname
 	Pop $firstletterthirdname
   Pop $firstname
-		
+
 	${NSD_CreateLabel} 0 0 100% 16u "Card Read"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
@@ -316,7 +367,13 @@ Function nsdCardData
 	;pop the others off the stack
 ${Else}
   ;MessageBox MB_OK "$$retval is $retval"
-	${NSD_CreateLabel} 0 0 100% 100% "Card Read"
+	${NSD_CreateLabel} 0 0 18% 20% "Error:"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 20% 0 100% 20% "$retval"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 0 20% 100% 100% "Card Read"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	SendMessage $Label ${WM_SETTEXT} 0 "STR:Test failed,$\n$\ngo back and try again,$\nor reboot your pc and launch the eid viewer to continue testing"
