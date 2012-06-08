@@ -47,10 +47,14 @@
 #define RTLD_GLOBAL 4
 
 #else
-#include <opensc/pkcs11.h>
+
+#include "include/rsaref220/unix.h"
+#include "include/rsaref220/pkcs11.h"
+
+//#include "pkcs11.h"
 #include <dlfcn.h>
 #include <unistd.h>
-#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
+#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.dylib" 
 #endif
 #include <stdlib.h>
 

@@ -24,12 +24,17 @@
  */
 
 #include <stdio.h>
-#include <MainTest.h>
+#include "MainTest.h"
 #include "logtest.h"
 
 #define NUMBER_OF_TESTS 10
 
-int main() {
+#ifdef WIN32
+int main()
+#else
+	int main (int argc, const char * argv[])
+#endif
+{
 	int i;
 	int testCounter = 0;
 	char* testDescription[NUMBER_OF_TESTS];
@@ -37,9 +42,9 @@ int main() {
 
 	initLog();
 
-	/*testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
+	testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
 	result[testCounter] = test_open_close_session();
-	testCounter++;
+	testCounter++;/*
 	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
 	result[testCounter] = test_getmechanisms();
 	testCounter++;
@@ -54,11 +59,10 @@ int main() {
 	testCounter++;
 	testDescription[testCounter] = "tests adding and removing readers";
 	result[testCounter] = test_add_remove_readers();
-	testCounter++;*/
+	testCounter++;
 	testDescription[testCounter] = "tests waiting for card and reader events";
 	result[testCounter] = test_add_remove_readerevents();
 	testCounter++;
-	/*
 	testDescription[testCounter] = "tests signing with the card";
 	result[testCounter] = test_sign();
 	testCounter++;*/
