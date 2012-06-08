@@ -16,7 +16,11 @@ BuildRequires: gtk2-devel
 BuildRequires: pcsc-lite-devel
 Requires(pre): /sbin/chkconfig
 Requires(pre): /sbin/service
+%if 0%{?suse_version}
+Requires: pcsc-ccid
+%else
 Requires: ccid
+%endif
 
 %description
 The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
