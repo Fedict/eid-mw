@@ -58,13 +58,39 @@ extern HANDLE                  ghSvcStopEvent;
 #endif
 #include <stdlib.h>
 
+//Function that handles card events in a loop,
+//and that exits when a reader event is triggered
+CK_RV HandleCardEvents(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions);
 
-DWORD CertProp();
-CK_RV getcertificates(HWND hTextEdit,CK_FUNCTION_LIST_PTR functions);
-CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions);
-BOOL ImportCertificates(BYTE* pbserialNumber,DWORD serialNumberLen,BYTE* pbcertificateData,DWORD dwcertificateDataLen);
+//Function called when HandleCardEvents detects a new card
+CK_RV HandleNewCardFound(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
+									CK_ULONG ulCounter, CK_SLOT_ID_PTR pSlotList,
+									PCCERT_CONTEXT*	pCertContext, CK_ULONG certContextLen);
+
+//Get the serial number of the inserted card
+CK_RV GetSerialNumber(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, CK_SESSION_HANDLE *psession_handle,
+											CK_BYTE* pbserialNumber,CK_ULONG *pulserialNumberLen);
+
+//Get the certificates of the inserted card, and register them
+CK_RV GetAndRegisterCertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, CK_SESSION_HANDLE *psession_handle,
+													 CK_BYTE* pbserialNumber,CK_ULONG ulserialNumberLen,
+													 PCCERT_CONTEXT*	ppCertContext, CK_ULONG ulcertContextLen);
+
+
+BOOL ImportCertificate(BYTE* pbserialNumber,DWORD serialNumberLen,BYTE* pbcertificateData,DWORD dwcertificateDataLen, PCCERT_CONTEXT	*ppCertContext);
 BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BYTE* pbserialNumber,DWORD dwserialNumberLen);
 BOOL StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits);
 BOOL ProviderNameCorrect (PCCERT_CONTEXT pCertContext );
+DWORD CertProp();
+
+//Function called when HandleCardEvents detects a card is removed
+CK_RV HandleCardRemoved(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
+									PCCERT_CONTEXT*	ppCertContext, CK_ULONG ulcertContextLen);
+
+BOOL DeleteIfUserCert (HWND hTextEdit,PCCERT_CONTEXT pCertContext);
+
+//function used for manual registration of the certificates
+CK_RV getcertificates(HWND hTextEdit,CK_FUNCTION_LIST_PTR functions);
+
 
 #endif /* CERTPROP_H_ */

@@ -20,10 +20,12 @@
 // Global Variables:
 HINSTANCE hInst;								// current instance
 HWND hTextEdit;									// the edit control
+DWORD gStopThreads;
 CK_FUNCTION_LIST_PTR gfunctions; // the pkcs11 functions
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
-void StartCardEventThread(void );			//the thread used to detect card insertion/removed events
+
+DWORD WINAPI pkcs11EventsThread( LPVOID ThreadVars ); //the thread used to detect card insertion/removed events
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -45,6 +47,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	HACCEL hAccelTable;
 	void *pkcs11_handle = NULL;
 	CK_RV retval = CKR_OK;
+	HANDLE  hThreadHandle; 
+	DWORD   dwThreadId;
+	gStopThreads = 0;
 
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -70,7 +75,20 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	}
 	else
 	{
-		StartCardEventThread();
+	// Create pkcs11Events thread
+	hThreadHandle = CreateThread( 
+		NULL,             // default security attributes
+		0,                // use default stack size  
+		pkcs11EventsThread,			// thread function name
+		NULL,			// argument to thread function 
+		0,                // use default creation flags 
+		&dwThreadId);			// returns the thread identifier 
+
+	if (hThreadHandle == NULL)
+	{
+		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR: Failed to start CardEventThread\r\n");
+		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Automated functionality is inactive\r\n");
+	}
 
 		hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CERTREG));
 
@@ -85,6 +103,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		}
 		retval = (gfunctions->C_Finalize) (NULL_PTR);
 	}
+
+	if (hThreadHandle != NULL)
+	{
+		gStopThreads = 1;
+		// Wait for max 5 seconds until pkcs11Events thread is terminated.
+		if (WaitForSingleObject(hThreadHandle, 5000) == WAIT_OBJECT_0)
+		{
+			CloseHandle(hThreadHandle);
+		}	
+	}
+
 	dlclose(pkcs11_handle);
 
 	return (int) msg.wParam;
@@ -344,10 +373,10 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	return (INT_PTR)FALSE;
 }
 
-DWORD WINAPI pkcs11Thread( LPVOID ThreadVars ) 
+DWORD WINAPI pkcs11EventsThread( LPVOID ThreadVars ) 
 { 
 	//threadVars->threadRetVal = readslots(functions);
-	while (TRUE)
+	while (gStopThreads == 0)
 	{
 		WaitForCardEvent(hTextEdit, gfunctions);
 		//Sleep(2000);
@@ -355,24 +384,3 @@ DWORD WINAPI pkcs11Thread( LPVOID ThreadVars )
 	}
   return 0; 
 } 
-
-void StartCardEventThread(void )
-{
-	HANDLE  hThreadHandle; 
-	DWORD   dwThreadId;
-
-	// Create pkcs11 thread
-	hThreadHandle = CreateThread( 
-		NULL,             // default security attributes
-		0,                // use default stack size  
-		pkcs11Thread,			// thread function name
-		NULL,			// argument to thread function 
-		0,                // use default creation flags 
-		&dwThreadId);			// returns the thread identifier 
-
-	if (hThreadHandle == NULL)
-	{
-		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"WARNING: Failed to start CardEventThread\r\n");
-	}
-}
-

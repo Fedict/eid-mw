@@ -40,9 +40,11 @@ BOOL UseMinidriver( void )
 	return bIsWindowsVistaorLater;
 }
 
-BOOL ImportCertificates(BYTE* pbserialNumber,DWORD serialNumberLen,BYTE* pbcertificateData,DWORD dwcertificateDataLen)
+BOOL ImportCertificate(BYTE* pbserialNumber,DWORD serialNumberLen,
+												BYTE* pbcertificateData,DWORD dwcertificateDataLen,
+												PCCERT_CONTEXT	*ppCertContext)
 {
-	PCCERT_CONTEXT	pCertContext = NULL;
+	//PCCERT_CONTEXT	pCertContext = NULL;
 	BOOL			bImported	= FALSE;
 
 	if ( !pbserialNumber || serialNumberLen == 0 || !pbcertificateData || dwcertificateDataLen == 0 )
@@ -50,17 +52,15 @@ BOOL ImportCertificates(BYTE* pbserialNumber,DWORD serialNumberLen,BYTE* pbcerti
 		return FALSE;
 	}
 
-
-
 	// ----------------------------------------------------
 	// create the certificate context with the certificate raw data
 	// ----------------------------------------------------
-	pCertContext = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, pbcertificateData, dwcertificateDataLen);
+	*ppCertContext = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, pbcertificateData, dwcertificateDataLen);
 
-	if( pCertContext )
+	if( *ppCertContext )
 	{
 		unsigned char KeyUsageBits = 0; // Intended key usage bits copied to here.
-		CertGetIntendedKeyUsage(X509_ASN_ENCODING, pCertContext->pCertInfo, &KeyUsageBits, 1);
+		CertGetIntendedKeyUsage(X509_ASN_ENCODING, (*ppCertContext)->pCertInfo, &KeyUsageBits, 1);
 
 		// ----------------------------------------------------
 		// Only store the context of the certificates with usages for an end-user 
@@ -68,19 +68,20 @@ BOOL ImportCertificates(BYTE* pbserialNumber,DWORD serialNumberLen,BYTE* pbcerti
 		// ----------------------------------------------------
 		if((KeyUsageBits & CERT_KEY_CERT_SIGN_KEY_USAGE) == CERT_KEY_CERT_SIGN_KEY_USAGE)
 		{
-			if(StoreAuthorityCerts (pCertContext, KeyUsageBits) )                    
+			if(StoreAuthorityCerts (*ppCertContext, KeyUsageBits) )                    
 			{
 				bImported = TRUE;
 			}
 		}
 		else
 		{
-			if(StoreUserCerts (pCertContext, KeyUsageBits,pbcertificateData,dwcertificateDataLen ))
+			if(StoreUserCerts (*ppCertContext, KeyUsageBits,pbcertificateData,dwcertificateDataLen ))
 			{
 				bImported = TRUE;
 			}
 		}
-		pCertContext = NULL;
+
+		//pCertContext not released, we keep using it
 	}
 	return bImported;
 }
@@ -101,7 +102,7 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 	unsigned long	ulID			= 0;
 
 	//First parameter is not used and should be set to NULL.
-	HCERTSTORE		hMyStore		= CertOpenSystemStore(NULL, "MY");
+	HCERTSTORE		hMyStore		= CertOpenSystemStore((HCRYPTPROV)NULL, "MY");
 
 	if ( NULL != hMyStore )
 	{
@@ -307,11 +308,11 @@ BOOL StoreAuthorityCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits
 		)
 		)
 	{
-		hMemoryStore = CertOpenSystemStoreA (NULL, "ROOT");
+		hMemoryStore = CertOpenSystemStoreA ((HCRYPTPROV)NULL, "ROOT");
 	}
 	else
 	{
-		hMemoryStore = CertOpenSystemStoreA (NULL, "CA");
+		hMemoryStore = CertOpenSystemStoreA ((HCRYPTPROV)NULL, "CA");
 	}
 
 	if(NULL != hMemoryStore)
@@ -371,8 +372,78 @@ BOOL ProviderNameCorrect (PCCERT_CONTEXT pCertContext )
 	}
 	if(CertGetCertificateContextProperty(pCertContext, dwPropId, pCryptKeyProvInfo, &cbData))
 	{
-		if (!wcscmp(pCryptKeyProvInfo->pwszProvName, TEXT("Belgium Identity Card CSP")))
+		if (!wcscmp(pCryptKeyProvInfo->pwszProvName, L"Belgium Identity Card CSP"))
 			return FALSE;
 	}
+	return TRUE;
+}
+
+
+//*****************************************************
+// store the user certificates 
+//*****************************************************
+BOOL DeleteIfUserCert (HWND hTextEdit,PCCERT_CONTEXT pCertContext)
+{
+	PCCERT_CONTEXT  pDesiredCert	= NULL;
+	PCCERT_CONTEXT  pPrevCert		= NULL;
+	HCERTSTORE		hMyStore = NULL;
+
+	if( pCertContext != NULL)
+	{
+		unsigned char KeyUsageBits = 0; // Intended key usage bits copied to here.
+		CertGetIntendedKeyUsage(X509_ASN_ENCODING, pCertContext->pCertInfo, &KeyUsageBits, 1);
+
+		if((KeyUsageBits & CERT_KEY_CERT_SIGN_KEY_USAGE) == CERT_KEY_CERT_SIGN_KEY_USAGE)
+		{
+			return TRUE;
+		}
+	}
+	else
+	{
+		return FALSE;
+	}
+
+	//First parameter is not used and should be set to NULL.
+	hMyStore		= CertOpenSystemStore((HCRYPTPROV)NULL, "MY");
+
+	if ( NULL != hMyStore )
+	{
+		// ----------------------------------------------------
+		// search for a certificate with the same subject (contains name and NNR) in the store
+		// If the certificate is not found --> NULL
+		// ----------------------------------------------------
+		do
+		{
+			if( NULL != (pDesiredCert = CertFindCertificateInStore(hMyStore, X509_ASN_ENCODING, 0, CERT_FIND_SUBJECT_NAME, &(pCertContext->pCertInfo->Subject) , pPrevCert)))
+			{
+				// ----------------------------------------------------
+				// certificate with the same subject (contains name and NNR) found,
+				// so we remove it from the store
+				// ----------------------------------------------------
+				if(FALSE == CertDeleteCertificateFromStore(pDesiredCert))
+				{
+					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"certificate deletion failed \r\n");
+					if (E_ACCESSDENIED == GetLastError())
+					{
+						;
+						//QString strCaption(tr("Deleting former certificate"));
+						//QString strMessage(tr("Error deleting former certificate"));
+						//QMessageBox::information(NULL,strCaption,strMessage);
+					}
+				}
+				else
+				{
+					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"certificate deleted \r\n");
+				}
+			}
+			//pPrevCert = pDesiredCert;
+
+		}
+		while (NULL != pDesiredCert);
+		CertCloseStore (hMyStore, CERT_CLOSE_STORE_FORCE_FLAG);
+	}
+	CertFreeCertificateContext(pDesiredCert);
+	CertFreeCertificateContext(pCertContext);
+
 	return TRUE;
 }
