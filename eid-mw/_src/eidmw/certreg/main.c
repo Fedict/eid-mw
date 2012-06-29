@@ -10,6 +10,10 @@
 #define IDB_CANCEL 2
 #define IDC_EDIT 3
 
+#define PKCS11THREAD_RUN		  0
+#define STOP_PKCS11THREAD			1
+#define PKCS11THREAD_STOPPED  2
+
 #define REG_BUTTON_HEIGHT 24
 #define REG_BUTTON_HEIGHT_MARGIN 12
 #define REG_BUTTON_WIDTH 152
@@ -21,6 +25,7 @@
 HINSTANCE hInst;								// current instance
 HWND hTextEdit;									// the edit control
 DWORD gStopThreads;
+DWORD gAutoFlags;
 CK_FUNCTION_LIST_PTR gfunctions; // the pkcs11 functions
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
@@ -47,9 +52,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	HACCEL hAccelTable;
 	void *pkcs11_handle = NULL;
 	CK_RV retval = CKR_OK;
-	HANDLE  hThreadHandle; 
 	DWORD   dwThreadId;
-	gStopThreads = 0;
+	HANDLE  hThreadHandle; 
+	gStopThreads = PKCS11THREAD_RUN;
 
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -75,20 +80,20 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	}
 	else
 	{
-	// Create pkcs11Events thread
-	hThreadHandle = CreateThread( 
-		NULL,             // default security attributes
-		0,                // use default stack size  
-		pkcs11EventsThread,			// thread function name
-		NULL,			// argument to thread function 
-		0,                // use default creation flags 
-		&dwThreadId);			// returns the thread identifier 
+		// Create pkcs11Events thread
+		hThreadHandle = CreateThread( 
+			NULL,             // default security attributes
+			0,                // use default stack size  
+			pkcs11EventsThread,			// thread function name
+			NULL,			// argument to thread function 
+			0,                // use default creation flags 
+			&dwThreadId);			// returns the thread identifier 
 
-	if (hThreadHandle == NULL)
-	{
-		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR: Failed to start CardEventThread\r\n");
-		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Automated functionality is inactive\r\n");
-	}
+		if (hThreadHandle == NULL)
+		{
+			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR: Failed to start CardEventThread\r\n");
+			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Automated functionality is inactive\r\n");
+		}
 
 		hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CERTREG));
 
@@ -100,8 +105,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
+			if(gStopThreads == PKCS11THREAD_STOPPED)
+			{
+				if(msg.hwnd != NULL)
+					DestroyWindow(msg.hwnd);
+				break;
+			}
 		}
-		retval = (gfunctions->C_Finalize) (NULL_PTR);
+		//retval = (gfunctions->C_Finalize) (NULL_PTR);
 	}
 
 	if (hThreadHandle != NULL)
@@ -111,8 +122,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		if (WaitForSingleObject(hThreadHandle, 5000) == WAIT_OBJECT_0)
 		{
 			CloseHandle(hThreadHandle);
-		}	
+		}
 	}
+
 
 	dlclose(pkcs11_handle);
 
@@ -174,6 +186,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	hInst = hInstance; // Store instance handle in our global variable
 
+	gAutoFlags = AUTO_REGISTER | AUTO_REMOVE;
 	//hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 	//   CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
@@ -233,11 +246,14 @@ BOOL InitPKCS11(void *handle)
 
 	handle = dlopen("beid_ff_pkcs11.dll", RTLD_LAZY); // RTLD_NOW is slower
 	if (NULL == handle) {
-		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR: beidpkcs11.dll not found :\r\n");
+		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"beid_ff_pkcs11.dll not found\r\n");
 		handle = dlopen("beidpkcs11.dll", RTLD_LAZY); // RTLD_NOW is slower
 		if (NULL == handle) {
-			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR: beid_ff_pkcs11.dll not found :\r\n");
+			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR: beidpkcs11.dll not found\r\n");
 			return FALSE;
+		}
+		else{
+			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"beidpkcs11.dll found\r\n");
 		}
 	}
 
@@ -308,10 +324,13 @@ BOOL CALLBACK ChildWindowResize(HWND hWndChild, LPARAM lParam)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	int wmId, wmEvent;
+	int flags = 0;
 	PAINTSTRUCT ps;
 	HDC hdc;
 	RECT rcClient;
-
+	HMENU hmenu;            // top-level menu 
+DWORD retval = 0;
+char* stringi;
 	switch (message)
 	{
 	case WM_COMMAND:
@@ -320,6 +339,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Parse the menu selections:
 		switch (wmId)
 		{
+		case IDM_AUTOREGISTER:
+			flags=AUTO_REGISTER;
+		case IDM_AUTOREMOVE:	
+			if(flags==0)
+				flags=AUTO_REMOVE;
+
+			// Get the menu.
+			if ((	hmenu = GetMenu(hWnd)) == NULL) 
+				return;
+
+			if( (gAutoFlags & flags) != NULL)
+			{
+				//flag was on, turn it off
+				CheckMenuItem(hmenu,wmId,MF_UNCHECKED|MF_BYCOMMAND);
+				gAutoFlags -= flags;
+			}
+			else
+			{
+				CheckMenuItem(hmenu,wmId,MF_CHECKED|MF_BYCOMMAND);
+				gAutoFlags |= flags;
+			}
+			break;
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
@@ -329,7 +370,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case IDB_CANCEL:
 		case IDM_EXIT:
-			DestroyWindow(hWnd);
+			if(gStopThreads != PKCS11THREAD_STOPPED)
+				gStopThreads = STOP_PKCS11THREAD;
+			gfunctions->C_Finalize(NULL_PTR);
 			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
@@ -376,11 +419,13 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 DWORD WINAPI pkcs11EventsThread( LPVOID ThreadVars ) 
 { 
 	//threadVars->threadRetVal = readslots(functions);
-	while (gStopThreads == 0)
+	while (gStopThreads == PKCS11THREAD_RUN)
 	{
-		WaitForCardEvent(hTextEdit, gfunctions);
+		WaitForCardEvent(hTextEdit, gfunctions, &gAutoFlags);
 		//Sleep(2000);
 		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)".");
 	}
+
+	gStopThreads = PKCS11THREAD_STOPPED;
   return 0; 
 } 

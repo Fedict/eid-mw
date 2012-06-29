@@ -38,6 +38,9 @@ extern HANDLE                  ghSvcStopEvent;
 #include <tchar.h>
 #include <strsafe.h>
 
+#define AUTO_REGISTER	0x01
+#define AUTO_REMOVE		0x02
+
 #define dlopen(lib,h) LoadLibrary(lib)
 #define dlsym(h, function) GetProcAddress(h, function)
 #define dlclose(h) FreeLibrary(h)

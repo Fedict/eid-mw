@@ -21,7 +21,7 @@
 #include "certreg.h"
 
 
-CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions)
+CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pAutoFlags)
 {
 	CK_RV retVal = CKR_OK; 
 	CK_FLAGS flags = 0;
@@ -92,17 +92,17 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions)
 							//allocate space for 5 certificate context pointers
 							pCertContextArray[ulCounter] = malloc (5*sizeof(PCCERT_CONTEXT));
 							memset(pCertContextArray[ulCounter],0,5*sizeof(PCCERT_CONTEXT));
-														if(pCertContextArray[ulCounter] != NULL)
+							if(pCertContextArray[ulCounter] != NULL)
 							{
 								memset(pCertContextArray[ulCounter],0,5*sizeof(PCCERT_CONTEXT));
-							retVal = HandleNewCardFound(hTextEdit, functions, ulCounter, pSlotList,pCertContextArray[ulCounter], 5);
-														}
-														else
-														{
-//no memory
-														}
-														
-														}
+								if(*pAutoFlags & AUTO_REGISTER)
+									retVal = HandleNewCardFound(hTextEdit, functions, ulCounter, pSlotList,pCertContextArray[ulCounter], 5);						
+							}
+							else
+							{
+								SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR:  Out of memory\r\n");
+							}
+						}
 					}
 				}
 				ulCounter++;
@@ -141,7 +141,8 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions)
 						SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Card removed\r\n");
 						pCardPresentList[ulCounter] = 0;
 						//token removed, so remove its certificates
-						retVal = HandleCardRemoved(hTextEdit, functions, pCertContextArray[ulCounter], 5);
+						if(*pAutoFlags & AUTO_REMOVE)
+							retVal = HandleCardRemoved(hTextEdit, functions, pCertContextArray[ulCounter], 5);
 						//free the allocated space of the certificate context pointers
 						if(pCertContextArray[ulCounter] != NULL)
 							free (pCertContextArray[ulCounter]);
@@ -158,12 +159,13 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions)
 							{
 								memset(pCertContextArray[ulCounter],0,5*sizeof(PCCERT_CONTEXT));
 								//token added, so add its certificates
-								retVal = HandleNewCardFound(hTextEdit, functions, ulCounter, pSlotList,
+								if(*pAutoFlags & AUTO_REGISTER)
+									retVal = HandleNewCardFound(hTextEdit, functions, ulCounter, pSlotList,
 									pCertContextArray[ulCounter], 5);
 							}
 							else
 							{
-//no memory
+								SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR:  Out of memory\r\n");
 							}
 						}					
 					}			

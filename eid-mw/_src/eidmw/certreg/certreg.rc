@@ -42,6 +42,9 @@ IDC_CERTREG MENU
 BEGIN
     POPUP "&File"
     BEGIN
+        MENUITEM "Auto Register",               IDM_AUTOREGISTER, CHECKED
+        MENUITEM "Auto Remove",                 IDM_AUTOREMOVE, CHECKED
+        MENUITEM SEPARATOR
         MENUITEM "E&xit",                       IDM_EXIT
     END
     POPUP "&Help"
