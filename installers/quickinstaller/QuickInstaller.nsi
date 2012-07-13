@@ -4,6 +4,8 @@
 !include "x64.nsh"
 !include LogicLib.nsh
 !include nsDialogs.nsh
+!include "eIDTranslations.nsh"
+!include WinMessages.nsh
 ;!include nsDialogs_createTextMultiline.nsh
 ;!include MUI2.nsh
 
@@ -11,18 +13,16 @@
 ;General
 
   ;defines
-  !define VERSION "4.0.4.7256g"
-	!define VERSION_SHORT "4.0.4"
-	!define LOGFILE ""
-;  LicenseLangString license ${LANG_ENGLISH} "..\..\misc\licenses_files\English\License_en.rtf"
-;  LicenseLangString license ${LANG_GERMAN} "..\..\misc\licenses_files\German\License_de.rtf"
-;  LicenseLangString license ${LANG_FRENCH} "..\..\misc\licenses_files\French\License_fr.rtf"
-;  LicenseLangString license ${LANG_DUTCH} "..\..\misc\licenses_files\Dutch\License_nl.rtf"
+!define VERSION "4.1.0.7256"
+!define VERSION_SHORT "4.1.0"
+!define LOGFILE ""
 
   ;Name and file
   Name "Belgium eID-QuickInstaller ${VERSION}"
   OutFile "Belgium eID-QuickInstaller ${VERSION}.exe"
-
+VIProductVersion "${VERSION}"
+VIAddVersionKey "FileVersion" "${VERSION}"
+  
   ;Default installation folder
   InstallDir "$PROGRAMFILES\Belgium Identity Card"
 	;InstallDir "$LOCALAPPDATA\Belgium Identity Card"
@@ -64,18 +64,10 @@ BrandingText " "
 InstallColors /windows
 ;InstProgressFlags smooth
 
-VIProductVersion "${VERSION}"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Belgium eID Middleware"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Software for reading the Belgium Identity Card"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Fedict"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" ""
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright © 2012"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "eID QuickInstaller"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VERSION}"
-
-
 ;--------------------------------
 ;Pages
+
+Page license
 Page custom nsdWelcome nsdWelcomeLeave
 Page instfiles "" show_instfiles ""
 Page custom nsdDone nsdDoneLeave
@@ -85,12 +77,7 @@ Page custom nsdCardData
 
 ;--------------------------------
 ;Languages
-; First is default
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Dutch.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
-
+; its all in "eIDTranslations.nsh"
 ;--------------------------------
 ;Reserve Files
   
@@ -100,51 +87,18 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
   
   ;!insertmacro MUI_RESERVEFILE_LANGDLL
 
-LangString ls_install ${LANG_ENGLISH} "Install"
-LangString ls_install ${LANG_FRENCH} "Installez"
-LangString ls_install ${LANG_DUTCH} "Installeer"
-
-LangString ls_cancel ${LANG_ENGLISH} "Cancel"
-LangString ls_cancel ${LANG_FRENCH} "Anulez"
-LangString ls_cancel ${LANG_DUTCH} "Anuleer"
-
-LangString ls_next ${LANG_ENGLISH} "Next"
-LangString ls_next ${LANG_FRENCH} "Prochaine"
-LangString ls_next ${LANG_DUTCH} "Volgende"
-
-LangString ls_back ${LANG_ENGLISH} "Back"
-LangString ls_back ${LANG_FRENCH} "Précédente"
-LangString ls_back ${LANG_DUTCH} "Vorige"
-
-LangString ls_close ${LANG_ENGLISH} "Close"
-LangString ls_close ${LANG_FRENCH} "Fermer"
-LangString ls_close ${LANG_DUTCH} "Sluiten"
-
-LangString ls_finish ${LANG_ENGLISH} "Finish"
-LangString ls_finish ${LANG_FRENCH} "OK"
-LangString ls_finish ${LANG_DUTCH} "OK"
-
-LangString ls_test ${LANG_ENGLISH} "Test"
-LangString ls_test ${LANG_FRENCH} "Tester"
-LangString ls_test ${LANG_DUTCH} "Testen"
-
 MiscButtonText $(ls_back) $(ls_next) $(ls_cancel) $(ls_close)
 ; MessageBox MB_OK "A translated message: $(message)"
-;  LicenseLangString license ${LANG_ENGLISH} "..\..\misc\licenses_files\English\License_en.rtf"
-;  LicenseLangString license ${LANG_GERMAN} "..\..\misc\licenses_files\German\License_de.rtf"
-;  LicenseLangString license ${LANG_FRENCH} "..\..\misc\licenses_files\French\License_fr.rtf"
-;  LicenseLangString license ${LANG_DUTCH} "..\..\misc\licenses_files\Dutch\License_nl.rtf"
+LicenseLangString license ${LANG_ENGLISH} "..\..\misc\licenses_files\English\License_en.rtf"
+LicenseLangString license ${LANG_GERMAN} "..\..\misc\licenses_files\German\License_de.rtf"
+LicenseLangString license ${LANG_FRENCH} "..\..\misc\licenses_files\French\License_fr.rtf"
+LicenseLangString license ${LANG_DUTCH} "..\..\misc\licenses_files\Dutch\License_nl.rtf"
+
+LicenseData $(license)
+;LicenseText "text" "button_text"
+
 ;--------------------------------
 ;Installer Sections
-;Section "Belgium Eid Viewer" BeidViewer
-
-  ;SetOutPath "$INSTDIR"
-  
-  ;File "..\eid-viewer\Windows\bin\BeidViewer.msi"
-  ;ExecWait 'msiexec /quiet /norestart /l* "$INSTDIR\log\install_eidviewer_log.txt" /i "$INSTDIR\BeidViewer.msi"'
-  ;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidViewer" 0x1
-  ;Delete "$INSTDIR\BeidViewer.msi"
-;SectionEnd
 
 Section "Belgium Eid Crypto Modules" BeidCrypto
 	SetOutPath "$INSTDIR"
@@ -174,6 +128,31 @@ SectionEnd
 ;Installer Functions
 
 Function .onInit
+
+;for testing different languages
+Push ${LANG_DUTCH}
+Pop $LANGUAGE
+	;Language selection dialog
+
+;	Push ""
+;	Push ${LANG_ENGLISH}
+;	Push English
+;	Push ${LANG_DUTCH}
+;	Push Dutch
+;	Push ${LANG_FRENCH}
+;	Push French
+;	Push ${LANG_GERMAN}
+;	Push German
+
+;	Push A ; A means auto count languages
+	       ; for the auto count to work the first empty push (Push "") must remain
+;	LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
+
+;	Pop $LANGUAGE
+;	StrCmp $LANGUAGE "cancel" 0 +2
+;		Abort
+
+
 FunctionEnd
 
 Function .onInstSuccess
@@ -186,8 +165,8 @@ Function nsdWelcome
 	${If} $nsdCustomDialog == error
 		Abort
 	${EndIf}
-
-	${NSD_CreateLabel} 0 0 100% 16u "Welcome to the Eid QuickInstaller"
+	
+	${NSD_CreateLabel} 0 0 100% 16u "$(ls_welcome)"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	CreateFont $Font_Title "Times New Roman" "18" "700" ;/UNDERLINE
@@ -224,7 +203,7 @@ Function nsdDone
 	${EndIf}
 
 	;${NSD_CreateTextMultiline} 
-	${NSD_CreateLabel} 0 0 100% 16u "Installation complete" ; $\r$\n if you'd like to test reading your eidcard, press next"
+	${NSD_CreateLabel} 0 0 100% 16u "$(ls_complete)" ; $\r$\n if you'd like to test reading your eidcard, press next"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
