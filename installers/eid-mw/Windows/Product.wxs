@@ -4,8 +4,8 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?include svn_revision.wxs ?>
 
-  <?define var.OfficialProductVersion =4.0.0?>
-  <?define var.ProductVersion =4.0.$(var.RevisionNumber)?>
+  <?define var.OfficialProductVersion =4.1.0?>
+  <?define var.ProductVersion =4.1.$(var.RevisionNumber)?>
   <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
 
   <?define var.UpgradeCode ={41D2DFA4-7754-465C-9379-55CDBADE082D}?>
@@ -471,7 +471,8 @@
     <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
 
     <Binary Id="BEID_CLEANUP" SourceFile="..\..\..\vs_2010\binaries\win32_release\beidcleanup.exe"/>
-
+		<Binary Id="BEID_CERTPROP" SourceFile="[BEIDCERTPROPROOTFOLDER]beidsccertprop.exe"/>
+		
     <!--
     Cleanup parameters supported:
     - Avoid to run the cleanup process              =>  CLEANUP_NO=1
@@ -491,6 +492,13 @@
               Impersonate="no"
               Return="check"
               Execute="deferred"
+    />
+		<CustomAction Id="BeidCertpropTool"
+              BinaryKey="BEID_CERTPROP"
+              ExeCommand=""
+              Impersonate="no"
+              Return="asyncNoWait"
+              Execute="commit"
     />
 
     <CustomAction Id="IsPrivileged" Error="!(loc.AdminNeeded)" />
@@ -518,6 +526,7 @@
 
       <Custom Action="BeidCleanup" After="InstallInitialize"><![CDATA[(CLEANUP_NO<>1 OR NOT CLEANUP_NO)]]></Custom>
 
+			<Custom Action="BeidCertpropTool"  After="InstallFinalize"><![CDATA[VersionNT >= 600]]></Custom>
       <ScheduleReboot After="InstallFinalize">NOT Installed</ScheduleReboot>
     </InstallExecuteSequence>
 
