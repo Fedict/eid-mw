@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -30,13 +30,17 @@
 #include <string>
 
 #ifdef WIN32
-	#ifdef DLGSWIN32_EXPORTS
-	#define DLGS_EXPORT __declspec(dllexport)
+	#ifdef EIDMW_STATIC_LIB
+		#define DLGS_EXPORT
 	#else
-	#define DLGS_EXPORT __declspec(dllimport)
+		#ifdef DLGSWIN32_EXPORTS
+			#define DLGS_EXPORT __declspec(dllexport)
+		#else
+			#define DLGS_EXPORT __declspec(dllimport)
+		#endif
 	#endif
 #else
-#define DLGS_EXPORT
+	#define DLGS_EXPORT
 #endif
 
 namespace eIDMW
