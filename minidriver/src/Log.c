@@ -179,7 +179,7 @@ void LogInit()
 void LogTrace(int info, const char *pWhere, const char *format,... )
 {
 	char           buffer[2048];
-	BYTE baseName[512];
+	TCHAR baseName[512];
 	DWORD baseNamseSize; 
 
 	time_t         timer;
@@ -202,14 +202,14 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 		break;
 
 	case LOGTYPE_WARNING:
-		if ( info == LOGTYPE_WARNING )
+		if ( info <= LOGTYPE_WARNING )
 		{
 			iLog++;
 		}
 		break;
 
 	case LOGTYPE_INFO:
-		if ( info == LOGTYPE_INFO )
+		if ( info <= LOGTYPE_INFO )
 		{
 			iLog++;
 		}
@@ -235,7 +235,7 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 	}
 
 	/* get the name of the file that started this process*/
-	baseNamseSize = GetModuleFileName(NULL,(LPTSTR)baseName,512);
+	baseNamseSize = GetModuleFileName(NULL,baseName,512);
 	if (baseNamseSize == 0)
 		lstrcpy(baseName,TEXT("Unknown name"));
 	//baseNamseSize = GetModuleBaseName(GetCurrentProcess(),NULL,(LPTSTR)baseName,512);
