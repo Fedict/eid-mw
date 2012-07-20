@@ -110,72 +110,6 @@ void LogInit()
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void LogTrace(int info, const char *pWhere, const char *format,... )
 {
 	char           buffer[2048];
@@ -238,6 +172,8 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 	baseNamseSize = GetModuleFileName(NULL,baseName,512);
 	if (baseNamseSize == 0)
 		lstrcpy(baseName,TEXT("Unknown name"));
+	else
+		baseName[511] = 0;
 	//baseNamseSize = GetModuleBaseName(GetCurrentProcess(),NULL,(LPTSTR)baseName,512);
 	//baseNamseSize = GetProcessImageFileName(NULL,(LPTSTR)baseName,512);
 
@@ -273,7 +209,7 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 	fp = _tfopen(g_szLogFile, TEXT("a"));
 	if ( fp != NULL )
 	{
-		fprintf (fp, "%s %d %d %s|%30s|%s\n",baseName, GetCurrentProcessId(), GetCurrentThreadId(), timebuf, pWhere, buffer);
+		fprintf (fp, "%S %d %d %s|%30s|%s\n",baseName, GetCurrentProcessId(), GetCurrentThreadId(), timebuf, pWhere, buffer);
 		fclose(fp);
 	}
 }
