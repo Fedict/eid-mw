@@ -72,19 +72,6 @@ copy %~dp0..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 
-@cd "%~dp0..\installers\sdk\Windows"
-@call "%~dp0..\installers\sdk\Windows\build_msi_sdk.cmd"
-@if %ERRORLEVEL%==1 goto end_resetpath_with_error
-@echo [INFO] copy eid SDK msi installer
-copy %~dp0..\installers\eid-mw\Windows\bin\BeidMWSDK_32.msi %~dp0
-
-@cd "%~dp0..\installers\eid-viewer\Windows"
-@call "%~dp0..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
-@if %ERRORLEVEL%==1 goto end_resetpath_with_error
-@echo [INFO] copy eid Viewer msi installer
-copy %~dp0..\installers\eid-viewer\Windows\bin\BeidViewer.msi %~dp0
-
-
 :: create the NSIS installer
 :: =========================
 @echo [INFO] Make nsis installer
