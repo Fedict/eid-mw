@@ -176,7 +176,6 @@
     <ClCompile Include="getallobjects.c" />
     <ClCompile Include="getinfo.c" />
     <ClCompile Include="getmechanisms.c" />
-    <ClCompile Include="getprivatekeys.c" />
     <ClCompile Include="getslotlist.c" />
     <ClCompile Include="logtest.c" />
     <ClCompile Include="MainTest.c" />

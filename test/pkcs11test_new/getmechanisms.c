@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2009-2010 FedICT.
+* Copyright (C) 2008-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -49,14 +49,14 @@ testRet test_getmechanisms() {
 			{
 				testlog(LVL_INFO,"library version: %d.%d\n", info.libraryVersion.major, info.libraryVersion.minor);
 				testlog(LVL_INFO,"PKCS#11 version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
-				frv = (*functions->C_GetSlotList) (0, 0, &slot_count);
+				frv = (*functions->C_GetSlotList) (CK_TRUE, 0, &slot_count);
 				if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetSlotList", "test_show_mechanismsinfo" ))
 				{
 					testlog(LVL_INFO,"slot count: %i\n", slot_count);
 					slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
 					if(slotIds != NULL)
 					{
-						frv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
+						frv = (*functions->C_GetSlotList) (CK_TRUE, slotIds, &slot_count);
 						if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetSlotList (X2)", "test_show_mechanismsinfo" ))
 						{
 							if(slot_count == 0)
@@ -74,10 +74,14 @@ testRet test_getmechanisms() {
 								{
 									//chop off last character
 									slotInfo.slotDescription[63] = '\0';
-									for (idx = 64 - 1; idx > 0; idx--) {
-										if (slotInfo.slotDescription[idx] == ' ') {
+									for (idx = 64 - 1; idx > 0; idx--) 
+									{
+										if (slotInfo.slotDescription[idx] == ' ') 
+										{
 											slotInfo.slotDescription[idx] = '\0';			
-										} else {
+										} 
+										else 
+										{
 											break;
 										}		
 									}

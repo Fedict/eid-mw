@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2010 FedICT.
+* Copyright (C) 2008-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -231,7 +231,7 @@ testRet test_open_close_session_limit(CK_FLAGS flags, CK_ULONG *pcounter)
 	CK_SLOT_ID_PTR slotIds = NULL;
 	CK_SESSION_HANDLE session_handle;
 
-	testlog(LVL_INFO, "test_open_close_session_bad_param enter\n");
+	testlog(LVL_INFO, "test_open_close_session_limit enter\n");
 	*pcounter = 0;
 
 	retVal = PrepareSlotListTest(&handle,&functions, &slotIds, &ulCount,CK_TRUE );
@@ -262,11 +262,11 @@ testRet test_open_close_session_limit(CK_FLAGS flags, CK_ULONG *pcounter)
 			}
 		}
 		frv = (*functions->C_Finalize) (NULL_PTR);
-		ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Finalize", "test_open_close_session enter" );
+		ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Finalize", "test_open_close_session_limit enter" );
 	}
 	EndSlotListTest(handle,slotIds );
 
-	testlog(LVL_INFO, "test_open_close_session_bad_param leave\n");
+	testlog(LVL_INFO, "test_open_close_session_limit leave\n");
 	return retVal;
 }
 
@@ -278,12 +278,12 @@ testRet test_open_close_session_limits()
 	retVal = test_open_close_session_limit(CKF_SERIAL_SESSION, &counter); 
 	if ((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED) )
 	{
-		testlog(LVL_INFO, "session_limits read-only = %d\n",counter);
+		testlog(LVL_INFO, "session_limits read-only tried 200, able to open %d\n",counter);
 		counter = 50;
 		retVal = test_open_close_session_limit(CKF_RW_SESSION | CKF_SERIAL_SESSION, &counter); //CKF_SERIAL_SESSION not set
 		if ((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED) )
 		{
-			testlog(LVL_INFO, "session_limits read-write = %d\n",counter);
+			testlog(LVL_INFO, "session_limits read-write tried 50, able to open %d\n",counter);
 		}
 	}
 	return retVal;

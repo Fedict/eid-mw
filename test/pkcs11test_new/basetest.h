@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2009-2010 FedICT.
+ * Copyright (C) 2009-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -37,21 +37,24 @@
 #define dlopen(lib,h) LoadLibrary(lib)
 #define dlsym(h, function) GetProcAddress(h, function)
 #define dlclose(h) FreeLibrary(h)
-#ifdef _DEBUG
-  #define PKCS11_LIB TEXT("beidpkcs11D.dll") //E:/trunk/eid-mw/test/_binaries35/debug/beid35pkcs11D.dll"
+#ifdef WIN64
+#define PKCS11_LIB L"..\\..\\VS_2010\\Binaries\\x64_Release\\beidpkcs11.dll"
 #else
-  #define PKCS11_LIB TEXT("beidpkcs11.dll")
+#define PKCS11_LIB L"F:\\Windows\\System32\\beid_ff_pkcs11.dll"
 #endif
-
 #define RTLD_LAZY	1
 #define RTLD_NOW	2
 #define RTLD_GLOBAL 4
 
 #else
-#include <opensc/pkcs11.h>
+
+#include "include/rsaref220/unix.h"
+#include "include/rsaref220/pkcs11.h"
+
+//#include "pkcs11.h"
 #include <dlfcn.h>
 #include <unistd.h>
-#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
+#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.dylib" 
 #endif
 #include <stdlib.h>
 

@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2009-2010 FedICT.
+ * Copyright (C) 2009-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -48,5 +48,6 @@ testRet test_getattributevalue_lastname(void);
 testRet test_getkeys_retvals(void);
 testRet test_findPrivateKeyWithoutLoginShouldFail(void);
 testRet test_findObjectsFinalNotInitialized(void); 
-
+testRet test_add_remove_readers();
+testRet test_add_remove_readerevents();
 

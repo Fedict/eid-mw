@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2009-2010 FedICT.
+* Copyright (C) 2009-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -62,8 +62,11 @@ testRet test_sign() {
 							CK_OBJECT_HANDLE hKey;
 							CK_MECHANISM mechanism = {CKM_RSA_PKCS, NULL_PTR, 0};
 							CK_BYTE_PTR data = "testsignthis"; 
-							CK_BYTE signature[128];
-							CK_ULONG signLength = 128;
+							CK_BYTE signature[256];
+							CK_ULONG signLength = 256;
+							CK_BYTE signatureMultiPart[256];
+							CK_ULONG signMultiPartLength = 256;
+							CK_ULONG lengthNeeded = 0;
 
 							frv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
 							if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_OpenSession", "test_sign" ))
@@ -77,17 +80,41 @@ testRet test_sign() {
 										frv = (*functions->C_FindObjectsFinal)(session_handle); 
 										if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_FindObjectsFinal", "test_sign" ))
 										{
+											//sign in a single part
 											frv = (*functions->C_SignInit)(session_handle, &mechanism, hKey); 
 											if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_SignInit", "test_sign" ))
 											{
 												frv = (*functions->C_Sign)(session_handle,data,(CK_ULONG) strlen(data),signature,&signLength);
 												ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Sign", "test_sign" );
-												/*if(retVal.pkcs11rv == CKR_FUNCTION_FAILED)
+											}
+											//sign in multiple parts
+											frv = (*functions->C_SignInit)(session_handle, &mechanism, hKey); 
+											if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_SignInit", "test_sign" ))
+											{
+												frv = (*functions->C_SignUpdate)(session_handle,data,4);
+												if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Sign", "test_sign" ))
 												{
-													CK_SESSION_INFO sessionInfo;
-													frv = (*functions->C_GetSessionInfo)(session_handle,&sessionInfo);
-													ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetSessionInfo", "test_sign" );			
-												}*/
+													data += 4;
+													frv = (*functions->C_SignUpdate)(session_handle,data,4);
+													if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Sign", "test_sign" ))
+													{
+														data += 4;
+														frv = (*functions->C_SignUpdate)(session_handle,data,4);
+														if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Sign", "test_sign" ))
+														{
+															frv = (*functions->C_SignFinal)(session_handle,NULL,&lengthNeeded);
+															if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Sign", "test_sign" ))
+															{
+																frv = (*functions->C_SignFinal)(session_handle,signatureMultiPart,&signMultiPartLength);
+																ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Sign", "test_sign" );
+																if(memcmp(signature,signatureMultiPart,signLength) != 0)
+																{
+																	testlog(LVL_ERROR, "test_sign single_part and multi_part give different results\n");
+																}
+															}
+														}
+													}
+												}
 											}
 										}
 									}

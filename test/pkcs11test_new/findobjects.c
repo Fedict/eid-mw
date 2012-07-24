@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2009-2010 FedICT.
+* Copyright (C) 2009-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -87,10 +87,9 @@ testRet test_findPrivateKeyWithoutLoginShouldFail()
 				}
 			}
 		}//end of for loop
+		frv = (*functions->C_Finalize) (NULL_PTR);
+		ReturnedSucces(frv,&(retVal.pkcs11rv), "C_Finalize");
 	}
-
-	frv = (*functions->C_Finalize) (NULL_PTR);
-	ReturnedSucces(frv,&(retVal.pkcs11rv), "C_Finalize");
 
 	EndSlotListTest(handle,slotIds );
 
@@ -144,10 +143,9 @@ testRet test_findObjectsFinalNotInitialized()
 				}
 			}
 		}//end of for loop
+		frv = (*functions->C_Finalize) (NULL_PTR);
+		ReturnedSucces(frv,&(retVal.pkcs11rv), "C_Finalize");
 	}
-
-	frv = (*functions->C_Finalize) (NULL_PTR);
-	ReturnedSucces(frv,&(retVal.pkcs11rv), "C_Finalize");
 
 	EndSlotListTest(handle,slotIds );
 

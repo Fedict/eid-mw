@@ -1,37 +1,41 @@
 /* ****************************************************************************
 
-* eID Middleware Project.
-* Copyright (C) 2009-2010 FedICT.
-*
-* This is free software; you can redistribute it and/or modify it
-* under the terms of the GNU Lesser General Public License version
-* 3.0 as published by the Free Software Foundation.
-*
-* This software is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this software; if not, see
-* http://www.gnu.org/licenses/.
+ * eID Middleware Project.
+ * Copyright (C) 2009-2012 FedICT.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License version
+ * 3.0 as published by the Free Software Foundation.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, see
+ * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
 
 /*
-* Integration test for the PKCS#11 library.
-* Required interaction: PIN entry.
-*/
+ * Integration test for the PKCS#11 library.
+ * Required interaction: none.
+ */
 
 #include <stdio.h>
-#include <MainTest.h>
+#include "MainTest.h"
 #include "logtest.h"
 
 #define NUMBER_OF_TESTS 100
-//#define USER_INTERACTION
 
-int main() {
-	int i=0;
+#ifdef WIN32
+int main()
+#else
+	int main (int argc, const char * argv[])
+#endif
+{
+	int i = 0;
 	int testCounter = 0;
 	char* testDescription[NUMBER_OF_TESTS];
 	testRet result[NUMBER_OF_TESTS];
@@ -104,6 +108,12 @@ int main() {
 	testDescription[testCounter] = "tests getting the lastname object's attributes from the card";
 	result[testCounter] = test_getattributevalue_lastname();
 	testCounter++;
+	testDescription[testCounter] = "tests adding and removing readers";
+	result[testCounter] = test_add_remove_readers();
+	testCounter++;
+	testDescription[testCounter] = "tests waiting for card and reader events";
+	result[testCounter] = test_add_remove_readerevents();
+	testCounter++;
 	testDescription[testCounter] = "tests getting the private object's from the card without logging in";
 	result[testCounter] = test_findPrivateKeyWithoutLoginShouldFail();
 	testCounter++;
@@ -151,6 +161,7 @@ int main() {
 				break;
 			};
 		}
+		testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
 	}
 
 	testlog(LVL_NOLEVEL,"\n===============================================\n");

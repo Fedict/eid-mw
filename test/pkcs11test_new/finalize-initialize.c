@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2009-2010 FedICT.
+* Copyright (C) 2009-2012 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -117,11 +117,11 @@ DWORD WINAPI pkcs11Thread( LPVOID testThreadVars )
 	LP_TEST_FIN_INI_VARS threadVars = (LP_TEST_FIN_INI_VARS)testThreadVars;
 	CK_FUNCTION_LIST_PTR functions;
 
-	functions = threadVars->functions;
+    functions = threadVars->functions;
 
 	threadVars->threadRetVal = readslots(functions,threadVars->initflags);
 
-	return 0; 
+    return 0; 
 } 
 
 testRet test_finalize_initialize_flag(CK_FLAGS flags) {
