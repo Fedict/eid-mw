@@ -105,6 +105,23 @@ LANGUAGES getLanguage() {
 		return nl;
 	if ((GetUserDefaultUILanguage() & LANG_FRENCH) == LANG_FRENCH) 
 		return fr;
+	if ((GetUserDefaultUILanguage() & LANG_GERMAN) == LANG_GERMAN) 
+		return en;//get german translations
+
 	//default language
 	return en;
+}
+
+USHORT getLangID() {
+	if ((GetUserDefaultUILanguage() & LANG_ENGLISH) == LANG_ENGLISH) 
+		return 0x0809;
+	if ((GetUserDefaultUILanguage() & LANG_DUTCH) == LANG_DUTCH) 
+		return 0x0813;
+	if ((GetUserDefaultUILanguage() & LANG_FRENCH) == LANG_FRENCH) 
+		return 0x080c;
+	if ((GetUserDefaultUILanguage() & LANG_GERMAN) == LANG_GERMAN)
+		return 0x0407;
+
+	//default language
+	return 0x0809;
 }

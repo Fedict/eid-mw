@@ -81,6 +81,7 @@ DWORD WINAPI DialogThreadPinEntry
 	)
 ;
 LANGUAGES getLanguage();
+USHORT getLangID();
 
 // translations for UI
 static wchar_t * t[MAX_LOCALIZATION_STRINGS][MAX_LANGUAGES] =

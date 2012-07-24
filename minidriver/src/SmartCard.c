@@ -1672,6 +1672,7 @@ cleanup:
 #undef WHERE
 
 DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
+		LANGUAGES displayLanguage = en;
     pVerifyCommand->bTimeOut = 30;
     pVerifyCommand->bTimeOut2 = 30;
     pVerifyCommand->bmFormatString = 0x80 | 0x08 | 0x00 | 0x01;
@@ -1729,9 +1730,9 @@ DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
      * 0x01 = message with index in bMsgIndex
      */
 
-    pVerifyCommand->wLangId = 0x1308;
+    pVerifyCommand->wLangId = getLangID();
     /*
-     * We should support multiple languages for CCID devices with LCD screen
+     * We support multiple languages for CCID devices with LCD screen
      */
 
     pVerifyCommand->bMsgIndex = 0x00;
