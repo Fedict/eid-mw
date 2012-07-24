@@ -34,7 +34,7 @@ testRet test_open_close_session(void);
 testRet test_open_close_session_info(void);
 testRet test_open_close_session_bad_params(void); 
 testRet test_open_close_session_limits(void); 
-testRet test_waitforslotevent_noblock(void);
+testRet test_waitforslotevent(CK_FLAGS flags);
 testRet test_waitforslotevent_userinteraction(void);
 testRet test_waitforslotevent_whilefinalize(void);
 testRet test_get_token_info(void); 

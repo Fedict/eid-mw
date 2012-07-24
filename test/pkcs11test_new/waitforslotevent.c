@@ -21,7 +21,7 @@
 #include "logtest.h"
 
 
-testRet test_waitforslotevent_noblock() {
+testRet test_waitforslotevent(CK_FLAGS flags) {
 	void *handle = NULL;				//handle to the pkcs11 library
 	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
 
@@ -35,10 +35,10 @@ testRet test_waitforslotevent_noblock() {
 
 	testlog(LVL_INFO, "test_waitforslotevent enter\n");
 
-	retVal = PrepareSlotListTest(&handle,&functions, &slotIds, &ulCount,CK_TRUE );
+	retVal = PrepareSlotListTest(&handle,&functions, &slotIds, &ulCount,CK_FALSE );
 	if((retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED))
 	{
-		frv = (*functions->C_WaitForSlotEvent)(CKF_DONT_BLOCK, &slotId,NULL_PTR);
+		frv = (*functions->C_WaitForSlotEvent)(flags, &slotId,NULL_PTR);
 		if (frv != CKR_NO_EVENT)
 		{
 			ReturnedSucces(frv,&(retVal.pkcs11rv), "C_WaitForSlotEvent");

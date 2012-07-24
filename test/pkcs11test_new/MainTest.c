@@ -75,7 +75,7 @@ int main() {
 	result[testCounter] = test_open_close_session_limits();
 	testCounter++;
 	testDescription[testCounter] = "Tests waiting for slot event";
-	result[testCounter] = test_waitforslotevent_noblock();
+	result[testCounter] = test_waitforslotevent(0);//CKF_DONT_BLOCK
 	testCounter++;
 #ifdef USER_INTERACTION
 	result[testCounter] = test_waitforslotevent_userinteraction();
