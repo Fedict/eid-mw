@@ -35,6 +35,8 @@ testRet test_open_close_session_info(void);
 testRet test_open_close_session_bad_params(void); 
 testRet test_open_close_session_limits(void); 
 testRet test_waitforslotevent(CK_FLAGS flags);
+testRet test_waitforslotevent_nonblocking(void);
+testRet test_waitforslotevent_blocking(void);
 testRet test_waitforslotevent_userinteraction(void);
 testRet test_waitforslotevent_whilefinalize(void);
 testRet test_get_token_info(void); 
@@ -48,6 +50,6 @@ testRet test_getattributevalue_lastname(void);
 testRet test_getkeys_retvals(void);
 testRet test_findPrivateKeyWithoutLoginShouldFail(void);
 testRet test_findObjectsFinalNotInitialized(void); 
-testRet test_add_remove_readers();
-testRet test_add_remove_readerevents();
+testRet test_add_remove_readers(void);
+testRet test_add_remove_readerevents(void);
 

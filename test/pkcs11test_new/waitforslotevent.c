@@ -177,3 +177,12 @@ testRet test_waitforslotevent_whilefinalize() {
 	testlog(LVL_INFO, "test_waitforslotevent_whilefinalize leave\n");
 	return retVal;
 }
+
+
+testRet test_waitforslotevent_nonblocking(void) {
+	return test_waitforslotevent(CKF_DONT_BLOCK);
+}
+
+testRet test_waitforslotevent_blocking(void) {
+	return test_waitforslotevent(0);
+}

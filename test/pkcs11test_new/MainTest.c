@@ -1,27 +1,27 @@
 /* ****************************************************************************
 
- * eID Middleware Project.
- * Copyright (C) 2009-2012 FedICT.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License version
- * 3.0 as published by the Free Software Foundation.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, see
- * http://www.gnu.org/licenses/.
+* eID Middleware Project.
+* Copyright (C) 2009-2012 FedICT.
+*
+* This is free software; you can redistribute it and/or modify it
+* under the terms of the GNU Lesser General Public License version
+* 3.0 as published by the Free Software Foundation.
+*
+* This software is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with this software; if not, see
+* http://www.gnu.org/licenses/.
 
 **************************************************************************** */
 
 /*
- * Integration test for the PKCS#11 library.
- * Required interaction: none.
- */
+* Integration test for the PKCS#11 library.
+* Required interaction: none.
+*/
 
 #include <stdio.h>
 #include "MainTest.h"
@@ -29,119 +29,79 @@
 
 #define NUMBER_OF_TESTS 100
 
+typedef	struct {
+	testRet result;
+	char* testDescription;
+	testRet (*test_function_ptr)(void);
+} eIDTest;
+
 #ifdef WIN32
 int main()
 #else
-	int main (int argc, const char * argv[])
+int main (int argc, const char * argv[])
 #endif
 {
 	int i = 0;
-	int testCounter = 0;
-	char* testDescription[NUMBER_OF_TESTS];
-	testRet result[NUMBER_OF_TESTS];
+	int nrofTests = 0;
+
+	eIDTest eIDTests[] = { \
+	{{0,TEST_SKIPPED},"Tests multiple finalize/initialize sessions in multiple threads with different args",&test_finalize_initialize},
+	{{0,TEST_SKIPPED},"Tests multiple finalize/initialize sessions in a single thread",&test_finalize_initialize_st},
+	{{0,TEST_SKIPPED},"Tests C_initialize when bad parameters are supplied 1",&test_initialize_ownmutex},
+	{{0,TEST_SKIPPED},"Tests C_initialize when bad parameters are supplied",&test_initialize_preserved},
+	{{0,TEST_SKIPPED},"Tests C_finalize when bad parameters are supplied",&test_finalize_preserved},
+	{{0,TEST_SKIPPED},"Tests C_getinfo results in a single thread",&test_getinfo},
+	{{0,TEST_SKIPPED},"Tests C_getslotlist in single and two call usage",&test_getslotlist},
+	{{0,TEST_SKIPPED},"Tests C_getslotlist when insufficient memory is reserved",&test_getslotlist_multiple_slots},
+	{{0,TEST_SKIPPED},"Tests opening and closing of a session in a single thread",&test_open_close_session},
+	{{0,TEST_SKIPPED},"Tests getting slotID and slotdescription",&test_open_close_session_info},
+	{{0,TEST_SKIPPED},"Tests C_opensession with wrong parameters supplied",&test_open_close_session_bad_params},
+	{{0,TEST_SKIPPED},"Tests how many sessions can be opened",&test_open_close_session_limits},
+#ifdef USER_INTERACTION
+	{{0,TEST_SKIPPED},"Tests waitforslot event (needs user interaction)",&test_waitforslotevent_userinteraction},
+	{{0,TEST_SKIPPED},"tests signing with the card",&test_sign},
+	{{0,TEST_SKIPPED},"Tests waiting for slot event blocking",&test_waitforslotevent_blocking},
+#endif
+	{{0,TEST_SKIPPED},"Tests waiting for slot event non-blocking",&test_waitforslotevent_nonblocking},
+	{{0,TEST_SKIPPED},"Tests waiting for slot event blocking, while another thread calls c_finalize",&test_waitforslotevent_whilefinalize},
+	{{0,TEST_SKIPPED},"Tests the retrieval of slot and token info",&test_get_token_info},
+	{{0,TEST_SKIPPED},"Shows info on the mechanisms supported by the card",&test_getmechanisms},
+	{{0,TEST_SKIPPED},"tests getting the keys from the card",&test_getkeys},
+	{{0,TEST_SKIPPED},"tests the return values of the getattributes function",&test_getkeys_retvals},
+	{{0,TEST_SKIPPED},"tests getting all the objects from the card",&test_getallobjects},
+	{{0,TEST_SKIPPED},"tests getting object's attributes from the card",&test_getattributevalue_all},
+	{{0,TEST_SKIPPED},"tests getting the lastname object's attributes from the card",&test_getattributevalue_lastname},	
+	{{0,TEST_SKIPPED},"tests adding and removing readers",&test_add_remove_readers},
+	{{0,TEST_SKIPPED},"tests waiting for card and reader events",&test_add_remove_readerevents},
+	{{0,TEST_SKIPPED},"tests getting the private object's from the card without logging in",&test_findPrivateKeyWithoutLoginShouldFail},	
+	{{0,TEST_SKIPPED},"tests the return value of C_FindObjectsFinal when called without C_FindObjectsInit",&test_findObjectsFinalNotInitialized},
+	};
 
 	initLog();
+	nrofTests = (sizeof(eIDTests)/sizeof(eIDTest));
 
-	while (i<NUMBER_OF_TESTS)
+	while (i < nrofTests )
 	{
-		testDescription[i] = NULL;
+		eIDTests[i].result = eIDTests[i].test_function_ptr();
 		i++;
 	}
-	testDescription[testCounter] = "Test multiple finalize/initialize sessions in multiple threads with different args";
-	result[testCounter] = test_finalize_initialize();
-	testCounter++;
-	testDescription[testCounter] = "Test multiple finalize/initialize sessions in a single thread";
-	result[testCounter] = test_finalize_initialize_st();
-	testCounter++;
-	testDescription[testCounter] = "Test initialize when bad parameters are supplied";
-	result[testCounter] = test_initialize_ownmutex();
-	testCounter++;
-	result[testCounter] = test_initialize_preserved();
-	testCounter++;
-	result[testCounter] = test_finalize_preserved();
-	testCounter++;
-	testDescription[testCounter] = "Test C_getinfo results in a single thread";
-	result[testCounter] = test_getinfo();
-	testCounter++;
-	testDescription[testCounter] = "Test C_getslotlist in single and two call usage";
-	result[testCounter] = test_getslotlist();
-	testCounter++;
-	testDescription[testCounter] = "Test C_getslotlist when insufficient memory is reserved";
-	result[testCounter] = test_getslotlist_multiple_slots();
-	testCounter++;
-	testDescription[testCounter] = "Tests opening and closing of a session in a single thread";
-	result[testCounter] = test_open_close_session();
-	testCounter++;
-	result[testCounter] = test_open_close_session_info();
-	testCounter++;
-	result[testCounter] = test_open_close_session_bad_params();
-	testCounter++;
-	result[testCounter] = test_open_close_session_limits();
-	testCounter++;
-	testDescription[testCounter] = "Tests waiting for slot event";
-	result[testCounter] = test_waitforslotevent(0);//CKF_DONT_BLOCK
-	testCounter++;
-#ifdef USER_INTERACTION
-	result[testCounter] = test_waitforslotevent_userinteraction();
-	testCounter++;
-#endif
-	result[testCounter] = test_waitforslotevent_whilefinalize();
-	testCounter++;
-	testDescription[testCounter] = "Tests the retrieval of slot and token info";
-	result[testCounter] = test_get_token_info();
-	testCounter++;
-	testDescription[testCounter] = "Shows info on the mechanisms supported by the card";
-	result[testCounter] = test_getmechanisms();
-	testCounter++;
-	testDescription[testCounter] = "tests getting the keys from the card";
-	result[testCounter] = test_getkeys();
-	testCounter++;
-	testDescription[testCounter] = "tests the return values of the getattributes function";
-	result[testCounter] = test_getkeys_retvals();
-	testCounter++;
-	testDescription[testCounter] = "tests getting all the objects from the card";
-	result[testCounter] = test_getallobjects();
-	testCounter++;
-	testDescription[testCounter] = "tests getting object's attributes from the card";
-	result[testCounter] = test_getattributevalue_all();
-	testCounter++;
-	testDescription[testCounter] = "tests getting the lastname object's attributes from the card";
-	result[testCounter] = test_getattributevalue_lastname();
-	testCounter++;
-	testDescription[testCounter] = "tests adding and removing readers";
-	result[testCounter] = test_add_remove_readers();
-	testCounter++;
-	testDescription[testCounter] = "tests waiting for card and reader events";
-	result[testCounter] = test_add_remove_readerevents();
-	testCounter++;
-	testDescription[testCounter] = "tests getting the private object's from the card without logging in";
-	result[testCounter] = test_findPrivateKeyWithoutLoginShouldFail();
-	testCounter++;
-	testDescription[testCounter] = "tests the return value of C_FindObjectsFinal when called without C_FindObjectsInit";
-	result[testCounter] = test_findObjectsFinalNotInitialized();
-	testCounter++;
 
-#ifdef USER_INTERACTION
-	testDescription[testCounter] = "tests signing with the card";
-	result[testCounter] = test_sign();
-	testCounter++;
-#endif
-	
+
 	//testlog(LVL_NOLEVEL,"\n\n_______________________________________________\n");
-	for (i = 0; i < testCounter; i++)
+	for (i = 0; i < nrofTests; i++)
 	{
-		if (testDescription[i] != NULL)
+		if (eIDTests[i].testDescription != NULL)
 		{
-			testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
-			testlog(LVL_NOLEVEL,"\nTest %d %s \n", i, testDescription[i]);
+			testlog(LVL_NOLEVEL,"_______________________________________________\n");
+			testlog(LVL_NOLEVEL,"Test %d %s \n", i, eIDTests[i].testDescription);
 		}
-		if(result[i].pkcs11rv != CKR_OK)
+		if(eIDTests[i].result.pkcs11rv != CKR_OK)
 		{
-			testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", result[i].pkcs11rv);
+			testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", eIDTests[i].result.pkcs11rv);
 		}
 		else
 		{
-			switch(result[i].basetestrv)
+			switch(eIDTests[i].result.basetestrv)
 			{
 			case TEST_PASSED:
 				testlog(LVL_NOLEVEL,"PASSED\n");
@@ -154,27 +114,27 @@ int main()
 				break;
 			case TEST_ERROR:
 			case TEST_FAILED:
-				testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", result[i].pkcs11rv);
+				testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x \n", eIDTests[i].result.pkcs11rv);
 				break;
 			default:
-				testlog(LVL_NOLEVEL,"UNKNOWN : Result = 0x%.8x \n", result[i].pkcs11rv);
+				testlog(LVL_NOLEVEL,"UNKNOWN : Result = 0x%.8x \n", eIDTests[i].result.pkcs11rv);
 				break;
 			};
 		}
-		testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
+		//testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
 	}
 
 	testlog(LVL_NOLEVEL,"\n===============================================\n");
 	//short summary
-	for (i = 0; i < testCounter; i++)
+	for (i = 0; i < nrofTests; i++)
 	{
-		if(result[i].pkcs11rv != CKR_OK)
+		if(eIDTests[i].result.pkcs11rv != CKR_OK)
 		{
 			testlog(LVL_NOLEVEL," F ");
 		}
 		else
 		{
-			switch(result[i].basetestrv)
+			switch(eIDTests[i].result.basetestrv)
 			{
 			case TEST_PASSED:
 				testlog(LVL_NOLEVEL,"P");
@@ -198,6 +158,7 @@ int main()
 	testlog(LVL_NOLEVEL,"\n===============================================\n");
 
 	endLog();
+	testlog(LVL_NOLEVEL,"press a key to end the test\n");
 	// Wait for user to end this test
 	getchar();
 }

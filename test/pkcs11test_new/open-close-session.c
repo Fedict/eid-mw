@@ -174,10 +174,10 @@ testRet test_open_close_session_bad_param(CK_FLAGS flags)
 		for (slotIdx = 0; slotIdx < ulCount; slotIdx++) 
 		{
 			frv = (*functions->C_OpenSession)(slotIdx, flags, NULL_PTR, NULL_PTR, &session_handle);
-			if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_OpenSession", "test_open_close_session enter" ))
+			if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_OpenSession", "test_open_close_session_bad_param enter" ))
 			{
 				frv = (*functions->C_CloseSession) (session_handle);
-				ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_CloseSession", "test_open_close_session enter" );
+				ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_CloseSession", "test_open_close_session_bad_param enter" );
 			}
 			else
 			{

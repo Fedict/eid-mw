@@ -34,6 +34,8 @@ typedef enum pkcs11test_log_level
 	LVL_NOLEVEL
 }PKCS11TEST_LOG_LEVEL;
 
+static PKCS11TEST_LOG_LEVEL g_logLevel = LVL_DEBUG;
+
 /****************************************************************************
  * Logging macro's
  ***************************************************************************/
@@ -47,7 +49,7 @@ typedef enum pkcs11test_log_level
 /****************************************************************************
  * macro's for logging to stdout
  ***************************************************************************/
-#define testlog(LOGLEVEL,...) logPrefix(LOGLEVEL), printf(__VA_ARGS__)
+#define testlog(LOGLEVEL,...) if (LOGLEVEL >= g_logLevel) {logPrefix(LOGLEVEL); printf(__VA_ARGS__);}
 #define printlogprefic(LOGLEVEL,LOGPREFIX) printf(LOGPREFIX)
 
 /****************************************************************************
