@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -226,7 +226,7 @@ CK_ULONG c = 0;
 static int l=0;
 
 	log_trace(WHERE, "I: enter");
-if (!g_init)
+if (g_init != BEIDP11_INITIALIZED)
 {
 	log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
    return (CKR_CRYPTOKI_NOT_INITIALIZED);
@@ -341,7 +341,7 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
    static int l=0;
 	log_trace(WHERE, "I: enter");
 
-   if (!g_init)
+   if (g_init != BEIDP11_INITIALIZED)
    {
 	   log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
       return(CKR_CRYPTOKI_NOT_INITIALIZED);
@@ -398,7 +398,7 @@ CK_RV C_GetTokenInfo(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 {
 CK_RV ret;
 log_trace(WHERE, "I: enter");
-if (!g_init)
+if (g_init != BEIDP11_INITIALIZED)
 {
 	log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
       return (CKR_CRYPTOKI_NOT_INITIALIZED);
@@ -441,7 +441,7 @@ CK_RV C_GetMechanismList(CK_SLOT_ID slotID,
 {
 CK_RV ret;
 log_trace(WHERE, "I: enter");
-if (!g_init)
+if (g_init != BEIDP11_INITIALIZED)
    return (CKR_CRYPTOKI_NOT_INITIALIZED);
 
 ret = p11_lock();
@@ -476,7 +476,7 @@ CK_RV C_GetMechanismInfo(CK_SLOT_ID slotID,
 {
 CK_RV ret;
 log_trace(WHERE, "I: enter");
-if (!g_init)
+if (g_init != BEIDP11_INITIALIZED)
 {
 	log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
    return (CKR_CRYPTOKI_NOT_INITIALIZED);
@@ -540,7 +540,7 @@ P11_SLOT *p11Slot = NULL;
 int i = 0;
 CK_BBOOL locked = CK_FALSE;
 
-if (!g_init)
+if (g_init != BEIDP11_INITIALIZED)
 {
 	log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
    return (CKR_CRYPTOKI_NOT_INITIALIZED);
