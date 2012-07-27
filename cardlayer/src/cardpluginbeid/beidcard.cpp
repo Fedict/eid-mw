@@ -149,8 +149,9 @@ CPkiCard(hCard, poContext, poPinpad)
 		m_oSerialNr = CByteArray(m_oCardData.GetBytes(), 16);
 
 		m_ucAppletVersion = m_oCardData.GetByte(21);
-        if (m_ucAppletVersion < 0x20)
-            m_ucAppletVersion = (unsigned char) (16 * m_oCardData.GetByte(21) + m_oCardData.GetByte(22));
+//beneath is not according to 1.4d or 1.7h spec
+//        if (m_ucAppletVersion < 0x20)
+//					m_ucAppletVersion = (unsigned char) (16 * m_oCardData.GetByte(21) + m_oCardData.GetByte(22));
 
 		m_ul6CDelay = 0;
 		if (m_oCardData.GetByte(22) == 0x00 && m_oCardData.GetByte(23) == 0x01)
@@ -303,8 +304,11 @@ unsigned long CBeidCard::GetSupportedAlgorithms()
 	unsigned long ulAlgos =
 		SIGN_ALGO_RSA_PKCS | SIGN_ALGO_MD5_RSA_PKCS | SIGN_ALGO_SHA1_RSA_PKCS;
 
-	if (m_ucAppletVersion >= 0x20)
+	if (m_ucAppletVersion >= 0x17)
+	{
 		ulAlgos |= SIGN_ALGO_SHA1_RSA_PSS;
+		ulAlgos |= SIGN_ALGO_SHA256_RSA_PSS;
+	}
 
 	return ulAlgos;
 }
@@ -420,9 +424,17 @@ void CBeidCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo,
     case SIGN_ALGO_SHA1_RSA_PKCS: ucAlgo = 0x02; break;
     case SIGN_ALGO_MD5_RSA_PKCS: ucAlgo = 0x04; break;
     case SIGN_ALGO_SHA1_RSA_PSS:
-        if (m_ucAppletVersion < 0x20)
+        if (m_ucAppletVersion < 0x17)
         {
-            MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on V1 cards");
+            MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards");
+            throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
+        }
+        ucAlgo = 0x08;
+        break;
+		case SIGN_ALGO_SHA256_RSA_PSS:
+				if (m_ucAppletVersion < 0x17)
+        {
+            MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards");
             throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
         }
         ucAlgo = 0x08;
@@ -454,8 +466,8 @@ CByteArray CBeidCard::SignInternal(const tPrivKey & key, unsigned long algo,
 {
 	CAutoLock autolock(this);
 
-	// For V2 cards, the Belpic dir has to be selected
-	if (m_ucAppletVersion >= 0x20)
+	// For V1.7 cards, the Belpic dir has to be selected
+	if (m_ucAppletVersion >= 0x17)
 		SelectFile(key.csPath);
 	else if (m_selectAppletMode == ALW_SELECT_APPLET)
 		SelectApplet();
