@@ -66,7 +66,7 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 	else
 	{
 		//g_init = BEIDP11_INITIALIZED;
-		
+		p11_set_init(BEIDP11_INITIALIZING);
 		if (pReserved != NULL)
 		{
 			p_args = (CK_C_INITIALIZE_ARGS *)pReserved;

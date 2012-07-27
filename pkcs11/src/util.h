@@ -28,6 +28,7 @@
 #define BEIDP11_NOT_INITIALIZED			0
 #define BEIDP11_INITIALIZED				1
 #define BEIDP11_DEINITIALIZING			2	
+#define BEIDP11_INITIALIZING			3
 
 #ifdef __cplusplus
 extern "C" {
