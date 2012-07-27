@@ -35,6 +35,8 @@ CK_RV C_DigestInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
+	 BEID_CHECK_PKCS_INITIALIZED;
+
    ret = p11_lock();
    if (ret != CKR_OK)
           return ret;
@@ -97,6 +99,8 @@ CK_RV C_Digest(CK_SESSION_HANDLE hSession,     /* the session's handle */
    int ret;
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
+
+	 BEID_CHECK_PKCS_INITIALIZED;
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -183,6 +187,8 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
+	 BEID_CHECK_PKCS_INITIALIZED;
+
    ret = p11_lock();
    if (ret != CKR_OK)
           return ret;
@@ -248,6 +254,8 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
    int ret;
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
+
+	 BEID_CHECK_PKCS_INITIALIZED;
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -333,7 +341,13 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    CK_ULONG       *pid = NULL;
    CK_ULONG       *pclass = NULL;
    CK_ULONG len = 0;
+
+	 CK_MECHANISM_TYPE_PTR  pMechanismsSupported = NULL;
+	 CK_ULONG ulSupportedMechLen = 0;
+	 CK_ULONG ulcounter = 0;
    int ihash;
+
+	 BEID_CHECK_PKCS_INITIALIZED;
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -366,7 +380,44 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 
    //check mechanism
    //since this module is only for BEID, we check for RSA here and we do not check the device capabilities
-   //TODO check mechanism table for signing depending on token in slot
+   //check mechanism table for signing depending on token in slot
+
+	 //get number of mechanisms
+		ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
+		if (ret != CKR_OK)
+   {
+			log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%d) returns %s", pSession->hslot, log_map_error(ret));
+			goto cleanup;
+   }
+
+		//get the mechanisms list
+		pMechanismsSupported = (CK_MECHANISM_TYPE_PTR) malloc (sizeof(CK_MECHANISM_TYPE_PTR)*ulSupportedMechLen);
+		if(pMechanismsSupported != NULL)
+		{
+			ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
+			if (ret != CKR_OK)
+			{
+				log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%d) returns %s", pSession->hslot, log_map_error(ret));
+				goto cleanup;
+			}
+
+			ret = CKR_MECHANISM_INVALID;
+
+			for(ulcounter = 0; ulcounter < ulSupportedMechLen ; ulcounter++)
+			{
+				if(pMechanismsSupported[ulcounter] == pMechanism->mechanism)
+				{
+					ret = CKR_OK;
+					break;
+				}
+			}
+			if(ret == CKR_MECHANISM_INVALID)
+			{
+				goto cleanup;  
+			}
+			free(pMechanismsSupported);
+		}
+
    switch(pMechanism->mechanism)
       {
       case CKM_MD5_RSA_PKCS:
@@ -374,8 +425,10 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
       case CKM_RIPEMD160_RSA_PKCS:
       case CKM_SHA256_RSA_PKCS:
       case CKM_SHA384_RSA_PKCS:
-      case CKM_SHA512_RSA_PKCS: ihash = 1; break;
-      case CKM_RSA_PKCS:        ihash = 0; break;
+      case CKM_SHA512_RSA_PKCS: 
+			case CKM_SHA1_RSA_PKCS_PSS:
+			case CKM_SHA256_RSA_PKCS_PSS:	ihash = 1; break;
+			case CKM_RSA_PKCS:        ihash = 0; break;
       default: 
          ret = CKR_MECHANISM_INVALID;
          goto cleanup;            
@@ -488,6 +541,8 @@ CK_RV C_Sign(CK_SESSION_HANDLE hSession,        /* the session's handle */
    unsigned char* pDigest     = NULL;
    unsigned long  ulDigestLen = 0;
 // unsigned int ulSignatureLen = *pulSignatureLen;
+
+	 BEID_CHECK_PKCS_INITIALIZED;
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -603,6 +658,8 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
    P11_SESSION *pSession = NULL;
    P11_SIGN_DATA *pSignData = NULL;
 
+	 BEID_CHECK_PKCS_INITIALIZED;
+
    ret = p11_lock();
    if (ret != CKR_OK)
           return ret;
@@ -682,6 +739,8 @@ CK_RV C_SignFinal(CK_SESSION_HANDLE hSession,        /* the session's handle */
    P11_SIGN_DATA *pSignData = NULL;
    unsigned char *pDigest = NULL;
    unsigned long ulDigestLen = 0;
+
+	 BEID_CHECK_PKCS_INITIALIZED;
 
    ret = p11_lock();
    if (ret != CKR_OK)
