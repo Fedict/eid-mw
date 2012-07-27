@@ -1872,7 +1872,7 @@ CK_RV cal_wait_for_the_slot_event(int block)
 			p11_unlock();
 			oCardLayer->GetStatusChange(TIMEOUT_INFINITE,txReaderStates,ulnReaders);
 			log_trace(WHERE, "I: status change received");
-			if(p11_get_init() == 0)
+			if(p11_get_init() != BEIDP11_INITIALIZED)
 			{
 				log_trace(WHERE, "I: leave, p11_get_init returned false");
 				CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);

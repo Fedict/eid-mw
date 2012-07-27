@@ -104,7 +104,11 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 	CK_ULONG len = 0;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -233,7 +237,11 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	CK_BYTE				allowCardRead = P11_DISPLAY_NO;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -476,7 +484,11 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -637,7 +649,11 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 	int ret;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)

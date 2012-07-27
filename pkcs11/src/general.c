@@ -58,15 +58,15 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_WARNING);
 #endif
 	log_trace(WHERE, "I: enter pReserved = %p",pReserved);
-	if (g_init != BEIDP11_NOT_INITIALIZED)
+	if (p11_get_init() != BEIDP11_NOT_INITIALIZED)
 	{
 		ret = CKR_CRYPTOKI_ALREADY_INITIALIZED;
 		log_trace(WHERE, "I: Module is allready initialized");
 	}
 	else
 	{
-		g_init = BEIDP11_INITIALIZED;
-		p11_set_init(1);
+		//g_init = BEIDP11_INITIALIZED;
+		
 		if (pReserved != NULL)
 		{
 			p_args = (CK_C_INITIALIZE_ARGS *)pReserved;
@@ -93,6 +93,7 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 			p11_init_lock(p_args);
 		}
 		cal_init();
+		p11_set_init(BEIDP11_INITIALIZED);
 		log_trace(WHERE, "S: Initialize this PKCS11 Module");
 		log_trace(WHERE, "S: =============================");
 	}
@@ -113,7 +114,11 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 	int counter = 0;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -131,8 +136,7 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 	}
 
 	//g_final = 0; /* Belpic */
-	g_init = BEIDP11_DEINITIALIZING;
-	p11_set_init(0);
+	p11_set_init(BEIDP11_DEINITIALIZING);
 
 	ret = cal_close();
 
@@ -140,7 +144,7 @@ cleanup:
 	/* Release and destroy the mutex */
 	p11_free_lock();
 
-	g_init = BEIDP11_NOT_INITIALIZED;
+	p11_set_init(BEIDP11_NOT_INITIALIZED);
 	// util_clean_lock(&logmutex);
 	log_trace(WHERE, "I: p11_free_lock()");
 	log_trace(WHERE, "I: leave, ret = %i",ret);
@@ -220,7 +224,11 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
 
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}
 
 	ret = p11_lock();
 	log_trace(WHERE, "I: p11_lock() acquiered");
@@ -332,7 +340,11 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 	static int l=0;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -386,7 +398,11 @@ CK_RV C_GetTokenInfo(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 	CK_RV ret;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -426,7 +442,11 @@ CK_RV C_GetMechanismList(CK_SLOT_ID slotID,
 	CK_RV ret;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -461,7 +481,11 @@ CK_RV C_GetMechanismInfo(CK_SLOT_ID slotID,
 	CK_RV ret;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -521,7 +545,11 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 	int i = 0;
 	CK_BBOOL locked = CK_FALSE;
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	log_trace(WHERE, "I: enter");
 	ret = p11_lock();
@@ -580,8 +608,8 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 		ret = cal_wait_for_slot_event(1);//1 means block, lock will get released here
 
 		//ret is 0x30 when SCardGetStatusChange gets cancelled 
-		if ((g_init == BEIDP11_NOT_INITIALIZED ) || 
-			(g_init == BEIDP11_DEINITIALIZING) || 
+		if ((p11_get_init() == BEIDP11_NOT_INITIALIZED ) || 
+			(p11_get_init() == BEIDP11_DEINITIALIZING) || 
 			(ret == CKR_CRYPTOKI_NOT_INITIALIZED) )
 		{
 			log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");

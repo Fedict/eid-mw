@@ -35,7 +35,11 @@ CK_RV C_DigestInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
-	 BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -100,7 +104,11 @@ CK_RV C_Digest(CK_SESSION_HANDLE hSession,     /* the session's handle */
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
-	 BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -187,7 +195,11 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
-	 BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -255,7 +267,11 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
-	 BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -347,7 +363,11 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 	 CK_ULONG ulcounter = 0;
    int ihash;
 
-	 BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -542,7 +562,11 @@ CK_RV C_Sign(CK_SESSION_HANDLE hSession,        /* the session's handle */
    unsigned long  ulDigestLen = 0;
 // unsigned int ulSignatureLen = *pulSignatureLen;
 
-	 BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -658,7 +682,11 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
    P11_SESSION *pSession = NULL;
    P11_SIGN_DATA *pSignData = NULL;
 
-	 BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
    ret = p11_lock();
    if (ret != CKR_OK)
@@ -740,7 +768,11 @@ CK_RV C_SignFinal(CK_SESSION_HANDLE hSession,        /* the session's handle */
    unsigned char *pDigest = NULL;
    unsigned long ulDigestLen = 0;
 
-	 BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
    ret = p11_lock();
    if (ret != CKR_OK)

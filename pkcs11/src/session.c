@@ -17,6 +17,7 @@
 * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,8 +26,6 @@
 #include "log.h"
 #include "util.h"
 #include "cal.h"
-
-
 
 #define WHERE "C_OpenSession()"
 CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
@@ -42,7 +41,12 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	//   CAutoMutex(&g_oSlotMutex);
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
+
 
 	ret = p11_lock(slotID);   /* mutex per slot slot 0 tot 9 FF=global slot*/
 	if (ret != CKR_OK)
@@ -132,7 +136,11 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 	CK_RV ret;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}	
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -200,7 +208,11 @@ CK_RV C_CloseAllSessions(CK_SLOT_ID slotID) /* the token's slot */
 	int ret;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -231,7 +243,11 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 	CK_TOKEN_INFO tokeninfo;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -334,7 +350,11 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 	//return(CKR_OK);
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -409,7 +429,11 @@ CK_RV C_Logout(CK_SESSION_HANDLE hSession) /* the session's handle */
 	P11_SLOT *pSlot = NULL;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -479,7 +503,11 @@ CK_RV C_SetPIN(CK_SESSION_HANDLE hSession,
 	P11_SESSION *pSession = NULL;
 	log_trace(WHERE, "I: enter");
 
-	BEID_CHECK_PKCS_INITIALIZED;
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)

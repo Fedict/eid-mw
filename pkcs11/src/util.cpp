@@ -32,7 +32,7 @@ CMutex g_mutex;
 //locking can be provided by app
 static CK_C_INITIALIZE_ARGS_PTR _locking;
 static void *_lock = NULL;
-static unsigned char g_initialized = 0;
+static unsigned char g_initialized = BEIDP11_NOT_INITIALIZED;
 
 
 void p11_set_init(unsigned char initialized)

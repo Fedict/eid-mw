@@ -81,17 +81,6 @@
 #define CKM_SHA256_RSA_PKCS            0x00000040
 #define CKM_SHA384_RSA_PKCS            0x00000041
 #define CKM_SHA512_RSA_PKCS            0x00000042
-*/
-#define BEIDP11_NOT_INITIALIZED			0
-#define BEIDP11_INITIALIZED				1
-#define BEIDP11_DEINITIALIZING			2
-static int g_init = BEIDP11_NOT_INITIALIZED;
-
-#define BEID_CHECK_PKCS_INITIALIZED															\
-if (g_init != BEIDP11_INITIALIZED)															\
-{																																\
-	log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");		\
-	return (CKR_CRYPTOKI_NOT_INITIALIZED);												\
-}																																
+*/																													
 
 #endif
