@@ -102,6 +102,9 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 	unsigned int j = 0;
 	void  *pValue    = NULL;
 	CK_ULONG len = 0;
+	log_trace(WHERE, "I: enter");
+
+	BEID_CHECK_PKCS_INITIALIZED;
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -228,6 +231,9 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	CK_BBOOL			addIdObjects = CK_FALSE;
 	CK_BYTE				filesToCacheFlag = CACHED_DATA_TYPE_ALL;
 	CK_BYTE				allowCardRead = P11_DISPLAY_NO;
+	log_trace(WHERE, "I: enter");
+
+	BEID_CHECK_PKCS_INITIALIZED;
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -468,6 +474,10 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 
 	CK_ULONG len = 0;
 
+	log_trace(WHERE, "I: enter");
+
+	BEID_CHECK_PKCS_INITIALIZED;
+
 	ret = p11_lock();
 	if (ret != CKR_OK)
 		return ret;
@@ -625,6 +635,9 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 	P11_SESSION *pSession = NULL;
 	P11_FIND_DATA *pData = NULL;
 	int ret;
+	log_trace(WHERE, "I: enter");
+
+	BEID_CHECK_PKCS_INITIALIZED;
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
