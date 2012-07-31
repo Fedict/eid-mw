@@ -306,6 +306,7 @@ unsigned long CBeidCard::GetSupportedAlgorithms()
 
 	if (m_ucAppletVersion >= 0x17)
 	{
+		ulAlgos |= SIGN_ALGO_SHA256_RSA_PKCS;
 		ulAlgos |= SIGN_ALGO_SHA1_RSA_PSS;
 		ulAlgos |= SIGN_ALGO_SHA256_RSA_PSS;
 	}
@@ -423,13 +424,21 @@ void CBeidCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo,
     case SIGN_ALGO_RSA_PKCS: ucAlgo = 0x01; break;
     case SIGN_ALGO_SHA1_RSA_PKCS: ucAlgo = 0x02; break;
     case SIGN_ALGO_MD5_RSA_PKCS: ucAlgo = 0x04; break;
+		case SIGN_ALGO_SHA256_RSA_PKCS:
+			if (m_ucAppletVersion < 0x17)
+			{
+				MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: SIGN_ALGO_SHA256_RSA_PKCS not supported on pre V1.7 cards");
+				throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
+			}
+			ucAlgo = 0x08;
+			break;
     case SIGN_ALGO_SHA1_RSA_PSS:
         if (m_ucAppletVersion < 0x17)
         {
             MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards");
             throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
         }
-        ucAlgo = 0x08;
+        ucAlgo = 0x10;
         break;
 		case SIGN_ALGO_SHA256_RSA_PSS:
 				if (m_ucAppletVersion < 0x17)
@@ -437,7 +446,7 @@ void CBeidCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo,
             MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards");
             throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
         }
-        ucAlgo = 0x08;
+        ucAlgo = 0x20;
         break;
     default:
         throw CMWEXCEPTION(EIDMW_ERR_ALGO_BAD);

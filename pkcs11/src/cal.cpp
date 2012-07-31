@@ -373,6 +373,8 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 		if (algos & SIGN_ALGO_SHA384_RSA_PKCS)    *pulCount +=1;
 		if (algos & SIGN_ALGO_SHA512_RSA_PKCS)    *pulCount +=1;
 		if (algos & SIGN_ALGO_RIPEMD160_RSA_PKCS) *pulCount +=1;
+		if (algos & SIGN_ALGO_SHA1_RSA_PSS)				*pulCount +=1;
+		if (algos & SIGN_ALGO_SHA256_RSA_PSS)			*pulCount +=1;
 		return (CKR_OK);
 	}
 

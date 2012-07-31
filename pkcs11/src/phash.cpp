@@ -37,8 +37,10 @@ switch(pMechanism->mechanism)
    case CKM_MD5:
    case CKM_MD5_RSA_PKCS:           algo = ALGO_MD5;        *size=16; break;
    case CKM_SHA_1:
+   case CKM_SHA1_RSA_PKCS_PSS:
    case CKM_SHA1_RSA_PKCS:          algo = ALGO_SHA1;       *size=20; break;
    case CKM_SHA256:
+	 case CKM_SHA256_RSA_PKCS_PSS:
    case CKM_SHA256_RSA_PKCS:        algo = ALGO_SHA256;     *size=32; break;
    case CKM_SHA384:
    case CKM_SHA384_RSA_PKCS:        algo = ALGO_SHA384;     *size=48; break;
@@ -46,6 +48,7 @@ switch(pMechanism->mechanism)
    case CKM_SHA512_RSA_PKCS:        algo = ALGO_SHA512;     *size=64; break;
    case CKM_RIPEMD160:
    case CKM_RIPEMD160_RSA_PKCS:     algo = ALGO_RIPEMD160;  *size=20; break;
+	 
    default: 
       ret = CKR_MECHANISM_INVALID;
       goto cleanup;            

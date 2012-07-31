@@ -24,6 +24,7 @@
 
 namespace eIDMW
 {
+//the DigestInfo Values:
 static const unsigned char MD5_AID[] = {
 	0x30, 0x20,
 		0x30, 0x0c,
