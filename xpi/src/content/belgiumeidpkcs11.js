@@ -45,9 +45,10 @@ be.fedict.belgiumeidpkcs11.notifyModuleNotFound = function() {
     not.persistence = 3;
 }
 
-window.addEventListener("load", function(e) {
+window.addEventListener("load", function beidPKCS11Loadhandler (e) {
   try {
-  
+	// event handler removes itself when called, so it is called only once
+	window.removeEventListener("load", beidPKCS11Loadhandler, false);
     var beidPKCS11 = Components.classes['@eid.belgium.be/belgiumeidpkcs11;1']
                                     .getService().wrappedJSObject;
 	if (!beidPKCS11.notificationHasBeenShown && beidPKCS11.initDone)
