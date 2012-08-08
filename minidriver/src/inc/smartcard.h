@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -60,6 +60,13 @@ typedef struct _PIN_VERIFY_STRUCTURE
 #define FEATURE_MCT_UNIVERSAL            0x09 
 #define FEATURE_IFD_PIN_PROPERTIES       0x0A 
 #define FEATURE_ABORT                    0x0B 
+
+#define BELPIC_SIGN_ALGO_RSASSA_PKCS1				0x01
+#define BELPIC_SIGN_ALGO_RSASSA_PSS_SHA1		0x10
+#define BELPIC_SIGN_ALGO_RSASSA_PSS_SHA256	0x20
+
+#define BELPIC_KEY_NON_REP									0x82
+#define BELPIC_KEY_AUTH											0x83
 
 
 typedef struct _FEATURES
@@ -134,7 +141,8 @@ extern DWORD   BeidDeAuthenticate
 extern DWORD   BeidMSE
                (
                   PCARD_DATA     pCardData,             
-                  DWORD          dwRole
+                  BYTE					 bKeyNr,
+									BYTE					 bAlgo
                ) ;
 
 extern DWORD   BeidChangePIN

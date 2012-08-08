@@ -164,7 +164,7 @@ cleanup:
 //
 // Function: CardSignData
 //
-// Purpose: Sign inupt data using a specified key
+// Purpose: Sign input data using a specified key
 //
 
 #define WHERE "CardSignData()"
@@ -181,8 +181,10 @@ DWORD WINAPI   CardSignData
 
 	unsigned int               uiHashAlgo   = HASH_ALGO_NONE;
 
-	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+	BYTE	bKeyNr = BELPIC_KEY_NON_REP;
+	BYTE	bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PKCS1;
 
+	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 	/********************/
 	/* Check Parameters */
 	/********************/
@@ -210,8 +212,15 @@ DWORD WINAPI   CardSignData
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
 	}
 
-	if ( ( pInfo->bContainerIndex != 0 ) &&
-		( pInfo->bContainerIndex != 1 ) )
+	if ( pInfo->bContainerIndex == 0 )
+	{
+		bKeyNr = BELPIC_KEY_AUTH; //see CardGetContainerProperty	
+	}
+	else if (pInfo->bContainerIndex == 1 )
+	{
+		bKeyNr = BELPIC_KEY_NON_REP; //see CardGetContainerProperty	
+	}
+	else
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pInfo->bContainerIndex]");
 		CLEANUP(SCARD_E_NO_KEY_CONTAINER);
@@ -243,39 +252,9 @@ DWORD WINAPI   CardSignData
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
 	}
 
-	switch(pInfo->aiHashAlg)
-	{
-	case CALG_MD2:
-		uiHashAlgo = HASH_ALGO_MD2;
-		break;
-	case CALG_MD4:
-		uiHashAlgo = HASH_ALGO_MD4;
-		break;
-	case CALG_MD5:
-		uiHashAlgo = HASH_ALGO_MD5;
-		break;
-	case CALG_SHA1:
-		uiHashAlgo = HASH_ALGO_SHA1;
-		break;
-	case CALG_SHA_256:
-		uiHashAlgo = HASH_ALGO_SHA_256;
-		break;
-	case CALG_SHA_384:
-		uiHashAlgo = HASH_ALGO_SHA_384;
-		break;
-	case CALG_SHA_512:
-		uiHashAlgo = HASH_ALGO_SHA_512;
-		break;
-	case CALG_TLS1PRF:
-	case CALG_MAC:
-	case CALG_HASH_REPLACE_OWF:
-	case CALG_HUGHES_MD5:
-	case CALG_HMAC:
-	case CALG_SSL3_SHAMD5:
-		CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
-		break;
-	default:
-		if ( ( pInfo->dwSigningFlags & CARD_PADDING_INFO_PRESENT ) == CARD_PADDING_INFO_PRESENT)
+
+	//First check if padding info is provided
+	if ( ( pInfo->dwSigningFlags & CARD_PADDING_INFO_PRESENT ) == CARD_PADDING_INFO_PRESENT)
 		{
 			LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwSigningFlags: CARD_PADDING_INFO_PRESENT");
 			if ( pInfo->pPaddingInfo == NULL )
@@ -332,25 +311,83 @@ DWORD WINAPI   CardSignData
 				}
 				break;
 			case CARD_PADDING_PSS:
+				//check card belpic applet version : if its < 1.7 -> not supported
+				PssPadInfo = (BCRYPT_PSS_PADDING_INFO *) pInfo->pPaddingInfo;
+				if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA1") == 0 ) 
+				{
+					uiHashAlgo = HASH_ALGO_NONE;
+					bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PSS_SHA1;
+				}
+				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA256") == 0 ) 
+				{
+					uiHashAlgo = HASH_ALGO_NONE;
+					bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PSS_SHA256;
+				}
 				LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_PSS");
-				memcpy (&PssPadInfo, pInfo->pPaddingInfo, sizeof(PssPadInfo));
+				//memcpy (&PssPadInfo, pInfo->pPaddingInfo, sizeof(PssPadInfo));
 				break;
 			case CARD_PADDING_NONE:
 				LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_NONE");
+				uiHashAlgo = HASH_ALGO_NONE;
 				break;
 			default:
 				LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: UNSUPPORTED");
 				break;
 			}
 		}
-		else
+	else
+	{ //no padding info is provided, defaulting to PKCS1
+		LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->pPaddingInfo] unsupported...");
+
+		switch(pInfo->aiHashAlg)
 		{
-			LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->pPaddingInfo] unsupported...");
+		case CALG_MD2:
+			uiHashAlgo = HASH_ALGO_MD2;
+			break;
+		case CALG_MD4:
+			uiHashAlgo = HASH_ALGO_MD4;
+			break;
+		case CALG_MD5:
+			uiHashAlgo = HASH_ALGO_MD5;
+			break;
+		case CALG_SHA1: //CALG_SHA: same value
+			uiHashAlgo = HASH_ALGO_SHA1;
+			break;
+		case CALG_SHA_256:
+			uiHashAlgo = HASH_ALGO_SHA_256;
+			break;
+		case CALG_SHA_384:
+			uiHashAlgo = HASH_ALGO_SHA_384;
+			break;
+		case CALG_SHA_512:
+			uiHashAlgo = HASH_ALGO_SHA_512;
+			break;
+		case CALG_TLS1PRF:
+		case CALG_MAC:
+		case CALG_HASH_REPLACE_OWF:
+		case CALG_HUGHES_MD5:
+		case CALG_HMAC:
+		case CALG_SSL3_SHAMD5:
+			CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+			break;
+		default://case 0, no hash specified
+			LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->aiHashAlg] is zero");
 			CLEANUP(SCARD_E_INVALID_PARAMETER);
 			/*uiHashAlgo = HASH_ALGO_NONE;*/
+			break;
 		}
 
-		break;
+	}
+
+#ifdef _DEBUG
+	LogTrace(LOGTYPE_INFO, WHERE, "BeidMSE [key=0x%.2x, algo=0x%.2x]", bKeyNr,bAlgoRef);
+#endif
+
+	dwReturn = BeidMSE(pCardData,bKeyNr,bAlgoRef);
+	if ( dwReturn != 0 )
+	{
+		LogTrace(LOGTYPE_ERROR, WHERE, "BeidMSE() returned [0x%X]", dwReturn);
+		CLEANUP(dwReturn);
 	}
 
 #ifdef _DEBUG

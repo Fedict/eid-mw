@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -628,8 +628,9 @@ cleanup:
 /****************************************************************************************************/
 
 #define WHERE "BeidMSE"
-DWORD BeidMSE(PCARD_DATA   pCardData, 
-              DWORD        dwRole) 
+DWORD BeidMSE(PCARD_DATA		pCardData, 
+              BYTE					bKey,
+							BYTE					bAlgo) 
 {
    DWORD             dwReturn = 0;
 
@@ -646,6 +647,17 @@ DWORD BeidMSE(PCARD_DATA   pCardData,
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
+	 if ( (bKey != 0x82) && (bKey != 0x83) )
+	 {
+      LogTrace(LOGTYPE_INFO, WHERE, "SET COMMAND: undefined key [0x%.2x]", bKey);
+      CLEANUP(SCARD_E_UNEXPECTED);
+   }
+	 if ( (bAlgo != 0x01) && (bAlgo != 0x02) && (bAlgo != 0x04) && (bAlgo != 0x08) && (bAlgo != 0x10) && (bAlgo != 0x20))
+	 {
+		  LogTrace(LOGTYPE_INFO, WHERE, "SET COMMAND: undefined algo [0x%.2x]", bAlgo);
+      CLEANUP(SCARD_E_UNEXPECTED);
+	 }
+
    /*
     * The MSE: SET Command will fail with error 0x000006f7
     * if the command is executed too fast after an command which resulted in an error condition
@@ -660,22 +672,10 @@ DWORD BeidMSE(PCARD_DATA   pCardData,
    Cmd [4] = 0x05;
    Cmd [5] = 0x04;   /* Length of following data      */
    Cmd [6] = 0x80;   /* ALGO Rreference               */
-   Cmd [7] = 0x01;   /* RSA PKCS#1                    */
+   Cmd [7] = bAlgo;//0x01;   /* RSA PKCS#1                    */
    Cmd [8] = 0x84;   /* TAG for private key reference */
+	 Cmd [9] = bKey;	/*0x82 for AUTH, 0x83 for NONREP*/
 
-   if ( dwRole == ROLE_DIGSIG )
-   {
-      Cmd [9] = 0x82;
-   }
-   else if ( dwRole == ROLE_NONREP )
-   {
-      Cmd [9] = 0x83;
-   } 
-   else 
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "SET COMMAND: undefined role [%d]", dwRole);
-      CLEANUP(SCARD_E_UNEXPECTED);
-   }
    uiCmdLg = 10;
 
    dwReturn = SCardTransmit(pCardData->hScard, 

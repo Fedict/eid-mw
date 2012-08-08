@@ -799,7 +799,7 @@ CardRSADecrypt(
 //
 // Function: CardSignData
 //
-// Purpose: Sign inupt data using a specified key
+// Purpose: Sign input data using a specified key
 //
 #define CARD_SIGNING_INFO_CURRENT_VERSION 2
 typedef struct _CARD_SIGNING_INFO

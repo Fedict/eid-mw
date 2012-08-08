@@ -68,8 +68,11 @@ DWORD WINAPI   CardAuthenticatePin
 		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter value [pwszUserId]");
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
 	}
-
-	dwReturn = BeidMSE(pCardData, ROLE_DIGSIG);
+	
+	//authenticate for which key, and what to use as default algo?
+	//use 
+	dwReturn = BeidMSE(pCardData, BELPIC_KEY_AUTH,BELPIC_SIGN_ALGO_RSASSA_PKCS1);
+	//dwReturn = BeidMSE(pCardData, ROLE_DIGSIG);
 	if ( dwReturn != SCARD_S_SUCCESS )
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "MSE: [0x%02X]", dwReturn);
@@ -220,7 +223,7 @@ cleanup:
 //
 
 #define WHERE "CardAuthenticateEx()"
-DWORD WINAPI   CardAuthenticateEx  
+DWORD WINAPI CardAuthenticateEx
 	(
 	__in                                   PCARD_DATA     pCardData,
 	__in                                   PIN_ID         PinId,
@@ -235,6 +238,7 @@ DWORD WINAPI   CardAuthenticateEx
 	DWORD dwReturn = SCARD_S_SUCCESS;
 	PIN_INFO pbPinInfo;
 	DWORD dwDataLen;
+	BYTE bKeyID;
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
@@ -246,8 +250,15 @@ DWORD WINAPI   CardAuthenticateEx
 		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pCardData]");
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
 	}
-	if ( ( PinId != ROLE_DIGSIG   ) &&
-		( PinId != ROLE_NONREP   ) )
+	if ( PinId == ROLE_DIGSIG )
+	{
+		bKeyID = BELPIC_KEY_AUTH;
+	}
+	else if ( PinId == ROLE_NONREP   )
+	{
+		bKeyID = BELPIC_KEY_NON_REP;
+	}
+	else
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [PinId]:[0x%02X]", PinId);
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
@@ -263,8 +274,8 @@ DWORD WINAPI   CardAuthenticateEx
 			CLEANUP(SCARD_E_INVALID_PARAMETER);
 		}
 	}
-
-	dwReturn = BeidMSE(pCardData, PinId);
+	//use BELPIC_SIGN_ALGO_RSASSA_PKCS1 as default
+	dwReturn = BeidMSE(pCardData, bKeyID,BELPIC_SIGN_ALGO_RSASSA_PKCS1);
 	if ( dwReturn != SCARD_S_SUCCESS )
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "MSE: [0x%02X]", dwReturn);
