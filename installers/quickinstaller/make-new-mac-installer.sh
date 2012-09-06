@@ -16,10 +16,11 @@ hdiutil create -size 50m -type UDIF -fs HFS+ -volname eID-Installer "./eID-Insta
 
 #Open the uncompressed dmg and Copy the bundle into it
 hdiutil attach "./eID-Installer-uncompressed.dmg"
+chmod 755 "./eID Viewer.app"
 cp -R -f "./beid.pkg" /Volumes/eID-Installer/
 cp -R -f "./eID Viewer.app" /Volumes/eID-Installer/
 ln -s /Applications /Volumes/eID-Installer/Applications
-ln -s "/Volumes/eID-Installer/Applications/eID Viewer.app" /Volumes/eID-Installer/Test
+ln -s "/Volumes/eID-Installer/eID Viewer.app" /Volumes/eID-Installer/Test
 cp -f "./DMG/DmgBackground.jpg" /Volumes/eID-Installer/
 /Developer/Tools/SetFile -a V /Volumes/eID-Installer/DmgBackground.jpg
 cp -f "./DMG/.VolumeIcon.icns" /Volumes/eID-Installer/
