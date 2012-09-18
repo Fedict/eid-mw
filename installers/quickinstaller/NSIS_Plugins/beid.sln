@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C++ Express 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beidread_test", "beidread_test\beidread_test.vcxproj", "{AD1249FE-22CA-471E-8706-8E0A4FE9F098}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beid", "beid.vcxproj", "{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beid", "beidread\beid.vcxproj", "{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

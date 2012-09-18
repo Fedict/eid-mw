@@ -1,7 +1,7 @@
 
 
 #include <windows.h>
-#include <nsis/pluginapi.h> // nsis plugin
+#include <pluginapi.h> // nsis plugin
 #include "common.h"
 #include "getcarddata.h"
 #include "getreadercount.h"

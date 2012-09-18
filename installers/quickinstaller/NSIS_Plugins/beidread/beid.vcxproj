@@ -60,7 +60,7 @@
     <ClCompile>
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>./nsis;.;..\..\..\pkcs11\src\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../nsis;.;..\..\..\..\pkcs11\src\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;EXDLL_EXPORTS;NSISCALL=__stdcall;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -79,7 +79,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>odbc32.lib;odbccp32.lib;nsis\pluginapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;..\nsis\pluginapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Release\beid.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -109,7 +109,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>./nsis;.;..\..\..\pkcs11\src\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../nsis;.;..\..\..\..\pkcs11\src\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;EXDLL_EXPORTS;NSISCALL=__stdcall;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -128,7 +128,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>odbc32.lib;odbccp32.lib;nsis\pluginapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;..\nsis\pluginapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Debug\beid.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -154,11 +154,11 @@
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\nsis\api.h" />
+    <ClInclude Include="..\nsis\pluginapi.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="getcarddata.h" />
     <ClInclude Include="getreadercount.h" />
-    <ClInclude Include="nsis\api.h" />
-    <ClInclude Include="nsis\pluginapi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

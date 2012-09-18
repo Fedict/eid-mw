@@ -49,7 +49,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../;..\..\..\..\pkcs11\src\include\rsaref220</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\beidread;../;..\..\..\..\pkcs11\src\include\rsaref220</AdditionalIncludeDirectories>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
@@ -67,7 +67,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>../;..\..\..\..\pkcs11\src\include\rsaref220</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\beidread;../;..\..\..\..\pkcs11\src\include\rsaref220</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,16 +80,16 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common.h" />
-    <ClInclude Include="..\getcarddata.h" />
-    <ClInclude Include="..\getreadercount.h" />
+    <ClInclude Include="..\beidread\common.h" />
+    <ClInclude Include="..\beidread\getcarddata.h" />
+    <ClInclude Include="..\beidread\getreadercount.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\common.c" />
-    <ClCompile Include="..\getcarddata.c" />
-    <ClCompile Include="..\getreadercount.c" />
+    <ClCompile Include="..\beidread\common.c" />
+    <ClCompile Include="..\beidread\getcarddata.c" />
+    <ClCompile Include="..\beidread\getreadercount.c" />
     <ClCompile Include="beidread_test.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
