@@ -106,13 +106,15 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
   ${If} ${RunningX64}
    ;MessageBox MB_OK "running on x64"
 	 File "..\..\Windows\bin\BeidMW_64.msi"
-	 ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
+	 ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_64.msi"'
+	 ;ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
 	 ;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
 	 Delete "$INSTDIR\BeidMW_64.msi"
   ${Else}
 	;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
 	File "..\..\Windows\bin\BeidMW_32.msi"	
-	ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
+	ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_32.msi"'
+	;ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
 ;	$0
 ; /l* "$APPDATA\install_eidmw32_log.txt"
 ;	${if} $0 <> 0
@@ -129,7 +131,10 @@ SectionEnd
 
 Function .onInit
 
+
 ;for testing different languages
+	;Push ${LANG_GERMAN}
+	;Pop $LANGUAGE
 	;Language selection dialog
 
 ;	Push ${LANG_ENGLISH}
