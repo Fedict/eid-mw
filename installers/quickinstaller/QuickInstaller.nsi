@@ -130,11 +130,8 @@ SectionEnd
 Function .onInit
 
 ;for testing different languages
-Push ${LANG_DUTCH}
-Pop $LANGUAGE
 	;Language selection dialog
 
-;	Push ""
 ;	Push ${LANG_ENGLISH}
 ;	Push English
 ;	Push ${LANG_DUTCH}
@@ -172,7 +169,7 @@ Function nsdWelcome
 	CreateFont $Font_Title "Times New Roman" "18" "700" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 
-	${NSD_CreateBitmap} 0 18u 100% -13u ""
+	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapwelcome)"
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "welcome.bmp" $Background_Image_Handle 
 
@@ -208,7 +205,7 @@ Function nsdDone
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 
-	${NSD_CreateBitmap} 0 18u 100% -13u ""
+	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapwelcome)"
 	Pop $Background_Image
   ${NSD_SetStretchedImage} $Background_Image "welcome.bmp" $Background_Image_Handle 
 
@@ -237,12 +234,12 @@ Function nsdConnectReader
 		Abort
 	${EndIf}
 	
-	${NSD_CreateLabel} 0 0 100% 16u "Please connect your cardreader"
+	${NSD_CreateLabel} 0 0 100% 16u "$(ls_pleaseconnect)"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 
-	${NSD_CreateBitmap} 0 18u 100% -13u "Type something here..."
+	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapconnectreader)"
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "connect_reader.bmp" $Background_Image_Handle 
 	
@@ -254,14 +251,14 @@ Function  nsdConnectReaderLeave
 	beid::GetReaderCount 0
 	Pop $retval
 	${If} $retval <> '0'
-		MessageBox MB_OK "Error while searching for cardreaders"
+		MessageBox MB_OK "$(ls_errorreadersearch)"
 		Abort
 	${EndIf}
   Pop $readercount
 	${If} $readercount > 0
 		;MessageBox MB_OK "$$readercount is $readercount"
 	${Else}
-		MessageBox MB_OK "No cardreader was found"
+		MessageBox MB_OK "$(ls_noreaderfound)"
 		Abort
 	${EndIf}
 FunctionEnd
@@ -273,12 +270,12 @@ Function nsdInsertCard
 	${If} $nsdCustomDialog == error
 		Abort
 	${EndIf}
-	${NSD_CreateLabel} 0 0 100% 16u "Please insert your beid card"
+	${NSD_CreateLabel} 0 0 100% 16u "$(ls_pleaseinsertcard)"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 
-	${NSD_CreateBitmap} 0 18u 100% -13u "Type something here..."
+	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapinsertcard)"
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "insert_card.bmp" $Background_Image_Handle 
 	
@@ -290,14 +287,14 @@ Function nsdInsertCardLeave
 	beid::GetReaderCount 1	
 	Pop $retval
 	${If} $retval <> '0'
-		MessageBox MB_OK "Error while trying to read from card"
+		MessageBox MB_OK "$(ls_errorreadingcard)"
 		Abort
 	${EndIf}
   Pop $readercount
 	${If} $readercount > 0
 		;MessageBox MB_OK "number of beidcards found is $readercount"
 	${Else}
-		MessageBox MB_OK "No beidcard was found"
+		MessageBox MB_OK "$(ls_nocardfound)"
 		Abort
 	${EndIf}
 FunctionEnd
@@ -321,20 +318,20 @@ Function nsdCardData
 	Pop $firstletterthirdname
   Pop $firstname
 
-	${NSD_CreateLabel} 0 0 100% 16u "Card Read"
+	${NSD_CreateLabel} 0 0 100% 16u "$(ls_cardread)"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	;SendMessage $Label ${WM_SETTEXT} 0 "STR:Card Read"
 
 	CreateFont $Font_CardData "Times New Roman" "14" "500" ;/UNDERLINE
-	${NSD_CreateLabel} 0 28u 18% 10u "Name:"
+	${NSD_CreateLabel} 0 28u 18% 10u "$(ls_name)"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	${NSD_CreateLabel} 20% 28u 85% 10u "$firstname $firstletterthirdname $lastname"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 0 42u 18% 10u "Adress:"
+	${NSD_CreateLabel} 0 42u 18% 10u "$(ls_address)"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	${NSD_CreateLabel} 20% 42u 85% 10u "$street"
@@ -346,17 +343,16 @@ Function nsdCardData
 	;pop the others off the stack
 ${Else}
   ;MessageBox MB_OK "$$retval is $retval"
-	${NSD_CreateLabel} 0 0 18% 20% "Error:"
+	${NSD_CreateLabel} 0 0 18% 20% "$(ls_error)"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	${NSD_CreateLabel} 20% 0 100% 20% "$retval"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 0 20% 100% 100% "Card Read"
+	${NSD_CreateLabel} 0 20% 100% 100% "$(ls_cardread)"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	SendMessage $Label ${WM_SETTEXT} 0 "STR:Test failed,$\n$\ngo back and try again,$\nor reboot your pc and launch the eid viewer to continue testing"
-		;if retval != 0, dont read out values, but print a 'restart' message
+	SendMessage $Label ${WM_SETTEXT} 0 "$(ls_testfailed)"
 ${EndIf}
 	
 	nsDialogs::Show
