@@ -154,7 +154,13 @@ namespace EidSamples
                     // "The label attribute of the objects should equal ..."
                     ByteArrayAttribute classAttribute = new ByteArrayAttribute(CKA.CLASS);
                     classAttribute.Value = BitConverter.GetBytes((uint)Net.Sf.Pkcs11.Wrapper.CKO.DATA);
-                    session.FindObjectsInit(new P11Attribute[] { classAttribute });
+
+
+                    ByteArrayAttribute labelAttribute = new ByteArrayAttribute(CKA.LABEL);
+                    labelAttribute.Value = System.Text.Encoding.UTF8.GetBytes(label);      
+
+
+                    session.FindObjectsInit(new P11Attribute[] { classAttribute, labelAttribute });
                     P11Object[] foundObjects = session.FindObjects(50);
                     int counter = foundObjects.Length;
                     Data data;
@@ -186,6 +192,16 @@ namespace EidSamples
                 m.Dispose();//m.Finalize_();
             }
             return value;
+        }
+
+        public void GetAndTestIdFile()
+        {
+            ReadData dataTest = new ReadData("beidpkcs11.dll");
+            Integrity integrityTest = new Integrity();
+            byte[] idFile = dataTest.GetIdFile();
+            byte[] idSignatureFile = dataTest.GetIdSignatureFile();
+            byte[] certificateRRN = null;
+           // Assert.False(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
         }
         /// <summary>
         /// Return ID data file contents
@@ -288,6 +304,7 @@ namespace EidSamples
             {
                 // pkcs11 finalize
                 m.Dispose();//m.Finalize_();
+                m = null;
             }
             return value;
         }

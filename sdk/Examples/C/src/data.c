@@ -39,6 +39,7 @@ CK_ULONG beidsdk_GetData()
 	CK_FUNCTION_LIST_PTR pFunctions;		//list of the pkcs11 function pointers
 	CK_C_GetFunctionList pC_GetFunctionList;
 	CK_RV retVal = CKR_OK;
+	DWORD err;
 
 	//open the pkcs11 library
 	pkcs11Handle = dlopen(PKCS11_LIB, RTLD_LAZY); // RTLD_NOW is slower
@@ -77,8 +78,8 @@ CK_ULONG beidsdk_GetData()
 											retVal = (pFunctions->C_OpenSession)(slotIds[slotIdx], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
 											if (retVal == CKR_OK)
 											{
-										CK_CHAR_PTR pFilename = (CK_CHAR_PTR)TEXT("DATA_FILE");
-										CK_CHAR_PTR pSignatureFilename = (CK_CHAR_PTR)TEXT("CERT_RN_FILE");
+										CK_CHAR_PTR pFilename = (CK_CHAR_PTR)TEXT("carddata_glob_os_version");
+										CK_CHAR_PTR pSignatureFilename = (CK_CHAR_PTR)TEXT("CARD_DATA");
 										CK_CHAR_PTR pLastname = (CK_CHAR_PTR)TEXT("surname");
 										CK_VOID_PTR pFileValue = NULL;
 										CK_VOID_PTR pSignatureValue = NULL;
@@ -155,6 +156,9 @@ CK_ULONG beidsdk_GetData()
 	{
 		retVal = CKR_GENERAL_ERROR;
 		printf("%s not found\n",PKCS11_LIB);
+		err = GetLastError();
+		printf("err is 0x%.8x\n",err);
+		//14001 MSVCR80.DLL not found
 	}
 	return retVal;
 } 

@@ -28,7 +28,7 @@ namespace EidSamples.tests
         [Test]
         public void IntegrityFails()
         {
-            ReadData dataTest = new ReadData("beidpkcs11D.dll");
+            ReadData dataTest = new ReadData("beidpkcs11.dll");
             Integrity integrityTest = new Integrity();
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
@@ -38,7 +38,7 @@ namespace EidSamples.tests
         [Test]
         public void IntegrityIdentityFile()
         {
-            ReadData dataTest = new ReadData("beidpkcs11D.dll");
+            ReadData dataTest = new ReadData("beidpkcs11.dll");
             Integrity integrityTest = new Integrity();
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
@@ -48,7 +48,7 @@ namespace EidSamples.tests
         [Test]
         public void IntegrityIdentityFileWrongSignature()
         {
-            ReadData dataTest = new ReadData("beidpkcs11D.dll");
+            ReadData dataTest = new ReadData("beidpkcs11.dll");
             Integrity integrityTest = new Integrity();
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetAddressSignatureFile();
@@ -58,7 +58,7 @@ namespace EidSamples.tests
         [Test]
         public void IntegrityIdentityFileWrongCertificate()
         {
-            ReadData dataTest = new ReadData("beidpkcs11D.dll");
+            ReadData dataTest = new ReadData("beidpkcs11.dll");
             Integrity integrityTest = new Integrity();
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
@@ -68,7 +68,7 @@ namespace EidSamples.tests
         [Test]
         public void IntegrityAddressFile()
         {
-            ReadData dataTest = new ReadData("beidpkcs11D.dll");
+            ReadData dataTest = new ReadData("beidpkcs11.dll");
             Integrity integrityTest = new Integrity();
             byte[] addressFile = trimRight(dataTest.GetAddressFile());
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
