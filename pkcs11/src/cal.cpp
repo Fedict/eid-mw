@@ -885,7 +885,7 @@ int cal_get_card_data(CK_SLOT_ID hSlot)
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
-		plabel = BEID_LABEL_DATA_FILE;
+		plabel = BEID_LABEL_CARD_DATA;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oCardData.GetBytes(),(CK_ULONG)oCardData.Size(),
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
@@ -1111,8 +1111,8 @@ int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 			}
 		case CACHED_DATA_TYPE_RNCERT:
 			oFileData = oReader.ReadFile(BEID_FILE_CERT_RRN);
-			plabel = BEID_OBJECTID_RNCERT;
-			pobjectID = BEID_OBJECTID_PHOTO;
+			plabel = BEID_LABEL_CERT_RN;
+			pobjectID = BEID_OBJECTID_RNCERT;
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)BEID_OBJECTID_RNCERT, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT));
