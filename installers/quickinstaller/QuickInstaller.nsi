@@ -39,7 +39,11 @@ VIAddVersionKey "FileVersion" "${VERSION}"
 	caption "Belgium eID-QuickInstaller ${VERSION_SHORT}"
 	;SubCaption 
 	
+	Var versionMajor
+	Var versionMinor
 	Var retval
+	Var reboot
+	Var errorvalue
 	Var readercount
   Var municipality
   Var zip
@@ -80,6 +84,18 @@ Page custom nsdCardData
 ; its all in "eIDTranslations.nsh"
 ;--------------------------------
 ;Reserve Files
+
+!macro INSTALL_DRIVER hardwareID infFilePath
+  driver_installer::UpdateDriver "${hardwareID}" "${infFilePath}"
+  Pop $retval
+	${If} $retval == 0
+		Pop $reboot
+	${Else}  
+		Pop $errorvalue
+	${EndIf}
+!macroend
+ 
+  
   
   ;If you are using solid compression, files that are required before
   ;the actual installation should be stored first in the data block,
@@ -123,7 +139,22 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 ;	${endif}
 	Delete "$INSTDIR\BeidMW_32.msi"
   ${EndIf}
+  
+  File /r "ReaderDrivers"
 
+  driver_installer::getOSVersion
+  Pop $versionMajor
+  Pop $versionMinor
+
+	${If} $versionMajor == 5
+		${If} $versionMinor == 1
+			!insertmacro INSTALL_DRIVER "USB\VID_072F&amp;PID_9000" "$INSTDIR\ReaderDrivers\XP\ACR38U\a38usb.inf"
+			!insertmacro INSTALL_DRIVER "USB\VID_076B&amp;PID_3021" "$INSTDIR\ReaderDrivers\XP\OmniKey3121\cxbu0wdm.inf"
+			!insertmacro INSTALL_DRIVER "USB\VID_04E6&amp;PID_E001" "$INSTDIR\ReaderDrivers\XP\SCR331\scr3xx.inf"
+			!insertmacro INSTALL_DRIVER "USB\Class_0B&amp;SubClass_00" "$INSTDIR\ReaderDrivers\XP\VascoDP509\usbccid.inf"
+			!insertmacro INSTALL_DRIVER "USB\VID_04E6&amp;PID_E003" "$INSTDIR\ReaderDrivers\XP\SPR532\Spr332.inf"
+	${EndIf}
+  ${EndIf}
 SectionEnd
 
 ;--------------------------------
