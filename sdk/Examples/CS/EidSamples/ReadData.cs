@@ -169,7 +169,7 @@ namespace EidSamples
                         //foundObjects[counter-1].ReadAttributes(session);
                         //public static BooleanAttribute ReadAttribute(Session session, uint hObj, BooleanAttribute attr)
                         data = foundObjects[counter - 1] as Data;
-                        label = data.Label.ToString();
+                        //label = data.Label.ToString();
                         if (label != null)
                             Console.WriteLine(label);
                         if (data.Value.Value != null)
