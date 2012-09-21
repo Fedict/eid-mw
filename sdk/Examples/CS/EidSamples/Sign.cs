@@ -65,7 +65,7 @@ namespace EidSamples
             byte[] encryptedData = null;
             try
             {
-                Slot slot = m.GetSlotList(false)[0];
+                Slot slot = m.GetSlotList(true)[0];
                 Session session = slot.Token.OpenSession(true);
                 ObjectClassAttribute classAttribute = new ObjectClassAttribute(CKO.PRIVATE_KEY);
                 ByteArrayAttribute keyLabelAttribute = new ByteArrayAttribute(CKA.LABEL);
