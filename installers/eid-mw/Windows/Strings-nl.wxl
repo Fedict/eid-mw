@@ -5,15 +5,16 @@
   <String Id="LicenseFile" Overridable="yes"></String>
   <String Id="StartApp" Overridable="yes">Start de Eid Viewer toepassing</String>
   <String Id="MinOs" Overridable="yes">Windows XP of hoger is vereist</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 4.0</String>
+  <String Id="BeidRuntime" Overridable="yes">Belgium EID</String>
   <String Id="BeidRuntimeDesc" Overridable="yes">Deze modules zijn noodzakelijk voor het gebruik van de eID kaart.</String>
-  <String Id="BeidGui" Overridable="yes">eID beheersinstrument</String>
-  <String Id="BeidGuiDescr" Overridable="yes">Uitlezen van de e-ID</String>
+  <String Id="BeidGui" Overridable="yes">eID Viewer</String>
+  <String Id="BeidGuiDescr" Overridable="yes">Uitlezen van de e-ID kaart</String>
   <String Id="Crypto" Overridable="yes">Cryptografische Modules</String>
   <String Id="CryptoDescr" Overridable="yes">Deze modules zijn noodzakelijk voor het gebruik van de eID kaart als elektronisch identiteitsbewijs in Internet Explorer, Firefox, etc. of voor het maken van digitale handtekeningen in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc.</String>
   <String Id="XSign" Overridable="yes">Xsign</String>
   <String Id="XSignDescr" Overridable="yes">XSign Toepassing</String>
   <String Id="OutlooksncTitle" Overridable="yes">MS Outlook configuratie voor de eID kaart</String>
+  <String Id="Office2010XAdESDescr" Overridable="yes">MS Office 2010: XAdES XL en TSA configuratie voor handtekeningen</String>
   <String Id="OutlooksncDescr" Overridable="yes">Zorgt ervoor dat MS Outlook ook certificaten aanvaard die geen e-mail adres bevatten, zoals dat bij de Belgische identiteitskaartcertificaten het geval is.</String>
   <String Id="UtilsTitle" Overridable="yes">Nuttige hulpmiddelen voor gebruik van de eID kaart</String>
   <String Id="UtilsDesc" Overridable="yes">Deze hulpmiddelen kunnen gebruikt worden voor de automatische configuratie van bestaande applicaties die van de eID kaart gebruik maken.</String>
