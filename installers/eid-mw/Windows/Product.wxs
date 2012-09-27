@@ -281,12 +281,6 @@
     </DirectoryRef>
     
     <DirectoryRef Id="APPLICATIONROOTFOLDER">
-      
-      <Component Id="RootFolder" Guid="{2FB5D279-50BD-49ed-98D9-3D043520F450}">
-        <CreateFolder/>
-        <Environment Id="PATH" Action="set" Part="last" Permanent="no" System="yes" Name="PATH" Value="[ProgramFilesFolder]Belgium Identity Card"/>
-        <Environment Id="CLASSPATH" Action="set" Part="last" Permanent="no" System="yes" Name="CLASSPATH" Value="[ProgramFilesFolder]Belgium Identity Card"/>
-      </Component>
 
       <Component Id="Icon" Guid="{5B657BAD-8CFC-4E42-AF8C-13338C50D784}" SharedDllRefCount="no">
         <File Id="eid.ico" Name="eid.ico" KeyPath="yes" Source="..\..\eid.ico" />
@@ -481,7 +475,6 @@
              Level="1"
              >
       <!-- Program Files -->
-      <ComponentRef Id="RootFolder"/>
       <ComponentRef Id="Icon" />
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
