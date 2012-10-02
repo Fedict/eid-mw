@@ -409,7 +409,7 @@ unsigned long CReader::GetSupportedAlgorithms()
     unsigned long algos = m_poCard->GetSupportedAlgorithms();
 
 	if (algos & SIGN_ALGO_RSA_RAW)
-		algos |= (algos | SIGN_ALGO_RSA_PKCS);
+		algos |= SIGN_ALGO_RSA_PKCS;
 	if (algos & SIGN_ALGO_RSA_PKCS)
 		algos |= (SIGN_ALGO_MD5_RSA_PKCS | SIGN_ALGO_SHA1_RSA_PKCS |
 			SIGN_ALGO_SHA256_RSA_PKCS | SIGN_ALGO_SHA384_RSA_PKCS |
@@ -438,9 +438,9 @@ CByteArray CReader::Sign(const tPrivKey & key, unsigned long algo,
 		else if (algo & SIGN_ALGO_SHA256_RSA_PKCS)
 			oAID_Data.Append(SHA256_AID, sizeof(SHA256_AID));
 		else if (algo & SIGN_ALGO_SHA384_RSA_PKCS)
-			oAID_Data.Append(SHA384_AID, sizeof(SHA256_AID));
+			oAID_Data.Append(SHA384_AID, sizeof(SHA384_AID));
 		else if (algo & SIGN_ALGO_SHA512_RSA_PKCS)
-			oAID_Data.Append(SHA512_AID, sizeof(SHA256_AID));
+			oAID_Data.Append(SHA512_AID, sizeof(SHA512_AID));
 		else if (algo & SIGN_ALGO_RIPEMD160_RSA_PKCS)
 			oAID_Data.Append(RIPEMD160_AID, sizeof(RIPEMD160_AID));
 		oAID_Data.Append(oData);
