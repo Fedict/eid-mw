@@ -8,7 +8,7 @@ Installing the DTM controller in a virtual machine is OK.
 
 Follow these steps:
 
-* Create a Wiundows Live ID account in order to use Microsoft Connect
+* Create a Windows Live ID account in order to use Microsoft Connect
 * Download the Windows Logo Kit DVD from http://www.microsoft.com/whdc/winlogo/WLK/default.mspx
 * Prepare a Windows 2003-2008 server (VM is OK)
 * Install the Windows Logo Kit DTM Controller
@@ -18,7 +18,10 @@ Follow these steps:
  Copy the files in that directory to the appropriate directory on your system.
 * Copy wttlog.dll from a share on the server to the same directory as the test tool
    x86: \\win2k3or8\Tests\x86fre\wtt\wttlog.dll
-   x64: \\win2k3or8\Tests\amd64fre\wtt\wttlog.dll
+   x64: \\win2k3or8\Tests\amd64fre\wtt\wttlog.dll 
+* install the DTM client on the test computer.
+   It can be found on the server :
+   \\server\DTMInstall\Client\Setup.exe
    
 2. Test cards
 
