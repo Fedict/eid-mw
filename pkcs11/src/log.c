@@ -55,9 +55,9 @@
  *
  ******************************************************************************/
 #ifdef DEBUG
-unsigned int g_uiLogLevel          = LOG_LEVEL_DEBUG;
+unsigned int g_uiLogLevel          = LOG_LEVEL_PKCS11_DEBUG;
 #else
-unsigned int g_uiLogLevel          = LOG_LEVEL_WARNING;
+unsigned int g_uiLogLevel          = LOG_LEVEL_PKCS11_NONE;
 #endif
 
 void *logmutex = NULL;
@@ -89,6 +89,42 @@ void log_init(char *pszLogFile, unsigned int uiLogLevel)
   util_unlock(logmutex);
 }
 
+
+int log_level_approved(const char *string)
+{
+	unsigned int  level = g_uiLogLevel & 0x0F;
+
+	// evaluate debug level
+  if (string[1] == ':')
+  {
+    switch (string[0])
+    {
+      case 'I':
+        if (level  < LOG_LEVEL_PKCS11_INFO) 
+          return 0;
+        break;
+
+      case 'S':
+        if (level  < LOG_LEVEL_PKCS11_DEBUG) 
+          return 0;
+        break;
+
+      case 'W':
+        if (level < LOG_LEVEL_PKCS11_WARNING) 
+          return 0;
+        break;
+
+      case 'E':
+				if (level < LOG_LEVEL_PKCS11_ERROR)
+					return 0;
+        break;
+
+      default:
+        return 0;
+    }
+  }
+	return 1;
+}
 /******************************************************************************
  *
  * log_trace
@@ -103,43 +139,10 @@ void log_trace(const char *where, const char *string,... )
   time_t        ltime;  
   struct tm     stime;
   char          asctime[21];
-  unsigned int  level = g_uiLogLevel & 0x0F;
 
-   // evaluate debug level
-  if (string[1] == ':')
-  {
-    switch (string[0])
-    {
-      case 'I':
-        if (level  < LOG_LEVEL_INFO) 
-          return;
-        break;
-
-      case 'S':
-        if (level  < LOG_LEVEL_DEBUG) 
-          return;
-        break;
-
-      case 'W':
-        if (level < LOG_LEVEL_WARNING) 
-          return;
-        break;
-
-      case 'E':
-        break;
-
-      default:
-        return;
-    }
-
-    //string+=2;
-  }
-  else
-  {
-#ifndef DEBUG            
-   // return;    => restore
-#endif
-  }
+  // evaluate log level
+  if (!log_level_approved(string))
+		return;
 
   util_lock(logmutex);
 
@@ -207,39 +210,13 @@ void log_xtrace(const char *where, char *string,void *data,int len)
   time_t        ltime;  
   struct tm     stime;
   char          asctime[21];
-  unsigned int  level = g_uiLogLevel & 0x0F;
   
-  // evaluate debug level
-  if (string != NULL && string[1] == ':')
-  {
-    switch (string[0])
-    {
-      case 'I':
-        if (level  < LOG_LEVEL_INFO) 
-          return;
-        break;
+	// evaluate log level
+  if (!log_level_approved(string))
+		return;
 
-      case 'W':
-        if (level < LOG_LEVEL_WARNING) 
-          return;
-        break;
+	string += 2;
 
-      case 'E':
-        break;
-
-      default:        
-        return;
-    }
-
-    string += 2;
-  }
-  else
-  {
-#ifndef DEBUG            
-   // return;
-#endif
-  }
-  
   util_lock(logmutex);
 #ifdef DEBUG
   _log_xtrace(string, data, len);
@@ -363,43 +340,11 @@ void _log_xtrace(char *text, void *data, int l_data)
 
 void log_template(const char *string, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG count)
 {
-unsigned int  level = g_uiLogLevel & 0x0F;
+	// evaluate log level
+  if (!log_level_approved(string))
+		return;
 
-  // evaluate debug level
-  if (string[1] == ':')
-  {
-    switch (string[0])
-      {
-      case 'I':
-        if (level  < LOG_LEVEL_INFO) 
-          return;
-        break;
-
-      case 'S':
-        if (level  < LOG_LEVEL_DEBUG) 
-          return;
-        break;
-
-      case 'W':
-        if (level < LOG_LEVEL_WARNING) 
-          return;
-        break;
-
-      case 'E':
-        break;
-
-      default:
-        return;
-      }
-  }
-  //else
-  //   return;
-
-//log template only in INFO mode
-//  if (level  < LOG_LEVEL_INFO) 
-//     return;
-
-  log_trace(string, "size = %d", count);
+  log_trace(string, "I:size = %d", count);
 
   if ((pTemplate == NULL) || (count == 0))
      return;

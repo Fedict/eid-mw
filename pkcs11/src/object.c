@@ -173,7 +173,7 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 		status = p11_get_attribute_value(pObject->pAttr, pObject->count, pTemplate[j].type, (CK_VOID_PTR *) &pValue, &len);
 		if (status != CKR_OK)
 		{
-			log_attr(&pTemplate[j]);
+			log_template("E: C_GetAttributeValue status != CKR_OK", &pTemplate[j], 1);
 			log_trace(WHERE, "E: p11_get_attribute_value (object=%d) returned %s", hObject, log_map_error(status));
 			pTemplate[j].ulValueLen = (CK_ULONG) -1;
 			ret = status;
