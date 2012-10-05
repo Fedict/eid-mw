@@ -71,12 +71,83 @@ char g_szLogFile[MAX_PATH];
 void log_init(char *pszLogFile, unsigned int uiLogLevel)
 {
   FILE          *fp = NULL;
+	DWORD         dwRet;
+	HKEY          hKey;
+	BYTE        lpData[MAX_PATH];
+	DWORD       dwData = 0; 
 
-  util_init_lock(&logmutex);
-  util_lock(logmutex);
+	util_init_lock(&logmutex);
+	util_lock(logmutex);
 
-  strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
-  g_uiLogLevel = uiLogLevel;
+
+	printf("\nRetrieving the data..."); 
+
+	dwRet = RegOpenKeyExA (HKEY_LOCAL_MACHINE, "Software\\BEID\\Logging", 0, KEY_READ, &hKey);
+
+	if (dwRet != ERROR_SUCCESS) {
+		// Key not found , use default values
+		g_uiLogLevel = uiLogLevel;
+		strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
+	} 
+	else
+	{
+		// getting log_level
+		dwData = sizeof(lpData);
+		dwRet = RegQueryValueExA( hKey,
+			"log_level",
+			NULL,
+			NULL,
+			(LPBYTE) lpData,
+			&dwData );
+
+		if (dwRet == ERROR_SUCCESS) {
+			// log_level found
+			// Read loglevels from registry and map on beid middleware loglevels
+
+			if (!lstrcmpA((LPSTR)lpData,"debug"))
+				g_uiLogLevel = LOG_LEVEL_PKCS11_DEBUG;
+			else if (!lstrcmpA((LPSTR)lpData,"info"))
+				g_uiLogLevel = LOG_LEVEL_PKCS11_INFO;
+			else if (!lstrcmpA((LPSTR)lpData,"warning"))
+				g_uiLogLevel = LOG_LEVEL_PKCS11_WARNING;
+			else if (!lstrcmpA((LPSTR)lpData,"error"))
+				g_uiLogLevel = LOG_LEVEL_PKCS11_ERROR;
+			else if (!lstrcmpA((LPSTR)lpData,"none"))
+				g_uiLogLevel = LOG_LEVEL_PKCS11_NONE;
+		}
+		else
+		{
+			// Value not found - use default value
+			g_uiLogLevel = uiLogLevel;
+		}
+
+		//getting log_dirname
+		dwData = sizeof(lpData);
+		dwRet = RegQueryValueExA( hKey,
+			"log_dirname",
+			NULL,
+			NULL,
+			(LPBYTE) lpData,
+			&dwData );
+
+		if (dwRet == ERROR_SUCCESS && dwData != 0) {
+			// log_dirname found
+			// we are not sure the string is null-terminated
+			if (dwData == sizeof(lpData))
+				dwData--; //replace last character with \0
+
+			lpData[dwData] = '\0';
+			// put dirname in global var
+			memcpy(g_szLogFile, lpData, dwData);
+			// append file name
+			lstrcatA(g_szLogFile, "\\p11.log");
+		}
+		else
+		{
+			// Value not found - use default value
+			strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
+		}
+	}
 
   //this will empty the logfile automatically
 #ifdef WIN32
