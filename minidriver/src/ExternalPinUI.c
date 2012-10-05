@@ -106,7 +106,7 @@ LANGUAGES getLanguage() {
 	if ((GetUserDefaultUILanguage() & LANG_FRENCH) == LANG_FRENCH) 
 		return fr;
 	if ((GetUserDefaultUILanguage() & LANG_GERMAN) == LANG_GERMAN) 
-		return en;//get german translations
+		return de;
 
 	//default language
 	return en;
