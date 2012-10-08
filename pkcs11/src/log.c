@@ -70,18 +70,20 @@ char g_szLogFile[MAX_PATH];
  ******************************************************************************/
 void log_init(char *pszLogFile, unsigned int uiLogLevel)
 {
-  FILE          *fp = NULL;
+	FILE          *fp = NULL;
+
+#ifdef WIN32
 	DWORD         dwRet;
+	DWORD       dwData = 0; 
 	HKEY          hKey;
 	BYTE        lpData[MAX_PATH];
-	DWORD       dwData = 0; 
+#endif
 
 	util_init_lock(&logmutex);
 	util_lock(logmutex);
 
 
-	printf("\nRetrieving the data..."); 
-
+#ifdef WIN32
 	dwRet = RegOpenKeyExA (HKEY_LOCAL_MACHINE, "Software\\BEID\\Logging", 0, KEY_READ, &hKey);
 
 	if (dwRet != ERROR_SUCCESS) {
@@ -148,6 +150,11 @@ void log_init(char *pszLogFile, unsigned int uiLogLevel)
 			strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
 		}
 	}
+#else //WIN32
+	g_uiLogLevel = uiLogLevel;
+	strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
+#endif
+
 
   //this will empty the logfile automatically
 #ifdef WIN32
