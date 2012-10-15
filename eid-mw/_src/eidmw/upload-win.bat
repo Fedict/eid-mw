@@ -19,6 +19,9 @@ if %MSI_TYPE%==msi35-pro goto %MSI_TYPE%
 if %MSI_TYPE%==msi35-sdk goto %MSI_TYPE%
 if %MSI_TYPE%==msi35-pro-sdk goto %MSI_TYPE%
 
+if %MSI_TYPE%==msi35BWC goto %MSI_TYPE%
+if %MSI_TYPE%==msi35BWC-64 goto %MSI_TYPE%
+
 if %MSI_TYPE%==msi40     goto %MSI_TYPE%
 if %MSI_TYPE%==msi40-64  goto %MSI_TYPE%
 
@@ -78,6 +81,16 @@ goto UPLOAD
 :msi40-64
 set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\x64\Release\BeidMW40-64.msi
 set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW40-64-%BUILD_NR%.msi
+goto UPLOAD
+
+:msi35BWC
+set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\Release\BeidMW35BWC.msi
+set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW35BWC-%BUILD_NR%.msi
+goto UPLOAD
+
+:msi35BWC-64
+set   SRC=%~dp0misc\Wix_MW35\MW35Wix\bin\x64\Release\BeidMW35BWC-64.msi
+set LOCAL=%~dp0misc\setup_win\_output\msi_runtime\BeidMW35BWC-64-%BUILD_NR%.msi
 goto UPLOAD
 
 :msi35-sdk

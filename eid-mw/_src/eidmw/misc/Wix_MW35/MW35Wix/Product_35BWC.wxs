@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:difx="http://schemas.microsoft.com/wix/DifxAppExtension"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include ..\..\..\svn_revision.wxs ?>
+
+  <?define var.OfficialProductVersion =4.0.4?>
+  <?define var.ProductVersion =4.0.$(var.RevisionNumber)?>
+  <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
+
+  <?define var.UpgradeCode ={36A5C1B3-4DD8-4315-9349-802A20754E23}?>
+  <?define var.ProductGuid ={A1919FCF-53BD-4bd0-9DE3-D2BFB978E289}?>
+  <?define var.ProductName =Belgium e-ID backwards compatibility package $(var.OfficialProductVersion) (build $(var.RevisionNumber))?>
+
+  <?define var.PackageCode="*"?>
+
+  <Product Id="$(var.ProductGuid)"
+           Name="$(var.ProductName)"
+           Language="!(loc.Lang)"
+           Codepage="1252"
+           Version="$(var.ProductVersion)"
+           Manufacturer="Belgian Government"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <!-- InstallerVersion="300" Released with Windows XP with Service Pack 2 (SP2) -->		   
+    <Package Id="$(var.PackageCode)"
+             InstallerVersion="300" 
+             Keywords="Belgium e-ID Middleware Backwards Compatibility Installer"
+             Platform="x86"
+             Manufacturer="Belgian Government"
+             Compressed="yes"
+             InstallPrivileges="elevated"
+    />
+
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"
+                      Property="NEWPRODUCTFOUND" 
+      />
+      <UpgradeVersion Minimum="3.5.0"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.ProductVersion)"
+                      IncludeMaximum="no"
+                      Property="UPGRADEFOUND" 
+      />
+    </Upgrade>
+
+    <?ifndef env.BEID_DIR_QT_334?>
+    <?define var.BEID_DIR_QT_334=..\..\..\..\ThirdParty\Qt\3.3.4?>
+    <?else?>
+    <?define var.BEID_DIR_QT_334=$(env.BEID_DIR_QT_334)?>
+    <?endif?>
+
+    <?ifndef env.BEID_DIR_MSM?>
+	<?define var.BEID_DIR_MSM=C:\Program Files\Common Files\Merge Modules?>
+    <?else?>
+    <?define var.BEID_DIR_MSM=$(env.BEID_DIR_MSM)?>
+    <?endif?>
+
+    <?ifndef env.BEID_DIR_OPENSSL_098G?>
+    <?define var.BEID_DIR_OPENSSL_098G=..\..\..\..\ThirdParty\openssl.0.9.8g?>
+    <?else?>
+    <?define var.BEID_DIR_OPENSSL_098G=$(env.BEID_DIR_OPENSSL_098G)?>
+    <?endif?>
+    
+    <?ifndef env.BEID_DIR_XERCES_310?>
+    <?define var.BEID_DIR_XERCES_310=..\..\..\..\ThirdParty\Xerces\Xerces-3.1.0?>
+    <?else?>
+    <?define var.BEID_DIR_XERCES_310=$(env.BEID_DIR_XERCES_310)?>
+    <?endif?>
+    
+    <?if $(var.Lang) = "nl"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\License_nl.rtf" />
+    <?elseif $(var.Lang) = "fr"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\License_fr.rtf" />
+    <?elseif $(var.Lang) = "de"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\License_de.rtf" />
+    <?else?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\License_en.rtf" />
+    <?endif?>
+
+    <WixVariable Id="WixUIBannerBmp" Value="..\..\..\misc\Wix_MW35\bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\..\..\misc\Wix_MW35\dlgbmp.bmp" />
+
+    <Condition Message="!(loc.MinOs)">
+      <![CDATA[
+      Installed
+      OR ((VersionNT = 500) and (ServicePackLevel > 3))
+      OR ((VersionNT = 501) and (ServicePackLevel > 1))
+      OR (VersionNT > 501)
+      ]]>
+    </Condition>
+
+    <Media Id="1" Cabinet="Middleware.cab" EmbedCab="yes" />
+
+    <Icon Id="eid.ico" SourceFile="..\..\..\eidgui\eid.ico"/>
+    
+    <Property Id="ARPPRODUCTICON" Value="eid.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
+    
+    <Property Id="ALLUSERS" Value="1" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
+		      <Directory Id="BEIDCERTPROPROOTFOLDER" Name="BeID Certprop"/>
+		        <Directory Id="EIDSTORE" Name="eidstore">
+              <Directory Id="CERTSDIR" Name="certs"/>
+              <Directory Id="CRLDIR" Name="crl">
+                <Directory Id="HTTPDIR" Name="http">
+                  <Directory Id="CRLEIDBELGIUMBE" Name="crl.eid.belgium.be"/>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="LOGDIR" Name="log"/>
+          </Directory>		
+        </Directory>
+
+      <Directory Id="DesktopFolder"/>
+
+      <Directory Id="WindowsFolder"/>
+
+      <Directory Id="SystemFolder">
+        <Directory Id="BEIDPPDIR" Name="beidpp"/>
+        <Directory Id="SISCARDPLUGINSDIR" Name="siscardplugins"/>
+      </Directory>
+   
+      <Merge Id="VCRT" SourceFile="$(var.BEID_DIR_MSM)\Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
+      <Merge Id="VCRT_POLICY" SourceFile="$(var.BEID_DIR_MSM)\policy_8_0_Microsoft_VC80_CRT_x86.msm" Language="0" DiskId="1" />
+
+    </Directory>
+	
+    <DirectoryRef Id="EIDSTORE">
+      <Component Id="EidStore" Guid="{F30FFFBD-4F50-4e4d-86D2-90F192A3F01B}" KeyPath="yes">
+        <CreateFolder>
+          <util:PermissionEx GenericAll="yes" User="Users" />
+        </CreateFolder>
+        <RemoveFile Id="RemoveEidstoreFiles" On="uninstall" Name="*"/>
+        <RemoveFolder Id="RemoveEidstoreFolder" On="uninstall"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="CERTSDIR">
+      <Component Id="Certs" Guid="{750F471B-6A83-4118-A0AF-2A138B770AC6}">
+        <File Id="beidcertbelgiumrca.der" Name="beid-cert-belgiumrca.der" KeyPath="yes" Source="..\..\certs\beid-cert-belgiumrca.der" />
+        <File Id="beidcertbelgiumrca2.der" Name="beid-cert-belgiumrca2.der" KeyPath="no" Source="..\..\certs\beid-cert-belgiumrca2.der" />
+        <File Id="beidcertgovernment.der" Name="beid-cert-government.der" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\eidstore\certs\beid-cert-government.der" />
+        <File Id="beidcertgovernment2004.der" Name="beid-cert-government2004.der" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\eidstore\certs\beid-cert-government2004.der" />
+        <File Id="beidcertgovernment2005.der" Name="beid-cert-government2005.der" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\eidstore\certs\beid-cert-government2005.der" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="CRLDIR">
+      <Component Id="CrlDir" Guid="{5731B322-17EE-4d08-90A5-9DB53F53EC29}">
+        <CreateFolder/>
+        <RemoveFile Id="RemoveCrlCacheFiles" On="uninstall" Name="*"/>
+        <RemoveFolder Id="RemoveCrlCacheFolder" On="uninstall"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="HTTPDIR">
+      <Component Id="HttpDir" Guid="{24B807B8-E1F2-42BB-976D-C98B7F52A119}" KeyPath="yes">
+        <CreateFolder />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="CRLEIDBELGIUMBE">
+      <Component Id="CrlEidBelgiumBe" Guid="{26BEC283-40A5-43A8-BC57-351DA9F79B33}" KeyPath="yes">
+        <CreateFolder />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="LOGDIR">
+      <Component Id="LogDir" Guid="{A300DA04-F8DF-4506-B654-1E5EB2782DF3}" KeyPath="yes">
+        <CreateFolder>
+          <util:PermissionEx GenericAll="yes" User="Users" />
+        </CreateFolder>
+        <RemoveFile Id="RemoveLogFiles" On="uninstall" Name="*"/>
+        <RemoveFolder Id="RemoveLogFolder" On="uninstall"/>
+      </Component>
+    </DirectoryRef>
+    
+    <DirectoryRef Id="APPLICATIONROOTFOLDER">
+      
+      <Component Id="RootFolder" Guid="{2FB5D279-50BD-49ed-98D9-3D043520F450}">
+        <CreateFolder/>
+        <Environment Id="PATH" Action="set" Part="last" Permanent="no" System="yes" Name="PATH" Value="[ProgramFilesFolder]Belgium Identity Card"/>
+        <Environment Id="CLASSPATH" Action="set" Part="last" Permanent="no" System="yes" Name="CLASSPATH" Value="[ProgramFilesFolder]Belgium Identity Card"/>
+      </Component>
+
+      <Component Id="Icon" Guid="{5B657BAD-8CFC-4E42-AF8C-13338C50D784}" SharedDllRefCount="yes">
+        <File Id="eid.ico" Name="eid.ico" KeyPath="yes" Source="..\..\..\eidgui\eid.ico" />
+      </Component>
+
+      <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="yes">
+        <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\misc\licenses_files\License_en.rtf" />
+        <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\License_nl.rtf" />
+        <File Id="License_fr.rtf" Name="License_fr.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\License_fr.rtf" />
+        <File Id="License_de.rtf" Name="License_de.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\License_de.rtf" />
+        <File Id="THIRDPARTY_LICENSES.txt" Name="THIRDPARTY-LICENSES.txt" KeyPath="no" Source="..\..\..\misc\licenses_files\THIRDPARTY-LICENSES.txt" />
+      </Component>
+
+      <Component Id="BWCompatibilityJava_Jar" Guid="{9431FC24-8C6B-46FE-A2C2-8C8CD4A50A3D}" SharedDllRefCount="yes">
+        <File Id="beidlib.jar" Name="beidlib.jar" KeyPath="yes" Source="..\..\..\misc\bw_compatibility\beidlib.jar" />
+        <File Id="eidlib.jar" Name="eidlib.jar" KeyPath="no" Source="..\..\..\misc\bw_compatibility\eidlib.jar" />
+        <File Id="BEID_old.html" Name="BEID_old.html" KeyPath="no" Source="..\..\..\misc\bw_compatibility\BEID_old.html" />
+      </Component>
+      
+    </DirectoryRef>
+
+
+    <DirectoryRef Id="WindowsFolder">
+
+      <Component Id="beidgui.conf" Guid="{D46BF825-5D1D-4FE9-AC90-5FDB45240DE0}">
+        <File Id="beidgui.conf" Name="beidgui.conf" KeyPath="yes" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidgui.conf" />
+        <IniFile Id="beidguiconf1" Directory="WindowsFolder" Name="beidgui.conf"
+          Section="BEID_default" Action="addLine" Key="certs"  Value="[ProgramFilesFolder]Belgium Identity Card\eidstore\certs\"
+          />
+        <IniFile Id="beidguiconf2" Directory="WindowsFolder" Name="beidgui.conf"
+          Section="BEID_default" Action="addLine" Key="crl"  Value="[ProgramFilesFolder]Belgium Identity Card\eidstore\crl\http\crl.eid.belgium.be\"
+          />
+      </Component>
+
+
+    </DirectoryRef>
+
+    <DirectoryRef Id="SystemFolder">
+
+      <Component Id="Runtime35" Guid="{41F033E4-0669-4FD6-8B8E-DE31FE3AAE24}" SharedDllRefCount="yes">
+        <File Id="beid35applayer.dll" Name="beid35applayer.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\beid35applayer.dll" />
+        <File Id="beid35cardlayer.dll" Name="beid35cardlayer.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35cardlayer.dll" />
+        <File Id="beid35common.dll" Name="beid35common.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35common.dll" />
+        <File Id="beid35DlgsWin32.dll" Name="beid35DlgsWin32.dll" KeyPath="no" Source="..\..\..\_Binaries35\Release\beid35DlgsWin32.dll" />
+      </Component>
+
+      <Component Id="Runtime35ThirdPartyOpenSSL" Guid="{A98B4895-7CCF-4A91-ACE2-433B8D4363F9}" SharedDllRefCount="yes">
+        <File Id="libeay32_0_9_8g.dll" Name="libeay32_0_9_8g.dll" KeyPath="yes" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\libeay32_0_9_8g.dll" />
+        <File Id="ssleay32_0_9_8g.dll" Name="ssleay32_0_9_8g.dll" KeyPath="no" Source="$(var.BEID_DIR_OPENSSL_098G)\lib\ssleay32_0_9_8g.dll" />
+      </Component>
+
+      <Component Id="Runtime35ThirdPartyXerces" Guid="{B1EBF9C5-1A6F-44d4-AA80-DE55AAF052FE}" SharedDllRefCount="yes">
+        <File Id="xercesc_3_1.dll" Name="xerces-c_3_1.dll" KeyPath="yes" Source="$(var.BEID_DIR_XERCES_310)\bin\xerces-c_3_1.dll" />
+      </Component>
+
+      <Component Id="BWCompatibility" Guid="{AFE2F946-0FD9-4FF4-917E-1E0970E8FCB7}" SharedDllRefCount="yes">
+        <File Id="beidlib.dll" Name="beidlib.dll" KeyPath="yes" Source="..\..\..\..\beid-2.6\src\_binaries\release\beidlib.dll" />
+        <File Id="eidlib.dll" Name="eidlib.dll" KeyPath="no" Source="..\..\..\..\beid-2.6\src\_binaries\release\eidlib.dll" />
+        <File Id="beidwinscard.dll" Name="beidwinscard.dll" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidwinscard.dll" />
+        <File Id="beidgui.dll" Name="beidgui.dll" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidgui.dll" />
+        <File Id="beidlibopensc.dll" Name="beidlibopensc.dll" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidlibopensc.dll" />
+        <File Id="beidlibeay32.dll" Name="beidlibeay32.dll" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidlibeay32.dll" />
+        <File Id="beidssleay32.dll" Name="beidssleay32.dll" KeyPath="no" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\beidssleay32.dll" />
+      </Component>
+      
+      <Component Id="BWCompatibilityQt" Guid="{92FDC305-F375-4a66-9F22-9CBDEF1B0BEB}" SharedDllRefCount="yes">
+        <File Id="qt_mt334.dll" Name="qt-mt334.dll" KeyPath="yes" Source="$(var.BEID_DIR_QT_334)\bin\qt-mt334.dll" />
+      </Component>
+
+      <Component Id="BWCompatibilityActiveX" Guid="{FE012727-F90E-4A4A-BC61-F1E93F0C82EB}">
+        <File Id="beidlibaxctrl.dll" Name="beidlibaxctrl.dll" KeyPath="yes" Source="..\..\..\misc\bw_compatibility\beidlibaxctrl.dll">
+          <Class Id="{28310B8B-0774-4483-85AF-4966EC52D8BC}" Context="InprocServer32" Description="Certif Class" ThreadingModel="apartment">
+            <ProgId Id="EIDLibCtrl.Certif.1" Description="Certif Class">
+              <ProgId Id="EIDLibCtrl.Certif" Description="Certif Class" />
+            </ProgId>
+          </Class>
+          <Class Id="{4CBC8AEE-7684-492E-8AA5-505943987B53}" Context="InprocServer32" Description="CertifCheck Class" ThreadingModel="apartment">
+            <ProgId Id="EIDLibCtrl.CertifCheck.1" Description="CertifCheck Class">
+              <ProgId Id="EIDLibCtrl.CertifCheck" Description="CertifCheck Class" />
+            </ProgId>
+          </Class>
+          <Class Id="{8923F2AE-B06E-430B-93F6-96FE1BDEEFF8}" Context="InprocServer32" Description="RetStatus Class" ThreadingModel="apartment">
+            <ProgId Id="EIDLibCtrl.RetStatus.1" Description="RetStatus Class">
+              <ProgId Id="EIDLibCtrl.RetStatus" Description="RetStatus Class" />
+            </ProgId>
+          </Class>
+          <Class Id="{BB91CEDA-82D5-4889-8732-3DB804619852}" Context="InprocServer32" Description="MapCollection Class" ThreadingModel="apartment">
+            <ProgId Id="EIDLibCtrl.MapCollection.1" Description="MapCollection Class">
+              <ProgId Id="EIDLibCtrl.MapCollection" Description="MapCollection Class" />
+            </ProgId>
+          </Class>
+          <TypeLib Id="{7705C6CB-5A66-4F92-B296-2B34ED21745C}" Description="beidlibaxctrl 1.1 Type Library" HelpDirectory="SystemFolder" Language="0" MajorVersion="1" MinorVersion="0">
+            <Class Id="{4E29F09E-EBCC-4A3B-BAA7-8372EC375870}" Context="InprocServer32" Description="EIDlib Class" ThreadingModel="apartment" Version="1.0">
+              <ProgId Id="EIDLibCtrl.EIDlib.1" Description="EIDlib Class">
+                <ProgId Id="EIDLibCtrl.EIDlib" Description="EIDlib Class" />
+              </ProgId>
+            </Class>
+            <Class Id="{79EAFF90-57D8-4A58-BC0C-0C5F7F60E65E}" Context="InprocServer32" Description="Raw Class" ThreadingModel="both">
+              <ProgId Id="EIDLibCtrl.Raw.1" Description="Raw Class">
+                <ProgId Id="EIDLibCtrl.Raw" Description="Raw Class" />
+              </ProgId>
+            </Class>
+            <Class Id="{B1731EE0-BE64-4FE3-8EAC-BF37A4D96B35}" Context="InprocServer32" Description="Pin Class" ThreadingModel="both">
+              <ProgId Id="EIDLibCtrl.Pin.1" Description="Pin Class">
+                <ProgId Id="EIDLibCtrl.Pin" Description="Pin Class" />
+              </ProgId>
+            </Class>
+            <Interface Id="{23271379-5195-4384-98DA-F54960DA8A84}" Name="_IEIDlibEvents" ProxyStubClassId="{00020420-0000-0000-C000-000000000046}" ProxyStubClassId32="{00020420-0000-0000-C000-000000000046}" />
+            <Interface Id="{26995400-2928-4E1B-9981-A317D486AC5A}" Name="ICertif" ProxyStubClassId="{00020424-0000-0000-C000-000000000046}" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+            <Interface Id="{886B55ED-4245-4FE9-B3B5-1D78B551000B}" Name="IMapCollection" ProxyStubClassId="{00020424-0000-0000-C000-000000000046}" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+            <Interface Id="{9233063D-D860-4CAD-AD47-BE48CC62D709}" Name="ICertifCheck" ProxyStubClassId="{00020424-0000-0000-C000-000000000046}" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+            <Interface Id="{9B4AD832-6FE8-4826-BFD3-3F278A40F741}" Name="IRetStatus" ProxyStubClassId="{00020424-0000-0000-C000-000000000046}" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+            <Interface Id="{9D5F1B11-8438-4C4E-9011-070F2E43C758}" Name="IRaw" ProxyStubClassId="{00020424-0000-0000-C000-000000000046}" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+            <Interface Id="{B7E86746-2EA7-4237-B523-5BD826A0BAF9}" Name="IPin" ProxyStubClassId="{00020424-0000-0000-C000-000000000046}" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+            <Interface Id="{D5701A16-9D8D-46C6-8E08-B3F1BAE9C4DC}" Name="IEIDlib" ProxyStubClassId="{00020424-0000-0000-C000-000000000046}" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" />
+          </TypeLib>
+        </File>
+        <RegistryValue Root="HKCR" Key="CLSID\{28310B8B-0774-4483-85AF-4966EC52D8BC}\Programmable" Value="" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{28310B8B-0774-4483-85AF-4966EC52D8BC}\TypeLib" Value="{08B2900D-5F45-46CB-A6F2-23E7EA559A1A}" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{4CBC8AEE-7684-492E-8AA5-505943987B53}\Programmable" Value="" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{4CBC8AEE-7684-492E-8AA5-505943987B53}\TypeLib" Value="{08B2900D-5F45-46CB-A6F2-23E7EA559A1A}" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{4E29F09E-EBCC-4A3B-BAA7-8372EC375870}\Control" Value="" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{4E29F09E-EBCC-4A3B-BAA7-8372EC375870}\Insertable" Value="" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{4E29F09E-EBCC-4A3B-BAA7-8372EC375870}\MiscStatus\1" Value="132497" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{4E29F09E-EBCC-4A3B-BAA7-8372EC375870}\MiscStatus" Value="0" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{4E29F09E-EBCC-4A3B-BAA7-8372EC375870}\Programmable" Value="" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{4E29F09E-EBCC-4A3B-BAA7-8372EC375870}\ToolboxBitmap32" Value="[#beidlibaxctrl.dll], 101" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{79EAFF90-57D8-4A58-BC0C-0C5F7F60E65E}\Programmable" Value="" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{8923F2AE-B06E-430B-93F6-96FE1BDEEFF8}\Programmable" Value="" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{8923F2AE-B06E-430B-93F6-96FE1BDEEFF8}\TypeLib" Value="{08B2900D-5F45-46CB-A6F2-23E7EA559A1A}" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{B1731EE0-BE64-4FE3-8EAC-BF37A4D96B35}\Programmable" Value="" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{BB91CEDA-82D5-4889-8732-3DB804619852}\Programmable" Value="" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="CLSID\{BB91CEDA-82D5-4889-8732-3DB804619852}\TypeLib" Value="{08B2900D-5F45-46CB-A6F2-23E7EA559A1A}" Type="string" Action="write" />
+
+        <File Id="EIDLibCtrl.dll" Name="EIDLibCtrl.dll" KeyPath="no" Source="..\..\..\misc\bw_compatibility\EIDLibCtrl.dll" />
+      </Component>
+
+      <Component Id="BWCompatibilityJava" Guid="{D9F8728F-D955-4356-9316-5050F3D36FE1}" SharedDllRefCount="yes">
+        <File Id="beidlibjni.dll" Name="beidlibjni.dll" KeyPath="yes" Source="..\..\..\misc\bw_compatibility\beidlibjni.dll" />
+        <File Id="beidlibjni.dll.manifest" Name="beidlibjni.dll.manifest" KeyPath="no" Source="..\..\..\misc\bw_compatibility\beidlibjni.dll.manifest" />
+        <File Id="eidlibj.dll" Name="eidlibj.dll" KeyPath="no" Source="..\..\..\misc\bw_compatibility\eidlibj.dll" />
+        <File Id="eidlibj.dll.manifest" Name="eidlibj.dll.manifest" KeyPath="no" Source="..\..\..\misc\bw_compatibility\eidlibj.dll.manifest" />
+      </Component>
+
+      <Component Id="BWPinpad" Guid="{AEB72EF2-7C5E-487E-84E3-0903140D7B74}" SharedDllRefCount="yes">
+        <File Id="belpicppgui.dll" Name="belpicppgui.dll" KeyPath="yes" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\pinpad\belpicppgui.dll" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="BEIDPPDIR">
+      <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes">
+        <!--File Id="ch44xxeid.dll" Name="ch44xxeid.dll" Source="..\..\..\pinpad\ch44xxeid.dll" /-->
+        <!--File Id="sprx32eid.dll" Name="sprx32eid.dll" Source="..\..\..\pinpad\sprx32eid.dll" /-->
+        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\pinpad\xireid.dll" />
+      </Component>
+    </DirectoryRef>
+    
+    <DirectoryRef Id="SISCARDPLUGINSDIR">
+      <Component Id="Siscardplugin" Guid="{821ED2E0-9FDB-4a08-9686-DDE65EE3D5E5}" SharedDllRefCount="yes">
+        <File Id="siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" Name="siscardplugin1_BE_EID_35__ACS ACR38U__.dll" KeyPath="yes" Source="..\..\..\_Binaries35\Release\siscardplugin1_BE_EID_35__ACS_ACR38U__.dll" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+ 
+      <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}">
+        <RegistryKey Root="HKLM"
+            Key="SOFTWARE\BEID"
+            Action="createAndRemoveOnUninstall">
+          <RegistryKey Key="certificatevalidation" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="integer" Name="cert_validation_ocsp" Value="0"/>
+            <RegistryValue Type="integer" Name="cert_validation_crl" Value="0"/>
+          </RegistryKey>
+          
+          <RegistryKey Key="certificatecache" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Name="cert_cachefile" Value="[ProgramFilesFolder]Belgium Identity Card\eidstore\crl\.cache.csc"/>
+          </RegistryKey>
+          
+          <RegistryKey Key="crl" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Name="crl_cachedir" Value="[ProgramFilesFolder]Belgium Identity Card\eidstore\crl"/>
+          </RegistryKey>
+          
+          <RegistryKey Key="general" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Name="language" Value="!(loc.Langpref)"/>
+            <RegistryValue Type="string" Name="cache_dirname" Value="[ProgramFilesFolder]Belgium Identity Card\.cache"/>
+            <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFilesFolder]Belgium Identity Card"/>
+          </RegistryKey>
+          
+          <RegistryKey Key="logging" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Name="log_dirname" Value="[ProgramFilesFolder]Belgium Identity Card\log"/>
+          </RegistryKey>
+          
+          <RegistryKey Key="configuretool" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="integer" Name="start_with_windows" Value="1"/>
+            <RegistryValue Type="integer" Name="start_minimized" Value="1"/>
+            <RegistryValue Type="integer" Name="show_toolbar" Value="1"/>
+            <RegistryValue Type="integer" Name="show_picture" Value="0"/>
+            <RegistryValue Type="integer" Name="show_notification" Value="1"/>
+            <RegistryValue Type="integer" Name="automatic_cardreading" Value="1"/>
+            <RegistryValue Type="integer" Name="cardreader" Value="-1"/>
+            <RegistryValue Type="integer" Name="registrate_certificate" Value="1"/>
+          </RegistryKey>
+        </RegistryKey>
+      </Component>
+
+    </DirectoryRef>
+
+
+    <Feature Id="BeidRuntime"
+             Title="!(loc.BeidRuntime)"
+             Description="!(loc.BeidRuntimeDesc)"
+             Absent="disallow" 
+             Level="1"
+             >
+      
+      <Feature Id="VCRedist" Title="VC++ 8.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
+        <MergeRef Id="VCRT" />
+        <MergeRef Id="VCRT_POLICY" />
+      </Feature>
+
+      <!-- Program Files -->
+      <ComponentRef Id="RootFolder"/>
+      <ComponentRef Id="Icon" />
+      <ComponentRef Id="EidStore"/>
+      <ComponentRef Id="Certs"/>
+      <ComponentRef Id="CrlDir"/>
+      <ComponentRef Id="HttpDir"/>
+      <ComponentRef Id="CrlEidBelgiumBe"/>
+      <ComponentRef Id="License"/>
+      <ComponentRef Id="LogDir"/>
+      <ComponentRef Id="BWCompatibilityJava_Jar" />     
+
+      <!-- System32 -->
+      <ComponentRef Id="Runtime35"/>
+      <ComponentRef Id="Runtime35ThirdPartyOpenSSL"/>
+      <ComponentRef Id="Runtime35ThirdPartyXerces"/>
+      <ComponentRef Id="BWCompatibility"/>
+      <ComponentRef Id="BWCompatibilityQt"/>
+      <ComponentRef Id="BWCompatibilityActiveX"/>
+      <ComponentRef Id="BWCompatibilityJava"/>
+      <ComponentRef Id="BWPinpad"/>
+
+      <!-- Beid pinpad dir-->
+      <ComponentRef Id="PinpadLib"/>
+
+      <!-- Beid Siscardplugin dir-->
+      <ComponentRef Id="Siscardplugin"/>
+
+      <!-- Windows -->
+      <ComponentRef Id="beidgui.conf"/>
+
+      <!-- Registry -->
+      <ComponentRef Id="RegistryBeidSystem"/>
+
+  </Feature>
+
+    <UI>
+      <UIRef Id="WixUI_FeatureTree" />
+      <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTFOLDER" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+    </UI>
+
+    <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
+    
+    <CustomAction Id="IsPrivileged" Error="!(loc.AdminNeeded)" />
+
+    <InstallExecuteSequence>    
+      <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>  
+      <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
+      <RemoveExistingProducts After="InstallExecute"/>
+      <!--<ScheduleReboot After="InstallFinalize">NOT Installed</ScheduleReboot>-->      
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>
