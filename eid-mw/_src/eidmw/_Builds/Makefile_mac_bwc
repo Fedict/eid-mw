@@ -1,0 +1,513 @@
+####################################################################################
+## Makefile for the preparation of the release and the package on Mac.
+##
+## This Makefile should be used after having built the package:
+##	 
+## on the macIntel:
+##   make -f Makefile_mac    (this will also call the configure script)
+##   sudo make -f Makefile_mac release
+## copy one of the /release_build dirs on the other machine in the directory /other
+##   sudo make -f Makefile_mac universal
+##
+## .. voila', the package with the universal binaries is there.
+##
+##
+## To build a release without the 3rd party libs (so this release can
+## be safely installed on your test machine):
+##   make -f Makefile_mac    (this will also call the configure script)
+##   sudo make -f Makefile_mac testrelease
+##
+## If you want to add or remove files from the release, please edit the following variables:
+## BASE_LIBS --> implicit names of the libraries (as from the definition file *versions.mak)
+## ETC --> implicit names of the config file(s)
+## OLD_LIBS --> names of the old (V2.6) libs
+## OLD_ETC --> names of the old (V2.6) config (are already universal binaries)
+## BASE_SISPLUGINS --> implicit names of the libraries (as from the definition file *versions.mak)
+## BASE_BINS --> names to the executables 
+## APP_BINS --> paths to the executables 
+## TRANSLATIONS --> language files for the GUI
+## HEADERS --> header files needed to use the SDK
+## CONFIG --> configuration files, e.g. for the GUI
+## DOCS --> documentation files, man pages
+## SCRIPTS --> script files
+## ... 
+####################################################################################
+# check if the QTBASEDIR is set. If so, use this as a bas directory to copy the Qt libraries
+# to the pkg.
+# The environment variable is used to indicate which Qt libraries have to be taken.
+ifdef QTBASEDIR
+        QTFRAMEWORKSDIR:=$(QTBASEDIR)/lib/
+	QTPLUGINDIR=$(QTBASEDIR)/plugins
+else
+        QTFRAMEWORKSDIR=/Library/Frameworks/
+	QTPLUGINDIR=/Developer/Applications/Qt/plugins/
+endif
+QT4VERSION=$(shell otool -L $(QTFRAMEWORKSDIR)/QtCore.framework/QtCore)
+VERSIONSTR=$(shell expr "$(QT4VERSION)" : '.*current version \(4\.[0-9]\.[0-9]\)')
+QT_VERSION=beid_$(VERSIONSTR)
+
+
+
+## If you want to build the release for another country,
+## substitute beidversions.mak with the country-specific one (e.g. pteidversions.mak for Portugal)
+## Other things to change:
+## - value of REL_NAME
+## - value of APPS_DIR
+
+include beidversions.mak
+
+REL_NAME=beid_bwc
+
+## For Qt4 we will try to figure out the version starting from 'qmake -v'
+## Sometimes qmake is link to the real qmake executable, therefore we first
+## do a 'readlink' and then use the directory of it to find the libs etc. 
+#QT_VERSION=beid_4.3.4
+
+#QT4=$(shell which qmake)
+#LINKPATH=$(shell readlink $(QT4))
+#QMAKEPATH=$(shell which $(LINKPATH))
+#THEPATH=$(dir $(QMAKEPATH))
+#QT4VERSION=`$(THEPATH)/moc -v 2>&1`
+#VERSIONSTR=$(shell expr "$(QT4VERSION)" : '.*\([1-9]\.[0-9]\.[0-9]\)')
+
+#QT_VERSION=beid_$(VERSIONSTR)
+#QT_BASEPATH=$(THEPATH)/..
+
+PATH_TO_QTCORE:=$(shell otool -L ../bin/beiddialogsQTsrv | grep QtCore  | sed s/\(.*\)//)
+PATH_TO_QTGUI:=$(shell otool -L ../bin/beiddialogsQTsrv | grep QtGui  | sed s/\(.*\)//)
+
+UDIR=/univ
+REL_DIR=/release_build
+
+PKG_MAKER=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
+
+REL_VERSION=$(REL_MAJ).$(REL_MIN).$(REL_REV)
+BUILD_NR=$(shell cat ../svn_revision | tr -d "\r")
+
+PKG_NAME =   $(REL_DIR)/$(REL_NAME).pkg
+DMG_NAME =   $(REL_NAME)_$(REL_VERSION).dmg
+DMG_NAME_u = $(REL_NAME)_u_$(REL_VERSION).dmg
+VOL_NAME =   $(REL_NAME)_MacOSX_$(REL_VERSION)
+
+ROOT_DIR =  $(REL_DIR)/root
+INST_DIR =  /usr/local
+MAN_DIR  =  /usr/share/man/man1
+
+## Make interpretes spaces as separator. So we specify 2 names:
+## the one that will be installed and the one to which this
+## name will be renamed into in the postflight script at the end
+## of the installation.
+APPS_DIR =  /Applications
+LICENSES_DIR= /Library/BelgiumIdentityCard/Licenses
+BELGIUM_DIR= /Library/BelgiumIdentityCard
+BELGIUM_DIR_NAME = "/Library/Belgium\ Identity\ Card"
+
+## List of the implicit names of the libraries. This is convenient
+## when we want to substitue "x_y_z" with "x_y" to obtain e.g.
+## DLGLIB_NAME_x_y_dylib and then use its value, resulting in libdialogsQT_1.0.dylib
+## PKCS11_FF_LIB_NAME_x_y_z_dylib \ removed for now
+
+BASE_LIBS =  DLGLIB_NAME_x_y_z_dylib \
+	EIDLIB_NAME_x_y_z_dylib \
+	CARDLAYERLIB_NAME_x_y_z_dylib \
+	COMMONLIB_NAME_x_y_z_dylib \
+	APPLAYERLIB_NAME_x_y_z_dylib \
+	JAVALIB_NAME_x_y_z_dylib
+
+ETC = beid.conf
+
+OLD_LIBS = beidlib.jar libbeidlibjni.2.7.2.dylib libbeid.2.7.4.dylib \
+	libbeidlibopensc.2.2.0.dylib libbeidcommon.1.0.0.dylib \
+	libbeidlibopenscinternal.2.2.0.dylib libbeidgui.1.5.0.dylib \
+	libqt-mt.3.3.8.dylib
+
+OLD_ETC = beidbase.conf beidgui.conf
+
+BASE_SISPLUGINS = CARDPLUGINSIS_ACR38U_NAME_dylib
+#BASE_SISPLUGINS = 
+
+## This foreach command loops over the content of BASE_LIBS and substitute
+## to each element $(element) --> LIBS contains $(DLGLIB_NAME_x_y_z_dylib),
+## $(EIDLIB_NAME_x_y_z_dylib), etc. These variables are defined in beidversions.mak,
+## therefore LIBS contains libdialogsQT_1.0.0.dylib, libeidlib_1.0.0.dylib, etc.
+
+LIBS = $(foreach var,$(BASE_LIBS), lib/$($(var)) )
+
+SISPLUGINS = $(foreach var,$(BASE_SISPLUGINS), lib/$($(var)) )
+SISPLUGINS_BARE = $(foreach var,$(BASE_SISPLUGINS), $($(var)) )
+
+
+BASE_BINS = $(DLGSRV)
+#	$(CARDLAYERTOOL)
+APP_BINS =  $(DLGSRV)
+
+## prepends 'bin/' to all the elements of BASE_BINS
+BINS = $(APP_BINS:%= bin/%) 
+
+
+## Language files for the GUI
+##TRANSLATIONS = bin/$(EIDGUI).app/Contents/MacOS/eidmw_de.qm \
+##	       bin/$(EIDGUI).app/Contents/MacOS/eidmw_en.qm \
+##	       bin/$(EIDGUI).app/Contents/MacOS/eidmw_fr.qm \
+##	       bin/$(EIDGUI).app/Contents/MacOS/eidmw_nl.qm 
+
+
+## Man pages to be included in the release.
+## Will be copied to $(ROOT_DIR)/$(MAN_DIR)
+DOCS = 
+
+## Scripts to be included in the release.
+## Will be copied to $(ROOT_DIR)/$(INST_DIR)/bin
+SCRIPTS = 
+
+
+## directories that the package installer should create
+## on the user's machine in case they are absent
+DIRS_TO_CREATE = $(INST_DIR) $(BELGIUM_DIR) $(LICENSES_DIR)
+
+INSTALLER_DIR = misc/mac/mw_installer
+
+
+## directories which will be created by the release rule
+DIRS =	$(ROOT_DIR)/$(INST_DIR)/lib/siscardplugins \
+	$(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins \
+	$(ROOT_DIR)/$(INST_DIR)/bin \
+	$(ROOT_DIR)/$(INST_DIR)/etc \
+	$(ROOT_DIR)/$(INST_DIR)/include/$(REL_NAME) \
+	$(ROOT_DIR)/usr/bin \
+	$(ROOT_DIR)/$(MAN_DIR) \
+	$(ROOT_DIR)/$(BELGIUM_DIR) \
+	$(ROOT_DIR)/$(LICENSES_DIR) \
+	$(ROOT_DIR)/$(APPS_DIR)
+
+## The source file (or directories) and the destination are
+## separated by 5 '_'. These will be parsed in copy_command
+
+FILES_TO_COPY := $(LIBS:%=%_____$(ROOT_DIR)/$(INST_DIR)/lib/) \
+		 $(OLD_LIBS:%=../beid-2.6/mac/lib/%_____$(ROOT_DIR)/$(INST_DIR)/lib/) \
+		 $(ETC:%=misc/mac/%_____$(ROOT_DIR)/$(INST_DIR)/etc/) \
+		 $(OLD_ETC:%=../beid-2.6/mac/etc/%_____$(ROOT_DIR)/$(INST_DIR)/etc/) \
+		 $(SISPLUGINS:%=%_____$(ROOT_DIR)/$(INST_DIR)/lib/siscardplugins) \
+	         $(DOCS:%=%_____$(ROOT_DIR)/$(MAN_DIR)) \
+	         $(SCRIPTS:%=%_____$(ROOT_DIR)/$(INST_DIR)/bin) \
+                 $(BINS:%=%_____$(ROOT_DIR)/usr/bin)
+
+DIRS_TO_COPY := ../beid-2.6/mac/share/_____$(ROOT_DIR)/$(INST_DIR)/share
+		
+
+r1=$(ROOT_DIR)
+r2=/other/$(ROOT_DIR)
+r3=$(UDIR)/$(ROOT_DIR)
+ 
+## List of binaries for which we have to run the lipo command.
+## The substitution command prepends $(r3)/$(INST_DIR)/ to all the elements of LIBS and
+## $(r3)/$(APPS_DIR)/ to all the elements of BASE_BINS
+UNIVERSAL = $(LIBS:%=$(r3)/$(INST_DIR)/%) \
+	    $(SISPLUGINS_BARE:%=$(r3)/$(INST_DIR)/lib/siscardplugins/%) \
+	    $(BASE_BINS:%=$(r3)/usr/bin/%)
+
+
+#####################################################################
+# Rules								    #
+#####################################################################
+all:
+	cd .. && ./configure BUILD_TESTS=y CONFIG+=release && $(MAKE) && cd -
+
+################################################################
+clean:
+	cd .. && $(MAKE) clean && cd -
+
+################################################################
+install:
+	cd .. && $(MAKE) install && cd -
+
+################################################################
+uninstall: 
+	cd .. && $(MAKE) uninstall && cd -
+
+################################################################
+POSTFLIGHT=$(REL_DIR)/resources/postflight
+PREFLIGHT=$(REL_DIR)/resources/preflight
+INSTALLATIONCHECK=$(REL_DIR)/resources/InstallationCheck
+INSTALLATIONCHECKSTRINGS=$(REL_DIR)/resources/InstallationCheck.strings
+
+release: clean_release $(DIRS) rel_start rel_3rd_party rel_end
+
+testrelease: clean_release $(DIRS) rel_start  rel_end
+
+rel_start:
+	-@ cd ..; \
+	  echo "********** copy dirs **********"; \
+	  $(call copy_command,$(DIRS_TO_COPY),-r)
+
+	@## copy files, follow symbolic links
+	-@ cd ..; \
+	  echo "********** copy files **********"; \
+	  $(call copy_command,$(FILES_TO_COPY),-L) ; \
+	  cp misc/licenses_files/Dutch/eID-toolkit_licensingtermsconditions.txt \
+		$(ROOT_DIR)/$(LICENSES_DIR)/license_NL.txt ; \
+	  cp misc/licenses_files/English/eID-toolkit_licensingtermsconditions.txt \
+		$(ROOT_DIR)/$(LICENSES_DIR)/license_EN.txt ; \
+	  cp misc/licenses_files/French/eID-toolkit_licensingtermsconditions.txt \
+		$(ROOT_DIR)/$(LICENSES_DIR)/license_FR.txt ; \
+	  cp misc/licenses_files/German/eID-toolkit_licensingtermsconditions.txt \
+		$(ROOT_DIR)/$(LICENSES_DIR)/license_DE.txt ; \
+	  cp misc/licenses_files/THIRDPARTY-LICENSES.txt $(ROOT_DIR)/$(LICENSES_DIR)/
+
+
+rel_3rd_party:
+	@echo "********** copy third party files (QT, ...) **********"
+	@echo "QTBASEDIR:$(QTBASEDIR)"
+	 mkdir -p $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/
+	 cp $(QTFRAMEWORKSDIR)/QtGui.framework/Versions/4/QtGui	$(ROOT_DIR)/$(INST_DIR)/lib/beidqt/
+	 cp $(QTFRAMEWORKSDIR)/QtCore.framework/Versions/4/QtCore  $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/
+	 mkdir -p $(ROOT_DIR)/$(INST_DIR)/lib
+	 cp ../../ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib $(ROOT_DIR)/$(INST_DIR)/lib/libxerces-c-3.1.dylib 
+	 mkdir -p $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats/
+	 cp $(QTPLUGINDIR)/imageformats/libqjpeg.dylib $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats/libbeidjpeg.dylib
+	 ##	 mkdir -p $(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/Resources
+	 @echo "********** Changing install_names for use with the QT libs **********"
+	 install_name_tool -change $(PATH_TO_QTCORE) \
+		$(INST_DIR)/lib/beidqt/QtCore \
+		$(ROOT_DIR)/usr/bin/$(DLGSRV)
+	 install_name_tool -change $(PATH_TO_QTGUI) \
+		$(INST_DIR)/lib/beidqt/QtGui \
+		$(ROOT_DIR)/usr/bin/$(DLGSRV)
+##	 install_name_tool -change $(PATH_TO_QTCORE) \
+##		$(INST_DIR)/lib/beidqt/QtCore \
+##		$(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/$(EIDGUI)
+##	 install_name_tool -change $(PATH_TO_QTGUI) \
+##		$(INST_DIR)/lib/beidqt/QtGui \
+##		$(ROOT_DIR)/$(APPS_DIR)/$(EIDGUI).app/Contents/MacOS/$(EIDGUI)
+	 install_name_tool -change QtCore.framework/Versions/4/QtCore \
+		$(INST_DIR)/lib/beidqt/QtCore \
+		$(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats/libbeidjpeg.dylib
+	 install_name_tool -change QtGui.framework/Versions/4/QtGui \
+		$(INST_DIR)/lib/beidqt/QtGui \
+		$(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats/libbeidjpeg.dylib
+	 install_name_tool -change $(PATH_TO_QTCORE) \
+		$(INST_DIR)/lib/beidqt/QtCore \
+		$(ROOT_DIR)/$(INST_DIR)/lib/beidqt/QtGui
+
+rel_end:
+	@echo "********** manipulate mw_installer **********"
+	-@cd ..; \
+	  sed -e "s;REPL_REL_VERSION;$(REL_VERSION);g" \
+	  	   $(INSTALLER_DIR)/Info_bwc.plist > $(REL_DIR)/Info.plist ; \
+	  cp $(INSTALLER_DIR)/Description_bwc.plist  $(REL_DIR)/Description.plist ; \
+	  svn export $(INSTALLER_DIR)/resources/ $(REL_DIR)/resources;
+
+##cp -r $(INSTALLER_DIR)/resources/ $(REL_DIR)/resources;
+	 @echo "********** generate $(POSTFLIGHT) **********"
+	-@test -e $(POSTFLIGHT) && rm $(POSTFLIGHT)
+	@touch $(POSTFLIGHT)
+	@echo "#!/bin/bash" >> $(POSTFLIGHT)
+	@$(call test_and_link_command, $(BASE_LIBS),x_y_z_,x_y_,  $(POSTFLIGHT))
+	@$(call test_and_link_command, $(foreach var,$(BASE_LIBS), $(subst x_y_z_,x_y_,$(var)) ),x_y_,x_, $(POSTFLIGHT))
+	@$(call test_and_link_command, $(foreach var,$(BASE_LIBS), $(subst x_y_z_,x_,$(var)) ),x_,, $(POSTFLIGHT))
+	@echo "" >> $(POSTFLIGHT)
+	@echo "test -e $(INST_DIR)/lib/libxerces-c-3.dylib && unlink $(INST_DIR)/lib/libxerces-c-3.dylib" >> $(POSTFLIGHT)
+	@echo "ln -fs $(INST_DIR)/lib/libxerces-c-3.1.dylib $(INST_DIR)/lib/libxerces-c-3.dylib" >> $(POSTFLIGHT)
+	@echo "test -e /Library/Java/Extensions/$(JAVALIB_NAME).jnilib && unlink /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
+	@echo "ln -fs /usr/local/lib/$(JAVALIB_NAME_x_y_z_dylib) /Library/Java/Extensions/$(JAVALIB_NAME).jnilib" >> $(POSTFLIGHT)
+	@echo "mv $(BELGIUM_DIR) \"$(BELGIUM_DIR_NAME)\"" >> $(POSTFLIGHT)
+	@echo "test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;" >> $(POSTFLIGHT)
+	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der" >> $(POSTFLIGHT)
+
+	-@test -e tmp && rm temp
+	@cat $(POSTFLIGHT) ../../beid-2.6/mac/postflight > temp
+	@mv temp $(POSTFLIGHT)
+	@chmod a+x $(POSTFLIGHT)
+
+##	 @echo "********** generate $(INSTALLATIONCHECKSTRINGS) **********"
+##	-@test -e $(INSTALLATIONCHECKSTRINGS) && rm $(INSTALLATIONCHECKSTRINGS)
+##	@touch $(INSTALLATIONCHECKSTRINGS)
+## 16 = 112-96 , 17 = 113-96	
+##	@echo "\"16\" = \"Cannot install on a Mac PPC\";" >> $(INSTALLATIONCHECKSTRINGS)
+##	@echo "\"17\" = \"This installer is not meant for mac OS X 10.5 running on a 32bit processor\";" >> $(INSTALLATIONCHECKSTRINGS)
+
+	 @echo "********** generate $(INSTALLATIONCHECK) **********"
+	-@test -e $(INSTALLATIONCHECK) && rm $(INSTALLATIONCHECK)
+	@touch $(INSTALLATIONCHECK)
+	@echo "#!/bin/bash" >> $(INSTALLATIONCHECK)
+	@echo "#########################################" >> $(INSTALLATIONCHECK)
+	@echo "# we must be running on intel" >> $(INSTALLATIONCHECK)
+	@echo "#########################################" >> $(INSTALLATIONCHECK)
+	@echo "MACHINE=\`uname -p\`" >> $(INSTALLATIONCHECK)
+	@echo 'if [[ ($$MACHINE == "ppc64") || ($$MACHINE == "ppc")]]' >> $(INSTALLATIONCHECK)
+	@echo "then" >> $(INSTALLATIONCHECK)
+	@echo "exit 112" >> $(INSTALLATIONCHECK)
+	@echo "fi" >> $(INSTALLATIONCHECK)
+	@echo "#########################################" >> $(INSTALLATIONCHECK)
+	@echo "# we must be running on 64 bit if 10.5" >> $(INSTALLATIONCHECK)
+	@echo "#########################################" >> $(INSTALLATIONCHECK)
+	@echo "OSVERSION=\`sw_vers -productVersion\`" >> $(INSTALLATIONCHECK)
+	@echo 'if [[ ($$OSVERSION > "10.4.99") && ($$OSVERSION < "10.6.0")]]' >> $(INSTALLATIONCHECK)
+	@echo "then" >> $(INSTALLATIONCHECK)
+##	@echo 'if [[ ($$MACHINE == "i386") ]]' >> $(INSTALLATIONCHECK)
+##	@echo "then" >> $(INSTALLATIONCHECK)
+	@echo "exit 113" >> $(INSTALLATIONCHECK)
+##	@echo "fi" >> $(INSTALLATIONCHECK)
+	@echo "fi" >> $(INSTALLATIONCHECK)
+	@echo "exit 0" >> $(INSTALLATIONCHECK)
+	@chmod a+x $(INSTALLATIONCHECK)
+
+	 @echo "********** generate $(PREFLIGHT) **********"
+	-@test -e $(PREFLIGHT) && rm $(PREFLIGHT)
+	@touch $(PREFLIGHT)
+	@echo "#!/bin/bash" >> $(PREFLIGHT)
+	@echo "" >> $(PREFLIGHT)
+	@$(call mkdir_command, $(DIRS_TO_CREATE), $(PREFLIGHT))
+	@chmod a+x $(PREFLIGHT)
+
+	@echo "********** generate $(PKG_NAME) and $(DMG_NAME) **********"
+	@rm -rf $(PKG_NAME)
+	
+	@chmod g+w $(ROOT_DIR)/Applications
+	@chmod g+w $(ROOT_DIR)/$(INST_DIR)
+	@chmod g+w $(ROOT_DIR)/$(INST_DIR)/lib
+	@chmod g+w $(ROOT_DIR)/$(INST_DIR)/lib/beidqt
+	@chmod g+w $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins
+	@chmod g+w $(ROOT_DIR)/$(INST_DIR)/lib/beidqt/plugins/imageformats
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/etc/beid.conf
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/etc/beidbase.conf
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/etc/beidgui.conf
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/lib/beidlib.jar
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca.der
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government.der
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government2004.der
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government2005.der
+	@chmod a+x  $(ROOT_DIR)/$(INST_DIR)/lib/libbeid*.dylib
+	@chmod a+x  $(ROOT_DIR)/$(INST_DIR)/lib/libqt-mt*.dylib
+	#@chgrp -R wheel  $(ROOT_DIR)/System
+	@chgrp    wheel  $(ROOT_DIR)/usr
+	@chgrp    wheel  $(ROOT_DIR)/usr/bin
+	@chgrp    wheel  $(ROOT_DIR)/usr/local
+	@chgrp    wheel  $(ROOT_DIR)/usr/share
+	@chgrp    wheel  $(ROOT_DIR)/usr/local/lib
+	@chgrp    wheel  $(ROOT_DIR)/usr/share/man
+	@chgrp    wheel  $(ROOT_DIR)/usr/local/lib/siscardplugins
+	@chgrp    wheel  $(ROOT_DIR)/usr/local/lib/beidqt
+	@chgrp    wheel  $(ROOT_DIR)/usr/local/lib/beidqt/plugins
+	@chgrp    wheel  $(ROOT_DIR)/usr/share/man/man1
+
+	$(PKG_MAKER) -build -p $(PKG_NAME) -f $(r1) -ds -i $(REL_DIR)/Info.plist \
+		 -d $(REL_DIR)/Description.plist -r $(REL_DIR)/resources  -v
+	hdiutil create -srcfolder $(PKG_NAME) -volname "$(VOL_NAME)" $(DMG_NAME)
+	#hdiutil internet-enable -yes $(DMG_NAME)
+
+################################################################
+
+universal: clean_universal $(UNIVERSAL)
+	# "This expects that 'sudo make release' was already done on this machine;"
+	# "as well as on the other architecture, and that the release_build"
+	# "from that architecture was copied a dir called 'other'"
+
+	@echo "********** generate $(UDIR)/$(PKG_NAME) and $(DMG_NAME_u) **********"
+	rm -rf $(UDIR)/$(PKG_NAME)
+	$(PKG_MAKER) -build -p $(UDIR)/$(PKG_NAME) -f $(r3) -ds -i $(UDIR)/$(REL_DIR)/Info.plist \
+		-d $(UDIR)/$(REL_DIR)/Description.plist -r $(UDIR)/$(REL_DIR)/resources  -v
+	hdiutil create -srcfolder $(UDIR)/$(PKG_NAME) -volname "$(VOL_NAME)" $(DMG_NAME_u)
+	#hdiutil internet-enable -yes $(DMG_NAME_u)
+
+
+################################################################
+## create directories in list DIRS intermediate directories as well
+
+$(DIRS): FORCE
+	@echo "mkdir $@"
+	@mkdir -p $@
+
+
+################################################################
+## lipo command explanation:
+## $@ -> one element in the $(UNIVERSAL) list (which is a lib or
+## an executable with path in $(r3)   (1)
+## $(patsubst $(r3)%,$(r1)%,$@) -> substitutes $(r1) to $(r3) in the path of $@   (2)
+## $(patsubst $(r3)%,$(r2)%,$@) -> substitutes $(r2) to $(r3) in the path of $@   (3)
+## lipo the results of (2) and (3) to create (1)
+
+$(UNIVERSAL) : 	FORCE
+	-lipo $(patsubst $(r3)%,$(r1)%,$@) $(patsubst $(r3)%,$(r2)%,$@)  -output $@ -create
+
+
+################################################################
+clean_universal:
+	- rm -rf $(UDIR)
+	- rm $(DMG_NAME_u)
+	mkdir $(UDIR)
+	cp -r $(REL_DIR) $(UDIR)/
+
+################################################################
+clean_release: 
+	- [ -d $(REL_DIR) ] && rm -rf $(REL_DIR)
+	- [ -e $(DMG_NAME) ] && rm $(DMG_NAME)
+
+
+################################################################
+## phony target used as a dependency in some cases 
+## to enforce the update of other targets
+FORCE:
+	
+	
+
+
+##############################################################
+# Helper functions					     #
+##############################################################
+##							     #
+## These functions generate a sequence of bash commands.     #
+## Each command is run in its own shell, therefore they have #
+## to be chained with ";"  if one wants to use the result of #
+## a command in the following one.			     #
+## "\" extends the command over multiple lines.		     #
+##							     #
+##############################################################
+
+## Copy files or directory with option $(2) (which might be empty)
+## The input $(1) contains strings of the form <source>_____<destination>,
+## which are parsed to define the source file and the destination file.
+
+define copy_command
+for FILE in $(1); do \
+  SOURCE=$$( echo $$FILE| sed "s#\(.*\)_____.*#\1#"); \
+  DESTINATION=$$(echo $$FILE | sed "s#.*_____\(.*\)#\1#"); \
+  echo "copy $(2) $$SOURCE --> $$DESTINATION" ; \
+  cp $(2) "$${SOURCE}" $${DESTINATION}; \
+done 
+endef
+
+###########################################################
+
+## $(1) -> list of variables, the value of which is the name of a library
+## $(2) -> string in $(var) to be substituted
+## $(3) -> string with which $(2) is substituted
+## $(4) -> output file
+##
+## This function produces lines of the type:
+##
+## test -e $(INST_DIR)/lib/<lib_x_y_dylib> && unlink  $(INST_DIR)/lib/<lib_x_y_dylib>
+## ln -fs $(INST_DIR)/lib/<lib_x_y_z_dylib> $(INST_DIR)/lib/<lib_x_y_dylib>
+##
+## and sends them to the file specified by argument 4.
+##
+
+define test_and_link_command
+$(foreach var,$(1),  echo "test -e $(INST_DIR)/lib/$($(subst $(2),$(3),$(var))) && unlink $(INST_DIR)/lib/$($(subst $(2),$(3),$(var)))" >> $(4) ; \
+	 echo "ln -fs $(INST_DIR)/lib/$($(var)) $(INST_DIR)/lib/$($(subst $(2),$(3),$(var)))" >> $(4); ) \
+echo >> $(4)
+endef
+
+###########################################################
+
+## Receives in input a list of directory, $(1), and a filename $(2).
+## For each elements of the list produces a mkdir command and pipes it to $(2).
+
+define mkdir_command
+$(foreach var,$(1),  echo "## Create $(var) if it does not exist yet" >> $(2); \
+			echo "mkdir -p $(var)" >> $(2) ; \
+			echo "" >> $(2); ) 
+endef
+
+###########################################################
