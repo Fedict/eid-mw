@@ -65,8 +65,8 @@ typedef struct _PIN_VERIFY_STRUCTURE
 #define BELPIC_SIGN_ALGO_RSASSA_PSS_SHA1		0x10
 #define BELPIC_SIGN_ALGO_RSASSA_PSS_SHA256	0x20
 
-#define BELPIC_KEY_NON_REP									0x82
-#define BELPIC_KEY_AUTH											0x83
+#define BELPIC_KEY_AUTH											0x82
+#define BELPIC_KEY_NON_REP									0x83
 
 
 typedef struct _FEATURES
