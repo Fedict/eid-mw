@@ -147,6 +147,16 @@ DWORD BeidAuthenticate(PCARD_DATA   pCardData,
       CLEANUP(SCARD_W_WRONG_CHV);
    }
 
+	 for ( i = 0 ; i < (unsigned char) cbPin ; i++ )
+	 {
+		 /* Don't allow non-numerical PIN entries */
+		 if ( ( pbPin[i] < 0x30 ) || ( pbPin[i] > 0x39 ) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pbPin[i]]");
+			 CLEANUP(SCARD_W_WRONG_CHV);
+		 }
+	 }
+
    /**********/
    /* Log On */
    /**********/
@@ -765,6 +775,26 @@ DWORD    BeidChangePIN
       LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [cbCurrentAuthenticator]");
       CLEANUP(SCARD_W_WRONG_CHV);
    }
+
+	 for ( i = 0 ; i < (unsigned char) cbCurrentAuthenticator ; i++ )
+	 {
+		 /* Don't allow non-numerical PIN entries */
+		 if ( ( pbCurrentAuthenticator[i] < 0x30 ) || ( pbCurrentAuthenticator[i] > 0x39 ) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pbCurrentAuthenticator[i]]");
+			 CLEANUP(SCARD_W_WRONG_CHV);
+		 }
+	 }
+
+	 for ( i = 0 ; i < (unsigned char) cbNewAuthenticator ; i++ )
+	 {
+		 /* Don't allow non-numerical PIN entries */
+		 if ( ( pbNewAuthenticator[i] < 0x30 ) || ( pbNewAuthenticator[i] > 0x39 ) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pbNewAuthenticator[i]]");
+			 CLEANUP(SCARD_W_WRONG_CHV);
+		 }
+	 }
 
    /* Change PIN code */
    Cmd [0] = 0x00;
