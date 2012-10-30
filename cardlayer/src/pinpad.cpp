@@ -209,8 +209,8 @@ CByteArray CPinpad::PinCmd1(tPinOperation operation,
 	xVerifyCmd.bEntryValidationCondition = 0x02;
 	xVerifyCmd.bNumberMessage = 0x01;
 	//ToUchar2(m_ulLangCode, xVerifyCmd.wLangId);
-	xVerifyCmd.wLangId[0] = (m_ulLangCode & 0xff00) / 256;
-	xVerifyCmd.wLangId[1] = m_ulLangCode & 0xff;
+	xVerifyCmd.wLangId[0] = (unsigned char) ((m_ulLangCode & 0xff00) / 256);
+	xVerifyCmd.wLangId[1] = (unsigned char) (m_ulLangCode & 0xff);
 	xVerifyCmd.bMsgIndex = 0;
 	ToUchar4(oAPDU.Size(), xVerifyCmd.ulDataLength);
 	memcpy(xVerifyCmd.abData, oAPDU.GetBytes(), oAPDU.Size());
@@ -253,8 +253,8 @@ CByteArray CPinpad::PinCmd2(tPinOperation operation,
 	xChangeCmd.bEntryValidationCondition = 0x02;
 	xChangeCmd.bNumberMessage = 0x03;
 	//ToUchar2(m_ulLangCode, xChangeCmd.wLangId);
-	xChangeCmd.wLangId[0] = (m_ulLangCode & 0xff00) / 256;
-	xChangeCmd.wLangId[1] = m_ulLangCode & 0xff;
+	xChangeCmd.wLangId[0] = (unsigned char) ((m_ulLangCode & 0xff00) / 256);
+	xChangeCmd.wLangId[1] = (unsigned char) (m_ulLangCode & 0xff);
 	xChangeCmd.bMsgIndex1 = 0x00;
 	xChangeCmd.bMsgIndex2 = 0x01;
 	xChangeCmd.bMsgIndex3 = 0x02;

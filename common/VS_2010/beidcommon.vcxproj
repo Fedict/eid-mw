@@ -182,6 +182,9 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <Lib>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">
     <PreBuildEvent>
@@ -450,7 +453,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\ByteArray.cpp" />
     <ClCompile Include="..\src\ByteArrayReader.cpp" />
-    <ClCompile Include="..\src\ConfigCommon.cpp" />
+    <ClCompile Include="..\src\configcommon.cpp" />
     <ClCompile Include="..\src\configreg.cpp" />
     <ClCompile Include="..\src\datafile.cpp" />
     <ClCompile Include="..\src\DynamicLib.cpp" />

@@ -227,7 +227,7 @@ public:
 	{
 		const wchar_t *csSection;
 		const wchar_t *csParam;
-		const long lDefault;
+		long lDefault;
 	};
 
 	CConfig();

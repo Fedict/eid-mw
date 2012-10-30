@@ -151,7 +151,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>BEID_35;WIN32;USE_WINERROR;_DEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;BEID_35;WIN32;USE_WINERROR;_DEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -189,7 +189,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;USE_WINERROR;_DEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;NO_DIALOGS;BEID_35;WIN32;USE_WINERROR;_DEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -226,7 +226,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>BEID_35;WIN32;NDEBUG;_WINDOWS;USE_WINERROR;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;BEID_35;WIN32;NDEBUG;_WINDOWS;USE_WINERROR;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -263,7 +263,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;NDEBUG;_WINDOWS;USE_WINERROR;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;NO_DIALOGS;BEID_35;WIN32;NDEBUG;_WINDOWS;USE_WINERROR;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -304,7 +304,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>BEID_35;WIN32;USE_WINERROR;_DEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;BEID_35;WIN32;USE_WINERROR;_DEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -346,7 +346,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;USE_WINERROR;_DEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;NO_DIALOGS;BEID_35;WIN32;USE_WINERROR;_DEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -387,7 +387,7 @@
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <PreprocessorDefinitions>BEID_35;USE_WINERROR;WIN32;NDEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;BEID_35;USE_WINERROR;WIN32;NDEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -428,7 +428,7 @@
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;USE_WINERROR;WIN32;NDEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;NO_DIALOGS;BEID_35;USE_WINERROR;WIN32;NDEBUG;_WINDOWS;_USRDLL;CSP_BEID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -493,6 +493,17 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="beidCSP.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\cardlayer\VS_2010\beidcardlayer.vcxproj">
+      <Project>{c7de2b79-f890-4acb-804a-bdd14e1a9cae}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common\VS_2010\beidcommon.vcxproj">
+      <Project>{39710980-b40e-4b06-b8e8-d86b125007f3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dialogs\VS_2010\beidDlgsWin32.vcxproj">
+      <Project>{e27cf8f7-e472-4966-b7d6-448b1427a0d6}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

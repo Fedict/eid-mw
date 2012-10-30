@@ -50,6 +50,7 @@ unsigned long dlgPinPadInfoCollectorIndex = 0;
 #pragma managed(push, off)
 #endif
 
+#ifndef EIDMW_STATIC_LIB
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -67,6 +68,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	}
     return TRUE;
 }
+#endif
 
 #ifdef _MANAGED
 #pragma managed(pop)

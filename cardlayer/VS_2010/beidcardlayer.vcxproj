@@ -212,6 +212,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <TargetMachine>MachineX86</TargetMachine>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">
