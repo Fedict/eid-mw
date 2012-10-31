@@ -45,6 +45,17 @@
   <ItemGroup>
     <ResourceCompile Include="sccertprop.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\cardlayer\VS_2010\beidcardlayer.vcxproj">
+      <Project>{c7de2b79-f890-4acb-804a-bdd14e1a9cae}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\common\VS_2010\beidcommon.vcxproj">
+      <Project>{39710980-b40e-4b06-b8e8-d86b125007f3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dialogs\VS_2010\beidDlgsWin32.vcxproj">
+      <Project>{e27cf8f7-e472-4966-b7d6-448b1427a0d6}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8196603C-AB95-4383-8675-81FA67441FE5}</ProjectGuid>
     <RootNamespace>sccertprop</RootNamespace>
@@ -152,7 +163,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>./;../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;EIDMW_CMN_EXPORT;_CRT_NON_CONFORMING_SWPRINTFS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;USE_WINERROR;BEID_35;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -168,7 +179,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib;WS2_32.Lib;Crypt32.lib;beid40commonD.lib;beid40cardlayerD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;WS2_32.Lib;Crypt32.lib;beid40commonD.lib;beid40DlgsWin32D.lib;beid40cardlayerD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)D.exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -301,7 +312,7 @@
     </PreBuildEvent>
     <ClCompile>
       <AdditionalIncludeDirectories>./;../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;EIDMW_CMN_EXPORT;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeader>
@@ -316,7 +327,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib;WS2_32.Lib;Crypt32.lib;beid40common.lib;beid40cardlayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;WS2_32.Lib;Crypt32.lib;beid40common.lib;beid40DlgsWin32.lib;beid40cardlayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\VS_2010\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
