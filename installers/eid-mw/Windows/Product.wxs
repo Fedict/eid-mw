@@ -271,7 +271,7 @@
 	<DirectoryRef Id="BEIDCERTPROPROOTFOLDER">
 	<!-- Certificate Propagation Service is not yet available on Windows XP, therefore the beidsccertprop will register the certificates instead. -->
       <Component Id="beidsccertproptool" Guid="8F0AC506-4863-47ac-8A92-7B8FCE9ABC64" >
-        <File Id="beidsccertprop.exe" Name="beidsccertprop.exe" Source="..\..\..\sccertprop\Release\beidsccertprop.exe" KeyPath="yes"/>
+        <File Id="beidsccertprop.exe" Name="beidsccertprop.exe" Source="..\..\..\VS_2010\Binaries\Win32_Release\beidsccertprop.exe" KeyPath="yes"/>
       </Component>
       
 	  <Component Id="beidsccertproptool_autostart" Guid="F02E7164-F7EA-4c06-A2AC-A3BEE214EF49" >
@@ -287,11 +287,11 @@
       </Component>
       
       <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}">
-        <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoutlooksnc.exe" />
+        <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\Outlook_snc\beidoutlooksnc.exe" />
       </Component>
 
       <Component Id="Office2010XAdESTool" Guid="{B42CF78B-952A-4768-8605-2E6F3BBA340B}">
-        <File Id="beidoffice2010_XAdES_XL.exe" Name="beidoffice2010_XAdES_XL.exe" KeyPath="yes" Source="..\..\..\misc\setup_win\beidoffice2010_XAdES_XL.exe" />
+        <File Id="beidoffice2010_XAdES_XL.exe" Name="beidoffice2010_XAdES_XL.exe" KeyPath="yes" Source="..\..\..\Office2010_XAdES_XL\beidoffice2010_XAdES_XL.exe" />
       </Component>
 
       <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="no" Win64="no">
@@ -305,12 +305,6 @@
 
     <DirectoryRef Id="SystemFolder">
 
-      <Component Id="Runtime40" Guid="{13BD63DB-BFCC-4971-BB31-F9AABDFDEBF8}" SharedDllRefCount="no" Win64="no">
-        <File Id="beid40cardlayer.dll" Name="beid40cardlayer.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beid40cardlayer.dll" />
-        <File Id="beid40common.dll" Name="beid40common.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beid40common.dll" />
-        <File Id="beid40DlgsWin32.dll" Name="beid40DlgsWin32.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beid40DlgsWin32.dll" />
-      </Component>
-
       <Component Id="beidmdrvsystem32" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" Permanent="no" Win64="no">
         <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
       </Component>
@@ -322,7 +316,7 @@
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="no">
         <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\pkcs11_ff_release\beid_ff_pkcs11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>
 
     </DirectoryRef>
@@ -331,7 +325,7 @@
       <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes">
         <!--File Id="ch44xxeid.dll" Name="ch44xxeid.dll" Source="..\..\..\pinpad\ch44xxeid.dll" /-->
         <!--File Id="sprx32eid.dll" Name="sprx32eid.dll" Source="..\..\..\pinpad\sprx32eid.dll" /-->
-        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\..\ThirdParty\beid_sdk\2.6\bin\pinpad\xireid.dll" />
+        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\beidpp\xireid.dll" />
       </Component>
     </DirectoryRef>
 
@@ -518,7 +512,6 @@
       <ComponentRef Id="SCardSvrService"/>
       <ComponentRef Id="pkcs11"/>
       <ComponentRef Id="REGISTERXPI"/>
-      <ComponentRef Id="Runtime40"/>
 
       <Feature Id="Office2010Signatureregistration" Level="1" Display="hidden" Absent="disallow">
         <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>

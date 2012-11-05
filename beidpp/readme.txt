@@ -1,0 +1,1 @@
+This folder contains the old pinpad reader plugins (from eidmw 2.6)

@@ -179,7 +179,7 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">beid$(ProjectName)D</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|x64'">beid$(ProjectName)D</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid$(ProjectName)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">beid$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">beid_ff_$(ProjectName)</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|Win32'">beid$(ProjectName)</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">beid$(ProjectName)D</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">beid$(ProjectName)D</TargetName>
@@ -389,7 +389,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>beid_ff_cardlayer.lib;beid40DlgsWin32.lib;beid40common.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>../../VS_2010/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
+      <OutputFile>../../VS_2010/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2010/Binaries/$(Platform)_$(Configuration);../../VS_2010/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
