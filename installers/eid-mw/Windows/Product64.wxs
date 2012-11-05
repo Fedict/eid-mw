@@ -491,7 +491,6 @@
           Target="[APPLICATIONROOTFOLDER]beidoutlooksnc.exe"
           WorkingDirectory="APPLICATIONROOTFOLDER"/>
         <RemoveFolder Id="ApplicationProgramsFolderUtilities" On="uninstall"/>
-        <RemoveFolder Id="ApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="OutlookShortcut" Type="integer" Value="1" KeyPath="yes" />
       </Component>
       <Component Id="Office2010XAdESShortcut" Guid="{B2D00383-20A7-4058-A153-80D4DC15FD42}" Win64="no">
