@@ -306,7 +306,7 @@
     <DirectoryRef Id="SystemFolder">
 
       <Component Id="beidmdrvsystem32" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" Permanent="no" Win64="no">
-        <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
+        <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv.dll" KeyPath="yes" DiskId="1" />
       </Component>
 
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="no">

@@ -323,7 +323,7 @@
     <DirectoryRef Id="SystemFolder">
 
       <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes" Win64="no">
-        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv32.dll" />
+        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv.dll" />
       </Component>
 
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes" Win64="no">
