@@ -80,6 +80,20 @@ copy %~dp0..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 
+:: create the NSIS plugins
+:: =========================
+@echo [INFO] Building "%~dp0..\VS_2010\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\installers\quickinstaller\NSIS_Plugins\beidplugins.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\installers\quickinstaller\NSIS_Plugins\beidplugins.sln"
+
+:: copy the NSIS plugins to NSIS default plugin folder
+:: =========================
+@echo [INFO] Copying beid NSIS plugin
+copy %~dp0..\installers\quickinstaller\NSIS_Plugins\beidread\Release\beid.dll "%NSIS_PATH%\Plugins"
+@echo [INFO] Copying driver_installer NSIS plugin
+copy %~dp0..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\driver_installer.dll "%NSIS_PATH%\Plugins"
+
 :: create the NSIS installer
 :: =========================
 @echo [INFO] Make nsis installer
