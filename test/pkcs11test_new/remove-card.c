@@ -25,7 +25,8 @@
  */
 
 #include <stdio.h>
-#include <opensc/pkcs11.h>
+#include <include/rsaref220/pkcs11.h>
+#include <include/rsaref220/unix.h>
 #include <dlfcn.h>
 #include <unistd.h>
 #include <stdlib.h>
