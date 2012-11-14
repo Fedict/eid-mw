@@ -206,8 +206,6 @@
 
 #elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)) && !defined(INTEL_CC) && !defined(LTC_NO_ASM)
 
-#error STOP RIGHT THERE - NO ASSEMBLER ALLOWED
-
 static inline unsigned ROL(unsigned word, int i)
 {
    asm ("roll %%cl,%0"

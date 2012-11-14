@@ -21,7 +21,7 @@
 #include "../common/src/log.h"
 
 #ifdef __APPLE__
-#include "src/unknowncard.h"
+#include "unknowncard.h"
 #endif
 
 using namespace eIDMW;
