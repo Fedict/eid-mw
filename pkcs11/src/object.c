@@ -312,22 +312,41 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
 	if(addIdObjects == CK_TRUE)
 	{
-		if (pSession->bReadDataAllowed == P11_READDATA_ASK)
+		//parse the search template
+		CK_UTF8CHAR* pLabel;
+		CK_UTF8CHAR* pObjectID;
+		ret = p11_get_attribute_value(pTemplate, ulCount, CKA_OBJECT_ID, (CK_VOID_PTR *) &pObjectID, &len);
+		if ( (ret == 0) && (len > 0 ) )
 		{
-			allowCardRead = AllowCardReading();
-			if (allowCardRead == P11_DISPLAY_YES)
+			SetParseFlagByObjectID(&filesToCacheFlag,pObjectID,len);
+		}
+		else
+		{
+			ret = p11_get_attribute_value(pTemplate, ulCount, CKA_LABEL, (CK_VOID_PTR *) &pLabel, &len);
+			if ( (ret == 0) && (len > 0 ) )
 			{
-				pSession->bReadDataAllowed = P11_READDATA_ALLOWED;
+				SetParseFlagByLabel(&filesToCacheFlag,pLabel,len);
 			}
-			else
+		}
+		if((filesToCacheFlag != CACHED_DATA_TYPE_CARDDATA) && (filesToCacheFlag != CACHED_DATA_TYPE_RNCERT))
+		{
+			if (pSession->bReadDataAllowed == P11_READDATA_ASK)
 			{
-				if(allowCardRead == P11_DISPLAY_NO)
+				allowCardRead = AllowCardReading();
+				if (allowCardRead == P11_DISPLAY_YES)
 				{
-					pSession->bReadDataAllowed = P11_READDATA_REFUSED;
-				}				
-				log_trace(WHERE, "I: User does not allow reading from the card");
-				ret = CKR_FUNCTION_FAILED;
-				goto cleanup;
+					pSession->bReadDataAllowed = P11_READDATA_ALLOWED;
+				}
+				else
+				{
+					if(allowCardRead == P11_DISPLAY_NO)
+					{
+						pSession->bReadDataAllowed = P11_READDATA_REFUSED;
+					}				
+					log_trace(WHERE, "I: User does not allow reading from the card");
+					ret = CKR_FUNCTION_FAILED;
+					goto cleanup;
+				}
 			}
 		}
 	}
@@ -365,25 +384,6 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		{
 			log_trace(WHERE, "E: p11_copy_object() returned %d", ret);
 			goto cleanup;
-		}
-		//parse the search template
-		if(addIdObjects == CK_TRUE)
-		{
-			CK_UTF8CHAR* pLabel;
-			CK_UTF8CHAR* pObjectID;
-			ret = p11_get_attribute_value(pTemplate, ulCount, CKA_OBJECT_ID, (CK_VOID_PTR *) &pObjectID, &len);
-			if ( (ret == 0) && (len > 0 ) )
-			{
-				SetParseFlagByObjectID(&filesToCacheFlag,pObjectID,len);
-			}
-			else
-			{
-				ret = p11_get_attribute_value(pTemplate, ulCount, CKA_LABEL, (CK_VOID_PTR *) &pLabel, &len);
-				if ( (ret == 0) && (len > 0 ) )
-				{
-					SetParseFlagByLabel(&filesToCacheFlag,pLabel,len);
-				}
-			}
 		}
 	}
 
@@ -713,7 +713,7 @@ void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_UL
 	BEID_DATA_LABELS_NAME ADDRESS_LABELS[]=BEID_ADDRESS_DATA_LABELS;
 
 	CK_ULONG carddataLabelsListLen = 14;
-	CK_UTF8CHAR_PTR carddataLabelsList[14] = {BEID_LABEL_DATA_SerialNr,BEID_LABEL_DATA_CompCode,BEID_LABEL_DATA_OSNr,
+	const char* carddataLabelsList[14] = {BEID_LABEL_DATA_SerialNr,BEID_LABEL_DATA_CompCode,BEID_LABEL_DATA_OSNr,
 		BEID_LABEL_DATA_OSVersion,BEID_LABEL_DATA_SoftMaskNumber,BEID_LABEL_DATA_SoftMaskVersion,
 		BEID_LABEL_DATA_ApplVersion,BEID_LABEL_DATA_GlobOSVersion,BEID_LABEL_DATA_ApplIntVersion,
 		BEID_LABEL_DATA_PKCS1Support,BEID_LABEL_DATA_ApplLifeCycle,BEID_LABEL_DATA_KeyExchangeVersion,
