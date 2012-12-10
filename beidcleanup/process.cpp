@@ -441,6 +441,7 @@ int Execute(wchar_t *wzCommandLine,long lTimeout, bool *pbRebootNeeded, HKEY hRo
 				if(RegistryKeyExist(hRootKey,wzKey))
 				{
 					LOG(L" --> ERROR - Timeout - Registry key still exist\n");
+					LOG(L" --> Registry key: \"%s\"\n",wzKey);
 					iReturnCode = RETURN_ERR_EXECUTE_TIMOUT;
 				}
 			}

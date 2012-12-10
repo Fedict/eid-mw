@@ -159,6 +159,8 @@ int Uninstall(const wchar_t *defaultname,const wchar_t *guid, InstallType type, 
 		return iReturnCode;
 	}
 
+	LOG(L"Ask for Uninstall of \"%s\" (GUID=%s)\n",defaultname,guid);
+
 	TCHAR wzKey[250];
 	if(type==INSTALLTYPE_IS_MSI)
 	{
