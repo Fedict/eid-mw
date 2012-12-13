@@ -20,7 +20,7 @@
 #include "basetest.h"
 #include "logtest.h"
 
-testRet test_sign() {
+testRet test_sign_mech(CK_MECHANISM_TYPE mechanismType) {
 	void *handle;						//handle to the pkcs11 library
 	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
 
@@ -46,7 +46,7 @@ testRet test_sign() {
 				slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
 				if(slotIds != NULL)
 				{
-					frv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
+					frv = (*functions->C_GetSlotList) (CK_TRUE, slotIds, &slot_count);
 					if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetSlotList (X2)", "test_sign" ))
 					{
 						if(slot_count == 0)
@@ -60,7 +60,7 @@ testRet test_sign() {
 							CK_ATTRIBUTE attributes[2] = {	{CKA_CLASS,&private_key,sizeof(CK_ULONG)},
 							{CKA_LABEL,"Signature",(CK_ULONG) strlen("Signature")}};
 							CK_OBJECT_HANDLE hKey;
-							CK_MECHANISM mechanism = {CKM_RSA_PKCS, NULL_PTR, 0};
+							CK_MECHANISM mechanism = {mechanismType, NULL_PTR, 0};
 							CK_BYTE_PTR data = "testsignthis"; 
 							CK_BYTE signature[256];
 							CK_ULONG signLength = 256;
@@ -110,6 +110,11 @@ testRet test_sign() {
 																if(memcmp(signature,signatureMultiPart,signLength) != 0)
 																{
 																	testlog(LVL_ERROR, "test_sign single_part and multi_part give different results\n");
+																	testlog(LVL_ERROR, "signature length single_part = %d\n signature = ",signLength);
+																	testlogbytes(LVL_ERROR,signature, signLength);
+																	testlog(LVL_ERROR, "\nsignature length multi_part = %d\n signature = ",signLength);
+																	testlogbytes(LVL_ERROR,signatureMultiPart, signMultiPartLength);
+																	testlog(LVL_ERROR, "\n");
 																}
 															}
 														}
@@ -151,3 +156,18 @@ testRet test_sign() {
 	return retVal;
 } 
 
+testRet test_sign(void)
+{
+	testRet testret;
+	
+	//testret = test_sign_mech(CKM_SHA384);//invalid
+
+	testret = test_sign_mech(CKM_SHA384_RSA_PKCS);
+	
+	testlog(LVL_ERROR, "test_sign single_part and multi_part give different results\n");
+
+	//testret = test_sign_mech(CKM_SHA1_RSA_PKCS_PSS);
+	
+
+	return testret;
+}

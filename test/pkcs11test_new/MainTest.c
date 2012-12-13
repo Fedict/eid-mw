@@ -73,8 +73,12 @@ int main (int argc, const char * argv[])
 	{{0,TEST_SKIPPED},"tests getting the keys from the card",&test_getkeys},
 	{{0,TEST_SKIPPED},"tests the return values of the getattributes function",&test_getkeys_retvals},
 	{{0,TEST_SKIPPED},"tests getting all the objects from the card",&test_getallobjects},
-	{{0,TEST_SKIPPED},"tests getting object's attributes from the card",&test_getattributevalue_all},
-	{{0,TEST_SKIPPED},"tests getting the lastname object's attributes from the card",&test_getattributevalue_lastname},	
+//		{{0,TEST_SKIPPED},"tests getting all the objects from the card",&test_getallidobjects},
+	
+//	{{0,TEST_SKIPPED},"tests getting object's attributes from the card",&test_getattributevalue_all},
+	{{0,TEST_SKIPPED},"tests getting object's attributes from the card",&test_getattributevalue_rrn},
+	
+//	{{0,TEST_SKIPPED},"tests getting the lastname object's attributes from the card",&test_getattributevalue_lastname},	
 #ifdef WIN32
 	{{0,TEST_SKIPPED},"tests adding and removing readers",&test_add_remove_readers},
 	{{0,TEST_SKIPPED},"tests waiting for card and reader events",&test_add_remove_readerevents},

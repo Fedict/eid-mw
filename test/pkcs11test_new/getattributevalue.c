@@ -46,7 +46,7 @@ testRet test_getattributevalue(CK_ATTRIBUTE_PTR psearchtemplate, CK_ULONG templa
 		slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
 		if(slotIds != NULL)
 		{
-		  frv = (*functions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
+		  frv = (*functions->C_GetSlotList) (CK_TRUE, slotIds, &slot_count);
 		  if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetSlotList (X2)", "test_getattributevalue" ))
 		  {
 			if(slot_count == 0)
@@ -166,6 +166,17 @@ testRet test_getattributevalue_lastname() {
   testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
   CK_ULONG data = CKO_DATA;
   CK_UTF8CHAR label[] = "Surname";
+  CK_ATTRIBUTE attributes[] = {{CKA_CLASS,&data,sizeof(CK_ULONG)},
+								{CKA_LABEL,label,sizeof(label)-1}};
+  test_getattributevalue(attributes, 2);
+
+  return retVal;
+}
+
+testRet test_getattributevalue_rrn() {
+  testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
+  CK_ULONG data = CKO_DATA;
+  CK_UTF8CHAR label[] = "national_number";
   CK_ATTRIBUTE attributes[] = {{CKA_CLASS,&data,sizeof(CK_ULONG)},
 								{CKA_LABEL,label,sizeof(label)-1}};
   test_getattributevalue(attributes, 2);
