@@ -207,7 +207,7 @@ static long BackToAsyncMode(tPCSCfunctions *pPCSCfunctions, const char *csReader
         				ioRecvPci.cbPciLength = sizeof(SCARD_IO_REQUEST);
         				ioSendPci.dwProtocol = dwAP;
         				ioRecvPci.dwProtocol = dwAP;   
-					long lRet = pPCSCfunctions->pCardTransmit(*phCard,
+						lRet = pPCSCfunctions->pCardTransmit(*phCard,
 						&ioSendPci, (unsigned char *) tSetAsyncCard, sizeof(tSetAsyncCard),
 						&ioRecvPci, tucRecv, &ulRecvLen);
 				}
