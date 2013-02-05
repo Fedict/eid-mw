@@ -1,0 +1,20 @@
+#!/bin/bash
+## Remove parts (GUI, Tray applet, pkcs11) of the previous middleware parts if they exist
+test -e "" && rm -rf ""
+test -e "/Library/Belgium Identity Card" && rm -rf "/Library/Belgium Identity Card"
+test -e /usr/local/lib/beid-pkcs11.bundle && rm -rf /usr/local/lib/beid-pkcs11.bundle
+test -e /usr/local/lib/pkcs11/beid-pkcs11.bundle && rm -rf /usr/local/lib/pkcs11/beid-pkcs11.bundle
+test -e /usr/local/lib/beid-pkcs11.bundle && rm -rf /usr/local/lib/beid-pkcs11.bundle
+
+## Create /usr/local if it does not exist yet
+mkdir -p /usr/local
+
+## Create /Library/BelgiumIdentityCard if it does not exist yet
+mkdir -p /Library/BelgiumIdentityCard
+
+## Create /Library/BelgiumIdentityCard/Licenses if it does not exist yet
+mkdir -p /Library/BelgiumIdentityCard/Licenses
+
+## Create /usr/local/lib/pkcs11 if it does not exist yet
+mkdir -p /usr/local/lib/pkcs11
+

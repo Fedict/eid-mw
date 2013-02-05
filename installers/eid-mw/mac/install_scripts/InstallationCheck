@@ -1,0 +1,18 @@
+#!/bin/bash
+#########################################
+# we must be running on intel
+#########################################
+MACHINE=`uname -p`
+if [[ ($MACHINE == "ppc64") || ($MACHINE == "ppc")]]
+then
+exit 112
+fi
+#########################################
+# we must be running on 64 bit if 10.5
+#########################################
+OSVERSION=`sw_vers -productVersion`
+if [[ ($OSVERSION > "10.4.99") && ($OSVERSION < "10.6.0")]]
+then
+exit 113
+fi
+exit 0
