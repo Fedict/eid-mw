@@ -23,18 +23,18 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		7F22A36F0F84C588001AD228 /* libbeidcommon.4.0.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.0.4.dylib */; };
-		7F22A3780F84C5A1001AD228 /* libbeiddialogsQT.4.0.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.0.4.dylib */; };
-		7F22A3C40F84D4A1001AD228 /* libbeidcommon.4.0.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.0.4.dylib */; };
-		7F872F7B0F84E58300DE6627 /* libbeiddialogsQT.4.0.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.0.4.dylib */; };
+		7F22A36F0F84C588001AD228 /* libbeidcommon.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.dylib */; };
+		7F22A3780F84C5A1001AD228 /* libbeiddialogsQT.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */; };
+		7F22A3C40F84D4A1001AD228 /* libbeidcommon.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.dylib */; };
+		7F872F7B0F84E58300DE6627 /* libbeiddialogsQT.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */; };
 		7F872F8F0F84E5E000DE6627 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F872F8E0F84E5E000DE6627 /* QtGui.framework */; };
 		7F872F930F84E5F800DE6627 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F872F920F84E5F800DE6627 /* QtCore.framework */; };
-		7F900E0A0F84EE15004A5FCC /* libbeidcommon.4.0.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.0.4.dylib */; };
-		7FA1AA620F85F6C1000D9EE1 /* libbeidcommon.4.0.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.0.4.dylib */; };
-		7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer.4.0.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.0.4.dylib */; };
+		7F900E0A0F84EE15004A5FCC /* libbeidcommon.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.dylib */; };
+		7FA1AA620F85F6C1000D9EE1 /* libbeidcommon.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.dylib */; };
+		7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.0.dylib */; };
 		7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
-		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.0.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.0.4.dylib */; };
-		8618D23D13CAFA16008E73AB /* libbeiddialogsQT.4.0.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.0.4.dylib */; };
+		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.dylib */; };
+		8618D23D13CAFA16008E73AB /* libbeiddialogsQT.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */; };
 		86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		86B82D9B1541AFA9008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
@@ -279,11 +279,11 @@
 		7F90111C0F850342004A5FCC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		7F90112C0F850450004A5FCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7F90D5620F9F38EC00BB8F23 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = System/Library/Frameworks/JavaVM.framework; sourceTree = SDKROOT; };
-		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.0.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.4.0.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FBB02530F839352009B751F /* libbeidcommon.4.0.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcommon.4.0.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.0.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcardlayer.4.0.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.0.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.4.1.0.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FBB02530F839352009B751F /* libbeidcommon.4.1.0.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcommon.4.1.0.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.0.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcardlayer.4.1.0.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC535AC0F84B9EF00BA96EE /* libsiscardplugin1__ACS__.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsiscardplugin1__ACS__.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.0.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsQT.4.0.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsQT.4.1.0.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		86A90A2B1122D6880011C6A8 /* trunk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trunk; path = "/beid-mw/trunk"; sourceTree = "<absolute>"; };
 		86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libxerces-c-3.1.dylib"; path = "/beid-mw/trunk/eid-mw/_src/ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib"; sourceTree = "<absolute>"; };
 		86D0915211ABF313007BC75E /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework; sourceTree = DEVELOPER_DIR; };
@@ -456,8 +456,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F900E0A0F84EE15004A5FCC /* libbeidcommon.4.0.4.dylib in Frameworks */,
-				7F872F7B0F84E58300DE6627 /* libbeiddialogsQT.4.0.4.dylib in Frameworks */,
+				7F900E0A0F84EE15004A5FCC /* libbeidcommon.4.1.0.dylib in Frameworks */,
+				7F872F7B0F84E58300DE6627 /* libbeiddialogsQT.4.1.0.dylib in Frameworks */,
 				7F872F8F0F84E5E000DE6627 /* QtGui.framework in Frameworks */,
 				7F872F930F84E5F800DE6627 /* QtCore.framework in Frameworks */,
 			);
@@ -467,10 +467,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer.4.0.4.dylib in Frameworks */,
-				7FA1AA620F85F6C1000D9EE1 /* libbeidcommon.4.0.4.dylib in Frameworks */,
+				7FA1AA640F85F6CF000D9EE1 /* libbeidcardlayer.4.1.0.dylib in Frameworks */,
+				7FA1AA620F85F6C1000D9EE1 /* libbeidcommon.4.1.0.dylib in Frameworks */,
 				86D0918011ABFA40007BC75E /* PCSC.framework in Frameworks */,
-				8618D23D13CAFA16008E73AB /* libbeiddialogsQT.4.0.4.dylib in Frameworks */,
+				8618D23D13CAFA16008E73AB /* libbeiddialogsQT.4.1.0.dylib in Frameworks */,
 				86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,8 +487,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F22A3780F84C5A1001AD228 /* libbeiddialogsQT.4.0.4.dylib in Frameworks */,
-				7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.0.4.dylib in Frameworks */,
+				7F22A3780F84C5A1001AD228 /* libbeiddialogsQT.4.1.0.dylib in Frameworks */,
+				7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.0.dylib in Frameworks */,
 				86D0915311ABF313007BC75E /* PCSC.framework in Frameworks */,
 				86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */,
 			);
@@ -498,7 +498,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F22A3C40F84D4A1001AD228 /* libbeidcommon.4.0.4.dylib in Frameworks */,
+				7F22A3C40F84D4A1001AD228 /* libbeidcommon.4.1.0.dylib in Frameworks */,
 				86B82D9B1541AFA9008A964F /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,7 +507,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F22A36F0F84C588001AD228 /* libbeidcommon.4.0.4.dylib in Frameworks */,
+				7F22A36F0F84C588001AD228 /* libbeidcommon.4.1.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,12 +517,12 @@
 		034768DDFF38A45A11DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7FBB02530F839352009B751F /* libbeidcommon.4.0.4.dylib */,
-				7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.0.4.dylib */,
+				7FBB02530F839352009B751F /* libbeidcommon.4.1.0.dylib */,
+				7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.0.dylib */,
 				7FC535AC0F84B9EF00BA96EE /* libsiscardplugin1__ACS__.dylib */,
-				7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.0.4.dylib */,
+				7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */,
 				7F872F680F84E53000DE6627 /* beiddialogsQTsrv */,
-				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.0.4.dylib */,
+				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.0.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -968,7 +968,7 @@
 			);
 			name = beidpkcs11;
 			productName = beidpkcs11;
-			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.0.4.dylib */;
+			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.0.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FBB02520F839352009B751F /* beidcommon */ = {
@@ -985,7 +985,7 @@
 			);
 			name = beidcommon;
 			productName = beidcommon;
-			productReference = 7FBB02530F839352009B751F /* libbeidcommon.4.0.4.dylib */;
+			productReference = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FC5353A0F84B83B00BA96EE /* beidcardlayer */ = {
@@ -1004,7 +1004,7 @@
 			);
 			name = beidcardlayer;
 			productName = beidcardlayer;
-			productReference = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.0.4.dylib */;
+			productReference = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.0.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FC535AB0F84B9EF00BA96EE /* siscardplugin */ = {
@@ -1040,7 +1040,7 @@
 			);
 			name = beiddialogsQT;
 			productName = beiddialogsQT;
-			productReference = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.0.4.dylib */;
+			productReference = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -1264,7 +1264,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CURRENT_PROJECT_VERSION = 3.6.0;
+				CURRENT_PROJECT_VERSION = 4.1.0;
 				DEBUG_INFORMATION_FORMAT = stabs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1292,7 +1292,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CURRENT_PROJECT_VERSION = 4.0.4;
+				CURRENT_PROJECT_VERSION = 4.1.0;
 				DEBUG_INFORMATION_FORMAT = stabs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_MODEL_TUNING = "";
@@ -1381,7 +1381,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.5.5;
+				CURRENT_PROJECT_VERSION = "";
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_PREFIX = lib;

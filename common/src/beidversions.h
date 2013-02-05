@@ -11,7 +11,7 @@
 // To specified in the .rc files
 
 #define BEID_COMPANY_NAME    	"Belgian Government"
-#define BEID_COPYRIGHT    		"Copyright (C) 2009-2012"
+#define BEID_COPYRIGHT    		"Copyright (C) 2009-2013"
 #define BEID_PRODUCT_NAME    	"Belgium eID MiddleWare"
 
 #define BEID_PRODUCT_VERSION    "4.1.0"
