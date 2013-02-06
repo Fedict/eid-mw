@@ -30,9 +30,17 @@ namespace EidSamples
         {
             System.Diagnostics.Stopwatch duurtijd = new System.Diagnostics.Stopwatch();
             duurtijd.Start();
+
+            //SignTests st = new SignTests();
+            //st.SignAuthentication();
+
+            //IntegrityTests it = new IntegrityTests();
+            //it.IntegrityIdentityFile();
+
             DataTests dt = new DataTests();
             //dt.StoreCertificateRNFile();
             dt.GetSurname();
+            dt.GetChipnumber();
             dt.GetCertificateLabels();
             duurtijd.Stop();
             Console.WriteLine(duurtijd.ElapsedMilliseconds.ToString());

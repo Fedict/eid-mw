@@ -115,6 +115,16 @@ namespace EidSamples
             return GetData("surname");
         }
 
+                /// <summary>
+        /// Get surname of the chipnumber of the token (eid) in the first non-empty slot (cardreader)
+        /// </summary>
+        /// <returns></returns>
+        public string GetChipnumber()
+        {
+            return GetData("chip_number",true);
+        }
+        
+
         /// <summary>
         /// Get date of birth of the owner. This is a language specific string
         /// More info about the format can be found in the eid specs.
@@ -124,12 +134,21 @@ namespace EidSamples
         {
             return GetData("date_of_birth");
         }
-        /// <summary>
+                /// <summary>
         /// Generic function to get string data objects from label
         /// </summary>
         /// <param name="label">Value of label attribute of the object</param>
         /// <returns></returns>
         public string GetData(String label)
+        {
+            return GetData(label, false);
+        }
+        /// <summary>
+        /// Generic function to get string data objects from label
+        /// </summary>
+        /// <param name="label">Value of label attribute of the object</param>
+        /// <returns></returns>
+        public string GetData(String label, Boolean displayBytes)
         {
             String value = "";
             if (m == null)
@@ -174,7 +193,16 @@ namespace EidSamples
                             Console.WriteLine(label);
                         if (data.Value.Value != null)
                         {
-                            value = System.Text.Encoding.UTF8.GetString(data.Value.Value);
+        
+                            if (displayBytes == true)
+                            {
+                                value = BitConverter.ToString(data.Value.Value);
+                                value = value.Replace("-", "");
+                            }
+                            else
+                            {
+                                value = System.Text.Encoding.UTF8.GetString(data.Value.Value);
+                            }
                             Console.WriteLine(value);
                         }
                         counter--;

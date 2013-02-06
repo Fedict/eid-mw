@@ -51,6 +51,13 @@ namespace EidSamples.tests
             //Assert.AreEqual("SPECIMEN", dataTest.GetSurname());
         }
         [Test]
+        public void GetChipnumber()
+        {
+            ReadData dataTest = new ReadData("beidpkcs11.dll");
+            dataTest.GetChipnumber();
+            //Assert.AreEqual("SPECIMEN", dataTest.GetSurname());
+        }
+        [Test]
         public void GetDateOfBirth()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
