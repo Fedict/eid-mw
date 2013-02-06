@@ -33,7 +33,7 @@ fi
 # make sure scripts are executable
 #-----------------------------------------
 CURRDIR=`pwd`
-chmod +x ./createPackage.sh
+chmod +x ./create_package.sh
 chmod +x ../../../xpi/build.sh
 
 #-----------------------------------------
@@ -92,6 +92,6 @@ cd -
 # create a pkg file
 #-----------------------------------------
 echo "creating the beid package..."
-./createPackage.sh
+./create_package.sh
 
 echo "[Info ] Done..."
