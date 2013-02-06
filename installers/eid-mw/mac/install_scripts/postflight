@@ -4,50 +4,33 @@ MWVER3=4.1.0
 MWVER2=4.1
 MWVER1=4
 
+XPI_VERSION=1.0.18
+
 echo $MWVER > /tmp/beid_install.log
 
 #update the links
-test -e /usr/local/lib/libbeiddialogsQT.$MWVER2.dylib && unlink /usr/local/lib/libbeiddialogsQT.$MWVER2.dylib
-ln -fs /usr/local/lib/libbeiddialogsQT.$MWVER3.dylib /usr/local/lib/libbeiddialogsQT.$MWVER2.dylib
-test -e /usr/local/lib/libbeidcardlayer.$MWVER2.dylib && unlink /usr/local/lib/libbeidcardlayer.$MWVER2.dylib
-ln -fs /usr/local/lib/libbeidcardlayer.$MWVER3.dylib /usr/local/lib/libbeidcardlayer.$MWVER2.dylib
-test -e /usr/local/lib/libbeidcommon.$MWVER2.dylib && unlink /usr/local/lib/libbeidcommon.$MWVER2.dylib
-ln -fs /usr/local/lib/libbeidcommon.$MWVER3.dylib /usr/local/lib/libbeidcommon.$MWVER2.dylib
 test -e /usr/local/lib/libbeidpkcs11.$MWVER2.dylib && unlink /usr/local/lib/libbeidpkcs11.$MWVER2.dylib
 ln -fs /usr/local/lib/libbeidpkcs11.$MWVER3.dylib /usr/local/lib/libbeidpkcs11.$MWVER2.dylib
 
-test -e /usr/local/lib/libbeiddialogsQT.$MWVER1.dylib && unlink /usr/local/lib/libbeiddialogsQT.$MWVER1.dylib
-ln -fs /usr/local/lib/libbeiddialogsQT.$MWVER2.dylib /usr/local/lib/libbeiddialogsQT.$MWVER1.dylib
-test -e /usr/local/lib/libbeidcardlayer.$MWVER1.dylib && unlink /usr/local/lib/libbeidcardlayer.$MWVER1.dylib
-ln -fs /usr/local/lib/libbeidcardlayer.$MWVER2.dylib /usr/local/lib/libbeidcardlayer.$MWVER1.dylib
-test -e /usr/local/lib/libbeidcommon.$MWVER1.dylib && unlink /usr/local/lib/libbeidcommon.$MWVER1.dylib
-ln -fs /usr/local/lib/libbeidcommon.$MWVER2.dylib /usr/local/lib/libbeidcommon.$MWVER1.dylib
 test -e /usr/local/lib/libbeidpkcs11.$MWVER1.dylib && unlink /usr/local/lib/libbeidpkcs11.$MWVER1.dylib
 ln -fs /usr/local/lib/libbeidpkcs11.$MWVER2.dylib /usr/local/lib/libbeidpkcs11.$MWVER1.dylib
 
-test -e /usr/local/lib/libbeiddialogsQT.dylib && unlink /usr/local/lib/libbeiddialogsQT.dylib
-ln -fs /usr/local/lib/libbeiddialogsQT.$MWVER1.dylib /usr/local/lib/libbeiddialogsQT.dylib
-test -e /usr/local/lib/libbeidcardlayer.dylib && unlink /usr/local/lib/libbeidcardlayer.dylib
-ln -fs /usr/local/lib/libbeidcardlayer.$MWVER1.dylib /usr/local/lib/libbeidcardlayer.dylib
-test -e /usr/local/lib/libbeidcommon.dylib && unlink /usr/local/lib/libbeidcommon.dylib
-ln -fs /usr/local/lib/libbeidcommon.$MWVER1.dylib /usr/local/lib/libbeidcommon.dylib
 test -e /usr/local/lib/libbeidpkcs11.dylib && unlink /usr/local/lib/libbeidpkcs11.dylib
 ln -fs /usr/local/lib/libbeidpkcs11.$MWVER1.dylib /usr/local/lib/libbeidpkcs11.dylib
 
 #place the pkcs11 bundle at /usr/local/lib/beid-pkcs11.bundle/ 
-cp -r /usr/local/lib/beid-pkcs11.bundle/ /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/
-test -e /usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib && unlink /usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
-ln -fs /usr/local/lib/libbeidpkcs11.$MWVER3.dylib /usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
-test -e /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib && unlink /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
-ln -fs /usr/local/lib/libbeidpkcs11.$MWVER3.dylib /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
+#cp -r /usr/local/lib/beid-pkcs11.bundle/ /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/
+#test -e /usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib && unlink /usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
+#ln -fs /usr/local/lib/libbeidpkcs11.$MWVER3.dylib /usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
+#test -e /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib && unlink /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
+#ln -fs /usr/local/lib/libbeidpkcs11.$MWVER3.dylib /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
 
 #install the XPI
 mkdir -p "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
-mv /Library/BelgiumIdentityCard/belgiumeid-1.0.12.xpi "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
-unzip -qq -o "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-1.0.12.xpi" -d "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/"
-rm "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-1.0.12.xpi"
+mv /Library/BelgiumIdentityCard/belgiumeid-$XPI_VERSION.xpi "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
+unzip -qq -o "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi" -d "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/"
+rm "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi"
 rm "/Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi"
-chmod -R +rx "/Applications/eID Viewer.app"
 
 #install adapted tokend for OS X 10.5
 if [[ $(sw_vers -productVersion) == *10.5* ]]; then
@@ -55,12 +38,12 @@ mv /Library/BelgiumIdentityCard/BEID.tokend /System/Library/Security/tokend/; el
 test -e /System/Library/Security/tokend/BEID.tokend && rm -R /System/Library/Security/tokend/BEID.tokend; fi
 rm -R /Library/BelgiumIdentityCard/BEID.tokend;
 
-#install OS X 10.6 tokend on 10.7
+#install OS X 10.6 tokend on OS X 10.7
 if [[ $(sw_vers -productVersion) >= *10.7* ]]; then
 mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi
 rm -R /Library/BelgiumIdentityCard/BEID_Lion.tokend;
 
-#install OS X 10.6 tokend on 10.8
+#install OS X 10.6 tokend on OS X 10.8
 if [[ $(sw_vers -productVersion) >= *10.8* ]]; then
 mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi
 rm -R /Library/BelgiumIdentityCard/BEID_Lion.tokend;

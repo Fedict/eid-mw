@@ -2,11 +2,13 @@
 
 #installer name defines
 #resources dir, where the plists are
+RESOURCES_NO_SVN_DIR="./resources_no_svn"
 RESOURCES_DIR="./resources"
 #install scripts dir, where the install scripts are
 INFO_DIR="./info"
 #install scripts dir, where the install scripts are
 INSTALL_SCRIPTS_DIR="./install_scripts"
+INSTALL_SCRIPTS_NO_SVN_DIR="./install_scripts_no_svn"
 #root dir, where all files to be packaged will be placed
 ROOT_DIR="./root"
 #inst dir, where our libs and binaries will be placed
@@ -44,13 +46,13 @@ BIN_DIR="../../../bin"
 #destroy previously build package\clean_release: 
 test -e $ROOT_DIR && rm -rdf $ROOT_DIR
 test -e $PKG_NAME &&rm -rf $PKG_NAME
-#test -e $DMG_NAME && rm $DMG_NAME
+test -e $RESOURCES_NO_SVN_DIR &&rm -rf $RESOURCES_NO_SVN_DIR
+test -e $INSTALL_SCRIPTS_NO_SVN_DIR &&rm -rf $INSTALL_SCRIPTS_NO_SVN_DIR
 
 #create installer dirs
 mkdir -p $ROOT_DIR/$INST_DIR/lib/siscardplugins
-mkdir -p $ROOT_DIR/$INST_DIR/lib/beidqt/plugins
-mkdir -p $ROOT_DIR/$INST_DIR/bin
-mkdir -p $ROOT_DIR/$INST_DIR/etc
+mkdir -p $ROOT_DIR/$INST_DIR/lib/beidqt
+mkdir -p $ROOT_DIR/$INST_DIR/share/beid/certs
 mkdir -p $ROOT_DIR/$LICENSES_DIR
 mkdir -p $ROOT_DIR/usr/bin/
 
@@ -87,21 +89,16 @@ cp ../../../misc/licenses_files/German/eID-toolkit_licensingtermsconditions.txt 
 	$ROOT_DIR/$LICENSES_DIR/license_DE.txt ; \
 cp ../../../misc/licenses_files/THIRDPARTY-LICENSES-Mac.txt $ROOT_DIR/$LICENSES_DIR/
 
+#copy certificates
+cp ../../../misc/certs/beid-cert-belgiumrca2.der $ROOT_DIR/$INST_DIR/share/beid/certs/
+
 #copy pkcs11 bundle
 #cp -r ../../../misc/mac/pkcs11.bundle $ROOT_DIR/$INST_DIR/lib/$PKCS11_BUNDLE
 	 
-#cp beid.conf 
 ## Make interpretes spaces as separator. So we specify 2 names:
 ## the one that will be installed and the one to which this
 ## name will be renamed into in the postflight script at the end
 ## of the installation.
-
-#ETC = beid.conf $ROOT_DIR/$INST_DIR/etc
-
-
-## directories that the package installer should create
-## on the user's machine in case they are absent
-#DIRS_TO_CREATE = $INST_DIR $LICENSES_DIR /usr/local/lib/pkcs11
 
 
 #####################################################################
@@ -122,24 +119,23 @@ INSTALLATIONCHECKSTRINGS=$REL_DIR/resources/InstallationCheck.strings
 		$INST_DIR/lib/beidqt/QtCore \
 		$ROOT_DIR/$INST_DIR/lib/beidqt/QtGui
 
+## make sure the .svn files don't get into the package
+svn export --force $RESOURCES_DIR $RESOURCES_NO_SVN_DIR
+svn export --force $INSTALL_SCRIPTS_DIR $INSTALL_SCRIPTS_NO_SVN_DIR
 
-	echo "********** manipulate mw_installer **********"
+
+echo "********** manipulate mw_installer **********"
 #	  sed -e "s;REPL_REL_VERSION;$REL_VERSION;g" \
-#	  	   $INSTALLER_DIR/resources/Info.plist > $REL_DIR/Info.plist ; \
-#	  cp $INSTALLER_DIR/resources/Description.plist  $REL_DIR/Description.plist ; \
-#	  svn export $INSTALLER_DIR/install_scripts/ $REL_DIR/resources; \
 #	  sed -e "s;REL_NAME;$REL_NAME;g" -e "s;PKCS11LIB_NAME_dylib;$PKCS11LIB_NAME_dylib;g" \
 #	  	   ./resources/pkcs11.bundle/Contents/Info.plist > \
 #	  	   $ROOT_DIR/$INST_DIR/lib/$PKCS11_BUNDLE/Contents/Info.plist
-
-##cp -r $INSTALLER_DIR/resources/ $REL_DIR/resources;
 
 echo "********** generate $PKG_NAME and $DMG_NAME **********"
 
 chmod g+w $ROOT_DIR/$INST_DIR
 chmod g+w $ROOT_DIR/$INST_DIR/lib
 chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt
-chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt/plugins
+#chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt/plugins
 #chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt/plugins/imageformats
 #chmod a-x $ROOT_DIR/$INST_DIR/etc/beid.conf
 #chmod a-x $ROOT_DIR/$INST_DIR/lib/beid-pkcs11.bundle/Contents/Info.plist
@@ -150,12 +146,12 @@ chgrp    wheel  $ROOT_DIR/usr/local
 chgrp    wheel  $ROOT_DIR/usr/local/lib
 chgrp    wheel  $ROOT_DIR/usr/local/lib/siscardplugins
 chgrp    wheel  $ROOT_DIR/usr/local/lib/beidqt
-chgrp    wheel  $ROOT_DIR/usr/local/lib/beidqt/plugins
+#chgrp    wheel  $ROOT_DIR/usr/local/lib/beidqt/plugins
 chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID.tokend
 chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID_Lion.tokend
 
 $PKG_MAKER -r $ROOT_DIR -o $PKG_NAME -i $INFO_DIR/Info.plist \
-	-e $RESOURCES_DIR -s $INSTALL_SCRIPTS_DIR -n REL_VERSION
+	-e $RESOURCES_NO_SVN_DIR -s $INSTALL_SCRIPTS_NO_SVN_DIR -n REL_VERSION
 		 
 		 
 #	hdiutil create -srcfolder $PKG_NAME -volname "$(VOL_NAME)" $DMG_NAME
