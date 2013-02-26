@@ -536,33 +536,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\asn1.h" />
-    <ClInclude Include="cardpluginBeid\BeidCard.h" />
-    <ClInclude Include="cardpluginBeid\BeidP15Correction.h" />
-    <ClInclude Include="Cache.h" />
-    <ClInclude Include="Card.h" />
-    <ClInclude Include="CardFactory.h" />
-    <ClInclude Include="CardLayer.h" />
-    <ClInclude Include="CardLayerConst.h" />
-    <ClInclude Include="CardReaderInfo.h" />
-    <ClInclude Include="Context.h" />
-    <ClInclude Include="InternalConst.h" />
-    <ClInclude Include="P15Correction.h" />
-    <ClInclude Include="P15Objects.h" />
-    <ClInclude Include="PCSC.h" />
-    <ClInclude Include="Pinpad.h" />
-    <ClInclude Include="pinpad2.h" />
-    <ClInclude Include="PinpadLib.h" />
-    <ClInclude Include="old\PinpadLibOldBeid.h" />
-    <ClInclude Include="PKCS15.h" />
-    <ClInclude Include="PKCS15Parser.h" />
-    <ClInclude Include="PkiCard.h" />
-    <ClInclude Include="Reader.h" />
+    <ClInclude Include="..\src\cache.h" />
+    <ClInclude Include="..\src\card.h" />
+    <ClInclude Include="..\src\cardfactory.h" />
+    <ClInclude Include="..\src\cardlayer.h" />
+    <ClInclude Include="..\src\cardlayerconst.h" />
+    <ClInclude Include="..\src\cardreaderinfo.h" />
+    <ClInclude Include="..\src\context.h" />
+    <ClInclude Include="..\src\internalconst.h" />
+    <ClInclude Include="..\src\p15correction.h" />
+    <ClInclude Include="..\src\p15objects.h" />
+    <ClInclude Include="..\src\pcsc.h" />
+    <ClInclude Include="..\src\pinpad.h" />
+    <ClInclude Include="..\src\pinpad2.h" />
+    <ClInclude Include="..\src\pinpadlib.h" />
+    <ClInclude Include="..\src\pkcs15.h" />
+    <ClInclude Include="..\src\pkcs15parser.h" />
+    <ClInclude Include="..\src\pkicard.h" />
+    <ClInclude Include="..\src\reader.h" />
+    <ClInclude Include="..\src\readersinfo.h" />
+    <ClInclude Include="..\src\threadpool.h" />
+    <ClInclude Include="..\src\unknowncard.h" />
     <CustomBuildStep Include="ReadersInfo.h" />
-    <ClInclude Include="cardpluginSIS\SISCard.h" />
-    <ClInclude Include="cardpluginSIS\SISplugin1.h" />
-    <ClInclude Include="cardpluginSIS\SISPluginHandler.h" />
-    <ClInclude Include="ThreadPool.h" />
-    <ClInclude Include="UnknownCard.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\VS_2010\beidcommon.vcxproj">
