@@ -134,7 +134,6 @@
       <Directory Id="WindowsFolder" Name="WindowsFolder"/>
       <Directory Id="SystemFolder" Name="SystemFolder">
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
-        <Directory Id="SISCARDPLUGINSDIR" Name="siscardplugins"/>
       </Directory>
       <Directory Id="System64Folder"/>
     </Directory>
