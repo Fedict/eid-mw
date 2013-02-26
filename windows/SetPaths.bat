@@ -5,6 +5,7 @@
 @set SEARCH_BEID_DIR_PLATFORMSDK_1=%~dp0..\ThirdParty\MSPlatformSDK
 @set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files\Microsoft Platform SDK
 @set SEARCH_BEID_DIR_PLATFORMSDK_3=C:\Program Files\Microsoft SDKs\Windows\v7.1
+@set SEARCH_WIX_PATH=F:\Program Files\Windows Installer XML v3
 @set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
 @set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
 ::end of search paths
@@ -134,6 +135,13 @@
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_WIX%\%%~i" set FILE_NOT_FOUND=%%~i
 @if "%FILE_NOT_FOUND%"=="" goto find_wix
 @echo        Not found in "%BEID_DIR_WIX%"
+
+@set BEID_DIR_WIX=%SEARCH_WIX_PATH%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_WIX%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_wix
+@echo        Not found in "%BEID_DIR_WIX%"
+
 
 @echo [ERROR] WiX could not be found (recommended version 3.0.4415)
 @echo         Please install ProjectAggregator2.msi and Wix3-3.0.4415.msi.
