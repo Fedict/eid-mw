@@ -109,9 +109,7 @@ cleanup:
 #define WHERE "C_Finalize()"
 CK_RV C_Finalize(CK_VOID_PTR pReserved)
 {
-
 	CK_RV ret = CKR_OK;
-	int counter = 0;
 	log_trace(WHERE, "I: enter");
 
 	if (p11_get_init() != BEIDP11_INITIALIZED)
@@ -120,19 +118,17 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
+	if (pReserved != NULL)
+	{
+		log_trace(WHERE, "I: leave, CKR_ARGUMENTS_BAD");
+		return (CKR_ARGUMENTS_BAD);
+	}
+
 	ret = p11_lock();
 	if (ret != CKR_OK)
 	{
 		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
 		return ret;
-	}
-
-	log_trace(WHERE, "S: C_Finalize()");
-
-	if (pReserved != NULL)
-	{
-		ret = CKR_ARGUMENTS_BAD;
-		goto cleanup;
 	}
 
 	//g_final = 0; /* Belpic */
@@ -142,6 +138,8 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 
 cleanup:
 	/* Release and destroy the mutex */
+	// mutex might still be in use by C_waitforslotlist
+
 	p11_free_lock();
 
 	p11_set_init(BEIDP11_NOT_INITIALIZED);
@@ -540,24 +538,35 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 {
 	CK_RV ret = CKR_OK;
 	int h;
-	int cardevent = 0;
 	P11_SLOT *p11Slot = NULL;
 	int i = 0;
 	CK_BBOOL locked = CK_FALSE;
 
+	log_trace(WHERE, "I: enter");
+
+	//need to check initialization before lock, as lock might be in progress of being set up
 	if (p11_get_init() != BEIDP11_INITIALIZED)
 	{
 		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	log_trace(WHERE, "I: enter");
 	ret = p11_lock();
 	if (ret != CKR_OK)
 	{
 		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
 		return ret;
 	}
+
+	//check again, in case c_finalize got the lock right before we did
+	//(then c_finalize will give us a chance to fall through, right before he resets the lock))
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		p11_unlock();
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}	
+
 	locked = CK_TRUE;
 
 	log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
@@ -613,7 +622,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 			(ret == CKR_CRYPTOKI_NOT_INITIALIZED) )
 		{
 			log_trace(WHERE, "I: CKR_CRYPTOKI_NOT_INITIALIZED");
-			//don't try to unlock, lock might be gone
+			p11_unlock();
 			return(CKR_CRYPTOKI_NOT_INITIALIZED);
 		}
 	}
