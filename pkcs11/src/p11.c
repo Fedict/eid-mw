@@ -62,7 +62,10 @@ P11_SLOT * p11_get_slot(unsigned int h)
 	 {
 #ifdef PKCS11_FF
 		 //return the upnp reader, as FF is probably asking info about the detected/removed reader
-			h = nReaders-1; 
+		 if(nReaders > 0)
+				h = nReaders-1; 
+		 else
+			 h = 0;
 #else
       return NULL; //invalid handle
 #endif

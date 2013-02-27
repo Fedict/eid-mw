@@ -1899,10 +1899,16 @@ CK_RV cal_wait_for_the_slot_event(int block)
 	}
 	catch (CMWException e)
 	{
+		if (block){
+			p11_lock();
+		}
 		CLEANUP(cal_translate_error(WHERE, e.GetError()));
 	}
 	catch (...) 
 	{
+		if (block){
+			p11_lock();
+		}
 		log_trace(WHERE, "E: unkown exception thrown");
 		CLEANUP(CKR_FUNCTION_FAILED);
 	}
