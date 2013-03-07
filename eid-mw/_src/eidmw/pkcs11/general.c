@@ -55,7 +55,7 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 #if _DEBUG
 	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_INFO);
 #else
-	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_NONE);
+	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_WARNING);
 #endif
 	log_trace(WHERE, "I: enter pReserved = %p",pReserved);
 	if (p11_get_init() != BEIDP11_NOT_INITIALIZED)

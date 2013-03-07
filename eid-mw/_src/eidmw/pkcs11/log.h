@@ -30,12 +30,10 @@ extern "C" {
  * Definitions
  *
  ******************************************************************************/
-
-#define LOG_LEVEL_PKCS11_NONE        0
-#define LOG_LEVEL_PKCS11_ERROR       1
-#define LOG_LEVEL_PKCS11_WARNING     2
-#define LOG_LEVEL_PKCS11_INFO        4
-#define LOG_LEVEL_PKCS11_DEBUG       5
+#define LOG_LEVEL_PKCS11_INFO        3
+#define LOG_LEVEL_PKCS11_SPY         2
+#define LOG_LEVEL_PKCS11_WARNING     1
+#define LOG_LEVEL_PKCS11_ERROR       0
 
 
 #ifdef _WIN32
