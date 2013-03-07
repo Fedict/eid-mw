@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -58,10 +58,10 @@ using namespace eIDMW;
  * Globals
  *
  ******************************************************************************/
-#ifdef _DEBUG
-unsigned int g_uiLogLevel          = LOG_LEVEL_PKCS11_INFO;
+#ifdef DEBUG
+unsigned int g_uiLogLevel          = LOG_LEVEL_SPY;
 #else
-unsigned int g_uiLogLevel          = LOG_LEVEL_PKCS11_WARNING;
+unsigned int g_uiLogLevel          = LOG_LEVEL_WARNING;
 #endif
 
 void *logmutex = NULL;

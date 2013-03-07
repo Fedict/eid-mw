@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -30,10 +30,12 @@ extern "C" {
  * Definitions
  *
  ******************************************************************************/
-#define LOG_LEVEL_PKCS11_INFO        3
-#define LOG_LEVEL_PKCS11_SPY         2
-#define LOG_LEVEL_PKCS11_WARNING     1
-#define LOG_LEVEL_PKCS11_ERROR       0
+
+#define LOG_LEVEL_PKCS11_NONE        0
+#define LOG_LEVEL_PKCS11_ERROR       1
+#define LOG_LEVEL_PKCS11_WARNING     2
+#define LOG_LEVEL_PKCS11_INFO        4
+#define LOG_LEVEL_PKCS11_DEBUG       5
 
 
 #ifdef _WIN32

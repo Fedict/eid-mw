@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2012 FedICT.
+* Copyright (C) 2008-2013 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -102,6 +102,13 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 	unsigned int j = 0;
 	void  *pValue    = NULL;
 	CK_ULONG len = 0;
+	log_trace(WHERE, "I: enter");
+
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -166,7 +173,7 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 		status = p11_get_attribute_value(pObject->pAttr, pObject->count, pTemplate[j].type, (CK_VOID_PTR *) &pValue, &len);
 		if (status != CKR_OK)
 		{
-			log_attr(&pTemplate[j]);
+			log_template("E: C_GetAttributeValue status != CKR_OK", &pTemplate[j], 1);
 			log_trace(WHERE, "E: p11_get_attribute_value (object=%d) returned %s", hObject, log_map_error(status));
 			pTemplate[j].ulValueLen = (CK_ULONG) -1;
 			ret = status;
@@ -228,6 +235,13 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	CK_BBOOL			addIdObjects = CK_FALSE;
 	CK_BYTE				filesToCacheFlag = CACHED_DATA_TYPE_ALL;
 	CK_BYTE				allowCardRead = P11_DISPLAY_NO;
+	log_trace(WHERE, "I: enter");
+
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -298,22 +312,41 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
 	if(addIdObjects == CK_TRUE)
 	{
-		if (pSession->bReadDataAllowed == P11_READDATA_ASK)
+		//parse the search template
+		CK_UTF8CHAR* pLabel;
+		CK_UTF8CHAR* pObjectID;
+		ret = p11_get_attribute_value(pTemplate, ulCount, CKA_OBJECT_ID, (CK_VOID_PTR *) &pObjectID, &len);
+		if ( (ret == 0) && (len > 0 ) )
 		{
-			allowCardRead = AllowCardReading();
-			if (allowCardRead == P11_DISPLAY_YES)
+			SetParseFlagByObjectID(&filesToCacheFlag,pObjectID,len);
+		}
+		else
+		{
+			ret = p11_get_attribute_value(pTemplate, ulCount, CKA_LABEL, (CK_VOID_PTR *) &pLabel, &len);
+			if ( (ret == 0) && (len > 0 ) )
 			{
-				pSession->bReadDataAllowed = P11_READDATA_ALLOWED;
+				SetParseFlagByLabel(&filesToCacheFlag,pLabel,len);
 			}
-			else
+		}
+		if((filesToCacheFlag != CACHED_DATA_TYPE_CARDDATA) && (filesToCacheFlag != CACHED_DATA_TYPE_RNCERT))
+		{
+			if (pSession->bReadDataAllowed == P11_READDATA_ASK)
 			{
-				if(allowCardRead == P11_DISPLAY_NO)
+				allowCardRead = AllowCardReading();
+				if (allowCardRead == P11_DISPLAY_YES)
 				{
-					pSession->bReadDataAllowed = P11_READDATA_REFUSED;
-				}				
-				log_trace(WHERE, "I: User does not allow reading from the card");
-				ret = CKR_FUNCTION_FAILED;
-				goto cleanup;
+					pSession->bReadDataAllowed = P11_READDATA_ALLOWED;
+				}
+				else
+				{
+					if(allowCardRead == P11_DISPLAY_NO)
+					{
+						pSession->bReadDataAllowed = P11_READDATA_REFUSED;
+					}				
+					log_trace(WHERE, "I: User does not allow reading from the card");
+					ret = CKR_FUNCTION_FAILED;
+					goto cleanup;
+				}
 			}
 		}
 	}
@@ -351,25 +384,6 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		{
 			log_trace(WHERE, "E: p11_copy_object() returned %d", ret);
 			goto cleanup;
-		}
-		//parse the search template
-		if(addIdObjects == CK_TRUE)
-		{
-			CK_UTF8CHAR* pLabel;
-			CK_UTF8CHAR* pObjectID;
-			ret = p11_get_attribute_value(pTemplate, ulCount, CKA_OBJECT_ID, (CK_VOID_PTR *) &pObjectID, &len);
-			if ( (ret == 0) && (len > 0 ) )
-			{
-				SetParseFlagByObjectID(&filesToCacheFlag,pObjectID,len);
-			}
-			else
-			{
-				ret = p11_get_attribute_value(pTemplate, ulCount, CKA_LABEL, (CK_VOID_PTR *) &pLabel, &len);
-				if ( (ret == 0) && (len > 0 ) )
-				{
-					SetParseFlagByLabel(&filesToCacheFlag,pLabel,len);
-				}
-			}
 		}
 	}
 
@@ -467,6 +481,14 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 	unsigned int           h,j = 0;
 
 	CK_ULONG len = 0;
+
+	log_trace(WHERE, "I: enter");
+
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -625,6 +647,13 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 	P11_SESSION *pSession = NULL;
 	P11_FIND_DATA *pData = NULL;
 	int ret;
+	log_trace(WHERE, "I: enter");
+
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
 	ret = p11_lock();
 	if (ret != CKR_OK)
@@ -684,7 +713,7 @@ void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_UL
 	BEID_DATA_LABELS_NAME ADDRESS_LABELS[]=BEID_ADDRESS_DATA_LABELS;
 
 	CK_ULONG carddataLabelsListLen = 14;
-	CK_UTF8CHAR_PTR carddataLabelsList[14] = {BEID_LABEL_DATA_SerialNr,BEID_LABEL_DATA_CompCode,BEID_LABEL_DATA_OSNr,
+	const char* carddataLabelsList[14] = {BEID_LABEL_DATA_SerialNr,BEID_LABEL_DATA_CompCode,BEID_LABEL_DATA_OSNr,
 		BEID_LABEL_DATA_OSVersion,BEID_LABEL_DATA_SoftMaskNumber,BEID_LABEL_DATA_SoftMaskVersion,
 		BEID_LABEL_DATA_ApplVersion,BEID_LABEL_DATA_GlobOSVersion,BEID_LABEL_DATA_ApplIntVersion,
 		BEID_LABEL_DATA_PKCS1Support,BEID_LABEL_DATA_ApplLifeCycle,BEID_LABEL_DATA_KeyExchangeVersion,

@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -23,16 +23,18 @@
 #include "beid_p11.h"
 #include "Mutex.h"
 #include "util.h"
+#include "thread.h"
 
 using namespace eIDMW;
 
 //EID LOCKING
 CMutex g_mutex;
+static unsigned long g_mutex_users = 0;
 
 //locking can be provided by app
 static CK_C_INITIALIZE_ARGS_PTR _locking;
 static void *_lock = NULL;
-static unsigned char g_initialized = 0;
+static unsigned char g_initialized = BEIDP11_NOT_INITIALIZED;
 
 
 void p11_set_init(unsigned char initialized)
@@ -88,6 +90,8 @@ if (!args)
 //use that. Otherwise use the supplied functions.
 _locking = NULL;
 
+g_mutex_users = 0;
+
 if (args->flags & CKF_OS_LOCKING_OK)
    {
 /*
@@ -126,34 +130,42 @@ return ret;
 
 CK_RV p11_lock()
 {
-//      if (context == NULL)
-//              return CKR_CRYPTOKI_NOT_INITIALIZED;
-if (!_lock)
-  return CKR_OK;
-if (_locking)  
-  {
-  while (_locking->LockMutex(_lock) != CKR_OK)       
-     ;
-  }
-else
-  {
-  g_mutex.Lock();
-  }
-return CKR_OK;
+	//      if (context == NULL)
+	//              return CKR_CRYPTOKI_NOT_INITIALIZED;
+	if (!_lock)
+		return CKR_OK;
+	if (_locking)  
+	{
+		g_mutex_users++;
+		while (_locking->LockMutex(_lock) != CKR_OK)       
+			;
+	}
+	else
+	{
+		g_mutex_users++;
+		g_mutex.Lock();
+	}
+	return CKR_OK;
 }
 
 static void __p11_unlock(void *lock)
 {
-if (!lock)
-   return;
-if (_locking)
-   {
-   while (_locking->UnlockMutex(lock) != CKR_OK)    ;
-   }
-else
-   {
-   g_mutex.Unlock();
-   }
+	if (!lock)
+		return;
+	if (_locking)
+	{
+		while (_locking->UnlockMutex(lock) != CKR_OK)    ;
+		if(g_mutex_users > 0){
+			g_mutex_users--;
+		}
+	}
+	else
+	{
+		g_mutex.Unlock();
+		if(g_mutex_users > 0){
+			g_mutex_users--;
+		}
+	}
 }
 
 
@@ -164,14 +176,27 @@ void p11_unlock()
 
 /*
  * Free the lock - note the lock must be held when
- * you come here
+ * you come here (and not nested)
  */
 void p11_free_lock()
 {
+
 void  *tempLock;
+
+int counter = 0;
 
 if (!(tempLock = _lock))
     return;
+
+//if another thread is still waiting for the mutex,
+//do not lose hold of it (try up to 500 ms, as hanging is even worse)
+while ((g_mutex_users > 1) && (counter < 10))
+{
+	p11_unlock();
+	CThread::SleepMillisecs(50);
+	counter++;
+	p11_lock();
+}
 
 /* Clear the global lock pointer - once we've
 * unlocked the mutex it's as good as gone */
@@ -186,6 +211,7 @@ if (_locking)
     _locking->DestroyMutex(tempLock);
 else
    {
+		//g_mutex will always be there
    //sc_mutex_free((sc_mutex_t *) tempLock);
    }
 _locking = NULL;

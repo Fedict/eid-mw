@@ -1,20 +1,20 @@
 /* ****************************************************************************
 
- * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License version
- * 3.0 as published by the Free Software Foundation.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, see
- * http://www.gnu.org/licenses/.
+* eID Middleware Project.
+* Copyright (C) 2008-2013 FedICT.
+*
+* This is free software; you can redistribute it and/or modify it
+* under the terms of the GNU Lesser General Public License version
+* 3.0 as published by the Free Software Foundation.
+*
+* This software is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with this software; if not, see
+* http://www.gnu.org/licenses/.
 
 **************************************************************************** */
 #include <stdio.h>
@@ -30,92 +30,100 @@
 
 #define WHERE "C_OpenSession()"
 CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
-                    CK_FLAGS              flags,         /* defined in CK_SESSION_INFO */
-                    CK_VOID_PTR           pApplication,  /* pointer passed to callback */
-                    CK_NOTIFY             Notify,        /* notification callback function */
-                    CK_SESSION_HANDLE_PTR phSession)     /* receives new session handle */
+	CK_FLAGS              flags,         /* defined in CK_SESSION_INFO */
+	CK_VOID_PTR           pApplication,  /* pointer passed to callback */
+	CK_NOTIFY             Notify,        /* notification callback function */
+	CK_SESSION_HANDLE_PTR phSession)     /* receives new session handle */
 {
-   int ret;
-   P11_SLOT* pSlot = NULL;
-   P11_SESSION *pSession = NULL;
+	int ret;
+	P11_SLOT* pSlot = NULL;
+	P11_SESSION *pSession = NULL;
 
-//   CAutoMutex(&g_oSlotMutex);
-log_trace(WHERE, "I: enter");
-   ret = p11_lock(slotID);   /* mutex per slot slot 0 tot 9 FF=global slot*/
-   if (ret != CKR_OK)
-{
-	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-   return ret;
-}
+	//   CAutoMutex(&g_oSlotMutex);
+	log_trace(WHERE, "I: enter");
 
-   log_trace(WHERE, "S: C_OpenSession (slot %d)", slotID);
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
-   if (!(flags & CKF_SERIAL_SESSION)) 
-     {
-     ret = CKR_SESSION_PARALLEL_NOT_SUPPORTED;
-     goto cleanup;
-     }
 
-   //XXX check this
-/*   if (flags & ~(CKF_SERIAL_SESSION | CKF_RW_SESSION))
-      {
-      ret = CKR_ARGUMENTS_BAD;
-      goto cleanup;
-      }*/
+	ret = p11_lock(slotID);   /* mutex per slot slot 0 tot 9 FF=global slot*/
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+		return ret;
+	}
 
-   pSlot = p11_get_slot(slotID);
-   if (pSlot == NULL)
-      {
-      log_trace(WHERE, "E: p11_get_slot(%d) returns null", slotID);
-      ret = CKR_SLOT_ID_INVALID;
-      goto cleanup;
-      }
+	log_trace(WHERE, "S: C_OpenSession (slot %d)", slotID);
 
-  /* Check that no conflictions sessions exist */
-  /* RO session when SO session exists is not allowed */
-  if ( !(flags & CKF_RW_SESSION) && (pSlot->login_type == CKU_SO)) 
-     {
-     log_trace(WHERE, "E: R/W Session exists", slotID);
-     ret = CKR_SESSION_READ_WRITE_SO_EXISTS;
-     goto cleanup;
-     }
+	if (!(flags & CKF_SERIAL_SESSION)) 
+	{
+		ret = CKR_SESSION_PARALLEL_NOT_SUPPORTED;
+		goto cleanup;
+	}
 
-  //get a free session object reserve it by setting inuse flag
-  ret = p11_get_free_session(phSession, &pSession);
-  if (ret != CKR_OK)
-     {
-     log_trace(WHERE, "E: p11_get_free_session() returns %d", ret);
-     goto cleanup;
-     }
+	//XXX check this
+	/*   if (flags & ~(CKF_SERIAL_SESSION | CKF_RW_SESSION))
+	{
+	ret = CKR_ARGUMENTS_BAD;
+	goto cleanup;
+	}*/
 
-  //connect to card if present
-  ret = cal_connect(slotID);
-  if (ret != CKR_OK)
-     {
-     log_trace(WHERE, "E: cal_connect(slot %d) failed", slotID);
-     //release session so it can be reused
-     pSession->inuse = 0;
-     goto cleanup;
-     }
+	pSlot = p11_get_slot(slotID);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: p11_get_slot(%d) returns null", slotID);
+		ret = CKR_SLOT_ID_INVALID;
+		goto cleanup;
+	}
 
-  pSession->hslot = slotID;
-  pSession->flags = flags;
-  pSession->pdNotify = pApplication;
-  pSession->pfNotify = Notify;
-  //initial state 
-  pSession->state = P11_CARD_STILL_PRESENT;
+	/* Check that no conflictions sessions exist */
+	/* RO session when SO session exists is not allowed */
+	if ( !(flags & CKF_RW_SESSION) && (pSlot->login_type == CKU_SO)) 
+	{
+		log_trace(WHERE, "E: R/W Session exists", slotID);
+		ret = CKR_SESSION_READ_WRITE_SO_EXISTS;
+		goto cleanup;
+	}
+
+	//get a free session object reserve it by setting inuse flag
+	ret = p11_get_free_session(phSession, &pSession);
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "E: p11_get_free_session() returns %d", ret);
+		goto cleanup;
+	}
+
+	//connect to card if present
+	ret = cal_connect(slotID);
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "E: cal_connect(slot %d) failed", slotID);
+		//release session so it can be reused
+		pSession->inuse = 0;
+		goto cleanup;
+	}
+
+	pSession->hslot = slotID;
+	pSession->flags = flags;
+	pSession->pdNotify = pApplication;
+	pSession->pfNotify = Notify;
+	//initial state 
+	pSession->state = P11_CARD_STILL_PRESENT;
 	pSession->bReadDataAllowed = P11_READDATA_ASK;
 	pSession->bCardDataCashed = FALSE;
 
-  /* keep the nr of sessions for this slot */
-  pSlot->nsessions++;
+	/* keep the nr of sessions for this slot */
+	pSlot->nsessions++;
 
-  log_trace(WHERE, "S: Open session (slot %d: hsession = %d )", slotID, *phSession);
+	log_trace(WHERE, "S: Open session (slot %d: hsession = %d )", slotID, *phSession);
 
 cleanup:
-   p11_unlock();
-   log_trace(WHERE, "I: leave, ret = %i",ret);
-   return ret;
+	p11_unlock();
+	log_trace(WHERE, "I: leave, ret = %i",ret);
+	return ret;
 }
 #undef WHERE
 
@@ -124,64 +132,71 @@ cleanup:
 #define WHERE "C_CloseSession()"
 CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 {
-P11_SESSION *pSession = NULL;
-P11_SLOT *pSlot = NULL;
-CK_RV ret;
-log_trace(WHERE, "I: enter");
-ret = p11_lock();
-if (ret != CKR_OK)
-{
-	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-   return ret;
-}
+	P11_SESSION *pSession = NULL;
+	P11_SLOT *pSlot = NULL;
+	CK_RV ret;
+	log_trace(WHERE, "I: enter");
 
-log_trace(WHERE, "S: C_CloseSession (session %d)", hSession);
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}	
 
-//get session, of pSession is found, regardless the ret value, we can clean it up
-ret = p11_get_session(hSession, &pSession);
-if (pSession == NULL)
-   {
-		 ret = CKR_SESSION_HANDLE_INVALID;
-   log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
-   goto cleanup;
-   }
+	ret = p11_lock();
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+		return ret;
+	}
 
-//get slot, if not exist, we allow to close session anyway
-pSlot = p11_get_slot(pSession->hslot);
-if (pSlot == NULL)
-   {
-   log_trace(WHERE, "W: Invalid slot (%d) for session (%d)", pSession->hslot, hSession);
-   //ret = CKR_OK;
-   }
-else
-   {
-   //
-   if (pSlot->nsessions > 0)
-      pSlot->nsessions--;
+	log_trace(WHERE, "S: C_CloseSession (session %d)", hSession);
 
-   if ((pSlot->nsessions < 1) && (pSlot->login_type >= 0) )
-      {
-      //TODO what to do if no session longer exists?
-//      cal_logout(pSlot);
-      pSlot->login_type = -1;
-      }
+	//get session, of pSession is found, regardless the ret value, we can clean it up
+	ret = p11_get_session(hSession, &pSession);
+	if (pSession == NULL)
+	{
+		ret = CKR_SESSION_HANDLE_INVALID;
+		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		goto cleanup;
+	}
 
-   //disconnect this session to device
-   ret = cal_disconnect(pSession->hslot);
-   }
+	//get slot, if not exist, we allow to close session anyway
+	pSlot = p11_get_slot(pSession->hslot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "W: Invalid slot (%d) for session (%d)", pSession->hslot, hSession);
+		//ret = CKR_OK;
+	}
+	else
+	{
+		//
+		if (pSlot->nsessions > 0)
+			pSlot->nsessions--;
 
-//clear data so it can be reused
-pSession->state = 0;
-pSession->inuse = 0;
-pSession->flags = 0;
-pSession->hslot = 0;
-pSession->pdNotify = NULL;
-pSession->pfNotify = NULL;
+		if ((pSlot->nsessions < 1) && (pSlot->login_type >= 0) )
+		{
+			//TODO what to do if no session longer exists?
+			//      cal_logout(pSlot);
+			pSlot->login_type = -1;
+		}
+
+		//disconnect this session to device
+		ret = cal_disconnect(pSession->hslot);
+	}
+
+	//clear data so it can be reused
+	pSession->state = 0;
+	pSession->inuse = 0;
+	pSession->flags = 0;
+	pSession->hslot = 0;
+	pSession->pdNotify = NULL;
+	pSession->pfNotify = NULL;
 
 cleanup:
-   p11_unlock();
-   log_trace(WHERE, "I: leave, ret = %i",ret);
-   return ret;
+	p11_unlock();
+	log_trace(WHERE, "I: leave, ret = %i",ret);
+	return ret;
 }
 #undef WHERE
 
@@ -191,22 +206,29 @@ cleanup:
 #define WHERE "C_CloseAllSessions()"
 CK_RV C_CloseAllSessions(CK_SLOT_ID slotID) /* the token's slot */
 {
-   int ret;
-log_trace(WHERE, "I: enter");
-   ret = p11_lock();
-if (ret != CKR_OK)
-{
-	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-   return ret;
-}
+	int ret;
+	log_trace(WHERE, "I: enter");
 
-   log_trace(WHERE, "S: C_CloseAllSessions(slot %d)", slotID);
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
-   ret = p11_close_all_sessions(slotID);
+	ret = p11_lock();
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+		return ret;
+	}
 
-   p11_unlock();
-   log_trace(WHERE, "I: leave, ret = %i",ret);
-   return ret;
+	log_trace(WHERE, "S: C_CloseAllSessions(slot %d)", slotID);
+
+	ret = p11_close_all_sessions(slotID);
+
+	p11_unlock();
+	log_trace(WHERE, "I: leave, ret = %i",ret);
+	return ret;
 }
 #undef WHERE
 
@@ -214,82 +236,89 @@ if (ret != CKR_OK)
 
 #define WHERE "C_GetSessionInfo()"
 CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
-                       CK_SESSION_INFO_PTR pInfo)   /* receives session information */
+	CK_SESSION_INFO_PTR pInfo)   /* receives session information */
 {
-   int ret;
-   P11_SESSION *pSession = NULL;
-   P11_SLOT *pSlot = NULL;
-   CK_TOKEN_INFO tokeninfo;
-log_trace(WHERE, "I: enter");
-   ret = p11_lock();
-if (ret != CKR_OK)
-{
-	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-   return ret;
-}
+	int ret;
+	P11_SESSION *pSession = NULL;
+	P11_SLOT *pSlot = NULL;
+	CK_TOKEN_INFO tokeninfo;
+	log_trace(WHERE, "I: enter");
 
-   log_trace(WHERE, "S: C_GetSessionInfo(session %d)", hSession);
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
-   if (pInfo == NULL_PTR) 
-      {
-      ret = CKR_ARGUMENTS_BAD;
-      goto cleanup;
-      }
+	ret = p11_lock();
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+		return ret;
+	}
 
-   ret = p11_get_session(hSession, &pSession);
-   if (ret)
-      {
-      log_trace(WHERE, "E: Invalid session handle (%d) (%s)", hSession, log_map_error(ret));
-      goto cleanup;
-      }
+	log_trace(WHERE, "S: C_GetSessionInfo(session %d)", hSession);
 
-   pInfo->slotID = pSession->hslot;
-   pInfo->flags = pSession->flags;
-   pInfo->ulDeviceError = 0;
+	if (pInfo == NULL_PTR) 
+	{
+		ret = CKR_ARGUMENTS_BAD;
+		goto cleanup;
+	}
 
-   pSlot = p11_get_slot(pSession->hslot);
-   if (pSlot == NULL)
-      {
-      log_trace(WHERE, "E: slot not found for session %d", hSession);
-      ret = CKR_SESSION_HANDLE_INVALID;
-      goto cleanup;
-      }
+	ret = p11_get_session(hSession, &pSession);
+	if (ret)
+	{
+		log_trace(WHERE, "E: Invalid session handle (%d) (%s)", hSession, log_map_error(ret));
+		goto cleanup;
+	}
 
-   //SO only can create RW_SO sessions
-   if (pSlot->login_type == CKU_SO) 
-      {
-      pInfo->state = CKS_RW_SO_FUNCTIONS;
-      }
-   //USER can create RW or RO sessions
-   else if (pSlot->login_type == CKU_USER) 
-      {
-      pInfo->state = (pSession->flags & CKF_RW_SESSION)? CKS_RW_USER_FUNCTIONS : CKS_RO_USER_FUNCTIONS;
-      } 
-   //if login not required => we can also get USER sessions without being logged on
-   else 
-      {
-      ret = cal_get_token_info(pSession->hslot, &tokeninfo);
-      if ( (ret == CKR_OK) && !(tokeninfo.flags & CKF_LOGIN_REQUIRED) )
-         pInfo->state = (pSession->flags & CKF_RW_SESSION)? CKS_RW_USER_FUNCTIONS : CKS_RO_USER_FUNCTIONS;
-      else
-         pInfo->state = (pSession->flags & CKF_RW_SESSION) ? CKS_RW_PUBLIC_SESSION : CKS_RO_PUBLIC_SESSION;
-      }
+	pInfo->slotID = pSession->hslot;
+	pInfo->flags = pSession->flags;
+	pInfo->ulDeviceError = 0;
+
+	pSlot = p11_get_slot(pSession->hslot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: slot not found for session %d", hSession);
+		ret = CKR_SESSION_HANDLE_INVALID;
+		goto cleanup;
+	}
+
+	//SO only can create RW_SO sessions
+	if (pSlot->login_type == CKU_SO) 
+	{
+		pInfo->state = CKS_RW_SO_FUNCTIONS;
+	}
+	//USER can create RW or RO sessions
+	else if (pSlot->login_type == CKU_USER) 
+	{
+		pInfo->state = (pSession->flags & CKF_RW_SESSION)? CKS_RW_USER_FUNCTIONS : CKS_RO_USER_FUNCTIONS;
+	} 
+	//if login not required => we can also get USER sessions without being logged on
+	else 
+	{
+		ret = cal_get_token_info(pSession->hslot, &tokeninfo);
+		if ( (ret == CKR_OK) && !(tokeninfo.flags & CKF_LOGIN_REQUIRED) )
+			pInfo->state = (pSession->flags & CKF_RW_SESSION)? CKS_RW_USER_FUNCTIONS : CKS_RO_USER_FUNCTIONS;
+		else
+			pInfo->state = (pSession->flags & CKF_RW_SESSION) ? CKS_RW_PUBLIC_SESSION : CKS_RO_PUBLIC_SESSION;
+	}
 
 cleanup:
-   p11_unlock();
-   log_trace(WHERE, "I: leave, ret = %i",ret);
-   return ret;
+	p11_unlock();
+	log_trace(WHERE, "I: leave, ret = %i",ret);
+	return ret;
 }
 #undef WHERE 
 
 
 #define WHERE "C_GetOperationState()"
 CK_RV C_GetOperationState(CK_SESSION_HANDLE hSession,             /* the session's handle */
-                          CK_BYTE_PTR       pOperationState,      /* location receiving state */
-                          CK_ULONG_PTR      pulOperationStateLen) /* location receiving state length */
+	CK_BYTE_PTR       pOperationState,      /* location receiving state */
+	CK_ULONG_PTR      pulOperationStateLen) /* location receiving state length */
 {
-   log_trace(WHERE, "S: C_GetOperationState(sesssion %d)", hSession);
-   return CKR_FUNCTION_NOT_SUPPORTED;
+	log_trace(WHERE, "S: C_GetOperationState(sesssion %d)", hSession);
+	return CKR_FUNCTION_NOT_SUPPORTED;
 }
 #undef WHERE
 
@@ -297,90 +326,97 @@ CK_RV C_GetOperationState(CK_SESSION_HANDLE hSession,             /* the session
 
 #define WHERE "C_SetOperationState()"
 CK_RV C_SetOperationState(CK_SESSION_HANDLE hSession,            /* the session's handle */
-                          CK_BYTE_PTR      pOperationState,      /* the location holding the state */
-                          CK_ULONG         ulOperationStateLen,  /* location holding state length */
-                          CK_OBJECT_HANDLE hEncryptionKey,       /* handle of en/decryption key */
-                          CK_OBJECT_HANDLE hAuthenticationKey)   /* handle of sign/verify key */
+	CK_BYTE_PTR      pOperationState,      /* the location holding the state */
+	CK_ULONG         ulOperationStateLen,  /* location holding state length */
+	CK_OBJECT_HANDLE hEncryptionKey,       /* handle of en/decryption key */
+	CK_OBJECT_HANDLE hAuthenticationKey)   /* handle of sign/verify key */
 {
-   log_trace(WHERE, "S: C_SetOperationState(session %d)", hSession);
-   return CKR_FUNCTION_NOT_SUPPORTED;
+	log_trace(WHERE, "S: C_SetOperationState(session %d)", hSession);
+	return CKR_FUNCTION_NOT_SUPPORTED;
 }
 #undef WHERE
 
 
 #define WHERE "C_Login()"
 CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
-              CK_USER_TYPE      userType,  /* the user type */
-              CK_CHAR_PTR       pPin,      /* the user's PIN */
-              CK_ULONG          ulPinLen)  /* the length of the PIN */
+	CK_USER_TYPE      userType,  /* the user type */
+	CK_CHAR_PTR       pPin,      /* the user's PIN */
+	CK_ULONG          ulPinLen)  /* the length of the PIN */
 {
-   int ret;
-   P11_SESSION *pSession = NULL;
-   P11_SLOT *pSlot = NULL;
-   CK_TOKEN_INFO tokeninfo;
+	int ret;
+	P11_SESSION *pSession = NULL;
+	P11_SLOT *pSlot = NULL;
+	CK_TOKEN_INFO tokeninfo;
 
-   //return(CKR_OK);
-log_trace(WHERE, "I: enter");
-   ret = p11_lock();
-if (ret != CKR_OK)
-{
-	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-   return ret;
-}
+	//return(CKR_OK);
+	log_trace(WHERE, "I: enter");
 
-   memset(&tokeninfo, 0, sizeof(CK_TOKEN_INFO));
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
-   log_trace(WHERE, "S: Login (session %d)", hSession);
+	ret = p11_lock();
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+		return ret;
+	}
 
-   if (userType != CKU_USER && userType != CKU_SO)
-      {
-      ret = CKR_USER_TYPE_INVALID;
-      goto cleanup;
-      }
+	memset(&tokeninfo, 0, sizeof(CK_TOKEN_INFO));
 
-   ret = p11_get_session(hSession, &pSession);
-   if (ret)
-      {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
-      goto cleanup;
-      }
+	log_trace(WHERE, "S: Login (session %d)", hSession);
 
-   pSlot = p11_get_slot(pSession->hslot);
-   if (pSlot == NULL)
-      {
-      log_trace(WHERE, "E: Slot not found for session %d", hSession);
-      ret = CKR_SESSION_HANDLE_INVALID;
-      goto cleanup;
-      }
+	if (userType != CKU_USER && userType != CKU_SO)
+	{
+		ret = CKR_USER_TYPE_INVALID;
+		goto cleanup;
+	}
 
-   if (pSlot->login_type >= 0)
-      {
-	  // Needed for Acrobat, in case you want to sign with a 2nd card
-      ret = CKR_OK; //CKR_USER_ALREADY_LOGGED_IN;
-      goto cleanup;
-      }
+	ret = p11_get_session(hSession, &pSession);
+	if (ret)
+	{
+		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		goto cleanup;
+	}
 
-/*   ret = cal_get_token_info(pSlot, &tokeninfo);
-   if (ret != CKR_OK)
-      {
-      log_trace(WHERE, "E: could not find tokeninfo for slot %d", pSession->hslot);
-      goto cleanup;
-      }
+	pSlot = p11_get_slot(pSession->hslot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: Slot not found for session %d", hSession);
+		ret = CKR_SESSION_HANDLE_INVALID;
+		goto cleanup;
+	}
 
-    if ( !(tokeninfo.flags & CKF_USER_PIN_INITIALIZED) )
-      {
-      ret = CKR_USER_PIN_NOT_INITIALIZED;
-      goto cleanup;
-      }*/
+	if (pSlot->login_type >= 0)
+	{
+		// Needed for Acrobat, in case you want to sign with a 2nd card
+		ret = CKR_OK; //CKR_USER_ALREADY_LOGGED_IN;
+		goto cleanup;
+	}
 
-   ret = cal_logon(pSession->hslot, ulPinLen, pPin, 0);
-   if (ret == CKR_OK)
-      pSlot->login_type = userType;
+	/*   ret = cal_get_token_info(pSlot, &tokeninfo);
+	if (ret != CKR_OK)
+	{
+	log_trace(WHERE, "E: could not find tokeninfo for slot %d", pSession->hslot);
+	goto cleanup;
+	}
+
+	if ( !(tokeninfo.flags & CKF_USER_PIN_INITIALIZED) )
+	{
+	ret = CKR_USER_PIN_NOT_INITIALIZED;
+	goto cleanup;
+	}*/
+
+	ret = cal_logon(pSession->hslot, ulPinLen, pPin, 0);
+	if (ret == CKR_OK)
+		pSlot->login_type = userType;
 
 cleanup:
-   p11_unlock();
-   log_trace(WHERE, "I: leave, ret = %i",ret);
-   return ret;
+	p11_unlock();
+	log_trace(WHERE, "I: leave, ret = %i",ret);
+	return ret;
 }
 #undef WHERE
 
@@ -389,50 +425,57 @@ cleanup:
 #define WHERE "C_Logout()"
 CK_RV C_Logout(CK_SESSION_HANDLE hSession) /* the session's handle */
 {
-int ret = CKR_OK;
-P11_SESSION *pSession = NULL;
-P11_SLOT *pSlot = NULL;
-log_trace(WHERE, "I: enter");
-ret = p11_lock();
-if (ret != CKR_OK)
-{
-	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-   return ret;
-} 
+	int ret = CKR_OK;
+	P11_SESSION *pSession = NULL;
+	P11_SLOT *pSlot = NULL;
+	log_trace(WHERE, "I: enter");
 
-log_trace(WHERE, "S: Logout (session %d)", hSession);
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
-ret = p11_get_session(hSession, &pSession);
-if (ret)
-   {
-   log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
-   goto cleanup;
-   }
+	ret = p11_lock();
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+		return ret;
+	} 
 
-pSlot = p11_get_slot(pSession->hslot);
-if (pSlot == NULL)
-   {
-   log_trace(WHERE, "E: Slot not found for session %d", hSession);
-   ret = CKR_SESSION_HANDLE_INVALID;
-   goto cleanup;
-   }
+	log_trace(WHERE, "S: Logout (session %d)", hSession);
 
-if (pSlot->login_type >= 0)
-   {
-   pSlot->login_type = -1;
-   ret = cal_logout(pSession->hslot);
-   }
-else
-   ret = CKR_USER_NOT_LOGGED_IN;
+	ret = p11_get_session(hSession, &pSession);
+	if (ret)
+	{
+		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		goto cleanup;
+	}
 
-/* TODO  cleanup all active operations (see standard) */
-/* TODO: invalidate all private objects */
-/* TODO: destroy all private session objects (we only have private token objects and they are unreadable anyway) */
+	pSlot = p11_get_slot(pSession->hslot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: Slot not found for session %d", hSession);
+		ret = CKR_SESSION_HANDLE_INVALID;
+		goto cleanup;
+	}
+
+	if (pSlot->login_type >= 0)
+	{
+		pSlot->login_type = -1;
+		ret = cal_logout(pSession->hslot);
+	}
+	else
+		ret = CKR_USER_NOT_LOGGED_IN;
+
+	/* TODO  cleanup all active operations (see standard) */
+	/* TODO: invalidate all private objects */
+	/* TODO: destroy all private session objects (we only have private token objects and they are unreadable anyway) */
 
 cleanup:
-   p11_unlock();
-   log_trace(WHERE, "I: leave, ret = %i",ret);
-   return ret;
+	p11_unlock();
+	log_trace(WHERE, "I: leave, ret = %i",ret);
+	return ret;
 }
 #undef WHERE
 
@@ -441,45 +484,52 @@ cleanup:
 
 #define WHERE "C_InitPIN()"
 CK_RV C_InitPIN(CK_SESSION_HANDLE hSession,
-                CK_CHAR_PTR pPin,
-                CK_ULONG ulPinLen)
+	CK_CHAR_PTR pPin,
+	CK_ULONG ulPinLen)
 {
-   log_trace(WHERE, "S: C_InitPIN (session %d)", hSession);
-   return (CKR_FUNCTION_NOT_SUPPORTED);
+	log_trace(WHERE, "S: C_InitPIN (session %d)", hSession);
+	return (CKR_FUNCTION_NOT_SUPPORTED);
 }
 #undef WHERE
 
 
 #define WHERE "C_SetPIN()"
 CK_RV C_SetPIN(CK_SESSION_HANDLE hSession,
-               CK_CHAR_PTR pOldPin,
-               CK_ULONG ulOldLen,
-               CK_CHAR_PTR pNewPin,
-               CK_ULONG ulNewLen)
+	CK_CHAR_PTR pOldPin,
+	CK_ULONG ulOldLen,
+	CK_CHAR_PTR pNewPin,
+	CK_ULONG ulNewLen)
 {
-   int ret;
-   P11_SESSION *pSession = NULL;
-log_trace(WHERE, "I: enter");
-   ret = p11_lock();
-if (ret != CKR_OK)
-{
-	log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-   return ret;
-}
+	int ret;
+	P11_SESSION *pSession = NULL;
+	log_trace(WHERE, "I: enter");
 
-   log_trace(WHERE, "S: C_SetPIN(session %d)", hSession);
+	if (p11_get_init() != BEIDP11_INITIALIZED)
+	{
+		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+		return (CKR_CRYPTOKI_NOT_INITIALIZED);
+	}		
 
-   ret = p11_get_session(hSession, &pSession);
-   if (ret)
-      {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
-      goto cleanup;
-      }
+	ret = p11_lock();
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+		return ret;
+	}
 
-   ret = cal_change_pin(pSession->hslot, ulOldLen, pOldPin, ulNewLen, pNewPin);
+	log_trace(WHERE, "S: C_SetPIN(session %d)", hSession);
+
+	ret = p11_get_session(hSession, &pSession);
+	if (ret)
+	{
+		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		goto cleanup;
+	}
+
+	ret = cal_change_pin(pSession->hslot, ulOldLen, pOldPin, ulNewLen, pNewPin);
 cleanup:
-   p11_unlock();
-   log_trace(WHERE, "I: leave, ret = %i",ret);
-   return ret;
+	p11_unlock();
+	log_trace(WHERE, "I: leave, ret = %i",ret);
+	return ret;
 }
 #undef WHERE

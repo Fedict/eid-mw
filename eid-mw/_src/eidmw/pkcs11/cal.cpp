@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2012 FedICT.
+* Copyright (C) 2008-2013 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -868,7 +868,7 @@ int cal_get_card_data(CK_SLOT_ID hSlot)
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret) goto cleanup;
 
-		plabel = BEID_LABEL_DATA_FILE;
+		plabel = BEID_LABEL_CARD_DATA;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oCardData.GetBytes(),(CK_ULONG)oCardData.Size(),
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
@@ -1094,8 +1094,8 @@ int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 			}
 		case CACHED_DATA_TYPE_RNCERT:
 			oFileData = oReader.ReadFile(BEID_FILE_CERT_RRN);
-			plabel = BEID_OBJECTID_RNCERT;
-			pobjectID = BEID_OBJECTID_PHOTO;
+			plabel = BEID_LABEL_CERT_RN;
+			pobjectID = BEID_OBJECTID_RNCERT;
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)BEID_OBJECTID_RNCERT, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT));
@@ -1855,12 +1855,12 @@ CK_RV cal_wait_for_the_slot_event(int block)
 			p11_unlock();
 			oCardLayer->GetStatusChange(TIMEOUT_INFINITE,txReaderStates,ulnReaders);
 			log_trace(WHERE, "I: status change received");
-			if(p11_get_init() == 0)
+			ret = p11_lock();
+			if(p11_get_init() != BEIDP11_INITIALIZED)
 			{
 				log_trace(WHERE, "I: leave, p11_get_init returned false");
 				CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
 			}
-			ret = p11_lock();
 			if (ret != CKR_OK)
 			{
 				log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
@@ -1880,10 +1880,16 @@ CK_RV cal_wait_for_the_slot_event(int block)
 	}
 	catch (CMWException e)
 	{
+		if (block){
+			p11_lock();
+		}
 		CLEANUP(cal_translate_error(WHERE, e.GetError()));
 	}
 	catch (...) 
 	{
+		if (block){
+			p11_lock();
+		}
 		log_trace(WHERE, "E: unkown exception thrown");
 		CLEANUP(CKR_FUNCTION_FAILED);
 	}

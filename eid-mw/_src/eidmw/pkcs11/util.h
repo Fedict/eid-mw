@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -22,8 +22,13 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "log.h"
 
 //#define DUMP_TEMPLATE_MAX	32
+#define BEIDP11_NOT_INITIALIZED			0
+#define BEIDP11_INITIALIZED				1
+#define BEIDP11_DEINITIALIZING			2	
+#define BEIDP11_INITIALIZING			3
 
 #ifdef __cplusplus
 extern "C" {
