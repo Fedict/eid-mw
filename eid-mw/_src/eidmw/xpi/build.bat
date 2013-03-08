@@ -4,10 +4,10 @@ set thecurrentdir=%cd%
 
 cd %~dp0 
 
-call ..\SetPath7zip.bat
+call .\SetPath7zip.bat
 
 set x=belgiumeid
-xcopy %x% build /i /e
+svn export ./src ./build
 
 cd %~dp0\build
 "%BEID_DIR_7ZIP%\7z" a -tzip "%x%.xpi" * -r -mx=9
