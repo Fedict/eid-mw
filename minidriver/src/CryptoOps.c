@@ -362,15 +362,17 @@ DWORD WINAPI   CardSignData
 		case CALG_SHA_512:
 			uiHashAlgo = HASH_ALGO_SHA_512;
 			break;
+		case CALG_SSL3_SHAMD5:
+			uiHashAlgo = HASH_ALGO_NONE;
+			break;
 		case CALG_TLS1PRF:
 		case CALG_MAC:
 		case CALG_HASH_REPLACE_OWF:
 		case CALG_HUGHES_MD5:
 		case CALG_HMAC:
-		case CALG_SSL3_SHAMD5:
 			CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
 			break;
-		default://case 0, no hash specified
+		default:
 			LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->aiHashAlg] is zero");
 			CLEANUP(SCARD_E_INVALID_PARAMETER);
 			/*uiHashAlgo = HASH_ALGO_NONE;*/
