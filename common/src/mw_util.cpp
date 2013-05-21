@@ -402,7 +402,7 @@ int wcscat_s(wchar_t* dst, size_t elem, const wchar_t* src)
 }
 
 // after https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=2981930
-#else //WIN32
+/*#else //WIN32
 int dupenv_s(char **buffer, size_t *numberOfElements, const char *varname)
 {
 //	size_t required;
@@ -418,5 +418,5 @@ int dupenv_s(char **buffer, size_t *numberOfElements, const char *varname)
 	if (!*buffer)
 		return ENOMEM;
 	return 0;
-}
+}*/
 #endif

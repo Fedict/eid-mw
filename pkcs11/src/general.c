@@ -136,7 +136,6 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 
 	ret = cal_close();
 
-cleanup:
 	/* Release and destroy the mutex */
 	// mutex might still be in use by C_waitforslotlist
 

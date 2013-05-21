@@ -91,6 +91,7 @@ bool CReadersInfo::ReaderStateChanged(unsigned long ulIndex)
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
 
 	return (m_tInfos[ulIndex].ulEventState != m_tInfos[ulIndex].ulCurrentState);
+	//return ( (m_tInfos[ulIndex].ulEventState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT)) != (m_tInfos[ulIndex].ulCurrentState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT)) );
     //return 0 != (m_tInfos[ulIndex].ulEventState & EIDMW_STATE_CHANGED);
 }
 

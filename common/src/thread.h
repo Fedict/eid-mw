@@ -95,8 +95,11 @@ public:
 	            1 = request the thread o stop after timeout
 				2 = force the thread to stop*/
 	virtual bool WaitTimeout(unsigned long ulTimeout,int iStopMode=0);
-
+#ifdef WIN32
+	uintptr_t m_SyncHandle;
+#else
 	beid_thread_id m_SyncHandle;
+#endif
 	bool m_isRunning;
 	bool m_bStopRequest;	/** Can be taken into account in the run method to end the thread properly before normal ending */
 

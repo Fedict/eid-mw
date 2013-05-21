@@ -30,6 +30,7 @@
 
 #ifdef WIN32
 #include <time.h>
+#include <stdlib.h>
 #endif
 
 #if !defined __APPLE__ && !defined USE_WINERROR
@@ -109,7 +110,8 @@ int wcscpy_s(wchar_t *dest, const wchar_t *src);
  #define _swprintf_s swprintf_s
  #define _vfwprintf_s vfwprintf_s
  #define _vfprintf_s vfprintf_s
- int 	dupenv_s(char **buffer, size_t *numberOfElements, const char *varname);
+ #define dupenv_s _dupenv_s 
+ //int 	dupenv_s(char **buffer, size_t *numberOfElements, const char *varname);
 #endif
 
 
