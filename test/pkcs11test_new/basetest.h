@@ -40,7 +40,7 @@
 #ifdef WIN64
 #define PKCS11_LIB L"..\\..\\VS_2010\\Binaries\\x64_Release\\beidpkcs11.dll"
 #else
-#define PKCS11_LIB L"F:\\Windows\\System32\\beid_ff_pkcs11.dll"
+#define PKCS11_LIB "beidpkcs11.dll"//"F:\\trunk\\VS_2010\\Binaries\\Win32_Debug\\beidpkcs11D.dll"//L"beid_ff_pkcs11.dll"//
 #endif
 #define RTLD_LAZY	1
 #define RTLD_NOW	2

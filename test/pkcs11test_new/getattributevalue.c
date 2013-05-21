@@ -165,7 +165,7 @@ testRet test_getattributevalue_all() {
 testRet test_getattributevalue_lastname() {
   testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
   CK_ULONG data = CKO_DATA;
-  CK_UTF8CHAR label[] = "Surname";
+  CK_UTF8CHAR label[] = "surname";
   CK_ATTRIBUTE attributes[] = {{CKA_CLASS,&data,sizeof(CK_ULONG)},
 								{CKA_LABEL,label,sizeof(label)-1}};
   test_getattributevalue(attributes, 2);
@@ -176,7 +176,7 @@ testRet test_getattributevalue_lastname() {
 testRet test_getattributevalue_rrn() {
   testRet retVal = {CKR_OK,TEST_PASSED};	//return values of this test
   CK_ULONG data = CKO_DATA;
-  CK_UTF8CHAR label[] = "national_number";
+  CK_UTF8CHAR label[] = "chip_number";
   CK_ATTRIBUTE attributes[] = {{CKA_CLASS,&data,sizeof(CK_ULONG)},
 								{CKA_LABEL,label,sizeof(label)-1}};
   test_getattributevalue(attributes, 2);

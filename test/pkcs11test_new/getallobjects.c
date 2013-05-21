@@ -70,7 +70,7 @@ testRet test_getallobjects()
 							frv = (*functions->C_OpenSession)(slotId, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
 							if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_OpenSession", "test_getallobjects" ))
 							{
-								frv = (*functions->C_FindObjectsInit)(session_handle, attributes, 0); 
+								frv = (*functions->C_FindObjectsInit)(session_handle, attributes, 1); 
 								if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_FindObjectsInit", "test_getallobjects" ))
 								{
 									while (ulObjectCount > 0)
@@ -149,7 +149,7 @@ testRet test_getallidobjects() {
 					{
 						CK_SLOT_ID slotId = slotIds[slotIdx];
 						CK_ULONG data = CKO_DATA;
-						CK_UTF8CHAR* ptheLabel = (CK_UTF8CHAR*)"surname";//id
+						CK_UTF8CHAR* ptheLabel = (CK_UTF8CHAR*)"carddata_serialnumber";//id
 						CK_ATTRIBUTE attributes[2] = {{CKA_CLASS,&data,sizeof(CK_ULONG)},{CKA_LABEL,ptheLabel,strlen((const char*)ptheLabel)}};//surname CKA_OBJECT_ID
 						CK_VOID_PTR pLabel = malloc (256);
 						CK_ULONG ullabelLen = 255;//last one is for the string termination

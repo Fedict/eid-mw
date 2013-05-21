@@ -173,10 +173,15 @@
   <ItemGroup>
     <ClCompile Include="basetest.c" />
     <ClCompile Include="finalize-initialize.c" />
+    <ClCompile Include="findobjects.c" />
     <ClCompile Include="getallobjects.c" />
+    <ClCompile Include="getattributevalue.c" />
     <ClCompile Include="getinfo.c" />
+    <ClCompile Include="getkeys.c" />
     <ClCompile Include="getmechanisms.c" />
+    <ClCompile Include="getprivatekeys.c" />
     <ClCompile Include="getslotlist.c" />
+    <ClCompile Include="gettokeninfo.c" />
     <ClCompile Include="logtest.c" />
     <ClCompile Include="MainTest.c" />
     <ClCompile Include="open-close-session.c" />
