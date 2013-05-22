@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="add-remove-readers.c" />
     <ClCompile Include="basetest.c" />
     <ClCompile Include="finalize-initialize.c" />
     <ClCompile Include="findobjects.c" />
