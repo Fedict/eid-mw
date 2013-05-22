@@ -12,40 +12,40 @@
 
 :: tortoise subwcrev
 :subwcrev
-subwcrev %~dp0.. %~dp0.\svn_revision_template %~dp0..\svn_revision
+subwcrev "%~dp0.." "%~dp0.\svn_revision_template" "%~dp0..\svn_revision"
 IF NOT ERRORLEVEL 1 GOTO write_svn_revision_h
 
 :: svnversion
 :svnversion
 @SET SVN_REVISION=
-@FOR /F "tokens=1" %%i in ('svnversion.exe %~dp0..') do @SET SVN_REVISION=%%i
+@FOR /F "tokens=1" %%i in ('svnversion.exe "%~dp0.."') do @SET SVN_REVISION=%%i
 
 @IF NOT DEFINED SVN_REVISION GOTO writedummy
 @IF "%SVN_REVISION%"=="" GOTO writedummy
 @IF SVN_REVISION==exported GOTO writedummy
 
 :writesvn_revision
-@echo %SVN_REVISION%>%~dp0..\svn_revision
+@echo %SVN_REVISION%>"%~dp0..\svn_revision"
 @echo [INFO] ..\svn_revision set to %SVN_REVISION%
 @GOTO write_svn_revision_h
 
 :writedummy
-@IF EXIST %~dp0..\svn_revision GOTO write_svn_revision_h
-@echo 666>%~dp0..\svn_revision
+@IF EXIST "%~dp0..\svn_revision" GOTO write_svn_revision_h
+@echo 666>"%~dp0..\svn_revision"
 @echo [INFO] ..\svn_revision set to 666
 
 :write_svn_revision_h
 
 :: creates svn_revision.h file
 
-@FOR /F "tokens=1" %%i in (%~dp0..\svn_revision) do @SET SVN_REVISION=%%i
+@FOR /F "tokens=1" %%i in ("%~dp0..\svn_revision") do @SET SVN_REVISION=%%i
 
 @SET /A SVN_REVISION+=6000
 
-@echo #ifndef __SVN_REVISION_H__                 >  %~dp0\svn_revision.h
-@echo #define __SVN_REVISION_H__                 >> %~dp0\svn_revision.h
-@echo #define SVN_REVISION %SVN_REVISION%        >> %~dp0\svn_revision.h
-@echo #define SVN_REVISION_STR "%SVN_REVISION%"  >> %~dp0\svn_revision.h
+@echo #ifndef __SVN_REVISION_H__                 >  "%~dp0\svn_revision.h"
+@echo #define __SVN_REVISION_H__                 >> "%~dp0\svn_revision.h"
+@echo #define SVN_REVISION %SVN_REVISION%        >> "%~dp0\svn_revision.h"
+@echo #define SVN_REVISION_STR "%SVN_REVISION%"  >> "%~dp0\svn_revision.h"
 
-@echo #endif //__SVN_REVISION_H__                >> %~dp0\svn_revision.h
+@echo #endif //__SVN_REVISION_H__                >> "%~dp0\svn_revision.h"
 
