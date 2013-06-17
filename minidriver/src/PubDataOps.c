@@ -310,6 +310,12 @@ DWORD WINAPI   CardReadFile
 					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
 					CLEANUP(SCARD_E_UNEXPECTED);
 				}
+				if(*(*ppbData) == 0)
+				{
+					LogTrace(LOGTYPE_INFO, WHERE, "CERT_AUTH **ppbData == 0");
+					CLEANUP(SCARD_E_FILE_NOT_FOUND);
+				}
+				LogTrace(LOGTYPE_INFO, WHERE, "CERT_AUTH **ppbData = 0x%.2x", *(*ppbData));
 			}
 			if ( _stricmp("ksc01", pszFileName) == 0)					   /* /mscp/ksc01 */
 			{
@@ -320,6 +326,12 @@ DWORD WINAPI   CardReadFile
 					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
 					CLEANUP(SCARD_E_UNEXPECTED);
 				}
+				if(*(*ppbData) == 0)
+				{
+					LogTrace(LOGTYPE_INFO, WHERE, "CERT_NONREP **ppbData == 0");
+					CLEANUP(SCARD_E_FILE_NOT_FOUND);
+				}
+				LogTrace(LOGTYPE_INFO, WHERE, "CERT_NONREP **ppbData = 0x%.2x", *(*ppbData));
 			}
 			if ( _stricmp("msroots", pszFileName) == 0)					/* /mscp/msroots */
 			{

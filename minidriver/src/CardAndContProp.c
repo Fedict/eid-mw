@@ -105,11 +105,11 @@ DWORD WINAPI   CardGetContainerProperty
          CLEANUP(ERROR_INSUFFICIENT_BUFFER);
       }
 	  if (bContainerIndex == 0) {
-		  LogTrace(LOGTYPE_INFO, WHERE, "Creating Authentication Certif...");
+		  LogTrace(LOGTYPE_INFO, WHERE, "Creating Authentication Certif..");
 		  dwCertSpec = CERT_AUTH;
 	  }
 	  if (bContainerIndex == 1) {
-	  	  LogTrace(LOGTYPE_INFO, WHERE, "Creating Non-Repudiation Certif...");
+	  	  LogTrace(LOGTYPE_INFO, WHERE, "Creating Non-Repudiation Certif..");
 		  dwCertSpec = CERT_NONREP;
 	  }
 	  dwReturn = BeidReadCert(pCardData, dwCertSpec, &cbCertif, &pbCertif);
@@ -121,6 +121,17 @@ DWORD WINAPI   CardGetContainerProperty
 			  LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
 		  CLEANUP(SCARD_E_UNEXPECTED);
 	  }
+		LogTrace(LOGTYPE_INFO, WHERE, "bContainerIndex = %d *pbCertif = %.2x",bContainerIndex, *pbCertif);
+		if((bContainerIndex == 0)&&(*pbCertif == 0))
+		{
+			LogTrace(LOGTYPE_INFO, WHERE, "Authentication Certif starts with 0x00, so it is not present");
+			CLEANUP(SCARD_E_NO_KEY_CONTAINER);//no Authentication Certificate
+		}
+		else if ((bContainerIndex == 1)&&(*pbCertif == 0))
+		{
+			LogTrace(LOGTYPE_INFO, WHERE, "Non-Repudiation Certif starts with 0x00, so it is not present");
+			CLEANUP(SCARD_E_NO_KEY_CONTAINER);//no Non-Repudiation Certificate
+		}
       ContInfo.dwVersion      = CONTAINER_INFO_CURRENT_VERSION;
       ContInfo.dwReserved     = 0;
   	  dwReturn = BeidGetPubKey(pCardData, 
@@ -144,25 +155,25 @@ DWORD WINAPI   CardGetContainerProperty
 
       *pdwDataLen = sizeof(CONTAINER_INFO);
    }
-   else
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "Property: [CCP_PIN_IDENTIFIER] for ContainerIndex: [%d]", bContainerIndex);
+	 else
+	 {
+		 LogTrace(LOGTYPE_INFO, WHERE, "Property: [CCP_PIN_IDENTIFIER] for ContainerIndex: [%d]", bContainerIndex);
 
-      if ( cbData < sizeof(PIN_ID) )
-      {
-         LogTrace(LOGTYPE_ERROR, WHERE, "Insufficient buffer[%d]<[%d]", cbData, sizeof(PIN_ID));
-         CLEANUP(ERROR_INSUFFICIENT_BUFFER);
-      }
-	  if (bContainerIndex == 0) {
-		  dwPinId = ROLE_DIGSIG;
-	  }
-	  if (bContainerIndex == 1) {
-		  dwPinId = ROLE_NONREP;
-	  }
-      
-      memcpy (pbData, &(dwPinId), sizeof(PIN_ID));
-      *pdwDataLen = sizeof(PIN_ID);
-   }
+		 if ( cbData < sizeof(PIN_ID) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Insufficient buffer[%d]<[%d]", cbData, sizeof(PIN_ID));
+			 CLEANUP(ERROR_INSUFFICIENT_BUFFER);
+		 }
+		 if (bContainerIndex == 0) {
+			 dwPinId = ROLE_DIGSIG;
+		 }
+		 if (bContainerIndex == 1) {
+			 dwPinId = ROLE_NONREP;
+		 }
+
+		 memcpy (pbData, &(dwPinId), sizeof(PIN_ID));
+		 *pdwDataLen = sizeof(PIN_ID);
+	 }
 
 cleanup:
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");

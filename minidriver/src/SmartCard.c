@@ -1506,6 +1506,7 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
 		// we will only return the file length
 		if (pcbCertif != NULL)
 			*pcbCertif = cbCertif;
+		LogTrace(LOGTYPE_INFO, WHERE, "returning filelength = %d",cbCertif);
 		CLEANUP(SCARD_S_SUCCESS);
 	}
    cbRead = cbCertif;
