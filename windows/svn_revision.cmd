@@ -12,8 +12,8 @@
 
 :: tortoise subwcrev
 :subwcrev
-subwcrev "%~dp0.." "%~dp0.\svn_revision_template" "%~dp0..\svn_revision"
-IF NOT ERRORLEVEL 1 GOTO write_svn_revision_h
+subwcrev "%~dp0.." "%~dp0.\svn_revision_template" "%~dp0..\svn_revision.txt"
+@IF NOT ERRORLEVEL 1 GOTO write_svn_revision_h
 
 :: svnversion
 :svnversion
@@ -35,13 +35,10 @@ IF NOT ERRORLEVEL 1 GOTO write_svn_revision_h
 @echo [INFO] ..\svn_revision set to 666
 
 :write_svn_revision_h
-
-:: creates svn_revision.h file
-
-@FOR /F "tokens=1" %%i in ("%~dp0..\svn_revision") do @SET SVN_REVISION=%%i
-
+@FOR /F "tokens=1" %%i in (%~dp0..\svn_revision.txt) do @SET SVN_REVISION=%%i
 @SET /A SVN_REVISION+=6000
 
+:: create svn_revision.h file
 @echo #ifndef __SVN_REVISION_H__                 >  "%~dp0\svn_revision.h"
 @echo #define __SVN_REVISION_H__                 >> "%~dp0\svn_revision.h"
 @echo #define SVN_REVISION %SVN_REVISION%        >> "%~dp0\svn_revision.h"
