@@ -1192,111 +1192,119 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 	if (ret) goto cleanup;
 
 	//do not refresh the ID files here
-	if (pClass == CKO_DATA ) goto cleanup;
+	if (*pClass == CKO_DATA ) goto cleanup;
 
 	//read ID of object we want to read from token
 	ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_ID, (CK_VOID_PTR*) &pID, &len);
 	if (ret) goto cleanup;
 
-	//get all objects related to this ID
-	ret = p11_find_slot_object(pSlot, CKO_CERTIFICATE, *pID, &pCertObject);
-	if (ret) goto cleanup;
+	//get the object related to this ID
 
-	p11_find_slot_object(pSlot, CKO_PRIVATE_KEY, *pID, &pPrivKeyObject);
-	//in case of cacertificate there is no private key with this id
-	p11_find_slot_object(pSlot, CKO_PUBLIC_KEY, *pID, &pPubKeyObject);
-	//in case of cacertificate there is no public key with this id
+		p11_find_slot_object(pSlot, CKO_PRIVATE_KEY, *pID, &pPrivKeyObject);
 
-	try
-	{
-		CReader &oReader = oCardLayer->getReader(szReader);
-		cert = oReader.GetCertByID(*pID);
+		p11_find_slot_object(pSlot, CKO_PUBLIC_KEY, *pID, &pPubKeyObject);
 
-		//bValid duidt aan if cert met deze ID
-		if (cert.bValid)
-			oCertData = oReader.ReadFile(cert.csPath);
-		else
+		p11_find_slot_object(pSlot, CKO_CERTIFICATE, *pID, &pCertObject);
+
+		try
 		{
-			return(CKR_DEVICE_ERROR);
+			CReader &oReader = oCardLayer->getReader(szReader);
+
+			if(pCertObject != NULL)
+			{
+				cert = oReader.GetCertByID(*pID);
+
+				//bValid duidt aan if cert met deze ID
+				if (cert.bValid)
+					oCertData = oReader.ReadFile(cert.csPath);
+				else
+				{
+					return(CKR_DEVICE_ERROR);
+				}
+
+				ret = cert_get_info(oCertData.GetBytes(), oCertData.Size(), &certinfo);
+
+				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_ISSUER, (CK_VOID_PTR) certinfo.issuer, (CK_ULONG)certinfo.l_issuer);
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SERIAL_NUMBER, (CK_VOID_PTR) certinfo.serial, (CK_ULONG)certinfo.l_serial);
+				if (ret) goto cleanup;
+				//use real length from decoder here instead of lg from cal
+				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_VALUE, (CK_VOID_PTR) oCertData.GetBytes(), (CK_ULONG)certinfo.lcert);
+				if (ret) goto cleanup;
+				//TODO Check this in the cal if we can be sure that the certificate can be trusted and not be modified on the card
+				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
+				if (ret) goto cleanup;
+
+				pCertObject->state = P11_CACHED;
+			}
+
+			if (pPrivKeyObject)
+			{
+				key = oReader.GetPrivKeyByID(*pID);
+
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) &btrue, sizeof(btrue));
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_DECRYPT, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SIGN_RECOVER, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_UNWRAP, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
+				if (ret) goto cleanup;
+				if(pCertObject != NULL)
+				{
+					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, (CK_ULONG)certinfo.l_mod);
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, (CK_ULONG)certinfo.l_exp);
+					if (ret) goto cleanup;
+				}
+				pPrivKeyObject->state = P11_CACHED;
+			}
+
+			if (pPubKeyObject)
+			{
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) &btrue, sizeof(btrue));
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VERIFY, (CK_VOID_PTR) &btrue, sizeof(btrue));
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_ENCRYPT, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_WRAP, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
+				if (ret) goto cleanup;
+
+				if(pCertObject != NULL)
+				{
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, certinfo.l_mod);
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VALUE, (CK_VOID_PTR) certinfo.pkinfo, certinfo.l_pkinfo);
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, certinfo.l_exp);
+					if (ret) goto cleanup;
+					//TODO test if we can set the trusted flag...
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
+					if (ret) goto cleanup;
+				}
+
+				pPubKeyObject->state = P11_CACHED;
+			}
 		}
-
-		ret = cert_get_info(oCertData.GetBytes(), oCertData.Size(), &certinfo);
-
-		ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
-		if (ret) goto cleanup;
-		ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_ISSUER, (CK_VOID_PTR) certinfo.issuer, (CK_ULONG)certinfo.l_issuer);
-		if (ret) goto cleanup;
-		ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SERIAL_NUMBER, (CK_VOID_PTR) certinfo.serial, (CK_ULONG)certinfo.l_serial);
-		if (ret) goto cleanup;
-		//use real length from decoder here instead of lg from cal
-		ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_VALUE, (CK_VOID_PTR) oCertData.GetBytes(), (CK_ULONG)certinfo.lcert);
-		if (ret) goto cleanup;
-		//TODO Check this in the cal if we can be sure that the certificate can be trusted and not be modified on the card
-		ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
-		if (ret) goto cleanup;
-
-		pCertObject->state = P11_CACHED;
-
-
-		if (pPrivKeyObject)
+		catch (CMWException e)
 		{
-			key = oReader.GetPrivKeyByID(*pID);
-			ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) &btrue, sizeof(btrue));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_DECRYPT, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SIGN_RECOVER, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_UNWRAP, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, (CK_ULONG)certinfo.l_mod);
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, (CK_ULONG)certinfo.l_exp);
-			if (ret) goto cleanup;
-
-			pPrivKeyObject->state = P11_CACHED;
+			cert_free_info(&certinfo);
+			return(cal_translate_error(WHERE, e.GetError()));
 		}
-
-		if (pPubKeyObject)
+		catch (...) 
 		{
-			ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) &btrue, sizeof(btrue));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VERIFY, (CK_VOID_PTR) &btrue, sizeof(btrue));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_ENCRYPT, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_WRAP, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, certinfo.l_mod);
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VALUE, (CK_VOID_PTR) certinfo.pkinfo, certinfo.l_pkinfo);
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, certinfo.l_exp);
-			if (ret) goto cleanup;
-			//TODO test if we can set the trusted flag...
-			ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
-			if (ret) goto cleanup;
-
-			pPubKeyObject->state = P11_CACHED;
+			lRet = -1;
+			log_trace(WHERE, "E: unkown exception thrown");
+			cert_free_info(&certinfo);
+			return (CKR_FUNCTION_FAILED);
 		}
-	}
-	catch (CMWException e)
-	{
-		cert_free_info(&certinfo);
-		return(cal_translate_error(WHERE, e.GetError()));
-	}
-	catch (...) 
-	{
-		lRet = -1;
-		log_trace(WHERE, "E: unkown exception thrown");
-		cert_free_info(&certinfo);
-		return (CKR_FUNCTION_FAILED);
-	}
-
 	if (ret != 0)
 	{
 		cert_free_info(&certinfo);
