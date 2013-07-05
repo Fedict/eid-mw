@@ -38,6 +38,71 @@
 
 /****************************************************************************************************/
 
+#define WHERE "BeidParsePrKDF"
+DWORD BeidParsePrKDF(PCARD_DATA  pCardData, DWORD *cbStream, BYTE *pbStream, WORD *cbKeySize)
+{
+  DWORD dwReturn  = 0;
+	DWORD	dwCounter = 0;
+	DWORD dwInc = 0;
+	*cbKeySize = 0;
+
+	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+	   /********************/
+   /* Check Parameters */
+   /********************/
+   if ( pCardData == NULL )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pCardData]");
+      CLEANUP(SCARD_E_INVALID_PARAMETER);
+   }
+   if ( pbStream == NULL )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [ppbStream]");
+      CLEANUP(SCARD_E_INVALID_PARAMETER);
+   }
+	 if ( cbStream == NULL )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [cbStream]");
+      CLEANUP(SCARD_E_INVALID_PARAMETER);
+	 }
+
+	 if(pbStream[dwCounter] == 0x30) //0x30 means sequence
+	 {
+		 LogTrace(LOGTYPE_TRACE, WHERE, "sequence [0x30]");
+		 dwCounter++; //jump to sequence length
+		 LogTrace(LOGTYPE_TRACE, WHERE, "sequence length [0x%.2X]",pbStream[dwCounter]);
+		 dwInc = pbStream[dwCounter];
+		 dwCounter += dwInc; //add length (to jump over sequence)
+		 if( dwCounter < (*cbStream))
+		 {
+			 //the last 2 bytes are the key size
+			 *cbKeySize = (pbStream[dwCounter-1])*256;
+			 *cbKeySize += (pbStream[dwCounter]);
+			 LogTrace(LOGTYPE_INFO, WHERE, "rsa key size is %d",*cbKeySize);
+		 }
+		 else
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "*cbStream = %d dwCounter = %d",*cbStream,dwCounter);
+			 LogDump(*cbStream,pbStream);
+			 CLEANUP(PEERDIST_ERROR_CANNOT_PARSE_CONTENTINFO);		 
+		 }
+	 }
+	 else
+	 {
+		 LogTrace(LOGTYPE_ERROR, WHERE, "Expected 0x30 instead of ox%.2x",pbStream[dwCounter]);
+		 LogDump(*cbStream,pbStream);
+		 CLEANUP(PEERDIST_ERROR_CANNOT_PARSE_CONTENTINFO);		 
+	 }
+
+cleanup:
+
+	 LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
+	 return(dwReturn);
+}
+#undef WHERE
+
+
+
 #define WHERE "BeidDelayAndRecover"
 void BeidDelayAndRecover(PCARD_DATA  pCardData,
 						 BYTE   SW1, 
@@ -62,8 +127,15 @@ void BeidDelayAndRecover(PCARD_DATA  pCardData,
 			dwReturn = SCardReconnect(pCardData->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &ap);
 
 			LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] SCardReconnect errorcode: [0x%08X]", i, dwReturn);
+
 			if ( dwReturn != SCARD_S_SUCCESS )
 			{			
+				if(dwReturn == SCARD_W_REMOVED_CARD)
+				{
+					LogTrace(LOGTYPE_INFO, WHERE, "SCARD_W_REMOVED_CARD");
+					LogTrace(LOGTYPE_INFO, WHERE, "Exit API... ");
+					return;
+				}
 				continue;
 			}
 			// transaction is lost after an SCardReconnect()
@@ -1147,8 +1219,9 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
       LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (SIGN) errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
-
-   if ( (SW1 != 0x61) || (SW2 != 0x80) )
+	 LogTrace(LOGTYPE_TRACE, WHERE, "ADPU response: [0x%02X][0x%02X]", SW1, SW2);
+	 LogTrace(LOGTYPE_TRACE, WHERE, "recvlen = %d", recvlen, SW2);
+   if (SW1 != 0x61)
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Sign Failed: [0x%02X][0x%02X]", SW1, SW2);
 
@@ -1167,7 +1240,7 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
    Cmd [1] = 0xC0;   /* PSO: GET RESPONSE COMMAND */
    Cmd [2] = 0x00;
    Cmd [3] = 0x00;
-   Cmd [4] = 0x80;   /* Length of response */
+   Cmd [4] = SW2;   /* Length of response */
    uiCmdLg = 5;
 
    recvlen = sizeof(recvbuf);
@@ -1193,16 +1266,22 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
       CLEANUP(SCARD_E_UNEXPECTED);
    }
 
-   if ( (recvlen - 2) != 0x80 )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid length received: [0x%02X][0x%02X]", recvlen - 2, 0x80);
+	 if( (recvlen - 2) == 0x80 )
+	 {
+		 *pcbSignature = 0x80; //128d
+	 }
+	 else if ( (recvlen - 2) == 0x100 )
+	 {
+		 *pcbSignature = 0x100; //256d
+	 }
+	 else //not supported
+	 {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid length received: [0x%02X]", recvlen - 2);
       CLEANUP(SCARD_E_UNEXPECTED);
    }
 
-   *pcbSignature = 0x80;
-
    /* Allocate memory for the target buffer */
-   *ppbSignature = pCardData->pfnCspAlloc(*pcbSignature);
+   *ppbSignature = (PBYTE)(pCardData->pfnCspAlloc(*pcbSignature));
    if ( *ppbSignature == NULL )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbSignature]");
@@ -1221,22 +1300,21 @@ cleanup:
 #undef WHERE
 
 /****************************************************************************************************/
-
+// read up to *cbStream bytes from the currently selected file, starting at offset dwOffset
+// and store them in pbStream
+/****************************************************************************************************/
 #define WHERE "BeidReadFile"
 DWORD BeidReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD *cbStream, PBYTE pbStream)
 {
    DWORD             dwReturn = 0;
-
    SCARD_IO_REQUEST  ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
    SCARD_IO_REQUEST  ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
 
    unsigned char     Cmd[128];
    unsigned int      uiCmdLg = 0;
-
    unsigned char     recvbuf[256];
    unsigned long     recvlen = sizeof(recvbuf);
    BYTE              SW1, SW2;
-
    DWORD             cbRead      = 0;
    DWORD             cbPartRead  = 0;
 
@@ -1250,74 +1328,88 @@ DWORD BeidReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD *cbStream, PBYTE
    Cmd [4] = 0x00;
    uiCmdLg = 5;
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
-   while ( ( *cbStream - cbRead ) > 0 )
-   {
-        Cmd[2] = (BYTE)((dwOffset + cbRead) >> 8);   /* set reading startpoint     */
-        Cmd[3] = (BYTE)(dwOffset + cbRead);
 
-      cbPartRead = *cbStream - cbRead;
-        if(cbPartRead > BEID_READ_BINARY_MAX_LEN)    /*if more than maximum length */
-      {
-         Cmd[4] = BEID_READ_BINARY_MAX_LEN;        /* is requested, than read    */
-      }
-        else                                         /* maximum length             */
-      {
-            Cmd[4] = (BYTE)(cbPartRead);
-      }
-		recvlen = sizeof(recvbuf);
-      dwReturn = SCardTransmit(pCardData->hScard, 
-                               &ioSendPci, 
-                               Cmd, 
-                               uiCmdLg, 
-                               &ioRecvPci, 
-                               recvbuf, 
-                               &recvlen);
-		SW1 = recvbuf[recvlen-2];
-		SW2 = recvbuf[recvlen-1];
-		LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
-		BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
-      if ( dwReturn != SCARD_S_SUCCESS )
-      {
-         LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
-         CLEANUP(dwReturn);
-      }
+	 while ( ( *cbStream - cbRead ) > 0 )
+	 {
+		 Cmd[2] = (BYTE)((dwOffset + cbRead) >> 8);   /* set reading startpoint     */
+		Cmd[3] = (BYTE)( (dwOffset + cbRead)&(0xFF) );
 
-		/* Special case: when SW1 == 0x6C (=incorrect value of Le), we will
-		retransmit with SW2 as Le, if SW2 is smaller then the 
-		BEID_READ_BINARY_MAX_LEN */
-		if ( ( SW1 == 0x6c ) && ( SW2 <= BEID_READ_BINARY_MAX_LEN ) ) 
-		{
-			Cmd[4] = SW2;
-			recvlen = sizeof(recvbuf);
-			dwReturn = SCardTransmit(pCardData->hScard, 
-				&ioSendPci, 
-				Cmd, 
-				uiCmdLg, 
-				&ioRecvPci, 
-				recvbuf, 
-				&recvlen);
-			LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
-			if ( dwReturn != SCARD_S_SUCCESS )
-			{
-				LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
-				CLEANUP(dwReturn);
-			}
-			SW1 = recvbuf[recvlen - 2];
-			SW2 = recvbuf[recvlen - 1];
+		 cbPartRead = *cbStream - cbRead;
+		 if(cbPartRead > BEID_READ_BINARY_MAX_LEN)    /*if more than maximum length */
+		 {
+			 Cmd[4] = BEID_READ_BINARY_MAX_LEN;        /* is requested, than read    */
+		 }
+		 else                                         /* maximum length             */
+		 {
+			 Cmd[4] = (BYTE)(cbPartRead);
+		 }
+		 recvlen = sizeof(recvbuf);
+#ifdef _DEBUG
+		 LogDump(uiCmdLg,Cmd);
+#endif
+		 dwReturn = SCardTransmit(pCardData->hScard, 
+			 &ioSendPci, 
+			 Cmd, 
+			 uiCmdLg, 
+			 &ioRecvPci, 
+			 recvbuf, 
+			 &recvlen);
+		 SW1 = recvbuf[recvlen-2];
+		 SW2 = recvbuf[recvlen-1];
+		 LogTrace(LOGTYPE_TRACE, WHERE, "recvlen = %d SW1 = 0x%.02X SW2 = 0x%.02X", recvlen,SW1,SW2);
+#ifdef _DEBUG
+		 LogDump(recvlen,recvbuf);
+#endif
+		 LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
+		 BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
+		 if ( dwReturn != SCARD_S_SUCCESS )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
+			 CLEANUP(dwReturn);
+		 }
 
-		}
+		 /* Special case: when SW1 == 0x6C (=incorrect value of Le), we will
+		 retransmit with SW2 as Le, if SW2 is smaller then the 
+		 BEID_READ_BINARY_MAX_LEN */
+		 if ( ( SW1 == 0x6c ) && ( SW2 <= BEID_READ_BINARY_MAX_LEN ) ) 
+		 {
+			 Cmd[4] = SW2;
+			 recvlen = sizeof(recvbuf);
+#ifdef _DEBUG
+			 LogDump(uiCmdLg,Cmd);
+#endif
+			 dwReturn = SCardTransmit(pCardData->hScard, 
+				 &ioSendPci, 
+				 Cmd, 
+				 uiCmdLg, 
+				 &ioRecvPci, 
+				 recvbuf, 
+				 &recvlen);
+			 LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
+			 if ( dwReturn != SCARD_S_SUCCESS )
+			 {
+				 LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
+				 CLEANUP(dwReturn);
+			 }
+			 SW1 = recvbuf[recvlen - 2];
+			 SW2 = recvbuf[recvlen - 1];
 
-      if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
-      {
+			 memcpy (pbStream + cbRead, recvbuf, recvlen - 2);
+			 cbRead += recvlen - 2;
+			 break; //stop reading, we already had the length corrected
+		 }
 
-         LogTrace(LOGTYPE_ERROR, WHERE, "Read Binary Failed: [0x%02X][0x%02X]", SW1, SW2);
-         CLEANUP(dwReturn);
-      }
+		 if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Read Binary Failed: [0x%02X][0x%02X]", SW1, SW2);
+			 break; //stop reading, something ain't right
+		 }
 
-      memcpy (pbStream + cbRead, recvbuf, recvlen - 2);
-      cbRead += recvlen - 2;
-   }
+		 memcpy (pbStream + cbRead, recvbuf, recvlen - 2);
+		 cbRead += recvlen - 2;
+	 }
 	*cbStream = cbRead;
+	LogTrace(LOGTYPE_TRACE, WHERE, "cbRead = %d",cbRead);
 cleanup:
 	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
    return (dwReturn);
@@ -1340,14 +1432,7 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
    unsigned char     recvbuf[256];
    unsigned long     recvlen = sizeof(recvbuf);
    BYTE              SW1, SW2;
-
-	DWORD             cbReadBuf;
-
-
-//   BYTE              bRead [255];
-//   DWORD             cbRead;
-
-//   DWORD             cbCertif;
+   DWORD             cbReadBuf;
 
    /***************/
    /* Select File */
@@ -1363,6 +1448,9 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
    memcpy(&Cmd[5], pbFileID, cbFileID);
    uiCmdLg += cbFileID;
 
+#ifdef _DEBUG
+	 LogDump(uiCmdLg,Cmd);
+#endif
    dwReturn = SCardTransmit(pCardData->hScard, 
                             &ioSendPci, 
                             Cmd, 
@@ -1388,25 +1476,28 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
 	*cbStream = 0;
 	*ppbStream = NULL;
 	cbReadBuf = 1024;
-	while (cbReadBuf == 1024) {
+	//read the file in chunks of 1024 bytes
+	while (cbReadBuf == 1024) 
+	{
 		if (*ppbStream == NULL)
-			*ppbStream = (PBYTE) pCardData->pfnCspAlloc(*cbStream + cbReadBuf);
+			*ppbStream = (PBYTE) pCardData->pfnCspAlloc(cbReadBuf);
 		else
 			*ppbStream = (PBYTE) pCardData->pfnCspReAlloc(*ppbStream, *cbStream + cbReadBuf);
-		
+
 		if (*ppbStream == NULL) {
 			LogTrace(LOGTYPE_ERROR, WHERE, "pfnCsp(Re)Alloc failed");
 			CLEANUP(dwReturn);
 		}
-
-		dwReturn = BeidReadFile(pCardData, dwOffset, &cbReadBuf, *ppbStream + *cbStream * sizeof(BYTE));
+		LogTrace(LOGTYPE_ERROR, WHERE, "dwOffset = %d", dwOffset);
+		dwReturn = BeidReadFile(pCardData, dwOffset, &cbReadBuf, *ppbStream + (*cbStream * sizeof(BYTE)));
 		if ( dwReturn != SCARD_S_SUCCESS )
 		{
 			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadFile errorcode: [0x%08X]", dwReturn);
 			pCardData->pfnCspFree(*ppbStream);
 			CLEANUP(dwReturn);
 		}
-		*cbStream = *cbStream + cbReadBuf;
+		dwOffset += cbReadBuf;
+		*cbStream += cbReadBuf;
 	}
 cleanup:
 	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
@@ -1468,7 +1559,9 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
 
    memcpy(&Cmd[5], bFileID, cbFileID);
    uiCmdLg += cbFileID;
-
+#ifdef _DEBUG
+	 LogDump(uiCmdLg,Cmd);
+#endif
    dwReturn = SCardTransmit(pCardData->hScard, 
                             &ioSendPci, 
                             Cmd, 

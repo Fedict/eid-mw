@@ -235,14 +235,13 @@ DWORD WINAPI   CardReadFile
          DirFound++;
 			if (_stricmp("cmapfile", pszFileName) == 0)			      /* /mscp/cmapfile */
          {
+				BYTE  pbFileID [] = {0xDF, 0x00, 0x50, 0x35};
+				
+				BYTE cbFileID  = (BYTE)sizeof(pbFileID);
+				WORD keySize;
+
             FileFound++;
-				*pcbData = sizeof(cmr);
-				*ppbData = (PBYTE)pCardData->pfnCspAlloc(*pcbData);
-				if ( *ppbData == NULL )
-				{
-					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
-					CLEANUP(SCARD_E_NO_MEMORY);
-				}
+
 				dwReturn = CardGetProperty(pCardData, 
 					CP_CARD_SERIAL_NO, 
 					pbSerialNumber, 
@@ -250,7 +249,7 @@ DWORD WINAPI   CardReadFile
 					&cbDataLen,
 					0);
 				if (dwReturn != SCARD_S_SUCCESS)  {
-					LogTrace(LOGTYPE_ERROR, WHERE, "Error CardGetProperty for [CP_CARD_SERIAL_NO]: 0x08X", dwReturn);
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error CardGetProperty for [CP_CARD_SERIAL_NO]: 0x%.08x", dwReturn);
 					CLEANUP(dwReturn);
 				}
 				for (i=0; i < 16; i++) {
@@ -273,12 +272,47 @@ DWORD WINAPI   CardReadFile
 				if (iReturn == 0) 
 				{
 					dwReturn = GetLastError();
-					LogTrace(LOGTYPE_ERROR, WHERE, "Error MultiByteToWideChar: 0x08X", dwReturn);
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error MultiByteToWideChar: 0x%.08x", dwReturn);
 					CLEANUP(dwReturn);
 				}
+
+				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
+				if (dwReturn != SCARD_S_SUCCESS)  {
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error BeidSelectAndReadFile 0x%.08x", dwReturn);
+					CLEANUP(dwReturn);
+				}
+				dwReturn = BeidParsePrKDF(pCardData,pcbData,*ppbData ,&keySize);
+				if (dwReturn != 0)  {
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error BeidParsePrKDF 0x%.08x keySize = %d", dwReturn,keySize);
+					CLEANUP(dwReturn);
+				}
+
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "BeidSelectAndReadFile returned [%d]", dwReturn);
+					CLEANUP(SCARD_E_UNEXPECTED);
+				}
+
+				*pcbData = sizeof(cmr);
+				*ppbData = (PBYTE)pCardData->pfnCspReAlloc(*ppbData,*pcbData);
+				if ( *ppbData == NULL )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
+				
+				if ( *ppbData == NULL )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
+
+				//LogTrace(LOGTYPE_INFO, WHERE, "CardGetProperty for [CP_CARD_KEYSIZES]: length = %d", cbSerialNumber);
+				//LogDump (cbSerialNumber, (BYTE *)pbSerialNumber);
+
 				cmr[0].bFlags                     = CONTAINER_MAP_VALID_CONTAINER|CONTAINER_MAP_DEFAULT_CONTAINER;
 				cmr[0].bReserved                  = 0;
-				cmr[0].wSigKeySizeBits            = 1024;
+				cmr[0].wSigKeySizeBits            = keySize;
 				cmr[0].wKeyExchangeKeySizeBits    = 0;
 
 				/****************************/
@@ -297,7 +331,7 @@ DWORD WINAPI   CardReadFile
 				}
 				cmr[1].bFlags                     = CONTAINER_MAP_VALID_CONTAINER;
 				cmr[1].bReserved                  = 0;
-				cmr[1].wSigKeySizeBits            = 1024;
+				cmr[1].wSigKeySizeBits            = keySize;
 				cmr[1].wKeyExchangeKeySizeBits    = 0;
 				memcpy (*ppbData, &cmr, *pcbData);
 			}

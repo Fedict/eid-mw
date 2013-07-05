@@ -175,4 +175,12 @@ extern DWORD createVerifyCommand
 					PPIN_VERIFY_STRUCTURE pVerifyCommand
 				);
 
+extern DWORD BeidParsePrKDF
+	(
+		PCARD_DATA  pCardData,
+		DWORD *cbStream,
+		PBYTE pbStream,
+		WORD *cbKeySize
+	);
+
 #endif

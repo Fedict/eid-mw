@@ -497,7 +497,7 @@ DWORD WINAPI   CardQueryKeySizes
 
 	pKeySizes->dwMinimumBitlen     = 1024;
 	pKeySizes->dwDefaultBitlen     = 1024;
-	pKeySizes->dwMaximumBitlen     = 1024;
+	pKeySizes->dwMaximumBitlen     = 2048;
 	pKeySizes->dwIncrementalBitlen = 0;
 
 cleanup:

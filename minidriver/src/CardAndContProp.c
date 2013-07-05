@@ -359,7 +359,7 @@ DWORD CardGetKeysizes(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD p
    KeySizes.dwVersion            = CARD_KEY_SIZES_CURRENT_VERSION;
    KeySizes.dwMinimumBitlen      = 1024;
    KeySizes.dwDefaultBitlen      = 1024;
-   KeySizes.dwMaximumBitlen      = 1024;
+   KeySizes.dwMaximumBitlen      = 2048;
    KeySizes.dwIncrementalBitlen  = 0;
 
    memcpy (pbData, &KeySizes, sizeof(KeySizes));
@@ -653,7 +653,7 @@ DWORD CardGetPinInfo(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pd
 
    LogTrace(LOGTYPE_INFO, WHERE, "GET Property: [CP_CARD_PIN_INFO][%d]", dwFlags);
 
-   /* dwFlags contains the the identifier of the PIN to return */
+   /* dwFlags contains the identifier of the PIN to return */
    if ( (dwFlags < 0        ) ||
         (dwFlags > MAX_PINS ) )
    {
