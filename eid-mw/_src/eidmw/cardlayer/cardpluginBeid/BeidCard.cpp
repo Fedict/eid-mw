@@ -27,7 +27,7 @@ using namespace eIDMW;
 
 static const unsigned char APPLET_AID[] = {0xA0,0x00,0x00,0x00,0x30,0x29,0x05,0x70,0x00,0xAD,0x13,0x10,0x01,0x01,0xFF};
 static const unsigned char BELPIC_AID[] = {0xA0,0x00,0x00,0x01,0x77,0x50,0x4B,0x43,0x53,0x2D,0x31,0x35};
-static const unsigned char ID_AID[] =     {0xA0,0x00,0x00,0x01,0x77,0x49,0x64,0x46,0x69,0x6C,0x65,0x73};
+//static const unsigned char ID_AID[] =     {0xA0,0x00,0x00,0x01,0x77,0x49,0x64,0x46,0x69,0x6C,0x65,0x73};
 
 static const tFileInfo DEFAULT_FILE_INFO = {-1, -1, -1};
 static const tFileInfo PREFS_FILE_INFO_V1 = {-1, -1, 1};
@@ -152,8 +152,8 @@ CPkiCard(hCard, poContext, poPinpad)
 		m_oSerialNr = CByteArray(m_oCardData.GetBytes(), 16);
 
 		m_ucAppletVersion = m_oCardData.GetByte(21);
-        if (m_ucAppletVersion < 0x20)
-            m_ucAppletVersion = (unsigned char) (16 * m_oCardData.GetByte(21) + m_oCardData.GetByte(22));
+//        if (m_ucAppletVersion < 0x17)
+//            m_ucAppletVersion = (unsigned char) (256 * m_oCardData.GetByte(21) + m_oCardData.GetByte(22));
 
 		m_ul6CDelay = 0;
 		if (m_oCardData.GetByte(22) == 0x00 && m_oCardData.GetByte(23) == 0x01)
@@ -314,7 +314,7 @@ unsigned long CBeidCard::GetSupportedAlgorithms()
 	unsigned long ulAlgos =
 		SIGN_ALGO_RSA_PKCS | SIGN_ALGO_MD5_RSA_PKCS | SIGN_ALGO_SHA1_RSA_PKCS;
 
-	if (m_ucAppletVersion >= 0x20)
+	if (m_ucAppletVersion >= 0x17)
 		ulAlgos |= SIGN_ALGO_SHA1_RSA_PSS;
 
 	return ulAlgos;
@@ -329,7 +329,7 @@ CByteArray CBeidCard::Ctrl(long ctrl, const CByteArray & oCmdData)
     case CTRL_BEID_GETCARDDATA:
         return m_oCardData;
     case CTRL_BEID_GETSIGNEDCARDDATA:
-		if (m_ucAppletVersion < 0x20)
+		if (m_ucAppletVersion < 0x17)
 			throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
 		else
 		{
@@ -345,7 +345,7 @@ CByteArray CBeidCard::Ctrl(long ctrl, const CByteArray & oCmdData)
     case CTRL_BEID_GETSIGNEDPINSTATUS:
 		// oCmdData must contain:
 		// - the pin reference (1 byte)
-		if (m_ucAppletVersion < 0x20)
+		if (m_ucAppletVersion < 0x17)
 			throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
 		else
 		{
@@ -431,7 +431,7 @@ void CBeidCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo,
     case SIGN_ALGO_SHA1_RSA_PKCS: ucAlgo = 0x02; break;
     case SIGN_ALGO_MD5_RSA_PKCS: ucAlgo = 0x04; break;
     case SIGN_ALGO_SHA1_RSA_PSS:
-        if (m_ucAppletVersion < 0x20)
+        if (m_ucAppletVersion < 0x17)
         {
             MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on V1 cards");
             throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
@@ -466,7 +466,7 @@ CByteArray CBeidCard::SignInternal(const tPrivKey & key, unsigned long algo,
 	CAutoLock autolock(this);
 
 	// For V2 cards, the Belpic dir has to be selected
-	if (m_ucAppletVersion >= 0x20)
+	if (m_ucAppletVersion >= 0x17)
 		SelectFile(key.csPath);
 	else if (m_selectAppletMode == ALW_SELECT_APPLET)
 		SelectApplet();
@@ -521,8 +521,9 @@ tBelpicDF CBeidCard::getDF(const std::string & csPath, unsigned long & ulOffset)
 		std::string csPartialPath = csPath.substr(ulOffset, 4);
 		if (csPartialPath == "DF00")
 			return BELPIC_DF;
-		if (csPartialPath == "DF01" && m_ucAppletVersion >= 0x20)
-			return ID_DF; // this AID doesn't exist for V1 cards
+		//if (csPartialPath == "DF01" && m_ucAppletVersion >= 0x20)
+		//	return ID_DF; // this AID doesn't exist for V1 cards
+		//this AID doesn't exist for applet v1.7
 	}
 
 	return UNKNOWN_DF;
@@ -536,7 +537,7 @@ tFileInfo CBeidCard::SelectFile(const std::string & csPath, bool bReturnFileInfo
 	// that's the only exception to the 'read always' - 'write never' ACs.
 	if (csPath.substr(csPath.size() - 4, 4) == "4039")
 	{
-		if (m_ucAppletVersion < 0x20)
+		if (m_ucAppletVersion < 0x17)
 			return PREFS_FILE_INFO_V1;
 		else
 			return PREFS_FILE_INFO_V2;
@@ -555,7 +556,7 @@ tFileInfo CBeidCard::SelectFile(const std::string & csPath, bool bReturnFileInfo
  *   Select(CCCC)
  * If the the path contains the Belpic DF (DF00) or
  * the ID DF (DF01) then we select by AID without
- * first selected the MF (3F00) even it it's specified
+ * first selected the MF (3F00) even if it is specified
  * because selection by AID always works.
  */
 CByteArray CBeidCard::SelectByPath(const std::string & csPath, bool bReturnFileInfo)
@@ -593,10 +594,10 @@ CByteArray CBeidCard::SelectByPath(const std::string & csPath, bool bReturnFileI
 		// 2.a Select the BELPIC DF or the ID DF by AID
 
 		CByteArray oAID(20);
-		if (belpicDF == BELPIC_DF)
+//		if (belpicDF == BELPIC_DF)
 			oAID.Append(BELPIC_AID, sizeof(BELPIC_AID));
-		else
-			oAID.Append(ID_AID, sizeof(ID_AID));
+//		else
+//			oAID.Append(ID_AID, sizeof(ID_AID));
 
 		CByteArray oResp = SendAPDU(0xA4, 0x04, 0x0C, oAID);
         unsigned long ulSW12 = getSW12(oResp);
