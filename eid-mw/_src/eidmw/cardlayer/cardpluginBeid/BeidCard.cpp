@@ -114,6 +114,10 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 					// SCardStatus() is called.
 					// Remark: this trick won't work if synchronous card
 					// (other then the SIS card is inserted).
+					if(ulLockCount)
+					{
+						poContext->m_oPCSC.EndTransaction(hCard);
+					}
 					return new CUnknownCard(hCard, poContext, poPinpad, CByteArray());
 				}
 #endif
