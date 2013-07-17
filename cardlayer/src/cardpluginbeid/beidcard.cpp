@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -28,7 +28,7 @@ using namespace eIDMW;
 
 static const unsigned char APPLET_AID[] = {0xA0,0x00,0x00,0x00,0x30,0x29,0x05,0x70,0x00,0xAD,0x13,0x10,0x01,0x01,0xFF};
 static const unsigned char BELPIC_AID[] = {0xA0,0x00,0x00,0x01,0x77,0x50,0x4B,0x43,0x53,0x2D,0x31,0x35};
-static const unsigned char ID_AID[] =     {0xA0,0x00,0x00,0x01,0x77,0x49,0x64,0x46,0x69,0x6C,0x65,0x73};
+//static const unsigned char ID_AID[] =     {0xA0,0x00,0x00,0x01,0x77,0x49,0x64,0x46,0x69,0x6C,0x65,0x73};
 
 static const tFileInfo DEFAULT_FILE_INFO = {-1, -1, -1};
 static const tFileInfo PREFS_FILE_INFO_V1 = {-1, -1, 1};
@@ -75,13 +75,14 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 			oCmd.Append(BELPIC_AID, sizeof(BELPIC_AID));
 			long lRetVal;
 			// Don't remove these brackets, CAutoLock dtor must be called!
-			{
-				CAutoLock oAutLock(&poContext->m_oPCSC, hCard);
-
+			//{
+			//don't use autolock when card might be reset
+				//CAutoLock oAutLock(&poContext->m_oPCSC, hCard);
+				unsigned long ulLockCount = 1;
+				poContext->m_oPCSC.BeginTransaction(hCard);
 				oData = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
 				if (lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED)
 				{
-					unsigned long ulLockCount = 0;
 					poContext->m_oPCSC.Recover(hCard, &ulLockCount);
 					
 					bNeedToSelectApplet = BeidCardSelectApplet(poContext, hCard);
@@ -115,9 +116,17 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 					// SCardStatus() is called.
 					// Remark: this trick won't work if synchronous card
 					// (other then the SIS card is inserted).
+					if(ulLockCount)
+					{
+						poContext->m_oPCSC.EndTransaction(hCard);
+					}
 					return new CUnknownCard(hCard, poContext, poPinpad, CByteArray());
 				}
 #endif
+			//}
+			if(ulLockCount)
+			{
+				poContext->m_oPCSC.EndTransaction(hCard);
 			}
 		}
 		catch(...)
@@ -149,9 +158,6 @@ CPkiCard(hCard, poContext, poPinpad)
 		m_oSerialNr = CByteArray(m_oCardData.GetBytes(), 16);
 
 		m_ucAppletVersion = m_oCardData.GetByte(21);
-//beneath is not according to 1.4d or 1.7h spec
-//        if (m_ucAppletVersion < 0x20)
-//					m_ucAppletVersion = (unsigned char) (16 * m_oCardData.GetByte(21) + m_oCardData.GetByte(22));
 
 		m_ul6CDelay = 0;
 		if (m_oCardData.GetByte(22) == 0x00 && m_oCardData.GetByte(23) == 0x01)
@@ -323,7 +329,7 @@ CByteArray CBeidCard::Ctrl(long ctrl, const CByteArray & oCmdData)
     case CTRL_BEID_GETCARDDATA:
         return m_oCardData;
     case CTRL_BEID_GETSIGNEDCARDDATA:
-		if (m_ucAppletVersion < 0x20)
+		if (m_ucAppletVersion < 0x17)
 			throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
 		else
 		{
@@ -339,7 +345,7 @@ CByteArray CBeidCard::Ctrl(long ctrl, const CByteArray & oCmdData)
     case CTRL_BEID_GETSIGNEDPINSTATUS:
 		// oCmdData must contain:
 		// - the pin reference (1 byte)
-		if (m_ucAppletVersion < 0x20)
+		if (m_ucAppletVersion < 0x17)
 			throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
 		else
 		{
@@ -531,8 +537,9 @@ tBelpicDF CBeidCard::getDF(const std::string & csPath, unsigned long & ulOffset)
 		std::string csPartialPath = csPath.substr(ulOffset, 4);
 		if (csPartialPath == "DF00")
 			return BELPIC_DF;
-		if (csPartialPath == "DF01" && m_ucAppletVersion >= 0x20)
-			return ID_DF; // this AID doesn't exist for V1 cards
+		//if (csPartialPath == "DF01" && m_ucAppletVersion >= 0x20)
+		//	return ID_DF; // this AID doesn't exist for V1 cards
+		//this AID doesn't exist for applet v1.7
 	}
 
 	return UNKNOWN_DF;
@@ -546,7 +553,7 @@ tFileInfo CBeidCard::SelectFile(const std::string & csPath, bool bReturnFileInfo
 	// that's the only exception to the 'read always' - 'write never' ACs.
 	if (csPath.substr(csPath.size() - 4, 4) == "4039")
 	{
-		if (m_ucAppletVersion < 0x20)
+		if (m_ucAppletVersion < 0x17)
 			return PREFS_FILE_INFO_V1;
 		else
 			return PREFS_FILE_INFO_V2;
@@ -565,7 +572,7 @@ tFileInfo CBeidCard::SelectFile(const std::string & csPath, bool bReturnFileInfo
  *   Select(CCCC)
  * If the the path contains the Belpic DF (DF00) or
  * the ID DF (DF01) then we select by AID without
- * first selected the MF (3F00) even it it's specified
+ * first selected the MF (3F00) even if it is specified
  * because selection by AID always works.
  */
 CByteArray CBeidCard::SelectByPath(const std::string & csPath, bool bReturnFileInfo)
@@ -603,10 +610,10 @@ CByteArray CBeidCard::SelectByPath(const std::string & csPath, bool bReturnFileI
 		// 2.a Select the BELPIC DF or the ID DF by AID
 
 		CByteArray oAID(20);
-		if (belpicDF == BELPIC_DF)
+//		if (belpicDF == BELPIC_DF)
 			oAID.Append(BELPIC_AID, sizeof(BELPIC_AID));
-		else
-			oAID.Append(ID_AID, sizeof(ID_AID));
+//		else
+//			oAID.Append(ID_AID, sizeof(ID_AID));
 
 		CByteArray oResp = SendAPDU(0xA4, 0x04, 0x0C, oAID);
         unsigned long ulSW12 = getSW12(oResp);
@@ -651,11 +658,11 @@ unsigned long CBeidCard::Get6CDelay()
 tCacheInfo CBeidCard::GetCacheInfo(const std::string &csPath)
 {
 	tCacheInfo dontCache = {DONT_CACHE, 0};
-	tCacheInfo simpleCache = {SIMPLE_CACHE, 0};
+/*	tCacheInfo simpleCache = {SIMPLE_CACHE, 0};
 	tCacheInfo certCache = {CERT_CACHE, 0};
 	tCacheInfo check16Cache = {CHECK_16_CACHE, 0}; // Check 16 bytes at offset 0
 	tCacheInfo checkSerial = {CHECK_SERIAL, 0}; // Check if the card serial nr is present
-/*
+
 	// csPath -> file ID
 	unsigned int uiFileID = 0;
 	unsigned long ulLen = (unsigned long) (csPath.size() / 2);
