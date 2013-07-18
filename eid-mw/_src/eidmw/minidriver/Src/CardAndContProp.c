@@ -121,6 +121,17 @@ DWORD WINAPI   CardGetContainerProperty
 			  LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
 		  CLEANUP(SCARD_E_UNEXPECTED);
 	  }
+		LogTrace(LOGTYPE_INFO, WHERE, "bContainerIndex = %d *pbCertif = %.2x",bContainerIndex, *pbCertif);
+		if((bContainerIndex == 0)&&(*pbCertif == 0))
+		{
+			LogTrace(LOGTYPE_INFO, WHERE, "Authentication Certif starts with 0x00, so it is not present");
+			CLEANUP(SCARD_E_NO_KEY_CONTAINER);//no Authentication Certificate
+		}
+		else if ((bContainerIndex == 1)&&(*pbCertif == 0))
+		{
+			LogTrace(LOGTYPE_INFO, WHERE, "Non-Repudiation Certif starts with 0x00, so it is not present");
+			CLEANUP(SCARD_E_NO_KEY_CONTAINER);//no Non-Repudiation Certificate
+		}
       ContInfo.dwVersion      = CONTAINER_INFO_CURRENT_VERSION;
       ContInfo.dwReserved     = 0;
   	  dwReturn = BeidGetPubKey(pCardData, 
@@ -144,25 +155,25 @@ DWORD WINAPI   CardGetContainerProperty
 
       *pdwDataLen = sizeof(CONTAINER_INFO);
    }
-   else
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "Property: [CCP_PIN_IDENTIFIER] for ContainerIndex: [%d]", bContainerIndex);
+	 else
+	 {
+		 LogTrace(LOGTYPE_INFO, WHERE, "Property: [CCP_PIN_IDENTIFIER] for ContainerIndex: [%d]", bContainerIndex);
 
-      if ( cbData < sizeof(PIN_ID) )
-      {
-         LogTrace(LOGTYPE_ERROR, WHERE, "Insufficient buffer[%d]<[%d]", cbData, sizeof(PIN_ID));
-         CLEANUP(ERROR_INSUFFICIENT_BUFFER);
-      }
-	  if (bContainerIndex == 0) {
-		  dwPinId = ROLE_DIGSIG;
-	  }
-	  if (bContainerIndex == 1) {
-		  dwPinId = ROLE_NONREP;
-	  }
-      
-      memcpy (pbData, &(dwPinId), sizeof(PIN_ID));
-      *pdwDataLen = sizeof(PIN_ID);
-   }
+		 if ( cbData < sizeof(PIN_ID) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Insufficient buffer[%d]<[%d]", cbData, sizeof(PIN_ID));
+			 CLEANUP(ERROR_INSUFFICIENT_BUFFER);
+		 }
+		 if (bContainerIndex == 0) {
+			 dwPinId = ROLE_DIGSIG;
+		 }
+		 if (bContainerIndex == 1) {
+			 dwPinId = ROLE_NONREP;
+		 }
+
+		 memcpy (pbData, &(dwPinId), sizeof(PIN_ID));
+		 *pdwDataLen = sizeof(PIN_ID);
+	 }
 
 cleanup:
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
@@ -348,7 +359,7 @@ DWORD CardGetKeysizes(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD p
    KeySizes.dwVersion            = CARD_KEY_SIZES_CURRENT_VERSION;
    KeySizes.dwMinimumBitlen      = 1024;
    KeySizes.dwDefaultBitlen      = 1024;
-   KeySizes.dwMaximumBitlen      = 1024;
+   KeySizes.dwMaximumBitlen      = 2048;
    KeySizes.dwIncrementalBitlen  = 0;
 
    memcpy (pbData, &KeySizes, sizeof(KeySizes));
@@ -642,7 +653,7 @@ DWORD CardGetPinInfo(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pd
 
    LogTrace(LOGTYPE_INFO, WHERE, "GET Property: [CP_CARD_PIN_INFO][%d]", dwFlags);
 
-   /* dwFlags contains the the identifier of the PIN to return */
+   /* dwFlags contains the identifier of the PIN to return */
    if ( (dwFlags < 0        ) ||
         (dwFlags > MAX_PINS ) )
    {

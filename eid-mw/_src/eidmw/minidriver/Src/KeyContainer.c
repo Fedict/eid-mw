@@ -177,7 +177,19 @@ DWORD WINAPI   CardGetContainerInfo
 			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
 		if (bContainerIndex == 1)
 			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
-		CLEANUP(SCARD_E_UNEXPECTED);
+		CLEANUP(dwReturn);
+	}
+
+	LogTrace(LOGTYPE_INFO, WHERE, "bContainerIndex = %d *pbCertif = 0x%.2x",bContainerIndex, *pbCertif);
+	if((bContainerIndex == 0)&&(*pbCertif == 0))
+	{
+		LogTrace(LOGTYPE_INFO, WHERE, "Authentication Certif starts with 0x00, so it is not present");
+		CLEANUP(SCARD_E_NO_KEY_CONTAINER);//no Authentication Certificate
+	}
+	else if ((bContainerIndex == 1)&&(*pbCertif == 0))
+	{
+		LogTrace(LOGTYPE_INFO, WHERE, "Non-Repudiation Certif starts with 0x00, so it is not present");
+		CLEANUP(SCARD_E_NO_KEY_CONTAINER);//no Non-Repudiation Certificate
 	}
 
 #ifdef _DEBUG

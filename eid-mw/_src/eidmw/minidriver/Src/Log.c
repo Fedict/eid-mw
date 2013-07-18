@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2009 FedICT.
+* Copyright (C) 2008-2013 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -110,12 +110,10 @@ void LogInit()
 	}
 }
 
-
-
 void LogTrace(int info, const char *pWhere, const char *format,... )
 {
 	char           buffer[2048];
-	BYTE baseName[512];
+	TCHAR baseName[512];
 	DWORD baseNamseSize; 
 
 	time_t         timer;
@@ -138,14 +136,14 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 		break;
 
 	case LOGTYPE_WARNING:
-		if ( info == LOGTYPE_WARNING )
+		if ( info <= LOGTYPE_WARNING )
 		{
 			iLog++;
 		}
 		break;
 
 	case LOGTYPE_INFO:
-		if ( info == LOGTYPE_INFO )
+		if ( info <= LOGTYPE_INFO )
 		{
 			iLog++;
 		}
@@ -171,9 +169,11 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 	}
 
 	/* get the name of the file that started this process*/
-	baseNamseSize = GetModuleFileName(NULL,(LPTSTR)baseName,512);
+	baseNamseSize = GetModuleFileName(NULL,baseName,512);
 	if (baseNamseSize == 0)
 		lstrcpy(baseName,TEXT("Unknown name"));
+	else
+		baseName[511] = 0;
 	//baseNamseSize = GetModuleBaseName(GetCurrentProcess(),NULL,(LPTSTR)baseName,512);
 	//baseNamseSize = GetProcessImageFileName(NULL,(LPTSTR)baseName,512);
 
@@ -209,7 +209,7 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 	fp = _tfopen(g_szLogFile, TEXT("a"));
 	if ( fp != NULL )
 	{
-		fprintf (fp, "%s %d %d %s|%30s|%s\n",baseName, GetCurrentProcessId(), GetCurrentThreadId(), timebuf, pWhere, buffer);
+		fprintf (fp, "%S %d %d %s|%30s|%s\n",baseName, GetCurrentProcessId(), GetCurrentThreadId(), timebuf, pWhere, buffer);
 		fclose(fp);
 	}
 }

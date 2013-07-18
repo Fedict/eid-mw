@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -38,12 +38,80 @@
 
 /****************************************************************************************************/
 
+#define WHERE "BeidParsePrKDF"
+DWORD BeidParsePrKDF(PCARD_DATA  pCardData, DWORD *cbStream, BYTE *pbStream, WORD *cbKeySize)
+{
+  DWORD dwReturn  = 0;
+	DWORD	dwCounter = 0;
+	DWORD dwInc = 0;
+	*cbKeySize = 0;
+
+	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+	   /********************/
+   /* Check Parameters */
+   /********************/
+   if ( pCardData == NULL )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pCardData]");
+      CLEANUP(SCARD_E_INVALID_PARAMETER);
+   }
+   if ( pbStream == NULL )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [ppbStream]");
+      CLEANUP(SCARD_E_INVALID_PARAMETER);
+   }
+	 if ( cbStream == NULL )
+   {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [cbStream]");
+      CLEANUP(SCARD_E_INVALID_PARAMETER);
+	 }
+
+	 if(pbStream[dwCounter] == 0x30) //0x30 means sequence
+	 {
+		 LogTrace(LOGTYPE_TRACE, WHERE, "sequence [0x30]");
+		 dwCounter++; //jump to sequence length
+		 LogTrace(LOGTYPE_TRACE, WHERE, "sequence length [0x%.2X]",pbStream[dwCounter]);
+		 dwInc = pbStream[dwCounter];
+		 dwCounter += dwInc; //add length (to jump over sequence)
+		 if( dwCounter < (*cbStream))
+		 {
+			 //the last 2 bytes are the key size
+			 *cbKeySize = (pbStream[dwCounter-1])*256;
+			 *cbKeySize += (pbStream[dwCounter]);
+			 LogTrace(LOGTYPE_INFO, WHERE, "rsa key size is %d",*cbKeySize);
+		 }
+		 else
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "*cbStream = %d dwCounter = %d",*cbStream,dwCounter);
+			 LogDump(*cbStream,pbStream);
+			 CLEANUP(PEERDIST_ERROR_CANNOT_PARSE_CONTENTINFO);		 
+		 }
+	 }
+	 else
+	 {
+		 LogTrace(LOGTYPE_ERROR, WHERE, "Expected 0x30 instead of ox%.2x",pbStream[dwCounter]);
+		 LogDump(*cbStream,pbStream);
+		 CLEANUP(PEERDIST_ERROR_CANNOT_PARSE_CONTENTINFO);		 
+	 }
+
+cleanup:
+
+	 LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
+	 return(dwReturn);
+}
+#undef WHERE
+
+
+
 #define WHERE "BeidDelayAndRecover"
 void BeidDelayAndRecover(PCARD_DATA  pCardData,
 						 BYTE   SW1, 
 						 BYTE   SW2,
 						 DWORD  dwReturn)
 {
+
+	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+
 	if( (dwReturn == SCARD_E_COMM_DATA_LOST) || (dwReturn == SCARD_E_NOT_TRANSACTED) )
 	{
 		DWORD ap = 0;
@@ -57,22 +125,32 @@ void BeidDelayAndRecover(PCARD_DATA  pCardData,
 				Sleep(1000);
 
 			dwReturn = SCardReconnect(pCardData->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &ap);
+
+			LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] SCardReconnect errorcode: [0x%08X]", i, dwReturn);
+
 			if ( dwReturn != SCARD_S_SUCCESS )
-			{
-				LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] SCardReconnect errorcode: [0x%02X]", i, dwReturn);
+			{			
+				if(dwReturn == SCARD_W_REMOVED_CARD)
+				{
+					LogTrace(LOGTYPE_INFO, WHERE, "SCARD_W_REMOVED_CARD");
+					LogTrace(LOGTYPE_INFO, WHERE, "Exit API... ");
+					return;
+				}
 				continue;
 			}
 			// transaction is lost after an SCardReconnect()
 			dwReturn = SCardBeginTransaction(pCardData->hScard);
+			LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] SCardBeginTransaction errorcode: [0x%08X]", i, dwReturn);
+
 			if ( dwReturn != SCARD_S_SUCCESS )
-			{
-				LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] SCardBeginTransaction errorcode: [0x%02X]", i, dwReturn);
+			{		
 				continue;
 			}
 			dwReturn = BeidSelectApplet(pCardData);
+			LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] BeidSelectApplet errorcode: [0x%08X]", i, dwReturn);
+
 			if ( dwReturn != SCARD_S_SUCCESS )
 			{
-				LogTrace(LOGTYPE_TRACE, WHERE, "  [%d] SCardSelectApplet errorcode: [0x%02X]", i, dwReturn);
 				continue;
 			}
 
@@ -80,7 +158,7 @@ void BeidDelayAndRecover(PCARD_DATA  pCardData,
 		}
 		if(i >=10)
 		{
-			LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X], Failed to recover", dwReturn);
+			LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X], Failed to recover", dwReturn);
 		}
 	}
 	if ( (( SW1 == 0x90 ) && ( SW2 == 0x00 )) ||
@@ -93,6 +171,7 @@ void BeidDelayAndRecover(PCARD_DATA  pCardData,
 	{
 		Sleep(25);
 	}
+	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
 }
 #undef WHERE
 
@@ -140,6 +219,16 @@ DWORD BeidAuthenticate(PCARD_DATA   pCardData,
       CLEANUP(SCARD_W_WRONG_CHV);
    }
 
+	 for ( i = 0 ; i < (unsigned char) cbPin ; i++ )
+	 {
+		 /* Don't allow non-numerical PIN entries */
+		 if ( ( pbPin[i] < 0x30 ) || ( pbPin[i] > 0x39 ) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pbPin[i]]");
+			 CLEANUP(SCARD_W_WRONG_CHV);
+		 }
+	 }
+
    /**********/
    /* Log On */
    /**********/
@@ -181,10 +270,11 @@ DWORD BeidAuthenticate(PCARD_DATA   pCardData,
                             &recvlen);
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
+   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit returncode: [0x%08X]", dwReturn);
    BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
+	  LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
 
@@ -338,10 +428,11 @@ DWORD BeidAuthenticateExternal(
 				recvlen,
 				&recvlen);
 
+			LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
 			externalPinInfo.cardState = CS_PINENTERED;
 			if ( dwReturn != SCARD_S_SUCCESS )
 			{
-				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
 				CLEANUP(dwReturn);
 			}
 		}
@@ -354,9 +445,10 @@ DWORD BeidAuthenticateExternal(
 				recvbuf, 
 				recvlen,
 				&recvlen);
+			LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
 			if ( dwReturn != SCARD_S_SUCCESS )
 			{
-				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
 				CLEANUP(dwReturn);
 			}
 			externalPinInfo.iPinCharacters = 0;
@@ -373,9 +465,10 @@ DWORD BeidAuthenticateExternal(
 					recvbuf,
 					recvlen,
 					&recvlen);
+				LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
 				if ( dwReturn != SCARD_S_SUCCESS )
 				{
-					LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+					LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
 					CLEANUP(dwReturn);
 				}
 				ucLastKey = recvbuf[0];
@@ -421,9 +514,10 @@ endkeypress:
 				recvbuf,
 				sizeof(recvbuf),
 				&recvlen);
+			LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
 			if ( dwReturn != SCARD_S_SUCCESS )
 			{
-				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%02X]", dwReturn);
+				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
 				CLEANUP(dwReturn);
 			}
 			SW1 = recvbuf[recvlen-2];
@@ -594,10 +688,11 @@ DWORD BeidDeAuthenticate(PCARD_DATA    pCardData)
                             &recvlen);
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
+   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
    BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
+      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
    if ( (SW1 != 0x90) || (SW2 != 0x00) )
@@ -615,8 +710,9 @@ cleanup:
 /****************************************************************************************************/
 
 #define WHERE "BeidMSE"
-DWORD BeidMSE(PCARD_DATA   pCardData, 
-              DWORD        dwRole) 
+DWORD BeidMSE(PCARD_DATA		pCardData, 
+              BYTE					bKey,
+							BYTE					bAlgo) 
 {
    DWORD             dwReturn = 0;
 
@@ -633,6 +729,17 @@ DWORD BeidMSE(PCARD_DATA   pCardData,
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
+	 if ( (bKey != 0x82) && (bKey != 0x83) )
+	 {
+      LogTrace(LOGTYPE_INFO, WHERE, "SET COMMAND: undefined key [0x%.2x]", bKey);
+      CLEANUP(SCARD_E_UNEXPECTED);
+   }
+	 if ( (bAlgo != 0x01) && (bAlgo != 0x02) && (bAlgo != 0x04) && (bAlgo != 0x08) && (bAlgo != 0x10) && (bAlgo != 0x20))
+	 {
+		  LogTrace(LOGTYPE_INFO, WHERE, "SET COMMAND: undefined algo [0x%.2x]", bAlgo);
+      CLEANUP(SCARD_E_UNEXPECTED);
+	 }
+
    /*
     * The MSE: SET Command will fail with error 0x000006f7
     * if the command is executed too fast after an command which resulted in an error condition
@@ -647,22 +754,10 @@ DWORD BeidMSE(PCARD_DATA   pCardData,
    Cmd [4] = 0x05;
    Cmd [5] = 0x04;   /* Length of following data      */
    Cmd [6] = 0x80;   /* ALGO Rreference               */
-   Cmd [7] = 0x01;   /* RSA PKCS#1                    */
+   Cmd [7] = bAlgo;//0x01;   /* RSA PKCS#1                    */
    Cmd [8] = 0x84;   /* TAG for private key reference */
+	 Cmd [9] = bKey;	/*0x82 for AUTH, 0x83 for NONREP*/
 
-   if ( dwRole == ROLE_DIGSIG )
-   {
-      Cmd [9] = 0x82;
-   }
-   else if ( dwRole == ROLE_NONREP )
-   {
-      Cmd [9] = 0x83;
-   } 
-   else 
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "SET COMMAND: undefined role [%d]", dwRole);
-      CLEANUP(SCARD_E_UNEXPECTED);
-   }
    uiCmdLg = 10;
 
    dwReturn = SCardTransmit(pCardData->hScard, 
@@ -674,10 +769,11 @@ DWORD BeidMSE(PCARD_DATA   pCardData,
                             &recvlen);
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
+   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
    BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (SET) errorcode: [0x%02X]", dwReturn);
+      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (SET) errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
@@ -752,6 +848,26 @@ DWORD    BeidChangePIN
       CLEANUP(SCARD_W_WRONG_CHV);
    }
 
+	 for ( i = 0 ; i < (unsigned char) cbCurrentAuthenticator ; i++ )
+	 {
+		 /* Don't allow non-numerical PIN entries */
+		 if ( ( pbCurrentAuthenticator[i] < 0x30 ) || ( pbCurrentAuthenticator[i] > 0x39 ) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pbCurrentAuthenticator[i]]");
+			 CLEANUP(SCARD_W_WRONG_CHV);
+		 }
+	 }
+
+	 for ( i = 0 ; i < (unsigned char) cbNewAuthenticator ; i++ )
+	 {
+		 /* Don't allow non-numerical PIN entries */
+		 if ( ( pbNewAuthenticator[i] < 0x30 ) || ( pbNewAuthenticator[i] > 0x39 ) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pbNewAuthenticator[i]]");
+			 CLEANUP(SCARD_W_WRONG_CHV);
+		 }
+	 }
+
    /* Change PIN code */
    Cmd [0] = 0x00;
    Cmd [1] = 0x24;   /* CHANGE REFERENCE DATA COMMAND    */
@@ -806,10 +922,11 @@ DWORD    BeidChangePIN
                             &recvlen);
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
+   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
    BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
+      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
 
@@ -866,6 +983,7 @@ DWORD BeidGetCardSN(PCARD_DATA  pCardData,
 	int                     iWaitApdu = 100;
 	int   				      bRetry = 0;
 
+	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 	if (cbSerialNumber < 16) {
 		CLEANUP(ERROR_INSUFFICIENT_BUFFER);
 	}
@@ -892,6 +1010,7 @@ DWORD BeidGetCardSN(PCARD_DATA  pCardData,
                             &recvlen);
 		SW1 = recvbuf[recvlen-2];
 		SW2 = recvbuf[recvlen-1];
+		LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
 		BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
 		i = i + 1;
 		bRetry = 0;
@@ -913,7 +1032,7 @@ DWORD BeidGetCardSN(PCARD_DATA  pCardData,
 
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-		LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (GET_CARD_DATA) errorcode: [0x%02X]", dwReturn);
+		LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (GET_CARD_DATA) errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
    SW1 = recvbuf[recvlen-2];
@@ -928,6 +1047,7 @@ DWORD BeidGetCardSN(PCARD_DATA  pCardData,
 	memcpy(pbSerialNumber, recvbuf, 16);
 
 cleanup:
+	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
    return (dwReturn);
 }
 #undef WHERE
@@ -1016,6 +1136,7 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
    Cmd [2] = 0x9E;
    Cmd [3] = 0x9A;
 
+   LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
    /* Length of data to be signed   */
    switch (HashAlgo)
    {
@@ -1091,14 +1212,16 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
                             &recvlen);
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
+   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
    BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (SIGN) errorcode: [0x%02X]", dwReturn);
+      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (SIGN) errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
-
-   if ( (SW1 != 0x61) || (SW2 != 0x80) )
+	 LogTrace(LOGTYPE_TRACE, WHERE, "ADPU response: [0x%02X][0x%02X]", SW1, SW2);
+	 LogTrace(LOGTYPE_TRACE, WHERE, "recvlen = %d", recvlen, SW2);
+   if (SW1 != 0x61)
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Sign Failed: [0x%02X][0x%02X]", SW1, SW2);
 
@@ -1117,7 +1240,7 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
    Cmd [1] = 0xC0;   /* PSO: GET RESPONSE COMMAND */
    Cmd [2] = 0x00;
    Cmd [3] = 0x00;
-   Cmd [4] = 0x80;   /* Length of response */
+   Cmd [4] = SW2;   /* Length of response */
    uiCmdLg = 5;
 
    recvlen = sizeof(recvbuf);
@@ -1130,10 +1253,11 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
                             &recvlen);
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
+   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
    BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (Get Response) errorcode: [0x%02X]", dwReturn);
+      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (Get Response) errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
@@ -1142,16 +1266,22 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
       CLEANUP(SCARD_E_UNEXPECTED);
    }
 
-   if ( (recvlen - 2) != 0x80 )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid length received: [0x%02X][0x%02X]", recvlen - 2, 0x80);
+	 if( (recvlen - 2) == 0x80 )
+	 {
+		 *pcbSignature = 0x80; //128d
+	 }
+	 else if ( (recvlen - 2) == 0x100 )
+	 {
+		 *pcbSignature = 0x100; //256d
+	 }
+	 else //not supported
+	 {
+      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid length received: [0x%02X]", recvlen - 2);
       CLEANUP(SCARD_E_UNEXPECTED);
    }
 
-   *pcbSignature = 0x80;
-
    /* Allocate memory for the target buffer */
-   *ppbSignature = pCardData->pfnCspAlloc(*pcbSignature);
+   *ppbSignature = (PBYTE)(pCardData->pfnCspAlloc(*pcbSignature));
    if ( *ppbSignature == NULL )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbSignature]");
@@ -1164,27 +1294,27 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
    }
 
 cleanup:
+   LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
    return (dwReturn);
 }
 #undef WHERE
 
 /****************************************************************************************************/
-
+// read up to *cbStream bytes from the currently selected file, starting at offset dwOffset
+// and store them in pbStream
+/****************************************************************************************************/
 #define WHERE "BeidReadFile"
 DWORD BeidReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD *cbStream, PBYTE pbStream)
 {
    DWORD             dwReturn = 0;
-
    SCARD_IO_REQUEST  ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
    SCARD_IO_REQUEST  ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
 
    unsigned char     Cmd[128];
    unsigned int      uiCmdLg = 0;
-
    unsigned char     recvbuf[256];
    unsigned long     recvlen = sizeof(recvbuf);
    BYTE              SW1, SW2;
-
    DWORD             cbRead      = 0;
    DWORD             cbPartRead  = 0;
 
@@ -1197,74 +1327,91 @@ DWORD BeidReadFile(PCARD_DATA  pCardData, DWORD dwOffset, DWORD *cbStream, PBYTE
    Cmd [3] = 0x00;
    Cmd [4] = 0x00;
    uiCmdLg = 5;
+   LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
-   while ( ( *cbStream - cbRead ) > 0 )
-   {
-        Cmd[2] = (BYTE)((dwOffset + cbRead) >> 8);   /* set reading startpoint     */
-        Cmd[3] = (BYTE)(dwOffset + cbRead);
+	 while ( ( *cbStream - cbRead ) > 0 )
+	 {
+		 Cmd[2] = (BYTE)((dwOffset + cbRead) >> 8);   /* set reading startpoint     */
+		Cmd[3] = (BYTE)( (dwOffset + cbRead)&(0xFF) );
 
-      cbPartRead = *cbStream - cbRead;
-        if(cbPartRead > BEID_READ_BINARY_MAX_LEN)    /*if more than maximum length */
-      {
-         Cmd[4] = BEID_READ_BINARY_MAX_LEN;        /* is requested, than read    */
-      }
-        else                                         /* maximum length             */
-      {
-            Cmd[4] = (BYTE)(cbPartRead);
-      }
-		recvlen = sizeof(recvbuf);
-      dwReturn = SCardTransmit(pCardData->hScard, 
-                               &ioSendPci, 
-                               Cmd, 
-                               uiCmdLg, 
-                               &ioRecvPci, 
-                               recvbuf, 
-                               &recvlen);
-		SW1 = recvbuf[recvlen-2];
-		SW2 = recvbuf[recvlen-1];
-		BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
-      if ( dwReturn != SCARD_S_SUCCESS )
-      {
-         LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
-         CLEANUP(dwReturn);
-      }
+		 cbPartRead = *cbStream - cbRead;
+		 if(cbPartRead > BEID_READ_BINARY_MAX_LEN)    /*if more than maximum length */
+		 {
+			 Cmd[4] = BEID_READ_BINARY_MAX_LEN;        /* is requested, than read    */
+		 }
+		 else                                         /* maximum length             */
+		 {
+			 Cmd[4] = (BYTE)(cbPartRead);
+		 }
+		 recvlen = sizeof(recvbuf);
+#ifdef _DEBUG
+		 LogDump(uiCmdLg,Cmd);
+#endif
+		 dwReturn = SCardTransmit(pCardData->hScard, 
+			 &ioSendPci, 
+			 Cmd, 
+			 uiCmdLg, 
+			 &ioRecvPci, 
+			 recvbuf, 
+			 &recvlen);
+		 SW1 = recvbuf[recvlen-2];
+		 SW2 = recvbuf[recvlen-1];
+		 LogTrace(LOGTYPE_TRACE, WHERE, "recvlen = %d SW1 = 0x%.02X SW2 = 0x%.02X", recvlen,SW1,SW2);
+#ifdef _DEBUG
+		 LogDump(recvlen,recvbuf);
+#endif
+		 LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
+		 BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
+		 if ( dwReturn != SCARD_S_SUCCESS )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
+			 CLEANUP(dwReturn);
+		 }
 
-		/* Special case: when SW1 == 0x6C (=incorrect value of Le), we will
-		retransmit with SW2 as Le, if SW2 is smaller then the 
-		BEID_READ_BINARY_MAX_LEN */
-		if ( ( SW1 == 0x6c ) && ( SW2 <= BEID_READ_BINARY_MAX_LEN ) ) 
-		{
-			Cmd[4] = SW2;
-			recvlen = sizeof(recvbuf);
-			dwReturn = SCardTransmit(pCardData->hScard, 
-				&ioSendPci, 
-				Cmd, 
-				uiCmdLg, 
-				&ioRecvPci, 
-				recvbuf, 
-				&recvlen);
-			if ( dwReturn != SCARD_S_SUCCESS )
-			{
-				LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
-				CLEANUP(dwReturn);
-			}
-			SW1 = recvbuf[recvlen - 2];
-			SW2 = recvbuf[recvlen - 1];
+		 /* Special case: when SW1 == 0x6C (=incorrect value of Le), we will
+		 retransmit with SW2 as Le, if SW2 is smaller then the 
+		 BEID_READ_BINARY_MAX_LEN */
+		 if ( ( SW1 == 0x6c ) && ( SW2 <= BEID_READ_BINARY_MAX_LEN ) ) 
+		 {
+			 Cmd[4] = SW2;
+			 recvlen = sizeof(recvbuf);
+#ifdef _DEBUG
+			 LogDump(uiCmdLg,Cmd);
+#endif
+			 dwReturn = SCardTransmit(pCardData->hScard, 
+				 &ioSendPci, 
+				 Cmd, 
+				 uiCmdLg, 
+				 &ioRecvPci, 
+				 recvbuf, 
+				 &recvlen);
+			 LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
+			 if ( dwReturn != SCARD_S_SUCCESS )
+			 {
+				 LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
+				 CLEANUP(dwReturn);
+			 }
+			 SW1 = recvbuf[recvlen - 2];
+			 SW2 = recvbuf[recvlen - 1];
 
-		}
+			 memcpy (pbStream + cbRead, recvbuf, recvlen - 2);
+			 cbRead += recvlen - 2;
+			 break; //stop reading, we already had the length corrected
+		 }
 
-      if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
-      {
+		 if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Read Binary Failed: [0x%02X][0x%02X]", SW1, SW2);
+			 break; //stop reading, something ain't right
+		 }
 
-         LogTrace(LOGTYPE_ERROR, WHERE, "Read Binary Failed: [0x%02X][0x%02X]", SW1, SW2);
-         CLEANUP(dwReturn);
-      }
-
-      memcpy (pbStream + cbRead, recvbuf, recvlen - 2);
-      cbRead += recvlen - 2;
-   }
+		 memcpy (pbStream + cbRead, recvbuf, recvlen - 2);
+		 cbRead += recvlen - 2;
+	 }
 	*cbStream = cbRead;
+	LogTrace(LOGTYPE_TRACE, WHERE, "cbRead = %d",cbRead);
 cleanup:
+	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
    return (dwReturn);
 }
 #undef WHERE
@@ -1285,14 +1432,7 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
    unsigned char     recvbuf[256];
    unsigned long     recvlen = sizeof(recvbuf);
    BYTE              SW1, SW2;
-
-	DWORD             cbReadBuf;
-
-
-//   BYTE              bRead [255];
-//   DWORD             cbRead;
-
-//   DWORD             cbCertif;
+   DWORD             cbReadBuf;
 
    /***************/
    /* Select File */
@@ -1303,10 +1443,14 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
    Cmd [3] = 0x0C;
    Cmd [4] = cbFileID;
    uiCmdLg = 5;
+   LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
    memcpy(&Cmd[5], pbFileID, cbFileID);
    uiCmdLg += cbFileID;
 
+#ifdef _DEBUG
+	 LogDump(uiCmdLg,Cmd);
+#endif
    dwReturn = SCardTransmit(pCardData->hScard, 
                             &ioSendPci, 
                             Cmd, 
@@ -1316,10 +1460,11 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
                             &recvlen);
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
+   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
    BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
+      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
@@ -1331,27 +1476,31 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
 	*cbStream = 0;
 	*ppbStream = NULL;
 	cbReadBuf = 1024;
-	while (cbReadBuf == 1024) {
+	//read the file in chunks of 1024 bytes
+	while (cbReadBuf == 1024) 
+	{
 		if (*ppbStream == NULL)
-			*ppbStream = (PBYTE) pCardData->pfnCspAlloc(*cbStream + cbReadBuf);
+			*ppbStream = (PBYTE) pCardData->pfnCspAlloc(cbReadBuf);
 		else
 			*ppbStream = (PBYTE) pCardData->pfnCspReAlloc(*ppbStream, *cbStream + cbReadBuf);
-		
+
 		if (*ppbStream == NULL) {
 			LogTrace(LOGTYPE_ERROR, WHERE, "pfnCsp(Re)Alloc failed");
 			CLEANUP(dwReturn);
 		}
-
-		dwReturn = BeidReadFile(pCardData, dwOffset, &cbReadBuf, *ppbStream + *cbStream * sizeof(BYTE));
+		LogTrace(LOGTYPE_ERROR, WHERE, "dwOffset = %d", dwOffset);
+		dwReturn = BeidReadFile(pCardData, dwOffset, &cbReadBuf, *ppbStream + (*cbStream * sizeof(BYTE)));
 		if ( dwReturn != SCARD_S_SUCCESS )
 		{
-			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadFile errorcode: [0x%02X]", dwReturn);
+			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadFile errorcode: [0x%08X]", dwReturn);
 			pCardData->pfnCspFree(*ppbStream);
 			CLEANUP(dwReturn);
 		}
-		*cbStream = *cbStream + cbReadBuf;
+		dwOffset += cbReadBuf;
+		*cbStream += cbReadBuf;
 	}
 cleanup:
+	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
    return (dwReturn);
 }
 #undef WHERE
@@ -1390,6 +1539,8 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
    Cmd [4] = cbFileID;
    uiCmdLg = 5;
 
+   LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+
    switch (dwCertSpec)
    {
    case CERT_AUTH:
@@ -1408,7 +1559,9 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
 
    memcpy(&Cmd[5], bFileID, cbFileID);
    uiCmdLg += cbFileID;
-
+#ifdef _DEBUG
+	 LogDump(uiCmdLg,Cmd);
+#endif
    dwReturn = SCardTransmit(pCardData->hScard, 
                             &ioSendPci, 
                             Cmd, 
@@ -1418,10 +1571,11 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
                             &recvlen);
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
+   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
    BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
+      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
    if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
@@ -1435,7 +1589,7 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
    dwReturn = BeidReadFile(pCardData, 0, &cbRead, bRead);
    if ( dwReturn != SCARD_S_SUCCESS )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadFile errorcode: [0x%02X]", dwReturn);
+      LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadFile errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
 
@@ -1445,6 +1599,7 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
 		// we will only return the file length
 		if (pcbCertif != NULL)
 			*pcbCertif = cbCertif;
+		LogTrace(LOGTYPE_INFO, WHERE, "returning filelength = %d",cbCertif);
 		CLEANUP(SCARD_S_SUCCESS);
 	}
    cbRead = cbCertif;
@@ -1460,7 +1615,7 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
    if ( ( dwReturn != SCARD_S_SUCCESS ) ||
         ( cbCertif != cbRead          ) )
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadFile errorcode: [0x%02X]", dwReturn);
+      LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadFile errorcode: [0x%08X]", dwReturn);
       CLEANUP(dwReturn);
    }
 
@@ -1468,6 +1623,7 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
    *pcbCertif = cbCertif;
 
 cleanup:
+   LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
    return (dwReturn);
 }
 #undef WHERE
@@ -1502,6 +1658,9 @@ DWORD BeidSelectApplet(PCARD_DATA  pCardData)
 	Cmd [2] = 0x04;
 	Cmd [3] = 0x0C;
 	Cmd [4] = cbBELPIC_AID;
+
+	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+
 	memcpy(&Cmd[5], bBELPIC_AID, cbBELPIC_AID);
 
 	uiCmdLg = 5 + cbBELPIC_AID;
@@ -1515,10 +1674,11 @@ DWORD BeidSelectApplet(PCARD_DATA  pCardData)
 		&recvlen);
 	SW1 = recvbuf[recvlen-2];
 	SW2 = recvbuf[recvlen-1];
+	LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
 	BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
 	if ( dwReturn != SCARD_S_SUCCESS )
 	{
-		LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
+		LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
 		CLEANUP(dwReturn);
     }
 
@@ -1547,7 +1707,7 @@ DWORD BeidSelectApplet(PCARD_DATA  pCardData)
 		BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
 		if ( dwReturn != SCARD_S_SUCCESS )
 		{
-			LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%02X]", dwReturn);
+			LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit errorcode: [0x%08X]", dwReturn);
 			CLEANUP(dwReturn);
 		}
 
@@ -1560,6 +1720,7 @@ DWORD BeidSelectApplet(PCARD_DATA  pCardData)
 
 
 cleanup:
+	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
 	return (dwReturn);
 }
 #undef WHERE
@@ -1615,8 +1776,9 @@ DWORD CCIDgetFeatures(PFEATURES pFeatures, SCARDHANDLE hCard) {
 		pbRecvBuffer,
 		sizeof(pbRecvBuffer),
 		&dwRecvLength);
+	LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetFeatures returncode: [0x%08X]", dwReturn);
 	if ( SCARD_S_SUCCESS != dwReturn ) {
-		LogTrace(LOGTYPE_ERROR, WHERE, "CCIDgetFeatures errorcode: [0x%02X]", dwReturn);
+		LogTrace(LOGTYPE_ERROR, WHERE, "CCIDgetFeatures errorcode: [0x%08X]", dwReturn);
         CLEANUP(dwReturn);
 	}
 	pFeatures->VERIFY_PIN_START = CCIDfindFeature(FEATURE_VERIFY_PIN_START, pbRecvBuffer, dwRecvLength);
@@ -1634,6 +1796,7 @@ cleanup:
 #undef WHERE
 
 DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
+		LANGUAGES displayLanguage = en;
     pVerifyCommand->bTimeOut = 30;
     pVerifyCommand->bTimeOut2 = 30;
     pVerifyCommand->bmFormatString = 0x80 | 0x08 | 0x00 | 0x01;
@@ -1691,9 +1854,9 @@ DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
      * 0x01 = message with index in bMsgIndex
      */
 
-    pVerifyCommand->wLangId = 0x1308;
+    pVerifyCommand->wLangId = getLangID();
     /*
-     * We should support multiple languages for CCID devices with LCD screen
+     * We support multiple languages for CCID devices with LCD screen
      */
 
     pVerifyCommand->bMsgIndex = 0x00;
