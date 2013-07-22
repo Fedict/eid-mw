@@ -779,8 +779,8 @@
 			<CheckOnOS>
 				<OperatingSystem>WINALL</OperatingSystem>
 			</CheckOnOS>
-			<DescriptionNl>Installatie van Middleware versie 4.0.5 (Quick-Install)</DescriptionNl>
-			<DescriptionFr>Installaton du Middleware version 4.0.5 (Quick-Install)</DescriptionFr>
+			<DescriptionNl>Installatie van Middleware versie 4.0.6 (Quick-Install)</DescriptionNl>
+			<DescriptionFr>Installaton du Middleware version 4.0.6 (Quick-Install)</DescriptionFr>
 			<ActionInfoNl/>
 			<ActionInfoFr/>
   		<InputParams>
@@ -789,8 +789,8 @@
             <CheckOnOS>
 					<OperatingSystem>WINALL</OperatingSystem>
 				</CheckOnOS>
-				<DescriptionNl>Installatie van Middleware 4.0.5 32bit(Quick-Install)</DescriptionNl>
-				<DescriptionFr>Démarrer l'installation MSI Middleware 4.0.5 32bit(Quick-Install)</DescriptionFr>
+				<DescriptionNl>Installatie van Middleware 4.0.6 32bit(Quick-Install)</DescriptionNl>
+				<DescriptionFr>Démarrer l'installation MSI Middleware 4.0.6 32bit(Quick-Install)</DescriptionFr>
 				<ActionInfoNl>Probeer opnieuw</ActionInfoNl>
 				<ActionInfoFr>Essayer de nouveau</ActionInfoFr>
 				<InputParams>
@@ -806,8 +806,8 @@
         <CheckOnOS>
           <OperatingSystem>WINALL</OperatingSystem>
         </CheckOnOS>
-        <DescriptionNl>Installatie van Middleware 4.0.5 64bit (Quick-Install)</DescriptionNl>
-        <DescriptionFr>Démarrer l'installation MSI Middleware 4.0.5 64bit(Quick-Install)</DescriptionFr>
+        <DescriptionNl>Installatie van Middleware 4.0.6 64bit (Quick-Install)</DescriptionNl>
+        <DescriptionFr>Démarrer l'installation MSI Middleware 4.0.6 64bit(Quick-Install)</DescriptionFr>
         <ActionInfoNl>Probeer opnieuw</ActionInfoNl>
         <ActionInfoFr>Essayer de nouveau</ActionInfoFr>
         <InputParams>
