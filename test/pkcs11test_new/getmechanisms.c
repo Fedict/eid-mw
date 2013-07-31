@@ -20,8 +20,19 @@
 #include "basetest.h"
 #include "logtest.h"
 
+//declaration
+testRet test_returnmechanisms(CK_ULONG_PTR ulRetMechCount,CK_MECHANISM_TYPE_PTR pRetMechanismList);
 
-testRet test_getmechanisms() {
+//implementation
+testRet test_getmechanisms(	)
+{
+	CK_ULONG ulRetMechCount;
+	return test_returnmechanisms( &ulRetMechCount,NULL);
+}
+
+testRet test_returnmechanisms(	CK_ULONG_PTR pulRetMechCount,
+	CK_MECHANISM_TYPE_PTR pRetMechanismList) 
+{
 	void *handle;						//handle to the pkcs11 library
 	CK_FUNCTION_LIST_PTR functions;		// list of the pkcs11 function pointers
 
@@ -39,6 +50,8 @@ testRet test_getmechanisms() {
 	CK_MECHANISM_TYPE_PTR pMechanismList;
 
 	testlog(LVL_INFO, "test_show_mechanismsinfo enter\n");
+
+	*pulRetMechCount = 0;
 	if (InitializeTest(&handle,&functions))
 	{
 		frv = (*functions->C_Initialize) (NULL);
@@ -107,6 +120,7 @@ testRet test_getmechanisms() {
 											frv = (*functions->C_GetMechanismList)(slotId, NULL_PTR, &ulMechCount);
 											if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetMechanismList", "test_show_mechanismsinfo" ))
 											{
+												*pulRetMechCount = ulMechCount;
 												if (ulMechCount > 0) 
 												{
 													pMechanismList = (CK_MECHANISM_TYPE_PTR)malloc(ulMechCount*sizeof(CK_MECHANISM_TYPE));
@@ -124,6 +138,10 @@ testRet test_getmechanisms() {
 															for ( ;ulCount < ulMechCount;ulCount++)
 															{
 																testlog(LVL_DEBUG,"Mechanism%d : 0x%.8x \n ",ulCount, pMechanismList[ulCount]);
+																if(pRetMechanismList != NULL)
+																{
+																	pRetMechanismList[ulCount] = pMechanismList[ulCount];
+																}
 															}
 														}
 													}

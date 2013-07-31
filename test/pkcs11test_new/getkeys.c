@@ -181,13 +181,13 @@ testRet test_getkeys() {
   testRet retVal = {CKR_OK,TEST_PASSED};
 
   retVal = test_getkeystype(CKO_PRIVATE_KEY, CKA_LABEL, NULL_PTR, 0);
-  if(( retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED))
+  if(retVal.basetestrv == TEST_PASSED)
   {
 	retVal = test_getkeystype(CKO_PUBLIC_KEY, CKA_LABEL, NULL_PTR, 0);
-	if(( retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED))
+	if(retVal.pkcs11rv == CKR_OK)
 	{
 	  retVal = test_getkeystype(CKO_CERTIFICATE, CKA_LABEL, NULL_PTR, 0);
-	  if(( retVal.pkcs11rv == CKR_OK) && (retVal.basetestrv == TEST_PASSED))
+	  if(retVal.pkcs11rv == CKR_OK)
 	  {
 	  }
 	}

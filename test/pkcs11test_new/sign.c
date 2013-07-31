@@ -19,6 +19,7 @@
 **************************************************************************** */
 #include "basetest.h"
 #include "logtest.h"
+#include "getmechanisms.h"
 
 testRet test_sign_mech(CK_MECHANISM_TYPE mechanismType) {
 	void *handle;						//handle to the pkcs11 library
@@ -28,7 +29,7 @@ testRet test_sign_mech(CK_MECHANISM_TYPE mechanismType) {
 	CK_RV frv = CKR_OK;						//return value of last pkcs11 function called
 
 	CK_SESSION_HANDLE session_handle;
-	long slot_count;
+	CK_ULONG slot_count;
 	CK_SLOT_ID_PTR slotIds;
 	int slotIdx;
 	CK_ULONG ulObjectCount;
@@ -39,7 +40,7 @@ testRet test_sign_mech(CK_MECHANISM_TYPE mechanismType) {
 		frv = (*functions->C_Initialize) (NULL);
 		if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_Initialize", "test_sign" ))
 		{		
-			frv = (*functions->C_GetSlotList) (0, 0, &slot_count);
+			frv = (*functions->C_GetSlotList) (CK_TRUE, 0, &slot_count);
 			if (ReturnedSuccesfull(frv,&(retVal.pkcs11rv), "C_GetSlotList", "test_sign" ))
 			{
 				testlog(LVL_INFO,"slot count: %i\n", slot_count);
@@ -162,12 +163,43 @@ testRet test_sign(void)
 	
 	//testret = test_sign_mech(CKM_SHA384);//invalid
 
-	testret = test_sign_mech(CKM_SHA384_RSA_PKCS);
+	testret = test_sign_mech(CKM_RSA_PKCS);//CKM_SHA384_RSA_PKCS);
 	
 	testlog(LVL_ERROR, "test_sign single_part and multi_part give different results\n");
 
 	//testret = test_sign_mech(CKM_SHA1_RSA_PKCS_PSS);
 	
+
+	return testret;
+}
+
+testRet test_sign_allmechs(void)
+{
+	testRet testret;
+	CK_ULONG ulRetMechCount = 0;
+	CK_MECHANISM_TYPE_PTR pRetMechanismList = NULL;
+
+	testret = test_returnmechanisms(&ulRetMechCount,pRetMechanismList);
+
+	pRetMechanismList = (CK_MECHANISM_TYPE_PTR) malloc (ulRetMechCount * sizeof(CK_MECHANISM_TYPE));
+	if(pRetMechanismList == NULL)
+	{
+			testlog(LVL_ERROR, "test_sign_allmechs: malloc failed \n");
+			testret.basetestrv = TEST_SKIPPED;
+			return testret;
+	}
+	testret = test_returnmechanisms(&ulRetMechCount,pRetMechanismList);
+
+	if(testret.pkcs11rv == CKR_OK)
+	{
+		CK_ULONG ulCounter = 0;
+		while (ulCounter < ulRetMechCount)
+		{
+			testlog(LVL_INFO, "test_sign with mechanism 0x%.8x\n",pRetMechanismList[ulCounter]);
+			testret = test_sign_mech(pRetMechanismList[ulCounter]);
+			ulCounter++;
+		}
+	}
 
 	return testret;
 }
