@@ -36,12 +36,13 @@ namespace beidmdrvTest
         Console.WriteLine("UniqueKeyContainerName: " + unkeycontname);
 
         // Create some data to sign. 
-        byte[] data = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+        byte[] data = new byte[] { 1, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                                   1, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
         Console.WriteLine("Data: " + BitConverter.ToString(data));
 
         // Sign the data using the Smart Card CryptoGraphic Provider. 
-        byte[] sig = rsacsp.SignData(data, "SHA1");
+        byte[] sig = rsacsp.SignData(data, "SHA1");//"SHA256"
 
         Console.WriteLine("Signature: " + BitConverter.ToString(sig));
 
