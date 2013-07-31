@@ -362,6 +362,16 @@
           <RegistryValue Type="integer" Name="MinXAdESLevel" Value="0" KeyPath="no"/>
         </RegistryKey>
       </Component>
+      
+      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010_64" Guid="{BF57853B-C3CF-4126-A71B-6DD6EE8E44B8}" Win64="yes">
+        <RegistryKey Root="HKCU"
+                     Key="Software\Microsoft\Office\14.0\Common\Signatures"
+                     Action="create" >
+          <RegistryValue Type="string" Name="TSALocation" Value="http://tsa.belgium.be/connect" KeyPath="yes"/>
+          <RegistryValue Type="integer" Name="XAdESLevel" Value="5" KeyPath="no"/>
+          <RegistryValue Type="integer" Name="MinXAdESLevel" Value="0" KeyPath="no"/>
+        </RegistryKey>
+      </Component>
 
       <Component Id="REGISTERXPI" Guid="{946B85B6-99CC-4893-8A42-E7EC6FFE0D87}" Win64="no">
         <RegistryKey Root="HKLM"
@@ -564,6 +574,11 @@
           <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG_32]]></Condition>
         </Feature>
 
+		<Feature Id="Office2010Signatureregistration_64" Level="1" Display="hidden" Absent="disallow">
+          <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010_64"/>
+          <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG_64]]></Condition>
+        </Feature>
+	
         <ComponentRef Id="BeidApplicationProgramsFolder" />
         <ComponentRef Id="OutlookTool" />
         <ComponentRef Id="Office2010XAdESTool"/>
