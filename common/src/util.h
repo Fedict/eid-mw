@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -21,7 +21,11 @@
 
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
+#ifdef WIN32
+#include "configuration.h"
+#else
 #include "config.h"
+#endif
 #endif
 
 #include "export.h"
