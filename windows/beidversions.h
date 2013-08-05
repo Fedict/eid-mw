@@ -5,7 +5,6 @@
  * Versions for the Windows binaries
  */
 
-#pragma once
 #include "./svn_revision.h"
 
 // To specified in the .rc files
