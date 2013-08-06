@@ -31,7 +31,7 @@ testRet test_sign_mech(CK_MECHANISM_TYPE mechanismType) {
 	CK_SESSION_HANDLE session_handle;
 	CK_ULONG slot_count;
 	CK_SLOT_ID_PTR slotIds;
-	int slotIdx;
+	CK_ULONG slotIdx;
 	CK_ULONG ulObjectCount;
 
 	testlog(LVL_INFO, "test_sign enter\n");

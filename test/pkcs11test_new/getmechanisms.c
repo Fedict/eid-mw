@@ -19,11 +19,8 @@
 **************************************************************************** */
 #include "basetest.h"
 #include "logtest.h"
+#include "getmechanisms.h"
 
-//declaration
-testRet test_returnmechanisms(CK_ULONG_PTR ulRetMechCount,CK_MECHANISM_TYPE_PTR pRetMechanismList);
-
-//implementation
 testRet test_getmechanisms(	)
 {
 	CK_ULONG ulRetMechCount;
