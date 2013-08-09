@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2012 FedICT.
+* Copyright (C) 2008-2013 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -52,19 +52,19 @@ extern "C" {
 }
 
 #ifdef PKCS11_FF
-	static int gnFFReaders;
-	int cal_getgnFFReaders(void)
-	{		
-		return gnFFReaders; 
-	}
-	void cal_setgnFFReaders(int newgnFFReaders)
-	{	
-		gnFFReaders = newgnFFReaders; 
-	}
-	void cal_incgnFFReaders(void)
-	{	
-		gnFFReaders++; 
-	}
+static int gnFFReaders;
+int cal_getgnFFReaders(void)
+{		
+	return gnFFReaders; 
+}
+void cal_setgnFFReaders(int newgnFFReaders)
+{	
+	gnFFReaders = newgnFFReaders; 
+}
+void cal_incgnFFReaders(void)
+{	
+	gnFFReaders++; 
+}
 #endif
 
 void cal_free_reader_states(SCARD_READERSTATEA* txReaderStates, unsigned long ulnReaders);
@@ -608,8 +608,10 @@ int cal_init_objects(P11_SLOT *pSlot)
 	CK_BBOOL btrue = CK_TRUE;
 	CK_BBOOL bfalse = CK_FALSE;
 	CK_ULONG modsize = 0;   /* TODO read from pkcs15 */
-	CK_ULONG id = 0;
-	unsigned int i = 0;
+	CK_ULONG CertId = 0;
+	CK_ULONG KeyId = 0;
+	unsigned int certCounter = 0;
+	unsigned int keyCounter = 0;
 	char clabel[128];
 	CK_CERTIFICATE_TYPE certType = CKC_X_509;
 
@@ -633,73 +635,14 @@ int cal_init_objects(P11_SLOT *pSlot)
 	{
 		CReader &oReader = oCardLayer->getReader(szReader);
 
-		for (i=0; i < oReader.PrivKeyCount(); i++)
-		{
-			/***************/
-			/* Private key */
-			/***************/
-			tPrivKey key = oReader.GetPrivKey(i);
-			id = (CK_ULONG) key.ulID;
-			//      sprintf_s(clabel,sizeof(clabel), "Private Key %d (%s)", i+1, key.csLabel.c_str()); 
-			sprintf_s(clabel,sizeof(clabel), "%s", key.csLabel.c_str()); 
-
-			ret = p11_add_slot_object(pSlot, PRV_KEY, sizeof(PRV_KEY)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, id, CK_TRUE, &hObject);
-			if (ret) 
-				goto cleanup;
-
-			//put some other attribute items allready so the key can be used for signing
-			pObject = p11_get_slot_object(pSlot, hObject);
-
-			//type = (CK_ULONG) oReader.GetPrivKey(i).;
-			//TODO fixed set to RSA
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
-			if (ret) goto cleanup;
-
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) &keytype, sizeof(CK_KEY_TYPE));
-			if (ret) goto cleanup;
-
-			//TODO if (ulKeyUsage & SIGN)
-			{
-				ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_SIGN, (CK_VOID_PTR) &btrue, sizeof(btrue));
-				if (ret) goto cleanup;
-			}
-
-			//TODO error in cal, size is in bits allready
-			modsize = key.ulKeyLenBytes  * 8;
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) &modsize, sizeof(CK_ULONG));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EXTRACTABLE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-			if (ret) goto cleanup;
-			/**************************************************/
-			/* Public key corresponding to private key object */
-			/**************************************************/
-			ret = p11_add_slot_object(pSlot, PUB_KEY, sizeof(PUB_KEY)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, id, CK_FALSE, &hObject);
-			if (ret) goto cleanup;
-
-			pObject = p11_get_slot_object(pSlot, hObject);
-
-			//      sprintf_s(clabel,sizeof(clabel), "Public Key %d (%s)", i+1, key.csLabel.c_str()); 
-			sprintf_s(clabel,sizeof(clabel), "%s", key.csLabel.c_str()); 
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) &keytype, sizeof(CK_KEY_TYPE));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) &modsize, sizeof(CK_ULONG));
-			if (ret) goto cleanup;
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-			if (ret) goto cleanup;
-		}
-
 		/* add all certificate objects from card */
-		for (i=0; i < oReader.CertCount(); i++)
+		for (certCounter=0; certCounter < oReader.CertCount(); certCounter++)
 		{
-			id = (CK_ULONG) oReader.GetCert(i).ulID;
+			CertId = (CK_ULONG) oReader.GetCert(certCounter).ulID;
 			//      sprintf_s(clabel,sizeof(clabel), "Certificate %d (%s)", i+1, oReader.GetCert(i).csLabel.c_str()); 
-			sprintf_s(clabel,sizeof(clabel), "%s", oReader.GetCert(i).csLabel.c_str()); 
+			sprintf_s(clabel,sizeof(clabel), "%s", oReader.GetCert(certCounter).csLabel.c_str()); 
 
-			ret = p11_add_slot_object(pSlot, CERTIFICATE, sizeof(CERTIFICATE)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_CERTIFICATE, id, CK_FALSE, &hObject);
+			ret = p11_add_slot_object(pSlot, CERTIFICATE, sizeof(CERTIFICATE)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_CERTIFICATE, CertId, CK_FALSE, &hObject);
 			if (ret) 
 				goto cleanup;
 			pObject = p11_get_slot_object(pSlot, hObject);
@@ -708,6 +651,70 @@ int cal_init_objects(P11_SLOT *pSlot)
 			if (ret) goto cleanup;
 			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
 			if (ret) goto cleanup;
+
+			//only add keys that have a matching cert
+			for (keyCounter=0; keyCounter < oReader.PrivKeyCount(); keyCounter++)
+			{
+				/***************/
+				/* Private key */
+				/***************/
+				tPrivKey key = oReader.GetPrivKey(keyCounter);
+				KeyId = (CK_ULONG) key.ulID;
+
+				if(KeyId == CertId)
+				{
+					//      sprintf_s(clabel,sizeof(clabel), "Private Key %d (%s)", i+1, key.csLabel.c_str()); 
+					sprintf_s(clabel,sizeof(clabel), "%s", key.csLabel.c_str()); 
+
+					ret = p11_add_slot_object(pSlot, PRV_KEY, sizeof(PRV_KEY)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
+					if (ret) 
+						goto cleanup;
+
+					//put some other attribute items allready so the key can be used for signing
+					pObject = p11_get_slot_object(pSlot, hObject);
+
+					//type = (CK_ULONG) oReader.GetPrivKey(i).;
+					//TODO fixed set to RSA
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
+					if (ret) goto cleanup;
+
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) &keytype, sizeof(CK_KEY_TYPE));
+					if (ret) goto cleanup;
+
+					//TODO if (ulKeyUsage & SIGN)
+					{
+						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_SIGN, (CK_VOID_PTR) &btrue, sizeof(btrue));
+						if (ret) goto cleanup;
+					}
+
+					//TODO error in cal, size is in bits allready
+					modsize = key.ulKeyLenBytes  * 8;
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) &modsize, sizeof(CK_ULONG));
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EXTRACTABLE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
+					if (ret) goto cleanup;
+					/**************************************************/
+					/* Public key corresponding to private key object */
+					/**************************************************/
+					ret = p11_add_slot_object(pSlot, PUB_KEY, sizeof(PUB_KEY)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
+					if (ret) goto cleanup;
+
+					pObject = p11_get_slot_object(pSlot, hObject);
+
+					//      sprintf_s(clabel,sizeof(clabel), "Public Key %d (%s)", i+1, key.csLabel.c_str()); 
+					sprintf_s(clabel,sizeof(clabel), "%s", key.csLabel.c_str()); 
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) &keytype, sizeof(CK_KEY_TYPE));
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) &modsize, sizeof(CK_ULONG));
+					if (ret) goto cleanup;
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
+					if (ret) goto cleanup;
+				}
+			}
 		}
 	}
 	catch (CMWException e)
@@ -1217,50 +1224,51 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 
 	//get the object related to this ID
 
-		p11_find_slot_object(pSlot, CKO_PRIVATE_KEY, *pID, &pPrivKeyObject);
+	p11_find_slot_object(pSlot, CKO_PRIVATE_KEY, *pID, &pPrivKeyObject);
 
-		p11_find_slot_object(pSlot, CKO_PUBLIC_KEY, *pID, &pPubKeyObject);
+	p11_find_slot_object(pSlot, CKO_PUBLIC_KEY, *pID, &pPubKeyObject);
 
-		p11_find_slot_object(pSlot, CKO_CERTIFICATE, *pID, &pCertObject);
+	p11_find_slot_object(pSlot, CKO_CERTIFICATE, *pID, &pCertObject);
 
+
+
+	if(pCertObject != NULL)
+	{
 		try
 		{
 			CReader &oReader = oCardLayer->getReader(szReader);
 
-			if(pCertObject != NULL)
+			cert = oReader.GetCertByID(*pID);
+
+			//bValid duidt aan if cert met deze ID
+			if (cert.bValid)
+				oCertData = oReader.ReadFile(cert.csPath);
+			else
 			{
-				cert = oReader.GetCertByID(*pID);
-
-				//bValid duidt aan if cert met deze ID
-				if (cert.bValid)
-					oCertData = oReader.ReadFile(cert.csPath);
-				else
-				{
-					return(CKR_DEVICE_ERROR);
-				}
-
-				ret = cert_get_info(oCertData.GetBytes(), oCertData.Size(), &certinfo);
-
-				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
-				if (ret) goto cleanup;
-				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_ISSUER, (CK_VOID_PTR) certinfo.issuer, (CK_ULONG)certinfo.l_issuer);
-				if (ret) goto cleanup;
-				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SERIAL_NUMBER, (CK_VOID_PTR) certinfo.serial, (CK_ULONG)certinfo.l_serial);
-				if (ret) goto cleanup;
-				//use real length from decoder here instead of lg from cal
-				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_VALUE, (CK_VOID_PTR) oCertData.GetBytes(), (CK_ULONG)certinfo.lcert);
-				if (ret) goto cleanup;
-				//TODO Check this in the cal if we can be sure that the certificate can be trusted and not be modified on the card
-				ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
-				if (ret) goto cleanup;
-
-				pCertObject->state = P11_CACHED;
+				return(CKR_DEVICE_ERROR);
 			}
 
-			if (pPrivKeyObject)
-			{
-				key = oReader.GetPrivKeyByID(*pID);
+			ret = cert_get_info(oCertData.GetBytes(), oCertData.Size(), &certinfo);
 
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
+			if (ret) goto cleanup;
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_ISSUER, (CK_VOID_PTR) certinfo.issuer, (CK_ULONG)certinfo.l_issuer);
+			if (ret) goto cleanup;
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SERIAL_NUMBER, (CK_VOID_PTR) certinfo.serial, (CK_ULONG)certinfo.l_serial);
+			if (ret) goto cleanup;
+			//use real length from decoder here instead of lg from cal
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_VALUE, (CK_VOID_PTR) oCertData.GetBytes(), (CK_ULONG)certinfo.lcert);
+			if (ret) goto cleanup;
+			//TODO Check this in the cal if we can be sure that the certificate can be trusted and not be modified on the card
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
+			if (ret) goto cleanup;
+
+			pCertObject->state = P11_CACHED;
+
+			key = oReader.GetPrivKeyByID(*pID);
+
+			if(pPrivKeyObject != NULL)
+			{
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) &btrue, sizeof(btrue));
 				if (ret) goto cleanup;
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_DECRYPT, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
@@ -1269,19 +1277,15 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 				if (ret) goto cleanup;
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_UNWRAP, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
 				if (ret) goto cleanup;
-				if(pCertObject != NULL)
-				{
-					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
-					if (ret) goto cleanup;
-					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, (CK_ULONG)certinfo.l_mod);
-					if (ret) goto cleanup;
-					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, (CK_ULONG)certinfo.l_exp);
-					if (ret) goto cleanup;
-				}
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, (CK_ULONG)certinfo.l_mod);
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, (CK_ULONG)certinfo.l_exp);
+				if (ret) goto cleanup;
 				pPrivKeyObject->state = P11_CACHED;
 			}
-
-			if (pPubKeyObject)
+			if(pPubKeyObject != NULL)
 			{
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) &btrue, sizeof(btrue));
 				if (ret) goto cleanup;
@@ -1292,20 +1296,17 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_WRAP, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
 				if (ret) goto cleanup;
 
-				if(pCertObject != NULL)
-				{
-					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
-					if (ret) goto cleanup;
-					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, certinfo.l_mod);
-					if (ret) goto cleanup;
-					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VALUE, (CK_VOID_PTR) certinfo.pkinfo, certinfo.l_pkinfo);
-					if (ret) goto cleanup;
-					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, certinfo.l_exp);
-					if (ret) goto cleanup;
-					//TODO test if we can set the trusted flag...
-					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
-					if (ret) goto cleanup;
-				}
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, certinfo.l_mod);
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VALUE, (CK_VOID_PTR) certinfo.pkinfo, certinfo.l_pkinfo);
+				if (ret) goto cleanup;
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, certinfo.l_exp);
+				if (ret) goto cleanup;
+				//TODO test if we can set the trusted flag...
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
+				if (ret) goto cleanup;
 
 				pPubKeyObject->state = P11_CACHED;
 			}
@@ -1322,6 +1323,7 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 			cert_free_info(&certinfo);
 			return (CKR_FUNCTION_FAILED);
 		}
+	}
 	if (ret != 0)
 	{
 		cert_free_info(&certinfo);
@@ -1554,29 +1556,29 @@ int cal_update_token(CK_SLOT_ID hSlot)
 #define WHERE "cal_wait_for_slot_event()"
 CK_RV cal_wait_for_slot_event(int block)
 {
-	CK_RV ret = CKR_OK;
+CK_RV ret = CKR_OK;
 
-	try 
-	{
-		if (block){
-			oReadersInfo->CheckTheReaderEvents(TIMEOUT_INFINITE);
-		}
-		else{
-			oReadersInfo->CheckTheReaderEvents(0);
-		}
-	}
-	catch (CMWException e)
-	{
-		CLEANUP(cal_translate_error(WHERE, e.GetError()));
-	}
-	catch (...) 
-	{
-		log_trace(WHERE, "E: unkown exception thrown");
-		CLEANUP(CKR_FUNCTION_FAILED);
-	}
+try 
+{
+if (block){
+oReadersInfo->CheckTheReaderEvents(TIMEOUT_INFINITE);
+}
+else{
+oReadersInfo->CheckTheReaderEvents(0);
+}
+}
+catch (CMWException e)
+{
+CLEANUP(cal_translate_error(WHERE, e.GetError()));
+}
+catch (...) 
+{
+log_trace(WHERE, "E: unkown exception thrown");
+CLEANUP(CKR_FUNCTION_FAILED);
+}
 cleanup:
 
-	return(ret);
+return(ret);
 }
 #undef WHERE
 */
@@ -1624,22 +1626,22 @@ CK_RV cal_get_slot_changes(int *ph)
 			}
 			else
 #endif
+			{
+				if (first)
 				{
-					if (first)
-					{
-						*ph = i;
-						first = 0;
-						ret = CKR_OK;
-					}
-					else
-					{
-						pSlot = p11_get_slot(i);
-						if (oReadersInfo->CardPresent(i))
-							pSlot->ievent = 1;
-						else
-							pSlot->ievent = -1;
-					}
+					*ph = i;
+					first = 0;
+					ret = CKR_OK;
 				}
+				else
+				{
+					pSlot = p11_get_slot(i);
+					if (oReadersInfo->CardPresent(i))
+						pSlot->ievent = 1;
+					else
+						pSlot->ievent = -1;
+				}
+			}
 		}
 	}
 	return ret;
@@ -1701,7 +1703,7 @@ int cal_refresh_readers()
 		return (CKR_FUNCTION_FAILED);
 	}
 
-		//init slots and token in slots
+	//init slots and token in slots
 	memset(gpSlot, 0, sizeof(gpSlot));
 	ret = cal_init_slots();
 	if (ret)
@@ -1930,7 +1932,7 @@ cleanup:
 #undef WHERE
 
 void cal_free_reader_states(SCARD_READERSTATEA* txReaderStates,
-																			unsigned long ulnReaders)
+														unsigned long ulnReaders)
 {
 	// Free the memory allocated for the reader names
 	for (DWORD i = 0; i < ulnReaders; i++)
