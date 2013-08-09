@@ -357,10 +357,9 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    CK_ULONG       *pid = NULL;
    CK_ULONG       *pclass = NULL;
    CK_ULONG len = 0;
-
-	 CK_MECHANISM_TYPE_PTR  pMechanismsSupported = NULL;
-	 CK_ULONG ulSupportedMechLen = 0;
-	 CK_ULONG ulcounter = 0;
+   CK_MECHANISM_TYPE_PTR  pMechanismsSupported = NULL;
+   CK_ULONG ulSupportedMechLen = 0;
+   CK_ULONG ulcounter = 0;
    int ihash;
 
 	if (p11_get_init() != BEIDP11_INITIALIZED)
@@ -418,6 +417,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 			if (ret != CKR_OK)
 			{
 				log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%d) returns %s", pSession->hslot, log_map_error(ret));
+				free(pMechanismsSupported);
 				goto cleanup;
 			}
 
@@ -433,6 +433,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 			}
 			if(ret == CKR_MECHANISM_INVALID)
 			{
+				free(pMechanismsSupported);
 				goto cleanup;  
 			}
 			free(pMechanismsSupported);
@@ -446,9 +447,9 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
       case CKM_SHA256_RSA_PKCS:
       case CKM_SHA384_RSA_PKCS:
       case CKM_SHA512_RSA_PKCS: 
-			case CKM_SHA1_RSA_PKCS_PSS:
-			case CKM_SHA256_RSA_PKCS_PSS:	ihash = 1; break;
-			case CKM_RSA_PKCS:        ihash = 0; break;
+      case CKM_SHA1_RSA_PKCS_PSS:
+      case CKM_SHA256_RSA_PKCS_PSS:	ihash = 1; break;
+      case CKM_RSA_PKCS:        ihash = 0; break;
       default: 
          ret = CKR_MECHANISM_INVALID;
          goto cleanup;            
