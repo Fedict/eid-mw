@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -37,8 +37,10 @@ switch(pMechanism->mechanism)
    case CKM_MD5:
    case CKM_MD5_RSA_PKCS:           algo = ALGO_MD5;        *size=16; break;
    case CKM_SHA_1:
+   case CKM_SHA1_RSA_PKCS_PSS:
    case CKM_SHA1_RSA_PKCS:          algo = ALGO_SHA1;       *size=20; break;
    case CKM_SHA256:
+   case CKM_SHA256_RSA_PKCS_PSS:
    case CKM_SHA256_RSA_PKCS:        algo = ALGO_SHA256;     *size=32; break;
    case CKM_SHA384:
    case CKM_SHA384_RSA_PKCS:        algo = ALGO_SHA384;     *size=48; break;

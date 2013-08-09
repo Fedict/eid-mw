@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2013 FedICT.
+ * Copyright (C) 2008-2012 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -357,6 +357,9 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    CK_ULONG       *pid = NULL;
    CK_ULONG       *pclass = NULL;
    CK_ULONG len = 0;
+   CK_MECHANISM_TYPE_PTR  pMechanismsSupported = NULL;
+   CK_ULONG ulSupportedMechLen = 0;
+   CK_ULONG ulcounter = 0;
    int ihash;
 
 	if (p11_get_init() != BEIDP11_INITIALIZED)
@@ -396,7 +399,46 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 
    //check mechanism
    //since this module is only for BEID, we check for RSA here and we do not check the device capabilities
-   //TODO check mechanism table for signing depending on token in slot
+   //check mechanism table for signing depending on token in slot
+
+	 //get number of mechanisms
+		ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
+		if (ret != CKR_OK)
+   {
+			log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%d) returns %s", pSession->hslot, log_map_error(ret));
+			goto cleanup;
+   }
+
+		//get the mechanisms list
+		pMechanismsSupported = (CK_MECHANISM_TYPE_PTR) malloc (sizeof(CK_MECHANISM_TYPE_PTR)*ulSupportedMechLen);
+		if(pMechanismsSupported != NULL)
+		{
+			ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
+			if (ret != CKR_OK)
+			{
+				log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%d) returns %s", pSession->hslot, log_map_error(ret));
+				free(pMechanismsSupported);
+				goto cleanup;
+			}
+
+			ret = CKR_MECHANISM_INVALID;
+
+			for(ulcounter = 0; ulcounter < ulSupportedMechLen ; ulcounter++)
+			{
+				if(pMechanismsSupported[ulcounter] == pMechanism->mechanism)
+				{
+					ret = CKR_OK;
+					break;
+				}
+			}
+			if(ret == CKR_MECHANISM_INVALID)
+			{
+				free(pMechanismsSupported);
+				goto cleanup;  
+			}
+			free(pMechanismsSupported);
+		}
+
    switch(pMechanism->mechanism)
       {
       case CKM_MD5_RSA_PKCS:
@@ -404,8 +446,10 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
       case CKM_RIPEMD160_RSA_PKCS:
       case CKM_SHA256_RSA_PKCS:
       case CKM_SHA384_RSA_PKCS:
-      case CKM_SHA512_RSA_PKCS: ihash = 1; break;
-			case CKM_RSA_PKCS:        ihash = 0; break;
+      case CKM_SHA512_RSA_PKCS: 
+      case CKM_SHA1_RSA_PKCS_PSS:
+      case CKM_SHA256_RSA_PKCS_PSS:	ihash = 1; break;
+      case CKM_RSA_PKCS:        ihash = 0; break;
       default: 
          ret = CKR_MECHANISM_INVALID;
          goto cleanup;            

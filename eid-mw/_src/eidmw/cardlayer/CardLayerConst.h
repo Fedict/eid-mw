@@ -57,6 +57,7 @@ const unsigned long SIGN_ALGO_SHA384_RSA_PKCS = 0x20;
 const unsigned long SIGN_ALGO_SHA512_RSA_PKCS = 0x40;
 const unsigned long SIGN_ALGO_RIPEMD160_RSA_PKCS = 0x80;
 const unsigned long SIGN_ALGO_SHA1_RSA_PSS = 0x100;
+const unsigned long SIGN_ALGO_SHA256_RSA_PSS = 0x200;
 
 typedef enum
 {

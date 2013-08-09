@@ -372,6 +372,8 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 		if (algos & SIGN_ALGO_SHA384_RSA_PKCS)    *pulCount +=1;
 		if (algos & SIGN_ALGO_SHA512_RSA_PKCS)    *pulCount +=1;
 		if (algos & SIGN_ALGO_RIPEMD160_RSA_PKCS) *pulCount +=1;
+		if (algos & SIGN_ALGO_SHA1_RSA_PSS)       *pulCount +=1;
+		if (algos & SIGN_ALGO_SHA256_RSA_PSS)     *pulCount +=1;
 		return (CKR_OK);
 	}
 
@@ -453,6 +455,20 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 	{
 		if (n++ <= *pulCount)  
 			pMechanismList[n-1] = CKM_RIPEMD160_RSA_PKCS;
+		else
+			return (CKR_BUFFER_TOO_SMALL);
+	}
+	if (algos & SIGN_ALGO_SHA1_RSA_PSS)
+	{
+		if (n++ <= *pulCount)  
+			pMechanismList[n-1] = CKM_SHA1_RSA_PKCS_PSS;
+		else
+			return (CKR_BUFFER_TOO_SMALL);
+	}
+	if (algos & SIGN_ALGO_SHA256_RSA_PSS)
+	{
+		if (n++ <= *pulCount)  
+			pMechanismList[n-1] = CKM_SHA256_RSA_PKCS_PSS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
@@ -1372,6 +1388,8 @@ int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsi
 		case CKM_SHA512_RSA_PKCS:        algo = SIGN_ALGO_SHA512_RSA_PKCS;     break;
 		case CKM_RIPEMD160:
 		case CKM_RIPEMD160_RSA_PKCS:     algo = SIGN_ALGO_RIPEMD160_RSA_PKCS;  break;
+		case CKM_SHA1_RSA_PKCS_PSS:      algo = SIGN_ALGO_SHA1_RSA_PSS;        break;
+		case CKM_SHA256_RSA_PKCS_PSS:    algo = SIGN_ALGO_SHA256_RSA_PSS;      break;
 		default: 
 			ret = CKR_MECHANISM_INVALID;
 			goto cleanup;            
