@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -29,7 +29,7 @@ using namespace eIDMW;
 // can't be present because it's the same for all plugins
 #ifndef CARDPLUGIN_IN_CAL
 EIDMW_CAL_API CCard *GetCardInstance(unsigned long ulVersion, const char *csReader,
-	unsigned long hCard, CContext *poContext, CPinpad *poPinpad);
+	SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad);
 #endif
 
 CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,

@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -37,7 +37,7 @@ static const tFileInfo PREFS_FILE_INFO_V2 = {-1, -1, 0x85};
 // can't be present because it's the same for all plugins
 #ifndef CARDPLUGIN_IN_CAL
 CCard *GetCardInstance(unsigned long ulVersion, const char *csReader,
-	unsigned long hCard, CContext *poContext, CPinpad *poPinpad)
+	SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad)
 {
 	return BeidCardGetInstance(ulVersion, csReader, hCard, poContext, poPinpad);
 }
@@ -64,7 +64,6 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 
 	if ((ulVersion % 100) == (PLUGIN_VERSION % 100))
 	{
-		try {
 			bool bNeedToSelectApplet = false;
 			CByteArray oData;
 			CByteArray oCmd(40);
@@ -75,9 +74,11 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 			long lRetVal;
 			// Don't remove these brackets, CAutoLock dtor must be called!
 			//{
+			//don't use autolock when card might be reset
 				//CAutoLock oAutLock(&poContext->m_oPCSC, hCard);
 				unsigned long ulLockCount = 1;
 				poContext->m_oPCSC.BeginTransaction(hCard);
+		try {
 				oData = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
 				if (lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED)
 				{
@@ -121,16 +122,18 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 					return new CUnknownCard(hCard, poContext, poPinpad, CByteArray());
 				}
 #endif
-			//}
-			if(ulLockCount)
-			{
-				poContext->m_oPCSC.EndTransaction(hCard);
-			}
 		}
 		catch(...)
 		{
 			//printf("Exception in cardPluginBeid.CardGetInstance()\n");
 		}
+			//}
+			if(ulLockCount)
+			{
+				poContext->m_oPCSC.EndTransaction(hCard);
+			}
+
+
 	}
 
 	return poCard;
@@ -156,8 +159,6 @@ CPkiCard(hCard, poContext, poPinpad)
 		m_oSerialNr = CByteArray(m_oCardData.GetBytes(), 16);
 
 		m_ucAppletVersion = m_oCardData.GetByte(21);
-//        if (m_ucAppletVersion < 0x17)
-//            m_ucAppletVersion = (unsigned char) (256 * m_oCardData.GetByte(21) + m_oCardData.GetByte(22));
 
 		m_ul6CDelay = 0;
 		if (m_oCardData.GetByte(22) == 0x00 && m_oCardData.GetByte(23) == 0x01)
@@ -243,10 +244,9 @@ DlgPinUsage CBeidCard::PinUsage2Dlg(const tPin & Pin, const tPrivKey *pKey)
 	return usage;
 }
 
-void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin,
-        std::string & csPin1, std::string & csPin2,	const tPrivKey *pKey)
+void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin, std::string & csPin1, std::string & csPin2,	const tPrivKey *pKey)
 {
-
+#ifndef NO_DIALOGS
 	// Convert params
 	wchar_t wsPin1[PIN_MAX_LENGTH+1];
 	wchar_t wsPin2[PIN_MAX_LENGTH+1];
@@ -257,18 +257,11 @@ void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin,
 	// The actual call
 	DlgRet ret;
 	std::wstring wideLabel = utilStringWiden(Pin.csLabel);
-	if (operation != PIN_OP_CHANGE)
-	{
-		ret = DlgAskPin(pinOperation,
-			usage, wideLabel.c_str(), pinInfo, wsPin1,PIN_MAX_LENGTH+1);
-	}
+
+	if(operation==PIN_OP_CHANGE)
+		ret=DlgAskPins(pinOperation,usage,wideLabel.c_str(),pinInfo,wsPin1,PIN_MAX_LENGTH+1,pinInfo,wsPin2,PIN_MAX_LENGTH+1);
 	else
-	{
-		ret = DlgAskPins(pinOperation,
-			usage, wideLabel.c_str(),
-			pinInfo, wsPin1,PIN_MAX_LENGTH+1, 
-			pinInfo, wsPin2,PIN_MAX_LENGTH+1);
-	}
+		ret=DlgAskPin(pinOperation,usage,wideLabel.c_str(),pinInfo,wsPin1,PIN_MAX_LENGTH+1);
 
 	// Convert back
 	if (ret == DLG_OK)
@@ -283,7 +276,7 @@ void CBeidCard::showPinDialog(tPinOperation operation, const tPin & Pin,
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 	else
 		throw CMWEXCEPTION(EIDMW_ERR_UNKNOWN);
-
+#endif
 }
 
 bool CBeidCard::PinCmd(tPinOperation operation, const tPin & Pin,
@@ -319,7 +312,11 @@ unsigned long CBeidCard::GetSupportedAlgorithms()
 		SIGN_ALGO_RSA_PKCS | SIGN_ALGO_MD5_RSA_PKCS | SIGN_ALGO_SHA1_RSA_PKCS;
 
 	if (m_ucAppletVersion >= 0x17)
+	{
+		ulAlgos |= SIGN_ALGO_SHA256_RSA_PKCS;
 		ulAlgos |= SIGN_ALGO_SHA1_RSA_PSS;
+		ulAlgos |= SIGN_ALGO_SHA256_RSA_PSS;
+	}
 
 	return ulAlgos;
 }
@@ -434,13 +431,29 @@ void CBeidCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo,
     case SIGN_ALGO_RSA_PKCS: ucAlgo = 0x01; break;
     case SIGN_ALGO_SHA1_RSA_PKCS: ucAlgo = 0x02; break;
     case SIGN_ALGO_MD5_RSA_PKCS: ucAlgo = 0x04; break;
+		case SIGN_ALGO_SHA256_RSA_PKCS:
+			if (m_ucAppletVersion < 0x17)
+			{
+				MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: SIGN_ALGO_SHA256_RSA_PKCS not supported on pre V1.7 cards");
+				throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
+			}
+			ucAlgo = 0x08;
+			break;
     case SIGN_ALGO_SHA1_RSA_PSS:
         if (m_ucAppletVersion < 0x17)
         {
-            MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on V1 cards");
+            MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards");
             throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
         }
-        ucAlgo = 0x08;
+        ucAlgo = 0x10;
+        break;
+    case SIGN_ALGO_SHA256_RSA_PSS:
+        if (m_ucAppletVersion < 0x17)
+        {
+            MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards");
+            throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
+        }
+        ucAlgo = 0x20;
         break;
     default:
         throw CMWEXCEPTION(EIDMW_ERR_ALGO_BAD);
@@ -469,7 +482,7 @@ CByteArray CBeidCard::SignInternal(const tPrivKey & key, unsigned long algo,
 {
 	CAutoLock autolock(this);
 
-	// For V2 cards, the Belpic dir has to be selected
+	// For V1.7 cards, the Belpic dir has to be selected
 	if (m_ucAppletVersion >= 0x17)
 		SelectFile(key.csPath);
 	else if (m_selectAppletMode == ALW_SELECT_APPLET)
