@@ -177,7 +177,7 @@ DWORD WINAPI   CardSignData
 	DWORD                      dwReturn       = 0;
 
 	BCRYPT_PKCS1_PADDING_INFO  *PkcsPadInfo = NULL;
-	BCRYPT_PSS_PADDING_INFO    *PssPadInfo  = NULL;
+	//BCRYPT_PSS_PADDING_INFO    *PssPadInfo  = NULL;
 
 	unsigned int               uiHashAlgo   = HASH_ALGO_NONE;
 
@@ -312,7 +312,10 @@ DWORD WINAPI   CardSignData
 				break;
 			case CARD_PADDING_PSS:
 				//check card belpic applet version : if its < 1.7 -> not supported
-				PssPadInfo = (BCRYPT_PSS_PADDING_INFO *) pInfo->pPaddingInfo;
+				//first need to create workaround for incompatible card and minidriver architecture
+				//(beidcard does not allow setting algo between pinpvalidation and signature,
+				//and base csp doesn't show the padding algo before pin validation )
+				/*PssPadInfo = (BCRYPT_PSS_PADDING_INFO *) pInfo->pPaddingInfo;
 				if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA1") == 0 ) 
 				{
 					uiHashAlgo = HASH_ALGO_NONE;
@@ -323,8 +326,13 @@ DWORD WINAPI   CardSignData
 					uiHashAlgo = HASH_ALGO_NONE;
 					bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PSS_SHA256;
 				}
+				else
+				{*/
+					LogTrace(LOGTYPE_ERROR, WHERE, "CARD_PADDING_PSS unsupported...");
+					CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+				//}
 				LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_PSS");
-				//memcpy (&PssPadInfo, pInfo->pPaddingInfo, sizeof(PssPadInfo));
+				////memcpy (&PssPadInfo, pInfo->pPaddingInfo, sizeof(PssPadInfo));
 				break;
 			case CARD_PADDING_NONE:
 				LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_NONE");
