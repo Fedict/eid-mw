@@ -24,6 +24,7 @@
 #define P11_DISPLAY_YES				0
 #define P11_DISPLAY_NO				1
 #define P11_DISPLAY_CANCEL		2
+#define P11_DISPLAY_ALWAYS		3
 
 #ifdef __cplusplus
 extern "C" {

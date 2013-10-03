@@ -35,7 +35,7 @@ class dlgWndModal : public Win32Dialog
 	unsigned char m_ulCancelButton;
 
 public:
-	dlgWndModal( DlgIcon icon, const std::wstring & Msg, unsigned char ulButtons, 
+	dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wstring & Title, unsigned char ulButtons, 
 		unsigned char ulEnterButton, unsigned char ulCancelButton, HWND Parent = NULL );
 	virtual ~dlgWndModal();
 

@@ -130,6 +130,7 @@ const unsigned char DLG_BUTTON_CANCEL = 2;
 const unsigned char DLG_BUTTON_RETRY = 4;
 const unsigned char DLG_BUTTON_YES = 8;
 const unsigned char DLG_BUTTON_NO = 16;
+const unsigned char DLG_BUTTON_ALWAYS = 32;
 
 const unsigned long DLG_LANG_DEFAULT = 0; // this is no USB LANGID code
 const unsigned long DLG_LANG_EN = 0x0409;
