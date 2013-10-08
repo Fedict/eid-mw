@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2012 FedICT.
+* Copyright (C) 2008-2013 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -25,6 +25,9 @@
 #include "p11.h"
 #include "cal.h"
 #include "display.h"
+
+//global variable 
+int eidmw_readpermission = 0;
 
 //function declarations
 void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len);
@@ -330,23 +333,30 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		}
 		if((filesToCacheFlag != CACHED_DATA_TYPE_CARDDATA) && (filesToCacheFlag != CACHED_DATA_TYPE_RNCERT))
 		{
-			if (pSession->bReadDataAllowed == P11_READDATA_ASK)
+			if ((pSession->bReadDataAllowed == P11_READDATA_ASK) & (eidmw_readpermission != P11_READDATA_ALWAYS))
 			{
 				allowCardRead = AllowCardReading();
-				if (allowCardRead == P11_DISPLAY_YES)
+				switch(allowCardRead)
 				{
+				case P11_DISPLAY_YES:
 					pSession->bReadDataAllowed = P11_READDATA_ALLOWED;
-				}
-				else
-				{
-					if(allowCardRead == P11_DISPLAY_NO)
-					{
-						pSession->bReadDataAllowed = P11_READDATA_REFUSED;
-					}				
+					break;
+				case P11_DISPLAY_ALWAYS:
+					pSession->bReadDataAllowed = P11_READDATA_ALLOWED;
+					eidmw_readpermission = P11_READDATA_ALWAYS;
+					//allowed for as long as this pkcs11 instance exists, put it in some variable
+					log_trace(WHERE, "I: Al reading from the card");
+					break;
+				case P11_DISPLAY_NO:
+					pSession->bReadDataAllowed = P11_READDATA_REFUSED;	
+				default:							
 					log_trace(WHERE, "I: User does not allow reading from the card");
 					ret = CKR_FUNCTION_FAILED;
 					goto cleanup;
-				}
+					break;
+
+			}
+
 			}
 		}
 	}

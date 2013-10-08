@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -58,7 +58,7 @@ DEFINE_LANG_STR(CancelNo) = {L"&Cancel (No)", L"&Annuleren (Nee)", L"&Annuler", 
 DEFINE_LANG_STR(Pin) = {L"PIN", L"PIN", L"PIN", L"PIN"};
 DEFINE_LANG_STR(Puk) = {L"PUK", L"PUK", L"PUK", L"PUK"};
 DEFINE_LANG_STR(Retry) = {L"&Retry", L"O&pnieuw", L"&Réessayer", L"&Erneut versuchen"};
-DEFINE_LANG_STR(Always) = {L"&Always", L"&Altijd", L"&Toujours", L"&Immer"};
+DEFINE_LANG_STR(Always) = {L"Yes, always", L"Ja, altijd", L"Oui, toujours", L"Ja, immer"};
 DEFINE_LANG_STR(Never) = {L"Ne&ver", L"N&ooit", L"&Jamais", L"&Nie"};
 DEFINE_LANG_STR(Belpic) = {L"Belpic", L"Belpic", L"Belpic", L"Belpic"};
 DEFINE_LANG_STR(Application) = {L"Application:", L"Programma:", L"Application:", L"Anwendung:"};

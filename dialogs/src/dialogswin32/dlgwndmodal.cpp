@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -26,8 +26,9 @@
 #include "log.h"
 
 #define IMG_ICO_SIZE 64
+#define IDALWAYS     22
 
-dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, unsigned char ulButtons, 
+dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wstring & Title, unsigned char ulButtons, 
 						 unsigned char ulEnterButton, unsigned char ulCancelButton, HWND Parent )
 :Win32Dialog(L"WndModal")
 {
@@ -43,19 +44,21 @@ dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, unsigned char 
 	{
 		if( i & ulButtons )
 			iWidth++;
+		if(i & DLG_BUTTON_ALWAYS)
+			iWidth++;//ALWAYS button is 2 times the size
 		else if( i == 0 )
 			break;
 	}
 	iWidth = iWidth * 80 + 40;
 
-	std::wstring tmpTitle = L"";
-	tmpTitle += GETSTRING_DLG(Message);
+//	std::wstring tmpTitle = L"";
+//	tmpTitle += GETSTRING_DLG(Message);
 
 	if( iWidth < 450 )
 		iWidth = 450;
 
 
-	if( CreateWnd( tmpTitle.c_str() , iWidth, 300, 0, Parent ) )
+	if( CreateWnd( Title.c_str() , iWidth, 300, 0, Parent ) )
 	{
 		RECT clientRect;
 		GetClientRect( m_hWnd, &clientRect );
@@ -122,6 +125,18 @@ dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, unsigned char 
 				(HMENU)(m_ulEnterButton==DLG_BUTTON_OK?IDOK:(m_ulCancelButton==DLG_BUTTON_OK?IDCANCEL:IDOK)), 
 				m_hInstance, NULL );
 			SendMessage( hOkButton, WM_SETFONT, (WPARAM)TextFont, 0 );
+			iWidth++;
+		}
+
+		if( ulButtons & DLG_BUTTON_ALWAYS )
+		{
+			HWND hAlwaysButton = CreateWindow(
+				L"BUTTON", GETSTRING_DLG(Always), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT 
+				| (m_ulEnterButton==DLG_BUTTON_ALWAYS?BS_DEFPUSHBUTTON:0), 
+				clientRect.left + 8, clientRect.bottom - 36, 152, 24, m_hWnd, 
+				(HMENU)(m_ulEnterButton==DLG_BUTTON_ALWAYS?IDOK:(m_ulCancelButton==DLG_BUTTON_ALWAYS?IDCANCEL:IDALWAYS)), 
+				m_hInstance, NULL );
+			SendMessage( hAlwaysButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 		}
 
 		switch( icon )
@@ -185,6 +200,8 @@ LRESULT dlgWndModal::ProcecEvent(	UINT		uMsg,			// Message For This Window
 						dlgResult = eIDMW::DLG_RETRY;	break;
 					case DLG_BUTTON_YES:
 						dlgResult = eIDMW::DLG_YES;		break;
+					case DLG_BUTTON_ALWAYS:
+						dlgResult = eIDMW::DLG_ALWAYS;		break;
 					default:
 						dlgResult = eIDMW::DLG_OK;		break;
 					}
@@ -202,6 +219,8 @@ LRESULT dlgWndModal::ProcecEvent(	UINT		uMsg,			// Message For This Window
 						dlgResult = eIDMW::DLG_YES;		break;
 					case DLG_BUTTON_OK:
 						dlgResult = eIDMW::DLG_OK;		break;
+					case DLG_BUTTON_ALWAYS:
+						dlgResult = eIDMW::DLG_ALWAYS;		break;
 					default:
 						dlgResult = eIDMW::DLG_CANCEL;	break;
 					}
@@ -220,6 +239,11 @@ LRESULT dlgWndModal::ProcecEvent(	UINT		uMsg,			// Message For This Window
 
 				case IDNO:
 					dlgResult = eIDMW::DLG_NO;
+					close();
+					return TRUE;
+
+				case IDALWAYS:
+					dlgResult = eIDMW::DLG_ALWAYS;
 					close();
 					return TRUE;
 

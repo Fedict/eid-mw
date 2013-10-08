@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2012 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -24,6 +24,7 @@
 #define P11_DISPLAY_YES				0
 #define P11_DISPLAY_NO				1
 #define P11_DISPLAY_CANCEL		2
+#define P11_DISPLAY_ALWAYS		3
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -505,13 +505,23 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
 	dlgWndModal *dlg = NULL;
 	try
 	{
+		std::wstring csTitle = L"";;
 		std::wstring csMessage;
 		if(wcslen(csMesg)==0)
 			csMessage=CLang::GetMessageFromID(messageID);
 		else
 			csMessage=csMesg;
 
-		dlg = new dlgWndModal( icon, csMessage, ulButtons, ulEnterButton, ulCancelButton );
+		if(messageID == DLG_MESSAGE_USER_WARNING)
+		{
+			csTitle += GETSTRING_DLG(ReadIdentityData);
+		}
+		else
+		{
+			csTitle += GETSTRING_DLG(Message);
+		}
+
+		dlg = new dlgWndModal( icon, csMessage, csTitle, ulButtons, ulEnterButton, ulCancelButton );
 		dlg->exec();
 		eIDMW::DlgRet dlgResult = dlg->dlgResult;
 		//csPin = dlg->PinResult;

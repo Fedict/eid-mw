@@ -159,7 +159,7 @@ void           *pReader;  //CReader
 #define P11_READDATA_ASK				0
 #define P11_READDATA_ALLOWED		1
 #define P11_READDATA_REFUSED    2
-
+#define P11_READDATA_ALWAYS			3
 
 typedef struct P11_OPERATION
 {

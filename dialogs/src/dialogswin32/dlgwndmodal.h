@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -35,7 +35,7 @@ class dlgWndModal : public Win32Dialog
 	unsigned char m_ulCancelButton;
 
 public:
-	dlgWndModal( DlgIcon icon, const std::wstring & Msg, unsigned char ulButtons, 
+	dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wstring & Title, unsigned char ulButtons, 
 		unsigned char ulEnterButton, unsigned char ulCancelButton, HWND Parent = NULL );
 	virtual ~dlgWndModal();
 

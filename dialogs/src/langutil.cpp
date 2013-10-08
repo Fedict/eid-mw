@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -25,6 +25,7 @@
 #include "mw_util.h"
 
 #define PATH_LENGHT 255
+
 
 namespace eIDMW
 {
@@ -122,6 +123,12 @@ void CLang::SetLangL(unsigned long lang)
 std::wstring CLang::GetMessageFromID(DlgMessageID messageID)
 {
 	std::wstring csMessage=L"";
+	unsigned char separator;
+#ifdef WIN32
+	separator = '\\';
+#else
+	separator = '/';
+#endif		
 
 	switch( messageID )
 		{
@@ -141,7 +148,9 @@ std::wstring CLang::GetMessageFromID(DlgMessageID messageID)
 			wcscpy_s(fullpath,PATH_LENGHT,L"");
 
 			const wchar_t *exename=NULL;
-
+			wchar_t *partPath = fullpath;//current (sub)folder name
+			wchar_t *nextPartPath = fullpath;//next (sub)folder name
+			wchar_t *startOfLine = fullpath;//start of (part of) path that is not yet copied
 			GetProcessName(fullpath,PATH_LENGHT);
 
 			if(wcslen(fullpath)==0)
@@ -151,11 +160,7 @@ std::wstring CLang::GetMessageFromID(DlgMessageID messageID)
 			}
 			else
 			{
-#ifdef WIN32
-				exename=wcsrchr(fullpath,'\\');
-#else
-				exename=wcsrchr(fullpath,'/');
-#endif			
+				exename=wcsrchr(fullpath,separator);		
 				if(exename==NULL)
 					exename=L"???";
 				else
@@ -167,7 +172,28 @@ std::wstring CLang::GetMessageFromID(DlgMessageID messageID)
 			csMessage+=L"\n\n\n\n\n";
 			csMessage+=GETSTRING_DLG(PathOfTheApplication);
 			csMessage+=L"\n\n";
-			csMessage+=fullpath;
+
+			nextPartPath=wcschr(partPath,separator);
+			while(nextPartPath != NULL)
+			{				
+				nextPartPath++;//skip separator
+				if((nextPartPath-startOfLine)>48)
+				{
+					csMessage+=L"\n";
+					startOfLine = nextPartPath;
+				}
+				csMessage.append(partPath,(nextPartPath-partPath));
+				//csMessage+=L" ";
+				partPath = nextPartPath;
+				nextPartPath=wcschr(partPath,separator);
+			}
+			if((wcslen(partPath)+(partPath-startOfLine))>48)
+			{
+				csMessage+=L"\n";
+			}
+			csMessage+=partPath;
+
+			//csMessage+=fullpath;
 		}
 			break;
 		case DLG_MESSAGE_SDK35_WARNING:
