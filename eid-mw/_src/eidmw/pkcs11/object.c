@@ -354,9 +354,13 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 					ret = CKR_FUNCTION_FAILED;
 					goto cleanup;
 					break;
-
+				}
 			}
-
+			else if (pSession->bReadDataAllowed == P11_READDATA_REFUSED)
+			{
+				log_trace(WHERE, "I: User did not allow reading from the card during this session");
+				ret = CKR_FUNCTION_FAILED;
+				goto cleanup;
 			}
 		}
 	}
