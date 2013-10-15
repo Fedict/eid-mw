@@ -390,7 +390,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
         wcscpy_s(oData->mesg,sizeof(oData->mesg)/sizeof(wchar_t),csMesg);
     }
     oData->buttons = ulButtons;
-    oData->EnterButton = ulEnterButton;
+	oData->EnterButton = ulCancelButton;//ulEnterButton;
     oData->CancelButton = ulCancelButton;
 
     CallQTServer(DLG_DISPLAY_MODAL,csReadableFilePath.c_str());

@@ -47,9 +47,9 @@ dlgWndModal::dlgWndModal( DlgIcon icon, QString Msg, unsigned char ulButtons,
 	ui.btnCancel->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Cancel)) );
 	ui.btnCancel->setDefault( ulEnterButton==DLG_BUTTON_CANCEL);
 
-	ui.btnRetry->setText( QString::fromWCharArray(GETSTRING_DLG(Retry)) );
-	ui.btnRetry->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Retry)) );
-	ui.btnRetry->setDefault( ulEnterButton==DLG_BUTTON_RETRY);
+	ui.btnRetry->setText( QString::fromWCharArray(GETSTRING_DLG(Always)) );
+	ui.btnRetry->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Always)) );
+	ui.btnRetry->setDefault( ulEnterButton==DLG_BUTTON_ALWAYS);
 
 	ui.btnYes->setText( QString::fromWCharArray(GETSTRING_DLG(Yes)) );
 	ui.btnYes->setAccessibleName( QString::fromWCharArray(GETSTRING_DLG(Yes)) );
@@ -83,7 +83,7 @@ dlgWndModal::dlgWndModal( DlgIcon icon, QString Msg, unsigned char ulButtons,
 
 	ui.btnOk->setVisible( ulButtons & DLG_BUTTON_OK );
 	ui.btnCancel->setVisible( ulButtons & DLG_BUTTON_CANCEL );
-	ui.btnRetry->setVisible( ulButtons & DLG_BUTTON_RETRY );
+	ui.btnRetry->setVisible( ulButtons & DLG_BUTTON_ALWAYS );
 	ui.btnYes->setVisible( ulButtons & DLG_BUTTON_YES );
 	ui.btnNo->setVisible( ulButtons & DLG_BUTTON_NO );
 
@@ -109,7 +109,7 @@ void dlgWndModal::on_btnCancel_clicked()
 
 void dlgWndModal::on_btnRetry_clicked()
 {
-	dlgResult = DLG_RETRY;
+	dlgResult = DLG_ALWAYS;
 	hide();
 }
 
@@ -131,8 +131,8 @@ void dlgWndModal::reject()
 	{
 	case DLG_BUTTON_NO:
 		dlgResult = eIDMW::DLG_NO;	break;
-	case DLG_BUTTON_RETRY:
-		dlgResult = eIDMW::DLG_RETRY;	break;
+	case DLG_BUTTON_ALWAYS:
+		dlgResult = eIDMW::DLG_ALWAYS;	break;
 	case DLG_BUTTON_YES:
 		dlgResult = eIDMW::DLG_YES;	break;
 	case DLG_BUTTON_OK:
