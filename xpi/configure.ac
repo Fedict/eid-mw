@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([xpi], [4.0.4], [servicedesk@fedict.be])
+AC_INIT([xpi], [4.0.6], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/content/belgiumeidpkcs11.js])
 AC_CONFIG_MACRO_DIR([m4])
@@ -10,31 +10,6 @@ AC_CANONICAL_HOST
 # Check for zip
 AC_PATH_PROG([ZIP], [zip])
 AC_PROG_SED
-
-############################################################################
-# Test for platform and set corresponding AM_CONDITIONALs for Makefile.am  #
-############################################################################
-
-linux="no"
-osx="no"
-win32="no"
-
-AS_CASE([$host],
-  [*-*-linux*],[linux=true],
-  [*-*-darwin*],[osx=true],
-  [*-mingw*|*-winnt*],[win32=true])
-
-AM_CONDITIONAL([LINUX],[test x$linux = xtrue])
-AM_CONDITIONAL([OSX],[test x$osx = xtrue])
-AM_CONDITIONAL([WIN32],[test x$win32 = xtrue])
-
-# For now no make install on Windows
-#programfiles_86_exists=no
-#programfiles_exists=no
-#AS_VAR_SET_IF([PROGRAMW6432],[programfiles_86_exists=true])
-#AM_CONDITIONAL([PROGRAMFILES_86_EXISTS],[test x$programfiles_86_exists = xtrue])
-#AS_VAR_SET_IF([PROGRAMFILES],[programfiles_exists=true])
-#AM_CONDITIONAL([PROGRAMFILES_EXISTS],[test x$programfiles_exists = xtrue])
 
 # Checks for libraries.
 
@@ -63,15 +38,7 @@ AC_ARG_WITH([mozext],
 
 AS_IF(
 	[test "x$with_mozext" = "xno"],
-	[AM_COND_IF(
-		[LINUX],
-		[mozext]=[${datadir}/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}],
-		[AM_COND_IF(
-			[OSX],
-			[mozext]=[/Library/Application\ Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}],
-			[mozext]=[${datadir}]
-		)]
-	)],
+	[mozext]=[${datadir}/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}],
 	[[mozext]=[$with_mozext]]
 )
 
@@ -79,10 +46,6 @@ AC_SUBST([ZIP])
 AC_SUBST([DEBUG])
 AC_SUBST([DEBUG_POSTFIX])
 AC_SUBST([mozext])
-
-# For now no make install on Windows
-#AC_SUBST([PROGRAMW6432])
-#AC_SUBST([PROGRAMFILES])
 
 # Checks for library functions.
 

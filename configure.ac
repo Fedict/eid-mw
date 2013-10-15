@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([eid-mw],[4.0.4],[servicedesk@fedict.be])
+AC_INIT([eid-mw],[4.0.6],[servicedesk@fedict.be])
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([common])
@@ -18,29 +18,10 @@ AC_PROG_LIBTOOL
 AC_PROG_INSTALL
 AC_PROG_LN_S
 
-linux="no"
-osx="no"
-win32="no"
-
-AS_CASE([$host],
-  [*-*-linux*],[linux=true],
-  [*-*-darwin*],[osx=true],
-  [*-mingw*|*-winnt*],[win32=true])
-
-AM_CONDITIONAL([LINUX],[test x$linux = xtrue])
-AM_CONDITIONAL([OSX],[test x$osx = xtrue])
-AM_CONDITIONAL([WIN32],[test x$win32 = xtrue])
-
 AS_VAR_IF([GXX],[yes],[],AC_MSG_ERROR([GNU C++ compiler (g++) is required.]))
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/file.h sys/ioctl.h sys/time.h unistd.h malloc.h memory.h sys/timeb.h])
-
-###### QT includes and libs ##########
-AC_MSG_CHECKING([Qt installation])
-AC_ARG_WITH(qt, AC_HELP_STRING([--with-qt=DIR],
-                [Qt install location]))
-AC_MSG_RESULT([$with_qt])
 
 ###### pcsc-lite ##########
 AC_MSG_CHECKING([pcsc-lite installation])
@@ -48,15 +29,18 @@ AC_ARG_WITH(pcsclite, AC_HELP_STRING([--with-pcsclite=DIR],
                     [pcsc-lite install location]))
 AC_MSG_RESULT([$with_pcsclite])
 
-# on Windows, check for msvcr
-AS_VAR_IF([win32],[true],[AC_CHECK_LIB([msvcr],[getpid])])
+AS_VAR_IF([with_pcsclite],[no],
+[
+	PKG_CHECK_MODULES([PCSC],[libpcsclite >= 1.4.4],
+   	[
+        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
+        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
+	])
+])
 
 ###########################################################################
 ####### read user-specific requests from --enable directives         ######
 ###########################################################################
-dnl this macro is used to get the arguments supplied
-dnl to the configure script (./configure --enable-dialogs)
-dnl Check if we have enable dialogs support.
 AC_MSG_CHECKING(whether to enable dialogs)
 default="yes"
 NO_DIALOGS=
@@ -89,14 +73,6 @@ AC_CONFIG_SUBDIRS([common cardlayer pkcs11 xpi])
 
 if test "x$enable_dialogs" = "xyes"; then
 	AC_CONFIG_SUBDIRS([dialogs])
-fi
-
-if test "x$osx" = "xtrue" ; then
-	AC_CONFIG_SUBDIRS([dmg])
-fi
-
-if test "x$win32" = "xtrue" ; then
-	AC_CONFIG_SUBDIRS([minidriver sccertprop])
 fi
 
 AC_OUTPUT

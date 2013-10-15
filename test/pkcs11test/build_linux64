@@ -1,4 +1,0 @@
-#!/bin/sh
-make clean
-./configure --with-opensc=/home/frank/opensc-build/image
-make -j12
