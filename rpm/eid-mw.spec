@@ -99,9 +99,6 @@ fi
 %{_libdir}/libbeidcommon.so.*
 %{_libdir}/libbeiddialogs.so
 %{_libdir}/libbeidpkcs11.so.*
-%{_libdir}/libcardpluginbeid.so
-%{_libdir}/libcardpluginsis.so
-%{_libdir}/libcardpluginsis_acr38u.so
 %{_libexecdir}/beid-askaccess
 %{_libexecdir}/beid-askpin
 %{_libexecdir}/beid-badpin
