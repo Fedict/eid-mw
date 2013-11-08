@@ -60,8 +60,12 @@ protected:
 	CByteArray PinpadControl(unsigned long ulControl, const CByteArray & oCmd,
 		tPinOperation operation, unsigned char ucPintype,
 		const std::string & csPinLabel,	bool bShowDlg);
+	CByteArray PinpadPPDU(BYTE cbControl, const CByteArray & oCmd,
+		tPinOperation operation, unsigned char ucPintype,
+	const std::string & csPinLabel,	bool bShowDlg);
 	void UnloadPinpadLib();
 	void GetFeatureList();
+	void GetPPDUFeatureList();
 	unsigned long GetLanguage();
 	unsigned char PinOperation2Lib(tPinOperation operation);
 
@@ -98,6 +102,7 @@ protected:
 	unsigned long m_ioctlChangeStart;
 	unsigned long m_ioctlChangeFinish;
 	unsigned long m_ioctlChangeDirect;
+	bool m_bCanUsePPDU;
 };
 
 }
