@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2012 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -79,6 +79,7 @@ typedef struct _FEATURES
 	DWORD MODIFY_PIN_DIRECT;
 	DWORD ABORT;
 	DWORD GET_KEY_PRESSED;
+	DWORD USE_PPDU;
 } FEATURES, *PFEATURES;
 
 extern DWORD BeidGetCardSN

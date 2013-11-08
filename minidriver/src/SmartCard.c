@@ -420,20 +420,55 @@ DWORD BeidAuthenticateExternal(
 			if (!bSilent)
 				DialogThreadHandle = CreateThread(NULL, 0, DialogThreadPinEntry, &externalPinInfo, 0, NULL);
 
-			dwReturn = SCardControl(pCardData->hScard, 
-				externalPinInfo.features.VERIFY_PIN_DIRECT, 
-				&verifyCommand, 
-				uiCmdLg,                              
-				recvbuf, 
-				recvlen,
-				&recvlen);
-
-			LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
-			externalPinInfo.cardState = CS_PINENTERED;
-			if ( dwReturn != SCARD_S_SUCCESS )
+			if(externalPinInfo.features.USE_PPDU == 0)
 			{
-				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
-				CLEANUP(dwReturn);
+				dwReturn = SCardControl(pCardData->hScard, 
+					externalPinInfo.features.VERIFY_PIN_DIRECT, 
+					&verifyCommand, 
+					uiCmdLg,                              
+					recvbuf, 
+					recvlen,
+					&recvlen);
+
+				LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
+				externalPinInfo.cardState = CS_PINENTERED;
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
+					CLEANUP(dwReturn);
+				}
+			}
+			else{
+				BYTE pbSendBufferVerifyPINDirect[256];// = {0xFF ,0xC2 ,0x01 ,0x06 , 0x00};
+				BYTE bSendBufferVerifyPINDirectLength = 5;
+
+				pbSendBufferVerifyPINDirect[0] = 0xFF;
+				pbSendBufferVerifyPINDirect[1] = 0xC2;
+				pbSendBufferVerifyPINDirect[2] = 0x01;
+				pbSendBufferVerifyPINDirect[3] = 0x06;
+				pbSendBufferVerifyPINDirect[4] = sizeof(verifyCommand);				
+
+				if(sizeof(verifyCommand) < (sizeof(pbSendBufferVerifyPINDirect)+5) )
+				{
+					memcpy(&pbSendBufferVerifyPINDirect[5],&verifyCommand,sizeof(verifyCommand));
+					bSendBufferVerifyPINDirectLength += sizeof(verifyCommand);
+				}
+				dwReturn = SCardTransmit(pCardData->hScard, 
+					&ioSendPci, 
+					pbSendBufferVerifyPINDirect, 
+					bSendBufferVerifyPINDirectLength, 
+					&ioRecvPci, 
+					recvbuf, 
+					&recvlen);	
+
+				LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit PPDU return code: [0x%08X]", dwReturn);
+				externalPinInfo.cardState = CS_PINENTERED;
+				if ( dwReturn != SCARD_S_SUCCESS )
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit PPDU errorcode: [0x%08X]", dwReturn);
+					CLEANUP(dwReturn);
+				}
+
 			}
 		}
 		else
@@ -1729,6 +1764,53 @@ cleanup:
 
 /****************************************************************************************************/
 
+/****************************************************************************************************/
+
+#define WHERE "CCIDgetPPDUFeatures"
+DWORD CCIDgetPPDUFeatures(PFEATURES pFeatures, SCARDHANDLE hCard)
+{
+	DWORD             dwReturn = SCARD_S_SUCCESS;
+	SCARD_IO_REQUEST  ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
+  SCARD_IO_REQUEST  ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
+	BYTE pbRecvBuffer[200];
+	DWORD cbRecvLength = sizeof(pbRecvBuffer);
+
+	BYTE Cmd[] = {0xFF ,0xC2 ,0x01 ,0x00 , 0x00};
+	DWORD uiCmdLg = sizeof(Cmd);
+
+	dwReturn = SCardTransmit(hCard, 
+                            &ioSendPci, 
+                            Cmd, 
+                            uiCmdLg, 
+                            &ioRecvPci, 
+                            pbRecvBuffer, 
+                            &cbRecvLength);
+
+	LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetPPDUFeatures returncode: [0x%08X]", dwReturn);
+	if(dwReturn == SCARD_S_SUCCESS)
+	{
+		if ( (pbRecvBuffer[cbRecvLength-2] == 0x90) && (pbRecvBuffer[cbRecvLength-1] == 0x00) )
+		{
+			BYTE bsupportedFeatureIndex = 0;
+			pFeatures->USE_PPDU = 1;
+			for( bsupportedFeatureIndex = 0;bsupportedFeatureIndex < (cbRecvLength -2);bsupportedFeatureIndex++ )
+			{
+				switch(pbRecvBuffer[bsupportedFeatureIndex])
+				{
+				case 0x06:
+					pFeatures->VERIFY_PIN_DIRECT = 1;
+					break;
+				default:
+					break;
+				}
+			}//end of for
+		}
+		dwReturn = SCARD_F_INTERNAL_ERROR;
+	}
+	return dwReturn;
+}
+#undef WHERE
+
 /* CCID Features */
 #define WHERE "CCIDfindFeature"
 DWORD CCIDfindFeature(BYTE featureTag, BYTE* features, DWORD featuresLength) {
@@ -1768,6 +1850,7 @@ DWORD CCIDgetFeatures(PFEATURES pFeatures, SCARDHANDLE hCard) {
 	pFeatures->MODIFY_PIN_DIRECT = 0;
 	pFeatures->GET_KEY_PRESSED = 0;
 	pFeatures->ABORT = 0;
+	pFeatures->USE_PPDU = 0;
 
 	dwReturn = SCardControl(hCard, 
 		SCARD_CTL_CODE(3400),
@@ -1778,8 +1861,11 @@ DWORD CCIDgetFeatures(PFEATURES pFeatures, SCARDHANDLE hCard) {
 		&dwRecvLength);
 	LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetFeatures returncode: [0x%08X]", dwReturn);
 	if ( SCARD_S_SUCCESS != dwReturn ) {
-		LogTrace(LOGTYPE_ERROR, WHERE, "CCIDgetFeatures errorcode: [0x%08X]", dwReturn);
-        CLEANUP(dwReturn);
+		dwReturn = CCIDgetPPDUFeatures(pFeatures,hCard);
+		if ( SCARD_S_SUCCESS != dwReturn ){
+			LogTrace(LOGTYPE_ERROR, WHERE, "CCIDgetFeatures errorcode: [0x%08X]", dwReturn);		
+		}
+		CLEANUP(dwReturn);
 	}
 	pFeatures->VERIFY_PIN_START = CCIDfindFeature(FEATURE_VERIFY_PIN_START, pbRecvBuffer, dwRecvLength);
 	pFeatures->VERIFY_PIN_FINISH = CCIDfindFeature(FEATURE_VERIFY_PIN_FINISH, pbRecvBuffer, dwRecvLength);
