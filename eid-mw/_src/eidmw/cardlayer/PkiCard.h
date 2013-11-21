@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -93,8 +93,14 @@ protected:
         unsigned long ulInputLen) = 0;
     virtual CByteArray SignInternal(const tPrivKey & key, unsigned long algo,
         const CByteArray & oData, const tPin *pPin = NULL) = 0;
-
+	virtual CByteArray CPkiCard::VerifyAndSign(const tPrivKey & key, const tPin & Pin,
+        unsigned long algo, const CByteArray & oData);
+	virtual void CPkiCard::AskPin(tPinOperation operation, const tPin & Pin,
+        std::string & csPin1, std::string & csPin2, const tPrivKey *pKey);
+	virtual bool CPkiCard::AskPinRetry(tPinOperation operation, const tPin & Pin,
+        unsigned long ulRemaining, const tPrivKey *pKey);
 	tSelectAppletMode m_selectAppletMode;
+	unsigned long m_ulRemaining;
 };
 
 }
