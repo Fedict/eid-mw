@@ -372,8 +372,8 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 		if (algos & SIGN_ALGO_SHA384_RSA_PKCS)    *pulCount +=1;
 		if (algos & SIGN_ALGO_SHA512_RSA_PKCS)    *pulCount +=1;
 		if (algos & SIGN_ALGO_RIPEMD160_RSA_PKCS) *pulCount +=1;
-		if (algos & SIGN_ALGO_SHA1_RSA_PSS)       *pulCount +=1;
-		if (algos & SIGN_ALGO_SHA256_RSA_PSS)     *pulCount +=1;
+		if (algos & SIGN_ALGO_SHA1_RSA_PSS)				*pulCount +=1;
+		if (algos & SIGN_ALGO_SHA256_RSA_PSS)			*pulCount +=1;
 		return (CKR_OK);
 	}
 
@@ -1388,8 +1388,8 @@ int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsi
 		case CKM_SHA512_RSA_PKCS:        algo = SIGN_ALGO_SHA512_RSA_PKCS;     break;
 		case CKM_RIPEMD160:
 		case CKM_RIPEMD160_RSA_PKCS:     algo = SIGN_ALGO_RIPEMD160_RSA_PKCS;  break;
-		case CKM_SHA1_RSA_PKCS_PSS:      algo = SIGN_ALGO_SHA1_RSA_PSS;        break;
-		case CKM_SHA256_RSA_PKCS_PSS:    algo = SIGN_ALGO_SHA256_RSA_PSS;      break;
+		case CKM_SHA1_RSA_PKCS_PSS:			 algo = SIGN_ALGO_SHA1_RSA_PSS;					break;
+		case CKM_SHA256_RSA_PKCS_PSS:    algo = SIGN_ALGO_SHA256_RSA_PSS;				break;
 		default: 
 			ret = CKR_MECHANISM_INVALID;
 			goto cleanup;            
@@ -1867,11 +1867,14 @@ CK_RV cal_wait_for_slot_event(int block)
 	return ret;
 }
 
-#define WHERE "cal_wait_for_slot_event()"
+#define WHERE "cal_wait_for_the_slot_event()"
 CK_RV cal_wait_for_the_slot_event(int block)
 {
 	SCARD_READERSTATEA txReaderStates[MAX_READERS];
 	CK_RV ret = CKR_OK;
+#ifdef PKCS11_FF
+	long lret = SCARD_E_TIMEOUT;
+#endif
 	unsigned long ulnReaders = 0;
 
 	memset(txReaderStates,0,sizeof(txReaderStates));
@@ -1881,7 +1884,14 @@ CK_RV cal_wait_for_the_slot_event(int block)
 	{
 		if (block){
 			p11_unlock();
+#ifdef PKCS11_FF
+			while( (p11_get_init() == BEIDP11_INITIALIZED) && (lret == SCARD_E_TIMEOUT) )
+			{
+				lret = oCardLayer->GetStatusChange(TIMEOUT_POLL,txReaderStates,ulnReaders);
+			}
+#else 
 			oCardLayer->GetStatusChange(TIMEOUT_INFINITE,txReaderStates,ulnReaders);
+#endif
 			log_trace(WHERE, "I: status change received");
 			ret = p11_lock();
 			if(p11_get_init() != BEIDP11_INITIALIZED)

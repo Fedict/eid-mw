@@ -1,6 +1,6 @@
 /* ****************************************************************************
 * eID Middleware Project.
-* Copyright (C) 2008-2009 FedICT.
+* Copyright (C) 2008-2013 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -43,6 +43,18 @@
 /** Bad usage of a class or function */
 #define EIDMW_ERR_BAD_USAGE            0xe1d00106
 
+/** wrong length */
+#define EIDMW_ERR_LEN_BAD			   0xe1d00107
+
+/** Condition of use not satisfied */
+#define EIDMW_ERR_BAD_COND             0xe1d00108
+
+/** Command not available within current lifecycle */
+#define EIDMW_ERR_CMD_NOT_AVAIL        0xe1d00109
+
+/** Wrong class byte */
+#define EIDMW_ERR_CLASS_BAD            0xe1d0010A
+
 
 // Card errors
 
@@ -78,6 +90,12 @@
 
 /** Card not activated */
 #define EIDMW_ERR_NOT_ACTIVATED        0xe1d0020A
+
+/** EEPROM corrupted */
+#define EIDMW_ERR_EEPROM               0xe1d0020B
+
+/** no precise diagnostic */
+#define EIDMW_ERR_NOT_SPEC             0xe1d0020C
 
 
 // Reader errors
@@ -270,7 +288,7 @@
 #define EIDMW_ERR_USER_MUST_ANSWER		0xe1d00b0D
 
 /** User did not yet allow or disallow to read the card */
-#define EIDMW_ERR_CANCELLED 0xe1d00b0E
+#define EIDMW_ERR_CANCELLED				0xe1d00b0E
 // Errors in system calls
 
 /** a system call returned an error */

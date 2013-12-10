@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -83,6 +83,7 @@ typedef enum
 } tCardStatus;
 
 const unsigned long TIMEOUT_INFINITE = 0xFFFFFFFF; // used in CCardLayer::GetStatusChange()
+const unsigned long TIMEOUT_POLL = 0x000001F4; // used in CCardLayer::GetStatusChange(), timeout in ms
 
 const unsigned long ALL_READERS = 0xFFFFFFFF; // used in CCardLayer::GetStatusChange()
 

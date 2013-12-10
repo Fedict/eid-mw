@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -114,7 +114,7 @@ public:
 	/* capture all status changes into txReaderStates
 	 * (a call to SCardGetStatusChange)
 	 */
-	void GetStatusChange(unsigned long ulTimeout,
+	long GetStatusChange(unsigned long ulTimeout,
 															 SCARD_READERSTATEA *txReaderStates,
 															 unsigned long ulReaderCount);
 
