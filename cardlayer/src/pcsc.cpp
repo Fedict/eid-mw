@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2010-2012 FedICT.
+* Copyright (C) 2010-2013 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -524,6 +524,12 @@ long CPCSC::SW12ToErr(unsigned long ulSW12)
 	case 0x6A86: lRet = EIDMW_ERR_BAD_P1P2; break;
 	case 0x6986: lRet = EIDMW_ERR_CMD_NOT_ALLOWED; break;
 	case 0x6A82: lRet = EIDMW_ERR_FILE_NOT_FOUND; break;
+	case 0x6400: lRet = EIDMW_ERR_NOT_AUTHENTICATED; break;
+	case 0x6581: lRet = EIDMW_ERR_EEPROM; break;
+	case 0x6700: lRet = EIDMW_ERR_LEN_BAD; break;
+	case 0x6985: lRet = EIDMW_ERR_BAD_COND; break;
+	case 0x6D00: lRet = EIDMW_ERR_CMD_NOT_AVAIL; break;
+	case 0x6E00: lRet = EIDMW_ERR_CLASS_BAD; break;
 	}
 
 	return lRet;
@@ -573,7 +579,7 @@ long CPCSC::PcscToErr(unsigned long lPcscErr)
 	return lRet;
 }
 
-void CPCSC::GetTheStatusChange(unsigned long ulTimeout,
+long CPCSC::GetTheStatusChange(unsigned long ulTimeout,
 															 SCARD_READERSTATEA *txReaderStates,
 															 unsigned long ulReaderCount)
 {
@@ -590,7 +596,7 @@ void CPCSC::GetTheStatusChange(unsigned long ulTimeout,
 	}
 	while( (lRet == SCARD_E_TIMEOUT)&&(ulTimeout == TIMEOUT_INFINITE) );
 
-	return;
+	return lRet;
 }
 
 }//end namespace

@@ -1873,6 +1873,9 @@ CK_RV cal_wait_for_the_slot_event(int block)
 {
 	SCARD_READERSTATEA txReaderStates[MAX_READERS];
 	CK_RV ret = CKR_OK;
+#ifdef PKCS11_FF
+	long lret = SCARD_E_TIMEOUT;
+#endif
 	unsigned long ulnReaders = 0;
 
 	memset(txReaderStates,0,sizeof(txReaderStates));
@@ -1882,7 +1885,14 @@ CK_RV cal_wait_for_the_slot_event(int block)
 	{
 		if (block){
 			p11_unlock();
+#ifdef PKCS11_FF
+			while( (p11_get_init() == BEIDP11_INITIALIZED) && (lret == SCARD_E_TIMEOUT) )
+			{
+				lret = oCardLayer->GetStatusChange(TIMEOUT_POLL,txReaderStates,ulnReaders);
+			}
+#else 
 			oCardLayer->GetStatusChange(TIMEOUT_INFINITE,txReaderStates,ulnReaders);
+#endif
 			log_trace(WHERE, "I: status change received");
 			ret = p11_lock();
 			if(p11_get_init() != BEIDP11_INITIALIZED)

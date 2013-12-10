@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2012 FedICT.
+ * Copyright (C) 2008-2013 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -117,7 +117,7 @@ public:
 
 	//created a new function for pkcs11, as we don't want to change the CSP's behaviour
 	//this is temporary, pkcs11 will move away from using this cardlayer
-	void GetTheStatusChange(unsigned long ulTimeout,
+	long GetTheStatusChange(unsigned long ulTimeout,
 															 SCARD_READERSTATEA *txReaderStates,
 															 unsigned long ulReaderCount);
 
