@@ -362,9 +362,11 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	}
 
 	/* init search operation */
-	if((pData = pSession->Operation[P11_OPERATION_FIND].pData) == NULL)
+	pData = (P11_FIND_DATA *)pSession->Operation[P11_OPERATION_FIND].pData;
+	if(pData == NULL)
 	{
-		pData = pSession->Operation[P11_OPERATION_FIND].pData = (P11_FIND_DATA *) malloc (sizeof(P11_FIND_DATA));
+		pSession->Operation[P11_OPERATION_FIND].pData = (P11_FIND_DATA *) malloc (sizeof(P11_FIND_DATA));
+		pData = (P11_FIND_DATA *)pSession->Operation[P11_OPERATION_FIND].pData;
 		if (pData == NULL)
 		{
 			log_trace( WHERE, "E: error allocating memory");
