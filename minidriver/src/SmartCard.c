@@ -1775,6 +1775,30 @@ DWORD CCIDgetPPDUFeatures(PFEATURES pFeatures, SCARDHANDLE hCard)
 	BYTE pbRecvBuffer[200];
 	DWORD cbRecvLength = sizeof(pbRecvBuffer);
 
+	wchar_t szReaderName[1024];
+	DWORD dwReaderLen = 1024;
+	DWORD dwState;
+	DWORD dwProtocol;
+	BYTE bAttribute[32];
+	DWORD dwAtrLen;
+
+dwReturn = SCardStatus( hCard, 
+  szReaderName, 
+  &dwReaderLen, 
+  &dwState, 
+  &dwProtocol, 
+  &bAttribute[0], 
+  &dwAtrLen 
+);
+
+
+if( (dwReaderLen > 1024) || dwReturn != SCARD_S_SUCCESS)
+{
+	return dwReturn;
+}
+//add friendlynames of readers that support PPDU over transmit here
+if(_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"VASCO DIGIPASS 870",wcslen(L"VASCO DIGIPASS 870"))==0)
+{
 	BYTE Cmd[] = {0xFF ,0xC2 ,0x01 ,0x00 , 0x00};
 	DWORD uiCmdLg = sizeof(Cmd);
 
@@ -1807,6 +1831,7 @@ DWORD CCIDgetPPDUFeatures(PFEATURES pFeatures, SCARDHANDLE hCard)
 		}
 		dwReturn = SCARD_F_INTERNAL_ERROR;
 	}
+}
 	return dwReturn;
 }
 #undef WHERE
