@@ -437,18 +437,23 @@ namespace eIDMW
 		unsigned char cmd[] = {0xFF,0xC2,0x01,0x00,0x00};
 		CByteArray oCmd(cmd,sizeof(cmd));
 
-		oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd, &lRetVal);
-		for(;counter<(oResp.Size()-2);counter++)
-		{
-			switch(oResp.GetByte(counter))
-			{
-			case 0x06:
-				m_ioctlVerifyDirect = true;
-				m_bCanUsePPDU = true;
-				break;
+		//add friendlynames of readers that support PPDU over transmit here
 
-			default:
-				break;
+		if (StartsWith(m_csReader.c_str(), "VASCO DIGIPASS 870"))
+		{
+			oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd, &lRetVal);
+			for(;counter<(oResp.Size()-2);counter++)
+			{
+				switch(oResp.GetByte(counter))
+				{
+				case 0x06:
+					m_ioctlVerifyDirect = true;
+					m_bCanUsePPDU = true;
+					break;
+
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -495,33 +500,33 @@ namespace eIDMW
 	}
 }
 
-	/**************************** logs *******************
+/**************************** logs *******************
 
-	1. SPR532 (driver 2.14_2.11, firmware 5.05)
+1. SPR532 (driver 2.14_2.11, firmware 5.05)
 
-	Verify:
-	1E 1E 01 47 04 08 04 02 01 CD CD 00 00 00 00 0D
-	00 00 00 00 20 00 01 08 20 FF FF FF FF FF FF FF
+Verify:
+1E 1E 01 47 04 08 04 02 01 CD CD 00 00 00 00 0D
+00 00 00 00 20 00 01 08 20 FF FF FF FF FF FF FF
 
-	Change:
-	1E 1E 01 47 04 00 08 0C 04 03 02 03 CD CD 00 00
-	00 00 00 00 15 00 00 00 00 24 00 01 10 20 FF FF
-	FF FF FF FF FF 20 FF FF FF FF FF FF FF
+Change:
+1E 1E 01 47 04 00 08 0C 04 03 02 03 CD CD 00 00
+00 00 00 00 15 00 00 00 00 24 00 01 10 20 FF FF
+FF FF FF FF FF 20 FF FF FF FF FF FF FF
 
-	Note: bmFormatString must be 01 (instead of 89) !!!
+Note: bmFormatString must be 01 (instead of 89) !!!
 
 
-	2. GemPC pinpad
+2. GemPC pinpad
 
-	Verify:
-	1E 1E 89 47 04 08 04 02 01 CD CD 00 00 00 00 0D
-	00 00 00 00 20 00 01 08 20 FF FF FF FF FF FF FF
+Verify:
+1E 1E 89 47 04 08 04 02 01 CD CD 00 00 00 00 0D
+00 00 00 00 20 00 01 08 20 FF FF FF FF FF FF FF
 
-	Change:
-	1E 1E 89 47 04 00 08 08 04 03 02 03 CD CD 00 00
-	00 00 00 00 15 00 00 00 00 24 00 01 10 20 FF FF
-	FF FF FF FF FF 20 FF FF FF FF FF FF FF
-	00
-	Note: wPINMaxExtraDigit[0] must be at most 8 (instead of 12) !!
+Change:
+1E 1E 89 47 04 00 08 08 04 03 02 03 CD CD 00 00
+00 00 00 00 15 00 00 00 00 24 00 01 10 20 FF FF
+FF FF FF FF FF 20 FF FF FF FF FF FF FF
+00
+Note: wPINMaxExtraDigit[0] must be at most 8 (instead of 12) !!
 
-	******************************************************/
+******************************************************/
