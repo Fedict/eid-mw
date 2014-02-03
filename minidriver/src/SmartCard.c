@@ -1790,7 +1790,7 @@ dwReturn = SCardStatus( hCard,
   &bAttribute[0], 
   &dwAtrLen 
 );
-
+Sleep(25);//BeidDelayAndRecover
 
 if( (dwReaderLen > 1024) || dwReturn != SCARD_S_SUCCESS)
 {
@@ -1809,7 +1809,7 @@ if(_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"VASCO DIGIPASS 870",wcslen
                             &ioRecvPci, 
                             pbRecvBuffer, 
                             &cbRecvLength);
-
+	Sleep(25);//BeidDelayAndRecover
 	LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetPPDUFeatures returncode: [0x%08X]", dwReturn);
 	if(dwReturn == SCARD_S_SUCCESS)
 	{
@@ -1885,6 +1885,8 @@ DWORD CCIDgetFeatures(PFEATURES pFeatures, SCARDHANDLE hCard) {
 		sizeof(pbRecvBuffer),
 		&dwRecvLength);
 	LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetFeatures returncode: [0x%08X]", dwReturn);
+   //BeidDelayAndRecover(hCard, pbRecvBuffer[dwRecvLength-2], pbRecvBuffer[dwRecvLength-1], dwReturn);
+	Sleep(25);//BeidDelayAndRecover when its changed to accept hCard
 	if ( SCARD_S_SUCCESS != dwReturn ) {
 		dwReturn = CCIDgetPPDUFeatures(pFeatures,hCard);
 		if ( SCARD_S_SUCCESS != dwReturn ){
