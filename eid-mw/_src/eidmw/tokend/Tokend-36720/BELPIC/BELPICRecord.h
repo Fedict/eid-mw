@@ -99,7 +99,7 @@ class BELPICKeyRecord : public BELPICRecord
 	NOCOPY(BELPICKeyRecord)
 public:
 	BELPICKeyRecord(const uint8_t *keyId, const char *description,
-		const Tokend::MetaRecord &metaRecord, bool signOnly);
+		const Tokend::MetaRecord &metaRecord, bool signOnly, bool PPDU);
     virtual ~BELPICKeyRecord();
 
 	size_t sizeInBits() const { return 1024; }
@@ -112,6 +112,7 @@ public:
 private:
 	const uint8_t *mKeyId;
 	bool mSignOnly;
+    bool mPPDU;
 	AutoAclEntryInfoList mAclEntries;
 };
 

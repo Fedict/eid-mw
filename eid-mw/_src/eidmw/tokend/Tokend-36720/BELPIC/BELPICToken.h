@@ -77,8 +77,10 @@ public:
 	static int usleep(int iTimeVal);
 	
 protected:
+    bool mPPDU;
 	uint8_t pinDigit(uint8_t digit);
 	void populate();
+    void checkPPDUSupport();
 
 public:
 	const uint8_t *mCurrentDF;

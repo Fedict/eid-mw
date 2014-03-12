@@ -37,6 +37,12 @@
 #include <map>
 #include <vector>
 
+//#include <CoreFoundation/CFNumber.h>//fve
+//#include <CoreFoundation/CFUserNotification.h>//fve
+
+//#include <Carbon/Carbon.h>
+
+
 using CssmClient::AclFactory;
 
 #define INTER_COMMAND_DELAY	10000	// delay in microseconds between commands
@@ -435,45 +441,85 @@ void BELPICToken::verifyPIN(int pinNum, const uint8_t *pin, size_t pinLength)
 	_verifyPIN(pinNum, pin, pinLength);
 	// Start a new transaction which we never get rid of until someone calls
 	// unverifyPIN()
-	// sbegin();
+	//begin();
 }
 
 void BELPICToken::_verifyPIN(int pinNum, const uint8_t *pin, size_t pinLength)
 {
-	if (pinNum < 1 || pinNum > 3)
-		CssmError::throwMe(CSSM_ERRCODE_SAMPLE_VALUE_NOT_SUPPORTED);
-
-	if (pinLength < BELPIC_MIN_PIN_LEN || pinLength > BELPIC_MAX_PIN_LEN)
-		CssmError::throwMe(CSSM_ERRCODE_INVALID_SAMPLE_VALUE);
-
 	PCSC::Transaction _(*this);
+	unsigned char result[MAX_BUFFER_SIZE];
+	size_t resultLength = sizeof(result);
+
+    if (mPPDU == true)
+    {
+        uint8_t ppdu_featurelist[] = {0xFF,0xC2,0x01,0x00,0x00};
+        
+        uint8_t ppdu_verifydirect[] = {0xFF,0xC2,0x01,0x06,0x20,
+            0x1E,0x1E,0x89,0x47,0x04,0x0c,0x04,0x02,0x01,0x08,
+            0x13,0x00,0x00,0x00,0x00,0x0D,0x00,0x00,0x00,0x00,
+            0x20,0x00,0x01,0x08,0x20,0xFF,0xFF,0xFF,0xFF,0xFF,
+            0xFF,0xFF };
+        
+        size_t counter =0;
+        bool ioctlVerifyDirect = false;
+        
+        mPinStatus = exchangeAPDU(ppdu_featurelist, sizeof(ppdu_featurelist), result, resultLength);
+        BELPICError::check(mPinStatus);
+        for(;counter<(resultLength-2);counter++)
+        {
+            switch(result[counter])
+            {
+				case 0x06:
+					ioctlVerifyDirect = true;
+					break;
+                    
+				default:
+					break;
+            }
+        }
+        
+        if (ioctlVerifyDirect == true)
+        {
+            resultLength = sizeof(result);
+            mPinStatus = exchangeAPDU(ppdu_verifydirect, sizeof(ppdu_verifydirect), result, resultLength);
+            BELPICError::check(mPinStatus);
+        }
+        
+    }
+    else{
+        if (pinNum < 1 || pinNum > 3)
+        	CssmError::throwMe(CSSM_ERRCODE_SAMPLE_VALUE_NOT_SUPPORTED);
+        
+        if (pinLength < BELPIC_MIN_PIN_LEN || pinLength > BELPIC_MAX_PIN_LEN)
+        	CssmError::throwMe(CSSM_ERRCODE_INVALID_SAMPLE_VALUE);
+        
 #ifdef USE_BUILTIN_PIN
-	uint8_t apdu[] =
+        uint8_t apdu[] =
 		{ 0x00, 0x20, 0x00, 0x01, 0x08, 0x24,
 			0x12, 0x34, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 #else
-	uint8_t apdu[] =
+        uint8_t apdu[] =
 		{ 0x00, 0x20, 0x00, uint8_t(pinNum), 0x08,
 			0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 
-	uint32_t offset = 5;
+        uint32_t offset = 5;
 
-	apdu[offset++] = 0x20 + pinLength;
-	for (uint32_t ix = 0; ix < pinLength;ix+=2)
-	{
-		apdu[offset++] = (pinDigit(pin[ix]) << 4) +
-			((ix+1) < pinLength ? pinDigit(pin[ix+1]) : pinDigit('F'));
-	}
+        apdu[offset++] = 0x20 + pinLength;
+        for (uint32_t ix = 0; ix < pinLength;ix+=2)
+        {
+            apdu[offset++] = (pinDigit(pin[ix]) << 4) +
+                ((ix+1) < pinLength ? pinDigit(pin[ix+1]) : pinDigit('F'));
+        }
 #endif
 
-	unsigned char result[MAX_BUFFER_SIZE];
-	size_t resultLength = sizeof(result);
 	mPinStatus = exchangeAPDU(apdu, sizeof(apdu), result, resultLength);
-	memset(apdu + 5, 0, 8);
+    memset(apdu + 5, 0, 8);
 	BELPICError::check(mPinStatus);
 	// Start a new transaction which we never get rid of until someone calls
 	// unverifyPIN()
 	// begin();
+    }
+ 
 }
 
 void BELPICToken::unverifyPIN(int pinNum)
@@ -481,7 +527,7 @@ void BELPICToken::unverifyPIN(int pinNum)
 	if (pinNum != -1)
 		CssmError::throwMe(CSSM_ERRCODE_SAMPLE_VALUE_NOT_SUPPORTED);
 
-	// end(SCARD_RESET_CARD);
+	//end(SCARD_RESET_CARD);
 }
 
 uint32 BELPICToken::probe(SecTokendProbeFlags flags,
@@ -510,20 +556,17 @@ uint32 BELPICToken::probe(SecTokendProbeFlags flags,
 			doDisconnect = true;
 		else
 		{
-			/* Zetes: return a higher score for the fixed tokend
-			 * (besides, '29' should be '0x29) */
 			// If the length is not an exact match only return a score of 100
-			score = (resultLength == 29) ? 200 : 100;
+			score = (resultLength == 0x29) ? 200 : 100;
 			// @@@ If the ATR matches one of the built in BELPIC ATR's we
 			// should probably return an even better score.
 			score = 300;
-			
 			// Setup the tokendUID
 			/* Zetes: change the tokendUID in order not to conflict with
 			 * the original tokend */
 			/*
-			memcpy(tokenUid, "BELPIC-", 7);
-			uint32_t offset = 7;
+             memcpy(tokenUid, "BELPIC-", 7);
+             uint32_t offset = 7;
 			 */
 			memcpy(tokenUid, "BEID-", 5);
 			uint32_t offset = 5;
@@ -583,34 +626,50 @@ void BELPICToken::getAcl(const char *tag, uint32 &count, AclEntryInfo *&acls)
 {
 	Allocator &alloc = Allocator::standard();
 
-	if (unsigned pin = pinFromAclTag(tag, "?")) {
-		static AutoAclEntryInfoList acl;
-		acl.clear();
-		acl.allocator(alloc);
-		uint32_t status = this->pinStatus(pin);
-		if (status == SCARD_SUCCESS)
-			acl.addPinState(pin, CSSM_ACL_PREAUTH_TRACKING_AUTHORIZED);
-		else
-			acl.addPinState(pin, CSSM_ACL_PREAUTH_TRACKING_UNKNOWN);
-		count = acl.size();
-		acls = acl.entries();
-		return;
-	}
-
-	// get pin list, then for each pin
-	if (!mAclEntries)
-	{
-		mAclEntries.allocator(alloc);
+    if(mPPDU)
+    {
+        mAclEntries.allocator(alloc);
         // Anyone can read the attributes and data of any record on this token
         // (it's further limited by the object itself).
 		mAclEntries.add(CssmClient::AclFactory::AnySubject(
+                                                           mAclEntries.allocator()),
+                        AclAuthorizationSet(CSSM_ACL_AUTHORIZATION_DB_READ, 0));
+        // PIN will be handled by the cardreader
+        mAclEntries.addPin(AclFactory::AnySubject(alloc),1);
+    
+    }
+    else
+    {
+        if (unsigned pin = pinFromAclTag(tag, "?"))
+        {
+            static AutoAclEntryInfoList acl;
+            acl.clear();
+            acl.allocator(alloc);
+            uint32_t status = this->pinStatus(pin);
+            if (status == SCARD_SUCCESS)
+                acl.addPinState(pin, CSSM_ACL_PREAUTH_TRACKING_AUTHORIZED);
+            else
+                acl.addPinState(pin, CSSM_ACL_PREAUTH_TRACKING_UNKNOWN);
+            count = acl.size();
+            acls = acl.entries();
+            return;
+        }
+
+        // get pin list, then for each pin
+        if (!mAclEntries)
+        {
+            mAclEntries.allocator(alloc);
+            // Anyone can read the attributes and data of any record on this token
+            // (it's further limited by the object itself).
+            mAclEntries.add(CssmClient::AclFactory::AnySubject(
 			mAclEntries.allocator()),
 			AclAuthorizationSet(CSSM_ACL_AUTHORIZATION_DB_READ, 0));
-        // We support PIN1 with either a passed in password
-        // subject or a prompted password subject.
-		mAclEntries.addPin(AclFactory::PWSubject(alloc), 1);
-		mAclEntries.addPin(AclFactory::PromptPWSubject(alloc, CssmData()), 1);
-	}
+            // We support PIN1 with either a passed in password
+            // subject or a prompted password subject.
+            mAclEntries.addPin(AclFactory::PWSubject(alloc), 1);
+            mAclEntries.addPin(AclFactory::PromptPWSubject(alloc, CssmData()), 1);
+        }
+    }
 	count = mAclEntries.size();
 	acls = mAclEntries.entries();
 }
@@ -648,17 +707,13 @@ void BELPICToken::populate()
 	/*
 	certRelation.insertRecord(cert8);
 	 */
-	
+	checkPPDUSupport();
+    
 	/* Zetes: better names for the private keys */
-	/* RefPointer<Tokend::Record> key2(new BELPICKeyRecord(kPrK2_Id,
-		"PrK#2 (authentication)", privateKeyRelation.metaRecord(), true));
-	RefPointer<Tokend::Record> key3(new BELPICKeyRecord(kPrK3_Id,
-		"PrK#3 (signature)", privateKeyRelation.metaRecord(), true));
-	 */
 	RefPointer<Tokend::Record> key2(new BELPICKeyRecord(kPrK2_Id,
-														"Authentication key", privateKeyRelation.metaRecord(), true));
+		"Authentication key", privateKeyRelation.metaRecord(), true, mPPDU));
 	RefPointer<Tokend::Record> key3(new BELPICKeyRecord(kPrK3_Id,
-														"Signature key", privateKeyRelation.metaRecord(), true));
+		"Signature key", privateKeyRelation.metaRecord(), true, mPPDU));
 	
 	privateKeyRelation.insertRecord(key2);
 	privateKeyRelation.insertRecord(key3);
@@ -667,7 +722,6 @@ void BELPICToken::populate()
 		new Tokend::LinkedRecordAdornment(cert2));
 	key3->setAdornment(mSchema->publicKeyHashCoder().certificateKey(),
 		new Tokend::LinkedRecordAdornment(cert3));
-	
 
 	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
 		kID_EF_ID_RN, "ID#RN"));
@@ -687,3 +741,13 @@ void BELPICToken::populate()
 	secdebug("populate", "BELPICToken::populate() end");
 }
 
+void BELPICToken::checkPPDUSupport()
+{
+    mPPDU = false;
+    if( (strncmp(this->startupReaderInfo()->szReader, "Vasco DP870", sizeof("Vasco DP870")-1) == 0) ||
+        (strncmp(this->startupReaderInfo()->szReader, "Vasco DP875", sizeof("Vasco DP875")-1) == 0) ||
+        (strncmp(this->startupReaderInfo()->szReader, "Vasco DP920", sizeof("Vasco DP920")-1) == 0) )
+    {
+        mPPDU = true;
+    }
+}

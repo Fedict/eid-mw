@@ -34,6 +34,7 @@
 #include <Security/SecCertificate.h>
 #include <Security/SecKeychainItem.h>
 #include <Security/SecKey.h>
+#include <Security/SecKeychain.h>
 
 using namespace Tokend;
 
@@ -78,7 +79,7 @@ Tokend::Relation *BELPICSchema::createKeyRelation(CSSM_DB_RECORDTYPE keyType)
 	mr.attributeCoder(kSecKeyDerive, &mFalseCoder);
 	mr.attributeCoder(kSecKeySignRecover, &mFalseCoder);
 	mr.attributeCoder(kSecKeyVerifyRecover, &mFalseCoder);
-
+    
 	return rn;
 }
 
