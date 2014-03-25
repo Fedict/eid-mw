@@ -439,7 +439,9 @@ namespace eIDMW
 
 		//add friendlynames of readers that support PPDU over transmit here
 
-		if (StartsWith(m_csReader.c_str(), "VASCO DIGIPASS 870"))
+		if( (StartsWith(m_csReader.c_str(), "VASCO DIGIPASS 870")) ||
+			(StartsWith(m_csReader.c_str(), "VASCO DIGIPASS 875")) ||
+			(StartsWith(m_csReader.c_str(), "VASCO DIGIPASS 920")) )
 		{
 			oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd, &lRetVal);
 			for(;counter<(oResp.Size()-2);counter++)
