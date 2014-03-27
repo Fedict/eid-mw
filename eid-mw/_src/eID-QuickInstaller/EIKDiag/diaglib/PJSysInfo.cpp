@@ -280,25 +280,33 @@ CPJOSProduct CPJSysInfo::GetOSProductEnum() {
     switch (this->_OSV.dwPlatformId) {
       case VER_PLATFORM_WIN32_NT: {
         // We have an NT OS
-        if (this->_OSV.dwMajorVersion <= 4) 
-          Result = osWinNT;
-        else if ((this->_OSV.dwMajorVersion == 5) && (this->_OSV.dwMinorVersion == 0))
-          Result = osWin2K;
-        else if ((this->_OSV.dwMajorVersion == 5) && (this->_OSV.dwMinorVersion == 1))
-          Result = osWinXP;
-        else if ((this->_OSV.dwMajorVersion == 5) && (this->_OSV.dwMinorVersion == 2))
-          Result = osWinSvr2003;
-        else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 0) && (this->_OSV.wProductType == 1))
-            Result = osWinVista;
-        else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 0) && (this->_OSV.wProductType == 3))
-            Result = OsWin2008;
-		else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 1) && (this->_OSV.wProductType != VER_NT_WORKSTATION))
-            Result = OsWinSvr2008;
-		else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 1) && (this->_OSV.wProductType == VER_NT_WORKSTATION))
-            Result = osWin7;
-        else
-            Result = osUnknownWinNT; 
-        break;
+				if (this->_OSV.dwMajorVersion <= 4) 
+					Result = osWinNT;
+				else if ((this->_OSV.dwMajorVersion == 5) && (this->_OSV.dwMinorVersion == 0))
+					Result = osWin2K;
+				else if ((this->_OSV.dwMajorVersion == 5) && (this->_OSV.dwMinorVersion == 1))
+					Result = osWinXP;
+				else if ((this->_OSV.dwMajorVersion == 5) && (this->_OSV.dwMinorVersion == 2))
+					Result = osWinSvr2003;
+				else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 0) && (this->_OSV.wProductType == 1))
+					Result = osWinVista;
+				else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 0) && (this->_OSV.wProductType == 3))
+					Result = OsWin2008;
+				else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 1) && (this->_OSV.wProductType != VER_NT_WORKSTATION))
+					Result = OsWinSvr2008;
+				else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 1) && (this->_OSV.wProductType == VER_NT_WORKSTATION))
+					Result = osWin7;
+				else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 2) && (this->_OSV.wProductType != VER_NT_WORKSTATION))
+					Result = OsWinSvr2012;
+				else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 2) && (this->_OSV.wProductType == VER_NT_WORKSTATION))
+					Result = osWin8;
+				else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 3) && (this->_OSV.wProductType != VER_NT_WORKSTATION))
+					Result = OsWinSvr2012R2;
+				else if ((this->_OSV.dwMajorVersion == 6) && (this->_OSV.dwMinorVersion == 3) && (this->_OSV.wProductType == VER_NT_WORKSTATION))
+					Result = osWin8_1;
+				else
+					Result = osUnknownWinNT; 
+				break;
       }
       case VER_PLATFORM_WIN32_WINDOWS: {
         // We have a Win 95 line OS

@@ -998,14 +998,14 @@ bool ezInstaller::mInstallReaders() {
     for (it = driverParameters.begin(); it != driverParameters.end(); ++it) {
         string params = *it;
 #ifdef WIN32
-		if( myOS != "Windows 7")
+		if(( myOS != "Windows 7")&&( myOS != "Windows 8")&&( myOS != "Windows 8.1"))
 			scl.installDevice(params,myOS);
 #endif WIN32
     }
     Sleep(2000);
 
 #ifdef WIN32
-if( myOS == "Windows 7")
+if(( myOS == "Windows 7")||( myOS == "Windows 8")||( myOS == "Windows 8.1"))
 	{
 		// Wait for maximum 30 seconds for Windows device installers to complete
 		scl.IsDeviceInstallInprogress(30000);

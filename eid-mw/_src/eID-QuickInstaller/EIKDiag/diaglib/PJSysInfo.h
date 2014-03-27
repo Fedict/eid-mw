@@ -74,7 +74,11 @@ enum CPJOSProduct {
   osWinVista,
   OsWin2008,
   OsWinSvr2008,
-  osWin7			// Windows 7
+  osWin7,			// Windows 7
+	OsWinSvr2012,
+	OsWinSvr2012R2,
+	osWin8,			//Windows 8
+	osWin8_1			//Windows 8.1
 };
 
 // Lookup table of product names
@@ -92,10 +96,14 @@ static const char *cOSProductNames[] = {
     "Win32s",
     "Windows Server 2003",
     "Windows Vista",
-    "Windows 2008",
-	"Windows Server 2008",
-	"Windows 7"
-  };
+		"Windows 2008",
+		"Windows Server 2008",
+		"Windows 7",
+		"Windows 2012",
+		"Windows Server 2012R2",
+		"Windows 8",
+		"Windows 8.1"
+};
 
 
 /*{

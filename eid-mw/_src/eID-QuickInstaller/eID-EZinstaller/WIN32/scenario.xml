@@ -212,7 +212,7 @@
           <OperatingSystem>WINALL</OperatingSystem>
         </CheckOnOS>
         <DescriptionNl>Installeer drivers voor SPR532.</DescriptionNl>
-        <DescriptionFr>Installer le logiciel.</DescriptionFr>
+        <DescriptionFr>Installer le logiciel SPR532.</DescriptionFr>
         <ActionInfoNl/>
         <ActionInfoFr/>
         <InputParams>
@@ -223,7 +223,22 @@
         <RequiredValue RequiredValueType="STRING"/>
       </CheckProperty>
 
-      <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3111" CheckPropertyName="EXTRACTISSFILES">
+	  <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3111" CheckPropertyName="INSTALLDEVICE">
+        <CheckOnOS>
+          <OperatingSystem>WIN8</OperatingSystem>
+        </CheckOnOS>
+        <DescriptionNl>Installeer drivers voor ACS.</DescriptionNl>
+        <DescriptionFr>Installer le logiciel ACS.</DescriptionFr>
+        <ActionInfoNl/>
+        <ActionInfoFr/>
+        <InputParams>
+          <pathToDriverFiles>%FIRST_INF_FOLDER%</pathToDriverFiles>
+          <infFile>%FIRST_INF_FOLDER%\acsdrv.inf</infFile>
+        </InputParams>
+        <RequiredValue RequiredValueType="STRING"/>
+      </CheckProperty>
+	  
+      <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3112" CheckPropertyName="EXTRACTISSFILES">
         <CheckOnOS>
           <OperatingSystem>WINALL</OperatingSystem>
         </CheckOnOS>

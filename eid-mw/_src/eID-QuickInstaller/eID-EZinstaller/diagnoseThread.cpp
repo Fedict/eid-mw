@@ -57,6 +57,8 @@ void diagnoseThread::translateOsString(string* myOS) {
     else if ( *myOS == "Windows Vista") {*myOS = "VISTA";}
     else if ( *myOS == "Windows 2000") {*myOS = "WIN2000";}
 	else if ( *myOS == "Windows 7") {*myOS = "WIN7";}
+	else if ( *myOS == "Windows 8") {*myOS = "WIN8";}
+	else if ( *myOS == "Windows 8.1") {*myOS = "WIN8";}//we use no separate entry for Win8.1
 }
 
 void diagnoseThread::setPercentage(int int1) {
@@ -120,8 +122,6 @@ void diagnoseThread::UpdateWorstTestValue(const string Result, const string test
     if (Result == "INFO") {itestLevel = 1;}
     else if (Result == "WARNING") {itestLevel = 2;}
     else if (Result == "ERROR") {itestLevel = 3;}
-
-
 
     if (testLevel == "CATEGORY") {
         if (CategoryWorstTestResult == "INFO") {CurrentLevel = 1;}
@@ -623,7 +623,7 @@ LOGSTR(paramsAsString.c_str())
     else if (ElementName == QString("INSTALLDEVICE")) 
         {string myOS = ezw.GetExtraInfoItem(scl.getSystemInfo(""),"osProductName");
 		returnString = scl.installDevice(paramsAsString,myOS);
-		if( myOS != "Windows 7")
+		if(( myOS != "Windows 7")&&( myOS != "Windows 8")&&( myOS != "Windows 8.1"))
 			addDriverParams(paramsAsString);
 		}
     else if (ElementName == QString("ENUMERATEDEVICES")) 
@@ -778,12 +778,13 @@ void diagnoseThread::extractSCDrivers(QString inputXml) {
         string theOS = hdr->get_OS();
         if ( myOS == "Windows XP") {myOS = "XP";}
         else if ( myOS == "Windows Vista") {myOS = "VISTA";}
-        else if ( myOS == "Windows 2000") {myOS = "WIN2000";}
-		else if ( myOS == "Windows 7") {myOS = "WIN7";}
-
+        else if ( myOS == "Windows 2000") {myOS = "XP";}//install drivers that are also suitable for XP
+				else if ( myOS == "Windows 7") {myOS = "WIN7";}
+				else if ( myOS == "Windows 8") {myOS = "WIN8";}
+				else if ( myOS == "Windows 8.1") {myOS = "WIN8";}//get WIN8.1 drivers from the WIN8 folder
 
         char* data = zarch.ReadFileData(hdr->get_Filesize());
-        if (myOS == theOS) {
+        if ((myOS == theOS)||(theOS == "WINALL")) {
 
             ofstream ofs;
             string xfn = hdr->get_Filename();

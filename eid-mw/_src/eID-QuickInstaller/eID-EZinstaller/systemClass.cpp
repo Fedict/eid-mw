@@ -1358,7 +1358,7 @@ string systemClass::installDevice (string inputXml, string myOS){
 			bool retVal;
 
             string pathToInfFile = infFile;
-			if (myOS == "Windows 7")
+			if ((myOS == "Windows 7")||( myOS == "Windows 8")||( myOS == "Windows 8.1"))
 			{
 				bootreqd = false;
 				retVal = ud.PrepareDriver(pathToInfFile);
