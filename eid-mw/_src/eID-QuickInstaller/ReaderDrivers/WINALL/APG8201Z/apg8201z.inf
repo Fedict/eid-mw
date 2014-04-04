@@ -1,0 +1,93 @@
+; APG8201Z.INF
+; Copyright (c) 2013 Advanced Card Systems Ltd.
+
+[Version]
+DriverVer=03/06/2013,1.0.0.1
+Signature="$Windows NT$"
+Class=SmartCardReader
+ClassGuid={50DD5230-BA8A-11D1-BF5D-0000F805F530}
+Provider=%ACS%
+CatalogFile.NT=apg8201z.cat
+
+[SourceDisksNames]
+1 = %SourceDiskName%,,,""
+
+[SourceDisksFiles]
+apg8201z.sys  = 1
+apg8201zx64.sys = 1
+
+[DestinationDirs]
+ACS.Install.CopySYS.NTx86   = 12
+ACS.Install.CopySYS.NTamd64 = 12
+
+[Manufacturer]
+%ACS%=ACS,NTamd64
+
+; ================= APG8201 Reader =====================
+
+[ACS]
+%ACS.DeviceDesc% = ACS.Install, USB\VID_072F&PID_8202
+
+[ACS.NTamd64]
+%ACS.DeviceDesc% = ACS.Install, USB\VID_072F&PID_8202
+
+[ACS.Install.NTx86]
+AddReg    = ACS.Install.AddReg.NT
+CopyFiles = ACS.Install.CopySYS.NTx86
+
+[ACS.Install.NTamd64]
+AddReg    = ACS.Install.AddReg.NT
+CopyFiles = ACS.Install.CopySYS.NTamd64
+
+; ============= Windows 2000 and up =================
+
+[ACS.Install.AddReg.NT]
+HKR,,AdapterType, 0, "0100"
+HKR,,"VendorName",0,%Vendor%
+HKR,,"IFDName",0,%Reader%
+HKR,,"CardType",0,%CardType%
+HKR,,"SFDT",0,%SFDT%
+HKR,,"CardVoltage",0,%CardVoltage%
+HKLM,"Software\Microsoft\Cryptography\Calais\Readers",,,
+HKLM,"System\CurrentControlSet\Services\SCardSvr","Start", 0x00010001,2
+HKLM,"System\CurrentControlSet\Services\CertPropSvc","Start", 0x00010001,2
+
+[ACS.Install.CopySYS.NTx86]
+apg8201z.sys
+
+[ACS.Install.CopySYS.NTamd64]
+apg8201z.sys,apg8201zx64.sys
+
+[ACS.Install.NTx86.Services]
+AddService = APG8201Z, 2, ACS.Service, ACS.EventLog
+
+[ACS.Install.NTamd64.Services]
+AddService = APG8201Z, 2, ACS.Service, ACS.EventLog
+
+[ACS.Service]
+DisplayName     = %ACS.DeviceDesc%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\apg8201z.sys
+
+[ACS.EventLog]
+AddReg = ACS.AddEventLog.reg
+
+[ACS.AddEventLog.reg]
+HKR,, EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\drivers\apg8201z.sys"
+HKR,, TypesSupported,   0x00010001, 7
+
+; ================= Strings =====================
+
+[Strings]
+SourceDiskName  = "APG8201 USB Smart Card Reader Driver Installation Disk"
+Msft			= "Advanced Card Systems Ltd."
+ACS			    = "ACS"
+ACS.DeviceDesc	= "APG8201Z Smart Card Reader"
+ClassName 		= "Smart Card Readers"
+Vendor			= "ACS"
+Reader			= "APG8201Z"
+CardType		= 0
+SFDT			= "TRUE"
+CardVoltage		= 0
