@@ -225,15 +225,16 @@
 
 	  <CheckProperty SeverityWhenFailure="INFO" Accuracy="IDONTCARE" TestID="3111" CheckPropertyName="INSTALLDEVICE">
         <CheckOnOS>
-          <OperatingSystem>WIN8</OperatingSystem>
+          <OperatingSystem>WINALL</OperatingSystem>
         </CheckOnOS>
-        <DescriptionNl>Installeer drivers voor ACS.</DescriptionNl>
-        <DescriptionFr>Installer le logiciel ACS.</DescriptionFr>
+        <DescriptionNl>Installeer drivers voor APG8201Z.</DescriptionNl>
+        <DescriptionFr>Installer le logiciel APG8201Z.</DescriptionFr>
         <ActionInfoNl/>
         <ActionInfoFr/>
         <InputParams>
+		  <hardwareID>USB\VID_072F&amp;PID_8202</hardwareID>
           <pathToDriverFiles>%FIRST_INF_FOLDER%</pathToDriverFiles>
-          <infFile>%FIRST_INF_FOLDER%\acsdrv.inf</infFile>
+          <infFile>%FIRST_INF_FOLDER%\apg8201z.inf</infFile>
         </InputParams>
         <RequiredValue RequiredValueType="STRING"/>
       </CheckProperty>
