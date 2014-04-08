@@ -14,8 +14,11 @@ if [[ ($ver == *10.5*) && ($ver < "10.5.6") ]]; then
             /usr/sbin/installer -pkg $DIRNAME/acr38driver_installer_1.7.11.mpkg -target /
             /usr/sbin/installer -pkg $DIRNAME/acsccid_installer_10.6.mpkg -target /
 		else if [[ $ver == *10.7* || $ver == *10.8* ]]; then
-				/usr/sbin/installer -pkg $DIRNAME/acr38driver_installer_1.7.11_10.7.mpkg -target /
-				/usr/sbin/installer -pkg $DIRNAME/acsccid_installer_10.7.mpkg -target /
+			/usr/sbin/installer -pkg $DIRNAME/acr38driver_installer_1.7.11_10.7.mpkg -target /
+			/usr/sbin/installer -pkg $DIRNAME/acsccid_installer_10.7.mpkg -target /
+				else if [[ $ver == *10.9* ]]; then
+					/usr/sbin/installer -pkg $DIRNAME/acr38driver_installer_1.7.11_10.7.mpkg -target /
+				fi
 		fi
 	fi
 fi
