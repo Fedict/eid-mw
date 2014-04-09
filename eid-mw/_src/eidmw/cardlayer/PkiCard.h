@@ -93,11 +93,11 @@ protected:
         unsigned long ulInputLen) = 0;
     virtual CByteArray SignInternal(const tPrivKey & key, unsigned long algo,
         const CByteArray & oData, const tPin *pPin = NULL) = 0;
-	virtual CByteArray CPkiCard::VerifyAndSign(const tPrivKey & key, const tPin & Pin,
+	virtual CByteArray VerifyAndSign(const tPrivKey & key, const tPin & Pin,
         unsigned long algo, const CByteArray & oData);
-	virtual void CPkiCard::AskPin(tPinOperation operation, const tPin & Pin,
+	virtual void AskPin(tPinOperation operation, const tPin & Pin,
         std::string & csPin1, std::string & csPin2, const tPrivKey *pKey);
-	virtual bool CPkiCard::AskPinRetry(tPinOperation operation, const tPin & Pin,
+	virtual bool AskPinRetry(tPinOperation operation, const tPin & Pin,
         unsigned long ulRemaining, const tPrivKey *pKey);
 	tSelectAppletMode m_selectAppletMode;
 	unsigned long m_ulRemaining;
