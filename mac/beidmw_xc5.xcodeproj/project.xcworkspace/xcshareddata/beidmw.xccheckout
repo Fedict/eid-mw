@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D9E6C9D6-3958-4246-9F8F-9938C78B583B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>beidmw</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</key>
+		<string>https://eid-mw.googlecode.com/svn/trunk</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>mac/beidmw.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</key>
+		<string>https://eid-mw.googlecode.com/svn</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://eid-mw.googlecode.com/svn/trunk/mac/beidmw.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>trunk</string>
+		</dict>
+	</array>
+</dict>
+</plist>
