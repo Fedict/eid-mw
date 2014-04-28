@@ -143,6 +143,9 @@ BASE_SISPLUGINS = CARDPLUGINSIS_ACR38U_NAME_dylib
 #BASE_SISPLUGINS = 
 EID_VIEWER_APP_PATH = "../ThirdParty/eID\ Viewer.app"
 EID_VIEWER_APP_NAME = "eID\ Viewer.app"
+#PLISTMERGER_PATH = "../ThirdParty/plistMerger"
+PLISTMERGER_DIR = "plistMerger"
+PLISTMERGER_APP = "plistMerger"
 LATEST_XPI:=$(shell readlink ../xpi/builds/belgiumeid-CURRENT.xpi)
 XPI_107 = /Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi
 XPI_PLUGIN = xpi/builds/$(LATEST_XPI)
@@ -226,7 +229,7 @@ SCRIPTS =
 
 ## directories that the package installer should create
 ## on the user's machine in case they are absent
-DIRS_TO_CREATE = $(INST_DIR) $(BELGIUM_DIR) $(LICENSES_DIR) /usr/local/lib/pkcs11
+DIRS_TO_CREATE = $(INST_DIR) $(BELGIUM_DIR) $(LICENSES_DIR) $(BELGIUM_DIR)/$(PLISTMERGER_DIR) /usr/local/lib/pkcs11
 
 INSTALLER_DIR = misc/mac/mw_installer
 
@@ -240,6 +243,7 @@ DIRS =	$(ROOT_DIR)/$(INST_DIR)/lib/siscardplugins \
 	$(ROOT_DIR)/usr/bin \
 	$(ROOT_DIR)/$(MAN_DIR) \
 	$(ROOT_DIR)/$(BELGIUM_DIR) \
+	$(ROOT_DIR)/$(BELGIUM_DIR)/$(PLISTMERGER_DIR) \
 	$(ROOT_DIR)/$(LICENSES_DIR) \
 	$(ROOT_DIR)/$(APPS_DIR)
 	
@@ -363,7 +367,12 @@ rel_start:
 		$(ROOT_DIR)/$(LICENSES_DIR)/license_FR.txt ; \
 	  cp misc/licenses_files/German/eID-toolkit_licensingtermsconditions.txt \
 		$(ROOT_DIR)/$(LICENSES_DIR)/license_DE.txt ; \
-	  cp misc/licenses_files/THIRDPARTY-LICENSES.txt $(ROOT_DIR)/$(LICENSES_DIR)/
+	  cp misc/licenses_files/THIRDPARTY-LICENSES.txt \
+		$(ROOT_DIR)/$(LICENSES_DIR)/THIRDPARTY-LICENSES.txt ; \
+	  cp $(PLISTMERGER_DIR)/$(PLISTMERGER_APP) \
+		$(ROOT_DIR)/$(BELGIUM_DIR)/$(PLISTMERGER_DIR)/ ; \
+	  cp $(PLISTMERGER_DIR)/Info.plist \
+		$(ROOT_DIR)/$(BELGIUM_DIR)/$(PLISTMERGER_DIR)/Info.plist ;
 
 	@echo "********** copy/rename the pkcs11 bundle **********"; \
 	 cp -r ../misc/mac/pkcs11.bundle $(ROOT_DIR)/$(INST_DIR)/lib/$(PKCS11_BUNDLE)
@@ -459,6 +468,13 @@ rel_end:
 	@echo "mv $(BELGIUM_DIR) \"$(BELGIUM_DIR_NAME)\"" >> $(POSTFLIGHT)
 	@echo "test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;" >> $(POSTFLIGHT)
 	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der" >> $(POSTFLIGHT)
+	@echo "sudo mv \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/Info_org.plist\" \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/Info_old.plist\";" >> $(POSTFLIGHT)
+	@echo "sudo rm \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/Info_org.plist\";" >> $(POSTFLIGHT)
+	@echo "sudo cp /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/Info_org.plist\";" >> $(POSTFLIGHT)
+	@echo "cd \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/\"" >> $(POSTFLIGHT)
+	@echo "sudo ./$(PLISTMERGER_APP)" >> $(POSTFLIGHT)
+	@echo "cd -" >> $(POSTFLIGHT)
+	@echo "sudo cp \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/Info_merged.plist\" /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist;" >> $(POSTFLIGHT)
 
 	-@test -e tmp && rm temp
 	@cat $(POSTFLIGHT) ../../beid-2.6/mac/postflight > temp
