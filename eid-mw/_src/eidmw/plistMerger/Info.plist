@@ -168,6 +168,7 @@
 		<string>0x072F</string>
 		<string>0x072F</string>
 		<string>0x072F</string>
+		<string>0x072F</string>
 		<string>0x058F</string>
 		<string>0x0A89</string>
 		<string>0x0A89</string>
@@ -312,6 +313,7 @@
 		<string>0x1A44</string>
 		<string>0x1A44</string>
 		<string>0x1A44</string>
+		<string>0x1A44</string>
 		<string>0x0E0F</string>
 		<string>0x0416</string>
 		<string>0x0F14</string>
@@ -394,6 +396,7 @@
 		<string>0xA022</string>
 		<string>0x1204</string>
 		<string>0x8201</string>
+		<string>0x8202</string>
 		<string>0x90CC</string>
 		<string>0x90CC</string>
 		<string>0x90CC</string>
@@ -542,6 +545,7 @@
 		<string>0x0122</string>
 		<string>0x0855</string>
 		<string>0x0865</string>
+		<string>0x0870</string>
 		<string>0x0920</string>
 		<string>0x0004</string>
 		<string>0x3815</string>
@@ -625,6 +629,7 @@
 		<string>XIRING Teo</string>
 		<string>ACS ACR101 ICC Reader</string>
 		<string>ACS APG8201 PINhandy 1</string>
+		<string>ACS APG8201</string>
 		<string>ACS ACR122U</string>
 		<string>ACS ACR100</string>
 		<string>ACS ACR38 plugin</string>
@@ -773,6 +778,7 @@
 		<string>VASCO DIGIPASS KEY 202</string>
 		<string>VASCO DP855</string>
 		<string>VASCO DP865</string>
+		<string>VASCO DP870</string>
 		<string>VASCO DIGIPASS 920</string>
 		<string>VMware Virtual USB CCID</string>
 		<string>Winbond CCID SmartCard Controller</string>
