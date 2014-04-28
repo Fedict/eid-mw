@@ -21,8 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		7F22A36F0F84C588001AD228 /* libbeid_ff_common.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */; };
-		7F22A3780F84C5A1001AD228 /* libbeid_ff_dialogsQT.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */; };
+		7F22A36F0F84C588001AD228 /* libbeid_ff_common.4.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.7.a */; };
+		7F22A3780F84C5A1001AD228 /* libbeid_ff_dialogsQT.4.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.7.a */; };
 		7FA1AA320F85F439000D9EE1 /* cal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA1F0F85F439000D9EE1 /* cal.cpp */; };
 		7FA1AA340F85F439000D9EE1 /* cert.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA210F85F439000D9EE1 /* cert.c */; };
 		7FA1AA360F85F439000D9EE1 /* encrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA230F85F439000D9EE1 /* encrypt.c */; };
@@ -32,8 +32,8 @@
 		7FA1AA3E0F85F439000D9EE1 /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2B0F85F439000D9EE1 /* session.c */; };
 		7FA1AA3F0F85F439000D9EE1 /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2C0F85F439000D9EE1 /* sign.c */; };
 		7FA1AA400F85F439000D9EE1 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA2D0F85F439000D9EE1 /* util.cpp */; };
-		7FA1AA620F85F6C1000D9EE1 /* libbeid_ff_common.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */; };
-		7FA1AA640F85F6CF000D9EE1 /* libbeid_ff_cardlayer.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.4.a */; };
+		7FA1AA620F85F6C1000D9EE1 /* libbeid_ff_common.4.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.7.a */; };
+		7FA1AA640F85F6CF000D9EE1 /* libbeid_ff_cardlayer.4.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.7.a */; };
 		7FA1AA920F860748000D9EE1 /* object.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA1AA910F860748000D9EE1 /* object.c */; };
 		7FBB02830F839412009B751F /* ByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02610F839412009B751F /* ByteArray.cpp */; };
 		7FBB02850F839412009B751F /* ByteArrayReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB02630F839412009B751F /* ByteArrayReader.cpp */; };
@@ -81,13 +81,13 @@
 		7FC5359C0F84B95600BA96EE /* BeidP15Correction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535980F84B95600BA96EE /* BeidP15Correction.cpp */; };
 		7FC535A30F84B97400BA96EE /* SISCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC5359E0F84B97400BA96EE /* SISCard.cpp */; };
 		7FC535A60F84B97400BA96EE /* SISPluginHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535A10F84B97400BA96EE /* SISPluginHandler.cpp */; };
-		7FC535BE0F84BADB00BA96EE /* libbeid_ff_common.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */; };
+		7FC535BE0F84BADB00BA96EE /* libbeid_ff_common.4.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.7.a */; };
 		7FC535EA0F84BD3F00BA96EE /* langUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535E60F84BD3F00BA96EE /* langUtil.cpp */; };
 		7FC535EF0F84BD6300BA96EE /* dlgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535EC0F84BD6300BA96EE /* dlgs.cpp */; };
 		7FC535F00F84BD6300BA96EE /* SharedMem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC535ED0F84BD6300BA96EE /* SharedMem.cpp */; };
 		8618D1ED13CAF490008E73AB /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8618D1EB13CAF490008E73AB /* display.cpp */; };
 		8618D1EE13CAF490008E73AB /* display.h in Headers */ = {isa = PBXBuildFile; fileRef = 8618D1EC13CAF490008E73AB /* display.h */; };
-		8618D23D13CAFA16008E73AB /* libbeid_ff_dialogsQT.4.0.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */; };
+		8618D23D13CAFA16008E73AB /* libbeid_ff_dialogsQT.4.0.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.7.a */; };
 		86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		86D0915311ABF313007BC75E /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D0915211ABF313007BC75E /* PCSC.framework */; };
@@ -144,7 +144,7 @@
 		7F90111C0F850342004A5FCC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		7F90112C0F850450004A5FCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7F90D5620F9F38EC00BB8F23 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = System/Library/Frameworks/JavaVM.framework; sourceTree = SDKROOT; };
-		7FA1A9F70F85F36E000D9EE1 /* libbeid_ff_pkcs11.4.0.4.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_pkcs11.4.0.4.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA1A9F70F85F36E000D9EE1 /* libbeid_ff_pkcs11.4.0.7.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_pkcs11.4.0.7.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA1AA1D0F85F439000D9EE1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = ../pkcs11/asn1.h; sourceTree = SOURCE_ROOT; };
 		7FA1AA1E0F85F439000D9EE1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = ../pkcs11/beid_p11.h; sourceTree = SOURCE_ROOT; };
 		7FA1AA1F0F85F439000D9EE1 /* cal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cal.cpp; path = ../pkcs11/cal.cpp; sourceTree = SOURCE_ROOT; };
@@ -168,7 +168,7 @@
 		7FA1AA4A0F85F47D000D9EE1 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = ../pkcs11/include/rsaref220/unix.h; sourceTree = SOURCE_ROOT; };
 		7FA1AA720F85FEE3000D9EE1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = ../pkcs11/util.h; sourceTree = SOURCE_ROOT; };
 		7FA1AA910F860748000D9EE1 /* object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = object.c; path = ../pkcs11/object.c; sourceTree = SOURCE_ROOT; };
-		7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_common.4.0.4.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FBB02530F839352009B751F /* libbeid_ff_common.4.0.7.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_common.4.0.7.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBB02610F839412009B751F /* ByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ByteArray.cpp; path = ../common/ByteArray.cpp; sourceTree = SOURCE_ROOT; };
 		7FBB02620F839412009B751F /* ByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ByteArray.h; path = ../common/ByteArray.h; sourceTree = SOURCE_ROOT; };
 		7FBB02630F839412009B751F /* ByteArrayReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ByteArrayReader.cpp; path = ../common/ByteArrayReader.cpp; sourceTree = SOURCE_ROOT; };
@@ -220,7 +220,7 @@
 		7FBB02D40F839514009B751F /* SocketServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SocketServer.cpp; path = ../common/Socket/SocketServer.cpp; sourceTree = SOURCE_ROOT; };
 		7FBB02D50F839514009B751F /* SocketServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketServer.h; path = ../common/Socket/SocketServer.h; sourceTree = SOURCE_ROOT; };
 		7FBB02F20F839622009B751F /* win_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win_macros.h; path = ../common/win_macros.h; sourceTree = SOURCE_ROOT; };
-		7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.4.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_cardlayer.4.0.4.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.7.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_cardlayer.4.0.7.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC535410F84B88600BA96EE /* Cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cache.cpp; path = ../cardlayer/Cache.cpp; sourceTree = SOURCE_ROOT; };
 		7FC535420F84B88600BA96EE /* Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cache.h; path = ../cardlayer/Cache.h; sourceTree = SOURCE_ROOT; };
 		7FC535430F84B88600BA96EE /* Card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Card.cpp; path = ../cardlayer/Card.cpp; sourceTree = SOURCE_ROOT; };
@@ -269,7 +269,7 @@
 		7FC535A10F84B97400BA96EE /* SISPluginHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SISPluginHandler.cpp; path = ../cardlayer/cardpluginSIS/SISPluginHandler.cpp; sourceTree = SOURCE_ROOT; };
 		7FC535A20F84B97400BA96EE /* SISPluginHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SISPluginHandler.h; path = ../cardlayer/cardpluginSIS/SISPluginHandler.h; sourceTree = SOURCE_ROOT; };
 		7FC535B70F84BA2E00BA96EE /* SISCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SISCard.cpp; path = ../cardlayer/cardpluginSIS_ACR38U/SISCard.cpp; sourceTree = SOURCE_ROOT; };
-		7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_dialogsQT.4.0.4.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.7.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_dialogsQT.4.0.7.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC535E40F84BD3F00BA96EE /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialogs.h; path = ../dialogs/dialogs.h; sourceTree = SOURCE_ROOT; };
 		7FC535E50F84BD3F00BA96EE /* language.h */ = {isa = PBXFileReference; fileEncoding = 5; lastKnownFileType = sourcecode.c.h; name = language.h; path = ../dialogs/language.h; sourceTree = SOURCE_ROOT; };
 		7FC535E60F84BD3F00BA96EE /* langUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = langUtil.cpp; path = ../dialogs/langUtil.cpp; sourceTree = SOURCE_ROOT; };
@@ -280,7 +280,7 @@
 		8618D1EB13CAF490008E73AB /* display.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 5; name = display.cpp; path = ../pkcs11/display.cpp; sourceTree = SOURCE_ROOT; };
 		8618D1EC13CAF490008E73AB /* display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = display.h; path = ../pkcs11/display.h; sourceTree = "<group>"; };
 		86A90A2B1122D6880011C6A8 /* trunk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trunk; path = "/beid-mw/trunk"; sourceTree = "<absolute>"; };
-		86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libxerces-c-3.1.dylib"; path = "/beid-mw/trunk/eid-mw/_src/ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib"; sourceTree = "<absolute>"; };
+		86A9430C1122D6E50011C6A8 /* libxerces-c-3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libxerces-c-3.1.dylib"; path = "/beid-mw/4_0_7/eid-mw/_src/ThirdParty/Xerces/Xerces-3.1.0-mac/lib/libxerces-c-3.1.dylib"; sourceTree = "<absolute>"; };
 		86D0915211ABF313007BC75E /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/PCSC.framework; sourceTree = DEVELOPER_DIR; };
 		86E110DE152B3C62004197EA /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log.cpp; path = ../pkcs11/log.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -290,10 +290,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FA1AA640F85F6CF000D9EE1 /* libbeid_ff_cardlayer.4.0.4.a in Frameworks */,
-				7FA1AA620F85F6C1000D9EE1 /* libbeid_ff_common.4.0.4.a in Frameworks */,
+				7FA1AA640F85F6CF000D9EE1 /* libbeid_ff_cardlayer.4.0.7.a in Frameworks */,
+				7FA1AA620F85F6C1000D9EE1 /* libbeid_ff_common.4.0.7.a in Frameworks */,
 				86D0918011ABFA40007BC75E /* PCSC.framework in Frameworks */,
-				8618D23D13CAFA16008E73AB /* libbeid_ff_dialogsQT.4.0.4.a in Frameworks */,
+				8618D23D13CAFA16008E73AB /* libbeid_ff_dialogsQT.4.0.7.a in Frameworks */,
 				86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,8 +310,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F22A3780F84C5A1001AD228 /* libbeid_ff_dialogsQT.4.0.4.a in Frameworks */,
-				7FC535BE0F84BADB00BA96EE /* libbeid_ff_common.4.0.4.a in Frameworks */,
+				7F22A3780F84C5A1001AD228 /* libbeid_ff_dialogsQT.4.0.7.a in Frameworks */,
+				7FC535BE0F84BADB00BA96EE /* libbeid_ff_common.4.0.7.a in Frameworks */,
 				86D0915311ABF313007BC75E /* PCSC.framework in Frameworks */,
 				86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */,
 			);
@@ -321,7 +321,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F22A36F0F84C588001AD228 /* libbeid_ff_common.4.0.4.a in Frameworks */,
+				7F22A36F0F84C588001AD228 /* libbeid_ff_common.4.0.7.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,10 +331,10 @@
 		034768DDFF38A45A11DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */,
-				7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.4.a */,
-				7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */,
-				7FA1A9F70F85F36E000D9EE1 /* libbeid_ff_pkcs11.4.0.4.dylib */,
+				7FBB02530F839352009B751F /* libbeid_ff_common.4.0.7.a */,
+				7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.7.a */,
+				7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.7.a */,
+				7FA1A9F70F85F36E000D9EE1 /* libbeid_ff_pkcs11.4.0.7.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -638,7 +638,7 @@
 			);
 			name = beidpkcs11;
 			productName = beidpkcs11;
-			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeid_ff_pkcs11.4.0.4.dylib */;
+			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeid_ff_pkcs11.4.0.7.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FBB02520F839352009B751F /* beidcommon */ = {
@@ -655,7 +655,7 @@
 			);
 			name = beidcommon;
 			productName = beidcommon;
-			productReference = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.4.a */;
+			productReference = 7FBB02530F839352009B751F /* libbeid_ff_common.4.0.7.a */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FC5353A0F84B83B00BA96EE /* beidcardlayer */ = {
@@ -674,7 +674,7 @@
 			);
 			name = beidcardlayer;
 			productName = beidcardlayer;
-			productReference = 7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.4.a */;
+			productReference = 7FC5353B0F84B83B00BA96EE /* libbeid_ff_cardlayer.4.0.7.a */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FC535DE0F84BCDA00BA96EE /* beiddialogsQT */ = {
@@ -692,7 +692,7 @@
 			);
 			name = beiddialogsQT;
 			productName = beiddialogsQT;
-			productReference = 7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.4.a */;
+			productReference = 7FC535DF0F84BCDA00BA96EE /* libbeid_ff_dialogsQT.4.0.7.a */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -702,7 +702,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beid_ff_pkcs11" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* beidmw */;
 			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
 			projectDirPath = "";
@@ -994,7 +1001,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CURRENT_PROJECT_VERSION = 4.0.4;
+				CURRENT_PROJECT_VERSION = 4.0.7;
 				DEBUG_INFORMATION_FORMAT = stabs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_MODEL_TUNING = "";
@@ -1022,7 +1029,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 4.0.4;
+				CURRENT_PROJECT_VERSION = 4.0.7;
 				DEBUG_INFORMATION_FORMAT = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = Beidmw;
