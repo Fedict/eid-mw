@@ -37,11 +37,11 @@
 #define dlopen(lib,h) LoadLibrary(lib)
 #define dlsym(h, function) GetProcAddress(h, function)
 #define dlclose(h) FreeLibrary(h)
-#ifdef _DEBUG
-  #define PKCS11_LIB TEXT("beid35pkcs11D.dll")
-#else
+//#ifdef _DEBUG
+//  #define PKCS11_LIB TEXT("beidpkcs11D.dll")
+//#else
   #define PKCS11_LIB TEXT("beidpkcs11.dll")
-#endif
+//#endif
 
 #define RTLD_LAZY	1
 #define RTLD_NOW	2
