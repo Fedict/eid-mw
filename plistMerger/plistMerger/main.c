@@ -159,10 +159,24 @@ int main(int argc, const char * argv[])
             //the destination plist has been searched for the entry at 'index' of the source plist
             if(bEntryFound == false)
             {
+                range.location = 0;
+                range.length = CFArrayGetCount (pArrayNewVID);
+                CFIndex vIDFound = CFArrayGetFirstIndexOfValue (pArrayNewVID,range,pStringSrcVID);
                 //if the entry was not found, we add it to the destination arrays now
-                CFArrayAppendValue(pArrayNewVID, pStringSrcVID);
-                CFArrayAppendValue(pArrayNewPID, pStringSrcPID);
-                CFArrayAppendValue(pArrayNewFN, pStringSrcFN);
+                //add it up front in the subarray with the same vendorID's if the vendorid was already present
+                //If its a new vendorid, add it to the back of the arrays
+                if(vIDFound != -1)
+                {
+                    CFArrayInsertValueAtIndex (pArrayNewVID, vIDFound,pStringSrcVID);
+                    CFArrayInsertValueAtIndex (pArrayNewPID, vIDFound,pStringSrcPID);
+                    CFArrayInsertValueAtIndex (pArrayNewFN, vIDFound,pStringSrcFN);
+                }
+                else
+                {
+                    CFArrayAppendValue(pArrayNewVID, pStringSrcVID);
+                    CFArrayAppendValue(pArrayNewPID, pStringSrcPID);
+                    CFArrayAppendValue(pArrayNewFN, pStringSrcFN);
+                }
             }
             
         }//end of for (entire plist searched)
