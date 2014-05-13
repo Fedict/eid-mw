@@ -603,7 +603,7 @@
 		<string>Gemalto Prox Dual USB PC LinkReader</string>
 		<string>Gemalto Prox SU USB PC LinkReader</string>
 		<string>Gemalto Smart Enterprise Guardian Secure USB Device</string>
-		<string>Giesecke &amp; Devrient GmbH StarSign Crypto USB Token</string>
+		<string>Giesecke and Devrient GmbH StarSign Crypto USB Token</string>
 		<string>id3 Semiconductors CL1356T</string>
 		<string>KOBIL KAAN Base</string>
 		<string>KOBIL KAAN Advanced</string>
@@ -671,7 +671,7 @@
 		<string>C3PO LTC32</string>
 		<string>C3PO LTC36</string>
 		<string>CCB eSafeLD</string>
-		<string>charismathics plug'n'crypt CCID token</string>
+		<string>charismathics plugncrypt CCID token</string>
 		<string>Cherry GmbH SmartBoard XX1X</string>
 		<string>Cherry GmbH SmartTerminal XX1X</string>
 		<string>Cherry GmbH SmartTerminal ST-1275</string>
@@ -694,8 +694,8 @@
 		<string>Gemplus GemCore POS Pro Smart Card Reader</string>
 		<string>Generic USB2.0-CRW</string>
 		<string>German Privacy Foundation Crypto Stick v1.2</string>
-		<string>Giesecke &amp; Devrient GmbH Star Sign Card Token 350 (ICCD)</string>
-		<string>Giesecke &amp; Devrient GmbH Star Sign Card Token 550 (ICCD)</string>
+		<string>Giesecke and Devrient GmbH Star Sign Card Token 350 (ICCD)</string>
+		<string>Giesecke and Devrient GmbH Star Sign Card Token 550 (ICCD)</string>
 		<string>GoldKey Security PIV Token</string>
 		<string>HDZB uKeyCI800-K18</string>
 		<string>Hewlett Packard MFP Smart Card Reader</string>
@@ -760,7 +760,7 @@
 		<string>SpringCard CSB6 Ultimate</string>
 		<string>SpringCard EasyFinger Standard</string>
 		<string>SpringCard EasyFinger Ultimate</string>
-		<string>SpringCard Prox'N'Roll</string>
+		<string>SpringCard ProxNRoll</string>
 		<string>SYNNIX STD200</string>
 		<string>Teridian Semiconductors TSC12xxFV.09</string>
 		<string>Tianyu Smart Card Reader</string>
@@ -778,8 +778,8 @@
 		<string>VASCO DIGIPASS KEY 202</string>
 		<string>VASCO DP855</string>
 		<string>VASCO DP865</string>
-		<string>VASCO DP870</string>
-		<string>VASCO DIGIPASS 920</string>
+		<string>Vasco DP870</string>
+		<string>Vasco DP920</string>
 		<string>VMware Virtual USB CCID</string>
 		<string>Winbond CCID SmartCard Controller</string>
 		<string>XIRING XI-SIGN USB V2</string>
