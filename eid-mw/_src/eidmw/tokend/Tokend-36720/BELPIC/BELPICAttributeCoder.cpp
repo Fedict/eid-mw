@@ -55,3 +55,14 @@ void BELPICDataAttributeCoder::decode(TokenContext *tokenContext,
 		belpicRecord.getDataAttribute(tokenContext));
 }
 
+//
+// BELPICKeySizeAttributeCoder
+//
+BELPICKeySizeAttributeCoder::~BELPICKeySizeAttributeCoder() {}
+
+void BELPICKeySizeAttributeCoder::decode(Tokend::TokenContext *tokenContext,
+                                      const Tokend::MetaAttribute &metaAttribute, Tokend::Record &record)
+{
+	uint32 keySize = dynamic_cast<BELPICKeyRecord &>(record).sizeInBits();
+	record.attributeAtIndex(metaAttribute.attributeIndex(), new Attribute(keySize));
+}

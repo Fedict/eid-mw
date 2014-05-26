@@ -65,6 +65,7 @@ using CssmClient::AclFactory;
 	CLA_STANDARD, INS_SELECT_FILE, P1_SELECT_APPLET, P2_SELECT_APPLET
 
 #define BELPIC_MAX_DATA_SIZE           (6*1024L)		// plus some extra
+#define BELPIC_MAXSIZE_KDF           256
 
 //static const unsigned char kBELPICPKCS15Applet[] =
 //	{ 0xA0, 0x00, 0x00, 0x01, 0x77, 0x50, 0x4B, 0x43, 0x53, 0x2D, 0x31, 0x35 };
@@ -317,10 +318,12 @@ uint32_t BELPICToken::exchangeAPDU(const uint8_t *apdu, size_t apduLength,
 	if (resultLength == 2 && result[0] == 0x61)	// || result[0] == 0x6C)
 	{
 		resultLength = savedLength;
-		uint8 expectedLength = result[1];
+		uint16 expectedLength = result[1];
 		unsigned char getResult[] = { 0x00, 0xC0, 0x00, 0x00, expectedLength };
 		BELPICToken::usleep(INTER_COMMAND_DELAY);
 		transmit(getResult, sizeof(getResult), result, resultLength);
+        if(expectedLength == 0)
+            expectedLength = 256;
 		if (resultLength - 2 != expectedLength)
         {
             if (resultLength < 2)
@@ -674,6 +677,22 @@ void BELPICToken::getAcl(const char *tag, uint32 &count, AclEntryInfo *&acls)
 	acls = mAclEntries.entries();
 }
 
+uint32_t BELPICToken::getKeySize(const uint8_t *df, const uint8_t *ef) {
+    uint8_t result[BELPIC_MAXSIZE_KDF];
+    size_t resultLength = BELPIC_MAXSIZE_KDF;
+    uint32_t keysize = 1024; //default keysize
+    
+    //select and read the key directory file
+    select(df,ef);
+    readBinary(result,resultLength);
+    
+    //last 2 bytes specify the keysize
+    if (resultLength > 2) {
+        keysize = result[resultLength-2]*256 + result[resultLength-1];
+    }
+	return keysize;
+}
+
 
 #pragma mark ---------------- BELPIC Specific --------------
 
@@ -709,11 +728,13 @@ void BELPICToken::populate()
 	 */
 	checkPPDUSupport();
     
+    uint32_t keysize = getKeySize(kDF_BELPIC, kBELPIC_EF_PrKDF);
+    
 	/* Zetes: better names for the private keys */
 	RefPointer<Tokend::Record> key2(new BELPICKeyRecord(kPrK2_Id,
-		"Authentication key", privateKeyRelation.metaRecord(), true, mPPDU));
+		"Authentication key", keysize, privateKeyRelation.metaRecord(), true, mPPDU));
 	RefPointer<Tokend::Record> key3(new BELPICKeyRecord(kPrK3_Id,
-		"Signature key", privateKeyRelation.metaRecord(), true, mPPDU));
+		"Signature key", keysize, privateKeyRelation.metaRecord(), true, mPPDU));
 	
 	privateKeyRelation.insertRecord(key2);
 	privateKeyRelation.insertRecord(key3);
@@ -722,7 +743,7 @@ void BELPICToken::populate()
 		new Tokend::LinkedRecordAdornment(cert2));
 	key3->setAdornment(mSchema->publicKeyHashCoder().certificateKey(),
 		new Tokend::LinkedRecordAdornment(cert3));
-
+    
 	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
 		kID_EF_ID_RN, "ID#RN"));
 	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
@@ -744,9 +765,10 @@ void BELPICToken::populate()
 void BELPICToken::checkPPDUSupport()
 {
     mPPDU = false;
-    if( (strncmp(this->startupReaderInfo()->szReader, "Vasco DP870", sizeof("Vasco DP870")-1) == 0) ||
-        (strncmp(this->startupReaderInfo()->szReader, "Vasco DP875", sizeof("Vasco DP875")-1) == 0) ||
-        (strncmp(this->startupReaderInfo()->szReader, "Vasco DP920", sizeof("Vasco DP920")-1) == 0) )
+    
+    if( (strncmp(this->startupReaderInfo()->szReader, "VASCO DIGIPASS 870", sizeof("VASCO DIGIPASS 870")-1) == 0) ||
+        (strncmp(this->startupReaderInfo()->szReader, "VASCO DIGIPASS 875", sizeof("VASCO DIGIPASS 875")-1) == 0) ||
+        (strncmp(this->startupReaderInfo()->szReader, "VASCO DIGIPASS 920", sizeof("VASCO DIGIPASS 920")-1) == 0) )
     {
         mPPDU = true;
     }

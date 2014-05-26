@@ -51,7 +51,7 @@ BELPICBinaryFileRecord::~BELPICBinaryFileRecord()
 {
 }
 
-#define BELPIC_MAXSIZE_CERT           4000
+#define BELPIC_MAXSIZE_CERT           8000
 
 BELPICCertificateRecord::~BELPICCertificateRecord()
 {
@@ -138,10 +138,11 @@ void BELPICProtectedRecord::getAcl(const char *tag, uint32 &count, AclEntryInfo 
 // BELPICKeyRecord
 //
 BELPICKeyRecord::BELPICKeyRecord(const uint8_t *keyId,
-	const char *description, const Tokend::MetaRecord &metaRecord,
+	const char *description, uint32_t keySize, const Tokend::MetaRecord &metaRecord,
 	bool signOnly, bool PPDU) :
 	BELPICRecord(description),
 	mKeyId(keyId),
+    mKeySize(keySize),
 	mSignOnly(signOnly),
     mPPDU(PPDU)
 {
@@ -151,6 +152,10 @@ BELPICKeyRecord::BELPICKeyRecord(const uint8_t *keyId,
                      new Tokend::Attribute(!signOnly));
     attributeAtIndex(metaRecord.metaAttribute(kSecKeySign).attributeIndex(),
                      new Tokend::Attribute(signOnly));
+    attributeAtIndex(metaRecord.metaAttribute(kSecKeyKeySizeInBits).attributeIndex(),
+                     new Tokend::Attribute(keySize));
+    attributeAtIndex(metaRecord.metaAttribute(kSecKeyEffectiveKeySize).attributeIndex(),
+                     new Tokend::Attribute(keySize));
 }
 
 BELPICKeyRecord::~BELPICKeyRecord()
@@ -221,7 +226,7 @@ void BELPICKeyRecord::computeCrypt(BELPICToken &belpicToken, bool sign,
 		resultLength));
 	if (resultLength != sizeInBits() / 8 + 2)
 	{
-		secdebug("cac", " %s: computeCrypt: expected size: %ld, got: %ld",
+		secdebug("belpic", " %s: computeCrypt: expected size: %ld, got: %ld",
 			mDescription, sizeInBits() / 8 + 2, resultLength);
 		PCSC::Error::throwMe(SCARD_E_PROTO_MISMATCH);
 	}

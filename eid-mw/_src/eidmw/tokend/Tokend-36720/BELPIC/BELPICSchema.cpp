@@ -39,8 +39,8 @@
 using namespace Tokend;
 
 BELPICSchema::BELPICSchema() :
-	mKeyAlgorithmCoder(uint32(CSSM_ALGID_RSA)),
-	mKeySizeCoder(uint32(1024))
+	mKeyAlgorithmCoder(uint32(CSSM_ALGID_RSA))
+	//mKeySizeCoder(uint32(1024)) new cards have 2048 bits keys
 {
 }
 
@@ -61,8 +61,10 @@ Tokend::Relation *BELPICSchema::createKeyRelation(CSSM_DB_RECORDTYPE keyType)
 
 	// Other key valuess
 	mr.attributeCoder(kSecKeyKeyType, &mKeyAlgorithmCoder);
-	mr.attributeCoder(kSecKeyKeySizeInBits, &mKeySizeCoder);
-	mr.attributeCoder(kSecKeyEffectiveKeySize, &mKeySizeCoder);
+    //decode() of mKeySizeCoder doesn't seem to get called,
+    //so we'll add these attributes in a BELPICKeyRecord constructor
+	//mr.attributeCoder(kSecKeyKeySizeInBits, &mKeySizeCoder);
+	//mr.attributeCoder(kSecKeyEffectiveKeySize, &mKeySizeCoder);
 
 	// Key attributes
 	mr.attributeCoder(kSecKeyExtractable, &mFalseCoder);
