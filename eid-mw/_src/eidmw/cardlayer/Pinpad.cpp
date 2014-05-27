@@ -312,11 +312,11 @@ namespace eIDMW
 		printf("PP IN: %s\n", oCmd.ToString(true, false, 0, 0xFFFFFFFF).c_str());
 #endif
 
-		unsigned long ulDlgHandle;
+		BEID_DIALOGHANDLE dlgHandle;
 		bool bCloseDlg = bShowDlg;
 		if (bShowDlg)
 			bCloseDlg = m_oPinpadLib.ShowDlg(pinpadOperation,
-			ucPintype, csPinLabel, m_csReader, &ulDlgHandle);
+			ucPintype, csPinLabel, m_csReader, &dlgHandle);
 
 		CByteArray oResp;
 		try
@@ -334,11 +334,11 @@ namespace eIDMW
 		catch (...)
 		{
 			if (bShowDlg)
-				m_oPinpadLib.CloseDlg(ulDlgHandle);
+				m_oPinpadLib.CloseDlg(dlgHandle);
 			throw ;
 		}
 		if (bShowDlg)
-			m_oPinpadLib.CloseDlg(ulDlgHandle);
+			m_oPinpadLib.CloseDlg(dlgHandle);
 
 #ifdef PP_DUMP_CMDS
 		printf("PP OUT: %s\n", oResp.ToString(true, false, 0, 0xFFFFFFFF).c_str());
@@ -475,7 +475,7 @@ namespace eIDMW
 		printf("PP IN: %s\n", oCmd.ToString(true, false, 0, 0xFFFFFFFF).c_str());
 #endif
 
-		unsigned long ulDlgHandle;
+		BEID_DIALOGHANDLE dlgHandle;
 		bool bCloseDlg = bShowDlg;
 
 		CByteArray oResp;
@@ -487,12 +487,12 @@ namespace eIDMW
 
 		if (bShowDlg)
 			bCloseDlg = m_oPinpadLib.ShowDlg(pinpadOperation,
-			ucPintype, csPinLabel, m_csReader, &ulDlgHandle);
+			ucPintype, csPinLabel, m_csReader, &dlgHandle);
 
 		oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oTransmit, &lRetVal);
 
-		if (bCloseDlg)
-			m_oPinpadLib.CloseDlg(ulDlgHandle);
+		if (bShowDlg)
+			m_oPinpadLib.CloseDlg(dlgHandle);
 
 #ifdef PP_DUMP_CMDS
 		printf("PP OUT: %s\n", oResp.ToString(true, false, 0, 0xFFFFFFFF).c_str());

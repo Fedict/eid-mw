@@ -105,7 +105,7 @@ bool CPinpadLib::CheckLib(const std::string & csPinpadDir, const char *csFileNam
 
 bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 	const std::string & csPinLabel, const std::string & csReader,
-	unsigned long *pulDlgHandle)
+	BEID_DIALOGHANDLE *pDlgHandle)
 {
 	const char *csMesg = GetGuiMesg(pinpadOperation);
 	if (csMesg == NULL)
@@ -136,13 +136,13 @@ bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 		std::wstring wideMesg = utilStringWiden(csMesg);
 		return EIDMW_OK == DlgDisplayPinpadInfo(dlgOperation,
 			wideReader.c_str(), dlgUsage,
-			widePinLabel.c_str(), wideMesg.c_str(), pulDlgHandle);
+			widePinLabel.c_str(), wideMesg.c_str(), pDlgHandle);
 	}
 }
 
-void CPinpadLib::CloseDlg(unsigned long ulDlgHandle)
+void CPinpadLib::CloseDlg(BEID_DIALOGHANDLE DlgHandle)
 {
-	DlgClosePinpadInfo(ulDlgHandle);
+	DlgClosePinpadInfo(DlgHandle);
 }
 
 const char *CPinpadLib::GetGuiMesg(unsigned char ucOperation)

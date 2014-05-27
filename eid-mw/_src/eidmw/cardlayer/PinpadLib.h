@@ -43,6 +43,12 @@
 #endif
 #include "../dialogs/dialogs.h"
 
+#ifdef __APPLE__
+typedef void* BEID_DIALOGHANDLE;
+#else
+typedef unsigned long BEID_DIALOGHANDLE;
+#endif
+
 namespace eIDMW
 {
 #ifdef EIDMW_PF_EXPORT
@@ -70,10 +76,10 @@ public:
 	/** This method is also called when no pinpad lib is used */
 	bool ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 		const std::string & csPinLabel, const std::string & csReader,
-		unsigned long *pulDlgHandle);
+		BEID_DIALOGHANDLE *pulDlgHandle);
 
 	/** To close the dialog opened by PinCmd() */
-	void CloseDlg(unsigned long ulDlgHandle);
+	void CloseDlg(BEID_DIALOGHANDLE ulDlgHandle);
 
 private:
 	bool CheckLib(const std::string & csPinpadDir, const char *csFileName,
