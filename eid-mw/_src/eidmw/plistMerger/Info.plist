@@ -104,7 +104,6 @@
 
 	<key>ifdVendorID</key>
 	<array>
-		<string>0x072F</string>
 		<string>0x09C3</string>
 		<string>0x09C3</string>
 		<string>0x058F</string>
@@ -161,14 +160,6 @@
 		<string>0x0F14</string>
 		<string>0x0F14</string>
 		<string>0x076B</string>
-		<string>0x072F</string>
-		<string>0x072F</string>
-		<string>0x072F</string>
-		<string>0x072F</string>
-		<string>0x072F</string>
-		<string>0x072F</string>
-		<string>0x072F</string>
-		<string>0x072F</string>
 		<string>0x058F</string>
 		<string>0x0A89</string>
 		<string>0x0A89</string>
@@ -317,7 +308,6 @@
 		<string>0x0E0F</string>
 		<string>0x0416</string>
 		<string>0x0F14</string>
-		<string>0x072F</string>
 		<string>0x09C3</string>
 		<string>0x0529</string>
 		<string>0x03EB</string>
@@ -337,7 +327,6 @@
 
 	<key>ifdProductID</key>
 	<array>
-		<string>0x90CC</string>
 		<string>0x0013</string>
 		<string>0x0014</string>
 		<string>0x9520</string>
@@ -394,14 +383,6 @@
 		<string>0x0037</string>
 		<string>0x0038</string>
 		<string>0xA022</string>
-		<string>0x1204</string>
-		<string>0x8201</string>
-		<string>0x8202</string>
-		<string>0x90CC</string>
-		<string>0x90CC</string>
-		<string>0x90CC</string>
-		<string>0x90CC</string>
-		<string>0x90DB</string>
 		<string>0x9520</string>
 		<string>0x0025</string>
 		<string>0x0030</string>
@@ -550,7 +531,6 @@
 		<string>0x0004</string>
 		<string>0x3815</string>
 		<string>0x0011</string>
-		<string>0x2200</string>
 		<string>0x0008</string>
 		<string>0x0620</string>
 		<string>0x6016</string>
@@ -570,7 +550,6 @@
 
 	<key>ifdFriendlyName</key>
 	<array>
-		<string>ACS ACR 38U-CCID</string>
 		<string>ActivIdentity USB Reader V3</string>
 		<string>ActivIdentity Activkey_Sim</string>
 		<string>Alcor Micro AU9520</string>
@@ -627,14 +606,6 @@
 		<string>XIRING MyLeo</string>
 		<string>XIRING Leo v2</string>
 		<string>XIRING Teo</string>
-		<string>ACS ACR101 ICC Reader</string>
-		<string>ACS APG8201 PINhandy 1</string>
-		<string>ACS APG8201</string>
-		<string>ACS ACR122U</string>
-		<string>ACS ACR100</string>
-		<string>ACS ACR38 plugin</string>
-		<string>ACS AET65</string>
-		<string>ACS CryptoMate64</string>
 		<string>Akasa AK-CR-03</string>
 		<string>Aktiv Rutoken lite</string>
 		<string>Aktiv Rutoken ECP</string>
@@ -778,12 +749,11 @@
 		<string>VASCO DIGIPASS KEY 202</string>
 		<string>VASCO DP855</string>
 		<string>VASCO DP865</string>
-		<string>Vasco DP870</string>
-		<string>Vasco DP920</string>
+		<string>VASCO DIGIPASS 870</string>
+		<string>VASCO DIGIPASS 920</string>
 		<string>VMware Virtual USB CCID</string>
 		<string>Winbond CCID SmartCard Controller</string>
 		<string>XIRING XI-SIGN USB V2</string>
-		<string>ACS ACR122U PICC Interface</string>
 		<string>ActivCard ActivCard USB Reader V2</string>
 		<string>Aladdin eToken PRO USB 72K Java</string>
 		<string>ATMEL VaultIC460</string>
