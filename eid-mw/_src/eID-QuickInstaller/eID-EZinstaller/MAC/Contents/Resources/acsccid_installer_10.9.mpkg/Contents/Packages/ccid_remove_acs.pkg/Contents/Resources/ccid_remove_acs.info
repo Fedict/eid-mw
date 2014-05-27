@@ -1,0 +1,17 @@
+Title Apple CCID Driver Fix
+Version 1.0.1
+Description Remove ACS readers from Apple CCID driver.
+DefaultLocation /
+DeleteWarning 
+
+### Package Flags
+
+NeedsAuthorization NO
+Required NO
+Relocatable NO
+RequiresReboot NO
+UseUserMask NO
+OverwritePermissions NO
+AllowBackRev NO
+RootVolumeOnly NO
+OnlyUpdateInstalledLanguages NO
