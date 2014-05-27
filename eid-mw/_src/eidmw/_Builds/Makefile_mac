@@ -468,6 +468,7 @@ rel_end:
 	@echo "mv $(BELGIUM_DIR) \"$(BELGIUM_DIR_NAME)\"" >> $(POSTFLIGHT)
 	@echo "test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;" >> $(POSTFLIGHT)
 	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der" >> $(POSTFLIGHT)
+	@echo "sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $(INST_DIR)/share/beid/certs/beid-cert-belgiumrca3.der" >> $(POSTFLIGHT)
 	@echo "sudo mv \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/Info_org.plist\" \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/Info_old.plist\";" >> $(POSTFLIGHT)
 	@echo "sudo rm \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/Info_org.plist\";" >> $(POSTFLIGHT)
 	@echo "sudo cp /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist \"$(BELGIUM_DIR_NAME)/$(PLISTMERGER_DIR)/Info_org.plist\";" >> $(POSTFLIGHT)
@@ -545,6 +546,7 @@ rel_end:
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/lib/beid-pkcs11.bundle/Contents/PkgInfo
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca.der
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca2.der
+	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-belgiumrca3.der
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government.der
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government2004.der
 	@chmod a-x $(ROOT_DIR)/$(INST_DIR)/share/beid/certs/beid-cert-government2005.der
