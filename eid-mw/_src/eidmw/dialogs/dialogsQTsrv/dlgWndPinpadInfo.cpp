@@ -63,10 +63,10 @@ dlgWndPinpadInfo::~dlgWndPinpadInfo()
 
 void dlgWndPinpadInfo::closeEvent( QCloseEvent *event)
 {
-	if( m_ulHandle )
+	/*if( m_ulHandle )
 	{
 		unsigned long tmp = m_ulHandle;
 		m_ulHandle = 0;
 		DlgClosePinpadInfo( tmp );
-	}
+	}*/
 }

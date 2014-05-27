@@ -209,12 +209,12 @@ DLGS_EXPORT DlgRet DlgBadPin(DlgPinUsage usage, const wchar_t *csPinName,
 DLGS_EXPORT DlgRet DlgDisplayPinpadInfo(DlgPinOperation operation,
 	const wchar_t *csReader, DlgPinUsage usage, const wchar_t *csPinName,
 	const wchar_t *csMessage,
-	unsigned long *pulHandle);
+	void** puserNotificationRef);
 
 /**
 * Close the pinpad info dialog 
 */
-DLGS_EXPORT void DlgClosePinpadInfo(unsigned long ulHandle);
+DLGS_EXPORT void DlgClosePinpadInfo(void *userNotificationRef);
 
 #ifndef WIN32
 /**
