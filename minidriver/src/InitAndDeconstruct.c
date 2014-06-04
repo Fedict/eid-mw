@@ -163,7 +163,7 @@ DWORD WINAPI   CardAcquireContext
    pCardData->pfnCardAuthenticatePin         = CardAuthenticatePin;
    pCardData->pfnCardGetChallenge            = CardGetChallenge;
    pCardData->pfnCardAuthenticateChallenge   = CardAuthenticateChallenge;
-   pCardData->pfnCardDeauthenticate          = NULL;//CardDeauthenticate;
+   pCardData->pfnCardDeauthenticate          = CardDeauthenticate;
    pCardData->pfnCardAuthenticateEx          = CardAuthenticateEx;
    pCardData->pfnCardGetChallengeEx          = CardGetChallengeEx;
    pCardData->pfnCardDeauthenticateEx        = CardDeauthenticateEx; /* This can be an optional export */
