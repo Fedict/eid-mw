@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -175,6 +175,39 @@ unsigned char CPkiCard::PinUsage2Pinpad(const tPin & Pin, const tPrivKey *pKey)
 	return ucPinpadUsage;
 }
 
+void CPkiCard::AskPin(tPinOperation operation, const tPin & Pin,
+        std::string & csPin1, std::string & csPin2,
+				const tPrivKey *pKey
+        )
+{
+	bool bAskPIN = csPin1.empty();
+	bool bUsePinpad = bAskPIN ? m_poPinpad->UsePinpad(operation) : false;
+
+	// If no Pin(s) provided and it's no Pinpad reader -> ask Pins
+	if (bAskPIN && !bUsePinpad)
+	{
+		showPinDialog(operation, Pin, csPin1, csPin2, pKey);
+	}
+}
+
+bool CPkiCard::AskPinRetry(tPinOperation operation, const tPin & Pin,
+													 unsigned long ulRemaining, const tPrivKey *pKey)
+{
+	bool bRetry = false;
+	bool bUsePinpad = m_poPinpad->UsePinpad(operation);
+
+	// Bad PIN: show a dialog to ask the user to try again
+	// PIN blocked: show a dialog to tell the user
+	if (!bUsePinpad)
+	{
+		DlgPinUsage usage = PinUsage2Dlg(Pin, pKey);
+		DlgRet dlgret = DlgBadPin(usage, utilStringWiden(Pin.csLabel).c_str(), ulRemaining);
+		if (0 != ulRemaining && DLG_RETRY == dlgret)
+			bRetry = true;
+	}
+	return bRetry;
+}
+
 bool CPkiCard::PinCmd(tPinOperation operation, const tPin & Pin,
         const std::string & csPin1, const std::string & csPin2,
         unsigned long & ulRemaining, const tPrivKey *pKey)
@@ -192,7 +225,7 @@ bool CPkiCard::PinCmd(tPinOperation operation, const tPin & Pin,
 	bool bUsePinpad = bAskPIN ? m_poPinpad->UsePinpad(operation) : false;
 
 bad_pin:
-    // If no Pin(s) provided and it's no Pinpad reader -> ask Pins
+     //If no Pin(s) provided and it's no Pinpad reader -> ask Pins
     if (bAskPIN && !bUsePinpad)
 	{
         showPinDialog(operation, Pin, csReadPin1, csReadPin2, pKey);
@@ -271,6 +304,39 @@ bool CPkiCard::LogOff(const tPin & Pin)
 	return false;
 }
 
+CByteArray CPkiCard::VerifyAndSign(const tPrivKey & key, const tPin & Pin,
+        unsigned long algo, const CByteArray & oData)
+{
+	CByteArray retBytes;
+    try
+    {
+        retBytes = SignInternal(key, algo, oData, &Pin);				
+    }
+		catch(CMWException & e)
+		{
+			if ((unsigned)e.GetError() == EIDMW_ERR_PIN_BAD)
+			{
+				MWLOG(LEV_INFO, MOD_CAL, L"     Couldn't sign, asking PIN and trying again");
+				// Bad PIN: show a dialog to ask the user to try again
+				bool retry = AskPinRetry(PIN_OP_VERIFY,Pin, m_ulRemaining,&key);
+				if(retry)
+					retBytes = VerifyAndSign(key, Pin, algo, oData);	
+				else
+					throw e;
+			}
+			else if ((unsigned)e.GetError() == EIDMW_ERR_PIN_BLOCKED)
+			{
+				MWLOG(LEV_WARN, MOD_CAL, L"     PIN blocked");
+				// PIN blocked: show a dialog to tell the user
+				AskPinRetry(PIN_OP_VERIFY,Pin,0,&key);
+				throw e;
+			}
+			else
+				throw e;
+		}				
+	return retBytes;
+}
+
 CByteArray CPkiCard::Sign(const tPrivKey & key, const tPin & Pin,
         unsigned long algo, const CByteArray & oData)
 {
@@ -304,8 +370,8 @@ CByteArray CPkiCard::Sign(const tPrivKey & key, const tPin & Pin,
     {
       if ((unsigned)e.GetError() == EIDMW_ERR_NOT_AUTHENTICATED)
         {
-			MWLOG(LEV_INFO, MOD_CAL, L"     Couldn't sign, asking PIN and trying again");
-            return SignInternal(key, algo, oData, &Pin);
+					MWLOG(LEV_INFO, MOD_CAL, L"     Couldn't sign, asking PIN and trying again");
+					return VerifyAndSign(key, Pin, algo, oData);	
         }
         else
             throw e;

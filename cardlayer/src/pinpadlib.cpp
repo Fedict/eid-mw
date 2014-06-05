@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2011 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -105,7 +105,7 @@ bool CPinpadLib::CheckLib(const std::string & csPinpadDir, const char *csFileNam
 
 bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 	const std::string & csPinLabel, const std::string & csReader,
-	unsigned long *pulDlgHandle)
+	BEID_DIALOGHANDLE *pDlgHandle)
 {
 #ifndef NO_DIALOGS
 	const char *csMesg = GetGuiMesg(pinpadOperation);
@@ -137,7 +137,7 @@ bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 		std::wstring wideMesg = utilStringWiden(csMesg);
 		return EIDMW_OK == DlgDisplayPinpadInfo(dlgOperation,
 			wideReader.c_str(), dlgUsage,
-			widePinLabel.c_str(), wideMesg.c_str(), pulDlgHandle);
+			widePinLabel.c_str(), wideMesg.c_str(), pDlgHandle);
 	}
 #else
   return false;
@@ -145,10 +145,10 @@ bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 
 }
 
-void CPinpadLib::CloseDlg(unsigned long ulDlgHandle)
+void CPinpadLib::CloseDlg(BEID_DIALOGHANDLE DlgHandle)
 {
 #ifndef NO_DIALOGS
-	DlgClosePinpadInfo(ulDlgHandle);
+	DlgClosePinpadInfo(DlgHandle);
 #endif
 }
 

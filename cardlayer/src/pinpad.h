@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -60,8 +60,12 @@ protected:
 	CByteArray PinpadControl(unsigned long ulControl, const CByteArray & oCmd,
 		tPinOperation operation, unsigned char ucPintype,
 		const std::string & csPinLabel,	bool bShowDlg);
+	CByteArray PinpadPPDU(BYTE cbControl, const CByteArray & oCmd,
+		tPinOperation operation, unsigned char ucPintype,
+	const std::string & csPinLabel,	bool bShowDlg);
 	void UnloadPinpadLib();
 	void GetFeatureList();
+	void GetPPDUFeatureList();
 	unsigned long GetLanguage();
 	unsigned char PinOperation2Lib(tPinOperation operation);
 
@@ -106,6 +110,7 @@ protected:
 	unsigned long m_ioctlChangeStart;
 	unsigned long m_ioctlChangeFinish;
 	unsigned long m_ioctlChangeDirect;
+	bool m_bCanUsePPDU;
 };
 
 }

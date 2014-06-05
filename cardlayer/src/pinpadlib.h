@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -39,10 +39,15 @@
 #include "../common/src/bytearray.h"
 #include "pinpad2.h"
 #if defined WIN32 && defined BEID_OLD_PINPAD
-#include "old/pinpadliboldbeid.h"
+#include "old/PinpadLibOldBeid.h" // For the old BE eID pinpad libs
 #endif
 #ifndef NO_DIALOGS
 #include "../dialogs/src/dialogs.h"
+#ifdef __APPLE__
+typedef void* BEID_DIALOGHANDLE;
+#else
+typedef unsigned long BEID_DIALOGHANDLE;
+#endif
 #endif
 
 namespace eIDMW
@@ -72,10 +77,10 @@ public:
 	/** This method is also called when no pinpad lib is used */
 	bool ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 		const std::string & csPinLabel, const std::string & csReader,
-		unsigned long *pulDlgHandle);
+		BEID_DIALOGHANDLE *pulDlgHandle);
 
 	/** To close the dialog opened by PinCmd() */
-	void CloseDlg(unsigned long ulDlgHandle);
+	void CloseDlg(BEID_DIALOGHANDLE ulDlgHandle);
 
 private:
 	bool CheckLib(const std::string & csPinpadDir, const char *csFileName,

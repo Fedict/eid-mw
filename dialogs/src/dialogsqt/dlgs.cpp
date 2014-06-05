@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2008-2009 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -38,6 +38,9 @@
 #include "mwexception.h"
 #include "eiderrors.h"
 #include "config.h"
+
+#include <CoreFoundation/CFNumber.h>
+#include <CoreFoundation/CFUserNotification.h>
 
 using namespace eIDMW;
  
@@ -212,116 +215,93 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
 }
 
 DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
-      const wchar_t *wsReader, DlgPinUsage usage, const wchar_t *wsPinName,
-      const wchar_t *wsMessage,
-			unsigned long *pulHandle)
+											   const wchar_t *wsReader, DlgPinUsage usage, const wchar_t *wsPinName,
+											   const wchar_t *wsMessage,
+											   void **puserNotificationRef)
 {
-  DlgRet lRet = DLG_CANCEL;
+    DlgRet lRet = DLG_CANCEL;
+	CFArrayRef           titlesArray;
 
-  DlgDisplayPinpadInfoArguments* oData;
-  SharedMem oShMemory;
-  std::string csReadableFilePath;
+	SharedMem oShMemory;
+	std::string csReadableFilePath;
+    const wchar_t * Title;
+	CFUserNotificationRef userNotificationRef;
+	SInt32 error = 0;
+    char datachar[256];
+    char titlechar[256];
+    CFOptionFlags optionFlags;
+	
+	const void* keys[] = {kCFUserNotificationAlertHeaderKey,
+		kCFUserNotificationAlertMessageKey};
+	
+    if( usage == DLG_PIN_SIGN )
+	{
+        optionFlags = kCFUserNotificationCautionAlertLevel;
+		Title=GETSTRING_DLG(YouAreAboutToMakeALegallyBindingElectronic);//SigningWith);
+	}
+	else
+	{
+        optionFlags = kCFUserNotificationPlainAlertLevel;
+		Title=GETSTRING_DLG(PleaseEnterYourPinOnThePinpadReader);
+	}
 
-  try {
-	MWLOG(LEV_DEBUG, MOD_DLG,L"  eIDMW::DlgDisplayPinpadInfo called");
-    csReadableFilePath = CreateRandomFile();
+    wcstombs(datachar,wsReader,sizeof(datachar));
+    datachar[255]='\0';
+    
+    CFStringRef datacharRefBytes = CFStringCreateWithBytes (
+															kCFAllocatorDefault,
+															(const UInt8 *)datachar,
+															strlen(datachar),
+															kCFStringEncodingUTF8,
+															false
+															);
+    
+    wcstombs(titlechar,Title,sizeof(titlechar));
+    titlechar[255]='\0';
+    CFStringRef titlecharRefBytes = CFStringCreateWithBytes (
+															 kCFAllocatorDefault,
+															 (const UInt8 *)titlechar,
+															 strlen(titlechar),
+															 kCFStringEncodingUTF8,
+															 false
+															 );
+    
+	const void* textFieldTitles[] = {Title};
+    
+    titlesArray = CFArrayCreate(NULL, textFieldTitles, 1, NULL);
+	
+	const void* values[] = {titlecharRefBytes,
+        datacharRefBytes};
+	
+	CFDictionaryRef parameters = CFDictionaryCreate(0, keys, values,
+													sizeof(keys)/sizeof(*keys), NULL,
+													NULL);
+    
+	userNotificationRef = CFUserNotificationCreate (kCFAllocatorDefault, //CFAllocatorRef allocator,
+													30, //CFTimeInterval timeout,
+													optionFlags,//CFOptionFlags flags,
+													&error,//SInt32 *error,
+													parameters);//CFDictionaryRef dictionary
+	
+	*puserNotificationRef = userNotificationRef;
 
-    oShMemory.Attach(sizeof(DlgDisplayPinpadInfoArguments),csReadableFilePath.c_str(),(void**)&oData);
+	CFRelease(titlesArray);
+	CFRelease(parameters);
 
-    // collect the arguments into the struct placed 
-    // on the shared memory segment
-
-    oData->operation = operation;
-    wcscpy_s(oData->reader,sizeof(oData->reader)/sizeof(wchar_t),wsReader);
-    oData->usage = usage;
-    wcscpy_s(oData->pinName,sizeof(oData->pinName)/sizeof(wchar_t),wsPinName);
-    wcscpy_s(oData->message,sizeof(oData->message)/sizeof(wchar_t),wsMessage);
-    oData->infoCollectorIndex = ++dlgPinPadInfoCollectorIndex;
-
-    CallQTServer(DLG_DISPLAY_PINPAD_INFO,csReadableFilePath.c_str());
-    lRet = oData->returnValue;
-
-    if (lRet != DLG_OK) {
-      throw CMWEXCEPTION(EIDMW_ERR_SYSTEM);
-    }
-
-    // for the killing need to store: 
-    // - the shared memory area to be released (unique with the filename?)
-    // - the child process ID
-    // - the handle (because the user will use it)
-
-    DlgRunningProc *ptRunningProc = new DlgRunningProc();
-    ptRunningProc->iSharedMemSegmentID = oShMemory.getID();
-    ptRunningProc->csRandomFilename = csReadableFilePath;
-  
-    ptRunningProc->tRunningProcess = oData->tRunningProcess;
-
-    dlgPinPadInfoCollector[dlgPinPadInfoCollectorIndex] = ptRunningProc;
-
-    if( pulHandle )
-      *pulHandle = dlgPinPadInfoCollectorIndex;
-
-    oShMemory.Detach(oData);
-  } catch(...) {
-
-    oShMemory.Detach(oData);
-
-    // delete the random file
-    DeleteFile(csReadableFilePath.c_str());
-	  
-	  MWLOG(LEV_ERROR, MOD_DLG,L"  eIDMW::DlgDisplayPinpadInfo failed");
-
-    return DLG_ERR;
-  }
-  return lRet;
-  
+    return lRet;
 }
 
 
 
-DLGS_EXPORT void eIDMW::DlgClosePinpadInfo( unsigned long ulHandle )
+DLGS_EXPORT void eIDMW::DlgClosePinpadInfo( void *theUserNotificationRef )
 {
-  // check if we have this handle
-  std::map < unsigned long,DlgRunningProc* >::iterator pIt = 
-    dlgPinPadInfoCollector.find(ulHandle);
-
-  if( pIt != dlgPinPadInfoCollector.end()){
-
-    // check if the process is still running
-    // and send SIGTERM if so
-    if( ! kill(pIt->second->tRunningProcess,0) ){
-
-      MWLOG(LEV_DEBUG, MOD_DLG,L"  eIDMW::DlgClosePinpadInfo :  sending kill signal to process %d",
-	    pIt->second->tRunningProcess);
-
-      if( kill(pIt->second->tRunningProcess, SIGINT) ) {
-
-	MWLOG(LEV_ERROR, MOD_DLG, L"  eIDMW::DlgClosePinpadInfo sent signal SIGINT to proc %d : %s ", 
-	      pIt->second->tRunningProcess, strerror(errno) );
-
-	throw CMWEXCEPTION(EIDMW_ERR_SIGNAL);
-      }
-
-    } else {
-      MWLOG(LEV_ERROR, MOD_DLG, L"  eIDMW::DlgClosePinpadInfo sent signal 0 to proc %d : %s ", 
-	    pIt->second->tRunningProcess, strerror(errno) );
-      throw CMWEXCEPTION(EIDMW_ERR_SIGNAL);
-    }
-
-    // delete the random file
-    DeleteFile(pIt->second->csRandomFilename.c_str());
-
-    // delete the map entry
-
-    delete pIt->second;
-    pIt->second = NULL;
-    dlgPinPadInfoCollector.erase(pIt);
-
-
-    // memory is cleaned up in the child process
-
-  }
-
+    SInt32 error = 0;
+    
+    CFUserNotificationRef userNotificationRef = (CFUserNotificationRef)theUserNotificationRef;
+    error = CFUserNotificationCancel (userNotificationRef);
+    
+    CFRelease(userNotificationRef);
+	
 }
 
 DLGS_EXPORT void eIDMW::DlgCloseAllPinpadInfo()
@@ -391,7 +371,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
         wcscpy_s(oData->mesg,sizeof(oData->mesg)/sizeof(wchar_t),csMesg);
     }
     oData->buttons = ulButtons;
-    oData->EnterButton = ulEnterButton;
+	oData->EnterButton = ulCancelButton;//ulEnterButton;
     oData->CancelButton = ulCancelButton;
 
     CallQTServer(DLG_DISPLAY_MODAL,csReadableFilePath.c_str());
