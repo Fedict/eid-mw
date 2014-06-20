@@ -309,12 +309,12 @@
     <DirectoryRef Id="System64Folder">
 
       <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="no" Win64="yes">
-        <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\x64_Release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
+        <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2012\binaries\x64_Release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\vs_2012\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
       </Component>
 
       <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="no" Win64="yes">
-        <File Id="MINIDRIVER_64.dll" Name="beidmdrv64.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\x64_release\beidmdrv64.dll" />
+        <File Id="MINIDRIVER_64.dll" Name="beidmdrv64.dll" KeyPath="yes" Source="..\..\..\vs_2012\binaries\x64_release\beidmdrv64.dll" />
       </Component>
 
     </DirectoryRef>
@@ -322,17 +322,17 @@
     <DirectoryRef Id="SystemFolder">
 
       <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes" Win64="no">
-        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv.dll" />
+        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\vs_2012\binaries\win32_release\beidmdrv.dll" />
       </Component>
 
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="yes" Win64="no">
-        <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidCSP.dll" />
-        <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beidCSPlib.dll" />
+        <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\vs_2012\binaries\win32_release\beidCSP.dll" />
+        <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\vs_2012\binaries\win32_release\beidCSPlib.dll" />
       </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes" Win64="no">
-        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2012\binaries\win32_release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\vs_2012\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>
 
     </DirectoryRef>

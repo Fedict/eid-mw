@@ -271,7 +271,7 @@
 	<DirectoryRef Id="BEIDCERTPROPROOTFOLDER">
 	<!-- Certificate Propagation Service is not yet available on Windows XP, therefore the beidsccertprop will register the certificates instead. -->
       <Component Id="beidsccertproptool" Guid="8F0AC506-4863-47ac-8A92-7B8FCE9ABC64" >
-        <File Id="beidsccertprop.exe" Name="beidsccertprop.exe" Source="..\..\..\VS_2010\Binaries\Win32_Release\beidsccertprop.exe" KeyPath="yes"/>
+        <File Id="beidsccertprop.exe" Name="beidsccertprop.exe" Source="..\..\..\VS_2012\Binaries\Win32_Release\beidsccertprop.exe" KeyPath="yes"/>
       </Component>
       
 	  <Component Id="beidsccertproptool_autostart" Guid="F02E7164-F7EA-4c06-A2AC-A3BEE214EF49" >
@@ -306,17 +306,17 @@
     <DirectoryRef Id="SystemFolder">
 
       <Component Id="beidmdrvsystem32" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" Permanent="no" Win64="no">
-        <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="..\..\..\vs_2010\binaries\win32_release\beidmdrv.dll" KeyPath="yes" DiskId="1" />
+        <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="..\..\..\VS_2012\binaries\win32_release\beidmdrv.dll" KeyPath="yes" DiskId="1" />
       </Component>
 
       <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="no">
-        <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidCSP.dll" />
-        <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\win32_release\beidCSPlib.dll" />
+        <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\VS_2012\binaries\win32_release\beidCSP.dll" />
+        <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\VS_2012\binaries\win32_release\beidCSPlib.dll" />
       </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="no">
-        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\vs_2010\binaries\win32_release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\vs_2010\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\VS_2012\binaries\win32_release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\VS_2012\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>
 
     </DirectoryRef>
