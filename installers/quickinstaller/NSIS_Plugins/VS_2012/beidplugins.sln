@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beid", "..\beidread\VS_2012\beid.vcxproj", "{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beidread_test", "..\beidread_test\VS_2012\beidread_test.vcxproj", "{AD1249FE-22CA-471E-8706-8E0A4FE9F098}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "driver_installer", "..\driver_installer\VS_2012\driver_installer.vcxproj", "{A097BFAA-C09A-4B0B-B9D4-2D8DE612B6F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}.Debug|Win32.Build.0 = Debug|Win32
+		{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}.Release|Win32.ActiveCfg = Release|Win32
+		{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}.Release|Win32.Build.0 = Release|Win32
+		{AD1249FE-22CA-471E-8706-8E0A4FE9F098}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AD1249FE-22CA-471E-8706-8E0A4FE9F098}.Debug|Win32.Build.0 = Debug|Win32
+		{AD1249FE-22CA-471E-8706-8E0A4FE9F098}.Release|Win32.ActiveCfg = Release|Win32
+		{AD1249FE-22CA-471E-8706-8E0A4FE9F098}.Release|Win32.Build.0 = Release|Win32
+		{A097BFAA-C09A-4B0B-B9D4-2D8DE612B6F1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A097BFAA-C09A-4B0B-B9D4-2D8DE612B6F1}.Debug|Win32.Build.0 = Debug|Win32
+		{A097BFAA-C09A-4B0B-B9D4-2D8DE612B6F1}.Release|Win32.ActiveCfg = Release|Win32
+		{A097BFAA-C09A-4B0B-B9D4-2D8DE612B6F1}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
