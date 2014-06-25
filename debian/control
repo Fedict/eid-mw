@@ -1,6 +1,6 @@
 Source: eid-mw
 Priority: optional
-Maintainer: Frank Marien <frank.marien@fedict.be>
+Maintainer: Wouter Verhelst <wouter.verhelst@fedict.be>
 Build-Depends: debhelper (>= 7.0.50), autotools-dev, libpcsclite-dev, libgtk2.0-dev, libtool
 Standards-Version: 3.8.3
 Section: libs
