@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2012 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -223,9 +223,9 @@ return (ret);
 
 
 #define WHERE "p11_new_slot_object()"
-int p11_new_slot_object(P11_SLOT *pSlot, CK_ULONG *phObject)
+CK_RV p11_new_slot_object(P11_SLOT *pSlot, CK_ULONG *phObject)
 {
-int ret = 0;
+CK_RV ret = CKR_OK;
 unsigned int index = 0;
 unsigned int size = 0;
 unsigned int diff = 0;
@@ -342,9 +342,9 @@ return (CKR_ATTRIBUTE_TYPE_INVALID);
 
 
 #define WHERE "p11_copy_object()"
-int p11_copy_object(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_PTR pObject)
+CK_RV p11_copy_object(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_PTR pObject)
 {
-int ret = CKR_OK;
+CK_RV ret = CKR_OK;
 unsigned int i;
 
 //check values are within limits
@@ -385,9 +385,9 @@ return (ret);
 
 
 #define WHERE "p11_add_slot_object()"
-int p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken, CK_ULONG type, CK_ULONG id,  CK_BBOOL bPrivate, CK_ULONG *phObject)
+CK_RV p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken, CK_ULONG type, CK_ULONG id,  CK_BBOOL bPrivate, CK_ULONG *phObject)
 {
-int ret = CKR_OK;
+CK_RV ret = CKR_OK;
 P11_OBJECT *pObject = NULL;
 //unsigned int hObject = 0;
 
@@ -465,18 +465,18 @@ return (ret);
 
 
 #define WHERE "p11_add_slot_ID_object()"
-int p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
+CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
 						   CK_ULONG type, CK_BBOOL bPrivate, CK_ULONG *phObject,
 						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen, CK_VOID_PTR pobjectID, CK_ULONG objectIDLen)
 {
-int ret = CKR_OK;
+CK_RV ret = CKR_OK;
 P11_OBJECT *pObject = NULL;
 //unsigned int hObject = 0;
 
 *phObject = 0;
 
 ret = p11_new_slot_object(pSlot, phObject);
-if ((ret != 0) || (*phObject == 0))
+if ((ret != CKR_OK) || (*phObject == 0))
    {
    log_trace(WHERE, "E: could not add new slot object during init of objects");
    return(ret);
@@ -569,12 +569,12 @@ return (ret);
 #undef WHERE 
 
 
-int p11_clean_object(P11_OBJECT *pObject)
+void p11_clean_object(P11_OBJECT *pObject)
 {
 	if (pObject == NULL)
-		return (0);
+		return;
 	if(pObject->count > MAX_OBJECT_SIZE)
-		return (0);
+		return;
 	//remove attributes from object
 	if (pObject->pAttr != NULL)
 	{
@@ -597,7 +597,7 @@ int p11_clean_object(P11_OBJECT *pObject)
 	pObject->inuse = 0;
 	pObject->state = 0;
 
-	return(0);
+	return;
 }
 
 void p11_clean_attributelist(CK_ATTRIBUTE_PTR pAttrList, CK_ULONG ulCount)
@@ -626,9 +626,9 @@ void p11_clean_finddata(P11_FIND_DATA* pFindData)
 
 
 #define WHERE "p11_find_slot_object()"
-int p11_find_slot_object(P11_SLOT *pSlot, CK_ULONG type, CK_ULONG id,  P11_OBJECT **ppObject)
+CK_RV p11_find_slot_object(P11_SLOT *pSlot, CK_ULONG type, CK_ULONG id,  P11_OBJECT **ppObject)
 {
-int ret = CKR_OK;
+CK_RV ret = CKR_OK;
 P11_OBJECT *pObject = NULL;
 unsigned int h = 0;
 CK_VOID_PTR  p = NULL;

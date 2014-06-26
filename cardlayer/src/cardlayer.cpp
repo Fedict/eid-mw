@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2013 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -50,6 +50,23 @@ void CCardLayer::CancelActions(void)
 {
 	m_oContext.m_oPCSC.Cancel();
 }
+
+/*void CCardLayer::StartPCSCService(void)
+{
+	m_oContext.m_oPCSC.StartPCSCService();
+}
+
+void CCardLayer::PCSCReEstablishContext()
+{
+	m_oContext.m_oPCSC.ReleaseContext();
+
+	m_oContext.m_oPCSC.EstablishContext();
+}
+
+long CCardLayer::PCSCServiceRunning(bool* pRunning)
+{
+	return m_oContext.m_oPCSC.PCSCServiceRunning(pRunning);
+}*/
 
 long CCardLayer::GetStatusChange(unsigned long ulTimeout,
 															 SCARD_READERSTATEA *txReaderStates,

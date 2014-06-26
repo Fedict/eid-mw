@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2012 FedICT.
+* Copyright (C) 2008-2014 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -96,6 +96,9 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 		p11_set_init(BEIDP11_INITIALIZED);
 		log_trace(WHERE, "S: Initialize this PKCS11 Module");
 		log_trace(WHERE, "S: =============================");
+/*#ifdef PKCS11_FF
+	cal_init_pcsc();
+#endif*/
 	}
 
 cleanup:
@@ -134,7 +137,7 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 	//g_final = 0; /* Belpic */
 	p11_set_init(BEIDP11_DEINITIALIZING);
 
-	ret = cal_close();
+	cal_close();
 
 	/* Release and destroy the mutex */
 	// mutex might still be in use by C_waitforslotlist
@@ -269,7 +272,13 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
 
 		if (tokenPresent == CK_TRUE)
 		{
-			if (cal_token_present(h))
+			int pPresent = 0;
+			ret = cal_token_present(h, &pPresent);
+			if(ret != CKR_OK)
+			{
+				goto cleanup;
+			}
+			if (pPresent)
 			{
 				log_trace(WHERE, "I: cal_token_present");
 				c++;
@@ -335,6 +344,8 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 	CK_RV ret;
 	P11_SLOT *slot;
 	static int l=0;
+	int isPresent = 0;
+
 	log_trace(WHERE, "I: enter");
 
 	if (p11_get_init() != BEIDP11_INITIALIZED)
@@ -376,9 +387,13 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 	pInfo->firmwareVersion.minor = 0;
 
 	//check if token is present
-	if (cal_token_present(slotID))
-		//VSC:don't remove other flags
+	ret = (cal_token_present(slotID, &isPresent));
+	if(ret != CKR_OK)
+		goto cleanup;
+	if (isPresent)
+	{
 		pInfo->flags |= CKF_TOKEN_PRESENT;
+	}
 
 cleanup:
 	p11_unlock();
@@ -540,6 +555,8 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 	P11_SLOT *p11Slot = NULL;
 	int i = 0;
 	CK_BBOOL locked = CK_FALSE;
+	CK_BBOOL bRunning = CK_TRUE;
+	long error = 0;
 
 	log_trace(WHERE, "I: enter");
 
@@ -548,7 +565,37 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 	{
 		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
-	}		
+	}	
+
+#ifdef PKCS11_FF
+	/*error = cal_check_pcsc(&bRunning);
+	if(bRunning == CK_FALSE)
+	{
+		while( (error == 0) && (bRunning == CK_FALSE) )
+		{
+			cal_wait (500);
+			error = cal_check_pcsc(&bRunning);
+
+			//check if pkcs11 isn't finalizing
+			if (p11_get_init() != BEIDP11_INITIALIZED)
+			{
+				log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NO_LONGER_INITIALIZED");
+				return (CKR_CRYPTOKI_NOT_INITIALIZED);
+			}	
+		}
+		//pcsc just got launched, so establish a new context
+		ret = p11_lock();
+		if (ret != CKR_OK)
+		{
+			log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
+			return ret;
+		}
+		//check if nowhere else the context has been reestablished
+		//TODO : if()
+		cal_re_establish_context();
+		p11_unlock();
+	}*/
+#endif
 
 	ret = p11_lock();
 	if (ret != CKR_OK)

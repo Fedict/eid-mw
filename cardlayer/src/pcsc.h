@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2013 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -121,7 +121,11 @@ public:
 															 SCARD_READERSTATEA *txReaderStates,
 															 unsigned long ulReaderCount);
 
+	//checks if the pcsc service is running
+	//long PCSCServiceRunning(bool* pRunning);
 
+	//attempt to start the pcsc service is if ain't running yet
+	//void StartPCSCService();
 
 	bool Status(const std::string &csReader);
 

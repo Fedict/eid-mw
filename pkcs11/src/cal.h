@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2012 FedICT.
+* Copyright (C) 2008-2014 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -20,6 +20,7 @@
 #if !defined(__CAL__)
 #define __CAL__
 
+#include <stdio.h>
 #include "beid_p11.h"
 //#include "CardLayer.h"
 
@@ -31,6 +32,7 @@ extern "C" {
 	int cal_getgnFFReaders(void);
 	void cal_setgnFFReaders(int newgnFFReaders);
 	void cal_incgnFFReaders(void);
+	void cal_re_establish_context(void);
 #endif
 
 #define CAL_MECHANISM_TABLE  { \
@@ -194,30 +196,33 @@ typedef struct BEID_DATA_LABELS_NAME {
 
 
 
-int cal_init();
-int cal_close();
-int cal_clean_slots(void);
-int cal_init_slots(void);
-int cal_token_present(CK_SLOT_ID hSlot);
+CK_RV cal_init();
+//void cal_init_pcsc();
+long cal_check_pcsc(CK_BBOOL* pRunning);
+void cal_wait (int millisecs);
+void cal_close();
+void cal_clean_slots(void);
+CK_RV cal_init_slots(void);
+CK_RV cal_token_present(CK_SLOT_ID hSlot, int *pPresent);
 CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo);
 CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount);
-int cal_connect(CK_SLOT_ID hSlot);
-int cal_disconnect(CK_SLOT_ID hSlot);
-int cal_init_objects(CK_SLOT_ID hSlot);
+CK_RV cal_connect(CK_SLOT_ID hSlot);
+CK_RV cal_disconnect(CK_SLOT_ID hSlot);
+CK_RV cal_init_objects(CK_SLOT_ID hSlot);
 CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo);
-int cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging);
-int cal_logout(CK_SLOT_ID hSlot);
-int cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_newpin, CK_CHAR_PTR newpin);
-int cal_get_card_data(CK_SLOT_ID hSlot);
-int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType);
-int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject);
-int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out);
-int cal_validate_session(P11_SESSION *pSession);
-int cal_update_token(CK_SLOT_ID hSlot);
+CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging);
+CK_RV cal_logout(CK_SLOT_ID hSlot);
+CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_newpin, CK_CHAR_PTR newpin);
+CK_RV cal_get_card_data(CK_SLOT_ID hSlot);
+CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType);
+CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject);
+CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out);
+CK_RV cal_validate_session(P11_SESSION *pSession);
+CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus);
 CK_RV cal_wait_for_slot_event(int block);
 CK_RV cal_wait_for_the_slot_event(int block);
 CK_RV cal_get_slot_changes(int *ph);
-int cal_refresh_readers();
+CK_RV cal_refresh_readers();
 
 #ifdef __cplusplus
   }

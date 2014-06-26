@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2013 FedICT.
+* Copyright (C) 2008-2014 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -47,7 +47,7 @@ extern "C" {
 	extern bool						gSlotsChanged;
 	extern P11_SLOT       gpSlot[MAX_SLOTS];
 	//local functions
-	int cal_translate_error(const char *WHERE, long err);
+	CK_RV cal_translate_error(const char *WHERE, long err);
 	int cal_map_status(tCardStatus calstatus);
 }
 
@@ -65,15 +65,45 @@ void cal_incgnFFReaders(void)
 {	
 	gnFFReaders++; 
 }
+
+void cal_re_establish_context(void)
+{
+	oCardLayer->PCSCReEstablishContext();
+}
+
 #endif
 
 void cal_free_reader_states(SCARD_READERSTATEA* txReaderStates, unsigned long ulnReaders);
+/*
+long cal_check_pcsc(CK_BBOOL* pRunning)
+{
+	//allthough both CK_BBOOL and bool are 1 byte at the moment
+	bool pbRunning = false;
+	long error = 0;
+	error = oCardLayer->PCSCServiceRunning(&pbRunning);
+	if (pbRunning == true)
+		*pRunning = CK_TRUE;
+	else
+		*pRunning = CK_FALSE;
+	return error;
+}*/
+
+void cal_wait (int millisecs)
+{
+	CThread::SleepMillisecs(millisecs);
+}
+
+/*#define WHERE "cal_init_pcsc()"
+void cal_init_pcsc()
+{
+	oCardLayer->StartPCSCService();
+}
+#undef WHERE*/
 
 #define WHERE "cal_init()"
-int cal_init()
+CK_RV cal_init()
 {
-	int ret = 0;
-	long lRet = 0;
+	CK_RV ret = CKR_OK;
 
 	if (gRefCount > 0)
 		return 0;
@@ -89,7 +119,6 @@ int cal_init()
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
@@ -109,10 +138,8 @@ int cal_init()
 
 
 #define WHERE "cal_close()"
-int cal_close()
+void cal_close()
 {
-	int ret = 0;
-
 	//Reference count countdown, clean if 0
 	//if (--gRefCount > 0)
 	//   return (0);
@@ -125,14 +152,14 @@ int cal_close()
 	oCardLayer = NULL;
 	oReadersInfo   = NULL;
 
-	ret = cal_clean_slots();
+	cal_clean_slots();
 
-	return (ret);
+	return;
 }
 #undef WHERE
 
 #define WHERE "cal_clean_slots()"
-int cal_clean_slots()
+void cal_clean_slots()
 {
 	int ret = 0;
 	unsigned int i;
@@ -162,17 +189,16 @@ int cal_clean_slots()
 			pSlot->pobjects = NULL;
 		}
 	}
-	return ret;
+	return;
 }
 #undef WHERE
 
 
 
 #define WHERE "cal_init_slots()"
-int cal_init_slots(void)
+CK_RV cal_init_slots(void)
 {
-	unsigned long ret = 0;
-	long lRet = 0;
+	CK_RV ret = CKR_OK;
 	unsigned int i;
 
 	try
@@ -193,7 +219,6 @@ int cal_init_slots(void)
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
@@ -204,22 +229,31 @@ int cal_init_slots(void)
 
 
 #define WHERE "cal_token_present()"
-int cal_token_present(CK_SLOT_ID hSlot)
+CK_RV cal_token_present(CK_SLOT_ID hSlot, int* pPresent)
 {
+	CK_RV ret = CKR_OK;
 	int status;
 
-	status = cal_update_token(hSlot);
+	ret = cal_update_token(hSlot, &status);
+	if (ret != CKR_OK) 
+	{
+		return(ret);
+	}
+
 	switch (status)
 	{
 	case P11_CARD_INSERTED:
 	case P11_CARD_STILL_PRESENT:
-	case P11_CARD_OTHER:          return (1);
+	case P11_CARD_OTHER:
+		*pPresent = 1;
+		break;
 	case P11_CARD_NOT_PRESENT:
 	case P11_CARD_REMOVED:
-	default:                      return(0);
+	default: 
+		*pPresent = 0;
 	}
 
-	return (0);
+	return (ret);
 }
 #undef WHERE
 
@@ -229,9 +263,8 @@ int cal_token_present(CK_SLOT_ID hSlot)
 #define WHERE "cal_get_token_info()"
 CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 {
-	int ret = CKR_OK;
+	CK_RV ret = CKR_OK;
 	int status;
-	long lRet = 0;
 	P11_SLOT *pSlot = NULL;
 
 	pInfo->flags = 0;
@@ -245,7 +278,9 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 
 	std::string reader = pSlot->name;
 
-	status = cal_update_token(hSlot);
+	ret = cal_update_token(hSlot, &status);
+	if (ret != CKR_OK) goto cleanup;
+
 	if ((status == P11_CARD_REMOVED) || (status == P11_CARD_NOT_PRESENT) )
 	{
 		ret = CKR_TOKEN_NOT_PRESENT;
@@ -275,7 +310,6 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
@@ -324,9 +358,8 @@ cleanup:
 #define WHERE "cal_get_mechanism_list()"
 CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount)
 {
-	int ret = CKR_OK;
+	CK_RV ret = CKR_OK;
 	int status;
-	long lRet = 0;
 	P11_SLOT *pSlot = NULL;
 
 	pSlot = p11_get_slot(hSlot);
@@ -340,7 +373,12 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 	unsigned long algos = 0;
 	unsigned int n = 0;
 
-	status = cal_update_token(hSlot);
+	ret = cal_update_token(hSlot,&status);
+	if (ret != CKR_OK)
+	{
+		return (ret);
+	}
+
 	if ((status == P11_CARD_REMOVED) || (status == P11_CARD_NOT_PRESENT) )
 	{
 		return (CKR_TOKEN_NOT_PRESENT);
@@ -357,7 +395,6 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
@@ -519,14 +556,16 @@ cleanup:
 
 
 #define WHERE "cal_connect()"
-int cal_connect(CK_SLOT_ID hSlot)
+CK_RV cal_connect(CK_SLOT_ID hSlot)
 {
-	int ret = 0;
+	CK_RV ret = CKR_OK;
 	int status;
 	P11_SLOT *pSlot = NULL;
 
 	//connect to token
-	status = cal_update_token(hSlot);
+	ret = cal_update_token(hSlot,&status);
+	if (ret != CKR_OK) goto cleanup;
+
 	if ((status == P11_CARD_REMOVED) || (status == P11_CARD_NOT_PRESENT) )
 	{
 		ret = CKR_TOKEN_NOT_PRESENT;
@@ -544,16 +583,16 @@ int cal_connect(CK_SLOT_ID hSlot)
 
 cleanup:
 
-	return (0);
+	return (ret);
 }
 #undef WHERE
 
 
 
 #define WHERE "cal_disconnect()"
-int cal_disconnect(CK_SLOT_ID hSlot)
+CK_RV cal_disconnect(CK_SLOT_ID hSlot)
 {
-	long lRet = 0;
+	CK_RV ret = 0;
 	P11_SLOT *pSlot = NULL;
 
 	pSlot = p11_get_slot(hSlot);
@@ -581,24 +620,19 @@ int cal_disconnect(CK_SLOT_ID hSlot)
 		}
 		catch (...) 
 		{
-			lRet = -1;
+			log_trace(WHERE, "E: unkown exception thrown");
 			return (CKR_FUNCTION_FAILED);
 		}
 	}
-	return (0);
+	return ret;
 }
 #undef WHERE
 
 
-
-
-
-
 #define WHERE "cal_init_objects()"
-int cal_init_objects(P11_SLOT *pSlot)
+CK_RV cal_init_objects(P11_SLOT *pSlot)
 {
-	int ret = CKR_OK;
-	long lRet = 0;
+	CK_RV ret = CKR_OK;
 	CK_ATTRIBUTE PRV_KEY[]     = BEID_TEMPLATE_PRV_KEY;
 	CK_ATTRIBUTE PUB_KEY[]     = BEID_TEMPLATE_PUB_KEY;
 	CK_ATTRIBUTE CERTIFICATE[] = BEID_TEMPLATE_CERTIFICATE;
@@ -643,14 +677,14 @@ int cal_init_objects(P11_SLOT *pSlot)
 			sprintf_s(clabel,sizeof(clabel), "%s", oReader.GetCert(certCounter).csLabel.c_str()); 
 
 			ret = p11_add_slot_object(pSlot, CERTIFICATE, sizeof(CERTIFICATE)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_CERTIFICATE, CertId, CK_FALSE, &hObject);
-			if (ret) 
+			if (ret != CKR_OK) 
 				goto cleanup;
 			pObject = p11_get_slot_object(pSlot, hObject);
 
 			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_CERTIFICATE_TYPE, (CK_VOID_PTR) &certType, sizeof(CK_ULONG));
-			if (ret) goto cleanup;
+			if (ret != CKR_OK) goto cleanup;
 			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
-			if (ret) goto cleanup;
+			if (ret != CKR_OK) goto cleanup;
 
 			//only add keys that have a matching cert
 			for (keyCounter=0; keyCounter < oReader.PrivKeyCount(); keyCounter++)
@@ -667,7 +701,7 @@ int cal_init_objects(P11_SLOT *pSlot)
 					sprintf_s(clabel,sizeof(clabel), "%s", key.csLabel.c_str()); 
 
 					ret = p11_add_slot_object(pSlot, PRV_KEY, sizeof(PRV_KEY)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
-					if (ret) 
+					if (ret != CKR_OK) 
 						goto cleanup;
 
 					//put some other attribute items allready so the key can be used for signing
@@ -676,43 +710,43 @@ int cal_init_objects(P11_SLOT *pSlot)
 					//type = (CK_ULONG) oReader.GetPrivKey(i).;
 					//TODO fixed set to RSA
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) &keytype, sizeof(CK_KEY_TYPE));
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 
 					//TODO if (ulKeyUsage & SIGN)
 					{
 						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_SIGN, (CK_VOID_PTR) &btrue, sizeof(btrue));
-						if (ret) goto cleanup;
+						if (ret != CKR_OK) goto cleanup;
 					}
 
 					//TODO error in cal, size is in bits allready
 					modsize = key.ulKeyLenBytes  * 8;
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) &modsize, sizeof(CK_ULONG));
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EXTRACTABLE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 					/**************************************************/
 					/* Public key corresponding to private key object */
 					/**************************************************/
 					ret = p11_add_slot_object(pSlot, PUB_KEY, sizeof(PUB_KEY)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 
 					pObject = p11_get_slot_object(pSlot, hObject);
 
 					//      sprintf_s(clabel,sizeof(clabel), "Public Key %d (%s)", i+1, key.csLabel.c_str()); 
 					sprintf_s(clabel,sizeof(clabel), "%s", key.csLabel.c_str()); 
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) &keytype, sizeof(CK_KEY_TYPE));
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) &modsize, sizeof(CK_ULONG));
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-					if (ret) goto cleanup;
+					if (ret != CKR_OK) goto cleanup;
 				}
 			}
 		}
@@ -723,7 +757,6 @@ int cal_init_objects(P11_SLOT *pSlot)
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
@@ -737,10 +770,9 @@ cleanup:
 
 
 #define WHERE "cal_logon()"
-int cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging)
+CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging)
 {
-	int ret = CKR_OK;
-	long lRet = 0;
+	CK_RV ret = CKR_OK;
 	char cpin[20];
 	P11_SLOT *pSlot = NULL;
 
@@ -779,7 +811,6 @@ int cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
@@ -792,9 +823,9 @@ int cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging
 
 
 #define WHERE "cal_logout()"
-int cal_logout(CK_SLOT_ID hSlot)
+CK_RV cal_logout(CK_SLOT_ID hSlot)
 {
-	int ret = CKR_OK;
+	CK_RV ret = CKR_OK;
 	P11_SLOT *pSlot = NULL;
 
 	pSlot = p11_get_slot(hSlot);
@@ -817,9 +848,9 @@ int cal_logout(CK_SLOT_ID hSlot)
 
 
 #define WHERE "cal_change_pin()"
-int cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_newpin, CK_CHAR_PTR newpin)
+CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_newpin, CK_CHAR_PTR newpin)
 {
-	int ret = 0;
+	CK_RV ret = CKR_OK;
 	P11_SLOT *pSlot = NULL;
 
 	pSlot = p11_get_slot(hSlot);
@@ -829,21 +860,32 @@ int cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_new
 		return (CKR_SLOT_ID_INVALID);
 	}
 
-	std::string szReader = pSlot->name;
-	CReader &oReader = oCardLayer->getReader(szReader);
+	try{
+		std::string szReader = pSlot->name;
+		CReader &oReader = oCardLayer->getReader(szReader);
 
-	static std::string csPin    = (char*)oldpin;
-	static std::string csNewPin = (char*)newpin;
-	unsigned long ulRemaining = 0;
+		static std::string csPin    = (char*)oldpin;
+		static std::string csNewPin = (char*)newpin;
+		unsigned long ulRemaining = 0;
 
-	tPin tpin = oReader.GetPin(0);
+		tPin tpin = oReader.GetPin(0);
 
-	if (!oReader.PinCmd(PIN_OP_CHANGE, tpin, csPin, csNewPin, ulRemaining))
+		if (!oReader.PinCmd(PIN_OP_CHANGE, tpin, csPin, csNewPin, ulRemaining))
+		{
+			if (ulRemaining == 0)
+				ret = CKR_PIN_LOCKED;
+			else
+				ret = CKR_PIN_INCORRECT;
+		}
+	}
+	catch (CMWException e)
 	{
-		if (ulRemaining == 0)
-			ret = CKR_PIN_LOCKED;
-		else
-			ret = CKR_PIN_INCORRECT;
+		return(cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...) 
+	{
+		log_trace(WHERE, "E: unkown exception thrown");
+		return (CKR_FUNCTION_FAILED);
 	}
 
 	return (ret);
@@ -855,9 +897,9 @@ int cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_new
 
 #define WHERE "cal_get_card_data()"
 //we already know the unsigned data 
-int cal_get_card_data(CK_SLOT_ID hSlot)
+CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 {
-	int ret = 0;
+	CK_RV ret = 0;
 	CByteArray oATR;
 	CByteArray oAPDU(5);
 	unsigned char oByte;
@@ -890,62 +932,62 @@ int cal_get_card_data(CK_SLOT_ID hSlot)
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oATR.GetBytes(),(CK_ULONG)oATR.Size(),
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		plabel = BEID_LABEL_CARD_DATA;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oCardData.GetBytes(),(CK_ULONG)oCardData.Size(),
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		CByteArray data = CByteArray(oCardData.GetBytes(), 16);
 		plabel = BEID_LABEL_DATA_SerialNr;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size(),
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(16);
 		plabel = BEID_LABEL_DATA_CompCode;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(17);
 		plabel = BEID_LABEL_DATA_OSNr;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(18);
 		plabel = BEID_LABEL_DATA_OSVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(19);
 		plabel = BEID_LABEL_DATA_SoftMaskNumber;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(20);
 		plabel = BEID_LABEL_DATA_SoftMaskVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(21);
 		plabel = BEID_LABEL_DATA_ApplVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		data.ClearContents();
 		data.Append(oCardData.GetByte(22));
@@ -954,35 +996,35 @@ int cal_get_card_data(CK_SLOT_ID hSlot)
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size(),
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(24);
 		plabel = BEID_LABEL_DATA_ApplIntVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(25);
 		plabel = BEID_LABEL_DATA_PKCS1Support;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(26);
 		plabel = BEID_LABEL_DATA_KeyExchangeVersion;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		oByte = oCardData.GetByte(27);
 		plabel = BEID_LABEL_DATA_ApplLifeCycle;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret) goto cleanup;
+		if (ret != CKR_OK) goto cleanup;
 
 		//		data.ClearContents();
 		//		data = oCardData.GetBytes(28);
@@ -998,7 +1040,6 @@ int cal_get_card_data(CK_SLOT_ID hSlot)
 	}
 	catch (...) 
 	{
-		ret = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
@@ -1019,9 +1060,9 @@ cleanup:
 
 
 #define WHERE "cal_read_ID_files()"
-int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
+CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 {
-	int ret = 0;
+	CK_RV ret = CKR_OK;
 	CByteArray oFileData;
 	std::string szReader;
 	char cBuffer[250];
@@ -1157,7 +1198,7 @@ int cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 	}
 	catch (...) 
 	{
-		ret = -1;
+		//ret = -1;
 		log_trace(WHERE, "E: unknown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
@@ -1175,11 +1216,10 @@ cleanup:
 
 
 #define WHERE "cal_read_object()"
-int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
+CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 {
-	int ret = 0;
+	CK_RV ret = CKR_OK;
 	int status;
-	long lRet = 0;
 	CK_ULONG  *pID    = NULL;
 	CK_ULONG  *pClass  = NULL;
 	CK_ULONG len = 0;
@@ -1205,7 +1245,9 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 
 	szReader = pSlot->name;
 
-	status = cal_update_token(hSlot);
+	ret = cal_update_token(hSlot,&status);
+	if (ret != CKR_OK) goto cleanup;
+
 	if ((status == P11_CARD_REMOVED) || (status == P11_CARD_NOT_PRESENT) )
 	{
 		ret = CKR_TOKEN_NOT_PRESENT;
@@ -1213,14 +1255,14 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 	}
 
 	ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_CLASS, (CK_VOID_PTR*) &pClass, &len);
-	if (ret) goto cleanup;
+	if (ret != CKR_OK) goto cleanup;
 
 	//do not refresh the ID files here
 	if (*pClass == CKO_DATA ) goto cleanup;
 
 	//read ID of object we want to read from token
 	ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_ID, (CK_VOID_PTR*) &pID, &len);
-	if (ret) goto cleanup;
+	if (ret != CKR_OK) goto cleanup;
 
 	//get the object related to this ID
 
@@ -1251,17 +1293,17 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 			ret = cert_get_info(oCertData.GetBytes(), oCertData.Size(), &certinfo);
 
 			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
-			if (ret) goto cleanup;
+			if (ret != CKR_OK) goto cleanup;
 			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_ISSUER, (CK_VOID_PTR) certinfo.issuer, (CK_ULONG)certinfo.l_issuer);
-			if (ret) goto cleanup;
+			if (ret != CKR_OK) goto cleanup;
 			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SERIAL_NUMBER, (CK_VOID_PTR) certinfo.serial, (CK_ULONG)certinfo.l_serial);
-			if (ret) goto cleanup;
+			if (ret != CKR_OK) goto cleanup;
 			//use real length from decoder here instead of lg from cal
 			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_VALUE, (CK_VOID_PTR) oCertData.GetBytes(), (CK_ULONG)certinfo.lcert);
-			if (ret) goto cleanup;
+			if (ret != CKR_OK) goto cleanup;
 			//TODO Check this in the cal if we can be sure that the certificate can be trusted and not be modified on the card
 			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
-			if (ret) goto cleanup;
+			if (ret != CKR_OK) goto cleanup;
 
 			pCertObject->state = P11_CACHED;
 
@@ -1270,43 +1312,43 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 			if(pPrivKeyObject != NULL)
 			{
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) &btrue, sizeof(btrue));
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_DECRYPT, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SIGN_RECOVER, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_UNWRAP, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, (CK_ULONG)certinfo.l_mod);
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, (CK_ULONG)certinfo.l_exp);
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				pPrivKeyObject->state = P11_CACHED;
 			}
 			if(pPubKeyObject != NULL)
 			{
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) &btrue, sizeof(btrue));
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VERIFY, (CK_VOID_PTR) &btrue, sizeof(btrue));
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_ENCRYPT, (CK_VOID_PTR) &bfalse, sizeof(bfalse));
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_WRAP, (CK_VOID_PTR) &bfalse, sizeof(CK_BBOOL));
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_MODULUS, (CK_VOID_PTR) certinfo.mod, certinfo.l_mod);
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VALUE, (CK_VOID_PTR) certinfo.pkinfo, certinfo.l_pkinfo);
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR) certinfo.exp, certinfo.l_exp);
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 				//TODO test if we can set the trusted flag...
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_TRUSTED, (CK_VOID_PTR) &btrue, sizeof(btrue));
-				if (ret) goto cleanup;
+				if (ret != CKR_OK) goto cleanup;
 
 				pPubKeyObject->state = P11_CACHED;
 			}
@@ -1318,7 +1360,6 @@ int cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 		}
 		catch (...) 
 		{
-			lRet = -1;
 			log_trace(WHERE, "E: unkown exception thrown");
 			cert_free_info(&certinfo);
 			return (CKR_FUNCTION_FAILED);
@@ -1341,10 +1382,9 @@ cleanup:
 
 
 #define WHERE "cal_sign()"
-int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out)
+CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out)
 {
-	int ret = 0;
-	long lRet = 0;
+	CK_RV ret = 0;
 	CByteArray oData(in,l_in);
 	CByteArray oDataOut;
 	unsigned long algo;
@@ -1404,7 +1444,6 @@ int cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsi
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
@@ -1421,11 +1460,10 @@ cleanup:
 
 
 #define WHERE "cal_validate_session()"
-int cal_validate_session(P11_SESSION *pSession)
+CK_RV cal_validate_session(P11_SESSION *pSession)
 {
-	int ret = 0;
+	CK_RV ret = CKR_OK;
 	int status;
-	long lRet = 0;
 
 	if (pSession->inuse == 0)
 	{
@@ -1452,7 +1490,12 @@ int cal_validate_session(P11_SESSION *pSession)
 	try
 	{
 		//previous state is STILL_PRESENT so get new state to see if this has changed
-		status = cal_update_token(pSession->hslot);
+		ret = cal_update_token(pSession->hslot, &status);
+		if (ret != CKR_OK) 
+		{
+			return (ret);
+		}
+
 		if (status == P11_CARD_STILL_PRESENT)
 			ret = 0;
 		else
@@ -1470,7 +1513,6 @@ int cal_validate_session(P11_SESSION *pSession)
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_GENERAL_ERROR);
 	}
@@ -1482,19 +1524,18 @@ int cal_validate_session(P11_SESSION *pSession)
 
 
 #define WHERE "cal_update_token()"
-int cal_update_token(CK_SLOT_ID hSlot)
+CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 {
-	long lRet;
 	P11_OBJECT *pObject = NULL;
-	int status;
-	int ret = 0;
+	CK_RV ret = CKR_OK;
+	//int status;
 	unsigned int i = 0;
 	P11_SLOT *pSlot = NULL;
 
 #ifdef PKCS11_FF
 	if(hSlot >= (CK_ULONG)(p11_get_nreaders()-1))
 	{
-		return ((int)P11_CARD_NOT_PRESENT);
+		return (CKR_SLOT_ID_INVALID);
 	}
 #endif
 
@@ -1509,9 +1550,9 @@ int cal_update_token(CK_SLOT_ID hSlot)
 	{
 		std::string reader = pSlot->name;   
 		CReader &oReader = oCardLayer->getReader(reader);
-		status = cal_map_status(oReader.Status(true));
+		*pStatus = cal_map_status(oReader.Status(true));
 
-		if (status != P11_CARD_STILL_PRESENT)
+		if (*pStatus != P11_CARD_STILL_PRESENT)
 		{
 			//clean objects
 			for (i=1; i <= pSlot->nobjects; i++)
@@ -1523,14 +1564,14 @@ int cal_update_token(CK_SLOT_ID hSlot)
 			}
 
 			//invalidate sessions
-			p11_invalidate_sessions(hSlot, status);
+			p11_invalidate_sessions(hSlot, *pStatus);
 
 			//if Present, other => init objects
-			if ((status == P11_CARD_OTHER) || (status == P11_CARD_INSERTED) )
+			if ((*pStatus == P11_CARD_OTHER) || (*pStatus == P11_CARD_INSERTED) )
 			{
 				//(re)initialize objects
 				ret = cal_init_objects(pSlot);
-				if (ret)
+				if (ret != CKR_OK)
 				{
 					log_trace(WHERE, "E: cal_init_objects() returned %s",log_map_error(ret));
 				}
@@ -1543,11 +1584,10 @@ int cal_update_token(CK_SLOT_ID hSlot)
 	}
 	catch (...) 
 	{
-		lRet = -1;
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_SESSION_HANDLE_INVALID);
 	}
-	return ((int)status);   
+	return ret;   
 }
 #undef WHERE
 
@@ -1591,58 +1631,69 @@ CK_RV cal_get_slot_changes(int *ph)
 	CK_RV ret = CKR_NO_EVENT;
 	*ph = -1;
 
-	for (int i=0; i < p11_get_nreaders();i++)
-	{
-		if (oReadersInfo->ReaderStateChanged(i))
+	try{
+		for (int i=0; i < p11_get_nreaders();i++)
 		{
-			//return first reader that changed state
-			//there could be more than one reader that changed state,
-			//keep these events in the slotlist
+			if (oReadersInfo->ReaderStateChanged(i))
+			{
+				//return first reader that changed state
+				//there could be more than one reader that changed state,
+				//keep these events in the slotlist
 #ifdef PKCS11_FF
-			//incase the upnp reader detected a reader event, we report it,
-			if(i == (p11_get_nreaders()-1))
-			{
-				//the '\\Pnp\\Notification' reader reported an event, check if number of readers is higher
-				//so the list of readers can be adjusted
-				//other reader's events will be ignored as the reader list will get refreshed
-				if(oReadersInfo->IsReaderInserted(i))//-1 as we don't count the pnp reader
+				//incase the upnp reader detected a reader event, we report it,
+				if(i == (p11_get_nreaders()-1))
 				{
-					if(gnFFReaders == 0)
+					//the '\\Pnp\\Notification' reader reported an event, check if number of readers is higher
+					//so the list of readers can be adjusted
+					//other reader's events will be ignored as the reader list will get refreshed
+					if(oReadersInfo->IsReaderInserted(i))//-1 as we don't count the pnp reader
 					{
-						gnFFReaders = p11_get_nreaders()+1;
+						if(gnFFReaders == 0)
+						{
+							gnFFReaders = p11_get_nreaders()+1;
+						}
+						else
+						{
+							gnFFReaders++;
+						}
+						*ph = gnFFReaders-1;
 					}
-					else
+					//if this is the only reader change, report the reader removal as a change of the upnp slot
+					else if (*ph == -1)
 					{
-						gnFFReaders++;
+						*ph = i;
 					}
-					*ph = gnFFReaders-1;
-				}
-				//if this is the only reader change, report the reader removal as a change of the upnp slot
-				else if (*ph == -1)
-				{
-					*ph = i;
-				}
-				ret = CKR_OK;
-			}
-			else
-#endif
-			{
-				if (first)
-				{
-					*ph = i;
-					first = 0;
 					ret = CKR_OK;
 				}
 				else
+#endif
 				{
-					pSlot = p11_get_slot(i);
-					if (oReadersInfo->CardPresent(i))
-						pSlot->ievent = 1;
+					if (first)
+					{
+						*ph = i;
+						first = 0;
+						ret = CKR_OK;
+					}
 					else
-						pSlot->ievent = -1;
+					{
+						pSlot = p11_get_slot(i);
+						if (oReadersInfo->CardPresent(i))
+							pSlot->ievent = 1;
+						else
+							pSlot->ievent = -1;
+					}
 				}
 			}
 		}
+	}	
+	catch (CMWException e)
+	{
+		return(cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...) 
+	{
+		log_trace(WHERE, "E: unkown exception thrown");
+		return (CKR_FUNCTION_FAILED);
 	}
 	return ret;
 }
@@ -1664,9 +1715,9 @@ int cal_map_status(tCardStatus calstatus)
 #undef WHERE
 
 #define WHERE "cal_refresh_readers()"
-int cal_refresh_readers()
+CK_RV cal_refresh_readers()
 {
-	int ret = CKR_OK;
+	CK_RV ret = CKR_OK;
 
 	try
 	{
@@ -1713,13 +1764,13 @@ int cal_refresh_readers()
 }
 #undef WHERE
 
-int cal_translate_error(const char *WHERE, long err)
+CK_RV cal_translate_error(const char *WHERE, long err)
 {
 	log_trace(WHERE, "E: MiddlewareException thrown: 0x%0x", err);
 
 	switch(err)
 	{
-	case EIDMW_OK:                            return(0);                    break;
+	case EIDMW_OK:                            return(CKR_OK);                    break;
 		/** A function parameter has an unexpected value (general) */
 	case EIDMW_ERR_PARAM_BAD:                 return(CKR_FUNCTION_FAILED);  break;//return(CKR_ARGUMENTS_BAD);
 		/** A function parameter exceeded the allowed range */
@@ -1867,8 +1918,9 @@ CK_RV cal_wait_for_slot_event(int block)
 	ret = cal_wait_for_the_slot_event(block);
 	return ret;
 }
+#undef WHERE
 
-#define WHERE "cal_wait_for_slot_event()"
+#define WHERE "cal_wait_for_the_slot_event()"
 CK_RV cal_wait_for_the_slot_event(int block)
 {
 	SCARD_READERSTATEA txReaderStates[MAX_READERS];

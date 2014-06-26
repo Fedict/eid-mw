@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2013 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -52,8 +52,21 @@ static bool BeidCardSelectApplet(CContext *poContext, SCARDHANDLE hCard)
 	oCmd.Append(tucSelectApp, sizeof(tucSelectApp));
 	oCmd.Append((unsigned char) sizeof(APPLET_AID));
 	oCmd.Append(APPLET_AID, sizeof(APPLET_AID));
+	CByteArray oResp;
 
-	CByteArray oResp = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
+	try {
+		oResp = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
+	}
+    catch(CMWException e)
+    {
+		MWLOG(LEV_CRIT, MOD_CAL, L"Failed to select applet: 0x%0x", e.GetError());
+        return false;
+    }
+    catch(...)
+    {
+        MWLOG(LEV_CRIT, MOD_CAL, L"Failed to select applet");
+        return false;
+    }
 
 	return (oResp.Size() == 2 && (oResp.GetByte(0) == 0x61 || oResp.GetByte(0) == 0x90));
 }

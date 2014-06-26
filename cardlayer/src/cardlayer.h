@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2013 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -110,6 +110,15 @@ public:
 	 * (a call to SCardCancel)
 	 */
 	void CancelActions();
+
+	/* reestablish the pcsc context */
+	void PCSCReEstablishContext();
+
+	/* check if the smartcard service is running */
+	long PCSCServiceRunning(bool* pRunning);
+
+	/* check if the smartcard service is running, and if not, try to start it */
+	//void StartPCSCService();
 
 	/* capture all status changes into txReaderStates
 	 * (a call to SCardGetStatusChange)
