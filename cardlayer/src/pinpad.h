@@ -35,6 +35,14 @@
 #include "internalconst.h"
 #include "pinpadlib.h"
 
+#define FEATURE_VERIFY_PIN_START         0x01 
+#define FEATURE_VERIFY_PIN_FINISH        0x02 
+#define FEATURE_MODIFY_PIN_START         0x03 
+#define FEATURE_MODIFY_PIN_FINISH        0x04 
+#define FEATURE_GET_KEY_PRESSED          0x05 
+#define FEATURE_VERIFY_PIN_DIRECT        0x06 
+#define FEATURE_MODIFY_PIN_DIRECT        0x07 
+
 namespace eIDMW
 {
 class CContext;

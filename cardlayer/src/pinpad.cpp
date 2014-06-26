@@ -222,11 +222,15 @@ namespace eIDMW
 		{
 			if (m_ioctlVerifyDirect)
 			{
-				return PinpadPPDU(0x06, oCmd, operation,
+				return PinpadPPDU(FEATURE_VERIFY_PIN_DIRECT, oCmd, operation,
 					ucPinType, pin.csLabel, true);
 			}
-			else if (m_ioctlVerifyStart)
+			else //m_bCanUsePPDU can only be true if either m_ioctlVerifyDirect or m_ioctlVerifyStart are set
 			{
+				PinpadPPDU(FEATURE_VERIFY_PIN_START, oCmd, operation,
+					ucPinType, pin.csLabel, false);
+				return PinpadPPDU(FEATURE_VERIFY_PIN_FINISH, CByteArray(), operation,
+					ucPinType, "", true);
 			}
 		}
 		else{
@@ -448,7 +452,16 @@ namespace eIDMW
 			{
 				switch(oResp.GetByte(counter))
 				{
-				case 0x06:
+				case FEATURE_VERIFY_PIN_START:
+					m_ioctlVerifyStart = true;
+					m_bCanUsePPDU = true;
+					break;
+
+				case FEATURE_VERIFY_PIN_FINISH:
+					m_ioctlVerifyFinish = true;
+					break;
+
+				case FEATURE_VERIFY_PIN_DIRECT:
 					m_ioctlVerifyDirect = true;
 					m_bCanUsePPDU = true;
 					break;
@@ -483,7 +496,10 @@ namespace eIDMW
 		CByteArray oTransmit(ucTransmit, sizeof(ucTransmit));
 		oTransmit.Append(cbControl);
 		oTransmit.Append(oCmdLen);
-		oTransmit.Append(oCmd);
+		if(oCmdLen > 0)
+		{
+			oTransmit.Append(oCmd);
+		}
 
 		if (bShowDlg)
 			bCloseDlg = m_oPinpadLib.ShowDlg(pinpadOperation,
