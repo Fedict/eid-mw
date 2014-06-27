@@ -61,7 +61,6 @@ static gboolean on_delete_event( GtkWidget *widget, GdkEvent* event, gpointer pi
 int main(int argc, char* argv[])
 {
 	char			caller_path[1024];
-	char 			message[2048];
 	int 			return_value=EXIT_ERROR;
 	PinDialogInfo 	pindialog;									// this struct contains all dialog objects
 
@@ -69,11 +68,7 @@ int main(int argc, char* argv[])
 
 	if(get_parent_path(caller_path, sizeof(caller_path)-2)>0)
     {
-		if((argc==2) && (argv[1]!=NULL) && (strlen(argv[1])>0))
-		{
-			snprintf(message,sizeof(message)-2,_MSG_(MSG_PLEASE_ENTER_PIN),caller_path,argv[1]);
-		}
-		else
+		if(!((argc==2) && (argv[1]!=NULL) && (strlen(argv[1])>0)))
 		{
 			fprintf(stderr,"Incorrect Parameter for <description of SPR>\n");
 			exit(EXIT_ERROR);
@@ -88,8 +83,8 @@ int main(int argc, char* argv[])
 	// create new message dialog with CANCEL button in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,message);
-	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
+    pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_MSG_(MSG_PLEASE_ENTER_PIN), caller_path, argv[1]);
+    gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_MSG_(MSG_PIN_CODE_REQUIRED));
     gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
     g_signal_connect (pindialog.dialog, "delete-event", G_CALLBACK (on_delete_event),&pindialog);

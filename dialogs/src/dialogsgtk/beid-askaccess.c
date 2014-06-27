@@ -61,9 +61,7 @@ int main(int argc, char* argv[])
 
 	if(get_parent_path(caller_path, sizeof(caller_path)-2)>0)
 	{
-		char message[2048];
-		snprintf(message, sizeof(message)-2, _MSG_(MSG_ACCESS_CARD_QUESTION), caller_path);
-    	dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,message);
+		dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_OK_CANCEL,_MSG_(MSG_ACCESS_CARD_QUESTION), caller_path);
 	}
 	else
 	{

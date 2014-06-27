@@ -29,7 +29,7 @@
 #define EXIT_OK			0
 #define EXIT_ERROR		2
 
-enum { MSG_INCORRECT_PIN_CODE=1, MSG_N_ATTEMPTS_LEFT, MSG_LAST_ATTEMPT };
+enum msgs { MSG_INCORRECT_PIN_CODE=1, MSG_N_ATTEMPTS_LEFT, MSG_LAST_ATTEMPT };
 char* beid_messages[4][4]={
                                     "en",   "beID: Incorrect PIN Code",    	"You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", 					"You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked.",
                                     "nl",   "beID: Foutive PINcode",    	"U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat u nog slechts %d pogingen hebt alvorens uw PIN code geblokkeerd wordt.", 	"U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat bij de volgende incorrecte ingave uw PIN code geblokkeerd wordt.",
@@ -56,14 +56,15 @@ int main(int argc, char* argv[])
 	// create new message dialog with CANCEL button in standard places, in center of user's screen
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	char message[1024];
+	enum msgs msg;
+	int attempts;
 	if((argc==2) && (argv[1]!=NULL) && (strlen(argv[1])==1) && isdigit(*(argv[1])))
 	{
-		int attempts=atoi(argv[1]);
+		attempts=atoi(argv[1]);
 		if(attempts>1)
-			snprintf(message,sizeof(message)-2,_MSG_(MSG_N_ATTEMPTS_LEFT),attempts);
+			msg = MSG_N_ATTEMPTS_LEFT;
 		else
-			snprintf(message,sizeof(message)-2,_MSG_(MSG_LAST_ATTEMPT));
+			msg = MSG_LAST_ATTEMPT;
 	}
 	else
 	{
@@ -71,8 +72,8 @@ int main(int argc, char* argv[])
 		exit(EXIT_ERROR);
 	}
 	
-    dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_WARNING,GTK_BUTTONS_OK,message);
-	gtk_dialog_set_default_response(GTK_DIALOG(dialog),GTK_RESPONSE_OK);
+    dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_WARNING,GTK_BUTTONS_OK,_MSG_(msg), attempts);
+    gtk_dialog_set_default_response(GTK_DIALOG(dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(dialog),_MSG_(MSG_INCORRECT_PIN_CODE));
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 

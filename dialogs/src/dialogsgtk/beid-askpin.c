@@ -209,8 +209,7 @@ int main(int argc, char* argv[])
     {
         char message[2048];
 		pindialog_init(&pindialog);									// setup PinDialogInfo structure
-        snprintf(message, sizeof(message)-2, _MSG_(MSG_PLEASE_ENTER_PIN), caller_path);
-        pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,message);
+        pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_MSG_(MSG_PLEASE_ENTER_PIN), caller_path);
     }
     else
     {

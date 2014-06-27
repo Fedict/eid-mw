@@ -160,8 +160,7 @@ int main(int argc, char* argv[])
 	if(get_parent_path(caller_path, sizeof(caller_path)-2)>0)
     {
         char message[2048];
-        snprintf(message, sizeof(message)-2, _MSG_(MSG_PLEASE_ENTER_OLD_AND_NEW_PINS), caller_path);
-    	pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,message);
+    	pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_MSG_(MSG_PLEASE_ENTER_OLD_AND_NEW_PINS), caller_path);
     }
     else
     {
@@ -169,8 +168,8 @@ int main(int argc, char* argv[])
         exit(EXIT_ERROR);
     }
 	
-	pindialog.cancelbutton	=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
-    pindialog.okbutton    	=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_OK,     GTK_RESPONSE_OK);
+	pindialog.cancelbutton	=GTK_BUTTON(gtk_dialog_add_button(GTK_DIALOG(pindialog.dialog),GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL));
+    pindialog.okbutton    	=GTK_BUTTON(gtk_dialog_add_button(GTK_DIALOG(pindialog.dialog),GTK_STOCK_OK,     GTK_RESPONSE_OK));
 
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_MSG_(MSG_CHANGE_PIN_CODE));
@@ -234,8 +233,8 @@ int main(int argc, char* argv[])
 	{
 		case GTK_RESPONSE_OK:					// if the user chose OK
 		{
-			char* oldpin=gtk_entry_get_text(GTK_ENTRY(pindialog.originalPinEntry));
-			char* newpin=gtk_entry_get_text(GTK_ENTRY(pindialog.newPin0Entry));
+			const char* oldpin=gtk_entry_get_text(GTK_ENTRY(pindialog.originalPinEntry));
+			const char* newpin=gtk_entry_get_text(GTK_ENTRY(pindialog.newPin0Entry));
 			printf("%s:%s\n",oldpin,newpin);	// output the PINs to stdout
 			return_value=EXIT_OK;				// and return OK
 		}
