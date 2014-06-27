@@ -74,14 +74,14 @@ void update_ok_button(PinDialogInfo *pindialog)
 	{
 		gtk_dialog_set_response_sensitive(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK, TRUE);
 		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_OK);
-		gtk_widget_grab_focus(pindialog->okbutton);
+		gtk_widget_grab_focus(GTK_WIDGET(pindialog->okbutton));
 		
 	}
 	else
 	{
 		gtk_dialog_set_response_sensitive(GTK_DIALOG(pindialog->dialog), GTK_RESPONSE_OK, FALSE);
 		gtk_dialog_set_default_response(GTK_DIALOG(pindialog->dialog),GTK_RESPONSE_CANCEL);
-		gtk_widget_grab_focus(pindialog->cancelbutton);
+		gtk_widget_grab_focus(GTK_WIDGET(pindialog->cancelbutton));
 	}
 }
 
@@ -218,8 +218,8 @@ int main(int argc, char* argv[])
         exit(EXIT_ERROR);
     }
 
-	pindialog.cancelbutton=gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_CANCEL,	GTK_RESPONSE_CANCEL);	
-	pindialog.okbutton	  =gtk_dialog_add_button(pindialog.dialog,GTK_STOCK_OK,		GTK_RESPONSE_OK);	
+	pindialog.cancelbutton = GTK_BUTTON(gtk_dialog_add_button(GTK_DIALOG(pindialog.dialog),GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL));
+	pindialog.okbutton = GTK_BUTTON(gtk_dialog_add_button(GTK_DIALOG(pindialog.dialog),GTK_STOCK_OK, GTK_RESPONSE_OK));
 
 	gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog),GTK_RESPONSE_OK);
     gtk_window_set_title(GTK_WINDOW(pindialog.dialog),_MSG_(MSG_PIN_CODE_REQUIRED));
