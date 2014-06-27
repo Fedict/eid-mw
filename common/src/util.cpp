@@ -474,7 +474,7 @@ EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...)
 
 	if (r != -1 && csTmp != NULL)
 	{
-		r = fprintf(stream, csTmp);
+		r = fputs(csTmp, stream);
 		free(csTmp);
 	}
 
@@ -490,7 +490,7 @@ EIDMW_CMN_API int vfprintf_s(FILE *stream, const char *format, va_list argptr)
 
 	if (r != -1 && csTmp != NULL)
 	{
-		r = fprintf(stream, csTmp);
+		r = fputs(csTmp, stream);
 		free(csTmp);
 	}
 

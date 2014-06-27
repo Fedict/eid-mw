@@ -271,7 +271,7 @@ int fwprintf_s(FILE *stream, const wchar_t *format, ...)
 
 	if (r != -1 && csTmp != NULL)
 	{
-		r = fprintf(stream, csTmp);
+		r = fputs(csTmp, stream);
 		free(csTmp);
 	}
 
@@ -289,7 +289,7 @@ int _vfwprintf_s(FILE *stream, const wchar_t *format, va_list argptr)
 
 	if (r != -1 && csTmp != NULL)
 	{
-		r = fprintf(stream, csTmp);
+		r = fputs(csTmp, stream);
 		free(csTmp);
 	}
 
@@ -306,7 +306,7 @@ int _vfprintf_s(FILE *stream, const char* format, va_list argptr)
 
 	if (r != -1 && csTmp != NULL)
 	{
-		r = fprintf(stream, csTmp);
+		r = fputs(csTmp, stream);
 		free(csTmp);
 	}
 
