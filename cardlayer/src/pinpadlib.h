@@ -43,12 +43,13 @@
 #endif
 #ifndef NO_DIALOGS
 #include "../dialogs/src/dialogs.h"
+#endif
 #ifdef __APPLE__
 typedef void* BEID_DIALOGHANDLE;
 #else
 typedef unsigned long BEID_DIALOGHANDLE;
 #endif
-#endif
+
 
 namespace eIDMW
 {
