@@ -1,0 +1,6 @@
+usr/lib/*/libbeidcommon.a
+usr/lib/*/libbeidpkcs11.a
+usr/lib/*/libbeidpkcs11.so
+usr/lib/*/libbeidcommon.a
+usr/lib/*/libbeidcommon.so
+usr/lib/*/libbeiddialogs.a

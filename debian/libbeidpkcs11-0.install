@@ -1,0 +1,4 @@
+usr/lib/*/libbeidpkcs11.so.0*
+usr/lib/*/libbeiddialogs.so
+usr/lib/*/libbeidcardlayer.so
+usr/lib/*/libbeidcommon.so.0*

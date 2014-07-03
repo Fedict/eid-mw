@@ -8,9 +8,16 @@
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
+export DPKG_GENSYMBOLS_CHECK_LEVEL=4
 
 %:
-	dh  $@
+	dh $@ --parallel
+
+override_dh_auto_configure:
+	dh_auto_configure -- --libexecdir=/usr/lib/eid-mw
 
 override_dh_installexamples:
 	dh_installexamples -X.svn
+
+override_dh_makeshlibs:
+	dh_makeshlibs -V -- -c 4
