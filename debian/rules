@@ -20,4 +20,4 @@ override_dh_installexamples:
 	dh_installexamples -X.svn
 
 override_dh_makeshlibs:
-	dh_makeshlibs -V -- -c 4
+	dh_makeshlibs -V -- -c4
