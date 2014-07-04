@@ -21,6 +21,7 @@ Package: libbeidpkcs11-0
 Section: libs
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
+Replaces: eid-mw (<< 4.0.6r1508)
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: PKCS#11 library for Belgian Electronic Identity Card
@@ -33,6 +34,7 @@ Section: libdevel
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Depends}
+Replaces: eid-mw (<< 4.0.6r1508)
 Multi-Arch: same
 Description: PKCS#11 library for Belgian Electronic Identity Card - development files
  This package contains the static libraries and the development headers
@@ -47,6 +49,7 @@ Section: libs
 Multi-Arch: foreign
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Replaces: eid-mw (<< 4.0.6r1508)
 Description: helper programs for libbeidpkcs11-0
  The libbeidpkcs11 library sometimes needs to pop up a few dialog boxes
  to ask the user to perform some action (e.g., enter a pin code). This
@@ -56,6 +59,7 @@ Package: beid-mozilla-extension
 Section: web
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0
+Replaces: eid-mw (<< 4.0.6r1508)
 Description: Belgian Electronic Identity Card - Mozilla plugin
  This package contains the mozilla plugin for the Belgian Electronic
  Identity Card. Install it if you wish to log on to websites using your
