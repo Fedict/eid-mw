@@ -9,7 +9,7 @@ Homepage: http://code.google.com/p/eid-mw/
 Package: eid-mw
 Section: metapackages
 Architecture: any
-Depends: ${misc:Depends}, pcscd, libbeidpkcs11-0, beid-mozilla-plugin, eid-mw-i386
+Depends: ${misc:Depends}, pcscd, libbeidpkcs11-0, beid-mozilla-extension
 Recommends: libccid, libacr38u
 Description: low-level support for Belgian Electronic Identity Card
  This metapackage depends on a PKCS#11 module and a Firefox plugin for
