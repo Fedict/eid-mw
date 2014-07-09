@@ -21,6 +21,7 @@ Requires: pcsc-ccid
 %else
 Requires: ccid
 %endif
+Conflicts: openct
 
 %description
 The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
@@ -43,34 +44,6 @@ websites and/or sign documents.
 
 %post
 /sbin/ldconfig
-
-### openct and pcscd are mutual exclusive and we need pcscd for eID Middleware.
-### Not nice but if people need the eID Middleware, this is what is required !
-if /sbin/service openct status &>/dev/null; then
-    /sbin/service openct stop || :
-fi
-
-### Disable openct on boot during first install only !
-if (( $1 == 1 )) && /sbin/chkconfig --list | grep -qP '^openct\s.+\s3:on\s'; then
-    echo "WARNING: The openct service is now disabled on boot." >&2
-    /sbin/chkconfig openct off
-fi
-
-### Make sure pcscd is enabled and make pcscd reread configuration and rescan USB bus.
-if /sbin/service pcscd status &>/dev/null; then
-    /usr/sbin/pcscd -H &>/dev/null || :
-elif /sbin/chkconfig --list | grep -qP '^pcscd\s'; then
-    /sbin/service pcscd start || :
-else
-    echo "ERROR: Your pcscd installation is seriously broken." >&2
-    exit 1
-fi
-
-### Enable pcscd on boot during first install only !
-if (( $1 == 1 )) && /sbin/chkconfig --list | grep -qP '^pcscd\s.+\s3:off\s'; then
-    echo "INFO: The pcscd service is now enabled on boot." >&2
-    /sbin/chkconfig pcscd on
-fi
 
 ### Notify user if an action is required for the eID plugin to work.
 if /usr/bin/pgrep 'firefox' &>/dev/null; then
