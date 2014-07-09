@@ -267,7 +267,7 @@ DWORD WINAPI   CardReadFile
 				/* Container name for Authentication key */
 				sprintf (szContainerName, "DS_%s", szSerialNumber);
 				memset(cmr[0].wszGuid, '\0', sizeof(cmr[0].wszGuid));
-				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, strlen(szContainerName), cmr[0].wszGuid, (int)sizeof(cmr[0].wszGuid));
+				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[0].wszGuid, (int)sizeof(cmr[0].wszGuid));
 
 				if (iReturn == 0) 
 				{
@@ -321,7 +321,7 @@ DWORD WINAPI   CardReadFile
 				/* Container name for Non-repudiation key */
 				sprintf (szContainerName, "NR_%s", szSerialNumber);
 				memset(cmr[1].wszGuid, '\0', sizeof(cmr[1].wszGuid));
-				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, strlen(szContainerName), cmr[1].wszGuid, (int)sizeof(cmr[1].wszGuid));
+				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[1].wszGuid, (int)sizeof(cmr[1].wszGuid));
 
 				if (iReturn == 0) 
 				{
