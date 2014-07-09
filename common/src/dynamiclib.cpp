@@ -42,7 +42,7 @@ unsigned long CDynamicLib::Open(const std::string & csLibPath)
 
 void * CDynamicLib::GetAddress(const std::string & csFunctionName)
 {
-	if (m_module != m_module)
+	if (m_module == NULL)
 		return NULL;
 
 	return PlatformGetAddress(csFunctionName.c_str());
@@ -50,8 +50,8 @@ void * CDynamicLib::GetAddress(const std::string & csFunctionName)
 
 void CDynamicLib::Close()
 {
-	if (m_module != m_module)
-		return PlatformClose();
+	if (m_module != NULL)
+		PlatformClose();
 
 	m_module = NULL;
 }
