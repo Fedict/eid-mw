@@ -33,20 +33,13 @@
 
 enum { MSG_ACCESS_CARD_TITLE=1, MSG_ACCESS_CARD_QUESTION };
 char* beid_messages[4][3]={
-                                    "en",   "beID: Card Access", 		"The application [%s] wants to access the eID card. Do you want to accept it?",
-                                    "nl",   "beID: Lezen Kaart", 		"Het Programma [%s] vraagt toegang tot de eID kaart. Wil U dit toelaten?",
-                                    "fr",   "beID: Lecture de Carte", 	"l'application [%s] essaye d'accéder à la carte eID. Acceptez-vous?",
-                                    "de",   "beID: Kartenzugriff", 		"Die Anwendung [%s] will auf die eID-Karte zugreifen. Möchten Sie akzeptieren?"
-                          };
+		{"en",   "beID: Card Access", 		"The application [%s] wants to access the eID card. Do you want to accept it?"},
+		{"nl",   "beID: Lezen Kaart", 		"Het Programma [%s] vraagt toegang tot de eID kaart. Wil U dit toelaten?"},
+		{"fr",   "beID: Lecture de Carte", 	"l'application [%s] essaye d'accéder à la carte eID. Acceptez-vous?"},
+		{"de",   "beID: Kartenzugriff", 		"Die Anwendung [%s] will auf die eID-Karte zugreifen. Möchten Sie akzeptieren?"}
+};
 
 #include "beid-i18n.h"
-
-// event handler for delete-event. always approves the deletion
-///////////////////////////////////////////////////////////////
-static gboolean on_delete_event( GtkWidget *widget, GdkEvent* event, gpointer pindialog)
-{
-    return TRUE;
-}
 
 int main(int argc, char* argv[])
 {

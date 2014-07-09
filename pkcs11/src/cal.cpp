@@ -161,7 +161,6 @@ void cal_close()
 #define WHERE "cal_clean_slots()"
 void cal_clean_slots()
 {
-	int ret = 0;
 	unsigned int i;
 	CK_SLOT_ID hSlot = 0;
 	P11_SLOT *pSlot = NULL;

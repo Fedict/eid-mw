@@ -112,7 +112,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin( DlgPinUsage usage, const wchar_t *wsPinName
 	char count[4];
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgBadPin called");
 
-	snprintf(count,sizeof(count)-2,"%1d",ulRemainingTries);
+	snprintf(count,sizeof(count)-2,"%1lu",ulRemainingTries);
 	char* response=sdialog_call_modal(QUOTEME(BEID_BADPIN_DIALOG),count);	
 	free(response);
     return DLG_OK;

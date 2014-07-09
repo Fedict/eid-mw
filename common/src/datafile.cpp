@@ -154,9 +154,8 @@ bool CDataFile::Load(bool bLock)
   CAutoMutex autoMutex(&sm_Mutex);
   //We come here if the file is not open yet (m_stream==NULL)
   //If the file is opened, it should be locked 
-	
-  size_t noOfKeys = KeyCount();
-  size_t noOfSections = SectionCount();
+
+  KeyCount();
 
   int err=0;
 
@@ -320,8 +319,7 @@ bool CDataFile::Load(bool bLock)
     m_stream=NULL;
   }
 
-  noOfKeys = KeyCount();
-  noOfSections = SectionCount();
+  KeyCount();
 
   return true;
 }

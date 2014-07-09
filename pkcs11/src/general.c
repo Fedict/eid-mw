@@ -555,8 +555,10 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 	P11_SLOT *p11Slot = NULL;
 	int i = 0;
 	CK_BBOOL locked = CK_FALSE;
+#ifdef PKCS11_FF
 	CK_BBOOL bRunning = CK_TRUE;
 	long error = 0;
+#endif
 
 	log_trace(WHERE, "I: enter");
 

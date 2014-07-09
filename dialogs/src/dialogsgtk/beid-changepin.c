@@ -27,6 +27,7 @@
 #include <locale.h>
 #include "config.h"
 #include "parent.h"
+#include <ctype.h>
 
 #define MIN_PIN_LENGTH 4
 #define MAX_PIN_LENGTH 16
@@ -37,12 +38,11 @@
 
 enum { MSG_CHANGE_PIN_CODE=1, MSG_PLEASE_ENTER_OLD_AND_NEW_PINS, MSG_CURRENT_PIN, MSG_NEW_PIN, MSG_NEW_PIN_AGAIN };
 char* beid_messages[4][6]={
-                                    "en",   "beID: Change PIN Code",      	"Request from Application [%s]:\n\nPlease enter your current eID PIN, followed by your new eID PIN (twice)", 									"Current PIN:", 		"New PIN:", 		"New PIN (again):",
-                                    "nl",   "beID: PIN Code Wijzigen",      "Verzoek van programma [%s]:\n\nGelieve Uw bestaande eID PIN code, en tweemaal uw nieuwe eID PINcode in te voeren.",							"Huidige PIN:",			"Nieuwe PIN:",		"Nieuwe PIN (opnieuw):",
-                                    "fr",   "beID: Changement de code PIN", "Demande de l'application [%s]:\n\nVeuillez entrer votre code PIN eID existant, suivi de votre nouveau code PIN eID (2 fois)", 					"Code PIN existant:", 	"Nouveau code PIN:","Nouveau code PIN (verification):",
-                                    "de",   "beID: PIN Code ändern",      	"Anfrage von Anwendug [%s]:\n\nBitte geben Sie ihren bestehenden eID PIN-Code, gefolgt von Ihrem neuen eID PIN-Code (zwei mal), ein", 	"Aktueller PIN-Code:", 	"Neuer PIN-Code:", 	"Neuer PIN-Code (noch einmal):"
-
-                              };
+		{"en",   "beID: Change PIN Code",      	"Request from Application [%s]:\n\nPlease enter your current eID PIN, followed by your new eID PIN (twice)", 									"Current PIN:", 		"New PIN:", 		"New PIN (again):"},
+		{"nl",   "beID: PIN Code Wijzigen",      "Verzoek van programma [%s]:\n\nGelieve Uw bestaande eID PIN code, en tweemaal uw nieuwe eID PINcode in te voeren.",							"Huidige PIN:",			"Nieuwe PIN:",		"Nieuwe PIN (opnieuw):"},
+		{"fr",   "beID: Changement de code PIN", "Demande de l'application [%s]:\n\nVeuillez entrer votre code PIN eID existant, suivi de votre nouveau code PIN eID (2 fois)", 					"Code PIN existant:", 	"Nouveau code PIN:","Nouveau code PIN (verification):"},
+		{"de",   "beID: PIN Code ändern",      	"Anfrage von Anwendug [%s]:\n\nBitte geben Sie ihren bestehenden eID PIN-Code, gefolgt von Ihrem neuen eID PIN-Code (zwei mal), ein", 	"Aktueller PIN-Code:", 	"Neuer PIN-Code:", 	"Neuer PIN-Code (noch einmal):"}
+};
 
 #include "beid-i18n.h"
 
@@ -159,7 +159,6 @@ int main(int argc, char* argv[])
 
 	if(get_parent_path(caller_path, sizeof(caller_path)-2)>0)
     {
-        char message[2048];
     	pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_MSG_(MSG_PLEASE_ENTER_OLD_AND_NEW_PINS), caller_path);
     }
     else

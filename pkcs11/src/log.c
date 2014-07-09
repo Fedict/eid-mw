@@ -208,9 +208,14 @@ int log_level_approved(const char *string)
  * log_trace
  *
  ******************************************************************************/
+#ifdef __GNUC__
+#define GCC_UNUSED __attribute__((unused))
+#else
+#define GCC_UNUSED
+#endif
 void log_trace(const char *where, const char *string,... )
 {
-  int           ret;
+  int           ret GCC_UNUSED;
   static char   buf[0x4000];    
   va_list       args;
   FILE          *fp = NULL;

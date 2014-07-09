@@ -36,11 +36,11 @@
 
 enum { MSG_PIN_CODE_REQUIRED=1, MSG_PLEASE_ENTER_PIN };
 char* beid_messages[4][3]={
-									"en",	"beID: PIN Code Required",		"The application\n[%s]\nrequests your eID PIN code.",
-									"nl",	"beID: PINcode Vereist", 		"Het programma\n[%s]\nvraagt uw eID PINcode",
-									"fr",	"beID: Code PIN Necessaire",	"l'application\n[%s]\nvous demande votre code PIN eID",
-									"de",	"beID: PIN Code Required",		"Die Anwendung\n[%s]\nfragt um Ihren eID PIN-code" 
-							  };
+		{"en",	"beID: PIN Code Required",		"The application\n[%s]\nrequests your eID PIN code."},
+		{"nl",	"beID: PINcode Vereist", 		"Het programma\n[%s]\nvraagt uw eID PINcode"},
+		{"fr",	"beID: Code PIN Necessaire",	"l'application\n[%s]\nvous demande votre code PIN eID"},
+		{"de",	"beID: PIN Code Required",		"Die Anwendung\n[%s]\nfragt um Ihren eID PIN-code"}
+};
 
 #include "beid-i18n.h"
 
@@ -207,7 +207,6 @@ int main(int argc, char* argv[])
 
 	if(get_parent_path(caller_path, sizeof(caller_path)-2)>0)
     {
-        char message[2048];
 		pindialog_init(&pindialog);									// setup PinDialogInfo structure
         pindialog.dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_QUESTION,GTK_BUTTONS_NONE,_MSG_(MSG_PLEASE_ENTER_PIN), caller_path);
     }

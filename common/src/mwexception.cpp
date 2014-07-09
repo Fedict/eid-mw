@@ -34,8 +34,8 @@ namespace eIDMW
 
 // CMWEXCEPTION::CMWEXCEPTION(long lError, const char *cpFile, long lLine)
 CMWException::CMWException(long lError, const char *cpFile, long lLine)
-: m_lError(lError),
-  m_sFile(cpFile),
+: m_sFile(cpFile),
+  m_lError(lError),
   m_lLine(lLine)
 
 {

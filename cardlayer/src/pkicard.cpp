@@ -390,12 +390,9 @@ CByteArray CPkiCard::GetRandom(unsigned long ulLen)
 {
 	CAutoLock oAutoLock(this);
 
-	bool bAppletSelectDone = false;
-
 	if (m_selectAppletMode == ALW_SELECT_APPLET)
 	{
 		SelectApplet();
-		bAppletSelectDone = true;
 	}
 
 	CByteArray oRandom(ulLen);
@@ -414,7 +411,6 @@ try_again:
 			if (SelectApplet())
 			{
 				m_selectAppletMode = ALW_SELECT_APPLET;
-				bAppletSelectDone = true;
 				goto try_again;
 			}
 		}

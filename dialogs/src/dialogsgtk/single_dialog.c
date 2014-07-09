@@ -40,14 +40,14 @@
 #define DPRINTF(format,args...) fprintf(stderr, format , ## args)
 #define DERROR(label) perror(label)
 #else
-#define DPRINTF
-#define DERROR
+#define DPRINTF(format, args...)
+#define DERROR(label)
 #endif
 
 
 /* the sdialog_call_modal function borrows from readpass.c in the OpenSSH distribution, whose Copyright is as follows: 
  *
- * START OF extra (C) NOTICE FOR sdialog_call_modal() 
+ * START OF extra (C) NOTICE FOR sdialog_call_modal() */
 
 /* $OpenBSD: readpass.c,v 1.47 2006/08/03 03:34:42 deraadt Exp $ */
 /*

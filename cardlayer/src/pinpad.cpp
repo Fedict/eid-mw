@@ -337,11 +337,11 @@ namespace eIDMW
 		}
 		catch (...)
 		{
-			if (bShowDlg)
+			if (bCloseDlg)
 				m_oPinpadLib.CloseDlg(dlgHandle);
 			throw ;
 		}
-		if (bShowDlg)
+		if (bCloseDlg)
 			m_oPinpadLib.CloseDlg(dlgHandle);
 
 #ifdef PP_DUMP_CMDS
@@ -478,8 +478,7 @@ namespace eIDMW
 		const std::string & csPinLabel,	bool bShowDlg)
 	{
 		unsigned char pinpadOperation = PinOperation2Lib(operation);
-		if (oCmd.Size() > 256)
-			return NULL;//this should never happen
+		assert(oCmd.Size() <= 255);
 		BYTE oCmdLen = (BYTE)oCmd.Size();
 		long lRetVal=0;
 
@@ -507,7 +506,7 @@ namespace eIDMW
 
 		oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oTransmit, &lRetVal);
 
-		if (bShowDlg)
+		if (bCloseDlg)
 			m_oPinpadLib.CloseDlg(dlgHandle);
 
 #ifdef PP_DUMP_CMDS

@@ -35,11 +35,11 @@
 
 enum { MSG_PIN_CODE_REQUIRED=1, MSG_PLEASE_ENTER_PIN };
 char* beid_messages[4][3]={
-                                    "en",   "beID: PIN Code Required",      "The application [%s] requests your eID PIN code on the secure pinpad reader:\n[%s]..",
-                                    "nl",   "beID: PINcode Vereist",        "Het programma [%s] vraagt uw eID PIN code in te geven op de beveiligde kaartlezer:\n[%s].",
-                                    "fr",   "beID: Code PIN Necessaire",    "l'application [%s] vous demande d'entrer votre code PIN eID sur le lecteur securise\n[%s]..",
-                                    "de",   "beID: PIN Code Required",      "Die Anwendung [%s] fragt um Ihren eID PIN-Code auf dem sicheren Kartenleser:\n[%s].."
-                              };
+		{"en",   "beID: PIN Code Required",      "The application [%s] requests your eID PIN code on the secure pinpad reader:\n[%s].."},
+		{"nl",   "beID: PINcode Vereist",        "Het programma [%s] vraagt uw eID PIN code in te geven op de beveiligde kaartlezer:\n[%s]."},
+		{"fr",   "beID: Code PIN Necessaire",    "l'application [%s] vous demande d'entrer votre code PIN eID sur le lecteur securise\n[%s].."},
+		{"de",   "beID: PIN Code Required",      "Die Anwendung [%s] fragt um Ihren eID PIN-Code auf dem sicheren Kartenleser:\n[%s].."}
+};
 
 #include "beid-i18n.h"
 
