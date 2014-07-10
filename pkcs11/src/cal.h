@@ -167,6 +167,7 @@ extern "C" {
 #define BEID_LABEL_DATA_PKCS1Support		"carddata_pkcs1_support"
 #define BEID_LABEL_DATA_ApplLifeCycle		"carddata_appl_lifecycle"
 #define BEID_LABEL_DATA_KeyExchangeVersion	"carddata_key_exchange_version"
+#define BEID_LABEL_DATA_PKCS15Version	"carddata_pkcs15_version"
 #define BEID_LABEL_DATA_Signature				"carddata_signature"
 
 #define BEID_LABEL_ATR									"ATR"

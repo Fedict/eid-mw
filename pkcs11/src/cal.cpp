@@ -981,42 +981,78 @@ CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
 		if (ret != CKR_OK) goto cleanup;
 
+		//spec of applet 1.7 is not compatible with that of applet 1.1,
+		//so we check the appletversion here, and fill in the remaining fields according to it
 		oByte = oCardData.GetByte(21);
-		plabel = BEID_LABEL_DATA_ApplVersion;
-		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
-			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret != CKR_OK) goto cleanup;
 
-		data.ClearContents();
-		data.Append(oCardData.GetByte(22));
-		data.Append(oCardData.GetByte(23));
-		plabel = BEID_LABEL_DATA_GlobOSVersion;
-		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
-			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size(),
-			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret != CKR_OK) goto cleanup;
+		if(oByte == 0x11)
+		{
+			data.ClearContents();
+			data.Append(oCardData.GetByte(21));
+			data.Append(oCardData.GetByte(22));
+			plabel = BEID_LABEL_DATA_ApplVersion;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size(),
+				(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			if (ret != CKR_OK) goto cleanup;
 
-		oByte = oCardData.GetByte(24);
-		plabel = BEID_LABEL_DATA_ApplIntVersion;
-		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
-			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret != CKR_OK) goto cleanup;
+			data.ClearContents();
+			data.Append(oCardData.GetByte(23));
+			data.Append(oCardData.GetByte(24));
+			plabel = BEID_LABEL_DATA_ApplIntVersion;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size(),
+				(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			if (ret != CKR_OK) goto cleanup;
 
-		oByte = oCardData.GetByte(25);
-		plabel = BEID_LABEL_DATA_PKCS1Support;
-		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
-			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret != CKR_OK) goto cleanup;
+			data.ClearContents();
+			data.Append(oCardData.GetByte(25));
+			data.Append(oCardData.GetByte(26));
+			plabel = BEID_LABEL_DATA_PKCS15Version;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size(),
+				(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			if (ret != CKR_OK) goto cleanup;
+		}
+		else
+		{
+			plabel = BEID_LABEL_DATA_ApplVersion;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
+				(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			if (ret != CKR_OK) goto cleanup;
 
-		oByte = oCardData.GetByte(26);
-		plabel = BEID_LABEL_DATA_KeyExchangeVersion;
-		ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
-			(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
-			(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
-		if (ret != CKR_OK) goto cleanup;
+			data.ClearContents();
+			data.Append(oCardData.GetByte(22));
+			data.Append(oCardData.GetByte(23));
+			plabel = BEID_LABEL_DATA_GlobOSVersion;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) data.GetBytes(),(CK_ULONG)data.Size(),
+				(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			if (ret != CKR_OK) goto cleanup;
+
+			oByte = oCardData.GetByte(24);
+			plabel = BEID_LABEL_DATA_ApplIntVersion;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
+				(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			if (ret != CKR_OK) goto cleanup;
+
+			oByte = oCardData.GetByte(25);
+			plabel = BEID_LABEL_DATA_PKCS1Support;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
+				(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			if (ret != CKR_OK) goto cleanup;
+
+			oByte = oCardData.GetByte(26);
+			plabel = BEID_LABEL_DATA_KeyExchangeVersion;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) &oByte,(CK_ULONG)1,
+				(CK_VOID_PTR)BEID_OBJECTID_CARDDATA, (CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+			if (ret != CKR_OK) goto cleanup;
+		}
+
 
 		oByte = oCardData.GetByte(27);
 		plabel = BEID_LABEL_DATA_ApplLifeCycle;
