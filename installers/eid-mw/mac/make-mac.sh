@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-set -x
 
 # Ensure we're in the right directory
 cd $(dirname $0)
@@ -49,13 +48,13 @@ chmod +x ../../../xpi/build.sh
 cd ../../../mac
 #	xcodebuild -configuration Release
 echo "cleaning former project..."
-xcodebuild -project beidmw.xcodeproj clean
+xcodebuild -project beidmw_xc5.xcodeproj clean
 echo "building siscardplugin..."
-xcodebuild -project beidmw.xcodeproj -target siscardplugin -configuration Release
+xcodebuild -project beidmw_xc5.xcodeproj -target siscardplugin -configuration Release
 echo "building beiddialogsQTsrv..."
-xcodebuild -project beidmw.xcodeproj -target beiddialogsQTsrv -configuration Release
+xcodebuild -project beidmw_xc5.xcodeproj -target beiddialogsQTsrv -configuration Release
 echo "building beidpkcs11..."
-xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration Release
+xcodebuild -project beidmw_xc5.xcodeproj -target beidpkcs11 -configuration Release
     
 cd -
 
