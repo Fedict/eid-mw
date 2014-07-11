@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Ensure we're in the right directory
+cd $(dirname $0)
+
 #########################################
 # check gcc compiler installed
 #########################################
