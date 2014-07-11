@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -x
+
 # Ensure we're in the right directory
 cd $(dirname $0)
 
