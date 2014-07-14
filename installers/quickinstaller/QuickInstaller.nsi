@@ -289,7 +289,7 @@ Function  nsdConnectReaderLeave
 	beid::GetReaderCount 0
 	Pop $retval
 	${If} $retval <> '0'
-		MessageBox MB_OK "$(ls_errorreadersearch)"
+		MessageBox MB_OK "$(ls_errorreadersearch) $\r$\n $(ls_error) = $retval"
 		Abort
 	${EndIf}
   Pop $readercount
