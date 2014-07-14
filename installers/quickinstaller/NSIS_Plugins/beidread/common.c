@@ -28,7 +28,7 @@ CK_RV loadpkcs11(CK_FUNCTION_LIST_PTR * pFunctions) {
 	int err = GetLastError();
 
 	if(g_handle == NULL){
-		g_handle = LoadLibrary(TEXT("F:\\Windows\\System32\\beidpkcs11.dll"));//PKCS11_LIB);//"F:\\Windows\\System32\\beidpkcs11.dll");
+		g_handle = LoadLibrary(TEXT("beidpkcs11.dll"));//PKCS11_LIB);//"F:\\Windows\\System32\\beidpkcs11.dll");
 		if (g_handle == NULL) {
 			err = GetLastError();
 			printf("err = %d\n",err);
