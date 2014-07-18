@@ -410,7 +410,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    }
 
 		//get the mechanisms list
-		pMechanismsSupported = (CK_MECHANISM_TYPE_PTR) malloc (sizeof(CK_MECHANISM_TYPE_PTR)*ulSupportedMechLen);
+		pMechanismsSupported = (CK_MECHANISM_TYPE_PTR) malloc (sizeof(CK_MECHANISM_TYPE)*ulSupportedMechLen);
 		if(pMechanismsSupported != NULL)
 		{
 			ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
