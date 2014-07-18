@@ -88,8 +88,6 @@ CSocketServer::~CSocketServer()
 	{
 #ifdef WIN32
 	closesocket(m_socket);
-#else
-	close(m_socket);
 #endif
 	}
 }
