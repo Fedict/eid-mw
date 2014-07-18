@@ -424,9 +424,6 @@ do
       return (E_ASN_ITEM_NOT_FOUND);
    } while (found == 0);
 
-if (!found)
-   return (E_ASN_ITEM_NOT_FOUND);
-
 p_xItem->p_data = p_cDat;
 p_xItem->l_data = iLen;
 p_xItem->tag = findtag;
