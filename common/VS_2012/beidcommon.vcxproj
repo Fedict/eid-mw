@@ -593,9 +593,6 @@
     <ClCompile Include="..\src\libtomcrypt\sha256.c" />
     <ClCompile Include="..\src\libtomcrypt\sha384.c" />
     <ClCompile Include="..\src\libtomcrypt\sha512.c" />
-    <ClCompile Include="..\src\Socket\Socket.cpp" />
-    <ClCompile Include="..\src\Socket\SocketClient.cpp" />
-    <ClCompile Include="..\src\Socket\SocketServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\beidversions.h" />
@@ -625,9 +622,6 @@
     <ClInclude Include="..\src\libtomcrypt\tomcrypt_cfg.h" />
     <ClInclude Include="..\src\libtomcrypt\tomcrypt_hash.h" />
     <ClInclude Include="..\src\libtomcrypt\tomcrypt_macros.h" />
-    <ClInclude Include="..\src\Socket\Socket.h" />
-    <ClInclude Include="..\src\Socket\SocketClient.h" />
-    <ClInclude Include="..\src\Socket\SocketServer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="beidcommon.rc" />
