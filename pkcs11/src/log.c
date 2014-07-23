@@ -172,6 +172,9 @@ int log_level_approved(const char *string)
 {
 	unsigned int  level = g_uiLogLevel & 0x0F;
 
+  if(string == NULL) {
+    return 1;
+  }
 	// evaluate debug level
   if (string[1] == ':')
   {
