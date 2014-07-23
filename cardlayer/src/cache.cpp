@@ -300,6 +300,9 @@ bool CCache::Delete(const std::string & csName)
 
 #else
 
+/* TODO: this function does not have any defined way to return an error
+ * condition (e.g., "cache directory cannot be created" or some such).
+ */
 std::string CCache::GetCacheDir(bool bAddSlash)
 {
 	std::string csCacheDir;
@@ -312,10 +315,12 @@ std::string CCache::GetCacheDir(bool bAddSlash)
 		csCacheDir += "/.eidmwcache";
 	}
 
-	struct stat buffer;
-	if ( stat(csCacheDir.c_str(),&buffer))
+	if(mkdir(csCacheDir.c_str(), 0700) < 0)
 	{
-		mkdir(csCacheDir.c_str(), 0700);
+		if(errno != EEXIST)
+		{
+			perror("creating cache directory:");
+		}
 	}
 
 	if (bAddSlash)
