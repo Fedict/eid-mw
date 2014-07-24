@@ -67,12 +67,6 @@
 		86E3DE151653D6210015B5E1 /* mwexception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDDD1653D6200015B5E1 /* mwexception.cpp */; };
 		86E3DE161653D6210015B5E1 /* mwexception.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDDE1653D6210015B5E1 /* mwexception.h */; };
 		86E3DE171653D6210015B5E1 /* prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDDF1653D6210015B5E1 /* prefix.h */; };
-		86E3DE181653D6210015B5E1 /* socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDE11653D6210015B5E1 /* socket.cpp */; };
-		86E3DE191653D6210015B5E1 /* socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDE21653D6210015B5E1 /* socket.h */; };
-		86E3DE1A1653D6210015B5E1 /* socketclient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDE31653D6210015B5E1 /* socketclient.cpp */; };
-		86E3DE1B1653D6210015B5E1 /* socketclient.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDE41653D6210015B5E1 /* socketclient.h */; };
-		86E3DE1C1653D6210015B5E1 /* socketserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDE51653D6210015B5E1 /* socketserver.cpp */; };
-		86E3DE1D1653D6210015B5E1 /* socketserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDE61653D6210015B5E1 /* socketserver.h */; };
 		86E3DE1E1653D6210015B5E1 /* svn_revision.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDE71653D6210015B5E1 /* svn_revision.h */; };
 		86E3DE1F1653D6210015B5E1 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDE81653D6210015B5E1 /* thread.cpp */; };
 		86E3DE201653D6210015B5E1 /* thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDE91653D6210015B5E1 /* thread.h */; };
@@ -274,12 +268,6 @@
 		86E3DDDD1653D6200015B5E1 /* mwexception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mwexception.cpp; path = ../common/src/mwexception.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDDE1653D6210015B5E1 /* mwexception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mwexception.h; path = ../common/src/mwexception.h; sourceTree = SOURCE_ROOT; };
 		86E3DDDF1653D6210015B5E1 /* prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prefix.h; path = ../common/src/prefix.h; sourceTree = SOURCE_ROOT; };
-		86E3DDE11653D6210015B5E1 /* socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = socket.cpp; path = ../common/src/socket/socket.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDE21653D6210015B5E1 /* socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = socket.h; path = ../common/src/socket/socket.h; sourceTree = SOURCE_ROOT; };
-		86E3DDE31653D6210015B5E1 /* socketclient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = socketclient.cpp; path = ../common/src/socket/socketclient.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDE41653D6210015B5E1 /* socketclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = socketclient.h; path = ../common/src/socket/socketclient.h; sourceTree = SOURCE_ROOT; };
-		86E3DDE51653D6210015B5E1 /* socketserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = socketserver.cpp; path = ../common/src/socket/socketserver.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDE61653D6210015B5E1 /* socketserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = socketserver.h; path = ../common/src/socket/socketserver.h; sourceTree = SOURCE_ROOT; };
 		86E3DDE71653D6210015B5E1 /* svn_revision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svn_revision.h; path = ../common/src/svn_revision.h; sourceTree = SOURCE_ROOT; };
 		86E3DDE81653D6210015B5E1 /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = ../common/src/thread.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDE91653D6210015B5E1 /* thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread.h; path = ../common/src/thread.h; sourceTree = SOURCE_ROOT; };
@@ -545,7 +533,6 @@
 				86E3DDDD1653D6200015B5E1 /* mwexception.cpp */,
 				86E3DDDE1653D6210015B5E1 /* mwexception.h */,
 				86E3DDDF1653D6210015B5E1 /* prefix.h */,
-				86E3DDE01653D6210015B5E1 /* socket */,
 				86E3DDE71653D6210015B5E1 /* svn_revision.h */,
 				86E3DDE81653D6210015B5E1 /* thread.cpp */,
 				86E3DDE91653D6210015B5E1 /* thread.h */,
@@ -657,20 +644,6 @@
 			path = ../common/src/libtomcrypt;
 			sourceTree = SOURCE_ROOT;
 		};
-		86E3DDE01653D6210015B5E1 /* socket */ = {
-			isa = PBXGroup;
-			children = (
-				86E3DDE11653D6210015B5E1 /* socket.cpp */,
-				86E3DDE21653D6210015B5E1 /* socket.h */,
-				86E3DDE31653D6210015B5E1 /* socketclient.cpp */,
-				86E3DDE41653D6210015B5E1 /* socketclient.h */,
-				86E3DDE51653D6210015B5E1 /* socketserver.cpp */,
-				86E3DDE61653D6210015B5E1 /* socketserver.h */,
-			);
-			name = socket;
-			path = ../common/src/socket;
-			sourceTree = SOURCE_ROOT;
-		};
 		86E3DEED1653ECB00015B5E1 /* cardpluginbeid */ = {
 			isa = PBXGroup;
 			children = (
@@ -758,9 +731,6 @@
 				86E3DE141653D6210015B5E1 /* mw_util.h in Headers */,
 				86E3DE161653D6210015B5E1 /* mwexception.h in Headers */,
 				86E3DE171653D6210015B5E1 /* prefix.h in Headers */,
-				86E3DE191653D6210015B5E1 /* socket.h in Headers */,
-				86E3DE1B1653D6210015B5E1 /* socketclient.h in Headers */,
-				86E3DE1D1653D6210015B5E1 /* socketserver.h in Headers */,
 				86E3DE1E1653D6210015B5E1 /* svn_revision.h in Headers */,
 				86E3DE201653D6210015B5E1 /* thread.h in Headers */,
 				86E3DE211653D6210015B5E1 /* threaddefines.h in Headers */,
@@ -1032,9 +1002,6 @@
 				86E3DE111653D6210015B5E1 /* mutex.cpp in Sources */,
 				86E3DE131653D6210015B5E1 /* mw_util.cpp in Sources */,
 				86E3DE151653D6210015B5E1 /* mwexception.cpp in Sources */,
-				86E3DE181653D6210015B5E1 /* socket.cpp in Sources */,
-				86E3DE1A1653D6210015B5E1 /* socketclient.cpp in Sources */,
-				86E3DE1C1653D6210015B5E1 /* socketserver.cpp in Sources */,
 				86E3DE1F1653D6210015B5E1 /* thread.cpp in Sources */,
 				86E3DE221653D6210015B5E1 /* tlv.cpp in Sources */,
 				86E3DE241653D6210015B5E1 /* tlvbuffer.cpp in Sources */,
