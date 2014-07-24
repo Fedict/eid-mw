@@ -37,7 +37,7 @@ public:
     //CMWException(long lError);
     CMWException(long lError, const char *cpFile, long lLine);
     ~CMWException () throw(){};
-    virtual const char* what() throw();
+    virtual const char* what() const throw();
 
     long GetError() const {return m_lError;};
     std::string GetFile() const {return m_sFile;};

@@ -41,7 +41,7 @@ CMWException::CMWException(long lError, const char *cpFile, long lLine)
 {
 }
 
-const char* CMWException::what() throw()
+const char* CMWException::what() const throw()
 {
 	return "CMWException, error code strings to be implemented";
 }
