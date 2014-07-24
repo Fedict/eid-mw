@@ -45,8 +45,8 @@
 #endif
 
 #ifndef WIN32
-#define strcpy_s(a,b,c)         strcpy((a),(c))
-#define sprintf_s(a,b,c,d,e,f,g,h,i)    sprintf((a),(c),(d),(e),(f),(g),(h),(i))
+#define strcpy_s(a,b,c)         strncpy((a),(c),(b))
+#define sprintf_s(a,b,c,d,e,f,g,h,i)    snprintf((a),(b),(c),(d),(e),(f),(g),(h),(i))
 #endif
 
 /******************************************************************************
