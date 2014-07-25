@@ -218,7 +218,7 @@ bool CDataFile::Load(bool bLock)
     // other processes from using the file only if they are collaborative 
     // and check for the lock, otherwise they can do whatever they like ..
 
-    m_tFl = malloc(sizeof(struct flock));
+    m_tFl = (struct flock*)malloc(sizeof(struct flock));
     m_tFl->l_whence = SEEK_SET; /* SEEK_SET, SEEK_CUR, SEEK_END */
     m_tFl->l_start  = 0;        /* Offset from l_whence         */
     m_tFl->l_len    = 0;        /* length, 0 = to EOF           */
