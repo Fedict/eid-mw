@@ -494,7 +494,7 @@ try_again:
 			MWLOG(LEV_DEBUG, MOD_CAL, L"        SCardControl(): 2 bytes returned", dwRecvLen);
 
 		CByteArray oResp(pucRecv, (unsigned long) dwRecvLen);
-		delete pucRecv;
+		delete[] pucRecv;
 
 		return oResp;
 	}
