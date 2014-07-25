@@ -506,10 +506,10 @@ CByteArray CBeidCard::SignInternal(const tPrivKey & key, unsigned long algo,
     // (needed for the nonrep key/pin, but also usable for the auth key/pin)
     if (pPin != NULL)
     {
-        unsigned long ulRemaining = 0;
-        bool bOK = PinCmd(PIN_OP_VERIFY, *pPin, "", "", ulRemaining, &key);
+        //unsigned long ulRemaining = 0;
+        bool bOK = PinCmd(PIN_OP_VERIFY, *pPin, "", "", m_ulRemaining, &key);
         if (!bOK)
-			throw CMWEXCEPTION(ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
+			throw CMWEXCEPTION(m_ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
     }
 
     // PSO: Compute Digital Signature

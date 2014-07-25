@@ -30,6 +30,7 @@ CCard(hCard, poContext, poPinpad)
 {
     m_ucCLA = 0;
 	m_selectAppletMode = DONT_SELECT_APPLET;
+	m_ulRemaining = 1;
 }
 
 CPkiCard::~CPkiCard(void)
