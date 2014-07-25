@@ -276,7 +276,7 @@ protected:
 	static CMutex 		sm_Mutex;	/**< Mutex for exclusive access */
 
 #ifndef WIN32
-	struct flock m_tFl;
+	struct flock *m_tFl;
 #endif
 
 // Data

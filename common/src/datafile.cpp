@@ -95,6 +95,9 @@ CDataFile::CDataFile(t_Str szFileName)
 	m_bDirty = false;
 	m_szFileName = szFileName;
 	m_Flags = (AUTOCREATE_SECTIONS | AUTOCREATE_KEYS);
+#ifndef WIN32
+	m_tFl = NULL;
+#endif
 }
 
 CDataFile::CDataFile()
@@ -104,6 +107,9 @@ CDataFile::CDataFile()
 	m_szFileName = t_Str(L"");
 	m_Sections.clear();
 	m_Flags = (AUTOCREATE_SECTIONS | AUTOCREATE_KEYS);
+#ifndef WIN32
+	m_tFl = NULL;
+#endif
 //	m_Sections.push_back( *(new t_Section) );
 }
 
@@ -212,13 +218,14 @@ bool CDataFile::Load(bool bLock)
     // other processes from using the file only if they are collaborative 
     // and check for the lock, otherwise they can do whatever they like ..
 
-    m_tFl.l_whence = SEEK_SET; /* SEEK_SET, SEEK_CUR, SEEK_END */
-    m_tFl.l_start  = 0;        /* Offset from l_whence         */
-    m_tFl.l_len    = 0;        /* length, 0 = to EOF           */
-    m_tFl.l_pid    = getpid(); /* our PID                      */
-    m_tFl.l_type   = F_RDLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
+    m_tFl = malloc(sizeof(struct flock));
+    m_tFl->l_whence = SEEK_SET; /* SEEK_SET, SEEK_CUR, SEEK_END */
+    m_tFl->l_start  = 0;        /* Offset from l_whence         */
+    m_tFl->l_len    = 0;        /* length, 0 = to EOF           */
+    m_tFl->l_pid    = getpid(); /* our PID                      */
+    m_tFl->l_type   = F_RDLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
 	
-    if( fcntl(fileno(m_stream), F_SETLKW, &m_tFl) == -1)
+    if( fcntl(fileno(m_stream), F_SETLKW, m_tFl) == -1)
     {  /* set the lock, waiting if necessary */
       printf("datafile::Load: fcntl %s\n",strerror(errno));
       exit(1);
@@ -299,18 +306,20 @@ bool CDataFile::Load(bool bLock)
     m_stream = freopen(utilStringNarrow(m_szFileName).c_str(), "w",m_stream);
     if (m_stream == NULL) return false;	
 
-    m_tFl.l_type   = F_UNLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
-    if( fcntl(fileno(m_stream), F_SETLKW, &m_tFl) == -1)
+    m_tFl->l_type   = F_UNLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
+    if( fcntl(fileno(m_stream), F_SETLKW, m_tFl) == -1)
     {  /* set the lock, waiting if necessary */
       printf("datafile::Load: fcntl %s\n",strerror(errno));
       exit(1);
     }
-    m_tFl.l_type   = F_WRLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
-    if( fcntl(fileno(m_stream), F_SETLKW, &m_tFl) == -1)
+    m_tFl->l_type   = F_WRLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
+    if( fcntl(fileno(m_stream), F_SETLKW, m_tFl) == -1)
     {  /* set the lock, waiting if necessary */
       printf("datafile::Load: fcntl %s\n",strerror(errno));
       exit(1);
     }
+    free(m_tFl);
+    m_tFl = NULL;
 #endif
   }
   else
@@ -403,8 +412,8 @@ bool CDataFile::Save()
 #ifdef WIN32
   _unlock_file(m_stream);
 #else	
-  m_tFl.l_type   = F_UNLCK;  /* tell it to unlock the region */
-  if( fcntl(fileno(m_stream), F_SETLKW, &m_tFl) == -1)
+  m_tFl->l_type   = F_UNLCK;  /* tell it to unlock the region */
+  if( fcntl(fileno(m_stream), F_SETLKW, m_tFl) == -1)
   {  /* set the lock, waiting if necessary */
     printf("CDataFile::Close: fcntl %s\n",strerror(errno));
     exit(1);
