@@ -29,6 +29,7 @@
 #include "mw_util.h"
 
 #ifndef WIN32
+#include <malloc.h>
 #ifdef LINUX
 #include "wintypes.h"
 #else
@@ -349,6 +350,9 @@ CLog::CLog(const wchar_t *directory,const wchar_t *prefix,const wchar_t *group,l
 	m_maxlevel=maxlevel;
 	m_groupinnewfile=groupinnewfile;
 	m_openfailed=0;
+#ifndef WIN32
+	m_flock = NULL;
+#endif
 }
 
 //Copy constructor
@@ -370,6 +374,9 @@ CLog &CLog::operator= (const CLog &log)
 		m_maxlevel=log.m_maxlevel;
 		m_groupinnewfile=log.m_groupinnewfile;
 		m_openfailed=log.m_openfailed;
+#ifndef WIN32
+		m_flock = NULL;
+#endif
 	}
 	return *this;
 }
@@ -546,11 +553,12 @@ bool CLog::open(bool bWchar)
 	}
 
 #ifndef WIN32
-	m_flock.l_type   = F_WRLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
-	m_flock.l_whence = SEEK_SET; /* SEEK_SET, SEEK_CUR, SEEK_END */
-	m_flock.l_start  = 0;        /* Offset from l_whence         */
-	m_flock.l_len    = 0;        /* length, 0 = to EOF           */
-	m_flock.l_pid    = getpid(); /* our PID                      */
+	m_flock = (struct flock*)malloc(sizeof(struct flock));
+	m_flock->l_type   = F_WRLCK;  /* F_RDLCK, F_WRLCK, F_UNLCK    */
+	m_flock->l_whence = SEEK_SET; /* SEEK_SET, SEEK_CUR, SEEK_END */
+	m_flock->l_start  = 0;        /* Offset from l_whence         */
+	m_flock->l_len    = 0;        /* length, 0 = to EOF           */
+	m_flock->l_pid    = getpid(); /* our PID                      */
 #endif
 
 	int err=0;
@@ -587,7 +595,7 @@ bool CLog::open(bool bWchar)
 	// and check for the lock, otherwise they can do whatever they like ..
 	if(m_f!=NULL)
 	{
-		if( fcntl(fileno(m_f), F_SETLK, &m_flock) == -1)  /* set the lock */
+		if( fcntl(fileno(m_f), F_SETLK, m_flock) == -1)  /* set the lock */
 		{
 		  fclose(m_f);
 		  m_f=NULL;
@@ -617,10 +625,11 @@ inline void  CLog::close()
 		throw CMWEXCEPTION(EIDMW_ERR_UNKNOWN);
 
 #ifndef WIN32
-	m_flock.l_type   = F_UNLCK;  /* tell it to unlock the region */
+	m_flock->l_type   = F_UNLCK;  /* tell it to unlock the region */
 		
-	if( fcntl(fileno(m_f), F_SETLK, &m_flock) == -1) /* set the region to unlocked */
+	if( fcntl(fileno(m_f), F_SETLK, m_flock) == -1) /* set the region to unlocked */
 		throw CMWEXCEPTION(EIDMW_ERR_UNKNOWN);
+	free(m_flock);
 #endif
 
 	fclose(m_f);

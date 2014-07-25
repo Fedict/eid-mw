@@ -225,7 +225,7 @@ private:
 	FILE *m_f;
 
 #ifndef WIN32
-	struct flock m_flock;
+	struct flock *m_flock;
 #endif
 };
 
