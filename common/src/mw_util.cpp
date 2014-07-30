@@ -211,8 +211,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 	if(written>size)				// if written, but buffer was too small
 	{
 		size=written;				// we now know exactly which size we need
-		free(buf);
-		buf=(char*)malloc(size);	// try and grow buffer
+		buf=(char*)realloc(size);	// try and grow buffer
 		if(buf==NULL)
 		{
 			return VASPRINTF_FAILED;	// return error.
