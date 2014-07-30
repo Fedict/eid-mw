@@ -200,7 +200,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 	if(buf==NULL)
 		return VASPRINTF_FAILED;
 
-	size_t written=vsnprintf(buf, size, fmt, ap);	// try and vsnprintf to it
+	int written=vsnprintf(buf, size, fmt, ap);	// try and vsnprintf to it
 
 	if(written<0)					// if failed, clean up buf and return error
 	{	
@@ -212,7 +212,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 	{
 		size=written;				// we now know exactly which size we need
 		free(buf);
-		char* buf=(char*)malloc(size);	// try and grow buffer
+		buf=(char*)malloc(size);	// try and grow buffer
 		if(buf==NULL)
 		{
 			return VASPRINTF_FAILED;	// return error.
