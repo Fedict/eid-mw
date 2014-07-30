@@ -32,7 +32,7 @@ This DLL reads all the data from the social security SIS-card.
 #define SIS_DISPOSITION         SCARD_LEAVE_CARD
 const unsigned char tucSetSyncCard[] = {0x18, 0x00, 0x00, 0x00};
 #else
-#define SISPLUGIN_EXPORT
+#define SISPLUGIN_EXPORT	__attribute__((visibility("default")))
 #define SIS_PROTOCOL            SCARD_PROTOCOL_RAW
 #define IOCTL_SET_CARD_TYPE	0
 #define SIS_DISPOSITION         SCARD_RESET_CARD

@@ -40,7 +40,7 @@
 		#endif
 	#endif
 #else
-	#define DLGS_EXPORT
+	#define DLGS_EXPORT __attribute__((visibility("default")))
 #endif
 
 namespace eIDMW

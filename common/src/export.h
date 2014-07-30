@@ -64,13 +64,13 @@
 
 #else
 
-#define EIDMW_CMN_API
+#define EIDMW_CMN_API __attribute__((visibility("default")))
 
-#define EIDMW_CAL_API
+#define EIDMW_CAL_API __attribute__((visibility("default")))
 
-#define EIDMW_PCSCEMU_API
+#define EIDMW_PCSCEMU_API __attribute__((visibility("default")))
 
-#define EIDMW_APL_API
+#define EIDMW_APL_API __attribute__((visibility("default")))
 
 #endif
 

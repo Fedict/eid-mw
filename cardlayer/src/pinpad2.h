@@ -75,7 +75,7 @@ extern "C" {
 #define EIDMW_PP_API __declspec(dllexport)
 #endif
 #else
-#define EIDMW_PP_API
+#define EIDMW_PP_API __attribute__((visibility("default")))
 #endif
 
 #ifdef WIN32

@@ -44,7 +44,7 @@
 
 #ifndef WIN32
 #include <wintypes.h>
-#define SISPLUGIN_EXPORT
+#define SISPLUGIN_EXPORT __attribute__((visibility("default")))
 #else
 #define SISPLUGIN_EXPORT __declspec(dllexport)
 #endif

@@ -6,10 +6,10 @@
 #define CK_PTR *
 
 #define CK_DEFINE_FUNCTION(returnType, name) \
-   returnType name
+   returnType __attribute__((visibility("default"))) name
 
 #define CK_DECLARE_FUNCTION(returnType, name) \
-   returnType name
+   returnType __attribute__((visibility("default"))) name
 
 #define CK_DECLARE_FUNCTION_POINTER(returnType, name) \
    returnType (* name)
