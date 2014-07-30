@@ -152,7 +152,8 @@ void log_init(char *pszLogFile, unsigned int uiLogLevel)
 	}
 #else //WIN32
 	g_uiLogLevel = uiLogLevel;
-	strcpy_s(g_szLogFile,sizeof(g_szLogFile), pszLogFile);
+	strncpy(g_szLogFile, pszLogFile,sizeof(g_szLogFile));
+	g_szLogFile[sizeof(g_szLogFile)-1]='\0';
 #endif
 
 
