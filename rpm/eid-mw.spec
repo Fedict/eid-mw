@@ -1,13 +1,13 @@
-Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
+#Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
 # Authority: dag
 
-Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
-Name: eid-mw
 Version: 4.0.6
 Release: 0.%{revision}%{?dist}
 License: LGPL
 Group: Applications/Communications
 URL: http://eid.belgium.be/
+Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
+Name: eid-mw
 
 Source: http://eidmw.yourict.net/dist/sources/eid-mw-%{version}-%{revision}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -16,6 +16,7 @@ BuildRequires: gtk2-devel
 BuildRequires: pcsc-lite-devel
 Requires(pre): /sbin/chkconfig
 Requires(pre): /sbin/service
+Requires: eid-mw-bin
 %if 0%{?suse_version}
 Requires: pcsc-ccid
 %else
@@ -28,11 +29,31 @@ The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
 plugin to use Belgian eID (electronic identity) card in order to access
 websites and/or sign documents.
 
+%package devel
+Summary: Belgium electronic identity card PKCS#11 module - development package
+Requires: eid-mw
+
+%description devel
+The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
+plugin to use Belgian eID (electronic identity) card in order to access
+websites and/or sign documents. This package contains the files needed
+to develop against the eID Middleware.
+
+%package bin
+Summary: Belgium electronic identity card PKCS#11 module - helper binaries
+Requires: eid-mw
+
+%description bin
+The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
+plugin to use Belgian eID (electronic identity) card in order to access
+websites and/or sign documents. This package contains a few helper
+programs needed by the eID Middleware.
+
 %prep
 %setup
 
 %build
-%configure --disable-static
+%configure
 %{__make} %{?_smp_mflags}
 
 %install
@@ -64,25 +85,36 @@ fi
 %defattr(-, root, root, 0755)
 ### Include license files
 %doc ChangeLog NEWS README
-### FIXME: Include a man-page about eid-mw and troubleshooting
-#%doc %{_mandir}/man1/eid-mw.1*
 %{_datadir}/mozilla/extensions/
-### FIXME: It links against *.so, not against *.so.*
 %{_libdir}/libbeidcardlayer.so
 %{_libdir}/libbeidcommon.so.*
 %{_libdir}/libbeiddialogs.so
 %{_libdir}/libbeidpkcs11.so.*
+%exclude %{_libdir}/libbeidcommon.so
+%exclude %{_libdir}/libbeidpkcs11.so
+%exclude %{_libdir}/*.la
+%files bin
+%doc ChangeLog NEWS README
 %{_libexecdir}/beid-askaccess
 %{_libexecdir}/beid-askpin
 %{_libexecdir}/beid-badpin
 %{_libexecdir}/beid-changepin
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
-%exclude %{_libdir}/libbeidcommon.so
-%exclude %{_libdir}/libbeidpkcs11.so
-%exclude %{_libdir}/*.la
+%files devel
+%doc ChangeLog NEWS README
+%{_libdir}/libbeidcardlayer.a
+%{_libdir}/libbeidpkcs11.a
+%{_libdir}/libbeidpkcs11.so
+%{_libdir}/libbeidcommon.a
+%{_libdir}/libbeidcommon.so
+%{_libdir}/libbeiddialogs.a
 
 %changelog
+* Thu Jul 31 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
+- Split package up into several subpackages so as to make multiarch work
+  without much issues.
+
 * Tue Oct 15 2013 Frank Marien <frank@apsu.be> - 4.0.6-0.R
 - Upgrade to 4.0.6
 
