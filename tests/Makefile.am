@@ -1,8 +1,8 @@
-TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo
+TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent
 check_PROGRAMS = $(TESTS)
 
 AM_CFLAGS = -I$(top_srcdir)/sdk/Pkcs11/include/rsaref220
-COMMON_SRCS = verbose_assert.h testlib.h testlib.c
+COMMON_SRCS = testlib.h testlib.c
 
 init_finalize_SOURCES = init_finalize.c $(COMMON_SRCS)
 init_finalize_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
@@ -27,3 +27,6 @@ double_init_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
 
 fork_init_SOURCES = fork_init.c $(COMMON_SRCS)
 fork_init_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+
+slotevent_SOURCES = slotevent.c $(COMMON_SRCS)
+slotevent_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la

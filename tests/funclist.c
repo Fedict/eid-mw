@@ -2,7 +2,6 @@
 #include <pkcs11.h>
 #include <stdio.h>
 
-#include "verbose_assert.h"
 #include "testlib.h"
 
 /*
@@ -14,7 +13,7 @@ int main(int argc, char**argv) {
 	CK_FUNCTION_LIST_PTR ptr;
 
 	rv = C_GetFunctionList(&ptr);
-	check_ok;
+	check_rv;
 	verbose_assert(ptr->C_Initialize == C_Initialize);
 
 	return TEST_OK;

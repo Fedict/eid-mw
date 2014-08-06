@@ -2,7 +2,6 @@
 #include <pkcs11.h>
 #include <stdio.h>
 
-#include "verbose_assert.h"
 #include "testlib.h"
 
 /*
@@ -14,11 +13,11 @@ int main(void) {
 	CK_RV rv;
 
 	rv = C_Initialize(NULL_PTR);
-	check_ok;
+	check_rv;
 	rv = C_Initialize(NULL_PTR);
 	verbose_assert(rv == CKR_CRYPTOKI_ALREADY_INITIALIZED);
 	rv = C_Finalize(NULL_PTR);
-	check_ok;
+	check_rv;
 
 	return TEST_OK;
 }

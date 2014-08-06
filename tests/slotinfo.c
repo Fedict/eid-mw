@@ -2,7 +2,6 @@
 #include <pkcs11.h>
 #include <stdio.h>
 
-#include "verbose_assert.h"
 #include "testlib.h"
 
 int main(void) {
@@ -13,7 +12,7 @@ int main(void) {
 	int i;
 
 	rv = C_Initialize(NULL_PTR);
-	check_ok;
+	check_rv;
 
 	rv = C_GetSlotList(CK_FALSE, NULL_PTR, &count);
 	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
@@ -29,7 +28,7 @@ int main(void) {
 	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
 
 	rv = C_GetSlotInfo(list[0], &info);
-	check_ok;
+	check_rv;
 
 	verify_null(info.slotDescription, 64, 0, "Slot description:\t'%s'\n");
 	verify_null(info.manufacturerID, 32, 0, "Manufacturer ID:\t'%s'\n");
@@ -39,7 +38,7 @@ int main(void) {
 	printf("Token present: %c; Removable: %c; Hardware slot: %c\n", info.flags & CKF_TOKEN_PRESENT ? 'y' : 'n', info.flags & CKF_REMOVABLE_DEVICE ? 'y' : 'n', info.flags & CKF_HW_SLOT ? 'y' : 'n');
 
 	rv = C_Finalize(NULL_PTR);
-	check_ok;
+	check_rv;
 
 	return TEST_OK;
 }

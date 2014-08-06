@@ -2,7 +2,6 @@
 #include <pkcs11.h>
 #include <stdio.h>
 
-#include "verbose_assert.h"
 #include "testlib.h"
 
 int main(void) {
@@ -12,7 +11,7 @@ int main(void) {
 	int i;
 
 	rv = C_Initialize(NULL_PTR);
-	check_ok;
+	check_rv;
 
 	rv = C_GetSlotList(CK_FALSE, NULL_PTR, &count);
 	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
@@ -27,7 +26,7 @@ int main(void) {
 	}
 
 	rv = C_Finalize(NULL_PTR);
-	check_ok;
+	check_rv;
 
 	return TEST_OK;
 }
