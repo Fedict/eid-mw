@@ -159,6 +159,10 @@ int init_tests() {
 	test_ptrs[8] = slotevent;
 	count++;
 #endif
+#if (TESTS_TO_RUN & TEST_MECHLIST)
+	test_ptrs[9] = mechlist;
+	count++;
+#endif
 	verbose_assert(count > 0);
 	if(count==1) {
 		return 1;

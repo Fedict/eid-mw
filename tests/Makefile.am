@@ -1,4 +1,4 @@
-TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent
+TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist
 check_PROGRAMS = $(TESTS)
 
 AM_CFLAGS = -I$(top_srcdir)/sdk/Pkcs11/include/rsaref220
@@ -39,3 +39,7 @@ fork_init_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
 slotevent_SOURCES = slotevent.c $(COMMON_SRCS)
 slotevent_CPPFLAGS = -DTESTS_TO_RUN=TEST_SLOTEVENT
 slotevent_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+
+mechlist_SOURCES = mechlist.c $(COMMON_SRCS)
+mechlist_CPPFLAGS = -DTESTS_TO_RUN=TEST_MECHLIST
+mechlist_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la

@@ -27,7 +27,7 @@ int slotevent(void) {
 	printf("slots with token found: %lu\n", count);
 	if(count == 0) {
 		printf("Need at least one token to call C_WaitForSlotEvent\n");
-		return TEST_RV_FAIL;
+		return TEST_RV_SKIP;
 	}
 
 	while(rv == CKR_BUFFER_TOO_SMALL) {
