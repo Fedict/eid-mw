@@ -4,7 +4,7 @@
 
 #include "testlib.h"
 
-int main(int argc, char**argv) {
+int getinfo(int argc, char**argv) {
 	CK_RV rv;
 	CK_INFO info;
 	char buf[33];
@@ -23,5 +23,5 @@ int main(int argc, char**argv) {
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
-	return TEST_OK;
+	return TEST_RV_OK;
 }

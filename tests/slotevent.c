@@ -5,7 +5,7 @@
 
 #include "testlib.h"
 
-int main(void) {
+int slotevent(void) {
 	CK_RV rv;
 	CK_SLOT_ID_PTR list = NULL;
 	CK_ULONG count=0;
@@ -14,7 +14,7 @@ int main(void) {
 
 	if(!have_robot()) {
 		printf("Need ability to remove token to perform this test\n");
-		return TEST_SKIP;
+		return TEST_RV_SKIP;
 	}
 
 	robot_insert_card();
@@ -27,7 +27,7 @@ int main(void) {
 	printf("slots with token found: %lu\n", count);
 	if(count == 0) {
 		printf("Need at least one token to call C_WaitForSlotEvent\n");
-		return TEST_FAIL;
+		return TEST_RV_FAIL;
 	}
 
 	while(rv == CKR_BUFFER_TOO_SMALL) {
@@ -47,5 +47,5 @@ int main(void) {
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
-	return TEST_OK;
+	return TEST_RV_OK;
 }

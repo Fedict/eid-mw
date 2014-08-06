@@ -4,7 +4,7 @@
 
 #include "testlib.h"
 
-int main(void) {
+int init_finalize() {
 	CK_RV rv;
 
 	rv = C_Initialize(NULL_PTR);
@@ -12,5 +12,5 @@ int main(void) {
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
-	return TEST_OK;
+	return TEST_RV_OK;
 }

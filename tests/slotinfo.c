@@ -4,7 +4,7 @@
 
 #include "testlib.h"
 
-int main(void) {
+int slotinfo(void) {
 	CK_RV rv;
 	CK_SLOT_ID_PTR list;
 	CK_ULONG count=0;
@@ -19,7 +19,7 @@ int main(void) {
 	printf("slots found: %d\n", count);
 	if(count == 0) {
 		printf("Need at least one slot to call C_GetSlotInfo");
-		return TEST_SKIP;
+		return TEST_RV_SKIP;
 	}
 
 	list = malloc(sizeof(CK_SLOT_ID) * count);
@@ -40,5 +40,5 @@ int main(void) {
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
-	return TEST_OK;
+	return TEST_RV_OK;
 }

@@ -4,7 +4,7 @@
 
 #include "testlib.h"
 
-int main(void) {
+int slotlist(void) {
 	CK_RV rv;
 	CK_SLOT_ID_PTR list;
 	CK_ULONG count=0;
@@ -28,5 +28,5 @@ int main(void) {
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
-	return TEST_OK;
+	return TEST_RV_OK;
 }

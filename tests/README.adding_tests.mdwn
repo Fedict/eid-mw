@@ -1,0 +1,25 @@
+Adding tests to the test suite
+==============================
+
+Since we want this test suite to function on all platforms, and since
+adding another executable on some platforms is rather involved, there's
+some added code which may make things seem slightly convoluted. It's not
+too hard, however.
+
+To add a test `foo` to the test suite, take the following steps:
+- Implement a function `foo` "somewhere". This would preferably be done in its
+  own file (`foo.c`), but that isn't _strictly_ necessary.
+- Edit `testlib.h`:
+    - add a constant `TEST_FOO` with value `1 << X`, with `X` being the first
+      value not yet used.
+    - increment the value of `TESTS_COUNT`
+    - add a line `int foo();` (function declaration)
+- Edit the `init_tests()` function in testlib.c, adding a stanza for your new
+  test.
+- Edit Makefile.am, adding `foo` to the `TESTS` variable, and adding lines
+  `foo_SOURCES`, `foo_LDADD` and `foo_CPPFLAGS`. The `foo_SOURCES` should
+  reference the file where you wrote your function `foo`.
+- Change the Windows and OSX project files so that the file `foo.c` is now also
+  compiled.
+
+You're done!

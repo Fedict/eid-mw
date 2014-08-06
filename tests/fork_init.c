@@ -11,7 +11,7 @@
  * Check behaviour of C_Initialize across a fork() call (PKCS#11 §6.6.1)
  */
 
-int main(void) {
+int fork_init(void) {
 	CK_RV rv;
 	pid_t child;
 	int status;
@@ -28,11 +28,11 @@ int main(void) {
 	} else {
 		if(child == -1) {
 			printf("fork failed, skipping test\n");
-			return TEST_SKIP;
+			return TEST_RV_SKIP;
 		}
 		wait(&status);
 		if(!WIFEXITED(status)) {
-			return TEST_FAIL;
+			return TEST_RV_FAIL;
 		} else {
 			return WEXITSTATUS(status);
 		}
@@ -40,5 +40,5 @@ int main(void) {
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
-	return TEST_OK;
+	return TEST_RV_OK;
 }

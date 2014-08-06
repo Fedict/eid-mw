@@ -9,7 +9,7 @@
  * CKR_CRYPTOKI_ALREADY_INITIALIZED
  */
 
-int main(void) {
+int double_init(void) {
 	CK_RV rv;
 
 	rv = C_Initialize(NULL_PTR);
@@ -19,5 +19,5 @@ int main(void) {
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
-	return TEST_OK;
+	return TEST_RV_OK;
 }
