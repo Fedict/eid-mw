@@ -19,6 +19,8 @@ PKG_PROG_PKG_CONFIG
 ####### read user-specific dependecy requests from --with directives ######
 ###########################################################################
 
+AC_SEARCH_LIBS([dlopen],[dl])
+
 AC_MSG_CHECKING([user-specified pscs-lite installation])
 AC_ARG_WITH([pcsclite],
 AC_HELP_STRING([--with-pcsclite=DIR],[specific pcsc-lite install location]),
