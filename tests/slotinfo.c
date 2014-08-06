@@ -1,0 +1,45 @@
+#include <unix.h>
+#include <pkcs11.h>
+#include <stdio.h>
+
+#include "verbose_assert.h"
+#include "testlib.h"
+
+int main(void) {
+	CK_RV rv;
+	CK_SLOT_ID_PTR list;
+	CK_ULONG count=0;
+	CK_SLOT_INFO info;
+	int i;
+
+	rv = C_Initialize(NULL_PTR);
+	check_ok;
+
+	rv = C_GetSlotList(CK_FALSE, NULL_PTR, &count);
+	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
+	printf("slots found: %d\n", count);
+	if(count == 0) {
+		printf("Need at least one slot to call C_GetSlotInfo");
+		return TEST_SKIP;
+	}
+
+	list = malloc(sizeof(CK_SLOT_ID) * count);
+
+	rv = C_GetSlotList(CK_FALSE, list, &count);
+	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
+
+	rv = C_GetSlotInfo(list[0], &info);
+	check_ok;
+
+	verify_null(info.slotDescription, 64, 0, "Slot description:\t'%s'\n");
+	verify_null(info.manufacturerID, 32, 0, "Manufacturer ID:\t'%s'\n");
+
+	printf("Hardware version: %d.%d\n", info.hardwareVersion.major, info.hardwareVersion.minor);
+	printf("Firmware version: %d.%d\n", info.hardwareVersion.major, info.hardwareVersion.minor);
+	printf("Token present: %c; Removable: %c; Hardware slot: %c\n", info.flags & CKF_TOKEN_PRESENT ? 'y' : 'n', info.flags & CKF_REMOVABLE_DEVICE ? 'y' : 'n', info.flags & CKF_HW_SLOT ? 'y' : 'n');
+
+	rv = C_Finalize(NULL_PTR);
+	check_ok;
+
+	return TEST_OK;
+}

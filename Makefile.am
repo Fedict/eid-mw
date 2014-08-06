@@ -8,7 +8,7 @@ else
 MAYBE_DIALOGS=dialogs
 endif
 
-SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi
+SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi tests
 
 svn_revision:
 	svnversion > svn_revision
