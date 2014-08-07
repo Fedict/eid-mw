@@ -85,6 +85,9 @@ int ckrv_decode(CK_RV rv) {
 	case CKR_HOST_MEMORY:
 		printf("host memory\n");
 		return TEST_RV_FAIL;
+	case CKR_MECHANISM_INVALID:
+		printf("mechanism invalid\n");
+		return TEST_RV_FAIL;
 	case CKR_NEED_TO_CREATE_THREADS:
 		printf("need to create tests\n");
 		return TEST_RV_FAIL;
@@ -185,6 +188,10 @@ int init_tests() {
 #endif
 #if (TESTS_TO_RUN & TEST_MECHLIST)
 	test_ptrs[9] = mechlist;
+	count++;
+#endif
+#if (TESTS_TO_RUN & TEST_MECHINFO)
+	test_ptrs[10] = mechinfo;
 	count++;
 #endif
 	verbose_assert(count > 0);
