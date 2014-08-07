@@ -15,6 +15,7 @@ int login(void) {
 	CK_ULONG count=0;
 	CK_SESSION_HANDLE handle;
 	CK_TOKEN_INFO info;
+	CK_SESSION_INFO sinfo;
 	int i, ret;
 	char* statenames[5];
 
@@ -36,6 +37,10 @@ int login(void) {
 	rv = C_GetTokenInfo(slot, &info);
 	check_rv;
 
+	rv = C_GetSessionInfo(handle, &sinfo);
+	printf("State: %lu\n", sinfo.state);
+	printf("Flags: 0x%08x\n", sinfo.flags);
+
 	if(info.flags & CKF_PROTECTED_AUTHENTICATION_PATH) {
 		if(!is_manual_robot()) {
 			fprintf(stderr, "robot cannot enter a pin code on a protected auth path SC reader\n");
@@ -44,6 +49,15 @@ int login(void) {
 	}
 
 	rv = C_Login(handle, CKU_USER, NULL_PTR, 0);
+	check_rv;
+
+	rv = C_GetSessionInfo(handle, &sinfo);
+	check_rv;
+
+	printf("State: %lu\n", sinfo.state);
+	printf("Flags: 0x%08x\n", sinfo.flags);
+
+	rv = C_Logout(handle);
 	check_rv;
 
 	rv = C_CloseSession(handle);
