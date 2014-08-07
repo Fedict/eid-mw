@@ -6,28 +6,19 @@
 
 int slotinfo(void) {
 	CK_RV rv;
-	CK_SLOT_ID_PTR list;
+	CK_SLOT_ID slot;
 	CK_ULONG count=0;
 	CK_SLOT_INFO info;
-	int i;
+	int i, ret;
 
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
 
-	rv = C_GetSlotList(CK_FALSE, NULL_PTR, &count);
-	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
-	printf("slots found: %d\n", count);
-	if(count == 0) {
-		printf("Need at least one slot to call C_GetSlotInfo");
-		return TEST_RV_SKIP;
+	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+		return ret;
 	}
 
-	list = malloc(sizeof(CK_SLOT_ID) * count);
-
-	rv = C_GetSlotList(CK_FALSE, list, &count);
-	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
-
-	rv = C_GetSlotInfo(list[0], &info);
+	rv = C_GetSlotInfo(slot, &info);
 	check_rv;
 
 	verify_null(info.slotDescription, 64, 0, "Slot description:\t'%s'\n");

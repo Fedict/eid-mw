@@ -13,12 +13,13 @@ CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 
 int sessioninfo(void) {
 	CK_RV rv;
-	CK_SLOT_ID_PTR list;
+	CK_SLOT_ID slot;
 	CK_ULONG count=0;
 	CK_SESSION_HANDLE handle;
 	CK_SESSION_INFO info;
 	int i;
 	char* statenames[5];
+	int ret;
 
 	ADD_STATE(CKS_RO_PUBLIC_SESSION);
 	ADD_STATE(CKS_RO_USER_FUNCTIONS);
@@ -29,27 +30,18 @@ int sessioninfo(void) {
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
 
-	rv = C_GetSlotList(CK_TRUE, NULL_PTR, &count);
-	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
-	printf("slots with token found: %lu\n", count);
-	if(count == 0) {
-		printf("Need at least one token to call C_OpenSession\n");
-		return TEST_RV_SKIP;
+	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+		return ret;
 	}
 
-	list = malloc(sizeof(CK_SLOT_ID) * count);
-
-	rv = C_GetSlotList(CK_TRUE, list, &count);
-	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
-
-	rv = C_OpenSession(list[0], CKF_SERIAL_SESSION, NULL_PTR, notify, &handle);
+	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify, &handle);
 	check_rv;
 
 	rv = C_GetSessionInfo(handle, &info);
 	check_rv;
 
 	printf("Slot: %lu\n", info.slotID);
-	verbose_assert(info.slotID == list[0]);
+	verbose_assert(info.slotID == slot);
 	printf("State: %s\n", statenames[info.state]);
 	printf("Flags: 0x%08x\n", info.flags);
 	verbose_assert(!(info.flags & CKF_RW_SESSION));
@@ -57,14 +49,14 @@ int sessioninfo(void) {
 	rv = C_CloseSession(handle);
 	check_rv;
 
-	rv = C_OpenSession(list[0], CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify, &handle);
+	rv = C_OpenSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify, &handle);
 	check_rv;
 
 	rv = C_GetSessionInfo(handle, &info);
 	check_rv;
 
 	printf("Slot: %lu\n", info.slotID);
-	verbose_assert(info.slotID == list[0]);
+	verbose_assert(info.slotID == slot);
 	printf("State: %s\n", statenames[info.state]);
 	printf("Flags: 0x%08x\n", info.flags);
 	verbose_assert(info.flags & CKF_RW_SESSION);

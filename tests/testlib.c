@@ -206,3 +206,31 @@ int init_tests() {
 		return 0;
 	}
 }
+
+int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
+	CK_RV rv;
+	CK_ULONG count = 0;
+	CK_SLOT_ID_PTR list;
+
+	rv = C_GetSlotList(with_token, NULL_PTR, &count);
+	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
+	printf("slots %sfound: %lu\n", with_token ? "with token " : "", count);
+	if(count == 0 && with_token) {
+		printf("Need at least one token to run this test\n");
+		return TEST_RV_SKIP;
+	}
+
+	do {
+		list = malloc(sizeof(CK_SLOT_ID) * count);
+	} while((rv = C_GetSlotList(with_token, list, &count) == CKR_BUFFER_TOO_SMALL));
+	check_rv;
+
+	if(count > 1) {
+		printf("INFO: multiple slots found, using slot %lu\n", list[0]);
+	}
+
+	*slot = list[0];
+	free(list);
+
+	return TEST_RV_OK;
+}

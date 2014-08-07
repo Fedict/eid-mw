@@ -7,10 +7,10 @@
 
 int slotevent(void) {
 	CK_RV rv;
-	CK_SLOT_ID_PTR list = NULL;
+	CK_SLOT_ID slot;
 	CK_ULONG count=0;
 	CK_TOKEN_INFO info;
-	int i;
+	int i, ret;
 
 	if(!have_robot()) {
 		printf("Need ability to remove token to perform this test\n");
@@ -22,26 +22,11 @@ int slotevent(void) {
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
 
-	rv = C_GetSlotList(CK_TRUE, NULL_PTR, &count);
-	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
-	printf("slots with token found: %lu\n", count);
-	if(count == 0) {
-		printf("Need at least one token to call C_WaitForSlotEvent\n");
-		return TEST_RV_SKIP;
+	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+		return ret;
 	}
 
-	while(rv == CKR_BUFFER_TOO_SMALL) {
-		list = realloc(list, sizeof(CK_SLOT_ID) * count);
-
-		rv = C_GetSlotList(CK_TRUE, list, &count);
-	}
-	check_rv;
-
-	if(count > 1) {
-		printf("INFO: multiple slots found, using slot %lu\n", list[0]);
-	}
-
-	rv = C_WaitForSlotEvent(0, list, NULL_PTR);
+	rv = C_WaitForSlotEvent(0, &slot, NULL_PTR);
 	check_rv;
 
 	rv = C_Finalize(NULL_PTR);

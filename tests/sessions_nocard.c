@@ -11,9 +11,9 @@ CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 
 int sessions_nocard(void) {
 	CK_RV rv;
-	CK_SLOT_ID_PTR list;
+	CK_SLOT_ID slot;
 	CK_ULONG count=0;
-	int i;
+	int i, ret;
 	CK_SESSION_HANDLE handle;
 
 	if(!have_robot()) {
@@ -26,23 +26,14 @@ int sessions_nocard(void) {
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
 
-	rv = C_GetSlotList(CK_TRUE, NULL_PTR, &count);
-	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
-	printf("slots with token found: %lu\n", count);
-	if(count == 0) {
-		printf("Need at least one token to call C_OpenSession\n");
-		return TEST_RV_SKIP;
+	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+		return ret;
 	}
 
-	list = malloc(sizeof(CK_SLOT_ID) * count);
-
-	rv = C_GetSlotList(CK_TRUE, list, &count);
-	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
-
-	rv = C_OpenSession(list[0], 0, NULL_PTR, notify, &handle);
+	rv = C_OpenSession(slot, 0, NULL_PTR, notify, &handle);
 	assert(ckrv_decode(rv, 2, (CK_RV)CKR_OK, (int)TEST_RV_FAIL, (CK_RV)CKR_SESSION_PARALLEL_NOT_SUPPORTED, (int)TEST_RV_OK) == TEST_RV_OK);
 
-	rv = C_OpenSession(list[0], CKF_SERIAL_SESSION, NULL_PTR, notify, &handle);
+	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify, &handle);
 	check_rv;
 
 	robot_remove_card();
@@ -50,7 +41,7 @@ int sessions_nocard(void) {
 	rv = C_CloseSession(handle);
 	check_rv;
 
-	rv = C_OpenSession(list[0], CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify, &handle);
+	rv = C_OpenSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify, &handle);
 	/* FIXME: this should not be such a long list... */
 	assert(ckrv_decode(rv, 6,
 			(CK_RV)CKR_OK, (int)TEST_RV_FAIL,
