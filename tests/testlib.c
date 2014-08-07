@@ -48,6 +48,22 @@ CK_BBOOL have_robot() {
 	}
 }
 
+CK_BBOOL have_pin() {
+	char* envvar;
+	if(have_robot() && is_manual_robot()) {
+		return CK_TRUE;
+	}
+	envvar = getenv("EID_PIN_CODE");
+	if(envvar != NULL) {
+		return CK_TRUE;
+	}
+	return CK_FALSE;
+}
+
+CK_BBOOL is_manual_robot() {
+	return robot_type == ROBOT_MECHANICAL_TURK;
+}
+
 typedef struct {
 	const char* rvname;
 	int result;
@@ -197,6 +213,10 @@ int init_tests() {
 #endif
 #if (TESTS_TO_RUN & TEST_SESSIONINFO)
 	test_ptrs[13] = sessioninfo;
+	count++;
+#endif
+#if (TESTS_TO_RUN & TEST_LOGIN)
+	test_ptrs[14] = login;
 	count++;
 #endif
 	verbose_assert(count > 0);
