@@ -78,9 +78,13 @@ int ckrv_decode(CK_RV rv, int count, ...) {
 	ADD_CKRV(CKR_NEED_TO_CREATE_THREADS, TEST_RV_FAIL);
 	ADD_CKRV(CKR_NO_EVENT, TEST_RV_FAIL);
 	ADD_CKRV(CKR_OK, TEST_RV_OK);
+	ADD_CKRV(CKR_SESSION_COUNT, TEST_RV_FAIL);
+	ADD_CKRV(CKR_SESSION_PARALLEL_NOT_SUPPORTED, TEST_RV_FAIL);
+	ADD_CKRV(CKR_SESSION_READ_WRITE_SO_EXISTS, TEST_RV_FAIL);
 	ADD_CKRV(CKR_SLOT_ID_INVALID, TEST_RV_FAIL);
 	ADD_CKRV(CKR_TOKEN_NOT_PRESENT, TEST_RV_FAIL);
 	ADD_CKRV(CKR_TOKEN_NOT_RECOGNIZED, TEST_RV_FAIL);
+	ADD_CKRV(CKR_TOKEN_WRITE_PROTECTED, TEST_RV_FAIL);
 
 	va_start(ap, count);
 	for(i=0; i<count; i++) {
@@ -180,6 +184,10 @@ int init_tests() {
 #endif
 #if (TESTS_TO_RUN & TEST_MECHINFO)
 	test_ptrs[10] = mechinfo;
+	count++;
+#endif
+#if (TESTS_TO_RUN & TEST_SESSIONS)
+	test_ptrs[11] = sessions;
 	count++;
 #endif
 	verbose_assert(count > 0);

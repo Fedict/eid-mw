@@ -48,8 +48,9 @@ typedef unsigned int testmask;
 #define TEST_SLOTEVENT		1 << 8
 #define TEST_MECHLIST		1 << 9
 #define TEST_MECHINFO		1 << 10
+#define TEST_SESSIONS		1 << 11
 
-#define TESTS_COUNT		11
+#define TESTS_COUNT		12
 
 #define TESTS_ALL		((testmask)1 << TEST_COUNT) - 1
 #define FIRST_TEST		TEST_INIT_FINALIZE
@@ -65,6 +66,7 @@ int fork_init();
 int slotevent();
 int mechlist();
 int mechinfo();
+int sessions();
 
 /* Define the tests to run for architectures where tests aren't run in individual programs */
 #ifndef TESTS_TO_RUN
