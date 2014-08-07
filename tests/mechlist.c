@@ -20,7 +20,7 @@ int mechlist(void) {
 	check_rv;
 
 	rv = C_GetSlotList(CK_TRUE, NULL_PTR, &count);
-	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
+	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
 	printf("slots with token found: %lu\n", count);
 	if(count == 0) {
 		printf("Need at least one token to call C_GetMechanismList\n");

@@ -3,6 +3,7 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 
 #include "testlib.h"
 
@@ -47,67 +48,54 @@ CK_BBOOL have_robot() {
 	}
 }
 
-int ckrv_decode(CK_RV rv) {
-	switch(rv) {
-	case CKR_ARGUMENTS_BAD:
-		printf("arguments bad\n");
-		return TEST_RV_FAIL;
-	case CKR_BUFFER_TOO_SMALL:
-		printf("buffer too small\n");
-		return TEST_RV_FAIL;
-	case CKR_CANT_LOCK:
-		printf("can't lock\n");
-		return TEST_RV_FAIL;
-	case CKR_CRYPTOKI_ALREADY_INITIALIZED:
-		printf("already initialized\n");
-		return TEST_RV_FAIL;
-	case CKR_CRYPTOKI_NOT_INITIALIZED:
-		printf("not initialized\n");
-		return TEST_RV_FAIL;
-	case CKR_DEVICE_ERROR:
-		printf("device error\n");
-		return TEST_RV_FAIL;
-	case CKR_DEVICE_MEMORY:
-		printf("device memory\n");
-		return TEST_RV_FAIL;
-	case CKR_DEVICE_REMOVED:
-		printf("device removed\n");
-		return TEST_RV_FAIL;
-	case CKR_FUNCTION_FAILED:
-		printf("function failed\n");
-		return TEST_RV_FAIL;
-	case CKR_FUNCTION_NOT_SUPPORTED:
-		printf("function not supported\n");
-		return TEST_RV_SKIP;
-	case CKR_GENERAL_ERROR:
-		printf("general error\n");
-		return TEST_RV_FAIL;
-	case CKR_HOST_MEMORY:
-		printf("host memory\n");
-		return TEST_RV_FAIL;
-	case CKR_MECHANISM_INVALID:
-		printf("mechanism invalid\n");
-		return TEST_RV_FAIL;
-	case CKR_NEED_TO_CREATE_THREADS:
-		printf("need to create tests\n");
-		return TEST_RV_FAIL;
-	case CKR_NO_EVENT:
-		printf("no event\n");
-		return TEST_RV_FAIL;
-	case CKR_OK:
-		printf("ok\n");
-		return TEST_RV_OK;
-	case CKR_SLOT_ID_INVALID:
-		printf("slot id invalid\n");
-		return TEST_RV_FAIL;
-	case CKR_TOKEN_NOT_PRESENT:
-		printf("token not present\n");
-		return TEST_RV_FAIL;
-	case CKR_TOKEN_NOT_RECOGNIZED:
-		printf("token not recognized\n");
-		return TEST_RV_FAIL;
-	default:
-		printf("unknown return code found: %d\n", (int)rv);
+typedef struct {
+	const char* rvname;
+	int result;
+} ckrvdecode;
+
+#define ADD_CKRV(ckrv, defaultrv) decodes[ckrv].rvname = #ckrv; decodes[ckrv].result = defaultrv
+
+int ckrv_decode(CK_RV rv, int count, ...) {
+	va_list ap;
+	ckrvdecode *decodes = calloc(CKR_FUNCTION_REJECTED + 1, sizeof(ckrvdecode));
+	int i;
+
+	printf("function %d: ", fc_counter++);
+
+	ADD_CKRV(CKR_ARGUMENTS_BAD, TEST_RV_FAIL);
+	ADD_CKRV(CKR_BUFFER_TOO_SMALL, TEST_RV_FAIL);
+	ADD_CKRV(CKR_CANT_LOCK, TEST_RV_FAIL);
+	ADD_CKRV(CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_FAIL);
+	ADD_CKRV(CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_FAIL);
+	ADD_CKRV(CKR_DEVICE_ERROR, TEST_RV_FAIL);
+	ADD_CKRV(CKR_DEVICE_MEMORY, TEST_RV_FAIL);
+	ADD_CKRV(CKR_DEVICE_REMOVED, TEST_RV_FAIL);
+	ADD_CKRV(CKR_FUNCTION_FAILED, TEST_RV_FAIL);
+	ADD_CKRV(CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_SKIP);
+	ADD_CKRV(CKR_GENERAL_ERROR, TEST_RV_FAIL);
+	ADD_CKRV(CKR_HOST_MEMORY, TEST_RV_FAIL);
+	ADD_CKRV(CKR_MECHANISM_INVALID, TEST_RV_FAIL);
+	ADD_CKRV(CKR_NEED_TO_CREATE_THREADS, TEST_RV_FAIL);
+	ADD_CKRV(CKR_NO_EVENT, TEST_RV_FAIL);
+	ADD_CKRV(CKR_OK, TEST_RV_OK);
+	ADD_CKRV(CKR_SLOT_ID_INVALID, TEST_RV_FAIL);
+	ADD_CKRV(CKR_TOKEN_NOT_PRESENT, TEST_RV_FAIL);
+	ADD_CKRV(CKR_TOKEN_NOT_RECOGNIZED, TEST_RV_FAIL);
+
+	va_start(ap, count);
+	for(i=0; i<count; i++) {
+		CK_RV modrv = va_arg(ap, CK_RV);
+		int toreturn = va_arg(ap, int);
+		assert(modrv <= CKR_FUNCTION_REJECTED);
+		assert(decodes[modrv].rvname != NULL);
+		decodes[modrv].result = toreturn;
+	}
+
+	if(decodes[rv].rvname != NULL) {
+		printf("%s\n", decodes[rv].rvname);
+		return decodes[rv].result;
+	} else {
+		printf("unknown CK_RV 0x%08x", rv);
 		return TEST_RV_FAIL;
 	}
 }

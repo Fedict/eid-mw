@@ -14,13 +14,14 @@ int slotlist(void) {
 	check_rv;
 
 	rv = C_GetSlotList(CK_FALSE, NULL_PTR, &count);
-	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
+	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
 	printf("slots found: %d\n", count);
 
 	list = malloc(sizeof(CK_SLOT_ID) * count);
 
 	rv = C_GetSlotList(CK_FALSE, list, &count);
-	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
+	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
+	printf("slots found: %d\n", count);
 	for(i=0; i<count; i++) {
 		printf("slot %d: id %d\n", i, list[i]);
 	}

@@ -15,7 +15,7 @@ int tkinfo(void) {
 	check_rv;
 
 	rv = C_GetSlotList(CK_TRUE, NULL_PTR, &count);
-	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
+	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
 	printf("slots with token found: %d\n", count);
 	if(count == 0) {
 		printf("Need at least one token to call C_GetTokenInfo\n");
@@ -25,7 +25,7 @@ int tkinfo(void) {
 	list = malloc(sizeof(CK_SLOT_ID) * count);
 
 	rv = C_GetSlotList(CK_TRUE, list, &count);
-	verbose_assert((rv == CKR_OK) || (rv == CKR_BUFFER_TOO_SMALL));
+	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
 
 	rv = C_GetTokenInfo(list[0], &info);
 	check_rv;

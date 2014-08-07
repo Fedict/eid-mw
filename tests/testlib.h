@@ -20,9 +20,9 @@ extern int fc_counter;
 #define EIDT_UNLIKELY(expr) (expr)
 #endif
 
-#define check_rv { printf("function call %d: ", fc_counter++); if(EIDT_LIKELY(rv == CKR_OK)) printf("ok\n"); else return ckrv_decode(rv); }
+#define check_rv { int retval = ckrv_decode(rv, 0); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok, returning\n"); return retval; }}
 
-int ckrv_decode(CK_RV rv);
+int ckrv_decode(CK_RV rv, int count, ...);
 
 /* Verifies that a string does not contain a NULL character */
 void verify_null(CK_UTF8CHAR* string, size_t length, int nulls_expected, char* msg);
