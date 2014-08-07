@@ -190,6 +190,10 @@ int init_tests() {
 	test_ptrs[11] = sessions;
 	count++;
 #endif
+#if (TESTS_TO_RUN & TEST_SESSIONS_NOCARD)
+	test_ptrs[12] = sessions_nocard;
+	count++;
+#endif
 	verbose_assert(count > 0);
 	if(count==1) {
 		return 1;

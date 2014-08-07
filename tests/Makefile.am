@@ -1,4 +1,4 @@
-TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions
+TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard
 check_PROGRAMS = $(TESTS)
 
 AM_CFLAGS = -I$(top_srcdir)/sdk/Pkcs11/include/rsaref220
@@ -51,3 +51,7 @@ mechinfo_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
 sessions_SOURCES = sessions.c $(COMMON_SRCS)
 sessions_CPPFLAGS = -DTESTS_TO_RUN=TEST_SESSIONS
 sessions_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+
+sessions_nocard_SOURCES = sessions_nocard.c $(COMMON_SRCS)
+sessions_nocard_CPPFLAGS = -DTESTS_TO_RUN=TEST_SESSIONS_NOCARD
+sessions_nocard_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
