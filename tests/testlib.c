@@ -78,6 +78,7 @@ int ckrv_decode(CK_RV rv, int count, ...) {
 	ADD_CKRV(CKR_NEED_TO_CREATE_THREADS, TEST_RV_FAIL);
 	ADD_CKRV(CKR_NO_EVENT, TEST_RV_FAIL);
 	ADD_CKRV(CKR_OK, TEST_RV_OK);
+	ADD_CKRV(CKR_SESSION_CLOSED, TEST_RV_FAIL);
 	ADD_CKRV(CKR_SESSION_COUNT, TEST_RV_FAIL);
 	ADD_CKRV(CKR_SESSION_PARALLEL_NOT_SUPPORTED, TEST_RV_FAIL);
 	ADD_CKRV(CKR_SESSION_READ_WRITE_SO_EXISTS, TEST_RV_FAIL);
@@ -192,6 +193,10 @@ int init_tests() {
 #endif
 #if (TESTS_TO_RUN & TEST_SESSIONS_NOCARD)
 	test_ptrs[12] = sessions_nocard;
+	count++;
+#endif
+#if (TESTS_TO_RUN & TEST_SESSIONINFO)
+	test_ptrs[13] = sessioninfo;
 	count++;
 #endif
 	verbose_assert(count > 0);
