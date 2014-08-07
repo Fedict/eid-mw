@@ -113,10 +113,10 @@ void robot_insert_card() {
 	char c;
 	switch(robot_type) {
 		case ROBOT_NONE:
-			fprintf(STDERR, "E: robot needed, no robot configured\n");
+			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
-			fprintf(STDERR, "Auto robot not yet implemented\n");
+			fprintf(stderr, "Auto robot not yet implemented\n");
 			exit(TEST_RV_SKIP);
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please insert a card and press <enter>\n");
@@ -128,10 +128,10 @@ void robot_remove_card() {
 	char c;
 	switch(robot_type) {
 		case ROBOT_NONE:
-			fprintf(STDERR, "E: robot needed, no robot configured\n");
+			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
-			fprintf(STDERR, "Auto robot not yet implemented\n");
+			fprintf(stderr, "Auto robot not yet implemented\n");
 			exit(TEST_RV_SKIP);
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please remove the card from the slot and press <enter>\n");
