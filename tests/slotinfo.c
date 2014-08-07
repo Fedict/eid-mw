@@ -15,7 +15,7 @@ int slotinfo(void) {
 	check_rv;
 
 	rv = C_GetSlotList(CK_FALSE, NULL_PTR, &count);
-	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
+	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
 	printf("slots found: %d\n", count);
 	if(count == 0) {
 		printf("Need at least one slot to call C_GetSlotInfo");
@@ -25,7 +25,7 @@ int slotinfo(void) {
 	list = malloc(sizeof(CK_SLOT_ID) * count);
 
 	rv = C_GetSlotList(CK_FALSE, list, &count);
-	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
+	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
 
 	rv = C_GetSlotInfo(list[0], &info);
 	check_rv;

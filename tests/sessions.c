@@ -20,7 +20,7 @@ int sessions(void) {
 	check_rv;
 
 	rv = C_GetSlotList(CK_TRUE, NULL_PTR, &count);
-	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
+	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
 	printf("slots with token found: %lu\n", count);
 	if(count == 0) {
 		printf("Need at least one token to call C_OpenSession\n");
@@ -30,15 +30,18 @@ int sessions(void) {
 	list = malloc(sizeof(CK_SLOT_ID) * count);
 
 	rv = C_GetSlotList(CK_TRUE, list, &count);
-	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
+	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
 
 	rv = C_OpenSession(list[0], 0, NULL_PTR, notify, &handle);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_SESSION_PARALLEL_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	assert(ckrv_decode(rv, 2, (CK_RV)CKR_OK, (int)TEST_RV_FAIL, (CK_RV)CKR_SESSION_PARALLEL_NOT_SUPPORTED, (int)TEST_RV_OK) == TEST_RV_OK);
 
 	rv = C_OpenSession(list[0], CKF_SERIAL_SESSION, NULL_PTR, notify, &handle);
 	check_rv;
 
 	rv = C_CloseSession(handle);
+	check_rv;
+
+	rv = C_OpenSession(list[0], CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify, &handle);
 	check_rv;
 
 	rv = C_Finalize(NULL_PTR);

@@ -22,7 +22,7 @@ int fork_init(void) {
 		CK_INFO info;
 
 		rv = C_Initialize(NULL_PTR);
-		assert(ckrv_decode(rv, 1, CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_OK) == TEST_RV_OK);
+		assert(ckrv_decode(rv, 1, (CK_RV)CKR_CRYPTOKI_ALREADY_INITIALIZED, (int)TEST_RV_OK) == TEST_RV_OK);
 		rv = C_GetInfo(&info);
 		check_rv;
 	} else {
