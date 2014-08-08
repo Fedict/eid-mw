@@ -72,6 +72,7 @@ int mechinfo(void) {
 			verbose_assert(info.ulMinKeySize == info.ulMaxKeySize);
 		}
 		if(mechlist[i] == CKM_RSA_PKCS) {
+			found=1;
 			if(card_2k) {
 				verbose_assert(info.ulMaxKeySize == 2048);
 			} else {
@@ -84,7 +85,7 @@ int mechinfo(void) {
 	}
 	if(!found) {
 		printf("Couldn't find PKCS RSA mechanism on this token\n");
-		return TEST_RV_SKIP;
+		return TEST_RV_FAIL;
 	}
 
 	rv = C_Finalize(NULL_PTR);
