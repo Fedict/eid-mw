@@ -302,6 +302,7 @@ void log_xtrace(const char *where, char *string,void *data,int len)
   if (!log_level_approved(string))
 		return;
 
+  if (string != NULL)
 	string += 2;
 
   util_lock(logmutex);
