@@ -7,9 +7,6 @@
 int getinfo(int argc, char**argv) {
 	CK_RV rv;
 	CK_INFO info;
-	char buf[33];
-	int i;
-	int nullCount=0;
 
 	rv = C_Initialize(NULL_PTR);
 	check_rv;

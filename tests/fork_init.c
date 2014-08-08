@@ -1,6 +1,7 @@
 #include <unix.h>
 #include <pkcs11.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include <sys/types.h>
 #include <sys/wait.h>

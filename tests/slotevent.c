@@ -8,9 +8,7 @@
 int slotevent(void) {
 	CK_RV rv;
 	CK_SLOT_ID slot;
-	CK_ULONG count=0;
-	CK_TOKEN_INFO info;
-	int i, ret;
+	int ret;
 
 	if(!have_robot()) {
 		printf("Need ability to remove token to perform this test\n");

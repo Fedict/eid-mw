@@ -45,7 +45,7 @@ int mechinfo(void) {
 	printf("RSA maximum key length: %lu\n", info.ulMaxKeySize);
 	verbose_assert(info.ulMinKeySize == info.ulMaxKeySize);
 	verbose_assert(info.ulMinKeySize == 1024 || info.ulMaxKeySize == 2048);
-	printf("RSA flags: 0x%08x\n", info.flags);
+	printf("RSA flags: %#08lx\n", info.flags);
 	verbose_assert(info.flags & CKF_HW);
 	verbose_assert(info.flags & CKF_SIGN);
 	verbose_assert((info.flags & ~CKF_HW & ~CKF_SIGN) == 0);

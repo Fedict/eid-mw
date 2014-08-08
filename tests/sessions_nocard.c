@@ -12,8 +12,7 @@ CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 int sessions_nocard(void) {
 	CK_RV rv;
 	CK_SLOT_ID slot;
-	CK_ULONG count=0;
-	int i, ret;
+	int ret;
 	CK_SESSION_HANDLE handle;
 
 	if(!have_robot()) {

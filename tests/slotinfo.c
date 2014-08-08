@@ -7,9 +7,8 @@
 int slotinfo(void) {
 	CK_RV rv;
 	CK_SLOT_ID slot;
-	CK_ULONG count=0;
 	CK_SLOT_INFO info;
-	int i, ret;
+	int ret;
 
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
