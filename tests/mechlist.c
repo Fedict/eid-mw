@@ -15,6 +15,7 @@ int mechlist(void) {
 	int known_mechs = 0;
 	int crit_mechs = 0;
 	int i, ret;
+	int retval;
 
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
@@ -31,7 +32,8 @@ int mechlist(void) {
 	check_rv;
 	if(count == 0) {
 		printf("Token supports no mechanisms!\n");
-		return TEST_RV_FAIL;
+		retval = TEST_RV_FAIL;
+		goto done;
 	}
 
 	for(i=0; i<count; i++) {
@@ -62,7 +64,8 @@ int mechlist(void) {
 			printf("INFO: %lu unknown mechanisms found\n", count - known_mechs);
 		} else {
 			fprintf(stderr, "E: something weird happened");
-			return TEST_RV_FAIL;
+			retval = TEST_RV_FAIL;
+			goto done;
 		}
 	}
 
@@ -70,6 +73,9 @@ int mechlist(void) {
 
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
+
+done:
+	free(mechlist);
 
 	return TEST_RV_OK;
 }
