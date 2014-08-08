@@ -59,13 +59,14 @@ namespace eIDMW
   const std::string defaultEFODF       = "3F00DF005031";
 
 
-  CPKCS15::CPKCS15(void) : m_poContext(NULL)
+  CPKCS15::CPKCS15(void) : m_poContext(NULL), m_poParser(NULL)
   {
     Clear();
   }
 
   CPKCS15::CPKCS15(CContext *poContext) :
-    m_poContext(poContext)
+    m_poContext(poContext),
+    m_poParser(NULL)
   {
     Clear();
   }
