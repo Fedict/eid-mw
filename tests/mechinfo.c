@@ -53,5 +53,7 @@ int mechinfo(void) {
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
+	free(mechlist);
+
 	return TEST_RV_OK;
 }
