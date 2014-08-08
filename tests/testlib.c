@@ -122,6 +122,7 @@ int ckrv_decode(CK_RV rv, int count, ...) {
 		assert(decodes[modrv].rvname != NULL);
 		decodes[modrv].result = toreturn;
 	}
+	va_end(ap);
 
 	if(decodes[rv].rvname != NULL) {
 		printf("%s\n", decodes[rv].rvname);
