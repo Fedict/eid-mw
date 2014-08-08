@@ -8,7 +8,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
 
 LT_INIT
-AM_INIT_AUTOMAKE([subdir-objects foreign tar-pax dist-zip])
+AM_INIT_AUTOMAKE([subdir-objects foreign tar-pax dist-zip serial-tests])
 
 # Checks for programs.
 AC_PROG_CXX([g++])
