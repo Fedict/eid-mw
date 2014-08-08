@@ -14,10 +14,8 @@ CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 int sessioninfo(void) {
 	CK_RV rv;
 	CK_SLOT_ID slot;
-	CK_ULONG count=0;
 	CK_SESSION_HANDLE handle;
 	CK_SESSION_INFO info;
-	int i;
 	char* statenames[5];
 	int ret;
 
@@ -43,7 +41,7 @@ int sessioninfo(void) {
 	printf("Slot: %lu\n", info.slotID);
 	verbose_assert(info.slotID == slot);
 	printf("State: %s\n", statenames[info.state]);
-	printf("Flags: 0x%08x\n", info.flags);
+	printf("Flags: %#08lx\n", info.flags);
 	verbose_assert(!(info.flags & CKF_RW_SESSION));
 
 	rv = C_CloseSession(handle);
@@ -58,7 +56,7 @@ int sessioninfo(void) {
 	printf("Slot: %lu\n", info.slotID);
 	verbose_assert(info.slotID == slot);
 	printf("State: %s\n", statenames[info.state]);
-	printf("Flags: 0x%08x\n", info.flags);
+	printf("Flags: %#08lx\n", info.flags);
 	verbose_assert(info.flags & CKF_RW_SESSION);
 
 	rv = C_CloseSession(handle);

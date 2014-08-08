@@ -12,12 +12,10 @@ CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 int login(void) {
 	CK_RV rv;
 	CK_SLOT_ID slot;
-	CK_ULONG count=0;
 	CK_SESSION_HANDLE handle;
 	CK_TOKEN_INFO info;
 	CK_SESSION_INFO sinfo;
-	int i, ret;
-	char* statenames[5];
+	int ret;
 
 	if(!have_pin()) {
 		fprintf(stderr, "cannot test login without a pin code\n");
@@ -39,7 +37,7 @@ int login(void) {
 
 	rv = C_GetSessionInfo(handle, &sinfo);
 	printf("State: %lu\n", sinfo.state);
-	printf("Flags: 0x%08x\n", sinfo.flags);
+	printf("Flags: %#08lx\n", sinfo.flags);
 
 	if(info.flags & CKF_PROTECTED_AUTHENTICATION_PATH) {
 		if(!is_manual_robot()) {
@@ -55,7 +53,7 @@ int login(void) {
 	check_rv;
 
 	printf("State: %lu\n", sinfo.state);
-	printf("Flags: 0x%08x\n", sinfo.flags);
+	printf("Flags: %#08lx\n", sinfo.flags);
 
 	rv = C_Logout(handle);
 	check_rv;

@@ -50,7 +50,7 @@ int mechlist(void) {
 		HAS_CKM(CKM_SHA384_RSA_PKCS, 0);
 		HAS_CKM(CKM_SHA512_RSA_PKCS, 0);
 		default:
-			printf("Found unknown mechanism 0x%08x\n", mechlist[i]);
+			printf("Found unknown mechanism %#08lx\n", mechlist[i]);
 			break;
 		}
 	}

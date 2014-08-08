@@ -7,9 +7,8 @@
 int tkinfo(void) {
 	CK_RV rv;
 	CK_SLOT_ID slot;
-	CK_ULONG count=0;
 	CK_TOKEN_INFO info;
-	int i, ret;
+	int ret;
 
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
@@ -27,13 +26,13 @@ int tkinfo(void) {
 	verify_null(info.serialNumber, 16, 0, "Serial number:\t'%s'\n");
 	//verify_null(info.utcTime, 16, 0, "UTC time on token:\t'%s'\n");
 
-	printf("Max session count: %d; session count: %d\n", info.ulMaxSessionCount, info.ulSessionCount);
-	printf("Max RW session count: %d; rw session count: %d\n", info.ulMaxRwSessionCount, info.ulRwSessionCount);
-	printf("Max PIN length: %d; min PIN length: %d\n", info.ulMaxPinLen, info.ulMinPinLen);
-	printf("Total public memory: %d; free public memory: %d\n", info.ulTotalPublicMemory, info.ulFreePublicMemory);
-	printf("Total private memory: %d; free private memory: %d\n", info.ulTotalPrivateMemory, info.ulFreePrivateMemory);
+	printf("Max session count: %lu; session count: %lu\n", info.ulMaxSessionCount, info.ulSessionCount);
+	printf("Max RW session count: %lu; rw session count: %lu\n", info.ulMaxRwSessionCount, info.ulRwSessionCount);
+	printf("Max PIN length: %lu; min PIN length: %lu\n", info.ulMaxPinLen, info.ulMinPinLen);
+	printf("Total public memory: %lu; free public memory: %lu\n", info.ulTotalPublicMemory, info.ulFreePublicMemory);
+	printf("Total private memory: %lu; free private memory: %lu\n", info.ulTotalPrivateMemory, info.ulFreePrivateMemory);
 
-	printf("flags field: %x\n", info.flags);
+	printf("flags field: %#08lx\n", info.flags);
 	
 	verbose_assert(!(info.flags & CKF_RNG));
 	verbose_assert(info.flags & CKF_WRITE_PROTECTED);

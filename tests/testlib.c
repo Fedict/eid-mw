@@ -27,9 +27,10 @@ void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	}
 	verbose_assert(nullCount == expect);
 
-	strncpy(buf, string, length + 1);
+	strncpy(buf, (char*)string, length + 1);
 	buf[length] = '\0';
 	printf(msg, buf);
+	free(buf);
 }
 
 CK_BBOOL have_robot() {
@@ -46,6 +47,8 @@ CK_BBOOL have_robot() {
 		robot_type = ROBOT_MECHANICAL_TURK;
 		return CK_TRUE;
 	}
+
+	return CK_FALSE;
 }
 
 CK_BBOOL have_pin() {
@@ -129,7 +132,7 @@ int ckrv_decode(CK_RV rv, int count, ...) {
 		printf("%s\n", decodes[rv].rvname);
 		retval = decodes[rv].result;
 	} else {
-		printf("unknown CK_RV 0x%08x\n", rv);
+		printf("unknown CK_RV %#08lx\n", rv);
 		retval = TEST_RV_FAIL;
 	}
 	free(decodes);
@@ -137,7 +140,7 @@ int ckrv_decode(CK_RV rv, int count, ...) {
 }
 
 void robot_insert_card() {
-	char c;
+	char buf[80];
 	switch(robot_type) {
 		case ROBOT_NONE:
 			fprintf(stderr, "E: robot needed, no robot configured\n");
@@ -147,12 +150,15 @@ void robot_insert_card() {
 			exit(TEST_RV_SKIP);
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please insert a card and press <enter>\n");
-			scanf("%c", &c);
+			if(fgets(buf, 80, stdin) == NULL) {
+				printf("something happened, skipping test\n");
+				exit(TEST_RV_SKIP);
+			}
 	}
 }
 
 void robot_remove_card() {
-	char c;
+	char buf[80];
 	switch(robot_type) {
 		case ROBOT_NONE:
 			fprintf(stderr, "E: robot needed, no robot configured\n");
@@ -162,7 +168,10 @@ void robot_remove_card() {
 			exit(TEST_RV_SKIP);
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please remove the card from the slot and press <enter>\n");
-			scanf("%c", &c);
+			if(fgets(buf, 80, stdin) == NULL) {
+				printf("soemthing happened, skipping test\n");
+				exit(TEST_RV_SKIP);
+			}
 	}
 }
 
