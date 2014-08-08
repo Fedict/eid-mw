@@ -254,7 +254,7 @@ int init_tests() {
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	CK_RV rv;
 	CK_ULONG count = 0;
-	CK_SLOT_ID_PTR list;
+	CK_SLOT_ID_PTR list = NULL;
 
 	rv = C_GetSlotList(with_token, NULL_PTR, &count);
 	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
@@ -265,7 +265,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	}
 
 	do {
-		list = malloc(sizeof(CK_SLOT_ID) * count);
+		list = realloc(list, sizeof(CK_SLOT_ID) * count);
 	} while((rv = C_GetSlotList(with_token, list, &count) == CKR_BUFFER_TOO_SMALL));
 	check_rv;
 
