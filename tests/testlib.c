@@ -75,6 +75,7 @@ int ckrv_decode(CK_RV rv, int count, ...) {
 	va_list ap;
 	ckrvdecode *decodes = calloc(CKR_FUNCTION_REJECTED + 1, sizeof(ckrvdecode));
 	int i;
+	int retval;
 
 	printf("function %d: ", fc_counter++);
 
@@ -126,11 +127,13 @@ int ckrv_decode(CK_RV rv, int count, ...) {
 
 	if(decodes[rv].rvname != NULL) {
 		printf("%s\n", decodes[rv].rvname);
-		return decodes[rv].result;
+		retval = decodes[rv].result;
 	} else {
 		printf("unknown CK_RV 0x%08x\n", rv);
-		return TEST_RV_FAIL;
+		retval = TEST_RV_FAIL;
 	}
+	free(decodes);
+	return retval;
 }
 
 void robot_insert_card() {
