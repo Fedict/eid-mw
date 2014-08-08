@@ -42,6 +42,7 @@ int mechinfo(void) {
 	}
 
 	rv = C_GetMechanismList(slot, NULL_PTR, &count);
+	assert(ckrv_decode(rv, 1, CKR_BUFFER_TOO_SMALL, TEST_RV_OK) == TEST_RV_OK);
 	mechlist = malloc(sizeof(CK_MECHANISM_TYPE) * count);
 	printf("number of mechanisms supported: %lu\n", count);
 
