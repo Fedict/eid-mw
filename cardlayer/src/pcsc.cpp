@@ -481,7 +481,7 @@ try_again:
 		if (SCARD_S_SUCCESS != lRet)
 		{
 			MWLOG(LEV_DEBUG, MOD_CAL, L"        SCardControl() err: 0x%0x", lRet);
-			delete pucRecv;
+			delete[] pucRecv;
 			throw CMWEXCEPTION(PcscToErr(lRet));
 		}
 
