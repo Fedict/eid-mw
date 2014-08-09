@@ -62,12 +62,21 @@ int mechinfo(void) {
 	for(i=0; i<count; i++) {
 		printf("Mechanism %#08lx (%s):\n", mechlist[i], ckms[mechlist[i]]);
 
+		info.ulMinKeySize = 0xdeadbeef;
+		info.ulMaxKeySize = 0xdeadbeef;
+		info.flags = 0xdeadbeef;
+
 		rv = C_GetMechanismInfo(slot, mechlist[i], &info);
 		check_rv;
 
 		printf("minimum key length: %lu\n", info.ulMinKeySize);
 		printf("maximum key length: %lu\n", info.ulMaxKeySize);
 		printf("flags: %#08lx\n", info.flags);
+
+		verbose_assert(info.ulMinKeySize != 0xdeadbeef);
+		verbose_assert(info.ulMaxKeySize != 0xdeadbeef);
+		verbose_assert(info.flags != 0xdeadbeef);
+
 		if(mechlist[i] != CKM_SHA1_RSA_PKCS_PSS && mechlist[i] != CKM_SHA256_RSA_PKCS_PSS) {
 			verbose_assert(info.ulMinKeySize == info.ulMaxKeySize);
 		}

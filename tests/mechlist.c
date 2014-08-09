@@ -28,6 +28,10 @@ int mechlist(void) {
 	mechlist = malloc(sizeof(CK_MECHANISM_TYPE) * count);
 	printf("number of mechanisms supported: %lu\n", count);
 
+	for(i=0; i<count; i++) {
+		mechlist[i] = 0xdeadbeef;
+	}
+
 	rv = C_GetMechanismList(slot, mechlist, &count);
 	check_rv;
 	if(count == 0) {
@@ -53,6 +57,10 @@ int mechlist(void) {
 		HAS_CKM(CKM_SHA256_RSA_PKCS_PSS, 0);
 		HAS_CKM(CKM_SHA384_RSA_PKCS, 0);
 		HAS_CKM(CKM_SHA512_RSA_PKCS, 0);
+		case 0xdeadbeef:
+			printf("E: found uninitialized data\n");
+			retval = TEST_RV_FAIL;
+			goto done;
 		default:
 			printf("Found unknown mechanism %#08lx\n", mechlist[i]);
 			break;
@@ -79,5 +87,5 @@ int mechlist(void) {
 done:
 	free(mechlist);
 
-	return TEST_RV_OK;
+	return retval;
 }
