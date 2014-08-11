@@ -15,7 +15,7 @@ int mechlist(void) {
 	int known_mechs = 0;
 	int crit_mechs = 0;
 	int i, ret;
-	int retval;
+	int retval = TEST_RV_OK;
 
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
