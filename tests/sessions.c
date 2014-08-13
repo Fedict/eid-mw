@@ -34,6 +34,9 @@ int sessions(void) {
 	rv = C_OpenSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify, &handle);
 	check_rv;
 
+	rv = C_CloseAllSessions(slot);
+	check_rv;
+
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
