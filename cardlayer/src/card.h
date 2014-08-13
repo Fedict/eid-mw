@@ -96,6 +96,7 @@ public:
 	virtual DlgPinUsage PinUsage2Dlg(const tPin & Pin, const tPrivKey *pKey);
 
 	virtual unsigned long GetSupportedAlgorithms();
+	virtual unsigned int GetRSAKeySize() = 0;
 
     virtual CByteArray Sign(const tPrivKey & key, const tPin & Pin,
         unsigned long algo, const CByteArray & oData);

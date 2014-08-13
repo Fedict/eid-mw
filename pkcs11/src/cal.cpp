@@ -409,8 +409,8 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 		if (algos & SIGN_ALGO_SHA384_RSA_PKCS)    *pulCount +=1;
 		if (algos & SIGN_ALGO_SHA512_RSA_PKCS)    *pulCount +=1;
 		if (algos & SIGN_ALGO_RIPEMD160_RSA_PKCS) *pulCount +=1;
-		if (algos & SIGN_ALGO_SHA1_RSA_PSS)				*pulCount +=1;
-		if (algos & SIGN_ALGO_SHA256_RSA_PSS)			*pulCount +=1;
+		if (algos & SIGN_ALGO_SHA1_RSA_PSS)	  *pulCount +=1;
+		if (algos & SIGN_ALGO_SHA256_RSA_PSS)	  *pulCount +=1;
 		return (CKR_OK);
 	}
 
@@ -516,12 +516,13 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 
 
 
-#define WHERE cal_get_mechanism_info()
+#define WHERE "cal_get_mechanism_info()"
 CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo)
 {
 	CK_RV ret = CKR_OK;
 	P11_MECHANISM_INFO table[] = CAL_MECHANISM_TABLE;
 	P11_MECHANISM_INFO *info = NULL;
+	int status;
 	int i;
 
 	if (pInfo == NULL_PTR) 
@@ -537,9 +538,47 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type, CK_MECHAN
 
 	if ((info) && (info->type))
 	{
-		//TODO
-		pInfo->ulMinKeySize = info->ulMinKeySize;
-		pInfo->ulMaxKeySize = info->ulMaxKeySize;
+		if (info->flags & CKF_SIGN)
+		{
+			ret = cal_update_token(hSlot,&status);
+			if (ret != CKR_OK)
+			{
+				return (ret);
+			}
+
+			if ((status == P11_CARD_REMOVED) || (status == P11_CARD_NOT_PRESENT))
+			{
+				return (CKR_TOKEN_NOT_PRESENT);
+			}
+
+			try
+			{
+				P11_SLOT *pSlot = p11_get_slot(hSlot);
+				if(pSlot == NULL)
+				{
+					log_trace(WHERE, "E: Invalid slot(%d)", hSlot);
+					return (CKR_SLOT_ID_INVALID);
+				}
+				std::string szReader = pSlot->name;
+
+				CReader &oReader = oCardLayer->getReader(szReader);
+				pInfo->ulMinKeySize = pInfo->ulMaxKeySize = (CK_ULONG)oReader.GetRSAKeySize();
+			}
+			catch(CMWException e)
+			{
+				return(cal_translate_error(WHERE, e.GetError()));
+			}
+			catch(...)
+			{
+				log_trace(WHERE, "E: unknown exception thrown");
+				return (CKR_FUNCTION_FAILED);
+			}
+		}
+		else
+		{
+			pInfo->ulMinKeySize = info->ulMinKeySize;
+			pInfo->ulMaxKeySize = info->ulMaxKeySize;
+		}
 		pInfo->flags = info->flags;
 	}
 	else

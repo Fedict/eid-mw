@@ -714,3 +714,15 @@ tCacheInfo CBeidCard::GetCacheInfo(const std::string &csPath)
 */
 	return dontCache;
 }
+
+unsigned int CBeidCard::GetRSAKeySize()
+{
+	if (m_ucAppletVersion >= 0x17)
+	{
+		return 2048;
+	}
+	else
+	{
+		return 1024;
+	}
+}

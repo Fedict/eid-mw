@@ -617,4 +617,12 @@ PinUsage CReader::GetPinUsage(const tPin & pin)
 	}
 }
 
+unsigned int CReader::GetRSAKeySize()
+{
+	if(m_poCard == NULL)
+		throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
+	
+	return m_poCard->GetRSAKeySize();
+}
+
 }

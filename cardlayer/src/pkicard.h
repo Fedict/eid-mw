@@ -68,6 +68,8 @@ public:
 
     virtual CByteArray Ctrl(long ctrl, const CByteArray & oCmdData) = 0;
 
+    virtual unsigned int GetRSAKeySize() = 0;
+
 protected:
 	std::vector <unsigned long> m_verifiedPINs;
 
