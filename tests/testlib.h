@@ -57,8 +57,9 @@ typedef unsigned int testmask;
 #define TEST_SESSIONS_NOCARD	1 << 12
 #define TEST_SESSIONINFO	1 << 13
 #define TEST_LOGIN		1 << 14
+#define TEST_INITTOKEN		1 << 15
 
-#define TESTS_COUNT		15
+#define TESTS_COUNT		16
 
 #define TESTS_ALL		((testmask)1 << TEST_COUNT) - 1
 #define FIRST_TEST		TEST_INIT_FINALIZE
@@ -78,6 +79,7 @@ int sessions();
 int sessions_nocard();
 int sessioninfo();
 int login();
+int inittoken();
 
 /* Define the tests to run for architectures where tests aren't run in individual programs */
 #ifndef TESTS_TO_RUN
