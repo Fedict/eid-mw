@@ -17,8 +17,10 @@ BuildRequires: pcsc-lite-devel
 Requires(pre): /sbin/chkconfig
 Requires(pre): /sbin/service
 Requires: eid-mw-bin
+Requires: eid-mw-libs
 %if 0%{?suse_version}
 Requires: pcsc-ccid
+BuildRequires: gcc-c++
 %else
 Requires: ccid
 %endif
@@ -48,6 +50,14 @@ The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
 plugin to use Belgian eID (electronic identity) card in order to access
 websites and/or sign documents. This package contains a few helper
 programs needed by the eID Middleware.
+
+%package libs
+Summary: Belgium electronic identity card PKCS#11 module - libraries
+
+%description libs
+The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
+plugin to use Belgian eID (electronic identity) card in order to access
+websites and/or sign documents. This package contains the actual libraries.
 
 %prep
 %setup
@@ -86,13 +96,15 @@ fi
 ### Include license files
 %doc ChangeLog NEWS README
 %{_datadir}/mozilla/extensions/
+%exclude %{_libdir}/*.la
+%files libs
+%doc ChangeLog NEWS README
 %{_libdir}/libbeidcardlayer.so
 %{_libdir}/libbeidcommon.so.*
 %{_libdir}/libbeiddialogs.so
 %{_libdir}/libbeidpkcs11.so.*
 %exclude %{_libdir}/libbeidcommon.so
 %exclude %{_libdir}/libbeidpkcs11.so
-%exclude %{_libdir}/*.la
 %files bin
 %doc ChangeLog NEWS README
 %{_libexecdir}/beid-askaccess
@@ -111,6 +123,9 @@ fi
 %{_libdir}/libbeiddialogs.a
 
 %changelog
+* Thu Aug 14 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
+- Split up somewhat further so that openSUSE-style multiarch works, too.
+
 * Thu Jul 31 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
 - Split package up into several subpackages so as to make multiarch work
   without much issues.
