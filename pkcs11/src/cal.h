@@ -35,7 +35,7 @@ extern "C" {
 	void cal_re_establish_context(void);
 #endif
 
-#define CAL_MECHANISM_TABLE  { \
+#define CAL_MECHANISM_TABLE { \
 	{  CKM_MD5,                128, 128  , CKF_DIGEST         }, \
 	{  CKM_SHA_1,              160, 160  , CKF_DIGEST         }, \
 	{  CKM_SHA256,             256, 256  , CKF_DIGEST         }, \
@@ -48,7 +48,9 @@ extern "C" {
 	{  CKM_SHA256_RSA_PKCS,    1024, 1024, CKF_HW | CKF_SIGN  }, \
 	{  CKM_SHA384_RSA_PKCS,    1024, 1024, CKF_HW | CKF_SIGN  }, \
 	{  CKM_SHA512_RSA_PKCS,    1024, 1024, CKF_HW | CKF_SIGN  }, \
-	{  CKM_RIPEMD160_RSA_PKCS, 1024, 1024, CKF_HW | CKF_SIGN  }  \
+	{  CKM_RIPEMD160_RSA_PKCS, 1024, 1024, CKF_HW | CKF_SIGN  }, \
+	{  CKM_SHA1_RSA_PKCS_PSS,  2048, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_SHA256_RSA_PKCS_PSS,2048, 2048, CKF_HW | CKF_SIGN  }  \
 }
 
 
