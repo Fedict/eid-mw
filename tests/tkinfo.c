@@ -29,8 +29,11 @@ int tkinfo(void) {
 	printf("Max session count: %lu; session count: %lu\n", info.ulMaxSessionCount, info.ulSessionCount);
 	printf("Max RW session count: %lu; rw session count: %lu\n", info.ulMaxRwSessionCount, info.ulRwSessionCount);
 	printf("Max PIN length: %lu; min PIN length: %lu\n", info.ulMaxPinLen, info.ulMinPinLen);
-	printf("Total public memory: %lu; free public memory: %lu\n", info.ulTotalPublicMemory, info.ulFreePublicMemory);
-	printf("Total private memory: %lu; free private memory: %lu\n", info.ulTotalPrivateMemory, info.ulFreePrivateMemory);
+
+	verbose_assert(info.ulTotalPublicMemory == CK_UNAVAILABLE_INFORMATION);
+	verbose_assert(info.ulFreePublicMemory == CK_UNAVAILABLE_INFORMATION);
+	verbose_assert(info.ulTotalPrivateMemory == CK_UNAVAILABLE_INFORMATION);
+	verbose_assert(info.ulFreePrivateMemory == CK_UNAVAILABLE_INFORMATION);
 
 	printf("flags field: %#08lx\n", info.flags);
 	
