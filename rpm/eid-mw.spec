@@ -96,7 +96,7 @@ fi
 %defattr(-, root, root, 0755)
 ### Include license files
 %doc ChangeLog NEWS README
-%{_datadir}/mozilla/extensions/
+%{_datadir}/mozilla/
 %exclude %{_libdir}/*.la
 %files libs
 %doc ChangeLog NEWS README
