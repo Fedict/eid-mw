@@ -74,6 +74,7 @@ public:
     virtual CP15Correction* GetP15Correction();
 
     virtual unsigned int GetRSAKeySize();
+    virtual unsigned long GetAppletVersion();
 
 protected:
 	virtual bool ShouldSelectApplet(unsigned char ins, unsigned long ulSW12);

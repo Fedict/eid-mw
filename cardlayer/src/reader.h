@@ -125,6 +125,8 @@ public:
 	unsigned long GetSupportedAlgorithms();
 	/** Returns the key size of the RSA key on the card */
 	unsigned int GetRSAKeySize();
+	/** Returns the applet version of the card */
+	unsigned long GetAppletVersion();
 
 	/* Sign data. If necessary, a PIN will be asked */
     CByteArray Sign(const tPrivKey & key, unsigned long algo,

@@ -286,6 +286,9 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 		goto cleanup;
 	}
 
+	pInfo->firmwareVersion.major = 1;
+	pInfo->firmwareVersion.minor = 0;
+
 	//TODO token recognized  CKR_TOKEN_NOT_RECOGNIZED
 	try
 	{
@@ -302,6 +305,7 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 		strcpy_n(pInfo->label, oReader.GetCardLabel().c_str(), 32, ' '); 
 		if(oReader.IsPinpadReader())
 			pInfo->flags = CKF_PROTECTED_AUTHENTICATION_PATH;
+		pInfo->firmwareVersion.major = oReader.GetAppletVersion();
 	}
 	catch (CMWException e)
 	{
@@ -334,8 +338,6 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 	pInfo->ulFreePrivateMemory = CK_UNAVAILABLE_INFORMATION;
 	pInfo->hardwareVersion.major = 1;
 	pInfo->hardwareVersion.minor = 0;
-	pInfo->firmwareVersion.major = 1;
-	pInfo->firmwareVersion.minor = 0;
 
 	pInfo->ulMaxPinLen = 12;
 	pInfo->ulMinPinLen = 4;

@@ -625,4 +625,12 @@ unsigned int CReader::GetRSAKeySize()
 	return m_poCard->GetRSAKeySize();
 }
 
+unsigned long CReader::GetAppletVersion()
+{
+	if(m_poCard == NULL)
+		throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
+	
+	return m_poCard->GetAppletVersion();
+}
+
 }

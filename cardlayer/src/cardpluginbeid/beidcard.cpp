@@ -726,3 +726,8 @@ unsigned int CBeidCard::GetRSAKeySize()
 		return 1024;
 	}
 }
+
+unsigned long CBeidCard::GetAppletVersion()
+{
+	return (unsigned long)m_ucAppletVersion;
+}

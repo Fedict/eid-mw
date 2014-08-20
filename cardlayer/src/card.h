@@ -97,6 +97,7 @@ public:
 
 	virtual unsigned long GetSupportedAlgorithms();
 	virtual unsigned int GetRSAKeySize() = 0;
+	virtual unsigned long GetAppletVersion() = 0;
 
     virtual CByteArray Sign(const tPrivKey & key, const tPin & Pin,
         unsigned long algo, const CByteArray & oData);
