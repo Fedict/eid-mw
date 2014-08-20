@@ -10,9 +10,7 @@ Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
 Name: eid-mw
 
 Source: http://eidmw.yourict.net/dist/sources/eid-mw-%{version}-%{revision}.tar.gz
-%if 0%{?suse_version}
 Source1: baselibs.conf
-%endif
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: gtk2-devel
