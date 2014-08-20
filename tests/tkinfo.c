@@ -47,7 +47,7 @@ int tkinfo(void) {
 	verbose_assert(!(info.flags & CKF_SECONDARY_AUTHENTICATION));
 
 	printf("Hardware version: %d.%d\n", info.hardwareVersion.major, info.hardwareVersion.minor);
-	printf("Firmware version: %d.%d\n", info.hardwareVersion.major, info.hardwareVersion.minor);
+	printf("Firmware version: %d.%d\n", info.firmwareVersion.major, info.firmwareVersion.minor);
 
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
