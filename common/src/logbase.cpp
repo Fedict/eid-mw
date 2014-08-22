@@ -29,7 +29,7 @@
 #include "mw_util.h"
 
 #ifndef WIN32
-#include <malloc.h>
+#include <stdlib.h>
 #ifdef LINUX
 #include "wintypes.h"
 #else
