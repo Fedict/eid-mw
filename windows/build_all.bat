@@ -1,7 +1,7 @@
 :: set all path variables
 :: =====================
 @call "%~dp0.\SetPaths.bat"
-@if %ERRORLEVEL%==1 goto err
+@if %ERRORLEVEL%==1 goto paths_failed
 
 :: BUILD
 :: =====
@@ -107,26 +107,30 @@ goto end_resetpath
 
 :msbuild_failed
 @echo [ERR ] msbuild failed
-@goto end
+@goto err
 
 :inf2cat_failed_failed
 @echo [ERR ] inf2cat_failed failed
-@goto end
+@goto err
 
 :makecert_failed
 @echo [ERR ] makecert failed
-@goto end
+@goto err
 
 :signtool_failed
 @echo [ERR ] signtool failed
-@goto end
+@goto err
 
 :end_resetpath_with_error
 @echo [ERR ] failed to create the MSI installer
+@goto err
+
+:paths_failed
+@echo [ERR ] could not set patsh
+@goto err
 
 :end_resetpath
 @cd %OUR_CURRENT_PATH%
-
 
 @echo [INFO] Build_all Done...
 @goto end
