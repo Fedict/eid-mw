@@ -68,8 +68,8 @@
 @if "%FILE_NOT_FOUND%"=="" goto find_mssdk
 @echo        Not found in "%BEID_DIR_PLATFORMSDK%"
 
-rem paths for Windows 8 SDK are slightly different
-@set FILE_TO_FIND="msitran.exe" "msidb.exe" "..\..\Include\shared\newdev.h"
+@rem paths for Windows 8 SDK are slightly different
+@set FILE_TO_FIND="msitran.exe" "msidb.exe" "..\..\Include\um\newdev.h"
 
 @set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_4%
 @set FILE_NOT_FOUND=
