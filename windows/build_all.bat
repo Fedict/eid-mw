@@ -1,7 +1,7 @@
 :: set all path variables
 :: =====================
 @call "%~dp0.\SetPaths.bat"
-@if %ERRORLEVEL%==1 goto end
+@if %ERRORLEVEL%==1 goto err
 
 :: BUILD
 :: =====
@@ -131,6 +131,8 @@ goto end_resetpath
 @echo [INFO] Build_all Done...
 @goto end
 
+:err
+@exit /b 1
 
 :end
 
