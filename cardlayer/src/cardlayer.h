@@ -112,10 +112,10 @@ public:
 	void CancelActions();
 
 	/* reestablish the pcsc context */
-	//void PCSCReEstablishContext();
+	void PCSCReEstablishContext();
 
 	/* check if the smartcard service is running */
-	//long PCSCServiceRunning(bool* pRunning);
+	long PCSCServiceRunning(bool* pRunning);
 
 	/* check if the smartcard service is running, and if not, try to start it */
 	//void StartPCSCService();

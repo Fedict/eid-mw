@@ -54,7 +54,7 @@ void CCardLayer::CancelActions(void)
 /*void CCardLayer::StartPCSCService(void)
 {
 	m_oContext.m_oPCSC.StartPCSCService();
-}
+}*/
 
 void CCardLayer::PCSCReEstablishContext()
 {
@@ -63,7 +63,7 @@ void CCardLayer::PCSCReEstablishContext()
 	m_oContext.m_oPCSC.EstablishContext();
 }
 
-long CCardLayer::PCSCServiceRunning(bool* pRunning)
+/*long CCardLayer::PCSCServiceRunning(bool* pRunning)
 {
 	return m_oContext.m_oPCSC.PCSCServiceRunning(pRunning);
 }*/
