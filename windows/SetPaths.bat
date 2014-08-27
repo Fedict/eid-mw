@@ -5,6 +5,7 @@
 @set SEARCH_BEID_DIR_PLATFORMSDK_1=%~dp0..\ThirdParty\MSPlatformSDK\bin
 @set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files\Microsoft Platform SDK\bin
 @set SEARCH_BEID_DIR_PLATFORMSDK_3=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\bin
+@set SEARCH_BEID_DIR_PLATFORMSDK_4=C:\Program Files (x86)\Windows Kits\8.0\bin\x86
 @set SEARCH_WIX_PATH=D:\wix38-binaries
 @set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
 @set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
@@ -67,8 +68,17 @@
 @if "%FILE_NOT_FOUND%"=="" goto find_mssdk
 @echo        Not found in "%BEID_DIR_PLATFORMSDK%"
 
-@echo [ERROR] MS Platform SDK 2008 or Windows SDK v7.1 could not be found
-@echo         If the path is different from "C:\Program Files\Microsoft SDKs\Windows\v7.1" or "C:\Program Files\Microsoft Platform SDK"
+rem paths for Windows 8 SDK are slightly different
+@set FILE_TO_FIND="msitran.exe" "msidb.exe" "..\..\Include\shared\newdev.h"
+
+@set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_4%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@echo        Not found in "%BEID_DIR_PLATFORMSDK%"
+
+@echo [ERROR] MS Platform SDK 2008, Windows SDK v7.1, or Windows SDK 8.0 could not be found
+@echo         If the path is not any of the above,
 @echo         please define BEID_DIR_PLATFORMSDK environment variable.
 @exit /B 1
 
