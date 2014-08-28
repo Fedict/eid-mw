@@ -1,4 +1,4 @@
-TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login nonsensible
+TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login nonsensible objects
 check_PROGRAMS = $(TESTS)
 
 AM_CFLAGS = -I$(top_srcdir)/sdk/Pkcs11/include/rsaref220
@@ -67,3 +67,7 @@ login_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
 nonsensible_SOURCES = nonsensible.c $(COMMON_SRCS)
 nonsensible_CPPFLAGS = -DTESTS_TO_RUN=TEST_NONSENSIBLE
 nonsensible_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+
+objects_SOURCES = objects.c $(COMMON_SRCS)
+objects_CPPFLAGS = -DTESTS_TO_RUN=TEST_OBJECTS
+objects_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
