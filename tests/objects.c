@@ -63,6 +63,30 @@ int objects() {
 	rv = C_FindObjectsFinal(session);
 	check_rv;
 
+	rv = C_CloseSession(session);
+	check_rv;
+
+	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
+	check_rv;
+
+	rv = C_FindObjectsInit(session, NULL_PTR, 0);
+	check_rv;
+
+	rv = C_CloseSession(session);
+	check_rv;
+
+	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
+	check_rv;
+
+	rv = C_FindObjectsInit(session, NULL_PTR, 0);
+	check_rv;
+
+	rv = C_CloseSession(session);
+	check_rv;
+
+	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
+	check_rv;
+
 	if(have_robot()) {
 		rv = C_FindObjectsInit(session, NULL_PTR, 0);
 		check_rv;
@@ -91,6 +115,9 @@ int objects() {
 		check_rv;
 
 		rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
+		check_rv;
+
+		rv = C_FindObjectsInit(session, NULL_PTR, 0);
 		check_rv;
 	} else {
 		printf("Robot not present, skipping card removal/insertion part of test...\n");
