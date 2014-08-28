@@ -272,6 +272,10 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
 	printf("slots %sfound: %lu\n", with_token ? "with token " : "", count);
 	if(count == 0 && with_token) {
+		if(have_robot()) {
+			robot_insert_card();
+			return find_slot(with_token, slot);
+		}
 		printf("Need at least one token to run this test\n");
 		return TEST_RV_SKIP;
 	}

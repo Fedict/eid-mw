@@ -20,8 +20,6 @@ int sessions_nocard(void) {
 		return TEST_RV_SKIP;
 	}
 
-	robot_insert_card();
-
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
 
