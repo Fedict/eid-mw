@@ -185,6 +185,12 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 	}
 
 	//clear data so it can be reused
+	if(pSession->Operation[P11_OPERATION_FIND].active) {
+		p11_clean_finddata(pSession->Operation[P11_OPERATION_FIND].pData);
+		free(pSession->Operation[P11_OPERATION_FIND].pData);
+		pSession->Operation[P11_OPERATION_FIND].pData = NULL;
+		pSession->Operation[P11_OPERATION_FIND].active = 0;
+	}
 	pSession->state = 0;
 	pSession->inuse = 0;
 	pSession->flags = 0;
