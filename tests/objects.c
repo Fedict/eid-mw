@@ -92,6 +92,7 @@ int objects() {
 		check_rv;
 
 		robot_remove_card();
+
 		rv = C_FindObjects(session, &object, 1, &count);
 		assert(ckrv_decode(rv, 2,
 			CKR_TOKEN_NOT_PRESENT, TEST_RV_OK,
@@ -104,6 +105,10 @@ int objects() {
 			CKR_DEVICE_REMOVED, TEST_RV_OK) == TEST_RV_OK);
 
 		robot_insert_card();
+
+		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+			return ret;
+		}
 
 		rv = C_FindObjectsInit(session, NULL_PTR, 0);
 		assert(ckrv_decode(rv, 2,
