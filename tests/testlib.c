@@ -243,8 +243,8 @@ int init_tests() {
 	test_ptrs[14] = login;
 	count++;
 #endif
-#if (TESTS_TO_RUN & TEST_INITTOKEN)
-	test_ptrs[15] = inittoken;
+#if (TESTS_TO_RUN & TEST_NONSENSIBLE)
+	test_ptrs[15] = nonsensible;
 	count++;
 #endif
 	verbose_assert(count > 0);
