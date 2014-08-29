@@ -7,7 +7,7 @@
 
 int nonsensible(void) {
 	CK_RV rv;
-	CK_SLOT_ID slot;
+	CK_SLOT_ID slot = 0;
 	CK_OBJECT_HANDLE object;
 	CK_SESSION_HANDLE session;
 	CK_ULONG data;
