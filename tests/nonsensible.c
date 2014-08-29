@@ -11,6 +11,7 @@ int nonsensible(void) {
 	CK_OBJECT_HANDLE object;
 	CK_SESSION_HANDLE session;
 	CK_ULONG data;
+	CK_MECHANISM mech;
 	int ret;
 
 	rv = C_Initialize(NULL_PTR);
@@ -32,6 +33,30 @@ int nonsensible(void) {
 	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
 
 	rv = C_GetObjectSize(session, object, &data);
+	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+
+	rv = C_EncryptInit(session, &mech, object);
+	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+
+	rv = C_Encrypt(session, NULL_PTR, 0, NULL_PTR, &data);
+	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+
+	rv = C_EncryptUpdate(session, NULL_PTR, 0, NULL_PTR, &data);
+	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+
+	rv = C_EncryptFinal(session, NULL_PTR, 0);
+	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+
+	rv = C_DecryptInit(session, &mech, object);
+	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+
+	rv = C_Decrypt(session, NULL_PTR, 0, NULL_PTR, &data);
+	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+
+	rv = C_DecryptUpdate(session, NULL_PTR, 0, NULL_PTR, &data);
+	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+
+	rv = C_DecryptFinal(session, NULL_PTR, 0);
 	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
 
 	rv = C_Finalize(NULL_PTR);
