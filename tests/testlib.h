@@ -30,6 +30,7 @@ void verify_null(CK_UTF8CHAR* string, size_t length, int nulls_expected, char* m
 /* Functions to work with card moving robots */
 CK_BBOOL have_robot();
 CK_BBOOL is_manual_robot();
+CK_BBOOL can_confirm();
 CK_BBOOL have_pin();
 void robot_remove_card();
 void robot_insert_card();
@@ -59,8 +60,9 @@ typedef unsigned int testmask;
 #define TEST_LOGIN		1 << 14
 #define TEST_NONSENSIBLE	1 << 15
 #define TEST_OBJECTS		1 << 16
+#define TEST_READDATA		1 << 17
 
-#define TESTS_COUNT		17
+#define TESTS_COUNT		18
 
 #define TESTS_ALL		((testmask)1 << TEST_COUNT) - 1
 #define FIRST_TEST		TEST_INIT_FINALIZE
@@ -82,6 +84,7 @@ int sessioninfo();
 int login();
 int nonsensible();
 int objects();
+int readdata();
 
 /* Define the tests to run for architectures where tests aren't run in individual programs */
 #ifndef TESTS_TO_RUN

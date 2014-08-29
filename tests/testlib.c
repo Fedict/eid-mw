@@ -67,6 +67,13 @@ CK_BBOOL is_manual_robot() {
 	return robot_type == ROBOT_MECHANICAL_TURK;
 }
 
+CK_BBOOL can_confirm() {
+	if(!have_robot()) {
+		return CK_FALSE;
+	}
+	return robot_type == ROBOT_MECHANICAL_TURK;
+}
+
 typedef struct {
 	const char* rvname;
 	int result;
@@ -253,6 +260,10 @@ int init_tests() {
 #endif
 #if (TESTS_TO_RUN & TEST_OBJECTS)
 	test_ptrs[16] = objects;
+	count++;
+#endif
+#if (TESTS_TO_RUN & TEST_READDATA)
+	test_ptrs[17] = readdata;
 	count++;
 #endif
 	verbose_assert(count > 0);
