@@ -52,7 +52,5 @@ int sessions_nocard(void) {
 	rv = C_Finalize(NULL_PTR);
 	check_rv;
 
-	robot_insert_card();
-
 	return TEST_RV_OK;
 }

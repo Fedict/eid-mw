@@ -104,8 +104,6 @@ int objects() {
 			CKR_TOKEN_NOT_PRESENT, TEST_RV_OK,
 			CKR_DEVICE_REMOVED, TEST_RV_OK) == TEST_RV_OK);
 
-		robot_insert_card();
-
 		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 			return ret;
 		}
