@@ -5,8 +5,6 @@
 
 #include "testlib.h"
 
-#define ADD_CKM(ckm) ckms[ckm] = #ckm
-
 int mechinfo(void) {
 	CK_RV rv;
 	CK_SLOT_ID slot;
@@ -16,23 +14,6 @@ int mechinfo(void) {
 	int i, ret;
 	int found = 0;
 	int card_2k = 0;
-	char* ckms[0x2002];
-
-	ADD_CKM(CKM_RSA_PKCS);
-	ADD_CKM(CKM_RIPEMD160);
-	ADD_CKM(CKM_MD5);
-	ADD_CKM(CKM_SHA_1);
-	ADD_CKM(CKM_SHA256);
-	ADD_CKM(CKM_SHA384);
-	ADD_CKM(CKM_SHA512);
-        ADD_CKM(CKM_RIPEMD160_RSA_PKCS);
-        ADD_CKM(CKM_MD5_RSA_PKCS);
-        ADD_CKM(CKM_SHA1_RSA_PKCS);
-        ADD_CKM(CKM_SHA1_RSA_PKCS_PSS);
-        ADD_CKM(CKM_SHA256_RSA_PKCS);
-        ADD_CKM(CKM_SHA256_RSA_PKCS_PSS);
-        ADD_CKM(CKM_SHA384_RSA_PKCS);
-        ADD_CKM(CKM_SHA512_RSA_PKCS);
 
 	rv = C_Initialize(NULL_PTR);
 	check_rv;
@@ -60,7 +41,7 @@ int mechinfo(void) {
 	}
 
 	for(i=0; i<count; i++) {
-		printf("Mechanism %#08lx (%s):\n", mechlist[i], ckms[mechlist[i]]);
+		printf("Mechanism %#08lx (%s):\n", mechlist[i], ckm_to_charp(mechlist[i]));
 
 		info.ulMinKeySize = 0xdeadbeef;
 		info.ulMaxKeySize = 0xdeadbeef;

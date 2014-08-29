@@ -150,6 +150,29 @@ int ckrv_decode(CK_RV rv, int count, ...) {
 	return retval;
 }
 
+#define CKM_PRINT(ckm) case ckm: return #ckm;
+char* ckm_to_charp(CK_MECHANISM_TYPE mech) {
+	switch(mech) {
+		CKM_PRINT(CKM_RSA_PKCS);
+		CKM_PRINT(CKM_RIPEMD160);
+		CKM_PRINT(CKM_MD5);
+		CKM_PRINT(CKM_SHA_1);
+		CKM_PRINT(CKM_SHA256);
+		CKM_PRINT(CKM_SHA384);
+		CKM_PRINT(CKM_SHA512);
+		CKM_PRINT(CKM_RIPEMD160_RSA_PKCS);
+		CKM_PRINT(CKM_MD5_RSA_PKCS);
+		CKM_PRINT(CKM_SHA1_RSA_PKCS);
+		CKM_PRINT(CKM_SHA1_RSA_PKCS_PSS);
+		CKM_PRINT(CKM_SHA256_RSA_PKCS);
+		CKM_PRINT(CKM_SHA256_RSA_PKCS_PSS);
+		CKM_PRINT(CKM_SHA384_RSA_PKCS);
+		CKM_PRINT(CKM_SHA512_RSA_PKCS);
+		default:
+			return "Unknown mechanism";
+	}
+}
+
 void robot_insert_card() {
 	char buf[80];
 	switch(robot_type) {
@@ -264,6 +287,10 @@ int init_tests() {
 #endif
 #if (TESTS_TO_RUN & TEST_READDATA)
 	test_ptrs[17] = readdata;
+	count++;
+#endif
+#if (TESTS_TO_RUN & TEST_DIGEST)
+	test_ptrs[18] = digest;
 	count++;
 #endif
 	verbose_assert(count > 0);

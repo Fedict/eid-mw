@@ -24,6 +24,8 @@ extern int fc_counter;
 
 int ckrv_decode(CK_RV rv, int count, ...);
 
+char* ckm_to_charp(CK_MECHANISM_TYPE);
+
 /* Verifies that a string does not contain a NULL character */
 void verify_null(CK_UTF8CHAR* string, size_t length, int nulls_expected, char* msg);
 
@@ -61,8 +63,9 @@ typedef unsigned int testmask;
 #define TEST_NONSENSIBLE	1 << 15
 #define TEST_OBJECTS		1 << 16
 #define TEST_READDATA		1 << 17
+#define TEST_DIGEST		1 << 18
 
-#define TESTS_COUNT		18
+#define TESTS_COUNT		19
 
 #define TESTS_ALL		((testmask)1 << TEST_COUNT) - 1
 #define FIRST_TEST		TEST_INIT_FINALIZE
@@ -85,6 +88,7 @@ int login();
 int nonsensible();
 int objects();
 int readdata();
+int digest();
 
 /* Define the tests to run for architectures where tests aren't run in individual programs */
 #ifndef TESTS_TO_RUN
