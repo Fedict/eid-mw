@@ -292,7 +292,7 @@ int init_tests() {
 	test_ptrs[18] = digest;
 	count++;
 #endif
-	verbose_assert(count > 0);
+	assert(count > 0);
 	if(count==1) {
 		return 1;
 	} else {
