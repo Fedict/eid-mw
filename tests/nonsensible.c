@@ -6,61 +6,48 @@
 #include "testlib.h"
 
 int nonsensible(void) {
-	CK_RV rv;
 	CK_SLOT_ID slot = 0;
 	CK_OBJECT_HANDLE object;
 	CK_SESSION_HANDLE session;
 	CK_ULONG data;
 	CK_MECHANISM mech;
 	int ret;
+	ckrv_mod m[] = {
+		{ CKR_OK, TEST_RV_FAIL },
+		{ CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK },
+	};
 
-	rv = C_Initialize(NULL_PTR);
-	check_rv;
+	check_rv(C_Initialize(NULL_PTR));
 
-	rv = C_InitToken(slot, "1111", 4, "");
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_InitToken(slot, "1111", 4, ""),m);
 
-	rv = C_InitPIN(slot, "1111", 4);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_InitPIN(slot, "1111", 4),m);
 
-	rv = C_CreateObject(session, NULL_PTR, 0, &object);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_CreateObject(session, NULL_PTR, 0, &object),m);
 
-	rv = C_CopyObject(session, object, NULL_PTR, 0, &object);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_CopyObject(session, object, NULL_PTR, 0, &object),m);
 
-	rv = C_DestroyObject(session, object);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_DestroyObject(session, object),m);
 
-	rv = C_GetObjectSize(session, object, &data);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_GetObjectSize(session, object, &data),m);
 
-	rv = C_EncryptInit(session, &mech, object);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_EncryptInit(session, &mech, object),m);
 
-	rv = C_Encrypt(session, NULL_PTR, 0, NULL_PTR, &data);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_Encrypt(session, NULL_PTR, 0, NULL_PTR, &data),m);
 
-	rv = C_EncryptUpdate(session, NULL_PTR, 0, NULL_PTR, &data);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_EncryptUpdate(session, NULL_PTR, 0, NULL_PTR, &data),m);
 
-	rv = C_EncryptFinal(session, NULL_PTR, 0);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_EncryptFinal(session, NULL_PTR, 0),m);
 
-	rv = C_DecryptInit(session, &mech, object);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_DecryptInit(session, &mech, object),m);
 
-	rv = C_Decrypt(session, NULL_PTR, 0, NULL_PTR, &data);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_Decrypt(session, NULL_PTR, 0, NULL_PTR, &data),m);
 
-	rv = C_DecryptUpdate(session, NULL_PTR, 0, NULL_PTR, &data);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_DecryptUpdate(session, NULL_PTR, 0, NULL_PTR, &data),m);
 
-	rv = C_DecryptFinal(session, NULL_PTR, 0);
-	assert(ckrv_decode(rv, 2, CKR_OK, TEST_RV_FAIL, CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_DecryptFinal(session, NULL_PTR, 0),m);
 
-	rv = C_Finalize(NULL_PTR);
-	check_rv;
+	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
 }

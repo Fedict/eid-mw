@@ -6,7 +6,6 @@
 #include "testlib.h"
 
 int slotevent(void) {
-	CK_RV rv;
 	CK_SLOT_ID slot;
 	int ret;
 
@@ -15,18 +14,15 @@ int slotevent(void) {
 		return TEST_RV_SKIP;
 	}
 
-	rv = C_Initialize(NULL_PTR);
-	check_rv;
+	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		return ret;
 	}
 
-	rv = C_WaitForSlotEvent(0, &slot, NULL_PTR);
-	check_rv;
+	check_rv(C_WaitForSlotEvent(0, &slot, NULL_PTR));
 
-	rv = C_Finalize(NULL_PTR);
-	check_rv;
+	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
 }

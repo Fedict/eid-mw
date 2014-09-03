@@ -7,7 +7,6 @@
 #define ADD_CKO(cko) ckos[cko] = #cko
 
 int objects() {
-	CK_RV rv;
 	CK_SESSION_HANDLE session;
 	CK_OBJECT_HANDLE object;
 	CK_ULONG count;
@@ -16,6 +15,10 @@ int objects() {
 	CK_OBJECT_CLASS klass;
 	char* ckos[8];
 	int ret;
+	ckrv_mod m[] = {
+		{ CKR_OK, TEST_RV_FAIL },
+		{ CKR_OPERATION_ACTIVE, TEST_RV_OK },
+	};
 
 	ADD_CKO(CKO_DATA);
 	ADD_CKO(CKO_CERTIFICATE);
@@ -26,108 +29,90 @@ int objects() {
 	ADD_CKO(CKO_DOMAIN_PARAMETERS);
 	ADD_CKO(CKO_MECHANISM);
 
-	rv = C_Initialize(NULL_PTR);
-	check_rv;
+	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		return ret;
 	}
 
-	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
-	check_rv;
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
-	rv = C_FindObjectsInit(session, NULL_PTR, 0);
-	check_rv;
+	check_rv(C_FindObjectsInit(session, NULL_PTR, 0));
 
 	do {
-		rv = C_FindObjects(session, &object, 1, &count);
-		check_rv;
+		check_rv(C_FindObjects(session, &object, 1, &count));
 
 		if(!count) continue;
 
 		attr.type = CKA_CLASS;
 		attr.pValue = &klass;
 		attr.ulValueLen=sizeof(klass);
-		rv = C_GetAttributeValue(session, object, &attr, 1);
-		check_rv;
+		check_rv(C_GetAttributeValue(session, object, &attr, 1));
 
 		printf("Found object %lx of class %s (%#lx)\n", object, ckos[klass], klass);
 		verbose_assert(klass == CKO_CERTIFICATE || klass == CKO_PUBLIC_KEY || klass == CKO_PRIVATE_KEY);
 	} while(count);
 
-	rv = C_FindObjectsInit(session, NULL_PTR, 0);
-	assert(ckrv_decode(rv, 2,
-		CKR_OK, TEST_RV_FAIL,
-		CKR_OPERATION_ACTIVE, TEST_RV_OK) == TEST_RV_OK);
+	check_rv_long(C_FindObjectsInit(session, NULL_PTR, 0), m);
 
-	rv = C_FindObjectsFinal(session);
-	check_rv;
+	check_rv(C_FindObjectsFinal(session));
 
-	rv = C_CloseSession(session);
-	check_rv;
+	check_rv(C_CloseSession(session));
 
-	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
-	check_rv;
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
-	rv = C_FindObjectsInit(session, NULL_PTR, 0);
-	check_rv;
+	check_rv(C_FindObjectsInit(session, NULL_PTR, 0));
 
-	rv = C_CloseSession(session);
-	check_rv;
+	check_rv(C_CloseSession(session));
 
-	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
-	check_rv;
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
-	rv = C_FindObjectsInit(session, NULL_PTR, 0);
-	check_rv;
+	check_rv(C_FindObjectsInit(session, NULL_PTR, 0));
 
-	rv = C_CloseSession(session);
-	check_rv;
+	check_rv(C_CloseSession(session));
 
-	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
-	check_rv;
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
 	if(have_robot()) {
-		rv = C_FindObjectsInit(session, NULL_PTR, 0);
-		check_rv;
+		ckrv_mod m_maybe_rmvd[] = {
+			{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
+			{ CKR_DEVICE_REMOVED, TEST_RV_OK},
+		};
+		ckrv_mod m_is_rmvd[] = {
+			{ CKR_OK, TEST_RV_FAIL },
+			{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
+			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
+		};
+		ckrv_mod m_inv[] = {
+			{ CKR_OK, TEST_RV_FAIL },
+			{ CKR_DEVICE_REMOVED, TEST_RV_OK },	// really?!?
+			{ CKR_SESSION_HANDLE_INVALID, TEST_RV_OK },
+		};
+
+		check_rv(C_FindObjectsInit(session, NULL_PTR, 0));
 
 		robot_remove_card();
 
-		rv = C_FindObjects(session, &object, 1, &count);
-		assert(ckrv_decode(rv, 2,
-			CKR_TOKEN_NOT_PRESENT, TEST_RV_OK,
-			CKR_DEVICE_REMOVED, TEST_RV_OK) == TEST_RV_OK);
+		check_rv_long(C_FindObjects(session, &object, 1, &count), m_maybe_rmvd);
 
-		rv = C_GetAttributeValue(session, object, &attr, 1);
-		assert(ckrv_decode(rv, 3,
-			CKR_OK, TEST_RV_FAIL,
-			CKR_TOKEN_NOT_PRESENT, TEST_RV_OK,
-			CKR_DEVICE_REMOVED, TEST_RV_OK) == TEST_RV_OK);
+		check_rv_long(C_GetAttributeValue(session, object, &attr, 1), m_is_rmvd);
 
 		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 			return ret;
 		}
 
-		rv = C_FindObjectsInit(session, NULL_PTR, 0);
-		assert(ckrv_decode(rv, 2,
-			CKR_OK, TEST_RV_FAIL,
-			CKR_DEVICE_REMOVED, TEST_RV_OK,	// really?!?
-			CKR_SESSION_HANDLE_INVALID, TEST_RV_OK) == TEST_RV_OK);
+		check_rv_long(C_FindObjectsInit(session, NULL_PTR, 0), m_inv);
 
-		rv = C_CloseSession(session);
-		check_rv;
+		check_rv(C_CloseSession(session));
 
-		rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
-		check_rv;
+		check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
-		rv = C_FindObjectsInit(session, NULL_PTR, 0);
-		check_rv;
+		check_rv(C_FindObjectsInit(session, NULL_PTR, 0));
 	} else {
 		printf("Robot not present, skipping card removal/insertion part of test...\n");
 	}
 
-	rv = C_Finalize(NULL_PTR);
-	check_rv;
+	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
 }

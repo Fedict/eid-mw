@@ -5,20 +5,17 @@
 #include "testlib.h"
 
 int tkinfo(void) {
-	CK_RV rv;
 	CK_SLOT_ID slot;
 	CK_TOKEN_INFO info;
 	int ret;
 
-	rv = C_Initialize(NULL_PTR);
-	check_rv;
+	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		return ret;
 	}
 
-	rv = C_GetTokenInfo(slot, &info);
-	check_rv;
+	check_rv(C_GetTokenInfo(slot, &info));
 
 	verify_null(info.label, 32, 0, "Label:\t'%s'\n");
 	verify_null(info.manufacturerID, 32, 0, "Manufacturer ID:\t'%s'\n");
@@ -49,8 +46,7 @@ int tkinfo(void) {
 	printf("Hardware version: %d.%d\n", info.hardwareVersion.major, info.hardwareVersion.minor);
 	printf("Firmware version: %d.%d\n", info.firmwareVersion.major, info.firmwareVersion.minor);
 
-	rv = C_Finalize(NULL_PTR);
-	check_rv;
+	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
 }

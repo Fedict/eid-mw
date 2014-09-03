@@ -81,13 +81,12 @@ typedef struct {
 
 #define ADD_CKRV(ckrv, defaultrv) decodes[ckrv].rvname = #ckrv; decodes[ckrv].result = defaultrv
 
-int ckrv_decode(CK_RV rv, int count, ...) {
-	va_list ap;
+int ckrv_decode(CK_RV rv, char* fc, int count, ckrv_mod* mods) {
 	ckrvdecode *decodes = calloc(CKR_FUNCTION_REJECTED + 1, sizeof(ckrvdecode));
 	int i;
 	int retval;
 
-	printf("function %d: ", fc_counter++);
+	printf("function %d: \"%s\": ", fc_counter++, fc);
 
 	ADD_CKRV(CKR_ARGUMENTS_BAD, TEST_RV_FAIL);
 	ADD_CKRV(CKR_ATTRIBUTE_TYPE_INVALID, TEST_RV_FAIL);
@@ -129,15 +128,15 @@ int ckrv_decode(CK_RV rv, int count, ...) {
 	ADD_CKRV(CKR_USER_TOO_MANY_TYPES, TEST_RV_FAIL);
 	ADD_CKRV(CKR_USER_TYPE_INVALID, TEST_RV_FAIL);
 
-	va_start(ap, count);
 	for(i=0; i<count; i++) {
-		CK_RV modrv = va_arg(ap, CK_RV);
-		int toreturn = va_arg(ap, int);
+		CK_RV modrv = mods[i].rv;
+		int toreturn = mods[i].retval;
+
 		assert(modrv <= CKR_FUNCTION_REJECTED);
 		assert(decodes[modrv].rvname != NULL);
+
 		decodes[modrv].result = toreturn;
 	}
-	va_end(ap);
 
 	if(decodes[rv].rvname != NULL) {
 		printf("%s\n", decodes[rv].rvname);
@@ -306,8 +305,8 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	CK_ULONG count = 0;
 	CK_SLOT_ID_PTR list = NULL;
 
-	rv = C_GetSlotList(with_token, NULL_PTR, &count);
-	assert(ckrv_decode(rv, 1, (CK_RV)CKR_BUFFER_TOO_SMALL, (int)TEST_RV_OK) == TEST_RV_OK);
+	ckrv_mod m[] = { CKR_BUFFER_TOO_SMALL, TEST_RV_OK };
+	check_rv_long(C_GetSlotList(with_token, NULL_PTR, &count), m);
 	printf("slots %sfound: %lu\n", with_token ? "with token " : "", count);
 	if(count == 0 && with_token) {
 		if(have_robot()) {
@@ -321,7 +320,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	do {
 		list = realloc(list, sizeof(CK_SLOT_ID) * count);
 	} while((rv = C_GetSlotList(with_token, list, &count) == CKR_BUFFER_TOO_SMALL));
-	check_rv;
+	check_rv_late;
 
 	if(count > 1) {
 		printf("INFO: multiple slots found, using slot %lu\n", list[0]);

@@ -13,19 +13,16 @@
  */
 
 int fork_init(void) {
-	CK_RV rv;
 	pid_t child;
 	int status;
 
-	rv = C_Initialize(NULL_PTR);
-	check_rv;
+	check_rv(C_Initialize(NULL_PTR));
 	if((child = fork()) == 0) {
 		CK_INFO info;
+		ckrv_mod m[] = { CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_OK };
 
-		rv = C_Initialize(NULL_PTR);
-		assert(ckrv_decode(rv, 1, (CK_RV)CKR_CRYPTOKI_ALREADY_INITIALIZED, (int)TEST_RV_OK) == TEST_RV_OK);
-		rv = C_GetInfo(&info);
-		check_rv;
+		check_rv_long(C_Initialize(NULL_PTR), m);
+		check_rv(C_GetInfo(&info));
 	} else {
 		if(child == -1) {
 			printf("fork failed, skipping test\n");
@@ -38,8 +35,7 @@ int fork_init(void) {
 			return WEXITSTATUS(status);
 		}
 	}
-	rv = C_Finalize(NULL_PTR);
-	check_rv;
+	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
 }

@@ -93,7 +93,6 @@ CK_BBOOL want_string(char* id, char* label) {
 }
 
 int readdata() {
-	CK_RV rv;
 	CK_SESSION_HANDLE session;
 	CK_OBJECT_HANDLE object;
 	CK_ULONG count;
@@ -108,23 +107,20 @@ int readdata() {
 		return TEST_RV_SKIP;
 	}
 
-	rv = C_Initialize(NULL_PTR);
-	check_rv;
+	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		return ret;
 	}
 
-	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
-	check_rv;
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
 	attr.type = CKA_CLASS;
 	attr.pValue = &type;
 	type = CKO_DATA;
 	attr.ulValueLen = sizeof(CK_ULONG);
 
-	rv = C_FindObjectsInit(session, &attr, 1);
-	check_rv;
+	check_rv(C_FindObjectsInit(session, &attr, 1));
 
 	do {
 		char* label_str;
@@ -136,12 +132,10 @@ int readdata() {
 			{CKA_OBJECT_ID, NULL_PTR, 0},
 		};
 
-		rv = C_FindObjects(session, &object, 1, &count);
-		check_rv;
+		check_rv(C_FindObjects(session, &object, 1, &count));
 		if(!count) continue;
 
-		rv = C_GetAttributeValue(session, object, data, 3);
-		check_rv;
+		check_rv(C_GetAttributeValue(session, object, data, 3));
 
 		label_str = malloc(data[0].ulValueLen + 1);
 		data[0].pValue = label_str;
@@ -152,8 +146,7 @@ int readdata() {
 		objid_str = malloc(data[2].ulValueLen + 1);
 		data[2].pValue = objid_str;
 
-		rv = C_GetAttributeValue(session, object, data, 3);
-		check_rv;
+		check_rv(C_GetAttributeValue(session, object, data, 3));
 
 		label_str[data[0].ulValueLen] = '\0';
 		value_str[data[1].ulValueLen] = '\0';
@@ -170,11 +163,9 @@ int readdata() {
 		free(value_str);
 	} while(count);
 
-	rv = C_CloseSession(session);
-	check_rv;
+	check_rv(C_CloseSession(session));
 
-	rv = C_Finalize(NULL_PTR);
-	check_rv;
+	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
 }

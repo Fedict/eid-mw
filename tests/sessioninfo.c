@@ -12,7 +12,6 @@ CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 }
 
 int sessioninfo(void) {
-	CK_RV rv;
 	CK_SLOT_ID slot;
 	CK_SESSION_HANDLE handle;
 	CK_SESSION_INFO info;
@@ -25,18 +24,15 @@ int sessioninfo(void) {
 	ADD_STATE(CKS_RW_USER_FUNCTIONS);
 	ADD_STATE(CKS_RW_SO_FUNCTIONS);
 
-	rv = C_Initialize(NULL_PTR);
-	check_rv;
+	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		return ret;
 	}
 
-	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify, &handle);
-	check_rv;
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify, &handle));
 
-	rv = C_GetSessionInfo(handle, &info);
-	check_rv;
+	check_rv(C_GetSessionInfo(handle, &info));
 
 	printf("Slot: %lu\n", info.slotID);
 	verbose_assert(info.slotID == slot);
@@ -44,14 +40,11 @@ int sessioninfo(void) {
 	printf("Flags: %#08lx\n", info.flags);
 	verbose_assert(!(info.flags & CKF_RW_SESSION));
 
-	rv = C_CloseSession(handle);
-	check_rv;
+	check_rv(C_CloseSession(handle));
 
-	rv = C_OpenSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify, &handle);
-	check_rv;
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify, &handle));
 
-	rv = C_GetSessionInfo(handle, &info);
-	check_rv;
+	check_rv(C_GetSessionInfo(handle, &info));
 
 	printf("Slot: %lu\n", info.slotID);
 	verbose_assert(info.slotID == slot);
@@ -59,11 +52,9 @@ int sessioninfo(void) {
 	printf("Flags: %#08lx\n", info.flags);
 	verbose_assert(info.flags & CKF_RW_SESSION);
 
-	rv = C_CloseSession(handle);
-	check_rv;
+	check_rv(C_CloseSession(handle));
 
-	rv = C_Finalize(NULL_PTR);
-	check_rv;
+	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
 }

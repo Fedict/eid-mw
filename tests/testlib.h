@@ -10,7 +10,7 @@
 extern int va_counter;
 extern int fc_counter;
 
-#define verbose_assert(a) { printf("assertion %d: ", va_counter++); assert((a)); printf("ok\n"); }
+#define verbose_assert(a) { printf("assertion %d: \"%s\": ", va_counter++, #a); assert((a)); printf("ok\n"); }
 
 #ifdef __GNUC__
 #define EIDT_LIKELY(expr) __builtin_expect((expr), 1)
@@ -20,9 +20,17 @@ extern int fc_counter;
 #define EIDT_UNLIKELY(expr) (expr)
 #endif
 
-#define check_rv { int retval = ckrv_decode(rv, 0); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok, returning\n"); return retval; }}
+typedef struct {
+	CK_RV rv;
+	int retval;
+} ckrv_mod;
 
-int ckrv_decode(CK_RV rv, int count, ...);
+#define check_rv_late { int retval = ckrv_decode(rv, "", 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok, returning\n"); return retval; }}
+#define check_rv(call) check_rv_action(call, 0, NULL)
+#define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok, returning\n"); return retval; }}
+#define check_rv_long(call, mods) { int c = sizeof(mods) / sizeof(ckrv_mod); check_rv_action(call, c, mods); }
+
+int ckrv_decode(CK_RV rv, char* fc, int count, ckrv_mod*);
 
 char* ckm_to_charp(CK_MECHANISM_TYPE);
 

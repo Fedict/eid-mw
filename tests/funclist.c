@@ -9,11 +9,9 @@
  */
 
 int funclist(int argc, char**argv) {
-	CK_RV rv;
 	CK_FUNCTION_LIST_PTR ptr;
 
-	rv = C_GetFunctionList(&ptr);
-	check_rv;
+	check_rv(C_GetFunctionList(&ptr));
 	verbose_assert(ptr->C_Initialize == C_Initialize);
 	verbose_assert(ptr->C_Finalize == C_Finalize);
 	verbose_assert(ptr->C_GetInfo == C_GetInfo);

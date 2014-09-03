@@ -8,7 +8,6 @@
 #define HAS_CKM(ckm, crit) case ckm: { printf("Found " #ckm "\n"); known_mechs++; if(crit) crit_mechs++; } break;
 
 int mechlist(void) {
-	CK_RV rv;
 	CK_SLOT_ID slot;
 	CK_ULONG count=0;
 	CK_MECHANISM_TYPE_PTR mechlist;
@@ -17,14 +16,13 @@ int mechlist(void) {
 	int i, ret;
 	int retval = TEST_RV_OK;
 
-	rv = C_Initialize(NULL_PTR);
-	check_rv;
+	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		return ret;
 	}
 
-	rv = C_GetMechanismList(slot, NULL_PTR, &count);
+	check_rv(C_GetMechanismList(slot, NULL_PTR, &count));
 	mechlist = malloc(sizeof(CK_MECHANISM_TYPE) * count);
 	printf("number of mechanisms supported: %lu\n", count);
 
@@ -32,8 +30,7 @@ int mechlist(void) {
 		mechlist[i] = 0xdeadbeef;
 	}
 
-	rv = C_GetMechanismList(slot, mechlist, &count);
-	check_rv;
+	check_rv(C_GetMechanismList(slot, mechlist, &count));
 	if(count == 0) {
 		printf("Token supports no mechanisms!\n");
 		retval = TEST_RV_FAIL;
@@ -81,8 +78,7 @@ int mechlist(void) {
 
 	verbose_assert(crit_mechs == 5);
 
-	rv = C_Finalize(NULL_PTR);
-	check_rv;
+	check_rv(C_Finalize(NULL_PTR));
 
 done:
 	free(mechlist);

@@ -80,7 +80,6 @@ CK_MECHANISM_TYPE digest_mechs[6] = {
 };
 
 int digest() {
-	CK_RV rv;
 	int ret;
 	CK_SESSION_HANDLE session;
 	CK_MECHANISM mech;
@@ -88,15 +87,13 @@ int digest() {
 	CK_SLOT_ID slot;
 	int i;
 
-	rv = C_Initialize(NULL_PTR);
-	check_rv;
+	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		return ret;
 	}
 
-	rv = C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
-	check_rv;
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
 	for(i=0; i<6; i++) {
 		CK_ULONG len = 0;
@@ -107,25 +104,20 @@ int digest() {
 
 		printf("Testing mechanism %s\n", ckm_to_charp(digest_mechs[i]));
 
-		rv = C_DigestInit(session, &mech);
-		check_rv;
+		check_rv(C_DigestInit(session, &mech));
 
-		rv = C_DigestUpdate(session, data, sizeof(data));
-		check_rv;
+		check_rv(C_DigestUpdate(session, data, sizeof(data)));
 
-		rv = C_DigestFinal(session, NULL_PTR, &len);
-		check_rv;
+		check_rv(C_DigestFinal(session, NULL_PTR, &len));
 
 		digest = malloc(len);
 
-		rv = C_DigestFinal(session, digest, &len);
-		check_rv
+		check_rv(C_DigestFinal(session, digest, &len));
 
 		verbose_assert(memcmp(digest, digest_results[i], len) == 0);
 	}
 
-	rv = C_Finalize(NULL_PTR);
-	check_rv;
+	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
 }
