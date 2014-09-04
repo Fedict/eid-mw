@@ -5,7 +5,7 @@
 
 #include "testlib.h"
 
-int slotevent(void) {
+TEST_FUNC(slotevent) {
 	CK_SLOT_ID slot;
 	int ret;
 

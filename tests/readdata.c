@@ -92,7 +92,7 @@ CK_BBOOL want_string(char* id, char* label) {
 	exit(TEST_RV_FAIL);
 }
 
-int readdata() {
+TEST_FUNC(readdata) {
 	CK_SESSION_HANDLE session;
 	CK_OBJECT_HANDLE object;
 	CK_ULONG count;

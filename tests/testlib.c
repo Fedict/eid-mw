@@ -13,6 +13,7 @@ int fc_counter;
 enum {
 	ROBOT_NONE,
 	ROBOT_AUTO,
+	ROBOT_DIALOGS_ONLY,
 	ROBOT_MECHANICAL_TURK,
 } robot_type;
 
@@ -47,6 +48,10 @@ CK_BBOOL have_robot() {
 		robot_type = ROBOT_MECHANICAL_TURK;
 		return CK_TRUE;
 	}
+	if(!strcmp(envvar, "dialogsonly")) {
+		robot_type = ROBOT_DIALOGS_ONLY;
+		return CK_FALSE;
+	}
 
 	return CK_FALSE;
 }
@@ -69,6 +74,9 @@ CK_BBOOL is_manual_robot() {
 
 CK_BBOOL can_confirm() {
 	if(!have_robot()) {
+		if(robot_type == ROBOT_DIALOGS_ONLY) {
+			return CK_TRUE;
+		}
 		return CK_FALSE;
 	}
 	return robot_type == ROBOT_MECHANICAL_TURK;

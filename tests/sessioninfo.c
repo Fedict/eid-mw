@@ -11,7 +11,7 @@ CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 	return CKR_OK;
 }
 
-int sessioninfo(void) {
+TEST_FUNC(sessioninfo) {
 	CK_SLOT_ID slot;
 	CK_SESSION_HANDLE handle;
 	CK_SESSION_INFO info;

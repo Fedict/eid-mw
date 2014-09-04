@@ -79,7 +79,7 @@ CK_MECHANISM_TYPE digest_mechs[6] = {
 	CKM_RIPEMD160,
 };
 
-int digest() {
+TEST_FUNC(digest) {
 	int ret;
 	CK_SESSION_HANDLE session;
 	CK_MECHANISM mech;

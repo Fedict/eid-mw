@@ -9,7 +9,7 @@ CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 	return CKR_OK;
 }
 
-int sessions(void) {
+TEST_FUNC(sessions) {
 	CK_SLOT_ID slot;
 	int ret;
 	CK_SESSION_HANDLE handle;

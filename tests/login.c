@@ -9,12 +9,16 @@ CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 	return CKR_OK;
 }
 
-int login(void) {
+TEST_FUNC(login) {
 	CK_SLOT_ID slot;
 	CK_SESSION_HANDLE handle;
 	CK_TOKEN_INFO info;
 	CK_SESSION_INFO sinfo;
 	int ret;
+	ckrv_mod m[] = {
+		{ CKR_PIN_INCORRECT, TEST_RV_SKIP },
+		{ CKR_FUNCTION_CANCELED, TEST_RV_SKIP },
+	};
 
 	if(!have_pin()) {
 		fprintf(stderr, "cannot test login without a pin code\n");
@@ -42,7 +46,7 @@ int login(void) {
 		}
 	}
 
-	check_rv(C_Login(handle, CKU_USER, NULL_PTR, 0));
+	check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);
 
 	check_rv(C_GetSessionInfo(handle, &sinfo));
 

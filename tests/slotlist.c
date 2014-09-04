@@ -5,7 +5,7 @@
 
 #include "testlib.h"
 
-int slotlist(void) {
+TEST_FUNC(slotlist) {
 	CK_SLOT_ID_PTR list;
 	CK_ULONG count=0;
 	int i;

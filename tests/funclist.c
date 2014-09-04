@@ -8,7 +8,7 @@
  * Check that C_GetFunctionList returns a table of function pointers that point to the right location
  */
 
-int funclist(int argc, char**argv) {
+TEST_FUNC(funclist) {
 	CK_FUNCTION_LIST_PTR ptr;
 
 	check_rv(C_GetFunctionList(&ptr));

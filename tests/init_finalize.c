@@ -4,7 +4,7 @@
 
 #include "testlib.h"
 
-int init_finalize() {
+TEST_FUNC(init_finalize) {
 	check_rv(C_Initialize(NULL_PTR));
 	check_rv(rv = C_Finalize(NULL_PTR));
 

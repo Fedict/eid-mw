@@ -5,7 +5,7 @@
 
 #include "testlib.h"
 
-int mechinfo(void) {
+TEST_FUNC(mechinfo) {
 	CK_SLOT_ID slot;
 	CK_ULONG count=0;
 	CK_MECHANISM_INFO info;

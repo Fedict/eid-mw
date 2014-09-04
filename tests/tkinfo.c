@@ -4,7 +4,7 @@
 
 #include "testlib.h"
 
-int tkinfo(void) {
+TEST_FUNC(tkinfo) {
 	CK_SLOT_ID slot;
 	CK_TOKEN_INFO info;
 	int ret;

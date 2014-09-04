@@ -12,7 +12,7 @@
  * Check behaviour of C_Initialize across a fork() call (PKCS#11 §6.6.1)
  */
 
-int fork_init(void) {
+TEST_FUNC(fork_init) {
 	pid_t child;
 	int status;
 

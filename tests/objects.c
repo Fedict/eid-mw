@@ -6,7 +6,7 @@
 
 #define ADD_CKO(cko) ckos[cko] = #cko
 
-int objects() {
+TEST_FUNC(objects) {
 	CK_SESSION_HANDLE session;
 	CK_OBJECT_HANDLE object;
 	CK_ULONG count;

@@ -7,7 +7,7 @@
 
 #define HAS_CKM(ckm, crit) case ckm: { printf("Found " #ckm "\n"); known_mechs++; if(crit) crit_mechs++; } break;
 
-int mechlist(void) {
+TEST_FUNC(mechlist) {
 	CK_SLOT_ID slot;
 	CK_ULONG count=0;
 	CK_MECHANISM_TYPE_PTR mechlist;

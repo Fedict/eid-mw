@@ -34,6 +34,12 @@ int ckrv_decode(CK_RV rv, char* fc, int count, ckrv_mod*);
 
 char* ckm_to_charp(CK_MECHANISM_TYPE);
 
+#ifdef HAVE_CONFIG_H
+#define TEST_FUNC(a) int main(void)
+#else
+#define TEST_FUNC(a) int a(void)
+#endif
+
 /* Verifies that a string does not contain a NULL character */
 void verify_null(CK_UTF8CHAR* string, size_t length, int nulls_expected, char* msg);
 

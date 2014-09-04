@@ -4,7 +4,7 @@
 
 #include "testlib.h"
 
-int getinfo(int argc, char**argv) {
+TEST_FUNC(getinfo) {
 	CK_INFO info;
 
 	check_rv(C_Initialize(NULL_PTR));

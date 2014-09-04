@@ -4,7 +4,7 @@
 
 #include "testlib.h"
 
-int slotinfo(void) {
+TEST_FUNC(slotinfo) {
 	CK_SLOT_ID slot;
 	CK_SLOT_INFO info;
 	int ret;

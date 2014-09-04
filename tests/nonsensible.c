@@ -5,7 +5,7 @@
 
 #include "testlib.h"
 
-int nonsensible(void) {
+TEST_FUNC(nonsensible) {
 	CK_SLOT_ID slot = 0;
 	CK_OBJECT_HANDLE object;
 	CK_SESSION_HANDLE session;
