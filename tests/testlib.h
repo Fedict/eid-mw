@@ -78,8 +78,9 @@ typedef unsigned int testmask;
 #define TEST_OBJECTS		1 << 16
 #define TEST_READDATA		1 << 17
 #define TEST_DIGEST		1 << 18
+#define TEST_DECODEPHOTO	1 << 19
 
-#define TESTS_COUNT		19
+#define TESTS_COUNT		20
 
 #define TESTS_ALL		((testmask)1 << TEST_COUNT) - 1
 #define FIRST_TEST		TEST_INIT_FINALIZE
@@ -103,6 +104,7 @@ int nonsensible();
 int objects();
 int readdata();
 int digest();
+int decode_photo();
 
 /* Define the tests to run for architectures where tests aren't run in individual programs */
 #ifndef TESTS_TO_RUN

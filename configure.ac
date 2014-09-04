@@ -68,6 +68,13 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([gethostbyname socket strerror ftime memchr memset mkdir select strchr strdup strerror strncasecmp strrchr strstr strtol strtoul vasprintf])
 
+# we only need libjpeg for the test suite, so don't worry if it's not available...
+AC_CHECK_LIB(jpeg, jpeg_mem_src, [HAVE_JPEGLIB=1; JPEG_LIBS='-ljpeg'], [HAVE_JPEGLIB=0])
+AM_CONDITIONAL([JPEG], [test x$HAVE_JPEGLIB = x1])
+AC_SUBST([JPEG_LIBS])
+
+AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjpeg installed])
+
 AC_CONFIG_FILES([Makefile tests/Makefile])
 AC_CONFIG_SUBDIRS([common cardlayer pkcs11 xpi])
 

@@ -1,4 +1,7 @@
 TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login nonsensible objects readdata digest
+if JPEG
+TESTS += decode_photo
+endif
 check_PROGRAMS = $(TESTS)
 
 EXTRA_DIST = main.c
@@ -62,3 +65,6 @@ readdata_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
 
 digest_SOURCES = digest.c $(COMMON_SRCS)
 digest_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+
+decode_photo_SOURCES = decode_photo.c $(COMMON_SRCS)
+decode_photo_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la @JPEG_LIBS@

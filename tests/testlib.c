@@ -300,6 +300,10 @@ int init_tests() {
 	test_ptrs[18] = digest;
 	count++;
 #endif
+#if (TESTS_TO_RUN & TEST_DECODEPHOTO)
+	test_ptrs[19] = decode_photo;
+	count++;
+#endif
 	assert(count > 0);
 	if(count==1) {
 		return 1;
