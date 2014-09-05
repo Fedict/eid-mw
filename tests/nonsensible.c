@@ -11,6 +11,7 @@ TEST_FUNC(nonsensible) {
 	CK_SESSION_HANDLE session;
 	CK_ULONG data;
 	CK_MECHANISM mech;
+	CK_ATTRIBUTE temp;
 	int ret;
 	ckrv_mod m[] = {
 		{ CKR_OK, TEST_RV_FAIL },
@@ -50,6 +51,8 @@ TEST_FUNC(nonsensible) {
 	check_rv_long(C_GetOperationState(session, NULL_PTR, &data), m);
 
 	check_rv_long(C_SetOperationState(session, NULL_PTR, &data, 0, 0), m);
+
+	check_rv_long(C_SetAttributeValue(session, object, &temp, 1), m);
 
 	check_rv(C_Finalize(NULL_PTR));
 
