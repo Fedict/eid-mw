@@ -6,7 +6,7 @@
 
 TEST_FUNC(init_finalize) {
 	check_rv(C_Initialize(NULL_PTR));
-	check_rv(rv = C_Finalize(NULL_PTR));
+	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
 }

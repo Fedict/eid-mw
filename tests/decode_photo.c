@@ -118,7 +118,7 @@ int jpegdump(char* data, CK_ULONG length) {
 		size += jpeg_read_scanlines(&cinfo, &(imgbuf[size]), cinfo.output_height - size);
 	}
 
-	printf("Read %ld scanlines\n", size);
+	printf("Read %lu scanlines\n", size);
 
 	for(i=0; i<cinfo.output_height; i+=2) {
 		for(j=0; j<rlen; j+=2) {
