@@ -47,6 +47,8 @@ CK_BBOOL want_string(char* id, char* label) {
 		ADD_LABEL("carddata_appl_int_version", CK_FALSE);
 		ADD_LABEL("carddata_pkcs15_version", CK_FALSE);
 		ADD_LABEL("carddata_appl_lifecycle", CK_FALSE);
+		ADD_LABEL("carddata_pkcs1_support", CK_FALSE);
+		ADD_LABEL("carddata_key_exchange_version", CK_FALSE);
 	}
 	if(!strcmp(id, "id")) {
 		ADD_LABEL("DATA_FILE", CK_FALSE);
