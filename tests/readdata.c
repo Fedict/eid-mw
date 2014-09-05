@@ -40,6 +40,7 @@ CK_BBOOL want_string(char* id, char* label) {
 		ADD_LABEL("carddata_comp_code", CK_FALSE);
 		ADD_LABEL("carddata_os_number", CK_FALSE);
 		ADD_LABEL("carddata_os_version", CK_FALSE);
+		ADD_LABEL("carddata_glob_os_version", CK_FALSE);
 		ADD_LABEL("carddata_soft_mask_number", CK_FALSE);
 		ADD_LABEL("carddata_soft_mask_version", CK_FALSE);
 		ADD_LABEL("carddata_appl_version", CK_FALSE);
