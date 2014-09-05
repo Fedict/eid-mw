@@ -47,6 +47,10 @@ TEST_FUNC(nonsensible) {
 
 	check_rv_long(C_DecryptFinal(session, NULL_PTR, 0),m);
 
+	check_rv_long(C_GetOperationState(session, NULL_PTR, &data), m);
+
+	check_rv_long(C_SetOperationState(session, NULL_PTR, &data, 0, 0), m);
+
 	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
