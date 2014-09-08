@@ -332,7 +332,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	do {
 		list = realloc(list, sizeof(CK_SLOT_ID) * count);
 	} while((rv = C_GetSlotList(with_token, list, &count) == CKR_BUFFER_TOO_SMALL));
-	check_rv_late;
+	check_rv_late("C_GetSlotList");
 
 	if(count > 1) {
 		printf("INFO: multiple slots found, using slot %lu\n", list[0]);

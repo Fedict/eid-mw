@@ -25,7 +25,7 @@ typedef struct {
 	int retval;
 } ckrv_mod;
 
-#define check_rv_late { int retval = ckrv_decode(rv, "", 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok, returning\n"); return retval; }}
+#define check_rv_late(func) { int retval = ckrv_decode(rv, func, 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok, returning\n"); return retval; }}
 #define check_rv(call) check_rv_action(call, 0, NULL)
 #define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok, returning\n"); return retval; }}
 #define check_rv_long(call, mods) { int c = sizeof(mods) / sizeof(ckrv_mod); check_rv_action(call, c, mods); }
