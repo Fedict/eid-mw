@@ -1,4 +1,4 @@
-TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login nonsensible objects readdata digest
+TESTS = init_finalize fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login nonsensible objects readdata digest threads
 if JPEG
 TESTS += decode_photo
 endif
@@ -68,3 +68,6 @@ digest_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
 
 decode_photo_SOURCES = decode_photo.c $(COMMON_SRCS)
 decode_photo_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la @JPEG_LIBS@
+
+threads_SOURCES = threads.c $(COMMON_SRCS)
+threads_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la @JPEG_LIBS@
