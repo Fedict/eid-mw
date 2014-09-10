@@ -21,7 +21,7 @@ AC_PROG_LN_S
 AS_VAR_IF([GXX],[yes],[],AC_MSG_ERROR([GNU C++ compiler (g++) is required.]))
 
 # Checks for header files.
-AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/file.h sys/ioctl.h sys/time.h unistd.h malloc.h memory.h sys/timeb.h])
+AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/file.h sys/ioctl.h sys/time.h unistd.h malloc.h memory.h sys/timeb.h openssl/rsa.h])
 
 ###### pcsc-lite ##########
 AC_MSG_CHECKING([pcsc-lite installation])
@@ -72,8 +72,13 @@ AC_CHECK_FUNCS([gethostbyname socket strerror ftime memchr memset mkdir select s
 AC_CHECK_LIB(jpeg, jpeg_mem_src, [HAVE_JPEGLIB=1; JPEG_LIBS='-ljpeg'], [HAVE_JPEGLIB=0])
 AM_CONDITIONAL([JPEG], [test x$HAVE_JPEGLIB = x1])
 AC_SUBST([JPEG_LIBS])
-
 AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjpeg installed])
+
+# we only need libssl for the test suite, so don't worry if it's not available...
+AC_CHECK_LIB(ssl, RSA_new, [HAVE_SSL=1; SSL_LIBS='-lssl'], [HAVE_SSL=0])
+AM_CONDITIONAL([SSL], [test x$HAVE_SSL = x1])
+AC_SUBST([SSL_LIBS])
+AC_DEFINE_UNQUOTED([HAVE_SSL], $HAVE_SSL, [Define to 1 if you have libssl installed])
 
 AC_CONFIG_FILES([Makefile tests/Makefile])
 AC_CONFIG_SUBDIRS([common cardlayer pkcs11 xpi])
