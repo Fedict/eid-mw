@@ -68,6 +68,29 @@ CK_BBOOL have_pin() {
 	return CK_FALSE;
 }
 
+CK_BBOOL can_enter_pin(CK_SLOT_ID slot) {
+	CK_SESSION_HANDLE session;
+	CK_SESSION_INFO info;
+	CK_BBOOL retval = CK_TRUE;
+
+	if(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session) != CKR_OK) {
+		printf("Could not open a session\n");
+		return CK_FALSE;
+	}
+	if(C_GetSessionInfo(session, &info) != CKR_OK) {
+		printf("Could not request session info\n");
+		return CK_FALSE;
+	}
+	if(info.flags & CKF_PROTECTED_AUTHENTICATION_PATH) {
+		if(have_robot() && !is_manual_robot()) {
+			fprintf(stderr, "E: robot cannot enter a pin code on a protected auth path SC reader\n");
+			retval = CK_FALSE;
+		}
+	}
+	C_CloseSession(session);
+	return retval;
+}
+
 CK_BBOOL is_manual_robot() {
 	return robot_type == ROBOT_MECHANICAL_TURK;
 }
@@ -342,4 +365,26 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	free(list);
 
 	return TEST_RV_OK;
+}
+
+void hex_dump(char* data, CK_ULONG length) {
+	CK_ULONG i;
+	int j;
+
+	for(i=0, j=0; i<length; i++) {
+		int8_t d = (int8_t)(data[i]);
+		printf("%02hhx ", d);
+		j+=3;
+		if(!((i + 1) % 5)) {
+			printf(" ");
+			j += 1;
+		}
+		if(j >= 80) {
+			printf("\n");
+			j = 0;
+		}
+	}
+	if(j) {
+		printf("\n");
+	}
 }

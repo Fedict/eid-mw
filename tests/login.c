@@ -33,17 +33,12 @@ TEST_FUNC(login) {
 
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify, &handle));
 
-	check_rv(C_GetTokenInfo(slot, &info));
-
 	check_rv(C_GetSessionInfo(handle, &sinfo));
 	printf("State: %lu\n", sinfo.state);
 	printf("Flags: %#08lx\n", sinfo.flags);
 
-	if(info.flags & CKF_PROTECTED_AUTHENTICATION_PATH) {
-		if(!is_manual_robot()) {
-			fprintf(stderr, "robot cannot enter a pin code on a protected auth path SC reader\n");
-			return TEST_RV_SKIP;
-		}
+	if(!can_enter_pin(slot)) {
+		return TEST_RV_SKIP;
 	}
 
 	check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);

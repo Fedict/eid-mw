@@ -48,10 +48,12 @@ CK_BBOOL have_robot();
 CK_BBOOL is_manual_robot();
 CK_BBOOL can_confirm();
 CK_BBOOL have_pin();
+CK_BBOOL can_enter_pin();
 void robot_remove_card();
 void robot_insert_card();
 void robot_remove_reader();
 void robot_insert_reader();
+void hex_dump(char* data, CK_ULONG length);
 
 /* Helper functions to not have to repeat common operations all the time */
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);

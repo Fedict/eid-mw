@@ -14,31 +14,6 @@
 
 #if HAVE_JPEGLIB
 #include <jpeglib.h>
-#endif
-
-void hex_dump(char* data, CK_ULONG length) {
-	CK_ULONG i;
-	int j;
-
-	for(i=0, j=0; i<length; i++) {
-		int8_t d = (int8_t)(data[i]);
-		printf("%02hhx ", d);
-		j+=3;
-		if(!((i + 1) % 5)) {
-			printf(" ");
-			j += 1;
-		}
-		if(j >= 80) {
-			printf("\n");
-			j = 0;
-		}
-	}
-	if(j) {
-		printf("\n");
-	}
-}
-
-#if HAVE_JPEGLIB
 
 enum weights {
 	TOPLEFT,

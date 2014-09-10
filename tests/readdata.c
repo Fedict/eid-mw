@@ -6,30 +6,6 @@
 
 #include "testlib.h"
 
-#define ADD_CKO(cko) ckos[cko] = #cko
-
-void hex_dump(char* data, CK_ULONG length) {
-	CK_ULONG i;
-	int j;
-
-	for(i=0, j=0; i<length; i++) {
-		int8_t d = (int8_t)(data[i]);
-		printf("%02hhx ", d);
-		j+=3;
-		if(!((i + 1) % 5)) {
-			printf(" ");
-			j += 1;
-		}
-		if(j >= 80) {
-			printf("\n");
-			j = 0;
-		}
-	}
-	if(j) {
-		printf("\n");
-	}
-}
-
 #define ADD_LABEL(l, is_string) if(!strcmp(label, l)) return is_string
 
 CK_BBOOL want_string(char* id, char* label) {
