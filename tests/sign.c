@@ -9,7 +9,7 @@
 #include <config.h>
 #endif
 
-#if (HAVE_OPENSSL_RSA_H && HAVE_SSL)
+#if HAVE_OPENSSL
 #include <openssl/rsa.h>
 #include <openssl/engine.h>
 
@@ -120,7 +120,7 @@ TEST_FUNC(sign) {
 
 	verbose_assert(attr[0].ulValueLen == sig_len);
 
-#if (HAVE_OPENSSL_RSA_H && HAVE_SSL)
+#if HAVE_OPENSSL
 	mod = malloc(attr[0].ulValueLen);
 	mod[0] = 0xde; mod[1] = 0xad; mod[2] = 0xbe; mod[3] = 0xef;
 	exp = malloc(attr[1].ulValueLen);

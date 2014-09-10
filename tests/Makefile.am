@@ -73,4 +73,5 @@ threads_SOURCES = threads.c $(COMMON_SRCS)
 threads_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
 
 sign_SOURCES = sign.c $(COMMON_SRCS)
+sign_CFLAGS = @SSL_CFLAGS@ $(AM_CFLAGS)
 sign_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la @SSL_LIBS@
