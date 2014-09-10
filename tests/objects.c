@@ -11,8 +11,9 @@ TEST_FUNC(objects) {
 	CK_OBJECT_HANDLE object;
 	CK_ULONG count;
 	CK_SLOT_ID slot;
-	CK_ATTRIBUTE attr;
+	CK_ATTRIBUTE attr[2];
 	CK_OBJECT_CLASS klass;
+	char label[1024];
 	char* ckos[8];
 	int ret;
 	ckrv_mod m[] = {
@@ -44,12 +45,19 @@ TEST_FUNC(objects) {
 
 		if(!count) continue;
 
-		attr.type = CKA_CLASS;
-		attr.pValue = &klass;
-		attr.ulValueLen=sizeof(klass);
-		check_rv(C_GetAttributeValue(session, object, &attr, 1));
+		attr[0].type = CKA_CLASS;
+		attr[0].pValue = &klass;
+		attr[0].ulValueLen=sizeof(klass);
+		
+		attr[1].type = CKA_LABEL;
+		attr[1].pValue = &label;
+		attr[1].ulValueLen=1024;
 
-		printf("Found object %lx of class %s (%#lx)\n", object, ckos[klass], klass);
+		check_rv(C_GetAttributeValue(session, object, &attr, 2));
+
+		label[attr[1].ulValueLen] = '\0';
+
+		printf("Found object %lx (label: %s) of class %s (%#lx)\n", object, label, ckos[klass], klass);
 		verbose_assert(klass == CKO_CERTIFICATE || klass == CKO_PUBLIC_KEY || klass == CKO_PRIVATE_KEY);
 	} while(count);
 
