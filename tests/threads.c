@@ -118,6 +118,8 @@ void* thread_func(void* v) {
 	threaded_test_result = threaded_test();
 
 	pthread_mutex_unlock(&condmutex);
+
+	return NULL;
 }
 
 TEST_FUNC(threads) {
