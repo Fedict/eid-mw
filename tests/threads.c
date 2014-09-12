@@ -158,7 +158,7 @@ TEST_FUNC(threads) {
 	printf("Thread signaled us, doing something...\n");
 	check_rv(C_GetTokenInfo(slot, &tkinfo))
 	verbose_assert(tkinfo.ulSessionCount == 2);
-	printf("RW session count: %d\n", tkinfo.ulRwSessionCount);
+	printf("RW session count: %lu\n", tkinfo.ulRwSessionCount);
 	printf("Signaling thread again\n");
 	pthread_cond_signal(&cond);
 	pthread_mutex_unlock(&condmutex);
