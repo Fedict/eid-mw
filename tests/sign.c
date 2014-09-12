@@ -24,6 +24,7 @@ CK_BYTE digest_sha1[] = {
 int verify_sig(char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULONG modlen, CK_BYTE_PTR exponent, CK_ULONG explen) {
 	RSA* rsa = RSA_new();
 	unsigned char* s = malloc(siglen);
+	int ret;
 
 	rsa->n = BN_bin2bn(modulus, (int) modlen, NULL);
 	rsa->e = BN_bin2bn(exponent, (int) explen, NULL);
@@ -34,10 +35,15 @@ int verify_sig(char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULONG modlen,
 	if(!v) {
 		unsigned long e = ERR_get_error();
 		printf("error %ld: %s\n", e, ERR_error_string(e, NULL));
-		return TEST_RV_FAIL;
+		ret = TEST_RV_FAIL;
 	} else {
-		return TEST_RV_OK;
+		ret = TEST_RV_OK;
 	}
+
+	free(s);
+	RSA_free(rsa);
+
+	return ret;
 }
 
 #endif
