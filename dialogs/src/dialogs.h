@@ -22,8 +22,6 @@
  */
 #ifdef WIN32
 #pragma once
-#else
-#include <unistd.h>
 #endif
 
 #ifndef __DIALOGS_H__
@@ -211,12 +209,12 @@ DLGS_EXPORT DlgRet DlgBadPin(DlgPinUsage usage, const wchar_t *csPinName,
 DLGS_EXPORT DlgRet DlgDisplayPinpadInfo(DlgPinOperation operation,
 	const wchar_t *csReader, DlgPinUsage usage, const wchar_t *csPinName,
 	const wchar_t *csMessage,
-	void **puserNotificationRef);
+	unsigned long *pulHandle);
 
 /**
 * Close the pinpad info dialog 
 */
-DLGS_EXPORT void DlgClosePinpadInfo(void *userNotificationRef);
+DLGS_EXPORT void DlgClosePinpadInfo(unsigned long ulHandle);
 
 #ifndef WIN32
 /**

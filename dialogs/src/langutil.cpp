@@ -120,9 +120,9 @@ void CLang::SetLangL(unsigned long lang)
 	}
 }
 
-wstring CLang::GetMessageFromID(DlgMessageID messageID)
+std::wstring CLang::GetMessageFromID(DlgMessageID messageID)
 {
-	wstring csMessage=L"";
+	std::wstring csMessage=L"";
 	unsigned char separator;
 #ifdef WIN32
 	separator = '\\';
@@ -208,7 +208,7 @@ wstring CLang::GetMessageFromID(DlgMessageID messageID)
 
 void CLang::Init()
 {
-	wstring lang = CConfig::GetString(CConfig::EIDMW_CONFIG_PARAM_GENERAL_LANGUAGE);
+	std::wstring lang = CConfig::GetString(CConfig::EIDMW_CONFIG_PARAM_GENERAL_LANGUAGE);
 
 	if(wcscmp(L"nl",lang.c_str())==0)
 		ms_Lang=LANG_NL;
