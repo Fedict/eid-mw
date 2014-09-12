@@ -98,7 +98,7 @@ TEST_FUNC(sign) {
 	sig = malloc(sig_len);
 	check_rv(C_Sign(session, data, sizeof(data), sig, &sig_len));
 
-	printf("Received a signature with length %d:\n", sig_len);
+	printf("Received a signature with length %lu:\n", sig_len);
 
 	hex_dump(sig, sig_len);
 
@@ -131,10 +131,10 @@ TEST_FUNC(sign) {
 
 	check_rv(C_GetAttributeValue(session, object, attr, 2));
 
-	printf("Received key modulus with length %ld:\n", attr[0].ulValueLen);
+	printf("Received key modulus with length %lu:\n", attr[0].ulValueLen);
 	hex_dump(mod, attr[0].ulValueLen);
 
-	printf("Received public exponent of key with length %ld:\n", attr[1].ulValueLen);
+	printf("Received public exponent of key with length %lu:\n", attr[1].ulValueLen);
 	hex_dump(exp, attr[1].ulValueLen);
 
 	if((ret = verify_sig(sig, sig_len, mod, attr[0].ulValueLen, exp, attr[1].ulValueLen)) != TEST_RV_OK) {
