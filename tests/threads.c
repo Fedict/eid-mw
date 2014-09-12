@@ -18,6 +18,7 @@ static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 CK_RV create_mutex(CK_VOID_PTR_PTR mutex) {
 	pthread_mutex_t* mut = calloc(sizeof(pthread_mutex_t), 1);
 	if(pthread_mutex_init(mut, NULL) < 0) {
+		free(mut);
 		switch(errno) {
 			case ENOMEM:
 				return CKR_HOST_MEMORY;
