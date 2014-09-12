@@ -50,10 +50,10 @@ cd ../../../mac
 echo "cleaning former project..."
 xcodebuild -project beidmw_xc5.xcodeproj clean
 echo "building siscardplugin..."
-xcodebuild -project beidmw_xc5.xcodeproj -target siscardplugin -configuration Release
-echo "building beiddialogsQTsrv..."
-xcodebuild -project beidmw_xc5.xcodeproj -target beiddialogsQTsrv -configuration Release
-echo "building beidpkcs11..."
+#xcodebuild -project beidmw_xc5.xcodeproj -target siscardplugin -configuration Release
+#echo "building beiddialogsQTsrv..."
+#xcodebuild -project beidmw_xc5.xcodeproj -target beiddialogsQTsrv -configuration Release
+#echo "building beidpkcs11..."
 xcodebuild -project beidmw_xc5.xcodeproj -target beidpkcs11 -configuration Release
     
 cd -
