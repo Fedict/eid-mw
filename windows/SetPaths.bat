@@ -38,7 +38,25 @@
 :find_msbuild
 @echo        Found in "%BEID_DIR_MSBUILD%"
 
+@echo [INFO] Define default value for INF2CAT_PATH if not defined yet
+@echo [INFO] Input BEID_DIR_MSBUILD=%INF2CAT_PATH%
+@set FILE_TO_FIND="inf2cat.exe"
+@echo [INFO] Looking for files: %FILE_TO_FIND%
 
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%INF2CAT_PATH%\%%i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_inf2cat
+@echo        Not found in "%INF2CAT_PATH%"
+
+@set INF2CAT_PATH=%SEARCH_INF2CAT_PATH%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%INF2CAT_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto find_inf2cat
+@echo        Not found in "%INF2CAT_PATH%"
+@exit /B 1
+
+:find_inf2cat
+@echo        Found in "%INF2CAT_PATH%"
 
 @echo [INFO] Define default value for BEID_DIR_PLATFORMSDK if not defined yet
 @echo [INFO] Input BEID_DIR_PLATFORMSDK=%BEID_DIR_PLATFORMSDK%
