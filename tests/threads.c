@@ -111,6 +111,8 @@ int threaded_test() {
 	printf("main thread done, continuing\n");
 	check_rv(C_CloseSession(h));
 
+	pthread_mutex_unlock(&condmutex);
+
 	return CKR_OK;
 }
 
