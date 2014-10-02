@@ -464,6 +464,8 @@ rel_end:
 	@echo "mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi" >> $(POSTFLIGHT)
 	@echo 'if [[ $$(sw_vers -productVersion) == *10.9* ]]; then' >> $(POSTFLIGHT)
 	@echo "mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi" >> $(POSTFLIGHT)
+	@echo 'if [[ $$(sw_vers -productVersion) == *10.10* ]]; then' >> $(POSTFLIGHT)
+	@echo "mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi" >> $(POSTFLIGHT)
 	@echo "rm -R /Library/BelgiumIdentityCard/BEID_Lion.tokend;" >> $(POSTFLIGHT)
 	@echo "mv $(BELGIUM_DIR) \"$(BELGIUM_DIR_NAME)\"" >> $(POSTFLIGHT)
 	@echo "test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;" >> $(POSTFLIGHT)
