@@ -4,8 +4,6 @@ TESTS += decode_photo
 endif
 check_PROGRAMS = $(TESTS)
 
-EXTRA_DIST = main.c
-
 AM_CFLAGS = -I$(top_srcdir)/sdk/Pkcs11/include/rsaref220 -DTESTS_TO_RUN=0
 COMMON_SRCS = testlib.h testlib.c
 
