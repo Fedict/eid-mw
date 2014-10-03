@@ -117,6 +117,46 @@ TEST_FUNC(digest) {
 		verbose_assert(memcmp(digest, digest_results[i], len) == 0);
 	}
 
+	if(have_robot()) {
+		CK_ULONG len = 0;
+		ckrv_mod m_maybe_rmvd[] = {
+			{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
+			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
+		};
+		ckrv_mod m_is_rmvd[] = {
+			{ CKR_OK, TEST_RV_FAIL },
+			{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
+			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
+		};
+		ckrv_mod m_inv[] = {
+			{ CKR_OK, TEST_RV_FAIL },
+			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
+			{ CKR_SESSION_HANDLE_INVALID, TEST_RV_OK },
+		};
+
+		check_rv(C_DigestInit(session, &mech));
+
+		robot_remove_card();
+
+		check_rv_long(C_DigestUpdate(session, data, sizeof(data)), m_maybe_rmvd);
+
+		check_rv_long(C_DigestFinal(session, NULL_PTR, &len), m_is_rmvd);
+
+		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+			return ret;
+		}
+
+		check_rv_long(C_DigestInit(session, &mech), m_inv);
+
+		check_rv(C_CloseSession(session));
+		
+		check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
+
+		check_rv(C_DigestInit(session, &mech));
+	} else {
+		printf("Robot not present, skipping manual removal/insertion part of test...\n");
+	}
+
 	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
