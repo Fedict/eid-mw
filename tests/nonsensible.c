@@ -1,4 +1,27 @@
+/* ****************************************************************************
+
+ * eID Middleware Project.
+ * Copyright (C) 2014 FedICT.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License version
+ * 3.0 as published by the Free Software Foundation.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, see
+ * http://www.gnu.org/licenses/.
+
+**************************************************************************** */
+#ifdef WIN32
+#include <win32.h>
+#else
 #include <unix.h>
+#endif
 #include <pkcs11.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,11 +31,11 @@
 TEST_FUNC(nonsensible) {
 	CK_SLOT_ID slot = 0;
 	CK_OBJECT_HANDLE object;
-	CK_SESSION_HANDLE session;
+	CK_SESSION_HANDLE session = 0;
 	CK_ULONG data;
 	CK_MECHANISM mech;
 	CK_ATTRIBUTE attr;
-	int ret;
+
 	ckrv_mod m[] = {
 		{ CKR_OK, TEST_RV_FAIL },
 		{ CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_OK },
@@ -20,8 +43,8 @@ TEST_FUNC(nonsensible) {
 
 	check_rv(C_Initialize(NULL_PTR));
 
-	check_rv_long(C_InitToken(slot, "1111", 4, ""),m);
-	check_rv_long(C_InitPIN(slot, "1111", 4),m);
+	check_rv_long(C_InitToken(slot, (CK_UTF8CHAR_PTR)"1111", 4, (CK_UTF8CHAR_PTR)""),m);
+	check_rv_long(C_InitPIN(slot, (CK_UTF8CHAR_PTR)"1111", 4),m);
 	check_rv_long(C_CreateObject(session, NULL_PTR, 0, &object),m);
 	check_rv_long(C_CopyObject(session, object, NULL_PTR, 0, &object),m);
 	check_rv_long(C_DestroyObject(session, object),m);

@@ -1,11 +1,34 @@
+/* ****************************************************************************
+
+ * eID Middleware Project.
+ * Copyright (C) 2014 FedICT.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License version
+ * 3.0 as published by the Free Software Foundation.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, see
+ * http://www.gnu.org/licenses/.
+
+**************************************************************************** */
+#ifdef WIN32
+#include <win32.h>
+#else
 #include <unix.h>
+#endif
 #include <pkcs11.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "testlib.h"
 
-CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
+CK_RV notify_session(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
 	return CKR_OK;
 }
 
@@ -24,13 +47,13 @@ TEST_FUNC(sessions) {
 		return ret;
 	}
 
-	check_rv_long(C_OpenSession(slot, 0, NULL_PTR, notify, &handle), m);
+	check_rv_long(C_OpenSession(slot, 0, NULL_PTR, notify_session, &handle), m);
 
-	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify, &handle));
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify_session, &handle));
 
 	check_rv(C_CloseSession(handle));
 
-	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify, &handle));
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, notify_session, &handle));
 
 	check_rv(C_CloseAllSessions(slot));
 

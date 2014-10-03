@@ -1,4 +1,30 @@
+/* ****************************************************************************
+
+ * eID Middleware Project.
+ * Copyright (C) 2014 FedICT.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License version
+ * 3.0 as published by the Free Software Foundation.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, see
+ * http://www.gnu.org/licenses/.
+
+**************************************************************************** */
+
+#ifdef WIN32
+#include <win32.h>
+#include <stdio.h>
+#include <stdint.h>
+#else
 #include <unix.h>
+#endif
 #include <pkcs11.h>
 #include <malloc.h>
 #include <stdlib.h>
@@ -19,23 +45,31 @@ enum {
 
 void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	int nullCount = 0;
-	char* buf = malloc(length + 1);
-	int i;
+	char* buf = (char*)malloc(length + 1);
+	unsigned int i;
 	for(i=0; i<length; i++) {
 		if(string[i] == '\0') {
 			nullCount++;
 		}
 	}
 	verbose_assert(nullCount == expect);
-
+#ifdef WIN32
+	strncpy_s(buf,  (size_t)(length + 1),(const char*)string, strlen((const char*)string)+1);
+#else
 	strncpy(buf, (char*)string, length + 1);
+#endif
 	buf[length] = '\0';
 	printf(msg, buf);
 	free(buf);
 }
 
 CK_BBOOL have_robot() {
+#ifdef WIN32
+	return CK_FALSE;
+
+#else
 	char* envvar = getenv("EID_ROBOT_STYLE");
+	
 	if(envvar == NULL) {
 		robot_type = ROBOT_NONE;
 		return CK_FALSE;
@@ -54,9 +88,13 @@ CK_BBOOL have_robot() {
 	}
 
 	return CK_FALSE;
+#endif
 }
 
 CK_BBOOL have_pin() {
+#ifdef WIN32
+	return CK_FALSE;
+#else
 	char* envvar;
 	if(have_robot() && is_manual_robot()) {
 		return CK_TRUE;
@@ -66,6 +104,7 @@ CK_BBOOL have_pin() {
 		return CK_TRUE;
 	}
 	return CK_FALSE;
+#endif
 }
 
 CK_BBOOL can_enter_pin(CK_SLOT_ID slot) {
@@ -113,7 +152,7 @@ typedef struct {
 #define ADD_CKRV(ckrv, defaultrv) decodes[ckrv].rvname = #ckrv; decodes[ckrv].result = defaultrv
 
 int ckrv_decode(CK_RV rv, char* fc, int count, ckrv_mod* mods) {
-	ckrvdecode *decodes = calloc(CKR_FUNCTION_REJECTED + 1, sizeof(ckrvdecode));
+	ckrvdecode *decodes = (ckrvdecode*)calloc(CKR_FUNCTION_REJECTED + 1, sizeof(ckrvdecode));
 	int i;
 	int retval;
 
@@ -264,7 +303,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	}
 
 	do {
-		list = realloc(list, sizeof(CK_SLOT_ID) * count);
+		list = (CK_SLOT_ID_PTR)realloc(list, sizeof(CK_SLOT_ID) * count);
 	} while((rv = C_GetSlotList(with_token, list, &count) == CKR_BUFFER_TOO_SMALL));
 	check_rv_late("C_GetSlotList");
 

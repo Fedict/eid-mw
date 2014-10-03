@@ -1,4 +1,8 @@
+#ifdef WIN32
+#include <win32.h>
+#else
 #include <unix.h>
+#endif
 #include <pkcs11.h>
 #include <stdio.h>
 #include <unistd.h>

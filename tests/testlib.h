@@ -59,7 +59,7 @@ void hex_dump(char* data, CK_ULONG length);
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);
 
 /* function definitions for tests that exist */
-int init_finalize();
+int init_finalize(void);
 int getinfo();
 int funclist();
 int slotlist();
