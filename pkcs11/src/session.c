@@ -191,6 +191,11 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 		pSession->Operation[P11_OPERATION_FIND].pData = NULL;
 		pSession->Operation[P11_OPERATION_FIND].active = 0;
 	}
+	if(pSession->Operation[P11_OPERATION_DIGEST].active) {
+		free(pSession->Operation[P11_OPERATION_DIGEST].pData);
+		pSession->Operation[P11_OPERATION_DIGEST].pData = NULL;
+		pSession->Operation[P11_OPERATION_DIGEST].active = 0;
+	}
 	pSession->state = 0;
 	pSession->inuse = 0;
 	pSession->flags = 0;
