@@ -12,12 +12,15 @@ variable to the correct value. We foresee the following possibilities:
    on stdout and ask the user to perform actions. For interactive use
    only. This robot style assumes that the PIN code is known and that
    read access to privacy-sensitive data will be granted.
-2. `EID_ROBOT_STYLE=`_path to unix domain socket_: a robot listens on
+2. `EID_ROBOT_STYLE=dialogsonly`: no actual robot, but this method does
+   allow the test suite to prompt for pin code or permission to read
+   data from the card.
+3. `EID_ROBOT_STYLE=`_path to unix domain socket_: a robot listens on
    the unix domain socket to commands. Not yet implemented. This robot
    may or may not have the ability to specify a pin code or confirm
    access; whether this is the case will be specified through other
    `EID_*` environment variables.
-3. `EID_ROBOT_STYLE` is unset: no robot is available; tests which
+4. `EID_ROBOT_STYLE` is unset: no robot is available; tests which
    require the insertion or removal of a card will be skipped, as will
    tests which require entering the PIN code or confirming access to
    privacy-sensitive data.
