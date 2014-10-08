@@ -1,2 +1,3 @@
 usr/lib/*/libbeidpkcs11.a
 usr/lib/*/libbeidpkcs11.so
+doc/sdk/include usr/include/beid
