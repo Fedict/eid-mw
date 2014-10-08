@@ -95,11 +95,11 @@ fi
 %files
 %defattr(-, root, root, 0755)
 ### Include license files
-%doc ChangeLog NEWS README
+%doc NEWS README
 %{_datadir}/mozilla/
 %exclude %{_libdir}/*.la
 %files libs
-%doc ChangeLog NEWS README
+%doc NEWS README
 %{_libdir}/libbeidcardlayer.so
 %{_libdir}/libbeidcommon.so.*
 %{_libdir}/libbeiddialogs.so
@@ -107,7 +107,7 @@ fi
 %exclude %{_libdir}/libbeidcommon.so
 %exclude %{_libdir}/libbeidpkcs11.so
 %files bin
-%doc ChangeLog NEWS README
+%doc NEWS README
 %{_libexecdir}/beid-askaccess
 %{_libexecdir}/beid-askpin
 %{_libexecdir}/beid-badpin
@@ -115,7 +115,7 @@ fi
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
 %files devel
-%doc ChangeLog NEWS README
+%doc NEWS README
 %{_libdir}/libbeidcardlayer.a
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
