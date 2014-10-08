@@ -21,8 +21,8 @@
 #define __beid_p11_h__
 
 #ifndef _WIN32
-#include "include/rsaref220/unix.h"
-#include "include/rsaref220/pkcs11.h"
+#include "unix.h"
+#include "pkcs11.h"
 #else
 #include "include/rsaref220/win32.h"
 #pragma pack(push, cryptoki, 1)

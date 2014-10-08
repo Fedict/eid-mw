@@ -59,8 +59,9 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/cardpluginbeid/beidcard.cpp \
 	cardlayer/cardpluginbeid/beidp15correction.cpp \
 	cardlayer/cardpluginsis/siscard.cpp \
-	cardlayer/cardpluginsis/sispluginhandler.cpp \
-noinst_HEADERS =
+	cardlayer/cardpluginsis/sispluginhandler.cpp
+
+noinst_HEADERS = \
 	p11.h \
 	phash.h \
 	cal.h \
@@ -163,7 +164,8 @@ noinst_HEADERS =
 	dialogs/dialogsqtsrv/resource/PINdisplay.png \
 	dialogs/dialogsgtk/beid-i18n.h \
 	dialogs/dialogsgtk/single_dialog.h \
-	dialogs/dialogsgtk/parent.h
+	dialogs/dialogsgtk/parent.h \
+	dialogs/dialogsgtk/gtk_dialog_names.h
 if NO_DIALOGS
 libbeidpkcs11_la_CXXFLAGS += -DNO_DIALOGS
 else

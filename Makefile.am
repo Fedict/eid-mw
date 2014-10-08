@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I scripts/m4
-EXTRA_DIST = debian build-debian.sh rpm svn_revision misc sdk
+EXTRA_DIST = debian build-debian.sh rpm svn_revision doc plugins_tools
 
 BUILT_SOURCES=svn_revision
 
