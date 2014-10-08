@@ -100,11 +100,7 @@ fi
 %exclude %{_libdir}/*.la
 %files libs
 %doc NEWS README
-%{_libdir}/libbeidcardlayer.so
-%{_libdir}/libbeidcommon.so.*
-%{_libdir}/libbeiddialogs.so
 %{_libdir}/libbeidpkcs11.so.*
-%exclude %{_libdir}/libbeidcommon.so
 %exclude %{_libdir}/libbeidpkcs11.so
 %files bin
 %doc NEWS README
@@ -116,12 +112,8 @@ fi
 %{_libexecdir}/beid-spr-changepin
 %files devel
 %doc NEWS README
-%{_libdir}/libbeidcardlayer.a
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
-%{_libdir}/libbeidcommon.a
-%{_libdir}/libbeidcommon.so
-%{_libdir}/libbeiddialogs.a
 
 %changelog
 * Thu Aug 14 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
