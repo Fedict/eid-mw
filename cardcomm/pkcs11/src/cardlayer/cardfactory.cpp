@@ -55,13 +55,13 @@
  */
 #include "cardfactory.h"
 #include "unknowncard.h"
-#include "../common/src/log.h"
-#include "../common/src/util.h"
-#include "../common/src/prefix.h"
+#include "common/log.h"
+#include "common/util.h"
+#include "common/prefix.h"
 #ifdef CAL_BEID
-#include "beidcard.h"
-#include "siscard.h"
-#include "sispluginhandler.h"
+#include "cardpluginbeid/beidcard.h"
+#include "cardpluginsis/siscard.h"
+#include "cardpluginsis/sispluginhandler.h"
 #endif
 #include <vector>
 #include <string>

@@ -18,8 +18,8 @@
 
 **************************************************************************** */
 #include "pkicard.h"
-#include "../common/src/log.h"
-#include "../common/src/thread.h"
+#include "common/log.h"
+#include "common/thread.h"
 #include "pinpad2.h"
 
 namespace eIDMW

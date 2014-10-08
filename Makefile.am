@@ -1,14 +1,9 @@
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I scripts/m4
 EXTRA_DIST = debian build-debian.sh rpm svn_revision misc sdk
 
 BUILT_SOURCES=svn_revision
 
-if NO_DIALOGS
-else
-MAYBE_DIALOGS=dialogs
-endif
-
-SUBDIRS=common $(MAYBE_DIALOGS) cardlayer pkcs11 xpi tests
+SUBDIRS=cardcomm/pkcs11/src tests/unit
 
 svn_revision:
 	svnversion > svn_revision

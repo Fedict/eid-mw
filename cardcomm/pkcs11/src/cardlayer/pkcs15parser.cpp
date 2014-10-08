@@ -29,16 +29,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/src/eiderrors.h"
-#include "../common/src/mwexception.h"
-#include "../common/src/util.h"
+#include "common/eiderrors.h"
+#include "common/mwexception.h"
+#include "common/util.h"
 #include "pkcs15parser.h"
 
-#include "../pkcs11/src/asn1.h"
+#include "asn1.h"
 
-extern "C" {
-#include "../pkcs11/src/asn1.c"
-}
+//extern "C" {
+//#include "asn1.c"
+//}
 
 namespace eIDMW{
 

@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 
-#include "../common/src/export.h"
+#include "common/export.h"
 
 namespace eIDMW
 {

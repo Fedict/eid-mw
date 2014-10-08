@@ -25,8 +25,8 @@
 #include "sispluginhandler.h"
 #include "siscard.h"
 #include "sisplugin1.h"
-#include "../common/src/log.h"
-#include "../common/src/prefix.h"
+#include "common/log.h"
+#include "common/prefix.h"
 
 namespace eIDMW
 {

@@ -2,7 +2,7 @@ AC_PREREQ([2.61])
 AC_INIT([eid-mw],[4.0.6],[servicedesk@fedict.be])
 
 AC_CONFIG_AUX_DIR([scripts/build-aux])
-AC_CONFIG_SRCDIR([common])
+AC_CONFIG_SRCDIR([cardcomm])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([scripts/m4])
 AC_CANONICAL_HOST
@@ -24,18 +24,33 @@ AS_VAR_IF([GXX],[yes],[],AC_MSG_ERROR([GNU C++ compiler (g++) is required.]))
 AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/file.h sys/ioctl.h sys/time.h unistd.h malloc.h memory.h sys/timeb.h])
 
 ###### pcsc-lite ##########
-AC_MSG_CHECKING([pcsc-lite installation])
+AC_MSG_CHECKING([custom pcsc-lite installation])
 AC_ARG_WITH(pcsclite, AC_HELP_STRING([--with-pcsclite=DIR],
-                    [pcsc-lite install location]))
+                    [pcsc-lite install location]),
+		    [],
+		    [with_pcsclite=default])
 AC_MSG_RESULT([$with_pcsclite])
 
-AS_VAR_IF([with_pcsclite],[no],
+AS_VAR_IF([with_pcsclite],[default],
 [
 	PKG_CHECK_MODULES([PCSC],[libpcsclite >= 1.4.4],
    	[
         CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
         LDFLAGS="$PCSC_LIBS $CPPFLAGS"
 	])
+])
+
+AC_MSG_CHECKING([custom gtk installation])
+AC_ARG_WITH(gtk, AC_HELP_STRING([--with-gtk=DIR],
+		[gtk install location]),
+		[],
+		[with_gtk=default])
+
+AS_VAR_IF([with_gtk],[default],
+[
+	PKG_CHECK_MODULES([GTK],[gtk+-2.0 >= 2.10.0],,
+	AC_MSG_RESULT([no])
+	AC_MSG_ERROR([you must have GTK+ 2.10.0 or newer development headers installed.]))
 ])
 
 ###########################################################################
@@ -79,11 +94,7 @@ AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjp
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1], [HAVE_OPENSSL=0])
 AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
 
-AC_CONFIG_FILES([Makefile tests/Makefile])
-AC_CONFIG_SUBDIRS([common cardlayer pkcs11 xpi])
-
-if test "x$enable_dialogs" = "xyes"; then
-	AC_CONFIG_SUBDIRS([dialogs])
-fi
+AC_CONFIG_FILES([Makefile cardcomm/pkcs11/src/Makefile tests/unit/Makefile])
+AC_CONFIG_SUBDIRS([plugins_tools/xpi])
 
 AC_OUTPUT

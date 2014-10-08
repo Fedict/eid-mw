@@ -22,11 +22,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include <glib/gi18n.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <glib/gi18n.h>
 #include <sys/stat.h>
 #include <stdio.h>
 #include <libgen.h>

@@ -20,9 +20,9 @@
 #include "pinpad.h"
 #include "context.h"
 #include "pinpad2.h"
-#include "../common/src/log.h"
-#include "../common/src/util.h"
-#include "../common/src/configuration.h"
+#include "common/log.h"
+#include "common/util.h"
+#include "common/configuration.h"
 #include "assert.h"
 
 // Make sure PP_DUMP_CMDS is not defined in a release!

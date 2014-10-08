@@ -18,7 +18,7 @@
 
 **************************************************************************** */
 #include "context.h"
-#include "../common/src/configuration.h"
+#include "common/configuration.h"
 
 namespace eIDMW
 {

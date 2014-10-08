@@ -24,8 +24,8 @@
 
 #include <vector>
 
-#include "../common/src/eiderrors.h"
-#include "../common/src/mwexception.h"
+#include "common/eiderrors.h"
+#include "common/mwexception.h"
 #include "p15objects.h"
 #include "pkcs15parser.h"
 

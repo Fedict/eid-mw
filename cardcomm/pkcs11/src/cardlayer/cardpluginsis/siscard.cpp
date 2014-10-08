@@ -32,7 +32,7 @@ Read the social security SIS-card and decode the data into useable fields
 #endif
 
 #include "siscard.h"
-#include "../common/src/log.h"
+#include "common/log.h"
 
 using namespace eIDMW;
 

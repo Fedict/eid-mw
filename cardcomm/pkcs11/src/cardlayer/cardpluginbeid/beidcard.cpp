@@ -18,7 +18,7 @@
 
 **************************************************************************** */
 #include "beidcard.h"
-#include "../common/src/log.h"
+#include "common/log.h"
 
 #ifdef __APPLE__
 #include "unknowncard.h"

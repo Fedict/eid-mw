@@ -18,9 +18,9 @@
 
 **************************************************************************** */
 #include "pinpadlib.h"
-#include "../common/src/mwexception.h"
-#include "../common/src/prefix.h"
-#include "../common/src/util.h"
+#include "common/mwexception.h"
+#include "common/prefix.h"
+#include "common/util.h"
 
 using namespace eIDMW;
 

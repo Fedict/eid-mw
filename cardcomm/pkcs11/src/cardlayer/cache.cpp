@@ -18,9 +18,9 @@
 
 **************************************************************************** */
 #include "cache.h"
-#include "../common/src/util.h"
-#include "../common/src/configuration.h"
-#include "../common/src/mw_util.h"
+#include "common/util.h"
+#include "common/configuration.h"
+#include "common/mw_util.h"
 
 #ifdef WIN32
 #include <io.h>

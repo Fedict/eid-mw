@@ -29,7 +29,7 @@
 #ifndef P15CORRECTION_H
 #define P15CORRECTION_H
 
-#include "../common/src/export.h"
+#include "common/export.h"
 #include "p15objects.h"
 #include <vector>
 

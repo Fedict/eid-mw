@@ -29,10 +29,10 @@
 #include <stdio.h>
 #include <limits.h>
 #include <unistd.h>
-#include "log.h"
-#include "util.h"
-#include "mwexception.h"
-#include "eiderrors.h"
+#include "../../common/log.h"
+#include "../../common/util.h"
+#include "../../common/mwexception.h"
+#include "../../common/eiderrors.h"
 #include "config.h"
 
 #define QUOTEME_(x) #x

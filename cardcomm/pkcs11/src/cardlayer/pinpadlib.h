@@ -34,15 +34,15 @@
 #define __PINPADLIB_H__
 
 #include "stdlib.h"
-#include "../common/src/export.h"
-#include "../common/src/dynamiclib.h"
-#include "../common/src/bytearray.h"
+#include "common/export.h"
+#include "common/dynamiclib.h"
+#include "common/bytearray.h"
 #include "pinpad2.h"
 #if defined WIN32 && defined BEID_OLD_PINPAD
 #include "old/PinpadLibOldBeid.h" // For the old BE eID pinpad libs
 #endif
 #ifndef NO_DIALOGS
-#include "../dialogs/src/dialogs.h"
+#include "dialogs/dialogs.h"
 #endif
 #ifdef __APPLE__
 typedef void* BEID_DIALOGHANDLE;

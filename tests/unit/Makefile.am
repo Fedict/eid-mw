@@ -4,72 +4,74 @@ TESTS += decode_photo
 endif
 check_PROGRAMS = $(TESTS)
 
-AM_CFLAGS = -I$(top_srcdir)/sdk/Pkcs11/include/rsaref220 -DTESTS_TO_RUN=0
+COMMON_LIB=$(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
+
+AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220
 COMMON_SRCS = testlib.h testlib.c
 
 init_finalize_SOURCES = init_finalize.c $(COMMON_SRCS)
-init_finalize_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+init_finalize_LDADD = $(COMMON_LIB)
 
 getinfo_SOURCES = getinfo.c $(COMMON_SRCS)
-getinfo_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+getinfo_LDADD = $(COMMON_LIB)
 
 funclist_SOURCES = funclist.c $(COMMON_SRCS)
-funclist_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+funclist_LDADD = $(COMMON_LIB)
 
 slotlist_SOURCES = slotlist.c $(COMMON_SRCS)
-slotlist_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+slotlist_LDADD = $(COMMON_LIB)
 
 slotinfo_SOURCES = slotinfo.c $(COMMON_SRCS)
-slotinfo_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+slotinfo_LDADD = $(COMMON_LIB)
 
 tkinfo_SOURCES = tkinfo.c $(COMMON_SRCS)
-tkinfo_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+tkinfo_LDADD = $(COMMON_LIB)
 
 double_init_SOURCES = double_init.c $(COMMON_SRCS)
-double_init_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+double_init_LDADD = $(COMMON_LIB)
 
 fork_init_SOURCES = fork_init.c $(COMMON_SRCS)
-fork_init_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+fork_init_LDADD = $(COMMON_LIB)
 
 slotevent_SOURCES = slotevent.c $(COMMON_SRCS)
-slotevent_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+slotevent_LDADD = $(COMMON_LIB)
 
 mechlist_SOURCES = mechlist.c $(COMMON_SRCS)
-mechlist_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+mechlist_LDADD = $(COMMON_LIB)
 
 mechinfo_SOURCES = mechinfo.c $(COMMON_SRCS)
-mechinfo_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+mechinfo_LDADD = $(COMMON_LIB)
 
 sessions_SOURCES = sessions.c $(COMMON_SRCS)
-sessions_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+sessions_LDADD = $(COMMON_LIB)
 
 sessions_nocard_SOURCES = sessions_nocard.c $(COMMON_SRCS)
-sessions_nocard_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+sessions_nocard_LDADD = $(COMMON_LIB)
 
 sessioninfo_SOURCES = sessioninfo.c $(COMMON_SRCS)
-sessioninfo_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+sessioninfo_LDADD = $(COMMON_LIB)
 
 login_SOURCES = login.c $(COMMON_SRCS)
-login_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+login_LDADD = $(COMMON_LIB)
 
 nonsensible_SOURCES = nonsensible.c $(COMMON_SRCS)
-nonsensible_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+nonsensible_LDADD = $(COMMON_LIB)
 
 objects_SOURCES = objects.c $(COMMON_SRCS)
-objects_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+objects_LDADD = $(COMMON_LIB)
 
 readdata_SOURCES = readdata.c $(COMMON_SRCS)
-readdata_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+readdata_LDADD = $(COMMON_LIB)
 
 digest_SOURCES = digest.c $(COMMON_SRCS)
-digest_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+digest_LDADD = $(COMMON_LIB)
 
 decode_photo_SOURCES = decode_photo.c $(COMMON_SRCS)
-decode_photo_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la @JPEG_LIBS@
+decode_photo_LDADD = $(COMMON_LIB) @JPEG_LIBS@
 
 threads_SOURCES = threads.c $(COMMON_SRCS)
-threads_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la
+threads_LDADD = $(COMMON_LIB)
 
 sign_SOURCES = sign.c $(COMMON_SRCS)
 sign_CFLAGS = @SSL_CFLAGS@ $(AM_CFLAGS)
-sign_LDADD = $(top_builddir)/pkcs11/libbeidpkcs11.la @SSL_LIBS@
+sign_LDADD = $(COMMON_LIB) @SSL_LIBS@

@@ -19,7 +19,7 @@
 **************************************************************************** */
 #include "reader.h"
 #include "card.h"
-#include "../common/src/log.h"
+#include "common/log.h"
 #include "cardfactory.h"
 
 namespace eIDMW

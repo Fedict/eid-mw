@@ -23,11 +23,11 @@
 
 #include "pcsc.h"
 #include "internalconst.h"
-#include "../common/src/configuration.h"
-#include "../common/src/mwexception.h"
-#include "../common/src/log.h"
-#include "../common/src/thread.h"
-#include "../common/src/util.h"
+#include "common/configuration.h"
+#include "common/mwexception.h"
+#include "common/log.h"
+#include "common/thread.h"
+#include "common/util.h"
 #include <exception>
 //#include <Winsvc.h>
 

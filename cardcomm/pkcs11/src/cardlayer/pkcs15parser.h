@@ -20,7 +20,7 @@
 #ifndef __PKCS15PARSER_H__
 #define __PKCS15PARSER_H__
 
-#include "../common/src/bytearray.h"
+#include "common/bytearray.h"
 #include <vector>
 #include "p15objects.h"
 

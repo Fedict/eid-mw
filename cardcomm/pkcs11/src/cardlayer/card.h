@@ -29,13 +29,13 @@
 #include "p15objects.h"
 #include "cache.h"
 #include "internalconst.h"
-#include "../common/src/bytearray.h"
-#include "../common/src/mwexception.h"
-#include "../common/src/hash.h"
-#include "../common/src/util.h"
+#include "common/bytearray.h"
+#include "common/mwexception.h"
+#include "common/hash.h"
+#include "common/util.h"
 #include "pinpad.h"
 #include "p15correction.h"
-#include "../dialogs/src/dialogs.h"
+#include "dialogs/dialogs.h"
 
 namespace eIDMW
 {
