@@ -35,8 +35,7 @@
 #include "../../common/eiderrors.h"
 #include "config.h"
 
-#define QUOTEME_(x) #x
-#define QUOTEME(x) QUOTEME_(x)
+#include "gtk_dialog_names.h"
 
 #ifdef DEBUG
 #define DPRINTF(format,args...) fprintf(stderr, format , ## args)
@@ -70,7 +69,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation, DlgPinUsage usage
 {
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgAskPin called");
 
-	char* response=sdialog_call_modal(QUOTEME(BEID_ASKPIN_DIALOG),"");	
+	char* response=sdialog_call_modal(BEID_ASKPIN_DIALOG,"");
 	if(response==NULL)
 		return DLG_CANCEL;
 	else
@@ -87,7 +86,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usag
 
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgAskPins called");
 
-	char* response=sdialog_call_modal(QUOTEME(BEID_CHANGEPIN_DIALOG),"");
+	char* response=sdialog_call_modal(BEID_CHANGEPIN_DIALOG,"");
 	if(response==NULL)
 		result=DLG_CANCEL;
 	else
@@ -113,7 +112,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin( DlgPinUsage usage, const wchar_t *wsPinName
 	MWLOG(LEV_DEBUG,MOD_DLG,L"eIDMW::DlgBadPin called");
 
 	snprintf(count,sizeof(count)-2,"%1lu",ulRemainingTries);
-	char* response=sdialog_call_modal(QUOTEME(BEID_BADPIN_DIALOG),count);	
+	char* response=sdialog_call_modal(BEID_BADPIN_DIALOG,count);
 	free(response);
     return DLG_OK;
 }
@@ -129,9 +128,9 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation, const 
 	wcstombs(message,wsReader,1024);
 
 	if(operation==DLG_PIN_OP_VERIFY)
-		dialog_pid=sdialog_call(QUOTEME(BEID_SPR_ASKPIN_DIALOG),message);
+		dialog_pid=sdialog_call(BEID_SPR_ASKPIN_DIALOG,message);
 	else
-		dialog_pid=sdialog_call(QUOTEME(BEID_SPR_CHANGEPIN_DIALOG),message);
+		dialog_pid=sdialog_call(BEID_SPR_CHANGEPIN_DIALOG,message);
 
 	if(dialog_pid<0)
 		return DLG_ERR;
@@ -169,7 +168,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskAccess( const wchar_t *wsAppPath, const wchar_t 
 
 
 	wcstombs(message,wsAppPath,1024);
-	char* response=sdialog_call_modal(QUOTEME(BEID_ASKACCESS_DIALOG),message);
+	char* response=sdialog_call_modal(BEID_ASKACCESS_DIALOG,message);
 	if(response!=NULL)
 	{
 		if(strcmp(response,"OK")==0)
