@@ -21,10 +21,9 @@
 #include "base.h"
 #include "cert_registration.h"
 
-
-
-CK_RV Beidsdk_GetObjectValue(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle,CK_CHAR_PTR filename,CK_VOID_PTR pValue, CK_ULONG_PTR pvalueLen);
-CK_RV Beidsdk_RegisterCertificates(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle, CK_BYTE_PTR cardSerialNumber, DWORD cardSerialNumberLen);
+/* forward definitions */
+CK_RV Beidsdk_GetObjectValue(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle,CK_CHAR_PTR filename,CK_VOID_PTR* ppValue, CK_ULONG_PTR pvalueLen);
+CK_RV Beidsdk_RegisterCertificates(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle, CK_BYTE_PTR cardSerialNumber, CK_ULONG cardSerialNumberLen);
 void Beidsdk_PrintValue(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen);
 CK_ULONG beidsdk_Main(void);
 
@@ -32,111 +31,88 @@ int main() {
 	CK_ULONG retval = CKR_OK;
 	retval = beidsdk_Main();
 
+	printf("Done. Return value: %ld (%s)\npress a key to exit...", retval, retval == CKR_OK ? "ok" : "NOT ok");
+
 	_getch();
 }
 
 
 CK_ULONG beidsdk_Main() 
 {
-	HMODULE pkcs11Handle;							//handle to the pkcs11 library		  
+	HMODULE pkcs11Handle;				//handle to the pkcs11 library
 	CK_FUNCTION_LIST_PTR pFunctions;		//list of the pkcs11 function pointers
 	CK_C_GetFunctionList pC_GetFunctionList;
 	CK_RV retVal = CKR_OK;
 
 	//open the pkcs11 library
 	pkcs11Handle = dlopen(PKCS11_LIB, RTLD_LAZY); // RTLD_NOW is slower
-	if (pkcs11Handle != NULL) 
+	if (pkcs11Handle == NULL) { retVal = CKR_GENERAL_ERROR; return retVal; }
+
+	// get function pointer to C_GetFunctionList
+	pC_GetFunctionList = (CK_C_GetFunctionList)dlsym(pkcs11Handle, "C_GetFunctionList");
+	if (pC_GetFunctionList == NULL) { retVal = CKR_GENERAL_ERROR; goto close; }
+
+	// invoke C_GetFunctionList to get the list of pkcs11 function pointers
+	retVal = (*pC_GetFunctionList) (&pFunctions);
+	if (retVal != CKR_OK) { goto close; }
+
+	// initialize Cryptoki
+	retVal = (pFunctions->C_Initialize) (NULL);
+	if (retVal != CKR_OK) {	goto close; }
+
+	CK_ULONG slot_count = 0;
+	// retrieve the number of slots (cardreaders) found
+	retVal = (pFunctions->C_GetSlotList) (CK_FALSE, 0, &slot_count);
+	if (slot_count == 0) { retVal = CKR_GENERAL_ERROR; printf("no slots found\n"); }
+	if (retVal != CKR_OK) { goto finalize; }
+
+	CK_SLOT_ID_PTR slotIds = (CK_SLOT_ID_PTR)malloc(slot_count * sizeof(CK_SLOT_INFO));
+	if(slotIds == NULL) { printf("malloc failed\n"); retVal = CKR_GENERAL_ERROR; goto finalize; }
+
+	// retrieve the list of slots (cardreaders)
+	retVal = (pFunctions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
+	if (retVal != CKR_OK) { goto freeslots; }
+
+	CK_ULONG slotIdx;
+	for (slotIdx = 0; slotIdx < slot_count; slotIdx++) 
 	{
-		// get function pointer to C_GetFunctionList
-		pC_GetFunctionList = (CK_C_GetFunctionList)dlsym(pkcs11Handle, "C_GetFunctionList");
-		if (pC_GetFunctionList != NULL) 
+		CK_SESSION_HANDLE session_handle;
+		//open a session
+		retVal = (pFunctions->C_OpenSession)(slotIds[slotIdx], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
+		if (retVal != CKR_OK) { continue; }
+
+		CK_CHAR_PTR pSerialNumber = (CK_CHAR_PTR)TEXT("carddata_serialnumber");
+		CK_VOID_PTR pSerialNumberValue = NULL;
+		CK_ULONG	SerialNumberValueLen = 0;
+
+		//retrieve the data of the file
+		retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pSerialNumber, &pSerialNumberValue, &SerialNumberValueLen);
+		if(retVal == CKR_OK)
 		{
-			// invoke C_GetFunctionList to get the list of pkcs11 function pointers
-			retVal = (*pC_GetFunctionList) (&pFunctions);
-			if (retVal == CKR_OK) 
-			{
-				// initialize Cryptoki
-				retVal = (pFunctions->C_Initialize) (NULL);
-				if (retVal == CKR_OK)
-				{		
-					CK_ULONG slot_count = 0;
-					// retrieve the number of slots (cardreaders) found
-					retVal = (pFunctions->C_GetSlotList) (CK_FALSE, 0, &slot_count);
-					if ((retVal == CKR_OK) && (slot_count > 0) )
-					{
-						CK_SLOT_ID_PTR slotIds = (CK_SLOT_ID_PTR)malloc(slot_count * sizeof(CK_SLOT_INFO));
-						if(slotIds != NULL)
-						{
-							// retrieve the list of slots (cardreaders)
-							retVal = (pFunctions->C_GetSlotList) (CK_FALSE, slotIds, &slot_count);
-							if (retVal == CKR_OK)
-							{
-								CK_ULONG slotIdx;
-								for (slotIdx = 0; slotIdx < slot_count; slotIdx++) 
-								{
-									CK_SESSION_HANDLE session_handle;
-									//open a session
-									retVal = (pFunctions->C_OpenSession)(slotIds[slotIdx], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
-									if (retVal == CKR_OK)
-									{
-										CK_CHAR_PTR pSerialNumber = (CK_CHAR_PTR)TEXT("carddata_serialnumber");
-										CK_VOID_PTR pSerialNumberValue = NULL;
-										CK_ULONG	SerialNumberValueLen = 0;
-
-										//retrieve the data of the file
-										retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pSerialNumber, &pSerialNumberValue, &SerialNumberValueLen);
-										if(retVal == CKR_OK)
-										{
-											Beidsdk_RegisterCertificates(pFunctions, session_handle,(CK_BYTE_PTR)pSerialNumberValue,SerialNumberValueLen);
-											Beidsdk_PrintValue(pSerialNumber,(CK_BYTE_PTR)pSerialNumberValue, SerialNumberValueLen);
-										}
-										else
-											printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
-
-										if (pSerialNumberValue != NULL)
-											free (pSerialNumberValue);
-
-										//close the session
-										if (retVal == CKR_OK)
-											retVal = (pFunctions->C_CloseSession) (session_handle);
-										else
-											(pFunctions->C_CloseSession) (session_handle);
-									}
-								}//end of for loop
-							}
-							free(slotIds);
-						}
-						else //malloc failed
-						{
-							printf("malloc failed\n");
-							retVal = CKR_GENERAL_ERROR;
-						}
-					}//no slots found
-					else if (slot_count == 0)
-					{
-						printf("no slots found\n");
-					}
-					if (retVal == CKR_OK)
-						retVal = (pFunctions->C_Finalize) (NULL_PTR);
-					else
-						(pFunctions->C_Finalize) (NULL_PTR);
-				}//C_Initialize failed	
-			}
-			else //CK_C_GetFunctionList failed
-			{
-				retVal = CKR_GENERAL_ERROR;
-			}
+			Beidsdk_RegisterCertificates(pFunctions, session_handle,(CK_BYTE_PTR)pSerialNumberValue,SerialNumberValueLen);
+			Beidsdk_PrintValue(pSerialNumber,(CK_BYTE_PTR)pSerialNumberValue, SerialNumberValueLen);
 		}
-		else //dlsym failed
-		{
-			retVal = CKR_GENERAL_ERROR;
-		}
-		dlclose(pkcs11Handle);
+		else
+			printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
+
+		if (pSerialNumberValue != NULL)
+			free (pSerialNumberValue);
+
+		//close the session
+		if (retVal == CKR_OK)
+			retVal = (pFunctions->C_CloseSession) (session_handle);
+		else
+			(pFunctions->C_CloseSession) (session_handle);
 	}
-	else //dlopen failed
-	{
-		retVal = CKR_GENERAL_ERROR;
-	}
+freeslots:
+	free(slotIds);
+finalize:
+	if (retVal == CKR_OK)
+		retVal = (pFunctions->C_Finalize) (NULL_PTR);
+	else
+		(pFunctions->C_Finalize) (NULL_PTR);
+close:
+	dlclose(pkcs11Handle);
 	return retVal;
 } 
 
@@ -150,40 +126,31 @@ CK_RV Beidsdk_GetObjectValue(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE 
 
 	//initialize the search for the objects with label <filename>
 	retVal = (pFunctions->C_FindObjectsInit)(session_handle, searchtemplate, 2); 
-	if (retVal == CKR_OK)
-	{
-		CK_OBJECT_HANDLE hObject = 0;
-		CK_ULONG ulObjectCount = 0;
-		//find the first object with label <filename>
-		retVal = (pFunctions->C_FindObjects)(session_handle, &hObject,1,&ulObjectCount); 
+	if (retVal != CKR_OK) { return retVal; }
 
-		if ( (ulObjectCount == 1) && (retVal == CKR_OK) )
-		{
-			//NULL_PTR as second argument, so the length of value is filled in to retValueLen
-			CK_ATTRIBUTE attr_templ[2] = {{CKA_VALUE,NULL_PTR,0},{CKA_CLASS,CKO_DATA,sizeof(CK_ULONG)}};
+	CK_OBJECT_HANDLE hObject = 0;
+	CK_ULONG ulObjectCount = 0;
+	//find the first object with label <filename>
+	retVal = (pFunctions->C_FindObjects)(session_handle, &hObject,1,&ulObjectCount); 
+	if ( (ulObjectCount != 1) || (retVal != CKR_OK) ) { goto finalize; }
 
-			//retrieve the length of the data from the object
-			retVal = (pFunctions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
-			if ((retVal == CKR_OK) && ((CK_LONG)(attr_templ[0].ulValueLen) != -1))
-			{
-				*ppValue = malloc (attr_templ[0].ulValueLen);												
-				if (*ppValue != NULL )
-				{
-					attr_templ[0].pValue = *ppValue;
-					//retrieve the data from the object
-					retVal = (pFunctions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
-					*pvalueLen = attr_templ[0].ulValueLen;
-				}						  
-				else
-				{
-					//error allocating memory for pValue
-					retVal = CKR_GENERAL_ERROR;
-				}					  
-			}
-		}
-		//finalize the search
-		retVal = (pFunctions->C_FindObjectsFinal)(session_handle); 
-	}
+	//NULL_PTR as second argument, so the length of value is filled in to retValueLen
+	CK_ATTRIBUTE attr_templ[2] = {{CKA_VALUE,NULL_PTR,0},{CKA_CLASS,CKO_DATA,sizeof(CK_ULONG)}};
+
+	//retrieve the length of the data from the object
+	retVal = (pFunctions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
+	if ((retVal != CKR_OK) || ((CK_LONG)(attr_templ[0].ulValueLen) == -1)) { goto finalize; }
+
+	*ppValue = malloc (attr_templ[0].ulValueLen);
+	if (*ppValue == NULL ) { retVal = CKR_GENERAL_ERROR; goto finalize; }
+
+	attr_templ[0].pValue = *ppValue;
+	//retrieve the data from the object
+	retVal = (pFunctions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
+	*pvalueLen = attr_templ[0].ulValueLen;
+finalize:
+	//finalize the search
+	retVal = (pFunctions->C_FindObjectsFinal)(session_handle); 
 	return retVal;
 }
 
@@ -195,44 +162,43 @@ CK_RV Beidsdk_RegisterCertificates(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_H
 
 	//initialize the search for the objects with label <filename>
 	retVal = (pFunctions->C_FindObjectsInit)(session_handle, searchtemplate, 1); 
-	if (retVal == CKR_OK)
-	{
-		CK_OBJECT_HANDLE hObject = 0;
-		CK_ULONG ulObjectCount = 0;
-		//find the first object with class CKO_CERTIFICATE
-		retVal = (pFunctions->C_FindObjects)(session_handle, &hObject,1,&ulObjectCount); 
-		while( (ulObjectCount == 1) && (retVal == CKR_OK) )
-		{
-			//NULL_PTR as second argument, so the length of value is filled in to retValueLen
-			CK_ATTRIBUTE attr_templ[1] = {CKA_VALUE,NULL_PTR,0};
+	if (retVal != CKR_OK) { return retVal; }
 
-			//retrieve the length of the data from the object
-			retVal = (pFunctions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
-			if ((retVal == CKR_OK) && ((CK_LONG)(attr_templ[0].ulValueLen) != -1))
+	CK_OBJECT_HANDLE hObject = 0;
+	CK_ULONG ulObjectCount = 0;
+	//find the first object with class CKO_CERTIFICATE
+	retVal = (pFunctions->C_FindObjects)(session_handle, &hObject,1,&ulObjectCount); 
+	while( (ulObjectCount == 1) && (retVal == CKR_OK) )
+	{
+		//NULL_PTR as second argument, so the length of value is filled in to retValueLen
+		CK_ATTRIBUTE attr_templ[1] = {CKA_VALUE,NULL_PTR,0};
+
+		//retrieve the length of the data from the object
+		retVal = (pFunctions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
+		if ((retVal == CKR_OK) && ((CK_LONG)(attr_templ[0].ulValueLen) != -1))
+		{
+			CK_BYTE* pValue = (CK_BYTE*)malloc (attr_templ[0].ulValueLen);												
+			if (pValue != NULL )
 			{
-				BYTE* pValue = (BYTE*)malloc (attr_templ[0].ulValueLen);												
-				if (pValue != NULL )
+				attr_templ[0].pValue = pValue;
+				//retrieve the data from the object
+				retVal = (pFunctions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
+				if (retVal == CKR_OK)
 				{
-					attr_templ[0].pValue = pValue;
-					//retrieve the data from the object
-					retVal = (pFunctions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
-					if (retVal == CKR_OK)
-					{
-						ImportCertificate(pValue,attr_templ[0].ulValueLen,cardSerialNumber,SerialNumberValueLen);
-					}
-					free(pValue);
-				}						  
-				else
-				{
-					//error allocating memory for pValue
-					retVal = CKR_GENERAL_ERROR;
-				}					  
-			}
-			retVal = (pFunctions->C_FindObjects)(session_handle, &hObject,1,&ulObjectCount); 
+					ImportCertificate(pValue,attr_templ[0].ulValueLen,cardSerialNumber,SerialNumberValueLen);
+				}
+				free(pValue);
+			}						  
+			else
+			{
+				//error allocating memory for pValue
+				retVal = CKR_GENERAL_ERROR;
+			}					  
 		}
-		//finalize the search
-		retVal = (pFunctions->C_FindObjectsFinal)(session_handle); 
+		retVal = (pFunctions->C_FindObjects)(session_handle, &hObject,1,&ulObjectCount); 
 	}
+	//finalize the search
+	retVal = (pFunctions->C_FindObjectsFinal)(session_handle); 
 	return retVal;
 }
 
@@ -251,4 +217,5 @@ void Beidsdk_PrintValue(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen
 			counter++;
 		}
 	}
+	printf("\n");
 }
