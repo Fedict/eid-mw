@@ -48,6 +48,7 @@
 #define RTLD_GLOBAL 4
 
 #else
+#define HMODULE void*
 #include "rsaref220/unix.h"
 #include "rsaref220/pkcs11.h"
 
@@ -62,7 +63,7 @@
 #ifdef __APPLE__
 #define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.dylib"
 #else
-#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so"
+#define PKCS11_LIB "/usr/lib/x86_64-linux-gnu/libbeidpkcs11.so.0"
 #endif
 #define TEXT(x) x
 #define _getch() getchar()

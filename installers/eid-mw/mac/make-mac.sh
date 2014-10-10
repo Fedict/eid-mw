@@ -3,7 +3,7 @@
 set -e
 
 # Ensure we're in the right directory
-cd $(dirname $0)
+cd $(dirname $0)/../installers/eid-mw/mac
 
 #########################################
 # check gcc compiler installed
@@ -45,7 +45,7 @@ chmod +x ../../../plugins_tools/xpi/build.sh
 # build the eID MW
 #-----------------------------------------
 
-cd ../../..
+pushd ../../..
 #	xcodebuild -configuration Release
 echo "cleaning former project..."
 xcodebuild -project beidmw.xcodeproj clean
@@ -56,12 +56,12 @@ echo "building siscardplugin..."
 #echo "building beidpkcs11..."
 xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration Release
     
-cd -
+popd
 
 #-----------------------------------------
 # Unpack the BEID.tokend and copy to bin
 #-----------------------------------------
-cd ../../../cardcomm/tokend 
+pushd ../../../cardcomm/tokend 
 if [ -d ./BEID.tokend ]
 then
 	sudo rm -rf ./BEID.tokend
@@ -69,13 +69,13 @@ fi
 echo "Unpacking BEID.tokend..."
 tar -xvf ./BEID.tokend.tar.gz
 
-cd -
+popd
 
 #-----------------------------------------
 # Unpack the BEID_Lion.tokend and copy to bin
 # this is the tokend version for Lion
 #-----------------------------------------
-cd ../../../cardcomm/tokend 
+pushd ../../../cardcomm/tokend 
 if [ -d ./BEID_Lion.tokend ]
 then
 	sudo rm -rf ./BEID_Lion.tokend
@@ -83,15 +83,15 @@ fi
 echo "Unpacking BEID_Lion.tokend..."
 tar -xvf ./BEID_Lion.tokend.tar.gz
 
-cd -
+popd
 
 #-----------------------------------------
 # create the xpi
 #-----------------------------------------
 echo "creating the XPI..."
-cd ../../../plugins_tools/xpi
+pushd ../../../plugins_tools/xpi
 ./build.sh -f
-cd -
+popd
 
 #-----------------------------------------
 # create a pkg file
