@@ -1,5 +1,0 @@
-#!/bin/bash
-make clean 
-./configure --prefix=$DIST_PREFIX --host=x86_64-w64-mingw32
-make -j12
-sudo make install

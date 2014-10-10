@@ -1,5 +1,0 @@
-#!/bin/bash
-make clean
-./configure --prefix=$DIST_PREFIX
-make 
-sudo make install
