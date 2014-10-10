@@ -60,8 +60,8 @@
 #include "common/prefix.h"
 #ifdef CAL_BEID
 #include "cardpluginbeid/beidcard.h"
-#include "cardpluginsis/siscard.h"
-#include "cardpluginsis/sispluginhandler.h"
+//#include "cardpluginsis/siscard.h"
+//#include "cardpluginsis/sispluginhandler.h"
 #endif
 #include <vector>
 #include <string>
@@ -142,8 +142,8 @@ CCard * CardConnect(const std::string &csReader,
 		if (poCard == NULL)
 			poCard = BeidCardGetInstance(PLUGIN_VERSION, strReader, hCard, poContext, poPinpad);
 
-		if (poCard == NULL)
-			poCard = SISPluginReadData(strReader, hCard, poContext, poPinpad, oCardPluginLib);
+		//if (poCard == NULL)
+		//	poCard = SISPluginReadData(strReader, hCard, poContext, poPinpad, oCardPluginLib);
 
 /* SIS support no longer in the CardLayer�, only via the plugins */
 #if SIS_IN_CAL

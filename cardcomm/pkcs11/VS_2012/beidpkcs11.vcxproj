@@ -238,7 +238,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -273,7 +273,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -310,7 +310,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -351,7 +351,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -388,7 +388,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -423,7 +423,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);../../VS_2012/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -459,7 +459,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);../../VS_2012/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -494,7 +494,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -532,7 +532,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -574,7 +574,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);../../VS_2012/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -616,7 +616,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);../../VS_2012/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -658,7 +658,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -679,6 +679,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\asn1.c" />
     <ClCompile Include="..\src\cal.cpp" />
     <ClCompile Include="..\src\cardlayer\cache.cpp" />
     <ClCompile Include="..\src\cardlayer\card.cpp" />
