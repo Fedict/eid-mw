@@ -21,7 +21,7 @@
 //
 //#include "resource.h"
 
-#include "../../../Windows/beidversions.h"
+#include "../../../VS_2012/beidversions.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////

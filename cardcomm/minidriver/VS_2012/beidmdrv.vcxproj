@@ -226,10 +226,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">
@@ -267,10 +269,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -309,10 +313,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|x64'">
@@ -351,10 +357,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -391,10 +399,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">
@@ -431,10 +441,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|Win32'">
@@ -471,10 +483,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -511,10 +525,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'">
@@ -551,10 +567,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|x64'">
@@ -591,10 +609,12 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>..\..\windows\svn_revision.cmd</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create svn_revision.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
