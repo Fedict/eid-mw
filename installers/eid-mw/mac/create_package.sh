@@ -48,7 +48,6 @@ BIN_DIR="../../../output/bin/Release"
 
 cleanup() {
 	test -e $ROOT_DIR && rm -rdf $ROOT_DIR
-	test -e $PKG_NAME &&rm -rf $PKG_NAME
 	test -e $RESOURCES_NO_SVN_DIR &&rm -rf $RESOURCES_NO_SVN_DIR
 	test -e $INSTALL_SCRIPTS_NO_SVN_DIR &&rm -rf $INSTALL_SCRIPTS_NO_SVN_DIR
 }
