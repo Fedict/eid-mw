@@ -32,7 +32,7 @@ REL_VERSION="4.1.0"
 PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(svn info ../../ | grep Revision | sed s/"Revision: "/""/)
 PKG_NAME="$REL_NAME.pkg"
-PKG_MAKER=/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
+PKG_MAKER=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
 #VOL_NAME="$REL_NAME_MacOSX_$REL_VERSION"
 #DMG_NAME="$REL_NAME_$REL_VERSION.dmg"
 
@@ -144,9 +144,9 @@ echo "********** generate $PKG_NAME and $DMG_NAME **********"
 #chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt
 #chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt/plugins
 #chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt/plugins/imageformats
-chmod a-x $ROOT_DIR/$INST_DIR/etc/beid.conf
-chmod a-x $ROOT_DIR/$INST_DIR/lib/beid-pkcs11.bundle/Contents/Info.plist
-chmod a-x $ROOT_DIR/$INST_DIR/lib/beid-pkcs11.bundle/Contents/PkgInfo
+#chmod a-x $ROOT_DIR/$INST_DIR/etc/beid.conf
+#chmod a-x $ROOT_DIR/$INST_DIR/lib/beid-pkcs11.bundle/Contents/Info.plist
+#chmod a-x $ROOT_DIR/$INST_DIR/lib/beid-pkcs11.bundle/Contents/PkgInfo
 chgrp    wheel  $ROOT_DIR/usr
 chgrp    wheel  $ROOT_DIR/usr/bin
 chgrp    wheel  $ROOT_DIR/usr/local
