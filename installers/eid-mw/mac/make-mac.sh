@@ -97,6 +97,6 @@ cd -
 # create a pkg file
 #-----------------------------------------
 echo "creating the beid package..."
-./create_package.sh
+sudo ./create_package.sh
 
 echo "[Info ] Done..."
