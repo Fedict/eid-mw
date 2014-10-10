@@ -3,7 +3,7 @@
 set -e
 
 # Ensure we're in the right directory
-cd $(dirname $0)/../installers/eid-mw/mac
+cd $(dirname $0)/../../installers/eid-mw/mac
 
 #########################################
 # check gcc compiler installed
