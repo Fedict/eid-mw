@@ -17,7 +17,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-#ifdef WIN32
+#ifdef HAVE_CONFIG_H
 #include "config.h"
 #else
 #include "configuration.h"
