@@ -82,8 +82,8 @@ LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
 XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
 cp $XPI_PLUGIN $ROOT_DIR/$BELGIUM_DIR
 
-cp -r ../../../tokend/BEID.tokend $ROOT_DIR/$BELGIUM_DIR
-cp -r ../../../tokend/BEID_Lion.tokend $ROOT_DIR/$BELGIUM_DIR
+cp -r ../../../cardcomm/tokend/BEID.tokend $ROOT_DIR/$BELGIUM_DIR
+cp -r ../../../cardcomm/tokend/BEID_Lion.tokend $ROOT_DIR/$BELGIUM_DIR
 
 #copy licenses
 cp ../../../misc/licenses_files/Dutch/eID-toolkit_licensingtermsconditions.txt \
