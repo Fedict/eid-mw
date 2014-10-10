@@ -12,7 +12,7 @@ INFO_DIR="./info"
 INSTALL_SCRIPTS_DIR="./install_scripts"
 INSTALL_SCRIPTS_NO_SVN_DIR="./install_scripts_no_svn"
 #root dir, where all files to be packaged will be placed
-ROOT_DIR="./root"
+ROOT_DIR="$(pwd)/root"
 #inst dir, where our libs and binaries will be placed
 INST_DIR=/usr/local
 #licenses dir, where our licences will be placed
@@ -45,12 +45,15 @@ XPI_PLUGIN_DIR="/Library/Application\ Support/Mozilla/Extensions/{ec8030f7-c20a-
 LIB_DIR="../../../output/lib/Release"
 BIN_DIR="../../../output/bin/Release"
 
+cleanup() {
+	test -e $ROOT_DIR && rm -rdf $ROOT_DIR
+	test -e $PKG_NAME &&rm -rf $PKG_NAME
+	test -e $RESOURCES_NO_SVN_DIR &&rm -rf $RESOURCES_NO_SVN_DIR
+	test -e $INSTALL_SCRIPTS_NO_SVN_DIR &&rm -rf $INSTALL_SCRIPTS_NO_SVN_DIR
+}
 
-#destroy previously build package\clean_release: 
-test -e $ROOT_DIR && rm -rdf $ROOT_DIR
-test -e $PKG_NAME &&rm -rf $PKG_NAME
-test -e $RESOURCES_NO_SVN_DIR &&rm -rf $RESOURCES_NO_SVN_DIR
-test -e $INSTALL_SCRIPTS_NO_SVN_DIR &&rm -rf $INSTALL_SCRIPTS_NO_SVN_DIR
+trap cleanup EXIT
+
 
 #create installer dirs
 mkdir -p $ROOT_DIR/$INST_DIR/lib/siscardplugins
@@ -155,6 +158,7 @@ chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID_Lion.tokend
 
 $PKG_MAKER -r $ROOT_DIR -o $PKG_NAME -f $INFO_DIR/Info.plist \
 	-e $RESOURCES_NO_SVN_DIR -s $INSTALL_SCRIPTS_NO_SVN_DIR -n REL_VERSION
-		 
-		 
+
+chown $SUDO_USER $PKG_NAME
+
 #	hdiutil create -srcfolder $PKG_NAME -volname "$(VOL_NAME)" $DMG_NAME
