@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -x
 
 #installer name defines
 #resources dir, where the plists are
