@@ -78,8 +78,8 @@ mkdir -p $ROOT_DIR/usr/bin/
 cp $LIB_DIR/libbeidpkcs11.$REL_VERSION.dylib $ROOT_DIR/$INST_DIR/lib/
 #cp $BIN_DIR/beiddialogsQTsrv $ROOT_DIR/usr/bin/
 
-LATEST_XPI=$(readlink ../../../xpi/builds/belgiumeid-CURRENT.xpi)
-XPI_PLUGIN=../../../xpi/builds/$LATEST_XPI
+LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
+XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
 cp $XPI_PLUGIN $ROOT_DIR/$BELGIUM_DIR
 
 cp -r ../../../tokend/BEID.tokend $ROOT_DIR/$BELGIUM_DIR
