@@ -45,23 +45,23 @@ chmod +x ../../../plugins_tools/xpi/build.sh
 # build the eID MW
 #-----------------------------------------
 
-cd ../../../mac
+cd ../../..
 #	xcodebuild -configuration Release
 echo "cleaning former project..."
-xcodebuild -project beidmw_xc5.xcodeproj clean
+xcodebuild -project beidmw.xcodeproj clean
 echo "building siscardplugin..."
-#xcodebuild -project beidmw_xc5.xcodeproj -target siscardplugin -configuration Release
+#xcodebuild -project beidmw.xcodeproj -target siscardplugin -configuration Release
 #echo "building beiddialogsQTsrv..."
-#xcodebuild -project beidmw_xc5.xcodeproj -target beiddialogsQTsrv -configuration Release
+#xcodebuild -project beidmw.xcodeproj -target beiddialogsQTsrv -configuration Release
 #echo "building beidpkcs11..."
-xcodebuild -project beidmw_xc5.xcodeproj -target beidpkcs11 -configuration Release
+xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration Release
     
 cd -
 
 #-----------------------------------------
 # Unpack the BEID.tokend and copy to bin
 #-----------------------------------------
-cd ../../../tokend 
+cd ../../../cardcomm/tokend 
 if [ -d ./BEID.tokend ]
 then
 	sudo rm -rf ./BEID.tokend
@@ -75,7 +75,7 @@ cd -
 # Unpack the BEID_Lion.tokend and copy to bin
 # this is the tokend version for Lion
 #-----------------------------------------
-cd ../../../tokend 
+cd ../../../cardcomm/tokend 
 if [ -d ./BEID_Lion.tokend ]
 then
 	sudo rm -rf ./BEID_Lion.tokend
@@ -89,7 +89,7 @@ cd -
 # create the xpi
 #-----------------------------------------
 echo "creating the XPI..."
-cd ../../../xpi
+cd ../../../plugins_tools/xpi
 ./build.sh -f
 cd -
 
