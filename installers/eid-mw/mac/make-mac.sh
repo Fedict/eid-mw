@@ -39,7 +39,7 @@ fi
 #-----------------------------------------
 CURRDIR=`pwd`
 chmod +x ./create_package.sh
-chmod +x ../../../xpi/build.sh
+chmod +x ../../../plugins_tools/xpi/build.sh
 
 #-----------------------------------------
 # build the eID MW
