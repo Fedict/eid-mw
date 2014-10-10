@@ -184,7 +184,7 @@ extern "C" {
 
 typedef struct BEID_DATA_LABELS_NAME {
 	unsigned char	tag;
-	char*			name;
+	const char*			name;
 }BEID_DATA_LABELS_NAME;
 
 #define BEID_LABEL_DATA_FILE		"DATA_FILE"

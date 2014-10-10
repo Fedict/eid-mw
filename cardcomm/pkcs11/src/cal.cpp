@@ -947,7 +947,7 @@ CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 	std::string szReader;
 	//	char cBuffer[250];
 	//	unsigned char ucBuffer[250];
-	char* plabel = NULL;
+	const char* plabel = NULL;
 	CTLVBuffer oTLVBuffer;
 	P11_SLOT *pSlot = NULL;
 	CK_ATTRIBUTE ID_DATA[]= BEID_TEMPLATE_ID_DATA;
@@ -1143,7 +1143,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 	std::string szReader;
 	char cBuffer[256];
 	//	unsigned char ucBuffer[250];
-	char* plabel = NULL;
+	const char* plabel = NULL;
 	char* pobjectID = NULL;
 	unsigned long ulLen=0;
 	CTLVBuffer oTLVBuffer;

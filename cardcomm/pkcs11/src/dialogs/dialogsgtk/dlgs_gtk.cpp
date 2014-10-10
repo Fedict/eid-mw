@@ -55,7 +55,7 @@ extern "C"
 
 	
 
-bool MW_PERROR(tLevel level, tModule mod, char* comment)
+bool MW_PERROR(tLevel level, tModule mod, const char* comment)
 {
     char    err_txt[256],log_txt[1024];
     wchar_t wide_log_txt[1024];
