@@ -86,18 +86,18 @@ cp -r ../../../cardcomm/tokend/BEID.tokend $ROOT_DIR/$BELGIUM_DIR
 cp -r ../../../cardcomm/tokend/BEID_Lion.tokend $ROOT_DIR/$BELGIUM_DIR
 
 #copy licenses
-cp ../../../misc/licenses_files/Dutch/eID-toolkit_licensingtermsconditions.txt \
+cp ../../../doc/licenses/Dutch/eID-toolkit_licensingtermsconditions.txt \
 	$ROOT_DIR/$LICENSES_DIR/license_NL.txt ; \
-cp ../../../misc/licenses_files/English/eID-toolkit_licensingtermsconditions.txt \
+cp ../../../doc/licenses/English/eID-toolkit_licensingtermsconditions.txt \
 	$ROOT_DIR/$LICENSES_DIR/license_EN.txt ; \
-cp ../../../misc/licenses_files/French/eID-toolkit_licensingtermsconditions.txt \
+cp ../../../doc/licenses/French/eID-toolkit_licensingtermsconditions.txt \
 	$ROOT_DIR/$LICENSES_DIR/license_FR.txt ; \
-cp ../../../misc/licenses_files/German/eID-toolkit_licensingtermsconditions.txt \
+cp ../../../doc/licenses/German/eID-toolkit_licensingtermsconditions.txt \
 	$ROOT_DIR/$LICENSES_DIR/license_DE.txt ; \
-cp ../../../misc/licenses_files/THIRDPARTY-LICENSES-Mac.txt $ROOT_DIR/$LICENSES_DIR/
+cp ../../../doc/licenses/THIRDPARTY-LICENSES-Mac.txt $ROOT_DIR/$LICENSES_DIR/
 
 #copy certificates
-cp ../../../misc/certs/beid-cert-belgiumrca2.der $ROOT_DIR/$INST_DIR/share/beid/certs/
+cp ../../../installers/certificates/beid-cert-belgiumrca2.der $ROOT_DIR/$INST_DIR/share/beid/certs/
 
 #copy pkcs11 bundle
 #cp -r ../../../misc/mac/pkcs11.bundle $ROOT_DIR/$INST_DIR/lib/$PKCS11_BUNDLE
