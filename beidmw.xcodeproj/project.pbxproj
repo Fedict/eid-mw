@@ -78,7 +78,6 @@
 		86E3DE261653D6210015B5E1 /* tlvtagdefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDEF1653D6210015B5E1 /* tlvtagdefinitions.h */; };
 		86E3DE271653D6210015B5E1 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDF01653D6210015B5E1 /* util.cpp */; };
 		86E3DE281653D6210015B5E1 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDF11653D6210015B5E1 /* util.h */; };
-		86E3DE511653E1FD0015B5E1 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DE501653E1FD0015B5E1 /* config.h */; };
 		86E3DEC61653EC3F0015B5E1 /* cache.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA01653EC3E0015B5E1 /* cache.h */; };
 		86E3DEC71653EC3F0015B5E1 /* card.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA11653EC3E0015B5E1 /* card.h */; };
 		86E3DEC81653EC3F0015B5E1 /* cardfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA21653EC3E0015B5E1 /* cardfactory.h */; };
@@ -205,13 +204,6 @@
 			remoteGlobalIDString = 7FC5353A0F84B83B00BA96EE;
 			remoteInfo = beidcardlayer;
 		};
-		86F33B281987B2EB00E200F0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 86F33B241987B2EB00E200F0 /* test_dialogs.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 86F33B0C1987A6B400E200F0;
-			remoteInfo = test_dialogs;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -228,142 +220,139 @@
 		7FC535AC0F84B9EF00BA96EE /* libsiscardplugin1__ACS__.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsiscardplugin1__ACS__.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsQT.4.1.0.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.0.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsmac.4.1.0.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		8683738A18648985005EE5D7 /* dlgsmac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dlgsmac.cpp; sourceTree = "<group>"; };
-		8683738D186489B5005EE5D7 /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialogs.h; path = ../dialogs.h; sourceTree = "<group>"; };
-		86837473186489B6005EE5D7 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = language.h; path = ../language.h; sourceTree = "<group>"; };
-		86837475186489B6005EE5D7 /* langutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = langutil.cpp; path = ../langutil.cpp; sourceTree = "<group>"; };
-		86837476186489B6005EE5D7 /* langutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = langutil.h; path = ../langutil.h; sourceTree = "<group>"; };
-		86837477186489B6005EE5D7 /* sharedmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sharedmem.cpp; path = ../sharedmem.cpp; sourceTree = "<group>"; };
-		86837478186489B6005EE5D7 /* sharedmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sharedmem.h; path = ../sharedmem.h; sourceTree = "<group>"; };
-		869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = plistMerger.xcodeproj; path = ../plistMerger/plistMerger.xcodeproj; sourceTree = "<group>"; };
-		86A90A2B1122D6880011C6A8 /* trunk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = trunk; path = "/beid-mw/trunk"; sourceTree = "<absolute>"; };
-		86E3DDB91653D6200015B5E1 /* beidversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidversions.h; path = ../common/src/beidversions.h; sourceTree = SOURCE_ROOT; };
-		86E3DDBA1653D6200015B5E1 /* bytearray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytearray.cpp; path = ../common/src/bytearray.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDBB1653D6200015B5E1 /* bytearray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytearray.h; path = ../common/src/bytearray.h; sourceTree = SOURCE_ROOT; };
-		86E3DDBC1653D6200015B5E1 /* bytearrayreader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytearrayreader.cpp; path = ../common/src/bytearrayreader.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDBD1653D6200015B5E1 /* bytearrayreader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytearrayreader.h; path = ../common/src/bytearrayreader.h; sourceTree = SOURCE_ROOT; };
-		86E3DDBE1653D6200015B5E1 /* configcommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configcommon.cpp; path = ../common/src/configcommon.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDBF1653D6200015B5E1 /* configreg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configreg.cpp; path = ../common/src/configreg.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDC01653D6200015B5E1 /* configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configuration.cpp; path = ../common/src/configuration.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDC11653D6200015B5E1 /* configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = configuration.h; path = ../common/src/configuration.h; sourceTree = SOURCE_ROOT; };
-		86E3DDC21653D6200015B5E1 /* datafile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = datafile.cpp; path = ../common/src/datafile.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDC31653D6200015B5E1 /* datafile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = datafile.h; path = ../common/src/datafile.h; sourceTree = SOURCE_ROOT; };
-		86E3DDC41653D6200015B5E1 /* dynamiclib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dynamiclib.cpp; path = ../common/src/dynamiclib.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDC51653D6200015B5E1 /* dynamiclib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dynamiclib.h; path = ../common/src/dynamiclib.h; sourceTree = SOURCE_ROOT; };
-		86E3DDC61653D6200015B5E1 /* eiderrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eiderrors.h; path = ../common/src/eiderrors.h; sourceTree = SOURCE_ROOT; };
-		86E3DDC71653D6200015B5E1 /* export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = export.h; path = ../common/src/export.h; sourceTree = SOURCE_ROOT; };
-		86E3DDC81653D6200015B5E1 /* hash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hash.cpp; path = ../common/src/hash.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDC91653D6200015B5E1 /* hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hash.h; path = ../common/src/hash.h; sourceTree = SOURCE_ROOT; };
-		86E3DDCB1653D6200015B5E1 /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = ../common/src/libtomcrypt/md5.c; sourceTree = SOURCE_ROOT; };
-		86E3DDCC1653D6200015B5E1 /* rmd160.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rmd160.c; path = ../common/src/libtomcrypt/rmd160.c; sourceTree = SOURCE_ROOT; };
-		86E3DDCD1653D6200015B5E1 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = ../common/src/libtomcrypt/sha1.c; sourceTree = SOURCE_ROOT; };
-		86E3DDCE1653D6200015B5E1 /* sha256.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha256.c; path = ../common/src/libtomcrypt/sha256.c; sourceTree = SOURCE_ROOT; };
-		86E3DDCF1653D6200015B5E1 /* sha384.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha384.c; path = ../common/src/libtomcrypt/sha384.c; sourceTree = SOURCE_ROOT; };
-		86E3DDD01653D6200015B5E1 /* sha512.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha512.c; path = ../common/src/libtomcrypt/sha512.c; sourceTree = SOURCE_ROOT; };
-		86E3DDD11653D6200015B5E1 /* tomcrypt_argchk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_argchk.h; path = ../common/src/libtomcrypt/tomcrypt_argchk.h; sourceTree = SOURCE_ROOT; };
-		86E3DDD21653D6200015B5E1 /* tomcrypt_cfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_cfg.h; path = ../common/src/libtomcrypt/tomcrypt_cfg.h; sourceTree = SOURCE_ROOT; };
-		86E3DDD31653D6200015B5E1 /* tomcrypt_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_hash.h; path = ../common/src/libtomcrypt/tomcrypt_hash.h; sourceTree = SOURCE_ROOT; };
-		86E3DDD41653D6200015B5E1 /* tomcrypt_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_macros.h; path = ../common/src/libtomcrypt/tomcrypt_macros.h; sourceTree = SOURCE_ROOT; };
-		86E3DDD51653D6200015B5E1 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log.cpp; path = ../common/src/log.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDD61653D6200015B5E1 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log.h; path = ../common/src/log.h; sourceTree = SOURCE_ROOT; };
-		86E3DDD71653D6200015B5E1 /* logbase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = logbase.cpp; path = ../common/src/logbase.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDD81653D6200015B5E1 /* logbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = logbase.h; path = ../common/src/logbase.h; sourceTree = SOURCE_ROOT; };
-		86E3DDD91653D6200015B5E1 /* mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mutex.cpp; path = ../common/src/mutex.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDDA1653D6200015B5E1 /* mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mutex.h; path = ../common/src/mutex.h; sourceTree = SOURCE_ROOT; };
-		86E3DDDB1653D6200015B5E1 /* mw_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mw_util.cpp; path = ../common/src/mw_util.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDDC1653D6200015B5E1 /* mw_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mw_util.h; path = ../common/src/mw_util.h; sourceTree = SOURCE_ROOT; };
-		86E3DDDD1653D6200015B5E1 /* mwexception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mwexception.cpp; path = ../common/src/mwexception.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDDE1653D6210015B5E1 /* mwexception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mwexception.h; path = ../common/src/mwexception.h; sourceTree = SOURCE_ROOT; };
-		86E3DDDF1653D6210015B5E1 /* prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prefix.h; path = ../common/src/prefix.h; sourceTree = SOURCE_ROOT; };
-		86E3DDE71653D6210015B5E1 /* svn_revision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svn_revision.h; path = ../common/src/svn_revision.h; sourceTree = SOURCE_ROOT; };
-		86E3DDE81653D6210015B5E1 /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = ../common/src/thread.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDE91653D6210015B5E1 /* thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread.h; path = ../common/src/thread.h; sourceTree = SOURCE_ROOT; };
-		86E3DDEA1653D6210015B5E1 /* threaddefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = threaddefines.h; path = ../common/src/threaddefines.h; sourceTree = SOURCE_ROOT; };
-		86E3DDEB1653D6210015B5E1 /* tlv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tlv.cpp; path = ../common/src/tlv.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDEC1653D6210015B5E1 /* tlv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlv.h; path = ../common/src/tlv.h; sourceTree = SOURCE_ROOT; };
-		86E3DDED1653D6210015B5E1 /* tlvbuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tlvbuffer.cpp; path = ../common/src/tlvbuffer.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDEE1653D6210015B5E1 /* tlvbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlvbuffer.h; path = ../common/src/tlvbuffer.h; sourceTree = SOURCE_ROOT; };
-		86E3DDEF1653D6210015B5E1 /* tlvtagdefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlvtagdefinitions.h; path = ../common/src/tlvtagdefinitions.h; sourceTree = SOURCE_ROOT; };
-		86E3DDF01653D6210015B5E1 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = ../common/src/util.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDF11653D6210015B5E1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = ../common/src/util.h; sourceTree = SOURCE_ROOT; };
-		86E3DE501653E1FD0015B5E1 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../common/Xcode/config.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA01653EC3E0015B5E1 /* cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cache.h; path = ../cardlayer/src/cache.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA11653EC3E0015B5E1 /* card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = card.h; path = ../cardlayer/src/card.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA21653EC3E0015B5E1 /* cardfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardfactory.h; path = ../cardlayer/src/cardfactory.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA31653EC3E0015B5E1 /* cardlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardlayer.h; path = ../cardlayer/src/cardlayer.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA41653EC3E0015B5E1 /* cardlayerconst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardlayerconst.h; path = ../cardlayer/src/cardlayerconst.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA51653EC3E0015B5E1 /* cardreaderinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardreaderinfo.h; path = ../cardlayer/src/cardreaderinfo.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA61653EC3E0015B5E1 /* context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = context.h; path = ../cardlayer/src/context.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA71653EC3E0015B5E1 /* internalconst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = internalconst.h; path = ../cardlayer/src/internalconst.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA81653EC3E0015B5E1 /* p15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p15correction.h; path = ../cardlayer/src/p15correction.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA91653EC3E0015B5E1 /* p15objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p15objects.h; path = ../cardlayer/src/p15objects.h; sourceTree = SOURCE_ROOT; };
-		86E3DEAA1653EC3E0015B5E1 /* pcsc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pcsc.h; path = ../cardlayer/src/pcsc.h; sourceTree = SOURCE_ROOT; };
-		86E3DEAB1653EC3E0015B5E1 /* pinpad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pinpad.h; path = ../cardlayer/src/pinpad.h; sourceTree = SOURCE_ROOT; };
-		86E3DEAC1653EC3E0015B5E1 /* pinpad2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pinpad2.h; path = ../cardlayer/src/pinpad2.h; sourceTree = SOURCE_ROOT; };
-		86E3DEAD1653EC3E0015B5E1 /* pinpadlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pinpadlib.h; path = ../cardlayer/src/pinpadlib.h; sourceTree = SOURCE_ROOT; };
-		86E3DEAE1653EC3E0015B5E1 /* pkcs15.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs15.h; path = ../cardlayer/src/pkcs15.h; sourceTree = SOURCE_ROOT; };
-		86E3DEAF1653EC3E0015B5E1 /* pkcs15parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs15parser.h; path = ../cardlayer/src/pkcs15parser.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB01653EC3E0015B5E1 /* pkicard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkicard.h; path = ../cardlayer/src/pkicard.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB11653EC3E0015B5E1 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reader.h; path = ../cardlayer/src/reader.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB21653EC3E0015B5E1 /* readersinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readersinfo.h; path = ../cardlayer/src/readersinfo.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB31653EC3E0015B5E1 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = threadpool.h; path = ../cardlayer/src/threadpool.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB41653EC3E0015B5E1 /* unknowncard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unknowncard.h; path = ../cardlayer/src/unknowncard.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB51653EC3E0015B5E1 /* cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cache.cpp; path = ../cardlayer/src/cache.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEB61653EC3E0015B5E1 /* card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = card.cpp; path = ../cardlayer/src/card.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardfactory.cpp; path = ../cardlayer/src/cardfactory.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardlayer.cpp; path = ../cardlayer/src/cardlayer.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEB91653EC3F0015B5E1 /* cardreaderinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardreaderinfo.cpp; path = ../cardlayer/src/cardreaderinfo.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEBA1653EC3F0015B5E1 /* context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = context.cpp; path = ../cardlayer/src/context.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEBB1653EC3F0015B5E1 /* p15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = p15correction.cpp; path = ../cardlayer/src/p15correction.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEBC1653EC3F0015B5E1 /* pcsc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pcsc.cpp; path = ../cardlayer/src/pcsc.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEBD1653EC3F0015B5E1 /* pinpad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pinpad.cpp; path = ../cardlayer/src/pinpad.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEBE1653EC3F0015B5E1 /* pinpadlib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pinpadlib.cpp; path = ../cardlayer/src/pinpadlib.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEBF1653EC3F0015B5E1 /* pkcs15.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs15.cpp; path = ../cardlayer/src/pkcs15.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEC01653EC3F0015B5E1 /* pkcs15parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs15parser.cpp; path = ../cardlayer/src/pkcs15parser.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEC11653EC3F0015B5E1 /* pkicard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkicard.cpp; path = ../cardlayer/src/pkicard.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEC21653EC3F0015B5E1 /* reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = reader.cpp; path = ../cardlayer/src/reader.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readersinfo.cpp; path = ../cardlayer/src/readersinfo.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEC41653EC3F0015B5E1 /* threadpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threadpool.cpp; path = ../cardlayer/src/threadpool.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unknowncard.cpp; path = ../cardlayer/src/unknowncard.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEEE1653ECB00015B5E1 /* beidcard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidcard.cpp; path = ../cardlayer/src/cardpluginbeid/beidcard.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEEF1653ECB00015B5E1 /* beidcard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidcard.h; path = ../cardlayer/src/cardpluginbeid/beidcard.h; sourceTree = SOURCE_ROOT; };
-		86E3DEF01653ECB00015B5E1 /* beidp15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidp15correction.cpp; path = ../cardlayer/src/cardpluginbeid/beidp15correction.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEF11653ECB00015B5E1 /* beidp15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidp15correction.h; path = ../cardlayer/src/cardpluginbeid/beidp15correction.h; sourceTree = SOURCE_ROOT; };
-		86E3DEF21653ECB00015B5E1 /* cardpluginBeid.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cardpluginBeid.rc; path = ../cardlayer/src/cardpluginbeid/cardpluginBeid.rc; sourceTree = SOURCE_ROOT; };
-		86E3DEF41653ECB10015B5E1 /* cardpluginSIS.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cardpluginSIS.rc; path = ../cardlayer/src/cardpluginsis/cardpluginSIS.rc; sourceTree = SOURCE_ROOT; };
-		86E3DEF51653ECB10015B5E1 /* siscard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = siscard.cpp; path = ../cardlayer/src/cardpluginsis/siscard.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEF61653ECB10015B5E1 /* siscard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = siscard.h; path = ../cardlayer/src/cardpluginsis/siscard.h; sourceTree = SOURCE_ROOT; };
-		86E3DEF71653ECB10015B5E1 /* sisplugin1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sisplugin1.h; path = ../cardlayer/src/cardpluginsis/sisplugin1.h; sourceTree = SOURCE_ROOT; };
-		86E3DEF81653ECB10015B5E1 /* sispluginhandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sispluginhandler.cpp; path = ../cardlayer/src/cardpluginsis/sispluginhandler.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEF91653ECB10015B5E1 /* sispluginhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sispluginhandler.h; path = ../cardlayer/src/cardpluginsis/sispluginhandler.h; sourceTree = SOURCE_ROOT; };
-		86E3DF211653EF0E0015B5E1 /* siscard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = siscard.cpp; path = ../cardlayer/src/cardpluginsis_acr38u/siscard.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DF251653EFE50015B5E1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = ../pkcs11/src/asn1.h; sourceTree = SOURCE_ROOT; };
-		86E3DF261653EFE50015B5E1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = ../pkcs11/src/beid_p11.h; sourceTree = SOURCE_ROOT; };
-		86E3DF271653EFE50015B5E1 /* cal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cal.h; path = ../pkcs11/src/cal.h; sourceTree = SOURCE_ROOT; };
-		86E3DF281653EFE50015B5E1 /* cert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cert.h; path = ../pkcs11/src/cert.h; sourceTree = SOURCE_ROOT; };
-		86E3DF291653EFE50015B5E1 /* display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = display.h; path = ../pkcs11/src/display.h; sourceTree = SOURCE_ROOT; };
-		86E3DF2A1653EFE50015B5E1 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log.h; path = ../pkcs11/src/log.h; sourceTree = SOURCE_ROOT; };
-		86E3DF2B1653EFE50015B5E1 /* p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p11.h; path = ../pkcs11/src/p11.h; sourceTree = SOURCE_ROOT; };
-		86E3DF2C1653EFE50015B5E1 /* phash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = phash.h; path = ../pkcs11/src/phash.h; sourceTree = SOURCE_ROOT; };
-		86E3DF2D1653EFE50015B5E1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = ../pkcs11/src/util.h; sourceTree = SOURCE_ROOT; };
-		86E3DF2F1653EFE50015B5E1 /* cert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cert.c; path = ../pkcs11/src/cert.c; sourceTree = SOURCE_ROOT; };
-		86E3DF301653EFE50015B5E1 /* encrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = encrypt.c; path = ../pkcs11/src/encrypt.c; sourceTree = SOURCE_ROOT; };
-		86E3DF311653EFE50015B5E1 /* general.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = general.c; path = ../pkcs11/src/general.c; sourceTree = SOURCE_ROOT; };
-		86E3DF321653EFE50015B5E1 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = log.c; path = ../pkcs11/src/log.c; sourceTree = SOURCE_ROOT; };
-		86E3DF331653EFE50015B5E1 /* object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = object.c; path = ../pkcs11/src/object.c; sourceTree = SOURCE_ROOT; };
-		86E3DF341653EFE50015B5E1 /* p11.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = p11.c; path = ../pkcs11/src/p11.c; sourceTree = SOURCE_ROOT; };
-		86E3DF351653EFE50015B5E1 /* session.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = session.c; path = ../pkcs11/src/session.c; sourceTree = SOURCE_ROOT; };
-		86E3DF361653EFE50015B5E1 /* sign.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sign.c; path = ../pkcs11/src/sign.c; sourceTree = SOURCE_ROOT; };
-		86E3DF371653EFE50015B5E1 /* cal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cal.cpp; path = ../pkcs11/src/cal.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DF381653EFE50015B5E1 /* display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = display.cpp; path = ../pkcs11/src/display.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DF391653EFE50015B5E1 /* phash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = phash.cpp; path = ../pkcs11/src/phash.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DF3A1653EFE50015B5E1 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = ../pkcs11/src/util.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DF4F1653EFE50015B5E1 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11.h; path = ../pkcs11/src/include/rsaref220/pkcs11.h; sourceTree = SOURCE_ROOT; };
-		86E3DF501653EFE50015B5E1 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11f.h; path = ../pkcs11/src/include/rsaref220/pkcs11f.h; sourceTree = SOURCE_ROOT; };
-		86E3DF511653EFE50015B5E1 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11t.h; path = ../pkcs11/src/include/rsaref220/pkcs11t.h; sourceTree = SOURCE_ROOT; };
-		86E3DF521653EFE50015B5E1 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = ../pkcs11/src/include/rsaref220/unix.h; sourceTree = SOURCE_ROOT; };
-		86E3DF531653EFE50015B5E1 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win32.h; path = ../pkcs11/src/include/rsaref220/win32.h; sourceTree = SOURCE_ROOT; };
-		86F33B241987B2EB00E200F0 /* test_dialogs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = test_dialogs.xcodeproj; path = ../dialogs/xcode/test_dialogs/test_dialogs.xcodeproj; sourceTree = "<group>"; };
+		8683738A18648985005EE5D7 /* dlgsmac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp; sourceTree = SOURCE_ROOT; };
+		8683738D186489B5005EE5D7 /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialogs.h; path = cardcomm/pkcs11/src/dialogs/dialogs.h; sourceTree = SOURCE_ROOT; };
+		86837473186489B6005EE5D7 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = language.h; path = cardcomm/pkcs11/src/dialogs/language.h; sourceTree = SOURCE_ROOT; };
+		86837475186489B6005EE5D7 /* langutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = langutil.cpp; path = cardcomm/pkcs11/src/dialogs/langutil.cpp; sourceTree = SOURCE_ROOT; };
+		86837476186489B6005EE5D7 /* langutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = langutil.h; path = cardcomm/pkcs11/src/dialogs/langutil.h; sourceTree = SOURCE_ROOT; };
+		86837477186489B6005EE5D7 /* sharedmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sharedmem.cpp; path = cardcomm/pkcs11/src/dialogs/sharedmem.cpp; sourceTree = SOURCE_ROOT; };
+		86837478186489B6005EE5D7 /* sharedmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sharedmem.h; path = cardcomm/pkcs11/src/dialogs/sharedmem.h; sourceTree = SOURCE_ROOT; };
+		869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = plistMerger.xcodeproj; path = plugins_tools/plistMerger/plistMerger.xcodeproj; sourceTree = SOURCE_ROOT; };
+		86E3DDB91653D6200015B5E1 /* beidversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidversions.h; path = cardcomm/pkcs11/src/common/beidversions.h; sourceTree = SOURCE_ROOT; };
+		86E3DDBA1653D6200015B5E1 /* bytearray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytearray.cpp; path = cardcomm/pkcs11/src/common/bytearray.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDBB1653D6200015B5E1 /* bytearray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytearray.h; path = cardcomm/pkcs11/src/common/bytearray.h; sourceTree = SOURCE_ROOT; };
+		86E3DDBC1653D6200015B5E1 /* bytearrayreader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytearrayreader.cpp; path = cardcomm/pkcs11/src/common/bytearrayreader.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDBD1653D6200015B5E1 /* bytearrayreader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytearrayreader.h; path = cardcomm/pkcs11/src/common/bytearrayreader.h; sourceTree = SOURCE_ROOT; };
+		86E3DDBE1653D6200015B5E1 /* configcommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configcommon.cpp; path = cardcomm/pkcs11/src/common/configcommon.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDBF1653D6200015B5E1 /* configreg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configreg.cpp; path = cardcomm/pkcs11/src/common/configreg.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDC01653D6200015B5E1 /* configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configuration.cpp; path = cardcomm/pkcs11/src/common/configuration.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDC11653D6200015B5E1 /* configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = configuration.h; path = cardcomm/pkcs11/src/common/configuration.h; sourceTree = SOURCE_ROOT; };
+		86E3DDC21653D6200015B5E1 /* datafile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = datafile.cpp; path = cardcomm/pkcs11/src/common/datafile.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDC31653D6200015B5E1 /* datafile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = datafile.h; path = cardcomm/pkcs11/src/common/datafile.h; sourceTree = SOURCE_ROOT; };
+		86E3DDC41653D6200015B5E1 /* dynamiclib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dynamiclib.cpp; path = cardcomm/pkcs11/src/common/dynamiclib.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDC51653D6200015B5E1 /* dynamiclib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dynamiclib.h; path = cardcomm/pkcs11/src/common/dynamiclib.h; sourceTree = SOURCE_ROOT; };
+		86E3DDC61653D6200015B5E1 /* eiderrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eiderrors.h; path = cardcomm/pkcs11/src/common/eiderrors.h; sourceTree = SOURCE_ROOT; };
+		86E3DDC71653D6200015B5E1 /* export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = export.h; path = cardcomm/pkcs11/src/common/export.h; sourceTree = SOURCE_ROOT; };
+		86E3DDC81653D6200015B5E1 /* hash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hash.cpp; path = cardcomm/pkcs11/src/common/hash.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDC91653D6200015B5E1 /* hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hash.h; path = cardcomm/pkcs11/src/common/hash.h; sourceTree = SOURCE_ROOT; };
+		86E3DDCB1653D6200015B5E1 /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = cardcomm/pkcs11/src/common/libtomcrypt/md5.c; sourceTree = SOURCE_ROOT; };
+		86E3DDCC1653D6200015B5E1 /* rmd160.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rmd160.c; path = cardcomm/pkcs11/src/common/libtomcrypt/rmd160.c; sourceTree = SOURCE_ROOT; };
+		86E3DDCD1653D6200015B5E1 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = cardcomm/pkcs11/src/common/libtomcrypt/sha1.c; sourceTree = SOURCE_ROOT; };
+		86E3DDCE1653D6200015B5E1 /* sha256.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha256.c; path = cardcomm/pkcs11/src/common/libtomcrypt/sha256.c; sourceTree = SOURCE_ROOT; };
+		86E3DDCF1653D6200015B5E1 /* sha384.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha384.c; path = cardcomm/pkcs11/src/common/libtomcrypt/sha384.c; sourceTree = SOURCE_ROOT; };
+		86E3DDD01653D6200015B5E1 /* sha512.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha512.c; path = cardcomm/pkcs11/src/common/libtomcrypt/sha512.c; sourceTree = SOURCE_ROOT; };
+		86E3DDD11653D6200015B5E1 /* tomcrypt_argchk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_argchk.h; path = cardcomm/pkcs11/src/common/libtomcrypt/tomcrypt_argchk.h; sourceTree = SOURCE_ROOT; };
+		86E3DDD21653D6200015B5E1 /* tomcrypt_cfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_cfg.h; path = cardcomm/pkcs11/src/common/libtomcrypt/tomcrypt_cfg.h; sourceTree = SOURCE_ROOT; };
+		86E3DDD31653D6200015B5E1 /* tomcrypt_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_hash.h; path = cardcomm/pkcs11/src/common/libtomcrypt/tomcrypt_hash.h; sourceTree = SOURCE_ROOT; };
+		86E3DDD41653D6200015B5E1 /* tomcrypt_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tomcrypt_macros.h; path = cardcomm/pkcs11/src/common/libtomcrypt/tomcrypt_macros.h; sourceTree = SOURCE_ROOT; };
+		86E3DDD51653D6200015B5E1 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log.cpp; path = cardcomm/pkcs11/src/common/log.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDD61653D6200015B5E1 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log.h; path = cardcomm/pkcs11/src/common/log.h; sourceTree = SOURCE_ROOT; };
+		86E3DDD71653D6200015B5E1 /* logbase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = logbase.cpp; path = cardcomm/pkcs11/src/common/logbase.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDD81653D6200015B5E1 /* logbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = logbase.h; path = cardcomm/pkcs11/src/common/logbase.h; sourceTree = SOURCE_ROOT; };
+		86E3DDD91653D6200015B5E1 /* mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mutex.cpp; path = cardcomm/pkcs11/src/common/mutex.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDDA1653D6200015B5E1 /* mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mutex.h; path = cardcomm/pkcs11/src/common/mutex.h; sourceTree = SOURCE_ROOT; };
+		86E3DDDB1653D6200015B5E1 /* mw_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mw_util.cpp; path = cardcomm/pkcs11/src/common/mw_util.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDDC1653D6200015B5E1 /* mw_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mw_util.h; path = cardcomm/pkcs11/src/common/mw_util.h; sourceTree = SOURCE_ROOT; };
+		86E3DDDD1653D6200015B5E1 /* mwexception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mwexception.cpp; path = cardcomm/pkcs11/src/common/mwexception.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDDE1653D6210015B5E1 /* mwexception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mwexception.h; path = cardcomm/pkcs11/src/common/mwexception.h; sourceTree = SOURCE_ROOT; };
+		86E3DDDF1653D6210015B5E1 /* prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prefix.h; path = cardcomm/pkcs11/src/common/prefix.h; sourceTree = SOURCE_ROOT; };
+		86E3DDE71653D6210015B5E1 /* svn_revision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svn_revision.h; path = cardcomm/pkcs11/src/common/svn_revision.h; sourceTree = SOURCE_ROOT; };
+		86E3DDE81653D6210015B5E1 /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = cardcomm/pkcs11/src/common/thread.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDE91653D6210015B5E1 /* thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread.h; path = cardcomm/pkcs11/src/common/thread.h; sourceTree = SOURCE_ROOT; };
+		86E3DDEA1653D6210015B5E1 /* threaddefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = threaddefines.h; path = cardcomm/pkcs11/src/common/threaddefines.h; sourceTree = SOURCE_ROOT; };
+		86E3DDEB1653D6210015B5E1 /* tlv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tlv.cpp; path = cardcomm/pkcs11/src/common/tlv.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDEC1653D6210015B5E1 /* tlv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlv.h; path = cardcomm/pkcs11/src/common/tlv.h; sourceTree = SOURCE_ROOT; };
+		86E3DDED1653D6210015B5E1 /* tlvbuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tlvbuffer.cpp; path = cardcomm/pkcs11/src/common/tlvbuffer.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDEE1653D6210015B5E1 /* tlvbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlvbuffer.h; path = cardcomm/pkcs11/src/common/tlvbuffer.h; sourceTree = SOURCE_ROOT; };
+		86E3DDEF1653D6210015B5E1 /* tlvtagdefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlvtagdefinitions.h; path = cardcomm/pkcs11/src/common/tlvtagdefinitions.h; sourceTree = SOURCE_ROOT; };
+		86E3DDF01653D6210015B5E1 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = cardcomm/pkcs11/src/common/util.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DDF11653D6210015B5E1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = cardcomm/pkcs11/src/common/util.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA01653EC3E0015B5E1 /* cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cache.h; path = cardcomm/pkcs11/src/cardlayer/cache.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA11653EC3E0015B5E1 /* card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = card.h; path = cardcomm/pkcs11/src/cardlayer/card.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA21653EC3E0015B5E1 /* cardfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardfactory.h; path = cardcomm/pkcs11/src/cardlayer/cardfactory.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA31653EC3E0015B5E1 /* cardlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardlayer.h; path = cardcomm/pkcs11/src/cardlayer/cardlayer.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA41653EC3E0015B5E1 /* cardlayerconst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardlayerconst.h; path = cardcomm/pkcs11/src/cardlayer/cardlayerconst.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA51653EC3E0015B5E1 /* cardreaderinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardreaderinfo.h; path = cardcomm/pkcs11/src/cardlayer/cardreaderinfo.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA61653EC3E0015B5E1 /* context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = context.h; path = cardcomm/pkcs11/src/cardlayer/context.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA71653EC3E0015B5E1 /* internalconst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = internalconst.h; path = cardcomm/pkcs11/src/cardlayer/internalconst.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA81653EC3E0015B5E1 /* p15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p15correction.h; path = cardcomm/pkcs11/src/cardlayer/p15correction.h; sourceTree = SOURCE_ROOT; };
+		86E3DEA91653EC3E0015B5E1 /* p15objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p15objects.h; path = cardcomm/pkcs11/src/cardlayer/p15objects.h; sourceTree = SOURCE_ROOT; };
+		86E3DEAA1653EC3E0015B5E1 /* pcsc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pcsc.h; path = cardcomm/pkcs11/src/cardlayer/pcsc.h; sourceTree = SOURCE_ROOT; };
+		86E3DEAB1653EC3E0015B5E1 /* pinpad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pinpad.h; path = cardcomm/pkcs11/src/cardlayer/pinpad.h; sourceTree = SOURCE_ROOT; };
+		86E3DEAC1653EC3E0015B5E1 /* pinpad2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pinpad2.h; path = cardcomm/pkcs11/src/cardlayer/pinpad2.h; sourceTree = SOURCE_ROOT; };
+		86E3DEAD1653EC3E0015B5E1 /* pinpadlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pinpadlib.h; path = cardcomm/pkcs11/src/cardlayer/pinpadlib.h; sourceTree = SOURCE_ROOT; };
+		86E3DEAE1653EC3E0015B5E1 /* pkcs15.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs15.h; path = cardcomm/pkcs11/src/cardlayer/pkcs15.h; sourceTree = SOURCE_ROOT; };
+		86E3DEAF1653EC3E0015B5E1 /* pkcs15parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs15parser.h; path = cardcomm/pkcs11/src/cardlayer/pkcs15parser.h; sourceTree = SOURCE_ROOT; };
+		86E3DEB01653EC3E0015B5E1 /* pkicard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkicard.h; path = cardcomm/pkcs11/src/cardlayer/pkicard.h; sourceTree = SOURCE_ROOT; };
+		86E3DEB11653EC3E0015B5E1 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reader.h; path = cardcomm/pkcs11/src/cardlayer/reader.h; sourceTree = SOURCE_ROOT; };
+		86E3DEB21653EC3E0015B5E1 /* readersinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readersinfo.h; path = cardcomm/pkcs11/src/cardlayer/readersinfo.h; sourceTree = SOURCE_ROOT; };
+		86E3DEB31653EC3E0015B5E1 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = threadpool.h; path = cardcomm/pkcs11/src/cardlayer/threadpool.h; sourceTree = SOURCE_ROOT; };
+		86E3DEB41653EC3E0015B5E1 /* unknowncard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unknowncard.h; path = cardcomm/pkcs11/src/cardlayer/unknowncard.h; sourceTree = SOURCE_ROOT; };
+		86E3DEB51653EC3E0015B5E1 /* cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cache.cpp; path = cardcomm/pkcs11/src/cardlayer/cache.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEB61653EC3E0015B5E1 /* card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = card.cpp; path = cardcomm/pkcs11/src/cardlayer/card.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardfactory.cpp; path = cardcomm/pkcs11/src/cardlayer/cardfactory.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardlayer.cpp; path = cardcomm/pkcs11/src/cardlayer/cardlayer.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEB91653EC3F0015B5E1 /* cardreaderinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardreaderinfo.cpp; path = cardcomm/pkcs11/src/cardlayer/cardreaderinfo.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEBA1653EC3F0015B5E1 /* context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = context.cpp; path = cardcomm/pkcs11/src/cardlayer/context.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEBB1653EC3F0015B5E1 /* p15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = p15correction.cpp; path = cardcomm/pkcs11/src/cardlayer/p15correction.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEBC1653EC3F0015B5E1 /* pcsc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pcsc.cpp; path = cardcomm/pkcs11/src/cardlayer/pcsc.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEBD1653EC3F0015B5E1 /* pinpad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pinpad.cpp; path = cardcomm/pkcs11/src/cardlayer/pinpad.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEBE1653EC3F0015B5E1 /* pinpadlib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pinpadlib.cpp; path = cardcomm/pkcs11/src/cardlayer/pinpadlib.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEBF1653EC3F0015B5E1 /* pkcs15.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs15.cpp; path = cardcomm/pkcs11/src/cardlayer/pkcs15.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEC01653EC3F0015B5E1 /* pkcs15parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs15parser.cpp; path = cardcomm/pkcs11/src/cardlayer/pkcs15parser.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEC11653EC3F0015B5E1 /* pkicard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkicard.cpp; path = cardcomm/pkcs11/src/cardlayer/pkicard.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEC21653EC3F0015B5E1 /* reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = reader.cpp; path = cardcomm/pkcs11/src/cardlayer/reader.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readersinfo.cpp; path = cardcomm/pkcs11/src/cardlayer/readersinfo.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEC41653EC3F0015B5E1 /* threadpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threadpool.cpp; path = cardcomm/pkcs11/src/cardlayer/threadpool.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unknowncard.cpp; path = cardcomm/pkcs11/src/cardlayer/unknowncard.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEEE1653ECB00015B5E1 /* beidcard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidcard.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidcard.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEEF1653ECB00015B5E1 /* beidcard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidcard.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidcard.h; sourceTree = SOURCE_ROOT; };
+		86E3DEF01653ECB00015B5E1 /* beidp15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidp15correction.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidp15correction.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEF11653ECB00015B5E1 /* beidp15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidp15correction.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidp15correction.h; sourceTree = SOURCE_ROOT; };
+		86E3DEF21653ECB00015B5E1 /* cardpluginBeid.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cardpluginBeid.rc; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/cardpluginBeid.rc; sourceTree = SOURCE_ROOT; };
+		86E3DEF41653ECB10015B5E1 /* cardpluginSIS.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cardpluginSIS.rc; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/cardpluginSIS.rc; sourceTree = SOURCE_ROOT; };
+		86E3DEF51653ECB10015B5E1 /* siscard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = siscard.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/siscard.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEF61653ECB10015B5E1 /* siscard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = siscard.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/siscard.h; sourceTree = SOURCE_ROOT; };
+		86E3DEF71653ECB10015B5E1 /* sisplugin1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sisplugin1.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/sisplugin1.h; sourceTree = SOURCE_ROOT; };
+		86E3DEF81653ECB10015B5E1 /* sispluginhandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sispluginhandler.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/sispluginhandler.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DEF91653ECB10015B5E1 /* sispluginhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sispluginhandler.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/sispluginhandler.h; sourceTree = SOURCE_ROOT; };
+		86E3DF211653EF0E0015B5E1 /* siscard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = siscard.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis_acr38u/siscard.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DF251653EFE50015B5E1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = cardcomm/pkcs11/src/asn1.h; sourceTree = SOURCE_ROOT; };
+		86E3DF261653EFE50015B5E1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = cardcomm/pkcs11/src/beid_p11.h; sourceTree = SOURCE_ROOT; };
+		86E3DF271653EFE50015B5E1 /* cal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cal.h; path = cardcomm/pkcs11/src/cal.h; sourceTree = SOURCE_ROOT; };
+		86E3DF281653EFE50015B5E1 /* cert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cert.h; path = cardcomm/pkcs11/src/cert.h; sourceTree = SOURCE_ROOT; };
+		86E3DF291653EFE50015B5E1 /* display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = display.h; path = cardcomm/pkcs11/src/display.h; sourceTree = SOURCE_ROOT; };
+		86E3DF2A1653EFE50015B5E1 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log.h; path = cardcomm/pkcs11/src/log.h; sourceTree = SOURCE_ROOT; };
+		86E3DF2B1653EFE50015B5E1 /* p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p11.h; path = cardcomm/pkcs11/src/p11.h; sourceTree = SOURCE_ROOT; };
+		86E3DF2C1653EFE50015B5E1 /* phash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = phash.h; path = cardcomm/pkcs11/src/phash.h; sourceTree = SOURCE_ROOT; };
+		86E3DF2D1653EFE50015B5E1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = cardcomm/pkcs11/src/util.h; sourceTree = SOURCE_ROOT; };
+		86E3DF2F1653EFE50015B5E1 /* cert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cert.c; path = cardcomm/pkcs11/src/cert.c; sourceTree = SOURCE_ROOT; };
+		86E3DF301653EFE50015B5E1 /* encrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = encrypt.c; path = cardcomm/pkcs11/src/encrypt.c; sourceTree = SOURCE_ROOT; };
+		86E3DF311653EFE50015B5E1 /* general.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = general.c; path = cardcomm/pkcs11/src/general.c; sourceTree = SOURCE_ROOT; };
+		86E3DF321653EFE50015B5E1 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = log.c; path = cardcomm/pkcs11/src/log.c; sourceTree = SOURCE_ROOT; };
+		86E3DF331653EFE50015B5E1 /* object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = object.c; path = cardcomm/pkcs11/src/object.c; sourceTree = SOURCE_ROOT; };
+		86E3DF341653EFE50015B5E1 /* p11.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = p11.c; path = cardcomm/pkcs11/src/p11.c; sourceTree = SOURCE_ROOT; };
+		86E3DF351653EFE50015B5E1 /* session.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = session.c; path = cardcomm/pkcs11/src/session.c; sourceTree = SOURCE_ROOT; };
+		86E3DF361653EFE50015B5E1 /* sign.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sign.c; path = cardcomm/pkcs11/src/sign.c; sourceTree = SOURCE_ROOT; };
+		86E3DF371653EFE50015B5E1 /* cal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cal.cpp; path = cardcomm/pkcs11/src/cal.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DF381653EFE50015B5E1 /* display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = display.cpp; path = cardcomm/pkcs11/src/display.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DF391653EFE50015B5E1 /* phash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = phash.cpp; path = cardcomm/pkcs11/src/phash.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DF3A1653EFE50015B5E1 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = cardcomm/pkcs11/src/util.cpp; sourceTree = SOURCE_ROOT; };
+		86E3DF4F1653EFE50015B5E1 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11.h; path = doc/sdk/include/rsaref220/pkcs11.h; sourceTree = SOURCE_ROOT; };
+		86E3DF501653EFE50015B5E1 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11f.h; path = doc/sdk/include/rsaref220/pkcs11f.h; sourceTree = SOURCE_ROOT; };
+		86E3DF511653EFE50015B5E1 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11t.h; path = doc/sdk/include/rsaref220/pkcs11t.h; sourceTree = SOURCE_ROOT; };
+		86E3DF521653EFE50015B5E1 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = doc/sdk/include/rsaref220/unix.h; sourceTree = SOURCE_ROOT; };
+		86E3DF531653EFE50015B5E1 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win32.h; path = doc/sdk/include/rsaref220/win32.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -444,7 +433,6 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
-				86F33B241987B2EB00E200F0 /* test_dialogs.xcodeproj */,
 				869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */,
 				8683738918648985005EE5D7 /* Dialogsmac */,
 				7FBB025A0F83937F009B751F /* Common */,
@@ -454,7 +442,6 @@
 				5073E0CA09E734BC00EC74B6 /* Configuration Files */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DDFF38A45A11DB9C8B /* Products */,
-				86A90A2B1122D6880011C6A8 /* trunk */,
 			);
 			name = beidmw;
 			sourceTree = "<group>";
@@ -512,7 +499,6 @@
 		7FBB025A0F83937F009B751F /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				86E3DE501653E1FD0015B5E1 /* config.h */,
 				86E3DDB91653D6200015B5E1 /* beidversions.h */,
 				86E3DDBA1653D6200015B5E1 /* bytearray.cpp */,
 				86E3DDBB1653D6200015B5E1 /* bytearray.h */,
@@ -624,7 +610,7 @@
 				8683738A18648985005EE5D7 /* dlgsmac.cpp */,
 			);
 			name = Dialogsmac;
-			path = ../dialogs/src/dialogsmac;
+			path = cardcomm/pkcs11/src/dialogs/dialogsmac;
 			sourceTree = "<group>";
 		};
 		869D00BE18D72DCF00A41853 /* Products */ = {
@@ -650,7 +636,7 @@
 				86E3DDD41653D6200015B5E1 /* tomcrypt_macros.h */,
 			);
 			name = libtomcrypt;
-			path = ../common/src/libtomcrypt;
+			path = cardcomm/pkcs11/src/common;
 			sourceTree = SOURCE_ROOT;
 		};
 		86E3DEED1653ECB00015B5E1 /* cardpluginbeid */ = {
@@ -663,7 +649,7 @@
 				86E3DEF21653ECB00015B5E1 /* cardpluginBeid.rc */,
 			);
 			name = cardpluginbeid;
-			path = ../cardlayer/src/cardpluginbeid;
+			path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid;
 			sourceTree = SOURCE_ROOT;
 		};
 		86E3DEF31653ECB10015B5E1 /* cardpluginsis */ = {
@@ -677,7 +663,7 @@
 				86E3DEF91653ECB10015B5E1 /* sispluginhandler.h */,
 			);
 			name = cardpluginsis;
-			path = ../cardlayer/src/cardpluginsis;
+			path = cardcomm/pkcs11/src/cardlayer/cardpluginsis;
 			sourceTree = SOURCE_ROOT;
 		};
 		86E3DF4E1653EFE50015B5E1 /* rsaref220 */ = {
@@ -690,16 +676,8 @@
 				86E3DF531653EFE50015B5E1 /* win32.h */,
 			);
 			name = rsaref220;
-			path = ../pkcs11/src/include/rsaref220;
+			path = doc/sdk/include/rsaref220;
 			sourceTree = SOURCE_ROOT;
-		};
-		86F33B251987B2EB00E200F0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				86F33B291987B2EB00E200F0 /* test_dialogs */,
-			);
-			name = Products;
-			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -755,7 +733,6 @@
 				86E3DE251653D6210015B5E1 /* tlvbuffer.h in Headers */,
 				86E3DE261653D6210015B5E1 /* tlvtagdefinitions.h in Headers */,
 				86E3DE281653D6210015B5E1 /* util.h in Headers */,
-				86E3DE511653E1FD0015B5E1 /* config.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -935,7 +912,7 @@
 			isa = PBXProject;
 			attributes = {
 			};
-			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beidmw_xc5" */;
+			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beidmw" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -953,10 +930,6 @@
 				{
 					ProductGroup = 869D00BE18D72DCF00A41853 /* Products */;
 					ProjectRef = 869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */;
-				},
-				{
-					ProductGroup = 86F33B251987B2EB00E200F0 /* Products */;
-					ProjectRef = 86F33B241987B2EB00E200F0 /* test_dialogs.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -977,13 +950,6 @@
 			fileType = "compiled.mach-o.executable";
 			path = plistMerger;
 			remoteRef = 869D00C118D72DD000A41853 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		86F33B291987B2EB00E200F0 /* test_dialogs */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = test_dialogs;
-			remoteRef = 86F33B281987B2EB00E200F0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1149,7 +1115,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					../../common/Xcode,
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
@@ -1185,7 +1150,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					../../common/Xcode,
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
@@ -1227,8 +1191,8 @@
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/../common",
-					"${PROJECT_DIR}/../cardlayer",
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
@@ -1270,8 +1234,8 @@
 					BEID_35,
 				);
 				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/../common",
-					"${PROJECT_DIR}/../cardlayer",
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
@@ -1279,7 +1243,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-fno-strict-aliasing",
-					"-finput-charset=cp1252",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidpkcs11.$(CURRENT_PROJECT_VERSION)";
@@ -1384,7 +1347,7 @@
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/../common",
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = "";
@@ -1404,7 +1367,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib/Release";
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/cardcomm/pkcs11/src/lib/Release";
 				COPY_PHASE_STRIP = YES;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
@@ -1423,11 +1386,11 @@
 					BEID_35,
 				);
 				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/../common",
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				"HEADER_SEARCH_PATHS[arch=*]" = (
-					"${PROJECT_DIR}/../common",
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
@@ -1501,11 +1464,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = "";
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../common/**";
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/cardcomm/pkcs11/src/common/**";
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-finput-charset=cp1252",
 					"-fno-strict-aliasing",
 				);
 				PREBINDING = NO;
@@ -1528,11 +1490,10 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = "";
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../common/**";
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/cardcomm/pkcs11/src/common/**";
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
-					"-finput-charset=cp1252",
 					"-fno-strict-aliasing",
 				);
 				PREBINDING = NO;
@@ -1582,7 +1543,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-finput-charset=cp1252",
 					"-fno-strict-aliasing",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME).$(CURRENT_PROJECT_VERSION)";
@@ -1630,7 +1590,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-finput-charset=cp1252",
 					"-fno-strict-aliasing",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME).$(CURRENT_PROJECT_VERSION)";
@@ -1641,7 +1600,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beidmw_xc5" */ = {
+		1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beidmw" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB916508733D950010E9CD /* Debug */,

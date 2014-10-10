@@ -14,7 +14,7 @@
 		<string>https://eid-mw.googlecode.com/svn/trunk</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>mac/beidmw.xcodeproj/project.xcworkspace</string>
+	<string>beidmw.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</key>
@@ -34,8 +34,14 @@
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
+			<key>IDESourceControlRepositoryBranchesRelativeLocationKey</key>
+			<string>branches</string>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.subversion</string>
+			<key>IDESourceControlRepositoryTagsRelativeLocationKey</key>
+			<string>tags</string>
+			<key>IDESourceControlRepositoryTrunkRelativeLocationKey</key>
+			<string>trunk</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</string>
 			<key>IDESourceControlWCCName</key>
