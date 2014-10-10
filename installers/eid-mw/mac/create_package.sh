@@ -33,8 +33,8 @@ PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(svn info ../../ | grep Revision | sed s/"Revision: "/""/)
 PKG_NAME="$REL_NAME.pkg"
 PKG_MAKER=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
-#VOL_NAME="$REL_NAME_MacOSX_$REL_VERSION"
-#DMG_NAME="$REL_NAME_$REL_VERSION.dmg"
+VOL_NAME="${REL_NAME} OSX ${REL_VERSION}"
+DMG_NAME="${REL_NAME} ${REL_VERSION}.dmg"
 
 
 XPI_PLUGIN_DIR="/Library/Application\ Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
@@ -159,6 +159,6 @@ chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID_Lion.tokend
 $PKG_MAKER -r $ROOT_DIR -o $PKG_NAME -f $INFO_DIR/Info.plist \
 	-e $RESOURCES_NO_SVN_DIR -s $INSTALL_SCRIPTS_NO_SVN_DIR -n REL_VERSION
 
-chown $SUDO_USER $PKG_NAME
+chown -r $SUDO_USER $PKG_NAME
 
-#	hdiutil create -srcfolder $PKG_NAME -volname "$(VOL_NAME)" $DMG_NAME
+hdiutil create -srcfolder $PKG_NAME -volname "$(VOL_NAME)" $DMG_NAME
