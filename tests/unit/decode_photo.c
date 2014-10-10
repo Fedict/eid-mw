@@ -214,8 +214,10 @@ TEST_FUNC(decode_photo) {
 		objid_str[data[2].ulValueLen] = '\0';
 
 		f = fopen("foto.jpg", "wb+");
-		fwrite(value_str, 1, data[1].ulValueLen, f);
-		fclose(f);
+		if(f) {
+			fwrite(value_str, 1, data[1].ulValueLen, f);
+			fclose(f);
+		}
 #if HAVE_JPEGLIB
 		printf("Data object with object ID: %s; label: %s; length: %lu\nContents(ASCII art representation):\n", objid_str, label_str, data[1].ulValueLen);
 		if((ret = jpegdump(value_str, data[1].ulValueLen)) != TEST_RV_OK) {
