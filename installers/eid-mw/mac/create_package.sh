@@ -51,7 +51,7 @@ cleanup() {
 	test -e $RESOURCES_NO_SVN_DIR &&rm -rf $RESOURCES_NO_SVN_DIR
 	test -e $INSTALL_SCRIPTS_NO_SVN_DIR &&rm -rf $INSTALL_SCRIPTS_NO_SVN_DIR
 	chown -R $SUDO_USER $PKG_NAME
-
+	chown $SUDO_USER $DMG_NAME
 }
 
 trap cleanup EXIT
