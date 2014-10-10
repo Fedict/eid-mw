@@ -1,4 +1,6 @@
-ifcon#!/bin/bash
+#!/bin/bash
+
+set -e
 
 #installer name defines
 #resources dir, where the plists are
@@ -22,8 +24,9 @@ BELGIUM_DIR="/Library/BelgiumIdentityCard"
 #base name of the package
 REL_NAME="beid"
 #version number of the package
-REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
-REL_VERSION=$(expr "$REL_VERSION_TMP" : '.*\([0-9].[0-9].[0-9]\).*')
+#REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
+#REL_VERSION=$(expr "$REL_VERSION_TMP" : '.*\([0-9].[0-9].[0-9]\).*')
+REL_VERSION="4.1.0"
 
 PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(svn info ../../ | grep Revision | sed s/"Revision: "/""/)
@@ -39,8 +42,8 @@ XPI_PLUGIN_DIR="/Library/Application\ Support/Mozilla/Extensions/{ec8030f7-c20a-
 #directories used to create the installer
 
 
-LIB_DIR="../../../lib/Debug"
-BIN_DIR="../../../bin/Debug"
+LIB_DIR="../../../output/lib/Release"
+BIN_DIR="../../../output/bin/Release"
 
 
 #destroy previously build package\clean_release: 
