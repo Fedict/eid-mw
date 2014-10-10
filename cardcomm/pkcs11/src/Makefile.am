@@ -71,7 +71,6 @@ noinst_HEADERS = \
 	util.h \
 	log.h \
 	display.h \
-	common/beidversions.h \
 	common/bytearrayreader.h \
 	common/thread.h \
 	common/prefix.h \
