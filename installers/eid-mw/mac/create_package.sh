@@ -50,6 +50,8 @@ cleanup() {
 	test -e $ROOT_DIR && rm -rdf $ROOT_DIR
 	test -e $RESOURCES_NO_SVN_DIR &&rm -rf $RESOURCES_NO_SVN_DIR
 	test -e $INSTALL_SCRIPTS_NO_SVN_DIR &&rm -rf $INSTALL_SCRIPTS_NO_SVN_DIR
+	chown -R $SUDO_USER $PKG_NAME
+
 }
 
 trap cleanup EXIT
@@ -158,7 +160,5 @@ chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID_Lion.tokend
 
 $PKG_MAKER -r $ROOT_DIR -o $PKG_NAME -f $INFO_DIR/Info.plist \
 	-e $RESOURCES_NO_SVN_DIR -s $INSTALL_SCRIPTS_NO_SVN_DIR -n REL_VERSION
-
-chown -r $SUDO_USER $PKG_NAME
 
 hdiutil create -srcfolder $PKG_NAME -volname "$(VOL_NAME)" $DMG_NAME
