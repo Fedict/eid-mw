@@ -736,13 +736,13 @@
     <ClCompile Include="..\src\display.cpp" />
     <ClCompile Include="..\src\encrypt.c" />
     <ClCompile Include="..\src\general.c" />
-    <ClCompile Include="..\src\log.c" />
     <ClCompile Include="..\src\object.c" />
     <ClCompile Include="..\src\p11.c" />
     <ClCompile Include="..\src\phash.cpp" />
+    <ClCompile Include="..\src\pkcs11log.c" />
+    <ClCompile Include="..\src\pkcs11util.cpp" />
     <ClCompile Include="..\src\session.c" />
     <ClCompile Include="..\src\sign.c" />
-    <ClCompile Include="..\src\util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\beid_p11.h" />

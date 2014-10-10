@@ -9,13 +9,13 @@ libbeidpkcs11_la_SOURCES = \
 	cert.c \
 	encrypt.c \
 	general.c \
-	log.c \
+	pkcs11log.c \
 	object.c \
 	p11.c \
 	phash.cpp \
 	session.c \
 	sign.c \
-	util.cpp \
+	pkcs11util.cpp \
 	display.cpp \
 	common/mw_util.cpp \
 	common/libtomcrypt/md5.c \
