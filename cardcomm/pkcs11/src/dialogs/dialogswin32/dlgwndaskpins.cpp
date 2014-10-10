@@ -22,7 +22,7 @@
 #include "dlgwndaskpins.h"
 #include "resource.h"
 #include "../langutil.h"
-#include "log.h"
+#include "common/log.h"
 #include "mw_util.h"
 
 #define IDC_STATIC 0

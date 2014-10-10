@@ -22,7 +22,7 @@
 #include "dlgwndaskaccess.h"
 #include "resource.h"
 #include "../langutil.h"
-#include "log.h"
+#include "common/log.h"
 
 #define IDB_YES 1
 #define IDB_NO 2

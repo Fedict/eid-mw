@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2013 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -21,8 +21,8 @@
 #include "langutil.h"
 #include "dialogs.h"
 #include "configuration.h"
-#include "util.h"
-#include "mw_util.h"
+#include "common/util.h"
+#include "common/mw_util.h"
 
 #define PATH_LENGHT 255
 

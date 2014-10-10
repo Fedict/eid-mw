@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include "resource.h"
 #include "../langutil.h"
-#include "log.h"
+#include "common/log.h"
 
 TD_WNDMAP WndMap;
 Win32Dialog *Win32Dialog::Active_lpWnd = NULL;

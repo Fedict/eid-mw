@@ -6,12 +6,14 @@
  */
 
 #pragma once
-#include "svn_revision.h"
+//#include "../svn_revision.h"
+#define SVN_REVISION          0
+#define SVN_REVISION_STR          "0"
 
 // To specified in the .rc files
 
 #define BEID_COMPANY_NAME    	"Belgian Government"
-#define BEID_COPYRIGHT    		"Copyright (C) 2009-2013"
+#define BEID_COPYRIGHT    		"Copyright (C) 2014"
 #define BEID_PRODUCT_NAME    	"Belgium eID MiddleWare"
 
 #define BEID_PRODUCT_VERSION    "4.1.0"
@@ -138,5 +140,13 @@
 #define WIN_QI_VERSION2          BASE_VERSION2          
 #define WIN_QI_VERSION3          BASE_VERSION3          
 #define WIN_QI_VERSION4          SVN_REVISION
+
+// certificate registration tool
+#define WIN_SCCERT_VERSION_STRING    BASE_VERSION_STRING SVN_REVISION_STR
+#define WIN_SCCERT_VERSION1          BASE_VERSION1          
+#define WIN_SCCERT_VERSION2          BASE_VERSION2          
+#define WIN_SCCERT_VERSION3          BASE_VERSION3          
+#define WIN_SCCERT_VERSION4          SVN_REVISION
+
 
 #endif //__BEID_VERSION_H__

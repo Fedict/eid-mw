@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2012 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -21,8 +21,6 @@
 #include <string.h>
 #include "beid_p11.h"
 #include "log.h"
-#include "util.h"
-
 
 
 #define WHERE "C_EncryptInit()"

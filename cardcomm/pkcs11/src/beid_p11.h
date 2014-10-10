@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2012 FedICT.
+ * Copyright (C) 2008-2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -24,9 +24,9 @@
 #include "unix.h"
 #include "pkcs11.h"
 #else
-#include "include/rsaref220/win32.h"
+#include "win32.h"
 #pragma pack(push, cryptoki, 1)
-#include "include/rsaref220/pkcs11.h"
+#include "pkcs11.h"
 #pragma pack(pop, cryptoki)
 #endif
 

@@ -23,7 +23,7 @@
 #include "dlgwndpinpadinfo.h"
 #include "resource.h"
 #include "../langutil.h"
-#include "log.h"
+#include "common/log.h"
 
 #define IDB_OK 1
 #define IDB_CANCEL 2

@@ -23,7 +23,7 @@
 #include "dlgwndmodal.h"
 #include "resource.h"
 #include "../langutil.h"
-#include "log.h"
+#include "common/log.h"
 
 #define IMG_ICO_SIZE 64
 #define IDALWAYS     22

@@ -29,7 +29,7 @@
 #include "resource.h"
 #include "../langutil.h"
 #include "configuration.h"
-#include "log.h"
+#include "common/log.h"
 #include "mw_util.h"
 
 using namespace eIDMW;
