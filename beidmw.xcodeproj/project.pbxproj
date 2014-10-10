@@ -3,15 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
+		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
+		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
 		7F22A36F0F84C588001AD228 /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
 		7F22A3C40F84D4A1001AD228 /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
 		7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
-		8683738B18648985005EE5D7 /* dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* dlgsmac.cpp */; };
+		8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */; };
 		86837479186489B6005EE5D7 /* dialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 8683738D186489B5005EE5D7 /* dialogs.h */; };
 		868374CD186489B6005EE5D7 /* language.h in Headers */ = {isa = PBXBuildFile; fileRef = 86837473186489B6005EE5D7 /* language.h */; };
 		868374CF186489B6005EE5D7 /* langutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86837475186489B6005EE5D7 /* langutil.cpp */; };
@@ -138,7 +141,6 @@
 		86E3DF5E1653EFE60015B5E1 /* cert.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF2F1653EFE50015B5E1 /* cert.c */; };
 		86E3DF5F1653EFE60015B5E1 /* encrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF301653EFE50015B5E1 /* encrypt.c */; };
 		86E3DF601653EFE60015B5E1 /* general.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF311653EFE50015B5E1 /* general.c */; };
-		86E3DF611653EFE60015B5E1 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF321653EFE50015B5E1 /* log.c */; };
 		86E3DF621653EFE60015B5E1 /* object.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF331653EFE50015B5E1 /* object.c */; };
 		86E3DF631653EFE60015B5E1 /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF341653EFE50015B5E1 /* p11.c */; };
 		86E3DF641653EFE60015B5E1 /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF351653EFE50015B5E1 /* session.c */; };
@@ -146,7 +148,6 @@
 		86E3DF661653EFE60015B5E1 /* cal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF371653EFE50015B5E1 /* cal.cpp */; };
 		86E3DF671653EFE60015B5E1 /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF381653EFE50015B5E1 /* display.cpp */; };
 		86E3DF681653EFE60015B5E1 /* phash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF391653EFE50015B5E1 /* phash.cpp */; };
-		86E3DF691653EFE60015B5E1 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF3A1653EFE50015B5E1 /* util.cpp */; };
 		86E3DF791653EFE60015B5E1 /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF4F1653EFE50015B5E1 /* pkcs11.h */; };
 		86E3DF7A1653EFE60015B5E1 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF501653EFE50015B5E1 /* pkcs11f.h */; };
 		86E3DF7B1653EFE60015B5E1 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF511653EFE50015B5E1 /* pkcs11t.h */; };
@@ -208,6 +209,9 @@
 
 /* Begin PBXFileReference section */
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		6594447B19A8C29B003ABC24 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = cardcomm/pkcs11/src/asn1.c; sourceTree = "<group>"; };
+		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
+		6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs11util.cpp; path = cardcomm/pkcs11/src/pkcs11util.cpp; sourceTree = "<group>"; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -220,7 +224,7 @@
 		7FC535AC0F84B9EF00BA96EE /* libsiscardplugin1__ACS__.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsiscardplugin1__ACS__.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsQT.4.1.0.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.0.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsmac.4.1.0.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		8683738A18648985005EE5D7 /* dlgsmac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp; sourceTree = SOURCE_ROOT; };
+		8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp; sourceTree = SOURCE_ROOT; };
 		8683738D186489B5005EE5D7 /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialogs.h; path = cardcomm/pkcs11/src/dialogs/dialogs.h; sourceTree = SOURCE_ROOT; };
 		86837473186489B6005EE5D7 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = language.h; path = cardcomm/pkcs11/src/dialogs/language.h; sourceTree = SOURCE_ROOT; };
 		86837475186489B6005EE5D7 /* langutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = langutil.cpp; path = cardcomm/pkcs11/src/dialogs/langutil.cpp; sourceTree = SOURCE_ROOT; };
@@ -339,7 +343,6 @@
 		86E3DF2F1653EFE50015B5E1 /* cert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cert.c; path = cardcomm/pkcs11/src/cert.c; sourceTree = SOURCE_ROOT; };
 		86E3DF301653EFE50015B5E1 /* encrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = encrypt.c; path = cardcomm/pkcs11/src/encrypt.c; sourceTree = SOURCE_ROOT; };
 		86E3DF311653EFE50015B5E1 /* general.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = general.c; path = cardcomm/pkcs11/src/general.c; sourceTree = SOURCE_ROOT; };
-		86E3DF321653EFE50015B5E1 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = log.c; path = cardcomm/pkcs11/src/log.c; sourceTree = SOURCE_ROOT; };
 		86E3DF331653EFE50015B5E1 /* object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = object.c; path = cardcomm/pkcs11/src/object.c; sourceTree = SOURCE_ROOT; };
 		86E3DF341653EFE50015B5E1 /* p11.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = p11.c; path = cardcomm/pkcs11/src/p11.c; sourceTree = SOURCE_ROOT; };
 		86E3DF351653EFE50015B5E1 /* session.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = session.c; path = cardcomm/pkcs11/src/session.c; sourceTree = SOURCE_ROOT; };
@@ -347,7 +350,6 @@
 		86E3DF371653EFE50015B5E1 /* cal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cal.cpp; path = cardcomm/pkcs11/src/cal.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DF381653EFE50015B5E1 /* display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = display.cpp; path = cardcomm/pkcs11/src/display.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DF391653EFE50015B5E1 /* phash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = phash.cpp; path = cardcomm/pkcs11/src/phash.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DF3A1653EFE50015B5E1 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = cardcomm/pkcs11/src/util.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DF4F1653EFE50015B5E1 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11.h; path = doc/sdk/include/rsaref220/pkcs11.h; sourceTree = SOURCE_ROOT; };
 		86E3DF501653EFE50015B5E1 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11f.h; path = doc/sdk/include/rsaref220/pkcs11f.h; sourceTree = SOURCE_ROOT; };
 		86E3DF511653EFE50015B5E1 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11t.h; path = doc/sdk/include/rsaref220/pkcs11t.h; sourceTree = SOURCE_ROOT; };
@@ -470,6 +472,9 @@
 		7FA1AA420F85F446000D9EE1 /* Pkcs11 */ = {
 			isa = PBXGroup;
 			children = (
+				6594447D19A8C2B0003ABC24 /* pkcs11log.c */,
+				6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */,
+				6594447B19A8C29B003ABC24 /* asn1.c */,
 				86E3DF4E1653EFE50015B5E1 /* rsaref220 */,
 				86E3DF251653EFE50015B5E1 /* asn1.h */,
 				86E3DF261653EFE50015B5E1 /* beid_p11.h */,
@@ -483,7 +488,6 @@
 				86E3DF2F1653EFE50015B5E1 /* cert.c */,
 				86E3DF301653EFE50015B5E1 /* encrypt.c */,
 				86E3DF311653EFE50015B5E1 /* general.c */,
-				86E3DF321653EFE50015B5E1 /* log.c */,
 				86E3DF331653EFE50015B5E1 /* object.c */,
 				86E3DF341653EFE50015B5E1 /* p11.c */,
 				86E3DF351653EFE50015B5E1 /* session.c */,
@@ -491,7 +495,6 @@
 				86E3DF371653EFE50015B5E1 /* cal.cpp */,
 				86E3DF381653EFE50015B5E1 /* display.cpp */,
 				86E3DF391653EFE50015B5E1 /* phash.cpp */,
-				86E3DF3A1653EFE50015B5E1 /* util.cpp */,
 			);
 			name = Pkcs11;
 			sourceTree = "<group>";
@@ -607,7 +610,7 @@
 				86837476186489B6005EE5D7 /* langutil.h */,
 				86837477186489B6005EE5D7 /* sharedmem.cpp */,
 				86837478186489B6005EE5D7 /* sharedmem.h */,
-				8683738A18648985005EE5D7 /* dlgsmac.cpp */,
+				8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */,
 			);
 			name = Dialogsmac;
 			path = cardcomm/pkcs11/src/dialogs/dialogsmac;
@@ -911,9 +914,10 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beidmw" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -962,7 +966,6 @@
 				86E3DF5E1653EFE60015B5E1 /* cert.c in Sources */,
 				86E3DF5F1653EFE60015B5E1 /* encrypt.c in Sources */,
 				86E3DF601653EFE60015B5E1 /* general.c in Sources */,
-				86E3DF611653EFE60015B5E1 /* log.c in Sources */,
 				86E3DF621653EFE60015B5E1 /* object.c in Sources */,
 				86E3DF631653EFE60015B5E1 /* p11.c in Sources */,
 				86E3DF641653EFE60015B5E1 /* session.c in Sources */,
@@ -970,7 +973,6 @@
 				86E3DF661653EFE60015B5E1 /* cal.cpp in Sources */,
 				86E3DF671653EFE60015B5E1 /* display.cpp in Sources */,
 				86E3DF681653EFE60015B5E1 /* phash.cpp in Sources */,
-				86E3DF691653EFE60015B5E1 /* util.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -979,6 +981,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				86E3DDF31653D6210015B5E1 /* bytearray.cpp in Sources */,
+				6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */,
+				6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */,
 				86E3DDF51653D6210015B5E1 /* bytearrayreader.cpp in Sources */,
 				86E3DDF71653D6210015B5E1 /* configcommon.cpp in Sources */,
 				86E3DDF91653D6210015B5E1 /* configuration.cpp in Sources */,
@@ -999,6 +1003,7 @@
 				86E3DE1F1653D6210015B5E1 /* thread.cpp in Sources */,
 				86E3DE221653D6210015B5E1 /* tlv.cpp in Sources */,
 				86E3DE241653D6210015B5E1 /* tlvbuffer.cpp in Sources */,
+				6594447C19A8C29B003ABC24 /* asn1.c in Sources */,
 				86E3DE271653D6210015B5E1 /* util.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1051,7 +1056,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				868374D1186489B6005EE5D7 /* sharedmem.cpp in Sources */,
-				8683738B18648985005EE5D7 /* dlgsmac.cpp in Sources */,
+				8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */,
 				868374CF186489B6005EE5D7 /* langutil.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1095,7 +1100,6 @@
 		1DEB916508733D950010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
@@ -1114,13 +1118,11 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
-				);
+				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
@@ -1131,7 +1133,6 @@
 		1DEB916608733D950010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib";
 				CURRENT_PROJECT_VERSION = 4.1.0;
@@ -1149,9 +1150,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
-				);
+				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers;
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
@@ -1203,6 +1202,7 @@
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = "beidpkcs11.$(CURRENT_PROJECT_VERSION)";
 				SDKROOT = macosx;
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
@@ -1241,12 +1241,11 @@
 				INSTALL_PATH = /usr/local/lib;
 				MACH_O_TYPE = mh_dylib;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = (
-					"-fno-strict-aliasing",
-				);
+				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidpkcs11.$(CURRENT_PROJECT_VERSION)";
 				SDKROOT = macosx;
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1296,7 +1295,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/../lib/Release";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = stabs;
@@ -1326,7 +1324,7 @@
 		7FC5353C0F84B83C00BA96EE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
@@ -1359,6 +1357,7 @@
 				PRODUCT_NAME = "beidcardlayer.$(CURRENT_PROJECT_VERSION)";
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
@@ -1366,7 +1365,7 @@
 		7FC5353D0F84B83C00BA96EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/cardcomm/pkcs11/src/lib/Release";
 				COPY_PHASE_STRIP = YES;
 				DYLIB_COMPATIBILITY_VERSION = "";
@@ -1403,6 +1402,7 @@
 				PRODUCT_NAME = "beidcardlayer.$(CURRENT_PROJECT_VERSION)";
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1467,9 +1467,7 @@
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/cardcomm/pkcs11/src/common/**";
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = (
-					"-fno-strict-aliasing",
-				);
+				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PREBINDING = NO;
 				PRODUCT_NAME = "beiddialogsQT.$(CURRENT_PROJECT_VERSION)";
 				SDKROOT = macosx;
@@ -1493,9 +1491,7 @@
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/cardcomm/pkcs11/src/common/**";
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = (
-					"-fno-strict-aliasing",
-				);
+				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PREBINDING = NO;
 				PRODUCT_NAME = "beiddialogsQT.$(CURRENT_PROJECT_VERSION)";
 				SDKROOT = macosx;
@@ -1542,11 +1538,10 @@
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = (
-					"-fno-strict-aliasing",
-				);
+				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRODUCT_NAME = "$(TARGET_NAME).$(CURRENT_PROJECT_VERSION)";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
 			};
 			name = Debug;
 		};
@@ -1589,11 +1584,10 @@
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = (
-					"-fno-strict-aliasing",
-				);
+				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRODUCT_NAME = "$(TARGET_NAME).$(CURRENT_PROJECT_VERSION)";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
 			};
 			name = Release;
 		};

@@ -21,10 +21,10 @@
 
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
-#ifdef WIN32
-#include "configuration.h"
-#else
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#else
+#include "configuration.h"
 #endif
 #endif
 

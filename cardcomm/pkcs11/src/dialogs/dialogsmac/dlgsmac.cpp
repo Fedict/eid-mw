@@ -48,6 +48,11 @@ using namespace eIDMW;
 	************************/
 #define BEID_MAX_MESSAGE_ARRAY_LEN 8
 
+typedef std::map<unsigned long, CFUserNotificationRef> TD_MCPINPAD_MAP;
+
+TD_MCPINPAD_MAP mc_pinpad_map;
+unsigned long mc_pinpad_map_index = 0;
+
 DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
                                     DlgPinUsage usage, const wchar_t *wsPinName,
                                     DlgPinInfo pinInfo, wchar_t *wsPin, unsigned long ulPinBufferLen)
@@ -357,7 +362,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
 DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 											   const wchar_t *wsReader, DlgPinUsage usage, const wchar_t *wsPinName,
 											   const wchar_t *wsMessage,
-											   void **puserNotificationRef)
+											   unsigned long *pulHandle)
 {
     DlgRet lRet = DLG_CANCEL;
 	CFArrayRef           titlesArray;
@@ -421,8 +426,10 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 													optionFlags,//CFOptionFlags flags,
 													&error,//SInt32 *error,
 													parameters);//CFDictionaryRef dictionary
-	
-	*puserNotificationRef = userNotificationRef;
+	mc_pinpad_map[mc_pinpad_map_index++] = userNotificationRef;
+    if(pulHandle) {
+        *pulHandle = mc_pinpad_map_index;
+    }
     
 	CFRelease(titlesArray);
 	CFRelease(parameters);
@@ -432,11 +439,11 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 
 
 
-DLGS_EXPORT void eIDMW::DlgClosePinpadInfo( void *theUserNotificationRef )
+DLGS_EXPORT void eIDMW::DlgClosePinpadInfo( unsigned long theUserNotificationRef )
 {
     SInt32 error = 0;
     
-    CFUserNotificationRef userNotificationRef = (CFUserNotificationRef)theUserNotificationRef;
+    CFUserNotificationRef userNotificationRef = mc_pinpad_map[theUserNotificationRef];
     error = CFUserNotificationCancel (userNotificationRef);
     
     CFRelease(userNotificationRef);

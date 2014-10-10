@@ -18,9 +18,9 @@
 
 **************************************************************************** */
 #ifdef WIN32
-#include "configuration.h"
-#else
 #include "config.h"
+#else
+#include "configuration.h"
 #endif
 #include <algorithm>
 #include <fstream>
