@@ -71,7 +71,7 @@ set OUR_CURRENT_PATH="%cd%"
 
 @cd %~dp0..\..\installers\eid-mw\Windows
 
-@call "%~dp0..\installers\eid-mw\Windows\build_msi_eidmw32.cmd"
+@call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw32.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 @echo [INFO] copy 32 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
