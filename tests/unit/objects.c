@@ -76,7 +76,7 @@ TEST_FUNC(objects) {
 		attr[1].pValue = &label;
 		attr[1].ulValueLen=1024;
 
-		check_rv(C_GetAttributeValue(session, object, &attr, 2));
+		check_rv(C_GetAttributeValue(session, object, attr, 2));
 
 		label[attr[1].ulValueLen] = '\0';
 
@@ -126,7 +126,7 @@ TEST_FUNC(objects) {
 
 		check_rv_long(C_FindObjects(session, &object, 1, &count), m_maybe_rmvd);
 
-		check_rv_long(C_GetAttributeValue(session, object, &attr, 1), m_is_rmvd);
+		check_rv_long(C_GetAttributeValue(session, object, attr, 1), m_is_rmvd);
 
 		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 			return ret;
