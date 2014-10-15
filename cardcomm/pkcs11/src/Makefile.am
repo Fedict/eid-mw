@@ -1,5 +1,5 @@
 lib_LTLIBRARIES = libbeidpkcs11.la
-AM_CPPFLAGS = -DLTC_NO_ASM
+AM_CFLAGS = -DLTC_NO_ASM
 libbeidpkcs11_la_CXXFLAGS = -DUSING_DL_OPEN -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM -fvisibility=hidden -I$(srcdir)/common -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/rsaref220 @PCSC_CFLAGS@
 libbeidpkcs11_la_CPPFLAGS = -I$(srcdir)/common -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/rsaref220 @PCSC_CFLAGS@ -DLIBEXECDIR='"$(libexecdir)"'
 libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ -ldl
