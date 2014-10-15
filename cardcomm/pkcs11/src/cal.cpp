@@ -1144,7 +1144,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 	char cBuffer[256];
 	//	unsigned char ucBuffer[250];
 	const char* plabel = NULL;
-	char* pobjectID = NULL;
+	const char* pobjectID = NULL;
 	unsigned long ulLen=0;
 	CTLVBuffer oTLVBuffer;
 	CTLVBuffer oTLVBufferAddress;//need second buffer object, as memory is only freed when this object is destructed
@@ -1175,10 +1175,13 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 			oFileData = oReader.ReadFile(BEID_FILE_ID);
 
 			plabel = BEID_LABEL_DATA_FILE;
-			pobjectID = BEID_OBJECTID_ID;
+			pobjectID = (char*)BEID_OBJECTID_ID;
+			/* XXX the const-ness of pobjectID and plabel should
+			 * ideally not be cast away, but it goes pretty deep.
+			 * Not Now(TM). */
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
-				pobjectID, (CK_ULONG)strlen(pobjectID));
+				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
 			if (ret) goto cleanup;
 
 			oTLVBuffer.ParseTLV(oFileData.GetBytes(), oFileData.Size());
@@ -1192,7 +1195,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				oTLVBuffer.FillUTF8Data(ID_LABELS[i].tag, cBuffer, &ulLen);
 				plabel = ID_LABELS[i].name;
 				ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
-					(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen,pobjectID, (CK_ULONG)strlen(pobjectID));
+					(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen,(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
 				if (ret) goto cleanup;
 			}
 			if(dataType != CACHED_DATA_TYPE_ALL){
@@ -1204,7 +1207,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 			pobjectID = BEID_OBJECTID_ADDRESS;
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
-				pobjectID, (CK_ULONG)strlen(pobjectID));
+				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
 			if (ret) goto cleanup;
 			oTLVBufferAddress.ParseTLV(oFileData.GetBytes(), oFileData.Size());
 			nrOfItems = sizeof(ADDRESS_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
@@ -1216,7 +1219,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				plabel = ADDRESS_LABELS[i].name;
 				ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 					(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen,
-					pobjectID, (CK_ULONG)strlen(pobjectID));
+					(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
 				if (ret) goto cleanup;
 			}
 			if(dataType != CACHED_DATA_TYPE_ALL){
@@ -1228,7 +1231,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 			oFileData = oReader.ReadFile(BEID_FILE_PHOTO);
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
-				pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_PHOTO));
+				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_PHOTO));
 			if (ret) goto cleanup;
 			if(dataType != CACHED_DATA_TYPE_ALL){
 				break;
