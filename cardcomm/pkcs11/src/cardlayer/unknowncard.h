@@ -40,7 +40,7 @@ public:
     virtual CByteArray ReadUncachedFile(const std::string & csPath,
         unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
     virtual unsigned int GetRSAKeySize() { return 0; };
-    virtual unsigned long GetAppletVersion() { return 0; };
+    virtual unsigned char GetAppletVersion() { return 0; };
 
     tCardType GetType();
 
