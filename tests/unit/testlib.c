@@ -26,7 +26,6 @@
 #include <unix.h>
 #endif
 #include <pkcs11.h>
-#include <malloc.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
