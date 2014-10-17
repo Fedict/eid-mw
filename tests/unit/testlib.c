@@ -261,6 +261,20 @@ void robot_insert_card() {
 	}
 }
 
+void robot_insert_card_delayed() {
+	switch(robot_type) {
+		case ROBOT_NONE:
+			fprintf(stderr, "E: robot needed, no robot configured\n");
+			exit(EXIT_FAILURE);
+		case ROBOT_AUTO:
+			fprintf(stderr, "Auto robot not yet implemented\n");
+			exit(TEST_RV_SKIP);
+		case ROBOT_MECHANICAL_TURK:
+			printf("Please wait a moment and then insert the card\n");
+			break;
+	}
+}
+
 void robot_remove_card() {
 	char buf[80];
 	switch(robot_type) {
@@ -276,6 +290,20 @@ void robot_remove_card() {
 				printf("soemthing happened, skipping test\n");
 				exit(TEST_RV_SKIP);
 			}
+	}
+}
+
+void robot_remove_card_delayed() {
+	switch(robot_type) {
+		case ROBOT_NONE:
+			fprintf(stderr, "E: robot needed, no robot configured\n");
+			exit(EXIT_FAILURE);
+		case ROBOT_AUTO:
+			fprintf(stderr, "Auto robot not yet implemented\n");
+			exit(TEST_RV_SKIP);
+		case ROBOT_MECHANICAL_TURK:
+			printf("Please wait a moment and then remove the card\n");
+			break;
 	}
 }
 
