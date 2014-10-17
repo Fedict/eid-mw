@@ -2,6 +2,7 @@
 #define EIDMW_TESTLIB_H
 
 #include <assert.h>
+#include <stdio.h>
 
 #define TEST_RV_SKIP 77 // defined by automake
 #define TEST_RV_FAIL 1
