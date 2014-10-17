@@ -81,6 +81,8 @@ int nonsensible();
 int objects();
 int readdata();
 int digest();
+int threads();
+int sign();
 int decode_photo();
 
 #endif
