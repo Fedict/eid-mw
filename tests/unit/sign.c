@@ -104,8 +104,6 @@ TEST_FUNC(sign) {
 		return TEST_RV_SKIP;
 	}
 
-	check_rv_long(C_Login(session, CKU_USER, NULL_PTR, 0), m);
-
 	attr[0].type = CKA_CLASS;
 	attr[0].pValue = &type;
 	type = CKO_PRIVATE_KEY;
@@ -117,8 +115,13 @@ TEST_FUNC(sign) {
 
 	check_rv(C_FindObjectsInit(session, attr, 2));
 	check_rv(C_FindObjects(session, &private, 1, &count));
-	verbose_assert(count == 1);
+	verbose_assert(count == 1 || count == 0);
 	check_rv(C_FindObjectsFinal(session));
+
+	if(count == 0) {
+		fprintf(stderr, "Cannot test signature on a card without a signature key\n");
+		return TEST_RV_SKIP;
+	}
 
 	mech.mechanism = CKM_SHA1_RSA_PKCS;
 	check_rv(C_SignInit(session, &mech, private));
