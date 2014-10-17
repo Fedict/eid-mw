@@ -43,10 +43,9 @@ TEST_FUNC(fork_init) {
 			return TEST_RV_SKIP;
 		}
 		wait(&status);
-		if(!WIFEXITED(status)) {
+		if(!WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+			check_rv(C_Finalize(NULL_PTR));
 			return TEST_RV_FAIL;
-		} else {
-			return WEXITSTATUS(status);
 		}
 	}
 	check_rv(C_Finalize(NULL_PTR));
