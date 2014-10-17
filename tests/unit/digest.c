@@ -168,6 +168,7 @@ TEST_FUNC(digest) {
 		check_rv_long(C_DigestFinal(session, NULL_PTR, &len), m_is_rmvd);
 
 		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+			check_rv(C_Finalize(NULL_PTR));
 			return ret;
 		}
 

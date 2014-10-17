@@ -204,6 +204,7 @@ TEST_FUNC(sign) {
 		check_rv_long(C_Sign(session, data, sizeof(data), NULL, &sig_len), m_is_rmvd);
 
 		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+			check_rv(C_Finalize(NULL_PTR));
 			return ret;
 		}
 

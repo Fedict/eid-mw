@@ -130,6 +130,7 @@ TEST_FUNC(objects) {
 		check_rv_long(C_GetAttributeValue(session, object, attr, 1), m_is_rmvd);
 
 		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+			check_rv(C_Finalize(NULL_PTR));
 			return ret;
 		}
 
