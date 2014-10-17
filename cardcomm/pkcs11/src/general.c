@@ -621,7 +621,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 	// Doesn't seem to work on Linux: if you insert a card then Mozilla freezes
 	// until you remove the card. This function however seems to work fine.
-#ifndef _WIN32
+#ifdef __APPLE__
 	CLEANUP(CKR_FUNCTION_NOT_SUPPORTED);
 #endif
 
