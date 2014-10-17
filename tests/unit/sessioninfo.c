@@ -50,6 +50,7 @@ TEST_FUNC(sessioninfo) {
 	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+		check_rv(C_Finalize(NULL_PTR));
 		return ret;
 	}
 

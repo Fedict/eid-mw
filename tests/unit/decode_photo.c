@@ -20,8 +20,10 @@
 #ifdef WIN32
 #include <win32.h>
 #else
-#include <config.h>
 #include <unix.h>
+#endif
+#ifdef HAVE_CONFIG_H
+#include <config.h>
 #endif
 #include <pkcs11.h>
 #include <stdio.h>
@@ -166,6 +168,7 @@ TEST_FUNC(decode_photo) {
 	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+		check_rv(C_Finalize(NULL_PTR));
 		return ret;
 	}
 

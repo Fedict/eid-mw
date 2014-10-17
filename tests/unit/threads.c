@@ -97,6 +97,7 @@ int threaded_test() {
 	printf("In thread:\n");
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+		check_rv(C_Finalize(NULL_PTR));
 		return ret;
 	}
 
