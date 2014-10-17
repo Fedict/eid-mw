@@ -7,6 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6536232519A7E92B00D46ECB /* decode_photo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230D19A7E92B00D46ECB /* decode_photo.c */; };
+		6536232619A7E92B00D46ECB /* digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230E19A7E92B00D46ECB /* digest.c */; };
+		6536232719A7E92B00D46ECB /* double_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230F19A7E92B00D46ECB /* double_init.c */; };
+		6536232819A7E92B00D46ECB /* fork_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231019A7E92B00D46ECB /* fork_init.c */; };
+		6536232919A7E92B00D46ECB /* funclist.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231119A7E92B00D46ECB /* funclist.c */; };
+		6536232A19A7E92B00D46ECB /* getinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231219A7E92B00D46ECB /* getinfo.c */; };
+		6536232B19A7E92B00D46ECB /* init_finalize.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231319A7E92B00D46ECB /* init_finalize.c */; };
+		6536232C19A7E92B00D46ECB /* login.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231419A7E92B00D46ECB /* login.c */; };
+		6536232D19A7E92B00D46ECB /* mechinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231519A7E92B00D46ECB /* mechinfo.c */; };
+		6536232E19A7E92B00D46ECB /* mechlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231619A7E92B00D46ECB /* mechlist.c */; };
+		6536232F19A7E92B00D46ECB /* nonsensible.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231719A7E92B00D46ECB /* nonsensible.c */; };
+		6536233019A7E92B00D46ECB /* objects.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231819A7E92B00D46ECB /* objects.c */; };
+		6536233119A7E92B00D46ECB /* readdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231919A7E92B00D46ECB /* readdata.c */; };
+		6536233219A7E92B00D46ECB /* sessioninfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231A19A7E92B00D46ECB /* sessioninfo.c */; };
+		6536233319A7E92B00D46ECB /* sessions_nocard.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231B19A7E92B00D46ECB /* sessions_nocard.c */; };
+		6536233419A7E92B00D46ECB /* sessions.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231C19A7E92B00D46ECB /* sessions.c */; };
+		6536233519A7E92B00D46ECB /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231D19A7E92B00D46ECB /* sign.c */; };
+		6536233619A7E92B00D46ECB /* slotevent.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231E19A7E92B00D46ECB /* slotevent.c */; };
+		6536233719A7E92B00D46ECB /* slotinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231F19A7E92B00D46ECB /* slotinfo.c */; };
+		6536233819A7E92B00D46ECB /* slotlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232019A7E92B00D46ECB /* slotlist.c */; };
+		6536233919A7E92B00D46ECB /* testlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232119A7E92B00D46ECB /* testlib.c */; };
+		6536233A19A7E92B00D46ECB /* threads.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232319A7E92B00D46ECB /* threads.c */; };
+		6536233B19A7E92B00D46ECB /* tkinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232419A7E92B00D46ECB /* tkinfo.c */; };
+		6536233D19A7E93A00D46ECB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536233C19A7E93A00D46ECB /* main.c */; };
+		6536233E19A7E98200D46ECB /* libbeidpkcs11.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.0.dylib */; };
 		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
@@ -207,8 +232,46 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6536230019A7E8E600D46ECB /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		6536230219A7E8E600D46ECB /* testsuite */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testsuite; sourceTree = BUILT_PRODUCTS_DIR; };
+		6536230D19A7E92B00D46ECB /* decode_photo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decode_photo.c; path = tests/unit/decode_photo.c; sourceTree = "<group>"; };
+		6536230E19A7E92B00D46ECB /* digest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = digest.c; path = tests/unit/digest.c; sourceTree = "<group>"; };
+		6536230F19A7E92B00D46ECB /* double_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = double_init.c; path = tests/unit/double_init.c; sourceTree = "<group>"; };
+		6536231019A7E92B00D46ECB /* fork_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fork_init.c; path = tests/unit/fork_init.c; sourceTree = "<group>"; };
+		6536231119A7E92B00D46ECB /* funclist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = funclist.c; path = tests/unit/funclist.c; sourceTree = "<group>"; };
+		6536231219A7E92B00D46ECB /* getinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = getinfo.c; path = tests/unit/getinfo.c; sourceTree = "<group>"; };
+		6536231319A7E92B00D46ECB /* init_finalize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = init_finalize.c; path = tests/unit/init_finalize.c; sourceTree = "<group>"; };
+		6536231419A7E92B00D46ECB /* login.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = login.c; path = tests/unit/login.c; sourceTree = "<group>"; };
+		6536231519A7E92B00D46ECB /* mechinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mechinfo.c; path = tests/unit/mechinfo.c; sourceTree = "<group>"; };
+		6536231619A7E92B00D46ECB /* mechlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mechlist.c; path = tests/unit/mechlist.c; sourceTree = "<group>"; };
+		6536231719A7E92B00D46ECB /* nonsensible.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = nonsensible.c; path = tests/unit/nonsensible.c; sourceTree = "<group>"; };
+		6536231819A7E92B00D46ECB /* objects.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = objects.c; path = tests/unit/objects.c; sourceTree = "<group>"; };
+		6536231919A7E92B00D46ECB /* readdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata.c; path = tests/unit/readdata.c; sourceTree = "<group>"; };
+		6536231A19A7E92B00D46ECB /* sessioninfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sessioninfo.c; path = tests/unit/sessioninfo.c; sourceTree = "<group>"; };
+		6536231B19A7E92B00D46ECB /* sessions_nocard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sessions_nocard.c; path = tests/unit/sessions_nocard.c; sourceTree = "<group>"; };
+		6536231C19A7E92B00D46ECB /* sessions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sessions.c; path = tests/unit/sessions.c; sourceTree = "<group>"; };
+		6536231D19A7E92B00D46ECB /* sign.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sign.c; path = tests/unit/sign.c; sourceTree = "<group>"; };
+		6536231E19A7E92B00D46ECB /* slotevent.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slotevent.c; path = tests/unit/slotevent.c; sourceTree = "<group>"; };
+		6536231F19A7E92B00D46ECB /* slotinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slotinfo.c; path = tests/unit/slotinfo.c; sourceTree = "<group>"; };
+		6536232019A7E92B00D46ECB /* slotlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slotlist.c; path = tests/unit/slotlist.c; sourceTree = "<group>"; };
+		6536232119A7E92B00D46ECB /* testlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = testlib.c; path = tests/unit/testlib.c; sourceTree = "<group>"; };
+		6536232219A7E92B00D46ECB /* testlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testlib.h; path = tests/unit/testlib.h; sourceTree = "<group>"; };
+		6536232319A7E92B00D46ECB /* threads.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = threads.c; path = tests/unit/threads.c; sourceTree = "<group>"; };
+		6536232419A7E92B00D46ECB /* tkinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tkinfo.c; path = tests/unit/tkinfo.c; sourceTree = "<group>"; };
+		6536233C19A7E93A00D46ECB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = tests/unit/apple/main.c; sourceTree = "<group>"; };
 		6594447B19A8C29B003ABC24 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = cardcomm/pkcs11/src/asn1.c; sourceTree = "<group>"; };
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
 		6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs11util.cpp; path = cardcomm/pkcs11/src/pkcs11util.cpp; sourceTree = "<group>"; };
@@ -358,6 +421,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		653622FF19A7E8E600D46ECB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6536233E19A7E98200D46ECB /* libbeidpkcs11.4.1.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FA1A9F50F85F36E000D9EE1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -428,6 +499,7 @@
 				7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */,
 				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.0.dylib */,
 				8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.0.a */,
+				6536230219A7E8E600D46ECB /* testsuite */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -435,6 +507,7 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
+				6536230C19A7E8FE00D46ECB /* testsuite */,
 				869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */,
 				8683738918648985005EE5D7 /* Dialogsmac */,
 				7FBB025A0F83937F009B751F /* Common */,
@@ -467,6 +540,38 @@
 			children = (
 			);
 			name = "Configuration Files";
+			sourceTree = "<group>";
+		};
+		6536230C19A7E8FE00D46ECB /* testsuite */ = {
+			isa = PBXGroup;
+			children = (
+				6536233C19A7E93A00D46ECB /* main.c */,
+				6536230D19A7E92B00D46ECB /* decode_photo.c */,
+				6536230E19A7E92B00D46ECB /* digest.c */,
+				6536230F19A7E92B00D46ECB /* double_init.c */,
+				6536231019A7E92B00D46ECB /* fork_init.c */,
+				6536231119A7E92B00D46ECB /* funclist.c */,
+				6536231219A7E92B00D46ECB /* getinfo.c */,
+				6536231319A7E92B00D46ECB /* init_finalize.c */,
+				6536231419A7E92B00D46ECB /* login.c */,
+				6536231519A7E92B00D46ECB /* mechinfo.c */,
+				6536231619A7E92B00D46ECB /* mechlist.c */,
+				6536231719A7E92B00D46ECB /* nonsensible.c */,
+				6536231819A7E92B00D46ECB /* objects.c */,
+				6536231919A7E92B00D46ECB /* readdata.c */,
+				6536231A19A7E92B00D46ECB /* sessioninfo.c */,
+				6536231B19A7E92B00D46ECB /* sessions_nocard.c */,
+				6536231C19A7E92B00D46ECB /* sessions.c */,
+				6536231D19A7E92B00D46ECB /* sign.c */,
+				6536231E19A7E92B00D46ECB /* slotevent.c */,
+				6536231F19A7E92B00D46ECB /* slotinfo.c */,
+				6536232019A7E92B00D46ECB /* slotlist.c */,
+				6536232119A7E92B00D46ECB /* testlib.c */,
+				6536232219A7E92B00D46ECB /* testlib.h */,
+				6536232319A7E92B00D46ECB /* threads.c */,
+				6536232419A7E92B00D46ECB /* tkinfo.c */,
+			);
+			name = testsuite;
 			sourceTree = "<group>";
 		};
 		7FA1AA420F85F446000D9EE1 /* Pkcs11 */ = {
@@ -800,6 +905,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		6536230119A7E8E600D46ECB /* testsuite */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6536230B19A7E8E600D46ECB /* Build configuration list for PBXNativeTarget "testsuite" */;
+			buildPhases = (
+				653622FE19A7E8E600D46ECB /* Sources */,
+				653622FF19A7E8E600D46ECB /* Frameworks */,
+				6536230019A7E8E600D46ECB /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testsuite;
+			productName = testsuite;
+			productReference = 6536230219A7E8E600D46ECB /* testsuite */;
+			productType = "com.apple.product-type.tool";
+		};
 		7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7FA1AA090F85F380000D9EE1 /* Build configuration list for PBXNativeTarget "beidpkcs11" */;
@@ -944,6 +1066,7 @@
 				7FC535AB0F84B9EF00BA96EE /* siscardplugin */,
 				7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */,
 				8683738418648918005EE5D7 /* beiddialogsmac */,
+				6536230119A7E8E600D46ECB /* testsuite */,
 			);
 		};
 /* End PBXProject section */
@@ -959,6 +1082,37 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
+		653622FE19A7E8E600D46ECB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6536232B19A7E92B00D46ECB /* init_finalize.c in Sources */,
+				6536232F19A7E92B00D46ECB /* nonsensible.c in Sources */,
+				6536233419A7E92B00D46ECB /* sessions.c in Sources */,
+				6536233319A7E92B00D46ECB /* sessions_nocard.c in Sources */,
+				6536233B19A7E92B00D46ECB /* tkinfo.c in Sources */,
+				6536233619A7E92B00D46ECB /* slotevent.c in Sources */,
+				6536233219A7E92B00D46ECB /* sessioninfo.c in Sources */,
+				6536232C19A7E92B00D46ECB /* login.c in Sources */,
+				6536233119A7E92B00D46ECB /* readdata.c in Sources */,
+				6536232D19A7E92B00D46ECB /* mechinfo.c in Sources */,
+				6536233819A7E92B00D46ECB /* slotlist.c in Sources */,
+				6536233019A7E92B00D46ECB /* objects.c in Sources */,
+				6536233719A7E92B00D46ECB /* slotinfo.c in Sources */,
+				6536232919A7E92B00D46ECB /* funclist.c in Sources */,
+				6536232719A7E92B00D46ECB /* double_init.c in Sources */,
+				6536233919A7E92B00D46ECB /* testlib.c in Sources */,
+				6536232819A7E92B00D46ECB /* fork_init.c in Sources */,
+				6536232E19A7E92B00D46ECB /* mechlist.c in Sources */,
+				6536233A19A7E92B00D46ECB /* threads.c in Sources */,
+				6536232519A7E92B00D46ECB /* decode_photo.c in Sources */,
+				6536233D19A7E93A00D46ECB /* main.c in Sources */,
+				6536233519A7E92B00D46ECB /* sign.c in Sources */,
+				6536232A19A7E92B00D46ECB /* getinfo.c in Sources */,
+				6536232619A7E92B00D46ECB /* digest.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FA1A9F40F85F36E000D9EE1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1159,6 +1313,77 @@
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Release;
+		};
+		6536230819A7E8E600D46ECB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					doc/sdk/include/rsaref220,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6536230919A7E8E600D46ECB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					doc/sdk/include/rsaref220,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -1599,6 +1824,15 @@
 			buildConfigurations = (
 				1DEB916508733D950010E9CD /* Debug */,
 				1DEB916608733D950010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6536230B19A7E8E600D46ECB /* Build configuration list for PBXNativeTarget "testsuite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6536230819A7E8E600D46ECB /* Debug */,
+				6536230919A7E8E600D46ECB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
