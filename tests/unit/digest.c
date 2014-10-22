@@ -140,6 +140,12 @@ TEST_FUNC(digest) {
 		check_rv(C_DigestFinal(session, digest, &len));
 
 		verbose_assert(memcmp(digest, digest_results[i], len) == 0);
+
+		check_rv(C_DigestInit(session, &mech));
+
+		check_rv(C_Digest(session, data, sizeof(data), digest, &len));
+
+		verbose_assert(memcmp(digest, digest_results[i], len) == 0);
 	}
 
 	if(have_robot()) {
