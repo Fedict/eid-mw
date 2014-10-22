@@ -31,16 +31,6 @@ const static ckrv_mod m_p11_noinit[] = {
 	{ CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK },
 };
 
-const static ckrv_mod m_sess_noinit[] = {
-	{ CKR_OK, TEST_RV_FAIL },
-	{ CKR_SESSION_HANDLE_INVALID, TEST_RV_OK },
-};
-
-const static ckrv_mod m_op_noinit[] = {
-	{ CKR_OK, TEST_RV_FAIL },
-	{ CKR_OPERATION_NOT_INITIALIZED, TEST_RV_OK },
-};
-
 #define check_rv_late(func) { int retval = ckrv_decode(rv, func, 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok, returning\n"); return retval; }}
 #define check_rv(call) check_rv_action(call, 0, NULL)
 #define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok, returning\n"); C_Finalize(NULL_PTR); return retval; }}
@@ -99,5 +89,6 @@ int digest();
 int threads();
 int sign();
 int decode_photo();
+int ordering();
 
 #endif
