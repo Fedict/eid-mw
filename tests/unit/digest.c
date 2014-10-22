@@ -110,8 +110,14 @@ TEST_FUNC(digest) {
 	CK_BYTE data[] = { 'f', 'o', 'o' };
 	CK_SLOT_ID slot;
 	int i;
+	CK_ULONG len = 0;
+	CK_BYTE_PTR digest;
+
+	check_rv_long(C_Digest(session, data, sizeof(data), digest, &len), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
+
+	check_rv_long(C_Digest(session, data, sizeof(data), digest, &len), m_sess_noinit);
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		check_rv(C_Finalize(NULL_PTR));
@@ -120,10 +126,9 @@ TEST_FUNC(digest) {
 
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
-	for(i=0; i<6; i++) {
-		CK_ULONG len = 0;
-		CK_BYTE_PTR digest;
+	check_rv_long(C_Digest(session, data, sizeof(data), digest, &len), m_op_noinit);
 
+	for(i=0; i<6; i++) {
 		memset(&mech, 0, sizeof(mech));
 		mech.mechanism = digest_mechs[i];
 

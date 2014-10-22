@@ -150,7 +150,7 @@ typedef struct {
 
 #define ADD_CKRV(ckrv, defaultrv) decodes[ckrv].rvname = #ckrv; decodes[ckrv].result = defaultrv
 
-int ckrv_decode(CK_RV rv, char* fc, int count, ckrv_mod* mods) {
+int ckrv_decode(CK_RV rv, char* fc, int count, const ckrv_mod* mods) {
 	ckrvdecode *decodes = (ckrvdecode*)calloc(CKR_FUNCTION_REJECTED + 1, sizeof(ckrvdecode));
 	int i;
 	int retval;

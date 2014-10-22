@@ -25,6 +25,7 @@
 #include <pkcs11.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "testlib.h"
 
@@ -33,22 +34,30 @@ CK_RV notify_session(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PT
 }
 
 TEST_FUNC(sessions) {
-	CK_SLOT_ID slot;
+	CK_SLOT_ID slot = UINT32_MAX;
 	int ret;
 	CK_SESSION_HANDLE handle;
-	ckrv_mod m[] = { 
+	ckrv_mod m_no_par[] = { 
 		{ CKR_OK, TEST_RV_FAIL },
 		{ CKR_SESSION_PARALLEL_NOT_SUPPORTED, TEST_RV_OK },
 	};
+	ckrv_mod m_inv_slot[] = {
+		{ CKR_OK, TEST_RV_FAIL },
+		{ CKR_SLOT_ID_INVALID, TEST_RV_OK },
+	};
+
+	check_rv_long(C_OpenSession(slot, 0, NULL_PTR, NULL_PTR, &handle), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
+
+	check_rv_long(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &handle), m_inv_slot);
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		check_rv(C_Finalize(NULL_PTR));
 		return ret;
 	}
 
-	check_rv_long(C_OpenSession(slot, 0, NULL_PTR, notify_session, &handle), m);
+	check_rv_long(C_OpenSession(slot, 0, NULL_PTR, notify_session, &handle), m_no_par);
 
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify_session, &handle));
 
