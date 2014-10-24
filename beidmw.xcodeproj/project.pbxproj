@@ -35,7 +35,7 @@
 		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
-		65CC20EE19A7DE4E0089CD13 /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
+		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
 		7F22A36F0F84C588001AD228 /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
 		7F22A3C40F84D4A1001AD228 /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
 		7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
@@ -1089,6 +1089,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */,
 				6536232B19A7E92B00D46ECB /* init_finalize.c in Sources */,
 				6536232F19A7E92B00D46ECB /* nonsensible.c in Sources */,
 				6536233419A7E92B00D46ECB /* sessions.c in Sources */,
@@ -1142,7 +1143,6 @@
 				6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */,
 				86E3DDF51653D6210015B5E1 /* bytearrayreader.cpp in Sources */,
 				86E3DDF71653D6210015B5E1 /* configcommon.cpp in Sources */,
-				65CC20EE19A7DE4E0089CD13 /* ordering.c in Sources */,
 				86E3DDF91653D6210015B5E1 /* configuration.cpp in Sources */,
 				86E3DDFB1653D6210015B5E1 /* datafile.cpp in Sources */,
 				86E3DDFD1653D6210015B5E1 /* dynamiclib.cpp in Sources */,
