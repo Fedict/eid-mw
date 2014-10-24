@@ -44,8 +44,9 @@ int main(void) {
 	run_test(threads());
 	run_test(sign());
 	run_test(decode_photo());
-	
+	run_test(ordering());
+
 	printf("Test suite finished.\nOK: %d\nFailed: %d\nSkipped: %d\n", ok_count, failed_count, skipped_count);
-	
+
 	return failed_count;
 }

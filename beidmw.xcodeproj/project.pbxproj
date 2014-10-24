@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6536232519A7E92B00D46ECB /* decode_photo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230D19A7E92B00D46ECB /* decode_photo.c */; };
+		6536232519A7E92B00D46ECB /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230D19A7E92B00D46ECB /* ordering.c */; };
 		6536232619A7E92B00D46ECB /* digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230E19A7E92B00D46ECB /* digest.c */; };
 		6536232719A7E92B00D46ECB /* double_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230F19A7E92B00D46ECB /* double_init.c */; };
 		6536232819A7E92B00D46ECB /* fork_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536231019A7E92B00D46ECB /* fork_init.c */; };
@@ -248,6 +249,7 @@
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		6536230219A7E8E600D46ECB /* testsuite */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testsuite; sourceTree = BUILT_PRODUCTS_DIR; };
 		6536230D19A7E92B00D46ECB /* decode_photo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decode_photo.c; path = tests/unit/decode_photo.c; sourceTree = "<group>"; };
+		6536230D19A7E92B00D46ECB /* ordering.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ordering.c; path = tests/unit/ordering.c; sourceTree = "<group>"; };
 		6536230E19A7E92B00D46ECB /* digest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = digest.c; path = tests/unit/digest.c; sourceTree = "<group>"; };
 		6536230F19A7E92B00D46ECB /* double_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = double_init.c; path = tests/unit/double_init.c; sourceTree = "<group>"; };
 		6536231019A7E92B00D46ECB /* fork_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fork_init.c; path = tests/unit/fork_init.c; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 			children = (
 				6536233C19A7E93A00D46ECB /* main.c */,
 				6536230D19A7E92B00D46ECB /* decode_photo.c */,
+				6536230D19A7E92B00D46ECB /* ordering.c */,
 				6536230E19A7E92B00D46ECB /* digest.c */,
 				6536230F19A7E92B00D46ECB /* double_init.c */,
 				6536231019A7E92B00D46ECB /* fork_init.c */,
@@ -1106,6 +1109,7 @@
 				6536232E19A7E92B00D46ECB /* mechlist.c in Sources */,
 				6536233A19A7E92B00D46ECB /* threads.c in Sources */,
 				6536232519A7E92B00D46ECB /* decode_photo.c in Sources */,
+				6536232519A7E92B00D46ECB /* ordering.c in Sources */,
 				6536233D19A7E93A00D46ECB /* main.c in Sources */,
 				6536233519A7E92B00D46ECB /* sign.c in Sources */,
 				6536232A19A7E92B00D46ECB /* getinfo.c in Sources */,
