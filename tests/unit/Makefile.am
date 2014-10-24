@@ -4,6 +4,8 @@ TESTS += decode_photo
 endif
 check_PROGRAMS = $(TESTS)
 
+CLEANFILES=foto.jpg
+
 COMMON_LIB=$(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
 
 AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220
