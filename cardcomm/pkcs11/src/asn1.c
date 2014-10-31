@@ -253,7 +253,7 @@ for (; *p_cPath; p_cPath++)
    /* check if we are decoding inside a BIT STRING: iNumTag == parent_tag */
    /* first octet of bit string is the number of unused bits at the end of the bitstring */
    /* in CER/DER: unused bits are always zero. And if they aren't zero, we still don't need to know the nr. of unused bits */
-   if ((iNumTag == 0x03) )
+   if (iNumTag == 0x03 )
       {
       p_cDat++;
       iLen--;
