@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,11 +17,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-/********************************************************************************
-*
-*	dlgs.cpp
-*
-********************************************************************************/
+
 #include <stdlib.h>
 #include <signal.h>
 #include "errno.h"
@@ -53,20 +49,160 @@ typedef std::map<unsigned long, CFUserNotificationRef> TD_MCPINPAD_MAP;
 TD_MCPINPAD_MAP mc_pinpad_map;
 unsigned long mc_pinpad_map_index = 0;
 
+CFStringRef CreateStringFromLangFile(const wchar_t * wcsMessage)
+{
+    char messagechar[256];
+    
+    if(wcsMessage == NULL)
+        return NULL;
+    wcstombs(messagechar,wcsMessage,sizeof(messagechar));
+    messagechar[255]='\0';
+    
+    return CFStringCreateWithBytes (
+                                    kCFAllocatorDefault,
+                                    (const UInt8 *)messagechar,
+                                    strlen(messagechar),
+                                    kCFStringEncodingUTF8,
+                                    false
+                                    );
+}
+
+
 DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
                                     DlgPinUsage usage, const wchar_t *wsPinName,
                                     DlgPinInfo pinInfo, wchar_t *wsPin, unsigned long ulPinBufferLen)
 {
-    
     DlgRet lRet = DLG_CANCEL;
     
+	std::string csReadableFilePath;
+    const wchar_t * wcsTitle;
+	CFUserNotificationRef userNotificationRef;
+	SInt32 error = 0;
+    
+    size_t textLen = 0;
+    char titlechar[256];
+    CFOptionFlags optionFlags = CFUserNotificationSecureTextField(0);
+    CFOptionFlags responseFlags;
+	
     try {
-
+        
+        //create header text
+        CFStringRef headerString = CreateStringFromLangFile(GETSTRING_DLG(EnterYourPin));
+        
+        //create title text and url
+        CFStringRef IconURLString = NULL;
+        if( usage == DLG_PIN_SIGN )
+        {
+            optionFlags |= kCFUserNotificationCautionAlertLevel;
+            wcsTitle=GETSTRING_DLG(SigningWith);
+            IconURLString = CreateStringFromLangFile(L"Users/Frederik/4_0_7_QT45/eid-mw/_src/eidmw/dialogs/dialogsQTsrv/Resources/ICO_CARD_DIGSIG_128x128.png");
+        }
+        else
+        {
+            optionFlags |= kCFUserNotificationPlainAlertLevel;
+            wcsTitle=GETSTRING_DLG(Asking);
+            IconURLString = CreateStringFromLangFile(L"Users/Frederik/4_0_7_QT45/eid-mw/_src/eidmw/dialogs/dialogsQTsrv/Resources/ICO_CARD_PIN_128x128.png");
+        }
+        wcstombs(titlechar,wcsTitle,sizeof(titlechar));
+        titlechar[255]='\0';
+        
+        CFURLRef urlRef = CFURLCreateWithString ( kCFAllocatorDefault, IconURLString, NULL );
+        
+        
+        textLen = strlen(titlechar);
+        //need room for space and pin name
+        if(textLen >= 250)
+            return DLG_ERR;
+        
+        strcpy_s(titlechar+textLen, 1, " ");
+        textLen++;
+        wcstombs(titlechar+textLen,wsPinName,sizeof(titlechar)-textLen);
+        titlechar[255]='\0';
+        
+        CFStringRef titleString = CFStringCreateWithBytes (
+                                                           kCFAllocatorDefault,
+                                                           (const UInt8 *)titlechar,
+                                                           strlen(titlechar),
+                                                           kCFStringEncodingUTF8,
+                                                           false
+                                                           );
+        
+        //create message text
+        CFStringRef messageString = CreateStringFromLangFile(GETSTRING_DLG(Pin));
+        
+        //create default button text
+        CFStringRef defaultButtonString = CreateStringFromLangFile(GETSTRING_DLG(Ok));
+        
+        //create alternate (cancel) button text
+        CFStringRef alternateButtonString = CreateStringFromLangFile(GETSTRING_DLG(Cancel));
+        
+        const void* keys[] = {kCFUserNotificationAlertHeaderKey,
+            kCFUserNotificationAlertMessageKey,
+            kCFUserNotificationTextFieldTitlesKey,
+            kCFUserNotificationDefaultButtonTitleKey,
+            kCFUserNotificationAlternateButtonTitleKey,
+            kCFUserNotificationIconURLKey
+        };
+        
+        const void* values[] = {headerString,
+            titleString,
+            messageString,
+            defaultButtonString,
+            alternateButtonString,
+            urlRef
+        };
+        
+        CFDictionaryRef parameters = CFDictionaryCreate(0, keys, values,
+                                                        sizeof(keys)/sizeof(*keys), NULL,
+                                                        NULL);
+        
+        userNotificationRef = CFUserNotificationCreate (kCFAllocatorDefault, //CFAllocatorRef allocator,
+                                                        30, //CFTimeInterval timeout,
+                                                        optionFlags,//CFOptionFlags flags,
+                                                        &error,//SInt32 *error,
+                                                        parameters);//CFDictionaryRef dictionary
+        
+        error = CFUserNotificationReceiveResponse (
+                                                   userNotificationRef,//CFUserNotificationRef userNotification,
+                                                   0,//CFTimeInterval timeout,
+                                                   &responseFlags//CFOptionFlags responseFlags
+                                                   );
+        
+        CFStringRef PinValue = NULL;
+        
+        switch (responseFlags & 0x03)
+        {
+            case kCFUserNotificationDefaultResponse:
+                lRet = DLG_OK;
+                //get the PIN
+                PinValue = CFUserNotificationGetResponseValue ( userNotificationRef, kCFUserNotificationTextFieldValuesKey, 0 );
+                break;
+            case kCFUserNotificationAlternateResponse:
+                lRet = DLG_CANCEL;
+                break;
+            case kCFUserNotificationOtherResponse:
+                lRet = DLG_RETRY;
+                break;
+            case kCFUserNotificationCancelResponse:
+                lRet = DLG_CANCEL;
+                break;
+            default:
+                lRet = DLG_CANCEL;
+        }
+        
+        CFRelease(userNotificationRef);
+        CFRelease(parameters);
+        CFRelease(messageString);
+        CFRelease(titleString);
+        CFRelease(headerString);
+        
+        
     } catch (...) {
-
+        
         return DLG_ERR;
     }
     return lRet;
+    
 }
 
 DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
