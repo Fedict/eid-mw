@@ -224,6 +224,13 @@
 			remoteGlobalIDString = 869D00AE18D72DCF00A41853;
 			remoteInfo = plistMerger;
 		};
+		86BC84C51A037C19009E374E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 86F33B0C1987A6B400E200F0;
+			remoteInfo = test_dialogs;
+		};
 		86F2229E186495600040D1AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -297,6 +304,7 @@
 		86837477186489B6005EE5D7 /* sharedmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sharedmem.cpp; path = cardcomm/pkcs11/src/dialogs/sharedmem.cpp; sourceTree = SOURCE_ROOT; };
 		86837478186489B6005EE5D7 /* sharedmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sharedmem.h; path = cardcomm/pkcs11/src/dialogs/sharedmem.h; sourceTree = SOURCE_ROOT; };
 		869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = plistMerger.xcodeproj; path = plugins_tools/plistMerger/plistMerger.xcodeproj; sourceTree = SOURCE_ROOT; };
+		86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = test_dialogs.xcodeproj; path = tests/dialogs/test_dialogs.xcodeproj; sourceTree = "<group>"; };
 		86E3DDB91653D6200015B5E1 /* beidversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidversions.h; path = cardcomm/pkcs11/src/common/beidversions.h; sourceTree = SOURCE_ROOT; };
 		86E3DDBA1653D6200015B5E1 /* bytearray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytearray.cpp; path = cardcomm/pkcs11/src/common/bytearray.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDBB1653D6200015B5E1 /* bytearray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytearray.h; path = cardcomm/pkcs11/src/common/bytearray.h; sourceTree = SOURCE_ROOT; };
@@ -509,6 +517,7 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
+				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
 				6536230C19A7E8FE00D46ECB /* testsuite */,
 				869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */,
 				8683738918648985005EE5D7 /* Dialogsmac */,
@@ -728,6 +737,14 @@
 			isa = PBXGroup;
 			children = (
 				869D00C218D72DD000A41853 /* plistMerger */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		86BC84C11A037C19009E374E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				86BC84C61A037C19009E374E /* test_dialogs */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1060,6 +1077,10 @@
 					ProductGroup = 869D00BE18D72DCF00A41853 /* Products */;
 					ProjectRef = 869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */;
 				},
+				{
+					ProductGroup = 86BC84C11A037C19009E374E /* Products */;
+					ProjectRef = 86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1080,6 +1101,13 @@
 			fileType = "compiled.mach-o.executable";
 			path = plistMerger;
 			remoteRef = 869D00C118D72DD000A41853 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		86BC84C61A037C19009E374E /* test_dialogs */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_dialogs;
+			remoteRef = 86BC84C51A037C19009E374E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1483,6 +1511,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
@@ -1524,6 +1553,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/output/lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = stabs;
