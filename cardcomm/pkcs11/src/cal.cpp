@@ -1756,10 +1756,12 @@ CK_RV cal_get_slot_changes(int *ph)
 					else
 					{
 						pSlot = p11_get_slot(i);
-						if (oReadersInfo->CardPresent(i))
-							pSlot->ievent = 1;
-						else
-							pSlot->ievent = -1;
+						if(pSlot) {
+							if (oReadersInfo->CardPresent(i))
+								pSlot->ievent = 1;
+							else
+								pSlot->ievent = -1;
+						}
 					}
 				}
 			}
