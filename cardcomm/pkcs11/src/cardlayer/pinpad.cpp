@@ -33,10 +33,13 @@ namespace eIDMW
 {
 
 	CPinpad::CPinpad(void)
+	 : m_bNewCard(true), m_ulLangCode(0), m_usReaderFirmVers(0),
+	   m_poContext(NULL), m_hCard(0), m_bUsePinpadLib(false),
+	   m_bCanVerifyUnlock(false), m_ioctlVerifyStart(0),
+	   m_ioctlVerifyFinish(0), m_ioctlVerifyDirect(0),
+	   m_ioctlChangeStart(0), m_ioctlChangeFinish(0),
+	   m_ioctlChangeDirect(0), m_bCanUsePPDU(false)
 	{
-		m_bNewCard = true;
-		m_ulLangCode = 0;
-		m_usReaderFirmVers = 0;
 	}
 
 	void CPinpad::Init(CContext *poContext, SCARDHANDLE hCard,
