@@ -18,6 +18,9 @@ if [[ ($ver == *10.5*) && ($ver < "10.5.6") ]]; then
 			/usr/sbin/installer -pkg $DIRNAME/acsccid_installer_10.7.mpkg -target /
 				else if [[ $ver == *10.9* ]]; then
 					/usr/sbin/installer -pkg $DIRNAME/acsccid_installer_10.9.mpkg -target /
+					else if [[ $ver == *10.10* ]]; then
+						/usr/sbin/installer -pkg $DIRNAME/acsccid_installer_10.9b.mpkg -target /
+					fi
 				fi
 		fi
 	fi
