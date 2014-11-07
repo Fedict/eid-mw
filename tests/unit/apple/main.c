@@ -20,6 +20,8 @@
 #include <stdio.h>
 #include <unix.h>
 #include <pkcs11.h>
+
+#define TEST_NO_ABORT
 #include "testlib.h"
 
 #define run_test(test) { printf("Running %s...\n", #test); switch(test) { \

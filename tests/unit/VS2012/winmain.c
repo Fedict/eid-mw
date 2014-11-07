@@ -23,6 +23,7 @@
 
 #include "stdafx.h"
 #include <stdio.h>
+#define TEST_NO_ABORT
 #include "testlib.h"
 #include "logtest.h"
 
