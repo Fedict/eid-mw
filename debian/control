@@ -29,6 +29,17 @@ Description: PKCS#11 library for Belgian Electronic Identity Card
  Identity card, and a few helper libraries. It handles all low-level
  access to the eID card.
 
+Package: libbeidpkcs11-dbg
+Section: debug
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0
+Description: PKCS#11 library for Belgian Electronic Identity Card - Debug symbols
+ This package contains the debug symbols for the Belgian Electronic
+ Identity Card's PKCS#11 library. It is only useful in case of problems,
+ or possibly when developing an application for the eID.
+
 Package: libbeidpkcs11-dev
 Section: libdevel
 Architecture: any

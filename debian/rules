@@ -21,3 +21,7 @@ override_dh_installexamples:
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V
+
+override_dh_strip:
+	dh_strip -p libbeidpkcs11-0 --dbg-package=libbeidpkcs11-dbg
+	dh_strip -a
