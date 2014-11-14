@@ -71,6 +71,7 @@ CK_BBOOL want_string(char* id, char* label) {
 		ADD_LABEL("duplicata", CK_FALSE);
 		ADD_LABEL("special_organization", CK_FALSE);
 		ADD_LABEL("member_of_family", CK_FALSE);
+		ADD_LABEL("date_and_country_of_protection", CK_TRUE);
 	}
 	if(!strcmp(id, "address")) {
 		ADD_LABEL("ADDRESS_FILE", CK_FALSE);
@@ -104,10 +105,12 @@ TEST_FUNC(readdata) {
 	CK_OBJECT_CLASS klass;
 	int ret;
 
+#ifndef WIN32
 	if(!can_confirm()) {
 		printf("Need the ability to read privacy-sensitive data from the card for this test...\n");
 		return TEST_RV_SKIP;
 	}
+#endif
 
 	check_rv(C_Initialize(NULL_PTR));
 
@@ -164,6 +167,7 @@ TEST_FUNC(readdata) {
 
 		free(label_str);
 		free(value_str);
+		free(objid_str);
 	} while(count);
 
 	check_rv(C_CloseSession(session));
