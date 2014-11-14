@@ -68,6 +68,7 @@
 #define BEID_FIELD_TAG_ID_Duplicata				0x12
 #define BEID_FIELD_TAG_ID_SpecialOrganization	0x13
 #define BEID_FIELD_TAG_ID_MemberOfFamily		0x14
+#define BEID_FIELD_TAG_ID_DateAndCountryOfProtection 0x15
 
 #define BEID_FIELD_TAG_ADDR_Version				0x00
 #define BEID_FIELD_TAG_ADDR_Street				0x01
