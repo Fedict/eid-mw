@@ -175,26 +175,38 @@ CTLV *CTLVBuffer::GetTagData(unsigned char ucTag)
 
 void CTLVBuffer::FillASCIIData(unsigned char ucTag, char *pData, unsigned long *pulLen)
 {
-    CTLV *pTagData = NULL;
-    unsigned long ulLength;
+	CTLV *pTagData = NULL;
+	unsigned long ulLength = 0;
 
-    if((NULL != (pTagData = GetTagData(ucTag))) && (pData != NULL) && (pulLen != NULL) && (*pulLen >= (ulLength = pTagData->GetLength())))
-    {
-        memcpy(pData, pTagData->GetData(), ulLength);
-        *pulLen = ulLength;
-    }
+	if( (NULL != (pTagData = GetTagData(ucTag))) && (pData != NULL) && (pulLen != NULL) )
+	{
+		if( (*pulLen >= (ulLength = pTagData->GetLength())) )
+		{
+			memcpy(pData, pTagData->GetData(), ulLength);
+		}
+		//else: we don't chop off data, so either get it all, or nothing
+	}
+	//tag not present -> *pulLen = 0
+
+	*pulLen = ulLength;
 }
 
 void CTLVBuffer::FillUTF8Data(unsigned char ucTag, char *pData, unsigned long *pulLen)
 {
-    CTLV *pTagData = NULL;
-    unsigned long ulLength;
+	CTLV *pTagData = NULL;
+	unsigned long ulLength = 0;
 
-    if((NULL != (pTagData = GetTagData(ucTag)))&& (pData != NULL) && (pulLen != NULL) && (*pulLen >= (ulLength = pTagData->GetLength())))
-    {
-        memcpy(pData, pTagData->GetData(), ulLength);
-        *pulLen = ulLength;
-    }
+	if( (NULL != (pTagData = GetTagData(ucTag))) && (pData != NULL) && (pulLen != NULL) )
+	{
+		if( (*pulLen >= (ulLength = pTagData->GetLength())))
+		{
+			memcpy(pData, pTagData->GetData(), ulLength);
+		}
+		//else: we don't chop off data, so either get it all, or nothing
+	}
+	//tag not present -> *pulLen = 0
+
+	*pulLen = ulLength;
 }
 
 void CTLVBuffer::FillBinaryStringData(unsigned char ucTag, char *pData, unsigned long *pulLen)
