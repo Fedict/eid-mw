@@ -22,6 +22,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "tlvbuffer.h"
+#include <assert.h>
 
 namespace eIDMW
 {
@@ -178,7 +179,9 @@ void CTLVBuffer::FillASCIIData(unsigned char ucTag, char *pData, unsigned long *
 	CTLV *pTagData = NULL;
 	unsigned long ulLength = 0;
 
-	if( (NULL != (pTagData = GetTagData(ucTag))) && (pData != NULL) && (pulLen != NULL) )
+	assert(pulLen != NULL);
+
+	if( (NULL != (pTagData = GetTagData(ucTag))) && (pData != NULL) )
 	{
 		if( (*pulLen >= (ulLength = pTagData->GetLength())) )
 		{
@@ -196,7 +199,9 @@ void CTLVBuffer::FillUTF8Data(unsigned char ucTag, char *pData, unsigned long *p
 	CTLV *pTagData = NULL;
 	unsigned long ulLength = 0;
 
-	if( (NULL != (pTagData = GetTagData(ucTag))) && (pData != NULL) && (pulLen != NULL) )
+	assert(pulLen != NULL);
+
+	if( (NULL != (pTagData = GetTagData(ucTag))) && (pData != NULL) )
 	{
 		if( (*pulLen >= (ulLength = pTagData->GetLength())))
 		{
