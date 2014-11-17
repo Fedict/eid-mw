@@ -327,7 +327,35 @@ void GetProcessName(wchar_t *wBuffer,unsigned long ulLen)
 		CloseHandle(hProcess);
 		FreeLibrary(hLibrary);
 #elif defined __APPLE__
-        ProcessSerialNumber xPSN = {kNoProcess, kCurrentProcess};
+        
+        CFBundleRef thisBundle = CFBundleGetMainBundle();
+        if(thisBundle != NULL)
+        {
+            CFURLRef thisurl = CFBundleCopyExecutableURL ( thisBundle );
+            if(thisurl != NULL)
+            {
+                UInt8 csPath[250];
+                UInt8 csPathLen = sizeof(csPath);
+                CFIndex index = CFURLGetBytes ( thisurl, csPath, csPathLen );
+                if(index != -1)
+                {
+                    if(index < csPathLen)
+                    {
+                        csPath[index]='\0';
+                    }
+                    else
+                    {
+                        csPath[csPathLen -1]='\0';
+                    }
+                    std::string strPath = (char *) csPath;
+                    wcscpy_s(wBuffer, ulLen, utilStringWiden(strPath).c_str());
+            
+                }
+                CFRelease(thisurl);
+            }
+        }
+        
+ /*       ProcessSerialNumber xPSN = {kNoProcess, kCurrentProcess};
 	FSRef location;
         OSStatus ret = GetProcessBundleLocation (&xPSN, &location);
         if (noErr == ret)
@@ -339,7 +367,7 @@ void GetProcessName(wchar_t *wBuffer,unsigned long ulLen)
 			std::string strPath = (char *) csPath;
 			wcscpy_s(wBuffer, ulLen, utilStringWiden(strPath).c_str());
 		}
-        }
+        }*/
 #else
 	char linkname[64]; /* /proc/<pid>/exe */
 	pid_t pid;

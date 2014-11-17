@@ -14,49 +14,139 @@
 #include "language.h"
 #include "langutil.h"
 
+using namespace eIDMW;
+
 void DisplayButtonPressed(eIDMW::DlgRet dlgret);
+
+void DisplayAllModalCombinations();
+void DisplayAllAskPinCombinations();
+void DisplayAllPinpadInfoCombinations();
+void DisplayAllBadPinCombinations();
+//void DisplayAllChangePinCombinations();
 
 int main(int argc, char **argv, char **envp, char **apple)
 {
-    eIDMW::tLanguage lang = eIDMW::LANG_NL;
+    eIDMW::tLanguage lang = eIDMW::LANG_NL; //  LANG_EN=0,LANG_NL=1,LANG_FR=2,LANG_DE=3
     
-    eIDMW::CLang::SetLang(lang); //  LANG_EN=0,LANG_NL=1,LANG_FR=2,LANG_DE=3
-    //DLG_PIN_AUTH
-    eIDMW::DlgPinUsage usage = eIDMW::DLG_PIN_SIGN;//eIDMW::DLG_PIN_AUTH;//
-    const wchar_t *wsPinName = L"PIN";
-    const wchar_t *wsReader = L"SmartCardReaderX";
-    const wchar_t *wsMessage = L"The message given";
-    unsigned long ulRemainingTries = 3;
-    eIDMW::DlgPinOperation operation =  eIDMW::DLG_PIN_OP_VERIFY;//	DLG_PIN_OP_VERIFY,DLG_PIN_OP_CHANGE,DLG_PIN_OP_UNBLOCK_NO_CHANGE,DLG_PIN_OP_UNBLOCK_CHANGE,
-    eIDMW::DlgPinInfo pinInfo;
+    eIDMW::CLang::SetLang(lang);
+  
+    DisplayAllModalCombinations();
+    DisplayAllAskPinCombinations();
+    DisplayAllPinpadInfoCombinations();
+    DisplayAllBadPinCombinations();
+    
+    // insert code here...
+    CFShow(CFSTR("The end has been reached\n"));
+    return 0;
+}
+
+struct ModalDialogCombo
+{
+    DlgIcon icon;
+    DlgMessageID messageID;
+    unsigned char ulButtons;
+    unsigned char ulEnterButton;
+    unsigned char ulCancelButton;
+};
+
+void DisplayAllModalCombinations()
+{
+    //	DLG_ICON_NONE,DLG_ICON_INFO,DLG_ICON_WARN,DLG_ICON_ERROR,DLG_ICON_QUESTION,
+    //DLG_MESSAGE_NONE, DLG_MESSAGE_TESTCARD, DLG_MESSAGE_ENTER_CORRECT_CARD, DLG_MESSAGE_USER_WARNING, DLG_MESSAGE_SDK35_WARNING,
+
+    ModalDialogCombo allModalDialogCombos[] = {
+        { DLG_ICON_WARN, DLG_MESSAGE_SDK35_WARNING, DLG_BUTTON_OK, DLG_BUTTON_OK, DLG_BUTTON_NO}, //OLD SDK
+        { DLG_ICON_WARN, DLG_MESSAGE_USER_WARNING, DLG_BUTTON_ALWAYS | DLG_BUTTON_YES | DLG_BUTTON_NO, DLG_BUTTON_NO, DLG_BUTTON_YES}, //PRIVACY POPUP
+        { DLG_ICON_ERROR, DLG_MESSAGE_ENTER_CORRECT_CARD, DLG_BUTTON_OK, DLG_BUTTON_OK, DLG_BUTTON_NO}}; //WRONG CARD
+    
+    DlgRet dlgret;
+
+    unsigned long ulNrOfCombos = sizeof(allModalDialogCombos) / sizeof(ModalDialogCombo);
+    
+    unsigned char counter;
+    for (counter = 0; counter < ulNrOfCombos; counter++) {
+        dlgret = DlgDisplayModal(allModalDialogCombos[counter].icon, allModalDialogCombos[counter].messageID, L"",
+                                 allModalDialogCombos[counter].ulButtons, allModalDialogCombos[counter].ulEnterButton,
+                                 allModalDialogCombos[counter].ulCancelButton);
+        DisplayButtonPressed(dlgret);
+    }
+}
+
+struct VerifyPinDialogCombo
+{
+    DlgPinUsage usage;
+    const wchar_t *wsPinName;
+    const wchar_t *wsReader;
+    const wchar_t *wsMessage;
+    unsigned long ulRemainingTries;
+    DlgPinOperation operation;//	DLG_PIN_OP_VERIFY,DLG_PIN_OP_CHANGE,DLG_PIN_OP_UNBLOCK_NO_CHANGE,DLG_PIN_OP_UNBLOCK_CHANGE,
+};
+
+void DisplayAllAskPinCombinations()
+{
+    DlgPinInfo pinInfo;
     pinInfo.ulFlags = 0;
     pinInfo.ulMinLen = 4;
     pinInfo.ulMaxLen = 12;
     wchar_t wsPin[12];
     unsigned long ulPinBufferLen = 12;
-    //	DLG_ICON_NONE,DLG_ICON_INFO,DLG_ICON_WARN,DLG_ICON_ERROR,DLG_ICON_QUESTION,
-    eIDMW::DlgIcon icon = eIDMW::DLG_ICON_WARN;
-    eIDMW::DlgMessageID messageID = eIDMW::DLG_MESSAGE_SDK35_WARNING;//DLG_MESSAGE_NONE, DLG_MESSAGE_TESTCARD, DLG_MESSAGE_ENTER_CORRECT_CARD, DLG_MESSAGE_USER_WARNING, DLG_MESSAGE_SDK35_WARNING,
     
-    unsigned char ulButtons = eIDMW::DLG_BUTTON_ALWAYS | eIDMW::DLG_BUTTON_YES | eIDMW::DLG_BUTTON_NO;
+    VerifyPinDialogCombo allAskPinCombos[] = {
+        { DLG_PIN_SIGN,  L"PIN", NULL, NULL, 3, DLG_PIN_OP_VERIFY},
+        { DLG_PIN_AUTH,  L"PIN", NULL, NULL, 3, DLG_PIN_OP_VERIFY},
+        { DLG_PIN_SIGN,  L"PIN", NULL, NULL, 0, DLG_PIN_OP_VERIFY},
+        { DLG_PIN_AUTH,  L"PIN", NULL, NULL, 0, DLG_PIN_OP_VERIFY} };
     
+    DlgRet dlgret;
     
-    eIDMW::DlgRet dlgret = eIDMW::DlgDisplayPinpadInfo( operation, wsReader, usage, wsPinName, wsMessage, NULL);
-    DisplayButtonPressed(dlgret);
+    unsigned long ulNrOfCombos = sizeof(allAskPinCombos) / sizeof(VerifyPinDialogCombo);
     
-    //dlgret =  eIDMW::DlgDisplayModal(icon,messageID, L"Message to be displayed", ulButtons, '0','0');
-    //DisplayButtonPressed(dlgret);
-    
-    dlgret =  eIDMW::DlgAskPin(operation,usage, wsPinName,pinInfo, wsPin, ulPinBufferLen);
-    DisplayButtonPressed(dlgret);
-    
-    dlgret = eIDMW::DlgBadPin(usage, wsPinName, ulRemainingTries);
-    DisplayButtonPressed(dlgret);
-    
+    unsigned char counter;
+    for (counter = 0; counter < ulNrOfCombos; counter++) {
+        dlgret = DlgAskPin(allAskPinCombos[counter].operation, allAskPinCombos[counter].usage, allAskPinCombos[counter].wsPinName,
+                                 pinInfo, wsPin, ulPinBufferLen);
+        DisplayButtonPressed(dlgret);
+    }
+}
 
-    // insert code here...
-    CFShow(CFSTR("Hello, World!\n"));
-    return 0;
+void DisplayAllPinpadInfoCombinations()
+{
+    VerifyPinDialogCombo allPinpadInfoCombos[] = {
+        { DLG_PIN_SIGN,  L"PIN",  L"SmartCardReaderX",  L"The message given", 3, DLG_PIN_OP_VERIFY},
+        { DLG_PIN_AUTH,  L"PIN",  L"SmartCardReaderX",  L"The message given", 3, DLG_PIN_OP_VERIFY},
+        { DLG_PIN_SIGN,  L"PIN",  L"SmartCardReaderX",  L"The message given", 0, DLG_PIN_OP_VERIFY},
+        { DLG_PIN_AUTH,  L"PIN",  L"SmartCardReaderX",  L"The message given", 0, DLG_PIN_OP_VERIFY} };
+    
+    DlgRet dlgret;
+    
+    unsigned long ulNrOfCombos = sizeof(allPinpadInfoCombos) / sizeof(VerifyPinDialogCombo);
+    
+    unsigned char counter;
+    for (counter = 0; counter < ulNrOfCombos; counter++) {
+        dlgret = DlgDisplayPinpadInfo( allPinpadInfoCombos[counter].operation, allPinpadInfoCombos[counter].wsReader,
+                                      allPinpadInfoCombos[counter].usage, allPinpadInfoCombos[counter].wsPinName,
+                                      allPinpadInfoCombos[counter].wsMessage, NULL);
+        DisplayButtonPressed(dlgret);
+    }
+}
+
+void DisplayAllBadPinCombinations()
+{
+    VerifyPinDialogCombo allBadPinCombos[] = {
+        { DLG_PIN_SIGN,  L"PIN", NULL, NULL, 3, DLG_PIN_OP_VERIFY},
+        { DLG_PIN_AUTH,  L"PIN", NULL, NULL, 3, DLG_PIN_OP_VERIFY},
+        { DLG_PIN_SIGN,  L"PIN", NULL, NULL, 0, DLG_PIN_OP_VERIFY},
+        { DLG_PIN_AUTH,  L"PIN", NULL, NULL, 0, DLG_PIN_OP_VERIFY} };
+    
+    DlgRet dlgret;
+    
+    unsigned long ulNrOfCombos = sizeof(allBadPinCombos) / sizeof(VerifyPinDialogCombo);
+    
+    unsigned char counter;
+    for (counter = 0; counter < ulNrOfCombos; counter++) {
+        dlgret = DlgBadPin(allBadPinCombos[counter].usage, allBadPinCombos[counter].wsPinName, allBadPinCombos[counter].ulRemainingTries);
+        DisplayButtonPressed(dlgret);
+    }
 }
 
 void DisplayButtonPressed(eIDMW::DlgRet dlgret)

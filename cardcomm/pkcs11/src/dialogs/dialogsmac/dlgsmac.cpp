@@ -49,7 +49,7 @@ typedef std::map<unsigned long, CFUserNotificationRef> TD_MCPINPAD_MAP;
 TD_MCPINPAD_MAP mc_pinpad_map;
 unsigned long mc_pinpad_map_index = 0;
 
-CFStringRef CreateStringFromLangFile(const wchar_t * wcsMessage)
+CFStringRef CreateStringFromWChar(const wchar_t * wcsMessage)
 {
     char messagechar[256];
     
@@ -65,6 +65,50 @@ CFStringRef CreateStringFromLangFile(const wchar_t * wcsMessage)
                                     kCFStringEncodingUTF8,
                                     false
                                     );
+}
+
+void AppendToStringFromWChar(CFMutableStringRef mutableString, const wchar_t * wcsMessage)
+{
+    char messagechar[256];
+    
+    if(wcsMessage != NULL)
+    {
+    wcstombs(messagechar,wcsMessage,sizeof(messagechar));
+    messagechar[255]='\0';
+    
+    CFStringRef tmpString = CFStringCreateWithBytes (
+                                    kCFAllocatorDefault,
+                                    (const UInt8 *)messagechar,
+                                    strlen(messagechar),
+                                    kCFStringEncodingUTF8,
+                                    false
+                                    );
+    
+    CFStringAppend(mutableString, tmpString);
+    CFRelease(tmpString);
+    }
+}
+
+void AppendButtonToArrays (unsigned char ulButtons, unsigned char ulButtonToAdd,
+                                   CFMutableArrayRef mutArrayKeys,CFMutableArrayRef mutArrayValues,
+                                   CFStringRef buttonTitleKey)
+{
+    if(ulButtonToAdd & ulButtons)
+    {
+        CFArrayAppendValue(mutArrayKeys, buttonTitleKey);
+        //DLG_BUTTON_ALWAYS | DLG_BUTTON_YES | DLG_BUTTON_NO
+        switch (ulButtonToAdd) {
+            case DLG_BUTTON_YES:
+                CFArrayAppendValue(mutArrayValues, CreateStringFromWChar(GETSTRING_DLG(Yes)) );
+                break;
+            case DLG_BUTTON_NO:
+                CFArrayAppendValue(mutArrayValues, CreateStringFromWChar(GETSTRING_DLG(No)) );
+                break;
+            default:
+                CFArrayAppendValue(mutArrayValues, CreateStringFromWChar(GETSTRING_DLG(Ok)) );
+                break;
+        }
+    }
 }
 
 
@@ -87,7 +131,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
     try {
         
         //create header text
-        CFStringRef headerString = CreateStringFromLangFile(GETSTRING_DLG(EnterYourPin));
+        CFStringRef headerString = CreateStringFromWChar(GETSTRING_DLG(EnterYourPin));
         
         //create title text and url
         CFStringRef IconURLString = NULL;
@@ -95,19 +139,19 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
         {
             optionFlags |= kCFUserNotificationCautionAlertLevel;
             wcsTitle=GETSTRING_DLG(SigningWith);
-            IconURLString = CreateStringFromLangFile(L"Users/Frederik/4_0_7_QT45/eid-mw/_src/eidmw/dialogs/dialogsQTsrv/Resources/ICO_CARD_DIGSIG_128x128.png");
+            IconURLString = CreateStringFromWChar(L"Users/Frederik/4_0_7_QT45/eid-mw/_src/eidmw/dialogs/dialogsQTsrv/Resources/ICO_CARD_DIGSIG_128x128.png");
         }
         else
         {
             optionFlags |= kCFUserNotificationPlainAlertLevel;
             wcsTitle=GETSTRING_DLG(Asking);
-            IconURLString = CreateStringFromLangFile(L"Users/Frederik/4_0_7_QT45/eid-mw/_src/eidmw/dialogs/dialogsQTsrv/Resources/ICO_CARD_PIN_128x128.png");
+            IconURLString = CreateStringFromWChar(L"Users/Frederik/4_0_7_QT45/eid-mw/_src/eidmw/dialogs/dialogsQTsrv/Resources/ICO_CARD_PIN_128x128.png");
         }
         wcstombs(titlechar,wcsTitle,sizeof(titlechar));
         titlechar[255]='\0';
         
         CFURLRef urlRef = CFURLCreateWithString ( kCFAllocatorDefault, IconURLString, NULL );
-        
+        if(urlRef == NULL)
         
         textLen = strlen(titlechar);
         //need room for space and pin name
@@ -128,13 +172,13 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
                                                            );
         
         //create message text
-        CFStringRef messageString = CreateStringFromLangFile(GETSTRING_DLG(Pin));
+        CFStringRef messageString = CreateStringFromWChar(GETSTRING_DLG(Pin));
         
         //create default button text
-        CFStringRef defaultButtonString = CreateStringFromLangFile(GETSTRING_DLG(Ok));
+        CFStringRef defaultButtonString = CreateStringFromWChar(GETSTRING_DLG(Ok));
         
         //create alternate (cancel) button text
-        CFStringRef alternateButtonString = CreateStringFromLangFile(GETSTRING_DLG(Cancel));
+        CFStringRef alternateButtonString = CreateStringFromWChar(GETSTRING_DLG(Cancel));
         
         const void* keys[] = {kCFUserNotificationAlertHeaderKey,
             kCFUserNotificationAlertMessageKey,
@@ -224,27 +268,23 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
                                     DlgPinUsage usage, const wchar_t *wsPinName,
                                     unsigned long ulRemainingTries)
 {
-    
     DlgRet lRet = DLG_CANCEL;
-	//CFArrayRef titlesArray;
-    CFMutableStringRef headerString;
-    CFMutableStringRef titleString;
-    CFMutableStringRef textString;
+
+    CFMutableStringRef headerString = NULL;
+    CFMutableStringRef titleString = NULL;
     CFStringRef defButtonString = NULL;
     CFStringRef altButtonString = NULL;
-    CFStringRef othButtonString = NULL;
     
 	std::string csReadableFilePath;
-    //const wchar_t * Title;
-	CFUserNotificationRef userNotificationRef;
+	CFUserNotificationRef userNotificationRef = NULL;
 	SInt32 error = 0;
-    //char titlechar[256];
 	CFOptionFlags optionFlags;
     CFOptionFlags responseFlags;
     
     optionFlags = kCFUserNotificationCautionAlertLevel;
-    CFMutableArrayRef mutArrayKeys;
-    CFMutableArrayRef mutArrayValues;
+    CFMutableArrayRef mutArrayKeys = NULL;
+    CFMutableArrayRef mutArrayValues = NULL;
+    CFDictionaryRef parameters = NULL;
 
     void* keys[BEID_MAX_MESSAGE_ARRAY_LEN];
     void* values[BEID_MAX_MESSAGE_ARRAY_LEN];
@@ -260,54 +300,53 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
                                                NULL//const CFArrayCallBacks *callBacks
                                                );
         
+        //create header string
         headerString = CFStringCreateMutable(kCFAllocatorDefault, 0);
-        CFStringAppendCharacters(headerString,(const UniChar *)GETSTRING_DLG(Notification), wcslen(GETSTRING_DLG(Notification)));
+        AppendToStringFromWChar(headerString, GETSTRING_DLG(Notification));
         CFStringAppend(headerString, CFSTR(": "));
-        CFStringAppendCharacters(headerString,(const UniChar *)GETSTRING_DLG(Bad), wcslen(GETSTRING_DLG(Bad)));
+        AppendToStringFromWChar(headerString, GETSTRING_DLG(Bad));
         CFStringAppend(headerString, CFSTR(" "));
-        CFStringAppendCharacters(headerString,(const UniChar *)wsPinName, wcslen(wsPinName));
+        AppendToStringFromWChar(headerString, wsPinName);
         
+        //create title string
         titleString = CFStringCreateMutable(kCFAllocatorDefault, 0);
-        CFStringAppendCharacters(titleString,(const UniChar *)GETSTRING_DLG(Bad), wcslen(GETSTRING_DLG(Bad)));
+        AppendToStringFromWChar(titleString, GETSTRING_DLG(Bad));
         CFStringAppend(titleString, CFSTR(" "));
-        CFStringAppendCharacters(titleString,(const UniChar *)wsPinName, wcslen(wsPinName));
+        AppendToStringFromWChar(titleString, wsPinName);
         CFStringAppend(titleString, CFSTR(": "));
+        
         CFDictionaryRef formatOptions = NULL;
         CFStringAppendFormat(titleString, formatOptions, CFSTR("%lu"), ulRemainingTries);
         CFStringAppend(titleString, CFSTR(" "));
-        CFStringAppendCharacters(titleString,(const UniChar *)GETSTRING_DLG(RemainingAttempts), wcslen(GETSTRING_DLG(RemainingAttempts)));
-        CFStringAppend(titleString, CFSTR(" "));
+        AppendToStringFromWChar(titleString, GETSTRING_DLG(RemainingAttempts));
+        CFStringAppend(titleString, CFSTR("\n\n"));
         
-        textString = CFStringCreateMutable(kCFAllocatorDefault, 0);
         if( ulRemainingTries == 0 )
         {
-            CFStringAppendCharacters(textString,(const UniChar *)wsPinName, wcslen(wsPinName));
-            CFStringAppend(textString, CFSTR(" "));
-            CFStringAppendCharacters(textString,(const UniChar *)GETSTRING_DLG(PinBlocked), wcslen(GETSTRING_DLG(PinBlocked)));
-            CFArrayAppendValue(mutArrayValues, textString);
-            altButtonString = CFStringCreateWithCharacters(kCFAllocatorDefault, (const UniChar *)GETSTRING_DLG(Cancel), wcslen(GETSTRING_DLG(Cancel)));
-            othButtonString = CFStringCreateWithCharacters(kCFAllocatorDefault, (const UniChar *)GETSTRING_DLG(Retry), wcslen(GETSTRING_DLG(Retry)));
-            
-            CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlternateButtonTitleKey);
-            CFArrayAppendValue(mutArrayValues, altButtonString);
-            CFArrayAppendValue(mutArrayKeys, kCFUserNotificationOtherButtonTitleKey);
-            CFArrayAppendValue(mutArrayValues, othButtonString);
-        }
-        else
-        {
-            CFStringAppendCharacters(textString,(const UniChar *)GETSTRING_DLG(TryAgainOrCancel), wcslen(GETSTRING_DLG(TryAgainOrCancel)));
-            defButtonString = CFStringCreateWithCharacters(kCFAllocatorDefault, (const UniChar *)GETSTRING_DLG(Ok), wcslen(GETSTRING_DLG(Ok)));
+            AppendToStringFromWChar(titleString, wsPinName);
+            CFStringAppend(titleString, CFSTR(" "));
+            AppendToStringFromWChar(titleString, GETSTRING_DLG(PinBlocked));
+            defButtonString = CreateStringFromWChar(GETSTRING_DLG(Ok));
+       
             CFArrayAppendValue(mutArrayKeys, kCFUserNotificationDefaultButtonTitleKey);
             CFArrayAppendValue(mutArrayValues, defButtonString);
         }
-        CFStringAppendCharacters(textString,(const UniChar *)GETSTRING_DLG(Notification), wcslen(GETSTRING_DLG(Notification)));
-        
+        else
+        {
+            AppendToStringFromWChar(titleString, GETSTRING_DLG(TryAgainOrCancel));
+            defButtonString = CreateStringFromWChar(GETSTRING_DLG(Cancel));
+            altButtonString = CreateStringFromWChar(GETSTRING_DLG(Retry));
+            
+            CFArrayAppendValue(mutArrayKeys, kCFUserNotificationDefaultButtonTitleKey);
+            CFArrayAppendValue(mutArrayValues, defButtonString);
+            CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlternateButtonTitleKey);
+            CFArrayAppendValue(mutArrayValues, altButtonString);
+        }
+   
         CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlertHeaderKey);
-        CFArrayAppendValue(mutArrayKeys, kCFUserNotificationTextFieldTitlesKey);
-        CFArrayAppendValue(mutArrayKeys, kCFUserNotificationTextFieldValuesKey);
+        CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlertMessageKey);
         CFArrayAppendValue(mutArrayValues, headerString);
         CFArrayAppendValue(mutArrayValues, titleString);
-        CFArrayAppendValue(mutArrayValues, textString);
         
         //ui.lblIcon->setPixmap( QPixmap( ":/Resources/ICO_CARD_NOK_64x64.png" ) );
         
@@ -319,7 +358,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
         range.location = 0;
         CFArrayGetValues (mutArrayKeys, range,(const void**)keys);
         
-        CFDictionaryRef parameters = CFDictionaryCreate(0, (const void**)keys, (const void**)values,
+        parameters = CFDictionaryCreate(0, (const void**)keys, (const void**)values,
                                                         CFArrayGetCount(mutArrayKeys), NULL,
                                                         NULL);
         
@@ -353,23 +392,25 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
                 lRet = DLG_CANCEL;
         }
         
-        CFRelease(userNotificationRef);
         
-        CFRelease(headerString);
-        CFRelease(titleString);
-        CFRelease(textString);
-        CFRelease(mutArrayKeys);
+        if(mutArrayKeys != NULL)
+            CFRelease(mutArrayKeys);
+        if(mutArrayValues != NULL)
+            CFRelease(mutArrayValues);
+        if(userNotificationRef != NULL)
+            CFRelease(userNotificationRef);
+        if(parameters != NULL)
+            CFRelease(parameters);
         
+        if(headerString != NULL)
+            CFRelease(headerString);
+        if(titleString != NULL)
+            CFRelease(titleString);
         if(defButtonString != NULL)
             CFRelease(defButtonString);
-        if(othButtonString != NULL)
-            CFRelease(othButtonString);
         if(altButtonString != NULL)
             CFRelease(altButtonString);
         
-        CFRelease(mutArrayKeys);
-        CFRelease(mutArrayValues);
-        CFRelease(parameters);
     } catch (...) {
         return DLG_ERR;
     }
@@ -390,12 +431,27 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
 	std::string csReadableFilePath;
 	CFUserNotificationRef userNotificationRef;
 	SInt32 error = 0;
-    char datachar[256];
+    char datachar[512];
+    UInt32 datacharlen = sizeof(datachar);
 	CFOptionFlags optionFlags;
     CFOptionFlags responseFlags;
+    CFStringRef tittleStrRef;
     
-    const void* keys[] = {kCFUserNotificationAlertMessageKey};
-    
+    void* keys[BEID_MAX_MESSAGE_ARRAY_LEN];   //to store the keys
+    void* values[BEID_MAX_MESSAGE_ARRAY_LEN]; //to store the values
+    CFRange range;
+    try {
+    //to create the array of keys
+    CFMutableArrayRef mutArrayKeys = CFArrayCreateMutable (kCFAllocatorDefault,
+                                             BEID_MAX_MESSAGE_ARRAY_LEN,//CFIndex capacity,
+                                             NULL//const CFArrayCallBacks *callBacks
+                                             );
+    //to create the array of values
+    CFMutableArrayRef mutArrayValues = CFArrayCreateMutable (kCFAllocatorDefault,
+                                               BEID_MAX_MESSAGE_ARRAY_LEN,//CFIndex capacity,
+                                               NULL//const CFArrayCallBacks *callBacks
+                                               );
+        
     switch (icon) {
         case DLG_ICON_ERROR:
             optionFlags = kCFUserNotificationStopAlertLevel;
@@ -413,16 +469,18 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
             break;
     }
     
-    if(wcslen(csMesg)==0)
+    if( csMesg == NULL)
     {
-        std::wstring translatedMessage(CLang::GetMessageFromID(messageID));
-        wcstombs(datachar,translatedMessage.c_str(),sizeof(datachar));
+        tittleStrRef = CreateStringFromWChar(L"");
     }
     else
     {
-        wcstombs(datachar,csMesg,sizeof(datachar));
+        tittleStrRef = CreateStringFromWChar(csMesg);
     }
-    datachar[255]='\0';
+    std::wstring translatedMessage(CLang::GetMessageFromID(messageID));
+    wcstombs(datachar,translatedMessage.c_str(),sizeof(datachar));
+    
+    datachar[datacharlen-1]='\0';
     
     CFStringRef datacharRefBytes = CFStringCreateWithBytes (
 															kCFAllocatorDefault,
@@ -431,21 +489,48 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
 															kCFStringEncodingUTF8,
 															false
 															);
-	
-    const void* values[] = {datacharRefBytes};
     
-	CFDictionaryRef parameters = CFDictionaryCreate(0, keys, values,
-													sizeof(keys)/sizeof(*keys), NULL,
-													NULL);
-    
+    //always display tittle
+    CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlertHeaderKey);
+    CFArrayAppendValue(mutArrayValues, tittleStrRef);
+    //always display message
+    CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlertMessageKey);
+    CFArrayAppendValue(mutArrayValues, datacharRefBytes);
+        
+    //check which buttons are requested to be shown
+    //ulEnterButton is the one on the right, only show it when part of the button list
+    AppendButtonToArrays (ulButtons, ulEnterButton, mutArrayKeys, mutArrayValues,
+                              kCFUserNotificationDefaultButtonTitleKey);
+        
+    //ulCancelButton is the one on the left
+    AppendButtonToArrays (ulButtons, ulCancelButton, mutArrayKeys, mutArrayValues,
+                              kCFUserNotificationAlternateButtonTitleKey);
+        
+    if(ulButtons & DLG_BUTTON_ALWAYS)
+    {
+        CFArrayAppendValue(mutArrayKeys, kCFUserNotificationOtherButtonTitleKey);
+        CFArrayAppendValue(mutArrayValues, CreateStringFromWChar(GETSTRING_DLG(Always)) );
+    }
+        
+    range.length = CFArrayGetCount(mutArrayValues);
+    range.location = 0;
+    CFArrayGetValues (mutArrayValues, range,(const void**)values);
+        
+    range.length = CFArrayGetCount(mutArrayKeys);
+    range.location = 0;
+    CFArrayGetValues (mutArrayKeys, range,(const void**)keys);
+        
+    CFDictionaryRef parameters = CFDictionaryCreate(0, (const void**)keys, (const void**)values,
+                                        CFArrayGetCount(mutArrayKeys), NULL,
+                                        NULL);
+        
 	userNotificationRef = CFUserNotificationCreate (kCFAllocatorDefault, //CFAllocatorRef allocator,
 													30, //CFTimeInterval timeout,
 													optionFlags,//CFOptionFlags flags,
 													&error,//SInt32 *error,
 													parameters);//CFDictionaryRef dictionary
 	
-    error = CFUserNotificationReceiveResponse (
-                                              userNotificationRef,//CFUserNotificationRef userNotification,
+    error = CFUserNotificationReceiveResponse (userNotificationRef,//CFUserNotificationRef userNotification,
                                               0,//CFTimeInterval timeout,
                                               &responseFlags//CFOptionFlags responseFlags
                                               );
@@ -486,11 +571,16 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
                 lRet = DLG_CANCEL;
         }
     }
+    CFRelease(tittleStrRef);
+    CFRelease(datacharRefBytes);
+    CFRelease(mutArrayKeys);
+    CFRelease(mutArrayValues);
+    CFRelease(parameters);
     CFRelease(userNotificationRef);
-    
-	//CFRelease(titlesArray);
-	CFRelease(parameters);
-    
+    }
+    catch (...) {
+        return DLG_ERR;
+    }
     return lRet;
 }
 
