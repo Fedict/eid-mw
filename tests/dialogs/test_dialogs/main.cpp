@@ -16,7 +16,8 @@
 
 using namespace eIDMW;
 
-void DisplayButtonPressed(eIDMW::DlgRet dlgret);
+void DisplayButtonPressed(DlgRet dlgret);
+void DisplayPINPressed(DlgRet dlgret, wchar_t* wsPin, unsigned long ulPinBufferLen);
 
 void DisplayAllModalCombinations();
 void DisplayAllAskPinCombinations();
@@ -26,9 +27,9 @@ void DisplayAllBadPinCombinations();
 
 int main(int argc, char **argv, char **envp, char **apple)
 {
-    eIDMW::tLanguage lang = eIDMW::LANG_NL; //  LANG_EN=0,LANG_NL=1,LANG_FR=2,LANG_DE=3
+    tLanguage lang = LANG_NL; //  LANG_EN=0,LANG_NL=1,LANG_FR=2,LANG_DE=3
     
-    eIDMW::CLang::SetLang(lang);
+    CLang::SetLang(lang);
   
     DisplayAllModalCombinations();
     DisplayAllAskPinCombinations();
@@ -106,6 +107,7 @@ void DisplayAllAskPinCombinations()
         dlgret = DlgAskPin(allAskPinCombos[counter].operation, allAskPinCombos[counter].usage, allAskPinCombos[counter].wsPinName,
                                  pinInfo, wsPin, ulPinBufferLen);
         DisplayButtonPressed(dlgret);
+        DisplayPINPressed(dlgret, wsPin, ulPinBufferLen);
     }
 }
 
@@ -149,7 +151,22 @@ void DisplayAllBadPinCombinations()
     }
 }
 
-void DisplayButtonPressed(eIDMW::DlgRet dlgret)
+void DisplayPINPressed(DlgRet dlgret, wchar_t* wsPin, unsigned long ulPinBufferLen)
+{
+    CFIndex numChars = ulPinBufferLen;
+    CFStringRef strPin = CFStringCreateWithCharacters(kCFAllocatorDefault, (const UniChar*)wsPin, numChars);
+    switch (dlgret) {
+        case DLG_OK:
+        case DLG_YES:
+            CFShow(strPin);
+            break;
+        default:
+            CFShow(CFSTR("check dialog return value\n"));
+            break;
+    }
+}
+
+void DisplayButtonPressed(DlgRet dlgret)
 {
     switch (dlgret) {
         case eIDMW::DLG_OK:
