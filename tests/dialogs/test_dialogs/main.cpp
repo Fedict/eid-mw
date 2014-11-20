@@ -27,16 +27,19 @@ void DisplayAllBadPinCombinations();
 
 int main(int argc, char **argv, char **envp, char **apple)
 {
-    tLanguage lang = LANG_NL; //  LANG_EN=0,LANG_NL=1,LANG_FR=2,LANG_DE=3
+    tLanguage lang[] = {LANG_EN,LANG_NL,LANG_FR,LANG_DE};
+    unsigned long counter = 0;
+    size_t langLen = sizeof(lang)/sizeof(tLanguage);
     
-    CLang::SetLang(lang);
+    for (; counter < langLen; counter++) {
+        CLang::SetLang(lang[counter]);
   
-    DisplayAllModalCombinations();
-    DisplayAllAskPinCombinations();
-    DisplayAllPinpadInfoCombinations();
-    DisplayAllBadPinCombinations();
-    
-    // insert code here...
+        DisplayAllModalCombinations();
+        DisplayAllAskPinCombinations();
+        DisplayAllPinpadInfoCombinations();
+        DisplayAllBadPinCombinations();
+    }
+
     CFShow(CFSTR("The end has been reached\n"));
     return 0;
 }
