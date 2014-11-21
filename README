@@ -1,7 +1,7 @@
 beid MiddleWare installation
 ----------------------------
 
-I. Code from svn repository:
+I. Code from git repository:
 ============================
 
 - Make sure you have libtool 2.2.7c or above, autoconf and automake installed, and in your $PATH
