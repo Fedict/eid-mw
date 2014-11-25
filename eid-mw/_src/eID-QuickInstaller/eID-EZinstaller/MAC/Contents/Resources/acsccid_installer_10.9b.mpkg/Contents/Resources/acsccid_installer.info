@@ -11,7 +11,7 @@ Version	1.0.6
 #
 # MetaPackage Description
 #
-Description	Installs acsccid and pcscd_autostart packages.
+Description	Installs acsccid package.
 
 #
 # Where to search for packages. For a real release, this would
