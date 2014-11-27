@@ -214,7 +214,6 @@ int main(int argc, char** argv) {
 	builder = gtk_builder_new();
 	gtk_builder_add_from_string(builder, ABOUT_GLADE_STRING, strlen(ABOUT_GLADE_STRING), NULL);
 	window = GTK_WIDGET(gtk_builder_get_object(builder, "window"));
-	gtk_widget_show_all(window);
 
 	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
 	g_signal_connect(G_OBJECT(gtk_builder_get_object(builder, "quitbtn")), "clicked", gtk_main_quit, NULL);
@@ -244,6 +243,8 @@ int main(int argc, char** argv) {
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), col);
 	col = gtk_tree_view_column_new_with_attributes(_("Value"), renderer, "text", 1, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), col);
+
+	gtk_widget_show_all(window);
 
 	gtk_main();
 }
