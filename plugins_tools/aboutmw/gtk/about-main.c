@@ -123,6 +123,28 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 	}
 }
 
+void copyline(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar** text) {
+	gchar *old = *text;
+	gchar *name, *value;
+	
+	gtk_tree_model_get(model, iter, 0, &name, 1, &value, -1);
+	if(*text == NULL) {
+		*text = g_strdup_printf("%s: %s", name, value);
+	} else {
+		*text = g_strdup_printf("%s\n%s: %s", old, name, value);
+		g_free(old);
+	}
+}
+
+void copy2clip(GtkTreeView* tv) {
+	GtkClipboard* clip = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+	GtkTreeSelection* sel = gtk_tree_view_get_selection(tv);
+	gchar* text = NULL;
+
+	gtk_tree_selection_selected_foreach(sel, (GtkTreeSelectionForeachFunc)copyline, &text);
+	gtk_clipboard_set_text(clip, text, strlen(text));
+}
+
 void do_uname(GtkWidget* top, GtkListStore* data) {
 	GtkTreeIter iter;
 	struct utsname undat;
@@ -247,6 +269,7 @@ int main(int argc, char** argv) {
 
 	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
 	g_signal_connect(G_OBJECT(gtk_builder_get_object(builder, "quitbtn")), "clicked", gtk_main_quit, NULL);
+	g_signal_connect_swapped(G_OBJECT(gtk_builder_get_object(builder, "copybtn")), "clicked", G_CALLBACK(copy2clip), treeview);
 
 	gtk_widget_show_all(window);
 
