@@ -244,6 +244,10 @@ int main(int argc, char** argv) {
 	col = gtk_tree_view_column_new_with_attributes(_("Value"), renderer, "text", 1, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), col);
 
+	gtk_tree_selection_set_mode(
+			GTK_TREE_SELECTION(gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview))),
+			GTK_SELECTION_MULTIPLE);
+
 	gtk_widget_show_all(window);
 
 	gtk_main();
