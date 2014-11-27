@@ -215,9 +215,6 @@ int main(int argc, char** argv) {
 	gtk_builder_add_from_string(builder, ABOUT_GLADE_STRING, strlen(ABOUT_GLADE_STRING), NULL);
 	window = GTK_WIDGET(gtk_builder_get_object(builder, "window"));
 
-	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
-	g_signal_connect(G_OBJECT(gtk_builder_get_object(builder, "quitbtn")), "clicked", gtk_main_quit, NULL);
-
 	treeview = GTK_WIDGET(gtk_builder_get_object(builder, "treeview"));
 
 	store = GTK_LIST_STORE(gtk_builder_get_object(builder, "infodata"));
@@ -247,6 +244,9 @@ int main(int argc, char** argv) {
 	gtk_tree_selection_set_mode(
 			GTK_TREE_SELECTION(gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview))),
 			GTK_SELECTION_MULTIPLE);
+
+	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
+	g_signal_connect(G_OBJECT(gtk_builder_get_object(builder, "quitbtn")), "clicked", gtk_main_quit, NULL);
 
 	gtk_widget_show_all(window);
 
