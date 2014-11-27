@@ -10,6 +10,7 @@
 #include <gtk/gtk.h>
 
 #include "about_glade.h"
+#include "now.h"
 
 #ifndef _
 #define _(s) (s)
@@ -83,13 +84,16 @@ int main(int argc, char** argv) {
 	gtk_list_store_append(store, &iter);
 	gtk_list_store_set(store, &iter, 0, _("Middleware build ID"), 1, loc+1, -1);
 
+	gtk_list_store_append(store, &iter);
+	gtk_list_store_set(store, &iter, 0, _("Middleware build date"), 1, EID_NOW_STRING, -1);
+
+	do_uname(window, store);
+
 	renderer = gtk_cell_renderer_text_new();
 	col = gtk_tree_view_column_new_with_attributes(_("Item"), renderer, "text", 0, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), col);
 	col = gtk_tree_view_column_new_with_attributes(_("Value"), renderer, "text", 1, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), col);
-
-	do_uname(window, store);
 
 	gtk_main();
 }
