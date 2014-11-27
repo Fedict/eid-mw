@@ -1,13 +1,56 @@
 #include <config.h>
 
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
+#include <sys/utsname.h>
+
 #include <gtk/gtk.h>
+
 #include <about_glade.h>
 
 #ifndef _
 #define _(s) (s)
 #endif
+
+static enum {
+	BITS_UNKNOWN,
+	BITS_32,
+	BITS_64,
+	BITS_FOREIGN,
+} bitness;
+
+void do_uname(GtkWidget* top, GtkListStore* data) {
+	GtkTreeIter iter;
+	struct utsname undat;
+	char* values;
+
+	if(uname(&undat) < 0) {
+		GtkWidget* dialog = gtk_message_dialog_new(GTK_WINDOW(top), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "uname: %s", strerror(errno));
+		gtk_dialog_run(GTK_DIALOG(dialog));
+		gtk_widget_destroy(dialog);
+	}
+	gtk_list_store_append(data, &iter);
+	asprintf(&values, "%s %s %s %s %s", undat.sysname, undat.nodename, undat.release, undat.version, undat.machine);
+	gtk_list_store_set(data, &iter, 0, _("uname"), 1, values, -1);
+	free(values);
+
+	gtk_list_store_append(data, &iter);
+	if(!strcmp(undat.machine, "x86_64")) {
+		bitness = BITS_64;
+		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, _("64-bit PC"));
+	} else if(undat.machine[0] == 'i' && undat.machine[2] == '8' && undat.machine[3] == '6') {
+		bitness = BITS_32;
+		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, _("32-bit PC"));
+	} else {
+		bitness = BITS_FOREIGN;
+		asprintf(&values, _("Unknown (%s)"), undat.machine);
+		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, values);
+		free(values);
+	}
+}
 
 int main(int argc, char** argv) {
 	GtkBuilder* builder;
@@ -39,6 +82,8 @@ int main(int argc, char** argv) {
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), col);
 	col = gtk_tree_view_column_new_with_attributes(_("Value"), renderer, "text", 1, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), col);
+
+	do_uname(window, store);
 
 	gtk_main();
 }
