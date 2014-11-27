@@ -110,12 +110,16 @@ fi
 %{_libexecdir}/beid-changepin
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
+%{_bindir}/about-eid-mw
 %files devel
 %doc NEWS README
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
 
 %changelog
+* Thu Nov 27 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
+- Install about-eid-mw into the eid-mw-bin package
+
 * Thu Aug 14 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
 - Split up somewhat further so that openSUSE-style multiarch works, too.
 
