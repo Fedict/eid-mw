@@ -37,14 +37,14 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 	gtk_list_store_append(data, &iter);
 	if(!strcmp(undat.machine, "x86_64")) {
 		bitness = BITS_64;
-		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, _("64-bit PC"));
+		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, _("64-bit PC"), -1);
 	} else if(undat.machine[0] == 'i' && undat.machine[2] == '8' && undat.machine[3] == '6') {
 		bitness = BITS_32;
-		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, _("32-bit PC"));
+		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, _("32-bit PC"), -1);
 	} else {
 		bitness = BITS_FOREIGN;
 		asprintf(&values, _("Unknown (%s)"), undat.machine);
-		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, values);
+		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, values, -1);
 		free(values);
 	}
 
