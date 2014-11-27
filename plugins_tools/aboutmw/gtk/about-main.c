@@ -54,6 +54,52 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 	free(values);
 }
 
+char* get_lsb_info(char opt) {
+	char cmd[] = "lsb_release -. -s";
+	char *rv, *loc;
+	FILE *f;
+
+	*(strchr(cmd, '.')) = opt;
+	f=popen(cmd, "r");
+	if(!f) {
+		return strdup(_("(unknown)"));
+	}
+	rv = malloc(80);
+	rv[79]='\0';
+	rv[0]='\0';
+	fgets(rv, 79, f);
+	pclose(f);
+	if(strlen(rv) == 0) {
+		free(rv);
+		return strdup(_("(unknown)"));
+	}
+	if((loc = strrchr(rv, '\n')) != NULL) {
+		*loc = '\0';
+	}
+	return rv;
+}
+
+void do_distro(GtkWidget* top, GtkListStore* data) {
+	GtkTreeIter iter;
+	FILE *f;
+	char *dat;
+
+	dat = get_lsb_info('i');
+	gtk_list_store_append(data, &iter);
+	gtk_list_store_set(data, &iter, 0, _("Distribution"), 1, dat, -1);
+	free(dat);
+
+	dat = get_lsb_info('r');
+	gtk_list_store_append(data, &iter);
+	gtk_list_store_set(data, &iter, 0, _("Distribution version"), 1, dat, -1);
+	free(dat);
+
+	dat = get_lsb_info('c');
+	gtk_list_store_append(data, &iter);
+	gtk_list_store_set(data, &iter, 0, _("Distribution codename"), 1, dat, -1);
+	free(dat);
+}
+
 int main(int argc, char** argv) {
 	GtkBuilder* builder;
 	GtkWidget *window, *treeview;
@@ -89,6 +135,8 @@ int main(int argc, char** argv) {
 	gtk_list_store_set(store, &iter, 0, _("Middleware build date"), 1, EID_NOW_STRING, -1);
 
 	do_uname(window, store);
+
+	do_distro(window, store);
 
 	renderer = gtk_cell_renderer_text_new();
 	col = gtk_tree_view_column_new_with_attributes(_("Item"), renderer, "text", 0, NULL);
