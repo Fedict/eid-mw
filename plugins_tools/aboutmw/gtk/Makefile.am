@@ -5,7 +5,7 @@ about_eid_mw_LDFLAGS = @GTK_LIBS@
 about_eid_mw_CFLAGS = @GTK_CFLAGS@
 
 BUILT_SOURCES = about_glade.h now.h
-EXTRA_DIST = genabout.sh
+EXTRA_DIST = genabout.sh about.glade
 
 about_glade.h: about.glade
 	./gen.sh ABOUT_GLADE_H ABOUT_GLADE_STRING < $^ > $@
