@@ -19,12 +19,85 @@
 #define _(s) (s)
 #endif
 
-static enum {
+static enum _bits {
 	BITS_UNKNOWN,
 	BITS_32,
 	BITS_64,
 	BITS_FOREIGN,
 } bitness;
+
+void do_files(GtkWidget* top, GtkListStore* data) {
+	GtkWidget* dialog;
+	struct stat st;
+	struct {
+		enum _bits bitness;
+		char* loc;
+	} locs[] = {
+		BITS_32, "/usr/lib/libbeidpkcs11.so.0",
+		BITS_32, "/usr/lib/i386-linux-gnu/libbeidpkcs11.so.0",
+		BITS_64, "/usr/lib64/libbeidpkcs11.so.0",
+		BITS_64, "/usr/lib/x86_64-linux-gnu/libbeidpkcs11.so.0",
+		BITS_FOREIGN, "/usr/local/lib/libbeidpkcs11.so.0",
+	};
+	int i;
+	gboolean found32 = FALSE;
+	gboolean found64 = FALSE;
+	gboolean foundforeign = FALSE;
+	GtkTreeIter iter;
+
+	for(i=0;i<4;i++) {
+		if(stat(locs[i].loc, &st) < 0) {
+			switch(errno) {
+			case ENOENT:
+				/* file does not exist */
+				break;
+			default:
+				dialog = gtk_message_dialog_new(GTK_WINDOW(top), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "stat: %s", strerror(errno));
+				gtk_dialog_run(GTK_DIALOG(dialog));
+				gtk_widget_destroy(dialog);
+				break;
+			}
+		} else {
+			gchar* str;
+			switch(locs[i].bitness) {
+				case BITS_32:
+					str = _("32-bit PKCS#11 location");
+					found32 = TRUE;
+					break;
+				case BITS_64:
+					str = _("64-bit PKCS#11 location");
+					found64 = TRUE;
+					break;
+				default:
+					str = _("PKCS#11 location");
+					foundforeign = TRUE;
+					break;
+			}
+
+			gtk_list_store_append(data, &iter);
+			gtk_list_store_set(data, &iter, 0, str, 1, locs[i].loc, -1);
+		}
+	}
+	switch(bitness) {
+	case BITS_32:
+	case BITS_64:
+		if(!found32) {
+			gtk_list_store_append(data, &iter);
+			gtk_list_store_set(data, &iter, 0, _("32-bit PKCS#11 location"), 1, _("(not found)"), -1);
+		}
+		if(!found64) {
+			gtk_list_store_append(data, &iter);
+			gtk_list_store_set(data, &iter, 0, _("64-bit PKCS#11 location"), 1, _("(not found)"), -1);
+		}
+		break;
+	default:
+		if(!foundforeign) {
+			gtk_list_store_append(data, &iter);
+			gtk_list_store_set(data, &iter, 0, _("PKCS#11 location"), 1, _("(not found)"), -1);
+		}
+		break;
+	}
+}
 
 void do_uname(GtkWidget* top, GtkListStore* data) {
 	GtkTreeIter iter;
@@ -138,7 +211,7 @@ int main(int argc, char** argv) {
 	gtk_list_store_set(store, &iter, 0, _("Middleware build date"), 1, EID_NOW_STRING, -1);
 
 	do_uname(window, store);
-
+	do_files(window, store);
 	do_distro(window, store);
 
 	renderer = gtk_cell_renderer_text_new();
