@@ -26,6 +26,30 @@ static enum _bits {
 	BITS_FOREIGN,
 } bitness;
 
+void do_viewer(GtkWidget* top, GtkListStore* data) {
+	FILE* f = popen("which eid-viewer", "r");
+	GtkTreeIter iter;
+	char tmp[PATH_MAX];
+	char* loc;
+
+	gtk_list_store_append(data, &iter);
+	if(!f) {
+		gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, _("(not found)"), -1);
+		return;
+	}
+	tmp[PATH_MAX-1]='\0';
+	fgets(tmp, PATH_MAX, f);
+	pclose(f);
+	if((loc = strrchr(tmp, '\n')) != NULL) {
+		*loc = '\0';
+	}
+	if(strlen(tmp) == 0) {
+		gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, _("(not found)"), -1);
+		return;
+	}
+	gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, tmp, -1);
+}
+
 void do_files(GtkWidget* top, GtkListStore* data) {
 	GtkWidget* dialog;
 	struct stat st;
@@ -213,6 +237,7 @@ int main(int argc, char** argv) {
 	do_uname(window, store);
 	do_files(window, store);
 	do_distro(window, store);
+	do_viewer(window, store);
 
 	renderer = gtk_cell_renderer_text_new();
 	col = gtk_tree_view_column_new_with_attributes(_("Item"), renderer, "text", 0, NULL);
