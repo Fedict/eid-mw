@@ -9,7 +9,7 @@
 
 #include <gtk/gtk.h>
 
-#include <about_glade.h>
+#include "about_glade.h"
 
 #ifndef _
 #define _(s) (s)
