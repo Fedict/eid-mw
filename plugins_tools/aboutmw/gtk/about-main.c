@@ -33,10 +33,6 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 		gtk_dialog_run(GTK_DIALOG(dialog));
 		gtk_widget_destroy(dialog);
 	}
-	gtk_list_store_append(data, &iter);
-	asprintf(&values, "%s %s %s %s %s", undat.sysname, undat.nodename, undat.release, undat.version, undat.machine);
-	gtk_list_store_set(data, &iter, 0, _("uname"), 1, values, -1);
-	free(values);
 
 	gtk_list_store_append(data, &iter);
 	if(!strcmp(undat.machine, "x86_64")) {
@@ -51,6 +47,11 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, values);
 		free(values);
 	}
+
+	gtk_list_store_append(data, &iter);
+	asprintf(&values, "%s %s %s %s %s", undat.sysname, undat.nodename, undat.release, undat.version, undat.machine);
+	gtk_list_store_set(data, &iter, 0, _("uname"), 1, values, -1);
+	free(values);
 }
 
 int main(int argc, char** argv) {
