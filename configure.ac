@@ -1,5 +1,4 @@
 AC_PREREQ([2.61])
-GITDESC=""
 AC_INIT([eid-mw],
   m4_esyscmd_s(echo "4.0.6-"$(git describe)$(git status --porcelain | awk '{if ($1 == "M") {print "-dirty";exit}}')),
   [servicedesk@fedict.be],,
