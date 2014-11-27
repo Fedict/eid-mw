@@ -1,5 +1,9 @@
 AC_PREREQ([2.61])
-AC_INIT([eid-mw],[4.0.6],[servicedesk@fedict.be])
+GITDESC=""
+AC_INIT([eid-mw],
+  m4_esyscmd_s(echo "4.0.6-"$(git describe)$(git status --porcelain | awk '{if ($1 == "M") {print "-dirty";exit}}')),
+  [servicedesk@fedict.be],,
+  [http://eid.belgium.be])
 
 AC_CONFIG_AUX_DIR([scripts/build-aux])
 AC_CONFIG_SRCDIR([cardcomm])
@@ -94,7 +98,7 @@ AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjp
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1], [HAVE_OPENSSL=0])
 AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
 
-AC_CONFIG_FILES([Makefile cardcomm/pkcs11/src/Makefile tests/unit/Makefile])
+AC_CONFIG_FILES([Makefile cardcomm/pkcs11/src/Makefile tests/unit/Makefile plugins_tools/aboutmw/gtk/Makefile])
 AC_CONFIG_SUBDIRS([plugins_tools/xpi])
 
 AC_OUTPUT
