@@ -11,6 +11,7 @@
 #include <sys/utsname.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "about_glade.h"
 #include "now.h"
@@ -257,11 +258,12 @@ void do_distro(GtkWidget* top, GtkListStore* data) {
 
 int main(int argc, char** argv) {
 	GtkBuilder* builder;
-	GtkWidget *window, *treeview;
+	GtkWidget *window, *treeview, *button;
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn* col;
 	GtkTreeIter iter;
 	GtkListStore *store;
+	GtkAccelGroup *group;
 	gchar *tmp, *loc;
 
 	gtk_init(&argc, &argv);
@@ -269,6 +271,8 @@ int main(int argc, char** argv) {
 	builder = gtk_builder_new();
 	gtk_builder_add_from_string(builder, ABOUT_GLADE_STRING, strlen(ABOUT_GLADE_STRING), NULL);
 	window = GTK_WIDGET(gtk_builder_get_object(builder, "window"));
+	group = gtk_accel_group_new();
+	gtk_window_add_accel_group(GTK_WINDOW(window), group);
 
 	treeview = GTK_WIDGET(gtk_builder_get_object(builder, "treeview"));
 
@@ -302,8 +306,13 @@ int main(int argc, char** argv) {
 			GTK_SELECTION_MULTIPLE);
 
 	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
-	g_signal_connect(G_OBJECT(gtk_builder_get_object(builder, "quitbtn")), "clicked", gtk_main_quit, NULL);
-	g_signal_connect_swapped(G_OBJECT(gtk_builder_get_object(builder, "copybtn")), "clicked", G_CALLBACK(copy2clip), treeview);
+	button = GTK_WIDGET(gtk_builder_get_object(builder, "quitbtn"));
+	g_signal_connect(G_OBJECT(button), "clicked", gtk_main_quit, NULL);
+	gtk_widget_add_accelerator(button, "clicked", group, GDK_KEY_q, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	gtk_widget_add_accelerator(button, "clicked", group, GDK_KEY_w, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	button = GTK_WIDGET(gtk_builder_get_object(builder, "copybtn"));
+	g_signal_connect_swapped(G_OBJECT(button), "clicked", G_CALLBACK(copy2clip), treeview);
+	gtk_widget_add_accelerator(button, "clicked", group, GDK_KEY_c, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 
 	gtk_widget_show_all(window);
 
