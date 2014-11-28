@@ -278,10 +278,10 @@ int main(int argc, char** argv) {
 	gtk_list_store_set(store, &iter, 0, _("Middleware build date"), 1, EID_NOW_STRING, -1);
 
 	check_pcsc(window, store);
+	do_viewer(window, store);
+	do_distro(window, store);
 	do_uname(window, store);
 	do_files(window, store);
-	do_distro(window, store);
-	do_viewer(window, store);
 
 	renderer = gtk_cell_renderer_text_new();
 	col = gtk_tree_view_column_new_with_attributes(_("Item"), renderer, "text", 0, NULL);
