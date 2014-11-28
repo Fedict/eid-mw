@@ -26,6 +26,31 @@ static enum _bits {
 	BITS_FOREIGN,
 } bitness;
 
+void check_pcsc(GtkWidget* top, GtkListStore* data) {
+	FILE* f = popen("pidof pcscd", "r");
+	GtkTreeIter iter;
+	char pid[6];
+	char* tmp;
+
+	gtk_list_store_append(data, &iter);
+	if(!f) {
+		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(check failed)"), -1);
+		return;
+	}
+	if(feof(f)) {
+		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
+		return;
+	}
+	pid[5]='\0';
+	fgets(pid, 5, f);
+	if((tmp = strchr(pid, '\n'))) {
+		*tmp = '\0';
+	}
+	tmp = g_strdup_printf(_("running; pid: %s"), pid);
+	gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, tmp, -1);
+	g_free(tmp);
+}
+
 void do_viewer(GtkWidget* top, GtkListStore* data) {
 	FILE* f = popen("which eid-viewer", "r");
 	GtkTreeIter iter;
@@ -252,6 +277,7 @@ int main(int argc, char** argv) {
 	gtk_list_store_append(store, &iter);
 	gtk_list_store_set(store, &iter, 0, _("Middleware build date"), 1, EID_NOW_STRING, -1);
 
+	check_pcsc(window, store);
 	do_uname(window, store);
 	do_files(window, store);
 	do_distro(window, store);
