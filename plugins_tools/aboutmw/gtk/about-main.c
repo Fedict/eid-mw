@@ -42,9 +42,17 @@ void check_pcsc(GtkWidget* top, GtkListStore* data) {
 		return;
 	}
 	pid[5]='\0';
-	fgets(pid, 5, f);
+	if(fgets(pid, 5, f)==NULL) {
+		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
+		return;
+	}
+	pclose(f);
 	if((tmp = strchr(pid, '\n'))) {
 		*tmp = '\0';
+	}
+	if(strlen(pid)==0) {
+		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
+		return;
 	}
 	tmp = g_strdup_printf(_("running; pid: %s"), pid);
 	gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, tmp, -1);
