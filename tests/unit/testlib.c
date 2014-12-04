@@ -117,7 +117,6 @@ CK_BBOOL open_robot(char* envvar) {
 CK_BBOOL have_robot() {
 #ifdef WIN32
 	return CK_FALSE;
-
 #else
 	char* envvar = getenv("EID_ROBOT_STYLE");
 	
