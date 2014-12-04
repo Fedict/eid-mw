@@ -88,7 +88,7 @@ CK_BBOOL open_robot(char* envvar) {
 	}
 	robot_dev = open(dev, O_RDWR | O_NOCTTY);
 	if(dev < 0) {
-		printf("Robot not found: could not open device\n");
+		perror("could not open robot:");
 		return CK_FALSE;
 	}
 	tcgetattr(robot_dev, &ios);
