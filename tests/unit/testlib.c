@@ -330,7 +330,7 @@ void robot_cmd(char cmd, CK_BBOOL check_result) {
 				fprintf(stderr, "Robot handling failed: expected %s, received %s\n", expected[i].result, line);
 				exit(TEST_RV_SKIP);
 			}
-			sleep(1);
+			usleep(200);
 			printf("\tok\n");
 			return;
 		}
