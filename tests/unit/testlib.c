@@ -87,8 +87,8 @@ CK_BBOOL open_robot(char* envvar) {
 		dev = envvar + strlen("fedict") + 1;
 	}
 	robot_dev = open(dev, O_RDWR | O_NOCTTY);
-	if(dev < 0) {
-		perror("could not open robot:");
+	if(robot_dev < 0) {
+		perror("could not open robot");
 		return CK_FALSE;
 	}
 	tcgetattr(robot_dev, &ios);
