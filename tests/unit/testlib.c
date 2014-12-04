@@ -131,6 +131,7 @@ CK_BBOOL have_robot() {
 		if(!robot_dev) {
 			return open_robot(envvar);
 		}
+		return CK_TRUE;
 #else
 		return CK_FALSE;
 #endif
