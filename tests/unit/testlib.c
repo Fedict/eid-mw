@@ -32,6 +32,17 @@
 
 #include "testlib.h"
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_TERMIOS_H
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <termios.h>
+#endif
+
 int va_counter;
 int fc_counter;
 
@@ -41,6 +52,8 @@ enum {
 	ROBOT_DIALOGS_ONLY,
 	ROBOT_MECHANICAL_TURK,
 } robot_type;
+
+int robot_dev = 0;
 
 void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	int nullCount = 0;
@@ -62,6 +75,45 @@ void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	free(buf);
 }
 
+#ifdef HAVE_TERMIOS_H
+CK_BBOOL open_robot(char* envvar) {
+	char* dev;
+	char line[80];
+	int len;
+	struct termios ios;
+	if(strlen(envvar) == strlen("fedict")) {
+		dev = "/dev/ttyACM0";
+	} else {
+		dev = envvar + strlen("fedict") + 1;
+	}
+	robot_dev = open(dev, O_RDWR | O_NOCTTY);
+	if(dev < 0) {
+		printf("Robot not found: could not open device\n");
+		return CK_FALSE;
+	}
+	tcgetattr(robot_dev, &ios);
+	cfmakeraw(&ios);
+	ios.c_iflag |= IGNCR;
+	ios.c_oflag |= ONLRET;
+	cfsetispeed(&ios, B9600);
+	cfsetospeed(&ios, B9600);
+	ios.c_cflag |= CREAD | CS8 | ~PARENB;
+	tcsetattr(robot_dev, TCSANOW, &ios);
+	
+	len = 0;
+	do {
+		len += read(robot_dev, line+len, 79);
+		line[len]=0;
+		if(strncmp(line, "READY.", len < 6 ? len : 6)) {
+			printf("Robot not found: received %s from serial line, expecting \"READY.\\n\"", line);
+			return CK_FALSE;
+		}
+	} while(line[len-1] != '\n');
+
+	return CK_TRUE;
+}
+#endif
+
 CK_BBOOL have_robot() {
 #ifdef WIN32
 	return CK_FALSE;
@@ -73,9 +125,15 @@ CK_BBOOL have_robot() {
 		robot_type = ROBOT_NONE;
 		return CK_FALSE;
 	}
-	if(!strcmp(envvar, "auto")) {
+	if(!strncmp(envvar, "fedict", strlen("fedict"))) {
+#ifdef HAVE_TERMIOS_H
 		robot_type = ROBOT_AUTO;
-		return CK_TRUE;
+		if(!robot_dev) {
+			return open_robot(envvar);
+		}
+#else
+		return CK_FALSE;
+#endif
 	}
 	if(!strcmp(envvar, "manual")) {
 		robot_type = ROBOT_MECHANICAL_TURK;
@@ -242,6 +300,42 @@ char* ckm_to_charp(CK_MECHANISM_TYPE mech) {
 	}
 }
 
+void robot_cmd(char cmd, CK_BBOOL check_result) {
+	struct expect {
+		char command;
+		char* result;
+	} expected[] = {
+		{ 'i', "inserted" },
+		{ 'e', "ejected" },
+		{ 'p', "parked" },
+	};
+	int len = 0;
+	char line[80];
+	int i;
+
+	printf("sending robot command %c...\n", cmd);
+	write(robot_dev, &cmd, 1);
+	if(!check_result) {
+		printf("\tdone, not waiting\n");
+		return;
+	}
+	do {
+		len += read(robot_dev, line+len, 79);
+		line[len]='\0';
+	} while(line[len-1] != '\n');
+	for(i=0; i<sizeof(expected) / sizeof(struct expect); i++) {
+		if(expected[i].command == cmd) {
+			if(strncmp(expected[i].result, line, strlen(expected[i].result))) {
+				fprintf(stderr, "Robot handling failed: expected %s, received %s\n", expected[i].result, line);
+				exit(TEST_RV_SKIP);
+			}
+			sleep(1);
+			printf("\tok\n");
+			return;
+		}
+	}
+}
+
 void robot_insert_card() {
 	char buf[80];
 	switch(robot_type) {
@@ -249,8 +343,8 @@ void robot_insert_card() {
 			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
-			fprintf(stderr, "Auto robot not yet implemented\n");
-			exit(TEST_RV_SKIP);
+			robot_cmd('i', CK_TRUE);
+			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please insert a card and press <enter>\n");
 			if(fgets(buf, 80, stdin) == NULL) {
@@ -266,8 +360,8 @@ void robot_insert_card_delayed() {
 			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
-			fprintf(stderr, "Auto robot not yet implemented\n");
-			exit(TEST_RV_SKIP);
+			robot_cmd('I', CK_FALSE);
+			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please wait a moment and then insert the card\n");
 			break;
@@ -281,8 +375,8 @@ void robot_remove_card() {
 			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
-			fprintf(stderr, "Auto robot not yet implemented\n");
-			exit(TEST_RV_SKIP);
+			robot_cmd('e', CK_TRUE);
+			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please remove the card from the slot and press <enter>\n");
 			if(fgets(buf, 80, stdin) == NULL) {
@@ -298,8 +392,8 @@ void robot_remove_card_delayed() {
 			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
-			fprintf(stderr, "Auto robot not yet implemented\n");
-			exit(TEST_RV_SKIP);
+			robot_cmd('E', CK_FALSE);
+			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please wait a moment and then remove the card\n");
 			break;
