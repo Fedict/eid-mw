@@ -40,6 +40,12 @@ TEST_FUNC(slotevent) {
 
 	check_rv(C_Initialize(NULL_PTR));
 
+	robot_remove_card();
+
+	printf("Checking for slot for already-removed card\n");
+	check_rv(C_WaitForSlotEvent(0, &slot, NULL_PTR));
+
+
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		check_rv(C_Finalize(NULL_PTR));
 		return ret;
@@ -54,11 +60,6 @@ TEST_FUNC(slotevent) {
 
 	printf("Waiting for slot event without flags...\n");
 	robot_insert_card_delayed();
-	check_rv(C_WaitForSlotEvent(0, &slot, NULL_PTR));
-
-	robot_remove_card();
-
-	printf("Checking for slot for already-removed card\n");
 	check_rv(C_WaitForSlotEvent(0, &slot, NULL_PTR));
 
 	robot_insert_card_delayed();
