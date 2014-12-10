@@ -48,10 +48,15 @@ int fc_counter;
 
 enum {
 	ROBOT_NONE,
-	ROBOT_AUTO,
-	ROBOT_DIALOGS_ONLY,
 	ROBOT_MECHANICAL_TURK,
+	ROBOT_AUTO,
 } robot_type;
+
+enum {
+	DIALOGS_AVOID,
+	DIALOGS_NOPIN,
+	DIALOGS_OK,
+} dialogs_type;
 
 int robot_dev = 0;
 
@@ -139,25 +144,36 @@ CK_BBOOL have_robot() {
 		robot_type = ROBOT_MECHANICAL_TURK;
 		return CK_TRUE;
 	}
-	if(!strcmp(envvar, "dialogsonly")) {
-		robot_type = ROBOT_DIALOGS_ONLY;
-		return CK_FALSE;
-	}
 
 	return CK_FALSE;
 #endif
+}
+
+CK_BBOOL want_dialogs() {
+	char* envvar = getenv("EID_DIALOGS_STYLE");
+
+	dialogs_type = DIALOGS_AVOID;
+
+	if(envvar == NULL) {
+		return CK_FALSE;
+	}
+	if(!strncmp(envvar, "nopin", strlen("nopin"))) {
+		dialogs_type = DIALOGS_NOPIN;
+	}
+	if(!strncmp(envvar, "ok", strlen("ok"))) {
+		dialogs_type = DIALOGS_OK;
+	}
+	if(dialogs_type == DIALOGS_AVOID) {
+		return CK_FALSE;
+	}
+	return CK_TRUE;
 }
 
 CK_BBOOL have_pin() {
 #ifdef WIN32
 	return CK_FALSE;
 #else
-	char* envvar;
-	if(have_robot() && is_manual_robot()) {
-		return CK_TRUE;
-	}
-	envvar = getenv("EID_PIN_CODE");
-	if(envvar != NULL) {
+	if(want_dialogs() && dialogs_type > DIALOGS_NOPIN) {
 		return CK_TRUE;
 	}
 	return CK_FALSE;
@@ -192,13 +208,10 @@ CK_BBOOL is_manual_robot() {
 }
 
 CK_BBOOL can_confirm() {
-	if(!have_robot()) {
-		if(robot_type == ROBOT_DIALOGS_ONLY) {
-			return CK_TRUE;
-		}
-		return CK_FALSE;
+	if(want_dialogs()) {
+		return CK_TRUE;
 	}
-	return robot_type == ROBOT_MECHANICAL_TURK;
+	return CK_FALSE;
 }
 
 typedef struct {
