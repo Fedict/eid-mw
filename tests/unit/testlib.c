@@ -98,11 +98,10 @@ CK_BBOOL open_robot(char* envvar) {
 	}
 	tcgetattr(robot_dev, &ios);
 	cfmakeraw(&ios);
-	ios.c_iflag |= IGNCR;
-	ios.c_oflag |= ONLRET;
 	cfsetispeed(&ios, B9600);
 	cfsetospeed(&ios, B9600);
-	ios.c_cflag |= CREAD | CS8 | ~PARENB | CRTSCTS;
+	ios.c_cflag |= CREAD | CS8 | CRTSCTS;
+	ios.c_cflag &= ~PARENB;
 	tcsetattr(robot_dev, TCSANOW, &ios);
 	
 	len = 0;
