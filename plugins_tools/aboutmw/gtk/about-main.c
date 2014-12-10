@@ -176,6 +176,7 @@ void copy2clip(GtkTreeView* tv) {
 	gchar* text = NULL;
 
 	gtk_tree_selection_selected_foreach(sel, (GtkTreeSelectionForeachFunc)copyline, &text);
+	if(!text) return;
 	gtk_clipboard_set_text(clip, text, strlen(text));
 }
 
