@@ -104,6 +104,8 @@ CK_BBOOL open_robot(char* envvar) {
 	ios.c_cflag &= ~PARENB;
 	tcsetattr(robot_dev, TCSANOW, &ios);
 	
+	write(robot_dev, "R", 1);
+
 	len = 0;
 	do {
 		len += read(robot_dev, line+len, 79);
