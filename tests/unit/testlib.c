@@ -137,6 +137,7 @@ CK_BBOOL have_robot() {
 		}
 		return CK_TRUE;
 #else
+		fprintf(stderr, "E: cannot initiate fedict robot without serial port support!\n");
 		return CK_FALSE;
 #endif
 	}
