@@ -317,6 +317,7 @@ char* ckm_to_charp(CK_MECHANISM_TYPE mech) {
 }
 
 void robot_cmd(char cmd, CK_BBOOL check_result) {
+#ifdef HAVE_TERMIOS_H
 	struct expect {
 		char command;
 		char* result;
@@ -350,6 +351,9 @@ void robot_cmd(char cmd, CK_BBOOL check_result) {
 			return;
 		}
 	}
+#else
+	return;
+#endif
 }
 
 void robot_insert_card() {
