@@ -88,6 +88,7 @@ TEST_FUNC(login) {
 	printf("Flags: %#08lx\n", sinfo.flags);
 
 	check_rv(C_Logout(handle));
+	check_rv_long(C_Logout(handle), m_nlogin);
 
 	check_rv(C_CloseSession(handle));
 
