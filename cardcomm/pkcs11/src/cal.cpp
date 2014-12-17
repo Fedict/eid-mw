@@ -1242,7 +1242,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 			pobjectID = BEID_OBJECTID_RNCERT;
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA)/sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA, CK_FALSE, &hObject,
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
-				(CK_VOID_PTR)BEID_OBJECTID_RNCERT, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT));
+				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT));
 			if (ret) goto cleanup;
 			if(dataType != CACHED_DATA_TYPE_ALL){
 				break;
