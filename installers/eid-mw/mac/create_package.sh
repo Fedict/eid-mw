@@ -5,13 +5,11 @@ set -x
 
 #installer name defines
 #resources dir, where the plists are
-RESOURCES_NO_SVN_DIR="./resources_no_svn"
 RESOURCES_DIR="./resources"
 #install scripts dir, where the install scripts are
 INFO_DIR="./info"
 #install scripts dir, where the install scripts are
 INSTALL_SCRIPTS_DIR="./install_scripts"
-INSTALL_SCRIPTS_NO_SVN_DIR="./install_scripts_no_svn"
 #root dir, where all files to be packaged will be placed
 ROOT_DIR="$(pwd)/root"
 #inst dir, where our libs and binaries will be placed
@@ -48,8 +46,6 @@ BIN_DIR="../../../output/bin/Release"
 
 cleanup() {
 	test -e $ROOT_DIR && rm -rdf $ROOT_DIR
-	test -e $RESOURCES_NO_SVN_DIR &&rm -rf $RESOURCES_NO_SVN_DIR
-	test -e $INSTALL_SCRIPTS_NO_SVN_DIR &&rm -rf $INSTALL_SCRIPTS_NO_SVN_DIR
 	chown -R $SUDO_USER $PKG_NAME
 	chown $SUDO_USER $DMG_NAME
 }
@@ -127,10 +123,6 @@ INSTALLATIONCHECKSTRINGS=$REL_DIR/resources/InstallationCheck.strings
 #		$INST_DIR/lib/beidqt/QtCore \
 #		$ROOT_DIR/$INST_DIR/lib/beidqt/QtGui
 
-## make sure the .svn files don't get into the package
-svn export --force $RESOURCES_DIR $RESOURCES_NO_SVN_DIR
-svn export --force $INSTALL_SCRIPTS_DIR $INSTALL_SCRIPTS_NO_SVN_DIR
-
 
 echo "********** manipulate mw_installer **********"
 #	  sed -e "s;REPL_REL_VERSION;$REL_VERSION;g" \
@@ -159,6 +151,6 @@ chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID.tokend
 chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID_Lion.tokend
 
 $PKG_MAKER -r $ROOT_DIR -o $PKG_NAME -f $INFO_DIR/Info.plist \
-	-e $RESOURCES_NO_SVN_DIR -s $INSTALL_SCRIPTS_NO_SVN_DIR -n REL_VERSION
+	-e $RESOURCES_DIR -s $INSTALL_SCRIPTS_DIR -n REL_VERSION
 
 hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
