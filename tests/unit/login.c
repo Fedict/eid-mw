@@ -34,7 +34,7 @@ CK_RV notify_login(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR 
 
 TEST_FUNC(login) {
 	CK_SLOT_ID slot;
-	CK_SESSION_HANDLE handle;
+	CK_SESSION_HANDLE handle = 0;
 	CK_TOKEN_INFO info;
 	CK_SESSION_INFO sinfo;
 	int ret;
@@ -47,6 +47,9 @@ TEST_FUNC(login) {
 		fprintf(stderr, "cannot test login without a pin code\n");
 		return TEST_RV_SKIP;
 	}
+
+	check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m_p11_noinit);
+	check_rv_long(C_Logout(handle), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
 
