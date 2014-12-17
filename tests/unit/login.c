@@ -42,6 +42,14 @@ TEST_FUNC(login) {
 		{ CKR_PIN_INCORRECT, TEST_RV_SKIP },
 		{ CKR_FUNCTION_CANCELED, TEST_RV_SKIP },
 	};
+	ckrv_mod m_nlogin[] = {
+		{ CKR_USER_NOT_LOGGED_IN, TEST_RV_OK },
+		{ CKR_OK, TEST_RV_FAIL },
+	};
+	ckrv_mod m_nsession[] = {
+		{ CKR_SESSION_HANDLE_INVALID, TEST_RV_OK },
+		{ CKR_OK, TEST_RV_FAIL },
+	};
 
 	if(!have_pin()) {
 		fprintf(stderr, "cannot test login without a pin code\n");
@@ -58,6 +66,8 @@ TEST_FUNC(login) {
 		return ret;
 	}
 
+	check_rv_long(C_Logout(handle), m_nsession);
+
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify_login, &handle));
 
 	check_rv(C_GetSessionInfo(handle, &sinfo));
@@ -67,6 +77,8 @@ TEST_FUNC(login) {
 	if(!can_enter_pin(slot)) {
 		return TEST_RV_SKIP;
 	}
+
+	check_rv_long(C_Logout(handle), m_nlogin);
 
 	check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);
 
