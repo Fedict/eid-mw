@@ -216,7 +216,7 @@ int main(int argc, char* argv[])
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    	gtk_container_set_border_width(GTK_CONTAINER(pindialog.dialog),10);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(pindialog.dialog)->vbox),pindialog.newPinsTable, TRUE, TRUE,2);
+	gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(pindialog.dialog))),pindialog.newPinsTable, TRUE, TRUE,2);
 
 	// initial state for OK button
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
