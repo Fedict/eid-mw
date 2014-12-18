@@ -48,9 +48,9 @@ AC_ARG_WITH(gtk, AC_HELP_STRING([--with-gtk=DIR],
 
 AS_VAR_IF([with_gtk],[default],
 [
-	PKG_CHECK_MODULES([GTK],[gtk+-2.0 >= 2.10.0],,
+	PKG_CHECK_MODULES([GTK],[gtk+-3.0],,
 	AC_MSG_RESULT([no])
-	AC_MSG_ERROR([you must have GTK+ 2.10.0 or newer development headers installed.]))
+	AC_MSG_ERROR([you must have GTK+ 3.0 or newer development headers installed.]))
 ])
 
 ###########################################################################
