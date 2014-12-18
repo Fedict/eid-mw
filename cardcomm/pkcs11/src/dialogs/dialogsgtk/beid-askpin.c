@@ -18,7 +18,6 @@
 
 **************************************************************************** */
 #include <gtk/gtk.h>
-#include <gtk/gtkenums.h>
 #include <gdk/gdkkeysyms.h>
 #include <glib.h>
 #include <string.h>
