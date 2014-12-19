@@ -1370,7 +1370,11 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject)
 			}
 
 			ret = cert_get_info(oCertData.GetBytes(), oCertData.Size(), &certinfo);
-			if (ret != CKR_OK) goto cleanup;
+			if (ret < 0) {
+				// ASN.1 parser failed. Assume hardware failure.
+				ret = CKR_DEVICE_ERROR;
+				goto cleanup;
+			}
 
 			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG)certinfo.l_subject);
 			if (ret != CKR_OK) goto cleanup;
