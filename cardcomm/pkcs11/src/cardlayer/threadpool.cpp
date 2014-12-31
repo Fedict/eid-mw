@@ -25,7 +25,9 @@ static bool g_bStop = true;
 
 #define MAX_THREAD_WAIT_LOOP 100
 
-CEventCallbackThread::CEventCallbackThread()
+CEventCallbackThread::CEventCallbackThread() :
+  m_bStop(false), m_poPCSC(NULL), m_csReader(""), m_callback(NULL),
+  m_ulCurrentState(0), m_bRunning(false), m_pvRef(NULL)
 {
 }
 
