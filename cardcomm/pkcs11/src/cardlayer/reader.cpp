@@ -144,11 +144,13 @@ tCardStatus CReader::Status(bool bReconnect)
 	}
 	else
 	{
-		bool bCardStillPresent = m_poCard->Status();
-		if (bCardStillPresent)
+#ifndef __APPLE__
+		if (m_poCard->Status()){
+#else
+		if (m_poContext->m_oPCSC.Status(m_csReader)){
+#endif
 			status = CARD_STILL_PRESENT;
-		else
-		{
+		}
 			Disconnect();
 			// if bReconnect = true, then we try to connect to a
 			// possibly new card that has been inserted
