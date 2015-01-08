@@ -151,6 +151,8 @@ tCardStatus CReader::Status(bool bReconnect)
 #endif
 			status = CARD_STILL_PRESENT;
 		}
+		else
+		{
 			Disconnect();
 			// if bReconnect = true, then we try to connect to a
 			// possibly new card that has been inserted
