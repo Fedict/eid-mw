@@ -38,13 +38,8 @@ mv /Library/BelgiumIdentityCard/BEID.tokend /System/Library/Security/tokend/; el
 test -e /System/Library/Security/tokend/BEID.tokend && rm -R /System/Library/Security/tokend/BEID.tokend; fi
 rm -R /Library/BelgiumIdentityCard/BEID.tokend;
 
-#install OS X 10.6 tokend on OS X 10.7
-if [[ $(sw_vers -productVersion) >= *10.7* ]]; then
-mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi
-rm -R /Library/BelgiumIdentityCard/BEID_Lion.tokend;
-
-#install OS X 10.6 tokend on OS X 10.8
-if [[ $(sw_vers -productVersion) >= *10.8* ]]; then
+#install OS X 10.6 tokend on OS X 10.7, OS X 10.8, OS X 10.9 and OS X 10.10
+if [[ $(sw_vers -productVersion) == *10.7* ]] || [[ $(sw_vers -productVersion) == *10.8* ]] || [[ $(sw_vers -productVersion) == *10.9* ]] || [[ $(sw_vers -productVersion) == *10.10* ]]; then
 mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi
 rm -R /Library/BelgiumIdentityCard/BEID_Lion.tokend;
 
@@ -54,6 +49,9 @@ test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchD
 
 #trust beid-cert-belgiumrca2.der
 sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain /release_build/root//usr/local/share/beid/certs/beid-cert-belgiumrca2.der
+
+#trust beid-cert-belgiumrca3.der
+sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain /release_build/root//usr/local/share/beid/certs/beid-cert-belgiumrca3.der
 
 echo succeeded > /tmp/beid_install.log
 
