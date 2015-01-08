@@ -75,10 +75,13 @@ public:
                           uint8_t *result, size_t &resultLength);
 
 	static int usleep(int iTimeVal);
+    uint32_t getKeySize(const uint8_t *df, const uint8_t *ef);
 	
 protected:
+    bool mPPDU;
 	uint8_t pinDigit(uint8_t digit);
 	void populate();
+    void checkPPDUSupport();
 
 public:
 	const uint8_t *mCurrentDF;

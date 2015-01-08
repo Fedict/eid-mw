@@ -54,7 +54,9 @@ BELPICKeyHandle::~BELPICKeyHandle()
 void BELPICKeyHandle::getKeySize(CSSM_KEY_SIZE &keySize)
 {
 	secdebug("crypto", "getKeySize");
-	CssmError::throwMe(CSSM_ERRCODE_FUNCTION_NOT_IMPLEMENTED);
+	keySize.LogicalKeySizeInBits = mKey.sizeInBits();
+	keySize.EffectiveKeySizeInBits = mKey.sizeInBits();
+
 }
 
 uint32 BELPICKeyHandle::getOutputSize(const Context &context,

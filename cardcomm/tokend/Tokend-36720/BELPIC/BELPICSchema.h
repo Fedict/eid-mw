@@ -57,7 +57,7 @@ private:
 	BELPICDataAttributeCoder mBELPICDataAttributeCoder;
 
 	Tokend::ConstAttributeCoder mKeyAlgorithmCoder;
-	Tokend::ConstAttributeCoder mKeySizeCoder;
+	BELPICKeySizeAttributeCoder mKeySizeCoder;
 
 	BELPICKeyHandleFactory mBELPICKeyHandleFactory;
 };

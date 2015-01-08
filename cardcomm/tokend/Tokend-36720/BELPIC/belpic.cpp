@@ -29,14 +29,9 @@
 
 int main(int argc, const char *argv[])
 {
-	/* Zetes: avoid name conflicts with the original tokend */
-	/*
-	 secdebug("BELPIC.tokend", "main starting with %d arguments", argc);
-	 secdelay("/tmp/delay/BELPIC");
-	 */
-	secdebug("BEID.tokend", "main starting with %d arguments", argc);
-	secdelay("/tmp/delay/BEID");
-	
+	secdebug("BELPIC.tokend", "main starting with %d arguments", argc);
+	secdelay((char *)"/tmp/delay/BELPIC");
+
 	token = new BELPICToken();
 	return SecTokendMain(argc, argv, token->callbacks(), token->support());
 }

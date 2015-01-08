@@ -51,5 +51,18 @@ public:
 };
 
 
+//
+// A coder that produces the LogicalKeySizeInBits of a key
+//
+class BELPICKeySizeAttributeCoder : public Tokend::AttributeCoder
+{
+	NOCOPY(BELPICKeySizeAttributeCoder)
+public:
+	BELPICKeySizeAttributeCoder() {}
+	virtual ~BELPICKeySizeAttributeCoder();
+    
+	virtual void decode(Tokend::TokenContext *tokenContext, const Tokend::MetaAttribute &metaAttribute, Tokend::Record &record);
+};
+
 #endif /* !_BELPICATTRIBUTECODER_H_ */
 

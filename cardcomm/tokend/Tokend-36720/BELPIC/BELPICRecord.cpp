@@ -51,7 +51,7 @@ BELPICBinaryFileRecord::~BELPICBinaryFileRecord()
 {
 }
 
-#define BELPIC_MAXSIZE_CERT           4000
+#define BELPIC_MAXSIZE_CERT           8000
 
 BELPICCertificateRecord::~BELPICCertificateRecord()
 {
@@ -138,11 +138,13 @@ void BELPICProtectedRecord::getAcl(const char *tag, uint32 &count, AclEntryInfo 
 // BELPICKeyRecord
 //
 BELPICKeyRecord::BELPICKeyRecord(const uint8_t *keyId,
-	const char *description, const Tokend::MetaRecord &metaRecord,
-	bool signOnly) :
+	const char *description, uint32_t keySize, const Tokend::MetaRecord &metaRecord,
+	bool signOnly, bool PPDU) :
 	BELPICRecord(description),
 	mKeyId(keyId),
-	mSignOnly(signOnly)
+    mKeySize(keySize),
+	mSignOnly(signOnly),
+    mPPDU(PPDU)
 {
     attributeAtIndex(metaRecord.metaAttribute(kSecKeyDecrypt).attributeIndex(),
                      new Tokend::Attribute(!signOnly));
@@ -150,6 +152,10 @@ BELPICKeyRecord::BELPICKeyRecord(const uint8_t *keyId,
                      new Tokend::Attribute(!signOnly));
     attributeAtIndex(metaRecord.metaAttribute(kSecKeySign).attributeIndex(),
                      new Tokend::Attribute(signOnly));
+    attributeAtIndex(metaRecord.metaAttribute(kSecKeyKeySizeInBits).attributeIndex(),
+                     new Tokend::Attribute(keySize));
+    attributeAtIndex(metaRecord.metaAttribute(kSecKeyEffectiveKeySize).attributeIndex(),
+                     new Tokend::Attribute(keySize));
 }
 
 BELPICKeyRecord::~BELPICKeyRecord()
@@ -163,7 +169,11 @@ void BELPICKeyRecord::computeCrypt(BELPICToken &belpicToken, bool sign,
 	PCSC::Transaction _(belpicToken);
 	belpicToken.selectKeyForSign(mKeyId);
 
-	if (cred)
+    if(mPPDU == true)
+    {
+        belpicToken._verifyPIN(1, NULL, 0);
+    }
+    else if (cred)
 	{
 		uint32 size = cred->size();
 		for (uint32 ix = 0; ix < size; ++ix)
@@ -171,6 +181,7 @@ void BELPICKeyRecord::computeCrypt(BELPICToken &belpicToken, bool sign,
 			const TypedList &sample = (*cred)[ix];
 			if (sample.type() == CSSM_SAMPLE_TYPE_PROMPTED_PASSWORD
                 && sample.length() == 2)
+            if (sample.type() == CSSM_SAMPLE_TYPE_PASSWORD)
             {
                 CssmData &pin = sample[1].data();
                 if (pin.Length >= BELPIC_MIN_PIN_LEN &&
@@ -215,7 +226,7 @@ void BELPICKeyRecord::computeCrypt(BELPICToken &belpicToken, bool sign,
 		resultLength));
 	if (resultLength != sizeInBits() / 8 + 2)
 	{
-		secdebug("cac", " %s: computeCrypt: expected size: %ld, got: %ld",
+		secdebug("belpic", " %s: computeCrypt: expected size: %ld, got: %ld",
 			mDescription, sizeInBits() / 8 + 2, resultLength);
 		PCSC::Error::throwMe(SCARD_E_PROTO_MISMATCH);
 	}
@@ -247,11 +258,20 @@ void BELPICKeyRecord::getAcl(const char *tag, uint32 &count,
 		snprintf(tmptag, sizeof(tmptag), "PIN%d", 1);
 		if (*mKeyId == 0x82)
 		{
-			mAclEntries.add(CssmClient::AclFactory::PinSubject(
-				mAclEntries.allocator(), 1),
-				AclAuthorizationSet(CSSM_ACL_AUTHORIZATION_SIGN, 0), tmptag);
+            if(mPPDU == true)
+            {
+                mAclEntries.add(CssmClient::AclFactory::AnySubject(
+                                                                   mAclEntries.allocator()),
+                                AclAuthorizationSet(CSSM_ACL_AUTHORIZATION_SIGN, 0), tmptag);
+            }
+            else
+            {
+                mAclEntries.add(CssmClient::AclFactory::PinSubject(
+                mAclEntries.allocator(), 1),
+                AclAuthorizationSet(CSSM_ACL_AUTHORIZATION_SIGN, 0), tmptag);
+            }
 		}
-		else if (*mKeyId == 0x83)
+        else if (*mKeyId == 0x83)
 		{
 			CssmData prompt;
 			mAclEntries.add(CssmClient::AclFactory::PromptPWSubject(

@@ -98,11 +98,11 @@ class BELPICKeyRecord : public BELPICRecord
 {
 	NOCOPY(BELPICKeyRecord)
 public:
-	BELPICKeyRecord(const uint8_t *keyId, const char *description,
-		const Tokend::MetaRecord &metaRecord, bool signOnly);
+	BELPICKeyRecord(const uint8_t *keyId, const char *description, uint32_t mKeySize,
+		const Tokend::MetaRecord &metaRecord, bool signOnly, bool PPDU);
     virtual ~BELPICKeyRecord();
 
-	size_t sizeInBits() const { return 1024; }
+	size_t sizeInBits() const { return mKeySize; }
 	void computeCrypt(BELPICToken &belpicToken, bool sign,
 		const AccessCredentials *cred, const unsigned char *data,
 		size_t dataLength, unsigned char *result, size_t &resultLength);
@@ -111,7 +111,9 @@ public:
 
 private:
 	const uint8_t *mKeyId;
+    uint32_t mKeySize;
 	bool mSignOnly;
+    bool mPPDU;
 	AutoAclEntryInfoList mAclEntries;
 };
 
