@@ -6,7 +6,7 @@
 @set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files\Microsoft Platform SDK\bin
 @set SEARCH_BEID_DIR_PLATFORMSDK_3=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\bin
 @set SEARCH_BEID_DIR_PLATFORMSDK_4=C:\Program Files (x86)\Windows Kits\8.0\bin\x86
-@set SEARCH_WIX_PATH=C:\Program Files (x86)\WiX Toolset v3.8\bin
+@set SEARCH_WIX_PATH=C:\Program Files (x86)\WiX Toolset v3.9\bin
 @set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
 @set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
 ::end of search paths
@@ -122,8 +122,8 @@
 @echo        Not found in "%BEID_DIR_WIX%"
 
 
-@echo [ERROR] WiX could not be found (recommended version 3.0.4415)
-@echo         Please install ProjectAggregator2.msi and Wix3-3.0.4415.msi.
+@echo [ERROR] WiX could not be found
+@echo         Please install Wix3
 @exit /B 1
 
 :find_wix
