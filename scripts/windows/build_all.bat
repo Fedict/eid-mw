@@ -69,7 +69,7 @@
 set OUR_CURRENT_PATH="%cd%"
 @echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
 
-@cd %~dp0..\..\installers\eid-mw\Windows
+::@cd %~dp0..\..\installers\eid-mw\Windows
 
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw32.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
