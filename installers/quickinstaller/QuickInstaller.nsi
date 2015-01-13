@@ -97,18 +97,18 @@ Page custom nsdCardData
  
   
   
-  ;If you are using solid compression, files that are required before
-  ;the actual installation should be stored first in the data block,
-  ;because this will make your installer start faster.
+;If you are using solid compression, files that are required before
+;the actual installation should be stored first in the data block,
+;because this will make your installer start faster.
   
-  ;!insertmacro MUI_RESERVEFILE_LANGDLL
+;!insertmacro MUI_RESERVEFILE_LANGDLL
 
 MiscButtonText $(ls_back) $(ls_next) $(ls_cancel) $(ls_close)
 ; MessageBox MB_OK "A translated message: $(message)"
-LicenseLangString license ${LANG_ENGLISH} "..\..\misc\licenses_files\English\License_en.rtf"
-LicenseLangString license ${LANG_GERMAN} "..\..\misc\licenses_files\German\License_de.rtf"
-LicenseLangString license ${LANG_FRENCH} "..\..\misc\licenses_files\French\License_fr.rtf"
-LicenseLangString license ${LANG_DUTCH} "..\..\misc\licenses_files\Dutch\License_nl.rtf"
+LicenseLangString license ${LANG_ENGLISH} "..\..\doc\licenses\English\License_en.rtf"
+LicenseLangString license ${LANG_GERMAN} "..\..\doc\licenses\German\License_de.rtf"
+LicenseLangString license ${LANG_FRENCH} "..\..\doc\licenses\French\License_fr.rtf"
+LicenseLangString license ${LANG_DUTCH} "..\..\doc\licenses\Dutch\License_nl.rtf"
 
 LicenseData $(license)
 ;LicenseText "text" "button_text"
@@ -121,7 +121,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	CreateDirectory "$INSTDIR\log"
   ${If} ${RunningX64}
    ;MessageBox MB_OK "running on x64"
-	 File "..\..\Windows\BeidMW_64.msi"
+	 File "..\eid-mw\Windows\bin\BeidMW_64.msi"
 	 ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_64.msi"'
 	 ;ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
 	 ;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
@@ -129,7 +129,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	 Delete "$INSTDIR\BeidMW_64.msi"
   ${Else}
 	;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
-	File "..\..\Windows\BeidMW_32.msi"	
+	File "..\eid-mw\Windows\bin\BeidMW_32.msi"	
 	ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_32.msi"'
 	;ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
 	ExecWait 'vcredist_x86.exe'
