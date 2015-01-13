@@ -69,7 +69,8 @@
 set OUR_CURRENT_PATH="%cd%"
 @echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
 
-::@cd %~dp0..\..\installers\eid-mw\Windows
+::need current dir to be pointing at the one of the wxs files, or light.exe can't find the paths
+@cd %~dp0..\..\installers\eid-mw\Windows
 
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw32.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
@@ -81,9 +82,10 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 
+@cd "%OUR_CURRENT_PATH%"
 :: create the NSIS plugins
 :: =========================
-@echo [INFO] Building "%~dp0..\..\VS_2012\beid.sln"
+@echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"

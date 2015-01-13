@@ -55,7 +55,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\beidread;../;..\..\..\..\..\pkcs11\src\include\rsaref220</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\beidread;../;..\..\..\..\..\doc\sdk\include\rsaref220</AdditionalIncludeDirectories>
       <ExceptionHandling>SyncCThrow</ExceptionHandling>
       <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
@@ -73,7 +73,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>CompileAsC</CompileAs>
-      <AdditionalIncludeDirectories>..\..\beidread;../;..\..\..\..\..\pkcs11\src\include\rsaref220</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\beidread;../;..\..\..\..\..\doc\sdk\include\rsaref220</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

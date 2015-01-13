@@ -21,13 +21,13 @@
 
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_MSBUILD%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_msbuild
+@if "%FILE_NOT_FOUND%"=="" goto found_msbuild
 @echo        Not found in "%BEID_DIR_MSBUILD%"
 
 @set BEID_DIR_MSBUILD=%SEARCH_BEID_DIR_MSBUILD%
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_MSBUILD%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_msbuild
+@if "%FILE_NOT_FOUND%"=="" goto found_msbuild
 @echo        Not found in "%BEID_DIR_MSBUILD%"
 
 @echo [ERROR] %FILE_TO_FIND% could not be found
@@ -35,7 +35,7 @@
 @echo         please define BEID_DIR_MSBUILD environment variable or adjust SetPaths.bat
 @exit /B 1
 
-:find_msbuild
+:found_msbuild
 @echo        Found in "%BEID_DIR_MSBUILD%"
 
 @echo [INFO] Define default value for INF2CAT_PATH if not defined yet
@@ -45,17 +45,17 @@
 
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%INF2CAT_PATH%\%%i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_inf2cat
+@if "%FILE_NOT_FOUND%"=="" goto found_inf2cat
 @echo        Not found in "%INF2CAT_PATH%"
 
 @set INF2CAT_PATH=%SEARCH_INF2CAT_PATH%
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%INF2CAT_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_inf2cat
+@if "%FILE_NOT_FOUND%"=="" goto found_inf2cat
 @echo        Not found in "%INF2CAT_PATH%"
 @exit /B 1
 
-:find_inf2cat
+:found_inf2cat
 @echo        Found in "%INF2CAT_PATH%"
 
 @echo [INFO] Define default value for BEID_DIR_PLATFORMSDK if not defined yet
@@ -65,25 +65,25 @@
 
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@if "%FILE_NOT_FOUND%"=="" goto found_mssdk
 @echo        Not found in "%BEID_DIR_PLATFORMSDK%"
 
 @set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_1%
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@if "%FILE_NOT_FOUND%"=="" goto found_mssdk
 @echo        Not found in "%BEID_DIR_PLATFORMSDK%"
 
 @set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_2%
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@if "%FILE_NOT_FOUND%"=="" goto found_mssdk
 @echo        Not found in "%BEID_DIR_PLATFORMSDK%"
 
 @set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_3%
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@if "%FILE_NOT_FOUND%"=="" goto found_mssdk
 @echo        Not found in "%BEID_DIR_PLATFORMSDK%"
 
 @rem paths for Windows 8 SDK are slightly different
@@ -92,7 +92,7 @@
 @set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_4%
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_mssdk
+@if "%FILE_NOT_FOUND%"=="" goto found_mssdk
 @echo        Not found in "%BEID_DIR_PLATFORMSDK%"
 
 @echo [ERROR] MS Platform SDK 2008, Windows SDK v7.1, or Windows SDK 8.0 could not be found
@@ -100,7 +100,7 @@
 @echo         please define BEID_DIR_PLATFORMSDK environment variable.
 @exit /B 1
 
-:find_mssdk
+:found_mssdk
 @echo        Found in "%BEID_DIR_PLATFORMSDK%"
 
 
@@ -112,13 +112,13 @@
 
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_WIX%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_wix
+@if "%FILE_NOT_FOUND%"=="" goto found_wix
 @echo        Not found in "%BEID_DIR_WIX%"
 
 @set BEID_DIR_WIX=%SEARCH_WIX_PATH%
 @set FILE_NOT_FOUND=
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_WIX%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto find_wix
+@if "%FILE_NOT_FOUND%"=="" goto found_wix
 @echo        Not found in "%BEID_DIR_WIX%"
 
 
@@ -126,7 +126,32 @@
 @echo         Please install Wix3
 @exit /B 1
 
-:find_wix
+:found_wix
 @echo        Found in "%BEID_DIR_WIX%"
+
+
+@echo [INFO] Define default value for SEARCH_NSIS_PATH if not defined yet
+@echo [INFO] Input NSIS_PATH=%SEARCH_NSIS_PATH%
+@set FILE_TO_FIND="makensis.exe"
+@echo [INFO] Looking for files: %FILE_TO_FIND%
+
+@set NSIS_PATH=%SEARCH_NSIS_PATH%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%NSIS_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto found_nsis
+@echo        Not found in "%NSIS_PATH%"
+
+@set NSIS_PATH=%SEARCH_NSIS_PATH_2%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%NSIS_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto found_nsis
+@echo        Not found in "%NSIS_PATH%"
+
+@echo [ERROR] NSIS could not be found
+@echo         Please install NSIS
+@exit /B 1
+
+:found_nsis
+@echo        Found in "%NSIS_PATH%"
 
 @exit /B 0
