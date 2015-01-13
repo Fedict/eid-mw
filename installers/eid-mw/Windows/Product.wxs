@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:difx="http://schemas.microsoft.com/wix/DifxAppExtension"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-  <?include svn_revision.wxs ?>
+  <?include ..\..\..\scripts\windows\eidmw_revision.wxs ?>
 
   <?define var.OfficialProductVersion =4.1.0?>
   <?define var.ProductVersion =4.1.$(var.RevisionNumber)?>
@@ -49,13 +49,13 @@
     </Upgrade>
 
     <?if $(var.Lang) = "nl"?>
-    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\Dutch\License_nl.rtf" />
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\Dutch\License_nl.rtf" />
     <?elseif $(var.Lang) = "fr"?>
-    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\French\License_fr.rtf" />
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\French\License_fr.rtf" />
     <?elseif $(var.Lang) = "de"?>
-    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\German\License_de.rtf" />
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\German\License_de.rtf" />
     <?else?>
-    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\misc\licenses_files\English\License_en.rtf" />
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\English\License_en.rtf" />
     <?endif?>
 
     <WixVariable Id="WixUIBannerBmp" Value="..\..\bannrbmp.bmp" />
@@ -74,10 +74,6 @@
 
     <Icon Id="eid.ico" SourceFile="..\..\eid.ico"/>
 
-    <!--
-    beidsccertprop.exe does not have a main window, so this won't work
-    <util:CloseApplication Id="closesccertprop" Target="beidsccertprop.exe" CloseMessage="yes" ElevatedCloseMessage="yes" RebootPrompt="no"/>
--->
     <Property Id="PROPOFFICE2010SIGNREG">
       <RegistrySearch Id="PropOffice2010SignaturesRegistered"
                       Root="HKCU"
@@ -168,28 +164,28 @@
     <DirectoryRef Id="XPIROOTFOLDER">
       <Component Id="XPIRoot" Guid="{6E56CA5C-29ED-47e0-9EEF-64FDF8A0B353}" KeyPath="no">
         <CreateFolder />
-        <File Id="chrome.manifest" Name="chrome.manifest" KeyPath="no" Source="..\..\..\xpi\src\chrome.manifest" />
-        <File Id="icon.png.root" Name="icon.png" KeyPath="no" Source="..\..\..\xpi\src\icon.png" />
-        <File Id="install.rdf" Name="install.rdf" KeyPath="no" Source="..\..\..\xpi\src\install.rdf" />
+        <File Id="chrome.manifest" Name="chrome.manifest" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\chrome.manifest" />
+        <File Id="icon.png.root" Name="icon.png" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\icon.png" />
+        <File Id="install.rdf" Name="install.rdf" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\install.rdf" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPICONTENTFOLDER">
       <Component Id="XPIContent" Guid="{DC052180-264F-4ace-ACF1-FC482715EB86}" KeyPath="no">
         <CreateFolder />
-        <File Id="belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidpkcs11.js" />
-        <File Id="belgiumeidpkcs11.xul" Name="belgiumeidpkcs11.xul" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidpkcs11.xul" />
-        <File Id="belgiumeidprompt.js" Name="belgiumeidprompt.js" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidprompt.js" />
-        <File Id="belgiumeidprompt.xul" Name="belgiumeidprompt.xul" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidprompt.xul" />
-        <File Id="belgiumeidpromptsecure.js" Name="belgiumeidpromptsecure.js" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidpromptsecure.js" />
-        <File Id="belgiumeidpromptsecure.xul" Name="belgiumeidpromptsecure.xul" KeyPath="no" Source="..\..\..\xpi\src\content\belgiumeidpromptsecure.xul" />
+        <File Id="belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidpkcs11.js" />
+        <File Id="belgiumeidpkcs11.xul" Name="belgiumeidpkcs11.xul" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidpkcs11.xul" />
+        <File Id="belgiumeidprompt.js" Name="belgiumeidprompt.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidprompt.js" />
+        <File Id="belgiumeidprompt.xul" Name="belgiumeidprompt.xul" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidprompt.xul" />
+        <File Id="belgiumeidpromptsecure.js" Name="belgiumeidpromptsecure.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidpromptsecure.js" />
+        <File Id="belgiumeidpromptsecure.xul" Name="belgiumeidpromptsecure.xul" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidpromptsecure.xul" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPICOMPONENTSFOLDER">
       <Component Id="XPIComponents" Guid="{2761C1B0-4EA2-4047-8A31-32679BB4651D}" KeyPath="no">
         <CreateFolder />
-        <File Id="comp_belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\xpi\src\components\belgiumeidpkcs11.js" />
+        <File Id="comp_belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\components\belgiumeidpkcs11.js" />
       </Component>
     </DirectoryRef>
 
@@ -202,7 +198,7 @@
     <DirectoryRef Id="XPIDEFAULTSPREFSFOLDER">
       <Component Id="XPIdefaultsprefs" Guid="{FA937E34-AE32-4acd-AC77-3487EBC2ABCD}" KeyPath="no">
         <CreateFolder />
-        <File Id="belgiumeid.js" Name="belgiumeid.js" KeyPath="no" Source="..\..\..\xpi\src\defaults\preferences\belgiumeid.js" />
+        <File Id="belgiumeid.js" Name="belgiumeid.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\defaults\preferences\belgiumeid.js" />
       </Component>
     </DirectoryRef>
 
@@ -215,46 +211,46 @@
     <DirectoryRef Id="XPILOCALEENFOLDER">
       <Component Id="XPIlocaleen" Guid="{F2BBAA41-E463-409d-B4AB-CE3626339663}" KeyPath="no">
         <CreateFolder />
-          <File Id="belgiumeid.properties.en" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\en-US\belgiumeid.properties" />
+          <File Id="belgiumeid.properties.en" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\locale\en-US\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALEFRFOLDER">
       <Component Id="XPIlocalefr" Guid="{C0F969BB-3678-4828-BAE7-023054072A01}" KeyPath="no">
         <CreateFolder />
-          <File Id="belgiumeid.properties.fr" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\fr-FR\belgiumeid.properties" />
+          <File Id="belgiumeid.properties.fr" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\locale\fr-FR\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="XPILOCALENLFOLDER">
       <Component Id="XPIlocalenl" Guid="{E8587941-7B32-4a9d-8F4B-23C1E8EC1126}" KeyPath="no">
         <CreateFolder />
-        <File Id="belgiumeid.properties.nl" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\nl-NL\belgiumeid.properties" />
+        <File Id="belgiumeid.properties.nl" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\locale\nl-NL\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 
 	<DirectoryRef Id="XPILOCALEDEFOLDER">
       <Component Id="XPIlocalede" Guid="{54BC660D-7C9D-4ddc-AA96-29D7A5DD0E53}" KeyPath="no">
         <CreateFolder />
-        <File Id="belgiumeid.properties.de" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\xpi\src\locale\de-DE\belgiumeid.properties" />
+        <File Id="belgiumeid.properties.de" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\locale\de-DE\belgiumeid.properties" />
       </Component>
     </DirectoryRef>
 	
     <DirectoryRef Id="XPISKINFOLDER">
       <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no">
         <CreateFolder />
-        <File Id="overlay.css" Name="overlay.css" KeyPath="no" Source="..\..\..\xpi\src\skin\overlay.css" />
-        <File Id="icon.png" Name="icon.png" KeyPath="no" Source="..\..\..\xpi\src\skin\icon.png" />
-		<File Id="icon40x40.png" Name="icon40x40.png" KeyPath="no" Source="..\..\..\xpi\src\skin\icon40x40.png" />
+        <File Id="overlay.css" Name="overlay.css" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\skin\overlay.css" />
+        <File Id="icon.png" Name="icon.png" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\skin\icon.png" />
+		<File Id="icon40x40.png" Name="icon40x40.png" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\skin\icon40x40.png" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="MINIDRIVERROOTFOLDER">
       <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" >
-        <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
-        <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
-        <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="no" DiskId="1" />
-        <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\minidriver\makemsi\Release\beidmdrv64.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
+        <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv64.dll" KeyPath="no" DiskId="1" />
         <difx:Driver ForceInstall="no" PlugAndPlayPrompt="no" DeleteFiles="yes"  />
       </Component>
       <!-- Certificate Propagation Service is a standard Windows service available in from Windows Vista on. In order to use the minidriver
@@ -267,18 +263,6 @@
         <!--<ServiceControl Id="StartCertPropSvc" Name="CertPropSvc" Start="install" Wait="no"/>-->
       </Component>
     </DirectoryRef>
-	
-	<DirectoryRef Id="BEIDCERTPROPROOTFOLDER">
-	<!-- Certificate Propagation Service is not yet available on Windows XP, therefore the beidsccertprop will register the certificates instead. -->
-      <Component Id="beidsccertproptool" Guid="8F0AC506-4863-47ac-8A92-7B8FCE9ABC64" >
-        <File Id="beidsccertprop.exe" Name="beidsccertprop.exe" Source="..\..\..\VS_2012\Binaries\Win32_Release\beidsccertprop.exe" KeyPath="yes"/>
-      </Component>
-      
-	  <Component Id="beidsccertproptool_autostart" Guid="F02E7164-F7EA-4c06-A2AC-A3BEE214EF49" >
-        <!-- Start beidsccertprop.exe during startup -->
-        <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run" Type="string" Name="beidsccertprop" Value="[BEIDCERTPROPROOTFOLDER]beidsccertprop.exe" KeyPath="yes"/>
-      </Component>
-    </DirectoryRef>
     
     <DirectoryRef Id="APPLICATIONROOTFOLDER">
 
@@ -287,18 +271,18 @@
       </Component>
       
       <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}">
-        <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\Outlook_snc\beidoutlooksnc.exe" />
+        <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\plugins_tools\Outlook_snc\beidoutlooksnc.exe" />
       </Component>
 
       <Component Id="Office2010XAdESTool" Guid="{B42CF78B-952A-4768-8605-2E6F3BBA340B}">
-        <File Id="beidoffice2010_XAdES_XL.exe" Name="beidoffice2010_XAdES_XL.exe" KeyPath="yes" Source="..\..\..\Office2010_XAdES_XL\beidoffice2010_XAdES_XL.exe" />
+        <File Id="beidoffice2010_XAdES_XL.exe" Name="beidoffice2010_XAdES_XL.exe" KeyPath="yes" Source="..\..\..\plugins_tools\Office2010_XAdES_XL\beidoffice2010_XAdES_XL.exe" />
       </Component>
 
       <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="no" Win64="no">
-        <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\misc\licenses_files\English\License_en.rtf" />
-        <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\Dutch\License_nl.rtf" />
-        <File Id="License_fr.rtf" Name="License_fr.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\French\License_fr.rtf" />
-        <File Id="License_de.rtf" Name="License_de.rtf" KeyPath="no" Source="..\..\..\misc\licenses_files\German\License_de.rtf" />
+        <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\doc\licenses\English\License_en.rtf" />
+        <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\doc\licenses\Dutch\License_nl.rtf" />
+        <File Id="License_fr.rtf" Name="License_fr.rtf" KeyPath="no" Source="..\..\..\doc\licenses\French\License_fr.rtf" />
+        <File Id="License_de.rtf" Name="License_de.rtf" KeyPath="no" Source="..\..\..\doc\licenses\German\License_de.rtf" />
       </Component>
 
     </DirectoryRef>
@@ -306,17 +290,12 @@
     <DirectoryRef Id="SystemFolder">
 
       <Component Id="beidmdrvsystem32" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" Permanent="no" Win64="no">
-        <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="..\..\..\VS_2012\binaries\win32_release\beidmdrv.dll" KeyPath="yes" DiskId="1" />
-      </Component>
-
-      <Component Id="CSP" Guid="{54153442-D4CE-4DE6-9321-1BAC5DE4C725}" SharedDllRefCount="no">
-        <File Id="beidCSP.dll" Name="beidCSP.dll" KeyPath="yes" Source="..\..\..\VS_2012\binaries\win32_release\beidCSP.dll" />
-        <File Id="beidCSPlib.dll" Name="beidCSPlib.dll" KeyPath="no" Source="..\..\..\VS_2012\binaries\win32_release\beidCSPlib.dll" />
+        <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
       </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="no">
-        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\VS_2012\binaries\win32_release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\VS_2012\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\VS_2012\binaries\win32_release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\VS_2012\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>
 
     </DirectoryRef>
@@ -368,27 +347,6 @@
           <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no"/>
         </RegistryKey>
       </Component> 
-
-      <Component Id="REGISTERCSP" Guid="{3DF6D19A-C268-4D97-B605-1F3E29DC15DC}">
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Belgium Identity Card CSP"
-                      Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Image Path" Value="beidcsp.dll" KeyPath="yes"/>
-          <RegistryValue Type="integer" Name="Type" Value="1" />
-          <RegistryValue
-            Type="binary"
-            Name="Signature"
-            Value="4ca7da22f79d4c8db3acaaf626b757929ff28cd2d205615323885f542f38d9ddfccd1b74d2ccbd99ad0a0a530e22b91dda3f3967ff7846f43a4fa263b41fbdb35976c68d64c3ff931036e009f3d3090d9afdbe8a9f942d1adc8791d5522644d1842bb802907737baa4b318a21554ecc3b25db0f42d7f5cdd3f58269703ffed300000000000000000" />
-        </RegistryKey>
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Belgium Identity Card"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Belgium Identity Card CSP"/>
-          <RegistryValue Type="string" Name="80000001" Value="beidcsp.dll" KeyPath="no"/>
-          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
-          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
-        </RegistryKey>
-      </Component>
 
       <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}">
         <RegistryKey Root="HKLM"
@@ -535,13 +493,7 @@
         <ComponentRef Id="REGISTERMINIDRIVER"/>
         <Condition Level="1">VersionNT >= 600</Condition>
       </Feature>
-      <Feature Id="Install_CSP" Level="1" Display="hidden" Absent="disallow">
-          <ComponentRef Id="CSP"/>
-          <ComponentRef Id="REGISTERCSP"/>
-		      <ComponentRef Id="beidsccertproptool"/>   
-		      <ComponentRef Id="beidsccertproptool_autostart"/>		  
-          <Condition Level="0">VersionNT >= 600</Condition>
-      </Feature>
+
     </Feature>
 
       <Feature  Id="Install_Utilities"
@@ -570,21 +522,12 @@
 
     <!--SetARPINSTALLLOCATION sets the location in the registry entries of the Add & Remove Panel-->
     <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
-
-    <CustomAction Id="BeidSccertProp"
-          FileKey="beidsccertprop.exe"
-          ExeCommand="-c"
-          Impersonate="yes"
-          Return="asyncNoWait"
-          Execute="commit"   
-    />
     
     <CustomAction Id="IsPrivileged" Error="!(loc.AdminNeeded)" />
 
     <InstallExecuteSequence>    
       <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>  
       <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
-      <Custom Action="BeidSccertProp" After="InstallFiles"><![CDATA[VersionNT<600]]></Custom>
       <RemoveExistingProducts After="InstallExecute"/>
       <ScheduleReboot After="InstallFinalize">NOT Installed</ScheduleReboot>      
     </InstallExecuteSequence>
