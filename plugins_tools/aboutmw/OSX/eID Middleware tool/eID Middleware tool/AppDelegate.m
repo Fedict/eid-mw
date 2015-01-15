@@ -44,14 +44,6 @@ char* getOsRel() {
     return cell;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
-}
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
-}
-
 - (void)awakeFromNib {
     if ([self.vals count] > 0) {
         return;
