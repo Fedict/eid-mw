@@ -18,10 +18,35 @@
 
 @end
 
-char* getOsRel() {
-    struct utsname uts;
+struct utsname uts;
+
+NSString* getOsRel() {
+    NSDictionary *RelMap = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @" (OSX 10.10, Yosemite)", @"14",
+                            @" (OSX 10.9, Mavericks)", @"13",
+                            @" (OSX 10.8, Mountain Lion)", @"12",
+                            @" (OSX 10.7, Lion)", @"11",
+                            @" (OSX 10.6, Snow Leopard)", @"10",
+                            @" (OSX 10.5, Leopard)", @"9",
+                            nil];
+    NSMutableString *retval = [NSMutableString stringWithCapacity:30];
+    char* tmp;
+    char* majrel;
+
+    [retval appendString:@"Darwin "];
+
     uname(&uts);
-    return strdup(uts.release);
+    tmp = strdup(uts.release);
+    majrel = strtok(tmp, ".");
+    NSString *reldesc = [RelMap valueForKey:[NSString stringWithCString:majrel encoding:NSUTF8StringEncoding]];
+    [retval appendString:[NSString stringWithCString:uts.release encoding:NSUTF8StringEncoding]];
+    if (reldesc == nil) {
+        [retval appendString:@" (unknown OSX release; please upgrade the eID middleware)"];
+    } else {
+        [retval appendString:reldesc];
+    }
+    free(tmp);
+    return retval;
 }
 
 @implementation AppDelegate
@@ -51,7 +76,7 @@ char* getOsRel() {
     self.vals = [NSMutableArray arrayWithCapacity:1];
     DataItem *item = [DataItem alloc];
     [item setTitle: @"OS release"];
-    [item setValue: [NSString stringWithCString:getOsRel() encoding:NSUTF8StringEncoding]];
+    [item setValue: getOsRel()];
     [self.ctrl addObject:item];
 }
 
