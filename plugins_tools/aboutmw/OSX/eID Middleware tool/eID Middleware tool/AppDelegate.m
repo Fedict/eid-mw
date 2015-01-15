@@ -49,6 +49,10 @@ NSString* getOsRel() {
     return retval;
 }
 
+NSString* getOsArch() {
+    return [NSString stringWithCString:uts.machine encoding:NSUTF8StringEncoding];
+}
+
 @implementation AppDelegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView {
@@ -77,6 +81,10 @@ NSString* getOsRel() {
     DataItem *item = [DataItem alloc];
     [item setTitle: @"OS release"];
     [item setValue: getOsRel()];
+    [self.ctrl addObject:item];
+    item = [DataItem alloc];
+    [item setTitle: @"System architecture"];
+    [item setValue: getOsArch()];
     [self.ctrl addObject:item];
 }
 
