@@ -100,7 +100,7 @@ copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\Quickinstaller.nsi"
 @if %ERRORLEVEL%==1 goto end_resetpath
 @echo [INFO] copy nsis installer
-copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller 4.1.0.1312*.exe" %~dp0
+copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller 4.1.0.1312.exe" %~dp0
 goto end_resetpath
 
 
