@@ -11,19 +11,8 @@
 		658054EE1A66C9BB000AEFE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 658054ED1A66C9BB000AEFE0 /* main.m */; };
 		658054F01A66C9BB000AEFE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658054EF1A66C9BB000AEFE0 /* Images.xcassets */; };
 		658054F31A66C9BB000AEFE0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658054F11A66C9BB000AEFE0 /* MainMenu.xib */; };
-		658054FF1A66C9BB000AEFE0 /* eID_Middleware_toolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 658054FE1A66C9BB000AEFE0 /* eID_Middleware_toolTests.m */; };
 		65CE8EB51A66D5AC00B20669 /* DataItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CE8EB41A66D5AC00B20669 /* DataItem.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		658054F91A66C9BB000AEFE0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 658054DD1A66C9BB000AEFE0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 658054E41A66C9BB000AEFE0;
-			remoteInfo = "eID Middleware tool";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		658054E51A66C9BB000AEFE0 /* eID Middleware tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Middleware tool.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,22 +22,12 @@
 		658054ED1A66C9BB000AEFE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		658054EF1A66C9BB000AEFE0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		658054F21A66C9BB000AEFE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		658054F81A66C9BB000AEFE0 /* eID Middleware toolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "eID Middleware toolTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		658054FD1A66C9BB000AEFE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		658054FE1A66C9BB000AEFE0 /* eID_Middleware_toolTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eID_Middleware_toolTests.m; sourceTree = "<group>"; };
 		65CE8EB31A66D5AC00B20669 /* DataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataItem.h; sourceTree = "<group>"; };
 		65CE8EB41A66D5AC00B20669 /* DataItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		658054E21A66C9BB000AEFE0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		658054F51A66C9BB000AEFE0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -62,7 +41,6 @@
 			isa = PBXGroup;
 			children = (
 				658054E71A66C9BB000AEFE0 /* eID Middleware tool */,
-				658054FB1A66C9BB000AEFE0 /* eID Middleware toolTests */,
 				658054E61A66C9BB000AEFE0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,7 +49,6 @@
 			isa = PBXGroup;
 			children = (
 				658054E51A66C9BB000AEFE0 /* eID Middleware tool.app */,
-				658054F81A66C9BB000AEFE0 /* eID Middleware toolTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,23 +76,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		658054FB1A66C9BB000AEFE0 /* eID Middleware toolTests */ = {
-			isa = PBXGroup;
-			children = (
-				658054FE1A66C9BB000AEFE0 /* eID_Middleware_toolTests.m */,
-				658054FC1A66C9BB000AEFE0 /* Supporting Files */,
-			);
-			path = "eID Middleware toolTests";
-			sourceTree = "<group>";
-		};
-		658054FC1A66C9BB000AEFE0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				658054FD1A66C9BB000AEFE0 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -136,24 +96,6 @@
 			productReference = 658054E51A66C9BB000AEFE0 /* eID Middleware tool.app */;
 			productType = "com.apple.product-type.application";
 		};
-		658054F71A66C9BB000AEFE0 /* eID Middleware toolTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 658055051A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware toolTests" */;
-			buildPhases = (
-				658054F41A66C9BB000AEFE0 /* Sources */,
-				658054F51A66C9BB000AEFE0 /* Frameworks */,
-				658054F61A66C9BB000AEFE0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				658054FA1A66C9BB000AEFE0 /* PBXTargetDependency */,
-			);
-			name = "eID Middleware toolTests";
-			productName = "eID Middleware toolTests";
-			productReference = 658054F81A66C9BB000AEFE0 /* eID Middleware toolTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -165,10 +107,6 @@
 				TargetAttributes = {
 					658054E41A66C9BB000AEFE0 = {
 						CreatedOnToolsVersion = 6.1.1;
-					};
-					658054F71A66C9BB000AEFE0 = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 658054E41A66C9BB000AEFE0;
 					};
 				};
 			};
@@ -186,7 +124,6 @@
 			projectRoot = "";
 			targets = (
 				658054E41A66C9BB000AEFE0 /* eID Middleware tool */,
-				658054F71A66C9BB000AEFE0 /* eID Middleware toolTests */,
 			);
 		};
 /* End PBXProject section */
@@ -198,13 +135,6 @@
 			files = (
 				658054F01A66C9BB000AEFE0 /* Images.xcassets in Resources */,
 				658054F31A66C9BB000AEFE0 /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		658054F61A66C9BB000AEFE0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,23 +151,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		658054F41A66C9BB000AEFE0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				658054FF1A66C9BB000AEFE0 /* eID_Middleware_toolTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		658054FA1A66C9BB000AEFE0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 658054E41A66C9BB000AEFE0 /* eID Middleware tool */;
-			targetProxy = 658054F91A66C9BB000AEFE0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		658054F11A66C9BB000AEFE0 /* MainMenu.xib */ = {
@@ -285,7 +199,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -321,7 +235,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -351,42 +265,6 @@
 			};
 			name = Release;
 		};
-		658055061A66C9BB000AEFE0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "eID Middleware toolTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eID Middleware tool.app/Contents/MacOS/eID Middleware tool";
-			};
-			name = Debug;
-		};
-		658055071A66C9BB000AEFE0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "eID Middleware toolTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eID Middleware tool.app/Contents/MacOS/eID Middleware tool";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -404,15 +282,6 @@
 			buildConfigurations = (
 				658055031A66C9BB000AEFE0 /* Debug */,
 				658055041A66C9BB000AEFE0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		658055051A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware toolTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				658055061A66C9BB000AEFE0 /* Debug */,
-				658055071A66C9BB000AEFE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
