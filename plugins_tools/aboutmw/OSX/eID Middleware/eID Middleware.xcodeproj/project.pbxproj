@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		658054E51A66C9BB000AEFE0 /* eID Middleware tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Middleware tool.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		658054E51A66C9BB000AEFE0 /* eID Middleware.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Middleware.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		658054E91A66C9BB000AEFE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		658054EA1A66C9BB000AEFE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		658054EB1A66C9BB000AEFE0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		658054DC1A66C9BB000AEFE0 = {
 			isa = PBXGroup;
 			children = (
-				658054E71A66C9BB000AEFE0 /* eID Middleware tool */,
+				658054E71A66C9BB000AEFE0 /* eID Middleware */,
 				658054E61A66C9BB000AEFE0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,12 +48,12 @@
 		658054E61A66C9BB000AEFE0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				658054E51A66C9BB000AEFE0 /* eID Middleware tool.app */,
+				658054E51A66C9BB000AEFE0 /* eID Middleware.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		658054E71A66C9BB000AEFE0 /* eID Middleware tool */ = {
+		658054E71A66C9BB000AEFE0 /* eID Middleware */ = {
 			isa = PBXGroup;
 			children = (
 				658054EA1A66C9BB000AEFE0 /* AppDelegate.h */,
@@ -64,7 +64,7 @@
 				658054F11A66C9BB000AEFE0 /* MainMenu.xib */,
 				658054E81A66C9BB000AEFE0 /* Supporting Files */,
 			);
-			path = "eID Middleware tool";
+			path = "eID Middleware";
 			sourceTree = "<group>";
 		};
 		658054E81A66C9BB000AEFE0 /* Supporting Files */ = {
@@ -79,9 +79,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		658054E41A66C9BB000AEFE0 /* eID Middleware tool */ = {
+		658054E41A66C9BB000AEFE0 /* eID Middleware */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 658055021A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware tool" */;
+			buildConfigurationList = 658055021A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware" */;
 			buildPhases = (
 				658054E11A66C9BB000AEFE0 /* Sources */,
 				658054E21A66C9BB000AEFE0 /* Frameworks */,
@@ -91,9 +91,9 @@
 			);
 			dependencies = (
 			);
-			name = "eID Middleware tool";
-			productName = "eID Middleware tool";
-			productReference = 658054E51A66C9BB000AEFE0 /* eID Middleware tool.app */;
+			name = "eID Middleware";
+			productName = "eID Middleware";
+			productReference = 658054E51A66C9BB000AEFE0 /* eID Middleware.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -110,7 +110,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 658054E01A66C9BB000AEFE0 /* Build configuration list for PBXProject "eID Middleware tool" */;
+			buildConfigurationList = 658054E01A66C9BB000AEFE0 /* Build configuration list for PBXProject "eID Middleware" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -123,7 +123,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				658054E41A66C9BB000AEFE0 /* eID Middleware tool */,
+				658054E41A66C9BB000AEFE0 /* eID Middleware */,
 			);
 		};
 /* End PBXProject section */
@@ -246,7 +246,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "eID Middleware tool/Info.plist";
+				INFOPLIST_FILE = "eID Middleware/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -258,7 +258,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "eID Middleware tool/Info.plist";
+				INFOPLIST_FILE = "eID Middleware/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -268,7 +268,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		658054E01A66C9BB000AEFE0 /* Build configuration list for PBXProject "eID Middleware tool" */ = {
+		658054E01A66C9BB000AEFE0 /* Build configuration list for PBXProject "eID Middleware" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				658055001A66C9BB000AEFE0 /* Debug */,
@@ -277,7 +277,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		658055021A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware tool" */ = {
+		658055021A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				658055031A66C9BB000AEFE0 /* Debug */,
