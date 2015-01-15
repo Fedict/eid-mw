@@ -3,13 +3,10 @@
 @call "%~dp0.\SetPaths.bat"
 @if %ERRORLEVEL%==1 goto paths_failed
 
-:: BUILD
-:: =====
+:: Create the version and revision number
+:: ======================================
+@call "%~dp0.\create_eidmw_version_files.cmd"
 
-:: Create svn_revision.h
-:: =====================
-:: TODO: get g
-::@call "%~dp0.\svn_revision.cmd"
 
 :: build pkcs11, minidriver, cleanuptool and sccertprop
 :: ====================================================
@@ -77,7 +74,7 @@ set OUR_CURRENT_PATH="%cd%"
 @echo [INFO] copy 32 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 
-@call "%~dp0..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
+@call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
@@ -103,7 +100,7 @@ copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\Quickinstaller.nsi"
 @if %ERRORLEVEL%==1 goto end_resetpath
 @echo [INFO] copy nsis installer
-copy %~dp0..\..\installers\quickinstaller\eID-QuickInstaller*.exe %~dp0
+copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller 4.1.0.1312*.exe" %~dp0
 goto end_resetpath
 
 

@@ -6,6 +6,7 @@
 !include nsDialogs.nsh
 !include "eIDTranslations.nsh"
 !include WinMessages.nsh
+!include "eidmw_version.nsh"
 ;!include nsDialogs_createTextMultiline.nsh
 ;!include MUI2.nsh
 
@@ -13,16 +14,20 @@
 ;General
 
   ;defines
-!define VERSION "4.1.0.7256"
-!define VERSION_SHORT "4.1.0"
 !define LOGFILE ""
 
   ;Name and file
-  Name "Belgium eID-QuickInstaller ${VERSION}"
-  OutFile "Belgium eID-QuickInstaller ${VERSION}.exe"
-VIProductVersion "${VERSION}"
-VIAddVersionKey "FileVersion" "${VERSION}"
-  
+  Name "Belgium eID-QuickInstaller ${EIDMW_VERSION}"
+  OutFile "Belgium eID-QuickInstaller ${EIDMW_VERSION}.exe"
+  VIProductVersion "${EIDMW_VERSION}"
+  VIAddVersionKey "FileVersion" "${EIDMW_VERSION}"
+  ;NSIS complains that Fileversion was not set for English, though it should have been done by the line above
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${EIDMW_VERSION}"
+VIAddVersionKey "CompanyName" "Belgian Government"
+VIAddVersionKey "LegalCopyright" "Copyright (C) 2015"
+VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
+
+ 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\Belgium Identity Card"
 	;InstallDir "$LOCALAPPDATA\Belgium Identity Card"
@@ -36,7 +41,7 @@ VIAddVersionKey "FileVersion" "${VERSION}"
   ;XPStyle on
 	WindowIcon on
 	Icon Setup.ico
-	caption "Belgium eID-QuickInstaller ${VERSION_SHORT}"
+	caption "Belgium eID-QuickInstaller ${EIDMW_VERSION_SHORT}"
 	;SubCaption 
 	
 	Var versionMajor

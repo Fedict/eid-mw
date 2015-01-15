@@ -1,13 +1,7 @@
-:: Check WiX
-:: =========
-@echo [INFO] Checking paths
-@call "%~dp0..\..\..\scripts\windows\SetPaths.bat"
-@if %ERRORLEVEL%==1 goto end
+:: make sure paths and version files are created first,
+:: either by eid-mw\scripts\windowsbuild_all.bat(build entire middleware) 
+:: or by start_build_msi_eidmw64.cmd (create only the 64bit MSI installer)
 
-
-:: Create the revision number
-:: ==========================
-@call "%~dp0..\..\..\scripts\windows\revision.cmd"
 
 :: create the language specific msi's
 :: ==================================
