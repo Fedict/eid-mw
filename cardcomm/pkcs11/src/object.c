@@ -681,7 +681,7 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 	log_trace(WHERE, "S: C_FindObjectsFinal(session %d)", hSession);
 
 	ret = p11_get_session(hSession, &pSession);
-	if (pSession == NULL)
+	if (pSession == NULL || ret != CKR_OK)
 		//omit error card removed here since FireFox has a problem with it.
 		// if (ret)
 	{
