@@ -20,6 +20,7 @@
 @end
 
 struct utsname uts;
+long osver;
 
 NSString* getOsRel() {
     NSDictionary *RelMap = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -37,6 +38,7 @@ NSString* getOsRel() {
     uname(&uts);
     tmp = strdup(uts.release);
     majrel = strtok(tmp, ".");
+    osver = strtol(majrel, NULL, 10);
     NSString *reldesc = [RelMap valueForKey:[NSString stringWithCString:majrel encoding:NSUTF8StringEncoding]];
     [retval appendString:[NSString stringWithCString:uts.release encoding:NSUTF8StringEncoding]];
     if (reldesc == nil) {
@@ -57,10 +59,16 @@ NSString* getPcscdStatus() {
     if(stat("/System/Library/LaunchDaemons/org.opensc.pcscd.autostart.plist", &stbuf)<0) {
         switch(errno) {
             case ENOENT:
-                return @"Not found (normal on OSX 10.10)";
+                if (osver >= 14) {
+                    return @"Not found (OK on OSX 10.10)";
+                }
+                return @"Not OK";
             default:
                 return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
         }
+    }
+    if (osver >= 14) {
+        return @"Found, yet OS is 10.10+?";
     }
     return @"OK";
 }
