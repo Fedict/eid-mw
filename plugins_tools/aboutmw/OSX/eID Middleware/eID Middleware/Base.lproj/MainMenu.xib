@@ -123,7 +123,7 @@
                             <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1g9-Zh-EMf" viewBased="YES" id="uWb-UB-rwg">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1g9-Zh-EMf" viewBased="YES" id="uWb-UB-rwg">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -227,7 +227,7 @@
                     <constraint firstItem="dSZ-Ra-gFB" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" id="xBS-Xc-StF"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="482" y="107"/>
+            <point key="canvasLocation" x="479" y="285"/>
         </window>
         <arrayController id="3Lq-6c-8Te">
             <connections>
