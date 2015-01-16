@@ -22,16 +22,16 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
-                <menuItem title="eID Middleware tool" id="1Xt-HY-uBw">
+                <menuItem title="eID Middleware" id="1Xt-HY-uBw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="eID Middleware tool" systemMenu="apple" id="uQy-DD-JDr">
+                    <menu key="submenu" title="eID Middleware" systemMenu="apple" id="uQy-DD-JDr">
                         <items>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                            <menuItem title="Hide eID Middleware tool" keyEquivalent="h" id="Olw-nP-bQN">
+                            <menuItem title="Hide eID Middleware" keyEquivalent="h" id="Olw-nP-bQN">
                                 <connections>
                                     <action selector="hide:" target="-1" id="PnN-Uc-m68"/>
                                 </connections>
@@ -49,7 +49,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                            <menuItem title="Quit eID Middleware tool" keyEquivalent="q" id="4sb-4s-VLi">
+                            <menuItem title="Quit eID Middleware" keyEquivalent="q" id="4sb-4s-VLi">
                                 <connections>
                                     <action selector="terminate:" target="-1" id="Te7-pn-YzF"/>
                                 </connections>
