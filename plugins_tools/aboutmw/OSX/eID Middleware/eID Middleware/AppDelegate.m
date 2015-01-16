@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "DataItem.h"
 #include <sys/utsname.h>
+#include <sys/stat.h>
 
 @interface AppDelegate ()
 @property (weak) IBOutlet NSTableView *table;
@@ -51,6 +52,19 @@ NSString* getOsArch() {
     return [NSString stringWithCString:uts.machine encoding:NSUTF8StringEncoding];
 }
 
+NSString* getPcscdStatus() {
+    struct stat stbuf;
+    if(stat("/System/Library/LaunchDaemons/org.opensc.pcscd.autostart.plist", &stbuf)<0) {
+        switch(errno) {
+            case ENOENT:
+                return @"Not found (normal on OSX 10.10)";
+            default:
+                return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
+        }
+    }
+    return @"OK";
+}
+
 @implementation AppDelegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView {
@@ -83,6 +97,10 @@ NSString* getOsArch() {
     item = [DataItem alloc];
     [item setTitle: @"System architecture"];
     [item setValue: getOsArch()];
+    [self.ctrl addObject:item];
+    item = [DataItem alloc];
+    [item setTitle: @"pcscd autostart"];
+    [item setValue: getPcscdStatus()];
     [self.ctrl addObject:item];
 }
 
