@@ -516,7 +516,7 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 	log_trace(WHERE, "S: C_FindObjects(session %d)", hSession);
 
 	ret = p11_get_session(hSession, &pSession);
-	if (pSession == NULL)
+	if (pSession == NULL || ret != CKR_OK)
 		// if (ret)
 	{
 		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
