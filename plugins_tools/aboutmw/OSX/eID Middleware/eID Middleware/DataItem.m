@@ -9,5 +9,13 @@
 #import "DataItem.h"
 
 @implementation DataItem
-
+-(NSString*) description {
+    return [NSString stringWithFormat:@"%@: %@", _title, _value];
+}
+-(id)pasteboardPropertyListForType:(NSString *)type {
+    return [self description];
+}
+-(NSArray*) writableTypesForPasteboard:(NSPasteboard *)pasteboard {
+    return [[NSArray alloc] initWithObjects:@"public.utf8-plain-text", nil];
+}
 @end

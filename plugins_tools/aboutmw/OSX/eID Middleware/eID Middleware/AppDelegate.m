@@ -16,6 +16,7 @@
 @property (weak) IBOutlet NSWindow *window;
 @property NSMutableArray *vals;
 @property (weak) IBOutlet NSArrayController *ctrl;
+- (IBAction)copyData:(id)sender;
 
 @end
 
@@ -73,6 +74,19 @@ NSString* getPcscdStatus() {
     return @"OK";
 }
 
+NSString* getTokendStatus() {
+    struct stat stbuf;
+    if(stat("/System/Library/Security/tokend/BEID.tokend", &stbuf) < 0) {
+        switch(errno) {
+            case ENOENT:
+                return @"Not found";
+            default:
+                return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
+        }
+    }
+    return @"/System/Library/Security/tokend/BEID.tokend";
+}
+
 @implementation AppDelegate
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView {
@@ -110,6 +124,22 @@ NSString* getPcscdStatus() {
     [item setTitle: @"pcscd autostart"];
     [item setValue: getPcscdStatus()];
     [self.ctrl addObject:item];
+    item = [DataItem alloc];
+    [item setTitle: @"BEID tokend"];
+    [item setValue: getTokendStatus()];
+    [self.ctrl addObject:item];
 }
 
+- (IBAction)copyData:(id)sender {
+    int i;
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:1];
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    for(i=0; i<[self.vals count]; i++) {
+        if ([self.table isRowSelected:i]) {
+            [arr addObject:[self.vals objectAtIndex:i]];
+        }
+    }
+    [pasteboard clearContents];
+    [pasteboard writeObjects:arr];
+}
 @end

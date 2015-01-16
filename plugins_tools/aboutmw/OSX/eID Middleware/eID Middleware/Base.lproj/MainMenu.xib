@@ -63,7 +63,7 @@
                         <items>
                             <menuItem title="Copy" keyEquivalent="c" id="x3v-GG-iWU">
                                 <connections>
-                                    <action selector="copy:" target="-1" id="G1f-GL-Joy"/>
+                                    <action selector="copyData:" target="Voe-Tx-rLC" id="BVK-Vy-ndd"/>
                                 </connections>
                             </menuItem>
                         </items>

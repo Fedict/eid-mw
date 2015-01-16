@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+@import AppKit;
 
-@interface DataItem : NSObject
+@interface DataItem : NSObject<NSPasteboardWriting>
 @property NSString *title;
 @property NSString *value;
+-(NSString*) description;
 @end
