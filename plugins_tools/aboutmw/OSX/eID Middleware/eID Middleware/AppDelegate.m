@@ -26,8 +26,6 @@ NSString* getOsRel() {
                             @" (OSX 10.9, Mavericks)", @"13",
                             @" (OSX 10.8, Mountain Lion)", @"12",
                             @" (OSX 10.7, Lion)", @"11",
-                            @" (OSX 10.6, Snow Leopard)", @"10",
-                            @" (OSX 10.5, Leopard)", @"9",
                             nil];
     NSMutableString *retval = [NSMutableString stringWithCapacity:30];
     char* tmp;
