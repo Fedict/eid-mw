@@ -248,6 +248,7 @@ int p11_get_session(unsigned int h, P11_SESSION **ppSession);
 P11_OBJECT *p11_get_slot_object(P11_SLOT *pSlot, unsigned int h);
 int p11_get_nreaders();
 
+CK_RV p11_close_sessions_finalize();
 CK_RV p11_close_session(P11_SLOT*, P11_SESSION*);
 CK_RV p11_close_all_sessions(CK_SLOT_ID slotID);
 CK_RV p11_get_free_session(CK_SESSION_HANDLE_PTR phSession, P11_SESSION **ppSession);

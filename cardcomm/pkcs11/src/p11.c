@@ -145,6 +145,28 @@ return (ret);
 }
 #undef WHERE
 
+CK_RV p11_close_sessions_finalize()
+{
+	CK_RV r, ret;
+	P11_SESSION *pSession;
+	P11_SLOT *pSlot;
+	int i;
+
+	ret = CKR_OK;
+	for(i=0;i<nSessions; i++) {
+		if((pSession = &gpSessions[i])) {
+			if(pSession->inuse) {
+				pSlot = p11_get_slot(pSession->hslot);
+				// don't overwrite previous errors
+				if((r = p11_close_session(pSlot, pSession)) != CKR_OK) {
+					ret = r;
+				}
+			}
+		}
+	}
+
+	return ret;
+}
 
 #define WHERE "p11_close_session()"
 CK_RV p11_close_session(P11_SLOT* pSlot, P11_SESSION* pSession)

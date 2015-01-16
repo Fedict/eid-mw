@@ -137,6 +137,8 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 	//g_final = 0; /* Belpic */
 	p11_set_init(BEIDP11_DEINITIALIZING);
 
+	p11_close_sessions_finalize();
+
 	cal_close();
 
 	/* Release and destroy the mutex */
