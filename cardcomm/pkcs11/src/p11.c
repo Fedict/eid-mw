@@ -84,10 +84,6 @@ if ( (h == 0) || (h > nSessions) )
 
 ret = cal_validate_session(*ppSession);
 
-if(ret != CKR_OK) {
-	*ppSession = NULL;
-}
-
 return (ret);
 }
 
