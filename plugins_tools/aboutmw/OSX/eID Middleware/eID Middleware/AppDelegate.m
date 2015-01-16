@@ -166,7 +166,11 @@ NSString* getTokendStatus() {
             [arr addObject:[self.vals objectAtIndex:i]];
         }
     }
+    if ([arr count] == 0) {
+        return;
+    }
     [pasteboard clearContents];
     [pasteboard writeObjects:arr];
 }
+
 @end
