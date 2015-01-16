@@ -97,11 +97,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 658055021A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware" */;
 			buildPhases = (
+				65709E9D1A69895C006835B8 /* ShellScript */,
 				65709E9E1A698963006835B8 /* Headers */,
 				658054E11A66C9BB000AEFE0 /* Sources */,
 				658054E21A66C9BB000AEFE0 /* Frameworks */,
 				658054E31A66C9BB000AEFE0 /* Resources */,
-				65709E9D1A69895C006835B8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -168,7 +168,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "../../../../scripts/mac/create-vers.sh ../../../../cardcomm/pkcs11/src/common/beidversions.h";
 		};
 /* End PBXShellScriptBuildPhase section */
 
