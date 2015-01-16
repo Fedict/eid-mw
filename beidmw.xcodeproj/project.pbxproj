@@ -964,6 +964,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7FBB02590F83936E009B751F /* Build configuration list for PBXNativeTarget "beidcommon" */;
 			buildPhases = (
+				6545A1B01A6986DE00125548 /* ShellScript */,
 				7FBB024F0F839352009B751F /* Headers */,
 				7FBB02500F839352009B751F /* Sources */,
 				7FBB02510F839352009B751F /* Frameworks */,
@@ -1111,6 +1112,22 @@
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6545A1B01A6986DE00125548 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "scripts/mac/create-vers.sh cardcomm/pkcs11/src/common/beidversions.h";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		653622FE19A7E8E600D46ECB /* Sources */ = {

@@ -10,42 +10,31 @@
 	<string>beidmw</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</key>
-		<string>https://eid-mw.googlecode.com/svn/trunk</string>
+		<key>7646EE4C01A86198ECA7EB45F2A55A7AA3591E0B</key>
+		<string>github.com:yoe/eid-mw</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>beidmw.xcodeproj/project.xcworkspace</string>
+	<string>beidmw.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</key>
-		<string>../../..</string>
-	</dict>
-	<key>IDESourceControlProjectRepositoryRootDictionary</key>
-	<dict>
-		<key>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</key>
-		<string>https://eid-mw.googlecode.com/svn</string>
+		<key>7646EE4C01A86198ECA7EB45F2A55A7AA3591E0B</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://eid-mw.googlecode.com/svn/trunk/mac/beidmw.xcodeproj</string>
+	<string>github.com:yoe/eid-mw</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</string>
+	<string>7646EE4C01A86198ECA7EB45F2A55A7AA3591E0B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
-			<key>IDESourceControlRepositoryBranchesRelativeLocationKey</key>
-			<string>branches</string>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.subversion</string>
-			<key>IDESourceControlRepositoryTagsRelativeLocationKey</key>
-			<string>tags</string>
-			<key>IDESourceControlRepositoryTrunkRelativeLocationKey</key>
-			<string>trunk</string>
+			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E2920C19-B997-4BDD-8361-CCB8F7D79B2F</string>
+			<string>7646EE4C01A86198ECA7EB45F2A55A7AA3591E0B</string>
 			<key>IDESourceControlWCCName</key>
-			<string>trunk</string>
+			<string>eid-mw</string>
 		</dict>
 	</array>
 </dict>
