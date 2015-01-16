@@ -152,7 +152,7 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 	log_trace(WHERE, "S: C_CloseSession (session %d)", hSession);
 
 	//get session, of pSession is found, regardless the ret value, we can clean it up
-	ret = p11_get_session(hSession, &pSession);
+	p11_get_session(hSession, &pSession);
 	if (pSession == NULL)
 	{
 		ret = CKR_SESSION_HANDLE_INVALID;
