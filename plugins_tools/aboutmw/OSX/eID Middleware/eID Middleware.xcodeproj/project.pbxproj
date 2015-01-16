@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65709EA01A69898E006835B8 /* beidversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 65709E9F1A69898E006835B8 /* beidversions.h */; };
 		658054EC1A66C9BB000AEFE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 658054EB1A66C9BB000AEFE0 /* AppDelegate.m */; };
 		658054EE1A66C9BB000AEFE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 658054ED1A66C9BB000AEFE0 /* main.m */; };
 		658054F01A66C9BB000AEFE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658054EF1A66C9BB000AEFE0 /* Images.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65709E9F1A69898E006835B8 /* beidversions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = beidversions.h; path = ../../../../cardcomm/pkcs11/src/common/beidversions.h; sourceTree = "<group>"; };
 		658054E51A66C9BB000AEFE0 /* eID Middleware.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Middleware.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		658054E91A66C9BB000AEFE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		658054EA1A66C9BB000AEFE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -40,6 +42,7 @@
 		658054DC1A66C9BB000AEFE0 = {
 			isa = PBXGroup;
 			children = (
+				65709E9F1A69898E006835B8 /* beidversions.h */,
 				658054E71A66C9BB000AEFE0 /* eID Middleware */,
 				658054E61A66C9BB000AEFE0 /* Products */,
 			);
@@ -78,14 +81,27 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		65709E9E1A698963006835B8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65709EA01A69898E006835B8 /* beidversions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		658054E41A66C9BB000AEFE0 /* eID Middleware */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 658055021A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware" */;
 			buildPhases = (
+				65709E9E1A698963006835B8 /* Headers */,
 				658054E11A66C9BB000AEFE0 /* Sources */,
 				658054E21A66C9BB000AEFE0 /* Frameworks */,
 				658054E31A66C9BB000AEFE0 /* Resources */,
+				65709E9D1A69895C006835B8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -139,6 +155,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		65709E9D1A69895C006835B8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		658054E11A66C9BB000AEFE0 /* Sources */ = {

@@ -22,6 +22,7 @@
 #import "DataItem.h"
 #include <sys/utsname.h>
 #include <sys/stat.h>
+#include "beidversions.h"
 
 @interface AppDelegate ()
 @property (weak) IBOutlet NSTableView *table;
@@ -86,6 +87,14 @@ NSString* getPcscdStartStatus() {
     return @"OK";
 }
 
+NSString* getMwVersion() {
+    return [NSString stringWithCString:BEID_PRODUCT_VERSION encoding:NSUTF8StringEncoding];
+}
+
+NSString* getMwRel() {
+    return [NSString stringWithCString:EIDMW_REVISION_STR encoding:NSUTF8StringEncoding];
+}
+
 NSString* getPcscdStatus() {
     FILE* pipe = popen("ps aux|awk '/[p]cscd/{print $2}'", "r");
     char line[80];
@@ -148,6 +157,14 @@ NSString* getTokendStatus() {
     }
     self.vals = [NSMutableArray arrayWithCapacity:1];
     DataItem *item = [DataItem alloc];
+    [item setTitle: @"Middleware version"];
+    [item setValue: getMwVersion()];
+    [self.ctrl addObject:item];
+    item = [DataItem alloc];
+    [item setTitle: @"Middleware build"];
+    [item setValue: getMwRel()];
+    [self.ctrl addObject:item];
+    item = [DataItem alloc];
     [item setTitle: @"OS release"];
     [item setValue: getOsRel()];
     [self.ctrl addObject:item];
