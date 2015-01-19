@@ -145,8 +145,72 @@ return (ret);
 }
 #undef WHERE
 
+CK_RV p11_close_sessions_finalize()
+{
+	CK_RV r, ret;
+	P11_SESSION *pSession;
+	P11_SLOT *pSlot;
+	int i;
 
-   
+	ret = CKR_OK;
+	for(i=0;i<nSessions; i++) {
+		if((pSession = &gpSessions[i])) {
+			if(pSession->inuse) {
+				pSlot = p11_get_slot(pSession->hslot);
+				// don't overwrite previous errors
+				if((r = p11_close_session(pSlot, pSession)) != CKR_OK) {
+					ret = r;
+				}
+			}
+		}
+	}
+
+	return ret;
+}
+
+#define WHERE "p11_close_session()"
+CK_RV p11_close_session(P11_SLOT* pSlot, P11_SESSION* pSession)
+{
+	CK_RV ret = CKR_OK;
+
+	if (pSlot->nsessions > 0)
+		pSlot->nsessions--;
+
+	if ((pSlot->nsessions < 1) && (pSlot->login_type >= 0) )
+	{
+		cal_logout(pSession->hslot);
+		pSlot->login_type = -1;
+	}
+
+	//disconnect this session to device
+	ret = cal_disconnect(pSession->hslot);
+	//clear data so it can be reused
+	if(pSession->Operation[P11_OPERATION_FIND].active) {
+		p11_clean_finddata(pSession->Operation[P11_OPERATION_FIND].pData);
+		free(pSession->Operation[P11_OPERATION_FIND].pData);
+		pSession->Operation[P11_OPERATION_FIND].pData = NULL;
+		pSession->Operation[P11_OPERATION_FIND].active = 0;
+	}
+	if(pSession->Operation[P11_OPERATION_DIGEST].active) {
+		free(pSession->Operation[P11_OPERATION_DIGEST].pData);
+		pSession->Operation[P11_OPERATION_DIGEST].pData = NULL;
+		pSession->Operation[P11_OPERATION_DIGEST].active = 0;
+	}
+	if(pSession->Operation[P11_OPERATION_SIGN].active) {
+		free(pSession->Operation[P11_OPERATION_SIGN].pData);
+		pSession->Operation[P11_OPERATION_SIGN].pData = NULL;
+		pSession->Operation[P11_OPERATION_SIGN].active = 0;
+	}
+	pSession->state = 0;
+	pSession->inuse = 0;
+	pSession->flags = 0;
+	pSession->hslot = 0;
+	pSession->pdNotify = NULL;
+	pSession->pfNotify = NULL;
+
+	return ret;
+}
+#undef WHERE
 
 #define WHERE "p11_close_all_sessions()"
 CK_RV p11_close_all_sessions(CK_SLOT_ID slotID)
@@ -175,22 +239,7 @@ for (i=0; (i < nSessions) && (pSession = &gpSessions[i]) ;i++)
    {
    if ( (pSession->inuse) && (pSession->hslot == slotID) )
       {
-      if (pSlot->nsessions > 0)
-         pSlot->nsessions--;
-
-      if ((pSlot->nsessions == 0) && (pSlot->login_type >= 0) )
-         {
-         cal_logout(slotID);
-         pSlot->login_type = -1;
-         }
-
-      //clear data so it can be reused
-      pSession->inuse = 0;
-      pSession->flags = 0;
-      pSession->hslot = 0;
-      pSession->pdNotify = NULL;
-      pSession->pfNotify = NULL;
-      pSession->state = 0;
+      ret = p11_close_session(pSlot, pSession);
       }
    }
 

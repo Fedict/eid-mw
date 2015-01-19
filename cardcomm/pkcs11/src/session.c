@@ -152,7 +152,7 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 	log_trace(WHERE, "S: C_CloseSession (session %d)", hSession);
 
 	//get session, of pSession is found, regardless the ret value, we can clean it up
-	ret = p11_get_session(hSession, &pSession);
+	p11_get_session(hSession, &pSession);
 	if (pSession == NULL)
 	{
 		ret = CKR_SESSION_HANDLE_INVALID;
@@ -169,44 +169,8 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 	}
 	else
 	{
-		//
-		if (pSlot->nsessions > 0)
-			pSlot->nsessions--;
-
-		if ((pSlot->nsessions < 1) && (pSlot->login_type >= 0) )
-		{
-			//TODO what to do if no session longer exists?
-			//      cal_logout(pSlot);
-			pSlot->login_type = -1;
-		}
-
-		//disconnect this session to device
-		ret = cal_disconnect(pSession->hslot);
+		ret = p11_close_session(pSlot, pSession);
 	}
-
-	//clear data so it can be reused
-	if(pSession->Operation[P11_OPERATION_FIND].active) {
-		p11_clean_finddata(pSession->Operation[P11_OPERATION_FIND].pData);
-		free(pSession->Operation[P11_OPERATION_FIND].pData);
-		pSession->Operation[P11_OPERATION_FIND].pData = NULL;
-		pSession->Operation[P11_OPERATION_FIND].active = 0;
-	}
-	if(pSession->Operation[P11_OPERATION_DIGEST].active) {
-		free(pSession->Operation[P11_OPERATION_DIGEST].pData);
-		pSession->Operation[P11_OPERATION_DIGEST].pData = NULL;
-		pSession->Operation[P11_OPERATION_DIGEST].active = 0;
-	}
-	if(pSession->Operation[P11_OPERATION_SIGN].active) {
-		free(pSession->Operation[P11_OPERATION_SIGN].pData);
-		pSession->Operation[P11_OPERATION_SIGN].pData = NULL;
-		pSession->Operation[P11_OPERATION_SIGN].active = 0;
-	}
-	pSession->state = 0;
-	pSession->inuse = 0;
-	pSession->flags = 0;
-	pSession->hslot = 0;
-	pSession->pdNotify = NULL;
-	pSession->pfNotify = NULL;
 
 cleanup:
 	p11_unlock();
