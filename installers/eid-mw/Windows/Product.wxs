@@ -4,14 +4,13 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?include ..\..\..\scripts\windows\eidmw_revision.wxs ?>
 
-  <?define var.OfficialProductVersion =4.1.0?>
-  <?define var.ProductVersion =4.1.$(var.RevisionNumber)?>
+  <?define var.OfficialProductVersion =$(var.BaseVersion1).$(var.BaseVersion2).$(var.BaseVersion3)?>
+  <?define var.ProductVersion =$(var.BaseVersion1).$(var.BaseVersion2).$(var.RevisionNumber)?>
   <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
 
   <?define var.UpgradeCode ={41D2DFA4-7754-465C-9379-55CDBADE082D}?>
-  <?define var.ProductGuid ={824563DE-75AD-4166-9DC0-B6482F20$(var.RevisionNumber)}?>
-  <?define var.ProductGuidGeneric ={824563DE-75AD-4166-9DC0-B6482F2?????}?>
-  <!--<?define var.ProductGuid ={824563DE-75AD-4166-9DC0-B6482F2DED5A})?>-->
+  <?define var.ProductGuid ={4DDF16AE-8D5D-4027-A2D1-8CBB498E$(var.RevisionNumber)}?>
+
   <?define var.ProductName =Belgium e-ID middleware $(var.OfficialProductVersion) (build $(var.RevisionNumber))?>
 
   <?define var.PackageCode="*"?>
@@ -24,9 +23,10 @@
            Manufacturer="Belgian Government"
            UpgradeCode="$(var.UpgradeCode)">
 
-    <!-- InstallerVersion="300" Released with Windows XP with Service Pack 2 (SP2) -->		   
+    <!-- InstallerVersion="300" Released with Windows XP with Service Pack 2 (SP2) -->		
+	<!-- InstallerVersion="450" Released with Vista Service Pack 2, or update for Windows XP(SP2, SP3) -->		
     <Package Id="$(var.PackageCode)"
-             InstallerVersion="300" 
+             InstallerVersion="450" 
              Keywords="Belgium e-ID Middleware Installer"
              Platform="x86"
              Manufacturer="Belgian Government"
@@ -131,6 +131,7 @@
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
       </Directory>
 
+      <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC110_CRT_x86.msm" Language="0" DiskId="1" />
     </Directory>
     
 	<DirectoryRef Id="BEIDVIEWERDIR">
@@ -426,6 +427,10 @@
              Absent="disallow"
              Level="1"
              >
+      <Feature Id="VCRedist" Title="VC++ 12.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
+        <MergeRef Id="VCRT" />
+      </Feature>
+
       <!-- Program Files -->
       <ComponentRef Id="Icon" />
       <ComponentRef Id="License"/>
