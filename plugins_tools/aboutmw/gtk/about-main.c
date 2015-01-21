@@ -125,7 +125,10 @@ void do_viewer(GtkWidget* top, GtkListStore* data) {
 		return;
 	}
 	tmp[PATH_MAX-1]='\0';
-	fgets(tmp, PATH_MAX, f);
+	if(fgets(tmp, PATH_MAX, f) == NULL) {
+		gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, _("(not found)"), -1);
+		return;
+	}
 	pclose(f);
 	if((loc = strrchr(tmp, '\n')) != NULL) {
 		*loc = '\0';
@@ -277,7 +280,9 @@ char* get_lsb_info(char opt) {
 	rv = malloc(80);
 	rv[79]='\0';
 	rv[0]='\0';
-	fgets(rv, 79, f);
+	if(fgets(rv, 79, f) == NULL) {
+		return strdup(_("(unknown)"));
+	}
 	pclose(f);
 	if(strlen(rv) == 0) {
 		free(rv);
