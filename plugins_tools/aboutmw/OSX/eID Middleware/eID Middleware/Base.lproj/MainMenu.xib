@@ -161,7 +161,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="Value" width="232" minWidth="40" maxWidth="1000" id="ZRB-r5-JkJ">
+                                        <tableColumn identifier="Value" width="200" minWidth="40" maxWidth="1000" id="ZRB-r5-JkJ">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Value">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -175,7 +175,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="tCP-f1-v1A">
-                                                    <rect key="frame" x="204" y="1" width="232" height="17"/>
+                                                    <rect key="frame" x="204" y="1" width="200" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6uw-iC-bmO">
