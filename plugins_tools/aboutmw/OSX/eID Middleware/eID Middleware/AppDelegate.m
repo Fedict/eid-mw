@@ -99,6 +99,49 @@ NSString* getMwBdate() {
     return [NSString stringWithCString:BEID_BUILD_DATE encoding:NSUTF8StringEncoding];
 }
 
+NSString* getJavaVers() {
+    char* paths[] = {
+        "/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bin/java",
+        "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java",
+        NULL
+    };
+    char line[256];
+    struct stat stbuf;
+    int i;
+    for(i=0; paths[i] != NULL; i++) {
+        if(stat(paths[i], &stbuf)< 0) {
+            switch(errno) {
+                case ENOENT:
+                    // not here, look further
+                    break;
+                default:
+                    // error
+                    return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
+            }
+        } else {
+            FILE* f;
+            int rv;
+            char* loc;
+            snprintf(line, 256, "'%s' -version 2>&1", paths[i]);
+            f = popen(line, "r");
+            if(!f || feof(f) || fgets(line, 256, f) == NULL) {
+                pclose(f);
+                return @"(check failed)";
+            }
+            rv = pclose(f);
+            if(!WIFEXITED(rv) || WEXITSTATUS(rv) == 127) {
+                return @"(check failed)";
+            }
+            if((loc = strrchr(line, '"')) != NULL) {
+                *loc = '\0';
+                return [NSString stringWithCString:strchr(line, '"')+1 encoding:NSUTF8StringEncoding];
+            }
+        }
+    }
+    
+    return @"(not found)";
+}
+
 NSString* getPcscdStatus() {
     FILE* pipe = popen("ps aux|awk '/[p]cscd/{print $2}'", "r");
     char line[80];
@@ -171,6 +214,10 @@ NSString* getTokendStatus() {
     item = [DataItem alloc];
     [item setTitle: @"Middleware build date"];
     [item setValue: getMwBdate()];
+    [self.ctrl addObject:item];
+    item = [DataItem alloc];
+    [item setTitle: @"Java version"];
+    [item setValue: getJavaVers()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];
     [item setTitle: @"OS release"];
