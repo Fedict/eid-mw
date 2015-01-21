@@ -165,7 +165,7 @@ NSString* getTokendStatus() {
     [item setValue: getMwVersion()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];
-    [item setTitle: @"Middleware build"];
+    [item setTitle: @"Middleware build ID"];
     [item setValue: getMwRel()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];
