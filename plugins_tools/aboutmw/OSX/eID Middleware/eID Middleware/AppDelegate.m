@@ -95,6 +95,10 @@ NSString* getMwRel() {
     return [NSString stringWithCString:EIDMW_REVISION_STR encoding:NSUTF8StringEncoding];
 }
 
+NSString* getMwBdate() {
+    return [NSString stringWithCString:BEID_BUILD_DATE encoding:NSUTF8StringEncoding];
+}
+
 NSString* getPcscdStatus() {
     FILE* pipe = popen("ps aux|awk '/[p]cscd/{print $2}'", "r");
     char line[80];
@@ -163,6 +167,10 @@ NSString* getTokendStatus() {
     item = [DataItem alloc];
     [item setTitle: @"Middleware build"];
     [item setValue: getMwRel()];
+    [self.ctrl addObject:item];
+    item = [DataItem alloc];
+    [item setTitle: @"Middleware build date"];
+    [item setValue: getMwBdate()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];
     [item setTitle: @"OS release"];
