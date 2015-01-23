@@ -173,6 +173,9 @@ CK_RV p11_close_session(P11_SLOT* pSlot, P11_SESSION* pSession)
 {
 	CK_RV ret = CKR_OK;
 
+	if (pSlot == NULL)
+		return ret;
+
 	if (pSlot->nsessions > 0)
 		pSlot->nsessions--;
 
