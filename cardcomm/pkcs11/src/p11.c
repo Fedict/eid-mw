@@ -145,6 +145,7 @@ return (ret);
 }
 #undef WHERE
 
+#define WHERE "p11_close_sessions_finalize()"
 CK_RV p11_close_sessions_finalize()
 {
 	CK_RV r, ret;
@@ -167,6 +168,7 @@ CK_RV p11_close_sessions_finalize()
 
 	return ret;
 }
+#undef WHERE
 
 #define WHERE "p11_close_session()"
 CK_RV p11_close_session(P11_SLOT* pSlot, P11_SESSION* pSession)
