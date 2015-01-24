@@ -55,7 +55,13 @@ echo "building siscardplugin..."
 #xcodebuild -project beidmw.xcodeproj -target beiddialogsQTsrv -configuration Release
 #echo "building beidpkcs11..."
 xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration Release
-    
+
+popd
+
+
+pushd "../../../plugins_tools/aboutmw/OSX/eID Middleware"
+xcodebuild -project "eID Middleware.xcodeproj" clean
+xcodebuild -project "eID Middleware.xcodeproj" -target "eID Middleware" -configuration Release
 popd
 
 #-----------------------------------------
