@@ -107,7 +107,6 @@
 		86E3DE261653D6210015B5E1 /* tlvtagdefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDEF1653D6210015B5E1 /* tlvtagdefinitions.h */; };
 		86E3DE271653D6210015B5E1 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDF01653D6210015B5E1 /* util.cpp */; };
 		86E3DE281653D6210015B5E1 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDF11653D6210015B5E1 /* util.h */; };
-		86E3DEC61653EC3F0015B5E1 /* cache.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA01653EC3E0015B5E1 /* cache.h */; };
 		86E3DEC71653EC3F0015B5E1 /* card.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA11653EC3E0015B5E1 /* card.h */; };
 		86E3DEC81653EC3F0015B5E1 /* cardfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA21653EC3E0015B5E1 /* cardfactory.h */; };
 		86E3DEC91653EC3F0015B5E1 /* cardlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA31653EC3E0015B5E1 /* cardlayer.h */; };
@@ -128,7 +127,6 @@
 		86E3DED81653EC3F0015B5E1 /* readersinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB21653EC3E0015B5E1 /* readersinfo.h */; };
 		86E3DED91653EC3F0015B5E1 /* threadpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB31653EC3E0015B5E1 /* threadpool.h */; };
 		86E3DEDA1653EC3F0015B5E1 /* unknowncard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB41653EC3E0015B5E1 /* unknowncard.h */; };
-		86E3DEDB1653EC3F0015B5E1 /* cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB51653EC3E0015B5E1 /* cache.cpp */; };
 		86E3DEDC1653EC3F0015B5E1 /* card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB61653EC3E0015B5E1 /* card.cpp */; };
 		86E3DEDD1653EC3F0015B5E1 /* cardfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */; };
 		86E3DEDE1653EC3F0015B5E1 /* cardlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */; };
@@ -356,7 +354,6 @@
 		86E3DDEF1653D6210015B5E1 /* tlvtagdefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlvtagdefinitions.h; path = cardcomm/pkcs11/src/common/tlvtagdefinitions.h; sourceTree = SOURCE_ROOT; };
 		86E3DDF01653D6210015B5E1 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = cardcomm/pkcs11/src/common/util.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDF11653D6210015B5E1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = cardcomm/pkcs11/src/common/util.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA01653EC3E0015B5E1 /* cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cache.h; path = cardcomm/pkcs11/src/cardlayer/cache.h; sourceTree = SOURCE_ROOT; };
 		86E3DEA11653EC3E0015B5E1 /* card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = card.h; path = cardcomm/pkcs11/src/cardlayer/card.h; sourceTree = SOURCE_ROOT; };
 		86E3DEA21653EC3E0015B5E1 /* cardfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardfactory.h; path = cardcomm/pkcs11/src/cardlayer/cardfactory.h; sourceTree = SOURCE_ROOT; };
 		86E3DEA31653EC3E0015B5E1 /* cardlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardlayer.h; path = cardcomm/pkcs11/src/cardlayer/cardlayer.h; sourceTree = SOURCE_ROOT; };
@@ -377,7 +374,6 @@
 		86E3DEB21653EC3E0015B5E1 /* readersinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readersinfo.h; path = cardcomm/pkcs11/src/cardlayer/readersinfo.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB31653EC3E0015B5E1 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = threadpool.h; path = cardcomm/pkcs11/src/cardlayer/threadpool.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB41653EC3E0015B5E1 /* unknowncard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unknowncard.h; path = cardcomm/pkcs11/src/cardlayer/unknowncard.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB51653EC3E0015B5E1 /* cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cache.cpp; path = cardcomm/pkcs11/src/cardlayer/cache.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB61653EC3E0015B5E1 /* card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = card.cpp; path = cardcomm/pkcs11/src/cardlayer/card.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardfactory.cpp; path = cardcomm/pkcs11/src/cardlayer/cardfactory.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardlayer.cpp; path = cardcomm/pkcs11/src/cardlayer/cardlayer.cpp; sourceTree = SOURCE_ROOT; };
@@ -670,7 +666,6 @@
 			isa = PBXGroup;
 			children = (
 				86E3DEED1653ECB00015B5E1 /* cardpluginbeid */,
-				86E3DEA01653EC3E0015B5E1 /* cache.h */,
 				86E3DEA11653EC3E0015B5E1 /* card.h */,
 				86E3DEA21653EC3E0015B5E1 /* cardfactory.h */,
 				86E3DEA31653EC3E0015B5E1 /* cardlayer.h */,
@@ -691,7 +686,6 @@
 				86E3DEB21653EC3E0015B5E1 /* readersinfo.h */,
 				86E3DEB31653EC3E0015B5E1 /* threadpool.h */,
 				86E3DEB41653EC3E0015B5E1 /* unknowncard.h */,
-				86E3DEB51653EC3E0015B5E1 /* cache.cpp */,
 				86E3DEB61653EC3E0015B5E1 /* card.cpp */,
 				86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */,
 				86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */,
@@ -848,7 +842,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86E3DEC61653EC3F0015B5E1 /* cache.h in Headers */,
 				86E3DEC71653EC3F0015B5E1 /* card.h in Headers */,
 				86E3DEC81653EC3F0015B5E1 /* cardfactory.h in Headers */,
 				86E3DEC91653EC3F0015B5E1 /* cardlayer.h in Headers */,
@@ -1203,7 +1196,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86E3DEDB1653EC3F0015B5E1 /* cache.cpp in Sources */,
 				86E3DEDC1653EC3F0015B5E1 /* card.cpp in Sources */,
 				86E3DEDD1653EC3F0015B5E1 /* cardfactory.cpp in Sources */,
 				86E3DEDE1653EC3F0015B5E1 /* cardlayer.cpp in Sources */,
