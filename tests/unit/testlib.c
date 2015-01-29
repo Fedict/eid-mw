@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2014 FedICT.
+ * Copyright (C) 2015 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,7 +17,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-
+//#define _CRT_SECURE_NO_WARNINGS
 #ifdef WIN32
 #include <win32.h>
 #include <stdio.h>
@@ -71,7 +71,7 @@ void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	}
 	verbose_assert(nullCount == expect);
 #ifdef WIN32
-	strncpy_s(buf,  (size_t)(length + 1),(const char*)string, strlen((const char*)string)+1);
+	strncpy_s(buf,  (size_t)(length + 1),(const char*)string, length);
 #else
 	strncpy(buf, (char*)string, length + 1);
 #endif
