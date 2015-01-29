@@ -149,12 +149,6 @@
 		86E3DEFB1653ECB10015B5E1 /* beidcard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEEF1653ECB00015B5E1 /* beidcard.h */; };
 		86E3DEFC1653ECB10015B5E1 /* beidp15correction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEF01653ECB00015B5E1 /* beidp15correction.cpp */; };
 		86E3DEFD1653ECB10015B5E1 /* beidp15correction.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEF11653ECB00015B5E1 /* beidp15correction.h */; };
-		86E3DEFE1653ECB10015B5E1 /* siscard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEF51653ECB10015B5E1 /* siscard.cpp */; };
-		86E3DEFF1653ECB10015B5E1 /* siscard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEF61653ECB10015B5E1 /* siscard.h */; };
-		86E3DF001653ECB10015B5E1 /* sisplugin1.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEF71653ECB10015B5E1 /* sisplugin1.h */; };
-		86E3DF011653ECB10015B5E1 /* sispluginhandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEF81653ECB10015B5E1 /* sispluginhandler.cpp */; };
-		86E3DF021653ECB10015B5E1 /* sispluginhandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEF91653ECB10015B5E1 /* sispluginhandler.h */; };
-		86E3DF221653EF0E0015B5E1 /* siscard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF211653EF0E0015B5E1 /* siscard.cpp */; };
 		86E3DF541653EFE60015B5E1 /* asn1.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF251653EFE50015B5E1 /* asn1.h */; };
 		86E3DF551653EFE60015B5E1 /* beid_p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF261653EFE50015B5E1 /* beid_p11.h */; };
 		86E3DF561653EFE60015B5E1 /* cal.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF271653EFE50015B5E1 /* cal.h */; };
@@ -188,13 +182,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 658054E51A66C9BB000AEFE0;
 			remoteInfo = "eID Middleware";
-		};
-		6580550F1A66C9BE000AEFE0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 658054F81A66C9BB000AEFE0;
-			remoteInfo = "eID MiddlewareTests";
 		};
 		7F22A3700F84C58C001AD228 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -412,13 +399,6 @@
 		86E3DEF01653ECB00015B5E1 /* beidp15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidp15correction.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidp15correction.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEF11653ECB00015B5E1 /* beidp15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidp15correction.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidp15correction.h; sourceTree = SOURCE_ROOT; };
 		86E3DEF21653ECB00015B5E1 /* cardpluginBeid.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cardpluginBeid.rc; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/cardpluginBeid.rc; sourceTree = SOURCE_ROOT; };
-		86E3DEF41653ECB10015B5E1 /* cardpluginSIS.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cardpluginSIS.rc; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/cardpluginSIS.rc; sourceTree = SOURCE_ROOT; };
-		86E3DEF51653ECB10015B5E1 /* siscard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = siscard.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/siscard.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEF61653ECB10015B5E1 /* siscard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = siscard.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/siscard.h; sourceTree = SOURCE_ROOT; };
-		86E3DEF71653ECB10015B5E1 /* sisplugin1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sisplugin1.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/sisplugin1.h; sourceTree = SOURCE_ROOT; };
-		86E3DEF81653ECB10015B5E1 /* sispluginhandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sispluginhandler.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/sispluginhandler.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEF91653ECB10015B5E1 /* sispluginhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sispluginhandler.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/sispluginhandler.h; sourceTree = SOURCE_ROOT; };
-		86E3DF211653EF0E0015B5E1 /* siscard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = siscard.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis_acr38u/siscard.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DF251653EFE50015B5E1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = cardcomm/pkcs11/src/asn1.h; sourceTree = SOURCE_ROOT; };
 		86E3DF261653EFE50015B5E1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = cardcomm/pkcs11/src/beid_p11.h; sourceTree = SOURCE_ROOT; };
 		86E3DF271653EFE50015B5E1 /* cal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cal.h; path = cardcomm/pkcs11/src/cal.h; sourceTree = SOURCE_ROOT; };
@@ -538,7 +518,6 @@
 				869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */,
 				8683738918648985005EE5D7 /* Dialogsmac */,
 				7FBB025A0F83937F009B751F /* Common */,
-				7FC535950F84B92000BA96EE /* Cardlayer_pluginSIS_ACR38 */,
 				7FC5358D0F84B88B00BA96EE /* Cardlayer */,
 				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
 				5073E0CA09E734BC00EC74B6 /* Configuration Files */,
@@ -606,7 +585,6 @@
 			isa = PBXGroup;
 			children = (
 				6580550E1A66C9BE000AEFE0 /* eID Middleware.app */,
-				658055101A66C9BE000AEFE0 /* eID MiddlewareTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -692,7 +670,6 @@
 			isa = PBXGroup;
 			children = (
 				86E3DEED1653ECB00015B5E1 /* cardpluginbeid */,
-				86E3DEF31653ECB10015B5E1 /* cardpluginsis */,
 				86E3DEA01653EC3E0015B5E1 /* cache.h */,
 				86E3DEA11653EC3E0015B5E1 /* card.h */,
 				86E3DEA21653EC3E0015B5E1 /* cardfactory.h */,
@@ -733,14 +710,6 @@
 				86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */,
 			);
 			name = Cardlayer;
-			sourceTree = "<group>";
-		};
-		7FC535950F84B92000BA96EE /* Cardlayer_pluginSIS_ACR38 */ = {
-			isa = PBXGroup;
-			children = (
-				86E3DF211653EF0E0015B5E1 /* siscard.cpp */,
-			);
-			name = Cardlayer_pluginSIS_ACR38;
 			sourceTree = "<group>";
 		};
 		8683738918648985005EE5D7 /* Dialogsmac */ = {
@@ -803,20 +772,6 @@
 			);
 			name = cardpluginbeid;
 			path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid;
-			sourceTree = SOURCE_ROOT;
-		};
-		86E3DEF31653ECB10015B5E1 /* cardpluginsis */ = {
-			isa = PBXGroup;
-			children = (
-				86E3DEF41653ECB10015B5E1 /* cardpluginSIS.rc */,
-				86E3DEF51653ECB10015B5E1 /* siscard.cpp */,
-				86E3DEF61653ECB10015B5E1 /* siscard.h */,
-				86E3DEF71653ECB10015B5E1 /* sisplugin1.h */,
-				86E3DEF81653ECB10015B5E1 /* sispluginhandler.cpp */,
-				86E3DEF91653ECB10015B5E1 /* sispluginhandler.h */,
-			);
-			name = cardpluginsis;
-			path = cardcomm/pkcs11/src/cardlayer/cardpluginsis;
 			sourceTree = SOURCE_ROOT;
 		};
 		86E3DF4E1653EFE50015B5E1 /* rsaref220 */ = {
@@ -916,9 +871,6 @@
 				86E3DEDA1653EC3F0015B5E1 /* unknowncard.h in Headers */,
 				86E3DEFB1653ECB10015B5E1 /* beidcard.h in Headers */,
 				86E3DEFD1653ECB10015B5E1 /* beidp15correction.h in Headers */,
-				86E3DEFF1653ECB10015B5E1 /* siscard.h in Headers */,
-				86E3DF001653ECB10015B5E1 /* sisplugin1.h in Headers */,
-				86E3DF021653ECB10015B5E1 /* sispluginhandler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1133,13 +1085,6 @@
 			remoteRef = 6580550D1A66C9BE000AEFE0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		658055101A66C9BE000AEFE0 /* eID MiddlewareTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "eID MiddlewareTests.xctest";
-			remoteRef = 6580550F1A66C9BE000AEFE0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		869D00C218D72DD000A41853 /* plistMerger */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
@@ -1277,8 +1222,6 @@
 				86E3DEEB1653EC3F0015B5E1 /* unknowncard.cpp in Sources */,
 				86E3DEFA1653ECB10015B5E1 /* beidcard.cpp in Sources */,
 				86E3DEFC1653ECB10015B5E1 /* beidp15correction.cpp in Sources */,
-				86E3DEFE1653ECB10015B5E1 /* siscard.cpp in Sources */,
-				86E3DF011653ECB10015B5E1 /* sispluginhandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1286,7 +1229,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86E3DF221653EF0E0015B5E1 /* siscard.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
