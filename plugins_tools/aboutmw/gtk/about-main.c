@@ -281,6 +281,7 @@ char* get_lsb_info(char opt) {
 	rv[79]='\0';
 	rv[0]='\0';
 	if(fgets(rv, 79, f) == NULL) {
+		free(rv);
 		return strdup(_("(unknown)"));
 	}
 	pclose(f);
