@@ -59,24 +59,25 @@ void check_pcsc(GtkWidget* top, GtkListStore* data) {
 	}
 	if(feof(f)) {
 		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
-		return;
+		goto exit;
 	}
 	pid[5]='\0';
 	if(fgets(pid, 5, f)==NULL) {
 		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
-		return;
+		goto exit;
 	}
-	pclose(f);
 	if((tmp = strchr(pid, '\n'))) {
 		*tmp = '\0';
 	}
 	if(strlen(pid)==0) {
 		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
-		return;
+		goto exit;
 	}
 	tmp = g_strdup_printf(_("running; pid: %s"), pid);
 	gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, tmp, -1);
 	g_free(tmp);
+exit:
+	pclose(f);
 }
 
 void do_java(GtkWidget* top, GtkListStore* data) {
@@ -96,6 +97,7 @@ void do_java(GtkWidget* top, GtkListStore* data) {
 	line[255]='\0';
 	if(fgets(line, 256, f) == NULL) {
 		gtk_list_store_set(data, &iter, 0, _("(not found)"), -1);
+		pclose(f);
 		return;
 	}
 	rv = pclose(f);
@@ -127,17 +129,18 @@ void do_viewer(GtkWidget* top, GtkListStore* data) {
 	tmp[PATH_MAX-1]='\0';
 	if(fgets(tmp, PATH_MAX, f) == NULL) {
 		gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, _("(not found)"), -1);
-		return;
+		goto exit;
 	}
-	pclose(f);
 	if((loc = strrchr(tmp, '\n')) != NULL) {
 		*loc = '\0';
 	}
 	if(strlen(tmp) == 0) {
 		gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, _("(not found)"), -1);
-		return;
+		goto exit;
 	}
 	gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, tmp, -1);
+exit:
+	pclose(f);
 }
 
 void do_files(GtkWidget* top, GtkListStore* data) {
@@ -282,16 +285,19 @@ char* get_lsb_info(char opt) {
 	rv[0]='\0';
 	if(fgets(rv, 79, f) == NULL) {
 		free(rv);
-		return strdup(_("(unknown)"));
+		rv = strdup(_("(unknown)"));
+		goto exit;
 	}
-	pclose(f);
 	if(strlen(rv) == 0) {
 		free(rv);
-		return strdup(_("(unknown)"));
+		rv = strdup(_("(unknown)"));
+		goto exit;
 	}
 	if((loc = strrchr(rv, '\n')) != NULL) {
 		*loc = '\0';
 	}
+exit:
+	pclose(f);
 	return rv;
 }
 
