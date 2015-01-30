@@ -94,6 +94,14 @@ AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjp
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1], [HAVE_OPENSSL=0])
 AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
 
+# build ID
+if test -d .git; then
+	BUILD=$(git describe --dirty)
+else
+	BUILD=""
+fi
+AC_DEFINE_UNQUOTED([BUILD_ID],["$BUILD"], [Is defined to the git description, but may be kept empty])
+
 AC_CONFIG_FILES([Makefile cardcomm/pkcs11/src/Makefile tests/unit/Makefile plugins_tools/aboutmw/gtk/Makefile plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh])
 AC_CONFIG_SUBDIRS([plugins_tools/xpi])
 
