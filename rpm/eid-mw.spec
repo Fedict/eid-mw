@@ -15,6 +15,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: gtk2-devel
 BuildRequires: pcsc-lite-devel
+BuildRequires: desktop-file-utils
 Requires(pre): /sbin/chkconfig
 Requires(pre): /sbin/service
 Requires: eid-mw-bin
@@ -70,6 +71,7 @@ websites and/or sign documents. This package contains the actual libraries.
 %install
 %{__rm} -rf %{buildroot}
 %{__make} install DESTDIR="%{buildroot}"
+desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict plugins_tools/aboutmw/gtk/about-eid-mw.desktop || true
 
 %clean
 %{__rm} -rf %{buildroot}
