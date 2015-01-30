@@ -7,6 +7,8 @@
 !include "eIDTranslations.nsh"
 !include WinMessages.nsh
 !include "eidmw_version.nsh"
+!include WinVer.nsh
+
 ;!include nsDialogs_createTextMultiline.nsh
 ;!include MUI2.nsh
 
@@ -47,8 +49,6 @@ VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 	Var versionMajor
 	Var versionMinor
 	Var retval
-	Var reboot
-	Var errorvalue
 	Var readercount
   Var municipality
   Var zip
@@ -90,17 +90,6 @@ Page custom nsdCardData
 ;--------------------------------
 ;Reserve Files
 
-!macro INSTALL_DRIVER hardwareID infFilePath
-  driver_installer::UpdateDriver "${hardwareID}" "${infFilePath}"
-  Pop $retval
-	${If} $retval == 0
-		Pop $reboot
-	${Else}  
-		Pop $errorvalue
-	${EndIf}
-!macroend
- 
-  
   
 ;If you are using solid compression, files that are required before
 ;the actual installation should be stored first in the data block,
@@ -149,45 +138,58 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
   
   File /r "ReaderDrivers"
 
-  driver_installer::getOSVersion
-  Pop $versionMajor
-  Pop $versionMinor
+${DisableX64FSRedirection}
 
+	${WinVerGetMajor} $versionMajor
+    ${WinVerGetMinor} $versionMinor
+	 
 	${If} $versionMajor == 5
-		${If} $versionMinor == 1
+	${AndIf} $versionMinor == 1
 		;xp
-			!insertmacro INSTALL_DRIVER "USB\VID_072F&amp;PID_9000" "$INSTDIR\ReaderDrivers\XP\ACR38U\a38usb.inf"
-			!insertmacro INSTALL_DRIVER "USB\VID_076B&amp;PID_3021" "$INSTDIR\ReaderDrivers\XP\OmniKey3121\cxbu0wdm.inf"
-			!insertmacro INSTALL_DRIVER "USB\VID_04E6&amp;PID_E001" "$INSTDIR\ReaderDrivers\XP\SCR331\scr3xx.inf"
-			!insertmacro INSTALL_DRIVER "USB\Class_0B&amp;SubClass_00" "$INSTDIR\ReaderDrivers\XP\VascoDP509\usbccid.inf"
-			!insertmacro INSTALL_DRIVER "USB\VID_04E6&amp;PID_E003" "$INSTDIR\ReaderDrivers\XP\SPR532\Spr332.inf"
-		${EndIf}
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\ACR38U\a38usb.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\OmniKey3121\cxbu0wdm.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\SCR331\scr3xx.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\VascoDP509\usbccid.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\SPR532\Spr332.inf"'
 	${EndIf}
+	
 	${If} $versionMajor == 6
-		${If} $versionMinor == 0
+	${AndIf} $versionMinor == 0
 		;vista
-			!insertmacro INSTALL_DRIVER "USB\VID_072F&amp;PID_9000" "$INSTDIR\ReaderDrivers\VISTA\ACR38U\a38usb.inf"
-			!insertmacro INSTALL_DRIVER "USB\VID_076B&amp;PID_3021" "$INSTDIR\ReaderDrivers\VISTA\OmniKey3121\cxbu0wdm.inf"
-			!insertmacro INSTALL_DRIVER "USB\VID_04E6&amp;PID_E001" "$INSTDIR\ReaderDrivers\VISTA\SCR331\scr3xx.inf"
-			!insertmacro INSTALL_DRIVER "USB\Class_0B&amp;SubClass_00" "$INSTDIR\ReaderDrivers\VISTA\VascoDP509\usbccid.inf"
-			!insertmacro INSTALL_DRIVER "USB\VID_04E6&amp;PID_E003" "$INSTDIR\ReaderDrivers\VISTA\SPR532\Spr332.inf"
-		${EndIf}
-		${If} $versionMinor == 1
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\ACR38U\a38usb.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\OmniKey3121\cxbu0wdm.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\SCR331\scr3xx.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\VascoDP509\usbccid.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\SPR532\Spr332.inf"'
+	${EndIf}
+	
+	${If} $versionMajor == 6
+	${AndIf} $versionMinor == 1
 		;windows 7
-			!insertmacro INSTALL_DRIVER "USB\VID_072F&amp;PID_9000" "$INSTDIR\ReaderDrivers\WIN7\ACR38U\a38usb.inf"
-			!insertmacro INSTALL_DRIVER "USB\VID_076B&amp;PID_3021" "$INSTDIR\ReaderDrivers\WIN7\OmniKey3121\cxbu0wdm.inf"
-			!insertmacro INSTALL_DRIVER "USB\VID_04E6&amp;PID_E001" "$INSTDIR\ReaderDrivers\WIN7\SCR331\scr3xx.inf"
-			!insertmacro INSTALL_DRIVER "USB\Class_0B&amp;SubClass_00" "$INSTDIR\ReaderDrivers\WIN7\VascoDP509\usbccid.inf"
-			!insertmacro INSTALL_DRIVER "USB\VID_04E6&amp;PID_E003" "$INSTDIR\ReaderDrivers\WIN7\SPR532\Spr332.inf"
-		${EndIf}
-		${If} $versionMinor == 2 
-		${OrIf}  $versionMinor == 3
-		;windows 8 or 8.1
-			!insertmacro INSTALL_DRIVER "USB\VID_072F&amp;PID_9000" "$INSTDIR\ReaderDrivers\WIN8\ACR38U\a38usb.inf"
-		${EndIf}
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\ReaderDrivers\WIN7\ACR38U\a38usb.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\ReaderDrivers\WIN7\OmniKey3121\cxbu0wdm.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\ReaderDrivers\WIN7\SCR331\scr3xx.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\ReaderDrivers\WIN7\VascoDP509\usbccid.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WIN7\SPR532\Spr332.inf"'
+	${EndIf}
+		
+	${If} $versionMajor == 6
+	${AndIf} $versionMinor == 2 
+		;windows 8
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WIN8\ACR38U\a38usb.inf"'
+	${EndIf}
+	
+	${If} $versionMajor == 6
+	${AndIf} $versionMinor == 3 
+		;windows 8.1
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WIN8\ACR38U\a38usb.inf"'
 	${EndIf}
 	;driver to install on all OS's
-	!insertmacro INSTALL_DRIVER "USB\VID_072F&amp;PID_9000" "$INSTDIR\ReaderDrivers\WINALL\APG8201Z\apg8201z.inf"
+
+	nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WINALL\APG8201Z\apg8201z.inf"'
+
+${EnableX64FSRedirection}
+
 SectionEnd
 
 ;--------------------------------
