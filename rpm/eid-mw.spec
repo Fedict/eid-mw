@@ -71,6 +71,7 @@ websites and/or sign documents. This package contains the actual libraries.
 %install
 %{__rm} -rf %{buildroot}
 %{__make} install DESTDIR="%{buildroot}"
+rm -f %{buildroot}%{_datadir}/applications/about-eid-mw.desktop
 desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict plugins_tools/aboutmw/gtk/about-eid-mw.desktop || true
 
 %clean
@@ -113,6 +114,7 @@ fi
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
+%{_datadir}/applications
 %files devel
 %doc NEWS README
 %{_libdir}/libbeidpkcs11.a
