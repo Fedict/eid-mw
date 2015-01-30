@@ -194,6 +194,12 @@ SectionEnd
 ;Installer Functions
 
 Function .onInit
+;images used by this installer
+InitPluginsDir
+;extract the bitmaps to the temporary pluginsdir (which will be auto removed after installation)
+File /oname=$PLUGINSDIR\"welcome.bmp" "welcome.bmp"
+File /oname=$PLUGINSDIR\"insert_card.bmp" "insert_card.bmp"
+File /oname=$PLUGINSDIR\"connect_reader.bmp" "connect_reader.bmp"
 
 
 ;for testing different languages
@@ -240,7 +246,7 @@ Function nsdWelcome
 
 	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapwelcome)"
 	Pop $Background_Image
-    ${NSD_SetStretchedImage} $Background_Image "welcome.bmp" $Background_Image_Handle 
+    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
 
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
 	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_install)"
@@ -276,7 +282,7 @@ Function nsdDone
 
 	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapwelcome)"
 	Pop $Background_Image
-  ${NSD_SetStretchedImage} $Background_Image "welcome.bmp" $Background_Image_Handle 
+  ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
 
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
@@ -310,7 +316,7 @@ Function nsdConnectReader
 
 	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapconnectreader)"
 	Pop $Background_Image
-    ${NSD_SetStretchedImage} $Background_Image "connect_reader.bmp" $Background_Image_Handle 
+    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\connect_reader.bmp" $Background_Image_Handle 
 	
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
@@ -346,7 +352,7 @@ Function nsdInsertCard
 
 	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapinsertcard)"
 	Pop $Background_Image
-    ${NSD_SetStretchedImage} $Background_Image "insert_card.bmp" $Background_Image_Handle 
+    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\insert_card.bmp" $Background_Image_Handle 
 	
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
