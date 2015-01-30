@@ -11,7 +11,7 @@ desktopdir=@datadir@/applications
 desktop_DATA=about-eid-mw.desktop
 
 BUILT_SOURCES = about_glade.h now.h
-EXTRA_DIST = genabout.sh about.glade gen.sh
+EXTRA_DIST = about.glade gen.sh
 
 about_glade.h: about.glade
 	$(srcdir)/gen.sh ABOUT_GLADE_H ABOUT_GLADE_STRING < $^ > $@
