@@ -348,7 +348,7 @@ int main(int argc, char** argv) {
 	loc = strchr(tmp, '-');
 	*loc = '\0';
 	gtk_list_store_append(store, &iter);
-	gtk_list_store_set(store, &iter, 0, _("Middleware version"), 1, PACKAGE_VERSION, -1);
+	gtk_list_store_set(store, &iter, 0, _("Middleware version"), 1, tmp, -1);
 	gtk_list_store_append(store, &iter);
 	gtk_list_store_set(store, &iter, 0, _("Middleware build ID"), 1, loc+1, -1);
 
