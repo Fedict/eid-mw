@@ -8,6 +8,7 @@ Group: Applications/Communications
 URL: http://eid.belgium.be/
 Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
 Name: eid-mw
+Vendor: FedICT
 
 Source: http://eidmw.yourict.net/dist/sources/eid-mw-%{version}-%{revision}.tar.gz
 Source1: baselibs.conf
