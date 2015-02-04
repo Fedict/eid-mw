@@ -1,5 +1,8 @@
 AC_PREREQ([2.61])
-AC_INIT([eid-mw],[4.0.6],[servicedesk@fedict.be],,[http://eid.belgium.be])
+AC_INIT([eid-mw],
+  m4_esyscmd_s(echo "4.0.6-"$(git describe --dirty|sed -e 's/-/./g')),
+  [servicedesk@fedict.be],,
+  [http://eid.belgium.be])
 
 AC_CONFIG_AUX_DIR([scripts/build-aux])
 AC_CONFIG_SRCDIR([cardcomm])
@@ -93,14 +96,6 @@ AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjp
 # we only need libssl for the test suite, so don't worry if it's not available...
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1], [HAVE_OPENSSL=0])
 AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
-
-# build ID
-if test -d .git; then
-	BUILD=$(git describe --dirty)
-else
-	BUILD=""
-fi
-AC_DEFINE_UNQUOTED([BUILD_ID],["$BUILD"], [Is defined to the git description, but may be kept empty])
 
 AC_CONFIG_FILES([Makefile cardcomm/pkcs11/src/Makefile tests/unit/Makefile plugins_tools/aboutmw/gtk/Makefile plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh])
 AC_CONFIG_SUBDIRS([plugins_tools/xpi])
