@@ -57,7 +57,7 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/threadpool.cpp \
 	cardlayer/unknowncard.cpp \
 	cardlayer/cardpluginbeid/beidcard.cpp \
-	cardlayer/cardpluginbeid/beidp15correction.cpp \
+	cardlayer/cardpluginbeid/beidp15correction.cpp
 
 noinst_HEADERS = \
 	p11.h \
