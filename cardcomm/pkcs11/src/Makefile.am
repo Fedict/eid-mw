@@ -58,8 +58,6 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/unknowncard.cpp \
 	cardlayer/cardpluginbeid/beidcard.cpp \
 	cardlayer/cardpluginbeid/beidp15correction.cpp \
-	cardlayer/cardpluginsis/siscard.cpp \
-	cardlayer/cardpluginsis/sispluginhandler.cpp
 
 noinst_HEADERS = \
 	p11.h \
@@ -111,9 +109,6 @@ noinst_HEADERS = \
 	cardlayer/threadpool.h \
 	cardlayer/pcsc.h \
 	cardlayer/cardlayerconst.h \
-	cardlayer/cardpluginsis/siscard.h \
-	cardlayer/cardpluginsis/sispluginhandler.h \
-	cardlayer/cardpluginsis/sisplugin1.h \
 	cardlayer/pinpad2.h \
 	cardlayer/pinpad.h \
 	cardlayer/p15objects.h \
