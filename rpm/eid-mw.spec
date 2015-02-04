@@ -63,7 +63,7 @@ plugin to use Belgian eID (electronic identity) card in order to access
 websites and/or sign documents. This package contains the actual libraries.
 
 %prep
-%setup
+%setup -n eid-mw-%{version}-%{revision}
 
 %build
 %configure
