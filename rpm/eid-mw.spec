@@ -1,7 +1,7 @@
 #Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
 # Authority: dag
 
-Version: 4.0.6
+Version: 4.1.1
 Release: 0.%{revision}%{?dist}
 License: LGPL
 Group: Applications/Communications
