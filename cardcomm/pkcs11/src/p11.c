@@ -151,7 +151,7 @@ CK_RV p11_close_sessions_finalize()
 	CK_RV r, ret;
 	P11_SESSION *pSession;
 	P11_SLOT *pSlot;
-	int i;
+	unsigned int i;
 
 	ret = CKR_OK;
 	for(i=0;i<nSessions; i++) {
