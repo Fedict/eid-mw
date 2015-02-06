@@ -13,6 +13,8 @@ desktop_DATA=about-eid-mw.desktop
 BUILT_SOURCES = about_glade.h now.h
 EXTRA_DIST = about.glade gen.sh
 
+SUBDIRS = po
+
 about_glade.h: about.glade
 	$(srcdir)/gen.sh ABOUT_GLADE_H ABOUT_GLADE_STRING < $^ > $@
 
