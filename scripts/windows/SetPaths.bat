@@ -154,4 +154,23 @@
 :found_nsis
 @echo        Found in "%NSIS_PATH%"
 
+
+@echo [INFO] Check if signtool is installed
+@set FILE_TO_FIND="signtool.exe"
+@echo [INFO] Looking for files: %FILE_TO_FIND%
+
+@set SIGNTOOL_PATH=%SEARCH_SIGNTOOL_PATH%
+
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%SEARCH_SIGNTOOL_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto found_signtool
+@echo        Not found in "%SEARCH_SIGNTOOL_PATH%"
+
+@echo [ERROR] Signtool could not be found
+@echo         Please install WINDDK 7600
+@exit /B 1
+
+:found_signtool
+@echo        Found in "%SEARCH_SIGNTOOL_PATH%"
+
 @exit /B 0

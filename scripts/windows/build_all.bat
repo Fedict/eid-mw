@@ -61,6 +61,9 @@
 :: %SIGNTOOL_PATH%\SignTool.exe sign /v /f %~dp0fedicteidtest.pfx /t http://timestamp.verisign.com/scripts/timestamp.dll %INSTALLPATH%\Release\beidmdrv.cat
 :: @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
+:: create cert
+:: %SIGNTOOL_PATH%\makecert -r -n CN="FedictTestCert" -b 01/01/2015 -e 01/01/2020 -ss my -sky signature
+
 :: create the MSI installers
 :: =========================
 set OUR_CURRENT_PATH="%cd%"
@@ -71,11 +74,17 @@ set OUR_CURRENT_PATH="%cd%"
 
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw32.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
+@echo [INFO] sign 32 bit msi installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
+@if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
+@echo [INFO] sign 64 bit msi installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
+@if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 
@@ -98,11 +107,20 @@ copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\
 :: =========================
 @echo [INFO] Make nsis installer
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\Quickinstaller.nsi"
-@if %ERRORLEVEL%==1 goto end_resetpath
+@if %ERRORLEVEL%==1 goto makensis_failed
+
+
+:: sign the NSIS installer
+:: =========================
+@echo [INFO] Sign nsis installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@if %ERRORLEVEL%==1 goto signtool_failed
+
+:: copy the NSIS installer
+:: =========================
 @echo [INFO] copy nsis installer
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
 goto end_resetpath
-
 
 :msbuild_failed
 @echo [ERR ] msbuild failed
@@ -112,8 +130,8 @@ goto end_resetpath
 @echo [ERR ] inf2cat_failed failed
 @goto err
 
-:makecert_failed
-@echo [ERR ] makecert failed
+:makensis_failed
+@echo [ERR ] makensis failed
 @goto err
 
 :signtool_failed
