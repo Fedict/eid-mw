@@ -119,14 +119,12 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	 ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_64.msi"'
 	 ;ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
 	 ;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
-	 ExecWait 'vcredist_x64.exe'
 	 Delete "$INSTDIR\BeidMW_64.msi"
   ${Else}
 	;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
 	File "..\eid-mw\Windows\bin\BeidMW_32.msi"	
 	ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_32.msi"'
 	;ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
-	ExecWait 'vcredist_x86.exe'
 ;	$0
 ; /l* "$APPDATA\install_eidmw32_log.txt"
 ;	${if} $0 <> 0
@@ -189,6 +187,8 @@ ${DisableX64FSRedirection}
 	nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WINALL\APG8201Z\apg8201z.inf"'
 
 ${EnableX64FSRedirection}
+
+  ;RMDir /r /REBOOTOK $INSTDIR\ReaderDrivers
 
 SectionEnd
 
