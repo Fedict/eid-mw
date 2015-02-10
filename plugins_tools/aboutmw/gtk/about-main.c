@@ -35,6 +35,8 @@
 #include "about_glade.h"
 #include "now.h"
 
+#include "gettext.h"
+
 #ifndef _
 #define _(s) (s)
 #endif
