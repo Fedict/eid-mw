@@ -38,7 +38,7 @@
 #include "gettext.h"
 
 #ifndef _
-#define _(s) (s)
+#define _(s) gettext(s)
 #endif
 
 static enum _bits {
@@ -333,6 +333,9 @@ int main(int argc, char** argv) {
 	GtkListStore *store;
 	GtkAccelGroup *group;
 	gchar *tmp, *loc;
+
+	bindtextdomain("about-eid-mw", DATAROOTDIR "/locale");
+	textdomain("about-eid-mw");
 
 	gtk_init(&argc, &argv);
 

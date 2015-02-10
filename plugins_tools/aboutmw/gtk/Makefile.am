@@ -2,7 +2,7 @@ bin_PROGRAMS = about-eid-mw
 
 about_eid_mw_SOURCES = about-main.c gettext.h
 about_eid_mw_LDFLAGS = @GTK_LIBS@
-about_eid_mw_CFLAGS = @GTK_CFLAGS@ -DLIBDIR='"$(libdir)"'
+about_eid_mw_CFLAGS = @GTK_CFLAGS@ -DLIBDIR='"$(libdir)"' -DDATAROOTDIR='"$(datarootdir)"'
 
 about-eid-mw.desktop: about-eid-mw.desktop.sh
 	sh ./about-eid-mw.desktop.sh
