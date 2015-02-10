@@ -402,19 +402,19 @@ Function nsdCardData
 	;SendMessage $Label ${WM_SETTEXT} 0 "STR:Card Read"
 
 	CreateFont $Font_CardData "Times New Roman" "14" "500" ;/UNDERLINE
-	${NSD_CreateLabel} 0 28u 18% 10u "$(ls_name)"
+	${NSD_CreateLabel} 0 28u 18% 14u "$(ls_name)"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 20% 28u 85% 10u "$firstname $firstletterthirdname $lastname"
+	${NSD_CreateLabel} 20% 28u 85% 14u "$firstname $firstletterthirdname $lastname"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 0 42u 18% 10u "$(ls_address)"
+	${NSD_CreateLabel} 0 42u 18% 14u "$(ls_address)"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 20% 42u 85% 10u "$street"
+	${NSD_CreateLabel} 20% 42u 85% 14u "$street"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 20% 56u 85% 10u "$zip $municipality"
+	${NSD_CreateLabel} 20% 56u 85% 14u "$zip $municipality"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	;pop the others off the stack
