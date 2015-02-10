@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2012 FedICT.
+* Copyright (C) 2012-2015 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -28,13 +28,6 @@ char* g_address_Street_Number = NULL;
 char* g_address_Zip = NULL;
 char* g_address_Municipality = NULL;
 
-
-/*int _main(int argv, char* args[])
-{
-	CK_RV retval;	
-	retval = ReadTheCardData();
-	return 0;
-}*/
 
 CK_RV ReadTheCardData(void) {
 
@@ -79,11 +72,28 @@ CK_RV ReadTheCardData(void) {
 						if(retval == CKR_OK)
 						{
 							if ((retval = FindAndStore(functions, session_handle, "firstnames",&g_firstNames)) == CKR_OK)
-							if ((retval = FindAndStore(functions, session_handle, "first_letter_of_third_given_name",&g_firstLetterThirdName)) == CKR_OK)
-							if ((retval = FindAndStore(functions, session_handle, "surname",&g_surName)) == CKR_OK)
-							if ((retval = FindAndStore(functions, session_handle, "address_street_and_number",&g_address_Street_Number)) == CKR_OK)
-							if ((retval = FindAndStore(functions, session_handle, "address_zip",&g_address_Zip)) == CKR_OK)
-							if ((retval = FindAndStore(functions, session_handle, "address_municipality",&g_address_Municipality)) == CKR_OK)
+							{
+								ConvertUtf8toAscii(&g_firstNames); //don't mind the return value, if it failed, we'll return the utf8 string
+								if ((retval = FindAndStore(functions, session_handle, "first_letter_of_third_given_name",&g_firstLetterThirdName)) == CKR_OK)
+								{
+									ConvertUtf8toAscii(&g_firstLetterThirdName); //don't mind the return value, if it failed, we'll return the utf8 string
+									if ((retval = FindAndStore(functions, session_handle, "surname",&g_surName)) == CKR_OK)
+									{
+										ConvertUtf8toAscii(&g_surName); //don't mind the return value, if it failed, we'll return the utf8 string
+										if ((retval = FindAndStore(functions, session_handle, "address_street_and_number",&g_address_Street_Number)) == CKR_OK)
+										{
+											ConvertUtf8toAscii(&g_address_Street_Number); //don't mind the return value, if it failed, we'll return the utf8 string
+											if ((retval = FindAndStore(functions, session_handle, "address_zip",&g_address_Zip)) == CKR_OK)
+											{
+												if ((retval = FindAndStore(functions, session_handle, "address_municipality",&g_address_Municipality)) == CKR_OK)
+												{
+													ConvertUtf8toAscii(&g_address_Municipality); //don't mind the return value, if it failed, we'll return the utf8 string
+												}
+											}
+										}
+									}
+								}
+							}
 							(functions->C_CloseSession) (session_handle);
 						}			
 					}
@@ -103,6 +113,8 @@ CK_RV ReadTheCardData(void) {
 	return retval;
 } 
 
+//*data_storage should be either allocated by malloc, or NULL
+//this function will use malloc to allocated memory to *data_storage
 CK_RV FindAndStore(CK_FUNCTION_LIST_PTR functions, CK_SESSION_HANDLE session_handle, const char* label, char** data_storage)
 {
 	CK_RV retval = CKR_OK;
@@ -121,6 +133,8 @@ CK_RV FindAndStore(CK_FUNCTION_LIST_PTR functions, CK_SESSION_HANDLE session_han
 			retval = (functions->C_GetAttributeValue)(session_handle,hObject,attr_templ,1);
 			if(retval == CKR_OK)
 			{
+				if(*data_storage != NULL)
+					free (*data_storage);
 				*data_storage = (char*)malloc (attr_templ[0].ulValueLen+1);//one extra for terminating null					
 				if (*data_storage != NULL )
 				{
@@ -140,4 +154,64 @@ CK_RV FindAndStore(CK_FUNCTION_LIST_PTR functions, CK_SESSION_HANDLE session_han
 		(functions->C_FindObjectsFinal)(session_handle); 
 	}	
 	return retval;
+}
+
+CK_RV ConvertUtf8toAscii(char** data_storage)
+{
+	int wcharLen = 0;
+	int mbLen = 0;
+	int rval = 0;
+
+	wchar_t* wcIntermediateString = NULL;
+	char* new_storage = NULL;
+	
+	if(*data_storage == NULL)
+		return CKR_HOST_MEMORY;
+
+	//retrieve length needed, in number of characters, of lpWideCharStr 
+	wcharLen = MultiByteToWideChar(CP_UTF8,0,*data_storage,-1,NULL,0);
+	//allocate the memory needed
+	if (wcharLen == 0)
+	{
+		//DWORD error = GetLastError(); //just return without conversion
+		return CKR_FUNCTION_FAILED;
+	}
+
+	wcIntermediateString = (wchar_t*)malloc(sizeof(wchar_t)*wcharLen);
+	if(wcIntermediateString == NULL)
+		return CKR_HOST_MEMORY;
+
+	//convert utf8 to utf-16
+	if (MultiByteToWideChar(CP_UTF8,0,*data_storage,-1,wcIntermediateString,wcharLen) == 0)
+	{
+		free(wcIntermediateString);
+		return CKR_FUNCTION_FAILED;
+	}
+
+	//retrieve length needed, in number of characters, of ascii string 
+	mbLen = WideCharToMultiByte(CP_ACP,0,wcIntermediateString,wcharLen,NULL,0,NULL,NULL);
+	if (mbLen == 0)
+	{
+		free(wcIntermediateString);
+		return CKR_FUNCTION_FAILED;
+	}
+
+	new_storage = (char*)realloc(*data_storage,mbLen);
+	if(new_storage == NULL)
+	{
+		free(wcIntermediateString);
+		return CKR_HOST_MEMORY;
+	}
+	*data_storage = new_storage;
+
+	//convert utf-16 to ASCII (current CodePage)
+	if( WideCharToMultiByte(CP_ACP,0,wcIntermediateString,wcharLen,*data_storage,mbLen,NULL,NULL) == 0)
+	{
+		free(wcIntermediateString);
+		*data_storage='\0';
+		return CKR_FUNCTION_FAILED;
+	}
+
+	free(wcIntermediateString);
+	return CKR_OK;
 }
