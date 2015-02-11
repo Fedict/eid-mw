@@ -386,14 +386,28 @@ Function nsdCardData
 	beid::ReadCardData
 	Pop $retval
 	
-	${If} $retval == '0'
-  ;MessageBox MB_OK "$$retval is 0"
-  Pop $municipality
-  Pop $zip
+	${If} $retval <> '0'
+	  ;MessageBox MB_OK "$$retval is $retval"
+	${NSD_CreateLabel} 0 0 18% 20% "$(ls_error)"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 20% 0 100% 20% "$retval"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 0 20% 100% 100% "$(ls_cardread)"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	SendMessage $Label ${WM_SETTEXT} 0 "$(ls_testfailed)"
+	Goto nsdCardDataDone
+	${EndIf}
+	
+	;MessageBox MB_OK "$$retval is 0"
+	Pop $municipality
+	Pop $zip
 	Pop $street
-  Pop $lastname
+	Pop $lastname
 	Pop $firstletterthirdname
-  Pop $firstname
+	Pop $firstname
 
 	${NSD_CreateLabel} 0 0 100% 16u "$(ls_cardread)"
 	Pop $Label
@@ -405,7 +419,11 @@ Function nsdCardData
 	${NSD_CreateLabel} 0 28u 18% 14u "$(ls_name)"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 20% 28u 85% 14u "$firstname $firstletterthirdname $lastname"
+	${if} $firstletterthirdname == ""
+		${NSD_CreateLabel} 20% 28u 85% 14u "$firstname $lastname"
+	${Else}
+		${NSD_CreateLabel} 20% 28u 85% 14u "$firstname $firstletterthirdname $lastname"
+	${EndIf}
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	${NSD_CreateLabel} 0 42u 18% 14u "$(ls_address)"
@@ -418,19 +436,7 @@ Function nsdCardData
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	;pop the others off the stack
-${Else}
-  ;MessageBox MB_OK "$$retval is $retval"
-	${NSD_CreateLabel} 0 0 18% 20% "$(ls_error)"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 20% 0 100% 20% "$retval"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 0 20% 100% 100% "$(ls_cardread)"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	SendMessage $Label ${WM_SETTEXT} 0 "$(ls_testfailed)"
-${EndIf}
-	
+
+	nsdCardDataDone:
 	nsDialogs::Show
 FunctionEnd
