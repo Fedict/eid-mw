@@ -3,8 +3,16 @@
 @call "%~dp0.\SetPaths.bat"
 @if %ERRORLEVEL%==1 goto paths_failed
 
-:: sign the minidriver
-::%SIGNTOOL_PATH%\SignTool.exe sign
+
+
+:: sign minidriver driver cat file
+:: ===============================
+set MDRVINSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
+@echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
+@echo [INFO] Sign the minidriver catalog
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
+
 
 :: create the MSI installers
 :: =========================

@@ -29,37 +29,36 @@
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 :: create minidriver driver installer
-:: disabled, we take the pre-build and signed minidriver
 :: ==================================
 
 :: BuildPath
-::set INSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
+set MDRVINSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
+@echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
 
-::md %INSTALLPATH%\Release
-::@echo [INFO] Copying minidriver files..
+rmdir \s \q %MDRVINSTALLPATH%\Release
+mkdir %MDRVINSTALLPATH%\Release
+@echo [INFO] Copying minidriver files..
 
 :: copy inf files
-::copy %INSTALLPATH%\beidmdrv.inf %INSTALLPATH%\Release
+copy %MDRVINSTALLPATH%\beidmdrv.inf %MDRVINSTALLPATH%\Release
 
 :: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-::copy %~dp0..\..\VS_2012\Binaries\Win32_Release\beidmdrv.dll %INSTALLPATH%\Release\beidmdrv32.dll
-::copy %~dp0..\..\VS_2012\Binaries\x64_Release\beidmdrv.dll %INSTALLPATH%\Release\beidmdrv64.dll
+copy %~dp0..\..\cardcomm\VS_2012\Binaries\Win32_Release\beidmdrv.dll %MDRVINSTALLPATH%\Release\beidmdrv32.dll
+copy %~dp0..\..\cardcomm\VS_2012\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\Release\beidmdrv64.dll
 
 :: copy icon
-::copy %~dp0..\minidriver\img\beid.ico %INSTALLPATH%\Release\
+copy %~dp0..\minidriver\img\beid.ico %MDRVINSTALLPATH%\Release\
 
 :: @echo [INFO] Creating cat file
 :: Create catalog
-::%INF2CAT_PATH%\inf2cat.exe /driver:%INSTALLPATH%\Release\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
-::@if "%ERRORLEVEL%" == "1" goto inf2cat_failed
+%INF2CAT_PATH%\inf2cat.exe /driver:%MDRVINSTALLPATH%\Release\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
+@if "%ERRORLEVEL%" == "1" goto inf2cat_failed
 
 :: sign minidriver driver cat file
 :: ===============================
-
-:: Sign the catalog
-:: @echo [INFO] Sign the catalog
-:: %SIGNTOOL_PATH%\SignTool.exe sign /v /f %~dp0fedicteidtest.pfx /t http://timestamp.verisign.com/scripts/timestamp.dll %INSTALLPATH%\Release\beidmdrv.cat
-:: @if "%ERRORLEVEL%" == "1" goto signtool_failed
+@echo [INFO] Sign the catalog
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 :: create cert
 :: %SIGNTOOL_PATH%\makecert -r -n CN="FedictTestCert" -b 01/01/2015 -e 01/01/2020 -ss my -sky signature
