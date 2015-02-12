@@ -166,7 +166,7 @@ CK_RV ConvertUtf8toAscii(char** data_storage)
 	char* new_storage = NULL;
 	
 	if(*data_storage == NULL)
-		return CKR_HOST_MEMORY;
+		return CKR_FUNCTION_FAILED;
 
 	//retrieve length needed, in number of characters, of lpWideCharStr 
 	wcharLen = MultiByteToWideChar(CP_UTF8,0,*data_storage,-1,NULL,0);
