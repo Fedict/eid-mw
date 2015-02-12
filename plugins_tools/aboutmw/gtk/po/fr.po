@@ -20,7 +20,7 @@ msgstr ""
 #: plugins_tools/aboutmw/gtk/about-main.c:75
 #: plugins_tools/aboutmw/gtk/about-main.c:79
 msgid "PCSC daemon status"
-msgstr "Statut système de service PCSC"
+msgstr "Statut service de système PCSC"
 
 #: plugins_tools/aboutmw/gtk/about-main.c:59
 msgid "(check failed)"
@@ -70,12 +70,12 @@ msgstr "Emplacement eID Viewer"
 #: plugins_tools/aboutmw/gtk/about-main.c:183
 #: plugins_tools/aboutmw/gtk/about-main.c:205
 msgid "32-bit PKCS#11 location"
-msgstr "Emplacement 32-bit PKCS#11"
+msgstr "Emplacement 32 bits PKCS#11"
 
 #: plugins_tools/aboutmw/gtk/about-main.c:187
 #: plugins_tools/aboutmw/gtk/about-main.c:209
 msgid "64-bit PKCS#11 location"
-msgstr "Emplacement 64-bit PKCS#11"
+msgstr "Emplacement 64 bits PKCS#11"
 
 #: plugins_tools/aboutmw/gtk/about-main.c:191
 #: plugins_tools/aboutmw/gtk/about-main.c:215
