@@ -17,7 +17,7 @@
 
   ;defines
 !define LOGFILE ""
-
+!addplugindir "NSIS_Plugins\beidread\Release"
   ;Name and file
   Name "Belgium eID-QuickInstaller ${EIDMW_VERSION}"
   OutFile "Belgium eID-QuickInstaller ${EIDMW_VERSION}.exe"

@@ -88,11 +88,12 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
 
 :: copy the NSIS plugins to NSIS default plugin folder
+:: nsis installer is updated to look into the build folder
 :: =========================
-@echo [INFO] Copying beid NSIS plugin
-copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\beidread\Release\beid.dll "%NSIS_PATH%\Plugins"
-@echo [INFO] Copying driver_installer NSIS plugin
-copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\driver_installer.dll "%NSIS_PATH%\Plugins"
+::@echo [INFO] Copying beid NSIS plugin
+::copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\beidread\Release\beid.dll "%NSIS_PATH%\Plugins"
+::@echo [INFO] Copying driver_installer NSIS plugin
+::copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\driver_installer.dll "%NSIS_PATH%\Plugins"
 
 :: create the NSIS installer
 :: =========================
