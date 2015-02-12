@@ -39,7 +39,6 @@ libbeidpkcs11_la_SOURCES = \
 	common/tlvbuffer.cpp \
 	common/tlv.cpp \
 	common/util.cpp \
-	cardlayer/cache.cpp \
 	cardlayer/card.cpp \
 	cardlayer/cardfactory.cpp \
 	cardlayer/cardlayer.cpp \
@@ -100,7 +99,6 @@ noinst_HEADERS = \
 	cardlayer/card.h \
 	cardlayer/cardfactory.h \
 	cardlayer/pkcs15.h \
-	cardlayer/cache.h \
 	cardlayer/context.h \
 	cardlayer/cardpluginbeid/beidp15correction.h \
 	cardlayer/cardpluginbeid/beidcard.h \

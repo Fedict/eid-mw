@@ -25,7 +25,7 @@ namespace eIDMW
 
 CCard::CCard(SCARDHANDLE hCard, CContext *poContext, CPinpad *poPinpad) :
 	m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad),
-	m_oCache(poContext), m_cardType(CARD_UNKNOWN), m_ulLockCount(0), m_bSerialNrString(false)
+	m_cardType(CARD_UNKNOWN), m_ulLockCount(0), m_bSerialNrString(false)
 {
 }
 
@@ -119,15 +119,6 @@ void CCard::SelectApplication(const CByteArray & oAID)
 	throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
 }
 
-CByteArray CCard::ReadCachedFile(const std::string & csPath, std::string & csName,
-	bool & bFound, unsigned long ulOffset, unsigned long ulMaxLen, bool &bFromDisk)
-{
-	bFromDisk = true;
-
-	return m_oCache.GetFile(csName,
-		bFound, bFromDisk, ulOffset, ulMaxLen);
-}
-
 bool CCard::SerialNrPresent(const CByteArray & oData)
 {
 	CByteArray oSerial = GetSerialNrBytes();
@@ -165,115 +156,6 @@ static CByteArray ReturnData(CByteArray oData, unsigned long ulOffset, unsigned 
 CByteArray CCard::ReadFile(const std::string & csPath,
 	unsigned long ulOffset, unsigned long ulMaxLen,bool bDoNotCache)
 {
-	tCacheInfo cacheInfo = GetCacheInfo(csPath);
-
-	if (cacheInfo.action == SIMPLE_CACHE || cacheInfo.action == CHECK_SERIAL)
-	{
-		// Either read from cache or read from the card and store to cache.
-		// We could optimise here if part of the file has already been
-		// cached but not enough: in this case we can read the cached part
-		// and the rest from the card and put both together (and then store
-		// this to cache and return it).
-		bool bFound;
-		bool bFromDisk;
-		std::string csName = m_oCache.GetSimpleName(GetSerialNr(), csPath);
-		CByteArray oData = ReadCachedFile(csPath, csName, bFound,
-			cacheInfo.action == CHECK_SERIAL ? 0         : ulOffset, 
-			cacheInfo.action == CHECK_SERIAL ? FULL_FILE : ulMaxLen, 
-			bFromDisk);
-		if (bFound)
-		{
-			if (cacheInfo.action == CHECK_SERIAL && !SerialNrPresent(oData))
-				throw CMWEXCEPTION(EIDMW_CACHE_TAMPERED);
-
-			MWLOG(LEV_INFO, MOD_CAL, L"   Read file %ls (%d bytes) from cache",
-				utilStringWiden(csPath).c_str(), oData.Size());
-			if (cacheInfo.action == CHECK_SERIAL)
-				return ReturnData(oData, ulOffset, ulMaxLen);
-			else
-				return oData;
-		}
-		else
-		{
-			oData = ReadUncachedFile(csPath, ulOffset, ulMaxLen);
-			if(!bDoNotCache)
-			{
-				m_oCache.StoreFile(csName, oData, ulOffset == 0 && ulMaxLen == FULL_FILE);
-				MWLOG(LEV_INFO, MOD_CAL, L"   Stored file %ls to cache",
-					utilStringWiden(csPath).c_str());
-			}
-			return oData;
-		}
-	}
-	else if (cacheInfo.action == CHECK_16_CACHE || cacheInfo.action == CERT_CACHE)
-	{
-		// 1. In case of CHECK_16_CACHE:
-		//    Compare 16 bytes starting at cacheInfo.ulOffset. If they are the
-		//    same then return the cached data.
-		// 2. In case of CERT_CACHE:
-		//    Read the last 16 bytes of the cert from the card, and compare
-		//    with the cached cert. If they are the same then return the cached
-		//    data because at end of the cert is its signature, and if something
-		//    changed in the cert then the signature will be completely different.
-		// NOTE: this is only done if read from the hard disk; if the data has been
-		// read from the hard disk before (and is already stored in memory) then
-		// we won't do the above checks again.
-		bool bFound;
-		bool bFromDisk;
-		unsigned long ulCheckOffset = 0xFFFFFFFF;
-		std::string csName = m_oCache.GetSimpleName(GetSerialNr(), csPath);
-		CByteArray oData = ReadCachedFile(csPath, csName, bFound,
-			0, FULL_FILE, bFromDisk);
-
-		if (bFound && !bFromDisk)
-		{
-			MWLOG(LEV_INFO, MOD_CAL, L"   Read file %ls (%d bytes) from memory cache",
-				utilStringWiden(csPath).c_str(), oData.Size());
-			return ReturnData(oData, ulOffset, ulMaxLen);
-		}
-
-		if (cacheInfo.action == CHECK_16_CACHE)
-			ulCheckOffset = cacheInfo.ulOffset;
-		else
-		{
-			// Our certs all start with 30 82 l1 l2 with [l1 l2] = the length of what follows
-			if (oData.Size() > 4 && oData.GetByte(0) == 0x30 && oData.GetByte(1) == 0x82)
-			{
-				unsigned long ulCertLen = 256 * oData.GetByte(2) + oData.GetByte(3) + 4;
-				if (ulCertLen > 16)
-					ulCheckOffset = ulCertLen - 16;
-			}
-		}
-
-		if (ulCheckOffset != 0xFFFFFFFF)
-		{
-			CByteArray oCertEnd = ReadUncachedFile(csPath, ulCheckOffset, 16);
-			if (oCertEnd.Size() == 16 &&
-				memcmp(oCertEnd.GetBytes(), oData.GetBytes() + ulCheckOffset, 16) == 0)
-			{
-				MWLOG(LEV_INFO, MOD_CAL, L"   Read file %ls (%d bytes) from disk cache",
-					utilStringWiden(csPath).c_str(), oData.Size());
-				m_oCache.StoreFileToMem(csName, oData, true);
-				return ReturnData(oData, ulOffset, ulMaxLen);
-			}
-			else
-			{
-				MWLOG(LEV_INFO, MOD_CAL, L"   Cached file %ls differs from the "
-					L"one on card, re-reading from card!", utilStringWiden(csPath).c_str());
-			}
-		}
-
-		oData = ReadUncachedFile(csPath, ulOffset, ulMaxLen);
-		if(!bDoNotCache)
-		{
-			m_oCache.StoreFile(csName, oData, ulMaxLen == FULL_FILE);
-			MWLOG(LEV_INFO, MOD_CAL, L"   (Re)stored file %ls to cache",
-				utilStringWiden(csPath).c_str());
-		}
-
-		return oData;
-	}
-
 	return ReadUncachedFile(csPath, ulOffset, ulMaxLen);
 }
 
@@ -281,14 +163,6 @@ void CCard::WriteFile(const std::string &csPath, unsigned long ulOffset,
 	const CByteArray & oData)
 {
 	WriteUncachedFile(csPath, ulOffset, oData);
-
-	// We could overwrite the cache with the new data, but because
-	// we don't know if it's the full file, we just clear the cached
-	// data. This will cause a new ReadFile() to read again from the
-	// card but as this probably won't happen that much...
-	tCacheInfo cacheInfo = GetCacheInfo(csPath);
-	if (cacheInfo.action == SIMPLE_CACHE)
-		m_oCache.Delete(m_oCache.GetSimpleName(GetSerialNr(), csPath));
 }
 
 void CCard::WriteUncachedFile(const std::string &csPath, unsigned long ulOffset,

@@ -18,7 +18,6 @@
 
 **************************************************************************** */
 #include "cardlayer.h"
-#include "cache.h"
 
 namespace eIDMW
 {
@@ -169,11 +168,6 @@ std::string * CCardLayer::GetDefaultReader()
 	}
 
 	return pRet;
-}
-
-bool CCardLayer::DeleteFromCache(const std::string & csSerialNr)
-{
-	return CCache::Delete(csSerialNr);
 }
 
 }

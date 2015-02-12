@@ -142,13 +142,6 @@ public:
 	 */
 	CReader & getReader(const std::string &csReaderName);
 
-	/**
-	 * Delete the cache files for the card with serial number 'csSerialNr'.
-	 * To delete all cache files, leave csSerialNr empty ("").
-	 * Returns true is something was deleted, false otherwise.
-	 */
-	bool DeleteFromCache(const std::string & csSerialNr);
-
 private:
     // No copies allowed
     CCardLayer(const CCardLayer & oCardLayer);

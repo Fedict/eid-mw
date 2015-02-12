@@ -27,7 +27,7 @@
 #define CARD_H
 
 #include "p15objects.h"
-#include "cache.h"
+#include "context.h"
 #include "internalconst.h"
 #include "common/bytearray.h"
 #include "common/mwexception.h"
@@ -142,7 +142,6 @@ protected:
 
 	CContext *m_poContext;
 	CPinpad *m_poPinpad;
-	CCache m_oCache;
 	tCardType m_cardType;
     unsigned long m_ulLockCount;
 	bool m_bSerialNrString;
