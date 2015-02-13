@@ -51,6 +51,7 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 {
 	int ret = CKR_OK;
 	CK_C_INITIALIZE_ARGS_PTR p_args;
+	unsigned char initial_state = p11_get_init();
 
 #if _DEBUG
 	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_INFO);
@@ -104,7 +105,7 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 cleanup:
 	log_trace(WHERE, "I: leave, ret = %i",ret);
 	if (ret != CKR_OK) {
-		p11_set_init(BEIDP11_NOT_INITIALIZED);
+		p11_set_init(initial_state);
 	}
 	return ret;
 }
