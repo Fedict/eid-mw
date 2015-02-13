@@ -75,8 +75,6 @@ public:
 
     virtual void SelectApplication(const CByteArray & oAID);
 
-	CByteArray ReadCachedFile(const std::string & csPath, std::string & csName,
-		bool & bFound, unsigned long ulOffset, unsigned long ulMaxLen, bool &bFromDisk);
     virtual CByteArray ReadFile(const std::string & csPath,
         unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE, bool bDoNotCache=false);
     virtual void WriteFile(const std::string &csPath, unsigned long ulOffset,

@@ -138,21 +138,6 @@ bool CCard::SerialNrPresent(const CByteArray & oData)
 	return false;
 }
 
-/** Little helper function for ReadFile() */
-static CByteArray ReturnData(CByteArray oData, unsigned long ulOffset, unsigned long ulMaxLen)
-{
-	if (ulOffset == 0 && ulMaxLen == FULL_FILE)
-		return oData;
-	else
-	{
-		if (ulOffset > oData.Size())
-			throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
-		if (ulMaxLen > ulOffset + oData.Size())
-		ulMaxLen = oData.Size() - ulOffset;
-		return CByteArray(oData.GetBytes() + ulOffset, ulMaxLen);
-	}
-}
-
 CByteArray CCard::ReadFile(const std::string & csPath,
 	unsigned long ulOffset, unsigned long ulMaxLen,bool bDoNotCache)
 {
