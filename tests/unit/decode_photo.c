@@ -99,7 +99,7 @@ int jpegdump(char* data, CK_ULONG length) {
 	cinfo.err = jpeg_std_error(&jerr);
 
 	jpeg_create_decompress(&cinfo);
-	jpeg_mem_src(&cinfo, data, length);
+	jpeg_mem_src(&cinfo, (unsigned char*)data, length);
 
 	if(jpeg_read_header(&cinfo, TRUE) != JPEG_HEADER_OK) {
 		printf("Could not read JPEG header\n");
@@ -139,7 +139,7 @@ int jpegdump(char* data, CK_ULONG length) {
 					or |= 1 << k;
 				}
 			}
-			dt = p[0] + p[1] + p[2] + p[3] >> 8;
+			dt = (p[0] + p[1] + p[2] + p[3]) >> 8;
 			or = orientations[or];
 			printf("%c", translate[dt][or]);
 		}
@@ -156,7 +156,6 @@ TEST_FUNC(decode_photo) {
 	CK_ULONG type;
 	CK_SLOT_ID slot;
 	CK_ATTRIBUTE attr[2];
-	CK_OBJECT_CLASS klass;
 	int ret;
 
 	if(!can_confirm()) {

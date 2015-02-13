@@ -35,7 +35,6 @@ CK_RV notify_login(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR 
 TEST_FUNC(login) {
 	CK_SLOT_ID slot;
 	CK_SESSION_HANDLE handle = 0;
-	CK_TOKEN_INFO info;
 	CK_SESSION_INFO sinfo;
 	int ret;
 	ckrv_mod m[] = {

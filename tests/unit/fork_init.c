@@ -15,7 +15,7 @@
 
 int child_part() {
 	CK_INFO info;
-	ckrv_mod m[] = { CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_OK };
+	ckrv_mod m[] = { { CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_OK } };
 
 	check_rv_long(C_Initialize(NULL_PTR), m);
 	check_rv(C_GetInfo(&info));

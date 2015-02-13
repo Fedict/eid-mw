@@ -44,7 +44,7 @@ CK_BYTE digest_sha1[] = {
                 0x75, 0xda, 0x8a, 0x33
 };
 
-int verify_sig(char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULONG modlen, CK_BYTE_PTR exponent, CK_ULONG explen) {
+int verify_sig(unsigned char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULONG modlen, CK_BYTE_PTR exponent, CK_ULONG explen) {
 	RSA* rsa = RSA_new();
 	unsigned char* s = malloc(siglen);
 	int ret;
@@ -80,12 +80,7 @@ TEST_FUNC(sign) {
 	CK_BYTE_PTR sig, mod, exp;
 	CK_ULONG sig_len, type, count;
 	CK_OBJECT_HANDLE private, public;
-	ckrv_mod m[] = {
-		{ CKR_PIN_INCORRECT, TEST_RV_SKIP },
-		{ CKR_FUNCTION_CANCELED, TEST_RV_SKIP },
-	};
 	CK_ATTRIBUTE attr[2];
-	int i;
 
 	if(!have_pin()) {
 		fprintf(stderr, "Cannot test signature without a pin code\n");
@@ -133,7 +128,7 @@ TEST_FUNC(sign) {
 
 	printf("Received a signature with length %lu:\n", sig_len);
 
-	hex_dump(sig, sig_len);
+	hex_dump((char*)sig, sig_len);
 
 	type = CKO_PUBLIC_KEY;
 	check_rv(C_FindObjectsInit(session, attr, 2));
@@ -165,10 +160,10 @@ TEST_FUNC(sign) {
 	check_rv(C_GetAttributeValue(session, public, attr, 2));
 
 	printf("Received key modulus with length %lu:\n", attr[0].ulValueLen);
-	hex_dump(mod, attr[0].ulValueLen);
+	hex_dump((char*)mod, attr[0].ulValueLen);
 
 	printf("Received public exponent of key with length %lu:\n", attr[1].ulValueLen);
-	hex_dump(exp, attr[1].ulValueLen);
+	hex_dump((char*)exp, attr[1].ulValueLen);
 
 	if((ret = verify_sig(sig, sig_len, mod, attr[0].ulValueLen, exp, attr[1].ulValueLen)) != TEST_RV_OK) {
 		return ret;
@@ -176,10 +171,6 @@ TEST_FUNC(sign) {
 #endif
 
 	if(have_robot()) {
-		ckrv_mod m_maybe_rmvd[] = {
-			{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
-			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
-		};
 		ckrv_mod m_is_rmvd[] = {
 			{ CKR_OK, TEST_RV_FAIL },
 			{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },

@@ -36,7 +36,7 @@ TEST_FUNC(mechinfo) {
 	int i, ret;
 	int found = 0;
 	int card_2k = 0;
-	ckrv_mod m[] = { CKR_BUFFER_TOO_SMALL, TEST_RV_OK };
+	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
 
 	check_rv(C_Initialize(NULL_PTR));
 

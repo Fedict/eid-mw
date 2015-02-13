@@ -58,7 +58,7 @@ TEST_FUNC(ordering) {
 	CK_SESSION_HANDLE session;
 	CK_BYTE data[] = { 'f', 'o', 'o' };
 	CK_SLOT_ID slot = UINT32_MAX;
-	CK_BYTE_PTR result;
+	CK_BYTE_PTR result = NULL;
 	CK_ULONG len = 0;
 	CK_MECHANISM mech;
 	CK_OBJECT_HANDLE obj;

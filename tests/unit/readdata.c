@@ -26,6 +26,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "testlib.h"
 
@@ -102,7 +103,6 @@ TEST_FUNC(readdata) {
 	CK_ULONG type;
 	CK_SLOT_ID slot;
 	CK_ATTRIBUTE attr;
-	CK_OBJECT_CLASS klass;
 	int ret;
 
 #ifndef WIN32
