@@ -27,8 +27,8 @@
 
 #include "testlib.h"
 
-TEST_FUNC(init_finalize) {
-	ckrv_mod m_wrong_init[] = { { CKR_ARGUMENTS_BAD, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
+TEST_FUNC(wrong_init) {
+	ckrv_mod m_wrong[] = { { CKR_ARGUMENTS_BAD, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 	ckrv_mod m_clear[] = { { CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK } };
 	ckrv_mod m_duplicate[] = { { CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 
@@ -36,16 +36,17 @@ TEST_FUNC(init_finalize) {
 		.pReserved = (CK_VOID_PTR)0xdeadbeaf
 	};
 
-	check_rv_long(C_Initialize(&args), m_wrong_init);
+	check_rv_long(C_Initialize(&args), m_wrong);
 
 	args.pReserved = NULL;
 	args.CreateMutex = (CK_VOID_PTR)0xdeadbeaf;
 
-	check_rv_long(C_Initialize(&args), m_wrong_init);
+	check_rv_long(C_Initialize(&args), m_wrong);
 
 	check_rv_long(C_Finalize(NULL_PTR), m_clear);
 
 	check_rv(C_Initialize(NULL_PTR));
+	check_rv_long(C_Finalize((CK_VOID_PTR)0xdeadbeaf), m_wrong);
 	check_rv(C_Finalize(NULL_PTR));
 	check_rv_long(C_Finalize(NULL_PTR), m_duplicate);
 
