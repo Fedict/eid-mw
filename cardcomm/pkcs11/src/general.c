@@ -103,6 +103,9 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 
 cleanup:
 	log_trace(WHERE, "I: leave, ret = %i",ret);
+	if (ret != CKR_OK) {
+		p11_set_init(BEIDP11_NOT_INITIALIZED);
+	}
 	return ret;
 }
 #undef WHERE
