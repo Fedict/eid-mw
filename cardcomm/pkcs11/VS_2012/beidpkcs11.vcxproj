@@ -700,7 +700,6 @@
   <ItemGroup>
     <ClCompile Include="..\src\asn1.c" />
     <ClCompile Include="..\src\cal.cpp" />
-    <ClCompile Include="..\src\cardlayer\cache.cpp" />
     <ClCompile Include="..\src\cardlayer\card.cpp" />
     <ClCompile Include="..\src\cardlayer\cardfactory.cpp" />
     <ClCompile Include="..\src\cardlayer\cardlayer.cpp" />
@@ -767,7 +766,6 @@
   <ItemGroup>
     <ClInclude Include="..\src\beid_p11.h" />
     <ClInclude Include="..\src\cal.h" />
-    <ClInclude Include="..\src\cardlayer\cache.h" />
     <ClInclude Include="..\src\cardlayer\card.h" />
     <ClInclude Include="..\src\cardlayer\cardfactory.h" />
     <ClInclude Include="..\src\cardlayer\cardlayer.h" />
