@@ -17,7 +17,7 @@
 
   ;defines
 !define LOGFILE ""
-
+!addplugindir "NSIS_Plugins\beidread\Release"
   ;Name and file
   Name "Belgium eID-QuickInstaller ${EIDMW_VERSION}"
   OutFile "Belgium eID-QuickInstaller ${EIDMW_VERSION}.exe"
@@ -119,14 +119,12 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	 ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_64.msi"'
 	 ;ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw64_log.txt" /i "$INSTDIR\BeidMW_64.msi"'
 	 ;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
-	 ExecWait 'vcredist_x64.exe'
 	 Delete "$INSTDIR\BeidMW_64.msi"
   ${Else}
 	;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
 	File "..\eid-mw\Windows\bin\BeidMW_32.msi"	
 	ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_32.msi"'
 	;ExecWait 'msiexec /quiet /norestart /l* "$APPDATA\log\install_eidmw32_log.txt" /i "$INSTDIR\BeidMW_32.msi"'
-	ExecWait 'vcredist_x86.exe'
 ;	$0
 ; /l* "$APPDATA\install_eidmw32_log.txt"
 ;	${if} $0 <> 0
@@ -189,6 +187,8 @@ ${DisableX64FSRedirection}
 	nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WINALL\APG8201Z\apg8201z.inf"'
 
 ${EnableX64FSRedirection}
+
+  ;RMDir /r /REBOOTOK $INSTDIR\ReaderDrivers
 
 SectionEnd
 
@@ -386,40 +386,8 @@ Function nsdCardData
 	beid::ReadCardData
 	Pop $retval
 	
-	${If} $retval == '0'
-  ;MessageBox MB_OK "$$retval is 0"
-  Pop $municipality
-  Pop $zip
-	Pop $street
-  Pop $lastname
-	Pop $firstletterthirdname
-  Pop $firstname
-
-	${NSD_CreateLabel} 0 0 100% 16u "$(ls_cardread)"
-	Pop $Label
-	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
-	SendMessage $Label ${WM_SETFont} $Font_Title 1
-	;SendMessage $Label ${WM_SETTEXT} 0 "STR:Card Read"
-
-	CreateFont $Font_CardData "Times New Roman" "14" "500" ;/UNDERLINE
-	${NSD_CreateLabel} 0 28u 18% 10u "$(ls_name)"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 20% 28u 85% 10u "$firstname $firstletterthirdname $lastname"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 0 42u 18% 10u "$(ls_address)"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 20% 42u 85% 10u "$street"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 20% 56u 85% 10u "$zip $municipality"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	;pop the others off the stack
-${Else}
-  ;MessageBox MB_OK "$$retval is $retval"
+	${If} $retval <> '0'
+	  ;MessageBox MB_OK "$$retval is $retval"
 	${NSD_CreateLabel} 0 0 18% 20% "$(ls_error)"
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
@@ -430,7 +398,45 @@ ${Else}
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	SendMessage $Label ${WM_SETTEXT} 0 "$(ls_testfailed)"
-${EndIf}
+	Goto nsdCardDataDone
+	${EndIf}
 	
+	;MessageBox MB_OK "$$retval is 0"
+	Pop $municipality
+	Pop $zip
+	Pop $street
+	Pop $lastname
+	Pop $firstletterthirdname
+	Pop $firstname
+
+	${NSD_CreateLabel} 0 0 100% 16u "$(ls_cardread)"
+	Pop $Label
+	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+	SendMessage $Label ${WM_SETFont} $Font_Title 1
+	;SendMessage $Label ${WM_SETTEXT} 0 "STR:Card Read"
+
+	CreateFont $Font_CardData "Times New Roman" "14" "500" ;/UNDERLINE
+	${NSD_CreateLabel} 0 28u 18% 14u "$(ls_name)"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${if} $firstletterthirdname == ""
+		${NSD_CreateLabel} 20% 28u 85% 14u "$firstname $lastname"
+	${Else}
+		${NSD_CreateLabel} 20% 28u 85% 14u "$firstname $firstletterthirdname $lastname"
+	${EndIf}
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 0 42u 18% 14u "$(ls_address)"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 20% 42u 85% 14u "$street"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	${NSD_CreateLabel} 20% 56u 85% 14u "$zip $municipality"
+	Pop $Label
+	SendMessage $Label ${WM_SETFont} $Font_CardData 1
+	;pop the others off the stack
+
+	nsdCardDataDone:
 	nsDialogs::Show
 FunctionEnd
