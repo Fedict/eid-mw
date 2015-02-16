@@ -24,9 +24,9 @@
            UpgradeCode="$(var.UpgradeCode)">
 
     <!-- InstallerVersion="300" Released with Windows XP with Service Pack 2 (SP2) -->
-	<!-- InstallerVersion="450" Released with Vista Service Pack 2, or update for Windows XP(SP2, SP3) -->	
+	<!-- InstallerVersion="405"(v4.5)Released with Vista Service Pack 2, or update for Windows XP(SP2, SP3) -->	
     <Package Id="$(var.PackageCode)"
-             InstallerVersion="450"
+             InstallerVersion="405"
              Keywords="Belgium e-ID Middleware Installer"
              Platform="x64"
              Manufacturer="Belgian Government"
