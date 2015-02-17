@@ -96,5 +96,6 @@ int threads();
 int sign();
 int decode_photo();
 int ordering();
+int wrong_init();
 
 #endif
