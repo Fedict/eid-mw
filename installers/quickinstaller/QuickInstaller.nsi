@@ -113,6 +113,17 @@ LicenseData $(license)
 Section "Belgium Eid Crypto Modules" BeidCrypto
 	SetOutPath "$INSTDIR"
 	CreateDirectory "$INSTDIR\log"
+
+${WinVerGetMajor} $versionMajor
+${WinVerGetMinor} $versionMinor
+	${If} $versionMajor == 5
+	${AndIf} $versionMinor == 1
+		;xp
+		File "..\..\..\ThirdParty\windows-installer\WindowsXP-KB942288-v3-x86.exe"
+		ExecWait "$INSTDIR\WindowsXP-KB942288-v3-x86.exe"
+		Delete "$INSTDIR\WindowsXP-KB942288-v3-x86.exe"
+	${EndIf}
+	
   ${If} ${RunningX64}
    ;MessageBox MB_OK "running on x64"
 	 File "..\eid-mw\Windows\bin\BeidMW_64.msi"
@@ -138,8 +149,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 
 ${DisableX64FSRedirection}
 
-	${WinVerGetMajor} $versionMajor
-    ${WinVerGetMinor} $versionMinor
+
 	 
 	${If} $versionMajor == 5
 	${AndIf} $versionMinor == 1
