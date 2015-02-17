@@ -198,7 +198,7 @@ ${DisableX64FSRedirection}
 
 ${EnableX64FSRedirection}
 
-  ;RMDir /r /REBOOTOK $INSTDIR\ReaderDrivers
+  RMDir /r /REBOOTOK $INSTDIR\ReaderDrivers
 
 SectionEnd
 
