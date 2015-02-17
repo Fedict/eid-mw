@@ -9,7 +9,7 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Belgium eID Middleware"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Software for reading the Belgium Identity Card"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Fedict"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" ""
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright © 2012"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright © 2015"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "eID QuickInstaller"
 
 
@@ -116,6 +116,16 @@ LangString ls_errorreadingcard ${LANG_ENGLISH} "Error while trying to read from 
 LangString ls_errorreadingcard ${LANG_FRENCH} "Erreur détectée pendant la tentative de lecture de la carte"
 LangString ls_errorreadingcard ${LANG_DUTCH} "Probleem opgetreden bij het lezen van de kaart"
 LangString ls_errorreadingcard ${LANG_GERMAN} "Fehler beim Versuch, die Karte zu lesen"
+
+LangString ls_errorinstallmsi ${LANG_ENGLISH} "An error occurred while trying to install the eID Middleware. $\nPlease check the log for further details:"
+LangString ls_errorinstallmsi ${LANG_FRENCH} "An error occurred while trying to install the eID Middleware. $\nPlease check the log for further details:"
+LangString ls_errorinstallmsi ${LANG_DUTCH} "Er is een probleem opgetreden bij het installeren van de eID Middleware. $\nGelieve het logbestand te bekijken voor meer details:"
+LangString ls_errorinstallmsi ${LANG_GERMAN} "An error occurred while trying to install the eID Middleware. $\nPlease check the log for further details:"
+
+LangString ls_errorcopyfile ${LANG_ENGLISH} "An error occurred while trying to create file"
+LangString ls_errorcopyfile ${LANG_FRENCH} "An error occurred while trying to create file"
+LangString ls_errorcopyfile ${LANG_DUTCH} "Er is een probleem opgetreden bij het aanmaken van bestand"
+LangString ls_errorcopyfile ${LANG_GERMAN} "An error occurred while trying to create file"
 
 ;below are texts linked to the bitmaps, no length limits
 LangString ls_bitmapwelcome ${LANG_ENGLISH} "Background welcome image"
