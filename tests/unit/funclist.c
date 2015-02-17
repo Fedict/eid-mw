@@ -33,7 +33,9 @@
 
 TEST_FUNC(funclist) {
 	CK_FUNCTION_LIST_PTR ptr;
+	ckrv_mod m[] = {{ CKR_ARGUMENTS_BAD, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL }};
 
+	check_rv_long(C_GetFunctionList(NULL_PTR), m);
 	check_rv(C_GetFunctionList(&ptr));
 	verbose_assert(ptr->C_Initialize == C_Initialize);
 	verbose_assert(ptr->C_Finalize == C_Finalize);

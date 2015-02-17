@@ -29,8 +29,10 @@
 
 TEST_FUNC(getinfo) {
 	CK_INFO info;
+	ckrv_mod m[] = { { CKR_ARGUMENTS_BAD, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 
 	check_rv(C_Initialize(NULL_PTR));
+	check_rv_long(C_GetInfo(NULL_PTR), m);
 	check_rv(C_GetInfo(&info));
 	verbose_assert(info.cryptokiVersion.major == 2);
 	verify_null(info.manufacturerID, 32, 0, "Cryptoki manufacturer ID:\t'%s'\n");
