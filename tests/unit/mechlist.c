@@ -39,6 +39,8 @@ TEST_FUNC(mechlist) {
 	int i, ret;
 	int retval = TEST_RV_OK;
 
+	check_rv_long(C_GetMechanismList(0, NULL_PTR, &count), m_p11_noinit);
+
 	check_rv(C_Initialize(NULL_PTR));
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
@@ -101,6 +103,8 @@ TEST_FUNC(mechlist) {
 	}
 
 	verbose_assert(crit_mechs == 5);
+
+	check_rv_long(C_GetMechanismList(slot+30, mechlist, &count), m_p11_badslot);
 
 	check_rv(C_Finalize(NULL_PTR));
 
