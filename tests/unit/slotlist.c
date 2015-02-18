@@ -33,11 +33,10 @@ TEST_FUNC(slotlist) {
 	CK_ULONG count=0;
 	int i;
 	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
-	ckrv_mod m_uninit[] = { { CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 	ckrv_mod m_badarg[] = { { CKR_ARGUMENTS_BAD, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 	ckrv_mod m_small[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 
-	check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, &count), m_uninit);
+	check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, &count), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
 
