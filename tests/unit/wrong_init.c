@@ -28,25 +28,23 @@
 #include "testlib.h"
 
 TEST_FUNC(wrong_init) {
-	ckrv_mod m_wrong[] = { { CKR_ARGUMENTS_BAD, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
-	ckrv_mod m_clear[] = { { CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK } };
 	ckrv_mod m_duplicate[] = { { CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 
 	CK_C_INITIALIZE_ARGS args = {
 		.pReserved = (CK_VOID_PTR)0xdeadbeaf
 	};
 
-	check_rv_long(C_Initialize(&args), m_wrong);
+	check_rv_long(C_Initialize(&args), m_p11_badarg);
 
 	args.pReserved = NULL;
 	args.CreateMutex = (CK_VOID_PTR)0xdeadbeaf;
 
-	check_rv_long(C_Initialize(&args), m_wrong);
+	check_rv_long(C_Initialize(&args), m_p11_badarg);
 
-	check_rv_long(C_Finalize(NULL_PTR), m_clear);
+	check_rv_long(C_Finalize(NULL_PTR), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
-	check_rv_long(C_Finalize((CK_VOID_PTR)0xdeadbeaf), m_wrong);
+	check_rv_long(C_Finalize((CK_VOID_PTR)0xdeadbeaf), m_p11_badarg);
 	check_rv(C_Finalize(NULL_PTR));
 	check_rv_long(C_Finalize(NULL_PTR), m_duplicate);
 
