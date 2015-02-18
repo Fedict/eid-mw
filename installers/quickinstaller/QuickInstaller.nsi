@@ -119,14 +119,14 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	${WinVerGetMajor} $versionMajor
 	${WinVerGetMinor} $versionMinor
 	
-	${If} $versionMajor == 5
-	${AndIf} $versionMinor == 1
+	;${If} $versionMajor == 5
+	;${AndIf} $versionMinor == 1
 		;xp
 		;install windows installer v4.5
-		File "..\..\..\ThirdParty\windows-installer\WindowsXP-KB942288-v3-x86.exe"
-		ExecWait "$INSTDIR\WindowsXP-KB942288-v3-x86.exe"
-		Delete "$INSTDIR\WindowsXP-KB942288-v3-x86.exe"
-	${EndIf}
+	;	File "..\..\..\ThirdParty\windows-installer\WindowsXP-KB942288-v3-x86.exe"
+	;	ExecWait "$INSTDIR\WindowsXP-KB942288-v3-x86.exe"
+	;	Delete "$INSTDIR\WindowsXP-KB942288-v3-x86.exe"
+	;${EndIf}
 	
 	${If} ${RunningX64}
 		ClearErrors
