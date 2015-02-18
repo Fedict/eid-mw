@@ -34,6 +34,7 @@
 TEST_FUNC(funclist) {
 	CK_FUNCTION_LIST_PTR ptr;
 
+	check_rv_long(C_GetFunctionList(NULL_PTR), m_p11_badarg);
 	check_rv(C_GetFunctionList(&ptr));
 	verbose_assert(ptr->C_Initialize == C_Initialize);
 	verbose_assert(ptr->C_Finalize == C_Finalize);

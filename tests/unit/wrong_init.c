@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2010 FedICT.
+ * Copyright (C) 2014 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,41 +17,36 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-#pragma once
-
-#include "export.h"
-#include "bytearray.h"
-#include "mwexception.h"
-
-#include <string>
-
-namespace eIDMW
-{
 #ifdef WIN32
-#pragma warning(disable:4290)			// Allow for 'throw()' specifications	
+#include <win32.h>
+#else
+#include <unix.h>
 #endif
+#include <pkcs11.h>
+#include <stdio.h>
 
-class CByteArrayReader 
-{
-public:
-    EIDMW_CMN_API CByteArrayReader(CByteArray *inByteArray);
+#include "testlib.h"
 
-	EIDMW_CMN_API unsigned char GetByte(void) throw(CMWException);
-	EIDMW_CMN_API unsigned long GetLong(void) throw(CMWException);
+TEST_FUNC(wrong_init) {
+	ckrv_mod m_duplicate[] = { { CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 
-	EIDMW_CMN_API std::string GetString(void) throw(CMWException);
+	CK_C_INITIALIZE_ARGS args = {
+		.pReserved = (CK_VOID_PTR)0xdeadbeaf
+	};
 
-	EIDMW_CMN_API bool IsEmpty();
+	check_rv_long(C_Initialize(&args), m_p11_badarg);
 
-	/** If Size() == 0, then NULL is returned */
-    EIDMW_CMN_API unsigned char *GetBytes();
-    EIDMW_CMN_API const unsigned char *GetBytes() const;
+	args.pReserved = NULL;
+	args.CreateMutex = (CK_VOID_PTR)0xdeadbeaf;
 
-private:
-	CByteArray *m_ByteArray;
-	unsigned long m_ulIndex;
+	check_rv_long(C_Initialize(&args), m_p11_badarg);
 
-};
+	check_rv_long(C_Finalize(NULL_PTR), m_p11_noinit);
 
+	check_rv(C_Initialize(NULL_PTR));
+	check_rv_long(C_Finalize((CK_VOID_PTR)0xdeadbeaf), m_p11_badarg);
+	check_rv(C_Finalize(NULL_PTR));
+	check_rv_long(C_Finalize(NULL_PTR), m_duplicate);
+
+	return TEST_RV_OK;
 }
-

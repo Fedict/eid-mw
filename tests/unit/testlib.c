@@ -24,6 +24,7 @@
 #include <stdint.h>
 #else
 #include <unix.h>
+#include <unistd.h>
 #endif
 #include <pkcs11.h>
 #include <stdlib.h>
@@ -431,7 +432,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	CK_ULONG count = 0;
 	CK_SLOT_ID_PTR list = NULL;
 
-	ckrv_mod m[] = { CKR_BUFFER_TOO_SMALL, TEST_RV_OK };
+	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
 	check_rv_long(C_GetSlotList(with_token, NULL_PTR, &count), m);
 	printf("slots %sfound: %lu\n", with_token ? "with token " : "", count);
 	if(count == 0 && with_token) {

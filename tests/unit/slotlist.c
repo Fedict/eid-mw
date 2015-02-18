@@ -32,9 +32,21 @@ TEST_FUNC(slotlist) {
 	CK_SLOT_ID_PTR list;
 	CK_ULONG count=0;
 	int i;
-	ckrv_mod m[] = { CKR_BUFFER_TOO_SMALL, TEST_RV_OK };
+	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
+	ckrv_mod m_small[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
+
+	check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, &count), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
+
+	check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, NULL_PTR), m_p11_badarg);
+
+	if(count > 0) {
+		count=0;
+		check_rv_long(C_GetSlotList(CK_FALSE, list, &count), m_small);
+	} else {
+		printf("No slots found, can't test for CKR_BUFFER_TOO_SMALL...\n");
+	}
 
 	check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, &count), m);
 	printf("slots found: %lu\n", count);

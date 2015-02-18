@@ -32,7 +32,11 @@ TEST_FUNC(tkinfo) {
 	CK_TOKEN_INFO info;
 	int ret;
 
+	check_rv_long(C_GetTokenInfo(slot, &info), m_p11_noinit);
+
 	check_rv(C_Initialize(NULL_PTR));
+
+	check_rv_long(C_GetTokenInfo(slot, NULL_PTR), m_p11_badarg);
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		check_rv(C_Finalize(NULL_PTR));
@@ -69,6 +73,8 @@ TEST_FUNC(tkinfo) {
 
 	printf("Hardware version: %d.%d\n", info.hardwareVersion.major, info.hardwareVersion.minor);
 	printf("Firmware version: %d.%d\n", info.firmwareVersion.major, info.firmwareVersion.minor);
+
+	check_rv_long(C_GetTokenInfo(slot+30, &info), m_p11_badslot);
 
 	check_rv(C_Finalize(NULL_PTR));
 

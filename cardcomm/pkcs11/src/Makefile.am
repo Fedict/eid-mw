@@ -25,7 +25,6 @@ libbeidpkcs11_la_SOURCES = \
 	common/libtomcrypt/sha384.c \
 	common/libtomcrypt/sha512.c \
 	common/bytearray.cpp \
-	common/bytearrayreader.cpp \
 	common/configcommon.cpp \
 	common/configuration.cpp \
 	common/datafile.cpp \
@@ -68,7 +67,6 @@ noinst_HEADERS = \
 	util.h \
 	log.h \
 	display.h \
-	common/bytearrayreader.h \
 	common/thread.h \
 	common/prefix.h \
 	common/bytearray.h \
