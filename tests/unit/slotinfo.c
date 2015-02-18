@@ -31,7 +31,6 @@ TEST_FUNC(slotinfo) {
 	CK_SLOT_ID slot;
 	CK_SLOT_INFO info;
 	int ret;
-	ckrv_mod m_badslot[] = { { CKR_SLOT_ID_INVALID, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 
 	check_rv_long(C_GetSlotInfo(slot, &info), m_p11_noinit);
 
@@ -44,7 +43,7 @@ TEST_FUNC(slotinfo) {
 		return ret;
 	}
 
-	check_rv_long(C_GetSlotInfo(slot+30, &info), m_badslot);
+	check_rv_long(C_GetSlotInfo(slot+30, &info), m_p11_badslot);
 	check_rv(C_GetSlotInfo(slot, &info));
 
 	verify_null(info.slotDescription, 64, 0, "Slot description:\t'%s'\n");

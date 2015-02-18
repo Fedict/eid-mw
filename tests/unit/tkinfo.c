@@ -31,10 +31,6 @@ TEST_FUNC(tkinfo) {
 	CK_SLOT_ID slot;
 	CK_TOKEN_INFO info;
 	int ret;
-	ckrv_mod m_slotid[] = {
-		{ CKR_SLOT_ID_INVALID, TEST_RV_OK },
-		{ CKR_OK, TEST_RV_FAIL },
-	};
 
 	check_rv_long(C_GetTokenInfo(slot, &info), m_p11_noinit);
 
@@ -78,7 +74,7 @@ TEST_FUNC(tkinfo) {
 	printf("Hardware version: %d.%d\n", info.hardwareVersion.major, info.hardwareVersion.minor);
 	printf("Firmware version: %d.%d\n", info.firmwareVersion.major, info.firmwareVersion.minor);
 
-	check_rv_long(C_GetTokenInfo(slot+30, &info), m_slotid);
+	check_rv_long(C_GetTokenInfo(slot+30, &info), m_p11_badslot);
 
 	check_rv(C_Finalize(NULL_PTR));
 

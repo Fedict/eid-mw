@@ -42,6 +42,11 @@ const static ckrv_mod m_p11_badarg[] = {
 	{ CKR_ARGUMENTS_BAD, TEST_RV_OK },
 };
 
+const static ckrv_mod m_p11_badslot[] = {
+	{ CKR_OK, TEST_RV_FAIL },
+	{ CKR_SLOT_ID_INVALID, TEST_RV_OK },
+};
+
 #define check_rv_late(func) { int retval = ckrv_decode(rv, func, 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
 #define check_rv(call) check_rv_action(call, 0, NULL)
 #define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
