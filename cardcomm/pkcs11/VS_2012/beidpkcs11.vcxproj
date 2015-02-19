@@ -720,7 +720,6 @@
     <ClCompile Include="..\src\cardlayer\unknowncard.cpp" />
     <ClCompile Include="..\src\cert.c" />
     <ClCompile Include="..\src\common\bytearray.cpp" />
-    <ClCompile Include="..\src\common\bytearrayreader.cpp" />
     <ClCompile Include="..\src\common\configcommon.cpp" />
     <ClCompile Include="..\src\common\configreg.cpp" />
     <ClCompile Include="..\src\common\datafile.cpp" />
@@ -791,7 +790,6 @@
     <ClInclude Include="..\src\cert.h" />
     <ClInclude Include="..\src\common\beidversions.h" />
     <ClInclude Include="..\src\common\bytearray.h" />
-    <ClInclude Include="..\src\common\bytearrayreader.h" />
     <ClInclude Include="..\src\common\configuration.h" />
     <ClInclude Include="..\src\common\datafile.h" />
     <ClInclude Include="..\src\common\dynamiclib.h" />
