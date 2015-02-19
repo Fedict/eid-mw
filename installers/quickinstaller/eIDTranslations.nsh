@@ -118,14 +118,14 @@ LangString ls_errorreadingcard ${LANG_DUTCH} "Probleem opgetreden bij het lezen 
 LangString ls_errorreadingcard ${LANG_GERMAN} "Fehler beim Versuch, die Karte zu lesen"
 
 LangString ls_errorinstallmsi ${LANG_ENGLISH} "An error occurred while trying to install the eID Middleware. $\nPlease check the log for further details:"
-LangString ls_errorinstallmsi ${LANG_FRENCH} "An error occurred while trying to install the eID Middleware. $\nPlease check the log for further details:"
+LangString ls_errorinstallmsi ${LANG_FRENCH} "Une erreur est survenue lors de l’installation du middleware de l’eID. $\nVeuillez consulter le fichier journal pour obtenir de plus amples détails :"
 LangString ls_errorinstallmsi ${LANG_DUTCH} "Er is een probleem opgetreden bij het installeren van de eID Middleware. $\nGelieve het logbestand te bekijken voor meer details:"
-LangString ls_errorinstallmsi ${LANG_GERMAN} "An error occurred while trying to install the eID Middleware. $\nPlease check the log for further details:"
+LangString ls_errorinstallmsi ${LANG_GERMAN} "Bei der Installation der eID Middleware ist ein Problem aufgetreten. $\nBitte prüfen Sie die Log-Datei für weitere Einzelheiten:"
 
 LangString ls_errorcopyfile ${LANG_ENGLISH} "An error occurred while trying to create file"
-LangString ls_errorcopyfile ${LANG_FRENCH} "An error occurred while trying to create file"
+LangString ls_errorcopyfile ${LANG_FRENCH} "Une erreur est survenue lors de la création du fichier"
 LangString ls_errorcopyfile ${LANG_DUTCH} "Er is een probleem opgetreden bij het aanmaken van bestand"
-LangString ls_errorcopyfile ${LANG_GERMAN} "An error occurred while trying to create file"
+LangString ls_errorcopyfile ${LANG_GERMAN} "Fehler bei der Erstellung von Datei"
 
 ;below are texts linked to the bitmaps, no length limits
 LangString ls_bitmapwelcome ${LANG_ENGLISH} "Background welcome image"
