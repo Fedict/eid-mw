@@ -35,8 +35,10 @@
 #include "about_glade.h"
 #include "now.h"
 
+#include "gettext.h"
+
 #ifndef _
-#define _(s) (s)
+#define _(s) gettext(s)
 #endif
 
 static enum _bits {
@@ -216,7 +218,21 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 	}
 }
 
-void copyline(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar** text) {
+void copyline_simple(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar** text) {
+	gchar *old = *text;
+	gchar *value;
+
+	gtk_tree_model_get(model, iter, 1, &value, -1);
+	if(*text == NULL) {
+		*text = g_strdup_printf("%s", value);
+	} else {
+		// should not happen, but better safe than sorry...
+		*text = g_strdup_printf("%s\n%s", old, value);
+		g_free(old);
+	}
+}
+
+void copyline_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar** text) {
 	gchar *old = *text;
 	gchar *name, *value;
 	
@@ -232,9 +248,15 @@ void copyline(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar**
 void copy2clip(GtkTreeView* tv) {
 	GtkClipboard* clip = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	GtkTreeSelection* sel = gtk_tree_view_get_selection(tv);
+	GtkTreeSelectionForeachFunc copyline = (GtkTreeSelectionForeachFunc)copyline_detail;
 	gchar* text = NULL;
+	gint rowcount = gtk_tree_selection_count_selected_rows(sel);
 
-	gtk_tree_selection_selected_foreach(sel, (GtkTreeSelectionForeachFunc)copyline, &text);
+	if(rowcount == 1) {
+		copyline = (GtkTreeSelectionForeachFunc)copyline_simple;
+	}
+
+	gtk_tree_selection_selected_foreach(sel, copyline, &text);
 	if(!text) return;
 	gtk_clipboard_set_text(clip, text, strlen(text));
 }
@@ -266,7 +288,7 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 
 	gtk_list_store_append(data, &iter);
 	asprintf(&values, "%s %s %s %s %s", undat.sysname, undat.nodename, undat.release, undat.version, undat.machine);
-	gtk_list_store_set(data, &iter, 0, _("uname"), 1, values, -1);
+	gtk_list_store_set(data, &iter, 0, "uname", 1, values, -1);
 	free(values);
 }
 
@@ -331,6 +353,9 @@ int main(int argc, char** argv) {
 	GtkListStore *store;
 	GtkAccelGroup *group;
 	gchar *tmp, *loc;
+
+	bindtextdomain("about-eid-mw", DATAROOTDIR "/locale");
+	textdomain("about-eid-mw");
 
 	gtk_init(&argc, &argv);
 

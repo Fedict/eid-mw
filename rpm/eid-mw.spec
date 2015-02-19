@@ -115,6 +115,7 @@ fi
 %{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
 %{_datadir}/applications
+%{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %files devel
 %doc NEWS README
 %{_libdir}/libbeidpkcs11.a
