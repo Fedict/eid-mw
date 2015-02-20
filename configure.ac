@@ -29,34 +29,23 @@ AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/fi
 AM_GNU_GETTEXT([external])
 
 ###### pcsc-lite ##########
-AC_MSG_CHECKING([custom pcsc-lite installation])
-AC_ARG_WITH(pcsclite, AC_HELP_STRING([--with-pcsclite=DIR],
-                    [pcsc-lite install location]),
-		    [],
-		    [with_pcsclite=default])
-AC_MSG_RESULT([$with_pcsclite])
-
-AS_VAR_IF([with_pcsclite],[default],
+PKG_CHECK_MODULES([PCSC],[libpcsclite >= 1.4.4],
 [
-	PKG_CHECK_MODULES([PCSC],[libpcsclite >= 1.4.4],
-   	[
-        CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
-        LDFLAGS="$PCSC_LIBS $CPPFLAGS"
-	])
+CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
+LDFLAGS="$PCSC_LIBS $CPPFLAGS"
 ])
 
-AC_MSG_CHECKING([custom gtk installation])
-AC_ARG_WITH(gtk, AC_HELP_STRING([--with-gtk=DIR],
-		[gtk install location]),
-		[],
-		[with_gtk=default])
+have_gtk=no
+AM_PATH_GTK_3_0(3.0.0, [have_gtk=yes])
+if test x"$have_gtk" = "xno"
+then
+	AM_PATH_GTK_2_0(2.10.0, [have_gtk=yes])
+fi
 
-AS_VAR_IF([with_gtk],[default],
-[
-	PKG_CHECK_MODULES([GTK],[gtk+-2.0 >= 2.10.0],,
-	AC_MSG_RESULT([no])
-	AC_MSG_ERROR([you must have GTK+ 2.10.0 or newer development headers installed.]))
-])
+if test x"$have_gtk" = "xno"
+then
+	AC_MSG_ERROR([At least one version of GTK is required.])
+fi
 
 ###########################################################################
 ####### read user-specific requests from --enable directives         ######

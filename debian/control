@@ -1,7 +1,7 @@
 Source: eid-mw
 Priority: optional
 Maintainer: FedICT Servicedesk <servicedesk@fedict.be>
-Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk2.0-dev, libtool
+Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk-3-dev | libgtk2.0-dev (<= 2.24.11), libtool
 Standards-Version: 3.8.3
 Section: libs
 Homepage: http://code.google.com/p/eid-mw/
