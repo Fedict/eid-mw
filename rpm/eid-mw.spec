@@ -13,7 +13,7 @@ Source: http://eidmw.yourict.net/dist/sources/eid-mw-%{version}-%{revision}.tar.
 Source1: baselibs.conf
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires: gtk3-devel | gtk2-devel (<= 2.21)
+BuildRequires: gtk3-devel | gtk2-devel <= 2.21
 BuildRequires: pcsc-lite-devel
 BuildRequires: desktop-file-utils
 Requires(pre): /sbin/chkconfig
