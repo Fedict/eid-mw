@@ -28,7 +28,7 @@
 #include "testlib.h"
 
 TEST_FUNC(tkinfo) {
-	CK_SLOT_ID slot;
+	CK_SLOT_ID slot = 0;
 	CK_TOKEN_INFO info;
 	int ret;
 

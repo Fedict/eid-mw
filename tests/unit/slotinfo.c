@@ -28,7 +28,7 @@
 #include "testlib.h"
 
 TEST_FUNC(slotinfo) {
-	CK_SLOT_ID slot;
+	CK_SLOT_ID slot = 0;
 	CK_SLOT_INFO info;
 	int ret;
 
