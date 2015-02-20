@@ -43,6 +43,10 @@ if [[ $(sw_vers -productVersion) == *10.7* ]] || [[ $(sw_vers -productVersion) =
 mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi
 rm -R /Library/BelgiumIdentityCard/BEID_Lion.tokend;
 
+#on OS X 10.10, make sure securityd auto launches pcscd
+if [[ $(sw_vers -productVersion) == *10.10* ]]; then
+sudo python $1/Contents/Resources/enablesecd.py; fi
+
 mv /Library/BelgiumIdentityCard "/Library/Belgium Identity Card"
 #correct the org.opensc.pcscd.autostart name if needed (add .plist)
 test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;
