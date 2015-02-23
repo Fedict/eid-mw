@@ -76,15 +76,12 @@ NSString* getPcscdStartStatus() {
                 if (osver >= 14) {
                     return @"Not found (OK on OSX 10.10)";
                 }
-                return @"Not OK";
+                return @"Not found";
             default:
                 return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
         }
     }
-    if (osver >= 14) {
-        return @"Found, yet OS is 10.10+?";
-    }
-    return @"OK";
+    return @"Found";
 }
 
 NSString* getMwVersion() {
@@ -228,7 +225,7 @@ NSString* getTokendStatus() {
     [item setValue: getOsArch()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];
-    [item setTitle: @"pcscd autostart"];
+    [item setTitle: @"opensc pcscd autostart"];
     [item setValue: getPcscdStartStatus()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];
