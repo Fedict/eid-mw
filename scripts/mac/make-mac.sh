@@ -3,38 +3,8 @@
 set -e
 
 
-
 # Ensure we're in the right directory
 cd $(dirname $0)/../../installers/eid-mw/mac
-
-#########################################
-# check gcc compiler installed
-#########################################
-GCC=`which gcc 2> /dev/null | wc -l`
-echo "[Info ] Verifying gcc compiler..."
-if [[ $GCC -eq 0 ]]
-then
-	echo "[Error] gcc compiler not found. Please verify or install."
-	exit -1
-
-else
-	GCCVER=`gcc --version`
-	echo "[Info ] Installed. gcc version: $GCCVER"
-fi
-
-#########################################
-# check g++ compiler installed
-#########################################
-echo "[Info ] Verifying g++ compiler..."
-GPP=`which g++ 2> /dev/null | wc -l`
-if [ $GPP -eq 0  ]
-then
-	echo "[Error] g++ compiler not found. Please verify or install."
-	exit -1
-else
-	GPPVER=`g++ --version`
-	echo "[Info ] Installed. g++ version: $GPPVER"
-fi
 
 #-----------------------------------------
 # make sure scripts are executable
