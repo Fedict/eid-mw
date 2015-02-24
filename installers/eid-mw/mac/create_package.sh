@@ -54,8 +54,6 @@ trap cleanup EXIT
 
 
 #create installer dirs
-mkdir -p $ROOT_DIR/$INST_DIR/lib/siscardplugins
-mkdir -p $ROOT_DIR/$INST_DIR/lib/beidqt
 mkdir -p $ROOT_DIR/$INST_DIR/share/beid/certs
 mkdir -p $ROOT_DIR/$LICENSES_DIR
 mkdir -p $ROOT_DIR/usr/bin/
@@ -69,7 +67,6 @@ LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
 XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
 cp $XPI_PLUGIN $ROOT_DIR/$BELGIUM_DIR
 
-cp -r ../../../cardcomm/tokend/BEID.tokend $ROOT_DIR/$BELGIUM_DIR
 cp -r ../../../cardcomm/tokend/BEID_Lion.tokend $ROOT_DIR/$BELGIUM_DIR
 
 #copy licenses
@@ -120,7 +117,6 @@ chgrp    wheel  $ROOT_DIR/usr
 chgrp    wheel  $ROOT_DIR/usr/bin
 chgrp    wheel  $ROOT_DIR/usr/local
 chgrp    wheel  $ROOT_DIR/usr/local/lib
-chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID.tokend
 chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID_Lion.tokend
 
 $PKG_MAKER -r $ROOT_DIR -o $PKG_NAME -f $INFO_DIR/Info.plist \

@@ -61,18 +61,6 @@ xcodebuild -project "eID Middleware.xcodeproj" clean
 xcodebuild -project "eID Middleware.xcodeproj" -target "eID Middleware" -configuration Release
 popd
 
-#-----------------------------------------
-# Unpack the BEID.tokend and copy to bin
-#-----------------------------------------
-pushd ../../../cardcomm/tokend 
-if [ -d ./BEID.tokend ]
-then
-	sudo rm -rf ./BEID.tokend
-fi
-echo "Unpacking BEID.tokend..."
-tar -xvf ./BEID.tokend.tar.gz
-
-popd
 
 #-----------------------------------------
 # Unpack the BEID_Lion.tokend and copy to bin
