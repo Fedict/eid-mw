@@ -246,8 +246,7 @@ void copyline_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, 
 }
 
 void copy2clip(GtkTreeView* tv) {
-	GtkClipboard* clipC = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-	GtkClipboard* clipP = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
+	GtkClipboard* clip = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	GtkTreeSelection* sel = gtk_tree_view_get_selection(tv);
 	GtkTreeSelectionForeachFunc copyline = (GtkTreeSelectionForeachFunc)copyline_detail;
 	gchar* text = NULL;
@@ -259,8 +258,19 @@ void copy2clip(GtkTreeView* tv) {
 
 	gtk_tree_selection_selected_foreach(sel, copyline, &text);
 	if(!text) return;
-	gtk_clipboard_set_text(clipC, text, strlen(text));
-	gtk_clipboard_set_text(clipP, text, strlen(text));
+	gtk_clipboard_set_text(clip, text, strlen(text));
+}
+
+void copy2prim(GtkTreeSelection* sel, gpointer user_data) {
+	GtkClipboard* clip = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
+	gchar* text = NULL;
+	gint rowcount = gtk_tree_selection_count_selected_rows(sel);
+
+	if(rowcount != 1) {
+		return;
+	}
+	gtk_tree_selection_selected_foreach(sel, (GtkTreeSelectionForeachFunc)copyline_simple, &text);
+	gtk_clipboard_set_text(clip, text, strlen(text));
 }
 
 void do_uname(GtkWidget* top, GtkListStore* data) {
@@ -354,6 +364,7 @@ int main(int argc, char** argv) {
 	GtkTreeIter iter;
 	GtkListStore *store;
 	GtkAccelGroup *group;
+	GtkTreeSelection* sel;
 	gchar *tmp, *loc;
 
 	bindtextdomain("about-eid-mw", DATAROOTDIR "/locale");
@@ -395,9 +406,9 @@ int main(int argc, char** argv) {
 	col = gtk_tree_view_column_new_with_attributes(_("Value"), renderer, "text", 1, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), col);
 
-	gtk_tree_selection_set_mode(
-			GTK_TREE_SELECTION(gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview))),
-			GTK_SELECTION_MULTIPLE);
+	sel = GTK_TREE_SELECTION(gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview)));
+	gtk_tree_selection_set_mode(sel, GTK_SELECTION_MULTIPLE);
+	g_signal_connect(G_OBJECT(sel), "changed", G_CALLBACK(copy2prim), NULL);
 
 	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
 	button = GTK_WIDGET(gtk_builder_get_object(builder, "quitbtn"));
