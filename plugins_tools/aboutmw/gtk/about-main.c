@@ -246,7 +246,8 @@ void copyline_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, 
 }
 
 void copy2clip(GtkTreeView* tv) {
-	GtkClipboard* clip = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+	GtkClipboard* clipC = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+	GtkClipboard* clipP = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
 	GtkTreeSelection* sel = gtk_tree_view_get_selection(tv);
 	GtkTreeSelectionForeachFunc copyline = (GtkTreeSelectionForeachFunc)copyline_detail;
 	gchar* text = NULL;
@@ -258,7 +259,8 @@ void copy2clip(GtkTreeView* tv) {
 
 	gtk_tree_selection_selected_foreach(sel, copyline, &text);
 	if(!text) return;
-	gtk_clipboard_set_text(clip, text, strlen(text));
+	gtk_clipboard_set_text(clipC, text, strlen(text));
+	gtk_clipboard_set_text(clipP, text, strlen(text));
 }
 
 void do_uname(GtkWidget* top, GtkListStore* data) {
