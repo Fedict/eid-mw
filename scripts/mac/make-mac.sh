@@ -2,6 +2,8 @@
 
 set -e
 
+
+
 # Ensure we're in the right directory
 cd $(dirname $0)/../../installers/eid-mw/mac
 
@@ -46,14 +48,9 @@ chmod +x ../../../plugins_tools/xpi/build.sh
 #-----------------------------------------
 
 pushd ../../..
-#	xcodebuild -configuration Release
+
 echo "cleaning former project..."
 xcodebuild -project beidmw.xcodeproj clean
-echo "building siscardplugin..."
-#xcodebuild -project beidmw.xcodeproj -target siscardplugin -configuration Release
-#echo "building beiddialogsQTsrv..."
-#xcodebuild -project beidmw.xcodeproj -target beiddialogsQTsrv -configuration Release
-#echo "building beidpkcs11..."
 xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration Release
 
 popd

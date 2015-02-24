@@ -62,18 +62,8 @@ mkdir -p $ROOT_DIR/usr/bin/
 
 #copy all files that should be part of the installer:
 #copy third party deliverables
-#PATH_TO_QTCORE=$(otool -L ../../../bin/beiddialogsQTsrv | grep QtCore  | sed s/\(.*\)/""/ | tr -d '\t')
-#PATH_TO_QTGUI=$(otool -L ../../../bin/beiddialogsQTsrv | grep QtGui  | sed s/\(.*\)/""/ | tr -d '\t')
-#PATH_TO_QTCORE=/Library/Frameworks/QtCore.framework/Versions/4/QtCore
-#PATH_TO_QTGUI=/Library/Frameworks/QtGui.framework/Versions/4/QtGui
-
-#cp "$PATH_TO_QTCORE" "$ROOT_DIR/$INST_DIR/lib/beidqt/QtCore"
-#cp "$PATH_TO_QTGUI" "$ROOT_DIR/$INST_DIR/lib/beidqt/QtGui"
-
-#copy eidMW deliverables
-#cp $LIB_DIR/libsiscardplugin1__ACS__.dylib $ROOT_DIR/$INST_DIR/lib/siscardplugins
 cp $LIB_DIR/libbeidpkcs11.$REL_VERSION.dylib $ROOT_DIR/$INST_DIR/lib/
-#cp $BIN_DIR/beiddialogsQTsrv $ROOT_DIR/usr/bin/
+
 
 LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
 XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
@@ -112,17 +102,6 @@ PREFLIGHT=$REL_DIR/resources/preflight
 INSTALLATIONCHECK=$REL_DIR/resources/InstallationCheck
 INSTALLATIONCHECKSTRINGS=$REL_DIR/resources/InstallationCheck.strings
 
-	 echo "********** Changing install_names for use with the QT libs **********"
-#	 install_name_tool -change $PATH_TO_QTCORE \
-#		$INST_DIR/lib/beidqt/QtCore \
-#		$ROOT_DIR/usr/bin/beiddialogsQTsrv
-#	 install_name_tool -change $PATH_TO_QTGUI \
-#		$INST_DIR/lib/beidqt/QtGui \
-#		$ROOT_DIR/usr/bin/beiddialogsQTsrv
-#	 install_name_tool -change $PATH_TO_QTCORE \
-#		$INST_DIR/lib/beidqt/QtCore \
-#		$ROOT_DIR/$INST_DIR/lib/beidqt/QtGui
-
 
 echo "********** manipulate mw_installer **********"
 #	  sed -e "s;REPL_REL_VERSION;$REL_VERSION;g" \
@@ -134,9 +113,6 @@ echo "********** generate $PKG_NAME and $DMG_NAME **********"
 
 #chmod g+w $ROOT_DIR/$INST_DIR
 #chmod g+w $ROOT_DIR/$INST_DIR/lib
-#chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt
-#chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt/plugins
-#chmod g+w $ROOT_DIR/$INST_DIR/lib/beidqt/plugins/imageformats
 #chmod a-x $ROOT_DIR/$INST_DIR/etc/beid.conf
 #chmod a-x $ROOT_DIR/$INST_DIR/lib/beid-pkcs11.bundle/Contents/Info.plist
 #chmod a-x $ROOT_DIR/$INST_DIR/lib/beid-pkcs11.bundle/Contents/PkgInfo
@@ -144,9 +120,6 @@ chgrp    wheel  $ROOT_DIR/usr
 chgrp    wheel  $ROOT_DIR/usr/bin
 chgrp    wheel  $ROOT_DIR/usr/local
 chgrp    wheel  $ROOT_DIR/usr/local/lib
-#chgrp    wheel  $ROOT_DIR/usr/local/lib/siscardplugins
-#chgrp    wheel  $ROOT_DIR/usr/local/lib/beidqt
-#chgrp    wheel  $ROOT_DIR/usr/local/lib/beidqt/plugins
 chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID.tokend
 chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID_Lion.tokend
 
