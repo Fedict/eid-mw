@@ -36,10 +36,12 @@ LDFLAGS="$PCSC_LIBS $CPPFLAGS"
 ])
 
 have_gtk=no
-AM_PATH_GTK_3_0(3.0.0, [have_gtk=yes])
+AC_MSG_CHECKING([for gtk3])
+PKG_CHECK_MODULES(GTK, [gtk+-3.0], [have_gtk=yes], [have_gtk=no])
 if test x"$have_gtk" = "xno"
 then
-	AM_PATH_GTK_2_0(2.10.0, [have_gtk=yes])
+	AC_MSG_CHECKING([for gtk2])
+	PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], [have_gtk=yes], [have_gtk=no])
 fi
 
 if test x"$have_gtk" = "xno"
