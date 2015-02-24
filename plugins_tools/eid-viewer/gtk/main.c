@@ -1,0 +1,103 @@
+#include <config.h>
+#include <gtk/gtk.h>
+#include <assert.h>
+
+#include "oslayer.h"
+#include "viewer_glade.h"
+#include "gettext.h"
+#include "binops.h"
+#include "gtk_globals.h"
+
+#ifndef _
+#define _(s) gettext(s)
+#endif
+
+typedef void(*bindisplayfunc)(void*, int);
+typedef void(*clearfunc)(char*);
+
+static GHashTable* binhash;
+
+static void uilog(eid_vwr_level, line) {
+	// TODO
+}
+
+static void stringclear(char* l) {
+	GtkLabel* label = GTK_LABEL(gtk_builder_get_object(builder, l));
+	// Should only appear in the hash table if we successfully found it
+	// earlier...
+	assert(label != NULL);
+	gtk_label_set_text(label, "-");
+}
+
+static void newstringdata(char* l, char* data) {
+	GtkLabel* label = GTK_LABEL(gtk_builder_get_object(builder, l));
+	clearfunc f = stringclear;
+	if(!label) {
+		char* msg = g_strdup_printf(_("Could not display label '%s', data '%s': no GtkLabel found for data"), label, data);
+		uilog(EID_VWR_LOG_DETAIL, msg);
+		g_free(msg);
+		return;
+	}
+	g_hash_table_insert(touched_labels, label, f);
+	gtk_label_set_text(label, data);
+}
+
+static void newbindata(char* label, void* data, int datalen) {
+	bindisplayfunc func;
+
+	if(!g_hash_table_contains(binhash, label)) {
+		char* msg = g_strdup_printf(_("Could not display binary data with label '%s': not found in hashtable"), label);
+	}
+	func = (bindisplayfunc)g_hash_table_lookup(binhash, label);
+	func(data, datalen);
+	return;
+}
+
+static void cleardata(gpointer key, gpointer value, gpointer user_data G_GNUC_UNUSED) {
+	clearfunc func = (clearfunc)value;
+	char* k = key;
+	func(k);
+}
+
+static void newsrc(enum eid_vwr_source src) {
+	g_hash_table_foreach(touched_labels, cleardata, NULL);
+	// TODO: update display so we see which source we're using
+}
+
+static gboolean poll(gpointer user_data G_GNUC_UNUSED) {
+	eid_vwr_poll();
+	return TRUE;
+}
+
+int main(int argc, char** argv) {
+	GtkWidget *window;
+	GtkAccelGroup *group;
+	struct eid_vwr_ui_callbacks* cb;
+
+	bindtextdomain("eid-viewer", DATAROOTDIR "/locale");
+	textdomain("eid-viewer");
+
+	gtk_init(&argc, &argv);
+	builder = gtk_builder_new();
+	gtk_builder_add_from_string(builder, VIEWER_GLADE_STRING, strlen(VIEWER_GLADE_STRING), NULL);
+
+	window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
+	group = gtk_accel_group_new();
+	gtk_window_add_accel_group(GTK_WINDOW(window), group);
+
+	touched_labels = g_hash_table_new(g_str_hash, g_str_equal);
+	binhash = g_hash_table_new(g_str_hash, g_str_equal);
+
+	cb = eid_vwr_cbstruct();
+	cb->newsrc = newsrc;
+	cb->newstringdata = newstringdata;
+	cb->newbindata = newbindata;
+	cb->log = uilog;
+	eid_vwr_createcallbacks(cb);
+
+	g_timeout_add_seconds(1, poll, NULL);
+
+	gtk_widget_show_all(window);
+
+	gtk_main();
+}
