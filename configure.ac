@@ -35,13 +35,24 @@ CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
 LDFLAGS="$PCSC_LIBS $CPPFLAGS"
 ])
 
+AC_ARG_WITH([gtkvers],
+	[AS_HELP_STRING([--with-gtkvers],[select GTK version to use [default: 3 if available, falls back to 2 if not]])],
+	[gtkvers=$withval],[gtkvers=detect])
 have_gtk=no
-AC_MSG_CHECKING([for gtk3])
-PKG_CHECK_MODULES(GTK, [gtk+-3.0], [have_gtk=yes], [have_gtk=no])
+AC_MSG_CHECKING([for wanted GTK version])
+AC_MSG_RESULT($gtkvers)
+if test x"$gtkvers" = xdetect -o x"$gtkvers" = x3
+then
+	AC_MSG_CHECKING([for gtk3])
+	PKG_CHECK_MODULES(GTK, [gtk+-3.0], [have_gtk=yes], [have_gtk=no])
+fi
 if test x"$have_gtk" = "xno"
 then
-	AC_MSG_CHECKING([for gtk2])
-	PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], [have_gtk=yes], [have_gtk=no])
+	if test x"$gtkvers" = xdetect -o x"$gtkvers" = x2
+	then
+		AC_MSG_CHECKING([for gtk2])
+		PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], [have_gtk=yes], [have_gtk=no])
+	fi
 fi
 
 if test x"$have_gtk" = "xno"
