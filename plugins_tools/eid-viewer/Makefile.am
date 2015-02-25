@@ -6,7 +6,7 @@ eid_viewer_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"'
 #SUBDIRS = po
 
 BUILT_SOURCES = gtk/viewer_glade.h
-EXTRA_DIST = gtk/viewer_glade.h
+EXTRA_DIST = gtk/viewer.glade
 
 gtk/viewer_glade.h: gtk/viewer.glade
 	$(top_srcdir)/plugins_tools/aboutmw/gtk/gen.sh VIEWER_GLADE_H VIEWER_GLADE_STRING < $^ > $@
