@@ -1,4 +1,5 @@
 #include "gtkui.h"
+#include "gettext.h"
 #include "gtk_globals.h"
 
 #ifndef _
