@@ -129,6 +129,10 @@ int main(int argc, char** argv) {
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showurl), "test");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_log"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showlog), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pintestbut"));
+	g_signal_connect(signaltmp, "clicked", G_CALLBACK(testpin), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pinchangebut"));
+	g_signal_connect(signaltmp, "clicked", G_CALLBACK(changepin), NULL);
 
 	g_timeout_add_seconds(1, poll, NULL);
 
