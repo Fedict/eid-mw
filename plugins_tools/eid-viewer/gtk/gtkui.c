@@ -74,8 +74,31 @@ void file_open(GtkMenuItem* item, gpointer user_data) {
 	gtk_widget_destroy(dialog);
 }
 
-GEN_FUNC(file_save, "save %s file")
-GEN_FUNC(file_close, "close file")
+GEN_FUNC(save_file_detail, "saving %s")
+
+void file_save(GtkMenuItem* item, gpointer user_data) {
+	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(
+			strcmp(user_data, "xml") ? _("Save eID CSV file") : _("Save eID XML file"), window, GTK_FILE_CHOOSER_ACTION_SAVE,
+			_("_Cancel"), GTK_RESPONSE_CANCEL,
+			_("_Save"), GTK_RESPONSE_ACCEPT,
+			NULL);
+	gchar* filename;
+	gint res;
+
+	res = gtk_dialog_run(GTK_DIALOG(dialog));
+	if(res == GTK_RESPONSE_ACCEPT) {
+		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+		save_file_detail(NULL, filename);
+		g_free(filename);
+	}
+	gtk_widget_destroy(dialog);
+}
+
+void file_close(GtkMenuItem* item, gpointer user_data) {
+	eid_vwr_deserialize(NULL, 0);
+}
+
 GEN_FUNC(file_prefs, "set preferences")
 GEN_FUNC(file_print, "print")
 GEN_FUNC(translate, "translate to %s")
