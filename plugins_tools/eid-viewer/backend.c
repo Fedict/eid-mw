@@ -14,6 +14,7 @@ struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 }
 
 int eid_vwr_serialize(void** data, int* len) {
+	return 0;
 }
 
 int eid_vwr_deserialize(void* data, int len) {
@@ -23,6 +24,7 @@ int eid_vwr_deserialize(void* data, int len) {
 		cb->newsrc(EID_VWR_SRC_NONE);
 	}
 	// TODO: parse the XML file, set the source
+	return 0;
 }
 
 int eid_vwr_pinop(enum eid_vwr_pinops op) {
@@ -32,6 +34,7 @@ int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	assert(cb == NULL);
 	cb = cb_;
 	cb->newsrc(EID_VWR_SRC_NONE);
+	return 0;
 }
 
 void eid_vwr_be_mainloop() {
