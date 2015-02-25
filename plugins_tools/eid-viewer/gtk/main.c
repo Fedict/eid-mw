@@ -8,6 +8,8 @@
 #include "binops.h"
 #include "gtk_globals.h"
 
+#include "gtkui.h"
+
 #ifndef _
 #define _(s) gettext(s)
 #endif
@@ -71,6 +73,7 @@ static gboolean poll(gpointer user_data G_GNUC_UNUSED) {
 
 int main(int argc, char** argv) {
 	GtkWidget *window;
+	GObject* signaltmp;
 	GtkAccelGroup *group;
 	struct eid_vwr_ui_callbacks* cb;
 
@@ -94,6 +97,38 @@ int main(int argc, char** argv) {
 	cb->newbindata = newbindata;
 	cb->log = uilog;
 	eid_vwr_createcallbacks(cb);
+
+	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_open"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_open), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_saveas_xml"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), "xml");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_saveas_csv"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), "csv");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_close"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_close), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_prefs"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_prefs), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_print"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_print), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_quit"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(gtk_main_quit), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_de"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "de");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_en"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "en");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_fr"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "fr");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_nl"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "nl");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_about"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(showabout), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_faq"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(showurl), "faq");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_test"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(showurl), "test");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_log"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(showlog), NULL);
 
 	g_timeout_add_seconds(1, poll, NULL);
 
