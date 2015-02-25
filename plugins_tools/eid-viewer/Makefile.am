@@ -1,6 +1,14 @@
 bin_PROGRAMS = eid-viewer
 
-eid_viewer_SOURCES = oslayer.h gtk/main.c gtk/viewer_glade.h backend.c gtk/gtkui.c gtk/gtkui.h
+eid_viewer_SOURCES = oslayer.h \
+	gettext.h \
+	gtk/main.c \
+	gtk/viewer_glade.h \
+	backend.c \
+	gtk/gtkui.c \
+	gtk/gtkui.h \
+	gtk/binops.h \
+	gtk/gtk_globals.h
 eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@
 eid_viewer_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"'
 #SUBDIRS = po
