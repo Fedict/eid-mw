@@ -1,15 +1,13 @@
 #include "gtkui.h"
 #include "gettext.h"
 #include "gtk_globals.h"
+#include "oslayer.h"
+
+#include <stdlib.h>
 
 #ifndef _
 #define _(s) gettext(s)
 #endif
-
-void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {
-	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
-	gtk_show_about_dialog(window, "program-name", _("eID Viewer"), NULL);
-}
 
 #define GEN_FUNC(n, d) \
 void n(GtkMenuItem* item, gpointer user_data) { \
@@ -19,7 +17,63 @@ void n(GtkMenuItem* item, gpointer user_data) { \
 	gtk_widget_destroy(dlg); \
 }
 
-GEN_FUNC(file_open, "open file")
+void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {
+	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
+	gtk_show_about_dialog(window, "program-name", _("eID Viewer"), NULL);
+}
+
+static void update_preview(GtkFileChooser* chooser, gpointer data) {
+	GtkWidget* preview;
+	char *filename;
+	GdkPixbuf *pixbuf;
+	GInputStream* mstream;
+	struct eid_vwr_preview* prv;
+
+	preview = GTK_WIDGET(data);
+	filename = gtk_file_chooser_get_preview_filename(chooser);
+	prv = eid_vwr_get_preview(filename);
+	g_free(filename);
+
+	if(!prv->have_data) {
+		gtk_file_chooser_set_preview_widget_active(chooser, FALSE);
+		free(prv);
+		return;
+	}
+
+	mstream = G_INPUT_STREAM(g_memory_input_stream_new_from_data(prv->imagedata, prv->imagelen, NULL));
+	pixbuf = gdk_pixbuf_new_from_stream(mstream, NULL, NULL);
+	gtk_image_set_from_pixbuf(GTK_IMAGE(preview), pixbuf);
+	g_object_unref(pixbuf);
+	free(prv->imagedata);
+	free(prv);
+	gtk_file_chooser_set_preview_widget_active(chooser, TRUE);
+}
+
+GEN_FUNC(open_file_detail, "opening %s")
+
+void file_open(GtkMenuItem* item, gpointer user_data) {
+	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(
+		_("Open eID file"), window, GTK_FILE_CHOOSER_ACTION_OPEN,
+		_("_Cancel"), GTK_RESPONSE_CANCEL,
+		_("_Open"), GTK_RESPONSE_ACCEPT,
+		NULL);
+	GtkWidget* preview;
+	gchar* filename;
+	gint res;
+
+	preview = gtk_image_new();
+	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), preview);
+	g_signal_connect(G_OBJECT(dialog), "update-preview", G_CALLBACK(update_preview), preview);
+	res = gtk_dialog_run(GTK_DIALOG(dialog));
+	if(res == GTK_RESPONSE_ACCEPT) {
+		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+		open_file_detail(NULL, filename);
+		g_free(filename);
+	}
+	gtk_widget_destroy(dialog);
+}
+
 GEN_FUNC(file_save, "save %s file")
 GEN_FUNC(file_close, "close file")
 GEN_FUNC(file_prefs, "set preferences")

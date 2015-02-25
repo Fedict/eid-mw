@@ -26,11 +26,18 @@ struct eid_vwr_ui_callbacks {
 	void(*log)(enum eid_vwr_loglevel, char* line);
 };
 
+struct eid_vwr_preview {
+	void* imagedata;
+	size_t imagelen;
+	int have_data;
+};
+
 int eid_vwr_serialize(void** data, int* len);
 int eid_vwr_deserialize(void* data, int len);
 int eid_vwr_pinop(enum eid_vwr_pinops);
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks*);
 struct eid_vwr_ui_callbacks* eid_vwr_cbstruct();
+struct eid_vwr_preview* eid_vwr_get_preview(char* filename);
 
 void eid_vwr_poll();
 void eid_vwr_be_mainloop();

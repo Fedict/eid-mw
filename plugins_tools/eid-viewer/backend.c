@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "oslayer.h"
 
 void eid_vwr_poll() {
@@ -24,3 +25,22 @@ int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb) {
 void eid_vwr_be_mainloop() {
 }
 
+struct eid_vwr_preview* eid_vwr_get_preview(char* filename) {
+	// TODO: open the file, deserialize until we find a photo, pass back the photo.
+	// For now, show the same photo in all cases...
+	FILE* f;
+	struct eid_vwr_preview* p;
+	p = calloc(sizeof(struct eid_vwr_preview), 1);
+	f = fopen("../../tests/unit/foto.jpg", "r");
+	if(!f) {
+		perror("fopen");
+		return p;
+	}
+	fseek(f, 0, SEEK_END);
+	p->imagelen = ftell(f);
+	fseek(f, 0, SEEK_SET);
+	p->imagedata = malloc(p->imagelen);
+	fread(p->imagedata, p->imagelen, 1, f);
+	p->have_data = 1;
+	return p;
+}
