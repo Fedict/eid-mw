@@ -1,6 +1,9 @@
 #include <stdlib.h>
+#include <assert.h>
 #include <stdio.h>
 #include "oslayer.h"
+
+struct eid_vwr_ui_callbacks* cb;
 
 void eid_vwr_poll() {
 }
@@ -14,12 +17,21 @@ int eid_vwr_serialize(void** data, int* len) {
 }
 
 int eid_vwr_deserialize(void* data, int len) {
+	assert(cb);
+
+	if(!len) {
+		cb->newsrc(EID_VWR_SRC_NONE);
+	}
+	// TODO: parse the XML file, set the source
 }
 
 int eid_vwr_pinop(enum eid_vwr_pinops op) {
 }
 
-int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb) {
+int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
+	assert(cb == NULL);
+	cb = cb_;
+	cb->newsrc(EID_VWR_SRC_NONE);
 }
 
 void eid_vwr_be_mainloop() {
