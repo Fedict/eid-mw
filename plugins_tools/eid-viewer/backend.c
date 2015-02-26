@@ -155,6 +155,13 @@ int read_card(CK_SLOT_ID which) {
 	} while(count);
 }
 
+void eid_vwr_be_mainloop() {
+	for(;;) {
+		eid_vwr_poll();
+		sleep(1);
+	}
+}
+
 void eid_vwr_poll() {
 	static CK_SLOT_ID prev_slot;
 	static int had_slot = 0;
