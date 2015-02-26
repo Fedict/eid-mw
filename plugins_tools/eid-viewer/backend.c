@@ -46,6 +46,12 @@ struct eid_vwr_preview* eid_vwr_get_preview(char* filename) {
 	FILE* f;
 	struct eid_vwr_preview* p;
 	p = calloc(sizeof(struct eid_vwr_preview), 1);
+	if(!filename) {
+		return p;
+	}
+	if(strstr(filename, ".eid") != filename + (strlen(filename) - 4)) {
+		return p;
+	}
 	f = fopen("../../tests/unit/foto.jpg", "r");
 	if(!f) {
 		perror("fopen");
