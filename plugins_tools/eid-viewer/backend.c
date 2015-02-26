@@ -174,9 +174,8 @@ void eid_vwr_poll() {
 			cb->log(EID_VWR_LOG_NORMAL, "found a card in slot %lu", tmp);
 			prev_slot = tmp;
 			cb->newsrc(EID_VWR_SRC_CARD);
-			read_card(prev_slot);
+			had_slot = (read_card(prev_slot) == EIDV_RV_OK);
 		}
-		had_slot = 1;
 	} else {
 		if(had_slot) {
 			cb->log(EID_VWR_LOG_NORMAL, "card gone, clearing data");
