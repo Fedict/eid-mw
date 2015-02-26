@@ -36,14 +36,13 @@ static void stringclear(char* l) {
 
 static void newstringdata(char* l, char* data) {
 	GtkLabel* label = GTK_LABEL(gtk_builder_get_object(builder, l));
-	clearfunc f = stringclear;
 	if(!label) {
 		char* msg = g_strdup_printf(_("Could not display label '%s', data '%s': no GtkLabel found for data"), l, data);
 		uilog(EID_VWR_LOG_DETAIL, msg);
 		g_free(msg);
 		return;
 	}
-	g_hash_table_insert(touched_labels, g_strdup(l), f);
+	g_hash_table_insert(touched_labels, g_strdup(l), stringclear);
 	g_object_set_threaded(G_OBJECT(label), "label", g_strdup(data), g_free);
 	g_object_set_threaded(G_OBJECT(label), "sensitive", (void*)TRUE, NULL);
 }
