@@ -2,9 +2,9 @@ bin_PROGRAMS = eid-viewer
 
 eid_viewer_SOURCES = oslayer.h \
 	gettext.h \
+	backend.c \
 	gtk/main.c \
 	gtk/viewer_glade.h \
-	backend.c \
 	gtk/gtkui.c \
 	gtk/gtkui.h \
 	gtk/binops.h \
