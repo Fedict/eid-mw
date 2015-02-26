@@ -307,7 +307,6 @@
                         <child>
                           <object class="GtkLabel" id="doctypeval">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">-</property>
                           </object>
@@ -333,7 +332,6 @@
                         <child>
                           <object class="GtkImage" id="image1">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="stock">gtk-file</property>
                           </object>
@@ -347,7 +345,6 @@
                         <child>
                           <object class="GtkLabel" id="nametit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Name:</property>
@@ -364,7 +361,6 @@
                         <child>
                           <object class="GtkLabel" id="giventit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Given names:</property>
@@ -381,7 +377,6 @@
                         <child>
                           <object class="GtkLabel" id="pobtit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Place of birth:</property>
@@ -398,7 +393,6 @@
                         <child>
                           <object class="GtkLabel" id="dobtit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Date of birth:</property>
@@ -415,7 +409,6 @@
                         <child>
                           <object class="GtkLabel" id="sextit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Sex:</property>
@@ -432,7 +425,6 @@
                         <child>
                           <object class="GtkLabel" id="natnumtit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">National number:</property>
@@ -449,7 +441,6 @@
                         <child>
                           <object class="GtkLabel" id="munictit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Municipality:</property>
@@ -466,7 +457,6 @@
                         <child>
                           <object class="GtkLabel" id="posttit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Postal code:</property>
@@ -483,7 +473,6 @@
                         <child>
                           <object class="GtkLabel" id="streettit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Street:</property>
@@ -514,7 +503,6 @@
                         <child>
                           <object class="GtkLabel" id="spectit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Special status:</property>
@@ -531,7 +519,6 @@
                         <child>
                           <object class="GtkLabel" id="tittit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Title:</property>
@@ -548,7 +535,6 @@
                         <child>
                           <object class="GtkLabel" id="nattit">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Nationality:</property>
@@ -565,7 +551,6 @@
                         <child>
                           <object class="GtkLabel" id="surname">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -582,7 +567,6 @@
                         <child>
                           <object class="GtkLabel" id="firstnames">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -599,7 +583,6 @@
                         <child>
                           <object class="GtkLabel" id="location_of_birth">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -616,7 +599,6 @@
                         <child>
                           <object class="GtkLabel" id="date_of_birth">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -633,7 +615,6 @@
                         <child>
                           <object class="GtkLabel" id="gender">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -650,7 +631,6 @@
                         <child>
                           <object class="GtkLabel" id="national_number">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -667,7 +647,6 @@
                         <child>
                           <object class="GtkLabel" id="nationality">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -684,7 +663,6 @@
                         <child>
                           <object class="GtkLabel" id="titval">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -701,7 +679,6 @@
                         <child>
                           <object class="GtkLabel" id="special_status">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -718,7 +695,6 @@
                         <child>
                           <object class="GtkLabel" id="address_street_and_number">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -735,7 +711,6 @@
                         <child>
                           <object class="GtkLabel" id="address_zip">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -752,7 +727,6 @@
                         <child>
                           <object class="GtkLabel" id="address_municipality">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
