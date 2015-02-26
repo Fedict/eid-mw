@@ -49,6 +49,7 @@ static void newbindata(char* label, void* data, int datalen) {
 
 	if(!g_hash_table_contains(binhash, label)) {
 		char* msg = g_strdup_printf(_("Could not display binary data with label '%s': not found in hashtable"), label);
+		return;
 	}
 	func = (bindisplayfunc)g_hash_table_lookup(binhash, label);
 	func(data, datalen);
