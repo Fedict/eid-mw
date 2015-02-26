@@ -10,6 +10,7 @@
 
 #include "gtkui.h"
 #include "thread.h"
+#include "photo.h"
 
 #ifndef _
 #define _(s) gettext(s)
@@ -43,15 +44,20 @@ static void newstringdata(char* l, char* data) {
 		return;
 	}
 	g_hash_table_insert(touched_labels, g_strdup(l), f);
-	g_object_set_threaded(G_OBJECT(label), "label", g_strdup(data), TRUE);
-	g_object_set_threaded(G_OBJECT(label), "sensitive", TRUE, FALSE);
+	g_object_set_threaded(G_OBJECT(label), "label", g_strdup(data), g_free);
+	g_object_set_threaded(G_OBJECT(label), "sensitive", (void*)TRUE, NULL);
 }
 
 static void newbindata(char* label, void* data, int datalen) {
 	bindisplayfunc func;
+	gchar* msg = g_strdup_printf("found label %s with data length %d", label, datalen);
 
+	uilog(EID_VWR_LOG_DETAIL, msg);
+	free(msg);
 	if(!g_hash_table_contains(binhash, label)) {
-		char* msg = g_strdup_printf(_("Could not display binary data with label '%s': not found in hashtable"), label);
+		msg = g_strdup_printf(_("Could not display binary data with label '%s': not found in hashtable"), label);
+		uilog(EID_VWR_LOG_DETAIL, msg);
+		free(msg);
 		return;
 	}
 	func = (bindisplayfunc)g_hash_table_lookup(binhash, label);
@@ -99,6 +105,8 @@ int main(int argc, char** argv) {
 
 	touched_labels = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
 	binhash = g_hash_table_new(g_str_hash, g_str_equal);
+
+	g_hash_table_insert(binhash, "PHOTO_FILE", displayphoto);
 
 	cb = eid_vwr_cbstruct();
 	cb->newsrc = newsrc;
