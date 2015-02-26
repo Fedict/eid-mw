@@ -19,7 +19,7 @@ typedef struct {
 
 ckrv_mod defmod[] = { { CKR_OK, EIDV_RV_OK } };
 
-int ckrv_decode(CK_RV rv, int count, ckrv_mod* mods) {
+int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 	int i;
 	for(i=0; i<count; i++) {
 		if(mods[i].rv == rv) {
@@ -31,14 +31,14 @@ int ckrv_decode(CK_RV rv, int count, ckrv_mod* mods) {
 
 #define check_rv_long(call, mods) { \
 	CK_RV rv = call; \
-	int retval = ckrv_decode(rv, sizeof(mods) / sizeof(ckrv_mod), mods); \
+	int retval = ckrv_decode_vwr(rv, sizeof(mods) / sizeof(ckrv_mod), mods); \
 	if(retval != EIDV_RV_OK) { \
 		return retval; \
 	} \
 }
 #define check_rv(call) check_rv_long(call, defmod)
 #define check_rv_late(rv) { \
-	int retval = ckrv_decode(rv, 1, defmod); \
+	int retval = ckrv_decode_vwr(rv, 1, defmod); \
 	if(retval != EIDV_RV_OK) { \
 		return retval; \
 	} \

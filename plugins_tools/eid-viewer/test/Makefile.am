@@ -1,7 +1,7 @@
 TESTS = cardevent deserialize serialize
 check_PROGRAMS = $(TESTS)
 
-COMMON_LIB=$(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la $(top_builddir)/tests/unit/libtestlib.a
+COMMON_LIB=$(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la $(top_builddir)/tests/unit/libtestlib.a $(top_builddir)/tests/unit/liblabels.a
 COMMON_SRCS = ../backend.c ../oslayer.h common.h common.c
 AM_CFLAGS = -I$(top_srcdir)/tests/unit -I$(srcdir)/..
 
