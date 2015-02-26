@@ -17,7 +17,7 @@
 #define _(s) gettext(s)
 #endif
 
-typedef void(*displayfunc)(void*, int);
+typedef void(*bindisplayfunc)(void*, int);
 typedef void(*clearfunc)(char*);
 
 static GHashTable* binhash;
