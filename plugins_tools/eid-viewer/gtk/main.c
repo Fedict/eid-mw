@@ -29,7 +29,7 @@ static void stringclear(char* l) {
 	// Should only appear in the hash table if we successfully found it
 	// earlier...
 	assert(label != NULL);
-	g_object_set_threaded(G_OBJECT(label), "label", "-", NULL);
+	g_object_set_threaded(G_OBJECT(label), "label", "-", FALSE);
 }
 
 static void newstringdata(char* l, char* data) {
@@ -42,7 +42,7 @@ static void newstringdata(char* l, char* data) {
 		return;
 	}
 	g_hash_table_insert(touched_labels, label, f);
-	g_object_set_threaded(G_OBJECT(label), "label", data, NULL);
+	g_object_set_threaded(G_OBJECT(label), "label", g_strdup(data), TRUE);
 }
 
 static void newbindata(char* label, void* data, int datalen) {

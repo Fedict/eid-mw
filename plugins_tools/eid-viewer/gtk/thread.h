@@ -3,6 +3,6 @@
 
 #include <glib-object.h>
 
-void g_object_set_threaded(GObject* obj, const gchar* first_property_name, ...);
+void g_object_set_threaded(GObject* obj, const gchar* name, void* value, gboolean do_free);
 
 #endif
