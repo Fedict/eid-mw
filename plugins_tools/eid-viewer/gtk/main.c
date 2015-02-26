@@ -20,8 +20,8 @@ typedef void(*clearfunc)(char*);
 
 static GHashTable* binhash;
 
-static void uilog(eid_vwr_level, line) {
-	// TODO
+static void uilog(enum eid_vwr_loglevel l, char* line) {
+	g_message("level %d: %s", (int)l, line);
 }
 
 static void stringclear(char* l) {
