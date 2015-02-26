@@ -73,11 +73,16 @@ static gboolean poll(gpointer user_data G_GNUC_UNUSED) {
 	return TRUE;
 }
 
+static void* threadmain(void* data G_GNUC_UNUSED) {
+	eid_vwr_be_mainloop();
+}
+
 int main(int argc, char** argv) {
 	GtkWidget *window;
 	GObject* signaltmp;
 	GtkAccelGroup *group;
 	struct eid_vwr_ui_callbacks* cb;
+	pthread_t thread;
 
 	bindtextdomain("eid-viewer", DATAROOTDIR "/locale");
 	textdomain("eid-viewer");
@@ -136,7 +141,7 @@ int main(int argc, char** argv) {
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pinchangebut"));
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(changepin), NULL);
 
-	g_timeout_add_seconds(1, poll, NULL);
+	pthread_create(&thread, NULL, threadmain, NULL);
 
 	gtk_widget_show_all(window);
 
