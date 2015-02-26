@@ -1,12 +1,49 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
+#include <string.h>
+
+#include <unix.h>
+#include <pkcs11.h>
+
 #include "oslayer.h"
 
-struct eid_vwr_ui_callbacks* cb;
+typedef struct {
+	CK_RV rv;
+	int res;
+} ckrv_mod;
 
-void eid_vwr_poll() {
+#define EIDV_RV_OK 0
+#define EIDV_RV_FAIL -1
+
+ckrv_mod defmod[] = { { CKR_OK, EIDV_RV_OK } };
+
+int ckrv_decode(CK_RV rv, int count, ckrv_mod* mods) {
+	int i;
+	for(i=0; i<count; i++) {
+		if(mods[i].rv == rv) {
+			return mods[i].res;
+		}
+	}
+	return EIDV_RV_FAIL;
 }
+
+#define check_rv_long(call, mods) { \
+	CK_RV rv = call; \
+	int retval = ckrv_decode(rv, sizeof(mods) / sizeof(ckrv_mod), mods); \
+	if(retval != EIDV_RV_OK) { \
+		return retval; \
+	} \
+}
+#define check_rv(call) check_rv_long(call, defmod)
+#define check_rv_late(rv) { \
+	int retval = ckrv_decode(rv, 1, defmod); \
+	if(retval != EIDV_RV_OK) { \
+		return retval; \
+	} \
+}
+
+struct eid_vwr_ui_callbacks* cb;
 
 struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 	struct eid_vwr_ui_callbacks* retval = calloc(sizeof(struct eid_vwr_ui_callbacks), 1);
