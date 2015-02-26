@@ -7,6 +7,7 @@
 #include <pkcs11.h>
 
 #include "oslayer.h"
+#include "labels.h"
 
 typedef struct {
 	CK_RV rv;
@@ -71,10 +72,107 @@ int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	assert(cb == NULL);
 	cb = cb_;
 	cb->newsrc(EID_VWR_SRC_NONE);
+	check_rv(C_Initialize(NULL_PTR));
 	return 0;
 }
 
-void eid_vwr_be_mainloop() {
+int find_first_slot(CK_SLOT_ID_PTR loc) {
+	CK_SLOT_ID_PTR slotlist = malloc(sizeof(CK_SLOT_ID));
+	CK_ULONG count = 0;
+	CK_RV ret;
+	ckrv_mod m[] = {
+		{ CKR_BUFFER_TOO_SMALL, EIDV_RV_OK },
+		{ CKR_OK, EIDV_RV_OK },
+	};
+
+	while((ret = C_GetSlotList(CK_TRUE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
+		free(slotlist);
+		slotlist = calloc(sizeof(CK_SLOT_ID), count);
+	}
+	check_rv_late(ret);
+	if(count > 0) {
+		*loc = slotlist[0];
+		return EIDV_RV_OK;
+	}
+	return EIDV_RV_FAIL;
+}
+
+int read_card(CK_SLOT_ID which) {
+	CK_SESSION_HANDLE session;
+	CK_OBJECT_HANDLE object;
+	CK_ATTRIBUTE attr;
+	CK_ULONG count, type;
+
+	check_rv(C_OpenSession(which, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
+
+	attr.type = CKA_CLASS;
+	attr.pValue = &type;
+	type = CKO_DATA;
+	attr.ulValueLen = sizeof(CK_ULONG);
+
+	check_rv(C_FindObjectsInit(session, &attr, 1));
+
+	do {
+		char* label_str;
+		char* value_str;
+		char* objid_str;
+
+		CK_ATTRIBUTE data[3] = {
+			{ CKA_LABEL, NULL_PTR, 0 },
+			{ CKA_VALUE, NULL_PTR, 0 },
+			{ CKA_OBJECT_ID, NULL_PTR, 0 },
+		};
+
+		check_rv(C_FindObjects(session, &object, 1, &count));
+		if(!count) continue;
+
+		check_rv(C_GetAttributeValue(session, object, data, 3));
+
+		label_str = malloc(data[0].ulValueLen + 1);
+		data[0].pValue = label_str;
+
+		value_str = malloc(data[1].ulValueLen + 1);
+		data[1].pValue = value_str;
+
+		objid_str = malloc(data[2].ulValueLen + 1);
+		data[2].pValue = objid_str;
+
+		check_rv(C_GetAttributeValue(session, object, data, 3));
+
+		label_str[data[0].ulValueLen] = '\0';
+		value_str[data[1].ulValueLen] = '\0';
+		objid_str[data[2].ulValueLen] = '\0';
+
+		if(is_string(objid_str, label_str)) {
+			cb->newstringdata(label_str, value_str);
+		} else {
+			cb->newbindata(label_str, value_str, data[1].ulValueLen);
+		}
+
+		free(label_str);
+		free(value_str);
+		free(objid_str);
+	} while(count);
+}
+
+void eid_vwr_poll() {
+	static CK_SLOT_ID prev_slot;
+	static int had_slot = 0;
+	CK_SLOT_ID tmp;
+
+	if(find_first_slot(&tmp) == EIDV_RV_OK) {
+		if(!had_slot || (tmp != prev_slot)) {
+			prev_slot = tmp;
+			cb->newsrc(EID_VWR_SRC_CARD);
+			read_card(prev_slot);
+		}
+		had_slot = 1;
+	} else {
+		if(had_slot) {
+			cb->newsrc(EID_VWR_SRC_NONE);
+		}
+		had_slot = 0;
+	}
 }
 
 struct eid_vwr_preview* eid_vwr_get_preview(char* filename) {
