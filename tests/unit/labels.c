@@ -62,7 +62,7 @@ CK_BBOOL is_string(char* object, char* label) {
 		ADD_LABEL("date_of_birth", CK_TRUE);
 		ADD_LABEL("gender", CK_TRUE);
 		ADD_LABEL("nobility", CK_TRUE);
-		ADD_LABEL("document_type", CK_TRUE);
+		ADD_LABEL("document_type", CK_FALSE);
 		ADD_LABEL("special_status", CK_TRUE);
 		ADD_LABEL("photo_hash", CK_FALSE);
 		ADD_LABEL("duplicata", CK_FALSE);
