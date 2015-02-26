@@ -1,6 +1,7 @@
 #include <config.h>
 #include <gtk/gtk.h>
 #include <assert.h>
+#include <stdarg.h>
 
 #include "oslayer.h"
 #include "viewer_glade.h"
@@ -16,13 +17,30 @@
 #define _(s) gettext(s)
 #endif
 
-typedef void(*bindisplayfunc)(void*, int);
+typedef void(*displayfunc)(void*, int);
 typedef void(*clearfunc)(char*);
 
 static GHashTable* binhash;
 
-static void uilog(enum eid_vwr_loglevel l, char* line) {
-	g_message("level %d: %s", (int)l, line);
+static void uilog(enum eid_vwr_loglevel l, char* line, ...) {
+	GLogLevelFlags gtklog;
+	va_list ap, ac;
+	switch(l) {
+		case EID_VWR_LOG_DETAIL:
+			gtklog = G_LOG_LEVEL_DEBUG;
+			break;
+		case EID_VWR_LOG_NORMAL:
+			gtklog = G_LOG_LEVEL_MESSAGE;
+			break;
+		case EID_VWR_LOG_COARSE:
+			gtklog = G_LOG_LEVEL_ERROR;
+			break;
+	}
+	va_start(ap, line);
+	va_copy(ac, ap);
+	g_logv(NULL, gtklog, line, ac);
+	va_end(ac);
+	va_end(ap);
 }
 
 static void stringclear(char* l) {

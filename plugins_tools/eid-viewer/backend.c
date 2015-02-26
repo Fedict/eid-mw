@@ -33,6 +33,7 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 	CK_RV rv = call; \
 	int retval = ckrv_decode_vwr(rv, sizeof(mods) / sizeof(ckrv_mod), mods); \
 	if(retval != EIDV_RV_OK) { \
+		cb->log(EID_VWR_LOG_DETAIL, #call " returned %d", retval); \
 		return retval; \
 	} \
 }
@@ -40,6 +41,7 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 #define check_rv_late(rv) { \
 	int retval = ckrv_decode_vwr(rv, 1, defmod); \
 	if(retval != EIDV_RV_OK) { \
+		cb->log(EID_VWR_LOG_DETAIL, "found return value of %d", retval); \
 		return retval; \
 	} \
 }
@@ -169,6 +171,7 @@ void eid_vwr_poll() {
 
 	if(find_first_slot(&tmp) == EIDV_RV_OK) {
 		if(!had_slot || (tmp != prev_slot)) {
+			cb->log(EID_VWR_LOG_NORMAL, "found a card in slot %lu", tmp);
 			prev_slot = tmp;
 			cb->newsrc(EID_VWR_SRC_CARD);
 			read_card(prev_slot);
@@ -176,6 +179,7 @@ void eid_vwr_poll() {
 		had_slot = 1;
 	} else {
 		if(had_slot) {
+			cb->log(EID_VWR_LOG_NORMAL, "card gone, clearing data");
 			cb->newsrc(EID_VWR_SRC_NONE);
 		}
 		had_slot = 0;
