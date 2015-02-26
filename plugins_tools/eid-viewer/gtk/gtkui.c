@@ -61,10 +61,28 @@ void file_open(GtkMenuItem* item, gpointer user_data) {
 	GtkWidget* preview;
 	gchar* filename;
 	gint res;
+	GtkFileFilter* filter;
+
+	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*");
+	gtk_file_filter_set_name(filter, _("All files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+
+	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*.eid");
+	gtk_file_filter_set_name(filter, _("eID XML files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+	gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
+
+	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*.csv");
+	gtk_file_filter_set_name(filter, _("eID CSV files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 
 	preview = gtk_image_new();
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), preview);
 	g_signal_connect(G_OBJECT(dialog), "update-preview", G_CALLBACK(update_preview), preview);
+
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
@@ -85,6 +103,23 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 			NULL);
 	gchar* filename;
 	gint res;
+	GtkFileFilter* filter;
+
+	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*");
+	gtk_file_filter_set_name(filter, _("All files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+
+	filter = gtk_file_filter_new();
+	if(strcmp(user_data, "xml")) {
+		gtk_file_filter_add_pattern(filter, "*.csv");
+		gtk_file_filter_set_name(filter, _("eID CSV files"));
+	} else {
+		gtk_file_filter_add_pattern(filter, "*.eid");
+		gtk_file_filter_set_name(filter, _("eID XML files"));
+	}
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+	gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
 
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
