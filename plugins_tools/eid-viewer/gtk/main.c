@@ -42,7 +42,7 @@ static void newstringdata(char* l, char* data) {
 		g_free(msg);
 		return;
 	}
-	g_hash_table_insert(touched_labels, label, f);
+	g_hash_table_insert(touched_labels, g_strdup(l), f);
 	g_object_set_threaded(G_OBJECT(label), "label", g_strdup(data), TRUE);
 	g_object_set_threaded(G_OBJECT(label), "sensitive", TRUE, FALSE);
 }
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
 	group = gtk_accel_group_new();
 	gtk_window_add_accel_group(GTK_WINDOW(window), group);
 
-	touched_labels = g_hash_table_new(g_str_hash, g_str_equal);
+	touched_labels = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
 	binhash = g_hash_table_new(g_str_hash, g_str_equal);
 
 	cb = eid_vwr_cbstruct();
