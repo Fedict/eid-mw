@@ -6,9 +6,10 @@ check_PROGRAMS = $(TESTS)
 
 CLEANFILES=foto.jpg
 
-COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la libtestlib.la
-noinst_LTLIBRARIES = libtestlib.la
-libtestlib_la_SOURCES = testlib.h testlib.c
+COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la libtestlib.a
+noinst_LIBRARIES = libtestlib.a liblabels.a
+libtestlib_a_SOURCES = testlib.h testlib.c
+liblabels_a_SOURCES = labels.h labels.c
 
 AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220
 
@@ -64,7 +65,7 @@ objects_SOURCES = objects.c
 objects_LDADD = $(COMMON_LIB)
 
 readdata_SOURCES = readdata.c
-readdata_LDADD = $(COMMON_LIB)
+readdata_LDADD = $(COMMON_LIB) liblabels.a
 
 digest_SOURCES = digest.c
 digest_LDADD = $(COMMON_LIB)
