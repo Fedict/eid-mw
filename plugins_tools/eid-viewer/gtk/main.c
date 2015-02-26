@@ -9,6 +9,7 @@
 #include "gtk_globals.h"
 
 #include "gtkui.h"
+#include "thread.h"
 
 #ifndef _
 #define _(s) gettext(s)
@@ -28,7 +29,7 @@ static void stringclear(char* l) {
 	// Should only appear in the hash table if we successfully found it
 	// earlier...
 	assert(label != NULL);
-	gtk_label_set_text(label, "-");
+	g_object_set_threaded(G_OBJECT(label), "label", "-", NULL);
 }
 
 static void newstringdata(char* l, char* data) {
@@ -41,7 +42,7 @@ static void newstringdata(char* l, char* data) {
 		return;
 	}
 	g_hash_table_insert(touched_labels, label, f);
-	gtk_label_set_text(label, data);
+	g_object_set_threaded(G_OBJECT(label), "label", data, NULL);
 }
 
 static void newbindata(char* label, void* data, int datalen) {
