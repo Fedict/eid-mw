@@ -4,14 +4,16 @@ set -e
 set -x
 
 #installer name defines
-#resources dir, where the plists are
+#resources dir, for files that are to be kept inside the pkg
 RESOURCES_DIR="./resources"
 #install scripts dir, where the install scripts are
 INFO_DIR="./info"
 #install scripts dir, where the install scripts are
 INSTALL_SCRIPTS_DIR="./install_scripts"
+
 #root dir, where all files to be packaged will be placed
 ROOT_DIR="$(pwd)/root"
+
 #inst dir, where our libs and binaries will be placed
 INST_DIR=/usr/local
 #licenses dir, where our licences will be placed
@@ -28,7 +30,7 @@ REL_NAME="beid"
 REL_VERSION="4.1.3"
 
 PKCS11_BUNDLE="beid-pkcs11.bundle"
-BUILD_NR=$(svn info ../../ | grep Revision | sed s/"Revision: "/""/)
+BUILD_NR=$(git rev-list --count HEAD)
 PKG_NAME="$REL_NAME.pkg"
 PKG_MAKER=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
 VOL_NAME="${REL_NAME} OSX ${REL_VERSION}"
@@ -54,20 +56,19 @@ trap cleanup EXIT
 
 
 #create installer dirs
-mkdir -p $ROOT_DIR/$INST_DIR/share/beid/certs
+mkdir -p $ROOT_DIR/$INST_DIR/lib/
 mkdir -p $ROOT_DIR/$LICENSES_DIR
 mkdir -p $ROOT_DIR/usr/bin/
 
 #copy all files that should be part of the installer:
-#copy third party deliverables
 cp $LIB_DIR/libbeidpkcs11.$REL_VERSION.dylib $ROOT_DIR/$INST_DIR/lib/
 
 
 LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
 XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
-cp $XPI_PLUGIN $ROOT_DIR/$BELGIUM_DIR
+cp $XPI_PLUGIN $RESOURCES_DIR
 
-cp -r ../../../cardcomm/tokend/BEID_Lion.tokend $ROOT_DIR/$BELGIUM_DIR
+cp -r ../../../cardcomm/tokend/BEID_Lion.tokend $RESOURCES_DIR
 
 #copy licenses
 cp ../../../doc/licenses/Dutch/eID-toolkit_licensingtermsconditions.txt \
@@ -81,10 +82,11 @@ cp ../../../doc/licenses/German/eID-toolkit_licensingtermsconditions.txt \
 cp ../../../doc/licenses/THIRDPARTY-LICENSES-Mac.txt $ROOT_DIR/$LICENSES_DIR/
 
 #copy certificates
-cp ../../../installers/certificates/beid-cert-belgiumrca2.der $ROOT_DIR/$INST_DIR/share/beid/certs/
+cp ../../../installers/certificates/beid-cert-belgiumrca2.der $RESOURCES_DIR
 
 #copy pkcs11 bundle
-#cp -r ../../../misc/mac/pkcs11.bundle $ROOT_DIR/$INST_DIR/lib/$PKCS11_BUNDLE
+#cp -r ../../../misc/mac/pkcs11.bundle $RESOURCES_DIR
+#$ROOT_DIR/$INST_DIR/lib/$PKCS11_BUNDLE
 	 
 ## Make interpretes spaces as separator. So we specify 2 names:
 ## the one that will be installed and the one to which this
@@ -117,7 +119,7 @@ chgrp    wheel  $ROOT_DIR/usr
 chgrp    wheel  $ROOT_DIR/usr/bin
 chgrp    wheel  $ROOT_DIR/usr/local
 chgrp    wheel  $ROOT_DIR/usr/local/lib
-chgrp -R admin  $ROOT_DIR/$BELGIUM_DIR/BEID_Lion.tokend
+chgrp -R admin  $RESOURCES_DIR/BEID_Lion.tokend
 
 $PKG_MAKER -r $ROOT_DIR -o $PKG_NAME -f $INFO_DIR/Info.plist \
 	-e $RESOURCES_DIR -s $INSTALL_SCRIPTS_DIR -n REL_VERSION
