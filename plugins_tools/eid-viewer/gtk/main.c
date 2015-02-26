@@ -30,6 +30,7 @@ static void stringclear(char* l) {
 	// earlier...
 	assert(label != NULL);
 	g_object_set_threaded(G_OBJECT(label), "label", "-", FALSE);
+	g_object_set_threaded(G_OBJECT(label), "sensitive", FALSE, FALSE);
 }
 
 static void newstringdata(char* l, char* data) {
@@ -43,6 +44,7 @@ static void newstringdata(char* l, char* data) {
 	}
 	g_hash_table_insert(touched_labels, label, f);
 	g_object_set_threaded(G_OBJECT(label), "label", g_strdup(data), TRUE);
+	g_object_set_threaded(G_OBJECT(label), "sensitive", TRUE, FALSE);
 }
 
 static void newbindata(char* label, void* data, int datalen) {
