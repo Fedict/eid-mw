@@ -8,6 +8,7 @@
 
 #include "oslayer.h"
 #include "labels.h"
+#include <conversions.h>
 
 typedef struct {
 	CK_RV rv;
@@ -145,7 +146,11 @@ int read_card(CK_SLOT_ID which) {
 		value_str[data[1].ulValueLen] = '\0';
 		objid_str[data[2].ulValueLen] = '\0';
 
-		if(is_string(objid_str, label_str)) {
+		if(can_convert(label_str)) {
+			char* str = converted_string(label_str, value_str);
+			cb->newstringdata(label_str, str);
+			free(str);
+		} else if(is_string(objid_str, label_str)) {
 			cb->newstringdata(label_str, value_str);
 		} else {
 			cb->newbindata(label_str, value_str, data[1].ulValueLen);

@@ -12,9 +12,20 @@ eid_viewer_SOURCES = oslayer.h \
 	gtk/thread.h \
 	gtk/thread.c \
 	gtk/photo.h \
-	gtk/photo.c
+	gtk/photo.c \
+	conversions/hexnumconv.cpp \
+	conversions/hexnumconv.h \
+	conversions/convert.cpp \
+	conversions/convertor.cpp \
+	conversions/convertor.h \
+	conversions/convworker.h \
+	conversions/convworker.cpp \
+	conversions/natnumconv.cpp \
+	conversions/natnumconv.h \
+	conversions.h
 eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/tests/unit/liblabels.a
 AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/tests/unit
+AM_CXXFLAGS = $(AM_CFLAGS) 
 #SUBDIRS = po
 SUBDIRS = test
 
