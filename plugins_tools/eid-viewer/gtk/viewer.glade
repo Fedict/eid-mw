@@ -945,6 +945,7 @@
                         <child>
                           <object class="GtkLabel" id="card_number">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -959,6 +960,7 @@
                         <child>
                           <object class="GtkLabel" id="issuing_municipality">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -975,6 +977,7 @@
                         <child>
                           <object class="GtkLabel" id="chip_number">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -991,6 +994,7 @@
                         <child>
                           <object class="GtkLabel" id="validity_begin_date">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
@@ -1007,6 +1011,7 @@
                         <child>
                           <object class="GtkLabel" id="validity_end_date">
                             <property name="visible">True</property>
+                            <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">-</property>
