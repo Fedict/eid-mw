@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
-"POT-Creation-Date: 2015-02-10 13:14+0100\n"
+"POT-Creation-Date: 2015-02-25 14:24+0100\n"
 "PO-Revision-Date: 2015-02-06 13:47+0100\n"
 "Last-Translator: Wouter Verhelst <wouter.verhelst@fedict.be>\n"
 "Language-Team: \n"
@@ -84,59 +84,59 @@ msgstr "64-bit PKCS#11 locatie"
 msgid "PKCS#11 location"
 msgstr "PKCS#11 locatie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:258
-#: plugins_tools/aboutmw/gtk/about-main.c:261
-#: plugins_tools/aboutmw/gtk/about-main.c:265
+#: plugins_tools/aboutmw/gtk/about-main.c:290
+#: plugins_tools/aboutmw/gtk/about-main.c:293
+#: plugins_tools/aboutmw/gtk/about-main.c:297
 msgid "System architecture"
 msgstr "Systeemarchitectuur"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:258
+#: plugins_tools/aboutmw/gtk/about-main.c:290
 msgid "64-bit PC"
 msgstr "64-bit PC"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:261
+#: plugins_tools/aboutmw/gtk/about-main.c:293
 msgid "32-bit PC"
 msgstr "32-bit PC"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:264
+#: plugins_tools/aboutmw/gtk/about-main.c:296
 #, c-format
 msgid "Unknown (%s)"
 msgstr "Onbekend (%s)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:283
-#: plugins_tools/aboutmw/gtk/about-main.c:290
-#: plugins_tools/aboutmw/gtk/about-main.c:295
+#: plugins_tools/aboutmw/gtk/about-main.c:315
+#: plugins_tools/aboutmw/gtk/about-main.c:322
+#: plugins_tools/aboutmw/gtk/about-main.c:327
 msgid "(unknown)"
 msgstr "(onbekend)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:313
+#: plugins_tools/aboutmw/gtk/about-main.c:344
 msgid "Distribution"
 msgstr "Distributie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:318
+#: plugins_tools/aboutmw/gtk/about-main.c:349
 msgid "Distribution version"
 msgstr "Distributie-versie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:323
+#: plugins_tools/aboutmw/gtk/about-main.c:354
 msgid "Distribution codename"
 msgstr "Distributie codenaam"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:356
+#: plugins_tools/aboutmw/gtk/about-main.c:388
 msgid "Middleware version"
 msgstr "Middleware-versie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:358
+#: plugins_tools/aboutmw/gtk/about-main.c:390
 msgid "Middleware build ID"
 msgstr "Middleware bouw-ID"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:361
+#: plugins_tools/aboutmw/gtk/about-main.c:393
 msgid "Middleware build date"
 msgstr "Middleware bouwdatum"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:371
+#: plugins_tools/aboutmw/gtk/about-main.c:403
 msgid "Item"
 msgstr "Item"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:373
+#: plugins_tools/aboutmw/gtk/about-main.c:405
 msgid "Value"
 msgstr "Waarde"
