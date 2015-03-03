@@ -19,5 +19,5 @@
     <choice id="eid.belgium.be" visible="false">
         <pkg-ref id="eid.belgium.be"/>
     </choice>
-    <pkg-ref id="eid.belgium.be" onConclusion="none">beid.pkg</pkg-ref>
+    <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
 </installer-gui-script>
