@@ -67,13 +67,7 @@ const gchar* describe_cert(char* label, X509* cert) {
 	return g_strdup_printf("TODO (%s)", label);
 }
 
-void add_certificate(char* label, void* data, int len) {
-	X509 *cert = NULL;
-	GtkTreeIter* iter;
-	BIO *bio = BIO_new(BIO_s_mem());
-	char *buf;
-	size_t size;
-
+static void ensure_cert() {
 	if(G_UNLIKELY(certificates == NULL)) {
 		certificates = gtk_tree_store_new(CERT_COL_NCOLS,
 				G_TYPE_STRING, // label (short description)
@@ -85,6 +79,16 @@ void add_certificate(char* label, void* data, int len) {
 				G_TYPE_STRING, // description (multi-line field 
 				G_TYPE_POINTER); // data (X509*)
 	}
+}
+
+void add_certificate(char* label, void* data, int len) {
+	X509 *cert = NULL;
+	GtkTreeIter* iter;
+	BIO *bio = BIO_new(BIO_s_mem());
+	char *buf;
+	size_t size;
+
+	ensure_cert();
 	if(!strcmp(label, "CERT_RN_FILE")) {
 		add_verify_data(label, data, len);
 	}
@@ -114,5 +118,6 @@ void add_certificate(char* label, void* data, int len) {
 }
 
 GtkTreeModel* certificates_get_model() {
+	ensure_cert();
 	return GTK_TREE_MODEL(certificates);
 }
