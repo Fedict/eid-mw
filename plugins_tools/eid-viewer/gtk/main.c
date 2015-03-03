@@ -15,6 +15,7 @@
 #include "thread.h"
 #include "photo.h"
 #include "verify.h"
+#include "certs.h"
 
 #ifndef _
 #define _(s) gettext(s)
@@ -177,6 +178,11 @@ int main(int argc, char** argv) {
 	g_hash_table_insert(binhash, "SIGN_ADDRESS_FILE", add_verify_data);
 	g_hash_table_insert(binhash, "ADDRESS_FILE", add_verify_data);
 	g_hash_table_insert(binhash, "DATA_FILE", add_verify_data);
+	g_hash_table_insert(binhash, "CERT_RN_FILE", add_certificate);
+	g_hash_table_insert(binhash, "Authentication", add_certificate);
+	g_hash_table_insert(binhash, "CA", add_certificate);
+	g_hash_table_insert(binhash, "Root", add_certificate);
+	g_hash_table_insert(binhash, "Signature", add_certificate);
 
 	cb = eid_vwr_cbstruct();
 	cb->newsrc = newsrc;

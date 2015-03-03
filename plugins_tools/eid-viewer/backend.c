@@ -101,25 +101,13 @@ int find_first_slot(CK_SLOT_ID_PTR loc) {
 	return EIDV_RV_FAIL;
 }
 
-int read_card(CK_SLOT_ID which) {
-	CK_SESSION_HANDLE session;
+static int perform_find(CK_SESSION_HANDLE session, CK_BBOOL do_objid) {
 	CK_OBJECT_HANDLE object;
-	CK_ATTRIBUTE attr;
-	CK_ULONG count, type;
-
-	check_rv(C_OpenSession(which, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
-
-	attr.type = CKA_CLASS;
-	attr.pValue = &type;
-	type = CKO_DATA;
-	attr.ulValueLen = sizeof(CK_ULONG);
-
-	check_rv(C_FindObjectsInit(session, &attr, 1));
-
+	CK_ULONG count;
 	do {
 		char* label_str;
 		char* value_str;
-		char* objid_str;
+		char* objid_str = NULL;
 
 		CK_ATTRIBUTE data[3] = {
 			{ CKA_LABEL, NULL_PTR, 0 },
@@ -130,7 +118,11 @@ int read_card(CK_SLOT_ID which) {
 		check_rv(C_FindObjects(session, &object, 1, &count));
 		if(!count) continue;
 
-		check_rv(C_GetAttributeValue(session, object, data, 3));
+		if(do_objid) {
+			check_rv(C_GetAttributeValue(session, object, data, 3));
+		} else {
+			check_rv(C_GetAttributeValue(session, object, data, 2));
+		}
 
 		label_str = malloc(data[0].ulValueLen + 1);
 		data[0].pValue = label_str;
@@ -138,24 +130,29 @@ int read_card(CK_SLOT_ID which) {
 		value_str = malloc(data[1].ulValueLen + 1);
 		data[1].pValue = value_str;
 
-		objid_str = malloc(data[2].ulValueLen + 1);
-		data[2].pValue = objid_str;
+		if(do_objid) {
+			objid_str = malloc(data[2].ulValueLen + 1);
+			data[2].pValue = objid_str;
 
-		check_rv(C_GetAttributeValue(session, object, data, 3));
+			check_rv(C_GetAttributeValue(session, object, data, 3));
+
+			objid_str[data[2].ulValueLen] = '\0';
+		} else {
+			check_rv(C_GetAttributeValue(session, object, data, 2));
+		}
 
 		label_str[data[0].ulValueLen] = '\0';
 		value_str[data[1].ulValueLen] = '\0';
-		objid_str[data[2].ulValueLen] = '\0';
 
 		cache_add(label_str, value_str, data[1].ulValueLen);
 
 		cb->log(EID_VWR_LOG_DETAIL, "found data for label %s", label_str);
 		if(can_convert(label_str)) {
-			cb->log(EID_VWR_LOG_DETAIL, "converting", label_str);
+			cb->log(EID_VWR_LOG_DETAIL, "converting %s", label_str);
 			char* str = converted_string(label_str, value_str);
 			cb->newstringdata(label_str, str);
 			free(str);
-		} else if(is_string(objid_str, label_str)) {
+		} else if(objid_str != NULL && is_string(objid_str, label_str)) {
 			cb->newstringdata(label_str, value_str);
 		} else {
 			cb->newbindata(label_str, value_str, data[1].ulValueLen);
@@ -165,6 +162,35 @@ int read_card(CK_SLOT_ID which) {
 		free(value_str);
 		free(objid_str);
 	} while(count);
+}
+
+int read_card(CK_SLOT_ID which) {
+	CK_SESSION_HANDLE session;
+	CK_ATTRIBUTE attr;
+	CK_ULONG type;
+
+	check_rv(C_OpenSession(which, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
+
+	attr.type = CKA_CLASS;
+	attr.pValue = &type;
+	type = CKO_DATA;
+	attr.ulValueLen = sizeof(CK_ULONG);
+
+	check_rv(C_FindObjectsInit(session, &attr, 1));
+
+	perform_find(session, 1);
+
+	check_rv(C_FindObjectsFinal(session));
+
+	type = CKO_CERTIFICATE;
+
+	check_rv(C_FindObjectsInit(session, &attr, 1));
+
+	perform_find(session, 0);
+
+	check_rv(C_FindObjectsFinal(session));
+
+	check_rv(C_CloseSession(which));
 }
 
 void eid_vwr_be_mainloop() {

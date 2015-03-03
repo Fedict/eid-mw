@@ -5,6 +5,8 @@ eid_viewer_SOURCES = oslayer.h \
 	backend.c \
 	gtk/main.c \
 	gtk/viewer_glade.h \
+	gtk/certs.h \
+	gtk/certs.c \
 	gtk/gtkui.c \
 	gtk/gtkui.h \
 	gtk/binops.h \
