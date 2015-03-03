@@ -64,6 +64,10 @@ static void newstringdata(char* l, char* data) {
 		g_free(msg);
 		return;
 	}
+	if(!strcmp(data, "-")) {
+		stringclear(l);
+		return;
+	}
 	g_hash_table_insert(touched_labels, g_strdup(l), stringclear);
 	g_object_set_threaded(G_OBJECT(label), "label", g_strdup(data), g_free);
 	g_object_set_threaded(G_OBJECT(label), "sensitive", (void*)TRUE, NULL);
