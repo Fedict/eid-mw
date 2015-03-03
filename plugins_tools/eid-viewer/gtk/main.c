@@ -206,7 +206,7 @@ static void bindata_init() {
 }
 
 static void setup_treeview() {
-	GtkTreeView* tv = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_certs"));
+	GtkTreeView* tv = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_cert"));
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *col;
 
