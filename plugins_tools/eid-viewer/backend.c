@@ -190,7 +190,7 @@ int read_card(CK_SLOT_ID which) {
 
 	check_rv(C_FindObjectsFinal(session));
 
-	check_rv(C_CloseSession(which));
+	check_rv(C_CloseSession(session));
 }
 
 void eid_vwr_be_mainloop() {
