@@ -149,47 +149,8 @@ enum eid_vwr_langs langfromenv() {
 	return EID_VWR_LANG_EN;
 }
 
-int main(int argc, char** argv) {
-	GtkWidget *window;
+static void connect_signals(GtkWidget* window) {
 	GObject* signaltmp;
-	GtkAccelGroup *group;
-	struct eid_vwr_ui_callbacks* cb;
-	pthread_t thread;
-
-	bindtextdomain("eid-viewer", DATAROOTDIR "/locale");
-	textdomain("eid-viewer");
-
-	convert_set_lang(langfromenv());
-
-	gtk_init(&argc, &argv);
-	builder = gtk_builder_new();
-	gtk_builder_add_from_string(builder, VIEWER_GLADE_STRING, strlen(VIEWER_GLADE_STRING), NULL);
-
-	window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
-	group = gtk_accel_group_new();
-	gtk_window_add_accel_group(GTK_WINDOW(window), group);
-
-	touched_labels = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
-	binhash = g_hash_table_new(g_str_hash, g_str_equal);
-
-	g_hash_table_insert(binhash, "PHOTO_FILE", displayphoto);
-	g_hash_table_insert(binhash, "photo_hash", photohash);
-	g_hash_table_insert(binhash, "SIGN_DATA_FILE", add_verify_data);
-	g_hash_table_insert(binhash, "SIGN_ADDRESS_FILE", add_verify_data);
-	g_hash_table_insert(binhash, "ADDRESS_FILE", add_verify_data);
-	g_hash_table_insert(binhash, "DATA_FILE", add_verify_data);
-	g_hash_table_insert(binhash, "CERT_RN_FILE", add_certificate);
-	g_hash_table_insert(binhash, "Authentication", add_certificate);
-	g_hash_table_insert(binhash, "CA", add_certificate);
-	g_hash_table_insert(binhash, "Root", add_certificate);
-	g_hash_table_insert(binhash, "Signature", add_certificate);
-
-	cb = eid_vwr_cbstruct();
-	cb->newsrc = newsrc;
-	cb->newstringdata = newstringdata;
-	cb->newbindata = newbindata;
-	cb->log = uilog;
-	eid_vwr_createcallbacks(cb);
 
 	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_open"));
@@ -226,6 +187,66 @@ int main(int argc, char** argv) {
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(testpin), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pinchangebut"));
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(changepin), NULL);
+}
+
+static void bindata_init() {
+	binhash = g_hash_table_new(g_str_hash, g_str_equal);
+
+	g_hash_table_insert(binhash, "PHOTO_FILE", displayphoto);
+	g_hash_table_insert(binhash, "photo_hash", photohash);
+	g_hash_table_insert(binhash, "SIGN_DATA_FILE", add_verify_data);
+	g_hash_table_insert(binhash, "SIGN_ADDRESS_FILE", add_verify_data);
+	g_hash_table_insert(binhash, "ADDRESS_FILE", add_verify_data);
+	g_hash_table_insert(binhash, "DATA_FILE", add_verify_data);
+	g_hash_table_insert(binhash, "CERT_RN_FILE", add_certificate);
+	g_hash_table_insert(binhash, "Authentication", add_certificate);
+	g_hash_table_insert(binhash, "CA", add_certificate);
+	g_hash_table_insert(binhash, "Root", add_certificate);
+	g_hash_table_insert(binhash, "Signature", add_certificate);
+}
+
+static void setup_treeview() {
+	GtkTreeView* tv = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_certs"));
+	GtkCellRenderer *renderer;
+	GtkTreeViewColumn *col;
+
+	gtk_tree_view_set_model(tv, certificates_get_model());
+	renderer = gtk_cell_renderer_text_new();
+	col = gtk_tree_view_column_new_with_attributes("label", renderer, "text", 0, NULL);
+	gtk_tree_view_append_column(tv, col);
+}
+
+int main(int argc, char** argv) {
+	GtkWidget *window;
+	GtkAccelGroup *group;
+	struct eid_vwr_ui_callbacks* cb;
+	pthread_t thread;
+
+	bindtextdomain("eid-viewer", DATAROOTDIR "/locale");
+	textdomain("eid-viewer");
+
+	convert_set_lang(langfromenv());
+
+	gtk_init(&argc, &argv);
+	builder = gtk_builder_new();
+	gtk_builder_add_from_string(builder, VIEWER_GLADE_STRING, strlen(VIEWER_GLADE_STRING), NULL);
+
+	window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
+	group = gtk_accel_group_new();
+	gtk_window_add_accel_group(GTK_WINDOW(window), group);
+
+	touched_labels = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
+
+	bindata_init();
+	connect_signals(window);
+	setup_treeview();
+
+	cb = eid_vwr_cbstruct();
+	cb->newsrc = newsrc;
+	cb->newstringdata = newstringdata;
+	cb->newbindata = newbindata;
+	cb->log = uilog;
+	eid_vwr_createcallbacks(cb);
 
 	pthread_create(&thread, NULL, threadmain, NULL);
 
