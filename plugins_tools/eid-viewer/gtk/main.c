@@ -64,7 +64,7 @@ static void newstringdata(char* l, char* data) {
 		g_free(msg);
 		return;
 	}
-	if(!strcmp(data, "-")) {
+	if(strlen(data) == 0) {
 		stringclear(l);
 		return;
 	}
