@@ -109,19 +109,18 @@ enum eid_vwr_langs langfromenv() {
 	char* all = NULL;
 	char* msg = NULL;
 	char* lang = NULL;
+	int i;
 
-	p = environ[0];
-	while(*p) {
-		if(strncmp(p, "LC_ALL", 6)) {
+	for(i=0, p=environ[0];p != NULL; i++, p=environ[i]) {
+		if(!strncmp(p, "LC_ALL=", 7)) {
 			all = p+7;
 		}
-		if(strncmp(p, "LC_MESSAGES", 11)) {
+		if(!strncmp(p, "LC_MESSAGES=", 12)) {
 			msg = p+12;
 		}
-		if(strncmp(p, "LANG", 4)) {
+		if(!strncmp(p, "LANG=", 5)) {
 			lang = p+5;
 		}
-		p++;
 	}
 	if(all != NULL) {
 		p = all;
@@ -132,13 +131,13 @@ enum eid_vwr_langs langfromenv() {
 	} else {
 		p = "";
 	}
-	if(strncmp(p, "de", 2)) {
+	if(!strncmp(p, "de", 2)) {
 		return EID_VWR_LANG_DE;
 	}
-	if(strncmp(p, "fr", 2)) {
+	if(!strncmp(p, "fr", 2)) {
 		return EID_VWR_LANG_FR;
 	}
-	if(strncmp(p, "nl", 2)) {
+	if(!strncmp(p, "nl", 2)) {
 		return EID_VWR_LANG_NL;
 	}
 	return EID_VWR_LANG_EN;
