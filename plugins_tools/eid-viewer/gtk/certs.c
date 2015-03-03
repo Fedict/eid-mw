@@ -103,15 +103,17 @@ void add_certificate(char* label, void* data, int len) {
 			-1);
 
 	ASN1_TIME_print(bio, X509_get_notBefore(cert));
-	buf = malloc((size = BIO_ctrl_pending(bio)));
+	buf = malloc((size = BIO_ctrl_pending(bio)) + 1);
 	BIO_read(bio, buf, (int)size);
+	buf[size] = '\0';
 	gtk_tree_store_set(certificates, iter,
 			CERT_COL_VALIDFROM, buf,
 			-1);
 	
 	ASN1_TIME_print(bio, X509_get_notAfter(cert));
-	buf = malloc((size = BIO_ctrl_pending(bio)));
+	buf = malloc((size = BIO_ctrl_pending(bio)) + 1);
 	BIO_read(bio, buf, (int)size);
+	buf[size] = '\0';
 	gtk_tree_store_set(certificates, iter,
 			CERT_COL_VALIDTO, buf,
 			-1);
