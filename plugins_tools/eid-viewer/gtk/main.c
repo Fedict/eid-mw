@@ -171,6 +171,7 @@ int main(int argc, char** argv) {
 	binhash = g_hash_table_new(g_str_hash, g_str_equal);
 
 	g_hash_table_insert(binhash, "PHOTO_FILE", displayphoto);
+	g_hash_table_insert(binhash, "photo_hash", photohash);
 
 	cb = eid_vwr_cbstruct();
 	cb->newsrc = newsrc;
