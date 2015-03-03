@@ -9,7 +9,6 @@ eid_viewer_SOURCES = oslayer.h \
 	gtk/certs.c \
 	gtk/gtkui.c \
 	gtk/gtkui.h \
-	gtk/binops.h \
 	gtk/gtk_globals.h \
 	gtk/thread.h \
 	gtk/thread.c \

@@ -8,7 +8,6 @@
 #include "oslayer.h"
 #include "viewer_glade.h"
 #include "gettext.h"
-#include "binops.h"
 #include "gtk_globals.h"
 
 #include "gtkui.h"
