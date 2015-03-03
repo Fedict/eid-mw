@@ -1,6 +1,7 @@
 #include "convertor.h"
 #include "natnumconv.h"
 #include "hexnumconv.h"
+#include "specconv.h"
 
 std::map<std::string, ConversionWorker*> Convertor::convertors;
 
@@ -8,6 +9,7 @@ Convertor::Convertor() {
 	if(convertors.empty()) {
 		convertors["national_number"] = new NationalNumberConvertor();
 		convertors["chip_number"] = new HexNumberConvertor(16);
+		convertors["special_status"] = new SpecConvertor();
 	}
 }
 
