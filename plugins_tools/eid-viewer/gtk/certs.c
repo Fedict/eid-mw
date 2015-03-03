@@ -4,18 +4,6 @@
 
 #include <openssl/x509.h>
 
-enum columns {
-	CERT_COL_LABEL,
-	CERT_COL_IMAGE,
-	CERT_COL_VALIDFROM,
-	CERT_COL_VALIDTO,
-	CERT_COL_USE,
-	CERT_COL_VALIDITY,
-	CERT_COL_DESC,
-	CERT_COL_DATA,
-	CERT_COL_NCOLS
-};
-
 enum certs {
 	Root,
 	CA,

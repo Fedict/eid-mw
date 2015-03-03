@@ -65,7 +65,7 @@ static void newstringdata(char* l, char* data) {
 		g_free(msg);
 		return;
 	}
-	if(strlen(data) == 0) {
+	if(!data || strlen(data) == 0) {
 		stringclear(l);
 		return;
 	}
@@ -204,15 +204,38 @@ static void bindata_init() {
 	g_hash_table_insert(binhash, "Signature", add_certificate);
 }
 
+static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter* iter, gpointer data G_GNUC_UNUSED) {
+	gchar *from, *to, *use;
+	gboolean validity;
+
+	gtk_tree_model_get(model, iter,
+			CERT_COL_VALIDFROM, &from,
+			CERT_COL_VALIDTO, &to,
+			CERT_COL_USE, &use,
+			CERT_COL_VALIDITY, &validity,
+			-1);
+	newstringdata("certvalfromval", from);
+	newstringdata("certvaltilval", to);
+	newstringdata("certuseval", use);
+	newstringdata("certtrustval", validity ? _("Trusted") : _("Not trusted"));
+}
+
+static void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
+	gtk_tree_selection_selected_foreach(sel, update_info_detail, NULL);
+}
+
 static void setup_treeview() {
 	GtkTreeView* tv = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_cert"));
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *col;
+	GtkTreeSelection* sel = gtk_tree_view_get_selection(tv);
 
 	gtk_tree_view_set_model(tv, certificates_get_model());
 	renderer = gtk_cell_renderer_text_new();
 	col = gtk_tree_view_column_new_with_attributes("label", renderer, "text", 0, NULL);
 	gtk_tree_view_append_column(tv, col);
+
+	g_signal_connect(G_OBJECT(sel), "changed", G_CALLBACK(update_info), NULL);
 }
 
 int main(int argc, char** argv) {
