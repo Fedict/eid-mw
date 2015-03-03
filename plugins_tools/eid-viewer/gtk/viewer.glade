@@ -556,7 +556,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -573,7 +573,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -590,7 +590,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -607,7 +607,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -624,7 +624,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -641,7 +641,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -658,7 +658,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -675,7 +675,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -692,7 +692,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -709,7 +709,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -726,7 +726,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -743,7 +743,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -927,7 +927,7 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="pinchangebut">
-                            <property name="label" translatable="yes">Change PIN</property>
+                            <property name="label" translatable="yes">button</property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -948,7 +948,8 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="yalign">0.43999999761581421</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -963,7 +964,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -980,7 +981,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -997,7 +998,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1014,7 +1015,7 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1289,7 +1290,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">-</property>
+                                <property name="label">-</property>
                               </object>
                               <packing>
                                 <property name="left_attach">2</property>
@@ -1305,7 +1306,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">-</property>
+                                <property name="label">-</property>
                               </object>
                               <packing>
                                 <property name="left_attach">2</property>
@@ -1321,7 +1322,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">-</property>
+                                <property name="label">-</property>
                               </object>
                               <packing>
                                 <property name="left_attach">2</property>
@@ -1337,7 +1338,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">-</property>
+                                <property name="label">-</property>
                               </object>
                               <packing>
                                 <property name="left_attach">2</property>
