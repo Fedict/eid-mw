@@ -1,6 +1,8 @@
 #ifndef EID_VWR_GTK_OSLAYER_H
 #define EID_VWR_GTK_OSLAYER_H
 
+#include <conversions.h>
+
 enum eid_vwr_source {
 	EID_VWR_SRC_NONE,
 	EID_VWR_SRC_FILE,

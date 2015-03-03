@@ -2,6 +2,8 @@
 #include <gtk/gtk.h>
 #include <assert.h>
 #include <stdarg.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #include "oslayer.h"
 #include "viewer_glade.h"
@@ -21,6 +23,8 @@ typedef void(*bindisplayfunc)(void*, int);
 typedef void(*clearfunc)(char*);
 
 static GHashTable* binhash;
+
+extern char** environ;
 
 static void uilog(enum eid_vwr_loglevel l, char* line, ...) {
 	GLogLevelFlags gtklog;
@@ -100,6 +104,46 @@ static void* threadmain(void* data G_GNUC_UNUSED) {
 	eid_vwr_be_mainloop();
 }
 
+enum eid_vwr_langs langfromenv() {
+	char* p;
+	char* all = NULL;
+	char* msg = NULL;
+	char* lang = NULL;
+
+	p = environ[0];
+	while(*p) {
+		if(strncmp(p, "LC_ALL", 6)) {
+			all = p+7;
+		}
+		if(strncmp(p, "LC_MESSAGES", 11)) {
+			msg = p+12;
+		}
+		if(strncmp(p, "LANG", 4)) {
+			lang = p+5;
+		}
+		p++;
+	}
+	if(all != NULL) {
+		p = all;
+	} else if(msg != NULL) {
+		p = msg;
+	} else if(lang != NULL) {
+		p = lang;
+	} else {
+		p = "";
+	}
+	if(strncmp(p, "de", 2)) {
+		return EID_VWR_LANG_DE;
+	}
+	if(strncmp(p, "fr", 2)) {
+		return EID_VWR_LANG_FR;
+	}
+	if(strncmp(p, "nl", 2)) {
+		return EID_VWR_LANG_NL;
+	}
+	return EID_VWR_LANG_EN;
+}
+
 int main(int argc, char** argv) {
 	GtkWidget *window;
 	GObject* signaltmp;
@@ -109,6 +153,8 @@ int main(int argc, char** argv) {
 
 	bindtextdomain("eid-viewer", DATAROOTDIR "/locale");
 	textdomain("eid-viewer");
+
+	convert_set_lang(langfromenv());
 
 	gtk_init(&argc, &argv);
 	builder = gtk_builder_new();
