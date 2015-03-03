@@ -146,7 +146,9 @@ int read_card(CK_SLOT_ID which) {
 		value_str[data[1].ulValueLen] = '\0';
 		objid_str[data[2].ulValueLen] = '\0';
 
+		cb->log(EID_VWR_LOG_DETAIL, "found data for label %s", label_str);
 		if(can_convert(label_str)) {
+			cb->log(EID_VWR_LOG_DETAIL, "converting", label_str);
 			char* str = converted_string(label_str, value_str);
 			cb->newstringdata(label_str, str);
 			free(str);

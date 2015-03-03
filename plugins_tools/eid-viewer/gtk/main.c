@@ -67,10 +67,8 @@ static void newstringdata(char* l, char* data) {
 
 static void newbindata(char* label, void* data, int datalen) {
 	bindisplayfunc func;
-	gchar* msg = g_strdup_printf("found label %s with data length %d", label, datalen);
+	gchar* msg;
 
-	uilog(EID_VWR_LOG_DETAIL, msg);
-	free(msg);
 	if(!g_hash_table_contains(binhash, label)) {
 		msg = g_strdup_printf(_("Could not display binary data with label '%s': not found in hashtable"), label);
 		uilog(EID_VWR_LOG_DETAIL, msg);
