@@ -14,12 +14,13 @@
 #include "gtkui.h"
 #include "thread.h"
 #include "photo.h"
+#include "verify.h"
 
 #ifndef _
 #define _(s) gettext(s)
 #endif
 
-typedef void(*bindisplayfunc)(void*, int);
+typedef void(*bindisplayfunc)(char*, void*, int);
 typedef void(*clearfunc)(char*);
 
 static GHashTable* binhash;
@@ -84,7 +85,7 @@ static void newbindata(char* label, void* data, int datalen) {
 		return;
 	}
 	func = (bindisplayfunc)g_hash_table_lookup(binhash, label);
-	func(data, datalen);
+	func(label, data, datalen);
 	return;
 }
 
@@ -172,6 +173,10 @@ int main(int argc, char** argv) {
 
 	g_hash_table_insert(binhash, "PHOTO_FILE", displayphoto);
 	g_hash_table_insert(binhash, "photo_hash", photohash);
+	g_hash_table_insert(binhash, "SIGN_DATA_FILE", add_verify_data);
+	g_hash_table_insert(binhash, "SIGN_ADDRESS_FILE", add_verify_data);
+	g_hash_table_insert(binhash, "ADDRESS_FILE", add_verify_data);
+	g_hash_table_insert(binhash, "DATA_FILE", add_verify_data);
 
 	cb = eid_vwr_cbstruct();
 	cb->newsrc = newsrc;

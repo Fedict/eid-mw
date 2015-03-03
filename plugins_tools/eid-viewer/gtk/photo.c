@@ -18,7 +18,7 @@ static void clearphoto(char* label) {
 	memset(sha1_asserted, 0, SHA_DIGEST_LENGTH);
 }
 
-void displayphoto(void* data, int length) {
+void displayphoto(char* label G_GNUC_UNUSED, void* data, int length) {
 	GtkWidget* image = GTK_WIDGET(gtk_builder_get_object(builder, "photo"));
 	GInputStream *mstream = G_INPUT_STREAM(g_memory_input_stream_new_from_data(data, length, NULL));
 	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_stream(mstream, NULL, NULL);
