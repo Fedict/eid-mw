@@ -8,6 +8,7 @@
 
 #include "oslayer.h"
 #include "labels.h"
+#include "cache.h"
 #include "conversions.h"
 
 typedef struct {
@@ -145,6 +146,8 @@ int read_card(CK_SLOT_ID which) {
 		label_str[data[0].ulValueLen] = '\0';
 		value_str[data[1].ulValueLen] = '\0';
 		objid_str[data[2].ulValueLen] = '\0';
+
+		cache_add(label_str, value_str, data[1].ulValueLen);
 
 		cb->log(EID_VWR_LOG_DETAIL, "found data for label %s", label_str);
 		if(can_convert(label_str)) {

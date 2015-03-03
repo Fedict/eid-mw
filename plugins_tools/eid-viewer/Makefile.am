@@ -13,6 +13,8 @@ eid_viewer_SOURCES = oslayer.h \
 	gtk/thread.c \
 	gtk/photo.h \
 	gtk/photo.c \
+	cache.h \
+	cache/cache.cpp \
 	conversions/hexnumconv.cpp \
 	conversions/hexnumconv.h \
 	conversions/convert.cpp \
