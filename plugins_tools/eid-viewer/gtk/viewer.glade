@@ -305,7 +305,7 @@
                         <property name="n_rows">15</property>
                         <property name="n_columns">3</property>
                         <child>
-                          <object class="GtkLabel" id="doctypeval">
+                          <object class="GtkLabel" id="document_type">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>

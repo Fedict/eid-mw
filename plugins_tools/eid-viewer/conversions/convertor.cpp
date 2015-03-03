@@ -2,6 +2,7 @@
 #include "natnumconv.h"
 #include "hexnumconv.h"
 #include "specconv.h"
+#include "doctypeconv.h"
 
 std::map<std::string, ConversionWorker*> Convertor::convertors;
 
@@ -10,6 +11,7 @@ Convertor::Convertor() {
 		convertors["national_number"] = new NationalNumberConvertor();
 		convertors["chip_number"] = new HexNumberConvertor(16);
 		convertors["special_status"] = new SpecConvertor();
+		convertors["document_type"] = new DocTypeConvertor();
 	}
 }
 

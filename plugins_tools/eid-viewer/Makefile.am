@@ -22,6 +22,8 @@ eid_viewer_SOURCES = oslayer.h \
 	conversions/convertor.h \
 	conversions/convworker.h \
 	conversions/convworker.cpp \
+	conversions/doctypeconv.h \
+	conversions/doctypeconv.cpp \
 	conversions/natnumconv.cpp \
 	conversions/natnumconv.h \
 	conversions/specconv.h \
