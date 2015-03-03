@@ -205,7 +205,7 @@ static void bindata_init() {
 }
 
 static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter* iter, gpointer data G_GNUC_UNUSED) {
-	gchar *from, *to, *use;
+	gchar *from, *to, *use, *certdata;
 	gboolean validity;
 
 	gtk_tree_model_get(model, iter,
@@ -213,11 +213,13 @@ static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIt
 			CERT_COL_VALIDTO, &to,
 			CERT_COL_USE, &use,
 			CERT_COL_VALIDITY, &validity,
+			CERT_COL_DATA, &certdata,
 			-1);
 	newstringdata("certvalfromval", from);
 	newstringdata("certvaltilval", to);
 	newstringdata("certuseval", use);
 	newstringdata("certtrustval", validity ? _("Trusted") : _("Not trusted"));
+	newstringdata("certdata", certdata);
 }
 
 static void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
