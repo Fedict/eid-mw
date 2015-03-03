@@ -1,4 +1,4 @@
-TESTS = cardevent deserialize serialize
+#TESTS = cardevent deserialize serialize
 check_PROGRAMS = $(TESTS)
 
 COMMON_LIB=$(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la $(top_builddir)/tests/unit/libtestlib.a $(top_builddir)/tests/unit/liblabels.a
