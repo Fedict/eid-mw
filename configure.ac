@@ -108,7 +108,8 @@ AC_CONFIG_FILES([Makefile
 		 plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh
 		 plugins_tools/aboutmw/gtk/po/Makefile.in
 		 plugins_tools/eid-viewer/Makefile
-		 plugins_tools/eid-viewer/test/Makefile])
+		 plugins_tools/eid-viewer/test/Makefile
+		 plugins_tools/eid-viewer/gtk/po/Makefile.in])
 
 AC_CONFIG_SUBDIRS([plugins_tools/xpi])
 

@@ -70,13 +70,19 @@ void file_open(GtkMenuItem* item, gpointer user_data) {
 
 	filter = gtk_file_filter_new();
 	gtk_file_filter_add_pattern(filter, "*.eid");
-	gtk_file_filter_set_name(filter, _("eID XML files"));
+	gtk_file_filter_add_pattern(filter, "*.csv");
+	gtk_file_filter_set_name(filter, _("All eID files"));
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 	gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
 
 	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*.eid");
+	gtk_file_filter_set_name(filter, _("XML eID files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+
+	filter = gtk_file_filter_new();
 	gtk_file_filter_add_pattern(filter, "*.csv");
-	gtk_file_filter_set_name(filter, _("eID CSV files"));
+	gtk_file_filter_set_name(filter, _("CSV eID files"));
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 
 	preview = gtk_image_new();
@@ -97,7 +103,7 @@ GEN_FUNC(save_file_detail, "saving %s")
 void file_save(GtkMenuItem* item, gpointer user_data) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
-			strcmp(user_data, "xml") ? _("Save eID CSV file") : _("Save eID XML file"), window, GTK_FILE_CHOOSER_ACTION_SAVE,
+			strcmp(user_data, "xml") ? _("Save CSV eID file") : _("Save XML eID file"), window, GTK_FILE_CHOOSER_ACTION_SAVE,
 			_("_Cancel"), GTK_RESPONSE_CANCEL,
 			_("_Save"), GTK_RESPONSE_ACCEPT,
 			NULL);
@@ -113,10 +119,10 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 	filter = gtk_file_filter_new();
 	if(strcmp(user_data, "xml")) {
 		gtk_file_filter_add_pattern(filter, "*.csv");
-		gtk_file_filter_set_name(filter, _("eID CSV files"));
+		gtk_file_filter_set_name(filter, _("CSV eID files"));
 	} else {
 		gtk_file_filter_add_pattern(filter, "*.eid");
-		gtk_file_filter_set_name(filter, _("eID XML files"));
+		gtk_file_filter_set_name(filter, _("XML eID files"));
 	}
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 	gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);

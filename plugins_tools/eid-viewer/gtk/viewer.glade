@@ -16,7 +16,7 @@
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_Bestand</property>
+                <property name="label" translatable="yes">_File</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menu_file">
@@ -151,7 +151,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Deutsch</property>
+                        <property name="label">Deutsch</property>
                         <property name="use_underline">True</property>
                         <accelerator key="d" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
@@ -161,7 +161,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">English</property>
+                        <property name="label">English</property>
                         <property name="use_underline">True</property>
                         <accelerator key="e" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
@@ -171,7 +171,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Français</property>
+                        <property name="label">Français</property>
                         <property name="use_underline">True</property>
                         <accelerator key="f" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
@@ -181,7 +181,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Nederlands</property>
+                        <property name="label">Nederlands</property>
                         <property name="use_underline">True</property>
                         <accelerator key="n" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
@@ -195,7 +195,7 @@
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_Hulp</property>
+                <property name="label" translatable="yes">_Help</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menu3">
@@ -309,7 +309,7 @@
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="right_attach">3</property>
@@ -927,7 +927,7 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="pinchangebut">
-                            <property name="label" translatable="yes">button</property>
+                            <property name="label" translatable="yes">Change PIN</property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>

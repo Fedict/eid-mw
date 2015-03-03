@@ -1,0 +1,205 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR FedICT
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eid-mw 4.1.1-v4.1.1.dirty\n"
+"Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
+"POT-Creation-Date: 2015-03-03 11:46+0100\n"
+"PO-Revision-Date: 2015-03-03 11:47+0100\n"
+"Last-Translator: Wouter Verhelst <wouter.verhelst@fedict.be>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plugins_tools/eid-viewer/gtk/main.c:62
+#, c-format
+msgid "Could not display label '%s', data '%s': no GtkLabel found for data"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/main.c:77
+#, c-format
+msgid "Could not display binary data with label '%s': not found in hashtable"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:22
+msgid "eID Viewer"
+msgstr "eID Viewer"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:57
+msgid "Open eID file"
+msgstr "eID bestand openen"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:58
+#: plugins_tools/eid-viewer/gtk/gtkui.c:107
+msgid "_Cancel"
+msgstr "_Annuleren"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:59
+msgid "_Open"
+msgstr "_Open"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:68
+#: plugins_tools/eid-viewer/gtk/gtkui.c:116
+msgid "All files"
+msgstr "Alle bestanden"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:74
+msgid "All eID files"
+msgstr "Alle eID bestanden"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:80
+#: plugins_tools/eid-viewer/gtk/gtkui.c:125
+msgid "XML eID files"
+msgstr "XML eID bestanden"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:85
+#: plugins_tools/eid-viewer/gtk/gtkui.c:122
+msgid "CSV eID files"
+msgstr "CSV eID bestanden"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:106
+msgid "Save CSV eID file"
+msgstr "CSV eID bestand opslaan"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:106
+msgid "Save XML eID file"
+msgstr "XML eID bestand opslaan"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:108
+msgid "_Save"
+msgstr "_Opslaan"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:19
+msgid "_File"
+msgstr "_Bestand"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:53
+msgid "XML file..."
+msgstr "XML bestand..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:62
+msgid "CSV file..."
+msgstr "CSV bestand..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:143
+msgid "Language"
+msgstr "Taal"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:198
+msgid "_Help"
+msgstr "_Hulp"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:226
+msgid "Frequently asked questions..."
+msgstr "Veel gestelde vragen..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:235
+msgid "Test site for eID..."
+msgstr "Testsite voor eID..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:251
+msgid "Show log"
+msgstr "Logboek tonen"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:352
+msgid "Name:"
+msgstr "Naam:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:368
+msgid "Given names:"
+msgstr "Voornamen:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:384
+msgid "Place of birth:"
+msgstr "Geboorteplaats:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:400
+msgid "Date of birth:"
+msgstr "Geboortedatum:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:416
+msgid "Sex:"
+msgstr "Geslacht:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:432
+msgid "National number:"
+msgstr "Nationaal nummer:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:448
+msgid "Municipality:"
+msgstr "Gemeente:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:464
+msgid "Postal code:"
+msgstr "Postcode:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:480
+msgid "Street:"
+msgstr "Straat:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:510
+msgid "Special status:"
+msgstr "Speciale status:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:526
+msgid "Title:"
+msgstr "Titel:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:542
+msgid "Nationality:"
+msgstr "Nationaliteit:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:799
+msgid "Identity"
+msgstr "Identiteit"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:848
+msgid "Card number:"
+msgstr "Kaartnummer:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:860
+msgid "Place of issue:"
+msgstr "Plaats van afgifte:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:874
+msgid "Chip number:"
+msgstr "Chip nummer:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:888
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1229
+msgid "Valid from:"
+msgstr "Geldig vanaf:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:902
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1245
+msgid "Valid until:"
+msgstr "Geldig tot:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:913
+msgid "Test PIN"
+msgstr "Pincode testen"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:930
+msgid "Change PIN"
+msgstr "Pincode wijzigen"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1090
+msgid "Card/PIN"
+msgstr "Kaart/PIN"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1261
+msgid "Use:"
+msgstr "Gebruik:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1277
+msgid "Trust:"
+msgstr "Betrouwbaarheid:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1403
+msgid "Certificates"
+msgstr "Certificaten"
