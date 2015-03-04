@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 
 #include <openssl/x509.h>
+#include <openssl/x509v3.h>
 
 enum certs {
 	Root,
@@ -92,6 +93,31 @@ void tst_set(char* w, gint* c, GValue* v, gint n) {
 	g_main_context_invoke(NULL, tst_helper, dat);
 }
 
+gchar* get_use_flags(char* label, X509* cert) {
+	X509_CINF* ci = cert->cert_info;
+	int i;
+	gchar* retval = 0;
+	int nid = OBJ_sn2nid("keyUsage");
+
+	for(i=0; i<sk_X509_EXTENSION_num(ci->extensions); i++) {
+		X509_EXTENSION *ex = sk_X509_EXTENSION_value(ci->extensions, i);
+		ASN1_OBJECT* obj = X509_EXTENSION_get_object(ex);
+		ASN1_OCTET_STRING* str = X509_EXTENSION_get_data(ex);
+
+		if(OBJ_obj2nid(obj) == nid) {
+			size_t size;
+			BIO *bio = BIO_new(BIO_s_mem());
+
+			X509V3_EXT_print(bio, ex, X509V3_EXT_DEFAULT, 0);
+			retval = g_malloc((size = BIO_ctrl_pending(bio)) + 1);
+			BIO_read(bio, retval, (int)size);
+			retval[size] = '\0';
+			BIO_free(bio);
+			return retval;
+		}
+	}
+}
+
 gchar* detail_cert(char* label, X509* cert) {
 	X509_NAME* subject = X509_get_subject_name(cert);
 	X509_NAME_ENTRY* entry;
@@ -149,7 +175,7 @@ void add_certificate(char* label, void* data, int len) {
 	BIO *bio = BIO_new(BIO_s_mem());
 	char *buf;
 	size_t size;
-	gint cols=5;
+	gint cols=6;
 	gint *columns;
 	GValue *vals;
 
@@ -192,6 +218,12 @@ void add_certificate(char* label, void* data, int len) {
 	columns[4] = CERT_COL_DESC;
 	g_value_init(&(vals[4]), G_TYPE_STRING);
 	g_value_take_string(&(vals[4]), detail_cert(label, cert));
+
+	columns[5] = CERT_COL_USE;
+	g_value_init(&(vals[5]), G_TYPE_STRING);
+	g_value_take_string(&(vals[5]), get_use_flags(label, cert));
+
+	BIO_free(bio);
 
 	tst_set(label, columns, vals, cols);
 }
