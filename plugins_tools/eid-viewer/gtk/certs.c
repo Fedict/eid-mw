@@ -92,6 +92,32 @@ void tst_set(char* w, gint* c, GValue* v, gint n) {
 	g_main_context_invoke(NULL, tst_helper, dat);
 }
 
+gchar* detail_cert(char* label, X509* cert) {
+	X509_NAME* subject = X509_get_subject_name(cert);
+	X509_NAME_ENTRY* entry;
+	int i;
+	gchar* retval = NULL;
+
+	for(i=0;i<X509_NAME_entry_count(subject);i++) {
+		const char* name;
+		const char* value;
+		entry = X509_NAME_get_entry(subject, i);
+		ASN1_OBJECT* obj = X509_NAME_ENTRY_get_object(entry); 
+		ASN1_STRING* str = X509_NAME_ENTRY_get_data(entry);
+
+		name = OBJ_nid2sn(OBJ_obj2nid(obj));
+		value = ASN1_STRING_data(str);
+		if(retval) {
+			gchar* tmp = retval;
+			retval = g_strdup_printf("%s=%s\n%s", name, value, tmp);
+			g_free(tmp);
+		} else {
+			retval = g_strdup_printf("%s=%s", name, value);
+		}
+	}
+	return retval;
+}
+
 gchar* describe_cert(char* label, X509* cert) {
 	return g_strdup_printf("TODO (%s)", label);
 }
@@ -115,7 +141,7 @@ void add_certificate(char* label, void* data, int len) {
 	BIO *bio = BIO_new(BIO_s_mem());
 	char *buf;
 	size_t size;
-	gint cols=4;
+	gint cols=5;
 	gint *columns;
 	GValue *vals;
 
@@ -154,6 +180,10 @@ void add_certificate(char* label, void* data, int len) {
 	columns[3] = CERT_COL_VALIDTO;
 	g_value_init(&(vals[3]), G_TYPE_STRING);
 	g_value_set_string(&(vals[3]), buf);
+
+	columns[4] = CERT_COL_DESC;
+	g_value_init(&(vals[4]), G_TYPE_STRING);
+	g_value_take_string(&(vals[4]), detail_cert(label, cert));
 
 	tst_set(label, columns, vals, cols);
 }

@@ -232,7 +232,7 @@ static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIt
 			CERT_COL_VALIDTO, &to,
 			CERT_COL_USE, &use,
 			CERT_COL_VALIDITY, &validity,
-			CERT_COL_DATA, &certdata,
+			CERT_COL_DESC, &certdata,
 			-1);
 	newstringdata("certvalfromval", from);
 	newstringdata("certvaltilval", to);

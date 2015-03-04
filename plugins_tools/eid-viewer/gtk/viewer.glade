@@ -1214,6 +1214,9 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
+                                <attributes>
+                                  <attribute name="style" value="italic"/>
+                                </attributes>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
