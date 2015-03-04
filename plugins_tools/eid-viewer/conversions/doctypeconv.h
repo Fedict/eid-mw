@@ -7,7 +7,7 @@
 
 class DocTypeConvertor : public ConversionWorker {
 private:
-	std::map<eid_vwr_langs, std::map<std::string, std::string> > conversions;
+	std::map<eid_vwr_langs, std::map<int, std::string> > conversions;
 public:
 	DocTypeConvertor();
 	virtual std::string convert(const char* original);
