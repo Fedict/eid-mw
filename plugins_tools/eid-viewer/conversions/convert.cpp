@@ -5,7 +5,7 @@
 #include <cstring>
 #include <map>
 
-const char* converted_string(const char* label, const char* normal) {
+char* converted_string(const char* label, const char* normal) {
 	Convertor conv;
 	return strdup(conv.convert(label, normal));
 }

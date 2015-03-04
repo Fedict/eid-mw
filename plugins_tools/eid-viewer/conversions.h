@@ -13,7 +13,7 @@ enum eid_vwr_langs {
 	EID_VWR_LANG_NL,
 };
 
-const char* converted_string(const char* label, const char* normal);
+char* converted_string(const char* label, const char* normal);
 int can_convert(const char* label);
 void convert_set_lang(enum eid_vwr_langs which);
 
