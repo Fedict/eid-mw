@@ -1,5 +1,7 @@
 #include "certs.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include <openssl/x509.h>
@@ -18,43 +20,6 @@ static GtkTreeIter* iters[CERTS_COUNT];
 static GdkPixbuf* good_certificate;
 static GdkPixbuf* bad_certificate;
 static GdkPixbuf* unchecked_certificate;
-
-struct tree_store_data {
-	GtkTreeIter* iter;
-	gint* columns;
-	GValue* values;
-	gint n_values;
-	void(*free)(struct tree_store_data*);
-};
-
-static void tst_free_simple(struct tree_store_data* dat) {
-	int i;
-	free(dat->columns);
-	for(i=0;i<dat->n_values; i++) {
-		g_value_unset(&(dat->values[i]));
-	}
-	free(dat->values);
-	free(dat);
-}
-
-static gboolean tst_helper(gpointer user_data) {
-	struct tree_store_data* dat = (struct tree_store_data*)user_data;
-
-	gtk_tree_store_set_valuesv(certificates, dat->iter, dat->columns, dat->values, dat->n_values);
-	dat->free(dat);
-
-	return FALSE;
-}
-
-void tst_set(GtkTreeIter* i, gint* c, GValue* v, gint n) {
-	struct tree_store_data* dat = malloc(sizeof(struct tree_store_data));
-	dat->iter = i;
-	dat->columns = c;
-	dat->values = v;
-	dat->n_values = n;
-	dat->free = tst_free_simple;
-	g_main_context_invoke(NULL, tst_helper, dat);
-}
 
 static GtkTreeIter* get_iter_for(char* which) {
 	GtkTreeIter* parent;
@@ -88,6 +53,45 @@ static GtkTreeIter* get_iter_for(char* which) {
 	return iters[w];
 }
 
+struct tree_store_data {
+	char* which;
+	gint* columns;
+	GValue* values;
+	gint n_values;
+	void(*free)(struct tree_store_data*);
+};
+
+static void tst_free_simple(struct tree_store_data* dat) {
+	int i;
+	free(dat->which);
+	free(dat->columns);
+	for(i=0;i<dat->n_values; i++) {
+		g_value_unset(&(dat->values[i]));
+	}
+	free(dat->values);
+	free(dat);
+}
+
+static gboolean tst_helper(gpointer user_data) {
+	struct tree_store_data* dat = (struct tree_store_data*)user_data;
+	GtkTreeIter* iter = get_iter_for(dat->which);
+
+	gtk_tree_store_set_valuesv(certificates, iter, dat->columns, dat->values, dat->n_values);
+	dat->free(dat);
+
+	return FALSE;
+}
+
+void tst_set(char* w, gint* c, GValue* v, gint n) {
+	struct tree_store_data* dat = malloc(sizeof(struct tree_store_data));
+	dat->which = strdup(w);
+	dat->columns = c;
+	dat->values = v;
+	dat->n_values = n;
+	dat->free = tst_free_simple;
+	g_main_context_invoke(NULL, tst_helper, dat);
+}
+
 gchar* describe_cert(char* label, X509* cert) {
 	return g_strdup_printf("TODO (%s)", label);
 }
@@ -108,10 +112,10 @@ static void ensure_cert() {
 
 void add_certificate(char* label, void* data, int len) {
 	X509 *cert = NULL;
-	GtkTreeIter* iter;
 	BIO *bio = BIO_new(BIO_s_mem());
 	char *buf;
 	size_t size;
+	gint cols=4;
 	gint *columns;
 	GValue *vals;
 
@@ -124,12 +128,13 @@ void add_certificate(char* label, void* data, int len) {
 		return;
 	}
 
-	columns = calloc(sizeof(gint),4);
-	vals = calloc(sizeof(GValue),4);
-	iter = get_iter_for(label);
+	columns = calloc(sizeof(gint),cols);
+	vals = calloc(sizeof(GValue),cols);
+
 	columns[0] = CERT_COL_LABEL;
 	g_value_init(&(vals[0]), G_TYPE_STRING);
 	g_value_take_string(&(vals[0]), describe_cert(label, cert));
+
 	columns[1] = CERT_COL_IMAGE;
 	g_value_init(&(vals[1]), GDK_TYPE_PIXBUF);
 	g_value_set_instance(&(vals[1]), unchecked_certificate);
@@ -150,7 +155,7 @@ void add_certificate(char* label, void* data, int len) {
 	g_value_init(&(vals[3]), G_TYPE_STRING);
 	g_value_set_string(&(vals[3]), buf);
 
-	tst_set(iter, columns, vals, 4);
+	tst_set(label, columns, vals, cols);
 }
 
 GtkTreeModel* certificates_get_model() {
