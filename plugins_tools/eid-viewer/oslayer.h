@@ -26,6 +26,7 @@ struct eid_vwr_ui_callbacks {
 	void(*newstringdata)(char* label, char* data);
 	void(*newbindata)(char* label, void* data, int datalen);
 	void(*log)(enum eid_vwr_loglevel, char* line, ...);
+	void(*status)(char* data, ...);
 };
 
 struct eid_vwr_preview {

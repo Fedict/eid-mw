@@ -176,6 +176,8 @@ int read_card(CK_SLOT_ID which) {
 	type = CKO_DATA;
 	attr.ulValueLen = sizeof(CK_ULONG);
 
+	cb->status("Reading identity data from card");
+
 	check_rv(C_FindObjectsInit(session, &attr, 1));
 
 	perform_find(session, 1);
@@ -185,6 +187,8 @@ int read_card(CK_SLOT_ID which) {
 	type = CKO_CERTIFICATE;
 
 	check_rv(C_FindObjectsInit(session, &attr, 1));
+
+	cb->status("Reading certificates");
 
 	perform_find(session, 0);
 

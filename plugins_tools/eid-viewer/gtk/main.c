@@ -24,6 +24,7 @@ typedef void(*bindisplayfunc)(char*, void*, int);
 typedef void(*clearfunc)(char*);
 
 static GHashTable* binhash;
+static guint statusbar_context = 0;
 
 extern char** environ;
 
@@ -46,6 +47,24 @@ static void uilog(enum eid_vwr_loglevel l, char* line, ...) {
 	g_logv(NULL, gtklog, line, ac);
 	va_end(ac);
 	va_end(ap);
+}
+
+static void uistatus(char* data, ...) {
+	va_list ap, ac;
+	GtkStatusbar* sb = GTK_STATUSBAR(gtk_builder_get_object(builder, "statusbar"));
+	gchar* line;
+	va_start(ap, data);
+	va_copy(ac, ap);
+	line = g_strdup_vprintf(data, ac);
+	va_end(ac);
+	va_end(ap);
+	
+	if(G_UNLIKELY(!statusbar_context)) {
+		statusbar_context = gtk_statusbar_get_context_id(sb, "useless");
+	}
+	gtk_statusbar_remove_all(sb, statusbar_context);
+	gtk_statusbar_push(sb, statusbar_context, line);
+	g_free(line);
 }
 
 static void stringclear(char* l) {
@@ -270,6 +289,7 @@ int main(int argc, char** argv) {
 	cb->newstringdata = newstringdata;
 	cb->newbindata = newbindata;
 	cb->log = uilog;
+	cb->status = uistatus;
 	eid_vwr_createcallbacks(cb);
 
 	pthread_create(&thread, NULL, threadmain, NULL);
