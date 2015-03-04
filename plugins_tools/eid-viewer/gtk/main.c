@@ -115,6 +115,7 @@ static void cleardata(gpointer key, gpointer value, gpointer user_data G_GNUC_UN
 }
 
 static void newsrc(enum eid_vwr_source src) {
+	clear_certdata();
 	g_hash_table_foreach(touched_labels, cleardata, NULL);
 	// TODO: update display so we see which source we're using
 }

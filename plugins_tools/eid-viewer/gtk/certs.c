@@ -192,3 +192,16 @@ GtkTreeModel* certificates_get_model() {
 	ensure_cert();
 	return GTK_TREE_MODEL(certificates);
 }
+
+gboolean real_clear(gpointer data G_GNUC_UNUSED) {
+	int i;
+	gtk_tree_store_clear(certificates);
+	for(i=0; i<CERTS_COUNT; i++) {
+		iters[i]=NULL;
+	}
+	return FALSE;
+}
+
+void clear_certdata() {
+	g_main_context_invoke(NULL, real_clear, NULL);
+}
