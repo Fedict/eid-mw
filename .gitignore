@@ -30,3 +30,4 @@ cardcomm/pkcs11/src/common/beidversions.h
 *.xccheckout
 xcuserdata
 .DS_Store
+release
