@@ -88,7 +88,7 @@ static GtkTreeIter* get_iter_for(char* which) {
 	return iters[w];
 }
 
-const gchar* describe_cert(char* label, X509* cert) {
+gchar* describe_cert(char* label, X509* cert) {
 	return g_strdup_printf("TODO (%s)", label);
 }
 
