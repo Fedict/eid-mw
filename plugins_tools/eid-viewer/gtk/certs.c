@@ -119,7 +119,15 @@ gchar* detail_cert(char* label, X509* cert) {
 }
 
 gchar* describe_cert(char* label, X509* cert) {
-	return g_strdup_printf("TODO (%s)", label);
+	X509_NAME* subject = X509_get_subject_name(cert);
+	int index = X509_NAME_get_index_by_NID(subject, OBJ_sn2nid("CN"), -1);
+	if(index < 0) {
+		return g_strdup(label);
+	}
+	X509_NAME_ENTRY* entry = X509_NAME_get_entry(subject, index);
+	const char* value = ASN1_STRING_data(X509_NAME_ENTRY_get_data(entry));
+
+	return g_strdup(value);
 }
 
 static void ensure_cert() {
