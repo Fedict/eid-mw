@@ -337,7 +337,6 @@ exit:
 
 void do_distro(GtkWidget* top, GtkListStore* data) {
 	GtkTreeIter iter;
-	FILE *f;
 	char *dat;
 
 	dat = get_lsb_info('i');

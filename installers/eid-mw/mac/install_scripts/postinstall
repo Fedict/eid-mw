@@ -26,22 +26,9 @@ ln -fs /usr/local/lib/libbeidpkcs11.$MWVER1.dylib /usr/local/lib/libbeidpkcs11.d
 #ln -fs /usr/local/lib/libbeidpkcs11.$MWVER3.dylib /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
 
 #install the XPI
-mkdir -p "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
-mv /Library/BelgiumIdentityCard/belgiumeid-$XPI_VERSION.xpi "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
 unzip -qq -o "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi" -d "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/"
 rm "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi"
 rm "/Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi"
-
-#install adapted tokend for OS X 10.5
-if [[ $(sw_vers -productVersion) == *10.5* ]]; then
-mv /Library/BelgiumIdentityCard/BEID.tokend /System/Library/Security/tokend/; else
-test -e /System/Library/Security/tokend/BEID.tokend && rm -R /System/Library/Security/tokend/BEID.tokend; fi
-rm -R /Library/BelgiumIdentityCard/BEID.tokend;
-
-#install OS X 10.6 tokend on OS X 10.7, OS X 10.8, OS X 10.9 and OS X 10.10
-if [[ $(sw_vers -productVersion) == *10.7* ]] || [[ $(sw_vers -productVersion) == *10.8* ]] || [[ $(sw_vers -productVersion) == *10.9* ]] || [[ $(sw_vers -productVersion) == *10.10* ]]; then
-mv /Library/BelgiumIdentityCard/BEID_Lion.tokend /System/Library/Security/tokend/BEID.tokend; fi
-rm -R /Library/BelgiumIdentityCard/BEID_Lion.tokend;
 
 #on OS X 10.10, make sure securityd auto launches pcscd
 if [[ $(sw_vers -productVersion) == *10.10* ]]; then
@@ -52,10 +39,10 @@ mv /Library/BelgiumIdentityCard "/Library/Belgium Identity Card"
 test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;
 
 #trust beid-cert-belgiumrca2.der
-sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain /release_build/root//usr/local/share/beid/certs/beid-cert-belgiumrca2.der
+sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $1/Contents/Scripts/beid-cert-belgiumrca2.der
 
 #trust beid-cert-belgiumrca3.der
-sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain /release_build/root//usr/local/share/beid/certs/beid-cert-belgiumrca3.der
+sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $1/Contents/Scripts/beid-cert-belgiumrca3.der
 
 echo succeeded > /tmp/beid_install.log
 
