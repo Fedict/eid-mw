@@ -12,7 +12,6 @@ void translate(GtkMenuItem* langitem, gpointer to_lang);
 void showabout(GtkMenuItem* about, gpointer user_data);
 void showurl(GtkMenuItem* item, gpointer which);
 void showlog(GtkMenuItem* item, gpointer user_data);
-void testpin(GtkMenuItem* item, gpointer user_data);
-void changepin(GtkMenuItem* item, gpointer user_data);
+void pinop(GtkWidget* item, gpointer which);
 
 #endif

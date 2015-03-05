@@ -140,10 +140,14 @@ void file_close(GtkMenuItem* item, gpointer user_data) {
 	eid_vwr_deserialize(NULL, 0);
 }
 
+void pinop(GtkWidget* button, gpointer which) {
+	enum eid_vwr_pinops op = (enum eid_vwr_pinops) which;
+
+	eid_vwr_pinop(op);
+}
+
 GEN_FUNC(file_prefs, "set preferences")
 GEN_FUNC(file_print, "print")
 GEN_FUNC(translate, "translate to %s")
 GEN_FUNC(showurl, "show %s url")
 GEN_FUNC(showlog, "show log tab")
-GEN_FUNC(testpin, "test pin")
-GEN_FUNC(changepin, "change pin")
