@@ -162,7 +162,9 @@ static void ensure_cert() {
 				G_TYPE_STRING, // label (short description)
 				GDK_TYPE_PIXBUF, // image
 				G_TYPE_STRING, // valid from
+				G_TYPE_BOOLEAN, // valid from in past?
 				G_TYPE_STRING, // valid through 
+				G_TYPE_BOOLEAN, // valid through in future?
 				G_TYPE_STRING, // use
 				G_TYPE_BOOLEAN, // validity
 				G_TYPE_STRING, // description (multi-line field 
@@ -175,7 +177,7 @@ void add_certificate(char* label, void* data, int len) {
 	BIO *bio = BIO_new(BIO_s_mem());
 	char *buf;
 	size_t size;
-	gint cols=6;
+	gint cols=8;
 	gint *columns;
 	GValue *vals;
 
@@ -222,6 +224,14 @@ void add_certificate(char* label, void* data, int len) {
 	columns[5] = CERT_COL_USE;
 	g_value_init(&(vals[5]), G_TYPE_STRING);
 	g_value_take_string(&(vals[5]), get_use_flags(label, cert));
+
+	columns[6] = CERT_COL_VALIDFROM_PAST;
+	g_value_init(&(vals[6]), G_TYPE_BOOLEAN);
+	g_value_set_boolean(&(vals[6]), (X509_cmp_current_time(X509_get_notBefore(cert)) < 0) ? FALSE : TRUE);
+
+	columns[7] = CERT_COL_VALIDTO_FUTURE;
+	g_value_init(&(vals[7]), G_TYPE_BOOLEAN);
+	g_value_set_boolean(&(vals[7]), (X509_cmp_current_time(X509_get_notAfter(cert)) > 0) ? FALSE : TRUE);
 
 	BIO_free(bio);
 

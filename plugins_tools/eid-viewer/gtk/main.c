@@ -208,6 +208,12 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(changepin), NULL);
 }
 
+static void show_date_state(char* label, void* data, int length) {
+	gchar* labelname = g_strndup(label, strstr(label, ":") - label);
+	GtkWidget* l = GTK_WIDGET(gtk_builder_get_object(builder, labelname));
+	g_free(labelname);
+}
+
 static void bindata_init() {
 	binhash = g_hash_table_new(g_str_hash, g_str_equal);
 
@@ -222,24 +228,28 @@ static void bindata_init() {
 	g_hash_table_insert(binhash, "CA", add_certificate);
 	g_hash_table_insert(binhash, "Root", add_certificate);
 	g_hash_table_insert(binhash, "Signature", add_certificate);
+	g_hash_table_insert(binhash, "certvalfromval:past", show_date_state);
+	g_hash_table_insert(binhash, "certvaltilval:future", show_date_state);
 }
 
 static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter* iter, gpointer data G_GNUC_UNUSED) {
 	gchar *from, *to, *use, *certdata;
-	gboolean validity;
+	gboolean past, future;
 
 	gtk_tree_model_get(model, iter,
 			CERT_COL_VALIDFROM, &from,
 			CERT_COL_VALIDTO, &to,
 			CERT_COL_USE, &use,
-			CERT_COL_VALIDITY, &validity,
 			CERT_COL_DESC, &certdata,
+			CERT_COL_VALIDFROM_PAST, &past,
+			CERT_COL_VALIDTO_FUTURE, &future,
 			-1);
 	newstringdata("certvalfromval", from);
 	newstringdata("certvaltilval", to);
 	newstringdata("certuseval", use);
-	newstringdata("certtrustval", validity ? _("Trusted") : _("Not trusted"));
 	newstringdata("certdata", certdata);
+	newbindata("certvalfromval:past", &past, sizeof(gboolean));
+	newbindata("certvaltilval:future", &future, sizeof(gboolean));
 }
 
 static void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
