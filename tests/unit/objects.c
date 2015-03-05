@@ -35,13 +35,19 @@ TEST_FUNC(objects) {
 	CK_ULONG count;
 	CK_SLOT_ID slot;
 	CK_ATTRIBUTE attr[2];
+	CK_ATTRIBUTE invalid[1];
 	CK_OBJECT_CLASS klass;
+
 	char label[1024];
 	char* ckos[8];
 	int ret;
 	ckrv_mod m[] = {
 		{ CKR_OK, TEST_RV_FAIL },
 		{ CKR_OPERATION_ACTIVE, TEST_RV_OK },
+	};
+	ckrv_mod m_inv[] = {
+		{ CKR_ATTRIBUTE_TYPE_INVALID, TEST_RV_OK },
+		{ CKR_OK, TEST_RV_FAIL },
 	};
 
 	ADD_CKO(CKO_DATA);
@@ -72,12 +78,18 @@ TEST_FUNC(objects) {
 		attr[0].type = CKA_CLASS;
 		attr[0].pValue = &klass;
 		attr[0].ulValueLen=sizeof(klass);
-		
+
 		attr[1].type = CKA_LABEL;
 		attr[1].pValue = &label;
 		attr[1].ulValueLen=1024;
 
+		invalid[0].type = CKA_OBJECT_ID;
+		invalid[0].pValue = NULL_PTR;
+		invalid[0].ulValueLen = 0;
+
 		check_rv(C_GetAttributeValue(session, object, attr, 2));
+
+		check_rv_long(C_GetAttributeValue(session, object, invalid, 1), m_inv);
 
 		label[attr[1].ulValueLen] = '\0';
 
