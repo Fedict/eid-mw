@@ -203,9 +203,9 @@ static void connect_signals(GtkWidget* window) {
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_log"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showlog), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pintestbut"));
-	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), EID_VWR_PINOP_TEST);
+	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_TEST);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pinchangebut"));
-	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), EID_VWR_PINOP_CHG);
+	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_CHG);
 }
 
 static void show_date_state(char* label, void* data, int length) {
