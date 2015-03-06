@@ -141,8 +141,11 @@ void parent_enter_recursive(struct state* start, struct state* end) {
 void sm_handle_event(enum eid_vwr_state_event e, void* data) {
 	struct state *thistree, *targettree, *cmnanc, *hold, *target;
 
+	/* We want to be able to detect when a state transition has happened recursively... */
 	hold = curstate;
 
+	/* First, check if the given event has any relevance to our current
+	 * state; if so, store the target state */
 	if(curstate->out[e]) {
 		target = curstate->out[e];
 	} else {
@@ -155,6 +158,7 @@ void sm_handle_event(enum eid_vwr_state_event e, void* data) {
 		}
 		target = thistree->out[e];
 	}
+	/* Now, see if we need to perform a leave() function before leaving the current state */
 	be_log(EID_VWR_LOG_DETAIL, "Handling state transition for event %s", event_to_name(e));
 	be_log(EID_VWR_LOG_DETAIL, "Leaving state %s", state_to_name(curstate->me));
 	if(curstate->leave != NULL) {
@@ -164,6 +168,7 @@ void sm_handle_event(enum eid_vwr_state_event e, void* data) {
 		be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting duplicate");
 		return;
 	}
+	/* Find the first common ancestor (if any) of the current state and the target state */
 	cmnanc = NULL;
 	for(thistree=curstate->parent; thistree != NULL; thistree = thistree->parent) {
 		for(targettree = target->parent; targettree != NULL; targettree = targettree->parent) {
@@ -174,6 +179,8 @@ void sm_handle_event(enum eid_vwr_state_event e, void* data) {
 		}
 	}
 exit_loop:
+	/* Call the "leave" method of all parent states of the current state
+	 * that don't share a common ancestor with the target state */
 	for(thistree = curstate->parent; thistree != cmnanc; thistree = thistree->parent) {
 		be_log(EID_VWR_LOG_DETAIL, "Leaving state %s", state_to_name(thistree->me));
 		if(thistree->leave != NULL) {
@@ -185,10 +192,16 @@ exit_loop:
 		}
 	}
 
+	/* Now do the actual state transition */
 	be_log(EID_VWR_LOG_DETAIL, "Entering state %s (target)", state_to_name(target->me));
 	hold = curstate = target;
 
+	/* If the target state has parent states that don't share a common
+	 * ancestor with the (previously) current state, call their "enter"
+	 * function -- but without passing on any data */
 	parent_enter_recursive(curstate->parent, cmnanc);
+	/* Call the target state's "enter" function, and pass on the data that
+	 * we got from the event */
 	if(curstate->enter != NULL) {
 		curstate->enter(data);
 	}
@@ -196,6 +209,8 @@ exit_loop:
 		be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting handling of %s", event_to_name(e));
 		return;
 	}
+	/* If the target state has a "first child" state, enter that state
+	 * instead, not passing on any data. */
 	while(curstate->first_child != NULL) {
 		be_log(EID_VWR_LOG_DETAIL, "Entering state %s (child)", state_to_name(curstate->first_child->me));
 		hold = curstate = curstate->first_child;
