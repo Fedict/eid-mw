@@ -56,6 +56,7 @@ static void uilog(enum eid_vwr_loglevel l, char* line, ...) {
 
 static void realstatus(char* data, va_list ap) {
 	GtkStatusbar* sb = GTK_STATUSBAR(gtk_builder_get_object(builder, "statusbar"));
+	GtkSpinner* spinner = GTK_SPINNER(gtk_builder_get_object(builder, "busy_spinner"));
 	gchar* line;
 
 	if(G_UNLIKELY(!statusbar_context)) {
@@ -63,8 +64,10 @@ static void realstatus(char* data, va_list ap) {
 	}
 	gtk_statusbar_remove_all(sb, statusbar_context);
 	if(data == NULL) {
+		gtk_spinner_stop(spinner);
 		return;
 	}
+	gtk_spinner_start(spinner);
 	line = g_strdup_vprintf(data, ap);
 	gtk_statusbar_push(sb, statusbar_context, line);
 	g_free(line);
