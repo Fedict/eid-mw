@@ -140,10 +140,10 @@ static void parent_enter_recursive(struct state* start, struct state* end) {
 }
 
 void sm_handle_event(enum eid_vwr_state_event e, void* data) {
-	struct state *thistree, *targettree, *cmnanc, *hold, *target, *oldstate;
+	struct state *thistree, *targettree, *cmnanc, *hold, *target;
 
 	/* We want to be able to detect when a state transition has happened recursively... */
-	hold = oldstate = curstate;
+	hold = curstate;
 
 	/* First, check if the given event has any relevance to our current
 	 * state; if so, store the target state */
@@ -200,7 +200,7 @@ exit_loop:
 	/* If the target state has parent states that don't share a common
 	 * ancestor with the (previously) current state, call their "enter"
 	 * function -- but without passing on any data */
-	parent_enter_recursive(oldstate->parent, cmnanc);
+	parent_enter_recursive(curstate->parent, cmnanc);
 	/* Call the target state's "enter" function, and pass on the data that
 	 * we got from the event */
 	if(curstate->enter != NULL) {
