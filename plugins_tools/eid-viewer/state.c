@@ -71,6 +71,7 @@ static int do_parse_file(void*data) {
 
 static int source_none(void*data) {
 	be_newsource(EID_VWR_SRC_NONE);
+	be_status("Ready to read a card");
 }
 
 static int do_pinop(void*which) {
