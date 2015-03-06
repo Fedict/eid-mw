@@ -38,6 +38,7 @@ void be_newsource(enum eid_vwr_source which) {
 }
 
 void be_log(enum eid_vwr_loglevel l, char* string, ...) {
+	if(!cb) return;
 	va_list ap, ac;
 	va_start(ap, string);
 	va_copy(ac, ap);

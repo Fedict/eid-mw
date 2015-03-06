@@ -17,6 +17,37 @@ enum states {
 	STATE_COUNT,
 };
 
+const char* state_to_name(enum states state) {
+	switch(state) {
+#define STATE_NAME(s) case STATE_##s: return #s
+	STATE_NAME(LIBOPEN);
+	STATE_NAME(CALLBACKS);
+	STATE_NAME(READY);
+	STATE_NAME(TOKEN);
+	STATE_NAME(TOKEN_WAIT);
+	STATE_NAME(TOKEN_ID);
+	STATE_NAME(TOKEN_CERTS);
+	STATE_NAME(TOKEN_PINOP);
+	STATE_NAME(FILE);
+#undef STATE_NAME
+	}
+	return "unknown state";
+}
+
+const char* event_to_name(enum eid_vwr_state_event event) {
+	switch(event) {
+#define EVENT_NAME(e) case EVENT_##e: return #e
+	EVENT_NAME(SET_CALLBACKS);
+	EVENT_NAME(OPEN_FILE);
+	EVENT_NAME(CLOSE_FILE);
+	EVENT_NAME(TOKEN_INSERTED);
+	EVENT_NAME(TOKEN_REMOVED);
+	EVENT_NAME(READ_READY);
+	EVENT_NAME(DO_PINOP);
+	}
+	return "unknown event";
+}
+
 struct state {
 	enum states me;
 	struct state* out[EVENT_COUNT];
@@ -99,14 +130,22 @@ void parent_enter_recursive(struct state* start, struct state* end) {
 		return;
 	}
 	parent_enter_recursive(start->parent, end);
-	if(start != NULL && start->enter != NULL) {
-		start->enter(NULL);
+	if(start != NULL) {
+		be_log(EID_VWR_LOG_DETAIL, "Entering state %s (parent)", state_to_name(start->me));
+		if(start->enter != NULL) {
+			start->enter(NULL);
+		}
 	}
 }
 
 void sm_handle_event(enum eid_vwr_state_event e, void* data) {
-	struct state *thistree, *targettree, *cmnanc;
-	if(curstate->out[e] == NULL) {
+	struct state *thistree, *targettree, *cmnanc, *hold, *target;
+
+	hold = curstate;
+
+	if(curstate->out[e]) {
+		target = curstate->out[e];
+	} else {
 		thistree = curstate->parent;
 		while(thistree && thistree->out[e] == NULL) {
 			thistree = thistree->parent;
@@ -114,13 +153,20 @@ void sm_handle_event(enum eid_vwr_state_event e, void* data) {
 		if(!thistree) {
 			return; // event is irrelevant for this state
 		}
+		target = thistree->out[e];
 	}
+	be_log(EID_VWR_LOG_DETAIL, "Handling state transition for event %s", event_to_name(e));
+	be_log(EID_VWR_LOG_DETAIL, "Leaving state %s", state_to_name(curstate->me));
 	if(curstate->leave != NULL) {
 		curstate->leave();
 	}
+	if(hold != curstate) {
+		be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting duplicate");
+		return;
+	}
 	cmnanc = NULL;
 	for(thistree=curstate->parent; thistree != NULL; thistree = thistree->parent) {
-		for(targettree = curstate->out[e]->parent; targettree != NULL; targettree = targettree->parent) {
+		for(targettree = target->parent; targettree != NULL; targettree = targettree->parent) {
 			if(thistree == targettree) {
 				cmnanc = thistree;
 				goto exit_loop;
@@ -129,19 +175,37 @@ void sm_handle_event(enum eid_vwr_state_event e, void* data) {
 	}
 exit_loop:
 	for(thistree = curstate->parent; thistree != cmnanc; thistree = thistree->parent) {
+		be_log(EID_VWR_LOG_DETAIL, "Leaving state %s", state_to_name(thistree->me));
 		if(thistree->leave != NULL) {
 			thistree->leave();
 		}
+		if(hold != curstate) {
+			be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting handling of %s", event_to_name(e));
+			return;
+		}
 	}
-	curstate = curstate->out[e];
+
+	be_log(EID_VWR_LOG_DETAIL, "Entering state %s (target)", state_to_name(target->me));
+	hold = curstate = target;
+
 	parent_enter_recursive(curstate->parent, cmnanc);
 	if(curstate->enter != NULL) {
 		curstate->enter(data);
 	}
+	if(hold != curstate) {
+		be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting handling of %s", event_to_name(e));
+		return;
+	}
 	while(curstate->first_child != NULL) {
-		curstate = curstate->first_child;
+		be_log(EID_VWR_LOG_DETAIL, "Entering state %s (child)", state_to_name(curstate->first_child->me));
+		hold = curstate = curstate->first_child;
 		if(curstate->enter != NULL) {
 			curstate->enter(NULL);
 		}
+		if(hold != curstate) {
+			be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting handling of %s", event_to_name(e));
+			return;
+		}
 	}
+	be_log(EID_VWR_LOG_DETAIL, "State transition for %s complete", event_to_name(e));
 }
