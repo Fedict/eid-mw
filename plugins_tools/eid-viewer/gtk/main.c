@@ -15,6 +15,7 @@
 #include "photo.h"
 #include "verify.h"
 #include "certs.h"
+#include "state.h"
 
 #ifndef _
 #define _(s) gettext(s)
@@ -28,9 +29,8 @@ static guint statusbar_context = 0;
 
 extern char** environ;
 
-static void uilog(enum eid_vwr_loglevel l, char* line, ...) {
+static void reallog(enum eid_vwr_loglevel l, char* line, va_list ap) {
 	GLogLevelFlags gtklog;
-	va_list ap, ac;
 	switch(l) {
 		case EID_VWR_LOG_DETAIL:
 			gtklog = G_LOG_LEVEL_DEBUG;
@@ -42,29 +42,41 @@ static void uilog(enum eid_vwr_loglevel l, char* line, ...) {
 			gtklog = G_LOG_LEVEL_ERROR;
 			break;
 	}
+	g_logv(NULL, gtklog, line, ap);
+}
+
+static void uilog(enum eid_vwr_loglevel l, char* line, ...) {
+	va_list ap, ac;
 	va_start(ap, line);
 	va_copy(ac, ap);
-	g_logv(NULL, gtklog, line, ac);
+	reallog(l, line, ac);
 	va_end(ac);
 	va_end(ap);
 }
 
-static void uistatus(char* data, ...) {
-	va_list ap, ac;
+static void realstatus(char* data, va_list ap) {
 	GtkStatusbar* sb = GTK_STATUSBAR(gtk_builder_get_object(builder, "statusbar"));
 	gchar* line;
-	va_start(ap, data);
-	va_copy(ac, ap);
-	line = g_strdup_vprintf(data, ac);
-	va_end(ac);
-	va_end(ap);
-	
+
 	if(G_UNLIKELY(!statusbar_context)) {
 		statusbar_context = gtk_statusbar_get_context_id(sb, "useless");
 	}
 	gtk_statusbar_remove_all(sb, statusbar_context);
+	if(data == NULL) {
+		return;
+	}
+	line = g_strdup_vprintf(data, ap);
 	gtk_statusbar_push(sb, statusbar_context, line);
 	g_free(line);
+}
+
+static void uistatus(char* data, ...) {
+	va_list ap, ac;
+	va_start(ap, data);
+	va_copy(ac, ap);
+	realstatus(data, ac);
+	va_end(ac);
+	va_end(ap);
 }
 
 static void stringclear(char* l) {
@@ -295,12 +307,14 @@ int main(int argc, char** argv) {
 	connect_signals(window);
 	setup_treeview();
 
+	sm_init();
+
 	cb = eid_vwr_cbstruct();
 	cb->newsrc = newsrc;
 	cb->newstringdata = newstringdata;
 	cb->newbindata = newbindata;
-	cb->log = uilog;
-	cb->status = uistatus;
+	cb->log = reallog;
+	cb->status = realstatus;
 	eid_vwr_createcallbacks(cb);
 
 	pthread_create(&thread, NULL, threadmain, NULL);

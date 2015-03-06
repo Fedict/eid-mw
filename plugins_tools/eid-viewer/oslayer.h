@@ -2,6 +2,8 @@
 #define EID_VWR_GTK_OSLAYER_H
 
 #include <conversions.h>
+#include <stdlib.h>
+#include <stdarg.h>
 
 enum eid_vwr_source {
 	EID_VWR_SRC_NONE,
@@ -25,8 +27,8 @@ struct eid_vwr_ui_callbacks {
 	void(*newsrc)(enum eid_vwr_source);
 	void(*newstringdata)(char* label, char* data);
 	void(*newbindata)(char* label, void* data, int datalen);
-	void(*log)(enum eid_vwr_loglevel, char* line, ...);
-	void(*status)(char* data, ...);
+	void(*log)(enum eid_vwr_loglevel, char* line, va_list ap);
+	void(*status)(char* data, va_list ap);
 };
 
 struct eid_vwr_preview {
