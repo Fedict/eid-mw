@@ -44,6 +44,7 @@ const char* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(TOKEN_REMOVED);
 	EVENT_NAME(READ_READY);
 	EVENT_NAME(DO_PINOP);
+#undef EVENT_NAME
 	}
 	return "unknown event";
 }
