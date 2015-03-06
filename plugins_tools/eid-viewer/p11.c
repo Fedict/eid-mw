@@ -169,8 +169,8 @@ static int perform_find(CK_BBOOL do_objid) {
 }*/
 
 int p11_finalize_find(void* data) {
-	check_rv(C_FindObjectsFinal(session));
 	be_status(NULL);
+	check_rv(C_FindObjectsFinal(session));
 }
 
 int p11_read_id(void* data) {
