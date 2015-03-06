@@ -33,7 +33,9 @@ eid_viewer_SOURCES = oslayer.h \
 	conversions/natnumconv.h \
 	conversions/specconv.h \
 	conversions/specconv.cpp \
-	conversions.h
+	conversions.h \
+	state.c \
+	state.h
 eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/tests/unit/liblabels.a @SSL_LIBS@
 AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/tests/unit @SSL_CFLAGS@
 AM_CXXFLAGS = $(AM_CFLAGS) 
