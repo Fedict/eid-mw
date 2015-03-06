@@ -35,14 +35,6 @@ int do_initialize(void*data) {
 	be_newsource(EID_VWR_SRC_NONE);
 }
 
-int do_open_session(void*data) {
-	p11_open_session(data);
-}
-
-int do_close_session(void*data) {
-	p11_close_session();
-}
-
 int do_parse_file(void*data) {
 }
 
@@ -72,8 +64,8 @@ void sm_init() {
 
 	states[STATE_TOKEN].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_TOKEN].first_child = &(states[STATE_TOKEN_ID]);
-	states[STATE_TOKEN].enter = do_open_session;
-	states[STATE_TOKEN].leave = do_close_session;
+	states[STATE_TOKEN].enter = p11_open_session;
+	states[STATE_TOKEN].leave = p11_close_session;
 	states[STATE_TOKEN].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
 
 	states[STATE_TOKEN_ID].parent = &(states[STATE_TOKEN]);
