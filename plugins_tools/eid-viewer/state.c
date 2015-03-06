@@ -165,7 +165,7 @@ void sm_handle_event(enum eid_vwr_state_event e, void* data) {
 		curstate->leave();
 	}
 	if(hold != curstate) {
-		be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting duplicate");
+		be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting handling of %s", event_to_name(e));
 		return;
 	}
 	/* Find the first common ancestor (if any) of the current state and the target state */
