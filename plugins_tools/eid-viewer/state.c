@@ -17,7 +17,7 @@ enum states {
 	STATE_COUNT,
 };
 
-const char* state_to_name(enum states state) {
+static const char* state_to_name(enum states state) {
 	switch(state) {
 #define STATE_NAME(s) case STATE_##s: return #s
 	STATE_NAME(LIBOPEN);
@@ -34,7 +34,7 @@ const char* state_to_name(enum states state) {
 	return "unknown state";
 }
 
-const char* event_to_name(enum eid_vwr_state_event event) {
+static const char* event_to_name(enum eid_vwr_state_event event) {
 	switch(event) {
 #define EVENT_NAME(e) case EVENT_##e: return #e
 	EVENT_NAME(SET_CALLBACKS);
@@ -61,22 +61,22 @@ struct state {
 static struct state states[STATE_COUNT];
 static struct state* curstate;
 
-int do_initialize(void*data) {
+static int do_initialize(void*data) {
 	p11_init();
 	be_setcallbacks(data);
 	be_newsource(EID_VWR_SRC_NONE);
 }
 
-int do_parse_file(void*data) {
+static int do_parse_file(void*data) {
 }
 
-int source_none(void*data) {
+static int source_none(void*data) {
 }
 
-int do_pinop(void*which) {
+static int do_pinop(void*which) {
 }
 
-int do_end_pinop() {
+static int do_end_pinop() {
 }
 
 void sm_init() {
@@ -126,7 +126,7 @@ void sm_init() {
 	curstate = &(states[STATE_LIBOPEN]);
 }
 
-void parent_enter_recursive(struct state* start, struct state* end) {
+static void parent_enter_recursive(struct state* start, struct state* end) {
 	if(start == end) {
 		return;
 	}
