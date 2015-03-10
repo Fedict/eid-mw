@@ -131,8 +131,8 @@ static void stringclear(char* l) {
 	// Should only appear in the hash table if we successfully found it
 	// earlier...
 	assert(label != NULL);
-	g_object_set_threaded(G_OBJECT(label), "label", "-", FALSE);
-	g_object_set_threaded(G_OBJECT(label), "sensitive", FALSE, FALSE);
+	g_object_set_threaded(G_OBJECT(label), "label", "-", NULL);
+	g_object_set_threaded(G_OBJECT(label), "sensitive", FALSE, NULL);
 }
 
 static void newstringdata(char* l, char* data) {
