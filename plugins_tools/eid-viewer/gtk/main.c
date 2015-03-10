@@ -22,7 +22,7 @@
 #define _(s) gettext(s)
 #endif
 
-typedef void(*bindisplayfunc)(char*, void*, int);
+typedef void(*bindisplayfunc)(const char*, void*, int);
 typedef void(*clearfunc)(char*);
 
 static GHashTable* binhash;
@@ -126,7 +126,7 @@ static void newstate(enum eid_vwr_states s) {
 	}
 }
 
-static void stringclear(char* l) {
+static void stringclear(const char* l) {
 	GtkLabel* label = GTK_LABEL(gtk_builder_get_object(builder, l));
 	// Should only appear in the hash table if we successfully found it
 	// earlier...
@@ -135,7 +135,7 @@ static void stringclear(char* l) {
 	g_object_set_threaded(G_OBJECT(label), "sensitive", FALSE, NULL);
 }
 
-static void newstringdata(char* l, char* data) {
+static void newstringdata(const char* l, char* data) {
 	GtkLabel* label = GTK_LABEL(gtk_builder_get_object(builder, l));
 	if(!label) {
 		char* msg = g_strdup_printf(_("Could not display label '%s', data '%s': no GtkLabel found for data"), l, data);
@@ -152,7 +152,7 @@ static void newstringdata(char* l, char* data) {
 	g_object_set_threaded(G_OBJECT(label), "sensitive", (void*)TRUE, NULL);
 }
 
-static void newbindata(char* label, void* data, int datalen) {
+static void newbindata(const char* label, void* data, int datalen) {
 	bindisplayfunc func;
 	gchar* msg;
 

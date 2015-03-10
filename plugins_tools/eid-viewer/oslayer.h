@@ -39,8 +39,8 @@ enum eid_vwr_states {
 
 struct eid_vwr_ui_callbacks {
 	void(*newsrc)(enum eid_vwr_source);
-	void(*newstringdata)(char* label, char* data);
-	void(*newbindata)(char* label, void* data, int datalen);
+	void(*newstringdata)(const char* label, char* data);
+	void(*newbindata)(const char* label, void* data, int datalen);
 	void(*log)(enum eid_vwr_loglevel, char* line, va_list ap);
 	void(*newstate)(enum eid_vwr_states);
 };

@@ -55,7 +55,7 @@ void be_log(enum eid_vwr_loglevel l, char* string, ...) {
 	va_end(ap);
 }
 
-void be_newstringdata(char* label, char* data) {
+void be_newstringdata(const char* label, char* data) {
 	NEED_CB_FUNC(newstringdata);
 	cb->newstringdata(label, data);
 }
