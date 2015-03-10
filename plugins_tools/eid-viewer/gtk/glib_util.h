@@ -6,7 +6,7 @@
  * glib version, emulate its behaviour with g_hash_table_lookup_extended
  */
 #include <glib.h>
-#if !GLIB_CHECK_VERSION(2, 32)
+#if !GLIB_CHECK_VERSION(2, 32, 0)
 #define g_hash_table_contains(t, k) g_hash_table_lookup_extended(t, k, NULL, NULL)
 #endif
 
