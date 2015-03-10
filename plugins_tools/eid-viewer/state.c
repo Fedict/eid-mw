@@ -140,7 +140,7 @@ static void parent_enter_recursive(struct state* start, struct state* end) {
 	}
 }
 
-void sm_handle_event(enum eid_vwr_state_event e, void* data) {
+void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 	struct state *thistree, *targettree, *cmnanc, *hold, *target;
 
 	/* We want to be able to detect when a state transition has happened recursively... */

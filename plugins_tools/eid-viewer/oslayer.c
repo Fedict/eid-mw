@@ -7,16 +7,16 @@ struct eid_vwr_deserialize_info {
 	int len;
 };
 
-int eid_vwr_deserialize(void* data, int len) {
+int eid_vwr_deserialize(void* data, int len, void(*write)(void*)) {
 	struct eid_vwr_deserialize_info i;
 	i.data = data;
 	i.len = len;
-	sm_handle_event(EVENT_OPEN_FILE, &i);
+	sm_handle_event(EVENT_OPEN_FILE, &i, NULL, write);
 	return 0;
 }
 
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
-	sm_handle_event(EVENT_SET_CALLBACKS, cb_);
+	sm_handle_event(EVENT_SET_CALLBACKS, cb_, NULL, NULL);
 	/*assert(cb == NULL);
 	cb = cb_;
 	cb->newsrc(EID_VWR_SRC_NONE);
@@ -35,7 +35,7 @@ void eid_vwr_poll() {
 	CK_SLOT_ID tmp;
 
 	if(p11_find_first_slot(&tmp) == EIDV_RV_OK) {
-		sm_handle_event(EVENT_TOKEN_INSERTED, &tmp);
+		sm_handle_event(EVENT_TOKEN_INSERTED, &tmp, NULL, NULL);
 		/*if(!had_slot || (tmp != prev_slot)) {
 			cb->log(EID_VWR_LOG_NORMAL, "found a card in slot %lu", tmp);
 			prev_slot = tmp;
@@ -43,7 +43,7 @@ void eid_vwr_poll() {
 			had_slot = (read_card(prev_slot) == EIDV_RV_OK);
 		}*/
 	} else {
-		sm_handle_event(EVENT_TOKEN_REMOVED, &tmp);
+		sm_handle_event(EVENT_TOKEN_REMOVED, &tmp, NULL, NULL);
 		/*
 		if(had_slot) {
 			cb->log(EID_VWR_LOG_NORMAL, "card gone, clearing data");

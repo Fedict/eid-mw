@@ -39,6 +39,7 @@ eid_viewer_SOURCES = \
 	conversions.h \
 	state.c \
 	state.h \
+	state-posix.c \
 	p11.h \
 	p11.c
 eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/tests/unit/liblabels.a @SSL_LIBS@

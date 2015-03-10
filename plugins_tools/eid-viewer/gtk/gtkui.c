@@ -137,7 +137,7 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 }
 
 void file_close(GtkMenuItem* item, gpointer user_data) {
-	eid_vwr_deserialize(NULL, 0);
+	eid_vwr_deserialize(NULL, 0, NULL);
 }
 
 void pinop(GtkWidget* button, gpointer which) {

@@ -132,7 +132,7 @@ static int perform_find(CK_BBOOL do_objid) {
 		free(value_str);
 		free(objid_str);
 	} while(count);
-	sm_handle_event(EVENT_READ_READY, NULL);
+	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
 }
 
 /*int p11_read_id(CK_SLOT_ID which) {
