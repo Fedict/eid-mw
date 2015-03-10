@@ -30,7 +30,7 @@ void eid_vwr_be_mainloop() {
 void eid_vwr_poll() {
 	CK_SLOT_ID_PTR tmp = malloc(sizeof(CK_SLOT_ID));
 
-	if(p11_find_first_slot(tmp) == EIDV_RV_OK) {
+	if(eid_vwr_p11_find_first_slot(tmp) == EIDV_RV_OK) {
 		sm_handle_event(EVENT_TOKEN_INSERTED, tmp, free, NULL);
 	} else {
 		sm_handle_event(EVENT_TOKEN_REMOVED, tmp, free, NULL);

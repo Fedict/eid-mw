@@ -62,7 +62,7 @@ static struct state states[STATE_COUNT];
 static struct state* curstate;
 
 static int do_initialize(void*data) {
-	p11_init();
+	eid_vwr_p11_init();
 	be_setcallbacks(data);
 }
 
@@ -97,18 +97,18 @@ void sm_init() {
 
 	states[STATE_TOKEN].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_TOKEN].first_child = &(states[STATE_TOKEN_ID]);
-	states[STATE_TOKEN].enter = p11_open_session;
-	states[STATE_TOKEN].leave = p11_close_session;
+	states[STATE_TOKEN].enter = eid_vwr_p11_open_session;
+	states[STATE_TOKEN].leave = eid_vwr_p11_close_session;
 	states[STATE_TOKEN].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
 
 	states[STATE_TOKEN_ID].parent = &(states[STATE_TOKEN]);
-	states[STATE_TOKEN_ID].enter = p11_read_id;
-	states[STATE_TOKEN_ID].leave = p11_finalize_find;
+	states[STATE_TOKEN_ID].enter = eid_vwr_p11_read_id;
+	states[STATE_TOKEN_ID].leave = eid_vwr_p11_finalize_find;
 	states[STATE_TOKEN_ID].out[EVENT_READ_READY] = &(states[STATE_TOKEN_CERTS]);
 
 	states[STATE_TOKEN_CERTS].parent = &(states[STATE_TOKEN]);
-	states[STATE_TOKEN_CERTS].enter = p11_read_certs;
-	states[STATE_TOKEN_CERTS].leave = p11_finalize_find;
+	states[STATE_TOKEN_CERTS].enter = eid_vwr_p11_read_certs;
+	states[STATE_TOKEN_CERTS].leave = eid_vwr_p11_finalize_find;
 	states[STATE_TOKEN_CERTS].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
 
 	states[STATE_TOKEN_PINOP].parent = &(states[STATE_TOKEN]);

@@ -38,19 +38,23 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 	} \
 }
 
-int p11_init() {
+int eid_vwr_p11_init() {
 	check_rv(C_Initialize(NULL_PTR));
 }
 
 static CK_SESSION_HANDLE session;
 static CK_SLOT_ID slot;
 
-int p11_open_session(void* slot_) {
+int eid_vwr_p11_open_session(void* slot_) {
 	slot = *(CK_SLOT_ID_PTR)slot_;
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 }
 
-int p11_find_first_slot(CK_SLOT_ID_PTR loc) {
+int eid_vwr_p11_close_session() {
+	check_rv(C_CloseSession(session));
+}
+
+int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
 	CK_SLOT_ID_PTR slotlist = malloc(sizeof(CK_SLOT_ID));
 	CK_ULONG count = 0;
 	CK_RV ret;
@@ -135,12 +139,12 @@ static int perform_find(CK_BBOOL do_objid) {
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
 }
 
-int p11_finalize_find(void* data) {
+int eid_vwr_p11_finalize_find(void* data) {
 	be_status(NULL);
 	check_rv(C_FindObjectsFinal(session));
 }
 
-int p11_read_id(void* data) {
+int eid_vwr_p11_read_id(void* data) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
 
@@ -156,7 +160,7 @@ int p11_read_id(void* data) {
 	perform_find(1);
 }
 
-int p11_read_certs(void* data) {
+int eid_vwr_p11_read_certs(void* data) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
 	
