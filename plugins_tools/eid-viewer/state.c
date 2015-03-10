@@ -125,6 +125,8 @@ void sm_init() {
 	states[STATE_FILE].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);
 
 	curstate = &(states[STATE_LIBOPEN]);
+
+	sm_start_thread();
 }
 
 static void parent_enter_recursive(struct state* start, struct state* end) {
