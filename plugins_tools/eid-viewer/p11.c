@@ -135,39 +135,6 @@ static int perform_find(CK_BBOOL do_objid) {
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
 }
 
-/*int p11_read_id(CK_SLOT_ID which) {
-	CK_SESSION_HANDLE session;
-	CK_ATTRIBUTE attr;
-	CK_ULONG type;
-
-	check_rv(C_OpenSession(which, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
-
-	attr.type = CKA_CLASS;
-	attr.pValue = &type;
-	type = CKO_DATA;
-	attr.ulValueLen = sizeof(CK_ULONG);
-
-	be_status("Reading identity data from card");
-
-	check_rv(C_FindObjectsInit(session, &attr, 1));
-
-	p11_perform_find(session, 1);
-
-	check_rv(C_FindObjectsFinal(session));
-
-	type = CKO_CERTIFICATE;
-
-	check_rv(C_FindObjectsInit(session, &attr, 1));
-
-	be_status("Reading certificates");
-
-	p11_perform_find(session, 0);
-
-	check_rv(C_FindObjectsFinal(session));
-
-	check_rv(C_CloseSession(session));
-}*/
-
 int p11_finalize_find(void* data) {
 	be_status(NULL);
 	check_rv(C_FindObjectsFinal(session));
