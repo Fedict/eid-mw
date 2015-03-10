@@ -66,6 +66,29 @@ The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
 plugin to use Belgian eID (electronic identity) card in order to access
 websites and/or sign documents. This package contains the actual libraries.
 
+%package vwr
+Obsoletes: eid-viewer
+Requires: eid-mw
+%if 0%{?suse_version}
+Requires: java >= 1.6.0
+Requires: pcsc-ccid
+%else
+Requires: java >= 1:1.6.0
+Requires: ccid
+%endif
+Requires: pcsc-lite
+Conflicts: openct
+
+%description vwr
+The eid-viewer application allows the user to read out any information from
+a Belgian electronic identity card. Both identity information and information
+about the stored cryptographic keys can be read in a user-friendly manner,
+and can easily be printed out or stored for later reviewal.
+
+The application verifies the signature of the identity information,
+checks whether it was signed by a government-issued key, and optionally
+checks the certificate against the government's Trust Service.
+
 %prep
 %setup -n eid-mw-%{version}-%{revision}
 
@@ -125,6 +148,10 @@ fi
 %doc NEWS README
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
+
+%files vwr
+%defattr(-,root,root,0755)
+%{_bindir}/eid-viewer
 
 %changelog
 * Thu Nov 27 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
