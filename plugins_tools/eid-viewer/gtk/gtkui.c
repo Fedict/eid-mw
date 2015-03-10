@@ -3,6 +3,7 @@
 #include "gtk_globals.h"
 #include "oslayer.h"
 
+#include <locale.h>
 #include <stdlib.h>
 
 #ifndef _
@@ -146,8 +147,20 @@ void pinop(GtkWidget* button, gpointer which) {
 	eid_vwr_pinop(op);
 }
 
+void translate(GtkMenuItem* item, gpointer target) {
+	enum eid_vwr_langs lang = EID_VWR_LANG_EN;
+	if(!strncmp(target, "de", 2)) {
+		lang = EID_VWR_LANG_DE;
+	} else if(!strncmp(target, "fr", 2)) {
+		lang = EID_VWR_LANG_FR;
+	} else if(!strncmp(target, "nl", 2)) {
+		lang = EID_VWR_LANG_NL;
+	}
+	convert_set_lang(lang);
+	setlocale(LC_MESSAGES, target);
+}
+
 GEN_FUNC(file_prefs, "set preferences")
 GEN_FUNC(file_print, "print")
-GEN_FUNC(translate, "translate to %s")
 GEN_FUNC(showurl, "show %s url")
 GEN_FUNC(showlog, "show log tab")
