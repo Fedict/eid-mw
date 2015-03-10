@@ -153,6 +153,7 @@ fi
 %files vwr
 %defattr(-,root,root,0755)
 %{_bindir}/eid-viewer
+%{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
 
 %changelog
 * Thu Nov 27 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
