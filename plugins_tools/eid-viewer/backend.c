@@ -22,6 +22,8 @@ struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 	return retval;
 }
 
+#define NEED_CB_FUNC(f) if(!cb) return; if(!(cb->f)) return
+
 int eid_vwr_serialize(void** data, int* len) {
 	return 0;
 }
@@ -34,11 +36,17 @@ void be_setcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 }
 
 void be_newsource(enum eid_vwr_source which) {
+	NEED_CB_FUNC(newsrc);
 	cb->newsrc(which);
 }
 
+void be_newstate(enum eid_vwr_states which) {
+	NEED_CB_FUNC(newstate);
+	cb->newstate(which);
+}
+
 void be_log(enum eid_vwr_loglevel l, char* string, ...) {
-	if(!cb) return;
+	NEED_CB_FUNC(log);
 	va_list ap, ac;
 	va_start(ap, string);
 	va_copy(ac, ap);
@@ -57,10 +65,12 @@ void be_status(char* data, ...) {
 }
 
 void be_newstringdata(char* label, char* data) {
+	NEED_CB_FUNC(newstringdata);
 	cb->newstringdata(label, data);
 }
 
 void be_newbindata(char* label, void* data, int datalen) {
+	NEED_CB_FUNC(newbindata);
 	cb->newbindata(label, data, datalen);
 }
 
