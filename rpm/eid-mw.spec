@@ -18,6 +18,7 @@ BuildRequires: gtk2-devel
 %else
 BuildRequires: gtk3-devel
 %endif
+BuildRequires: openssl-devel
 BuildRequires: pcsc-lite-devel
 BuildRequires: desktop-file-utils
 Requires(pre): /sbin/chkconfig
