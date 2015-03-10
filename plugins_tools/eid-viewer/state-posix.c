@@ -32,13 +32,13 @@ static void* thread_main(void* val) {
 			// Avoid deadlocks. Event-handling code could be doing
 			// anything, including dealing with (other?) mutexes.
 			pthread_mutex_unlock(&mutex);
-			sm_handle_event_onthread(cmdlist->e, cmdlist->data);
-			if(cmdlist->done != NULL) {
-				cmdlist->done(cmdlist->data);
+			sm_handle_event_onthread(tmp->e, tmp->data);
+			if(tmp->done != NULL) {
+				tmp->done(tmp->data);
 			}
 			pthread_mutex_lock(&mutex);
-			if(cmdlist->free != NULL) {
-				cmdlist->free(cmdlist->data);
+			if(tmp->free != NULL) {
+				tmp->free(cmdlist->data);
 			}
 			cmdlist = cmdlist->next;
 			free(tmp);
