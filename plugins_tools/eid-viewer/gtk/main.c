@@ -16,6 +16,7 @@
 #include "verify.h"
 #include "certs.h"
 #include "state.h"
+#include "glib_util.h"
 
 #ifndef _
 #define _(s) gettext(s)

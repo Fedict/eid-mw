@@ -1,5 +1,6 @@
 #include "verify.h"
 #include "photo.h"
+#include "glib_util.h"
 
 static GHashTable* hash = NULL;
 
