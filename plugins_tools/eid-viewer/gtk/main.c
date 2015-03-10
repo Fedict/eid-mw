@@ -246,13 +246,13 @@ static void connect_signals(GtkWidget* window) {
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_quit"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(gtk_main_quit), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_de"));
-	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "de");
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "de_BE.UTF-8");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_en"));
-	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "en");
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "en_US.UTF-8");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_fr"));
-	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "fr");
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "fr_BE.UTF-8");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_nl"));
-	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "nl");
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "nl_BE.UTF-8");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_about"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showabout), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_faq"));
@@ -335,6 +335,11 @@ int main(int argc, char** argv) {
 	struct eid_vwr_ui_callbacks* cb;
 	pthread_t thread;
 
+	/* The GNU implementation of setlocale() ignores whatever we
+	 * specify if the LANGUAGE environment variable has a value, so
+	 * ensure that it doesn't
+	 */
+	putenv("LANGUAGE=");
 	bindtextdomain("eid-viewer", DATAROOTDIR "/locale");
 	textdomain("eid-viewer");
 
