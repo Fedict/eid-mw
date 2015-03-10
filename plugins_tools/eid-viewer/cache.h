@@ -5,10 +5,16 @@
 extern "C" {
 #endif
 
+struct eid_vwr_cache_item {
+	void* data;
+	int len;
+};
+
 void cache_add(char* label, void* data, unsigned long len);
-const void* cache_get_data(char* label);
+const struct eid_vwr_cache_item* cache_get_data(const char* label);
 void* cache_label_iterator();
 const char* cache_next_label(void* iterator);
+void cache_label_iterator_free(void* iterator);
 void cache_clear();
 
 #ifdef __cplusplus

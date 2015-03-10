@@ -1,20 +1,36 @@
 #include "cache.h"
 #include <map>
 #include <string>
+#include <cstdlib>
+#include <cstring>
 
-std::map<std::string, void*> cache;
+struct cache_item_container {	
+	eid_vwr_cache_item* item;
+
+	cache_item_container(void* data, size_t len) : item(new eid_vwr_cache_item) {
+		item->data = malloc(len);
+		memcpy(item->data, data, len);
+		item->len = len;
+	}
+
+	~cache_item_container() {
+		free(item->data);
+		delete item;
+	}
+};
+
+std::map<std::string, cache_item_container*> cache;
 
 void cache_add(char* label, void* data, unsigned long len) {
-	void* copy = new char[len];
-	cache[label] = data;
+	cache[label] = new cache_item_container(data, len);
 }
 
-const void* cache_get_data(char* label) {
-	return cache[label];
+const struct eid_vwr_cache_item* cache_get_data(const char* label) {
+	return cache[label]->item;
 }
 
 struct iterator_deref {
-	std::map<std::string, void*>::iterator it;
+	std::map<std::string, cache_item_container*>::iterator it;
 };
 
 void* cache_label_iterator() {
@@ -23,13 +39,21 @@ void* cache_label_iterator() {
 	return (void*)it;
 }
 
+void cache_label_iterator_free(void* iterator) {
+	iterator_deref* it = (iterator_deref*)iterator;
+	delete it;
+}
+
 const char* cache_next_label(void* iterator) {
 	iterator_deref* it = (iterator_deref*)iterator;
+	if(it->it == cache.end()) {
+		return NULL;
+	}
 	const char* retval = it->it->first.c_str();
 	++(it->it);
 	return retval;
 }
 
 void cache_clear() {
-	cache.erase(cache.begin(), cache.end());
+	cache.clear();
 }
