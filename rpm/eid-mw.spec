@@ -67,6 +67,7 @@ plugin to use Belgian eID (electronic identity) card in order to access
 websites and/or sign documents. This package contains the actual libraries.
 
 %package vwr
+Summary: Belgium electronic identity card viewer
 Obsoletes: eid-viewer
 Requires: eid-mw
 %if 0%{?suse_version}
