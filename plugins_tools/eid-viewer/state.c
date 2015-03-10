@@ -30,8 +30,9 @@ static const char* state_to_name(enum states state) {
 	STATE_NAME(TOKEN_PINOP);
 	STATE_NAME(FILE);
 #undef STATE_NAME
+	default:
+		return "unknown state";
 	}
-	return "unknown state";
 }
 
 static const char* event_to_name(enum eid_vwr_state_event event) {
@@ -45,8 +46,9 @@ static const char* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(READ_READY);
 	EVENT_NAME(DO_PINOP);
 #undef EVENT_NAME
+	default:
+		return "unknown event";
 	}
-	return "unknown event";
 }
 
 struct state {

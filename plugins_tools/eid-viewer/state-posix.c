@@ -47,7 +47,7 @@ static void* thread_main(void* val) {
 	}
 exit:
 	pthread_mutex_unlock(&mutex);
-	return;
+	return NULL;
 }
 
 void add_item(struct list* item) {
