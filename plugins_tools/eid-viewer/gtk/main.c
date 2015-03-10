@@ -55,32 +55,75 @@ static void uilog(enum eid_vwr_loglevel l, char* line, ...) {
 	va_end(ap);
 }
 
-static void realstatus(char* data, va_list ap) {
+struct statusupdate {
+	gboolean spin;
+	char* text;
+};
+
+static gboolean realstatus(gpointer data) {
 	GtkStatusbar* sb = GTK_STATUSBAR(gtk_builder_get_object(builder, "statusbar"));
 	GtkSpinner* spinner = GTK_SPINNER(gtk_builder_get_object(builder, "busy_spinner"));
-	gchar* line;
+	struct statusupdate *update = (struct statusupdate*)data;
 
 	if(G_UNLIKELY(!statusbar_context)) {
 		statusbar_context = gtk_statusbar_get_context_id(sb, "useless");
 	}
 	gtk_statusbar_remove_all(sb, statusbar_context);
-	if(data == NULL) {
-		gtk_spinner_stop(spinner);
-		return;
+	gtk_widget_set_visible(GTK_WIDGET(spinner), update->spin);
+	g_object_set(G_OBJECT(spinner), "active", update->spin, NULL);
+	if(update->text) {
+		gtk_statusbar_push(sb, statusbar_context, update->text);
+		g_free(update->text);
 	}
-	gtk_spinner_start(spinner);
-	line = g_strdup_vprintf(data, ap);
-	gtk_statusbar_push(sb, statusbar_context, line);
-	g_free(line);
+	g_free(update);
+
+	return FALSE;
 }
 
-static void uistatus(char* data, ...) {
+static void uistatus(gboolean spin, char* data, ...) {
 	va_list ap, ac;
-	va_start(ap, data);
-	va_copy(ac, ap);
-	realstatus(data, ac);
-	va_end(ac);
-	va_end(ap);
+	struct statusupdate* update = g_new0(struct statusupdate, 1);
+
+	if(data != NULL) {
+		va_start(ap, data);
+		va_copy(ac, ap);
+		update->text = g_strdup_vprintf(data, ac);
+		va_end(ac);
+		va_end(ap);
+	}
+	update->spin = spin;
+	g_main_context_invoke(NULL, realstatus, update);
+}
+
+static void newstate(enum eid_vwr_states s) {
+	switch(s) {
+		case STATE_LIBOPEN:
+		case STATE_CALLBACKS:
+			uistatus(TRUE, _("Initializing"));
+			return;
+		case STATE_READY:
+			uistatus(FALSE, _("Ready to read a card"));
+			return;
+		case STATE_TOKEN:
+			uistatus(TRUE, _("Token available"));
+			return;
+		case STATE_TOKEN_WAIT:
+			uistatus(FALSE, NULL);
+			return;
+		case STATE_TOKEN_ID:
+			uistatus(TRUE, _("Reading identity data from card"));
+			return;
+		case STATE_TOKEN_CERTS:
+			uistatus(TRUE, _("Reading certificates from card"));
+			return;
+		case STATE_TOKEN_PINOP:
+			uistatus(TRUE, _("Performing a PIN operation"));
+			return;
+		case STATE_FILE:
+			uistatus(TRUE, _("Reading data from file"));
+		default:
+			return;
+	}
 }
 
 static void stringclear(char* l) {
@@ -318,7 +361,7 @@ int main(int argc, char** argv) {
 	cb->newstringdata = newstringdata;
 	cb->newbindata = newbindata;
 	cb->log = reallog;
-	cb->status = realstatus;
+	cb->newstate = newstate;
 	eid_vwr_createcallbacks(cb);
 
 	pthread_create(&thread, NULL, threadmain, NULL);

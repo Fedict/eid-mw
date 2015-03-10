@@ -140,15 +140,12 @@ static int perform_find(CK_BBOOL do_objid) {
 }
 
 int eid_vwr_p11_finalize_find(void* data) {
-	be_status(NULL);
 	check_rv(C_FindObjectsFinal(session));
 }
 
 int eid_vwr_p11_read_id(void* data) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
-
-	be_status("Reading identity data from card");
 
 	attr.type = CKA_CLASS;
 	attr.pValue = &type;
@@ -164,8 +161,6 @@ int eid_vwr_p11_read_certs(void* data) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
 	
-	be_status("Reading certificates from card");
-
 	attr.type = CKA_CLASS;
 	attr.pValue = &type;
 	type = CKO_CERTIFICATE;

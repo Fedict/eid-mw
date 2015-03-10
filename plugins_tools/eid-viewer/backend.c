@@ -55,15 +55,6 @@ void be_log(enum eid_vwr_loglevel l, char* string, ...) {
 	va_end(ap);
 }
 
-void be_status(char* data, ...) {
-	va_list ap, ac;
-	va_start(ap, data);
-	va_copy(ac, ap);
-	cb->status(data, ac);
-	va_end(ac);
-	va_end(ap);
-}
-
 void be_newstringdata(char* label, char* data) {
 	NEED_CB_FUNC(newstringdata);
 	cb->newstringdata(label, data);

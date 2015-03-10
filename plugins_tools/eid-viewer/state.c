@@ -3,21 +3,7 @@
 #include "backend.h"
 #include <stdlib.h>
 
-enum states {
-	STATE_LIBOPEN,
-	STATE_CALLBACKS,
-	STATE_READY,
-	STATE_TOKEN,
-	STATE_TOKEN_WAIT,
-	STATE_TOKEN_ID,
-	STATE_TOKEN_CERTS,
-	STATE_TOKEN_PINOP,
-	STATE_FILE,
-
-	STATE_COUNT,
-};
-
-static const char* state_to_name(enum states state) {
+static const char* state_to_name(enum eid_vwr_states state) {
 	switch(state) {
 #define STATE_NAME(s) case STATE_##s: return #s
 	STATE_NAME(LIBOPEN);
@@ -52,7 +38,7 @@ static const char* event_to_name(enum eid_vwr_state_event event) {
 }
 
 struct state {
-	enum states me;
+	enum eid_vwr_states me;
 	struct state* out[EVENT_COUNT];
 	struct state* first_child;
 	struct state* parent;
@@ -73,7 +59,6 @@ static int do_parse_file(void*data) {
 
 static int source_none(void*data) {
 	be_newsource(EID_VWR_SRC_NONE);
-	be_status("Ready to read a card");
 }
 
 static int do_pinop(void*which) {
@@ -85,7 +70,7 @@ static int do_end_pinop() {
 void sm_init() {
 	int i;
 	for(i=0;i<STATE_COUNT;i++) {
-		states[i].me = (enum states)i;
+		states[i].me = (enum eid_vwr_states)i;
 	}
 	states[STATE_LIBOPEN].out[EVENT_SET_CALLBACKS] = &(states[STATE_CALLBACKS]);
 
@@ -201,6 +186,7 @@ exit_loop:
 	/* Now do the actual state transition */
 	be_log(EID_VWR_LOG_DETAIL, "Entering state %s (target)", state_to_name(target->me));
 	hold = curstate = target;
+	be_newstate(curstate->me);
 
 	/* If the target state has parent states that don't share a common
 	 * ancestor with the (previously) current state, call their "enter"
@@ -220,6 +206,7 @@ exit_loop:
 	while(curstate->first_child != NULL) {
 		be_log(EID_VWR_LOG_DETAIL, "Entering state %s (child)", state_to_name(curstate->first_child->me));
 		hold = curstate = curstate->first_child;
+		be_newstate(curstate->me);
 		if(curstate->enter != NULL) {
 			curstate->enter(NULL);
 		}

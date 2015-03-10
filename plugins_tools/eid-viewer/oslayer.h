@@ -23,12 +23,26 @@ enum eid_vwr_pinops {
 	EID_VWR_PINOP_CHG,
 };
 
+enum eid_vwr_states {
+	STATE_LIBOPEN,
+	STATE_CALLBACKS,
+	STATE_READY,
+	STATE_TOKEN,
+	STATE_TOKEN_WAIT,
+	STATE_TOKEN_ID,
+	STATE_TOKEN_CERTS,
+	STATE_TOKEN_PINOP,
+	STATE_FILE,
+
+	STATE_COUNT,
+};
+
 struct eid_vwr_ui_callbacks {
 	void(*newsrc)(enum eid_vwr_source);
 	void(*newstringdata)(char* label, char* data);
 	void(*newbindata)(char* label, void* data, int datalen);
 	void(*log)(enum eid_vwr_loglevel, char* line, va_list ap);
-	void(*status)(char* data, va_list ap);
+	void(*newstate)(enum eid_vwr_states);
 };
 
 struct eid_vwr_preview {
