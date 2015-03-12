@@ -20,10 +20,12 @@ static gboolean append_logline(gpointer ptr) {
 						gtk_builder_get_object(builder, "loglvl")))) {
 			GtkTextView* tv = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "logtext"));
 			GtkTextBuffer* buf = gtk_text_view_get_buffer(tv);
+			GtkTextMark* mark = gtk_text_buffer_get_mark(buf, "logaddpos");
 			GtkTextIter it;
 
-			gtk_text_buffer_get_end_iter(buf, &it);
+			gtk_text_buffer_get_iter_at_mark(buf, &it, mark);
 			gtk_text_buffer_insert(buf, &it, msg->msg, -1);
+			gtk_text_view_scroll_to_mark(tv, mark, 0.0, FALSE, 0.0, 0.0);
 		}
 	}
 	g_free(msg->msg);
@@ -116,6 +118,8 @@ void uilog(enum eid_vwr_loglevel l, char* line, ...) {
 
 logfunc log_init() {
 	GObject* signaltmp;
+	GtkTextBuffer* buf;
+	GtkTextIter it;
 
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_log"));
 	g_signal_connect(signaltmp, "toggled", G_CALLBACK(switch_logtab), NULL);
@@ -124,6 +128,10 @@ logfunc log_init() {
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(clear_log), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "logcopybut"));
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(copy_log), NULL);
+
+	buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtk_builder_get_object(builder, "logtext")));
+	gtk_text_buffer_get_end_iter(buf, &it);
+	gtk_text_buffer_create_mark(buf, "logaddpos", &it, FALSE);
 
 	g_log_set_default_handler(glib_message_redirect, NULL);
 
