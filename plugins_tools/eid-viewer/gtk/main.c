@@ -308,6 +308,7 @@ int main(int argc, char** argv) {
 	GtkAccelGroup *group;
 	struct eid_vwr_ui_callbacks* cb;
 	pthread_t thread;
+	GError* err = NULL;
 
 	/* The GNU implementation of setlocale() ignores whatever we
 	 * specify if the LANGUAGE environment variable has a value, so
@@ -321,7 +322,10 @@ int main(int argc, char** argv) {
 
 	gtk_init(&argc, &argv);
 	builder = gtk_builder_new();
-	gtk_builder_add_from_string(builder, VIEWER_GLADE_STRING, strlen(VIEWER_GLADE_STRING), NULL);
+	if(gtk_builder_add_from_string(builder, VIEWER_GLADE_STRING, strlen(VIEWER_GLADE_STRING), &err) == 0) {
+		g_critical("Could not parse Glade XML: %s", err->message);
+		exit(EXIT_FAILURE);
+	}
 
 	window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
 	group = gtk_accel_group_new();
