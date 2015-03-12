@@ -13,9 +13,9 @@ enum eid_vwr_source {
 };
 
 enum eid_vwr_loglevel {
-	EID_VWR_LOG_DETAIL,
-	EID_VWR_LOG_NORMAL,
-	EID_VWR_LOG_COARSE,
+	EID_VWR_LOG_DETAIL = 0,
+	EID_VWR_LOG_NORMAL = 1,
+	EID_VWR_LOG_COARSE = 2,
 };
 
 enum eid_vwr_pinops {

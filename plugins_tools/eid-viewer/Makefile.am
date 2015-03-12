@@ -20,6 +20,8 @@ eid_viewer_SOURCES = \
 	gtk/verify.h \
 	gtk/verify.c \
 	gtk/glib_util.h \
+	gtk/logging.h \
+	gtk/logging.c \
 	cache.h \
 	cache/cache.cpp \
 	conversions/hexnumconv.cpp \

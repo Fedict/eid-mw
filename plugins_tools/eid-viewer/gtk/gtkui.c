@@ -196,4 +196,3 @@ void translate(GtkMenuItem* item, gpointer target) {
 GEN_FUNC(file_prefs, "set preferences")
 GEN_FUNC(file_print, "print")
 GEN_FUNC(showurl, "show %s url")
-GEN_FUNC(showlog, "show log tab")
