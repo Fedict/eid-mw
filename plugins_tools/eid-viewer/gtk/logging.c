@@ -6,6 +6,7 @@
 
 #include "gtk_globals.h"
 #include "logging.h"
+#include "prefs.h"
 
 struct log_message {
 	enum eid_vwr_loglevel l;
@@ -117,17 +118,24 @@ void uilog(enum eid_vwr_loglevel l, char* line, ...) {
 }
 
 logfunc log_init() {
-	GObject* signaltmp;
+	GObject* object;
 	GtkTextBuffer* buf;
 	GtkTextIter it;
+	GSettings* sets = get_prefs();
 
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_log"));
-	g_signal_connect(signaltmp, "toggled", G_CALLBACK(switch_logtab), NULL);
-	switch_logtab(GTK_CHECK_MENU_ITEM(signaltmp), NULL);
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "logclearbut"));
-	g_signal_connect(signaltmp, "clicked", G_CALLBACK(clear_log), NULL);
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "logcopybut"));
-	g_signal_connect(signaltmp, "clicked", G_CALLBACK(copy_log), NULL);
+	object = G_OBJECT(gtk_builder_get_object(builder, "mi_help_log"));
+	g_signal_connect(object, "toggled", G_CALLBACK(switch_logtab), object);
+	g_settings_bind(sets, "showlog", object, "active", 0);
+	switch_logtab(GTK_CHECK_MENU_ITEM(object), NULL);
+
+	object = G_OBJECT(gtk_builder_get_object(builder, "logclearbut"));
+	g_signal_connect(object, "clicked", G_CALLBACK(clear_log), NULL);
+
+	object = G_OBJECT(gtk_builder_get_object(builder, "logcopybut"));
+	g_signal_connect(object, "clicked", G_CALLBACK(copy_log), NULL);
+
+	object = G_OBJECT(gtk_builder_get_object(builder, "loglvl"));
+	g_settings_bind(sets, "loglevel", object, "active", 0);
 
 	buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtk_builder_get_object(builder, "logtext")));
 	gtk_text_buffer_get_end_iter(buf, &it);

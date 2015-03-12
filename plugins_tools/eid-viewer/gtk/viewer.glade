@@ -1093,7 +1093,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVPaned" id="paned1">
+              <object class="GtkVPaned" id="cert_paned">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <child>
@@ -1412,7 +1412,6 @@
             <child>
               <object class="GtkVBox" id="logtab">
                 <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow2">
                     <property name="visible">True</property>

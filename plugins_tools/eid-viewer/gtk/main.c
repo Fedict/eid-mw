@@ -18,6 +18,7 @@
 #include "state.h"
 #include "glib_util.h"
 #include "logging.h"
+#include "prefs.h"
 
 #ifndef _
 #define _(s) gettext(s)
@@ -239,6 +240,9 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_TEST);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pinchangebut"));
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_CHG);
+
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "cert_paned"));
+	g_settings_bind(get_prefs(), "cert-paned-pos", signaltmp, "position", 0);
 }
 
 static void show_date_state(char* label, void* data, int length) {
