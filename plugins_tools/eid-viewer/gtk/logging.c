@@ -90,28 +90,28 @@ static void switch_logtab(GtkCheckMenuItem* item, gpointer user_data G_GNUC_UNUS
 }
 
 static void reallog(enum eid_vwr_loglevel l, char* line, va_list ap) {
-        GLogLevelFlags gtklog;
-        switch(l) {
-                case EID_VWR_LOG_DETAIL:
-                        gtklog = G_LOG_LEVEL_DEBUG;
-                        break;
-                case EID_VWR_LOG_NORMAL:
-                        gtklog = G_LOG_LEVEL_MESSAGE;
-                        break;
-                case EID_VWR_LOG_COARSE:
-                        gtklog = G_LOG_LEVEL_ERROR;
-                        break;
-        }
-        g_logv(NULL, gtklog, line, ap);
+	GLogLevelFlags gtklog;
+	switch(l) {
+		case EID_VWR_LOG_DETAIL:
+			gtklog = G_LOG_LEVEL_DEBUG;
+			break;
+		case EID_VWR_LOG_NORMAL:
+			gtklog = G_LOG_LEVEL_MESSAGE;
+			break;
+		case EID_VWR_LOG_COARSE:
+			gtklog = G_LOG_LEVEL_ERROR;
+			break;
+	}
+	g_logv(NULL, gtklog, line, ap);
 }
 
 void uilog(enum eid_vwr_loglevel l, char* line, ...) {
-        va_list ap, ac;
-        va_start(ap, line);
-        va_copy(ac, ap);
-        reallog(l, line, ac);
-        va_end(ac);
-        va_end(ap);
+	va_list ap, ac;
+	va_start(ap, line);
+	va_copy(ac, ap);
+	reallog(l, line, ac);
+	va_end(ac);
+	va_end(ap);
 }
 
 logfunc log_init() {
