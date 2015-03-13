@@ -17,6 +17,8 @@
 #include "certs.h"
 #include "state.h"
 #include "glib_util.h"
+#include "logging.h"
+#include "prefs.h"
 
 #ifndef _
 #define _(s) gettext(s)
@@ -29,31 +31,6 @@ static GHashTable* binhash;
 static guint statusbar_context = 0;
 
 extern char** environ;
-
-static void reallog(enum eid_vwr_loglevel l, char* line, va_list ap) {
-	GLogLevelFlags gtklog;
-	switch(l) {
-		case EID_VWR_LOG_DETAIL:
-			gtklog = G_LOG_LEVEL_DEBUG;
-			break;
-		case EID_VWR_LOG_NORMAL:
-			gtklog = G_LOG_LEVEL_MESSAGE;
-			break;
-		case EID_VWR_LOG_COARSE:
-			gtklog = G_LOG_LEVEL_ERROR;
-			break;
-	}
-	g_logv(NULL, gtklog, line, ap);
-}
-
-static void uilog(enum eid_vwr_loglevel l, char* line, ...) {
-	va_list ap, ac;
-	va_start(ap, line);
-	va_copy(ac, ap);
-	reallog(l, line, ac);
-	va_end(ac);
-	va_end(ap);
-}
 
 struct statusupdate {
 	gboolean spin;
@@ -259,12 +236,13 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showurl), "faq");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_test"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showurl), "test");
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_log"));
-	g_signal_connect(signaltmp, "activate", G_CALLBACK(showlog), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pintestbut"));
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_TEST);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pinchangebut"));
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_CHG);
+
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "cert_paned"));
+	g_settings_bind(get_prefs(), "cert-paned-pos", signaltmp, "position", 0);
 }
 
 static void show_date_state(char* label, void* data, int length) {
@@ -334,6 +312,7 @@ int main(int argc, char** argv) {
 	GtkAccelGroup *group;
 	struct eid_vwr_ui_callbacks* cb;
 	pthread_t thread;
+	GError* err = NULL;
 
 	/* The GNU implementation of setlocale() ignores whatever we
 	 * specify if the LANGUAGE environment variable has a value, so
@@ -347,7 +326,10 @@ int main(int argc, char** argv) {
 
 	gtk_init(&argc, &argv);
 	builder = gtk_builder_new();
-	gtk_builder_add_from_string(builder, VIEWER_GLADE_STRING, strlen(VIEWER_GLADE_STRING), NULL);
+	if(gtk_builder_add_from_string(builder, VIEWER_GLADE_STRING, strlen(VIEWER_GLADE_STRING), &err) == 0) {
+		g_critical("Could not parse Glade XML: %s", err->message);
+		exit(EXIT_FAILURE);
+	}
 
 	window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
 	group = gtk_accel_group_new();
@@ -365,13 +347,13 @@ int main(int argc, char** argv) {
 	cb->newsrc = newsrc;
 	cb->newstringdata = newstringdata;
 	cb->newbindata = newbindata;
-	cb->log = reallog;
+	cb->log = log_init();
 	cb->newstate = newstate;
 	eid_vwr_createcallbacks(cb);
 
 	pthread_create(&thread, NULL, threadmain, NULL);
 
-	gtk_widget_show_all(window);
+	gtk_widget_show(window);
 
 	gtk_main();
 }

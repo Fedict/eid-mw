@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<schemalist>
+  <schema id="be.belgium.eid.eid-viewer" path="/be/belgium/eid/eID-Viewer/" gettext-domain="eid-viewer">
+    <key name="showlog" type="b">
+      <default>false</default>
+      <summary>Show log tab</summary>
+      <description>Whether to show the log tab</description>
+    </key>
+    <key name="loglevel" type="i">
+      <default>1</default>
+      <summary>Log level</summary>
+      <description>The log level which is used by default</description>
+      <range min="0" max="2" />
+    </key>
+    <key name="validate" type="b">
+      <default>false</default>
+      <summary>Always validate</summary>
+      <description>Whether to automatically validate when a card is inserted.</description>
+    </key>
+    <key name="cert-paned-pos" type="i">
+      <default>107</default>
+      <summary>Position of the Paned on the "certificates" tab</summary>
+      <description>How high the upper part of the paned on the "certificates" page should be (in pixels)</description>
+      <range min="0" max="1000" />
+    </key>
+  </schema>
+</schemalist>
