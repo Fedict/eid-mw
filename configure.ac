@@ -75,7 +75,12 @@ AC_MSG_RESULT(yes)
 fi
 AM_CONDITIONAL([NO_DIALOGS],[test x$enable_dialogs = xno])
 
-PKG_CHECK_MODULES(GIO, "gio-2.0")
+PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.30],[HAVE_GIO=1],[HAVE_GIO=0])
+AC_SUBST([HAVE_GIO])
+if test "$HAVE_GIO" -gt 0; then
+GLIB_GSETTINGS
+fi
+AM_CONDITIONAL(HAVE_GIO, [test "$HAVE_GIO" = 1])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
@@ -100,8 +105,6 @@ AC_SUBST([JPEG_LIBS])
 AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjpeg installed])
 
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1])
-
-GLIB_GSETTINGS
 
 AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/Makefile

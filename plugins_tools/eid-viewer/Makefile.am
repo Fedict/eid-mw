@@ -23,7 +23,6 @@ eid_viewer_SOURCES = \
 	gtk/logging.h \
 	gtk/logging.c \
 	gtk/prefs.h \
-	gtk/prefs.c \
 	cache.h \
 	cache/cache.cpp \
 	conversions/hexnumconv.cpp \
@@ -47,6 +46,10 @@ eid_viewer_SOURCES = \
 	state-posix.c \
 	p11.h \
 	p11.c
+if HAVE_GIO
+eid_viewer_SOURCES = $(eid_viewer_SOURCES) gtk/prefs.c
+endif
+
 eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/tests/unit/liblabels.a @SSL_LIBS@ @GIO_LIBS@
 AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/tests/unit @SSL_CFLAGS@ @GIO_CFLAGS@
 AM_CXXFLAGS = $(AM_CFLAGS) 
