@@ -170,3 +170,13 @@ int eid_vwr_p11_read_certs(void* data) {
 
 	perform_find(0);
 }
+
+int eid_vwr_p11_do_pinop(void* data) {
+	enum eid_vwr_pinops p = (enum eid_vwr_pinops) data;
+	check_rv(C_Login(session, CKU_USER, NULL_PTR, 0));
+	if(p >= EID_VWR_PINOP_CHG) {
+		check_rv(C_SetPIN(session, NULL_PTR, 0, NULL_PTR, 0));
+	}
+	check_rv(C_Logout(session));
+	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+}

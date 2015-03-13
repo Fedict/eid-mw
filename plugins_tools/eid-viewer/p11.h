@@ -14,5 +14,6 @@ int eid_vwr_p11_read_certs(void*);
 int eid_vwr_p11_open_session(void* slot);
 int eid_vwr_p11_close_session();
 int eid_vwr_p11_finalize_find(void*);
+int eid_vwr_p11_do_pinop(void*);
 
 #endif

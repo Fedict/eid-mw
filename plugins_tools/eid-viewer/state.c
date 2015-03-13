@@ -61,12 +61,6 @@ static int source_none(void*data) {
 	be_newsource(EID_VWR_SRC_NONE);
 }
 
-static int do_pinop(void*which) {
-}
-
-static int do_end_pinop() {
-}
-
 void sm_init() {
 	int i;
 	for(i=0;i<STATE_COUNT;i++) {
@@ -99,8 +93,7 @@ void sm_init() {
 	states[STATE_TOKEN_CERTS].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
 
 	states[STATE_TOKEN_PINOP].parent = &(states[STATE_TOKEN]);
-	states[STATE_TOKEN_PINOP].enter = do_pinop;
-	states[STATE_TOKEN_PINOP].leave = do_end_pinop;
+	states[STATE_TOKEN_PINOP].enter = eid_vwr_p11_do_pinop;
 	states[STATE_TOKEN_PINOP].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
 
 	states[STATE_TOKEN_WAIT].parent = &(states[STATE_TOKEN]);

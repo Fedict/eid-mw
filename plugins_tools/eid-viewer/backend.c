@@ -29,6 +29,8 @@ int eid_vwr_serialize(void** data, int* len) {
 }
 
 int eid_vwr_pinop(enum eid_vwr_pinops op) {
+	sm_handle_event(EVENT_DO_PINOP, (void*)op, NULL, NULL);
+	return 0;
 }
 
 void be_setcallbacks(struct eid_vwr_ui_callbacks* cb_) {
