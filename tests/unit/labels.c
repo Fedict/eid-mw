@@ -25,6 +25,7 @@
 #include <pkcs11.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #define ADD_LABEL(l, is_string) if(!strcmp(label, l)) return is_string
 

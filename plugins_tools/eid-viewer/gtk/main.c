@@ -102,16 +102,16 @@ static void newstate(enum eid_vwr_states s) {
 			uistatus(TRUE, _("Initializing"));
 			return;
 		case STATE_READY:
-			uistatus(FALSE, _("Ready to read a card"));
+			uistatus(FALSE, _("Ready to read identity card."));
 			return;
 		case STATE_TOKEN:
-			uistatus(TRUE, _("Token available"));
+			uistatus(TRUE, _("Card available"));
 			return;
 		case STATE_TOKEN_WAIT:
-			uistatus(FALSE, NULL);
+			uistatus(FALSE, _("");
 			return;
 		case STATE_TOKEN_ID:
-			uistatus(TRUE, _("Reading identity data from card"));
+			uistatus(TRUE, _("Reading identity."));
 			return;
 		case STATE_TOKEN_CERTS:
 			uistatus(TRUE, _("Reading certificates from card"));

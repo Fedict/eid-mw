@@ -217,3 +217,15 @@ exit_loop:
 	}
 	be_log(EID_VWR_LOG_DETAIL, "State transition for %s complete", event_to_name(e));
 }
+
+int sm_state_is_active(enum eid_vwr_states s) {
+	struct state* ptr = curstate;
+	while(ptr && ptr->me != s) {
+		ptr = ptr->parent;
+	}
+	if(ptr) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
