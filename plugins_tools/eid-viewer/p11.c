@@ -137,10 +137,12 @@ static int perform_find(CK_BBOOL do_objid) {
 		free(objid_str);
 	} while(count);
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+	return 0;
 }
 
 int eid_vwr_p11_finalize_find(void* data) {
 	check_rv(C_FindObjectsFinal(session));
+	return 0;
 }
 
 int eid_vwr_p11_read_id(void* data) {
@@ -155,6 +157,8 @@ int eid_vwr_p11_read_id(void* data) {
 	check_rv(C_FindObjectsInit(session, &attr, 1));
 
 	perform_find(1);
+
+	return 0;
 }
 
 int eid_vwr_p11_read_certs(void* data) {
@@ -169,6 +173,8 @@ int eid_vwr_p11_read_certs(void* data) {
 	check_rv(C_FindObjectsInit(session, &attr, 1));
 
 	perform_find(0);
+
+	return 0;
 }
 
 int eid_vwr_p11_do_pinop(void* data) {
@@ -179,4 +185,6 @@ int eid_vwr_p11_do_pinop(void* data) {
 	}
 	check_rv(C_Logout(session));
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+
+	return 0;
 }
