@@ -188,3 +188,9 @@ int eid_vwr_p11_do_pinop(void* data) {
 
 	return 0;
 }
+
+int eid_vwr_p11_serialize(void* data) {
+	// TODO
+
+	return 0;
+}

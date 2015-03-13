@@ -100,7 +100,7 @@ void sm_init() {
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
 
 	states[STATE_TOKEN_SERIALIZE].parent = &(states[STATE_TOKEN]);
-	states[STATE_TOKEN_SERIALIZE].enter = be_serialize;
+	states[STATE_TOKEN_SERIALIZE].enter = eid_vwr_p11_serialize;
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
 
 	states[STATE_FILE].parent = &(states[STATE_CALLBACKS]);
