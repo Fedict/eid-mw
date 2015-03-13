@@ -10,6 +10,8 @@ enum eid_vwr_state_event {
 	EVENT_READ_READY,
 	EVENT_DO_PINOP,
 
+	EVENT_STATE_ERROR,
+
 	EVENT_COUNT
 };
 

@@ -14,6 +14,8 @@ static const char* state_to_name(enum eid_vwr_states state) {
 	STATE_NAME(TOKEN_ID);
 	STATE_NAME(TOKEN_CERTS);
 	STATE_NAME(TOKEN_PINOP);
+	STATE_NAME(TOKEN_SERIALIZE);
+	STATE_NAME(TOKEN_ERROR);
 	STATE_NAME(FILE);
 #undef STATE_NAME
 	default:
@@ -31,6 +33,7 @@ static const char* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(TOKEN_REMOVED);
 	EVENT_NAME(READ_READY);
 	EVENT_NAME(DO_PINOP);
+	EVENT_NAME(STATE_ERROR);
 #undef EVENT_NAME
 	default:
 		return "unknown event";
@@ -86,15 +89,19 @@ void sm_init() {
 	states[STATE_TOKEN_ID].enter = eid_vwr_p11_read_id;
 	states[STATE_TOKEN_ID].leave = eid_vwr_p11_finalize_find;
 	states[STATE_TOKEN_ID].out[EVENT_READ_READY] = &(states[STATE_TOKEN_CERTS]);
+	states[STATE_TOKEN_ID].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
 	states[STATE_TOKEN_CERTS].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_CERTS].enter = eid_vwr_p11_read_certs;
 	states[STATE_TOKEN_CERTS].leave = eid_vwr_p11_finalize_find;
 	states[STATE_TOKEN_CERTS].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_CERTS].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
 	states[STATE_TOKEN_PINOP].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_PINOP].enter = eid_vwr_p11_do_pinop;
+	states[STATE_TOKEN_PINOP].leave = eid_vwr_p11_leave_pinop;
 	states[STATE_TOKEN_PINOP].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_PINOP].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_WAIT]);
 
 	states[STATE_TOKEN_WAIT].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
@@ -121,7 +128,9 @@ static void parent_enter_recursive(struct state* start, struct state* end) {
 	if(start != NULL) {
 		be_log(EID_VWR_LOG_DETAIL, "Entering state %s (parent)", state_to_name(start->me));
 		if(start->enter != NULL) {
-			start->enter(NULL);
+			if(start->enter(NULL) != 0) {
+				sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
+			}
 		}
 	}
 }
@@ -150,7 +159,9 @@ void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 	be_log(EID_VWR_LOG_DETAIL, "Handling state transition for event %s", event_to_name(e));
 	be_log(EID_VWR_LOG_DETAIL, "Leaving state %s", state_to_name(curstate->me));
 	if(curstate->leave != NULL) {
-		curstate->leave();
+		if(curstate->leave() != 0) {
+			sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
+		}
 	}
 	if(hold != curstate) {
 		be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting handling of %s", event_to_name(e));
@@ -192,7 +203,9 @@ exit_loop:
 	/* Call the target state's "enter" function, and pass on the data that
 	 * we got from the event */
 	if(curstate->enter != NULL) {
-		curstate->enter(data);
+		if(curstate->enter(data) != 0) {
+			sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
+		}
 	}
 	if(hold != curstate) {
 		be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting handling of %s", event_to_name(e));

@@ -156,9 +156,7 @@ int eid_vwr_p11_read_id(void* data) {
 
 	check_rv(C_FindObjectsInit(session, &attr, 1));
 
-	perform_find(1);
-
-	return 0;
+	return perform_find(1);
 }
 
 int eid_vwr_p11_read_certs(void* data) {
@@ -172,9 +170,7 @@ int eid_vwr_p11_read_certs(void* data) {
 
 	check_rv(C_FindObjectsInit(session, &attr, 1));
 
-	perform_find(0);
-
-	return 0;
+	return perform_find(0);
 }
 
 int eid_vwr_p11_do_pinop(void* data) {
@@ -183,8 +179,13 @@ int eid_vwr_p11_do_pinop(void* data) {
 	if(p >= EID_VWR_PINOP_CHG) {
 		check_rv(C_SetPIN(session, NULL_PTR, 0, NULL_PTR, 0));
 	}
-	check_rv(C_Logout(session));
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+
+	return 0;
+}
+
+int eid_vwr_p11_leave_pinop() {
+	check_rv(C_Logout(session));
 
 	return 0;
 }
