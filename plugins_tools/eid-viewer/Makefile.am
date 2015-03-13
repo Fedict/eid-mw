@@ -53,7 +53,7 @@ AM_CXXFLAGS = $(AM_CFLAGS)
 SUBDIRS = gtk/po test
 
 BUILT_SOURCES = gtk/viewer_glade.h
-EXTRA_DIST = gtk/viewer.glade
+EXTRA_DIST = gtk/viewer.glade gtk/eid-viewer.gschema.xml
 
 gtk/viewer_glade.h: gtk/viewer.glade
 	$(top_srcdir)/plugins_tools/aboutmw/gtk/gen.sh VIEWER_GLADE_H VIEWER_GLADE_STRING < $^ > $@
