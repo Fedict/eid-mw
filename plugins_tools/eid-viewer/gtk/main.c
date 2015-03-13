@@ -85,7 +85,7 @@ static void newstate(enum eid_vwr_states s) {
 			uistatus(TRUE, _("Card available"));
 			return;
 		case STATE_TOKEN_WAIT:
-			uistatus(FALSE, _(""));
+			uistatus(FALSE, "");
 			return;
 		case STATE_TOKEN_ID:
 			uistatus(TRUE, _("Reading identity."));
