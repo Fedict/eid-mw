@@ -25,7 +25,7 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 	CK_RV rv = call; \
 	int retval = ckrv_decode_vwr(rv, sizeof(mods) / sizeof(ckrv_mod), mods); \
 	if(retval != EIDV_RV_OK) { \
-		be_log(EID_VWR_LOG_DETAIL, #call " returned %d", retval); \
+		be_log(EID_VWR_LOG_DETAIL, #call " returned %d", rv); \
 		return retval; \
 	} \
 }
@@ -33,7 +33,7 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 #define check_rv_late(rv) { \
 	int retval = ckrv_decode_vwr(rv, 1, defmod); \
 	if(retval != EIDV_RV_OK) { \
-		be_log(EID_VWR_LOG_DETAIL, "found return value of %d", retval); \
+		be_log(EID_VWR_LOG_DETAIL, "found return value of %d", rv); \
 		return retval; \
 	} \
 }
