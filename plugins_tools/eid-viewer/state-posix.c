@@ -18,7 +18,6 @@ struct list {
 
 static void* thread_main(void* val) {
 	int rv;
-	int exiting = 0;
 	if((rv = pthread_mutex_lock(&mutex)) != 0) {
 		be_log(EID_VWR_LOG_COARSE, "Could not lock mutex: %s", strerror(rv));
 	}

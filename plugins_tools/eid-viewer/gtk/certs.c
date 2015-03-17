@@ -1,4 +1,5 @@
 #include "certs.h"
+#include "verify.h"
 
 #include <string.h>
 
@@ -102,7 +103,6 @@ gchar* get_use_flags(char* label, X509* cert) {
 	for(i=0; i<sk_X509_EXTENSION_num(ci->extensions); i++) {
 		X509_EXTENSION *ex = sk_X509_EXTENSION_value(ci->extensions, i);
 		ASN1_OBJECT* obj = X509_EXTENSION_get_object(ex);
-		ASN1_OCTET_STRING* str = X509_EXTENSION_get_data(ex);
 
 		if(OBJ_obj2nid(obj) == nid) {
 			size_t size;
@@ -128,7 +128,7 @@ gchar* detail_cert(char* label, X509* cert) {
 
 	for(i=0;i<X509_NAME_entry_count(subject);i++) {
 		const char* name;
-		const char* value;
+		const unsigned char* value;
 		entry = X509_NAME_get_entry(subject, i);
 		ASN1_OBJECT* obj = X509_NAME_ENTRY_get_object(entry); 
 		ASN1_STRING* str = X509_NAME_ENTRY_get_data(entry);
@@ -153,9 +153,9 @@ gchar* describe_cert(char* label, X509* cert) {
 		return g_strdup(label);
 	}
 	X509_NAME_ENTRY* entry = X509_NAME_get_entry(subject, index);
-	const char* value = ASN1_STRING_data(X509_NAME_ENTRY_get_data(entry));
+	const unsigned char* value = ASN1_STRING_data(X509_NAME_ENTRY_get_data(entry));
 
-	return g_strdup(value);
+	return g_strdup((char*)value);
 }
 
 static void ensure_cert() {

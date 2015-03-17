@@ -7,8 +7,8 @@
 
 #include <openssl/sha.h>
 
-static char sha1_detected[SHA_DIGEST_LENGTH];
-static char sha1_asserted[SHA_DIGEST_LENGTH];
+static unsigned char sha1_detected[SHA_DIGEST_LENGTH];
+static unsigned char sha1_asserted[SHA_DIGEST_LENGTH];
 
 static void clearphoto(char* label) {
 	GtkWidget* image = GTK_WIDGET(gtk_builder_get_object(builder, "photo"));

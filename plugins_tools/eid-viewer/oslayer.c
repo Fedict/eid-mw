@@ -1,6 +1,7 @@
 #include <oslayer.h>
 #include <state.h>
 #include <p11.h>
+#include <unistd.h>
 
 struct eid_vwr_deserialize_info {
 	void* data;

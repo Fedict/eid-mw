@@ -3,6 +3,8 @@
 #include <pkcs11.h>
 #include <backend.h>
 #include <state.h>
+#include <labels.h>
+#include <cache.h>
 
 typedef struct {
 	CK_RV rv;
@@ -64,10 +66,6 @@ int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
 	CK_SLOT_ID_PTR slotlist = malloc(sizeof(CK_SLOT_ID));
 	CK_ULONG count = 0;
 	CK_RV ret;
-	ckrv_mod m[] = {
-		{ CKR_BUFFER_TOO_SMALL, EIDV_RV_OK },
-		{ CKR_OK, EIDV_RV_OK },
-	};
 
 	while((ret = C_GetSlotList(CK_TRUE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
 		free(slotlist);
