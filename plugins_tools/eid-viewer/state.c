@@ -130,15 +130,15 @@ void sm_init() {
 	sm_start_thread();
 }
 
-static void parent_enter_recursive(struct state* start, struct state* end) {
+static void parent_enter_recursive(struct state* start, struct state* end, enum eid_vwr_state_event e) {
 	if(start == end) {
 		return;
 	}
-	parent_enter_recursive(start->parent, end);
+	parent_enter_recursive(start->parent, end, e);
 	if(start != NULL) {
 		be_log(EID_VWR_LOG_DETAIL, "Entering state %s (parent)", state_to_name(start->me));
 		if(start->enter != NULL) {
-			if(start->enter(NULL) != 0) {
+			if(start->enter(NULL) != 0 && e != EVENT_STATE_ERROR) {
 				sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
 			}
 		}
@@ -169,7 +169,7 @@ void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 	be_log(EID_VWR_LOG_DETAIL, "Handling state transition for event %s", event_to_name(e));
 	be_log(EID_VWR_LOG_DETAIL, "Leaving state %s", state_to_name(curstate->me));
 	if(curstate->leave != NULL) {
-		if(curstate->leave() != 0) {
+		if(curstate->leave() != 0 && e != EVENT_STATE_ERROR) {
 			sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
 		}
 	}
@@ -209,11 +209,11 @@ exit_loop:
 	/* If the target state has parent states that don't share a common
 	 * ancestor with the (previously) current state, call their "enter"
 	 * function -- but without passing on any data */
-	parent_enter_recursive(curstate->parent, cmnanc);
+	parent_enter_recursive(curstate->parent, cmnanc, e);
 	/* Call the target state's "enter" function, and pass on the data that
 	 * we got from the event */
 	if(curstate->enter != NULL) {
-		if(curstate->enter(data) != 0) {
+		if(curstate->enter(data) != 0 && e != EVENT_STATE_ERROR) {
 			sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
 		}
 	}
@@ -228,7 +228,9 @@ exit_loop:
 		hold = curstate = curstate->first_child;
 		be_newstate(curstate->me);
 		if(curstate->enter != NULL) {
-			curstate->enter(NULL);
+			if(curstate->enter(NULL) != 0 && e != EVENT_STATE_ERROR) {
+				sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
+			}
 		}
 		if(hold != curstate) {
 			be_log(EID_VWR_LOG_DETAIL, "State transition detected, aborting handling of %s", event_to_name(e));
