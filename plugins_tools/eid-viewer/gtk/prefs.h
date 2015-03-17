@@ -3,7 +3,7 @@
 
 #include <config.h>
 
-#if !HAVE_GIO
+#if HAVE_GIO
 #include <gio/gio.h>
 
 GSettings* get_prefs() G_GNUC_PURE;

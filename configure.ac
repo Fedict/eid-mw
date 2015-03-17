@@ -76,7 +76,7 @@ fi
 AM_CONDITIONAL([NO_DIALOGS],[test x$enable_dialogs = xno])
 
 PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.30],[HAVE_GIO=1],[HAVE_GIO=0])
-AC_SUBST([HAVE_GIO])
+AC_DEFINE_UNQUOTED([HAVE_GIO], [$HAVE_GIO], [Define to one if you have a recent enough libgio])
 if test "$HAVE_GIO" -gt 0; then
 GLIB_GSETTINGS
 fi
