@@ -155,7 +155,9 @@ fi
 %defattr(-,root,root,0755)
 %{_bindir}/eid-viewer
 %{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
+%if ! 0%{?el6}
 %{_datadir}/glib-2.0/schemas
+%endif
 
 %changelog
 * Thu Nov 27 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
