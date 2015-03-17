@@ -60,7 +60,9 @@ static void glib_message_redirect(const gchar* log_domain,
 			tmp = "C: ";
 			break;
 		default:
-			g_assert_not_reached();
+			l = EID_VWR_LOG_COARSE;
+			tmp = "U: ";
+			break;
 	}
 	tmp = g_strdup_printf("%s%s\n", tmp, message);
 	msg = g_new0(struct log_message, 1);
@@ -104,7 +106,7 @@ static void reallog(enum eid_vwr_loglevel l, char* line, va_list ap) {
 			gtklog = G_LOG_LEVEL_MESSAGE;
 			break;
 		case EID_VWR_LOG_COARSE:
-			gtklog = G_LOG_LEVEL_ERROR;
+			gtklog = G_LOG_LEVEL_WARNING;
 			break;
 	}
 	g_logv(NULL, gtklog, line, ap);
