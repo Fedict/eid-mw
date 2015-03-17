@@ -156,13 +156,12 @@ static void newsrc(enum eid_vwr_source src) {
 	// TODO: update display so we see which source we're using
 }
 
-static gboolean poll(gpointer user_data G_GNUC_UNUSED) {
-	eid_vwr_poll();
-	return TRUE;
-}
+static void* threadmain(void* data G_GNUC_UNUSED) G_GNUC_NORETURN;
 
-static void* threadmain(void* data G_GNUC_UNUSED) {
+static void* threadmain(void* data) {
 	eid_vwr_be_mainloop();
+
+	assert(1 == 0); // let the compiler know that we shouldn't get here
 }
 
 enum eid_vwr_langs langfromenv() {
@@ -356,4 +355,6 @@ int main(int argc, char** argv) {
 	gtk_widget_show(window);
 
 	gtk_main();
+
+	return 0;
 }

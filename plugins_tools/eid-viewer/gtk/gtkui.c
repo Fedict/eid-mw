@@ -15,7 +15,7 @@
 #define GEN_FUNC(n, d) \
 void n(GtkMenuItem* item, gpointer user_data) { \
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin")); \
-	GtkWidget* dlg = gtk_message_dialog_new(window, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, d " (not yet implemented)", user_data); \
+	GtkWidget* dlg = gtk_message_dialog_new(window, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, d " (not yet implemented)", (gchar*)user_data); \
 	gtk_dialog_run(GTK_DIALOG(dlg)); \
 	gtk_widget_destroy(dlg); \
 }
@@ -152,7 +152,6 @@ void pinop(GtkWidget* button, gpointer which) {
 void translate(GtkMenuItem* item, gpointer target) {
 	enum eid_vwr_langs lang = EID_VWR_LANG_EN;
 	GtkWidget *widget;
-	char* newlocale;
 	if(!strncmp(target, "de", 2)) {
 		lang = EID_VWR_LANG_DE;
 	} else if(!strncmp(target, "fr", 2)) {

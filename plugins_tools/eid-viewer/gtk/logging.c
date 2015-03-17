@@ -59,6 +59,8 @@ static void glib_message_redirect(const gchar* log_domain,
 			l = EID_VWR_LOG_COARSE;
 			tmp = "C: ";
 			break;
+		default:
+			g_assert_not_reached();
 	}
 	tmp = g_strdup_printf("%s%s\n", tmp, message);
 	msg = g_new0(struct log_message, 1);

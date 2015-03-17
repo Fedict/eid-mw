@@ -116,6 +116,8 @@ gchar* get_use_flags(char* label, X509* cert) {
 			return retval;
 		}
 	}
+
+	return NULL;
 }
 
 gchar* detail_cert(char* label, X509* cert) {
