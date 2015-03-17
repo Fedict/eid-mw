@@ -97,6 +97,9 @@ static void newstate(enum eid_vwr_states s) {
 		case STATE_TOKEN_CERTS:
 			uistatus(TRUE, _("Reading certificates from card"));
 			return;
+		case STATE_TOKEN_ERROR:
+			uistatus(FALSE, _("Failed to read identity data."));
+			return;
 		case STATE_TOKEN_PINOP:
 			uistatus(TRUE, _("Performing a PIN operation"));
 			return;
