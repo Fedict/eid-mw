@@ -1,43 +1,51 @@
 #!/bin/bash
 
 #remove former builds
-if [ -e "./eID-Installer.dmg" ] 
+if [ -e "./eID-QuickInstaller.dmg" ] 
 then 
-rm "./eID-Installer.dmg"
+rm "./eID-QuickInstaller.dmg"
 fi
 
-if [ -e "./eID-Installer-uncompressed.dmg" ] 
+if [ -e "./eID-QuickInstaller-uncompressed.dmg" ] 
 then 
-rm "./eID-Installer-uncompressed.dmg"
+rm "./eID-QuickInstaller-uncompressed.dmg"
 fi
 
-#Create an uncompressed image
-hdiutil create -size 50m -type UDIF -fs HFS+ -volname eID-Installer "./eID-Installer-uncompressed.dmg"
+#Create an uncompressed image (used for new template)
+#hdiutil create -size 1m -type UDIF -fs HFS+ -volname eID-QuickInstaller "./eID-QuickInstaller-uncompressed-template.dmg"
+
+#resize the template uncompressed image
+cp ./eID-QuickInstaller-uncompressed-template.dmg ./eID-QuickInstaller-uncompressed.dmg
+hdiutil resize -size 50m ./eID-QuickInstaller-uncompressed.dmg 
 
 #Open the uncompressed dmg and Copy the bundle into it
-hdiutil attach "./eID-Installer-uncompressed.dmg"
-chmod 755 "./eID Viewer.app"
-cp -R -f "./beid.pkg" /Volumes/eID-Installer/
-cp -R -f "./eID Viewer.app" /Volumes/eID-Installer/
-ln -s /Applications /Volumes/eID-Installer/Applications
-ln -s "/Volumes/eID-Installer/eID Viewer.app" /Volumes/eID-Installer/Test
-cp -f "./DMG/DmgBackground.jpg" /Volumes/eID-Installer/
-/Developer/Tools/SetFile -a V /Volumes/eID-Installer/DmgBackground.jpg
-cp -f "./DMG/.VolumeIcon.icns" /Volumes/eID-Installer/
-/Developer/Tools/SetFile -a C /Volumes/eID-Installer/
-cp -f "./DMG/DMG_DS_Store" /Volumes/eID-Installer/.DS_Store
+hdiutil attach "./eID-QuickInstaller-uncompressed.dmg"
+chmod 755 "../../../../ThirdParty/eid-viewer/eID Viewer.app"
+
+#remove stubs, then copy the build apps
+rm -R "/Volumes/eID-QuickInstaller/eID Viewer.app"
+cp -R -f "../../../../ThirdParty/eid-viewer/eID Viewer.app" /Volumes/eID-QuickInstaller/
+rm -R "/Volumes/eID-QuickInstaller/eID Middleware.app"
+cp -R -f "../../../plugins_tools/aboutmw/OSX/eID Middleware/build/Release/eID Middleware.app" /Volumes/eID-QuickInstaller/
+
+#cp -f "./DMG/DmgBackground2.jpg" /Volumes/eID-QuickInstaller/
+#hide background image
+SetFile -a V /Volumes/eID-QuickInstaller/DmgBackground2.jpg
+
+#open the folder when the volume is mounted
+bless --openfolder "/Volumes/eID-QuickInstaller"
 
 #Close the uncompress dmg
-hdiutil detach "/Volumes/eID-Installer"
+hdiutil detach "/Volumes/eID-QuickInstaller"
 
 #Convert to Read-Only/Compressed
-hdiutil convert -format UDCO "./eID-Installer-uncompressed.dmg" -o "./eID-Installer.dmg"
+hdiutil convert -format UDCO "./eID-QuickInstaller-uncompressed.dmg" -o "./eID-QuickInstaller.dmg"
 
 #Insert the resource file
-hdiutil unflatten "./eID-Installer.dmg"
+hdiutil unflatten "./eID-QuickInstaller.dmg"
 #The SLAResources file contain resources fork data this is not supported by svn.
 #So the sla.r file is kept in place of SLAResources
-/Developer/Tools/Rez -a "./DMG/sla.r" -o "./eID-Installer.dmg"
-hdiutil flatten "./eID-Installer.dmg"
+Rez -a "./DMG/sla.r" -o "./eID-QuickInstaller.dmg"
+hdiutil flatten "./eID-QuickInstaller.dmg"
 
-#mv "./eID-Installer.dmg" "./eID-Installer-$build.dmg"
+#mv "./eID-QuickInstaller.dmg" "./eID-QuickInstaller-$build.dmg"

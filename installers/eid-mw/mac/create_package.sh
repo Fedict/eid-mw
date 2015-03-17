@@ -112,7 +112,7 @@ chgrp -R admin  "$TOKEND_DIR/BEID.tokend"
 
 #build the packages in the release dir
 pushd $RELEASE_DIR
-pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier eid.belgium.be --version $REL_VERSION --install-location / beidbuild.pkg
+pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
 
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
