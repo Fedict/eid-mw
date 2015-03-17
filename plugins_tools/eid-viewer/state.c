@@ -55,13 +55,19 @@ static struct state* curstate;
 static int do_initialize(void*data) {
 	eid_vwr_p11_init();
 	be_setcallbacks(data);
+
+	return 0;
 }
 
 static int do_parse_file(void*data) {
+
+	return 0;
 }
 
 static int source_none(void*data) {
 	be_newsource(EID_VWR_SRC_NONE);
+
+	return 0;
 }
 
 void sm_init() {

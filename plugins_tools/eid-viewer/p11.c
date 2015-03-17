@@ -40,6 +40,8 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 
 int eid_vwr_p11_init() {
 	check_rv(C_Initialize(NULL_PTR));
+
+	return 0;
 }
 
 static CK_SESSION_HANDLE session;
@@ -48,10 +50,14 @@ static CK_SLOT_ID slot;
 int eid_vwr_p11_open_session(void* slot_) {
 	slot = *(CK_SLOT_ID_PTR)slot_;
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
+
+	return 0;
 }
 
 int eid_vwr_p11_close_session() {
 	check_rv(C_CloseSession(session));
+
+	return 0;
 }
 
 int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {

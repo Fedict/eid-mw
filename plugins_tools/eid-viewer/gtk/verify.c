@@ -32,4 +32,6 @@ gboolean data_verifies() {
 	REQUIRE("CERT_RN_FILE");
 #undef REQUIRE
 	// TODO: do actual verification
+
+	return FALSE;
 }
