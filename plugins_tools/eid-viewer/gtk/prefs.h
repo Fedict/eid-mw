@@ -9,7 +9,6 @@
 GSettings* get_prefs() G_GNUC_PURE;
 #else
 #define get_prefs() NULL
-typedef struct _gsettings GSettings;
 #define g_settings_bind(s, k, o, p, f) { }
 
 #endif
