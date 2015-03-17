@@ -32,17 +32,17 @@ rm "/Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi"
 
 #on OS X 10.10, make sure securityd auto launches pcscd
 if [[ $(sw_vers -productVersion) == *10.10* ]]; then
-sudo python $1/Contents/Resources/enablesecd.py; fi
+sudo python ./enablesecd.py; fi
 
 mv /Library/BelgiumIdentityCard "/Library/Belgium Identity Card"
 #correct the org.opensc.pcscd.autostart name if needed (add .plist)
 test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;
 
 #trust beid-cert-belgiumrca2.der
-sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $1/Contents/Scripts/beid-cert-belgiumrca2.der
+sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain ./beid-cert-belgiumrca2.der
 
 #trust beid-cert-belgiumrca3.der
-sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain $1/Contents/Scripts/beid-cert-belgiumrca3.der
+sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain ./beid-cert-belgiumrca3.der
 
 echo succeeded > /tmp/beid_install.log
 
