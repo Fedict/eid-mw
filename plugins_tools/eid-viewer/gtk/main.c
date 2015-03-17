@@ -86,6 +86,10 @@ static void newstate(enum eid_vwr_states s) {
 			return;
 		case STATE_TOKEN_WAIT:
 			uistatus(FALSE, "");
+			if(!data_verifies()) {
+				uilog(EID_VWR_LOG_COARSE, "Cannot load card: data signature invalid!");
+				sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+			}
 			return;
 		case STATE_TOKEN_ID:
 			uistatus(TRUE, _("Reading identity."));

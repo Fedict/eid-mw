@@ -34,6 +34,7 @@ static const char* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(READ_READY);
 	EVENT_NAME(DO_PINOP);
 	EVENT_NAME(STATE_ERROR);
+	EVENT_NAME(DATA_INVALID);
 #undef EVENT_NAME
 	default:
 		return "unknown event";
@@ -90,6 +91,7 @@ void sm_init() {
 	states[STATE_TOKEN].enter = eid_vwr_p11_open_session;
 	states[STATE_TOKEN].leave = eid_vwr_p11_close_session;
 	states[STATE_TOKEN].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
+	states[STATE_TOKEN].out[EVENT_DATA_INVALID] = &(states[STATE_READY]);
 
 	states[STATE_TOKEN_ID].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_ID].enter = eid_vwr_p11_read_id;
@@ -111,6 +113,8 @@ void sm_init() {
 
 	states[STATE_TOKEN_WAIT].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
+
+	states[STATE_TOKEN_ERROR].parent = &(states[STATE_TOKEN]);
 
 	states[STATE_TOKEN_SERIALIZE].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_SERIALIZE].enter = eid_vwr_p11_serialize;
