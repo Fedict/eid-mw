@@ -47,7 +47,7 @@ gboolean data_verifies() {
 	BIO *bio;
 	X509 *cert;
 	EVP_PKEY* pubkey;
-	void* address_data;
+	unsigned char *ptr, *address_data;
 	unsigned char digest[SHA_DIGEST_LENGTH];
 	struct storage_data *tmp, *datsign;
 
@@ -86,16 +86,13 @@ gboolean data_verifies() {
 	}
 
 	tmp = g_hash_table_lookup(hash, "ADDRESS_FILE");
-	address_data = g_malloc(tmp->len + datsign->len);
+	address_data = g_malloc0(tmp->len + datsign->len);
 	memcpy(address_data, tmp->data, tmp->len);
-	memcpy(address_data + tmp->len, datsign->data, datsign->len);
-	if(memcmp(address_data, tmp->data, tmp->len)) {
-		uilog(EID_VWR_LOG_COARSE, "The universe is weird!");
+	for(ptr = address_data + tmp->len; *ptr == 0; ptr--) {
 	}
-	if(memcmp(address_data + tmp->len, datsign->data, datsign->len)) {
-		uilog(EID_VWR_LOG_COARSE, "The universe is really weird!");
-	}
-	SHA1(address_data, tmp->len + datsign->len, digest);
+	ptr++;
+	memcpy(ptr, datsign->data, datsign->len);
+	SHA1(address_data, (ptr - address_data) + datsign->len, digest);
 	g_free(address_data);
 	tmp = g_hash_table_lookup(hash, "SIGN_ADDRESS_FILE");
 	if(RSA_verify(NID_sha1, digest, sizeof(digest), tmp->data, tmp->len, EVP_PKEY_get1_RSA(pubkey)) != 1) {
