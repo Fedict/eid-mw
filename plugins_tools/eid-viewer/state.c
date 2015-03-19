@@ -17,6 +17,7 @@ static const char* state_to_name(enum eid_vwr_states state) {
 	STATE_NAME(TOKEN_SERIALIZE);
 	STATE_NAME(TOKEN_ERROR);
 	STATE_NAME(FILE);
+	STATE_NAME(CARD_INVALID);
 #undef STATE_NAME
 	default:
 		return "unknown state";
@@ -91,7 +92,9 @@ void sm_init() {
 	states[STATE_TOKEN].enter = eid_vwr_p11_open_session;
 	states[STATE_TOKEN].leave = eid_vwr_p11_close_session;
 	states[STATE_TOKEN].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
-	states[STATE_TOKEN].out[EVENT_DATA_INVALID] = &(states[STATE_READY]);
+	states[STATE_TOKEN].out[EVENT_DATA_INVALID] = &(states[STATE_CARD_INVALID]);
+
+	states[STATE_CARD_INVALID].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
 
 	states[STATE_TOKEN_ID].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_ID].enter = eid_vwr_p11_read_id;
