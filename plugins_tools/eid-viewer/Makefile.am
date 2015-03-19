@@ -31,6 +31,7 @@ eid_viewer_SOURCES = \
 	gtk/logging.h \
 	gtk/logging.c \
 	gtk/prefs.h \
+	gtk/gtk_main.h \
 	resources/coat_of_arms_nl.c \
 	resources/coat_of_arms_fr.c \
 	resources/coat_of_arms_en.c \
@@ -76,7 +77,12 @@ BUILT_SOURCES = gtk/viewer_glade.h \
 		resources/coat_of_arms_fr.c \
 		resources/coat_of_arms_de.c \
 		resources/coat_of_arms_en.c
-EXTRA_DIST = gtk/viewer.glade gtk/eid-viewer.gschema.xml
+EXTRA_DIST = gtk/viewer.glade \
+	     gtk/eid-viewer.gschema.xml \
+	     resources/coat_of_arms_de.jpg \
+	     resources/coat_of_arms_en.jpg \
+	     resources/coat_of_arms_fr.jpg \
+	     resources/coat_of_arms_nl.jpg
 
 gtk/viewer_glade.h: gtk/viewer.glade
 	$(top_srcdir)/plugins_tools/aboutmw/gtk/gen.sh VIEWER_GLADE_H VIEWER_GLADE_STRING < $^ > $@
