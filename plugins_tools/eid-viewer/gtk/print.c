@@ -1,7 +1,6 @@
 #include <config.h>
 #include <cairo.h>
 #include "gtk_globals.h"
-#include "resources.h"
 #include "gtkui.h"
 
 #include "gettext.h"
