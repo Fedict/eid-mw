@@ -19,6 +19,8 @@
 #include "glib_util.h"
 #include "logging.h"
 #include "prefs.h"
+#include "print.h"
+#include "gtk_main.h"
 
 #ifndef _
 #define _(s) gettext(s)
@@ -29,6 +31,9 @@ typedef void(*clearfunc)(char*);
 
 static GHashTable* binhash;
 static guint statusbar_context = 0;
+
+GHashTable* touched_labels;
+GtkBuilder* builder;
 
 extern char** environ;
 
@@ -225,7 +230,7 @@ static void connect_signals(GtkWidget* window) {
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_prefs"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_prefs), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_print"));
-	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_print), NULL);
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(do_print), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_quit"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(gtk_main_quit), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_de"));

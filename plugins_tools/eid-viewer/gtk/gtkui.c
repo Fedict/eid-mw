@@ -2,6 +2,7 @@
 #include "gtkui.h"
 #include "gettext.h"
 #include "gtk_globals.h"
+#include "gtk_main.h"
 #include "oslayer.h"
 
 #include <locale.h>
@@ -19,6 +20,8 @@ void n(GtkMenuItem* item, gpointer user_data) { \
 	gtk_dialog_run(GTK_DIALOG(dlg)); \
 	gtk_widget_destroy(dlg); \
 }
+
+static enum eid_vwr_langs curlang = EID_VWR_LANG_NONE;
 
 void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
@@ -149,6 +152,13 @@ void pinop(GtkWidget* button, gpointer which) {
 	eid_vwr_pinop(op);
 }
 
+enum eid_vwr_langs get_curlang() {
+	if(curlang != EID_VWR_LANG_NONE) {
+		return curlang;
+	}
+	return langfromenv();
+}
+
 void translate(GtkMenuItem* item, gpointer target) {
 	enum eid_vwr_langs lang = EID_VWR_LANG_EN;
 	GtkWidget *widget;
@@ -160,6 +170,7 @@ void translate(GtkMenuItem* item, gpointer target) {
 		lang = EID_VWR_LANG_NL;
 	}
 	convert_set_lang(lang);
+	curlang = lang;
 	setlocale(LC_MESSAGES, target);
 
 	// TODO: it would be more efficient if the below was parsed from the
@@ -193,5 +204,4 @@ void translate(GtkMenuItem* item, gpointer target) {
 }
 
 GEN_FUNC(file_prefs, "set preferences")
-GEN_FUNC(file_print, "print")
 GEN_FUNC(showurl, "show %s url")

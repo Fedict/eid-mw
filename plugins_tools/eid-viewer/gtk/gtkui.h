@@ -2,6 +2,7 @@
 #define EID_VWR_GTKUI_H
 
 #include <gtk/gtk.h>
+#include "conversions.h"
 
 void file_open(GtkMenuItem* open, gpointer user_data);
 void file_save(GtkMenuItem* open, gpointer format);
@@ -13,5 +14,6 @@ void showabout(GtkMenuItem* about, gpointer user_data);
 void showurl(GtkMenuItem* item, gpointer which);
 void showlog(GtkMenuItem* item, gpointer user_data);
 void pinop(GtkWidget* item, gpointer which);
+enum eid_vwr_langs get_curlang();
 
 #endif

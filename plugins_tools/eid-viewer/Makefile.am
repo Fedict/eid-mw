@@ -23,12 +23,18 @@ eid_viewer_SOURCES = \
 	gtk/thread.c \
 	gtk/photo.h \
 	gtk/photo.c \
+	gtk/print.h \
+	gtk/print.c \
 	gtk/verify.h \
 	gtk/verify.c \
 	gtk/glib_util.h \
 	gtk/logging.h \
 	gtk/logging.c \
 	gtk/prefs.h \
+	resources/coat_of_arms_nl.c \
+	resources/coat_of_arms_fr.c \
+	resources/coat_of_arms_en.c \
+	resources/coat_of_arms_de.c \
 	$(MAYBE_PREFS) \
 	cache.h \
 	cache/cache.cpp \
@@ -58,7 +64,16 @@ AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcd
 AM_CXXFLAGS = $(AM_CFLAGS) 
 SUBDIRS = gtk/po test
 
-BUILT_SOURCES = gtk/viewer_glade.h
+resources/%.c: resources/%.jpg
+	echo -e "#include <gdk-pixbuf/gdk-pixdata.h>\n#if __GNUC__ >= 4\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wpointer-sign\"\n#endif\n" > $@
+	gdk-pixbuf-csource --struct --extern --name `basename $^ .jpg` $^ >> $@
+	echo -e "#pragma GCC diagnostic pop\n" >> $@
+
+BUILT_SOURCES = gtk/viewer_glade.h \
+		resources/coat_of_arms_nl.c \
+		resources/coat_of_arms_fr.c \
+		resources/coat_of_arms_de.c \
+		resources/coat_of_arms_en.c
 EXTRA_DIST = gtk/viewer.glade gtk/eid-viewer.gschema.xml
 
 gtk/viewer_glade.h: gtk/viewer.glade

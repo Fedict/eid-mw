@@ -3,7 +3,14 @@
 
 #include <gtk/gtk.h>
 
-GHashTable* touched_labels;
-GtkBuilder* builder;
+extern GHashTable* touched_labels;
+extern GtkBuilder* builder;
+
+#include <gdk-pixbuf/gdk-pixdata.h>
+
+extern const GdkPixdata coat_of_arms_nl;
+extern const GdkPixdata coat_of_arms_fr;
+extern const GdkPixdata coat_of_arms_de;
+extern const GdkPixdata coat_of_arms_en;
 
 #endif
