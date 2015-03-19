@@ -38,6 +38,8 @@ eid_viewer_SOURCES = \
 	$(MAYBE_PREFS) \
 	cache.h \
 	cache/cache.cpp \
+	conversions/bbannumconv.h \
+	conversions/bbannumconv.cpp \
 	conversions/hexnumconv.cpp \
 	conversions/hexnumconv.h \
 	conversions/convert.cpp \

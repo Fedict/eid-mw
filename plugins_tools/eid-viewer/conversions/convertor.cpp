@@ -4,6 +4,7 @@
 #include "specconv.h"
 #include "doctypeconv.h"
 #include "dateconv.h"
+#include "bbannumconv.h"
 
 std::map<std::string, ConversionWorker*> Convertor::convertors;
 
@@ -14,6 +15,7 @@ Convertor::Convertor() {
 		convertors["special_status"] = new SpecConvertor();
 		convertors["document_type"] = new DocTypeConvertor();
 		convertors["date_of_birth"] = new DateConvertor();
+		convertors["card_number"] = new BBANNumberConvertor();
 	}
 }
 
