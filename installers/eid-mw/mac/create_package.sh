@@ -17,7 +17,7 @@ INSTALL_SCRIPTS_DIR="$RELEASE_DIR/install_scripts"
 #pkcs11_inst dir, where our pkcs11 lib will be placed
 PKCS11_INST_DIR="$ROOT_DIR/usr/local/lib"
 #licenses dir, where our licences will be placed
-LICENSES_DIR="$ROOT_DIR/Library/BelgiumIdentityCard/Licenses"
+LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 #xpi plugin dir, where the xpi plugin will be placed
 XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
 #tokend dir, where the BEID.tokend will be placed
