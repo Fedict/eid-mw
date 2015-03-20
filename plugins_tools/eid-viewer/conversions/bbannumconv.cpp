@@ -1,8 +1,15 @@
 #include "bbannumconv.h"
+#include "backend.h"
+#include <string>
+#include <stdexcept>
 
 std::string BBANNumberConvertor::convert(const char* original) {
 	const std::string normal(original);
 
-	std::string retval = normal.substr(0, 3) + "-" + normal.substr(3, 7) + "-" + normal.substr(10, 2);
-	return retval;
+	try {
+		return normal.substr(0, 3) + "-" + normal.substr(3, 7) + "-" + normal.substr(10, 2);
+	} catch (const std::out_of_range& oor) {
+		be_log(EID_VWR_LOG_NORMAL, "Could not convert '%s' to display format: number too short", original);
+		return normal;
+	}
 }
