@@ -197,6 +197,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 	size_t size=VASPRINTF_INITIAL_SIZE;
 
 	char* buf=(char*)malloc(size);			// initial attempt for a "reasonable" string length
+    char* tmp = buf;
 	if(buf==NULL)
 		return VASPRINTF_FAILED;
 
@@ -214,6 +215,7 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 		buf=(char*)realloc(buf, size);	// try and grow buffer
 		if(buf==NULL)
 		{
+            free(tmp);
 			return VASPRINTF_FAILED;	// return error.
 		}
 
