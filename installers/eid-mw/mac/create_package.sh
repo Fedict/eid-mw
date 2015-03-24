@@ -61,7 +61,7 @@ mkdir -p "$RESOURCES_DIR"
 mkdir -p "$INSTALL_SCRIPTS_DIR"
 
 #copy all files that should be part of the installer:
-cp ../../../output/lib/Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
+cp ../../../Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
 #copy pkcs11 bundle
 #cp -r ../../../misc/mac/pkcs11.bundle $RESOURCES_DIR
 #$ROOT_DIR/$INST_DIR/lib/$PKCS11_BUNDLE
