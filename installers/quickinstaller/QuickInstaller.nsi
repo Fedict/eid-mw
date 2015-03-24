@@ -138,7 +138,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;delete previous log
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw64_log.txt"
 		Delete "$LogFile"
-		ExecWait 'msiexec /quiet /norestart /l* "$LogFile" /i "$INSTDIR\BeidMW_642.msi"'
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"'
 		IfErrors 0 +2
 			Call ErrorHandler_msiexec
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
@@ -153,7 +153,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;delete previous log
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw32_log.txt"
 		Delete "$LogFile"
-		ExecWait 'msiexec /quiet /norestart /l* "$LogFile" /i "$INSTDIR\BeidMW_32.msi"'
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"'
 		IfErrors 0 +2
 			Call ErrorHandler_msiexec
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
