@@ -47,7 +47,7 @@ copy %~dp0..\..\cardcomm\VS_2012\Binaries\Win32_Release\beidmdrv.dll %MDRVINSTAL
 copy %~dp0..\..\cardcomm\VS_2012\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\Release\beidmdrv64.dll
 
 :: copy icon
-copy %~dp0..\minidriver\img\beid.ico %MDRVINSTALLPATH%\Release\
+copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\Release\
 
 :: @echo [INFO] Creating cat file
 :: Create catalog
