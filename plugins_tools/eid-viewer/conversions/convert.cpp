@@ -22,7 +22,7 @@ void convert_set_lang(enum eid_vwr_langs which) {
 		void* iterator;
 		const char* label;
 		ConversionWorker::set_lang(which);
-		for(iterator = cache_label_iterator(); label != NULL; label = cache_next_label(iterator)) {
+		for(iterator = cache_label_iterator(),label=cache_next_label(iterator); label != NULL; label = cache_next_label(iterator)) {
 			if(can_convert(label)) {
 				const eid_vwr_cache_item *item = cache_get_data(label);
 				char* str = converted_string(label, (const char*)item->data);
