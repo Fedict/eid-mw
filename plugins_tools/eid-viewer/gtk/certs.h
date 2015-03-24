@@ -19,6 +19,7 @@ enum cert_columns {
 
 void add_certificate(char* label, void* data, int len);
 void clear_certdata();
+void certs_init();
 GtkTreeModel* certificates_get_model();
 
 #endif

@@ -1,5 +1,7 @@
 #include "certs.h"
 #include "verify.h"
+#include "prefs.h"
+#include "gtk_globals.h"
 
 #include <string.h>
 
@@ -252,6 +254,13 @@ gboolean real_clear(gpointer data G_GNUC_UNUSED) {
 		iters[i]=NULL;
 	}
 	return FALSE;
+}
+
+void certs_init() {
+	GSettings* sets = get_prefs();
+	g_settings_bind(sets, "showlog",
+			G_OBJECT(gtk_builder_get_object(builder, "validate_always")),
+			"active", 0);
 }
 
 void clear_certdata() {
