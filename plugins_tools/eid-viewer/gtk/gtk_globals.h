@@ -12,5 +12,6 @@ extern const GdkPixdata coat_of_arms_nl;
 extern const GdkPixdata coat_of_arms_fr;
 extern const GdkPixdata coat_of_arms_de;
 extern const GdkPixdata coat_of_arms_en;
+extern const GdkPixdata logo_128;
 
 #endif

@@ -36,6 +36,7 @@ eid_viewer_SOURCES = \
 	resources/coat_of_arms_fr.c \
 	resources/coat_of_arms_en.c \
 	resources/coat_of_arms_de.c \
+	resources/logo_128.c \
 	$(MAYBE_PREFS) \
 	cache.h \
 	cache/cache.cpp \
@@ -67,6 +68,10 @@ AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcd
 AM_CXXFLAGS = $(AM_CFLAGS) 
 SUBDIRS = gtk/po test
 
+resources/%.c: resources/%.png
+	echo -e "#include <gdk-pixbuf/gdk-pixdata.h>\n#if __GNUC__ >= 4\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wpointer-sign\"\n#endif\n" > $@
+	gdk-pixbuf-csource --struct --extern --name `basename $^ .png` $^ >> $@
+	echo -e "#pragma GCC diagnostic pop\n" >> $@
 resources/%.c: resources/%.jpg
 	echo -e "#include <gdk-pixbuf/gdk-pixdata.h>\n#if __GNUC__ >= 4\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wpointer-sign\"\n#endif\n" > $@
 	gdk-pixbuf-csource --struct --extern --name `basename $^ .jpg` $^ >> $@
