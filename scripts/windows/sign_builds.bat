@@ -1,16 +1,25 @@
 :: set all path variables
-:: =====================
+:: ======================
 @call "%~dp0.\SetPaths.bat"
 @if %ERRORLEVEL%==1 goto paths_failed
 
+:: get eidmw version
+:: =================
+@call "%~dp0.\set_eidmw_version.cmd"
 
+:: Create catalog
+:: create the MSI installers
+:: =========================
+
+%INF2CAT_PATH%\inf2cat.exe /driver:%MDRVINSTALLPATH%\Release\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
+@if "%ERRORLEVEL%" == "1" goto inf2cat_failed
 
 :: sign minidriver driver cat file
 :: ===============================
 set MDRVINSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 @echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
 @echo [INFO] Sign the minidriver catalog
-"%SIGNTOOL_PATH%\signtool" sign /a /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
+"%SIGNTOOL_PATH%\signtool" sign /ac "%MDRVINSTALLPATH%\MSCV-GTECyberTrust.cer" /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 
@@ -26,7 +35,7 @@ set OUR_CURRENT_PATH="%cd%"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 ::sign the 32bit msi
 @echo [INFO] sign 32 bit msi installer
-%SIGNTOOL_PATH%\SignTool.exe sign /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dlll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
+%SIGNTOOL_PATH%\SignTool.exe sign /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
@@ -35,7 +44,7 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 @if %ERRORLEVEL%==1 goto 
 ::sign the 64bit msi
 @echo [INFO] sign 64 bit msi installer
-%SIGNTOOL_PATH%\SignTool.exe sign /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dlll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
+%SIGNTOOL_PATH%\SignTool.exe sign /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
@@ -51,8 +60,8 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 
 :: sign the nsis installer
 :: =======================
-@echo [INFO] sign 64 bit msi installer
-%SIGNTOOL_PATH%\SignTool.exe sign /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dlll /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@echo [INFO] sign nsis installer
+%SIGNTOOL_PATH%\SignTool.exe sign /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy nsis installer
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
