@@ -24,6 +24,10 @@ void n(GtkMenuItem* item, gpointer user_data) { \
 static enum eid_vwr_langs curlang = EID_VWR_LANG_NONE;
 
 void show_cert_image(const char* label, void *data, int len) {
+	GdkPixbuf *buf = GDK_PIXBUF(data);
+	GtkImage *ci = GTK_IMAGE(gtk_builder_get_object(builder, "certimage"));
+
+	gtk_image_set_from_pixbuf(ci, buf);
 }
 
 void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {

@@ -261,6 +261,7 @@ void certs_init() {
 	g_settings_bind(sets, "showlog",
 			G_OBJECT(gtk_builder_get_object(builder, "validate_always")),
 			"active", 0);
+	unchecked_certificate = gdk_pixbuf_from_pixdata(&certificate_large, FALSE, NULL);
 }
 
 void clear_certdata() {

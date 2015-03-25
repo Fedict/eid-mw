@@ -284,6 +284,7 @@ static void bindata_init() {
 static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter* iter, gpointer data G_GNUC_UNUSED) {
 	gchar *from, *to, *use, *certdata;
 	gboolean past, future;
+	GdkPixbuf *image;
 
 	gtk_tree_model_get(model, iter,
 			CERT_COL_VALIDFROM, &from,
@@ -292,11 +293,13 @@ static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIt
 			CERT_COL_DESC, &certdata,
 			CERT_COL_VALIDFROM_PAST, &past,
 			CERT_COL_VALIDTO_FUTURE, &future,
+			CERT_COL_IMAGE, &image,
 			-1);
 	newstringdata("certvalfromval", from);
 	newstringdata("certvaltilval", to);
 	newstringdata("certuseval", use);
 	newstringdata("certdata", certdata);
+	newbindata("certimage", image, -1);
 	newbindata("certvalfromval:past", &past, sizeof(gboolean));
 	newbindata("certvaltilval:future", &future, sizeof(gboolean));
 }
