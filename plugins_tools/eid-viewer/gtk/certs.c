@@ -23,6 +23,7 @@ static GtkTreeStore* certificates = NULL;
 static GtkTreeIter* iters[CERTS_COUNT];
 static GdkPixbuf* good_certificate;
 static GdkPixbuf* bad_certificate;
+static GdkPixbuf* warn_certificate;
 static GdkPixbuf* unchecked_certificate;
 
 static GtkTreeIter* get_iter_for(char* which) {
@@ -262,6 +263,9 @@ void certs_init() {
 			G_OBJECT(gtk_builder_get_object(builder, "validate_always")),
 			"active", 0);
 	unchecked_certificate = gdk_pixbuf_from_pixdata(&certificate_large, FALSE, NULL);
+	bad_certificate = gdk_pixbuf_from_pixdata(&certificate_bad, FALSE, NULL);
+	warn_certificate = gdk_pixbuf_from_pixdata(&certificate_warn, FALSE, NULL);
+	good_certificate = gdk_pixbuf_from_pixdata(&certificate_checked, FALSE, NULL);
 }
 
 void clear_certdata() {
