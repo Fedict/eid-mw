@@ -1156,7 +1156,7 @@
                             <property name="n_rows">8</property>
                             <property name="n_columns">3</property>
                             <child>
-                              <object class="GtkImage" id="image2">
+                              <object class="GtkImage" id="certimage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="stock">gtk-missing-image</property>

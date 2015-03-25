@@ -278,6 +278,7 @@ static void bindata_init() {
 	g_hash_table_insert(binhash, "Signature", add_certificate);
 	g_hash_table_insert(binhash, "certvalfromval:past", show_date_state);
 	g_hash_table_insert(binhash, "certvaltilval:future", show_date_state);
+	g_hash_table_insert(binhash, "certimage", show_cert_image);
 }
 
 static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter* iter, gpointer data G_GNUC_UNUSED) {

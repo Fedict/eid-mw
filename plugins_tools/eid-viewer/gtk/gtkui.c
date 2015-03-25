@@ -23,6 +23,9 @@ void n(GtkMenuItem* item, gpointer user_data) { \
 
 static enum eid_vwr_langs curlang = EID_VWR_LANG_NONE;
 
+void show_cert_image(const char* label, void *data, int len) {
+}
+
 void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	const char *authors[] = { "Wouter Verhelst", "Frederik Vernelen", NULL };

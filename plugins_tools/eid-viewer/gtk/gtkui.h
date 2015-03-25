@@ -15,5 +15,6 @@ void showurl(GtkMenuItem* item, gpointer which);
 void showlog(GtkMenuItem* item, gpointer user_data);
 void pinop(GtkWidget* item, gpointer which);
 enum eid_vwr_langs get_curlang();
+void show_cert_image(const char* name, void* data, int len);
 
 #endif
