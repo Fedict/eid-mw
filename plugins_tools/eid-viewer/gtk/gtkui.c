@@ -37,8 +37,12 @@ void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {
 			"authors", authors,
 			"copyright", _("Copyright 2015 Fedict"),
 			"comments", _("View data on the Belgian eID card"),
-			"license", _("This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\nSource code at <https://github.com/Fedict/eid-mw/>"),
+#if (HAVE_GTK == 3)
+			"license-type", GTK_LICENSE_LGPL_3_0,
+#else
+			"license", _("This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see http://www.gnu.org/licenses/."),
 			"wrap-license", TRUE,
+#endif
 			"artists", artists,
 			NULL);
 }

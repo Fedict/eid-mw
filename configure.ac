@@ -41,21 +41,23 @@ AC_ARG_WITH([gtkvers],
 have_gtk=no
 AC_MSG_CHECKING([for wanted GTK version])
 AC_MSG_RESULT($gtkvers)
-if test x"$gtkvers" = xdetect -o x"$gtkvers" = x3
+if test "$gtkvers" = "detect" -o "$gtkvers" = 3
 then
 	AC_MSG_CHECKING([for gtk3])
-	PKG_CHECK_MODULES(GTK, [gtk+-3.0], [have_gtk=yes], [have_gtk=no])
+	PKG_CHECK_MODULES(GTK, [gtk+-3.0], [have_gtk=3], [have_gtk=no])
 fi
-if test x"$have_gtk" = "xno"
+if test "$have_gtk" = "no"
 then
-	if test x"$gtkvers" = xdetect -o x"$gtkvers" = x2
+	if test "$gtkvers" = detect -o "$gtkvers" = 2
 	then
 		AC_MSG_CHECKING([for gtk2])
-		PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], [have_gtk=yes], [have_gtk=no])
+		PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], [have_gtk=2], [have_gtk=no])
 	fi
 fi
 
-if test x"$have_gtk" = "xno"
+AC_DEFINE_UNQUOTED([HAVE_GTK], [$have_gtk], [Set to major version of libgtk])
+
+if test "$have_gtk" = "no"
 then
 	AC_MSG_ERROR([At least one version of GTK is required.])
 fi
