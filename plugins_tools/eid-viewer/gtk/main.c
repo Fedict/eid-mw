@@ -323,6 +323,7 @@ int main(int argc, char** argv) {
 	GtkAccelGroup *group;
 	struct eid_vwr_ui_callbacks* cb;
 	pthread_t thread;
+	GdkPixbuf *logo = gdk_pixbuf_from_pixdata(&logo_128, FALSE, NULL);
 	GError* err = NULL;
 
 	/* The GNU implementation of setlocale() ignores whatever we
@@ -364,6 +365,8 @@ int main(int argc, char** argv) {
 	eid_vwr_createcallbacks(cb);
 
 	pthread_create(&thread, NULL, threadmain, NULL);
+
+	gtk_window_set_default_icon(logo);
 
 	gtk_widget_show(window);
 
