@@ -24,10 +24,6 @@ struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 
 #define NEED_CB_FUNC(f) if(!cb) return; if(!(cb->f)) return
 
-int eid_vwr_serialize(void** data, int* len) {
-	return 0;
-}
-
 int eid_vwr_pinop(enum eid_vwr_pinops op) {
 	sm_handle_event(EVENT_DO_PINOP, (void*)op, NULL, NULL);
 	return 0;

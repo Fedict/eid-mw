@@ -12,6 +12,11 @@ char* converted_string(const char* label, const char* normal) {
 	return strdup(conv.convert(label, normal));
 }
 
+char* converted_string_xml(const char* label, const struct eid_vwr_cache_item* normal) {
+	Convertor conv;
+	return strdup(conv.convert_xml(label, normal));
+}
+
 int can_convert(const char* label) {
 	Convertor conv;
 	return conv.can_convert(label);

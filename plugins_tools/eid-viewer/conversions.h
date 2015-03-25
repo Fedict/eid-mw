@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include "cache.h"
+
 enum eid_vwr_langs {
 	EID_VWR_LANG_NONE,
 	EID_VWR_LANG_DE,
@@ -14,6 +16,7 @@ enum eid_vwr_langs {
 };
 
 char* converted_string(const char* label, const char* normal);
+char* converted_string_xml(const char* label, const struct eid_vwr_cache_item* item);
 int can_convert(const char* label);
 void convert_set_lang(enum eid_vwr_langs which);
 

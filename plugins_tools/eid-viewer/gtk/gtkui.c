@@ -4,6 +4,7 @@
 #include "gtk_globals.h"
 #include "gtk_main.h"
 #include "oslayer.h"
+#include "state.h"
 
 #include <locale.h>
 #include <stdlib.h>
@@ -127,8 +128,6 @@ void file_open(GtkMenuItem* item, gpointer user_data) {
 	gtk_widget_destroy(dialog);
 }
 
-GEN_FUNC(save_file_detail, "saving %s")
-
 void file_save(GtkMenuItem* item, gpointer user_data) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
@@ -159,8 +158,7 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-		save_file_detail(NULL, filename);
-		g_free(filename);
+		sm_handle_event(EVENT_SERIALIZE, filename, g_free, NULL);
 	}
 	gtk_widget_destroy(dialog);
 }

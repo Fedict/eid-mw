@@ -1,4 +1,5 @@
 #include "cache.h"
+#include "conversions.h"
 #include <map>
 #include <string>
 #include <cstdlib>
@@ -56,4 +57,16 @@ const char* cache_next_label(void* iterator) {
 
 void cache_clear() {
 	cache.clear();
+}
+
+int cache_have_label(const char* label) {
+	return cache.count(label);
+}
+
+char* cache_get_xmlform(const char* label) {
+	if(!can_convert(label)) {
+		return (char*)cache_get_data(label)->data;
+	} else {
+		return converted_string_xml(label, cache_get_data(label));
+	}
 }

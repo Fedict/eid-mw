@@ -16,6 +16,8 @@ void* cache_label_iterator();
 const char* cache_next_label(void* iterator);
 void cache_label_iterator_free(void* iterator);
 void cache_clear();
+int cache_have_label(const char* label);
+char* cache_get_xmlform(const char* label);
 
 #ifdef __cplusplus
 }

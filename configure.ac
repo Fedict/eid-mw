@@ -62,6 +62,8 @@ then
 	AC_MSG_ERROR([At least one version of GTK is required.])
 fi
 
+PKG_CHECK_MODULES([XML2], [libxml-2.0])
+
 ###########################################################################
 ####### read user-specific requests from --enable directives         ######
 ###########################################################################

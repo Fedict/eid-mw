@@ -54,8 +54,8 @@ struct eid_vwr_preview {
 	int have_data;
 };
 
-int eid_vwr_serialize(void** data, int* len);
-int eid_vwr_deserialize(void* data, int len, void(*write)(void*));
+/*int eid_vwr_serialize(void** data, int* len);
+int eid_vwr_deserialize(void* data, int len, void(*write)(void*));*/
 int eid_vwr_pinop(enum eid_vwr_pinops);
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks*);
 struct eid_vwr_ui_callbacks* eid_vwr_cbstruct();

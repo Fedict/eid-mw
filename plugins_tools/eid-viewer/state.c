@@ -1,6 +1,7 @@
 #include "state.h"
 #include "p11.h"
 #include "backend.h"
+#include "xml.h"
 #include <stdlib.h>
 
 static const char* state_to_name(enum eid_vwr_states state) {
@@ -36,6 +37,7 @@ static const char* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(DO_PINOP);
 	EVENT_NAME(STATE_ERROR);
 	EVENT_NAME(DATA_INVALID);
+	EVENT_NAME(SERIALIZE);
 #undef EVENT_NAME
 	default:
 		return "unknown event";
@@ -116,12 +118,14 @@ void sm_init() {
 
 	states[STATE_TOKEN_WAIT].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
+	states[STATE_TOKEN_WAIT].out[EVENT_SERIALIZE] = &(states[STATE_TOKEN_SERIALIZE]);
 
 	states[STATE_TOKEN_ERROR].parent = &(states[STATE_TOKEN]);
 
 	states[STATE_TOKEN_SERIALIZE].parent = &(states[STATE_TOKEN]);
-	states[STATE_TOKEN_SERIALIZE].enter = eid_vwr_p11_serialize;
+	states[STATE_TOKEN_SERIALIZE].enter = eid_vwr_serialize;
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_SERIALIZE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
 	states[STATE_FILE].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_FILE].enter = do_parse_file;

@@ -193,9 +193,3 @@ int eid_vwr_p11_leave_pinop() {
 
 	return 0;
 }
-
-int eid_vwr_p11_serialize(void* data) {
-	// TODO
-
-	return 0;
-}

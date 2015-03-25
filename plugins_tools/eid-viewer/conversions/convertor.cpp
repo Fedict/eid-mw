@@ -5,6 +5,7 @@
 #include "doctypeconv.h"
 #include "dateconv.h"
 #include "bbannumconv.h"
+#include "cache.h"
 
 std::map<std::string, ConversionWorker*> Convertor::convertors;
 
@@ -24,6 +25,14 @@ const char* Convertor::convert(const char* label, const char* normal) {
 		return convertors[label]->convert(normal).c_str();
 	} else {
 		return normal;
+	}
+}
+
+const char* Convertor::convert_xml(const char* label, const struct eid_vwr_cache_item* normal) {
+	if(can_convert(label)) {
+		return convertors[label]->convert_xml(normal).c_str();
+	} else {
+		return (const char*)normal->data;
 	}
 }
 
