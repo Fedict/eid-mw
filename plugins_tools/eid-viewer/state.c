@@ -2,6 +2,7 @@
 #include "p11.h"
 #include "backend.h"
 #include "xml.h"
+#include "cache.h"
 #include <stdlib.h>
 
 static const char* state_to_name(enum eid_vwr_states state) {
@@ -129,6 +130,7 @@ void sm_init() {
 
 	states[STATE_FILE].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_FILE].enter = do_parse_file;
+	states[STATE_FILE].leave = cache_clear;
 	states[STATE_FILE].out[EVENT_CLOSE_FILE] = &(states[STATE_READY]);
 	states[STATE_FILE].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);
 
