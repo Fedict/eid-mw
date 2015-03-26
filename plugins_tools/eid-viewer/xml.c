@@ -76,11 +76,16 @@ struct element_desc certificate_elements[] = {
 	{ NULL, NULL, 0, 0, NULL, NULL },
 };
 
-struct element_desc toplevel[] = {
+struct element_desc eid_elements[] = {
 	{ "identity", NULL, 1, 0, identity_elements, identity_attributes },
 	{ "card", NULL, 1, 0, card_elements, card_attributes },
 	{ "address", NULL, 1, 0, address_elements, NULL },
 	{ "certificates", NULL, 1, 0, certificate_elements, NULL },
+	{ NULL, NULL, 0, 0, NULL, NULL },
+};
+
+struct element_desc toplevel[] = {
+	{ "eid", NULL, 1, 0, eid_elements, NULL },
 	{ NULL, NULL, 0, 0, NULL, NULL },
 };
 
