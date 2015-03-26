@@ -59,6 +59,8 @@ int eid_vwr_p11_open_session(void* slot_) {
 int eid_vwr_p11_close_session() {
 	check_rv(C_CloseSession(session));
 
+	cache_clear();
+
 	return 0;
 }
 
