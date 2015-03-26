@@ -32,6 +32,7 @@ BuildRequires: libopenssl-devel
 Requires: ccid
 BuildRequires: openssl-devel
 %endif
+BuildRequires: libxml2-devel
 Conflicts: openct
 
 %description
