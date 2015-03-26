@@ -25,6 +25,7 @@
 #include <pkcs11.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "testlib.h"
 
@@ -77,7 +78,7 @@ TEST_FUNC(sign) {
 	CK_MECHANISM mech;
 	CK_BYTE data[] = { 'f', 'o', 'o' };
 	CK_SLOT_ID slot;
-	CK_BYTE_PTR sig, mod, exp;
+	CK_BYTE_PTR sig;
 	CK_ULONG sig_len, type, count;
 	CK_OBJECT_HANDLE private, public;
 	CK_ATTRIBUTE attr[2];
