@@ -43,7 +43,7 @@ void be_newstate(enum eid_vwr_states which) {
 	cb->newstate(which);
 }
 
-void be_log(enum eid_vwr_loglevel l, char* string, ...) {
+void be_log(enum eid_vwr_loglevel l, const char* string, ...) {
 	NEED_CB_FUNC(log);
 	va_list ap, ac;
 	va_start(ap, string);
@@ -53,7 +53,7 @@ void be_log(enum eid_vwr_loglevel l, char* string, ...) {
 	va_end(ap);
 }
 
-void be_newstringdata(const char* label, char* data) {
+void be_newstringdata(const char* label, const char* data) {
 	NEED_CB_FUNC(newstringdata);
 	cb->newstringdata(label, data);
 }

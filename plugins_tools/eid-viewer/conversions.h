@@ -16,7 +16,8 @@ enum eid_vwr_langs {
 };
 
 char* converted_string(const char* label, const char* normal);
-char* converted_string_xml(const char* label, const struct eid_vwr_cache_item* item);
+char* convert_to_xml(const char* label, const char* item);
+void* convert_from_xml(const char* name, const char* value, int* len_return);
 int can_convert(const char* label);
 void convert_set_lang(enum eid_vwr_langs which);
 

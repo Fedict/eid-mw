@@ -81,6 +81,19 @@ int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
 	return EIDV_RV_FAIL;
 }
 
+void eid_vwr_p11_to_ui(const char* label, const void* value, int len) {
+	if(can_convert(label)) {
+		be_log(EID_VWR_LOG_DETAIL, "converting %s", label);
+		char* str = converted_string(label, value);
+		be_newstringdata(label, str);
+		free(str);
+	} else if(is_string(label)) {
+		be_newstringdata(label, value);
+	} else {
+		be_newbindata(label, value, len);
+	}
+}
+
 static int perform_find(CK_BBOOL do_objid) {
 	CK_OBJECT_HANDLE object;
 	CK_ULONG count;
@@ -127,16 +140,7 @@ static int perform_find(CK_BBOOL do_objid) {
 		cache_add(label_str, value_str, data[1].ulValueLen);
 
 		be_log(EID_VWR_LOG_DETAIL, "found data for label %s", label_str);
-		if(can_convert(label_str)) {
-			be_log(EID_VWR_LOG_DETAIL, "converting %s", label_str);
-			char* str = converted_string(label_str, value_str);
-			be_newstringdata(label_str, str);
-			free(str);
-		} else if(objid_str != NULL && is_string(objid_str, label_str)) {
-			be_newstringdata(label_str, value_str);
-		} else {
-			be_newbindata(label_str, value_str, data[1].ulValueLen);
-		}
+		eid_vwr_p11_to_ui(label_str, value_str, data[1].ulValueLen);
 
 		free(label_str);
 		free(value_str);

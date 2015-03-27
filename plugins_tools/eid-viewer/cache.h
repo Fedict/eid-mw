@@ -10,12 +10,12 @@ struct eid_vwr_cache_item {
 	int len;
 };
 
-void cache_add(char* label, void* data, unsigned long len);
+void cache_add(const char* label, void* data, unsigned long len);
 const struct eid_vwr_cache_item* cache_get_data(const char* label);
 void* cache_label_iterator();
 const char* cache_next_label(void* iterator);
 void cache_label_iterator_free(void* iterator);
-void cache_clear();
+int cache_clear();
 int cache_have_label(const char* label);
 char* cache_get_xmlform(const char* label);
 

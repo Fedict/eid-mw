@@ -125,7 +125,7 @@ static void newstate(enum eid_vwr_states s) {
 			uistatus(TRUE, _("Performing a PIN operation"));
 			return;
 		case STATE_FILE:
-			uistatus(TRUE, _("Reading data from file"));
+			uistatus(FALSE, "");
 			g_object_set_threaded(print, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(close, "sensitive", (void*)TRUE, NULL);
 		default:
@@ -142,7 +142,7 @@ static void stringclear(const char* l) {
 	g_object_set_threaded(G_OBJECT(label), "sensitive", FALSE, NULL);
 }
 
-static void newstringdata(const char* l, char* data) {
+static void newstringdata(const char* l, const char* data) {
 	GtkLabel* label = GTK_LABEL(gtk_builder_get_object(builder, l));
 	if(!label) {
 		char* msg = g_strdup_printf(_("Could not display label '%s', data '%s': no GtkLabel found for data"), l, data);
@@ -345,7 +345,7 @@ int main(int argc, char** argv) {
 	GtkAccelGroup *group;
 	struct eid_vwr_ui_callbacks* cb;
 	pthread_t thread;
-	GdkPixbuf *logo = gdk_pixbuf_from_pixdata(&logo_128, FALSE, NULL);
+	GdkPixbuf *logo;
 	GError* err = NULL;
 
 	/* The GNU implementation of setlocale() ignores whatever we
@@ -388,6 +388,7 @@ int main(int argc, char** argv) {
 
 	pthread_create(&thread, NULL, threadmain, NULL);
 
+	logo = gdk_pixbuf_from_pixdata(&logo_128, FALSE, NULL);
 	gtk_window_set_default_icon(logo);
 
 	gtk_widget_show(window);

@@ -22,7 +22,7 @@ struct cache_item_container {
 
 std::map<std::string, cache_item_container*> cache;
 
-void cache_add(char* label, void* data, unsigned long len) {
+void cache_add(const char* label, void* data, unsigned long len) {
 	cache[label] = new cache_item_container(data, len);
 }
 
@@ -55,8 +55,10 @@ const char* cache_next_label(void* iterator) {
 	return retval;
 }
 
-void cache_clear() {
+int cache_clear() {
 	cache.clear();
+
+	return 0;
 }
 
 int cache_have_label(const char* label) {
@@ -64,9 +66,10 @@ int cache_have_label(const char* label) {
 }
 
 char* cache_get_xmlform(const char* label) {
-	if(!can_convert(label)) {
-		return (char*)cache_get_data(label)->data;
-	} else {
-		return converted_string_xml(label, cache_get_data(label));
-	}
+	return (char*)convert_to_xml(label, (char*)cache_get_data(label)->data);
+}
+
+void cache_add_xmlform(const char* label, const char* value) {
+	int len = 0;
+	cache_add(label, convert_from_xml(label, value, &len), len);
 }

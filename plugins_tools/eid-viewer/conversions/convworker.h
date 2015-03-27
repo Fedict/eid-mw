@@ -13,7 +13,6 @@ public:
 	static bool have_language() { return target_ > EID_VWR_LANG_NONE; };
 	virtual std::string convert(const char* original) = 0;
 	virtual std::string convert(std::string original) { return convert(original.c_str()); };
-	virtual std::string convert_xml(const struct eid_vwr_cache_item* original);
 };
 
 #endif

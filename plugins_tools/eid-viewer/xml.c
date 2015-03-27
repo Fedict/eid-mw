@@ -1,8 +1,16 @@
 #include "cache.h"
 #include "backend.h"
 
+#include "xmlmap.h"
+#include "config.h"
+
 #include <libxml/encoding.h>
 #include <libxml/xmlwriter.h>
+#include <libxml/xmlreader.h>
+
+// libxml2 has a function to write Base64-encoded data, but no function to read
+// the same data, so we need our own decoder...
+#include <b64/base64dec.h>
 
 #include <assert.h>
 
@@ -10,84 +18,6 @@
 	be_log(EID_VWR_LOG_DETAIL, "Error while writing to file (calling '%s'): %d", #call, rc); \
 	return -1; \
 }
-
-struct attribute_desc {
-	char* name;
-	char* label;
-	int reqd;
-};
-
-struct element_desc {
-	char* name;
-	char* label;
-	int reqd;
-	int is_b64;
-	struct element_desc *child_elements;
-	struct attribute_desc *attributes;
-};
-
-struct attribute_desc identity_attributes[] = {
-	{ "nationalnumber", "national_number", 1 },
-	{ "dateofbirth", "date_of_birth", 1 },
-	{ "gender", "gender", 1 },
-	{ "noblecondition", "nobility", 0 },
-	{ "specialstatus", "special_status", 0 },
-	{ "duplicate", "duplicata", 0 },
-	{ NULL, NULL, 0 },
-};
-
-struct element_desc identity_elements[] = {
-	{ "name", "surname", 1, 0, NULL, NULL },
-	{ "firstname", "firstnames", 1, 0, NULL, NULL },
-	{ "middlenames", "first_letter_of_third_given_name", 0, 0, NULL, NULL },
-	{ "nationality", "nationality", 1, 0, NULL, NULL },
-	{ "placeofbirth", "location_of_birth", 1, 0, NULL, NULL },
-	{ "photo", "PHOTO_FILE", 1, 1, NULL, NULL },
-	{ NULL, NULL, 0, 0, NULL, NULL },
-};
-
-struct element_desc card_elements[] = {
-	{ "deliverymunicipality", "issuing_municipality", 1, 0, NULL, NULL },
-	{ NULL, NULL, 0, 0, NULL, NULL },
-};
-
-struct attribute_desc card_attributes[] = {
-	{ "documenttype", "document_type", 1 },
-	{ "cardnumber", "card_number", 1 },
-	{ "chipnumber", "chip_number", 1 },
-	{ "validitydatebegin", "validity_begin_date", 1 },
-	{ "validitydateend", "validity_end_date", 1 },
-	{ NULL, NULL, 0 },
-};
-
-struct element_desc address_elements[] = {
-	{ "streetandnumber", "address_street_and_number", 1, 0, NULL, NULL },
-	{ "zip", "address_zip", 1, 0, NULL, NULL },
-	{ "municipality", "address_municipality", 1, 0, NULL, NULL },
-	{ NULL, NULL, 0, 0, NULL, NULL },
-};
-
-struct element_desc certificate_elements[] = {
-	{ "root", "Root", 1, 1, NULL, NULL },
-	{ "citizenca", "CA", 1, 1, NULL, NULL },
-	{ "authentication", "Authentication", 0, 1, NULL, NULL },
-	{ "signing", "Signature", 0, 1, NULL, NULL },
-	{ "rrn", "CERT_RN_FILE", 1, 1, NULL, NULL },
-	{ NULL, NULL, 0, 0, NULL, NULL },
-};
-
-struct element_desc eid_elements[] = {
-	{ "identity", NULL, 1, 0, identity_elements, identity_attributes },
-	{ "card", NULL, 1, 0, card_elements, card_attributes },
-	{ "address", NULL, 1, 0, address_elements, NULL },
-	{ "certificates", NULL, 1, 0, certificate_elements, NULL },
-	{ NULL, NULL, 0, 0, NULL, NULL },
-};
-
-struct element_desc toplevel[] = {
-	{ "eid", NULL, 1, 0, eid_elements, NULL },
-	{ NULL, NULL, 0, 0, NULL, NULL },
-};
 
 static int write_attributes(xmlTextWriterPtr writer, struct attribute_desc *attribute) {
 	int rc;
@@ -143,7 +73,7 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 
 int eid_vwr_serialize(void* data) {
 	xmlTextWriterPtr writer;
-	int i, rc;
+	int rc;
 	const char* filename = (const char*)data;
 
 	writer = xmlNewTextWriterFilename(filename, 0);
@@ -157,6 +87,81 @@ int eid_vwr_serialize(void* data) {
 	check_xml(xmlTextWriterEndDocument(writer));
 
 	xmlFreeTextWriter(writer);
+
+	return 0;
+}
+
+static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) {
+	int rc;
+	while((rc = xmlTextReaderRead(reader)) > 0) {
+		const xmlChar *curnode = xmlTextReaderConstLocalName(reader);
+		struct element_desc *desc = get_elemdesc((const char*)curnode);
+		struct attribute_desc *att;
+		if(xmlTextReaderNodeType(reader) != XML_READER_TYPE_ELEMENT) {
+			continue;
+		}
+		if(xmlTextReaderHasAttributes(reader) > 0) {
+			if(desc->attributes == NULL) {
+				be_log(EID_VWR_LOG_COARSE, "could not read file: found attribute on an element that shouldn't have one.");
+				return -1;
+			}
+			for(att = desc->attributes; att->name != NULL; att++) {
+				xmlChar* value = xmlTextReaderGetAttribute(reader, att->name);
+				if(value) {
+					int len;
+					void* val = convert_from_xml(att->label, value, &len);
+					cache_add(att->label, val, len);
+					eid_vwr_p11_to_ui(att->label, val, len);
+					xmlFree(value);
+				} else {
+					if(att->reqd) {
+						be_log(EID_VWR_LOG_COARSE, "could not read file: missing attribute %s on %s", att->name, desc->name);
+						return -1;
+					}
+				}
+			}
+		}
+		if(desc->label != NULL) {
+			int len;
+			void* val;
+			check_xml(xmlTextReaderRead(reader));
+			if(desc->is_b64) {
+				const char* tmp;
+				base64_decodestate state;
+				base64_init_decodestate(&state);
+				tmp = xmlTextReaderConstValue(reader);
+				len = strlen(tmp);
+				val = malloc(len);
+				len = base64_decode_block(tmp, len, val, &state);
+			} else {
+				val = convert_from_xml(desc->label, xmlTextReaderConstValue(reader), &len);
+			}
+			cache_add(desc->label, val, len);
+			eid_vwr_p11_to_ui(desc->label, val, len);
+			be_log(EID_VWR_LOG_DETAIL, "found data for label %s", desc->label);
+		}
+	}
+	if(rc < 0) {
+		return rc;
+	}
+	return 0;
+}
+
+int eid_vwr_deserialize(void* data) {
+	xmlTextReaderPtr reader;
+	const char* filename = (const char*)data;
+	int rc;
+
+	reader = xmlNewTextReaderFilename(filename);
+	if(reader == NULL) {
+		be_log(EID_VWR_LOG_COARSE, "Could not open file");
+		return -1;
+	}
+
+	check_xml(xmlTextReaderSchemaValidate(reader, DATAROOTDIR "/" PACKAGE_NAME "/" "eidv4.xsd"));
+	check_xml(read_elements(reader, toplevel));
+
+	xmlFreeTextReader(reader);
 
 	return 0;
 }

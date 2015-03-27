@@ -25,6 +25,6 @@
 #include <unix.h>
 #endif
 
-CK_BBOOL is_string(char* object, char* label);
+CK_BBOOL is_string(const char* label);
 
 #endif

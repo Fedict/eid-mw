@@ -129,7 +129,7 @@ void sm_init() {
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
 	states[STATE_FILE].parent = &(states[STATE_CALLBACKS]);
-	states[STATE_FILE].enter = do_parse_file;
+	states[STATE_FILE].enter = eid_vwr_deserialize;
 	states[STATE_FILE].leave = cache_clear;
 	states[STATE_FILE].out[EVENT_CLOSE_FILE] = &(states[STATE_READY]);
 	states[STATE_FILE].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);

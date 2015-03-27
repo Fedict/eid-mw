@@ -94,7 +94,7 @@ TEST_FUNC(readdata) {
 		value_str[data[1].ulValueLen] = '\0';
 		objid_str[data[2].ulValueLen] = '\0';
 
-		if(is_string(objid_str, label_str)) {
+		if(is_string(label_str)) {
 			printf("Data object with object ID: %s; label: %s; length: %lu\nContents(string):\n%s\n", objid_str, label_str, data[1].ulValueLen, value_str);
 		} else {
 			printf("Data object with object ID: %s; label: %s; length: %lu\nContents(hexdump):\n", objid_str, label_str, data[1].ulValueLen);

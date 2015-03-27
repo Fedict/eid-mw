@@ -122,8 +122,7 @@ void file_open(GtkMenuItem* item, gpointer user_data) {
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-		open_file_detail(NULL, filename);
-		g_free(filename);
+		sm_handle_event(EVENT_OPEN_FILE, filename, g_free, NULL);
 	}
 	gtk_widget_destroy(dialog);
 }
@@ -164,7 +163,7 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 }
 
 void file_close(GtkMenuItem* item, gpointer user_data) {
-	eid_vwr_deserialize(NULL, 0, NULL);
+	sm_handle_event(EVENT_CLOSE_FILE, NULL, NULL, NULL);
 }
 
 void pinop(GtkWidget* button, gpointer which) {

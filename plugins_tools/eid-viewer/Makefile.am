@@ -48,6 +48,8 @@ eid_viewer_SOURCES = \
 	conversions/bbannumconv.cpp \
 	conversions/hexnumconv.cpp \
 	conversions/hexnumconv.h \
+	conversions/hexdecode.h \
+	conversions/hexdecode.cpp \
 	conversions/convert.cpp \
 	conversions/convertor.cpp \
 	conversions/convertor.h \
@@ -61,6 +63,13 @@ eid_viewer_SOURCES = \
 	conversions/natnumconv.h \
 	conversions/specconv.h \
 	conversions/specconv.cpp \
+	conversions/xmldoctypeconv.h \
+	conversions/xmldoctypeconv.cpp \
+	conversions/xmlconvworker.h \
+	conversions/xmldateconv.h \
+	conversions/xmldateconv.cpp \
+	conversions/xmlspecconv.h \
+	conversions/xmlspecconv.cpp \
 	conversions.h \
 	state.c \
 	state.h \
@@ -68,7 +77,11 @@ eid_viewer_SOURCES = \
 	p11.h \
 	p11.c \
 	xml.h \
-	xml.c
+	xml.c \
+	xmlmap.cpp \
+	xmlmap.h \
+	b64/base64dec.h \
+	b64/base64dec.c
 eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/tests/unit/liblabels.a @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@
 AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/tests/unit @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@
 AM_CXXFLAGS = $(AM_CFLAGS)
@@ -94,6 +107,10 @@ EXTRA_DIST = gtk/viewer.glade \
 	     resources/coat_of_arms_en.jpg \
 	     resources/coat_of_arms_fr.jpg \
 	     resources/coat_of_arms_nl.jpg
+
+packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
+
+packagedata_DATA = eidv4.xsd
 
 gtk/viewer_glade.h: gtk/viewer.glade
 	$(top_srcdir)/plugins_tools/aboutmw/gtk/gen.sh VIEWER_GLADE_H VIEWER_GLADE_STRING < $^ > $@

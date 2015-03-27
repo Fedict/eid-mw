@@ -3,19 +3,6 @@
 #include <p11.h>
 #include <unistd.h>
 
-struct eid_vwr_deserialize_info {
-	void* data;
-	int len;
-};
-
-int eid_vwr_deserialize(void* data, int len, void(*write)(void*)) {
-	struct eid_vwr_deserialize_info i;
-	i.data = data;
-	i.len = len;
-	sm_handle_event(EVENT_OPEN_FILE, &i, NULL, write);
-	return 0;
-}
-
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	sm_handle_event(EVENT_SET_CALLBACKS, cb_, NULL, NULL);
 	return 0;

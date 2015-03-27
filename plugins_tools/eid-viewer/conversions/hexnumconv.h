@@ -1,9 +1,9 @@
 #ifndef EID_VWR_CHIPNUM_CONV_H
 #define EID_VWR_CHIPNUM_CONV_H
 
-#include "convworker.h"
+#include "xmlconvworker.h"
 
-class HexNumberConvertor : public ConversionWorker {
+class HexNumberConvertor : public XmlConversionWorker {
 private:
 	HexNumberConvertor() {};
 	int len_;
