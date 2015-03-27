@@ -138,6 +138,7 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 		}
 		element++;
 	}
+	return 0;
 }
 
 int eid_vwr_serialize(void* data) {
