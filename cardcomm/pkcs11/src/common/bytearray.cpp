@@ -338,6 +338,9 @@ bool CByteArray::Equals(const CByteArray & oByteArray) const
 
     if (m_ulSize == 0 && oByteArray.Size() == 0)
         return true;
+    
+    if (m_pucData == NULL)
+        throw CMWEXCEPTION(EIDMW_ERR_CHECK);
 
     return m_ulSize == oByteArray.Size() &&
         memcmp(m_pucData, oByteArray.GetBytes(), m_ulSize) == 0;
