@@ -32,6 +32,7 @@
 		6536233B19A7E92B00D46ECB /* tkinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232419A7E92B00D46ECB /* tkinfo.c */; };
 		6536233D19A7E93A00D46ECB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536233C19A7E93A00D46ECB /* main.c */; };
 		65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.3.dylib */; };
+		655EC1341AC970B400C411CB /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 655EC1321AC970B400C411CB /* labels.c */; };
 		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
@@ -260,6 +261,8 @@
 		6536232319A7E92B00D46ECB /* threads.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = threads.c; path = tests/unit/threads.c; sourceTree = "<group>"; };
 		6536232419A7E92B00D46ECB /* tkinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tkinfo.c; path = tests/unit/tkinfo.c; sourceTree = "<group>"; };
 		6536233C19A7E93A00D46ECB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = tests/unit/apple/main.c; sourceTree = "<group>"; };
+		655EC1321AC970B400C411CB /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = tests/unit/labels.c; sourceTree = "<group>"; };
+		655EC1331AC970B400C411CB /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = tests/unit/labels.h; sourceTree = "<group>"; };
 		658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Middleware.xcodeproj"; path = "plugins_tools/aboutmw/OSX/eID Middleware/eID Middleware.xcodeproj"; sourceTree = "<group>"; };
 		6594447B19A8C29B003ABC24 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = cardcomm/pkcs11/src/asn1.c; sourceTree = "<group>"; };
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
@@ -505,6 +508,8 @@
 		6536230C19A7E8FE00D46ECB /* testsuite */ = {
 			isa = PBXGroup;
 			children = (
+				655EC1321AC970B400C411CB /* labels.c */,
+				655EC1331AC970B400C411CB /* labels.h */,
 				65CC20ED19A7DE4E0089CD13 /* ordering.c */,
 				6536233C19A7E93A00D46ECB /* main.c */,
 				6536230D19A7E92B00D46ECB /* decode_photo.c */,
@@ -1020,6 +1025,7 @@
 			files = (
 				65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */,
 				6536232B19A7E92B00D46ECB /* init_finalize.c in Sources */,
+				655EC1341AC970B400C411CB /* labels.c in Sources */,
 				6536232F19A7E92B00D46ECB /* nonsensible.c in Sources */,
 				6536233419A7E92B00D46ECB /* sessions.c in Sources */,
 				6536233319A7E92B00D46ECB /* sessions_nocard.c in Sources */,
