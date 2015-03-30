@@ -28,7 +28,7 @@ CReadersInfo::CReadersInfo()
 	m_ulReaderCount = 0;
 }
 
-//contains the virtual reader incase of #define PKCS11_V2_20
+//contains the virtual reader incase of #define PKCS11_FF
 unsigned long CReadersInfo::ReaderCount()
 {
 	return m_ulReaderCount;
@@ -120,7 +120,7 @@ CReadersInfo::CReadersInfo(const CByteArray & oReaders)
 	size_t i;
 
 
-#ifdef PKCS11_V2_20
+#ifdef PKCS11_FF
 	for (i = 0;csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS-1; i++, m_ulReaderCount++)
 #else
 	for (i = 0;csReaders != NULL && csReaders[0] != '\0' && i < MAX_READERS; i++, m_ulReaderCount++)
@@ -131,7 +131,7 @@ CReadersInfo::CReadersInfo(const CByteArray & oReaders)
 		m_tInfos[m_ulReaderCount].ulEventState = 0;
 		csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
 	}
-#ifdef PKCS11_V2_20
+#ifdef PKCS11_FF
 	//Add an extra hidden reader to detect new attached reader events
 	m_tInfos[m_ulReaderCount].csReader = "\\\\?PnP?\\Notification";
 	m_tInfos[m_ulReaderCount].ulCurrentState = 0;
