@@ -4,6 +4,8 @@
 #include "xmlmap.h"
 #include "config.h"
 
+#include <string.h>
+
 #include <libxml/encoding.h>
 #include <libxml/xmlwriter.h>
 #include <libxml/xmlreader.h>
