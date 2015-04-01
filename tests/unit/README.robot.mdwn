@@ -6,24 +6,32 @@ insert a card into the card reader, remove it, enter a pin code, or
 confirm access to the card for privacy-sensitive data.
 
 To select the robot type to use, set the `EID_ROBOT_STYLE` environment
-variable to the correct value. We foresee the following possibilities:
+variable to the correct value. The following options exist:
 
 1. `EID_ROBOT_STYLE=manual`: no actual robot, instead print instructions
    on stdout and ask the user to perform actions. For interactive use
-   only. This robot style assumes that the PIN code is known and that
-   read access to privacy-sensitive data will be granted.
-2. `EID_ROBOT_STYLE=dialogsonly`: no actual robot, but this method does
-   allow the test suite to prompt for pin code or permission to read
-   data from the card.
-3. `EID_ROBOT_STYLE=`_path to unix domain socket_: a robot listens on
-   the unix domain socket to commands. Not yet implemented. This robot
-   may or may not have the ability to specify a pin code or confirm
-   access; whether this is the case will be specified through other
-   `EID_*` environment variables.
-4. `EID_ROBOT_STYLE` is unset: no robot is available; tests which
-   require the insertion or removal of a card will be skipped, as will
-   tests which require entering the PIN code or confirming access to
-   privacy-sensitive data.
+   only. This assumes that the instructions will be followed to the letter, and
+   will fail if not.
+2. `EID_ROBOT_STYLE=fedict`: opens /dev/ttyACM0, on which it expects to
+   find a robot which implements the same protocol as implemented by the
+   [Fedict eID robot](https://github.com/yoe/eid-robot).
+3. `EID_ROBOT_STYLE` is unset: no robot is available; tests which
+   require the insertion or removal of a card will be skipped.
+
+In addition, in order to run the test suite in a noninteractive
+environment, it may be necessary to suppress tests which require
+entering a pin code or which would cause the middleware to request
+permission from the user. This can be done by way of the
+`EID_DALOGS_STYLE` environment variable. For this one, the following
+options exist:
+
+1. `EID_DIALOGS_STYLE=ok`: all kinds of dialogs may be shown, no
+   restrictions.
+2. `EID_DIALOGS_STYLE=nopin`: dialogs asking pin codes will be
+   suppressed, but all other dialogs will be shown.
+3. `EID_DIALOGS_STYLE=ok`: all dialogs will be shown. Please note that
+   entering an incorrect pincode three times will result in the card
+   getting locked.
 
 In addition, most tests require an actual card to be in a reader. This
 may be a test card, or it can be an actual ID card. It is safe to run
