@@ -51,8 +51,6 @@ private:
 	CRITICAL_SECTION m_Mutex;
 #else
 	pthread_mutex_t m_Mutex;
-	pthread_t m_MutexOwner;
-	int m_MutexLockcount;
 #endif
 };
 
