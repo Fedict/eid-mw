@@ -18,6 +18,8 @@
 
 **************************************************************************** */
 #include "mutex.h"
+#include "log.h"
+#include <errno.h>
 
 #ifndef TRUE
 #define TRUE true
@@ -51,7 +53,22 @@ CMutex::~CMutex()
 	LeaveCriticalSection(&m_Mutex);
 	DeleteCriticalSection(&m_Mutex);
 #else
-	pthread_mutex_destroy(&m_Mutex);
+	// We should maybe use a conditional macro to do the
+	// __builtin_expect below so that it only gets used when we're
+	// using a compiler which supports that. However, since we're
+	// already in the non-win32 section here, we're either compiling
+	// on OSX (clang) or Linux (gcc or clang), which means we do
+	// have support for that. So ignore.
+	if(__builtin_expect(pthread_mutex_destroy(&m_Mutex), 0)) {
+		switch(errno) {
+			case EBUSY:
+				MWLOG(LEV_CRIT, MOD_LIB, L"trying to destroy a mutex which is still in use!");
+				break;
+			case EINVAL:
+				MWLOG(LEV_CRIT, MOD_LIB, L"trying to destroy an invalid mutex!");
+				break;
+		}
+	}
 #endif
 }
 
