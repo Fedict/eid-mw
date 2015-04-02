@@ -55,6 +55,7 @@ eid_viewer_SOURCES = \
 	conversions/convertor.h \
 	conversions/convworker.h \
 	conversions/convworker.cpp \
+	conversions/date.h \
 	conversions/dateconv.h \
 	conversions/dateconv.cpp \
 	conversions/doctypeconv.h \

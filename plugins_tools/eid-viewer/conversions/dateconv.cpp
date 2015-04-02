@@ -56,13 +56,18 @@ DateConvertor::DateConvertor() {
 	domap(EID_VWR_LANG_EN, 12, "DEC");
 }
 
-std::string DateConvertor::convert(const char* original) {
-	std::string orig = original;
-	std::string daypart = orig.substr(0,2);
-	std::string monthpart = orig.substr(3, orig.find_last_of(" .") - 3);
-	std::string yearpart = orig.substr(orig.find_last_of(" .") + 1);
+void DateConvertor::input(std::string original) {
+	day = original.substr(0,2);
+	month = frommonth[original.substr(3, original.find_last_of(" .") - 3)];
+	year = original.substr(original.find_last_of(" .") + 1);
+}
 
+std::string DateConvertor::output() {
 	char sep = target_ == EID_VWR_LANG_DE ? '.' : ' ';
+	return day + sep + tomonth[target_][month] + sep + year;
+}
 
-	return daypart + sep + tomonth[target_][frommonth[monthpart]] + sep + yearpart;
+std::string DateConvertor::convert(const char* original) {
+	input(original);
+	return output();
 }
