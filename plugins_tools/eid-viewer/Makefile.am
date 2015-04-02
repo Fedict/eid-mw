@@ -58,6 +58,8 @@ eid_viewer_SOURCES = \
 	conversions/date.h \
 	conversions/dateconv.h \
 	conversions/dateconv.cpp \
+	conversions/dob.h \
+	conversions/dob.cpp \
 	conversions/doctypeconv.h \
 	conversions/doctypeconv.cpp \
 	conversions/natnumconv.cpp \
@@ -67,8 +69,6 @@ eid_viewer_SOURCES = \
 	conversions/xmldoctypeconv.h \
 	conversions/xmldoctypeconv.cpp \
 	conversions/xmlconvworker.h \
-	conversions/xmldateconv.h \
-	conversions/xmldateconv.cpp \
 	conversions/xmlspecconv.h \
 	conversions/xmlspecconv.cpp \
 	conversions.h \

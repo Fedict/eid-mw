@@ -1,11 +1,11 @@
 #ifndef XML_DOCTYPECONV_H
 #define XML_DOCTYPECONV_H
 
-#include "xmlconvworker.h"
+#include "convworker.h"
 #include <map>
 #include <string>
 
-class XmlDoctypeConvertor : public XmlConversionWorker {
+class XmlDoctypeConvertor : public ConversionWorker {
 private:
 	static std::map<std::string, std::string> conversions;
 public:

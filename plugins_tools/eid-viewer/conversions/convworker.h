@@ -3,6 +3,7 @@
 
 #include <string>
 #include <conversions.h>
+#include <cstring>
 
 class ConversionWorker {
 protected:
@@ -13,6 +14,11 @@ public:
 	static bool have_language() { return target_ > EID_VWR_LANG_NONE; };
 	virtual std::string convert(const char* original) = 0;
 	virtual std::string convert(std::string original) { return convert(original.c_str()); };
+	virtual void* convert(const char* original, int* len_return) {
+		std::string cv = convert(original);
+		*len_return = cv.length();
+		return strdup(cv.c_str());
+	}
 };
 
 #endif

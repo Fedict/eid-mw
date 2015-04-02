@@ -8,7 +8,7 @@
 #include "cache.h"
 #include "xmldoctypeconv.h"
 #include "xmlspecconv.h"
-#include "xmldateconv.h"
+#include "dob.h"
 #include "hexdecode.h"
 
 #include <map>
@@ -16,8 +16,8 @@
 #include <cstring>
 
 std::map<std::string, ConversionWorker*> Convertor::convertors;
-std::map<std::string, XmlConversionWorker*> Convertor::to_xml;
-std::map<std::string, XmlConversionWorker*> Convertor::from_xml;
+std::map<std::string, ConversionWorker*> Convertor::to_xml;
+std::map<std::string, ConversionWorker*> Convertor::from_xml;
 
 Convertor::Convertor() {
 	if(convertors.empty()) {
@@ -25,20 +25,20 @@ Convertor::Convertor() {
 		convertors["chip_number"] = new HexNumberConvertor(16);
 		convertors["special_status"] = new SpecConvertor();
 		convertors["document_type"] = new DocTypeConvertor();
-		convertors["date_of_birth"] = new DateConvertor();
+		convertors["date_of_birth"] = new DobWriter(new DobParser);
 		convertors["card_number"] = new BBANNumberConvertor();
 	}
 	if(to_xml.empty()) {
 		to_xml["document_type"] = new XmlDoctypeConvertor();
 		to_xml["special_status"] = new XmlSpecConvertor();
 		to_xml["chip_number"] = new HexNumberConvertor(16);
-		to_xml["date_of_birth"] = new XmlDateConvertor();
+		to_xml["date_of_birth"] = new XmlDateWriter(new DobParser);
 	}
 	if(from_xml.empty()) {
 		from_xml["document_type"] = new XmlDoctypeConvertor();
 		from_xml["special_status"] = new XmlSpecConvertor();
 		from_xml["chip_number"] = new HexDecodeConvertor(16);
-		from_xml["date_of_birth"] = new XmlDateConvertor();
+		from_xml["date_of_birth"] = new DobWriter(new XmlDateParser);
 	}
 }
 

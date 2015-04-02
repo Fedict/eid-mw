@@ -1,9 +1,9 @@
 #ifndef EID_VWR_HEXDECODE_H
 #define EID_VWR_HEXDECODE_H
 
-#include "xmlconvworker.h"
+#include "convworker.h"
 
-class HexDecodeConvertor : public XmlConversionWorker {
+class HexDecodeConvertor : public ConversionWorker {
 private:
 	int len_;
 public:

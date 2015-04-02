@@ -11,8 +11,8 @@ class XmlConversionWorker;
 class Convertor {
 private:
 	static std::map<std::string, ConversionWorker*> convertors;
-	static std::map<std::string, XmlConversionWorker*> to_xml;
-	static std::map<std::string, XmlConversionWorker*> from_xml;
+	static std::map<std::string, ConversionWorker*> to_xml;
+	static std::map<std::string, ConversionWorker*> from_xml;
 public:
 	Convertor();
 	const char* convert(const char* label, const char* normal);
