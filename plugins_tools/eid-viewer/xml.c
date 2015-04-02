@@ -30,7 +30,11 @@ static int write_attributes(xmlTextWriterPtr writer, struct attribute_desc *attr
 			return -1;
 		}
 		if(have_cache) {
-			check_xml(xmlTextWriterWriteAttribute(writer, BAD_CAST attribute->name, BAD_CAST cache_get_xmlform(attribute->label)));
+			char* val = cache_get_xmlform(attribute->label);
+			if(strlen(val) || attribute->reqd) {
+				check_xml(xmlTextWriterWriteAttribute(writer, BAD_CAST attribute->name, BAD_CAST val));
+			}
+			free(val);
 		}
 		attribute++;
 	}
@@ -58,6 +62,7 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 				return -1;
 			}
 			if(have_cache) {
+				char* val = cache_get_xmlform(element->label);
 				if(!element->is_b64) {
 					check_xml(xmlTextWriterWriteElement(writer, BAD_CAST element->name, BAD_CAST cache_get_xmlform(element->label)));
 				} else {
@@ -66,6 +71,7 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 					check_xml(xmlTextWriterWriteBase64(writer, item->data, 0, item->len));
 					check_xml(xmlTextWriterEndElement(writer));
 				}
+				free(val);
 			}
 		}
 		element++;
