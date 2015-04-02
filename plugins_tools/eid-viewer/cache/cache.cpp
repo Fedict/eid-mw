@@ -9,8 +9,9 @@ struct cache_item_container {
 	eid_vwr_cache_item* item;
 
 	cache_item_container(void* data, size_t len) : item(new eid_vwr_cache_item) {
-		item->data = malloc(len);
+		item->data = malloc(len+1);
 		memcpy(item->data, data, len);
+		((char*)item->data)[len]='\0';
 		item->len = len;
 	}
 
