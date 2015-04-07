@@ -62,29 +62,3 @@ void be_newbindata(char* label, void* data, int datalen) {
 	NEED_CB_FUNC(newbindata);
 	cb->newbindata(label, data, datalen);
 }
-
-struct eid_vwr_preview* eid_vwr_get_preview(char* filename) {
-	// TODO: open the file, deserialize until we find a photo, pass back the photo.
-	// For now, show the same photo in all cases...
-	FILE* f;
-	struct eid_vwr_preview* p;
-	p = calloc(sizeof(struct eid_vwr_preview), 1);
-	if(!filename) {
-		return p;
-	}
-	if(strstr(filename, ".eid") != filename + (strlen(filename) - 4)) {
-		return p;
-	}
-	f = fopen("../../tests/unit/foto.jpg", "r");
-	if(!f) {
-		perror("fopen");
-		return p;
-	}
-	fseek(f, 0, SEEK_END);
-	p->imagelen = ftell(f);
-	fseek(f, 0, SEEK_SET);
-	p->imagedata = malloc(p->imagelen);
-	fread(p->imagedata, p->imagelen, 1, f);
-	p->have_data = 1;
-	return p;
-}
