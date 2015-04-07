@@ -51,11 +51,11 @@ Convertor::Convertor() {
 	}
 }
 
-const char* Convertor::convert(const char* label, const char* normal) {
+char* Convertor::convert(const char* label, const char* normal) {
 	if(can_convert(label)) {
 		return strdup(convertors[label]->convert(normal).c_str());
 	} else {
-		return normal;
+		return strdup(normal);
 	}
 }
 
@@ -71,11 +71,11 @@ void* Convertor::convert_from_xml(const char* name, const char* value, int* len_
 	return strdup(value);
 }
 
-const char* Convertor::convert_to_xml(const char* label, const char* normal) {
+char* Convertor::convert_to_xml(const char* label, const char* normal) {
 	if(to_xml.count(label) > 0) {
 		return strdup(to_xml[label]->convert(normal).c_str());
 	}
-	return normal;
+	return strdup(normal);
 }
 
 int Convertor::can_convert(const char* label) {
