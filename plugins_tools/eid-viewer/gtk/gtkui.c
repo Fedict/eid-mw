@@ -142,6 +142,7 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 			_("_Save"), GTK_RESPONSE_ACCEPT,
 			NULL);
 	gchar* filename;
+	gchar* filename_sugg;
 	gint res;
 	GtkFileFilter* filter;
 
@@ -161,12 +162,16 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 	gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
 
+	filename_sugg = g_strdup_printf("%s.eid", gtk_label_get_text(GTK_LABEL(gtk_builder_get_object(builder, "national_number"))));
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), filename_sugg);
+
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 		sm_handle_event(EVENT_SERIALIZE, filename, g_free, NULL);
 	}
 	gtk_widget_destroy(dialog);
+	g_free(filename_sugg);
 }
 
 void file_close(GtkMenuItem* item, gpointer user_data) {
