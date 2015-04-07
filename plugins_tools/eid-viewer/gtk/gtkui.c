@@ -24,9 +24,16 @@ void n(GtkMenuItem* item, gpointer user_data) { \
 
 static enum eid_vwr_langs curlang = EID_VWR_LANG_NONE;
 
+static void clear_cert_image(char* label) {
+	GtkImage *img = GTK_IMAGE(gtk_builder_get_object(builder, label));
+	gtk_image_set_from_stock(img, GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_BUTTON);
+}
+
 void show_cert_image(const char* label, void *data, int len) {
 	GdkPixbuf *buf = GDK_PIXBUF(data);
 	GtkImage *ci = GTK_IMAGE(gtk_builder_get_object(builder, "certimage"));
+
+	g_hash_table_insert(touched_labels, g_strdup(label), clear_cert_image);
 
 	gtk_image_set_from_pixbuf(ci, buf);
 }
