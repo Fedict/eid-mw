@@ -11,6 +11,6 @@ void ValidityDateParser::input(std::string original) {
 
 std::string ValidityDateWriter::output() {
 	std::ostringstream s;
-	s << parser->day << "." << std::setfill('0') << std::setw(2) << parser->month << parser->year;
+	s << parser->day << "." << std::setfill('0') << std::setw(2) << parser->month << "." << parser->year;
 	return s.str();
 }
