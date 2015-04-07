@@ -28,6 +28,7 @@ static void* thread_main(void* val) {
 			if(cmdlist->exiting != 0) {
 				goto exit;
 			}
+			cmdlist = cmdlist->next;
 			// Avoid deadlocks. Event-handling code could be doing
 			// anything, including dealing with (other?) mutexes.
 			pthread_mutex_unlock(&mutex);
@@ -39,7 +40,6 @@ static void* thread_main(void* val) {
 			if(tmp->free != NULL) {
 				tmp->free(cmdlist->data);
 			}
-			cmdlist = cmdlist->next;
 			free(tmp);
 		}
 		pthread_cond_wait(&cond, &mutex);
