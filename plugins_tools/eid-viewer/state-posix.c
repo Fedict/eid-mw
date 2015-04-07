@@ -38,7 +38,7 @@ static void* thread_main(void* val) {
 			}
 			pthread_mutex_lock(&mutex);
 			if(tmp->free != NULL) {
-				tmp->free(cmdlist->data);
+				tmp->free(tmp->data);
 			}
 			free(tmp);
 		}

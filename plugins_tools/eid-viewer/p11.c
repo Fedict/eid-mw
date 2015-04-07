@@ -65,8 +65,8 @@ int eid_vwr_p11_close_session() {
 }
 
 int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
-	CK_SLOT_ID_PTR slotlist = NULL;
-	CK_ULONG count = 0;
+	CK_SLOT_ID_PTR slotlist = calloc(sizeof(CK_SLOT_ID), 1);
+	CK_ULONG count = 1;
 	CK_RV ret;
 
 	while((ret = C_GetSlotList(CK_TRUE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
