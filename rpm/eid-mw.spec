@@ -156,7 +156,7 @@ fi
 %defattr(-,root,root,0755)
 %{_bindir}/eid-viewer
 %{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
-%{_datadir}/eid-mw/eidv4.xsd
+%{_datadir}/eid-mw
 %if ! 0%{?el6}
 %{_datadir}/glib-2.0/schemas
 %endif
