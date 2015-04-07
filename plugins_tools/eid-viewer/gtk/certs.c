@@ -28,7 +28,7 @@ static GdkPixbuf* unchecked_certificate;
 
 static GtkTreeIter* get_iter_for(char* which) {
 	GtkTreeIter* parent;
-	enum certs w;
+	enum certs w = CERTS_COUNT;
 
 #define char_to_enum(c) if(!strcmp(#c, which)) { w = c; }
 	char_to_enum(Root);
@@ -38,6 +38,10 @@ static GtkTreeIter* get_iter_for(char* which) {
 	char_to_enum(Signature);
 #undef char_to_enum
 
+	if(w == CERTS_COUNT) {
+		// invalid/unknown certificate
+		return NULL;
+	}
 	if(iters[w]) {
 	       	return iters[w];
 	}
@@ -80,6 +84,10 @@ static void tst_free_simple(struct tree_store_data* dat) {
 static gboolean tst_helper(gpointer user_data) {
 	struct tree_store_data* dat = (struct tree_store_data*)user_data;
 	GtkTreeIter* iter = get_iter_for(dat->which);
+
+	if(!iter) {
+		return FALSE;
+	}
 
 	gtk_tree_store_set_valuesv(certificates, iter, dat->columns, dat->values, dat->n_values);
 	dat->free(dat);
