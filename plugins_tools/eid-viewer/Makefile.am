@@ -109,7 +109,8 @@ EXTRA_DIST = gtk/viewer.glade \
 	     resources/coat_of_arms_de.jpg \
 	     resources/coat_of_arms_en.jpg \
 	     resources/coat_of_arms_fr.jpg \
-	     resources/coat_of_arms_nl.jpg
+	     resources/coat_of_arms_nl.jpg \
+	     eidv4.xsd
 
 packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
 
