@@ -36,4 +36,6 @@ std::string XmlGenderConvertor::convert(const char* original) {
 		case 'f':
 			return GenderConvertor::convert("F");
 	}
+
+	return "unknown";
 }
