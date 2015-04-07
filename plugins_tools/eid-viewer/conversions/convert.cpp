@@ -9,12 +9,12 @@
 
 char* converted_string(const char* label, const char* normal) {
 	Convertor conv;
-	return strdup(conv.convert(label, normal));
+	return conv.convert(label, normal);
 }
 
 char* convert_to_xml(const char* label, const char* normal) {
 	Convertor conv;
-	return strdup(conv.convert_to_xml(label, normal));
+	return conv.convert_to_xml(label, normal);
 }
 
 void* convert_from_xml(const char* name, const char* value, int* len_return) {
