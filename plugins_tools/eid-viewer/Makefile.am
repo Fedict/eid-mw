@@ -46,6 +46,8 @@ eid_viewer_SOURCES = \
 	cache/cache.cpp \
 	conversions/bbannumconv.h \
 	conversions/bbannumconv.cpp \
+	conversions/genderconv.h \
+	conversions/genderconv.cpp \
 	conversions/hexnumconv.cpp \
 	conversions/hexnumconv.h \
 	conversions/hexdecode.h \
@@ -55,7 +57,6 @@ eid_viewer_SOURCES = \
 	conversions/convertor.h \
 	conversions/convworker.h \
 	conversions/convworker.cpp \
-	conversions/date.h \
 	conversions/dateconv.h \
 	conversions/dateconv.cpp \
 	conversions/dob.h \
@@ -66,9 +67,10 @@ eid_viewer_SOURCES = \
 	conversions/natnumconv.h \
 	conversions/specconv.h \
 	conversions/specconv.cpp \
+	conversions/valdate.h \
+	conversions/valdate.cpp \
 	conversions/xmldoctypeconv.h \
 	conversions/xmldoctypeconv.cpp \
-	conversions/xmlconvworker.h \
 	conversions/xmlspecconv.h \
 	conversions/xmlspecconv.cpp \
 	conversions.h \

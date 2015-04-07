@@ -121,7 +121,7 @@ void uilog(enum eid_vwr_loglevel l, const char* line, ...) {
 	va_end(ap);
 }
 
-logfunc log_init() {
+logfunc ui_log_init() {
 	GObject* object;
 	GtkTextBuffer* buf;
 	GtkTextIter it;

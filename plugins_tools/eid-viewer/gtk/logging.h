@@ -6,7 +6,7 @@
 
 typedef void(*logfunc)(enum eid_vwr_loglevel, const char*, va_list);
 
-logfunc log_init();
+logfunc ui_log_init();
 void uilog(enum eid_vwr_loglevel l, const char* line, ...);
 
 #endif
