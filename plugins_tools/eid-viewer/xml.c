@@ -18,11 +18,12 @@
 
 #define check_xml(call) if((rc = call) < 0) { \
 	be_log(EID_VWR_LOG_DETAIL, "Error while writing to file (calling '%s'): %d", #call, rc); \
-	return -1; \
+	goto err_out; \
 }
 
 static int write_attributes(xmlTextWriterPtr writer, struct attribute_desc *attribute) {
-	int rc;
+	int rc = 0;
+	char* val = NULL;
 	while(attribute->name) {
 		int have_cache = cache_have_label(attribute->label);
 		if(attribute->reqd && !have_cache) {
@@ -30,20 +31,27 @@ static int write_attributes(xmlTextWriterPtr writer, struct attribute_desc *attr
 			return -1;
 		}
 		if(have_cache) {
-			char* val = cache_get_xmlform(attribute->label);
+			val = cache_get_xmlform(attribute->label);
 			if(strlen(val) || attribute->reqd) {
 				check_xml(xmlTextWriterWriteAttribute(writer, BAD_CAST attribute->name, BAD_CAST val));
 			}
 			free(val);
+			val = NULL;
 		}
 		attribute++;
 	}
 
-	return 0;
+	rc = 0;
+err_out:
+	if(val != NULL) {
+		free(val);
+	}
+	return rc;
 }
 
 static int write_elements(xmlTextWriterPtr writer, struct element_desc *element) {
 	int rc;
+	char* val = NULL;
 	while(element->name) {
 		if(element->label == NULL) {
 			assert(element->child_elements != NULL);
@@ -62,7 +70,7 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 				return -1;
 			}
 			if(have_cache) {
-				char* val = cache_get_xmlform(element->label);
+				val = cache_get_xmlform(element->label);
 				if(!element->is_b64) {
 					check_xml(xmlTextWriterWriteElement(writer, BAD_CAST element->name, BAD_CAST cache_get_xmlform(element->label)));
 				} else {
@@ -72,11 +80,17 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 					check_xml(xmlTextWriterEndElement(writer));
 				}
 				free(val);
+				val = NULL;
 			}
 		}
 		element++;
 	}
-	return 0;
+	rc=0;
+err_out:
+	if(val != NULL) {
+		free(val);
+	}
+	return rc;
 }
 
 int eid_vwr_serialize(void* data) {
@@ -96,11 +110,14 @@ int eid_vwr_serialize(void* data) {
 
 	xmlFreeTextWriter(writer);
 
-	return 0;
+	rc=0;
+err_out:
+	return rc;
 }
 
 static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) {
 	int rc;
+	void* val = NULL;
 	while((rc = xmlTextReaderRead(reader)) > 0) {
 		const xmlChar *curnode = xmlTextReaderConstLocalName(reader);
 		struct element_desc *desc = get_elemdesc((const char*)curnode);
@@ -117,9 +134,10 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 				xmlChar* value = xmlTextReaderGetAttribute(reader, att->name);
 				if(value) {
 					int len;
-					void* val = convert_from_xml(att->label, value, &len);
+					val = convert_from_xml(att->label, value, &len);
 					cache_add(att->label, val, len);
 					eid_vwr_p11_to_ui(att->label, val, len);
+					val = NULL;
 					xmlFree(value);
 				} else {
 					if(att->reqd) {
@@ -131,7 +149,6 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 		}
 		if(desc->label != NULL) {
 			int len;
-			void* val;
 			check_xml(xmlTextReaderRead(reader));
 			if(desc->is_b64) {
 				const char* tmp;
@@ -147,12 +164,17 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 			cache_add(desc->label, val, len);
 			eid_vwr_p11_to_ui(desc->label, val, len);
 			be_log(EID_VWR_LOG_DETAIL, "found data for label %s", desc->label);
+			val = NULL;
 		}
 	}
-	if(rc < 0) {
-		return rc;
+	if(rc > 0) {
+		rc=0;
 	}
-	return 0;
+err_out:
+	if(val != NULL) {
+		free(val);
+	}
+	return rc;
 }
 
 int eid_vwr_deserialize(void* data) {
@@ -170,6 +192,6 @@ int eid_vwr_deserialize(void* data) {
 	check_xml(read_elements(reader, toplevel));
 
 	xmlFreeTextReader(reader);
-
-	return 0;
+err_out:
+	return rc;
 }
