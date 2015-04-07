@@ -158,6 +158,7 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
 %if ! 0%{?el6}
 %{_datadir}/glib-2.0/schemas
+%{_datadir}/eid-mw/eidv4.xsd
 %endif
 
 %changelog
