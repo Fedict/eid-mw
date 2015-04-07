@@ -65,7 +65,7 @@ int eid_vwr_p11_close_session() {
 }
 
 int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
-	CK_SLOT_ID_PTR slotlist = malloc(sizeof(CK_SLOT_ID));
+	CK_SLOT_ID_PTR slotlist = NULL;
 	CK_ULONG count = 0;
 	CK_RV ret;
 
@@ -76,6 +76,7 @@ int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
 	check_rv_late(ret);
 	if(count > 0) {
 		*loc = slotlist[0];
+		free(slotlist);
 		return EIDV_RV_OK;
 	}
 	return EIDV_RV_FAIL;
