@@ -17,7 +17,7 @@ struct log_message {
 
 static void show_error(const gchar* message) {
 	GtkWidget *msgdlg = gtk_message_dialog_new(GTK_WINDOW(gtk_builder_get_object(builder, "mainwin")),
-			0, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, message);
+			0, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", message);
 	gtk_dialog_run(GTK_DIALOG(msgdlg));
 	gtk_widget_destroy(msgdlg);
 }
