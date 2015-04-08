@@ -393,6 +393,10 @@ int main(int argc, char** argv) {
 
 	gtk_widget_show(window);
 
+	if(argc > 1) {
+		sm_handle_event(EVENT_OPEN_FILE, argv[1], NULL, NULL);
+	}
+
 	gtk_main();
 
 	return 0;
