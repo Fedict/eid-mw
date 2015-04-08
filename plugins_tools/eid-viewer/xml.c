@@ -27,7 +27,7 @@ static int write_attributes(xmlTextWriterPtr writer, struct attribute_desc *attr
 	while(attribute->name) {
 		int have_cache = cache_have_label(attribute->label);
 		if(attribute->reqd && !have_cache) {
-			be_log(EID_VWR_LOG_COARSE, "Error: no data found for required label %s", attribute->label);
+			be_log(EID_VWR_LOG_ERROR, "Could not write file: no data found for required label %s", attribute->label);
 			return -1;
 		}
 		if(have_cache) {
@@ -66,7 +66,7 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 			assert(element->child_elements == NULL);
 
 			if(element->reqd && !have_cache) {
-				be_log(EID_VWR_LOG_COARSE, "Error: no data found for required label %s", element->label);
+				be_log(EID_VWR_LOG_ERROR, "Could not write file: no data found for required label %s", element->label);
 				return -1;
 			}
 			if(have_cache) {
@@ -127,7 +127,7 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 		}
 		if(xmlTextReaderHasAttributes(reader) > 0) {
 			if(desc->attributes == NULL) {
-				be_log(EID_VWR_LOG_COARSE, "could not read file: found attribute on an element that shouldn't have one.");
+				be_log(EID_VWR_LOG_ERROR, "Could not read file: found attribute on an element that shouldn't have one.");
 				return -1;
 			}
 			for(att = desc->attributes; att->name != NULL; att++) {
@@ -141,7 +141,7 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 					xmlFree(value);
 				} else {
 					if(att->reqd) {
-						be_log(EID_VWR_LOG_COARSE, "could not read file: missing attribute %s on %s", att->name, desc->name);
+						be_log(EID_VWR_LOG_ERROR, "Could not read file: missing attribute %s on %s", att->name, desc->name);
 						return -1;
 					}
 				}
