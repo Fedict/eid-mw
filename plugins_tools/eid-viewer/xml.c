@@ -17,7 +17,7 @@
 #include <assert.h>
 
 #define check_xml(call) if((rc = call) < 0) { \
-	be_log(EID_VWR_LOG_DETAIL, "Error while writing to file (calling '%s'): %d", #call, rc); \
+	be_log(EID_VWR_LOG_DETAIL, "Error while dealing with file (calling '%s'): %d", #call, rc); \
 	goto out; \
 }
 
