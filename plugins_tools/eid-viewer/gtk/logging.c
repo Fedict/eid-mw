@@ -45,6 +45,7 @@ static gboolean append_logline(gpointer ptr) {
 		show_error(msg->msg);
 	}
 	g_free(tmp);
+	g_free(msg->msg);
 	g_free(msg);
 	return FALSE;
 }
@@ -87,7 +88,7 @@ static void glib_message_redirect(const gchar* log_domain,
 	}
 	g_log_default_handler(log_domain, log_level, message, user_data);
 	msg->l = l;
-	msg->msg = message;
+	msg->msg = g_strdup(message);
 	g_main_context_invoke(NULL, append_logline, msg);
 }
 
