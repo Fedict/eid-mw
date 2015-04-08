@@ -94,7 +94,7 @@ out:
 }
 
 int eid_vwr_serialize(void* data) {
-	xmlTextWriterPtr writer;
+	xmlTextWriterPtr writer = NULL;
 	int rc;
 	const char* filename = (const char*)data;
 
@@ -108,10 +108,11 @@ int eid_vwr_serialize(void* data) {
 	check_xml(write_elements(writer, toplevel));
 	check_xml(xmlTextWriterEndDocument(writer));
 
-	xmlFreeTextWriter(writer);
-
 	rc=0;
 out:
+	if(writer) {
+		xmlFreeTextWriter(writer);
+	}
 	return rc;
 }
 
@@ -178,7 +179,7 @@ out:
 }
 
 int eid_vwr_deserialize(void* data) {
-	xmlTextReaderPtr reader;
+	xmlTextReaderPtr reader = NULL;
 	const char* filename = (const char*)data;
 	int rc;
 
@@ -190,9 +191,10 @@ int eid_vwr_deserialize(void* data) {
 
 	check_xml(xmlTextReaderSchemaValidate(reader, DATAROOTDIR "/" PACKAGE_NAME "/eidv4.xsd"));
 	check_xml(read_elements(reader, toplevel));
-
-	xmlFreeTextReader(reader);
 out:
+	if(reader) {
+		xmlFreeTextReader(reader);
+	}
 	return rc;
 }
 
