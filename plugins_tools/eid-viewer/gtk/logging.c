@@ -10,11 +10,23 @@
 
 struct log_message {
 	enum eid_vwr_loglevel l;
-	gchar* msg;
+	const gchar* prefix;
+	const gchar* msg;
+	gboolean show_dialog;
 };
+
+static void show_error(const gchar* message) {
+	GtkWidget *msgdlg = gtk_message_dialog_new(GTK_WINDOW(gtk_builder_get_object(builder, "mainwin")),
+			0, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, message);
+	gtk_dialog_run(GTK_DIALOG(msgdlg));
+	gtk_widget_destroy(msgdlg);
+}
 
 static gboolean append_logline(gpointer ptr) {
 	struct log_message *msg = (struct log_message*)ptr;
+	gchar* tmp;
+
+	tmp = g_strdup_printf("%s%s\n", msg->prefix, msg->msg);
 	if(gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(
 					gtk_builder_get_object(builder, "mi_help_log")))) {
 		if(msg->l >= gtk_combo_box_get_active(GTK_COMBO_BOX(
@@ -25,11 +37,14 @@ static gboolean append_logline(gpointer ptr) {
 			GtkTextIter it;
 
 			gtk_text_buffer_get_iter_at_mark(buf, &it, mark);
-			gtk_text_buffer_insert(buf, &it, msg->msg, -1);
+			gtk_text_buffer_insert(buf, &it, tmp, -1);
 			gtk_text_view_scroll_to_mark(tv, mark, 0.0, FALSE, 0.0, 0.0);
 		}
 	}
-	g_free(msg->msg);
+	if(msg->show_dialog) {
+		show_error(msg->msg);
+	}
+	g_free(tmp);
 	g_free(msg);
 	return FALSE;
 }
@@ -42,32 +57,37 @@ static void glib_message_redirect(const gchar* log_domain,
 	gchar* tmp;
 	struct log_message* msg;
 
-	g_log_default_handler(log_domain, log_level, message, user_data);
+	msg = g_new0(struct log_message, 1);
 	switch(log_level) {
 		case G_LOG_LEVEL_DEBUG:
 			l = EID_VWR_LOG_DETAIL;
-			tmp = "D: ";
+			msg->prefix = "D: ";
 			break;
 		case G_LOG_LEVEL_INFO:
 		case G_LOG_LEVEL_MESSAGE:
 			l = EID_VWR_LOG_NORMAL;
-			tmp = "N: ";
+			msg->prefix = "N: ";
 			break;
 		case G_LOG_LEVEL_WARNING:
+			l = EID_VWR_LOG_COARSE;
+			msg->prefix = "W: ";
+			break;
 		case G_LOG_LEVEL_CRITICAL:
 		case G_LOG_LEVEL_ERROR:
-			l = EID_VWR_LOG_COARSE;
-			tmp = "C: ";
+			l = EID_VWR_LOG_ERROR;
+			msg->prefix = "E: ";
+			if(!log_domain) {
+				msg->show_dialog = TRUE;
+			}
 			break;
 		default:
 			l = EID_VWR_LOG_COARSE;
-			tmp = "U: ";
+			msg->prefix = "U: ";
 			break;
 	}
-	tmp = g_strdup_printf("%s%s\n", tmp, message);
-	msg = g_new0(struct log_message, 1);
+	g_log_default_handler(log_domain, log_level, message, user_data);
 	msg->l = l;
-	msg->msg = tmp;
+	msg->msg = message;
 	g_main_context_invoke(NULL, append_logline, msg);
 }
 
@@ -108,6 +128,11 @@ static void reallog(enum eid_vwr_loglevel l, const char* line, va_list ap) {
 		case EID_VWR_LOG_COARSE:
 			gtklog = G_LOG_LEVEL_WARNING;
 			break;
+		case EID_VWR_LOG_ERROR:
+			/* glib has G_LOG_LEVEL_ERROR, but that causes
+			   abort(), so don't use it. */
+			gtklog = G_LOG_LEVEL_CRITICAL;
+			break;
 	}
 	g_logv(NULL, gtklog, line, ap);
 }
@@ -146,6 +171,8 @@ logfunc ui_log_init() {
 	gtk_text_buffer_create_mark(buf, "logaddpos", &it, FALSE);
 
 	g_log_set_default_handler(glib_message_redirect, NULL);
+
+	g_log_set_fatal_mask(NULL, G_LOG_LEVEL_ERROR);
 
 	return reallog;
 }

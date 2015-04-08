@@ -179,6 +179,7 @@ void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 	be_log(EID_VWR_LOG_DETAIL, "Leaving state %s", state_to_name(curstate->me));
 	if(curstate->leave != NULL) {
 		if(curstate->leave() != 0 && e != EVENT_STATE_ERROR) {
+			be_log(EID_VWR_LOG_ERROR, "state transition failed");
 			sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
 		}
 	}

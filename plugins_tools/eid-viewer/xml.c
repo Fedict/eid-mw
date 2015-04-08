@@ -100,7 +100,7 @@ int eid_vwr_serialize(void* data) {
 
 	writer = xmlNewTextWriterFilename(filename, 0);
 	if(writer == NULL) {
-		be_log(EID_VWR_LOG_COARSE, "Could not open file");
+		be_log(EID_VWR_LOG_ERROR, "Could not open file");
 		return -1;
 	}
 
@@ -184,7 +184,7 @@ int eid_vwr_deserialize(void* data) {
 
 	reader = xmlNewTextReaderFilename(filename);
 	if(reader == NULL) {
-		be_log(EID_VWR_LOG_COARSE, "Could not open file");
+		be_log(EID_VWR_LOG_ERROR, "Could not open file");
 		return -1;
 	}
 
