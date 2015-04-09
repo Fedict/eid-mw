@@ -26,7 +26,7 @@
 #define _(s) gettext(s)
 #endif
 
-typedef void(*bindisplayfunc)(const char*, void*, int);
+typedef void(*bindisplayfunc)(const char*, const void*, int);
 typedef void(*clearfunc)(char*);
 
 static GHashTable* binhash;
@@ -159,7 +159,7 @@ static void newstringdata(const char* l, const char* data) {
 	g_object_set_threaded(G_OBJECT(label), "sensitive", (void*)TRUE, NULL);
 }
 
-static void newbindata(const char* label, void* data, int datalen) {
+static void newbindata(const char* label, const void* data, int datalen) {
 	bindisplayfunc func;
 	gchar* msg;
 

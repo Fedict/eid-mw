@@ -58,7 +58,7 @@ void be_newstringdata(const char* label, const char* data) {
 	cb->newstringdata(label, data);
 }
 
-void be_newbindata(char* label, void* data, int datalen) {
+void be_newbindata(const char* label, const void* data, int datalen) {
 	NEED_CB_FUNC(newbindata);
 	cb->newbindata(label, data, datalen);
 }

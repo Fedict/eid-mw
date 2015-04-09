@@ -11,7 +11,7 @@
 struct log_message {
 	enum eid_vwr_loglevel l;
 	const gchar* prefix;
-	const gchar* msg;
+	gchar* msg;
 	gboolean show_dialog;
 };
 
