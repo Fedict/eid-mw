@@ -78,18 +78,22 @@ static void uistatus(gboolean spin, char* data, ...) {
 }
 
 static void newstate(enum eid_vwr_states s) {
-	GObject *open, *savexml, *savecsv, *print, *close;
+	GObject *open, *savexml, *savecsv, *print, *close, *pintest, *pinchg;
 	open = gtk_builder_get_object(builder, "mi_file_open");
 	savexml = gtk_builder_get_object(builder, "mi_file_saveas_xml");
 	savecsv = gtk_builder_get_object(builder, "mi_file_saveas_csv");
 	print = gtk_builder_get_object(builder, "mi_file_print");
 	close = gtk_builder_get_object(builder, "mi_file_close");
+	pintest = gtk_builder_get_object(builder, "pintestbut");
+	pinchg = gtk_builder_get_object(builder, "pinchangebut");
 
 	g_object_set_threaded(open, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(close, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(print, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(savexml, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(savecsv, "sensitive", (void*)FALSE, NULL);
+	g_object_set_threaded(pintest, "sensitive", (void*)FALSE, NULL);
+	g_object_set_threaded(pinchg, "sensitive", (void*)FALSE, NULL);
 	switch(s) {
 		case STATE_LIBOPEN:
 		case STATE_CALLBACKS:
@@ -107,6 +111,8 @@ static void newstate(enum eid_vwr_states s) {
 			g_object_set_threaded(print, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(savexml, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(savecsv, "sensitive", (void*)TRUE, NULL);
+			g_object_set_threaded(pintest, "sensitive", (void*)TRUE, NULL);
+			g_object_set_threaded(pinchg, "sensitive", (void*)TRUE, NULL);
 			if(!data_verifies()) {
 				uilog(EID_VWR_LOG_COARSE, "Cannot load card: data signature invalid!");
 				sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
