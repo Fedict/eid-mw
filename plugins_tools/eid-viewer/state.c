@@ -133,6 +133,7 @@ void sm_init() {
 	states[STATE_FILE].leave = cache_clear;
 	states[STATE_FILE].out[EVENT_CLOSE_FILE] = &(states[STATE_READY]);
 	states[STATE_FILE].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);
+	states[STATE_FILE].out[EVENT_STATE_ERROR] = &(states[STATE_READY]);
 
 	curstate = &(states[STATE_LIBOPEN]);
 
