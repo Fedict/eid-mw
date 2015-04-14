@@ -192,6 +192,12 @@ int eid_vwr_deserialize(void* data) {
 	check_xml(xmlTextReaderSchemaValidate(reader, DATAROOTDIR "/" PACKAGE_NAME "/eidv4.xsd"));
 	check_xml(read_elements(reader, toplevel));
 out:
+	if(rc) {
+		xmlError* err = xmlGetLastError();
+		if(err != NULL) {
+			be_log(EID_VWR_LOG_ERROR, "Could not read file: %s", err->message);
+		}
+	}
 	if(reader) {
 		xmlFreeTextReader(reader);
 	}
