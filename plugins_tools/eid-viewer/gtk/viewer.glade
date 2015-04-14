@@ -146,49 +146,42 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkRadioMenuItem" id="mi_lang_de">
+                      <object class="GtkMenuItem" id="mi_lang_de">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label">Deutsch</property>
                         <property name="use_underline">True</property>
-                        <property name="draw_as_radio">True</property>
                         <accelerator key="d" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkRadioMenuItem" id="mi_lang_en">
+                      <object class="GtkMenuItem" id="mi_lang_en">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label">English</property>
                         <property name="use_underline">True</property>
-                        <property name="draw_as_radio">True</property>
-                        <property name="group">mi_lang_de</property>
                         <accelerator key="e" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkRadioMenuItem" id="mi_lang_fr">
+                      <object class="GtkMenuItem" id="mi_lang_fr">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label">Français</property>
                         <property name="use_underline">True</property>
-                        <property name="draw_as_radio">True</property>
-                        <property name="group">mi_lang_de</property>
                         <accelerator key="f" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkRadioMenuItem" id="mi_lang_nl">
+                      <object class="GtkMenuItem" id="mi_lang_nl">
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label">Nederlands</property>
                         <property name="use_underline">True</property>
-                        <property name="draw_as_radio">True</property>
-                        <property name="group">mi_lang_de</property>
                         <accelerator key="n" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
