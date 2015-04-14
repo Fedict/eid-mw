@@ -6,6 +6,9 @@
 #include "oslayer.h"
 #include "state.h"
 
+#include <libxml/xmlreader.h>
+#include "viewer_glade.h"
+
 #include <locale.h>
 #include <stdlib.h>
 
@@ -191,9 +194,47 @@ enum eid_vwr_langs get_curlang() {
 	return langfromenv();
 }
 
+static void retranslate_gtkui() {
+	xmlTextReaderPtr reader = xmlReaderForMemory(VIEWER_GLADE_STRING, strlen(VIEWER_GLADE_STRING), "", NULL, 0);
+	const xmlChar *curnode = NULL, *curname = NULL;
+	int rc;
+
+	if(!reader) {
+		printf("whoops\n");
+		return;
+	}
+	while((rc = xmlTextReaderRead(reader)) > 0) {
+		curnode = xmlTextReaderConstLocalName(reader);
+
+		if(xmlTextReaderNodeType(reader) != XML_READER_TYPE_ELEMENT) {
+			continue;
+		}
+
+		if(!strcmp(curnode, "object")) {
+			if(xmlTextReaderHasAttributes(reader) > 0) {
+				xmlChar* val = xmlTextReaderGetAttribute(reader, "id");
+				if(val) {
+					curname = val;
+				}
+			}
+		}
+		if(curname != NULL && !strcmp(curnode, "property")) {
+			if(xmlTextReaderHasAttributes(reader) > 0) {
+				xmlChar *trans = xmlTextReaderGetAttribute(reader, "translatable");
+				xmlChar *prop = xmlTextReaderGetAttribute(reader, "name");
+				const xmlChar *label;
+				xmlTextReaderRead(reader);
+				label = xmlTextReaderConstValue(reader);
+				if(trans && !strcmp(trans, "yes")) {
+					g_object_set(G_OBJECT(gtk_builder_get_object(builder, curname)), prop, _(label), NULL);
+				}
+			}
+		}
+	}
+}
+
 void translate(GtkMenuItem* item, gpointer target) {
 	enum eid_vwr_langs lang = EID_VWR_LANG_EN;
-	GtkWidget *widget;
 	if(!strncmp(target, "de", 2)) {
 		lang = EID_VWR_LANG_DE;
 	} else if(!strncmp(target, "fr", 2)) {
@@ -205,6 +246,8 @@ void translate(GtkMenuItem* item, gpointer target) {
 	curlang = lang;
 	setlocale(LC_MESSAGES, target);
 
+	retranslate_gtkui();
+#if 0
 	// TODO: it would be more efficient if the below was parsed from the
 	// Glad XML data rather than be re-encoded here...
 #define TSL_LABEL(l, t) { widget = GTK_WIDGET(gtk_builder_get_object(builder, l)); gtk_label_set_text(GTK_LABEL(widget), t); }
@@ -233,6 +276,7 @@ void translate(GtkMenuItem* item, gpointer target) {
 	TSL_LABEL("certusetit", _("Use:"));
 	TSL_LABEL("certtrusttit", _("Trust:"));
 #undef TSL_LABEL
+#endif
 }
 
 GEN_FUNC(file_prefs, "set preferences")
