@@ -177,6 +177,20 @@
 			remoteGlobalIDString = 658054E51A66C9BB000AEFE0;
 			remoteInfo = "eID Middleware";
 		};
+		65ECDDD61ADE6C8C006D3221 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65ECDDD01ADE6C8B006D3221 /* eID-Viewer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 65ECDDB01ADE6C8A006D3221;
+			remoteInfo = "eID-Viewer";
+		};
+		65ECDDD81ADE6C8C006D3221 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65ECDDD01ADE6C8B006D3221 /* eID-Viewer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 65ECDDC01ADE6C8B006D3221;
+			remoteInfo = "eID-ViewerTests";
+		};
 		7FC5353E0F84B84300BA96EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -268,6 +282,7 @@
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
 		6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs11util.cpp; path = cardcomm/pkcs11/src/pkcs11util.cpp; sourceTree = "<group>"; };
 		65CC20ED19A7DE4E0089CD13 /* ordering.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ordering.c; path = tests/unit/ordering.c; sourceTree = "<group>"; };
+		65ECDDD01ADE6C8B006D3221 /* eID-Viewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID-Viewer.xcodeproj"; path = "plugins_tools/eid-viewer/OSX/eID-Viewer/eID-Viewer.xcodeproj"; sourceTree = "<group>"; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -469,6 +484,7 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
+				65ECDDD01ADE6C8B006D3221 /* eID-Viewer.xcodeproj */,
 				658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */,
 				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
 				6536230C19A7E8FE00D46ECB /* testsuite */,
@@ -544,6 +560,15 @@
 			isa = PBXGroup;
 			children = (
 				6580550E1A66C9BE000AEFE0 /* eID Middleware.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65ECDDD11ADE6C8B006D3221 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65ECDDD71ADE6C8C006D3221 /* eID-Viewer.app */,
+				65ECDDD91ADE6C8C006D3221 /* eID-ViewerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -959,6 +984,10 @@
 					ProjectRef = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
 				},
 				{
+					ProductGroup = 65ECDDD11ADE6C8B006D3221 /* Products */;
+					ProjectRef = 65ECDDD01ADE6C8B006D3221 /* eID-Viewer.xcodeproj */;
+				},
+				{
 					ProductGroup = 869D00BE18D72DCF00A41853 /* Products */;
 					ProjectRef = 869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */;
 				},
@@ -984,6 +1013,20 @@
 			fileType = wrapper.application;
 			path = "eID Middleware.app";
 			remoteRef = 6580550D1A66C9BE000AEFE0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65ECDDD71ADE6C8C006D3221 /* eID-Viewer.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "eID-Viewer.app";
+			remoteRef = 65ECDDD61ADE6C8C006D3221 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65ECDDD91ADE6C8C006D3221 /* eID-ViewerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "eID-ViewerTests.xctest";
+			remoteRef = 65ECDDD81ADE6C8C006D3221 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		869D00C218D72DD000A41853 /* plistMerger */ = {

@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		65ECDDB61ADE6C8A006D3221 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECDDB51ADE6C8A006D3221 /* AppDelegate.swift */; };
+		65ECDDB81ADE6C8A006D3221 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65ECDDB71ADE6C8A006D3221 /* Images.xcassets */; };
+		65ECDDBB1ADE6C8B006D3221 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65ECDDB91ADE6C8B006D3221 /* MainMenu.xib */; };
+		65ECDDC71ADE6C8B006D3221 /* eID_ViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECDDC61ADE6C8B006D3221 /* eID_ViewerTests.swift */; };
+		65ECDDDD1ADE6DB3006D3221 /* libbeidpkcs11.4.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ECDDDC1ADE6DB3006D3221 /* libbeidpkcs11.4.1.3.dylib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		65ECDDC11ADE6C8B006D3221 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65ECDDA81ADE6C8A006D3221 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65ECDDAF1ADE6C8A006D3221;
+			remoteInfo = "eID-Viewer";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		65D26B601ADE9FD30042927C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		65D26B611ADE9FD80042927C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		65D26B621ADE9FDC0042927C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		65ECDDB01ADE6C8A006D3221 /* eID-Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID-Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65ECDDB41ADE6C8A006D3221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65ECDDB51ADE6C8A006D3221 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		65ECDDB71ADE6C8A006D3221 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		65ECDDBA1ADE6C8B006D3221 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		65ECDDC01ADE6C8B006D3221 /* eID-ViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "eID-ViewerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65ECDDC51ADE6C8B006D3221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65ECDDC61ADE6C8B006D3221 /* eID_ViewerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eID_ViewerTests.swift; sourceTree = "<group>"; };
+		65ECDDDC1ADE6DB3006D3221 /* libbeidpkcs11.4.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.3.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.3.dylib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		65ECDDAD1ADE6C8A006D3221 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65ECDDDD1ADE6DB3006D3221 /* libbeidpkcs11.4.1.3.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65ECDDBD1ADE6C8B006D3221 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		65ECDDA71ADE6C8A006D3221 = {
+			isa = PBXGroup;
+			children = (
+				65ECDDDC1ADE6DB3006D3221 /* libbeidpkcs11.4.1.3.dylib */,
+				65ECDDB21ADE6C8A006D3221 /* eID-Viewer */,
+				65ECDDC31ADE6C8B006D3221 /* eID-ViewerTests */,
+				65ECDDB11ADE6C8A006D3221 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		65ECDDB11ADE6C8A006D3221 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65ECDDB01ADE6C8A006D3221 /* eID-Viewer.app */,
+				65ECDDC01ADE6C8B006D3221 /* eID-ViewerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65ECDDB21ADE6C8A006D3221 /* eID-Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				65ECDDB51ADE6C8A006D3221 /* AppDelegate.swift */,
+				65ECDDB71ADE6C8A006D3221 /* Images.xcassets */,
+				65ECDDB91ADE6C8B006D3221 /* MainMenu.xib */,
+				65ECDDB31ADE6C8A006D3221 /* Supporting Files */,
+			);
+			path = "eID-Viewer";
+			sourceTree = "<group>";
+		};
+		65ECDDB31ADE6C8A006D3221 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				65ECDDB41ADE6C8A006D3221 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		65ECDDC31ADE6C8B006D3221 /* eID-ViewerTests */ = {
+			isa = PBXGroup;
+			children = (
+				65ECDDC61ADE6C8B006D3221 /* eID_ViewerTests.swift */,
+				65ECDDC41ADE6C8B006D3221 /* Supporting Files */,
+			);
+			path = "eID-ViewerTests";
+			sourceTree = "<group>";
+		};
+		65ECDDC41ADE6C8B006D3221 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				65ECDDC51ADE6C8B006D3221 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		65ECDDAF1ADE6C8A006D3221 /* eID-Viewer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65ECDDCA1ADE6C8B006D3221 /* Build configuration list for PBXNativeTarget "eID-Viewer" */;
+			buildPhases = (
+				65ECDDAC1ADE6C8A006D3221 /* Sources */,
+				65ECDDAD1ADE6C8A006D3221 /* Frameworks */,
+				65ECDDAE1ADE6C8A006D3221 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "eID-Viewer";
+			productName = "eID-Viewer";
+			productReference = 65ECDDB01ADE6C8A006D3221 /* eID-Viewer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		65ECDDBF1ADE6C8B006D3221 /* eID-ViewerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65ECDDCD1ADE6C8B006D3221 /* Build configuration list for PBXNativeTarget "eID-ViewerTests" */;
+			buildPhases = (
+				65ECDDBC1ADE6C8B006D3221 /* Sources */,
+				65ECDDBD1ADE6C8B006D3221 /* Frameworks */,
+				65ECDDBE1ADE6C8B006D3221 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65ECDDC21ADE6C8B006D3221 /* PBXTargetDependency */,
+			);
+			name = "eID-ViewerTests";
+			productName = "eID-ViewerTests";
+			productReference = 65ECDDC01ADE6C8B006D3221 /* eID-ViewerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		65ECDDA81ADE6C8A006D3221 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = Fedict;
+				TargetAttributes = {
+					65ECDDAF1ADE6C8A006D3221 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					65ECDDBF1ADE6C8B006D3221 = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 65ECDDAF1ADE6C8A006D3221;
+					};
+				};
+			};
+			buildConfigurationList = 65ECDDAB1ADE6C8A006D3221 /* Build configuration list for PBXProject "eID-Viewer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 65ECDDA71ADE6C8A006D3221;
+			productRefGroup = 65ECDDB11ADE6C8A006D3221 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				65ECDDAF1ADE6C8A006D3221 /* eID-Viewer */,
+				65ECDDBF1ADE6C8B006D3221 /* eID-ViewerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		65ECDDAE1ADE6C8A006D3221 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65ECDDB81ADE6C8A006D3221 /* Images.xcassets in Resources */,
+				65ECDDBB1ADE6C8B006D3221 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65ECDDBE1ADE6C8B006D3221 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		65ECDDAC1ADE6C8A006D3221 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65ECDDB61ADE6C8A006D3221 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65ECDDBC1ADE6C8B006D3221 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65ECDDC71ADE6C8B006D3221 /* eID_ViewerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		65ECDDC21ADE6C8B006D3221 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65ECDDAF1ADE6C8A006D3221 /* eID-Viewer */;
+			targetProxy = 65ECDDC11ADE6C8B006D3221 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		65ECDDB91ADE6C8B006D3221 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65ECDDBA1ADE6C8B006D3221 /* Base */,
+				65D26B601ADE9FD30042927C /* nl */,
+				65D26B611ADE9FD80042927C /* fr */,
+				65D26B621ADE9FDC0042927C /* de */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		65ECDDC81ADE6C8B006D3221 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		65ECDDC91ADE6C8B006D3221 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		65ECDDCB1ADE6C8B006D3221 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "eID-Viewer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/buildslave/Documents/eid-mw/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		65ECDDCC1ADE6C8B006D3221 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "eID-Viewer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/buildslave/Documents/eid-mw/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		65ECDDCE1ADE6C8B006D3221 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "eID-ViewerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eID-Viewer.app/Contents/MacOS/eID-Viewer";
+			};
+			name = Debug;
+		};
+		65ECDDCF1ADE6C8B006D3221 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "eID-ViewerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eID-Viewer.app/Contents/MacOS/eID-Viewer";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		65ECDDAB1ADE6C8A006D3221 /* Build configuration list for PBXProject "eID-Viewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65ECDDC81ADE6C8B006D3221 /* Debug */,
+				65ECDDC91ADE6C8B006D3221 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65ECDDCA1ADE6C8B006D3221 /* Build configuration list for PBXNativeTarget "eID-Viewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65ECDDCB1ADE6C8B006D3221 /* Debug */,
+				65ECDDCC1ADE6C8B006D3221 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65ECDDCD1ADE6C8B006D3221 /* Build configuration list for PBXNativeTarget "eID-ViewerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65ECDDCE1ADE6C8B006D3221 /* Debug */,
+				65ECDDCF1ADE6C8B006D3221 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 65ECDDA81ADE6C8A006D3221 /* Project object */;
+}
