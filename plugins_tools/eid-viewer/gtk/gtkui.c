@@ -195,7 +195,7 @@ enum eid_vwr_langs get_curlang() {
 }
 
 static void retranslate_gtkui() {
-	xmlTextReaderPtr reader = xmlReaderForMemory(VIEWER_GLADE_STRING, strlen(VIEWER_GLADE_STRING), "", NULL, 0);
+	xmlTextReaderPtr reader = xmlReaderForMemory(VIEWER_GLADE_STRING, sizeof(VIEWER_GLADE_STRING)-1, "", NULL, 0);
 	const xmlChar *curnode = NULL, *curname = NULL;
 	int rc;
 
