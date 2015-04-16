@@ -159,15 +159,15 @@
         </menu>
         <window title="eID-Viewer" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="689" height="471"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" topStrut="YES"/>
+            <rect key="contentRect" x="70" y="470" width="690" height="470"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="1001"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="689" height="471"/>
+                <rect key="frame" x="0.0" y="0.0" width="690" height="470"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <tabView allowsTruncatedLabels="NO" initialItem="2qK-Eh-lWj" translatesAutoresizingMaskIntoConstraints="NO" id="rK2-AU-RVe">
-                        <rect key="frame" x="13" y="10" width="663" height="455"/>
+                    <tabView misplaced="YES" allowsTruncatedLabels="NO" initialItem="2qK-Eh-lWj" translatesAutoresizingMaskIntoConstraints="NO" id="rK2-AU-RVe">
+                        <rect key="frame" x="13" y="9" width="663" height="455"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Identity" identifier="1" id="2qK-Eh-lWj">
