@@ -53,6 +53,8 @@ int eid_vwr_p11_open_session(void* slot_) {
 	slot = *(CK_SLOT_ID_PTR)slot_;
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
+	be_newsource(EID_VWR_SRC_CARD);
+
 	return 0;
 }
 

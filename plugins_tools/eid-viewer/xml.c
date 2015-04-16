@@ -189,6 +189,8 @@ int eid_vwr_deserialize(void* data) {
 		return -1;
 	}
 
+	be_newsource(EID_VWR_SRC_FILE);
+
 	check_xml(xmlTextReaderSchemaValidate(reader, DATAROOTDIR "/" PACKAGE_NAME "/eidv4.xsd"));
 	check_xml(read_elements(reader, toplevel));
 out:
