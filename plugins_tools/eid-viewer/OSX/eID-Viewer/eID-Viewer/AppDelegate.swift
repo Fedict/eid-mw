@@ -10,8 +10,6 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, eIDOSLayerUI {
-
-    @IBOutlet weak var pinops: NSSegmentedControl!
     @IBOutlet weak var window: NSWindow!
 
     @IBAction func do_pinop(sender: AnyObject) {
