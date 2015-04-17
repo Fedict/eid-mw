@@ -11,8 +11,19 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    @IBOutlet weak var pinops: NSSegmentedControl!
     @IBOutlet weak var window: NSWindow!
 
+    @IBAction func do_pinop(sender: AnyObject) {
+        var alert = NSAlert()
+        alert.messageText = "Not yet implemented"
+        alert.runModal()
+    }
+    @IBAction func open_file(sender: AnyObject) {
+        var alert = NSAlert()
+        alert.messageText = "Not yet implemented"
+        alert.runModal()
+    }
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application

@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="eID_Viewer" customModuleProvider="target">
             <connections>
+                <outlet property="pinops" destination="TXl-22-iLS" id="nGl-il-zwH"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -67,7 +68,7 @@
                         <items>
                             <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
                                 <connections>
-                                    <action selector="openDocument:" target="-1" id="bVn-NM-KNZ"/>
+                                    <action selector="open_file:" target="Voe-Tx-rLC" id="w7G-Vc-Ehx"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Open Recent" id="tXI-mr-wws">
@@ -92,11 +93,6 @@
                             <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="teZ-XB-qJY"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
-                                <connections>
-                                    <action selector="saveDocumentAs:" target="-1" id="mDf-zr-I0C"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
@@ -172,7 +168,7 @@
                         <tabViewItems>
                             <tabViewItem label="Identity" identifier="1" id="2qK-Eh-lWj">
                                 <view key="view" id="58O-PR-pM3">
-                                    <rect key="frame" x="10" y="33" width="643" height="409"/>
+                                    <rect key="frame" x="10" y="33" width="644" height="408"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="a2n-sN-Bp1">
@@ -575,6 +571,9 @@
                                                     <segment label="Change PIN" tag="1"/>
                                                 </segments>
                                             </segmentedCell>
+                                            <connections>
+                                                <action selector="do_pinop:" target="Voe-Tx-rLC" id="Mb6-hG-A1z"/>
+                                            </connections>
                                         </segmentedControl>
                                     </subviews>
                                     <constraints>

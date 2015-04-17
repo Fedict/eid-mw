@@ -2,7 +2,15 @@
 #include "backend.h"
 
 #include "xmlmap.h"
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#else
+/* XXX need to make this map to the proper DATAROOTDIR`
+   somehow (which will depend on installed location)
+ */
+#define DATAROOTDIR "."
+#define PACKAGE_NAME "eid-viewer"
+#endif
 
 #include <string.h>
 
