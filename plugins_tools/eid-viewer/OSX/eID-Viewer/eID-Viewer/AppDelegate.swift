@@ -9,7 +9,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, eIDOSLayerUI {
 
     @IBOutlet weak var pinops: NSSegmentedControl!
     @IBOutlet weak var window: NSWindow!
@@ -24,6 +24,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         alert.messageText = "Not yet implemented"
         alert.runModal()
     }
+    
+    func log(line: String!, withLevel level: eIDLogLevel) {
+        var alert = NSAlert()
+        alert.messageText = "Not yet implemented"
+        alert.runModal()
+    }
+    
+    func newsrc(which: eIDSource) {
+    }
+    func newbindata(data: NSData!, withLabel label: String!) {
+    }
+    func newstate(state: eIDState) {
+    }
+    func newstringdata(data: String!, withLabel label: String!) {
+    }
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
@@ -32,7 +47,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
-
-
 }
-

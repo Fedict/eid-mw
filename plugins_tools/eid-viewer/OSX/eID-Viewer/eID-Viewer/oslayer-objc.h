@@ -37,8 +37,8 @@ typedef NS_ENUM(NSInteger, eIDState) {
     eIDStateCardInvalid = STATE_CARD_INVALID,
 };
 
-// Abstract class for implementing a UI. Subclass this, and do something useful in the methods.
-@interface eIDOsLayerUI : NSObject
+// Protocol for implementing a UI.
+@protocol eIDOSLayerUI
 -(void)newsrc:(eIDSource)which;
 -(void)newstringdata:(NSString*)data withLabel:(NSString*)label;
 -(void)newbindata:(NSData*)data withLabel:(NSString*)label;
@@ -51,7 +51,7 @@ typedef NS_ENUM(NSInteger, eIDState) {
 // the getPreview method)
 @interface eIDOSLayerBackend : NSObject
 +(NSInteger)pinop:(eIDPinOp)which;
-+(NSInteger)setUi:(eIDOsLayerUI*)ui;
++(NSInteger)setUi:(id<eIDOSLayerUI>)ui;
 +(NSImage*)getPreview:(NSURL*)from;
 +(void)poll;
 +(void)mainloop; // does not return

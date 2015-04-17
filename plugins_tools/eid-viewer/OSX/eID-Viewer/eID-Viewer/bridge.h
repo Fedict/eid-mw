@@ -9,5 +9,6 @@
 #ifndef eID_Viewer_bridge_h
 #define eID_Viewer_bridge_h
 
+#import "oslayer-objc.h"
 
 #endif
