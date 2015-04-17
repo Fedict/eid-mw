@@ -381,7 +381,6 @@ int main(int argc, char** argv) {
 	connect_signals(window);
 	setup_treeview();
 
-	sm_init();
 	certs_init();
 
 	cb = eid_vwr_cbstruct();

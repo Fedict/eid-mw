@@ -35,7 +35,6 @@ static void osl_objc_newstate(enum eid_vwr_states state) {
     cb->newstate = osl_objc_newstate;
     cb->newstringdata = osl_objc_newstringdata;
     currUi = ui;
-    sm_init();
     return eid_vwr_createcallbacks(cb);
 }
 +(NSImage*)getPreview:(NSURL *)from {
