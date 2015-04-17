@@ -1,4 +1,5 @@
 #import "oslayer-objc.h"
+#include <state.h>
 
 static id <eIDOSLayerUI>currUi = NULL;
 
@@ -26,7 +27,7 @@ static void osl_objc_newstate(enum eid_vwr_states state) {
 +(NSInteger)pinop:(eIDPinOp)which {
     return (NSInteger)eid_vwr_pinop((enum eid_vwr_pinops)which);
 }
-+(NSInteger)setUi:(NSObject *)ui {
++(NSInteger)setUi:(id<eIDOSLayerUI>)ui {
     struct eid_vwr_ui_callbacks *cb = eid_vwr_cbstruct();
     cb->log = osl_objc_log;
     cb->newbindata = osl_objc_newbindata;
@@ -34,6 +35,7 @@ static void osl_objc_newstate(enum eid_vwr_states state) {
     cb->newstate = osl_objc_newstate;
     cb->newstringdata = osl_objc_newstringdata;
     currUi = ui;
+    sm_init();
     return eid_vwr_createcallbacks(cb);
 }
 +(NSImage*)getPreview:(NSURL *)from {
