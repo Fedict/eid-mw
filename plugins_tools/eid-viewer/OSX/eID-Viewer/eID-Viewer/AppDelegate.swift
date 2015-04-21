@@ -36,6 +36,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, eIDOSLayerUI {
     func newstate(state: eIDState) {
     }
     func newstringdata(data: String!, withLabel label: String!) {
+        var aView : NSView
+        for aView in window.contentView.subviews {
+            if (aView.identifier.isEqualToString(label) && aView.type == "NSTextView") {
+                var tv : NSTextView = aView as! NSTextView
+                tv.setValue(data)
+                return
+            }
+        }
     }
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
@@ -44,5 +52,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, eIDOSLayerUI {
 
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
+    }
+    
+    override func awakeFromNib() {
+        eIDOSLayerBackend.setUi(self)
+        eIDOSLayerBackend.mainloop_thread()
     }
 }
