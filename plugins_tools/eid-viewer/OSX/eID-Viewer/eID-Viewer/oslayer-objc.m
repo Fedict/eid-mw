@@ -1,5 +1,6 @@
 #import "oslayer-objc.h"
 #include <state.h>
+#include <pthread.h>
 
 static id <eIDOSLayerUI>currUi = NULL;
 
@@ -21,6 +22,12 @@ static void osl_objc_log(enum eid_vwr_loglevel level, const char* line, va_list 
 
 static void osl_objc_newstate(enum eid_vwr_states state) {
     [currUi newstate:(eIDState)state];
+}
+
+static void* threadmain(void* val) {
+    eid_vwr_be_mainloop();
+    
+    assert(1 == 0); // we shouldn't ever get here...
 }
 
 @implementation eIDOSLayerBackend
@@ -54,5 +61,10 @@ static void osl_objc_newstate(enum eid_vwr_states state) {
 }
 +(void)poll {
     eid_vwr_poll();
+}
++(void)mainloop_thread {
+    pthread_t thread;
+    pthread_create(&thread, NULL, threadmain, NULL);
+    pthread_detach(thread);
 }
 @end

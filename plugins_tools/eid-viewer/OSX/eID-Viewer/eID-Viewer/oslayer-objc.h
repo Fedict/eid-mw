@@ -55,4 +55,5 @@ typedef NS_ENUM(NSInteger, eIDState) {
 +(NSImage*)getPreview:(NSURL*)from;
 +(void)poll;
 +(void)mainloop; // does not return
++(void)mainloop_thread;
 @end
