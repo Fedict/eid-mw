@@ -15,10 +15,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, eIDOSLayerUI {
     @IBOutlet weak var logLevel: NSPopUpButton!
 
     @IBAction func do_pinop(sender: AnyObject) {
-        var alert = NSAlert()
-        alert.messageText = "Pin operations not yet implemented"
-        alert.runModal()
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            var alert = NSAlert()
+            alert.messageText = "Pin operations not yet implemented"
+            alert.runModal()
+        }
     }
+
     @IBAction func open_file(sender: AnyObject) {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
             var alert = NSAlert()
