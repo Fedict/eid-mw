@@ -67,4 +67,10 @@ static void* threadmain(void* val) {
     pthread_create(&thread, NULL, threadmain, NULL);
     pthread_detach(thread);
 }
++(void)deserialize:(NSURL*)from {
+    eid_vwr_be_deserialize(from.fileSystemRepresentation);
+}
++(void)serialize:(NSURL*)target {
+    eid_vwr_be_serialize(target.fileSystemRepresentation);
+}
 @end

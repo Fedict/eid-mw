@@ -56,4 +56,6 @@ typedef NS_ENUM(NSInteger, eIDState) {
 +(void)poll;
 +(void)mainloop; // does not return
 +(void)mainloop_thread;
++(void)deserialize:(NSURL*)from;
++(void)serialize:(NSURL*)to;
 @end

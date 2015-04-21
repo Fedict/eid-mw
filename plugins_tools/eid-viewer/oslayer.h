@@ -62,5 +62,7 @@ struct eid_vwr_preview* eid_vwr_get_preview(char* filename);
 
 void eid_vwr_poll();
 void eid_vwr_be_mainloop();
+void eid_vwr_be_serialize(const char* target_file);
+void eid_vwr_be_deserialize(const char* source_file);
 
 #endif

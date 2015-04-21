@@ -2,6 +2,7 @@
 #include <state.h>
 #include <p11.h>
 #include <unistd.h>
+#include <string.h>
 
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	sm_init();
@@ -24,4 +25,14 @@ void eid_vwr_poll() {
 	} else {
 		sm_handle_event(EVENT_TOKEN_REMOVED, tmp, free, NULL);
 	}
+}
+
+void eid_vwr_be_serialize(const char* target_file) {
+    char* copy = strdup(target_file);
+    sm_handle_event(EVENT_SERIALIZE, copy, free, NULL);
+}
+
+void eid_vwr_be_deserialize(const char* source_file) {
+    char* copy = strdup(source_file);
+    sm_handle_event(EVENT_OPEN_FILE, copy, free, NULL);
 }
