@@ -13,21 +13,35 @@ class AppDelegate: NSObject, NSApplicationDelegate, eIDOSLayerUI {
     @IBOutlet weak var window: NSWindow!
     @IBOutlet var logItem: NSTextView!
     @IBOutlet weak var logLevel: NSPopUpButton!
+    @IBOutlet weak var pinopControls: NSSegmentedControl!
+    @IBOutlet weak var IdentityTab: NSView!
+    @IBOutlet weak var CardPinTab: NSView!
+    @IBOutlet weak var CertificatesTab: NSView!
 
     @IBAction func do_pinop(sender: AnyObject) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            var alert = NSAlert()
-            alert.messageText = "Pin operations not yet implemented"
-            alert.runModal()
+        var send : NSSegmentedControl = sender as! NSSegmentedControl
+        var alert = NSAlert()
+        var sel = send.selectedSegment
+        var which : eIDPinOp
+        switch(sel) {
+        case 0:
+            which = eIDPinOp.Test
+        case 1:
+            which = eIDPinOp.Change
+        default:
+            return // we shouldn't get here
         }
+        eIDOSLayerBackend.pinop(which)
     }
 
     @IBAction func open_file(sender: AnyObject) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            var alert = NSAlert()
-            alert.messageText = "Opening files not yet implemented"
-            alert.runModal()
-        }
+        var panel = NSOpenPanel()
+        
+        panel.beginWithCompletionHandler( { (Int result) -> Void in
+            if(result == NSFileHandlingPanelOKButton) {
+                eIDOSLayerBackend.deserialize(panel.URLs[0] as! NSURL)
+            }
+        })
     }
     
     func log(line: String!, withLevel level: eIDLogLevel) {
@@ -56,13 +70,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, eIDOSLayerUI {
     }
     func newstate(state: eIDState) {
     }
+    func searchView(from: AnyObject, name: String) -> AnyObject? {
+        var fromId : NSUserInterfaceItemIdentification? = from as? NSUserInterfaceItemIdentification
+        if (fromId == nil) {
+            return nil
+        }
+        if (fromId?.identifier == name) {
+            return from
+        }
+        for aView in from.subviews {
+            var retval: AnyObject? = searchView(aView as! NSView, name: name)
+            if(retval != nil) {
+                return retval
+            }
+        }
+        return nil
+    }
     func newstringdata(data: String!, withLabel label: String!) {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
-            var aView : NSView
-            for aView in self.window.contentView.subviews {
-                if (aView.identifier.isEqualToString(label) && aView.type == "NSTextView") {
-                    var tv : NSTextView = aView as! NSTextView
-                    tv.setValue(data)
+            for tab in [self.IdentityTab, self.CardPinTab, self.CertificatesTab] {
+                var aView = self.searchView(tab, name: label) as? NSTextField
+                aView?.stringValue = data
+                if(aView != nil) {
                     return
                 }
             }
