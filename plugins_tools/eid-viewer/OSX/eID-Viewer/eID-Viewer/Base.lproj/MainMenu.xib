@@ -13,6 +13,8 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="eID_Viewer" customModuleProvider="target">
             <connections>
+                <outlet property="logItem" destination="dnt-HR-7L4" id="heh-VP-fiu"/>
+                <outlet property="logLevel" destination="syA-1x-Og3" id="sOL-gy-4rU"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -844,7 +846,7 @@
                                     <rect key="frame" x="10" y="33" width="643" height="409"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mj8-sQ-buS">
+                                        <segmentedControl verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mj8-sQ-buS">
                                             <rect key="frame" x="376" y="18" width="249" height="24"/>
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="Hd7-B7-6lk">
                                                 <font key="font" metaFont="system"/>
@@ -854,9 +856,9 @@
                                                 </segments>
                                             </segmentedCell>
                                         </segmentedControl>
-                                        <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avl-fy-Nfs">
+                                        <scrollView misplaced="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avl-fy-Nfs">
                                             <rect key="frame" x="20" y="61" width="603" height="328"/>
-                                            <clipView key="contentView" id="3Zi-p9-9Rn">
+                                            <clipView key="contentView" misplaced="YES" id="3Zi-p9-9Rn">
                                                 <rect key="frame" x="1" y="1" width="223" height="133"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
