@@ -43,11 +43,11 @@ mkdir %MDRVINSTALLPATH%\Release
 copy %MDRVINSTALLPATH%\beidmdrv.inf %MDRVINSTALLPATH%\Release
 
 :: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-copy %~dp0..\..\cardcomm\VS_2012\Binaries\Win32_Release\beidmdrv.dll %MDRVINSTALLPATH%\Release\beidmdrv32.dll
+copy %~dp0..\..\cardcomm\VS_2012\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\Release\beidmdrv32.dll
 copy %~dp0..\..\cardcomm\VS_2012\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\Release\beidmdrv64.dll
 
 :: copy icon
-copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\Release\
+:: copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\Release\
 
 :: @echo [INFO] Creating cat file
 :: Create catalog
