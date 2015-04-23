@@ -20,7 +20,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, eIDOSLayerUI {
 
     @IBAction func do_pinop(sender: AnyObject) {
         var send : NSSegmentedControl = sender as! NSSegmentedControl
-        var alert = NSAlert()
         var sel = send.selectedSegment
         var which : eIDPinOp
         switch(sel) {
