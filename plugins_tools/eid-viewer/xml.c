@@ -2,15 +2,7 @@
 #include "backend.h"
 
 #include "xmlmap.h"
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#else
-/* XXX need to make this map to the proper DATAROOTDIR`
-   somehow (which will depend on installed location)
- */
-#define DATAROOTDIR "."
-#define PACKAGE_NAME "eid-viewer"
-#endif
+#include "xsdloc.h"
 
 #include <string.h>
 
@@ -199,7 +191,7 @@ int eid_vwr_deserialize(void* data) {
 
 	be_newsource(EID_VWR_SRC_FILE);
 
-	check_xml(xmlTextReaderSchemaValidate(reader, DATAROOTDIR "/" PACKAGE_NAME "/eidv4.xsd"));
+	check_xml(xmlTextReaderSchemaValidate(reader, get_xsdloc()));
 	check_xml(read_elements(reader, toplevel));
 out:
 	if(rc) {
@@ -230,7 +222,7 @@ struct eid_vwr_preview* eid_vwr_get_preview(char* filename) {
 	if(!reader) {
 		return p;
 	}
-	check_xml(xmlTextReaderSchemaValidate(reader, DATAROOTDIR "/" PACKAGE_NAME "/eidv4.xsd"));
+	check_xml(xmlTextReaderSchemaValidate(reader, get_xsdloc()));
 	while((rc = xmlTextReaderRead(reader)) > 0) {
 		const xmlChar *curnode = xmlTextReaderConstLocalName(reader);
 		if(!strcmp(curnode, "photo")) {
