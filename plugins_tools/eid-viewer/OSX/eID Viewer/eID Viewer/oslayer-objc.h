@@ -37,6 +37,13 @@ typedef NS_ENUM(NSInteger, eIDState) {
     eIDStateCardInvalid = STATE_CARD_INVALID,
 };
 
+typedef NS_ENUM(NSInteger, eIDLanguage) {
+    eIDLanguageDe = EID_VWR_LANG_DE,
+    eIDLanguageEn = EID_VWR_LANG_EN,
+    eIDLanguageFr = EID_VWR_LANG_FR,
+    eIDLanguageNl = EID_VWR_LANG_NL,
+};
+
 // Protocol for implementing a UI.
 @protocol eIDOSLayerUI
 -(void)newsrc:(eIDSource)which;
@@ -53,6 +60,7 @@ typedef NS_ENUM(NSInteger, eIDState) {
 +(NSInteger)pinop:(eIDPinOp)which;
 +(NSInteger)setUi:(id<eIDOSLayerUI>)ui;
 +(NSImage*)getPreview:(NSURL*)from;
++(void)setLang:(eIDLanguage)language;
 +(void)poll;
 +(void)mainloop; // does not return
 +(void)mainloop_thread;

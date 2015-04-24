@@ -73,4 +73,8 @@ static void* threadmain(void* val) {
 +(void)serialize:(NSURL*)target {
     eid_vwr_be_serialize(target.fileSystemRepresentation);
 }
++(void)setLang:(eIDLanguage)language {
+    enum eid_vwr_langs l = (enum eid_vwr_langs) language;
+    convert_set_lang(l);
+}
 @end
