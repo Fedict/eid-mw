@@ -212,7 +212,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winscard.lib;Rpcrt4.lib;Crypt32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)D.dll</OutputFile>
+      <OutputFile>..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)32D.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -386,7 +386,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winscard.lib;Rpcrt4.lib;Crypt32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName).dll</OutputFile>
+      <OutputFile>..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)32.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
