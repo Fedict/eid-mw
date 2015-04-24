@@ -11,6 +11,7 @@
 @interface AppDelegate ()
 - (IBAction)file_open:(id)sender;
 - (IBAction)do_pinop:(NSSegmentedControl *)sender;
+- (IBAction)setLanguage:(NSMenuItem *)sender;
 
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSView *IdentityTab;
@@ -105,6 +106,30 @@
 }
 - (void)awakeFromNib {
     [eIDOSLayerBackend setUi:self];
+    // TODO: make the below depend on the system-configured language
+    [eIDOSLayerBackend setLang:eIDLanguageNl];
     [eIDOSLayerBackend mainloop_thread];
+}
+- (void)setLanguage:(NSMenuItem *)sender {
+    NSString* keyeq = sender.keyEquivalent;
+    if([keyeq isEqualToString:@"d"]) {
+        [eIDOSLayerBackend setLang:eIDLanguageDe];
+        return;
+    }
+    if([keyeq isEqualToString:@"e"]) {
+        [eIDOSLayerBackend setLang:eIDLanguageEn];
+        return;
+    }
+    if([keyeq isEqualToString:@"f"]) {
+        [eIDOSLayerBackend setLang:eIDLanguageFr];
+        return;
+    }
+    if([keyeq isEqualToString:@"n"]) {
+        [eIDOSLayerBackend setLang:eIDLanguageEn];
+        return;
+    }
+    NSAlert *alert = [[NSAlert alloc] init];
+    alert.messageText = @"Error: could not determine language";
+    [alert runModal];
 }
 @end
