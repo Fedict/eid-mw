@@ -125,7 +125,7 @@
         return;
     }
     if([keyeq isEqualToString:@"n"]) {
-        [eIDOSLayerBackend setLang:eIDLanguageEn];
+        [eIDOSLayerBackend setLang:eIDLanguageNl];
         return;
     }
     NSAlert *alert = [[NSAlert alloc] init];
