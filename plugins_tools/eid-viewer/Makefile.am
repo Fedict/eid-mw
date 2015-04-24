@@ -83,6 +83,8 @@ eid_viewer_SOURCES = \
 	xml.c \
 	xmlmap.cpp \
 	xmlmap.h \
+	xsdloc.h \
+	xsdloc.c \
 	b64/base64dec.h \
 	b64/base64dec.c
 eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/tests/unit/liblabels.a @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@
