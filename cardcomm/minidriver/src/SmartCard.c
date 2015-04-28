@@ -1073,14 +1073,24 @@ DWORD BeidGetCardSN(PCARD_DATA  pCardData,
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
 
-   if ( ( SW1 != 0x61 ) || ( SW2 != 0x0C ) )
+   if(recvlen >= 18)
    {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Bad status bytes: [0x%02X][0x%02X]", SW1, SW2);
-		CLEANUP(SCARD_E_UNEXPECTED);
+	   if( (( SW1 == 0x90 ) && ( SW2 == 0x00 )) || (( SW1 == 0x61 ) && ( SW2 == 0x0C )) )
+	   {
+		   *pdwSerialNumber = 16;
+		   memcpy(pbSerialNumber, recvbuf, 16);
+	   }
+	   else
+	   {
+		   LogTrace(LOGTYPE_ERROR, WHERE, "Bad status bytes: [0x%02X][0x%02X]", SW1, SW2);
+		   CLEANUP(SCARD_E_UNEXPECTED);
+	   }
    }
-	*pdwSerialNumber = 16;
-	memcpy(pbSerialNumber, recvbuf, 16);
-
+   else
+   {
+	   LogTrace(LOGTYPE_ERROR, WHERE, "Serial number too short, status bytes: [0x%02X][0x%02X]", SW1, SW2);
+	   CLEANUP(SCARD_E_UNEXPECTED);
+   }
 cleanup:
 	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
    return (dwReturn);
@@ -1256,50 +1266,52 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
    }
 	 LogTrace(LOGTYPE_TRACE, WHERE, "ADPU response: [0x%02X][0x%02X]", SW1, SW2);
 	 LogTrace(LOGTYPE_TRACE, WHERE, "recvlen = %d", recvlen, SW2);
-   if (SW1 != 0x61)
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Sign Failed: [0x%02X][0x%02X]", SW1, SW2);
+	 if (SW1 == 0x61)
+	 {
+		 /* Retrieve signature Command */
+		 Cmd [0] = 0x00;
+		 Cmd [1] = 0xC0;   /* PSO: GET RESPONSE COMMAND */
+		 Cmd [2] = 0x00;
+		 Cmd [3] = 0x00;
+		 Cmd [4] = SW2;   /* Length of response */
+		 uiCmdLg = 5;
 
-      if ( SW1 == 0x69 )
-      {
-         CLEANUP(SCARD_W_SECURITY_VIOLATION);
-      }
-      else
-      {
-         CLEANUP(SCARD_E_UNEXPECTED);
-      }
-   }
+		 recvlen = sizeof(recvbuf);
+		 dwReturn = SCardTransmit(pCardData->hScard, 
+			 &ioSendPci, 
+			 Cmd, 
+			 uiCmdLg, 
+			 &ioRecvPci, 
+			 recvbuf, 
+			 &recvlen);
+		 SW1 = recvbuf[recvlen-2];
+		 SW2 = recvbuf[recvlen-1];
+		 LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
+		 BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
+		 if ( dwReturn != SCARD_S_SUCCESS )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (Get Response) errorcode: [0x%08X]", dwReturn);
+			 CLEANUP(dwReturn);
+		 }
+		 if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
+		 {
+			 LogTrace(LOGTYPE_ERROR, WHERE, "Get Response Failed: [0x%02X][0x%02X]", SW1, SW2);
+			 CLEANUP(SCARD_E_UNEXPECTED);
+		 }
+	 }//end of get response handling
+	 else if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
+	 {
+		 LogTrace(LOGTYPE_ERROR, WHERE, "Sign Failed: [0x%02X][0x%02X]", SW1, SW2);
 
-   /* Retrieve signature Command */
-   Cmd [0] = 0x00;
-   Cmd [1] = 0xC0;   /* PSO: GET RESPONSE COMMAND */
-   Cmd [2] = 0x00;
-   Cmd [3] = 0x00;
-   Cmd [4] = SW2;   /* Length of response */
-   uiCmdLg = 5;
-
-   recvlen = sizeof(recvbuf);
-   dwReturn = SCardTransmit(pCardData->hScard, 
-                            &ioSendPci, 
-                            Cmd, 
-                            uiCmdLg, 
-                            &ioRecvPci, 
-                            recvbuf, 
-                            &recvlen);
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
-   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
-   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
-   if ( dwReturn != SCARD_S_SUCCESS )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (Get Response) errorcode: [0x%08X]", dwReturn);
-      CLEANUP(dwReturn);
-   }
-   if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Get Response Failed: [0x%02X][0x%02X]", SW1, SW2);
-      CLEANUP(SCARD_E_UNEXPECTED);
-   }
+		 if ( SW1 == 0x69 )
+		 {
+			 CLEANUP(SCARD_W_SECURITY_VIOLATION);
+		 }
+		 else
+		 {
+			 CLEANUP(SCARD_E_UNEXPECTED);
+		 }
+	 }
 
 	 if( (recvlen - 2) == 0x80 )
 	 {
@@ -1327,6 +1339,7 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
    {
       (*ppbSignature)[i] = recvbuf[*pcbSignature - i - 1];
    }
+
 
 cleanup:
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
