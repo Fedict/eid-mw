@@ -19,6 +19,7 @@
                 <outlet property="IdentityTab" destination="8cq-xu-vLE" id="UUh-5o-1f7"/>
                 <outlet property="logItem" destination="I3G-tI-1MG" id="Lw3-P0-gIi"/>
                 <outlet property="logLevel" destination="2Iq-Qb-1J7" id="zdf-dd-Roe"/>
+                <outlet property="photoview" destination="xjA-5d-ByW" id="8wT-9a-gCB"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -417,7 +418,7 @@
                                                 <constraint firstAttribute="height" constant="200" id="Vnk-fA-zBa"/>
                                                 <constraint firstAttribute="width" constant="140" id="eue-Ju-3wN"/>
                                             </constraints>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="jkX-rh-1JG"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="jkX-rh-1JG"/>
                                         </imageView>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LS2-EH-nXE">
                                             <rect key="frame" x="166" y="179" width="110" height="17"/>

@@ -21,6 +21,7 @@
 @property (weak) IBOutlet NSView *CertificatesTab;
 @property (unsafe_unretained) IBOutlet NSTextView *logItem;
 @property (weak) IBOutlet NSPopUpButton *logLevel;
+@property (weak) IBOutlet NSImageView *photoview;
 @end
 
 @implementation AppDelegate
@@ -76,7 +77,12 @@
     
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
-    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if([label isEqualToString:@"PHOTO_FILE"]) {
+            NSImage* img = [[NSImage alloc] initWithData:data];
+            [_photoview setImage:img];
+        }
+    }];
 }
 - (void)newstate:(eIDState)state {
     
