@@ -18,6 +18,7 @@
 @property (weak) IBOutlet NSView *CardPinTab;
 @property (weak) IBOutlet NSView *CertificatesTab;
 @property (unsafe_unretained) IBOutlet NSTextView *logItem;
+@property (weak) IBOutlet NSPopUpButton *logLevel;
 @end
 
 @implementation AppDelegate
@@ -25,6 +26,9 @@
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         char l;
         NSAlert* alert;
+        if([self.logLevel indexOfSelectedItem] > level) {
+            return;
+        }
         switch(level) {
             case eIDLogLevelDetail:
                 l='D';

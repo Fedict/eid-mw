@@ -18,6 +18,7 @@
                 <outlet property="CertificatesTab" destination="TnE-Be-ndr" id="1th-gT-Pm9"/>
                 <outlet property="IdentityTab" destination="8cq-xu-vLE" id="UUh-5o-1f7"/>
                 <outlet property="logItem" destination="I3G-tI-1MG" id="Lw3-P0-gIi"/>
+                <outlet property="logLevel" destination="2Iq-Qb-1J7" id="zdf-dd-Roe"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -209,14 +210,6 @@
                                         <textField identifier="document_type" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5j0-eh-0XV" userLabel="document_type">
                                             <rect key="frame" x="214" y="338" width="14" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" placeholderString="-" id="VYw-86-rmN">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LS2-EH-nXE">
-                                            <rect key="frame" x="166" y="179" width="110" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="National number:" id="Lut-kf-HNc">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -426,6 +419,14 @@
                                             </constraints>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="jkX-rh-1JG"/>
                                         </imageView>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LS2-EH-nXE">
+                                            <rect key="frame" x="166" y="179" width="110" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="National number:" id="Lut-kf-HNc">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="xjA-5d-ByW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8cq-xu-vLE" secondAttribute="leading" constant="20" symbolic="YES" id="0Xb-AP-acn"/>
@@ -530,11 +531,11 @@
                             </tabViewItem>
                             <tabViewItem label="Card/PIN" identifier="2" id="TI0-e6-w10">
                                 <view key="view" id="5hT-7G-WY9">
-                                    <rect key="frame" x="10" y="33" width="442" height="378"/>
+                                    <rect key="frame" x="10" y="33" width="442" height="375"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8JI-fr-vEy">
-                                            <rect key="frame" x="118" y="206" width="94" height="17"/>
+                                            <rect key="frame" x="118" y="203" width="94" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Place of issue:" id="ruu-Ea-Cd9">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -542,7 +543,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zky-zg-jyE">
-                                            <rect key="frame" x="118" y="181" width="94" height="17"/>
+                                            <rect key="frame" x="118" y="178" width="94" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Chip number:" id="Lnq-zk-ckh">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -550,7 +551,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iLf-eU-2fw">
-                                            <rect key="frame" x="118" y="156" width="94" height="17"/>
+                                            <rect key="frame" x="118" y="153" width="94" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Valid from:" id="2ly-GQ-L95">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -558,7 +559,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kEM-Vg-WFu">
-                                            <rect key="frame" x="118" y="131" width="94" height="17"/>
+                                            <rect key="frame" x="118" y="128" width="94" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Valid until:" id="Cnx-oC-rJ5">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -566,7 +567,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField identifier="card_number" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gxN-98-Llk" userLabel="card_number">
-                                            <rect key="frame" x="216" y="231" width="10" height="17"/>
+                                            <rect key="frame" x="216" y="228" width="10" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="-" id="S09-Sf-lPk">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -574,7 +575,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField identifier="issuing_municipality" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2GY-Qg-wmr" userLabel="issuing_municipality">
-                                            <rect key="frame" x="216" y="206" width="10" height="17"/>
+                                            <rect key="frame" x="216" y="203" width="10" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="-" id="ytY-Qa-k4c">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -582,7 +583,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField identifier="chip_number" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pRJ-cd-hfU" userLabel="chip_number">
-                                            <rect key="frame" x="216" y="181" width="10" height="17"/>
+                                            <rect key="frame" x="216" y="178" width="10" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="-" id="Gvc-Pb-JpW">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -590,7 +591,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField identifier="validity_begin_date" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9i5-E1-Lry" userLabel="validity_begin_date">
-                                            <rect key="frame" x="216" y="156" width="10" height="17"/>
+                                            <rect key="frame" x="216" y="153" width="10" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="-" id="q8V-A2-wIs">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -598,7 +599,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField identifier="validity_end_date" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5F1-Tw-NP3" userLabel="validity_end_date">
-                                            <rect key="frame" x="216" y="131" width="10" height="17"/>
+                                            <rect key="frame" x="216" y="128" width="10" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="-" id="zmd-lf-VkW">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -606,7 +607,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vjd-Dd-TOU">
-                                            <rect key="frame" x="135" y="18" width="173" height="24"/>
+                                            <rect key="frame" x="135" y="15" width="173" height="24"/>
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="1fk-Wt-tsG">
                                                 <font key="font" metaFont="system"/>
                                                 <segments>
@@ -619,7 +620,7 @@
                                             </connections>
                                         </segmentedControl>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b0D-UO-3ec">
-                                            <rect key="frame" x="118" y="231" width="94" height="17"/>
+                                            <rect key="frame" x="118" y="228" width="94" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Card number:" id="3ta-Y3-CdH">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -680,7 +681,7 @@
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="SbE-j5-DtL" id="G1r-zp-mgg">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="238" height="117"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="119" height="0.0"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -897,11 +898,11 @@
                             </tabViewItem>
                             <tabViewItem label="Log" identifier="" id="3Pf-c1-Y7s">
                                 <view key="view" id="jwv-00-bmx">
-                                    <rect key="frame" x="10" y="33" width="442" height="378"/>
+                                    <rect key="frame" x="10" y="33" width="442" height="375"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Zy-5V-HpU">
-                                            <rect key="frame" x="20" y="49" width="402" height="309"/>
+                                            <rect key="frame" x="20" y="46" width="402" height="309"/>
                                             <clipView key="contentView" id="5ef-zU-ZQu">
                                                 <rect key="frame" x="1" y="1" width="223" height="133"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -929,7 +930,7 @@
                                             </scroller>
                                         </scrollView>
                                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Iq-Qb-1J7">
-                                            <rect key="frame" x="18" y="17" width="79" height="26"/>
+                                            <rect key="frame" x="18" y="14" width="79" height="26"/>
                                             <popUpButtonCell key="cell" type="push" title="Coarse" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="a4x-Kn-S3D" id="bLp-H5-Cu7">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
@@ -943,7 +944,7 @@
                                             </popUpButtonCell>
                                         </popUpButton>
                                         <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QHx-81-5MV">
-                                            <rect key="frame" x="175" y="18" width="249" height="24"/>
+                                            <rect key="frame" x="175" y="15" width="249" height="24"/>
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="f7q-4j-TGg">
                                                 <font key="font" metaFont="system"/>
                                                 <segments>
