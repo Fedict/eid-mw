@@ -13,6 +13,7 @@
 - (IBAction)file_close:(id)sender;
 - (IBAction)do_pinop:(NSSegmentedControl *)sender;
 - (IBAction)setLanguage:(NSMenuItem *)sender;
+- (IBAction)log_buttonaction:(NSSegmentedControl *)sender;
 
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSView *IdentityTab;
@@ -139,5 +140,24 @@
     NSAlert *alert = [[NSAlert alloc] init];
     alert.messageText = @"Error: could not determine language";
     [alert runModal];
+}
+
+- (IBAction)log_buttonaction:(NSSegmentedControl *)sender {
+    NSUInteger sel = [sender selectedSegment];
+    NSRange r;
+    if (sel > 1) {
+        return;
+    }
+    switch(sel) {
+        case 0:
+            [_logItem setString:@""];
+            break;
+        case 1:
+            r = [_logItem selectedRange];
+            [_logItem selectAll:self];
+            [_logItem copy:self];
+            [_logItem setSelectedRange:r];
+            break;
+    }
 }
 @end

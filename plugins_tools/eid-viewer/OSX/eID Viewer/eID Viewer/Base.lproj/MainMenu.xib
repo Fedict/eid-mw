@@ -952,6 +952,9 @@
                                                     <segment label="Copy Log To Clipboard" tag="1"/>
                                                 </segments>
                                             </segmentedCell>
+                                            <connections>
+                                                <action selector="log_buttonaction:" target="Voe-Tx-rLC" id="5zB-Pg-D2Y"/>
+                                            </connections>
                                         </segmentedControl>
                                     </subviews>
                                     <constraints>
