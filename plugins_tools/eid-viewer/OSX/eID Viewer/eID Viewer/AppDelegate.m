@@ -127,8 +127,7 @@
     }];
 }
 - (void)awakeFromNib {
-    photohandler* p = [photohandler alloc];
-    _bindict = [[NSDictionary alloc] initWithObjectsAndKeys:@"PHOTO_FILE", p, nil];
+    _bindict = [[NSDictionary alloc] initWithObjectsAndKeys:[photohandler alloc], @"PHOTO_FILE", nil];
     [eIDOSLayerBackend setUi:self];
     // TODO: make the below depend on the system-configured language
     [eIDOSLayerBackend setLang:eIDLanguageNl];

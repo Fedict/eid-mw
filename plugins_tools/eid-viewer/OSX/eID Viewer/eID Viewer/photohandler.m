@@ -14,7 +14,4 @@
     NSImage* img = [[NSImage alloc] initWithData:data];
     [(NSImageView*)[ui searchObjectById:@"photo" ofClass:[NSImageView class]] setImage:img];
 }
--(instancetype)init {
-    return self;
-}
 @end
