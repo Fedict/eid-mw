@@ -94,7 +94,7 @@
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
-                                    <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
+                                    <action selector="file_close:" target="Voe-Tx-rLC" id="xMa-a9-ld5"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">

@@ -10,6 +10,7 @@
 
 @interface AppDelegate ()
 - (IBAction)file_open:(id)sender;
+- (IBAction)file_close:(id)sender;
 - (IBAction)do_pinop:(NSSegmentedControl *)sender;
 - (IBAction)setLanguage:(NSMenuItem *)sender;
 
@@ -58,6 +59,9 @@
             [eIDOSLayerBackend deserialize:[[panel URLs]objectAtIndex:0]];
         }
     }];
+}
+- (void)file_close:(id)sender {
+    [eIDOSLayerBackend close_file];
 }
 - (void)do_pinop:(NSSegmentedControl *)sender {
     NSUInteger sel = [sender selectedSegment];

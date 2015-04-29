@@ -66,4 +66,5 @@ typedef NS_ENUM(NSInteger, eIDLanguage) {
 +(void)mainloop_thread;
 +(void)deserialize:(NSURL*)from;
 +(void)serialize:(NSURL*)to;
++(void)close_file;
 @end

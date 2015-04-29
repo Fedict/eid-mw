@@ -77,4 +77,7 @@ static void* threadmain(void* val) {
     enum eid_vwr_langs l = (enum eid_vwr_langs) language;
     convert_set_lang(l);
 }
++(void)close_file {
+    sm_handle_event(EVENT_CLOSE_FILE, NULL, NULL, NULL);
+}
 @end
