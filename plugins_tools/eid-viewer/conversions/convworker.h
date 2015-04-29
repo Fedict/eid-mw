@@ -16,7 +16,7 @@ public:
 	virtual std::string convert(std::string original) { return convert(original.c_str()); };
 	virtual void* convert(const char* original, int* len_return) {
 		std::string cv = convert(original);
-		*len_return = cv.length();
+		*len_return = (int)cv.length();
 		return strdup(cv.c_str());
 	}
 };

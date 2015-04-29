@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A341AF1181700F0DDE7 /* CertificateStore.m */; };
+		65296A391AF119CB00F0DDE7 /* photohandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A381AF119CB00F0DDE7 /* photohandler.m */; };
 		652BC8AE1AEA41D100DA9519 /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */; };
 		652BC8B11AEA467800DA9519 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
 		659FFC431AE9360D004CEC1F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC421AE9360D004CEC1F /* AppDelegate.m */; };
@@ -44,6 +46,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65296A331AF1181700F0DDE7 /* CertificateStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateStore.h; sourceTree = "<group>"; };
+		65296A341AF1181700F0DDE7 /* CertificateStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateStore.m; sourceTree = "<group>"; };
+		65296A361AF1197400F0DDE7 /* binhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binhandler.h; sourceTree = "<group>"; };
+		65296A371AF119CB00F0DDE7 /* photohandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = photohandler.h; sourceTree = "<group>"; };
+		65296A381AF119CB00F0DDE7 /* photohandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = photohandler.m; sourceTree = "<group>"; };
 		652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "dataroot-osx.m"; sourceTree = "<group>"; };
 		652BC8AF1AEA441400DA9519 /* xsdloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xsdloc.h; path = ../../../xsdloc.h; sourceTree = "<group>"; };
 		652BC8B01AEA467800DA9519 /* eidv4.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../eidv4.xsd; sourceTree = "<group>"; };
@@ -170,9 +177,14 @@
 				659FFC6C1AE9365F004CEC1F /* oslayer-objc.m */,
 				659FFC411AE9360D004CEC1F /* AppDelegate.h */,
 				659FFC421AE9360D004CEC1F /* AppDelegate.m */,
+				65296A361AF1197400F0DDE7 /* binhandler.h */,
+				65296A371AF119CB00F0DDE7 /* photohandler.h */,
+				65296A381AF119CB00F0DDE7 /* photohandler.m */,
 				659FFC461AE9360D004CEC1F /* Images.xcassets */,
 				659FFC481AE9360D004CEC1F /* MainMenu.xib */,
 				659FFC3F1AE9360D004CEC1F /* Supporting Files */,
+				65296A331AF1181700F0DDE7 /* CertificateStore.h */,
+				65296A341AF1181700F0DDE7 /* CertificateStore.m */,
 			);
 			path = "eID Viewer";
 			sourceTree = "<group>";
@@ -318,8 +330,10 @@
 				659FFC761AE93AB5004CEC1F /* base64dec.c in Sources */,
 				659FFC9A1AE93AD1004CEC1F /* doctypeconv.cpp in Sources */,
 				652BC8AE1AEA41D100DA9519 /* dataroot-osx.m in Sources */,
+				65296A391AF119CB00F0DDE7 /* photohandler.m in Sources */,
 				659FFCB81AE93C37004CEC1F /* labels.c in Sources */,
 				659FFC9E1AE93AD1004CEC1F /* natnumconv.cpp in Sources */,
+				65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */,
 				659FFC9B1AE93AD1004CEC1F /* genderconv.cpp in Sources */,
 				659FFC961AE93AD1004CEC1F /* convertor.cpp in Sources */,
 			);

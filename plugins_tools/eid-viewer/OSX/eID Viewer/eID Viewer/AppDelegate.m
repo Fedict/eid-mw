@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "CertificateStore.h"
+#import "photohandler.h"
 
 @interface AppDelegate ()
 - (IBAction)file_open:(id)sender;
@@ -15,13 +17,15 @@
 - (IBAction)setLanguage:(NSMenuItem *)sender;
 - (IBAction)log_buttonaction:(NSSegmentedControl *)sender;
 
+@property CertificateStore *certstore;
+@property NSDictionary *bindict;
+@property (weak) IBOutlet NSImageView *photoview;
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSView *IdentityTab;
 @property (weak) IBOutlet NSView *CardPinTab;
 @property (weak) IBOutlet NSView *CertificatesTab;
 @property (unsafe_unretained) IBOutlet NSTextView *logItem;
 @property (weak) IBOutlet NSPopUpButton *logLevel;
-@property (weak) IBOutlet NSImageView *photoview;
 @end
 
 @implementation AppDelegate
@@ -78,10 +82,8 @@
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        if([label isEqualToString:@"PHOTO_FILE"]) {
-            NSImage* img = [[NSImage alloc] initWithData:data];
-            [_photoview setImage:img];
-        }
+        id<binhandler> handler = [self.bindict objectForKey:label];
+        [handler handle_bin_data:data forLabel:label withUi:self];
     }];
 }
 - (void)newstate:(eIDState)state {
@@ -105,21 +107,28 @@
     }
     return nil;
 }
+- (NSObject*)searchObjectById:(NSString*)identity ofClass:(Class)aClass {
+    static NSArray* elems = NULL;
+    if(!elems) {
+        elems = [NSArray arrayWithObjects:[self IdentityTab],[self CardPinTab],[self CertificatesTab], nil];
+    }
+    for(int i=0;i<3;i++) {
+        NSObject* o = [self searchView:[elems objectAtIndex:i] withName:identity];
+        if([o isKindOfClass:aClass]) {
+            return o;
+        }
+    }
+    return nil;
+}
 - (void)newstringdata:(NSString *)data withLabel:(NSString *)label{
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        NSArray* elems = [NSArray arrayWithObjects:[self IdentityTab],[self CardPinTab], [self CertificatesTab], nil];
-        for (int i=0; i<3; i++) {
-            NSObject* o = [self searchView:[elems objectAtIndex:i] withName:label];
-            if(o==nil || ![o isKindOfClass:[NSTextField class]]) {
-                continue;
-            }
-            NSTextField* tf = (NSTextField*) o;
-            [tf setStringValue:data];
-            return;
-        }
+        NSTextField* tf = (NSTextField*)[self searchObjectById:label ofClass:[NSTextField class]];
+        [tf setStringValue:data];
     }];
 }
 - (void)awakeFromNib {
+    photohandler* p = [photohandler alloc];
+    _bindict = [[NSDictionary alloc] initWithObjectsAndKeys:@"PHOTO_FILE", p, nil];
     [eIDOSLayerBackend setUi:self];
     // TODO: make the below depend on the system-configured language
     [eIDOSLayerBackend setLang:eIDLanguageNl];
