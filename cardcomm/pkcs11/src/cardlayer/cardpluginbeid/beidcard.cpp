@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2014 FedICT.
+ * Copyright (C) 2008-2015 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -144,6 +144,10 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 		}
 		catch(...)
 		{
+			if(ulLockCount)
+			{
+				poContext->m_oPCSC.EndTransaction(hCard);
+			}
 			//printf("Exception in cardPluginBeid.CardGetInstance()\n");
 		}
 	}
