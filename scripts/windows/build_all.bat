@@ -1,3 +1,6 @@
+:: options for build file
+::@set DONT_MERGE_VCRT=yes
+
 :: set all path variables
 :: =====================
 @call "%~dp0.\SetPaths.bat"
