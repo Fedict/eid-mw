@@ -144,7 +144,9 @@ void add_certificate(char* label, void* data, int len) {
 
 	columns[0] = CERT_COL_LABEL;
 	g_value_init(&(vals[0]), G_TYPE_STRING);
-	g_value_take_string(&(vals[0]), describe_cert(label, cert));
+	char* str = describe_cert(label, cert);
+	g_value_take_string(&(vals[0]), g_strdup(str));
+	free(str);
 
 	columns[1] = CERT_COL_IMAGE;
 	g_value_init(&(vals[1]), GDK_TYPE_PIXBUF);
