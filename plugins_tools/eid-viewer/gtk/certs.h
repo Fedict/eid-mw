@@ -2,7 +2,7 @@
 #define EID_VWR_GTK_CERTS_H
 
 #include <gtk/gtk.h>
-#include <certcols.h>
+#include <certhelpers.h>
 
 void add_certificate(char* label, void* data, int len);
 void clear_certdata();

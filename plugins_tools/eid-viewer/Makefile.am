@@ -9,7 +9,8 @@ endif
 eid_viewer_SOURCES = \
 	oslayer.h \
 	oslayer.c \
-	certcols.h \
+	certhelpers.h \
+	certhelpers.c \
 	gettext.h \
 	backend.c \
 	backend.h \
