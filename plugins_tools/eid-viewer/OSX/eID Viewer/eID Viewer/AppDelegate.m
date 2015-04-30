@@ -127,7 +127,14 @@
     }];
 }
 - (void)awakeFromNib {
-    _bindict = [[NSDictionary alloc] initWithObjectsAndKeys:[photohandler alloc], @"PHOTO_FILE", nil];
+    _certstore = [[CertificateStore alloc] init];
+    _bindict = [[NSDictionary alloc] initWithObjectsAndKeys:[photohandler alloc], @"PHOTO_FILE",
+                _certstore, @"Root",
+                _certstore, @"CA",
+                _certstore, @"Authentication",
+                _certstore, @"Signature",
+                _certstore, @"CERT_RN_FILE",
+                nil];
     [eIDOSLayerBackend setUi:self];
     // TODO: make the below depend on the system-configured language
     [eIDOSLayerBackend setLang:eIDLanguageNl];

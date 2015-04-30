@@ -43,6 +43,9 @@
 		659FFCB81AE93C37004CEC1F /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB61AE93C37004CEC1F /* labels.c */; };
 		659FFCBA1AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */; };
 		659FFCBC1AE93CD5004CEC1F /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659FFCBB1AE93CD5004CEC1F /* libxml2.dylib */; };
+		8B4E16961AF26F9D004C2B24 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4E16951AF26F9D004C2B24 /* libssl.dylib */; };
+		8B4E16981AF2705F004C2B24 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4E16971AF2705F004C2B24 /* libcrypto.dylib */; };
+		8B4E169B1AF2707F004C2B24 /* certhelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E16991AF2707F004C2B24 /* certhelpers.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +117,10 @@
 		659FFCB71AE93C37004CEC1F /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = ../../../../../tests/unit/labels.h; sourceTree = "<group>"; };
 		659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.3.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.3.dylib; sourceTree = "<group>"; };
 		659FFCBB1AE93CD5004CEC1F /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		8B4E16951AF26F9D004C2B24 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
+		8B4E16971AF2705F004C2B24 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		8B4E16991AF2707F004C2B24 /* certhelpers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = certhelpers.c; path = ../../../certhelpers.c; sourceTree = "<group>"; };
+		8B4E169A1AF2707F004C2B24 /* certhelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = certhelpers.h; path = ../../../certhelpers.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +128,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B4E16981AF2705F004C2B24 /* libcrypto.dylib in Frameworks */,
+				8B4E16961AF26F9D004C2B24 /* libssl.dylib in Frameworks */,
 				659FFCBC1AE93CD5004CEC1F /* libxml2.dylib in Frameworks */,
 				659FFCBA1AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib in Frameworks */,
 			);
@@ -132,6 +141,8 @@
 		659FFC331AE9360D004CEC1F = {
 			isa = PBXGroup;
 			children = (
+				8B4E16971AF2705F004C2B24 /* libcrypto.dylib */,
+				8B4E16951AF26F9D004C2B24 /* libssl.dylib */,
 				659FFCBB1AE93CD5004CEC1F /* libxml2.dylib */,
 				659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */,
 				659FFC3E1AE9360D004CEC1F /* eID Viewer */,
@@ -156,6 +167,8 @@
 				659FFC751AE93AB5004CEC1F /* base64dec.h */,
 				659FFC721AE93A9B004CEC1F /* cache.cpp */,
 				659FFC711AE93A8A004CEC1F /* cache.h */,
+				8B4E16991AF2707F004C2B24 /* certhelpers.c */,
+				8B4E169A1AF2707F004C2B24 /* certhelpers.h */,
 				659FFCA31AE93ADA004CEC1F /* conversions */,
 				659FFCA41AE93AF3004CEC1F /* conversions.h */,
 				659FFCB61AE93C37004CEC1F /* labels.c */,
@@ -173,18 +186,10 @@
 				659FFCB11AE93B4B004CEC1F /* xml.h */,
 				659FFCB21AE93B4B004CEC1F /* xmlmap.cpp */,
 				659FFCB31AE93B4B004CEC1F /* xmlmap.h */,
-				659FFC6B1AE9365F004CEC1F /* oslayer-objc.h */,
-				659FFC6C1AE9365F004CEC1F /* oslayer-objc.m */,
-				659FFC411AE9360D004CEC1F /* AppDelegate.h */,
-				659FFC421AE9360D004CEC1F /* AppDelegate.m */,
-				65296A361AF1197400F0DDE7 /* binhandler.h */,
-				65296A371AF119CB00F0DDE7 /* photohandler.h */,
-				65296A381AF119CB00F0DDE7 /* photohandler.m */,
+				8B4E16901AF21B04004C2B24 /* ObjC */,
 				659FFC461AE9360D004CEC1F /* Images.xcassets */,
 				659FFC481AE9360D004CEC1F /* MainMenu.xib */,
 				659FFC3F1AE9360D004CEC1F /* Supporting Files */,
-				65296A331AF1181700F0DDE7 /* CertificateStore.h */,
-				65296A341AF1181700F0DDE7 /* CertificateStore.m */,
 			);
 			path = "eID Viewer";
 			sourceTree = "<group>";
@@ -233,6 +238,22 @@
 				659FFC931AE93AD1004CEC1F /* xmlspecconv.h */,
 			);
 			name = conversions;
+			sourceTree = "<group>";
+		};
+		8B4E16901AF21B04004C2B24 /* ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				659FFC6B1AE9365F004CEC1F /* oslayer-objc.h */,
+				659FFC6C1AE9365F004CEC1F /* oslayer-objc.m */,
+				659FFC411AE9360D004CEC1F /* AppDelegate.h */,
+				659FFC421AE9360D004CEC1F /* AppDelegate.m */,
+				65296A361AF1197400F0DDE7 /* binhandler.h */,
+				65296A371AF119CB00F0DDE7 /* photohandler.h */,
+				65296A381AF119CB00F0DDE7 /* photohandler.m */,
+				65296A331AF1181700F0DDE7 /* CertificateStore.h */,
+				65296A341AF1181700F0DDE7 /* CertificateStore.m */,
+			);
+			name = ObjC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,6 +357,7 @@
 				65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */,
 				659FFC9B1AE93AD1004CEC1F /* genderconv.cpp in Sources */,
 				659FFC961AE93AD1004CEC1F /* convertor.cpp in Sources */,
+				8B4E169B1AF2707F004C2B24 /* certhelpers.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
