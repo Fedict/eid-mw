@@ -19,6 +19,7 @@
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
+@property NSMutableDictionary *viewdict;
 @property (weak) IBOutlet NSImageView *photoview;
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSView *IdentityTab;
@@ -26,6 +27,7 @@
 @property (weak) IBOutlet NSView *CertificatesTab;
 @property (unsafe_unretained) IBOutlet NSTextView *logItem;
 @property (weak) IBOutlet NSPopUpButton *logLevel;
+@property (weak) IBOutlet NSOutlineView *CertificatesView;
 @end
 
 @implementation AppDelegate
@@ -108,12 +110,19 @@
     return nil;
 }
 - (NSObject*)searchObjectById:(NSString*)identity ofClass:(Class)aClass {
+    NSObject* o = [_viewdict objectForKey:identity];
+    if([o isKindOfClass:aClass]) {
+        return o;
+    }
     static NSArray* elems = NULL;
     if(!elems) {
         elems = [NSArray arrayWithObjects:[self IdentityTab],[self CardPinTab],[self CertificatesTab], nil];
     }
     for(int i=0;i<3;i++) {
         NSObject* o = [self searchView:[elems objectAtIndex:i] withName:identity];
+        if(o != nil) {
+            [_viewdict setValue:o forKey:identity];
+        }
         if([o isKindOfClass:aClass]) {
             return o;
         }
@@ -135,6 +144,7 @@
                 _certstore, @"Signature",
                 _certstore, @"CERT_RN_FILE",
                 nil];
+    _viewdict = [[NSMutableDictionary alloc] init];
     [eIDOSLayerBackend setUi:self];
     // TODO: make the below depend on the system-configured language
     [eIDOSLayerBackend setLang:eIDLanguageNl];
