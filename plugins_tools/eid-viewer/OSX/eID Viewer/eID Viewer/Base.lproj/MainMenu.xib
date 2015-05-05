@@ -200,7 +200,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="488" height="437"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <tabView translatesAutoresizingMaskIntoConstraints="NO" id="5Om-bz-RVh">
+                    <tabView initialItem="55i-L2-Jzx" translatesAutoresizingMaskIntoConstraints="NO" id="5Om-bz-RVh">
                         <rect key="frame" x="13" y="10" width="462" height="421"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
