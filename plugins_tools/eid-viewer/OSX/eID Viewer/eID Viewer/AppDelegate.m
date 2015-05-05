@@ -136,7 +136,10 @@
     }];
 }
 - (void)awakeFromNib {
-    _certstore = [[CertificateStore alloc] init];
+    if(_certstore != nil) {
+        return;
+    }
+    _certstore = [[CertificateStore alloc] initWithOutlineView:_CertificatesView];
     _bindict = [[NSDictionary alloc] initWithObjectsAndKeys:[photohandler alloc], @"PHOTO_FILE",
                 _certstore, @"Root",
                 _certstore, @"CA",
@@ -145,6 +148,8 @@
                 _certstore, @"CERT_RN_FILE",
                 nil];
     _viewdict = [[NSMutableDictionary alloc] init];
+    [_CertificatesView setDataSource:_certstore];
+    [_CertificatesView setDelegate:_certstore];
     [eIDOSLayerBackend setUi:self];
     // TODO: make the below depend on the system-configured language
     [eIDOSLayerBackend setLang:eIDLanguageNl];

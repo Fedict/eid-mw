@@ -9,7 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "binhandler.h"
 
-@interface CertificateStore : NSObject<NSOutlineViewDataSource,binhandler>
+@interface CertificateStore : NSObject<NSOutlineViewDataSource,NSOutlineViewDelegate,binhandler>
 @property NSMutableDictionary* CertificateData;
--(instancetype)init;
+@property NSOutlineView* ov;
+@property AppDelegate* ui;
+-(instancetype)initWithOutlineView:(NSOutlineView*)view;
 @end
