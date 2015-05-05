@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, eIDState) {
 };
 
 typedef NS_ENUM(NSInteger, eIDLanguage) {
+    eIDLanguageNone = EID_VWR_LANG_NONE,
     eIDLanguageDe = EID_VWR_LANG_DE,
     eIDLanguageEn = EID_VWR_LANG_EN,
     eIDLanguageFr = EID_VWR_LANG_FR,

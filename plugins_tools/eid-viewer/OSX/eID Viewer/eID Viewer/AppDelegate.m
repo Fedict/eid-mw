@@ -151,31 +151,47 @@
     [_CertificatesView setDataSource:_certstore];
     [_CertificatesView setDelegate:_certstore];
     [eIDOSLayerBackend setUi:self];
-    // TODO: make the below depend on the system-configured language
-    [eIDOSLayerBackend setLang:eIDLanguageNl];
+    NSUserDefaults* prefs = [NSUserDefaults standardUserDefaults];
+    eIDLanguage langcode = [prefs integerForKey:@"ContentLanguage"];
+    assert(langcode <= eIDLanguageNl);
+    if(langcode == eIDLanguageNone) {
+        NSArray* langs = [NSLocale preferredLanguages];
+        for(int i=0; i<[langs count] && langcode == eIDLanguageNone;i++) {
+            NSString* str = [langs objectAtIndex:i];
+            if([str isEqualToString:@"de"]) {
+                langcode = eIDLanguageDe;
+            } else if([str isEqualToString:@"en"]) {
+                langcode = eIDLanguageEn;
+            } else if([str isEqualToString:@"fr"]) {
+                langcode = eIDLanguageFr;
+            } else if([str isEqualToString:@"nl"]) {
+                langcode = eIDLanguageNl;
+            }
+        }
+    }
+    [eIDOSLayerBackend setLang:langcode];
     [eIDOSLayerBackend mainloop_thread];
 }
 - (void)setLanguage:(NSMenuItem *)sender {
     NSString* keyeq = sender.keyEquivalent;
+    eIDLanguage langcode = eIDLanguageNone;
     if([keyeq isEqualToString:@"d"]) {
-        [eIDOSLayerBackend setLang:eIDLanguageDe];
+        langcode = eIDLanguageDe;
+    } else if([keyeq isEqualToString:@"e"]) {
+        langcode = eIDLanguageEn;
+    } else if([keyeq isEqualToString:@"f"]) {
+        langcode = eIDLanguageFr;
+    } else if([keyeq isEqualToString:@"n"]) {
+        langcode = eIDLanguageNl;
+    }
+    if(langcode == eIDLanguageNone) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"Error: could not determine language";
+        [alert runModal];
         return;
     }
-    if([keyeq isEqualToString:@"e"]) {
-        [eIDOSLayerBackend setLang:eIDLanguageEn];
-        return;
-    }
-    if([keyeq isEqualToString:@"f"]) {
-        [eIDOSLayerBackend setLang:eIDLanguageFr];
-        return;
-    }
-    if([keyeq isEqualToString:@"n"]) {
-        [eIDOSLayerBackend setLang:eIDLanguageNl];
-        return;
-    }
-    NSAlert *alert = [[NSAlert alloc] init];
-    alert.messageText = @"Error: could not determine language";
-    [alert runModal];
+    [eIDOSLayerBackend setLang:langcode];
+    [[NSUserDefaults standardUserDefaults] setInteger:langcode forKey:@"ContentLanguage"];
 }
 
 - (IBAction)log_buttonaction:(NSSegmentedControl *)sender {
