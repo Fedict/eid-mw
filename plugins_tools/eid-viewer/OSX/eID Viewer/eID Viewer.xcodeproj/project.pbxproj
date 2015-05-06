@@ -181,7 +181,6 @@
 				659FFCAC1AE93B3D004CEC1F /* state.c */,
 				659FFCAD1AE93B3D004CEC1F /* state.h */,
 				659FFCB01AE93B4B004CEC1F /* xml.c */,
-				652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */,
 				652BC8AF1AEA441400DA9519 /* xsdloc.h */,
 				659FFCB11AE93B4B004CEC1F /* xml.h */,
 				659FFCB21AE93B4B004CEC1F /* xmlmap.cpp */,
@@ -243,15 +242,16 @@
 		8B4E16901AF21B04004C2B24 /* ObjC */ = {
 			isa = PBXGroup;
 			children = (
-				659FFC6B1AE9365F004CEC1F /* oslayer-objc.h */,
-				659FFC6C1AE9365F004CEC1F /* oslayer-objc.m */,
 				659FFC411AE9360D004CEC1F /* AppDelegate.h */,
 				659FFC421AE9360D004CEC1F /* AppDelegate.m */,
 				65296A361AF1197400F0DDE7 /* binhandler.h */,
-				65296A371AF119CB00F0DDE7 /* photohandler.h */,
-				65296A381AF119CB00F0DDE7 /* photohandler.m */,
 				65296A331AF1181700F0DDE7 /* CertificateStore.h */,
 				65296A341AF1181700F0DDE7 /* CertificateStore.m */,
+				652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */,
+				659FFC6B1AE9365F004CEC1F /* oslayer-objc.h */,
+				659FFC6C1AE9365F004CEC1F /* oslayer-objc.m */,
+				65296A371AF119CB00F0DDE7 /* photohandler.h */,
+				65296A381AF119CB00F0DDE7 /* photohandler.m */,
 			);
 			name = ObjC;
 			sourceTree = "<group>";
