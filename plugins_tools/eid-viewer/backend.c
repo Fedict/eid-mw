@@ -62,3 +62,7 @@ void be_newbindata(const char* label, const void* data, int datalen) {
 	NEED_CB_FUNC(newbindata);
 	cb->newbindata(label, data, datalen);
 }
+
+void be_pinresult(enum eid_vwr_pinops p, enum eid_vwr_result res) {
+    NEED_CB_FUNC(pinop_result);
+}

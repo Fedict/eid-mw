@@ -186,15 +186,25 @@ int eid_vwr_p11_read_certs(void* data) {
 	return perform_find(0);
 }
 
-int eid_vwr_p11_do_pinop(void* data) {
-	enum eid_vwr_pinops p = (enum eid_vwr_pinops) data;
-	check_rv(C_Login(session, CKU_USER, NULL_PTR, 0));
-	if(p >= EID_VWR_PINOP_CHG) {
-		check_rv(C_SetPIN(session, NULL_PTR, 0, NULL_PTR, 0));
-	}
-	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
+    check_rv(C_Login(session, CKU_USER, NULL_PTR, 0));
+    if(p >= EID_VWR_PINOP_CHG) {
+        check_rv(C_SetPIN(session, NULL_PTR, 0, NULL_PTR, 0));
+    }
+    sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+    
+    return 0;
+}
 
-	return 0;
+int eid_vwr_p11_do_pinop(void* data) {
+    int retval;
+    enum eid_vwr_pinops p = (enum eid_vwr_pinops) data;
+    if((retval = eid_vwr_p11_do_pinop_real(p)) > 0) {
+        be_pinresult(p, EID_VWR_FAILED);
+    } else {
+        be_pinresult(p, EID_VWR_SUCCESS);
+    }
+    return retval;
 }
 
 int eid_vwr_p11_leave_pinop() {

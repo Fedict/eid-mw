@@ -24,6 +24,11 @@ enum eid_vwr_pinops {
 	EID_VWR_PINOP_CHG,
 };
 
+enum eid_vwr_result {
+    EID_VWR_FAILED,
+    EID_VWR_SUCCESS,
+};
+
 enum eid_vwr_states {
 	STATE_LIBOPEN,
 	STATE_CALLBACKS,
@@ -47,6 +52,7 @@ struct eid_vwr_ui_callbacks {
 	void(*newbindata)(const char* label, const void* data, int datalen);
 	void(*log)(enum eid_vwr_loglevel, const char* line, va_list ap);
 	void(*newstate)(enum eid_vwr_states);
+    void(*pinop_result)(enum eid_vwr_pinops, enum eid_vwr_result);
 };
 
 struct eid_vwr_preview {

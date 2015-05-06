@@ -24,6 +24,10 @@ static void osl_objc_newstate(enum eid_vwr_states state) {
     [currUi newstate:(eIDState)state];
 }
 
+static void osl_objc_pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result r) {
+    [currUi pinop_result:(eIDResult)r forOperation:(eIDPinOp)p];
+}
+
 static void* threadmain(void* val) {
     eid_vwr_be_mainloop();
     
@@ -41,6 +45,7 @@ static void* threadmain(void* val) {
     cb->newsrc = osl_objc_newsrc;
     cb->newstate = osl_objc_newstate;
     cb->newstringdata = osl_objc_newstringdata;
+    cb->pinop_result = osl_objc_pinop_result;
     currUi = ui;
     return eid_vwr_createcallbacks(cb);
 }

@@ -212,4 +212,12 @@
             break;
     }
 }
+-(void)pinop_result:(eIDResult)result forOperation:(eIDPinOp)operation {
+    [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+        NSString *msg = [NSString stringWithFormat:@"Pin code %@ %@.", (operation == eIDPinOpTest) ? @"test" : @"change", (result == eIDResultSuccess) ? @"successful" : @"failed"];
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = msg;
+        [alert runModal];
+    }];
+}
 @end

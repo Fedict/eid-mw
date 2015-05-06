@@ -13,6 +13,7 @@ void be_log(enum eid_vwr_loglevel, const char* line, ...);
 void be_newstate(enum eid_vwr_states s);
 void be_newstringdata(const char* label, const char* data);
 void be_newbindata(const char* label, const void* data, int datalen);
+void be_pinresult(enum eid_vwr_pinops, enum eid_vwr_result);
 
 #ifdef __cplusplus
 }

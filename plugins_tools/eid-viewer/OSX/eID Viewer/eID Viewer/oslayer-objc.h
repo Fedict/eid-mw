@@ -45,6 +45,11 @@ typedef NS_ENUM(NSInteger, eIDLanguage) {
     eIDLanguageNl = EID_VWR_LANG_NL,
 };
 
+typedef NS_ENUM(NSInteger, eIDResult) {
+    eIDResultFailed = EID_VWR_FAILED,
+    eIDResultSuccess = EID_VWR_SUCCESS,
+};
+
 // Protocol for implementing a UI.
 @protocol eIDOSLayerUI
 -(void)newsrc:(eIDSource)which;
@@ -52,6 +57,7 @@ typedef NS_ENUM(NSInteger, eIDLanguage) {
 -(void)newbindata:(NSData*)data withLabel:(NSString*)label;
 -(void)log:(NSString*)line withLevel:(eIDLogLevel)level;
 -(void)newstate:(eIDState)state;
+-(void)pinop_result:(eIDResult)result forOperation:(eIDPinOp)operation;
 @end
 
 // Class method-only class which wraps the corresponding C-only APIs for the
