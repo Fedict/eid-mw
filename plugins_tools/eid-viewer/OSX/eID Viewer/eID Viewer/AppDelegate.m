@@ -195,6 +195,7 @@
         [alert runModal];
         return;
     }
+    [self log:[NSString stringWithFormat:@"Setting language to %@", keyeq] withLevel:eIDLogLevelNormal];
     [eIDOSLayerBackend setLang:langcode];
     [[NSUserDefaults standardUserDefaults] setInteger:langcode forKey:@"ContentLanguage"];
 }
@@ -223,6 +224,7 @@
         NSAlert *alert = [[NSAlert alloc] init];
         alert.messageText = msg;
         [alert runModal];
+        [self log:msg withLevel:eIDLogLevelDetail];
     }];
 }
 -(void)changeLogLevel:(NSPopUpButton *)logLevel {
