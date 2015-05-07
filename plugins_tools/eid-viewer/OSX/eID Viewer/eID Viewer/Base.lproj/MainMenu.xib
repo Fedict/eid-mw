@@ -709,7 +709,7 @@
                                                                                         <rect key="frame" x="1" y="1" width="397" height="17"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                         <subviews>
-                                                                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jre-Bh-cxO">
+                                                                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jre-Bh-cxO">
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
                                                                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Certificate" id="EWX-mV-sXX">
                                                                                                     <font key="font" metaFont="system"/>
@@ -719,6 +719,7 @@
                                                                                             </textField>
                                                                                         </subviews>
                                                                                         <constraints>
+                                                                                            <constraint firstAttribute="centerY" secondItem="Jre-Bh-cxO" secondAttribute="centerY" id="WKX-4l-4Bt"/>
                                                                                             <constraint firstAttribute="trailing" secondItem="Jre-Bh-cxO" secondAttribute="trailing" id="asP-an-ZYg"/>
                                                                                             <constraint firstItem="Jre-Bh-cxO" firstAttribute="leading" secondItem="Bu6-6L-gVm" secondAttribute="leading" id="woJ-iE-P5e"/>
                                                                                         </constraints>
