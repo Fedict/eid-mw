@@ -140,6 +140,7 @@
     if(_certstore != nil) {
         return;
     }
+    // Set up the certificate pane
     _certstore = [[CertificateStore alloc] initWithOutlineView:_CertificatesView];
     _bindict = [[NSDictionary alloc] initWithObjectsAndKeys:[photohandler alloc], @"PHOTO_FILE",
                 _certstore, @"Root",
@@ -152,6 +153,8 @@
     [_CertificatesView setDataSource:_certstore];
     [_CertificatesView setDelegate:_certstore];
     [eIDOSLayerBackend setUi:self];
+    
+    // Load preferences (language, log level)
     NSUserDefaults* prefs = [NSUserDefaults standardUserDefaults];
     eIDLanguage langcode = [prefs integerForKey:@"ContentLanguage"];
     if(langcode == eIDLanguageNone||langcode > eIDLanguageNl) {
