@@ -16,6 +16,7 @@
 - (IBAction)do_pinop:(NSSegmentedControl *)sender;
 - (IBAction)setLanguage:(NSMenuItem *)sender;
 - (IBAction)log_buttonaction:(NSSegmentedControl *)sender;
+- (IBAction)changeLogLevel:(NSPopUpButton *)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
@@ -153,8 +154,7 @@
     [eIDOSLayerBackend setUi:self];
     NSUserDefaults* prefs = [NSUserDefaults standardUserDefaults];
     eIDLanguage langcode = [prefs integerForKey:@"ContentLanguage"];
-    assert(langcode <= eIDLanguageNl);
-    if(langcode == eIDLanguageNone) {
+    if(langcode == eIDLanguageNone||langcode > eIDLanguageNl) {
         NSArray* langs = [NSLocale preferredLanguages];
         for(int i=0; i<[langs count] && langcode == eIDLanguageNone;i++) {
             NSString* str = [langs objectAtIndex:i];
@@ -169,6 +169,8 @@
             }
         }
     }
+    eIDLogLevel level = [prefs integerForKey:@"log_level"];
+    [_logLevel selectItemAtIndex:level];
     [eIDOSLayerBackend setLang:langcode];
     [eIDOSLayerBackend mainloop_thread];
 }
@@ -219,5 +221,8 @@
         alert.messageText = msg;
         [alert runModal];
     }];
+}
+-(void)changeLogLevel:(NSPopUpButton *)logLevel {
+    [[NSUserDefaults standardUserDefaults] setInteger:[logLevel indexOfSelectedItem] forKey:@"log_level"];
 }
 @end

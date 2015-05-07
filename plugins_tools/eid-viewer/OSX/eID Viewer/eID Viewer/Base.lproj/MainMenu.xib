@@ -945,6 +945,9 @@
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="changeLogLevel:" target="Voe-Tx-rLC" id="mqB-k7-hFj"/>
+                                            </connections>
                                         </popUpButton>
                                         <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QHx-81-5MV">
                                             <rect key="frame" x="175" y="18" width="249" height="24"/>
