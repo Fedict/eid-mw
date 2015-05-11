@@ -97,6 +97,7 @@ pid_t sdialog_call(const char* path,const char* msg)
 			dlg_log_printf("sdialog_call: DISPLAY=%s\n");
 		} else {
 			dlg_log_printf("DISPLAY not set\n");
+		}
        	umask(0);
 		chdir("/");
 		dlg_log_printf("call_dialog: about to exec %s\n",path);
