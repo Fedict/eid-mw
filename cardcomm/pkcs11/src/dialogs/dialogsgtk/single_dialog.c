@@ -143,8 +143,13 @@ char* sdialog_call_modal(const char* path,const char* msg)
 
     if(pid==0)
 	{
+		char* disp = getenv("DISPLAY");
 		dlg_log_printf("sdialog_call_modal: in child\n");
-		dlg_log_printf("sdialog_call_modal: DISPLAY=%s\n",getenv("DISPLAY"));
+		if(disp != NULL) {
+			dlg_log_printf("sdialog_call_modal: DISPLAY=%s\n", disp);
+		} else {
+			dlg_log_printf("DISPLAY not set\n");
+		}
        	umask(0);
 		chdir("/");
         close(p[0]);
