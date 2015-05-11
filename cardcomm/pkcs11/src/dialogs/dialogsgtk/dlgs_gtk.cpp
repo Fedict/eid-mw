@@ -37,15 +37,23 @@
 
 #include "gtk_dialog_names.h"
 
+#ifdef DEBUG
+#define DPRINTF(format,args...) fprintf(stderr, format , ## args)
+#define DERROR(label) perror(label)
+#else
+#define DPRINTF
+#define DERROR
+#endif
+
 using namespace eIDMW;
 
 extern "C"
 {
 	pid_t   sdialog_call(const char* path,const char* msg);
 	char*   sdialog_call_modal(const char* path,const char* msg);
-	void	dlg_log_printf(const char* format, ...);
-	void	dlg_log_error(const char* label);
 }
+
+	
 
 bool MW_PERROR(tLevel level, tModule mod, const char* comment)
 {
@@ -55,24 +63,6 @@ bool MW_PERROR(tLevel level, tModule mod, const char* comment)
     snprintf(log_txt,sizeof(log_txt),"%s:%s",comment,strerror_r(errno,err_txt,sizeof(err_txt)));
     mbstowcs(wide_log_txt,log_txt,sizeof(wide_log_txt)/sizeof(wchar_t));
     return MWLOG(level,mod,wide_log_txt);
-}
-
-void dlg_log_printf(const char* format, ...)
-{
-    char buf[1024];
-    wchar_t wbuf[1024];
-    va_list ap, ad;
-    va_copy(ad, ap);
-    vsnprintf(buf, sizeof(buf), format, ad);
-    va_end(ad);
-    va_end(ap);
-    mbstowcs(wbuf, buf, sizeof(wbuf)/sizeof(wchar_t));
-    MWLOG(LEV_DEBUG,MOD_DLG,wbuf);
-}
-
-void dlg_log_error(const char* label)
-{
-    MW_PERROR(LEV_ERROR,MOD_DLG,label);
 }
 
 DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation, DlgPinUsage usage, const wchar_t *wsPinName, DlgPinInfo pinInfo, wchar_t *wsPin, unsigned long ulPinBufferLen)
