@@ -15,7 +15,7 @@
     [self setApp:app];
     [self setViewDict:[[NSMutableDictionary alloc]init]];
     [self indexViews:view];
-    [self setPrintableFields:[[NSArray alloc] initWithObjects:@"surname", @"photo", @"firstnames", @"location_of_birth", @"date_of_birth", @"gender", @"nationality", @"national_number", @"nobility", @"special_status", @"address_street_and_number", @"address_zip", @"address_municipality", @"card_number", @"issuing_municipality", @"chip_number", @"validity_begin_date", @"validity_end_date", nil]];
+    [self setPrintableFields:[[NSArray alloc] initWithObjects:@"surname", @"photo", @"firstnames", @"location_of_birth", @"date_of_birth", @"gender", @"nationality", @"national_number", @"nobility", @"special_status", @"address_street_and_number", @"address_zip", @"address_municipality", @"card_number", @"issuing_municipality", @"chip_number", @"validity_begin_date", @"validity_end_date", @"document_type", nil]];
     return self;
 }
 -(void)indexViews:(NSView*)view {
