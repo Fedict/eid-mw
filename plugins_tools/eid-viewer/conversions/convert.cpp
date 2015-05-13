@@ -43,3 +43,7 @@ void convert_set_lang(enum eid_vwr_langs which) {
 		cache_label_iterator_free(iterator);
 	}
 }
+
+enum eid_vwr_langs convert_get_lang() {
+    return ConversionWorker::get_lang();
+}

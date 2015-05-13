@@ -20,6 +20,7 @@ char* convert_to_xml(const char* label, const char* item);
 void* convert_from_xml(const char* name, const char* value, int* len_return);
 int can_convert(const char* label);
 void convert_set_lang(enum eid_vwr_langs which);
+enum eid_vwr_langs convert_get_lang();
 
 #ifdef __cplusplus
 }

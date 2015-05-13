@@ -68,6 +68,7 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 +(NSInteger)setUi:(id<eIDOSLayerUI>)ui;
 +(NSImage*)getPreview:(NSURL*)from;
 +(void)setLang:(eIDLanguage)language;
++(eIDLanguage)lang;
 +(void)poll;
 +(void)mainloop; // does not return
 +(void)mainloop_thread;
