@@ -46,6 +46,7 @@
 		8B4E16961AF26F9D004C2B24 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4E16951AF26F9D004C2B24 /* libssl.dylib */; };
 		8B4E16981AF2705F004C2B24 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4E16971AF2705F004C2B24 /* libcrypto.dylib */; };
 		8B4E169B1AF2707F004C2B24 /* certhelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E16991AF2707F004C2B24 /* certhelpers.c */; };
+		8BAC043C1AFB7F0400750CF6 /* PrintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC043B1AFB7F0400750CF6 /* PrintOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +122,8 @@
 		8B4E16971AF2705F004C2B24 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		8B4E16991AF2707F004C2B24 /* certhelpers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = certhelpers.c; path = ../../../certhelpers.c; sourceTree = "<group>"; };
 		8B4E169A1AF2707F004C2B24 /* certhelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = certhelpers.h; path = ../../../certhelpers.h; sourceTree = "<group>"; };
+		8BAC043A1AFB7F0400750CF6 /* PrintOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintOperation.h; sourceTree = "<group>"; };
+		8BAC043B1AFB7F0400750CF6 /* PrintOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +255,8 @@
 				659FFC6C1AE9365F004CEC1F /* oslayer-objc.m */,
 				65296A371AF119CB00F0DDE7 /* photohandler.h */,
 				65296A381AF119CB00F0DDE7 /* photohandler.m */,
+				8BAC043A1AFB7F0400750CF6 /* PrintOperation.h */,
+				8BAC043B1AFB7F0400750CF6 /* PrintOperation.m */,
 			);
 			name = ObjC;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 				659FFC9A1AE93AD1004CEC1F /* doctypeconv.cpp in Sources */,
 				652BC8AE1AEA41D100DA9519 /* dataroot-osx.m in Sources */,
 				65296A391AF119CB00F0DDE7 /* photohandler.m in Sources */,
+				8BAC043C1AFB7F0400750CF6 /* PrintOperation.m in Sources */,
 				659FFCB81AE93C37004CEC1F /* labels.c in Sources */,
 				659FFC9E1AE93AD1004CEC1F /* natnumconv.cpp in Sources */,
 				65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */,

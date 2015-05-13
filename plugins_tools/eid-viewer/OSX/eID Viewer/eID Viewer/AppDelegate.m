@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "CertificateStore.h"
 #import "photohandler.h"
+#import "PrintOperation.h"
 
 @interface AppDelegate ()
 - (IBAction)file_open:(id)sender;
@@ -17,6 +18,7 @@
 - (IBAction)setLanguage:(NSMenuItem *)sender;
 - (IBAction)log_buttonaction:(NSSegmentedControl *)sender;
 - (IBAction)changeLogLevel:(NSPopUpButton *)sender;
+- (IBAction)print:(id)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
@@ -29,6 +31,7 @@
 @property (unsafe_unretained) IBOutlet NSTextView *logItem;
 @property (weak) IBOutlet NSPopUpButton *logLevel;
 @property (weak) IBOutlet NSOutlineView *CertificatesView;
+@property (weak) IBOutlet NSView *printop_view;
 @end
 
 @implementation AppDelegate
@@ -135,6 +138,9 @@
         NSTextField* tf = (NSTextField*)[self searchObjectById:label ofClass:[NSTextField class]];
         [tf setStringValue:data];
     }];
+}
+- (IBAction)print:(id)sender {
+    [[[PrintOperation alloc] initWithView:_printop_view app:self] runOperation];
 }
 - (void)awakeFromNib {
     if(_certstore != nil) {
