@@ -6,7 +6,10 @@
 //  Copyright (c) 2015 Fedict. All rights reserved.
 //
 
+@import AppKit;
 #import "PrintOperation.h"
+#import "oslayer-objc.h"
+#include <time.h>
 
 @implementation PrintOperation
 -(instancetype)initWithView:(NSView *)view app:(AppDelegate *)app {
@@ -48,6 +51,30 @@
         }
         [d performSelector:writesel withObject:[s performSelector:readsel]];
     }
+    NSString *seal;
+    NSString *ctry;
+    switch([eIDOSLayerBackend lang]) {
+        case eIDLanguageDe:
+            seal = @"coat_of_arms_de";
+            ctry = @"BELGIEN";
+            break;
+        case eIDLanguageFr:
+            seal = @"coat_of_arms_fr";
+            ctry = @"BELGIQUE";
+            break;
+        case eIDLanguageNl:
+            seal = @"coat_of_arms_nl";
+            ctry = @"BELGIË";
+            break;
+        default:
+            seal = @"coat_of_arms_en";
+            ctry = @"BELGIUM";
+            break;
+    }
+    [[_viewDict objectForKey:@"seal"] setImage:[NSImage imageNamed:seal]];
+    [[_viewDict objectForKey:@"country"] setStringValue:ctry];
+    time_t t = time(NULL);
+    [[_viewDict objectForKey:@"printdate"] setStringValue:[NSString stringWithCString:ctime(&t) encoding:NSUTF8StringEncoding]];
     return [[NSPrintOperation printOperationWithView:_view] runOperation];
 }
 @end

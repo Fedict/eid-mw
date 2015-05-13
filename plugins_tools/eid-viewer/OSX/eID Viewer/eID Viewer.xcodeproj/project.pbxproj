@@ -43,6 +43,10 @@
 		659FFCB81AE93C37004CEC1F /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB61AE93C37004CEC1F /* labels.c */; };
 		659FFCBA1AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */; };
 		659FFCBC1AE93CD5004CEC1F /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659FFCBB1AE93CD5004CEC1F /* libxml2.dylib */; };
+		8B3DD9751B03907500E0537B /* coat_of_arms_de.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9711B03907500E0537B /* coat_of_arms_de.jpg */; };
+		8B3DD9761B03907500E0537B /* coat_of_arms_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9721B03907500E0537B /* coat_of_arms_en.jpg */; };
+		8B3DD9771B03907500E0537B /* coat_of_arms_fr.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9731B03907500E0537B /* coat_of_arms_fr.jpg */; };
+		8B3DD9781B03907500E0537B /* coat_of_arms_nl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9741B03907500E0537B /* coat_of_arms_nl.jpg */; };
 		8B4E16961AF26F9D004C2B24 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4E16951AF26F9D004C2B24 /* libssl.dylib */; };
 		8B4E16981AF2705F004C2B24 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4E16971AF2705F004C2B24 /* libcrypto.dylib */; };
 		8B4E169B1AF2707F004C2B24 /* certhelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E16991AF2707F004C2B24 /* certhelpers.c */; };
@@ -118,6 +122,10 @@
 		659FFCB71AE93C37004CEC1F /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = ../../../../../tests/unit/labels.h; sourceTree = "<group>"; };
 		659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.3.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.3.dylib; sourceTree = "<group>"; };
 		659FFCBB1AE93CD5004CEC1F /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		8B3DD9711B03907500E0537B /* coat_of_arms_de.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_de.jpg; path = ../../../resources/coat_of_arms_de.jpg; sourceTree = "<group>"; };
+		8B3DD9721B03907500E0537B /* coat_of_arms_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_en.jpg; path = ../../../resources/coat_of_arms_en.jpg; sourceTree = "<group>"; };
+		8B3DD9731B03907500E0537B /* coat_of_arms_fr.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_fr.jpg; path = ../../../resources/coat_of_arms_fr.jpg; sourceTree = "<group>"; };
+		8B3DD9741B03907500E0537B /* coat_of_arms_nl.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_nl.jpg; path = ../../../resources/coat_of_arms_nl.jpg; sourceTree = "<group>"; };
 		8B4E16951AF26F9D004C2B24 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		8B4E16971AF2705F004C2B24 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		8B4E16991AF2707F004C2B24 /* certhelpers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = certhelpers.c; path = ../../../certhelpers.c; sourceTree = "<group>"; };
@@ -202,6 +210,10 @@
 				652BC8B01AEA467800DA9519 /* eidv4.xsd */,
 				659FFC401AE9360D004CEC1F /* Info.plist */,
 				659FFC441AE9360D004CEC1F /* main.m */,
+				8B3DD9711B03907500E0537B /* coat_of_arms_de.jpg */,
+				8B3DD9721B03907500E0537B /* coat_of_arms_en.jpg */,
+				8B3DD9731B03907500E0537B /* coat_of_arms_fr.jpg */,
+				8B3DD9741B03907500E0537B /* coat_of_arms_nl.jpg */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -318,9 +330,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B3DD9771B03907500E0537B /* coat_of_arms_fr.jpg in Resources */,
+				8B3DD9761B03907500E0537B /* coat_of_arms_en.jpg in Resources */,
 				659FFC471AE9360D004CEC1F /* Images.xcassets in Resources */,
 				659FFC4A1AE9360D004CEC1F /* MainMenu.xib in Resources */,
 				652BC8B11AEA467800DA9519 /* eidv4.xsd in Resources */,
+				8B3DD9781B03907500E0537B /* coat_of_arms_nl.jpg in Resources */,
+				8B3DD9751B03907500E0537B /* coat_of_arms_de.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

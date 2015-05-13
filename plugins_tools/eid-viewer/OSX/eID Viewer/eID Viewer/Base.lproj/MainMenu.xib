@@ -1007,7 +1007,7 @@
                         <constraint firstAttribute="width" constant="100" id="djU-9R-7Am"/>
                         <constraint firstAttribute="height" constant="100" id="xLD-GG-ab6"/>
                     </constraints>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="hHv-gf-u82"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="hHv-gf-u82"/>
                 </imageView>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="aun-RW-brR">
                     <rect key="frame" x="20" y="550" width="384" height="5"/>
