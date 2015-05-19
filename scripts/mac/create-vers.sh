@@ -6,7 +6,7 @@ BASE_VERSION2=1
 BASE_VERSION3=3
 NOW=$(date +%F)
 
-cat > $1 <<EOF
+cat > "$1" <<EOF
 #ifndef BEID_VERSION_H
 #define BEID_VERSION_H
 
