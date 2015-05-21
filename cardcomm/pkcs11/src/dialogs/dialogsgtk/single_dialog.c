@@ -188,12 +188,15 @@ char* sdialog_call_modal(const char* path,const char* msg)
 
 	dlg_log_printf("sdialog_call_modal: waiting for child to die\n");
     while(waitpid(pid,&status,0)<0)
-        if(errno!=EINTR)
+        if(errno!=EINTR) {
+	    dlg_log_printf("sdialog_call_modal: waitpid returned with error %s", strerror(errno));
             break;
+		}
+	}
 
     if(!WIFEXITED(status) || WEXITSTATUS(status)>1)
 	{
-		dlg_log_printf("sdialog_call_modal: child died badly\n");
+		dlg_log_printf("sdialog_call_modal: child died badly: if %d, st %d\n", WIFEXITED(status), WEXITSTATUS(status));
         memset(buf,0,sizeof(buf));
         return NULL;
     }
