@@ -187,7 +187,7 @@ char* sdialog_call_modal(const char* path,const char* msg)
     close(p[0]);
 
 	dlg_log_printf("sdialog_call_modal: waiting for child to die\n");
-    while(waitpid(pid,&status,0)<0)
+    while(waitpid(pid,&status,0)<0) {
         if(errno!=EINTR) {
 	    dlg_log_printf("sdialog_call_modal: waitpid returned with error %s", strerror(errno));
             break;
