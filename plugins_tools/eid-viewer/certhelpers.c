@@ -3,6 +3,9 @@
 #include <certhelpers.h>
 #include <stdbool.h>
 #include <string.h>
+#include <assert.h>
+
+#include "backend.h"
 
 char* get_use_flags(const char* label, X509* cert) {
 	X509_CINF* ci = cert->cert_info;
@@ -77,3 +80,68 @@ char* describe_cert(const char* label, X509* cert) {
 	return strdup((char*)value);
 }
 
+int check_data_validity(const char* photo, int plen,
+		const char* photohash, int hashlen,
+		const char* datafile, int datfilelen,
+		const char* datasig, int datsiglen,
+		const char* addrfile, int addfilelen,
+		const char* addrsig, int addsiglen,
+		const char* cert, int certlen) {
+	BIO *bio;
+	X509* rrncert;
+	EVP_PKEY* pubkey;
+	unsigned char digest[SHA256_DIGEST_LENGTH];
+	unsigned char*(*hash)(const unsigned char*, size_t, unsigned char*);
+	unsigned char *address_data, *ptr;
+	int nid;
+
+	bio = BIO_new_mem_buf((char*)cert, certlen);
+	rrncert = d2i_X509_bio(bio, NULL);
+
+	assert(photo != NULL && plen != 0
+			&& photohash != NULL && (hashlen == SHA_DIGEST_LENGTH || hashlen == SHA256_DIGEST_LENGTH)
+			&& datafile != NULL && datfilelen != 0 && datasig != NULL && datsiglen != 0
+			&& addrfile != NULL && addfilelen != 0 && addrsig != NULL && addsiglen != 0
+			&& rrncert != NULL);
+
+	switch(hashlen) {
+		case SHA_DIGEST_LENGTH:
+			hash = SHA1;
+			nid = NID_sha1;
+			break;
+		case SHA256_DIGEST_LENGTH:
+			hash = SHA256;
+			nid = NID_sha256;
+			break;
+	}
+
+	hash(photo, plen, digest);
+	if(memcmp(digest, photohash, hashlen)) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: photo hash invalid");
+		return 0;
+	}
+	pubkey = X509_get_pubkey(rrncert);
+	if(EVP_PKEY_type(pubkey->type) != EVP_PKEY_RSA) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: wrong key type (expecting RSA, got %d)", pubkey->type);
+		return 0;
+	}
+	hash(datafile, datfilelen, digest);
+	if(RSA_verify(nid, digest, hashlen, datasig, datsiglen, EVP_PKEY_get1_RSA(pubkey)) != 1) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: data signature invalid!");
+		return 0;
+	}
+
+	address_data = calloc(addfilelen + datsiglen, 1);
+	memcpy(address_data, addrfile, addfilelen);
+	for(ptr = address_data + addfilelen; *ptr == 0; ptr--);
+	ptr++;
+	memcpy(ptr, datasig, datsiglen);
+	hash(address_data, (ptr - address_data) + datsiglen, digest);
+	free(address_data);
+	if(RSA_verify(nid, digest, hashlen, addrsig, addsiglen, EVP_PKEY_get1_RSA(pubkey)) != 1) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: address signature invalid!");
+		return 0;
+	}
+
+	return 1;
+}

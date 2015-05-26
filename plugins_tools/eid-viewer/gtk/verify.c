@@ -6,11 +6,6 @@
 
 #include <string.h>
 
-#include <openssl/rsa.h>
-#include <openssl/x509.h>
-#include <openssl/bio.h>
-#include <openssl/sha.h>
-
 static GHashTable* hash = NULL;
 
 struct storage_data {
@@ -43,22 +38,7 @@ void add_verify_data(char* label, void* data, int len) {
 }
 
 gboolean data_verifies() {
-	int photovalid = photo_is_valid();
-	BIO *bio;
-	X509 *cert;
-	EVP_PKEY* pubkey;
-	unsigned char *ptr, *address_data;
-	unsigned char digest[SHA_DIGEST_LENGTH];
-	struct storage_data *tmp, *datsign;
-
-	if(photovalid <= 0) {
-		return FALSE;
-	}
-	/* The photo_is_valid() function only verifies the photo's hash,
-	 * it does not verify any signature. However, the photo hash is
-	 * stored in the DATA_FILE (which is signed), so if that file's
-	 * signature validates, then the photo is valid and signed, too.
-	 */
+	struct storage_data *data, *address, *datsig, *addsig, *cert;
 
 	/* Make sure we have all the info we need. */
 #define REQUIRE(s) if(!g_hash_table_contains(hash, s)) return FALSE
@@ -70,34 +50,18 @@ gboolean data_verifies() {
 #undef REQUIRE
 
 	/* Feed RRN certificate to OpenSSL */
-	tmp = g_hash_table_lookup(hash, "CERT_RN_FILE");
-	bio = BIO_new_mem_buf(tmp->data, tmp->len);
-	cert = d2i_X509_bio(bio, NULL);
-	pubkey = X509_get_pubkey(cert);
-	if(EVP_PKEY_type(pubkey->type) != EVP_PKEY_RSA) {
-		return FALSE;
-	}
+	cert = g_hash_table_lookup(hash, "CERT_RN_FILE");
 
-	tmp = g_hash_table_lookup(hash, "DATA_FILE");
-	SHA1(tmp->data, tmp->len, digest);
-	datsign = g_hash_table_lookup(hash, "SIGN_DATA_FILE");
-	if(RSA_verify(NID_sha1, digest, sizeof(digest), datsign->data, datsign->len, EVP_PKEY_get1_RSA(pubkey)) != 1) {
-		return FALSE;
-	}
-
-	tmp = g_hash_table_lookup(hash, "ADDRESS_FILE");
-	address_data = g_malloc0(tmp->len + datsign->len);
-	memcpy(address_data, tmp->data, tmp->len);
-	for(ptr = address_data + tmp->len; *ptr == 0; ptr--) {
-	}
-	ptr++;
-	memcpy(ptr, datsign->data, datsign->len);
-	SHA1(address_data, (ptr - address_data) + datsign->len, digest);
-	g_free(address_data);
-	tmp = g_hash_table_lookup(hash, "SIGN_ADDRESS_FILE");
-	if(RSA_verify(NID_sha1, digest, sizeof(digest), tmp->data, tmp->len, EVP_PKEY_get1_RSA(pubkey)) != 1) {
-		return FALSE;
-	}
-
-	return TRUE;
+	data = g_hash_table_lookup(hash, "DATA_FILE");
+	address = g_hash_table_lookup(hash, "ADDRESS_FILE");
+	datsig = g_hash_table_lookup(hash, "SIGN_DATA_FILE");
+	addsig = g_hash_table_lookup(hash, "SIGN_ADDRESS_FILE");
+	const struct photo_info* pi = photo_get_data();
+	return (check_data_validity(pi->raw, pi->plen,
+				pi->hash, pi->hlen,
+				data->data, data->len,
+				datsig->data, datsig->len,
+				address->data, address->len,
+				addsig->data, addsig->len,
+				cert->data, cert->len) == 1) ? TRUE : FALSE;
 }
