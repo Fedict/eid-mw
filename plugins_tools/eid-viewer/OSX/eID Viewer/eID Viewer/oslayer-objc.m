@@ -89,4 +89,7 @@ static void* threadmain(void* val) {
 +(void)close_file {
     sm_handle_event(EVENT_CLOSE_FILE, NULL, NULL, NULL);
 }
++(void)set_invalid {
+    sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+}
 @end

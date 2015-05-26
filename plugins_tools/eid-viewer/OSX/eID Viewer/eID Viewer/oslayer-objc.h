@@ -75,4 +75,5 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 +(void)deserialize:(NSURL*)from;
 +(void)serialize:(NSURL*)to;
 +(void)close_file;
++(void)set_invalid;
 @end

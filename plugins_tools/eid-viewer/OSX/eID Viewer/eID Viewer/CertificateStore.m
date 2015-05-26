@@ -7,6 +7,7 @@
 //
 
 #import "CertificateStore.h"
+#import "DataVerifier.h"
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 #include <openssl/err.h>
@@ -32,6 +33,9 @@
     
     _ui = ui;
 
+    if([label isEqualToString:@"CERT_RN_FILE"]) {
+        [[DataVerifier verifier]handle_bin_data:data forLabel:label withUi:ui];
+    }
     for(int i=0; i<CERT_COL_NCOLS; i++) {
         arr[i] = @"";
     }
