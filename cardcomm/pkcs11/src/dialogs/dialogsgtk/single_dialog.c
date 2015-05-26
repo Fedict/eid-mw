@@ -36,6 +36,8 @@
 extern void dlg_log_printf(const char* format, ...);
 extern void dlg_log_error(const char* label);
 
+#define DEBUG
+
 #ifdef DEBUG
 #define DPRINTF(format,args...) fprintf(stderr, format , ## args)
 #define DERROR(label) perror(label)
@@ -144,11 +146,11 @@ char* sdialog_call_modal(const char* path,const char* msg)
     if(pid==0)
 	{
 		char* disp = getenv("DISPLAY");
-		dlg_log_printf("sdialog_call_modal: in child\n");
+		DPRINTF("sdialog_call_modal: in child\n");
 		if(disp != NULL) {
-			dlg_log_printf("sdialog_call_modal: DISPLAY=%s\n", disp);
+			DPRINTF("sdialog_call_modal: DISPLAY=%s\n", disp);
 		} else {
-			dlg_log_printf("DISPLAY not set\n");
+			DPRINTF("DISPLAY not set\n");
 		}
        	umask(0);
 		chdir("/");
@@ -156,14 +158,14 @@ char* sdialog_call_modal(const char* path,const char* msg)
 
         if(dup2(p[1],STDOUT_FILENO)<0)
 		{
-			dlg_log_printf("sdialog_call_modal/child/dup2");
+			DPRINTF("sdialog_call_modal/child/dup2");
 			exit(1);
 		}
 
-		dlg_log_printf("call_dialog_result: about to exec %s\n",path);
+		DPRINTF("call_dialog_result: about to exec %s\n",path);
 		execlp(path,path,msg,(char*)0);
 
-		dlg_log_error("sdialog_call_modal/execlp");
+		DPRINTF("sdialog_call_modal/execlp");
 		exit(1);
     }
 
