@@ -46,6 +46,7 @@ int main(void) {
 	run_test(init_finalize());
 	run_test(fork_init());
 	run_test(double_init());
+    run_test(wrong_init());
 	run_test(getinfo());
 	run_test(funclist());
 	run_test(slotlist());

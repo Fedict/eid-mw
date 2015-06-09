@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2011 FedICT.
+ * Copyright (C) 2015 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -21,7 +21,7 @@
 //
 //#include "resource.h"
 
-#include "../../../VS_2012/beidversions.h"
+#include "..\..\..\..\scripts\windows\beidversions.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////

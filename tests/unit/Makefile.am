@@ -12,6 +12,10 @@ libtestlib_a_SOURCES = testlib.h testlib.c
 liblabels_a_SOURCES = labels.h labels.c
 
 AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220
+if NO_DIALOGS
+AM_CFLAGS += -DNO_DIALOGS
+endif
+COMMON_SRCS = testlib.h testlib.c
 
 init_finalize_SOURCES = init_finalize.c
 init_finalize_LDADD = $(COMMON_LIB)

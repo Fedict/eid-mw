@@ -64,7 +64,11 @@ TEST_FUNC(tkinfo) {
 	
 	verbose_assert(!(info.flags & CKF_RNG));
 	verbose_assert(info.flags & CKF_WRITE_PROTECTED);
+#ifndef NO_DIALOGS
 	verbose_assert(!(info.flags & CKF_LOGIN_REQUIRED));
+#else
+	verbose_assert(info.flags & CKF_LOGIN_REQUIRED);
+#endif
 	verbose_assert(!(info.flags & CKF_RESTORE_KEY_NOT_NEEDED));
 	verbose_assert(!(info.flags & CKF_CLOCK_ON_TOKEN));
 	verbose_assert(!(info.flags & CKF_DUAL_CRYPTO_OPERATIONS));

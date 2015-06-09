@@ -362,6 +362,9 @@ return(lBits);
     //default values
     tInfo.iAppVersion = 0;
 
+    tInfo.iSecEnv = 0;
+    tInfo.piRecordInfo[0] = 0;
+
     while(xLev1Item.l_data > 0)
     {
         //get next item

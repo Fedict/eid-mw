@@ -130,9 +130,10 @@
       <Directory Id="SystemFolder">
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
       </Directory>
-
+<?ifndef env.DONT_MERGE_VCRT?>
       <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC110_CRT_x86.msm" Language="0" DiskId="1" />
-    </Directory>
+<?endif?>
+	  </Directory>
     
 	<DirectoryRef Id="BEIDVIEWERDIR">
       <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
@@ -427,10 +428,11 @@
              Absent="disallow"
              Level="1"
              >
+<?ifndef env.DONT_MERGE_VCRT?>
       <Feature Id="VCRedist" Title="VC++ 12.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
         <MergeRef Id="VCRT" />
       </Feature>
-
+<?endif?>
       <!-- Program Files -->
       <ComponentRef Id="Icon" />
       <ComponentRef Id="License"/>

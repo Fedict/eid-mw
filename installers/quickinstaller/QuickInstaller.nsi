@@ -66,6 +66,7 @@ VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 	Var Font_CardData
 	Var FileToCopy
 	Var LogFile
+	Var MsiResponse
 
 ;--------------------------------
 	;Interface Settings
@@ -137,10 +138,19 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		ClearErrors
 		;delete previous log
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw64_log.txt"
-		Delete "$LogFile"
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"'
-		IfErrors 0 +2
-			Call ErrorHandler_msiexec
+		;Delete "$LogFile"
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse
+		${Switch} $MsiResponse
+			${Case} 0
+			${Case} 3010 
+				;3010 is 'success, but reboot requiered'
+			${Break}
+			${Default}
+				Call ErrorHandler_msiexec
+		${EndSwitch}
+		;IfErrors 0 +2
+		;	Call ErrorHandler_msiexec
+		
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
 		Delete "$INSTDIR\BeidMW_64.msi"
 	${Else}	
@@ -152,10 +162,18 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		ClearErrors
 		;delete previous log
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw32_log.txt"
-		Delete "$LogFile"
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"'
-		IfErrors 0 +2
-			Call ErrorHandler_msiexec
+		;Delete "$LogFile"
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse
+		${Switch} $MsiResponse
+			${Case} 0
+			${Case} 3010 
+				;3010 is 'success, but reboot requiered'
+			${Break}
+			${Default}
+				Call ErrorHandler_msiexec
+		${EndSwitch}
+		;IfErrors 0 +2
+		;	Call ErrorHandler_msiexec
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
 		Delete "$INSTDIR\BeidMW_32.msi"
   ${EndIf}
