@@ -35,7 +35,6 @@ static DataVerifier* ver;
 -(void)handle_bin_data:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui {
     NSMutableDictionary* dict = (NSMutableDictionary*)_elements;
     [dict setObject:data forKey:label];
-    [ui log:[NSString stringWithFormat:@"received binary object with label %@ and data '%@'", label, data] withLevel:eIDLogLevelDetail];
 }
 -(BOOL)isValid {
     NSData* photohash = [_elements objectForKey:@"photo_hash"];
