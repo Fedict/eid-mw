@@ -22,10 +22,12 @@
 #if defined(WIN32) || defined (__APPLE__)
 #include "langutil.h"
 #else
+#ifndef NO_DIALOGS
 #include "dialogs.h"
-#endif
 
 using namespace eIDMW;
+#endif
+#endif
 
 CK_BYTE AllowCardReading(void)
 {
