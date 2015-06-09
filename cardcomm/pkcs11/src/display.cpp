@@ -21,6 +21,8 @@
 
 #if defined(WIN32) || defined (__APPLE__)
 #include "langutil.h"
+
+using namespace eIDMW;
 #else
 #ifndef NO_DIALOGS
 #include "dialogs.h"
