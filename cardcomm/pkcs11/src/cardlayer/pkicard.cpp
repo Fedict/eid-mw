@@ -201,6 +201,9 @@ bool CPkiCard::AskPinRetry(tPinOperation operation, const tPin & Pin,
 	// PIN blocked: show a dialog to tell the user
 	if (!bUsePinpad)
 	{
+#ifdef NO_DIALOGS
+		return false;
+#endif
 		DlgPinUsage usage = PinUsage2Dlg(Pin, pKey);
 		DlgRet dlgret = DlgBadPin(usage, utilStringWiden(Pin.csLabel).c_str(), ulRemaining);
 		if (0 != ulRemaining && DLG_RETRY == dlgret)
