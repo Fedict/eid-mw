@@ -156,7 +156,11 @@ CK_BBOOL want_dialogs() {
 #ifndef WIN32
 	char* envvar = getenv("EID_DIALOGS_STYLE");
 
+#ifdef NO_DIALOGS
+	dialogs_type = DIALOGS_NOPIN;
+#else
 	dialogs_type = DIALOGS_AVOID;
+#endif
 
 	if(envvar == NULL) {
 		return CK_FALSE;

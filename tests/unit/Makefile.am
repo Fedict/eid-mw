@@ -9,6 +9,9 @@ CLEANFILES=foto.jpg
 COMMON_LIB=$(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
 
 AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220
+if NO_DIALOGS
+AM_CFLAGS += -DNO_DIALOGS
+endif
 COMMON_SRCS = testlib.h testlib.c
 
 init_finalize_SOURCES = init_finalize.c $(COMMON_SRCS)
