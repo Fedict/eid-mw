@@ -332,6 +332,14 @@ static void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED)
 	gtk_tree_selection_selected_foreach(sel, update_info_detail, NULL);
 }
 
+static gboolean show_menu(GtkWidget* widget, GdkEvent* event, gpointer user_data) {
+	GtkMenu* menu = GTK_MENU(gtk_builder_get_object(builder, "certmenu"));
+	if(event->button.button == 3) { // RMB click
+		gtk_menu_popup(menu, NULL, NULL, NULL, NULL, event->button.button, event->button.time);
+	}
+	return FALSE;
+}
+
 static void setup_treeview() {
 	GtkTreeView* tv = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_cert"));
 	GtkCellRenderer *renderer;
@@ -344,6 +352,7 @@ static void setup_treeview() {
 	gtk_tree_view_append_column(tv, col);
 
 	g_signal_connect(G_OBJECT(sel), "changed", G_CALLBACK(update_info), NULL);
+	g_signal_connect(G_OBJECT(tv), "button-press-event", G_CALLBACK(show_menu), NULL);
 }
 
 int main(int argc, char** argv) {
