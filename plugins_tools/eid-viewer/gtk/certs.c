@@ -240,3 +240,89 @@ void certs_init() {
 void clear_certdata() {
 	g_main_context_invoke(NULL, real_clear, NULL);
 }
+
+void certexport(GtkMenuItem* item, gpointer userdata) {
+	GtkWindow* win = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(
+			_("Save eID file"), win, GTK_FILE_CHOOSER_ACTION_SAVE,
+		       	_("Cancel"), GTK_RESPONSE_CANCEL,
+		       	_("Save"), GTK_RESPONSE_ACCEPT,
+			NULL);
+	gchar* filename_sugg;
+	gchar* desc;
+	gint res;
+	GtkFileFilter* filter;
+	GtkTreeSelection* sel = gtk_tree_view_get_selection(
+			GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_cert")));
+	GtkTreeIter iter;
+	GtkTreeModel* model;
+	int s, d, len;
+
+	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*.pem");
+	gtk_file_filter_set_name(filter, _("PEM files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+	
+	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*.pem");
+	gtk_file_filter_add_pattern(filter, "*.der");
+	gtk_file_filter_set_name(filter, _("PEM and DER files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+
+	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*.der");
+	gtk_file_filter_set_name(filter, _("DER files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+
+	gtk_tree_selection_get_selected(sel, &model, &iter);
+	gtk_tree_model_get(model, &iter, CERT_COL_LABEL, &desc, -1);
+	filename_sugg = g_strdup_printf("%s.%s",
+			desc, strcmp((char*)userdata, "DER") ? "pem" : "der");
+	len = strlen(filename_sugg);
+	for(s=0,d=0;s<len;s++) {
+		switch(filename_sugg[s]) {
+			case '(':
+			case ')':
+				break;
+			case ' ':
+				filename_sugg[d] = '_';
+			default:
+				filename_sugg[d] = tolower(filename_sugg[s]);
+				d++;
+		}
+	}
+	filename_sugg[d]='\0';
+
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), filename_sugg);
+
+	res = gtk_dialog_run(GTK_DIALOG(dialog));
+	if(res == GTK_RESPONSE_ACCEPT) {
+		gchar* filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+		int fd = open(filename, O_WRONLY | O_CREAT);
+		GByteArray* arr;
+		if(!fd) {
+			uilog(EID_VWR_LOG_ERROR, _("Could not open file %s: %s"), filename, strerror(errno));
+			return;
+		}
+
+		gtk_tree_model_get(model, &iter, CERT_COL_DATA, &arr, -1);
+		fd = open(filename, O_WRONLY | O_CREAT);
+		dumpcert(fd, arr->data, arr->len, strcmp((char*)userdata, "DER") ? DUMP_PEM : DUMP_DER);
+		if(!strcmp((char*)userdata, "chain")) {
+			while(gtk_tree_model_iter_parent(model, &iter, &iter)) {
+				gtk_tree_model_get(model, &iter, CERT_COL_DATA, &arr, -1);
+				dumpcert(fd, arr->data, arr->len, DUMP_PEM);
+			}
+		}
+		close(fd);
+	}
+	g_free(filename_sugg);
+	gtk_widget_destroy(dialog);
+}
+
+void certdetail(GtkMenuItem* item, gpointer userdata) {
+	GtkWindow* win = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
+	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, _("Not yet implemented"));
+	gtk_dialog_run(GTK_DIALOG(dialog));
+	gtk_widget_destroy(dialog);
+}

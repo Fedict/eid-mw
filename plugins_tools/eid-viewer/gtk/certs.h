@@ -8,5 +8,7 @@ void add_certificate(char* label, void* data, int len);
 void clear_certdata();
 void certs_init();
 GtkTreeModel* certificates_get_model();
+void certexport(GtkMenuItem* mi, gpointer user_data);
+void certdetail(GtkMenuItem* mi, gpointer user_data);
 
 #endif

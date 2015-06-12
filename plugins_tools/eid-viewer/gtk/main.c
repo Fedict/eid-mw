@@ -271,6 +271,14 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showurl), "faq");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_test"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showurl), "test");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_cert_detail"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(certdetail), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_cert_export_der"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(certexport), "DER");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_cert_export_pem"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(certexport), "PEM");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_cert_export_chain"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(certexport), "chain");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pintestbut"));
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_TEST);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pinchangebut"));

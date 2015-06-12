@@ -17,6 +17,11 @@ enum cert_columns {
 	CERT_COL_NCOLS
 };
 
+enum dump_type {
+	DUMP_DER,
+	DUMP_PEM,
+};
+
 char* get_use_flags(const char* label, X509* cert);
 char* detail_cert(const char* label, X509* cert);
 char* describe_cert(const char* label, X509* cert);
@@ -27,5 +32,5 @@ int check_data_validity(const char* photo, int plen,
 		const char* addrfile, int addfilelen,
 		const char* addrsig, int addsiglen,
 		const char* rrncert, int certlen);
-
+void dumpcert(int fd, void* derdata, int len, enum dump_type how);
 #endif

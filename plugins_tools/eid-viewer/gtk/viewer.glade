@@ -4,7 +4,7 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkMenuItem" id="cert_detail">
+      <object class="GtkMenuItem" id="mi_cert_detail">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Detailed information...</property>
@@ -18,7 +18,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkMenuItem" id="cert_export_pem">
+      <object class="GtkMenuItem" id="mi_cert_export_pem">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Export to PEM file...</property>
@@ -26,7 +26,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkMenuItem" id="cert_export_der">
+      <object class="GtkMenuItem" id="mi_cert_export_der">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Export to DER file...</property>
@@ -40,7 +40,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkMenuItem" id="cert_export_chain">
+      <object class="GtkMenuItem" id="mi_cert_export_chain">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Export chain to PEM file...</property>
