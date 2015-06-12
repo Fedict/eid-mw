@@ -298,7 +298,7 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		gchar* filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-		int fd = open(filename, O_WRONLY | O_CREAT);
+		int fd;
 		GByteArray* arr;
 		if(!fd) {
 			uilog(EID_VWR_LOG_ERROR, _("Could not open file %s: %s"), filename, strerror(errno));
