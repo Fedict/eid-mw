@@ -128,6 +128,7 @@ void add_certificate(char* label, void* data, int len) {
 	size_t size;
 	gint cols=8;
 	gint *columns;
+	gint cur=0;
 	GValue *vals;
 
 	ensure_cert();
@@ -142,47 +143,47 @@ void add_certificate(char* label, void* data, int len) {
 	columns = calloc(sizeof(gint),cols);
 	vals = calloc(sizeof(GValue),cols);
 
-	columns[0] = CERT_COL_LABEL;
-	g_value_init(&(vals[0]), G_TYPE_STRING);
+	columns[cur] = CERT_COL_LABEL;
+	g_value_init(&(vals[cur]), G_TYPE_STRING);
 	char* str = describe_cert(label, cert);
-	g_value_take_string(&(vals[0]), g_strdup(str));
+	g_value_take_string(&(vals[cur++]), g_strdup(str));
 	free(str);
 
-	columns[1] = CERT_COL_IMAGE;
-	g_value_init(&(vals[1]), GDK_TYPE_PIXBUF);
-	g_value_set_instance(&(vals[1]), unchecked_certificate);
+	columns[cur] = CERT_COL_IMAGE;
+	g_value_init(&(vals[cur]), GDK_TYPE_PIXBUF);
+	g_value_set_instance(&(vals[cur++]), unchecked_certificate);
 
 	ASN1_TIME_print(bio, X509_get_notBefore(cert));
 	buf = malloc((size = BIO_ctrl_pending(bio)) + 1);
 	BIO_read(bio, buf, (int)size);
 	buf[size] = '\0';
-	columns[2] = CERT_COL_VALIDFROM;
-	g_value_init(&(vals[2]), G_TYPE_STRING);
-	g_value_set_string(&(vals[2]), buf);
+	columns[cur] = CERT_COL_VALIDFROM;
+	g_value_init(&(vals[cur]), G_TYPE_STRING);
+	g_value_set_string(&(vals[cur++]), buf);
 	
 	ASN1_TIME_print(bio, X509_get_notAfter(cert));
 	buf = malloc((size = BIO_ctrl_pending(bio)) + 1);
 	BIO_read(bio, buf, (int)size);
 	buf[size] = '\0';
-	columns[3] = CERT_COL_VALIDTO;
-	g_value_init(&(vals[3]), G_TYPE_STRING);
-	g_value_set_string(&(vals[3]), buf);
+	columns[cur] = CERT_COL_VALIDTO;
+	g_value_init(&(vals[cur]), G_TYPE_STRING);
+	g_value_set_string(&(vals[cur++]), buf);
 
-	columns[4] = CERT_COL_DESC;
-	g_value_init(&(vals[4]), G_TYPE_STRING);
-	g_value_take_string(&(vals[4]), detail_cert(label, cert));
+	columns[cur] = CERT_COL_DESC;
+	g_value_init(&(vals[cur]), G_TYPE_STRING);
+	g_value_take_string(&(vals[cur++]), detail_cert(label, cert));
 
-	columns[5] = CERT_COL_USE;
-	g_value_init(&(vals[5]), G_TYPE_STRING);
-	g_value_take_string(&(vals[5]), get_use_flags(label, cert));
+	columns[cur] = CERT_COL_USE;
+	g_value_init(&(vals[cur]), G_TYPE_STRING);
+	g_value_take_string(&(vals[cur++]), get_use_flags(label, cert));
 
-	columns[6] = CERT_COL_VALIDFROM_PAST;
-	g_value_init(&(vals[6]), G_TYPE_BOOLEAN);
-	g_value_set_boolean(&(vals[6]), (X509_cmp_current_time(X509_get_notBefore(cert)) < 0) ? FALSE : TRUE);
+	columns[cur] = CERT_COL_VALIDFROM_PAST;
+	g_value_init(&(vals[cur]), G_TYPE_BOOLEAN);
+	g_value_set_boolean(&(vals[cur++]), (X509_cmp_current_time(X509_get_notBefore(cert)) < 0) ? FALSE : TRUE);
 
-	columns[7] = CERT_COL_VALIDTO_FUTURE;
-	g_value_init(&(vals[7]), G_TYPE_BOOLEAN);
-	g_value_set_boolean(&(vals[7]), (X509_cmp_current_time(X509_get_notAfter(cert)) > 0) ? FALSE : TRUE);
+	columns[cur] = CERT_COL_VALIDTO_FUTURE;
+	g_value_init(&(vals[cur]), G_TYPE_BOOLEAN);
+	g_value_set_boolean(&(vals[cur++]), (X509_cmp_current_time(X509_get_notAfter(cert)) > 0) ? FALSE : TRUE);
 
 	BIO_free(bio);
 
