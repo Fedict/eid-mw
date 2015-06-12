@@ -145,3 +145,31 @@ int check_data_validity(const char* photo, int plen,
 
 	return 1;
 }
+
+void dumpcert(int fd, void* derdata, int len, enum dump_type how) {
+	BIO *bio;
+	X509 *cert = NULL;
+
+	switch(how) {
+		case DUMP_DER:
+			write(fd, derdata, len);
+			break;
+		case DUMP_PEM:
+			/* Clear errors */
+			while(ERR_get_error() != 0) {};
+			bio = BIO_new_fd(fd, 0);
+			if(d2i_X509(&cert, (const unsigned char**)&derdata, len) == NULL) {
+				char buf[100];
+				unsigned long error = ERR_get_error();
+				ERR_load_crypto_strings();
+				ERR_error_string_n(error, buf, sizeof(buf));
+				buf[99]='\0';
+				be_log(EID_VWR_LOG_ERROR, "Could not parse certificate");
+				be_log(EID_VWR_LOG_DETAIL, "libssl error: %s", buf);
+				return;
+			}
+			PEM_write_bio_X509(bio, cert);
+			BIO_free(bio);
+			break;
+	}
+}
