@@ -1,3 +1,4 @@
+#include <config.h>
 #include "certs.h"
 #include "verify.h"
 #include "prefs.h"
@@ -6,9 +7,18 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gtk/logging.h>
 
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#include <locale.h>
+#include <gettext.h>
+#include <errno.h>
 
 enum certs {
 	Root,
@@ -18,6 +28,8 @@ enum certs {
 	Signature,
 	CERTS_COUNT,
 };
+
+#define _(s) gettext(s)
 
 static GtkTreeStore* certificates = NULL;
 static GtkTreeIter* iters[CERTS_COUNT];
@@ -117,7 +129,7 @@ static void ensure_cert() {
 				G_TYPE_STRING, // use
 				G_TYPE_BOOLEAN, // validity
 				G_TYPE_STRING, // description (multi-line field 
-				G_TYPE_POINTER); // data (X509*)
+				G_TYPE_BYTE_ARRAY); // data (GByteArray*)
 	}
 }
 
@@ -126,22 +138,32 @@ void add_certificate(char* label, void* data, int len) {
 	BIO *bio = BIO_new(BIO_s_mem());
 	char *buf;
 	size_t size;
-	gint cols=8;
+	gint cols=9;
 	gint *columns;
 	gint cur=0;
 	GValue *vals;
+	GByteArray* ba;
 
 	ensure_cert();
-	if(!strcmp(label, "CERT_RN_FILE")) {
-		add_verify_data(label, data, len);
-	}
-	if(d2i_X509(&cert, (const unsigned char**)&data, len) == NULL) {
-		g_warning("Could not parse %s certificate", label);
-		return;
-	}
 
 	columns = calloc(sizeof(gint),cols);
 	vals = calloc(sizeof(GValue),cols);
+
+	if(!strcmp(label, "CERT_RN_FILE")) {
+		add_verify_data(label, data, len);
+	}
+
+	/* must happen before d2i_X509, since that modifies the pointer */
+	columns[cur] = CERT_COL_DATA;
+	g_value_init(&(vals[cur]), G_TYPE_BYTE_ARRAY);
+	ba = g_byte_array_sized_new(len);
+	g_byte_array_append(ba, data, len);
+	g_value_take_boxed(&(vals[cur++]), ba);
+
+	if(d2i_X509(&cert, (unsigned char**)&data, len) == NULL) {
+		g_warning("Could not parse %s certificate", label);
+		return;
+	}
 
 	columns[cur] = CERT_COL_LABEL;
 	g_value_init(&(vals[cur]), G_TYPE_STRING);
