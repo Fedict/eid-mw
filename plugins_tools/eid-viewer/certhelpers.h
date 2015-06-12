@@ -32,5 +32,5 @@ int check_data_validity(const char* photo, int plen,
 		const char* addrfile, int addfilelen,
 		const char* addrsig, int addsiglen,
 		const char* rrncert, int certlen);
-void dumpcert(int fd, void* derdata, int len, enum dump_type how);
+void dumpcert(int fd, const void* derdata, int len, enum dump_type how);
 #endif

@@ -147,7 +147,7 @@ int check_data_validity(const char* photo, int plen,
 	return 1;
 }
 
-void dumpcert(int fd, void* derdata, int len, enum dump_type how) {
+void dumpcert(int fd, const void* derdata, int len, enum dump_type how) {
 	BIO *bio;
 	X509 *cert = NULL;
 

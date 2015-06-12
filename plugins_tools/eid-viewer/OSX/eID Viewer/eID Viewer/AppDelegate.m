@@ -20,6 +20,8 @@
 - (IBAction)log_buttonaction:(NSSegmentedControl *)sender;
 - (IBAction)changeLogLevel:(NSPopUpButton *)sender;
 - (IBAction)print:(id)sender;
+- (IBAction)showDetail:(id)sender;
+- (IBAction)export:(NSMenuItem *)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
@@ -160,6 +162,31 @@
 }
 - (IBAction)print:(id)sender {
     [[[PrintOperation alloc] initWithView:_printop_view app:self] runOperation];
+}
+
+- (IBAction)showDetail:(id)sender {
+}
+
+- (IBAction)export:(NSMenuItem *)sender {
+    NSString* key = [_CertificatesView itemAtRow:[_CertificatesView selectedRow]];
+    if(key == nil) {
+        return;
+    }
+    NSSavePanel* panel = [NSSavePanel savePanel];
+    panel.title = @"Export";
+    panel.nameFieldStringValue = [NSString stringWithFormat: @"%@%s.%s", [_certstore fileNameForKey:key], sender.tag == 3 ? "_chain" : "", sender.tag == 2 ? "der" : "pem"];
+    [panel beginWithCompletionHandler:^(NSInteger result) {
+        int fd=open([panel.URL fileSystemRepresentation], O_CREAT|O_RDWR, S_IWRITE|S_IREAD);
+        [_certstore dumpFile:fd forKey:key withFormat:sender.tag == 2 ? eIDDumpTypeDer : eIDDumpTypePem];
+        if(sender.tag == 3) {
+            NSString* newKey = [_certstore keyForParent:key];
+            while(newKey != nil) {
+                [_certstore dumpFile:fd forKey:key withFormat:eIDDumpTypePem];
+                newKey = [_certstore keyForParent:newKey];
+            }
+        }
+        close(fd);
+    }];
 }
 - (void)awakeFromNib {
     if(_certstore != nil) {

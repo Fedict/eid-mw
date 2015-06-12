@@ -42,6 +42,7 @@
     while(ERR_get_error()) {
         continue;
     }
+    arr[CERT_COL_DATA] = data;
     [data getBytes:bytes length:size];
     if(d2i_X509(&cert, &bytes, size) == NULL) {
         ERR_load_crypto_strings();
@@ -182,5 +183,41 @@
     [_ui newstringdata:[arr objectAtIndex:CERT_COL_VALIDTO] withLabel:@"certvaltilval"];
     [_ui newstringdata:[arr objectAtIndex:CERT_COL_USE] withLabel:@"certuseval"];
     [_ui newbindata:[arr objectAtIndex:CERT_COL_IMAGE]withLabel:@"certimage"];
+}
+-(void)dumpFile:(int)fd forKey:(NSString*)key withFormat:(eIDDumpType)format {
+    NSData *dat = [[_CertificateData objectForKey:key] objectAtIndex:CERT_COL_DATA];
+    dumpcert(fd, [dat bytes], [dat length], (enum dump_type)format);
+}
+-(NSString*)fileNameForKey:(NSString*)key {
+    NSString* label = [[_CertificateData objectForKey:key] objectAtIndex:CERT_COL_LABEL];
+    NSUInteger len = [label length];
+    char string[len+1];
+    memcpy(string, [label cStringUsingEncoding:NSUTF8StringEncoding], len);
+    string[len]='\0';
+    int d=0;
+    for(int s=0; s<len;s++) {
+        string[d] = tolower(string[s]);
+        switch(string[s]) {
+            case '(':
+            case ')':
+                break;
+            case ' ':
+                string[d]='_';
+            default:
+                d++;
+        }
+    }
+    string[d]='\0';
+    NSString *rv = [NSString stringWithCString:string encoding:NSUTF8StringEncoding];
+    return rv;
+}
+-(NSString*)keyForParent:(NSString *)key {
+    if([key isEqualToString:@"CERT_RN_FILE"] || [key isEqualToString:@"CA"]) {
+        return @"Root";
+    }
+    if([key isEqualToString:@"Authentication"] || [key isEqualToString:@"Signature"]) {
+        return @"CA";
+    }
+    return nil;
 }
 @end
