@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <assert.h>
+#include <unistd.h>
 
 #include "backend.h"
 
