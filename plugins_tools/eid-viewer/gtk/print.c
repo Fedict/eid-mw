@@ -2,6 +2,7 @@
 #include <cairo.h>
 #include "gtk_globals.h"
 #include "gtkui.h"
+#include "glib_util.h"
 
 #include "gettext.h"
 

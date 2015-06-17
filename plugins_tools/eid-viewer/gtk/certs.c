@@ -3,6 +3,7 @@
 #include "verify.h"
 #include "prefs.h"
 #include "gtk_globals.h"
+#include "glib_util.h"
 
 #include <string.h>
 
