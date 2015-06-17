@@ -12,6 +12,7 @@ AC_CANONICAL_HOST
 
 LT_INIT
 AM_INIT_AUTOMAKE([subdir-objects foreign tar-pax dist-zip serial-tests])
+AM_SILENT_RULES([yes])
 
 # Checks for programs.
 AC_PROG_CXX([g++])
