@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2014 FedICT.
+ * Copyright (C) 2008-2015 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -78,6 +78,7 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 
 	if ((ulVersion % 100) == (PLUGIN_VERSION % 100))
 	{
+		unsigned long ulLockCount = 1;
 		try {
 			bool bNeedToSelectApplet = false;
 			CByteArray oData;
@@ -91,7 +92,7 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 			//{
 			//don't use autolock when card might be reset
 				//CAutoLock oAutLock(&poContext->m_oPCSC, hCard);
-				unsigned long ulLockCount = 1;
+				
 				poContext->m_oPCSC.BeginTransaction(hCard);
 				oData = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
 				if (lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED)
@@ -144,6 +145,10 @@ CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 		}
 		catch(...)
 		{
+			if(ulLockCount)
+			{
+				poContext->m_oPCSC.EndTransaction(hCard);
+			}
 			//printf("Exception in cardPluginBeid.CardGetInstance()\n");
 		}
 	}

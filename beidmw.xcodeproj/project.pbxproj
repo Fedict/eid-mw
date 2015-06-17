@@ -166,6 +166,7 @@
 		86E3DF7B1653EFE60015B5E1 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF511653EFE50015B5E1 /* pkcs11t.h */; };
 		86E3DF7C1653EFE60015B5E1 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF521653EFE50015B5E1 /* unix.h */; };
 		86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
+		8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B07D1011B21CEB80033CD62 /* wrong_init.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -396,6 +397,7 @@
 		86E3DF511653EFE50015B5E1 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11t.h; path = doc/sdk/include/rsaref220/pkcs11t.h; sourceTree = SOURCE_ROOT; };
 		86E3DF521653EFE50015B5E1 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = doc/sdk/include/rsaref220/unix.h; sourceTree = SOURCE_ROOT; };
 		86E3DF531653EFE50015B5E1 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win32.h; path = doc/sdk/include/rsaref220/win32.h; sourceTree = SOURCE_ROOT; };
+		8B07D1011B21CEB80033CD62 /* wrong_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrong_init.c; path = tests/unit/wrong_init.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -505,6 +507,7 @@
 		6536230C19A7E8FE00D46ECB /* testsuite */ = {
 			isa = PBXGroup;
 			children = (
+				8B07D1011B21CEB80033CD62 /* wrong_init.c */,
 				65CC20ED19A7DE4E0089CD13 /* ordering.c */,
 				6536233C19A7E93A00D46ECB /* main.c */,
 				6536230D19A7E92B00D46ECB /* decode_photo.c */,
@@ -1043,6 +1046,7 @@
 				6536233519A7E92B00D46ECB /* sign.c in Sources */,
 				6536232A19A7E92B00D46ECB /* getinfo.c in Sources */,
 				6536232619A7E92B00D46ECB /* digest.c in Sources */,
+				8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

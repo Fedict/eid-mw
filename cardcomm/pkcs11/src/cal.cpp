@@ -1617,9 +1617,11 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 	P11_SLOT *pSlot = NULL;
 
 #ifdef PKCS11_FF
-	if(hSlot >= (CK_ULONG)(p11_get_nreaders()-1))
+	//our fake firefox slots should not return CKR_SLOT_ID_INVALID, or firefox will ignore them
+	if( (hSlot >= (CK_ULONG)(p11_get_nreaders()-1)) && (hSlot <= (CK_ULONG)cal_getgnFFReaders) )
 	{
-		return (CKR_SLOT_ID_INVALID);
+		*pStatus = P11_CARD_NOT_PRESENT;
+		return ret;
 	}
 #endif
 

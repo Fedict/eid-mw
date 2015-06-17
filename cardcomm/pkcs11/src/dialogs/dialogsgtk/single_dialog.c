@@ -33,6 +33,10 @@
 
 #define	MIN_CMDLINE_PATH_BYTES 14
 
+extern void dlg_log_printf(const char* format, ...);
+extern void dlg_log_error(const char* label);
+
+#define DEBUG
 
 #ifdef DEBUG
 #define DPRINTF(format,args...) fprintf(stderr, format , ## args)
@@ -80,26 +84,31 @@ pid_t sdialog_call(const char* path,const char* msg)
 {
     pid_t pid;
 
-	DPRINTF("sdialog_call/fork\n");
+	dlg_log_printf("sdialog_call/fork\n");
     if((pid=fork())<0)
 	{
-		DERROR("sdialog_call/fork");
+		dlg_log_error("sdialog_call/fork");
         return 0L;
     }
 
     if(pid==0)
 	{
-		DPRINTF("sdialog_call: in child\n");
-		DPRINTF("sdialog_call: DISPLAY=%s\n",getenv("DISPLAY"));
+		char* disp = getenv("DISPLAY");
+		dlg_log_printf("sdialog_call: in child\n");
+		if(disp != NULL) {
+			dlg_log_printf("sdialog_call: DISPLAY=%s\n");
+		} else {
+			dlg_log_printf("DISPLAY not set\n");
+		}
        	umask(0);
 		chdir("/");
-		DPRINTF("call_dialog: about to exec %s\n",path);
+		dlg_log_printf("call_dialog: about to exec %s\n",path);
 		execlp(path,path,msg,(char*)0);
-		DERROR("sdialog_call/execlp");
+		dlg_log_error("sdialog_call/execlp");
 		exit(1);
     }
 
-	DPRINTF("sdialog_call: child PID=%d\n",pid);
+	dlg_log_printf("sdialog_call: child PID=%d\n",pid);
     return pid;
 }
 
@@ -113,31 +122,36 @@ char* sdialog_call_modal(const char* path,const char* msg)
     int p[2], status, ret;
     char buf[1024];
 
-	DPRINTF("... fflush\n");
+	dlg_log_printf("... fflush\n");
     if(fflush(stdout)!=0)
 	{
-		DERROR("sdialog_call_modal/fflush");
+		dlg_log_error("sdialog_call_modal/fflush");
 		return NULL;
 	}
 
-	DPRINTF("... pipe\n");
+	dlg_log_printf("... pipe\n");
     if(pipe(p)<0)
 	{
-		DERROR("sdialog_call_modal/pipe");
+		dlg_log_error("sdialog_call_modal/pipe");
         return NULL;
     }
 
-	DPRINTF("... fork\n");
+	dlg_log_printf("... fork\n");
     if((pid=fork())<0)
 	{
-		DERROR("sdialog_call_modal/fork");
+		dlg_log_error("sdialog_call_modal/fork");
         return NULL;
     }
 
     if(pid==0)
 	{
+		char* disp = getenv("DISPLAY");
 		DPRINTF("sdialog_call_modal: in child\n");
-		DPRINTF("sdialog_call_modal: DISPLAY=%s\n",getenv("DISPLAY"));
+		if(disp != NULL) {
+			DPRINTF("sdialog_call_modal: DISPLAY=%s\n", disp);
+		} else {
+			DPRINTF("DISPLAY not set\n");
+		}
        	umask(0);
 		chdir("/");
         close(p[0]);
@@ -151,12 +165,12 @@ char* sdialog_call_modal(const char* path,const char* msg)
 		DPRINTF("call_dialog_result: about to exec %s\n",path);
 		execlp(path,path,msg,(char*)0);
 
-		DERROR("sdialog_call_modal/execlp");
+		DPRINTF("sdialog_call_modal/execlp");
 		exit(1);
     }
 
-	DPRINTF("sdialog_call_modal: child PID=%d\n",pid);
-	DPRINTF("sdialog_call_modal: reading result\n");
+	dlg_log_printf("sdialog_call_modal: child PID=%d\n",pid);
+	dlg_log_printf("sdialog_call_modal: reading result\n");
 
     close(p[1]);
     len=ret=0;
@@ -174,19 +188,22 @@ char* sdialog_call_modal(const char* path,const char* msg)
     buf[len]='\0';
     close(p[0]);
 
-	DPRINTF("sdialog_call_modal: waiting for child to die\n");
-    while(waitpid(pid,&status,0)<0)
-        if(errno!=EINTR)
+	dlg_log_printf("sdialog_call_modal: waiting for child to die\n");
+    while(waitpid(pid,&status,0)<0) {
+        if(errno!=EINTR) {
+	    dlg_log_printf("sdialog_call_modal: waitpid returned with error %s", strerror(errno));
             break;
+		}
+	}
 
     if(!WIFEXITED(status) || WEXITSTATUS(status)>1)
 	{
-		DPRINTF("sdialog_call_modal: child died badly\n");
+		dlg_log_printf("sdialog_call_modal: child died badly: if %d, st %d\n", WIFEXITED(status), WEXITSTATUS(status));
         memset(buf,0,sizeof(buf));
         return NULL;
     }
 
-	DPRINTF("sdialog_call_modal: child died normally\n");
+	dlg_log_printf("sdialog_call_modal: child died normally\n");
     buf[strcspn(buf,"\r\n")]='\0';
     response=strdup(buf);
     memset(buf,0,sizeof(buf));

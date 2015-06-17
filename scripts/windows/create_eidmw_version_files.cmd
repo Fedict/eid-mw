@@ -1,30 +1,7 @@
 :: creates the version files used by NSIS, Wix and MSBuild
 
-@SET BASE_VERSION1=4
-@SET BASE_VERSION2=1
-@SET BASE_VERSION3=3
-
-@FOR /F "tokens=1" %%i in ('"C:\Program Files (x86)\Git\bin\git.exe" rev-list --count HEAD') do @SET EIDMW_REVISION=%%i
-::"C:\Program Files (x86)\Git\bin\git.exe" describe
-
-@IF NOT DEFINED EIDMW_REVISION GOTO writedummy
-@IF "%EIDMW_REVISION%"=="" GOTO writedummy
-@IF EIDMW_REVISION==exported GOTO writedummy
-
-
-:writesvn_revision
-::@echo %EIDMW_REVISION%>"%~dp0\eidmw_revision"
-@echo [INFO] \eidmw_revision set to %EIDMW_REVISION%
-@GOTO write_eidmw_revision_h
-
-:writedummy
-::@IF EXIST "%~dp0\eidmw_revision" GOTO set_eidmw_revision
-::@echo 000>"%~dp0\eidmw_revision"
-@echo [INFO] \eidmw_revision set to 000
-@SET EIDMW_REVISION=0000
-
-::set_eidmw_revision
-::@FOR /F "tokens=1" %%i in (%~dp0..\eidmw_revision) do @SET EIDMW_REVISION=%%i
+:: retrieve the version numbers
+@call "%~dp0.\set_eidmw_version.cmd"
 
 :write_eidmw_revision_h
 :: create eidmw_revision.h file
