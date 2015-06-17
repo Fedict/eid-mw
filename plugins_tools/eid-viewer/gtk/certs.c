@@ -160,7 +160,7 @@ void add_certificate(char* label, void* data, int len) {
 	g_byte_array_append(ba, data, len);
 	g_value_take_boxed(&(vals[cur++]), ba);
 
-	if(d2i_X509(&cert, (unsigned char**)&data, len) == NULL) {
+	if(d2i_X509(&cert, (const unsigned char**)&data, len) == NULL) {
 		g_warning("Could not parse %s certificate", label);
 		return;
 	}
