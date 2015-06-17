@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2014 FedICT.
+ * Copyright (C) 2015 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -24,6 +24,7 @@
 #include <sys/stat.h>
 #include "beidversions.h"
 
+@import Foundation;
 @interface AppDelegate ()
 @property (weak) IBOutlet NSTableView *table;
 @property (weak) IBOutlet NSWindow *window;
@@ -34,33 +35,45 @@
 @end
 
 struct utsname uts;
-long osver;
+long darwinver;
+static const long max_supported_darwin_version = 14;
+
 
 NSString* getOsRel() {
-    NSDictionary *RelMap = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @" (OSX 10.10, Yosemite)", @"14",
-                            @" (OSX 10.9, Mavericks)", @"13",
-                            @" (OSX 10.8, Mountain Lion)", @"12",
-                            @" (OSX 10.7, Lion)", @"11",
+/*    NSDictionary *RelMap = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @" OS X 10.10, Yosemite", @"14",
+                            @" OS X 10.9, Mavericks", @"13",
+                            @" OS X 10.8, Mountain Lion", @"12",
+                            @" OS X 10.7, Lion", @"11",
                             nil];
-    NSMutableString *retval = [NSMutableString stringWithCapacity:30];
+ */
+    NSMutableString *retval = [NSMutableString stringWithCapacity:64];
     char* tmp;
     char* majrel;
-
-    [retval appendString:@"Darwin "];
 
     uname(&uts);
     tmp = strdup(uts.release);
     majrel = strtok(tmp, ".");
-    osver = strtol(majrel, NULL, 10);
-    NSString *reldesc = [RelMap valueForKey:[NSString stringWithCString:majrel encoding:NSUTF8StringEncoding]];
-    [retval appendString:[NSString stringWithCString:uts.release encoding:NSUTF8StringEncoding]];
-    if (reldesc == nil) {
-        [retval appendString:@" (unknown OSX release; please upgrade the eID middleware)"];
+    darwinver = strtol(majrel, NULL, 10);
+//    NSString *reldesc = [RelMap valueForKey:[NSString stringWithCString:majrel encoding:NSUTF8StringEncoding]];
+    
+    if (darwinver > max_supported_darwin_version) {
+        [retval appendString:@" (unknown OS X release; please upgrade the eID middleware)"];
     } else {
-        [retval appendString:reldesc];
+        NSString * OSVersionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
+        if (OSVersionString == nil) {
+            [retval appendString:@"unknown OS X release"];
+        } else {
+            [retval appendString:OSVersionString];
+        }
+        //[retval appendString:reldesc];
     }
+        
+    //[retval appendString:@" (Darwin "];
+    //[retval appendString:[NSString stringWithCString:uts.release encoding:NSUTF8StringEncoding]];
+    //[retval appendString:@" )"];
     free(tmp);
+ 
     return retval;
 }
 
@@ -73,7 +86,7 @@ NSString* getPcscdStartStatus() {
     if(stat("/System/Library/LaunchDaemons/org.opensc.pcscd.autostart.plist", &stbuf)<0) {
         switch(errno) {
             case ENOENT:
-                if (osver >= 14) {
+                if (darwinver >= 14) {
                     return @"Not found (OK on OSX 10.10)";
                 }
                 return @"Not found";
