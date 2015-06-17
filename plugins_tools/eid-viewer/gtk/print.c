@@ -132,6 +132,7 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 	cairo_set_line_width(cr, 1.0);
 
 	photobuf = gtk_image_get_pixbuf(GTK_IMAGE(gtk_builder_get_object(builder, "photo")));
+	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 	switch(get_curlang()) {
 		case EID_VWR_LANG_DE:
 			coabuf = gdk_pixbuf_from_pixdata(&coat_of_arms_de, TRUE, NULL);
@@ -146,6 +147,7 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 			coabuf = gdk_pixbuf_from_pixdata(&coat_of_arms_en, TRUE, NULL);
 			break;
 	}
+	G_GNUC_END_IGNORE_DEPRECATIONS
 	c_headerspace = c_pagewidth - get_photo_width(photobuf) - get_photo_width(coabuf);
 	p_headerspace = c_headerspace * PANGO_SCALE;
 

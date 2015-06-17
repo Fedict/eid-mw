@@ -410,7 +410,9 @@ int main(int argc, char** argv) {
 
 	pthread_create(&thread, NULL, threadmain, NULL);
 
+	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 	logo = gdk_pixbuf_from_pixdata(&logo_128, FALSE, NULL);
+	G_GNUC_END_IGNORE_DEPRECATIONS
 	gtk_window_set_default_icon(logo);
 
 	gtk_widget_show(window);
