@@ -116,6 +116,9 @@ int check_data_validity(const char* photo, int plen,
 			hash = SHA256;
 			nid = NID_sha256;
 			break;
+		default:
+			be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: unknown hash type");
+			return 0;
 	}
 
 	hash(photo, plen, digest);
