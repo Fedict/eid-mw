@@ -92,7 +92,8 @@ static void* threadmain(void* val) {
 +(void)set_invalid {
     sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
 }
-+(NSString*)xmlform {
-    return [NSString stringWithCString:eid_vwr_be_get_xmlform() encoding:NSUTF8StringEncoding];
++(NSData*)xmlform {
+    const char* xml = eid_vwr_be_get_xmlform();
+    return [NSData dataWithBytes:xml length:strlen(xml)];
 }
 @end

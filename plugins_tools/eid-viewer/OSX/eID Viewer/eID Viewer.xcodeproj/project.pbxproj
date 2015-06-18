@@ -48,6 +48,7 @@
 		8B3DD9761B03907500E0537B /* coat_of_arms_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9721B03907500E0537B /* coat_of_arms_en.jpg */; };
 		8B3DD9771B03907500E0537B /* coat_of_arms_fr.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9731B03907500E0537B /* coat_of_arms_fr.jpg */; };
 		8B3DD9781B03907500E0537B /* coat_of_arms_nl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9741B03907500E0537B /* coat_of_arms_nl.jpg */; };
+		8B4A21C11B330EDD00D489E8 /* DraggingImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A21C01B330EDD00D489E8 /* DraggingImage.m */; };
 		8B4E16961AF26F9D004C2B24 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4E16951AF26F9D004C2B24 /* libssl.dylib */; };
 		8B4E16981AF2705F004C2B24 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4E16971AF2705F004C2B24 /* libcrypto.dylib */; };
 		8B4E169B1AF2707F004C2B24 /* certhelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E16991AF2707F004C2B24 /* certhelpers.c */; };
@@ -129,6 +130,8 @@
 		8B3DD9721B03907500E0537B /* coat_of_arms_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_en.jpg; path = ../../../resources/coat_of_arms_en.jpg; sourceTree = "<group>"; };
 		8B3DD9731B03907500E0537B /* coat_of_arms_fr.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_fr.jpg; path = ../../../resources/coat_of_arms_fr.jpg; sourceTree = "<group>"; };
 		8B3DD9741B03907500E0537B /* coat_of_arms_nl.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_nl.jpg; path = ../../../resources/coat_of_arms_nl.jpg; sourceTree = "<group>"; };
+		8B4A21BF1B330EDD00D489E8 /* DraggingImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggingImage.h; sourceTree = "<group>"; };
+		8B4A21C01B330EDD00D489E8 /* DraggingImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggingImage.m; sourceTree = "<group>"; };
 		8B4E16951AF26F9D004C2B24 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		8B4E16971AF2705F004C2B24 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		8B4E16991AF2707F004C2B24 /* certhelpers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = certhelpers.c; path = ../../../certhelpers.c; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 				8BAC043B1AFB7F0400750CF6 /* PrintOperation.m */,
 				8B079D2E1B0B6136004E88C8 /* DataVerifier.h */,
 				8B079D2F1B0B6136004E88C8 /* DataVerifier.m */,
+				8B4A21BF1B330EDD00D489E8 /* DraggingImage.h */,
+				8B4A21C01B330EDD00D489E8 /* DraggingImage.m */,
 			);
 			name = ObjC;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				659FFCAF1AE93B3D004CEC1F /* state.c in Sources */,
 				659FFC451AE9360D004CEC1F /* main.m in Sources */,
 				659FFC981AE93AD1004CEC1F /* dateconv.cpp in Sources */,
+				8B4A21C11B330EDD00D489E8 /* DraggingImage.m in Sources */,
 				659FFCAA1AE93B2E004CEC1F /* p11.c in Sources */,
 				659FFCA01AE93AD1004CEC1F /* valdate.cpp in Sources */,
 				659FFCAE1AE93B3D004CEC1F /* state-posix.c in Sources */,

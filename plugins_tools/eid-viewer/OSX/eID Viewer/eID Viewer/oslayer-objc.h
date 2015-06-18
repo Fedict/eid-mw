@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 +(void)mainloop_thread;
 +(void)deserialize:(NSURL*)from;
 +(void)serialize:(NSURL*)to;
-+(NSString*)xmlform;
++(NSData*)xmlform;
 +(void)close_file;
 +(void)set_invalid;
 @end
