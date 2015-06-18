@@ -288,7 +288,7 @@ void setup_dnd(void) {
 }
 
 void drag_data_get(GtkWidget* widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, gpointer user_data) {
-	gtk_selection_data_set_text(data, "Not Yet Fully Implemented", -1);
+	gtk_selection_data_set_text(data, eid_vwr_be_get_xmlform(), -1);
 }
 
 GEN_FUNC(file_prefs, "set preferences")

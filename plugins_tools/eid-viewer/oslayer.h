@@ -70,5 +70,6 @@ void eid_vwr_poll();
 void eid_vwr_be_mainloop();
 void eid_vwr_be_serialize(const char* target_file);
 void eid_vwr_be_deserialize(const char* source_file);
+const char* eid_vwr_be_get_xmlform();
 
 #endif

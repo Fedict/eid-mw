@@ -3,6 +3,7 @@
 #include <p11.h>
 #include <unistd.h>
 #include <string.h>
+#include <cache.h>
 
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	sm_init();
@@ -35,4 +36,8 @@ void eid_vwr_be_serialize(const char* target_file) {
 void eid_vwr_be_deserialize(const char* source_file) {
     char* copy = strdup(source_file);
     sm_handle_event(EVENT_OPEN_FILE, copy, free, NULL);
+}
+const char* eid_vwr_be_get_xmlform() {
+	const struct eid_vwr_cache_item* item = cache_get_data("xml");
+	return (const char*)item->data;
 }
