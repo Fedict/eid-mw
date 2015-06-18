@@ -176,6 +176,7 @@
     panel.title = @"Export";
     panel.nameFieldStringValue = [NSString stringWithFormat: @"%@%s.%s", [_certstore fileNameForKey:key], sender.tag == 3 ? "_chain" : "", sender.tag == 2 ? "der" : "pem"];
     [panel beginWithCompletionHandler:^(NSInteger result) {
+        if(!result) return;
         int fd=open([panel.URL fileSystemRepresentation], O_CREAT|O_RDWR, S_IWRITE|S_IREAD);
         [_certstore dumpFile:fd forKey:key withFormat:sender.tag == 2 ? eIDDumpTypeDer : eIDDumpTypePem];
         if(sender.tag == 3) {
