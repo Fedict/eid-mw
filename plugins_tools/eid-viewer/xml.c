@@ -94,6 +94,10 @@ out:
 	return rc;
 }
 
+/*
+ * TODO: make this execute automatically when we enter STATE_TOKEN_WAIT, so
+ * that later on we can just read the data when we need to.
+ */
 int eid_vwr_serialize(void* data) {
 	xmlTextWriterPtr writer = NULL;
 	int rc;

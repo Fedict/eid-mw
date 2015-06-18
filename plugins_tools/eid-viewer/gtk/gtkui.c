@@ -279,5 +279,17 @@ void translate(GtkMenuItem* item, gpointer target) {
 #endif
 }
 
+void setup_dnd(void) {
+	GtkWidget* photo = GTK_WIDGET(gtk_builder_get_object(builder, "photobox"));
+	GtkTargetEntry *target = malloc(sizeof(GtkTargetEntry));
+
+	gtk_drag_source_set(photo, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
+	gtk_drag_source_add_text_targets(photo);
+}
+
+void drag_data_get(GtkWidget* widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, gpointer user_data) {
+	gtk_selection_data_set_text(data, "Not Yet Fully Implemented", -1);
+}
+
 GEN_FUNC(file_prefs, "set preferences")
 GEN_FUNC(showurl, "show %s url")

@@ -242,6 +242,7 @@ enum eid_vwr_langs langfromenv() {
 
 static void connect_signals(GtkWidget* window) {
 	GObject* signaltmp;
+	GObject* photo;
 
 	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_open"));
@@ -284,6 +285,9 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_TEST);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "pinchangebut"));
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_CHG);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "photobox"));
+	photo = G_OBJECT(gtk_builder_get_object(builder, "photo"));
+	g_signal_connect(signaltmp, "drag-data-get", G_CALLBACK(drag_data_get), photo);
 
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "cert_paned"));
 	g_settings_bind(get_prefs(), "cert-paned-pos", signaltmp, "position", 0);
@@ -398,6 +402,7 @@ int main(int argc, char** argv) {
 	bindata_init();
 	connect_signals(window);
 	setup_treeview();
+	setup_dnd();
 
 	certs_init();
 
