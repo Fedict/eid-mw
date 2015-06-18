@@ -10,9 +10,9 @@
 #define g_hash_table_contains(t, k) g_hash_table_lookup_extended(t, k, NULL, NULL)
 #endif
 
-#ifndef G_GNUC_BEGIN_IGNORE_DECLARATIONS
-#define G_GNUC_BEGIN_IGNORE_DECLARATIONS
-#define G_GNUC_END_IGNORE_DECLARATIONS
+#ifndef G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+#define G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+#define G_GNUC_END_IGNORE_DEPRECATIONS
 #endif
 
 #endif
