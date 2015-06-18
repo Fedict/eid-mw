@@ -6,6 +6,7 @@
 #include "glib_util.h"
 
 #include <string.h>
+#include <ctype.h>
 
 #include <gtk/gtk.h>
 #include <gtk/logging.h>

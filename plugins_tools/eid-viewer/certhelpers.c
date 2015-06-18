@@ -1,5 +1,7 @@
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
+#include <openssl/err.h>
+#include <openssl/pem.h>
 #include <certhelpers.h>
 #include <stdbool.h>
 #include <string.h>

@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <pthread.h>
 
 #include "oslayer.h"
 #include "viewer_glade.h"

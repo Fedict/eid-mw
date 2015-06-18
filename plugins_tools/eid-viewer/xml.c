@@ -5,6 +5,7 @@
 #include "xsdloc.h"
 
 #include <string.h>
+#include "p11.h"
 
 #include <libxml/encoding.h>
 #include <libxml/xmlwriter.h>
