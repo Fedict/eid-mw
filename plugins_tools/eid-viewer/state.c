@@ -118,6 +118,7 @@ void sm_init() {
 	states[STATE_TOKEN_PINOP].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_WAIT]);
 
 	states[STATE_TOKEN_WAIT].parent = &(states[STATE_TOKEN]);
+	states[STATE_TOKEN_WAIT].enter = eid_vwr_gen_xml;
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
 	states[STATE_TOKEN_WAIT].out[EVENT_SERIALIZE] = &(states[STATE_TOKEN_SERIALIZE]);
 

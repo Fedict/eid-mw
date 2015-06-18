@@ -98,27 +98,46 @@ out:
  * TODO: make this execute automatically when we enter STATE_TOKEN_WAIT, so
  * that later on we can just read the data when we need to.
  */
-int eid_vwr_serialize(void* data) {
+int eid_vwr_gen_xml(void* data) {
 	xmlTextWriterPtr writer = NULL;
 	int rc;
-	const char* filename = (const char*)data;
+	xmlBufferPtr buf;
 
-	writer = xmlNewTextWriterFilename(filename, 0);
+	buf = xmlBufferCreate();
+	if(buf == NULL) {
+		be_log(EID_VWR_LOG_COARSE, "Could not generate XML format: error creating the xml buffer");
+		rc = -1;
+		goto out;
+	}
+	writer = xmlNewTextWriterMemory(buf, 0);
 	if(writer == NULL) {
 		be_log(EID_VWR_LOG_ERROR, "Could not open file");
-		return -1;
+		rc = -1;
+		goto out;
 	}
 
 	check_xml(xmlTextWriterStartDocument(writer, NULL, "UTF-8", NULL));
 	check_xml(write_elements(writer, toplevel));
 	check_xml(xmlTextWriterEndDocument(writer));
 
+	cache_add("xml", buf->content, strlen(buf->content));
+
 	rc=0;
 out:
 	if(writer) {
 		xmlFreeTextWriter(writer);
 	}
+	if(buf) {
+		xmlBufferFree(buf);
+	}
 	return rc;
+}
+
+int eid_vwr_serialize(void* data) {
+	const struct eid_vwr_cache_item* item = cache_get_data("xml");
+	FILE* f = fopen((const char*)data, "w");
+	fwrite(item->data, item->len, 1, f);
+	return fclose(f);
 }
 
 static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) {
@@ -198,6 +217,7 @@ int eid_vwr_deserialize(void* data) {
 
 	check_xml(xmlTextReaderSchemaValidate(reader, get_xsdloc()));
 	check_xml(read_elements(reader, toplevel));
+	check_xml(eid_vwr_gen_xml(NULL));
 out:
 	if(rc) {
 		xmlError* err = xmlGetLastError();
