@@ -1,4 +1,4 @@
 usr/lib/*/libbeidpkcs11.a
 usr/lib/*/libbeidpkcs11.so
-usr/lib/pkgconfig
+usr/lib/*/pkgconfig
 usr/include/beid
