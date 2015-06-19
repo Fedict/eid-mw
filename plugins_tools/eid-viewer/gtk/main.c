@@ -103,6 +103,7 @@ static void newstate(enum eid_vwr_states s) {
 		case STATE_READY:
 			uistatus(FALSE, _("Ready to read identity card."));
 			g_object_set_threaded(open, "sensitive", (void*)TRUE, NULL);
+			disable_dnd();
 			return;
 		case STATE_TOKEN:
 			uistatus(TRUE, _("Card available"));
@@ -118,6 +119,7 @@ static void newstate(enum eid_vwr_states s) {
 				uilog(EID_VWR_LOG_COARSE, "Cannot load card: data signature invalid!");
 				sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
 			}
+			setup_dnd();
 			return;
 		case STATE_TOKEN_ID:
 			uistatus(TRUE, _("Reading identity."));
@@ -135,6 +137,7 @@ static void newstate(enum eid_vwr_states s) {
 			uistatus(FALSE, "");
 			g_object_set_threaded(print, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(close, "sensitive", (void*)TRUE, NULL);
+			setup_dnd();
 		default:
 			return;
 	}
@@ -402,7 +405,6 @@ int main(int argc, char** argv) {
 	bindata_init();
 	connect_signals(window);
 	setup_treeview();
-	setup_dnd();
 
 	certs_init();
 

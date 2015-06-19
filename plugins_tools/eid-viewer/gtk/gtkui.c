@@ -281,14 +281,21 @@ void translate(GtkMenuItem* item, gpointer target) {
 
 void setup_dnd(void) {
 	GtkWidget* photo = GTK_WIDGET(gtk_builder_get_object(builder, "photobox"));
-	GtkTargetEntry *target = malloc(sizeof(GtkTargetEntry));
 
 	gtk_drag_source_set(photo, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
 	gtk_drag_source_add_text_targets(photo);
 }
 
+void disable_dnd(void) {
+	GtkWidget* pbox = GTK_WIDGET(gtk_builder_get_object(builder, "photobox"));
+
+	gtk_drag_source_unset(pbox);
+}
+
 void drag_data_get(GtkWidget* widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, gpointer user_data) {
-	gtk_selection_data_set_text(data, eid_vwr_be_get_xmlform(), -1);
+	const char* xml = eid_vwr_be_get_xmlform();
+	if(!xml) return;
+	gtk_selection_data_set_text(data, xml, -1);
 }
 
 GEN_FUNC(file_prefs, "set preferences")

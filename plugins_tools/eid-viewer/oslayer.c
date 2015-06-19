@@ -37,7 +37,11 @@ void eid_vwr_be_deserialize(const char* source_file) {
     char* copy = strdup(source_file);
     sm_handle_event(EVENT_OPEN_FILE, copy, free, NULL);
 }
+
 const char* eid_vwr_be_get_xmlform() {
+	if(!cache_have_label("xml")) {
+		return NULL;
+	}
 	const struct eid_vwr_cache_item* item = cache_get_data("xml");
 	return (const char*)item->data;
 }
