@@ -94,6 +94,7 @@ static void* threadmain(void* val) {
 }
 +(NSData*)xmlform {
     const char* xml = eid_vwr_be_get_xmlform();
+    if(!xml) return nil;
     return [NSData dataWithBytes:xml length:strlen(xml)];
 }
 @end

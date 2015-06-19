@@ -19,6 +19,9 @@
     session.draggingFormation = NSDraggingFormationNone;
 }
 -(NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
+    if(!eid_vwr_be_get_xmlform()) {
+        return NSDragOperationNone;
+    }
     return NSDragOperationCopy;
 }
 -(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
