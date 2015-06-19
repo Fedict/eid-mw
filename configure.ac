@@ -103,7 +103,7 @@ PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1], [HAVE_OPENSSL=0])
 AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
 
 pkgconfigdir="\$(libdir)/pkgconfig"
-pkcs11hincludedir="\$(includedir)/rsaref220"
+pkcs11hincludedir="\$(includedir)/beid/rsaref220"
 AC_SUBST([pkgconfigdir])
 AC_SUBST([pkcs11hincludedir])
 
