@@ -29,13 +29,13 @@ void eid_vwr_poll() {
 }
 
 void eid_vwr_be_serialize(const char* target_file) {
-    char* copy = strdup(target_file);
-    sm_handle_event(EVENT_SERIALIZE, copy, free, NULL);
+	char* copy = strdup(target_file);
+	sm_handle_event(EVENT_SERIALIZE, copy, free, NULL);
 }
 
 void eid_vwr_be_deserialize(const char* source_file) {
-    char* copy = strdup(source_file);
-    sm_handle_event(EVENT_OPEN_FILE, copy, free, NULL);
+	char* copy = strdup(source_file);
+	sm_handle_event(EVENT_OPEN_FILE, copy, free, NULL);
 }
 
 const char* eid_vwr_be_get_xmlform() {
