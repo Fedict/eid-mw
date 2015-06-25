@@ -11,6 +11,7 @@
 #include <libxml/xmlwriter.h>
 #include <libxml/xmlreader.h>
 #include <b64/base64dec.h>
+#include <string.h>
 
 #define check_xml(call) if((rc = call) < 0) { \
 be_log(EID_VWR_LOG_DETAIL, "Error while dealing with file (calling '%s'): %d", #call, rc); \
