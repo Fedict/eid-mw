@@ -64,7 +64,7 @@ struct eid_vwr_preview {
 int eid_vwr_pinop(enum eid_vwr_pinops);
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks*);
 struct eid_vwr_ui_callbacks* eid_vwr_cbstruct();
-struct eid_vwr_preview* eid_vwr_get_preview(char* filename);
+struct eid_vwr_preview* eid_vwr_get_preview(const char* filename);
 
 void eid_vwr_poll();
 void eid_vwr_be_mainloop();
