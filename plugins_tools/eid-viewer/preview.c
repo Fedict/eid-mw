@@ -9,6 +9,7 @@
 be_log(EID_VWR_LOG_DETAIL, "Error while dealing with file (calling '%s'): %d", #call, rc); \
 goto out; \
 }
+
 struct eid_vwr_preview* eid_vwr_get_preview(const char* filename) {
     int rc;
     xmlTextReaderPtr reader = NULL;
