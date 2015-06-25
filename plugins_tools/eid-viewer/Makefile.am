@@ -81,6 +81,7 @@ eid_viewer_SOURCES = \
 	state-posix.c \
 	p11.h \
 	p11.c \
+	preview.c \
 	xml.h \
 	xml.c \
 	xmlmap.cpp \
