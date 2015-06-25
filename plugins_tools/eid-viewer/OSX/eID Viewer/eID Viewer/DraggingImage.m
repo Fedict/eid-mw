@@ -19,7 +19,7 @@
     session.draggingFormation = NSDraggingFormationNone;
 }
 -(NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
-    if(!eid_vwr_be_get_xmlform()) {
+    if(![eIDOSLayerBackend xmlform]) {
         return NSDragOperationNone;
     }
     return NSDragOperationCopy;
