@@ -21,6 +21,7 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 AC_PROG_INSTALL
 AC_PROG_LN_S
+PKG_PROG_PKG_CONFIG
 
 AS_VAR_IF([GXX],[yes],[],AC_MSG_ERROR([GNU C++ compiler (g++) is required.]))
 
@@ -111,8 +112,15 @@ AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjp
 
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1])
 
+pkgconfigdir="\$(libdir)/pkgconfig"
+pkcs11hincludedir="\$(includedir)/beid/rsaref220"
+AC_SUBST([pkgconfigdir])
+AC_SUBST([pkcs11hincludedir])
+
 AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/Makefile
+		 cardcomm/pkcs11/src/libbeidpkcs11.pc
+		 doc/sdk/include/rsaref220/Makefile
 		 tests/unit/Makefile
 		 plugins_tools/aboutmw/gtk/Makefile
 		 plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh
