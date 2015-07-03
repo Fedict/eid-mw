@@ -185,13 +185,6 @@
 			remoteGlobalIDString = 659FFC3C1AE9360D004CEC1F;
 			remoteInfo = "eID Viewer";
 		};
-		659FFC671AE9360F004CEC1F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 659FFC4F1AE9360D004CEC1F;
-			remoteInfo = "eID ViewerTests";
-		};
 		7FC5353E0F84B84300BA96EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -233,6 +226,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7FC5353A0F84B83B00BA96EE;
 			remoteInfo = beidcardlayer;
+		};
+		8B67ABD31B3D60FD00DF3E81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8BBDE3121B3BF02C00CBE13E;
+			remoteInfo = eidfilepreview;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -571,7 +571,7 @@
 			isa = PBXGroup;
 			children = (
 				659FFC661AE9360F004CEC1F /* eID Viewer.app */,
-				659FFC681AE9360F004CEC1F /* eID ViewerTests.xctest */,
+				8B67ABD41B3D60FD00DF3E81 /* eidfilepreview.qlgenerator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1025,13 +1025,6 @@
 			remoteRef = 659FFC651AE9360F004CEC1F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		659FFC681AE9360F004CEC1F /* eID ViewerTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "eID ViewerTests.xctest";
-			remoteRef = 659FFC671AE9360F004CEC1F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		869D00C218D72DD000A41853 /* plistMerger */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
@@ -1044,6 +1037,13 @@
 			fileType = "compiled.mach-o.executable";
 			path = test_dialogs;
 			remoteRef = 86BC84C51A037C19009E374E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8B67ABD41B3D60FD00DF3E81 /* eidfilepreview.qlgenerator */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = eidfilepreview.qlgenerator;
+			remoteRef = 8B67ABD31B3D60FD00DF3E81 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
