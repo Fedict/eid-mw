@@ -77,6 +77,16 @@
         }
     }];
 }
+- (void)saveDocument:(id)sender {
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    [panel setAllowedFileTypes:[NSArray arrayWithObjects: @"be.fedict.eid.eidviewer", nil]];
+    [panel setNameFieldStringValue:[NSString stringWithFormat:@"%@.eid", [(NSTextField*)[self searchObjectById:@"national_number" ofClass:[NSTextField class]] stringValue]]];
+    [panel beginWithCompletionHandler:^(NSInteger result) {
+        if(result == NSFileHandlingPanelOKButton) {
+            [eIDOSLayerBackend serialize:[panel URL]];
+        }
+    }];
+}
 - (void)file_close:(id)sender {
     [eIDOSLayerBackend close_file];
 }
