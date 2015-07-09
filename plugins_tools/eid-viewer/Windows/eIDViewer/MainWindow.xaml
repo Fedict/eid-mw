@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <TabControl HorizontalAlignment="Left" Height="216" Margin="10,33,0,0" VerticalAlignment="Top" Width="497">
+        <TabControl Margin="0,23,0,60">
             <TabItem Header="Identity">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
@@ -17,7 +17,7 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
-        <Menu HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="497">
+        <Menu Height="23" Margin="0,0,0,0" VerticalAlignment="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Open.."/>
                 <MenuItem Header="Save as.." IsEnabled="False"/>
@@ -45,9 +45,9 @@
                 <MenuItem Header="Show Log Tab" IsCheckable="True" InputGestureText="Ctrl+L"/>
             </MenuItem>
         </Menu>
-        <Grid HorizontalAlignment="Left" Height="55" Margin="10,254,0,0" VerticalAlignment="Top" Width="497">
-            <Image HorizontalAlignment="Right" Height="55" Margin="397,0,0,0" VerticalAlignment="Top" Width="100" Source="Resources/state_noreaders.png"/>
-            <Image HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="100" Source="Resources/print.png" IsEnabled="False"/>
+        <Grid Height="55" Margin="0,0,0,0" VerticalAlignment="Bottom">
+            <Image HorizontalAlignment="Right" Height="55" Margin="0,0,0,0" VerticalAlignment="Top" Width="100" Source="Resources/state_noreaders.png"/>
+            <Image HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="100" Source="Resources/print.png" IsEnabled="False" Opacity="0.5"/>
         </Grid>
 
     </Grid>
