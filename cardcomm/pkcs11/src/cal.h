@@ -212,7 +212,7 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo);
 CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount);
 CK_RV cal_connect(CK_SLOT_ID hSlot);
 CK_RV cal_disconnect(CK_SLOT_ID hSlot);
-CK_RV cal_init_objects(CK_SLOT_ID hSlot);
+CK_RV cal_init_objects(P11_SLOT *pSlot);
 CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo);
 CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging);
 CK_RV cal_logout(CK_SLOT_ID hSlot);

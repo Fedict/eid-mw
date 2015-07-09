@@ -231,6 +231,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 												CK_ULONG          ulCount)    /* attributes in search template */
 {
 	P11_SESSION *pSession = NULL;
+	P11_SLOT    *pSlot    = NULL;
 	P11_FIND_DATA *pData = NULL;
 	int ret;
 	CK_ULONG      *pclass = NULL;
@@ -256,6 +257,30 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	else
 		log_template("I: Search template:", pTemplate, ulCount);
 
+
+	ret = p11_get_session(hSession, &pSession);
+	if (pSession == NULL)
+	{
+		log_trace(WHERE, "E: pSession == NULL");
+		goto cleanup;
+	}
+	if (ret)
+	{
+		log_trace(WHERE, "E: Invalid session (%d) (%s)", hSession, log_map_error(ret));
+		//if (ret == CKR_DEVICE_REMOVED)
+		//ret = CKR_SESSION_HANDLE_INVALID;
+		//ret = CKR_FUNCTION_FAILED;
+		goto cleanup;
+	}
+
+	pSlot = p11_get_slot(pSession->hslot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: p11_get_slot(%d) returns null", pSession->hslot);
+		ret = CKR_SLOT_ID_INVALID;
+		goto cleanup;
+	}
+
 	/* add check here to avoid useless calls to C_FindObjects() */
 	/* reason to add this is that e.g. Firefox for every certificate in its store starts a find operation with CKA_CLASS_TYPE */
 	/* that is unknown by this implementation */
@@ -267,6 +292,16 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		ret = p11_get_attribute_value(pTemplate, ulCount, CKA_CLASS, (CK_VOID_PTR *) &pclass, &len);
 		if ( (ret == 0) && (len == sizeof(CK_ULONG) ) )
 		{
+#ifndef PKCS11_FF
+			if( (*pclass == CKO_CERTIFICATE) || (*pclass == CKO_PRIVATE_KEY) || (*pclass == CKO_PUBLIC_KEY) || (*pclass == CKO_SECRET_KEY) )
+			{
+				ret = cal_init_objects(pSlot);
+				if (ret != CKR_OK)
+				{
+					log_trace(WHERE, "E: cal_init_objects() returned %s.",log_map_error(ret));
+				}
+			}
+#endif
 			//CKO_SECRET_KEY is not supported but for SUN-PKCS11 we allow a search that will result in 0 objects
 			if ( (*pclass != CKO_CERTIFICATE) && (*pclass != CKO_PRIVATE_KEY) && (*pclass != CKO_PUBLIC_KEY) && (*pclass != CKO_SECRET_KEY) && (*pclass != CKO_DATA))
 			{
@@ -288,22 +323,23 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		//	addIdObjects = CK_TRUE;
 		//}
 	}
+	else
+	{
+#ifndef PKCS11_FF
+		ret = cal_init_objects(pSlot);
+		if (ret != CKR_OK)
+		{
+			log_trace(WHERE, "E: cal_init_objects() returned %s_",log_map_error(ret));
+		}
+#endif
+	}
 	//see comment above, We only return the CKO_DATA objects when specifically asked for
 	//else
 	//{
 	//	addIdObjects = CK_TRUE;
 	//}
 
-	ret = p11_get_session(hSession, &pSession);
-	// if (pSession == NULL)
-	if (ret)
-	{
-		log_trace(WHERE, "E: Invalid session (%d) (%s)", hSession, log_map_error(ret));
-		//if (ret == CKR_DEVICE_REMOVED)
-		//ret = CKR_SESSION_HANDLE_INVALID;
-		//ret = CKR_FUNCTION_FAILED;
-		goto cleanup;
-	}
+
 
 	//is there an active search operation for this session
 	if (pSession->Operation[P11_OPERATION_FIND].active)
