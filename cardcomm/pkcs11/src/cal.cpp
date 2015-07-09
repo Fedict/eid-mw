@@ -689,6 +689,12 @@ CK_RV cal_init_objects(P11_SLOT *pSlot)
 	char clabel[128];
 	CK_CERTIFICATE_TYPE certType = CKC_X_509;
 
+	//check if the object list is empty
+	//if not, we initialized the objects already and can return with OK
+	if(pSlot->pobjects != NULL)
+		return CKR_OK;
+
+
 	//this function will initialize objects as they are valid for the token
 	//this function does not read the actual values but enables an application to
 	//search for an attribute
@@ -1656,11 +1662,13 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 			if ((*pStatus == P11_CARD_OTHER) || (*pStatus == P11_CARD_INSERTED) )
 			{
 				//(re)initialize objects
+#ifdef PKCS11_FF
 				ret = cal_init_objects(pSlot);
 				if (ret != CKR_OK)
 				{
 					log_trace(WHERE, "E: cal_init_objects() returned %s",log_map_error(ret));
 				}
+#endif
 			}
 		}
 	}
