@@ -29,7 +29,7 @@
 #include "testlib.h"
 
 TEST_FUNC(slotlist) {
-	CK_SLOT_ID_PTR list;
+	CK_SLOT_ID_PTR list=NULL;
 	CK_ULONG count=0;
 	int i;
 	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
@@ -51,7 +51,7 @@ TEST_FUNC(slotlist) {
 	check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, &count), m);
 	printf("slots found: %lu\n", count);
 
-	list = malloc(sizeof(CK_SLOT_ID) * count);
+	list = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID) * count);
 	for(i=0; i<count; i++) {
 		list[i] = 0xdeadbeef;
 	}
