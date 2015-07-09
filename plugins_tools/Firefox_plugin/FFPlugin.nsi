@@ -45,5 +45,5 @@ Section "Launch Firefox" FFStart
 	IfFileExists "$PROGRAMFILES\Mozilla Firefox\Firefox.exe" 0 +3
 		Exec '"$PROGRAMFILES\Mozilla Firefox\Firefox.exe" "$(ls_firefoxeidpluginpage)"'
 		Quit
-		
+	MessageBox MB_OK "Firefox not found, but you can find the plugin at $(ls_firefoxeidpluginpage)"
 SectionEnd
