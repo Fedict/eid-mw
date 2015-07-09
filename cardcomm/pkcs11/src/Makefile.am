@@ -190,3 +190,5 @@ beid_spr_askpin_LDADD = @GTK_LIBS@
 beid_spr_changepin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-spr-changepin.c
 beid_spr_changepin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@
 beid_spr_changepin_LDADD = @GTK_LIBS@
+
+pkgconfig_DATA=libbeidpkcs11.pc

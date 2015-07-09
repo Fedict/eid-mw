@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -15,6 +15,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="CardPinTab" destination="5hT-7G-WY9" id="QXO-3h-K73"/>
+                <outlet property="CardReadSheet" destination="8La-eA-MLK" id="lu8-yH-ZLa"/>
                 <outlet property="CertificatesTab" destination="TnE-Be-ndr" id="1th-gT-Pm9"/>
                 <outlet property="CertificatesView" destination="G1r-zp-mgg" id="mxb-Xx-Viq"/>
                 <outlet property="IdentityTab" destination="8cq-xu-vLE" id="UUh-5o-1f7"/>
@@ -22,6 +23,7 @@
                 <outlet property="logLevel" destination="2Iq-Qb-1J7" id="zdf-dd-Roe"/>
                 <outlet property="photoview" destination="xjA-5d-ByW" id="8wT-9a-gCB"/>
                 <outlet property="printop_view" destination="ieQ-cl-G8D" id="rWl-5c-j9U"/>
+                <outlet property="spinner" destination="iN8-2b-tEq" id="B3Z-bR-RbU"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -111,19 +113,6 @@
                                     <action selector="file_open:" target="Voe-Tx-rLC" id="Js5-h0-0eY"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Open Recent" id="tXI-mr-wws">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="oas-Oc-fiZ">
-                                    <items>
-                                        <menuItem title="Clear Menu" id="vNY-rz-j42">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="clearRecentDocuments:" target="-1" id="Daa-9d-B3U"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
@@ -133,11 +122,6 @@
                             <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="teZ-XB-qJY"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
-                                <connections>
-                                    <action selector="saveDocumentAs:" target="-1" id="mDf-zr-I0C"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
@@ -340,14 +324,6 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField identifier="surname" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gHg-7a-bRk" userLabel="surname">
-                                            <rect key="frame" x="347" y="304" width="10" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="-" id="4sG-Sn-9Sh">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <textField identifier="firstnames" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cSU-EZ-fdf" userLabel="firstnames">
                                             <rect key="frame" x="347" y="279" width="10" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="-" id="VUf-yO-cOS">
@@ -455,6 +431,14 @@
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LS2-EH-nXE">
                                             <rect key="frame" x="233" y="179" width="110" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="National number:" id="Lut-kf-HNc">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField identifier="surname" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gHg-7a-bRk" userLabel="surname">
+                                            <rect key="frame" x="347" y="304" width="10" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="-" id="4sG-Sn-9Sh">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1020,7 +1004,7 @@
                     <constraint firstItem="5Om-bz-RVh" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="12" symbolic="YES" id="nqi-su-YXf"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="350" y="472.5"/>
+            <point key="canvasLocation" x="322" y="289.5"/>
         </window>
         <customView id="ieQ-cl-G8D" userLabel="PrintOperation">
             <rect key="frame" x="0.0" y="-5" width="424" height="660"/>
@@ -1548,10 +1532,39 @@
             </constraints>
             <point key="canvasLocation" x="361" y="564"/>
         </customView>
-        <view id="Tu1-3x-lHE">
-            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-            <autoresizingMask key="autoresizingMask"/>
-        </view>
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="8La-eA-MLK" userLabel="CardReadSheet">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="370" height="57"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="1001"/>
+            <view key="contentView" id="JyZ-ex-r1w">
+                <rect key="frame" x="0.0" y="0.0" width="370" height="57"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4FG-ss-2aC">
+                        <rect key="frame" x="42" y="20" width="314" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Reading data from card..." id="UKa-9U-r1R">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="iN8-2b-tEq">
+                        <rect key="frame" x="20" y="20" width="16" height="17"/>
+                    </progressIndicator>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="iN8-2b-tEq" firstAttribute="leading" secondItem="JyZ-ex-r1w" secondAttribute="leading" constant="20" symbolic="YES" id="5NE-eR-a3f"/>
+                    <constraint firstItem="4FG-ss-2aC" firstAttribute="top" secondItem="JyZ-ex-r1w" secondAttribute="top" constant="20" symbolic="YES" id="Hg3-qL-JSg"/>
+                    <constraint firstAttribute="trailing" secondItem="4FG-ss-2aC" secondAttribute="trailing" constant="20" symbolic="YES" id="SIK-i5-Zuj"/>
+                    <constraint firstItem="4FG-ss-2aC" firstAttribute="leading" secondItem="iN8-2b-tEq" secondAttribute="trailing" constant="8" symbolic="YES" id="V26-RJ-ILd"/>
+                    <constraint firstAttribute="bottom" secondItem="4FG-ss-2aC" secondAttribute="bottom" constant="20" symbolic="YES" id="Zgo-FX-7g5"/>
+                    <constraint firstAttribute="bottom" secondItem="iN8-2b-tEq" secondAttribute="bottom" constant="20" symbolic="YES" id="eFm-7l-UYY"/>
+                    <constraint firstItem="iN8-2b-tEq" firstAttribute="top" secondItem="JyZ-ex-r1w" secondAttribute="top" constant="20" symbolic="YES" id="oqH-oi-tew"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="286" y="-105.5"/>
+        </window>
     </objects>
     <resources>
         <image name="coat_of_arms_en" width="108" height="120"/>

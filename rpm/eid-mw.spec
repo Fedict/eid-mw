@@ -151,6 +151,8 @@ fi
 %doc NEWS README
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
+%{_libdir}/pkgconfig
+%{_includedir}/beid/
 
 %files vwr
 %defattr(-,root,root,0755)

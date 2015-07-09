@@ -1,21 +1,17 @@
-//
-//  preview.c
-//  eID Viewer
-//
-//  Created by AFI-DMAC130201 on 25/06/15.
-//  Copyright (c) 2015 Fedict. All rights reserved.
-//
-
 #include <oslayer.h>
 #include <libxml/encoding.h>
 #include <libxml/xmlwriter.h>
 #include <libxml/xmlreader.h>
 #include <b64/base64dec.h>
+#include <string.h>
+#include <xsdloc.h>
+#include <backend.h>
 
 #define check_xml(call) if((rc = call) < 0) { \
 be_log(EID_VWR_LOG_DETAIL, "Error while dealing with file (calling '%s'): %d", #call, rc); \
 goto out; \
 }
+
 struct eid_vwr_preview* eid_vwr_get_preview(const char* filename) {
     int rc;
     xmlTextReaderPtr reader = NULL;
@@ -32,7 +28,6 @@ struct eid_vwr_preview* eid_vwr_get_preview(const char* filename) {
     if(!reader) {
         return p;
     }
-    check_xml(xmlTextReaderSchemaValidate(reader, get_xsdloc()));
     while((rc = xmlTextReaderRead(reader)) > 0) {
         const xmlChar *curnode = xmlTextReaderConstLocalName(reader);
         if(!strcmp(curnode, "photo")) {

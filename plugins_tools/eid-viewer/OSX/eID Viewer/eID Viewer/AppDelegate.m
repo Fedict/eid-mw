@@ -28,6 +28,7 @@
 @property NSMutableDictionary *viewdict;
 @property (weak) IBOutlet NSImageView *photoview;
 @property (weak) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSWindow *CardReadSheet;
 @property (weak) IBOutlet NSView *IdentityTab;
 @property (weak) IBOutlet NSView *CardPinTab;
 @property (weak) IBOutlet NSView *CertificatesTab;
@@ -35,6 +36,7 @@
 @property (weak) IBOutlet NSPopUpButton *logLevel;
 @property (weak) IBOutlet NSOutlineView *CertificatesView;
 @property (weak) IBOutlet NSView *printop_view;
+@property (weak) IBOutlet NSProgressIndicator *spinner;
 @end
 
 @implementation AppDelegate
@@ -75,6 +77,16 @@
         }
     }];
 }
+- (void)saveDocument:(id)sender {
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    [panel setAllowedFileTypes:[NSArray arrayWithObjects: @"be.fedict.eid.eidviewer", nil]];
+    [panel setNameFieldStringValue:[NSString stringWithFormat:@"%@.eid", [(NSTextField*)[self searchObjectById:@"national_number" ofClass:[NSTextField class]] stringValue]]];
+    [panel beginWithCompletionHandler:^(NSInteger result) {
+        if(result == NSFileHandlingPanelOKButton) {
+            [eIDOSLayerBackend serialize:[panel URL]];
+        }
+    }];
+}
 - (void)file_close:(id)sender {
     [eIDOSLayerBackend close_file];
 }
@@ -95,25 +107,42 @@
         [handler handle_bin_data:data forLabel:label withUi:self];
     }];
 }
+- (void) endSheet:(NSWindow*)sheet returnCode:(NSInteger)returnCode contextInfo:(void*)ctxInfo {
+    [sheet orderOut:self];
+}
 - (void)newstate:(eIDState)state {
     DataVerifier *v = [DataVerifier verifier];
     // make everything nonsensitive
     switch(state) {
         case eIDStateReady:
             //make file->open sensitive
-            return;
+            break;
+        case eIDStateToken:
+        {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [_spinner startAnimation:self];
+                [NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
+            }];
+        }
+            break;
         case eIDStateTokenWait:
             //make print, savexml, savecsv, pintest, pinchg sensitive
+        {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [NSApp endSheet:_CardReadSheet];
+                [_spinner stopAnimation:self];
+            }];
             if(!([v canVerify] && [v isValid])) {
                 [self log:@"Cannot load card: data signature invalid!" withLevel:eIDLogLevelCoarse];
                 [eIDOSLayerBackend set_invalid];
             }
-            return;
+        }
+            break;
         case eIDStateFile:
             // make file->print, file->close sensitive
-            return;
+            break;
         default:
-            return;
+            break;
     }
 }
 - (NSObject*)searchView:(NSView*)from withName:(NSString*)name {

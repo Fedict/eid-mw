@@ -53,6 +53,7 @@
 		8B4E16981AF2705F004C2B24 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B4E16971AF2705F004C2B24 /* libcrypto.dylib */; };
 		8B4E169B1AF2707F004C2B24 /* certhelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E16991AF2707F004C2B24 /* certhelpers.c */; };
 		8BAC043C1AFB7F0400750CF6 /* PrintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC043B1AFB7F0400750CF6 /* PrintOperation.m */; };
+		8BB34E601B468C4C006B0B99 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
 		8BBDE3171B3BF02C00CBE13E /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBDE3161B3BF02C00CBE13E /* GenerateThumbnailForURL.m */; };
 		8BBDE3191B3BF02C00CBE13E /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBDE3181B3BF02C00CBE13E /* GeneratePreviewForURL.m */; };
 		8BBDE31B1B3BF02C00CBE13E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 8BBDE31A1B3BF02C00CBE13E /* main.c */; };
@@ -432,6 +433,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BB34E601B468C4C006B0B99 /* eidv4.xsd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,6 +709,7 @@
 				8BBDE31D1B3BF02C00CBE13E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
