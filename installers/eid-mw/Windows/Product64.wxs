@@ -107,22 +107,24 @@
           <Directory Id="LOGDIR" Name="log"/>
         </Directory>
         <Directory Id="FIREFOXROOTFOLDER" Name="Mozilla Firefox">
-          <Directory Id="FIREFOXEXTENSIONS" Name="extensions">
-            <Directory Id="XPIROOTFOLDER" Name="belgiumeid@eid.belgium.be">
-              <Directory Id="XPICONTENTFOLDER" Name="content"/>
-              <Directory Id="XPICOMPONENTSFOLDER" Name="components"/>
-              <Directory Id="XPIDEFAULTSFOLDER" Name="defaults">
-                <Directory Id="XPIDEFAULTSPREFSFOLDER" Name="preferences"/>
-              </Directory>
-              <Directory Id="XPILOCALEFOLDER" Name="locale">
-                <Directory Id="XPILOCALEENFOLDER" Name="en-US"/>
-                <Directory Id="XPILOCALEFRFOLDER" Name="fr-FR"/>
-                <Directory Id="XPILOCALENLFOLDER" Name="nl-NL"/>
-                <Directory Id="XPILOCALEDEFOLDER" Name="de-DE"/>
-              </Directory>
-              <Directory Id="XPISKINFOLDER" Name="skin"/>
-            </Directory>
-          </Directory>
+			<Directory Id="FIREFOXBROWSERFOLDER" Name="browser">
+			  <Directory Id="FIREFOXEXTENSIONS" Name="extensions">
+				<Directory Id="XPIROOTFOLDER" Name="belgiumeid@eid.belgium.be">
+				  <Directory Id="XPICONTENTFOLDER" Name="content"/>
+				  <Directory Id="XPICOMPONENTSFOLDER" Name="components"/>
+				  <Directory Id="XPIDEFAULTSFOLDER" Name="defaults">
+					<Directory Id="XPIDEFAULTSPREFSFOLDER" Name="preferences"/>
+				  </Directory>
+				  <Directory Id="XPILOCALEFOLDER" Name="locale">
+					<Directory Id="XPILOCALEENFOLDER" Name="en-US"/>
+					<Directory Id="XPILOCALEFRFOLDER" Name="fr-FR"/>
+					<Directory Id="XPILOCALENLFOLDER" Name="nl-NL"/>
+					<Directory Id="XPILOCALEDEFOLDER" Name="de-DE"/>
+				  </Directory>
+				  <Directory Id="XPISKINFOLDER" Name="skin"/>
+				</Directory>
+			  </Directory>
+			</Directory>
         </Directory>
       </Directory>
       <Directory Id="ProgramFiles64Folder" Name="ProgramFiles64Folder">
@@ -167,6 +169,12 @@
         </CreateFolder>
         <RemoveFile Id="RemoveLogFiles64" On="uninstall" Name="*"/>
         <RemoveFolder Id="RemoveLogFolder64" On="uninstall"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="FIREFOXBROWSERFOLDER">
+      <Component Id="FFBrowser" Guid="{29434785-B77D-40BE-97F0-F304405340F5}" Win64="no">
+        <CreateFolder />
       </Component>
     </DirectoryRef>
 
@@ -514,6 +522,7 @@
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
       <ComponentRef Id="LogDir_64"/>
+	  <ComponentRef Id="FFBrowser"/>
       <ComponentRef Id="Extensions"/>
       <ComponentRef Id="FireFoxRoot"/>
       <ComponentRef Id="XPIRoot"/>
