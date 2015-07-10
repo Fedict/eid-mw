@@ -153,7 +153,7 @@ CK_BBOOL have_robot() {
 }
 
 CK_BBOOL want_dialogs() {
-#ifdef WIN32
+#ifndef WIN32
 	char* envvar = getenv("EID_DIALOGS_STYLE");
 
 	dialogs_type = DIALOGS_AVOID;
