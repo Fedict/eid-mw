@@ -1,5 +1,10 @@
 #include <p11.h>
+
+#ifdef WIN32
+#include <win32.h>
+#else
 #include <unix.h>
+#endif
 #include <pkcs11.h>
 #include <backend.h>
 #include <state.h>
@@ -67,13 +72,13 @@ int eid_vwr_p11_close_session() {
 }
 
 int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
-	CK_SLOT_ID_PTR slotlist = calloc(sizeof(CK_SLOT_ID), 1);
+	CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
 	CK_ULONG count = 1;
 	CK_RV ret;
 
 	while((ret = C_GetSlotList(CK_TRUE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
 		free(slotlist);
-		slotlist = calloc(sizeof(CK_SLOT_ID), count);
+		slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), count);
 	}
 	check_rv_late(ret);
 	if(count > 0) {
@@ -87,11 +92,11 @@ int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
 void eid_vwr_p11_to_ui(const char* label, const void* value, int len) {
 	if(can_convert(label)) {
 		be_log(EID_VWR_LOG_DETAIL, "converting %s", label);
-		char* str = converted_string(label, value);
+		char* str = converted_string(label, (const char*)value);
 		be_newstringdata(label, str);
 		free(str);
 	} else if(is_string(label)) {
-		be_newstringdata(label, value);
+		be_newstringdata(label, (const char*)value);
 	} else {
 		be_newbindata(label, value, len);
 	}
@@ -120,14 +125,14 @@ static int perform_find(CK_BBOOL do_objid) {
 			check_rv(C_GetAttributeValue(session, object, data, 2));
 		}
 
-		label_str = malloc(data[0].ulValueLen + 1);
+		label_str = (char*)malloc(data[0].ulValueLen + 1);
 		data[0].pValue = label_str;
 
-		value_str = malloc(data[1].ulValueLen + 1);
+		value_str = (char*)malloc(data[1].ulValueLen + 1);
 		data[1].pValue = value_str;
 
 		if(do_objid) {
-			objid_str = malloc(data[2].ulValueLen + 1);
+			objid_str = (char*)malloc(data[2].ulValueLen + 1);
 			data[2].pValue = objid_str;
 
 			check_rv(C_GetAttributeValue(session, object, data, 3));
@@ -198,11 +203,11 @@ int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
 
 int eid_vwr_p11_do_pinop(void* data) {
     int retval;
-    enum eid_vwr_pinops p = (enum eid_vwr_pinops) data;
-    if((retval = eid_vwr_p11_do_pinop_real(p)) != CKR_OK) {
-        be_pinresult(p, EID_VWR_FAILED);
+    enum eid_vwr_pinops* p = (enum eid_vwr_pinops*) data;
+    if((retval = eid_vwr_p11_do_pinop_real(*p)) != CKR_OK) {
+        be_pinresult(*p, EID_VWR_FAILED);
     } else {
-        be_pinresult(p, EID_VWR_SUCCESS);
+        be_pinresult(*p, EID_VWR_SUCCESS);
     }
     return retval;
 }

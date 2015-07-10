@@ -1,7 +1,11 @@
 #ifndef EID_VWR_P11_H
 #define EID_VWR_P11_H
 
+#ifdef WIN32
+#include <win32.h>
+#else
 #include <unix.h>
+#endif
 #include <pkcs11t.h>
 
 #define EIDV_RV_OK 0

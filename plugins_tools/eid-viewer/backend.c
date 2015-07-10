@@ -4,21 +4,27 @@
 #include <string.h>
 #include <stdarg.h>
 
+#ifdef WIN32
+#include <win32.h>
+#else
 #include <unix.h>
+#include "labels.h"
+#endif
 #include <pkcs11.h>
 
 #include "oslayer.h"
 #include "backend.h"
-#include "labels.h"
 #include "cache.h"
 #include "conversions.h"
 #include "state.h"
 #include "p11.h"
 
+
+
 struct eid_vwr_ui_callbacks* cb;
 
 struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
-	struct eid_vwr_ui_callbacks* retval = calloc(sizeof(struct eid_vwr_ui_callbacks), 1);
+	struct eid_vwr_ui_callbacks* retval = (struct eid_vwr_ui_callbacks*)calloc(sizeof(struct eid_vwr_ui_callbacks), 1);
 	return retval;
 }
 
@@ -42,7 +48,7 @@ void be_newstate(enum eid_vwr_states which) {
 	NEED_CB_FUNC(newstate);
 	cb->newstate(which);
 }
-
+#ifndef WIN32
 void be_log(enum eid_vwr_loglevel l, const char* string, ...) {
 	NEED_CB_FUNC(log);
 	va_list ap, ac;
@@ -52,7 +58,7 @@ void be_log(enum eid_vwr_loglevel l, const char* string, ...) {
 	va_end(ac);
 	va_end(ap);
 }
-
+#endif
 void be_newstringdata(const char* label, const char* data) {
 	NEED_CB_FUNC(newstringdata);
 	cb->newstringdata(label, data);
