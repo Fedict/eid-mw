@@ -220,4 +220,8 @@
     }
     return nil;
 }
+-(void)clear {
+    [_CertificateData removeAllObjects];
+    [_ov reloadData];
+}
 @end

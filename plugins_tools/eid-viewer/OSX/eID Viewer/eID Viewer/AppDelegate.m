@@ -106,7 +106,15 @@
     [eIDOSLayerBackend pinop:which];
 }
 - (void)newsrc:(eIDSource)which {
-    
+    [_photoview setImage:nil];
+    [_certstore clear];
+    [_viewdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+        if(![obj isKindOfClass:[NSTextField class]]) {
+            return;
+        }
+        NSTextField* tf = (NSTextField*)obj;
+        [tf setStringValue:@""];
+    }];
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
