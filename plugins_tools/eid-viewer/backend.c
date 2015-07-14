@@ -8,12 +8,12 @@
 #include <win32.h>
 #else
 #include <unix.h>
-#include "labels.h"
 #endif
 #include <pkcs11.h>
 
 #include "oslayer.h"
 #include "backend.h"
+#include "labels.h"
 #include "cache.h"
 #include "conversions.h"
 #include "state.h"
