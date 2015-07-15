@@ -158,7 +158,7 @@ static int perform_find(CK_BBOOL do_objid) {
 	return 0;
 }
 
-int eid_vwr_p11_finalize_find(void* data) {
+int eid_vwr_p11_finalize_find() {
 	check_rv(C_FindObjectsFinal(session));
 	return 0;
 }
