@@ -37,6 +37,13 @@
 @property (weak) IBOutlet NSOutlineView *CertificatesView;
 @property (weak) IBOutlet NSView *printop_view;
 @property (weak) IBOutlet NSProgressIndicator *spinner;
+
+@property (weak) IBOutlet NSMenuItem *menu_file_open;
+@property (weak) IBOutlet NSMenuItem *menu_file_close;
+@property (weak) IBOutlet NSMenuItem *menu_file_save;
+@property (weak) IBOutlet NSMenuItem *menu_file_print;
+@property (weak) IBOutlet NSSegmentedControl *pinop_ctrl;
+
 @end
 
 @implementation AppDelegate
@@ -99,7 +106,15 @@
     [eIDOSLayerBackend pinop:which];
 }
 - (void)newsrc:(eIDSource)which {
-    
+    [_photoview setImage:nil];
+    [_certstore clear];
+    [_viewdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+        if(![obj isKindOfClass:[NSTextField class]]) {
+            return;
+        }
+        NSTextField* tf = (NSTextField*)obj;
+        [tf setStringValue:@""];
+    }];
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -113,9 +128,15 @@
 - (void)newstate:(eIDState)state {
     DataVerifier *v = [DataVerifier verifier];
     // make everything nonsensitive
+    [_menu_file_close setEnabled:NO];
+    [_menu_file_open setEnabled:NO];
+    [_menu_file_print setEnabled:NO];
+    [_menu_file_save setEnabled:NO];
+    [_pinop_ctrl setEnabled:NO];
     switch(state) {
         case eIDStateReady:
             //make file->open sensitive
+            [_menu_file_open setEnabled:YES];
             break;
         case eIDStateToken:
         {
@@ -127,6 +148,9 @@
             break;
         case eIDStateTokenWait:
             //make print, savexml, savecsv, pintest, pinchg sensitive
+            [_menu_file_print setEnabled:YES];
+            [_menu_file_save setEnabled:YES];
+            [_pinop_ctrl setEnabled:YES];
         {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 [NSApp endSheet:_CardReadSheet];
@@ -140,6 +164,8 @@
             break;
         case eIDStateFile:
             // make file->print, file->close sensitive
+            [_menu_file_close setEnabled:YES];
+            [_menu_file_print setEnabled:YES];
             break;
         default:
             break;

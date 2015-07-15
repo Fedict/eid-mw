@@ -20,14 +20,16 @@ state CALLBACKS {
 
   READY --> FILE : OPEN_FILE
   READY --> TOKEN : TOKEN_INSERTED
-  READY: entry: source_none
+  READY: enter: source_none
 
   FILE --> READY : CLOSE_FILE
-  FILE: entry: do_parse_file
   FILE --> TOKEN : TOKEN_INSERTED
+  FILE --> READY : STATE_ERROR
+  FILE: enter: do_parse_file
 
-  TOKEN: entry: eid_vwr_p11_open_session\nexit: eid_vwr_p11_close_session
+  TOKEN: enter: eid_vwr_p11_open_session\nexit: eid_vwr_p11_close_session
   TOKEN --> READY : TOKEN_REMOVED
+  TOKEN --> CARD_INVALID : DATA_INVALID
 
   CARD_INVALID --> READY : TOKEN_REMOVED
 
@@ -43,21 +45,22 @@ state CALLBACKS {
 
     TOKEN_ID --> TOKEN_CERTS : READ_READY
     TOKEN_ID --> TOKEN_ERROR : STATE_ERROR
-    TOKEN_ID: entry: eid_vwr_p11_read_id\nexit:eid_vwr_p11_finalize_find
+    TOKEN_ID: enter: eid_vwr_p11_read_id\nexit:eid_vwr_p11_finalize_find
 
     TOKEN_CERTS --> TOKEN_WAIT : READ_READY
     TOKEN_CERTS --> TOKEN_ERROR : STATE_ERROR
-    TOKEN_CERTS: entry: eid_vwr_p11_read_certs\nexit:eid_vwr_p11_finalize_find
+    TOKEN_CERTS: enter: eid_vwr_p11_read_certs\nexit:eid_vwr_p11_finalize_find
  
     TOKEN_WAIT --> TOKEN_PINOP : DO_PINOP
     TOKEN_WAIT --> TOKEN_SERIALIZE : SERIALIZE
-    TOKEN_WAIT -up-> CARD_INVALID : STATE_ERROR
 
     TOKEN_PINOP --> TOKEN_WAIT : READ_READY
-    TOKEN_PINOP: entry: eid_vwr_p11_do_pinop\nexit :eid_vwr_p11_leave_pinop
+    TOKEN_PINOP --> TOKEN_WAIT : STATE_ERROR
+    TOKEN_PINOP: enter: eid_vwr_p11_do_pinop\nexit :eid_vwr_p11_leave_pinop
 
     TOKEN_SERIALIZE --> TOKEN_WAIT : READ_READY
-    TOKEN_SERIALIZE: entry: eid_vwr_p11_serialize
+    TOKEN_SERIALIZE --> TOKEN_ERROR : STATE_ERROR
+    TOKEN_SERIALIZE: enter: eid_vwr_p11_serialize
   }
 }
 
