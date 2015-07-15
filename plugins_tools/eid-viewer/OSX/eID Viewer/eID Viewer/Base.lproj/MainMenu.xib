@@ -1537,7 +1537,7 @@
             </constraints>
             <point key="canvasLocation" x="361" y="564"/>
         </customView>
-        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="8La-eA-MLK" userLabel="CardReadSheet">
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="8La-eA-MLK" userLabel="CardReadSheet">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="370" height="57"/>
