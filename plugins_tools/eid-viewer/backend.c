@@ -49,21 +49,19 @@ void be_newstate(enum eid_vwr_states which) {
 	cb->newstate(which);
 }
 void be_log(enum eid_vwr_loglevel l, const char* string, ...) {
-    va_list ap, ac;
+    va_list ap;
     char* str = NULL;
     size_t size, newsize = 40;
     NEED_CB_FUNC(log);
-	va_start(ap, string);
     do {
-        va_copy(ac, ap);
+        va_start(ap, string);
         size = newsize+1;
         str = realloc(str, size);
         if(!str) return;
-        newsize = vsnprintf(str, size, string, ac);
-        va_end(ac);
+        newsize = vsnprintf(str, size, string, ap);
+        va_end(ap);
     } while (newsize >= size);
     cb->log(l, str);
-	va_end(ap);
     free(str);
 }
 void be_newstringdata(const char* label, const char* data) {
