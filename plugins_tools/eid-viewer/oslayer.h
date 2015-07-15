@@ -51,6 +51,7 @@ struct eid_vwr_ui_callbacks {
 	void(*newstringdata)(const char* label, const char* data);
 	void(*newbindata)(const char* label, const void* data, int datalen);
     void(*log)(enum eid_vwr_loglevel, const char* line);
+    void(*logv)(enum eid_vwr_loglevel, const char* line, va_list ap);
 	void(*newstate)(enum eid_vwr_states);
     void(*pinop_result)(enum eid_vwr_pinops, enum eid_vwr_result);
 };

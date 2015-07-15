@@ -117,7 +117,7 @@ static void switch_logtab(GtkCheckMenuItem* item, gpointer user_data G_GNUC_UNUS
 	gtk_widget_set_visible(GTK_WIDGET(gtk_builder_get_object(builder, "logtab")), active);
 }
 
-static void reallog(enum eid_vwr_loglevel l, const char* line) {
+static void reallog(enum eid_vwr_loglevel l, const char* line, va_list ap) {
 	GLogLevelFlags gtklog;
 	switch(l) {
 		case EID_VWR_LOG_DETAIL:
@@ -135,15 +135,13 @@ static void reallog(enum eid_vwr_loglevel l, const char* line) {
 			gtklog = G_LOG_LEVEL_CRITICAL;
 			break;
 	}
-	g_log(NULL, gtklog, line);
+	g_logv(NULL, gtklog, line, ap);
 }
 
 void uilog(enum eid_vwr_loglevel l, const char* line, ...) {
 	va_list ap;
 	va_start(ap, line);
-	char* str = g_strdup_printf(line, ap);
-	reallog(l, str);
-	free(str);
+	reallog(l, str, ap);
 	va_end(ap);
 }
 
