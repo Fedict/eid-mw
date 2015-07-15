@@ -141,7 +141,7 @@ static void reallog(enum eid_vwr_loglevel l, const char* line, va_list ap) {
 void uilog(enum eid_vwr_loglevel l, const char* line, ...) {
 	va_list ap;
 	va_start(ap, line);
-	reallog(l, str, ap);
+	reallog(l, line, ap);
 	va_end(ap);
 }
 
