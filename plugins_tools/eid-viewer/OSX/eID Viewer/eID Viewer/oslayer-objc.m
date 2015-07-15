@@ -16,8 +16,8 @@ static void osl_objc_newbindata(const char* label, const void* data, int datalen
     [currUi newbindata:[NSData dataWithBytes:data length:datalen] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
 }
 
-static void osl_objc_log(enum eid_vwr_loglevel level, const char* line, va_list ap) {
-    [currUi log:[[NSString alloc] initWithFormat:[NSString stringWithCString:line encoding:NSUTF8StringEncoding] arguments:ap] withLevel:(eIDLogLevel)level];
+static void osl_objc_log(enum eid_vwr_loglevel level, const char* line) {
+    [currUi log:[NSString stringWithCString:line encoding:NSUTF8StringEncoding]withLevel:(eIDLogLevel) level];
 }
 
 static void osl_objc_newstate(enum eid_vwr_states state) {
