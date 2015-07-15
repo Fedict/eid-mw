@@ -9,14 +9,6 @@
 #include <string.h>
 #include <cache.h>
 
-#ifdef WIN32
-#define STRDUP(x) _strdup(x)
-#define SLEEP(x) Sleep(x*1000)
-#else
-#define STRDUP(x) strdup(x)
-#define SLEEP(x) sleep(x)
-#endif
-
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	sm_init();
 	sm_handle_event(EVENT_SET_CALLBACKS, cb_, NULL, NULL);

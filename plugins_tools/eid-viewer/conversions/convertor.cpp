@@ -53,29 +53,29 @@ Convertor::Convertor() {
 
 char* Convertor::convert(const char* label, const char* normal) {
 	if(can_convert(label)) {
-		return strdup(convertors[label]->convert(normal).c_str());
+		return STRDUP(convertors[label]->convert(normal).c_str());
 	} else {
-		return strdup(normal);
+		return STRDUP(normal);
 	}
 }
 
 void* Convertor::convert_from_xml(const char* name, const char* value, int* len_return) {
 	if(!value) {
 		*len_return = 0;
-		return strdup("");
+		return STRDUP("");
 	}
 	if(from_xml.count(name) > 0) {
 		return from_xml[name]->convert(value, len_return);
 	}
 	*len_return = strlen(value);
-	return strdup(value);
+	return STRDUP(value);
 }
 
 char* Convertor::convert_to_xml(const char* label, const char* normal) {
 	if(to_xml.count(label) > 0) {
-		return strdup(to_xml[label]->convert(normal).c_str());
+		return STRDUP(to_xml[label]->convert(normal).c_str());
 	}
-	return strdup(normal);
+	return STRDUP(normal);
 }
 
 int Convertor::can_convert(const char* label) {

@@ -7,6 +7,14 @@ extern "C" {
 
 #include "cache.h"
 
+#ifdef WIN32
+#define STRDUP(x) _strdup(x)
+#define SLEEP(x) Sleep(x*1000)
+#else
+#define STRDUP(x) strdup(x)
+#define SLEEP(x) sleep(x)
+#endif
+
 enum eid_vwr_langs {
 	EID_VWR_LANG_NONE,
 	EID_VWR_LANG_DE,
