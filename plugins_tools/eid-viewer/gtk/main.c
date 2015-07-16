@@ -412,7 +412,7 @@ int main(int argc, char** argv) {
 	cb->newsrc = newsrc;
 	cb->newstringdata = newstringdata;
 	cb->newbindata = newbindata;
-	cb->log = ui_log_init();
+	cb->logv = ui_log_init();
 	cb->newstate = newstate;
 	eid_vwr_createcallbacks(cb);
 

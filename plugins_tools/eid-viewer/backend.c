@@ -52,17 +52,23 @@ void be_log(enum eid_vwr_loglevel l, const char* string, ...) {
     va_list ap;
     char* str = NULL;
     size_t size, newsize = 40;
-    NEED_CB_FUNC(log);
-    do {
+    if(!cb) return;
+    if(cb->log) {
+        do {
+            va_start(ap, string);
+            size = newsize+1;
+            str = realloc(str, size);
+            if(!str) return;
+            newsize = vsnprintf(str, size, string, ap);
+            va_end(ap);
+        } while (newsize >= size);
+        cb->log(l, str);
+        free(str);
+    } else if(cb->logv) {
         va_start(ap, string);
-        size = newsize+1;
-        str = realloc(str, size);
-        if(!str) return;
-        newsize = vsnprintf(str, size, string, ap);
+        cb->logv(l, str, ap);
         va_end(ap);
-    } while (newsize >= size);
-    cb->log(l, str);
-    free(str);
+    }
 }
 void be_newstringdata(const char* label, const char* data) {
 	NEED_CB_FUNC(newstringdata);

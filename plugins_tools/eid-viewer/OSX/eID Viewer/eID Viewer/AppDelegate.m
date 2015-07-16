@@ -127,16 +127,14 @@
 }
 - (void)newstate:(eIDState)state {
     DataVerifier *v = [DataVerifier verifier];
-    // make everything nonsensitive
-    [_menu_file_close setEnabled:NO];
-    [_menu_file_open setEnabled:NO];
-    [_menu_file_print setEnabled:NO];
-    [_menu_file_save setEnabled:NO];
-    [_pinop_ctrl setEnabled:NO];
+    BOOL fileOpen = NO;
+    BOOL filePrint = NO;
+    BOOL fileSave = NO;
+    BOOL fileClose = NO;
+    BOOL pinops = NO;
     switch(state) {
         case eIDStateReady:
-            //make file->open sensitive
-            [_menu_file_open setEnabled:YES];
+            fileOpen = YES;
             break;
         case eIDStateToken:
         {
@@ -147,10 +145,9 @@
         }
             break;
         case eIDStateTokenWait:
-            //make print, savexml, savecsv, pintest, pinchg sensitive
-            [_menu_file_print setEnabled:YES];
-            [_menu_file_save setEnabled:YES];
-            [_pinop_ctrl setEnabled:YES];
+            filePrint = YES;
+            fileSave = YES;
+            pinops = YES;
         {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 [NSApp endSheet:_CardReadSheet];
@@ -163,13 +160,19 @@
         }
             break;
         case eIDStateFile:
-            // make file->print, file->close sensitive
-            [_menu_file_close setEnabled:YES];
-            [_menu_file_print setEnabled:YES];
+            fileClose = YES;
+            filePrint = YES;
             break;
         default:
             break;
     }
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [_menu_file_print setEnabled:filePrint];
+        [_menu_file_open setEnabled:fileOpen];
+        [_menu_file_close setEnabled:fileClose];
+        [_menu_file_save setEnabled: fileSave];
+        [_pinop_ctrl setEnabled:pinops];
+    }];
 }
 - (NSObject*)searchView:(NSView*)from withName:(NSString*)name {
     if(![from conformsToProtocol:@protocol(NSUserInterfaceItemIdentification)]) {
