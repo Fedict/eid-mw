@@ -90,9 +90,10 @@ int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
 }
 
 void eid_vwr_p11_to_ui(const char* label, const void* value, int len) {
+	char* str;
 	if(can_convert(label)) {
 		be_log(EID_VWR_LOG_DETAIL, "converting %s", label);
-		char* str = converted_string(label, (const char*)value);
+		str = converted_string(label, (const char*)value);
 		be_newstringdata(label, str);
 		free(str);
 	} else if(is_string(label)) {

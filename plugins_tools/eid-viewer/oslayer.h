@@ -1,9 +1,17 @@
+//contains the functions, enums and structures that need to be knonw by the ui
+
 #ifndef EID_VWR_GTK_OSLAYER_H
 #define EID_VWR_GTK_OSLAYER_H
 
 #include <conversions.h>
 #include <stdlib.h>
 #include <stdarg.h>
+
+#ifdef WIN32
+#define DllExport   __declspec( dllexport ) 
+#else
+#define DllExport
+#endif
 
 enum eid_vwr_source {
 	EID_VWR_SRC_NONE,
@@ -62,12 +70,13 @@ struct eid_vwr_preview {
 };
 
 int eid_vwr_pinop(enum eid_vwr_pinops);
-int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks*);
+DllExport int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb);
+
 struct eid_vwr_ui_callbacks* eid_vwr_cbstruct();
 struct eid_vwr_preview* eid_vwr_get_preview(const char* filename);
 
 void eid_vwr_poll();
-void eid_vwr_be_mainloop();
+DllExport void eid_vwr_be_mainloop();
 void eid_vwr_be_serialize(const char* target_file);
 void eid_vwr_be_deserialize(const char* source_file);
 const char* eid_vwr_be_get_xmlform();

@@ -24,6 +24,7 @@
 #else
 #include <unix.h>
 #endif
+#include <pkcs11.h>
 
 CK_BBOOL is_string(const char* label);
 

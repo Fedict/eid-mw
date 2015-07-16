@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace eIDViewer
 {
@@ -20,13 +21,23 @@ namespace eIDViewer
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow()    
         {
+            m_eIDViewerBackend = new eIDViewerBackend();
+            m_eIDViewerBackend.Init();
+
+            Thread backendThread = new Thread(m_eIDViewerBackend.backendMainloop);
+            backendThread.Start();
+            Console.WriteLine("backendThread started");
+
             InitializeComponent();
+            
         }
         void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+        private eIDViewerBackend m_eIDViewerBackend;
     }
 }
