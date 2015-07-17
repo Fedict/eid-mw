@@ -1,7 +1,7 @@
 #Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
 # Authority: dag
 
-Version: 4.1.3
+Version: 4.1.4
 Release: 0.%{revision}%{?dist}
 License: LGPL
 Group: Applications/Communications
@@ -126,6 +126,9 @@ fi
 %{_libdir}/libbeidpkcs11.so
 
 %changelog
+* Fri Jul 17 2015 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.1.4-0.R
+- Update to 4.1.4
+
 * Thu Nov 27 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
 - Install about-eid-mw into the eid-mw-bin package
 
