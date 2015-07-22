@@ -36,17 +36,11 @@
 
 struct utsname uts;
 long darwinver;
-static const long max_supported_darwin_version = 14;
+static const long max_supported_darwin_version = 14; // 10.10
+static const long min_supported_darwin_version = 11; // 10.7
 
 
 NSString* getOsRel() {
-/*    NSDictionary *RelMap = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @" OS X 10.10, Yosemite", @"14",
-                            @" OS X 10.9, Mavericks", @"13",
-                            @" OS X 10.8, Mountain Lion", @"12",
-                            @" OS X 10.7, Lion", @"11",
-                            nil];
- */
     NSMutableString *retval = [NSMutableString stringWithCapacity:64];
     char* tmp;
     char* majrel;
@@ -55,24 +49,20 @@ NSString* getOsRel() {
     tmp = strdup(uts.release);
     majrel = strtok(tmp, ".");
     darwinver = strtol(majrel, NULL, 10);
-//    NSString *reldesc = [RelMap valueForKey:[NSString stringWithCString:majrel encoding:NSUTF8StringEncoding]];
+    free(tmp);
     
+    NSString * OSVersionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
+    if (OSVersionString == nil) {
+        [retval appendString:@"unknown OS X release"];
+    } else {
+        [retval appendString:OSVersionString];
+    }
     if (darwinver > max_supported_darwin_version) {
         [retval appendString:@" (unknown OS X release; please upgrade the eID middleware)"];
-    } else {
-        NSString * OSVersionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
-        if (OSVersionString == nil) {
-            [retval appendString:@"unknown OS X release"];
-        } else {
-            [retval appendString:OSVersionString];
-        }
-        //[retval appendString:reldesc];
     }
-        
-    //[retval appendString:@" (Darwin "];
-    //[retval appendString:[NSString stringWithCString:uts.release encoding:NSUTF8StringEncoding]];
-    //[retval appendString:@" )"];
-    free(tmp);
+    if (darwinver < min_supported_darwin_version) {
+        [retval appendString:@" (no longer supported by this version of the middleware)"];
+    }
  
     return retval;
 }

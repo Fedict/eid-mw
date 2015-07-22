@@ -124,6 +124,8 @@ fi
 %doc NEWS README
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
+%{_libdir}/pkgconfig
+%{_includedir}/beid/
 
 %changelog
 * Thu Nov 27 2014 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.0.6-0.R
