@@ -11,6 +11,9 @@
 @IF "%EIDMW_REVISION%"=="" GOTO set_zero_revision
 @IF EIDMW_REVISION==exported GOTO set_zero_revision
 
+@echo BASE_VERSION1 set to %BASE_VERSION1%
+@echo BASE_VERSION2 set to %BASE_VERSION2%
+@echo BASE_VERSION3 set to %BASE_VERSION3%
 @GOTO end
 
 :set_zero_revision
