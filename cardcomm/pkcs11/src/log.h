@@ -42,7 +42,7 @@ extern "C" {
 #define DEFAULT_LOG_FILE "c:\\temp\\beidpkcs11\\p11.log"
 #else
  #ifdef __APPLE__
-  #define DEFAULT_LOG_FILE "/Library/Belgium Identity Card/"
+  #define DEFAULT_LOG_FILE "/Library/Belgium Identity Card/p11.log"
  #else
   #define DEFAULT_LOG_FILE "/var/log/beidpkcs11/p11.log"
  #endif
