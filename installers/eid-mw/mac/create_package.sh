@@ -21,14 +21,14 @@ LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 #xpi plugin dir, where the xpi plugin will be placed
 XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
 #tokend dir, where the BEID.tokend will be placed
-TOKEND_DIR="$ROOT_DIR/System/Library/Security/tokend"
+TOKEND_DIR="$ROOT_DIR/Library/Security/tokend"
 
 #base name of the package
 REL_NAME="beid"
 #version number of the package
 #REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
 #REL_VERSION=$(expr "$REL_VERSION_TMP" : '.*\([0-9].[0-9].[0-9]\).*')
-REL_VERSION="4.1.3"
+REL_VERSION="4.1.4"
 
 PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(git rev-list --count HEAD)
