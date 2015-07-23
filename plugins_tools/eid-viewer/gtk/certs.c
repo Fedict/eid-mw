@@ -304,10 +304,6 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 		gchar* filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 		int fd;
 		GByteArray* arr;
-		if(!fd) {
-			uilog(EID_VWR_LOG_ERROR, _("Could not open file %s: %s"), filename, strerror(errno));
-			return;
-		}
 
 		gtk_tree_model_get(model, &iter, CERT_COL_DATA, &arr, -1);
 		fd = open(filename, O_WRONLY | O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH);
