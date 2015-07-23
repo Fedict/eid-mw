@@ -55,7 +55,6 @@ static void glib_message_redirect(const gchar* log_domain,
 			   const gchar* message,
 			   gpointer user_data) {
 	enum eid_vwr_loglevel l;
-	gchar* tmp;
 	struct log_message* msg;
 
 	msg = g_new0(struct log_message, 1);
