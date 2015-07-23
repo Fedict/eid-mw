@@ -48,28 +48,30 @@ void be_newstate(enum eid_vwr_states which) {
 	NEED_CB_FUNC(newstate);
 	cb->newstate(which);
 }
+
 void be_log(enum eid_vwr_loglevel l, const char* string, ...) {
-    va_list ap;
-    char* str = NULL;
-    size_t size, newsize = 40;
-    if(!cb) return;
-    if(cb->log) {
-        do {
-            va_start(ap, string);
-            size = newsize+1;
-            str = realloc(str, size);
-            if(!str) return;
-            newsize = vsnprintf(str, size, string, ap);
-            va_end(ap);
-        } while (newsize >= size);
-        cb->log(l, str);
-        free(str);
-    } else if(cb->logv) {
-        va_start(ap, string);
-        cb->logv(l, str, ap);
-        va_end(ap);
-    }
+	va_list ap;
+	char* str = NULL;
+	size_t size, newsize = 40;
+	if(!cb) return;
+	if(cb->log) {
+		do {
+			va_start(ap, string);
+			size = newsize+1;
+			str = realloc(str, size);
+			if(!str) return;
+			newsize = vsnprintf(str, size, string, ap);
+			va_end(ap);
+		} while (newsize >= size);
+		cb->log(l, str);
+		free(str);
+	} else if(cb->logv) {
+		va_start(ap, string);
+		cb->logv(l, str, ap);
+		va_end(ap);
+	}
 }
+
 void be_newstringdata(const char* label, const char* data) {
 	NEED_CB_FUNC(newstringdata);
 	cb->newstringdata(label, data);
