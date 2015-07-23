@@ -67,7 +67,7 @@ void be_log(enum eid_vwr_loglevel l, const char* string, ...) {
 		free(str);
 	} else if(cb->logv) {
 		va_start(ap, string);
-		cb->logv(l, str, ap);
+		cb->logv(l, string, ap);
 		va_end(ap);
 	}
 }
