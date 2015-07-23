@@ -301,11 +301,11 @@ static void show_date_state(char* label, void* data, int length) {
 	GtkLabel* l = GTK_LABEL(gtk_builder_get_object(builder, labelname));
 	PangoAttrList *attrs = pango_attr_list_new();
 	PangoAttribute *attr;
-	gboolean* is_valid = (gboolean*)data;
+	gboolean* is_invalid = (gboolean*)data;
 	guint16 red = 0;
 
 	g_free(labelname);
-	if(!*is_valid) {
+	if(*is_invalid) {
 		red = G_MAXUINT16;
 	};
 	attr = pango_attr_foreground_new(red, 0, 0);
