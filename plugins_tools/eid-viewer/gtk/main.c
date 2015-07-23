@@ -298,8 +298,19 @@ static void connect_signals(GtkWidget* window) {
 
 static void show_date_state(char* label, void* data, int length) {
 	gchar* labelname = g_strndup(label, strstr(label, ":") - label);
-	GtkWidget* l = GTK_WIDGET(gtk_builder_get_object(builder, labelname));
+	GtkLabel* l = GTK_LABEL(gtk_builder_get_object(builder, labelname));
+	PangoAttrList *attrs = pango_attr_list_new();
+	PangoAttribute *attr;
+	gboolean* is_valid = (gboolean*)data;
+	guint16 red = 0;
+
 	g_free(labelname);
+	if(!*is_valid) {
+		red = G_MAXUINT16;
+	};
+	attr = pango_attr_foreground_new(red, 0, 0);
+	pango_attr_list_insert(attrs, attr);
+	gtk_label_set_attributes(l, attrs);
 }
 
 static void bindata_init() {
