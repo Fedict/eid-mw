@@ -302,13 +302,17 @@ static void show_date_state(char* label, void* data, int length) {
 	PangoAttrList *attrs = pango_attr_list_new();
 	PangoAttribute *attr;
 	gboolean* is_invalid = (gboolean*)data;
-	guint16 red = 0;
 
 	g_free(labelname);
 	if(*is_invalid) {
-		red = G_MAXUINT16;
-	};
-	attr = pango_attr_foreground_new(red, 0, 0);
+		attr = pango_attr_foreground_new(G_MAXUINT16, 0, 0);
+	} else {
+		GdkRGBA color;
+		GtkStyleContext *style = gtk_widget_get_style_context(GTK_WIDGET(l));
+
+		gtk_style_context_get_color(style, GTK_STATE_FLAG_NORMAL, &color);
+		attr = pango_attr_foreground_new(color.red * G_MAXUINT16, color.green * G_MAXUINT16, color.blue * G_MAXUINT16);
+	}
 	pango_attr_list_insert(attrs, attr);
 	gtk_label_set_attributes(l, attrs);
 }
