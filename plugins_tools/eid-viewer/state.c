@@ -64,11 +64,6 @@ static int do_initialize(void*data) {
 	return 0;
 }
 
-static int do_parse_file(void*data) {
-
-	return 0;
-}
-
 static int source_none(void*data) {
 	be_newsource(EID_VWR_SRC_NONE);
 
