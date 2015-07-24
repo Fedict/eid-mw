@@ -230,7 +230,7 @@ gboolean real_clear(gpointer data G_GNUC_UNUSED) {
 
 void certs_init() {
 	GSettings* sets = get_prefs();
-	g_settings_bind(sets, "showlog",
+	g_settings_bind(sets, "validate",
 			G_OBJECT(gtk_builder_get_object(builder, "validate_always")),
 			"active", 0);
 	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
