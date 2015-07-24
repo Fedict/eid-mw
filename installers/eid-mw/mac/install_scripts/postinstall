@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MWVER3=4.1.0
+MWVER3=4.1.4
 MWVER2=4.1
 MWVER1=4
 
@@ -37,6 +37,16 @@ sudo python ./enablesecd.py; fi
 mv /Library/BelgiumIdentityCard "/Library/Belgium Identity Card"
 #correct the org.opensc.pcscd.autostart name if needed (add .plist)
 test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;
+
+#update the list of supported card readers by the default ccid driver
+sudo mv "/Library/Belgium Identity Card/plistMerger/Info_org.plist" "/Library/Belgium Identity Card/plistMerger/Info_old.plist";
+sudo rm "/Library/Belgium Identity Card/plistMerger/Info_org.plist";
+sudo cp /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist "/Library/Belgium Identity Card/plistMerger/Info_org.plist";
+sudo touch "/Library/Belgium Identity Card/plistMerger/Info_merged.plist"
+sudo chmod 666 "/Library/Belgium Identity Card/plistMerger/Info_merged.plist"
+"/Library/Belgium Identity Card/plistMerger/plistMerger"
+sudo chmod 655 "/Library/Belgium Identity Card/plistMerger/Info_merged.plist"
+sudo cp "/Library/Belgium Identity Card/plistMerger/Info_merged.plist" /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist;
 
 #trust beid-cert-belgiumrca2.der
 sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain ./beid-cert-belgiumrca2.der
