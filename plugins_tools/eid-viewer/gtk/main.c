@@ -43,6 +43,7 @@ struct statusupdate {
 	char* text;
 };
 
+/* Helper function for uistatus() */
 static gboolean realstatus(gpointer data) {
 	GtkStatusbar* sb = GTK_STATUSBAR(gtk_builder_get_object(builder, "statusbar"));
 	GtkSpinner* spinner = GTK_SPINNER(gtk_builder_get_object(builder, "busy_spinner"));
@@ -63,6 +64,7 @@ static gboolean realstatus(gpointer data) {
 	return FALSE;
 }
 
+/* Update the status bar and the spinner with a new status message. */
 static void uistatus(gboolean spin, char* data, ...) {
 	va_list ap, ac;
 	struct statusupdate* update = g_new0(struct statusupdate, 1);
@@ -75,9 +77,11 @@ static void uistatus(gboolean spin, char* data, ...) {
 		va_end(ap);
 	}
 	update->spin = spin;
+	/* Don't change UI elements from a background thread */
 	g_main_context_invoke(NULL, realstatus, update);
 }
 
+/* Handle "state changed" elements */
 static void newstate(enum eid_vwr_states s) {
 	GObject *open, *savexml, *savecsv, *print, *close, *pintest, *pinchg;
 	open = gtk_builder_get_object(builder, "mi_file_open");
@@ -143,15 +147,17 @@ static void newstate(enum eid_vwr_states s) {
 	}
 }
 
+/* Clear a string element from the UI */
 static void stringclear(const char* l) {
 	GtkLabel* label = GTK_LABEL(gtk_builder_get_object(builder, l));
-	// Should only appear in the hash table if we successfully found it
-	// earlier...
+	/* Should only appear in the hash table if we successfully found it
+	   earlier... */
 	assert(label != NULL);
 	g_object_set_threaded(G_OBJECT(label), "label", "-", NULL);
 	g_object_set_threaded(G_OBJECT(label), "sensitive", FALSE, NULL);
 }
 
+/* Add a new string to the UI */
 static void newstringdata(const char* l, const char* data) {
 	GtkLabel* label = GTK_LABEL(gtk_builder_get_object(builder, l));
 	if(!label) {
@@ -164,11 +170,14 @@ static void newstringdata(const char* l, const char* data) {
 		stringclear(l);
 		return;
 	}
+	/* Remember which elements we've touched, so we can clear them
+	 * again later on */
 	g_hash_table_insert(touched_labels, g_strdup(l), stringclear);
 	g_object_set_threaded(G_OBJECT(label), "label", g_strdup(data), g_free);
 	g_object_set_threaded(G_OBJECT(label), "sensitive", (void*)TRUE, NULL);
 }
 
+/* Add a new binary data element to the UI */
 static void newbindata(const char* label, const void* data, int datalen) {
 	bindisplayfunc func;
 	gchar* msg;
@@ -184,26 +193,29 @@ static void newbindata(const char* label, const void* data, int datalen) {
 	return;
 }
 
+/* Helper function for newsrc() */
 static void cleardata(gpointer key, gpointer value, gpointer user_data G_GNUC_UNUSED) {
 	clearfunc func = (clearfunc)value;
 	char* k = key;
 	func(k);
 }
 
+/* Handle the "new source" event from the state machine */
 static void newsrc(enum eid_vwr_source src) {
 	clear_certdata();
 	g_hash_table_foreach(touched_labels, cleardata, NULL);
 	// TODO: update display so we see which source we're using
 }
 
+/* Main function for the p11 thread */
 static void* threadmain(void* data G_GNUC_UNUSED) G_GNUC_NORETURN;
-
 static void* threadmain(void* data) {
 	eid_vwr_be_mainloop();
 
 	assert(1 == 0); // let the compiler know that we shouldn't get here
 }
 
+/* Figure out what language we should use from environment variables */
 enum eid_vwr_langs langfromenv() {
 	char* p;
 	char* all = NULL;
@@ -243,6 +255,7 @@ enum eid_vwr_langs langfromenv() {
 	return EID_VWR_LANG_EN;
 }
 
+/* Connect UI event signals to callback functions */
 static void connect_signals(GtkWidget* window) {
 	GObject* signaltmp;
 	GObject* photo;
@@ -296,6 +309,9 @@ static void connect_signals(GtkWidget* window) {
 	g_settings_bind(get_prefs(), "cert-paned-pos", signaltmp, "position", 0);
 }
 
+/* Set the colour of the "valid from" and "valid until" elements on the
+ * Certificate page to red if they are incorrectly in the future or
+ * past. */
 static void show_date_state(char* label, void* data, int length) {
 	gchar* labelname = g_strndup(label, strstr(label, ":") - label);
 	GtkLabel* l = GTK_LABEL(gtk_builder_get_object(builder, labelname));
@@ -315,7 +331,15 @@ static void show_date_state(char* label, void* data, int length) {
 		attr = pango_attr_foreground_new(color.red * G_MAXUINT16, color.green * G_MAXUINT16, color.blue * G_MAXUINT16);
 #else
 #if HAVE_GTK == 2
+		/* In GTK+ 2, there is no GtkStyleContext yet. It
+		 * should, in theory, be possible to figure out what the
+		 * default foreground color is by using a GTK+
+		 * 2-specific API, but that's too much work and GTK+ 2
+		 * is a minority now anyway, so... */
 		attr = pango_attr_foreground_new(0, 0, 0);
+#else
+		/* The configure script only allows GTK+2 or GTK+3. */
+#error should not happen
 #endif
 #endif
 	}
@@ -323,6 +347,7 @@ static void show_date_state(char* label, void* data, int length) {
 	gtk_label_set_attributes(l, attrs);
 }
 
+/* Initialize the hash table for binary data */
 static void bindata_init() {
 	binhash = g_hash_table_new(g_str_hash, g_str_equal);
 
@@ -342,6 +367,7 @@ static void bindata_init() {
 	g_hash_table_insert(binhash, "certimage", show_cert_image);
 }
 
+/* Helper function for update_info() */
 static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter* iter, gpointer data G_GNUC_UNUSED) {
 	gchar *from, *to, *use, *certdata;
 	gboolean past, future;
@@ -365,10 +391,13 @@ static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIt
 	newbindata("certvaltilval:future", &future, sizeof(gboolean));
 }
 
+/* Called when the user changes the selection of the treeview on the
+ * certificates tab */
 static void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
 	gtk_tree_selection_selected_foreach(sel, update_info_detail, NULL);
 }
 
+/* Called when the user clicks on the treeview on the certificates tab */
 static gboolean show_menu(GtkWidget* widget, GdkEvent* event, gpointer user_data) {
 	GtkMenu* menu = GTK_MENU(gtk_builder_get_object(builder, "certmenu"));
 	if(event->button.button == 3) { // RMB click
@@ -377,6 +406,8 @@ static gboolean show_menu(GtkWidget* widget, GdkEvent* event, gpointer user_data
 	return FALSE;
 }
 
+/* Initialize the treeview on the certificates tab: connect the model,
+ * and connect signal handlers */
 static void setup_treeview() {
 	GtkTreeView* tv = GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_cert"));
 	GtkCellRenderer *renderer;
@@ -392,6 +423,7 @@ static void setup_treeview() {
 	g_signal_connect(G_OBJECT(tv), "button-press-event", G_CALLBACK(show_menu), NULL);
 }
 
+/* Main entry point */
 int main(int argc, char** argv) {
 	GtkWidget *window;
 	GtkAccelGroup *group;

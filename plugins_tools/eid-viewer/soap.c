@@ -2,6 +2,7 @@
 #include <libxml/xmlstring.h>
 #include <backend.h>
 
+/* Send a SOAP ValidateRequest request out to the trust server */
 char* eid_vwr_send_soap(xmlChar* data) {
 	static CURL* handle;
 	char* retval = NULL;

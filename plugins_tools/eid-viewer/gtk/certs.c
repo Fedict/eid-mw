@@ -40,6 +40,8 @@ static GdkPixbuf* bad_certificate;
 static GdkPixbuf* warn_certificate;
 static GdkPixbuf* unchecked_certificate;
 
+/* Returns a GtkTreeIter for the part of the tree model that refers to the
+ * certificate with the given name */
 static GtkTreeIter* get_iter_for(char* which) {
 	GtkTreeIter* parent;
 	enum certs w = CERTS_COUNT;
@@ -53,7 +55,7 @@ static GtkTreeIter* get_iter_for(char* which) {
 #undef char_to_enum
 
 	if(w == CERTS_COUNT) {
-		// invalid/unknown certificate
+		/* invalid/unknown certificate */
 		return NULL;
 	}
 	if(iters[w]) {
@@ -84,6 +86,7 @@ struct tree_store_data {
 	void(*free)(struct tree_store_data*);
 };
 
+/* Free the data for the tree store */
 static void tst_free_simple(struct tree_store_data* dat) {
 	int i;
 	free(dat->which);
@@ -95,6 +98,7 @@ static void tst_free_simple(struct tree_store_data* dat) {
 	free(dat);
 }
 
+/* Helper function for tst_set() */
 static gboolean tst_helper(gpointer user_data) {
 	struct tree_store_data* dat = (struct tree_store_data*)user_data;
 	GtkTreeIter* iter = get_iter_for(dat->which);
@@ -109,6 +113,7 @@ static gboolean tst_helper(gpointer user_data) {
 	return FALSE;
 }
 
+/* Set the given data on the tree model */
 void tst_set(char* w, gint* c, GValue* v, gint n) {
 	struct tree_store_data* dat = malloc(sizeof(struct tree_store_data));
 	dat->which = strdup(w);
@@ -116,9 +121,12 @@ void tst_set(char* w, gint* c, GValue* v, gint n) {
 	dat->values = v;
 	dat->n_values = n;
 	dat->free = tst_free_simple;
+	/* GTK+ does not like it when you modify UI elements from a background
+	 * thread, so ensure it's called on the main thread instead */
 	g_main_context_invoke(NULL, tst_helper, dat);
 }
 
+/* Helper function to initialize the tree store if that hasn't happened yet */
 static void ensure_cert() {
 	if(G_UNLIKELY(certificates == NULL)) {
 		certificates = gtk_tree_store_new(CERT_COL_NCOLS,
@@ -135,6 +143,7 @@ static void ensure_cert() {
 	}
 }
 
+/* newbindata() handler function for when we receive a certificate */
 void add_certificate(char* label, void* data, int len) {
 	X509 *cert = NULL;
 	BIO *bio = BIO_new(BIO_s_mem());
@@ -151,11 +160,14 @@ void add_certificate(char* label, void* data, int len) {
 	columns = calloc(sizeof(gint),cols);
 	vals = calloc(sizeof(GValue),cols);
 
+	/* The RRN certificate is required for signature verification, so pass
+	 * that on to the verification subsystem */
 	if(!strcmp(label, "CERT_RN_FILE")) {
 		add_verify_data(label, data, len);
 	}
 
-	/* must happen before d2i_X509, since that modifies the pointer */
+	/* d2i_X509 destroys its input, so make sure we have a copy before we
+	 * call that function */
 	columns[cur] = CERT_COL_DATA;
 	g_value_init(&(vals[cur]), G_TYPE_BYTE_ARRAY);
 	ba = g_byte_array_sized_new(len);
@@ -167,6 +179,8 @@ void add_certificate(char* label, void* data, int len) {
 		return;
 	}
 
+	/* Now fill all the other columns with the parsed-out data from the
+	 * certificate */
 	columns[cur] = CERT_COL_LABEL;
 	g_value_init(&(vals[cur]), G_TYPE_STRING);
 	char* str = describe_cert(label, cert);
@@ -214,11 +228,13 @@ void add_certificate(char* label, void* data, int len) {
 	tst_set(label, columns, vals, cols);
 }
 
+/* Return the tree model for the certificates treeview */
 GtkTreeModel* certificates_get_model() {
 	ensure_cert();
 	return GTK_TREE_MODEL(certificates);
 }
 
+/* Helper function for clear_certdata() */
 gboolean real_clear(gpointer data G_GNUC_UNUSED) {
 	int i;
 	gtk_tree_store_clear(certificates);
@@ -228,6 +244,7 @@ gboolean real_clear(gpointer data G_GNUC_UNUSED) {
 	return FALSE;
 }
 
+/* Initialize the data needed for the certificate */
 void certs_init() {
 	GSettings* sets = get_prefs();
 	g_settings_bind(sets, "validate",
@@ -241,10 +258,13 @@ void certs_init() {
 	G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
+/* Clear the certificates treeview */
 void clear_certdata() {
 	g_main_context_invoke(NULL, real_clear, NULL);
 }
 
+/* Export a certificate to a file. Called by a menu option in the right-mouse
+ * popup menu on the treeview */
 void certexport(GtkMenuItem* item, gpointer userdata) {
 	GtkWindow* win = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
@@ -262,6 +282,7 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 	GtkTreeModel* model;
 	int s, d, len;
 
+	/* Build a set of file filters for our "Save..." dialog */
 	filter = gtk_file_filter_new();
 	gtk_file_filter_add_pattern(filter, "*.pem");
 	gtk_file_filter_set_name(filter, _("PEM files"));
@@ -278,6 +299,8 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 	gtk_file_filter_set_name(filter, _("DER files"));
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 
+	/* Generate a suggested filename based on the common name of the
+	 * selected certificate */
 	gtk_tree_selection_get_selected(sel, &model, &iter);
 	gtk_tree_model_get(model, &iter, CERT_COL_LABEL, &desc, -1);
 	filename_sugg = g_strdup_printf("%s.%s",
@@ -299,6 +322,7 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), filename_sugg);
 
+	/* Show the dialog, and if the user accepts the selection, save to the given filename */
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		gchar* filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
@@ -320,6 +344,7 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 	gtk_widget_destroy(dialog);
 }
 
+/* Show details on a given certificate. Not actually implemented yet. */
 void certdetail(GtkMenuItem* item, gpointer userdata) {
 	GtkWindow* win = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, _("Not yet implemented"));

@@ -27,11 +27,14 @@ void n(GtkMenuItem* item, gpointer user_data) { \
 
 static enum eid_vwr_langs curlang = EID_VWR_LANG_NONE;
 
+/* Hide the certificate state icon */
 static void clear_cert_image(char* label) {
 	GtkImage *img = GTK_IMAGE(gtk_builder_get_object(builder, label));
 	gtk_image_set_from_stock(img, GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_BUTTON);
 }
 
+/* Show the correct certificate state icon. TODO: make this match what the
+ * certificate validation returns */
 void show_cert_image(const char* label, void *data, int len) {
 	GdkPixbuf *buf = GDK_PIXBUF(data);
 	GtkImage *ci = GTK_IMAGE(gtk_builder_get_object(builder, "certimage"));
@@ -41,6 +44,7 @@ void show_cert_image(const char* label, void *data, int len) {
 	gtk_image_set_from_pixbuf(ci, buf);
 }
 
+/* Show an "about" dialog */
 void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	const char *authors[] = { "Wouter Verhelst", "Frederik Vernelen", NULL };
@@ -62,6 +66,7 @@ void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {
 			NULL);
 }
 
+/* Show a preview image for the selected file (if any, and if that is a valid .eid file) */
 static void update_preview(GtkFileChooser* chooser, gpointer data) {
 	GtkWidget* preview;
 	char *filename;
@@ -91,6 +96,7 @@ static void update_preview(GtkFileChooser* chooser, gpointer data) {
 
 GEN_FUNC(open_file_detail, "opening %s")
 
+/* Show an "open file" dialog, and make the backend open it if the user accepted the selection */
 void file_open(GtkMenuItem* item, gpointer user_data) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
@@ -137,6 +143,7 @@ void file_open(GtkMenuItem* item, gpointer user_data) {
 	gtk_widget_destroy(dialog);
 }
 
+/* Show a "save file" dialog, and make the backend save the XML data there if the user accepted the selection */
 void file_save(GtkMenuItem* item, gpointer user_data) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
@@ -177,16 +184,19 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 	g_free(filename_sugg);
 }
 
+/* Close the currently-open file */
 void file_close(GtkMenuItem* item, gpointer user_data) {
 	sm_handle_event(EVENT_CLOSE_FILE, NULL, NULL, NULL);
 }
 
+/* Perform a PIN operation */
 void pinop(GtkWidget* button, gpointer which) {
 	enum eid_vwr_pinops op = (enum eid_vwr_pinops) which;
 
 	eid_vwr_pinop(op);
 }
 
+/* Get the "current" language, or the default language if none is selected */
 enum eid_vwr_langs get_curlang() {
 	if(curlang != EID_VWR_LANG_NONE) {
 		return curlang;
@@ -194,6 +204,8 @@ enum eid_vwr_langs get_curlang() {
 	return langfromenv();
 }
 
+/* Re-translate the user interface if the user switches language.
+   TODO: will we still need this? */
 static void retranslate_gtkui() {
 	xmlTextReaderPtr reader = xmlReaderForMemory(VIEWER_GLADE_STRING, sizeof(VIEWER_GLADE_STRING)-1, "", NULL, 0);
 	const xmlChar *curnode = NULL, *curname = NULL;
@@ -233,6 +245,7 @@ static void retranslate_gtkui() {
 	}
 }
 
+/* Translate the UI to the target language */
 void translate(GtkMenuItem* item, gpointer target) {
 	enum eid_vwr_langs lang = EID_VWR_LANG_EN;
 	if(!strncmp(target, "de", 2)) {
@@ -279,6 +292,7 @@ void translate(GtkMenuItem* item, gpointer target) {
 #endif
 }
 
+/* Initialize the drag-and-drop environment */
 void setup_dnd(void) {
 	GtkWidget* photo = GTK_WIDGET(gtk_builder_get_object(builder, "photobox"));
 
@@ -286,17 +300,19 @@ void setup_dnd(void) {
 	gtk_drag_source_add_text_targets(photo);
 }
 
+/* Disable drag-and-drop when we no longer have data */
 void disable_dnd(void) {
 	GtkWidget* pbox = GTK_WIDGET(gtk_builder_get_object(builder, "photobox"));
 
 	gtk_drag_source_unset(pbox);
 }
 
+/* Perform a drag-and-drop operation */
 void drag_data_get(GtkWidget* widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, gpointer user_data) {
 	const char* xml = eid_vwr_be_get_xmlform();
 	if(!xml) return;
 	gtk_selection_data_set_text(data, xml, -1);
 }
 
-GEN_FUNC(file_prefs, "set preferences")
+GEN_FUNC(file_prefs, "set preferences %s")
 GEN_FUNC(showurl, "show %s url")

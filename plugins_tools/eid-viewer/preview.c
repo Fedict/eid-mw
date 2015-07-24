@@ -12,6 +12,7 @@ be_log(EID_VWR_LOG_DETAIL, "Error while dealing with file (calling '%s'): %d", #
 goto out; \
 }
 
+/* Produce a preview for a given eID file: parse the JPEG photo out. */
 struct eid_vwr_preview* eid_vwr_get_preview(const char* filename) {
     int rc;
     xmlTextReaderPtr reader = NULL;

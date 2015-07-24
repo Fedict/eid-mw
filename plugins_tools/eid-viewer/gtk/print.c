@@ -50,6 +50,7 @@ static struct field {
 	{ 5, N_("Printed by:"), "printby" },
 };
 
+/* Show the photo on the right location on the page */
 static void add_photo(cairo_t* cr, GdkPixbuf* buf, gdouble c_pagewidth, int right_side) {
 	gdouble scalefactor = C_HEADER_HEIGHT / gdk_pixbuf_get_height(buf);
 
@@ -68,12 +69,14 @@ static void add_photo(cairo_t* cr, GdkPixbuf* buf, gdouble c_pagewidth, int righ
 	cairo_stroke(cr);
 }
 
+/* Compute the width of the photo */
 static gdouble get_photo_width(GdkPixbuf *buf) {
 	gdouble scalefactor = C_HEADER_HEIGHT / gdk_pixbuf_get_height(buf);
 
 	return gdk_pixbuf_get_width(buf) * scalefactor;
 }
 
+/* Called by the GtkPrintOperation when it wants us to draw a page */
 static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint page_nr, gpointer user_data) {
 	cairo_t *cr;
 	PangoLayout *header, *title, *data;
@@ -96,7 +99,6 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 	strftime(today, 20, _("%B %d, %Y"), localtime(&now));
 	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder, "printby")), "eID Viewer " PACKAGE_VERSION);
 	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder, "printdate")), today);
-
 
 	/* Initialization of various coordinate variables. GTK+ has two
 	 * libraries used in printing: Cairo, a 2D graphics library, and
@@ -231,7 +233,7 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 
 		if(fields[i].group > lastgroup) {
 			lastgroup = fields[i].group;
-			/* XXX draw a line */
+			/* draw a line */
 			cairo_move_to(cr, C_MARGIN, c_lineoffset + c_lineheight / 2);
 			cairo_line_to(cr, c_pagewidth - C_MARGIN, c_lineoffset + c_lineheight / 2);
 			cairo_stroke(cr);
@@ -259,6 +261,7 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 	pango_cairo_show_layout(cr, header);
 }
 
+/* Called by UI when the user activates the "Print" menu item */
 void do_print(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkPrintOperation *print = gtk_print_operation_new();
 	GtkPrintOperationResult res;

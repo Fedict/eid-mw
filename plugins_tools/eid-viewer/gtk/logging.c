@@ -15,6 +15,7 @@ struct log_message {
 	gboolean show_dialog;
 };
 
+/* Show an error message when we get an EID_VWR_LOG_ERROR log message */
 static void show_error(const gchar* message) {
 	GtkWidget *msgdlg = gtk_message_dialog_new(GTK_WINDOW(gtk_builder_get_object(builder, "mainwin")),
 			0, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", message);
@@ -22,6 +23,7 @@ static void show_error(const gchar* message) {
 	gtk_widget_destroy(msgdlg);
 }
 
+/* Append a log line to the log tab (if it is active) */
 static gboolean append_logline(gpointer ptr) {
 	struct log_message *msg = (struct log_message*)ptr;
 	gchar* tmp;
@@ -50,6 +52,9 @@ static gboolean append_logline(gpointer ptr) {
 	return FALSE;
 }
 
+/* Redirect glib log messages. This will contain our own messages as well as
+ * those from elsewhere in glib. We still call g_log_default_handler() so that
+ * the log line shows up on stderr, but we *also* show it on the log tab */
 static void glib_message_redirect(const gchar* log_domain,
 			   GLogLevelFlags log_level,
 			   const gchar* message,
@@ -91,12 +96,14 @@ static void glib_message_redirect(const gchar* log_domain,
 	g_main_context_invoke(NULL, append_logline, msg);
 }
 
+/* Clear the log tab */
 static void clear_log(GtkButton* but G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkTextBuffer* buf = GTK_TEXT_BUFFER(gtk_text_view_get_buffer(
 				GTK_TEXT_VIEW(gtk_builder_get_object(builder, "logtext"))));
 	gtk_text_buffer_set_text(buf, "", -1);
 }
 
+/* Copy the log tab to the SELECTION clipboard (i.e., the Ctrl+C/Ctrl+V one) */
 static void copy_log(GtkButton* but G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkTextBuffer* buf = GTK_TEXT_BUFFER(gtk_text_view_get_buffer(
 				GTK_TEXT_VIEW(gtk_builder_get_object(builder, "logtext"))));
@@ -108,6 +115,7 @@ static void copy_log(GtkButton* but G_GNUC_UNUSED, gpointer user_data G_GNUC_UNU
 	gtk_clipboard_set_text(clip, text, strlen(text));
 }
 
+/* Toggle the visibility of the log tab. Callback for the "show log" menu item */
 static void switch_logtab(GtkCheckMenuItem* item, gpointer user_data G_GNUC_UNUSED) {
 	gboolean active = gtk_check_menu_item_get_active(item);
 	if(!active) {
@@ -116,6 +124,9 @@ static void switch_logtab(GtkCheckMenuItem* item, gpointer user_data G_GNUC_UNUS
 	gtk_widget_set_visible(GTK_WIDGET(gtk_builder_get_object(builder, "logtab")), active);
 }
 
+/* Inject eid-viewer log messages into the glib log subysstem. We hook
+ * reallog() into the glib log system later on, so that the messages may
+ * end up on the log tab as well. */
 static void reallog(enum eid_vwr_loglevel l, const char* line, va_list ap) {
 	GLogLevelFlags gtklog;
 	switch(l) {
@@ -137,6 +148,9 @@ static void reallog(enum eid_vwr_loglevel l, const char* line, va_list ap) {
 	g_logv(NULL, gtklog, line, ap);
 }
 
+/* Helper function to log something from the UI. Use either this or the
+ * g_warning()/g_message()/ etc macros; both will have the same result.
+ */
 void uilog(enum eid_vwr_loglevel l, const char* line, ...) {
 	va_list ap;
 	va_start(ap, line);
@@ -144,6 +158,9 @@ void uilog(enum eid_vwr_loglevel l, const char* line, ...) {
 	va_end(ap);
 }
 
+/* Initialize the log subsystem, and return a function pointer to
+ * reallog().
+ */
 logfunc ui_log_init() {
 	GObject* object;
 	GtkTextBuffer* buf;

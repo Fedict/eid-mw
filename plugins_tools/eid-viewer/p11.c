@@ -45,6 +45,7 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 	} \
 }
 
+/* Called by state machine to initialize p11 subsystem */
 int eid_vwr_p11_init() {
 	check_rv(C_Initialize(NULL_PTR));
 
@@ -54,6 +55,7 @@ int eid_vwr_p11_init() {
 static CK_SESSION_HANDLE session;
 static CK_SLOT_ID slot;
 
+/* Called by state machine when a card is inserted */
 int eid_vwr_p11_open_session(void* slot_) {
 	slot = *(CK_SLOT_ID_PTR)slot_;
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
@@ -63,6 +65,7 @@ int eid_vwr_p11_open_session(void* slot_) {
 	return 0;
 }
 
+/* Called by state machien when a card is removed */
 int eid_vwr_p11_close_session() {
 	check_rv(C_CloseSession(session));
 
@@ -71,6 +74,7 @@ int eid_vwr_p11_close_session() {
 	return 0;
 }
 
+/* Called by eid_vwr_poll(). */
 int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
 	CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
 	CK_ULONG count = 1;
@@ -89,6 +93,9 @@ int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc) {
 	return EIDV_RV_FAIL;
 }
 
+/* Called by the backend when something needs to be passed on to the UI.
+ * Will abstract the conversion between on-card data and presentable
+ * data */
 void eid_vwr_p11_to_ui(const char* label, const void* value, int len) {
 	char* str;
 	if(can_convert(label)) {
@@ -103,6 +110,7 @@ void eid_vwr_p11_to_ui(const char* label, const void* value, int len) {
 	}
 }
 
+/* Performs a previously-initialized find operation. */
 static int perform_find(CK_BBOOL do_objid) {
 	CK_OBJECT_HANDLE object;
 	CK_ULONG count;
@@ -155,15 +163,19 @@ static int perform_find(CK_BBOOL do_objid) {
 		free(value_str);
 		free(objid_str);
 	} while(count);
+	/* Inform state machine that we're done reading, which will
+	 * cause the state machine to enter the next state */
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
 	return 0;
 }
 
+/* Called by state machine at end of TOKEN_CERTS and TOKEN_ID states */
 int eid_vwr_p11_finalize_find() {
 	check_rv(C_FindObjectsFinal(session));
 	return 0;
 }
 
+/* Called by state machine at start of TOKEN_ID state */
 int eid_vwr_p11_read_id(void* data) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
@@ -178,6 +190,7 @@ int eid_vwr_p11_read_id(void* data) {
 	return perform_find(1);
 }
 
+/* Called by state machine at start of TOKEN_CERTS state */
 int eid_vwr_p11_read_certs(void* data) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
@@ -192,6 +205,10 @@ int eid_vwr_p11_read_certs(void* data) {
 	return perform_find(0);
 }
 
+/* Do the actual PIN operation. Separate helper function for the below,
+ * because PKCS#11 "failed" message does not match state machine
+ * "failed" message, and otherwise we can't use our check_rv() macro
+ */
 int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
     check_rv(C_Login(session, CKU_USER, NULL_PTR, 0));
     if(p >= EID_VWR_PINOP_CHG) {
@@ -202,6 +219,8 @@ int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
     return 0;
 }
 
+/* Called by state machine when a "perform PIN operation" action was
+ * requested */
 int eid_vwr_p11_do_pinop(void* data) {
     int retval;
     enum eid_vwr_pinops* p = (enum eid_vwr_pinops*) data;
@@ -213,6 +232,7 @@ int eid_vwr_p11_do_pinop(void* data) {
     return retval;
 }
 
+/* Called by state machine at end of TOKEN_PINOP state. */
 int eid_vwr_p11_leave_pinop() {
 	check_rv(C_Logout(session));
 

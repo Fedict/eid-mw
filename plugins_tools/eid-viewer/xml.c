@@ -22,6 +22,7 @@
 	goto out; \
 }
 
+/* Write attributes to the description in *attribute */
 static int write_attributes(xmlTextWriterPtr writer, struct attribute_desc *attribute) {
 	int rc = 0;
 	char* val = NULL;
@@ -50,6 +51,7 @@ out:
 	return rc;
 }
 
+/* Write elements to the description in *element */
 static int write_elements(xmlTextWriterPtr writer, struct element_desc *element) {
 	int rc;
 	char* val = NULL;
@@ -94,6 +96,15 @@ out:
 	return rc;
 }
 
+/* Called when we enter the FILE or TOKEN states.
+   Note: in theory it would be possible to just store the xml data we
+   read from a file in the deserialize event into the cache as-is.
+   However, that has a few downsides:
+   - If the file has invalid XML or superfluous data, we will write that
+     same data back later on.
+   - If we would want to modify the XML format at some undefined point
+     in the future, it is a good idea generally to ensure that we
+     already generate new XML data */
 int eid_vwr_gen_xml(void* data) {
 	xmlTextWriterPtr writer = NULL;
 	int rc;
@@ -129,6 +140,8 @@ out:
 	return rc;
 }
 
+/* Read data from the cache and store it to the file whose name we get
+ * in the *data argument */
 int eid_vwr_serialize(void* data) {
 	const struct eid_vwr_cache_item* item = cache_get_data("xml");
 	FILE* f = fopen((const char*)data, "w");
@@ -136,6 +149,7 @@ int eid_vwr_serialize(void* data) {
 	return fclose(f);
 }
 
+/* Read elements according to the description in *element */
 static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) {
 	int rc;
 	void* val = NULL;
@@ -143,9 +157,14 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 		const xmlChar *curnode = xmlTextReaderConstLocalName(reader);
 		struct element_desc *desc = get_elemdesc((const char*)curnode);
 		struct attribute_desc *att;
+		/* libxml2 will generate many "nodes" per element. We're
+		 * only interested in element nodes, not in CDATA nodes
+		 * or xml header nodes etc */
 		if(xmlTextReaderNodeType(reader) != XML_READER_TYPE_ELEMENT) {
 			continue;
 		}
+		/* However, if the element has attributes, we're also
+		 * interested in those. */
 		if(xmlTextReaderHasAttributes(reader) > 0) {
 			if(desc->attributes == NULL) {
 				be_log(EID_VWR_LOG_ERROR, "Could not read file: found attribute on an element that shouldn't have one.");
@@ -168,6 +187,7 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 				}
 			}
 		}
+		/* If we recognize this element, parse it */
 		if(desc->label != NULL) {
 			int len;
 			check_xml(xmlTextReaderRead(reader));
@@ -198,6 +218,8 @@ out:
 	return rc;
 }
 
+/* Read data from the file whose name we get in the *data argument,
+ * issue events to the UI with new data, and update the cache. */
 int eid_vwr_deserialize(void* data) {
 	xmlTextReaderPtr reader = NULL;
 	const char* filename = (const char*)data;
@@ -211,6 +233,8 @@ int eid_vwr_deserialize(void* data) {
 
 	be_newsource(EID_VWR_SRC_FILE);
 
+	/* Enable validation. This requires the XSD, which we ship as a
+	 * file "somewhere", in an OS-dependent way. */
 	check_xml(xmlTextReaderSchemaValidate(reader, get_xsdloc()));
 	check_xml(read_elements(reader, toplevel));
 	check_xml(eid_vwr_gen_xml(NULL));

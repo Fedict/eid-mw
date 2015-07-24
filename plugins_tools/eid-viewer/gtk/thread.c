@@ -19,6 +19,8 @@ static gboolean gost_helper(gpointer user_data) {
 	return FALSE;
 }
 
+/* Helper function to allow properties to be set transparently from
+ * background threads */
 void g_object_set_threaded(GObject* obj, const gchar* property, void* value, void(*freefunc)(void*)) {
 	struct gost_helper* help = malloc(sizeof(struct gost_helper));
 	help->obj = obj;

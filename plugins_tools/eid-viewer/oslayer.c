@@ -44,6 +44,10 @@ void eid_vwr_be_deserialize(const char* source_file) {
 
 const char* eid_vwr_be_get_xmlform() {
 	const struct eid_vwr_cache_item* item;
+	/* When we have card data, the state machine ensures that the
+	 * cache will contain the XML form of the data under the "xml"
+	 * label. Thus, if that cache entry is empty, this means we
+	 * don't have any data yet. */
 	if(!cache_have_label("xml")) {
 		return NULL;
 	}

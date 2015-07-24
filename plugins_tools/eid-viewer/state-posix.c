@@ -44,6 +44,7 @@ struct list {
 } *cmdlist = NULL;
 
 
+/* Main loop for state machine thread */
 #ifdef WIN32
 DWORD WINAPI thread_main(void* val) {
 	INT error;
@@ -98,6 +99,7 @@ exit:
 #endif
 }
 
+/* Add an event to the list of events to be processed */
 void add_item(struct list* item) {
 	struct list **ptr;
 	LOCK_MUTEX(mutex);
@@ -112,7 +114,7 @@ void add_item(struct list* item) {
 	UNLOCK_MUTEX(mutex);
 }
 
-
+/* Stop the thread */
 void sm_stop_thread() {
 	struct list *item = (struct list *)calloc(sizeof(struct list), 1);
 
@@ -121,6 +123,7 @@ void sm_stop_thread() {
 	add_item(item);
 }
 
+/* Start the thread */
 void sm_start_thread() {
 #ifdef WIN32
 	HANDLE thread = NULL;
@@ -133,6 +136,7 @@ void sm_start_thread() {
 #endif
 }
 
+/* Handle an event. Caller: backend or UI */
 void sm_handle_event(enum eid_vwr_state_event e, void* data, void(*freefunc)(void*), void(*donefunc)(void*)) {
 	struct list *item = (struct list *)calloc(sizeof(struct list), 1);
 

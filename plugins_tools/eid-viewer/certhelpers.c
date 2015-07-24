@@ -10,17 +10,20 @@
 
 #include "backend.h"
 
+/* Return a string representation of the X509v3 uses of the given certificate. */
 char* get_use_flags(const char* label, X509* cert) {
 	X509_CINF* ci = cert->cert_info;
 	int i;
 	char* retval = 0;
 	int nid = OBJ_sn2nid("keyUsage");
 
+	/* Search for the object with the NID of the keyUsage field */
 	for(i=0; i<sk_X509_EXTENSION_num(ci->extensions); i++) {
 		X509_EXTENSION *ex = sk_X509_EXTENSION_value(ci->extensions, i);
 		ASN1_OBJECT* obj = X509_EXTENSION_get_object(ex);
 
 		if(OBJ_obj2nid(obj) == nid) {
+			/* Found it, now get the string representation */
 			size_t size;
 			BIO *bio = BIO_new(BIO_s_mem());
 
@@ -36,6 +39,8 @@ char* get_use_flags(const char* label, X509* cert) {
 	return NULL;
 }
 
+/* Return a detailed description of the X509 certificate (a multiline string of
+ * all the subject name fields) */
 char* detail_cert(const char* label, X509* cert) {
 	X509_NAME* subject = X509_get_subject_name(cert);
 	X509_NAME_ENTRY* entry;
@@ -71,6 +76,8 @@ char* detail_cert(const char* label, X509* cert) {
 	return retval;
 }
 
+/* Return a short description of the X509 certificate (i.e., the certificate's
+ * common name) */
 char* describe_cert(const char* label, X509* cert) {
 	X509_NAME* subject = X509_get_subject_name(cert);
 	int index = X509_NAME_get_index_by_NID(subject, OBJ_sn2nid("CN"), -1);
@@ -83,6 +90,8 @@ char* describe_cert(const char* label, X509* cert) {
 	return strdup((char*)value);
 }
 
+/* Test if the card data signatures (identity signature, address signature) are
+ * valid for the given rrn certificate*/
 int check_data_validity(const char* photo, int plen,
 		const char* photohash, int hashlen,
 		const char* datafile, int datfilelen,
@@ -121,6 +130,7 @@ int check_data_validity(const char* photo, int plen,
 			return 0;
 	}
 
+	/* compute photo hash and compare against passed hash */
 	hash(photo, plen, digest);
 	if(memcmp(digest, photohash, hashlen)) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: photo hash invalid");
@@ -131,6 +141,8 @@ int check_data_validity(const char* photo, int plen,
 		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: wrong key type (expecting RSA, got %d)", pubkey->type);
 		return 0;
 	}
+	/* data signature is created over hash(concatenation(data file, photo hash)).
+	 * Calculate the hash and verify the signature */
 	hash(datafile, datfilelen, digest);
 	if(RSA_verify(nid, digest, hashlen, datasig, datsiglen, EVP_PKEY_get1_RSA(pubkey)) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: data signature invalid!");
@@ -139,6 +151,15 @@ int check_data_validity(const char* photo, int plen,
 
 	address_data = calloc(addfilelen + datsiglen, 1);
 	memcpy(address_data, addrfile, addfilelen);
+	/* The documentation on the address file claims that the
+	 * signature of the identity file is simply concatenated to the
+	 * address file, at the given length of the address file with
+	 * terminating NULL bytes retained, and that a hash is taken
+	 * from the result. However, the documentation is wrong.
+	 *
+	 * In reality, the address data is stripped of any terminating
+	 * NULL bytes, regardless of specified length of the address
+	 * file, and the data signature is concatenated to the result */
 	for(ptr = address_data + addfilelen; *ptr == 0; ptr--);
 	ptr++;
 	memcpy(ptr, datasig, datsiglen);
@@ -152,6 +173,8 @@ int check_data_validity(const char* photo, int plen,
 	return 1;
 }
 
+/* Write the given certificate (in DER format) to the passed file
+ * descriptor. */
 void dumpcert(int fd, const void* derdata, int len, enum dump_type how) {
 	BIO *bio;
 	X509 *cert = NULL;

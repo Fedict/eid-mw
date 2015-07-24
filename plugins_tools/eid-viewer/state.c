@@ -5,6 +5,7 @@
 #include "cache.h"
 #include <stdlib.h>
 
+/* Returns a string representation of the state name */
 static const char* state_to_name(enum eid_vwr_states state) {
 	switch(state) {
 #define STATE_NAME(s) case STATE_##s: return #s
@@ -26,6 +27,7 @@ static const char* state_to_name(enum eid_vwr_states state) {
 	}
 }
 
+/* Returns a string representation of the event name */
 static const char* event_to_name(enum eid_vwr_state_event event) {
 	switch(event) {
 #define EVENT_NAME(e) case EVENT_##e: return #e
@@ -45,18 +47,34 @@ static const char* event_to_name(enum eid_vwr_state_event event) {
 	}
 }
 
+/* State structure */
 struct state {
-	enum eid_vwr_states me;
-	struct state* out[EVENT_COUNT];
-	struct state* first_child;
-	struct state* parent;
-	int(*enter)(void*data);
-	int(*leave)();
+	enum eid_vwr_states me; /* Our number */
+	struct state* out[EVENT_COUNT]; /* Target states to transition
+					   to when the given event
+					   occurs. May be NULL, which
+					   means to ignore the event */
+	struct state* first_child; /* If this state has child states,
+				      then transitioning to this state
+				      will cause the machine to
+				      immediately also enter the child
+				      state */
+	struct state* parent; /* The parent state of this state, if any */
+	int(*enter)(void*data); /* Function called when we enter this
+				   state. The argument will be NULL
+				   except if this state is the target
+				   state; parent states or child states
+				   of the target state will have their
+				   enter() function called, but will not
+				   get any data. */
+	int(*leave)(); /* Function called when we leave the current
+			  state (directly or by leaving its parent) */
 };
 
-static struct state states[STATE_COUNT];
-static struct state* curstate;
+static struct state states[STATE_COUNT]; /* The state table */
+static struct state* curstate; /* Current state. Defaults to 0=LIBOPEN */
 
+/* enter() function of CALLBACKS state */
 static int do_initialize(void*data) {
 	eid_vwr_p11_init();
 	be_setcallbacks(data);
@@ -64,12 +82,15 @@ static int do_initialize(void*data) {
 	return 0;
 }
 
+/* Called whenever we leave the TOKEN or FILE states. */
 static int source_none(void*data) {
 	be_newsource(EID_VWR_SRC_NONE);
 
 	return 0;
 }
 
+/* Initialize the state machine.
+   Please see be-statemach.uml in the uml directory for more details */
 void sm_init() {
 	int i;
 	for(i=0;i<STATE_COUNT;i++) {
@@ -136,6 +157,9 @@ void sm_init() {
 	sm_start_thread();
 }
 
+/* Enter the parent states of the target state (that we're not currently
+ * in yet), recursively. We will never enter a child state until we've
+ * entered its parent state. */
 static void parent_enter_recursive(struct state* start, struct state* end, enum eid_vwr_state_event e) {
 	if(start == end) {
 		return;
@@ -151,6 +175,8 @@ static void parent_enter_recursive(struct state* start, struct state* end, enum 
 	}
 }
 
+/* Handle a state machine event. MUST be called on the state machine
+ * thread; if not, undefined behaviour will occur. */
 void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 	struct state *thistree, *targettree, *cmnanc, *hold, *target;
 
@@ -247,6 +273,8 @@ exit_loop:
 	be_log(EID_VWR_LOG_DETAIL, "State transition for %s complete", event_to_name(e));
 }
 
+/* Verify if the given state is active, either because it's the current
+ * state or one of its parents */
 int sm_state_is_active(enum eid_vwr_states s) {
 	struct state* ptr = curstate;
 	while(ptr && ptr->me != s) {
