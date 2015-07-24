@@ -76,6 +76,7 @@ eid_viewer_SOURCES = \
 	conversions/xmlspecconv.h \
 	conversions/xmlspecconv.cpp \
 	conversions.h \
+	soap.c \
 	state.c \
 	state.h \
 	state-posix.c \
@@ -90,8 +91,9 @@ eid_viewer_SOURCES = \
 	xsdloc.c \
 	b64/base64dec.h \
 	b64/base64dec.c
-eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/tests/unit/liblabels.a @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@
-AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/tests/unit @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@
+
+eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/tests/unit/liblabels.a @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@ @CURL_LIBS@
+AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/tests/unit @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@
 AM_CXXFLAGS = $(AM_CFLAGS)
 SUBDIRS = gtk/po test
 
