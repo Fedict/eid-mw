@@ -100,7 +100,7 @@ exit:
 }
 
 /* Add an event to the list of events to be processed */
-void add_item(struct list* item) {
+static void add_item(struct list* item) {
 	struct list **ptr;
 	LOCK_MUTEX(mutex);
 
