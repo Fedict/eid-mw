@@ -260,36 +260,6 @@ void translate(GtkMenuItem* item, gpointer target) {
 	setlocale(LC_MESSAGES, target);
 
 	retranslate_gtkui();
-#if 0
-	// TODO: it would be more efficient if the below was parsed from the
-	// Glad XML data rather than be re-encoded here...
-#define TSL_LABEL(l, t) { widget = GTK_WIDGET(gtk_builder_get_object(builder, l)); gtk_label_set_text(GTK_LABEL(widget), t); }
-	TSL_LABEL("tab_id", _("Identity"));
-	TSL_LABEL("tab_cardpin", _("Card/PIN"));
-	TSL_LABEL("tab_certs", _("Certificates"));
-	TSL_LABEL("nametit", _("Name:"));
-	TSL_LABEL("giventit", _("Given names:"));
-	TSL_LABEL("pobtit", _("Place of birth:"));
-	TSL_LABEL("dobtit", _("Date of birth:"));
-	TSL_LABEL("sextit", _("Sex:"));
-	TSL_LABEL("natnumtit", _("National number:"));
-	TSL_LABEL("nattit", _("Nationality:"));
-	TSL_LABEL("tittit", _("Title:"));
-	TSL_LABEL("spectit", _("Special status:"));
-	TSL_LABEL("streettit", _("Street:"));
-	TSL_LABEL("posttit", _("Postal code:"));
-	TSL_LABEL("munictit", _("Municipality:"));
-	TSL_LABEL("cardnumtit", _("Card number:"));
-	TSL_LABEL("issuetit", _("Place of issue:"));
-	TSL_LABEL("chipnumtit", _("Chip number:"));
-	TSL_LABEL("cardvalfromtit", _("Valid from:"));
-	TSL_LABEL("cardvaltiltit", _("Valid until:"));
-	TSL_LABEL("certvalfromtit", _("Valid from:"));
-	TSL_LABEL("certvaltiltit", _("Valid until:"));
-	TSL_LABEL("certusetit", _("Use:"));
-	TSL_LABEL("certtrusttit", _("Trust:"));
-#undef TSL_LABEL
-#endif
 }
 
 /* Initialize the drag-and-drop environment */
