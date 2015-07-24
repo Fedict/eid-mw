@@ -21,6 +21,7 @@
 #include <locale.h>
 #include <gettext.h>
 #include <errno.h>
+#include <verify_cert.h>
 
 enum certs {
 	Root,
@@ -165,6 +166,8 @@ void add_certificate(char* label, void* data, int len) {
 	if(!strcmp(label, "CERT_RN_FILE")) {
 		add_verify_data(label, data, len);
 	}
+
+	eid_vwr_verify_cert(data, len);
 
 	/* d2i_X509 destroys its input, so make sure we have a copy before we
 	 * call that function */

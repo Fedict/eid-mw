@@ -113,6 +113,7 @@ AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjp
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1])
 
 PKG_CHECK_MODULES(CURL, "libcurl", [HAVE_CURL=1])
+PKG_CHECK_MODULES(xmlsec, "xmlsec1", [HAVE_XMLSEC=1])
 
 pkgconfigdir="\$(libdir)/pkgconfig"
 pkcs11hincludedir="\$(includedir)/beid/rsaref220"
