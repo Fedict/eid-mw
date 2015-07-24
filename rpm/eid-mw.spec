@@ -28,12 +28,11 @@ Requires: eid-mw-libs
 Requires: pcsc-ccid
 BuildRequires: gcc-c++
 BuildRequires: libopenssl-devel
-BuildRequires: libcurl-devel
 %else
 Requires: ccid
 BuildRequires: openssl-devel
-BuildRequires: curl-devel
 %endif
+BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
 Conflicts: openct
 
