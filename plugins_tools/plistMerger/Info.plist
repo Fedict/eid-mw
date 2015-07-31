@@ -104,6 +104,7 @@
 
 	<key>ifdVendorID</key>
 	<array>
+		<string>0x072F</string>
 		<string>0x09C3</string>
 		<string>0x09C3</string>
 		<string>0x058F</string>
@@ -327,6 +328,7 @@
 
 	<key>ifdProductID</key>
 	<array>
+		<string>0x8205</string>
 		<string>0x0013</string>
 		<string>0x0014</string>
 		<string>0x9520</string>
@@ -550,6 +552,7 @@
 
 	<key>ifdFriendlyName</key>
 	<array>
+		<string>ACS APG8205</string>
 		<string>ActivIdentity USB Reader V3</string>
 		<string>ActivIdentity Activkey_Sim</string>
 		<string>Alcor Micro AU9520</string>
