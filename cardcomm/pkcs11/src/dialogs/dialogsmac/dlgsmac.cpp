@@ -265,15 +265,13 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
                                                         parameters);//CFDictionaryRef dictionary
         
         THROW_ERROR_IF_NULL(userNotificationRef);
+        THROW_ERROR_IF_NON_ZERO(error);
         
         error = CFUserNotificationReceiveResponse (
                                                    userNotificationRef,//CFUserNotificationRef userNotification,
                                                    0,//CFTimeInterval timeout,
                                                    &responseFlags//CFOptionFlags responseFlags
                                                    );
-        
-        THROW_ERROR_IF_NON_ZERO(userNotificationRef);
-        
         CFStringRef PinValue = NULL;
         CFIndex length;
         
