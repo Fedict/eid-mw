@@ -59,6 +59,13 @@ CFStringRef CreateStringFromWChar(const wchar_t * wcsMessage)
         return NULL;
     wcstombs(messagechar,wcsMessage,sizeof(messagechar));
     messagechar[255]='\0';
+    char *s, *t;
+    s=t=messagechar;
+    do {
+        if(*s == '&')
+            s++;
+        *t++ = *s;
+    } while(*s++);
     
     CFStringRef tmpString = CFStringCreateWithBytes (
                                                      kCFAllocatorDefault,
