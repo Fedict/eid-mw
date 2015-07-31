@@ -268,6 +268,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
         THROW_ERROR_IF_NON_ZERO(userNotificationRef);
         
         CFStringRef PinValue = NULL;
+        CFIndex length;
         
         switch (responseFlags & 0x03)
         {
@@ -275,25 +276,15 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
                 lRet = DLG_OK;
                 //get the PIN
                 PinValue = CFUserNotificationGetResponseValue ( userNotificationRef, kCFUserNotificationTextFieldValuesKey, 0 );
-                const UniChar *chars;
                 
-                chars = CFStringGetCharactersPtr(PinValue);
-                if (chars == NULL) {
-                    
-                    CFIndex length = CFStringGetLength(PinValue);
-                    
-                    if (length >= ulPinBufferLen) {
-                        //PIN entered is too long, we'll return an error (need 1 unichar for string termination)
-                        lRet = DLG_ERR;
-                    }
-                    else{
-                        CFStringGetCharacters(PinValue, CFRangeMake(0, length), (UniChar *)wsPin);
-                        //CFStringDelete(PinValue,CFRangeMake(0, length));
-                    }
-                }
-                else {
-                    //we can't get the PIN, we'll return an error
+                if ((length = CFStringGetLength(PinValue)) >= ulPinBufferLen) {
+                    //PIN entered is too long, we'll return an error (need 1 char for string termination)
                     lRet = DLG_ERR;
+                } else {
+                    char *chars = (char*)malloc(length * 2);
+                    CFStringGetCString(PinValue, chars, length * 2, kCFStringEncodingUTF8);
+                    mbstowcs(wsPin, chars, ulPinBufferLen);
+                    free(chars);
                 }
                 break;
             case kCFUserNotificationAlternateResponse:
