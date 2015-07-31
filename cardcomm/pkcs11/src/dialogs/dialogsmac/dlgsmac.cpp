@@ -308,31 +308,35 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
             default:
                 lRet = DLG_CANCEL;
         }
+        CFRelease(userNotificationRef);
+        userNotificationRef = NULL;
     } catch (...) {
         
         lRet = DLG_ERR;
     }
     
     //cleanup
-    if (defaultButtonString == NULL)
+    if (defaultButtonString != NULL)
         CFRelease(defaultButtonString);
-    if (alternateButtonString == NULL)
+    if (alternateButtonString != NULL)
         CFRelease(alternateButtonString);
-    if (userNotificationRef == NULL)
+    if (userNotificationRef != NULL) {
+        CFUserNotificationCancel(userNotificationRef);
         CFRelease(userNotificationRef);
-    if (urlRef == NULL)
+    }
+    if (urlRef != NULL)
         CFRelease(urlRef);
-    if (IconURLString == NULL)
+    if (IconURLString != NULL)
         CFRelease(IconURLString);
-    if (userNotificationRef == NULL)
+    if (userNotificationRef != NULL)
         CFRelease(userNotificationRef);
-    if (parameters == NULL)
+    if (parameters != NULL)
         CFRelease(parameters);
-    if (messageString == NULL)
+    if (messageString != NULL)
         CFRelease(messageString);
-    if (titleString == NULL)
+    if (titleString != NULL)
         CFRelease(titleString);
-    if (headerString == NULL)
+    if (headerString != NULL)
         CFRelease(headerString);
     
     return lRet;
