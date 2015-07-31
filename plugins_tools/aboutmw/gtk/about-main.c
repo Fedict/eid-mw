@@ -17,6 +17,8 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
+#define _GNU_SOURCE
 #include <config.h>
 
 #include <errno.h>
