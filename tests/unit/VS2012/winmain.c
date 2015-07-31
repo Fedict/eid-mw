@@ -20,6 +20,7 @@
 
 #include <win32.h>
 #include <pkcs11.h>
+#include <time.h>
 
 #include "stdafx.h"
 #include <stdio.h>
@@ -41,6 +42,10 @@ typedef	struct {
 
 int main()
 {
+	clock_t startTime = clock();
+	clock_t duration = 0;
+	int msecDuration = 0;
+
 	int i = 0;
 	int nrofTests = 0;
 	errno_t error;
@@ -167,7 +172,13 @@ int main()
 		//testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
 	}
 
+	duration = clock() - startTime;
+
+	msecDuration = (duration * 1000) / CLOCKS_PER_SEC;
+	printf("Duration: %d,%d seconds", msecDuration/1000, msecDuration%1000);
+
 	testlog(LVL_NOLEVEL,"\n===============================================\n");
+
 	//short summary
 	/*for (i = 0; i < nrofTests; i++)
 	{

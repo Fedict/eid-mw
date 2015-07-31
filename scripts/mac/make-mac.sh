@@ -32,6 +32,11 @@ xcodebuild -project "eID Middleware.xcodeproj" -target "eID Middleware" -configu
 popd
 
 
+pushd "../../../plugins_tools/plistMerger"
+xcodebuild -project "plistmerger.xcodeproj" clean
+xcodebuild -project "plistmerger.xcodeproj" -target "plistMerger" -configuration Release
+popd
+
 #-----------------------------------------
 # Unpack the BEID_Lion.tokend and copy to bin
 # this is the tokend version for Lion

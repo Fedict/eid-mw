@@ -142,3 +142,9 @@ LangString ls_bitmapinsertcard ${LANG_ENGLISH} "Background image asking to inser
 LangString ls_bitmapinsertcard ${LANG_FRENCH} "Image en arrière-plan demandant d’insérer l’eID dans le lecteur de cartes"
 LangString ls_bitmapinsertcard ${LANG_DUTCH} "Achtergrondafbeelding die vraagt om de eID kaart in de kaartlezer te steken"
 LangString ls_bitmapinsertcard ${LANG_GERMAN} "Hintergrundbild mit der Aufforderung, die eID-Karte in den Kartenleser zu stecken"
+
+;below are language dependant urls
+LangString ls_firefoxeidpluginpage ${LANG_ENGLISH} "https://addons.mozilla.org/en/firefox/addon/belgium-eid/?src=search"
+LangString ls_firefoxeidpluginpage ${LANG_FRENCH} "https://addons.mozilla.org/fr/firefox/addon/belgium-eid/?src=search"
+LangString ls_firefoxeidpluginpage ${LANG_DUTCH} "https://addons.mozilla.org/nl/firefox/addon/belgium-eid/?src=search"
+LangString ls_firefoxeidpluginpage ${LANG_GERMAN} "https://addons.mozilla.org/de/firefox/addon/belgium-eid/?src=search"
