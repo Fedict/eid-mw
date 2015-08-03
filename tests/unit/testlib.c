@@ -122,9 +122,7 @@ CK_BBOOL open_robot(char* envvar) {
 #endif
 
 CK_BBOOL have_robot() {
-#ifdef WIN32
-	return CK_FALSE;
-#else
+
 	char* envvar = getenv("EID_ROBOT_STYLE");
 	
 	if(envvar == NULL) {
@@ -149,11 +147,11 @@ CK_BBOOL have_robot() {
 	}
 
 	return CK_FALSE;
-#endif
+
 }
 
 CK_BBOOL want_dialogs() {
-#ifndef WIN32
+
 	char* envvar = getenv("EID_DIALOGS_STYLE");
 
 #ifdef NO_DIALOGS
@@ -174,7 +172,7 @@ CK_BBOOL want_dialogs() {
 	if(dialogs_type == DIALOGS_AVOID) {
 		return CK_FALSE;
 	}
-#endif
+
 	return CK_TRUE;
 }
 
