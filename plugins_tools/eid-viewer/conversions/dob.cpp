@@ -3,6 +3,14 @@
 std::map<eid_vwr_langs, std::map<int, std::string> > DobWriter::tomonth;
 std::map<std::string, int> DobParser::frommonth;
 
+/*
+The date of birth is written to the card in a localized format. This
+means we need to read it from the card, parse it, and then convert it
+to the same format in the language of the current user.
+
+Clearly someone never heard of ISO 8601
+*/
+
 #define domap(l,n,s) frommonth[s] = n;
 DobParser::DobParser() {
 	if(frommonth.size() == 0) {

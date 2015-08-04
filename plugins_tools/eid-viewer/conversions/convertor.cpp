@@ -21,6 +21,7 @@ std::map<std::string, ConversionWorker*> Convertor::convertors;
 std::map<std::string, ConversionWorker*> Convertor::to_xml;
 std::map<std::string, ConversionWorker*> Convertor::from_xml;
 
+/* Top-level class for conversions. */
 Convertor::Convertor() {
 	if(convertors.empty()) {
 		convertors["national_number"] = new NationalNumberConvertor();

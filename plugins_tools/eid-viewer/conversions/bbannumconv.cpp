@@ -3,6 +3,10 @@
 #include <string>
 #include <stdexcept>
 
+/* BBAN numbers.
+   On card: 123123456712
+   Display: 123-1234567-12
+ */
 std::string BBANNumberConvertor::convert(const char* original) {
 	const std::string normal(original);
 
