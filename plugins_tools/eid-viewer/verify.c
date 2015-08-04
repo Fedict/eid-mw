@@ -62,7 +62,7 @@ struct attr {
 };
 
 enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen) {
-	xmlBufferPtr buf;
+	xmlBufferPtr buf = NULL;
 	xmlTextWriterPtr writer = NULL;
 	xmlTextReaderPtr reader = NULL;
 	enum eid_vwr_result rc = EID_VWR_FAILED;

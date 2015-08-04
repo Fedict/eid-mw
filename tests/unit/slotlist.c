@@ -29,7 +29,7 @@
 #include "testlib.h"
 
 TEST_FUNC(slotlist) {
-	CK_SLOT_ID_PTR list;
+	CK_SLOT_ID_PTR list=NULL;
 	CK_ULONG count=0;
 	int i;
 	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
