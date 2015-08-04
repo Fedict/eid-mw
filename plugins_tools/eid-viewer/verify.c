@@ -106,6 +106,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen) {
 	check_xml(xmlTextWriterEndDocument(writer));
 
 	reply = eid_vwr_send_soap(buf->content);
+	if(!reply) goto out;
 
 	reader = xmlReaderForMemory(reply, strlen(reply), NULL, "UTF-8", 0);
 	if(!reader) {
