@@ -77,6 +77,7 @@ eid_viewer_SOURCES = \
 	conversions/xmlspecconv.cpp \
 	conversions.h \
 	soap.c \
+	soap.h \
 	state.c \
 	state.h \
 	state-posix.c \
