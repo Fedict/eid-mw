@@ -34,6 +34,7 @@ BuildRequires: openssl-devel
 %endif
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
+BuildRequires: xmlsec1-devel
 Conflicts: openct
 
 %description
