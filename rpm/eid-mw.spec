@@ -33,6 +33,7 @@ Buildrequires: libxmlsec1-devel
 Requires: ccid
 BuildRequires: openssl-devel
 BuildRequires: xmlsec1-devel
+BuildRequires: libtool-ltdl-devel
 %endif
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
