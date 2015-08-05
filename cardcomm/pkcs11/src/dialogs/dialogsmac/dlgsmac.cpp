@@ -59,6 +59,13 @@ CFStringRef CreateStringFromWChar(const wchar_t * wcsMessage)
         return NULL;
     wcstombs(messagechar,wcsMessage,sizeof(messagechar));
     messagechar[255]='\0';
+    char *s, *t;
+    s=t=messagechar;
+    do {
+        if(*s == '&')
+            s++;
+        *t++ = *s;
+    } while(*s++);
     
     CFStringRef tmpString = CFStringCreateWithBytes (
                                                      kCFAllocatorDefault,
@@ -258,16 +265,15 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
                                                         parameters);//CFDictionaryRef dictionary
         
         THROW_ERROR_IF_NULL(userNotificationRef);
+        THROW_ERROR_IF_NON_ZERO(error);
         
         error = CFUserNotificationReceiveResponse (
                                                    userNotificationRef,//CFUserNotificationRef userNotification,
                                                    0,//CFTimeInterval timeout,
                                                    &responseFlags//CFOptionFlags responseFlags
                                                    );
-        
-        THROW_ERROR_IF_NON_ZERO(userNotificationRef);
-        
         CFStringRef PinValue = NULL;
+        CFIndex length;
         
         switch (responseFlags & 0x03)
         {
@@ -275,25 +281,15 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
                 lRet = DLG_OK;
                 //get the PIN
                 PinValue = CFUserNotificationGetResponseValue ( userNotificationRef, kCFUserNotificationTextFieldValuesKey, 0 );
-                const UniChar *chars;
                 
-                chars = CFStringGetCharactersPtr(PinValue);
-                if (chars == NULL) {
-                    
-                    CFIndex length = CFStringGetLength(PinValue);
-                    
-                    if (length >= ulPinBufferLen) {
-                        //PIN entered is too long, we'll return an error (need 1 unichar for string termination)
-                        lRet = DLG_ERR;
-                    }
-                    else{
-                        CFStringGetCharacters(PinValue, CFRangeMake(0, length), (UniChar *)wsPin);
-                        //CFStringDelete(PinValue,CFRangeMake(0, length));
-                    }
-                }
-                else {
-                    //we can't get the PIN, we'll return an error
+                if ((length = CFStringGetLength(PinValue)) >= ulPinBufferLen) {
+                    //PIN entered is too long, we'll return an error (need 1 char for string termination)
                     lRet = DLG_ERR;
+                } else {
+                    char *chars = (char*)malloc(length * 2);
+                    CFStringGetCString(PinValue, chars, length * 2, kCFStringEncodingUTF8);
+                    mbstowcs(wsPin, chars, ulPinBufferLen);
+                    free(chars);
                 }
                 break;
             case kCFUserNotificationAlternateResponse:
@@ -308,31 +304,35 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
             default:
                 lRet = DLG_CANCEL;
         }
+        CFRelease(userNotificationRef);
+        userNotificationRef = NULL;
     } catch (...) {
         
         lRet = DLG_ERR;
     }
     
     //cleanup
-    if (defaultButtonString == NULL)
+    if (defaultButtonString != NULL)
         CFRelease(defaultButtonString);
-    if (alternateButtonString == NULL)
+    if (alternateButtonString != NULL)
         CFRelease(alternateButtonString);
-    if (userNotificationRef == NULL)
+    if (userNotificationRef != NULL) {
+        CFUserNotificationCancel(userNotificationRef);
         CFRelease(userNotificationRef);
-    if (urlRef == NULL)
+    }
+    if (urlRef != NULL)
         CFRelease(urlRef);
-    if (IconURLString == NULL)
+    if (IconURLString != NULL)
         CFRelease(IconURLString);
-    if (userNotificationRef == NULL)
+    if (userNotificationRef != NULL)
         CFRelease(userNotificationRef);
-    if (parameters == NULL)
+    if (parameters != NULL)
         CFRelease(parameters);
-    if (messageString == NULL)
+    if (messageString != NULL)
         CFRelease(messageString);
-    if (titleString == NULL)
+    if (titleString != NULL)
         CFRelease(titleString);
-    if (headerString == NULL)
+    if (headerString != NULL)
         CFRelease(headerString);
     
     return lRet;
