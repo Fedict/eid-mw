@@ -1,6 +1,6 @@
 AC_PREREQ([2.61])
 AC_INIT([eid-mw],
-  m4_esyscmd_s(echo "4.1.4-"$(git describe --dirty|sed -e 's/-/./g')),
+  m4_esyscmd_s(echo "4.1.5-"$(git describe --dirty|sed -e 's/-/./g')),
   [servicedesk@fedict.be],,
   [http://eid.belgium.be])
 
