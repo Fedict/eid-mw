@@ -168,6 +168,8 @@
 		86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
 		8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B07D1011B21CEB80033CD62 /* wrong_init.c */; };
 		8B8B71591B74CCA300D8910E /* sign_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B71581B74CCA300D8910E /* sign_state.c */; };
+		8B90EB371B74CEDA0045683D /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B90EB361B74CEDA0045683D /* libssl.dylib */; };
+		8B90EB3C1B74CEE40045683D /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B90EB3B1B74CEE40045683D /* libcrypto.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -400,6 +402,8 @@
 		86E3DF531653EFE50015B5E1 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win32.h; path = doc/sdk/include/rsaref220/win32.h; sourceTree = SOURCE_ROOT; };
 		8B07D1011B21CEB80033CD62 /* wrong_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrong_init.c; path = tests/unit/wrong_init.c; sourceTree = "<group>"; };
 		8B8B71581B74CCA300D8910E /* sign_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sign_state.c; path = tests/unit/sign_state.c; sourceTree = "<group>"; };
+		8B90EB361B74CEDA0045683D /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
+		8B90EB3B1B74CEE40045683D /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -407,6 +411,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B90EB3C1B74CEE40045683D /* libcrypto.dylib in Frameworks */,
+				8B90EB371B74CEDA0045683D /* libssl.dylib in Frameworks */,
 				65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.1.4.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,6 +476,8 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
+				8B90EB3B1B74CEE40045683D /* libcrypto.dylib */,
+				8B90EB361B74CEDA0045683D /* libssl.dylib */,
 				658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */,
 				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
 				6536230C19A7E8FE00D46ECB /* testsuite */,
@@ -1251,6 +1259,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					TEST_NO_ABORT,
+					HAVE_SSL,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1287,6 +1297,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					BEID_35,
+					HAVE_SSL,
+					TEST_NO_ABORT,
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
