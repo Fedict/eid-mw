@@ -89,7 +89,7 @@ return (ret);
 
 P11_OBJECT *p11_get_slot_object(P11_SLOT *pSlot, unsigned int h)
 {
-   if ( (h < 1) || (h > pSlot->nobjects) || ((pSlot->pobjects[h-1]).count == 0))
+   if ( (h < 1) || (h > pSlot->nobjects) )
       return (NULL); //invalid handle
 
    //internally we start from 0
