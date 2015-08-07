@@ -376,11 +376,25 @@ namespace eIDMW
 			// Which means:
 			//  - IOCTL for CCID_VERIFY_DIRECT = 0x00312030
 			//  - IOCTL for CCID_CHANGE_DIRECT = 0x00312034
+
+			
 			unsigned long ulFeatureLen = oFeatures.Size();
-			if ((ulFeatureLen % 6) == 0)
+			MWLOG(LEV_DEBUG, MOD_CAL, L"CPinpad::GetFeatureList() oFeatures.size = %lu\n",ulFeatureLen);
+
+			//if(ulFeatureLen > 0)
+			//{
+			//	const unsigned char *pucFeatures = oFeatures.GetBytes();
+			//	for (unsigned long i = 0; i < ulFeatureLen; i+=6)
+			//	{
+			//		MWLOG(LEV_DEBUG, MOD_CAL, L"feature %d is 0x%02u 0x%02u 0x%02u 0x%02u 0x%02u 0x%02u",i/6,pucFeatures[i],pucFeatures[i+1],pucFeatures[i+2],pucFeatures[i+3],pucFeatures[i+4],pucFeatures[i+5]);
+			//	}
+			//}
+
+			if (((ulFeatureLen % 6) == 0) && (ulFeatureLen > 0) )
 			{
 				const unsigned char *pucFeatures = oFeatures.GetBytes();
 				ulFeatureLen /= 6;
+				MWLOG(LEV_DEBUG, MOD_CAL, L"checking features");
 				for (unsigned long i = 0; i < ulFeatureLen; i++)
 				{
 					CHECK_FEATURE(pucFeatures, CCID_VERIFY_START, m_ioctlVerifyStart)
@@ -392,11 +406,17 @@ namespace eIDMW
 						pucFeatures += 6;
 				}
 			}
+			else
+			{
+				//MWLOG(LEV_DEBUG, MOD_CAL, L"(ulFeatureLen mod 6) is 0, trying GetPPDUFeatureList\n");
+				GetPPDUFeatureList();
+			}
 		}
 		catch(const CMWException & e)
 		{
 			// very likely CCID_IOCTL_GET_FEATURE_REQUEST isn't supported
 			// by this reader -> try via PPDU
+			//MWLOG(LEV_DEBUG, MOD_CAL, L"CPinpad::GetFeatureList() threw exception, trying GetPPDUFeatureList\n");
 			GetPPDUFeatureList();
 
 			e.GetError();
@@ -489,7 +509,7 @@ namespace eIDMW
 		long lRetVal=0;
 
 #ifdef PP_DUMP_CMDS
-		printf("PP PPDU (%svia pinpad lib): 0x%0x\n", (m_bUsePinpadLib ? "" : "not "), ulControl);
+		printf("PP PPDU (%svia pinpad lib): 0x%0x\n", (m_bUsePinpadLib ? "" : "not "), cbControl);
 		printf("PP IN: %s\n", oCmd.ToString(true, false, 0, 0xFFFFFFFF).c_str());
 #endif
 
