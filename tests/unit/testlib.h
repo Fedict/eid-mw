@@ -63,7 +63,9 @@ char* ckm_to_charp(CK_MECHANISM_TYPE);
 #endif
 
 /* Verifies that a string does not contain a NULL character */
-void verify_null(CK_UTF8CHAR* string, size_t length, int nulls_expected, char* msg);
+int verify_null_func(CK_UTF8CHAR* string, size_t length, int nulls_expected, char* msg);
+
+#define verify_null(s, l, e, m) { int retval = verify_null_func(s, l, e, m); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) return retval; }
 
 /* Functions to work with card moving robots */
 CK_BBOOL have_robot();

@@ -61,7 +61,7 @@ enum {
 
 int robot_dev = 0;
 
-void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
+int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	int nullCount = 0;
 	char* buf = (char*)malloc(length + 1);
 	unsigned int i;
@@ -79,6 +79,8 @@ void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	buf[length] = '\0';
 	printf(msg, buf);
 	free(buf);
+    
+    return TEST_RV_OK;
 }
 
 #ifdef HAVE_TERMIOS_H
