@@ -1,6 +1,6 @@
 AC_PREREQ([2.61])
 AC_INIT([eid-mw],
-  m4_esyscmd_s(echo "4.1.4-"$(git describe --dirty|sed -e 's/-/./g')),
+  m4_esyscmd_s(echo "4.1.5-"$(git describe --dirty|sed -e 's/-/./g')),
   [servicedesk@fedict.be],,
   [http://eid.belgium.be])
 
@@ -101,13 +101,16 @@ AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjp
 # we only need libssl for the test suite, so don't worry if it's not available...
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1], [HAVE_OPENSSL=0])
 AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
+MAINVERSION=$(echo $PACKAGE_VERSION|sed -e 's/-.*$//')
+AC_DEFINE_UNQUOTED([MAINVERSION], $MAINVERSION, [do not change this])
+AC_SUBST(MAINVERSION)
 
 pkgconfigdir="\$(libdir)/pkgconfig"
 pkcs11hincludedir="\$(includedir)/beid/rsaref220"
 AC_SUBST([pkgconfigdir])
 AC_SUBST([pkcs11hincludedir])
 
-AC_CONFIG_FILES([Makefile cardcomm/pkcs11/src/Makefile cardcomm/pkcs11/src/libbeidpkcs11.pc doc/sdk/include/rsaref220/Makefile tests/unit/Makefile plugins_tools/aboutmw/gtk/Makefile plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh plugins_tools/aboutmw/gtk/po/Makefile.in])
+AC_CONFIG_FILES([Makefile cardcomm/pkcs11/src/Makefile cardcomm/pkcs11/src/libbeidpkcs11.pc doc/sdk/include/rsaref220/Makefile tests/unit/Makefile plugins_tools/aboutmw/gtk/Makefile plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh plugins_tools/aboutmw/gtk/po/Makefile.in rpm/eid-mw.spec])
 AC_CONFIG_SUBDIRS([plugins_tools/xpi])
 
 AC_OUTPUT

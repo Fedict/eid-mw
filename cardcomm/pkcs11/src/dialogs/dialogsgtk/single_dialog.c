@@ -96,15 +96,15 @@ pid_t sdialog_call(const char* path,const char* msg)
 		char* disp = getenv("DISPLAY");
 		dlg_log_printf("sdialog_call: in child\n");
 		if(disp != NULL) {
-			dlg_log_printf("sdialog_call: DISPLAY=%s\n");
+			DPRINTF("sdialog_call: DISPLAY=%s\n", disp);
 		} else {
-			dlg_log_printf("DISPLAY not set\n");
+			DPRINTF("DISPLAY not set\n");
 		}
 		umask(0);
 		chdir("/");
-		dlg_log_printf("call_dialog: about to exec %s\n",path);
+		DPRINTF("call_dialog: about to exec %s\n",path);
 		execlp(path,path,msg,(char*)0);
-		dlg_log_error("sdialog_call/execlp");
+		DERROR("sdialog_call/execlp");
 		exit(1);
 	}
 
