@@ -1,4 +1,4 @@
-TESTS = init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login nonsensible objects readdata digest threads sign ordering
+TESTS = init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login nonsensible objects readdata digest threads sign sign_state ordering
 if JPEG
 TESTS += decode_photo
 endif
@@ -80,6 +80,9 @@ threads_LDADD = $(COMMON_LIB)
 sign_SOURCES = sign.c $(COMMON_SRCS)
 sign_CFLAGS = @SSL_CFLAGS@ $(AM_CFLAGS)
 sign_LDADD = $(COMMON_LIB) @SSL_LIBS@
+
+sign_state_SOURCES = sign_state.c $(COMMON_SRCS)
+sign_state_LDADD = $(COMMON_LIB)
 
 ordering_SOURCES = ordering.c $(COMMON_SRCS)
 ordering_LDADD = $(COMMON_LIB)

@@ -104,6 +104,7 @@ int readdata();
 int digest();
 int threads();
 int sign();
+int sign_state();
 int decode_photo();
 int ordering();
 int wrong_init();
