@@ -56,6 +56,10 @@ TEST_FUNC(sign_state) {
 		{ CKR_OK, TEST_RV_FAIL },
 		{ CKR_KEY_FUNCTION_NOT_PERMITTED, TEST_RV_OK },
 	};
+	ckrv_mod m_objinv[] = {
+		{ CKR_OK, TEST_RV_FAIL },
+		{ CKR_KEY_HANDLE_INVALID, TEST_RV_OK },
+	};
 
 
 	if(!have_robot()) {
@@ -128,7 +132,24 @@ TEST_FUNC(sign_state) {
 
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
+	check_rv_long(C_SignInit(session, &mech, privatekey), m_objinv);
+
+	attr[0].type = CKA_CLASS;
+	attr[0].pValue = &type;
+	type = CKO_PRIVATE_KEY;
+	attr[0].ulValueLen = sizeof(CK_ULONG);
+
+	attr[1].type = CKA_LABEL;
+	attr[1].pValue = "Signature";
+	attr[1].ulValueLen = strlen("Signature");
+
+	check_rv(C_FindObjectsInit(session, attr, 2));
+	check_rv(C_FindObjects(session, &privatekey, 1, &count));
+	verbose_assert(count == 1 || count == 0);
+
 	check_rv(C_SignInit(session, &mech, privatekey));
+
+	check_rv(C_FindObjectsFinal(session));
 
 	check_rv(C_Finalize(NULL_PTR));
 
