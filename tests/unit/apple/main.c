@@ -65,6 +65,7 @@ int main(void) {
 	run_test(digest());
 	run_test(threads());
 	run_test(sign());
+    run_test(sign_state());
 	run_test(decode_photo());
 	run_test(ordering());
 
