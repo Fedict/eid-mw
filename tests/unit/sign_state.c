@@ -118,7 +118,7 @@ TEST_FUNC(sign_state) {
 	check_rv(C_SignInit(session, &mech, privatekey));
 
 	robot_remove_card();
-	
+
 	check_rv_long(C_Sign(session, data, sizeof(data), NULL, &sig_len), m_is_rmvd);
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
