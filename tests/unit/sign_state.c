@@ -40,7 +40,7 @@ TEST_FUNC(sign_state) {
 	CK_BYTE data[] = { 'f', 'o', 'o' };
 	CK_SLOT_ID slot;
 	CK_ULONG sig_len, type, count;
-	CK_OBJECT_HANDLE private, public;
+	CK_OBJECT_HANDLE privatekey, publickey;
 	CK_ATTRIBUTE attr[2];
 	ckrv_mod m_is_rmvd[] = {
 		{ CKR_OK, TEST_RV_FAIL },
@@ -82,7 +82,7 @@ TEST_FUNC(sign_state) {
 	attr[1].ulValueLen = strlen("Signature");
 
 	check_rv(C_FindObjectsInit(session, attr, 2));
-	check_rv(C_FindObjects(session, &private, 1, &count));
+	check_rv(C_FindObjects(session, &privatekey, 1, &count));
 	verbose_assert(count == 1 || count == 0);
 	check_rv(C_FindObjectsFinal(session));
 
@@ -93,7 +93,7 @@ TEST_FUNC(sign_state) {
 
 	type = CKO_PUBLIC_KEY;
 	check_rv(C_FindObjectsInit(session, attr, 2));
-	check_rv(C_FindObjects(session, &public, 1, &count));
+	check_rv(C_FindObjects(session, &publickey, 1, &count));
 	verbose_assert(count == 1);
 	check_rv(C_FindObjectsFinal(session));
 
@@ -107,11 +107,11 @@ TEST_FUNC(sign_state) {
 
 	mech.mechanism = CKM_SHA1_RSA_PKCS;
 
-	check_rv(C_GetAttributeValue(session, public, attr, 2));
+	check_rv(C_GetAttributeValue(session, publickey, attr, 2));
 
-	check_rv_long(C_SignInit(session, &mech, public), m_pubkey);
+	check_rv_long(C_SignInit(session, &mech, publickey), m_pubkey);
 
-	check_rv(C_SignInit(session, &mech, private));
+	check_rv(C_SignInit(session, &mech, privatekey));
 
 	robot_remove_card();
 	
@@ -122,13 +122,13 @@ TEST_FUNC(sign_state) {
 		return ret;
 	}
 
-	check_rv_long(C_SignInit(session, &mech, private), m_inv);
+	check_rv_long(C_SignInit(session, &mech, privatekey), m_inv);
 
 	check_rv(C_CloseSession(session));
 
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
-	check_rv(C_SignInit(session, &mech, private));
+	check_rv(C_SignInit(session, &mech, privatekey));
 
 	check_rv(C_Finalize(NULL_PTR));
 

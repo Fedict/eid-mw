@@ -80,7 +80,7 @@ TEST_FUNC(sign) {
 	CK_SLOT_ID slot;
 	CK_BYTE_PTR sig, mod, exp;
 	CK_ULONG sig_len, type, count;
-	CK_OBJECT_HANDLE private, public;
+	CK_OBJECT_HANDLE privatekey, publickey;
 	CK_ATTRIBUTE attr[2];
 
 	if(!have_pin()) {
@@ -111,7 +111,7 @@ TEST_FUNC(sign) {
 	attr[1].ulValueLen = strlen("Signature");
 
 	check_rv(C_FindObjectsInit(session, attr, 2));
-	check_rv(C_FindObjects(session, &private, 1, &count));
+	check_rv(C_FindObjects(session, &privatekey, 1, &count));
 	verbose_assert(count == 1 || count == 0);
 	check_rv(C_FindObjectsFinal(session));
 
@@ -121,7 +121,7 @@ TEST_FUNC(sign) {
 	}
 
 	mech.mechanism = CKM_SHA1_RSA_PKCS;
-	check_rv(C_SignInit(session, &mech, private));
+	check_rv(C_SignInit(session, &mech, privatekey));
 
 	check_rv(C_Sign(session, data, sizeof(data), NULL, &sig_len));
 	sig = malloc(sig_len);
@@ -133,7 +133,7 @@ TEST_FUNC(sign) {
 
 	type = CKO_PUBLIC_KEY;
 	check_rv(C_FindObjectsInit(session, attr, 2));
-	check_rv(C_FindObjects(session, &public, 1, &count));
+	check_rv(C_FindObjects(session, &publickey, 1, &count));
 	verbose_assert(count == 1);
 	check_rv(C_FindObjectsFinal(session));
 
@@ -145,7 +145,7 @@ TEST_FUNC(sign) {
 	attr[1].pValue = NULL_PTR;
 	attr[1].ulValueLen = 0;
 
-	check_rv(C_GetAttributeValue(session, public, attr, 2));
+	check_rv(C_GetAttributeValue(session, publickey, attr, 2));
 
 	verbose_assert(attr[0].ulValueLen == sig_len);
 
@@ -158,7 +158,7 @@ TEST_FUNC(sign) {
 	attr[0].pValue = mod;
 	attr[1].pValue = exp;
 
-	check_rv(C_GetAttributeValue(session, public, attr, 2));
+	check_rv(C_GetAttributeValue(session, publickey, attr, 2));
 
 	printf("Received key modulus with length %lu:\n", attr[0].ulValueLen);
 	hex_dump((char*)mod, attr[0].ulValueLen);
