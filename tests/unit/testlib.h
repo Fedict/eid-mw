@@ -72,7 +72,7 @@ CK_BBOOL have_robot();
 CK_BBOOL is_manual_robot();
 CK_BBOOL can_confirm();
 CK_BBOOL have_pin();
-CK_BBOOL can_enter_pin();
+CK_BBOOL can_enter_pin(CK_SLOT_ID slot);
 void robot_remove_card();
 void robot_remove_card_delayed();
 void robot_insert_card();
