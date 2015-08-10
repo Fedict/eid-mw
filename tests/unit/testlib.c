@@ -22,6 +22,7 @@
 #include <win32.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <tchar.h>
 #else
 #include <unix.h>
 #include <unistd.h>
@@ -46,6 +47,10 @@
 
 int va_counter;
 int fc_counter;
+#ifdef WIN32
+extern _TCHAR* eid_robot_style;
+extern _TCHAR*	eid_dialogs_style;
+#endif
 
 enum {
 	ROBOT_NONE,
@@ -124,9 +129,11 @@ CK_BBOOL open_robot(char* envvar) {
 #endif
 
 CK_BBOOL have_robot() {
-
+#ifdef WIN32
+	char* envvar = eid_robot_style;
+#else
 	char* envvar = getenv("EID_ROBOT_STYLE");
-	
+#endif
 	if(envvar == NULL) {
 		robot_type = ROBOT_NONE;
 		return CK_FALSE;
@@ -153,9 +160,11 @@ CK_BBOOL have_robot() {
 }
 
 CK_BBOOL want_dialogs() {
-
+#ifdef WIN32
+	char* envvar = eid_dialogs_style;
+#else
 	char* envvar = getenv("EID_DIALOGS_STYLE");
-
+#endif
 #ifdef NO_DIALOGS
 	dialogs_type = DIALOGS_NOPIN;
 #else

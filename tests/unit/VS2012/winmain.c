@@ -28,6 +28,10 @@
 #include "testlib.h"
 #include "logtest.h"
 
+
+_TCHAR* eid_robot_style = NULL;
+_TCHAR*	eid_dialogs_style = NULL;
+
 /*
  * Main function
  */
@@ -40,8 +44,9 @@ typedef	struct {
 	int (*test_function_ptr)(void);
 } eIDTest;
 
-int main()
-{
+//int main()
+//{
+int	_tmain(int argc, _TCHAR* argv[]){
 	clock_t startTime = clock();
 	clock_t duration = 0;
 	int msecDuration = 0;
@@ -49,6 +54,7 @@ int main()
 	int i = 0;
 	int nrofTests = 0;
 	errno_t error;
+
 	eIDTest eIDTests[] = { \
 //	{{0,TEST_SKIPPED},"Tests C_getinfo results in a single thread",&test_getinfo},
 //#ifdef WIN32
@@ -101,6 +107,7 @@ int main()
 			{0,CKR_OK,"tests objects",&objects},
 			{0,CKR_OK,"tests readdata",&readdata},
 			{0,CKR_OK,"tests digest",&digest},
+			{0,CKR_OK,"tests sign_state",&sign_state},
 
 			//{0,CKR_OK,"tests initialize/finalize",&decode_photo},
 
@@ -118,6 +125,12 @@ int main()
 //	{{0,TEST_SKIPPED},"tests getting the private object's from the card without logging in",&test_findPrivateKeyWithoutLoginShouldFail},	
 //	{{0,TEST_SKIPPED},"tests the return value of C_FindObjectsFinal when called without C_FindObjectsInit",&test_findObjectsFinalNotInitialized},
 	};
+
+	if(argc >=2)
+		eid_robot_style = argv[1];
+
+	if(argc >=3)
+		eid_dialogs_style = argv[2];
 
 	error = initLog();
 	if(error != 0)
