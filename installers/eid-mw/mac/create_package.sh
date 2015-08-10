@@ -25,6 +25,12 @@ XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030
 #tokend dir, where the BEID.tokend will be placed
 TOKEND_DIR="$ROOT_DIR/Library/Security/tokend"
 
+#eIDViewer path
+EIDVIEWER_PATH="$(pwd)/../../../../ThirdParty/eid-viewer/eID Viewer.app"
+
+#eIDMiddleware app path
+EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/Release/eID Middleware.app"
+
 #base name of the package
 REL_NAME="beid"
 #version number of the package
@@ -119,6 +125,10 @@ chgrp -R admin  "$TOKEND_DIR/BEID.tokend"
 #build the packages in the release dir
 pushd $RELEASE_DIR
 pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
+
+pkgbuild --component "$EIDVIEWER_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location /Applications/ eidviewer.pkg
+
+pkgbuild --component "$EIDMIDDLEWAREAPP_PATH" --identifier be.eid.middleware.app --version $REL_VERSION --install-location /Applications/ eidmiddleware.pkg
 
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
