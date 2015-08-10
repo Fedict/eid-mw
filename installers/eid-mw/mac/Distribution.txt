@@ -11,13 +11,20 @@
     </allowed-os-versions>    
     <options customize="never" require-scripts="false"/>
     <choices-outline>
-        <line choice="default">
-            <line choice="eid.belgium.be"/>
-        </line>
+        <line choice="eid.belgium.be"/>
+	<line choice="eidviewer.belgium.be"/>
+	<line choice="eidmiddleware.belgium.be"/>
     </choices-outline>
-    <choice id="default"/>
     <choice id="eid.belgium.be" visible="false">
         <pkg-ref id="eid.belgium.be"/>
     </choice>
+    <choice id="eidviewer.belgium.be" visible="false">
+        <pkg-ref id="eidviewer.belgium.be"/>
+    </choice>
+    <choice id="eidmiddleware.belgium.be" visible="false">
+        <pkg-ref id="eidmiddleware.belgium.be"/>
+    </choice>
     <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
+    <pkg-ref id="eidviewer.belgium.be" onConclusion="none">eidviewer.pkg</pkg-ref>
+    <pkg-ref id="eidmiddleware.belgium.be" onConclusion="none">eidmiddleware.pkg</pkg-ref>
 </installer-gui-script>
