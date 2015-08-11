@@ -82,68 +82,68 @@ extern void dlg_log_error(const char* label);
 ///////////////////////////////////////////////////////////////////////////////////////////
 pid_t sdialog_call(const char* path,const char* msg)
 {
-    pid_t pid;
+	pid_t pid;
 
 	dlg_log_printf("sdialog_call/fork\n");
-    if((pid=fork())<0)
+	if((pid=fork())<0)
 	{
 		dlg_log_error("sdialog_call/fork");
-        return 0L;
-    }
+		return 0L;
+	}
 
-    if(pid==0)
+	if(pid==0)
 	{
 		char* disp = getenv("DISPLAY");
 		dlg_log_printf("sdialog_call: in child\n");
 		if(disp != NULL) {
-			dlg_log_printf("sdialog_call: DISPLAY=%s\n");
+			DPRINTF("sdialog_call: DISPLAY=%s\n", disp);
 		} else {
-			dlg_log_printf("DISPLAY not set\n");
+			DPRINTF("DISPLAY not set\n");
 		}
-       	umask(0);
+		umask(0);
 		chdir("/");
-		dlg_log_printf("call_dialog: about to exec %s\n",path);
+		DPRINTF("call_dialog: about to exec %s\n",path);
 		execlp(path,path,msg,(char*)0);
-		dlg_log_error("sdialog_call/execlp");
+		DERROR("sdialog_call/execlp");
 		exit(1);
-    }
+	}
 
 	dlg_log_printf("sdialog_call: child PID=%d\n",pid);
-    return pid;
+	return pid;
 }
 
 // execute dialog in a child process, read back it's stdout via a pipe, wait for it to exit
 ///////////////////////////////////////////////////////////////////////////////////////////
 char* sdialog_call_modal(const char* path,const char* msg)
 {
-    pid_t pid;
-    size_t len;
-    char *response;
-    int p[2], status, ret;
-    char buf[1024];
+	pid_t pid;
+	size_t len;
+	char *response;
+	int p[2], status, ret;
+	char buf[1024];
 
 	dlg_log_printf("... fflush\n");
-    if(fflush(stdout)!=0)
+	if(fflush(stdout)!=0)
 	{
 		dlg_log_error("sdialog_call_modal/fflush");
 		return NULL;
 	}
 
 	dlg_log_printf("... pipe\n");
-    if(pipe(p)<0)
+	if(pipe(p)<0)
 	{
 		dlg_log_error("sdialog_call_modal/pipe");
-        return NULL;
-    }
+		return NULL;
+	}
 
 	dlg_log_printf("... fork\n");
-    if((pid=fork())<0)
+	if((pid=fork())<0)
 	{
 		dlg_log_error("sdialog_call_modal/fork");
-        return NULL;
-    }
+		return NULL;
+	}
 
-    if(pid==0)
+	if(pid==0)
 	{
 		char* disp = getenv("DISPLAY");
 		DPRINTF("sdialog_call_modal: in child\n");
@@ -152,11 +152,11 @@ char* sdialog_call_modal(const char* path,const char* msg)
 		} else {
 			DPRINTF("DISPLAY not set\n");
 		}
-       	umask(0);
+		umask(0);
 		chdir("/");
-        close(p[0]);
+		close(p[0]);
 
-        if(dup2(p[1],STDOUT_FILENO)<0)
+		if(dup2(p[1],STDOUT_FILENO)<0)
 		{
 			DPRINTF("sdialog_call_modal/child/dup2");
 			exit(1);
@@ -167,42 +167,42 @@ char* sdialog_call_modal(const char* path,const char* msg)
 
 		DPRINTF("sdialog_call_modal/execlp");
 		exit(1);
-    }
+	}
 
 	dlg_log_printf("sdialog_call_modal: child PID=%d\n",pid);
 	dlg_log_printf("sdialog_call_modal: reading result\n");
 
-    close(p[1]);
-    len=ret=0;
-    do
+	close(p[1]);
+	len=ret=0;
+	do
 	{
-        ret=read(p[0],buf+len,sizeof(buf)-1-len);
-        if(ret==-1 && errno==EINTR)
-            continue;
-        if(ret<=0)
-            break;
-        len+=ret;
-    }
+		ret=read(p[0],buf+len,sizeof(buf)-1-len);
+		if(ret==-1 && errno==EINTR)
+			continue;
+		if(ret<=0)
+			break;
+		len+=ret;
+	}
 	while(sizeof(buf)-1-len>0);
 
-    buf[len]='\0';
-    close(p[0]);
+	buf[len]='\0';
+	close(p[0]);
 
 	dlg_log_printf("sdialog_call_modal: waiting for child to die\n");
-    while(waitpid(pid,&status,0)<0)
-        if(errno!=EINTR)
-            break;
+	while(waitpid(pid,&status,0)<0)
+		if(errno!=EINTR)
+			break;
 
-    if(!WIFEXITED(status) || WEXITSTATUS(status)>1)
+	if(!WIFEXITED(status) || WEXITSTATUS(status)>1)
 	{
 		dlg_log_printf("sdialog_call_modal: child died badly\n");
-        memset(buf,0,sizeof(buf));
-        return NULL;
-    }
+		memset(buf,0,sizeof(buf));
+		return NULL;
+	}
 
 	dlg_log_printf("sdialog_call_modal: child died normally\n");
-    buf[strcspn(buf,"\r\n")]='\0';
-    response=strdup(buf);
-    memset(buf,0,sizeof(buf));
-    return response;
+	buf[strcspn(buf,"\r\n")]='\0';
+	response=strdup(buf);
+	memset(buf,0,sizeof(buf));
+	return response;
 }

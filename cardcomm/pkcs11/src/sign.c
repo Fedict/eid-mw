@@ -466,7 +466,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 
    //can we use the object for signing?
    pObject = p11_get_slot_object(pSlot, hKey);
-   if (pObject == NULL)
+   if (pObject == NULL || pObject->count == 0)
       {
       log_trace(WHERE, "E: invalid key handle");
       ret = CKR_KEY_HANDLE_INVALID;
