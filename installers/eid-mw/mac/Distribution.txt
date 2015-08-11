@@ -16,12 +16,13 @@
     </choices-outline>
     <choice id="eid.belgium.be" visible="false">
         <pkg-ref id="eid.belgium.be"/>
+        <pkg-ref id="acsccid_installer"/>
     </choice>
     <choice id="eidviewer.belgium.be" visible="false">
         <pkg-ref id="eidviewer.belgium.be"/>
     </choice>
     <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
-    <pkg-ref id="eid.belgium.be" onConclusion="none">acsccid_installer.pkg</pkg-ref>
+    <pkg-ref id="acsccid_installer" onConclusion="none">acsccid_installer.pkg</pkg-ref>
     <pkg-ref id="eidviewer.belgium.be" onConclusion="none">eidviewer.pkg</pkg-ref>
     
 </installer-gui-script>

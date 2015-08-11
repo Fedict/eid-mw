@@ -109,6 +109,10 @@ cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
 #copy distribution file
 cp ./Distribution.txt "$RELEASE_DIR"
 
+#copy drivers
+cp -r ./drivers/* "$RELEASE_DIR"
+
+
 #####################################################################
 
 echo "********** generate $PKG_NAME and $DMG_NAME **********"
