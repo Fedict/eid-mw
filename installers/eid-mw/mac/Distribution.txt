@@ -3,6 +3,16 @@
     <title>eID Middleware</title>
     <options hostArchitectures="i386"/>
     <options customize="never" rootVolumeOnly="true"/>
+    <script>
+      <![CDATA[
+	function osx_before_yosemite() {
+	 if((system.compareVersions(my.target.systemVersion, '10.10')) < 0)
+	  result = false;
+	 else
+	  result = true;
+	}
+      ]]>
+    </script>
     <readme file="ReadMe.rtf"/>
     <license file="license.rtf"/>
     <background file="eid.png" scaling="proportional" alignment="bottomleft" mime-type="image/png"/>
@@ -13,16 +23,28 @@
     <choices-outline>
         <line choice="eid.belgium.be"/>
 	<line choice="eidviewer.belgium.be"/>
+        <line choice="com.acs.acsccid"/>
+	<line choice="com.acs.ccid_remove_acs"/>
+	<line choice="org.opensc.pcscd_autostart"/>
     </choices-outline>
     <choice id="eid.belgium.be" visible="false">
         <pkg-ref id="eid.belgium.be"/>
-        <pkg-ref id="acsccid_installer"/>
     </choice>
     <choice id="eidviewer.belgium.be" visible="false">
         <pkg-ref id="eidviewer.belgium.be"/>
     </choice>
+    <choice id="com.acs.acsccid" visible="false">
+        <pkg-ref id="com.acs.acsccid"/>
+    </choice>
+    <choice id="com.acs.ccid_remove_acs" visible="false">
+        <pkg-ref id="com.acs.ccid_remove_acs"/>
+    </choice>
+    <choice id="org.opensc.pcscd_autostart" visible="false" selected="osx_before_yosemite()">
+        <pkg-ref id="org.opensc.pcscd_autostart"/>
+    </choice>
     <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
-    <pkg-ref id="acsccid_installer" onConclusion="none">acsccid_installer.pkg</pkg-ref>
     <pkg-ref id="eidviewer.belgium.be" onConclusion="none">eidviewer.pkg</pkg-ref>
-    
+    <pkg-ref id="com.acs.acsccid" onConclusion="none">acsccid_flat.pkg</pkg-ref>
+    <pkg-ref id="com.acs.ccid_remove_acs" onConclusion="none">ccid_remove_acs_flat.pkg/</pkg-ref>
+    <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="none">pcscd_autostart_flat.pkg</pkg-ref>
 </installer-gui-script>
