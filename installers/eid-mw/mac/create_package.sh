@@ -33,6 +33,7 @@ EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/
 
 #base name of the package
 REL_NAME="beid"
+REL_NAME_DIAG="beid_diagnostic"
 #version number of the package
 #REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
 #REL_VERSION=$(expr "$REL_VERSION_TMP" : '.*\([0-9].[0-9].[0-9]\).*')
@@ -44,9 +45,9 @@ PKG_NAME="$REL_NAME.pkg"
 VOL_NAME="${REL_NAME} OSX ${REL_VERSION}"
 DMG_NAME="${REL_NAME}_${REL_VERSION}.dmg"
 
-
-
-
+PKG_NAME_DIAG="$REL_NAME_DIAG.pkg"
+VOL_NAME_DIAG="${REL_NAME_DIAG} OSX ${REL_VERSION}"
+DMG_NAME_DIAG="${REL_NAME_DIAG}_${REL_VERSION}.dmg"
 
 #cleanup previous build
 
@@ -128,9 +129,14 @@ pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid
 
 pkgbuild --component "$EIDVIEWER_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location /Applications/ eidviewer.pkg
 
-pkgbuild --component "$EIDMIDDLEWAREAPP_PATH" --identifier be.eid.middleware.app --version $REL_VERSION --install-location /Applications/ eidmiddleware.pkg
-
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
 hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
+
+
+echo "********** generate $PKG_NAME_DIAG and $DMG_NAME_DIAG **********"
+
+pkgbuild --component "$EIDMIDDLEWAREAPP_PATH" --identifier be.eid.middleware.app --version $REL_VERSION --install-location /Applications/ $PKG_NAME_DIAG
+
+hdiutil create -srcfolder $PKG_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
 popd
