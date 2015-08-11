@@ -769,7 +769,7 @@ void BELPICToken::checkPPDUSupport()
     if( (strncmp(this->startupReaderInfo()->szReader, "VASCO DIGIPASS 870", sizeof("VASCO DIGIPASS 870")-1) == 0) ||
         (strncmp(this->startupReaderInfo()->szReader, "VASCO DIGIPASS 875", sizeof("VASCO DIGIPASS 875")-1) == 0) ||
         (strncmp(this->startupReaderInfo()->szReader, "VASCO DIGIPASS 920", sizeof("VASCO DIGIPASS 920")-1) == 0) ||
-        (strncmp(this->startupReaderInfo()->szReader, "ACS APG8205", sizeof("ACS APG8205")-1) == 0) ||
+        (strncmp(this->startupReaderInfo()->szReader, "ACS APG8201", sizeof("ACS APG8201")-1) == 0) ||
         (strncmp(this->startupReaderInfo()->szReader, "Ezio Shield Secure Channel", sizeof("Ezio Shield Secure Channel")-1) == 0) ||
         (strncmp(this->startupReaderInfo()->szReader, "PPDUOT EID CARD READER", sizeof("PPDUOT EID CARD READER")-1) == 0))
     {
