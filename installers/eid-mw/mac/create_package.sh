@@ -3,6 +3,9 @@
 set -e
 set -x
 
+SIGN_BUILD=0
+#set SIGN_BUILD=1 to sign the .pkg files
+
 #installer name defines
 #release dir, where all files to be released will be placed
 RELEASE_DIR="$(pwd)/release"
@@ -32,7 +35,7 @@ EIDVIEWER_PATH="$(pwd)/../../../../ThirdParty/eid-viewer/eID Viewer.app"
 EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/Release/eID Middleware.app"
 
 #base name of the package
-REL_NAME="beid"
+REL_NAME="eID-Quickinstaller"
 REL_NAME_DIAG="beid_diagnostic"
 #version number of the package
 #REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
@@ -42,12 +45,14 @@ REL_VERSION="4.1.5"
 PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(git rev-list --count HEAD)
 PKG_NAME="$REL_NAME.pkg"
-VOL_NAME="${REL_NAME} OSX ${REL_VERSION}"
-DMG_NAME="${REL_NAME}_${REL_VERSION}.dmg"
+PKGSIGNED_NAME="${REL_NAME}-signed.pkg"
+VOL_NAME="${REL_NAME}-${REL_VERSION}"
+DMG_NAME="${REL_NAME}-${REL_VERSION}.dmg"
 
 PKG_NAME_DIAG="$REL_NAME_DIAG.pkg"
-VOL_NAME_DIAG="${REL_NAME_DIAG} OSX ${REL_VERSION}"
-DMG_NAME_DIAG="${REL_NAME_DIAG}_${REL_VERSION}.dmg"
+PKGSIGNED_NAME_DIAG="${REL_NAME_DIAG}-signed.pkg"
+VOL_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}"
+DMG_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}.dmg"
 
 #cleanup previous build
 
@@ -135,12 +140,23 @@ pkgbuild --component "$EIDVIEWER_PATH" --identifier be.eid.viewer.app --version 
 
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
-hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
+if [ $SIGN_BUILD -eq 1 ];then
+  productsign --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAME
+  hdiutil create -srcfolder $PKGSIGNED_NAME -volname "${VOL_NAME}" $DMG_NAME
+else
+  hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
+fi
 
 
 echo "********** generate $PKG_NAME_DIAG and $DMG_NAME_DIAG **********"
 
 pkgbuild --component "$EIDMIDDLEWAREAPP_PATH" --identifier be.eid.middleware.app --version $REL_VERSION --install-location /Applications/ $PKG_NAME_DIAG
 
-hdiutil create -srcfolder $PKG_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
+if [ $SIGN_BUILD -eq 1 ];then
+  productsign --sign "Developer ID Installer" $PKG_NAME_DIAG $PKGSIGNED_NAME_DIAG
+  hdiutil create -srcfolder $PKGSIGNED_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
+else
+  hdiutil create -srcfolder $PKG_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
+fi
+
 popd
