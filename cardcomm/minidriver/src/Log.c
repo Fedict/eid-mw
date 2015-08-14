@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2011 FedICT.
+* Copyright (C) 2008-2015 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -123,6 +123,7 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 
 	va_list        listArg;
 	int            iLog = 0;
+	int			   err = 0;
 
 	FILE           *fp = NULL;
 
@@ -206,8 +207,9 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 	_vsnprintf(buffer, sizeof(buffer), format, listArg);
 	va_end(listArg);
 
-	fp = _tfopen(g_szLogFile, TEXT("a"));
-	if ( fp != NULL )
+
+	err = _wfopen_s(&fp,g_szLogFile, TEXT("a"));
+	if ( (fp != NULL) && (err == 0))
 	{
 		fprintf (fp, "%S %d %d %s|%30s|%s\n",baseName, GetCurrentProcessId(), GetCurrentThreadId(), timebuf, pWhere, buffer);
 		fclose(fp);
@@ -221,6 +223,7 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 void LogDump (int iStreamLg, unsigned char *pa_cStream)
 {
 	FILE           *fp = NULL;
+	int err = 0;
 
 	int            i        = 0;
 	int            iOffset  = 0;
@@ -231,8 +234,8 @@ void LogDump (int iStreamLg, unsigned char *pa_cStream)
 		return;
 	}
 
-	fp = _tfopen(g_szLogFile, TEXT("a"));
-	if ( fp == NULL )
+	err = _wfopen_s(&fp,g_szLogFile, TEXT("a"));
+	if ( (fp == NULL) || (err != 0) )
 	{
 		return;
 	}
@@ -256,7 +259,8 @@ void LogDump (int iStreamLg, unsigned char *pa_cStream)
 
 void LogDumpBin (char *pa_cName, int iStreamLg, unsigned char *pa_cStream)
 {
-	FILE           *fp = NULL;
+	FILE *fp = NULL;
+	int	err = 0;
 
 	if ( ( pa_cName   == NULL ) ||
 		( pa_cStream == NULL ) )
@@ -264,8 +268,8 @@ void LogDumpBin (char *pa_cName, int iStreamLg, unsigned char *pa_cStream)
 		return;
 	}
 
-	fp = fopen(pa_cName, "wb");
-	if ( fp != NULL )
+	err = fopen_s(&fp,pa_cName, "wb");
+	if ( (fp != NULL) && (err == 0) )
 	{
 		fwrite(pa_cStream, sizeof(char), iStreamLg, fp);
 		fclose(fp);
