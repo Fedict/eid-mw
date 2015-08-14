@@ -78,8 +78,7 @@ mkdir -p "$PLISTMERGER_DIR"
 #copy all files that should be part of the installer:
 cp ../../../Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
 #copy pkcs11 bundle
-#cp -r ../../../misc/mac/pkcs11.bundle $RESOURCES_DIR
-#$ROOT_DIR/$INST_DIR/lib/$PKCS11_BUNDLE
+cp -r ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
 
 #copy licenses
 cp ../../../doc/licenses/Dutch/eID-toolkit_licensingtermsconditions.txt \
