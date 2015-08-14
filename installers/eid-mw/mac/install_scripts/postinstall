@@ -31,8 +31,14 @@ rm "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a
 rm "/Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi"
 
 #on OS X 10.10, make sure securityd auto launches pcscd
-if [[ $(sw_vers -productVersion) == *10.10* ]]; then
+if [[ $(sw_vers -productVersion) == *10.10* || $(sw_vers -productVersion) == *10.11* ]]; then
 sudo python ./enablesecd.py; fi
+
+#prior to OS X 10.11, try to copy tokend to the /System folder (otherwise, the tokends in this folder get priority)
+if [[ $(sw_vers -productVersion) == *10.10* || $(sw_vers -productVersion) == *10.9* || $(sw_vers -productVersion) == *10.8* || $(sw_vers -productVersion) == *10.7* ]]; then
+test -e /System/Library/Security/tokend/BEID.tokend && sudo rm -r /System/Library/Security/tokend/BEID.tokend
+sudo cp -r /Library/Security/tokend/BEID.tokend /System/Library/Security/tokend/
+fi
 
 mv /Library/BelgiumIdentityCard "/Library/Belgium Identity Card"
 #correct the org.opensc.pcscd.autostart name if needed (add .plist)
