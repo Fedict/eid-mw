@@ -691,9 +691,8 @@ CK_RV cal_init_objects(P11_SLOT *pSlot)
 
 	//check if the object list is empty
 	//if not, we initialized the objects already and can return with OK
-	if(pSlot->pobjects != NULL)
+	if(pSlot->pobjects != NULL && pSlot->pobjects->inuse != 0)
 		return CKR_OK;
-
 
 	//this function will initialize objects as they are valid for the token
 	//this function does not read the actual values but enables an application to
