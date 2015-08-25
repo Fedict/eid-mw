@@ -398,14 +398,6 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
       goto cleanup;
       }
 
-#ifndef PKCS11_FF
-		ret = cal_init_objects(pSlot);
-		if (ret != CKR_OK)
-		{
-			log_trace(WHERE, "E: cal_init_objects() returned %s_",log_map_error(ret));
-		}
-#endif
-
    //check mechanism
    //since this module is only for BEID, we check for RSA here and we do not check the device capabilities
    //check mechanism table for signing depending on token in slot
