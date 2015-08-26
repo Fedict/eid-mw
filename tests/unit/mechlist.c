@@ -38,6 +38,10 @@ TEST_FUNC(mechlist) {
 	int crit_mechs = 0;
 	int i, ret;
 	int retval = TEST_RV_OK;
+	ckrv_mod m_small[] = {
+		{ CKR_BUFFER_TOO_SMALL, TEST_RV_OK },
+		{ CKR_OK, TEST_RV_FAIL },
+	};
 
 	check_rv_long(C_GetMechanismList(0, NULL_PTR, &count), m_p11_noinit);
 
@@ -64,6 +68,8 @@ TEST_FUNC(mechlist) {
 	}
 
 	for(i=0; i<count; i++) {
+		unsigned long temp = i+1;
+
 		switch(mechlist[i]) {
 		HAS_CKM(CKM_RSA_PKCS, 1);
 		HAS_CKM(CKM_RIPEMD160, 0);
@@ -87,6 +93,9 @@ TEST_FUNC(mechlist) {
 		default:
 			printf("Found unknown mechanism %#08lx\n", mechlist[i]);
 			break;
+		}
+		if(i<(count-1)) {
+			check_rv_long(C_GetMechanismList(slot, mechlist, &temp), m_small);
 		}
 	}
 
