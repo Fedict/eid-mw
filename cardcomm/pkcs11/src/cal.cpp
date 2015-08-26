@@ -417,32 +417,32 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 	}
 
 	/* hash algos */
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_MD5;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_SHA_1;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_SHA256;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_SHA384;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_SHA512;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_RIPEMD160;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
@@ -450,63 +450,63 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 	/* sign algos */
 	if (algos & SIGN_ALGO_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_MD5_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_MD5_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA1_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA1_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA256_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA256_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA384_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA384_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA512_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA512_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_RIPEMD160_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_RIPEMD160_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA1_RSA_PSS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA1_RSA_PKCS_PSS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA256_RSA_PSS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA256_RSA_PKCS_PSS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
