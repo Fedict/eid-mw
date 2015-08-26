@@ -42,6 +42,11 @@ TEST_FUNC(mechlist) {
 		{ CKR_BUFFER_TOO_SMALL, TEST_RV_OK },
 		{ CKR_OK, TEST_RV_FAIL },
 	};
+	ckrv_mod m_p11_ntoken[] = {
+		{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
+		{ CKR_FUNCTION_FAILED, TEST_RV_OK },
+		{ CKR_OK, TEST_RV_FAIL },
+	};
 
 	check_rv_long(C_GetMechanismList(0, NULL_PTR, &count), m_p11_noinit);
 
@@ -114,6 +119,11 @@ TEST_FUNC(mechlist) {
 	verbose_assert(crit_mechs == 5);
 
 	check_rv_long(C_GetMechanismList(slot+30, mechlist, &count), m_p11_badslot);
+
+	if(have_robot()) {
+		robot_remove_card();
+		check_rv_long(C_GetMechanismList(slot, mechlist, &count), m_p11_ntoken);
+	}
 
 	check_rv(C_Finalize(NULL_PTR));
 
