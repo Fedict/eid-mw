@@ -37,6 +37,12 @@ TEST_FUNC(mechinfo) {
 	int found = 0;
 	int card_2k = 0;
 	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
+	ckrv_mod m_mech_inv[] = {
+		{ CKR_OK, TEST_RV_FAIL },
+		{ CKR_MECHANISM_INVALID, TEST_RV_OK },
+	};
+
+	check_rv_long(C_GetMechanismInfo(slot, NULL_PTR, &info), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
 
@@ -50,6 +56,9 @@ TEST_FUNC(mechinfo) {
 	printf("number of mechanisms supported: %lu\n", count);
 
 	check_rv(C_GetMechanismList(slot, mechlist, &count));
+
+	check_rv_long(C_GetMechanismInfo(slot, mechlist[1], NULL_PTR), m_p11_badarg);
+	check_rv_long(C_GetMechanismInfo(slot, NULL_PTR, &info), m_mech_inv);
 
 	switch(count) {
 		case 13:
