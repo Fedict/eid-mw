@@ -29,6 +29,7 @@
 #include "testlib.h"
 
 CK_RV notify_login(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
+	printf("INFO: notification called\n");
 	return CKR_OK;
 }
 
