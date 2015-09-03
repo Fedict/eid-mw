@@ -24,7 +24,7 @@ LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 #plistmerger dir, where our plistmerger tool will be placed
 PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
 #xpi plugin dir, where the xpi plugin will be placed
-XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
+#XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
 #tokend dir, where the BEID.tokend will be placed
 TOKEND_DIR="$ROOT_DIR/Library/Security/tokend"
 
@@ -70,7 +70,7 @@ test -e $PKG_NAME && rm $PKG_NAME
 mkdir -p "$PKCS11_INST_DIR"
 mkdir -p "$LICENSES_DIR"
 mkdir -p "$TOKEND_DIR"
-mkdir -p "$XPI_PLUGIN_DIR"
+#mkdir -p "$XPI_PLUGIN_DIR"
 mkdir -p "$RESOURCES_DIR"
 mkdir -p "$INSTALL_SCRIPTS_DIR"
 mkdir -p "$PLISTMERGER_DIR"
@@ -99,9 +99,9 @@ cp ../../../installers/certificates/beid-cert-belgiumrca2.der "$INSTALL_SCRIPTS_
 cp ../../../installers/certificates/beid-cert-belgiumrca3.der "$INSTALL_SCRIPTS_DIR"
 
 
-LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
-XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
-cp $XPI_PLUGIN "$XPI_PLUGIN_DIR"
+#LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
+#XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
+#cp $XPI_PLUGIN "$XPI_PLUGIN_DIR"
 
 cp -r ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
