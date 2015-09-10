@@ -296,7 +296,11 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, _("32-bit PC"), -1);
 	} else {
 		bitness = BITS_FOREIGN;
-		asprintf(&values, _("Unknown (%s)"), undat.machine);
+		if(!strncmp(undat.machine, "arm", 3)) {
+			strcpy(values, undat.machine);
+		} else {
+			asprintf(&values, _("Unknown (%s)"), undat.machine);
+		}
 		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, values, -1);
 		free(values);
 	}
