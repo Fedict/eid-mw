@@ -167,7 +167,7 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 	gboolean foundforeign = FALSE;
 	GtkTreeIter iter;
 
-	for(i=0;i<4;i++) {
+	for(i=0;i<(sizeof(locs) / sizeof(locs[0]));i++) {
 		if(stat(locs[i].loc, &st) < 0) {
 			switch(errno) {
 			case ENOENT:
