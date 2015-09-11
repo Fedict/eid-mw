@@ -170,12 +170,26 @@ NSString* getTokendStatus() {
     if(stat("/System/Library/Security/tokend/BEID.tokend", &stbuf) < 0) {
         switch(errno) {
             case ENOENT:
+                break;
+            default:
+                return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
+        }
+    }
+    else {
+        return @"/System/Library/Security/tokend/BEID.tokend";
+    }
+    if(stat("/Library/Security/tokend/BEID.tokend", &stbuf) < 0) {
+        switch(errno) {
+            case ENOENT:
                 return @"Not found";
             default:
                 return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
         }
     }
-    return @"/System/Library/Security/tokend/BEID.tokend";
+    else {
+        return @"/Library/Security/tokend/BEID.tokend";
+    }
+    
 }
 
 @implementation AppDelegate
