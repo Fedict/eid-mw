@@ -23,6 +23,7 @@ PKCS11_INST_DIR="$ROOT_DIR/usr/local/lib"
 LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 #plistmerger dir, where our plistmerger tool will be placed
 PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
+BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 #xpi plugin dir, where the xpi plugin will be placed
 #XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
 #tokend dir, where the BEID.tokend will be placed
@@ -116,6 +117,8 @@ cp ./Distribution.txt "$RELEASE_DIR"
 #copy drivers
 cp -r ./drivers/* "$RELEASE_DIR"
 
+#copy eid middleware app
+cp -r "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
 
 #####################################################################
 
@@ -149,7 +152,7 @@ fi
 
 echo "********** generate $PKG_NAME_DIAG and $DMG_NAME_DIAG **********"
 
-pkgbuild --component "$EIDMIDDLEWAREAPP_PATH" --identifier be.eid.middleware.app --version $REL_VERSION --install-location /Applications/ $PKG_NAME_DIAG
+#pkgbuild --component "$EIDMIDDLEWAREAPP_PATH" --identifier be.eid.middleware.app --version $REL_VERSION --install-location /Applications/ $PKG_NAME_DIAG
 
 if [ $SIGN_BUILD -eq 1 ];then
   productsign --sign "Developer ID Installer" $PKG_NAME_DIAG $PKGSIGNED_NAME_DIAG
