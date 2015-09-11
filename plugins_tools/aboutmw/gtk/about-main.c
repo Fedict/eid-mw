@@ -183,10 +183,12 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 			gchar* str;
 			switch(locs[i].bitness) {
 				case BITS_32:
+					if(found32) continue;
 					str = _("32-bit PKCS#11 location");
 					found32 = TRUE;
 					break;
 				case BITS_64:
+					if(found64) continue;
 					str = _("64-bit PKCS#11 location");
 					found64 = TRUE;
 					break;
