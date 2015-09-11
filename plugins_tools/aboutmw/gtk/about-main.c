@@ -297,7 +297,7 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 	} else {
 		bitness = BITS_FOREIGN;
 		if(!strncmp(undat.machine, "arm", 3)) {
-			strcpy(values, undat.machine);
+			values = strdup(undat.machine);
 		} else {
 			asprintf(&values, _("Unknown (%s)"), undat.machine);
 		}
