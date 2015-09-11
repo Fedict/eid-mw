@@ -3,7 +3,7 @@
 gitrev=$(git describe --dirty)
 BASE_VERSION1=4
 BASE_VERSION2=1
-BASE_VERSION3=4
+BASE_VERSION3=5
 NOW=$(date +%F)
 
 cat > $1 <<EOF
