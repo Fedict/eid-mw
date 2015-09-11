@@ -6,10 +6,25 @@
     <script>
       <![CDATA[
 	function osx_before_yosemite() {
-	 if((system.compareVersions(my.target.systemVersion, '10.10')) < 0)
-	  result = false;
+	 system.log('system OS version ' + system.version.ProductVersion + ' deteced');
+	 if((system.compareVersions(system.version.ProductVersion, '10.10')) == -1)
+	 {
+	  return true;
+	 }
 	 else
-	  result = true;
+	 {
+	  return false;
+	 }
+	}
+	function osx_before_elcapitan() {
+	 if((system.compareVersions(system.version.ProductVersion, '10.11')) == -1)
+	 {
+	  return true;
+	 }
+	 else
+	 {
+	  return false;
+	 }
 	}
       ]]>
     </script>
@@ -33,10 +48,10 @@
     <choice id="eidviewer.belgium.be" visible="false">
         <pkg-ref id="eidviewer.belgium.be"/>
     </choice>
-    <choice id="com.acs.acsccid" visible="false">
+    <choice id="com.acs.acsccid" visible="false" selected="osx_before_elcapitan()">
         <pkg-ref id="com.acs.acsccid"/>
     </choice>
-    <choice id="com.acs.ccid_remove_acs" visible="false">
+    <choice id="com.acs.ccid_remove_acs" visible="false" selected="osx_before_elcapitan()">
         <pkg-ref id="com.acs.ccid_remove_acs"/>
     </choice>
     <choice id="org.opensc.pcscd_autostart" visible="false" selected="osx_before_yosemite()">
@@ -46,5 +61,5 @@
     <pkg-ref id="eidviewer.belgium.be" onConclusion="none">eidviewer.pkg</pkg-ref>
     <pkg-ref id="com.acs.acsccid" onConclusion="none">acsccid_flat.pkg</pkg-ref>
     <pkg-ref id="com.acs.ccid_remove_acs" onConclusion="none">ccid_remove_acs_flat.pkg/</pkg-ref>
-    <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="none">pcscd_autostart_flat.pkg</pkg-ref>
+    <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="restart">pcscd_autostart_flat.pkg</pkg-ref>
 </installer-gui-script>
