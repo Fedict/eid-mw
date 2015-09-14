@@ -150,15 +150,15 @@ else
 fi
 
 
-echo "********** generate $PKG_NAME_DIAG and $DMG_NAME_DIAG **********"
-
+#echo "********** generate $PKG_NAME_DIAG and $DMG_NAME_DIAG **********"
+#
 #pkgbuild --component "$EIDMIDDLEWAREAPP_PATH" --identifier be.eid.middleware.app --version $REL_VERSION --install-location /Applications/ $PKG_NAME_DIAG
-
-if [ $SIGN_BUILD -eq 1 ];then
-  productsign --sign "Developer ID Installer" $PKG_NAME_DIAG $PKGSIGNED_NAME_DIAG
-  hdiutil create -srcfolder $PKGSIGNED_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
-else
-  hdiutil create -srcfolder $PKG_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
-fi
+#
+#if [ $SIGN_BUILD -eq 1 ];then
+#  productsign --sign "Developer ID Installer" $PKG_NAME_DIAG $PKGSIGNED_NAME_DIAG
+#  hdiutil create -srcfolder $PKGSIGNED_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
+#else
+#  hdiutil create -srcfolder $PKG_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
+#fi
 
 popd
