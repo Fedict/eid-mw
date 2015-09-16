@@ -3,6 +3,31 @@
     <title>eID Middleware</title>
     <options hostArchitectures="i386"/>
     <options customize="never" rootVolumeOnly="true"/>
+    <script>
+      <![CDATA[
+	function osx_before_yosemite() {
+	 system.log('system OS version ' + system.version.ProductVersion + ' deteced');
+	 if((system.compareVersions(system.version.ProductVersion, '10.10')) == -1)
+	 {
+	  return true;
+	 }
+	 else
+	 {
+	  return false;
+	 }
+	}
+	function osx_before_elcapitan() {
+	 if((system.compareVersions(system.version.ProductVersion, '10.11')) == -1)
+	 {
+	  return true;
+	 }
+	 else
+	 {
+	  return false;
+	 }
+	}
+      ]]>
+    </script>
     <readme file="ReadMe.rtf"/>
     <license file="license.rtf"/>
     <background file="eid.png" scaling="proportional" alignment="bottomleft" mime-type="image/png"/>
@@ -11,13 +36,30 @@
     </allowed-os-versions>    
     <options customize="never" require-scripts="false"/>
     <choices-outline>
-        <line choice="default">
-            <line choice="eid.belgium.be"/>
-        </line>
+        <line choice="eid.belgium.be"/>
+	<line choice="eidviewer.belgium.be"/>
+        <line choice="com.acs.acsccid"/>
+	<line choice="com.acs.ccid_remove_acs"/>
+	<line choice="org.opensc.pcscd_autostart"/>
     </choices-outline>
-    <choice id="default"/>
     <choice id="eid.belgium.be" visible="false">
         <pkg-ref id="eid.belgium.be"/>
     </choice>
+    <choice id="eidviewer.belgium.be" visible="false">
+        <pkg-ref id="eidviewer.belgium.be"/>
+    </choice>
+    <choice id="com.acs.acsccid" visible="false" selected="osx_before_elcapitan()">
+        <pkg-ref id="com.acs.acsccid"/>
+    </choice>
+    <choice id="com.acs.ccid_remove_acs" visible="false" selected="osx_before_elcapitan()">
+        <pkg-ref id="com.acs.ccid_remove_acs"/>
+    </choice>
+    <choice id="org.opensc.pcscd_autostart" visible="false" selected="osx_before_yosemite()">
+        <pkg-ref id="org.opensc.pcscd_autostart"/>
+    </choice>
     <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
+    <pkg-ref id="eidviewer.belgium.be" onConclusion="none">eidviewer.pkg</pkg-ref>
+    <pkg-ref id="com.acs.acsccid" onConclusion="none">acsccid_flat.pkg</pkg-ref>
+    <pkg-ref id="com.acs.ccid_remove_acs" onConclusion="none">ccid_remove_acs_flat.pkg/</pkg-ref>
+    <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="restart">pcscd_autostart_flat.pkg</pkg-ref>
 </installer-gui-script>

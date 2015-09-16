@@ -1922,7 +1922,8 @@ DWORD CCIDgetFeatures(PFEATURES pFeatures, SCARDHANDLE hCard) {
 		sizeof(pbRecvBuffer),
 		&dwRecvLength);
 	LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetFeatures returncode: [0x%08X]", dwReturn);
-	if ( SCARD_S_SUCCESS != dwReturn ) {
+
+	if ( (SCARD_S_SUCCESS != dwReturn) || (dwRecvLength == 0) ) {
 		dwReturn = CCIDgetPPDUFeatures(pFeatures,hCard);
 		if ( SCARD_S_SUCCESS != dwReturn ){
 			LogTrace(LOGTYPE_ERROR, WHERE, "CCIDgetFeatures errorcode: [0x%08X]", dwReturn);		

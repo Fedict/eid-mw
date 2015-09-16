@@ -3,6 +3,9 @@
 set -e
 set -x
 
+SIGN_BUILD=0
+#set SIGN_BUILD=1 to sign the .pkg files
+
 #installer name defines
 #release dir, where all files to be released will be placed
 RELEASE_DIR="$(pwd)/release"
@@ -20,27 +23,37 @@ PKCS11_INST_DIR="$ROOT_DIR/usr/local/lib"
 LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 #plistmerger dir, where our plistmerger tool will be placed
 PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
+BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 #xpi plugin dir, where the xpi plugin will be placed
-XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
+#XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
 #tokend dir, where the BEID.tokend will be placed
 TOKEND_DIR="$ROOT_DIR/Library/Security/tokend"
 
+#eIDViewer path
+EIDVIEWER_PATH="$(pwd)/../../../../ThirdParty/eid-viewer/eID Viewer.app"
+
+#eIDMiddleware app path
+EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/Release/eID Middleware.app"
+
 #base name of the package
-REL_NAME="beid"
+REL_NAME="eID-Quickinstaller"
+REL_NAME_DIAG="beid_diagnostic"
 #version number of the package
 #REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
 #REL_VERSION=$(expr "$REL_VERSION_TMP" : '.*\([0-9].[0-9].[0-9]\).*')
-REL_VERSION="4.1.4"
+REL_VERSION="4.1.5"
 
 PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(git rev-list --count HEAD)
 PKG_NAME="$REL_NAME.pkg"
-VOL_NAME="${REL_NAME} OSX ${REL_VERSION}"
-DMG_NAME="${REL_NAME}_${REL_VERSION}.dmg"
+PKGSIGNED_NAME="${REL_NAME}-signed.pkg"
+VOL_NAME="${REL_NAME}-${REL_VERSION}"
+DMG_NAME="${REL_NAME}-${REL_VERSION}.dmg"
 
-
-
-
+PKG_NAME_DIAG="$REL_NAME_DIAG.pkg"
+PKGSIGNED_NAME_DIAG="${REL_NAME_DIAG}-signed.pkg"
+VOL_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}"
+DMG_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}.dmg"
 
 #cleanup previous build
 
@@ -58,7 +71,7 @@ test -e $PKG_NAME && rm $PKG_NAME
 mkdir -p "$PKCS11_INST_DIR"
 mkdir -p "$LICENSES_DIR"
 mkdir -p "$TOKEND_DIR"
-mkdir -p "$XPI_PLUGIN_DIR"
+#mkdir -p "$XPI_PLUGIN_DIR"
 mkdir -p "$RESOURCES_DIR"
 mkdir -p "$INSTALL_SCRIPTS_DIR"
 mkdir -p "$PLISTMERGER_DIR"
@@ -66,8 +79,7 @@ mkdir -p "$PLISTMERGER_DIR"
 #copy all files that should be part of the installer:
 cp ../../../Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
 #copy pkcs11 bundle
-#cp -r ../../../misc/mac/pkcs11.bundle $RESOURCES_DIR
-#$ROOT_DIR/$INST_DIR/lib/$PKCS11_BUNDLE
+cp -r ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
 
 #copy licenses
 cp ../../../doc/licenses/Dutch/eID-toolkit_licensingtermsconditions.txt \
@@ -88,9 +100,9 @@ cp ../../../installers/certificates/beid-cert-belgiumrca2.der "$INSTALL_SCRIPTS_
 cp ../../../installers/certificates/beid-cert-belgiumrca3.der "$INSTALL_SCRIPTS_DIR"
 
 
-LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
-XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
-cp $XPI_PLUGIN "$XPI_PLUGIN_DIR"
+#LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
+#XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
+#cp $XPI_PLUGIN "$XPI_PLUGIN_DIR"
 
 cp -r ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
@@ -101,6 +113,12 @@ cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
 
 #copy distribution file
 cp ./Distribution.txt "$RELEASE_DIR"
+
+#copy drivers
+cp -r ./drivers/* "$RELEASE_DIR"
+
+#copy eid middleware app
+cp -r "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
 
 #####################################################################
 
@@ -120,7 +138,27 @@ chgrp -R admin  "$TOKEND_DIR/BEID.tokend"
 pushd $RELEASE_DIR
 pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
 
+pkgbuild --component "$EIDVIEWER_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location /Applications/ eidviewer.pkg
+
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
-hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
+if [ $SIGN_BUILD -eq 1 ];then
+  productsign --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAME
+  hdiutil create -srcfolder $PKGSIGNED_NAME -volname "${VOL_NAME}" $DMG_NAME
+else
+  hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
+fi
+
+
+#echo "********** generate $PKG_NAME_DIAG and $DMG_NAME_DIAG **********"
+#
+#pkgbuild --component "$EIDMIDDLEWAREAPP_PATH" --identifier be.eid.middleware.app --version $REL_VERSION --install-location /Applications/ $PKG_NAME_DIAG
+#
+#if [ $SIGN_BUILD -eq 1 ];then
+#  productsign --sign "Developer ID Installer" $PKG_NAME_DIAG $PKGSIGNED_NAME_DIAG
+#  hdiutil create -srcfolder $PKGSIGNED_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
+#else
+#  hdiutil create -srcfolder $PKG_NAME_DIAG -volname "${VOL_NAME_DIAG}" $DMG_NAME_DIAG
+#fi
+
 popd
