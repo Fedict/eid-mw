@@ -554,7 +554,7 @@
 					../../../../doc/sdk/include/rsaref220,
 					../../,
 					../../../../tests/unit/,
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/usr/include/libxml2,
+					/usr/include/libxml2,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -599,7 +599,7 @@
 					../../../../doc/sdk/include/rsaref220,
 					../../,
 					../../../../tests/unit/,
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/usr/include/libxml2,
+					/usr/include/libxml2,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
