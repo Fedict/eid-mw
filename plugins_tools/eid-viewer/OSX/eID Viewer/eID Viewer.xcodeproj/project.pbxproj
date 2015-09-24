@@ -44,6 +44,7 @@
 		659FFCBA1AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */; };
 		659FFCBC1AE93CD5004CEC1F /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659FFCBB1AE93CD5004CEC1F /* libxml2.dylib */; };
 		8B079D301B0B6136004E88C8 /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B079D2F1B0B6136004E88C8 /* DataVerifier.m */; };
+		8B195DE51BB3F62900777CC5 /* ResizablePrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B195DE41BB3F62900777CC5 /* ResizablePrintView.m */; };
 		8B3DD9751B03907500E0537B /* coat_of_arms_de.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9711B03907500E0537B /* coat_of_arms_de.jpg */; };
 		8B3DD9761B03907500E0537B /* coat_of_arms_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9721B03907500E0537B /* coat_of_arms_en.jpg */; };
 		8B3DD9771B03907500E0537B /* coat_of_arms_fr.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9731B03907500E0537B /* coat_of_arms_fr.jpg */; };
@@ -137,6 +138,8 @@
 		659FFCBB1AE93CD5004CEC1F /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		8B079D2E1B0B6136004E88C8 /* DataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVerifier.h; sourceTree = "<group>"; };
 		8B079D2F1B0B6136004E88C8 /* DataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataVerifier.m; sourceTree = "<group>"; };
+		8B195DE31BB3F62900777CC5 /* ResizablePrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizablePrintView.h; sourceTree = "<group>"; };
+		8B195DE41BB3F62900777CC5 /* ResizablePrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizablePrintView.m; sourceTree = "<group>"; };
 		8B3DD9711B03907500E0537B /* coat_of_arms_de.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_de.jpg; path = ../../../resources/coat_of_arms_de.jpg; sourceTree = "<group>"; };
 		8B3DD9721B03907500E0537B /* coat_of_arms_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_en.jpg; path = ../../../resources/coat_of_arms_en.jpg; sourceTree = "<group>"; };
 		8B3DD9731B03907500E0537B /* coat_of_arms_fr.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_fr.jpg; path = ../../../resources/coat_of_arms_fr.jpg; sourceTree = "<group>"; };
@@ -307,6 +310,8 @@
 				8B079D2F1B0B6136004E88C8 /* DataVerifier.m */,
 				8B4A21BF1B330EDD00D489E8 /* DraggingImage.h */,
 				8B4A21C01B330EDD00D489E8 /* DraggingImage.m */,
+				8B195DE31BB3F62900777CC5 /* ResizablePrintView.h */,
+				8B195DE41BB3F62900777CC5 /* ResizablePrintView.m */,
 			);
 			name = ObjC;
 			sourceTree = "<group>";
@@ -476,6 +481,7 @@
 				659FFCB81AE93C37004CEC1F /* labels.c in Sources */,
 				659FFC9E1AE93AD1004CEC1F /* natnumconv.cpp in Sources */,
 				65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */,
+				8B195DE51BB3F62900777CC5 /* ResizablePrintView.m in Sources */,
 				8BBDE3281B3C063100CBE13E /* preview.c in Sources */,
 				659FFC9B1AE93AD1004CEC1F /* genderconv.cpp in Sources */,
 				659FFC961AE93AD1004CEC1F /* convertor.cpp in Sources */,

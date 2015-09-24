@@ -1011,7 +1011,7 @@
             </view>
             <point key="canvasLocation" x="322" y="289.5"/>
         </window>
-        <customView id="ieQ-cl-G8D" userLabel="PrintOperation">
+        <customView id="ieQ-cl-G8D" userLabel="PrintOperation" customClass="ResizablePrintView">
             <rect key="frame" x="0.0" y="-5" width="424" height="660"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
