@@ -79,7 +79,10 @@ mkdir -p "$PLISTMERGER_DIR"
 #copy all files that should be part of the installer:
 cp ../../../Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
 #copy pkcs11 bundle
-cp -r ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
+cp -R ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
+#make relative symblic link from bundle to the dylib
+ln -s ../../../libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/macOS/libbeidpkcs11.dylib
+
 
 #copy licenses
 cp ../../../doc/licenses/Dutch/eID-toolkit_licensingtermsconditions.txt \
@@ -93,7 +96,7 @@ cp ../../../doc/licenses/German/eID-toolkit_licensingtermsconditions.txt \
 cp ../../../doc/licenses/THIRDPARTY-LICENSES-Mac.txt "$LICENSES_DIR/"
 
 
-cp -r ./resources/* $RESOURCES_DIR
+cp -R ./resources/* $RESOURCES_DIR
 
 #copy certificates to scripts folder, as they are only used during install (to trust them)
 cp ../../../installers/certificates/beid-cert-belgiumrca2.der "$INSTALL_SCRIPTS_DIR"
@@ -104,9 +107,9 @@ cp ../../../installers/certificates/beid-cert-belgiumrca3.der "$INSTALL_SCRIPTS_
 #XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
 #cp $XPI_PLUGIN "$XPI_PLUGIN_DIR"
 
-cp -r ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
+cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
-cp -r ./install_scripts/* "$INSTALL_SCRIPTS_DIR"
+cp -R ./install_scripts/* "$INSTALL_SCRIPTS_DIR"
 	 
 cp  ../../../plugins_tools/bin/Release/plistmerger "$PLISTMERGER_DIR"
 cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
@@ -115,10 +118,10 @@ cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
 cp ./Distribution.txt "$RELEASE_DIR"
 
 #copy drivers
-cp -r ./drivers/* "$RELEASE_DIR"
+cp -R ./drivers/* "$RELEASE_DIR"
 
 #copy eid middleware app
-cp -r "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
+cp -R "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
 
 #####################################################################
 
@@ -145,8 +148,13 @@ productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOUR
 if [ $SIGN_BUILD -eq 1 ];then
   productsign --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAME
   hdiutil create -srcfolder $PKGSIGNED_NAME -volname "${VOL_NAME}" $DMG_NAME
+
+  productsign --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
+  hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
+hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild-415" "beidbuild-415.dmg"
 else
   hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
+  hdiutil create -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
 fi
 
 
