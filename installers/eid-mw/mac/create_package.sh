@@ -81,7 +81,8 @@ cp ../../../Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
 #copy pkcs11 bundle
 cp -R ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
 #make relative symblic link from bundle to the dylib
-ln -s ../../../libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/macOS/libbeidpkcs11.dylib
+mkdir -p "$PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/MacOS/"
+ln -s ../../../libbeidpkcs11.$REL_VERSION.dylib "$PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib"
 
 
 #copy licenses
