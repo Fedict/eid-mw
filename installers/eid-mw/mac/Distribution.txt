@@ -6,7 +6,7 @@
     <script>
       <![CDATA[
 	function osx_before_yosemite() {
-	 system.log('system OS version ' + system.version.ProductVersion + ' deteced');
+	 system.log('system OS version ' + system.version.ProductVersion + ' detected');
 	 if((system.compareVersions(system.version.ProductVersion, '10.10')) == -1)
 	 {
 	  return true;
@@ -61,5 +61,5 @@
     <pkg-ref id="eidviewer.belgium.be" onConclusion="none">eidviewer.pkg</pkg-ref>
     <pkg-ref id="com.acs.acsccid" onConclusion="none">acsccid_flat.pkg</pkg-ref>
     <pkg-ref id="com.acs.ccid_remove_acs" onConclusion="none">ccid_remove_acs_flat.pkg/</pkg-ref>
-    <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="restart">pcscd_autostart_flat.pkg</pkg-ref>
+    <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="RequireRestart">pcscd_autostart_flat.pkg</pkg-ref>
 </installer-gui-script>
