@@ -5,7 +5,7 @@ build: openssl/libssl.dylib openssl/libcrypto.dylib
 clean:
 	rm -rf configured openssl openssl-$(OSSL_VERSION)*
 
-configured: openssl
+configured: openssl/Configure
 	cd openssl; ./Configure darwin64-x86_64-cc -shared
 	touch configured
 
