@@ -5,7 +5,7 @@
 
 void XmlDateParser::input(std::string original) {
 	year = original.substr(0,4);
-	month = strtol(original.substr(4,2).c_str(), NULL, 10);
+	month = (int)strtol(original.substr(4,2).c_str(), NULL, 10);
 	day = original.substr(6,2);
 }
 
