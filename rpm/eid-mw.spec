@@ -28,7 +28,7 @@ Requires: eid-mw-libs
 Requires: pcsc-ccid
 BuildRequires: gcc-c++
 BuildRequires: libopenssl-devel
-Buildrequires: libxmlsec1-openssl-devel
+Buildrequires: xmlsec1-openssl-devel
 %else
 Requires: ccid
 BuildRequires: openssl-devel
