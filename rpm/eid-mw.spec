@@ -29,6 +29,8 @@ Requires: pcsc-ccid
 BuildRequires: gcc-c++
 BuildRequires: libopenssl-devel
 Buildrequires: xmlsec1-openssl-devel
+BuildRequires: libtool
+BuildRequires: libltdl7
 %else
 Requires: ccid
 BuildRequires: openssl-devel
