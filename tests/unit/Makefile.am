@@ -1,4 +1,4 @@
-TESTS = init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata digest threads sign sign_state ordering
+TESTS = init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_sequence digest threads sign sign_state ordering
 if JPEG
 TESTS += decode_photo
 endif
@@ -70,6 +70,9 @@ objects_LDADD = $(COMMON_LIB)
 
 readdata_SOURCES = readdata.c $(COMMON_SRCS)
 readdata_LDADD = $(COMMON_LIB)
+
+readdata_sequence_SOURCES = readdata_sequence.c $(COMMON_SRCS)
+readdata_sequence_LDADD = $(COMMON_LIB)
 
 digest_SOURCES = digest.c $(COMMON_SRCS)
 digest_LDADD = $(COMMON_LIB)

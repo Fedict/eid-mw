@@ -109,6 +109,7 @@ int login();
 int nonsensible();
 int objects();
 int readdata();
+int readdata_sequence();
 int digest();
 int threads();
 int sign();
