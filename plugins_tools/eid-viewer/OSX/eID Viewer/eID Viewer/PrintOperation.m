@@ -75,6 +75,7 @@
     [[_viewDict objectForKey:@"country"] setStringValue:ctry];
     time_t t = time(NULL);
     [[_viewDict objectForKey:@"printdate"] setStringValue:[NSString stringWithCString:ctime(&t) encoding:NSUTF8StringEncoding]];
+    [[_viewDict objectForKey:@"printby"] setStringValue:[NSString stringWithFormat:@"eID Viewer %@ (OS X)", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]]];
     return [[NSPrintOperation printOperationWithView:_view] runOperation];
 }
 @end
