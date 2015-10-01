@@ -40,11 +40,12 @@ using namespace eIDMW;
 
 CCardLayer *oCardLayer;
 CReadersInfo *oReadersInfo;
+CK_BBOOL objectsInitialized = FALSE;
 
 extern "C" {
 	extern unsigned int   gRefCount;
 	extern unsigned int   nReaders;
-	extern bool						gSlotsChanged;
+	extern bool			  gSlotsChanged;
 	extern P11_SLOT       gpSlot[MAX_SLOTS];
 	//local functions
 	CK_RV cal_translate_error(const char *WHERE, long err);
@@ -187,6 +188,7 @@ void cal_clean_slots()
 			free(pSlot->pobjects);
 			pSlot->pobjects = NULL;
 		}
+		objectsInitialized = FALSE;
 	}
 	return;
 }
@@ -689,9 +691,8 @@ CK_RV cal_init_objects(P11_SLOT *pSlot)
 	char clabel[128];
 	CK_CERTIFICATE_TYPE certType = CKC_X_509;
 
-	//check if the object list is empty
-	//if not, we initialized the objects already and can return with OK
-	if(pSlot->pobjects != NULL && pSlot->pobjects->inuse != 0)
+	//check if the object list is initialized, and if so, return with OK
+	if(objectsInitialized == TRUE)
 		return CKR_OK;
 
 	//this function will initialize objects as they are valid for the token
@@ -807,7 +808,7 @@ CK_RV cal_init_objects(P11_SLOT *pSlot)
 	}
 
 cleanup:
-
+	objectsInitialized = TRUE;
 	return (ret);
 }
 #undef WHERE
