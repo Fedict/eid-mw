@@ -22,6 +22,7 @@
 - (IBAction)print:(id)sender;
 - (IBAction)showDetail:(id)sender;
 - (IBAction)export:(NSMenuItem *)sender;
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
@@ -47,6 +48,10 @@
 @end
 
 @implementation AppDelegate
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+    return YES;
+}
+
 - (void)log:(NSString *)line withLevel:(eIDLogLevel)level {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         char l;
