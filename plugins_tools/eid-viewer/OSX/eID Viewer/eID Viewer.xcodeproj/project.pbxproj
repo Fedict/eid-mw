@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65096FD51BBD39AB0057E4B8 /* eidfilepreview.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BBDE3121B3BF02C00CBE13E /* eidfilepreview.qlgenerator */; };
 		65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A341AF1181700F0DDE7 /* CertificateStore.m */; };
 		65296A391AF119CB00F0DDE7 /* photohandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A381AF119CB00F0DDE7 /* photohandler.m */; };
 		652BC8AE1AEA41D100DA9519 /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */; };
 		652BC8B11AEA467800DA9519 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
+		653BB4D91BBC0D2F00EA73CF /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */; };
 		659FFC431AE9360D004CEC1F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC421AE9360D004CEC1F /* AppDelegate.m */; };
 		659FFC451AE9360D004CEC1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC441AE9360D004CEC1F /* main.m */; };
 		659FFC471AE9360D004CEC1F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659FFC461AE9360D004CEC1F /* Images.xcassets */; };
@@ -67,7 +69,27 @@
 		8BBDE32A1B3C078E00CBE13E /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		65096FD21BBD378C0057E4B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 659FFC341AE9360D004CEC1F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BBDE3111B3BF02C00CBE13E;
+			remoteInfo = eidfilepreview;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		65096FD41BBD39500057E4B8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "eID Viewer.app/Contents/Library/QuickLook";
+			dstSubfolderSpec = 16;
+			files = (
+				65096FD51BBD39AB0057E4B8 /* eidfilepreview.qlgenerator in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		65BE1C741BB570B5002E8061 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -89,6 +111,7 @@
 		652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "dataroot-osx.m"; sourceTree = "<group>"; };
 		652BC8AF1AEA441400DA9519 /* xsdloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xsdloc.h; path = ../../../xsdloc.h; sourceTree = "<group>"; };
 		652BC8B01AEA467800DA9519 /* eidv4.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../eidv4.xsd; sourceTree = "<group>"; };
+		653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../support/xml/builddir/.libs/libxml2.2.dylib; sourceTree = "<group>"; };
 		659FFC3C1AE9360D004CEC1F /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		659FFC401AE9360D004CEC1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		659FFC411AE9360D004CEC1F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -189,6 +212,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653BB4D91BBC0D2F00EA73CF /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +222,7 @@
 		659FFC331AE9360D004CEC1F = {
 			isa = PBXGroup;
 			children = (
+				653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */,
 				65BE1C781BB573C4002E8061 /* libxml2.a */,
 				65BE1C6F1BB56809002E8061 /* libssl.a */,
 				65BE1C6D1BB567C2002E8061 /* libcrypto.a */,
@@ -369,10 +394,12 @@
 				659FFC391AE9360D004CEC1F /* Frameworks */,
 				659FFC3A1AE9360D004CEC1F /* Resources */,
 				65BE1C741BB570B5002E8061 /* CopyFiles */,
+				65096FD41BBD39500057E4B8 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				65096FD31BBD378C0057E4B8 /* PBXTargetDependency */,
 			);
 			name = "eID Viewer";
 			productName = "eID Viewer";
@@ -535,6 +562,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		65096FD31BBD378C0057E4B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BBDE3111B3BF02C00CBE13E /* eidfilepreview */;
+			targetProxy = 65096FD21BBD378C0057E4B8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		659FFC481AE9360D004CEC1F /* MainMenu.xib */ = {
