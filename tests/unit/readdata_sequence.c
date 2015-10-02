@@ -34,7 +34,7 @@
 TEST_FUNC(readdata_sequence) {
 	CK_SESSION_HANDLE session;
 	CK_SLOT_ID slot;
-	int ret;
+	int ret = TEST_RV_OK;
 
 #ifndef WIN32
 	if(!can_confirm()) {
@@ -92,6 +92,7 @@ int ReadFirstDataObject(CK_SESSION_HANDLE session)
 	CK_ULONG value = CKO_DATA;
 	CK_OBJECT_HANDLE object;
 	CK_ATTRIBUTE attr = {CKA_CLASS,&value,sizeof(CK_ULONG)};
+	int ret = TEST_RV_OK;
 
 	check_rv(C_FindObjectsInit(session, &attr, 1));
 
@@ -108,6 +109,7 @@ int ReadAuthCert(CK_SESSION_HANDLE session)
 	CK_ULONG count = 0;
 	CK_ULONG value = CKO_CERTIFICATE;
 	CK_OBJECT_HANDLE object;
+	int ret = TEST_RV_OK;
 	const char* pAuthentication = "authentication";
 	CK_ATTRIBUTE attr_list[2] = {	{CKA_CLASS,&value,sizeof(CK_ULONG)},
 									{CKA_OBJECT_ID,(CK_VOID_PTR)pAuthentication,(CK_ULONG)strlen(pAuthentication)}	};
