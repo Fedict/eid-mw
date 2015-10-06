@@ -40,9 +40,7 @@ int ReadFirstDataObject(CK_SESSION_HANDLE session)
 	check_rv(C_FindObjectsInit(session, &attr, 1));
 
 	check_rv(C_FindObjects(session, &object, 1, &count));
-	if(count == 0){
-		return(TEST_RV_FAIL);
-	}
+	verbose_assert(count != 0);
 
 	check_rv(C_FindObjectsFinal(session));
 	return TEST_RV_OK;
@@ -60,9 +58,7 @@ int ReadAuthCert(CK_SESSION_HANDLE session)
 	check_rv(C_FindObjectsInit(session, attr_list, 2));
 
 	check_rv(C_FindObjects(session, &object, 1, &count));
-	if(count == 0){
-		return(TEST_RV_FAIL);
-	}
+	verbose_assert(count != 0);
 
 	check_rv(C_FindObjectsFinal(session));
 
