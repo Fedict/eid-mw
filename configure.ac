@@ -9,6 +9,7 @@ AC_CONFIG_SRCDIR([cardcomm])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([scripts/m4])
 AC_CANONICAL_HOST
+AM_SILENT_RULES([yes])
 
 LT_INIT
 AM_INIT_AUTOMAKE([subdir-objects foreign tar-pax dist-zip serial-tests])
