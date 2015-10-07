@@ -112,7 +112,6 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	//initial state 
 	pSession->state = P11_CARD_STILL_PRESENT;
 	pSession->bReadDataAllowed = P11_READDATA_ASK;
-	pSession->bCardDataCashed = FALSE;
 
 	/* keep the nr of sessions for this slot */
 	pSlot->nsessions++;

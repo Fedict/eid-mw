@@ -40,7 +40,6 @@ using namespace eIDMW;
 
 CCardLayer *oCardLayer;
 CReadersInfo *oReadersInfo;
-CK_BBOOL objectsInitialized = FALSE;
 
 extern "C" {
 	extern unsigned int   gRefCount;
@@ -692,7 +691,7 @@ CK_RV cal_init_objects(P11_SLOT *pSlot)
 	CK_CERTIFICATE_TYPE certType = CKC_X_509;
 
 	//check if the object list is initialized, and if so, return with OK
-	if(objectsInitialized == TRUE)
+	if(pSlot->ulCardDataCached & CACHED_DATA_TYPE_CDF)
 		return CKR_OK;
 
 	//this function will initialize objects as they are valid for the token
@@ -808,7 +807,7 @@ CK_RV cal_init_objects(P11_SLOT *pSlot)
 	}
 
 cleanup:
-	objectsInitialized = TRUE;
+	pSlot->ulCardDataCached |= CACHED_DATA_TYPE_CDF;
 	return (ret);
 }
 #undef WHERE
@@ -1654,6 +1653,7 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 				//if (pObject != NULL)
 				// pObject->state = 0;
 			}
+			pSlot->ulCardDataCached = 0;
 
 			//invalidate sessions
 			p11_invalidate_sessions(hSlot, *pStatus);

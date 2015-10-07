@@ -257,7 +257,6 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	else
 		log_template("I: Search template:", pTemplate, ulCount);
 
-
 	ret = p11_get_session(hSession, &pSession);
 	if (pSession == NULL)
 	{
@@ -450,8 +449,8 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	if ( addIdObjects )
 	{
 		//check if the data isn't cached already
-		if(	((filesToCacheFlag != CACHED_DATA_TYPE_ALL_DATA) && ((pSession->bCardDataCashed & filesToCacheFlag) == FALSE)) ||
-			((filesToCacheFlag == CACHED_DATA_TYPE_ALL_DATA) && (pSession->bCardDataCashed != CACHED_DATA_TYPE_ALL_DATA)) )
+		if(	((filesToCacheFlag != CACHED_DATA_TYPE_ALL_DATA) && ((pSlot->ulCardDataCached & filesToCacheFlag) == FALSE)) ||
+			((filesToCacheFlag == CACHED_DATA_TYPE_ALL_DATA) && (pSlot->ulCardDataCached != CACHED_DATA_TYPE_ALL_DATA)) )
 		{
 			CK_ULONG counter = 0;
 			CK_ULONG flagsToCheckListLen = 6;
@@ -463,7 +462,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 			case CACHED_DATA_TYPE_ALL_DATA:
 				//cache and parse whatever isn't cached already
 				//first check if carddata is cashed already, if not parse and cache it
-				if( (pSession->bCardDataCashed & CACHED_DATA_TYPE_CARDDATA) == 0){
+				if( (pSlot->ulCardDataCached & CACHED_DATA_TYPE_CARDDATA) == 0){
 					ret = cal_get_card_data(pSession->hslot);
 					if (ret != 0){
 						log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
@@ -497,7 +496,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				}
 			}
 			//remember the file(s) we cashed
-			pSession->bCardDataCashed |= filesToCacheFlag;
+			pSlot->ulCardDataCached |= filesToCacheFlag;
 		}
 	}
 

@@ -56,19 +56,19 @@ extern "C" {
 #define CARD_TYPE_NOTSUPPORTED		   -100
 
 
-#define CACHED_DATA_TYPE_ID						0x001
-#define CACHED_DATA_TYPE_ADDRESS					0x002
-#define CACHED_DATA_TYPE_PHOTO						0x004
-#define CACHED_DATA_TYPE_CARDDATA					0x008
-#define CACHED_DATA_TYPE_RNCERT						0x010
-#define CACHED_DATA_TYPE_SIGN_DATA_FILE					0x020
-#define CACHED_DATA_TYPE_SIGN_ADDRESS_FILE				0x040
-#define CACHED_DATA_TYPE_ALL_DATA					0x07F //All the above are set
-#define CACHED_DATA_TYPE_AUTH_CERT					0x080
-#define CACHED_DATA_TYPE_SIGN_CERT					0x100
-#define CACHED_DATA_TYPE_CA_CERT					0x200
-#define CACHED_DATA_TYPE_ROOT_CERT					0x400
-#define CACHED_DATA_TYPE_ALL_CERT					0x780 // all off the non-RRN certificates are set
+#define CACHED_DATA_TYPE_ID			0x001
+#define CACHED_DATA_TYPE_ADDRESS		0x002
+#define CACHED_DATA_TYPE_PHOTO			0x004
+#define CACHED_DATA_TYPE_CARDDATA		0x008
+#define CACHED_DATA_TYPE_RNCERT			0x010
+#define CACHED_DATA_TYPE_SIGN_DATA_FILE		0x020
+#define CACHED_DATA_TYPE_SIGN_ADDRESS_FILE	0x040
+#define CACHED_DATA_TYPE_ALL_DATA		0x07F //All the above are set
+#define CACHED_DATA_TYPE_CDF			0x080
+#define CACHED_DATA_TYPE_AUTH_CERT		0x100
+#define CACHED_DATA_TYPE_SIGN_CERT		0x200
+#define CACHED_DATA_TYPE_CA_CERT		0x400
+#define CACHED_DATA_TYPE_ROOT_CERT		0x800
 
 #define CARD_FUNCTION_NOT_IMPLEMENTED  -101
 #define CARD_FUNCTION_NOT_SUPPORTED		-102
@@ -151,6 +151,7 @@ int            ievent;    //0:nothing   1:inserted    2:removed
 P11_OBJECT     *pobjects;
 unsigned int   nobjects;
 void           *pReader;  //CReader
+CK_ULONG       ulCardDataCached;
 } P11_SLOT;
 
 //pReader = &oReader;
@@ -185,7 +186,6 @@ int               state;
 //P11_OBJECT        **ppObjects;
 P11_OPERATION     Operation[P11_NUM_OPERATIONS];
 CK_BYTE						bReadDataAllowed;
-CK_BYTE						bCardDataCashed;
 } P11_SESSION;
 
 
