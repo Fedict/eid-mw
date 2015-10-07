@@ -1176,7 +1176,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 		CReader &oReader = oCardLayer->getReader(szReader);
 		switch(dataType)
 		{
-		case CACHED_DATA_TYPE_ALL:
+		case CACHED_DATA_TYPE_ALL_DATA:
 		case CACHED_DATA_TYPE_ID:
 			oFileData = oReader.ReadFile(BEID_FILE_ID);
 
@@ -1204,7 +1204,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 					(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen,(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
 				if (ret) goto cleanup;
 			}
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_ADDRESS:
@@ -1228,7 +1228,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 					(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
 				if (ret) goto cleanup;
 			}
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_PHOTO:
@@ -1239,7 +1239,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_PHOTO));
 			if (ret) goto cleanup;
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_RNCERT:
@@ -1250,7 +1250,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT));
 			if (ret) goto cleanup;
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_SIGN_DATA_FILE:
@@ -1260,7 +1260,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)BEID_OBJECTID_SIGN_DATA_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_DATA_FILE));
 			if (ret) goto cleanup;
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_SIGN_ADDRESS_FILE:
@@ -1270,7 +1270,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)BEID_OBJECTID_SIGN_ADDRESS_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_ADDRESS_FILE));
 			if (ret) goto cleanup;
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		default:

@@ -30,8 +30,8 @@
 int eidmw_readpermission = 0;
 
 //function declarations
-void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len);
-void SetParseFlagByObjectID(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len);
+void SetParseFlagByLabel(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len);
+void SetParseFlagByObjectID(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len);
 
 
 #define WHERE "C_CreateObject()"
@@ -237,7 +237,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	CK_ULONG      *pclass = NULL;
 	CK_ULONG       len = 0;
 	CK_BBOOL			addIdObjects = CK_FALSE;
-	CK_BYTE				filesToCacheFlag = CACHED_DATA_TYPE_ALL;
+	CK_ULONG			filesToCacheFlag = CACHED_DATA_TYPE_ALL_DATA;
 	CK_BYTE				allowCardRead = P11_DISPLAY_NO;
 	log_trace(WHERE, "I: enter");
 
@@ -450,8 +450,8 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	if ( addIdObjects )
 	{
 		//check if the data isn't cached already
-		if(	((filesToCacheFlag != CACHED_DATA_TYPE_ALL) && ((pSession->bCardDataCashed & filesToCacheFlag) == FALSE)) ||
-			((filesToCacheFlag == CACHED_DATA_TYPE_ALL) && (pSession->bCardDataCashed != CACHED_DATA_TYPE_ALL)) )
+		if(	((filesToCacheFlag != CACHED_DATA_TYPE_ALL_DATA) && ((pSession->bCardDataCashed & filesToCacheFlag) == FALSE)) ||
+			((filesToCacheFlag == CACHED_DATA_TYPE_ALL_DATA) && (pSession->bCardDataCashed != CACHED_DATA_TYPE_ALL_DATA)) )
 		{
 			CK_ULONG counter = 0;
 			CK_ULONG flagsToCheckListLen = 6;
@@ -460,7 +460,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
 			switch(filesToCacheFlag)
 			{
-			case CACHED_DATA_TYPE_ALL:
+			case CACHED_DATA_TYPE_ALL_DATA:
 				//cache and parse whatever isn't cached already
 				//first check if carddata is cashed already, if not parse and cache it
 				if( (pSession->bCardDataCashed & CACHED_DATA_TYPE_CARDDATA) == 0){
@@ -760,7 +760,7 @@ cleanup:
 #undef WHERE
 
 
-void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len)
+void SetParseFlagByLabel(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len)
 {
 	CK_ULONG nrOfItems = 0;
 	CK_ULONG counter = 0;
@@ -852,7 +852,7 @@ void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_UL
 }
 
 
-void SetParseFlagByObjectID(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len)
+void SetParseFlagByObjectID(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len)
 {
 	if(strlen(BEID_OBJECTID_ID)==len){
 		if(memcmp(BEID_OBJECTID_ID,pObjectID,len)==0){
