@@ -18,11 +18,9 @@ chmod +x ../../../plugins_tools/xpi/build.sh
 #-----------------------------------------
 
 pushd ../../..
-
 echo "cleaning former project..."
 xcodebuild -project beidmw.xcodeproj clean
 xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration Release
-
 popd
 
 
@@ -35,20 +33,6 @@ popd
 pushd "../../../plugins_tools/plistMerger"
 xcodebuild -project "plistmerger.xcodeproj" clean
 xcodebuild -project "plistmerger.xcodeproj" -target "plistMerger" -configuration Release
-popd
-
-#-----------------------------------------
-# Unpack the BEID_Lion.tokend and copy to bin
-# this is the tokend version for Lion
-#-----------------------------------------
-pushd ../../../cardcomm/tokend 
-if [ -d ./BEID_Lion.tokend ]
-then
-	sudo rm -rf ./BEID_Lion.tokend
-fi
-echo "Unpacking BEID_Lion.tokend..."
-tar -xvf ./BEID_Lion.tokend.tar.gz
-
 popd
 
 #-----------------------------------------
