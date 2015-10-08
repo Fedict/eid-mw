@@ -189,10 +189,13 @@ if [ $SIGN_BUILD -eq 1 ];then
 
   productsign --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
   hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
-hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild-415" "beidbuild-415.dmg"
+
+  productsign --sign "Developer ID Installer" "eidviewer.pkg" "eidviewer-signed.pkg"
+  hdiutil create -srcfolder "eidviewer-signed.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
 else
   hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
   hdiutil create -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
+  hdiutil create -srcfolder "eidviewer.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
 fi
 
 
