@@ -140,7 +140,11 @@ chgrp -R admin  "$TOKEND_DIR/BEID.tokend"
 
 #build the packages in the release dir
 pushd $RELEASE_DIR
+pkgbuild --analyze --root "$ROOT_DIR" beidbuild.plist
+
 pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
+
+pkgbuild --analyze --root "$EIDVIEWER_PATH" eidviewer.plist
 
 pkgbuild --component "$EIDVIEWER_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location /Applications/ eidviewer.pkg
 
