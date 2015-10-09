@@ -186,8 +186,8 @@ void cal_clean_slots()
 		{
 			free(pSlot->pobjects);
 			pSlot->pobjects = NULL;
+			pSlot->ulCardDataCached = 0;
 		}
-		objectsInitialized = FALSE;
 	}
 	return;
 }
