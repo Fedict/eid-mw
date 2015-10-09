@@ -51,9 +51,11 @@ int ReadAuthCert(CK_SESSION_HANDLE session)
 	CK_ULONG count = 0;
 	CK_ULONG value = CKO_CERTIFICATE;
 	CK_OBJECT_HANDLE object;
-	const char* pAuthentication = "authentication";
-	CK_ATTRIBUTE attr_list[2] = {	{CKA_CLASS,&value,sizeof(CK_ULONG)},
-									{CKA_OBJECT_ID,(CK_VOID_PTR)pAuthentication,(CK_ULONG)strlen(pAuthentication)}	};
+	const char *pAuthentication = "Authentication";
+	CK_ATTRIBUTE attr_list[2] = {
+		{CKA_CLASS,&value,sizeof(CK_ULONG)},
+		{CKA_LABEL,(CK_VOID_PTR)pAuthentication,(CK_ULONG)strlen(pAuthentication)}
+	};
 
 	check_rv(C_FindObjectsInit(session, attr_list, 2));
 
