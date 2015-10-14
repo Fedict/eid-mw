@@ -79,7 +79,7 @@ namespace eIDMW
 			// to get and display the remainings attempts. But the BE eID card takes this
 			// empty buffer to be a bad PIN, so you quickly end up with a blocked card.
 			// Therefore, we don't allow this reader to be used as a pinpad reader..
-			if (!m_bUsePinpadLib && StartsWith(m_csReader.c_str(), "Gemplus GemPC Pinpad"))
+			if (!m_bUsePinpadLib && m_csReader.find("Gemplus GemPC Pinpad") == 0)
 				return false;
 
 			GetFeatureList();
@@ -468,10 +468,10 @@ namespace eIDMW
 
 		//add friendlynames of readers that support PPDU over transmit here
 
-		if( (StartsWith(m_csReader.c_str(), "VASCO DIGIPASS 870")) ||
-			(StartsWith(m_csReader.c_str(), "VASCO DIGIPASS 875")) ||
-			(StartsWith(m_csReader.c_str(), "VASCO DIGIPASS 920")) ||
-			(StartsWith(m_csReader.c_str(), "Gemalto ING Shield Pro")) )
+		if( (m_csReader.find("VASCO DIGIPASS 870") == 0) ||
+			(m_csReader.find("VASCO DIGIPASS 875") == 0) ||
+			(m_csReader.find("VASCO DIGIPASS 920") == 0) ||
+			(m_csReader.find("Gemalto ING Shield Pro") == 0) )
 		{
 			oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd, &lRetVal);
 			for(;counter<(oResp.Size()-2);counter++)
