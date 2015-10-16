@@ -133,7 +133,7 @@ CCard * CardConnect(const std::string &csReader,
 		for (size_t i = 0; poCard == NULL && i < m_Plugins.size(); i++)
 		{
 			tPluginInfo &plugin = m_Plugins.at(i);
-			if (plugin.csReader.size() != 0 && plugin.csReader.compare(0, string::npos, strReader, plugin.csReader.length()));
+			if (plugin.csReader.size() != 0 && plugin.csReader.compare(0, string::npos, strReader, plugin.csReader.length()))
 				continue;
 			poCard = GetCardInstance(strReader, hCard, poContext, poPinpad, plugin.csPath, oCardPluginLib);
 		}
