@@ -29,7 +29,7 @@
 #include "testlib.h"
 
 TEST_FUNC(mechinfo) {
-	CK_SLOT_ID slot;
+	CK_SLOT_ID slot = -1;
 	CK_ULONG count=0;
 	CK_MECHANISM_INFO info;
 	CK_MECHANISM_TYPE_PTR mechlist;
