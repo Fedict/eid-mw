@@ -55,7 +55,7 @@ REL_NAME_DIAG="beid_diagnostic"
 #version number of the package
 #REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
 #REL_VERSION=$(expr "$REL_VERSION_TMP" : '.*\([0-9].[0-9].[0-9]\).*')
-REL_VERSION="4.1.8"
+REL_VERSION="4.1.9"
 
 PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(git rev-list --count HEAD)
