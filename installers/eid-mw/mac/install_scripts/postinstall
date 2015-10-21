@@ -19,8 +19,7 @@ test -e /usr/local/lib/libbeidpkcs11.dylib && unlink /usr/local/lib/libbeidpkcs1
 ln -fs /usr/local/lib/libbeidpkcs11.$MWVER1.dylib /usr/local/lib/libbeidpkcs11.dylib
 
 #uninstall possible present older versions of the XPI
-test -e "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi"
- && rm "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi"
+test -e "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi" && rm "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi"
 test -e "/Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi" && rm "/Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi"
 
 #on OS X 10.10, make sure securityd auto launches pcscd
