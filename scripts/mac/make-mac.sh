@@ -3,7 +3,7 @@
 set -e
 
 
-# Ensure we're in the right directory
+# Go to the mac installers directory
 cd $(dirname $0)/../../installers/eid-mw/mac
 
 #-----------------------------------------
@@ -19,8 +19,14 @@ chmod +x ../../../plugins_tools/xpi/build.sh
 
 pushd ../../..
 echo "cleaning former project..."
-xcodebuild -project beidmw.xcodeproj clean
+xcodebuild -project beidmw.xcodeproj -target beidpkcs11 clean
 xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration Release
+
+# store the SDK version (with own dialogs)
+
+
+xcodebuild -project beidmw.xcodeproj -target beid_ff_pkcs11 clean
+xcodebuild -project beidmw.xcodeproj -target beid_ff_pkcs11 -configuration Release GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS='NO_DIALOGS=1' 
 popd
 
 
@@ -30,10 +36,10 @@ xcodebuild -project "eID Middleware.xcodeproj" -target "eID Middleware" -configu
 popd
 
 
-pushd "../../../plugins_tools/plistMerger"
-xcodebuild -project "plistmerger.xcodeproj" clean
-xcodebuild -project "plistmerger.xcodeproj" -target "plistMerger" -configuration Release
-popd
+#pushd "../../../plugins_tools/plistMerger"
+#xcodebuild -project "plistmerger.xcodeproj" clean
+#xcodebuild -project "plistmerger.xcodeproj" -target "plistMerger" -configuration Release
+#popd
 
 #-----------------------------------------
 # create the xpi
