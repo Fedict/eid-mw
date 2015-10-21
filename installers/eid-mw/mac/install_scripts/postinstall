@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MWVER3=4.1.5
+MWVER3=4.1.9
 MWVER2=4.1
 MWVER1=4
 
@@ -18,17 +18,10 @@ ln -fs /usr/local/lib/libbeidpkcs11.$MWVER2.dylib /usr/local/lib/libbeidpkcs11.$
 test -e /usr/local/lib/libbeidpkcs11.dylib && unlink /usr/local/lib/libbeidpkcs11.dylib
 ln -fs /usr/local/lib/libbeidpkcs11.$MWVER1.dylib /usr/local/lib/libbeidpkcs11.dylib
 
-#place the pkcs11 bundle at /usr/local/lib/beid-pkcs11.bundle/ 
-#cp -r /usr/local/lib/beid-pkcs11.bundle/ /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/
-#test -e /usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib && unlink /usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
-#ln -fs /usr/local/lib/libbeidpkcs11.$MWVER3.dylib /usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
-#test -e /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib && unlink /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
-#ln -fs /usr/local/lib/libbeidpkcs11.$MWVER3.dylib /usr/local/lib/pkcs11/Belgium-EID-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib
-
 #uninstall possible present older versions of the XPI
-#unzip -qq -o "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi" -d "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/"
-rm "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi"
-rm "/Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi"
+test -e "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi"
+ && rm "/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be/belgiumeid-$XPI_VERSION.xpi"
+test -e "/Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi" && rm "/Applications/Firefox.app/Contents/MacOS/extensions/belgiumeid-1.0.7.xpi"
 
 #on OS X 10.10, make sure securityd auto launches pcscd
 if [[ $(sw_vers -productVersion) == *10.10* || $(sw_vers -productVersion) == *10.11* ]]; then
@@ -40,27 +33,27 @@ test -e /System/Library/Security/tokend/BEID.tokend && sudo rm -r /System/Librar
 sudo cp -r /Library/Security/tokend/BEID.tokend /System/Library/Security/tokend/
 fi
 
-mv /Library/BelgiumIdentityCard "/Library/Belgium Identity Card"
+# mv /Library/BelgiumIdentityCard "/Library/Belgium Identity Card"
 #correct the org.opensc.pcscd.autostart name if needed (add .plist)
 test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;
 
 #update the list of supported card readers by the default ccid driver
-if [[ $(sw_vers -productVersion) == *10.10* || $(sw_vers -productVersion) == *10.11* ]]; then
-echo "not running plistMerger on 10.10 or 10.11"
-else
-sudo rm "/Library/Belgium Identity Card/plistMerger/Info_old.plist";
-sudo mv "/Library/Belgium Identity Card/plistMerger/Info_org.plist" "/Library/Belgium Identity Card/plistMerger/Info_old.plist";
-sudo cp /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist "/Library/Belgium Identity Card/plistMerger/Info_org.plist";
-sudo touch "/Library/Belgium Identity Card/plistMerger/Info_merged.plist"
-sudo chmod 644 "/Library/Belgium Identity Card/plistMerger/Info_merged.plist"
-sudo chown $(echo $USER) "/Library/Belgium Identity Card/plistMerger/Info_org.plist"
-sudo chown $(echo $USER) "/Library/Belgium Identity Card/plistMerger/Info.plist"
-sudo chown $(echo $USER) "/Library/Belgium Identity Card/plistMerger/Info_merged.plist"
-pushd "/Library/Belgium Identity Card/plistMerger/"
-"./plistMerger"
-popd
-sudo cp "/Library/Belgium Identity Card/plistMerger/Info_merged.plist" /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist;
-fi
+#if [[ $(sw_vers -productVersion) == *10.10* || $(sw_vers -productVersion) == *10.11* ]]; then
+#echo "not running plistMerger on 10.10 or 10.11"
+#else
+#sudo rm "/Library/Belgium Identity Card/plistMerger/Info_old.plist";
+#sudo mv "/Library/Belgium Identity Card/plistMerger/Info_org.plist" "/Library/Belgium Identity Card/plistMerger/Info_old.plist";
+#sudo cp /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist "/Library/Belgium Identity Card/plistMerger/Info_org.plist";
+#sudo touch "/Library/Belgium Identity Card/plistMerger/Info_merged.plist"
+#sudo chmod 644 "/Library/Belgium Identity Card/plistMerger/Info_merged.plist"
+#sudo chown $(echo $USER) "/Library/Belgium Identity Card/plistMerger/Info_org.plist"
+#sudo chown $(echo $USER) "/Library/Belgium Identity Card/plistMerger/Info.plist"
+#sudo chown $(echo $USER) "/Library/Belgium Identity Card/plistMerger/Info_merged.plist"
+#pushd "/Library/Belgium Identity Card/plistMerger/"
+#"./plistMerger"
+#popd
+#sudo cp "/Library/Belgium Identity Card/plistMerger/Info_merged.plist" /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist;
+#fi
 
 #trust beid-cert-belgiumrca2.der
 sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain ./beid-cert-belgiumrca2.der
