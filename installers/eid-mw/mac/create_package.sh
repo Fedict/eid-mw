@@ -129,7 +129,7 @@ cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
 cp -R ./install_scripts/* "$INSTALL_SCRIPTS_DIR"
 	 
-cp  ../../../plugins_tools/bin/Release/plistmerger "$PLISTMERGER_DIR"
+cp  ../../../plugins_tools/bin/Release/plistMerger "$PLISTMERGER_DIR"
 cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
 
 #copy distribution file
