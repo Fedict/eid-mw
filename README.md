@@ -1,20 +1,20 @@
-beid MiddleWare installation
+BeID middleware installation
 ============================
 
 Code from git repository:
 -------------------------
 
-- Make sure you have libtool 2.2.7c or above, autoconf and automake installed, and in your $PATH
-- run autoreconf -i 
-- proceed to II.
+- Make sure you have libtool 2.2.7c or above, autoconf and automake installed, and in your `$PATH`
+- run `autoreconf -i`
+- proceed to the next step
 
-Code from a source package, or code you just bootstrapped at item I.
---------------------------------------------------------------------
+Code from a source package, or code you just bootstrapped as above
+------------------------------------------------------------------
 
 ### GNU/Linux
 
-- Make sure you have pcsc-lite and GTK+ and and their development libraries
-  installed. After that it's just:
+Make sure you have pcsc-lite and GTK+ and and their development libraries
+installed. After that it's just:
 
     ./configure 
     make
