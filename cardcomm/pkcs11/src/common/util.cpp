@@ -70,6 +70,22 @@ namespace eIDMW
     return out;
   }
 
+/**
+ * Case insensitve search, csSearch should be in lower case.
+ * Returns true is csSearch is present in csData.
+ */
+bool StartsWithCI(const char *csData, const char *csSearch)
+{
+	for (const char *pc1 = csData, *pc2 = csSearch; *pc2 != '\0'; pc1++, pc2++)
+	{
+		if(*pc1 != tolower(*pc2)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 /* convert binary to ascii-hexadecimal, terminate with a 00-byte
    You have to free the returned buffer yourself !!
  */
