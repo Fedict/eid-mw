@@ -131,7 +131,7 @@ bool CPinpadLibOldBeid::Load(unsigned long hContext, SCARDHANDLE hCard,
 			{ "Xiring X", "xireid.dll" },
 			{ "Cherry ", "ch44xxeid.dll" },
 			{ "SCM Microsystems Inc. SPRx32 USB Smart Card Reader", "sprx32eid.dll" },
-		}
+		};
 
 		for(int i=0; i<sizeof(libs) / sizeof(libs[0]) && !bPinpadLibFound; i++) {
 			if(!strncmp(csReader, libs[i].name, strlen(libs[i].name))) {
