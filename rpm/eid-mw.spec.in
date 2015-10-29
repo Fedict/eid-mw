@@ -102,15 +102,12 @@ fi
 %files
 %defattr(-, root, root, 0755)
 ### Include license files
-%doc NEWS README
 %{_datadir}/mozilla/
 %exclude %{_libdir}/*.la
 %files libs
-%doc NEWS README
 %{_libdir}/libbeidpkcs11.so.*
 %exclude %{_libdir}/libbeidpkcs11.so
 %files bin
-%doc NEWS README
 %{_libexecdir}/beid-askaccess
 %{_libexecdir}/beid-askpin
 %{_libexecdir}/beid-badpin
@@ -121,7 +118,6 @@ fi
 %{_datadir}/applications
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %files devel
-%doc NEWS README
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
 %{_libdir}/pkgconfig
