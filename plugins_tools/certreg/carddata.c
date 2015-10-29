@@ -36,7 +36,7 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pA
 	//CK_BYTE_PTR pserialNumberList;
 	//CK_ULONG_PTR pserialNumberLenList;
 								//CK_ULONG certContextLen = 5;
-	PCCERT_CONTEXT**	pCertContextArray;
+	PCCERT_CONTEXT** pCertContextArray = (PCCERT_CONTEXT** ) calloc (ulCount, sizeof(PCCERT_CONTEXT*) );
 
 	retVal = functions->C_GetSlotList(FALSE, NULL_PTR, &ulCount);
 	ulPreviousCount = ulCount;
@@ -46,9 +46,6 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pA
 	//memset(pserialNumberList,0,ulCount*sizeof(CK_BYTE));
 	//pserialNumberLenList = (CK_ULONG*)malloc(ulCount*sizeof(CK_ULONG));
 	//allocate space for the array of certificate pointers per slot
-	pCertContextArray = malloc(ulCount*sizeof(PCCERT_CONTEXT*));
-	//initialize with zero's
-	memset(pCertContextArray,0,ulCount*sizeof(PCCERT_CONTEXT*));
 
 	if((pSlotList != NULL) &&(pCardPresentList != NULL) &&(pCertContextArray != NULL))
 	{
@@ -70,7 +67,7 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pA
 				{
 					slotInfo.slotDescription[63] = 0;
 					//do not display the PnP slot
-					if(strncmp(slotInfo.slotDescription,"\\\\?PnP?\\Notification",20) != 0)
+					if(strncmp((const char*)slotInfo.slotDescription,"\\\\?PnP?\\Notification",20) != 0)
 					{
 						SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"- ");
 						SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)slotInfo.slotDescription);
@@ -90,11 +87,9 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pA
 							SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)tokenInfo.label);
 							SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"\r\n");
 							//allocate space for 5 certificate context pointers
-							pCertContextArray[ulCounter] = malloc (5*sizeof(PCCERT_CONTEXT));
-							memset(pCertContextArray[ulCounter],0,5*sizeof(PCCERT_CONTEXT));
+							pCertContextArray[ulCounter] = (PCCERT_CONTEXT*) calloc (5,sizeof(PCCERT_CONTEXT));
 							if(pCertContextArray[ulCounter] != NULL)
 							{
-								memset(pCertContextArray[ulCounter],0,5*sizeof(PCCERT_CONTEXT));
 								if(*pAutoFlags & AUTO_REGISTER)
 									retVal = HandleNewCardFound(hTextEdit, functions, ulCounter, pSlotList,pCertContextArray[ulCounter], 5);						
 							}
@@ -154,10 +149,9 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pA
 							SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Card inserted\r\n");
 							pCardPresentList[ulCounter] = 1;
 							//allocate space for 5 certificate context pointers
-							pCertContextArray[ulCounter] = malloc (5*sizeof(PCCERT_CONTEXT));
+							pCertContextArray[ulCounter] = (PCCERT_CONTEXT*)calloc (5,sizeof(PCCERT_CONTEXT));
 							if(pCertContextArray[ulCounter] != NULL)
 							{
-								memset(pCertContextArray[ulCounter],0,5*sizeof(PCCERT_CONTEXT));
 								//token added, so add its certificates
 								if(*pAutoFlags & AUTO_REGISTER)
 									retVal = HandleNewCardFound(hTextEdit, functions, ulCounter, pSlotList,
@@ -338,7 +332,7 @@ CK_RV GetAndRegisterCertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
 				retval = (functions->C_GetAttributeValue)(*psession_handle,hKey,&attr_label_templ,1);
 				if (retval == CKR_OK)
 				{
-					pbcertificateData = attr_label_templ.pValue;										
+					pbcertificateData = (CK_BYTE_PTR)attr_label_templ.pValue;										
 					pbcertificateData[attr_label_templ.ulValueLen] = 0;
 					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"certificate found: ");
 					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)pbcertificateData);
@@ -347,7 +341,7 @@ CK_RV GetAndRegisterCertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
 				retval = (functions->C_GetAttributeValue)(*psession_handle,hKey,&attr_value_templ,1);
 				if ((retval == CKR_OK) && (ulcertContextLen > certCount) )
 				{
-					pbcertificateData = attr_value_templ.pValue;
+					pbcertificateData = (CK_BYTE_PTR)attr_value_templ.pValue;
 					dwcertificateDataLen = attr_value_templ.ulValueLen; 
 
 					if( ImportCertificate(pbserialNumber,ulserialNumberLen,pbcertificateData,dwcertificateDataLen, &(ppCertContext[certCount])) == TRUE)
@@ -455,9 +449,9 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 	//	CK_FUNCTION_LIST_PTR functions;
 	CK_RV retval = CKR_OK; 
 	CK_SESSION_HANDLE session_handle;
-	long slot_count = 0;
+	CK_ULONG slot_count = 0;
 	CK_SLOT_ID_PTR slotIds;
-	int slotIdx;
+	CK_ULONG slotIdx;
 	CK_ULONG ulObjectCount=1;
 
 	//	retval = (functions->C_Initialize) (NULL);
@@ -475,7 +469,7 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"eID card found \r\n");
 			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Retrieving certificates.. \r\n");
 		}
-		slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
+		slotIds = (CK_SLOT_ID_PTR)malloc(slot_count * sizeof(CK_SLOT_INFO));
 		//check failure
 
 		retval = (functions->C_GetSlotList) (CK_TRUE, slotIds, &slot_count);
@@ -522,7 +516,7 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 								retval = (functions->C_GetAttributeValue)(session_handle,hKey,&attr_value_templ,1);
 								if (retval == CKR_OK)
 								{
-									pbserialNumber = malloc (attr_value_templ.ulValueLen + 1);
+									pbserialNumber = (CK_BYTE_PTR)malloc (attr_value_templ.ulValueLen + 1);
 									if (pbserialNumber != NULL)
 									{
 										memcpy(pbserialNumber, attr_value_templ.pValue, attr_value_templ.ulValueLen);
@@ -558,7 +552,7 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 								retval = (functions->C_GetAttributeValue)(session_handle,hKey,&attr_label_templ,1);
 								if (retval == CKR_OK)
 								{
-									pbcertificateData = attr_label_templ.pValue;										
+									pbcertificateData = (CK_BYTE_PTR)attr_label_templ.pValue;										
 									pbcertificateData[attr_label_templ.ulValueLen] = 0;
 									SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"certificate found: ");
 									SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)pbcertificateData);
@@ -568,7 +562,7 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 								if (retval == CKR_OK)
 								{
 									PCCERT_CONTEXT	pCertContext = NULL;
-									pbcertificateData = attr_value_templ.pValue;
+									pbcertificateData = (CK_BYTE_PTR)attr_value_templ.pValue;
 									dwcertificateDataLen = attr_value_templ.ulValueLen; 
 									
 									if( ImportCertificate(pbserialNumber,dwserialNumberLen,pbcertificateData,dwcertificateDataLen, &pCertContext) == TRUE)
