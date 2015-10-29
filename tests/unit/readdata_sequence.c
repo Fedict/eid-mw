@@ -20,9 +20,9 @@
 #ifdef WIN32
 #include <win32.h>
 #else
-#include <unix.h>
+#include "unix.h"
 #endif
-#include <pkcs11.h>
+#include "pkcs11.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
