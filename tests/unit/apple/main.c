@@ -58,7 +58,7 @@ int main(void) {
 	run_test(sessions());
 	run_test(sessions_nocard());
 	run_test(sessioninfo());
-	run_test(login());
+	run_test(login_c());
 	run_test(nonsensible());
 	run_test(objects());
 	run_test(readdata());

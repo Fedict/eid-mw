@@ -33,7 +33,7 @@ CK_RV notify_login(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR 
 	return CKR_OK;
 }
 
-TEST_FUNC(login) {
+TEST_FUNC(login_c) {
 	CK_SLOT_ID slot;
 	CK_SESSION_HANDLE handle = 0;
 	CK_SESSION_INFO sinfo;
