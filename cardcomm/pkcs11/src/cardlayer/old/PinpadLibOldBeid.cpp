@@ -124,21 +124,21 @@ bool CPinpadLibOldBeid::Load(unsigned long hContext, SCARDHANDLE hCard,
 		size_t len = strlen(csSystemDir);
 		csSystemDir[len++] = '\\';
 		csSystemDir[len] = '\0';
+		struct {
+			char* name;
+			char* dll;
+		} libs[] = {
+			{ "Xiring X", "xireid.dll" },
+			{ "Cherry ", "ch44xxeid.dll" },
+			{ "SCM Microsystems Inc. SPRx32 USB Smart Card Reader", "sprx32eid.dll" },
+		}
 
-		if (StartsWith(csReader, "Xiring X"))
-		{
-			bPinpadLibFound = CheckLib(csSystemDir, "xireid.dll",
-				ulLanguage, hContext, hCard, csReader);
-		}
-		else if (StartsWith(csReader, "Cherry "))
-		{
-			bPinpadLibFound = CheckLib(csSystemDir, "ch44xxeid.dll",
-				ulLanguage, hContext, hCard, csReader);
-		}
-		else if (StartsWith(csReader, "SCM Microsystems Inc. SPRx32 USB Smart Card Reader"))
-		{
-			bPinpadLibFound = CheckLib(csSystemDir, "sprx32eid.dll",
-				ulLanguage, hContext, hCard, csReader);
+		for(int i=0; i<sizeof(libs) / sizeof(libs[0]) && !bPinpadLibFound; i++) {
+			if(!strncmp(csReader, libs[i].name, strlen(libs[i].name))) {
+				bPinpadLibFound = CheckLib(csSystemDir,
+						libs[i].dll, ulLanguage,
+						hContext, hCard, csReader);
+			}
 		}
 	}
 
@@ -234,14 +234,6 @@ bool CPinpadLibOldBeid::CheckLib(
 
 	// This is no pinpad DLL (it doesn't hurt to try it out, but it's faster not to)
 	if (StartsWithCI(csFileName, "belpicppgui"))
-		return false;
-
-	// Some known reader/lib pairs:
-	if (StartsWithCI(csFileName, "xireid") && !StartsWith(csReader, "Xiring X"))
-		return false;
-	if (StartsWithCI(csFileName, "ch44xxeid") && !StartsWith(csReader, "Cherry "))
-		return false;
-	if (StartsWithCI(csFileName, "sprx32eid") && !StartsWith(csReader, "SCM Microsystems Inc. SPRx32 USB Smart Card Reader"))
 		return false;
 
 	BEID_OLD_PP_INIT pInit = NULL;
