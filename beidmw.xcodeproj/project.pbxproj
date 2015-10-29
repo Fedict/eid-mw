@@ -36,7 +36,8 @@
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
-		7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
+		65F3F01B1BE2328A0073F2A3 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
+		65F3F0201BE232D70073F2A3 /* PCSC.framework in Headers */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.5.a */; };
 		8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */; };
 		86837479186489B6005EE5D7 /* dialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 8683738D186489B5005EE5D7 /* dialogs.h */; };
@@ -434,7 +435,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */,
+				65F3F01B1BE2328A0073F2A3 /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -811,6 +812,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F3F0201BE232D70073F2A3 /* PCSC.framework in Headers */,
 				86E3DEC71653EC3F0015B5E1 /* card.h in Headers */,
 				86E3DEC81653EC3F0015B5E1 /* cardfactory.h in Headers */,
 				86E3DEC91653EC3F0015B5E1 /* cardlayer.h in Headers */,
@@ -1330,7 +1332,7 @@
 				"EXPORTED_SYMBOLS_FILE[arch=*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks,
+					/System/Library/Frameworks,
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -1346,7 +1348,7 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
@@ -1373,7 +1375,7 @@
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks,
+					/System/Library/Frameworks,
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = "";
@@ -1389,7 +1391,7 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				MACH_O_TYPE = mh_dylib;
@@ -1496,11 +1498,12 @@
 					CARDPLUGIN_IN_CAL,
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
+					LTC_NO_ROLC,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = "";
 				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
@@ -1536,10 +1539,11 @@
 					CARDPLUGIN_IN_CAL,
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
+					LTC_NO_ROLC,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				"HEADER_SEARCH_PATHS[arch=*]" = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
