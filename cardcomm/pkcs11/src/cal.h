@@ -234,4 +234,3 @@ CK_RV cal_refresh_readers();
 
 
 #endif
-

@@ -7,7 +7,7 @@ SIGN_BUILD=0
 #set SIGN_BUILD=1 to sign the .pkg files
 
 #installer name defines
-#release dir, where all files to be released will be placed
+#release dir, where all the beidbuild files to be released will be placed
 RELEASE_DIR="$(pwd)/release"
 #root dir, for files that are to be installed by the pkg
 ROOT_DIR="$RELEASE_DIR/root"
@@ -16,24 +16,38 @@ RESOURCES_DIR="$RELEASE_DIR/resources"
 #install scripts dir, where the install scripts are that will be executed by the package
 INSTALL_SCRIPTS_DIR="$RELEASE_DIR/install_scripts"
 
-
 #pkcs11_inst dir, where our pkcs11 lib will be placed
 PKCS11_INST_DIR="$ROOT_DIR/usr/local/lib"
 #licenses dir, where our licences will be placed
 LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 #plistmerger dir, where our plistmerger tool will be placed
-PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
+#PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
 BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 #xpi plugin dir, where the xpi plugin will be placed
 #XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
 #tokend dir, where the BEID.tokend will be placed
 TOKEND_DIR="$ROOT_DIR/Library/Security/tokend"
 
+#eIDMiddleware app path
+EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/Release/eID Middleware.app"
+
+
+#viewer installer name defines
+#release dir, where all the beidbuild files to be released will be placed
+RELEASE_VIEWER_DIR="$(pwd)/release_viewer"
+#root dir, for files that are to be installed by the pkg
+ROOT_VIEWER_DIR="$RELEASE_VIEWER_DIR/root"
+
+#eidviewer inst dir, where our eidviewer.app will be installed
+EIDVIEWER_INST_DIR="$ROOT_VIEWER_DIR/Applications"
+
 #eIDViewer path
 EIDVIEWER_PATH="$(pwd)/../../../../ThirdParty/eid-viewer/eID Viewer.app"
 
-#eIDMiddleware app path
-EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/Release/eID Middleware.app"
+#eIDViewer.plist path
+EIDVIEWER_PLIST_PATH="$(pwd)/eidviewer.plist"
+
+
 
 #base name of the package
 REL_NAME="eID-Quickinstaller"
@@ -41,7 +55,7 @@ REL_NAME_DIAG="beid_diagnostic"
 #version number of the package
 #REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
 #REL_VERSION=$(expr "$REL_VERSION_TMP" : '.*\([0-9].[0-9].[0-9]\).*')
-REL_VERSION="4.1.5"
+REL_VERSION="4.1.9"
 
 PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(git rev-list --count HEAD)
@@ -67,6 +81,9 @@ test -e $PKG_NAME && rm $PKG_NAME
 #trap cleanup EXIT
 
 
+#####################################################################
+echo "********** prepare beidbuild.pkg **********"
+
 #create installer dirs
 mkdir -p "$PKCS11_INST_DIR"
 mkdir -p "$LICENSES_DIR"
@@ -74,7 +91,7 @@ mkdir -p "$TOKEND_DIR"
 #mkdir -p "$XPI_PLUGIN_DIR"
 mkdir -p "$RESOURCES_DIR"
 mkdir -p "$INSTALL_SCRIPTS_DIR"
-mkdir -p "$PLISTMERGER_DIR"
+#mkdir -p "$PLISTMERGER_DIR"
 
 #copy all files that should be part of the installer:
 cp ../../../Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
@@ -112,8 +129,8 @@ cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
 cp -R ./install_scripts/* "$INSTALL_SCRIPTS_DIR"
 	 
-cp  ../../../plugins_tools/bin/Release/plistmerger "$PLISTMERGER_DIR"
-cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
+#cp  ../../../plugins_tools/bin/Release/plistMerger "$PLISTMERGER_DIR"
+#cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
 
 #copy distribution file
 cp ./Distribution.txt "$RELEASE_DIR"
@@ -123,6 +140,20 @@ cp -R ./drivers/* "$RELEASE_DIR"
 
 #copy eid middleware app
 cp -R "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
+
+
+#####################################################################
+echo "********** prepare eidviewer.pkg **********"
+
+#cleanup
+test -e "$RELEASE_VIEWER_DIR" && rm -rdf "$RELEASE_VIEWER_DIR"
+test -e eidviewer.pkg && rm eidviewer.pkg
+
+#create installer dirs
+mkdir -p "$EIDVIEWER_INST_DIR"
+
+#copy eid middleware app
+cp -R "$EIDVIEWER_PATH"  "$EIDVIEWER_INST_DIR"
 
 #####################################################################
 
@@ -140,9 +171,15 @@ chgrp -R admin  "$TOKEND_DIR/BEID.tokend"
 
 #build the packages in the release dir
 pushd $RELEASE_DIR
+#pkgbuild --analyze --root "$ROOT_DIR" beidbuild.plist
+
 pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
 
-pkgbuild --component "$EIDVIEWER_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location /Applications/ eidviewer.pkg
+#pkgbuild --component "$EIDVIEWER_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location /Applications/ eidviewer.pkg
+
+#pkgbuild --analyze --root "$ROOT_VIEWER_DIR" eidviewer.plist
+
+pkgbuild --root "$ROOT_VIEWER_DIR" --component-plist "$EIDVIEWER_PLIST_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location / eidviewer.pkg
 
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
@@ -152,10 +189,13 @@ if [ $SIGN_BUILD -eq 1 ];then
 
   productsign --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
   hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
-hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild-415" "beidbuild-415.dmg"
+
+  productsign --sign "Developer ID Installer" "eidviewer.pkg" "eidviewer-signed.pkg"
+  hdiutil create -srcfolder "eidviewer-signed.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
 else
   hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
   hdiutil create -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
+  hdiutil create -srcfolder "eidviewer.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
 fi
 
 
