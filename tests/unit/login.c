@@ -71,6 +71,7 @@ TEST_FUNC(login_c) {
 
 	if(!have_pin() || !can_enter_pin(slot)) {
 		fprintf(stderr, "cannot test login without the ability to enter a pin code\n");
+        check_rv(C_Finalize(NULL_PTR));
 		return TEST_RV_SKIP;
 	}
 
