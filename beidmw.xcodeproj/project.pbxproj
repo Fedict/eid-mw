@@ -38,6 +38,7 @@
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
 		65F3F01B1BE2328A0073F2A3 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		65F3F0201BE232D70073F2A3 /* PCSC.framework in Headers */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
+		65F3F0221BE236680073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; settings = {ASSET_TAGS = (); }; };
 		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.5.a */; };
 		8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */; };
 		86837479186489B6005EE5D7 /* dialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 8683738D186489B5005EE5D7 /* dialogs.h */; };
@@ -270,6 +271,7 @@
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
 		6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs11util.cpp; path = cardcomm/pkcs11/src/pkcs11util.cpp; sourceTree = "<group>"; };
 		65CC20ED19A7DE4E0089CD13 /* ordering.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ordering.c; path = tests/unit/ordering.c; sourceTree = "<group>"; };
+		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -518,6 +520,7 @@
 		6536230C19A7E8FE00D46ECB /* testsuite */ = {
 			isa = PBXGroup;
 			children = (
+				65F3F0211BE236680073F2A3 /* readdata_sequence.c */,
 				8B8B71581B74CCA300D8910E /* sign_state.c */,
 				8B07D1011B21CEB80033CD62 /* wrong_init.c */,
 				65CC20ED19A7DE4E0089CD13 /* ordering.c */,
@@ -1099,6 +1102,7 @@
 				86E3DE061653D6210015B5E1 /* sha256.c in Sources */,
 				86E3DE071653D6210015B5E1 /* sha384.c in Sources */,
 				86E3DE081653D6210015B5E1 /* sha512.c in Sources */,
+				65F3F0221BE236680073F2A3 /* readdata_sequence.c in Sources */,
 				86E3DE0D1653D6210015B5E1 /* log.cpp in Sources */,
 				86E3DE0F1653D6210015B5E1 /* logbase.cpp in Sources */,
 				86E3DE111653D6210015B5E1 /* mutex.cpp in Sources */,

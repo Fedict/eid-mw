@@ -62,6 +62,7 @@ int main(void) {
 	run_test(nonsensible());
 	run_test(objects());
 	run_test(readdata());
+    run_test(readdata_sequence());
 	run_test(digest());
 	run_test(threads());
 	run_test(sign());
