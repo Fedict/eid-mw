@@ -1141,7 +1141,7 @@ cleanup:
 
 
 #define WHERE "cal_read_ID_files()"
-CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
+CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 {
 	CK_RV ret = CKR_OK;
 	CByteArray oFileData;

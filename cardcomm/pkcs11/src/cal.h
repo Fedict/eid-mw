@@ -218,7 +218,7 @@ CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messagi
 CK_RV cal_logout(CK_SLOT_ID hSlot);
 CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_newpin, CK_CHAR_PTR newpin);
 CK_RV cal_get_card_data(CK_SLOT_ID hSlot);
-CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType);
+CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType);
 CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject);
 CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out);
 CK_RV cal_validate_session(P11_SESSION *pSession);
