@@ -398,6 +398,21 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
       goto cleanup;
       }
 
+   if(!(pSlot->ulCardDataCached & CACHED_DATA_TYPE_CDF))
+   {
+	   log_trace(WHERE, "E: Key handle but no CDF read yet!");
+	   ret = CKR_KEY_HANDLE_INVALID;
+	   goto cleanup;
+   }
+
+#ifndef PKCS11_FF
+   ret = cal_init_objects(pSlot);
+   if(ret != CKR_OK)
+   {
+	   log_trace(WHERE, "E: cal_init_objects() returns %s_", log_map_error(ret));
+   }
+#endif
+
    //check mechanism
    //since this module is only for BEID, we check for RSA here and we do not check the device capabilities
    //check mechanism table for signing depending on token in slot

@@ -1141,7 +1141,7 @@ cleanup:
 
 
 #define WHERE "cal_read_ID_files()"
-CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
+CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 {
 	CK_RV ret = CKR_OK;
 	CByteArray oFileData;
@@ -1662,11 +1662,13 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 			if ((*pStatus == P11_CARD_OTHER) || (*pStatus == P11_CARD_INSERTED) )
 			{
 				//(re)initialize objects
+#ifdef PKCS11_FF
 				ret = cal_init_objects(pSlot);
 				if (ret != CKR_OK)
 				{
 					log_trace(WHERE, "E: cal_init_objects() returned %s",log_map_error(ret));
 				}
+#endif
 			}
 		}
 	}
