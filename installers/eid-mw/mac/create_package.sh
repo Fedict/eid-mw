@@ -21,7 +21,7 @@ PKCS11_INST_DIR="$ROOT_DIR/usr/local/lib"
 #licenses dir, where our licences will be placed
 LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 #plistmerger dir, where our plistmerger tool will be placed
-PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
+#PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
 BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 #xpi plugin dir, where the xpi plugin will be placed
 #XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
@@ -91,7 +91,7 @@ mkdir -p "$TOKEND_DIR"
 #mkdir -p "$XPI_PLUGIN_DIR"
 mkdir -p "$RESOURCES_DIR"
 mkdir -p "$INSTALL_SCRIPTS_DIR"
-mkdir -p "$PLISTMERGER_DIR"
+#mkdir -p "$PLISTMERGER_DIR"
 
 #copy all files that should be part of the installer:
 cp ../../../Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
@@ -129,8 +129,8 @@ cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
 cp -R ./install_scripts/* "$INSTALL_SCRIPTS_DIR"
 	 
-cp  ../../../plugins_tools/bin/Release/plistmerger "$PLISTMERGER_DIR"
-cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
+#cp  ../../../plugins_tools/bin/Release/plistMerger "$PLISTMERGER_DIR"
+#cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
 
 #copy distribution file
 cp ./Distribution.txt "$RELEASE_DIR"
