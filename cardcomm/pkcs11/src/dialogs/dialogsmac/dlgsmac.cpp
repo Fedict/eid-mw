@@ -629,7 +629,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
                 
             case kCFUserNotificationOtherResponse:
                 if (ulButtons & DLG_BUTTON_ALWAYS)
-                    lRet = DLG_RETRY;
+                    lRet = DLG_ALWAYS;
                 else if(ulButtons & DLG_BUTTON_YES)
                     lRet = DLG_YES;
                 else if(ulButtons & DLG_BUTTON_NO)
