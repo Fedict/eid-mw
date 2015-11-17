@@ -559,24 +559,15 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
             tittleStrRef = CreateStringFromWChar(csMesg);
         }
         std::wstring translatedMessage(CLang::GetMessageFromID(messageID));
-        wcstombs(datachar,translatedMessage.c_str(),sizeof(datachar));
-        
-        datachar[datacharlen-1]='\0';
-        
-        datacharRefBytes = CFStringCreateWithBytes (
-                                                    kCFAllocatorDefault,
-                                                    (const UInt8 *)datachar,
-                                                    strlen(datachar),
-                                                    kCFStringEncodingUTF8,
-                                                    false
-                                                    );
+        datacharRefBytes = CFStringCreateWithBytes(kCFAllocatorDefault,const_cast<UInt8*>(reinterpret_cast<const UInt8*>(translatedMessage.c_str())), translatedMessage.size() * sizeof(wchar_t),kCFStringEncodingUTF32LE,false);
+
         
         //always display tittle
         CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlertHeaderKey);
         CFArrayAppendValue(mutArrayValues, tittleStrRef);
         //always display message
         CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlertMessageKey);
-        CFArrayAppendValue(mutArrayValues, datacharRefBytes);
+        CFArrayAppendValue(mutArrayValues, datacharRefBytes?:CreateStringFromWChar(L""));
         
         //check which buttons are requested to be shown
         //ulEnterButton is the one on the right, only show it when part of the button list
