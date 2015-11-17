@@ -97,7 +97,7 @@ int mechinfo();
 int sessions();
 int sessions_nocard();
 int sessioninfo();
-int login();
+int slogin();
 int nonsensible();
 int objects();
 int readdata();
