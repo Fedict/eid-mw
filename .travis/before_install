@@ -3,14 +3,14 @@
 set -e
 set -x
 
-case $TRAVIS_OS_NAME in
-	linux)
+case $(uname -s) in
+	Linux)
 		sh .travis/add-trusty
 		apt-get update
 		apt-get -t trusty -y install automake
 		apt-get install -y autotools-dev libgtk2.0-dev libpcsclite-dev libtool automake autoconf
 	;;
-	osx)
+	*)
 		continue
 	;;
 esac

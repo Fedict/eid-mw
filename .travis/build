@@ -3,11 +3,11 @@
 set -e
 set -x
 
-case $TRAVIS_OS_NAME in
-	osx)
+case $(uname -s) in
+	Darwin)
 		exec $(dirname $0)/../scripts/make-mac.sh
 		;;
-	linux)
+	Linux)
 		cd $(dirname $0)/..
 		autoreconf -f -i
 		./configure
