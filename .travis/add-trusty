@@ -1,5 +1,6 @@
 #!/bin/sh
 
+set -e
 set -x
 
 echo 'deb http://us.archive.ubuntu.com/ubuntu trusty main' > /etc/apt/sources.list.d/automake.list
