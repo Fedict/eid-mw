@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+case $TRAVIS_OS_NAME in
+	osx)
+		exec $(dirname $0)/../scripts/make-mac.sh
+		;;
+	linux)
+		cd $(dirname $0)/..
+		autoreconf -f -i
+		./configure
+		make
+		make check
+		;;
+esac
