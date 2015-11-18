@@ -473,8 +473,6 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
 	std::string csReadableFilePath;
 	CFUserNotificationRef userNotificationRef = NULL;
 	SInt32 error = 0;
-    char datachar[512];
-    UInt32 datacharlen = sizeof(datachar);
 	CFOptionFlags optionFlags;
     CFOptionFlags responseFlags;
     CFStringRef tittleStrRef = NULL;
@@ -645,8 +643,6 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
     const wchar_t * Title;
 	CFUserNotificationRef userNotificationRef = NULL;
 	SInt32 error = 0;
-    char datachar[256];
-    char titlechar[256];
     CFOptionFlags optionFlags;
     CFStringRef datacharRefBytes = NULL;
     CFStringRef titlecharRefBytes = NULL;
