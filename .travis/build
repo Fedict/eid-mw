@@ -5,7 +5,7 @@ set -x
 
 case $(uname -s) in
 	Darwin)
-		exec $(dirname $0)/../scripts/make-mac.sh
+		exec $(dirname $0)/../scripts/mac/make-mac.sh
 		;;
 	Linux)
 		cd $(dirname $0)/..
