@@ -464,8 +464,8 @@ void CBeidCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo,
         }
         ucAlgo = 0x10;
         break;
-		case SIGN_ALGO_SHA256_RSA_PSS:
-				if (m_ucAppletVersion < 0x17)
+    case SIGN_ALGO_SHA256_RSA_PSS:
+        if (m_ucAppletVersion < 0x17)
         {
             MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards");
             throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
@@ -497,6 +497,14 @@ void CBeidCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo,
 CByteArray CBeidCard::SignInternal(const tPrivKey & key, unsigned long algo,
     const CByteArray & oData, const tPin *pPin)
 {
+	std::string csReadPin1;
+	std::string csReadPin2;
+	std::string &csPin1 = csReadPin1;
+	std::string &csPin2 = csReadPin2;
+	if (pPin != NULL)
+	{
+		AskPin(PIN_OP_VERIFY,*pPin,csPin1,csPin2, &key);
+	}
 	CAutoLock autolock(this);
 
 	// For V1.7 cards, the Belpic dir has to be selected
@@ -511,10 +519,13 @@ CByteArray CBeidCard::SignInternal(const tPrivKey & key, unsigned long algo,
     // (needed for the nonrep key/pin, but also usable for the auth key/pin)
     if (pPin != NULL)
     {
-        //unsigned long ulRemaining = 0;
-        bool bOK = PinCmd(PIN_OP_VERIFY, *pPin, "", "", m_ulRemaining, &key);
+        unsigned long ulRemaining = 0;
+        bool bOK = PinCmd(PIN_OP_VERIFY, *pPin, csPin1, csPin2, ulRemaining, &key);
         if (!bOK)
-			throw CMWEXCEPTION(m_ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
+				{
+					m_ulRemaining = ulRemaining;
+					throw CMWEXCEPTION(ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
+				}
     }
 
     // PSO: Compute Digital Signature
