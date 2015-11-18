@@ -76,7 +76,9 @@ void AppendToStringFromWChar(CFMutableStringRef mutableString, const wchar_t * w
 {
     if(wcsMessage != NULL)
     {
-        CFStringAppend(mutableString, CreateStringFromWChar(wcsMessage));
+        CFMutableStringRef str = CreateStringFromWChar(wcsMessage);
+        CFStringAppend(mutableString, str);
+        CFRelease(str);
     }
 }
 
