@@ -1,6 +1,8 @@
 ::Define search paths here
 @set SEARCH_BEID_DIR_MSBUILD=C:\Windows\Microsoft.NET\Framework\v4.0.30319
-@set SEARCH_SIGNTOOL_PATH=C:\WinDDK\7600.16385.1\bin\x86
+::@set SEARCH_SIGNTOOL_PATH=C:\WinDDK\7600.16385.1\bin\x86
+::@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin
+@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Windows Kits\8.1\bin\x64
 @set SEARCH_INF2CAT_PATH=C:\WinDDK\7600.16385.1\bin\selfsign
 @set SEARCH_BEID_DIR_PLATFORMSDK_1=%~dp0..\ThirdParty\MSPlatformSDK\bin
 @set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files\Microsoft Platform SDK\bin
