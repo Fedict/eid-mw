@@ -163,15 +163,15 @@
 
 @set SIGNTOOL_PATH=%SEARCH_SIGNTOOL_PATH%
 @set FILE_NOT_FOUND=
-@for %%i in (%FILE_TO_FIND%) do @if not exist "%SEARCH_SIGNTOOL_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%SIGNTOOL_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
 @if "%FILE_NOT_FOUND%"=="" goto found_signtool
-@echo        Not found in "%SEARCH_SIGNTOOL_PATH%"
+@echo        Not found in "%SIGNTOOL_PATH%"
 
 @set SIGNTOOL_PATH=%SEARCH_SIGNTOOL_PATH_2%
 @set FILE_NOT_FOUND=
-@for %%i in (%FILE_TO_FIND%) do @if not exist "%SEARCH_SIGNTOOL_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%SIGNTOOL_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
 @if "%FILE_NOT_FOUND%"=="" goto found_signtool
-@echo        Not found in "%SEARCH_SIGNTOOL_PATH%"
+@echo        Not found in "%SIGNTOOL_PATH%"
 
 @echo [ERROR] Signtool could not be found
 @echo         Please install Visual Studio or WINDDK
