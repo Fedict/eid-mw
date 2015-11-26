@@ -23,7 +23,35 @@
 
 struct eid_vwr_ui_callbacks* cb;
 
+
+// I keep getting marshalling errors when providing a structure pointer that contains the function pointers,
+// so (for now) I'll provide the function pointers directly and allocate memory for the structure here
+#ifdef WIN32
+int eid_vwr_set_cbfuncs(		void(*newsrc)(enum eid_vwr_source source), // data source has changed.
+	void(*newstringdata)(const char* label, const char* data), // new string data to be displayed in UI.
+	void(*newbindata)(const char* label, const void* data, int datalen), // new binary data to be displayed in UI.
+	void(*log)(enum eid_vwr_loglevel loglevel, const char* line), // log a string at the given level.
+	//void(*logv)(enum eid_vwr_loglevel loglevel, const char* line, va_list ap), // log a string using varargs. Note: a UI needs to implement only one of log() or logv(); the backend will use whichever is implemented.
+	void(*newstate)(enum eid_vwr_states states), // issued at state machine transition
+	void(*pinop_result)(enum eid_vwr_pinops pinops, enum eid_vwr_result result) // issued when a PIN operation finished.
+	) {
+
+	struct eid_vwr_ui_callbacks* cb_ = eid_vwr_cbstruct();
+	cb_->newsrc = newsrc;
+	cb_->newstringdata = newstringdata;
+	cb_->newbindata = newbindata;
+	cb_->log = log;
+	cb_->logv = NULL;
+	cb_->newstate = newstate;
+	cb_->pinop_result = pinop_result;
+
+	return eid_vwr_createcallbacks(cb_);
+}
+#endif
+
+
 /* Allocate (and initialize) a callbacks struct. Caller: UI. */
+
 struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 	struct eid_vwr_ui_callbacks* retval = (struct eid_vwr_ui_callbacks*)calloc(sizeof(struct eid_vwr_ui_callbacks), 1);
 	return retval;
@@ -64,7 +92,7 @@ void be_log(enum eid_vwr_loglevel l, const char* string, ...) {
 		do {
 			va_start(ap, string);
 			size = newsize+1;
-			str = realloc(str, size);
+			str = (char*)realloc(str, size);
 			if(!str) return;
 			newsize = vsnprintf(str, size, string, ap);
 			va_end(ap);

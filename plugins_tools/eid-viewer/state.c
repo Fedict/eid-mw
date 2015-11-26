@@ -77,7 +77,7 @@ static struct state* curstate; /* Current state. Defaults to 0=LIBOPEN */
 /* enter() function of CALLBACKS state */
 static int do_initialize(void*data) {
 	eid_vwr_p11_init();
-	be_setcallbacks(data);
+	be_setcallbacks((struct eid_vwr_ui_callbacks*)data);
 
 	return 0;
 }
@@ -193,6 +193,7 @@ void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 			thistree = thistree->parent;
 		}
 		if(!thistree) {
+			be_log(EID_VWR_LOG_DETAIL, "Irrelevant event %s received for state %s",  event_to_name(e), state_to_name(curstate->me));
 			return; // event is irrelevant for this state
 		}
 		target = thistree->out[e];

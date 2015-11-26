@@ -23,21 +23,14 @@ namespace eIDViewer
     {
         public MainWindow()    
         {
-            m_eIDViewerBackend = new eIDViewerBackend();
-            m_eIDViewerBackend.Init();
-
-            Thread backendThread = new Thread(m_eIDViewerBackend.backendMainloop);
-            backendThread.Start();
-            Console.WriteLine("backendThread started");
-
             InitializeComponent();
-            
+
+
         }
         void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        private eIDViewerBackend m_eIDViewerBackend;
     }
 }
