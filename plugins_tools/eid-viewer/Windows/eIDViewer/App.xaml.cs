@@ -14,17 +14,19 @@ namespace eIDViewer
     /// </summary>
     public partial class App : Application
     {
-        public eIDViewerBackend m_eIDViewerBackend;
+        //public eIDViewerBackend m_eIDViewerBackend;
+        private Thread backendThread;
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            m_eIDViewerBackend = new eIDViewerBackend();
-            m_eIDViewerBackend.Init();
+            //eIDViewerBackend theeIDViewerBackendObj = (eIDViewerBackend)App.Current.Resources["eIDViewerBackendObj"];
 
-            System.Threading.Thread.Sleep(1000);
+            ((eIDViewerBackend)App.Current.Resources["eIDViewerBackendObj"]).Init();
+
+           // System.Threading.Thread.Sleep(10000);
 
             //Wait for EVENT_SET_CALLBACKS set event
-            Thread backendThread = new Thread(m_eIDViewerBackend.backendMainloop);
+            backendThread = new Thread(((eIDViewerBackend)App.Current.Resources["eIDViewerBackendObj"]).backendMainloop);
             backendThread.Start();
             Console.WriteLine("backendThread started");
 
