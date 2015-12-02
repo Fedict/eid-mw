@@ -12,16 +12,16 @@
 #ifdef WIN32
 HANDLE mutex = NULL;
 HANDLE cond = NULL;
-HANDLE lpHandles[2];
 
 #define LOCK_MUTEX(mutex) WaitForSingleObject( mutex, INFINITE )
 #define UNLOCK_MUTEX(mutex) ReleaseMutex(mutex)
 
 #define SET_SIGNAL(cond) SetEvent(cond);
+//no need to be atomic, the signalled state remains untill auto released by some thread waiting for it
 #define WAIT_SIGNAL(cond, mutex) \
-	lpHandles[0] = cond; \
-	lpHandles[1] = mutex; \
-	WaitForMultipleObjects(2, lpHandles, TRUE, INFINITE);
+	UNLOCK_MUTEX(mutex); \
+	WaitForSingleObject( cond, INFINITE ); \
+	LOCK_MUTEX(mutex);
 
 #else
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
