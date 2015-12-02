@@ -8,35 +8,6 @@
 #endif
 #include <string.h>
 #include <cache.h>
-/*
-// I keep getting marshalling errors when providing a structure pointer that contains the function pointers,
-// so (for now) I'll provide the function pointers directly and allocate memory here
-#ifdef WIN32
-int eid_vwr_set_cbfuncs(		void(*newsrc)(enum eid_vwr_source), // data source has changed.
-	void(*newstringdata)(const char* label, const char* data), // new string data to be displayed in UI.
-	void(*newbindata)(const char* label, const void* data, int datalen), // new binary data to be displayed in UI.
-	void(*log)(enum eid_vwr_loglevel, const char* line), // log a string at the given level.
-	void(*logv)(enum eid_vwr_loglevel, const char* line, va_list ap), // log a string using varargs. Note: a UI needs to implement only one of log() or logv(); the backend will use whichever is implemented.
-	void(*newstate)(enum eid_vwr_states), // issued at state machine transition
-	void(*pinop_result)(enum eid_vwr_pinops, enum eid_vwr_result) // issued when a PIN operation finished.
-	) {
-
-	eid_vwr_ui_callbacks* cb_ = eid_vwr_cbstruct();
-	cb_->newsrc = newsrc;
-	cb_->newstringdata = newstringdata;
-	cb_->newbindata = newbindata;
-	cb_->log = log;
-	cb_->logv = logv;
-	cb_->newstate = newstate;
-	cb_->pinop_result = pinop_result;
-
-	be_setcallbacks(cb_);
-
-	struct eid_vwr_ui_callbacks* retval = (struct eid_vwr_ui_callbacks*)calloc(sizeof(struct eid_vwr_ui_callbacks), 1);
-	return retval;
-}
-#endif*/
-
 
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	sm_init();

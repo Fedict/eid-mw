@@ -22,7 +22,7 @@ DllExport int eid_vwr_set_cbfuncs(		void(*newsrc)(enum eid_vwr_source source), /
 	void(*newstate)(enum eid_vwr_states states), // issued at state machine transition
 	void(*pinop_result)(enum eid_vwr_pinops pinops, enum eid_vwr_result result) // issued when a PIN operation finished.
 	);
-DllExport void eid_vwr_test_useFunctionPointer(enum eid_vwr_loglevel, const char* line);
+
 void be_newsource(enum eid_vwr_source which);
 void be_log(enum eid_vwr_loglevel, const char* line, ...);
 void be_newstate(enum eid_vwr_states s);
