@@ -1,23 +1,71 @@
 ﻿<Window x:Class="eIDViewer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525"    
+        Title="MainWindow" Height="670" Width="595"    
         DataContext="{StaticResource eIDViewerBackendObj}">
     <Grid>
         <TabControl Margin="0,23,0,60">
             <TabItem Header="Identity">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5" Margin="0,-1,0,1">
+                    <Label Content="Type kaart" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" Width="123"/>
+                    <Viewbox HorizontalAlignment="Left" Height="134" Margin="41,35,0,0" VerticalAlignment="Top" Width="109" OpacityMask="White"/>
+                    <Separator HorizontalAlignment="Left" Height="16" Margin="30,35,0,0" VerticalAlignment="Top" Width="308"/>
+                    <Label Content="Naam:" HorizontalAlignment="Left" Margin="176,46,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Voornamen:" HorizontalAlignment="Left" Margin="176,71,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Geboorteplaats:" HorizontalAlignment="Left" Margin="176,97,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Geboortedatum:" HorizontalAlignment="Left" Margin="176,123,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Geslacht:" HorizontalAlignment="Left" Margin="176,149,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Nationaal nummer:" HorizontalAlignment="Left" Margin="176,175,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Nationaliteit:" HorizontalAlignment="Left" Margin="176,201,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Titel:" HorizontalAlignment="Left" Margin="176,227,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Speciale status:" HorizontalAlignment="Left" Margin="176,253,0,0" VerticalAlignment="Top"/>
+                    <Separator HorizontalAlignment="Left" Height="16" Margin="176,284,0,0" VerticalAlignment="Top" Width="220"/>
+                    <Label Content="Straat:" HorizontalAlignment="Left" Margin="176,308,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Postcode:" HorizontalAlignment="Left" Margin="176,334,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Gemeente:" HorizontalAlignment="Left" Margin="176,360,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=surName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,46,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=firstNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,71,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=date_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,97,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=location_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,123,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=gender, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,149,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=national_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,175,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=nationality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,201,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=nobility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,227,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=special_status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,253,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=address_street_and_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,308,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=address_zip, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,334,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=address_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,360,0,0" VerticalAlignment="Top"/>
+
+                </Grid>
             </TabItem>
             <TabItem Header="Card/PIN">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Kaartnummer:" HorizontalAlignment="Left" Margin="92,133,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Plaats van afgifte:" HorizontalAlignment="Left" Margin="92,159,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Chip nummer:" HorizontalAlignment="Left" Margin="92,185,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Geldig vanaf:" HorizontalAlignment="Left" Margin="92,211,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Geldig tot:" HorizontalAlignment="Left" Margin="92,237,0,0" VerticalAlignment="Top"/>
+                    <Button Content="Pincode testen" HorizontalAlignment="Left" Margin="92,283,0,0" VerticalAlignment="Top" Width="207"/>
+                    <Button Content="Pincode wijzigen" HorizontalAlignment="Left" Margin="92,308,0,0" VerticalAlignment="Top" Width="207"/>
+                    <Label Content="{Binding Path=card_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,133,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=issuing_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,159,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=chip_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,185,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=validity_begin_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,211,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding Path=validity_end_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,237,0,0" VerticalAlignment="Top"/>
+                    
+                </Grid>
             </TabItem>
             <TabItem Header="Certificates">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <ContentControl Content="ContentControl" HorizontalAlignment="Left" Margin="53,24,0,0" VerticalAlignment="Top" Height="94" Width="370"/>
+                    <Grid HorizontalAlignment="Left" Height="310" Margin="7,208,0,0" VerticalAlignment="Top" Width="564"/>
+                    <Canvas HorizontalAlignment="Left" Height="93" Margin="53,182,0,0" VerticalAlignment="Top" Width="370"/>
+                </Grid>
             </TabItem>
             <TabItem Header="Log">
                 <Grid Background="#FFE5E5E5">
                     <TextBox Text="{Binding Path=logText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                             TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Height="208" Width="511" />
+                             TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
         </TabControl>

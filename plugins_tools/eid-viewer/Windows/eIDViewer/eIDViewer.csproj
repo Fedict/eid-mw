@@ -70,6 +70,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Sources\Backend.cs" />
+    <Compile Include="Sources\BackendData.cs" />
     <Compile Include="Sources\BackendEnums.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
