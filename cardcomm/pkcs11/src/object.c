@@ -30,8 +30,8 @@
 int eidmw_readpermission = 0;
 
 //function declarations
-void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len);
-void SetParseFlagByObjectID(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len);
+void SetParseFlagByLabel(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len);
+void SetParseFlagByObjectID(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len);
 
 
 #define WHERE "C_CreateObject()"
@@ -231,12 +231,13 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 												CK_ULONG          ulCount)    /* attributes in search template */
 {
 	P11_SESSION *pSession = NULL;
+	P11_SLOT    *pSlot    = NULL;
 	P11_FIND_DATA *pData = NULL;
 	int ret;
 	CK_ULONG      *pclass = NULL;
 	CK_ULONG       len = 0;
 	CK_BBOOL			addIdObjects = CK_FALSE;
-	CK_BYTE				filesToCacheFlag = CACHED_DATA_TYPE_ALL;
+	CK_ULONG			filesToCacheFlag = CACHED_DATA_TYPE_ALL_DATA;
 	CK_BYTE				allowCardRead = P11_DISPLAY_NO;
 	log_trace(WHERE, "I: enter");
 
@@ -256,6 +257,29 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	else
 		log_template("I: Search template:", pTemplate, ulCount);
 
+	ret = p11_get_session(hSession, &pSession);
+	if (pSession == NULL)
+	{
+		log_trace(WHERE, "E: pSession == NULL");
+		goto cleanup;
+	}
+	if (ret)
+	{
+		log_trace(WHERE, "E: Invalid session (%d) (%s)", hSession, log_map_error(ret));
+		//if (ret == CKR_DEVICE_REMOVED)
+		//ret = CKR_SESSION_HANDLE_INVALID;
+		//ret = CKR_FUNCTION_FAILED;
+		goto cleanup;
+	}
+
+	pSlot = p11_get_slot(pSession->hslot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: p11_get_slot(%d) returns null", pSession->hslot);
+		ret = CKR_SLOT_ID_INVALID;
+		goto cleanup;
+	}
+
 	/* add check here to avoid useless calls to C_FindObjects() */
 	/* reason to add this is that e.g. Firefox for every certificate in its store starts a find operation with CKA_CLASS_TYPE */
 	/* that is unknown by this implementation */
@@ -267,6 +291,16 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		ret = p11_get_attribute_value(pTemplate, ulCount, CKA_CLASS, (CK_VOID_PTR *) &pclass, &len);
 		if ( (ret == 0) && (len == sizeof(CK_ULONG) ) )
 		{
+#ifndef PKCS11_FF
+			if( (*pclass == CKO_CERTIFICATE) || (*pclass == CKO_PRIVATE_KEY) || (*pclass == CKO_PUBLIC_KEY) || (*pclass == CKO_SECRET_KEY) )
+			{
+				ret = cal_init_objects(pSlot);
+				if (ret != CKR_OK)
+				{
+					log_trace(WHERE, "E: cal_init_objects() returned %s.",log_map_error(ret));
+				}
+			}
+#endif
 			//CKO_SECRET_KEY is not supported but for SUN-PKCS11 we allow a search that will result in 0 objects
 			if ( (*pclass != CKO_CERTIFICATE) && (*pclass != CKO_PRIVATE_KEY) && (*pclass != CKO_PUBLIC_KEY) && (*pclass != CKO_SECRET_KEY) && (*pclass != CKO_DATA))
 			{
@@ -288,22 +322,23 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		//	addIdObjects = CK_TRUE;
 		//}
 	}
+	else
+	{
+#ifndef PKCS11_FF
+		ret = cal_init_objects(pSlot);
+		if (ret != CKR_OK)
+		{
+			log_trace(WHERE, "E: cal_init_objects() returned %s_",log_map_error(ret));
+		}
+#endif
+	}
 	//see comment above, We only return the CKO_DATA objects when specifically asked for
 	//else
 	//{
 	//	addIdObjects = CK_TRUE;
 	//}
 
-	ret = p11_get_session(hSession, &pSession);
-	// if (pSession == NULL)
-	if (ret)
-	{
-		log_trace(WHERE, "E: Invalid session (%d) (%s)", hSession, log_map_error(ret));
-		//if (ret == CKR_DEVICE_REMOVED)
-		//ret = CKR_SESSION_HANDLE_INVALID;
-		//ret = CKR_FUNCTION_FAILED;
-		goto cleanup;
-	}
+
 
 	//is there an active search operation for this session
 	if (pSession->Operation[P11_OPERATION_FIND].active)
@@ -414,8 +449,8 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	if ( addIdObjects )
 	{
 		//check if the data isn't cached already
-		if(	((filesToCacheFlag != CACHED_DATA_TYPE_ALL) && ((pSession->bCardDataCashed & filesToCacheFlag) == FALSE)) ||
-			((filesToCacheFlag == CACHED_DATA_TYPE_ALL) && (pSession->bCardDataCashed != CACHED_DATA_TYPE_ALL)) )
+		if(	((filesToCacheFlag != CACHED_DATA_TYPE_ALL_DATA) && ((pSlot->ulCardDataCached & filesToCacheFlag) == FALSE)) ||
+			((filesToCacheFlag == CACHED_DATA_TYPE_ALL_DATA) && (pSlot->ulCardDataCached != CACHED_DATA_TYPE_ALL_DATA)) )
 		{
 			CK_ULONG counter = 0;
 			CK_ULONG flagsToCheckListLen = 6;
@@ -424,10 +459,10 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
 			switch(filesToCacheFlag)
 			{
-			case CACHED_DATA_TYPE_ALL:
+			case CACHED_DATA_TYPE_ALL_DATA:
 				//cache and parse whatever isn't cached already
 				//first check if carddata is cashed already, if not parse and cache it
-				if( (pSession->bCardDataCashed & CACHED_DATA_TYPE_CARDDATA) == 0){
+				if( (pSlot->ulCardDataCached & CACHED_DATA_TYPE_CARDDATA) == 0){
 					ret = cal_get_card_data(pSession->hslot);
 					if (ret != 0){
 						log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
@@ -461,7 +496,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				}
 			}
 			//remember the file(s) we cashed
-			pSession->bCardDataCashed |= filesToCacheFlag;
+			pSlot->ulCardDataCached |= filesToCacheFlag;
 		}
 	}
 
@@ -724,7 +759,7 @@ cleanup:
 #undef WHERE
 
 
-void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len)
+void SetParseFlagByLabel(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len)
 {
 	CK_ULONG nrOfItems = 0;
 	CK_ULONG counter = 0;
@@ -816,7 +851,7 @@ void SetParseFlagByLabel(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_UL
 }
 
 
-void SetParseFlagByObjectID(CK_BYTE* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len)
+void SetParseFlagByObjectID(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len)
 {
 	if(strlen(BEID_OBJECTID_ID)==len){
 		if(memcmp(BEID_OBJECTID_ID,pObjectID,len)==0){

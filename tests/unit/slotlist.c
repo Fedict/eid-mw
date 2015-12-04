@@ -51,7 +51,7 @@ TEST_FUNC(slotlist) {
 	check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, &count), m);
 	printf("slots found: %lu\n", count);
 
-	list = malloc(sizeof(CK_SLOT_ID) * count);
+	list = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID) * count);
 	for(i=0; i<count; i++) {
 		list[i] = 0xdeadbeef;
 	}

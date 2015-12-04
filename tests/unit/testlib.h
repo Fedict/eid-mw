@@ -47,6 +47,12 @@ const static ckrv_mod m_p11_badslot[] = {
 	{ CKR_SLOT_ID_INVALID, TEST_RV_OK },
 };
 
+const static ckrv_mod m_p11_nocard[] = {
+	{ CKR_OK, TEST_RV_FAIL },
+	{ CKR_DEVICE_ERROR, TEST_RV_OK },
+	{ CKR_DEVICE_REMOVED, TEST_RV_OK },
+};
+
 #define check_rv_late(func) { int retval = ckrv_decode(rv, func, 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
 #define check_rv(call) check_rv_action(call, 0, NULL)
 #define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
@@ -63,14 +69,16 @@ char* ckm_to_charp(CK_MECHANISM_TYPE);
 #endif
 
 /* Verifies that a string does not contain a NULL character */
-void verify_null(CK_UTF8CHAR* string, size_t length, int nulls_expected, char* msg);
+int verify_null_func(CK_UTF8CHAR* string, size_t length, int nulls_expected, char* msg);
+
+#define verify_null(s, l, e, m) { int retval = verify_null_func(s, l, e, m); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) return retval; }
 
 /* Functions to work with card moving robots */
 CK_BBOOL have_robot();
 CK_BBOOL is_manual_robot();
 CK_BBOOL can_confirm();
 CK_BBOOL have_pin();
-CK_BBOOL can_enter_pin();
+CK_BBOOL can_enter_pin(CK_SLOT_ID slot);
 void robot_remove_card();
 void robot_remove_card_delayed();
 void robot_insert_card();
@@ -97,13 +105,15 @@ int mechinfo();
 int sessions();
 int sessions_nocard();
 int sessioninfo();
-int login();
+int login_c();
 int nonsensible();
 int objects();
 int readdata();
+int readdata_sequence();
 int digest();
 int threads();
 int sign();
+int sign_state();
 int decode_photo();
 int ordering();
 int wrong_init();

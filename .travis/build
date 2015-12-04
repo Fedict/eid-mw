@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+set -x
+
+case $(uname -s) in
+	Darwin)
+		cd $(dirname $0)/..
+		./scripts/mac/make-mac.sh
+		xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release
+		cd build/Release
+		DYLD_LIBRARY_PATH=$(pwd) ./testsuite
+		;;
+	Linux)
+		cd $(dirname $0)/..
+		autoreconf -f -i
+		./configure
+		make
+		make check
+		;;
+esac

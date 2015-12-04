@@ -51,53 +51,34 @@ typedef std::map<unsigned long, CFUserNotificationRef> TD_MCPINPAD_MAP;
 TD_MCPINPAD_MAP mc_pinpad_map;
 unsigned long mc_pinpad_map_index = 0;
 
-CFStringRef CreateStringFromWChar(const wchar_t * wcsMessage)
+CFMutableStringRef CreateStringFromWChar(const wchar_t * wcsMessage)
 {
-    char messagechar[256];
-    
     if(wcsMessage == NULL)
         return NULL;
-    wcstombs(messagechar,wcsMessage,sizeof(messagechar));
-    messagechar[255]='\0';
-    char *s, *t;
-    s=t=messagechar;
-    do {
-        if(*s == '&')
-            s++;
-        *t++ = *s;
-    } while(*s++);
     
-    CFStringRef tmpString = CFStringCreateWithBytes (
+    CFStringRef utf8String = CFStringCreateWithBytes (
                                                      kCFAllocatorDefault,
-                                                     (const UInt8 *)messagechar,
-                                                     strlen(messagechar),
-                                                     kCFStringEncodingUTF8,
+                                                     (const UInt8 *)wcsMessage,
+                                                     wcslen(wcsMessage)*sizeof(wchar_t)/sizeof(UInt8),
+                                                     kCFStringEncodingUTF32LE,
                                                      false
                                                      );
-    THROW_ERROR_IF_NULL(tmpString);
-    return tmpString;
+    THROW_ERROR_IF_NULL(utf8String);
+
+    CFMutableStringRef toBeStrippedString = CFStringCreateMutableCopy(kCFAllocatorDefault, 0, utf8String);
+    CFStringFindAndReplace(toBeStrippedString, CFSTR("&"), CFSTR(""), CFRangeMake(0, CFStringGetLength(toBeStrippedString)), NULL);
+    CFRelease(utf8String);
+
+    return toBeStrippedString;
 }
 
 void AppendToStringFromWChar(CFMutableStringRef mutableString, const wchar_t * wcsMessage)
 {
-    char messagechar[256];
-    
     if(wcsMessage != NULL)
     {
-        wcstombs(messagechar,wcsMessage,sizeof(messagechar));
-        messagechar[255]='\0';
-        
-        CFStringRef tmpString = CFStringCreateWithBytes (
-                                                         kCFAllocatorDefault,
-                                                         (const UInt8 *)messagechar,
-                                                         strlen(messagechar),
-                                                         kCFStringEncodingUTF8,
-                                                         false
-                                                         );
-        THROW_ERROR_IF_NULL(tmpString);
-        
-        CFStringAppend(mutableString, tmpString);
-        CFRelease(tmpString);
+        CFMutableStringRef str = CreateStringFromWChar(wcsMessage);
+        CFStringAppend(mutableString, str);
+        CFRelease(str);
     }
 }
 
@@ -153,8 +134,6 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 	CFUserNotificationRef userNotificationRef = NULL;
 	SInt32 error = 0;
     
-    size_t textLen = 0;
-    char titlechar[256];
     CFOptionFlags optionFlags = CFUserNotificationSecureTextField(0);
     CFOptionFlags responseFlags = 0;
 	
@@ -166,7 +145,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
     CFStringRef IconURLString = NULL;
     CFURLRef urlRef = NULL;
     CFStringRef headerString = NULL;
-    CFStringRef titleString = NULL;
+    CFMutableStringRef titleString = NULL;
     CFStringRef messageString = NULL;
     CFDictionaryRef parameters = NULL;
     CFStringRef defaultButtonString = NULL;
@@ -199,7 +178,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
         {
             optionFlags |= kCFUserNotificationCautionAlertLevel;
             wcsTitle=GETSTRING_DLG(SigningWith);
-            IconURLString = CreateStringFromWChar(L"usr/local/lib/beid-pkcs11.bundle/Contents/Resources/ICO_CARD_DIGSIG_128x128.png");
+            IconURLString = CreateStringFromWChar(L"/usr/local/lib/beid-pkcs11.bundle/Contents/Resources/ICO_CARD_DIGSIG_128x128.png");
             //urlRef = CFBundleCopyResourceURL(bundle, CFSTR("ICO_CARD_DIGSIG_128x128"), CFSTR("png"), NULL);
         }
         else
@@ -209,29 +188,17 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
             IconURLString = CreateStringFromWChar(L"/usr/local/lib/beid-pkcs11.bundle/Contents/Resources/ICO_CARD_PIN_128x128.png");
             //urlRef = CFBundleCopyResourceURL(bundle, CFSTR("ICO_CARD_PIN_128x128"), CFSTR("png"), NULL);
         }
-        wcstombs(titlechar,wcsTitle,sizeof(titlechar));
-        titlechar[255]='\0';
-        
         urlRef = CFURLCreateWithString ( kCFAllocatorDefault, IconURLString, NULL );
         
-        textLen = strlen(titlechar);
         //need room for space and pin name
-        if(textLen >= 250)
+        if(wcslen(wcsTitle) >= 250)
             return DLG_ERR;
-        
-        strcpy_s(titlechar+textLen, 1, " ");
-        textLen++;
-        wcstombs(titlechar+textLen,wsPinName,sizeof(titlechar)-textLen);
-        titlechar[255]='\0';
-        
-        titleString = CFStringCreateWithBytes (
-                                               kCFAllocatorDefault,
-                                               (const UInt8 *)titlechar,
-                                               strlen(titlechar),
-                                               kCFStringEncodingUTF8,
-                                               false
-                                               );
-        
+
+        titleString = CFStringCreateMutable(kCFAllocatorDefault, 0);
+        AppendToStringFromWChar(titleString, wcsTitle);
+        AppendToStringFromWChar(titleString, L" ");
+        AppendToStringFromWChar(titleString, wsPinName);
+
         //always display header
         CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlertHeaderKey);
         CFArrayAppendValue(mutArrayValues, headerString);
@@ -506,8 +473,6 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
 	std::string csReadableFilePath;
 	CFUserNotificationRef userNotificationRef = NULL;
 	SInt32 error = 0;
-    char datachar[512];
-    UInt32 datacharlen = sizeof(datachar);
 	CFOptionFlags optionFlags;
     CFOptionFlags responseFlags;
     CFStringRef tittleStrRef = NULL;
@@ -559,15 +524,11 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
             tittleStrRef = CreateStringFromWChar(csMesg);
         }
         std::wstring translatedMessage(CLang::GetMessageFromID(messageID));
-        wcstombs(datachar,translatedMessage.c_str(),sizeof(datachar));
-        
-        datachar[datacharlen-1]='\0';
-        
         datacharRefBytes = CFStringCreateWithBytes (
                                                     kCFAllocatorDefault,
-                                                    (const UInt8 *)datachar,
-                                                    strlen(datachar),
-                                                    kCFStringEncodingUTF8,
+                                                    (const UInt8 *)translatedMessage.c_str(),
+                                                    translatedMessage.size()*sizeof(wchar_t)/sizeof(UInt8),
+                                                    kCFStringEncodingUTF32LE,
                                                     false
                                                     );
         
@@ -576,7 +537,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
         CFArrayAppendValue(mutArrayValues, tittleStrRef);
         //always display message
         CFArrayAppendValue(mutArrayKeys, kCFUserNotificationAlertMessageKey);
-        CFArrayAppendValue(mutArrayValues, datacharRefBytes);
+        CFArrayAppendValue(mutArrayValues, datacharRefBytes?:CreateStringFromWChar(L""));
         
         //check which buttons are requested to be shown
         //ulEnterButton is the one on the right, only show it when part of the button list
@@ -682,8 +643,6 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
     const wchar_t * Title;
 	CFUserNotificationRef userNotificationRef = NULL;
 	SInt32 error = 0;
-    char datachar[256];
-    char titlechar[256];
     CFOptionFlags optionFlags;
     CFStringRef datacharRefBytes = NULL;
     CFStringRef titlecharRefBytes = NULL;
@@ -705,27 +664,22 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
             Title=GETSTRING_DLG(PleaseEnterYourPinOnThePinpadReader);
         }
         
-        wcstombs(datachar,wsReader,sizeof(datachar));
-        datachar[255]='\0';
-        
         datacharRefBytes = CFStringCreateWithBytes (
                                                     kCFAllocatorDefault,
-                                                    (const UInt8 *)datachar,
-                                                    strlen(datachar),
-                                                    kCFStringEncodingUTF8,
+                                                    (const UInt8 *)wsReader,
+                                                    wcslen(wsReader)*sizeof(wchar_t)/sizeof(UInt8),
+                                                    kCFStringEncodingUTF32LE,
                                                     false
                                                     );
         
-        wcstombs(titlechar,Title,sizeof(titlechar));
-        titlechar[255]='\0';
         titlecharRefBytes = CFStringCreateWithBytes (
-                                                     kCFAllocatorDefault,
-                                                     (const UInt8 *)titlechar,
-                                                     strlen(titlechar),
-                                                     kCFStringEncodingUTF8,
-                                                     false
-                                                     );
-        
+                                                    kCFAllocatorDefault,
+                                                    (const UInt8 *)Title,
+                                                    wcslen(Title)*sizeof(wchar_t)/sizeof(UInt8),
+                                                    kCFStringEncodingUTF32LE,
+                                                    false
+                                                    );
+
         const void* textFieldTitles[] = {Title};
         
         titlesArray = CFArrayCreate(NULL, textFieldTitles, 1, NULL);

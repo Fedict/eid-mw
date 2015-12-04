@@ -20,12 +20,17 @@
 
 #include <win32.h>
 #include <pkcs11.h>
+#include <time.h>
 
 #include "stdafx.h"
 #include <stdio.h>
 #define TEST_NO_ABORT
 #include "testlib.h"
 #include "logtest.h"
+
+
+_TCHAR* eid_robot_style = NULL;
+_TCHAR*	eid_dialogs_style = NULL;
 
 /*
  * Main function
@@ -39,11 +44,17 @@ typedef	struct {
 	int (*test_function_ptr)(void);
 } eIDTest;
 
-int main()
-{
+//int main()
+//{
+int	_tmain(int argc, _TCHAR* argv[]){
+	clock_t startTime = clock();
+	clock_t duration = 0;
+	int msecDuration = 0;
+
 	int i = 0;
 	int nrofTests = 0;
 	errno_t error;
+
 	eIDTest eIDTests[] = { \
 //	{{0,TEST_SKIPPED},"Tests C_getinfo results in a single thread",&test_getinfo},
 //#ifdef WIN32
@@ -77,25 +88,26 @@ int main()
 //	{{0,TEST_SKIPPED},"tests the return values of the getattributes function",&test_getkeys_retvals},
 	//{{0,TEST_SKIPPED},"tests getting all the objects from the card",&test_getallobjects},
 		{0,CKR_OK,"tests initialize/finalize",&init_finalize},
-			{0,CKR_OK,"tests initialize/finalize",&getinfo},
+			{0,CKR_OK,"tests getinfo",&getinfo},
 			//{0,CKR_OK,"tests initialize/finalize",&funclist},
-			{0,CKR_OK,"tests initialize/finalize",&slotlist},
-			{0,CKR_OK,"tests initialize/finalize",&slotinfo},
-			{0,CKR_OK,"tests initialize/finalize",&tkinfo},
-			{0,CKR_OK,"tests initialize/finalize",&double_init},
-			{0,CKR_OK,"tests initialize/finalize",&slotevent},
-			{0,CKR_OK,"tests initialize/finalize",&mechlist},
+			{0,CKR_OK,"tests slotlist",&slotlist},
+			{0,CKR_OK,"tests slotinfo",&slotinfo},
+			{0,CKR_OK,"tests tkinfo",&tkinfo},
+			{0,CKR_OK,"tests double_init",&double_init},
+			{0,CKR_OK,"tests slotevent",&slotevent},
+			{0,CKR_OK,"tests mechlist",&mechlist},
 	
 
-		{0,CKR_OK,"tests initialize/finalize",&mechinfo},
-			{0,CKR_OK,"tests initialize/finalize",&sessions},
-			{0,CKR_OK,"tests initialize/finalize",&sessions_nocard},
-			{0,CKR_OK,"tests initialize/finalize",&sessioninfo},
-			{0,CKR_OK,"tests initialize/finalize",&login},
-			{0,CKR_OK,"tests initialize/finalize",&nonsensible},
-			{0,CKR_OK,"tests initialize/finalize",&objects},
-			{0,CKR_OK,"tests initialize/finalize",&readdata},
-			{0,CKR_OK,"tests initialize/finalize",&digest},
+		{0,CKR_OK,"tests mechinfo",&mechinfo},
+			{0,CKR_OK,"tests sessions",&sessions},
+			{0,CKR_OK,"tests sessions_nocard",&sessions_nocard},
+			{0,CKR_OK,"tests sessioninfo",&sessioninfo},
+			{0,CKR_OK,"tests login",&login},
+			{0,CKR_OK,"tests nonsensible",&nonsensible},
+			{0,CKR_OK,"tests objects",&objects},
+			{0,CKR_OK,"tests readdata",&readdata},
+			{0,CKR_OK,"tests digest",&digest},
+			{0,CKR_OK,"tests sign_state",&sign_state},
 
 			//{0,CKR_OK,"tests initialize/finalize",&decode_photo},
 
@@ -113,6 +125,12 @@ int main()
 //	{{0,TEST_SKIPPED},"tests getting the private object's from the card without logging in",&test_findPrivateKeyWithoutLoginShouldFail},	
 //	{{0,TEST_SKIPPED},"tests the return value of C_FindObjectsFinal when called without C_FindObjectsInit",&test_findObjectsFinalNotInitialized},
 	};
+
+	if(argc >=2)
+		eid_robot_style = argv[1];
+
+	if(argc >=3)
+		eid_dialogs_style = argv[2];
 
 	error = initLog();
 	if(error != 0)
@@ -167,7 +185,13 @@ int main()
 		//testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
 	}
 
+	duration = clock() - startTime;
+
+	msecDuration = (duration * 1000) / CLOCKS_PER_SEC;
+	printf("Duration: %d,%d seconds", msecDuration/1000, msecDuration%1000);
+
 	testlog(LVL_NOLEVEL,"\n===============================================\n");
+
 	//short summary
 	/*for (i = 0; i < nrofTests; i++)
 	{

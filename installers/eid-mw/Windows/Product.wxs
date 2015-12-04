@@ -502,7 +502,7 @@
       <!-- Shortcuts -->
       <ComponentRef Id ="OutlookShortcut"/>
       <ComponentRef Id="Office2010XAdESShortcut"/>
-      <Feature Id="Install_Minidriver" Level="0" Display="hidden" Absent="disallow">
+      <Feature Id="Install_Minidriver" Title="Minidriver" Absent="allow" Level="1">
         <ComponentRef Id="beidmdrv"/>
         <ComponentRef Id="CertPropService"/>
         <ComponentRef Id="beidmdrvsystem32"/>

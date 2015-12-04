@@ -1,4 +1,4 @@
-TESTS = init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login nonsensible objects readdata digest threads sign ordering
+TESTS = init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_sequence digest threads sign sign_state ordering
 if JPEG
 TESTS += decode_photo
 endif
@@ -65,14 +65,20 @@ login_LDADD = $(COMMON_LIB)
 nonsensible_SOURCES = nonsensible.c
 nonsensible_LDADD = $(COMMON_LIB)
 
+login_state_SOURCES = login_state.c $(COMMON_SRCS)
+login_state_LDADD = $(COMMON_LIB)
+
 objects_SOURCES = objects.c
 objects_LDADD = $(COMMON_LIB)
 
 readdata_SOURCES = readdata.c
 readdata_LDADD = $(COMMON_LIB) liblabels.a
 
-digest_SOURCES = digest.c
+digest_SOURCES = digest.c $(COMMON_SRCS)
 digest_LDADD = $(COMMON_LIB)
+
+readdata_sequence_SOURCES = readdata_sequence.c $(COMMON_SRCS)
+readdata_sequence_LDADD = $(COMMON_LIB)
 
 decode_photo_SOURCES = decode_photo.c
 decode_photo_LDADD = $(COMMON_LIB) @JPEG_LIBS@
@@ -85,7 +91,10 @@ sign_CFLAGS = @SSL_CFLAGS@ $(AM_CFLAGS)
 sign_LDADD = $(COMMON_LIB) @SSL_LIBS@
 
 ordering_SOURCES = ordering.c
-ordering_LDADD = $(COMMON_LIB)
+ordering_SOURCES = ordering.c $(COMMON_SRCS)
+
+sign_state_SOURCES = sign_state.c $(COMMON_SRCS)
+sign_state_LDADD = $(COMMON_LIB)
 
 wrong_init_SOURCES = wrong_init.c
 wrong_init_LDADD = $(COMMON_LIB)

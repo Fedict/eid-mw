@@ -17,6 +17,9 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
+#define _GNU_SOURCE
+
 #include <config.h>
 
 #define _GNU_SOURCE
@@ -158,7 +161,7 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 		{ BITS_32, "/usr/lib/i386-linux-gnu/libbeidpkcs11.so.0" },
 		{ BITS_64, "/usr/lib64/libbeidpkcs11.so.0" },
 		{ BITS_64, "/usr/lib/x86_64-linux-gnu/libbeidpkcs11.so.0" },
-		{ bitness, LIBDIR },
+		{ bitness, LIBDIR "/libbeidpkcs11.so.0" },
 	};
 	int i;
 	gboolean found32 = FALSE;
@@ -166,7 +169,7 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 	gboolean foundforeign = FALSE;
 	GtkTreeIter iter;
 
-	for(i=0;i<4;i++) {
+	for(i=0;i<(sizeof(locs) / sizeof(locs[0]));i++) {
 		if(stat(locs[i].loc, &st) < 0) {
 			switch(errno) {
 			case ENOENT:
@@ -182,10 +185,12 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 			gchar* str;
 			switch(locs[i].bitness) {
 				case BITS_32:
+					if(found32) continue;
 					str = _("32-bit PKCS#11 location");
 					found32 = TRUE;
 					break;
 				case BITS_64:
+					if(found64) continue;
 					str = _("64-bit PKCS#11 location");
 					found64 = TRUE;
 					break;
@@ -295,7 +300,11 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, _("32-bit PC"), -1);
 	} else {
 		bitness = BITS_FOREIGN;
-		asprintf(&values, _("Unknown (%s)"), undat.machine);
+		if(!strncmp(undat.machine, "arm", 3)) {
+			values = strdup(undat.machine);
+		} else {
+			asprintf(&values, _("Unknown (%s)"), undat.machine);
+		}
 		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, values, -1);
 		free(values);
 	}

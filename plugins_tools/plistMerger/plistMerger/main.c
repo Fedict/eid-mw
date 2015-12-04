@@ -55,7 +55,10 @@ int main(int argc, const char * argv[])
     
     CFDictionaryRef pDictDestOrg = CreateDictionaryFromPlist(CFSTR("./Info_org.plist"), &errorCode);
     //CreateDictionaryFromPlist(CFSTR("/usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist"), &errorCode);
-    CFMutableDictionaryRef pDictDest = CFDictionaryCreateMutableCopy(kCFAllocatorDefault, 0, pDictDestOrg);
+    CFMutableDictionaryRef pDictDest = NULL;
+    if (pDictDestOrg != NULL) {
+        pDictDest = CFDictionaryCreateMutableCopy(kCFAllocatorDefault, 0, pDictDestOrg);
+    }
     CFDictionaryRef pDictSrc = CreateDictionaryFromPlist(CFSTR("./Info.plist"), &errorCode);
     
     if( (pDictSrc != NULL) && (pDictDest != NULL) )
@@ -92,7 +95,7 @@ int main(int argc, const char * argv[])
                     }
                 }
             }
-        }
+
         if (!bAllArraysPresent) {
             CFShow(CFSTR("Cannot merge\nNot all arrays are present in the plists\n"));
             return 0;
@@ -190,8 +193,12 @@ int main(int argc, const char * argv[])
         
         //release all created variables
         CFRelease(pDictDest);
+        }
+        CFShow(CFSTR("Merge completed\n"));
     }
-    CFShow(CFSTR("Merge completed\n"));
+    else{
+        CFShow(CFSTR("Merge skipped\n"));
+    }
     return 0;
 }
 
@@ -207,8 +214,10 @@ CFDictionaryRef CreateDictionaryFromPlist(CFStringRef stringPlist, SInt32 *error
     }
     CFDictionaryRef dictRef = CFPropertyListCreateFromXMLData(kCFAllocatorDefault,dataRef,
                                                               kCFPropertyListMutableContainersAndLeaves,&errorStringRef);
-    CFRelease(fileURLRef);
-    CFRelease(dataRef);
+    if(fileURLRef != NULL)
+        CFRelease(fileURLRef);
+    if(dataRef != NULL)
+        CFRelease(dataRef);
     return dictRef;
 }
 
@@ -223,9 +232,10 @@ void StoreDictionaryInPlist(CFPropertyListRef propListRef, CFStringRef stringPli
     if (!status) {
         //error
     }
-    
-    CFRelease(fileURLRef);
-    CFRelease(dataRef);
+    if(fileURLRef != NULL)
+        CFRelease(fileURLRef);
+    if(dataRef != NULL)
+        CFRelease(dataRef);
 }
 
 
