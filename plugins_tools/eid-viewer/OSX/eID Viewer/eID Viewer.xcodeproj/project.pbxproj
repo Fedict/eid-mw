@@ -13,6 +13,7 @@
 		652BC8AE1AEA41D100DA9519 /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */; };
 		652BC8B11AEA467800DA9519 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
 		653BB4D91BBC0D2F00EA73CF /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */; };
+		65967BC81C11DF6400814858 /* libbeidpkcs11.4.1.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.9.dylib */; };
 		659FFC431AE9360D004CEC1F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC421AE9360D004CEC1F /* AppDelegate.m */; };
 		659FFC451AE9360D004CEC1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC441AE9360D004CEC1F /* main.m */; };
 		659FFC471AE9360D004CEC1F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659FFC461AE9360D004CEC1F /* Images.xcassets */; };
@@ -43,7 +44,6 @@
 		659FFCB41AE93B4B004CEC1F /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB01AE93B4B004CEC1F /* xml.c */; };
 		659FFCB51AE93B4B004CEC1F /* xmlmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB21AE93B4B004CEC1F /* xmlmap.cpp */; };
 		659FFCB81AE93C37004CEC1F /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB61AE93C37004CEC1F /* labels.c */; };
-		659FFCBA1AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */; };
 		65BE1C6E1BB567C2002E8061 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C6D1BB567C2002E8061 /* libcrypto.a */; };
 		65BE1C701BB56809002E8061 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C6F1BB56809002E8061 /* libssl.a */; };
 		65BE1C771BB57173002E8061 /* libbeidpkcs11.4.1.3.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -112,6 +112,7 @@
 		652BC8AF1AEA441400DA9519 /* xsdloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xsdloc.h; path = ../../../xsdloc.h; sourceTree = "<group>"; };
 		652BC8B01AEA467800DA9519 /* eidv4.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../eidv4.xsd; sourceTree = "<group>"; };
 		653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../support/xml/builddir/.libs/libxml2.2.dylib; sourceTree = "<group>"; };
+		65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.9.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.9.dylib; sourceTree = "<group>"; };
 		659FFC3C1AE9360D004CEC1F /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		659FFC401AE9360D004CEC1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		659FFC411AE9360D004CEC1F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -170,7 +171,7 @@
 		659FFCB31AE93B4B004CEC1F /* xmlmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlmap.h; path = ../../../xmlmap.h; sourceTree = "<group>"; };
 		659FFCB61AE93C37004CEC1F /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = ../../../../../tests/unit/labels.c; sourceTree = "<group>"; };
 		659FFCB71AE93C37004CEC1F /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = ../../../../../tests/unit/labels.h; sourceTree = "<group>"; };
-		659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.3.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.3.dylib; sourceTree = "<group>"; };
+		659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.3.dylib; path = "/Users/buildslave/Documents/eid-mw/Debug/libbeidpkcs11.4.1.3.dylib"; sourceTree = "<absolute>"; };
 		65BE1C6D1BB567C2002E8061 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../support/ossl/openssl-1.0.2d/libcrypto.a"; sourceTree = "<group>"; };
 		65BE1C6F1BB56809002E8061 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../support/ossl/openssl-1.0.2d/libssl.a"; sourceTree = "<group>"; };
 		65BE1C781BB573C4002E8061 /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = ../support/xml/builddir/.libs/libxml2.a; sourceTree = "<group>"; };
@@ -201,10 +202,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65967BC81C11DF6400814858 /* libbeidpkcs11.4.1.9.dylib in Frameworks */,
 				65BE1C791BB573C4002E8061 /* libxml2.a in Frameworks */,
 				65BE1C701BB56809002E8061 /* libssl.a in Frameworks */,
 				65BE1C6E1BB567C2002E8061 /* libcrypto.a in Frameworks */,
-				659FFCBA1AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,11 +223,11 @@
 		659FFC331AE9360D004CEC1F = {
 			isa = PBXGroup;
 			children = (
+				65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.9.dylib */,
 				653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */,
 				65BE1C781BB573C4002E8061 /* libxml2.a */,
 				65BE1C6F1BB56809002E8061 /* libssl.a */,
 				65BE1C6D1BB567C2002E8061 /* libcrypto.a */,
-				659FFCB91AE93CB0004CEC1F /* libbeidpkcs11.4.1.3.dylib */,
 				659FFC3E1AE9360D004CEC1F /* eID Viewer */,
 				8BBDE3131B3BF02C00CBE13E /* eidfilepreview */,
 				659FFC3D1AE9360D004CEC1F /* Products */,
