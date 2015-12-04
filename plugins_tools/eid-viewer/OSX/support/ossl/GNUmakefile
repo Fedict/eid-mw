@@ -1,4 +1,4 @@
-OSSL_VERSION=1.0.2d
+OSSL_VERSION=1.0.2e
 TP_DIR=../../../../../../ThirdParty
 
 build: openssl/libssl.dylib openssl/libcrypto.dylib
