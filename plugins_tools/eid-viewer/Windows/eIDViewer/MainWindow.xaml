@@ -34,7 +34,8 @@
                     <Label Content="{Binding Path=address_street_and_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,308,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=address_zip, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,334,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=address_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,360,0,0" VerticalAlignment="Top"/>
-                    <Image Source="{Binding Path=photo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="100" Margin="43,236,0,0" VerticalAlignment="Top" Width="100"/>
+                    <Image Source="{Binding Path=photo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="200" Margin="30,56,0,0" VerticalAlignment="Top" Width="140
+                           "/>
 
                 </Grid>
             </TabItem>
