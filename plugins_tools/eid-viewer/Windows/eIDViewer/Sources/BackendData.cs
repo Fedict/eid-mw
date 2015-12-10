@@ -312,5 +312,11 @@ namespace eIDViewer
             { validity_end_date = data; }
         }
 
-    }
+        public void StoreBinData(string label, byte[] data, int datalen)
+        {
+            if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
+            { photo = LoadImage(data); }
+        }
+
+        }
 }

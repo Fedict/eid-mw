@@ -115,7 +115,7 @@ void be_newstringdata(const char* label, const char* data) {
 
 /* Send binary data to the UI (if implemented). Caller: p11.c, cache subsystem
    on translation */
-void be_newbindata(const char* label, const void* data, int datalen) {
+void be_newbindata(const char* label, const unsigned char* data, int datalen) {
 	NEED_CB_FUNC(newbindata);
 	cb->newbindata(label, data, datalen);
 }

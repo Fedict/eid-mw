@@ -30,7 +30,7 @@ namespace eIDViewer
         private delegate void CbNewStringData([MarshalAs(UnmanagedType.LPStr)] string label, [MarshalAs(UnmanagedType.LPStr)]string data);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void Cbnewbindata([MarshalAs(UnmanagedType.LPStr)] string label, [MarshalAs(UnmanagedType.LPArray)] byte[] data, int datalen);
+        private delegate void Cbnewbindata([MarshalAs(UnmanagedType.LPStr)] string label, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data, int datalen);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void Cblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPStr)] string str);
@@ -95,14 +95,15 @@ namespace eIDViewer
 
             theData.logText += "CSCbNewStringData called, data =  " + data + "\n";
         }
-        private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPStr)] string label, [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1)] byte[] data, int datalen)
+
+        private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPStr)] string label,  [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data,  int datalen)
         {
             Console.WriteLine("CSCbnewbindata called, label = ");
             Console.WriteLine(label);
             theData.logText += "CSCbnewbindata called " + label + "\n";
 
-           // if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
-           // { photo = LoadImage(data); }
+            theData.StoreBinData(label, data, datalen);
+
         }
 
         private static void CSCblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPStr)]string str)
