@@ -316,6 +316,11 @@ namespace eIDViewer
         {
             if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
             { photo = LoadImage(data); }
+            else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
+            { //chip_number = BitConverter.ToString(data);
+                chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
+            }
+
         }
 
         }
