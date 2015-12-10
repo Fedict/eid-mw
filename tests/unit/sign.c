@@ -78,9 +78,9 @@ TEST_FUNC(sign) {
 	CK_MECHANISM mech;
 	CK_BYTE data[] = { 'f', 'o', 'o' };
 	CK_SLOT_ID slot;
-	CK_BYTE_PTR sig;
+	CK_BYTE_PTR sig, mod, exp;
 	CK_ULONG sig_len, type, count;
-	CK_OBJECT_HANDLE private, public;
+	CK_OBJECT_HANDLE privatekey, publickey;
 	CK_ATTRIBUTE attr[2];
 
 	if(!have_pin()) {
@@ -111,7 +111,7 @@ TEST_FUNC(sign) {
 	attr[1].ulValueLen = strlen("Signature");
 
 	check_rv(C_FindObjectsInit(session, attr, 2));
-	check_rv(C_FindObjects(session, &private, 1, &count));
+	check_rv(C_FindObjects(session, &privatekey, 1, &count));
 	verbose_assert(count == 1 || count == 0);
 	check_rv(C_FindObjectsFinal(session));
 
@@ -121,7 +121,7 @@ TEST_FUNC(sign) {
 	}
 
 	mech.mechanism = CKM_SHA1_RSA_PKCS;
-	check_rv(C_SignInit(session, &mech, private));
+	check_rv(C_SignInit(session, &mech, privatekey));
 
 	check_rv(C_Sign(session, data, sizeof(data), NULL, &sig_len));
 	sig = malloc(sig_len);
@@ -133,7 +133,7 @@ TEST_FUNC(sign) {
 
 	type = CKO_PUBLIC_KEY;
 	check_rv(C_FindObjectsInit(session, attr, 2));
-	check_rv(C_FindObjects(session, &public, 1, &count));
+	check_rv(C_FindObjects(session, &publickey, 1, &count));
 	verbose_assert(count == 1);
 	check_rv(C_FindObjectsFinal(session));
 
@@ -145,7 +145,7 @@ TEST_FUNC(sign) {
 	attr[1].pValue = NULL_PTR;
 	attr[1].ulValueLen = 0;
 
-	check_rv(C_GetAttributeValue(session, public, attr, 2));
+	check_rv(C_GetAttributeValue(session, publickey, attr, 2));
 
 	verbose_assert(attr[0].ulValueLen == sig_len);
 
@@ -158,7 +158,7 @@ TEST_FUNC(sign) {
 	attr[0].pValue = mod;
 	attr[1].pValue = exp;
 
-	check_rv(C_GetAttributeValue(session, public, attr, 2));
+	check_rv(C_GetAttributeValue(session, publickey, attr, 2));
 
 	printf("Received key modulus with length %lu:\n", attr[0].ulValueLen);
 	hex_dump((char*)mod, attr[0].ulValueLen);
@@ -170,46 +170,6 @@ TEST_FUNC(sign) {
 		return ret;
 	}
 #endif
-
-	if(have_robot()) {
-		ckrv_mod m_is_rmvd[] = {
-			{ CKR_OK, TEST_RV_FAIL },
-			{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
-			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
-		};
-		ckrv_mod m_inv[] = {
-			{ CKR_OK, TEST_RV_FAIL },
-			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
-			{ CKR_SESSION_HANDLE_INVALID, TEST_RV_OK },
-		};
-		ckrv_mod m_pubkey[] = {
-			{ CKR_OK, TEST_RV_FAIL },
-			{ CKR_KEY_FUNCTION_NOT_PERMITTED, TEST_RV_OK },
-		};
-
-		check_rv_long(C_SignInit(session, &mech, public), m_pubkey);
-
-		check_rv(C_SignInit(session, &mech, private));
-
-		robot_remove_card();
-		
-		check_rv_long(C_Sign(session, data, sizeof(data), NULL, &sig_len), m_is_rmvd);
-
-		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
-			check_rv(C_Finalize(NULL_PTR));
-			return ret;
-		}
-
-		check_rv_long(C_SignInit(session, &mech, private), m_inv);
-
-		check_rv(C_CloseSession(session));
-
-		check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
-
-		check_rv(C_SignInit(session, &mech, private));
-	} else {
-		printf("Robot not present, skipping removal/insertion part of test...\n");
-	}
 
 	check_rv(C_Finalize(NULL_PTR));
 

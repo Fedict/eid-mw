@@ -44,7 +44,7 @@ CReadersInfo *oReadersInfo;
 extern "C" {
 	extern unsigned int   gRefCount;
 	extern unsigned int   nReaders;
-	extern bool						gSlotsChanged;
+	extern bool			  gSlotsChanged;
 	extern P11_SLOT       gpSlot[MAX_SLOTS];
 	//local functions
 	CK_RV cal_translate_error(const char *WHERE, long err);
@@ -186,6 +186,7 @@ void cal_clean_slots()
 		{
 			free(pSlot->pobjects);
 			pSlot->pobjects = NULL;
+			pSlot->ulCardDataCached = 0;
 		}
 	}
 	return;
@@ -417,32 +418,32 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 	}
 
 	/* hash algos */
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_MD5;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_SHA_1;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_SHA256;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_SHA384;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_SHA512;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
-	if (n++ <= *pulCount)
+	if (n++ < *pulCount)
 		pMechanismList[n-1] = CKM_RIPEMD160;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
@@ -450,63 +451,63 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismL
 	/* sign algos */
 	if (algos & SIGN_ALGO_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_MD5_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_MD5_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA1_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA1_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA256_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA256_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA384_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA384_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA512_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA512_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_RIPEMD160_RSA_PKCS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_RIPEMD160_RSA_PKCS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA1_RSA_PSS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA1_RSA_PKCS_PSS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
 	if (algos & SIGN_ALGO_SHA256_RSA_PSS)
 	{
-		if (n++ <= *pulCount)
+		if (n++ < *pulCount)
 			pMechanismList[n-1] = CKM_SHA256_RSA_PKCS_PSS;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
@@ -689,6 +690,10 @@ CK_RV cal_init_objects(P11_SLOT *pSlot)
 	char clabel[128];
 	CK_CERTIFICATE_TYPE certType = CKC_X_509;
 
+	//check if the object list is initialized, and if so, return with OK
+	if(pSlot->ulCardDataCached & CACHED_DATA_TYPE_CDF)
+		return CKR_OK;
+
 	//this function will initialize objects as they are valid for the token
 	//this function does not read the actual values but enables an application to
 	//search for an attribute
@@ -802,7 +807,7 @@ CK_RV cal_init_objects(P11_SLOT *pSlot)
 	}
 
 cleanup:
-
+	pSlot->ulCardDataCached |= CACHED_DATA_TYPE_CDF;
 	return (ret);
 }
 #undef WHERE
@@ -1136,7 +1141,7 @@ cleanup:
 
 
 #define WHERE "cal_read_ID_files()"
-CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
+CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 {
 	CK_RV ret = CKR_OK;
 	CByteArray oFileData;
@@ -1170,7 +1175,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 		CReader &oReader = oCardLayer->getReader(szReader);
 		switch(dataType)
 		{
-		case CACHED_DATA_TYPE_ALL:
+		case CACHED_DATA_TYPE_ALL_DATA:
 		case CACHED_DATA_TYPE_ID:
 			oFileData = oReader.ReadFile(BEID_FILE_ID);
 
@@ -1198,7 +1203,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 					(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) cBuffer,ulLen,(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
 				if (ret) goto cleanup;
 			}
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_ADDRESS:
@@ -1222,7 +1227,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 					(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
 				if (ret) goto cleanup;
 			}
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_PHOTO:
@@ -1233,7 +1238,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_PHOTO));
 			if (ret) goto cleanup;
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_RNCERT:
@@ -1244,7 +1249,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT));
 			if (ret) goto cleanup;
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_SIGN_DATA_FILE:
@@ -1254,7 +1259,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)BEID_OBJECTID_SIGN_DATA_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_DATA_FILE));
 			if (ret) goto cleanup;
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		case CACHED_DATA_TYPE_SIGN_ADDRESS_FILE:
@@ -1264,7 +1269,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType)
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),(CK_VOID_PTR) oFileData.GetBytes(),(CK_ULONG)oFileData.Size(),
 				(CK_VOID_PTR)BEID_OBJECTID_SIGN_ADDRESS_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_ADDRESS_FILE));
 			if (ret) goto cleanup;
-			if(dataType != CACHED_DATA_TYPE_ALL){
+			if(dataType != CACHED_DATA_TYPE_ALL_DATA){
 				break;
 			}
 		default:
@@ -1648,6 +1653,7 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 				//if (pObject != NULL)
 				// pObject->state = 0;
 			}
+			pSlot->ulCardDataCached = 0;
 
 			//invalidate sessions
 			p11_invalidate_sessions(hSlot, *pStatus);
@@ -1656,11 +1662,13 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 			if ((*pStatus == P11_CARD_OTHER) || (*pStatus == P11_CARD_INSERTED) )
 			{
 				//(re)initialize objects
+#ifdef PKCS11_FF
 				ret = cal_init_objects(pSlot);
 				if (ret != CKR_OK)
 				{
 					log_trace(WHERE, "E: cal_init_objects() returned %s",log_map_error(ret));
 				}
+#endif
 			}
 		}
 	}

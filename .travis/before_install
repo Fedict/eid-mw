@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+set -x
+
+case $(uname -s) in
+	Linux)
+		sh .travis/add-trusty
+		apt-get update
+		apt-get -t trusty -y install automake
+		apt-get install -y autotools-dev libgtk2.0-dev libpcsclite-dev libtool automake autoconf libcurl4-openssl-dev libxml2-dev
+	;;
+	*)
+		continue
+	;;
+esac

@@ -133,7 +133,7 @@ CCard * CardConnect(const std::string &csReader,
 		for (size_t i = 0; poCard == NULL && i < m_Plugins.size(); i++)
 		{
 			tPluginInfo &plugin = m_Plugins.at(i);
-			if (plugin.csReader.size() != 0 && !StartsWith(strReader, plugin.csReader.c_str()))
+			if (plugin.csReader.size() != 0 && plugin.csReader.compare(0, string::npos, strReader, plugin.csReader.length()))
 				continue;
 			poCard = GetCardInstance(strReader, hCard, poContext, poPinpad, plugin.csPath, oCardPluginLib);
 		}
@@ -188,7 +188,7 @@ CCard * CardConnect(const std::string &csReader,
 		for (size_t i = 0; poCard == NULL && i < m_Plugins.size(); i++)
 		{
 			tPluginInfo &plugin = m_Plugins.at(i);
-			if (!plugin.bFull || (plugin.csReader.size() != 0 && !StartsWith(strReader, plugin.csReader.c_str())))
+			if (!plugin.bFull || (plugin.csReader.size() != 0 && plugin.csReader.compare(0, string::npos, strReader, plugin.csReader.length())))
 				continue;
 			poCard = ConnectGetCardInstance(strReader, poContext, poPinpad,
 				plugin.csPath, oCardPluginLib);
@@ -402,14 +402,15 @@ static void GetPluginNames()
 
 static void AddPluginName(const char *csPluginName, const std::string & csPath)
 {
-	if (StartsWith(csPluginName, "cardplugin") || StartsWith(csPluginName, "libcardplugin"))
+	if (!strncmp(csPluginName, "cardplugin", sizeof "cardplugin")
+			|| !strncmp(csPluginName, "libcardplugin", sizeof "libcardplugin"))
 	{
 		tPluginInfo plugin;
 
 		plugin.csPath = csPath;
 
-		plugin.bFull = StartsWith(csPluginName, "cardpluginFull") ||
-			StartsWith(csPluginName, "libcardpluginFull");
+		plugin.bFull = !strncmp(csPluginName, "cardpluginFull", sizeof "cardpluginFull") ||
+			!strncmp(csPluginName, "libcardpluginFull", sizeof "libcardpluginFull");
 		const char *ptr1 = strstr(csPluginName, "__");
 		const char *ptr2 = (ptr1 == NULL ? NULL : strstr(ptr1 + 2, "__"));
 		if (ptr2 != NULL && ptr2 - ptr1 < 200)

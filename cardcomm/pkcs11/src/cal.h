@@ -212,13 +212,13 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo);
 CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount);
 CK_RV cal_connect(CK_SLOT_ID hSlot);
 CK_RV cal_disconnect(CK_SLOT_ID hSlot);
-CK_RV cal_init_objects(CK_SLOT_ID hSlot);
+CK_RV cal_init_objects(P11_SLOT *pSlot);
 CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo);
 CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging);
 CK_RV cal_logout(CK_SLOT_ID hSlot);
 CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_newpin, CK_CHAR_PTR newpin);
 CK_RV cal_get_card_data(CK_SLOT_ID hSlot);
-CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_BYTE dataType);
+CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType);
 CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject);
 CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out);
 CK_RV cal_validate_session(P11_SESSION *pSession);
@@ -234,4 +234,3 @@ CK_RV cal_refresh_readers();
 
 
 #endif
-

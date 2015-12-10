@@ -39,7 +39,7 @@ TEST_FUNC(readdata) {
 	CK_ULONG type;
 	CK_SLOT_ID slot;
 	CK_ATTRIBUTE attr;
-	int ret;
+	int ret = TEST_RV_OK;
 
 #ifndef WIN32
 	if(!can_confirm()) {

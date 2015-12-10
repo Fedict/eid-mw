@@ -222,7 +222,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>CAL_BEID;EIDMW_STATIC_LIB;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAL_BEID;EIDMW_STATIC_LIB;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -258,7 +258,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NO_DIALOGS;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NO_DIALOGS;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -295,7 +295,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>CAL_BEID;EIDMW_STATIC_LIB;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAL_BEID;EIDMW_STATIC_LIB;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -338,7 +338,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -378,7 +378,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>CAL_BEID;EIDMW_STATIC_LIB;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAL_BEID;EIDMW_STATIC_LIB;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -415,7 +415,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>CAL_BEID;PKCS11_FF;PKCS11_V2_20;EIDMW_STATIC_LIB;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAL_BEID;PKCS11_FF;PKCS11_V2_20;EIDMW_STATIC_LIB;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -452,7 +452,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>EIDMW_STATIC_LIB;WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_WINERROR;CAL_BEID;PKCS11_V2_20;PKCS11_FF;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EIDMW_STATIC_LIB;WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_WINERROR;CAL_BEID;PKCS11_V2_20;PKCS11_FF;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -490,7 +490,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NO_DIALOGS;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NO_DIALOGS;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -528,7 +528,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>CAL_BEID;EIDMW_STATIC_LIB;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAL_BEID;EIDMW_STATIC_LIB;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -572,7 +572,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>CAL_BEID;PKCS11_FF;PKCS11_V2_20;EIDMW_STATIC_LIB;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAL_BEID;PKCS11_FF;PKCS11_V2_20;EIDMW_STATIC_LIB;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -616,7 +616,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>CAL_BEID;PKCS11_FF;PKCS11_V2_20;EIDMW_STATIC_LIB;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CAL_BEID;PKCS11_FF;PKCS11_V2_20;EIDMW_STATIC_LIB;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -660,7 +660,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\rsaref220;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NO_DIALOGS;BEID_35;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;_USRDLL;BEIDPKCS11_EXPORTS;USE_WINERROR;BEID_OLD_PINPAD;CARDPLUGIN_IN_CAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -707,6 +707,7 @@
     <ClCompile Include="..\src\cardlayer\cardpluginbeid\beidp15correction.cpp" />
     <ClCompile Include="..\src\cardlayer\cardreaderinfo.cpp" />
     <ClCompile Include="..\src\cardlayer\context.cpp" />
+    <ClCompile Include="..\src\cardlayer\old\PinpadLibOldBeid.cpp" />
     <ClCompile Include="..\src\cardlayer\p15correction.cpp" />
     <ClCompile Include="..\src\cardlayer\pcsc.cpp" />
     <ClCompile Include="..\src\cardlayer\pinpad.cpp" />
@@ -774,6 +775,8 @@
     <ClInclude Include="..\src\cardlayer\cardreaderinfo.h" />
     <ClInclude Include="..\src\cardlayer\context.h" />
     <ClInclude Include="..\src\cardlayer\internalconst.h" />
+    <ClInclude Include="..\src\cardlayer\old\PinpadLibOldBeid.h" />
+    <ClInclude Include="..\src\cardlayer\old\scr.h" />
     <ClInclude Include="..\src\cardlayer\p15correction.h" />
     <ClInclude Include="..\src\cardlayer\p15objects.h" />
     <ClInclude Include="..\src\cardlayer\pcsc.h" />

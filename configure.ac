@@ -1,6 +1,6 @@
 AC_PREREQ([2.61])
 AC_INIT([eid-mw],
-  m4_esyscmd_s(echo "4.1.4-"$(git describe --dirty|sed -e 's/-/./g')),
+  m4_esyscmd_s(echo "4.1.9-"$(git describe --dirty|sed -e 's/-/./g')),
   [servicedesk@fedict.be],,
   [http://eid.belgium.be])
 
@@ -9,6 +9,7 @@ AC_CONFIG_SRCDIR([cardcomm])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([scripts/m4])
 AC_CANONICAL_HOST
+AM_SILENT_RULES([yes])
 
 LT_INIT
 AM_INIT_AUTOMAKE([subdir-objects foreign tar-pax dist-zip serial-tests])
@@ -110,10 +111,13 @@ AM_CONDITIONAL([JPEG], [test x$HAVE_JPEGLIB = x1])
 AC_SUBST([JPEG_LIBS])
 AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjpeg installed])
 
-PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1])
+PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1], [HAVE_OPENSSL=0])
+AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
 
 PKG_CHECK_MODULES(CURL, "libcurl", [HAVE_CURL=1])
-PKG_CHECK_MODULES(xmlsec, "xmlsec1", [HAVE_XMLSEC=1])
+MAINVERSION=$(echo $PACKAGE_VERSION|sed -e 's/-.*$//')
+AC_DEFINE_UNQUOTED([MAINVERSION], $MAINVERSION, [do not change this])
+AC_SUBST(MAINVERSION)
 
 pkgconfigdir="\$(libdir)/pkgconfig"
 pkcs11hincludedir="\$(includedir)/beid/rsaref220"
@@ -130,8 +134,8 @@ AC_CONFIG_FILES([Makefile
 		 plugins_tools/aboutmw/gtk/po/Makefile.in
 		 plugins_tools/eid-viewer/Makefile
 		 plugins_tools/eid-viewer/test/Makefile
-		 plugins_tools/eid-viewer/gtk/po/Makefile.in])
-
+		 plugins_tools/eid-viewer/gtk/po/Makefile.in
+		 rpm/eid-mw.spec])
 AC_CONFIG_SUBDIRS([plugins_tools/xpi])
 
 AC_OUTPUT
