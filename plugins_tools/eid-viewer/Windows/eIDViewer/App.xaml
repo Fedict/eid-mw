@@ -2,8 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml"
-             xmlns:local="clr-namespace:eIDViewer">
+             xmlns:viewer="clr-namespace:eIDViewer">
     <Application.Resources>
-        <local:eIDViewerBackend x:Key="eIDViewerBackendObj" />
+        <viewer:eIDViewerBackendData x:Key="eIDViewerBackendObj" />
     </Application.Resources>
 </Application>
