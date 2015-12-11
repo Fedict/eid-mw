@@ -11,27 +11,35 @@ LIBOPEN --> CALLBACKS : SET_CALLBACKS
 
 CALLBACKS: enter:C_Initialize()\nexit:C_Finalize()
 state CALLBACKS {
-  state READY
+  state NO_TOKEN
   state TOKEN
   state FILE
   state CARD_INVALID
 
-  [*] --> READY
+  [*] --> NO_TOKEN
 
-  READY --> FILE : OPEN_FILE
-  READY --> TOKEN : TOKEN_INSERTED
-  READY: enter: source_none
-
-  FILE --> READY : CLOSE_FILE
+  NO_TOKEN --> FILE : OPEN_FILE
+  FILE --> NO_TOKEN : CLOSE_FILE
   FILE --> TOKEN : TOKEN_INSERTED
-  FILE --> READY : STATE_ERROR
+  FILE --> NO_TOKEN : STATE_ERROR
   FILE: enter: do_parse_file
 
   TOKEN: enter: eid_vwr_p11_open_session\nexit: eid_vwr_p11_close_session
-  TOKEN --> READY : TOKEN_REMOVED
+  TOKEN --> NO_TOKEN : TOKEN_REMOVED
   TOKEN --> CARD_INVALID : DATA_INVALID
 
-  CARD_INVALID --> READY : TOKEN_REMOVED
+  CARD_INVALID --> NO_TOKEN : TOKEN_REMOVED
+
+  state NO_TOKEN {
+    state NO_READER
+    state READY
+
+    [*] --> NO_READER
+    NO_READER --> READY : READER_FOUND
+
+    READY --> TOKEN : TOKEN_INSERTED
+    READY: enter: source_none
+  }
 
   state TOKEN {
     state TOKEN_ID
