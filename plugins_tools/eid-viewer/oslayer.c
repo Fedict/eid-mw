@@ -23,12 +23,16 @@ void eid_vwr_be_mainloop() {
 }
 
 void eid_vwr_poll() {
-	CK_SLOT_ID_PTR tmp = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
+	CK_SLOT_ID_PTR no_token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
+	CK_SLOT_ID_PTR token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
 
-	if(eid_vwr_p11_find_first_slot(tmp) == EIDV_RV_OK) {
-		sm_handle_event(EVENT_TOKEN_INSERTED, tmp, free, NULL);
+	if(eid_vwr_p11_find_first_slot(CK_FALSE, no_token) == EIDV_RV_OK) {
+		sm_handle_event(EVENT_READER_FOUND, no_token, free, NULL);
+	}
+	if(eid_vwr_p11_find_first_slot(CK_TRUE, token) == EIDV_RV_OK) {
+		sm_handle_event(EVENT_TOKEN_INSERTED, token, free, NULL);
 	} else {
-		sm_handle_event(EVENT_TOKEN_REMOVED, tmp, free, NULL);
+		sm_handle_event(EVENT_TOKEN_REMOVED, token, free, NULL);
 	}
 }
 

@@ -12,7 +12,7 @@
 #define EIDV_RV_FAIL -1
 
 int eid_vwr_p11_init();
-int eid_vwr_p11_find_first_slot(CK_SLOT_ID_PTR loc);
+int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc);
 int eid_vwr_p11_read_id(void*);
 int eid_vwr_p11_read_certs(void*);
 int eid_vwr_p11_open_session(void* slot);
