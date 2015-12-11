@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Windows.Threading;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows.Media.Imaging;
 
 
@@ -65,6 +65,7 @@ namespace eIDViewer
             eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
                 mybindata, mylog, mynewstate, mypinopresult);
 
+            theData.cardreader_icon = new BitmapImage(new Uri("Resources/state_noreaders.png", UriKind.Relative));
             /*
             //fill in the functions reference struct
             eIDViewerBackend.mCSCbStruct.theCbNewSrc = eIDViewerBackend.CSCbNewSrc;
@@ -80,11 +81,50 @@ namespace eIDViewer
             eid_vwr_createcallbacks(ref mCSCbStruct);*/
         }
 
+        private static void AdjustIconImage(string fileName)
+        {
+            if (App.Current.Dispatcher.CheckAccess())
+            {
+                theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
+            }
+            else
+            {
+                App.Current.Dispatcher.BeginInvoke(
+                  DispatcherPriority.Background,
+                  new Action(() => {
+                      theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
+                  }));
+            }
+        }
+
         private static void CSCbNewSrc(eid_vwr_source eid_vwr_source)
         {
             Console.WriteLine("CbNewSrc called ");
             Console.WriteLine(eid_vwr_source.ToString());
             theData.logText += "CSCbNewSrc called " + eid_vwr_source.ToString() + "\n";
+
+            switch (eid_vwr_source)
+            {
+                case eid_vwr_source.EID_VWR_SRC_UNKNOWN:
+                    theData.type_kaart = "onbekende kaart";
+                    theData.ResetDataValues();
+                    AdjustIconImage("Resources\\state_error.png");
+                    break;
+                case eid_vwr_source.EID_VWR_SRC_NONE:
+                    theData.ResetDataValues();
+                    AdjustIconImage("Resources\\state_noeidpresent.png");
+                    break;
+                case eid_vwr_source.EID_VWR_SRC_CARD:
+                    theData.type_kaart = "IDENTITEITSKAART";
+                    AdjustIconImage("Resources\\state_eidpresent.png");
+                    break;
+                case eid_vwr_source.EID_VWR_SRC_FILE:
+                    theData.type_kaart = "IDENTITEITSKAART";
+                    AdjustIconImage("Resources\\state_fileloaded.png");
+                    break;
+                default:
+                    break;
+            }
         }
         private static void CSCbNewStringData([MarshalAs(UnmanagedType.LPStr)] string label, [MarshalAs(UnmanagedType.LPStr)]string data)
         {
@@ -118,6 +158,17 @@ namespace eIDViewer
             Console.WriteLine("CSCbnewstate called ");
             Console.WriteLine(state.ToString());
             theData.logText += "CSCbnewstate called " + state.ToString() + "\n";
+
+            switch(state)
+            {
+                case eid_vwr_states.STATE_CARD_INVALID:
+                case eid_vwr_states.STATE_TOKEN_ERROR:
+                    theData.ResetDataValues();
+                    break;
+                default:
+                    break;
+            }
+ 
         }
         private static void CSCbpinopResult(eid_vwr_pinops pinop, eid_vwr_result result)
         {

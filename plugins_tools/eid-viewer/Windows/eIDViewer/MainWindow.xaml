@@ -7,7 +7,7 @@
         <TabControl Margin="0,23,0,60">
             <TabItem Header="Identity">
                 <Grid Background="#FFE5E5E5" Margin="0,-1,0,1">
-                    <Label Content="Type kaart" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" Width="123"/>
+                    <Label Content="{Binding Path=type_kaart, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" Width="123"/>
                     <Separator HorizontalAlignment="Left" Height="16" Margin="30,35,0,0" VerticalAlignment="Top" Width="308"/>
                     <Label Content="Naam:" HorizontalAlignment="Left" Margin="176,46,0,0" VerticalAlignment="Top"/>
                     <Label Content="Voornamen:" HorizontalAlignment="Left" Margin="176,71,0,0" VerticalAlignment="Top"/>
@@ -103,7 +103,7 @@
             </MenuItem>
         </Menu>
         <Grid Height="55" Margin="0,0,0,0" VerticalAlignment="Bottom">
-            <Image HorizontalAlignment="Right" Height="55" Margin="0,0,0,0" VerticalAlignment="Top" Width="100" Source="Resources/state_noreaders.png"/>
+            <Image HorizontalAlignment="Right" Height="55" Margin="0,0,0,0" VerticalAlignment="Top" Width="100" Source="{Binding Path=cardreader_icon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Image HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="100" Source="Resources/print.png" IsEnabled="False" Opacity="0.5"/>
         </Grid>
 

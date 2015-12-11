@@ -134,6 +134,14 @@
     <Resource Include="Resources\print.png" />
     <Resource Include="Resources\state_noreaders.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\state_eidpresent.png" />
+    <Resource Include="Resources\state_eidyielded.png" />
+    <Resource Include="Resources\state_error.png" />
+    <Resource Include="Resources\state_fileloaded.png" />
+    <Resource Include="Resources\state_fileloading.png" />
+    <Resource Include="Resources\state_noeidpresent.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

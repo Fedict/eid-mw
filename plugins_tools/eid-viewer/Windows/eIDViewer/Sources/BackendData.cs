@@ -33,6 +33,17 @@ namespace eIDViewer
             }
         }
 
+        private string _type_kaart;
+        public string type_kaart
+        {
+            get { return _type_kaart; }
+            set
+            {
+                _type_kaart = value;
+                NotifyPropertyChanged("type_kaart");
+            }
+        }       
+
         private BitmapImage LoadImage(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0) return null;
@@ -272,6 +283,17 @@ namespace eIDViewer
             }
         }
 
+        private BitmapImage _cardreader_icon;
+        public BitmapImage cardreader_icon
+        {
+            get { return _cardreader_icon; }
+            set
+            {
+                _cardreader_icon = value;
+                this.NotifyPropertyChanged("cardreader_icon");
+            }
+        }
+
         public void StoreStringData(string label, string data)
         {
             if (String.Equals(label, "firstnames", StringComparison.Ordinal))
@@ -323,5 +345,28 @@ namespace eIDViewer
 
         }
 
+        public void ResetDataValues()
+        {
+            firstName = "-";
+            firstNames = "-";
+            surName = "-";
+            first_letter_of_third_given_name = "-";
+            date_of_birth = "-";
+            location_of_birth = "-";
+            gender = "-";
+            national_number = "-";
+            nationality = "BE";
+            nobility = "-";
+            special_status = "-";
+            address_street_and_number = "-";
+            address_zip = "-";
+            address_municipality = "-";
+            card_number = "-";
+            issuing_municipality = "-";
+            chip_number = "-";
+            validity_begin_date = "-";
+            validity_end_date = "-";
         }
+
+    }
 }
