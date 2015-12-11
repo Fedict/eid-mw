@@ -178,7 +178,7 @@ static void newstringdata(const char* l, const char* data) {
 }
 
 /* Add a new binary data element to the UI */
-static void newbindata(const char* label, const void* data, int datalen) {
+static void newbindata(const char* label, const unsigned char* data, int datalen) {
 	bindisplayfunc func;
 	gchar* msg;
 
@@ -386,9 +386,9 @@ static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIt
 	newstringdata("certvaltilval", to);
 	newstringdata("certuseval", use);
 	newstringdata("certdata", certdata);
-	newbindata("certimage", image, -1);
-	newbindata("certvalfromval:past", &past, sizeof(gboolean));
-	newbindata("certvaltilval:future", &future, sizeof(gboolean));
+	newbindata("certimage", (unsigned char*)image, -1);
+	newbindata("certvalfromval:past", (unsigned char*)(&past), sizeof(gboolean));
+	newbindata("certvaltilval:future", (unsigned char*)(&future), sizeof(gboolean));
 }
 
 /* Called when the user changes the selection of the treeview on the
