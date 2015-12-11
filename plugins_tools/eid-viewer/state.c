@@ -21,6 +21,8 @@ static const char* state_to_name(enum eid_vwr_states state) {
 	STATE_NAME(TOKEN_ERROR);
 	STATE_NAME(FILE);
 	STATE_NAME(CARD_INVALID);
+	STATE_NAME(NO_READER);
+	STATE_NAME(NO_TOKEN);
 #undef STATE_NAME
 	default:
 		return "unknown state";
@@ -41,6 +43,7 @@ static const char* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(STATE_ERROR);
 	EVENT_NAME(DATA_INVALID);
 	EVENT_NAME(SERIALIZE);
+	EVENT_NAME(READER_FOUND);
 #undef EVENT_NAME
 	default:
 		return "unknown event";
@@ -98,12 +101,11 @@ void sm_init() {
 	}
 	states[STATE_LIBOPEN].out[EVENT_SET_CALLBACKS] = &(states[STATE_CALLBACKS]);
 
-	states[STATE_CALLBACKS].first_child = &(states[STATE_READY]);
+	states[STATE_CALLBACKS].first_child = &(states[STATE_NO_TOKEN]);
 	states[STATE_CALLBACKS].enter = do_initialize;
 
-	states[STATE_READY].parent = &(states[STATE_CALLBACKS]);
+	states[STATE_READY].parent = &(states[STATE_NO_TOKEN]);
 	states[STATE_READY].enter = source_none;
-	states[STATE_READY].out[EVENT_OPEN_FILE] = &(states[STATE_FILE]);
 	states[STATE_READY].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);
 
 	states[STATE_TOKEN].parent = &(states[STATE_CALLBACKS]);
@@ -145,12 +147,19 @@ void sm_init() {
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
+	states[STATE_NO_TOKEN].parent = &(states[STATE_CALLBACKS]);
+	states[STATE_NO_TOKEN].first_child = &(states[STATE_NO_READER]);
+	states[STATE_NO_TOKEN].out[EVENT_OPEN_FILE] = &(states[STATE_FILE]);
+
+	states[STATE_NO_READER].parent = &(states[STATE_NO_TOKEN]);
+	states[STATE_NO_READER].out[EVENT_READER_FOUND] = &(states[STATE_READY]);
+
 	states[STATE_FILE].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_FILE].enter = eid_vwr_deserialize;
 	states[STATE_FILE].leave = cache_clear;
-	states[STATE_FILE].out[EVENT_CLOSE_FILE] = &(states[STATE_READY]);
+	states[STATE_FILE].out[EVENT_CLOSE_FILE] = &(states[STATE_NO_TOKEN]);
 	states[STATE_FILE].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);
-	states[STATE_FILE].out[EVENT_STATE_ERROR] = &(states[STATE_READY]);
+	states[STATE_FILE].out[EVENT_STATE_ERROR] = &(states[STATE_NO_TOKEN]);
 
 	curstate = &(states[STATE_LIBOPEN]);
 

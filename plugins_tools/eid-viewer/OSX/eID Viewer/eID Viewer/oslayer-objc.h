@@ -35,6 +35,8 @@ typedef NS_ENUM(NSInteger, eIDState) {
     eIDStateTokenError = STATE_TOKEN_ERROR,
     eIDStateFile = STATE_FILE,
     eIDStateCardInvalid = STATE_CARD_INVALID,
+    eIDStateNoToken = STATE_NO_TOKEN,
+    eIDStateNoReader = STATE_NO_READER,
 };
 
 typedef NS_ENUM(NSInteger, eIDLanguage) {
