@@ -21,7 +21,7 @@ public struct CSCbStruct
 namespace eIDViewer
 {
 
-    public static class eIDViewerBackend
+    public static class NativeMethods
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void CbNewSrc(eid_vwr_source eid_vwr_source);
@@ -46,12 +46,12 @@ namespace eIDViewer
         //list all functions of the C backend we need to call
         //[DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //public static extern int eid_vwr_createcallbacks(ref CSCbStruct eid_vwr_ui_callbacks);       
-        private static Cblog mylog = eIDViewerBackend.CSCblog;
-        private static CbNewSrc mynewsrc = eIDViewerBackend.CSCbNewSrc;
-        private static CbNewStringData mystringdata = eIDViewerBackend.CSCbNewStringData;
-        private static Cbnewbindata mybindata = eIDViewerBackend.CSCbnewbindata;
-        private static Cbnewstate mynewstate = eIDViewerBackend.CSCbnewstate;
-        private static Cbpinop_result mypinopresult = eIDViewerBackend.CSCbpinopResult;
+        private static Cblog mylog = NativeMethods.CSCblog;
+        private static CbNewSrc mynewsrc = NativeMethods.CSCbNewSrc;
+        private static CbNewStringData mystringdata = NativeMethods.CSCbNewStringData;
+        private static Cbnewbindata mybindata = NativeMethods.CSCbnewbindata;
+        private static Cbnewstate mynewstate = NativeMethods.CSCbnewstate;
+        private static Cbpinop_result mypinopresult = NativeMethods.CSCbpinopResult;
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_set_cbfuncs(CbNewSrc theCbNewSrc, CbNewStringData theCbNewStringData,
@@ -116,10 +116,13 @@ namespace eIDViewer
                     break;
                 case eid_vwr_source.EID_VWR_SRC_CARD:
                     theData.type_kaart = "IDENTITEITSKAART";
+                    theData.text_color = "Black";
                     AdjustIconImage("Resources\\state_eidpresent.png");
+                    theData.eid_card_present = "True";
                     break;
                 case eid_vwr_source.EID_VWR_SRC_FILE:
                     theData.type_kaart = "IDENTITEITSKAART";
+                    theData.text_color = "Black";
                     AdjustIconImage("Resources\\state_fileloaded.png");
                     break;
                 default:

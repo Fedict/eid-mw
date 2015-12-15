@@ -18,10 +18,10 @@ namespace eIDViewer
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            eIDViewerBackend.theData = (eIDViewerBackendData)(this.Resources["eIDViewerBackendObj"]);
-            eIDViewerBackend.Init();
+            NativeMethods.theData = (eIDViewerBackendData)(this.Resources["eIDViewerBackendObj"]);
+            NativeMethods.Init();
 
-            backendThread = new Thread(eIDViewerBackend.backendMainloop);
+            backendThread = new Thread(NativeMethods.backendMainloop);
             backendThread.Start();
             Console.WriteLine("backendThread started");
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows;
 
 namespace eIDViewer
 {
@@ -347,6 +348,7 @@ namespace eIDViewer
 
         public void ResetDataValues()
         {
+            text_color = "Gray";
             firstName = "-";
             firstNames = "-";
             surName = "-";
@@ -366,7 +368,31 @@ namespace eIDViewer
             chip_number = "-";
             validity_begin_date = "-";
             validity_end_date = "-";
+            eid_card_present = "False";
         }
+
+        private String _text_color;
+        public String text_color
+        {
+            get { return _text_color; }
+            set
+            {
+                _text_color = value;
+                this.NotifyPropertyChanged("text_color");
+            }
+        }
+
+        private String _eid_card_present;
+        public String eid_card_present
+        {
+            get { return _eid_card_present; }
+            set
+            {
+                _eid_card_present = value;
+                this.NotifyPropertyChanged("eid_card_present");
+            }
+        }
+        
 
     }
 }
