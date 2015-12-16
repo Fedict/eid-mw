@@ -86,7 +86,7 @@ int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) 
 	printf(msg, buf);
 	free(buf);
     
-    return TEST_RV_OK;
+	return TEST_RV_OK;
 }
 
 #ifdef HAVE_TERMIOS_H
