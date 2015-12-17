@@ -2,26 +2,28 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="550.987" Width="502.434"    
-        DataContext="{StaticResource eIDViewerBackendObj}">
-    <Grid>
+        xmlns:resx="clr-namespace:eIDViewer.Resources"
+        DataContext="{StaticResource eIDViewerBackendObj}"
+        xml:lang="en-US">
+    <Grid >
         <TabControl Margin="0,23,0,60">
             <TabItem Header="Identity">
                 <Grid Background="#FFE5E5E5" Margin="0,-1,0,1">
                     <Label Content="{Binding Path=type_kaart, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" Width="123"/>
                     <Separator HorizontalAlignment="Left" Height="16" Margin="30,35,0,0" VerticalAlignment="Top" Width="308"/>
-                    <Label Content="Naam:" HorizontalAlignment="Left" Margin="176,46,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Voornamen:" HorizontalAlignment="Left" Margin="176,71,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Geboorteplaats:" HorizontalAlignment="Left" Margin="176,97,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Geboortedatum:" HorizontalAlignment="Left" Margin="176,123,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Geslacht:" HorizontalAlignment="Left" Margin="176,149,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Nationaal nummer:" HorizontalAlignment="Left" Margin="176,175,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Nationaliteit:" HorizontalAlignment="Left" Margin="176,201,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Titel:" HorizontalAlignment="Left" Margin="176,227,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Speciale status:" HorizontalAlignment="Left" Margin="176,253,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.NameLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,46,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.GivenNamesLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,71,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.PlaceOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,97,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.DateOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,123,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.SexLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,149,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.NationalNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,175,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.NationalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,201,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.TitleLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,227,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.SpecialStatusLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,253,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Separator HorizontalAlignment="Left" Height="16" Margin="176,284,0,0" VerticalAlignment="Top" Width="220"/>
-                    <Label Content="Straat:" HorizontalAlignment="Left" Margin="176,308,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Postcode:" HorizontalAlignment="Left" Margin="176,334,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Gemeente:" HorizontalAlignment="Left" Margin="176,360,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.StreetLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,308,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.PostalCodeLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,334,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=resource1.MunicipalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="176,360,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="{Binding Path=surName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,46,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=firstNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,71,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=date_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="303,97,0,0" VerticalAlignment="Top"/>
@@ -87,10 +89,10 @@
                 <MenuItem Header="Quit" Click="ExitMenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="Language">
-                <MenuItem Header="Deutch"/>
-                <MenuItem Header="English"/>
-                <MenuItem Header="Français"/>
-                <MenuItem Header="Nederlands"/>
+                <MenuItem Header="Deutch" Click="Deutch_Click"/>
+                <MenuItem Header="English" Click="English_Click"/>
+                <MenuItem Header="Français" Click="French_Click"/>
+                <MenuItem Header="Nederlands" Click="Nederlands_Click"/>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About.."/>

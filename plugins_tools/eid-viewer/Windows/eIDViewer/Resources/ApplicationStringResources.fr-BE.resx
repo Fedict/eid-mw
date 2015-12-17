@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,111 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DateOfBirthLabel" xml:space="preserve">
+    <value>Date de naissance:</value>
+  </data>
+  <data name="genderFemale" xml:space="preserve">
+    <value>F</value>
+  </data>
+  <data name="genderMale" xml:space="preserve">
+    <value>M</value>
+  </data>
+  <data name="GivenNamesLabel" xml:space="preserve">
+    <value>Pr\u00e9noms:</value>
+  </data>
+  <data name="MunicipalityLabel" xml:space="preserve">
+    <value>Commune:</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Nom:</value>
+  </data>
+  <data name="NationalityLabel" xml:space="preserve">
+    <value>Nationalit\u00e9:</value>
+  </data>
+  <data name="NationalNumberLabel" xml:space="preserve">
+    <value>Num\u00e9ro national:</value>
+  </data>
+  <data name="PlaceOfBirthLabel" xml:space="preserve">
+    <value>Lieu de naissance:</value>
+  </data>
+  <data name="PostalCodeLabel" xml:space="preserve">
+    <value>Code postal:</value>
+  </data>
+  <data name="SexLabel" xml:space="preserve">
+    <value>Sexe</value>
+  </data>
+  <data name="SpecialStatusLabel" xml:space="preserve">
+    <value>Etat sp\u00e9cial:</value>
+  </data>
+  <data name="special_organisation_former_blue_card" xml:space="preserve">
+    <value>Ancien titulaire d\u2019une carte bleue europ\u00e9enne</value>
+  </data>
+  <data name="special_organisation_nato" xml:space="preserve">
+    <value>OTAN</value>
+  </data>
+  <data name="special_organisation_researcher" xml:space="preserve">
+    <value>Chercheur</value>
+  </data>
+  <data name="special_organisation_shape" xml:space="preserve">
+    <value>SHAPE</value>
+  </data>
+  <data name="special_status_extended_minority" xml:space="preserve">
+    <value>Minorit\u00e9 \u00e9tendue</value>
+  </data>
+  <data name="special_status_white_cane" xml:space="preserve">
+    <value>Canne blanche</value>
+  </data>
+  <data name="special_status_yellow_cane" xml:space="preserve">
+    <value>Canne jaune</value>
+  </data>
+  <data name="StreetLabel" xml:space="preserve">
+    <value>Rue:</value>
+  </data>
+  <data name="TitleLabel" xml:space="preserve">
+    <value>Titre:</value>
+  </data>
+  <data name="type_BELGIAN_CITIZEN" xml:space="preserve">
+    <value>CARTE D'IDENTITE</value>
+  </data>
+  <data name="type_BOOTSTRAP_CARD" xml:space="preserve">
+    <value>CARTE DE DEMARRAGE</value>
+  </data>
+  <data name="type_EUROPEAN_BLUE_CARD_H" xml:space="preserve">
+    <value>H. Carte bleue europ\u00e9enne</value>
+  </data>
+  <data name="type_FOREIGNER_A" xml:space="preserve">
+    <value>Certificat d'inscription au Registre des Etrangers \u2013 S\u00e9jour temporaire</value>
+  </data>
+  <data name="type_FOREIGNER_B" xml:space="preserve">
+    <value>Certificat d'inscription au Registre des Etrangers</value>
+  </data>
+  <data name="type_FOREIGNER_C" xml:space="preserve">
+    <value>Carte d'identit\u00e9 d'\u00e9tranger</value>
+  </data>
+  <data name="type_FOREIGNER_D" xml:space="preserve">
+    <value>R\u00e9sident de longue dur\u00e9e \u2013 CE</value>
+  </data>
+  <data name="type_FOREIGNER_E" xml:space="preserve">
+    <value>Carte (de s\u00e9jour) de ressortissant d\u2019un Etat membre de la CEE \u2013 Attestation d\u2019enregistrement</value>
+  </data>
+  <data name="type_FOREIGNER_E_PLUS" xml:space="preserve">
+    <value>Document attestant de la permanence du s\u00e9jour d\u2019un ressortissant de l'UE</value>
+  </data>
+  <data name="type_FOREIGNER_F" xml:space="preserve">
+    <value>Carte pour les \u00e9trangers non UE qui sont membres de famille d\u2019un ressortissant UE ou d\u2019un Belge</value>
+  </data>
+  <data name="type_FOREIGNER_F_PLUS" xml:space="preserve">
+    <value>Carte de s\u00e9jour permanent de membre de la famille d\u2019un citoyen de l\u2019Union</value>
+  </data>
+  <data name="type_HABILITATION_CARD" xml:space="preserve">
+    <value>Carte d'habilitation</value>
+  </data>
+  <data name="type_KIDS_CARD" xml:space="preserve">
+    <value>CARTE POUR ENFANTS</value>
+  </data>
 </root>
