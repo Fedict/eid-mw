@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eIDViewer", "eIDViewer\eIDViewer.csproj", "{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{754CDA28-B21E-4919-94A2-2DC6BA77F578} = {754CDA28-B21E-4919-94A2-2DC6BA77F578}
