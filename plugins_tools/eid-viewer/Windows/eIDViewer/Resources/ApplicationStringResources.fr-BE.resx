@@ -127,7 +127,7 @@
     <value>M</value>
   </data>
   <data name="GivenNamesLabel" xml:space="preserve">
-    <value>Pr\u00e9noms:</value>
+    <value>Prénoms:</value>
   </data>
   <data name="MunicipalityLabel" xml:space="preserve">
     <value>Commune:</value>
@@ -136,10 +136,10 @@
     <value>Nom:</value>
   </data>
   <data name="NationalityLabel" xml:space="preserve">
-    <value>Nationalit\u00e9:</value>
+    <value>Nationalité:</value>
   </data>
   <data name="NationalNumberLabel" xml:space="preserve">
-    <value>Num\u00e9ro national:</value>
+    <value>Numéro national:</value>
   </data>
   <data name="PlaceOfBirthLabel" xml:space="preserve">
     <value>Lieu de naissance:</value>
@@ -151,10 +151,10 @@
     <value>Sexe</value>
   </data>
   <data name="SpecialStatusLabel" xml:space="preserve">
-    <value>Etat sp\u00e9cial:</value>
+    <value>Etat spécial:</value>
   </data>
   <data name="special_organisation_former_blue_card" xml:space="preserve">
-    <value>Ancien titulaire d\u2019une carte bleue europ\u00e9enne</value>
+    <value>Ancien titulaire d’une carte bleue européenne</value>
   </data>
   <data name="special_organisation_nato" xml:space="preserve">
     <value>OTAN</value>
@@ -166,7 +166,7 @@
     <value>SHAPE</value>
   </data>
   <data name="special_status_extended_minority" xml:space="preserve">
-    <value>Minorit\u00e9 \u00e9tendue</value>
+    <value>Minorité étendue</value>
   </data>
   <data name="special_status_white_cane" xml:space="preserve">
     <value>Canne blanche</value>
@@ -181,37 +181,37 @@
     <value>Titre:</value>
   </data>
   <data name="type_BELGIAN_CITIZEN" xml:space="preserve">
-    <value>CARTE D'IDENTITE</value>
+    <value>CARTE D'IDENTITÉ</value>
   </data>
   <data name="type_BOOTSTRAP_CARD" xml:space="preserve">
     <value>CARTE DE DEMARRAGE</value>
   </data>
   <data name="type_EUROPEAN_BLUE_CARD_H" xml:space="preserve">
-    <value>H. Carte bleue europ\u00e9enne</value>
+    <value>H. Carte bleue européenne</value>
   </data>
   <data name="type_FOREIGNER_A" xml:space="preserve">
-    <value>Certificat d'inscription au Registre des Etrangers \u2013 S\u00e9jour temporaire</value>
+    <value>Certificat d'inscription au Registre des Etrangers ’ Séjour temporaire</value>
   </data>
   <data name="type_FOREIGNER_B" xml:space="preserve">
     <value>Certificat d'inscription au Registre des Etrangers</value>
   </data>
   <data name="type_FOREIGNER_C" xml:space="preserve">
-    <value>Carte d'identit\u00e9 d'\u00e9tranger</value>
+    <value>Carte d'identité d'étranger</value>
   </data>
   <data name="type_FOREIGNER_D" xml:space="preserve">
-    <value>R\u00e9sident de longue dur\u00e9e \u2013 CE</value>
+    <value>Résident de longue durée – CE</value>
   </data>
   <data name="type_FOREIGNER_E" xml:space="preserve">
-    <value>Carte (de s\u00e9jour) de ressortissant d\u2019un Etat membre de la CEE \u2013 Attestation d\u2019enregistrement</value>
+    <value>Carte (de séjour) de ressortissant d’un Etat membre de la CEE – Attestation d’enregistrement</value>
   </data>
   <data name="type_FOREIGNER_E_PLUS" xml:space="preserve">
-    <value>Document attestant de la permanence du s\u00e9jour d\u2019un ressortissant de l'UE</value>
+    <value>Document attestant de la permanence du séjour d’un ressortissant de l'UE</value>
   </data>
   <data name="type_FOREIGNER_F" xml:space="preserve">
-    <value>Carte pour les \u00e9trangers non UE qui sont membres de famille d\u2019un ressortissant UE ou d\u2019un Belge</value>
+    <value>Carte pour les étrangers non UE qui sont membres de famille d’un ressortissant UE ou d’un Belge</value>
   </data>
   <data name="type_FOREIGNER_F_PLUS" xml:space="preserve">
-    <value>Carte de s\u00e9jour permanent de membre de la famille d\u2019un citoyen de l\u2019Union</value>
+    <value>Carte de séjour permanent de membre de la famille d’un citoyen de l’Union</value>
   </data>
   <data name="type_HABILITATION_CARD" xml:space="preserve">
     <value>Carte d'habilitation</value>

@@ -190,10 +190,10 @@
     <value>H. European Blue Card</value>
   </data>
   <data name="type_FOREIGNER_A" xml:space="preserve">
-    <value>Proof of registration in the Aliens\u2019 Register \u2013 Temporary residence</value>
+    <value>Proof of registration in the Aliens’ Register – Temporary residence</value>
   </data>
   <data name="type_FOREIGNER_B" xml:space="preserve">
-    <value>Proof of registration in the Aliens\u2019 Register</value>
+    <value>Proof of registration in the Aliens’ Register</value>
   </data>
   <data name="type_FOREIGNER_C" xml:space="preserve">
     <value>Identity Card for Aliens</value>
@@ -202,7 +202,7 @@
     <value>Long-term EU Resident</value>
   </data>
   <data name="type_FOREIGNER_E" xml:space="preserve">
-    <value>(Residence) permit of EU Citizen \u2013 Certificate of Registration</value>
+    <value>(Residence) permit of EU Citizen – Certificate of Registration</value>
   </data>
   <data name="type_FOREIGNER_E_PLUS" xml:space="preserve">
     <value>Document in evidence of durable residence of an EU Citizen</value>
