@@ -117,37 +117,106 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ABOUT" xml:space="preserve">
-    <value>About</value>
+  <data name="DateOfBirthLabel" xml:space="preserve">
+    <value>Date of birth:</value>
   </data>
-  <data name="CARD" xml:space="preserve">
-    <value>Card/PIN</value>
+  <data name="GivenNamesLabel" xml:space="preserve">
+    <value>Given Names:</value>
   </data>
-  <data name="CERTIFICATES" xml:space="preserve">
-    <value>Certificates</value>
+  <data name="MunicipalityLabel" xml:space="preserve">
+    <value>Municipality:</value>
   </data>
-  <data name="fileMenuQuitItem" xml:space="preserve">
-    <value>Quit</value>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Name:</value>
   </data>
-  <data name="fileMenuTitle" xml:space="preserve">
-    <value>File</value>
+  <data name="NationalityLabel" xml:space="preserve">
+    <value>Nationality:</value>
   </data>
-  <data name="helpMenuTitle" xml:space="preserve">
-    <value>Help</value>
+  <data name="NationalNumberLabel" xml:space="preserve">
+    <value>National number:</value>
   </data>
-  <data name="IDENTITY" xml:space="preserve">
-    <value>Identity</value>
+  <data name="PlaceOfBirthLabel" xml:space="preserve">
+    <value>Place of birth:</value>
   </data>
-  <data name="languageMenuTitle" xml:space="preserve">
-    <value>Language</value>
+  <data name="PostalCodeLabel" xml:space="preserve">
+    <value>Postal code:</value>
   </data>
-  <data name="LOG" xml:space="preserve">
-    <value>Log</value>
+  <data name="SexLabel" xml:space="preserve">
+    <value>Sex:</value>
   </data>
-  <data name="printButtonTitle" xml:space="preserve">
-    <value>Print..</value>
+  <data name="SpecialStatusLabel" xml:space="preserve">
+    <value>Special status:</value>
   </data>
-  <data name="showLogTab" xml:space="preserve">
-    <value>Show Log Tab</value>
+  <data name="StreetLabel" xml:space="preserve">
+    <value>Street:</value>
+  </data>
+  <data name="TitleLabel" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="genderFemale" xml:space="preserve">
+    <value>V</value>
+  </data>
+  <data name="genderMale" xml:space="preserve">
+    <value>M</value>
+  </data>
+  <data name="special_organisation_former_blue_card" xml:space="preserve">
+    <value>Previously holder of European Blue Card</value>
+  </data>
+  <data name="special_organisation_nato" xml:space="preserve">
+    <value>NATO</value>
+  </data>
+  <data name="special_organisation_researcher" xml:space="preserve">
+    <value>Researcher</value>
+  </data>
+  <data name="special_organisation_shape" xml:space="preserve">
+    <value>SHAPE</value>
+  </data>
+  <data name="special_status_extended_minority" xml:space="preserve">
+    <value>Extended Nonage</value>
+  </data>
+  <data name="special_status_white_cane" xml:space="preserve">
+    <value>White Cane</value>
+  </data>
+  <data name="special_status_yellow_cane" xml:space="preserve">
+    <value>Yellow Cane</value>
+  </data>
+  <data name="type_BELGIAN_CITIZEN" xml:space="preserve">
+    <value>IDENTITY CARD</value>
+  </data>
+  <data name="type_BOOTSTRAP_CARD" xml:space="preserve">
+    <value>BOOTSTRAP CARD</value>
+  </data>
+  <data name="type_EUROPEAN_BLUE_CARD_H" xml:space="preserve">
+    <value>H. European Blue Card</value>
+  </data>
+  <data name="type_FOREIGNER_A" xml:space="preserve">
+    <value>Proof of registration in the Aliens’ Register – Temporary residence</value>
+  </data>
+  <data name="type_FOREIGNER_B" xml:space="preserve">
+    <value>Proof of registration in the Aliens’ Register</value>
+  </data>
+  <data name="type_FOREIGNER_C" xml:space="preserve">
+    <value>Identity Card for Aliens</value>
+  </data>
+  <data name="type_FOREIGNER_D" xml:space="preserve">
+    <value>Long-term EU Resident</value>
+  </data>
+  <data name="type_FOREIGNER_E" xml:space="preserve">
+    <value>(Residence) permit of EU Citizen – Certificate of Registration</value>
+  </data>
+  <data name="type_FOREIGNER_E_PLUS" xml:space="preserve">
+    <value>Document in evidence of durable residence of an EU Citizen</value>
+  </data>
+  <data name="type_FOREIGNER_F" xml:space="preserve">
+    <value>Permit for non-EU family members of an EU Citizen or Belgian national</value>
+  </data>
+  <data name="type_FOREIGNER_F_PLUS" xml:space="preserve">
+    <value>Durable residence permit of a family member of an EU Citizen</value>
+  </data>
+  <data name="type_HABILITATION_CARD" xml:space="preserve">
+    <value>Habilitation Card</value>
+  </data>
+  <data name="type_KIDS_CARD" xml:space="preserve">
+    <value>KIDS CARD</value>
   </data>
 </root>

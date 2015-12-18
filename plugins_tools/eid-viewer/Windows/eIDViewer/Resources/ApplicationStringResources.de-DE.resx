@@ -117,106 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DateOfBirthLabel" xml:space="preserve">
-    <value>Geburtsdatum:</value>
+  <data name="ABOUT" xml:space="preserve">
+    <value>&#220;ber</value>
   </data>
-  <data name="genderFemale" xml:space="preserve">
-    <value>F</value>
+  <data name="CARD" xml:space="preserve">
+    <value>Karte/PIN</value>
   </data>
-  <data name="genderMale" xml:space="preserve">
-    <value>M</value>
+  <data name="CERTIFICATES" xml:space="preserve">
+    <value>Zertifikate</value>
   </data>
-  <data name="GivenNamesLabel" xml:space="preserve">
-    <value>Vornamen:</value>
+  <data name="fileMenuQuitItem" xml:space="preserve">
+    <value>Beenden</value>
   </data>
-  <data name="MunicipalityLabel" xml:space="preserve">
-    <value>Kommune:</value>
+  <data name="fileMenuTitle" xml:space="preserve">
+    <value>Datei</value>
   </data>
-  <data name="NameLabel" xml:space="preserve">
-    <value>Name:</value>
+  <data name="helpMenuTitle" xml:space="preserve">
+    <value>Hilfe</value>
   </data>
-  <data name="NationalityLabel" xml:space="preserve">
-    <value>Staatsangeh&#246;rigkeit:</value>
+  <data name="IDENTITY" xml:space="preserve">
+    <value>Identit&#228;t</value>
   </data>
-  <data name="NationalNumberLabel" xml:space="preserve">
-    <value>Staatsangeh&#246;rigkeitsnummer:</value>
+  <data name="languageMenuTitle" xml:space="preserve">
+    <value>Sprache</value>
   </data>
-  <data name="PlaceOfBirthLabel" xml:space="preserve">
-    <value>Geburtsdatum:</value>
+  <data name="LOG" xml:space="preserve">
+    <value>Logbuch</value>
   </data>
-  <data name="PostalCodeLabel" xml:space="preserve">
-    <value>ostleitzahl:</value>
+  <data name="printButtonTitle" xml:space="preserve">
+    <value>Drucken</value>
   </data>
-  <data name="SexLabel" xml:space="preserve">
-    <value>Geschlecht:</value>
-  </data>
-  <data name="SpecialStatusLabel" xml:space="preserve">
-    <value>Besonderer Status:</value>
-  </data>
-  <data name="special_organisation_former_blue_card" xml:space="preserve">
-    <value>ehemaliger Inhaber der Blauen Karte EU</value>
-  </data>
-  <data name="special_organisation_nato" xml:space="preserve">
-    <value>NATO</value>
-  </data>
-  <data name="special_organisation_researcher" xml:space="preserve">
-    <value>Forscher</value>
-  </data>
-  <data name="special_organisation_shape" xml:space="preserve">
-    <value>SHAPE</value>
-  </data>
-  <data name="special_status_extended_minority" xml:space="preserve">
-    <value>Verl&#228;ngerte Minderj&#228;hrigkeit</value>
-  </data>
-  <data name="special_status_white_cane" xml:space="preserve">
-    <value>Wei&#223;er Stock</value>
-  </data>
-  <data name="special_status_yellow_cane" xml:space="preserve">
-    <value>Gelber Stock</value>
-  </data>
-  <data name="StreetLabel" xml:space="preserve">
-    <value>Stra&#223;e:</value>
-  </data>
-  <data name="TitleLabel" xml:space="preserve">
-    <value>Titel:</value>
-  </data>
-  <data name="type_BELGIAN_CITIZEN" xml:space="preserve">
-    <value>PERSONALAUSWEIS</value>
-  </data>
-  <data name="type_BOOTSTRAP_CARD" xml:space="preserve">
-    <value>STARTKARTE</value>
-  </data>
-  <data name="type_EUROPEAN_BLUE_CARD_H" xml:space="preserve">
-    <value>H. Blaue Karte EU</value>
-  </data>
-  <data name="type_FOREIGNER_A" xml:space="preserve">
-    <value>Bescheinigung der Eintragung im Ausl&#228;nderregister - Vor&#252;bergehender Aufenthalt</value>
-  </data>
-  <data name="type_FOREIGNER_B" xml:space="preserve">
-    <value>Bescheinigung der Eintragung im Ausl&#228;nderregister</value>
-  </data>
-  <data name="type_FOREIGNER_C" xml:space="preserve">
-    <value>Personalausweis f&#252;r Ausl&#228;nder</value>
-  </data>
-  <data name="type_FOREIGNER_D" xml:space="preserve">
-    <value>Daueraufenthalt - EG</value>
-  </data>
-  <data name="type_FOREIGNER_E" xml:space="preserve">
-    <value>Aufenthaltserlaubnis f&#252;r Staatsangeh&#246;rige eines EWG-Mitgliedstaates;Anmeldebescheinigung</value>
-  </data>
-  <data name="type_FOREIGNER_E_PLUS" xml:space="preserve">
-    <value>Dokument zur Bescheinigung des Daueraufenthalts eines EU-Ausl&#228;nders</value>
-  </data>
-  <data name="type_FOREIGNER_F" xml:space="preserve">
-    <value>Ausweis f&#252;r Nicht-EU-Familienmitglieder eines EU-Ausl&#228;nders oder eines belgischen Staatsangeh&#246;rigen</value>
-  </data>
-  <data name="type_FOREIGNER_F_PLUS" xml:space="preserve">
-    <value>Daueraufenthaltskarte f&#252;r Familienangeh&#246;rige eines Unionsb&#252;rgers</value>
-  </data>
-  <data name="type_HABILITATION_CARD" xml:space="preserve">
-    <value>Berechtigungskarte</value>
-  </data>
-  <data name="type_KIDS_CARD" xml:space="preserve">
-    <value>KIDS-KARTE</value>
+  <data name="showLogTab" xml:space="preserve">
+    <value>Logbuch anzeigen</value>
   </data>
 </root>

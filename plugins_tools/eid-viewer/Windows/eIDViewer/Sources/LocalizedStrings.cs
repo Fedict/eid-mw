@@ -19,16 +19,29 @@ namespace eIDViewer
             }
         }
 
-        private static eIDViewer.Resources.ApplicationStringResources _resource1 = new eIDViewer.Resources.ApplicationStringResources();
+        private static eIDViewer.Resources.IdentityTabStringResources _identityTabResource = new eIDViewer.Resources.IdentityTabStringResources();
 
-        public eIDViewer.Resources.ApplicationStringResources resource1
+        public eIDViewer.Resources.IdentityTabStringResources identityTabResource
         {
-            get { return _resource1; }
+            get { return _identityTabResource; }
 
             set
             {
-                _resource1 = value;
-                NotifyPropertyChanged("resource1");
+                _identityTabResource = value;
+                NotifyPropertyChanged("identityTabResource");
+            }
+        }
+
+        private static eIDViewer.Resources.ApplicationStringResources _applicationResource = new eIDViewer.Resources.ApplicationStringResources();
+
+        public eIDViewer.Resources.ApplicationStringResources applicationResource
+        {
+            get { return _applicationResource; }
+
+            set
+            {
+                _applicationResource = value;
+                NotifyPropertyChanged("applicationResource");
             }
         }
     }

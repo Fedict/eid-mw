@@ -38,7 +38,8 @@ namespace eIDViewer
             Thread.CurrentThread.CurrentCulture = new CultureInfo(localization);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(localization);
             eIDViewer.LocalizedStrings theLocalizedStrings = (LocalizedStrings)(App.Current.Resources["LocalizedStrings"]);
-            theLocalizedStrings.resource1 = new eIDViewer.Resources.ApplicationStringResources();
+            theLocalizedStrings.identityTabResource = new eIDViewer.Resources.IdentityTabStringResources();
+            theLocalizedStrings.applicationResource = new eIDViewer.Resources.ApplicationStringResources();
         }
 
         private void Deutch_Click(object sender, RoutedEventArgs e)

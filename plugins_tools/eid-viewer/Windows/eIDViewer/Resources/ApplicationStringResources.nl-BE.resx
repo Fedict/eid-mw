@@ -117,106 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DateOfBirthLabel" xml:space="preserve">
-    <value>Geboortedatum:</value>
+  <data name="ABOUT" xml:space="preserve">
+    <value>Over</value>
   </data>
-  <data name="GivenNamesLabel" xml:space="preserve">
-    <value>Voornamen:</value>
+  <data name="CARD" xml:space="preserve">
+    <value>Kaart/PIN</value>
   </data>
-  <data name="MunicipalityLabel" xml:space="preserve">
-    <value>Gemeente:</value>
+  <data name="CERTIFICATES" xml:space="preserve">
+    <value>Certificaten</value>
   </data>
-  <data name="NameLabel" xml:space="preserve">
-    <value>Naam:</value>
+  <data name="fileMenuQuitItem" xml:space="preserve">
+    <value>Verlaten</value>
   </data>
-  <data name="NationalityLabel" xml:space="preserve">
-    <value>Nationaliteit:</value>
+  <data name="fileMenuTitle" xml:space="preserve">
+    <value>Bestand</value>
   </data>
-  <data name="NationalNumberLabel" xml:space="preserve">
-    <value>Nationaal nummer:</value>
+  <data name="helpMenuTitle" xml:space="preserve">
+    <value>Hulp</value>
   </data>
-  <data name="PlaceOfBirthLabel" xml:space="preserve">
-    <value>Geboortedatum:</value>
+  <data name="IDENTITY" xml:space="preserve">
+    <value>Identiteit</value>
   </data>
-  <data name="PostalCodeLabel" xml:space="preserve">
-    <value>Postcode:</value>
+  <data name="languageMenuTitle" xml:space="preserve">
+    <value>Taal</value>
   </data>
-  <data name="SexLabel" xml:space="preserve">
-    <value>Geslacht:</value>
+  <data name="LOG" xml:space="preserve">
+    <value>Logboek</value>
   </data>
-  <data name="SpecialStatusLabel" xml:space="preserve">
-    <value>Speciale status:</value>
+  <data name="printButtonTitle" xml:space="preserve">
+    <value>Afdrukken..</value>
   </data>
-  <data name="StreetLabel" xml:space="preserve">
-    <value>Straat:</value>
-  </data>
-  <data name="TitleLabel" xml:space="preserve">
-    <value>Titel:</value>
-  </data>
-  <data name="genderFemale" xml:space="preserve">
-    <value>V</value>
-  </data>
-  <data name="genderMale" xml:space="preserve">
-    <value>M</value>
-  </data>
-  <data name="special_organisation_former_blue_card" xml:space="preserve">
-    <value>Voormalig houder van Europese blauwe kaart</value>
-  </data>
-  <data name="special_organisation_nato" xml:space="preserve">
-    <value>NATO</value>
-  </data>
-  <data name="special_organisation_researcher" xml:space="preserve">
-    <value>Onderzoeker</value>
-  </data>
-  <data name="special_organisation_shape" xml:space="preserve">
-    <value>SHAPE</value>
-  </data>
-  <data name="special_status_extended_minority" xml:space="preserve">
-    <value>Verlengde minderjarigheid</value>
-  </data>
-  <data name="special_status_white_cane" xml:space="preserve">
-    <value>Witte stok</value>
-  </data>
-  <data name="special_status_yellow_cane" xml:space="preserve">
-    <value>Gele stok</value>
-  </data>
-  <data name="type_BELGIAN_CITIZEN" xml:space="preserve">
-    <value>IDENTITEITSKAART</value>
-  </data>
-  <data name="type_BOOTSTRAP_CARD" xml:space="preserve">
-    <value>OPSTARTKAART</value>
-  </data>
-  <data name="type_EUROPEAN_BLUE_CARD_H" xml:space="preserve">
-    <value>H. Europese blauwe kaart</value>
-  </data>
-  <data name="type_FOREIGNER_A" xml:space="preserve">
-    <value>Bewijs van inschrijving in het vreemdelingenregister – Tijdelijk verblijf</value>
-  </data>
-  <data name="type_FOREIGNER_B" xml:space="preserve">
-    <value>Bewijs van inschrijving in het vreemdelingenregister</value>
-  </data>
-  <data name="type_FOREIGNER_C" xml:space="preserve">
-    <value>Identiteitskaart voor vreemdeling</value>
-  </data>
-  <data name="type_FOREIGNER_D" xml:space="preserve">
-    <value>EG-Langdurig ingezetene</value>
-  </data>
-  <data name="type_FOREIGNER_E" xml:space="preserve">
-    <value>(Verblijfs)kaart van een onderdaan van een lidstaat der EEG Verklaring van inschrijving</value>
-  </data>
-  <data name="type_FOREIGNER_E_PLUS" xml:space="preserve">
-    <value>Document ter staving van duurzaam verblijf van een EU onderdaan</value>
-  </data>
-  <data name="type_FOREIGNER_F" xml:space="preserve">
-    <value>Kaart voor niet-EU familieleden van een EU-onderdaan of van een Belg</value>
-  </data>
-  <data name="type_FOREIGNER_F_PLUS" xml:space="preserve">
-    <value>Duurzame verblijfskaart van een familielid van een burger van de Unie</value>
-  </data>
-  <data name="type_HABILITATION_CARD" xml:space="preserve">
-    <value>Habilitatiekaart</value>
-  </data>
-  <data name="type_KIDS_CARD" xml:space="preserve">
-    <value>KIDS KAART</value>
+  <data name="showLogTab" xml:space="preserve">
+    <value>Logboek tonen</value>
   </data>
 </root>
