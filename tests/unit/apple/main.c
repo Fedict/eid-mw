@@ -46,7 +46,7 @@ int main(void) {
 	run_test(init_finalize());
 	run_test(fork_init());
 	run_test(double_init());
-    run_test(wrong_init());
+	run_test(wrong_init());
 	run_test(getinfo());
 	run_test(funclist());
 	run_test(slotlist());
@@ -58,15 +58,15 @@ int main(void) {
 	run_test(sessions());
 	run_test(sessions_nocard());
 	run_test(sessioninfo());
-	run_test(login_c());
+	run_test(slogin());
 	run_test(nonsensible());
 	run_test(objects());
 	run_test(readdata());
-    run_test(readdata_sequence());
+	run_test(readdata_sequence());
 	run_test(digest());
 	run_test(threads());
 	run_test(sign());
-    run_test(sign_state());
+	run_test(sign_state());
 	run_test(decode_photo());
 	run_test(ordering());
 

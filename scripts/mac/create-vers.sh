@@ -1,9 +1,8 @@
 #!/bin/bash
 
+source ./set_eidmw_version.sh
+
 gitrev=$(git describe --dirty)
-BASE_VERSION1=4
-BASE_VERSION2=1
-BASE_VERSION3=9
 NOW=$(date +%F)
 
 cat > $1 <<EOF

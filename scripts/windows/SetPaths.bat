@@ -1,6 +1,8 @@
 ::Define search paths here
 @set SEARCH_BEID_DIR_MSBUILD=C:\Windows\Microsoft.NET\Framework\v4.0.30319
-@set SEARCH_SIGNTOOL_PATH=C:\WinDDK\7600.16385.1\bin\x86
+::@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin
+@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Windows Kits\8.1\bin\x64
+@set SEARCH_SIGNTOOL_PATH_2=C:\WinDDK\7600.16385.1\bin\x86
 @set SEARCH_INF2CAT_PATH=C:\WinDDK\7600.16385.1\bin\selfsign
 @set SEARCH_BEID_DIR_PLATFORMSDK_1=%~dp0..\ThirdParty\MSPlatformSDK\bin
 @set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files\Microsoft Platform SDK\bin
@@ -160,14 +162,19 @@
 @echo [INFO] Looking for files: %FILE_TO_FIND%
 
 @set SIGNTOOL_PATH=%SEARCH_SIGNTOOL_PATH%
-
 @set FILE_NOT_FOUND=
-@for %%i in (%FILE_TO_FIND%) do @if not exist "%SEARCH_SIGNTOOL_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%SIGNTOOL_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
 @if "%FILE_NOT_FOUND%"=="" goto found_signtool
-@echo        Not found in "%SEARCH_SIGNTOOL_PATH%"
+@echo        Not found in "%SIGNTOOL_PATH%"
+
+@set SIGNTOOL_PATH=%SEARCH_SIGNTOOL_PATH_2%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%SIGNTOOL_PATH%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto found_signtool
+@echo        Not found in "%SIGNTOOL_PATH%"
 
 @echo [ERROR] Signtool could not be found
-@echo         Please install WINDDK 7600
+@echo         Please install Visual Studio or WINDDK
 @exit /B 1
 
 :found_signtool
