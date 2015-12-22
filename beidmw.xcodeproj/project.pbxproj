@@ -1381,7 +1381,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 					TEST_NO_ABORT,
-					HAVE_SSL,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1421,7 +1420,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
-					HAVE_SSL,
 					TEST_NO_ABORT,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
