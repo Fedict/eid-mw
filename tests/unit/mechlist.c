@@ -101,6 +101,8 @@ TEST_FUNC(mechlist) {
 		}
 		if(i<(count-1)) {
 			check_rv_long(C_GetMechanismList(slot, mechlist, &temp), m_small);
+		} else {
+			check_rv(C_GetMechanismList(slot, mechlist, &temp));
 		}
 	}
 
