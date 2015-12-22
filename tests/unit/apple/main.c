@@ -23,25 +23,32 @@
 
 #include "testlib.h"
 
-#define run_test(test) { printf("Running %s...\n", #test); switch(test) { \
-	case TEST_RV_OK: \
-		printf("--> Test completed OK\n"); \
-		ok_count++; \
-		break; \
-	case TEST_RV_SKIP: \
-		printf("--> Test skipped\n"); \
-		skipped_count++; \
-		break; \
-	case TEST_RV_FAIL: \
-		printf("--> Test failed\n"); \
-		failed_count++; \
-		break; \
-	} \
-}
+#define run_test(test) if(test_target != NULL && !strcmp(test_target, #test)) \
+	{ \
+		printf("Running %s...\n", #test); \
+		switch(test) { \
+		case TEST_RV_OK: \
+			printf("--> Test completed OK\n"); \
+			ok_count++; \
+			break; \
+		case TEST_RV_SKIP: \
+			printf("--> Test skipped\n"); \
+			skipped_count++; \
+			break; \
+		case TEST_RV_FAIL: \
+			printf("--> Test failed\n"); \
+			failed_count++; \
+			break; \
+		} \
+	}
 
-int main(void) {
+int main(int argc, char** argv) {
 	int skipped_count=0, failed_count=0, ok_count=0;
+	char* test_target = NULL;
 
+	if(argc > 1) {
+		test_target = argv[1];
+	}
 	run_test(init_finalize());
 	run_test(fork_init());
 	run_test(double_init());
