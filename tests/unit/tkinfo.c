@@ -48,7 +48,7 @@ TEST_FUNC(tkinfo) {
 	verify_null(info.label, 32, 0, "Label:\t'%s'\n");
 	verify_null(info.manufacturerID, 32, 0, "Manufacturer ID:\t'%s'\n");
 	verify_null(info.model, 16, 0, "Model:\t'%s'\n");
-	verify_null(info.serialNumber, 16, 0, "Serial number:\t'%s'\n");
+	//verify_null(info.serialNumber, 16, 0, "Serial number:\t'%s'\n");
 	//verify_null(info.utcTime, 16, 0, "UTC time on token:\t'%s'\n");
 
 	printf("Max session count: %lu; session count: %lu\n", info.ulMaxSessionCount, info.ulSessionCount);
