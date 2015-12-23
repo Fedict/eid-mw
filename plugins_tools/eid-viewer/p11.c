@@ -224,10 +224,10 @@ static int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
 int eid_vwr_p11_do_pinop(void* data) {
 	int retval;
 	enum eid_vwr_pinops* p = (enum eid_vwr_pinops*) data;
-	if((retval = eid_vwr_p11_do_pinop_real(*p)) != CKR_OK) {
-		be_pinresult(*p, EID_VWR_FAILED);
+	if((retval = eid_vwr_p11_do_pinop_real((enum eid_vwr_pinops)p)) != CKR_OK) {
+		be_pinresult((enum eid_vwr_pinops)p, EID_VWR_FAILED);
 	} else {
-		be_pinresult(*p, EID_VWR_SUCCESS);
+		be_pinresult((enum eid_vwr_pinops)p, EID_VWR_SUCCESS);
 	}
 	return retval;
 }
