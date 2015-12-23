@@ -25,8 +25,6 @@ namespace eIDViewer
         public MainWindow()    
         {
             InitializeComponent();
-
-
         }
         void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -40,6 +38,9 @@ namespace eIDViewer
             eIDViewer.LocalizedStrings theLocalizedStrings = (LocalizedStrings)(App.Current.Resources["LocalizedStrings"]);
             theLocalizedStrings.identityTabResource = new eIDViewer.Resources.IdentityTabStringResources();
             theLocalizedStrings.applicationResource = new eIDViewer.Resources.ApplicationStringResources();
+
+            eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
+            theBackendData.Refresh();
         }
 
         private void Deutch_Click(object sender, RoutedEventArgs e)
@@ -60,6 +61,45 @@ namespace eIDViewer
         private void Nederlands_Click(object sender, RoutedEventArgs e)
         {
             ChangeLocalization("nl-BE");
+        }
+
+        private void ClearLog_Click(object sender, RoutedEventArgs e)
+        {
+            eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
+            theBackendData.logText = "";
+        }
+
+        void LogLevel_OnSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            ComboBox logCombo = sender as ComboBox;
+            if(logCombo != null)
+            {
+                eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
+
+                switch (logCombo.SelectedIndex)
+                {
+                    case 0:
+                        theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
+                        break;
+                    case 1:
+                        theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_COARSE;
+                        break;
+                    case 2:
+                        theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
+                        break;
+                    case 3:
+                        theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_DETAIL;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void CopyLogToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
+            System.Windows.Clipboard.SetText(theBackendData.logText);
         }
     }
 }

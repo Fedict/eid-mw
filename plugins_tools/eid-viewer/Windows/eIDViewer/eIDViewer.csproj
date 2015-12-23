@@ -84,6 +84,7 @@
     <Compile Include="Sources\BackendData.cs" />
     <Compile Include="Sources\BackendEnums.cs" />
     <Compile Include="Sources\LocalizedStrings.cs" />
+    <Compile Include="Sources\TextBoxutilities.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

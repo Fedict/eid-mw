@@ -99,10 +99,12 @@ namespace eIDViewer
 
         private static void CSCbNewSrc(eid_vwr_source eid_vwr_source)
         {
-            Console.WriteLine("CbNewSrc called ");
-            Console.WriteLine(eid_vwr_source.ToString());
-            theData.logText += "CSCbNewSrc called " + eid_vwr_source.ToString() + "\n";
-
+            //Console.WriteLine("CbNewSrc called ");
+            //Console.WriteLine(eid_vwr_source.ToString());
+            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
+            {
+                theData.logText += "CSCbNewSrc called " + eid_vwr_source.ToString() + "\n";
+            }
             switch (eid_vwr_source)
             {
                 case eid_vwr_source.EID_VWR_SRC_UNKNOWN:
@@ -119,6 +121,7 @@ namespace eIDViewer
                     theData.text_color = "Black";
                     AdjustIconImage("Resources\\state_eidpresent.png");
                     theData.eid_card_present = "True";
+                    theData.progress_bar_visible = "Visible";
                     break;
                 case eid_vwr_source.EID_VWR_SRC_FILE:
                     theData.type_kaart = "IDENTITEITSKAART";
@@ -131,37 +134,46 @@ namespace eIDViewer
         }
         private static void CSCbNewStringData([MarshalAs(UnmanagedType.LPStr)] string label, [MarshalAs(UnmanagedType.LPStr)]string data)
         {
-            Console.WriteLine("CSCbNewStringData called, label = ");
-            Console.WriteLine(label);
-            Console.WriteLine("data = " + data);
+            //Console.WriteLine("CSCbNewStringData called, label = ");
+            //Console.WriteLine(label);
+            //Console.WriteLine("data = " + data);
             theData.StoreStringData(label, data);
-
-            theData.logText += "CSCbNewStringData called, data =  " + data + "\n";
+            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
+            {
+                theData.logText += "CSCbNewStringData called, data =  " + data + "\n";
+            }
         }
 
         private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPStr)] string label,  [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data,  int datalen)
         {
-            Console.WriteLine("CSCbnewbindata called, label = ");
-            Console.WriteLine(label);
-            theData.logText += "CSCbnewbindata called " + label + "\n";
-
+            //Console.WriteLine("CSCbnewbindata called, label = ");
+            //Console.WriteLine(label);
+            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
+            {
+                theData.logText += "CSCbnewbindata called " + label + "\n";
+            }
             theData.StoreBinData(label, data, datalen);
 
         }
 
         private static void CSCblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPStr)]string str)
         {
-            Console.WriteLine("CSCblog called: ");
-            Console.WriteLine(str);
-            theData.logText += "CSCblogtest called " + str + "\n";
+            //Console.WriteLine("CSCblog called: ");
+            //Console.WriteLine(str);
+            if (logLevel >= theData.log_level)
+            {
+                theData.logText += "CSCblogtest called " + str + "\n";
+            }
         }
 
         private static void CSCbnewstate(eid_vwr_states state)
         {
-            Console.WriteLine("CSCbnewstate called ");
-            Console.WriteLine(state.ToString());
-            theData.logText += "CSCbnewstate called " + state.ToString() + "\n";
-
+            //Console.WriteLine("CSCbnewstate called ");
+            //Console.WriteLine(state.ToString());
+            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
+            {
+                theData.logText += "CSCbnewstate called " + state.ToString() + "\n";
+            }
             switch(state)
             {
                 case eid_vwr_states.STATE_CARD_INVALID:
@@ -175,8 +187,11 @@ namespace eIDViewer
         }
         private static void CSCbpinopResult(eid_vwr_pinops pinop, eid_vwr_result result)
         {
-            Console.WriteLine("CSCbpinopResult called ");
-            theData.logText += "CSCbpinopResult called, result = " + result.ToString() + "\n";
+            //Console.WriteLine("CSCbpinopResult called ");
+            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
+            {
+                theData.logText += "CSCbpinopResult called, result = " + result.ToString() + "\n";
+            }
         }
 
         public static void backendMainloop()

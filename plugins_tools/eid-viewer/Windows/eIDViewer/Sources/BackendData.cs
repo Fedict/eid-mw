@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows;
+using System.Resources;
 
 namespace eIDViewer
 {
@@ -273,6 +274,30 @@ namespace eIDViewer
             }
         }
 
+        private string _document_type;
+        private string _document_type_value;
+        public string document_type
+        {
+            get { return _document_type; }
+            set
+            {
+                _document_type_value = value;
+                if (String.Equals(value, "1", StringComparison.Ordinal))
+                {
+                    ResourceManager rm = new ResourceManager("IdentityTabStringResources",
+                                         typeof(eIDViewerBackendData).Assembly);
+                    _document_type = rm.GetString("type_BELGIAN_CITIZEN", null);
+
+                }
+                this.NotifyPropertyChanged("document_type");
+            }
+        }
+
+        public void Refresh()
+        {
+            document_type = _document_type_value;
+        }
+
         private BitmapImage _photo;
         public BitmapImage photo
         {
@@ -297,6 +322,8 @@ namespace eIDViewer
 
         public void StoreStringData(string label, string data)
         {
+            progress_info = "reading data";
+            progress += 1;
             if (String.Equals(label, "firstnames", StringComparison.Ordinal))
             { firstName = data; }
             else if (String.Equals(label, "surName", StringComparison.Ordinal))
@@ -333,14 +360,20 @@ namespace eIDViewer
             { validity_begin_date = data; }
             else if (String.Equals(label, "validity_end_date", StringComparison.Ordinal))
             { validity_end_date = data; }
+            else if (String.Equals(label, "document_type", StringComparison.Ordinal))
+            { _document_type = data; }
         }
 
         public void StoreBinData(string label, byte[] data, int datalen)
         {
+            progress += 6;
             if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
-            { photo = LoadImage(data); }
+            { photo = LoadImage(data);
+                progress_info = "reading photo";
+            }
             else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
             { //chip_number = BitConverter.ToString(data);
+                progress_info = "reading chip_number";
                 chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
             }
 
@@ -357,7 +390,7 @@ namespace eIDViewer
             location_of_birth = "-";
             gender = "-";
             national_number = "-";
-            nationality = "BE";
+            nationality = "-";
             nobility = "-";
             special_status = "-";
             address_street_and_number = "-";
@@ -369,6 +402,9 @@ namespace eIDViewer
             validity_begin_date = "-";
             validity_end_date = "-";
             eid_card_present = "False";
+            progress = 0;
+            progress_bar_visible = "Hidden";
+            progress_info = "";
         }
 
         private String _text_color;
@@ -392,7 +428,52 @@ namespace eIDViewer
                 this.NotifyPropertyChanged("eid_card_present");
             }
         }
-        
+
+        private int _progress;
+        public int progress
+        {
+            get { return _progress; }
+            set
+            {
+                _progress = value;
+                this.NotifyPropertyChanged("progress");
+                if (progress >= 100)
+                {
+                    progress_bar_visible = "Hidden";
+                }
+            }
+        }
+        private String _progress_bar_visible = "Hidden";
+        public String progress_bar_visible
+        {
+            get { return _progress_bar_visible; }
+            set
+            {
+                _progress_bar_visible = value;
+                this.NotifyPropertyChanged("progress_bar_visible");
+            }
+        }
+        private String _progress_info = "";
+        public String progress_info
+        {
+            get { return _progress_info; }
+            set
+            {
+                _progress_info = value;
+                this.NotifyPropertyChanged("progress_info");
+            }
+        }
+
+        private eid_vwr_loglevel _log_level = eid_vwr_loglevel.EID_VWR_LOG_DETAIL;
+        public eid_vwr_loglevel log_level
+        {
+            get { return _log_level; }
+            set
+            {
+                _log_level = value;
+                this.NotifyPropertyChanged("log_level");
+            }
+        }
 
     }
 }
