@@ -101,5 +101,15 @@ namespace eIDViewer
             eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
             System.Windows.Clipboard.SetText(theBackendData.logText);
         }
+
+        private void PincodeTest_Click(object sender, RoutedEventArgs e)
+        {
+            eIDViewer.NativeMethods.DoPinop(eid_vwr_pinops.EID_VWR_PINOP_TEST);
+        }
+
+        private void PincodeTest_Change(object sender, RoutedEventArgs e)
+        {
+            eIDViewer.NativeMethods.DoPinop(eid_vwr_pinops.EID_VWR_PINOP_CHG);
+        }
     }
 }

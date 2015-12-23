@@ -82,7 +82,7 @@ struct eid_vwr_preview {
 };
 
 /* Perform a PIN operation */
-int eid_vwr_pinop(enum eid_vwr_pinops);
+DllExport int eid_vwr_pinop(enum eid_vwr_pinops);
 /* Initialize the callbacks */
 DllExport int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb);
 
@@ -97,10 +97,10 @@ void eid_vwr_poll();
 DllExport void eid_vwr_be_mainloop();
 /* Save the currently-open data. Returns before the file has been saved; saving
  * data is done in a background thread. */
-void eid_vwr_be_serialize(const char* target_file);
+DllExport void eid_vwr_be_serialize(const char* target_file);
 /* Open a file. Returns before the file has been opened; reading the file and
  * parsing it is done in a background thread. */
-void eid_vwr_be_deserialize(const char* source_file);
+DllExport void eid_vwr_be_deserialize(const char* source_file);
 /* Get the currently-open data in XML form, usable by the drag-and-drop
  * handler. Note: do *not* free this data. */
 const char* eid_vwr_be_get_xmlform();

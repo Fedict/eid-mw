@@ -59,7 +59,10 @@ namespace eIDViewer
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern void eid_vwr_be_mainloop();
-                                                            
+
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int eid_vwr_pinop(eid_vwr_pinops pinop);
+                     
         public static void Init()
         {
             eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
@@ -185,6 +188,7 @@ namespace eIDViewer
             }
  
         }
+
         private static void CSCbpinopResult(eid_vwr_pinops pinop, eid_vwr_result result)
         {
             //Console.WriteLine("CSCbpinopResult called ");
@@ -192,6 +196,11 @@ namespace eIDViewer
             {
                 theData.logText += "CSCbpinopResult called, result = " + result.ToString() + "\n";
             }
+        }
+
+        public static void DoPinop(eid_vwr_pinops pinop)
+        {
+            eid_vwr_pinop(pinop);
         }
 
         public static void backendMainloop()

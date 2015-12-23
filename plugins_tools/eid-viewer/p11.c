@@ -210,9 +210,13 @@ int eid_vwr_p11_read_certs(void* data) {
  * "failed" message, and otherwise we can't use our check_rv() macro
  */
 static int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
-	check_rv(C_Login(session, CKU_USER, NULL_PTR, 0));
+	
 	if(p >= EID_VWR_PINOP_CHG) {
 		check_rv(C_SetPIN(session, NULL_PTR, 0, NULL_PTR, 0));
+	}
+	else
+	{
+		check_rv(C_Login(session, CKU_USER, NULL_PTR, 0));
 	}
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
 	
@@ -223,11 +227,11 @@ static int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
  * requested */
 int eid_vwr_p11_do_pinop(void* data) {
 	int retval;
-	enum eid_vwr_pinops* p = (enum eid_vwr_pinops*) data;
-	if((retval = eid_vwr_p11_do_pinop_real((enum eid_vwr_pinops)p)) != CKR_OK) {
-		be_pinresult((enum eid_vwr_pinops)p, EID_VWR_FAILED);
+	enum eid_vwr_pinops p = (enum eid_vwr_pinops) data;
+	if((retval = eid_vwr_p11_do_pinop_real(p)) != CKR_OK) {
+		be_pinresult(p, EID_VWR_FAILED);
 	} else {
-		be_pinresult((enum eid_vwr_pinops)p, EID_VWR_SUCCESS);
+		be_pinresult(p, EID_VWR_SUCCESS);
 	}
 	return retval;
 }
