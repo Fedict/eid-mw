@@ -26,12 +26,11 @@ permission from the user. This can be done by way of the
 options exist:
 
 1. `EID_DIALOGS_STYLE=ok`: all kinds of dialogs may be shown, no
-   restrictions.
+   restrictions. Please note that entering an incorrect pincode three times
+   will result in the card getting locked.
 2. `EID_DIALOGS_STYLE=nopin`: dialogs asking pin codes will be
    suppressed, but all other dialogs will be shown.
-3. `EID_DIALOGS_STYLE=ok`: all dialogs will be shown. Please note that
-   entering an incorrect pincode three times will result in the card
-   getting locked.
+3. `EID_DIALOGS_STYLE` is unset: no dialogs will be shown.
 
 In addition, most tests require an actual card to be in a reader. This
 may be a test card, or it can be an actual ID card. It is safe to run
