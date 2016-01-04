@@ -7,7 +7,7 @@ extern "C" {
 
 #include <oslayer.h>
 
-enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen);
+enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void* ca, size_t calen);
 
 #ifdef __cplusplus
 }
