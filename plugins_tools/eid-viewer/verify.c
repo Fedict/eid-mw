@@ -65,6 +65,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	struct curl_slist *list = NULL;
 	long len;
 	CURL *curl;
+	int curl_res;
 	char *status_string = NULL;
 	ASN1_GENERALIZEDTIME *rev, *this, *next;
 	X509_STORE *store;
@@ -141,7 +142,10 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, appendmem);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, dat);
 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
-	curl_easy_perform(curl);
+	if((curl_res = curl_easy_perform(curl) != CURLE_OK)) {
+		be_log(EID_VWR_LOG_COARSE, "Could not perform OCSP request: %s", curl_easy_strerror(curl_res));
+		return EID_VWR_FAILED;
+	}
 
 	resp = d2i_OCSP_RESPONSE(NULL, (const unsigned char**)&(dat->data), dat->len);
 	switch(OCSP_response_status(resp)) {
