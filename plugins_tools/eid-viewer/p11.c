@@ -229,9 +229,9 @@ int eid_vwr_p11_do_pinop(void* data) {
 	int retval;
 	enum eid_vwr_pinops p = (enum eid_vwr_pinops) data;
 	if((retval = eid_vwr_p11_do_pinop_real(p)) != CKR_OK) {
-		be_pinresult(p, EID_VWR_FAILED);
+		be_pinresult(p, EID_VWR_RES_FAILED);
 	} else {
-		be_pinresult(p, EID_VWR_SUCCESS);
+		be_pinresult(p, EID_VWR_RES_SUCCESS);
 	}
 	return retval;
 }

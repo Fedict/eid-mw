@@ -73,11 +73,11 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_error("Could not parse entity certificate");
-		return EID_VWR_FAILED;
+		return EID_VWR_RES_FAILED;
 	}
 	if(d2i_X509(&ca_i, (const unsigned char**)&ca, calen) == NULL) {
 		log_error("Could not parse CA certificate");
-		return EID_VWR_FAILED;
+		return EID_VWR_RES_FAILED;
 	}
 	certv3 = cert_i->cert_info;
 	
@@ -93,7 +93,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 
 			if(!(method = X509V3_EXT_get(ex)) || !(method->i2v)) {
 				log_error("Could not find OCSP URL information");
-				return EID_VWR_FAILED;
+				return EID_VWR_RES_FAILED;
 			}
 			if(method->it) {
 				ext_str = ASN1_item_d2i(NULL, &p, ex->value->length, ASN1_ITEM_ptr(method->it));
@@ -102,7 +102,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 			}
 			if(!(nval = method->i2v(method, ext_str, NULL))) {
 				log_error("Could not read OCSP URL from certificate");
-				return EID_VWR_FAILED;
+				return EID_VWR_RES_FAILED;
 			}
 			for(j=0; j<sk_CONF_VALUE_num(nval); j++) {
 				CONF_VALUE *val = sk_CONF_VALUE_value(nval, j);
@@ -111,7 +111,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 						url = val->value;
 						if(strncmp(url, VALID_OCSP_PREFIX, strlen(VALID_OCSP_PREFIX))) {
 							be_log(EID_VWR_LOG_NORMAL, "Invalid OCSP URL. Is this an actual eID card?");
-							return EID_VWR_FAILED;
+							return EID_VWR_RES_FAILED;
 						}
 					}
 				}
@@ -120,7 +120,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	}
 	if(!url) {
 		be_log(EID_VWR_LOG_NORMAL, "No OCSP URL found. Is this an actual eID card?");
-		return EID_VWR_FAILED;
+		return EID_VWR_RES_FAILED;
 	}
 
 	req = OCSP_REQUEST_new();
@@ -144,7 +144,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
 	if((curl_res = curl_easy_perform(curl) != CURLE_OK)) {
 		be_log(EID_VWR_LOG_COARSE, "Could not perform OCSP request: %s", curl_easy_strerror(curl_res));
-		return EID_VWR_FAILED;
+		return EID_VWR_RES_UNKNOWN;
 	}
 
 	resp = d2i_OCSP_RESPONSE(NULL, (const unsigned char**)&(dat->data), dat->len);
@@ -164,7 +164,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	}
 	if(status_string != NULL) {
 		be_log(EID_VWR_LOG_NORMAL, "eID certificate check failed: %s", status_string);
-		return EID_VWR_FAILED;
+		return EID_VWR_RES_FAILED;
 	}
 	bresp = OCSP_response_get1_basic(resp);
 	OCSP_resp_find_status(bresp, id, &stat, &reason, &rev, &this, &next);
@@ -180,14 +180,14 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	}
 	if(status_string != NULL) {
 		be_log(EID_VWR_LOG_NORMAL, "eID certificate %s", status_string);
-		return EID_VWR_FAILED;
+		return EID_VWR_RES_FAILED;
 	}
 	store = X509_STORE_new();
 	lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir());
 	X509_LOOKUP_add_dir(lookup, PKGDATADIR "/trustdir", X509_FILETYPE_PEM);
 	if(OCSP_basic_verify(bresp, bresp->certs, store, 0) <= 0) {
 		log_error("OCSP signature invalid, or root certificate unknown");
-		return EID_VWR_FAILED;
+		return EID_VWR_RES_FAILED;
 	}
-	return EID_VWR_SUCCESS;
+	return EID_VWR_RES_SUCCESS;
 }

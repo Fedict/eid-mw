@@ -39,8 +39,9 @@ enum eid_vwr_pinops {
 
 /* Result of an operation. */
 enum eid_vwr_result {
-    EID_VWR_FAILED,
-    EID_VWR_SUCCESS,
+    EID_VWR_RES_FAILED,
+    EID_VWR_RES_SUCCESS,
+    EID_VWR_RES_UNKNOWN
 };
 
 /* Possible states. See be-statemach.uml in uml/ directory. */

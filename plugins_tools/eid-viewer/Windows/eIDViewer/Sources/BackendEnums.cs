@@ -34,8 +34,9 @@ namespace eIDViewer
 
     public enum eid_vwr_result
     {
-        EID_VWR_FAILED,
-        EID_VWR_SUCCESS,
+        EID_VWR_RES_FAILED,
+        EID_VWR_RES_SUCCESS,
+	EID_VWR_RES_UNKNOWN,
     };
 
     public enum eid_vwr_states
