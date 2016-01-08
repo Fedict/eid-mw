@@ -247,8 +247,8 @@ void add_certificate(char* label, void* data, int len) {
 		add_verify_data(label, data, len);
 	}
 
-	/* d2i_X509 destroys its input, so make sure we have a copy before we
-	 * call that function */
+	/* d2i_X509 moves its input pointer, so make sure we have a copy before
+	 * we call that function */
 	columns[cur] = CERT_COL_DATA;
 	g_value_init(&(vals[cur]), G_TYPE_BYTE_ARRAY);
 	ba = g_byte_array_sized_new(len);
@@ -307,10 +307,6 @@ void add_certificate(char* label, void* data, int len) {
 	BIO_free(bio);
 
 	tst_set(label, columns, vals, cols);
-	// TODO:
-	// If we have data for Root and CA certificates, and at least
-	// one of Signature or Authentication certificates, call
-	// eid_vwr_verify_cert() on the latter.
 }
 
 /* Return the tree model for the certificates treeview */
@@ -372,7 +368,7 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 	gtk_file_filter_add_pattern(filter, "*.pem");
 	gtk_file_filter_set_name(filter, _("PEM files"));
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
-	
+
 	filter = gtk_file_filter_new();
 	gtk_file_filter_add_pattern(filter, "*.pem");
 	gtk_file_filter_add_pattern(filter, "*.der");
