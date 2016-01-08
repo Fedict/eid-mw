@@ -119,7 +119,7 @@ static gboolean tst_helper(gpointer user_data) {
 }
 
 /* Set the given data on the tree model */
-void tst_set(char* w, gint* c, GValue* v, gint n) {
+static void tst_set(char* w, gint* c, GValue* v, gint n) {
 	struct tree_store_data* dat = malloc(sizeof(struct tree_store_data));
 	dat->which = strdup(w);
 	dat->columns = c;
