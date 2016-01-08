@@ -157,7 +157,8 @@ static char** find_proxies_for(char* url) {
 }
 
 static void free_proxy_list(char** proxies) {
-	for(int i=0; proxies[i]; i++) {
+	int i;
+	for(i=0; proxies[i]; i++) {
 		free(proxies[i]);
 	}
 	free(proxies);
