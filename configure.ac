@@ -66,6 +66,7 @@ then
 fi
 
 PKG_CHECK_MODULES([XML2], [libxml-2.0])
+PKG_CHECK_MODULES([libproxy], [libproxy-1.0])
 
 ###########################################################################
 ####### read user-specific requests from --enable directives         ######
