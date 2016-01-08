@@ -689,8 +689,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../../Debug/,
-					"$(PROJECT_DIR)/eID",
-					"Viewer/ossl/openssl-1.0.2d",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -706,8 +704,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../../Release/,
-					"$(PROJECT_DIR)/eID",
-					"Viewer/ossl/openssl-1.0.2d",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
