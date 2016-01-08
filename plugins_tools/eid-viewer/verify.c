@@ -51,8 +51,8 @@ static void log_error(char* message) {
 	be_log(EID_VWR_LOG_DETAIL, "libssl error: %s", buf);
 }
 
-enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void* ca, size_t calen) {
-	X509 *cert_i, *ca_i;
+enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void* ca, size_t calen, char**(*get_proxies)(char*), void(*put_proxies)(char**)) {
+	X509 *cert_i = NULL, *ca_i = NULL;
 	X509_CINF *certv3;
 	char* url = NULL;
 	int i, j, stat, reason;
@@ -70,6 +70,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	ASN1_GENERALIZEDTIME *rev, *this, *next;
 	X509_STORE *store;
 	X509_LOOKUP *lookup;
+	char** proxies;
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_error("Could not parse entity certificate");
@@ -142,8 +143,26 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, appendmem);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, dat);
 	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
-	if((curl_res = curl_easy_perform(curl) != CURLE_OK)) {
-		be_log(EID_VWR_LOG_COARSE, "Could not perform OCSP request: %s", curl_easy_strerror(curl_res));
+	proxies = get_proxies(url);
+	i=0;
+	do {
+		if((curl_res = curl_easy_perform(curl)) != CURLE_OK) {
+			be_log(EID_VWR_LOG_COARSE, "Could not perform OCSP request (with proxy: %s): %s",
+					proxies[i] ? "none" : proxies[i],
+					curl_easy_strerror(curl_res));
+		}
+		if(!strcmp(proxies[i], "direct://")) {
+			// skip that
+			i++;
+		}
+		if(proxies[i] == NULL) {
+			curl_easy_setopt(curl, CURLOPT_PROXY, "");
+		} else {
+			curl_easy_setopt(curl, CURLOPT_PROXY, proxies[i]);
+		}
+	} while(proxies[i++] != NULL && curl_res != CURLE_OK);
+	put_proxies(proxies);
+	if(curl_res != CURLE_OK) {
 		return EID_VWR_RES_UNKNOWN;
 	}
 
