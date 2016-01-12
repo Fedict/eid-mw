@@ -12,7 +12,7 @@ static void osl_objc_newstringdata(const char* label, const char* data) {
     [currUi newstringdata:[NSString stringWithCString:data encoding:NSUTF8StringEncoding] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
 }
 
-static void osl_objc_newbindata(const char* label, const void* data, int datalen) {
+static void osl_objc_newbindata(const char* label, const unsigned char* data, int datalen) {
     [currUi newbindata:[NSData dataWithBytes:data length:datalen] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
 }
 
