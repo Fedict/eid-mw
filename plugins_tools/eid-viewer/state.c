@@ -202,7 +202,6 @@ void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 			thistree = thistree->parent;
 		}
 		if(!thistree) {
-			be_log(EID_VWR_LOG_DETAIL, "Irrelevant event %s received for state %s",  event_to_name(e), state_to_name(curstate->me));
 			return; // event is irrelevant for this state
 		}
 		target = thistree->out[e];

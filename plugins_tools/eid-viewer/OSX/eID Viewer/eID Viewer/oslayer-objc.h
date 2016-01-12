@@ -48,8 +48,9 @@ typedef NS_ENUM(NSInteger, eIDLanguage) {
 };
 
 typedef NS_ENUM(NSInteger, eIDResult) {
-    eIDResultFailed = EID_VWR_FAILED,
-    eIDResultSuccess = EID_VWR_SUCCESS,
+    eIDResultFailed = EID_VWR_RES_FAILED,
+    eIDResultSuccess = EID_VWR_RES_SUCCESS,
+    eIDResultUnknown = EID_VWR_RES_UNKNOWN,
 };
 
 // Protocol for implementing a UI.

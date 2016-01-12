@@ -83,7 +83,8 @@ static void uistatus(gboolean spin, char* data, ...) {
 
 /* Handle "state changed" elements */
 static void newstate(enum eid_vwr_states s) {
-	GObject *open, *savexml, *savecsv, *print, *close, *pintest, *pinchg;
+	GObject *open, *savexml, *savecsv, *print, *close, *pintest, *pinchg, *validate;
+#define want_verify (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "validate_always"))))
 	open = gtk_builder_get_object(builder, "mi_file_open");
 	savexml = gtk_builder_get_object(builder, "mi_file_saveas_xml");
 	savecsv = gtk_builder_get_object(builder, "mi_file_saveas_csv");
@@ -91,6 +92,7 @@ static void newstate(enum eid_vwr_states s) {
 	close = gtk_builder_get_object(builder, "mi_file_close");
 	pintest = gtk_builder_get_object(builder, "pintestbut");
 	pinchg = gtk_builder_get_object(builder, "pinchangebut");
+	validate = gtk_builder_get_object(builder, "validate_now");
 
 	g_object_set_threaded(open, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(close, "sensitive", (void*)FALSE, NULL);
@@ -99,6 +101,8 @@ static void newstate(enum eid_vwr_states s) {
 	g_object_set_threaded(savecsv, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(pintest, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(pinchg, "sensitive", (void*)FALSE, NULL);
+	g_object_set_threaded(validate, "sensitive", (void*)FALSE, NULL);
+	g_object_set_data_threaded(validate, "want_active", (void*)FALSE, NULL);
 	switch(s) {
 		case STATE_LIBOPEN:
 		case STATE_CALLBACKS:
@@ -108,6 +112,9 @@ static void newstate(enum eid_vwr_states s) {
 			uistatus(FALSE, _("Ready to read identity card."));
 			g_object_set_threaded(open, "sensitive", (void*)TRUE, NULL);
 			disable_dnd();
+			return;
+		case STATE_NO_READER:
+			uistatus(FALSE, _("No cardreader found."));
 			return;
 		case STATE_TOKEN:
 			uistatus(TRUE, _("Card available"));
@@ -122,6 +129,12 @@ static void newstate(enum eid_vwr_states s) {
 			if(!data_verifies()) {
 				uilog(EID_VWR_LOG_COARSE, "Cannot load card: data signature invalid!");
 				sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+			}
+			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
+			if(want_verify) {
+				validate_all(NULL, NULL);
+			} else {
+				g_object_set_threaded(validate, "sensitive", (void*)TRUE, NULL);
 			}
 			setup_dnd();
 			return;
@@ -141,6 +154,12 @@ static void newstate(enum eid_vwr_states s) {
 			uistatus(FALSE, "");
 			g_object_set_threaded(print, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(close, "sensitive", (void*)TRUE, NULL);
+			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
+			if(want_verify) {
+				validate_all(NULL, NULL);
+			} else {
+				g_object_set_threaded(validate, "sensitive", (void*)TRUE, NULL);
+			}
 			setup_dnd();
 		default:
 			return;
@@ -304,6 +323,10 @@ static void connect_signals(GtkWidget* window) {
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "photobox"));
 	photo = G_OBJECT(gtk_builder_get_object(builder, "photo"));
 	g_signal_connect(signaltmp, "drag-data-get", G_CALLBACK(drag_data_get), photo);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "validate_now"));
+	g_signal_connect(signaltmp, "clicked", G_CALLBACK(validate_all), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "validate_always"));
+	g_signal_connect(signaltmp, "toggled", G_CALLBACK(validate_toggle), NULL);
 
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "cert_paned"));
 	g_settings_bind(get_prefs(), "cert-paned-pos", signaltmp, "position", 0);

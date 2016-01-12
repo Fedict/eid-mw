@@ -19,5 +19,6 @@ void show_cert_image(const char* name, void* data, int len);
 void setup_dnd(void);
 void disable_dnd(void);
 void drag_data_get(GtkWidget* widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, gpointer user_data);
+void validate_toggle(gpointer event_source, gpointer user_data);
 
 #endif

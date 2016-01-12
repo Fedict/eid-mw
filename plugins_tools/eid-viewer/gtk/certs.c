@@ -11,17 +11,21 @@
 #include <gtk/gtk.h>
 #include <gtk/logging.h>
 
+#include <proxy.h>
+
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <pthread.h>
 
 #include <locale.h>
 #include <gettext.h>
 #include <errno.h>
 #include <verify_cert.h>
+#include <backend.h>
 
 enum certs {
 	Root,
@@ -40,6 +44,7 @@ static GdkPixbuf* good_certificate;
 static GdkPixbuf* bad_certificate;
 static GdkPixbuf* warn_certificate;
 static GdkPixbuf* unchecked_certificate;
+static pxProxyFactory *pf;
 
 /* Returns a GtkTreeIter for the part of the tree model that refers to the
  * certificate with the given name */
@@ -115,7 +120,7 @@ static gboolean tst_helper(gpointer user_data) {
 }
 
 /* Set the given data on the tree model */
-void tst_set(char* w, gint* c, GValue* v, gint n) {
+static void tst_set(char* w, gint* c, GValue* v, gint n) {
 	struct tree_store_data* dat = malloc(sizeof(struct tree_store_data));
 	dat->which = strdup(w);
 	dat->columns = c;
@@ -144,6 +149,83 @@ static void ensure_cert() {
 	}
 }
 
+static void create_proxy_factory() {
+	pf = px_proxy_factory_new();
+}
+
+static char** find_proxies_for(char* url) {
+	return px_proxy_factory_get_proxies(pf, url);
+}
+
+static void free_proxy_list(char** proxies) {
+	int i;
+	for(i=0; proxies[i]; i++) {
+		free(proxies[i]);
+	}
+	free(proxies);
+}
+
+static void check_cert(char* which) {
+	GtkTreeIter *cert_iter = get_iter_for(which);
+	GtkTreeIter *ca_iter = get_iter_for("CA");
+	GByteArray *cert, *ca_cert;
+	GValue *val;
+	int *col;
+
+	gtk_tree_model_get(GTK_TREE_MODEL(certificates), cert_iter, CERT_COL_DATA, &cert, -1);
+	gtk_tree_model_get(GTK_TREE_MODEL(certificates), ca_iter, CERT_COL_DATA, &ca_cert, -1);
+
+	val = calloc(sizeof(GValue), 1);
+	col = malloc(sizeof(int));
+
+	*col = CERT_COL_VALIDITY;
+	g_value_init(val, G_TYPE_BOOLEAN);
+
+	switch(eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, find_proxies_for, free_proxy_list)) {
+		case EID_VWR_RES_SUCCESS:
+			g_value_set_boolean(val, TRUE);
+			break;
+		case EID_VWR_RES_FAILED:
+			g_value_set_boolean(val, FALSE);
+			break;
+		default:
+			free(val);
+			free(col);
+			return;
+	}
+	tst_set(which, col, val, 1);
+	tst_set("CA", col, val, 1);
+	tst_set("Root", col, val, 1);
+}
+
+static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
+	static pthread_once_t once = PTHREAD_ONCE_INIT;
+
+	pthread_once(&once, create_proxy_factory);
+	if(!pf) {
+		be_log(EID_VWR_LOG_ERROR, "Certificate validation: Could not find proxy");
+		return NULL;
+	}
+
+	if(iters[CA] == NULL) {
+		be_log(EID_VWR_LOG_NORMAL, "Certificate validation failed: no CA certificate found");
+		return NULL;
+	}
+
+	if(iters[Signature] != NULL) {
+		check_cert("Signature");
+	}
+	if(iters[Authentication] != NULL) {
+		check_cert("Authentication");
+	}
+	return NULL;
+}
+
+void validate_all(gpointer event_source G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+	pthread_t thread;
+	pthread_create(&thread, NULL, check_certs_thread, NULL);
+}
+
 /* newbindata() handler function for when we receive a certificate */
 void add_certificate(char* label, void* data, int len) {
 	X509 *cert = NULL;
@@ -167,10 +249,8 @@ void add_certificate(char* label, void* data, int len) {
 		add_verify_data(label, data, len);
 	}
 
-	eid_vwr_verify_cert(data, len);
-
-	/* d2i_X509 destroys its input, so make sure we have a copy before we
-	 * call that function */
+	/* d2i_X509 moves its input pointer, so make sure we have a copy before
+	 * we call that function */
 	columns[cur] = CERT_COL_DATA;
 	g_value_init(&(vals[cur]), G_TYPE_BYTE_ARRAY);
 	ba = g_byte_array_sized_new(len);
@@ -290,7 +370,7 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 	gtk_file_filter_add_pattern(filter, "*.pem");
 	gtk_file_filter_set_name(filter, _("PEM files"));
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
-	
+
 	filter = gtk_file_filter_new();
 	gtk_file_filter_add_pattern(filter, "*.pem");
 	gtk_file_filter_add_pattern(filter, "*.der");

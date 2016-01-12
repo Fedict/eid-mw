@@ -5,6 +5,7 @@
 #include "gtk_main.h"
 #include "oslayer.h"
 #include "state.h"
+#include "certs.h"
 
 #include <libxml/xmlreader.h>
 #include "viewer_glade.h"
@@ -282,6 +283,21 @@ void drag_data_get(GtkWidget* widget, GdkDragContext *ctx, GtkSelectionData *dat
 	const char* xml = eid_vwr_be_get_xmlform();
 	if(!xml) return;
 	gtk_selection_data_set_text(data, xml, -1);
+}
+
+void validate_toggle(gpointer event_source, gpointer user_data G_GNUC_UNUSED) {
+	// g_object_get_data returns NULL if we haven't set this yet. That's
+	// fine, just means we'll drop to the false case which disables things,
+	// which is exactly what we want at startup
+	GtkWidget* valbut = GTK_WIDGET(gtk_builder_get_object(builder, "validate_now"));
+	gtk_widget_set_sensitive(valbut, FALSE);
+	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(event_source))) {
+		validate_all(NULL, NULL);
+	} else {
+		if(g_object_get_data(G_OBJECT(valbut), "want_active") != NULL) {
+			gtk_widget_set_sensitive(valbut, TRUE);
+		}
+	}
 }
 
 GEN_FUNC(file_prefs, "set preferences %s")

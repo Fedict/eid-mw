@@ -28,15 +28,14 @@ Requires: eid-mw-libs
 Requires: pcsc-ccid
 BuildRequires: gcc-c++
 BuildRequires: libopenssl-devel
-Buildrequires: xmlsec1-openssl-devel
 BuildRequires: libtool
 BuildRequires: libltdl7
 %else
 Requires: ccid
 BuildRequires: openssl-devel
-BuildRequires: xmlsec1-devel
 BuildRequires: libtool-ltdl-devel
 %endif
+BuildRequires: libproxy-devel
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
 Conflicts: openct

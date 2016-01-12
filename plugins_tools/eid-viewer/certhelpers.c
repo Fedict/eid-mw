@@ -10,6 +10,18 @@
 
 #include "backend.h"
 
+#include <pthread.h>
+
+static pthread_once_t init = PTHREAD_ONCE_INIT;
+
+static void init_crypto() {
+	ERR_load_crypto_strings();
+}
+
+void ensure_inited() {
+	pthread_once(&init, init_crypto);
+}
+
 /* Return a string representation of the X509v3 uses of the given certificate. */
 char* get_use_flags(const char* label, X509* cert) {
 	X509_CINF* ci = cert->cert_info;
@@ -190,7 +202,7 @@ void dumpcert(int fd, const void* derdata, int len, enum dump_type how) {
 			if(d2i_X509(&cert, (const unsigned char**)&derdata, len) == NULL) {
 				char buf[100];
 				unsigned long error = ERR_get_error();
-				ERR_load_crypto_strings();
+				ensure_inited();
 				ERR_error_string_n(error, buf, sizeof(buf));
 				buf[99]='\0';
 				be_log(EID_VWR_LOG_ERROR, "Could not parse certificate");
