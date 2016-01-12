@@ -59,7 +59,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>beidpkcs11D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>beidpkcs11D.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\..\cardcomm\VS_2012\Binaries\Win32_Debug\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -80,7 +80,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>beidpkcs11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>beidpkcs11.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\..\cardcomm\VS_2012\Binaries\Win32_release</AdditionalLibraryDirectories>
     </Link>
     <Lib>
@@ -114,15 +114,19 @@
     <ClCompile Include="..\..\p11.c" />
     <ClCompile Include="..\..\state-posix.c" />
     <ClCompile Include="..\..\state.c" />
+    <ClCompile Include="..\..\eidxmllite.cpp" />
+    <ClCompile Include="..\..\xmlmap.cpp" />
     <ClCompile Include="..\..\xmlwin32.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\tests\unit\labels.h" />
     <ClInclude Include="..\..\backend.h" />
     <ClInclude Include="..\..\conversions.h" />
+    <ClInclude Include="..\..\eidxmllite.h" />
     <ClInclude Include="..\..\oslayer.h" />
     <ClInclude Include="..\..\p11.h" />
     <ClInclude Include="..\..\state.h" />
+    <ClInclude Include="..\..\xmlmap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

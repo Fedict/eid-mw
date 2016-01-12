@@ -13,7 +13,7 @@
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
         <clr:String x:Key="GlobalString">#FFE5E5E5</clr:String>
-        <SolidColorBrush x:Key="DefaultBackground" Color="Aquamarine">
-        </SolidColorBrush>
+        <SolidColorBrush x:Key="DefaultBackground" Color="Aquamarine"/>
+        <SolidColorBrush x:Key="SelectedBackground" Color="Navy"/>
     </Application.Resources>
 </Application>

@@ -334,7 +334,7 @@ namespace eIDViewer
             progress += 1;
             if (String.Equals(label, "firstnames", StringComparison.Ordinal))
             { firstName = data; }
-            else if (String.Equals(label, "surName", StringComparison.Ordinal))
+            else if (String.Equals(label, "surname", StringComparison.Ordinal))
             { surName = data; }
             else if (String.Equals(label, "first_letter_of_third_given_name", StringComparison.Ordinal))
             { first_letter_of_third_given_name = data; }
@@ -345,9 +345,9 @@ namespace eIDViewer
             else if (String.Equals(label, "gender", StringComparison.Ordinal))
             { gender = data; }
             else if (String.Equals(label, "national_number", StringComparison.Ordinal))
-            { national_number = data;
-            nationality = "BE";
-            }
+            { national_number = data; }
+            else if (String.Equals(label, "nationality", StringComparison.Ordinal))
+            { nationality = data; }
             else if (String.Equals(label, "nobility", StringComparison.Ordinal))
             { nobility = data; }
             else if (String.Equals(label, "special_status", StringComparison.Ordinal))
@@ -384,7 +384,6 @@ namespace eIDViewer
                 progress_info = "reading chip_number";
                 chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
             }
-
         }
 
         public void ResetDataValues()
@@ -409,10 +408,11 @@ namespace eIDViewer
             chip_number = "-";
             validity_begin_date = "-";
             validity_end_date = "-";
-            eid_card_present = "False";
+            eid_card_present = false;
             progress = 0;
             progress_bar_visible = "Hidden";
             progress_info = "";
+            pinop_ready = false;
         }
 
         private String _text_color;
@@ -426,8 +426,8 @@ namespace eIDViewer
             }
         }
 
-        private String _eid_card_present;
-        public String eid_card_present
+        private Boolean _eid_card_present;
+        public Boolean eid_card_present
         {
             get { return _eid_card_present; }
             set
@@ -480,6 +480,17 @@ namespace eIDViewer
             {
                 _log_level = value;
                 this.NotifyPropertyChanged("log_level");
+            }
+        }
+
+        private Boolean _pinop_ready = false;
+        public Boolean pinop_ready
+        {
+            get { return _pinop_ready; }
+            set
+            {
+                _pinop_ready = value;
+                this.NotifyPropertyChanged("pinop_ready");
             }
         }
 

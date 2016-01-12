@@ -62,7 +62,13 @@ namespace eIDViewer
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_pinop(eid_vwr_pinops pinop);
-                     
+
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int eid_vwr_be_deserialize([MarshalAs(UnmanagedType.LPStr)] string source_file);
+
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int eid_vwr_be_serialize([MarshalAs(UnmanagedType.LPStr)] string dest_file);
+
         public static void Init()
         {
             eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
@@ -123,7 +129,7 @@ namespace eIDViewer
                     theData.type_kaart = "IDENTITEITSKAART";
                     theData.text_color = "Black";
                     AdjustIconImage("Resources\\state_eidpresent.png");
-                    theData.eid_card_present = "True";
+                    theData.eid_card_present = true;
                     theData.progress_bar_visible = "Visible";
                     break;
                 case eid_vwr_source.EID_VWR_SRC_FILE:
@@ -196,6 +202,19 @@ namespace eIDViewer
             {
                 theData.logText += "CSCbpinopResult called, result = " + result.ToString() + "\n";
             }
+
+            System.Resources.ResourceManager rm = new System.Resources.ResourceManager("ApplicationStringResources", 
+                typeof(eIDViewer.Resources.ApplicationStringResources).Assembly);
+
+            switch (result)
+            {
+                case eid_vwr_result.EID_VWR_FAILED:
+                    System.Windows.MessageBox.Show("PinOp Failed");
+                    break;
+                case eid_vwr_result.EID_VWR_SUCCESS:
+                    System.Windows.MessageBox.Show(rm.GetString("CARD",null));
+                    break;
+            }
         }
 
         public static void DoPinop(eid_vwr_pinops pinop)
@@ -208,7 +227,17 @@ namespace eIDViewer
             eid_vwr_be_mainloop();
         }
 
-       // public CSCbStruct mCSCbStruct;
+        public static void OpenXML(string sourceFile)
+        {
+            eid_vwr_be_deserialize(sourceFile);
+        }
+
+        public static void SaveXML(string destFile)
+        {
+            eid_vwr_be_serialize(destFile);
+        }
+
+        // public CSCbStruct mCSCbStruct;
     }
 
 }

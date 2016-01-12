@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
 using System.Globalization;
+using System.IO;
+using Microsoft.Win32;
 
 namespace eIDViewer
 {
@@ -111,5 +113,46 @@ namespace eIDViewer
         {
             eIDViewer.NativeMethods.DoPinop(eid_vwr_pinops.EID_VWR_PINOP_CHG);
         }
+
+        private void MenuItemOpen_Click(object sender, RoutedEventArgs e)
+        {
+            //Stream myStream = null;
+            String filename = null;
+            OpenFileDialog myOpenFileDialog = new OpenFileDialog();
+
+            myOpenFileDialog.Filter = "eid files (*.eid)|*.eid|All files (*.*)|*.*";
+            myOpenFileDialog.FilterIndex = 1;
+
+            if (myOpenFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    if ((filename = myOpenFileDialog.FileName) != null)
+                    {
+                        MessageBox.Show("File selected is " + filename);
+                        eIDViewer.NativeMethods.OpenXML(filename);
+                    }
+                   /* if ((myStream = myOpenFileDialog.OpenFile()) != null)
+                    {
+                        using (myStream)
+                        {
+                            int length = (int)myStream.Length;
+                            byte[] buffer = new byte[length];
+                            int bytesRead = 0;
+                            do
+                            {
+                                bytesRead = myStream.Read(buffer, 0, length - bytesRead);
+                            } while (bytesRead > 0);
+
+                        }
+                    }*/
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Error message: " + ex.Message);
+                }
+            }
+        }
     }
+
 }

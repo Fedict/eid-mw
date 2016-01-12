@@ -119,7 +119,7 @@
         </TabControl>
         <Menu Height="23" Margin="0,0,0,0" VerticalAlignment="Top">
             <MenuItem Header="{Binding Path=applicationResource.fileMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <MenuItem Header="Open.."/>
+                <MenuItem Header="Open.." Click="MenuItemOpen_Click"/>
                 <MenuItem Header="Save as.." IsEnabled="False"/>
                 <MenuItem Header="Close" IsEnabled="False"/>
                 <Separator/>
