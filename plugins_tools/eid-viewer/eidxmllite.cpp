@@ -14,7 +14,7 @@ const UINT MAX_ELEMENT_DEPTH = 8;
 //#define HR(stmt)                do { hr = (stmt); goto CleanUp; } while(0) 
 #define SAFE_RELEASE(I)         if (I){ I->Release();  I = NULL; }
 #define SAFE_FREE(val)			if (val != NULL){ free(val); val = NULL;}
-#define FAILED_OUT(retVal)		if (retVal != 0){goto out;}
+#define FAILED_OUT(retVal)		if ((retVal) != 0){goto out;}
 
 #define check_xml(call) if((rc = call) < 0) { \
 	be_log(EID_VWR_LOG_DETAIL, "Error while dealing with file (calling '%s'): %d", #call, rc); \
