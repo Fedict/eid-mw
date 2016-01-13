@@ -108,6 +108,9 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	len = (long)i2d_OCSP_REQUEST(req, &data);
 
 	response = perform_ocsp_request(url, data, len, &len);
+	if(!response) {
+		return EID_VWR_RES_UNKNOWN;
+	}
 
 	resp = d2i_OCSP_RESPONSE(NULL, (const unsigned char**)&(response), len);
 	switch(OCSP_response_status(resp)) {
