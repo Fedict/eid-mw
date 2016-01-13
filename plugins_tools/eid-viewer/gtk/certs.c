@@ -11,6 +11,7 @@
 #include <gtk/gtk.h>
 #include <gtk/logging.h>
 
+#include <curl/curl.h>
 #include <proxy.h>
 
 #include <openssl/x509.h>
@@ -153,16 +154,82 @@ static void create_proxy_factory() {
 	pf = px_proxy_factory_new();
 }
 
-static char** find_proxies_for(char* url) {
-	return px_proxy_factory_get_proxies(pf, url);
+struct recvdata {
+	unsigned char* data;
+	size_t len;
+};
+
+/* CURL helper function to receive data */
+static size_t appendmem(char *ptr, size_t size, size_t nmemb, void* data) {
+	struct recvdata *str = (struct recvdata*) data;
+	size_t realsize = size * nmemb;
+	unsigned char *p = realloc(str->data, str->len + realsize);
+
+	if(!p) {
+		return 0;
+	}
+	str->data = p;
+	memcpy(str->data + str->len, ptr, realsize);
+	str->len += realsize;
+
+	return realsize;
 }
 
-static void free_proxy_list(char** proxies) {
+static void* perform_ocsp_request(char* url, void* data, long datlen, long* retlen) {
+	CURL *curl;
+	CURLcode curl_res;
+	struct curl_slist *list = NULL;
+	char** proxies = px_proxy_factory_get_proxies(pf, url);
 	int i;
+	struct recvdata *dat;
+	void* retval;
+
+	dat = calloc(sizeof(struct recvdata), 1);
+	curl_slist_append(list, "Content-Type: application/ocsp-request");
+	curl = curl_easy_init();
+	curl_easy_setopt(curl, CURLOPT_URL, url);
+	curl_easy_setopt(curl, CURLOPT_POST, (long)1);
+	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+	curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, datlen);
+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, appendmem);
+	curl_easy_setopt(curl, CURLOPT_WRITEDATA, dat);
+	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
+	i=0;
+	do {
+		if((curl_res = curl_easy_perform(curl)) != CURLE_OK) {
+			be_log(EID_VWR_LOG_COARSE, "Could not perform OCSP request (with proxy: %s): %s",
+					proxies[i] ? "none" : proxies[i],
+					curl_easy_strerror(curl_res));
+		}
+		if(!strcmp(proxies[i], "direct://")) {
+			// skip that
+			i++;
+		}
+		if(proxies[i] == NULL) {
+			curl_easy_setopt(curl, CURLOPT_PROXY, "");
+		} else {
+			curl_easy_setopt(curl, CURLOPT_PROXY, proxies[i]);
+		}
+	} while(proxies[i++] != NULL && curl_res != CURLE_OK);
+
 	for(i=0; proxies[i]; i++) {
 		free(proxies[i]);
 	}
 	free(proxies);
+
+	if(curl_res != CURLE_OK) {
+		free(dat->data);
+		dat->len = 0;
+		dat->data = NULL;
+	}
+	retval = dat->data;
+	*retlen = dat->len;
+
+	free(dat);
+	curl_easy_cleanup(curl);
+	curl_slist_free_all(list);
+
+	return retval;
 }
 
 static void check_cert(char* which) {
@@ -181,7 +248,7 @@ static void check_cert(char* which) {
 	*col = CERT_COL_VALIDITY;
 	g_value_init(val, G_TYPE_BOOLEAN);
 
-	switch(eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, find_proxies_for, free_proxy_list)) {
+	switch(eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request)) {
 		case EID_VWR_RES_SUCCESS:
 			g_value_set_boolean(val, TRUE);
 			break;
