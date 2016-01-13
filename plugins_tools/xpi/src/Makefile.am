@@ -1,14 +1,14 @@
 XPI_NAME=belgiumeid.xpi
 XPI_UUID={ec8030f7-c20a-464f-9b0e-13a3a9e97384}
 
-CLEANFILES = $(XPI_NAME)
+CLEANFILES = $(XPI_NAME) $(XPI_ID).xpi
 EXTRA_DIST = belgiumeid-1.0.18.1-signed.xpi
 
 if SIGNED
-extensionroot_DATA = $(XPI_UUID).xpi
+extensionbase_DATA = $(XPI_ID).xpi
 
-$(XPI_NAME).xpi: belgiumeid-1.0.18.1-signed.xpi
-	cp $(srcdir)/belgiumeid-1.0.18.1-signed.xpi $(XPI_NAME).xpi
+$(XPI_ID).xpi: belgiumeid-1.0.18.1-signed.xpi
+	cp $(srcdir)/belgiumeid-1.0.18.1-signed.xpi $(XPI_ID).xpi
 else
 xpi_files = $(dist_content_DATA) \
 			$(dist_defaults_preferences_DATA) \
@@ -68,8 +68,8 @@ xpipackage: $(xpi_files)
 	rm -rf $$tmp;
 
 endif
-mozextdir=$(mozext)
-extensionrootdir=$(mozextdir)/$(XPI_UUID)/$(XPI_ID)/
+extensionbasedir=$(mozext)/$(XPI_UUID)
+extensionrootdir=$(extensionbasedir)/$(XPI_ID)/
 contentdir=$(extensionrootdir)content
 defaults_preferencesdir=$(extensionrootdir)defaults/preferences
 locale_enusdir=$(extensionrootdir)locale/en-US
