@@ -208,10 +208,10 @@ namespace eIDViewer
 
             switch (result)
             {
-                case eid_vwr_result.EID_VWR_FAILED:
+                case eid_vwr_result.EID_VWR_RES_FAILED:
                     System.Windows.MessageBox.Show("PinOp Failed");
                     break;
-                case eid_vwr_result.EID_VWR_SUCCESS:
+                case eid_vwr_result.EID_VWR_RES_SUCCESS:
                     System.Windows.MessageBox.Show(rm.GetString("CARD",null));
                     break;
             }
