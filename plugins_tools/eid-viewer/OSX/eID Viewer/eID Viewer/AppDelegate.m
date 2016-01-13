@@ -22,6 +22,7 @@
 - (IBAction)print:(id)sender;
 - (IBAction)showDetail:(id)sender;
 - (IBAction)export:(NSMenuItem *)sender;
+- (IBAction)validateNow:(id)sender;
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
 
 @property CertificateStore *certstore;
@@ -38,6 +39,7 @@
 @property (weak) IBOutlet NSOutlineView *CertificatesView;
 @property (weak) IBOutlet NSView *printop_view;
 @property (weak) IBOutlet NSProgressIndicator *spinner;
+@property (weak) IBOutlet NSButton *alwaysValidate;
 
 @property (weak) IBOutlet NSMenuItem *menu_file_open;
 @property (weak) IBOutlet NSMenuItem *menu_file_close;
@@ -351,5 +353,17 @@
 }
 -(void)changeLogLevel:(NSPopUpButton *)logLevel {
     [[NSUserDefaults standardUserDefaults] setInteger:[logLevel indexOfSelectedItem] forKey:@"log_level"];
+}
+-(IBAction)validateNow:(id)sender {
+    NSData* ca = [_certstore certificateForKey:@"CA"];
+    // TODO: update certificate state in UI
+    switch([eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Signature"] withCa:ca]) {
+        case eIDResultSuccess:
+        case eIDResultFailed:
+        case eIDResultUnknown:
+            break;
+    }
+    // TODO: same as above.
+    [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca];
 }
 @end

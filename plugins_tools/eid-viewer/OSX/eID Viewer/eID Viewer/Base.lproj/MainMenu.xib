@@ -19,6 +19,7 @@
                 <outlet property="CertificatesTab" destination="TnE-Be-ndr" id="1th-gT-Pm9"/>
                 <outlet property="CertificatesView" destination="G1r-zp-mgg" id="mxb-Xx-Viq"/>
                 <outlet property="IdentityTab" destination="8cq-xu-vLE" id="UUh-5o-1f7"/>
+                <outlet property="alwaysValidate" destination="DP5-Vd-vKQ" id="16x-fw-umH"/>
                 <outlet property="logItem" destination="I3G-tI-1MG" id="Lw3-P0-gIi"/>
                 <outlet property="logLevel" destination="2Iq-Qb-1J7" id="zdf-dd-Roe"/>
                 <outlet property="menu_file_close" destination="DVo-aG-piG" id="eD3-6j-eIp"/>
@@ -750,7 +751,7 @@
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="SbE-j5-DtL" id="G1r-zp-mgg">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="360" height="107"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="360" height="0.0"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <animations/>
                                                                         <size key="intercellSpacing" width="3" height="2"/>
@@ -987,6 +988,9 @@
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="validateNow:" target="Voe-Tx-rLC" id="tJs-QA-T2C"/>
+                                            </connections>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="DP5-Vd-vKQ">
                                             <rect key="frame" x="114" y="22" width="115" height="18"/>

@@ -8,7 +8,9 @@
 
 #include <string.h>
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
 
 #define PKGDATADIR "/home/wouter"
 

@@ -184,8 +184,11 @@
     [_ui newstringdata:[arr objectAtIndex:CERT_COL_USE] withLabel:@"certuseval"];
     [_ui newbindata:[arr objectAtIndex:CERT_COL_IMAGE]withLabel:@"certimage"];
 }
+-(NSData*) certificateForKey:(NSString*)key {
+    return [[_CertificateData objectForKey:key] objectAtIndex:CERT_COL_DATA];
+}
 -(void)dumpFile:(int)fd forKey:(NSString*)key withFormat:(eIDDumpType)format {
-    NSData *dat = [[_CertificateData objectForKey:key] objectAtIndex:CERT_COL_DATA];
+    NSData *dat = [self certificateForKey:key];
     dumpcert(fd, [dat bytes], [dat length], (enum dump_type)format);
 }
 -(NSString*)fileNameForKey:(NSString*)key {

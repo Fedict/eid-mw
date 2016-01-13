@@ -13,6 +13,7 @@
 		652BC8AE1AEA41D100DA9519 /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */; };
 		652BC8B11AEA467800DA9519 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
 		653BB4D91BBC0D2F00EA73CF /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */; };
+		654832DF1C451E160030D770 /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = 654832DE1C451E160030D770 /* verify.c */; settings = {ASSET_TAGS = (); }; };
 		65967BC81C11DF6400814858 /* libbeidpkcs11.4.1.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.9.dylib */; };
 		659FFC431AE9360D004CEC1F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC421AE9360D004CEC1F /* AppDelegate.m */; };
 		659FFC451AE9360D004CEC1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC441AE9360D004CEC1F /* main.m */; };
@@ -101,6 +102,8 @@
 		652BC8AF1AEA441400DA9519 /* xsdloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xsdloc.h; path = ../../../xsdloc.h; sourceTree = "<group>"; };
 		652BC8B01AEA467800DA9519 /* eidv4.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../eidv4.xsd; sourceTree = "<group>"; };
 		653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../support/xml/builddir/.libs/libxml2.2.dylib; sourceTree = "<group>"; };
+		654832DD1C451E160030D770 /* verify_cert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = verify_cert.h; path = ../../../verify_cert.h; sourceTree = "<group>"; };
+		654832DE1C451E160030D770 /* verify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = verify.c; path = ../../../verify.c; sourceTree = "<group>"; };
 		65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.9.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.9.dylib; sourceTree = "<group>"; };
 		659FFC3C1AE9360D004CEC1F /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		659FFC401AE9360D004CEC1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 		659FFC3E1AE9360D004CEC1F /* eID Viewer */ = {
 			isa = PBXGroup;
 			children = (
+				654832DD1C451E160030D770 /* verify_cert.h */,
+				654832DE1C451E160030D770 /* verify.c */,
 				659FFC6E1AE93A7B004CEC1F /* backend.c */,
 				659FFC6F1AE93A7B004CEC1F /* backend.h */,
 				659FFC741AE93AB5004CEC1F /* base64dec.c */,
@@ -514,6 +519,7 @@
 				659FFC6D1AE9365F004CEC1F /* oslayer-objc.m in Sources */,
 				659FFCB51AE93B4B004CEC1F /* xmlmap.cpp in Sources */,
 				659FFC9C1AE93AD1004CEC1F /* hexdecode.cpp in Sources */,
+				654832DF1C451E160030D770 /* verify.c in Sources */,
 				659FFC9F1AE93AD1004CEC1F /* specconv.cpp in Sources */,
 				659FFC9D1AE93AD1004CEC1F /* hexnumconv.cpp in Sources */,
 				659FFCA71AE93B1C004CEC1F /* oslayer.c in Sources */,
