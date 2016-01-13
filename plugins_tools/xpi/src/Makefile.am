@@ -1,7 +1,18 @@
 XPI_NAME=belgiumeid.xpi
+XPI_UUID={ec8030f7-c20a-464f-9b0e-13a3a9e97384}
 
 CLEANFILES = $(XPI_NAME)
+EXTRA_DIST = belgiumeid-1.0.18.1-signed.xpi
 
+if SIGNED
+mozext_DATA = $(XPI_UUID).xpi
+
+$(XPI_UUID).xpi: belgiumeid-1.0.18.1-signed.xpi
+	cp $(srcdir)/belgiumeid-1.0.18.1-signed.xpi $(XPI_UUID).xpi
+
+CLEANFILES += $(XPI_UUID).xpi
+
+else
 xpi_files = $(dist_content_DATA) \
 			$(dist_defaults_preferences_DATA) \
 			$(dist_locale_enus_DATA) \
@@ -36,10 +47,12 @@ dist_locale_dede_DATA = locale/de-DE/belgiumeid.properties
 dist_skin_DATA = skin/icon.png \
 			skin/icon40x40.png \
 			skin/overlay.css
-			
+
 dist_components_DATA = components/belgiumeidpkcs11.js
-			
-extensionrootdir=$(mozext)/$(XPI_ID)/
+
+endif
+mozextdir=$(mozext)
+extensionrootdir=$(mozextdir)/$(XPI_UUID)/$(XPI_ID)/
 contentdir=$(extensionrootdir)content
 defaults_preferencesdir=$(extensionrootdir)defaults/preferences
 locale_enusdir=$(extensionrootdir)locale/en-US
@@ -68,4 +81,3 @@ xpipackage: $(xpi_files)
 	@ZIP@ -rq $(abs_builddir)/$(XPI_NAME) .; \
 	cd -; \
 	rm -rf $$tmp;
-

@@ -38,9 +38,12 @@ AC_ARG_WITH([mozext],
 
 AS_IF(
 	[test "x$with_mozext" = "xno"],
-	[mozext]=[${datadir}/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}],
+	[mozext]=[${datadir}/mozilla/extensions/],
 	[[mozext]=[$with_mozext]]
 )
+
+AC_ARG_ENABLE(signed, AS_HELP_STRING([--enable-signed], [Use the (pre-)signed version of the extension, rather than building it from source. Required for Firefox >= 43 (default on)]),[],[enable_signed=yes])
+AM_CONDITIONAL([SIGNED], [test "$enable_signed" = yes])
 
 AC_SUBST([ZIP])
 AC_SUBST([DEBUG])
