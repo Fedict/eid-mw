@@ -5,13 +5,10 @@ CLEANFILES = $(XPI_NAME)
 EXTRA_DIST = belgiumeid-1.0.18.1-signed.xpi
 
 if SIGNED
-mozext_DATA = $(XPI_UUID).xpi
+extensionroot_DATA = $(XPI_UUID).xpi
 
-$(XPI_UUID).xpi: belgiumeid-1.0.18.1-signed.xpi
-	cp $(srcdir)/belgiumeid-1.0.18.1-signed.xpi $(XPI_UUID).xpi
-
-CLEANFILES += $(XPI_UUID).xpi
-
+$(XPI_NAME).xpi: belgiumeid-1.0.18.1-signed.xpi
+	cp $(srcdir)/belgiumeid-1.0.18.1-signed.xpi $(XPI_NAME).xpi
 else
 xpi_files = $(dist_content_DATA) \
 			$(dist_defaults_preferences_DATA) \
@@ -50,18 +47,6 @@ dist_skin_DATA = skin/icon.png \
 
 dist_components_DATA = components/belgiumeidpkcs11.js
 
-endif
-mozextdir=$(mozext)
-extensionrootdir=$(mozextdir)/$(XPI_UUID)/$(XPI_ID)/
-contentdir=$(extensionrootdir)content
-defaults_preferencesdir=$(extensionrootdir)defaults/preferences
-locale_enusdir=$(extensionrootdir)locale/en-US
-locale_frfrdir=$(extensionrootdir)locale/fr-FR
-locale_nlnldir=$(extensionrootdir)locale/nl-NL
-locale_dededir=$(extensionrootdir)locale/de-DE
-skindir=$(extensionrootdir)skin
-componentsdir=$(extensionrootdir)components
-
 xpipackage: $(xpi_files)
 #	 Create a temporary directory $tmp in $TMPDIR (default /tmp).
 #	 Use mktemp if possible; otherwise fall back on mkdir,
@@ -81,3 +66,15 @@ xpipackage: $(xpi_files)
 	@ZIP@ -rq $(abs_builddir)/$(XPI_NAME) .; \
 	cd -; \
 	rm -rf $$tmp;
+
+endif
+mozextdir=$(mozext)
+extensionrootdir=$(mozextdir)/$(XPI_UUID)/$(XPI_ID)/
+contentdir=$(extensionrootdir)content
+defaults_preferencesdir=$(extensionrootdir)defaults/preferences
+locale_enusdir=$(extensionrootdir)locale/en-US
+locale_frfrdir=$(extensionrootdir)locale/fr-FR
+locale_nlnldir=$(extensionrootdir)locale/nl-NL
+locale_dededir=$(extensionrootdir)locale/de-DE
+skindir=$(extensionrootdir)skin
+componentsdir=$(extensionrootdir)components
