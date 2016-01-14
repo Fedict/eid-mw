@@ -236,33 +236,42 @@ static void check_cert(char* which) {
 	GtkTreeIter *cert_iter = get_iter_for(which);
 	GtkTreeIter *ca_iter = get_iter_for("CA");
 	GByteArray *cert, *ca_cert;
-	GValue *val;
-	int *col;
+	GValue *val_cert, *val_ca, *val_root;
+	int *col_cert, *col_ca, *col_root;
 
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), cert_iter, CERT_COL_DATA, &cert, -1);
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), ca_iter, CERT_COL_DATA, &ca_cert, -1);
 
-	val = calloc(sizeof(GValue), 1);
-	col = malloc(sizeof(int));
+	val_cert = calloc(sizeof(GValue), 1);
+	col_cert = malloc(sizeof(int));
 
-	*col = CERT_COL_VALIDITY;
-	g_value_init(val, G_TYPE_BOOLEAN);
+	*col_cert = CERT_COL_VALIDITY;
+	g_value_init(val_cert, G_TYPE_BOOLEAN);
 
 	switch(eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request)) {
 		case EID_VWR_RES_SUCCESS:
-			g_value_set_boolean(val, TRUE);
+			g_value_set_boolean(val_cert, TRUE);
 			break;
 		case EID_VWR_RES_FAILED:
-			g_value_set_boolean(val, FALSE);
+			g_value_set_boolean(val_cert, FALSE);
 			break;
 		default:
-			free(val);
-			free(col);
+			free(val_cert);
+			free(col_cert);
 			return;
 	}
-	tst_set(which, col, val, 1);
-	tst_set("CA", col, val, 1);
-	tst_set("Root", col, val, 1);
+	col_ca = malloc(sizeof(int));
+	val_ca = calloc(sizeof(GValue), 1);
+	col_root = malloc(sizeof(int));
+	val_root = calloc(sizeof(GValue), 1);
+	*col_ca = *col_root = *col_cert;
+	g_value_init(val_ca, G_TYPE_BOOLEAN);
+	g_value_copy(val_cert, val_ca);
+	g_value_init(val_root, G_TYPE_BOOLEAN);
+	g_value_copy(val_cert, val_root);
+	tst_set(which, col_cert, val_cert, 1);
+	tst_set("CA", col_ca, val_ca, 1);
+	tst_set("Root", col_root, val_root, 1);
 }
 
 static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
