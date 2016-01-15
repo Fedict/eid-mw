@@ -76,3 +76,14 @@ Description: Belgian Electronic Identity Card - Mozilla plugin
  Identity Card. Install it if you wish to log on to websites using your
  electronic identity card from within iceweasel or any other gecko-based
  browser.
+
+Package: eid-viewer
+Section: misc
+Provides: beidgui
+Replaces: beidgui
+Conflicts: beidgui
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Graphical interface to Belgian Electronic Identity Card
+ This package contains a graphical application to read data from the
+ Belgian electronic identity card.
