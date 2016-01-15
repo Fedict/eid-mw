@@ -119,14 +119,13 @@ EXTRA_DIST = gtk/viewer.glade \
 	     resources/coat_of_arms_de.jpg \
 	     resources/coat_of_arms_en.jpg \
 	     resources/coat_of_arms_fr.jpg \
-	     resources/coat_of_arms_nl.jpg \
-	     eidv4.xsd
+	     resources/coat_of_arms_nl.jpg
 
 packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
 trustdir = $(packagedatadir)/trustdir
 
-packagedata_DATA = eidv4.xsd
-trust_DATA = \
+dist_packagedata_DATA = eidv4.xsd
+dist_trust_DATA = \
 	certs/belgiumrca.pem \
 	certs/belgiumrca2.pem \
 	certs/belgiumrca3.pem \
