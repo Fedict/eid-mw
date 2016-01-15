@@ -139,4 +139,10 @@ gtk/viewer_glade.h: gtk/viewer.glade
 
 gsettings_SCHEMAS = gtk/eid-viewer.gschema.xml
 
+desktopdir=@datadir@/applications
+desktop_DATA=eid-viewer.desktop
+
+eid-viewer.desktop: gtk/eid-viewer.desktop.sh
+	sh ./eid-viewer.desktop.sh
+
 @GSETTINGS_RULES@
