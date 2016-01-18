@@ -1,6 +1,7 @@
 #import "oslayer-objc.h"
 #include <state.h>
 #include <pthread.h>
+#include "verify_cert.h"
 
 static id <eIDOSLayerUI>currUi = NULL;
 
@@ -12,7 +13,7 @@ static void osl_objc_newstringdata(const char* label, const char* data) {
     [currUi newstringdata:[NSString stringWithCString:data encoding:NSUTF8StringEncoding] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
 }
 
-static void osl_objc_newbindata(const char* label, const void* data, int datalen) {
+static void osl_objc_newbindata(const char* label, const unsigned char* data, int datalen) {
     [currUi newbindata:[NSData dataWithBytes:data length:datalen] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
 }
 
@@ -32,6 +33,23 @@ static void* threadmain(void* val) {
     eid_vwr_be_mainloop();
     
     assert(1 == 0); // we shouldn't ever get here...
+}
+
+static void* osl_objc_perform_ocsp_request(char* url, void* data, long len, long* retlen) {
+    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithCString:url encoding:NSUTF8StringEncoding]]];
+    NSData* dat = [NSData dataWithBytes:data length:len];
+    [req setValue:@"application/ocsp-request" forHTTPHeaderField: @"Content-Type"];
+    req.HTTPBody = dat;
+    req.HTTPMethod = @"POST";
+    NSURLResponse* resp;
+    NSError *err;
+    NSData* respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
+    if (respdata != nil) {
+        *retlen = (long)respdata.length;
+        return [respdata bytes];
+    } else {
+        return NULL;
+    }
 }
 
 @implementation eIDOSLayerBackend
@@ -96,5 +114,8 @@ static void* threadmain(void* val) {
     const char* xml = eid_vwr_be_get_xmlform();
     if(!xml) return nil;
     return [NSData dataWithBytes:xml length:strlen(xml)];
+}
++(void)validateCert:(NSData*)certificate withCa:(NSData*)ca {
+    eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request);
 }
 @end

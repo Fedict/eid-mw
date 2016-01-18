@@ -80,4 +80,5 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 +(NSData*)xmlform;
 +(void)close_file;
 +(void)set_invalid;
++(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca;
 @end

@@ -6,39 +6,17 @@
 #include <openssl/ocsp.h>
 #include <openssl/x509.h>
 
-#include <curl/curl.h>
-
 #include <string.h>
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
-
-struct recvdata {
-	unsigned char* data;
-	size_t len;
-};
-
+#endif
 
 #define PKGDATADIR "/home/wouter"
 
 // All valid OCSP URLs should have the following as their prefix:
 
 #define VALID_OCSP_PREFIX "http://ocsp.eid.belgium.be/"
-
-/* CURL helper function to receive data */
-static size_t appendmem(char *ptr, size_t size, size_t nmemb, void* data) {
-	struct recvdata *str = (struct recvdata*) data;
-	size_t realsize = size * nmemb;
-	unsigned char *p = realloc(str->data, str->len + realsize);
-
-	if(!p) {
-		return 0;
-	}
-	str->data = p;
-	memcpy(str->data + str->len, ptr, realsize);
-	str->len += realsize;
-
-	return realsize;
-}
 
 static void log_error(char* message) {
 	char buf[100];
@@ -51,7 +29,7 @@ static void log_error(char* message) {
 	be_log(EID_VWR_LOG_DETAIL, "libssl error: %s", buf);
 }
 
-enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void* ca, size_t calen, char**(*get_proxies)(char*), void(*put_proxies)(char**)) {
+enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void* ca, size_t calen, void*(*perform_ocsp_request)(char*, void*, long, long*)) {
 	X509 *cert_i = NULL, *ca_i = NULL;
 	X509_CINF *certv3;
 	char* url = NULL;
@@ -61,16 +39,12 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	OCSP_RESPONSE *resp;
 	OCSP_BASICRESP *bresp;
 	unsigned char *data = NULL;
-	struct recvdata *dat;
-	struct curl_slist *list = NULL;
+	unsigned char *response = NULL;
 	long len;
-	CURL *curl;
-	int curl_res;
 	char *status_string = NULL;
 	ASN1_GENERALIZEDTIME *rev, *this, *next;
 	X509_STORE *store;
 	X509_LOOKUP *lookup;
-	char** proxies;
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_error("Could not parse entity certificate");
@@ -132,41 +106,13 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	OCSP_request_add0_id(req, id);
 	OCSP_request_add1_nonce(req, 0, -1);
 	len = (long)i2d_OCSP_REQUEST(req, &data);
-	dat = calloc(sizeof(struct recvdata), 1);
 
-	curl_slist_append(list, "Content-Type: application/ocsp-request");
-	curl = curl_easy_init();
-	curl_easy_setopt(curl, CURLOPT_URL, url);
-	curl_easy_setopt(curl, CURLOPT_POST, (long)1);
-	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
-	curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, len);
-	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, appendmem);
-	curl_easy_setopt(curl, CURLOPT_WRITEDATA, dat);
-	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
-	proxies = get_proxies(url);
-	i=0;
-	do {
-		if((curl_res = curl_easy_perform(curl)) != CURLE_OK) {
-			be_log(EID_VWR_LOG_COARSE, "Could not perform OCSP request (with proxy: %s): %s",
-					proxies[i] ? "none" : proxies[i],
-					curl_easy_strerror(curl_res));
-		}
-		if(!strcmp(proxies[i], "direct://")) {
-			// skip that
-			i++;
-		}
-		if(proxies[i] == NULL) {
-			curl_easy_setopt(curl, CURLOPT_PROXY, "");
-		} else {
-			curl_easy_setopt(curl, CURLOPT_PROXY, proxies[i]);
-		}
-	} while(proxies[i++] != NULL && curl_res != CURLE_OK);
-	put_proxies(proxies);
-	if(curl_res != CURLE_OK) {
+	response = perform_ocsp_request(url, data, len, &len);
+	if(!response) {
 		return EID_VWR_RES_UNKNOWN;
 	}
 
-	resp = d2i_OCSP_RESPONSE(NULL, (const unsigned char**)&(dat->data), dat->len);
+	resp = d2i_OCSP_RESPONSE(NULL, (const unsigned char**)&(response), len);
 	switch(OCSP_response_status(resp)) {
 		case OCSP_RESPONSE_STATUS_SUCCESSFUL:
 			break;

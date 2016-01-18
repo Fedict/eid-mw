@@ -119,16 +119,30 @@ EXTRA_DIST = gtk/viewer.glade \
 	     resources/coat_of_arms_de.jpg \
 	     resources/coat_of_arms_en.jpg \
 	     resources/coat_of_arms_fr.jpg \
-	     resources/coat_of_arms_nl.jpg \
-	     eidv4.xsd
+	     resources/coat_of_arms_nl.jpg
 
 packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
+trustdir = $(packagedatadir)/trustdir
 
-packagedata_DATA = eidv4.xsd
+dist_packagedata_DATA = eidv4.xsd
+dist_trust_DATA = \
+	certs/belgiumrca.pem \
+	certs/belgiumrca2.pem \
+	certs/belgiumrca3.pem \
+	certs/belgiumrca4.pem
+
+install-data-hook:
+	$(SSL_PREFIX)/bin/c_rehash $(DESTDIR)/$(trustdir)
 
 gtk/viewer_glade.h: gtk/viewer.glade
 	$(top_srcdir)/plugins_tools/aboutmw/gtk/gen.sh VIEWER_GLADE_H VIEWER_GLADE_STRING < $^ > $@
 
 gsettings_SCHEMAS = gtk/eid-viewer.gschema.xml
+
+desktopdir=@datadir@/applications
+desktop_DATA=eid-viewer.desktop
+
+eid-viewer.desktop: gtk/eid-viewer.desktop.sh
+	sh ./eid-viewer.desktop.sh
 
 @GSETTINGS_RULES@

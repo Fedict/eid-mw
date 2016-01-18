@@ -1,7 +1,7 @@
 Source: eid-mw
 Priority: optional
 Maintainer: FedICT Servicedesk <servicedesk@fedict.be>
-Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk-3-dev | libgtk2.0-dev (<= 2.24.11), libtool, libssl-dev, libxml2-dev, libcurl4-openssl-dev, libproxy-dev
+Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk-3-dev | libgtk2.0-dev (<= 2.24.11), libtool, libssl-dev, libxml2-dev, libcurl4-openssl-dev, libproxy-dev, openssl
 Standards-Version: 3.8.3
 Section: libs
 Homepage: http://code.google.com/p/eid-mw/
@@ -76,3 +76,14 @@ Description: Belgian Electronic Identity Card - Mozilla plugin
  Identity Card. Install it if you wish to log on to websites using your
  electronic identity card from within iceweasel or any other gecko-based
  browser.
+
+Package: eid-viewer
+Section: misc
+Provides: beidgui
+Replaces: beidgui
+Conflicts: beidgui
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Graphical interface to Belgian Electronic Identity Card
+ This package contains a graphical application to read data from the
+ Belgian electronic identity card.

@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, eIDDumpType) {
 @property NSOutlineView* ov;
 @property AppDelegate* ui;
 -(instancetype)initWithOutlineView:(NSOutlineView*)view;
+-(NSData*)certificateForKey:(NSString*)key;
 -(void)dumpFile:(int)fd forKey:(NSString*)key withFormat:(eIDDumpType)format;
 -(NSString*)fileNameForKey:(NSString*)key;
 -(NSString*)keyForParent:(NSString*)key;
