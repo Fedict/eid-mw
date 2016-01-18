@@ -1,45 +1,45 @@
 #include "xmldoctypeconv.h"
 
-std::map<std::string, std::string> XmlDoctypeConvertor::conversions;
+std::map<EID_STRING, EID_STRING> XmlDoctypeConvertor::conversions;
 
 XmlDoctypeConvertor::XmlDoctypeConvertor() {
 	if(conversions.empty()) {
-		conversions["1"] = "belgian_citizen";
-		conversions["6"] = "kids_card";
-		conversions["7"] = "bootstrap_card";
-		conversions["8"] = "habilitation_card";
-		conversions["11"] = "foreigner_a";
-		conversions["12"] = "foreigner_b";
-		conversions["13"] = "foreigner_c";
-		conversions["14"] = "foreigner_d";
-		conversions["15"] = "foreigner_e";
-		conversions["16"] = "foreigner_e_plus";
-		conversions["17"] = "foreigner_f";
-		conversions["18"] = "foreigner_f_plus";
-		conversions["19"] = "european_blue_card_h";
-		conversions["belgian_citizen"] = "1";
-		conversions["kids_card"] = "6";
-		conversions["bootstrap_card"] = "7";
-		conversions["habilitation_card"] = "8";
-		conversions["foreigner_a"] = "11";
-		conversions["foreigner_b"] = "12";
-		conversions["foreigner_c"] = "13";
-		conversions["foreigner_d"] = "14";
-		conversions["foreigner_e"] = "15";
-		conversions["foreigner_e_plus"]	= "16";
-		conversions["foreigner_f"] = "17";
-		conversions["foreigner_f_plus"] = "18";
-		conversions["european_blue_card_h"] = "19";
+		conversions[TEXT("1")] = TEXT("belgian_citizen");
+		conversions[TEXT("6")] = TEXT("kids_card");
+		conversions[TEXT("7")] = TEXT("bootstrap_card");
+		conversions[TEXT("8")] = TEXT("habilitation_card");
+		conversions[TEXT("11")] = TEXT("foreigner_a");
+		conversions[TEXT("12")] = TEXT("foreigner_b");
+		conversions[TEXT("13")] = TEXT("foreigner_c");
+		conversions[TEXT("14")] = TEXT("foreigner_d");
+		conversions[TEXT("15")] = TEXT("foreigner_e");
+		conversions[TEXT("16")] = TEXT("foreigner_e_plus");
+		conversions[TEXT("17")] = TEXT("foreigner_f");
+		conversions[TEXT("18")] = TEXT("foreigner_f_plus");
+		conversions[TEXT("19")] = TEXT("european_blue_card_h");
+		conversions[TEXT("belgian_citizen")] = TEXT("1");
+		conversions[TEXT("kids_card")] = TEXT("6");
+		conversions[TEXT("bootstrap_card")] = TEXT("7");
+		conversions[TEXT("habilitation_card")] = TEXT("8");
+		conversions[TEXT("foreigner_a")] = TEXT("11");
+		conversions[TEXT("foreigner_b")] = TEXT("12");
+		conversions[TEXT("foreigner_c")] = TEXT("13");
+		conversions[TEXT("foreigner_d")] = TEXT("14");
+		conversions[TEXT("foreigner_e")] = TEXT("15");
+		conversions[TEXT("foreigner_e_plus")]	= TEXT("16");
+		conversions[TEXT("foreigner_f")] = TEXT("17");
+		conversions[TEXT("foreigner_f_plus")] = TEXT("18");
+		conversions[TEXT("european_blue_card_h")] = TEXT("19");
 	}
 }
 
-std::string XmlDoctypeConvertor::convert(const char* original) {
-	std::string str(original);
+EID_STRING XmlDoctypeConvertor::convert(const void* original) {
+	EID_STRING str((EID_CHAR*)original);
 	if(conversions.count(str) > 0) {
 		return conversions[str];
 	}
 	if(conversions.count(str.substr(1, 1)) > 0) {
 		return conversions[str.substr(1, 1)];
 	}
-	return "";
+	return TEXT("");
 }

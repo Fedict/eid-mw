@@ -5,13 +5,13 @@
 
 class ValidityDateParser : public DateParser {
 public:
-	virtual void input(std::string);
+	virtual void input(EID_STRING);
 };
 
 class ValidityDateWriter : public DateWriter {
 public:
 	ValidityDateWriter(DateParser* p) : DateWriter(p) {};
-	virtual std::string output();
+	virtual EID_STRING output();
 };
 
 #endif

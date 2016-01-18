@@ -14,20 +14,21 @@
     <ProjectGuid>{754CDA28-B21E-4919-94A2-2DC6BA77F578}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>eIDViewerBackend</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -115,6 +116,7 @@
     <ClCompile Include="..\..\state-posix.c" />
     <ClCompile Include="..\..\state.c" />
     <ClCompile Include="..\..\eidxmllite.cpp" />
+    <ClCompile Include="..\..\utftranslate.c" />
     <ClCompile Include="..\..\xmlmap.cpp" />
     <ClCompile Include="..\..\xmlwin32.c" />
   </ItemGroup>
@@ -122,10 +124,13 @@
     <ClInclude Include="..\..\..\..\tests\unit\labels.h" />
     <ClInclude Include="..\..\backend.h" />
     <ClInclude Include="..\..\conversions.h" />
+    <ClInclude Include="..\..\conversions\convertor.h" />
+    <ClInclude Include="..\..\cppeidstring.h" />
     <ClInclude Include="..\..\eidxmllite.h" />
     <ClInclude Include="..\..\oslayer.h" />
     <ClInclude Include="..\..\p11.h" />
     <ClInclude Include="..\..\state.h" />
+    <ClInclude Include="..\..\utftranslate.h" />
     <ClInclude Include="..\..\xmlmap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

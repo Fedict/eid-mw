@@ -1,41 +1,46 @@
 #include "genderconv.h"
+#include "cppeidstring.h"
 
-std::string GenderConvertor::convert(const char* original) {
-	switch(original[0]) {
-		case 'M':
-			return original;
+
+EID_STRING GenderConvertor::convert(const void* original) {
+	const EID_CHAR* eid_original = (const EID_CHAR*)original;
+	switch(eid_original[0]) {
+		case TEXT('M'):
+			return eid_original;
 		case 'V':
 		case 'F':
 		case 'W':
 			switch(target_) {
 				case EID_VWR_LANG_NL:
-					return "V";
+					return TEXT("V");
 				case EID_VWR_LANG_FR:
 				case EID_VWR_LANG_DE:
-					return "F";
+					return TEXT("F");
 				case EID_VWR_LANG_EN:
-					return "W";
+					return TEXT("W");
 				default:
-					return original;
+					return eid_original;
 			}
 		default:
-			return original;
+			return eid_original;
 	}
 }
 
-std::string XmlGenderConvertor::convert(const char* original) {
-	switch(original[0]) {
+EID_STRING XmlGenderConvertor::convert(const void* original) {
+	const EID_CHAR* eid_original = (const EID_CHAR*)original;
+	switch(eid_original[0]) {
 		case 'M':
-			return "male";
+			return TEXT("male");
 		case 'F':
 		case 'V':
 		case 'W':
-			return "female";
+			return TEXT("female");
+		//bidirectional translation, we only check the first char
 		case 'm':
 			return GenderConvertor::convert("M");
 		case 'f':
 			return GenderConvertor::convert("F");
 	}
 
-	return "unknown";
+	return TEXT("unknown");
 }

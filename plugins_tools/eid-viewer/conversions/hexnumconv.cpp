@@ -3,10 +3,10 @@
 #include <sstream>
 #include <iomanip>
 
-std::string HexNumberConvertor::convert(const char* normal) {
+EID_STRING HexNumberConvertor::convert(const void* normal) {
 	unsigned char* uc = (unsigned char*)normal;
-	std::ostringstream s;
-	s << std::setfill('0') << std::hex << std::uppercase;
+	EID_OSTRINGSTREAM s;
+	s << std::setfill(TEXT('0')) << std::hex << std::uppercase;
 	for(int i=0; i<len_; i++) {
 		s << std::setw(2) << (unsigned int) uc[i];
 	}

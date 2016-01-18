@@ -4,6 +4,8 @@
 #include <string>
 #include <conversions.h>
 #include <cstring>
+#include "utftranslate.h"
+#include "cppeidstring.h"
 
 class ConversionWorker {
 protected:
@@ -12,12 +14,12 @@ public:
 	static void set_lang(eid_vwr_langs which) { target_ = which; };
 	static eid_vwr_langs get_lang() { return target_; };
 	static bool have_language() { return target_ > EID_VWR_LANG_NONE; };
-	virtual std::string convert(const char* original) = 0;
-	virtual std::string convert(std::string original) { return convert(original.c_str()); };
-	virtual void* convert(const char* original, int* len_return) {
-		std::string cv = convert(original);
+	virtual EID_STRING convert(const void* original) = 0;
+	virtual EID_STRING convert(std::string original) { return convert(original.c_str()); };
+	virtual void* convert(const void* original, int* len_return) {
+		EID_STRING cv = convert(original);
 		*len_return = (int)cv.length();
-		return STRDUP(cv.c_str());
+		return EID_STRDUP(cv.c_str());
 	}
 };
 

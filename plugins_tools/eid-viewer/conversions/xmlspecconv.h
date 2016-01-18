@@ -7,10 +7,10 @@
 
 class XmlSpecConvertor : public ConversionWorker {
 private:
-	static std::map<std::string, std::string> conversions;
+	static std::map<EID_STRING, EID_STRING> conversions;
 public:
 	XmlSpecConvertor();
-	virtual std::string convert(const char* original);
+	virtual EID_STRING convert(const void* original);
 };
 
 #endif

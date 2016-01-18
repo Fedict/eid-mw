@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-	DllExport int eid_vwr_do_deserialize(char* data);
+	int eid_vwr_do_deserialize(const EID_CHAR* data);
 
 #ifdef __cplusplus
 }

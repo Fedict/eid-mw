@@ -6,12 +6,11 @@ extern "C" {
 #endif
 
 #include "cache.h"
+#include "utftranslate.h"
 
 #ifdef WIN32
-#define STRDUP(x) _strdup(x)
 #define SLEEP(x) Sleep(x*1000)
 #else
-#define STRDUP(x) strdup(x)
 #define SLEEP(x) sleep(x)
 #endif
 
@@ -23,10 +22,10 @@ enum eid_vwr_langs {
 	EID_VWR_LANG_NL,
 };
 
-char* converted_string(const char* label, const char* normal);
-char* convert_to_xml(const char* label, const char* item);
-void* convert_from_xml(const char* name, const char* value, int* len_return);
-int can_convert(const char* label);
+EID_CHAR* converted_string(const EID_CHAR* label, const EID_CHAR* normal);
+EID_CHAR* convert_to_xml(const EID_CHAR* label, const EID_CHAR* item);
+void* convert_from_xml(const EID_CHAR* name, const EID_CHAR* value, int* len_return);
+int can_convert(const EID_CHAR* label);
 void convert_set_lang(enum eid_vwr_langs which);
 enum eid_vwr_langs convert_get_lang();
 

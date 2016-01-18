@@ -7,10 +7,10 @@
 
 class DocTypeConvertor : public ConversionWorker {
 private:
-	static std::map<eid_vwr_langs, std::map<int, std::string> > conversions;
+	static std::map<eid_vwr_langs, std::map<int, EID_STRING> > conversions;
 public:
 	DocTypeConvertor();
-	virtual std::string convert(const char* original);
+	virtual EID_STRING convert(const void* original);
 };
 
 #endif

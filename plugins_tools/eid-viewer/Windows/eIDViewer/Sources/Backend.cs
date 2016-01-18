@@ -27,13 +27,13 @@ namespace eIDViewer
         private delegate void CbNewSrc(eid_vwr_source eid_vwr_source);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void CbNewStringData([MarshalAs(UnmanagedType.LPStr)] string label, [MarshalAs(UnmanagedType.LPStr)]string data);
+        private delegate void CbNewStringData([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPWStr)]string data);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void Cbnewbindata([MarshalAs(UnmanagedType.LPStr)] string label, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data, int datalen);
+        private delegate void Cbnewbindata([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data, int datalen);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void Cblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPStr)] string str);
+        private delegate void Cblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPWStr)] string str);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void Cbnewstate(eid_vwr_states state);
@@ -64,10 +64,10 @@ namespace eIDViewer
         private static extern int eid_vwr_pinop(eid_vwr_pinops pinop);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int eid_vwr_be_deserialize([MarshalAs(UnmanagedType.LPStr)] string source_file);
+        private static extern int eid_vwr_be_deserialize([MarshalAs(UnmanagedType.LPWStr)] string source_file);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int eid_vwr_be_serialize([MarshalAs(UnmanagedType.LPStr)] string dest_file);
+        private static extern int eid_vwr_be_serialize([MarshalAs(UnmanagedType.LPWStr)] string dest_file);
 
         public static void Init()
         {
@@ -141,7 +141,7 @@ namespace eIDViewer
                     break;
             }
         }
-        private static void CSCbNewStringData([MarshalAs(UnmanagedType.LPStr)] string label, [MarshalAs(UnmanagedType.LPStr)]string data)
+        private static void CSCbNewStringData([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPWStr)]string data)
         {
             //Console.WriteLine("CSCbNewStringData called, label = ");
             //Console.WriteLine(label);
@@ -153,7 +153,7 @@ namespace eIDViewer
             }
         }
 
-        private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPStr)] string label,  [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data,  int datalen)
+        private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPWStr)] string label,  [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data,  int datalen)
         {
             //Console.WriteLine("CSCbnewbindata called, label = ");
             //Console.WriteLine(label);
@@ -165,7 +165,7 @@ namespace eIDViewer
 
         }
 
-        private static void CSCblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPStr)]string str)
+        private static void CSCblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPWStr)]string str)
         {
             //Console.WriteLine("CSCblog called: ");
             //Console.WriteLine(str);

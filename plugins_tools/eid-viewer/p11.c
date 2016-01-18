@@ -32,7 +32,7 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 	CK_RV rv = call; \
 	int retval = ckrv_decode_vwr(rv, sizeof(mods) / sizeof(ckrv_mod), mods); \
 	if(retval != EIDV_RV_OK) { \
-		be_log(EID_VWR_LOG_DETAIL, #call " returned %d", rv); \
+		be_log(EID_VWR_LOG_DETAIL, TEXT( "%s returned %d"),#call, rv); \
 		return retval; \
 	} \
 }
@@ -40,7 +40,7 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 #define check_rv_late(rv) { \
 	int retval = ckrv_decode_vwr(rv, 1, defmod); \
 	if(retval != EIDV_RV_OK) { \
-		be_log(EID_VWR_LOG_DETAIL, "found return value of %d", rv); \
+		be_log(EID_VWR_LOG_DETAIL, TEXT("found return value of %d"), rv); \
 		return retval; \
 	} \
 }
@@ -96,15 +96,15 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc) {
 /* Called by the backend when something needs to be passed on to the UI.
  * Will abstract the conversion between on-card data and presentable
  * data */
-void eid_vwr_p11_to_ui(const char* label, const void* value, int len) {
-	char* str;
+void eid_vwr_p11_to_ui(const EID_CHAR* label, const void* value, int len) {
+	EID_CHAR* str;
 	if(can_convert(label)) {
-		be_log(EID_VWR_LOG_DETAIL, "converting %s", label);
-		str = converted_string(label, (const char*)value);
+		be_log(EID_VWR_LOG_DETAIL, TEXT("converting %s"), label);
+		str = converted_string(label, (const EID_CHAR*)value);
 		be_newstringdata(label, str);
 		free(str);
 	} else if(is_string(label)) {
-		be_newstringdata(label, (const char*)value);
+		be_newstringdata(label, (const EID_CHAR*)value);
 	} else {
 		be_newbindata(label, value, len);
 	}
@@ -154,14 +154,19 @@ static int perform_find(CK_BBOOL do_objid) {
 		label_str[data[0].ulValueLen] = '\0';
 		value_str[data[1].ulValueLen] = '\0';
 
-		cache_add(label_str, value_str, data[1].ulValueLen);
+		EID_CHAR* label_eidstr = UTF8TOEID((const char*)label_str, &(data[1].ulValueLen));
+		EID_CHAR* value_eidstr = UTF8TOEID((const char*)value_str, &(data[1].ulValueLen));
 
-		be_log(EID_VWR_LOG_DETAIL, "found data for label %s", label_str);
-		eid_vwr_p11_to_ui(label_str, value_str, data[1].ulValueLen);
+		cache_add(label_eidstr, value_eidstr, data[1].ulValueLen);
 
-		free(label_str);
-		free(value_str);
-		free(objid_str);
+		be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_str);
+		eid_vwr_p11_to_ui(label_eidstr, value_eidstr, data[1].ulValueLen);
+
+		EID_SAFE_FREE(label_eidstr);
+		EID_SAFE_FREE(value_eidstr);
+		EID_SAFE_FREE(label_str);
+		EID_SAFE_FREE(value_str);
+		EID_SAFE_FREE(objid_str);
 	} while(count);
 	/* Inform state machine that we're done reading, which will
 	 * cause the state machine to enter the next state */

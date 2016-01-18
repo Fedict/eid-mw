@@ -5,7 +5,7 @@
 
 class NationalNumberConvertor : public ConversionWorker {
 public:
-	virtual std::string convert(const char* normal);
+	virtual EID_STRING convert(const void* normal);
 };
 
 #endif

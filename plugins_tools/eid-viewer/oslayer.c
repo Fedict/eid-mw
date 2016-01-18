@@ -36,13 +36,13 @@ void eid_vwr_poll() {
 	}
 }
 
-void eid_vwr_be_serialize(const char* target_file) {
-	char* copy = STRDUP(target_file);
+void eid_vwr_be_serialize(const EID_CHAR* target_file) {
+	EID_CHAR* copy = EID_STRDUP(target_file);
 	sm_handle_event(EVENT_SERIALIZE, copy, free, NULL);
 }
 
-void eid_vwr_be_deserialize(const char* source_file) {
-	char* copy = STRDUP(source_file);
+void eid_vwr_be_deserialize(const EID_CHAR* source_file) {
+	EID_CHAR* copy = EID_STRDUP(source_file);
 	sm_handle_event(EVENT_OPEN_FILE, copy, free, NULL);
 }
 
@@ -52,9 +52,9 @@ const char* eid_vwr_be_get_xmlform() {
 	 * cache will contain the XML form of the data under the "xml"
 	 * label. Thus, if that cache entry is empty, this means we
 	 * don't have any data yet. */
-	if(!cache_have_label("xml")) {
+	if(!cache_have_label(TEXT("xml"))) {
 		return NULL;
 	}
-	item = cache_get_data("xml");
+	item = cache_get_data(TEXT("xml"));
 	return (const char*)item->data;
 }

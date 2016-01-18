@@ -7,6 +7,7 @@
 #include <unix.h>
 #endif
 #include <pkcs11t.h>
+#include "utftranslate.h"
 
 #define EIDV_RV_OK 0
 #define EIDV_RV_FAIL -1
@@ -23,7 +24,7 @@ int eid_vwr_p11_leave_pinop();
 #ifdef __cplusplus
 extern "C"{
 #endif
-void eid_vwr_p11_to_ui(const char*, const void*, int);
+void eid_vwr_p11_to_ui(const EID_CHAR*, const void*, int);
 #ifdef __cplusplus
 }
 #endif

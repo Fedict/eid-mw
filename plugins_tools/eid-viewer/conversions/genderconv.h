@@ -5,12 +5,12 @@
 
 class GenderConvertor : public ConversionWorker {
 public:
-	std::string convert(const char* original);
+	EID_STRING convert(const void* original);
 };
 
 class XmlGenderConvertor : public GenderConvertor {
 public:
-	std::string convert(const char* original);
+	EID_STRING convert(const void* original);
 };
 
 #endif

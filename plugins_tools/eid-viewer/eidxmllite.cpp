@@ -9,17 +9,117 @@
 
 const UINT MAX_ELEMENT_DEPTH = 8;
 
-#pragma warning(disable : 4127)  // conditional expression is constant 
-//#define CHKHR(stmt)             do { hr = (stmt); if (FAILED(hr)) goto CleanUp; } while(0) 
-//#define HR(stmt)                do { hr = (stmt); goto CleanUp; } while(0) 
 #define SAFE_RELEASE(I)         if (I){ I->Release();  I = NULL; }
 #define SAFE_FREE(val)			if (val != NULL){ free(val); val = NULL;}
 #define FAILED_OUT(retVal)		if ((retVal) != 0){goto out;}
 
 #define check_xml(call) if((rc = call) < 0) { \
-	be_log(EID_VWR_LOG_DETAIL, "Error while dealing with file (calling '%s'): %d", #call, rc); \
+	be_log(EID_VWR_LOG_DETAIL, TEXT("Error while dealing with file (calling '%s'): %d"), #call, rc); \
 	goto out; \
 }
+
+/* Write elements to the description in *element */
+/*static int write_elements(IXmlWriter *pWriter, struct element_desc *element) {
+	HRESULT retVal;
+	char* val = NULL;
+	while (element->name) {
+		if (element->label == NULL) {
+			//assert(element->child_elements != NULL);
+			//check_xml(xmlTextWriterStartElement(writer, BAD_CAST element->name));
+			pWriter->WriteStartElement(NULL,element->name,NULL);
+			if (element->attributes != NULL) {
+				write_attributes(pWriter, element->attributes);
+				//retVal = pWriter->WriteAttributeString(NULL,
+				//	element->name, NULL,
+				//	element->attributes);
+			}
+			check_xml(write_elements(writer, element->child_elements));
+			//check_xml(xmlTextWriterEndElement(writer));
+			pWriter->WriteEndElement();
+		}
+		else {
+			int have_cache = cache_have_label(element->label);
+			assert(element->child_elements == NULL);
+
+			if (element->reqd && !have_cache) {
+				be_log(EID_VWR_LOG_ERROR, "Could not write file: no data found for required label %s", element->label);
+				return -1;
+			}
+			if (have_cache) {
+				val = cache_get_xmlform(element->label);
+				if (!element->is_b64) {
+					check_xml(xmlTextWriterWriteElement(writer, BAD_CAST element->name, BAD_CAST cache_get_xmlform(element->label)));
+				}
+				else {
+					const struct eid_vwr_cache_item *item = cache_get_data(element->label);
+					check_xml(xmlTextWriterStartElement(writer, BAD_CAST element->name));
+					check_xml(xmlTextWriterWriteBase64(writer, item->data, 0, item->len));
+					check_xml(xmlTextWriterEndElement(writer));
+				}
+				free(val);
+				val = NULL;
+			}
+		}
+		element++;
+	}
+	rc = 0;
+out:
+	if (val != NULL) {
+		free(val);
+	}
+	return rc;
+}*/
+
+/* Called when we enter the FILE or TOKEN states.
+Note: in theory it would be possible to just store the xml data we
+read from a file in the deserialize event into the cache as-is.
+However, that has a few downsides:
+- If the file has invalid XML or superfluous data, we will write that
+same data back later on.
+- If we would want to modify the XML format at some undefined point
+in the future, it is a good idea generally to ensure that we
+already generate new XML data */
+int eid_vwr_gen_xml(void* data) {
+	/*HRESULT retVal = S_OK;
+	IStream *pFileStream = NULL;
+	IXmlWriter *pWriter = NULL;
+
+	FAILED_OUT(retVal = CreateXmlWriter(__uuidof(IXmlWriter), (void**)&pWriter, NULL));
+	//xmlTextWriterPtr writer = NULL;
+	//int rc;
+	xmlBufferPtr buf;
+
+	buf = xmlBufferCreate();
+	if (buf == NULL) {
+	be_log(EID_VWR_LOG_COARSE, "Could not generate XML format: error creating the xml buffer");
+	rc = -1;
+	goto out;
+	}
+	writer = xmlNewTextWriterMemory(buf, 0);
+	if (writer == NULL) {
+	be_log(EID_VWR_LOG_ERROR, "Could not open file");
+	rc = -1;
+	goto out;
+	}
+
+	check_xml(xmlTextWriterStartDocument(writer, NULL, "UTF-8", NULL));
+	check_xml(write_elements(writer, toplevel));
+	check_xml(xmlTextWriterEndDocument(writer));
+
+	cache_add("xml", buf->content, strlen(buf->content));
+
+	rc = 0;
+	out:
+	if (writer) {
+	xmlFreeTextWriter(writer);
+	}
+	if (buf) {
+	xmlBufferFree(buf);
+	}
+	return retVal;*/
+	return 0;
+}
+
 
 HRESULT ReadNodePending(IXmlReader *pReader, XmlNodeType *pNodeType, int retries)
 {
@@ -67,27 +167,27 @@ int ConvertWCharToMultiByte(const wchar_t* wsIn, char** bsOut)
 
 HRESULT StoreTextElement(const WCHAR* pwszValue, WCHAR* wcsNodeName)
 {
-	char* nodeName = NULL;
-	char* value = NULL;
+//	EID_CHAR* nodeName = NULL;
+//	EID_CHAR* value = NULL;
 	void* val = NULL;
 
-	if ((ConvertWCharToMultiByte(wcsNodeName, &nodeName) == 0) &&
-		(ConvertWCharToMultiByte(pwszValue, &value) == 0))
-	{
-		struct element_desc *desc = get_elemdesc((const char*)nodeName);
+//	if ((ConvertWCharToMultiByte(wcsNodeName, &nodeName) == 0) &&
+//		(ConvertWCharToMultiByte(pwszValue, &value) == 0))
+//	{
+		struct element_desc *desc = get_elemdesc((EID_CHAR*)wcsNodeName);
 		/* If we recognize this element, parse it */
 		if (desc != NULL) {
 			int len = 0; {
-				val = convert_from_xml(desc->label, value, &len);
+				val = convert_from_xml(desc->label, pwszValue, &len);
 				cache_add(desc->label, val, len);
-				eid_vwr_p11_to_ui((const char*)(desc->label), (const void*)val, len);
-				be_log(EID_VWR_LOG_DETAIL, "found data for label %s", desc->label);
+				eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
+				be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
 				val = NULL;
 			}
 		}
-	}
-	SAFE_FREE(nodeName);
-	SAFE_FREE(value);
+//	}
+//	SAFE_FREE(nodeName);
+//	SAFE_FREE(value);
 
 	return S_OK;
 }
@@ -95,9 +195,9 @@ HRESULT StoreTextElement(const WCHAR* pwszValue, WCHAR* wcsNodeName)
 HRESULT ParseAttributes(IXmlReader* pReader, const WCHAR* pwszLocalName)
 {
 	const WCHAR* pwszValue;
-	char* nodeName = NULL;
-	char* value = NULL;
-	void* val = NULL;
+//	EID_CHAR* nodeName = NULL;
+//	EID_CHAR* value = NULL;
+	EID_CHAR* val = NULL;
 	HRESULT retVal = pReader->MoveToFirstAttribute();
 
 	if (retVal != S_OK)
@@ -113,42 +213,42 @@ HRESULT ParseAttributes(IXmlReader* pReader, const WCHAR* pwszLocalName)
 				FAILED_OUT(retVal = pReader->GetLocalName(&pwszLocalName, NULL));
 				FAILED_OUT(retVal = pReader->GetValue(&pwszValue, NULL));
 
-				if ((ConvertWCharToMultiByte(pwszLocalName, &nodeName) == 0) &&
-					(ConvertWCharToMultiByte(pwszValue, &value) == 0))
-				{
+//				if ((ConvertWCharToMultiByte(pwszLocalName, &nodeName) == 0) &&
+//					(ConvertWCharToMultiByte(pwszValue, &value) == 0))
+//				{
 
-					struct attribute_desc *desc = get_attdesc((const char*)nodeName);
+					struct attribute_desc *desc = get_attdesc((const EID_CHAR*)pwszLocalName);
 					/* If we recognize this element, parse it */
 					if (desc != NULL) {
 						int len = 0; {
-							val = convert_from_xml(desc->label, value, &len);
+							val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
 							cache_add(desc->label, val, len);
-							eid_vwr_p11_to_ui((const char*)(desc->label), (const void*)val, len);
-							be_log(EID_VWR_LOG_DETAIL, "found data for label %s", desc->label);
+							eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
+							be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
 							val = NULL;
 						}
 					}
 				}
-			}
+//			}
 		}
 	}
 out:
-	SAFE_FREE(nodeName);
-	SAFE_FREE(value);
+//	SAFE_FREE(nodeName);
+//	SAFE_FREE(value);
 
 	return retVal;
 }
 
-int eid_vwr_do_deserialize (char* filename)
+int eid_vwr_do_deserialize (const EID_CHAR* filename)
 {
 	HRESULT retVal = S_OK;
 	IStream *pFileStream = NULL;
 	IXmlReader *pReader = NULL;
 	XmlNodeType nodeType;
 	const WCHAR* pwszLocalName;
-	char* nodeName = NULL;
-	char* value = NULL;
-	void* val = NULL;
+	EID_CHAR* nodeName = NULL;
+	EID_CHAR* value = NULL;
+	EID_CHAR* val = NULL;
 	const WCHAR* pwszValue;
 	UINT attrCount = 0;
 	UINT count = 0;
@@ -218,21 +318,3 @@ out:
 	}
 	return 0;
 }
-
-/*// This is a sample of how one might handle E_PENDING
-if (PENDING(hr = pReader->GetValue(&pwszValue, NULL))){
-    // Alert user to the pending notification
-    wprintf(L"Error pending, error is %08.8lx", hr);
-
-        // As long as E_PENDING is returned keep trying to get value
-        while (PENDING(hr){
-            ::sleep(1000);
-            hr = pReader->GetValue(&pwszValue, NULL);
-        }
-        continue;
-    }
-if (FAILED(hr = pReader->GetValue(&pwszValue, NULL))){
-    wprintf(L"Error getting value, error is %08.8lx", hr);
-    return -1;
-}
-wprintf(L"Text: %s\n", pwszValue);*/

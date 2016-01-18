@@ -5,17 +5,17 @@
 #include "convworker.h"
 
 struct Date {
-	std::string year;
+	EID_STRING year;
 	int month;
-	std::string day;
+	EID_STRING day;
 
-	Date() : year("0"), month(0), day("0") {};
-	Date(std::string y, int m, std::string d) : year(y), month(m), day(d) {};
+	Date() : year(TEXT("0")), month(0), day(TEXT("0")) {};
+	Date(EID_STRING y, int m, EID_STRING d) : year(y), month(m), day(d) {};
 };
 
 class DateParser : public Date {
 public:
-	virtual void input(std::string) = 0;
+	virtual void input(EID_STRING) = 0;
 };
 
 class DateWriter : public ConversionWorker {
@@ -25,22 +25,22 @@ protected:
 	DateParser* parser;
 public:
 	DateWriter(DateParser* p) : parser(p) {};
-	virtual std::string output() = 0;
-	virtual std::string convert(const char* original) {
-		parser->input(original);
+	virtual EID_STRING output() = 0;
+	virtual EID_STRING convert(const void* original) {
+		parser->input((EID_CHAR*)original);
 		return output();
 	}
 };
 
 class XmlDateParser : public DateParser {
 public:
-	virtual void input(std::string);
+	virtual void input(EID_STRING);
 };
 
 class XmlDateWriter : public DateWriter {
 public:
 	XmlDateWriter(DateParser* p) : DateWriter(p) {};
-	virtual std::string output();
+	virtual EID_STRING output();
 };
 
 #endif

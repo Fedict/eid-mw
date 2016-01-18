@@ -8,8 +8,8 @@ private:
 	int len_;
 public:
 	HexDecodeConvertor(int len) : len_(len) {};
-	virtual std::string convert(const char* original) { return ""; };
-	virtual void* convert(const char* original, int* len_return);
+	virtual EID_STRING convert(const void* original) { return TEXT(""); };
+	virtual void* convert(const void* original, int* len_return);
 };
 
 #endif

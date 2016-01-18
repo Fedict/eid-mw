@@ -1,9 +1,13 @@
 #include "cache.h"
 #include "conversions.h"
+#include "utftranslate.h"
+#include "cppeidstring.h"
 #include <map>
 #include <string>
 #include <cstdlib>
 #include <cstring>
+
+
 
 struct cache_item_container {	
 	eid_vwr_cache_item* item;
@@ -21,18 +25,18 @@ struct cache_item_container {
 	}
 };
 
-std::map<std::string, cache_item_container*> cache;
+std::map<EID_STRING, cache_item_container*> cache;
 
-void cache_add(const char* label, void* data, unsigned long len) {
+void cache_add(const EID_CHAR* label, void* data, unsigned long len) {
 	cache[label] = new cache_item_container(data, len);
 }
 
-const struct eid_vwr_cache_item* cache_get_data(const char* label) {
+const struct eid_vwr_cache_item* cache_get_data(const EID_CHAR* label) {
 	return cache[label]->item;
 }
 
 struct iterator_deref {
-	std::map<std::string, cache_item_container*>::iterator it;
+	std::map<EID_STRING, cache_item_container*>::iterator it;
 };
 
 void* cache_label_iterator() {
@@ -46,12 +50,12 @@ void cache_label_iterator_free(void* iterator) {
 	delete it;
 }
 
-const char* cache_next_label(void* iterator) {
+const EID_CHAR* cache_next_label(void* iterator) {
 	iterator_deref* it = (iterator_deref*)iterator;
 	if(it->it == cache.end()) {
 		return NULL;
 	}
-	const char* retval = it->it->first.c_str();
+	const EID_CHAR* retval = it->it->first.c_str();
 	++(it->it);
 	return retval;
 }
@@ -62,15 +66,15 @@ int cache_clear() {
 	return 0;
 }
 
-int cache_have_label(const char* label) {
+int cache_have_label(const EID_CHAR* label) {
 	return cache.count(label);
 }
 
-char* cache_get_xmlform(const char* label) {
-	return (char*)convert_to_xml(label, (char*)cache_get_data(label)->data);
+EID_CHAR* cache_get_xmlform(const EID_CHAR* label) {
+	return (EID_CHAR*)convert_to_xml(label, (EID_CHAR*)cache_get_data(label)->data);
 }
 
-void cache_add_xmlform(const char* label, const char* value) {
+void cache_add_xmlform(const EID_CHAR* label, const EID_CHAR* value) {
 	int len = 0;
 	cache_add(label, convert_from_xml(label, value, &len), len);
 }

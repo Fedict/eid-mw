@@ -52,14 +52,14 @@ DWORD WINAPI thread_main(void* val) {
 	if( WaitForSingleObject( mutex, INFINITE ) == WAIT_FAILED)
 	{
 		error = GetLastError();
-		be_log(EID_VWR_LOG_COARSE, "WAIT_FAILED with error: %.8x", error);
+		be_log(EID_VWR_LOG_COARSE, TEXT("WAIT_FAILED with error: %.8x"), error);
 	}
 
 #else
 static void* thread_main(void* val) {
 	int rv;
 	if((rv = pthread_mutex_lock(&mutex)) != 0) {
-		be_log(EID_VWR_LOG_COARSE, "Could not lock mutex: %s", strerror(rv));
+		be_log(EID_VWR_LOG_COARSE, TEXT("Could not lock mutex: %s"), strerror(rv));
 	}
 #endif
 

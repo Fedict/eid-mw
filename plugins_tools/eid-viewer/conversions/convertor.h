@@ -2,6 +2,8 @@
 #define EID_VWR_CONVERTOR_H
 
 #include <conversions.h>
+#include "utftranslate.h"
+#include "cppeidstring.h"
 #include <map>
 #include <string>
 
@@ -10,15 +12,15 @@ class XmlConversionWorker;
 
 class Convertor {
 private:
-	static std::map<std::string, ConversionWorker*> convertors;
-	static std::map<std::string, ConversionWorker*> to_xml;
-	static std::map<std::string, ConversionWorker*> from_xml;
+	static std::map<EID_STRING, ConversionWorker*> convertors;
+	static std::map<EID_STRING, ConversionWorker*> to_xml;
+	static std::map<EID_STRING, ConversionWorker*> from_xml;
 public:
 	Convertor();
-	char* convert(const char* label, const char* normal);
-	char* convert_to_xml(const char* label, const char* normal);
-	void* convert_from_xml(const char* name, const char* value, int* len_return);
-	int can_convert(const char* label);
+	EID_CHAR* convert(const EID_CHAR* label, const EID_CHAR* normal);
+	EID_CHAR* convert_to_xml(const EID_CHAR* label, const EID_CHAR* normal);
+	void* convert_from_xml(const EID_CHAR* name, const EID_CHAR* value, int* len_return);
+	int can_convert(const EID_CHAR* label);
 };
 
 #endif

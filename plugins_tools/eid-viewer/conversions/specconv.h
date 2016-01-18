@@ -7,10 +7,10 @@
 
 class SpecConvertor : public ConversionWorker {
 private:
-	std::map<eid_vwr_langs, std::map<char, std::string> > conversions;
+	std::map<eid_vwr_langs, std::map<char, EID_STRING> > conversions;
 public:
 	SpecConvertor();
-	virtual std::string convert(const char* original);
+	virtual EID_STRING convert(const void* original);
 };
 
 #endif

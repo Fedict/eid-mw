@@ -9,7 +9,7 @@ private:
 	int len_;
 public:
 	HexNumberConvertor(int len) : len_(len) { };
-	virtual std::string convert(const char* normal);
+	virtual EID_STRING convert(const void* normal);
 };
 
 #endif
