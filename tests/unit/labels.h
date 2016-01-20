@@ -26,6 +26,6 @@
 #endif
 #include <pkcs11.h>
 
-CK_BBOOL is_string(const char* label);
+CK_BBOOL is_string(const EID_CHAR* label);
 
 #endif

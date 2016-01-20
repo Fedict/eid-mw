@@ -7,6 +7,7 @@
 #define EID_STRDUP(x) strdup(x)
 #define EID_STRLEN(x) strlen(x)
 #define EID_VSNPRINTF(str, size, string, ap) vsnprintf(str, size, string, ap)
+#define EID_FOPEN(filename, mode) fopen(filename, mode)
 typedef char EID_CHAR;
 #define UTF8TOEID(utf8string, len) utf8string
 #define EIDTOUTF8(eidstring, len) utf8string
@@ -28,6 +29,7 @@ char* Utf16ToUtf8(const wchar_t * utf16string, unsigned long* utf8len);
 #define EID_STRDUP(x) _wcsdup(x)
 #define EID_STRLEN(x) wcslen(x)
 #define EID_VSNPRINTF(str, size, string, ap) _vsnwprintf(str, size, string, ap)
+#define EID_FOPEN(filename, mode) _wfopen(filename, mode)
 typedef wchar_t EID_CHAR;
 #define UTF8TOEID(utf8string, len) Utf8ToUtf16(utf8string, len)
 #define EIDTOUTF8(eidstring, len) Utf16ToUtf8(eidstring, len)

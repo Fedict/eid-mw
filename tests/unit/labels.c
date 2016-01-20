@@ -26,60 +26,60 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "utftranslate.h"
 
-#define ADD_LABEL(l, is_string) if(!strcmp(label, l)) return is_string
+#define ADD_LABEL(l, is_string) if(!EID_STRCMP(label, l)) return is_string
 
-CK_BBOOL is_string(const char* label) {
-	ADD_LABEL("CARD_DATA", CK_FALSE);
-	ADD_LABEL("ATR", CK_FALSE);
-	ADD_LABEL("carddata_serialnumber", CK_FALSE);
-	ADD_LABEL("carddata_comp_code", CK_FALSE);
-	ADD_LABEL("carddata_os_number", CK_FALSE);
-	ADD_LABEL("carddata_os_version", CK_FALSE);
-	ADD_LABEL("carddata_glob_os_version", CK_FALSE);
-	ADD_LABEL("carddata_soft_mask_number", CK_FALSE);
-	ADD_LABEL("carddata_soft_mask_version", CK_FALSE);
-	ADD_LABEL("carddata_appl_version", CK_FALSE);
-	ADD_LABEL("carddata_appl_int_version", CK_FALSE);
-	ADD_LABEL("carddata_pkcs15_version", CK_FALSE);
-	ADD_LABEL("carddata_appl_lifecycle", CK_FALSE);
-	ADD_LABEL("carddata_pkcs1_support", CK_FALSE);
-	ADD_LABEL("carddata_key_exchange_version", CK_FALSE);
-	ADD_LABEL("DATA_FILE", CK_FALSE);
-	ADD_LABEL("card_number", CK_TRUE);
-	ADD_LABEL("chip_number", CK_FALSE);
-	ADD_LABEL("validity_begin_date", CK_TRUE);
-	ADD_LABEL("validity_end_date", CK_TRUE);
-	ADD_LABEL("issuing_municipality", CK_TRUE);
-	ADD_LABEL("national_number", CK_TRUE);
-	ADD_LABEL("surname", CK_TRUE);
-	ADD_LABEL("firstnames", CK_TRUE);
-	ADD_LABEL("first_letter_of_third_given_name", CK_TRUE);
-	ADD_LABEL("nationality", CK_TRUE);
-	ADD_LABEL("location_of_birth", CK_TRUE);
-	ADD_LABEL("date_of_birth", CK_TRUE);
-	ADD_LABEL("gender", CK_TRUE);
-	ADD_LABEL("nobility", CK_TRUE);
-	ADD_LABEL("document_type", CK_FALSE);
-	ADD_LABEL("special_status", CK_TRUE);
-	ADD_LABEL("photo_hash", CK_FALSE);
-	ADD_LABEL("duplicata", CK_FALSE);
-	ADD_LABEL("special_organization", CK_FALSE);
-	ADD_LABEL("member_of_family", CK_FALSE);
-	ADD_LABEL("date_and_country_of_protection", CK_TRUE);
-	ADD_LABEL("ADDRESS_FILE", CK_FALSE);
-	ADD_LABEL("address_street_and_number", CK_TRUE);
-	ADD_LABEL("address_zip", CK_TRUE);
-	ADD_LABEL("address_municipality", CK_TRUE);
-	ADD_LABEL("PHOTO_FILE", CK_FALSE);
-	ADD_LABEL("CERT_RN_FILE", CK_FALSE);
-	ADD_LABEL("SIGN_DATA_FILE", CK_FALSE);
-	ADD_LABEL("SIGN_ADDRESS_FILE", CK_FALSE);
-	ADD_LABEL("Authentication", CK_FALSE);
-	ADD_LABEL("Signature", CK_FALSE);
-	ADD_LABEL("Root", CK_FALSE);
-	ADD_LABEL("CA", CK_FALSE);
+CK_BBOOL is_string(const EID_CHAR* label) {
+	ADD_LABEL(TEXT("CARD_DATA"), CK_FALSE);
+	ADD_LABEL(TEXT("ATR"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_serialnumber"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_comp_code"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_os_number"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_os_version"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_glob_os_version"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_soft_mask_number"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_soft_mask_version"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_appl_version"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_appl_int_version"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_pkcs15_version"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_appl_lifecycle"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_pkcs1_support"), CK_FALSE);
+	ADD_LABEL(TEXT("carddata_key_exchange_version"), CK_FALSE);
+	ADD_LABEL(TEXT("DATA_FILE"), CK_FALSE);
+	ADD_LABEL(TEXT("card_number"), CK_TRUE);
+	ADD_LABEL(TEXT("chip_number"), CK_FALSE);
+	ADD_LABEL(TEXT("validity_begin_date"), CK_TRUE);
+	ADD_LABEL(TEXT("validity_end_date"), CK_TRUE);
+	ADD_LABEL(TEXT("issuing_municipality"), CK_TRUE);
+	ADD_LABEL(TEXT("national_number"), CK_TRUE);
+	ADD_LABEL(TEXT("surname"), CK_TRUE);
+	ADD_LABEL(TEXT("firstnames"), CK_TRUE);
+	ADD_LABEL(TEXT("first_letter_of_third_given_name"), CK_TRUE);
+	ADD_LABEL(TEXT("nationality"), CK_TRUE);
+	ADD_LABEL(TEXT("location_of_birth"), CK_TRUE);
+	ADD_LABEL(TEXT("date_of_birth"), CK_TRUE);
+	ADD_LABEL(TEXT("gender"), CK_TRUE);
+	ADD_LABEL(TEXT("nobility"), CK_TRUE);
+	ADD_LABEL(TEXT("document_type"), CK_FALSE);
+	ADD_LABEL(TEXT("special_status"), CK_TRUE);
+	ADD_LABEL(TEXT("photo_hash"), CK_FALSE);
+	ADD_LABEL(TEXT("duplicata"), CK_FALSE);
+	ADD_LABEL(TEXT("special_organization"), CK_FALSE);
+	ADD_LABEL(TEXT("member_of_family"), CK_FALSE);
+	ADD_LABEL(TEXT("date_and_country_of_protection"), CK_TRUE);
+	ADD_LABEL(TEXT("ADDRESS_FILE"), CK_FALSE);
+	ADD_LABEL(TEXT("address_street_and_number"), CK_TRUE);
+	ADD_LABEL(TEXT("address_zip"), CK_TRUE);
+	ADD_LABEL(TEXT("address_municipality"), CK_TRUE);
+	ADD_LABEL(TEXT("PHOTO_FILE"), CK_FALSE);
+	ADD_LABEL(TEXT("CERT_RN_FILE"), CK_FALSE);
+	ADD_LABEL(TEXT("SIGN_DATA_FILE"), CK_FALSE);
+	ADD_LABEL(TEXT("SIGN_ADDRESS_FILE"), CK_FALSE);
+	ADD_LABEL(TEXT("Authentication"), CK_FALSE);
+	ADD_LABEL(TEXT("Signature"), CK_FALSE);
+	ADD_LABEL(TEXT("Root"), CK_FALSE);
+	ADD_LABEL(TEXT("CA"), CK_FALSE);
 
-	printf("E: unknown label %s found\n", label);
 	exit(EXIT_FAILURE);
 }

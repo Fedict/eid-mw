@@ -90,7 +90,7 @@ DllExport int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb);
 /* Creates the eid_vwr_ui_callbacks struct. */
 struct eid_vwr_ui_callbacks* eid_vwr_cbstruct();
 /* Create a preview for the given file */
-struct eid_vwr_preview* eid_vwr_get_preview(const char* filename);
+struct eid_vwr_preview* eid_vwr_get_preview(const EID_CHAR* filename);
 
 /* Check if there is an event to be handled. Will handle one event and then return. */
 void eid_vwr_poll();
@@ -98,10 +98,10 @@ void eid_vwr_poll();
 DllExport void eid_vwr_be_mainloop();
 /* Save the currently-open data. Returns before the file has been saved; saving
  * data is done in a background thread. */
-DllExport void eid_vwr_be_serialize(const char* target_file);
+DllExport void eid_vwr_be_serialize(const EID_CHAR* target_file);
 /* Open a file. Returns before the file has been opened; reading the file and
  * parsing it is done in a background thread. */
-DllExport void eid_vwr_be_deserialize(const char* source_file);
+DllExport void eid_vwr_be_deserialize(const EID_CHAR* source_file);
 /* Get the currently-open data in XML form, usable by the drag-and-drop
  * handler. Note: do *not* free this data. */
 const char* eid_vwr_be_get_xmlform();

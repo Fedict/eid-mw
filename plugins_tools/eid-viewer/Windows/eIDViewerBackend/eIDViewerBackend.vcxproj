@@ -118,7 +118,6 @@
     <ClCompile Include="..\..\eidxmllite.cpp" />
     <ClCompile Include="..\..\utftranslate.c" />
     <ClCompile Include="..\..\xmlmap.cpp" />
-    <ClCompile Include="..\..\xmlwin32.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\tests\unit\labels.h" />
@@ -131,6 +130,7 @@
     <ClInclude Include="..\..\p11.h" />
     <ClInclude Include="..\..\state.h" />
     <ClInclude Include="..\..\utftranslate.h" />
+    <ClInclude Include="..\..\xml.h" />
     <ClInclude Include="..\..\xmlmap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

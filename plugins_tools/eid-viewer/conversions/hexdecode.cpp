@@ -3,6 +3,7 @@
 #include <string>
 #include "cppeidstring.h"
 
+//convert the chip number representation back into a 16 bytes long array
 void* HexDecodeConvertor::convert(const void* original, int* len_return) {
 	unsigned char* rv = (unsigned char*)malloc(len_);
 	*len_return = len_;
