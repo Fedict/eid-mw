@@ -106,24 +106,6 @@
           <Directory Id="BEIDVIEWERDIR" Name="EidViewer" />
           <Directory Id="LOGDIR" Name="log"/>
         </Directory>
-        <Directory Id="FIREFOXROOTFOLDER" Name="Mozilla Firefox">
-          <Directory Id="FIREFOXEXTENSIONS" Name="extensions">
-            <Directory Id="XPIROOTFOLDER" Name="belgiumeid@eid.belgium.be">
-              <Directory Id="XPICONTENTFOLDER" Name="content"/>
-              <Directory Id="XPICOMPONENTSFOLDER" Name="components"/>
-              <Directory Id="XPIDEFAULTSFOLDER" Name="defaults">
-                <Directory Id="XPIDEFAULTSPREFSFOLDER" Name="preferences"/>
-              </Directory>
-              <Directory Id="XPILOCALEFOLDER" Name="locale">
-                <Directory Id="XPILOCALEENFOLDER" Name="en-US"/>
-                <Directory Id="XPILOCALEFRFOLDER" Name="fr-FR"/>
-                <Directory Id="XPILOCALENLFOLDER" Name="nl-NL"/>
-                <Directory Id="XPILOCALEDEFOLDER" Name="de-DE"/>
-              </Directory>
-              <Directory Id="XPISKINFOLDER" Name="skin"/>
-            </Directory>
-          </Directory>
-        </Directory>
       </Directory>
       <Directory Id="ProgramFiles64Folder" Name="ProgramFiles64Folder">
         <Directory Id="LOGDIR_64" Name="log"/>
@@ -167,102 +149,6 @@
         </CreateFolder>
         <RemoveFile Id="RemoveLogFiles64" On="uninstall" Name="*"/>
         <RemoveFolder Id="RemoveLogFolder64" On="uninstall"/>
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="FIREFOXEXTENSIONS">
-      <Component Id="Extensions" Guid="{DBEFB6AD-3282-4625-8257-2CF7EA4E7264}" Win64="no">
-        <CreateFolder />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="FIREFOXROOTFOLDER">
-      <Component Id="FireFoxRoot" Guid="{3F6140E7-B25A-41c5-BACE-9DBCDE8019D9}" KeyPath="no" Win64="no">
-        <CreateFolder />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIROOTFOLDER">
-      <Component Id="XPIRoot" Guid="{6E56CA5C-29ED-47e0-9EEF-64FDF8A0B353}" KeyPath="no" Win64="no">
-        <CreateFolder />
-        <File Id="chrome.manifest" Name="chrome.manifest" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\chrome.manifest" />
-        <File Id="icon.png.root" Name="icon.png" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\icon.png" />
-        <File Id="install.rdf" Name="install.rdf" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\install.rdf" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPICONTENTFOLDER">
-      <Component Id="XPIContent" Guid="{DC052180-264F-4ace-ACF1-FC482715EB86}" KeyPath="no" Win64="no">
-        <CreateFolder />
-        <File Id="belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidpkcs11.js" />
-        <File Id="belgiumeidpkcs11.xul" Name="belgiumeidpkcs11.xul" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidpkcs11.xul" />
-        <File Id="belgiumeidprompt.js" Name="belgiumeidprompt.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidprompt.js" />
-        <File Id="belgiumeidprompt.xul" Name="belgiumeidprompt.xul" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidprompt.xul" />
-        <File Id="belgiumeidpromptsecure.js" Name="belgiumeidpromptsecure.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidpromptsecure.js" />
-        <File Id="belgiumeidpromptsecure.xul" Name="belgiumeidpromptsecure.xul" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\content\belgiumeidpromptsecure.xul" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPICOMPONENTSFOLDER">
-      <Component Id="XPIComponents" Guid="{2761C1B0-4EA2-4047-8A31-32679BB4651D}" KeyPath="no" Win64="no">
-        <CreateFolder />
-        <File Id="comp_belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\components\belgiumeidpkcs11.js" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIDEFAULTSFOLDER">
-      <Component Id="XPIdefaults" Guid="{B635FD45-0FCE-4285-9FA6-F9559C0F7EBB}" KeyPath="no" Win64="no">
-        <CreateFolder />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIDEFAULTSPREFSFOLDER">
-      <Component Id="XPIdefaultsprefs" Guid="{FA937E34-AE32-4acd-AC77-3487EBC2ABCD}" KeyPath="no" Win64="no">
-        <CreateFolder />
-        <File Id="belgiumeid.js" Name="belgiumeid.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\defaults\preferences\belgiumeid.js" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPILOCALEFOLDER">
-      <Component Id="XPIlocale" Guid="{B8A44A30-F2EF-44c3-BBE5-54395F47C869}" KeyPath="no" Win64="no">
-        <CreateFolder />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPILOCALEENFOLDER">
-      <Component Id="XPIlocaleen" Guid="{F2BBAA41-E463-409d-B4AB-CE3626339663}" KeyPath="no" Win64="no">
-        <CreateFolder />
-        <File Id="belgiumeid.properties.en" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\locale\en-US\belgiumeid.properties" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPILOCALEFRFOLDER">
-      <Component Id="XPIlocalefr" Guid="{C0F969BB-3678-4828-BAE7-023054072A01}" KeyPath="no" Win64="no">
-        <CreateFolder />
-        <File Id="belgiumeid.properties.fr" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\locale\fr-FR\belgiumeid.properties" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPILOCALENLFOLDER">
-      <Component Id="XPIlocalenl" Guid="{E8587941-7B32-4a9d-8F4B-23C1E8EC1126}" KeyPath="no" Win64="no">
-        <CreateFolder />
-        <File Id="belgiumeid.properties.nl" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\locale\nl-NL\belgiumeid.properties" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPILOCALEDEFOLDER">
-      <Component Id="XPIlocalede" Guid="{54BC660D-7C9D-4ddc-AA96-29D7A5DD0E53}" KeyPath="no" Win64="no">
-        <CreateFolder />
-        <File Id="belgiumeid.properties.de" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\locale\de-DE\belgiumeid.properties" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPISKINFOLDER">
-      <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no" Win64="no">
-        <CreateFolder />
-        <File Id="overlay.css" Name="overlay.css" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\skin\overlay.css" />
-        <File Id="icon.png" Name="icon.png" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\skin\icon.png" />
-        <File Id="icon40x40.png" Name="icon40x40.png" KeyPath="no" Source="..\..\..\plugins_tools\xpi\src\skin\icon40x40.png" />
       </Component>
     </DirectoryRef>
 
@@ -319,17 +205,9 @@
         <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\vs_2012\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
       </Component>
 
-      <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="no" Win64="yes">
-        <File Id="MINIDRIVER_64.dll" Name="beidmdrv64.dll" KeyPath="yes" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv64.dll" />
-      </Component>
-
     </DirectoryRef>
 
     <DirectoryRef Id="SystemFolder">
-
-      <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes" Win64="no">
-        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv32.dll" />
-      </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes" Win64="no">
         <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\vs_2012\binaries\win32_release\beidpkcs11.dll" />
@@ -371,14 +249,6 @@
           <RegistryValue Type="string" Name="TSALocation" Value="http://tsa.belgium.be/connect" KeyPath="yes"/>
           <RegistryValue Type="integer" Name="XAdESLevel" Value="5" KeyPath="no"/>
           <RegistryValue Type="integer" Name="MinXAdESLevel" Value="0" KeyPath="no"/>
-        </RegistryKey>
-      </Component>
-
-      <Component Id="REGISTERXPI" Guid="{946B85B6-99CC-4893-8A42-E7EC6FFE0D87}" Win64="no">
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Mozilla\Firefox\Extensions"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="belgiumeid@eid.belgium.be" Value="C:\Program Files\Mozilla Firefox\extensions\belgiumeid@eid.belgium.be" KeyPath="yes"/>
         </RegistryKey>
       </Component>
 
@@ -516,17 +386,6 @@
       <ComponentRef Id="LogDir_64"/>
       <ComponentRef Id="Extensions"/>
       <ComponentRef Id="FireFoxRoot"/>
-      <ComponentRef Id="XPIRoot"/>
-      <ComponentRef Id="XPIContent"/>
-      <ComponentRef Id="XPIComponents"/>
-      <ComponentRef Id="XPIdefaults"/>
-      <ComponentRef Id="XPIdefaultsprefs"/>
-      <ComponentRef Id="XPIlocale"/>
-      <ComponentRef Id="XPIlocaleen"/>
-      <ComponentRef Id="XPIlocalefr"/>
-      <ComponentRef Id="XPIlocalenl"/>
-      <ComponentRef Id="XPIlocalede"/>
-      <ComponentRef Id="XPIskin"/>
 
       <!-- Beid pinpad dir-->
       <ComponentRef Id="PinpadLib"/>
@@ -557,7 +416,6 @@
         <ComponentRef Id="SCardSvrService"/>
         <ComponentRef Id="pkcs11"/>
         <ComponentRef Id="pkcs11_64"/>
-        <ComponentRef Id="REGISTERXPI"/>
 
         <Feature Id="Office2010Signatureregistration_32" Level="1" Display="hidden" Absent="disallow">
           <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>
