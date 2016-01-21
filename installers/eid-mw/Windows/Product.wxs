@@ -311,8 +311,6 @@
       <ComponentRef Id="Icon" />
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
-      <ComponentRef Id="Extensions"/>
-      <ComponentRef Id="FireFoxRoot"/>
 
       <!-- Beid pinpad dir-->
       <ComponentRef Id="PinpadLib"/>
@@ -358,7 +356,6 @@
       <Feature Id="Install_Minidriver" Title="Minidriver" Absent="allow" Level="1">
         <ComponentRef Id="beidmdrv"/>
         <ComponentRef Id="CertPropService"/>
-        <ComponentRef Id="beidmdrvsystem32"/>
         <ComponentRef Id="REGISTERMINIDRIVER"/>
         <Condition Level="1">VersionNT >= 600</Condition>
       </Feature>
