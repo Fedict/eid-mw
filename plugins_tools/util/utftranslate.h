@@ -11,9 +11,9 @@
 typedef char EID_CHAR;
 #define UTF8TOEID(utf8string, len) utf8string
 #define EIDTOUTF8(eidstring, len) utf8string
-  #ifndef TEXT(string)
-    #define TEXT(string) string
-  #endif
+# ifndef TEXT
+#  define TEXT(string) string
+# endif
 #else
 #include <stdio.h>
 #include <Windows.h>
