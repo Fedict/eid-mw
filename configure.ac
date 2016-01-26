@@ -132,6 +132,7 @@ AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/libbeidpkcs11.pc
 		 doc/sdk/include/rsaref220/Makefile
 		 tests/unit/Makefile
+		 plugins_tools/util/Makefile
 		 plugins_tools/aboutmw/gtk/Makefile
 		 plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh
 		 plugins_tools/aboutmw/gtk/po/Makefile.in

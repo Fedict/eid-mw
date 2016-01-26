@@ -76,6 +76,7 @@ eid_viewer_SOURCES = \
 	conversions/xmlspecconv.h \
 	conversions/xmlspecconv.cpp \
 	conversions.h \
+	cppeidstring.h \
 	soap.c \
 	soap.h \
 	state.c \
@@ -93,9 +94,7 @@ eid_viewer_SOURCES = \
 	b64/base64dec.h \
 	b64/base64dec.c \
 	verify_cert.h \
-	verify.c \
-	utftranslate.h \
-	utftranslate.c
+	verify.c
 
 eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/plugins_tools/util/liblabels.a @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@ @CURL_LIBS@ @libproxy_LIBS@
 AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@
@@ -121,7 +120,8 @@ EXTRA_DIST = gtk/viewer.glade \
 	     resources/coat_of_arms_de.jpg \
 	     resources/coat_of_arms_en.jpg \
 	     resources/coat_of_arms_fr.jpg \
-	     resources/coat_of_arms_nl.jpg
+	     resources/coat_of_arms_nl.jpg \
+	     gtk/eid-viewer.desktop.sh.in
 
 packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
 trustdir = $(packagedatadir)/trustdir
@@ -145,6 +145,8 @@ desktopdir=@datadir@/applications
 desktop_DATA=eid-viewer.desktop
 
 eid-viewer.desktop: gtk/eid-viewer.desktop.sh
-	sh ./eid-viewer.desktop.sh
+	sh $(builddir)/gtk/eid-viewer.desktop.sh
+
+CLEANFILES=eid-viewer.desktop
 
 @GSETTINGS_RULES@
