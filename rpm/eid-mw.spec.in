@@ -33,9 +33,10 @@ BuildRequires: libltdl7
 %else
 Requires: ccid
 BuildRequires: openssl-devel
-BuildRequires: openssl
 BuildRequires: libtool-ltdl-devel
 %endif
+BuildRequires: openssl
+BuildRequires: openssl-perl
 BuildRequires: libproxy-devel
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
