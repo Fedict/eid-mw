@@ -58,7 +58,7 @@ TEST_FUNC(mechinfo) {
 	check_rv(C_GetMechanismList(slot, mechlist, &count));
 
 	check_rv_long(C_GetMechanismInfo(slot, mechlist[1], NULL_PTR), m_p11_badarg);
-	check_rv_long(C_GetMechanismInfo(slot, NULL_PTR, &info), m_mech_inv);
+	check_rv_long(C_GetMechanismInfo(slot, 0xdeadbeef, &info), m_mech_inv);
 
 	switch(count) {
 		case 13:
