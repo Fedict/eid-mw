@@ -537,6 +537,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type, CK_MECHAN
 	//look for type in table
 	for (i=0; (info = &table[i]) && (info->type) &&(info->type != type); i++)
 	{
+        log_trace(WHERE, "info->type: %d, type: %d", info->type, type);
 	}
 
 	if ((info) && (info->type))
