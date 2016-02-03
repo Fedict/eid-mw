@@ -125,6 +125,8 @@ EXTRA_DIST = gtk/viewer.glade \
 
 packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
 trustdir = $(packagedatadir)/trustdir
+icondir = @datadir@/icons
+icon_DATA = gtk/eid-viewer.png
 
 dist_packagedata_DATA = eidv4.xsd
 dist_trust_DATA = \
