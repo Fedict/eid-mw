@@ -121,7 +121,8 @@ EXTRA_DIST = gtk/viewer.glade \
 	     resources/coat_of_arms_en.jpg \
 	     resources/coat_of_arms_fr.jpg \
 	     resources/coat_of_arms_nl.jpg \
-	     gtk/eid-viewer.desktop.sh.in
+	     gtk/eid-viewer.desktop.sh.in \
+	     gtk/eid-viewer.png
 
 packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
 trustdir = $(packagedatadir)/trustdir
