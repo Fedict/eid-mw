@@ -32,15 +32,16 @@
 		6536233B19A7E92B00D46ECB /* tkinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232419A7E92B00D46ECB /* tkinfo.c */; };
 		6536233D19A7E93A00D46ECB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536233C19A7E93A00D46ECB /* main.c */; };
 		65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.1.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.9.dylib */; };
-		655EC1341AC970B400C411CB /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 655EC1321AC970B400C411CB /* labels.c */; };
 		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
+		65EABAF11C621F3D00034337 /* labels.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EABAEE1C621F3D00034337 /* labels.h */; settings = {ASSET_TAGS = (); }; };
+		65EABAF21C621F3D00034337 /* utftranslate.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EABAEF1C621F3D00034337 /* utftranslate.h */; settings = {ASSET_TAGS = (); }; };
+		65EABAF31C621FB400034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAED1C621F3D00034337 /* labels.c */; };
 		65F3F01B1BE2328A0073F2A3 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		65F3F0201BE232D70073F2A3 /* PCSC.framework in Headers */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; };
-		7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.9.a */; };
 		8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */; };
 		86837479186489B6005EE5D7 /* dialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 8683738D186489B5005EE5D7 /* dialogs.h */; };
@@ -202,8 +203,6 @@
 		86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
 		8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B07D1011B21CEB80033CD62 /* wrong_init.c */; };
 		8B8B71591B74CCA300D8910E /* sign_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B71581B74CCA300D8910E /* sign_state.c */; };
-		8B90EB371B74CEDA0045683D /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B90EB361B74CEDA0045683D /* libssl.dylib */; };
-		8B90EB3C1B74CEE40045683D /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B90EB3B1B74CEE40045683D /* libcrypto.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -319,14 +318,15 @@
 		6536232319A7E92B00D46ECB /* threads.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = threads.c; path = tests/unit/threads.c; sourceTree = "<group>"; };
 		6536232419A7E92B00D46ECB /* tkinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tkinfo.c; path = tests/unit/tkinfo.c; sourceTree = "<group>"; };
 		6536233C19A7E93A00D46ECB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = tests/unit/apple/main.c; sourceTree = "<group>"; };
-		655EC1321AC970B400C411CB /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = tests/unit/labels.c; sourceTree = "<group>"; };
-		655EC1331AC970B400C411CB /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = tests/unit/labels.h; sourceTree = "<group>"; };
 		658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Middleware.xcodeproj"; path = "plugins_tools/aboutmw/OSX/eID Middleware/eID Middleware.xcodeproj"; sourceTree = "<group>"; };
 		6594447B19A8C29B003ABC24 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = cardcomm/pkcs11/src/asn1.c; sourceTree = "<group>"; };
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
 		6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs11util.cpp; path = cardcomm/pkcs11/src/pkcs11util.cpp; sourceTree = "<group>"; };
 		659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Viewer.xcodeproj"; path = "plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		65CC20ED19A7DE4E0089CD13 /* ordering.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ordering.c; path = tests/unit/ordering.c; sourceTree = "<group>"; };
+		65EABAED1C621F3D00034337 /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = plugins_tools/util/labels.c; sourceTree = "<group>"; };
+		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = plugins_tools/util/labels.h; sourceTree = "<group>"; };
+		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = plugins_tools/util/utftranslate.h; sourceTree = "<group>"; };
 		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
@@ -590,8 +590,9 @@
 		6536230C19A7E8FE00D46ECB /* testsuite */ = {
 			isa = PBXGroup;
 			children = (
-				655EC1321AC970B400C411CB /* labels.c */,
-				655EC1331AC970B400C411CB /* labels.h */,
+				65EABAED1C621F3D00034337 /* labels.c */,
+				65EABAEE1C621F3D00034337 /* labels.h */,
+				65EABAEF1C621F3D00034337 /* utftranslate.h */,
 				65F3F0211BE236680073F2A3 /* readdata_sequence.c */,
 				8B8B71581B74CCA300D8910E /* sign_state.c */,
 				8B07D1011B21CEB80033CD62 /* wrong_init.c */,
@@ -870,6 +871,7 @@
 				86E3DDFC1653D6210015B5E1 /* datafile.h in Headers */,
 				86E3DDFE1653D6210015B5E1 /* dynamiclib.h in Headers */,
 				86E3DDFF1653D6210015B5E1 /* eiderrors.h in Headers */,
+				65EABAF21C621F3D00034337 /* utftranslate.h in Headers */,
 				86E3DE001653D6210015B5E1 /* export.h in Headers */,
 				86E3DE021653D6210015B5E1 /* hash.h in Headers */,
 				86E3DE091653D6210015B5E1 /* tomcrypt_argchk.h in Headers */,
@@ -877,6 +879,7 @@
 				86E3DE0B1653D6210015B5E1 /* tomcrypt_hash.h in Headers */,
 				86E3DE0C1653D6210015B5E1 /* tomcrypt_macros.h in Headers */,
 				86E3DE0E1653D6210015B5E1 /* log.h in Headers */,
+				65EABAF11C621F3D00034337 /* labels.h in Headers */,
 				86E3DE101653D6210015B5E1 /* logbase.h in Headers */,
 				86E3DE121653D6210015B5E1 /* mutex.h in Headers */,
 				86E3DE141653D6210015B5E1 /* mw_util.h in Headers */,
@@ -1176,10 +1179,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65EABAF31C621FB400034337 /* labels.c in Sources */,
 				65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */,
 				65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */,
 				6536232B19A7E92B00D46ECB /* init_finalize.c in Sources */,
-				655EC1341AC970B400C411CB /* labels.c in Sources */,
 				6536232F19A7E92B00D46ECB /* nonsensible.c in Sources */,
 				6536233419A7E92B00D46ECB /* sessions.c in Sources */,
 				6536233319A7E92B00D46ECB /* sessions_nocard.c in Sources */,
