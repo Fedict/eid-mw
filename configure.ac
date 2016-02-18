@@ -110,7 +110,6 @@ PKG_CHECK_MODULES(p11kit, "p11-kit-1", [HAVE_P11KIT=1], [HAVE_P11KIT=0])
 AM_CONDITIONAL([P11KIT], [test "$HAVE_P11KIT" = 1])
 if test "$HAVE_P11KIT" = 1
 then
-	AC_PROG_LN_S
 	PKG_CHECK_VAR([p11kitsodir], "p11-kit-1", "p11_module_path",, AC_MSG_ERROR([Could not find p11-kit module path]))
 	PKG_CHECK_VAR([p11kitcfdir], "p11-kit-1", "p11_module_configs",, AC_MSG_ERROR([Could not find p11-kit configuration path]))
 else
