@@ -1,2 +1,4 @@
-usr/lib/*/libbeidpkcs11.so.0*
-usr/lib/*/pkcs11/*
+#!/bin/sh
+
+echo "usr/lib/*/libbeidpkcs11.so.0*"
+pkg-config --variable=p11_system_config_modules p11-kit-1

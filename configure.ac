@@ -113,7 +113,7 @@ PKG_CHECK_MODULES(p11kit, "p11-kit-1", [HAVE_P11KIT=1], [HAVE_P11KIT=0])
 if test "$HAVE_P11KIT" = 1
 then
 	PKG_CHECK_VAR([p11kitsodir], "p11-kit-1", "p11_module_path",, [HAVE_P11KIT=0])
-	PKG_CHECK_VAR([p11kitcfdir], "p11-kit-1", "p11_module_configs",, [HAVE_P11KIT=0])
+	PKG_CHECK_VAR([p11kitcfdir], "p11-kit-1", "p11_system_config_modules",, [HAVE_P11KIT=0])
 fi
 AM_CONDITIONAL([P11KIT], [test "$HAVE_P11KIT" = 1])
 
