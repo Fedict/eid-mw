@@ -106,10 +106,24 @@ MAINVERSION=$(echo $PACKAGE_VERSION|sed -e 's/-.*$//')
 AC_DEFINE_UNQUOTED([MAINVERSION], $MAINVERSION, [do not change this])
 AC_SUBST(MAINVERSION)
 
+PKG_CHECK_MODULES(p11kit, "p11-kit", [HAVE_P11KIT=1], [HAVE_P11KIT=0])
+AM_CONDITIONAL([P11KIT], [test "$HAVE_P11KIT" = 1])
+if test "$HAVE_P11KIT" = 1
+then
+	AC_PROG_LN_S
+	PKG_CHECK_VAR([p11kitsodir], "p11-kit", "p11_module_path",, AC_MSG_ERROR([Could not find p11-kit module path]))
+	PKG_CHECK_VAR([p11kitcfdir], "p11-kit", "p11_module_configs",, AC_MSG_ERROR([Could not find p11-kit configuration path]))
+else
+	p11kitsodir=""
+	p11kitcfdir=""
+fi
+
 pkgconfigdir="\$(libdir)/pkgconfig"
 pkcs11hincludedir="\$(includedir)/beid/rsaref220"
 AC_SUBST([pkgconfigdir])
 AC_SUBST([pkcs11hincludedir])
+AC_SUBST([p11kitsodir])
+AC_SUBST([p11kitcfdir])
 
 AC_CONFIG_FILES([Makefile cardcomm/pkcs11/src/Makefile cardcomm/pkcs11/src/libbeidpkcs11.pc doc/sdk/include/rsaref220/Makefile tests/unit/Makefile plugins_tools/aboutmw/gtk/Makefile plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh plugins_tools/aboutmw/gtk/po/Makefile.in rpm/eid-mw.spec])
 AC_CONFIG_SUBDIRS([plugins_tools/xpi])
