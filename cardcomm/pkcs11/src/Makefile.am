@@ -170,6 +170,7 @@ libexec_PROGRAMS = beid-askpin beid-changepin beid-badpin beid-askaccess beid-sp
 if P11KIT
 dist_p11kitcf_DATA = beid.module
 install-exec-hook:
+	$(MKDIR_P) $(DESTDIR)$(p11kitsodir) && \
 	cd $(DESTDIR)$(p11kitsodir) && \
 		rm -f beidpkcs11.so && \
 		$(LN_S) $(libdir)/libbeidpkcs11.so.0 beidpkcs11.so
