@@ -1,4 +1,4 @@
 #!/bin/sh
 
 echo "usr/lib/*/libbeidpkcs11.so.0*"
-pkg-config --variable=p11_system_config_modules p11-kit-1
+pkg-config --variable=p11_module_path p11-kit-1 | sed -e 's,^/,,'
