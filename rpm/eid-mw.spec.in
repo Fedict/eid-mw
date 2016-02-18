@@ -107,7 +107,7 @@ fi
 %exclude %{_libdir}/*.la
 %files libs
 %{_libdir}/libbeidpkcs11.so.*
-%{_libdir}/pkcs11/beidpkcs11.so
+@p11kitsodir@/beidpkcs11.so
 %exclude %{_libdir}/libbeidpkcs11.so
 %files bin
 %{_libexecdir}/beid-askaccess
