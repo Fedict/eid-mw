@@ -119,7 +119,7 @@ fi
 %{_bindir}/about-eid-mw
 %{_datadir}/applications
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
-%{_datadir}/pkcs11/beid.module
+@p11kitcfdir@/beid.module
 %files devel
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
