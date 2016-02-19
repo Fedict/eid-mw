@@ -107,7 +107,7 @@ fi
 %exclude %{_libdir}/*.la
 %files libs
 %{_libdir}/libbeidpkcs11.so.*
-%{_libdir}/pkcs11/beidpkcs11.so
+%{_libdir}/pkcs11
 %exclude %{_libdir}/libbeidpkcs11.so
 %files bin
 %{_libexecdir}/beid-askaccess
@@ -119,7 +119,7 @@ fi
 %{_bindir}/about-eid-mw
 %{_datadir}/applications
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
-%{_datadir}/p11-kit/modules/beid.module
+%{_datadir}/p11-kit
 %files devel
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
