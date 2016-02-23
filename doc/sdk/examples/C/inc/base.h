@@ -64,7 +64,7 @@
 #ifdef __APPLE__
 #define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.dylib"
 #else
-#define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so.0"
+#define PKCS11_LIB "libbeidpkcs11.so.0"
 #endif
 #define TEXT(x) x
 #define _getch() getchar()
