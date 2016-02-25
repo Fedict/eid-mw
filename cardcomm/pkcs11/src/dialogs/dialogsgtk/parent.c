@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "config.h"
-#include "parent.h"
-#include <unistd.h>
 #include <stdio.h>
+
+#include "parent.h"
 
 // get the path of the parent process' executable
 ///////////////////////////////////////////////////////////////
