@@ -105,6 +105,14 @@ MAINVERSION=$(echo $PACKAGE_VERSION|sed -e 's/-.*$//')
 AC_DEFINE_UNQUOTED([MAINVERSION], $MAINVERSION, [do not change this])
 AC_SUBST(MAINVERSION)
 
+# need dlopen() for the pincode plugin thing
+save_LIBS="$LIBS"
+LIBS=""
+AC_SEARCH_LIBS([dlopen], [dl],, [AC_MSG_ERROR([I need a dlopen() implementation])])
+DL_LIBS="$LIBS"
+LIBS="$save_LIBS"
+AC_SUBST(DL_LIBS)
+
 p11kitsodir=""
 p11kitcfdir=""
 PKG_CHECK_MODULES(p11kit, "p11-kit-1", [HAVE_P11KIT=1], [HAVE_P11KIT=0])
