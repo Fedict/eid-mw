@@ -15,7 +15,7 @@ LT_INIT
 AM_INIT_AUTOMAKE([subdir-objects foreign tar-pax dist-zip serial-tests])
 
 # Checks for programs.
-AC_PROG_CXX([g++])
+AC_PROG_CXX
 AC_PROG_CPP
 AC_PROG_CC
 AC_PROG_LIBTOOL
@@ -23,8 +23,6 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MKDIR_P
 PKG_PROG_PKG_CONFIG
-
-AS_VAR_IF([GXX],[yes],[],AC_MSG_ERROR([GNU C++ compiler (g++) is required.]))
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/file.h sys/ioctl.h sys/time.h unistd.h malloc.h memory.h sys/timeb.h termios.h])
