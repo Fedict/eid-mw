@@ -535,8 +535,12 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type, CK_MECHAN
 	}
 
 	//look for type in table
-	for (i=0; (info = &table[i]) && (info->type) &&(info->type != type); i++)
+	for (i=0; (info = &table[i]) && (info->type != type); i++)
 	{
+		if(i >= (sizeof(table) / sizeof(table[0]))) {
+			ret = CKR_MECHANISM_INVALID;
+			goto cleanup;
+		}
 	}
 
 	if ((info) && (info->type))
