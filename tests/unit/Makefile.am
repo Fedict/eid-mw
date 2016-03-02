@@ -7,11 +7,10 @@ check_PROGRAMS = $(TESTS)
 CLEANFILES=foto.jpg
 
 COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la libtestlib.a
-noinst_LIBRARIES = libtestlib.a liblabels.a
+noinst_LIBRARIES = libtestlib.a
 libtestlib_a_SOURCES = testlib.h testlib.c
-liblabels_a_SOURCES = labels.h labels.c
 
-AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220
+AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util
 if NO_DIALOGS
 AM_CFLAGS += -DNO_DIALOGS
 endif
@@ -72,7 +71,7 @@ objects_SOURCES = objects.c $(COMMON_SRCS)
 objects_LDADD = $(COMMON_LIB)
 
 readdata_SOURCES = readdata.c $(COMMON_SRCS)
-readdata_LDADD = $(COMMON_LIB) liblabels.a
+readdata_LDADD = $(COMMON_LIB) $(top_builddir)/plugins_tools/util/liblabels.a
 
 digest_SOURCES = digest.c $(COMMON_SRCS)
 digest_LDADD = $(COMMON_LIB)

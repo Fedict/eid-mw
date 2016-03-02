@@ -76,6 +76,7 @@ eid_viewer_SOURCES = \
 	conversions/xmlspecconv.h \
 	conversions/xmlspecconv.cpp \
 	conversions.h \
+	cppeidstring.h \
 	soap.c \
 	soap.h \
 	state.c \
@@ -95,8 +96,8 @@ eid_viewer_SOURCES = \
 	verify_cert.h \
 	verify.c
 
-eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/tests/unit/liblabels.a @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@ @CURL_LIBS@ @libproxy_LIBS@
-AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/tests/unit @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@
+eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/plugins_tools/util/liblabels.a @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@ @CURL_LIBS@ @libproxy_LIBS@
+AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@
 AM_CXXFLAGS = $(AM_CFLAGS)
 SUBDIRS = gtk/po test
 
@@ -119,10 +120,14 @@ EXTRA_DIST = gtk/viewer.glade \
 	     resources/coat_of_arms_de.jpg \
 	     resources/coat_of_arms_en.jpg \
 	     resources/coat_of_arms_fr.jpg \
-	     resources/coat_of_arms_nl.jpg
+	     resources/coat_of_arms_nl.jpg \
+	     gtk/eid-viewer.desktop.sh.in \
+	     gtk/eid-viewer.png
 
 packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
 trustdir = $(packagedatadir)/trustdir
+icondir = @datadir@/icons
+icon_DATA = gtk/eid-viewer.png
 
 dist_packagedata_DATA = eidv4.xsd
 dist_trust_DATA = \
@@ -143,6 +148,8 @@ desktopdir=@datadir@/applications
 desktop_DATA=eid-viewer.desktop
 
 eid-viewer.desktop: gtk/eid-viewer.desktop.sh
-	sh ./eid-viewer.desktop.sh
+	sh $(builddir)/gtk/eid-viewer.desktop.sh
+
+CLEANFILES=eid-viewer.desktop
 
 @GSETTINGS_RULES@

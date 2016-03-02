@@ -8,7 +8,7 @@
 #include <pkcs11.h>
 #include <backend.h>
 #include <state.h>
-#include <labels.h>
+#include "labels.h"
 #include <cache.h>
 
 typedef struct {

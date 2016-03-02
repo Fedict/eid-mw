@@ -6,7 +6,7 @@
 #include "utftranslate.h"
 
     #ifndef WIN32
-    typedef std::string EID_STRING
+    typedef std::string EID_STRING;
 	#define EID_OSTRINGSTREAM std::ostringstream
 	#define EID_STRINGSTREAM std::stringstream
     #else

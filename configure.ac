@@ -1,6 +1,6 @@
 AC_PREREQ([2.61])
 AC_INIT([eid-mw],
-  m4_esyscmd_s(echo "4.1.9-"$(git describe --dirty|sed -e 's/-/./g')),
+  m4_esyscmd_s(echo "4.1.9-"$(scripts/build-aux/genver.sh)),
   [servicedesk@fedict.be],,
   [http://eid.belgium.be])
 
@@ -113,7 +113,7 @@ AC_SUBST([JPEG_LIBS])
 AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjpeg installed])
 
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1])
-PKG_CHECK_VAR(SSL_PREFIX, "openssl", "exec_prefix",, [AC_MSG_ERROR([Could not find exec_prefix for openssl])])
+PKG_CHECK_VAR(SSL_PREFIX, "openssl", "exec_prefix",, AC_MSG_ERROR([Could not find exec_prefix for openssl]))
 AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
 AC_SUBST(SSL_PREFIX)
 
@@ -132,6 +132,7 @@ AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/libbeidpkcs11.pc
 		 doc/sdk/include/rsaref220/Makefile
 		 tests/unit/Makefile
+		 plugins_tools/util/Makefile
 		 plugins_tools/aboutmw/gtk/Makefile
 		 plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh
 		 plugins_tools/aboutmw/gtk/po/Makefile.in

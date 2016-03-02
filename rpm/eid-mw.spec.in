@@ -33,9 +33,10 @@ BuildRequires: libltdl7
 %else
 Requires: ccid
 BuildRequires: openssl-devel
-BuildRequires: openssl
+BuildRequires: openssl-perl
 BuildRequires: libtool-ltdl-devel
 %endif
+BuildRequires: openssl
 BuildRequires: libproxy-devel
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
@@ -161,6 +162,9 @@ fi
 %{_bindir}/eid-viewer
 %{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
 %{_datadir}/eid-mw
+%{__install} -Dp -m0644 plugins/tools/eid-viewer/gtk/eid-viewer.png %{buildroot}%{_datadir}/pixmaps/eid-viewer.png
+%{__install} -d -m0755 %{buildroot}%{_datadir}/applications/
+desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict eid-viewer.desktop || true
 %if ! 0%{?el6}
 %{_datadir}/glib-2.0/schemas
 %endif
