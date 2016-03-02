@@ -841,7 +841,7 @@ bool CLog::writeLineHeaderA(tLOG_Level level_in,const int line,const char *file)
 	{
 		if(isFileMixingGroups())
 		{
-			fprintf_s(m_f,"%s - %ld - %s: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",timestamp.c_str(),CThread::getCurrentPid(),m_group.c_str(),lPreviousOpenFailed);
+			fprintf_s(m_f,"%s - %ld - %ls: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",timestamp.c_str(),CThread::getCurrentPid(),m_group.c_str(),lPreviousOpenFailed);
 		}
 		else
 		{

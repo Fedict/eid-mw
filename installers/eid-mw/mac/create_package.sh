@@ -6,6 +6,9 @@ set -x
 SIGN_BUILD=0
 #set SIGN_BUILD=1 to sign the .pkg files
 
+#get the release number
+source "$(pwd)/../../../scripts/mac/set_eidmw_version.sh"
+
 #installer name defines
 #release dir, where all the beidbuild files to be released will be placed
 RELEASE_DIR="$(pwd)/release"
@@ -55,7 +58,7 @@ REL_NAME_DIAG="beid_diagnostic"
 #version number of the package
 #REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
 #REL_VERSION=$(expr "$REL_VERSION_TMP" : '.*\([0-9].[0-9].[0-9]\).*')
-REL_VERSION="4.1.9"
+#REL_VERSION="$4.1.10"
 
 PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(git rev-list --count HEAD)
@@ -127,6 +130,7 @@ cp ../../../installers/certificates/beid-cert-belgiumrca3.der "$INSTALL_SCRIPTS_
 
 cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
+cp "$(pwd)/../../../scripts/mac/set_eidmw_version.sh" "$INSTALL_SCRIPTS_DIR"
 cp -R ./install_scripts/* "$INSTALL_SCRIPTS_DIR"
 	 
 #cp  ../../../plugins_tools/bin/Release/plistMerger "$PLISTMERGER_DIR"

@@ -1,6 +1,6 @@
 AC_PREREQ([2.61])
 AC_INIT([eid-mw],
-  m4_esyscmd_s(echo "4.1.9-"$(scripts/build-aux/genver.sh)),
+  m4_esyscmd_s(echo "4.1.11-"$(scripts/build-aux/genver.sh)),
   [servicedesk@fedict.be],,
   [http://eid.belgium.be])
 
@@ -16,15 +16,14 @@ AM_INIT_AUTOMAKE([subdir-objects foreign tar-pax dist-zip serial-tests])
 AM_SILENT_RULES([yes])
 
 # Checks for programs.
-AC_PROG_CXX([g++])
+AC_PROG_CXX
 AC_PROG_CPP
 AC_PROG_CC
 AC_PROG_LIBTOOL
 AC_PROG_INSTALL
 AC_PROG_LN_S
+AC_PROG_MKDIR_P
 PKG_PROG_PKG_CONFIG
-
-AS_VAR_IF([GXX],[yes],[],AC_MSG_ERROR([GNU C++ compiler (g++) is required.]))
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/file.h sys/ioctl.h sys/time.h unistd.h malloc.h memory.h sys/timeb.h termios.h])
@@ -122,10 +121,30 @@ MAINVERSION=$(echo $PACKAGE_VERSION|sed -e 's/-.*$//')
 AC_DEFINE_UNQUOTED([MAINVERSION], $MAINVERSION, [do not change this])
 AC_SUBST(MAINVERSION)
 
+# need dlopen() for the pincode plugin thing
+save_LIBS="$LIBS"
+LIBS=""
+AC_SEARCH_LIBS([dlopen], [dl],, [AC_MSG_ERROR([I need a dlopen() implementation])])
+DL_LIBS="$LIBS"
+LIBS="$save_LIBS"
+AC_SUBST(DL_LIBS)
+
+p11kitsodir=""
+p11kitcfdir=""
+PKG_CHECK_MODULES(p11kit, "p11-kit-1", [HAVE_P11KIT=1], [HAVE_P11KIT=0])
+if test "$HAVE_P11KIT" = 1
+then
+	PKG_CHECK_VAR([p11kitsodir], "p11-kit-1", "p11_module_path",, [HAVE_P11KIT=0])
+	PKG_CHECK_VAR([p11kitcfdir], "p11-kit-1", "p11_system_config_modules",, [HAVE_P11KIT=0])
+fi
+AM_CONDITIONAL([P11KIT], [test "$HAVE_P11KIT" = 1])
+
 pkgconfigdir="\$(libdir)/pkgconfig"
 pkcs11hincludedir="\$(includedir)/beid/rsaref220"
 AC_SUBST([pkgconfigdir])
 AC_SUBST([pkcs11hincludedir])
+AC_SUBST([p11kitsodir])
+AC_SUBST([p11kitcfdir])
 
 AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/Makefile
