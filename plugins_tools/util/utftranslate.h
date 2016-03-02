@@ -11,8 +11,8 @@
 #define EID_VSNPRINTF(str, size, string, ap) vsnprintf(str, size, string, ap)
 #define EID_FOPEN(filename, mode) fopen(filename, mode)
 typedef char EID_CHAR;
-#define UTF8TOEID(utf8string, len) strndup(utf8string, len)
-#define EIDTOUTF8(eidstring, len) strndup(utf8string, len)
+#define UTF8TOEID(utf8string, len) strndup(utf8string, *len)
+#define EIDTOUTF8(eidstring, len) strndup(utf8string, *len)
 # ifndef TEXT
 #  define TEXT(string) string
 # endif
