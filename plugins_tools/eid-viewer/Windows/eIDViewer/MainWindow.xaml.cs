@@ -153,6 +153,31 @@ namespace eIDViewer
                 }
             }
         }
+    private void MenuItemSaveAs_Click(object sender, RoutedEventArgs e)
+    {
+        //Stream myStream = null;
+        String filename = null;
+        SaveFileDialog mySaveFileDialog = new SaveFileDialog();
+
+       mySaveFileDialog.Filter = "eid files (*.eid)|*.eid|All files (*.*)|*.*";
+       mySaveFileDialog.FilterIndex = 1;
+
+       if (mySaveFileDialog.ShowDialog() == true)
+       {
+           try
+           {
+               if ((filename = mySaveFileDialog.FileName) != null)
+               {
+                   MessageBox.Show("File selected is " + filename);
+                   eIDViewer.NativeMethods.SaveXML(filename);
+               }
+           }
+           catch (Exception ex)
+               {
+                   MessageBox.Show("Error: Could not read file from disk. Error message: " + ex.Message);
+               }
+       }
     }
+}
 
 }

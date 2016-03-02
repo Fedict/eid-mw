@@ -185,11 +185,22 @@ namespace eIDViewer
             }
             switch(state)
             {
+                case eid_vwr_states.STATE_READY:
+                    theData.eid_data_ready = false;
+                    break;
+                case eid_vwr_states.STATE_LIBOPEN:
+                    theData.eid_data_ready = false;
+                    break;
                 case eid_vwr_states.STATE_CARD_INVALID:
+                    theData.ResetDataValues();
+                    theData.eid_data_ready = false;
+                    break;
                 case eid_vwr_states.STATE_TOKEN_ERROR:
                     theData.ResetDataValues();
+                    theData.eid_data_ready = false;
                     break;
                 default:
+                    theData.eid_data_ready = true;
                     break;
             }
  

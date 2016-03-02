@@ -18,6 +18,33 @@ const UINT MAX_ELEMENT_DEPTH = 8;
 	goto out; \
 }
 
+/* Write attributes to the description in *attribute */
+static int write_attributes(IXmlWriter *pWriter, struct attribute_desc *attribute) {
+	HRESULT retVal = 0;
+	EID_CHAR* val = NULL;
+	while (attribute->name) {
+		int have_cache = cache_have_label(attribute->label);
+		if (attribute->reqd && !have_cache) {
+			be_log(EID_VWR_LOG_ERROR, L"Could not write file: no data found for required label %s", attribute->label);
+			return -1;
+		}
+		if (have_cache) {
+			val = cache_get_xmlform(attribute->label);
+			if (EID_STRLEN(val) || attribute->reqd) {
+				pWriter->WriteAttributeString(NULL, attribute->name, NULL, val);
+			}
+			free(val);
+			val = NULL;
+		}
+		attribute++;
+	}
+out:
+	if (val != NULL) {
+		free(val);
+	}
+	return retVal;
+}
+
 /* Write elements to the description in *element */
 static int write_elements(IXmlWriter *pWriter, struct element_desc *element) {
 	HRESULT retVal;
@@ -29,6 +56,7 @@ static int write_elements(IXmlWriter *pWriter, struct element_desc *element) {
 			//check_xml(xmlTextWriterStartElement(writer, BAD_CAST element->name));
 			pWriter->WriteStartElement(NULL,element->name,NULL);
 			if (element->attributes != NULL) {
+				retVal = write_attributes(pWriter, element->attributes);
 				///write_attributes(pWriter, element->attributes);
 				//retVal = pWriter->WriteAttributeString(NULL,
 				//	element->name, NULL,
@@ -47,9 +75,8 @@ static int write_elements(IXmlWriter *pWriter, struct element_desc *element) {
 				return -1;
 			}
 			if (have_cache) {
-				val = cache_get_xmlform(element->label);
 				if (!element->is_b64) {
-					pWriter->WriteElementString(NULL, element->name, NULL, element->label);
+					pWriter->WriteElementString(NULL, element->name, NULL, cache_get_xmlform(element->label));
 					//check_xml(xmlTextWriterWriteElement(writer, BAD_CAST element->name, BAD_CAST cache_get_xmlform(element->label)));
 				}
 				else {
@@ -104,7 +131,7 @@ int eid_vwr_gen_xml(void* data) {
 	retVal = pWriter->WriteStartDocument(XmlStandalone_Omit);
 	retVal = pWriter->WriteStartElement(NULL, L"eid", NULL);
 
-//	retVal = write_elements(writer, toplevel);
+	retVal = write_elements(pWriter, toplevel);
 //	retVal = pWriter->WriteWhitespace(L"\n");
 //	retVal = pWriter->WriteCData(L"This is CDATA text.");
 //	retVal = pWriter->WriteWhitespace(L"\n");
@@ -129,7 +156,7 @@ int eid_vwr_gen_xml(void* data) {
 	SIZE_T cbRead;
 	retVal = pMemoryStream->Read(pwszContent, cbSize, &cbRead);
 
-	cache_add(TEXT("xml"), pwszContent, cbSize / sizeof(WCHAR));
+	cache_add_bin(TEXT("xml"), pwszContent, cbSize);
 
 	out:
 	if (pwszContent != NULL) {
@@ -188,7 +215,7 @@ HRESULT StoreTextElement(const WCHAR* pwszValue, WCHAR* wcsNodeName)
 {
 //	EID_CHAR* nodeName = NULL;
 //	EID_CHAR* value = NULL;
-	void* val = NULL;
+	EID_CHAR* val = NULL;
 
 //	if ((ConvertWCharToMultiByte(wcsNodeName, &nodeName) == 0) &&
 //		(ConvertWCharToMultiByte(pwszValue, &value) == 0))
@@ -197,7 +224,7 @@ HRESULT StoreTextElement(const WCHAR* pwszValue, WCHAR* wcsNodeName)
 		/* If we recognize this element, parse it */
 		if (desc != NULL) {
 			int len = 0; {
-				val = convert_from_xml(desc->label, pwszValue, &len);
+				val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
 				cache_add(desc->label, val, len);
 				eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
 				be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
@@ -258,6 +285,7 @@ out:
 	return retVal;
 }
 
+//parse the xml file
 int eid_vwr_deserialize (const EID_CHAR* filename)
 {
 	HRESULT retVal = S_OK;
@@ -338,6 +366,7 @@ out:
 	return 0;
 }
 
+//return the xml data
 int eid_vwr_serialize(const EID_CHAR* filename) {
 	const struct eid_vwr_cache_item* item = cache_get_data(TEXT("xml"));
 	FILE* f = EID_FOPEN(filename, TEXT("w"));

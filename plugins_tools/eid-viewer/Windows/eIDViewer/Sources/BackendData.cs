@@ -24,6 +24,17 @@ namespace eIDViewer
             }
         }
 
+        private Boolean _eid_data_ready;
+        public Boolean eid_data_ready
+        {
+            get { return _eid_data_ready; }
+            set
+            {
+                _eid_data_ready = value;
+                this.NotifyPropertyChanged("eid_data_ready");
+            }
+        }
+
         private string _logtext;
         public string logText
         {
