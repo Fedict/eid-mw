@@ -12,11 +12,24 @@
 struct cache_item_container {	
 	eid_vwr_cache_item* item;
 
-	cache_item_container(void* data, size_t len) : item(new eid_vwr_cache_item) {
-		item->data = malloc(len+1);
-		memcpy(item->data, data, len);
-		((char*)item->data)[len]='\0';
+	cache_item_container(EID_CHAR* data, size_t len) : item(new eid_vwr_cache_item) {
+		item->data = malloc((len+1)*sizeof(EID_CHAR));
+		memcpy(item->data, data, len*sizeof(EID_CHAR));
+		((EID_CHAR*)item->data)[len]='\0';
 		item->len = len;
+	}
+
+	cache_item_container(BYTE* data, size_t len, boolean bin) {
+		if (!bin)
+			cache_item_container((EID_CHAR*) data, len);
+		else
+		{
+			item = new eid_vwr_cache_item;
+			item->data = malloc((len + 1));
+			memcpy(item->data, data, len);
+			((char*)item->data)[len] = '\0';
+			item->len = len;
+		}
 	}
 
 	~cache_item_container() {
@@ -27,8 +40,12 @@ struct cache_item_container {
 
 std::map<EID_STRING, cache_item_container*> cache;
 
-void cache_add(const EID_CHAR* label, void* data, unsigned long len) {
+void cache_add(const EID_CHAR* label, EID_CHAR* data, unsigned long len) {
 	cache[label] = new cache_item_container(data, len);
+}
+
+void cache_add_bin(const EID_CHAR* label, BYTE* data, unsigned long len) {
+	cache[label] = new cache_item_container(data, len, true);
 }
 
 const struct eid_vwr_cache_item* cache_get_data(const EID_CHAR* label) {
@@ -76,5 +93,5 @@ EID_CHAR* cache_get_xmlform(const EID_CHAR* label) {
 
 void cache_add_xmlform(const EID_CHAR* label, const EID_CHAR* value) {
 	int len = 0;
-	cache_add(label, convert_from_xml(label, value, &len), len);
+	cache_add(label, (EID_CHAR*)convert_from_xml(label, value, &len), len);
 }

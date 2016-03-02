@@ -126,11 +126,12 @@ static int perform_find(CK_BBOOL do_objid) {
 		};
 
 		check_rv(C_FindObjects(session, &object, 1, &count));
-		if(!count) continue;
+		if (!count) continue;
 
-		if(do_objid) {
+		if (do_objid) {
 			check_rv(C_GetAttributeValue(session, object, data, 3));
-		} else {
+		}
+		else {
 			check_rv(C_GetAttributeValue(session, object, data, 2));
 		}
 
@@ -140,30 +141,39 @@ static int perform_find(CK_BBOOL do_objid) {
 		value_str = (char*)malloc(data[1].ulValueLen + 1);
 		data[1].pValue = value_str;
 
-		if(do_objid) {
+		if (do_objid) {
 			objid_str = (char*)malloc(data[2].ulValueLen + 1);
 			data[2].pValue = objid_str;
 
 			check_rv(C_GetAttributeValue(session, object, data, 3));
 
 			objid_str[data[2].ulValueLen] = '\0';
-		} else {
+		}
+		else {
 			check_rv(C_GetAttributeValue(session, object, data, 2));
 		}
 
 		label_str[data[0].ulValueLen] = '\0';
 		value_str[data[1].ulValueLen] = '\0';
 
+
 		EID_CHAR* label_eidstr = UTF8TOEID((const char*)label_str, &(data[1].ulValueLen));
-		EID_CHAR* value_eidstr = UTF8TOEID((const char*)value_str, &(data[1].ulValueLen));
-
-		cache_add(label_eidstr, value_eidstr, data[1].ulValueLen);
-
-		be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_str);
-		eid_vwr_p11_to_ui(label_eidstr, value_eidstr, data[1].ulValueLen);
-
-		EID_SAFE_FREE(label_eidstr);
-		EID_SAFE_FREE(value_eidstr);
+		if (is_string(label_eidstr))
+		{
+			EID_CHAR* value_eidstr = UTF8TOEID((const char*)value_str, &(data[1].ulValueLen));
+			cache_add(label_eidstr, value_eidstr, data[1].ulValueLen / sizeof(EID_CHAR));
+			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_str);
+			eid_vwr_p11_to_ui(label_eidstr, value_eidstr, data[1].ulValueLen);
+			EID_SAFE_FREE(value_eidstr);
+		}
+		else
+		{
+			cache_add_bin(label_eidstr, value_str, data[1].ulValueLen);
+			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_str);
+			eid_vwr_p11_to_ui(label_eidstr, value_str, data[1].ulValueLen);
+		}
+		
+		EID_SAFE_FREE(label_eidstr);		
 		EID_SAFE_FREE(label_str);
 		EID_SAFE_FREE(value_str);
 		EID_SAFE_FREE(objid_str);
