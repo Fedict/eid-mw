@@ -12,6 +12,11 @@ struct eid_vwr_cache_item {
 	int len;
 };
 
+#ifndef WIN32
+#include <stdint.h>
+typedef uint8_t BYTE;
+#endif
+
 void cache_add(const EID_CHAR* label, EID_CHAR* data, unsigned long len);
 void cache_add_bin(const EID_CHAR* label, BYTE* data, unsigned long len);
 const struct eid_vwr_cache_item* cache_get_data(const EID_CHAR* label);
