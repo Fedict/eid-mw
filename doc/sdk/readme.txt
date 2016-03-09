@@ -56,9 +56,12 @@ SDK Installation
 The eID MW 4.0 runtime should be installed before the SDK can be used,
 as it contains our pkcs11 implementation, which is essentially the SDK.
 
-- Windows: unzip the SDK package 
-- Linux: unzip the SDK package
-- Mac OSX: unzip the SDK package
+To get the SDK, you just need the directory which contains this
+readme.txt file. You can get it by cloning the git repository, or by
+just downloading the zip file from github. It is preferable to use
+latest release for the operating system you're using, rather than to use
+the "master" branch (which may or may not be production-ready at any
+point in time).
 
 Contents of the SDK
 ===================
