@@ -151,7 +151,7 @@ fi
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
-%{_datadir}/applications
+%{_datadir}/applications/about-eid-mw.desktop
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/p11-kit
 %files devel
@@ -166,8 +166,9 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
 %{_datadir}/eid-mw
 %{__install} -Dp -m0644 plugins/tools/eid-viewer/gtk/eid-viewer.png %{buildroot}%{_datadir}/pixmaps/eid-viewer.png
-%{__install} -d -m0755 %{buildroot}%{_datadir}/applications/
-desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict eid-viewer.desktop || true
+%{_datadir}/applications/eid-viewer.desktop
+%{_datadir}/icons/eid-viewer.png
+# desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict eid-viewer.desktop || true
 %if ! 0%{?el6}
 %{_datadir}/glib-2.0/schemas
 %endif
