@@ -112,6 +112,8 @@ checks the certificate against the government's Trust Service.
 %{__make} install DESTDIR="%{buildroot}"
 rm -f %{buildroot}%{_datadir}/applications/about-eid-mw.desktop
 desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict plugins_tools/aboutmw/gtk/about-eid-mw.desktop || true
+rm -f %{buildroot}%{_datadir}/applications/eid-viewer.desktop
+desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict eid-viewer.desktop || true
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -151,7 +153,7 @@ fi
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
-%{_datadir}/applications/about-eid-mw.desktop
+%{_datadir}/applications/fedict-about-eid-mw.desktop
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/p11-kit
 %files devel
@@ -165,10 +167,8 @@ fi
 %{_bindir}/eid-viewer
 %{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
 %{_datadir}/eid-mw
-%{__install} -Dp -m0644 plugins/tools/eid-viewer/gtk/eid-viewer.png %{buildroot}%{_datadir}/pixmaps/eid-viewer.png
-%{_datadir}/applications/eid-viewer.desktop
+%{_datadir}/applications/fedict-eid-viewer.desktop
 %{_datadir}/icons/eid-viewer.png
-# desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict eid-viewer.desktop || true
 %if ! 0%{?el6}
 %{_datadir}/glib-2.0/schemas
 %endif
