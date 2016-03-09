@@ -113,7 +113,7 @@ checks the certificate against the government's Trust Service.
 rm -f %{buildroot}%{_datadir}/applications/about-eid-mw.desktop
 desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict plugins_tools/aboutmw/gtk/about-eid-mw.desktop || true
 rm -f %{buildroot}%{_datadir}/applications/eid-viewer.desktop
-desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict eid-viewer.desktop || true
+desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict plugins_tools/eid-viewer/gtk/eid-viewer.desktop || true
 
 %clean
 %{__rm} -rf %{buildroot}
