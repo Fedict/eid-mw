@@ -35,6 +35,16 @@
 #define EXIT_CANCEL 1
 #define EXIT_ERROR	2
 
+/* When compiling against GTK+3, we get a few deprecation warnings.
+ * Moving away from the deprecated API calls would stop the ability to
+ * compile against GTK+2, which is not yet an option. Disable
+ * deprecation warnings, so we understand when there really *are*
+ * problems. */
+#if __GNUC__ >= 4
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 enum { MSG_CHANGE_PIN_CODE=1, MSG_PLEASE_ENTER_OLD_AND_NEW_PINS, MSG_CURRENT_PIN, MSG_NEW_PIN, MSG_NEW_PIN_AGAIN };
 char* beid_messages[4][6]={
 		{"en",   "beID: Change PIN Code",      	"Request from Application [%s]:\n\nPlease enter your current eID PIN, followed by your new eID PIN (twice)", 									"Current PIN:", 		"New PIN:", 		"New PIN (again):"},
@@ -251,5 +261,6 @@ int main(int argc, char* argv[])
 	exit(return_value);
 }
 
-
-
+#if __GNUC__ >= 4
+#pragma GCC diagnostic pop
+#endif
