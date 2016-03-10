@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{3845DF22-E6C6-482D-B38C-45C3B92FA5B7}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Net.Pkcs11</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\fbahar\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <RootNamespace>Net.Sf</RootNamespace>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>None</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>None</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Pkcs11\Delegates\C_GenerateKey.cs" />
+    <Compile Include="Pkcs11\Delegates\C_CloseAllSessions.cs" />
+    <Compile Include="Pkcs11\Delegates\C_CloseSession.cs" />
+    <Compile Include="Pkcs11\Delegates\C_CopyObject.cs" />
+    <Compile Include="Pkcs11\Delegates\C_CreateObject.cs" />
+    <Compile Include="Pkcs11\Delegates\C_Decrypt.cs" />
+    <Compile Include="Pkcs11\Delegates\C_DecryptFinal.cs" />
+    <Compile Include="Pkcs11\Delegates\C_DecryptInit.cs" />
+    <Compile Include="Pkcs11\Delegates\C_DecryptUpdate.cs" />
+    <Compile Include="Pkcs11\Delegates\C_DestroyObject.cs" />
+    <Compile Include="Pkcs11\Delegates\C_Digest.cs" />
+    <Compile Include="Pkcs11\Delegates\C_DigestFinal.cs" />
+    <Compile Include="Pkcs11\Delegates\C_DigestInit.cs" />
+    <Compile Include="Pkcs11\Delegates\C_DigestKey.cs" />
+    <Compile Include="Pkcs11\Delegates\C_DigestUpdate.cs" />
+    <Compile Include="Pkcs11\Delegates\C_Encrypt.cs" />
+    <Compile Include="Pkcs11\Delegates\C_EncryptFinal.cs" />
+    <Compile Include="Pkcs11\Delegates\C_EncryptInit.cs" />
+    <Compile Include="Pkcs11\Delegates\C_EncryptUpdate.cs" />
+    <Compile Include="Pkcs11\Delegates\C_Finalize.cs" />
+    <Compile Include="Pkcs11\Delegates\C_FindObjects.cs" />
+    <Compile Include="Pkcs11\Delegates\C_FindObjectsFinal.cs" />
+    <Compile Include="Pkcs11\Delegates\C_FindObjectsInit.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GenerateKeyPair.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetAttributeValue.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetFunctionList.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetInfo.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetMechanismInfo.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetMechanismList.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetObjectSize.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetOperationState.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetSessionInfo.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetSlotInfo.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetSlotList.cs" />
+    <Compile Include="Pkcs11\Delegates\C_GetTokenInfo.cs" />
+    <Compile Include="Pkcs11\Delegates\C_Initialize.cs" />
+    <Compile Include="Pkcs11\Delegates\C_InitPIN.cs" />
+    <Compile Include="Pkcs11\Delegates\C_InitToken.cs" />
+    <Compile Include="Pkcs11\Delegates\C_Login.cs" />
+    <Compile Include="Pkcs11\Delegates\C_Logout.cs" />
+    <Compile Include="Pkcs11\Delegates\C_OpenSession.cs" />
+    <Compile Include="Pkcs11\Delegates\C_SetAttributeValue.cs" />
+    <Compile Include="Pkcs11\Delegates\C_SetOperationState.cs" />
+    <Compile Include="Pkcs11\Delegates\C_SetPIN.cs" />
+    <Compile Include="Pkcs11\Delegates\C_Sign.cs" />
+    <Compile Include="Pkcs11\Delegates\C_SignFinal.cs" />
+    <Compile Include="Pkcs11\Delegates\C_SignInit.cs" />
+    <Compile Include="Pkcs11\Delegates\C_SignRecoverInit.cs" />
+    <Compile Include="Pkcs11\Delegates\C_SignUpdate.cs" />
+    <Compile Include="Pkcs11\Delegates\C_Verify.cs" />
+    <Compile Include="Pkcs11\Delegates\C_VerifyFinal.cs" />
+    <Compile Include="Pkcs11\Delegates\C_VerifyInit.cs" />
+    <Compile Include="Pkcs11\Delegates\C_VerifyUpdate.cs" />
+    <Compile Include="Pkcs11\Delegates\C_WaitForSlotEvent.cs" />
+    <Compile Include="Pkcs11\Info.cs" />
+    <Compile Include="Pkcs11\KeyPair.cs" />
+    <Compile Include="Pkcs11\MechanismInfo.cs" />
+    <Compile Include="Pkcs11\Module.cs" />
+    <Compile Include="Pkcs11\Objects\Des2SecretKey.cs" />
+    <Compile Include="Pkcs11\Objects\Des3SecretKey.cs" />
+    <Compile Include="Pkcs11\Objects\DesSecretKey.cs" />
+    <Compile Include="Pkcs11\Objects\GostPrivateKey.cs" />
+    <Compile Include="Pkcs11\Objects\GostPublicKey.cs" />
+    <Compile Include="Pkcs11\Objects\Mechanism.cs" />
+    <Compile Include="Pkcs11\Objects\MechanismTypeAttribute.cs" />
+    <Compile Include="Pkcs11\Objects\MetaData.cs" />
+    <Compile Include="Pkcs11\Objects\P11Attribute.cs" />
+    <Compile Include="Pkcs11\Objects\BooleanAttribute.cs" />
+    <Compile Include="Pkcs11\Objects\ByteArrayAttribute.cs" />
+    <Compile Include="Pkcs11\Objects\Certificate.cs" />
+    <Compile Include="Pkcs11\Objects\CertificateTypeAttribute.cs" />
+    <Compile Include="Pkcs11\Objects\CharArrayAttribute.cs" />
+    <Compile Include="Pkcs11\Objects\Data.cs" />
+    <Compile Include="Pkcs11\Objects\DateAttribute.cs" />
+    <Compile Include="Pkcs11\Objects\DomainParameters.cs" />
+    <Compile Include="Pkcs11\Objects\HardwareFeature.cs" />
+    <Compile Include="Pkcs11\Objects\Key.cs" />
+    <Compile Include="Pkcs11\Objects\KeyTypeAttribute.cs" />
+    <Compile Include="Pkcs11\Objects\ObjectClassAttribute.cs" />
+    <Compile Include="Pkcs11\Objects\P11Object.cs" />
+    <Compile Include="Pkcs11\Objects\PrivateKey.cs" />
+    <Compile Include="Pkcs11\Objects\PublicKey.cs" />
+    <Compile Include="Pkcs11\Objects\RSAPrivateKey.cs" />
+    <Compile Include="Pkcs11\Objects\RSAPublicKey.cs" />
+    <Compile Include="Pkcs11\Objects\SecretKey.cs" />
+    <Compile Include="Pkcs11\Objects\Storage.cs" />
+    <Compile Include="Pkcs11\Objects\UIntAttribute.cs" />
+    <Compile Include="Pkcs11\Objects\X509AttributeCertificate.cs" />
+    <Compile Include="Pkcs11\Objects\X509PublicKeyCertificate.cs" />
+    <Compile Include="Pkcs11\P11Util.cs" />
+    <Compile Include="Pkcs11\Params\Parameters.cs" />
+    <Compile Include="Pkcs11\Session.cs" />
+    <Compile Include="Pkcs11\Slot.cs" />
+    <Compile Include="Pkcs11\SlotInfo.cs" />
+    <Compile Include="Pkcs11\Token.cs" />
+    <Compile Include="Pkcs11\TokenException.cs" />
+    <Compile Include="Pkcs11\TokenInfo.cs" />
+    <Compile Include="Pkcs11\UserType.cs" />
+    <Compile Include="Pkcs11\Version.cs" />
+    <Compile Include="Pkcs11\Wrapper\CKA.cs" />
+    <Compile Include="Pkcs11\Wrapper\AttributeUtil.cs" />
+    <Compile Include="Pkcs11\Wrapper\CKC.cs" />
+    <Compile Include="Pkcs11\Wrapper\CKK.cs" />
+    <Compile Include="Pkcs11\Wrapper\CKM.cs" />
+    <Compile Include="Pkcs11\Wrapper\CKO.cs" />
+    <Compile Include="Pkcs11\Wrapper\CKR.cs" />
+    <Compile Include="Pkcs11\Wrapper\CKU.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_ATTRIBUTE.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_DATE.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_FUNCTION_LIST.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_INFO.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_MECHANISM.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_MECHANISM_INFO.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_SESSION_INFO.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_SLOT_INFO.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_TOKEN_INFO.cs" />
+    <Compile Include="Pkcs11\Wrapper\CK_VERSION.cs" />
+    <Compile Include="Pkcs11\Wrapper\DelegateUtil.cs" />
+    <Compile Include="Pkcs11\Wrapper\KernelUtil.cs" />
+    <Compile Include="Pkcs11\Wrapper\KeyPairHandler.cs" />
+    <Compile Include="Pkcs11\Wrapper\Pkcs11Module.cs" />
+    <Compile Include="Pkcs11\Wrapper\PKCS11Constants.cs" />
+    <Compile Include="Properties\AssemblyInfo_Pkcs11Net.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+</Project>
