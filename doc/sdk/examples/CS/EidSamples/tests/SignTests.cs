@@ -1,7 +1,7 @@
 ﻿/* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2010-2010 FedICT.
+ * Copyright (C) 2010-2016 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,16 +17,22 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EidSamples;
 using System;
 
 namespace EidSamples.tests
 {
-    [TestFixture]
+    /// <summary> 
+    /// Tests the creation of digital signatures
+    /// </summary>
+    [TestClass]
     public class SignTests
     {
-        [Test]
+        /// <summary> 
+        /// Tests the creation of digital signatures, using the authentication key
+        /// </summary>
+        [TestMethod]
         public void SignAuthentication()
         {
             // Sign
@@ -37,14 +43,16 @@ namespace EidSamples.tests
             // Verification
             ReadData dataTest = new ReadData("beidpkcs11.dll");
             Integrity integrityTest = new Integrity();
-            Assert.True(integrityTest.Verify(testdata, signeddata,
+            Assert.IsTrue(integrityTest.Verify(testdata, signeddata,
                 dataTest.GetCertificateAuthenticationFile()));
             //Assert.False(integrityTest.Verify(testdata, signeddata,
             //    dataTest.GetCertificateSignatureFile()));
 
         }
-
-        [Test]
+        /// <summary> 
+        /// Tests the creation of digital signatures, using the signature key
+        /// </summary>
+        [TestMethod]
         public void SignSignature()
         {
             // Sign
@@ -55,9 +63,9 @@ namespace EidSamples.tests
             // Verification
             ReadData dataTest = new ReadData("beidpkcs11.dll");
             Integrity integrityTest = new Integrity();
-            Assert.False(integrityTest.Verify(testdata, signeddata,
+            Assert.IsFalse(integrityTest.Verify(testdata, signeddata,
                 dataTest.GetCertificateAuthenticationFile()));
-            Assert.True(integrityTest.Verify(testdata, signeddata,
+            Assert.IsTrue(integrityTest.Verify(testdata, signeddata,
                 dataTest.GetCertificateSignatureFile()));
 
         }

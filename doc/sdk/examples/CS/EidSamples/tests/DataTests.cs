@@ -1,7 +1,7 @@
 ﻿/* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2010-2010 FedICT.
+ * Copyright (C) 2010-2016 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,7 +17,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EidSamples;
 using System.Collections.Generic;
 using System;
@@ -27,44 +27,64 @@ using System.IO;
 
 namespace EidSamples.tests
 {
-    [TestFixture]
+    /// <summary> 
+    /// Tests some basic data retrieval (from the eID card, or the pkcs11 module)
+    /// </summary>
+    [TestClass]
     public class DataTests
     {
-        [Test]
+        /// <summary>
+        /// Tests if pkcs11 finds the attached card reader "ACS CCID USB Reader 0"
+        /// Test is only valid if such card reader is attached
+        /// </summary>
+        [TestMethod]
         public void GetSlotDescription()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
             Assert.AreEqual("ACS CCID USB Reader 0", dataTest.GetSlotDescription());
         }
-        [Test]
+        /// <summary>
+        /// Tests if pkcs11 labels the eID card as "BELPIC"
+        /// </summary>
+        [TestMethod]
         public void GetTokenInfoLabel()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
             Assert.AreEqual("BELPIC", dataTest.GetTokenInfoLabel().Trim());
         }
-
-        [Test]
+        /// <summary>
+        /// Tests the retrieval of the special status from the parsed identity file from the eID card
+        /// </summary>
+        [TestMethod]
+        public void GetSpecialStatus()
+        {
+            ReadData dataTest = new ReadData("beidpkcs11.dll");
+            dataTest.GetSpecialStatus();
+            //Assert.AreEqual("SPECIMEN", dataTest.GetSurname());
+        }
+        /// <summary>
+        /// Tests the retrieval of the surname from the parsed identity file from the eID card
+        /// </summary>
+        [TestMethod]
         public void GetSurname()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
             dataTest.GetSurname();
             //Assert.AreEqual("SPECIMEN", dataTest.GetSurname());
         }
-        [Test]
-        public void GetChipnumber()
-        {
-            ReadData dataTest = new ReadData("beidpkcs11.dll");
-            dataTest.GetChipnumber();
-            //Assert.AreEqual("SPECIMEN", dataTest.GetSurname());
-        }
-        [Test]
+        /// <summary>
+        /// Tests the retrieval of the birth date from the parsed identity file from the eID card
+        /// </summary>
+        [TestMethod]
         public void GetDateOfBirth()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
             Assert.AreEqual("01 JAN 1971", dataTest.GetDateOfBirth());
         }
-
-        [Test]
+        /// <summary>
+        /// Tests the retrieval of the Identity file from the eID card
+        /// </summary>
+        [TestMethod]
         public void GetIdFile()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
@@ -78,35 +98,60 @@ namespace EidSamples.tests
             i++;
             Assert.AreEqual(0x02, idFile[i]); // Tag
         }
-        [Test]
+        /// <summary> 
+        /// Tests the retrieval of the Authentication certificate label
+        /// This test is only valid for eID cards with an authentication certificate
+        /// </summary> 
+        [TestMethod]
         public void GetCertificateLabels()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
             List<string> labels = dataTest.GetCertificateLabels();
-            //Assert.True(labels.Contains("Authentication"),"Find Authentication certificate");
+            Assert.IsTrue(labels.Contains("Authentication"),"Find Authentication certificate");
         }
-        [Test]
+        /// <summary> 
+        /// Tests the retrieval of the RN certificate, and check if it is named 'root'
+        /// </summary> 
+        [TestMethod]
         public void GetCertificateRNFile()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
             byte[] certificateRNFile = dataTest.GetCertificateRNFile();
             X509Certificate certificateRN;
-            Assert.DoesNotThrow(delegate { certificateRN = new X509Certificate(certificateRNFile); });
-            certificateRN = new X509Certificate(certificateRNFile);
-            Assert.True(certificateRN.Issuer.Contains("Root"));
+            try
+            {
+                certificateRN = new X509Certificate(certificateRNFile);
+                Assert.IsTrue(certificateRN.Issuer.Contains("Root"));
+            }
+            catch
+            {
+                Assert.Fail();
+            }   
         }
-        [Test]
+        /// <summary> 
+        /// Tests the retrieval of the Belgium root certificate, and check if it is self-signed, and named 'root'
+        /// </summary> 
+        [TestMethod]
         public void GetCertificateRootFile()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
             byte[] certificateFile = dataTest.GetCertificateRootFile();
             X509Certificate certificateRoot;
-            Assert.DoesNotThrow(delegate { certificateRoot = new X509Certificate(certificateFile); });
-            certificateRoot = new X509Certificate(certificateFile);
-            Assert.AreEqual(certificateRoot.Subject, certificateRoot.Issuer, "Should be a self-signed root certificate");
-            Assert.True(certificateRoot.Subject.Contains("Root"));
+            try
+            {
+                certificateRoot = new X509Certificate(certificateFile);
+                Assert.IsTrue(certificateRoot.Subject.Contains("Root"));
+                Assert.AreEqual(certificateRoot.Subject, certificateRoot.Issuer, "Should be a self-signed root certificate");
+            }
+            catch
+            {
+                Assert.Fail();
+            }             
         }
-        [Test]
+        /// <summary> 
+        /// Tests retrieval of the photo file, and checks if its size is as expected
+        /// </summary> 
+        [TestMethod]
         public void GetPhotoFile()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
@@ -116,7 +161,10 @@ namespace EidSamples.tests
             Assert.AreEqual(200, photo.Height);
             
         }
-        [Test]
+        /// <summary> 
+        /// Tests the retrieval of the RN certificate, and try to add it in the my store
+        /// </summary> 
+        [TestMethod]
         public void StoreCertificateRNFile()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
