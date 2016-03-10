@@ -93,7 +93,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Net.Pkcs11, Version=1.1.5913.17753, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Net.Pkcs11, Version=1.1.5913.17749, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\wrappers\C# pkcs11wrappers\pkcs11net\build\x64\Net.Pkcs11.dll</HintPath>
     </Reference>
