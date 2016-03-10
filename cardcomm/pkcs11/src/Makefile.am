@@ -2,7 +2,7 @@ lib_LTLIBRARIES = libbeidpkcs11.la
 AM_CFLAGS = -DLTC_NO_ASM
 libbeidpkcs11_la_CXXFLAGS = -DUSING_DL_OPEN -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM -fvisibility=hidden -I$(srcdir)/common -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/rsaref220 @PCSC_CFLAGS@
 libbeidpkcs11_la_CPPFLAGS = -I$(srcdir)/common -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/rsaref220 @PCSC_CFLAGS@ -DLIBEXECDIR='"$(libexecdir)"'
-libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ -ldl
+libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ @DL_LIBS@
 libbeidpkcs11_la_SOURCES = \
 	asn1.c \
 	cal.cpp \
@@ -166,6 +166,15 @@ libbeidpkcs11_la_SOURCES += \
 endif
 
 libexec_PROGRAMS = beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin
+
+if P11KIT
+dist_p11kitcf_DATA = beid.module
+install-exec-hook:
+	$(MKDIR_P) $(DESTDIR)$(p11kitsodir) && \
+	cd $(DESTDIR)$(p11kitsodir) && \
+		rm -f beidpkcs11.so && \
+		$(LN_S) $(libdir)/libbeidpkcs11.so.0 beidpkcs11.so
+endif
 
 beid_askpin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-askpin.c
 beid_askpin_CPPFLAGS = -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src @GTK_CFLAGS@

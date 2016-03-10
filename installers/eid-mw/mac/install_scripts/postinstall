@@ -1,8 +1,7 @@
 #!/bin/bash
 
-MWVER3=4.1.9
-MWVER2=4.1
-MWVER1=4
+#get the version numbers
+source ./set_eidmw_version.sh
 
 XPI_VERSION=1.0.18
 

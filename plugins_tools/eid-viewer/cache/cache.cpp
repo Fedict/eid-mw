@@ -19,7 +19,7 @@ struct cache_item_container {
 		item->len = len;
 	}
 
-	cache_item_container(BYTE* data, size_t len, boolean bin) {
+	cache_item_container(BYTE* data, size_t len, bool bin) {
 		if (!bin)
 			cache_item_container((EID_CHAR*) data, len);
 		else

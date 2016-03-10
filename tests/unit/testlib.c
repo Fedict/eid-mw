@@ -75,7 +75,7 @@ int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) 
 			nullCount++;
 		}
 	}
-	verbose_assert(nullCount == expect);
+	printf("nullCount: %d; expect: %d\n", nullCount, expect);
 #ifdef WIN32
 	strncpy_s(buf,  (size_t)(length + 1),(const char*)string, length);
 #else
@@ -84,8 +84,9 @@ int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) 
 	buf[length] = '\0';
 	printf(msg, buf);
 	free(buf);
+	verbose_assert(nullCount == expect);
     
-    return TEST_RV_OK;
+	return TEST_RV_OK;
 }
 
 #ifdef HAVE_TERMIOS_H

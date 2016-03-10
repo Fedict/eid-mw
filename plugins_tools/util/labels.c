@@ -81,5 +81,7 @@ CK_BBOOL is_string(const EID_CHAR* label) {
 	ADD_LABEL(TEXT("Root"), CK_FALSE);
 	ADD_LABEL(TEXT("CA"), CK_FALSE);
 
+	fprintf(stderr, "E: unkown label: %s", label);
+
 	exit(EXIT_FAILURE);
 }

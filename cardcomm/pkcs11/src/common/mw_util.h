@@ -37,10 +37,6 @@
 #include <stdlib.h>
 #endif
 
-#if !defined __APPLE__ && !defined USE_WINERROR
-#include "error.h"
-#endif
-
 #ifndef HAVE_ERRNO_T
 typedef int errno_t;
 #endif

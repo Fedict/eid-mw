@@ -21,6 +21,7 @@
 #define basetest_h
 
 #include <stdio.h>
+#include <ctype.h>
 #ifdef WIN32
 //allign at 1 byte
 #pragma pack(push, cryptoki, 1)
@@ -63,7 +64,7 @@
 #ifdef __APPLE__
 #define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.dylib"
 #else
-#define PKCS11_LIB "/usr/lib/x86_64-linux-gnu/libbeidpkcs11.so.0"
+#define PKCS11_LIB "libbeidpkcs11.so.0"
 #endif
 #define TEXT(x) x
 #define _getch() getchar()

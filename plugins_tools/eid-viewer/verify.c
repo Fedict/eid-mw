@@ -16,7 +16,7 @@
 
 // All valid OCSP URLs should have the following as their prefix:
 
-#define VALID_OCSP_PREFIX "http://ocsp.eid.belgium.be/"
+#define VALID_OCSP_PREFIX "http://ocsp.eid.belgium.be"
 
 static void log_error(char* message) {
 	char buf[100];

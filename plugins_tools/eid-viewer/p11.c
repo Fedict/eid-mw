@@ -157,7 +157,7 @@ static int perform_find(CK_BBOOL do_objid) {
 		value_str[data[1].ulValueLen] = '\0';
 
 
-		EID_CHAR* label_eidstr = UTF8TOEID((const char*)label_str, &(data[1].ulValueLen));
+		EID_CHAR* label_eidstr = UTF8TOEID((const char*)label_str, &(data[0].ulValueLen));
 		if (is_string(label_eidstr))
 		{
 			EID_CHAR* value_eidstr = UTF8TOEID((const char*)value_str, &(data[1].ulValueLen));
