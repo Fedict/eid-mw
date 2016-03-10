@@ -54,7 +54,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\rsaref220;..\..\;..\..\..\..\tests\unit</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\rsaref220;..\..\;..\..\..\..\tests\unit;..\..\..\util</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
@@ -74,7 +74,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\rsaref220;..\..\;..\..\..\..\tests\unit</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\rsaref220;..\..\;..\..\..\..\tests\unit;..\..\..\util</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -93,7 +93,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\tests\unit\labels.c" />
+    <ClCompile Include="..\..\..\util\labels.c" />
+    <ClCompile Include="..\..\..\util\utftranslate.c" />
     <ClCompile Include="..\..\backend.c" />
     <ClCompile Include="..\..\cache\cache.cpp" />
     <ClCompile Include="..\..\conversions\bbannumconv.cpp" />
@@ -116,7 +117,6 @@
     <ClCompile Include="..\..\state-posix.c" />
     <ClCompile Include="..\..\state.c" />
     <ClCompile Include="..\..\eidxmllite.cpp" />
-    <ClCompile Include="..\..\utftranslate.c" />
     <ClCompile Include="..\..\xmlmap.cpp" />
   </ItemGroup>
   <ItemGroup>
