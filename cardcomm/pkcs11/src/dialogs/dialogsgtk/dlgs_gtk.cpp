@@ -52,8 +52,9 @@ bool MW_PERROR(tLevel level, tModule mod, const char* comment)
 {
     char    err_txt[256],log_txt[1024];
     wchar_t wide_log_txt[1024];
+    strerror_r(errno, err_txt, sizeof(err_txt));
 
-    snprintf(log_txt,sizeof(log_txt),"%s:%s",comment,strerror_r(errno,err_txt,sizeof(err_txt)));
+    snprintf(log_txt,sizeof(log_txt),"%s:%s",comment,err_txt);
     mbstowcs(wide_log_txt,log_txt,sizeof(wide_log_txt)/sizeof(wchar_t));
     return MWLOG(level,mod,wide_log_txt);
 }
