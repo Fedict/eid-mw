@@ -462,8 +462,13 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 	 * selected certificate */
 	gtk_tree_selection_get_selected(sel, &model, &iter);
 	gtk_tree_model_get(model, &iter, CERT_COL_LABEL, &desc, -1);
-	filename_sugg = g_strdup_printf("%s.%s",
-			desc, strcmp((char*)userdata, "DER") ? "pem" : "der");
+	if(strcmp((char*)userdata, "DER") == 0) {
+		filename_sugg = g_strdup_printf("%s.der", desc);
+	} else if(strcmp((char*)userdata, "chain") == 0) {
+		filename_sugg = g_strdup_printf("%s_chain.pem", desc);
+	} else {
+		filename_sugg = g_strdup_printf("%s.pem", desc);
+	}
 	len = strlen(filename_sugg);
 	for(s=0,d=0;s<len;s++) {
 		switch(filename_sugg[s]) {
