@@ -497,9 +497,11 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 		fd = open(filename, O_WRONLY | O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH);
 		dumpcert(fd, arr->data, arr->len, strcmp((char*)userdata, "DER") ? DUMP_PEM : DUMP_DER);
 		if(!strcmp((char*)userdata, "chain")) {
-			while(gtk_tree_model_iter_parent(model, &iter, &iter)) {
+			GtkTreeIter child = iter;
+			while(gtk_tree_model_iter_parent(model, &iter, &child)) {
 				gtk_tree_model_get(model, &iter, CERT_COL_DATA, &arr, -1);
 				dumpcert(fd, arr->data, arr->len, DUMP_PEM);
+				child = iter;
 			}
 		}
 		close(fd);
