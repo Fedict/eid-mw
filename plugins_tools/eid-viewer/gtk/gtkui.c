@@ -17,6 +17,7 @@
 #error _ must not be defined
 #endif
 #define _(s) gettext(s)
+#define N_(s) gettext_noop(s)
 
 #define GEN_FUNC(n, d) \
 void n(GtkMenuItem* item, gpointer user_data) { \
@@ -197,6 +198,22 @@ void pinop(GtkWidget* button, gpointer which) {
 	enum eid_vwr_pinops op = (enum eid_vwr_pinops) which;
 
 	eid_vwr_pinop(op);
+}
+
+gboolean showdlg(gpointer d) {
+	GtkDialog *dlg = GTK_DIALOG(d);
+	gtk_dialog_run(dlg);
+	gtk_widget_destroy(GTK_WIDGET(dlg));
+}
+
+void pinop_result(enum eid_vwr_pinops which, enum eid_vwr_result r) {
+	static char* msgs[2][3] = {
+		{ N_("PIN incorrect"), N_("PIN OK"), N_("Error occurred while trying to test PIN code") },
+		{ N_("PIN change failed"), N_("PIN changed"), N_("Error occurred while trying to change PIN code") }
+	};
+	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
+	GtkWidget* dlg = gtk_message_dialog_new(window, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, gettext(msgs[which][r]), NULL);
+	g_main_context_invoke(NULL, showdlg, dlg);
 }
 
 /* Get the "current" language, or the default language if none is selected */

@@ -490,6 +490,7 @@ int main(int argc, char** argv) {
 	cb->newbindata = newbindata;
 	cb->logv = ui_log_init();
 	cb->newstate = newstate;
+	cb->pinop_result = pinop_result;
 	eid_vwr_createcallbacks(cb);
 
 	pthread_create(&thread, NULL, threadmain, NULL);

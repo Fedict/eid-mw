@@ -3,6 +3,7 @@
 
 #include <gtk/gtk.h>
 #include "conversions.h"
+#include "oslayer.h"
 
 void file_open(GtkMenuItem* open, gpointer user_data);
 void file_save(GtkMenuItem* open, gpointer format);
@@ -14,6 +15,7 @@ void showabout(GtkMenuItem* about, gpointer user_data);
 void showurl(GtkMenuItem* item, gpointer which);
 void showlog(GtkMenuItem* item, gpointer user_data);
 void pinop(GtkWidget* item, gpointer which);
+void pinop_result(enum eid_vwr_pinops which, enum eid_vwr_result r);
 enum eid_vwr_langs get_curlang();
 void show_cert_image(const char* name, void* data, int len);
 void setup_dnd(void);
