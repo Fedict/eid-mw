@@ -319,5 +319,13 @@ void validate_toggle(gpointer event_source, gpointer user_data G_GNUC_UNUSED) {
 	}
 }
 
+void showurl(GtkMenuItem *item, gpointer user_data) {
+	GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
+	if(strcmp((gchar*)user_data, "faq") == 0) {
+		gtk_show_uri(gtk_widget_get_screen(window), "http://faq.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
+	} else {
+		gtk_show_uri(gtk_widget_get_screen(window), "http://test.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
+	}
+}
+
 GEN_FUNC(file_prefs, "set preferences %s")
-GEN_FUNC(showurl, "show %s url")
