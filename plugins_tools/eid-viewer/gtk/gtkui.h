@@ -8,7 +8,6 @@
 void file_open(GtkMenuItem* open, gpointer user_data);
 void file_save(GtkMenuItem* open, gpointer format);
 void file_close(GtkMenuItem* close, gpointer user_data);
-void file_prefs(GtkMenuItem* prefs, gpointer user_data);
 void file_print(GtkMenuItem* print, gpointer user_data);
 void translate(GtkMenuItem* langitem, gpointer to_lang);
 void showabout(GtkMenuItem* about, gpointer user_data);

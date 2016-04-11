@@ -327,5 +327,3 @@ void showurl(GtkMenuItem *item, gpointer user_data) {
 		gtk_show_uri(gtk_widget_get_screen(window), "http://test.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
 	}
 }
-
-GEN_FUNC(file_prefs, "set preferences %s")

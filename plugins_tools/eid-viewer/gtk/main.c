@@ -288,8 +288,6 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), "csv");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_close"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_close), NULL);
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_prefs"));
-	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_prefs), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_print"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(do_print), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_quit"));
