@@ -17,5 +17,5 @@ Exec=@bindir@/eid-viewer
 Terminal=false
 Type=Application
 Icon=eid-viewer
-Categories=Application;Utility;
+Categories=Office;Viewer;
 EOF
