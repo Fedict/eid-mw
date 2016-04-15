@@ -1886,7 +1886,7 @@ CK_RV cal_translate_error(const char *WHERE, long err)
 		/** PIN blocked */
 	case EIDMW_ERR_PIN_BLOCKED:               return(CKR_PIN_LOCKED);       break;
 		/** No card present or card has been removed */
-	case EIDMW_ERR_NO_CARD:                   return(CKR_PIN_LOCKED);       break;
+	case EIDMW_ERR_NO_CARD:                   return(CKR_TOKEN_NOT_PRESENT);break;
 		/** Bad parameter P1 or P2 */
 	case EIDMW_ERR_BAD_P1P2:                  return(CKR_DEVICE_ERROR);     break;
 		/** Command not allowed */
