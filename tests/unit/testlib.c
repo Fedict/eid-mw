@@ -449,11 +449,14 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	CK_RV rv;
 	CK_ULONG count = 0;
 	CK_SLOT_ID_PTR list = NULL;
-
+	int i;
 	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
+	CK_SESSION_HANDLE session;
+
 	check_rv_long(C_GetSlotList(with_token, NULL_PTR, &count), m);
-	printf("slots %sfound: %lu\n", with_token ? "with token " : "", count);
+	printf("INFO: slots %sfound: %lu\n", with_token ? "with token " : "", count);
 	if(count == 0 && with_token) {
+		/* no slots with token found; try asking for a token */
 		if(have_robot()) {
 			robot_insert_card();
 			return find_slot(with_token, slot);
@@ -467,11 +470,29 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	} while((rv = C_GetSlotList(with_token, list, &count) == CKR_BUFFER_TOO_SMALL));
 	check_rv_late("C_GetSlotList");
 
-	if(count > 1) {
-		printf("INFO: multiple slots found, using slot %lu\n", list[0]);
+	i = 0;
+	if(with_token) {
+		do {
+			rv = C_OpenSession(list[i], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
+			if(rv != CKR_TOKEN_NOT_RECOGNIZED) {
+				check_rv_late("C_OpenSession");
+			} else {
+				printf("INFO: skipping slot %lu, token not recognized\n", list[i]);
+			}
+			check_rv(C_CloseSession(session));
+		} while(rv != CKR_OK && (++i < count));
+		if (i >= count ) {
+			if(have_robot()) {
+				robot_insert_card();
+				return find_slot(with_token, slot);
+			}
+			printf("Need at least one known token for this test\n");
+			return TEST_RV_SKIP;
+		}
 	}
+	printf("INFO: using slot %lu\n", list[i]);
 
-	*slot = list[0];
+	*slot = list[i];
 	free(list);
 
 	return TEST_RV_OK;
