@@ -231,13 +231,9 @@ CK_RV cal_init_slots(void)
 CK_RV cal_token_present(CK_SLOT_ID hSlot, int* pPresent)
 {
 	CK_RV ret = CKR_OK;
-	int status;
+	int status = P11_CARD_NOT_PRESENT;
 
 	ret = cal_update_token(hSlot, &status);
-	if (ret != CKR_OK)
-	{
-		return(ret);
-	}
 
 	switch (status)
 	{
@@ -1662,7 +1658,12 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 					log_trace(WHERE, "E: cal_init_objects() returned %s",log_map_error(ret));
 				}
 			}
+		} else {
+			if(oReader.GetCardType() == CARD_UNKNOWN) {
+				return (CKR_TOKEN_NOT_RECOGNIZED);
+			}
 		}
+
 	}
 	catch (CMWException e)
 	{

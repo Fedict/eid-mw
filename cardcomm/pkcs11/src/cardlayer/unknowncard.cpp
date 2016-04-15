@@ -42,7 +42,7 @@ CUnknownCard::~CUnknownCard(void)
 CByteArray CUnknownCard::ReadUncachedFile(const std::string &csPath,
     unsigned long ulOffset, unsigned long ulMaxLen)
 {
-    throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
+    throw CMWEXCEPTION(EIDMW_ERR_CARDTYPE_UNKNOWN);
 }
 
 tCardType CUnknownCard::GetType()
