@@ -1673,12 +1673,7 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 			if(oReader.GetCardType() == CARD_UNKNOWN) {
 				return (CKR_TOKEN_NOT_RECOGNIZED);
 			}
-		} else {
-			if(oReader.GetCardType() == CARD_UNKNOWN) {
-				return (CKR_TOKEN_NOT_RECOGNIZED);
-			}
 		}
-
 	}
 	catch (CMWException e)
 	{
