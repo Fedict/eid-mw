@@ -20,7 +20,7 @@
 set MDRVINSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 @echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
 @echo [INFO] Sign the minidriver catalog
-"%SIGNTOOL_PATH%\signtool" sign /ac "%MDRVINSTALLPATH%\GlobalSign Root CA.crt" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
+::"%SIGNTOOL_PATH%\signtool" sign /ac "%MDRVINSTALLPATH%\GlobalSign Root CA.crt" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
 "%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVINSTALLPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
 
 @if "%ERRORLEVEL%" == "1" goto signtool_failed

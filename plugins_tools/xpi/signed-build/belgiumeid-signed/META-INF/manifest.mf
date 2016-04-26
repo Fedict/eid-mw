@@ -1,0 +1,97 @@
+Manifest-Version: 1.0
+
+Name: install.rdf
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: O4evKkLELwFOrPRin0JWpg==
+SHA1-Digest: HLKItbmGRo75uvLUEKIjTTPH05M=
+
+Name: chrome.manifest
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: rJFDVqO8qT3R2c3df4lNPw==
+SHA1-Digest: sI3VUqn422my7tAXVhLdVRlv4OE=
+
+Name: icon.png
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: nGbdVCRS/Y9+qPb2RoWk5g==
+SHA1-Digest: 5sEagrcAQvfuYRbjmqzK3lGM4UI=
+
+Name: Makefile.am
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: L8Qynlw+I0mS6bVs7o7u7w==
+SHA1-Digest: S+aRVsKnh/n8MW7XdJWGRbugxH0=
+
+Name: components/belgiumeidpkcs11.js
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: 6KS+ei0YaBlAn/dtPFkjFg==
+SHA1-Digest: 9bgHj3NE1Al+wP6HEG0bI1OzucU=
+
+Name: content/belgiumeidpkcs11.js
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: dbwfKxVgROWfg5MrYh4bzQ==
+SHA1-Digest: sMydsHfsxQ3AKkOAtFfKA9xko1s=
+
+Name: content/belgiumeidpkcs11.xul
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: UrnvRqLCE+UgZKh5j+IwNQ==
+SHA1-Digest: 1tC4NT4Fr+jApgdtuqRkzr49VqQ=
+
+Name: content/belgiumeidprompt.js
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: 2hnZSo2tqQL+/7sit/dJ+A==
+SHA1-Digest: qKIF2TEX0V7MuETpl6N6Sc6f6Vc=
+
+Name: content/belgiumeidprompt.xul
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: 0MhysUdBACTwMVOxXZBBxg==
+SHA1-Digest: L+c9LzHpl7mjDJGEnGXs16yGNKk=
+
+Name: content/belgiumeidpromptsecure.js
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: +oF/ArCRTjqL095LuRVAnA==
+SHA1-Digest: /vI6Spg3BFjCYsksDxKdinWUaPg=
+
+Name: content/belgiumeidpromptsecure.xul
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: tjV9lA5Q01G4M5bRPhef2A==
+SHA1-Digest: j7mMtZ/jjVEOh5dvv1wo/Fg/39M=
+
+Name: defaults/preferences/belgiumeid.js
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: C9wwbS+rFxjeB9cjXPpVgA==
+SHA1-Digest: IYVqi/QDakseQfl9FJLaN3N1A8I=
+
+Name: locale/de-DE/belgiumeid.properties
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: +Mg4CSlsCYwPr/96IK27QA==
+SHA1-Digest: XKM0OjTwy85A67OCNMnQk0UG2ok=
+
+Name: locale/en-US/belgiumeid.properties
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: QBSBVIgW5D0A8OY6PEVZxg==
+SHA1-Digest: e6tTcOmQ126Ev1lDJdM95v7k0x4=
+
+Name: locale/fr-FR/belgiumeid.properties
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: SjeLOIPoBn4hUnfwYno6dQ==
+SHA1-Digest: 3Xwjw6iD501an2ysJANjnljxzA8=
+
+Name: locale/nl-NL/belgiumeid.properties
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: T57XKypp2PyPKhkAQRS0iQ==
+SHA1-Digest: UhTRFy8LF1FIn10Fp6RHFOWMaos=
+
+Name: skin/icon.png
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: nGbdVCRS/Y9+qPb2RoWk5g==
+SHA1-Digest: 5sEagrcAQvfuYRbjmqzK3lGM4UI=
+
+Name: skin/icon40x40.png
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: ATYQ9qSYzZGaN+YZxIFxRA==
+SHA1-Digest: TJ82/UR9B4nuEFHVGkRjK0HoaP0=
+
+Name: skin/overlay.css
+Digest-Algorithms: MD5 SHA1
+MD5-Digest: 1B2M2Y8AsgTpgAmY7PhCfg==
+SHA1-Digest: 2jmj7l5rSw0yVb/vlWAYkK/YBwk=
+
