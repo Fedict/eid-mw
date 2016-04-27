@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 
 Name: install.rdf
 Digest-Algorithms: MD5 SHA1
-MD5-Digest: O4evKkLELwFOrPRin0JWpg==
-SHA1-Digest: HLKItbmGRo75uvLUEKIjTTPH05M=
+MD5-Digest: WT81QEL5eQyf6zOzKPT/mQ==
+SHA1-Digest: 72tVBbHPakdzJFsagVGP3SRfJ68=
 
 Name: chrome.manifest
 Digest-Algorithms: MD5 SHA1
