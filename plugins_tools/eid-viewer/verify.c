@@ -45,6 +45,8 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	ASN1_GENERALIZEDTIME *rev, *this, *next;
 	X509_STORE *store;
 	X509_LOOKUP *lookup;
+	int md_nid;
+	const EVP_MD *md;
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_error("Could not parse entity certificate");
@@ -99,10 +101,16 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	}
 
 	req = OCSP_REQUEST_new();
-	// !!! TODO !!!
-	//have this choose the certificate algorithm based on the
-	// algorithm of the certificate chain, rather than hardcoding to SHA1
-	id = OCSP_cert_to_id(EVP_sha1(), cert_i, ca_i);
+	md_nid = OBJ_obj2nid(cert_i->sig_alg->algorithm);
+	if(md_nid == OBJ_sn2nid("RSA-SHA1")) {
+		md = EVP_sha1();
+	} else if (md_nid == OBJ_sn2nid("RSA-SHA256")) {
+		md = EVP_sha256();
+	} else {
+		be_log(EID_VWR_LOG_NORMAL, "Card is signed with unknown algorithm %s (aka %s), cannot continue", OBJ_nid2sn(md_nid), OBJ_nid2ln(md_nid));
+		return EID_VWR_RES_FAILED;
+	}
+	id = OCSP_cert_to_id(md, cert_i, ca_i);
 	OCSP_request_add0_id(req, id);
 	OCSP_request_add1_nonce(req, 0, -1);
 	len = (long)i2d_OCSP_REQUEST(req, &data);
