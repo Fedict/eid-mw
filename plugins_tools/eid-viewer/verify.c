@@ -129,11 +129,11 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 		case OCSP_RESPONSE_STATUS_INTERNALERROR:
 			status_string = "internal error"; break;
 		case OCSP_RESPONSE_STATUS_TRYLATER:
-			status_string = "try later"; break;
+			status_string = "try again later"; break;
 		case OCSP_RESPONSE_STATUS_SIGREQUIRED:
 			status_string = "signature required"; break;
 		case OCSP_RESPONSE_STATUS_UNAUTHORIZED:
-			status_string = "unauthorized"; break;
+			status_string = "invalid certificate or algorithm"; break;
 	}
 	if(status_string != NULL) {
 		be_log(EID_VWR_LOG_NORMAL, "eID certificate check failed: %s", status_string);
