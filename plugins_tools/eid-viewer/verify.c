@@ -45,8 +45,10 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	ASN1_GENERALIZEDTIME *rev, *this, *next;
 	X509_STORE *store;
 	X509_LOOKUP *lookup;
-	int md_nid;
+	int md_nid, sig_nid, pkey_nid;
+	intptr_t dummy;
 	const EVP_MD *md;
+	ASN1_OBJECT *algobj;
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_error("Could not parse entity certificate");
@@ -101,13 +103,15 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	}
 
 	req = OCSP_REQUEST_new();
-	md_nid = OBJ_obj2nid(cert_i->sig_alg->algorithm);
-	if(md_nid == OBJ_sn2nid("RSA-SHA1")) {
+	X509_ALGOR_get0(&algobj, (int*)&dummy, (void**)&dummy, cert_i->sig_alg);
+	sig_nid = OBJ_obj2nid(algobj);
+	OBJ_find_sigid_algs(sig_nid, &md_nid, &pkey_nid);
+	if(md_nid == OBJ_sn2nid("SHA1")) {
 		md = EVP_sha1();
-	} else if (md_nid == OBJ_sn2nid("RSA-SHA256")) {
+	} else if (md_nid == OBJ_sn2nid("SHA256")) {
 		md = EVP_sha256();
 	} else {
-		be_log(EID_VWR_LOG_NORMAL, "Card is signed with unknown algorithm %s (aka %s), cannot continue", OBJ_nid2sn(md_nid), OBJ_nid2ln(md_nid));
+		be_log(EID_VWR_LOG_NORMAL, "Card is signed with unknown hashing algorithm %s (aka %s), cannot continue", OBJ_nid2sn(md_nid), OBJ_nid2ln(md_nid));
 		return EID_VWR_RES_FAILED;
 	}
 	id = OCSP_cert_to_id(md, cert_i, ca_i);
