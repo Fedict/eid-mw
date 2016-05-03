@@ -12,8 +12,9 @@
 #include <config.h>
 #endif
 
-#define PKGDATADIR "/home/wouter"
-
+#ifdef __APPLE__
+#define PKGDATADIR "../../Resources/certs"
+#endif
 // All valid OCSP URLs should have the following as their prefix:
 
 #define VALID_OCSP_PREFIX "http://ocsp.eid.belgium.be"

@@ -356,14 +356,22 @@
 }
 -(IBAction)validateNow:(id)sender {
     NSData* ca = [_certstore certificateForKey:@"CA"];
-    // TODO: update certificate state in UI
-    switch([eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Signature"] withCa:ca]) {
-        case eIDResultSuccess:
-        case eIDResultFailed:
-        case eIDResultUnknown:
-            break;
+    eIDResult resSig = [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Signature"] withCa:ca];
+    eIDResult resAuth = [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca];
+    eIDResult resParents;
+    if(resSig == resAuth) {
+        resParents = resSig;
+    } else {
+        if(resSig < resAuth) {
+            resParents = resSig;
+        } else {
+            resParents = resAuth;
+        }
     }
-    // TODO: same as above.
-    [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca];
+    [_certstore setValid:resParents forKey:@"Root"];
+    [_certstore setValid:resParents forKey:@"CA"];
+    [_certstore setValid:resParents forKey:@"RRN"];
+    [_certstore setValid:resAuth forKey:@"Authentication"];
+    [_certstore setValid:resSig forKey:@"Signature"];
 }
 @end

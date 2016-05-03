@@ -25,4 +25,5 @@ typedef NS_ENUM(NSInteger, eIDDumpType) {
 -(NSString*)fileNameForKey:(NSString*)key;
 -(NSString*)keyForParent:(NSString*)key;
 -(void)clear;
+-(void)setValid:(eIDResult)valid forKey:(NSString*)key;
 @end
