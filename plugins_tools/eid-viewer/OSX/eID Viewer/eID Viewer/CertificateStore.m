@@ -71,7 +71,8 @@
 
     arr[CERT_COL_DESC] = [NSString stringWithCString:detail_cert(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
     arr[CERT_COL_USE] = [NSString stringWithCString:get_use_flags(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
-    [self.CertificateData setObject:[NSArray arrayWithObjects:arr count:CERT_COL_NCOLS] forKey:label];
+    arr[CERT_COL_VALIDITY] = @(eIDResultUnknown);
+    [self.CertificateData setObject:[NSMutableArray arrayWithObjects:arr count:CERT_COL_NCOLS] forKey:label];
 
     BIO_free(bio);
     free(bytes_b);
@@ -182,7 +183,20 @@
     [_ui newstringdata:[arr objectAtIndex:CERT_COL_VALIDFROM] withLabel:@"certvalfromval"];
     [_ui newstringdata:[arr objectAtIndex:CERT_COL_VALIDTO] withLabel:@"certvaltilval"];
     [_ui newstringdata:[arr objectAtIndex:CERT_COL_USE] withLabel:@"certuseval"];
-    [_ui newbindata:[arr objectAtIndex:CERT_COL_IMAGE]withLabel:@"certimage"];
+    [_ui newbindata:[arr objectAtIndex:CERT_COL_IMAGE] withLabel:@"certimage"];
+    NSString *trust;
+    switch([[arr objectAtIndex:CERT_COL_VALIDITY] integerValue]) {
+        case eIDResultUnknown:
+            trust = @"";
+            break;
+        case eIDResultSuccess:
+            trust = @"Valid";
+            break;
+        case eIDResultFailed:
+            trust = @"NOT VALID";
+            break;
+    }
+    [_ui newstringdata:trust withLabel:@"certtrustval"];
 }
 -(NSData*) certificateForKey:(NSString*)key {
     return [[_CertificateData objectForKey:key] objectAtIndex:CERT_COL_DATA];
@@ -225,6 +239,14 @@
 }
 -(void)clear {
     [_CertificateData removeAllObjects];
+    [_ov reloadData];
+}
+-(void)setValid:(eIDResult)valid forKey:(NSString *)key {
+    NSMutableArray* arr = [_CertificateData objectForKey:(key)];
+    if(arr == nil) {
+        return;
+    }
+    arr[CERT_COL_VALIDITY] = @(valid);
     [_ov reloadData];
 }
 @end

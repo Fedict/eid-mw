@@ -1,4 +1,4 @@
-OSSL_VERSION=1.0.2e
+OSSL_VERSION=1.0.2g
 TP_DIR=../../../../../../ThirdParty
 
 build: openssl/libssl.dylib openssl/libcrypto.dylib
@@ -7,7 +7,8 @@ clean:
 	rm -rf configured openssl openssl-$(OSSL_VERSION)*
 
 configured: openssl/Configure
-	cd openssl; ./Configure darwin64-x86_64-cc -shared
+	cd openssl; ./Configure darwin64-x86_64-cc no-shared
+	$(MAKE) -C openssl depend
 	touch configured
 
 openssl/Configure: openssl

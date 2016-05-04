@@ -19,7 +19,7 @@ libxml2-$(XML2_VERSION): libxml2-$(XML2_VERSION).tar.gz
 	tar xvzf libxml2-$(XML2_VERSION).tar.gz
 
 builddir/config.status: builddir/.exists
-	cd builddir; ../libxml2-$(XML2_VERSION)/configure
+	cd builddir; ../libxml2-$(XML2_VERSION)/configure --disable-shared --enable-static
 
 builddir/.exists: libxml2-$(XML2_VERSION)
 	rm -rf builddir

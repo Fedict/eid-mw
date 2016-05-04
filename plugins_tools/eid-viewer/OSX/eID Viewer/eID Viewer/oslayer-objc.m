@@ -115,7 +115,7 @@ static void* osl_objc_perform_ocsp_request(char* url, void* data, long len, long
     if(!xml) return nil;
     return [NSData dataWithBytes:xml length:strlen(xml)];
 }
-+(void)validateCert:(NSData*)certificate withCa:(NSData*)ca {
-    eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request);
++(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca {
+    return eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request);
 }
 @end

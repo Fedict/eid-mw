@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		65096FD51BBD39AB0057E4B8 /* eidfilepreview.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BBDE3121B3BF02C00CBE13E /* eidfilepreview.qlgenerator */; };
+		651130961CD8DD3F0076682F /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 651130951CD8DD3F0076682F /* libcrypto.a */; };
 		65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A341AF1181700F0DDE7 /* CertificateStore.m */; };
 		65296A391AF119CB00F0DDE7 /* photohandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A381AF119CB00F0DDE7 /* photohandler.m */; };
 		652BC8AE1AEA41D100DA9519 /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */; };
 		652BC8B11AEA467800DA9519 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
 		653BB4D91BBC0D2F00EA73CF /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */; };
-		654832DF1C451E160030D770 /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = 654832DE1C451E160030D770 /* verify.c */; settings = {ASSET_TAGS = (); }; };
+		654832DF1C451E160030D770 /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = 654832DE1C451E160030D770 /* verify.c */; };
+		6593B10E1CD8F8BC00C089A2 /* certs in Resources */ = {isa = PBXBuildFile; fileRef = 6593B10D1CD8F8BC00C089A2 /* certs */; };
 		65967BC81C11DF6400814858 /* libbeidpkcs11.4.1.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.10.dylib */; };
 		659FFC431AE9360D004CEC1F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC421AE9360D004CEC1F /* AppDelegate.m */; };
 		659FFC451AE9360D004CEC1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC441AE9360D004CEC1F /* main.m */; };
@@ -44,8 +46,6 @@
 		659FFCAF1AE93B3D004CEC1F /* state.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCAC1AE93B3D004CEC1F /* state.c */; };
 		659FFCB41AE93B4B004CEC1F /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB01AE93B4B004CEC1F /* xml.c */; };
 		659FFCB51AE93B4B004CEC1F /* xmlmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB21AE93B4B004CEC1F /* xmlmap.cpp */; };
-		65BE1C6E1BB567C2002E8061 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C6D1BB567C2002E8061 /* libcrypto.a */; };
-		65BE1C701BB56809002E8061 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C6F1BB56809002E8061 /* libssl.a */; };
 		65BE1C791BB573C4002E8061 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C781BB573C4002E8061 /* libxml2.a */; };
 		65EABAE71C621EE900034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAE31C621E3D00034337 /* labels.c */; };
 		8B079D301B0B6136004E88C8 /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B079D2F1B0B6136004E88C8 /* DataVerifier.m */; };
@@ -93,6 +93,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		651130951CD8DD3F0076682F /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../support/ossl/openssl-1.0.2g/libcrypto.a"; sourceTree = "<group>"; };
 		65296A331AF1181700F0DDE7 /* CertificateStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateStore.h; sourceTree = "<group>"; };
 		65296A341AF1181700F0DDE7 /* CertificateStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateStore.m; sourceTree = "<group>"; };
 		65296A361AF1197400F0DDE7 /* binhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binhandler.h; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 		653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../support/xml/builddir/.libs/libxml2.2.dylib; sourceTree = "<group>"; };
 		654832DD1C451E160030D770 /* verify_cert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = verify_cert.h; path = ../../../verify_cert.h; sourceTree = "<group>"; };
 		654832DE1C451E160030D770 /* verify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = verify.c; path = ../../../verify.c; sourceTree = "<group>"; };
+		6593B10D1CD8F8BC00C089A2 /* certs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = certs; path = ../../../certs; sourceTree = "<group>"; };
 		65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.10.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.10.dylib; sourceTree = "<group>"; };
 		659FFC3C1AE9360D004CEC1F /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		659FFC401AE9360D004CEC1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -161,8 +163,6 @@
 		659FFCB11AE93B4B004CEC1F /* xml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xml.h; path = ../../../xml.h; sourceTree = "<group>"; };
 		659FFCB21AE93B4B004CEC1F /* xmlmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmlmap.cpp; path = ../../../xmlmap.cpp; sourceTree = "<group>"; };
 		659FFCB31AE93B4B004CEC1F /* xmlmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlmap.h; path = ../../../xmlmap.h; sourceTree = "<group>"; };
-		65BE1C6D1BB567C2002E8061 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../support/ossl/openssl-1.0.2d/libcrypto.a"; sourceTree = "<group>"; };
-		65BE1C6F1BB56809002E8061 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../support/ossl/openssl-1.0.2d/libssl.a"; sourceTree = "<group>"; };
 		65BE1C781BB573C4002E8061 /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = ../support/xml/builddir/.libs/libxml2.a; sourceTree = "<group>"; };
 		65EABAE31C621E3D00034337 /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = ../../../../util/labels.c; sourceTree = "<group>"; };
 		65EABAE41C621E3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = ../../../../util/labels.h; sourceTree = "<group>"; };
@@ -194,10 +194,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				651130961CD8DD3F0076682F /* libcrypto.a in Frameworks */,
 				65967BC81C11DF6400814858 /* libbeidpkcs11.4.1.10.dylib in Frameworks */,
 				65BE1C791BB573C4002E8061 /* libxml2.a in Frameworks */,
-				65BE1C701BB56809002E8061 /* libssl.a in Frameworks */,
-				65BE1C6E1BB567C2002E8061 /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,11 +214,10 @@
 		659FFC331AE9360D004CEC1F = {
 			isa = PBXGroup;
 			children = (
+				651130951CD8DD3F0076682F /* libcrypto.a */,
 				65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.10.dylib */,
 				653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */,
 				65BE1C781BB573C4002E8061 /* libxml2.a */,
-				65BE1C6F1BB56809002E8061 /* libssl.a */,
-				65BE1C6D1BB567C2002E8061 /* libcrypto.a */,
 				659FFC3E1AE9360D004CEC1F /* eID Viewer */,
 				8BBDE3131B3BF02C00CBE13E /* eidfilepreview */,
 				659FFC3D1AE9360D004CEC1F /* Products */,
@@ -268,6 +266,7 @@
 				659FFCB31AE93B4B004CEC1F /* xmlmap.h */,
 				8B4E16901AF21B04004C2B24 /* ObjC */,
 				659FFC461AE9360D004CEC1F /* Images.xcassets */,
+				6593B10D1CD8F8BC00C089A2 /* certs */,
 				659FFC481AE9360D004CEC1F /* MainMenu.xib */,
 				659FFC3F1AE9360D004CEC1F /* Supporting Files */,
 			);
@@ -460,6 +459,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6593B10E1CD8F8BC00C089A2 /* certs in Resources */,
 				8B3DD9771B03907500E0537B /* coat_of_arms_fr.jpg in Resources */,
 				8B3DD9761B03907500E0537B /* coat_of_arms_en.jpg in Resources */,
 				659FFC471AE9360D004CEC1F /* Images.xcassets in Resources */,
@@ -684,6 +684,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../../Debug/,
+					../support/ossl/openssl,
+					../support/xml/builddir,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -699,6 +701,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../../Release/,
+					../support/ssl/openssl,
+					../support/xml/builddir,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
