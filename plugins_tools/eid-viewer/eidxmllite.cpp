@@ -14,7 +14,7 @@ const UINT MAX_ELEMENT_DEPTH = 8;
 #define FAILED_OUT(retVal)		if ((retVal) != 0){goto out;}
 
 #define check_xml(call) if((rc = call) < 0) { \
-	be_log(EID_VWR_LOG_DETAIL, TEXT("Error while dealing with file (calling '%s'): %d"), #call, rc); \
+	be_log(EID_VWR_LOG_DETAIL, TEXT("Error while dealing with file (calling '%s'): %d"), TEXT(#call), rc); \
 	goto out; \
 }
 

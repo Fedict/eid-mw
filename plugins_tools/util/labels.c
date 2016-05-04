@@ -83,6 +83,8 @@ CK_BBOOL is_string(const EID_CHAR* label) {
 
 #ifndef WIN32
 	fprintf(stderr, "E: unkown label: %s", label);
+#else
+	fwprintf(stderr, TEXT("E: unkown label: %s"), label);
 #endif
 	exit(EXIT_FAILURE);
 }
