@@ -38,7 +38,7 @@ static int write_attributes(IXmlWriter *pWriter, struct attribute_desc *attribut
 		}
 		attribute++;
 	}
-out:
+
 	if (val != NULL) {
 		free(val);
 	}
