@@ -8,9 +8,8 @@
 
 /* Returns a string representation of the state name */
 static const EID_CHAR* state_to_name(enum eid_vwr_states state) {
-	unsigned long utf16len;
 	switch(state) {
-#define STATE_NAME(s) case STATE_##s: return UTF8TOEID((const char*)#s, &utf16len);
+#define STATE_NAME(s) case STATE_##s: return TEXT(#s);
 	STATE_NAME(LIBOPEN);
 	STATE_NAME(CALLBACKS);
 	STATE_NAME(READY);
@@ -33,9 +32,8 @@ static const EID_CHAR* state_to_name(enum eid_vwr_states state) {
 
 /* Returns a string representation of the event name */
 static const EID_CHAR* event_to_name(enum eid_vwr_state_event event) {
-	unsigned long utf16len;
 	switch(event) {
-#define EVENT_NAME(e) case EVENT_##e: return UTF8TOEID((const char*)#e, &utf16len);
+#define EVENT_NAME(e) case EVENT_##e: return TEXT(#e);
 	EVENT_NAME(SET_CALLBACKS);
 	EVENT_NAME(OPEN_FILE);
 	EVENT_NAME(CLOSE_FILE);

@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2014 FedICT.
+ * Copyright (C) 2016 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -64,7 +64,7 @@ CK_BBOOL is_string(const EID_CHAR* label) {
 	ADD_LABEL(TEXT("document_type"), CK_FALSE);
 	ADD_LABEL(TEXT("special_status"), CK_TRUE);
 	ADD_LABEL(TEXT("photo_hash"), CK_FALSE);
-	ADD_LABEL(TEXT("duplicata"), CK_FALSE);
+	ADD_LABEL(TEXT("duplicata"), CK_TRUE);//there is no converter for this field, and according to card spec, there are ascii values in this field
 	ADD_LABEL(TEXT("special_organization"), CK_FALSE);
 	ADD_LABEL(TEXT("member_of_family"), CK_FALSE);
 	ADD_LABEL(TEXT("date_and_country_of_protection"), CK_TRUE);
@@ -81,7 +81,10 @@ CK_BBOOL is_string(const EID_CHAR* label) {
 	ADD_LABEL(TEXT("Root"), CK_FALSE);
 	ADD_LABEL(TEXT("CA"), CK_FALSE);
 
+#ifndef WIN32
 	fprintf(stderr, "E: unkown label: %s", label);
-
+#else
+	fwprintf(stderr, TEXT("E: unkown label: %s"), label);
+#endif
 	exit(EXIT_FAILURE);
 }

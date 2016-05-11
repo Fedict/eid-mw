@@ -8,6 +8,7 @@ clean:
 
 configured: openssl/Configure
 	cd openssl; ./Configure darwin64-x86_64-cc no-shared
+	$(MAKE) -C openssl depend
 	touch configured
 
 openssl/Configure: openssl

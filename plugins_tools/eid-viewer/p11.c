@@ -162,14 +162,14 @@ static int perform_find(CK_BBOOL do_objid) {
 		{
 			EID_CHAR* value_eidstr = UTF8TOEID((const char*)value_str, &(data[1].ulValueLen));
 			cache_add(label_eidstr, value_eidstr, data[1].ulValueLen / sizeof(EID_CHAR));
-			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_str);
+			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_eidstr);
 			eid_vwr_p11_to_ui(label_eidstr, value_eidstr, data[1].ulValueLen);
 			EID_SAFE_FREE(value_eidstr);
 		}
 		else
 		{
 			cache_add_bin(label_eidstr, value_str, data[1].ulValueLen);
-			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_str);
+			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_eidstr);
 			eid_vwr_p11_to_ui(label_eidstr, value_str, data[1].ulValueLen);
 		}
 		

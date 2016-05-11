@@ -13,7 +13,9 @@
 #endif
 
 #ifdef __APPLE__
-#define PKGDATADIR "../../Resources/certs"
+#define CERTTRUSTDIR "../../Resources/certs"
+#else
+#define CERTTRUSTDIR (DATAROOTDIR "/" PACKAGE_NAME "/trustdir")
 #endif
 // All valid OCSP URLs should have the following as their prefix:
 
@@ -162,7 +164,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	}
 	store = X509_STORE_new();
 	lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir());
-	X509_LOOKUP_add_dir(lookup, PKGDATADIR "/trustdir", X509_FILETYPE_PEM);
+	X509_LOOKUP_add_dir(lookup, CERTTRUSTDIR, X509_FILETYPE_PEM);
 	if(OCSP_basic_verify(bresp, bresp->certs, store, 0) <= 0) {
 		log_error("OCSP signature invalid, or root certificate unknown");
 		return EID_VWR_RES_FAILED;
