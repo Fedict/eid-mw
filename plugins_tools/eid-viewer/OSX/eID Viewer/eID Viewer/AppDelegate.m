@@ -23,6 +23,7 @@
 - (IBAction)showDetail:(id)sender;
 - (IBAction)export:(NSMenuItem *)sender;
 - (IBAction)validateNow:(id)sender;
+- (IBAction)changeValidatePolicy:(id)sender;
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
 
 @property CertificateStore *certstore;
@@ -164,11 +165,17 @@
                 [self log:@"Cannot load card: data signature invalid!" withLevel:eIDLogLevelCoarse];
                 [eIDOSLayerBackend set_invalid];
             }
+            if([_alwaysValidate state] == NSOnState) {
+                [self validateNow:nil];
+            }
         }
             break;
         case eIDStateFile:
             fileClose = YES;
             filePrint = YES;
+            if([_alwaysValidate state] == NSOnState) {
+                [self validateNow:nil];
+            }
             break;
         default:
             break;
@@ -297,6 +304,12 @@
         }
     }
     eIDLogLevel level = [prefs integerForKey:@"log_level"];
+    BOOL alw_val = [prefs boolForKey:@"always_validate"];
+    if(alw_val) {
+        [_alwaysValidate setState:NSOnState];
+    } else {
+        [_alwaysValidate setState:NSOffState];
+    }
     [_logLevel selectItemAtIndex:level];
     [eIDOSLayerBackend setLang:langcode];
     [eIDOSLayerBackend mainloop_thread];
@@ -381,6 +394,13 @@
             [error setMessageText:@"One or more of the certificates on this card were found to be invalid or revoked."];
             [error runModal];
         }];
+    }
+}
+-(void)changeValidatePolicy:(id)sender {
+    BOOL on = ([_alwaysValidate state] == NSOnState);
+    [[NSUserDefaults standardUserDefaults] setBool:on forKey:@"always_validate"];
+    if(on) {
+        [self validateNow:sender];
     }
 }
 @end
