@@ -373,5 +373,14 @@
     [_certstore setValid:resParents forKey:@"RRN"];
     [_certstore setValid:resAuth forKey:@"Authentication"];
     [_certstore setValid:resSig forKey:@"Signature"];
+    if(resParents == eIDResultFailed) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            NSAlert* error = [[NSAlert alloc ] init];
+            [error setAlertStyle:NSWarningAlertStyle];
+            [error setInformativeText:@"For more information, please see the log tab"];
+            [error setMessageText:@"One or more of the certificates on this card were found to be invalid or revoked."];
+            [error runModal];
+        }];
+    }
 }
 @end
