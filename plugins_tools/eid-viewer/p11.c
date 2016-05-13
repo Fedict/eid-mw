@@ -78,7 +78,7 @@ int eid_vwr_p11_open_session(void* slot_) {
 	return 0;
 }
 
-/* Called by state machien when a card is removed */
+/* Called by state machine when a card is removed */
 int eid_vwr_p11_close_session() {
 	check_rv(C_CloseSession(session));
 
