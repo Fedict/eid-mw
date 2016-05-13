@@ -10,6 +10,7 @@
 #include <state.h>
 #include "labels.h"
 #include <cache.h>
+#include <string.h>
 
 typedef struct {
 	CK_RV rv;
@@ -54,6 +55,18 @@ int eid_vwr_p11_init() {
 
 static CK_SESSION_HANDLE session;
 static CK_SLOT_ID slot;
+static CK_SLOT_ID slot_manual;
+static CK_BBOOL is_auto = CK_FALSE;
+
+/* Called by UI when user selects a slot (or selects the "automatic" option again */
+int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot) {
+    is_auto = automatic;
+    if(is_auto) {
+        slot_manual = manualslot;
+    }
+    
+    return 0;
+}
 
 /* Called by state machine when a card is inserted */
 int eid_vwr_p11_open_session(void* slot_) {
@@ -91,6 +104,38 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc) {
 		return EIDV_RV_OK;
 	}
 	return EIDV_RV_FAIL;
+}
+
+/* Called by UI to get list of slots */
+int eid_vwr_p11_name_slots(struct slots* slots, CK_ULONG_PTR len) {
+    CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
+    CK_ULONG count = 1;
+    CK_RV ret;
+    int rv = EIDV_RV_FAIL;
+    int i;
+    
+    while((ret = C_GetSlotList(CK_FALSE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
+        free(slotlist);
+        slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), count);
+    }
+    if(count > *len) {
+        *len = count;
+        goto end;
+    }
+    for(i=0; i<count; i++) {
+        CK_SLOT_INFO info;
+        slots[i].slot = slotlist[i];
+        ret = C_GetSlotInfo(slotlist[i], &info);
+        if(ret != CKR_OK) {
+            goto end;
+        }
+        memcpy(slots[i].description, info.slotDescription, sizeof(info.slotDescription));
+    }
+    
+    rv = EIDV_RV_OK;
+end:
+    free(slotlist);
+    return rv;
 }
 
 /* Called by the backend when something needs to be passed on to the UI.
