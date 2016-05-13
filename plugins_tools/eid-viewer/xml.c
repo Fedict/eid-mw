@@ -127,7 +127,7 @@ int eid_vwr_gen_xml(void* data) {
 	check_xml(write_elements(writer, toplevel));
 	check_xml(xmlTextWriterEndDocument(writer));
 
-	cache_add("xml", buf->content, strlen(buf->content));
+	cache_add("xml", (char*)buf->content, strlen((char*)buf->content));
 
 	rc=0;
 out:
@@ -171,10 +171,10 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 				return -1;
 			}
 			for(att = desc->attributes; att->name != NULL; att++) {
-				xmlChar* value = xmlTextReaderGetAttribute(reader, att->name);
+				xmlChar* value = xmlTextReaderGetAttribute(reader, (const xmlChar*)att->name);
 				if(value) {
 					int len;
-					val = convert_from_xml(att->label, value, &len);
+					val = convert_from_xml(att->label, (const EID_CHAR*)value, &len);
 					cache_add(att->label, val, len);
 					eid_vwr_p11_to_ui(att->label, val, len);
 					val = NULL;
@@ -192,15 +192,15 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 			int len;
 			check_xml(xmlTextReaderRead(reader));
 			if(desc->is_b64) {
-				const char* tmp;
+				const xmlChar* tmp;
 				base64_decodestate state;
 				base64_init_decodestate(&state);
 				tmp = xmlTextReaderConstValue(reader);
-				len = strlen(tmp);
+				len = (int)strlen((const char*)tmp);
 				val = malloc(len);
-				len = base64_decode_block(tmp, len, val, &state);
+				len = base64_decode_block((const char*)tmp, len, val, &state);
 			} else {
-				val = convert_from_xml(desc->label, xmlTextReaderConstValue(reader), &len);
+				val = convert_from_xml(desc->label, (const char*)xmlTextReaderConstValue(reader), &len);
 			}
 			cache_add(desc->label, val, len);
 			eid_vwr_p11_to_ui(desc->label, val, len);

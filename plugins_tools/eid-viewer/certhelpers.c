@@ -64,7 +64,7 @@ char* detail_cert(const char* label, X509* cert) {
 	for(i=0;i<X509_NAME_entry_count(subject);i++) {
 		const char* name;
 		const unsigned char* value;
-		char* tmp;
+		char* tmp = retval;
 		entry = X509_NAME_get_entry(subject, i);
 		ASN1_OBJECT* obj = X509_NAME_ENTRY_get_object(entry); 
 		ASN1_STRING* str = X509_NAME_ENTRY_get_data(entry);
@@ -75,7 +75,7 @@ char* detail_cert(const char* label, X509* cert) {
 			len++; // newline
 			tmp = strdup(retval);
 		}
-		len += strlen(name) + strlen(value) + 1;
+		len += strlen(name) + strlen((const char*)value) + 1;
 		retval = realloc(retval, len);
 		if(first) {
 			snprintf(retval, len, "%s=%s", name, value);
@@ -104,13 +104,13 @@ char* describe_cert(const char* label, X509* cert) {
 
 /* Test if the card data signatures (identity signature, address signature) are
  * valid for the given rrn certificate*/
-int check_data_validity(const char* photo, int plen,
-		const char* photohash, int hashlen,
-		const char* datafile, int datfilelen,
-		const char* datasig, int datsiglen,
-		const char* addrfile, int addfilelen,
-		const char* addrsig, int addsiglen,
-		const char* cert, int certlen) {
+int check_data_validity(const void* photo, int plen,
+		const void* photohash, int hashlen,
+		const void* datafile, int datfilelen,
+		const void* datasig, int datsiglen,
+		const void* addrfile, int addfilelen,
+		const void* addrsig, int addsiglen,
+		const void* cert, int certlen) {
 	BIO *bio;
 	X509* rrncert;
 	EVP_PKEY* pubkey;

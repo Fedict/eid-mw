@@ -44,7 +44,7 @@
     }
     arr[CERT_COL_DATA] = data;
     [data getBytes:bytes length:size];
-    if(d2i_X509(&cert, &bytes, size) == NULL) {
+    if(d2i_X509(&cert, (const unsigned char**)&bytes, size) == NULL) {
         ERR_load_crypto_strings();
         unsigned long err;
         [_ui log:[[NSString alloc] initWithFormat:@"Could not parse %@ certificate:", label] withLevel:eIDLogLevelCoarse];
@@ -203,7 +203,7 @@
 }
 -(void)dumpFile:(int)fd forKey:(NSString*)key withFormat:(eIDDumpType)format {
     NSData *dat = [self certificateForKey:key];
-    dumpcert(fd, [dat bytes], [dat length], (enum dump_type)format);
+    dumpcert(fd, [dat bytes], (int)[dat length], (enum dump_type)format);
 }
 -(NSString*)fileNameForKey:(NSString*)key {
     NSString* label = [[_CertificateData objectForKey:key] objectAtIndex:CERT_COL_LABEL];

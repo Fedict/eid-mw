@@ -35,21 +35,26 @@ static void* threadmain(void* val) {
     assert(1 == 0); // we shouldn't ever get here...
 }
 
-static void* osl_objc_perform_ocsp_request(char* url, void* data, long len, long* retlen) {
-    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithCString:url encoding:NSUTF8StringEncoding]]];
-    NSData* dat = [NSData dataWithBytes:data length:len];
-    [req setValue:@"application/ocsp-request" forHTTPHeaderField: @"Content-Type"];
-    req.HTTPBody = dat;
-    req.HTTPMethod = @"POST";
-    NSURLResponse* resp;
-    NSError *err;
-    NSData* respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
-    if (respdata != nil) {
-        *retlen = (long)respdata.length;
-        return [respdata bytes];
-    } else {
-        return NULL;
-    }
+static const void* osl_objc_perform_ocsp_request(char* url, void* data, long len, long* retlen, void** handle) {
+	NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithCString:url encoding:NSUTF8StringEncoding]]];
+	NSData* dat = [NSData dataWithBytes:data length:len];
+	[req setValue:@"application/ocsp-request" forHTTPHeaderField: @"Content-Type"];
+	req.HTTPBody = dat;
+	req.HTTPMethod = @"POST";
+	NSURLResponse* resp;
+	NSError *err;
+	NSData *respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
+	if (respdata != nil) {
+		*retlen = (long)respdata.length;
+		*handle = (void*)CFBridgingRetain(respdata);
+		return [respdata bytes];
+	} else {
+		return NULL;
+	}
+}
+
+static void osl_objc_free_ocsp_request(const void* data) {
+	CFRelease(data);
 }
 
 @implementation eIDOSLayerBackend
@@ -116,6 +121,6 @@ static void* osl_objc_perform_ocsp_request(char* url, void* data, long len, long
     return [NSData dataWithBytes:xml length:strlen(xml)];
 }
 +(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca {
-    return eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request);
+    return (eIDResult)eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request, osl_objc_free_ocsp_request);
 }
 @end

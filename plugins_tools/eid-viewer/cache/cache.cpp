@@ -16,7 +16,7 @@ struct cache_item_container {
 		item->data = malloc((len+1)*sizeof(EID_CHAR));
 		memcpy(item->data, data, len*sizeof(EID_CHAR));
 		((EID_CHAR*)item->data)[len]='\0';
-		item->len = len;
+		item->len = (int)len;
 	}
 
 	cache_item_container(BYTE* data, size_t len, bool bin) {
@@ -28,7 +28,7 @@ struct cache_item_container {
 			item->data = malloc((len + 1));
 			memcpy(item->data, data, len);
 			((char*)item->data)[len] = '\0';
-			item->len = len;
+			item->len = (int)len;
 		}
 	}
 
@@ -84,7 +84,7 @@ int cache_clear() {
 }
 
 int cache_have_label(const EID_CHAR* label) {
-	return cache.count(label);
+	return (int)cache.count(label);
 }
 
 EID_CHAR* cache_get_xmlform(const EID_CHAR* label) {
