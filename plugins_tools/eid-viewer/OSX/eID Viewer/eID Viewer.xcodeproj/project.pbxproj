@@ -701,7 +701,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../../Release/,
-					"${PROJECT_DIR}/../support/ssl/openssl",
+					"${PROJECT_DIR}/../support/ossl/openssl",
 					"${PROJECT_DIR}/../support/xml/builddir",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
