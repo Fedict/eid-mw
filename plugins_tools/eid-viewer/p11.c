@@ -60,12 +60,12 @@ static CK_BBOOL is_auto = CK_FALSE;
 
 /* Called by UI when user selects a slot (or selects the "automatic" option again */
 int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot) {
-    is_auto = automatic;
-    if(is_auto) {
-        slot_manual = manualslot;
-    }
-    
-    return 0;
+	is_auto = automatic;
+	if(is_auto) {
+		slot_manual = manualslot;
+	}
+
+	return 0;
 }
 
 /* Called by state machine when a card is inserted */
@@ -93,57 +93,57 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc) {
 	CK_ULONG count = 1;
 	CK_RV ret;
 
-    if(is_auto) {
-        while((ret = C_GetSlotList(with_token, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
-            free(slotlist);
-            slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), count);
-        }
-        check_rv_late(ret);
-        if(count > 0) {
-            *loc = slotlist[0];
-            free(slotlist);
-            return EIDV_RV_OK;
-        }
-    } else {
-        CK_SLOT_INFO info;
-        ret = C_GetSlotInfo(slot_manual, &info);
-        if(ret == CKR_OK && (!with_token || (info.flags & CKF_TOKEN_PRESENT) != CKF_TOKEN_PRESENT )) {
-            return EIDV_RV_OK;
-        }
-    }
-    return EIDV_RV_FAIL;
+	if(is_auto) {
+		while((ret = C_GetSlotList(with_token, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
+			free(slotlist);
+			slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), count);
+		}
+		check_rv_late(ret);
+		if(count > 0) {
+			*loc = slotlist[0];
+			free(slotlist);
+			return EIDV_RV_OK;
+		}
+	} else {
+		CK_SLOT_INFO info;
+		ret = C_GetSlotInfo(slot_manual, &info);
+		if(ret == CKR_OK && (!with_token || (info.flags & CKF_TOKEN_PRESENT) != CKF_TOKEN_PRESENT )) {
+			return EIDV_RV_OK;
+		}
+	}
+	return EIDV_RV_FAIL;
 }
 
 /* Called by UI to get list of slots */
 int eid_vwr_p11_name_slots(struct slots* slots, CK_ULONG_PTR len) {
-    CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
-    CK_ULONG count = 1;
-    CK_RV ret;
-    int rv = EIDV_RV_FAIL;
-    int i;
-    
-    while((ret = C_GetSlotList(CK_FALSE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
-        free(slotlist);
-        slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), count);
-    }
-    if(count > *len) {
-        *len = count;
-        goto end;
-    }
-    for(i=0; i<count; i++) {
-        CK_SLOT_INFO info;
-        slots[i].slot = slotlist[i];
-        ret = C_GetSlotInfo(slotlist[i], &info);
-        if(ret != CKR_OK) {
-            goto end;
-        }
-        memcpy(slots[i].description, info.slotDescription, sizeof(info.slotDescription));
-    }
-    
-    rv = EIDV_RV_OK;
+	CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
+	CK_ULONG count = 1;
+	CK_RV ret;
+	int rv = EIDV_RV_FAIL;
+	int i;
+
+	while((ret = C_GetSlotList(CK_FALSE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
+		free(slotlist);
+		slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), count);
+	}
+	if(count > *len) {
+		*len = count;
+		goto end;
+	}
+	for(i=0; i<count; i++) {
+		CK_SLOT_INFO info;
+		slots[i].slot = slotlist[i];
+		ret = C_GetSlotInfo(slotlist[i], &info);
+		if(ret != CKR_OK) {
+			goto end;
+		}
+		memcpy(slots[i].description, info.slotDescription, sizeof(info.slotDescription));
+	}
+
+	rv = EIDV_RV_OK;
 end:
-    free(slotlist);
-    return rv;
+	free(slotlist);
+	return rv;
 }
 
 /* Called by the backend when something needs to be passed on to the UI.
