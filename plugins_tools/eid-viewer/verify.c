@@ -32,7 +32,7 @@ static void log_error(char* message) {
 	be_log(EID_VWR_LOG_DETAIL, "libssl error: %s", buf);
 }
 
-enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen, const void* ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(const void*)) {
+enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen, const void* ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*)) {
 	X509 *cert_i = NULL, *ca_i = NULL;
 	X509_CINF *certv3;
 	char* url = NULL;

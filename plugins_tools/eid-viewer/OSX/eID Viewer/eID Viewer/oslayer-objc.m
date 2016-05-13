@@ -53,7 +53,7 @@ static const void* osl_objc_perform_ocsp_request(char* url, void* data, long len
 	}
 }
 
-static void osl_objc_free_ocsp_request(const void* data) {
+static void osl_objc_free_ocsp_request(void* data) {
 	CFRelease(data);
 }
 
