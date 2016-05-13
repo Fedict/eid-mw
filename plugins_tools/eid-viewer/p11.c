@@ -168,9 +168,9 @@ static int perform_find(CK_BBOOL do_objid) {
 	CK_OBJECT_HANDLE object;
 	CK_ULONG count;
 	do {
-		char* label_str;
-		char* value_str;
-		char* objid_str = NULL;
+		unsigned char* label_str;
+		unsigned char* value_str;
+		unsigned char* objid_str = NULL;
 
 		CK_ATTRIBUTE data[3] = {
 			{ CKA_LABEL, NULL_PTR, 0 },
@@ -188,14 +188,14 @@ static int perform_find(CK_BBOOL do_objid) {
 			check_rv(C_GetAttributeValue(session, object, data, 2));
 		}
 
-		label_str = (char*)malloc(data[0].ulValueLen + 1);
+		label_str = (unsigned char*)malloc(data[0].ulValueLen + 1);
 		data[0].pValue = label_str;
 
-		value_str = (char*)malloc(data[1].ulValueLen + 1);
+		value_str = (unsigned char*)malloc(data[1].ulValueLen + 1);
 		data[1].pValue = value_str;
 
 		if (do_objid) {
-			objid_str = (char*)malloc(data[2].ulValueLen + 1);
+			objid_str = (unsigned char*)malloc(data[2].ulValueLen + 1);
 			data[2].pValue = objid_str;
 
 			check_rv(C_GetAttributeValue(session, object, data, 3));
@@ -216,14 +216,14 @@ static int perform_find(CK_BBOOL do_objid) {
 			EID_CHAR* value_eidstr = UTF8TOEID((const char*)value_str, &(data[1].ulValueLen));
 			cache_add(label_eidstr, value_eidstr, data[1].ulValueLen / sizeof(EID_CHAR));
 			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_eidstr);
-			eid_vwr_p11_to_ui(label_eidstr, value_eidstr, data[1].ulValueLen);
+			eid_vwr_p11_to_ui(label_eidstr, value_eidstr, (int)data[1].ulValueLen);
 			EID_SAFE_FREE(value_eidstr);
 		}
 		else
 		{
 			cache_add_bin(label_eidstr, value_str, data[1].ulValueLen);
 			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_eidstr);
-			eid_vwr_p11_to_ui(label_eidstr, value_str, data[1].ulValueLen);
+			eid_vwr_p11_to_ui(label_eidstr, value_str, (int)data[1].ulValueLen);
 		}
 		
 		EID_SAFE_FREE(label_eidstr);		
