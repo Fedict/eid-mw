@@ -61,6 +61,7 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 -(void)log:(NSString*)line withLevel:(eIDLogLevel)level;
 -(void)newstate:(eIDState)state;
 -(void)pinop_result:(eIDResult)result forOperation:(eIDPinOp)operation;
+-(void)readersFound:(NSArray*)readers withSlotNumbers:(NSArray*)slots;
 @end
 
 // Class method-only class which wraps the corresponding C-only APIs for the

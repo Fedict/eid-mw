@@ -11,6 +11,7 @@
 #import "photohandler.h"
 #import "PrintOperation.h"
 #import "DataVerifier.h"
+#import "ReaderMenuItem.h"
 
 @interface AppDelegate ()
 - (IBAction)file_open:(id)sender;
@@ -25,12 +26,13 @@
 - (IBAction)validateNow:(id)sender;
 - (IBAction)changeValidatePolicy:(id)sender;
 - (IBAction)selectAutoReader:(NSMenuItem*)sender;
+- (IBAction)selectManualReader:(NSMenuItem*)sender;
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
 @property NSMutableDictionary *viewdict;
-@property NSMutableArray *readerSelections;
+@property NSArray *readerSelections;
 @property (weak) IBOutlet NSImageView *photoview;
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSWindow *CardReadSheet;
@@ -48,6 +50,7 @@
 @property (weak) IBOutlet NSMenuItem *menu_file_close;
 @property (weak) IBOutlet NSMenuItem *menu_file_save;
 @property (weak) IBOutlet NSMenuItem *menu_file_print;
+@property (weak) IBOutlet NSMenu *menu_file_reader;
 @property (weak) IBOutlet NSMenuItem *menu_file_reader_auto;
 @property (weak) IBOutlet NSSegmentedControl *pinop_ctrl;
 
@@ -411,12 +414,31 @@
 		// We haven't seen the readers yet, can't do a manual selection. This should be impossible by the fact that we disabled the menu item, but it doesn't hurt to be sure.
 		return;
 	}
-	BOOL on = ([sender state] == NSOnState ? YES : NO);
-	[sender setState:on ? NSOffState : NSOnState];
-	on = !on;
-	[eIDOSLayerBackend setReaderAuto:on];
-	if(!on) {
-		[[_readerSelections objectAtIndex:0] setState:NSOnState];
+	for(int i=0; i<[_readerSelections count]; i++) {
+		[[_readerSelections objectAtIndex:i] setState:NSOffState];
 	}
+	[sender setState:NSOnState];
+	[eIDOSLayerBackend setReaderAuto:YES];
+}
+-(IBAction)selectManualReader:(ReaderMenuItem*)sender {
+	[_menu_file_reader_auto setState: NSOffState];
+	for(int i=0; i<[_readerSelections count]; i++) {
+		[[_readerSelections objectAtIndex:i] setState: NSOffState];
+	}
+	[sender setState:NSOnState];
+	[eIDOSLayerBackend selectReader:[sender slotNumber]];
+}
+-(void)readersFound:(NSArray *)readers withSlotNumbers:(NSArray *)slots {
+	NSInteger count = [readers count];
+	assert(count == [slots count]);
+	ReaderMenuItem* newreaders[count];
+	for(int i=0; i<count; i++) {
+		NSInteger slot = [[slots objectAtIndex:i]integerValue];
+		NSString *readerName = [readers objectAtIndex:i];
+		newreaders[i] = [[ReaderMenuItem alloc] initWithTitle:readerName action:@selector(selectManualReader:) keyEquivalent:@"" slotNumber:slot];
+		[_menu_file_reader addItem:newreaders[i]];
+	}
+	[_menu_file_reader_auto setEnabled:count > 0 ? YES : NO];
+	_readerSelections = [NSArray arrayWithObjects:newreaders count:count];
 }
 @end
