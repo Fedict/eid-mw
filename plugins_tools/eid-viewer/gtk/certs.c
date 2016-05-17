@@ -175,7 +175,7 @@ static size_t appendmem(char *ptr, size_t size, size_t nmemb, void* data) {
 	return realsize;
 }
 
-static void* perform_ocsp_request(char* url, void* data, long datlen, long* retlen) {
+static const void* perform_ocsp_request(char* url, void* data, long datlen, long* retlen, void** handle) {
 	CURL *curl;
 	CURLcode curl_res;
 	struct curl_slist *list = NULL;
@@ -229,6 +229,7 @@ static void* perform_ocsp_request(char* url, void* data, long datlen, long* retl
 	curl_easy_cleanup(curl);
 	curl_slist_free_all(list);
 
+	*handle = retval;
 	return retval;
 }
 
@@ -248,7 +249,7 @@ static void check_cert(char* which) {
 	*col_cert = CERT_COL_VALIDITY;
 	g_value_init(val_cert, G_TYPE_BOOLEAN);
 
-	switch(eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request)) {
+	switch(eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free)) {
 		case EID_VWR_RES_SUCCESS:
 			g_value_set_boolean(val_cert, TRUE);
 			break;

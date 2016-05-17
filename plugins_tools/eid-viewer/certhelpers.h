@@ -25,13 +25,13 @@ enum dump_type {
 char* get_use_flags(const char* label, X509* cert);
 char* detail_cert(const char* label, X509* cert);
 char* describe_cert(const char* label, X509* cert);
-int check_data_validity(const char* photo, int plen,
-		const char* photohash, int hashlen,
-		const char* datafile, int datfilelen,
-		const char* datasig, int datsiglen,
-		const char* addrfile, int addfilelen,
-		const char* addrsig, int addsiglen,
-		const char* rrncert, int certlen);
+int check_data_validity(const void* photo, int plen,
+		const void* photohash, int hashlen,
+		const void* datafile, int datfilelen,
+		const void* datasig, int datsiglen,
+		const void* addrfile, int addfilelen,
+		const void* addrsig, int addsiglen,
+		const void* rrncert, int certlen);
 void dumpcert(int fd, const void* derdata, int len, enum dump_type how);
 void ensure_inited();
 #endif

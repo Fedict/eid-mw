@@ -72,7 +72,7 @@ void* Convertor::convert_from_xml(const EID_CHAR* name, const EID_CHAR* value, i
 	if(from_xml.count(name) > 0) {
 		return from_xml[name]->convert(value, len_return);
 	}
-	*len_return = EID_STRLEN(value);
+	*len_return = (int)EID_STRLEN(value);
 	return EID_STRDUP(value);
 }
 

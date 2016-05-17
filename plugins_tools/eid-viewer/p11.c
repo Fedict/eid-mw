@@ -10,6 +10,7 @@
 #include <state.h>
 #include "labels.h"
 #include <cache.h>
+#include <string.h>
 
 typedef struct {
 	CK_RV rv;
@@ -54,6 +55,18 @@ int eid_vwr_p11_init() {
 
 static CK_SESSION_HANDLE session;
 static CK_SLOT_ID slot;
+static CK_SLOT_ID slot_manual;
+static CK_BBOOL is_auto = CK_TRUE;
+
+/* Called by UI when user selects a slot (or selects the "automatic" option again */
+int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot) {
+	is_auto = automatic;
+	if(is_auto) {
+		slot_manual = manualslot;
+	}
+
+	return 0;
+}
 
 /* Called by state machine when a card is inserted */
 int eid_vwr_p11_open_session(void* slot_) {
@@ -65,7 +78,7 @@ int eid_vwr_p11_open_session(void* slot_) {
 	return 0;
 }
 
-/* Called by state machien when a card is removed */
+/* Called by state machine when a card is removed */
 int eid_vwr_p11_close_session() {
 	check_rv(C_CloseSession(session));
 
@@ -75,22 +88,71 @@ int eid_vwr_p11_close_session() {
 }
 
 /* Called by eid_vwr_poll(). */
-int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc) {
+int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULONG_PTR count) {
+	CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
+	CK_RV ret;
+
+	*count = 1;
+	if(is_auto) {
+		while((ret = C_GetSlotList(with_token, slotlist, count)) == CKR_BUFFER_TOO_SMALL) {
+			free(slotlist);
+			slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), *count);
+		}
+		check_rv_late(ret);
+		if(*count > 0) {
+			*loc = slotlist[0];
+			free(slotlist);
+			return EIDV_RV_OK;
+		}
+	} else {
+		CK_SLOT_INFO info;
+		ret = C_GetSlotInfo(slot_manual, &info);
+		if(with_token) {
+			if(ret == CKR_OK && (info.flags & CKF_TOKEN_PRESENT) != CKF_TOKEN_PRESENT ) {
+				return EIDV_RV_OK;
+			}
+		} else {
+			/* Figure out how many slots there are so that the caller can update its 
+			   state if necessary, but return FAIL if GetSlotInfo told us the reader wasn't found */
+			C_GetSlotList(CK_FALSE, NULL, count);
+			if(ret == CKR_OK) {
+				return EIDV_RV_OK;
+			}
+		}
+	}
+	return EIDV_RV_FAIL;
+}
+
+/* Called by UI to get list of slots */
+int eid_vwr_p11_name_slots(struct _slotdesc* slots, CK_ULONG_PTR len) {
 	CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
 	CK_ULONG count = 1;
 	CK_RV ret;
+	int rv = EIDV_RV_FAIL;
+	int i;
 
-	while((ret = C_GetSlotList(with_token, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
+	while((ret = C_GetSlotList(CK_FALSE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
 		free(slotlist);
 		slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), count);
 	}
-	check_rv_late(ret);
-	if(count > 0) {
-		*loc = slotlist[0];
-		free(slotlist);
-		return EIDV_RV_OK;
+	if(count > *len) {
+		*len = count;
+		goto end;
 	}
-	return EIDV_RV_FAIL;
+	for(i=0; i<count; i++) {
+		CK_SLOT_INFO info;
+		slots[i].slot = slotlist[i];
+		ret = C_GetSlotInfo(slotlist[i], &info);
+		if(ret != CKR_OK) {
+			goto end;
+		}
+		memcpy(slots[i].description, info.slotDescription, sizeof(info.slotDescription));
+	}
+
+	rv = EIDV_RV_OK;
+end:
+	free(slotlist);
+	return rv;
 }
 
 /* Called by the backend when something needs to be passed on to the UI.
@@ -115,9 +177,9 @@ static int perform_find(CK_BBOOL do_objid) {
 	CK_OBJECT_HANDLE object;
 	CK_ULONG count;
 	do {
-		char* label_str;
-		char* value_str;
-		char* objid_str = NULL;
+		unsigned char* label_str;
+		unsigned char* value_str;
+		unsigned char* objid_str = NULL;
 
 		CK_ATTRIBUTE data[3] = {
 			{ CKA_LABEL, NULL_PTR, 0 },
@@ -135,14 +197,14 @@ static int perform_find(CK_BBOOL do_objid) {
 			check_rv(C_GetAttributeValue(session, object, data, 2));
 		}
 
-		label_str = (char*)malloc(data[0].ulValueLen + 1);
+		label_str = (unsigned char*)malloc(data[0].ulValueLen + 1);
 		data[0].pValue = label_str;
 
-		value_str = (char*)malloc(data[1].ulValueLen + 1);
+		value_str = (unsigned char*)malloc(data[1].ulValueLen + 1);
 		data[1].pValue = value_str;
 
 		if (do_objid) {
-			objid_str = (char*)malloc(data[2].ulValueLen + 1);
+			objid_str = (unsigned char*)malloc(data[2].ulValueLen + 1);
 			data[2].pValue = objid_str;
 
 			check_rv(C_GetAttributeValue(session, object, data, 3));
@@ -163,14 +225,14 @@ static int perform_find(CK_BBOOL do_objid) {
 			EID_CHAR* value_eidstr = UTF8TOEID((const char*)value_str, &(data[1].ulValueLen));
 			cache_add(label_eidstr, value_eidstr, data[1].ulValueLen / sizeof(EID_CHAR));
 			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_eidstr);
-			eid_vwr_p11_to_ui(label_eidstr, value_eidstr, data[1].ulValueLen);
+			eid_vwr_p11_to_ui(label_eidstr, value_eidstr, (int)data[1].ulValueLen);
 			EID_SAFE_FREE(value_eidstr);
 		}
 		else
 		{
 			cache_add_bin(label_eidstr, value_str, data[1].ulValueLen);
 			be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), label_eidstr);
-			eid_vwr_p11_to_ui(label_eidstr, value_str, data[1].ulValueLen);
+			eid_vwr_p11_to_ui(label_eidstr, value_str, (int)data[1].ulValueLen);
 		}
 		
 		EID_SAFE_FREE(label_eidstr);		

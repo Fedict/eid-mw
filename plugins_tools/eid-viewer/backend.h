@@ -23,12 +23,14 @@ DllExport int eid_vwr_set_cbfuncs(		void(*newsrc)(enum eid_vwr_source source), /
 	void(*pinop_result)(enum eid_vwr_pinops pinops, enum eid_vwr_result result) // issued when a PIN operation finished.
 	);
 
-void be_newsource(enum eid_vwr_source which);
 void be_log(enum eid_vwr_loglevel, const EID_CHAR* line, ...);
-void be_newstate(enum eid_vwr_states s);
-void be_newstringdata(const EID_CHAR* label, const EID_CHAR* data);
-void be_newbindata(const EID_CHAR* label, const unsigned char* data, int datalen);
-void be_pinresult(enum eid_vwr_pinops, enum eid_vwr_result);
+
+int be_newsource(enum eid_vwr_source which);
+int be_newstate(enum eid_vwr_states s);
+int be_newstringdata(const EID_CHAR* label, const EID_CHAR* data);
+int be_newbindata(const EID_CHAR* label, const unsigned char* data, int datalen);
+int be_pinresult(enum eid_vwr_pinops, enum eid_vwr_result);
+int be_readers_changed(unsigned long nreaders, slotdesc* slots);
 
 #ifdef __cplusplus
 }

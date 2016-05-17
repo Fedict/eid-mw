@@ -30,16 +30,16 @@ struct eid_vwr_preview* eid_vwr_get_preview(const char* filename) {
 		return p;
 	}
 	while((rc = xmlTextReaderRead(reader)) > 0) {
-		const xmlChar *curnode = xmlTextReaderConstLocalName(reader);
+		const char *curnode = (const char*)xmlTextReaderConstLocalName(reader);
 		if(!strcmp(curnode, "photo")) {
 			check_xml(xmlTextReaderRead(reader));
 			const char* tmp;
-			tmp = xmlTextReaderConstValue(reader);
+			tmp = (const char*)xmlTextReaderConstValue(reader);
 			base64_decodestate(state);
 			base64_init_decodestate(&state);
 			p->imagelen = strlen(tmp);
 			p->imagedata = malloc(p->imagelen);
-			p->imagelen = base64_decode_block(tmp, p->imagelen, p->imagedata, &state);
+			p->imagelen = base64_decode_block(tmp, (int)p->imagelen, p->imagedata, &state);
 			p->have_data = 1;
 			goto out;
 		}

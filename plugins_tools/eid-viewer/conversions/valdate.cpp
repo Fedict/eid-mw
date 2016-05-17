@@ -6,7 +6,7 @@
 
 void ValidityDateParser::input(EID_STRING original) {
 	day = original.substr(0, 2);
-	month = EID_STRTOL(original.substr(3, 2).c_str(), NULL, 10);
+	month = (int)EID_STRTOL(original.substr(3, 2).c_str(), NULL, 10);
 	year = original.substr(6, 4);
 }
 

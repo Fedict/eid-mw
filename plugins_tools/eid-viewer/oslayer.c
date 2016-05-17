@@ -8,6 +8,7 @@
 #endif
 #include <string.h>
 #include <cache.h>
+#include "backend.h"
 
 int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	sm_init();
@@ -25,11 +26,22 @@ void eid_vwr_be_mainloop() {
 void eid_vwr_poll() {
 	CK_SLOT_ID_PTR no_token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
 	CK_SLOT_ID_PTR token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
+	static CK_ULONG count_old = 0;
+	CK_ULONG count = 0;
 
-	if(eid_vwr_p11_find_first_slot(CK_FALSE, no_token) == EIDV_RV_OK) {
+	if(eid_vwr_p11_find_first_slot(CK_FALSE, no_token, &count) == EIDV_RV_OK) {
 		sm_handle_event(EVENT_READER_FOUND, no_token, free, NULL);
+	} else {
+		free(no_token);
 	}
-	if(eid_vwr_p11_find_first_slot(CK_TRUE, token) == EIDV_RV_OK) {
+	if(count_old != count) {
+		slotdesc slots[count];
+		eid_vwr_p11_name_slots(slots, &count);
+		if(be_readers_changed(count, slots) == EIDV_RV_OK) {
+			count_old = count;
+		}
+	}
+	if(eid_vwr_p11_find_first_slot(CK_TRUE, token, &count) == EIDV_RV_OK) {
 		sm_handle_event(EVENT_TOKEN_INSERTED, token, free, NULL);
 	} else {
 		sm_handle_event(EVENT_TOKEN_REMOVED, token, free, NULL);

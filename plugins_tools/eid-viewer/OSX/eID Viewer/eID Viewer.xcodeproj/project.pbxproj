@@ -684,8 +684,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../../Debug/,
-					../support/ossl/openssl,
-					../support/xml/builddir,
+					"${PROJECT_DIR}/../support/ossl/openssl",
+					"${PROJECT_DIR}/../support/xml/builddir",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -701,8 +701,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../../../Release/,
-					../support/ssl/openssl,
-					../support/xml/builddir,
+					"${PROJECT_DIR}/../support/ossl/openssl",
+					"${PROJECT_DIR}/../support/xml/builddir",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

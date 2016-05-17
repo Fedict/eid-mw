@@ -13,6 +13,8 @@
 #define DllExport
 #endif
 
+typedef struct _slotdesc slotdesc;
+
 /* Types of data sources we can have */
 enum eid_vwr_source {
 	EID_VWR_SRC_NONE, // No source. UI should be cleared.
@@ -73,6 +75,7 @@ struct eid_vwr_ui_callbacks {
 	void(*logv)(enum eid_vwr_loglevel, const EID_CHAR* line, va_list ap); // log a string using varargs. Note: a UI needs to implement only one of log() or logv(); the backend will use whichever is implemented.
 	void(*newstate)(enum eid_vwr_states); // issued at state machine transition
 	void(*pinop_result)(enum eid_vwr_pinops, enum eid_vwr_result); // issued when a PIN operation finished.
+	void(*readers_changed)(unsigned long nreaders, slotdesc* slots); // issued when number of readers changes
 };
 
 /* Struct used by preview handler */

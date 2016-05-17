@@ -32,7 +32,7 @@ static void log_error(char* message) {
 	be_log(EID_VWR_LOG_DETAIL, "libssl error: %s", buf);
 }
 
-enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void* ca, size_t calen, void*(*perform_ocsp_request)(char*, void*, long, long*)) {
+enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen, const void* ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*)) {
 	X509 *cert_i = NULL, *ca_i = NULL;
 	X509_CINF *certv3;
 	char* url = NULL;
@@ -42,7 +42,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	OCSP_RESPONSE *resp;
 	OCSP_BASICRESP *bresp;
 	unsigned char *data = NULL;
-	unsigned char *response = NULL;
+	const char *response = NULL;
 	long len;
 	char *status_string = NULL;
 	ASN1_GENERALIZEDTIME *rev, *this, *next;
@@ -52,6 +52,7 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	intptr_t dummy;
 	const EVP_MD *md;
 	ASN1_OBJECT *algobj;
+	void *ocsp_handle;
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_error("Could not parse entity certificate");
@@ -122,12 +123,14 @@ enum eid_vwr_result eid_vwr_verify_cert(void* certificate, size_t certlen, void*
 	OCSP_request_add1_nonce(req, 0, -1);
 	len = (long)i2d_OCSP_REQUEST(req, &data);
 
-	response = perform_ocsp_request(url, data, len, &len);
+	response = perform_ocsp_request(url, data, len, &len, &ocsp_handle);
 	if(!response) {
+		free_ocsp_request(ocsp_handle);
 		return EID_VWR_RES_UNKNOWN;
 	}
 
 	resp = d2i_OCSP_RESPONSE(NULL, (const unsigned char**)&(response), len);
+	free_ocsp_request(ocsp_handle);
 	switch(OCSP_response_status(resp)) {
 		case OCSP_RESPONSE_STATUS_SUCCESSFUL:
 			break;
