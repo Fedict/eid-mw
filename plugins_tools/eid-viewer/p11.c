@@ -61,7 +61,7 @@ static CK_BBOOL is_auto = CK_TRUE;
 /* Called by UI when user selects a slot (or selects the "automatic" option again */
 int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot) {
 	is_auto = automatic;
-	if(is_auto) {
+	if(!is_auto) {
 		slot_manual = manualslot;
 	}
 
@@ -108,7 +108,8 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULON
 		CK_SLOT_INFO info;
 		ret = C_GetSlotInfo(slot_manual, &info);
 		if(with_token) {
-			if(ret == CKR_OK && (info.flags & CKF_TOKEN_PRESENT) != CKF_TOKEN_PRESENT ) {
+			if((ret == CKR_OK) && ((info.flags & CKF_TOKEN_PRESENT) == CKF_TOKEN_PRESENT)) {
+				*loc = slot_manual;
 				return EIDV_RV_OK;
 			}
 		} else {
