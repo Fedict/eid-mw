@@ -56,7 +56,7 @@ int eid_vwr_p11_init() {
 static CK_SESSION_HANDLE session;
 static CK_SLOT_ID slot;
 static CK_SLOT_ID slot_manual;
-static CK_BBOOL is_auto = CK_FALSE;
+static CK_BBOOL is_auto = CK_TRUE;
 
 /* Called by UI when user selects a slot (or selects the "automatic" option again */
 int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot) {
