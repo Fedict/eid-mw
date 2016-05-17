@@ -132,7 +132,7 @@
                         <property name="label" translatable="yes">Reader selection</property>
                         <property name="use_underline">True</property>
                         <child type="submenu">
-                          <object class="GtkMenu">
+                          <object class="GtkMenu" id="menu_reader">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
@@ -144,7 +144,7 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkSeparatorMenuItem">
+                              <object class="GtkSeparatorMenuItem" id="mumble">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                               </object>
@@ -154,7 +154,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem">
+                      <object class="GtkSeparatorMenuItem" id="mumble2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                       </object>
