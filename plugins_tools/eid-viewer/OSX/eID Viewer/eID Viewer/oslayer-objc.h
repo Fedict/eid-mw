@@ -81,4 +81,6 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 +(void)close_file;
 +(void)set_invalid;
 +(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca;
++(void)selectReader:(NSInteger)readerNumber;
++(void)setReaderAuto:(BOOL)automatic;
 @end

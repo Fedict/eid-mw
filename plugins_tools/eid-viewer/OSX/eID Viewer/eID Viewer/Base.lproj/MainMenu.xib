@@ -25,6 +25,7 @@
                 <outlet property="menu_file_close" destination="DVo-aG-piG" id="eD3-6j-eIp"/>
                 <outlet property="menu_file_open" destination="IAo-SY-fd9" id="J3t-ga-LHA"/>
                 <outlet property="menu_file_print" destination="aTl-1u-JFS" id="UOj-yd-qT7"/>
+                <outlet property="menu_file_reader_auto" destination="LcD-R6-Nvz" id="gF7-5B-7LS"/>
                 <outlet property="menu_file_save" destination="pxx-59-PXV" id="1k4-5U-aOo"/>
                 <outlet property="photoview" destination="xjA-5d-ByW" id="8wT-9a-gCB"/>
                 <outlet property="pinop_ctrl" destination="Vjd-Dd-TOU" id="Kal-SJ-hYA"/>
@@ -131,6 +132,21 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
+                            <menuItem title="Reader selection" id="997-Qu-fV1">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Reader selection" autoenablesItems="NO" id="vdP-FZ-jf2">
+                                    <items>
+                                        <menuItem title="Automatic" state="on" enabled="NO" id="LcD-R6-Nvz">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="selectAutoReader:" target="Voe-Tx-rLC" id="iJ1-xB-RoB"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="EUI-oD-sPc"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="B5I-QF-jGt"/>
                             <menuItem title="Page Setup…" keyEquivalent="P" id="qIS-W8-SiK">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                 <connections>
@@ -1042,7 +1058,7 @@
                     <constraint firstItem="5Om-bz-RVh" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="12" symbolic="YES" id="nqi-su-YXf"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="322" y="289.5"/>
+            <point key="canvasLocation" x="431" y="842.5"/>
         </window>
         <customView id="ieQ-cl-G8D" userLabel="PrintOperation" customClass="ResizablePrintView">
             <rect key="frame" x="0.0" y="0.0" width="424" height="660"/>
