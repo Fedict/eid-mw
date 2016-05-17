@@ -99,7 +99,7 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULON
 			slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), *count);
 		}
 		check_rv_late(ret);
-		if(count > 0) {
+		if(*count > 0) {
 			*loc = slotlist[0];
 			free(slotlist);
 			return EIDV_RV_OK;
