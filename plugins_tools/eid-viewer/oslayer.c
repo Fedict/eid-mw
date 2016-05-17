@@ -27,6 +27,7 @@ void eid_vwr_poll() {
 	CK_SLOT_ID_PTR no_token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
 	CK_SLOT_ID_PTR token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
 	static CK_ULONG count_old = 0;
+	static CK_SLOT_ID token_old = 0xCAFEBABE;
 	CK_ULONG count = 0;
 
 	if(eid_vwr_p11_find_first_slot(CK_FALSE, no_token, &count) == EIDV_RV_OK) {
@@ -44,6 +45,12 @@ void eid_vwr_poll() {
 		free (slots);
 	}
 	if(eid_vwr_p11_find_first_slot(CK_TRUE, token, &count) == EIDV_RV_OK) {
+		if(token_old != *token) {
+			CK_SLOT_ID_PTR tmp = malloc(sizeof(CK_SLOT_ID));
+			*tmp = *token;
+			sm_handle_event(EVENT_TOKEN_REMOVED, tmp, free, NULL);
+			token_old = *token;
+		}
 		sm_handle_event(EVENT_TOKEN_INSERTED, token, free, NULL);
 	} else {
 		sm_handle_event(EVENT_TOKEN_REMOVED, token, free, NULL);
