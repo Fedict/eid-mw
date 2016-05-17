@@ -153,7 +153,7 @@ namespace eIDViewer
             }
         }
 
-        private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPWStr)] string label,  [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data,  int datalen)
+        private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data, int datalen)
         {
             //Console.WriteLine("CSCbnewbindata called, label = ");
             //Console.WriteLine(label);
@@ -161,7 +161,10 @@ namespace eIDViewer
             {
                 theData.logText += "CSCbnewbindata called " + label + "\n";
             }
-            theData.StoreBinData(label, data, datalen);
+            if (data != null)
+            {
+                theData.StoreBinData(label, data, datalen);
+            }
 
         }
 
@@ -185,6 +188,9 @@ namespace eIDViewer
             }
             switch(state)
             {
+                case eid_vwr_states.STATE_TOKEN_WAIT:
+                    theData.progress_bar_visible = "Hidden";
+                    break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;
                     break;
@@ -208,23 +214,29 @@ namespace eIDViewer
 
         private static void CSCbpinopResult(eid_vwr_pinops pinop, eid_vwr_result result)
         {
-            //Console.WriteLine("CSCbpinopResult called ");
-            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
-            {
-                theData.logText += "CSCbpinopResult called, result = " + result.ToString() + "\n";
+            try {
+                //Console.WriteLine("CSCbpinopResult called ");
+                if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
+                {
+                    theData.logText += "CSCbpinopResult called, result = " + result.ToString() + "\n";
+                }
+
+                System.Resources.ResourceManager rm = new System.Resources.ResourceManager("ApplicationStringResources",
+                    typeof(eIDViewer.Resources.ApplicationStringResources).Assembly);
+
+                switch (result)
+                {
+                    case eid_vwr_result.EID_VWR_RES_FAILED:
+                        System.Windows.MessageBox.Show("PinOp Failed");
+                        break;
+                    case eid_vwr_result.EID_VWR_RES_SUCCESS:
+                        System.Windows.MessageBox.Show(rm.GetString("CARD", null));
+                        break;
+                }
             }
-
-            System.Resources.ResourceManager rm = new System.Resources.ResourceManager("ApplicationStringResources", 
-                typeof(eIDViewer.Resources.ApplicationStringResources).Assembly);
-
-            switch (result)
+            catch(Exception e)
             {
-                case eid_vwr_result.EID_VWR_RES_FAILED:
-                    System.Windows.MessageBox.Show("PinOp Failed");
-                    break;
-                case eid_vwr_result.EID_VWR_RES_SUCCESS:
-                    System.Windows.MessageBox.Show(rm.GetString("CARD",null));
-                    break;
+                theData.logText += "CSCbpinopResult encountered an error " + e.ToString() + "\n";
             }
         }
 

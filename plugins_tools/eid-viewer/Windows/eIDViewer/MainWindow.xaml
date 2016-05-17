@@ -90,7 +90,28 @@
                         <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="562*"/>
                     </Grid.ColumnDefinitions>
-                    <ContentControl Content="ContentControl" HorizontalAlignment="Left" Margin="34,24,0,0" VerticalAlignment="Top" Height="94" Width="370" Grid.Column="1"/>
+                    <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="94" Width="370" Grid.Column="1" Margin="0,28,0,0">
+                        <TreeView ItemsSource="{Binding Path=certsList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,-131">
+                            <TreeView.ItemContainerStyle>
+                                <Style TargetType="{x:Type TreeViewItem}">
+                                    <Setter Property="IsExpanded" Value="True"/>
+                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                                    <Setter Property="Visibility" Value="{Binding CertVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Setter Property="FontWeight" Value="Normal"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TreeView.ItemContainerStyle>
+                                    <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Path=Certs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" DataType="x:Type viewer:ICerts">
+                                    <TextBlock Text="{Binding Path=CertLabel}"/>
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                    </ContentControl>
                     <Grid HorizontalAlignment="Left" Height="310" Margin="7,208,0,0" VerticalAlignment="Top" Width="564" Grid.ColumnSpan="2"/>
                     <Canvas HorizontalAlignment="Left" Height="93" Margin="34,182,0,0" VerticalAlignment="Top" Width="370" Grid.Column="1"/>
                 </Grid>
@@ -112,7 +133,7 @@
                             <ComboBoxItem Content="Detail" Background="{StaticResource DefaultBackground}"/>
                         </ComboBox>
                         <Button Background="{StaticResource DefaultBackground}" Grid.Column="1" x:Name="ClearLog" Content="Clear Log" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Click="ClearLog_Click"/>
-                        <Button Background="{StaticResource DefaultBackground}" Grid.Column="2" x:Name="CopyLogToClipboard" Content="Copy Log to Clipboard" HorizontalAlignment="Left" VerticalAlignment="Center" Click="CopyLogToClipboard_Click" />              
+                        <Button Background="{StaticResource DefaultBackground}" Grid.Column="2" x:Name="CopyLogToClipboard" Content="Copy Log to Clipboard" HorizontalAlignment="Left" VerticalAlignment="Center" Click="CopyLogToClipboard_Click" />
                     </Grid>
                 </Grid>
             </TabItem>

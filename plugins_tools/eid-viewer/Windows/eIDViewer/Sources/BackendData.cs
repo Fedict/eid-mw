@@ -8,13 +8,92 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows;
 using System.Resources;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Collections.ObjectModel;
 
 namespace eIDViewer
 {
+
+
     public class eIDViewerBackendData : INotifyPropertyChanged
     {
+        public interface ICert
+        {
+            string CertLabel { get; }
+            ObservableCollection<ICert> Certs { get; }
+            bool IsExpanded { get; }
+            bool IsSelected { get; set; }
+            System.Windows.Visibility CertVisibility { get; set; }
+        }
+
+        public class CCert: ICert, INotifyPropertyChanged
+        {
+            public event PropertyChangedEventHandler PropertyChanged;
+            public CCert()
+            {
+                Certs = new ObservableCollection<ICert>();
+                IsExpanded = true;
+                CertVisibility = System.Windows.Visibility.Hidden;
+            }
+            public void CertNotifyPropertyChanged(String propertyName)
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                }
+            }
+
+            public string CertLabel { get; set; }
+            public ObservableCollection<ICert> Certs { get; set; }
+            public bool IsExpanded { get; set; }
+            public bool IsSelected { get; set; }
+
+            private System.Windows.Visibility _CertVisibility;
+            public System.Windows.Visibility CertVisibility
+            {
+                get { return _CertVisibility; }
+                set
+                {
+                    _CertVisibility = value;
+                    this.CertNotifyPropertyChanged("CertVisibility");
+                }
+            }
+        }
+
+        public eIDViewerBackendData()
+        {
+            _certsList = new List<ICert>();
+            cert_collection = new X509Certificate2Collection();
+            rootCA = new CCert { CertLabel = "rootCA" };
+            RNCert = new CCert { CertLabel = "RN cert" };
+            intermediateCA = new CCert { CertLabel = "citizen CA" };
+            authCert = new CCert { CertLabel = "Authentication" };
+            signCert = new CCert { CertLabel = "Signature" };
+
+            certsList.Add(rootCA);
+
+            certsList[0].Certs.Add(RNCert);
+            certsList[0].Certs.Add(intermediateCA);
+
+            certsList[0].Certs[1].Certs.Add(authCert);
+            certsList[0].Certs[1].Certs.Add(signCert);
+        }
+
+        private CCert rootCA;
+        private CCert intermediateCA;
+        private CCert RNCert;
+        private CCert authCert;
+        private CCert signCert;
+
+        private X509Certificate2 authentication_cert;
+        private X509Certificate2 signature_cert;
+        private X509Certificate2 rootCA_cert;
+        private X509Certificate2 intermediateCA_cert;
+        private X509Certificate2 RN_cert;
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private X509Certificate2Collection cert_collection;
 
         public void NotifyPropertyChanged(String propertyName)
         {
@@ -77,7 +156,7 @@ namespace eIDViewer
             }
             catch (Exception e)
             {
-                this.logText+= "An error occurred displaying the image";
+                this.logText+= "An error occurred displaying the image \n";
                 Console.WriteLine("An error occurred: '{0}'", e);
                 return null;
             }
@@ -339,6 +418,19 @@ namespace eIDViewer
             }
         }
 
+        private List<ICert> _certsList;
+        public List<ICert> certsList
+        {
+            get { return _certsList; }
+            set
+            {
+                _certsList = value;
+                this.NotifyPropertyChanged("certsList");
+            }
+        }
+
+
+
         public void StoreStringData(string label, string data)
         {
             progress_info = "reading data";
@@ -385,15 +477,62 @@ namespace eIDViewer
 
         public void StoreBinData(string label, byte[] data, int datalen)
         {
-            progress += 6;
-            if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
-            { photo = LoadImage(data);
-                progress_info = "reading photo";
+            try
+            {
+                progress += 6;
+                if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
+                {
+                    photo = LoadImage(data);
+                    progress_info = "reading photo";
+                }
+                else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
+                { //chip_number = BitConverter.ToString(data);
+                    progress_info = "reading chip_number";
+                    chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
+                }
+                else if (String.Equals(label, "Authentication", StringComparison.Ordinal))
+                {
+                    progress_info = "reading authentication certificate";
+                    authentication_cert = new X509Certificate2(data);
+                    cert_collection.Add(authentication_cert);
+                    authCert.CertVisibility = Visibility.Visible;
+                }
+                else if (String.Equals(label, "Signature", StringComparison.Ordinal))
+                {
+                    progress_info = "reading signature certificate";
+                    signature_cert = new X509Certificate2(data);
+                    cert_collection.Add(signature_cert);
+                    signCert.CertVisibility = Visibility.Visible;
+                    signCert.CertNotifyPropertyChanged("CertVisibility");
+                }
+                else if (String.Equals(label, "Root", StringComparison.Ordinal))
+                {
+                    progress_info = "reading root certificate";
+                    rootCA_cert = new X509Certificate2(data);
+                    cert_collection.Add(rootCA_cert);
+                    rootCA.CertVisibility = Visibility.Visible;
+                    rootCA.CertLabel="Root_gevodnen";
+                }
+                else if (String.Equals(label, "CA", StringComparison.Ordinal))
+                {
+                    progress_info = "reading intermediate certificate";
+                    intermediateCA_cert = new X509Certificate2(data);
+                    cert_collection.Add(intermediateCA_cert);
+                    intermediateCA.CertVisibility = Visibility.Visible;
+                }
+                else if (String.Equals(label, "CERT_RN_FILE", StringComparison.Ordinal))
+                {
+                    progress_info = "reading RN certificate";
+                    RN_cert = new X509Certificate2(data);
+                    cert_collection.Add(RN_cert);
+                    RNCert.CertVisibility = Visibility.Visible;
+                }
+
             }
-            else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
-            { //chip_number = BitConverter.ToString(data);
-                progress_info = "reading chip_number";
-                chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
+            catch ( Exception e)
+            {
+                this.logText += "An error occurred storing binary data of " + label + "\n";
+                Console.WriteLine("An error occurred: '{0}'", e);
             }
         }
 
@@ -424,6 +563,8 @@ namespace eIDViewer
             progress_bar_visible = "Hidden";
             progress_info = "";
             pinop_ready = false;
+
+            cert_collection = new X509Certificate2Collection();
         }
 
         private String _text_color;
@@ -456,10 +597,10 @@ namespace eIDViewer
             {
                 _progress = value;
                 this.NotifyPropertyChanged("progress");
-                if (progress >= 100)
-                {
-                    progress_bar_visible = "Hidden";
-                }
+                //if (progress >= 100)
+                //{
+                //    progress_bar_visible = "Hidden";
+                //}
             }
         }
         private String _progress_bar_visible = "Hidden";
