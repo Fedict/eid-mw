@@ -35,11 +35,13 @@ void eid_vwr_poll() {
 		free(no_token);
 	}
 	if(count_old != count) {
-		slotdesc slots[count];
+
+		slotdesc* slots = (slotdesc*)malloc(count * sizeof(slotdesc));
 		eid_vwr_p11_name_slots(slots, &count);
 		if(be_readers_changed(count, slots) == EIDV_RV_OK) {
 			count_old = count;
 		}
+		free (slots);
 	}
 	if(eid_vwr_p11_find_first_slot(CK_TRUE, token, &count) == EIDV_RV_OK) {
 		sm_handle_event(EVENT_TOKEN_INSERTED, token, free, NULL);
