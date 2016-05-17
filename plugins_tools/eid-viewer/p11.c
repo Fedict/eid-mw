@@ -88,15 +88,15 @@ int eid_vwr_p11_close_session() {
 }
 
 /* Called by eid_vwr_poll(). */
-int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc) {
+int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULONG_PTR count) {
 	CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
-	CK_ULONG count = 1;
 	CK_RV ret;
 
+	*count = 1;
 	if(is_auto) {
-		while((ret = C_GetSlotList(with_token, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
+		while((ret = C_GetSlotList(with_token, slotlist, count)) == CKR_BUFFER_TOO_SMALL) {
 			free(slotlist);
-			slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), count);
+			slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), *count);
 		}
 		check_rv_late(ret);
 		if(count > 0) {
@@ -107,15 +107,24 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc) {
 	} else {
 		CK_SLOT_INFO info;
 		ret = C_GetSlotInfo(slot_manual, &info);
-		if(ret == CKR_OK && (!with_token || (info.flags & CKF_TOKEN_PRESENT) != CKF_TOKEN_PRESENT )) {
-			return EIDV_RV_OK;
+		if(with_token) {
+			if(ret == CKR_OK && (info.flags & CKF_TOKEN_PRESENT) != CKF_TOKEN_PRESENT ) {
+				return EIDV_RV_OK;
+			}
+		} else {
+			/* Figure out how many slots there are so that the caller can update its 
+			   state if necessary, but return FAIL if GetSlotInfo told us the reader wasn't found */
+			C_GetSlotList(CK_FALSE, NULL, count);
+			if(ret == CKR_OK) {
+				return EIDV_RV_OK;
+			}
 		}
 	}
 	return EIDV_RV_FAIL;
 }
 
 /* Called by UI to get list of slots */
-int eid_vwr_p11_name_slots(struct slots* slots, CK_ULONG_PTR len) {
+int eid_vwr_p11_name_slots(struct _slotdesc* slots, CK_ULONG_PTR len) {
 	CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
 	CK_ULONG count = 1;
 	CK_RV ret;
