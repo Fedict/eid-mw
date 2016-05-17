@@ -31,6 +31,8 @@ void eid_vwr_poll() {
 
 	if(eid_vwr_p11_find_first_slot(CK_FALSE, no_token, &count) == EIDV_RV_OK) {
 		sm_handle_event(EVENT_READER_FOUND, no_token, free, NULL);
+	} else {
+		free(no_token);
 	}
 	if(count_old != count) {
 		slotdesc slots[count];
