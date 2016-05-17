@@ -14,7 +14,7 @@
 
 struct _slotdesc {
 	CK_SLOT_ID slot;
-	CK_UTF8CHAR description[65];
+	char* description[65];
 };
 
 int eid_vwr_p11_init();
