@@ -8,7 +8,7 @@
 
 @import AppKit;
 #import "PrintOperation.h"
-#import "oslayer-objc.h"
+#import <BeidView/oslayer-objc.h>
 #include <time.h>
 
 @implementation PrintOperation
