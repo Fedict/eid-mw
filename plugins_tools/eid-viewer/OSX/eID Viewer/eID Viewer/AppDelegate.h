@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "oslayer-objc.h"
+#import <BeidView/oslayer-objc.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate,eIDOSLayerUI>
 - (NSObject*)searchObjectById:(NSString*)identity ofClass:(Class)aClass;

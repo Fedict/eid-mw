@@ -1,4 +1,4 @@
-#include <eid-viewer/oslayer.h>
+#include <BeidView/oslayer.h>
 
 @import Foundation;
 @import AppKit;
