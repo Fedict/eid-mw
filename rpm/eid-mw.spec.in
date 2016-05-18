@@ -143,6 +143,7 @@ fi
 %exclude %{_libdir}/*.la
 %files libs
 %{_libdir}/libbeidpkcs11.so.*
+%{_libdir}/libeidviewer.so.*
 %{_libdir}/pkcs11
 %exclude %{_libdir}/libbeidpkcs11.so
 %files bin
@@ -159,6 +160,8 @@ fi
 %files devel
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
+%{_libdir}/libeidviewer.a
+%{_libdir}/libeidviewer.so
 %{_libdir}/pkgconfig
 %{_includedir}/beid/
 
@@ -174,6 +177,8 @@ fi
 %endif
 
 %changelog
+* Wed May 18 2016 Wouter Verhelst <wouter.verhelst@fedict.be>
+- Add libeidviewer stuff
 * Thu Feb 18 2016 Wouter Verhelst <wouter.verhelst@fedict.be>
 - Add p11-kit linkage
 * Thu Aug 06 2015 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.1.5-0.R
