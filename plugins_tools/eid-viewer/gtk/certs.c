@@ -26,7 +26,6 @@
 #include <gettext.h>
 #include <errno.h>
 #include <verify_cert.h>
-#include <backend.h>
 
 enum certs {
 	Root,
@@ -197,7 +196,7 @@ static const void* perform_ocsp_request(char* url, void* data, long datlen, long
 	i=0;
 	do {
 		if((curl_res = curl_easy_perform(curl)) != CURLE_OK) {
-			be_log(EID_VWR_LOG_COARSE, "Could not perform OCSP request (with proxy: %s): %s",
+			uilog(EID_VWR_LOG_COARSE, "Could not perform OCSP request (with proxy: %s): %s",
 					proxies[i] ? "none" : proxies[i],
 					curl_easy_strerror(curl_res));
 		}
@@ -280,12 +279,12 @@ static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 
 	pthread_once(&once, create_proxy_factory);
 	if(!pf) {
-		be_log(EID_VWR_LOG_ERROR, "Certificate validation: Could not find proxy");
+		uilog(EID_VWR_LOG_ERROR, "Certificate validation: Could not find proxy");
 		return NULL;
 	}
 
 	if(iters[CA] == NULL) {
-		be_log(EID_VWR_LOG_NORMAL, "Certificate validation failed: no CA certificate found");
+		uilog(EID_VWR_LOG_NORMAL, "Certificate validation failed: no CA certificate found");
 		return NULL;
 	}
 

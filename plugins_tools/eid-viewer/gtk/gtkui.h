@@ -2,7 +2,6 @@
 #define EID_VWR_GTKUI_H
 
 #include <gtk/gtk.h>
-#include "conversions.h"
 #include "oslayer.h"
 
 void file_open(GtkMenuItem* open, gpointer user_data);
