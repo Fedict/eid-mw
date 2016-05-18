@@ -128,7 +128,7 @@ static void newstate(enum eid_vwr_states s) {
 			g_object_set_threaded(pinchg, "sensitive", (void*)TRUE, NULL);
 			if(!data_verifies()) {
 				uilog(EID_VWR_LOG_COARSE, "Cannot load card: data signature invalid!");
-				sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+				eid_vwr_be_set_invalid();
 			}
 			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
 			if(want_verify) {
@@ -463,7 +463,7 @@ int main(int argc, char** argv) {
 	bindtextdomain("eid-viewer", DATAROOTDIR "/locale");
 	textdomain("eid-viewer");
 
-	convert_set_lang(langfromenv());
+	eid_vwr_convert_set_lang(langfromenv());
 
 	gtk_init(&argc, &argv);
 	builder = gtk_builder_new();
@@ -504,7 +504,7 @@ int main(int argc, char** argv) {
 	gtk_widget_show(window);
 
 	if(argc > 1) {
-		sm_handle_event(EVENT_OPEN_FILE, argv[1], NULL, NULL);
+		eid_vwr_be_deserialize(argv[1]);
 	}
 
 	gtk_main();

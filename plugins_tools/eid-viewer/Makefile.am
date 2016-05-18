@@ -102,11 +102,12 @@ dist_eidvinclude_HEADERS = \
 	include/eid-viewer/oslayer.h \
 	include/eid-viewer/verify_cert.h \
 	include/eid-viewer/certhelpers.h \
-	include/eid-viewer/eid-viewer.h
+	include/eid-viewer/eid-viewer.h \
+	include/eid-viewer/macros.h
 
 eid_viewer_LDADD = @GTK_LIBS@ @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@ @CURL_LIBS@ @libproxy_LIBS@ libeidviewer.la
 libeidviewer_la_LIBADD = $(top_builddir)/plugins_tools/util/liblabels.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
-AM_CFLAGS = @GTK_CFLAGS@ -I. -I$(srcdir)/include -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@
+AM_CFLAGS = @GTK_CFLAGS@ -I. -I$(srcdir)/include -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@ -fvisibility=hidden
 AM_CXXFLAGS = $(AM_CFLAGS)
 SUBDIRS = gtk/po test
 

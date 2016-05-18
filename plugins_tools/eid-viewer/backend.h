@@ -1,11 +1,7 @@
 #ifndef EID_VWR_BACKEND_H
 #define EID_VWR_BACKEND_H
 
-#ifdef WIN32
-#define DllExport   __declspec( dllexport ) 
-#else
-#define DllExport
-#endif
+#include <eid-viewer/macros.h>
 
 #ifdef __cplusplus
 extern "C" {

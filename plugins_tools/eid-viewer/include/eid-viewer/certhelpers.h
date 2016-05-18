@@ -2,6 +2,7 @@
 #define EID_VWR_CERT_HELPERS_H
 
 #include <openssl/x509.h>
+#include <eid-viewer/macros.h>
 
 enum cert_columns {
 	CERT_COL_LABEL,
@@ -22,16 +23,16 @@ enum dump_type {
 	DUMP_PEM,
 };
 
-char* get_use_flags(const char* label, X509* cert);
-char* detail_cert(const char* label, X509* cert);
-char* describe_cert(const char* label, X509* cert);
-int check_data_validity(const void* photo, int plen,
-		const void* photohash, int hashlen,
-		const void* datafile, int datfilelen,
-		const void* datasig, int datsiglen,
-		const void* addrfile, int addfilelen,
-		const void* addrsig, int addsiglen,
-		const void* rrncert, int certlen);
-void dumpcert(int fd, const void* derdata, int len, enum dump_type how);
+DllExport char* eid_vwr_get_use_flags(const char* label, X509* cert);
+DllExport char* eid_vwr_detail_cert(const char* label, X509* cert);
+DllExport char* eid_vwr_describe_cert(const char* label, X509* cert);
+DllExport int eid_vwr_check_data_validity(const void* photo, int plen,
+			const void* photohash, int hashlen,
+			const void* datafile, int datfilelen,
+			const void* datasig, int datsiglen,
+			const void* addrfile, int addfilelen,
+			const void* addrsig, int addsiglen,
+			const void* rrncert, int certlen);
+DllExport void eid_vwr_dumpcert(int fd, const void* derdata, int len, enum dump_type how);
 void ensure_inited();
 #endif

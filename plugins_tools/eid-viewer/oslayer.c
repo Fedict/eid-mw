@@ -83,3 +83,11 @@ const char* eid_vwr_be_get_xmlform() {
 void eid_vwr_be_select_slot(int automatic, unsigned long manualslot) {
 	eid_vwr_p11_select_slot(automatic ? CK_TRUE : CK_FALSE, (CK_SLOT_ID)manualslot);
 }
+
+void eid_vwr_be_set_invalid() {
+	sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+}
+
+void eid_vwr_close_file() {
+	sm_handle_event(EVENT_CLOSE_FILE, NULL, NULL, NULL);
+}

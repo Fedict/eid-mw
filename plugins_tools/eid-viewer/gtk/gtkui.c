@@ -142,7 +142,8 @@ void file_open(GtkMenuItem* item, gpointer user_data) {
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-		sm_handle_event(EVENT_OPEN_FILE, filename, g_free, NULL);
+		eid_vwr_be_deserialize(filename);
+		g_free(filename);
 	}
 	gtk_widget_destroy(dialog);
 }
@@ -182,7 +183,8 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-		sm_handle_event(EVENT_SERIALIZE, filename, g_free, NULL);
+		eid_vwr_be_serialize(filename);
+		g_free(filename);
 	}
 	gtk_widget_destroy(dialog);
 	g_free(filename_sugg);
@@ -190,7 +192,7 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 
 /* Close the currently-open file */
 void file_close(GtkMenuItem* item, gpointer user_data) {
-	sm_handle_event(EVENT_CLOSE_FILE, NULL, NULL, NULL);
+	eid_vwr_close_file();
 }
 
 /* Perform a PIN operation */
@@ -277,7 +279,7 @@ void translate(GtkMenuItem* item, gpointer target) {
 	} else if(!strncmp(target, "nl", 2)) {
 		lang = EID_VWR_LANG_NL;
 	}
-	convert_set_lang(lang);
+	eid_vwr_convert_set_lang(lang);
 	curlang = lang;
 	setlocale(LC_MESSAGES, target);
 

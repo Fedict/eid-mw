@@ -1,17 +1,12 @@
 //contains the functions, enums and structures that need to be knonw by the ui
 
-#ifndef EID_VWR_GTK_OSLAYER_H
-#define EID_VWR_GTK_OSLAYER_H
+#ifndef EID_VWR_OSLAYER_H
+#define EID_VWR_OSLAYER_H
 
 #include <conversions.h>
 #include <stdlib.h>
 #include <stdarg.h>
-
-#ifdef WIN32
-#define DllExport   __declspec( dllexport ) 
-#else
-#define DllExport
-#endif
+#include <eid-viewer/macros.h>
 
 typedef struct _slotdesc slotdesc;
 
@@ -71,6 +66,15 @@ enum eid_vwr_states {
 	STATE_COUNT,
 };
 
+enum eid_vwr_langs {
+	EID_VWR_LANG_NONE,
+	EID_VWR_LANG_DE,
+	EID_VWR_LANG_EN,
+	EID_VWR_LANG_FR,
+	EID_VWR_LANG_NL,
+};
+
+
 /* Callbacks which the backend can perform towards the UI */
 struct eid_vwr_ui_callbacks {
 	void(*newsrc)(enum eid_vwr_source); // data source has changed.
@@ -96,12 +100,12 @@ DllExport int eid_vwr_pinop(enum eid_vwr_pinops);
 DllExport int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb);
 
 /* Creates the eid_vwr_ui_callbacks struct. */
-struct eid_vwr_ui_callbacks* eid_vwr_cbstruct();
+DllExport struct eid_vwr_ui_callbacks* eid_vwr_cbstruct();
 /* Create a preview for the given file */
-struct eid_vwr_preview* eid_vwr_get_preview(const EID_CHAR* filename);
+DllExport struct eid_vwr_preview* eid_vwr_get_preview(const EID_CHAR* filename);
 
 /* Check if there is an event to be handled. Will handle one event and then return. */
-void eid_vwr_poll();
+DllExport void eid_vwr_poll();
 /* Loop over the above. Does not return. */
 DllExport void eid_vwr_be_mainloop();
 /* Save the currently-open data. Returns before the file has been saved; saving
@@ -117,5 +121,13 @@ DllExport const char* eid_vwr_be_get_xmlform();
  * which reader and ignore the value of manualslot; otherwise, force
  * "manualslot" to be the active reader. */
 DllExport void eid_vwr_be_select_slot(int automatic, unsigned long manualslot);
+/* Set the card to "invalid". This should really not be done from the UI
+ * but from the backend, but for now, keep things as they are. */
+DllExport void eid_vwr_be_set_invalid();
+/* Close the current file */
+DllExport void eid_vwr_close_file();
+/* Inform the backend of what the user interface is, so that converted
+ * strings are in the correct language */
+DllExport void eid_vwr_convert_set_lang(enum eid_vwr_langs which);
 
 #endif

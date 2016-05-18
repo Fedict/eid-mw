@@ -7,6 +7,7 @@
 #include <openssl/x509.h>
 
 #include <string.h>
+#include <stdint.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

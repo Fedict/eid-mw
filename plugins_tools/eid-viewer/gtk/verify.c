@@ -58,7 +58,7 @@ gboolean data_verifies() {
 	datsig = g_hash_table_lookup(hash, "SIGN_DATA_FILE");
 	addsig = g_hash_table_lookup(hash, "SIGN_ADDRESS_FILE");
 	const struct photo_info* pi = photo_get_data();
-	return (check_data_validity(pi->raw, pi->plen,
+	return (eid_vwr_check_data_validity(pi->raw, pi->plen,
 				pi->hash, pi->hlen,
 				data->data, data->len,
 				datsig->data, datsig->len,

@@ -7,7 +7,7 @@ extern "C" {
 
 #include <eid-viewer/oslayer.h>
 
-enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen, const void* ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*));
+DllExport enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen, const void* ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*));
 
 #ifdef __cplusplus
 }
