@@ -245,23 +245,23 @@ static void retranslate_gtkui() {
 			continue;
 		}
 
-		if(!strcmp(curnode, "object")) {
+		if(!strcmp((char*)curnode, "object")) {
 			if(xmlTextReaderHasAttributes(reader) > 0) {
-				xmlChar* val = xmlTextReaderGetAttribute(reader, "id");
+				xmlChar* val = xmlTextReaderGetAttribute(reader, (const xmlChar*)"id");
 				if(val) {
 					curname = val;
 				}
 			}
 		}
-		if(curname != NULL && !strcmp(curnode, "property")) {
+		if(curname != NULL && !strcmp((char*)curnode, "property")) {
 			if(xmlTextReaderHasAttributes(reader) > 0) {
-				xmlChar *trans = xmlTextReaderGetAttribute(reader, "translatable");
-				xmlChar *prop = xmlTextReaderGetAttribute(reader, "name");
+				xmlChar *trans = xmlTextReaderGetAttribute(reader, (const xmlChar*)"translatable");
+				xmlChar *prop = xmlTextReaderGetAttribute(reader, (const xmlChar*)"name");
 				const xmlChar *label;
 				xmlTextReaderRead(reader);
 				label = xmlTextReaderConstValue(reader);
-				if(trans && !strcmp(trans, "yes")) {
-					g_object_set(G_OBJECT(gtk_builder_get_object(builder, curname)), prop, _(label), NULL);
+				if(trans && !strcmp((char*)trans, "yes")) {
+					g_object_set(G_OBJECT(gtk_builder_get_object(builder, (char*)curname)), (char*)prop, _((char*)label), NULL);
 				}
 			}
 		}
