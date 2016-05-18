@@ -8,7 +8,7 @@
 
 #import "DataVerifier.h"
 #include <openssl/x509.h>
-#include <certhelpers.h>
+#include <eid-viewer/certhelpers.h>
 
 static DataVerifier* ver;
 
@@ -45,6 +45,6 @@ static DataVerifier* ver;
     NSData *address = [_elements objectForKey:@"ADDRESS_FILE"];
     NSData *addrsig = [_elements objectForKey:@"SIGN_ADDRESS_FILE"];
 
-    return check_data_validity(photo.bytes, (int)photo.length, photohash.bytes, (int)photohash.length, datfile.bytes, (int)datfile.length, datsig.bytes, (int)datsig.length, address.bytes, (int)address.length, addrsig.bytes, (int)addrsig.length, rrncert.bytes, (int)rrncert.length)? YES : NO;
+    return eid_vwr_check_data_validity(photo.bytes, (int)photo.length, photohash.bytes, (int)photohash.length, datfile.bytes, (int)datfile.length, datsig.bytes, (int)datsig.length, address.bytes, (int)address.length, addrsig.bytes, (int)addrsig.length, rrncert.bytes, (int)rrncert.length)? YES : NO;
 }
 @end

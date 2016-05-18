@@ -117,7 +117,7 @@ static void osl_objc_free_ocsp_request(void* data) {
 }
 +(void)setLang:(eIDLanguage)language {
 	enum eid_vwr_langs l = (enum eid_vwr_langs) language;
-	convert_set_lang(l);
+	eid_vwr_convert_set_lang(l);
 }
 +(eIDLanguage)lang {
 	eIDLanguage l = (eIDLanguage) convert_get_lang();
