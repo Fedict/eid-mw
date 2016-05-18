@@ -11,7 +11,7 @@
 #endif
 #include <pkcs11.h>
 
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
 #include "backend.h"
 #include "labels.h"
 #include "cache.h"

@@ -2,7 +2,7 @@
 #define EID_VWR_GTKUI_H
 
 #include <gtk/gtk.h>
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
 
 void file_open(GtkMenuItem* open, gpointer user_data);
 void file_save(GtkMenuItem* open, gpointer format);

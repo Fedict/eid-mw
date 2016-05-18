@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
 
 DllExport void be_setcallbacks(struct eid_vwr_ui_callbacks* cb_);
 DllExport int eid_vwr_set_cbfuncs(		void(*newsrc)(enum eid_vwr_source source), // data source has changed.

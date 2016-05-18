@@ -3,7 +3,7 @@
 #include "glib_util.h"
 #include "p11.h"
 #include "logging.h"
-#include "certhelpers.h"
+#include <eid-viewer/certhelpers.h>
 
 #include <string.h>
 

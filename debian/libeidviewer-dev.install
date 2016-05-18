@@ -1,2 +1,3 @@
 usr/lib/*/libeidviewer.a
 usr/lib/*/libeidviewer.so
+usr/include/eid-viewer/*.h

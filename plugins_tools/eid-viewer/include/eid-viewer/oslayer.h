@@ -15,6 +15,11 @@
 
 typedef struct _slotdesc slotdesc;
 
+struct _slotdesc {
+	unsigned long slot;
+	char* description[65];
+};
+
 /* Types of data sources we can have */
 enum eid_vwr_source {
 	EID_VWR_SRC_NONE, // No source. UI should be cleared.
@@ -107,6 +112,10 @@ DllExport void eid_vwr_be_serialize(const EID_CHAR* target_file);
 DllExport void eid_vwr_be_deserialize(const EID_CHAR* source_file);
 /* Get the currently-open data in XML form, usable by the drag-and-drop
  * handler. Note: do *not* free this data. */
-const char* eid_vwr_be_get_xmlform();
+DllExport const char* eid_vwr_be_get_xmlform();
+/* Select the current reader. If "automatic" is nonzero, let the backend decide
+ * which reader and ignore the value of manualslot; otherwise, force
+ * "manualslot" to be the active reader. */
+DllExport void eid_vwr_be_select_slot(int automatic, unsigned long manualslot);
 
 #endif

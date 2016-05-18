@@ -25,7 +25,7 @@
 #include <locale.h>
 #include <gettext.h>
 #include <errno.h>
-#include <verify_cert.h>
+#include <eid-viewer/verify_cert.h>
 
 enum certs {
 	Root,

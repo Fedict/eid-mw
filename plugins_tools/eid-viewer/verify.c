@@ -1,6 +1,6 @@
 #include <backend.h>
-#include <verify_cert.h>
-#include <certhelpers.h>
+#include <eid-viewer/verify_cert.h>
+#include <eid-viewer/certhelpers.h>
 
 #include <openssl/err.h>
 #include <openssl/ocsp.h>

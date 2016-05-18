@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
 #include "viewer_glade.h"
 #include "gettext.h"
 #include "gtk_globals.h"

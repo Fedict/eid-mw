@@ -1,4 +1,4 @@
-#include <oslayer.h>
+#include <eid-viewer/oslayer.h>
 #include <state.h>
 #include <p11.h>
 #ifdef WIN32
@@ -78,4 +78,8 @@ const char* eid_vwr_be_get_xmlform() {
 	}
 	item = cache_get_data(TEXT("xml"));
 	return (const char*)item->data;
+}
+
+void eid_vwr_be_select_slot(int automatic, unsigned long manualslot) {
+	eid_vwr_p11_select_slot(automatic ? CK_TRUE : CK_FALSE, (CK_SLOT_ID)manualslot);
 }

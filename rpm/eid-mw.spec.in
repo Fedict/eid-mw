@@ -164,6 +164,7 @@ fi
 %{_libdir}/libeidviewer.so
 %{_libdir}/pkgconfig
 %{_includedir}/beid/
+%{_includedir}/eid-viewer/
 
 %files vwr
 %defattr(-,root,root,0755)

@@ -3,10 +3,9 @@
 #include "gettext.h"
 #include "gtk_globals.h"
 #include "gtk_main.h"
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
 #include "state.h"
 #include "certs.h"
-#include "p11.h"
 
 #include <libxml/xmlreader.h>
 #include "viewer_glade.h"
@@ -333,7 +332,7 @@ void showurl(GtkMenuItem *item, gpointer user_data) {
 
 void auto_reader(GtkCheckMenuItem *mi, gpointer user_data) {
 	if(gtk_check_menu_item_get_active(mi)) {
-		eid_vwr_p11_select_slot(CK_TRUE, 0);
+		eid_vwr_be_select_slot(1, 0);
 	}
 }
 
@@ -341,7 +340,7 @@ static void manual_reader(GtkCheckMenuItem *mi, gpointer slotptr) {
 	intptr_t slot = (intptr_t)slotptr;
 
 	if(gtk_check_menu_item_get_active(mi)) {
-		eid_vwr_p11_select_slot(CK_FALSE, (CK_SLOT_ID)slot);
+		eid_vwr_be_select_slot(0, slot);
 	}
 }
 

@@ -1,5 +1,5 @@
 #include "prefs.h"
-#include <oslayer.h>
+#include <eid-viewer/oslayer.h>
 
 static GSettings* prefs = NULL;
 
