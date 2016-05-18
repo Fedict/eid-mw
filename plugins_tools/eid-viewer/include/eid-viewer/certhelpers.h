@@ -1,6 +1,15 @@
 #ifndef EID_VWR_CERT_HELPERS_H
 #define EID_VWR_CERT_HELPERS_H
 
+/** \addtogroup C_API
+  * @{
+  */
+
+/** \file certhelpers.h
+  * \brief Contains some helper functions to deal with certificates and data
+  * integrity using OpenSSL. Linux/OSX only.
+  */
+
 #include <openssl/x509.h>
 #include <eid-viewer/macros.h>
 
@@ -35,4 +44,7 @@ DllExport int eid_vwr_check_data_validity(const void* photo, int plen,
 			const void* rrncert, int certlen);
 DllExport void eid_vwr_dumpcert(int fd, const void* derdata, int len, enum dump_type how);
 void ensure_inited();
+
+/**@}*/
+
 #endif
