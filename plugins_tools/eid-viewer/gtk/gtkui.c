@@ -205,6 +205,8 @@ gboolean showdlg(gpointer d) {
 	GtkDialog *dlg = GTK_DIALOG(d);
 	gtk_dialog_run(dlg);
 	gtk_widget_destroy(GTK_WIDGET(dlg));
+
+	return FALSE;
 }
 
 void pinop_result(enum eid_vwr_pinops which, enum eid_vwr_result r) {
