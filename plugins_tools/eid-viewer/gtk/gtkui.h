@@ -15,11 +15,13 @@ void showurl(GtkMenuItem* item, gpointer which);
 void showlog(GtkMenuItem* item, gpointer user_data);
 void pinop(GtkWidget* item, gpointer which);
 void pinop_result(enum eid_vwr_pinops which, enum eid_vwr_result r);
+void readers_changed(unsigned long nreaders, slotdesc* slots);
 enum eid_vwr_langs get_curlang();
 void show_cert_image(const char* name, void* data, int len);
 void setup_dnd(void);
 void disable_dnd(void);
 void drag_data_get(GtkWidget* widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, gpointer user_data);
 void validate_toggle(gpointer event_source, gpointer user_data);
+void auto_reader(GtkCheckMenuItem *mi, gpointer user_data);
 
 #endif

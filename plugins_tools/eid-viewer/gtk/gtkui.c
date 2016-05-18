@@ -6,6 +6,7 @@
 #include "oslayer.h"
 #include "state.h"
 #include "certs.h"
+#include "p11.h"
 
 #include <libxml/xmlreader.h>
 #include "viewer_glade.h"
@@ -326,4 +327,62 @@ void showurl(GtkMenuItem *item, gpointer user_data) {
 	} else {
 		gtk_show_uri(gtk_widget_get_screen(window), "http://test.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
 	}
+}
+
+void auto_reader(GtkCheckMenuItem *mi, gpointer user_data) {
+	if(gtk_check_menu_item_get_active(mi)) {
+		eid_vwr_p11_select_slot(CK_TRUE, 0);
+	}
+}
+
+static void manual_reader(GtkCheckMenuItem *mi, gpointer slotptr) {
+	intptr_t slot = (intptr_t)slotptr;
+
+	if(gtk_check_menu_item_get_active(mi)) {
+		eid_vwr_p11_select_slot(CK_FALSE, (CK_SLOT_ID)slot);
+	}
+}
+
+struct rdri {
+	unsigned long nreaders;
+	slotdesc* slots;
+};
+
+static gboolean readers_changed_real(gpointer user_data) {
+	int i;
+	GtkMenuShell *menu = GTK_MENU_SHELL(gtk_builder_get_object(builder, "menu_reader"));
+	static GtkWidget** items = NULL;
+	struct rdri* info = (struct rdri*) user_data;
+
+	if(items) {
+		for(i=0; items[i]!=NULL; i++) {
+			gtk_widget_destroy(GTK_WIDGET(items[i]));
+		}
+		free(items);
+	}
+	GtkRadioMenuItem* automatic = GTK_RADIO_MENU_ITEM(gtk_builder_get_object(builder, "mi_file_reader_auto"));
+	if(info->nreaders == 0) {
+		gtk_widget_set_sensitive(GTK_WIDGET(automatic), FALSE);
+		return FALSE;
+	}
+	gtk_widget_set_sensitive(GTK_WIDGET(automatic), TRUE);
+	items = malloc(sizeof(GtkWidget*) * info->nreaders);
+	for(i=0; i<info->nreaders; i++) {
+		items[i] = gtk_radio_menu_item_new_with_label_from_widget(automatic, (char*)info->slots[i].description);
+		gtk_menu_shell_append(menu, items[i]);
+		g_signal_connect(G_OBJECT(items[i]), "toggled", G_CALLBACK(manual_reader), (void*)info->slots[i].slot);
+		gtk_widget_show(GTK_WIDGET(items[i]));
+	}
+	free(info->slots);
+	free(info);
+	return FALSE;
+}
+
+void readers_changed(unsigned long nreaders, slotdesc* slots) {
+	struct rdri* data = malloc(sizeof(struct rdri));
+	data->slots = malloc(sizeof(slotdesc) * nreaders);
+	memcpy(data->slots, slots, sizeof(slotdesc)*nreaders);
+	data->nreaders = nreaders;
+	g_main_context_invoke(NULL, readers_changed_real, data);
+	g_message("readers changed");
 }

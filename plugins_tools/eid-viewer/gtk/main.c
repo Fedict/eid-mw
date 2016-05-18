@@ -286,6 +286,8 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), "xml");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_saveas_csv"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), "csv");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_reader_auto"));
+	g_signal_connect(signaltmp, "toggled", G_CALLBACK(auto_reader), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_close"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_close), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_print"));
@@ -489,6 +491,7 @@ int main(int argc, char** argv) {
 	cb->logv = ui_log_init();
 	cb->newstate = newstate;
 	cb->pinop_result = pinop_result;
+	cb->readers_changed = readers_changed;
 	eid_vwr_createcallbacks(cb);
 
 	pthread_create(&thread, NULL, threadmain, NULL);
