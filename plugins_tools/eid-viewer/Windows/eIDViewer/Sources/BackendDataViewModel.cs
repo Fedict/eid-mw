@@ -19,12 +19,6 @@ namespace eIDViewer
     public class BackendDataViewModel : INotifyPropertyChanged
     {
 
-        public void CertificateSelectionChanged(object sender, EventArgs e)
-        {
-            CertViewModel certificate = sender as CertViewModel;
-            cert_valid_from = certificate.CertLabel;
-        }
-
         public BackendDataViewModel()
         {
             _certsList = new ObservableCollection<CertViewModel>();
@@ -64,6 +58,230 @@ namespace eIDViewer
         public event PropertyChangedEventHandler PropertyChanged;
         private X509Certificate2Collection cert_collection;
 
+        //event function notified by CertViewModel when an other certificate is selected
+        public void CertificateSelectionChanged(object sender, EventArgs e)
+        {
+            CertViewModel certificate = sender as CertViewModel;
+            cert_valid_from = certificate.CertValidfrom;
+            cert_valid_untill = certificate.CertValidUntill;
+            cert_usage = certificate.CertUsage;
+            cert_trust = certificate.CertTrust;
+        }    
+
+        private void StoreCertificate (ref CertViewModel theCertViewModel, ref X509Certificate2 theX509Certificate)
+        {
+            theCertViewModel.CertValidfrom = theX509Certificate.GetEffectiveDateString();
+            theCertViewModel.CertValidUntill = theX509Certificate.GetExpirationDateString();
+            theCertViewModel.CertVisibility = Visibility.Visible;
+            theCertViewModel.CertTrust = "Not checked";
+
+            foreach (X509Extension extension in theX509Certificate.Extensions)
+            {
+                //Console.WriteLine(extension.Oid.FriendlyName + "(" + extension.Oid.Value + ")");
+                if (extension.Oid.Value == "2.5.29.15")//OID_KEY_USAGE
+                    {
+                    theCertViewModel.CertUsage = "";
+                    X509KeyUsageExtension ext = (X509KeyUsageExtension)extension;
+
+                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.DigitalSignature))
+                    {
+                        theCertViewModel.CertUsage += "DigitalSignature ";
+                    }
+                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.NonRepudiation))
+                    {
+                        theCertViewModel.CertUsage += "NonRepudiation ";
+                    }
+                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.KeyCertSign))
+                    {
+                        theCertViewModel.CertUsage += "KeyCertSign ";
+                    }
+                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.DataEncipherment))
+                    {
+                        theCertViewModel.CertUsage += "DataEncipherment ";
+                    }
+                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.DecipherOnly))
+                    {
+                        theCertViewModel.CertUsage += "DecipherOnly ";
+                    }
+                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.EncipherOnly))
+                    {
+                        theCertViewModel.CertUsage += "EncipherOnly ";
+                    }
+                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.KeyAgreement))
+                    {
+                        theCertViewModel.CertUsage += "KeyAgreement ";
+                    }
+                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.KeyEncipherment))
+                    {
+                        theCertViewModel.CertUsage += "KeyEncipherment ";
+                    }
+                    if (ext.KeyUsages == (X509KeyUsageFlags.None))
+                    {
+                        theCertViewModel.CertUsage += "No key usage parameters ";
+                    }
+                }
+            }
+        }
+
+        private BitmapImage LoadImage(byte[] imageData)
+        {
+            if (imageData == null || imageData.Length == 0) return null;
+            try
+            {
+                BitmapImage image = new BitmapImage();
+                MemoryStream mem = new MemoryStream(imageData);
+
+                mem.Position = 0;
+                image.BeginInit();
+                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.UriSource = null;
+                image.StreamSource = mem;
+                image.EndInit();
+                image.Freeze();
+                return image;
+            }
+            catch (Exception e)
+            {
+                this.logText+= "An error occurred displaying the image \n";
+                Console.WriteLine("An error occurred: '{0}'", e);
+                return null;
+            }
+        }
+
+        public void StoreStringData(string label, string data)
+        {
+            progress_info = "reading data";
+            progress += 1;
+            if (String.Equals(label, "firstnames", StringComparison.Ordinal))
+            { firstName = data; }
+            else if (String.Equals(label, "surname", StringComparison.Ordinal))
+            { surName = data; }
+            else if (String.Equals(label, "first_letter_of_third_given_name", StringComparison.Ordinal))
+            { first_letter_of_third_given_name = data; }
+            else if (String.Equals(label, "date_of_birth", StringComparison.Ordinal))
+            { date_of_birth = data; }
+            else if (String.Equals(label, "location_of_birth", StringComparison.Ordinal))
+            { location_of_birth = data; }
+            else if (String.Equals(label, "gender", StringComparison.Ordinal))
+            { gender = data; }
+            else if (String.Equals(label, "national_number", StringComparison.Ordinal))
+            { national_number = data; }
+            else if (String.Equals(label, "nationality", StringComparison.Ordinal))
+            { nationality = data; }
+            else if (String.Equals(label, "nobility", StringComparison.Ordinal))
+            { nobility = data; }
+            else if (String.Equals(label, "special_status", StringComparison.Ordinal))
+            { special_status = data; }
+            else if (String.Equals(label, "address_street_and_number", StringComparison.Ordinal))
+            { address_street_and_number = data; }
+            else if (String.Equals(label, "address_zip", StringComparison.Ordinal))
+            { address_zip = data; }
+            else if (String.Equals(label, "address_municipality", StringComparison.Ordinal))
+            { address_municipality = data; }
+            else if (String.Equals(label, "card_number", StringComparison.Ordinal))
+            { card_number = data; }
+            else if (String.Equals(label, "issuing_municipality", StringComparison.Ordinal))
+            { issuing_municipality = data; }
+            else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
+            { chip_number = data; }
+            else if (String.Equals(label, "validity_begin_date", StringComparison.Ordinal))
+            { validity_begin_date = data; }
+            else if (String.Equals(label, "validity_end_date", StringComparison.Ordinal))
+            { validity_end_date = data; }
+            else if (String.Equals(label, "document_type", StringComparison.Ordinal))
+            { _document_type = data; }
+        }
+
+        public void StoreBinData(string label, byte[] data, int datalen)
+        {
+            try
+            {
+                progress += 6;
+                if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
+                {
+                    photo = LoadImage(data);
+                    progress_info = "reading photo";
+                }
+                else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
+                { //chip_number = BitConverter.ToString(data);
+                    progress_info = "reading chip_number";
+                    chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
+                }
+                else if (String.Equals(label, "Authentication", StringComparison.Ordinal))
+                {
+                    progress_info = "reading authentication certificate";
+                    authentication_cert = new X509Certificate2(data);
+                    cert_collection.Add(authentication_cert);
+                    StoreCertificate( ref authCert, ref authentication_cert);
+                }
+                else if (String.Equals(label, "Signature", StringComparison.Ordinal))
+                {
+                    progress_info = "reading signature certificate";
+                    signature_cert = new X509Certificate2(data);
+                    cert_collection.Add(signature_cert);
+                    StoreCertificate(ref signCert, ref signature_cert);
+                }
+                else if (String.Equals(label, "Root", StringComparison.Ordinal))
+                {
+                    progress_info = "reading root certificate";
+                    rootCA_cert = new X509Certificate2(data);
+                    cert_collection.Add(rootCA_cert);
+                    StoreCertificate(ref rootCA, ref rootCA_cert);
+                }
+                else if (String.Equals(label, "CA", StringComparison.Ordinal))
+                {
+                    progress_info = "reading intermediate certificate";
+                    intermediateCA_cert = new X509Certificate2(data);
+                    cert_collection.Add(intermediateCA_cert);
+                    StoreCertificate(ref intermediateCA, ref intermediateCA_cert);
+                }
+                else if (String.Equals(label, "CERT_RN_FILE", StringComparison.Ordinal))
+                {
+                    progress_info = "reading RN certificate";
+                    RN_cert = new X509Certificate2(data);
+                    cert_collection.Add(RN_cert);
+                    StoreCertificate(ref RNCert, ref RN_cert);
+                }
+            }
+            catch (Exception e)
+            {
+                this.logText += "An error occurred storing binary data of " + label + "\n";
+                Console.WriteLine("An error occurred: '{0}'", e);
+            }
+        }
+
+        public void ResetDataValues()
+        {
+            text_color = "Gray";
+            firstName = "-";
+            firstNames = "-";
+            surName = "-";
+            first_letter_of_third_given_name = "-";
+            date_of_birth = "-";
+            location_of_birth = "-";
+            gender = "-";
+            national_number = "-";
+            nationality = "-";
+            nobility = "-";
+            special_status = "-";
+            address_street_and_number = "-";
+            address_zip = "-";
+            address_municipality = "-";
+            card_number = "-";
+            issuing_municipality = "-";
+            chip_number = "-";
+            validity_begin_date = "-";
+            validity_end_date = "-";
+            eid_card_present = false;
+            progress = 0;
+            progress_bar_visible = "Hidden";
+            progress_info = "";
+            pinop_ready = false;
+
+            cert_collection = new X509Certificate2Collection();
+        }
+
         public void NotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
@@ -71,6 +289,7 @@ namespace eIDViewer
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
 
         private Boolean _eid_data_ready;
         public Boolean eid_data_ready
@@ -103,34 +322,7 @@ namespace eIDViewer
                 _type_kaart = value;
                 NotifyPropertyChanged("type_kaart");
             }
-        }       
-
-        private BitmapImage LoadImage(byte[] imageData)
-        {
-            if (imageData == null || imageData.Length == 0) return null;
-            try
-            {
-                BitmapImage image = new BitmapImage();
-                MemoryStream mem = new MemoryStream(imageData);
-
-                mem.Position = 0;
-                image.BeginInit();
-                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = null;
-                image.StreamSource = mem;
-                image.EndInit();
-                image.Freeze();
-                return image;
-            }
-            catch (Exception e)
-            {
-                this.logText+= "An error occurred displaying the image \n";
-                Console.WriteLine("An error occurred: '{0}'", e);
-                return null;
-            }
         }
-
 
         private string _firstName;
         public string firstName
@@ -440,142 +632,6 @@ namespace eIDViewer
                 _cert_trust = value;
                 this.NotifyPropertyChanged("cert_trust");
             }
-        }
-
-        public void StoreStringData(string label, string data)
-        {
-            progress_info = "reading data";
-            progress += 1;
-            if (String.Equals(label, "firstnames", StringComparison.Ordinal))
-            { firstName = data; }
-            else if (String.Equals(label, "surname", StringComparison.Ordinal))
-            { surName = data; }
-            else if (String.Equals(label, "first_letter_of_third_given_name", StringComparison.Ordinal))
-            { first_letter_of_third_given_name = data; }
-            else if (String.Equals(label, "date_of_birth", StringComparison.Ordinal))
-            { date_of_birth = data; }
-            else if (String.Equals(label, "location_of_birth", StringComparison.Ordinal))
-            { location_of_birth = data; }
-            else if (String.Equals(label, "gender", StringComparison.Ordinal))
-            { gender = data; }
-            else if (String.Equals(label, "national_number", StringComparison.Ordinal))
-            { national_number = data; }
-            else if (String.Equals(label, "nationality", StringComparison.Ordinal))
-            { nationality = data; }
-            else if (String.Equals(label, "nobility", StringComparison.Ordinal))
-            { nobility = data; }
-            else if (String.Equals(label, "special_status", StringComparison.Ordinal))
-            { special_status = data; }
-            else if (String.Equals(label, "address_street_and_number", StringComparison.Ordinal))
-            { address_street_and_number = data; }
-            else if (String.Equals(label, "address_zip", StringComparison.Ordinal))
-            { address_zip = data; }
-            else if (String.Equals(label, "address_municipality", StringComparison.Ordinal))
-            { address_municipality = data; }
-            else if (String.Equals(label, "card_number", StringComparison.Ordinal))
-            { card_number = data; }
-            else if (String.Equals(label, "issuing_municipality", StringComparison.Ordinal))
-            { issuing_municipality = data; }
-            else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
-            { chip_number = data; }
-            else if (String.Equals(label, "validity_begin_date", StringComparison.Ordinal))
-            { validity_begin_date = data; }
-            else if (String.Equals(label, "validity_end_date", StringComparison.Ordinal))
-            { validity_end_date = data; }
-            else if (String.Equals(label, "document_type", StringComparison.Ordinal))
-            { _document_type = data; }
-        }
-
-        public void StoreBinData(string label, byte[] data, int datalen)
-        {
-            try
-            {
-                progress += 6;
-                if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
-                {
-                    photo = LoadImage(data);
-                    progress_info = "reading photo";
-                }
-                else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
-                { //chip_number = BitConverter.ToString(data);
-                    progress_info = "reading chip_number";
-                    chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
-                }
-                else if (String.Equals(label, "Authentication", StringComparison.Ordinal))
-                {
-                    progress_info = "reading authentication certificate";
-                    authentication_cert = new X509Certificate2(data);
-                    cert_collection.Add(authentication_cert);
-                    authCert.CertVisibility = Visibility.Visible;
-                }
-                else if (String.Equals(label, "Signature", StringComparison.Ordinal))
-                {
-                    progress_info = "reading signature certificate";
-                    signature_cert = new X509Certificate2(data);
-                    cert_collection.Add(signature_cert);
-                    signCert.CertVisibility = Visibility.Visible;
-                    signCert.CertNotifyPropertyChanged("CertVisibility");
-                }
-                else if (String.Equals(label, "Root", StringComparison.Ordinal))
-                {
-                    progress_info = "reading root certificate";
-                    rootCA_cert = new X509Certificate2(data);
-                    cert_collection.Add(rootCA_cert);
-                    rootCA.CertVisibility = Visibility.Visible;
-                    rootCA.CertLabel="Root_gevodnen";
-                }
-                else if (String.Equals(label, "CA", StringComparison.Ordinal))
-                {
-                    progress_info = "reading intermediate certificate";
-                    intermediateCA_cert = new X509Certificate2(data);
-                    cert_collection.Add(intermediateCA_cert);
-                    intermediateCA.CertVisibility = Visibility.Visible;
-                }
-                else if (String.Equals(label, "CERT_RN_FILE", StringComparison.Ordinal))
-                {
-                    progress_info = "reading RN certificate";
-                    RN_cert = new X509Certificate2(data);
-                    cert_collection.Add(RN_cert);
-                    RNCert.CertVisibility = Visibility.Visible;
-                }
-
-            }
-            catch ( Exception e)
-            {
-                this.logText += "An error occurred storing binary data of " + label + "\n";
-                Console.WriteLine("An error occurred: '{0}'", e);
-            }
-        }
-
-        public void ResetDataValues()
-        {
-            text_color = "Gray";
-            firstName = "-";
-            firstNames = "-";
-            surName = "-";
-            first_letter_of_third_given_name = "-";
-            date_of_birth = "-";
-            location_of_birth = "-";
-            gender = "-";
-            national_number = "-";
-            nationality = "-";
-            nobility = "-";
-            special_status = "-";
-            address_street_and_number = "-";
-            address_zip = "-";
-            address_municipality = "-";
-            card_number = "-";
-            issuing_municipality = "-";
-            chip_number = "-";
-            validity_begin_date = "-";
-            validity_end_date = "-";
-            eid_card_present = false;
-            progress = 0;
-            progress_bar_visible = "Hidden";
-            progress_info = "";
-            pinop_ready = false;
-
-            cert_collection = new X509Certificate2Collection();
         }
 
         private String _text_color;

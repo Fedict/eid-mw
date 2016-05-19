@@ -91,7 +91,7 @@
                         <ColumnDefinition Width="562*"/>
                     </Grid.ColumnDefinitions>
                     <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="94" Width="370" Grid.Column="1" Margin="0,28,0,0">
-                        <TreeView ItemsSource="{Binding Path=certsList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-91,-37">
+                        <TreeView ItemsSource="{Binding Path=certsList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-91,0">
                             <TreeView.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
                                     <Setter Property="IsExpanded" Value="True"/>
@@ -112,7 +112,7 @@
                             </TreeView.ItemTemplate>
                         </TreeView>
                     </ContentControl>
-                    <Grid Grid.Column="1" HorizontalAlignment="Left" Height="192" Margin="2,186,50,0" VerticalAlignment="Top">
+                    <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="2,186,30,0" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" MinWidth="150"  />
                             <ColumnDefinition Width="Auto" MinWidth="100" />
