@@ -5,7 +5,7 @@
              xmlns:viewer="clr-namespace:eIDViewer"
              xmlns:clr="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
-        <viewer:eIDViewerBackendData x:Key="eIDViewerBackendObj" />
+        <viewer:BackendDataViewModel x:Key="eIDViewerBackendObj" />
         <viewer:LocalizedStrings x:Key="LocalizedStrings" />
         <Style x:Key="DataLabel" TargetType="{x:Type Label}" BasedOn="{x:Null}">
             <Setter Property="Height"  Value="26"/>

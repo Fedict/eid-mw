@@ -42,7 +42,7 @@ namespace eIDViewer
             theLocalizedStrings.certificateTabResource = new eIDViewer.Resources.CertificateTabStringResources();
             theLocalizedStrings.applicationResource = new eIDViewer.Resources.ApplicationStringResources();
 
-            eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
+            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
             theBackendData.Refresh();
         }
 
@@ -68,7 +68,7 @@ namespace eIDViewer
 
         private void ClearLog_Click(object sender, RoutedEventArgs e)
         {
-            eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
+            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
             theBackendData.logText = "";
         }
 
@@ -77,7 +77,7 @@ namespace eIDViewer
             ComboBox logCombo = sender as ComboBox;
             if(logCombo != null)
             {
-                eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
+                eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
 
                 switch (logCombo.SelectedIndex)
                 {
@@ -101,7 +101,7 @@ namespace eIDViewer
 
         private void CopyLogToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
+            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
             System.Windows.Clipboard.SetText(theBackendData.logText);
         }
 

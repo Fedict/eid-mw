@@ -15,11 +15,11 @@ using System.Collections.ObjectModel;
 namespace eIDViewer
 {
 
-        public class CCert: INotifyPropertyChanged
+        public class CertViewModel: INotifyPropertyChanged
         {
-            public CCert()
+            public CertViewModel()
             {
-                Certs = new ObservableCollection<CCert>();
+                Certs = new ObservableCollection<CertViewModel>();
                 IsExpanded = true;
                 CertVisibility = System.Windows.Visibility.Hidden;
             }
@@ -49,7 +49,7 @@ namespace eIDViewer
 
             //the certificate label, as shown in the treeview
             public string CertLabel { get; set; }
-            public ObservableCollection<CCert> Certs { get; set; }
+            public ObservableCollection<CertViewModel> Certs { get; set; }
             public bool IsExpanded { get; set; }
 
             private System.Windows.Visibility _CertVisibility;

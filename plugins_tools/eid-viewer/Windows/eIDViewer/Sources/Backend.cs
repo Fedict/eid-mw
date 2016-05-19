@@ -41,7 +41,7 @@ namespace eIDViewer
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void Cbpinop_result(eid_vwr_pinops pinop, eid_vwr_result result);
 
-        public static eIDViewerBackendData theData {get;set;}
+        public static BackendDataViewModel theData {get;set;}
 
         //list all functions of the C backend we need to call
         //[DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]

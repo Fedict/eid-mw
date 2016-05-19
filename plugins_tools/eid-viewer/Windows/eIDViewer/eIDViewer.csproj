@@ -86,7 +86,7 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Sources\Backend.cs" />
-    <Compile Include="Sources\BackendData.cs" />
+    <Compile Include="Sources\BackendDataViewModel.cs" />
     <Compile Include="Sources\BackendEnums.cs" />
     <Compile Include="Sources\CertViewModule.cs" />
     <Compile Include="Sources\LocalizedStrings.cs" />

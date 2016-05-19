@@ -16,28 +16,28 @@ namespace eIDViewer
 {
 
 
-    public class eIDViewerBackendData : INotifyPropertyChanged
+    public class BackendDataViewModel : INotifyPropertyChanged
     {
 
         public void CertificateSelectionChanged(object sender, EventArgs e)
         {
-            CCert certificate = sender as CCert;
+            CertViewModel certificate = sender as CertViewModel;
             cert_valid_from = certificate.CertLabel;
         }
 
-        public eIDViewerBackendData()
+        public BackendDataViewModel()
         {
-            _certsList = new ObservableCollection<CCert>();
+            _certsList = new ObservableCollection<CertViewModel>();
             cert_collection = new X509Certificate2Collection();
-            rootCA = new CCert { CertLabel = "rootCA" };
+            rootCA = new CertViewModel { CertLabel = "rootCA" };
             rootCA.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            RNCert = new CCert { CertLabel = "RN cert" };
+            RNCert = new CertViewModel { CertLabel = "RN cert" };
             RNCert.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            intermediateCA = new CCert { CertLabel = "citizen CA" };
+            intermediateCA = new CertViewModel { CertLabel = "citizen CA" };
             intermediateCA.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            authCert = new CCert { CertLabel = "Authentication" };
+            authCert = new CertViewModel { CertLabel = "Authentication" };
             authCert.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            signCert = new CCert { CertLabel = "Signature" };
+            signCert = new CertViewModel { CertLabel = "Signature" };
             signCert.CertificateSelectionChanged += this.CertificateSelectionChanged;
 
             certsList.Add(rootCA);
@@ -49,11 +49,11 @@ namespace eIDViewer
             certsList[0].Certs[1].Certs.Add(signCert);
         }
 
-        private CCert rootCA;
-        private CCert intermediateCA;
-        private CCert RNCert;
-        private CCert authCert;
-        private CCert signCert;
+        private CertViewModel rootCA;
+        private CertViewModel intermediateCA;
+        private CertViewModel RNCert;
+        private CertViewModel authCert;
+        private CertViewModel signCert;
 
         private X509Certificate2 authentication_cert;
         private X509Certificate2 signature_cert;
@@ -352,7 +352,7 @@ namespace eIDViewer
                 if (String.Equals(value, "1", StringComparison.Ordinal))
                 {
                     ResourceManager rm = new ResourceManager("IdentityTabStringResources",
-                                         typeof(eIDViewerBackendData).Assembly);
+                                         typeof(BackendDataViewModel).Assembly);
                     _document_type = rm.GetString("type_BELGIAN_CITIZEN", null);
 
                 }
@@ -387,8 +387,8 @@ namespace eIDViewer
             }
         }
 
-        private ObservableCollection<CCert> _certsList;
-        public ObservableCollection<CCert> certsList
+        private ObservableCollection<CertViewModel> _certsList;
+        public ObservableCollection<CertViewModel> certsList
         {
             get { return _certsList; }
             set
