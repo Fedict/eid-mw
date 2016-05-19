@@ -18,58 +18,27 @@ namespace eIDViewer
 
     public class eIDViewerBackendData : INotifyPropertyChanged
     {
-        public interface ICert
+
+        public void CertificateSelectionChanged(object sender, EventArgs e)
         {
-            string CertLabel { get; }
-            ObservableCollection<ICert> Certs { get; }
-            bool IsExpanded { get; }
-            bool IsSelected { get; set; }
-            System.Windows.Visibility CertVisibility { get; set; }
-        }
-
-        public class CCert: ICert, INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-            public CCert()
-            {
-                Certs = new ObservableCollection<ICert>();
-                IsExpanded = true;
-                CertVisibility = System.Windows.Visibility.Hidden;
-            }
-            public void CertNotifyPropertyChanged(String propertyName)
-            {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
-            }
-
-            public string CertLabel { get; set; }
-            public ObservableCollection<ICert> Certs { get; set; }
-            public bool IsExpanded { get; set; }
-            public bool IsSelected { get; set; }
-
-            private System.Windows.Visibility _CertVisibility;
-            public System.Windows.Visibility CertVisibility
-            {
-                get { return _CertVisibility; }
-                set
-                {
-                    _CertVisibility = value;
-                    this.CertNotifyPropertyChanged("CertVisibility");
-                }
-            }
+            CCert certificate = sender as CCert;
+            cert_valid_from = certificate.CertLabel;
         }
 
         public eIDViewerBackendData()
         {
-            _certsList = new List<ICert>();
+            _certsList = new ObservableCollection<CCert>();
             cert_collection = new X509Certificate2Collection();
             rootCA = new CCert { CertLabel = "rootCA" };
+            rootCA.CertificateSelectionChanged += this.CertificateSelectionChanged;
             RNCert = new CCert { CertLabel = "RN cert" };
+            RNCert.CertificateSelectionChanged += this.CertificateSelectionChanged;
             intermediateCA = new CCert { CertLabel = "citizen CA" };
+            intermediateCA.CertificateSelectionChanged += this.CertificateSelectionChanged;
             authCert = new CCert { CertLabel = "Authentication" };
+            authCert.CertificateSelectionChanged += this.CertificateSelectionChanged;
             signCert = new CCert { CertLabel = "Signature" };
+            signCert.CertificateSelectionChanged += this.CertificateSelectionChanged;
 
             certsList.Add(rootCA);
 
@@ -418,8 +387,8 @@ namespace eIDViewer
             }
         }
 
-        private List<ICert> _certsList;
-        public List<ICert> certsList
+        private ObservableCollection<CCert> _certsList;
+        public ObservableCollection<CCert> certsList
         {
             get { return _certsList; }
             set
@@ -429,7 +398,49 @@ namespace eIDViewer
             }
         }
 
+        private string _cert_valid_from;
+        public string cert_valid_from
+        {
+            get { return _cert_valid_from; }
+            set
+            {
+                _cert_valid_from = value;
+                this.NotifyPropertyChanged("cert_valid_from");
+            }
+        }
 
+        private string _cert_valid_untill;
+        public string cert_valid_untill
+        {
+            get { return _cert_valid_untill; }
+            set
+            {
+                _cert_valid_untill = value;
+                this.NotifyPropertyChanged("cert_valid_untill");
+            }
+        }
+
+        private string _cert_usage;
+        public string cert_usage
+        {
+            get { return _cert_usage; }
+            set
+            {
+                _cert_usage = value;
+                this.NotifyPropertyChanged("cert_usage");
+            }
+        }
+
+        private string _cert_trust;
+        public string cert_trust
+        {
+            get { return _cert_trust; }
+            set
+            {
+                _cert_trust = value;
+                this.NotifyPropertyChanged("cert_trust");
+            }
+        }
 
         public void StoreStringData(string label, string data)
         {

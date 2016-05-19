@@ -39,6 +39,7 @@ namespace eIDViewer
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(localization);
             eIDViewer.LocalizedStrings theLocalizedStrings = (LocalizedStrings)(App.Current.Resources["LocalizedStrings"]);
             theLocalizedStrings.identityTabResource = new eIDViewer.Resources.IdentityTabStringResources();
+            theLocalizedStrings.certificateTabResource = new eIDViewer.Resources.CertificateTabStringResources();
             theLocalizedStrings.applicationResource = new eIDViewer.Resources.ApplicationStringResources();
 
             eIDViewer.eIDViewerBackendData theBackendData = (eIDViewerBackendData)(App.Current.Resources["eIDViewerBackendObj"]);
@@ -178,6 +179,17 @@ namespace eIDViewer
                }
        }
     }
-}
+
+        private void checkBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBlockCertificate_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBlock certText = sender as TextBlock;
+
+        }
+    }
 
 }

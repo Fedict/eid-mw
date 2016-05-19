@@ -32,6 +32,19 @@ namespace eIDViewer
             }
         }
 
+        private static eIDViewer.Resources.CertificateTabStringResources _certificateTabResource = new eIDViewer.Resources.CertificateTabStringResources();
+
+        public eIDViewer.Resources.CertificateTabStringResources certificateTabResource
+        {
+            get { return _certificateTabResource; }
+
+            set
+            {
+                _certificateTabResource = value;
+                NotifyPropertyChanged("certificateTabResource");
+            }
+        }
+
         private static eIDViewer.Resources.ApplicationStringResources _applicationResource = new eIDViewer.Resources.ApplicationStringResources();
 
         public eIDViewer.Resources.ApplicationStringResources applicationResource

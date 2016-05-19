@@ -85,13 +85,13 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.CERTIFICATES, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" Margin="0,-2,0,2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="562*"/>
                     </Grid.ColumnDefinitions>
                     <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="94" Width="370" Grid.Column="1" Margin="0,28,0,0">
-                        <TreeView ItemsSource="{Binding Path=certsList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,-131">
+                        <TreeView ItemsSource="{Binding Path=certsList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-91,-37">
                             <TreeView.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
                                     <Setter Property="IsExpanded" Value="True"/>
@@ -105,15 +105,46 @@
                                     </Style.Triggers>
                                 </Style>
                             </TreeView.ItemContainerStyle>
-                                    <TreeView.ItemTemplate>
+                            <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Certs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" DataType="x:Type viewer:ICerts">
-                                    <TextBlock Text="{Binding Path=CertLabel}"/>
+                                    <TextBlock Text="{Binding Path=CertLabel}" GotFocus="TextBlockCertificate_GotFocus"/>
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
                         </TreeView>
                     </ContentControl>
-                    <Grid HorizontalAlignment="Left" Height="310" Margin="7,208,0,0" VerticalAlignment="Top" Width="564" Grid.ColumnSpan="2"/>
-                    <Canvas HorizontalAlignment="Left" Height="93" Margin="34,182,0,0" VerticalAlignment="Top" Width="370" Grid.Column="1"/>
+                    <Grid Grid.Column="1" HorizontalAlignment="Left" Height="192" Margin="2,186,50,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="150"  />
+                            <ColumnDefinition Width="Auto" MinWidth="100" />
+                            <ColumnDefinition Width="Auto" MinWidth="100"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=certificateTabResource.CertValidFromLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=certificateTabResource.CertValidUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Separator Grid.ColumnSpan="3" Grid.Row="4" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
+                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=certificateTabResource.CertUsageLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Separator Grid.ColumnSpan="3" Grid.Row="6" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
+                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=certificateTabResource.CertTrustLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Label Grid.Column="2" Grid.Row="2" Content="{Binding Path=cert_valid_from, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
+                        <Label Grid.Column="2" Grid.Row="3" Content="{Binding Path=cert_valid_untill, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
+                        <Label Grid.Column="2" Grid.Row="5" Content="{Binding Path=cert_usage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
+                        <Label Grid.Column="2" Grid.Row="7" Content="{Binding Path=cert_trust, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
+                        <Image Grid.Column="0" Grid.RowSpan="8" x:Name="image" HorizontalAlignment="Right" Height="80" VerticalAlignment="Center" />
+                    </Grid>
+                    <CheckBox x:Name="checkBox" Content="Always validate certificate trust" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBox_Checked" Margin="110,407,0,0"/>
+                    <Button x:Name="button" Content="Check validity now" Grid.Column="1" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Margin="377,403,0,-3" />
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.LOG, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings}}">
