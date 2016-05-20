@@ -54,7 +54,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\rsaref220;..\..\;..\..\..\..\tests\unit;..\..\..\util</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\rsaref220;..\..\;..\..\..\..\tests\unit;..\..\..\util;..\..\include</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
@@ -74,7 +74,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\rsaref220;..\..\;..\..\..\..\tests\unit;..\..\..\util</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\rsaref220;..\..\;..\..\..\..\tests\unit;..\..\..\util;..\..\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

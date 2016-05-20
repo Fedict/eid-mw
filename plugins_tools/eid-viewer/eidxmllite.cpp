@@ -6,6 +6,7 @@
 #include "xmlmap.h"
 #include "backend.h"
 #include "p11.h"
+#include "cache.h"
 
 const UINT MAX_ELEMENT_DEPTH = 8;
 
