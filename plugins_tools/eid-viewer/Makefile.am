@@ -78,8 +78,6 @@ libeidviewer_la_SOURCES = \
 	conversions/xmlspecconv.cpp \
 	conversions.h \
 	cppeidstring.h \
-	soap.c \
-	soap.h \
 	state.c \
 	state.h \
 	state-posix.c \
