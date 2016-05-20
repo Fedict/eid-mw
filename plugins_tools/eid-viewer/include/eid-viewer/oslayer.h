@@ -58,7 +58,7 @@ enum eid_vwr_result {
 
 /** \brief Possible states.
  *
- * \image html umldiagram.png
+ * \image html be-statemach-docs.png
  */
 enum eid_vwr_states {
 	STATE_LIBOPEN, ///< The library has been opened. Used as an initializer.
