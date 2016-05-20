@@ -11,7 +11,6 @@
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 #include <openssl/err.h>
-#include <certhelpers.h>
 
 @implementation CertificateStore
 -(id)initWithOutlineView:(NSOutlineView *)view {
@@ -53,7 +52,7 @@
         }
         return;
     }
-    arr[CERT_COL_LABEL] = [NSString stringWithCString:describe_cert(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
+    arr[CERT_COL_LABEL] = [NSString stringWithCString:eid_vwr_describe_cert(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
 
     ASN1_TIME_print(bio, X509_get_notBefore(cert));
     buf = malloc((size = BIO_ctrl_pending(bio)) + 1);
@@ -69,8 +68,8 @@
     arr[CERT_COL_VALIDTO] = [NSString stringWithCString:buf encoding:NSUTF8StringEncoding];
     free(buf);
 
-    arr[CERT_COL_DESC] = [NSString stringWithCString:detail_cert(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
-    arr[CERT_COL_USE] = [NSString stringWithCString:get_use_flags(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
+    arr[CERT_COL_DESC] = [NSString stringWithCString:eid_vwr_detail_cert(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
+    arr[CERT_COL_USE] = [NSString stringWithCString:eid_vwr_get_use_flags(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
     arr[CERT_COL_VALIDITY] = @(eIDResultUnknown);
     [self.CertificateData setObject:[NSMutableArray arrayWithObjects:arr count:CERT_COL_NCOLS] forKey:label];
 
@@ -203,7 +202,7 @@
 }
 -(void)dumpFile:(int)fd forKey:(NSString*)key withFormat:(eIDDumpType)format {
     NSData *dat = [self certificateForKey:key];
-    dumpcert(fd, [dat bytes], (int)[dat length], (enum dump_type)format);
+    eid_vwr_dumpcert(fd, [dat bytes], (int)[dat length], (enum dump_type)format);
 }
 -(NSString*)fileNameForKey:(NSString*)key {
     NSString* label = [[_CertificateData objectForKey:key] objectAtIndex:CERT_COL_LABEL];

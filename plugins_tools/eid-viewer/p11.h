@@ -12,10 +12,7 @@
 #define EIDV_RV_OK 0
 #define EIDV_RV_FAIL -1
 
-struct _slotdesc {
-	CK_SLOT_ID slot;
-	CK_UTF8CHAR description[65];
-};
+struct _slotdesc;
 
 int eid_vwr_p11_init();
 int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULONG_PTR slots_found);

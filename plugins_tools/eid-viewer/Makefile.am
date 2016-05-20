@@ -1,4 +1,5 @@
 bin_PROGRAMS = eid-viewer
+lib_LTLIBRARIES = libeidviewer.la
 
 if HAVE_GIO
 MAYBE_PREFS = gtk/prefs.c
@@ -7,13 +8,6 @@ MAYBE_PREFS =
 endif
 
 eid_viewer_SOURCES = \
-	oslayer.h \
-	oslayer.c \
-	certhelpers.h \
-	certhelpers.c \
-	gettext.h \
-	backend.c \
-	backend.h \
 	gtk/main.c \
 	gtk/viewer_glade.h \
 	gtk/certs.h \
@@ -43,7 +37,14 @@ eid_viewer_SOURCES = \
 	resources/certificate_bad.c \
 	resources/certificate_checked.c \
 	resources/certificate_warn.c \
-	$(MAYBE_PREFS) \
+	$(MAYBE_PREFS)
+
+libeidviewer_la_SOURCES = \
+	oslayer.c \
+	certhelpers.c \
+	gettext.h \
+	backend.c \
+	backend.h \
 	cache.h \
 	cache/cache.cpp \
 	conversions/bbannumconv.h \
@@ -93,11 +94,20 @@ eid_viewer_SOURCES = \
 	xsdloc.c \
 	b64/base64dec.h \
 	b64/base64dec.c \
-	verify_cert.h \
 	verify.c
 
-eid_viewer_LDADD = ../../cardcomm/pkcs11/src/libbeidpkcs11.la @GTK_LIBS@ $(top_builddir)/plugins_tools/util/liblabels.a @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@ @CURL_LIBS@ @libproxy_LIBS@
-AM_CFLAGS = @GTK_CFLAGS@ -I. -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@
+eidvincludedir = $(includedir)/eid-viewer
+
+dist_eidvinclude_HEADERS = \
+	include/eid-viewer/oslayer.h \
+	include/eid-viewer/verify_cert.h \
+	include/eid-viewer/certhelpers.h \
+	include/eid-viewer/eid-viewer.h \
+	include/eid-viewer/macros.h
+
+eid_viewer_LDADD = @GTK_LIBS@ @SSL_LIBS@ @GIO_LIBS@ @XML2_LIBS@ @CURL_LIBS@ @libproxy_LIBS@ libeidviewer.la
+libeidviewer_la_LIBADD = $(top_builddir)/plugins_tools/util/liblabels.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
+AM_CFLAGS = @GTK_CFLAGS@ -I. -I$(srcdir)/include -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@ -fvisibility=hidden
 AM_CXXFLAGS = $(AM_CFLAGS)
 SUBDIRS = gtk/po test
 

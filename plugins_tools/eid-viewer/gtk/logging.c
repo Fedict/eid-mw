@@ -2,7 +2,7 @@
 
 #include <glib.h>
 
-#include <oslayer.h>
+#include <eid-viewer/oslayer.h>
 
 #include "gtk_globals.h"
 #include "logging.h"

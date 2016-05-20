@@ -1,12 +1,13 @@
 #include <backend.h>
-#include <verify_cert.h>
-#include <certhelpers.h>
+#include <eid-viewer/verify_cert.h>
+#include <eid-viewer/certhelpers.h>
 
 #include <openssl/err.h>
 #include <openssl/ocsp.h>
 #include <openssl/x509.h>
 
 #include <string.h>
+#include <stdint.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

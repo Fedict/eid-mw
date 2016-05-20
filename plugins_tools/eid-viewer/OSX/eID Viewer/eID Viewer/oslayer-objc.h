@@ -1,4 +1,12 @@
-#include <oslayer.h>
+#include <BeidView/oslayer.h>
+
+/**
+ * \defgroup ObjC Objective-C wrapper API (OSX only)
+ *
+ * @{
+ */
+
+/** \file oslayer-objc.h */
 
 @import Foundation;
 @import AppKit;
@@ -53,34 +61,37 @@ typedef NS_ENUM(NSInteger, eIDResult) {
     eIDResultUnknown = EID_VWR_RES_UNKNOWN,
 };
 
-// Protocol for implementing a UI.
+/** \brief Protocol for implementing a UI.
+  * \see cbstruct for details on what each method does; these methods are
+  * straightforward C-to-ObjC translations */
 @protocol eIDOSLayerUI
--(void)newsrc:(eIDSource)which;
--(void)newstringdata:(NSString*)data withLabel:(NSString*)label;
--(void)newbindata:(NSData*)data withLabel:(NSString*)label;
--(void)log:(NSString*)line withLevel:(eIDLogLevel)level;
--(void)newstate:(eIDState)state;
--(void)pinop_result:(eIDResult)result forOperation:(eIDPinOp)operation;
+-(void)newsrc:(eIDSource)which; ///< called by eid_vwr_ui_callbacks::newsrc()
+-(void)newstringdata:(NSString*)data /**< . */ withLabel:(NSString*)label; ///< called by eid_vwr_ui_callbacks::newstringdata()
+-(void)newbindata:(NSData*)data withLabel:(NSString*)label; ///< called by eid_vwr_ui_callbacks::newbindata()
+-(void)log:(NSString*)line withLevel:(eIDLogLevel)level; ///< called by eid_vwr_ui_callbacks::log()
+-(void)newstate:(eIDState)state; ///< called by eid_vwr_ui_callbacks::newstate()
+-(void)pinop_result:(eIDResult)result forOperation:(eIDPinOp)operation; ///< called by eid_vwr_ui_callbacks::pinop_result()
+-(void)readersFound:(NSArray*)readers withSlotNumbers:(NSArray*)slots; ///< called by eid_vwr_ui_callbacks::readers_changed()
 @end
 
-// Class method-only class which wraps the corresponding C-only APIs for the
-// benefit of swift applications and which does some data conversion (mainly in
-// the getPreview method)
+/** Class method-only class which wraps the corresponding C-only APIs for the
+    benefit of ObjC applications. */
 @interface eIDOSLayerBackend : NSObject
-+(NSInteger)pinop:(eIDPinOp)which;
-+(NSInteger)setUi:(id<eIDOSLayerUI>)ui;
-+(NSImage*)getPreview:(NSURL*)from;
-+(void)setLang:(eIDLanguage)language;
-+(eIDLanguage)lang;
-+(void)poll;
-+(void)mainloop; // does not return
-+(void)mainloop_thread;
-+(void)deserialize:(NSURL*)from;
-+(void)serialize:(NSURL*)to;
-+(NSData*)xmlform;
-+(void)close_file;
-+(void)set_invalid;
-+(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca;
-+(void)selectReader:(NSInteger)readerNumber;
-+(void)setReaderAuto:(BOOL)automatic;
++(NSInteger)pinop:(eIDPinOp)which; ///< calls eid_vwr_pinop()
++(NSInteger)setUi:(id<eIDOSLayerUI>)ui; ///< calls eid_vwr_ui_callbacks() and eid_vwr_createcallbacks()
++(NSImage*)getPreview:(NSURL*)from; ///< calls eid_vwr_get_preview(), and converts the result to an NSImage*
++(void)setLang:(eIDLanguage)language; ///< calls eid_vwr_convert_set_lang()
++(void)poll; ///< calls eid_vwr_poll()
++(void)mainloop; ///< calls eid_vwr_be_mainloop(), which does not return
++(void)mainloop_thread; ///< calls mainloop in a background thread.
++(void)deserialize:(NSURL*)from; ///< calls eid_vwr_be_deserialize()
++(void)serialize:(NSURL*)to; ///< calls eid_vwr_be_serialize()
++(NSData*)xmlform; ///< calls eid_vwr_be_get_xmlform(), and converts the result to an NSData*
++(void)close_file; ///< calls eid_vwr_close_file()
++(void)set_invalid; ///< calls eid_vwr_be_set_invalid()
++(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca; ///< calls eid_vwr_verify_cert() with valid perform_ocsp_request and free_ocsp_request function pointers
++(void)selectReader:(NSInteger)readerNumber; ///< calls eid_vwr_be_select_slot() with 0 as the first parameter, and the given reader number as the second parameter.
++(void)setReaderAuto:(BOOL)automatic; ///< calls eid_vwr_be_select_slot with nonzero (if YES) or zero (if NO) as the first parameter, and 0 as the second parameter.
 @end
+
+/**@}*/

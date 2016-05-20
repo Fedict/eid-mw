@@ -7,7 +7,7 @@
 //
 
 #import "DraggingImage.h"
-#import "oslayer-objc.h"
+#import <BeidView/oslayer-objc.h>
 
 @implementation DraggingImage
 -(void)mouseDown:(NSEvent*)event {

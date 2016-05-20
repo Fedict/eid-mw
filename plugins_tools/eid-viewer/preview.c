@@ -1,4 +1,4 @@
-#include <oslayer.h>
+#include <eid-viewer/oslayer.h>
 #include <libxml/encoding.h>
 #include <libxml/xmlwriter.h>
 #include <libxml/xmlreader.h>

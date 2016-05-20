@@ -30,6 +30,18 @@ static void osl_objc_pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result r) 
 	[currUi pinop_result:(eIDResult)r forOperation:(eIDPinOp)p];
 }
 
+static void osl_objc_readers_found(unsigned long nreaders, slotdesc* slots) {
+	NSString* names[nreaders];
+	NSNumber* slotnumbers[nreaders];
+	for(int i=0; i<nreaders; i++) {
+		names[i] = [NSString stringWithCString:(const char*)(slots[i].description) encoding:NSUTF8StringEncoding];
+		slotnumbers[i] = [NSNumber numberWithUnsignedLong:slots[i].slot];
+	}
+	NSArray *readerNames = [NSArray arrayWithObjects:names count:nreaders];
+	NSArray *slotNumbers = [NSArray arrayWithObjects:slotnumbers count:nreaders];
+	[currUi readersFound:readerNames withSlotNumbers:slotNumbers];
+}
+
 static void* threadmain(void* val) {
 	eid_vwr_be_mainloop();
 
@@ -70,6 +82,7 @@ static void osl_objc_free_ocsp_request(void* data) {
 	cb->newstate = osl_objc_newstate;
 	cb->newstringdata = osl_objc_newstringdata;
 	cb->pinop_result = osl_objc_pinop_result;
+	cb->readers_changed = osl_objc_readers_found;
 	currUi = ui;
 	return eid_vwr_createcallbacks(cb);
 }
@@ -104,11 +117,7 @@ static void osl_objc_free_ocsp_request(void* data) {
 }
 +(void)setLang:(eIDLanguage)language {
 	enum eid_vwr_langs l = (enum eid_vwr_langs) language;
-	convert_set_lang(l);
-}
-+(eIDLanguage)lang {
-	eIDLanguage l = (eIDLanguage) convert_get_lang();
-	return l;
+	eid_vwr_convert_set_lang(l);
 }
 +(void)close_file {
 	sm_handle_event(EVENT_CLOSE_FILE, NULL, NULL, NULL);
@@ -126,5 +135,8 @@ static void osl_objc_free_ocsp_request(void* data) {
 }
 +(void)setReaderAuto:(BOOL)automatic {
 	eid_vwr_p11_select_slot(automatic ? CK_TRUE : CK_FALSE, 0);
+}
++(void)selectReader:(NSInteger)readerNumber {
+	eid_vwr_p11_select_slot(CK_FALSE, (CK_SLOT_ID)readerNumber);
 }
 @end

@@ -3,7 +3,7 @@
 #include "gettext.h"
 #include "gtk_globals.h"
 #include "gtk_main.h"
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
 #include "state.h"
 #include "certs.h"
 
@@ -142,7 +142,8 @@ void file_open(GtkMenuItem* item, gpointer user_data) {
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-		sm_handle_event(EVENT_OPEN_FILE, filename, g_free, NULL);
+		eid_vwr_be_deserialize(filename);
+		g_free(filename);
 	}
 	gtk_widget_destroy(dialog);
 }
@@ -182,7 +183,8 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 	res = gtk_dialog_run(GTK_DIALOG(dialog));
 	if(res == GTK_RESPONSE_ACCEPT) {
 		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-		sm_handle_event(EVENT_SERIALIZE, filename, g_free, NULL);
+		eid_vwr_be_serialize(filename);
+		g_free(filename);
 	}
 	gtk_widget_destroy(dialog);
 	g_free(filename_sugg);
@@ -190,7 +192,7 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 
 /* Close the currently-open file */
 void file_close(GtkMenuItem* item, gpointer user_data) {
-	sm_handle_event(EVENT_CLOSE_FILE, NULL, NULL, NULL);
+	eid_vwr_close_file();
 }
 
 /* Perform a PIN operation */
@@ -204,6 +206,8 @@ gboolean showdlg(gpointer d) {
 	GtkDialog *dlg = GTK_DIALOG(d);
 	gtk_dialog_run(dlg);
 	gtk_widget_destroy(GTK_WIDGET(dlg));
+
+	return FALSE;
 }
 
 void pinop_result(enum eid_vwr_pinops which, enum eid_vwr_result r) {
@@ -242,23 +246,23 @@ static void retranslate_gtkui() {
 			continue;
 		}
 
-		if(!strcmp(curnode, "object")) {
+		if(!strcmp((char*)curnode, "object")) {
 			if(xmlTextReaderHasAttributes(reader) > 0) {
-				xmlChar* val = xmlTextReaderGetAttribute(reader, "id");
+				xmlChar* val = xmlTextReaderGetAttribute(reader, (const xmlChar*)"id");
 				if(val) {
 					curname = val;
 				}
 			}
 		}
-		if(curname != NULL && !strcmp(curnode, "property")) {
+		if(curname != NULL && !strcmp((char*)curnode, "property")) {
 			if(xmlTextReaderHasAttributes(reader) > 0) {
-				xmlChar *trans = xmlTextReaderGetAttribute(reader, "translatable");
-				xmlChar *prop = xmlTextReaderGetAttribute(reader, "name");
+				xmlChar *trans = xmlTextReaderGetAttribute(reader, (const xmlChar*)"translatable");
+				xmlChar *prop = xmlTextReaderGetAttribute(reader, (const xmlChar*)"name");
 				const xmlChar *label;
 				xmlTextReaderRead(reader);
 				label = xmlTextReaderConstValue(reader);
-				if(trans && !strcmp(trans, "yes")) {
-					g_object_set(G_OBJECT(gtk_builder_get_object(builder, curname)), prop, _(label), NULL);
+				if(trans && !strcmp((char*)trans, "yes")) {
+					g_object_set(G_OBJECT(gtk_builder_get_object(builder, (char*)curname)), (char*)prop, _((char*)label), NULL);
 				}
 			}
 		}
@@ -275,7 +279,7 @@ void translate(GtkMenuItem* item, gpointer target) {
 	} else if(!strncmp(target, "nl", 2)) {
 		lang = EID_VWR_LANG_NL;
 	}
-	convert_set_lang(lang);
+	eid_vwr_convert_set_lang(lang);
 	curlang = lang;
 	setlocale(LC_MESSAGES, target);
 
@@ -326,4 +330,62 @@ void showurl(GtkMenuItem *item, gpointer user_data) {
 	} else {
 		gtk_show_uri(gtk_widget_get_screen(window), "http://test.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
 	}
+}
+
+void auto_reader(GtkCheckMenuItem *mi, gpointer user_data) {
+	if(gtk_check_menu_item_get_active(mi)) {
+		eid_vwr_be_select_slot(1, 0);
+	}
+}
+
+static void manual_reader(GtkCheckMenuItem *mi, gpointer slotptr) {
+	intptr_t slot = (intptr_t)slotptr;
+
+	if(gtk_check_menu_item_get_active(mi)) {
+		eid_vwr_be_select_slot(0, slot);
+	}
+}
+
+struct rdri {
+	unsigned long nreaders;
+	slotdesc* slots;
+};
+
+static gboolean readers_changed_real(gpointer user_data) {
+	int i;
+	GtkMenuShell *menu = GTK_MENU_SHELL(gtk_builder_get_object(builder, "menu_reader"));
+	static GtkWidget** items = NULL;
+	struct rdri* info = (struct rdri*) user_data;
+
+	if(items) {
+		for(i=0; items[i]!=NULL; i++) {
+			gtk_widget_destroy(GTK_WIDGET(items[i]));
+		}
+		free(items);
+	}
+	GtkRadioMenuItem* automatic = GTK_RADIO_MENU_ITEM(gtk_builder_get_object(builder, "mi_file_reader_auto"));
+	if(info->nreaders == 0) {
+		gtk_widget_set_sensitive(GTK_WIDGET(automatic), FALSE);
+		return FALSE;
+	}
+	gtk_widget_set_sensitive(GTK_WIDGET(automatic), TRUE);
+	items = malloc(sizeof(GtkWidget*) * info->nreaders);
+	for(i=0; i<info->nreaders; i++) {
+		items[i] = gtk_radio_menu_item_new_with_label_from_widget(automatic, (char*)info->slots[i].description);
+		gtk_menu_shell_append(menu, items[i]);
+		g_signal_connect(G_OBJECT(items[i]), "toggled", G_CALLBACK(manual_reader), (void*)info->slots[i].slot);
+		gtk_widget_show(GTK_WIDGET(items[i]));
+	}
+	free(info->slots);
+	free(info);
+	return FALSE;
+}
+
+void readers_changed(unsigned long nreaders, slotdesc* slots) {
+	struct rdri* data = malloc(sizeof(struct rdri));
+	data->slots = malloc(sizeof(slotdesc) * nreaders);
+	memcpy(data->slots, slots, sizeof(slotdesc)*nreaders);
+	data->nreaders = nreaders;
+	g_main_context_invoke(NULL, readers_changed_real, data);
+	g_message("readers changed");
 }

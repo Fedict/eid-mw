@@ -71,7 +71,7 @@ objects_SOURCES = objects.c $(COMMON_SRCS)
 objects_LDADD = $(COMMON_LIB)
 
 readdata_SOURCES = readdata.c $(COMMON_SRCS)
-readdata_LDADD = $(COMMON_LIB) $(top_builddir)/plugins_tools/util/liblabels.a
+readdata_LDADD = $(COMMON_LIB) $(top_builddir)/plugins_tools/util/liblabels.la
 
 digest_SOURCES = digest.c $(COMMON_SRCS)
 digest_LDADD = $(COMMON_LIB)

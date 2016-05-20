@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "binhandler.h"
-#include <certhelpers.h>
+#include <eid-viewer/certhelpers.h>
 
 typedef NS_ENUM(NSInteger, eIDDumpType) {
     eIDDumpTypeDer = DUMP_DER,

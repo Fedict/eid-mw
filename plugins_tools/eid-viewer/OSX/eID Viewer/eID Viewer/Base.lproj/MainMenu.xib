@@ -25,6 +25,7 @@
                 <outlet property="menu_file_close" destination="DVo-aG-piG" id="eD3-6j-eIp"/>
                 <outlet property="menu_file_open" destination="IAo-SY-fd9" id="J3t-ga-LHA"/>
                 <outlet property="menu_file_print" destination="aTl-1u-JFS" id="UOj-yd-qT7"/>
+                <outlet property="menu_file_reader" destination="vdP-FZ-jf2" id="H76-ob-vtp"/>
                 <outlet property="menu_file_reader_auto" destination="LcD-R6-Nvz" id="gF7-5B-7LS"/>
                 <outlet property="menu_file_save" destination="pxx-59-PXV" id="1k4-5U-aOo"/>
                 <outlet property="photoview" destination="xjA-5d-ByW" id="8wT-9a-gCB"/>

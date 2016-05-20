@@ -1,4 +1,4 @@
-#include <oslayer.h>
+#include <eid-viewer/oslayer.h>
 #include <state.h>
 #include <p11.h>
 #ifdef WIN32
@@ -27,6 +27,7 @@ void eid_vwr_poll() {
 	CK_SLOT_ID_PTR no_token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
 	CK_SLOT_ID_PTR token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
 	static CK_ULONG count_old = 0;
+	static CK_SLOT_ID token_old = 0xCAFEBABE;
 	CK_ULONG count = 0;
 
 	if(eid_vwr_p11_find_first_slot(CK_FALSE, no_token, &count) == EIDV_RV_OK) {
@@ -44,6 +45,12 @@ void eid_vwr_poll() {
 		free (slots);
 	}
 	if(eid_vwr_p11_find_first_slot(CK_TRUE, token, &count) == EIDV_RV_OK) {
+		if(token_old != *token) {
+			CK_SLOT_ID_PTR tmp = malloc(sizeof(CK_SLOT_ID));
+			*tmp = *token;
+			sm_handle_event(EVENT_TOKEN_REMOVED, tmp, free, NULL);
+			token_old = *token;
+		}
 		sm_handle_event(EVENT_TOKEN_INSERTED, token, free, NULL);
 	} else {
 		sm_handle_event(EVENT_TOKEN_REMOVED, token, free, NULL);
@@ -71,4 +78,16 @@ const char* eid_vwr_be_get_xmlform() {
 	}
 	item = cache_get_data(TEXT("xml"));
 	return (const char*)item->data;
+}
+
+void eid_vwr_be_select_slot(int automatic, unsigned long manualslot) {
+	eid_vwr_p11_select_slot(automatic ? CK_TRUE : CK_FALSE, (CK_SLOT_ID)manualslot);
+}
+
+void eid_vwr_be_set_invalid() {
+	sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+}
+
+void eid_vwr_close_file() {
+	sm_handle_event(EVENT_CLOSE_FILE, NULL, NULL, NULL);
 }

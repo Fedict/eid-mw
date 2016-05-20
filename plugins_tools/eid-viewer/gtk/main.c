@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
 #include "viewer_glade.h"
 #include "gettext.h"
 #include "gtk_globals.h"
@@ -128,7 +128,7 @@ static void newstate(enum eid_vwr_states s) {
 			g_object_set_threaded(pinchg, "sensitive", (void*)TRUE, NULL);
 			if(!data_verifies()) {
 				uilog(EID_VWR_LOG_COARSE, "Cannot load card: data signature invalid!");
-				sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+				eid_vwr_be_set_invalid();
 			}
 			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
 			if(want_verify) {
@@ -286,6 +286,8 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), "xml");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_saveas_csv"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), "csv");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_reader_auto"));
+	g_signal_connect(signaltmp, "toggled", G_CALLBACK(auto_reader), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_close"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_close), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_print"));
@@ -461,7 +463,7 @@ int main(int argc, char** argv) {
 	bindtextdomain("eid-viewer", DATAROOTDIR "/locale");
 	textdomain("eid-viewer");
 
-	convert_set_lang(langfromenv());
+	eid_vwr_convert_set_lang(langfromenv());
 
 	gtk_init(&argc, &argv);
 	builder = gtk_builder_new();
@@ -489,6 +491,7 @@ int main(int argc, char** argv) {
 	cb->logv = ui_log_init();
 	cb->newstate = newstate;
 	cb->pinop_result = pinop_result;
+	cb->readers_changed = readers_changed;
 	eid_vwr_createcallbacks(cb);
 
 	pthread_create(&thread, NULL, threadmain, NULL);
@@ -501,7 +504,7 @@ int main(int argc, char** argv) {
 	gtk_widget_show(window);
 
 	if(argc > 1) {
-		sm_handle_event(EVENT_OPEN_FILE, argv[1], NULL, NULL);
+		eid_vwr_be_deserialize(argv[1]);
 	}
 
 	gtk_main();

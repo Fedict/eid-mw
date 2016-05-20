@@ -1,17 +1,13 @@
 #ifndef EID_VWR_BACKEND_H
 #define EID_VWR_BACKEND_H
 
-#ifdef WIN32
-#define DllExport   __declspec( dllexport ) 
-#else
-#define DllExport
-#endif
+#include <eid-viewer/macros.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
 
 DllExport void be_setcallbacks(struct eid_vwr_ui_callbacks* cb_);
 DllExport int eid_vwr_set_cbfuncs(		void(*newsrc)(enum eid_vwr_source source), // data source has changed.

@@ -2,7 +2,7 @@
 #include <openssl/x509v3.h>
 #include <openssl/err.h>
 #include <openssl/pem.h>
-#include <certhelpers.h>
+#include <eid-viewer/certhelpers.h>
 #include <stdbool.h>
 #include <string.h>
 #include <assert.h>
@@ -23,7 +23,7 @@ void ensure_inited() {
 }
 
 /* Return a string representation of the X509v3 uses of the given certificate. */
-char* get_use_flags(const char* label, X509* cert) {
+char* eid_vwr_get_use_flags(const char* label, X509* cert) {
 	X509_CINF* ci = cert->cert_info;
 	int i;
 	char* retval = 0;
@@ -53,7 +53,7 @@ char* get_use_flags(const char* label, X509* cert) {
 
 /* Return a detailed description of the X509 certificate (a multiline string of
  * all the subject name fields) */
-char* detail_cert(const char* label, X509* cert) {
+char* eid_vwr_detail_cert(const char* label, X509* cert) {
 	X509_NAME* subject = X509_get_subject_name(cert);
 	X509_NAME_ENTRY* entry;
 	int i;
@@ -90,7 +90,7 @@ char* detail_cert(const char* label, X509* cert) {
 
 /* Return a short description of the X509 certificate (i.e., the certificate's
  * common name) */
-char* describe_cert(const char* label, X509* cert) {
+char* eid_vwr_describe_cert(const char* label, X509* cert) {
 	X509_NAME* subject = X509_get_subject_name(cert);
 	int index = X509_NAME_get_index_by_NID(subject, OBJ_sn2nid("CN"), -1);
 	if(index < 0) {
@@ -104,7 +104,7 @@ char* describe_cert(const char* label, X509* cert) {
 
 /* Test if the card data signatures (identity signature, address signature) are
  * valid for the given rrn certificate*/
-int check_data_validity(const void* photo, int plen,
+int eid_vwr_check_data_validity(const void* photo, int plen,
 		const void* photohash, int hashlen,
 		const void* datafile, int datfilelen,
 		const void* datasig, int datsiglen,
@@ -187,7 +187,7 @@ int check_data_validity(const void* photo, int plen,
 
 /* Write the given certificate (in DER format) to the passed file
  * descriptor. */
-void dumpcert(int fd, const void* derdata, int len, enum dump_type how) {
+void eid_vwr_dumpcert(int fd, const void* derdata, int len, enum dump_type how) {
 	BIO *bio;
 	X509 *cert = NULL;
 

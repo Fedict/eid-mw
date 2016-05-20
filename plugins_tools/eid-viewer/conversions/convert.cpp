@@ -36,7 +36,7 @@ int can_convert(const EID_CHAR* label) {
 }
 
 /* Set the display language for conversions */
-void convert_set_lang(enum eid_vwr_langs which) {
+void eid_vwr_convert_set_lang(enum eid_vwr_langs which) {
 	if(ConversionWorker::get_lang() != which) {
 		void* iterator;
 		const EID_CHAR* label;

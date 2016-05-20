@@ -25,8 +25,7 @@
 #include <locale.h>
 #include <gettext.h>
 #include <errno.h>
-#include <verify_cert.h>
-#include <backend.h>
+#include <eid-viewer/verify_cert.h>
 
 enum certs {
 	Root,
@@ -197,7 +196,7 @@ static const void* perform_ocsp_request(char* url, void* data, long datlen, long
 	i=0;
 	do {
 		if((curl_res = curl_easy_perform(curl)) != CURLE_OK) {
-			be_log(EID_VWR_LOG_COARSE, "Could not perform OCSP request (with proxy: %s): %s",
+			uilog(EID_VWR_LOG_COARSE, "Could not perform OCSP request (with proxy: %s): %s",
 					proxies[i] ? "none" : proxies[i],
 					curl_easy_strerror(curl_res));
 		}
@@ -280,12 +279,12 @@ static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 
 	pthread_once(&once, create_proxy_factory);
 	if(!pf) {
-		be_log(EID_VWR_LOG_ERROR, "Certificate validation: Could not find proxy");
+		uilog(EID_VWR_LOG_ERROR, "Certificate validation: Could not find proxy");
 		return NULL;
 	}
 
 	if(iters[CA] == NULL) {
-		be_log(EID_VWR_LOG_NORMAL, "Certificate validation failed: no CA certificate found");
+		uilog(EID_VWR_LOG_NORMAL, "Certificate validation failed: no CA certificate found");
 		return NULL;
 	}
 
@@ -343,7 +342,7 @@ void add_certificate(char* label, void* data, int len) {
 	 * certificate */
 	columns[cur] = CERT_COL_LABEL;
 	g_value_init(&(vals[cur]), G_TYPE_STRING);
-	char* str = describe_cert(label, cert);
+	char* str = eid_vwr_describe_cert(label, cert);
 	g_value_take_string(&(vals[cur++]), g_strdup(str));
 	free(str);
 
@@ -369,11 +368,11 @@ void add_certificate(char* label, void* data, int len) {
 
 	columns[cur] = CERT_COL_DESC;
 	g_value_init(&(vals[cur]), G_TYPE_STRING);
-	g_value_take_string(&(vals[cur++]), detail_cert(label, cert));
+	g_value_take_string(&(vals[cur++]), eid_vwr_detail_cert(label, cert));
 
 	columns[cur] = CERT_COL_USE;
 	g_value_init(&(vals[cur]), G_TYPE_STRING);
-	g_value_take_string(&(vals[cur++]), get_use_flags(label, cert));
+	g_value_take_string(&(vals[cur++]), eid_vwr_get_use_flags(label, cert));
 
 	columns[cur] = CERT_COL_VALIDFROM_PAST;
 	g_value_init(&(vals[cur]), G_TYPE_BOOLEAN);
@@ -496,12 +495,12 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 
 		gtk_tree_model_get(model, &iter, CERT_COL_DATA, &arr, -1);
 		fd = open(filename, O_WRONLY | O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH);
-		dumpcert(fd, arr->data, arr->len, strcmp((char*)userdata, "DER") ? DUMP_PEM : DUMP_DER);
+		eid_vwr_dumpcert(fd, arr->data, arr->len, strcmp((char*)userdata, "DER") ? DUMP_PEM : DUMP_DER);
 		if(!strcmp((char*)userdata, "chain")) {
 			GtkTreeIter child = iter;
 			while(gtk_tree_model_iter_parent(model, &iter, &child)) {
 				gtk_tree_model_get(model, &iter, CERT_COL_DATA, &arr, -1);
-				dumpcert(fd, arr->data, arr->len, DUMP_PEM);
+				eid_vwr_dumpcert(fd, arr->data, arr->len, DUMP_PEM);
 				child = iter;
 			}
 		}
