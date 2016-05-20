@@ -109,7 +109,7 @@ struct eid_vwr_preview {
 };
 
 /** Perform a PIN operation */
-DllExport int eid_vwr_pinop(enum eid_vwr_pinops);
+DllExport void eid_vwr_pinop(enum eid_vwr_pinops);
 /** Initialize the callbacks */
 DllExport int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb);
 
