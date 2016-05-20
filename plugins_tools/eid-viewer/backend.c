@@ -63,7 +63,7 @@ struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 /* Perform a PIN operation. Caller: UI. */
 void eid_vwr_pinop(enum eid_vwr_pinops op) {
 	sm_handle_event(EVENT_DO_PINOP, (void*)op, NULL, NULL);
-	return 0;
+	return;
 }
 
 /* Actually assign the callbacks to the correct static variable. Caller: state machine. */
