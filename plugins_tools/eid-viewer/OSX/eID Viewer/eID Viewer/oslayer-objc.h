@@ -91,6 +91,7 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 +(void)close_file; ///< calls eid_vwr_close_file()
 +(void)set_invalid; ///< calls eid_vwr_be_set_invalid()
 +(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca; ///< calls eid_vwr_verify_cert() with valid perform_ocsp_request and free_ocsp_request function pointers
++(eIDResult)validateRrnCert:(NSData*)certificate; ///< calls eid_vwr_verify_rrncert()
 +(void)selectReader:(NSInteger)readerNumber; ///< calls eid_vwr_be_select_slot() with 0 as the first parameter, and the given reader number as the second parameter.
 +(void)setReaderAuto:(BOOL)automatic; ///< calls eid_vwr_be_select_slot with nonzero (if YES) or zero (if NO) as the first parameter, and 0 as the second parameter.
 @end

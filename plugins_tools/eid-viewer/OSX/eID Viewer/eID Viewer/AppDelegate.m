@@ -377,6 +377,7 @@
 	NSData* ca = [_certstore certificateForKey:@"CA"];
 	eIDResult resSig = [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Signature"] withCa:ca];
 	eIDResult resAuth = [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca];
+	eIDResult resRRN = [eIDOSLayerBackend validateRrnCert:[_certstore certificateForKey:@"CERT_RN_FILE"]];
 	eIDResult resParents;
 	if(resSig == resAuth) {
 		resParents = resSig;
@@ -389,10 +390,10 @@
 	}
 	[_certstore setValid:resParents forKey:@"Root"];
 	[_certstore setValid:resParents forKey:@"CA"];
-	[_certstore setValid:resParents forKey:@"RRN"];
+	[_certstore setValid:resRRN forKey:@"CERT_RN_FILE"];
 	[_certstore setValid:resAuth forKey:@"Authentication"];
 	[_certstore setValid:resSig forKey:@"Signature"];
-	if(resParents == eIDResultFailed) {
+	if(resParents == eIDResultFailed || resRRN == eIDResultFailed) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			NSAlert* error = [[NSAlert alloc ] init];
 			[error setAlertStyle:NSWarningAlertStyle];
