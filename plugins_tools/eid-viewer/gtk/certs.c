@@ -238,6 +238,7 @@ static void check_cert(char* which) {
 	GByteArray *cert, *ca_cert;
 	GValue *val_cert, *val_ca, *val_root;
 	int *col_cert, *col_ca, *col_root;
+	enum eid_vwr_result verify_result;
 
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), cert_iter, CERT_COL_DATA, &cert, -1);
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), ca_iter, CERT_COL_DATA, &ca_cert, -1);
