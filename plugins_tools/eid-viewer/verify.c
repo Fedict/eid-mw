@@ -186,9 +186,6 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 		goto exit;
 	}
 exit:
-	if(lookup) {
-		X509_LOOKUP_free(lookup);
-	}
 	if(store) {
 		X509_STORE_free(store);
 	}
@@ -232,9 +229,6 @@ enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certl
 exit:
 	if(ctx) {
 		X509_STORE_CTX_free(ctx);
-	}
-	if(lookup) {
-		X509_LOOKUP_free(lookup);
 	}
 	if(store) {
 		X509_STORE_free(store);

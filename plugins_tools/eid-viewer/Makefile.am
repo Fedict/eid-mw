@@ -1,6 +1,10 @@
 bin_PROGRAMS = eid-viewer
 lib_LTLIBRARIES = libeidviewer.la
 
+noinst_PROGRAMS = apitest
+apitest_SOURCES = test.c
+apitest_LDADD = libeidviewer.la
+
 if HAVE_GIO
 MAYBE_PREFS = gtk/prefs.c
 else
