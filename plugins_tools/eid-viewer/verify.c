@@ -156,7 +156,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 			status_string = "invalid certificate, algorithm, or root certificate"; break;
 	}
 	if(status_string != NULL) {
-		be_log(EID_VWR_LOG_ERROR, "eID certificate check failed: %s", status_string);
+		be_log(EID_VWR_LOG_COARSE, "eID certificate check failed: %s", status_string);
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
@@ -181,7 +181,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir());
 	X509_LOOKUP_add_dir(lookup, CERTTRUSTDIR, X509_FILETYPE_PEM);
 	if(OCSP_basic_verify(bresp, bresp->certs, store, 0) <= 0) {
-		be_log(EID_VWR_LOG_ERROR, "OCSP signature invalid, or root certificate unknown");
+		be_log(EID_VWR_LOG_COARSE, "OCSP signature invalid, or root certificate unknown");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
@@ -221,7 +221,7 @@ enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certl
 	}
 
 	if(X509_verify_cert(ctx) != 1) {
-		be_log(EID_VWR_LOG_ERROR, "RRN certificate verification failed: invalid signature, or invalid root certificate.");
+		be_log(EID_VWR_LOG_COARSE, "RRN certificate verification failed: invalid signature, or invalid root certificate.");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
