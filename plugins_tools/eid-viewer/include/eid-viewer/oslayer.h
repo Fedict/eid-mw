@@ -337,6 +337,14 @@ DllExport void eid_vwr_close_file();
   */
 DllExport void eid_vwr_convert_set_lang(enum eid_vwr_langs which);
 
+/** \brief Return the backend language.
+  *
+  * \return the current backend language as previously set by
+  * eid_vwr_convert_set_lang(). If no language has previously been set,
+  * returns EID_VWR_LANG_NONE.
+  */
+DllExport enum eid_vwr_langs eid_vwr_convert_get_lang();
+
 /**@}*/
 
 #endif

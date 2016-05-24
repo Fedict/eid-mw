@@ -54,6 +54,6 @@ void eid_vwr_convert_set_lang(enum eid_vwr_langs which) {
 }
 
 /* Get the current display language for conversions */
-enum eid_vwr_langs convert_get_lang() {
+enum eid_vwr_langs eid_vwr_convert_get_lang() {
 	return ConversionWorker::get_lang();
 }

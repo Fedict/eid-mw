@@ -77,10 +77,11 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 /** Class method-only class which wraps the corresponding C-only APIs for the
     benefit of ObjC applications. */
 @interface eIDOSLayerBackend : NSObject
-+(NSInteger)pinop:(eIDPinOp)which; ///< calls eid_vwr_pinop()
++(void)pinop:(eIDPinOp)which; ///< calls eid_vwr_pinop()
 +(NSInteger)setUi:(id<eIDOSLayerUI>)ui; ///< calls eid_vwr_ui_callbacks() and eid_vwr_createcallbacks()
 +(NSImage*)getPreview:(NSURL*)from; ///< calls eid_vwr_get_preview(), and converts the result to an NSImage*
 +(void)setLang:(eIDLanguage)language; ///< calls eid_vwr_convert_set_lang()
++(eIDLanguage)lang; ///< calls eid_vwr_convert_get_lang()
 +(void)poll; ///< calls eid_vwr_poll()
 +(void)mainloop; ///< calls eid_vwr_be_mainloop(), which does not return
 +(void)mainloop_thread; ///< calls mainloop in a background thread.
