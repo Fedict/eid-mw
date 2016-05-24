@@ -194,3 +194,50 @@ exit:
 	}
 	return ret;
 }
+
+enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certlen) {
+	X509 *cert_i = NULL;
+	X509_STORE *store = NULL;
+	X509_LOOKUP *lookup = NULL;
+	X509_STORE_CTX *ctx = NULL;
+	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
+
+	store = X509_STORE_new();
+	if(!(lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir()))) {
+		log_error("RRN certificate verification failed: Could not load root certificates");
+		ret = EID_VWR_RES_UNKNOWN;
+		goto exit;
+	}
+	X509_LOOKUP_add_dir(lookup, CERTTRUSTDIR, X509_FILETYPE_PEM);
+
+	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
+		log_error("RRN certificate verification failed: Could not parse RRN certificate");
+		ret = EID_VWR_RES_UNKNOWN;
+		goto exit;
+	}
+
+	ctx = X509_STORE_CTX_new();
+	if(X509_STORE_CTX_init(ctx, store, cert_i, NULL) != 1) {
+		log_error("RRN certificate verification failed: could not build context");
+		ret = EID_VWR_RES_UNKNOWN;
+		goto exit;
+	}
+
+	if(X509_verify_cert(ctx) != 1) {
+		log_error("RRN certificate verification failed: invalid signature, or invalid root certificate.");
+		ret = EID_VWR_RES_FAILED;
+		goto exit;
+	}
+	ret = EID_VWR_RES_SUCCESS;
+exit:
+	if(ctx) {
+		X509_STORE_CTX_free(ctx);
+	}
+	if(lookup) {
+		X509_LOOKUP_free(lookup);
+	}
+	if(store) {
+		X509_STORE_free(store);
+	}
+	return ret;
+}
