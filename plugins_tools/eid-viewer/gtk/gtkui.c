@@ -287,18 +287,30 @@ void translate(GtkMenuItem* item, gpointer target) {
 }
 
 /* Initialize the drag-and-drop environment */
-void setup_dnd(void) {
+static gboolean setup_dnd_real(gpointer foo G_GNUC_UNUSED) {
 	GtkWidget* photo = GTK_WIDGET(gtk_builder_get_object(builder, "photobox"));
 
 	gtk_drag_source_set(photo, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
 	gtk_drag_source_add_text_targets(photo);
+
+	return FALSE;
+}
+
+void setup_dnd(void) {
+	g_main_context_invoke(NULL, setup_dnd_real, NULL);
 }
 
 /* Disable drag-and-drop when we no longer have data */
-void disable_dnd(void) {
+static gboolean disable_dnd_real(gpointer foo G_GNUC_UNUSED) {
 	GtkWidget* pbox = GTK_WIDGET(gtk_builder_get_object(builder, "photobox"));
 
 	gtk_drag_source_unset(pbox);
+
+	return FALSE;
+}
+
+void disable_dnd(void) {
+	g_main_context_invoke(NULL, disable_dnd_real, NULL);
 }
 
 /* Perform a drag-and-drop operation */
