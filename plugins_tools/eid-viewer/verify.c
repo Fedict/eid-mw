@@ -22,14 +22,14 @@
 
 #define VALID_OCSP_PREFIX "http://ocsp.eid.belgium.be"
 
-static void log_error(char* message) {
+static void log_ssl_error(char* message) {
 	char buf[100];
 	unsigned long error = ERR_get_error();
 
 	ensure_inited();
 	ERR_error_string_n(error, buf, sizeof buf);
 	buf[99] = '\0';
-	be_log(EID_VWR_LOG_ERROR, message);
+	be_log(EID_VWR_LOG_COARSE, message);
 	be_log(EID_VWR_LOG_DETAIL, "libssl error: %s", buf);
 }
 
@@ -57,12 +57,12 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
-		log_error("Could not parse entity certificate");
+		log_ssl_error("Could not parse entity certificate");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
 	if(d2i_X509(&ca_i, (const unsigned char**)&ca, calen) == NULL) {
-		log_error("Could not parse CA certificate");
+		log_ssl_error("Could not parse CA certificate");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
@@ -79,7 +79,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 			STACK_OF(CONF_VALUE) *nval = NULL;
 
 			if(!(method = X509V3_EXT_get(ex)) || !(method->i2v)) {
-				log_error("Could not find OCSP URL information");
+				log_ssl_error("Could not find OCSP URL information");
 				ret = EID_VWR_RES_FAILED;
 				goto exit;
 			}
@@ -89,7 +89,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 				ext_str = method->d2i(NULL, &p, ex->value->length);
 			}
 			if(!(nval = method->i2v(method, ext_str, NULL))) {
-				log_error("Could not read OCSP URL from certificate");
+				log_ssl_error("Could not read OCSP URL from certificate");
 				ret = EID_VWR_RES_FAILED;
 				goto exit;
 			}
@@ -153,10 +153,10 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 		case OCSP_RESPONSE_STATUS_SIGREQUIRED:
 			status_string = "signature required"; break;
 		case OCSP_RESPONSE_STATUS_UNAUTHORIZED:
-			status_string = "invalid certificate or algorithm"; break;
+			status_string = "invalid certificate, algorithm, or root certificate"; break;
 	}
 	if(status_string != NULL) {
-		be_log(EID_VWR_LOG_NORMAL, "eID certificate check failed: %s", status_string);
+		be_log(EID_VWR_LOG_ERROR, "eID certificate check failed: %s", status_string);
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
@@ -181,7 +181,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir());
 	X509_LOOKUP_add_dir(lookup, CERTTRUSTDIR, X509_FILETYPE_PEM);
 	if(OCSP_basic_verify(bresp, bresp->certs, store, 0) <= 0) {
-		log_error("OCSP signature invalid, or root certificate unknown");
+		be_log(EID_VWR_LOG_ERROR, "OCSP signature invalid, or root certificate unknown");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
@@ -201,27 +201,27 @@ enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certl
 
 	store = X509_STORE_new();
 	if(!(lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir()))) {
-		log_error("RRN certificate verification failed: Could not load root certificates");
+		be_log(EID_VWR_LOG_NORMAL, "RRN certificate verification failed: Could not load root certificates");
 		ret = EID_VWR_RES_UNKNOWN;
 		goto exit;
 	}
 	X509_LOOKUP_add_dir(lookup, CERTTRUSTDIR, X509_FILETYPE_PEM);
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
-		log_error("RRN certificate verification failed: Could not parse RRN certificate");
+		be_log(EID_VWR_LOG_NORMAL, "RRN certificate verification failed: Could not parse RRN certificate");
 		ret = EID_VWR_RES_UNKNOWN;
 		goto exit;
 	}
 
 	ctx = X509_STORE_CTX_new();
 	if(X509_STORE_CTX_init(ctx, store, cert_i, NULL) != 1) {
-		log_error("RRN certificate verification failed: could not build context");
+		be_log(EID_VWR_LOG_NORMAL, "RRN certificate verification failed: could not build context");
 		ret = EID_VWR_RES_UNKNOWN;
 		goto exit;
 	}
 
 	if(X509_verify_cert(ctx) != 1) {
-		log_error("RRN certificate verification failed: invalid signature, or invalid root certificate.");
+		be_log(EID_VWR_LOG_ERROR, "RRN certificate verification failed: invalid signature, or invalid root certificate.");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
