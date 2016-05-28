@@ -1,12 +1,12 @@
 #ifndef EID_VWR_CERT_HELPERS_H
 #define EID_VWR_CERT_HELPERS_H
 
-/** \addtogroup C_API
+/** \addtogroup C_API_OSSL
   * @{
   */
 
 /** \file certhelpers.h
-  * \brief Certificate helper functions
+  * \brief Certificate helper functions. Linux/OSX only.
   *
   * This file contains some helper functions to deal with certificates
   * and data integrity using OpenSSL. It is for Linux and OSX only.

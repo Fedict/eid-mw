@@ -2,8 +2,9 @@
 #define EID_VWR_VERIFY_H
 
 /**
-  * \addtogroup C_API
+  * \defgroup C_API_OSSL OpenSSL-based helper functions
   *
+  * These functions are available on GNU/Linux and OS X *only*.
   * @{
   */
 
@@ -25,7 +26,7 @@ extern "C" {
   * checking signatures, ensuring they're signed by a valid root
   * certificate, and performing an OCSP request against the OCSP server.
   *
-  * \param certificate the X.509 certificate to check, in DER format
+  * \param certificate the X.509 certificate to check, in DER format.
   * \param certlen the length (in bytes) of certificate.
   * \param ca the CA certificate by which the certificate is signed
   * \param calen the length (in bytes) of ca
@@ -46,6 +47,18 @@ extern "C" {
   * parameter.
   */
 DllExport enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen, const void* ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*));
+/**
+  * \brief Verify the validity of the RRN certificate.
+  *
+  * This function will verify the validity of the RRN certificate by
+  * checking that the certificate is signed by a valid root certificate.
+  *
+  * \note This function will *not* perform an OCSP request, since the
+  * root CA does not have an OCSP server.
+  *
+  * \param certificate the X.509 certificate to check, in DER format.
+  * \param certlen the length (in bytes) of certificate.
+  */
 DllExport enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certlen);
 
 #ifdef __cplusplus
