@@ -84,6 +84,10 @@ DllExport char* eid_vwr_describe_cert(const char* label, X509* cert);
   *   the correct manner, and verify the passed address signature against the
   *   result
   *
+  * \warning the validity of the RRN certificate is not checked by this
+  * function.
+  * \see eid_vwr_verify_rrncert() verifies the RRN certificate
+  *
   * \param photo the contents of the binary data with label "PHOTO_FILE"
   * \param plen the length in bytes of the preceding parameter
   * \param photohash the contents of the binary data with label
@@ -106,9 +110,6 @@ DllExport char* eid_vwr_describe_cert(const char* label, X509* cert);
   * \param certlen the length in bytes of the preceding parameter
   * \return 0 if one of the above-described tests indicates invalid
   * data, or 1 if all tests were successful.
-  *
-  * \warning the validity of the RRN certificate is not checked by this
-  * function.
   */
 DllExport int eid_vwr_check_data_validity(const void* photo, int plen,
 			const void* photohash, int hashlen,
