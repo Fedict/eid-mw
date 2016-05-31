@@ -5,7 +5,7 @@ source $(dirname $0)/set_eidmw_version.sh
 gitrev=$(git describe --dirty)
 NOW=$(date +%F)
 
-cat > $1 <<EOF
+cat > "$1" <<EOF
 #ifndef BEID_VERSION_H
 #define BEID_VERSION_H
 

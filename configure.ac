@@ -1,6 +1,6 @@
 AC_PREREQ([2.61])
 AC_INIT([eid-mw],
-  m4_esyscmd_s(echo "4.1.18-"$(git describe --dirty|sed -e 's/-/./g')),
+  m4_esyscmd_s(echo "4.1.12-"$(scripts/build-aux/genver.sh)),
   [servicedesk@fedict.be],,
   [http://eid.belgium.be])
 
@@ -13,6 +13,7 @@ AM_SILENT_RULES([yes])
 
 LT_INIT
 AM_INIT_AUTOMAKE([subdir-objects foreign tar-pax dist-zip serial-tests])
+AM_SILENT_RULES([yes])
 
 # Checks for programs.
 AC_PROG_CXX
@@ -42,24 +43,29 @@ AC_ARG_WITH([gtkvers],
 have_gtk=no
 AC_MSG_CHECKING([for wanted GTK version])
 AC_MSG_RESULT($gtkvers)
-if test x"$gtkvers" = xdetect -o x"$gtkvers" = x3
+if test "$gtkvers" = "detect" -o "$gtkvers" = 3
 then
 	AC_MSG_CHECKING([for gtk3])
-	PKG_CHECK_MODULES(GTK, [gtk+-3.0], [have_gtk=yes], [have_gtk=no])
+	PKG_CHECK_MODULES(GTK, [gtk+-3.0], [have_gtk=3], [have_gtk=no])
 fi
-if test x"$have_gtk" = "xno"
+if test "$have_gtk" = "no"
 then
-	if test x"$gtkvers" = xdetect -o x"$gtkvers" = x2
+	if test "$gtkvers" = detect -o "$gtkvers" = 2
 	then
 		AC_MSG_CHECKING([for gtk2])
-		PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], [have_gtk=yes], [have_gtk=no])
+		PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], [have_gtk=2], [have_gtk=no])
 	fi
 fi
 
-if test x"$have_gtk" = "xno"
+AC_DEFINE_UNQUOTED([HAVE_GTK], [$have_gtk], [Set to major version of libgtk])
+
+if test "$have_gtk" = "no"
 then
 	AC_MSG_ERROR([At least one version of GTK is required.])
 fi
+
+PKG_CHECK_MODULES([XML2], [libxml-2.0])
+PKG_CHECK_MODULES([libproxy], [libproxy-1.0])
 
 ###########################################################################
 ####### read user-specific requests from --enable directives         ######
@@ -75,6 +81,13 @@ else
 AC_MSG_RESULT(yes)
 fi
 AM_CONDITIONAL([NO_DIALOGS],[test x$enable_dialogs = xno])
+
+PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.30],[HAVE_GIO=1],[HAVE_GIO=0])
+AC_DEFINE_UNQUOTED([HAVE_GIO], [$HAVE_GIO], [Define to one if you have a recent enough libgio])
+if test "$HAVE_GIO" -gt 0; then
+GLIB_GSETTINGS
+fi
+AM_CONDITIONAL(HAVE_GIO, [test "$HAVE_GIO" = 1])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
@@ -98,9 +111,12 @@ AM_CONDITIONAL([JPEG], [test x$HAVE_JPEGLIB = x1])
 AC_SUBST([JPEG_LIBS])
 AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjpeg installed])
 
-# we only need libssl for the test suite, so don't worry if it's not available...
-PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1], [HAVE_OPENSSL=0])
+PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1])
+PKG_CHECK_VAR(SSL_PREFIX, "openssl", "exec_prefix",, AC_MSG_ERROR([Could not find exec_prefix for openssl]))
 AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
+AC_SUBST(SSL_PREFIX)
+
+PKG_CHECK_MODULES(CURL, "libcurl", [HAVE_CURL=1])
 MAINVERSION=$(echo $PACKAGE_VERSION|sed -e 's/-.*$//')
 AC_DEFINE_UNQUOTED([MAINVERSION], $MAINVERSION, [do not change this])
 AC_SUBST(MAINVERSION)
@@ -130,7 +146,20 @@ AC_SUBST([pkcs11hincludedir])
 AC_SUBST([p11kitsodir])
 AC_SUBST([p11kitcfdir])
 
-AC_CONFIG_FILES([Makefile cardcomm/pkcs11/src/Makefile cardcomm/pkcs11/src/libbeidpkcs11.pc doc/sdk/include/rsaref220/Makefile tests/unit/Makefile plugins_tools/aboutmw/gtk/Makefile plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh plugins_tools/aboutmw/gtk/po/Makefile.in rpm/eid-mw.spec])
+AC_CONFIG_FILES([Makefile
+		 cardcomm/pkcs11/src/Makefile
+		 cardcomm/pkcs11/src/libbeidpkcs11.pc
+		 doc/sdk/include/rsaref220/Makefile
+		 tests/unit/Makefile
+		 plugins_tools/util/Makefile
+		 plugins_tools/aboutmw/gtk/Makefile
+		 plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh
+		 plugins_tools/aboutmw/gtk/po/Makefile.in
+		 plugins_tools/eid-viewer/Makefile
+		 plugins_tools/eid-viewer/test/Makefile
+		 plugins_tools/eid-viewer/gtk/po/Makefile.in
+		 plugins_tools/eid-viewer/gtk/eid-viewer.desktop.sh
+		 rpm/eid-mw.spec])
 AC_CONFIG_SUBDIRS([plugins_tools/xpi])
 
 AC_OUTPUT

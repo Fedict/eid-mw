@@ -1,0 +1,5 @@
+# List of source files which contain translatable strings.
+plugins_tools/eid-viewer/gtk/main.c
+plugins_tools/eid-viewer/gtk/gtkui.c
+plugins_tools/eid-viewer/gtk/viewer.glade
+plugins_tools/eid-viewer/gtk/print.c

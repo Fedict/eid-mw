@@ -6,6 +6,6 @@ cat <<EOF
 
 #define $2 \\
 EOF
-sed -e 's/"/\\"/g;s/^/"/;s/$/"\\/'
+sed -e 's/\\/\\\\/g;s/"/\\"/g;s/^/"/;s/$/"\\/'
 echo ""
 echo "#endif"

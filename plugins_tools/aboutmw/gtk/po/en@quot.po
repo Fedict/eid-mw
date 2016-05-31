@@ -1,5 +1,5 @@
 # English translations for eid-mw package.
-# Copyright (C) 2015 FedICT
+# Copyright (C) 2015 Fedict
 # This file is distributed under the same license as the eid-mw package.
 # Automatically generated, 2015.
 #

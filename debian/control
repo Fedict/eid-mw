@@ -1,7 +1,7 @@
 Source: eid-mw
 Priority: optional
 Maintainer: FedICT Servicedesk <servicedesk@fedict.be>
-Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk-3-dev | libgtk2.0-dev (<= 2.24.11), libtool, libp11-kit-dev
+Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk-3-dev | libgtk2.0-dev (<= 2.24.11), libtool, libssl-dev, libxml2-dev, libcurl4-openssl-dev, libproxy-dev, openssl, libp11-kit-dev
 Standards-Version: 3.8.3
 Section: libs
 Homepage: http://code.google.com/p/eid-mw/
@@ -76,3 +76,62 @@ Description: Belgian Electronic Identity Card - Mozilla plugin
  Identity Card. Install it if you wish to log on to websites using your
  electronic identity card from within iceweasel or any other gecko-based
  browser.
+
+Package: eid-viewer
+Section: misc
+Provides: beidgui
+Replaces: beidgui
+Conflicts: beidgui
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Graphical interface to Belgian Electronic Identity Card
+ This package contains a graphical application to read data from the
+ Belgian electronic identity card.
+
+Package: libeidviewer0
+Section: libs
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Pre-Depends: ${misc:Depends}
+Description: eid-viewer library
+ The eid-viewer library is a high-level, event-based library written
+ originally for use by the official eID-viewer program. It is a simple
+ to use library to access a Belgian eID, and can be used as an
+ alternative for the PKCS#11 API for projects that don't have high
+ performance requirements and don't need to do cryptographic operations.
+ .
+ This package contains the shared libraries.
+
+Package: libeidviewer-dev
+Section: libdevel
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: same
+Description: eid-viewer library - development files
+ The eid-viewer library is a high-level, event-based library written
+ originally for use by the official eID-viewer program. It is a simple
+ to use library to access a Belgian eID, and can be used as an
+ alternative for the PKCS#11 API for projects that don't have high
+ performance requirements and don't need to do cryptographic operations.
+ .
+ This package contains the static libraries and the development headers
+ for libeidviewer.
+
+Package: libeidviewer-dbg
+Section: debug
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libeidviewer0
+Description: eid-viewer library - debug symbols
+ The eid-viewer library is a high-level, event-based library written
+ originally for use by the official eID-viewer program. It is a simple
+ to use library to access a Belgian eID, and can be used as an
+ alternative for the PKCS#11 API for projects that don't have high
+ performance requirements and don't need to do cryptographic operations.
+ .
+ This package contains the debugging symbols for the library. It is only
+ useful in case of problems, or possibly when developing an application
+ for the eID.

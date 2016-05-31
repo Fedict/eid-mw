@@ -1,0 +1,75 @@
+@startuml
+title Backend state machine
+
+' This file documents the state machine as implemented in state.c. It
+' can be converted to a diagram by way of PlantUML, see
+' http://plantuml.com/
+
+[*] --> LIBOPEN
+
+LIBOPEN --> CALLBACKS : SET_CALLBACKS
+
+CALLBACKS: enter:C_Initialize()\nexit:C_Finalize()
+state CALLBACKS {
+  state NO_TOKEN
+  state TOKEN
+  state FILE
+  state CARD_INVALID
+
+  [*] --> NO_TOKEN
+
+  NO_TOKEN --> FILE : OPEN_FILE
+  FILE --> NO_TOKEN : CLOSE_FILE
+  FILE --> TOKEN : TOKEN_INSERTED
+  FILE --> NO_TOKEN : STATE_ERROR
+  FILE: enter: do_parse_file
+
+  TOKEN: enter: eid_vwr_p11_open_session\nexit: eid_vwr_p11_close_session
+  TOKEN --> NO_TOKEN : TOKEN_REMOVED
+  TOKEN --> CARD_INVALID : DATA_INVALID
+
+  CARD_INVALID --> NO_TOKEN : TOKEN_REMOVED
+
+  state NO_TOKEN {
+    state NO_READER
+    state READY
+
+    [*] --> NO_READER
+    NO_READER --> READY : READER_FOUND
+
+    READY --> TOKEN : TOKEN_INSERTED
+    READY: enter: source_none
+  }
+
+  state TOKEN {
+    state TOKEN_ID
+    state TOKEN_CERTS
+    state TOKEN_ERROR
+    state TOKEN_WAIT
+    state TOKEN_PINOP
+    state TOKEN_SERIALIZE
+
+    [*] --> TOKEN_ID
+
+    TOKEN_ID --> TOKEN_CERTS : READ_READY
+    TOKEN_ID --> TOKEN_ERROR : STATE_ERROR
+    TOKEN_ID: enter: eid_vwr_p11_read_id\nexit:eid_vwr_p11_finalize_find
+
+    TOKEN_CERTS --> TOKEN_WAIT : READ_READY
+    TOKEN_CERTS --> TOKEN_ERROR : STATE_ERROR
+    TOKEN_CERTS: enter: eid_vwr_p11_read_certs\nexit:eid_vwr_p11_finalize_find
+ 
+    TOKEN_WAIT --> TOKEN_PINOP : DO_PINOP
+    TOKEN_WAIT --> TOKEN_SERIALIZE : SERIALIZE
+
+    TOKEN_PINOP --> TOKEN_WAIT : READ_READY
+    TOKEN_PINOP --> TOKEN_WAIT : STATE_ERROR
+    TOKEN_PINOP: enter: eid_vwr_p11_do_pinop\nexit :eid_vwr_p11_leave_pinop
+
+    TOKEN_SERIALIZE --> TOKEN_WAIT : READ_READY
+    TOKEN_SERIALIZE --> TOKEN_ERROR : STATE_ERROR
+    TOKEN_SERIALIZE: enter: eid_vwr_p11_serialize
+  }
+}
+
+@enduml

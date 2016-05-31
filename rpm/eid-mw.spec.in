@@ -28,9 +28,19 @@ Requires: eid-mw-libs
 %if 0%{?suse_version}
 Requires: pcsc-ccid
 BuildRequires: gcc-c++
+BuildRequires: libopenssl-devel
+BuildRequires: libtool
+BuildRequires: libltdl7
 %else
 Requires: ccid
+BuildRequires: openssl-devel
+BuildRequires: openssl-perl
+BuildRequires: libtool-ltdl-devel
 %endif
+BuildRequires: openssl
+BuildRequires: libproxy-devel
+BuildRequires: libcurl-devel
+BuildRequires: libxml2-devel
 Conflicts: openct
 
 %description
@@ -66,6 +76,30 @@ The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
 plugin to use Belgian eID (electronic identity) card in order to access
 websites and/or sign documents. This package contains the actual libraries.
 
+%package vwr
+Summary: Belgium electronic identity card viewer
+Obsoletes: eid-viewer
+Requires: eid-mw
+%if 0%{?suse_version}
+Requires: java >= 1.6.0
+Requires: pcsc-ccid
+%else
+Requires: java >= 1:1.6.0
+Requires: ccid
+%endif
+Requires: pcsc-lite
+Conflicts: openct
+
+%description vwr
+The eid-viewer application allows the user to read out any information from
+a Belgian electronic identity card. Both identity information and information
+about the stored cryptographic keys can be read in a user-friendly manner,
+and can easily be printed out or stored for later reviewal.
+
+The application verifies the signature of the identity information,
+checks whether it was signed by a government-issued key, and optionally
+checks the certificate against the government's Trust Service.
+
 %prep
 %setup -n eid-mw-%{version}-%{revision}
 
@@ -78,6 +112,8 @@ websites and/or sign documents. This package contains the actual libraries.
 %{__make} install DESTDIR="%{buildroot}"
 rm -f %{buildroot}%{_datadir}/applications/about-eid-mw.desktop
 desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict plugins_tools/aboutmw/gtk/about-eid-mw.desktop || true
+rm -f %{buildroot}%{_datadir}/applications/eid-viewer.desktop
+desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict plugins_tools/eid-viewer/eid-viewer.desktop || true
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -107,6 +143,7 @@ fi
 %exclude %{_libdir}/*.la
 %files libs
 %{_libdir}/libbeidpkcs11.so.*
+%{_libdir}/libeidviewer.so.*
 %{_libdir}/pkcs11
 %exclude %{_libdir}/libbeidpkcs11.so
 %files bin
@@ -117,19 +154,36 @@ fi
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
-%{_datadir}/applications
+%{_datadir}/applications/fedict-about-eid-mw.desktop
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/p11-kit
 %files devel
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
+%{_libdir}/libeidviewer.a
+%{_libdir}/libeidviewer.so
 %{_libdir}/pkgconfig
 %{_includedir}/beid/
+%{_includedir}/eid-viewer/
+
+%files vwr
+%defattr(-,root,root,0755)
+%{_bindir}/eid-viewer
+%{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
+%{_datadir}/eid-mw
+%{_datadir}/applications/fedict-eid-viewer.desktop
+%{_datadir}/icons/eid-viewer.png
+%if ! 0%{?el6}
+%{_datadir}/glib-2.0/schemas
+%endif
 
 %changelog
 * Fri May 20 2016 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.1.18-0.R
 - Update to 4.1.18
 - Update the XPI file so we have Firefox' new signature
+
+* Wed May 18 2016 Wouter Verhelst <wouter.verhelst@fedict.be>
+- Add libeidviewer stuff
 
 * Thu Feb 18 2016 Wouter Verhelst <wouter.verhelst@fedict.be>
 - Add p11-kit linkage

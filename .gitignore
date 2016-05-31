@@ -30,4 +30,11 @@ cardcomm/pkcs11/src/common/beidversions.h
 *.xccheckout
 xcuserdata
 .DS_Store
+*.gmo
+*.po~
+*.mo
+en@boldquot.po
+en@quot.po
+stamp-po
 release
+Debug

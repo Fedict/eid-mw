@@ -6,9 +6,11 @@ check_PROGRAMS = $(TESTS)
 
 CLEANFILES=foto.jpg
 
-COMMON_LIB=$(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
+COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la libtestlib.a
+noinst_LIBRARIES = libtestlib.a
+libtestlib_a_SOURCES = testlib.h testlib.c
 
-AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220
+AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util
 if NO_DIALOGS
 AM_CFLAGS += -DNO_DIALOGS
 endif
@@ -59,23 +61,23 @@ sessioninfo_LDADD = $(COMMON_LIB)
 login_SOURCES = login.c $(COMMON_SRCS)
 login_LDADD = $(COMMON_LIB)
 
-login_state_SOURCES = login_state.c $(COMMON_SRCS)
-login_state_LDADD = $(COMMON_LIB)
-
 nonsensible_SOURCES = nonsensible.c $(COMMON_SRCS)
 nonsensible_LDADD = $(COMMON_LIB)
+
+login_state_SOURCES = login_state.c $(COMMON_SRCS)
+login_state_LDADD = $(COMMON_LIB)
 
 objects_SOURCES = objects.c $(COMMON_SRCS)
 objects_LDADD = $(COMMON_LIB)
 
 readdata_SOURCES = readdata.c $(COMMON_SRCS)
-readdata_LDADD = $(COMMON_LIB)
-
-readdata_sequence_SOURCES = readdata_sequence.c $(COMMON_SRCS)
-readdata_sequence_LDADD = $(COMMON_LIB)
+readdata_LDADD = $(COMMON_LIB) $(top_builddir)/plugins_tools/util/liblabels.la
 
 digest_SOURCES = digest.c $(COMMON_SRCS)
 digest_LDADD = $(COMMON_LIB)
+
+readdata_sequence_SOURCES = readdata_sequence.c $(COMMON_SRCS)
+readdata_sequence_LDADD = $(COMMON_LIB)
 
 decode_photo_SOURCES = decode_photo.c $(COMMON_SRCS)
 decode_photo_LDADD = $(COMMON_LIB) @JPEG_LIBS@
@@ -87,11 +89,11 @@ sign_SOURCES = sign.c $(COMMON_SRCS)
 sign_CFLAGS = @SSL_CFLAGS@ $(AM_CFLAGS)
 sign_LDADD = $(COMMON_LIB) @SSL_LIBS@
 
-sign_state_SOURCES = sign_state.c $(COMMON_SRCS)
-sign_state_LDADD = $(COMMON_LIB)
-
 ordering_SOURCES = ordering.c $(COMMON_SRCS)
 ordering_LDADD = $(COMMON_LIB)
+
+sign_state_SOURCES = sign_state.c $(COMMON_SRCS)
+sign_state_LDADD = $(COMMON_LIB)
 
 wrong_init_SOURCES = wrong_init.c $(COMMON_SRCS)
 wrong_init_LDADD = $(COMMON_LIB)
