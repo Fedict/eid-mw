@@ -19,8 +19,125 @@ namespace eIDViewer
     public class BackendDataViewModel : INotifyPropertyChanged
     {
 
+        static bool VerifyCertificate(byte[] primaryCertificate, IEnumerable<byte[]> additionalCertificates)
+        {
+            var chain = new X509Chain();
+            foreach (var cert in additionalCertificates.Select(x => new X509Certificate2(x)))
+            {
+                chain.ChainPolicy.ExtraStore.Add(cert);
+            }
+
+            // You can alter how the chain is built/validated.
+            chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+            chain.ChainPolicy.VerificationFlags = X509VerificationFlags.NoFlag;
+
+            // Do the validation.
+            var primaryCert = new X509Certificate2(primaryCertificate);
+            return chain.Build(primaryCert);
+        }
+
+        public void CheckCertificateValidity()
+        {
+            var chain = new X509Chain();
+            try
+            {     
+                if (authentication_cert != null)
+                {                  
+                    //alter how the chain is built/validated.
+                    chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+                    chain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
+
+                    //CertCreateCertificateChainEngine()
+
+
+                    /*                   typedef struct _CERT_CHAIN_ENGINE_CONFIG
+                           {
+                               DWORD cbSize;
+                               HCERTSTORE hRestrictedRoot;
+                               HCERTSTORE hRestrictedTrust;
+                               HCERTSTORE hRestrictedOther;
+                               DWORD cAdditionalStore;
+                               HCERTSTORE* rghAdditionalStore;
+                               DWORD dwFlags;
+                               DWORD dwUrlRetrievalTimeout;
+                               DWORD MaximumCachedCertificates;
+                               DWORD CycleDetectionModulus;
+                               HCERTSTORE hExclusiveRoot;
+                               HCERTSTORE hExclusiveTrustedPeople;
+                               DWORD dwExclusiveFlags;
+                           }
+                           CERT_CHAIN_ENGINE_CONFIG, *PCERT_CHAIN_ENGINE_CONFIG;*/
+
+                    /*                   BOOL WINAPI CertCreateCertificateChainEngine(
+                     _In_  PCERT_CHAIN_ENGINE_CONFIG pConfig,
+                     _Out_ HCERTCHAINENGINE * phChainEngine
+                   );*/
+
+                    chain.ChainPolicy.ExtraStore.Add(intermediateCA_cert);
+                    chain.ChainPolicy.ExtraStore.Add(rootCA_cert);
+
+                    // Do the validation
+                    bool chainok = chain.Build(authentication_cert);
+
+                    Console.WriteLine("Chain Information");
+                    Console.WriteLine("Chain revocation flag: {0}", chain.ChainPolicy.RevocationFlag);
+                    Console.WriteLine("Chain revocation mode: {0}", chain.ChainPolicy.RevocationMode);
+                    Console.WriteLine("Chain verification flag: {0}", chain.ChainPolicy.VerificationFlags);
+                    Console.WriteLine("Chain verification time: {0}", chain.ChainPolicy.VerificationTime);
+                    Console.WriteLine("Chain status length: {0}", chain.ChainStatus.Length);
+                    Console.WriteLine("Chain application policy count: {0}", chain.ChainPolicy.ApplicationPolicy.Count);
+                    Console.WriteLine("Chain certificate policy count: {0} {1}", chain.ChainPolicy.CertificatePolicy.Count, Environment.NewLine);
+
+                    if (chainok == false)
+                    {
+                        this.logText += "authentication chain has issues \n";
+                    }
+                    else if (chain.ChainElements[chain.ChainElements.Count - 1].Certificate.Thumbprint == rootCA_cert.Thumbprint)
+                    {
+                        this.logText += "authentication chain not build correctly \n";
+                    }
+                    else
+                    {
+                        //root cert in the verified chain is not the one on the eID Card
+                    }
+                    authentication_cert.Verify();
+                }
+            }
+
+            catch (Exception e)
+            {
+                this.logText += "An error occurred displaying the image \n";
+            }     
+            finally
+            {
+                var disposable = chain as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
+        }
+
+        public void AllDataRead( )
+        {
+            progress_bar_visible = "Hidden";
+            CheckCertificateValidity();
+        }
+
+        private string _certificateLargeIcon;
+        public string certificateLargeIcon
+    {
+            get { return _certificateLargeIcon; }
+            set
+            {
+                _certificateLargeIcon = value;
+                this.NotifyPropertyChanged("certificateLargeIcon");
+            }
+        }
+
         public BackendDataViewModel()
         {
+            certificateLargeIcon = "Resources/CertificateImages/certificate_large.png";
             _certsList = new ObservableCollection<CertViewModel>();
             cert_collection = new X509Certificate2Collection();
             rootCA = new CertViewModel { CertLabel = "rootCA" };
@@ -144,7 +261,7 @@ namespace eIDViewer
             catch (Exception e)
             {
                 this.logText+= "An error occurred displaying the image \n";
-                Console.WriteLine("An error occurred: '{0}'", e);
+               // Console.WriteLine("An error occurred: '{0}'", e);
                 return null;
             }
         }

@@ -189,7 +189,8 @@ namespace eIDViewer
             switch(state)
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
-                    theData.progress_bar_visible = "Hidden";
+                    theData.AllDataRead();
+                    //theData.progress_bar_visible = "Hidden";
                     break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;

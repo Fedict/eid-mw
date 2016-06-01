@@ -81,7 +81,6 @@
                     <Label Content="{Binding Path=chip_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,185,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=validity_begin_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,211,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=validity_end_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,237,0,0" VerticalAlignment="Top"/>
-
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.CERTIFICATES, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
@@ -141,7 +140,7 @@
                         <Label Grid.Column="2" Grid.Row="3" Content="{Binding Path=cert_valid_untill, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
                         <Label Grid.Column="2" Grid.Row="5" Content="{Binding Path=cert_usage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
                         <Label Grid.Column="2" Grid.Row="7" Content="{Binding Path=cert_trust, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
-                        <Image Grid.Column="0" Grid.RowSpan="8" x:Name="image" HorizontalAlignment="Right" Height="80" VerticalAlignment="Center" />
+                        <Image Grid.Column="0" Grid.RowSpan="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Path=certificateLargeIcon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Opacity="0.6" />
                     </Grid>
                     <CheckBox x:Name="checkBox" Content="Always validate certificate trust" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBox_Checked" Margin="110,407,0,0"/>
                     <Button x:Name="button" Content="Check validity now" Grid.Column="1" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Margin="377,403,0,-3" />
