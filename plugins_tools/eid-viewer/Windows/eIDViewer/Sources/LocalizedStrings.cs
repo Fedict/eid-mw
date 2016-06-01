@@ -32,6 +32,18 @@ namespace eIDViewer
             }
         }
 
+        private static eIDViewer.Resources.CardTabStringResources _cardTabResource = new eIDViewer.Resources.CardTabStringResources();
+
+        public eIDViewer.Resources.CardTabStringResources cardTabResource
+        {
+            get { return _cardTabResource; }
+
+            set
+            {
+                _cardTabResource = value;
+                NotifyPropertyChanged("cardTabResource");
+            }
+        }
         private static eIDViewer.Resources.CertificateTabStringResources _certificateTabResource = new eIDViewer.Resources.CertificateTabStringResources();
 
         public eIDViewer.Resources.CertificateTabStringResources certificateTabResource

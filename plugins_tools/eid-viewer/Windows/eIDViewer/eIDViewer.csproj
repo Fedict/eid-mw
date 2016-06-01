@@ -75,6 +75,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ApplicationStringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\CardTabStringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CardTabStringResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\CertificateTabStringResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -164,6 +169,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApplicationStringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CardTabStringResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CardTabStringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CardTabStringResources.fr-BE.resx" />
+    <EmbeddedResource Include="Resources\CardTabStringResources.nl-BE.resx" />
+    <EmbeddedResource Include="Resources\CardTabStringResources.de-DE.resx" />
     <EmbeddedResource Include="Resources\CertificateTabStringResources.de-DE.resx" />
     <EmbeddedResource Include="Resources\CertificateTabStringResources.fr-BE.resx" />
     <EmbeddedResource Include="Resources\CertificateTabStringResources.nl-BE.resx" />
