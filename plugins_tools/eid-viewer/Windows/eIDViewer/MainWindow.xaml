@@ -170,15 +170,15 @@
         </TabControl>
         <Menu Height="23" Margin="0,0,0,0" VerticalAlignment="Top">
             <MenuItem Header="{Binding Path=applicationResource.fileMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <MenuItem Header="Open.." Click="MenuItemOpen_Click"/>
-                <MenuItem Header="Save as.." Click="MenuItemSaveAs_Click" IsEnabled="{Binding Path=eid_data_ready, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <MenuItem Header="Close" IsEnabled="False"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuOpenItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Click="MenuItemOpen_Click"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuSaveItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Click="MenuItemSaveAs_Click" IsEnabled="{Binding Path=eid_data_ready, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuCloseItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" IsEnabled="False"/>
                 <Separator/>
-                <MenuItem Header="Preferences.."/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuPreferencesItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
                 <Separator/>
-                <MenuItem Header="Print.." IsEnabled="False"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuPrintItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" IsEnabled="False"/>
                 <Separator/>
-                <MenuItem Header="Quit" Click="ExitMenuItem_Click"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuQuitItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Click="ExitMenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="{Binding Path=applicationResource.languageMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
                 <MenuItem Header="Deutch" Click="Deutch_Click"/>
@@ -189,9 +189,9 @@
             <MenuItem Header="{Binding Path=applicationResource.helpMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
                 <MenuItem Header="{Binding Path=applicationResource.ABOUT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
                 <Separator/>
-                <MenuItem Header="Frequently asked questions.."/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuFAQItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
                 <Separator/>
-                <MenuItem Header="Testsite for eID.."/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuTestSiteItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
                 <Separator/>
                 <MenuItem Header="Show Log Tab" IsCheckable="True" InputGestureText="Ctrl+L"/>
             </MenuItem>

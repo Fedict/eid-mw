@@ -57,5 +57,18 @@ namespace eIDViewer
                 NotifyPropertyChanged("applicationResource");
             }
         }
+
+        private static eIDViewer.Resources.MenuItemStringResources _menuItemResource = new eIDViewer.Resources.MenuItemStringResources();
+
+        public eIDViewer.Resources.MenuItemStringResources menuItemResource
+        {
+            get { return _menuItemResource; }
+
+            set
+            {
+                _menuItemResource = value;
+                NotifyPropertyChanged("menuItemResource");
+            }
+        }
     }
 }

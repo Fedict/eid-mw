@@ -41,6 +41,7 @@ namespace eIDViewer
             theLocalizedStrings.identityTabResource = new eIDViewer.Resources.IdentityTabStringResources();
             theLocalizedStrings.certificateTabResource = new eIDViewer.Resources.CertificateTabStringResources();
             theLocalizedStrings.applicationResource = new eIDViewer.Resources.ApplicationStringResources();
+            theLocalizedStrings.menuItemResource = new eIDViewer.Resources.MenuItemStringResources();
 
             eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
             theBackendData.Refresh();

@@ -85,6 +85,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Resources\MenuItemStringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MenuItemStringResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Sources\Backend.cs" />
     <Compile Include="Sources\BackendDataViewModel.cs" />
     <Compile Include="Sources\BackendEnums.cs" />
@@ -166,12 +171,21 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CertificateTabStringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\IdentityTabStringResources.de-DE.resx" />
+    <EmbeddedResource Include="Resources\IdentityTabStringResources.de-DE.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\IdentityTabStringResources.fr-BE.resx" />
     <EmbeddedResource Include="Resources\IdentityTabStringResources.nl-BE.resx" />
     <EmbeddedResource Include="Resources\IdentityTabStringResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IdentityTabStringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MenuItemStringResources.de-DE.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.fr-BE.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.nl-BE.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MenuItemStringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
