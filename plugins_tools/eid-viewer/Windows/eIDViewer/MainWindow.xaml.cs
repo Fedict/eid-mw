@@ -38,9 +38,12 @@ namespace eIDViewer
             Thread.CurrentThread.CurrentCulture = new CultureInfo(localization);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(localization);
             eIDViewer.LocalizedStrings theLocalizedStrings = (LocalizedStrings)(App.Current.Resources["LocalizedStrings"]);
-            theLocalizedStrings.identityTabResource = new eIDViewer.Resources.IdentityTabStringResources();
-            theLocalizedStrings.certificateTabResource = new eIDViewer.Resources.CertificateTabStringResources();
-            theLocalizedStrings.applicationResource = new eIDViewer.Resources.ApplicationStringResources();
+            
+            theLocalizedStrings.NotifyPropertyChanged("identityTabResource");
+            theLocalizedStrings.NotifyPropertyChanged("cardTabResource");
+            theLocalizedStrings.NotifyPropertyChanged("certificateTabResource");
+            theLocalizedStrings.NotifyPropertyChanged("applicationResource");
+            theLocalizedStrings.NotifyPropertyChanged("menuItemResource");
 
             eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
             theBackendData.Refresh();

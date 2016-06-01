@@ -69,19 +69,18 @@
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.CARD, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Kaartnummer:" HorizontalAlignment="Left" Margin="92,133,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Plaats van afgifte:" HorizontalAlignment="Left" Margin="92,159,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Label Content="Chip nummer:" HorizontalAlignment="Left" Margin="92,185,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Geldig vanaf:" HorizontalAlignment="Left" Margin="92,211,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="Geldig tot:" HorizontalAlignment="Left" Margin="92,237,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Click="PincodeTest_Click" Content="Pincode testen" HorizontalAlignment="Left" Margin="92,283,0,0" VerticalAlignment="Top" Width="207" IsEnabled="{Binding Path=eid_card_present, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Click="PincodeTest_Change" Content="Pincode wijzigen" HorizontalAlignment="Left" Margin="92,308,0,0" VerticalAlignment="Top" Width="207" IsEnabled="{Binding Path=eid_card_present, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=cardTabResource.cardNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,133,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=cardTabResource.placeOfIssueLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,159,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Content="{Binding Path=cardTabResource.chipNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,185,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=cardTabResource.validFromLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,211,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=cardTabResource.validUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,237,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Click="PincodeTest_Click" Content="{Binding Path=cardTabResource.verifyPinButton, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,283,0,0" VerticalAlignment="Top" Width="207" IsEnabled="{Binding Path=eid_card_present, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Click="PincodeTest_Change" Content="{Binding Path=cardTabResource.changePinButton, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,308,0,0" VerticalAlignment="Top" Width="207" IsEnabled="{Binding Path=eid_card_present, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="{Binding Path=card_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,133,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=issuing_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,159,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=chip_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,185,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=validity_begin_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,211,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=validity_end_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,237,0,0" VerticalAlignment="Top"/>
-
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.CERTIFICATES, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
@@ -141,7 +140,7 @@
                         <Label Grid.Column="2" Grid.Row="3" Content="{Binding Path=cert_valid_untill, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
                         <Label Grid.Column="2" Grid.Row="5" Content="{Binding Path=cert_usage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
                         <Label Grid.Column="2" Grid.Row="7" Content="{Binding Path=cert_trust, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
-                        <Image Grid.Column="0" Grid.RowSpan="8" x:Name="image" HorizontalAlignment="Right" Height="80" VerticalAlignment="Center" />
+                        <Image Grid.Column="0" Grid.RowSpan="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Path=certificateLargeIcon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Opacity="0.6" />
                     </Grid>
                     <CheckBox x:Name="checkBox" Content="Always validate certificate trust" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBox_Checked" Margin="110,407,0,0"/>
                     <Button x:Name="button" Content="Check validity now" Grid.Column="1" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Margin="377,403,0,-3" />
@@ -171,30 +170,28 @@
         </TabControl>
         <Menu Height="23" Margin="0,0,0,0" VerticalAlignment="Top">
             <MenuItem Header="{Binding Path=applicationResource.fileMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <MenuItem Header="Open.." Click="MenuItemOpen_Click"/>
-                <MenuItem Header="Save as.." Click="MenuItemSaveAs_Click" IsEnabled="{Binding Path=eid_data_ready, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <MenuItem Header="Close" IsEnabled="False"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuOpenItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+O" Click="MenuItemOpen_Click"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuSaveItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+S" Click="MenuItemSaveAs_Click" IsEnabled="{Binding Path=eid_data_ready, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuCloseItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+W" IsEnabled="False"/>
                 <Separator/>
-                <MenuItem Header="Preferences.."/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuPreferencesItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
                 <Separator/>
-                <MenuItem Header="Print.." IsEnabled="False"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuPrintItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+P" IsEnabled="False"/>
                 <Separator/>
-                <MenuItem Header="Quit" Click="ExitMenuItem_Click"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuQuitItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+Q" Click="ExitMenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="{Binding Path=applicationResource.languageMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <MenuItem Header="Deutch" Click="Deutch_Click"/>
-                <MenuItem Header="English" Click="English_Click"/>
-                <MenuItem Header="Français" Click="French_Click"/>
-                <MenuItem Header="Nederlands" Click="Nederlands_Click"/>
+                <MenuItem Header="Deutch" InputGestureText="Ctrl+D" Click="Deutch_Click"/>
+                <MenuItem Header="English" InputGestureText="Ctrl+E" Click="English_Click"/>
+                <MenuItem Header="Français" InputGestureText="Ctrl+F" Click="French_Click"/>
+                <MenuItem Header="Nederlands" InputGestureText="Ctrl+N" Click="Nederlands_Click"/>
             </MenuItem>
             <MenuItem Header="{Binding Path=applicationResource.helpMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
                 <MenuItem Header="{Binding Path=applicationResource.ABOUT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
                 <Separator/>
-                <MenuItem Header="Frequently asked questions.."/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuFAQItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
                 <Separator/>
-                <MenuItem Header="Testsite for eID.."/>
-                <Separator/>
-                <MenuItem Header="Show Log Tab" IsCheckable="True" InputGestureText="Ctrl+L"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuTestSiteItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
             </MenuItem>
         </Menu>
         <Grid Height="55" Margin="0,0,0,0" VerticalAlignment="Bottom">

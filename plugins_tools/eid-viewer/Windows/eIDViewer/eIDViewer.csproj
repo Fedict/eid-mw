@@ -75,6 +75,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ApplicationStringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\CardTabStringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CardTabStringResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\CertificateTabStringResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -84,6 +89,11 @@
       <DependentUpon>IdentityTabStringResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Resources\MenuItemStringResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MenuItemStringResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Sources\Backend.cs" />
     <Compile Include="Sources\BackendDataViewModel.cs" />
@@ -159,6 +169,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApplicationStringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CardTabStringResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CardTabStringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CardTabStringResources.fr-BE.resx" />
+    <EmbeddedResource Include="Resources\CardTabStringResources.nl-BE.resx" />
+    <EmbeddedResource Include="Resources\CardTabStringResources.de-DE.resx" />
     <EmbeddedResource Include="Resources\CertificateTabStringResources.de-DE.resx" />
     <EmbeddedResource Include="Resources\CertificateTabStringResources.fr-BE.resx" />
     <EmbeddedResource Include="Resources\CertificateTabStringResources.nl-BE.resx" />
@@ -166,13 +183,28 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CertificateTabStringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\IdentityTabStringResources.de-DE.resx" />
+    <EmbeddedResource Include="Resources\IdentityTabStringResources.de-DE.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\IdentityTabStringResources.fr-BE.resx" />
     <EmbeddedResource Include="Resources\IdentityTabStringResources.nl-BE.resx" />
     <EmbeddedResource Include="Resources\IdentityTabStringResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IdentityTabStringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MenuItemStringResources.de-DE.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.fr-BE.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.nl-BE.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MenuItemStringResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CertificateImages\certificate_bad.png" />
+    <Resource Include="Resources\CertificateImages\certificate_checked.png" />
+    <Resource Include="Resources\CertificateImages\certificate_large.png" />
+    <Resource Include="Resources\CertificateImages\certificate_warn.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

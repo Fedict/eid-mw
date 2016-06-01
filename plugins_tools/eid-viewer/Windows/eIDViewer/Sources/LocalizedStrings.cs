@@ -32,6 +32,18 @@ namespace eIDViewer
             }
         }
 
+        private static eIDViewer.Resources.CardTabStringResources _cardTabResource = new eIDViewer.Resources.CardTabStringResources();
+
+        public eIDViewer.Resources.CardTabStringResources cardTabResource
+        {
+            get { return _cardTabResource; }
+
+            set
+            {
+                _cardTabResource = value;
+                NotifyPropertyChanged("cardTabResource");
+            }
+        }
         private static eIDViewer.Resources.CertificateTabStringResources _certificateTabResource = new eIDViewer.Resources.CertificateTabStringResources();
 
         public eIDViewer.Resources.CertificateTabStringResources certificateTabResource
@@ -55,6 +67,19 @@ namespace eIDViewer
             {
                 _applicationResource = value;
                 NotifyPropertyChanged("applicationResource");
+            }
+        }
+
+        private static eIDViewer.Resources.MenuItemStringResources _menuItemResource = new eIDViewer.Resources.MenuItemStringResources();
+
+        public eIDViewer.Resources.MenuItemStringResources menuItemResource
+        {
+            get { return _menuItemResource; }
+
+            set
+            {
+                _menuItemResource = value;
+                NotifyPropertyChanged("menuItemResource");
             }
         }
     }
