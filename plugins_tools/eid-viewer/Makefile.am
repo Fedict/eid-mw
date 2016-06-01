@@ -122,7 +122,11 @@ BUILT_SOURCES = gtk/viewer_glade.h \
 		resources/coat_of_arms_nl.c \
 		resources/coat_of_arms_fr.c \
 		resources/coat_of_arms_de.c \
-		resources/coat_of_arms_en.c
+		resources/coat_of_arms_en.c \
+		resources/certificate_large.c \
+		resources/certificate_bad.c \
+		resources/certificate_checked.c \
+		resources/certificate_warn.c
 EXTRA_DIST = gtk/viewer.glade \
 	     gtk/eid-viewer.gschema.xml \
 	     resources/coat_of_arms_de.jpg \
