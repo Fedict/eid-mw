@@ -170,21 +170,21 @@
         </TabControl>
         <Menu Height="23" Margin="0,0,0,0" VerticalAlignment="Top">
             <MenuItem Header="{Binding Path=applicationResource.fileMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <MenuItem Header="{Binding Path=menuItemResource.fileMenuOpenItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Click="MenuItemOpen_Click"/>
-                <MenuItem Header="{Binding Path=menuItemResource.fileMenuSaveItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Click="MenuItemSaveAs_Click" IsEnabled="{Binding Path=eid_data_ready, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <MenuItem Header="{Binding Path=menuItemResource.fileMenuCloseItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" IsEnabled="False"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuOpenItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+O" Click="MenuItemOpen_Click"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuSaveItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+S" Click="MenuItemSaveAs_Click" IsEnabled="{Binding Path=eid_data_ready, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuCloseItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+W" IsEnabled="False"/>
                 <Separator/>
                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuPreferencesItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
                 <Separator/>
-                <MenuItem Header="{Binding Path=menuItemResource.fileMenuPrintItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" IsEnabled="False"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuPrintItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+P" IsEnabled="False"/>
                 <Separator/>
-                <MenuItem Header="{Binding Path=menuItemResource.fileMenuQuitItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Click="ExitMenuItem_Click"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuQuitItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+Q" Click="ExitMenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="{Binding Path=applicationResource.languageMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <MenuItem Header="Deutch" Click="Deutch_Click"/>
-                <MenuItem Header="English" Click="English_Click"/>
-                <MenuItem Header="Français" Click="French_Click"/>
-                <MenuItem Header="Nederlands" Click="Nederlands_Click"/>
+                <MenuItem Header="Deutch" InputGestureText="Ctrl+D" Click="Deutch_Click"/>
+                <MenuItem Header="English" InputGestureText="Ctrl+E" Click="English_Click"/>
+                <MenuItem Header="Français" InputGestureText="Ctrl+F" Click="French_Click"/>
+                <MenuItem Header="Nederlands" InputGestureText="Ctrl+N" Click="Nederlands_Click"/>
             </MenuItem>
             <MenuItem Header="{Binding Path=applicationResource.helpMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
                 <MenuItem Header="{Binding Path=applicationResource.ABOUT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
