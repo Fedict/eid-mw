@@ -185,6 +185,8 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
+
+	ret = EID_VWR_RES_SUCCESS;
 exit:
 	if(store) {
 		X509_STORE_free(store);
