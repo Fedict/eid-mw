@@ -248,8 +248,8 @@ static enum eid_vwr_result check_cert(char* which) {
 	val_cert = calloc(sizeof(GValue), 1);
 	col_cert = malloc(sizeof(int));
 
-	*col_cert = CERT_COL_VALIDITY;
-	g_value_init(val_cert, G_TYPE_BOOLEAN);
+	*col_cert = CERT_COL_IMAGE;
+	g_value_init(val_cert, GDK_TYPE_PIXBUF);
 	if(strcmp(which, "CERT_RN_FILE") != 0) {
 		verify_result = eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free);
 	} else {
@@ -258,10 +258,13 @@ static enum eid_vwr_result check_cert(char* which) {
 
 	switch(verify_result) {
 		case EID_VWR_RES_SUCCESS:
-			g_value_set_boolean(val_cert, TRUE);
+			g_value_set_instance(val_cert, good_certificate);
 			break;
 		case EID_VWR_RES_FAILED:
-			g_value_set_boolean(val_cert, FALSE);
+			g_value_set_instance(val_cert, bad_certificate);
+			break;
+		case EID_VWR_RES_UNKNOWN:
+			g_value_set_instance(val_cert, warn_certificate);
 			break;
 		default:
 			free(val_cert);
@@ -273,9 +276,9 @@ static enum eid_vwr_result check_cert(char* which) {
 	col_root = malloc(sizeof(int));
 	val_root = calloc(sizeof(GValue), 1);
 	*col_ca = *col_root = *col_cert;
-	g_value_init(val_ca, G_TYPE_BOOLEAN);
+	g_value_init(val_ca, GDK_TYPE_PIXBUF);
 	g_value_copy(val_cert, val_ca);
-	g_value_init(val_root, G_TYPE_BOOLEAN);
+	g_value_init(val_root, GDK_TYPE_PIXBUF);
 	g_value_copy(val_cert, val_root);
 	tst_set(which, col_cert, val_cert, 1);
 	tst_set("CA", col_ca, val_ca, 1);
