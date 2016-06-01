@@ -232,12 +232,15 @@ static const void* perform_ocsp_request(char* url, void* data, long datlen, long
 	return retval;
 }
 
-static void check_cert(char* which) {
+static enum eid_vwr_result check_cert(char* which) {
 	GtkTreeIter *cert_iter = get_iter_for(which);
-	GtkTreeIter *ca_iter = get_iter_for("CA");
+	GtkTreeIter *ca_iter;
 	GByteArray *cert, *ca_cert;
 	GValue *val_cert, *val_ca, *val_root;
 	int *col_cert, *col_ca, *col_root;
+	enum eid_vwr_result verify_result;
+
+	ca_iter = get_iter_for("CA");
 
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), cert_iter, CERT_COL_DATA, &cert, -1);
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), ca_iter, CERT_COL_DATA, &ca_cert, -1);
@@ -247,8 +250,13 @@ static void check_cert(char* which) {
 
 	*col_cert = CERT_COL_VALIDITY;
 	g_value_init(val_cert, G_TYPE_BOOLEAN);
+	if(strcmp(which, "CERT_RN_FILE") != 0) {
+		verify_result = eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free);
+	} else {
+		verify_result = eid_vwr_verify_rrncert(cert->data, cert->len);
+	}
 
-	switch(eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free)) {
+	switch(verify_result) {
 		case EID_VWR_RES_SUCCESS:
 			g_value_set_boolean(val_cert, TRUE);
 			break;
@@ -258,7 +266,7 @@ static void check_cert(char* which) {
 		default:
 			free(val_cert);
 			free(col_cert);
-			return;
+			return verify_result;
 	}
 	col_ca = malloc(sizeof(int));
 	val_ca = calloc(sizeof(GValue), 1);
@@ -272,10 +280,15 @@ static void check_cert(char* which) {
 	tst_set(which, col_cert, val_cert, 1);
 	tst_set("CA", col_ca, val_ca, 1);
 	tst_set("Root", col_root, val_root, 1);
+
+	return verify_result;
 }
+
+#define worst(res, new) (res == EID_VWR_RES_FAILED ? res : new)
 
 static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 	static pthread_once_t once = PTHREAD_ONCE_INIT;
+	enum eid_vwr_result res;
 
 	pthread_once(&once, create_proxy_factory);
 	if(!pf) {
@@ -289,10 +302,19 @@ static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 	}
 
 	if(iters[Signature] != NULL) {
-		check_cert("Signature");
+		res = check_cert("Signature");
 	}
 	if(iters[Authentication] != NULL) {
-		check_cert("Authentication");
+		res = worst(res, check_cert("Authentication"));
+	}
+	if(iters[CERT_RN_FILE] != NULL) {
+		if(iters[Root] == NULL) {
+			uilog(EID_VWR_LOG_ERROR, "RRN certificate validation failed: no Root certificate found");
+		}
+		res = worst(res, check_cert("CERT_RN_FILE"));
+	}
+	if(res == EID_VWR_RES_FAILED) {
+		uilog(EID_VWR_LOG_ERROR, _("One or more certificates of the certificates on this card were found to be invalid or revoked. For more information, please see the log tab"));
 	}
 	return NULL;
 }

@@ -77,10 +77,11 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 /** Class method-only class which wraps the corresponding C-only APIs for the
     benefit of ObjC applications. */
 @interface eIDOSLayerBackend : NSObject
-+(NSInteger)pinop:(eIDPinOp)which; ///< calls eid_vwr_pinop()
++(void)pinop:(eIDPinOp)which; ///< calls eid_vwr_pinop()
 +(NSInteger)setUi:(id<eIDOSLayerUI>)ui; ///< calls eid_vwr_ui_callbacks() and eid_vwr_createcallbacks()
 +(NSImage*)getPreview:(NSURL*)from; ///< calls eid_vwr_get_preview(), and converts the result to an NSImage*
 +(void)setLang:(eIDLanguage)language; ///< calls eid_vwr_convert_set_lang()
++(eIDLanguage)lang; ///< calls eid_vwr_convert_get_lang()
 +(void)poll; ///< calls eid_vwr_poll()
 +(void)mainloop; ///< calls eid_vwr_be_mainloop(), which does not return
 +(void)mainloop_thread; ///< calls mainloop in a background thread.
@@ -90,6 +91,7 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 +(void)close_file; ///< calls eid_vwr_close_file()
 +(void)set_invalid; ///< calls eid_vwr_be_set_invalid()
 +(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca; ///< calls eid_vwr_verify_cert() with valid perform_ocsp_request and free_ocsp_request function pointers
++(eIDResult)validateRrnCert:(NSData*)certificate; ///< calls eid_vwr_verify_rrncert()
 +(void)selectReader:(NSInteger)readerNumber; ///< calls eid_vwr_be_select_slot() with 0 as the first parameter, and the given reader number as the second parameter.
 +(void)setReaderAuto:(BOOL)automatic; ///< calls eid_vwr_be_select_slot with nonzero (if YES) or zero (if NO) as the first parameter, and 0 as the second parameter.
 @end

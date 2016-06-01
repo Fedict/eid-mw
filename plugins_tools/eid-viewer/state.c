@@ -97,6 +97,10 @@ static int source_none(void*data) {
    Please see be-statemach.uml in the uml directory for more details */
 void sm_init() {
 	int i;
+	if(states[STATE_COUNT-1].me == STATE_COUNT-1) {
+		/* state machine is already initialized */
+		return;
+	}
 	for(i=0;i<STATE_COUNT;i++) {
 		states[i].me = (enum eid_vwr_states)i;
 	}

@@ -71,8 +71,8 @@ static void osl_objc_free_ocsp_request(void* data) {
 }
 
 @implementation eIDOSLayerBackend
-+(NSInteger)pinop:(eIDPinOp)which {
-	return (NSInteger)eid_vwr_pinop((enum eid_vwr_pinops)which);
++(void)pinop:(eIDPinOp)which {
+	eid_vwr_pinop((enum eid_vwr_pinops)which);
 }
 +(NSInteger)setUi:(id<eIDOSLayerUI>)ui {
 	struct eid_vwr_ui_callbacks *cb = eid_vwr_cbstruct();
@@ -133,10 +133,16 @@ static void osl_objc_free_ocsp_request(void* data) {
 +(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca {
 	return (eIDResult)eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request, osl_objc_free_ocsp_request);
 }
++(eIDResult)validateRrnCert:(NSData *)certificate {
+	return (eIDResult)eid_vwr_verify_rrncert([certificate bytes], [certificate length]);
+}
 +(void)setReaderAuto:(BOOL)automatic {
 	eid_vwr_p11_select_slot(automatic ? CK_TRUE : CK_FALSE, 0);
 }
 +(void)selectReader:(NSInteger)readerNumber {
 	eid_vwr_p11_select_slot(CK_FALSE, (CK_SLOT_ID)readerNumber);
+}
++(eIDLanguage)lang {
+	return (eIDLanguage)eid_vwr_convert_get_lang();
 }
 @end

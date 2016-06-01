@@ -61,9 +61,9 @@ struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 #define NEED_CB_FUNC(f) if(!cb) return EIDV_RV_FAIL; if(!(cb->f)) return EIDV_RV_FAIL;
 
 /* Perform a PIN operation. Caller: UI. */
-int eid_vwr_pinop(enum eid_vwr_pinops op) {
+void eid_vwr_pinop(enum eid_vwr_pinops op) {
 	sm_handle_event(EVENT_DO_PINOP, (void*)op, NULL, NULL);
-	return 0;
+	return;
 }
 
 /* Actually assign the callbacks to the correct static variable. Caller: state machine. */
