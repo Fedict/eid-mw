@@ -14,7 +14,8 @@
 #endif
 
 #ifdef __APPLE__
-#define CERTTRUSTDIR "../../Resources/certs"
+#include "trustdirname.h"
+#define CERTTRUSTDIR eid_vwr_osl_objc_trustdirname()
 #else
 #define CERTTRUSTDIR (DATAROOTDIR "/" PACKAGE_NAME "/trustdir")
 #endif
