@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <unix.h>
 #include <pkcs11.h>
+#include <string.h>
 
 #include "testlib.h"
 
