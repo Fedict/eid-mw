@@ -144,7 +144,7 @@ int eid_vwr_p11_name_slots(struct _slotdesc* slots, CK_ULONG_PTR len) {
 	for(i=0; i<count; i++) {
 		CK_SLOT_INFO info;
 		slots[i].slot = slotlist[i];
-		memset(slots[i].description, '\0', sizeof(slots[i].description));
+		slots[i].description[64] = '\0';
 		ret = C_GetSlotInfo(slotlist[i], &info);
 		if(ret != CKR_OK) {
 			goto end;
