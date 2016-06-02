@@ -14,7 +14,7 @@ extern int fc_counter;
 #ifndef TEST_NO_ABORT
 #define my_assert(a) assert(a)
 #else
-#define my_assert(a) do { if((!a)) { printf("failed!\n"); return TEST_RV_FAIL; }} while(0)
+#define my_assert(a) do { if(!(a)) { printf("failed!\n"); return TEST_RV_FAIL; }} while(0)
 #endif
 
 #define verbose_assert(a) { printf("assertion %d: \"%s\": ", va_counter++, #a); my_assert((a)); printf("ok\n"); }
