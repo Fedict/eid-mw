@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlwaysValidateCheckboxLabel" xml:space="preserve">
+    <value>Toujours valider les certificats de confiance</value>
+  </data>
   <data name="CertTrustLabel" xml:space="preserve">
     <value>Confiance:</value>
   </data>
@@ -128,5 +131,23 @@
   </data>
   <data name="CertValidUntilLabel" xml:space="preserve">
     <value>Valable jusqu'au:</value>
+  </data>
+  <data name="TrustStatus_trusted" xml:space="preserve">
+    <value>Fiable</value>
+  </data>
+  <data name="TrustStatus_unknown" xml:space="preserve">
+    <value>Non validé</value>
+  </data>
+  <data name="TrustStatus_unobtainable" xml:space="preserve">
+    <value>Non disponible;(veuillez vérifier;votre configuration proxy)</value>
+  </data>
+  <data name="TrustStatus_untrusted" xml:space="preserve">
+    <value>Non fiable!</value>
+  </data>
+  <data name="TrustStatus_validating" xml:space="preserve">
+    <value>Validation en cours</value>
+  </data>
+  <data name="ValidateNowButtonLabel" xml:space="preserve">
+    <value>Valider maintenant</value>
   </data>
 </root>
