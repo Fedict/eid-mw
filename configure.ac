@@ -1,6 +1,6 @@
 AC_PREREQ([2.61])
 AC_INIT([eid-mw],
-  m4_esyscmd_s(echo "4.1.12-"$(scripts/build-aux/genver.sh)),
+  m4_esyscmd_s(echo "4.1.18-"$(scripts/build-aux/genver.sh)),
   [servicedesk@fedict.be],,
   [http://eid.belgium.be])
 
