@@ -1,13 +1,10 @@
-#Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
-# Authority: dag
-
+Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
+Name: eid-mw
 Version: @MAINVERSION@
 Release: 0.%{revision}%{?dist}
 License: LGPL
 Group: Applications/Communications
 URL: http://eid.belgium.be/
-Summary: Belgium electronic identity card PKCS#11 module and Firefox plugin
-Name: eid-mw
 
 Source: http://eidmw.yourict.net/dist/sources/eid-mw-%{version}-%{revision}.tar.gz
 Source1: baselibs.conf
@@ -18,9 +15,9 @@ BuildRequires: gtk2-devel
 %else
 BuildRequires: gtk3-devel
 %endif
-BuildRequires: pcsc-lite-devel
 BuildRequires: desktop-file-utils
 BuildRequires: p11-kit-devel
+BuildRequires: pcsc-lite-devel
 Requires(pre): /sbin/chkconfig
 Requires(pre): /sbin/service
 Requires: eid-mw-bin
@@ -29,18 +26,18 @@ Requires: eid-mw-libs
 Requires: pcsc-ccid
 BuildRequires: gcc-c++
 BuildRequires: libopenssl-devel
-BuildRequires: libtool
 BuildRequires: libltdl7
+BuildRequires: libtool
 %else
 Requires: ccid
+BuildRequires: libtool-ltdl-devel
 BuildRequires: openssl-devel
 BuildRequires: openssl-perl
-BuildRequires: libtool-ltdl-devel
 %endif
-BuildRequires: openssl
-BuildRequires: libproxy-devel
 BuildRequires: libcurl-devel
+BuildRequires: libproxy-devel
 BuildRequires: libxml2-devel
+BuildRequires: openssl
 Conflicts: openct
 
 %description
@@ -76,7 +73,7 @@ The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
 plugin to use Belgian eID (electronic identity) card in order to access
 websites and/or sign documents. This package contains the actual libraries.
 
-%package vwr
+%package -n eid-viewer
 Summary: Belgium electronic identity card viewer
 Obsoletes: eid-viewer
 Requires: eid-mw
@@ -90,7 +87,7 @@ Requires: ccid
 Requires: pcsc-lite
 Conflicts: openct
 
-%description vwr
+%description -n eid-viewer
 The eid-viewer application allows the user to read out any information from
 a Belgian electronic identity card. Both identity information and information
 about the stored cryptographic keys can be read in a user-friendly manner,
@@ -122,10 +119,14 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict 
 /sbin/ldconfig
 
 ### Notify user if an action is required for the eID plugin to work.
+if /usr/bin/pgrep 'chrome' &>/dev/null; then
+    echo "INFO: You may have to restart Chrome for the Belgium eID add-on to work." >&2
+fi
+if /usr/bin/pgrep 'chromium' &>/dev/null; then
+    echo "INFO: You may have to restart Chromium for the Belgium eID add-on to work." >&2
+fi
 if /usr/bin/pgrep 'firefox' &>/dev/null; then
     echo "INFO: You may have to restart Firefox for the Belgium eID add-on to work." >&2
-elif /usr/bin/pgrep 'iceweasel' &>/dev/null; then
-    echo "INFO: You may have to restart Iceweasel for the Belgium eID add-on to work." >&2
 fi
 
 %postun
@@ -141,12 +142,16 @@ fi
 ### Include license files
 %{_datadir}/mozilla/
 %exclude %{_libdir}/*.la
+
 %files libs
+%defattr(-, root, root, 0755)
 %{_libdir}/libbeidpkcs11.so.*
 %{_libdir}/libeidviewer.so.*
-%{_libdir}/pkcs11
+%{_libdir}/pkcs11/
 %exclude %{_libdir}/libbeidpkcs11.so
+
 %files bin
+%defattr(-, root, root, 0755)
 %{_libexecdir}/beid-askaccess
 %{_libexecdir}/beid-askpin
 %{_libexecdir}/beid-badpin
@@ -156,25 +161,27 @@ fi
 %{_bindir}/about-eid-mw
 %{_datadir}/applications/fedict-about-eid-mw.desktop
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
-%{_datadir}/p11-kit
+%{_datadir}/p11-kit/
+
 %files devel
+%defattr(-, root, root, 0755)
 %{_libdir}/libbeidpkcs11.a
 %{_libdir}/libbeidpkcs11.so
 %{_libdir}/libeidviewer.a
 %{_libdir}/libeidviewer.so
-%{_libdir}/pkgconfig
+%{_libdir}/pkgconfig/
 %{_includedir}/beid/
 %{_includedir}/eid-viewer/
 
-%files vwr
+%files -n eid-viewer
 %defattr(-,root,root,0755)
 %{_bindir}/eid-viewer
 %{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
-%{_datadir}/eid-mw
 %{_datadir}/applications/fedict-eid-viewer.desktop
+%{_datadir}/eid-mw/
 %{_datadir}/icons/eid-viewer.png
 %if ! 0%{?el6}
-%{_datadir}/glib-2.0/schemas
+%{_datadir}/glib-2.0/schemas/
 %endif
 
 %changelog
