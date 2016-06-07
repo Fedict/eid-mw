@@ -24,9 +24,12 @@ namespace eIDViewer
     /// </summary>
     public partial class MainWindow : Window
     {
+        eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
+
         public MainWindow()    
         {
             InitializeComponent();
+            GetLanguage();
         }
         void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -44,29 +47,32 @@ namespace eIDViewer
             theLocalizedStrings.NotifyPropertyChanged("certificateTabResource");
             theLocalizedStrings.NotifyPropertyChanged("applicationResource");
             theLocalizedStrings.NotifyPropertyChanged("menuItemResource");
-
-            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
+          
             theBackendData.Refresh();
         }
 
         private void Deutch_Click(object sender, RoutedEventArgs e)
         {
             ChangeLocalization("de-DE");
+            StoreLanguage("de");
         }
 
         private void English_Click(object sender, RoutedEventArgs e)
         {
             ChangeLocalization("en-US");
+            StoreLanguage("en");
         }
 
         private void French_Click(object sender, RoutedEventArgs e)
         {
             ChangeLocalization("fr-BE");
+            StoreLanguage("fr");
         }
 
         private void Nederlands_Click(object sender, RoutedEventArgs e)
         {
             ChangeLocalization("nl-BE");
+            StoreLanguage("nl");
         }
 
         private void ClearLog_Click(object sender, RoutedEventArgs e)
