@@ -453,7 +453,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 659FFC591AE9360D004CEC1F /* Build configuration list for PBXNativeTarget "eID Viewer" */;
 			buildPhases = (
-				65BE1C631BB552A8002E8061 /* ShellScript */,
 				659FFC381AE9360D004CEC1F /* Sources */,
 				659FFC391AE9360D004CEC1F /* Frameworks */,
 				659FFC3A1AE9360D004CEC1F /* Resources */,
@@ -493,6 +492,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BBDE31E1B3BF02C00CBE13E /* Build configuration list for PBXNativeTarget "eidfilepreview" */;
 			buildPhases = (
+				65362FF71D06C15C008D5F73 /* ShellScript */,
 				8BBDE30D1B3BF02C00CBE13E /* Sources */,
 				8BBDE30E1B3BF02C00CBE13E /* Frameworks */,
 				8BBDE30F1B3BF02C00CBE13E /* Headers */,
@@ -581,7 +581,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		65BE1C631BB552A8002E8061 /* ShellScript */ = {
+		65362FF71D06C15C008D5F73 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -928,6 +928,7 @@
 				65BD086F1CECB257000A30E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8BBDE31E1B3BF02C00CBE13E /* Build configuration list for PBXNativeTarget "eidfilepreview" */ = {
 			isa = XCConfigurationList;
