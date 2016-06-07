@@ -157,7 +157,6 @@ fi
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
-%{_datadir}/applications/fedict-about-eid-mw.desktop
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/p11-kit/
 

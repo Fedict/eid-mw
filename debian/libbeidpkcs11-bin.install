@@ -3,7 +3,6 @@
 cat <<EOF
 usr/lib/eid-mw
 usr/bin/about-eid-mw
-usr/share/applications/about-eid-mw.desktop
 usr/share/locale/*/LC_MESSAGES/about-eid-mw.mo
 EOF
 pkg-config --variable=p11_system_config_modules p11-kit-1 | sed -e 's,^/,,'
