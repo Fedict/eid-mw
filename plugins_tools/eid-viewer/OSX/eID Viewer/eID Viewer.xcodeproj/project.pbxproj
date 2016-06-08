@@ -57,6 +57,7 @@
 		65BD08761CECB43D000A30E4 /* verify_cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 65BD084C1CECAB6B000A30E4 /* verify_cert.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65BE1C791BB573C4002E8061 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C781BB573C4002E8061 /* libxml2.a */; };
 		65CEFFFD1CEB490000642B63 /* ReaderMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CEFFFC1CEB490000642B63 /* ReaderMenuItem.m */; };
+		65DD2E941D006B3F0005EC86 /* trustdirname.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DD2E931D006B3F0005EC86 /* trustdirname.m */; };
 		65EABAE71C621EE900034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAE31C621E3D00034337 /* labels.c */; };
 		8B079D301B0B6136004E88C8 /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B079D2F1B0B6136004E88C8 /* DataVerifier.m */; };
 		8B195DE51BB3F62900777CC5 /* ResizablePrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B195DE41BB3F62900777CC5 /* ResizablePrintView.m */; };
@@ -199,6 +200,8 @@
 		65BE1C781BB573C4002E8061 /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = ../support/xml/builddir/.libs/libxml2.a; sourceTree = "<group>"; };
 		65CEFFFB1CEB490000642B63 /* ReaderMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderMenuItem.h; sourceTree = "<group>"; };
 		65CEFFFC1CEB490000642B63 /* ReaderMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderMenuItem.m; sourceTree = "<group>"; };
+		65DD2E931D006B3F0005EC86 /* trustdirname.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = trustdirname.m; sourceTree = "<group>"; };
+		65DD2E951D006B530005EC86 /* trustdirname.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = trustdirname.h; sourceTree = "<group>"; };
 		65EABAE31C621E3D00034337 /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = ../../../../util/labels.c; sourceTree = "<group>"; };
 		65EABAE41C621E3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = ../../../../util/labels.h; sourceTree = "<group>"; };
 		65EABAE51C621E3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = ../../../../util/utftranslate.h; sourceTree = "<group>"; };
@@ -394,6 +397,8 @@
 				65BD084C1CECAB6B000A30E4 /* verify_cert.h */,
 				65BD08661CECB257000A30E4 /* BeidView.h */,
 				65BD08681CECB257000A30E4 /* Info.plist */,
+				65DD2E931D006B3F0005EC86 /* trustdirname.m */,
+				65DD2E951D006B530005EC86 /* trustdirname.h */,
 			);
 			path = BeidView;
 			sourceTree = "<group>";
@@ -448,7 +453,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 659FFC591AE9360D004CEC1F /* Build configuration list for PBXNativeTarget "eID Viewer" */;
 			buildPhases = (
-				65BE1C631BB552A8002E8061 /* ShellScript */,
 				659FFC381AE9360D004CEC1F /* Sources */,
 				659FFC391AE9360D004CEC1F /* Frameworks */,
 				659FFC3A1AE9360D004CEC1F /* Resources */,
@@ -470,6 +474,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65BD086D1CECB257000A30E4 /* Build configuration list for PBXNativeTarget "BeidView" */;
 			buildPhases = (
+				65362FF81D081CA4008D5F73 /* Run Script */,
 				65BD085F1CECB257000A30E4 /* Sources */,
 				65BD08601CECB257000A30E4 /* Frameworks */,
 				65BD08611CECB257000A30E4 /* Headers */,
@@ -488,6 +493,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BBDE31E1B3BF02C00CBE13E /* Build configuration list for PBXNativeTarget "eidfilepreview" */;
 			buildPhases = (
+				65362FF71D06C15C008D5F73 /* ShellScript */,
 				8BBDE30D1B3BF02C00CBE13E /* Sources */,
 				8BBDE30E1B3BF02C00CBE13E /* Frameworks */,
 				8BBDE30F1B3BF02C00CBE13E /* Headers */,
@@ -576,13 +582,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		65BE1C631BB552A8002E8061 /* ShellScript */ = {
+		65362FF71D06C15C008D5F73 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C $(dirname \"${PROJECT_DIR}\")/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C $(dirname \"${PROJECT_DIR}\")/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build";
+		};
+		65362FF81D081CA4008D5F73 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,6 +662,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65DD2E941D006B3F0005EC86 /* trustdirname.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -922,6 +943,7 @@
 				65BD086F1CECB257000A30E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8BBDE31E1B3BF02C00CBE13E /* Build configuration list for PBXNativeTarget "eidfilepreview" */ = {
 			isa = XCConfigurationList;

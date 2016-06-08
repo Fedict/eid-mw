@@ -1,6 +1,6 @@
 AC_PREREQ([2.61])
 AC_INIT([eid-mw],
-  m4_esyscmd_s(echo "4.1.12-"$(scripts/build-aux/genver.sh)),
+  m4_esyscmd_s(echo "4.1.18-"$(scripts/build-aux/genver.sh)),
   [servicedesk@fedict.be],,
   [http://eid.belgium.be])
 
@@ -153,7 +153,6 @@ AC_CONFIG_FILES([Makefile
 		 tests/unit/Makefile
 		 plugins_tools/util/Makefile
 		 plugins_tools/aboutmw/gtk/Makefile
-		 plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh
 		 plugins_tools/aboutmw/gtk/po/Makefile.in
 		 plugins_tools/eid-viewer/Makefile
 		 plugins_tools/eid-viewer/test/Makefile

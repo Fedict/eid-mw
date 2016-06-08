@@ -20,10 +20,11 @@
 #include <stdio.h>
 #include <unix.h>
 #include <pkcs11.h>
+#include <string.h>
 
 #include "testlib.h"
 
-#define run_test(test) if(test_target != NULL && !strcmp(test_target, #test)) \
+#define run_test(test) if(test_target == NULL || !strcmp(test_target, #test)) \
 	{ \
 		printf("Running %s...\n", #test); \
 		switch(test) { \

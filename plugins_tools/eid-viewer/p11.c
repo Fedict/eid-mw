@@ -131,6 +131,7 @@ int eid_vwr_p11_name_slots(struct _slotdesc* slots, CK_ULONG_PTR len) {
 	CK_RV ret;
 	int rv = EIDV_RV_FAIL;
 	int i;
+	char* c;
 
 	while((ret = C_GetSlotList(CK_FALSE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL) {
 		free(slotlist);
@@ -143,11 +144,14 @@ int eid_vwr_p11_name_slots(struct _slotdesc* slots, CK_ULONG_PTR len) {
 	for(i=0; i<count; i++) {
 		CK_SLOT_INFO info;
 		slots[i].slot = slotlist[i];
+		slots[i].description[64] = '\0';
 		ret = C_GetSlotInfo(slotlist[i], &info);
 		if(ret != CKR_OK) {
 			goto end;
 		}
 		memcpy(slots[i].description, info.slotDescription, sizeof(info.slotDescription));
+		for(c=&(slots[i].description[64]); *c==' '||*c=='\0'; c--);
+		*(++c) = '\0';
 	}
 
 	rv = EIDV_RV_OK;

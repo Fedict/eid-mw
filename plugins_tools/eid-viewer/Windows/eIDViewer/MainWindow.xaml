@@ -1,7 +1,7 @@
 ﻿<Window x:Class="eIDViewer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="570" Width="510"    
+        Title="eID Viewer" Height="570" Width="510"    
         xmlns:resx="clr-namespace:eIDViewer.Resources"
         DataContext="{StaticResource eIDViewerBackendObj}"
         xml:lang="en-US"
@@ -142,8 +142,8 @@
                         <Label Grid.Column="2" Grid.Row="7" Content="{Binding Path=cert_trust, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
                         <Image Grid.Column="0" Grid.RowSpan="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Path=certificateLargeIcon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Opacity="0.6" />
                     </Grid>
-                    <CheckBox x:Name="checkBox" Content="Always validate certificate trust" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBox_Checked" Margin="110,407,0,0"/>
-                    <Button x:Name="button" Content="Check validity now" Grid.Column="1" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Margin="377,403,0,-3" />
+                    <CheckBox x:Name="checkBox" Content="{Binding Path=certificateTabResource.AlwaysValidateCheckboxLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBox_Checked" Margin="110,407,0,0"/>
+                    <Button x:Name="button" Content="{Binding Path=certificateTabResource.ValidateNowButtonLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Grid.Column="1" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Margin="377,403,0,-3" />
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.LOG, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings}}">
