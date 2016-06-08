@@ -474,6 +474,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65BD086D1CECB257000A30E4 /* Build configuration list for PBXNativeTarget "BeidView" */;
 			buildPhases = (
+				65362FF81D081CA4008D5F73 /* Run Script */,
 				65BD085F1CECB257000A30E4 /* Sources */,
 				65BD08601CECB257000A30E4 /* Frameworks */,
 				65BD08611CECB257000A30E4 /* Headers */,
@@ -588,6 +589,20 @@
 			);
 			inputPaths = (
 			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C $(dirname \"${PROJECT_DIR}\")/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C $(dirname \"${PROJECT_DIR}\")/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build";
+		};
+		65362FF81D081CA4008D5F73 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
