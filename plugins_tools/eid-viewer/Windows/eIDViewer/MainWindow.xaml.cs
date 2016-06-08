@@ -16,6 +16,7 @@ using System.Threading;
 using System.Globalization;
 using System.IO;
 using Microsoft.Win32;
+using System.Windows.Controls.Primitives;
 
 namespace eIDViewer
 {
@@ -198,6 +199,48 @@ namespace eIDViewer
         {
             TextBlock certText = sender as TextBlock;
 
+        }
+
+        private void TestSiteMenu_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://test.eid.belgium.be");
+        }
+
+        private void FAQMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://faq.eid.belgium.be/");
+        }
+
+        private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Popup myPopup = new Popup();
+            myPopup.IsOpen = true;
+            
+            string message = @"eID Viewer 4.2.0
+eID Middleware Project
+Copyright(C) 2016 Fedict
+
+By Frederik Vernelen and Wouter Verhelst
+Based on the design of Frank Marien
+
+This is free software; you can redistribute it and / or modify it
+under the terms of the GNU Lesser General Public License version 
+3.0 as published by the Free Software Foundation.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the GNU 
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public 
+License along with this software; if not, see 
+http://www.gnu.org/licenses
+
+Official releases and support are available on http://eid.belgium.be
+Source code and other files are available on https://github.com/Fedict/eid-viewer";
+            string caption = "About";
+            MessageBoxResult result = new MessageBoxResult();
+            MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information, result);
         }
     }
 
