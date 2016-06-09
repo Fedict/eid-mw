@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "certificate_warn.png",
       "scale" : "1x"
     },
     {
@@ -11,15 +12,6 @@
     {
       "idiom" : "universal",
       "scale" : "3x"
-    },
-    {
-      "idiom" : "mac",
-      "filename" : "certificate_warn.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "mac",
-      "scale" : "2x"
     }
   ],
   "info" : {

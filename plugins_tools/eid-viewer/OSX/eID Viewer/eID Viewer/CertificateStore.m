@@ -71,6 +71,9 @@
 	arr[CERT_COL_DESC] = [NSString stringWithCString:eid_vwr_detail_cert(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
 	arr[CERT_COL_USE] = [NSString stringWithCString:eid_vwr_get_use_flags(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
 	arr[CERT_COL_VALIDITY] = @(eIDResultUnknown);
+	NSString *str = [[NSBundle mainBundle] pathForResource:@"certificate_large" ofType:@"png"];
+	NSImage *img = [[NSImage alloc] initByReferencingFile:str];
+	arr[CERT_COL_IMAGE] = img;
 	[self.CertificateData setObject:[NSMutableArray arrayWithObjects:arr count:CERT_COL_NCOLS] forKey:label];
 
 	BIO_free(bio);
@@ -246,6 +249,21 @@
 		return;
 	}
 	arr[CERT_COL_VALIDITY] = @(valid);
+	NSString *name;
+	switch(valid) {
+		case eIDResultFailed:
+			name = @"certificate_bad";
+			break;
+		case eIDResultSuccess:
+			name = @"certificate_checked";
+			break;
+		case eIDResultUnknown:
+			name = @"certificate_warn";
+			break;
+	}
+	NSString *filename = [[NSBundle mainBundle] pathForResource:name ofType:@"png"];
+	NSImage *img = [[NSImage alloc] initByReferencingFile:filename];
+	arr[CERT_COL_IMAGE] = img;
 	[_ov reloadData];
 }
 @end
