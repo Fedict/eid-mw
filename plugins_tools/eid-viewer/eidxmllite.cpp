@@ -61,10 +61,6 @@ static int write_elements(IXmlWriter *pWriter, struct element_desc *element) {
 			pWriter->WriteStartElement(NULL,element->name,NULL);
 			if (element->attributes != NULL) {
 				retVal = write_attributes(pWriter, element->attributes);
-				///write_attributes(pWriter, element->attributes);
-				//retVal = pWriter->WriteAttributeString(NULL,
-				//	element->name, NULL,
-				//	element->attributes);
 			}
 			FAILED_OUT(retVal = write_elements(pWriter, element->child_elements));
 			//check_xml(xmlTextWriterEndElement(writer));
@@ -160,7 +156,6 @@ int eid_vwr_gen_xml(void* data) {
 
 	//don't write these, they were not present in the previous viewer
 	//retVal = pWriter->WriteStartDocument(XmlStandalone_Omit);
-	//retVal = pWriter->WriteStartElement(NULL, L"eid", NULL);
 
 	retVal = write_elements(pWriter, toplevel);
 	retVal = pWriter->WriteEndDocument();
@@ -220,82 +215,55 @@ HRESULT StoreLocalName(WCHAR** nodeNames, const WCHAR* pwszLocalName)
 	return S_OK;
 }
 
-int ConvertWCharToMultiByte(const wchar_t* wsIn, char** bsOut)
-{
-	size_t buffersize = 256;
-	char* buffer = NULL;
-	size_t numOfCharConverted = 0;
-
-	//retrieve the needed buffersize
-	wcstombs_s(&numOfCharConverted, NULL, 0, wsIn, 0);
-	buffer = (char*)calloc(numOfCharConverted, 1);
-	if (buffer == NULL)
-		return -1;
-	*bsOut = buffer;
-
-	buffersize = numOfCharConverted;
-
-	return wcstombs_s(&numOfCharConverted, buffer, buffersize, wsIn, buffersize - 1);
-	
-}
 
 HRESULT StoreTextElement(const WCHAR* pwszValue, WCHAR* wcsNodeName)
 {
-//	EID_CHAR* nodeName = NULL;
-//	EID_CHAR* value = NULL;
 	EID_CHAR* val = NULL;
 
-//	if ((ConvertWCharToMultiByte(wcsNodeName, &nodeName) == 0) &&
-//		(ConvertWCharToMultiByte(pwszValue, &value) == 0))
-//	{
-		struct element_desc *desc = get_elemdesc((EID_CHAR*)wcsNodeName);
-		/* If we recognize this element, parse it */
-		if (desc != NULL) {
-			int len = 0; {
-				val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
-				if (desc->is_b64)
-				{
-					//utf16toutf8
-					unsigned long length = len;
-					char* utf8Char_out = EIDTOUTF8(val, &length);
+	struct element_desc *desc = get_elemdesc((EID_CHAR*)wcsNodeName);
+	/* If we recognize this element, parse it */
+	if (desc != NULL) {
+		int len = 0; {
+			val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
+			if (desc->is_b64)
+			{
+				//utf16toutf8
+				unsigned long length = len;
+				char* utf8Char_out = EIDTOUTF8(val, &length);
 
-					//base64decode
-					base64_decodestate state_in;
-					int decodedLength = 0;
-					char* binData = (char *)malloc(length);
-					if (binData != NULL)
-					{
-						base64_init_decodestate(&state_in);
-						decodedLength = base64_decode_block(utf8Char_out, length, binData, &state_in);
-
-						cache_add(desc->label, val, len);
-						eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)binData, decodedLength);
-						be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
-						free(binData);
-					}
-					if (utf8Char_out != NULL)
-					{
-						free(utf8Char_out);
-					}
-				}
-				else
+				//base64decode
+				base64_decodestate state_in;
+				int decodedLength = 0;
+				char* binData = (char *)malloc(length);
+				if (binData != NULL)
 				{
-					int len = 0; 
-					{
-						val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
-						cache_add(desc->label, val, len);
-						eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
-						be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
-						val = NULL;
-					}
+					base64_init_decodestate(&state_in);
+					decodedLength = base64_decode_block(utf8Char_out, length, binData, &state_in);
+
+					cache_add(desc->label, val, len);
+					eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)binData, decodedLength);
+					be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
+					free(binData);
 				}
-				val = NULL;
+				if (utf8Char_out != NULL)
+				{
+					free(utf8Char_out);
+				}
 			}
+			else
+			{
+				int len = 0;
+				{
+					val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
+					cache_add(desc->label, val, len);
+					eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
+					be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
+					val = NULL;
+				}
+			}
+			val = NULL;
 		}
-
-//	}
-//	SAFE_FREE(nodeName);
-//	SAFE_FREE(value);
+	}
 
 	return S_OK;
 }
@@ -303,8 +271,7 @@ HRESULT StoreTextElement(const WCHAR* pwszValue, WCHAR* wcsNodeName)
 HRESULT ParseAttributes(IXmlReader* pReader, const WCHAR* pwszLocalName)
 {
 	const WCHAR* pwszValue;
-//	EID_CHAR* nodeName = NULL;
-//	EID_CHAR* value = NULL;
+
 	EID_CHAR* val = NULL;
 	HRESULT retVal = pReader->MoveToFirstAttribute();
 
@@ -321,28 +288,21 @@ HRESULT ParseAttributes(IXmlReader* pReader, const WCHAR* pwszLocalName)
 				FAILED_OUT(retVal = pReader->GetLocalName(&pwszLocalName, NULL));
 				FAILED_OUT(retVal = pReader->GetValue(&pwszValue, NULL));
 
-//				if ((ConvertWCharToMultiByte(pwszLocalName, &nodeName) == 0) &&
-//					(ConvertWCharToMultiByte(pwszValue, &value) == 0))
-//				{
-
-					struct attribute_desc *desc = get_attdesc((const EID_CHAR*)pwszLocalName);
-					/* If we recognize this element, parse it */
-					if (desc != NULL) {
-						int len = 0; {
-							val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
-							cache_add(desc->label, val, len);
-							eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
-							be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
-							val = NULL;
-						}
+				struct attribute_desc *desc = get_attdesc((const EID_CHAR*)pwszLocalName);
+				/* If we recognize this element, parse it */
+				if (desc != NULL) {
+					int len = 0; {
+						val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
+						cache_add(desc->label, val, len);
+						eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
+						be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
+						val = NULL;
 					}
 				}
-//			}
+			}
 		}
 	}
 out:
-//	SAFE_FREE(nodeName);
-//	SAFE_FREE(value);
 
 	return retVal;
 }
