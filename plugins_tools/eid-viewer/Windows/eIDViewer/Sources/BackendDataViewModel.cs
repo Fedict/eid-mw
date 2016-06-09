@@ -73,6 +73,9 @@ namespace eIDViewer
                      _Out_ HCERTCHAINENGINE * phChainEngine
                    );*/
 
+                    //intermediateCA_cert.GetPublicKey();
+                    //authentication_cert.GetCertHash();
+
                     chain.ChainPolicy.ExtraStore.Add(intermediateCA_cert);
                     chain.ChainPolicy.ExtraStore.Add(rootCA_cert);
 
@@ -121,7 +124,7 @@ namespace eIDViewer
         public void AllDataRead( )
         {
             progress_bar_visible = "Hidden";
-            CheckCertificateValidity();
+            //CheckCertificateValidity(); check them in a new thread
         }
 
         private string _certificateLargeIcon;
