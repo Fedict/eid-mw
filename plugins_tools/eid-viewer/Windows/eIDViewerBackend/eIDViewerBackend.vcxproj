@@ -95,6 +95,8 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\util\labels.c" />
     <ClCompile Include="..\..\..\util\utftranslate.c" />
+    <ClCompile Include="..\..\b64\base64dec.c" />
+    <ClCompile Include="..\..\b64\base64enc.c" />
     <ClCompile Include="..\..\backend.c" />
     <ClCompile Include="..\..\cache\cache.cpp" />
     <ClCompile Include="..\..\conversions\bbannumconv.cpp" />
@@ -121,6 +123,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\tests\unit\labels.h" />
+    <ClInclude Include="..\..\b64\base64dec.h" />
+    <ClInclude Include="..\..\b64\base64enc.h" />
     <ClInclude Include="..\..\backend.h" />
     <ClInclude Include="..\..\conversions.h" />
     <ClInclude Include="..\..\conversions\convertor.h" />

@@ -7,7 +7,10 @@
 #include "backend.h"
 #include "p11.h"
 #include "cache.h"
-
+extern "C" {
+#include <b64/base64dec.h>
+#include <b64/base64enc.h>
+}
 const UINT MAX_ELEMENT_DEPTH = 8;
 
 #define SAFE_RELEASE(I)         if (I){ I->Release();  I = NULL; }
@@ -82,6 +85,31 @@ static int write_elements(IXmlWriter *pWriter, struct element_desc *element) {
 				}
 				else {
 					const struct eid_vwr_cache_item *item = cache_get_data(element->label);
+
+					base64_encodestate state_in;
+
+					base64_init_encodestate(&state_in);
+					char * plaintext_out = (char*)malloc(((item->len)*134)/100 + 3);//size increases with 1/3, and 2 padding bytes '=' are possible, plus a terminating zero
+					EID_CHAR* eIDChar_out;
+					unsigned long ullength = item->len;
+					int plaintextLength = 0;
+					if (plaintext_out != NULL)
+					{
+						plaintextLength = base64_encode_block((const char*)(item->data), item->len, plaintext_out, &state_in);
+						//add padding if needed and terminating zero 
+						base64_encode_blockend(plaintext_out + plaintextLength, &state_in);
+						eIDChar_out = UTF8TOEID(plaintext_out, &ullength);
+						if (eIDChar_out != NULL)
+						{
+							pWriter->WriteElementString(NULL, element->name, NULL, eIDChar_out);
+							free(eIDChar_out);
+						}
+						free(plaintext_out);
+					}
+					else
+					{
+						be_log(EID_VWR_LOG_ERROR, TEXT("Could not allocate memory to store %s"), element->label);
+					}
 					//check_xml(xmlTextWriterStartElement(writer, BAD_CAST element->name));
 					//check_xml(xmlTextWriterWriteBase64(writer, item->data, 0, item->len));
 					//check_xml(xmlTextWriterEndElement(writer));
@@ -89,6 +117,7 @@ static int write_elements(IXmlWriter *pWriter, struct element_desc *element) {
 				free(val);
 				val = NULL;
 			}
+		
 		}
 		element++;
 	}
@@ -129,17 +158,15 @@ int eid_vwr_gen_xml(void* data) {
 	retVal = pWriter->SetOutput(pWriterOutput);
 	retVal = pWriter->SetProperty(XmlWriterProperty_Indent, TRUE);
 
-	retVal = pWriter->WriteStartDocument(XmlStandalone_Omit);
-	retVal = pWriter->WriteStartElement(NULL, L"eid", NULL);
+	//don't write these, they were not present in the previous viewer
+	//retVal = pWriter->WriteStartDocument(XmlStandalone_Omit);
+	//retVal = pWriter->WriteStartElement(NULL, L"eid", NULL);
 
 	retVal = write_elements(pWriter, toplevel);
-//	retVal = pWriter->WriteWhitespace(L"\n");
-//	retVal = pWriter->WriteCData(L"This is CDATA text.");
-//	retVal = pWriter->WriteWhitespace(L"\n");
 	retVal = pWriter->WriteEndDocument();
 	retVal = pWriter->Flush();
 
-	// Allocates enough memory for the xml content.
+	// Allocate enough memory for the xml content.
 	
 	retVal = pMemoryStream->Stat(&ssStreamData, STATFLAG_NONAME);
 	SIZE_T cbSize = ssStreamData.cbSize.LowPart;
@@ -226,12 +253,46 @@ HRESULT StoreTextElement(const WCHAR* pwszValue, WCHAR* wcsNodeName)
 		if (desc != NULL) {
 			int len = 0; {
 				val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
-				cache_add(desc->label, val, len);
-				eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
-				be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
+				if (desc->is_b64)
+				{
+					//utf16toutf8
+					unsigned long length = len;
+					char* utf8Char_out = EIDTOUTF8(val, &length);
+
+					//base64decode
+					base64_decodestate state_in;
+					int decodedLength = 0;
+					char* binData = (char *)malloc(length);
+					if (binData != NULL)
+					{
+						base64_init_decodestate(&state_in);
+						decodedLength = base64_decode_block(utf8Char_out, length, binData, &state_in);
+
+						cache_add(desc->label, val, len);
+						eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)binData, decodedLength);
+						be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
+						free(binData);
+					}
+					if (utf8Char_out != NULL)
+					{
+						free(utf8Char_out);
+					}
+				}
+				else
+				{
+					int len = 0; 
+					{
+						val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
+						cache_add(desc->label, val, len);
+						eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
+						be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
+						val = NULL;
+					}
+				}
 				val = NULL;
 			}
 		}
+
 //	}
 //	SAFE_FREE(nodeName);
 //	SAFE_FREE(value);
