@@ -58,16 +58,18 @@ static const void* osl_objc_perform_ocsp_request(char* url, void* data, long len
 	NSError *err;
 	NSData *respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
 	if (respdata != nil) {
+		void *retval = malloc(respdata.length);
 		*retlen = (long)respdata.length;
-		*handle = (void*)CFBridgingRetain(respdata);
-		return [respdata bytes];
+		*handle = retval;
+		[respdata getBytes:retval length:*retlen];
+		return retval;
 	} else {
 		return NULL;
 	}
 }
 
 static void osl_objc_free_ocsp_request(void* data) {
-	CFRelease(data);
+	free(data);
 }
 
 @implementation eIDOSLayerBackend

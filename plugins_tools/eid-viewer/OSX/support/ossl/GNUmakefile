@@ -1,7 +1,7 @@
 OSSL_VERSION=1.0.2g
 TP_DIR=../../../../../../ThirdParty
 
-build: openssl/libssl.dylib openssl/libcrypto.dylib
+build: openssl/libcrypto.dylib
 
 clean:
 	rm -rf configured openssl openssl-$(OSSL_VERSION)*

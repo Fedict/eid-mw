@@ -2,6 +2,7 @@
 #include <openssl/x509v3.h>
 #include <openssl/err.h>
 #include <openssl/pem.h>
+#include <openssl/crypto.h>
 #include <eid-viewer/certhelpers.h>
 #include <stdbool.h>
 #include <string.h>
@@ -16,6 +17,9 @@ static pthread_once_t init = PTHREAD_ONCE_INIT;
 
 static void init_crypto() {
 	ERR_load_crypto_strings();
+	be_log(EID_VWR_LOG_DETAIL, "Built with %s", OPENSSL_VERSION_TEXT);
+	be_log(EID_VWR_LOG_DETAIL, "Using %s", SSLeay_version(SSLEAY_VERSION));
+	OpenSSL_add_all_algorithms();
 }
 
 void ensure_inited() {

@@ -285,6 +285,7 @@
 		    ver, @"DATA_FILE",
 		    ver, @"ADDRESS_FILE",
 		    ver, @"photo_hash",
+		    self, @"certimage",
 		    nil];
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
@@ -369,6 +370,10 @@
 		[alert runModal];
 		[self log:msg withLevel:eIDLogLevelDetail];
 	}];
+}
+-(void)handle_bin_data:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui {
+	assert(ui == self);
+	[(NSImageView*) [ui searchObjectById:label ofClass:[NSImageView class]] setImage:(NSImage*)data];
 }
 -(void)changeLogLevel:(NSPopUpButton *)logLevel {
 	[[NSUserDefaults standardUserDefaults] setInteger:[logLevel indexOfSelectedItem] forKey:@"log_level"];

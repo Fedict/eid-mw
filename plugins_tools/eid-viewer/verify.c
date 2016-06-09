@@ -28,10 +28,13 @@ static void log_ssl_error(char* message) {
 	unsigned long error = ERR_get_error();
 
 	ensure_inited();
-	ERR_error_string_n(error, buf, sizeof buf);
-	buf[99] = '\0';
 	be_log(EID_VWR_LOG_COARSE, message);
-	be_log(EID_VWR_LOG_DETAIL, "libssl error: %s", buf);
+	while(error != 0) {
+		ERR_error_string_n(error, buf, sizeof buf);
+		buf[99] = '\0';
+		be_log(EID_VWR_LOG_DETAIL, "libssl error: %s", buf);
+		error = ERR_get_error();
+	}
 }
 
 enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen, const void* ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*)) {
@@ -57,6 +60,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	void *ocsp_handle;
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
 
+	ensure_inited();
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_ssl_error("Could not parse entity certificate");
 		ret = EID_VWR_RES_FAILED;
@@ -182,7 +186,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir());
 	X509_LOOKUP_add_dir(lookup, CERTTRUSTDIR, X509_FILETYPE_PEM);
 	if(OCSP_basic_verify(bresp, bresp->certs, store, 0) <= 0) {
-		be_log(EID_VWR_LOG_COARSE, "OCSP signature invalid, or root certificate unknown");
+		log_ssl_error("OCSP signature invalid, or root certificate unknown");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
@@ -224,7 +228,7 @@ enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certl
 	}
 
 	if(X509_verify_cert(ctx) != 1) {
-		be_log(EID_VWR_LOG_COARSE, "RRN certificate verification failed: invalid signature, or invalid root certificate.");
+		log_ssl_error("RRN certificate verification failed: invalid signature, or invalid root certificate.");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}

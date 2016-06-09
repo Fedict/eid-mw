@@ -153,7 +153,6 @@ AC_CONFIG_FILES([Makefile
 		 tests/unit/Makefile
 		 plugins_tools/util/Makefile
 		 plugins_tools/aboutmw/gtk/Makefile
-		 plugins_tools/aboutmw/gtk/about-eid-mw.desktop.sh
 		 plugins_tools/aboutmw/gtk/po/Makefile.in
 		 plugins_tools/eid-viewer/Makefile
 		 plugins_tools/eid-viewer/test/Makefile
