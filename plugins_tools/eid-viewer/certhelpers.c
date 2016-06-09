@@ -2,6 +2,7 @@
 #include <openssl/x509v3.h>
 #include <openssl/err.h>
 #include <openssl/pem.h>
+#include <openssl/crypto.h>
 #include <eid-viewer/certhelpers.h>
 #include <stdbool.h>
 #include <string.h>
@@ -16,6 +17,7 @@ static pthread_once_t init = PTHREAD_ONCE_INIT;
 
 static void init_crypto() {
 	ERR_load_crypto_strings();
+	OpenSSL_add_all_algorithms();
 }
 
 void ensure_inited() {

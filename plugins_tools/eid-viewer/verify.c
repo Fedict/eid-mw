@@ -60,6 +60,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	void *ocsp_handle;
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
 
+	ensure_inited();
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_ssl_error("Could not parse entity certificate");
 		ret = EID_VWR_RES_FAILED;
