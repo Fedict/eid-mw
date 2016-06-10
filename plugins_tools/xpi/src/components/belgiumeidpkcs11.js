@@ -99,6 +99,7 @@ BelgiumEidPKCS11.prototype = {
 	   found = true;
 	} catch (e)
 	{
+		this.errorLog("Belgium eID, module not found");
 		found = false;
 	}
 	return found;
@@ -180,6 +181,7 @@ BelgiumEidPKCS11.prototype = {
     try {
       modules.isDone();
     } catch (e) { 
+	//this.errorLog("modules list was empty, was searching for " + modulelibname);
       return null;
     }
     while (true) {
@@ -192,6 +194,7 @@ BelgiumEidPKCS11.prototype = {
       try {
         modules.next();
       } catch (e) { 
+		//this.errorLog("module not found");
         break;
       }
     }
@@ -229,28 +232,26 @@ BelgiumEidPKCS11.prototype = {
    */
   isModuleInstalled: function() {
     var modules = this.getPKCS11ModuleDB().listModules();
-    try {
-      modules.isDone();
-    } catch (e) {
-      return false;
+	//listModules changed from being a nsIEnumerator to being a nsISimpleEnumerator
+	try{
+		while (modules.hasMoreElements()) {
+			var module = modules.getNext().QueryInterface(Components.interfaces.nsIPKCS11Module);
+			if (module) {
+			// OK if module name starts with the module name provided in the preferences
+			// this.errorLog("module.name is " + module.name);
+			if (module.name.indexOf(this.getModuleName()) == 0) 
+			return true;
+			
+			// OK if module location of the module is in our list
+			if (this.getModuleLocation().indexOf(module.libName) != -1 )
+			return true;
+			}
+		}
+	}
+	catch (anError) {
+        this.errorLog(anError);
     }
-    while (true) {
-      var module = modules.currentItem().QueryInterface(Components.interfaces.nsIPKCS11Module);
-      if (module) {
-	    // OK if module name starts with the module name provided in the preferences
-        if (module.name.indexOf(this.getModuleName()) == 0) 
-          return true;
-        
-		// OK if module location of the module is in our list
-		if (this.getModuleLocation().indexOf(module.libName) != -1 )
-		  return true;
-      }
-      try {
-        modules.next();
-      } catch (e) {
-        break;
-      }
-    }
+
 	// no valid module found
     return false;
   },
