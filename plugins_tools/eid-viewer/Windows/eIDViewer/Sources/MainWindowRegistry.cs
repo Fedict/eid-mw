@@ -82,18 +82,22 @@ namespace eIDViewer
                 if( readValue.Equals("nl"))
                 {
                     ChangeLocalization("nl-BE");
+                    eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
                 }
                 else if (readValue.Equals("fr"))
                 {
                     ChangeLocalization("fr-BE");
+                    eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
                 }
                 else if (readValue.Equals("de"))
                 {
                     ChangeLocalization("de-DE");
+                    eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
                 }
                 else if (readValue.Equals("en"))
                 {
                     ChangeLocalization("en-US");
+                    eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
                 }
                 else
                 {

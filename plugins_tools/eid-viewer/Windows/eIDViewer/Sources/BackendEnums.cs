@@ -32,6 +32,16 @@ namespace eIDViewer
         EID_VWR_PINOP_CHG,
     };
 
+    /** Possible languages. */
+    public enum eid_vwr_langs
+    {
+        EID_VWR_LANG_NONE, ///< No language has yet been selected. Used as initializer.
+        EID_VWR_LANG_DE, ///< German
+        EID_VWR_LANG_EN, ///< English
+        EID_VWR_LANG_FR, ///< French
+        EID_VWR_LANG_NL, ///< Dutch
+    };
+
     public enum eid_vwr_result
     {
         EID_VWR_RES_FAILED,

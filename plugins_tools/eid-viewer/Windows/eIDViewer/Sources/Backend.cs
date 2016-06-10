@@ -41,6 +41,9 @@ namespace eIDViewer
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void Cbpinop_result(eid_vwr_pinops pinop, eid_vwr_result result);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void CbsetLang(eid_vwr_langs lang);
+
         public static BackendDataViewModel theData {get;set;}
 
         //list all functions of the C backend we need to call
@@ -69,6 +72,9 @@ namespace eIDViewer
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_be_serialize([MarshalAs(UnmanagedType.LPWStr)] string dest_file);
 
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int eid_vwr_convert_set_lang(eid_vwr_langs lang);
+
         public static void Init()
         {
             eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
@@ -92,17 +98,21 @@ namespace eIDViewer
 
         private static void AdjustIconImage(string fileName)
         {
-            if (App.Current.Dispatcher.CheckAccess())
+            if (App.Current.Dispatcher != null)
             {
-                theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
-            }
-            else
-            {
-                App.Current.Dispatcher.BeginInvoke(
-                  DispatcherPriority.Background,
-                  new Action(() => {
-                      theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
-                  }));
+                if (App.Current.Dispatcher.CheckAccess())
+                {
+                    theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
+                }
+                else
+                {
+                    App.Current.Dispatcher.BeginInvoke(
+                      DispatcherPriority.Background,
+                      new Action(() =>
+                      {
+                          theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
+                      }));
+                }
             }
         }
 
@@ -241,6 +251,39 @@ namespace eIDViewer
             }
         }
 
+        private static void CSCsetLang(eid_vwr_states state)
+        {
+            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
+            {
+                theData.logText += "CSCsetLang called " + state.ToString() + "\n";
+            }
+            switch (state)
+            {
+                case eid_vwr_states.STATE_TOKEN_WAIT:
+                    theData.AllDataRead();
+                    //theData.progress_bar_visible = "Hidden";
+                    break;
+                case eid_vwr_states.STATE_READY:
+                    theData.eid_data_ready = false;
+                    break;
+                case eid_vwr_states.STATE_LIBOPEN:
+                    theData.eid_data_ready = false;
+                    break;
+                case eid_vwr_states.STATE_CARD_INVALID:
+                    theData.ResetDataValues();
+                    theData.eid_data_ready = false;
+                    break;
+                case eid_vwr_states.STATE_TOKEN_ERROR:
+                    theData.ResetDataValues();
+                    theData.eid_data_ready = false;
+                    break;
+                default:
+                    theData.eid_data_ready = true;
+                    break;
+            }
+
+        }
+
         public static void DoPinop(eid_vwr_pinops pinop)
         {
             eid_vwr_pinop(pinop);
@@ -259,6 +302,11 @@ namespace eIDViewer
         public static void SaveXML(string destFile)
         {
             eid_vwr_be_serialize(destFile);
+        }
+
+        public static void ChangeLanguage(eid_vwr_langs language )
+        {
+            eid_vwr_convert_set_lang (language);
         }
 
         // public CSCbStruct mCSCbStruct;

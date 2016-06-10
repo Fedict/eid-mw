@@ -56,24 +56,28 @@ namespace eIDViewer
         {
             ChangeLocalization("de-DE");
             StoreLanguage("de");
+            eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
         }
 
         private void English_Click(object sender, RoutedEventArgs e)
         {
             ChangeLocalization("en-US");
             StoreLanguage("en");
+            eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
         }
 
         private void French_Click(object sender, RoutedEventArgs e)
         {
             ChangeLocalization("fr-BE");
             StoreLanguage("fr");
+            eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
         }
 
         private void Nederlands_Click(object sender, RoutedEventArgs e)
         {
             ChangeLocalization("nl-BE");
             StoreLanguage("nl");
+            eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
         }
 
         private void ClearLog_Click(object sender, RoutedEventArgs e)
