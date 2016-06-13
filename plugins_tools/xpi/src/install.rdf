@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   - eID Middleware Project.
-  - Copyright (C) 2008-2012 FedICT.
+  - Copyright (C) 2008-2016 FedICT.
  
   - This is free software; you can redistribute it and/or modify it
   - under the terms of the GNU Lesser General Public License version
@@ -43,15 +43,15 @@
     </em:localized>
     <em:name>Belgium eID</em:name>
     <em:description>Use the Belgian electronic identity card (eID) in Firefox</em:description>
-    <em:version>1.0.18</em:version>
+    <em:version>1.0.19</em:version>
     <em:creator>Fedict</em:creator>
     <em:homepageURL>http://eid.belgium.be/</em:homepageURL>
     <em:iconURL>chrome://belgiumeid/skin/icon.png</em:iconURL>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- firefox -->
-        <em:minVersion>3.0</em:minVersion>
-        <em:maxVersion>28.*</em:maxVersion>
+        <em:minVersion>47.0</em:minVersion>
+        <em:maxVersion>47.*</em:maxVersion>
       </Description>
     </em:targetApplication>
 	<em:type>2</em:type>
