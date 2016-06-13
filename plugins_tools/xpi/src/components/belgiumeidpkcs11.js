@@ -178,27 +178,20 @@ BelgiumEidPKCS11.prototype = {
   findModuleByLibName: function (modulelibname) {
 	const nsIPKCS11Module = Components.interfaces.nsIPKCS11Module;
     var modules = this.getPKCS11ModuleDB().listModules();
-    try {
-      modules.isDone();
-    } catch (e) { 
-	//this.errorLog("modules list was empty, was searching for " + modulelibname);
-      return null;
+	try{
+		while (modules.hasMoreElements()) {
+			var module = modules.getNext().QueryInterface(Components.interfaces.nsIPKCS11Module);
+			if (module) {
+				if (module.libName == modulelibname) {
+					return module;
+				}
+			}
+		}
+	}
+	catch (anError) {
+        this.errorLog(anError);
     }
-    while (true) {
-      var module = modules.currentItem().QueryInterface(nsIPKCS11Module);
-      if (module) {
-        if (module.libName == modulelibname) {
-          return module;
-        }
-      }
-      try {
-        modules.next();
-      } catch (e) { 
-		//this.errorLog("module not found");
-        break;
-      }
-    }
-    return null;
+	return null;
   },
   setShouldShowModuleNotFoundNotification: function (shouldshow) {
     if (shouldshow != undefined) {
