@@ -143,7 +143,7 @@ static void ensure_cert() {
 				G_TYPE_STRING, // valid through 
 				G_TYPE_BOOLEAN, // valid through in future?
 				G_TYPE_STRING, // use
-				G_TYPE_BOOLEAN, // validity
+				G_TYPE_STRING, // validity
 				G_TYPE_STRING, // description (multi-line field 
 				G_TYPE_BYTE_ARRAY); // data (GByteArray*)
 	}
@@ -237,7 +237,9 @@ static enum eid_vwr_result check_cert(char* which) {
 	GtkTreeIter *ca_iter;
 	GByteArray *cert, *ca_cert;
 	GValue *val_cert, *val_ca, *val_root;
+	GValue *val_tcert, *val_tca, *val_troot;
 	int *col_cert, *col_ca, *col_root;
+	int *col_tcert, *col_tca, *col_troot;
 	enum eid_vwr_result verify_result;
 
 	ca_iter = get_iter_for("CA");
@@ -247,9 +249,13 @@ static enum eid_vwr_result check_cert(char* which) {
 
 	val_cert = calloc(sizeof(GValue), 1);
 	col_cert = malloc(sizeof(int));
+	val_tcert = calloc(sizeof(GValue), 1);
+	col_tcert = malloc(sizeof(int));
 
 	*col_cert = CERT_COL_IMAGE;
 	g_value_init(val_cert, GDK_TYPE_PIXBUF);
+	*col_tcert = CERT_COL_VALIDITY;
+	g_value_init(val_tcert, G_TYPE_STRING);
 	if(strcmp(which, "CERT_RN_FILE") != 0) {
 		verify_result = eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free);
 	} else {
@@ -259,30 +265,47 @@ static enum eid_vwr_result check_cert(char* which) {
 	switch(verify_result) {
 		case EID_VWR_RES_SUCCESS:
 			g_value_set_instance(val_cert, good_certificate);
+			g_value_set_string(val_tcert, _("trusted"));
 			break;
 		case EID_VWR_RES_FAILED:
 			g_value_set_instance(val_cert, bad_certificate);
+			g_value_set_string(val_tcert, _("NOT TRUSTED"));
 			break;
 		case EID_VWR_RES_UNKNOWN:
 			g_value_set_instance(val_cert, warn_certificate);
+			g_value_set_string(val_tcert, _("validation failed"));
 			break;
 		default:
 			free(val_cert);
 			free(col_cert);
+			free(val_tcert);
+			free(col_tcert);
 			return verify_result;
 	}
 	col_ca = malloc(sizeof(int));
 	val_ca = calloc(sizeof(GValue), 1);
+	col_tca = malloc(sizeof(int));
+	val_tca = calloc(sizeof(GValue), 1);
 	col_root = malloc(sizeof(int));
 	val_root = calloc(sizeof(GValue), 1);
+	col_troot = malloc(sizeof(int));
+	val_troot = calloc(sizeof(GValue), 1);
 	*col_ca = *col_root = *col_cert;
+	*col_tca = *col_troot = *col_tcert;
 	g_value_init(val_ca, GDK_TYPE_PIXBUF);
 	g_value_copy(val_cert, val_ca);
 	g_value_init(val_root, GDK_TYPE_PIXBUF);
 	g_value_copy(val_cert, val_root);
+	g_value_init(val_tca, G_TYPE_STRING);
+	g_value_copy(val_tcert, val_tca);
+	g_value_init(val_troot, G_TYPE_STRING);
+	g_value_copy(val_tcert, val_troot);
 	tst_set(which, col_cert, val_cert, 1);
+	tst_set(which, col_tcert, val_tcert, 1);
 	tst_set("CA", col_ca, val_ca, 1);
+	tst_set("CA", col_tca, val_tca, 1);
 	tst_set("Root", col_root, val_root, 1);
+	tst_set("Root", col_troot, val_troot, 1);
 
 	return verify_result;
 }
