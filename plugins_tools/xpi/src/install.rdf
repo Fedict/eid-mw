@@ -43,7 +43,7 @@
     </em:localized>
     <em:name>Belgium eID</em:name>
     <em:description>Use the Belgian electronic identity card (eID) in Firefox</em:description>
-    <em:version>1.0.20</em:version>
+    <em:version>1.0.21</em:version>
     <em:creator>Fedict</em:creator>
     <em:homepageURL>http://eid.belgium.be/</em:homepageURL>
     <em:iconURL>chrome://belgiumeid/skin/icon.png</em:iconURL>
