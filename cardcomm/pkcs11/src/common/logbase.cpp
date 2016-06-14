@@ -30,11 +30,7 @@
 
 #ifndef WIN32
 #include <stdlib.h>
-#ifdef LINUX
-#include "wintypes.h"
-#else
-#include "PCSC/wintypes.h"
-#endif
+#include <PCSC/wintypes.h>
 #include "sys/stat.h"
 #include "util.h"
 
