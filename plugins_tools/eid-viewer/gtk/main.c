@@ -115,6 +115,8 @@ static void newstate(enum eid_vwr_states s) {
 			return;
 		case STATE_NO_READER:
 			uistatus(FALSE, _("No cardreader found."));
+			g_object_set_threaded(open, "sensitive", (void*)TRUE, NULL);
+			disable_dnd();
 			return;
 		case STATE_TOKEN:
 			uistatus(TRUE, _("Card available"));
