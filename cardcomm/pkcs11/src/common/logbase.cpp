@@ -30,7 +30,11 @@
 
 #ifndef WIN32
 #include <stdlib.h>
+#ifdef __APPLE__
 #include <PCSC/wintypes.h>
+#else
+#include <wintypes.h>
+#endif
 #include "sys/stat.h"
 #include "util.h"
 
