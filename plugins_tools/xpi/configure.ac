@@ -55,5 +55,6 @@ AC_SUBST([mozext])
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
+	signed-build/Makefile
 ])
 AC_OUTPUT
