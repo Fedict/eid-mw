@@ -953,8 +953,8 @@
                                                 <action selector="changeValidatePolicy:" target="Voe-Tx-rLC" id="uvY-PX-Gco"/>
                                             </connections>
                                         </button>
-                                        <box hidden="YES" verticalHuggingPriority="750" ambiguous="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="iSU-im-9Io">
-                                            <rect key="frame" x="116" y="-2" width="210" height="5"/>
+                                        <box hidden="YES" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="iSU-im-9Io">
+                                            <rect key="frame" x="116" y="29" width="210" height="5"/>
                                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
@@ -970,6 +970,7 @@
                                         <constraint firstItem="0io-gu-IzB" firstAttribute="centerY" secondItem="DP5-Vd-vKQ" secondAttribute="centerY" id="VyR-gx-sm5"/>
                                         <constraint firstItem="iSU-im-9Io" firstAttribute="leading" secondItem="DP5-Vd-vKQ" secondAttribute="leading" id="cpR-pb-CyB"/>
                                         <constraint firstAttribute="trailing" secondItem="r0g-Wa-PDS" secondAttribute="trailing" constant="20" symbolic="YES" id="hst-Oz-gOU"/>
+                                        <constraint firstItem="0io-gu-IzB" firstAttribute="centerY" secondItem="iSU-im-9Io" secondAttribute="centerY" id="tkV-Gv-Rkm"/>
                                         <constraint firstItem="r0g-Wa-PDS" firstAttribute="leading" secondItem="TnE-Be-ndr" secondAttribute="leading" constant="20" symbolic="YES" id="vff-39-Unb"/>
                                     </constraints>
                                 </view>
