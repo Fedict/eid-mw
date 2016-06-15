@@ -28,7 +28,6 @@ openssl-$(OSSL_VERSION).tar.gz:
 		cp $(TP_DIR)/openssl-$(OSSL_VERSION).tar.gz . ; \
 	else \
 		curl -O https://www.openssl.org/source/openssl-$(OSSL_VERSION).tar.gz; \
-		sed -i '' -e "s/\$$/  openssl-$(OSSL_VERSION).tar.gz/" openssl-$(OSSL_VERSION).tar.gz.sha256; \
 		shasum -a 256 -c openssl-$(OSSL_VERSION).tar.gz.sha256; \
 	fi
 
