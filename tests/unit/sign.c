@@ -128,7 +128,6 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 
 	verbose_assert(attr[0].ulValueLen == sig_len);
 
-#if HAVE_OPENSSL
 	mod = malloc(attr[0].ulValueLen);
 	mod[0] = 0xde; mod[1] = 0xad; mod[2] = 0xbe; mod[3] = 0xef;
 	exp = malloc(attr[1].ulValueLen);
@@ -145,6 +144,7 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 	printf("Received public exponent of key with length %lu:\n", attr[1].ulValueLen);
 	hex_dump((char*)exp, attr[1].ulValueLen);
 
+#if HAVE_OPENSSL
 	return verify_sig(sig, sig_len, mod, attr[0].ulValueLen, exp, attr[1].ulValueLen);
 #else
 	return TEST_RV_OK;
