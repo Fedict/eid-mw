@@ -1,5 +1,23 @@
-<?xml version='1.0' encoding='utf-8'?>
-<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - eID Middleware Project.
+  - Copyright (C) 2008-2016 FedICT.
+ 
+  - This is free software; you can redistribute it and/or modify it
+  - under the terms of the GNU Lesser General Public License version
+  - 3.0 as published by the Free Software Foundation.
+ 
+  - This software is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  - Lesser General Public License for more details.
+ 
+  - You should have received a copy of the GNU Lesser General Public
+  - License along with this software; if not, see
+  - http://www.gnu.org/licenses/.
+-->
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
     <em:id>belgiumeid@eid.belgium.be</em:id>
     <em:localized>
@@ -25,15 +43,15 @@
     </em:localized>
     <em:name>Belgium eID</em:name>
     <em:description>Use the Belgian electronic identity card (eID) in Firefox</em:description>
-    <em:version>1.0.18.1-signed.1-signed</em:version>
+    <em:version>1.0.21</em:version>
     <em:creator>Fedict</em:creator>
     <em:homepageURL>http://eid.belgium.be/</em:homepageURL>
     <em:iconURL>chrome://belgiumeid/skin/icon.png</em:iconURL>
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- firefox -->
-        <em:minVersion>3.0</em:minVersion>
-        <em:maxVersion>17.*</em:maxVersion>
+        <em:minVersion>47.0</em:minVersion>
+        <em:maxVersion>47.*</em:maxVersion>
       </Description>
     </em:targetApplication>
 	<em:type>2</em:type>
