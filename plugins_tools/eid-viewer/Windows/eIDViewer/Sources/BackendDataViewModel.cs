@@ -19,6 +19,71 @@ namespace eIDViewer
     public class BackendDataViewModel : INotifyPropertyChanged
     {
 
+        public bool CheckRNSignature(byte[] data, byte[] signedHash)
+        {
+            byte[] HashValue;
+            try
+            {
+                SHA1 sha = new SHA1CryptoServiceProvider();
+                // This is one implementation of the abstract class SHA1.
+
+                HashValue = sha.ComputeHash(data);
+
+                RSACryptoServiceProvider csp = RN_cert.PublicKey.Key as RSACryptoServiceProvider;
+
+                if (csp.VerifyHash(HashValue, CryptoConfig.MapNameToOID("SHA1"), signedHash))
+                {
+                    Console.WriteLine("The signature is valid.");
+                    this.logText += "The signature of the data is valid \n";
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("The signature is not valid.");
+                    this.logText += "The signature of the data is not valid  \n";
+                    ResetDataValues();
+                }
+            }
+            catch (Exception e)
+            {
+                this.logText += "An error occurred validating the data signature \n";
+            }
+            return false;
+
+        }
+
+        public bool CheckSha1Hash(byte[] data, byte[] sha1hash)
+        {
+            byte[] HashValue;
+            try
+            {
+                SHA1 sha = new SHA1CryptoServiceProvider();
+
+                HashValue = sha.ComputeHash(data);
+
+                if (HashValue.Length != sha1hash.Length)
+                    return false;
+
+                for (int i = 0; i < sha1hash.Length; i++)
+                {
+                    if (HashValue[i] != sha1hash[i])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+
+
+            }
+            catch (Exception e)
+            {
+                this.logText += "An error occurred computing a sha1 hash \n";
+            }
+            return false;
+
+        }
+
         static bool VerifyCertificate(byte[] primaryCertificate, IEnumerable<byte[]> additionalCertificates)
         {
             var chain = new X509Chain();
@@ -121,10 +186,49 @@ namespace eIDViewer
             }
         }
 
+
+        public static void TrimEnd(ref byte[] array)
+        {
+            int lastIndex = Array.FindLastIndex(array, b => b != 0);
+
+            Array.Resize(ref array, lastIndex + 1);
+        }
+
         public void AllDataRead( )
         {
+            
+            //CheckCertificateValidity()
+
+            //check if the identity signature is ok
+            if (CheckRNSignature(dataFile, dataSignFile) != true)
+            {
+                this.logText += "dataFile signature check failed \n";
+                ResetDataValues();
+                return;
+            }
+
+            //check if the address signature is ok
+            byte[] trimmedAddressFile = (byte[]) addressFile.Clone();
+            int lastIndex = Array.FindLastIndex(trimmedAddressFile, b => b != 0);
+            Array.Resize(ref trimmedAddressFile, lastIndex + 1 + dataSignFile.Length);
+            dataSignFile.CopyTo(trimmedAddressFile, lastIndex + 1);
+
+            if (CheckRNSignature(trimmedAddressFile, addressSignFile) != true)
+            {
+                this.logText += "addressFile signature check failed \n";
+                ResetDataValues();
+                return;
+            }
+
+            //check if the photo corresponds with the photo hash in the identity file
+            if (CheckSha1Hash(photoFile, photo_hash) != true)
+            {
+                this.logText += "photo doesn't match the hash in the signature file \n";
+                ResetDataValues();
+                return;
+            }
+
             progress_bar_visible = "Hidden";
-            //CheckCertificateValidity(); check them in a new thread
         }
 
         private string _certificateLargeIcon;
@@ -313,20 +417,66 @@ namespace eIDViewer
             { _document_type = data; }
         }
 
+        private byte[] dataFile;
+        private byte[] addressFile;
+        private byte[] dataSignFile;
+        private byte[] addressSignFile;
+        private byte[] photoFile;
+        private byte[] photo_hash;
+
         public void StoreBinData(string label, byte[] data, int datalen)
         {
             try
             {
-                progress += 6;
+                
                 if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
                 {
+                    photoFile = new byte[datalen];
+                    data.CopyTo(photoFile, 0);
                     photo = LoadImage(data);
                     progress_info = "reading photo";
+                    progress += 4;
+                }
+                else if (String.Equals(label, "photo_hash", StringComparison.Ordinal))
+                {
+                    photo_hash = new byte[datalen];
+                    data.CopyTo(photo_hash, 0);
+                    progress_info = "reading the identity data file";
+                    progress += 4;
+                }
+                else if (String.Equals(label, "DATA_FILE", StringComparison.Ordinal))
+                {
+                   dataFile = new byte[datalen];
+                   data.CopyTo(dataFile,0);
+                   progress_info = "reading the identity data file";
+                   progress += 4;                         
+                }
+                else if (String.Equals(label, "ADDRESS_FILE", StringComparison.Ordinal))
+                {
+                    addressFile = new byte[datalen];
+                    data.CopyTo(addressFile, 0);
+                    progress_info = "reading the address file";
+                    progress += 2;
+                }
+                else if (String.Equals(label, "SIGN_DATA_FILE", StringComparison.Ordinal))
+                {
+                    dataSignFile = new byte[datalen];
+                    data.CopyTo(dataSignFile, 0);
+                    progress_info = "reading the signature of the identity file";
+                    progress += 1;
+                }
+                else if (String.Equals(label, "SIGN_ADDRESS_FILE", StringComparison.Ordinal))
+                {
+                    addressSignFile = new byte[datalen];
+                    data.CopyTo(addressSignFile, 0);
+                    progress_info = "reading the signature of the address file";
+                    progress += 1;
                 }
                 else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
                 { //chip_number = BitConverter.ToString(data);
                     progress_info = "reading chip_number";
                     chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
+                    progress += 1;
                 }
                 else if (String.Equals(label, "Authentication", StringComparison.Ordinal))
                 {
@@ -334,6 +484,7 @@ namespace eIDViewer
                     authentication_cert = new X509Certificate2(data);
                     cert_collection.Add(authentication_cert);
                     StoreCertificate( ref authCert, ref authentication_cert);
+                    progress += 6;
                 }
                 else if (String.Equals(label, "Signature", StringComparison.Ordinal))
                 {
@@ -341,6 +492,7 @@ namespace eIDViewer
                     signature_cert = new X509Certificate2(data);
                     cert_collection.Add(signature_cert);
                     StoreCertificate(ref signCert, ref signature_cert);
+                    progress += 6;
                 }
                 else if (String.Equals(label, "Root", StringComparison.Ordinal))
                 {
@@ -348,6 +500,7 @@ namespace eIDViewer
                     rootCA_cert = new X509Certificate2(data);
                     cert_collection.Add(rootCA_cert);
                     StoreCertificate(ref rootCA, ref rootCA_cert);
+                    progress += 6;
                 }
                 else if (String.Equals(label, "CA", StringComparison.Ordinal))
                 {
@@ -355,6 +508,7 @@ namespace eIDViewer
                     intermediateCA_cert = new X509Certificate2(data);
                     cert_collection.Add(intermediateCA_cert);
                     StoreCertificate(ref intermediateCA, ref intermediateCA_cert);
+                    progress += 6;
                 }
                 else if (String.Equals(label, "CERT_RN_FILE", StringComparison.Ordinal))
                 {
@@ -362,6 +516,7 @@ namespace eIDViewer
                     RN_cert = new X509Certificate2(data);
                     cert_collection.Add(RN_cert);
                     StoreCertificate(ref RNCert, ref RN_cert);
+                    progress += 6;
                 }
             }
             catch (Exception e)
