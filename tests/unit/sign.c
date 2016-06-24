@@ -72,34 +72,13 @@ int verify_sig(unsigned char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULON
 
 #endif
 
-TEST_FUNC(sign) {
-	int ret;
-	CK_SESSION_HANDLE session;
+int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
+	CK_ATTRIBUTE attr[2];
 	CK_MECHANISM mech;
 	CK_BYTE data[] = { 'f', 'o', 'o' };
-	CK_SLOT_ID slot;
 	CK_BYTE_PTR sig, mod, exp;
 	CK_ULONG sig_len, type, count;
 	CK_OBJECT_HANDLE privatekey, publickey;
-	CK_ATTRIBUTE attr[2];
-
-	if(!have_pin()) {
-		fprintf(stderr, "Cannot test signature without a pin code\n");
-		return TEST_RV_SKIP;
-	}
-
-	check_rv(C_Initialize(NULL_PTR));
-
-	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
-		check_rv(C_Finalize(NULL_PTR));
-		return ret;
-	}
-
-	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
-
-	if(!can_enter_pin(slot)) {
-		return TEST_RV_SKIP;
-	}
 
 	attr[0].type = CKA_CLASS;
 	attr[0].pValue = &type;
@@ -107,8 +86,8 @@ TEST_FUNC(sign) {
 	attr[0].ulValueLen = sizeof(CK_ULONG);
 
 	attr[1].type = CKA_LABEL;
-	attr[1].pValue = "Signature";
-	attr[1].ulValueLen = strlen("Signature");
+	attr[1].pValue = label;
+	attr[1].ulValueLen = strlen(label);
 
 	check_rv(C_FindObjectsInit(session, attr, 2));
 	check_rv(C_FindObjects(session, &privatekey, 1, &count));
@@ -116,7 +95,7 @@ TEST_FUNC(sign) {
 	check_rv(C_FindObjectsFinal(session));
 
 	if(count == 0) {
-		fprintf(stderr, "Cannot test signature on a card without a signature key\n");
+		fprintf(stderr, "Cannot test \"%s\" signature on a card without a \"%s\" key\n", label, label);
 		return TEST_RV_SKIP;
 	}
 
@@ -166,10 +145,41 @@ TEST_FUNC(sign) {
 	printf("Received public exponent of key with length %lu:\n", attr[1].ulValueLen);
 	hex_dump((char*)exp, attr[1].ulValueLen);
 
-	if((ret = verify_sig(sig, sig_len, mod, attr[0].ulValueLen, exp, attr[1].ulValueLen)) != TEST_RV_OK) {
+	return verify_sig(sig, sig_len, mod, attr[0].ulValueLen, exp, attr[1].ulValueLen);
+#else
+	return TEST_RV_OK;
+#endif
+}
+
+TEST_FUNC(sign) {
+	int ret;
+	CK_SESSION_HANDLE session;
+	CK_SLOT_ID slot;
+
+	if(!have_pin()) {
+		fprintf(stderr, "Cannot test signature without a pin code\n");
+		return TEST_RV_SKIP;
+	}
+
+	check_rv(C_Initialize(NULL_PTR));
+
+	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+		check_rv(C_Finalize(NULL_PTR));
 		return ret;
 	}
-#endif
+
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
+
+	if(!can_enter_pin(slot)) {
+		return TEST_RV_SKIP;
+	}
+
+	if((ret = test_key("Authentication", session, slot)) != TEST_RV_OK) {
+		return ret;
+	}
+	if((ret = test_key("Signature", session, slot)) != TEST_RV_OK) {
+		return ret;
+	}
 
 	check_rv(C_Finalize(NULL_PTR));
 

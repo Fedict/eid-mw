@@ -175,19 +175,16 @@
 	return cell;
 }
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification {
-	NSOutlineView* view = [notification object];
-	NSString* key = [view itemAtRow:[view selectedRow]];
+	NSString* key = [_ov itemAtRow:[_ov selectedRow]];
 	NSArray* arr = [_CertificateData objectForKey:key];
-	if(arr == nil) {
-		return;
-	}
 	[_ui newstringdata:[arr objectAtIndex:CERT_COL_DESC] withLabel:@"certdata"];
 	[_ui newstringdata:[arr objectAtIndex:CERT_COL_VALIDFROM] withLabel:@"certvalfromval"];
 	[_ui newstringdata:[arr objectAtIndex:CERT_COL_VALIDTO] withLabel:@"certvaltilval"];
 	[_ui newstringdata:[arr objectAtIndex:CERT_COL_USE] withLabel:@"certuseval"];
 	[_ui newbindata:[arr objectAtIndex:CERT_COL_IMAGE] withLabel:@"certimage"];
 	NSString *trust;
-	switch([[arr objectAtIndex:CERT_COL_VALIDITY] integerValue]) {
+	eIDResult res = arr == nil ? eIDResultUnknown : [[arr objectAtIndex:CERT_COL_VALIDITY] integerValue];
+	switch(res) {
 		case eIDResultUnknown:
 			trust = @"";
 			break;
@@ -265,5 +262,6 @@
 	NSImage *img = [[NSImage alloc] initByReferencingFile:filename];
 	arr[CERT_COL_IMAGE] = img;
 	[_ov reloadData];
+	[self outlineViewSelectionDidChange:[NSNotification notificationWithName:@"validation" object:_ov]];
 }
 @end

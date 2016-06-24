@@ -20,6 +20,7 @@
                 <outlet property="CertificatesView" destination="G1r-zp-mgg" id="mxb-Xx-Viq"/>
                 <outlet property="IdentityTab" destination="8cq-xu-vLE" id="UUh-5o-1f7"/>
                 <outlet property="alwaysValidate" destination="DP5-Vd-vKQ" id="16x-fw-umH"/>
+                <outlet property="certview" destination="eni-gv-Xrt" id="9qA-J6-bCO"/>
                 <outlet property="logItem" destination="I3G-tI-1MG" id="Lw3-P0-gIi"/>
                 <outlet property="logLevel" destination="2Iq-Qb-1J7" id="zdf-dd-Roe"/>
                 <outlet property="menu_file_close" destination="DVo-aG-piG" id="eD3-6j-eIp"/>

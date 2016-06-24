@@ -34,6 +34,7 @@
 @property NSMutableDictionary *viewdict;
 @property NSArray *readerSelections;
 @property (weak) IBOutlet NSImageView *photoview;
+@property (weak) IBOutlet NSImageView *certview;
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSWindow *CardReadSheet;
 @property (weak) IBOutlet NSView *IdentityTab;
@@ -121,6 +122,7 @@
 }
 - (void)newsrc:(eIDSource)which {
 	[_photoview setImage:nil];
+	[_certview setImage:nil];
 	[_certstore clear];
 	[_viewdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
 		if(![obj isKindOfClass:[NSTextField class]]) {
@@ -235,7 +237,7 @@
 - (void)newstringdata:(NSString *)data withLabel:(NSString *)label{
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		NSTextField* tf = (NSTextField*)[self searchObjectById:label ofClass:[NSTextField class]];
-		[tf setStringValue:data];
+		[tf setStringValue:data ? data : @""];
 	}];
 }
 - (IBAction)print:(id)sender {

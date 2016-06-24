@@ -220,6 +220,13 @@
 			remoteGlobalIDString = 8BBDE3121B3BF02C00CBE13E;
 			remoteInfo = eidfilepreview;
 		};
+		657875021D11518000DDA856 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 65BD08641CECB257000A30E4;
+			remoteInfo = BeidView;
+		};
 		6580550D1A66C9BE000AEFE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
@@ -627,6 +634,7 @@
 			children = (
 				655E14D51BBA8A2900D855D3 /* eID Viewer.app */,
 				655E14D71BBA8A2900D855D3 /* eidfilepreview.qlgenerator */,
+				657875031D11518000DDA856 /* BeidView.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1129,6 +1137,13 @@
 			fileType = wrapper.cfbundle;
 			path = eidfilepreview.qlgenerator;
 			remoteRef = 655E14D61BBA8A2900D855D3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		657875031D11518000DDA856 /* BeidView.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BeidView.framework;
+			remoteRef = 657875021D11518000DDA856 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		6580550E1A66C9BE000AEFE0 /* eID Middleware.app */ = {
@@ -1767,7 +1782,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRODUCT_NAME = "$(TARGET_NAME).$(CURRENT_PROJECT_VERSION)";
@@ -1812,7 +1827,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRODUCT_NAME = "$(TARGET_NAME).$(CURRENT_PROJECT_VERSION)";

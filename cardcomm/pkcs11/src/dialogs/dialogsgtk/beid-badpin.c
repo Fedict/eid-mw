@@ -29,68 +29,75 @@
 #define EXIT_OK			0
 #define EXIT_ERROR		2
 
-enum msgs { MSG_INCORRECT_PIN_CODE=1, MSG_N_ATTEMPTS_LEFT, MSG_LAST_ATTEMPT };
-char* beid_messages[4][4]={
-		{"en",   "beID: Incorrect PIN Code",    	"You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", 					"You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."},
-		{"nl",   "beID: Foutive PINcode",    	"U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat u nog slechts %d pogingen hebt alvorens uw PIN code geblokkeerd wordt.", 	"U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat bij de volgende incorrecte ingave uw PIN code geblokkeerd wordt."},
-		{"fr",   "beID: Code PIN incorrect",    	"Vous avez entré un code PIN incorrect.\nVeuillez noter qu'il ne vous reste plus que %d tentatives avant que votre PIN soit bloqué", 		"Vous avez entré un code PIN incorrect.\nVieullez noter qu'a la prochaine entree incorrecte votre code PIN sera bloqué"},
-		{"de",   "beID: Incorrect PIN Code",    	"You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", 					"You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."}
+enum msgs { MSG_INCORRECT_PIN_CODE = 1, MSG_N_ATTEMPTS_LEFT, MSG_LAST_ATTEMPT
+};
+
+char *beid_messages[4][4] = {
+        {"en", "beID: Incorrect PIN Code",
+         "You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.",
+         "You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."},
+        {"nl", "beID: Foutive PINcode",
+         "U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat u nog slechts %d pogingen hebt alvorens uw PIN code geblokkeerd wordt.",
+         "U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat bij de volgende incorrecte ingave uw PIN code geblokkeerd wordt."},
+        {"fr", "beID: Code PIN incorrect",
+         "Vous avez entré un code PIN incorrect.\nVeuillez noter qu'il ne vous reste plus que %d tentatives avant que votre PIN soit bloqué",
+         "Vous avez entré un code PIN incorrect.\nVieullez noter qu'a la prochaine entree incorrecte votre code PIN sera bloqué"},
+        {"de", "beID: Incorrect PIN Code",
+         "You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.",
+         "You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."}
 };
 
 #include "beid-i18n.h"
 
-int main(int argc, char* argv[])
-{
-	int 		return_value=EXIT_ERROR;
-	GtkWidget*	dialog;
+int main(int argc, char *argv[]) {
+        int return_value = EXIT_ERROR;
+        GtkWidget *dialog;
 
-    gtk_init(&argc,&argv);										// initialize gtk+
-	
-	// create new message dialog with CANCEL button in standard places, in center of user's screen
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	enum msgs msg;
-	int attempts;
-	if((argc==2) && (argv[1]!=NULL) && (strlen(argv[1])==1) && isdigit(*(argv[1])))
-	{
-		attempts=atoi(argv[1]);
-		if(attempts>1)
-			msg = MSG_N_ATTEMPTS_LEFT;
-		else
-			msg = MSG_LAST_ATTEMPT;
-	}
-	else
-	{
-		fprintf(stderr,"Incorrect Parameter for <number of attempts left>\n");
-		exit(EXIT_ERROR);
-	}
-	
-    dialog=gtk_message_dialog_new(NULL,GTK_DIALOG_MODAL,GTK_MESSAGE_WARNING,GTK_BUTTONS_OK,_MSG_(msg), attempts);
-    gtk_dialog_set_default_response(GTK_DIALOG(dialog),GTK_RESPONSE_OK);
-    gtk_window_set_title(GTK_WINDOW(dialog),_MSG_(MSG_INCORRECT_PIN_CODE));
-    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+        gtk_init(&argc, &argv); // initialize gtk+
 
-	// show all these widgets, and run the dialog as a modal dialog until it is closed by the user
-	//////////////////////////////////////////////////////////////////////////////////////////////    
+        // create new message dialog with CANCEL button in standard places, in center of user's screen
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    gtk_widget_show_all(GTK_WIDGET(dialog));
-    switch(gtk_dialog_run(GTK_DIALOG(dialog)))
-	{
-		case GTK_RESPONSE_OK:					// if the use chose OK
-			printf("OK\n");
-			return_value=EXIT_OK;
-		break;
+        enum msgs msg;
+        int attempts;
 
-		default:								// otherwise
-			printf("ERROR\n");
-			return_value=EXIT_ERROR;
-		break;
-	}
+        if ((argc == 2) && (argv[1] != NULL) && (strlen(argv[1]) == 1)
+            && isdigit(*(argv[1]))) {
+                attempts = atoi(argv[1]);
+                if (attempts > 1)
+                        msg = MSG_N_ATTEMPTS_LEFT;
+                else
+                        msg = MSG_LAST_ATTEMPT;
+        } else {
+                fprintf(stderr, "Incorrect Parameter for <number of attempts left>\n");
+                exit(EXIT_ERROR);
+        }
 
-	// properly dispose of the dialog (which disposes of all it's children), and exit with specific return value
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING,
+                                        GTK_BUTTONS_OK, _MSG_(msg), attempts);
+        gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
+        gtk_window_set_title(GTK_WINDOW(dialog), _MSG_(MSG_INCORRECT_PIN_CODE));
+        gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
-	gtk_widget_destroy(dialog);
-	exit(return_value);
+        // show all these widgets, and run the dialog as a modal dialog until it is closed by the user
+        //////////////////////////////////////////////////////////////////////////////////////////////    
+
+        gtk_widget_show_all(GTK_WIDGET(dialog));
+        switch (gtk_dialog_run(GTK_DIALOG(dialog))) {
+                case GTK_RESPONSE_OK:  // if the use chose OK
+                        printf("OK\n");
+                        return_value = EXIT_OK;
+                        break;
+
+                default:       // otherwise
+                        printf("ERROR\n");
+                        return_value = EXIT_ERROR;
+                        break;
+        }
+
+        // properly dispose of the dialog (which disposes of all it's children), and exit with specific return value
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        gtk_widget_destroy(dialog);
+        exit(return_value);
 }
-
