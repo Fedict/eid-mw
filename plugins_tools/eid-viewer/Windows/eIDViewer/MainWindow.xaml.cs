@@ -246,6 +246,32 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
             MessageBoxResult result = new MessageBoxResult();
             MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Information, result);
         }
+
+        private void MenuItemPrint_Click(object sender, RoutedEventArgs e)
+        {
+            PrintWindow thePrintWindow = new PrintWindow();
+
+
+
+
+
+
+
+            PrintDialog dialog = new PrintDialog();
+
+            if (dialog.ShowDialog() != true)
+                return;
+
+            thePrintWindow.printWindowGrid.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
+            thePrintWindow.printWindowGrid.Arrange(new Rect(new Point(20, 20), thePrintWindow.printWindowGrid.DesiredSize));
+
+            dialog.PrintVisual(thePrintWindow.printWindowGrid, "Printing");
+            thePrintWindow.Close();
+        }
+
+
+
+
     }
 
 }
