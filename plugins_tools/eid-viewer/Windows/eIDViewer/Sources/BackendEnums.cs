@@ -10,6 +10,13 @@ namespace eIDViewer
         Popup           // User is alerted to the message
     };
 
+    public enum eid_cert_status
+    {
+        EID_CERT_STATUS_UNKNOWN,
+        EID_CERT_STATUS_INVALID,
+        EID_CERT_STATUS_VALID,
+    }
+
     public enum eid_vwr_source
     {
         EID_VWR_SRC_NONE,
