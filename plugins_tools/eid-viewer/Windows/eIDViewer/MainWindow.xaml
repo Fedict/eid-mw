@@ -89,7 +89,7 @@
                         <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="562*"/>
                     </Grid.ColumnDefinitions>
-                    <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="94" Width="370" Grid.Column="1" Margin="0,28,0,0">
+                    <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="104" Width="370" Grid.Column="1" Margin="0,28,0,0">
                         <TreeView ItemsSource="{Binding Path=certsList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-91,0">
                             <TreeView.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
@@ -106,7 +106,10 @@
                             </TreeView.ItemContainerStyle>
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Certs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" DataType="x:Type viewer:ICerts">
-                                    <TextBlock Text="{Binding Path=CertLabel}" GotFocus="TextBlockCertificate_GotFocus"/>
+                                    <StackPanel Orientation="Horizontal" Margin="2">
+                                        <Image Source="{Binding Path=ImagePath}" Width="16" Height="16" SnapsToDevicePixels="True"/>
+                                        <TextBlock Text="{Binding Path=CertLabel}" GotFocus="TextBlockCertificate_GotFocus"/>
+                                    </StackPanel>
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
                         </TreeView>
@@ -127,19 +130,28 @@
                             <RowDefinition Height="Auto" MinHeight="26" />
                             <RowDefinition Height="Auto" MinHeight="26" />
                             <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
+                            <RowDefinition Height="Auto" MinHeight="26" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-
-                        <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=certificateTabResource.CertValidFromLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                        <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=certificateTabResource.CertValidUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                        <Separator Grid.ColumnSpan="3" Grid.Row="4" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
-                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=certificateTabResource.CertUsageLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding Path=certificateTabResource.CertValidFromLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=certificateTabResource.CertValidUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
                         <Separator Grid.ColumnSpan="3" Grid.Row="6" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
-                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=certificateTabResource.CertTrustLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                        <Label Grid.Column="2" Grid.Row="2" Content="{Binding Path=cert_valid_from, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
-                        <Label Grid.Column="2" Grid.Row="3" Content="{Binding Path=cert_valid_untill, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
-                        <Label Grid.Column="2" Grid.Row="5" Content="{Binding Path=cert_usage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
-                        <Label Grid.Column="2" Grid.Row="7" Content="{Binding Path=cert_trust, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
+                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=certificateTabResource.CertUsageLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Separator Grid.ColumnSpan="3" Grid.Row="8" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
+                        <Label Grid.Column="1" Grid.Row="9" Content="{Binding Path=certificateTabResource.CertTrustLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3" Content="{Binding Path=cert_subject, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Background="#FFACACAC" >
+                            <Label.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </Label.Resources>
+                        </Label>
+                        <Label Grid.Column="2" Grid.Row="4" Content="{Binding Path=cert_valid_from, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
+                        <Label Grid.Column="2" Grid.Row="5" Content="{Binding Path=cert_valid_untill, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
+                        <Label Grid.Column="2" Grid.Row="7" Content="{Binding Path=cert_usage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
+                        <Label Grid.Column="2" Grid.Row="9" Content="{Binding Path=cert_trust, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" />
                         <Image Grid.Column="0" Grid.RowSpan="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Path=certificateLargeIcon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Opacity="0.6" />
                     </Grid>
                     <CheckBox x:Name="checkBox" Content="{Binding Path=certificateTabResource.AlwaysValidateCheckboxLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBox_Checked" Margin="110,407,0,0"/>
@@ -202,7 +214,7 @@
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="100" Source="Resources/print.png" IsEnabled="False" Opacity="0.5"/>
             <Label Grid.Column="1" Content="{Binding Path=progress_info, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            <Image Grid.Column="2" HorizontalAlignment="Right" Height="55" Margin="0,0,0,0" VerticalAlignment="Top" Width="100" Source="{Binding Path=cardreader_icon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Image Grid.Column="2" HorizontalAlignment="Right" Height="55" Margin="0,0,-50,0" VerticalAlignment="Top" Width="100" Source="{Binding Path=cardreader_icon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
         <ProgressBar Value="{Binding Path=progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Name="sbar" Minimum="0" Maximum="100" Height="10" VerticalAlignment="Bottom" Background="Beige" UseLayoutRounding="True" Visibility="{Binding Path=progress_bar_visible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>

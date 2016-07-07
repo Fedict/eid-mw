@@ -10,11 +10,13 @@ namespace eIDViewer
         Popup           // User is alerted to the message
     };
 
+//certificate status, ordered from trusted to untrusted
     public enum eid_cert_status
     {
-        EID_CERT_STATUS_UNKNOWN,
-        EID_CERT_STATUS_INVALID,
-        EID_CERT_STATUS_VALID,
+        EID_CERT_STATUS_VALID = 0,
+        EID_CERT_STATUS_UNKNOWN = 1,
+        EID_CERT_STATUS_WARNING = 2,
+        EID_CERT_STATUS_INVALID = 3,       
     }
 
     public enum eid_vwr_source
