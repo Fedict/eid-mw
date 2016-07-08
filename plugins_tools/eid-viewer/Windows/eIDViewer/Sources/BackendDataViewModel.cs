@@ -384,6 +384,27 @@ namespace eIDViewer
             Array.Resize(ref array, lastIndex + 1);
         }
 
+        public void VerifyAllCertificates()
+        {
+            //TODO: verify RNcert
+
+            progress_info = "checking certificates validity";
+            if (VerifyRootCA(ref rootCA_cert, ref rootCAViewModel) == true)
+            {
+                eid_cert_status authcertStatus = CheckCertificateValidity(ref authentication_cert, ref authCertViewModel);
+                SetCertificateLargeIcon(authcertStatus);
+                //handle it in UI
+                eid_cert_status signcertStatus = CheckCertificateValidity(ref signature_cert, ref signCertViewModel);
+                if (signcertStatus > authcertStatus)
+                    SetCertificateLargeIcon(signcertStatus);
+            }
+            else
+            {
+                this.logText += "this root certificate is not know by this version of the eID Viewer \n";
+            }
+            progress_info = "";
+        }
+
         public void AllDataRead( )
         {
             string hashAlg = "SHA1";
@@ -416,20 +437,11 @@ namespace eIDViewer
                 return;
             }
 
-            progress_info = "checking certificate validity";
-            if (VerifyRootCA(ref rootCA_cert, ref rootCAViewModel) == true)
+            if (validateAlways == true)
             {
-                eid_cert_status authcertStatus = CheckCertificateValidity(ref authentication_cert, ref authCertViewModel);
-                SetCertificateLargeIcon(authcertStatus);
-                //handle it in UI
-                eid_cert_status signcertStatus = CheckCertificateValidity(ref signature_cert, ref signCertViewModel);
-                if (signcertStatus > authcertStatus)
-                    SetCertificateLargeIcon(signcertStatus);
+                VerifyAllCertificates();
             }
-            else
-            {
-                this.logText += "this root certificate is not know by this version of the eID Viewer \n";
-            }
+
             HideProgressBar();
         }
 
