@@ -22,6 +22,7 @@ namespace eIDViewer
             NativeMethods.Init();
 
             backendThread = new Thread(NativeMethods.backendMainloop);
+            backendThread.IsBackground = true;
             backendThread.Start();
             Console.WriteLine("backendThread started");
 
