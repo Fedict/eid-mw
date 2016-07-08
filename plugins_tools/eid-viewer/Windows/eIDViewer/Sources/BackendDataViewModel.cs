@@ -497,6 +497,8 @@ namespace eIDViewer
 
         public BackendDataViewModel()
         {
+            validateAlways = Properties.Settings.Default.AlwaysValidate;
+
             SetCertificateLargeIcon(eid_cert_status.EID_CERT_STATUS_UNKNOWN);
             _certsList = new ObservableCollection<CertViewModel>();
             cert_collection = new X509Certificate2Collection();
@@ -518,6 +520,16 @@ namespace eIDViewer
 
             certsList[0].Certs[1].Certs.Add(authCertViewModel);
             certsList[0].Certs[1].Certs.Add(signCertViewModel);
+        }
+
+        ~BackendDataViewModel()
+        {
+            //store application settings
+            if(Properties.Settings.Default.AlwaysValidate != validateAlways)
+            {
+                Properties.Settings.Default.AlwaysValidate = validateAlways;
+                Properties.Settings.Default.Save();
+            }
         }
 
         private CertViewModel rootCAViewModel;
@@ -820,6 +832,16 @@ namespace eIDViewer
             }
         }
 
+        private Boolean _validateAlways;
+        public Boolean validateAlways
+        {
+            get { return _validateAlways; }
+            set
+            {
+                _validateAlways = value;
+                this.NotifyPropertyChanged("validateAlways");
+            }
+        }
 
         private Boolean _eid_data_ready;
         public Boolean eid_data_ready
