@@ -136,6 +136,10 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EmbeddedResource Include="Resources\Certs\belgiumrca.pem" />
+    <EmbeddedResource Include="Resources\Certs\belgiumrca2.pem" />
+    <EmbeddedResource Include="Resources\Certs\belgiumrca3.pem" />
+    <EmbeddedResource Include="Resources\Certs\belgiumrca4.pem" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

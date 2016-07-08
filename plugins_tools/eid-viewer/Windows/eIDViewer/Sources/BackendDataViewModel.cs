@@ -156,6 +156,66 @@ namespace eIDViewer
             return chainIsOnEIDCard;
         }
 
+        public bool VerifyRootCAvsEmbeddedRootCA(ref X509Certificate2 rootCertOnCard, string embeddedRootCA)
+        {
+            bool foundEmbeddedRootCA = false;
+            try
+            {
+                //for debugging, list all embedded resources
+                //string[] names = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+                //foreach(string name in names)
+                //{
+                //     this.logText += name.ToString();
+                //}
+
+                using (System.IO.Stream fileStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(embeddedRootCA))
+                {
+                    var bytes = new byte[fileStream.Length];
+                    fileStream.Read(bytes, 0, bytes.Length);
+                    X509Certificate2 fileCert = new X509Certificate2(bytes);
+
+                    if (rootCertOnCard.Thumbprint.Equals(fileCert.Thumbprint))
+                    {
+                        foundEmbeddedRootCA = true;
+                    }
+                }
+            }
+            catch (CryptographicException e)
+            {
+                this.logText += "An error occurred comparing the Belgium rootCA on the card with the ones in the EIDViewer\n" + e.ToString();
+            }
+            return foundEmbeddedRootCA;
+        }
+
+
+        public bool VerifyRootCA(ref X509Certificate2 rootCertOnCard, ref CertViewModel rootViewModel)
+        {
+            bool foundEmbeddedRootCA = false;
+            string[] embeddedRootCAs = { "eIDViewer.Resources.Certs.belgiumrca.pem",
+                                         "eIDViewer.Resources.Certs.belgiumrca2.pem",
+                                         "eIDViewer.Resources.Certs.belgiumrca3.pem",
+                                         "eIDViewer.Resources.Certs.belgiumrca4.pem"};
+
+            foreach(string embeddedRootCA in embeddedRootCAs)
+            {
+                if (VerifyRootCAvsEmbeddedRootCA(ref rootCertOnCard, embeddedRootCA) == true)
+                {
+                    foundEmbeddedRootCA = true;
+                    break;
+                }
+            }
+
+            //if the rootca is not found in our embedded resources, show it as invalid
+            if (foundEmbeddedRootCA == false)
+            {
+                rootViewModel.CertTrust = "Unknow RootCA";
+                SetCertificateIcon(rootViewModel, eid_cert_status.EID_CERT_STATUS_INVALID);
+            }
+
+            return foundEmbeddedRootCA;
+
+        }
+
         public void LogChainInfo(ref X509Chain chain)
         {
             this.logText += "Chain Information \n";
@@ -219,7 +279,7 @@ namespace eIDViewer
                     }
                     else
                     {
-                        //a certificate chain was constructed, now verify if it is the same as the one on the eID Card
+                        //a valid certificate chain is constructed, now verify if it is the same as the one on the eID Card
                         if (CheckChain(ref chain, ref leafCertificate))
                         {
                             this.logText += "certificate chain build correctly \n";
@@ -278,9 +338,7 @@ namespace eIDViewer
                                 {                          
                                     if (element.ChainElementStatus[index].Status == X509ChainStatusFlags.RevocationStatusUnknown)
                                     {
-                                        //SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_UNKNOWN);
-                                        //for testin"g:
-                                        SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_INVALID);
+                                        SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_UNKNOWN);
                                     }
                                     else
                                     {
@@ -315,7 +373,7 @@ namespace eIDViewer
                     disposable.Dispose();
                 }            
             }
-            return chainStatus;
+            return chainStatus; 
         }
 
 
@@ -359,13 +417,19 @@ namespace eIDViewer
             }
 
             progress_info = "checking certificate validity";
-            eid_cert_status authcertStatus = CheckCertificateValidity(ref authentication_cert, ref authCertViewModel );
-            SetCertificateLargeIcon(authcertStatus);
-            //handle it in UI
-            eid_cert_status signcertStatus = CheckCertificateValidity(ref signature_cert, ref signCertViewModel);
-            if (signcertStatus > authcertStatus)
-                SetCertificateLargeIcon(signcertStatus);
-
+            if (VerifyRootCA(ref rootCA_cert, ref rootCAViewModel) == true)
+            {
+                eid_cert_status authcertStatus = CheckCertificateValidity(ref authentication_cert, ref authCertViewModel);
+                SetCertificateLargeIcon(authcertStatus);
+                //handle it in UI
+                eid_cert_status signcertStatus = CheckCertificateValidity(ref signature_cert, ref signCertViewModel);
+                if (signcertStatus > authcertStatus)
+                    SetCertificateLargeIcon(signcertStatus);
+            }
+            else
+            {
+                this.logText += "this root certificate is not know by this version of the eID Viewer \n";
+            }
             HideProgressBar();
         }
 
