@@ -269,9 +269,11 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
             thePrintWindow.Close();
         }
 
-
-
-
+        private void ValidateNowButton_Click(object sender, RoutedEventArgs e)
+        {
+            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
+            theBackendData.VerifyAllCertificates();
+        }
     }
 
 }
