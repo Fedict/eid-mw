@@ -250,13 +250,6 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
         private void MenuItemPrint_Click(object sender, RoutedEventArgs e)
         {
             PrintWindow thePrintWindow = new PrintWindow();
-
-
-
-
-
-
-
             PrintDialog dialog = new PrintDialog();
 
             if (dialog.ShowDialog() != true)
@@ -274,6 +267,7 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
             eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
             theBackendData.VerifyAllCertificates();
         }
+
     }
 
 }

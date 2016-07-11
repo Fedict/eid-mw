@@ -443,6 +443,8 @@ namespace eIDViewer
             }
 
             HideProgressBar();
+
+            print_enabled = true;
         }
 
         private string _certificateLargeIcon;
@@ -707,8 +709,7 @@ namespace eIDViewer
         public void StoreBinData(string label, byte[] data, int datalen)
         {
             try
-            {
-                
+            {            
                 if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
                 {
                     photoFile = new byte[datalen];
@@ -832,6 +833,7 @@ namespace eIDViewer
             progress = 0;
             HideProgressBar();
             pinop_ready = false;
+            print_enabled = false;
 
             cert_collection = new X509Certificate2Collection();
         }
@@ -1286,6 +1288,17 @@ namespace eIDViewer
             {
                 _pinop_ready = value;
                 this.NotifyPropertyChanged("pinop_ready");
+            }
+        }
+
+        private Boolean _print_enabled = false;
+        public Boolean print_enabled
+        {
+            get { return _print_enabled; }
+            set
+            {
+                _print_enabled = value;
+                this.NotifyPropertyChanged("print_enabled");
             }
         }
 
