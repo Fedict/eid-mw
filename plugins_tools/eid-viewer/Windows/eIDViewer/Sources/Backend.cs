@@ -75,6 +75,11 @@ namespace eIDViewer
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_convert_set_lang(eid_vwr_langs lang);
 
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.SysInt)]
+        private static extern IntPtr eid_vwr_be_get_xmlform();
+
+
         public static void Init()
         {
             eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
@@ -309,6 +314,11 @@ namespace eIDViewer
             eid_vwr_convert_set_lang (language);
         }
 
+        public static IntPtr GetXMLForm()
+        {
+            return eid_vwr_be_get_xmlform();
+        }
+    
         // public CSCbStruct mCSCbStruct;
     }
 

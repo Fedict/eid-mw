@@ -122,7 +122,6 @@
     <ClCompile Include="..\..\xmlmap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\tests\unit\labels.h" />
     <ClInclude Include="..\..\b64\base64dec.h" />
     <ClInclude Include="..\..\b64\base64enc.h" />
     <ClInclude Include="..\..\backend.h" />
@@ -130,10 +129,9 @@
     <ClInclude Include="..\..\conversions\convertor.h" />
     <ClInclude Include="..\..\cppeidstring.h" />
     <ClInclude Include="..\..\eidxmllite.h" />
-    <ClInclude Include="..\..\oslayer.h" />
+    <ClInclude Include="..\..\include\eid-viewer\oslayer.h" />
     <ClInclude Include="..\..\p11.h" />
     <ClInclude Include="..\..\state.h" />
-    <ClInclude Include="..\..\utftranslate.h" />
     <ClInclude Include="..\..\xml.h" />
     <ClInclude Include="..\..\xmlmap.h" />
   </ItemGroup>

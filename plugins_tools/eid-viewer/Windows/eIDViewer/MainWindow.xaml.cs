@@ -17,6 +17,7 @@ using System.Globalization;
 using System.IO;
 using Microsoft.Win32;
 using System.Windows.Controls.Primitives;
+using System.Runtime.InteropServices;
 
 namespace eIDViewer
 {
@@ -268,20 +269,31 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
             theBackendData.VerifyAllCertificates();
         }
 
+        public static string Utf8ToString(IntPtr nativeUtf8)
+        {
+            int len = 0;
+            while (Marshal.ReadByte(nativeUtf8, len) != 0)
+            {
+                len++;
+            }
+            byte[] buffer = new byte[len];
+            Marshal.Copy(nativeUtf8, buffer, 0, buffer.Length);
+            return Encoding.UTF8.GetString(buffer);
+        }
+
         private void eIDPictureDnD(object sender, MouseEventArgs e)
         {
-            //System.IO.Path.GetTempPath();
-
-            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
-
             if (e.Source.GetType().Name.Equals("Image"))
             {
                 Image item = (Image)e.Source;
 
                 if (item != null)
                 {
+                    IntPtr intptrXML = eIDViewer.NativeMethods.GetXMLForm();
+                    string XMLForm = Utf8ToString(intptrXML);
+
                     DataObject dataObject = new DataObject();
-                    dataObject.SetData(DataFormats.StringFormat, theBackendData.firstName.ToString());
+                    dataObject.SetData(DataFormats.StringFormat, XMLForm.ToString());
                     DragDrop.DoDragDrop(item, dataObject, DragDropEffects.Copy);
                 }
             }
