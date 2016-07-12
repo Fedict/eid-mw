@@ -268,6 +268,24 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
             theBackendData.VerifyAllCertificates();
         }
 
+        private void eIDPictureDnD(object sender, MouseEventArgs e)
+        {
+            //System.IO.Path.GetTempPath();
+
+            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
+
+            if (e.Source.GetType().Name.Equals("Image"))
+            {
+                Image item = (Image)e.Source;
+
+                if (item != null)
+                {
+                    DataObject dataObject = new DataObject();
+                    dataObject.SetData(DataFormats.StringFormat, theBackendData.firstName.ToString());
+                    DragDrop.DoDragDrop(item, dataObject, DragDropEffects.Copy);
+                }
+            }
+        }
     }
 
 }
