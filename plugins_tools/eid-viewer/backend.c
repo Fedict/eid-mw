@@ -28,7 +28,7 @@ struct eid_vwr_ui_callbacks* cb;
 // I keep getting marshalling errors when providing a structure pointer that contains the function pointers,
 // so (for now) I'll provide the function pointers directly and allocate memory for the structure here
 
-int eid_vwr_set_cbfuncs(		void(*newsrc)(enum eid_vwr_source source), // data source has changed.
+int eid_vwr_set_cbfuncs(void(*newsrc)(enum eid_vwr_source source), // data source has changed.
 			void(*newstringdata)(const EID_CHAR* label, const EID_CHAR* data), // new string data to be displayed in UI.
 			void(*newbindata)(const EID_CHAR* label, const unsigned char* data, int datalen), // new binary data to be displayed in UI.
 			void(*log)(enum eid_vwr_loglevel loglevel, const EID_CHAR* line), // log a string at the given level.
