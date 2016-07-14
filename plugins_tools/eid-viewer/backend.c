@@ -35,7 +35,7 @@ int eid_vwr_set_cbfuncs(		void(*newsrc)(enum eid_vwr_source source), // data sou
 			//void(*logv)(enum eid_vwr_loglevel loglevel, const char* line, va_list ap), // log a string using varargs. Note: a UI needs to implement only one of log() or logv(); the backend will use whichever is implemented.
 			void(*newstate)(enum eid_vwr_states states), // issued at state machine transition
 			void(*pinop_result)(enum eid_vwr_pinops pinops, enum eid_vwr_result result), // issued when a PIN operation finished.
-			int (*readers_changed)(unsigned long nreaders, slotdesc* slots)
+			void(*readers_changed)(unsigned long nreaders, slotdesc* slots)
 ) {
 
 	struct eid_vwr_ui_callbacks* cb_ = eid_vwr_cbstruct();

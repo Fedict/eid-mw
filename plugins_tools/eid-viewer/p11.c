@@ -160,7 +160,7 @@ int eid_vwr_p11_name_slots(struct _slotdesc* slots, CK_ULONG_PTR len) {
 			goto end;
 		}
 		//null-terminate the description (and remove padding spaces)
-		memcpy(description, info.slotDescription, min(sizeof(info.slotDescription), description_len));
+		memcpy(description, info.slotDescription, sizeof(info.slotDescription) > description_len ? description_len : sizeof(info.slotDescription));
 		for (counter = description_len-1; (description[counter] == ' ' || description[counter] == '\0') && (counter > 0); counter--) {
 			description[counter] = '\0';
 		}
