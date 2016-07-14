@@ -36,11 +36,17 @@ void eid_vwr_poll() {
 		free(no_token);
 	}
 	if(count_old != count) {
-
 		slotdesc* slots = (slotdesc*)malloc(count * sizeof(slotdesc));
+		memset(slots, 0, count * sizeof(slotdesc));
 		eid_vwr_p11_name_slots(slots, &count);
 		if(be_readers_changed(count, slots) == EIDV_RV_OK) {
 			count_old = count;
+		}
+		for (int i = 0; i < count; i++)
+		{
+			if (slots[i].description != NULL) {
+				free(slots[i].description);
+			}
 		}
 		free (slots);
 	}
