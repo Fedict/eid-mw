@@ -1,7 +1,20 @@
 ﻿//TODO: make it so this file gets auto-generated from the C header file
 
+using System;
+using System.Runtime.InteropServices;
+
 namespace eIDViewer
 {
+    /** Describes a slot (reader) */
+    [StructLayout(LayoutKind.Sequential)]
+    public struct eid_slotdesc
+    {
+        [MarshalAsAttribute(UnmanagedType.U4)]
+        public UInt32 slot; ///< The number of the slot, to be used with eid_vwr_be_select_slot()
+        [MarshalAsAttribute(UnmanagedType.LPWStr)]
+        public string description; ///< A human-readable name for the reader
+    };
+
     enum MessageLevel
     {
         None,           // Message is ignored
