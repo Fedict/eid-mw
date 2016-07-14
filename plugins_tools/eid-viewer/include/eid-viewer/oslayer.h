@@ -189,7 +189,7 @@ struct eid_vwr_ui_callbacks {
 	  * \param slots the slot IDs and human-readable descriptions of
 	  * all known readers
 	  */
-	void(*readers_changed)(unsigned long nreaders, slotdesc* slots); ///< issued when number of readers changes
+	void(*readers_changed)(unsigned long nreaders, slotdesc* slots);
 };
 
 /** Struct used by preview handler */
