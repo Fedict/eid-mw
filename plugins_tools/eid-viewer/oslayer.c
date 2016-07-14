@@ -29,6 +29,7 @@ void eid_vwr_poll() {
 	static CK_ULONG count_old = 0;
 	static CK_SLOT_ID token_old = 0xCAFEBABE;
 	CK_ULONG count = 0;
+	int i;
 
 	if(eid_vwr_p11_find_first_slot(CK_FALSE, no_token, &count) == EIDV_RV_OK) {
 		sm_handle_event(EVENT_READER_FOUND, no_token, free, NULL);
@@ -42,7 +43,7 @@ void eid_vwr_poll() {
 		if(be_readers_changed(count, slots) == EIDV_RV_OK) {
 			count_old = count;
 		}
-		for (int i = 0; i < count; i++)
+		for (i = 0; i < count; i++)
 		{
 			if (slots[i].description != NULL) {
 				free(slots[i].description);
