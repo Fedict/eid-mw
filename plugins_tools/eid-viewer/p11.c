@@ -89,21 +89,28 @@ int eid_vwr_p11_close_session() {
 
 /* Called by eid_vwr_poll(). */
 int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULONG_PTR count) {
-	CK_SLOT_ID_PTR slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), 1);
 	CK_RV ret;
 
-	*count = 1;
+	*count = 0;
 	if(is_auto) {
-		while((ret = C_GetSlotList(with_token, slotlist, count)) == CKR_BUFFER_TOO_SMALL) {
-			free(slotlist);
+		CK_SLOT_ID_PTR slotlist = NULL;
+		ret = C_GetSlotList(with_token, slotlist, count);
+
+		if (ret == CKR_BUFFER_TOO_SMALL) {
 			slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), *count);
+			if (slotlist == NULL)
+			{
+				return EIDV_RV_FAIL;
+			}
+			ret = C_GetSlotList(with_token, slotlist, count);
+			if (*count > 0) {
+				*loc = slotlist[0];
+				free(slotlist);
+				return EIDV_RV_OK;
+			}
 		}
 		check_rv_late(ret);
-		if(*count > 0) {
-			*loc = slotlist[0];
-			free(slotlist);
-			return EIDV_RV_OK;
-		}
+
 	} else {
 		CK_SLOT_INFO info;
 		ret = C_GetSlotInfo(slot_manual, &info);
