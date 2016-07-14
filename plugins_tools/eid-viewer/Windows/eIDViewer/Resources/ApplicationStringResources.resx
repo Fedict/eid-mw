@@ -150,4 +150,10 @@
   <data name="showLogTab" xml:space="preserve">
     <value>Show Log Tab</value>
   </data>
+  <data name="Belgium" xml:space="preserve">
+    <value>Belgium</value>
+  </data>
+  <data name="coat_of_arms_jpg_location" xml:space="preserve">
+    <value>pack://application:,,,/Resources/coat_of_arms_en.jpg</value>
+  </data>
 </root>

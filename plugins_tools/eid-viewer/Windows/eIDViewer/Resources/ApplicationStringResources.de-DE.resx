@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ABOUT" xml:space="preserve">
-    <value>&#220;ber</value>
+    <value>Über</value>
   </data>
   <data name="CARD" xml:space="preserve">
     <value>Karte/PIN</value>
@@ -136,7 +136,7 @@
     <value>Hilfe</value>
   </data>
   <data name="IDENTITY" xml:space="preserve">
-    <value>Identit&#228;t</value>
+    <value>Identität</value>
   </data>
   <data name="languageMenuTitle" xml:space="preserve">
     <value>Sprache</value>
@@ -149,5 +149,11 @@
   </data>
   <data name="showLogTab" xml:space="preserve">
     <value>Logbuch anzeigen</value>
+  </data>
+  <data name="Belgium" xml:space="preserve">
+    <value>Belgien</value>
+  </data>
+  <data name="coat_of_arms_jpg_location" xml:space="preserve">
+    <value>pack://application:,,,/Resources/coat_of_arms_de.jpg</value>
   </data>
 </root>

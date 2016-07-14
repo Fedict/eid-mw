@@ -18,6 +18,91 @@ namespace eIDViewer
 
     public class BackendDataViewModel : INotifyPropertyChanged
     {
+        //hashAlg being "SHA1", or "SHA256"
+        public bool CheckRNSignature(byte[] data, byte[] signedHash, string hashAlg)
+        {
+            byte[] HashValue;
+            try
+            {
+                if (hashAlg.Equals("SHA1"))
+                {
+                    SHA1 sha = new SHA1CryptoServiceProvider();
+                    HashValue = sha.ComputeHash(data);
+                }
+                else if (hashAlg.Equals("SHA256"))
+                {
+                    SHA256 sha = new SHA256CryptoServiceProvider();
+                    HashValue = sha.ComputeHash(data);
+                }
+                else
+                {
+                    return false;
+                }
+
+                RSACryptoServiceProvider csp = RN_cert.PublicKey.Key as RSACryptoServiceProvider;
+
+                if (csp.VerifyHash(HashValue, CryptoConfig.MapNameToOID(hashAlg), signedHash))
+                {
+                    Console.WriteLine("The signature is valid.");
+                    this.logText += "The signature of the data is valid \n";
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("The signature is not valid.");
+                    this.logText += "The signature of the data is not valid \n";
+                    ResetDataValues();
+                }
+            }
+            catch (Exception e)
+            {
+                this.logText += "An error occurred validating the data signature \n";
+            }
+            return false;
+        }
+
+        public bool CheckShaHash(byte[] data, byte[] shaHash)
+        {
+            byte[] HashValue;
+            try
+            {
+                if(shaHash.Length == 20)
+                {
+                    SHA1 sha = new SHA1CryptoServiceProvider();
+                    HashValue = sha.ComputeHash(data);
+                }
+                else if (shaHash.Length == 32)
+                {
+                    SHA256 sha = new SHA256CryptoServiceProvider();
+                    HashValue = sha.ComputeHash(data);
+                }
+                else
+                {
+                    return false;
+                }
+                    
+                if (HashValue.Length != shaHash.Length)
+                    return false;
+
+                for (int i = 0; i < shaHash.Length; i++)
+                {
+                    if (HashValue[i] != shaHash[i])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+
+
+            }
+            catch (Exception e)
+            {
+                this.logText += "An error occurred computing a sha1 hash \n";
+            }
+            return false;
+
+        }
 
         static bool VerifyCertificate(byte[] primaryCertificate, IEnumerable<byte[]> additionalCertificates)
         {
@@ -36,80 +121,249 @@ namespace eIDViewer
             return chain.Build(primaryCert);
         }
 
-        public void CheckCertificateValidity()
+        //verify if the chain that was build by .NET is identical to the one on the eID Card
+        public bool CheckChain(ref X509Chain buildChain, ref X509Certificate2 leafCertificate)
+        {
+            bool chainIsOnEIDCard = true;
+            //chain length should be 3
+            if (buildChain.ChainElements.Count != 3)
+            {
+                this.logText += "certificate chain is bigger then 3, did the webtrusted Belgian rootCA entered the chain? \n";
+                chainIsOnEIDCard = false;
+            }
+            //check if entire chain .NET just build is the one on the eID Card
+            else if (buildChain.ChainElements[0].Certificate.Thumbprint != leafCertificate.Thumbprint)
+            {
+                //root cert in the verified chain is not the one on the eID Card
+                this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
+                chainIsOnEIDCard = false;
+            }
+            //check if entire chain .NET just build is the one on the eID Card
+            else if (buildChain.ChainElements[1].Certificate.Thumbprint != intermediateCA_cert.Thumbprint)
+            {
+                //root cert in the verified chain is not the one on the eID Card
+                this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
+                chainIsOnEIDCard = false;
+            }
+            //check if entire chain .NET just build is the one on the eID Card
+            else if (buildChain.ChainElements[2].Certificate.Thumbprint != rootCA_cert.Thumbprint)
+            {
+                //root cert in the verified chain is not the one on the eID Card
+                this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
+                chainIsOnEIDCard = false;
+            }
+
+            return chainIsOnEIDCard;
+        }
+
+        public bool VerifyRootCAvsEmbeddedRootCA(ref X509Certificate2 rootCertOnCard, string embeddedRootCA)
+        {
+            bool foundEmbeddedRootCA = false;
+            try
+            {
+                //for debugging, list all embedded resources
+                //string[] names = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+                //foreach(string name in names)
+                //{
+                //     this.logText += name.ToString();
+                //}
+
+                using (System.IO.Stream fileStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(embeddedRootCA))
+                {
+                    var bytes = new byte[fileStream.Length];
+                    fileStream.Read(bytes, 0, bytes.Length);
+                    X509Certificate2 fileCert = new X509Certificate2(bytes);
+
+                    if (rootCertOnCard.Thumbprint.Equals(fileCert.Thumbprint))
+                    {
+                        foundEmbeddedRootCA = true;
+                    }
+                }
+            }
+            catch (CryptographicException e)
+            {
+                this.logText += "An error occurred comparing the Belgium rootCA on the card with the ones in the EIDViewer\n" + e.ToString();
+            }
+            return foundEmbeddedRootCA;
+        }
+
+
+        public bool VerifyRootCA(ref X509Certificate2 rootCertOnCard, ref CertViewModel rootViewModel)
+        {
+            bool foundEmbeddedRootCA = false;
+            string[] embeddedRootCAs = { "eIDViewer.Resources.Certs.belgiumrca.pem",
+                                         "eIDViewer.Resources.Certs.belgiumrca2.pem",
+                                         "eIDViewer.Resources.Certs.belgiumrca3.pem",
+                                         "eIDViewer.Resources.Certs.belgiumrca4.pem"};
+
+            foreach(string embeddedRootCA in embeddedRootCAs)
+            {
+                if (VerifyRootCAvsEmbeddedRootCA(ref rootCertOnCard, embeddedRootCA) == true)
+                {
+                    foundEmbeddedRootCA = true;
+                    break;
+                }
+            }
+
+            //if the rootca is not found in our embedded resources, show it as invalid
+            if (foundEmbeddedRootCA == false)
+            {
+                rootViewModel.CertTrust = "Unknow RootCA";
+                SetCertificateIcon(rootViewModel, eid_cert_status.EID_CERT_STATUS_INVALID);
+            }
+
+            return foundEmbeddedRootCA;
+
+        }
+
+        public void LogChainInfo(ref X509Chain chain)
+        {
+            this.logText += "Chain Information \n";
+            this.logText += "Chain revocation flag: " + chain.ChainPolicy.RevocationFlag  + "\n";
+            this.logText += "Chain revocation mode: " + chain.ChainPolicy.RevocationMode + "\n";
+            this.logText += "Chain verification flag: " + chain.ChainPolicy.VerificationFlags + "\n";
+            this.logText += "Chain verification time: " + chain.ChainPolicy.VerificationTime + "\n";
+            this.logText += "Chain status length: " + chain.ChainStatus.Length + "\n";
+            this.logText += "Chain application policy count: " + chain.ChainPolicy.ApplicationPolicy.Count + "\n";
+            this.logText += "Chain certificate policy count: " + chain.ChainPolicy.CertificatePolicy.Count + "\n";
+
+            //Output chain element information.
+            this.logText += "Chain Element Information \n";
+            this.logText += "Number of chain elements: " + chain.ChainElements.Count + "\n";
+            this.logText += "Chain elements synchronized? " + chain.ChainElements.IsSynchronized + "\n";
+        }
+
+        public void LogChainElement(ref X509ChainElement element, int index)
+        {
+            this.logText += "Certificate in chain \n";
+            this.logText += "subject: " + element.Certificate.Subject + "\n";
+            this.logText += "issuer name: " + element.Certificate.Issuer + "\n";
+            this.logText += "valid from: " + element.Certificate.NotBefore + "\n";
+            this.logText += "valid until: " + element.Certificate.NotAfter + "\n";
+            this.logText += "is valid: " + element.Certificate.Verify() + "\n";
+        }
+
+        //if .NET cannot build a validated chain, return invalid
+        //if the root cert is not know by this application, return invalid
+        //if the above are true, but the chain has status information on certificates in the chain, return warning
+        //if something went wrong, return unknown
+        //if none of the above, return valid
+        public eid_cert_status CheckCertificateValidity(ref X509Certificate2 leafCertificate, ref CertViewModel leafCertificateViewModel )
         {
             var chain = new X509Chain();
+            eid_cert_status chainStatus = eid_cert_status.EID_CERT_STATUS_UNKNOWN;
             try
             {     
-                if (authentication_cert != null)
+                if (leafCertificate != null)
                 {                  
                     //alter how the chain is built/validated.
                     chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-                    chain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
-
-                    //CertCreateCertificateChainEngine()
-
-
-                    /*                   typedef struct _CERT_CHAIN_ENGINE_CONFIG
-                           {
-                               DWORD cbSize;
-                               HCERTSTORE hRestrictedRoot;
-                               HCERTSTORE hRestrictedTrust;
-                               HCERTSTORE hRestrictedOther;
-                               DWORD cAdditionalStore;
-                               HCERTSTORE* rghAdditionalStore;
-                               DWORD dwFlags;
-                               DWORD dwUrlRetrievalTimeout;
-                               DWORD MaximumCachedCertificates;
-                               DWORD CycleDetectionModulus;
-                               HCERTSTORE hExclusiveRoot;
-                               HCERTSTORE hExclusiveTrustedPeople;
-                               DWORD dwExclusiveFlags;
-                           }
-                           CERT_CHAIN_ENGINE_CONFIG, *PCERT_CHAIN_ENGINE_CONFIG;*/
-
-                    /*                   BOOL WINAPI CertCreateCertificateChainEngine(
-                     _In_  PCERT_CHAIN_ENGINE_CONFIG pConfig,
-                     _Out_ HCERTCHAINENGINE * phChainEngine
-                   );*/
-
-                    //intermediateCA_cert.GetPublicKey();
-                    //authentication_cert.GetCertHash();
-
+                    //chain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
+                    // Set the time span that may elapse during online revocation verification or downloading the certificate revocation list (CRL).
+                    TimeSpan verificationTime = new TimeSpan(0, 0, 20);
+                    chain.ChainPolicy.UrlRetrievalTimeout = verificationTime;
+           
+                    //add the intermediate and root certs in case they are not already in the windows certificate store
                     chain.ChainPolicy.ExtraStore.Add(intermediateCA_cert);
                     chain.ChainPolicy.ExtraStore.Add(rootCA_cert);
 
                     // Do the validation
-                    bool chainok = chain.Build(authentication_cert);
-
-                    Console.WriteLine("Chain Information");
-                    Console.WriteLine("Chain revocation flag: {0}", chain.ChainPolicy.RevocationFlag);
-                    Console.WriteLine("Chain revocation mode: {0}", chain.ChainPolicy.RevocationMode);
-                    Console.WriteLine("Chain verification flag: {0}", chain.ChainPolicy.VerificationFlags);
-                    Console.WriteLine("Chain verification time: {0}", chain.ChainPolicy.VerificationTime);
-                    Console.WriteLine("Chain status length: {0}", chain.ChainStatus.Length);
-                    Console.WriteLine("Chain application policy count: {0}", chain.ChainPolicy.ApplicationPolicy.Count);
-                    Console.WriteLine("Chain certificate policy count: {0} {1}", chain.ChainPolicy.CertificatePolicy.Count, Environment.NewLine);
+                    bool chainok = chain.Build(leafCertificate);
 
                     if (chainok == false)
                     {
-                        this.logText += "authentication chain has issues \n";
-                    }
-                    else if (chain.ChainElements[chain.ChainElements.Count - 1].Certificate.Thumbprint == rootCA_cert.Thumbprint)
-                    {
-                        this.logText += "authentication chain not build correctly \n";
+                        //no valid chain could be build
+                        this.logText += "no valid certificate chain could be constructed \n";
+                        SetCertificateIcon(leafCertificateViewModel, eid_cert_status.EID_CERT_STATUS_INVALID);
+                        chainStatus = eid_cert_status.EID_CERT_STATUS_INVALID;
                     }
                     else
                     {
-                        //root cert in the verified chain is not the one on the eID Card
+                        //a valid certificate chain is constructed, now verify if it is the same as the one on the eID Card
+                        if (CheckChain(ref chain, ref leafCertificate))
+                        {
+                            this.logText += "certificate chain build correctly \n";
+                            chainStatus = eid_cert_status.EID_CERT_STATUS_VALID;
+                        }
+                        else
+                        {
+                            this.logText += "this was not the certificate chain we were looking for \n";
+                            return eid_cert_status.EID_CERT_STATUS_WARNING;
+                        }
                     }
-                    authentication_cert.Verify();
+                    //output chain information in the log
+                    LogChainInfo(ref chain);
+
+                    //go through the chain's elements 
+                    for (int elIndex = 0; elIndex < chain.ChainElements.Count; elIndex++)
+                    {
+                        X509ChainElement element = chain.ChainElements[elIndex];
+                        CertViewModel certModel;
+
+                        if (element.Certificate.Thumbprint.Equals(leafCertificate.Thumbprint))
+                        {
+                            certModel = leafCertificateViewModel;
+                        }
+                        else if (element.Certificate.Thumbprint.Equals(intermediateCA_cert.Thumbprint))
+                        {
+                            certModel = intermediateCAViewModel;
+                        }
+                        else if (element.Certificate.Thumbprint.Equals(rootCA_cert.Thumbprint))
+                        {
+                            certModel = rootCAViewModel;
+                        }
+                        else
+                        {
+                            //should never get here, CheckChain() should have seen it
+                            break;
+                        }
+
+                        LogChainElement(ref element, elIndex);
+
+                        if(element.ChainElementStatus.Length > 0)
+                        {
+                            if (chainStatus != eid_cert_status.EID_CERT_STATUS_INVALID)
+                            {
+                                chainStatus = eid_cert_status.EID_CERT_STATUS_WARNING;
+                            }
+                            for (int index = 0; index < element.ChainElementStatus.Length; index++)
+                            {
+                                Console.WriteLine(element.ChainElementStatus[index].Status);
+                                Console.WriteLine(element.ChainElementStatus[index].StatusInformation);
+                                this.logText += "certificate status is " + element.ChainElementStatus[index].Status + "\n";
+                                this.logText += "certificate status information: " + element.ChainElementStatus[index].StatusInformation + "\n";
+
+                                certModel.CertTrust = element.ChainElementStatus[index].StatusInformation;
+                                if (element.ChainElementStatus[index].Status != X509ChainStatusFlags.NoError)
+                                {                          
+                                    if (element.ChainElementStatus[index].Status == X509ChainStatusFlags.RevocationStatusUnknown)
+                                    {
+                                        SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_UNKNOWN);
+                                    }
+                                    else
+                                    {
+                                        SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_INVALID);
+                                    }
+                                }
+                                else
+                                {
+                                    // X509ChainStatusFlags.NoError
+                                    SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_VALID);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //no chain status, everything is fine
+                            SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_VALID);
+                        }
+                    }
                 }
             }
 
             catch (Exception e)
             {
-                this.logText += "An error occurred displaying the image \n";
+                this.logText += "An error occurred checking the certificate status \n";
             }     
             finally
             {
@@ -117,14 +371,80 @@ namespace eIDViewer
                 if (disposable != null)
                 {
                     disposable.Dispose();
-                }
+                }            
             }
+            return chainStatus; 
+        }
+
+
+        public static void TrimEnd(ref byte[] array)
+        {
+            int lastIndex = Array.FindLastIndex(array, b => b != 0);
+
+            Array.Resize(ref array, lastIndex + 1);
+        }
+
+        public void VerifyAllCertificates()
+        {
+            //TODO: verify RNcert
+
+            progress_info = "checking certificates validity";
+            if (VerifyRootCA(ref rootCA_cert, ref rootCAViewModel) == true)
+            {
+                eid_cert_status authcertStatus = CheckCertificateValidity(ref authentication_cert, ref authCertViewModel);
+                SetCertificateLargeIcon(authcertStatus);
+                //handle it in UI
+                eid_cert_status signcertStatus = CheckCertificateValidity(ref signature_cert, ref signCertViewModel);
+                if (signcertStatus > authcertStatus)
+                    SetCertificateLargeIcon(signcertStatus);
+            }
+            else
+            {
+                this.logText += "this root certificate is not know by this version of the eID Viewer \n";
+            }
+            progress_info = "";
         }
 
         public void AllDataRead( )
         {
-            progress_bar_visible = "Hidden";
-            //CheckCertificateValidity(); check them in a new thread
+            string hashAlg = "SHA1";
+            //check if the identity signature is ok
+            if (CheckRNSignature(dataFile, dataSignFile, hashAlg) != true)
+            {
+                this.logText += "dataFile signature check failed \n";
+                ResetDataValues();
+                return;
+            }
+
+            //check if the address signature is ok
+            byte[] trimmedAddressFile = (byte[]) addressFile.Clone();
+            int lastIndex = Array.FindLastIndex(trimmedAddressFile, b => b != 0);
+            Array.Resize(ref trimmedAddressFile, lastIndex + 1 + dataSignFile.Length);
+            dataSignFile.CopyTo(trimmedAddressFile, lastIndex + 1);
+
+            if (CheckRNSignature(trimmedAddressFile, addressSignFile, hashAlg) != true)
+            {
+                this.logText += "addressFile signature check failed \n";
+                ResetDataValues();
+                return;
+            }
+
+            //check if the photo corresponds with the photo hash in the identity file
+            if (CheckShaHash(photoFile, photo_hash) != true)
+            {
+                this.logText += "photo doesn't match the hash in the signature file \n";
+                ResetDataValues();
+                return;
+            }
+
+            if (validateAlways == true)
+            {
+                VerifyAllCertificates();
+            }
+
+            HideProgressBar();
+
+            print_enabled = true;
         }
 
         private string _certificateLargeIcon;
@@ -138,36 +458,99 @@ namespace eIDViewer
             }
         }
 
-        public BackendDataViewModel()
+        public void HideProgressBar()
         {
-            certificateLargeIcon = "Resources/CertificateImages/certificate_large.png";
-            _certsList = new ObservableCollection<CertViewModel>();
-            cert_collection = new X509Certificate2Collection();
-            rootCA = new CertViewModel { CertLabel = "rootCA" };
-            rootCA.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            RNCert = new CertViewModel { CertLabel = "RN cert" };
-            RNCert.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            intermediateCA = new CertViewModel { CertLabel = "citizen CA" };
-            intermediateCA.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            authCert = new CertViewModel { CertLabel = "Authentication" };
-            authCert.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            signCert = new CertViewModel { CertLabel = "Signature" };
-            signCert.CertificateSelectionChanged += this.CertificateSelectionChanged;
-
-            certsList.Add(rootCA);
-
-            certsList[0].Certs.Add(RNCert);
-            certsList[0].Certs.Add(intermediateCA);
-
-            certsList[0].Certs[1].Certs.Add(authCert);
-            certsList[0].Certs[1].Certs.Add(signCert);
+            progress = 100;
+            progress_info = "";
+            progress_bar_visible = "Hidden";
         }
 
-        private CertViewModel rootCA;
-        private CertViewModel intermediateCA;
-        private CertViewModel RNCert;
-        private CertViewModel authCert;
-        private CertViewModel signCert;
+        public void SetCertificateLargeIcon (eid_cert_status icon)
+        {
+            switch(icon)
+            {
+                case eid_cert_status.EID_CERT_STATUS_INVALID:
+                    certificateLargeIcon = "Resources/CertificateImages/certificate_bad.png";
+                    break;
+                case eid_cert_status.EID_CERT_STATUS_UNKNOWN:
+                    certificateLargeIcon = "Resources/CertificateImages/certificate_large.png";
+                    break;
+                case eid_cert_status.EID_CERT_STATUS_VALID:
+                    certificateLargeIcon = "Resources/CertificateImages/certificate_checked.png";
+                    break;
+                case eid_cert_status.EID_CERT_STATUS_WARNING:
+                    certificateLargeIcon = "Resources/CertificateImages/certificate_warn.png";
+                    break;
+                default:
+                    certificateLargeIcon = "Resources/CertificateImages/certificate_large.png";
+                    break;
+            }
+        }
+
+        public void SetCertificateIcon(CertViewModel cert, eid_cert_status icon)
+        {
+            switch (icon)
+            {
+                case eid_cert_status.EID_CERT_STATUS_INVALID:
+                    cert.ImagePath = "Resources/CertificateImages/certificate_bad.png";
+                    break;
+                case eid_cert_status.EID_CERT_STATUS_UNKNOWN:
+                    cert.ImagePath = "Resources/CertificateImages/certificate_large.png";
+                    break;
+                case eid_cert_status.EID_CERT_STATUS_VALID:
+                    cert.ImagePath = "Resources/CertificateImages/certificate_checked.png";
+                    break;
+                case eid_cert_status.EID_CERT_STATUS_WARNING:
+                    cert.ImagePath = "Resources/CertificateImages/certificate_warn.png";
+                    break;
+                default:
+                    cert.ImagePath = "Resources/CertificateImages/certificate_large.png";
+                    break;
+            }
+        }
+
+        public BackendDataViewModel()
+        {
+            validateAlways = Properties.Settings.Default.AlwaysValidate;
+
+            SetCertificateLargeIcon(eid_cert_status.EID_CERT_STATUS_UNKNOWN);
+            _certsList = new ObservableCollection<CertViewModel>();
+            cert_collection = new X509Certificate2Collection();
+            rootCAViewModel = new CertViewModel { CertLabel = "rootCA" };
+            rootCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            RNCertViewModel = new CertViewModel { CertLabel = "RN cert" };
+            RNCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            intermediateCAViewModel = new CertViewModel { CertLabel = "citizen CA" };
+            intermediateCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            authCertViewModel = new CertViewModel { CertLabel = "Authentication" };
+            authCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            signCertViewModel = new CertViewModel { CertLabel = "Signature" };
+            signCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+
+            certsList.Add(rootCAViewModel);
+
+            certsList[0].Certs.Add(RNCertViewModel);
+            certsList[0].Certs.Add(intermediateCAViewModel);
+
+            certsList[0].Certs[1].Certs.Add(authCertViewModel);
+            certsList[0].Certs[1].Certs.Add(signCertViewModel);
+        }
+
+        ~BackendDataViewModel()
+        {
+            //store application settings
+            if(Properties.Settings.Default.AlwaysValidate != validateAlways)
+            {
+                Properties.Settings.Default.AlwaysValidate = validateAlways;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private CertViewModel rootCAViewModel;
+        private CertViewModel intermediateCAViewModel;
+        private CertViewModel RNCertViewModel;
+        private CertViewModel authCertViewModel;
+        private CertViewModel signCertViewModel;
 
         private X509Certificate2 authentication_cert;
         private X509Certificate2 signature_cert;
@@ -182,6 +565,8 @@ namespace eIDViewer
         public void CertificateSelectionChanged(object sender, EventArgs e)
         {
             CertViewModel certificate = sender as CertViewModel;
+            cert_subject = certificate.CertSubject;
+            //cert_c = certificate.CertC;
             cert_valid_from = certificate.CertValidfrom;
             cert_valid_untill = certificate.CertValidUntill;
             cert_usage = certificate.CertUsage;
@@ -194,6 +579,7 @@ namespace eIDViewer
             theCertViewModel.CertValidUntill = theX509Certificate.GetExpirationDateString();
             theCertViewModel.CertVisibility = Visibility.Visible;
             theCertViewModel.CertTrust = "Not checked";
+            theCertViewModel.CertSubject = theX509Certificate.Subject.Replace(',', '\n');
 
             foreach (X509Extension extension in theX509Certificate.Extensions)
             {
@@ -313,55 +699,105 @@ namespace eIDViewer
             { _document_type = data; }
         }
 
+        private byte[] dataFile;
+        private byte[] addressFile;
+        private byte[] dataSignFile;
+        private byte[] addressSignFile;
+        private byte[] photoFile;
+        private byte[] photo_hash;
+
         public void StoreBinData(string label, byte[] data, int datalen)
         {
             try
-            {
-                progress += 6;
+            {            
                 if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
                 {
+                    photoFile = new byte[datalen];
+                    data.CopyTo(photoFile, 0);
                     photo = LoadImage(data);
                     progress_info = "reading photo";
+                    progress += 4;
+                }
+                else if (String.Equals(label, "photo_hash", StringComparison.Ordinal))
+                {
+                    photo_hash = new byte[datalen];
+                    data.CopyTo(photo_hash, 0);
+                    progress_info = "reading the identity data file";
+                    progress += 4;
+                }
+                else if (String.Equals(label, "DATA_FILE", StringComparison.Ordinal))
+                {
+                   dataFile = new byte[datalen];
+                   data.CopyTo(dataFile,0);
+                   progress_info = "reading the identity data file";
+                   progress += 4;                         
+                }
+                else if (String.Equals(label, "ADDRESS_FILE", StringComparison.Ordinal))
+                {
+                    addressFile = new byte[datalen];
+                    data.CopyTo(addressFile, 0);
+                    progress_info = "reading the address file";
+                    progress += 2;
+                }
+                else if (String.Equals(label, "SIGN_DATA_FILE", StringComparison.Ordinal))
+                {
+                    dataSignFile = new byte[datalen];
+                    data.CopyTo(dataSignFile, 0);
+                    progress_info = "reading the signature of the identity file";
+                    progress += 1;
+                }
+                else if (String.Equals(label, "SIGN_ADDRESS_FILE", StringComparison.Ordinal))
+                {
+                    addressSignFile = new byte[datalen];
+                    data.CopyTo(addressSignFile, 0);
+                    progress_info = "reading the signature of the address file";
+                    progress += 1;
                 }
                 else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
                 { //chip_number = BitConverter.ToString(data);
                     progress_info = "reading chip_number";
                     chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
+                    progress += 1;
                 }
                 else if (String.Equals(label, "Authentication", StringComparison.Ordinal))
                 {
                     progress_info = "reading authentication certificate";
                     authentication_cert = new X509Certificate2(data);
                     cert_collection.Add(authentication_cert);
-                    StoreCertificate( ref authCert, ref authentication_cert);
+                    StoreCertificate( ref authCertViewModel, ref authentication_cert);
+                    progress += 6;
                 }
                 else if (String.Equals(label, "Signature", StringComparison.Ordinal))
                 {
                     progress_info = "reading signature certificate";
                     signature_cert = new X509Certificate2(data);
                     cert_collection.Add(signature_cert);
-                    StoreCertificate(ref signCert, ref signature_cert);
+                    StoreCertificate(ref signCertViewModel, ref signature_cert);
+                    progress += 6;
                 }
                 else if (String.Equals(label, "Root", StringComparison.Ordinal))
                 {
                     progress_info = "reading root certificate";
                     rootCA_cert = new X509Certificate2(data);
                     cert_collection.Add(rootCA_cert);
-                    StoreCertificate(ref rootCA, ref rootCA_cert);
+                    StoreCertificate(ref rootCAViewModel, ref rootCA_cert);
+                    progress += 6;
                 }
                 else if (String.Equals(label, "CA", StringComparison.Ordinal))
                 {
                     progress_info = "reading intermediate certificate";
                     intermediateCA_cert = new X509Certificate2(data);
                     cert_collection.Add(intermediateCA_cert);
-                    StoreCertificate(ref intermediateCA, ref intermediateCA_cert);
+                    StoreCertificate(ref intermediateCAViewModel, ref intermediateCA_cert);
+                    progress += 6;
                 }
                 else if (String.Equals(label, "CERT_RN_FILE", StringComparison.Ordinal))
                 {
                     progress_info = "reading RN certificate";
                     RN_cert = new X509Certificate2(data);
                     cert_collection.Add(RN_cert);
-                    StoreCertificate(ref RNCert, ref RN_cert);
+                    StoreCertificate(ref RNCertViewModel, ref RN_cert);
+                    progress += 6;
                 }
             }
             catch (Exception e)
@@ -395,9 +831,9 @@ namespace eIDViewer
             validity_end_date = "-";
             eid_card_present = false;
             progress = 0;
-            progress_bar_visible = "Hidden";
-            progress_info = "";
+            HideProgressBar();
             pinop_ready = false;
+            print_enabled = false;
 
             cert_collection = new X509Certificate2Collection();
         }
@@ -410,6 +846,16 @@ namespace eIDViewer
             }
         }
 
+        private Boolean _validateAlways;
+        public Boolean validateAlways
+        {
+            get { return _validateAlways; }
+            set
+            {
+                _validateAlways = value;
+                this.NotifyPropertyChanged("validateAlways");
+            }
+        }
 
         private Boolean _eid_data_ready;
         public Boolean eid_data_ready
@@ -710,6 +1156,18 @@ namespace eIDViewer
             }
         }
 
+
+        private string _cert_subject;
+        public string cert_subject
+        {
+            get { return _cert_subject; }
+            set
+            {
+                _cert_subject = value;
+                this.NotifyPropertyChanged("cert_subject");
+            }
+        }
+
         private string _cert_valid_from;
         public string cert_valid_from
         {
@@ -830,6 +1288,17 @@ namespace eIDViewer
             {
                 _pinop_ready = value;
                 this.NotifyPropertyChanged("pinop_ready");
+            }
+        }
+
+        private Boolean _print_enabled = false;
+        public Boolean print_enabled
+        {
+            get { return _print_enabled; }
+            set
+            {
+                _print_enabled = value;
+                this.NotifyPropertyChanged("print_enabled");
             }
         }
 

@@ -12,6 +12,7 @@ namespace eIDViewer
             Certs = new ObservableCollection<CertViewModel>();
             IsExpanded = true;
             CertVisibility = System.Windows.Visibility.Hidden;
+            ImagePath = "Resources/CertificateImages/certificate_large.png";
         }
 
         public void CertNotifyPropertyChanged(String propertyName)
@@ -39,9 +40,14 @@ namespace eIDViewer
 
         //the certificate label, as shown in the treeview
         public string CertLabel { get; set; }
+        //the certificate image, as shown in the treeview
+        //public string ImagePath { get; set; }
+        public string CertSubject { get; set; }
+        //public string CertC { get; set; }
         public string CertValidfrom { get; set; }
         public string CertValidUntill { get; set; }
         public string CertUsage { get; set; }
+        //the certificate trust status
         public string CertTrust { get; set; }
         public ObservableCollection<CertViewModel> Certs { get; set; }
         public bool IsExpanded { get; set; }
@@ -54,6 +60,17 @@ namespace eIDViewer
             {
                 _CertVisibility = value;
                 this.CertNotifyPropertyChanged("CertVisibility");
+            }
+        }
+
+        private string _ImagePath;
+        public string ImagePath
+        {
+            get { return _ImagePath; }
+            set
+            {
+                _ImagePath = value;
+                this.CertNotifyPropertyChanged("ImagePath");
             }
         }
 
