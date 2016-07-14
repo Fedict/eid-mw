@@ -44,6 +44,10 @@ namespace eIDViewer
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void CbsetLang(eid_vwr_langs lang);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void CbReaders_changed(UInt32 nreaders, IntPtr slotList);
+        //private delegate void CbReaders_changed(UInt32 nreaders, eid_slotdesc[] slotList);
+
         public static BackendDataViewModel theData {get;set;}
 
         //list all functions of the C backend we need to call
@@ -55,10 +59,11 @@ namespace eIDViewer
         private static Cbnewbindata mybindata = NativeMethods.CSCbnewbindata;
         private static Cbnewstate mynewstate = NativeMethods.CSCbnewstate;
         private static Cbpinop_result mypinopresult = NativeMethods.CSCbpinopResult;
+        private static CbReaders_changed myReadersChanged = NativeMethods.CbReadersChanged;
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_set_cbfuncs(CbNewSrc theCbNewSrc, CbNewStringData theCbNewStringData,
-            Cbnewbindata theCbnewbindata, Cblog theCbLog, Cbnewstate theCbnewstate, Cbpinop_result theCbpinopResult);
+            Cbnewbindata theCbnewbindata, Cblog theCbLog, Cbnewstate theCbnewstate, Cbpinop_result theCbpinopResult, CbReaders_changed theCbReadersChanged);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern void eid_vwr_be_mainloop();
@@ -79,11 +84,11 @@ namespace eIDViewer
         [return: MarshalAs(UnmanagedType.SysInt)]
         private static extern IntPtr eid_vwr_be_get_xmlform();
 
-
+        //void(*readers_changed)(unsigned long nreaders, slotdesc* slots)
         public static void Init()
         {
             eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
-                mybindata, mylog, mynewstate, mypinopresult);
+                mybindata, mylog, mynewstate, mypinopresult, myReadersChanged);
 
             theData.cardreader_icon = new BitmapImage(new Uri("Resources/state_noreaders.png", UriKind.Relative));
             /*
@@ -285,6 +290,22 @@ namespace eIDViewer
                 default:
                     theData.eid_data_ready = true;
                     break;
+            }
+
+        }
+
+        private static void CbReadersChanged(UInt32 nreaders, IntPtr slotList)
+        {
+            int structSize = Marshal.SizeOf(typeof(eid_slotdesc));
+            Console.WriteLine(structSize);
+
+            for (int i = 0; i < nreaders; i++)
+            {
+                IntPtr data = new IntPtr(slotList.ToInt64() + structSize * i);
+                eid_slotdesc slotDesc = (eid_slotdesc)Marshal.PtrToStructure(data, typeof(eid_slotdesc));
+
+                theData.logText += "Reader slotnr  " + slotDesc.slot.ToString() + "\n";
+                theData.logText += "Reader name  " + slotDesc.description.ToString() + "\n";
             }
 
         }

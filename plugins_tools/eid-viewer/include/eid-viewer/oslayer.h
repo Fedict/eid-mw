@@ -21,7 +21,7 @@ typedef struct _slotdesc slotdesc;
 /** Describes a slot (reader) */
 struct _slotdesc {
 	unsigned long slot; ///< The number of the slot, to be used with eid_vwr_be_select_slot()
-	char description[65]; ///< A human-readable name for the reader
+	EID_CHAR *description; ///< A human-readable name for the reader
 };
 
 /** Types of data sources we can have */
@@ -189,7 +189,7 @@ struct eid_vwr_ui_callbacks {
 	  * \param slots the slot IDs and human-readable descriptions of
 	  * all known readers
 	  */
-	void(*readers_changed)(unsigned long nreaders, slotdesc* slots); ///< issued when number of readers changes
+	void(*readers_changed)(unsigned long nreaders, slotdesc* slots);
 };
 
 /** Struct used by preview handler */
