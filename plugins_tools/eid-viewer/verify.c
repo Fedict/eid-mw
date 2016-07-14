@@ -126,7 +126,11 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	if(md_nid == OBJ_sn2nid("SHA1")) {
 		md = EVP_sha1();
 	} else if (md_nid == OBJ_sn2nid("SHA256")) {
-		md = EVP_sha256();
+		//md = EVP_sha256();
+		/* XXX the current OCSP responder does not support SHA256 as
+		 * hashing algorithm for the Certificate ID. Use SHA1 until
+		 * that's fixed. */
+		md = EVP_sha1();
 	} else {
 		be_log(EID_VWR_LOG_NORMAL, "Card is signed with unknown hashing algorithm %s (aka %s), cannot continue", OBJ_nid2sn(md_nid), OBJ_nid2ln(md_nid));
 		ret = EID_VWR_RES_FAILED;

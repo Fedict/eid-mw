@@ -515,7 +515,6 @@
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
       <ComponentRef Id="LogDir_64"/>
-	  <ComponentRef Id="FFBrowser"/>
       <ComponentRef Id="Extensions"/>
       <ComponentRef Id="FireFoxRoot"/>
       <ComponentRef Id="XPIRoot"/>
