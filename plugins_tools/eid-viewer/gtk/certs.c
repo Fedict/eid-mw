@@ -575,4 +575,5 @@ void certdetail(GtkMenuItem* item, gpointer userdata) {
 	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, text);
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
+	free(text);
 }
