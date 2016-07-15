@@ -95,22 +95,20 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULON
 	*count = 0;
 	if(is_auto) {
 		CK_SLOT_ID_PTR slotlist = NULL;
-		ret = C_GetSlotList(with_token, slotlist, count);
+		C_GetSlotList(with_token, slotlist, count);
 
-		if (ret == CKR_BUFFER_TOO_SMALL) {
-			slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), *count);
-			if (slotlist == NULL)
-			{
-				return EIDV_RV_FAIL;
-			}
-			ret = C_GetSlotList(with_token, slotlist, count);
-			if (*count > 0) {
-				*loc = slotlist[0];
-				free(slotlist);
-				return EIDV_RV_OK;
-			}
+		slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), *count);
+		if (slotlist == NULL)
+		{
+			return EIDV_RV_FAIL;
 		}
+		ret = C_GetSlotList(with_token, slotlist, count);
 		check_rv_late(ret);
+		if (*count > 0) {
+			*loc = slotlist[0];
+			free(slotlist);
+			return EIDV_RV_OK;
+		}
 
 	} else {
 		CK_SLOT_INFO info;
