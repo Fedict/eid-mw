@@ -2,6 +2,7 @@
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
+using System.Collections.ObjectModel;
 
 
 
@@ -298,6 +299,7 @@ namespace eIDViewer
         {
             int structSize = Marshal.SizeOf(typeof(eid_slotdesc));
             Console.WriteLine(structSize);
+            theData.readersList = new ObservableCollection<ReadersMenuViewModel>();
 
             for (int i = 0; i < nreaders; i++)
             {
@@ -306,6 +308,7 @@ namespace eIDViewer
 
                 theData.logText += "Reader slotnr  " + slotDesc.slot.ToString() + "\n";
                 theData.logText += "Reader name  " + slotDesc.description.ToString() + "\n";
+                theData.readersList.Add(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
             }
 
         }

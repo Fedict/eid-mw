@@ -101,6 +101,7 @@
     <Compile Include="Sources\Backend.cs" />
     <Compile Include="Sources\BackendDataViewModel.cs" />
     <Compile Include="Sources\BackendEnums.cs" />
+    <Compile Include="Sources\ReadersMenuViewModel.cs" />
     <Compile Include="Sources\CertViewModel.cs" />
     <Compile Include="Sources\LocalizedStrings.cs" />
     <Compile Include="Sources\MainWindowRegistry.cs" />

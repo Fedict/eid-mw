@@ -509,9 +509,13 @@ namespace eIDViewer
             }
         }
 
+
         public BackendDataViewModel()
         {
             validateAlways = Properties.Settings.Default.AlwaysValidate;
+
+            _readersList = new ObservableCollection<ReadersMenuViewModel>();
+            //readersList.Add(new ReadersMenuViewModel("No Readers Found", 0));
 
             SetCertificateLargeIcon(eid_cert_status.EID_CERT_STATUS_UNKNOWN);
             _certsList = new ObservableCollection<CertViewModel>();
@@ -1156,6 +1160,16 @@ namespace eIDViewer
             }
         }
 
+        private ObservableCollection<ReadersMenuViewModel> _readersList;
+        public ObservableCollection<ReadersMenuViewModel> readersList
+        {
+            get { return _readersList; }
+            set
+            {
+                _readersList = value;
+                this.NotifyPropertyChanged("readersList");
+            }
+        }
 
         private string _cert_subject;
         public string cert_subject
