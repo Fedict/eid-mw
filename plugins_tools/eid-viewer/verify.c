@@ -251,7 +251,6 @@ char* eid_vwr_x509_get_details(const void* certificate, size_t certlen) {
 	X509* cert = NULL;
 	BIO* b = BIO_new(BIO_s_mem());
 	char* rv;
-	size_t len;
 	BUF_MEM *p;
 
 	if(d2i_X509(&cert, (const unsigned char**)&certificate, certlen) == NULL) {
@@ -259,10 +258,9 @@ char* eid_vwr_x509_get_details(const void* certificate, size_t certlen) {
 		return NULL;
 	}
 	X509_print_ex(b, cert, 0, 0);
-	len = BIO_get_mem_ptr(b, &p);
-	rv = malloc(len + 1);
-	memcpy(rv, p, len);
-	rv[len] = '\0';
+	BIO_get_mem_ptr(b, &p);
+	rv = malloc(p->length + 1);
+	strncpy(rv, p->data, p->length);
 
 	BIO_free(b);
 
