@@ -11,6 +11,7 @@ using System.Resources;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections.ObjectModel;
+using System.Collections.Concurrent;
 
 namespace eIDViewer
 {
@@ -513,7 +514,7 @@ namespace eIDViewer
         {
             validateAlways = Properties.Settings.Default.AlwaysValidate;
 
-            _readersList = new ObservableCollection<ReadersMenuViewModel>();
+            _readersList = new ConcurrentQueue<ReadersMenuViewModel>();
             //readersList.Add(new ReadersMenuViewModel("No Readers Found", 0));
 
             SetCertificateLargeIcon(eid_cert_status.EID_CERT_STATUS_UNKNOWN);
@@ -1158,9 +1159,9 @@ namespace eIDViewer
                 this.NotifyPropertyChanged("certsList");
             }
         }
-
-        private ObservableCollection<ReadersMenuViewModel> _readersList;
-        public ObservableCollection<ReadersMenuViewModel> readersList
+        //TDO : not thread safe atm
+        private ConcurrentQueue<ReadersMenuViewModel> _readersList;
+        public ConcurrentQueue<ReadersMenuViewModel> readersList
         {
             get { return _readersList; }
             set
