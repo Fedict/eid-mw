@@ -240,7 +240,6 @@ namespace eIDViewer
             this.logText += "issuer name: " + element.Certificate.Issuer + "\n";
             this.logText += "valid from: " + element.Certificate.NotBefore + "\n";
             this.logText += "valid until: " + element.Certificate.NotAfter + "\n";
-            this.logText += "is valid: " + element.Certificate.Verify() + "\n";
         }
 
         //if .NET cannot build a validated chain, return invalid
