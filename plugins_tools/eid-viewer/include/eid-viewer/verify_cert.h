@@ -61,6 +61,21 @@ DllExport enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_
   */
 DllExport enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certlen);
 
+/**
+  * \brief Produce a human-readable version of the certificate.
+  *
+  * This function will call OpenSSL's X509_print_ex() function on the
+  * given certificate which produces the output as produced by the
+  * command-line call "openssl x509 -in <certificate> -text".
+  *
+  * \param certificate the certificate for which to get details
+  * \param certlen the length of certificate
+  *
+  * \return a text representation of the certificate. Should be free()d
+  * when no longer required.
+  */
+DllExport char* eid_vwr_x509_get_details(const void* certificate, size_t certlen);
+
 #ifdef __cplusplus
 }
 #endif
