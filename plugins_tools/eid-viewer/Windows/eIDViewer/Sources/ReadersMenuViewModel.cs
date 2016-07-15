@@ -34,7 +34,7 @@ namespace eIDViewer
                 this.ReadersMenuNotifyPropertyChanged("readerName");
             }
         }
-        UInt32 slotNumber;
+        public UInt32 slotNumber;
 
     }
 }

@@ -49,7 +49,7 @@ namespace eIDViewer
         private delegate void CbReaders_changed(UInt32 nreaders, IntPtr slotList);
         //private delegate void CbReaders_changed(UInt32 nreaders, eid_slotdesc[] slotList);
 
-        public static BackendDataViewModel theData {get;set;}
+        public static BackendDataViewModel theData { get; set; }
 
         //list all functions of the C backend we need to call
         //[DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -84,6 +84,9 @@ namespace eIDViewer
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.SysInt)]
         private static extern IntPtr eid_vwr_be_get_xmlform();
+
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void eid_vwr_be_select_slot([MarshalAs(UnmanagedType.I4)] int automatic, [MarshalAs(UnmanagedType.U4)] UInt32 manualslot);
 
         //void(*readers_changed)(unsigned long nreaders, slotdesc* slots)
         public static void Init()
@@ -207,7 +210,7 @@ namespace eIDViewer
             {
                 theData.logText += "CSCbnewstate called " + state.ToString() + "\n";
             }
-            switch(state)
+            switch (state)
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
                     theData.AllDataRead();
@@ -231,7 +234,7 @@ namespace eIDViewer
                     theData.eid_data_ready = true;
                     break;
             }
- 
+
         }
 
         private static void CSCbpinopResult(eid_vwr_pinops pinop, eid_vwr_result result)
@@ -256,7 +259,7 @@ namespace eIDViewer
                         break;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 theData.logText += "CSCbpinopResult encountered an error " + e.ToString() + "\n";
             }
@@ -308,9 +311,9 @@ namespace eIDViewer
 
                 theData.logText += "Reader slotnr  " + slotDesc.slot.ToString() + "\n";
                 theData.logText += "Reader name  " + slotDesc.description.ToString() + "\n";
+
                 theData.readersList.Add(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
             }
-
         }
 
         public static void DoPinop(eid_vwr_pinops pinop)
@@ -333,16 +336,20 @@ namespace eIDViewer
             eid_vwr_be_serialize(destFile);
         }
 
-        public static void ChangeLanguage(eid_vwr_langs language )
+        public static void ChangeLanguage(eid_vwr_langs language)
         {
-            eid_vwr_convert_set_lang (language);
+            eid_vwr_convert_set_lang(language);
         }
 
         public static IntPtr GetXMLForm()
         {
             return eid_vwr_be_get_xmlform();
         }
-    
+
+        public static void SelectCardReader(int auto, UInt32 slotnr)
+        {
+            eid_vwr_be_select_slot(auto, slotnr);
+        }
         // public CSCbStruct mCSCbStruct;
     }
 

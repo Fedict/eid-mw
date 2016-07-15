@@ -189,7 +189,7 @@
                 <MenuItem Header="Card Readers"  ItemsSource="{Binding readersList}" >
                     <MenuItem.ItemTemplate>
                         <DataTemplate>
-                            <MenuItem  Header="{Binding readerName}"  />
+                            <MenuItem  Header="{Binding readerName}" Click="CardReaderMenuItem_Click" />
                         </DataTemplate>
                     </MenuItem.ItemTemplate>
                 </MenuItem>
