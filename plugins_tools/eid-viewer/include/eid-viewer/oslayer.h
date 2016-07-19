@@ -21,7 +21,7 @@ typedef struct _slotdesc slotdesc;
 /** Describes a slot (reader) */
 struct _slotdesc {
 	unsigned long slot; ///< The number of the slot, to be used with eid_vwr_be_select_slot()
-	EID_CHAR description[65]; ///< A human-readable name for the reader
+	EID_CHAR *description; ///< A human-readable name for the reader
 };
 
 /** Types of data sources we can have */

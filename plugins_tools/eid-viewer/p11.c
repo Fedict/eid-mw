@@ -11,7 +11,6 @@
 #include "labels.h"
 #include <cache.h>
 #include <string.h>
-#include <assert.h>
 
 typedef struct {
 	CK_RV rv;
@@ -165,9 +164,8 @@ int eid_vwr_p11_name_slots(struct _slotdesc* slots, CK_ULONG_PTR len) {
 		}
 
 		//transform it into a wchar if needed
-		unsigned long l = sizeof(slots[i].description);
-		EID_CHAR* c = UTF8TOEID_L(description, &l, (slots[i].description));
-		assert(c != NULL);
+		unsigned long len;
+		slots[i].description = UTF8TOEID(description, &len);
 	}
 
 	rv = EIDV_RV_OK;
