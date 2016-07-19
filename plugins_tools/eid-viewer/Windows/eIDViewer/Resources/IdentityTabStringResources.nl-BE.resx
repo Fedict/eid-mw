@@ -136,7 +136,7 @@
     <value>Nationaal nummer:</value>
   </data>
   <data name="PlaceOfBirthLabel" xml:space="preserve">
-    <value>Geboortedatum:</value>
+    <value>Geboorteplaats:</value>
   </data>
   <data name="PostalCodeLabel" xml:space="preserve">
     <value>Postcode:</value>
