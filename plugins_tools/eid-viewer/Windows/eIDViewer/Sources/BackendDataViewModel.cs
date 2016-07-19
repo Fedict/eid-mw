@@ -839,7 +839,7 @@ namespace eIDViewer
             pinop_ready = false;
             print_enabled = false;
 
-
+            photo = null;
             cert_collection = new X509Certificate2Collection();
         }
 
