@@ -145,7 +145,7 @@ namespace eIDViewer
                 {
                     if ((filename = myOpenFileDialog.FileName) != null)
                     {
-                        MessageBox.Show("File selected is " + filename);
+                        //MessageBox.Show("File selected is " + filename);
                         eIDViewer.NativeMethods.OpenXML(filename);
                     }
                     /* if ((myStream = myOpenFileDialog.OpenFile()) != null)
@@ -194,10 +194,12 @@ namespace eIDViewer
             }
         }
 
-        private void checkBox_Checked(object sender, RoutedEventArgs e)
-        {
 
+        private void MenuItemClose_Click(object sender, RoutedEventArgs e)
+        {
+            eIDViewer.NativeMethods.CloseXML();
         }
+
 
         private void TextBlockCertificate_GotFocus(object sender, RoutedEventArgs e)
         {

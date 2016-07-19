@@ -839,6 +839,7 @@ namespace eIDViewer
             pinop_ready = false;
             print_enabled = false;
 
+
             cert_collection = new X509Certificate2Collection();
         }
 
@@ -869,6 +870,17 @@ namespace eIDViewer
             {
                 _eid_data_ready = value;
                 this.NotifyPropertyChanged("eid_data_ready");
+            }
+        }
+
+        private Boolean _eid_data_from_file;
+        public Boolean eid_data_from_file
+        {
+            get { return _eid_data_from_file; }
+            set
+            {
+                _eid_data_from_file = value;
+                this.NotifyPropertyChanged("eid_data_from_file");
             }
         }
 

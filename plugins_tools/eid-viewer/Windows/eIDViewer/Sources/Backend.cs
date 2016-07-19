@@ -89,6 +89,12 @@ namespace eIDViewer
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern void eid_vwr_be_select_slot([MarshalAs(UnmanagedType.I4)] int automatic, [MarshalAs(UnmanagedType.U4)] UInt32 manualslot);
 
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void eid_vwr_be_set_invalid();
+
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void eid_vwr_close_file();
+
         //void(*readers_changed)(unsigned long nreaders, slotdesc* slots)
         public static void Init()
         {
@@ -215,24 +221,33 @@ namespace eIDViewer
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
                     theData.AllDataRead();
+                    theData.eid_data_from_file = false;
                     //theData.progress_bar_visible = "Hidden";
                     break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;
+                    theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_LIBOPEN:
                     theData.eid_data_ready = false;
+                    theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_CARD_INVALID:
                     theData.ResetDataValues();
                     theData.eid_data_ready = false;
+                    theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_TOKEN_ERROR:
                     theData.ResetDataValues();
                     theData.eid_data_ready = false;
+                    theData.eid_data_from_file = false;
+                    break;
+                case eid_vwr_states.STATE_FILE:
+                    theData.eid_data_from_file = true;
                     break;
                 default:
                     theData.eid_data_ready = true;
+                    theData.eid_data_from_file = false;
                     break;
             }
 
@@ -351,6 +366,18 @@ namespace eIDViewer
         {
             eid_vwr_be_select_slot(auto, slotnr);
         }
+
+        public static void MarkCardInvalid()
+        {
+            eid_vwr_be_set_invalid();
+        }
+
+        public static void CloseXML()
+        {
+            eid_vwr_close_file();
+        }
+
+
         // public CSCbStruct mCSCbStruct;
     }
 
