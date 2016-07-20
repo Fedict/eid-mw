@@ -110,6 +110,7 @@ void sm_init() {
 	states[STATE_CALLBACKS].enter = do_initialize;
 
 	states[STATE_READY].parent = &(states[STATE_NO_TOKEN]);
+	states[STATE_READY].enter = eid_vwr_p11_check_version;
 	states[STATE_READY].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);
 
 	states[STATE_TOKEN].parent = &(states[STATE_CALLBACKS]);
