@@ -309,8 +309,10 @@ static int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
 	/* Need to do a C_Login in both cases (whether we're doing a "test pin"
 	 * or a "change pin", since you can't change your PIN code unless
 	 * you're logged in. */
-	check_rv(C_Login(session, CKU_USER, NULL_PTR, 0));
-	if(p >= EID_VWR_PINOP_CHG) {
+	if (p == EID_VWR_PINOP_TEST) {
+		check_rv(C_Login(session, CKU_USER, NULL, 0));
+	}
+	else {
 		check_rv(C_SetPIN(session, NULL_PTR, 0, NULL_PTR, 0));
 	}
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
