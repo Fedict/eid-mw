@@ -387,6 +387,7 @@ static gboolean readers_changed_real(gpointer user_data) {
 		gtk_menu_shell_append(menu, items[i]);
 		g_signal_connect(G_OBJECT(items[i]), "toggled", G_CALLBACK(manual_reader), (void*)info->slots[i].slot);
 		gtk_widget_show(GTK_WIDGET(items[i]));
+		free(info->slots[i].description);
 	}
 	free(info->slots);
 	free(info);
@@ -395,8 +396,22 @@ static gboolean readers_changed_real(gpointer user_data) {
 
 void readers_changed(unsigned long nreaders, slotdesc* slots) {
 	struct rdri* data = malloc(sizeof(struct rdri));
+	int i;
 	data->slots = malloc(sizeof(slotdesc) * nreaders);
 	memcpy(data->slots, slots, sizeof(slotdesc)*nreaders);
+	for(i=0; i<nreaders; i++) {
+		/* XXX The description is NULL if a reader contains a
+		 * card we don't know about. While that shouldn't
+		 * happen (and we need to fix that bug eventually), we
+		 * should at the very least make sure we don't segfault
+		 * in that case.
+		 */
+		if(slots[i].description != NULL) {
+			data->slots[i].description = strdup(slots[i].description);
+		} else {
+			data->slots[i].description = NULL;
+		}
+	}
 	data->nreaders = nreaders;
 	g_main_context_invoke(NULL, readers_changed_real, data);
 	g_message("readers changed");
