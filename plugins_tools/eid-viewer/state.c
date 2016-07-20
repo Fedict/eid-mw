@@ -86,7 +86,7 @@ static int do_initialize(void*data) {
 	return 0;
 }
 
-/* Called whenever we leave the TOKEN or FILE states. */
+/* Called whenever we enter the STATE_NO_TOKEN state. */
 static int source_none(void*data) {
 	be_newsource(EID_VWR_SRC_NONE);
 
@@ -110,7 +110,7 @@ void sm_init() {
 	states[STATE_CALLBACKS].enter = do_initialize;
 
 	states[STATE_READY].parent = &(states[STATE_NO_TOKEN]);
-	states[STATE_READY].enter = source_none;
+	states[STATE_READY].enter = eid_vwr_p11_check_version;
 	states[STATE_READY].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);
 
 	states[STATE_TOKEN].parent = &(states[STATE_CALLBACKS]);
@@ -153,6 +153,7 @@ void sm_init() {
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
 	states[STATE_NO_TOKEN].parent = &(states[STATE_CALLBACKS]);
+	states[STATE_NO_TOKEN].enter = source_none;
 	states[STATE_NO_TOKEN].first_child = &(states[STATE_NO_READER]);
 	states[STATE_NO_TOKEN].out[EVENT_OPEN_FILE] = &(states[STATE_FILE]);
 

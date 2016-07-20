@@ -28,7 +28,7 @@ namespace eIDViewer
     {
         eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
 
-        public MainWindow()    
+        public MainWindow()
         {
             InitializeComponent();
             GetLanguage();
@@ -38,18 +38,18 @@ namespace eIDViewer
             this.Close();
         }
 
-        private void ChangeLocalization (string localization)
+        private void ChangeLocalization(string localization)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(localization);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(localization);
             eIDViewer.LocalizedStrings theLocalizedStrings = (LocalizedStrings)(App.Current.Resources["LocalizedStrings"]);
-            
+
             theLocalizedStrings.NotifyPropertyChanged("identityTabResource");
             theLocalizedStrings.NotifyPropertyChanged("cardTabResource");
             theLocalizedStrings.NotifyPropertyChanged("certificateTabResource");
             theLocalizedStrings.NotifyPropertyChanged("applicationResource");
             theLocalizedStrings.NotifyPropertyChanged("menuItemResource");
-          
+
             theBackendData.Refresh();
         }
 
@@ -90,7 +90,7 @@ namespace eIDViewer
         void LogLevel_OnSelectionChanged(object sender, RoutedEventArgs e)
         {
             ComboBox logCombo = sender as ComboBox;
-            if(logCombo != null)
+            if (logCombo != null)
             {
                 eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
 
@@ -145,23 +145,25 @@ namespace eIDViewer
                 {
                     if ((filename = myOpenFileDialog.FileName) != null)
                     {
-                        MessageBox.Show("File selected is " + filename);
+                        //close previous file
+                        eIDViewer.NativeMethods.CloseXML();
+                        //MessageBox.Show("File selected is " + filename);
                         eIDViewer.NativeMethods.OpenXML(filename);
                     }
-                   /* if ((myStream = myOpenFileDialog.OpenFile()) != null)
-                    {
-                        using (myStream)
-                        {
-                            int length = (int)myStream.Length;
-                            byte[] buffer = new byte[length];
-                            int bytesRead = 0;
-                            do
-                            {
-                                bytesRead = myStream.Read(buffer, 0, length - bytesRead);
-                            } while (bytesRead > 0);
+                    /* if ((myStream = myOpenFileDialog.OpenFile()) != null)
+                     {
+                         using (myStream)
+                         {
+                             int length = (int)myStream.Length;
+                             byte[] buffer = new byte[length];
+                             int bytesRead = 0;
+                             do
+                             {
+                                 bytesRead = myStream.Read(buffer, 0, length - bytesRead);
+                             } while (bytesRead > 0);
 
-                        }
-                    }*/
+                         }
+                     }*/
                 }
                 catch (Exception ex)
                 {
@@ -169,36 +171,37 @@ namespace eIDViewer
                 }
             }
         }
-    private void MenuItemSaveAs_Click(object sender, RoutedEventArgs e)
-    {
-        //Stream myStream = null;
-        String filename = null;
-        SaveFileDialog mySaveFileDialog = new SaveFileDialog();
-
-       mySaveFileDialog.Filter = "eid files (*.eid)|*.eid|All files (*.*)|*.*";
-       mySaveFileDialog.FilterIndex = 1;
-
-       if (mySaveFileDialog.ShowDialog() == true)
-       {
-           try
-           {
-               if ((filename = mySaveFileDialog.FileName) != null)
-               {
-                   MessageBox.Show("File selected is " + filename);
-                   eIDViewer.NativeMethods.SaveXML(filename);
-               }
-           }
-           catch (Exception ex)
-               {
-                   MessageBox.Show("Error: Could not read file from disk. Error message: " + ex.Message);
-               }
-       }
-    }
-
-        private void checkBox_Checked(object sender, RoutedEventArgs e)
+        private void MenuItemSaveAs_Click(object sender, RoutedEventArgs e)
         {
+            //Stream myStream = null;
+            String filename = null;
+            SaveFileDialog mySaveFileDialog = new SaveFileDialog();
 
+            mySaveFileDialog.Filter = "eid files (*.eid)|*.eid|All files (*.*)|*.*";
+            mySaveFileDialog.FilterIndex = 1;
+
+            if (mySaveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    if ((filename = mySaveFileDialog.FileName) != null)
+                    {
+                        eIDViewer.NativeMethods.SaveXML(filename);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Error message: " + ex.Message);
+                }
+            }
         }
+
+
+        private void MenuItemClose_Click(object sender, RoutedEventArgs e)
+        {
+            eIDViewer.NativeMethods.CloseXML();
+        }
+
 
         private void TextBlockCertificate_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -220,7 +223,7 @@ namespace eIDViewer
         {
             Popup myPopup = new Popup();
             myPopup.IsOpen = true;
-            
+
             string message = @"eID Viewer 4.2.0
 eID Middleware Project
 Copyright(C) 2016 Fedict
@@ -298,6 +301,20 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
                 }
             }
         }
-    }
 
+        private void CardReaderMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (e.Source.GetType().Name.Equals("MenuItem"))
+            {
+                MenuItem menu = e.Source as MenuItem;
+                if (menu.DataContext.GetType().Name.Equals("ReadersMenuViewModel"))
+                {
+                    ReadersMenuViewModel reader = menu.DataContext as ReadersMenuViewModel;
+                    eIDViewer.NativeMethods.SelectCardReader(0, reader.slotNumber);
+                }
+            }
+        }
+
+    }
 }
+

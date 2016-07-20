@@ -11,6 +11,7 @@ using System.Resources;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections.ObjectModel;
+using System.Collections.Concurrent;
 
 namespace eIDViewer
 {
@@ -240,7 +241,6 @@ namespace eIDViewer
             this.logText += "issuer name: " + element.Certificate.Issuer + "\n";
             this.logText += "valid from: " + element.Certificate.NotBefore + "\n";
             this.logText += "valid until: " + element.Certificate.NotAfter + "\n";
-            this.logText += "is valid: " + element.Certificate.Verify() + "\n";
         }
 
         //if .NET cannot build a validated chain, return invalid
@@ -460,7 +460,7 @@ namespace eIDViewer
 
         public void HideProgressBar()
         {
-            progress = 100;
+            progress = 0;
             progress_info = "";
             progress_bar_visible = "Hidden";
         }
@@ -509,9 +509,13 @@ namespace eIDViewer
             }
         }
 
+
         public BackendDataViewModel()
         {
             validateAlways = Properties.Settings.Default.AlwaysValidate;
+
+            _readersList = new ConcurrentQueue<ReadersMenuViewModel>();
+            //readersList.Add(new ReadersMenuViewModel("No Readers Found", 0));
 
             SetCertificateLargeIcon(eid_cert_status.EID_CERT_STATUS_UNKNOWN);
             _certsList = new ObservableCollection<CertViewModel>();
@@ -810,10 +814,10 @@ namespace eIDViewer
         public void ResetDataValues()
         {
             text_color = "Gray";
-            firstName = "-";
+            _firstName = "";
+            _first_letter_of_third_given_name = "";
             firstNames = "-";
-            surName = "-";
-            first_letter_of_third_given_name = "-";
+            surName = "-";       
             date_of_birth = "-";
             location_of_birth = "-";
             gender = "-";
@@ -835,6 +839,7 @@ namespace eIDViewer
             pinop_ready = false;
             print_enabled = false;
 
+            photo = null;
             cert_collection = new X509Certificate2Collection();
         }
 
@@ -868,6 +873,17 @@ namespace eIDViewer
             }
         }
 
+        private Boolean _eid_data_from_file;
+        public Boolean eid_data_from_file
+        {
+            get { return _eid_data_from_file; }
+            set
+            {
+                _eid_data_from_file = value;
+                this.NotifyPropertyChanged("eid_data_from_file");
+            }
+        }
+
         private string _logtext;
         public string logText
         {
@@ -897,7 +913,7 @@ namespace eIDViewer
             set
             {
                 _firstName = value;
-                _firstNames = value + _first_letter_of_third_given_name;
+                _firstNames = value + " " + _first_letter_of_third_given_name;
                 this.NotifyPropertyChanged("firstNames");
             }
         }
@@ -920,7 +936,7 @@ namespace eIDViewer
             set
             {
                 _first_letter_of_third_given_name = value;
-                _firstNames = _firstName + value;
+                _firstNames = _firstName + " " + value;
                 this.NotifyPropertyChanged("firstNames");
             }
         }
@@ -1155,7 +1171,17 @@ namespace eIDViewer
                 this.NotifyPropertyChanged("certsList");
             }
         }
-
+        //TDO : not thread safe atm
+        private ConcurrentQueue<ReadersMenuViewModel> _readersList;
+        public ConcurrentQueue<ReadersMenuViewModel> readersList
+        {
+            get { return _readersList; }
+            set
+            {
+                _readersList = value;
+                this.NotifyPropertyChanged("readersList");
+            }
+        }
 
         private string _cert_subject;
         public string cert_subject

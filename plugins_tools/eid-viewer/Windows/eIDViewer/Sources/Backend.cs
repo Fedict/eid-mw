@@ -2,6 +2,11 @@
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
+using System.Collections.ObjectModel;
+using System.Collections.Concurrent;
+using System.Resources;
+using System.Reflection;
+using System.Threading;
 
 
 
@@ -48,7 +53,7 @@ namespace eIDViewer
         private delegate void CbReaders_changed(UInt32 nreaders, IntPtr slotList);
         //private delegate void CbReaders_changed(UInt32 nreaders, eid_slotdesc[] slotList);
 
-        public static BackendDataViewModel theData {get;set;}
+        public static BackendDataViewModel theData { get; set; }
 
         //list all functions of the C backend we need to call
         //[DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -83,6 +88,15 @@ namespace eIDViewer
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.SysInt)]
         private static extern IntPtr eid_vwr_be_get_xmlform();
+
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void eid_vwr_be_select_slot([MarshalAs(UnmanagedType.I4)] int automatic, [MarshalAs(UnmanagedType.U4)] UInt32 manualslot);
+
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void eid_vwr_be_set_invalid();
+
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void eid_vwr_close_file();
 
         //void(*readers_changed)(unsigned long nreaders, slotdesc* slots)
         public static void Init()
@@ -128,8 +142,6 @@ namespace eIDViewer
 
         private static void CSCbNewSrc(eid_vwr_source eid_vwr_source)
         {
-            //Console.WriteLine("CbNewSrc called ");
-            //Console.WriteLine(eid_vwr_source.ToString());
             if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
             {
                 theData.logText += "CSCbNewSrc called " + eid_vwr_source.ToString() + "\n";
@@ -163,9 +175,6 @@ namespace eIDViewer
         }
         private static void CSCbNewStringData([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPWStr)]string data)
         {
-            //Console.WriteLine("CSCbNewStringData called, label = ");
-            //Console.WriteLine(label);
-            //Console.WriteLine("data = " + data);
             theData.StoreStringData(label, data);
             if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
             {
@@ -175,8 +184,6 @@ namespace eIDViewer
 
         private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data, int datalen)
         {
-            //Console.WriteLine("CSCbnewbindata called, label = ");
-            //Console.WriteLine(label);
             if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
             {
                 theData.logText += "CSCbnewbindata called " + label + "\n";
@@ -185,13 +192,10 @@ namespace eIDViewer
             {
                 theData.StoreBinData(label, data, datalen);
             }
-
         }
 
         private static void CSCblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPWStr)]string str)
         {
-            //Console.WriteLine("CSCblog called: ");
-            //Console.WriteLine(str);
             if (logLevel >= theData.log_level)
             {
                 theData.logText += "CSCblogtest called " + str + "\n";
@@ -200,62 +204,68 @@ namespace eIDViewer
 
         private static void CSCbnewstate(eid_vwr_states state)
         {
-            //Console.WriteLine("CSCbnewstate called ");
-            //Console.WriteLine(state.ToString());
             if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
             {
                 theData.logText += "CSCbnewstate called " + state.ToString() + "\n";
             }
-            switch(state)
+            switch (state)
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
                     theData.AllDataRead();
-                    //theData.progress_bar_visible = "Hidden";
+                    theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;
+                    theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_LIBOPEN:
                     theData.eid_data_ready = false;
+                    theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_CARD_INVALID:
                     theData.ResetDataValues();
                     theData.eid_data_ready = false;
+                    theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_TOKEN_ERROR:
                     theData.ResetDataValues();
                     theData.eid_data_ready = false;
+                    theData.eid_data_from_file = false;
+                    break;
+                case eid_vwr_states.STATE_FILE:
+                    theData.eid_data_from_file = true;
                     break;
                 default:
                     theData.eid_data_ready = true;
+                    theData.eid_data_from_file = false;
                     break;
             }
- 
         }
 
         private static void CSCbpinopResult(eid_vwr_pinops pinop, eid_vwr_result result)
         {
-            try {
-                //Console.WriteLine("CSCbpinopResult called ");
+            try
+            {
                 if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
                 {
                     theData.logText += "CSCbpinopResult called, result = " + result.ToString() + "\n";
                 }
 
-                System.Resources.ResourceManager rm = new System.Resources.ResourceManager("ApplicationStringResources",
-                    typeof(eIDViewer.Resources.ApplicationStringResources).Assembly);
+                ResourceManager rm = new ResourceManager("eIDViewer.Resources.ApplicationStringResources",
+                    Assembly.GetExecutingAssembly());
 
                 switch (result)
                 {
-                    case eid_vwr_result.EID_VWR_RES_FAILED:
-                        System.Windows.MessageBox.Show("PinOp Failed");
-                        break;
+                    //pkcs11 will bring up a message box in case of a failure
+                    //case eid_vwr_result.EID_VWR_RES_FAILED:
+                    //    System.Windows.MessageBox.Show("PinOp Failed");
+                    //    break;
                     case eid_vwr_result.EID_VWR_RES_SUCCESS:
-                        System.Windows.MessageBox.Show(rm.GetString("CARD", null));
+                        System.Windows.MessageBox.Show(rm.GetString("pinVerifiedOKDialogMessage", Thread.CurrentThread.CurrentUICulture));
                         break;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 theData.logText += "CSCbpinopResult encountered an error " + e.ToString() + "\n";
             }
@@ -271,7 +281,6 @@ namespace eIDViewer
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
                     theData.AllDataRead();
-                    //theData.progress_bar_visible = "Hidden";
                     break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;
@@ -291,13 +300,13 @@ namespace eIDViewer
                     theData.eid_data_ready = true;
                     break;
             }
-
         }
 
         private static void CbReadersChanged(UInt32 nreaders, IntPtr slotList)
         {
             int structSize = Marshal.SizeOf(typeof(eid_slotdesc));
             Console.WriteLine(structSize);
+            theData.readersList = new ConcurrentQueue<ReadersMenuViewModel>();
 
             for (int i = 0; i < nreaders; i++)
             {
@@ -306,8 +315,9 @@ namespace eIDViewer
 
                 theData.logText += "Reader slotnr  " + slotDesc.slot.ToString() + "\n";
                 theData.logText += "Reader name  " + slotDesc.description.ToString() + "\n";
-            }
 
+                theData.readersList.Enqueue(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
+            }
         }
 
         public static void DoPinop(eid_vwr_pinops pinop)
@@ -330,16 +340,32 @@ namespace eIDViewer
             eid_vwr_be_serialize(destFile);
         }
 
-        public static void ChangeLanguage(eid_vwr_langs language )
+        public static void ChangeLanguage(eid_vwr_langs language)
         {
-            eid_vwr_convert_set_lang (language);
+            eid_vwr_convert_set_lang(language);
         }
 
         public static IntPtr GetXMLForm()
         {
             return eid_vwr_be_get_xmlform();
         }
-    
+
+        public static void SelectCardReader(int auto, UInt32 slotnr)
+        {
+            eid_vwr_be_select_slot(auto, slotnr);
+        }
+
+        public static void MarkCardInvalid()
+        {
+            eid_vwr_be_set_invalid();
+        }
+
+        public static void CloseXML()
+        {
+            eid_vwr_close_file();
+        }
+
+
         // public CSCbStruct mCSCbStruct;
     }
 

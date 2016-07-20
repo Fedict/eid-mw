@@ -136,13 +136,13 @@
     <value>Name:</value>
   </data>
   <data name="NationalityLabel" xml:space="preserve">
-    <value>Staatsangeh&#246;rigkeit:</value>
+    <value>Staatsangehörigkeit:</value>
   </data>
   <data name="NationalNumberLabel" xml:space="preserve">
-    <value>Staatsangeh&#246;rigkeitsnummer:</value>
+    <value>Staatsangehörigkeitsnummer:</value>
   </data>
   <data name="PlaceOfBirthLabel" xml:space="preserve">
-    <value>Geburtsdatum:</value>
+    <value>Geburtsort:</value>
   </data>
   <data name="PostalCodeLabel" xml:space="preserve">
     <value>ostleitzahl:</value>
@@ -166,16 +166,16 @@
     <value>SHAPE</value>
   </data>
   <data name="special_status_extended_minority" xml:space="preserve">
-    <value>Verl&#228;ngerte Minderj&#228;hrigkeit</value>
+    <value>Verlängerte Minderjährigkeit</value>
   </data>
   <data name="special_status_white_cane" xml:space="preserve">
-    <value>Wei&#223;er Stock</value>
+    <value>Weißer Stock</value>
   </data>
   <data name="special_status_yellow_cane" xml:space="preserve">
     <value>Gelber Stock</value>
   </data>
   <data name="StreetLabel" xml:space="preserve">
-    <value>Stra&#223;e:</value>
+    <value>Straße:</value>
   </data>
   <data name="TitleLabel" xml:space="preserve">
     <value>Titel:</value>
@@ -190,28 +190,28 @@
     <value>H. Blaue Karte EU</value>
   </data>
   <data name="type_FOREIGNER_A" xml:space="preserve">
-    <value>Bescheinigung der Eintragung im Ausl&#228;nderregister - Vor&#252;bergehender Aufenthalt</value>
+    <value>Bescheinigung der Eintragung im Ausländerregister - Vorübergehender Aufenthalt</value>
   </data>
   <data name="type_FOREIGNER_B" xml:space="preserve">
-    <value>Bescheinigung der Eintragung im Ausl&#228;nderregister</value>
+    <value>Bescheinigung der Eintragung im Ausländerregister</value>
   </data>
   <data name="type_FOREIGNER_C" xml:space="preserve">
-    <value>Personalausweis f&#252;r Ausl&#228;nder</value>
+    <value>Personalausweis für Ausländer</value>
   </data>
   <data name="type_FOREIGNER_D" xml:space="preserve">
     <value>Daueraufenthalt - EG</value>
   </data>
   <data name="type_FOREIGNER_E" xml:space="preserve">
-    <value>Aufenthaltserlaubnis f&#252;r Staatsangeh&#246;rige eines EWG-Mitgliedstaates;Anmeldebescheinigung</value>
+    <value>Aufenthaltserlaubnis für Staatsangehörige eines EWG-Mitgliedstaates;Anmeldebescheinigung</value>
   </data>
   <data name="type_FOREIGNER_E_PLUS" xml:space="preserve">
-    <value>Dokument zur Bescheinigung des Daueraufenthalts eines EU-Ausl&#228;nders</value>
+    <value>Dokument zur Bescheinigung des Daueraufenthalts eines EU-Ausländers</value>
   </data>
   <data name="type_FOREIGNER_F" xml:space="preserve">
-    <value>Ausweis f&#252;r Nicht-EU-Familienmitglieder eines EU-Ausl&#228;nders oder eines belgischen Staatsangeh&#246;rigen</value>
+    <value>Ausweis für Nicht-EU-Familienmitglieder eines EU-Ausländers oder eines belgischen Staatsangehörigen</value>
   </data>
   <data name="type_FOREIGNER_F_PLUS" xml:space="preserve">
-    <value>Daueraufenthaltskarte f&#252;r Familienangeh&#246;rige eines Unionsb&#252;rgers</value>
+    <value>Daueraufenthaltskarte für Familienangehörige eines Unionsbürgers</value>
   </data>
   <data name="type_HABILITATION_CARD" xml:space="preserve">
     <value>Berechtigungskarte</value>

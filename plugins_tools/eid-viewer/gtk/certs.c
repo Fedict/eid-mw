@@ -561,7 +561,19 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 /* Show details on a given certificate. Not actually implemented yet. */
 void certdetail(GtkMenuItem* item, gpointer userdata) {
 	GtkWindow* win = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
-	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, _("Not yet implemented"));
+	GtkTreeSelection *sel = gtk_tree_view_get_selection(
+			GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_cert")));
+	GtkTreeIter iter;
+	GtkTreeModel *model;
+	char* text;
+	GByteArray *arr;
+
+	gtk_tree_selection_get_selected(sel, &model, &iter);
+	gtk_tree_model_get(model, &iter, CERT_COL_DATA, &arr, -1);
+
+	text = eid_vwr_x509_get_details(arr->data, arr->len);
+	GtkWidget* dialog = gtk_message_dialog_new(win, GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", text);
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
+	free(text);
 }

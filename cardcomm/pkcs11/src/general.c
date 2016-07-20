@@ -185,7 +185,7 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 	strcpy_n(pInfo->manufacturerID,  "Belgium Government",  sizeof(pInfo->manufacturerID), ' ');
 	strcpy_n(pInfo->libraryDescription, "Belgium eID PKCS#11 interface v2", sizeof(pInfo->libraryDescription), ' ');
 	pInfo->libraryVersion.major = 4;
-	pInfo->libraryVersion.minor = 1;
+	pInfo->libraryVersion.minor = 2;
 
 cleanup:
 	log_trace(WHERE, "I: leave, ret = %i",ret);

@@ -905,11 +905,18 @@ CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_n
 	}
 
 	try{
+		std::string csPin = "";
+		std::string csNewPin = "";
 		std::string szReader = pSlot->name;
+
 		CReader &oReader = oCardLayer->getReader(szReader);
 
-		static std::string csPin    = (char*)oldpin;
-		static std::string csNewPin = (char*)newpin;
+		if(oldpin != NULL){
+			csPin    = (char*)oldpin;
+		}
+		if(newpin != NULL){
+			csNewPin = (char*)newpin;
+		}
 		unsigned long ulRemaining = 0;
 
 		tPin tpin = oReader.GetPin(0);

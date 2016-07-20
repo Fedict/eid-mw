@@ -94,22 +94,20 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULON
 	*count = 0;
 	if(is_auto) {
 		CK_SLOT_ID_PTR slotlist = NULL;
-		ret = C_GetSlotList(with_token, slotlist, count);
+		C_GetSlotList(with_token, slotlist, count);
 
-		if (ret == CKR_BUFFER_TOO_SMALL) {
-			slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), *count);
-			if (slotlist == NULL)
-			{
-				return EIDV_RV_FAIL;
-			}
-			ret = C_GetSlotList(with_token, slotlist, count);
-			if (*count > 0) {
-				*loc = slotlist[0];
-				free(slotlist);
-				return EIDV_RV_OK;
-			}
+		slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), *count);
+		if (slotlist == NULL)
+		{
+			return EIDV_RV_FAIL;
 		}
+		ret = C_GetSlotList(with_token, slotlist, count);
 		check_rv_late(ret);
+		if (*count > 0) {
+			*loc = slotlist[0];
+			free(slotlist);
+			return EIDV_RV_OK;
+		}
 
 	} else {
 		CK_SLOT_INFO info;
@@ -311,8 +309,10 @@ static int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
 	/* Need to do a C_Login in both cases (whether we're doing a "test pin"
 	 * or a "change pin", since you can't change your PIN code unless
 	 * you're logged in. */
-	check_rv(C_Login(session, CKU_USER, NULL_PTR, 0));
-	if(p >= EID_VWR_PINOP_CHG) {
+	if (p == EID_VWR_PINOP_TEST) {
+		check_rv(C_Login(session, CKU_USER, NULL, 0));
+	}
+	else {
 		check_rv(C_SetPIN(session, NULL_PTR, 0, NULL_PTR, 0));
 	}
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
@@ -336,6 +336,17 @@ int eid_vwr_p11_do_pinop(void* data) {
 /* Called by state machine at end of TOKEN_PINOP state. */
 int eid_vwr_p11_leave_pinop() {
 	check_rv(C_Logout(session));
+
+	return 0;
+}
+
+int eid_vwr_p11_check_version() {
+	CK_INFO info;
+	check_rv(C_GetInfo(&info));
+	if(info.libraryVersion.major < 4 || (info.libraryVersion.major == 4 && info.libraryVersion.minor < 2)) {
+		be_log(EID_VWR_LOG_ERROR, "eID middleware outdated. Found version %d.%d, whereas version 4.2 or higher is required for this version of the eID viewer", info.libraryVersion.major, info.libraryVersion.minor);
+		return 1;
+	}
 
 	return 0;
 }
