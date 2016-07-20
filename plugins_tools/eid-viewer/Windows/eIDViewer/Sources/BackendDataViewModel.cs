@@ -814,10 +814,10 @@ namespace eIDViewer
         public void ResetDataValues()
         {
             text_color = "Gray";
-            firstName = "-";
+            _firstName = "";
+            _first_letter_of_third_given_name = "";
             firstNames = "-";
-            surName = "-";
-            first_letter_of_third_given_name = "-";
+            surName = "-";       
             date_of_birth = "-";
             location_of_birth = "-";
             gender = "-";
@@ -913,7 +913,7 @@ namespace eIDViewer
             set
             {
                 _firstName = value;
-                _firstNames = value + _first_letter_of_third_given_name;
+                _firstNames = value + " " + _first_letter_of_third_given_name;
                 this.NotifyPropertyChanged("firstNames");
             }
         }
@@ -936,7 +936,7 @@ namespace eIDViewer
             set
             {
                 _first_letter_of_third_given_name = value;
-                _firstNames = _firstName + value;
+                _firstNames = _firstName + " " + value;
                 this.NotifyPropertyChanged("firstNames");
             }
         }

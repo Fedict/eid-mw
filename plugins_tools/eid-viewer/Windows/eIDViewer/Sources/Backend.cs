@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 using System.Collections.ObjectModel;
 using System.Collections.Concurrent;
+using System.Resources;
+using System.Reflection;
+using System.Threading;
 
 
 
@@ -255,23 +258,24 @@ namespace eIDViewer
 
         private static void CSCbpinopResult(eid_vwr_pinops pinop, eid_vwr_result result)
         {
-            try {
-                //Console.WriteLine("CSCbpinopResult called ");
+            try
+            {
                 if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
                 {
                     theData.logText += "CSCbpinopResult called, result = " + result.ToString() + "\n";
                 }
 
-                System.Resources.ResourceManager rm = new System.Resources.ResourceManager("ApplicationStringResources",
-                    typeof(eIDViewer.Resources.ApplicationStringResources).Assembly);
+                ResourceManager rm = new ResourceManager("eIDViewer.Resources.ApplicationStringResources",
+                    Assembly.GetExecutingAssembly());
 
                 switch (result)
                 {
-                    case eid_vwr_result.EID_VWR_RES_FAILED:
-                        System.Windows.MessageBox.Show("PinOp Failed");
-                        break;
+                    //pkcs11 will bring up a message box
+                    //case eid_vwr_result.EID_VWR_RES_FAILED:
+                    //    System.Windows.MessageBox.Show("PinOp Failed");
+                    //    break;
                     case eid_vwr_result.EID_VWR_RES_SUCCESS:
-                        System.Windows.MessageBox.Show(rm.GetString("CARD", null));
+                        System.Windows.MessageBox.Show(rm.GetString("pinVerifiedOKDialogMessage", Thread.CurrentThread.CurrentUICulture));
                         break;
                 }
             }

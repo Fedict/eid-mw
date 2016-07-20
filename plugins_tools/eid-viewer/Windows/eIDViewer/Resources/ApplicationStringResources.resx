@@ -156,4 +156,10 @@
   <data name="coat_of_arms_jpg_location" xml:space="preserve">
     <value>pack://application:,,,/Resources/coat_of_arms_en.jpg</value>
   </data>
+  <data name="pinVerifiedOKDialogMessage" xml:space="preserve">
+    <value>Your PIN was validated correctly.</value>
+  </data>
+  <data name="pinVerifiedOKDialogTitle" xml:space="preserve">
+    <value>PIN validated OK</value>
+  </data>
 </root>
