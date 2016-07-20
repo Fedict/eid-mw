@@ -9,3 +9,5 @@ $(XPI_ID)-ff47p.xpi: eid_belgie-1.0.21-fx.xpi
 	cp $(srcdir)/$< $(XPI_ID)-ff47p.xpi
 
 extensionbasedir=$(mozext)/$(XPI_UUID)
+
+DISTCLEANFILES = $(XPI_ID).xpi $(XPI_ID)-ff47p.xpi
