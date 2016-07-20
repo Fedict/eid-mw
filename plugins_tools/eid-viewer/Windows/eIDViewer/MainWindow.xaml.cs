@@ -145,9 +145,6 @@ namespace eIDViewer
                 {
                     if ((filename = myOpenFileDialog.FileName) != null)
                     {
-                        //clear data
-                        eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
-                        theBackendData.ResetDataValues();
                         //close previous file
                         eIDViewer.NativeMethods.CloseXML();
                         //MessageBox.Show("File selected is " + filename);
