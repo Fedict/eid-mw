@@ -125,11 +125,15 @@ if (index == nSessions)
    size = nSessions * sizeof(P11_SESSION);
    diff = SESSION_TAB_STEP_SIZE * sizeof(P11_SESSION);
 
-   if ((gpSessions = realloc(gpSessions, size+diff)) == NULL)
+   P11_SESSION* gpSessions_realloc = realloc(gpSessions, size+diff);
+   if (gpSessions_realloc == NULL) // realloc failed
       {
       log_trace(WHERE, "E: unable to allocate memory for session table, %d bytes\n", size+diff);
+	  free(gpSessions);
       return(CKR_HOST_MEMORY);      
-      }      
+   } else { // realloc succeeded
+	   gpSessions = gpSessions_realloc;
+   }
 
    memset(&gpSessions[index], 0, diff);
    nSessions += SESSION_TAB_STEP_SIZE;
@@ -736,8 +740,3 @@ for (i=0; i < ulCount; i++)
 return (0);
 }
 #undef WHERE
-
-
-
-
-
