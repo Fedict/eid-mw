@@ -3,6 +3,7 @@ XPI_UUID={ec8030f7-c20a-464f-9b0e-13a3a9e97384}
 
 CLEANFILES = $(XPI_NAME) $(XPI_ID).xpi
 
+if !SIGNED
 xpi_files = $(dist_content_DATA) \
 			$(dist_defaults_preferences_DATA) \
 			$(dist_locale_enus_DATA) \
@@ -39,6 +40,7 @@ dist_skin_DATA = skin/icon.png \
 			skin/overlay.css
 
 dist_components_DATA = components/belgiumeidpkcs11.js
+endif
 
 xpipackage: $(xpi_files)
 #	 Create a temporary directory $tmp in $TMPDIR (default /tmp).
