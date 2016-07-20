@@ -337,3 +337,14 @@ int eid_vwr_p11_leave_pinop() {
 
 	return 0;
 }
+
+int eid_vwr_p11_check_version() {
+	CK_INFO info;
+	check_rv(C_GetInfo(&info));
+	if(info.libraryVersion.major < 4 || (info.libraryVersion.major == 4 && info.libraryVersion.minor < 2)) {
+		be_log(EID_VWR_LOG_ERROR, "eID middleware outdated. Found version %d.%d, whereas version 4.2 or higher is required for this version of the eID viewer", info.libraryVersion.major, info.libraryVersion.minor);
+		return 1;
+	}
+
+	return 0;
+}
