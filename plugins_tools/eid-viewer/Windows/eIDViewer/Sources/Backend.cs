@@ -199,7 +199,6 @@ namespace eIDViewer
             {
                 theData.StoreBinData(label, data, datalen);
             }
-
         }
 
         private static void CSCblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPWStr)]string str)

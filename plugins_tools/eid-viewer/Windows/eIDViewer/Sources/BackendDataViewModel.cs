@@ -460,7 +460,7 @@ namespace eIDViewer
 
         public void HideProgressBar()
         {
-            progress = 100;
+            progress = 0;
             progress_info = "";
             progress_bar_visible = "Hidden";
         }
