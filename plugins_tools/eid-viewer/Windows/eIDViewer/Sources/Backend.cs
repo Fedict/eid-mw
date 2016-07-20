@@ -142,8 +142,6 @@ namespace eIDViewer
 
         private static void CSCbNewSrc(eid_vwr_source eid_vwr_source)
         {
-            //Console.WriteLine("CbNewSrc called ");
-            //Console.WriteLine(eid_vwr_source.ToString());
             if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
             {
                 theData.logText += "CSCbNewSrc called " + eid_vwr_source.ToString() + "\n";
@@ -177,9 +175,6 @@ namespace eIDViewer
         }
         private static void CSCbNewStringData([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPWStr)]string data)
         {
-            //Console.WriteLine("CSCbNewStringData called, label = ");
-            //Console.WriteLine(label);
-            //Console.WriteLine("data = " + data);
             theData.StoreStringData(label, data);
             if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
             {
@@ -189,8 +184,6 @@ namespace eIDViewer
 
         private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data, int datalen)
         {
-            //Console.WriteLine("CSCbnewbindata called, label = ");
-            //Console.WriteLine(label);
             if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
             {
                 theData.logText += "CSCbnewbindata called " + label + "\n";
@@ -203,8 +196,6 @@ namespace eIDViewer
 
         private static void CSCblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPWStr)]string str)
         {
-            //Console.WriteLine("CSCblog called: ");
-            //Console.WriteLine(str);
             if (logLevel >= theData.log_level)
             {
                 theData.logText += "CSCblogtest called " + str + "\n";
@@ -213,8 +204,6 @@ namespace eIDViewer
 
         private static void CSCbnewstate(eid_vwr_states state)
         {
-            //Console.WriteLine("CSCbnewstate called ");
-            //Console.WriteLine(state.ToString());
             if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
             {
                 theData.logText += "CSCbnewstate called " + state.ToString() + "\n";
@@ -224,7 +213,6 @@ namespace eIDViewer
                 case eid_vwr_states.STATE_TOKEN_WAIT:
                     theData.AllDataRead();
                     theData.eid_data_from_file = false;
-                    //theData.progress_bar_visible = "Hidden";
                     break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;
@@ -252,7 +240,6 @@ namespace eIDViewer
                     theData.eid_data_from_file = false;
                     break;
             }
-
         }
 
         private static void CSCbpinopResult(eid_vwr_pinops pinop, eid_vwr_result result)
@@ -269,7 +256,7 @@ namespace eIDViewer
 
                 switch (result)
                 {
-                    //pkcs11 will bring up a message box
+                    //pkcs11 will bring up a message box in case of a failure
                     //case eid_vwr_result.EID_VWR_RES_FAILED:
                     //    System.Windows.MessageBox.Show("PinOp Failed");
                     //    break;
@@ -294,7 +281,6 @@ namespace eIDViewer
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
                     theData.AllDataRead();
-                    //theData.progress_bar_visible = "Hidden";
                     break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;
@@ -314,7 +300,6 @@ namespace eIDViewer
                     theData.eid_data_ready = true;
                     break;
             }
-
         }
 
         private static void CbReadersChanged(UInt32 nreaders, IntPtr slotList)
