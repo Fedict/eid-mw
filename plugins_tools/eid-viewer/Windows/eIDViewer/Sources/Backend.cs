@@ -168,6 +168,8 @@ namespace eIDViewer
                     theData.type_kaart = "IDENTITEITSKAART";
                     theData.text_color = "Black";
                     AdjustIconImage("Resources\\state_fileloaded.png");
+                    theData.eid_card_present = true;
+                    theData.progress_bar_visible = "Visible";
                     break;
                 default:
                     break;

@@ -337,6 +337,8 @@ int eid_vwr_deserialize (const EID_CHAR* filename)
 
 	retVal = ReadNodePending(pReader, &nodeType, 20);
 
+	be_newsource(EID_VWR_SRC_FILE);
+
 	while (retVal == S_OK )
 	{
 		switch (nodeType)
