@@ -403,19 +403,19 @@ namespace eIDViewer
 
         public void VerifyAllCertificates()
         {
-            //TODO: verify RNcert
-
             progress_info = "checking certificates validity";
             if (VerifyRootCA(ref rootCA_cert, ref rootCAViewModel) == true)
             {
                 CheckCertificateValidity(ref RN_cert, ref RNCertViewModel);
 
-                eid_cert_status authcertStatus = CheckCertificateValidity(ref authentication_cert, ref authCertViewModel);
-                SetCertificateLargeIcon(authcertStatus);
+                //eid_cert_status authcertStatus = 
+                CheckCertificateValidity(ref authentication_cert, ref authCertViewModel);
+                //SetCertificateLargeIcon(authcertStatus);
                 //handle it in UI
-                eid_cert_status signcertStatus = CheckCertificateValidity(ref signature_cert, ref signCertViewModel);
-                if (signcertStatus > authcertStatus)
-                    SetCertificateLargeIcon(signcertStatus);
+                //eid_cert_status signcertStatus = 
+                CheckCertificateValidity(ref signature_cert, ref signCertViewModel);
+                //if (signcertStatus > authcertStatus)
+                //    SetCertificateLargeIcon(signcertStatus);
             }
             else
             {
@@ -594,6 +594,7 @@ namespace eIDViewer
             cert_valid_untill = certificate.CertValidUntill;
             cert_usage = certificate.CertUsage;
             cert_trust = certificate.CertTrust;
+            certificateLargeIcon = certificate.ImagePath;
         }    
 
         private void StoreCertificate (ref CertViewModel theCertViewModel, ref X509Certificate2 theX509Certificate)
