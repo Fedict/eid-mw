@@ -125,36 +125,53 @@ namespace eIDViewer
         //verify if the chain that was build by .NET is identical to the one on the eID Card
         public bool CheckChain(ref X509Chain buildChain, ref X509Certificate2 leafCertificate)
         {
-            bool chainIsOnEIDCard = true;
+            int chainLen = 3;
+
+            if(leafCertificate.Equals(RN_cert))
+            {
+                chainLen = 2;
+            }
             //chain length should be 3
-            if (buildChain.ChainElements.Count != 3)
+            if (buildChain.ChainElements.Count != chainLen)
             {
                 this.logText += "certificate chain is bigger then 3, did the webtrusted Belgian rootCA entered the chain? \n";
-                chainIsOnEIDCard = false;
+                return false;
             }
             //check if entire chain .NET just build is the one on the eID Card
-            else if (buildChain.ChainElements[0].Certificate.Thumbprint != leafCertificate.Thumbprint)
+            if (buildChain.ChainElements[0].Certificate.Thumbprint != leafCertificate.Thumbprint)
             {
-                //root cert in the verified chain is not the one on the eID Card
-                this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
-                chainIsOnEIDCard = false;
+                //leaf cert in the verified chain is not the one on the eID Card
+                this.logText += "certificate chain not build correctly, leafCertificate in Windows store differs from the one on eID card \n";
+               return false;
+            }
+            if (chainLen == 2)
+            {
+                if (buildChain.ChainElements[1].Certificate.Thumbprint != rootCA_cert.Thumbprint)
+                {
+                    //root cert in the verified chain is not the one on the eID Card
+                    this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
+                    return false;
+                }
             }
             //check if entire chain .NET just build is the one on the eID Card
-            else if (buildChain.ChainElements[1].Certificate.Thumbprint != intermediateCA_cert.Thumbprint)
+            else
             {
-                //root cert in the verified chain is not the one on the eID Card
-                this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
-                chainIsOnEIDCard = false;
-            }
-            //check if entire chain .NET just build is the one on the eID Card
-            else if (buildChain.ChainElements[2].Certificate.Thumbprint != rootCA_cert.Thumbprint)
-            {
-                //root cert in the verified chain is not the one on the eID Card
-                this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
-                chainIsOnEIDCard = false;
+                if (buildChain.ChainElements[1].Certificate.Thumbprint != intermediateCA_cert.Thumbprint)
+                {
+                    //intermediateCA cert  in the verified chain is not the one on the eID Card
+                    this.logText += "certificate chain not build correctly, intermediateCA in Windows store differs from the one on eID card \n";
+                    return false;
+                }
+                //check if entire chain .NET just build is the one on the eID Card
+                if (buildChain.ChainElements[2].Certificate.Thumbprint != rootCA_cert.Thumbprint)
+                {
+                    //root cert in the verified chain is not the one on the eID Card
+                    this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
+                    return false;
+                }
             }
 
-            return chainIsOnEIDCard;
+            return true;
         }
 
         public bool VerifyRootCAvsEmbeddedRootCA(ref X509Certificate2 rootCertOnCard, string embeddedRootCA)
@@ -391,6 +408,8 @@ namespace eIDViewer
             progress_info = "checking certificates validity";
             if (VerifyRootCA(ref rootCA_cert, ref rootCAViewModel) == true)
             {
+                CheckCertificateValidity(ref RN_cert, ref RNCertViewModel);
+
                 eid_cert_status authcertStatus = CheckCertificateValidity(ref authentication_cert, ref authCertViewModel);
                 SetCertificateLargeIcon(authcertStatus);
                 //handle it in UI
