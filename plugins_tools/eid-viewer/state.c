@@ -172,6 +172,7 @@ void sm_init() {
 	states[STATE_FILE_READING].parent = &(states[STATE_FILE]);
 	states[STATE_FILE_READING].enter = (int(*)(void*))eid_vwr_deserialize;
 	states[STATE_FILE_READING].out[EVENT_READ_READY] = &(states[STATE_FILE_WAIT]);
+	states[STATE_FILE_READING].out[EVENT_STATE_ERROR] = &(states[STATE_NO_TOKEN]);
 
 	states[STATE_FILE_WAIT].parent = &(states[STATE_FILE]);
 
