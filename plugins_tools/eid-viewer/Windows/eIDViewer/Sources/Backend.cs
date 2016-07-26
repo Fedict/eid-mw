@@ -213,9 +213,12 @@ namespace eIDViewer
             switch (state)
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
-                case eid_vwr_states.STATE_FILE_WAIT:
-                    theData.AllDataRead();
                     theData.eid_data_from_file = false;
+                    theData.AllDataRead();
+                    break;
+                case eid_vwr_states.STATE_FILE_WAIT:
+                    theData.eid_data_from_file = true;
+                    theData.progress_bar_visible = "Hidden";  
                     break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;
