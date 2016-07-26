@@ -21,6 +21,8 @@ static const EID_CHAR* state_to_name(enum eid_vwr_states state) {
 	STATE_NAME(TOKEN_SERIALIZE);
 	STATE_NAME(TOKEN_ERROR);
 	STATE_NAME(FILE);
+	STATE_NAME(FILE_READING);
+	STATE_NAME(FILE_WAIT);
 	STATE_NAME(CARD_INVALID);
 	STATE_NAME(NO_READER);
 	STATE_NAME(NO_TOKEN);
@@ -155,17 +157,23 @@ void sm_init() {
 	states[STATE_NO_TOKEN].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_NO_TOKEN].enter = source_none;
 	states[STATE_NO_TOKEN].first_child = &(states[STATE_NO_READER]);
-	states[STATE_NO_TOKEN].out[EVENT_OPEN_FILE] = &(states[STATE_FILE]);
+	states[STATE_NO_TOKEN].out[EVENT_OPEN_FILE] = &(states[STATE_FILE_READING]);
 
 	states[STATE_NO_READER].parent = &(states[STATE_NO_TOKEN]);
 	states[STATE_NO_READER].out[EVENT_READER_FOUND] = &(states[STATE_READY]);
 
 	states[STATE_FILE].parent = &(states[STATE_CALLBACKS]);
-	states[STATE_FILE].enter = (int(*)(void*))eid_vwr_deserialize;
 	states[STATE_FILE].leave = cache_clear;
+	states[STATE_FILE].first_child = &(states[STATE_FILE_READING]);
 	states[STATE_FILE].out[EVENT_CLOSE_FILE] = &(states[STATE_NO_TOKEN]);
 	states[STATE_FILE].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);
 	states[STATE_FILE].out[EVENT_STATE_ERROR] = &(states[STATE_NO_TOKEN]);
+
+	states[STATE_FILE_READING].parent = &(states[STATE_FILE]);
+	states[STATE_FILE_READING].enter = (int(*)(void*))eid_vwr_deserialize;
+	states[STATE_FILE_READING].out[EVENT_READ_READY] = &(states[STATE_FILE_WAIT]);
+
+	states[STATE_FILE_WAIT].parent = &(states[STATE_FILE]);
 
 	curstate = &(states[STATE_LIBOPEN]);
 

@@ -3,6 +3,7 @@
 
 #include "xmlmap.h"
 #include "xsdloc.h"
+#include "state.h"
 
 #include <string.h>
 #include "p11.h"
@@ -247,6 +248,9 @@ out:
 	}
 	if(reader) {
 		xmlFreeTextReader(reader);
+	}
+	if(!rc) {
+		sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
 	}
 	return rc;
 }
