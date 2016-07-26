@@ -527,6 +527,8 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 				break;
 			case ' ':
 				filename_sugg[d] = '_';
+				d++;
+				break;
 			default:
 				filename_sugg[d] = tolower(filename_sugg[s]);
 				d++;
