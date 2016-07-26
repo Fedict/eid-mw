@@ -547,6 +547,10 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 
 		gtk_tree_model_get(model, &iter, CERT_COL_DATA, &arr, -1);
 		fd = open(filename, O_WRONLY | O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH);
+		if(fd < 0) {
+			uilog(EID_VWR_LOG_ERROR, _("Could not open file: %s", strerror(errno)));
+			return;
+		}
 		eid_vwr_dumpcert(fd, arr->data, arr->len, strcmp((char*)userdata, "DER") ? DUMP_PEM : DUMP_DER);
 		if(!strcmp((char*)userdata, "chain")) {
 			GtkTreeIter child = iter;
