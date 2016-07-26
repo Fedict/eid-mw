@@ -145,6 +145,9 @@ out:
 int eid_vwr_serialize(void* data) {
 	const struct eid_vwr_cache_item* item = cache_get_data("xml");
 	FILE* f = fopen((const char*)data, "w");
+	if(!f) {
+		return 1;
+	}
 	fwrite(item->data, item->len, 1, f);
 	return fclose(f);
 }
