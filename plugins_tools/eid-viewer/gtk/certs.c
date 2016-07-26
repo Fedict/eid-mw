@@ -383,6 +383,8 @@ void add_certificate(char* label, void* data, int len) {
 
 	if(d2i_X509(&cert, (const unsigned char**)&data, len) == NULL) {
 		g_warning("Could not parse %s certificate", label);
+		free(columns);
+		free(vals);
 		return;
 	}
 
