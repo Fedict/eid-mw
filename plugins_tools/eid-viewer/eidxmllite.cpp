@@ -393,11 +393,8 @@ out:
 	{
 		sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
 	}
-	else
-	{
-		sm_handle_event(EVENT_STATE_ERROR, NULL, NULL, NULL);
-	}
-	return 0;
+
+	return retVal;
 }
 
 //return the xml data

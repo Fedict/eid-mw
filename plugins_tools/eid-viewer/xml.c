@@ -245,7 +245,6 @@ out:
 		if(err != NULL) {
 			be_log(EID_VWR_LOG_ERROR, "Could not read file: %s", err->message);
 		}
-		sm_handle_event(EVENT_STATE_ERROR, NULL, NULL, NULL);
 	}
 	if(reader) {
 		xmlFreeTextReader(reader);
