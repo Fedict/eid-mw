@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections.ObjectModel;
 using System.Collections.Concurrent;
+using System.Reflection;
 
 namespace eIDViewer
 {
@@ -531,6 +532,7 @@ namespace eIDViewer
 
         public BackendDataViewModel()
         {
+            viewerVersion = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             validateAlways = Properties.Settings.Default.AlwaysValidate;
 
             _readersList = new ConcurrentQueue<ReadersMenuViewModel>();
@@ -1132,6 +1134,28 @@ namespace eIDViewer
             {
                 _validity_end_date = value;
                 this.NotifyPropertyChanged("validity_end_date");
+            }
+        }
+
+        private string _date;
+        public string date
+        {
+            get { return _date; }
+            set
+            {
+                _date = value;
+                this.NotifyPropertyChanged("date");
+            }
+        }
+
+        private string _viewerVersion;
+        public string viewerVersion
+        {
+            get { return _viewerVersion; }
+            set
+            {
+                _viewerVersion = value;
+                this.NotifyPropertyChanged("viewerVersion");
             }
         }
 

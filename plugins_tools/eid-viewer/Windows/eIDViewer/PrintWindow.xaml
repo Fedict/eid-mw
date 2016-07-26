@@ -11,27 +11,28 @@
         Title="PrintWindow" Foreground="{x:Null}">
     <Grid x:Name="printWindowGrid" Margin="0,0,0,0"
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid Margin="0,0,0,0" Height="60"  VerticalAlignment="Top">
+        <Grid Margin="0,0,0,0" Height="76"  VerticalAlignment="Top" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="26" />
                 <RowDefinition Height="Auto" MinHeight="26" />
+                <RowDefinition Height="Auto" MinHeight="16" />
             </Grid.RowDefinitions>
-            <Image Grid.Column="0" Grid.RowSpan="2"  Source="{Binding Path=applicationResource.coat_of_arms_jpg_location, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Right" Height="60" VerticalAlignment="Top"/>
-            <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=applicationResource.Belgium, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="123" Height="26"/>
-            <Label Grid.Column="1" Grid.Row="1" Content="{Binding Path=type_kaart, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="26"/>
+            <Image Grid.Column="0" Grid.RowSpan="2"  Source="{Binding Path=applicationResource.coat_of_arms_jpg_location, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top"/>
+            <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=applicationResource.Belgium, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="30"/>
+            <Label Grid.Column="1" Grid.Row="1" Content="{Binding Path=type_kaart, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="30"/>
             <Image Grid.Column="2" Grid.RowSpan="2" Source="{Binding Path=photo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Height="60" VerticalAlignment="Top"/>
-            <Separator Grid.ColumnSpan="3" Grid.Row="1" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
+            <Separator Grid.ColumnSpan="3" Grid.Row="2" Height="16" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
         </Grid>
 
-        <Grid Margin="0,60,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Margin="0,76,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -58,6 +59,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
 
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*" />
@@ -82,6 +85,9 @@
             <Label Grid.Column="0" Grid.Row="19" Content="{Binding Path=cardTabResource.chipNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Grid.Column="0" Grid.Row="20" Content="{Binding Path=cardTabResource.validFromLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Grid.Column="0" Grid.Row="21" Content="{Binding Path=cardTabResource.validUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Separator Grid.ColumnSpan="2" Grid.Row="22" HorizontalAlignment="Stretch" Height="16" VerticalAlignment="Center"/>
+            <Label Grid.Column="0" Grid.Row="23" Content="{Binding Path=applicationResource.printedDateLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Grid.Column="0" Grid.Row="24" Content="{Binding Path=applicationResource.printedBy, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=surName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=firstNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
@@ -100,7 +106,8 @@
             <Label Grid.Column="1" Grid.Row="19" Content="{Binding Path=chip_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="20" Content="{Binding Path=validity_begin_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="21" Content="{Binding Path=validity_end_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Separator Grid.ColumnSpan="2" Grid.Row="16" HorizontalAlignment="Stretch" Height="16" VerticalAlignment="Center"/>
+            <Label Grid.Column="1" Grid.Row="23" Content="{Binding Path=date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="24" Content="{Binding Path=viewerVersion, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
 
         </Grid>
     </Grid>

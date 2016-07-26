@@ -253,14 +253,19 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
 
         private void MenuItemPrint_Click(object sender, RoutedEventArgs e)
         {
+            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
+
+            theBackendData.date = DateTime.Now.ToString("D",Thread.CurrentThread.CurrentUICulture);
+
             PrintWindow thePrintWindow = new PrintWindow();
             PrintDialog dialog = new PrintDialog();
 
             if (dialog.ShowDialog() != true)
                 return;
 
+            //re-arrange the printwindow grid to fill the entire page
             thePrintWindow.printWindowGrid.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
-            thePrintWindow.printWindowGrid.Arrange(new Rect(new Point(20, 20), thePrintWindow.printWindowGrid.DesiredSize));
+            thePrintWindow.printWindowGrid.Arrange(new Rect(new Point(0, 0), thePrintWindow.printWindowGrid.DesiredSize));
 
             dialog.PrintVisual(thePrintWindow.printWindowGrid, "Printing");
             thePrintWindow.Close();

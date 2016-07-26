@@ -162,4 +162,10 @@
   <data name="pinVerifiedOKDialogTitle" xml:space="preserve">
     <value>PIN validiert</value>
   </data>
+  <data name="printedBy" xml:space="preserve">
+    <value>Gedruckt von:</value>
+  </data>
+  <data name="printedDateLabel" xml:space="preserve">
+    <value>Gedruckt:</value>
+  </data>
 </root>
