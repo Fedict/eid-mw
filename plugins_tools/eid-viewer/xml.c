@@ -208,9 +208,6 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 			val = NULL;
 		}
 	}
-	if(rc > 0) {
-		rc=0;
-	}
 out:
 	if(val != NULL) {
 		free(val);
