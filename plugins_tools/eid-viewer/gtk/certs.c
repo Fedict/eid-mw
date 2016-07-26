@@ -314,7 +314,7 @@ static enum eid_vwr_result check_cert(char* which) {
 
 static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 	static pthread_once_t once = PTHREAD_ONCE_INIT;
-	enum eid_vwr_result res;
+	enum eid_vwr_result res = EID_VWR_RES_UNKNOWN;
 
 	pthread_once(&once, create_proxy_factory);
 	if(!pf) {
