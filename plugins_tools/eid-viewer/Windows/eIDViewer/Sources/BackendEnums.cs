@@ -73,18 +73,22 @@ namespace eIDViewer
 
     public enum eid_vwr_states
     {
-        STATE_LIBOPEN,
-        STATE_CALLBACKS,
-        STATE_READY,
-        STATE_TOKEN,
-        STATE_TOKEN_WAIT,
-        STATE_TOKEN_ID,
-        STATE_TOKEN_CERTS,
-        STATE_TOKEN_PINOP,
-        STATE_TOKEN_SERIALIZE,
-        STATE_TOKEN_ERROR,
-        STATE_FILE,
-        STATE_CARD_INVALID,
+        STATE_LIBOPEN, ///< The library has been opened. Used as an initializer.
+        STATE_CALLBACKS, ///< The callbacks have been defined.
+        STATE_READY, ///< Ready to receive a token (eID card)
+        STATE_TOKEN, ///< A token (eID card) has been found
+        STATE_TOKEN_WAIT, ///< The card has been read, we're now waiting for events to do something else.
+        STATE_TOKEN_ID, ///< Reading identity data
+        STATE_TOKEN_CERTS, ///< Reading certificates
+        STATE_TOKEN_PINOP, ///< Performing a PIN operation
+        STATE_TOKEN_SERIALIZE, ///< Saving data to a file
+        STATE_TOKEN_ERROR, ///< An error occurred while dealing with the card
+        STATE_FILE, ///< We're dealing with files
+        STATE_FILE_READING, ///< We're reading from the file currently
+        STATE_FILE_WAIT, ///< We finished parsing the file.
+        STATE_CARD_INVALID, ///< The data was determined to be invalid. That is, the card could be read, but signature validation failed.
+        STATE_NO_TOKEN, ///< We don't have a card, and we also don't have a file.
+        STATE_NO_READER, ///< We don't have a reader (yet?)
 
         STATE_COUNT,
     };
