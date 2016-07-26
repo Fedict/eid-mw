@@ -393,6 +393,10 @@ out:
 	{
 		sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
 	}
+	else
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("Error reading file %s"), filename);
+	}
 
 	return retVal;
 }
