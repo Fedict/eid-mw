@@ -214,11 +214,13 @@ namespace eIDViewer
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
                     theData.eid_data_from_file = false;
-                    theData.AllDataRead();
+                    theData.VerifyAllData();
+                    theData.HideProgressBar();
+                    theData.print_enabled = true;
                     break;
                 case eid_vwr_states.STATE_FILE_WAIT:
                     theData.eid_data_from_file = true;
-                    theData.progress_bar_visible = "Hidden";  
+                    theData.HideProgressBar();
                     break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;
@@ -277,36 +279,6 @@ namespace eIDViewer
             }
         }
 
-        private static void CSCsetLang(eid_vwr_states state)
-        {
-            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
-            {
-                theData.logText += "CSCsetLang called " + state.ToString() + "\n";
-            }
-            switch (state)
-            {
-                case eid_vwr_states.STATE_TOKEN_WAIT:
-                    theData.AllDataRead();
-                    break;
-                case eid_vwr_states.STATE_READY:
-                    theData.eid_data_ready = false;
-                    break;
-                case eid_vwr_states.STATE_LIBOPEN:
-                    theData.eid_data_ready = false;
-                    break;
-                case eid_vwr_states.STATE_CARD_INVALID:
-                    theData.ResetDataValues();
-                    theData.eid_data_ready = false;
-                    break;
-                case eid_vwr_states.STATE_TOKEN_ERROR:
-                    theData.ResetDataValues();
-                    theData.eid_data_ready = false;
-                    break;
-                default:
-                    theData.eid_data_ready = true;
-                    break;
-            }
-        }
 
         private static void CbReadersChanged(UInt32 nreaders, IntPtr slotList)
         {

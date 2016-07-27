@@ -58,7 +58,7 @@ namespace eIDViewer
             }
             catch (Exception e)
             {
-                this.logText += "An error occurred validating the data signature \n";
+                this.logText += "An error occurred validating the data signature\n Exception message is: " + e.Message + "\n";
             }
             return false;
         }
@@ -104,23 +104,6 @@ namespace eIDViewer
             }
             return false;
 
-        }
-
-        static bool VerifyCertificate(byte[] primaryCertificate, IEnumerable<byte[]> additionalCertificates)
-        {
-            var chain = new X509Chain();
-            foreach (var cert in additionalCertificates.Select(x => new X509Certificate2(x)))
-            {
-                chain.ChainPolicy.ExtraStore.Add(cert);
-            }
-
-            // You can alter how the chain is built/validated.
-            chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-            chain.ChainPolicy.VerificationFlags = X509VerificationFlags.NoFlag;
-
-            // Do the validation.
-            var primaryCert = new X509Certificate2(primaryCertificate);
-            return chain.Build(primaryCert);
         }
 
         //verify if the chain that was build by .NET is identical to the one on the eID Card
@@ -408,15 +391,8 @@ namespace eIDViewer
             if (VerifyRootCA(ref rootCA_cert, ref rootCAViewModel) == true)
             {
                 CheckCertificateValidity(ref RN_cert, ref RNCertViewModel);
-
-                //eid_cert_status authcertStatus = 
                 CheckCertificateValidity(ref authentication_cert, ref authCertViewModel);
-                //SetCertificateLargeIcon(authcertStatus);
-                //handle it in UI
-                //eid_cert_status signcertStatus = 
                 CheckCertificateValidity(ref signature_cert, ref signCertViewModel);
-                //if (signcertStatus > authcertStatus)
-                //    SetCertificateLargeIcon(signcertStatus);
             }
             else
             {
@@ -425,15 +401,40 @@ namespace eIDViewer
             progress_info = "";
         }
 
-        public void AllDataRead( )
+        public void VerifyAllData()
         {
-            string hashAlg = "SHA1";
+            if(IsVerifiedDataOK() == false)
+            {
+                ResetDataValues();
+            }
+            if (validateAlways == true)
+            {
+                VerifyAllCertificates();
+            }
+        }
+
+        public bool IsVerifiedDataOK( )
+        {
+            string hashAlg;
+
+            if (photo_hash.Length == 20)
+            {
+                hashAlg = "SHA1";
+            }
+            else if (photo_hash.Length == 32)
+            {
+                hashAlg = "SHA256";
+            }
+            else
+            {
+                return false;
+            }
+
             //check if the identity signature is ok
             if (CheckRNSignature(dataFile, dataSignFile, hashAlg) != true)
             {
                 this.logText += "dataFile signature check failed \n";
-                ResetDataValues();
-                return;
+                return false;
             }
 
             //check if the address signature is ok
@@ -445,26 +446,17 @@ namespace eIDViewer
             if (CheckRNSignature(trimmedAddressFile, addressSignFile, hashAlg) != true)
             {
                 this.logText += "addressFile signature check failed \n";
-                ResetDataValues();
-                return;
+                return false;
             }
 
             //check if the photo corresponds with the photo hash in the identity file
             if (CheckShaHash(photoFile, photo_hash) != true)
             {
                 this.logText += "photo doesn't match the hash in the signature file \n";
-                ResetDataValues();
-                return;
+                return false;
             }
 
-            if (validateAlways == true)
-            {
-                VerifyAllCertificates();
-            }
-
-            HideProgressBar();
-
-            print_enabled = true;
+            return true;
         }
 
         private string _certificateLargeIcon;
@@ -483,28 +475,6 @@ namespace eIDViewer
             progress = 0;
             progress_info = "";
             progress_bar_visible = "Hidden";
-        }
-
-        public void SetCertificateLargeIcon (eid_cert_status icon)
-        {
-            switch(icon)
-            {
-                case eid_cert_status.EID_CERT_STATUS_INVALID:
-                    certificateLargeIcon = "Resources/CertificateImages/certificate_bad.png";
-                    break;
-                case eid_cert_status.EID_CERT_STATUS_UNKNOWN:
-                    certificateLargeIcon = "Resources/CertificateImages/certificate_large.png";
-                    break;
-                case eid_cert_status.EID_CERT_STATUS_VALID:
-                    certificateLargeIcon = "Resources/CertificateImages/certificate_checked.png";
-                    break;
-                case eid_cert_status.EID_CERT_STATUS_WARNING:
-                    certificateLargeIcon = "Resources/CertificateImages/certificate_warn.png";
-                    break;
-                default:
-                    certificateLargeIcon = "Resources/CertificateImages/certificate_large.png";
-                    break;
-            }
         }
 
         public void SetCertificateIcon(CertViewModel cert, eid_cert_status icon)
@@ -538,7 +508,6 @@ namespace eIDViewer
             _readersList = new ConcurrentQueue<ReadersMenuViewModel>();
             //readersList.Add(new ReadersMenuViewModel("No Readers Found", 0));
 
-            SetCertificateLargeIcon(eid_cert_status.EID_CERT_STATUS_UNKNOWN);
             _certsList = new ObservableCollection<CertViewModel>();
             cert_collection = new X509Certificate2Collection();
             rootCAViewModel = new CertViewModel { CertLabel = "rootCA" };
