@@ -194,8 +194,6 @@
                     </MenuItem.ItemTemplate>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="{Binding Path=menuItemResource.fileMenuPreferencesItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"/>
-                <Separator/>
                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuPrintItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+P" Click="MenuItemPrint_Click" IsEnabled="{Binding Path=eid_data_ready, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Separator/>
                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuQuitItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+Q" Click="ExitMenuItem_Click"/>
