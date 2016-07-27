@@ -406,6 +406,8 @@ namespace eIDViewer
             if(IsVerifiedDataOK() == false)
             {
                 ResetDataValues();
+                eIDViewer.NativeMethods.MarkCardInvalid();
+                return;
             }
             if (validateAlways == true)
             {
