@@ -180,10 +180,25 @@
 		case eIDStateFile:
 			fileClose = YES;
 			filePrint = YES;
+		{
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				[_spinner startAnimation:self];
+				[NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
+			}];
+		}
+			break;
+		case eIDStateFileWait:
+			fileClose = YES;
+			filePrint = YES;
 			if([_alwaysValidate state] == NSOnState) {
 				[self validateNow:nil];
 			}
-			break;
+		{
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				[NSApp endSheet:_CardReadSheet];
+				[_spinner stopAnimation:self];
+			}];
+		}
 		default:
 			break;
 	}
