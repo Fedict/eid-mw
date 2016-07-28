@@ -42,6 +42,8 @@ typedef NS_ENUM(NSInteger, eIDState) {
 	eIDStateTokenSerialize = STATE_TOKEN_SERIALIZE,
 	eIDStateTokenError = STATE_TOKEN_ERROR,
 	eIDStateFile = STATE_FILE,
+	eIDStateFileReading = STATE_FILE_READING,
+	eIDStateFileWait = STATE_FILE_WAIT,
 	eIDStateCardInvalid = STATE_CARD_INVALID,
 	eIDStateNoToken = STATE_NO_TOKEN,
 	eIDStateNoReader = STATE_NO_READER,
