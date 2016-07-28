@@ -123,6 +123,7 @@ void sm_init() {
 	states[STATE_TOKEN].out[EVENT_DATA_INVALID] = &(states[STATE_CARD_INVALID]);
 
 	states[STATE_CARD_INVALID].parent = &(states[STATE_CALLBACKS]);
+	states[STATE_CARD_INVALID].enter = source_none;
 	states[STATE_CARD_INVALID].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
 
 	states[STATE_TOKEN_ID].parent = &(states[STATE_TOKEN]);

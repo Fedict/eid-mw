@@ -61,7 +61,6 @@
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
 	return YES;
 }
-
 - (void)log:(NSString *)line withLevel:(eIDLogLevel)level {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		char l;
@@ -82,7 +81,7 @@
 			case eIDLogLevelError:
 				l='E';
 				alert = [[NSAlert alloc] init];
-				alert.messageText = [NSString stringWithFormat:@"Error: %@", line];
+				alert.messageText = [NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"errorprefix", nil, [NSBundle mainBundle], @"Error: %@", "error prefix"), line];
 				[alert runModal];
 				break;
 		}
@@ -170,7 +169,7 @@
 				[_spinner stopAnimation:self];
 			}];
 			if(!([v canVerify] && [v isValid])) {
-				[self log:@"Cannot load card: data signature invalid!" withLevel:eIDLogLevelCoarse];
+				[self log:NSLocalizedStringWithDefaultValue(@"DataSigInvalid", nil, [NSBundle mainBundle], @"Cannot load card: data signature invalid!", "") withLevel:eIDLogLevelError];
 				[eIDOSLayerBackend set_invalid];
 			}
 			if([_alwaysValidate state] == NSOnState) {
@@ -181,10 +180,25 @@
 		case eIDStateFile:
 			fileClose = YES;
 			filePrint = YES;
+		{
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				[_spinner startAnimation:self];
+				[NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
+			}];
+		}
+			break;
+		case eIDStateFileWait:
+			fileClose = YES;
+			filePrint = YES;
 			if([_alwaysValidate state] == NSOnState) {
 				[self validateNow:nil];
 			}
-			break;
+		{
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				[NSApp endSheet:_CardReadSheet];
+				[_spinner stopAnimation:self];
+			}];
+		}
 		default:
 			break;
 	}
@@ -253,7 +267,7 @@
 		return;
 	}
 	NSSavePanel* panel = [NSSavePanel savePanel];
-	panel.title = @"Export";
+	panel.title = NSLocalizedStringWithDefaultValue(@"ExportTitle", nil, [NSBundle mainBundle], @"Export", "");
 	panel.nameFieldStringValue = [NSString stringWithFormat: @"%@%s.%s", [_certstore fileNameForKey:key], sender.tag == 3 ? "_chain" : "", sender.tag == 2 ? "der" : "pem"];
 	[panel beginWithCompletionHandler:^(NSInteger result) {
 		if(!result) return;
@@ -341,7 +355,7 @@
 		[alert runModal];
 		return;
 	}
-	[self log:[NSString stringWithFormat:@"Setting language to %@", keyeq] withLevel:eIDLogLevelNormal];
+	[self log:[NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"LanguageChosenLog", nil, [NSBundle mainBundle], @"Setting language to %@", ""), keyeq] withLevel:eIDLogLevelNormal];
 	[eIDOSLayerBackend setLang:langcode];
 	[[NSUserDefaults standardUserDefaults] setInteger:langcode forKey:@"ContentLanguage"];
 }
@@ -366,7 +380,13 @@
 }
 -(void)pinop_result:(eIDResult)result forOperation:(eIDPinOp)operation {
 	[[NSOperationQueue mainQueue]addOperationWithBlock:^{
-		NSString *msg = [NSString stringWithFormat:@"Pin code %@ %@.", (operation == eIDPinOpTest) ? @"test" : @"change", (result == eIDResultSuccess) ? @"successful" : @"failed"];
+		NSString *msgTemplate;
+		if(operation == eIDPinOpTest) {
+			msgTemplate = NSLocalizedStringWithDefaultValue(@"PinCodeTestMsg", nil, [NSBundle mainBundle], @"Pin code test: %@.", "");
+		} else {
+			msgTemplate = NSLocalizedStringWithDefaultValue(@"PinCodeChangeMsg", nil, [NSBundle mainBundle], @"Pin code change: %@.", "");
+		}
+		NSString *msg = [NSString stringWithFormat:msgTemplate, (result == eIDResultSuccess) ? NSLocalizedStringWithDefaultValue(@"PinSuccess", nil, [NSBundle mainBundle], @"successful", "") : NSLocalizedStringWithDefaultValue(@"PinFailed", nil, [NSBundle mainBundle], @"failed", "")];
 		NSAlert *alert = [[NSAlert alloc] init];
 		alert.messageText = msg;
 		[alert runModal];
@@ -404,8 +424,8 @@
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			NSAlert* error = [[NSAlert alloc ] init];
 			[error setAlertStyle:NSWarningAlertStyle];
-			[error setMessageText:@"One or more of the certificates on this card were found to be invalid or revoked."];
-			[error setInformativeText:@"For more information, please see the log tab"];
+			[error setMessageText:NSLocalizedStringWithDefaultValue(@"InvalidCertsFound", nil, [NSBundle mainBundle], @"One or more of the certificates on this card were found to be invalid or revoked.", "")];
+			[error setInformativeText:NSLocalizedStringWithDefaultValue(@"InvalidCertsMoreInfo", nil, [NSBundle mainBundle], @"For more information, please see the log tab", "")];
 			[error runModal];
 		}];
 	}
