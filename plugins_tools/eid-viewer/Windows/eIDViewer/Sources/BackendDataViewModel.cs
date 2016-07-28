@@ -273,6 +273,8 @@ namespace eIDViewer
                     chain.ChainPolicy.ExtraStore.Add(intermediateCA_cert);
                     chain.ChainPolicy.ExtraStore.Add(rootCA_cert);
 
+                    leafCertificateViewModel.CertTrust = "Validating..\n";
+                    UpdateUICertDetails();
                     // Do the validation
                     bool chainok = chain.Build(leafCertificate);
 
@@ -331,6 +333,7 @@ namespace eIDViewer
                         }
 
                         LogChainElement(ref element, elIndex);
+                        certModel.CertTrust = "";
 
                         if (element.ChainElementStatus.Length > 0)
                         {
@@ -341,7 +344,7 @@ namespace eIDViewer
                                 this.logText += "certificate status is " + element.ChainElementStatus[index].Status + "\n";
                                 this.logText += "certificate status information: " + element.ChainElementStatus[index].StatusInformation + "\n";
 
-                                certModel.CertTrust = element.ChainElementStatus[index].StatusInformation;
+                                certModel.CertTrust += element.ChainElementStatus[index].StatusInformation;
                                 switch (element.ChainElementStatus[index].Status)
                                 {
                                     case X509ChainStatusFlags.NoError:
@@ -391,6 +394,7 @@ namespace eIDViewer
                 {
                     disposable.Dispose();
                 }
+                UpdateUICertDetails();
             }
             return; 
         }
@@ -575,18 +579,28 @@ namespace eIDViewer
         public event PropertyChangedEventHandler PropertyChanged;
         private X509Certificate2Collection cert_collection;
 
+        private CertViewModel currentCertificateView = null;
+
         //event function notified by CertViewModel when an other certificate is selected
         public void CertificateSelectionChanged(object sender, EventArgs e)
         {
-            CertViewModel certificate = sender as CertViewModel;
-            cert_subject = certificate.CertSubject;
-            //cert_c = certificate.CertC;
-            cert_valid_from = certificate.CertValidfrom;
-            cert_valid_untill = certificate.CertValidUntill;
-            cert_usage = certificate.CertUsage;
-            cert_trust = certificate.CertTrust;
-            certificateLargeIcon = certificate.ImagePath;
-        }    
+            currentCertificateView = sender as CertViewModel;
+            UpdateUICertDetails();
+        }
+
+        public void UpdateUICertDetails()
+        {
+            if (currentCertificateView != null)
+            {
+                cert_subject = currentCertificateView.CertSubject;
+                //cert_c = certificate.CertC;
+                cert_valid_from = currentCertificateView.CertValidfrom;
+                cert_valid_untill = currentCertificateView.CertValidUntill;
+                cert_usage = currentCertificateView.CertUsage;
+                cert_trust = currentCertificateView.CertTrust;
+                certificateLargeIcon = currentCertificateView.ImagePath;
+            }
+        }
 
         private void StoreCertificate (ref CertViewModel theCertViewModel, ref X509Certificate2 theX509Certificate)
         {
