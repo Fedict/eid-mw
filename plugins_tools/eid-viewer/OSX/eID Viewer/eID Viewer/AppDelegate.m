@@ -169,7 +169,7 @@
 				[_spinner stopAnimation:self];
 			}];
 			if(!([v canVerify] && [v isValid])) {
-				[self log:NSLocalizedStringWithDefaultValue(@"DataSigInvalid", nil, [NSBundle mainBundle], @"Cannot load card: data signature invalid!", "") withLevel:eIDLogLevelCoarse];
+				[self log:NSLocalizedStringWithDefaultValue(@"DataSigInvalid", nil, [NSBundle mainBundle], @"Cannot load card: data signature invalid!", "") withLevel:eIDLogLevelError];
 				[eIDOSLayerBackend set_invalid];
 			}
 			if([_alwaysValidate state] == NSOnState) {
