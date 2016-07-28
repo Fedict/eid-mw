@@ -198,6 +198,9 @@
 		65BD08661CECB257000A30E4 /* BeidView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeidView.h; sourceTree = "<group>"; };
 		65BD08681CECB257000A30E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65BE1C781BB573C4002E8061 /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = ../support/xml/builddir/.libs/libxml2.a; sourceTree = "<group>"; };
+		65C96B8A1D1169380018211E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		65C96B8B1D11693C0018211E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		65C96B8C1D1169480018211E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		65CEFFFB1CEB490000642B63 /* ReaderMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderMenuItem.h; sourceTree = "<group>"; };
 		65CEFFFC1CEB490000642B63 /* ReaderMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderMenuItem.m; sourceTree = "<group>"; };
 		65DD2E931D006B3F0005EC86 /* trustdirname.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = trustdirname.m; sourceTree = "<group>"; };
@@ -700,6 +703,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				659FFC491AE9360D004CEC1F /* Base */,
+				65C96B8A1D1169380018211E /* fr */,
+				65C96B8B1D11693C0018211E /* de */,
+				65C96B8C1D1169480018211E /* nl */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
