@@ -192,10 +192,10 @@
                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuSaveItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+S" Click="MenuItemSaveAs_Click" IsEnabled="{Binding Path=eid_data_ready, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuCloseItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+W" Click="MenuItemClose_Click" IsEnabled="{Binding Path=eid_data_from_file, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Separator/>
-                <MenuItem Header="Card Readers"  ItemsSource="{Binding readersList}" >
+                <MenuItem Header="Card Readers"  ItemsSource="{Binding Path=readersList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" >
                     <MenuItem.ItemTemplate>
                         <DataTemplate>
-                            <MenuItem  Header="{Binding readerName}" Click="CardReaderMenuItem_Click" />
+                            <MenuItem  Header="{Binding Path=readerName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="CardReaderMenuItem_Click" />
                         </DataTemplate>
                     </MenuItem.ItemTemplate>
                 </MenuItem>
