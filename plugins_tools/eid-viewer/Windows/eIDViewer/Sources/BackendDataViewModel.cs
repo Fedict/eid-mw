@@ -213,6 +213,10 @@ namespace eIDViewer
                 rootViewModel.CertTrust = "Unknow RootCA";
                 SetCertificateIcon(rootViewModel, eid_cert_status.EID_CERT_STATUS_INVALID);
             }
+            else
+            {
+                SetCertificateIcon(rootViewModel, eid_cert_status.EID_CERT_STATUS_VALID);
+            }
 
             return foundEmbeddedRootCA;
 
@@ -249,10 +253,11 @@ namespace eIDViewer
         //if the above are true, but the chain has status information on certificates in the chain, return warning
         //if something went wrong, return unknown
         //if none of the above, return valid
-        public eid_cert_status CheckCertificateValidity(ref X509Certificate2 leafCertificate, ref CertViewModel leafCertificateViewModel )
+        public void CheckCertificateValidity(ref X509Certificate2 leafCertificate, ref CertViewModel leafCertificateViewModel )
         {
             var chain = new X509Chain();
             eid_cert_status chainStatus = eid_cert_status.EID_CERT_STATUS_UNKNOWN;
+
             try
             {     
                 if (leafCertificate != null)
@@ -261,7 +266,7 @@ namespace eIDViewer
                     chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
                     //chain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
                     // Set the time span that may elapse during online revocation verification or downloading the certificate revocation list (CRL).
-                    TimeSpan verificationTime = new TimeSpan(0, 0, 20);
+                    TimeSpan verificationTime = new TimeSpan(0, 0, 10);
                     chain.ChainPolicy.UrlRetrievalTimeout = verificationTime;
            
                     //add the intermediate and root certs in case they are not already in the windows certificate store
@@ -275,8 +280,7 @@ namespace eIDViewer
                     {
                         //no valid chain could be build
                         this.logText += "no valid certificate chain could be constructed \n";
-                        SetCertificateIcon(leafCertificateViewModel, eid_cert_status.EID_CERT_STATUS_INVALID);
-                        chainStatus = eid_cert_status.EID_CERT_STATUS_INVALID;
+                        chainStatus = eid_cert_status.EID_CERT_STATUS_UNKNOWN;
                     }
                     else
                     {
@@ -289,17 +293,22 @@ namespace eIDViewer
                         else
                         {
                             this.logText += "this was not the certificate chain we were looking for \n";
-                            return eid_cert_status.EID_CERT_STATUS_WARNING;
+                            SetCertificateIcon(leafCertificateViewModel, eid_cert_status.EID_CERT_STATUS_WARNING);
+                            return;
                         }
                     }
                     //output chain information in the log
                     LogChainInfo(ref chain);
 
+                    X509ChainElement element;
+                    CertViewModel certModel;
+                    eid_cert_status certStatus;
+
                     //go through the chain's elements 
                     for (int elIndex = 0; elIndex < chain.ChainElements.Count; elIndex++)
                     {
-                        X509ChainElement element = chain.ChainElements[elIndex];
-                        CertViewModel certModel;
+                        certStatus = eid_cert_status.EID_CERT_STATUS_UNKNOWN;
+                        element = chain.ChainElements[elIndex];
 
                         if (element.Certificate.Thumbprint.Equals(leafCertificate.Thumbprint))
                         {
@@ -311,7 +320,9 @@ namespace eIDViewer
                         }
                         else if (element.Certificate.Thumbprint.Equals(rootCA_cert.Thumbprint))
                         {
-                            certModel = rootCAViewModel;
+                            //certModel = rootCAViewModel;
+                            //no ocsp or crl for root available, and we already verified if rootca is one of the application embedded rootca's
+                            break;
                         }
                         else
                         {
@@ -321,12 +332,8 @@ namespace eIDViewer
 
                         LogChainElement(ref element, elIndex);
 
-                        if(element.ChainElementStatus.Length > 0)
+                        if (element.ChainElementStatus.Length > 0)
                         {
-                            if (chainStatus != eid_cert_status.EID_CERT_STATUS_INVALID)
-                            {
-                                chainStatus = eid_cert_status.EID_CERT_STATUS_WARNING;
-                            }
                             for (int index = 0; index < element.ChainElementStatus.Length; index++)
                             {
                                 Console.WriteLine(element.ChainElementStatus[index].Status);
@@ -335,29 +342,40 @@ namespace eIDViewer
                                 this.logText += "certificate status information: " + element.ChainElementStatus[index].StatusInformation + "\n";
 
                                 certModel.CertTrust = element.ChainElementStatus[index].StatusInformation;
-                                if (element.ChainElementStatus[index].Status != X509ChainStatusFlags.NoError)
-                                {                          
-                                    if (element.ChainElementStatus[index].Status == X509ChainStatusFlags.RevocationStatusUnknown)
-                                    {
-                                        SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_UNKNOWN);
-                                    }
-                                    else
-                                    {
-                                        SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_INVALID);
-                                    }
-                                }
-                                else
+                                switch (element.ChainElementStatus[index].Status)
                                 {
-                                    // X509ChainStatusFlags.NoError
-                                    SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_VALID);
+                                    case X509ChainStatusFlags.NoError:
+                                        certStatus = eid_cert_status.EID_CERT_STATUS_VALID;
+                                        break;
+                                    case X509ChainStatusFlags.RevocationStatusUnknown:
+                                        if ( (certStatus != eid_cert_status.EID_CERT_STATUS_INVALID) && (certStatus != eid_cert_status.EID_CERT_STATUS_WARNING) )
+                                        {
+                                            SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_UNKNOWN);
+                                        }
+                                        break;
+                                    case X509ChainStatusFlags.NoIssuanceChainPolicy:
+                                        if (certStatus != eid_cert_status.EID_CERT_STATUS_INVALID)
+                                        {
+                                            certStatus = eid_cert_status.EID_CERT_STATUS_WARNING;
+                                        }
+                                        break;
+                                    case X509ChainStatusFlags.NotTimeNested:
+                                    case X509ChainStatusFlags.OfflineRevocation:
+                                        //ignore these
+                                        break;
+                                    default:
+                                        certStatus = eid_cert_status.EID_CERT_STATUS_INVALID;
+                                        break;
                                 }
                             }
                         }
                         else
                         {
-                            //no chain status, everything is fine
-                            SetCertificateIcon(certModel, eid_cert_status.EID_CERT_STATUS_VALID);
+                            //no detailed chain element certificate status, use the chainStatus
+                            //e.g. for RN cert, as it has no crl or ocsp
+                            certStatus = chainStatus;
                         }
+                        SetCertificateIcon(certModel, certStatus);
                     }
                 }
             }
@@ -372,9 +390,9 @@ namespace eIDViewer
                 if (disposable != null)
                 {
                     disposable.Dispose();
-                }            
+                }
             }
-            return chainStatus; 
+            return; 
         }
 
 
