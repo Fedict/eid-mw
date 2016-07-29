@@ -6,8 +6,8 @@
 extern "C" {
 #endif
 
-	DllExport int eid_vwr_deserialize(const EID_CHAR* filename);
-	DllExport int eid_vwr_serialize(const EID_CHAR* filename);
+	int eid_vwr_deserialize(const EID_CHAR* filename);
+	int eid_vwr_serialize(const EID_CHAR* filename);
 	int eid_vwr_gen_xml(void* data);
 
 #ifdef __cplusplus
