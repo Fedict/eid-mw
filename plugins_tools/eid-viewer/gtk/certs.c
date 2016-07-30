@@ -314,7 +314,7 @@ static enum eid_vwr_result check_cert(char* which) {
 
 static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 	static pthread_once_t once = PTHREAD_ONCE_INIT;
-	enum eid_vwr_result res;
+	enum eid_vwr_result res = EID_VWR_RES_UNKNOWN;
 
 	pthread_once(&once, create_proxy_factory);
 	if(!pf) {
@@ -383,6 +383,8 @@ void add_certificate(char* label, void* data, int len) {
 
 	if(d2i_X509(&cert, (const unsigned char**)&data, len) == NULL) {
 		g_warning("Could not parse %s certificate", label);
+		free(columns);
+		free(vals);
 		return;
 	}
 
@@ -525,6 +527,8 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 				break;
 			case ' ':
 				filename_sugg[d] = '_';
+				d++;
+				break;
 			default:
 				filename_sugg[d] = tolower(filename_sugg[s]);
 				d++;
@@ -543,6 +547,10 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 
 		gtk_tree_model_get(model, &iter, CERT_COL_DATA, &arr, -1);
 		fd = open(filename, O_WRONLY | O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH);
+		if(fd < 0) {
+			uilog(EID_VWR_LOG_ERROR, _("Could not open file: %s"), strerror(errno));
+			return;
+		}
 		eid_vwr_dumpcert(fd, arr->data, arr->len, strcmp((char*)userdata, "DER") ? DUMP_PEM : DUMP_DER);
 		if(!strcmp((char*)userdata, "chain")) {
 			GtkTreeIter child = iter;

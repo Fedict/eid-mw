@@ -71,7 +71,9 @@ enum eid_vwr_states {
 	STATE_TOKEN_PINOP, ///< Performing a PIN operation
 	STATE_TOKEN_SERIALIZE, ///< Saving data to a file
 	STATE_TOKEN_ERROR, ///< An error occurred while dealing with the card
-	STATE_FILE, ///< We've read data from a file
+	STATE_FILE, ///< We're dealing with files
+	STATE_FILE_READING, ///< We're reading from the file currently
+	STATE_FILE_WAIT, ///< We finished parsing the file.
 	STATE_CARD_INVALID, ///< The data was determined to be invalid. That is, the card could be read, but signature validation failed.
 	STATE_NO_TOKEN, ///< We don't have a card, and we also don't have a file.
 	STATE_NO_READER, ///< We don't have a reader (yet?)

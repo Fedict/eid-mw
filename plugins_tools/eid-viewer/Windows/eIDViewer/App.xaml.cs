@@ -18,22 +18,23 @@ namespace eIDViewer
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            NativeMethods.theData = (BackendDataViewModel)(this.Resources["eIDViewerBackendObj"]);
-            NativeMethods.Init();
+            try
+            {
+                NativeMethods.theData = (BackendDataViewModel)(this.Resources["eIDViewerBackendObj"]);
+                NativeMethods.Init();
 
-            backendThread = new Thread(NativeMethods.backendMainloop);
-            backendThread.IsBackground = true;
-            backendThread.Start();
-            Console.WriteLine("backendThread started");
+                backendThread = new Thread(NativeMethods.backendMainloop);
+                backendThread.IsBackground = true;
+                backendThread.Start();
+                Console.WriteLine("backendThread started");
 
-            base.OnStartup(e);
+                base.OnStartup(e);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("error starting eID Viewer, error message is: " + ex.Message + "\n");
+            }
         }
-        /*
-        protected override void OnExit(ExitEventArgs e)
-        {
-            //eIDViewerBackend.CSCblog(0, "On Exit");
-            base.OnExit(e);
-        }*/
 
     }
 }

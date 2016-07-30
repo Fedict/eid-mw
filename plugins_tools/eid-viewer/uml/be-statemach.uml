@@ -22,7 +22,11 @@ state CALLBACKS {
   FILE --> NO_TOKEN : CLOSE_FILE
   FILE --> TOKEN : TOKEN_INSERTED
   FILE --> NO_TOKEN : STATE_ERROR
-  FILE: enter: do_parse_file
+  state FILE {
+    [*] --> FILE_READING
+    FILE_READING: enter: do_parse_file
+    FILE_READING --> FILE_WAIT: READ_READY
+  }
 
   TOKEN: enter: eid_vwr_p11_open_session\nexit: eid_vwr_p11_close_session
   TOKEN --> NO_TOKEN : TOKEN_REMOVED

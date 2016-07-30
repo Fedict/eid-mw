@@ -8,6 +8,7 @@
 #include "p11.h"
 #include "cache.h"
 extern "C" {
+#include "state.h"
 #include <b64/base64dec.h>
 #include <b64/base64enc.h>
 }
@@ -311,6 +312,7 @@ out:
 int eid_vwr_deserialize (const EID_CHAR* filename)
 {
 	HRESULT retVal = S_OK;
+	HRESULT moreData = S_OK;
 	IStream *pFileStream = NULL;
 	IXmlReader *pReader = NULL;
 	XmlNodeType nodeType;
@@ -335,9 +337,11 @@ int eid_vwr_deserialize (const EID_CHAR* filename)
 	FAILED_OUT(retVal = pReader->SetProperty(XmlReaderProperty_MaxElementDepth, MAX_ELEMENT_DEPTH));
 	FAILED_OUT(retVal = pReader->SetInput(pFileStream));
 
-	retVal = ReadNodePending(pReader, &nodeType, 20);
+	moreData = ReadNodePending(pReader, &nodeType, 20);
 
-	while (retVal == S_OK )
+	be_newsource(EID_VWR_SRC_FILE);
+
+	while (moreData == S_OK )
 	{
 		switch (nodeType)
 		{
@@ -370,7 +374,7 @@ int eid_vwr_deserialize (const EID_CHAR* filename)
 		case XmlNodeType_DocumentType:
 			break;
 		}
-		retVal = ReadNodePending(pReader, &nodeType, 20);
+		moreData = ReadNodePending(pReader, &nodeType, 20);
 	}
 
 out:
@@ -385,7 +389,16 @@ out:
 			nodeNames[count] = NULL;
 		}
 	}
-	return 0;
+	if (retVal == S_OK)
+	{
+		sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+	}
+	else
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("Error reading file %s"), filename);
+	}
+
+	return retVal;
 }
 
 //return the xml data

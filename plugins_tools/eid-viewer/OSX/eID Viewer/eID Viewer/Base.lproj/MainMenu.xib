@@ -953,8 +953,8 @@
                                                 <action selector="changeValidatePolicy:" target="Voe-Tx-rLC" id="uvY-PX-Gco"/>
                                             </connections>
                                         </button>
-                                        <box hidden="YES" verticalHuggingPriority="750" ambiguous="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="iSU-im-9Io">
-                                            <rect key="frame" x="116" y="-2" width="210" height="5"/>
+                                        <box hidden="YES" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="iSU-im-9Io">
+                                            <rect key="frame" x="116" y="29" width="210" height="5"/>
                                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
@@ -970,6 +970,7 @@
                                         <constraint firstItem="0io-gu-IzB" firstAttribute="centerY" secondItem="DP5-Vd-vKQ" secondAttribute="centerY" id="VyR-gx-sm5"/>
                                         <constraint firstItem="iSU-im-9Io" firstAttribute="leading" secondItem="DP5-Vd-vKQ" secondAttribute="leading" id="cpR-pb-CyB"/>
                                         <constraint firstAttribute="trailing" secondItem="r0g-Wa-PDS" secondAttribute="trailing" constant="20" symbolic="YES" id="hst-Oz-gOU"/>
+                                        <constraint firstItem="0io-gu-IzB" firstAttribute="centerY" secondItem="iSU-im-9Io" secondAttribute="centerY" id="tkV-Gv-Rkm"/>
                                         <constraint firstItem="r0g-Wa-PDS" firstAttribute="leading" secondItem="TnE-Be-ndr" secondAttribute="leading" constant="20" symbolic="YES" id="vff-39-Unb"/>
                                     </constraints>
                                 </view>
@@ -989,10 +990,10 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="223" height="307"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <size key="minSize" width="385" height="304"/>
+                                                        <size key="minSize" width="400" height="304"/>
                                                         <size key="maxSize" width="463" height="10000000"/>
                                                         <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <size key="minSize" width="385" height="304"/>
+                                                        <size key="minSize" width="400" height="304"/>
                                                         <size key="maxSize" width="463" height="10000000"/>
                                                     </textView>
                                                 </subviews>
@@ -1003,20 +1004,20 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="MEb-Tz-7TU">
-                                                <rect key="frame" x="386" y="1" width="15" height="304"/>
+                                                <rect key="frame" x="385" y="1" width="16" height="304"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
                                         <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Iq-Qb-1J7">
                                             <rect key="frame" x="18" y="17" width="79" height="26"/>
-                                            <popUpButtonCell key="cell" type="push" title="Coarse" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="a4x-Kn-S3D" id="bLp-H5-Cu7">
+                                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="bLp-H5-Cu7">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="ZJw-Yj-LHW">
                                                     <items>
                                                         <menuItem title="Detail" id="hRa-Yu-bbZ"/>
                                                         <menuItem title="Normal" id="Fme-4t-8wK"/>
-                                                        <menuItem title="Coarse" state="on" id="a4x-Kn-S3D"/>
+                                                        <menuItem title="Warning" id="a4x-Kn-S3D"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -1060,7 +1061,7 @@
                     <constraint firstItem="5Om-bz-RVh" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="12" symbolic="YES" id="nqi-su-YXf"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="475" y="739.5"/>
+            <point key="canvasLocation" x="537" y="738.5"/>
         </window>
         <customView id="ieQ-cl-G8D" userLabel="PrintOperation" customClass="ResizablePrintView">
             <rect key="frame" x="0.0" y="0.0" width="424" height="660"/>

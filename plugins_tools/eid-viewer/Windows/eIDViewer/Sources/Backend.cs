@@ -149,7 +149,7 @@ namespace eIDViewer
             switch (eid_vwr_source)
             {
                 case eid_vwr_source.EID_VWR_SRC_UNKNOWN:
-                    theData.type_kaart = "onbekende kaart";
+                    //theData.type_kaart = "onbekende kaart";
                     theData.ResetDataValues();
                     AdjustIconImage("Resources\\state_error.png");
                     break;
@@ -158,16 +158,18 @@ namespace eIDViewer
                     AdjustIconImage("Resources\\state_noeidpresent.png");
                     break;
                 case eid_vwr_source.EID_VWR_SRC_CARD:
-                    theData.type_kaart = "IDENTITEITSKAART";
+                    //theData.type_kaart = "IDENTITEITSKAART";
                     theData.text_color = "Black";
                     AdjustIconImage("Resources\\state_eidpresent.png");
                     theData.eid_card_present = true;
                     theData.progress_bar_visible = "Visible";
                     break;
                 case eid_vwr_source.EID_VWR_SRC_FILE:
-                    theData.type_kaart = "IDENTITEITSKAART";
+                    //theData.type_kaart = "IDENTITEITSKAART";
                     theData.text_color = "Black";
                     AdjustIconImage("Resources\\state_fileloaded.png");
+                    theData.eid_card_present = true;
+                    theData.progress_bar_visible = "Visible";
                     break;
                 default:
                     break;
@@ -211,8 +213,14 @@ namespace eIDViewer
             switch (state)
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
-                    theData.AllDataRead();
                     theData.eid_data_from_file = false;
+                    theData.VerifyAllData();
+                    theData.HideProgressBar();
+                    theData.print_enabled = true;
+                    break;
+                case eid_vwr_states.STATE_FILE_WAIT:
+                    theData.eid_data_from_file = true;
+                    theData.HideProgressBar();
                     break;
                 case eid_vwr_states.STATE_READY:
                     theData.eid_data_ready = false;
@@ -226,6 +234,7 @@ namespace eIDViewer
                     theData.ResetDataValues();
                     theData.eid_data_ready = false;
                     theData.eid_data_from_file = false;
+                    AdjustIconImage("Resources\\state_error.png");
                     break;
                 case eid_vwr_states.STATE_TOKEN_ERROR:
                     theData.ResetDataValues();
@@ -271,36 +280,6 @@ namespace eIDViewer
             }
         }
 
-        private static void CSCsetLang(eid_vwr_states state)
-        {
-            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
-            {
-                theData.logText += "CSCsetLang called " + state.ToString() + "\n";
-            }
-            switch (state)
-            {
-                case eid_vwr_states.STATE_TOKEN_WAIT:
-                    theData.AllDataRead();
-                    break;
-                case eid_vwr_states.STATE_READY:
-                    theData.eid_data_ready = false;
-                    break;
-                case eid_vwr_states.STATE_LIBOPEN:
-                    theData.eid_data_ready = false;
-                    break;
-                case eid_vwr_states.STATE_CARD_INVALID:
-                    theData.ResetDataValues();
-                    theData.eid_data_ready = false;
-                    break;
-                case eid_vwr_states.STATE_TOKEN_ERROR:
-                    theData.ResetDataValues();
-                    theData.eid_data_ready = false;
-                    break;
-                default:
-                    theData.eid_data_ready = true;
-                    break;
-            }
-        }
 
         private static void CbReadersChanged(UInt32 nreaders, IntPtr slotList)
         {

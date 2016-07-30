@@ -3,6 +3,7 @@
 
 #include "xmlmap.h"
 #include "xsdloc.h"
+#include "state.h"
 
 #include <string.h>
 #include "p11.h"
@@ -145,6 +146,9 @@ out:
 int eid_vwr_serialize(void* data) {
 	const struct eid_vwr_cache_item* item = cache_get_data("xml");
 	FILE* f = fopen((const char*)data, "w");
+	if(!f) {
+		return 1;
+	}
 	fwrite(item->data, item->len, 1, f);
 	return fclose(f);
 }
@@ -208,9 +212,6 @@ static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) 
 			val = NULL;
 		}
 	}
-	if(rc > 0) {
-		rc=0;
-	}
 out:
 	if(val != NULL) {
 		free(val);
@@ -247,6 +248,9 @@ out:
 	}
 	if(reader) {
 		xmlFreeTextReader(reader);
+	}
+	if(!rc) {
+		sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
 	}
 	return rc;
 }

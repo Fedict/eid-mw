@@ -9,7 +9,7 @@ extern "C" {
 
 #include <eid-viewer/oslayer.h>
 
-DllExport void be_setcallbacks(struct eid_vwr_ui_callbacks* cb_);
+void be_setcallbacks(struct eid_vwr_ui_callbacks* cb_);
 DllExport int eid_vwr_set_cbfuncs(void(*newsrc)(enum eid_vwr_source source), // data source has changed.
 	void(*newstringdata)(const EID_CHAR* label, const EID_CHAR* data), // new string data to be displayed in UI.
 	void(*newbindata)(const EID_CHAR* label, const unsigned char* data, int datalen), // new binary data to be displayed in UI.
