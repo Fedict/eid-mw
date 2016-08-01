@@ -529,8 +529,8 @@ namespace eIDViewer
             viewerVersion = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             validateAlways = Properties.Settings.Default.AlwaysValidate;
 
-            _readersList = new ConcurrentQueue<ReadersMenuViewModel>();
-            //readersList.Add(new ReadersMenuViewModel("No Readers Found", 0));
+            readersList = new ConcurrentQueue<ReadersMenuViewModel>();
+            readersList.Enqueue(new ReadersMenuViewModel("No Readers Found", 0));
 
             _certsList = new ObservableCollection<CertViewModel>();
             cert_collection = new X509Certificate2Collection();
