@@ -50,7 +50,6 @@ namespace eIDViewer
             theLocalizedStrings.NotifyPropertyChanged("applicationResource");
             theLocalizedStrings.NotifyPropertyChanged("menuItemResource");
 
-            theBackendData.Refresh();
         }
 
         private void Deutch_Click(object sender, RoutedEventArgs e)

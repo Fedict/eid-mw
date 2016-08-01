@@ -37,7 +37,7 @@
                     </Grid.RowDefinitions>
                     <Rectangle Grid.ColumnSpan="4" Grid.RowSpan="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Lime" RadiusX="0" RadiusY="0" StrokeThickness="16"/>
 
-                    <Label Grid.ColumnSpan="3" Grid.Row="0" Content="{Binding Path=type_kaart, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="123" Height="26"/>
+                    <Label Grid.ColumnSpan="3" Grid.Row="0" Content="{Binding Path=document_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="123" Height="26"/>
                     <Separator Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
                     <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=identityTabResource.NameLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=identityTabResource.GivenNamesLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>

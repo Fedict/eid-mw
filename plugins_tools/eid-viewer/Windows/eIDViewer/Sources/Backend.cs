@@ -7,6 +7,7 @@ using System.Collections.Concurrent;
 using System.Resources;
 using System.Reflection;
 using System.Threading;
+using System.Windows.Input;
 
 
 
@@ -149,7 +150,6 @@ namespace eIDViewer
             switch (eid_vwr_source)
             {
                 case eid_vwr_source.EID_VWR_SRC_UNKNOWN:
-                    //theData.type_kaart = "onbekende kaart";
                     theData.ResetDataValues();
                     AdjustIconImage("Resources\\state_error.png");
                     break;
@@ -158,14 +158,12 @@ namespace eIDViewer
                     AdjustIconImage("Resources\\state_noeidpresent.png");
                     break;
                 case eid_vwr_source.EID_VWR_SRC_CARD:
-                    //theData.type_kaart = "IDENTITEITSKAART";
                     theData.text_color = "Black";
                     AdjustIconImage("Resources\\state_eidpresent.png");
                     theData.eid_card_present = true;
                     theData.progress_bar_visible = "Visible";
                     break;
                 case eid_vwr_source.EID_VWR_SRC_FILE:
-                    //theData.type_kaart = "IDENTITEITSKAART";
                     theData.text_color = "Black";
                     AdjustIconImage("Resources\\state_fileloaded.png");
                     theData.eid_card_present = true;

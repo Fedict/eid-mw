@@ -725,7 +725,7 @@ namespace eIDViewer
             else if (String.Equals(label, "validity_end_date", StringComparison.Ordinal))
             { validity_end_date = data; }
             else if (String.Equals(label, "document_type", StringComparison.Ordinal))
-            { _document_type = data; }
+            { document_type = data; }
         }
 
         private byte[] dataFile;
@@ -839,6 +839,7 @@ namespace eIDViewer
         public void ResetDataValues()
         {
             text_color = "Gray";
+            document_type = "-";
             _firstName = "";
             _first_letter_of_third_given_name = "";
             firstNames = "-";
@@ -917,17 +918,6 @@ namespace eIDViewer
             {
                 _logtext = value;
                 NotifyPropertyChanged("logText");
-            }
-        }
-
-        private string _type_kaart;
-        public string type_kaart
-        {
-            get { return _type_kaart; }
-            set
-            {
-                _type_kaart = value;
-                NotifyPropertyChanged("type_kaart");
             }
         }
 
@@ -1163,27 +1153,14 @@ namespace eIDViewer
         }
 
         private string _document_type;
-        private string _document_type_value;
         public string document_type
         {
             get { return _document_type; }
             set
             {
-                _document_type_value = value;
-                if (String.Equals(value, "1", StringComparison.Ordinal))
-                {
-                    ResourceManager rm = new ResourceManager("IdentityTabStringResources",
-                                         typeof(BackendDataViewModel).Assembly);
-                    _document_type = rm.GetString("type_BELGIAN_CITIZEN", null);
-
-                }
+                _document_type = value;
                 this.NotifyPropertyChanged("document_type");
             }
-        }
-
-        public void Refresh()
-        {
-            document_type = _document_type_value;
         }
 
         private BitmapImage _photo;
