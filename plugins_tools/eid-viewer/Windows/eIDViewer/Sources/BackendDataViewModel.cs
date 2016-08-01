@@ -216,10 +216,10 @@ namespace eIDViewer
             else
             {
                 SetCertificateIcon(rootViewModel, eid_cert_status.EID_CERT_STATUS_VALID);
+                rootViewModel.CertTrust = "Trusted";
             }
 
             return foundEmbeddedRootCA;
-
         }
 
         public void LogChainInfo(ref X509Chain chain)
@@ -379,6 +379,10 @@ namespace eIDViewer
                             certStatus = chainStatus;
                         }
                         SetCertificateIcon(certModel, certStatus);
+                        if(certStatus == eid_cert_status.EID_CERT_STATUS_VALID)
+                        {
+                            certModel.CertTrust = "Trusted";
+                        }
                     }
                 }
             }
