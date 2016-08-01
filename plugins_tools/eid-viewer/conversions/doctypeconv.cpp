@@ -104,7 +104,7 @@ DocTypeConvertor::DocTypeConvertor() {
 
 EID_STRING DocTypeConvertor::convert(const void* normal) {
 	if(conversions.count(target_) > 0) {
-		EID_STRINGSTREAM stream((EID_CHAR*)normal);
+		std::stringstream stream((char*)normal);
 		int i;
 		stream >> i;
 		if(conversions[target_].count(i) > 0) {
