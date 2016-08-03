@@ -510,19 +510,19 @@ namespace eIDViewer
             switch (icon)
             {
                 case eid_cert_status.EID_CERT_STATUS_INVALID:
-                    cert.ImagePath = "Resources/CertificateImages/certificate_bad.png";
+                    cert.ImagePath = "Resources/Images/certificate_bad.png";
                     break;
                 case eid_cert_status.EID_CERT_STATUS_UNKNOWN:
-                    cert.ImagePath = "Resources/CertificateImages/certificate_large.png";
+                    cert.ImagePath = "Resources/Images/certificate_large.png";
                     break;
                 case eid_cert_status.EID_CERT_STATUS_VALID:
-                    cert.ImagePath = "Resources/CertificateImages/certificate_checked.png";
+                    cert.ImagePath = "Resources/Images/certificate_checked.png";
                     break;
                 case eid_cert_status.EID_CERT_STATUS_WARNING:
-                    cert.ImagePath = "Resources/CertificateImages/certificate_warn.png";
+                    cert.ImagePath = "Resources/Images/certificate_warn.png";
                     break;
                 default:
-                    cert.ImagePath = "Resources/CertificateImages/certificate_large.png";
+                    cert.ImagePath = "Resources/Images/certificate_large.png";
                     break;
             }
         }

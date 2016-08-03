@@ -214,18 +214,39 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\CertificateImages\certificate_bad.png" />
-    <Resource Include="Resources\CertificateImages\certificate_checked.png" />
-    <Resource Include="Resources\CertificateImages\certificate_large.png" />
-    <Resource Include="Resources\CertificateImages\certificate_warn.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\coat_of_arms_de.jpg" />
     <Resource Include="Resources\coat_of_arms_en.jpg" />
     <Resource Include="Resources\coat_of_arms_fr.jpg" />
     <Resource Include="Resources\coat_of_arms_nl.jpg" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\certificate_bad.png" />
+    <Resource Include="Resources\Images\certificate_checked.png" />
+    <Resource Include="Resources\Images\certificate_large.png" />
+    <Resource Include="Resources\Images\certificate_warn.png" />
+    <Resource Include="Resources\Images\checkmark_large.png" />
+    <Resource Include="Resources\Images\logo_128.png" />
+    <Resource Include="Resources\Images\logo_16.png" />
+    <Resource Include="Resources\Images\logo_256.png" />
+    <Resource Include="Resources\Images\logo_32.png" />
+    <Resource Include="Resources\Images\logo_512.png" />
+    <Resource Include="Resources\Images\print.png" />
+    <Resource Include="Resources\Images\state_eidpresent.png" />
+    <Resource Include="Resources\Images\state_eidyielded.png" />
+    <Resource Include="Resources\Images\state_error.png" />
+    <Resource Include="Resources\Images\state_fileloaded.png" />
+    <Resource Include="Resources\Images\state_fileloading.png" />
+    <Resource Include="Resources\Images\state_noeidpresent.png" />
+    <Resource Include="Resources\Images\state_noreaders.png" />
+    <Resource Include="Resources\Images\stop_large.png" />
+    <Resource Include="Resources\Images\warning_large.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>robocopy  $(ProjectDir)..\..\certs\ $(ProjectDir)\Resources\Certs\ *.pem
+robocopy  $(ProjectDir)..\..\resources\ $(ProjectDir)\Resources\Images\ *.png</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

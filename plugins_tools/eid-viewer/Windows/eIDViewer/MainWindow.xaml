@@ -223,7 +223,7 @@
                 <ColumnDefinition Width="Auto" MinWidth="80"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Style="{DynamicResource ImageButton}" IsEnabled="{Binding Path=print_enabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="MenuItemPrint_Click" >
-                <Image  HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="100" Source="Resources/print.png" />
+                <Image  HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="100" Source="Resources/Images/print.png" />
             </Button>
             <Label Grid.Column="1" Content="{Binding Path=progress_info, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             <Image Grid.Column="2" HorizontalAlignment="Right" Height="55" Margin="0,0,0,0" VerticalAlignment="Top" Width="80" Source="{Binding Path=cardreader_icon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>

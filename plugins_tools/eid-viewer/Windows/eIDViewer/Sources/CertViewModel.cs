@@ -12,7 +12,7 @@ namespace eIDViewer
             Certs = new ObservableCollection<CertViewModel>();
             IsExpanded = true;
             CertVisibility = System.Windows.Visibility.Hidden;
-            ImagePath = "Resources/CertificateImages/certificate_large.png";
+            ImagePath = "Resources/Images/certificate_large.png";
         }
 
         public void CertNotifyPropertyChanged(String propertyName)

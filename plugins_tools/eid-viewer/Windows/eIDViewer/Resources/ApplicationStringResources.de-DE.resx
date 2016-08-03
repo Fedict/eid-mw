@@ -154,7 +154,7 @@
     <value>Belgien</value>
   </data>
   <data name="coat_of_arms_jpg_location" xml:space="preserve">
-    <value>pack://application:,,,/Resources/coat_of_arms_de.jpg</value>
+    <value>pack://application:,,,/Resources/Images/coat_of_arms_de.jpg</value>
   </data>
   <data name="pinVerifiedOKDialogMessage" xml:space="preserve">
     <value>Ihr PIN-Code war korrekt validiert</value>

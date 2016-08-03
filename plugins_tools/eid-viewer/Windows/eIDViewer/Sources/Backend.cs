@@ -105,7 +105,7 @@ namespace eIDViewer
             eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
                 mybindata, mylog, mynewstate, mypinopresult, myReadersChanged);
 
-            theData.cardreader_icon = new BitmapImage(new Uri("Resources/state_noreaders.png", UriKind.Relative));
+            theData.cardreader_icon = new BitmapImage(new Uri("Resources/Images/state_noreaders.png", UriKind.Relative));
             /*
             //fill in the functions reference struct
             eIDViewerBackend.mCSCbStruct.theCbNewSrc = eIDViewerBackend.CSCbNewSrc;
@@ -151,21 +151,21 @@ namespace eIDViewer
             {
                 case eid_vwr_source.EID_VWR_SRC_UNKNOWN:
                     theData.ResetDataValues();
-                    AdjustIconImage("Resources\\state_error.png");
+                    AdjustIconImage("Resources/Images/state_error.png");
                     break;
                 case eid_vwr_source.EID_VWR_SRC_NONE:
                     theData.ResetDataValues();
-                    AdjustIconImage("Resources\\state_noeidpresent.png");
+                    AdjustIconImage("Resources/Images/state_noeidpresent.png");
                     break;
                 case eid_vwr_source.EID_VWR_SRC_CARD:
                     theData.text_color = "Black";
-                    AdjustIconImage("Resources\\state_eidpresent.png");
+                    AdjustIconImage("Resources/Images/state_eidpresent.png");
                     theData.eid_card_present = true;
                     theData.progress_bar_visible = "Visible";
                     break;
                 case eid_vwr_source.EID_VWR_SRC_FILE:
                     theData.text_color = "Black";
-                    AdjustIconImage("Resources\\state_fileloaded.png");
+                    AdjustIconImage("Resources/Images/state_fileloaded.png");
                     theData.eid_card_present = true;
                     theData.progress_bar_visible = "Visible";
                     break;
@@ -232,7 +232,7 @@ namespace eIDViewer
                     theData.ResetDataValues();
                     theData.eid_data_ready = false;
                     theData.eid_data_from_file = false;
-                    AdjustIconImage("Resources\\state_error.png");
+                    AdjustIconImage("Resources/Images/state_error.png");
                     break;
                 case eid_vwr_states.STATE_TOKEN_ERROR:
                     theData.ResetDataValues();
