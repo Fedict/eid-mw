@@ -11,6 +11,7 @@ Makefile
 Makefile.in
 VS_2005
 VS_2010
+VS_2012
 autom4te.cache
 build-aux
 build_*
@@ -38,3 +39,9 @@ en@quot.po
 stamp-po
 release
 Debug
+Win32_Release
+Win32_Debug
+x64_Debug
+x64_Release
+/VS_2015/beid.sdf
+/VS_2015/beid.v11.suo
