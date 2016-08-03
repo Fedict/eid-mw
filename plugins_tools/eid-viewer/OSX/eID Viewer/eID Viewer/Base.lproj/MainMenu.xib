@@ -16,6 +16,8 @@
             <connections>
                 <outlet property="CardPinTab" destination="5hT-7G-WY9" id="QXO-3h-K73"/>
                 <outlet property="CardReadSheet" destination="8La-eA-MLK" id="lu8-yH-ZLa"/>
+                <outlet property="CertDetailSheet" destination="1TP-On-3Kg" id="8rh-ek-wLQ"/>
+                <outlet property="CertDetailView" destination="RNs-UU-2CF" id="JRc-if-EDy"/>
                 <outlet property="CertificatesTab" destination="TnE-Be-ndr" id="1th-gT-Pm9"/>
                 <outlet property="CertificatesView" destination="G1r-zp-mgg" id="mxb-Xx-Viq"/>
                 <outlet property="IdentityTab" destination="8cq-xu-vLE" id="UUh-5o-1f7"/>
@@ -1623,6 +1625,68 @@
                 </constraints>
             </view>
             <point key="canvasLocation" x="286" y="-105.5"/>
+        </window>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="1TP-On-3Kg">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="82" y="435" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1080" height="1897"/>
+            <view key="contentView" id="naL-zq-hky">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CnY-K2-Fy0">
+                        <rect key="frame" x="385" y="13" width="81" height="32"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="t0l-zZ-q2E">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="closeDetail:" target="Voe-Tx-rLC" id="6IM-qm-8gJ"/>
+                        </connections>
+                    </button>
+                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0as-1a-gNB">
+                        <rect key="frame" x="20" y="61" width="440" height="189"/>
+                        <clipView key="contentView" id="rBk-zL-wWH">
+                            <rect key="frame" x="1" y="1" width="438" height="187"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="RNs-UU-2CF">
+                                    <rect key="frame" x="0.0" y="0.0" width="438" height="187"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <size key="minSize" width="438" height="187"/>
+                                    <size key="maxSize" width="638" height="10000000"/>
+                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="438" height="187"/>
+                                    <size key="maxSize" width="638" height="10000000"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="koJ-Hw-IbG">
+                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="HfZ-8v-0ce">
+                            <rect key="frame" x="423" y="1" width="16" height="187"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="CnY-K2-Fy0" secondAttribute="bottom" constant="20" symbolic="YES" id="4p0-hr-lp3"/>
+                    <constraint firstItem="0as-1a-gNB" firstAttribute="top" secondItem="naL-zq-hky" secondAttribute="top" constant="20" symbolic="YES" id="Jq3-Sf-1WP"/>
+                    <constraint firstAttribute="trailing" secondItem="0as-1a-gNB" secondAttribute="trailing" constant="20" symbolic="YES" id="cTg-ml-Fhf"/>
+                    <constraint firstAttribute="trailing" secondItem="CnY-K2-Fy0" secondAttribute="trailing" constant="20" symbolic="YES" id="dnL-Q6-jRE"/>
+                    <constraint firstItem="CnY-K2-Fy0" firstAttribute="top" secondItem="0as-1a-gNB" secondAttribute="bottom" constant="20" symbolic="YES" id="lQ6-nH-7nQ"/>
+                    <constraint firstItem="0as-1a-gNB" firstAttribute="leading" secondItem="naL-zq-hky" secondAttribute="leading" constant="20" symbolic="YES" id="uY1-uF-6ER"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="459" y="584"/>
         </window>
     </objects>
     <resources>

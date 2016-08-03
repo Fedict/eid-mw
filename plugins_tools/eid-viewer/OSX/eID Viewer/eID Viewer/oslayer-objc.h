@@ -96,6 +96,7 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 +(eIDResult)validateRrnCert:(NSData*)certificate; ///< calls eid_vwr_verify_rrncert()
 +(void)selectReader:(NSInteger)readerNumber; ///< calls eid_vwr_be_select_slot() with 0 as the first parameter, and the given reader number as the second parameter.
 +(void)setReaderAuto:(BOOL)automatic; ///< calls eid_vwr_be_select_slot with nonzero (if YES) or zero (if NO) as the first parameter, and 0 as the second parameter.
++(NSString*)getCertDetail:(NSData*)certificate;
 @end
 
 /**@}*/

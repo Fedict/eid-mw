@@ -147,4 +147,10 @@ static void osl_objc_free_ocsp_request(void* data) {
 +(eIDLanguage)lang {
 	return (eIDLanguage)eid_vwr_convert_get_lang();
 }
++(NSString*)getCertDetail:(NSData *)certificate {
+	char* details = eid_vwr_x509_get_details([certificate bytes], [certificate length]);
+	NSString* rv = [NSString stringWithUTF8String:details];
+	free(details);
+	return rv;
+}
 @end
