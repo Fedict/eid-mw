@@ -307,8 +307,8 @@
       </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="no">
-        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\VS_2012\binaries\win32_release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\VS_2012\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\VS_2015\binaries\win32_release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\VS_2015\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>
 
     </DirectoryRef>
