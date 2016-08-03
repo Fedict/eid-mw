@@ -28,6 +28,7 @@
 - (IBAction)selectAutoReader:(NSMenuItem*)sender;
 - (IBAction)selectManualReader:(NSMenuItem*)sender;
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
+- (IBAction)closeDetail:(id)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
@@ -54,6 +55,8 @@
 @property (weak) IBOutlet NSMenu *menu_file_reader;
 @property (weak) IBOutlet NSMenuItem *menu_file_reader_auto;
 @property (weak) IBOutlet NSSegmentedControl *pinop_ctrl;
+@property (unsafe_unretained) IBOutlet NSTextView *CertDetailView;
+@property (weak) IBOutlet NSWindow *CertDetailSheet;
 
 @end
 
@@ -259,6 +262,12 @@
 }
 
 - (IBAction)showDetail:(id)sender {
+	NSString* details = [eIDOSLayerBackend getCertDetail:[_certstore certificateForKey:[_CertificatesView itemAtRow:[_CertificatesView selectedRow]]]];
+	[NSApp beginSheet:_CertDetailSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
+	[_CertDetailView selectAll:nil];
+	[_CertDetailView delete:nil];
+	[_CertDetailView setEditable:YES];
+	[_CertDetailView insertText:details];
 }
 
 - (IBAction)export:(NSMenuItem *)sender {
@@ -468,5 +477,9 @@
 	}
 	[_menu_file_reader_auto setEnabled:count > 0 ? YES : NO];
 	_readerSelections = [NSArray arrayWithObjects:newreaders count:count];
+}
+
+- (IBAction)closeDetail:(id)sender {
+	[NSApp endSheet:_CertDetailSheet];
 }
 @end
