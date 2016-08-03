@@ -45,3 +45,10 @@ x64_Debug
 x64_Release
 /VS_2015/beid.sdf
 /VS_2015/beid.v11.suo
+/installers/quickinstaller/*.exe
+/scripts/windows/*.exe
+/scripts/windows/*.msi
+*.vcxproj.user
+/installers/eid-mw/Windows/obj/*.wixobj
+beidpkcs11.sdf
+*.suo
