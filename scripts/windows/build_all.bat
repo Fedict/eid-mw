@@ -13,22 +13,22 @@
 
 :: build pkcs11, minidriver, cleanuptool and sccertprop
 :: ====================================================
-@echo [INFO] Building "%~dp0..\..\VS_2012\beid.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2012\beid.sln"
+@echo [INFO] Building "%~dp0..\..\VS_2015\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 :: create minidriver driver installer
@@ -46,8 +46,8 @@ mkdir %MDRVINSTALLPATH%\Release
 copy %MDRVINSTALLPATH%\beidmdrv.inf %MDRVINSTALLPATH%\Release
 
 :: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-copy %~dp0..\..\cardcomm\VS_2012\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\Release\beidmdrv32.dll
-copy %~dp0..\..\cardcomm\VS_2012\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\Release\beidmdrv64.dll
+copy %~dp0..\..\cardcomm\VS_2015\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\Release\beidmdrv32.dll
+copy %~dp0..\..\cardcomm\VS_2015\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\Release\beidmdrv64.dll
 
 :: copy icon
 :: copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\Release\
@@ -94,9 +94,9 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 :: create the NSIS plugins
 :: =========================
 @echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2015\beidplugins.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2015\beidplugins.sln"
 
 :: copy the NSIS plugins to NSIS default plugin folder
 :: nsis installer is updated to look into the build folder

@@ -1,5 +1,5 @@
 ::Define search paths here
-@set SEARCH_BEID_DIR_MSBUILD=C:\Windows\Microsoft.NET\Framework\v4.0.30319
+@set SEARCH_BEID_DIR_MSBUILD=C:\Program Files (x86)\MSBuild\14.0\Bin
 ::@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin
 @set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Windows Kits\8.1\bin\x64
 @set SEARCH_SIGNTOOL_PATH_2=C:\WinDDK\7600.16385.1\bin\x86

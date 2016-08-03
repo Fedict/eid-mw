@@ -171,21 +171,21 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)_$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|Win32'">true</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|x64'">..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|x64'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)_$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|x64'">$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug_No_Dialog|x64'">true</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|Win32'">..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|Win32'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)_$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">$(Platform)_$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">$(Platform)_$(Configuration)\</IntDir>
@@ -195,9 +195,9 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'">..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'">..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|x64'">..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_No_Dialog|x64'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)_$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'">$(Platform)_$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'">$(Platform)_$(Configuration)\</IntDir>
@@ -276,8 +276,8 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
-      <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>../../VS_2015/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../VS_2015/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -356,8 +356,8 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
-      <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>../../VS_2015/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../VS_2015/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
@@ -432,8 +432,8 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
-      <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);../../VS_2012/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>../../VS_2015/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>../../VS_2015/Binaries/$(Platform)_$(Configuration);../../VS_2015/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -470,8 +470,8 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
-      <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName)D.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);../../VS_2012/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>../../VS_2015/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName)D.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../VS_2015/Binaries/$(Platform)_$(Configuration);../../VS_2015/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -507,8 +507,8 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
-      <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>../../VS_2015/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>../../VS_2015/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -589,8 +589,8 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
-      <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);../../VS_2012/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>../../VS_2015/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>../../VS_2015/Binaries/$(Platform)_$(Configuration);../../VS_2015/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -633,8 +633,8 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
-      <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);../../VS_2012/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>../../VS_2015/Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>../../VS_2015/Binaries/$(Platform)_$(Configuration);../../VS_2015/Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -677,8 +677,8 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib</AdditionalDependencies>
-      <OutputFile>../../VS_2012/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>../../VS_2012/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>../../VS_2015/Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>../../VS_2015/Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>

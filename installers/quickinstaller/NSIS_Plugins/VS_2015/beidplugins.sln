@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beid", "..\beidread\VS_2012\beid.vcxproj", "{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beid", "..\beidread\VS_2015\beid.vcxproj", "{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beidread_test", "..\beidread_test\VS_2012\beidread_test.vcxproj", "{AD1249FE-22CA-471E-8706-8E0A4FE9F098}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beidread_test", "..\beidread_test\VS_2015\beidread_test.vcxproj", "{AD1249FE-22CA-471E-8706-8E0A4FE9F098}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
