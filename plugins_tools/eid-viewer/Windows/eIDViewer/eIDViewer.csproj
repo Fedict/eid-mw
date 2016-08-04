@@ -163,18 +163,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\print.png" />
-    <Resource Include="Resources\state_noreaders.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\state_eidpresent.png" />
-    <Resource Include="Resources\state_eidyielded.png" />
-    <Resource Include="Resources\state_error.png" />
-    <Resource Include="Resources\state_fileloaded.png" />
-    <Resource Include="Resources\state_fileloading.png" />
-    <Resource Include="Resources\state_noeidpresent.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\ApplicationStringResources.de-DE.resx" />
     <EmbeddedResource Include="Resources\ApplicationStringResources.fr-BE.resx" />
     <EmbeddedResource Include="Resources\ApplicationStringResources.nl-BE.resx" />
@@ -214,12 +202,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\coat_of_arms_de.jpg" />
-    <Resource Include="Resources\coat_of_arms_en.jpg" />
-    <Resource Include="Resources\coat_of_arms_fr.jpg" />
-    <Resource Include="Resources\coat_of_arms_nl.jpg" />
+    <Resource Include="Resources\Images\coat_of_arms_de.jpg" />
+    <Resource Include="Resources\Images\coat_of_arms_en.jpg" />
+    <Resource Include="Resources\Images\coat_of_arms_fr.jpg" />
+    <Resource Include="Resources\Images\coat_of_arms_nl.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\certificate_bad.png" />
     <Resource Include="Resources\Images\certificate_checked.png" />
@@ -245,7 +232,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>robocopy  $(ProjectDir)..\..\certs\ $(ProjectDir)\Resources\Certs\ *.pem
-robocopy  $(ProjectDir)..\..\resources\ $(ProjectDir)\Resources\Images\ *.png</PreBuildEvent>
+robocopy  $(ProjectDir)..\..\resources\ $(ProjectDir)\Resources\Images\ *.png
+robocopy  $(ProjectDir)..\..\resources\ $(ProjectDir)\Resources\Images\ *.jpg
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
