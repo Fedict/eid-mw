@@ -87,12 +87,12 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 +(eIDLanguage)lang; ///< calls eid_vwr_convert_get_lang()
 +(void)poll; ///< calls eid_vwr_poll()
 +(void)mainloop; ///< calls eid_vwr_be_mainloop(), which does not return
-+(void)mainloop_thread; ///< calls mainloop in a background thread.
++(void)mainloopThread; ///< calls mainloop in a background thread.
 +(void)deserialize:(NSURL*)from; ///< calls eid_vwr_be_deserialize()
 +(void)serialize:(NSURL*)to; ///< calls eid_vwr_be_serialize()
 +(NSData*)xmlform; ///< calls eid_vwr_be_get_xmlform(), and converts the result to an NSData*
-+(void)close_file; ///< calls eid_vwr_close_file()
-+(void)set_invalid; ///< calls eid_vwr_be_set_invalid()
++(void)closeFile; ///< calls eid_vwr_close_file()
++(void)setInvalid; ///< calls eid_vwr_be_set_invalid()
 +(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca; ///< calls eid_vwr_verify_cert() with valid perform_ocsp_request and free_ocsp_request function pointers
 +(eIDResult)validateRrnCert:(NSData*)certificate; ///< calls eid_vwr_verify_rrncert()
 +(void)selectReader:(NSInteger)readerNumber; ///< calls eid_vwr_be_select_slot() with 0 as the first parameter, and the given reader number as the second parameter.
