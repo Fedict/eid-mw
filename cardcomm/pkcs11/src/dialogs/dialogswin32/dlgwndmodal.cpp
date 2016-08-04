@@ -74,7 +74,7 @@ dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wst
 				L"BUTTON", GETSTRING_DLG(No), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT
 				| (m_ulEnterButton==DLG_BUTTON_NO?BS_DEFPUSHBUTTON:0), 
 				clientRect.right - iWidth*80, clientRect.bottom - 36, 72, 24, m_hWnd, 
-				(HMENU)(m_ulEnterButton==DLG_BUTTON_NO?IDOK:(m_ulCancelButton==DLG_BUTTON_NO?IDCANCEL:IDNO)), 
+				(HMENU)(UINT_PTR)(m_ulEnterButton==DLG_BUTTON_NO?IDOK:(m_ulCancelButton==DLG_BUTTON_NO?IDCANCEL:IDNO)),
 				m_hInstance, NULL );
 			SendMessage( hNoButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 			iWidth++;
@@ -86,7 +86,7 @@ dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wst
 				L"BUTTON", GETSTRING_DLG(Cancel), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT 
 				| (m_ulEnterButton==DLG_BUTTON_CANCEL?BS_DEFPUSHBUTTON:0), 
 				clientRect.right - iWidth*80, clientRect.bottom - 36, 72, 24, m_hWnd,
-				(HMENU)(m_ulEnterButton==DLG_BUTTON_CANCEL?IDOK:(m_ulCancelButton==DLG_BUTTON_CANCEL?IDCANCEL:IDCANCEL)), 
+				(HMENU)(UINT_PTR)(m_ulEnterButton==DLG_BUTTON_CANCEL?IDOK:(m_ulCancelButton==DLG_BUTTON_CANCEL?IDCANCEL:IDCANCEL)),
 				m_hInstance, NULL );
 			SendMessage( hCancelButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 			iWidth++;
@@ -98,7 +98,7 @@ dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wst
 				L"BUTTON", GETSTRING_DLG(Retry), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT 
 				| (m_ulEnterButton==DLG_BUTTON_RETRY?BS_DEFPUSHBUTTON:0), 
 				clientRect.right - iWidth*80, clientRect.bottom - 36, 72, 24, m_hWnd, 
-				(HMENU)(m_ulEnterButton==DLG_BUTTON_RETRY?IDOK:(m_ulCancelButton==DLG_BUTTON_RETRY?IDCANCEL:IDRETRY)), 
+				(HMENU)(UINT_PTR)(m_ulEnterButton==DLG_BUTTON_RETRY?IDOK:(m_ulCancelButton==DLG_BUTTON_RETRY?IDCANCEL:IDRETRY)),
 				m_hInstance, NULL );
 			SendMessage( hRetryButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 			iWidth++;
@@ -110,7 +110,7 @@ dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wst
 				L"BUTTON", GETSTRING_DLG(Yes), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT 
 				| (m_ulEnterButton==DLG_BUTTON_YES?BS_DEFPUSHBUTTON:0), 
 				clientRect.right - iWidth*80, clientRect.bottom - 36, 72, 24, m_hWnd, 
-				(HMENU)(m_ulEnterButton==DLG_BUTTON_YES?IDOK:(m_ulCancelButton==DLG_BUTTON_YES?IDCANCEL:IDYES)), 
+				(HMENU)(UINT_PTR)(m_ulEnterButton==DLG_BUTTON_YES?IDOK:(m_ulCancelButton==DLG_BUTTON_YES?IDCANCEL:IDYES)),
 				m_hInstance, NULL );
 			SendMessage( hYesButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 			iWidth++;
@@ -122,7 +122,7 @@ dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wst
 				L"BUTTON", GETSTRING_DLG(Ok), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT 
 				| (m_ulEnterButton==DLG_BUTTON_OK?BS_DEFPUSHBUTTON:0), 
 				clientRect.right - iWidth*80, clientRect.bottom - 36, 72, 24, m_hWnd, 
-				(HMENU)(m_ulEnterButton==DLG_BUTTON_OK?IDOK:(m_ulCancelButton==DLG_BUTTON_OK?IDCANCEL:IDOK)), 
+				(HMENU)(UINT_PTR)(m_ulEnterButton==DLG_BUTTON_OK?IDOK:(m_ulCancelButton==DLG_BUTTON_OK?IDCANCEL:IDOK)),
 				m_hInstance, NULL );
 			SendMessage( hOkButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 			iWidth++;
@@ -134,7 +134,7 @@ dlgWndModal::dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wst
 				L"BUTTON", GETSTRING_DLG(Always), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT 
 				| (m_ulEnterButton==DLG_BUTTON_ALWAYS?BS_DEFPUSHBUTTON:0), 
 				clientRect.left + 8, clientRect.bottom - 36, 152, 24, m_hWnd, 
-				(HMENU)(m_ulEnterButton==DLG_BUTTON_ALWAYS?IDOK:(m_ulCancelButton==DLG_BUTTON_ALWAYS?IDCANCEL:IDALWAYS)), 
+				(HMENU)(UINT_PTR)(m_ulEnterButton==DLG_BUTTON_ALWAYS?IDOK:(m_ulCancelButton==DLG_BUTTON_ALWAYS?IDCANCEL:IDALWAYS)),
 				m_hInstance, NULL );
 			SendMessage( hAlwaysButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 		}
