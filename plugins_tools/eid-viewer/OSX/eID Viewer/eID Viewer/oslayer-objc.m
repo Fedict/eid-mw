@@ -4,33 +4,48 @@
 #include "verify_cert.h"
 #include "p11.h"
 
-static id <eIDOSLayerUI>currUi = NULL;
+static id <eIDOSLayerUI>currUi = nil;
 
 static void osl_objc_newsrc(enum eid_vwr_source src) {
-	[currUi newsrc:(eIDSource)src];
+	if ([currUi respondsToSelector:@selector(newsrc:)]) {
+		[currUi newsrc:(eIDSource)src];
+	}
 }
 
 static void osl_objc_newstringdata(const char* label, const char* data) {
-	[currUi newstringdata:[NSString stringWithCString:data encoding:NSUTF8StringEncoding] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
+	if ([currUi respondsToSelector:@selector(newstringdata:withLabel:)]) {
+		[currUi newstringdata:[NSString stringWithCString:data encoding:NSUTF8StringEncoding] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
+	}
 }
 
 static void osl_objc_newbindata(const char* label, const unsigned char* data, int datalen) {
-	[currUi newbindata:[NSData dataWithBytes:data length:datalen] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
+	if ([currUi respondsToSelector:@selector(newbindata:withLabel:)]) {
+		[currUi newbindata:[NSData dataWithBytes:data length:datalen] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
+	}
 }
 
 static void osl_objc_log(enum eid_vwr_loglevel level, const char* line) {
-	[currUi log:[NSString stringWithCString:line encoding:NSUTF8StringEncoding]withLevel:(eIDLogLevel) level];
+	if ([currUi respondsToSelector:@selector(log:withLevel:)]) {
+		[currUi log:[NSString stringWithCString:line encoding:NSUTF8StringEncoding]withLevel:(eIDLogLevel) level];
+	}
 }
 
 static void osl_objc_newstate(enum eid_vwr_states state) {
-	[currUi newstate:(eIDState)state];
+	if ([currUi respondsToSelector:@selector(newstate:)]) {
+		[currUi newstate:(eIDState)state];
+	}
 }
 
 static void osl_objc_pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result r) {
-	[currUi pinop_result:(eIDResult)r forOperation:(eIDPinOp)p];
+	if ([currUi respondsToSelector:@selector(pinop_result:forOperation:)]) {
+		[currUi pinop_result:(eIDResult)r forOperation:(eIDPinOp)p];
+	}
 }
 
 static void osl_objc_readers_found(unsigned long nreaders, slotdesc* slots) {
+	if (![currUi respondsToSelector:@selector(readersFound:withSlotNumbers:)]) {
+		return;
+	}
 	NSString* names[nreaders];
 	NSNumber* slotnumbers[nreaders];
 	for(int i=0; i<nreaders; i++) {

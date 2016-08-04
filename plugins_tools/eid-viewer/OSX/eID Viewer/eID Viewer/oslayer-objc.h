@@ -66,7 +66,8 @@ typedef NS_ENUM(NSInteger, eIDResult) {
 /** \brief Protocol for implementing a UI.
  * \see cbstruct for details on what each method does; these methods are
  * straightforward C-to-ObjC translations */
-@protocol eIDOSLayerUI
+@protocol eIDOSLayerUI<NSObject>
+@optional
 -(void)newsrc:(eIDSource)which; ///< called by eid_vwr_ui_callbacks::newsrc()
 -(void)newstringdata:(NSString*)data /**< . */ withLabel:(NSString*)label; ///< called by eid_vwr_ui_callbacks::newstringdata()
 -(void)newbindata:(NSData*)data withLabel:(NSString*)label; ///< called by eid_vwr_ui_callbacks::newbindata()
