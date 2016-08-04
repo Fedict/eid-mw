@@ -87,7 +87,12 @@
                         <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="562*"/>
                     </Grid.ColumnDefinitions>
-                    <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="104" Width="370" Grid.Column="1" Margin="0,28,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="104"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="104" Width="370" Grid.Column="1" Grid.Row="0" Margin="0,28,0,0">
                         <TreeView ItemsSource="{Binding Path=certsList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-91,0">
                             <TreeView.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
@@ -112,7 +117,7 @@
                             </TreeView.ItemTemplate>
                         </TreeView>
                     </ContentControl>
-                    <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="2,136,2,0" VerticalAlignment="Top" Background="{StaticResource DefaultBackground}">
+                    <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="2,0,2,0" VerticalAlignment="Top" Background="{StaticResource DefaultBackground}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" MinWidth="150"  />
                             <ColumnDefinition Width="Auto" MinWidth="100" />
@@ -158,8 +163,14 @@
                         </Label>
                         <Image Grid.Column="0" Grid.RowSpan="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Path=certificateLargeIcon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Opacity="0.6" />
                     </Grid>
-                    <CheckBox x:Name="checkBox" Content="{Binding Path=certificateTabResource.AlwaysValidateCheckboxLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=validateAlways, Mode=TwoWay}" Margin="110,407,0,0"/>
-                    <Button x:Name="button" Content="{Binding Path=certificateTabResource.ValidateNowButtonLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Grid.Column="1" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Click="ValidateNowButton_Click" Margin="377,403,0,-3" Background="{StaticResource DefaultBackground}"/>
+                    <Grid Grid.Row="2" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300*"/>
+                            <ColumnDefinition Width="200*"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Column="0" x:Name="checkBox" Margin="0,0,10,0" Content="{Binding Path=certificateTabResource.AlwaysValidateCheckboxLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="{Binding Path=validateAlways, Mode=TwoWay}" />
+                        <Button Grid.Column="1" x:Name="button" Content="{Binding Path=certificateTabResource.ValidateNowButtonLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Height="28" VerticalAlignment="Center" Click="ValidateNowButton_Click" Margin="10,0,0,-3" Background="{StaticResource DefaultBackground}"/>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.LOG, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings}}">
