@@ -21,10 +21,11 @@
 @set FILE_TO_FIND="msbuild.exe"
 @echo [INFO] Looking for files: %FILE_TO_FIND%
 
-@set FILE_NOT_FOUND=
-@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_MSBUILD%\%%~i" set FILE_NOT_FOUND=%%~i
-@if "%FILE_NOT_FOUND%"=="" goto found_msbuild
-@echo        Not found in "%BEID_DIR_MSBUILD%"
+::do not try to re-use MSBUILD path (could be set to an older version)
+::@set FILE_NOT_FOUND=
+::@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_MSBUILD%\%%~i" set FILE_NOT_FOUND=%%~i
+::@if "%FILE_NOT_FOUND%"=="" goto found_msbuild
+::@echo        Not found in "%BEID_DIR_MSBUILD%"
 
 @set BEID_DIR_MSBUILD=%SEARCH_BEID_DIR_MSBUILD%
 @set FILE_NOT_FOUND=
