@@ -302,6 +302,7 @@ namespace eIDViewer
                         else
                         {
                             this.logText += "this was not the certificate chain we were looking for \n";
+                            //leafCertificateViewModel.CertTrust = "Did not validate\n";
                             SetCertificateIcon(leafCertificateViewModel, eid_cert_status.EID_CERT_STATUS_WARNING);
                             return;
                         }
@@ -519,26 +520,28 @@ namespace eIDViewer
 
         public void SetCertificateIcon(CertViewModel cert, eid_cert_status icon)
         {
-            switch (icon)
+            if (cert != null)
             {
-                case eid_cert_status.EID_CERT_STATUS_INVALID:
-                    cert.ImagePath = "Resources/Images/certificate_bad.png";
-                    break;
-                case eid_cert_status.EID_CERT_STATUS_UNKNOWN:
-                    cert.ImagePath = "Resources/Images/certificate_large.png";
-                    break;
-                case eid_cert_status.EID_CERT_STATUS_VALID:
-                    cert.ImagePath = "Resources/Images/certificate_checked.png";
-                    break;
-                case eid_cert_status.EID_CERT_STATUS_WARNING:
-                    cert.ImagePath = "Resources/Images/certificate_warn.png";
-                    break;
-                default:
-                    cert.ImagePath = "Resources/Images/certificate_large.png";
-                    break;
+                switch (icon)
+                {
+                    case eid_cert_status.EID_CERT_STATUS_INVALID:
+                        cert.ImagePath = "Resources/Images/certificate_bad.png";
+                        break;
+                    case eid_cert_status.EID_CERT_STATUS_UNKNOWN:
+                        cert.ImagePath = "Resources/Images/certificate_large.png";
+                        break;
+                    case eid_cert_status.EID_CERT_STATUS_VALID:
+                        cert.ImagePath = "Resources/Images/certificate_checked.png";
+                        break;
+                    case eid_cert_status.EID_CERT_STATUS_WARNING:
+                        cert.ImagePath = "Resources/Images/certificate_warn.png";
+                        break;
+                    default:
+                        cert.ImagePath = "Resources/Images/certificate_large.png";
+                        break;
+                }
             }
         }
-
 
         public BackendDataViewModel()
         {
@@ -549,7 +552,6 @@ namespace eIDViewer
             readersList.Enqueue(new ReadersMenuViewModel("No Readers Found", 0));
 
             _certsList = new ObservableCollection<CertViewModel>();
-            cert_collection = new X509Certificate2Collection();
             rootCAViewModel = new CertViewModel { CertLabel = "rootCA" };
             rootCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
             RNCertViewModel = new CertViewModel { CertLabel = "RN cert" };
@@ -593,7 +595,6 @@ namespace eIDViewer
         private X509Certificate2 RN_cert = null;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private X509Certificate2Collection cert_collection;
 
         private CertViewModel currentCertificateView = null;
 
@@ -808,7 +809,6 @@ namespace eIDViewer
                 {
                     progress_info = "reading authentication certificate";
                     authentication_cert = new X509Certificate2(data);
-                    cert_collection.Add(authentication_cert);
                     StoreCertificate( ref authCertViewModel, ref authentication_cert);
                     progress += 6;
                 }
@@ -816,7 +816,6 @@ namespace eIDViewer
                 {
                     progress_info = "reading signature certificate";
                     signature_cert = new X509Certificate2(data);
-                    cert_collection.Add(signature_cert);
                     StoreCertificate(ref signCertViewModel, ref signature_cert);
                     progress += 6;
                 }
@@ -824,7 +823,6 @@ namespace eIDViewer
                 {
                     progress_info = "reading root certificate";
                     rootCA_cert = new X509Certificate2(data);
-                    cert_collection.Add(rootCA_cert);
                     StoreCertificate(ref rootCAViewModel, ref rootCA_cert);
                     progress += 6;
                 }
@@ -832,7 +830,6 @@ namespace eIDViewer
                 {
                     progress_info = "reading intermediate certificate";
                     intermediateCA_cert = new X509Certificate2(data);
-                    cert_collection.Add(intermediateCA_cert);
                     StoreCertificate(ref intermediateCAViewModel, ref intermediateCA_cert);
                     progress += 6;
                 }
@@ -840,7 +837,6 @@ namespace eIDViewer
                 {
                     progress_info = "reading RN certificate";
                     RN_cert = new X509Certificate2(data);
-                    cert_collection.Add(RN_cert);
                     StoreCertificate(ref RNCertViewModel, ref RN_cert);
                     progress += 6;
                 }
@@ -859,7 +855,7 @@ namespace eIDViewer
             _firstName = "";
             _first_letter_of_third_given_name = "";
             firstNames = "-";
-            surName = "-";       
+            surName = "-";
             date_of_birth = "-";
             location_of_birth = "-";
             gender = "-";
@@ -882,7 +878,19 @@ namespace eIDViewer
             print_enabled = false;
 
             photo = null;
-            cert_collection = new X509Certificate2Collection();
+
+            rootCAViewModel.ClearData();
+            intermediateCAViewModel.ClearData();
+            RNCertViewModel.ClearData();
+            authCertViewModel.ClearData();
+            signCertViewModel.ClearData();
+
+            UpdateUICertDetails();
+            authentication_cert = null;
+            signature_cert = null;
+            rootCA_cert = null;
+            intermediateCA_cert = null;
+            RN_cert = null; 
         }
 
         public void NotifyPropertyChanged(String propertyName)

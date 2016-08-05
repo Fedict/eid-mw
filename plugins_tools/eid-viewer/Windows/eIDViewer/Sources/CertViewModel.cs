@@ -15,6 +15,17 @@ namespace eIDViewer
             ImagePath = "Resources/Images/certificate_large.png";
         }
 
+        public void ClearData()
+        {
+            CertVisibility = System.Windows.Visibility.Hidden;
+            ImagePath = "Resources/Images/certificate_large.png";
+            CertSubject = "";
+            CertValidfrom = "";
+            CertValidUntill = "";
+            CertUsage = "";
+            CertTrust = "";
+        }
+
         public void CertNotifyPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
