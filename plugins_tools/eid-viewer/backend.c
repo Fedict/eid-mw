@@ -91,17 +91,19 @@ int be_newstate(enum eid_vwr_states which) {
 void be_log(enum eid_vwr_loglevel l, const EID_CHAR* string, ...) {
 	va_list ap;
 	EID_CHAR* str = NULL;
-	size_t strsize, strnewsize = 40;
+	size_t strsize = 0;
+	size_t strnewsize = 0;
 	if(!cb) return;
 	if(cb->log) {
 		do {
 			va_start(ap, string);
+			strnewsize = EID_VSNPRINTF(str, strsize, string, ap);
 			strsize = strnewsize +1;
 			str = (EID_CHAR*)realloc(str, strsize * sizeof(EID_CHAR));
 			if(!str) { 
 				va_end(ap);
 				return;
-			}
+			}		
 			strnewsize = EID_VSNPRINTF(str, strsize, string, ap);
 			va_end(ap);
 		} while (strnewsize >= strsize);
