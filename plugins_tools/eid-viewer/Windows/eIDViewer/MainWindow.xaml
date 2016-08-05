@@ -88,11 +88,11 @@
                         <ColumnDefinition Width="562*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="104"/>
+                        <RowDefinition Height="124"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="104" Width="370" Grid.Column="1" Grid.Row="0" Margin="0,28,0,0">
+                    <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="124" Width="370" Grid.Column="1" Grid.Row="0" Margin="0,18,0,0">
                         <TreeView ItemsSource="{Binding Path=certsList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,-91,0">
                             <TreeView.ItemContainerStyle>
                                 <Style TargetType="{x:Type TreeViewItem}">
