@@ -25,7 +25,7 @@ int eid_vwr_p11_do_pinop(void*);
 int eid_vwr_p11_leave_pinop();
 int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot);
 int eid_vwr_p11_name_slots(struct _slotdesc* slots, CK_ULONG_PTR len);
-int eid_vwr_p11_check_version();
+int eid_vwr_p11_check_version(void* data);
 #ifdef __cplusplus
 extern "C"{
 #endif
