@@ -112,7 +112,7 @@
 	}];
 }
 - (void)file_close:(id)sender {
-	[eIDOSLayerBackend close_file];
+	[eIDOSLayerBackend closeFile];
 }
 - (void)do_pinop:(NSSegmentedControl *)sender {
 	NSUInteger sel = [sender selectedSegment];
@@ -173,7 +173,7 @@
 			}];
 			if(!([v canVerify] && [v isValid])) {
 				[self log:NSLocalizedStringWithDefaultValue(@"DataSigInvalid", nil, [NSBundle mainBundle], @"Cannot load card: data signature invalid!", "") withLevel:eIDLogLevelError];
-				[eIDOSLayerBackend set_invalid];
+				[eIDOSLayerBackend setInvalid];
 			}
 			if([_alwaysValidate state] == NSOnState) {
 				[self validateNow:nil];
@@ -344,7 +344,7 @@
 	}
 	[_logLevel selectItemAtIndex:level];
 	[eIDOSLayerBackend setLang:langcode];
-	[eIDOSLayerBackend mainloop_thread];
+	[eIDOSLayerBackend mainloopThread];
 }
 - (void)setLanguage:(NSMenuItem *)sender {
 	NSString* keyeq = sender.keyEquivalent;
