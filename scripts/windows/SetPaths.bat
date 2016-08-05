@@ -8,6 +8,8 @@
 @set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files\Microsoft Platform SDK\bin
 @set SEARCH_BEID_DIR_PLATFORMSDK_3=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\bin
 @set SEARCH_BEID_DIR_PLATFORMSDK_4=C:\Program Files (x86)\Windows Kits\8.0\bin\x86
+@set SEARCH_BEID_DIR_PLATFORMSDK_5=C:\Program Files (x86)\Windows Kits\8.1\bin\x86
+@set SEARCH_BEID_DIR_PLATFORMSDK_6=C:\Program Files (x86)\Windows Kits\10\bin\x86
 @set SEARCH_WIX_PATH=C:\Program Files (x86)\WiX Toolset v3.9\bin
 @set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
 @set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
@@ -98,7 +100,19 @@
 @if "%FILE_NOT_FOUND%"=="" goto found_mssdk
 @echo        Not found in "%BEID_DIR_PLATFORMSDK%"
 
-@echo [ERROR] MS Platform SDK 2008, Windows SDK v7.1, or Windows SDK 8.0 could not be found
+@set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_5%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto found_mssdk
+@echo        Not found in "%BEID_DIR_PLATFORMSDK%"
+
+@set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_6%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_PLATFORMSDK%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto found_mssdk
+@echo        Not found in "%BEID_DIR_PLATFORMSDK%"
+
+@echo [ERROR] MS Platform SDK 2008, Windows SDK v7.1, or Windows SDK 8.0/8.1/10 could not be found
 @echo         If the path is not any of the above,
 @echo         please define BEID_DIR_PLATFORMSDK environment variable.
 @exit /B 1
