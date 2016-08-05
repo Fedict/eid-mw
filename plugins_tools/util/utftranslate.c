@@ -8,7 +8,7 @@
 wchar_t* Utf8ToUtf16(const char* utf8string, unsigned long* utf16len, wchar_t *buf)
 {
 	int wcharcount = MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, NULL, 0);
-	int reqlen = sizeof(wchar_t) * (wcharcount);
+	unsigned int reqlen = sizeof(wchar_t) * (wcharcount);
 	wchar_t *utf16string = (buf) ? buf : (wchar_t*)malloc(sizeof(wchar_t) * (wcharcount));
 	if(reqlen > *utf16len && buf != NULL) {
 		return NULL;
@@ -26,9 +26,9 @@ wchar_t* Utf8ToUtf16(const char* utf8string, unsigned long* utf16len, wchar_t *b
 //utf8len is the length of the returned string in bytes, excluding the terminating null
 char* Utf16ToUtf8(const wchar_t * utf16string, unsigned long* utf8len, char* buf)
 {
-	int utf8bytesize = WideCharToMultiByte(CP_UTF8, 0, utf16string, -1, NULL, 0, NULL, NULL);
+	unsigned int utf8bytesize = WideCharToMultiByte(CP_UTF8, 0, utf16string, -1, NULL, 0, NULL, NULL);
 	char *utf8string = (buf) ? buf : (char*) malloc(utf8bytesize);
-	if(utf8bytesize > utf8len && buf != NULL) {
+	if(utf8bytesize > *utf8len && buf != NULL) {
 		return NULL;
 	}
 	if (utf8string != NULL)
