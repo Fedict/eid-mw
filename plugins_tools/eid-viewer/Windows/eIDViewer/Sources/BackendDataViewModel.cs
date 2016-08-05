@@ -101,6 +101,7 @@ namespace eIDViewer
             catch (Exception e)
             {
                 this.logText += "An error occurred computing a sha1 hash \n";
+                this.logText += "Exception message: " + e.Message + "\n";
             }
             return false;
 
@@ -197,6 +198,12 @@ namespace eIDViewer
                                          "eIDViewer.Resources.Certs.belgiumrca2.pem",
                                          "eIDViewer.Resources.Certs.belgiumrca3.pem",
                                          "eIDViewer.Resources.Certs.belgiumrca4.pem"};
+
+            if( (rootCertOnCard == null) || (rootViewModel == null) )
+            {
+                this.logText += "No root certificate present to verify\n";
+                return false;
+            }
 
             foreach(string embeddedRootCA in embeddedRootCAs)
             {
@@ -385,11 +392,16 @@ namespace eIDViewer
                         }
                     }
                 }
+                else
+                {
+                    this.logText += "Leaf certificate was null, cannot verify \n";
+                }
             }
 
             catch (Exception e)
             {
                 this.logText += "An error occurred checking the certificate status \n";
+                this.logText += "Exception message: " + e.Message + "\n";
             }     
             finally
             {
@@ -568,17 +580,17 @@ namespace eIDViewer
             }
         }
 
-        private CertViewModel rootCAViewModel;
-        private CertViewModel intermediateCAViewModel;
-        private CertViewModel RNCertViewModel;
-        private CertViewModel authCertViewModel;
-        private CertViewModel signCertViewModel;
+        private CertViewModel rootCAViewModel = null;
+        private CertViewModel intermediateCAViewModel = null;
+        private CertViewModel RNCertViewModel = null;
+        private CertViewModel authCertViewModel = null;
+        private CertViewModel signCertViewModel = null;
 
-        private X509Certificate2 authentication_cert;
-        private X509Certificate2 signature_cert;
-        private X509Certificate2 rootCA_cert;
-        private X509Certificate2 intermediateCA_cert;
-        private X509Certificate2 RN_cert;
+        private X509Certificate2 authentication_cert = null;
+        private X509Certificate2 signature_cert = null;
+        private X509Certificate2 rootCA_cert = null;
+        private X509Certificate2 intermediateCA_cert = null;
+        private X509Certificate2 RN_cert = null;
 
         public event PropertyChangedEventHandler PropertyChanged;
         private X509Certificate2Collection cert_collection;
@@ -683,7 +695,7 @@ namespace eIDViewer
             catch (Exception e)
             {
                 this.logText+= "An error occurred displaying the image \n";
-               // Console.WriteLine("An error occurred: '{0}'", e);
+				this.logText += "Exception message: " + e.Message + "\n";
                 return null;
             }
         }
@@ -836,7 +848,7 @@ namespace eIDViewer
             catch (Exception e)
             {
                 this.logText += "An error occurred storing binary data of " + label + "\n";
-                Console.WriteLine("An error occurred: '{0}'", e);
+                this.logText += "Exception message: " + e.Message + "\n";
             }
         }
 

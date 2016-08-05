@@ -39,16 +39,18 @@ namespace eIDViewer
             catch (SecurityException e)
             {
                 theBackendData.logText += "ReadRegistryStringValue failed, no permission to read key " + keyName;
+                theBackendData.logText += "Exception message: " + e.Message + "\n";
                 return "";
             }
             catch (IOException e)
             {
                 theBackendData.logText += "ReadRegistryStringValue failed, the key " + keyName + " was marked for deletion";
+                theBackendData.logText += "Exception message: " + e.Message + "\n";
                 return "";
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0} Exception caught.", e);
+                theBackendData.logText += "Exception message: " + e.Message + "\n";
                 return "";
             }
         }
