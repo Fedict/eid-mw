@@ -108,7 +108,7 @@ char* eid_vwr_describe_cert(const char* label, X509* cert) {
 
 /* Test if the card data signatures (identity signature, address signature) are
  * valid for the given rrn certificate*/
-int eid_vwr_check_data_validity(const void* photo, int plen,
+static int eid_vwr_check_data_validity(const void* photo, int plen,
 		const void* photohash, int hashlen,
 		const void* datafile, int datfilelen,
 		const void* datasig, int datsiglen,
