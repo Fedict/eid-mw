@@ -22,7 +22,6 @@ eid_viewer_SOURCES = \
 	gtk/print.h \
 	gtk/print.c \
 	gtk/verify.h \
-	gtk/verify.c \
 	gtk/glib_util.h \
 	gtk/logging.h \
 	gtk/logging.c \

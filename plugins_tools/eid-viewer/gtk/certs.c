@@ -1,6 +1,5 @@
 #include <config.h>
 #include "certs.h"
-#include "verify.h"
 #include "prefs.h"
 #include "gtk_globals.h"
 #include "glib_util.h"
@@ -366,12 +365,6 @@ void add_certificate(char* label, void* data, int len) {
 
 	columns = calloc(sizeof(gint),cols);
 	vals = calloc(sizeof(GValue),cols);
-
-	/* The RRN certificate is required for signature verification, so pass
-	 * that on to the verification subsystem */
-	if(!strcmp(label, "CERT_RN_FILE")) {
-		add_verify_data(label, data, len);
-	}
 
 	/* d2i_X509 moves its input pointer, so make sure we have a copy before
 	 * we call that function */

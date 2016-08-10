@@ -14,7 +14,6 @@
 #include "gtkui.h"
 #include "thread.h"
 #include "photo.h"
-#include "verify.h"
 #include "certs.h"
 #include "state.h"
 #include "glib_util.h"
@@ -128,10 +127,6 @@ static void newstate(enum eid_vwr_states s) {
 			g_object_set_threaded(savecsv, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(pintest, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(pinchg, "sensitive", (void*)TRUE, NULL);
-			if(!data_verifies()) {
-				uilog(EID_VWR_LOG_COARSE, "Cannot load card: data signature invalid!");
-				eid_vwr_be_set_invalid();
-			}
 			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
 			if(want_verify) {
 				validate_all(NULL, NULL);
@@ -378,10 +373,6 @@ static void bindata_init() {
 
 	g_hash_table_insert(binhash, "PHOTO_FILE", displayphoto);
 	g_hash_table_insert(binhash, "photo_hash", photohash);
-	g_hash_table_insert(binhash, "SIGN_DATA_FILE", add_verify_data);
-	g_hash_table_insert(binhash, "SIGN_ADDRESS_FILE", add_verify_data);
-	g_hash_table_insert(binhash, "ADDRESS_FILE", add_verify_data);
-	g_hash_table_insert(binhash, "DATA_FILE", add_verify_data);
 	g_hash_table_insert(binhash, "CERT_RN_FILE", add_certificate);
 	g_hash_table_insert(binhash, "Authentication", add_certificate);
 	g_hash_table_insert(binhash, "CA", add_certificate);
