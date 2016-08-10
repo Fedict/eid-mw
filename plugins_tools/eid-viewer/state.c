@@ -2,6 +2,7 @@
 #include "p11.h"
 #include "backend.h"
 #include "xml.h"
+#include "dataverify.h"
 #include "cache.h"
 #include <stdlib.h>
 #include "utftranslate.h"
@@ -95,6 +96,16 @@ static int source_none(void*data) {
 	return 0;
 }
 
+/* called when we enter the TOKEN_WAIT state. */
+static int enter_token_wait(void* data) {
+	int rv;
+	if((rv = eid_vwr_verify_card(data)) != 0) {
+		sm_handle_event_onthread(EVENT_DATA_INVALID, NULL);
+		return 0;
+	}
+	return eid_vwr_gen_xml(data);
+}
+
 /* Initialize the state machine.
    Please see be-statemach.uml in the uml directory for more details */
 void sm_init() {
@@ -145,7 +156,7 @@ void sm_init() {
 	states[STATE_TOKEN_PINOP].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_WAIT]);
 
 	states[STATE_TOKEN_WAIT].parent = &(states[STATE_TOKEN]);
-	states[STATE_TOKEN_WAIT].enter = eid_vwr_gen_xml;
+	states[STATE_TOKEN_WAIT].enter = enter_token_wait;
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
 	states[STATE_TOKEN_WAIT].out[EVENT_SERIALIZE] = &(states[STATE_TOKEN_SERIALIZE]);
 

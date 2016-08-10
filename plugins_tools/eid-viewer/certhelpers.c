@@ -8,6 +8,7 @@
 #include <string.h>
 #include <assert.h>
 #include <unistd.h>
+#include "cache.h"
 
 #include "backend.h"
 
@@ -217,4 +218,25 @@ void eid_vwr_dumpcert(int fd, const void* derdata, int len, enum dump_type how) 
 			BIO_free(bio);
 			break;
 	}
+}
+
+int eid_vwr_verify_card(void* d) {
+	const struct eid_vwr_cache_item *photo, *phash, *data, *datsig, *address, *adsig, *cert;
+
+#define GET(t, s) if(!cache_have_label(s)) { return 1; }; t = cache_get_data(s)
+	GET(photo, "PHOTO_FILE");
+	GET(phash, "photo_hash");
+	GET(data, "DATA_FILE");
+	GET(datsig, "SIGN_DATA_FILE");
+	GET(address, "ADDRESS_FILE");
+	GET(adsig, "SIGN_ADDRESS_FILE");
+	GET(cert, "CERT_RN_FILE");
+#undef GET
+	return eid_vwr_check_data_validity(photo->data, photo->len,
+			phash->data, phash->len,
+			data->data, data->len,
+			datsig->data, datsig->len,
+			address->data, address->len,
+			adsig->data, adsig->len,
+			cert->data, cert->len);
 }
