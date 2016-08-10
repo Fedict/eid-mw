@@ -10,7 +10,6 @@
 #import "CertificateStore.h"
 #import "photohandler.h"
 #import "PrintOperation.h"
-#import "DataVerifier.h"
 #import "ReaderMenuItem.h"
 
 @interface AppDelegate ()
@@ -144,7 +143,6 @@
 	[sheet orderOut:self];
 }
 - (void)newstate:(eIDState)state {
-	DataVerifier *v = [DataVerifier verifier];
 	BOOL fileOpen = NO;
 	BOOL filePrint = NO;
 	BOOL fileSave = NO;
@@ -171,10 +169,6 @@
 				[NSApp endSheet:_CardReadSheet];
 				[_spinner stopAnimation:self];
 			}];
-			if(!([v canVerify] && [v isValid])) {
-				[self log:NSLocalizedStringWithDefaultValue(@"DataSigInvalid", nil, [NSBundle mainBundle], @"Cannot load card: data signature invalid!", "") withLevel:eIDLogLevelError];
-				[eIDOSLayerBackend setInvalid];
-			}
 			if([_alwaysValidate state] == NSOnState) {
 				[self validateNow:nil];
 			}
@@ -298,18 +292,12 @@
 	}
 	// Set up the certificate pane
 	_certstore = [[CertificateStore alloc] initWithOutlineView:_CertificatesView];
-	DataVerifier *ver = [DataVerifier verifier];
 	_bindict = [[NSDictionary alloc] initWithObjectsAndKeys:[photohandler alloc], @"PHOTO_FILE",
 		    _certstore, @"Root",
 		    _certstore, @"CA",
 		    _certstore, @"Authentication",
 		    _certstore, @"Signature",
 		    _certstore, @"CERT_RN_FILE",
-		    ver, @"SIGN_DATA_FILE",
-		    ver, @"SIGN_ADDRESS_FILE",
-		    ver, @"DATA_FILE",
-		    ver, @"ADDRESS_FILE",
-		    ver, @"photo_hash",
 		    self, @"certimage",
 		    nil];
 	_viewdict = [[NSMutableDictionary alloc] init];
