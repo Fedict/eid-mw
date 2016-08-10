@@ -232,7 +232,7 @@ int eid_vwr_verify_card(void* d) {
 	GET(adsig, "SIGN_ADDRESS_FILE");
 	GET(cert, "CERT_RN_FILE");
 #undef GET
-	return eid_vwr_check_data_validity(photo->data, photo->len,
+	return 1 - eid_vwr_check_data_validity(photo->data, photo->len,
 			phash->data, phash->len,
 			data->data, data->len,
 			datsig->data, datsig->len,
