@@ -103,6 +103,22 @@ enum eid_vwr_langs {
   * simply not issue that event.
   */
 struct eid_vwr_ui_callbacks {
+	/** \brief The version number of this struct.
+	  *
+	  * This version number exists for backwards compatibility
+	  * reasons. When the eid_vwr_cbstruct() function is called,
+	  * this version number will be set to the latest version
+	  * supported by the backend (0 for now). Frontend code should
+	  * check the version number. If it is higher than the most
+	  * recently supported version at the time of writing of the
+	  * frontend code, then the frontend code should change the
+	  * version number so it reflects the most recent version it
+	  * supports.
+	  *
+	  * If the version is lower, it should not touch the version
+	  * number.
+	  */
+	int version;
 	/** \brief Called when the data source has changed.
 	  * 
 	  * When the viewer library starts looking at a new file or eID
