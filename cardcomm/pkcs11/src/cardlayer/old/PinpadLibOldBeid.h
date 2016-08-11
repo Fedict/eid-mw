@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,6 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 /**
  * Class that takes care of the older BE eID pinpad libs
  * (xipass, cashmouse, ..).
@@ -32,47 +34,58 @@
 
 #include <io.h>
 #include <Windows.h>
-#include "scr.h"          // the old API
-#include "../pinpad2.h"   // the new API
+#include "scr.h"		// the old API
+#include "../pinpad2.h"		// the new API
 
-typedef long (*BEID_OLD_PP_INIT)(const char *szReader, DWORD version, SCR_SupportConstants *supported);
-typedef long (*BEID_OLD_VERIFY_PIN)(const SCR_Card*, BYTE pinID, const SCR_PinUsage*, const SCR_Application*, BYTE *cardStatus);
-typedef long (*BEID_OLD_CHANGE_PIN)(const SCR_Card*, BYTE pinID, const SCR_Application*, BYTE *cardStatus);
+typedef long (*BEID_OLD_PP_INIT) (const char *szReader, DWORD version,
+				  SCR_SupportConstants * supported);
+typedef long (*BEID_OLD_VERIFY_PIN) (const SCR_Card *, BYTE pinID,
+				     const SCR_PinUsage *,
+				     const SCR_Application *,
+				     BYTE * cardStatus);
+typedef long (*BEID_OLD_CHANGE_PIN) (const SCR_Card *, BYTE pinID,
+				     const SCR_Application *,
+				     BYTE * cardStatus);
 
 namespace eIDMW
 {
 
 #ifdef EIDMW_PF_EXPORT
-class CPinpadLibOldBeid
+	class CPinpadLibOldBeid
 #else
-class EIDMW_CAL_API CPinpadLibOldBeid
+	class EIDMW_CAL_API CPinpadLibOldBeid
 #endif
-{
+	{
 public:
-	CPinpadLibOldBeid();
-	~CPinpadLibOldBeid();
+		CPinpadLibOldBeid();
+		~CPinpadLibOldBeid();
 
-	bool Load(unsigned long hContext, SCARDHANDLE hCard,
-		const std::string & csReader, const std::string & csPinpadPrefix,
-		unsigned long ulLanguage);
+		bool Load(unsigned long hContext, SCARDHANDLE hCard,
+			  const std::string & csReader,
+			  const std::string & csPinpadPrefix,
+			  unsigned long ulLanguage);
 
-	void UnLoad();
+		void UnLoad();
 
-    CByteArray PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
-		CByteArray oCmd, unsigned char ucPintype, unsigned char ucOperation);
+		CByteArray PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
+				  CByteArray oCmd, unsigned char ucPintype,
+				  unsigned char ucOperation);
 
-	bool UseOldLib();
+		bool UseOldLib();
 
 private:
-	bool CheckLib(const std::string & csPinpadDir, const char *csFileName,
-		unsigned long ulLanguage, unsigned long hContext,
-		SCARDHANDLE hCard, const char *csReader);
+		     bool CheckLib(const std::string & csPinpadDir,
+				   const char *csFileName,
+				   unsigned long ulLanguage,
+				   unsigned long hContext, SCARDHANDLE hCard,
+				   const char *csReader);
 
-	CDynamicLib m_oPinpadLib;
-	int m_iLangIdx;
+		CDynamicLib m_oPinpadLib;
+		int m_iLangIdx;
 
-	BEID_OLD_VERIFY_PIN m_pVerifyPin;
-	BEID_OLD_CHANGE_PIN m_pChangePin;};
+		BEID_OLD_VERIFY_PIN m_pVerifyPin;
+		BEID_OLD_CHANGE_PIN m_pChangePin;
+	};
 
 }
 

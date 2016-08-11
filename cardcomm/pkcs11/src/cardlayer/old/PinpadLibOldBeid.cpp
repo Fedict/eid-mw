@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -25,7 +26,7 @@
 
 using namespace eIDMW;
 
-static char *tcsLangs[4] = {"en", "nl", "fr", "de"};
+static char *tcsLangs[4] = { "en", "nl", "fr", "de" };
 
 static char *tcsUsageSig[4] = {
 	"Signature",
@@ -41,21 +42,27 @@ static char *tcsUsageAuth[4] = {
 	"Authentifizierung"
 };
 
-static unsigned char aid_belpic[] = {0xA0, 0x00, 0x00, 0x01, 0x77, 0x50, 0x4B, 0x43, 0x53, 0x2D, 0x31, 0x35};
+static unsigned char aid_belpic[] =
+	{ 0xA0, 0x00, 0x00, 0x01, 0x77, 0x50, 0x4B, 0x43, 0x53, 0x2D, 0x31,
+0x35 };
 
 static SCR_Application xApp = {
-	{aid_belpic, sizeof(aid_belpic)},
+	{aid_belpic, sizeof(aid_belpic)}
+	,
 	"ID",
 	NULL
 };
 
 static int LangToId(unsigned long ulLanguage)
 {
-	switch(ulLanguage)
+	switch (ulLanguage)
 	{
-	case 0x0813: return 1;//LANG_NL
-	case 0x080c: return 2;//LANG_FR
-	case 0x0407: return 3;//LANG_DE
+		case 0x0813:
+			return 1;	//LANG_NL
+		case 0x080c:
+			return 2;	//LANG_FR
+		case 0x0407:
+			return 3;	//LANG_DE
 	}
 	return 0;
 }
@@ -74,11 +81,13 @@ CPinpadLibOldBeid::~CPinpadLibOldBeid()
 }
 
 bool CPinpadLibOldBeid::Load(unsigned long hContext, SCARDHANDLE hCard,
-	const std::string & strReader, const std::string & strPinpadPrefix,
-	unsigned long ulLanguage)
+			     const std::string & strReader,
+			     const std::string & strPinpadPrefix,
+			     unsigned long ulLanguage)
 {
 	bool bPinpadLibFound = false;
 	char csSystemDir[_MAX_PATH];
+
 	GetSystemDirectoryA(csSystemDir, sizeof(csSystemDir) - 50);
 
 	// E.g. "C:\WINDOWS\System32\beidpp\" or "/usr/local/lib/pteidpp/"
@@ -93,20 +102,24 @@ bool CPinpadLibOldBeid::Load(unsigned long hContext, SCARDHANDLE hCard,
 
 	// Search for files in csPinpadDir that are candidate pinpad lib,
 	// load them and ask them if they support this reader + pinpad lib version
-    struct _finddata_t c_file;
+	struct _finddata_t c_file;
 	intptr_t hFile = _findfirst(csSearchFor, &c_file);
+
 	if (hFile != -1)
 	{
 		int iFindRes;
+
 		do
 		{
 			// Old pinpad lib are not assumed to start with "beidpp"
 			if (!StartsWithCI(c_file.name, csPinpadPrefix))
 			{
-				bPinpadLibFound = CheckLib(csPinpadDir, c_file.name,
-					ulLanguage, hContext, hCard, csReader);
+				bPinpadLibFound =
+					CheckLib(csPinpadDir, c_file.name,
+						 ulLanguage, hContext, hCard,
+						 csReader);
 				if (bPinpadLibFound)
-					break; // OK: a good pinpad lib was found and loaded
+					break;	// OK: a good pinpad lib was found and loaded
 			}
 
 			iFindRes = _findnext(hFile, &c_file);
@@ -122,22 +135,35 @@ bool CPinpadLibOldBeid::Load(unsigned long hContext, SCARDHANDLE hCard,
 
 		// Append a \ to the system dir name
 		size_t len = strlen(csSystemDir);
+
 		csSystemDir[len++] = '\\';
 		csSystemDir[len] = '\0';
-		struct {
-			char* name;
-			char* dll;
-		} libs[] = {
-			{ "Xiring X", "xireid.dll" },
-			{ "Cherry ", "ch44xxeid.dll" },
-			{ "SCM Microsystems Inc. SPRx32 USB Smart Card Reader", "sprx32eid.dll" },
-		};
+		struct
+		{
+			char *name;
+			char *dll;
+		} libs[] =
+		{
+			{
+			"Xiring X", "xireid.dll"},
+			{
+			"Cherry ", "ch44xxeid.dll"},
+			{
+		"SCM Microsystems Inc. SPRx32 USB Smart Card Reader",
+					"sprx32eid.dll"},};
 
-		for(int i=0; i<sizeof(libs) / sizeof(libs[0]) && !bPinpadLibFound; i++) {
-			if(!strncmp(csReader, libs[i].name, strlen(libs[i].name))) {
+		for (int i = 0;
+		     i < sizeof(libs) / sizeof(libs[0]) && !bPinpadLibFound;
+		     i++)
+		{
+			if (!strncmp
+			    (csReader, libs[i].name, strlen(libs[i].name)))
+			{
 				bPinpadLibFound = CheckLib(csSystemDir,
-						libs[i].dll, ulLanguage,
-						hContext, hCard, csReader);
+							   libs[i].dll,
+							   ulLanguage,
+							   hContext, hCard,
+							   csReader);
 			}
 		}
 	}
@@ -153,24 +179,29 @@ void CPinpadLibOldBeid::UnLoad()
 	m_oPinpadLib.Close();
 }
 
-static unsigned char tucErrTimeout[] = {0x64, 0x00};
-static unsigned char tucErrCancel[] = {0x64, 0x01};
-static unsigned char tucErrPinsDiffer[] = {0x64, 0x02};
-static unsigned char tucErrGeneral[] = {0x6B, 0x80};
+static unsigned char tucErrTimeout[] = { 0x64, 0x00 };
+static unsigned char tucErrCancel[] = { 0x64, 0x01 };
+static unsigned char tucErrPinsDiffer[] = { 0x64, 0x02 };
+static unsigned char tucErrGeneral[] = { 0x6B, 0x80 };
 
-CByteArray CPinpadLibOldBeid::PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
-	CByteArray oCmd, unsigned char ucPintype, unsigned char ucOperation)
+CByteArray CPinpadLibOldBeid::PinCmd(SCARDHANDLE hCard,
+				     unsigned long ulControl, CByteArray oCmd,
+				     unsigned char ucPintype,
+				     unsigned char ucOperation)
 {
 	if (ulControl == CCID_IOCTL_GET_FEATURE_REQUEST)
 	{
-		unsigned char tucFeatures[] = {0x06, 0x04, 0x00, 0x31, 0x32, 0x33, 0x07, 0x04, 0x00 ,0x31, 0x32, 0x33};
+		unsigned char tucFeatures[] =
+			{ 0x06, 0x04, 0x00, 0x31, 0x32, 0x33, 0x07, 0x04,
+	  0x00, 0x31, 0x32, 0x33 };
 		return CByteArray(tucFeatures, sizeof(tucFeatures));
 	}
 
 	SCR_Card xCard = {
 		hCard,
 		tcsLangs[m_iLangIdx],
-		{NULL, 0},
+		{NULL, 0}
+		,
 		NULL
 	};
 	unsigned char tucStatus[2];
@@ -179,42 +210,50 @@ CByteArray CPinpadLibOldBeid::PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 	if (ucOperation == EIDMW_PP_OP_VERIFY)
 	{
 		SCR_PinUsage xPinUsage = {
-			ucPintype == EIDMW_PP_TYPE_SIGN ? SCR_USAGE_SIGN: SCR_USAGE_AUTH,
+			ucPintype ==
+				EIDMW_PP_TYPE_SIGN ? SCR_USAGE_SIGN :
+				SCR_USAGE_AUTH,
 			ucPintype == EIDMW_PP_TYPE_SIGN ? "SIG" : "AUT",
-			ucPintype == EIDMW_PP_TYPE_SIGN ? tcsUsageSig[m_iLangIdx] : tcsUsageAuth[m_iLangIdx]
+			ucPintype ==
+				EIDMW_PP_TYPE_SIGN ? tcsUsageSig[m_iLangIdx] :
+				tcsUsageAuth[m_iLangIdx]
 		};
 
-		lRet = m_pVerifyPin(&xCard, oCmd.GetByte(22), &xPinUsage, &xApp, tucStatus);
-	}
-	else if (ucOperation == EIDMW_PP_OP_CHANGE)
+		lRet = m_pVerifyPin(&xCard, oCmd.GetByte(22), &xPinUsage,
+				    &xApp, tucStatus);
+	} else if (ucOperation == EIDMW_PP_OP_CHANGE)
 	{
-		lRet = m_pChangePin(&xCard, oCmd.GetByte(27), &xApp, tucStatus);	
-	}
-	else
+		lRet = m_pChangePin(&xCard, oCmd.GetByte(27), &xApp,
+				    tucStatus);
+	} else
 		throw CMWEXCEPTION(EIDMW_ERR_PIN_OPERATION);
 
 	CByteArray oResp(2);
-	switch(lRet)
+
+	switch (lRet)
 	{
-	case SCARD_S_SUCCESS:
-		if (tucStatus[0] == 0xEC && tucStatus[1] == 0xD2)
-			oResp.Append(tucErrTimeout, sizeof(tucErrTimeout));
-		else if (tucStatus[0] == 0xEC && tucStatus[1] == 0xD6)
+		case SCARD_S_SUCCESS:
+			if (tucStatus[0] == 0xEC && tucStatus[1] == 0xD2)
+				oResp.Append(tucErrTimeout,
+					     sizeof(tucErrTimeout));
+			else if (tucStatus[0] == 0xEC && tucStatus[1] == 0xD6)
+				oResp.Append(tucErrCancel,
+					     sizeof(tucErrCancel));
+			else
+				oResp.Append(tucStatus, 2);
+			break;
+		case SCARD_E_CANCELLED:
 			oResp.Append(tucErrCancel, sizeof(tucErrCancel));
-		else
-			oResp.Append(tucStatus, 2);
-		break;
-	case SCARD_E_CANCELLED:
-		oResp.Append(tucErrCancel, sizeof(tucErrCancel));
-		break;
-	case SCARD_W_REMOVED_CARD:
-		throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-		break;
-	case SCR_I_PIN_CHECK_FAILED:
-		oResp.Append(tucErrPinsDiffer, sizeof(tucErrPinsDiffer));
-		break;
-	default:
-		oResp.Append(tucErrGeneral, sizeof(tucErrGeneral));
+			break;
+		case SCARD_W_REMOVED_CARD:
+			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
+			break;
+		case SCR_I_PIN_CHECK_FAILED:
+			oResp.Append(tucErrPinsDiffer,
+				     sizeof(tucErrPinsDiffer));
+			break;
+		default:
+			oResp.Append(tucErrGeneral, sizeof(tucErrGeneral));
 	}
 
 	return oResp;
@@ -225,10 +264,11 @@ bool CPinpadLibOldBeid::UseOldLib()
 	return m_pVerifyPin != NULL && m_pChangePin != NULL;
 }
 
-bool CPinpadLibOldBeid::CheckLib(
-	const std::string & csPinpadDir, const char *csFileName,
-	unsigned long ulLanguage, unsigned long hContext,
-	SCARDHANDLE hCard, const char *csReader)
+bool CPinpadLibOldBeid::CheckLib(const std::string & csPinpadDir,
+				 const char *csFileName,
+				 unsigned long ulLanguage,
+				 unsigned long hContext, SCARDHANDLE hCard,
+				 const char *csReader)
 {
 	bool bRet = false;
 
@@ -242,12 +282,18 @@ bool CPinpadLibOldBeid::CheckLib(
 
 	// Load the pinpad lib
 	unsigned long ulRes = m_oPinpadLib.Open(csPinpadDir + csFileName);
+
 	if (ulRes == EIDMW_OK)
 	{
 		// Get the 3 functions
-		pInit = (BEID_OLD_PP_INIT) m_oPinpadLib.GetAddress("SCR_Init");
-		pVerifyPin = (BEID_OLD_VERIFY_PIN) m_oPinpadLib.GetAddress("SCR_VerifyPIN");
-		pChangePin = (BEID_OLD_CHANGE_PIN) m_oPinpadLib.GetAddress("SCR_ChangePIN");
+		pInit = (BEID_OLD_PP_INIT) m_oPinpadLib.
+			GetAddress("SCR_Init");
+		pVerifyPin =
+			(BEID_OLD_VERIFY_PIN) m_oPinpadLib.
+			GetAddress("SCR_VerifyPIN");
+		pChangePin =
+			(BEID_OLD_CHANGE_PIN) m_oPinpadLib.
+			GetAddress("SCR_ChangePIN");
 
 		if (pInit == NULL || pVerifyPin == NULL || pChangePin == NULL)
 			m_oPinpadLib.Close();
@@ -255,8 +301,10 @@ bool CPinpadLibOldBeid::CheckLib(
 		{
 			SCR_SupportConstants supported;
 			long lRet = pInit(csReader, 1, &supported);
-			if (lRet == SCARD_S_SUCCESS && supported == SCR_SUPPORT_OK)
-				bRet = true; // OK, the pinpad lib supports this reader
+
+			if (lRet == SCARD_S_SUCCESS
+			    && supported == SCR_SUPPORT_OK)
+				bRet = true;	// OK, the pinpad lib supports this reader
 			else
 				m_oPinpadLib.Close();
 		}

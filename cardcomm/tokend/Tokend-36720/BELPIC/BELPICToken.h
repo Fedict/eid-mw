@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -41,47 +42,53 @@ class BELPICSchema;
 //
 // "The" token
 //
-class BELPICToken : public Tokend::ISO7816Token
+class BELPICToken:public Tokend::ISO7816Token
 {
-	NOCOPY(BELPICToken)
-public:
+NOCOPY(BELPICToken) public:
 	BELPICToken();
 	~BELPICToken();
 
 	virtual void didDisconnect();
 	virtual void didEnd();
 
-    virtual uint32 probe(SecTokendProbeFlags flags,
-		char tokenUid[TOKEND_MAX_UID]);
-	virtual void establish(const CSSM_GUID *guid, uint32 subserviceId,
-		SecTokendEstablishFlags flags, const char *cacheDirectory,
-		const char *workDirectory, char mdsDirectory[PATH_MAX],
-		char printName[PATH_MAX]);
-	virtual void getOwner(AclOwnerPrototype &owner);
-	virtual void getAcl(const char *tag, uint32 &count, AclEntryInfo *&acls);
+	virtual uint32 probe(SecTokendProbeFlags flags,
+			     char tokenUid[TOKEND_MAX_UID]);
+	virtual void establish(const CSSM_GUID * guid, uint32 subserviceId,
+			       SecTokendEstablishFlags flags,
+			       const char *cacheDirectory,
+			       const char *workDirectory,
+			       char mdsDirectory[PATH_MAX],
+			       char printName[PATH_MAX]);
+	virtual void getOwner(AclOwnerPrototype & owner);
+	virtual void getAcl(const char *tag, uint32 & count,
+			    AclEntryInfo * &acls);
 
 	virtual void changePIN(int pinNum,
-		const unsigned char *oldPin, size_t oldPinLength,
-		const unsigned char *newPin, size_t newPinLength);
+			       const unsigned char *oldPin,
+			       size_t oldPinLength,
+			       const unsigned char *newPin,
+			       size_t newPinLength);
 	virtual uint32_t pinStatus(int pinNum);
-	virtual void verifyPIN(int pinNum, const unsigned char *pin, size_t pinLength);
-	void _verifyPIN(int pinNum, const unsigned char *pin, size_t pinLength);
+	virtual void verifyPIN(int pinNum, const unsigned char *pin,
+			       size_t pinLength);
+	void _verifyPIN(int pinNum, const unsigned char *pin,
+			size_t pinLength);
 	virtual void unverifyPIN(int pinNum);
 
-	void select(const uint8_t *df, const uint8_t *ef);
-	void selectKeyForSign(const uint8_t *keyId);
-	void readBinary(uint8_t *result, size_t &resultLength);
-	uint32_t exchangeAPDU(const uint8_t *apdu, size_t apduLength,
-                          uint8_t *result, size_t &resultLength);
+	void select(const uint8_t * df, const uint8_t * ef);
+	void selectKeyForSign(const uint8_t * keyId);
+	void readBinary(uint8_t * result, size_t & resultLength);
+	uint32_t exchangeAPDU(const uint8_t * apdu, size_t apduLength,
+			      uint8_t * result, size_t & resultLength);
 
 	static int usleep(int iTimeVal);
-    uint32_t getKeySize(const uint8_t *df, const uint8_t *ef);
-	
+	uint32_t getKeySize(const uint8_t * df, const uint8_t * ef);
+
 protected:
-    bool mPPDU;
+	bool mPPDU;
 	uint8_t pinDigit(uint8_t digit);
 	void populate();
-    void checkPPDUSupport();
+	void checkPPDUSupport();
 
 public:
 	const uint8_t *mCurrentDF;
@@ -96,4 +103,3 @@ public:
 
 
 #endif /* !_BELPICTOKEN_H_ */
-

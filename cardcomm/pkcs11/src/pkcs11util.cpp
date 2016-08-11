@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -51,19 +52,19 @@ unsigned char p11_get_init(void)
 
 void memwash(char *p_in, unsigned int len)
 {
-  for(; len > 0; len--)
-    *p_in++ = 0x00;
+	for (; len > 0; len--)
+		*p_in++ = 0x00;
 
-  return;
+	return;
 }
 
 
 void strcpy_n(unsigned char *to, const char *from, size_t n, char padding)
 {
-   size_t c = strlen(from) > n ? n : (int) strlen(from);
-        
-   memset((char*) to, padding, n);
-   memcpy((char*) to, from, c);  //do not copy 0 char
+	size_t c = strlen(from) > n ? n : (int) strlen(from);
+
+	memset((char *) to, padding, n);
+	memcpy((char *) to, from, c);	//do not copy 0 char
 }
 
 
@@ -74,26 +75,27 @@ void strcpy_n(unsigned char *to, const char *from, size_t n, char padding)
  */
 CK_RV p11_init_lock(CK_C_INITIALIZE_ARGS_PTR args)
 {
-int ret = CKR_OK;
+	int ret = CKR_OK;
 
-if (_lock)
-   return CKR_OK;
+	if (_lock)
+		return CKR_OK;
 
 // No CK_C_INITIALIZE_ARGS pointer, no locking 
-if (!args)
-   return CKR_OK;
+	if (!args)
+		return CKR_OK;
 
 //if (args->pReserved)
 //   return CKR_ARGUMENTS_BAD;
 
 //If the app tells us OS locking is okay,
 //use that. Otherwise use the supplied functions.
-_locking = NULL;
+	_locking = NULL;
 
-g_mutex_users = 0;
+	g_mutex_users = 0;
 
-if (args->flags & CKF_OS_LOCKING_OK)
-   {
+	if (args->flags & CKF_OS_LOCKING_OK)
+	{
+
 /*
 #if (defined(HAVE_PTHREAD) && !defined(PKCS11_THREAD_LOCKING))
                 // FIXME:
@@ -111,21 +113,22 @@ if (args->flags & CKF_OS_LOCKING_OK)
                 //
                  return CKR_OK;
 #endif*/
-   _lock = (void*) &g_mutex;
-      //g_Mutex = new CMutex();
-      //if (g_Mutex == NULL)
-      //   ret = CKR_CANT_LOCK;
-   } 
+		_lock = (void *) &g_mutex;
+		//g_Mutex = new CMutex();
+		//if (g_Mutex == NULL)
+		//   ret = CKR_CANT_LOCK;
+	}
 #undef CreateMutex
-else if (args->CreateMutex && args->DestroyMutex && args->LockMutex && args->UnlockMutex) 
-   {
-   ret = args->CreateMutex(&_lock);
-   if (ret == CKR_OK)
-      _locking = args;  
-   }
+	else if (args->CreateMutex && args->DestroyMutex && args->LockMutex
+		 && args->UnlockMutex)
+	{
+		ret = args->CreateMutex(&_lock);
+		if (ret == CKR_OK)
+			_locking = args;
+	}
 #define CreateMutex CreateMutexW
 
-return ret;
+	return ret;
 }
 
 CK_RV p11_lock()
@@ -134,13 +137,12 @@ CK_RV p11_lock()
 	//              return CKR_CRYPTOKI_NOT_INITIALIZED;
 	if (!_lock)
 		return CKR_OK;
-	if (_locking)  
+	if (_locking)
 	{
 		g_mutex_users++;
-		while (_locking->LockMutex(_lock) != CKR_OK)       
+		while (_locking->LockMutex(_lock) != CKR_OK)
 			;
-	}
-	else
+	} else
 	{
 		g_mutex_users++;
 		g_mutex.Lock();
@@ -154,15 +156,16 @@ static void __p11_unlock(void *lock)
 		return;
 	if (_locking)
 	{
-		while (_locking->UnlockMutex(lock) != CKR_OK)    ;
-		if(g_mutex_users > 0){
+		while (_locking->UnlockMutex(lock) != CKR_OK) ;
+		if (g_mutex_users > 0)
+		{
 			g_mutex_users--;
 		}
-	}
-	else
+	} else
 	{
 		g_mutex.Unlock();
-		if(g_mutex_users > 0){
+		if (g_mutex_users > 0)
+		{
 			g_mutex_users--;
 		}
 	}
@@ -171,7 +174,7 @@ static void __p11_unlock(void *lock)
 
 void p11_unlock()
 {
-   __p11_unlock(_lock);
+	__p11_unlock(_lock);
 }
 
 /*
@@ -181,73 +184,74 @@ void p11_unlock()
 void p11_free_lock()
 {
 
-void  *tempLock;
+	void *tempLock;
 
-int counter = 0;
+	int counter = 0;
 
-if (!(tempLock = _lock))
-    return;
+	if (!(tempLock = _lock))
+		return;
 
 //if another thread is still waiting for the mutex,
 //do not lose hold of it (try up to 500 ms, as hanging is even worse)
-while ((g_mutex_users > 1) && (counter < 10))
-{
-	p11_unlock();
-	CThread::SleepMillisecs(50);
-	counter++;
-	p11_lock();
-}
+	while ((g_mutex_users > 1) && (counter < 10))
+	{
+		p11_unlock();
+		CThread::SleepMillisecs(50);
+		counter++;
+		p11_lock();
+	}
 
 /* Clear the global lock pointer - once we've
 * unlocked the mutex it's as good as gone */
-_lock = NULL;
+	_lock = NULL;
 
 /* Now unlock. On SMP machines the synchronization
 * primitives should take care of flushing cleanup 
 * all changed data to RAM */
-__p11_unlock(tempLock);
+	__p11_unlock(tempLock);
 
-if (_locking)
-    _locking->DestroyMutex(tempLock);
-else
-   {
+	if (_locking)
+		_locking->DestroyMutex(tempLock);
+	else
+	{
 		//g_mutex will always be there
-   //sc_mutex_free((sc_mutex_t *) tempLock);
-   }
-_locking = NULL;
+		//sc_mutex_free((sc_mutex_t *) tempLock);
+	}
+	_locking = NULL;
 }
 
 
 
 void util_init_lock(void **lock)
 {
-if (*lock == NULL)
-   *lock = (void*) new CMutex();
+	if (*lock == NULL)
+		*lock = (void *) new CMutex();
 }
 
 void util_clean_lock(void **lock)
 {
-if(*lock)
-   delete((CMutex*)*lock);
+	if (*lock)
+		delete((CMutex *) * lock);
 
-*lock = NULL;
+	*lock = NULL;
 }
 
 void util_lock(void *lock)
 {
-if(lock)
-   {
-   CMutex *mutex = (CMutex*) lock;
-   mutex->Lock();
-   }
+	if (lock)
+	{
+		CMutex *mutex = (CMutex *) lock;
+
+		mutex->Lock();
+	}
 }
 
 void util_unlock(void *lock)
 {
-if(lock)
-   {
-   CMutex *mutex = (CMutex*) lock;
-   mutex->Unlock();
-   }
-}
+	if (lock)
+	{
+		CMutex *mutex = (CMutex *) lock;
 
+		mutex->Unlock();
+	}
+}

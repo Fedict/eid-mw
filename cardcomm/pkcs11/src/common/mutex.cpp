@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -34,60 +35,71 @@
 namespace eIDMW
 {
 
-CMutex::CMutex()
-{
+	CMutex::CMutex()
+	{
 #ifdef WIN32
-	InitializeCriticalSection(&m_Mutex);
+		InitializeCriticalSection(&m_Mutex);
 #else
-	pthread_mutexattr_t attr;
-	pthread_mutexattr_init(&attr);
-	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-	pthread_mutex_init(&m_Mutex, &attr);
+		pthread_mutexattr_t attr;
+		                    pthread_mutexattr_init(&attr);
+		         
+			 
+			 
+			 
+			 
+			 
+			pthread_mutexattr_settype(&attr,
+						  PTHREAD_MUTEX_RECURSIVE);
+		                    pthread_mutex_init(&m_Mutex, &attr);
 #endif
-}
-
-CMutex::~CMutex()
-{
-#ifdef WIN32
-	EnterCriticalSection(&m_Mutex);
-	LeaveCriticalSection(&m_Mutex);
-	DeleteCriticalSection(&m_Mutex);
-#else
-	// We should maybe use a conditional macro to do the
-	// __builtin_expect below so that it only gets used when we're
-	// using a compiler which supports that. However, since we're
-	// already in the non-win32 section here, we're either compiling
-	// on OSX (clang) or Linux (gcc or clang), which means we do
-	// have support for that. So ignore.
-	if(__builtin_expect(pthread_mutex_destroy(&m_Mutex), 0)) {
-		switch(errno) {
-			case EBUSY:
-				MWLOG(LEV_CRIT, MOD_LIB, L"trying to destroy a mutex which is still in use!");
-				break;
-			case EINVAL:
-				MWLOG(LEV_CRIT, MOD_LIB, L"trying to destroy an invalid mutex!");
-				break;
-		}
 	}
-#endif
-}
 
-void CMutex::Lock()
-{
+	CMutex:: ~CMutex()
+	{
 #ifdef WIN32
-	EnterCriticalSection(&m_Mutex);
+		EnterCriticalSection(&m_Mutex);
+		LeaveCriticalSection(&m_Mutex);
+		DeleteCriticalSection(&m_Mutex);
 #else
-	pthread_mutex_lock(&m_Mutex);
+		// We should maybe use a conditional macro to do the
+		// __builtin_expect below so that it only gets used when we're
+		// using a compiler which supports that. However, since we're
+		// already in the non-win32 section here, we're either compiling
+		// on OSX (clang) or Linux (gcc or clang), which means we do
+		// have support for that. So ignore.
+		if (__builtin_expect(pthread_mutex_destroy(&m_Mutex), 0))
+		{
+			switch (errno)
+			{
+				case EBUSY:
+					MWLOG(LEV_CRIT, MOD_LIB,
+					      L"trying to destroy a mutex which is still in use!");
+					break;
+				case EINVAL:
+					MWLOG(LEV_CRIT, MOD_LIB,
+					      L"trying to destroy an invalid mutex!");
+					break;
+			}
+		}
 #endif
-}
+	}
 
-void CMutex::Unlock()
-{
+	void CMutex::Lock()
+	{
 #ifdef WIN32
-	LeaveCriticalSection(&m_Mutex);
+		EnterCriticalSection(&m_Mutex);
 #else
-	pthread_mutex_unlock(&m_Mutex);
+		pthread_mutex_lock(&m_Mutex);
 #endif
-}
+	}
+
+	void CMutex::Unlock()
+	{
+#ifdef WIN32
+		LeaveCriticalSection(&m_Mutex);
+#else
+		pthread_mutex_unlock(&m_Mutex);
+#endif
+	}
 
 }

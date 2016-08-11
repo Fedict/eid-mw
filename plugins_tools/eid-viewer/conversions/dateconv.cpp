@@ -3,14 +3,19 @@
 #include <cstdlib>
 #include <iomanip>
 
-void XmlDateParser::input(EID_STRING original) {
-	year = original.substr(0,4);
-	month = (int)EID_STRTOL(original.substr(4,2).c_str(), NULL, 10);
-	day = original.substr(6,2);
+void XmlDateParser::input(EID_STRING original)
+{
+	year = original.substr(0, 4);
+	month = (int) EID_STRTOL(original.substr(4, 2).c_str(), NULL, 10);
+	day = original.substr(6, 2);
 }
 
-EID_STRING XmlDateWriter::output() {
+EID_STRING XmlDateWriter::output()
+{
 	EID_OSTRINGSTREAM s;
-	s << parser->year << std::setfill(TEXT('0')) << std::setw(2) << parser->month << parser->day;
+
+	s << parser->
+		year << std::setfill(TEXT('0')) << std::setw(2) << parser->
+		month << parser->day;
 	return s.str();
 }

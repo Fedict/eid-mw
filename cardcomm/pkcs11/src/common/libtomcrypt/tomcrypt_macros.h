@@ -2,20 +2,20 @@
 
 /* fix for MSVC ...evil! */
 #ifdef _MSC_VER
-   #define CONST64(n) n ## ui64
-   typedef unsigned __int64 ulong64;
+#define CONST64(n) n ## ui64
+typedef unsigned __int64 ulong64;
 #else
-   #define CONST64(n) n ## ULL
-   typedef unsigned long long ulong64;
+#define CONST64(n) n ## ULL
+typedef unsigned long long ulong64;
 #endif
 
 /* this is the "32-bit at least" data type 
  * Re-define it to suit your platform but it must be at least 32-bits 
  */
 #if defined(__x86_64__)
-   typedef unsigned ulong32;
+typedef unsigned ulong32;
 #else
-   typedef unsigned long ulong32;
+typedef unsigned long ulong32;
 #endif
 
 /* ---- HELPER MACROS ---- */
@@ -91,7 +91,7 @@
          (((ulong64)((y)[4] & 255))<<24)|(((ulong64)((y)[5] & 255))<<16) | \
          (((ulong64)((y)[6] & 255))<<8)|(((ulong64)((y)[7] & 255))); }
 
-#ifdef ENDIAN_32BITWORD 
+#ifdef ENDIAN_32BITWORD
 
 #define STORE32L(x, y)        \
      { unsigned long __t = (x); memcpy(y, &__t, 4); }
@@ -152,7 +152,7 @@
          (((ulong64)((y)[3] & 255))<<24)|(((ulong64)((y)[2] & 255))<<16) | \
          (((ulong64)((y)[1] & 255))<<8)|(((ulong64)((y)[0] & 255))); }
 
-#ifdef ENDIAN_32BITWORD 
+#ifdef ENDIAN_32BITWORD
 
 #define STORE32H(x, y)        \
      { unsigned long __t = (x); memcpy(y, &__t, 4); }
@@ -208,18 +208,14 @@
 
 static inline unsigned ROL(unsigned word, int i)
 {
-   asm ("roll %%cl,%0"
-      :"=r" (word)
-      :"0" (word),"c" (i));
-   return word;
+asm("roll %%cl,%0": "=r"(word):"0"(word), "c"(i));
+	return word;
 }
 
 static inline unsigned ROR(unsigned word, int i)
 {
-   asm ("rorl %%cl,%0"
-      :"=r" (word)
-      :"0" (word),"c" (i));
-   return word;
+asm("rorl %%cl,%0": "=r"(word):"0"(word), "c"(i));
+	return word;
 }
 
 #ifndef LTC_NO_ROLC
@@ -265,18 +261,14 @@ __RORc_tmp; \
 
 static inline unsigned long ROL64(unsigned long word, int i)
 {
-   asm("rolq %%cl,%0"
-      :"=r" (word)
-      :"0" (word),"c" (i));
-   return word;
+asm("rolq %%cl,%0": "=r"(word):"0"(word), "c"(i));
+	return word;
 }
 
 static inline unsigned long ROR64(unsigned long word, int i)
 {
-   asm("rorq %%cl,%0"
-      :"=r" (word)
-      :"0" (word),"c" (i));
-   return word;
+asm("rorq %%cl,%0": "=r"(word):"0"(word), "c"(i));
+	return word;
 }
 
 #ifndef LTC_NO_ROLC
@@ -332,7 +324,7 @@ __ROR64c_tmp; \
 
 /* extract a byte portably */
 #ifdef _MSC_VER
-   #define byte(x, n) ((unsigned char)((x) >> (8 * (n))))
+#define byte(x, n) ((unsigned char)((x) >> (8 * (n))))
 #else
-   #define byte(x, n) (((x) >> (8 * (n))) & 255)
-#endif   
+#define byte(x, n) (((x) >> (8 * (n))) & 255)
+#endif

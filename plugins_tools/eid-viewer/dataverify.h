@@ -1,5 +1,6 @@
 #ifndef EID_VWR_DATAVERIFY_H
 #define EID_VWR_DATAVERIFY_H
+
 /**
   * \brief Check that the data on the card is correctly signed.
   *
@@ -39,12 +40,12 @@
   * \return 0 if one of the above-described tests indicates invalid
   * data, or 1 if all tests were successful.
   */
-int eid_vwr_check_data_validity(const void* photo, int plen,
-			const void* photohash, int hashlen,
-			const void* datafile, int datfilelen,
-			const void* datasig, int datsiglen,
-			const void* addrfile, int addfilelen,
-			const void* addrsig, int addsiglen,
-			const void* rrncert, int certlen);
-int eid_vwr_verify_card(void* data);
+int eid_vwr_check_data_validity(const void *photo, int plen,
+				const void *photohash, int hashlen,
+				const void *datafile, int datfilelen,
+				const void *datasig, int datsiglen,
+				const void *addrfile, int addfilelen,
+				const void *addrsig, int addsiglen,
+				const void *rrncert, int certlen);
+int eid_vwr_verify_card(void *data);
 #endif

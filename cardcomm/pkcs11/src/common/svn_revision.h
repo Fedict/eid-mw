@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -24,4 +25,3 @@
 #define SVN_REVISION_STR "6254"
 
 #endif //__SVN_REVISION_H__
-

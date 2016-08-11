@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
 * eID Middleware Project.
@@ -21,4 +22,5 @@
 #include "certreg.h"
 
 
-CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pAutoFlags);
+CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
+		       DWORD * pAutoFlags);

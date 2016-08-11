@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -25,7 +26,8 @@
 #include "util.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #define CLEANUP(a)   { ret = (a); goto cleanup; }
@@ -63,7 +65,7 @@ extern "C" {
 #define CACHED_DATA_TYPE_RNCERT			0x010
 #define CACHED_DATA_TYPE_SIGN_DATA_FILE		0x020
 #define CACHED_DATA_TYPE_SIGN_ADDRESS_FILE	0x040
-#define CACHED_DATA_TYPE_ALL_DATA		0x07F //All the above are set
+#define CACHED_DATA_TYPE_ALL_DATA		0x07F	//All the above are set
 #define CACHED_DATA_TYPE_CDF			0x080
 #define CACHED_DATA_TYPE_AUTH_CERT		0x100
 #define CACHED_DATA_TYPE_SIGN_CERT		0x200
@@ -99,11 +101,11 @@ extern "C" {
 #define P11_EVENT_INSERT            1
 #define P11_EVENT_REMOVE           -1
 
-typedef struct CARD_TYPE
+	typedef struct CARD_TYPE
 	{
-	char* atr;
-	char* label;
-	int   type;
+		char *atr;
+		char *label;
+		int type;
 	} CARD_TYPE;
 
 //extern CARD_TYPE g_CardTypeTable[];
@@ -121,38 +123,38 @@ typedef struct CARD_TYPE
 }
 
 #if 0
-typedef struct P11_TOKEN
-{
-SCARDHANDLE hdl;
-int			isT1;
-int			type;
-char			a_cType[MAX_LABEL_LENGTH];
-char			atr[MAX_ATR_LENGTH];
-} P11_TOKEN;
+	typedef struct P11_TOKEN
+	{
+		SCARDHANDLE hdl;
+		int isT1;
+		int type;
+		char a_cType[MAX_LABEL_LENGTH];
+		char atr[MAX_ATR_LENGTH];
+	} P11_TOKEN;
 #endif
 
-typedef struct P11_OBJECT
-{
-int inuse;
-int state;
-CK_ATTRIBUTE_PTR pAttr;
-CK_ULONG         count;
-} P11_OBJECT;
+	typedef struct P11_OBJECT
+	{
+		int inuse;
+		int state;
+		CK_ATTRIBUTE_PTR pAttr;
+		CK_ULONG count;
+	} P11_OBJECT;
 
 
-typedef struct P11_SLOT
-{
-char           name[MAX_SLOT_NAME];
-int            login_type;
-unsigned int   nsessions;
-unsigned int   connect;
-int            ievent;    //0:nothing   1:inserted    2:removed
+	typedef struct P11_SLOT
+	{
+		char name[MAX_SLOT_NAME];
+		int login_type;
+		unsigned int nsessions;
+		unsigned int connect;
+		int ievent;  //0:nothing   1:inserted    2:removed
 //P11_TOKEN      token;
-P11_OBJECT     *pobjects;
-unsigned int   nobjects;
-void           *pReader;  //CReader
-CK_ULONG       ulCardDataCached;
-} P11_SLOT;
+		P11_OBJECT *pobjects;
+		unsigned int nobjects;
+		void *pReader;	//CReader
+		CK_ULONG ulCardDataCached;
+	} P11_SLOT;
 
 //pReader = &oReader;
 
@@ -167,114 +169,142 @@ CK_ULONG       ulCardDataCached;
 #define P11_READDATA_REFUSED    2
 #define P11_READDATA_ALWAYS			3
 
-typedef struct P11_OPERATION
-{
-int   type;
-int   active;
-void  *pData;
-} P11_OPERATION;
+	typedef struct P11_OPERATION
+	{
+		int type;
+		int active;
+		void *pData;
+	} P11_OPERATION;
 
-typedef struct P11_SESSION
-{
-int               inuse;
-CK_SLOT_ID        hslot;
-CK_FLAGS          flags;
-CK_VOID_PTR       pdNotify;
-CK_NOTIFY         pfNotify;
-int               state;
+	typedef struct P11_SESSION
+	{
+		int inuse;
+		CK_SLOT_ID hslot;
+		CK_FLAGS flags;
+		CK_VOID_PTR pdNotify;
+		CK_NOTIFY pfNotify;
+		int state;
 //int               nObjects;
 //P11_OBJECT        **ppObjects;
-P11_OPERATION     Operation[P11_NUM_OPERATIONS];
-CK_BYTE						bReadDataAllowed;
-} P11_SESSION;
+		P11_OPERATION Operation[P11_NUM_OPERATIONS];
+		CK_BYTE bReadDataAllowed;
+	} P11_SESSION;
 
 
-typedef struct P11_MECHANISM_INFO
-{
-CK_MECHANISM_TYPE type;
-CK_ULONG          ulMinKeySize;
-CK_ULONG          ulMaxKeySize;
-CK_FLAGS          flags;
-} P11_MECHANISM_INFO;
+	typedef struct P11_MECHANISM_INFO
+	{
+		CK_MECHANISM_TYPE type;
+		CK_ULONG ulMinKeySize;
+		CK_ULONG ulMaxKeySize;
+		CK_FLAGS flags;
+	} P11_MECHANISM_INFO;
 
 
-typedef struct P11_FIND_DATA
-{
-CK_ATTRIBUTE_PTR pSearch;
-CK_ULONG size;
-CK_OBJECT_HANDLE hCurrent;
-} P11_FIND_DATA;
+	typedef struct P11_FIND_DATA
+	{
+		CK_ATTRIBUTE_PTR pSearch;
+		CK_ULONG size;
+		CK_OBJECT_HANDLE hCurrent;
+	} P11_FIND_DATA;
 
 
-typedef struct P11_DIGEST_DATA
-{
-int         update;
-void        *phash;
-unsigned int l_hash;
-} P11_DIGEST_DATA;
+	typedef struct P11_DIGEST_DATA
+	{
+		int update;
+		void *phash;
+		unsigned int l_hash;
+	} P11_DIGEST_DATA;
 
-typedef struct P11_SIGN_DATA
-{
-int update;
-CK_MECHANISM_TYPE mechanism;
-CK_OBJECT_HANDLE  hKey;
-CK_ULONG          l_sign;
-CK_ULONG          id;
-void              *phash;
-unsigned int      l_hash;
-char*             pbuf;
-unsigned int      lbuf;
-} P11_SIGN_DATA;
+	typedef struct P11_SIGN_DATA
+	{
+		int update;
+		CK_MECHANISM_TYPE mechanism;
+		CK_OBJECT_HANDLE hKey;
+		CK_ULONG l_sign;
+		CK_ULONG id;
+		void *phash;
+		unsigned int l_hash;
+		char *pbuf;
+		unsigned int lbuf;
+	} P11_SIGN_DATA;
 
 
 //void memwash(char *p_in, unsigned int len);
-int p11_get_token_type(char *atr, char* a_cType);
+	int p11_get_token_type(char *atr, char *a_cType);
 
 #if 0
-int p11_init();
-int p11_close();
-int p11_init_slots();
-int p11_connect(P11_SLOT *pReader);
-int p11_disconnect(P11_SLOT *pSlot);
-int p11_change_pin(P11_SLOT *pSlot, int l_oldpin, char *oldpin, int l_newpin, char *newpin);
-int p11_logon(P11_SLOT *pSlot, int l_pin, char *pin, int sec_messaging);
-int p11_logout(P11_SLOT *pSlot);
-int p11_sign(P11_SLOT *pSlot, P11_SIGN_DATA *pSignData, unsigned char* in, int l_in, unsigned char *out, unsigned int *l_out);
-int p11_read_certificate(P11_SLOT *pSlot, int *l_cert, char **pp_cert);
-CK_RV p11_get_mechanism_list(P11_SLOT *pSlot, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount);
-CK_RV p11_get_mechanism_info(P11_SLOT *pSlot, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo);
-CK_RV p11_get_token_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo);
-int p11_init_objects(P11_SLOT *pSlot);
-int p11_read_object(P11_SLOT *pSlot, P11_OBJECT *pObject);
+	int p11_init();
+	int p11_close();
+	int p11_init_slots();
+	int p11_connect(P11_SLOT * pReader);
+	int p11_disconnect(P11_SLOT * pSlot);
+	int p11_change_pin(P11_SLOT * pSlot, int l_oldpin, char *oldpin,
+			   int l_newpin, char *newpin);
+	int p11_logon(P11_SLOT * pSlot, int l_pin, char *pin,
+		      int sec_messaging);
+	int p11_logout(P11_SLOT * pSlot);
+	int p11_sign(P11_SLOT * pSlot, P11_SIGN_DATA * pSignData,
+		     unsigned char *in, int l_in, unsigned char *out,
+		     unsigned int *l_out);
+	int p11_read_certificate(P11_SLOT * pSlot, int *l_cert,
+				 char **pp_cert);
+	CK_RV p11_get_mechanism_list(P11_SLOT * pSlot,
+				     CK_MECHANISM_TYPE_PTR pMechanismList,
+				     CK_ULONG_PTR pulCount);
+	CK_RV p11_get_mechanism_info(P11_SLOT * pSlot, CK_MECHANISM_TYPE type,
+				     CK_MECHANISM_INFO_PTR pInfo);
+	CK_RV p11_get_token_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo);
+	int p11_init_objects(P11_SLOT * pSlot);
+	int p11_read_object(P11_SLOT * pSlot, P11_OBJECT * pObject);
 #endif
 
-P11_SLOT* p11_get_slot(unsigned int h);
-int p11_get_session(unsigned int h, P11_SESSION **ppSession);
-P11_OBJECT *p11_get_slot_object(P11_SLOT *pSlot, unsigned int h);
-int p11_get_nreaders();
+	P11_SLOT *p11_get_slot(unsigned int h);
+	int p11_get_session(unsigned int h, P11_SESSION ** ppSession);
+	P11_OBJECT *p11_get_slot_object(P11_SLOT * pSlot, unsigned int h);
+	int p11_get_nreaders();
 
-CK_RV p11_close_sessions_finalize();
-CK_RV p11_close_session(P11_SLOT*, P11_SESSION*);
-CK_RV p11_close_all_sessions(CK_SLOT_ID slotID);
-CK_RV p11_get_free_session(CK_SESSION_HANDLE_PTR phSession, P11_SESSION **ppSession);
-CK_RV p11_get_attribute_value(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_TYPE type, CK_VOID_PTR *ppVoid, CK_ULONG *len);
-CK_RV p11_set_attribute_value(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_TYPE type, CK_VOID_PTR pVoid, CK_ULONG len);
-CK_RV p11_copy_object(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_PTR pObject);
-CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
-						   CK_ULONG type, CK_BBOOL bPrivate, CK_ULONG *phObject,
-						   CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen, CK_VOID_PTR pobjectID, CK_ULONG objectIDLen);
-CK_RV p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken, CK_ULONG type, CK_ULONG id, CK_BBOOL bPrivate, CK_ULONG *phObject);
-void p11_clean_object(P11_OBJECT *pObject);
-void p11_clean_attributelist(CK_ATTRIBUTE_PTR pAttr, CK_ULONG ulCount);
-void p11_clean_finddata(P11_FIND_DATA* pFindData);
-CK_RV p11_find_slot_object(P11_SLOT *pSlot, CK_ULONG type, CK_ULONG id,  P11_OBJECT **pphObject);
-int p11_attribute_present(CK_ATTRIBUTE_TYPE type, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount);
-CK_RV p11_invalidate_sessions(CK_SLOT_ID hSlot, int status);
+	CK_RV p11_close_sessions_finalize();
+	CK_RV p11_close_session(P11_SLOT *, P11_SESSION *);
+	CK_RV p11_close_all_sessions(CK_SLOT_ID slotID);
+	CK_RV p11_get_free_session(CK_SESSION_HANDLE_PTR phSession,
+				   P11_SESSION ** ppSession);
+	CK_RV p11_get_attribute_value(CK_ATTRIBUTE_PTR pTemplate,
+				      CK_ULONG ulCount,
+				      CK_ATTRIBUTE_TYPE type,
+				      CK_VOID_PTR * ppVoid, CK_ULONG * len);
+	CK_RV p11_set_attribute_value(CK_ATTRIBUTE_PTR pTemplate,
+				      CK_ULONG ulCount,
+				      CK_ATTRIBUTE_TYPE type,
+				      CK_VOID_PTR pVoid, CK_ULONG len);
+	CK_RV p11_copy_object(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount,
+			      CK_ATTRIBUTE_PTR pObject);
+	CK_RV p11_add_slot_ID_object(P11_SLOT * pSlot,
+				     CK_ATTRIBUTE_PTR pTemplate,
+				     CK_ULONG ulCount, CK_BBOOL bToken,
+				     CK_ULONG type, CK_BBOOL bPrivate,
+				     CK_ULONG * phObject, CK_VOID_PTR plabel,
+				     CK_ULONG labelLen, CK_VOID_PTR pvalue,
+				     CK_ULONG valueLen, CK_VOID_PTR pobjectID,
+				     CK_ULONG objectIDLen);
+	CK_RV p11_add_slot_object(P11_SLOT * pSlot,
+				  CK_ATTRIBUTE_PTR pTemplate,
+				  CK_ULONG ulCount, CK_BBOOL bToken,
+				  CK_ULONG type, CK_ULONG id,
+				  CK_BBOOL bPrivate, CK_ULONG * phObject);
+	void p11_clean_object(P11_OBJECT * pObject);
+	void p11_clean_attributelist(CK_ATTRIBUTE_PTR pAttr,
+				     CK_ULONG ulCount);
+	void p11_clean_finddata(P11_FIND_DATA * pFindData);
+	CK_RV p11_find_slot_object(P11_SLOT * pSlot, CK_ULONG type,
+				   CK_ULONG id, P11_OBJECT ** pphObject);
+	int p11_attribute_present(CK_ATTRIBUTE_TYPE type,
+				  CK_ATTRIBUTE_PTR pTemplate,
+				  CK_ULONG ulCount);
+	CK_RV p11_invalidate_sessions(CK_SLOT_ID hSlot, int status);
 
 #ifdef __cplusplus
-   }
+}
 #endif
 
 
 #endif
-

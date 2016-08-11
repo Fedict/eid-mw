@@ -3,6 +3,6 @@
 
 #include <gtk/gtk.h>
 
-void do_print(GtkMenuItem* print, gpointer user_data);
+void do_print(GtkMenuItem * print, gpointer user_data);
 
 #endif

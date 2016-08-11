@@ -9,6 +9,4 @@
 #import <Foundation/Foundation.h>
 #import "binhandler.h"
 
-@interface photohandler : NSObject<binhandler>
-
-@end
+@ interface photohandler:NSObject < binhandler > @end

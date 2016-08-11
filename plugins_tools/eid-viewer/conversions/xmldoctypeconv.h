@@ -5,12 +5,13 @@
 #include <map>
 #include <string>
 
-class XmlDoctypeConvertor : public ConversionWorker {
+class XmlDoctypeConvertor:public ConversionWorker
+{
 private:
-	static std::map<EID_STRING, EID_STRING> conversions;
+	static std::map < EID_STRING, EID_STRING > conversions;
 public:
-	XmlDoctypeConvertor();
-	virtual EID_STRING convert(const void* original);
+	       XmlDoctypeConvertor();
+	virtual EID_STRING convert(const void *original);
 };
 
 #endif

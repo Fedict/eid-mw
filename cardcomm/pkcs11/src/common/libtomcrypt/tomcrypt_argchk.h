@@ -1,4 +1,6 @@
+
 /* Defines the LTC_ARGCHK macro used within the library */
+
 /* ARGTYPE is defined in mycrypt_cfg.h */
 #if ARGTYPE == 0
 
@@ -6,6 +8,7 @@
 
 /* this is the default LibTomCrypt macro  */
 void crypt_argchk(char *v, char *s, int d);
+
 #define LTC_ARGCHK(x) if (!(x)) { crypt_argchk(#x); }
 
 #elif ARGTYPE == 1
@@ -15,7 +18,6 @@ void crypt_argchk(char *v, char *s, int d);
 
 #elif ARGTYPE == 2
 
-#define LTC_ARGCHK(x) 
+#define LTC_ARGCHK(x)
 
 #endif
-

@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -25,15 +26,19 @@ static bool g_bStop = true;
 
 #define MAX_THREAD_WAIT_LOOP 100
 
-CEventCallbackThread::CEventCallbackThread() :
-  m_bStop(false), m_poPCSC(NULL), m_csReader(""), m_callback(NULL),
-  m_ulCurrentState(0), m_bRunning(false), m_pvRef(NULL)
+CEventCallbackThread::CEventCallbackThread():
+m_bStop(false), m_poPCSC(NULL), m_csReader(""), m_callback(NULL),
+m_ulCurrentState(0), m_bRunning(false), m_pvRef(NULL)
 {
 }
 
-CEventCallbackThread::CEventCallbackThread(
-	CPCSC *poPCSC, const std::string & csReader,
-	void (* callback)(long lRet, unsigned long ulState, void *pvRef), void *pvRef)
+CEventCallbackThread::CEventCallbackThread(CPCSC * poPCSC,
+					   const std::string & csReader,
+					   void (*callback) (long lRet,
+							     unsigned long
+							     ulState,
+							     void *pvRef),
+					   void *pvRef)
 {
 	m_bStop = false;
 	m_bRunning = false;
@@ -49,21 +54,25 @@ void CEventCallbackThread::Run()
 	m_bRunning = true;
 
 	long lRet = EIDMW_OK;
-	tReaderInfo tInfo = {m_csReader, m_ulCurrentState, 0};
+	tReaderInfo tInfo = { m_csReader, m_ulCurrentState, 0 };
 
 	try
 	{
-		while (!g_bStop && ! m_bStop)
+		while (!g_bStop && !m_bStop)
 		{
-			bool bChanged = m_poPCSC->GetStatusChange(10, &tInfo, 1);
+			bool bChanged =
+				m_poPCSC->GetStatusChange(10, &tInfo, 1);
 			if (g_bStop || m_bStop)
 				break;
 			else if (bChanged)
 				m_callback(lRet, tInfo.ulEventState, m_pvRef);
 			else
 			{
-				for (int i = 0; i < 5 && !g_bStop && ! m_bStop; i++)
-					CThread::SleepMillisecs(MAX_THREAD_WAIT_LOOP);
+				for (int i = 0; i < 5 && !g_bStop && !m_bStop;
+				     i++)
+					CThread::
+						SleepMillisecs
+						(MAX_THREAD_WAIT_LOOP);
 			}
 			if (g_bStop || m_bStop)
 				break;
@@ -73,7 +82,7 @@ void CEventCallbackThread::Run()
 	{
 		lRet = e.GetError();
 	}
-	catch (...)
+	catch( ...)
 	{
 		lRet = EIDMW_ERR_UNKNOWN;
 	}
@@ -104,17 +113,21 @@ CThreadPool::~CThreadPool()
 	g_bStop = true;
 }
 
-CEventCallbackThread & CThreadPool::NewThread(
-	CPCSC *poPCSC, const std::string & csReader,
-	void (* callback)(long lRet, unsigned long ulState, void *pvRef),
-	unsigned long & ulHandle, void *pvRef)
+CEventCallbackThread & CThreadPool::NewThread(CPCSC * poPCSC,
+					      const std::string & csReader,
+					      void (*callback) (long lRet,
+								unsigned long
+								ulState,
+								void *pvRef),
+					      unsigned long &ulHandle,
+					      void *pvRef)
 {
 	CAutoMutex oAutoMutex(&m_mutex);
 
 	m_ulCurrentHandle++;
 
-	m_pool[m_ulCurrentHandle] = CEventCallbackThread(
-		poPCSC, csReader, callback, pvRef);
+	m_pool[m_ulCurrentHandle] =
+		CEventCallbackThread(poPCSC, csReader, callback, pvRef);
 
 	ulHandle = m_ulCurrentHandle;
 
@@ -133,8 +146,9 @@ void CThreadPool::RemoveThread(unsigned long ulHandle)
 	 * this may not yet be the one that we just signalled
 	 * to stop that's no problem; we'll remove it in one
 	 * of the next calls to this function. */
-	std::map <unsigned long, CEventCallbackThread>::iterator it;
+	std::map < unsigned long, CEventCallbackThread >::iterator it;
 	bool bChanged = true;
+
 	while (bChanged && m_pool.size() > 0)
 	{
 		bChanged = false;
@@ -158,7 +172,8 @@ void CThreadPool::FinishThreads()
 		return;
 
 	// First signal all threads to stop
-	std::map <unsigned long, CEventCallbackThread>::iterator it;
+	std::map < unsigned long, CEventCallbackThread >::iterator it;
+
 	for (it = m_pool.begin(); it != m_pool.end(); it++)
 		it->second.Stop();
 
@@ -169,6 +184,7 @@ void CThreadPool::FinishThreads()
 	for (int i = 0; i < 12; i++)
 	{
 		bool bChanged = true;
+
 		while (bChanged && m_pool.size() > 0)
 		{
 			bChanged = false;

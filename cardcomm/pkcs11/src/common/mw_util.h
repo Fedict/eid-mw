@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -91,27 +92,29 @@ inline rT join (const cT& list, const rT& sep)
 
 
 #ifndef WIN32
-std::wstring wstring_From_string(std::string const& in);
-std::string string_From_wstring(std::wstring const& in);
+std::wstring wstring_From_string(std::string const &in);
+std::string string_From_wstring(std::wstring const &in);
+
 #ifndef HAVE_VASPRINTF
 int vasprintf(char **strp, const char *fmt, va_list ap);
 #endif
-int _wfopen_s(FILE** pFile, const wchar_t *filename, const wchar_t *mode);
-int fwprintf_s(FILE *stream, const wchar_t *format, ...);
+int _wfopen_s(FILE ** pFile, const wchar_t * filename, const wchar_t * mode);
+int fwprintf_s(FILE * stream, const wchar_t * format, ...);
 int strcpy_s(char *dest, size_t len, const char *src);
-int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src);
-int wcscat_s(wchar_t* dst, size_t elem, const wchar_t* src);
-int 	_vfwprintf_s(FILE *stream, const wchar_t *format, va_list argptr);
-int 	_vfprintf_s(FILE *stream, const char* format, va_list argptr); 
-int 	_swprintf_s(wchar_t *buffer, size_t sizeOfBuffer, const wchar_t *format, ...);
+int wcscpy_s(wchar_t * dest, size_t len, const wchar_t * src);
+int wcscat_s(wchar_t * dst, size_t elem, const wchar_t * src);
+int _vfwprintf_s(FILE * stream, const wchar_t * format, va_list argptr);
+int _vfprintf_s(FILE * stream, const char *format, va_list argptr);
+int _swprintf_s(wchar_t * buffer, size_t sizeOfBuffer, const wchar_t * format,
+		...);
 //errno_t _localtime_s(struct tm* _tm, const time_t *time);
-int wcscpy_s(wchar_t *dest, const wchar_t *src);
+int wcscpy_s(wchar_t * dest, const wchar_t * src);
 #else
- #define _swprintf_s swprintf_s
- #define _vfwprintf_s vfwprintf_s
- #define _vfprintf_s vfprintf_s
- #define dupenv_s _dupenv_s 
- //int 	dupenv_s(char **buffer, size_t *numberOfElements, const char *varname);
+#define _swprintf_s swprintf_s
+#define _vfwprintf_s vfwprintf_s
+#define _vfprintf_s vfprintf_s
+#define dupenv_s _dupenv_s
+ //int  dupenv_s(char **buffer, size_t *numberOfElements, const char *varname);
 #endif
 
 

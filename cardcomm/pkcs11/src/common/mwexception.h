@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -31,43 +32,53 @@ using namespace std;
 namespace eIDMW
 {
 
-class EIDMW_CMN_API CMWException: public std::exception
-{
+	class EIDMW_CMN_API CMWException:public std::exception
+	{
 public:
-    //CMWException(long lError);
-    CMWException(long lError, const char *cpFile, long lLine);
-    ~CMWException () throw(){};
-    virtual const char* what() const throw();
+		//CMWException(long lError);
+		CMWException(long lError, const char *cpFile, long lLine);
+		    ~CMWException() throw()
+		{
+		};
+		virtual const char *what() const throw();
 
-    long GetError() const {return m_lError;};
-    std::string GetFile() const {return m_sFile;};
-    long GetLine()const {return m_lLine;};
+		long GetError() const
+		{
+			return m_lError;
+		};
+		      std::string GetFile() const
+		{
+			return m_sFile;
+		};
+		long GetLine() const
+		{
+			return m_lLine;
+		};
 
 protected:
 #ifdef WIN32
 #pragma warning(push)
-#pragma warning(disable:4251)//m_sFile should not be exported by the beidcommon.dll
+#pragma warning(disable:4251)	//m_sFile should not be exported by the beidcommon.dll
 #endif
-	std::string m_sFile;
+		      std::string m_sFile;
 #ifdef WIN32
 #pragma warning(pop)
 #endif
 
-    long m_lError;   
-    long m_lLine;
-};
+		long m_lError;
+		long m_lLine;
+	};
 
-class EIDMW_CMN_API CNotAuthenticatedException: public CMWException
-{
+	class EIDMW_CMN_API CNotAuthenticatedException:public CMWException
+	{
 public:
-	CNotAuthenticatedException(
-		long lError, long lPinRef);
+		CNotAuthenticatedException(long lError, long lPinRef);
 
-	long GetPinRef() const;
+		long GetPinRef() const;
 
 protected:
-	long m_lPinRef;
-};
+		long m_lPinRef;
+	};
 
 #define CMWEXCEPTION(i)	CMWException(i, __FILE__, __LINE__)
 

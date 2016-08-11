@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004,2007 Apple Inc. All Rights Reserved.
  * 
@@ -64,54 +65,51 @@ using CssmClient::AclFactory;
 #define SELECT_APPLET \
 	CLA_STANDARD, INS_SELECT_FILE, P1_SELECT_APPLET, P2_SELECT_APPLET
 
-#define BELPIC_MAX_DATA_SIZE           (6*1024L)		// plus some extra
+#define BELPIC_MAX_DATA_SIZE           (6*1024L)	// plus some extra
 #define BELPIC_MAXSIZE_KDF           256
 
 //static const unsigned char kBELPICPKCS15Applet[] =
-//	{ 0xA0, 0x00, 0x00, 0x01, 0x77, 0x50, 0x4B, 0x43, 0x53, 0x2D, 0x31, 0x35 };
+//      { 0xA0, 0x00, 0x00, 0x01, 0x77, 0x50, 0x4B, 0x43, 0x53, 0x2D, 0x31, 0x35 };
 
-static const unsigned char kDF_BELPIC[] =           { 0xDF, 0x00 };
-static const unsigned char kDF_ID[] =               { 0xDF, 0x01 };
+static const unsigned char kDF_BELPIC[] = { 0xDF, 0x00 };
+static const unsigned char kDF_ID[] = { 0xDF, 0x01 };
 
-static const unsigned char kEF_DIR[] =              { 0x2F, 0x00 };
+static const unsigned char kEF_DIR[] = { 0x2F, 0x00 };
 
-static const unsigned char kBELPIC_EF_ODF[] =       { 0x50, 0x31 };
+static const unsigned char kBELPIC_EF_ODF[] = { 0x50, 0x31 };
 static const unsigned char kBELPIC_EF_TokenInfo[] = { 0x50, 0x32 };
-static const unsigned char kBELPIC_EF_AODF[] =      { 0x50, 0x34 };
-static const unsigned char kBELPIC_EF_PrKDF[] =     { 0x50, 0x35 };
-static const unsigned char kBELPIC_EF_PukDF[] =     { 0x50, 0x36 };
-static const unsigned char kBELPIC_EF_CDF[] =       { 0x50, 0x37 };
-static const unsigned char kBELPIC_EF_Cert2[] =     { 0x50, 0x38 };
-static const unsigned char kBELPIC_EF_Cert3[] =     { 0x50, 0x39 };
-static const unsigned char kBELPIC_EF_Cert4[] =     { 0x50, 0x3A };
-static const unsigned char kBELPIC_EF_Cert6[] =     { 0x50, 0x3B };
-static const unsigned char kBELPIC_EF_Cert8[] =     { 0x50, 0x3C };
+static const unsigned char kBELPIC_EF_AODF[] = { 0x50, 0x34 };
+static const unsigned char kBELPIC_EF_PrKDF[] = { 0x50, 0x35 };
+static const unsigned char kBELPIC_EF_PukDF[] = { 0x50, 0x36 };
+static const unsigned char kBELPIC_EF_CDF[] = { 0x50, 0x37 };
+static const unsigned char kBELPIC_EF_Cert2[] = { 0x50, 0x38 };
+static const unsigned char kBELPIC_EF_Cert3[] = { 0x50, 0x39 };
+static const unsigned char kBELPIC_EF_Cert4[] = { 0x50, 0x3A };
+static const unsigned char kBELPIC_EF_Cert6[] = { 0x50, 0x3B };
+static const unsigned char kBELPIC_EF_Cert8[] = { 0x50, 0x3C };
 
-static const unsigned char kID_EF_ID_RN[] =         { 0x40, 0x31 };
-static const unsigned char kID_EF_SGN_RN[] =        { 0x40, 0x32 };
-static const unsigned char kID_EF_ID_ADDRESS[] =    { 0x40, 0x33 };
-static const unsigned char kID_EF_SGN_ADDRESS[] =   { 0x40, 0x34 };
-static const unsigned char kID_EF_ID_PHOTO[] =      { 0x40, 0x35 };
-static const unsigned char kID_EF_PuK7_ID[] =       { 0x40, 0x38 };
-static const unsigned char kID_EF_Preferences[] =   { 0x40, 0x39 };
+static const unsigned char kID_EF_ID_RN[] = { 0x40, 0x31 };
+static const unsigned char kID_EF_SGN_RN[] = { 0x40, 0x32 };
+static const unsigned char kID_EF_ID_ADDRESS[] = { 0x40, 0x33 };
+static const unsigned char kID_EF_SGN_ADDRESS[] = { 0x40, 0x34 };
+static const unsigned char kID_EF_ID_PHOTO[] = { 0x40, 0x35 };
+static const unsigned char kID_EF_PuK7_ID[] = { 0x40, 0x38 };
+static const unsigned char kID_EF_Preferences[] = { 0x40, 0x39 };
 
-static const unsigned char kPIN_Cardholder_Id[] =   { 0x01 };
-static const unsigned char kPIN_Reset_Id[] =        { 0x02 };
-static const unsigned char kPUK_Unblock_Id[] =      { 0x03 };
-static const unsigned char kPIN_Activate_Id[] =     { 0x84 };
+static const unsigned char kPIN_Cardholder_Id[] = { 0x01 };
+static const unsigned char kPIN_Reset_Id[] = { 0x02 };
+static const unsigned char kPUK_Unblock_Id[] = { 0x03 };
+static const unsigned char kPIN_Activate_Id[] = { 0x84 };
 
-static const unsigned char kPrK1_Id[] =             { 0x81 };
-static const unsigned char kPrK2_Id[] =             { 0x82 };
-static const unsigned char kPrK3_Id[] =             { 0x83 };
-static const unsigned char kPuK5_Id[] =             { 0x85 };
-static const unsigned char kPuK7_Id[] =             { 0x87 };
+static const unsigned char kPrK1_Id[] = { 0x81 };
+static const unsigned char kPrK2_Id[] = { 0x82 };
+static const unsigned char kPrK3_Id[] = { 0x83 };
+static const unsigned char kPuK5_Id[] = { 0x85 };
+static const unsigned char kPuK7_Id[] = { 0x87 };
 
 
-BELPICToken::BELPICToken() :
-	mCurrentDF(NULL),
-	mCurrentEF(NULL),
-	mReturnedData(NULL),
-	mPinStatus(0)
+BELPICToken::BELPICToken():
+mCurrentDF(NULL), mCurrentEF(NULL), mReturnedData(NULL), mPinStatus(0)
 {
 	mTokenContext = this;
 	mSession.open();
@@ -123,26 +121,32 @@ BELPICToken::~BELPICToken()
 	delete mReturnedData;
 }
 
-void BELPICToken::select(const uint8_t *df, const uint8_t *ef)
+void BELPICToken::select(const uint8_t * df, const uint8_t * ef)
 {
 	unsigned char result[MAX_BUFFER_SIZE];
 	size_t resultLength = sizeof(result);
+
 	if (isInTransaction() && mCurrentDF == df)
 	{
 		if (mCurrentEF == ef)
 			return;
 
-		uint8_t command[] = { 0x00, 0xA4, 0x02, 0x0C, 0x02, ef[0], ef[1] };
-		BELPICError::check(exchangeAPDU(command, sizeof(command), result,
-			resultLength));
+		uint8_t command[] =
+			{ 0x00, 0xA4, 0x02, 0x0C, 0x02, ef[0], ef[1] };
+		BELPICError::
+			check(exchangeAPDU
+			      (command, sizeof(command), result,
+			       resultLength));
 		mCurrentEF = ef;
-	}
-	else
+	} else
 	{
 		uint8_t command[] =
-			{ 0x00, 0xA4, 0x08, 0x0C, 0x04, df[0], df[1], ef[0], ef[1] };
-		BELPICError::check(exchangeAPDU(command, sizeof(command), result,
-			resultLength));
+			{ 0x00, 0xA4, 0x08, 0x0C, 0x04, df[0], df[1], ef[0],
+		    ef[1] };
+		BELPICError::
+			check(exchangeAPDU
+			      (command, sizeof(command), result,
+			       resultLength));
 		if (isInTransaction())
 		{
 			mCurrentDF = df;
@@ -151,25 +155,28 @@ void BELPICToken::select(const uint8_t *df, const uint8_t *ef)
 	}
 }
 
-void BELPICToken::selectKeyForSign(const uint8_t *keyId)
+void BELPICToken::selectKeyForSign(const uint8_t * keyId)
 {
 	bool encrypt = true;
 	uint8_t p1 = (encrypt ? 0x41 : 0x81);
-    // Select signing, algorithm pkcs1 padding and key keyId
+
+	// Select signing, algorithm pkcs1 padding and key keyId
 	unsigned char command[] =
-		{ 0x00, 0x22, p1, 0xB6, 0x05, 0x04, 0x80, 0x01, 0x84, *keyId };
-    // @@@ This would be the command when letting the card itself to the
+		{ 0x00, 0x22, p1, 0xB6, 0x05, 0x04, 0x80, 0x01, 0x84,
+      *keyId };
+	// @@@ This would be the command when letting the card itself to the
 	// DigestInfo wrapping for a SHA1 hash.
 	//unsigned char command[] =
 	//  { 0x00, 0x22, p1, 0xB6, 0x05, 0x04, 0x80, 0x02, 0x84, *keyId };
 
 	//if (isInTransaction() && mCurrentKeyId == keyId)
-	//	return;
+	//      return;
 
 	unsigned char result[MAX_BUFFER_SIZE];
 	size_t resultLength = sizeof(result);
+
 	BELPICError::check(exchangeAPDU(command, sizeof(command), result,
-		resultLength));
+					resultLength));
 }
 
 /**
@@ -180,7 +187,8 @@ void BELPICToken::selectKeyForSign(const uint8_t *keyId)
 int BELPICToken::usleep(int iTimeVal)
 {
 	struct timespec mrqtp;
-	mrqtp.tv_sec = iTimeVal/1000000;
+
+	mrqtp.tv_sec = iTimeVal / 1000000;
 	mrqtp.tv_nsec = (iTimeVal - (mrqtp.tv_sec * 1000000)) * 1000;
 
 	return nanosleep(&mrqtp, NULL);
@@ -236,11 +244,11 @@ int BELPICToken::usleep(int iTimeVal)
 	90	00	Successful execution
 */
 
-void BELPICToken::readBinary(uint8_t *result, size_t &resultLength)
+void BELPICToken::readBinary(uint8_t * result, size_t & resultLength)
 {
 	// Attempt to read READ_BLOCK_SIZE bytes
 
-	unsigned char rcvBuffer[MAX_BUFFER_SIZE];		// N.B. Must be > READ_BLOCK_SIZE
+	unsigned char rcvBuffer[MAX_BUFFER_SIZE];	// N.B. Must be > READ_BLOCK_SIZE
 	size_t bytesReceived = sizeof(rcvBuffer);
 	size_t returnedDataLength = 0;
 
@@ -255,60 +263,73 @@ void BELPICToken::readBinary(uint8_t *result, size_t &resultLength)
 		uint16_t rx;
 		uint32_t offset = 0;
 		bool requestedTooMuch = false;
-		
-		for (bool done = false; !done; )
+
+		for (bool done = false; !done;)
 		{
 			bytesReceived = sizeof(rcvBuffer);	// must reset each time
-			secdebug("token", "readBinary: attempting read of %d bytes at offset: %d", 
-				apdu[OFF_LC], (apdu[OFF_P1] << 8 | apdu[OFF_P2]));
+			secdebug("token",
+				 "readBinary: attempting read of %d bytes at offset: %d",
+				 apdu[OFF_LC],
+				 (apdu[OFF_P1] << 8 | apdu[OFF_P2]));
 			transmit(apdu, apduSize, rcvBuffer, bytesReceived);
 			if (bytesReceived < 2)
 				break;
-			rx = (rcvBuffer[bytesReceived - 2] << 8) + rcvBuffer[bytesReceived - 1];
-			secdebug("tokend", "readBinary result 0x%02X (masked: 0x%02X)", rx, rx & 0xFF00);
+			rx = (rcvBuffer[bytesReceived - 2] << 8) +
+				rcvBuffer[bytesReceived - 1];
+			secdebug("tokend",
+				 "readBinary result 0x%02X (masked: 0x%02X)",
+				 rx, rx & 0xFF00);
 
 			switch (rx & 0xFF00)
 			{
-			case SCARD_BYTES_LEFT_IN_SW2:		// 0x6100
-			case SCARD_LE_IN_SW2:				// 0x6C00
-				secdebug("token", "readBinary should only have read: %d bytes", rx & 0x00FF);
-				// Re-read from same offset with new, shorter length
-				apdu[OFF_LC] = (uint8_t)(rx & 0xFF);
-				requestedTooMuch = true;				// signal that we are almost done
-				break;
-			case SCARD_WRONG_PARAMETER_P1_P2:			// we read past the end, (probably) non-fatal
-				done = true;
-				break;
-			case SCARD_SUCCESS:
-				offset += (bytesReceived - 2);
-				apdu[OFF_P1] = offset >> 8;
-				apdu[OFF_P2] = offset & 0xFF;
-				apdu[OFF_LC] = READ_BLOCK_SIZE & 0xFF;
-				if (requestedTooMuch)
+				case SCARD_BYTES_LEFT_IN_SW2:	// 0x6100
+				case SCARD_LE_IN_SW2:	// 0x6C00
+					secdebug("token",
+						 "readBinary should only have read: %d bytes",
+						 rx & 0x00FF);
+					// Re-read from same offset with new, shorter length
+					apdu[OFF_LC] = (uint8_t) (rx & 0xFF);
+					requestedTooMuch = true;	// signal that we are almost done
+					break;
+				case SCARD_WRONG_PARAMETER_P1_P2:	// we read past the end, (probably) non-fatal
 					done = true;
-				if (resultLength >= (returnedDataLength + bytesReceived - 2))
-				{
-					memcpy(result + returnedDataLength, rcvBuffer, bytesReceived - 2);
-					returnedDataLength += bytesReceived - 2;
-				}
-				else
-					done = true;
-				break;
-			case SCARD_EXECUTION_WARNING:	// No way to recover from SCARD_END_OF_FILE_REACHED, so fall through
-			default:
-				BELPICError::check(rx);
-				return;						// will actually throw above
+					break;
+				case SCARD_SUCCESS:
+					offset += (bytesReceived - 2);
+					apdu[OFF_P1] = offset >> 8;
+					apdu[OFF_P2] = offset & 0xFF;
+					apdu[OFF_LC] = READ_BLOCK_SIZE & 0xFF;
+					if (requestedTooMuch)
+						done = true;
+					if (resultLength >=
+					    (returnedDataLength +
+					     bytesReceived - 2))
+					{
+						memcpy(result +
+						       returnedDataLength,
+						       rcvBuffer,
+						       bytesReceived - 2);
+						returnedDataLength +=
+							bytesReceived - 2;
+					} else
+						done = true;
+					break;
+				case SCARD_EXECUTION_WARNING:	// No way to recover from SCARD_END_OF_FILE_REACHED, so fall through
+				default:
+					BELPICError::check(rx);
+					return;	// will actually throw above
 			}
 
 		}
 	}
 
-	secdebug("token", "readBinary read a total of %ld bytes", returnedDataLength);
+	secdebug("token", "readBinary read a total of %ld bytes",
+		 returnedDataLength);
 	resultLength = returnedDataLength;
 }
 
-uint32_t BELPICToken::exchangeAPDU(const uint8_t *apdu, size_t apduLength,
-	uint8_t *result, size_t &resultLength)
+uint32_t BELPICToken::exchangeAPDU(const uint8_t * apdu, size_t apduLength,
+				   uint8_t * result, size_t & resultLength)
 {
 	// see SCARD_LE_IN_SW2
 
@@ -319,25 +340,28 @@ uint32_t BELPICToken::exchangeAPDU(const uint8_t *apdu, size_t apduLength,
 	{
 		resultLength = savedLength;
 		uint16 expectedLength = result[1];
-		unsigned char getResult[] = { 0x00, 0xC0, 0x00, 0x00, expectedLength };
+		unsigned char getResult[] =
+			{ 0x00, 0xC0, 0x00, 0x00, expectedLength };
 		BELPICToken::usleep(INTER_COMMAND_DELAY);
 		transmit(getResult, sizeof(getResult), result, resultLength);
-        if(expectedLength == 0)
-            expectedLength = 256;
+		if (expectedLength == 0)
+			expectedLength = 256;
 		if (resultLength - 2 != expectedLength)
-        {
-            if (resultLength < 2)
-                PCSC::Error::throwMe(SCARD_E_PROTO_MISMATCH);
-            else
-                BELPICError::throwMe((result[resultLength - 2] << 8)
-					+ result[resultLength - 1]);
-        }
+		{
+			if (resultLength < 2)
+				PCSC::Error::throwMe(SCARD_E_PROTO_MISMATCH);
+			else
+				BELPICError::
+					throwMe((result[resultLength - 2] <<
+						 8) + result[resultLength -
+							     1]);
+		}
 	}
 
 	if (resultLength < 2)
 		PCSC::Error::throwMe(SCARD_E_PROTO_MISMATCH);
 
-    return (result[resultLength - 2] << 8) + result[resultLength - 1];
+	return (result[resultLength - 2] << 8) + result[resultLength - 1];
 }
 
 void BELPICToken::didDisconnect()
@@ -369,46 +393,50 @@ uint8_t BELPICToken::pinDigit(uint8_t digit)
 }
 
 void BELPICToken::changePIN(int pinNum,
-	const unsigned char *oldPin, size_t oldPinLength,
-	const unsigned char *newPin, size_t newPinLength)
+			    const unsigned char *oldPin, size_t oldPinLength,
+			    const unsigned char *newPin, size_t newPinLength)
 {
 	if (pinNum != 1)
 		CssmError::throwMe(CSSM_ERRCODE_SAMPLE_VALUE_NOT_SUPPORTED);
 
 	if (oldPinLength < 0 ||
-		oldPinLength > BELPIC_MAX_PIN_LEN ||
-		newPinLength < BELPIC_MIN_PIN_LEN ||
-		newPinLength > BELPIC_MAX_PIN_LEN)
+	    oldPinLength > BELPIC_MAX_PIN_LEN ||
+	    newPinLength < BELPIC_MIN_PIN_LEN ||
+	    newPinLength > BELPIC_MAX_PIN_LEN)
 	{
 		CssmError::throwMe(CSSM_ERRCODE_INVALID_SAMPLE_VALUE);
 	}
 
 	PCSC::Transaction _(*this);
-	uint8_t apdu[] =
-		{ 0x00, 0x24, 0x00, uint8_t(pinNum), 0x10,
-			0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-			0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
-		};
+	uint8_t apdu[] = { 0x00, 0x24, 0x00, uint8_t(pinNum), 0x10,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+	};
 
 	uint32_t offset = 5;
 
 	apdu[offset++] = 0x20 + oldPinLength;
-	for (uint32_t ix = 0; ix < oldPinLength;ix+=2)
+	for (uint32_t ix = 0; ix < oldPinLength; ix += 2)
 	{
 		apdu[offset++] = (pinDigit(oldPin[ix]) << 4) +
-			((ix+1) < oldPinLength ? pinDigit(oldPin[ix+1]) : pinDigit('F'));
+			((ix + 1) <
+			 oldPinLength ? pinDigit(oldPin[ix + 1]) :
+			 pinDigit('F'));
 	}
 
 	offset = 5 + 8;
 	apdu[offset++] = 0x20 + newPinLength;
-	for (uint32_t ix = 0; ix < newPinLength;ix+=2)
+	for (uint32_t ix = 0; ix < newPinLength; ix += 2)
 	{
 		apdu[offset++] = (pinDigit(newPin[ix]) << 4) +
-			((ix+1) < newPinLength ? pinDigit(newPin[ix+1]) : pinDigit('F'));
+			((ix + 1) <
+			 newPinLength ? pinDigit(newPin[ix + 1]) :
+			 pinDigit('F'));
 	}
 
 	unsigned char result[MAX_BUFFER_SIZE];
 	size_t resultLength = sizeof(result);
+
 	mPinStatus = exchangeAPDU(apdu, sizeof(apdu), result, resultLength);
 	memset(apdu + 5, 0, 16);
 	BELPICError::check(mPinStatus);
@@ -432,14 +460,14 @@ uint32_t BELPICToken::pinStatus(int pinNum)
 
 	mPinStatus = exchangeAPDU(apdu, 4, result, resultLength);
 	if ((mPinStatus & 0xFF00) != 0x6300
-		&& mPinStatus != SCARD_AUTHENTICATION_BLOCKED)
+	    && mPinStatus != SCARD_AUTHENTICATION_BLOCKED)
 		BELPICError::check(mPinStatus);
 #endif
 
 	return mPinStatus;
 }
 
-void BELPICToken::verifyPIN(int pinNum, const uint8_t *pin, size_t pinLength)
+void BELPICToken::verifyPIN(int pinNum, const uint8_t * pin, size_t pinLength)
 {
 	_verifyPIN(pinNum, pin, pinLength);
 	// Start a new transaction which we never get rid of until someone calls
@@ -447,82 +475,100 @@ void BELPICToken::verifyPIN(int pinNum, const uint8_t *pin, size_t pinLength)
 	//begin();
 }
 
-void BELPICToken::_verifyPIN(int pinNum, const uint8_t *pin, size_t pinLength)
+void BELPICToken::_verifyPIN(int pinNum, const uint8_t * pin,
+			     size_t pinLength)
 {
 	PCSC::Transaction _(*this);
 	unsigned char result[MAX_BUFFER_SIZE];
 	size_t resultLength = sizeof(result);
 
-    if (mPPDU == true)
-    {
-        uint8_t ppdu_featurelist[] = {0xFF,0xC2,0x01,0x00,0x00};
-        
-        uint8_t ppdu_verifydirect[] = {0xFF,0xC2,0x01,0x06,0x20,
-            0x1E,0x1E,0x89,0x47,0x04,0x0c,0x04,0x02,0x01,0x08,
-            0x13,0x00,0x00,0x00,0x00,0x0D,0x00,0x00,0x00,0x00,
-            0x20,0x00,0x01,0x08,0x20,0xFF,0xFF,0xFF,0xFF,0xFF,
-            0xFF,0xFF };
-        
-        size_t counter =0;
-        bool ioctlVerifyDirect = false;
-        
-        mPinStatus = exchangeAPDU(ppdu_featurelist, sizeof(ppdu_featurelist), result, resultLength);
-        BELPICError::check(mPinStatus);
-        for(;counter<(resultLength-2);counter++)
-        {
-            switch(result[counter])
-            {
+	if (mPPDU == true)
+	{
+		uint8_t ppdu_featurelist[] = { 0xFF, 0xC2, 0x01, 0x00, 0x00 };
+
+		uint8_t ppdu_verifydirect[] = { 0xFF, 0xC2, 0x01, 0x06, 0x20,
+			0x1E, 0x1E, 0x89, 0x47, 0x04, 0x0c, 0x04, 0x02, 0x01,
+				0x08,
+			0x13, 0x00, 0x00, 0x00, 0x00, 0x0D, 0x00, 0x00, 0x00,
+				0x00,
+			0x20, 0x00, 0x01, 0x08, 0x20, 0xFF, 0xFF, 0xFF, 0xFF,
+				0xFF,
+			0xFF, 0xFF
+		};
+
+		size_t counter = 0;
+		bool ioctlVerifyDirect = false;
+
+		mPinStatus =
+			exchangeAPDU(ppdu_featurelist,
+				     sizeof(ppdu_featurelist), result,
+				     resultLength);
+		BELPICError::check(mPinStatus);
+		for (; counter < (resultLength - 2); counter++)
+		{
+			switch (result[counter])
+			{
 				case 0x06:
 					ioctlVerifyDirect = true;
 					break;
-                    
+
 				default:
 					break;
-            }
-        }
-        
-        if (ioctlVerifyDirect == true)
-        {
-            resultLength = sizeof(result);
-            mPinStatus = exchangeAPDU(ppdu_verifydirect, sizeof(ppdu_verifydirect), result, resultLength);
-            BELPICError::check(mPinStatus);
-        }
-        
-    }
-    else{
-        if (pinNum < 1 || pinNum > 3)
-        	CssmError::throwMe(CSSM_ERRCODE_SAMPLE_VALUE_NOT_SUPPORTED);
-        
-        if (pinLength < BELPIC_MIN_PIN_LEN || pinLength > BELPIC_MAX_PIN_LEN)
-        	CssmError::throwMe(CSSM_ERRCODE_INVALID_SAMPLE_VALUE);
-        
+			}
+		}
+
+		if (ioctlVerifyDirect == true)
+		{
+			resultLength = sizeof(result);
+			mPinStatus =
+				exchangeAPDU(ppdu_verifydirect,
+					     sizeof(ppdu_verifydirect),
+					     result, resultLength);
+			BELPICError::check(mPinStatus);
+		}
+
+	} else
+	{
+		if (pinNum < 1 || pinNum > 3)
+			CssmError::
+				throwMe
+				(CSSM_ERRCODE_SAMPLE_VALUE_NOT_SUPPORTED);
+
+		if (pinLength < BELPIC_MIN_PIN_LEN
+		    || pinLength > BELPIC_MAX_PIN_LEN)
+			CssmError::throwMe(CSSM_ERRCODE_INVALID_SAMPLE_VALUE);
+
 #ifdef USE_BUILTIN_PIN
-        uint8_t apdu[] =
-		{ 0x00, 0x20, 0x00, 0x01, 0x08, 0x24,
-			0x12, 0x34, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+		uint8_t apdu[] = { 0x00, 0x20, 0x00, 0x01, 0x08, 0x24,
+			0x12, 0x34, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+		};
 #else
-        uint8_t apdu[] =
-		{ 0x00, 0x20, 0x00, uint8_t(pinNum), 0x08,
-			0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+		uint8_t apdu[] = { 0x00, 0x20, 0x00, uint8_t(pinNum), 0x08,
+			0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+		};
 
-        uint32_t offset = 5;
+		uint32_t offset = 5;
 
-        apdu[offset++] = 0x20 + pinLength;
-        for (uint32_t ix = 0; ix < pinLength;ix+=2)
-        {
-            apdu[offset++] = (pinDigit(pin[ix]) << 4) +
-                ((ix+1) < pinLength ? pinDigit(pin[ix+1]) : pinDigit('F'));
-        }
+		apdu[offset++] = 0x20 + pinLength;
+		for (uint32_t ix = 0; ix < pinLength; ix += 2)
+		{
+			apdu[offset++] = (pinDigit(pin[ix]) << 4) +
+				((ix + 1) <
+				 pinLength ? pinDigit(pin[ix + 1]) :
+				 pinDigit('F'));
+		}
 #endif
 
-	mPinStatus = exchangeAPDU(apdu, sizeof(apdu), result, resultLength);
-    memset(apdu + 5, 0, 8);
-	BELPICError::check(mPinStatus);
-	// Start a new transaction which we never get rid of until someone calls
-	// unverifyPIN()
-	// begin();
-    }
- 
+		mPinStatus =
+			exchangeAPDU(apdu, sizeof(apdu), result,
+				     resultLength);
+		memset(apdu + 5, 0, 8);
+		BELPICError::check(mPinStatus);
+		// Start a new transaction which we never get rid of until someone calls
+		// unverifyPIN()
+		// begin();
+	}
+
 }
 
 void BELPICToken::unverifyPIN(int pinNum)
@@ -534,15 +580,18 @@ void BELPICToken::unverifyPIN(int pinNum)
 }
 
 uint32 BELPICToken::probe(SecTokendProbeFlags flags,
-	char tokenUid[TOKEND_MAX_UID])
+			  char tokenUid[TOKEND_MAX_UID])
 {
-//	uint32 score = Tokend::ISO7816Token::probe(flags, tokenUid);
+//      uint32 score = Tokend::ISO7816Token::probe(flags, tokenUid);
 //SCARD_PROTOCOL_T0
-	const SCARD_READERSTATE &readerState = *(*startupReaderInfo)();
-	connect(mSession, readerState.szReader, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0);
+	const SCARD_READERSTATE & readerState = *(*startupReaderInfo) ();
+
+	connect(mSession, readerState.szReader, SCARD_SHARE_SHARED,
+		SCARD_PROTOCOL_T0);
 	uint32 score = 0;
+
 	//flags = 2;//share pcsc 
-	bool doDisconnect = false; /*!(flags & kSecTokendProbeKeepToken); */
+	bool doDisconnect = false;	/*!(flags & kSecTokendProbeKeepToken); */
 
 	try
 	{
@@ -568,15 +617,17 @@ uint32 BELPICToken::probe(SecTokendProbeFlags flags,
 			/* Zetes: change the tokendUID in order not to conflict with
 			 * the original tokend */
 			/*
-             memcpy(tokenUid, "BELPIC-", 7);
-             uint32_t offset = 7;
+			   memcpy(tokenUid, "BELPIC-", 7);
+			   uint32_t offset = 7;
 			 */
 			memcpy(tokenUid, "BEID-", 5);
 			uint32_t offset = 5;
+
 			// Now stick in the chip serial # as hex bytes.
 			for (uint32_t ix = 0x07; ix < 0x17; ++ix)
 			{
-				sprintf(tokenUid + offset, "%02X", result[ix]);
+				sprintf(tokenUid + offset, "%02X",
+					result[ix]);
 				offset += 2;
 			}
 			assert(TOKEND_MAX_UID > offset);
@@ -585,7 +636,7 @@ uint32 BELPICToken::probe(SecTokendProbeFlags flags,
 			secdebug("probe", "recognized %s", tokenUid);
 		}
 	}
-	catch (...)
+	catch( ...)
 	{
 		doDisconnect = true;
 		score = 0;
@@ -597,13 +648,16 @@ uint32 BELPICToken::probe(SecTokendProbeFlags flags,
 	return score;
 }
 
-void BELPICToken::establish(const CSSM_GUID *guid, uint32 subserviceId,
-	SecTokendEstablishFlags flags, const char *cacheDirectory,
-	const char *workDirectory, char mdsDirectory[PATH_MAX],
-	char printName[PATH_MAX])
+void BELPICToken::establish(const CSSM_GUID * guid, uint32 subserviceId,
+			    SecTokendEstablishFlags flags,
+			    const char *cacheDirectory,
+			    const char *workDirectory,
+			    char mdsDirectory[PATH_MAX],
+			    char printName[PATH_MAX])
 {
 	Tokend::ISO7816Token::establish(guid, subserviceId, flags,
-		cacheDirectory, workDirectory, mdsDirectory, printName);
+					cacheDirectory, workDirectory,
+					mdsDirectory, printName);
 
 	mSchema = new BELPICSchema();
 	mSchema->create();
@@ -614,10 +668,11 @@ void BELPICToken::establish(const CSSM_GUID *guid, uint32 subserviceId,
 //
 // Database-level ACLs
 //
-void BELPICToken::getOwner(AclOwnerPrototype &owner)
+void BELPICToken::getOwner(AclOwnerPrototype & owner)
 {
 	// we don't really know (right now), so claim we're owned by PIN #0
-	if (!mAclOwner) {
+	if (!mAclOwner)
+	{
 		mAclOwner.allocator(Allocator::standard());
 		mAclOwner = AclFactory::PinSubject(Allocator::standard(), 0);
 	}
@@ -625,71 +680,84 @@ void BELPICToken::getOwner(AclOwnerPrototype &owner)
 }
 
 
-void BELPICToken::getAcl(const char *tag, uint32 &count, AclEntryInfo *&acls)
+void BELPICToken::getAcl(const char *tag, uint32 & count,
+			 AclEntryInfo * &acls)
 {
-	Allocator &alloc = Allocator::standard();
+	Allocator & alloc = Allocator::standard();
 
-    if(mPPDU)
-    {
-        mAclEntries.allocator(alloc);
-        // Anyone can read the attributes and data of any record on this token
-        // (it's further limited by the object itself).
-		mAclEntries.add(CssmClient::AclFactory::AnySubject(
-                                                           mAclEntries.allocator()),
-                        AclAuthorizationSet(CSSM_ACL_AUTHORIZATION_DB_READ, 0));
-        // PIN will be handled by the cardreader
-        mAclEntries.addPin(AclFactory::AnySubject(alloc),1);
-    
-    }
-    else
-    {
-        if (unsigned pin = pinFromAclTag(tag, "?"))
-        {
-            static AutoAclEntryInfoList acl;
-            acl.clear();
-            acl.allocator(alloc);
-            uint32_t status = this->pinStatus(pin);
-            if (status == SCARD_SUCCESS)
-                acl.addPinState(pin, CSSM_ACL_PREAUTH_TRACKING_AUTHORIZED);
-            else
-                acl.addPinState(pin, CSSM_ACL_PREAUTH_TRACKING_UNKNOWN);
-            count = acl.size();
-            acls = acl.entries();
-            return;
-        }
+	if (mPPDU)
+	{
+		mAclEntries.allocator(alloc);
+		// Anyone can read the attributes and data of any record on this token
+		// (it's further limited by the object itself).
+		mAclEntries.
+			add(CssmClient::AclFactory::
+			    AnySubject(mAclEntries.allocator()),
+			    AclAuthorizationSet
+			    (CSSM_ACL_AUTHORIZATION_DB_READ, 0));
+		// PIN will be handled by the cardreader
+		mAclEntries.addPin(AclFactory::AnySubject(alloc), 1);
 
-        // get pin list, then for each pin
-        if (!mAclEntries)
-        {
-            mAclEntries.allocator(alloc);
-            // Anyone can read the attributes and data of any record on this token
-            // (it's further limited by the object itself).
-            mAclEntries.add(CssmClient::AclFactory::AnySubject(
-			mAclEntries.allocator()),
-			AclAuthorizationSet(CSSM_ACL_AUTHORIZATION_DB_READ, 0));
-            // We support PIN1 with either a passed in password
-            // subject or a prompted password subject.
-            mAclEntries.addPin(AclFactory::PWSubject(alloc), 1);
-            mAclEntries.addPin(AclFactory::PromptPWSubject(alloc, CssmData()), 1);
-        }
-    }
+	} else
+	{
+		if (unsigned pin = pinFromAclTag(tag, "?"))
+		{
+			static AutoAclEntryInfoList acl;
+
+			acl.clear();
+			acl.allocator(alloc);
+			uint32_t status = this->pinStatus(pin);
+
+			if (status == SCARD_SUCCESS)
+				acl.addPinState(pin,
+						CSSM_ACL_PREAUTH_TRACKING_AUTHORIZED);
+			else
+				acl.addPinState(pin,
+						CSSM_ACL_PREAUTH_TRACKING_UNKNOWN);
+			count = acl.size();
+			acls = acl.entries();
+			return;
+		}
+		// get pin list, then for each pin
+		if (!mAclEntries)
+		{
+			mAclEntries.allocator(alloc);
+			// Anyone can read the attributes and data of any record on this token
+			// (it's further limited by the object itself).
+			mAclEntries.
+				add(CssmClient::AclFactory::
+				    AnySubject(mAclEntries.allocator()),
+				    AclAuthorizationSet
+				    (CSSM_ACL_AUTHORIZATION_DB_READ, 0));
+			// We support PIN1 with either a passed in password
+			// subject or a prompted password subject.
+			mAclEntries.addPin(AclFactory::PWSubject(alloc), 1);
+			mAclEntries.
+				addPin(AclFactory::
+				       PromptPWSubject(alloc, CssmData()), 1);
+		}
+	}
 	count = mAclEntries.size();
 	acls = mAclEntries.entries();
 }
 
-uint32_t BELPICToken::getKeySize(const uint8_t *df, const uint8_t *ef) {
-    uint8_t result[BELPIC_MAXSIZE_KDF];
-    size_t resultLength = BELPIC_MAXSIZE_KDF;
-    uint32_t keysize = 1024; //default keysize
-    
-    //select and read the key directory file
-    select(df,ef);
-    readBinary(result,resultLength);
-    
-    //last 2 bytes specify the keysize
-    if (resultLength > 2) {
-        keysize = result[resultLength-2]*256 + result[resultLength-1];
-    }
+uint32_t BELPICToken::getKeySize(const uint8_t * df, const uint8_t * ef)
+{
+	uint8_t result[BELPIC_MAXSIZE_KDF];
+	size_t resultLength = BELPIC_MAXSIZE_KDF;
+	uint32_t keysize = 1024;	//default keysize
+
+	//select and read the key directory file
+	select(df, ef);
+	readBinary(result, resultLength);
+
+	//last 2 bytes specify the keysize
+	if (resultLength > 2)
+	{
+		keysize =
+			result[resultLength - 2] * 256 + result[resultLength -
+								1];
+	}
 	return keysize;
 }
 
@@ -699,24 +767,32 @@ uint32_t BELPICToken::getKeySize(const uint8_t *df, const uint8_t *ef) {
 void BELPICToken::populate()
 {
 	secdebug("populate", "BELPICToken::populate() begin");
-	Tokend::Relation &certRelation =
+	Tokend::Relation & certRelation =
 		mSchema->findRelation(CSSM_DL_DB_RECORD_X509_CERTIFICATE);
-	Tokend::Relation &privateKeyRelation =
+	Tokend::Relation & privateKeyRelation =
 		mSchema->findRelation(CSSM_DL_DB_RECORD_PRIVATE_KEY);
-	Tokend::Relation &dataRelation =
+	Tokend::Relation & dataRelation =
 		mSchema->findRelation(CSSM_DL_DB_RECORD_GENERIC);
 
-	RefPointer<Tokend::Record> cert2(new BELPICCertificateRecord(kDF_BELPIC,
-		kBELPIC_EF_Cert2, "Cert #2 (authentication)"));
-	RefPointer<Tokend::Record> cert3(new BELPICCertificateRecord(kDF_BELPIC,
-		kBELPIC_EF_Cert3, "Cert #3 (signature)"));
-	RefPointer<Tokend::Record> cert4(new BELPICCertificateRecord(kDF_BELPIC,
-		kBELPIC_EF_Cert4, "Cert #4 (CA)"));
-	RefPointer<Tokend::Record> cert6(new BELPICCertificateRecord(kDF_BELPIC,
-		kBELPIC_EF_Cert6, "Cert #6 (root)"));
+	RefPointer < Tokend::Record >
+		cert2(new
+		      BELPICCertificateRecord(kDF_BELPIC, kBELPIC_EF_Cert2,
+					      "Cert #2 (authentication)"));
+	RefPointer < Tokend::Record >
+		cert3(new
+		      BELPICCertificateRecord(kDF_BELPIC, kBELPIC_EF_Cert3,
+					      "Cert #3 (signature)"));
+	RefPointer < Tokend::Record >
+		cert4(new
+		      BELPICCertificateRecord(kDF_BELPIC, kBELPIC_EF_Cert4,
+					      "Cert #4 (CA)"));
+	RefPointer < Tokend::Record >
+		cert6(new
+		      BELPICCertificateRecord(kDF_BELPIC, kBELPIC_EF_Cert6,
+					      "Cert #6 (root)"));
 	/* Zetes: RRN cert is not relevant here */
-	/*	RefPointer<Tokend::Record> cert8(new BELPICCertificateRecord(kDF_BELPIC,
-		kBELPIC_EF_Cert8, "Cert #8 (RN)"));
+	/*      RefPointer<Tokend::Record> cert8(new BELPICCertificateRecord(kDF_BELPIC,
+	   kBELPIC_EF_Cert8, "Cert #8 (RN)"));
 	 */
 	certRelation.insertRecord(cert2);
 	certRelation.insertRecord(cert3);
@@ -724,55 +800,93 @@ void BELPICToken::populate()
 	certRelation.insertRecord(cert6);
 	/* Zetes: RRN cert is not relevant here */
 	/*
-	certRelation.insertRecord(cert8);
+	   certRelation.insertRecord(cert8);
 	 */
 	checkPPDUSupport();
-    
-    uint32_t keysize = getKeySize(kDF_BELPIC, kBELPIC_EF_PrKDF);
-    
+
+	uint32_t keysize = getKeySize(kDF_BELPIC, kBELPIC_EF_PrKDF);
+
 	/* Zetes: better names for the private keys */
-	RefPointer<Tokend::Record> key2(new BELPICKeyRecord(kPrK2_Id,
-		"Authentication key", keysize, privateKeyRelation.metaRecord(), true, mPPDU));
-	RefPointer<Tokend::Record> key3(new BELPICKeyRecord(kPrK3_Id,
-		"Signature key", keysize, privateKeyRelation.metaRecord(), true, mPPDU));
-	
+	RefPointer < Tokend::Record > key2(new BELPICKeyRecord(kPrK2_Id,
+							       "Authentication key",
+							       keysize,
+							       privateKeyRelation.
+							       metaRecord(),
+							       true, mPPDU));
+	RefPointer < Tokend::Record >
+		key3(new
+		     BELPICKeyRecord(kPrK3_Id, "Signature key", keysize,
+				     privateKeyRelation.metaRecord(), true,
+				     mPPDU));
+
 	privateKeyRelation.insertRecord(key2);
 	privateKeyRelation.insertRecord(key3);
 
 	key2->setAdornment(mSchema->publicKeyHashCoder().certificateKey(),
-		new Tokend::LinkedRecordAdornment(cert2));
+			   new Tokend::LinkedRecordAdornment(cert2));
 	key3->setAdornment(mSchema->publicKeyHashCoder().certificateKey(),
-		new Tokend::LinkedRecordAdornment(cert3));
-    
+			   new Tokend::LinkedRecordAdornment(cert3));
+
 	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
-		kID_EF_ID_RN, "ID#RN"));
-	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
-		kID_EF_SGN_RN, "SGN#RN"));
-	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
-		kID_EF_ID_ADDRESS, "ID#Address"));
-	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
-		kID_EF_SGN_ADDRESS, "SGN#Address"));
-	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
-		kID_EF_ID_PHOTO, "ID#Photo"));
-	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
-		kID_EF_PuK7_ID, "PuK#7 ID (CA role ID)"));
-	dataRelation.insertRecord(new BELPICProtectedRecord(kDF_ID,
-		kID_EF_Preferences, "Preferences"));
-	
+							    kID_EF_ID_RN,
+							    "ID#RN"));
+	dataRelation.
+		insertRecord(new
+			     BELPICProtectedRecord(kDF_ID, kID_EF_SGN_RN,
+						   "SGN#RN"));
+	dataRelation.
+		insertRecord(new
+			     BELPICProtectedRecord(kDF_ID, kID_EF_ID_ADDRESS,
+						   "ID#Address"));
+	dataRelation.
+		insertRecord(new
+			     BELPICProtectedRecord(kDF_ID, kID_EF_SGN_ADDRESS,
+						   "SGN#Address"));
+	dataRelation.
+		insertRecord(new
+			     BELPICProtectedRecord(kDF_ID, kID_EF_ID_PHOTO,
+						   "ID#Photo"));
+	dataRelation.
+		insertRecord(new
+			     BELPICProtectedRecord(kDF_ID, kID_EF_PuK7_ID,
+						   "PuK#7 ID (CA role ID)"));
+	dataRelation.
+		insertRecord(new
+			     BELPICProtectedRecord(kDF_ID, kID_EF_Preferences,
+						   "Preferences"));
+
 	secdebug("populate", "BELPICToken::populate() end");
 }
 
 void BELPICToken::checkPPDUSupport()
 {
-    mPPDU = false;
-    
-    if( (strncmp(this->startupReaderInfo()->szReader, "VASCO DIGIPASS 870", sizeof("VASCO DIGIPASS 870")-1) == 0) ||
-        (strncmp(this->startupReaderInfo()->szReader, "VASCO DIGIPASS 875", sizeof("VASCO DIGIPASS 875")-1) == 0) ||
-        (strncmp(this->startupReaderInfo()->szReader, "VASCO DIGIPASS 920", sizeof("VASCO DIGIPASS 920")-1) == 0) ||
-        (strncmp(this->startupReaderInfo()->szReader, "ACS APG8201", sizeof("ACS APG8201")-1) == 0) ||
-        (strncmp(this->startupReaderInfo()->szReader, "Ezio Shield Secure Channel", sizeof("Ezio Shield Secure Channel")-1) == 0) ||
-        (strncmp(this->startupReaderInfo()->szReader, "PPDUOT EID CARD READER", sizeof("PPDUOT EID CARD READER")-1) == 0))
-    {
-        mPPDU = true;
-    }
+	mPPDU = false;
+
+	if ((strncmp
+	     (this->startupReaderInfo()->szReader, "VASCO DIGIPASS 870",
+	      sizeof("VASCO DIGIPASS 870") - 1) == 0)
+	    ||
+	    (strncmp
+	     (this->startupReaderInfo()->szReader, "VASCO DIGIPASS 875",
+	      sizeof("VASCO DIGIPASS 875") - 1) == 0)
+	    ||
+	    (strncmp
+	     (this->startupReaderInfo()->szReader, "VASCO DIGIPASS 920",
+	      sizeof("VASCO DIGIPASS 920") - 1) == 0)
+	    ||
+	    (strncmp
+	     (this->startupReaderInfo()->szReader, "ACS APG8201",
+	      sizeof("ACS APG8201") - 1) == 0)
+	    ||
+	    (strncmp
+	     (this->startupReaderInfo()->szReader,
+	      "Ezio Shield Secure Channel",
+	      sizeof("Ezio Shield Secure Channel") - 1) == 0)
+	    ||
+	    (strncmp
+	     (this->startupReaderInfo()->szReader, "PPDUOT EID CARD READER",
+	      sizeof("PPDUOT EID CARD READER") - 1) == 0))
+	{
+		mPPDU = true;
+	}
 }

@@ -7,18 +7,33 @@
 #include "utftranslate.h"
 #include "cppeidstring.h"
 
-class ConversionWorker {
+class ConversionWorker
+{
 protected:
 	static eid_vwr_langs target_;
 public:
-	static void set_lang(eid_vwr_langs which) { target_ = which; };
-	static eid_vwr_langs get_lang() { return target_; };
-	static bool have_language() { return target_ > EID_VWR_LANG_NONE; };
-	virtual EID_STRING convert(const void* original) = 0;
-	virtual EID_STRING convert(std::string original) { return convert(original.c_str()); };
-	virtual void* convert(const void* original, int* len_return) {
+	static void set_lang(eid_vwr_langs which)
+	{
+		target_ = which;
+	};
+	static eid_vwr_langs get_lang()
+	{
+		return target_;
+	};
+	static bool have_language()
+	{
+		return target_ > EID_VWR_LANG_NONE;
+	};
+	virtual EID_STRING convert(const void *original) = 0;
+	virtual EID_STRING convert(std::string original)
+	{
+		return convert(original.c_str());
+	};
+	virtual void *convert(const void *original, int *len_return)
+	{
 		EID_STRING cv = convert(original);
-		*len_return = (int)cv.length();
+
+		*len_return = (int) cv.length();
 		return EID_STRDUP(cv.c_str());
 	}
 };

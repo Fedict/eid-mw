@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -23,21 +24,20 @@
 
 using namespace eIDMW;
 
-class dlgWndBadPIN : public Win32Dialog
+class dlgWndBadPIN:public Win32Dialog
 {
 	HBITMAP ImagePIN;
 	HBITMAP ImagePIN_Mask;
-	wchar_t * szHeader;
-	const wchar_t * szBody;
+	wchar_t *szHeader;
+	const wchar_t *szBody;
 	HFONT TextFont;
 
 public:
-	dlgWndBadPIN( std::wstring & PINName, unsigned long RemainingTries, HWND Parent = NULL );
-	virtual ~dlgWndBadPIN();
+	      dlgWndBadPIN(std::wstring & PINName,
+			   unsigned long RemainingTries, HWND Parent = NULL);
+	     virtual ~ dlgWndBadPIN();
 
-	virtual LRESULT ProcecEvent
-				(	UINT		uMsg,			// Message For This Window
-					WPARAM		wParam,			// Additional Message Information
-					LPARAM		lParam );		// Additional Message Information
+	virtual LRESULT ProcecEvent(UINT uMsg,	// Message For This Window
+				    WPARAM wParam,	// Additional Message Information
+				    LPARAM lParam);	// Additional Message Information
 };
-

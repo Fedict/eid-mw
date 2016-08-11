@@ -1,8 +1,8 @@
 #include "dob.h"
 #include "cppeidstring.h"
 
-std::map<eid_vwr_langs, std::map<int, EID_STRING> > DobWriter::tomonth;
-std::map<EID_STRING, int> DobParser::frommonth;
+std::map < eid_vwr_langs, std::map < int, EID_STRING > >DobWriter::tomonth;
+std::map < EID_STRING, int >DobParser::frommonth;
 
 /*
 The date of birth is written to the card in a localized format. This
@@ -13,8 +13,10 @@ Clearly someone never heard of ISO 8601
 */
 
 #define domap(l,n,s) frommonth[s] = n;
-DobParser::DobParser() {
-	if(frommonth.size() == 0) {
+DobParser::DobParser()
+{
+	if (frommonth.size() == 0)
+	{
 		domap(EID_VWR_LANG_DE, 1, TEXT("JAN"));
 		domap(EID_VWR_LANG_DE, 2, TEXT("FEB"));
 		domap(EID_VWR_LANG_DE, 3, TEXT("MÄR"));
@@ -68,10 +70,13 @@ DobParser::DobParser() {
 		domap(EID_VWR_LANG_EN, 12, TEXT("DEC"));
 	}
 }
+
 #undef domap
 #define domap(l,n,s) tomonth[l][n] = s
-DobWriter::DobWriter(DateParser* p) : DateWriter(p) {
-	if(tomonth.size() == 0) {
+DobWriter::DobWriter(DateParser * p):DateWriter(p)
+{
+	if (tomonth.size() == 0)
+	{
 		domap(EID_VWR_LANG_DE, 1, TEXT("JAN"));
 		domap(EID_VWR_LANG_DE, 2, TEXT("FEB"));
 		domap(EID_VWR_LANG_DE, 3, TEXT("MÄR"));
@@ -126,13 +131,18 @@ DobWriter::DobWriter(DateParser* p) : DateWriter(p) {
 	}
 }
 
-void DobParser::input(EID_STRING original) {
-	day = original.substr(0,2);
-	month = frommonth[original.substr(3, original.find_last_of(TEXT(" .")) - 3)];
+void DobParser::input(EID_STRING original)
+{
+	day = original.substr(0, 2);
+	month = frommonth[original.
+			  substr(3, original.find_last_of(TEXT(" .")) - 3)];
 	year = original.substr(original.find_last_of(TEXT(" .")) + 1);
 }
 
-EID_STRING DobWriter::output() {
+EID_STRING DobWriter::output()
+{
 	EID_CHAR sep = target_ == EID_VWR_LANG_DE ? TEXT('.') : TEXT(' ');
-	return parser->day + sep + tomonth[target_][parser->month] + sep + parser->year;
+
+	return parser->day + sep + tomonth[target_][parser->month] + sep +
+		parser->year;
 }

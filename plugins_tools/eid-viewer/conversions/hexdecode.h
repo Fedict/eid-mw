@@ -3,13 +3,19 @@
 
 #include "convworker.h"
 
-class HexDecodeConvertor : public ConversionWorker {
+class HexDecodeConvertor:public ConversionWorker
+{
 private:
 	int len_;
 public:
-	HexDecodeConvertor(int len) : len_(len) {};
-	virtual EID_STRING convert(const void* original) { return TEXT(""); };
-	virtual void* convert(const void* original, int* len_return);
+	    HexDecodeConvertor(int len):len_(len)
+	{
+	};
+	virtual EID_STRING convert(const void *original)
+	{
+		return TEXT("");
+	};
+	virtual void *convert(const void *original, int *len_return);
 };
 
 #endif

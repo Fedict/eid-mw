@@ -8,6 +8,5 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface DraggingImage : NSImageView<NSPasteboardItemDataProvider, NSDraggingSource>
-
-@end
+@ interface DraggingImage:NSImageView < NSPasteboardItemDataProvider, NSDraggingSource >
+	@end

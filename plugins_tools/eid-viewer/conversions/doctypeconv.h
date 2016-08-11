@@ -5,12 +5,14 @@
 #include <map>
 #include "convworker.h"
 
-class DocTypeConvertor : public ConversionWorker {
+class DocTypeConvertor:public ConversionWorker
+{
 private:
-	static std::map<eid_vwr_langs, std::map<int, EID_STRING> > conversions;
+	static std::map < eid_vwr_langs, std::map < int,
+		EID_STRING > >conversions;
 public:
-	DocTypeConvertor();
-	virtual EID_STRING convert(const void* original);
+	    DocTypeConvertor();
+	virtual EID_STRING convert(const void *original);
 };
 
 #endif

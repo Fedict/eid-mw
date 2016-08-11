@@ -1,3 +1,4 @@
+
 /**
  * \defgroup C_API the (base) C API
  *
@@ -19,16 +20,18 @@
 typedef struct _slotdesc slotdesc;
 
 /** Describes a slot (reader) */
-struct _slotdesc {
-	unsigned long slot; ///< The number of the slot, to be used with eid_vwr_be_select_slot()
-	EID_CHAR *description; ///< A human-readable name for the reader
+struct _slotdesc
+{
+	unsigned long slot;  ///< The number of the slot, to be used with eid_vwr_be_select_slot()
+	EID_CHAR *description;	///< A human-readable name for the reader
 };
 
 /** Types of data sources we can have */
-enum eid_vwr_source {
-	EID_VWR_SRC_NONE, ///< No source. UI should be cleared.
-	EID_VWR_SRC_FILE, ///< File source. "Print", "Validate" and "Close" operations should be allowed, PIN-related operations are impossible. Save is pointless (but may be possible).
-	EID_VWR_SRC_CARD, ///< Card source. Close should not be allowed, everything else should be.
+enum eid_vwr_source
+{
+	EID_VWR_SRC_NONE,    ///< No source. UI should be cleared.
+	EID_VWR_SRC_FILE,    ///< File source. "Print", "Validate" and "Close" operations should be allowed, PIN-related operations are impossible. Save is pointless (but may be possible).
+	EID_VWR_SRC_CARD,    ///< Card source. Close should not be allowed, everything else should be.
 	EID_VWR_SRC_UNKNOWN, ///< Unknown. Used as initializer.
 };
 
@@ -36,58 +39,67 @@ enum eid_vwr_source {
  *
  * These are the log levels which the backend may use.
  */
-enum eid_vwr_loglevel {
-	EID_VWR_LOG_DETAIL = 0, /**< most detail */
-	EID_VWR_LOG_NORMAL = 1, /**< intermediate detail */
-	EID_VWR_LOG_COARSE = 2, /**< least detail */
+enum eid_vwr_loglevel
+{
+
+	EID_VWR_LOG_DETAIL = 0,	/**< most detail */
+
+	EID_VWR_LOG_NORMAL = 1,	/**< intermediate detail */
+
+	EID_VWR_LOG_COARSE = 2,	/**< least detail */
+
 	EID_VWR_LOG_ERROR = 3, /**< error message; a dialog box with the message (in addition to adding to the log) may be appropriate */
 };
 
 /** PIN operations. TEST: perform a login (and return whether the login was successful). CHG: change PIN */
-enum eid_vwr_pinops {
-	EID_VWR_PINOP_TEST, ///< perform a login and return whether the login was successful
-	EID_VWR_PINOP_CHG, ///< change the PIN code of the card
+enum eid_vwr_pinops
+{
+	EID_VWR_PINOP_TEST,  ///< perform a login and return whether the login was successful
+	EID_VWR_PINOP_CHG,   ///< change the PIN code of the card
 };
 
 /** Result of an operation. */
-enum eid_vwr_result {
-    EID_VWR_RES_FAILED, ///< operation failed
-    EID_VWR_RES_SUCCESS, ///< the operation returned successfully
-    EID_VWR_RES_UNKNOWN ///< the operation did not finish
+enum eid_vwr_result
+{
+	EID_VWR_RES_FAILED,  ///< operation failed
+	EID_VWR_RES_SUCCESS, ///< the operation returned successfully
+	EID_VWR_RES_UNKNOWN  ///< the operation did not finish
 };
 
 /** \brief Possible states.
  *
  * \image html be-statemach-docs.png
  */
-enum eid_vwr_states {
-	STATE_LIBOPEN, ///< The library has been opened. Used as an initializer.
-	STATE_CALLBACKS, ///< The callbacks have been defined.
-	STATE_READY, ///< Ready to receive a token (eID card)
-	STATE_TOKEN, ///< A token (eID card) has been found
-	STATE_TOKEN_WAIT, ///< The card has been read, we're now waiting for events to do something else.
-	STATE_TOKEN_ID, ///< Reading identity data
-	STATE_TOKEN_CERTS, ///< Reading certificates
-	STATE_TOKEN_PINOP, ///< Performing a PIN operation
-	STATE_TOKEN_SERIALIZE, ///< Saving data to a file
-	STATE_TOKEN_ERROR, ///< An error occurred while dealing with the card
-	STATE_FILE, ///< We're dealing with files
-	STATE_FILE_READING, ///< We're reading from the file currently
-	STATE_FILE_WAIT, ///< We finished parsing the file.
-	STATE_CARD_INVALID, ///< The data was determined to be invalid. That is, the card could be read, but signature validation failed.
-	STATE_NO_TOKEN, ///< We don't have a card, and we also don't have a file.
-	STATE_NO_READER, ///< We don't have a reader (yet?)
+enum eid_vwr_states
+{
+	STATE_LIBOPEN,	     ///< The library has been opened. Used as an initializer.
+	STATE_CALLBACKS,     ///< The callbacks have been defined.
+	STATE_READY,	     ///< Ready to receive a token (eID card)
+	STATE_TOKEN,	     ///< A token (eID card) has been found
+	STATE_TOKEN_WAIT,    ///< The card has been read, we're now waiting for events to do something else.
+	STATE_TOKEN_ID,	     ///< Reading identity data
+	STATE_TOKEN_CERTS,   ///< Reading certificates
+	STATE_TOKEN_PINOP,   ///< Performing a PIN operation
+	STATE_TOKEN_SERIALIZE,	///< Saving data to a file
+	STATE_TOKEN_ERROR,   ///< An error occurred while dealing with the card
+	STATE_FILE,	     ///< We're dealing with files
+	STATE_FILE_READING,  ///< We're reading from the file currently
+	STATE_FILE_WAIT,     ///< We finished parsing the file.
+	STATE_CARD_INVALID,  ///< The data was determined to be invalid. That is, the card could be read, but signature validation failed.
+	STATE_NO_TOKEN,	     ///< We don't have a card, and we also don't have a file.
+	STATE_NO_READER,     ///< We don't have a reader (yet?)
 
 	STATE_COUNT,
 };
 
 /** Possible languages. */
-enum eid_vwr_langs {
-	EID_VWR_LANG_NONE, ///< No language has yet been selected. Used as initializer.
-	EID_VWR_LANG_DE, ///< German
-	EID_VWR_LANG_EN, ///< English
-	EID_VWR_LANG_FR, ///< French
-	EID_VWR_LANG_NL, ///< Dutch
+enum eid_vwr_langs
+{
+	EID_VWR_LANG_NONE,   ///< No language has yet been selected. Used as initializer.
+	EID_VWR_LANG_DE,     ///< German
+	EID_VWR_LANG_EN,     ///< English
+	EID_VWR_LANG_FR,     ///< French
+	EID_VWR_LANG_NL,     ///< Dutch
 };
 
 
@@ -102,7 +114,9 @@ enum eid_vwr_langs {
   * pointers empty (i.e., at NULL). If this happens, the backend will
   * simply not issue that event.
   */
-struct eid_vwr_ui_callbacks {
+struct eid_vwr_ui_callbacks
+{
+
 	/** \brief The version number of this struct.
 	  *
 	  * This version number exists for backwards compatibility
@@ -119,6 +133,7 @@ struct eid_vwr_ui_callbacks {
 	  * number.
 	  */
 	int version;
+
 	/** \brief Called when the data source has changed.
 	  * 
 	  * When the viewer library starts looking at a new file or eID
@@ -128,7 +143,8 @@ struct eid_vwr_ui_callbacks {
 	  *
 	  * \param new_source the type of the new source.
 	  */
-	void(*newsrc)(enum eid_vwr_source new_source);
+	void (*newsrc) (enum eid_vwr_source new_source);
+
 	/** \brief new string data to be displayed in UI.
 	  *
 	  * Data with the given label and which should be interpreted as
@@ -141,7 +157,8 @@ struct eid_vwr_ui_callbacks {
 	  * language.
 	  * \see beidsdk_card_data.pdf contains the possible labels
 	  */
-	void(*newstringdata)(const EID_CHAR* label, const EID_CHAR* data);
+	void (*newstringdata) (const EID_CHAR * label, const EID_CHAR * data);
+
 	/** \brief New binary data to be displayed in UI.
 	  *
 	  * Data with the given label and which should be interpreted as
@@ -153,7 +170,9 @@ struct eid_vwr_ui_callbacks {
 	  * \param data the data as it is on the card.
 	  * \param datalen the length of the data, in bytes.
 	  */
-	void(*newbindata)(const EID_CHAR* label, const unsigned char* data, int datalen);
+	void (*newbindata) (const EID_CHAR * label, const unsigned char *data,
+			    int datalen);
+
 	/** \brief Log a string at the given level.
 	  *
 	  * \param level the level at which to log.
@@ -162,7 +181,8 @@ struct eid_vwr_ui_callbacks {
 	  * \note only one of log() or logv() needs to be implemented;
 	  * the backend will use whichever version is available.
 	  */
-	void(*log)(enum eid_vwr_loglevel level, const EID_CHAR* line);
+	void (*log) (enum eid_vwr_loglevel level, const EID_CHAR * line);
+
 	/** \brief Log a string using varargs.
 	  *
 	  * The advantage of having this function (as opposed to log())
@@ -178,7 +198,9 @@ struct eid_vwr_ui_callbacks {
 	  * \note only one of log() or logv() needs to be implemented;
 	  * the backend will use whichever version is available.
 	  */
-	void(*logv)(enum eid_vwr_loglevel level, const EID_CHAR* line, va_list ap);
+	void (*logv) (enum eid_vwr_loglevel level, const EID_CHAR * line,
+		      va_list ap);
+
 	/** \brief State machine transition.
 	  *
 	  * This event is issued whenever the state machine changes
@@ -187,7 +209,8 @@ struct eid_vwr_ui_callbacks {
 	  *
 	  * \param new_state the new state we're in right now.
 	  */
-	void(*newstate)(enum eid_vwr_states new_state);
+	void (*newstate) (enum eid_vwr_states new_state);
+
 	/** \brief Return the result of a PIN operation
 	  *
 	  * When the user interface calls eid_vwr_pinop(), then at some
@@ -200,21 +223,24 @@ struct eid_vwr_ui_callbacks {
 	  * \param op the operation for which this is a result
 	  * \param res the result of the operation
 	  */
-	void(*pinop_result)(enum eid_vwr_pinops op, enum eid_vwr_result res);
+	void (*pinop_result) (enum eid_vwr_pinops op,
+			      enum eid_vwr_result res);
+
 	/** \brief The number of known readers has changed
 	  *
 	  * \param nreaders the new reader count
 	  * \param slots the slot IDs and human-readable descriptions of
 	  * all known readers
 	  */
-	void(*readers_changed)(unsigned long nreaders, slotdesc* slots);
+	void (*readers_changed) (unsigned long nreaders, slotdesc * slots);
 };
 
 /** Struct used by preview handler */
-struct eid_vwr_preview {
-	void* imagedata; ///< JPEG photo of the inspected XML file
-	size_t imagelen; ///< length of imagedata
-	int have_data; ///< nonzero if there is actually any data
+struct eid_vwr_preview
+{
+	void *imagedata;     ///< JPEG photo of the inspected XML file
+	size_t imagelen;     ///< length of imagedata
+	int have_data;	     ///< nonzero if there is actually any data
 };
 
 /** \brief Perform a PIN operation
@@ -227,6 +253,7 @@ struct eid_vwr_preview {
   * change the PIN code.
   */
 DllExport void eid_vwr_pinop(enum eid_vwr_pinops op);
+
 /** \brief Initialize the callbacks
   * 
   * Must be called by every application which wants to make use of this
@@ -239,7 +266,8 @@ DllExport void eid_vwr_pinop(enum eid_vwr_pinops op);
   * more than once, this is not very well tested and therefore doing so
   * is not recommended.
   */
-DllExport int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb);
+DllExport int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks *cb);
+
 /** \brief Create the eid_vwr_ui_callbacks struct.
   *
   * While it is possible, in theory, to create the struct by malloc()ing
@@ -251,7 +279,8 @@ DllExport int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb);
   * \return an allocated eid_vwr_ui_callbacks struct, with all members
   * set to NULL.
   */
-DllExport struct eid_vwr_ui_callbacks* eid_vwr_cbstruct();
+DllExport struct eid_vwr_ui_callbacks *eid_vwr_cbstruct();
+
 /** \brief Create a preview for the given file 
   *
   * This function simply parses the XML file and extracts the embedded
@@ -260,7 +289,9 @@ DllExport struct eid_vwr_ui_callbacks* eid_vwr_cbstruct();
   * the photo
   * \return 
   */
-DllExport struct eid_vwr_preview* eid_vwr_get_preview(const EID_CHAR* filename);
+DllExport struct eid_vwr_preview *eid_vwr_get_preview(const EID_CHAR *
+						      filename);
+
 /** 
   * \brief Check if there is an event to be handled.
   *
@@ -269,11 +300,13 @@ DllExport struct eid_vwr_preview* eid_vwr_get_preview(const EID_CHAR* filename);
   * recommended.
   */
 DllExport void eid_vwr_poll();
+
 /** \brief Loop over eid_vwr_poll().
   *
   * \return never
   */
 DllExport void eid_vwr_be_mainloop();
+
 /**
   * \brief Save the currently-open data.
   *
@@ -285,7 +318,8 @@ DllExport void eid_vwr_be_mainloop();
   * \param target_file the name of the file in which to save data.
   * \see eid_vwr_ui_callbacks::newstate()
   */
-DllExport void eid_vwr_be_serialize(const EID_CHAR* target_file);
+DllExport void eid_vwr_be_serialize(const EID_CHAR * target_file);
+
 /**
   * \brief Open a file.
   *
@@ -296,7 +330,8 @@ DllExport void eid_vwr_be_serialize(const EID_CHAR* target_file);
   * 
   * \param source_file the file to read
   */
-DllExport void eid_vwr_be_deserialize(const EID_CHAR* source_file);
+DllExport void eid_vwr_be_deserialize(const EID_CHAR * source_file);
+
 /**
   * \brief Get the currently-open data in XML form.
   *
@@ -309,7 +344,8 @@ DllExport void eid_vwr_be_deserialize(const EID_CHAR* source_file);
   * \note this data is owned by the eid-viewer library and should *not*
   * be freed by the caller.
   */
-DllExport const char* eid_vwr_be_get_xmlform();
+DllExport const char *eid_vwr_be_get_xmlform();
+
 /** \brief Select the current reader.
   *
   * \param automatic if nonzero, let the backend decide
@@ -318,7 +354,9 @@ DllExport const char* eid_vwr_be_get_xmlform();
   * the one with this as the slot id.
   * \see eid_vwr_ui_callbacks::readers_changed()
   */
-DllExport void eid_vwr_be_select_slot(int automatic, unsigned long manualslot);
+DllExport void eid_vwr_be_select_slot(int automatic,
+				      unsigned long manualslot);
+
 /** \brief Mark the current data as invalid.
   *
   * If the UI detects that the card data is invalid for some reason,
@@ -337,12 +375,14 @@ DllExport void eid_vwr_be_select_slot(int automatic, unsigned long manualslot);
   *    RRN certificate itself)
   */
 DllExport void eid_vwr_be_set_invalid();
+
 /** \brief Close the current file
   *
   * If the current state is STATE_FILE, switch to STATE_NO_TOKEN. In all
   * other cases, does nothing.
   */
 DllExport void eid_vwr_close_file();
+
 /** \brief Set the backend language.
   *
   * This method sets the current backend language to the given language.

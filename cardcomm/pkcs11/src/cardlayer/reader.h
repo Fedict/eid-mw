@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -26,29 +27,33 @@
 namespace eIDMW
 {
 
-class CCardLayer;
-class CCard;
+	class CCardLayer;
+	class CCard;
 
-class EIDMW_CAL_API CReader
-{
+	class EIDMW_CAL_API CReader
+	{
 public:
-    ~CReader(void);
+		~CReader(void);
 
 	/**
 	 * Returns the reader name
 	 */
-	std::string & GetReaderName();
+		     std::string & GetReaderName();
 
 	/** Specify a callback function to be called each time a
 	 * card is inserted/remove in/from this reader.
 	 * The returned handle can be used to stop the callbacks
 	 * when they are no longer needed. */
-    unsigned long SetEventCallback(
-		void (* callback)(long lRet, unsigned long ulState, void *pvRef), void *pvRef);
+		unsigned long
+			SetEventCallback(void (*callback)
+					 (long lRet, unsigned long ulState,
+					  void *pvRef), void *pvRef);
+
 	/** Returns true is ulState indicates that a card is present, false otherwise. */
-	static bool CardPresent(unsigned long ulState);
+		static bool CardPresent(unsigned long ulState);
+
 	/** To tell that the callbacks are not longer needed. */
-	void StopEventCallback(unsigned long ulHandle);
+		void StopEventCallback(unsigned long ulHandle);
 
 	/**
 	 * Get the status w.r.t. a card being present in the reader
@@ -62,7 +67,7 @@ public:
 	 * If the card has been removed and a (new) card has been inserted
 	 * then if bReconnect is true, this function will reconnect to the (new) card.
 	 */
-    tCardStatus Status(bool bReconnect = false);
+		tCardStatus Status(bool bReconnect = false);
 
 	/**
 	 * Connect to the card; it's sae to call this function multiple times.
@@ -71,131 +76,145 @@ public:
 	 * NOTE: this method must be called successfully before calling
 	 * any of the other functions below.
 	 */
-    bool Connect();
+		bool Connect();
 
 	/** Disconnect from the card; it's safe to call this function multiple times */
-	void Disconnect(tDisconnectMode disconnectMode = DISCONNECT_LEAVE_CARD);
+		void Disconnect(tDisconnectMode disconnectMode =
+				DISCONNECT_LEAVE_CARD);
 
 	/**
 	 * Returns the ATR of the card that is currently present.
 	 */
-	CByteArray GetATR();
+		CByteArray GetATR();
 
-	bool IsPinpadReader();
+		bool IsPinpadReader();
 
-    tCardType GetCardType();
-    /* Return card-specific info.
-     * E.g. for the BeID card, this will return the result
-	 * of the "Get Card Data" command (unsigned) */
-    CByteArray GetInfo();
+		tCardType GetCardType();
+		/* Return card-specific info.
+		 * E.g. for the BeID card, this will return the result
+		 * of the "Get Card Data" command (unsigned) */
+		CByteArray GetInfo();
 
-    std::string GetSerialNr();
-    std::string GetCardLabel();
+		           std::string GetSerialNr();
+		           std::string GetCardLabel();
 
-	/* Lock the card for exclusive use. Multiple calls are possible
-	 * (only the first call will lock the card), but for each Lock()
-	 * call, an UnLock() must be called. */
-    void Lock();
-    void Unlock();
+		/* Lock the card for exclusive use. Multiple calls are possible
+		 * (only the first call will lock the card), but for each Lock()
+		 * call, an UnLock() must be called. */
+		void Lock();
+		void Unlock();
 
-    void SelectApplication(const CByteArray & oAID);
+		void SelectApplication(const CByteArray & oAID);
 
-    /* Read the file indicated by 'csPath'.
-     * This path can be absolute, relative or empty
-	 * (in which case the currenlty selected file is read)
-	 * If too much bytes are specified by ulMaxLen, no
-	 * exception is throw, the function just returns the
-	 * number of bytes that are available. */
-    CByteArray ReadFile(const std::string &csPath,
-        unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE, bool bDoNotCache=false);
-    /* Write to the file indicated by 'csPath'.
-     * This path can be absolute, relative or empty
-	 * (in which case the currenlty selected file is written) */
-    void WriteFile(const std::string &csPath, unsigned long ulOffset,
-        const CByteArray & oData);
+		/* Read the file indicated by 'csPath'.
+		 * This path can be absolute, relative or empty
+		 * (in which case the currenlty selected file is read)
+		 * If too much bytes are specified by ulMaxLen, no
+		 * exception is throw, the function just returns the
+		 * number of bytes that are available. */
+		CByteArray ReadFile(const std::string & csPath,
+				    unsigned long ulOffset =
+				    0, unsigned long ulMaxLen =
+				    FULL_FILE, bool bDoNotCache = false);
+		/* Write to the file indicated by 'csPath'.
+		 * This path can be absolute, relative or empty
+		 * (in which case the currenlty selected file is written) */
+		void WriteFile(const std::string & csPath,
+			       unsigned long ulOffset,
+			       const CByteArray & oData);
 
-	/* Return the remaining PIN attempts;
-	 * returns PIN_STATUS_UNKNOWN if this info isn't available */
-    unsigned long PinStatus(const tPin & Pin);
-    bool PinCmd(tPinOperation operation, const tPin & Pin,
-        const std::string & csPin1, const std::string & csPin2,
-        unsigned long & ulRemaining);
+		/* Return the remaining PIN attempts;
+		 * returns PIN_STATUS_UNKNOWN if this info isn't available */
+		unsigned long PinStatus(const tPin & Pin);
+		bool PinCmd(tPinOperation operation, const tPin & Pin,
+			    const std::string & csPin1,
+			    const std::string & csPin2,
+			    unsigned long &ulRemaining);
 
 	/** Returns the OR-ing of all supported crypto algorithms */
-	unsigned long GetSupportedAlgorithms();
+		unsigned long GetSupportedAlgorithms();
+
 	/** Returns the key size of the RSA key on the card */
-	unsigned int GetRSAKeySize();
+		unsigned int GetRSAKeySize();
+
 	/** Returns the applet version of the card */
-	unsigned char GetAppletVersion();
+		unsigned char GetAppletVersion();
 
-	/* Sign data. If necessary, a PIN will be asked */
-    CByteArray Sign(const tPrivKey & key, unsigned long algo,
-        const CByteArray & oData);
-	/* Sign data. No call to oHash.GetHash() should be done;
-	 * this way it is possible to support 'partial signing'
-	 * in which the last part of the data to be signed (this
-	 * is kept in the oHash object) is sent to the card to
-	 * finish the hashing. */
-    CByteArray Sign(const tPrivKey & key, unsigned long algo,
-        CHash & oHash);
+		/* Sign data. If necessary, a PIN will be asked */
+		CByteArray Sign(const tPrivKey & key, unsigned long algo,
+				const CByteArray & oData);
+		/* Sign data. No call to oHash.GetHash() should be done;
+		 * this way it is possible to support 'partial signing'
+		 * in which the last part of the data to be signed (this
+		 * is kept in the oHash object) is sent to the card to
+		 * finish the hashing. */
+		CByteArray Sign(const tPrivKey & key, unsigned long algo,
+				CHash & oHash);
 
-	CByteArray Decrypt(const tPrivKey & key, unsigned long algo,
-        const CByteArray & oData);
+		CByteArray Decrypt(const tPrivKey & key, unsigned long algo,
+				   const CByteArray & oData);
 
-    CByteArray GetRandom(unsigned long ulLen);
+		CByteArray GetRandom(unsigned long ulLen);
 
-    CByteArray SendAPDU(const CByteArray & oCmdAPDU);
-    /* Send card-specific command, e.g. for a secure channel
-	 * or the GetCardData command on a BE eID card */
-    CByteArray Ctrl(long ctrl, const CByteArray & oCmdData);
+		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
+		/* Send card-specific command, e.g. for a secure channel
+		 * or the GetCardData command on a BE eID card */
+		CByteArray Ctrl(long ctrl, const CByteArray & oCmdData);
 
-    //--- P15 functions
-    unsigned long PinCount();
+		//--- P15 functions
+		unsigned long PinCount();
+
     /** ulIndex ranges from 0 to PinCount() - 1 */
-    tPin GetPin(unsigned long ulIndex);
-	/** If bValid == false, then no PIN with this ID was found */
-    tPin GetPinByID(unsigned long ulID);
+		tPin GetPin(unsigned long ulIndex);
 
-    unsigned long CertCount();
+	/** If bValid == false, then no PIN with this ID was found */
+		tPin GetPinByID(unsigned long ulID);
+
+		unsigned long CertCount();
+
     /** ulIndex ranges from 0 to CertCount() - 1 */
-    tCert GetCert(unsigned long ulIndex);
-	/** If bValid == false, then no PIN with this ID was found */
-    tCert GetCertByID(unsigned long ulID);
+		tCert GetCert(unsigned long ulIndex);
 
-    unsigned long PrivKeyCount();
-    /** ulIndex ranges from 0 to PrivKeyCount() - 1 */
-    tPrivKey GetPrivKey(unsigned long ulIndex);
 	/** If bValid == false, then no PIN with this ID was found */
-    tPrivKey GetPrivKeyByID(unsigned long ulID);
+		tCert GetCertByID(unsigned long ulID);
+
+		unsigned long PrivKeyCount();
+
+    /** ulIndex ranges from 0 to PrivKeyCount() - 1 */
+		tPrivKey GetPrivKey(unsigned long ulIndex);
+
+	/** If bValid == false, then no PIN with this ID was found */
+		tPrivKey GetPrivKeyByID(unsigned long ulID);
 
 	/** Returns a card-independent way to identify a PIN */
-	PinUsage GetPinUsage(const tPin & pin);
+		PinUsage GetPinUsage(const tPin & pin);
 
 private:
-    CReader(const std::string & csReader, CContext *poContext);
-    // No copies allowed
-    CReader(const CReader & oReader);
-    CReader & operator = (const CReader & oReader);
+		      CReader(const std::string & csReader,
+			      CContext * poContext);
+		// No copies allowed
+		      CReader(const CReader & oReader);
+		      CReader & operator =(const CReader & oReader);
 
-	bool m_bIgnoreRemoval;
+		bool m_bIgnoreRemoval;
 #ifdef WIN32
 #pragma warning(push)
-#pragma warning(disable:4251)// these strings do not need a dll interface
+#pragma warning(disable:4251)	// these strings do not need a dll interface
 #endif
-    std::string m_csReader;
-	std::wstring m_wsReader;
+		     std::string m_csReader;
+		     std::wstring m_wsReader;
 #ifdef WIN32
 #pragma warning(pop)
 #endif
 
-    CCard *m_poCard;
-    CPKCS15 m_oPKCS15;
-    CPinpad m_oPinpad;
-	CDynamicLib m_oCardPluginLib;
-    
-    friend class CCardLayer; // calls the CReader constructor
+		CCard *m_poCard;
+		CPKCS15 m_oPKCS15;
+		CPinpad m_oPinpad;
+		CDynamicLib m_oCardPluginLib;
 
-    CContext *m_poContext;
-};
+		friend class CCardLayer;	// calls the CReader constructor
+
+		CContext *m_poContext;
+	};
 
 }

@@ -18,7 +18,8 @@
 #include <openssl/x509.h>
 #include <eid-viewer/macros.h>
 
-enum cert_columns {
+enum cert_columns
+{
 	CERT_COL_LABEL,
 	CERT_COL_IMAGE,
 	CERT_COL_VALIDFROM,
@@ -35,9 +36,10 @@ enum cert_columns {
 /**
   * File type to be used when dumping data to a file
   */
-enum dump_type {
-	DUMP_DER, ///< Dump using ASN.1 Distinguished Encoding Rules (DER)
-	DUMP_PEM, ///< Dump in PEM format
+enum dump_type
+{
+	DUMP_DER,	     ///< Dump using ASN.1 Distinguished Encoding Rules (DER)
+	DUMP_PEM,	     ///< Dump in PEM format
 };
 
 /**
@@ -49,7 +51,8 @@ enum dump_type {
   * produced by OpenSSL. Should be free()d by the caller when no longer
   * needed.
   */
-DllExport char* eid_vwr_get_use_flags(const char* label, X509* cert);
+DllExport char *eid_vwr_get_use_flags(const char *label, X509 * cert);
+
 /**
   * \brief Get a printable version of the certificate's distinguished
   * name (DN).
@@ -60,7 +63,8 @@ DllExport char* eid_vwr_get_use_flags(const char* label, X509* cert);
   * name, as displayed on the eID Viewer's "certificates" pane. Should
   * be free()d by the caller when no longer needed.
   */
-DllExport char* eid_vwr_detail_cert(const char* label, X509* cert);
+DllExport char *eid_vwr_detail_cert(const char *label, X509 * cert);
+
 /**
   * \brief Get a useful label for the certificate.
   *
@@ -71,7 +75,8 @@ DllExport char* eid_vwr_detail_cert(const char* label, X509* cert);
   * of the label parameter if the certificate has no common name. Should
   * be free()d by the caller when no longer needed.
   */
-DllExport char* eid_vwr_describe_cert(const char* label, X509* cert);
+DllExport char *eid_vwr_describe_cert(const char *label, X509 * cert);
+
 /**
   * \brief Write the given certificate to a file descriptor
   *
@@ -80,7 +85,8 @@ DllExport char* eid_vwr_describe_cert(const char* label, X509* cert);
   * \param len the length in bytes of the preceding parameter
   * \param how which format to use when writing
   */
-DllExport void eid_vwr_dumpcert(int fd, const void* derdata, int len, enum dump_type how);
+DllExport void eid_vwr_dumpcert(int fd, const void *derdata, int len,
+				enum dump_type how);
 
 /**@}*/
 

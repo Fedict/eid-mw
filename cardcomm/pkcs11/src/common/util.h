@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -38,44 +39,55 @@
 namespace eIDMW
 {
 
-EIDMW_CMN_API void LogShitLevel(int x);
+	EIDMW_CMN_API void LogShitLevel(int x);
 
 //--- string conversion between std::wstring and std::string
-EIDMW_CMN_API std::wstring   utilStringWiden(const std::string& in, const std::locale& locale = std::locale());
-EIDMW_CMN_API std::string    utilStringNarrow(const std::wstring& in, const std::locale& locale = std::locale());
+	EIDMW_CMN_API std::wstring utilStringWiden(const std::string & in,
+						   const std::locale & locale
+						   = std::locale());
+	EIDMW_CMN_API std::string utilStringNarrow(const std::wstring & in,
+						   const std::locale & locale
+						   = std::locale());
 
 /**
  * Case insensitve search, csSearch should be in lower case.
  * Returns true is csSearch is present in csData.
  */
-EIDMW_CMN_API bool StartsWithCI(const char *csData, const char *csSearch);
+	EIDMW_CMN_API bool StartsWithCI(const char *csData,
+					const char *csSearch);
 
-int            Test(void);
+	int Test(void);
 
-EIDMW_CMN_API char *bin2AsciiHex(const unsigned char * pData, unsigned long ulLen);
+	EIDMW_CMN_API char *bin2AsciiHex(const unsigned char *pData,
+					 unsigned long ulLen);
 
-EIDMW_CMN_API void GetProcessName(wchar_t *wBuffer,unsigned long ulLen);
+	EIDMW_CMN_API void GetProcessName(wchar_t * wBuffer,
+					  unsigned long ulLen);
 }
 
 #ifndef WIN32
 
 //#define _TRUNCATE -1
 
-EIDMW_CMN_API int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...);
+EIDMW_CMN_API int sprintf_s(char *buffer, size_t sizeOfBuffer,
+			    const char *format, ...);
 
 EIDMW_CMN_API int strcat_s(char *dest, size_t len, const char *src);
 
 EIDMW_CMN_API int strcpy_s(char *dest, size_t len, const char *src);
 
-EIDMW_CMN_API int strncpy_s(char *dest, size_t len, const char *src, long count);
+EIDMW_CMN_API int strncpy_s(char *dest, size_t len, const char *src,
+			    long count);
 
-EIDMW_CMN_API int fopen_s(FILE** pFile, const char *filename, const char *mode);
+EIDMW_CMN_API int fopen_s(FILE ** pFile, const char *filename,
+			  const char *mode);
 
-EIDMW_CMN_API int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src);
+EIDMW_CMN_API int wcscpy_s(wchar_t * dest, size_t len, const wchar_t * src);
 
-EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...);
+EIDMW_CMN_API int fprintf_s(FILE * stream, const char *format, ...);
 
-EIDMW_CMN_API int vfprintf_s(FILE *stream, const char *format, va_list argptr);
-EIDMW_CMN_API errno_t freopen_s(FILE **pFile, const char *filename, const char *mode, FILE* stream);
+EIDMW_CMN_API int vfprintf_s(FILE * stream, const char *format,
+			     va_list argptr);
+EIDMW_CMN_API errno_t freopen_s(FILE ** pFile, const char *filename,
+				const char *mode, FILE * stream);
 #endif
-

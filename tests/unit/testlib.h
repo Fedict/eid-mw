@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#define TEST_RV_SKIP 77 // defined by automake
+#define TEST_RV_SKIP 77		// defined by automake
 #define TEST_RV_FAIL 1
 #define TEST_RV_OK 0
 
@@ -27,30 +27,31 @@ extern int fc_counter;
 #define EIDT_UNLIKELY(expr) (expr)
 #endif
 
-typedef struct {
+typedef struct
+{
 	CK_RV rv;
 	int retval;
 } ckrv_mod;
 
 const static ckrv_mod m_p11_noinit[] = {
-	{ CKR_OK, TEST_RV_FAIL },
-	{ CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK },
+	{CKR_OK, TEST_RV_FAIL},
+	{CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK},
 };
 
 const static ckrv_mod m_p11_badarg[] = {
-	{ CKR_OK, TEST_RV_FAIL },
-	{ CKR_ARGUMENTS_BAD, TEST_RV_OK },
+	{CKR_OK, TEST_RV_FAIL},
+	{CKR_ARGUMENTS_BAD, TEST_RV_OK},
 };
 
 const static ckrv_mod m_p11_badslot[] = {
-	{ CKR_OK, TEST_RV_FAIL },
-	{ CKR_SLOT_ID_INVALID, TEST_RV_OK },
+	{CKR_OK, TEST_RV_FAIL},
+	{CKR_SLOT_ID_INVALID, TEST_RV_OK},
 };
 
 const static ckrv_mod m_p11_nocard[] = {
-	{ CKR_OK, TEST_RV_FAIL },
-	{ CKR_DEVICE_ERROR, TEST_RV_OK },
-	{ CKR_DEVICE_REMOVED, TEST_RV_OK },
+	{CKR_OK, TEST_RV_FAIL},
+	{CKR_DEVICE_ERROR, TEST_RV_OK},
+	{CKR_DEVICE_REMOVED, TEST_RV_OK},
 };
 
 #define check_rv_late(func) { int retval = ckrv_decode(rv, func, 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
@@ -58,9 +59,9 @@ const static ckrv_mod m_p11_nocard[] = {
 #define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
 #define check_rv_long(call, mods) { int c = sizeof(mods) / sizeof(ckrv_mod); check_rv_action(call, c, mods); }
 
-int ckrv_decode(CK_RV rv, char* fc, int count, const ckrv_mod*);
+int ckrv_decode(CK_RV rv, char *fc, int count, const ckrv_mod *);
 
-char* ckm_to_charp(CK_MECHANISM_TYPE);
+char *ckm_to_charp(CK_MECHANISM_TYPE);
 
 #ifdef HAVE_CONFIG_H
 #define TEST_FUNC(a) int main(void)
@@ -69,7 +70,8 @@ char* ckm_to_charp(CK_MECHANISM_TYPE);
 #endif
 
 /* Verifies that a string does not contain a NULL character */
-int verify_null_func(CK_UTF8CHAR* string, size_t length, int nulls_expected, char* msg);
+int verify_null_func(CK_UTF8CHAR * string, size_t length, int nulls_expected,
+		     char *msg);
 
 #define verify_null(s, l, e, m) { int retval = verify_null_func(s, l, e, m); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) return retval; }
 
@@ -85,7 +87,7 @@ void robot_insert_card();
 void robot_insert_card_delayed();
 void robot_remove_reader();
 void robot_insert_reader();
-void hex_dump(char* data, CK_ULONG length);
+void hex_dump(char *data, CK_ULONG length);
 
 /* Helper functions to not have to repeat common operations all the time */
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);

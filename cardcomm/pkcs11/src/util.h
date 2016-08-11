@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -24,32 +25,33 @@
 #include <string.h>
 #include "log.h"
 
-//#define DUMP_TEMPLATE_MAX	32
+//#define DUMP_TEMPLATE_MAX     32
 #define BEIDP11_NOT_INITIALIZED			0
 #define BEIDP11_INITIALIZED				1
-#define BEIDP11_DEINITIALIZING			2	
+#define BEIDP11_DEINITIALIZING			2
 #define BEIDP11_INITIALIZING			3
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-CK_RV p11_init_lock(CK_C_INITIALIZE_ARGS_PTR args);
-CK_RV p11_lock();
-void p11_unlock();
-void p11_free_lock();
-void util_init_lock(void **lock);
-void util_clean_lock(void **lock);
-void util_lock(void *lock);
-void util_unlock(void *lock);
-void memwash(char *p_in, unsigned int len);
-void strcpy_n(unsigned char *to, const char *from, size_t n, char padding);
-void p11_set_init(unsigned char initialized);
-unsigned char p11_get_init(void);
+	CK_RV p11_init_lock(CK_C_INITIALIZE_ARGS_PTR args);
+	CK_RV p11_lock();
+	void p11_unlock();
+	void p11_free_lock();
+	void util_init_lock(void **lock);
+	void util_clean_lock(void **lock);
+	void util_lock(void *lock);
+	void util_unlock(void *lock);
+	void memwash(char *p_in, unsigned int len);
+	void strcpy_n(unsigned char *to, const char *from, size_t n,
+		      char padding);
+	void p11_set_init(unsigned char initialized);
+	unsigned char p11_get_init(void);
 
 #ifdef __cplusplus
-   }
+}
 #endif
 
 #endif
-

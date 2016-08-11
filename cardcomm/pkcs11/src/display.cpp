@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -35,28 +36,33 @@ CK_BYTE AllowCardReading(void)
 {
 #ifndef NO_DIALOGS
 	CK_BYTE bDispResp = P11_DISPLAY_NO;
+
 #if defined(WIN32) || defined (__APPLE__)
-	DlgRet retVal = DlgDisplayModal(DLG_ICON_WARN,DLG_MESSAGE_USER_WARNING,L"",DLG_BUTTON_YES + DLG_BUTTON_NO + DLG_BUTTON_ALWAYS, DLG_BUTTON_YES, DLG_BUTTON_NO);
+	DlgRet retVal =
+		DlgDisplayModal(DLG_ICON_WARN, DLG_MESSAGE_USER_WARNING, L"",
+				DLG_BUTTON_YES + DLG_BUTTON_NO +
+				DLG_BUTTON_ALWAYS, DLG_BUTTON_YES,
+				DLG_BUTTON_NO);
 #else
 	const wchar_t *wsAppPath = L"An application";
 	const wchar_t *wsReaderName = L"your reader";
 	int iForAllOperations = 0;
-	DlgRet retVal = DlgAskAccess( wsAppPath, wsReaderName, DLG_PF_OP_READ_ID, &iForAllOperations);
+	DlgRet retVal =
+		DlgAskAccess(wsAppPath, wsReaderName, DLG_PF_OP_READ_ID,
+			     &iForAllOperations);
 #endif
-	if( ( retVal == DLG_YES) || ( retVal == DLG_OK) )
+	if ((retVal == DLG_YES) || (retVal == DLG_OK))
 	{
 		bDispResp = P11_DISPLAY_YES;
-	}
-	else if (retVal == DLG_CANCEL)
+	} else if (retVal == DLG_CANCEL)
 	{
 		bDispResp = P11_DISPLAY_CANCEL;
-	}
-	else if (retVal == DLG_ALWAYS)
+	} else if (retVal == DLG_ALWAYS)
 	{
 		bDispResp = P11_DISPLAY_ALWAYS;
 	}
 	return bDispResp;
 #else
-  	return P11_DISPLAY_YES;
+	return P11_DISPLAY_YES;
 #endif
 }

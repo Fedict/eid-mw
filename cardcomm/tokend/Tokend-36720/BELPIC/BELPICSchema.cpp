@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -38,8 +39,8 @@
 
 using namespace Tokend;
 
-BELPICSchema::BELPICSchema() :
-	mKeyAlgorithmCoder(uint32(CSSM_ALGID_RSA))
+BELPICSchema::BELPICSchema():
+mKeyAlgorithmCoder(uint32(CSSM_ALGID_RSA))
 	//mKeySizeCoder(uint32(1024)) new cards have 2048 bits keys
 {
 }
@@ -48,12 +49,12 @@ BELPICSchema::~BELPICSchema()
 {
 }
 
-Tokend::Relation *BELPICSchema::createKeyRelation(CSSM_DB_RECORDTYPE keyType)
+Tokend::Relation * BELPICSchema::createKeyRelation(CSSM_DB_RECORDTYPE keyType)
 {
 	Relation *rn = createStandardRelation(keyType);
 
 	// Set up coders for key records.
-	MetaRecord &mr = rn->metaRecord();
+	MetaRecord & mr = rn->metaRecord();
 	mr.keyHandleFactory(&mBELPICKeyHandleFactory);
 
 	// Print name of a key might as well be the key name.
@@ -61,8 +62,8 @@ Tokend::Relation *BELPICSchema::createKeyRelation(CSSM_DB_RECORDTYPE keyType)
 
 	// Other key valuess
 	mr.attributeCoder(kSecKeyKeyType, &mKeyAlgorithmCoder);
-    //decode() of mKeySizeCoder doesn't seem to get called,
-    //so we'll add these attributes in a BELPICKeyRecord constructor
+	//decode() of mKeySizeCoder doesn't seem to get called,
+	//so we'll add these attributes in a BELPICKeyRecord constructor
 	//mr.attributeCoder(kSecKeyKeySizeInBits, &mKeySizeCoder);
 	//mr.attributeCoder(kSecKeyEffectiveKeySize, &mKeySizeCoder);
 
@@ -81,7 +82,7 @@ Tokend::Relation *BELPICSchema::createKeyRelation(CSSM_DB_RECORDTYPE keyType)
 	mr.attributeCoder(kSecKeyDerive, &mFalseCoder);
 	mr.attributeCoder(kSecKeySignRecover, &mFalseCoder);
 	mr.attributeCoder(kSecKeyVerifyRecover, &mFalseCoder);
-    
+
 	return rn;
 }
 
@@ -91,12 +92,11 @@ void BELPICSchema::create()
 
 	createStandardRelation(CSSM_DL_DB_RECORD_X509_CERTIFICATE);
 	createKeyRelation(CSSM_DL_DB_RECORD_PRIVATE_KEY);
-	
-	Relation *rn_gen = createStandardRelation(CSSM_DL_DB_RECORD_GENERIC);
-	
-	// Create the generic table
-	MetaRecord &mr_gen = rn_gen->metaRecord();
-	mr_gen.attributeCoderForData(&mBELPICDataAttributeCoder);
-	
-}
 
+	Relation *rn_gen = createStandardRelation(CSSM_DL_DB_RECORD_GENERIC);
+
+	// Create the generic table
+	MetaRecord & mr_gen = rn_gen->metaRecord();
+	mr_gen.attributeCoderForData(&mBELPICDataAttributeCoder);
+
+}

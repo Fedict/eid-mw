@@ -8,7 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ReaderMenuItem : NSMenuItem
--(instancetype)initWithTitle:(NSString *)aString action:(SEL)aSelector keyEquivalent:(NSString *)charCode slotNumber:(NSInteger)slotNumber;
+@ interface ReaderMenuItem: NSMenuItem - (instancetype) initWithTitle:(NSString
+ *)
+     aString action:(SEL)
+     aSelector keyEquivalent:(NSString *)
+     charCode slotNumber:(NSInteger) slotNumber;
+
 @property NSInteger slotNumber;
 @end

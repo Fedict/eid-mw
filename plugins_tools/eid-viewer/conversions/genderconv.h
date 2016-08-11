@@ -3,14 +3,16 @@
 
 #include "convworker.h"
 
-class GenderConvertor : public ConversionWorker {
+class GenderConvertor:public ConversionWorker
+{
 public:
-	EID_STRING convert(const void* original);
+	EID_STRING convert(const void *original);
 };
 
-class XmlGenderConvertor : public GenderConvertor {
+class XmlGenderConvertor:public GenderConvertor
+{
 public:
-	EID_STRING convert(const void* original);
+	EID_STRING convert(const void *original);
 };
 
 #endif

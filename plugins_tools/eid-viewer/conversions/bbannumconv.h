@@ -3,9 +3,10 @@
 
 #include "convworker.h"
 
-class BBANNumberConvertor : public ConversionWorker {
+class BBANNumberConvertor:public ConversionWorker
+{
 public:
-	virtual EID_STRING convert(const void* normal);
+	virtual EID_STRING convert(const void *normal);
 };
 
 #endif

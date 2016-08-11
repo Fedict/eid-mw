@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
 * eID Middleware Project.
@@ -25,7 +26,8 @@
 //#include "CardLayer.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #ifdef PKCS11_FF
@@ -126,7 +128,7 @@ extern "C" {
 	{ CKA_OBJECT_ID,				( CK_VOID_PTR )    NULL, 0 }	 \
 }
 
-	//	{ BEID_FIELD_TAG_ID_Version,			"Version"},
+	//      { BEID_FIELD_TAG_ID_Version,                    "Version"},
 #define BEID_ID_DATA_LABELS  {  \
 	{ BEID_FIELD_TAG_ID_CardNr,				"card_number"},  \
 	{ BEID_FIELD_TAG_ID_ChipNr,				"chip_number"},  \
@@ -151,7 +153,7 @@ extern "C" {
 	{ BEID_FIELD_TAG_ID_DateAndCountryOfProtection,		"date_and_country_of_protection"}  \
 }
 
-	//{ BEID_FIELD_TAG_ADDR_Version,			"Address_Version"},
+	//{ BEID_FIELD_TAG_ADDR_Version,                        "Address_Version"},
 #define BEID_ADDRESS_DATA_LABELS  {  \
 	{ BEID_FIELD_TAG_ADDR_Street,			"address_street_and_number"},  \
 	{ BEID_FIELD_TAG_ADDR_ZipCode,			"address_zip"},  \
@@ -175,7 +177,7 @@ extern "C" {
 
 #define BEID_LABEL_ATR									"ATR"
 
-#define BEID_OBJECTID_ID									"id"		
+#define BEID_OBJECTID_ID									"id"
 #define BEID_OBJECTID_ADDRESS							"address"
 #define BEID_OBJECTID_PHOTO								"photo"
 #define BEID_OBJECTID_CARDDATA						"carddata"
@@ -183,53 +185,62 @@ extern "C" {
 #define BEID_OBJECTID_SIGN_DATA_FILE			"sign_data_file"
 #define BEID_OBJECTID_SIGN_ADDRESS_FILE		"sign_address_file"
 
-typedef struct BEID_DATA_LABELS_NAME {
-	unsigned char	tag;
-	const char*			name;
-}BEID_DATA_LABELS_NAME;
+	typedef struct BEID_DATA_LABELS_NAME
+	{
+		unsigned char tag;
+		const char *name;
+	} BEID_DATA_LABELS_NAME;
 
 #define BEID_LABEL_DATA_FILE		"DATA_FILE"
 #define BEID_LABEL_ADDRESS_FILE		"ADDRESS_FILE"
 #define BEID_LABEL_PHOTO			"PHOTO_FILE"
 #define BEID_LABEL_CARD_DATA		"CARD_DATA"
 #define BEID_LABEL_CERT_RN			"CERT_RN_FILE"
-//#define BEID_LABEL_CERT_RNCA		"CERT_RNCA_FILE"
+//#define BEID_LABEL_CERT_RNCA          "CERT_RNCA_FILE"
 
 #define BEID_LABEL_SGN_RN			"SIGN_DATA_FILE"
 #define BEID_LABEL_SGN_ADDRESS	"SIGN_ADDRESS_FILE"
 
 
 
-CK_RV cal_init();
+	CK_RV cal_init();
 //void cal_init_pcsc();
-long cal_check_pcsc(CK_BBOOL* pRunning);
-void cal_wait (int millisecs);
-void cal_close();
-void cal_clean_slots(void);
-CK_RV cal_init_slots(void);
-CK_RV cal_token_present(CK_SLOT_ID hSlot, int *pPresent);
-CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo);
-CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount);
-CK_RV cal_connect(CK_SLOT_ID hSlot);
-CK_RV cal_disconnect(CK_SLOT_ID hSlot);
-CK_RV cal_init_objects(P11_SLOT *pSlot);
-CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo);
-CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin, int sec_messaging);
-CK_RV cal_logout(CK_SLOT_ID hSlot);
-CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin, int l_newpin, CK_CHAR_PTR newpin);
-CK_RV cal_get_card_data(CK_SLOT_ID hSlot);
-CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType);
-CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT *pObject);
-CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA *pSignData, unsigned char* in, unsigned long l_in, unsigned char *out, unsigned long *l_out);
-CK_RV cal_validate_session(P11_SESSION *pSession);
-CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus);
-CK_RV cal_wait_for_slot_event(int block);
-CK_RV cal_wait_for_the_slot_event(int block);
-CK_RV cal_get_slot_changes(int *ph);
-CK_RV cal_refresh_readers();
+	long cal_check_pcsc(CK_BBOOL * pRunning);
+	void cal_wait(int millisecs);
+	void cal_close();
+	void cal_clean_slots(void);
+	CK_RV cal_init_slots(void);
+	CK_RV cal_token_present(CK_SLOT_ID hSlot, int *pPresent);
+	CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo);
+	CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
+				     CK_MECHANISM_TYPE_PTR pMechanismList,
+				     CK_ULONG_PTR pulCount);
+	CK_RV cal_connect(CK_SLOT_ID hSlot);
+	CK_RV cal_disconnect(CK_SLOT_ID hSlot);
+	CK_RV cal_init_objects(P11_SLOT * pSlot);
+	CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
+				     CK_MECHANISM_INFO_PTR pInfo);
+	CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
+			int sec_messaging);
+	CK_RV cal_logout(CK_SLOT_ID hSlot);
+	CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin,
+			     CK_CHAR_PTR oldpin, int l_newpin,
+			     CK_CHAR_PTR newpin);
+	CK_RV cal_get_card_data(CK_SLOT_ID hSlot);
+	CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType);
+	CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject);
+	CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData,
+		       unsigned char *in, unsigned long l_in,
+		       unsigned char *out, unsigned long *l_out);
+	CK_RV cal_validate_session(P11_SESSION * pSession);
+	CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus);
+	CK_RV cal_wait_for_slot_event(int block);
+	CK_RV cal_wait_for_the_slot_event(int block);
+	CK_RV cal_get_slot_changes(int *ph);
+	CK_RV cal_refresh_readers();
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 

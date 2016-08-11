@@ -3,13 +3,19 @@
 
 #include "convworker.h"
 
-class HexNumberConvertor : public ConversionWorker {
+class HexNumberConvertor:public ConversionWorker
+{
 private:
-	HexNumberConvertor() {};
+	HexNumberConvertor()
+	{
+	};
 	int len_;
+
 public:
-	HexNumberConvertor(int len) : len_(len) { };
-	virtual EID_STRING convert(const void* normal);
+	HexNumberConvertor(int len):len_(len)
+	{
+	};
+	virtual EID_STRING convert(const void *normal);
 };
 
 #endif

@@ -3,8 +3,8 @@
 
 #include <gtk/gtk.h>
 
-extern GHashTable* touched_labels;
-extern GtkBuilder* builder;
+extern GHashTable *touched_labels;
+extern GtkBuilder *builder;
 
 #include <gdk-pixbuf/gdk-pixdata.h>
 

@@ -1,9 +1,11 @@
 #include "xmldoctypeconv.h"
 
-std::map<EID_STRING, EID_STRING> XmlDoctypeConvertor::conversions;
+std::map < EID_STRING, EID_STRING > XmlDoctypeConvertor::conversions;
 
-XmlDoctypeConvertor::XmlDoctypeConvertor() {
-	if(conversions.empty()) {
+XmlDoctypeConvertor::XmlDoctypeConvertor()
+{
+	if (conversions.empty())
+	{
 		conversions[TEXT("1")] = TEXT("belgian_citizen");
 		conversions[TEXT("6")] = TEXT("kids_card");
 		conversions[TEXT("7")] = TEXT("bootstrap_card");
@@ -26,19 +28,23 @@ XmlDoctypeConvertor::XmlDoctypeConvertor() {
 		conversions[TEXT("foreigner_c")] = TEXT("13");
 		conversions[TEXT("foreigner_d")] = TEXT("14");
 		conversions[TEXT("foreigner_e")] = TEXT("15");
-		conversions[TEXT("foreigner_e_plus")]	= TEXT("16");
+		conversions[TEXT("foreigner_e_plus")] = TEXT("16");
 		conversions[TEXT("foreigner_f")] = TEXT("17");
 		conversions[TEXT("foreigner_f_plus")] = TEXT("18");
 		conversions[TEXT("european_blue_card_h")] = TEXT("19");
 	}
 }
 
-EID_STRING XmlDoctypeConvertor::convert(const void* original) {
-	EID_STRING str((EID_CHAR*)original);
-	if(conversions.count(str) > 0) {
+EID_STRING XmlDoctypeConvertor::convert(const void *original)
+{
+	EID_STRING str((EID_CHAR *) original);
+
+	if (conversions.count(str) > 0)
+	{
 		return conversions[str];
 	}
-	if(conversions.count(str.substr(1, 1)) > 0) {
+	if (conversions.count(str.substr(1, 1)) > 0)
+	{
 		return conversions[str.substr(1, 1)];
 	}
 	return TEXT("");

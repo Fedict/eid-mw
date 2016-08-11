@@ -14,7 +14,8 @@
   */
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <eid-viewer/oslayer.h>
@@ -46,7 +47,21 @@ extern "C" {
   * the data which was returned in perform_ocsp_request's last
   * parameter.
   */
-DllExport enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen, const void* ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*));
+	DllExport enum eid_vwr_result eid_vwr_verify_cert(const void
+							  *certificate,
+							  size_t certlen,
+							  const void *ca,
+							  size_t calen,
+							  const void
+							  *
+							  (*perform_ocsp_request)
+							  (char *, void *,
+							   long, long *,
+							   void **),
+							  void
+							  (*free_ocsp_request)
+							  (void *));
+
 /**
   * \brief Verify the validity of the RRN certificate.
   *
@@ -59,7 +74,9 @@ DllExport enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_
   * \param certificate the X.509 certificate to check, in DER format.
   * \param certlen the length (in bytes) of certificate.
   */
-DllExport enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certlen);
+	DllExport enum eid_vwr_result eid_vwr_verify_rrncert(const void
+							     *certificate,
+							     size_t certlen);
 
 /**
   * \brief Produce a human-readable version of the certificate.
@@ -74,7 +91,8 @@ DllExport enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, si
   * \return a text representation of the certificate. Should be free()d
   * when no longer required.
   */
-DllExport char* eid_vwr_x509_get_details(const void* certificate, size_t certlen);
+	DllExport char *eid_vwr_x509_get_details(const void *certificate,
+						 size_t certlen);
 
 #ifdef __cplusplus
 }

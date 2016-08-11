@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,6 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 /*
 This file contains 2 classes for log purpose : CLogger and CLog
 
@@ -93,141 +95,211 @@ Example of usage through objects and macro are give at the end of this file
 namespace eIDMW
 {
 
-class CLog; //define below
+	class CLog;	     //define below
 
-typedef enum {
-    LEV_LEVEL_NOLOG,
-    LOG_LEVEL_CRITICAL,
-    LOG_LEVEL_ERROR,
-    LOG_LEVEL_WARNING,
-    LOG_LEVEL_INFO,
-    LOG_LEVEL_DEBUG,
-} tLOG_Level;
+	typedef enum
+	{
+		LEV_LEVEL_NOLOG,
+		LOG_LEVEL_CRITICAL,
+		LOG_LEVEL_ERROR,
+		LOG_LEVEL_WARNING,
+		LOG_LEVEL_INFO,
+		LOG_LEVEL_DEBUG,
+	} tLOG_Level;
 
 #define LOG_LEVEL_DEFAULT LOG_LEVEL_ERROR
 
-class CLogger
-{
-  public:
-    EIDMW_CMN_API static CLogger &instance();
-    EIDMW_CMN_API ~CLogger();
- 
-  private:
-    CLogger();
-	CLogger(const CLogger &logger);
-	CLogger &operator= (const CLogger &logger);
-
-  public:
-	EIDMW_CMN_API void initFromConfig();
-	EIDMW_CMN_API void init(const wchar_t *directory,const wchar_t *prefix,long filesize,long filenr,tLOG_Level minlevel,bool groupinnewfile); 
-	EIDMW_CMN_API void init(const char *directory,const char *prefix,long filesize,long filenr,tLOG_Level minlevel,bool groupinnewfile); 
-	EIDMW_CMN_API CLog &getLogW(const wchar_t *group=L"");
-	EIDMW_CMN_API CLog &getLogA(const char *group="");
-	EIDMW_CMN_API void writeToGroup(const wchar_t *group,tLOG_Level level,const wchar_t *format, ...);
-	EIDMW_CMN_API void writeToGroup(const char *group,tLOG_Level level,const char *format, ...);
-	EIDMW_CMN_API void writeToGroup(const wchar_t *group,tLOG_Level level,const int line,const wchar_t *file,const wchar_t *format, ...);
-	EIDMW_CMN_API void writeToGroup(const char *group,tLOG_Level level,const int line,const char *file,const char *format, ...);
-	EIDMW_CMN_API void write(tLOG_Level level,const wchar_t *format, ...);
-	EIDMW_CMN_API void write(tLOG_Level level,const char *format, ...);
-	EIDMW_CMN_API void write(tLOG_Level level,const int line,const wchar_t *file,const wchar_t *format, ...);
-	EIDMW_CMN_API void write(tLOG_Level level,const int line,const char *file,const char *format, ...);
-
-  private:
-    static std::auto_ptr<CLogger> m_instance;
-    static bool m_bApplicationLeaving;
-
-	std::wstring m_directory;
-	std::wstring m_prefix;
-	long m_filesize;
-	long m_filenr;
-	tLOG_Level m_maxlevel;
-	bool m_groupinnewfile;
-
-	std::vector <CLog*> m_logStore;
-};
-
-class CLog
-{
-  public:
-    EIDMW_CMN_API ~CLog();
- 
-  private:
-    CLog(const wchar_t *directory,const wchar_t *prefix,const wchar_t *group,long filesize,long filenr,tLOG_Level minlevel,bool groupinnewfile);	
-	CLog(const CLog &log);				
-	CLog &  operator= (const CLog &) ;
-
-  public:
-	EIDMW_CMN_API void write(tLOG_Level level,const wchar_t *format, ...);
-	EIDMW_CMN_API void write(tLOG_Level level,const char *format, ...);
-	EIDMW_CMN_API void write(tLOG_Level level,const wchar_t *format, va_list args);
-	EIDMW_CMN_API void write(tLOG_Level level,const char *format, va_list args);
-	EIDMW_CMN_API void write(tLOG_Level level,const int line,const wchar_t *file,const wchar_t *format, ...);
-	EIDMW_CMN_API void write(tLOG_Level level,const int line,const char *file,const char *format, ...);
-	EIDMW_CMN_API void write(tLOG_Level level,const int line,const wchar_t *file,const wchar_t *format, va_list args);
-	EIDMW_CMN_API void write(tLOG_Level level,const int line,const char *file,const char *format, va_list args);
-
-	EIDMW_CMN_API void writeCritical(const wchar_t *format, ...);
-	EIDMW_CMN_API void writeCritical(const char *format, ...);
-	EIDMW_CMN_API void writeCritical(const int line,const wchar_t *file,const wchar_t *format, ...);
-	EIDMW_CMN_API void writeCritical(const int line,const char *file,const char *format, ...);
-	EIDMW_CMN_API void writeError(const wchar_t *format, ...);
-	EIDMW_CMN_API void writeError(const char *format, ...);
-	EIDMW_CMN_API void writeError(const int line,const wchar_t *file,const wchar_t *format, ...);
-	EIDMW_CMN_API void writeError(const int line,const char *file,const char *format, ...);
-	EIDMW_CMN_API void writeWarning(const wchar_t *format, ...);
-	EIDMW_CMN_API void writeWarning(const char *format, ...);
-	EIDMW_CMN_API void writeWarning(const int line,const wchar_t *file,const wchar_t *format, ...);
-	EIDMW_CMN_API void writeWarning(const int line,const char *file,const char *format, ...);
-	EIDMW_CMN_API void writeInfo(const wchar_t *format, ...);
-	EIDMW_CMN_API void writeInfo(const char *format, ...);
-	EIDMW_CMN_API void writeInfo(const int line,const wchar_t *file,const wchar_t *format, ...);
-	EIDMW_CMN_API void writeInfo(const int line,const char *file,const char *format, ...);
-	EIDMW_CMN_API void writeDebug(const wchar_t *format, ...);
-	EIDMW_CMN_API void writeDebug(const char *format, ...);
-	EIDMW_CMN_API void writeDebug(const int line,const wchar_t *file,const wchar_t *format, ...);
-	EIDMW_CMN_API void writeDebug(const int line,const char *file,const char *format, ...);
-
-	//USE ONLY IN MACRO
-	EIDMW_CMN_API bool writeLineHeaderW(tLOG_Level level,const int line=0,const wchar_t *file=L"");
-	EIDMW_CMN_API bool writeLineHeaderA(tLOG_Level level,const int line=0,const char *file="");
-	EIDMW_CMN_API bool writeLineMessageW(const wchar_t *format, ...);
-	EIDMW_CMN_API bool writeLineMessageA(const char *format, ...);
-
-  friend class CLogger;
+	class CLogger
+	{
+public:
+		EIDMW_CMN_API static CLogger & instance();
+		       EIDMW_CMN_API ~ CLogger();
 
 private:
-	void getFilename(std::wstring &filename);
-	void renameFiles(const wchar_t *root_filename);
-	bool open(bool bWchar);
-	void close();
-	void writeLineMessageW(const wchar_t *format, va_list argList);
-	void writeLineMessageA(const char *format, va_list argList);
-	const wchar_t *getLevel(tLOG_Level level);
-	void getLocalTimeW(std::wstring &timestamp, const wchar_t *format=L"%Y-%m-%d %H:%M:%S");
-	void getLocalTimeA(std::string &timestamp, const char *format="%Y-%m-%d %H:%M:%S");
+		       CLogger();
+		       CLogger(const CLogger & logger);
+		      CLogger & operator=(const CLogger & logger);
 
-	bool isFileMixingGroups();
-	long getOpenFailed();
-	bool canWeTryToOpen();
-	void incrementOpenFailed();
-	void resetOpenFailed();
+public:
+		      EIDMW_CMN_API void initFromConfig();
+		EIDMW_CMN_API void init(const wchar_t * directory,
+					const wchar_t * prefix, long filesize,
+					long filenr, tLOG_Level minlevel,
+					bool groupinnewfile);
+		EIDMW_CMN_API void init(const char *directory,
+					const char *prefix, long filesize,
+					long filenr, tLOG_Level minlevel,
+					bool groupinnewfile);
+		EIDMW_CMN_API CLog & getLogW(const wchar_t * group = L"");
+		EIDMW_CMN_API CLog & getLogA(const char *group = "");
+		EIDMW_CMN_API void writeToGroup(const wchar_t * group,
+						tLOG_Level level,
+						const wchar_t * format, ...);
+		EIDMW_CMN_API void writeToGroup(const char *group,
+						tLOG_Level level,
+						const char *format, ...);
+		EIDMW_CMN_API void writeToGroup(const wchar_t * group,
+						tLOG_Level level,
+						const int line,
+						const wchar_t * file,
+						const wchar_t * format, ...);
+		EIDMW_CMN_API void writeToGroup(const char *group,
+						tLOG_Level level,
+						const int line,
+						const char *file,
+						const char *format, ...);
+		EIDMW_CMN_API void write(tLOG_Level level,
+					 const wchar_t * format, ...);
+		EIDMW_CMN_API void write(tLOG_Level level, const char *format,
+					 ...);
+		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+					 const wchar_t * file,
+					 const wchar_t * format, ...);
+		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+					 const char *file, const char *format,
+					 ...);
 
-	std::wstring m_directory;
-	std::wstring m_prefix;
-	std::wstring m_group;
-	long m_filesize;
-	long m_filenr;
-	tLOG_Level m_maxlevel;
-	bool m_groupinnewfile;
-	long m_openfailed;
-	static long m_sopenfailed;
+private:
+		static std::auto_ptr < CLogger > m_instance;
+		static bool m_bApplicationLeaving;
 
-	FILE *m_f;
+		     std::wstring m_directory;
+		     std::wstring m_prefix;
+		long m_filesize;
+		long m_filenr;
+		tLOG_Level m_maxlevel;
+		bool m_groupinnewfile;
+
+		     std::vector < CLog * >m_logStore;
+	};
+
+	class CLog
+	{
+public:
+		EIDMW_CMN_API ~ CLog();
+
+private:
+		CLog(const wchar_t * directory, const wchar_t * prefix,
+		     const wchar_t * group, long filesize, long filenr,
+		     tLOG_Level minlevel, bool groupinnewfile);
+		     CLog(const CLog & log);
+		      CLog & operator=(const CLog &);
+
+public:
+		      EIDMW_CMN_API void write(tLOG_Level level,
+					       const wchar_t * format, ...);
+		EIDMW_CMN_API void write(tLOG_Level level, const char *format,
+					 ...);
+		EIDMW_CMN_API void write(tLOG_Level level,
+					 const wchar_t * format,
+					 va_list args);
+		EIDMW_CMN_API void write(tLOG_Level level, const char *format,
+					 va_list args);
+		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+					 const wchar_t * file,
+					 const wchar_t * format, ...);
+		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+					 const char *file, const char *format,
+					 ...);
+		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+					 const wchar_t * file,
+					 const wchar_t * format,
+					 va_list args);
+		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+					 const char *file, const char *format,
+					 va_list args);
+
+		EIDMW_CMN_API void writeCritical(const wchar_t * format, ...);
+		EIDMW_CMN_API void writeCritical(const char *format, ...);
+		EIDMW_CMN_API void writeCritical(const int line,
+						 const wchar_t * file,
+						 const wchar_t * format, ...);
+		EIDMW_CMN_API void writeCritical(const int line,
+						 const char *file,
+						 const char *format, ...);
+		EIDMW_CMN_API void writeError(const wchar_t * format, ...);
+		EIDMW_CMN_API void writeError(const char *format, ...);
+		EIDMW_CMN_API void writeError(const int line,
+					      const wchar_t * file,
+					      const wchar_t * format, ...);
+		EIDMW_CMN_API void writeError(const int line,
+					      const char *file,
+					      const char *format, ...);
+		EIDMW_CMN_API void writeWarning(const wchar_t * format, ...);
+		EIDMW_CMN_API void writeWarning(const char *format, ...);
+		EIDMW_CMN_API void writeWarning(const int line,
+						const wchar_t * file,
+						const wchar_t * format, ...);
+		EIDMW_CMN_API void writeWarning(const int line,
+						const char *file,
+						const char *format, ...);
+		EIDMW_CMN_API void writeInfo(const wchar_t * format, ...);
+		EIDMW_CMN_API void writeInfo(const char *format, ...);
+		EIDMW_CMN_API void writeInfo(const int line,
+					     const wchar_t * file,
+					     const wchar_t * format, ...);
+		EIDMW_CMN_API void writeInfo(const int line, const char *file,
+					     const char *format, ...);
+		EIDMW_CMN_API void writeDebug(const wchar_t * format, ...);
+		EIDMW_CMN_API void writeDebug(const char *format, ...);
+		EIDMW_CMN_API void writeDebug(const int line,
+					      const wchar_t * file,
+					      const wchar_t * format, ...);
+		EIDMW_CMN_API void writeDebug(const int line,
+					      const char *file,
+					      const char *format, ...);
+
+		//USE ONLY IN MACRO
+		EIDMW_CMN_API bool writeLineHeaderW(tLOG_Level level,
+						    const int line =
+						    0, const wchar_t * file =
+						    L"");
+		EIDMW_CMN_API bool writeLineHeaderA(tLOG_Level level,
+						    const int line =
+						    0, const char *file = "");
+		EIDMW_CMN_API bool writeLineMessageW(const wchar_t * format,
+						     ...);
+		EIDMW_CMN_API bool writeLineMessageA(const char *format, ...);
+
+		friend class CLogger;
+
+private:
+		void getFilename(std::wstring & filename);
+		void renameFiles(const wchar_t * root_filename);
+		bool open(bool bWchar);
+		void close();
+		void writeLineMessageW(const wchar_t * format,
+				       va_list argList);
+		void writeLineMessageA(const char *format, va_list argList);
+		const wchar_t *getLevel(tLOG_Level level);
+		void getLocalTimeW(std::wstring & timestamp,
+				   const wchar_t * format =
+				   L"%Y-%m-%d %H:%M:%S");
+		void getLocalTimeA(std::string & timestamp,
+				   const char *format = "%Y-%m-%d %H:%M:%S");
+
+		bool isFileMixingGroups();
+		long getOpenFailed();
+		bool canWeTryToOpen();
+		void incrementOpenFailed();
+		void resetOpenFailed();
+
+		     std::wstring m_directory;
+		     std::wstring m_prefix;
+		     std::wstring m_group;
+		long m_filesize;
+		long m_filenr;
+		tLOG_Level m_maxlevel;
+		bool m_groupinnewfile;
+		long m_openfailed;
+		static long m_sopenfailed;
+
+		FILE *m_f;
 
 #ifndef WIN32
-	struct flock *m_flock;
+		struct flock *m_flock;
 #endif
-};
+	};
 
 //SHORTCUT MACRO
 //General use

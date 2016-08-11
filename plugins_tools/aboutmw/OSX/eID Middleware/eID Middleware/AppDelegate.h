@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -20,8 +21,5 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate>
-
-
-@end
-
+@ interface AppDelegate:NSObject < NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate >
+	@end

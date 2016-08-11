@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -29,43 +30,42 @@ using namespace eIDMW;
 class Win32Dialog
 {
 public:
-	Win32Dialog(const wchar_t *appName);
-	virtual ~Win32Dialog();
-	virtual LRESULT ProcecEvent
-					(	UINT		uMsg,			// Message For This Window
-						WPARAM		wParam,			// Additional Message Information
-						LPARAM		lParam );		// Additional Message Information
+	Win32Dialog(const wchar_t * appName);
+	      virtual ~ Win32Dialog();
+	virtual LRESULT ProcecEvent(UINT uMsg,	// Message For This Window
+				    WPARAM wParam,	// Additional Message Information
+				    LPARAM lParam);	// Additional Message Information
 
 	bool exec();
 	void show();
 	void close();
-	bool isFriend( HWND f_hWnd );
-	
-	eIDMW::DlgRet dlgResult;
+	bool isFriend(HWND f_hWnd);
 
-protected: 
-	void CreateBitapMask( HBITMAP & BmpSource, HBITMAP & BmpMask );
+	     eIDMW::DlgRet dlgResult;
+
+protected:
+	void CreateBitapMask(HBITMAP & BmpSource, HBITMAP & BmpMask);
 	static HWND Active_hWnd;
 	static Win32Dialog *Active_lpWnd;
-	static LRESULT CALLBACK WndProc
-					(	HWND		hWnd,			// Handle For This Window
-						UINT		uMsg,			// Message For This Window
-						WPARAM		wParam,			// Additional Message Information
-						LPARAM		lParam );		// Additional Message Information
-	bool CreateWnd( const wchar_t* title, int width, int height, int Icon = 0 , HWND Parent = NULL );
-	void KillWindow( );
+	static LRESULT CALLBACK WndProc(HWND hWnd,	// Handle For This Window
+					UINT uMsg,	// Message For This Window
+					WPARAM wParam,	// Additional Message Information
+					LPARAM lParam);	// Additional Message Information
+	bool CreateWnd(const wchar_t * title, int width, int height,
+		       int Icon = 0, HWND Parent = NULL);
+	void KillWindow();
 	virtual void Destroy();
 
 protected:
-	HDC			m_hDC;					// Private GDI Device Context
-	HWND		m_hWnd;					// Holds Our Window Handle
-	HINSTANCE	m_hInstance;			// Instance to our Module(DLL)
-	bool		m_ModalHold;			// Wheither it's modal or not
+	     HDC m_hDC;	     // Private GDI Device Context
+	HWND m_hWnd;	     // Holds Our Window Handle
+	HINSTANCE m_hInstance;	// Instance to our Module(DLL)
+	bool m_ModalHold;    // Wheither it's modal or not
 
 private:
-	wchar_t*	m_appName;				// Name of the Window Class
+	     wchar_t * m_appName;	// Name of the Window Class
 
 };
 
-typedef map< HWND, Win32Dialog* > TD_WNDMAP;
-typedef pair< HWND, Win32Dialog* > TD_WNDPAIR;
+typedef map < HWND, Win32Dialog * >TD_WNDMAP;
+typedef pair < HWND, Win32Dialog * >TD_WNDPAIR;

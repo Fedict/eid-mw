@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 * eID Middleware Project.
 * Copyright (C) 2008-2013 FedICT.
@@ -219,12 +220,16 @@
 #define EIDMW_PERMISSION_DENIED        0xe1d00801
 
 /** A loop exists in symbolic links encountered during resolution of the path argument. */
+
 /** A component of path does not name an existing file or path is an empty string.*/
+
 /** A component of the path prefix is not a directory. */
+
 /** The length of the path argument exceeds {PATH_MAX} or a pathname component is longer than {NAME_MAX}. */
 #define EIDMW_INVALID_PATH             0xe1d00802
 
 /** {OPEN_MAX} file descriptors are currently open in the calling process. */
+
 /** Too many files are currently open in the system.*/
 #define EIDMW_TOO_MANY_OPENED_FILES    0xe1d00803
 
@@ -245,6 +250,7 @@
 
 
 // SDK error
+
 /** The document type is unknown for this card */
 #define EIDMW_ERR_DOCTYPE_UNKNOWN		0xe1d00b00
 

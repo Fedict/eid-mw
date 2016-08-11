@@ -9,11 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface beid_spr_changepin : NSObject
+@ interface beid_spr_changepin:NSObject
 {
-	IBOutlet NSProgressIndicator* progress;
-	IBOutlet NSTextField*		  textField;
-	IBOutlet NSWindow*			  window;
+	IBOutlet NSProgressIndicator *progress;
+	IBOutlet NSTextField *textField;
+	IBOutlet NSWindow *window;
 }
 
 @end

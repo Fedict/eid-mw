@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,6 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 /**
  * A pinpad lib is a DLL, SO file or DYLIB that implements
  * and export the 2 functions in pinpad2.h (or another
@@ -39,7 +41,7 @@
 #include "common/bytearray.h"
 #include "pinpad2.h"
 #if defined WIN32 && defined BEID_OLD_PINPAD
-#include "old/PinpadLibOldBeid.h" // For the old BE eID pinpad libs
+#include "old/PinpadLibOldBeid.h"	// For the old BE eID pinpad libs
 #endif
 #ifndef NO_DIALOGS
 #include "dialogs/dialogs.h"
@@ -49,51 +51,57 @@ typedef unsigned long BEID_DIALOGHANDLE;
 namespace eIDMW
 {
 #ifdef EIDMW_PF_EXPORT
-class CPinpadLib
+	class CPinpadLib
 #else
-class EIDMW_CAL_API CPinpadLib
+	class EIDMW_CAL_API CPinpadLib
 #endif
-{
+	{
 public:
-	CPinpadLib();
-	~CPinpadLib();
+		CPinpadLib();
+		~CPinpadLib();
 
 	/** Search for a pinpad lib that supports this reader and load it */
-	bool Load(unsigned long hContext, SCARDHANDLE hCard,
-		const std::string & csReader, const std::string & csPinpadPrefix,
-		unsigned long ulLanguage);
+		bool Load(unsigned long hContext, SCARDHANDLE hCard,
+			  const std::string & csReader,
+			  const std::string & csPinpadPrefix,
+			  unsigned long ulLanguage);
 
 	/** Unload the currently loaded pinpad lib */
-	void Unload();
+		void Unload();
 
 	/** Send a command to the pinpad lib */
-    CByteArray PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
-		CByteArray oCmd, unsigned char ucPintype, unsigned char ucOperation);
+		CByteArray PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
+				  CByteArray oCmd, unsigned char ucPintype,
+				  unsigned char ucOperation);
 
 	/** This method is also called when no pinpad lib is used */
-	bool ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
-		const std::string & csPinLabel, const std::string & csReader,
-		BEID_DIALOGHANDLE *pulDlgHandle);
+		bool ShowDlg(unsigned char pinpadOperation,
+			     unsigned char ucPintype,
+			     const std::string & csPinLabel,
+			     const std::string & csReader,
+			     BEID_DIALOGHANDLE * pulDlgHandle);
 
 	/** To close the dialog opened by PinCmd() */
-	void CloseDlg(BEID_DIALOGHANDLE ulDlgHandle);
+		void CloseDlg(BEID_DIALOGHANDLE ulDlgHandle);
 
 private:
-	bool CheckLib(const std::string & csPinpadDir, const char *csFileName,
-		unsigned long ulLanguage, int iVersion,
-		unsigned long hContext, SCARDHANDLE hCard, const char *csReader);
-	tGuiInfo *InitGuiInfo();
-	void ClearGuiInfo();
-	const char *GetGuiMesg(unsigned char ucOperation);
+		     bool CheckLib(const std::string & csPinpadDir,
+				   const char *csFileName,
+				   unsigned long ulLanguage, int iVersion,
+				   unsigned long hContext, SCARDHANDLE hCard,
+				   const char *csReader);
+		tGuiInfo *InitGuiInfo();
+		void ClearGuiInfo();
+		const char *GetGuiMesg(unsigned char ucOperation);
 
-	CDynamicLib m_oPinpadLib;
-	EIDMW_PP2_COMMAND m_ppCmd2;
-	tGuiInfo m_guiInfo;
+		CDynamicLib m_oPinpadLib;
+		EIDMW_PP2_COMMAND m_ppCmd2;
+		tGuiInfo m_guiInfo;
 
 #if defined WIN32 && defined BEID_OLD_PINPAD
-	CPinpadLibOldBeid m_oPinpadLibOldBeid; // For the old BE eID pinpad libs
+		CPinpadLibOldBeid m_oPinpadLibOldBeid;	// For the old BE eID pinpad libs
 #endif
-};
+	};
 
 }
 

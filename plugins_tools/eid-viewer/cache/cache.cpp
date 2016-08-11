@@ -9,89 +9,118 @@
 
 
 
-struct cache_item_container {	
-	eid_vwr_cache_item* item;
+struct cache_item_container
+{
+	eid_vwr_cache_item *item;
 
-	cache_item_container(EID_CHAR* data, size_t len) : item(new eid_vwr_cache_item) {
-		item->data = malloc((len+1)*sizeof(EID_CHAR));
-		memcpy(item->data, data, len*sizeof(EID_CHAR));
-		((EID_CHAR*)item->data)[len]='\0';
-		item->len = (int)len;
+	         
+		 
+		 
+		 
+		 
+		 cache_item_container(EID_CHAR * data,
+				      size_t len):item(new eid_vwr_cache_item)
+	{
+		item->data = malloc((len + 1) * sizeof(EID_CHAR));
+		memcpy(item->data, data, len * sizeof(EID_CHAR));
+		((EID_CHAR *) item->data)[len] = '\0';
+		item->len = (int) len;
 	}
 
-	cache_item_container(BYTE* data, size_t len, bool bin) {
+	cache_item_container (BYTE * data, size_t len, bool bin)
+	{
 		if (!bin)
-			cache_item_container((EID_CHAR*) data, len);
+			cache_item_container((EID_CHAR *) data, len);
 		else
 		{
 			item = new eid_vwr_cache_item;
 			item->data = malloc((len + 1));
 			memcpy(item->data, data, len);
-			((char*)item->data)[len] = '\0';
-			item->len = (int)len;
+			((char *) item->data)[len] = '\0';
+			item->len = (int) len;
 		}
 	}
 
-	~cache_item_container() {
+	~cache_item_container()
+	{
 		free(item->data);
 		delete item;
 	}
 };
 
-std::map<EID_STRING, cache_item_container*> cache;
+std::map < EID_STRING, cache_item_container * >cache;
 
-void cache_add(const EID_CHAR* label, EID_CHAR* data, unsigned long len) {
+void cache_add(const EID_CHAR * label, EID_CHAR * data, unsigned long len)
+{
 	cache[label] = new cache_item_container(data, len);
 }
 
-void cache_add_bin(const EID_CHAR* label, BYTE* data, unsigned long len) {
+void cache_add_bin(const EID_CHAR * label, BYTE * data, unsigned long len)
+{
 	cache[label] = new cache_item_container(data, len, true);
 }
 
-const struct eid_vwr_cache_item* cache_get_data(const EID_CHAR* label) {
+const struct eid_vwr_cache_item *cache_get_data(const EID_CHAR * label)
+{
 	return cache[label]->item;
 }
 
-struct iterator_deref {
-	std::map<EID_STRING, cache_item_container*>::iterator it;
+struct iterator_deref
+{
+	std::map < EID_STRING, cache_item_container * >::iterator it;
 };
 
-void* cache_label_iterator() {
-	iterator_deref* it = new iterator_deref;
+void *cache_label_iterator()
+{
+	iterator_deref *it = new iterator_deref;
+
 	it->it = cache.begin();
-	return (void*)it;
+	return (void *) it;
 }
 
-void cache_label_iterator_free(void* iterator) {
-	iterator_deref* it = (iterator_deref*)iterator;
+void cache_label_iterator_free(void *iterator)
+{
+	iterator_deref *it = (iterator_deref *) iterator;
 	delete it;
 }
 
-const EID_CHAR* cache_next_label(void* iterator) {
-	iterator_deref* it = (iterator_deref*)iterator;
-	if(it->it == cache.end()) {
+const EID_CHAR *cache_next_label(void *iterator)
+{
+	iterator_deref *it = (iterator_deref *) iterator;
+
+	if (it->it == cache.end())
+	{
 		return NULL;
 	}
-	const EID_CHAR* retval = it->it->first.c_str();
+	const EID_CHAR *retval = it->it->first.c_str();
+
 	++(it->it);
 	return retval;
 }
 
-int cache_clear() {
+int cache_clear()
+{
 	cache.clear();
 
 	return 0;
 }
 
-int cache_have_label(const EID_CHAR* label) {
-	return (int)cache.count(label);
+int cache_have_label(const EID_CHAR * label)
+{
+	return (int) cache.count(label);
 }
 
-EID_CHAR* cache_get_xmlform(const EID_CHAR* label) {
-	return (EID_CHAR*)convert_to_xml(label, (EID_CHAR*)cache_get_data(label)->data);
+EID_CHAR *cache_get_xmlform(const EID_CHAR * label)
+{
+	return (EID_CHAR *) convert_to_xml(label,
+					   (EID_CHAR *)
+					   cache_get_data(label)->data);
 }
 
-void cache_add_xmlform(const EID_CHAR* label, const EID_CHAR* value) {
+void cache_add_xmlform(const EID_CHAR * label, const EID_CHAR * value)
+{
 	int len = 0;
-	cache_add(label, (EID_CHAR*)convert_from_xml(label, value, &len), len);
+
+	cache_add(label, (EID_CHAR *) convert_from_xml(label, value, &len),
+		  len);
 }

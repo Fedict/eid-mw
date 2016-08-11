@@ -6,7 +6,7 @@
 #if HAVE_GIO
 #include <gio/gio.h>
 
-GSettings* get_prefs() G_GNUC_PURE;
+GSettings *get_prefs() G_GNUC_PURE;
 #else
 #define get_prefs() NULL
 #define g_settings_bind(s, k, o, p, f) { }

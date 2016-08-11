@@ -5,12 +5,14 @@
 #include <conversions.h>
 #include <map>
 
-class SpecConvertor : public ConversionWorker {
+class SpecConvertor:public ConversionWorker
+{
 private:
-	std::map<eid_vwr_langs, std::map<EID_CHAR, EID_STRING> > conversions;
+	std::map < eid_vwr_langs, std::map < EID_CHAR,
+		EID_STRING > >conversions;
 public:
 	SpecConvertor();
-	virtual EID_STRING convert(const void* original);
+	virtual EID_STRING convert(const void *original);
 };
 
 #endif

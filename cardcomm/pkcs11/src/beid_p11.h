@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -55,7 +56,7 @@
 #define BEID_FIELD_TAG_ID_IssuingMunicipality	0x05
 #define BEID_FIELD_TAG_ID_NationalNr			0x06
 #define BEID_FIELD_TAG_ID_Surname				0x07
-#define BEID_FIELD_TAG_ID_FirstNames			0x08	
+#define BEID_FIELD_TAG_ID_FirstNames			0x08
 #define BEID_FIELD_TAG_ID_FirstLetterOfThirdGivenName 0x09
 #define BEID_FIELD_TAG_ID_Nationality			0x0A
 #define BEID_FIELD_TAG_ID_LocationOfBirth		0x0B
@@ -74,14 +75,18 @@
 #define BEID_FIELD_TAG_ADDR_Street				0x01
 #define BEID_FIELD_TAG_ADDR_ZipCode             0x02
 #define BEID_FIELD_TAG_ADDR_Municipality        0x03
+
 /************************/
+
 /* differences with 2.20*/
+
 /************************/
+
 /*#define CK_TRUE   TRUE
 #define CK_FALSE  FALSE
 #define CKM_SHA256_RSA_PKCS            0x00000040
 #define CKM_SHA384_RSA_PKCS            0x00000041
 #define CKM_SHA512_RSA_PKCS            0x00000042
-*/																													
+*/
 
 #endif

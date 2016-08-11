@@ -3,14 +3,18 @@
 
 #include "dateconv.h"
 
-class ValidityDateParser : public DateParser {
+class ValidityDateParser:public DateParser
+{
 public:
 	virtual void input(EID_STRING);
 };
 
-class ValidityDateWriter : public DateWriter {
+class ValidityDateWriter:public DateWriter
+{
 public:
-	ValidityDateWriter(DateParser* p) : DateWriter(p) {};
+	ValidityDateWriter(DateParser * p):DateWriter(p)
+	{
+	};
 	virtual EID_STRING output();
 };
 

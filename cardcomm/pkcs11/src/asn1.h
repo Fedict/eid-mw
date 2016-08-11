@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -21,60 +22,65 @@
 #define __ASN1_H__
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* return codes for ASN1 parsing */
-#define E_ASN_BAD_TAG        -1           /* tag not expected or unknown */
-#define E_ASN_TAG_LEN        -2           /* tag has length > 4 bytes */
-#define E_ASN_BAD_LEN        -3           /* length encoding error */
-#define E_ASN_INCOMPLETE     -4           /* unexpected end of ASN1 encoding */
-#define E_ASN_ITEM_NOT_FOUND -5           /* item in path does not exist */
-#define E_ASN_ALLOC          -6           /* memory allocation error */
-#define E_ASN_LIST           -7           /* error in asn1 item list to encode */
+#define E_ASN_BAD_TAG        -1	/* tag not expected or unknown */
+#define E_ASN_TAG_LEN        -2	/* tag has length > 4 bytes */
+#define E_ASN_BAD_LEN        -3	/* length encoding error */
+#define E_ASN_INCOMPLETE     -4	/* unexpected end of ASN1 encoding */
+#define E_ASN_ITEM_NOT_FOUND -5	/* item in path does not exist */
+#define E_ASN_ALLOC          -6	/* memory allocation error */
+#define E_ASN_LIST           -7	/* error in asn1 item list to encode */
 //#define ASN1_ERR -1
 
 
-typedef struct ASN1_ITEM 
-{
-   unsigned int         tag;          //tag
-   const unsigned char* p_data;      //value data
-   unsigned int	        l_data;       //value len
-   unsigned int         nsubitems;    //number of sub-items (not yet implemented !, always 0)
-   const unsigned char* p_raw;       //total TLV data
-   unsigned int         l_raw;        //total TLV len
-} ASN1_ITEM;
+	typedef struct ASN1_ITEM
+	{
+		unsigned int tag;	//tag
+		const unsigned char *p_data;	//value data
+		unsigned int l_data;	//value len
+		unsigned int nsubitems;	//number of sub-items (not yet implemented !, always 0)
+		const unsigned char *p_raw;	//total TLV data
+		unsigned int l_raw;	//total TLV len
+	} ASN1_ITEM;
 
 
-typedef struct ASN1_LIST
-{
-   unsigned int   size;
-   unsigned int   nitems;
-   ASN1_ITEM      *item;
-} ASN1_LIST;
+	typedef struct ASN1_LIST
+	{
+		unsigned int size;
+		unsigned int nitems;
+		ASN1_ITEM *item;
+	} ASN1_LIST;
 
 
 
-typedef struct T_OID
-{
-	char *dotid;
-	char *str;
-} T_OID;
+	typedef struct T_OID
+	{
+		char *dotid;
+		char *str;
+	} T_OID;
 
 
 
 /* BER ASN1 decoding masks */
-#define TAG_MASK   0x1F  /* bits 1 - 5  */
-#define TYPE_MASK  0x20  /* bit  6      */
-#define CLASS_MASK 0xC0  /* bits 7,8    */
+#define TAG_MASK   0x1F	     /* bits 1 - 5  */
+#define TYPE_MASK  0x20	     /* bit  6      */
+#define CLASS_MASK 0xC0	     /* bits 7,8    */
 
-#define LEN_MASK   0x7F  /* bits 1 - 7  */
-#define EXT_LEN    0x80  /* bit  8      */
+#define LEN_MASK   0x7F	     /* bits 1 - 7  */
+#define EXT_LEN    0x80	     /* bit  8      */
 
 /* For this implementation: class, type and tagnumber are converted to single unsigned int max 4 bytes (32-bit) */
+
 /* 2 bits for class, 1 bit for type so 29 bits remain for tagnumber (32-bit system)    */
+
 /* tag encoded as multiple of 7 bits cannot be bigger than 28 bits anyway */
+
 /* following are the definitions for class, type and value */
+
 /* ASN_CLASS: bit 1 and 2 */
 #define ASN_UNIVERSAL    0x00
 #define ASN_APPLICATION  0x01
@@ -89,20 +95,20 @@ typedef struct T_OID
 
 /* COMMON ASN_TAGS */
 //#define ASN_EOC               ( ASN_CONTEXT   | ASN_CONSTRUCTED | (0x00 << 3) )   /* end of contents octet */
-#define ASN_BOOLEAN             ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x01 << 3) )      
-#define ASN_INTEGER             ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x02 << 3) )      
+#define ASN_BOOLEAN             ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x01 << 3) )
+#define ASN_INTEGER             ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x02 << 3) )
 #define ASN_BIT_STRING          ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x03 << 3) )
 #define ASN_OCTET_STRING        ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x04 << 3) )
-#define ASN_NULL                ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x05 << 3) )    
-#define ASN_OID                 ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x06 << 3) )    
-#define ASN_OBJDESCRIP          ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x07 << 3) )    
-#define ASN_EXTERNAL            ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x08 << 3) )    
-#define ASN_REAL                ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x09 << 3) )    
-#define ASN_ENUM                ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x0A << 3) )    
-#define ASN_EMBEDED_PDV         ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x0B << 3) )    
-#define ASN_UTF8STRING          ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x0C << 3) )    
+#define ASN_NULL                ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x05 << 3) )
+#define ASN_OID                 ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x06 << 3) )
+#define ASN_OBJDESCRIP          ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x07 << 3) )
+#define ASN_EXTERNAL            ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x08 << 3) )
+#define ASN_REAL                ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x09 << 3) )
+#define ASN_ENUM                ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x0A << 3) )
+#define ASN_EMBEDED_PDV         ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x0B << 3) )
+#define ASN_UTF8STRING          ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x0C << 3) )
 
-#define ASN_SEQUENCE            ( ASN_UNIVERSAL | ASN_CONSTRUCTED | (0x10 << 3) )  
+#define ASN_SEQUENCE            ( ASN_UNIVERSAL | ASN_CONSTRUCTED | (0x10 << 3) )
 #define ASN_SET                 ( ASN_UNIVERSAL | ASN_CONSTRUCTED | (0x11 << 3) )
 #define ASN_NUMSTRING           ( ASN_UNIVERSAL | ASN_CONSTRUCTED | (0x12 << 3) )
 #define ASN_PRINTABLE_STRING    ( ASN_UNIVERSAL | ASN_PRIMITIV    | (0x13 << 3) )
@@ -133,15 +139,20 @@ typedef struct T_OID
 #define ASNPATH_FIRST           "\x01"
 
 /* ASN1 decoding functions */
-int asn1_get_item(const unsigned char *content, unsigned int len, const char *path, ASN1_ITEM *item);
-int asn1_find_item(const unsigned char *content, unsigned int len, unsigned int findtag, ASN1_ITEM *item);
-int dec_oid( unsigned char *p_data, int l_data, unsigned int *oid, int l_oid);
-int asn1_next_item(ASN1_ITEM          *p_xLev0,       /**< In/out: object   */
-                   ASN1_ITEM          *p_xLev1        /**< Out: object   */
-                  );
+	int asn1_get_item(const unsigned char *content, unsigned int len,
+			  const char *path, ASN1_ITEM * item);
+	int asn1_find_item(const unsigned char *content, unsigned int len,
+			   unsigned int findtag, ASN1_ITEM * item);
+	int dec_oid(unsigned char *p_data, int l_data, unsigned int *oid,
+		    int l_oid);
+
+	int asn1_next_item(ASN1_ITEM * p_xLev0,	      /**< In/out: object   */
+
+			   ASN1_ITEM * p_xLev1	      /**< Out: object   */
+		);
 
 #ifdef __cplusplus
-   }
+}
 #endif
 
 

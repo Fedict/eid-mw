@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -32,70 +33,82 @@ namespace eIDMW
 {
 
 /** Thread class to handle a callback */
-class EIDMW_CAL_API CEventCallbackThread : public CThread
-{
+	class EIDMW_CAL_API CEventCallbackThread:public CThread
+	{
 public:
-	CEventCallbackThread();
+		CEventCallbackThread();
 
-	CEventCallbackThread(CPCSC *poPCSC, const std::string & csReader,
-		void (* callback)(long lRet, unsigned long ulState, void *pvRef), void *pvRef);
+		CEventCallbackThread(CPCSC * poPCSC,
+				     const std::string & csReader,
+				     void (*callback) (long lRet,
+						       unsigned long ulState,
+						       void *pvRef),
+				     void *pvRef);
 
-	void Run();
+		void Run();
 
-	void Stop();
+		void Stop();
 
-	bool HasStopped();
+		bool HasStopped();
 
 private:
-	bool m_bStop;
-	CPCSC *m_poPCSC;
+		     bool m_bStop;
+		CPCSC *m_poPCSC;
 #ifdef WIN32
 #pragma warning(push)
-#pragma warning(disable:4251)// m_csReader does not need to have dll-interface
+#pragma warning(disable:4251)	// m_csReader does not need to have dll-interface
 #endif
-	std::string m_csReader;
+		      std::string m_csReader;
 #ifdef WIN32
 #pragma warning(pop)
 #endif
-	
-	void (* m_callback)(long lRet, unsigned long ulState, void *pvRef);
-	unsigned long m_ulCurrentState;
-	bool m_bRunning;
-	void *m_pvRef;
-};
+
+		void (*m_callback) (long lRet, unsigned long ulState,
+				    void *pvRef);
+		unsigned long m_ulCurrentState;
+		bool m_bRunning;
+		void *m_pvRef;
+	};
 
 ////////////////////////////////////////////////////////////////
 
-class EIDMW_CAL_API CThreadPool
-{
+	class EIDMW_CAL_API CThreadPool
+	{
 public:
-	CThreadPool();
+		CThreadPool();
 
-	~CThreadPool();
+		~CThreadPool();
 
-	CEventCallbackThread & NewThread(
-		CPCSC *poPCSC, const std::string & csReader,
-		void (* callback)(long lRet, unsigned long ulState, void *pvRef),
-		unsigned long & ulHandle, void *pvRef);
+		CEventCallbackThread & NewThread(CPCSC * poPCSC,
+						 const std::string & csReader,
+						 void (*callback) (long lRet,
+								   unsigned
+								   long
+								   ulState,
+								   void
+								   *pvRef),
+						 unsigned long &ulHandle,
+						 void *pvRef);
 
-	void RemoveThread(unsigned long ulHandle);
+		void RemoveThread(unsigned long ulHandle);
 
-	void FinishThreads();
+		void FinishThreads();
 
 private:
-	unsigned long m_ulCurrentHandle;
-	CMutex m_mutex;
+		unsigned long m_ulCurrentHandle;
+		CMutex m_mutex;
 
 #ifdef WIN32
 // See http://groups.google.com/group/microsoft.public.vc.stl/msg/c4dfeb8987d7b8f0
 #pragma warning(push)
 #pragma warning(disable:4251)
 #endif
-	std::map <unsigned long, CEventCallbackThread> m_pool;
+		       std::map < unsigned long,
+			CEventCallbackThread > m_pool;
 #ifdef WIN32
 #pragma warning(pop)
 #endif
-};
+	};
 
 }
 #endif

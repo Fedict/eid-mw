@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -23,13 +24,11 @@
 
 #include <QtGui/QDialog>
 
-class dlgWndBase : public QDialog
+class dlgWndBase:public QDialog
 {
-	Q_OBJECT
-
-public:
-	dlgWndBase(QWidget *parent);
-	~dlgWndBase();
+Q_OBJECT public:
+	         dlgWndBase(QWidget * parent);
+	        ~dlgWndBase();
 
 	int exec();
 };

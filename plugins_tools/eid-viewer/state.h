@@ -1,7 +1,8 @@
 #ifndef EID_VWR_STATE_H
 #define EID_VWR_STATE_H
 
-enum eid_vwr_state_event {
+enum eid_vwr_state_event
+{
 	EVENT_SET_CALLBACKS,
 	EVENT_OPEN_FILE,
 	EVENT_CLOSE_FILE,
@@ -18,8 +19,9 @@ enum eid_vwr_state_event {
 };
 
 void sm_init();
-void sm_handle_event(enum eid_vwr_state_event e, void* data, void(*freefunc)(void*), void(*donefunc)(void*));
-void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data);
+void sm_handle_event(enum eid_vwr_state_event e, void *data,
+		     void (*freefunc) (void *), void (*donefunc) (void *));
+void sm_handle_event_onthread(enum eid_vwr_state_event e, void *data);
 void sm_start_thread();
 void sm_stop_thread();
 

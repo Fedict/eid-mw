@@ -5,19 +5,22 @@
 #include <map>
 #include "cppeidstring.h"
 
-class DobParser : public DateParser {
+class DobParser:public DateParser
+{
 private:
-	static std::map<EID_STRING, int> frommonth;
+	static std::map < EID_STRING, int >frommonth;
 public:
-	DobParser();
+	    DobParser();
 	virtual void input(EID_STRING);
 };
 
-class DobWriter : public DateWriter {
+class DobWriter:public DateWriter
+{
 private:
-	static std::map<eid_vwr_langs, std::map<int, EID_STRING> > tomonth;
+	static std::map < eid_vwr_langs, std::map < int,
+		EID_STRING > >tomonth;
 public:
-	DobWriter(DateParser* p);
+	    DobWriter(DateParser * p);
 	virtual EID_STRING output();
 };
 

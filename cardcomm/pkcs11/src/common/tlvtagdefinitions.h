@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -22,10 +23,11 @@
 namespace eIDMW
 {
 
-typedef enum {
-    TLV_TAG_LONG,
-    TLV_TAG_ULONG,
-	TLV_TAG_STRING,
-} tTLVTagType;
+	typedef enum
+	{
+		TLV_TAG_LONG,
+		TLV_TAG_ULONG,
+		TLV_TAG_STRING,
+	} tTLVTagType;
 
 }

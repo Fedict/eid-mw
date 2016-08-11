@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,6 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 /*
 Takes care of
  - communication with the reader/smart card
@@ -52,7 +54,8 @@ Takes care of
 #endif
 // needed for pcsclite version earlier than 1.4
 #ifndef SCARD_E_NO_READERS_AVAILABLE
-#define SCARD_E_NO_READERS_AVAILABLE 0x8010002E /** Cannot find smart card reader */
+
+#define SCARD_E_NO_READERS_AVAILABLE 0x8010002E	/** Cannot find smart card reader */
 #endif
 #ifndef SCARD_PROTOCOL_UNDEFINED
 #define SCARD_PROTOCOL_UNDEFINED         0x00
@@ -87,91 +90,100 @@ namespace eIDMW
  * except that the SCARD_STATE_CHANGED is only set when a card
  * insert/removal occurred (as opposed to Windows' PCSC).
  */
-typedef struct  {
-    std::string csReader;
-    unsigned long ulCurrentState; // the state when we last checked
-    unsigned long ulEventState;   // the state after the new check
-} tReaderInfo;
+	typedef struct
+	{
+		std::string csReader;
+		unsigned long ulCurrentState;	// the state when we last checked
+		unsigned long ulEventState;	// the state after the new check
+	} tReaderInfo;
 
-class EIDMW_CAL_API CPCSC
-{
+	class EIDMW_CAL_API CPCSC
+	{
 public:
-    CPCSC(void);
-    ~CPCSC(void);
+		CPCSC(void);
+		    ~CPCSC(void);
 
-	void EstablishContext();
+		void EstablishContext();
 
-	void ReleaseContext();
-	void Cancel();
+		void ReleaseContext();
+		void Cancel();
 
 	/**
 	 * We can't return a string because the output is a "multistring",
 	 * which means a multiple strings separated by a 0x00 and ended
 	 * by 2 0x00 bytes.
 	 */
-	CByteArray ListReaders();
+		CByteArray ListReaders();
 
 	/** Returns true if something changed */
-	bool GetStatusChange(unsigned long ulTimeout,
-		tReaderInfo *pReaderInfos, unsigned long ulReaderCount);
+		bool GetStatusChange(unsigned long ulTimeout,
+				     tReaderInfo * pReaderInfos,
+				     unsigned long ulReaderCount);
 
-	//created a new function for pkcs11, as we don't want to change the CSP's behaviour
-	//this is temporary, pkcs11 will move away from using this cardlayer
-	long GetTheStatusChange(unsigned long ulTimeout,
-															 SCARD_READERSTATEA *txReaderStates,
-															 unsigned long ulReaderCount);
+		//created a new function for pkcs11, as we don't want to change the CSP's behaviour
+		//this is temporary, pkcs11 will move away from using this cardlayer
+		long GetTheStatusChange(unsigned long ulTimeout,
+					SCARD_READERSTATEA * txReaderStates,
+					unsigned long ulReaderCount);
 
-	//checks if the pcsc service is running
-	//long PCSCServiceRunning(bool* pRunning);
+		//checks if the pcsc service is running
+		//long PCSCServiceRunning(bool* pRunning);
 
-	//attempt to start the pcsc service is if ain't running yet
-	//void StartPCSCService();
+		//attempt to start the pcsc service is if ain't running yet
+		//void StartPCSCService();
 
-	bool Status(const std::string &csReader);
+		bool Status(const std::string & csReader);
 
-    SCARDHANDLE Connect(const std::string &csReader,
-		unsigned long ulShareMode = SCARD_SHARE_SHARED,
-		unsigned long ulPreferredProtocols = SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1);
-    void Disconnect(SCARDHANDLE hCard, tDisconnectMode disconnectMode);
+		SCARDHANDLE Connect(const std::string & csReader,
+				    unsigned long ulShareMode =
+				    SCARD_SHARE_SHARED,
+				    unsigned long ulPreferredProtocols =
+				    SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1);
+		void Disconnect(SCARDHANDLE hCard,
+				tDisconnectMode disconnectMode);
 
-	CByteArray GetATR(SCARDHANDLE hCard);
-	CByteArray GetIFDVersion(SCARDHANDLE hCard);
+		CByteArray GetATR(SCARDHANDLE hCard);
+		CByteArray GetIFDVersion(SCARDHANDLE hCard);
 
 	/**
 	 * Returns true if the same card is still present,
 	 * false if the card has been removed (and perhaps
 	 * the same or antoher card has been inserted).
 	 */
-	bool Status(SCARDHANDLE hCard);
+		bool Status(SCARDHANDLE hCard);
 
-	CByteArray Transmit(SCARDHANDLE hCard, const CByteArray &oCmdAPDU,
-		long *plRetVal, void *pSendPci = NULL, void *pRecvPci = NULL);
-	void Recover(SCARDHANDLE hCard, unsigned long *pulLockCount);
-	CByteArray Control(SCARDHANDLE hCard, unsigned long ulControl,
-		const CByteArray &oCmd, unsigned long ulMaxResponseSize = CTRL_BUF_LEN);
+		CByteArray Transmit(SCARDHANDLE hCard,
+				    const CByteArray & oCmdAPDU,
+				    long *plRetVal, void *pSendPci =
+				    NULL, void *pRecvPci = NULL);
+		void Recover(SCARDHANDLE hCard, unsigned long *pulLockCount);
+		CByteArray Control(SCARDHANDLE hCard, unsigned long ulControl,
+				   const CByteArray & oCmd,
+				   unsigned long ulMaxResponseSize =
+				   CTRL_BUF_LEN);
 
-    void BeginTransaction(SCARDHANDLE hCard);
-    void EndTransaction(SCARDHANDLE hCard);
+		void BeginTransaction(SCARDHANDLE hCard);
+		void EndTransaction(SCARDHANDLE hCard);
 
-	//unsigned long GetContext();
-	SCARDCONTEXT GetContext();
+		//unsigned long GetContext();
+		SCARDCONTEXT GetContext();
 
-    long SW12ToErr(unsigned long ulSW12);
+		long SW12ToErr(unsigned long ulSW12);
 
 private:
-	long PcscToErr(unsigned long lRet);
+		long PcscToErr(unsigned long lRet);
 
-    //unsigned long m_hContext;
-	SCARDCONTEXT m_hContext;
+		//unsigned long m_hContext;
+		SCARDCONTEXT m_hContext;
 
-	friend class CPinpad;
+		friend class CPinpad;
 
-	int m_iTimeoutCount;
-	int m_iListReadersCount;
+		int m_iTimeoutCount;
+		int m_iListReadersCount;
 
-    unsigned long m_ulCardTxDelay;          //delay before each transmission to a smartcard; in millie-seconds, default 1
+		unsigned long m_ulCardTxDelay;	//delay before each transmission to a smartcard; in millie-seconds, default 1
 
-};
+	};
 
 }
 #endif

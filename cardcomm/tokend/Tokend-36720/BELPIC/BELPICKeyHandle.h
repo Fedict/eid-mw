@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -38,55 +39,62 @@ class BELPICKeyRecord;
 //
 // A KeyHandle object which implements the crypto interface to muscle.
 //
-class BELPICKeyHandle: public Tokend::KeyHandle
+class BELPICKeyHandle:public Tokend::KeyHandle
 {
-	NOCOPY(BELPICKeyHandle)
-public:
-    BELPICKeyHandle(BELPICToken &belpicToken,
-		const Tokend::MetaRecord &metaRecord, BELPICKeyRecord &cacKey);
-    ~BELPICKeyHandle();
+NOCOPY(BELPICKeyHandle) public:
+	BELPICKeyHandle(BELPICToken & belpicToken,
+			const Tokend::MetaRecord & metaRecord,
+			BELPICKeyRecord & cacKey);
+	     ~BELPICKeyHandle();
 
-    virtual void getKeySize(CSSM_KEY_SIZE &keySize);
-    virtual uint32 getOutputSize(const Context &context, uint32 inputSize,
-		bool encrypting);
-    virtual void generateSignature(const Context &context,
-		CSSM_ALGORITHMS signOnly, const CssmData &input, CssmData &signature);
-    virtual void verifySignature(const Context &context,
-		CSSM_ALGORITHMS signOnly, const CssmData &input,
-		const CssmData &signature);
-    virtual void generateMac(const Context &context, const CssmData &input,
-		CssmData &output);
-    virtual void verifyMac(const Context &context, const CssmData &input,
-		const CssmData &compare);
-    virtual void encrypt(const Context &context, const CssmData &clear,
-		CssmData &cipher);
-    virtual void decrypt(const Context &context, const CssmData &cipher,
-		CssmData &clear);
+	virtual void getKeySize(CSSM_KEY_SIZE & keySize);
+	virtual uint32 getOutputSize(const Context & context,
+				     uint32 inputSize, bool encrypting);
+	virtual void generateSignature(const Context & context,
+				       CSSM_ALGORITHMS signOnly,
+				       const CssmData & input,
+				       CssmData & signature);
+	virtual void verifySignature(const Context & context,
+				     CSSM_ALGORITHMS signOnly,
+				     const CssmData & input,
+				     const CssmData & signature);
+	virtual void generateMac(const Context & context,
+				 const CssmData & input, CssmData & output);
+	virtual void verifyMac(const Context & context,
+			       const CssmData & input,
+			       const CssmData & compare);
+	virtual void encrypt(const Context & context, const CssmData & clear,
+			     CssmData & cipher);
+	virtual void decrypt(const Context & context, const CssmData & cipher,
+			     CssmData & clear);
 
-	virtual void exportKey(const Context &context,
-		const AccessCredentials *cred, CssmKey &wrappedKey);
+	virtual void exportKey(const Context & context,
+			       const AccessCredentials * cred,
+			       CssmKey & wrappedKey);
 
 private:
-	BELPICToken &mToken;
-	BELPICKeyRecord &mKey;
+	BELPICToken & mToken;
+	BELPICKeyRecord & mKey;
 };
 
 
 //
 // A factory that creates BELPICKeyHandle objects.
 //
-class BELPICKeyHandleFactory : public Tokend::KeyHandleFactory
+class BELPICKeyHandleFactory:public Tokend::KeyHandleFactory
 {
-	NOCOPY(BELPICKeyHandleFactory)
-public:
-	BELPICKeyHandleFactory() {}
-	virtual ~BELPICKeyHandleFactory();
+NOCOPY(BELPICKeyHandleFactory) public:
+	BELPICKeyHandleFactory()
+	{
+	}
+	virtual ~ BELPICKeyHandleFactory();
 
-	virtual Tokend::KeyHandle *keyHandle(Tokend::TokenContext *tokenContext,
-		const Tokend::MetaRecord &metaRecord, Tokend::Record &record) const;
+	virtual Tokend::KeyHandle * keyHandle(Tokend::TokenContext *
+					      tokenContext,
+					      const Tokend::MetaRecord &
+					      metaRecord,
+					      Tokend::Record & record) const;
 };
 
 
 #endif /* !_BELPICKEYHANDLE_H_ */
-
-

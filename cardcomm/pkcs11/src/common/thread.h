@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -29,7 +30,7 @@
 #define __WIN32__
 #endif
 #define VC_GE_2005( _MSC_VER )	( _MSC_VER >= 1400 )
-#include <windows.h> // needed for Sleep()
+#include <windows.h>		// needed for Sleep()
 #else
 #ifndef __UNIX__
 #define __UNIX__
@@ -55,58 +56,63 @@ typedef pthread_t beid_thread_id;
 #endif
 
 #ifdef __APPLE__
-typedef _opaque_pthread_t* beid_thread_id;
+typedef _opaque_pthread_t *beid_thread_id;
 #endif
 
 namespace eIDMW
 {
 
-class EIDMW_CMN_API CThread
-{
+	class EIDMW_CMN_API CThread
+	{
 public:
-	CThread();
-	virtual ~CThread();
+		CThread();
+		virtual ~ CThread();
 
 	/** To be implemented by the subclasses */
-	virtual void Run() = 0;
+		virtual void Run() = 0;
 
 	/** Returns 0 if the thread was started, -1 otherwise */
-	virtual int Start();
+		virtual int Start();
 
 	/** Returns true if the thread is running, false otherwise */
-	virtual bool IsRunning();
+		virtual bool IsRunning();
 
-	static void SleepMillisecs(int millisecs);
+		static void SleepMillisecs(int millisecs);
 
 	/** Ask the thread to stop */
-	virtual void RequestStop();
+		virtual void RequestStop();
 
 	/** Force the thread to stop */
-	virtual void ForceStop();
+		virtual void ForceStop();
 
 	/** Ask the thread to stop then wait until the thread ends */
-	virtual void Stop(unsigned long ulSleepFrequency=100);
+		virtual void Stop(unsigned long ulSleepFrequency = 100);
 
 	/** Wait until the thread ends */
-	virtual void WaitTillStopped(unsigned long ulSleepFrequency=100);
+		virtual void WaitTillStopped(unsigned long ulSleepFrequency =
+					     100);
 
 	/** Wait until the thread ends or the timeout occure (in second) 
 	iStopMode : 0 = do not stop the thread after timeout
 	            1 = request the thread o stop after timeout
 				2 = force the thread to stop*/
-	virtual bool WaitTimeout(unsigned long ulTimeout,int iStopMode=0);
+		virtual bool WaitTimeout(unsigned long ulTimeout,
+					 int iStopMode = 0);
 #ifdef WIN32
-	uintptr_t m_SyncHandle;
+		uintptr_t m_SyncHandle;
 #else
-	beid_thread_id m_SyncHandle;
+		beid_thread_id m_SyncHandle;
 #endif
-	bool m_isRunning;
-	bool m_bStopRequest;	/** Can be taken into account in the run method to end the thread properly before normal ending */
+		bool m_isRunning;
 
-	static int getCurrentPid();
-	static beid_thread_id getCurrentThreadId();
+		bool m_bStopRequest;
 
-};
+				/** Can be taken into account in the run method to end the thread properly before normal ending */
+
+		static int getCurrentPid();
+		static beid_thread_id getCurrentThreadId();
+
+	};
 
 }
 #endif

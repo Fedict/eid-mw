@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -33,33 +34,37 @@
 //
 // BELPICError exceptions
 //
-BELPICError::BELPICError(uint16_t sw) : SCardError(sw)
+BELPICError::BELPICError(uint16_t sw):SCardError(sw)
 {
 #if MAX_OS_X_VERSION_MIN_REQUIRED <= MAX_OS_X_VERSION_10_5
 	IFDEBUG(debugDiagnose(this));
 #else
-	SECURITY_EXCEPTION_THROW_OTHER(this, sw, (char *)"BELPIC");
+	SECURITY_EXCEPTION_THROW_OTHER(this, sw, (char *) "BELPIC");
 #endif
 }
 
-BELPICError::~BELPICError() throw ()
+BELPICError::~BELPICError()throw()
 {
 }
 
-const char *BELPICError::what() const throw ()
-{ return "BELPIC error"; }
+const char *BELPICError::what() const const throw()
+{
+	return "BELPIC error";
+}
 
 void BELPICError::throwMe(uint16_t sw)
-{ throw BELPICError(sw); }
+{
+	throw BELPICError(sw);
+}
 
 #if MAX_OS_X_VERSION_MIN_REQUIRED <= MAX_OS_X_VERSION_10_5
 
 #if !defined(NDEBUG)
 
-void BELPICError::debugDiagnose(const void *id) const
+void BELPICError::debugDiagnose(const void *id) const const
 {
-    secdebug("exception", "%p BELPICError %s (%04hX)",
-             id, errorstr(statusWord), statusWord);
+	secdebug("exception", "%p BELPICError %s (%04hX)",
+		 id, errorstr(statusWord), statusWord);
 }
 
 #endif //NDEBUG

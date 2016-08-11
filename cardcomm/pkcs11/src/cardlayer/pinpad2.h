@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,6 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 /*
  * This API should be implemented by libraries (also called
  * plugins) that want to support a pinpad reader for use
@@ -65,7 +67,8 @@
 
 
 #ifdef  __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #if defined(_WIN32) || defined(WIN32)
@@ -93,18 +96,18 @@ extern "C" {
 
 #define PTEID_MINOR_VERSION       0
 
-#define EIDMW_PP_TYPE_AUTH         0x00    /* The Authentication PIN/PUK */
-#define EIDMW_PP_TYPE_SIGN         0x01    /* The Signature PIN/PUK */
-#define EIDMW_PP_TYPE_ADDR         0x02    /* The Address PIN/PUK */
-#define EIDMW_PP_TYPE_ACTIV        0x03    /* The Activation PIN */
-#define EIDMW_PP_TYPE_UNKNOWN      0xFF    /* Unkonwn PIN/PUK */
+#define EIDMW_PP_TYPE_AUTH         0x00	/* The Authentication PIN/PUK */
+#define EIDMW_PP_TYPE_SIGN         0x01	/* The Signature PIN/PUK */
+#define EIDMW_PP_TYPE_ADDR         0x02	/* The Address PIN/PUK */
+#define EIDMW_PP_TYPE_ACTIV        0x03	/* The Activation PIN */
+#define EIDMW_PP_TYPE_UNKNOWN      0xFF	/* Unkonwn PIN/PUK */
 
-#define EIDMW_PP_OP_VERIFY                    0x01    /* PIN verification */
-#define EIDMW_PP_OP_CHANGE                    0x02    /* PIN change */
-#define EIDMW_PP_OP_UNBLOCK_NO_CHANGE         0x03    /* PIN unblock without PIN change */
-#define EIDMW_PP_OP_UNBLOCK_CHANGE            0x04    /* PIn unblock plus PIN change */
-#define EIDMW_PP_OP_UNBLOCK_MERGE_NO_CHANGE   0x05    /* PIN unblock using PUK merge, without PIN change*/
-#define EIDMW_PP_OP_UNBLOCK_MERGE_CHANGE      0x06    /* PIN unblock using PUK merge, plus PIN change */
+#define EIDMW_PP_OP_VERIFY                    0x01	/* PIN verification */
+#define EIDMW_PP_OP_CHANGE                    0x02	/* PIN change */
+#define EIDMW_PP_OP_UNBLOCK_NO_CHANGE         0x03	/* PIN unblock without PIN change */
+#define EIDMW_PP_OP_UNBLOCK_CHANGE            0x04	/* PIn unblock plus PIN change */
+#define EIDMW_PP_OP_UNBLOCK_MERGE_NO_CHANGE   0x05	/* PIN unblock using PUK merge, without PIN change */
+#define EIDMW_PP_OP_UNBLOCK_MERGE_CHANGE      0x06	/* PIN unblock using PUK merge, plus PIN change */
 
 #define DLG_INFO_CHARS       2000
 
@@ -123,24 +126,29 @@ extern "C" {
  * at most DLG_INFO_CHARS bytes in length; this memory has already been allocated.
  * LIMITATION: double quote signs " or \" are not allowed inside the strings!
  */
-typedef struct {
-	char *csVerifyInfo;
-	char *csChangeInfo;
-	char *csUnblockNoChangeInfo;
-	char *csUnblockChangeInfo;
-	char *csUnblockMergeNoChangeInfo;
-	char *csUnblockMergeChangeInfo;
-	char *csRfu1;                      /* NULL */
-	char *csRfu2;                      /* NULL */
-	char *csRfu3;                      /* NULL */
-	char *csRfu4;                      /* NULL */
-} tGuiInfo;
+	typedef struct
+	{
+		char *csVerifyInfo;
+		char *csChangeInfo;
+		char *csUnblockNoChangeInfo;
+		char *csUnblockChangeInfo;
+		char *csUnblockMergeNoChangeInfo;
+		char *csUnblockMergeChangeInfo;
+		char *csRfu1;	/* NULL */
+		char *csRfu2;	/* NULL */
+		char *csRfu3;	/* NULL */
+		char *csRfu4;	/* NULL */
+	} tGuiInfo;
 
-typedef long (*EIDMW_PP2_INIT)(unsigned char, SCARDCONTEXT, SCARDHANDLE,
-	const char *, unsigned long, tGuiInfo *, unsigned long, void *);
-typedef long (*EIDMW_PP2_COMMAND)(SCARDHANDLE, int, const unsigned char *,
-	DWORD, unsigned char *, DWORD, DWORD *, unsigned char,
-	unsigned char, unsigned long, void *);
+	typedef long (*EIDMW_PP2_INIT) (unsigned char, SCARDCONTEXT,
+					SCARDHANDLE, const char *,
+					unsigned long, tGuiInfo *,
+					unsigned long, void *);
+	typedef long (*EIDMW_PP2_COMMAND) (SCARDHANDLE, int,
+					   const unsigned char *, DWORD,
+					   unsigned char *, DWORD, DWORD *,
+					   unsigned char, unsigned char,
+					   unsigned long, void *);
 
 /**
  * This function is called after loading the pinpad library, it is used by the middleware
@@ -170,12 +178,12 @@ typedef long (*EIDMW_PP2_COMMAND)(SCARDHANDLE, int, const unsigned char *,
  * by the middleware for pinpad operation. Otherwise, the middleware will continue
  * searching for other pinpad libraries that may support this reader.
  */
-EIDMW_PP_API long EIDMW_PP2_Init(
-	unsigned char ucMinorVersion,
-	SCARDCONTEXT hCtx, SCARDHANDLE hCard, const char *csReader,
-	unsigned long ulLanguage,
-	tGuiInfo *pGuiInfo,
-	unsigned long ulRfu, void *pRfu);
+	EIDMW_PP_API long EIDMW_PP2_Init(unsigned char ucMinorVersion,
+					 SCARDCONTEXT hCtx, SCARDHANDLE hCard,
+					 const char *csReader,
+					 unsigned long ulLanguage,
+					 tGuiInfo * pGuiInfo,
+					 unsigned long ulRfu, void *pRfu);
 
 /**
  * This function is called for a "Get Feature Request" with control = CM_IOCTL_GET_FEATURE_REQUEST
@@ -203,12 +211,15 @@ EIDMW_PP_API long EIDMW_PP2_Init(
  *
  * Returns SC_ERROR_SUCCESS upon success, or another (preferably) PCSC error code otherwise.
  */
-EIDMW_PP_API long EIDMW_PP2_Command(
-	SCARDHANDLE hCard, int ioctl,
-	const unsigned char *pucSendbuf, DWORD dwSendlen,
-	unsigned char *pucRecvbuf, DWORD dwRrecvlen, DWORD *pdwRrecvlen,
-	unsigned char ucPintype, unsigned char ucOperation,
-	unsigned long ulRfu, void *pRfu);
+	EIDMW_PP_API long EIDMW_PP2_Command(SCARDHANDLE hCard, int ioctl,
+					    const unsigned char *pucSendbuf,
+					    DWORD dwSendlen,
+					    unsigned char *pucRecvbuf,
+					    DWORD dwRrecvlen,
+					    DWORD * pdwRrecvlen,
+					    unsigned char ucPintype,
+					    unsigned char ucOperation,
+					    unsigned long ulRfu, void *pRfu);
 
 
 /////////////////////////////////// CCID things ///////////////////////////////
@@ -230,22 +241,22 @@ EIDMW_PP_API long EIDMW_PP2_Command(
 #define CCID_CHANGE_DIRECT   0x07
 
 /* Big endian encoding to 2 bytes */
-inline void ToUchar2(unsigned long ulIn, unsigned char *pucOut2)
-{
-	pucOut2[0] = (unsigned char) (ulIn % 256);
-	pucOut2[1] = (unsigned char) (ulIn / 256);
-}
+	inline void ToUchar2(unsigned long ulIn, unsigned char *pucOut2)
+	{
+		pucOut2[0] = (unsigned char) (ulIn % 256);
+		pucOut2[1] = (unsigned char) (ulIn / 256);
+	}
 
 /* Big endian encoding to 4 bytes */
-inline void ToUchar4(unsigned long ulIn, unsigned char *pucOut4)
-{
-	pucOut4[0] = (unsigned char) (ulIn % 256);
-	ulIn /= 256;
-	pucOut4[1] = (unsigned char) (ulIn % 256);
-	ulIn /= 256;
-	pucOut4[2] = (unsigned char) (ulIn % 256);
-	pucOut4[3] = (unsigned char) (ulIn / 256);
-}
+	inline void ToUchar4(unsigned long ulIn, unsigned char *pucOut4)
+	{
+		pucOut4[0] = (unsigned char) (ulIn % 256);
+		ulIn /= 256;
+		pucOut4[1] = (unsigned char) (ulIn % 256);
+		ulIn /= 256;
+		pucOut4[2] = (unsigned char) (ulIn % 256);
+		pucOut4[3] = (unsigned char) (ulIn / 256);
+	}
 
 // The structs below need packing with 1-byte alignment
 #pragma pack(push, pinpad2, 1)
@@ -256,48 +267,48 @@ inline void ToUchar4(unsigned long ulIn, unsigned char *pucOut4)
  * Data to be sent during a PIN verification
  * (or unblock without PIN change).
  */
-typedef struct
-{
-	unsigned char bTimerOut;	// timeout in seconds (0: default timeout)
-	unsigned char bTimerOut2; // timeout in seconds after first key stroke
-	unsigned char bmFormatString; // formatting options
-	unsigned char bmPINBlockString; // length (in bytes) of the PIN block
-	unsigned char bmPINLengthFormat; // where (if needed) to put the PIN length
-	unsigned char wPINMaxExtraDigit[2]; // min and max number of PIN digits
-	unsigned char bEntryValidationCondition; // e.g. 0x02: "OK" button pressed
-	unsigned char bNumberMessage; // number of messages to display
-	unsigned char wLangId[2]; // LANG_ID code
-	unsigned char bMsgIndex; // Message index (should be 00)
-	unsigned char bTeoPrologue[3]; // T=1 block prologue field to use (fill with 00)
-	unsigned char ulDataLength[4]; // length of the following field
-	unsigned char abData[PP_APDU_MAX_LEN]; // APDU to send to the card (to be completed by the reader)
-} EIDMW_PP_VERIFY_CCID;
+	typedef struct
+	{
+		unsigned char bTimerOut;	// timeout in seconds (0: default timeout)
+		unsigned char bTimerOut2;	// timeout in seconds after first key stroke
+		unsigned char bmFormatString;	// formatting options
+		unsigned char bmPINBlockString;	// length (in bytes) of the PIN block
+		unsigned char bmPINLengthFormat;	// where (if needed) to put the PIN length
+		unsigned char wPINMaxExtraDigit[2];	// min and max number of PIN digits
+		unsigned char bEntryValidationCondition;	// e.g. 0x02: "OK" button pressed
+		unsigned char bNumberMessage;	// number of messages to display
+		unsigned char wLangId[2];	// LANG_ID code
+		unsigned char bMsgIndex;	// Message index (should be 00)
+		unsigned char bTeoPrologue[3];	// T=1 block prologue field to use (fill with 00)
+		unsigned char ulDataLength[4];	// length of the following field
+		unsigned char abData[PP_APDU_MAX_LEN];	// APDU to send to the card (to be completed by the reader)
+	} EIDMW_PP_VERIFY_CCID;
 
 /**
  * Data to be sent during a PIN change
  * (or unblock with PIN change).
  */
-typedef struct
-{
-	unsigned char bTimerOut;	// timeout is seconds (00 means use default timeout)
-	unsigned char bTimerOut2; // timeout in seconds after first key stroke
-	unsigned char bmFormatString; // formatting options
-	unsigned char bmPINBlockString; // length (in bytes) of the PIN block
-	unsigned char bmPINLengthFormat; // where (if needed) to put the PIN length
-	unsigned char bInsertionOffsetOld; //insertion position offset in bytes for the current PIN
-	unsigned char bInsertionOffsetNew; // insertion position offset in bytes for the new PIN
-	unsigned char wPINMaxExtraDigit[2]; // min and max number of PIN digits
-	unsigned char bConfirmPIN; // flags governing need for confirmation of new PIN
-	unsigned char bEntryValidationCondition; // e.g. 0x02: "OK" button pressed
-	unsigned char bNumberMessage; // number of messages to display
-	unsigned char wLangId[2]; // LANG_ID code to specify the language
-	unsigned char bMsgIndex1; // index of 1st prompting message
-	unsigned char bMsgIndex2; // index of 2d prompting message
-	unsigned char bMsgIndex3; // index of 3d prompting message
-	unsigned char bTeoPrologue[3]; // T=1 block prologue field to use (fill with 00)
-	unsigned char ulDataLength[4]; // length of the following field
-	unsigned char abData[PP_APDU_MAX_LEN]; // APDU to send to the card (to be completed by the reader)
-} EIDMW_PP_CHANGE_CCID;
+	typedef struct
+	{
+		unsigned char bTimerOut;	// timeout is seconds (00 means use default timeout)
+		unsigned char bTimerOut2;	// timeout in seconds after first key stroke
+		unsigned char bmFormatString;	// formatting options
+		unsigned char bmPINBlockString;	// length (in bytes) of the PIN block
+		unsigned char bmPINLengthFormat;	// where (if needed) to put the PIN length
+		unsigned char bInsertionOffsetOld;	//insertion position offset in bytes for the current PIN
+		unsigned char bInsertionOffsetNew;	// insertion position offset in bytes for the new PIN
+		unsigned char wPINMaxExtraDigit[2];	// min and max number of PIN digits
+		unsigned char bConfirmPIN;	// flags governing need for confirmation of new PIN
+		unsigned char bEntryValidationCondition;	// e.g. 0x02: "OK" button pressed
+		unsigned char bNumberMessage;	// number of messages to display
+		unsigned char wLangId[2];	// LANG_ID code to specify the language
+		unsigned char bMsgIndex1;	// index of 1st prompting message
+		unsigned char bMsgIndex2;	// index of 2d prompting message
+		unsigned char bMsgIndex3;	// index of 3d prompting message
+		unsigned char bTeoPrologue[3];	// T=1 block prologue field to use (fill with 00)
+		unsigned char ulDataLength[4];	// length of the following field
+		unsigned char abData[PP_APDU_MAX_LEN];	// APDU to send to the card (to be completed by the reader)
+	} EIDMW_PP_CHANGE_CCID;
 
 #pragma pack(pop, pinpad2)
 

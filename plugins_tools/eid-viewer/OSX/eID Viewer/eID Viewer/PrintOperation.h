@@ -9,11 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "AppDelegate.h"
 
-@interface PrintOperation : NSObject
-@property NSMutableDictionary* viewDict;
-@property NSView* view;
-@property NSArray* printableFields;
-@property AppDelegate* app;
--(instancetype)initWithView:(NSView*)view app:(AppDelegate*)app;
--(BOOL)runOperation;
+@ interface PrintOperation:NSObject @ property NSMutableDictionary *
+	viewDict;
+@property NSView * view;
+@property NSArray * printableFields;
+@property AppDelegate * app;
+-(instancetype) initWithView:(NSView *)
+     view app:(AppDelegate *) app;
+
+-(BOOL) runOperation;
 @end

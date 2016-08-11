@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,13 +18,16 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 #ifndef plugin_getcarddata_h
 #define plugin_getcarddata_h
-
+	
 #include "common.h"
+	CK_RV ReadTheCardData(void);
+CK_RV FindAndStore(CK_FUNCTION_LIST_PTR functions,
+		    CK_SESSION_HANDLE session_handle, const char *label,
+		    char **data_storage);
+CK_RV ConvertUtf8toAscii(char **data_storage);
 
-CK_RV ReadTheCardData(void);
-CK_RV FindAndStore(CK_FUNCTION_LIST_PTR functions, CK_SESSION_HANDLE session_handle, const char* label, char** data_storage);
-CK_RV ConvertUtf8toAscii(char** data_storage);
-
-#endif
+ 
+#endif /*  */

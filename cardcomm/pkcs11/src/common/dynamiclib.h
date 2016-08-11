@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,6 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 /**
  * Platform-independent loading of dynamic libraries
  * (.DLL on Windows, .so on Linux, .dylib or .so on Mac OS X).
@@ -33,31 +35,33 @@
 namespace eIDMW
 {
 
-class EIDMW_CMN_API CDynamicLib
-{
+	class EIDMW_CMN_API CDynamicLib
+	{
 public:
-	CDynamicLib();
-	~CDynamicLib();
+		CDynamicLib();
+		~CDynamicLib();
 
 	/** Load the dynamic lib called 'csLibPath' */
-	unsigned long Open(const std::string & csLibPath);
+		unsigned long Open(const std::string & csLibPath);
+
 	/** Get a pointer to function 'csFuntionName' in the currently loaded lib */
-	void * GetAddress(const std::string & csFunctionName);
+		void *GetAddress(const std::string & csFunctionName);
+
 	/** Un-load the currently loaded lib (if one is loaded) */
-	void Close();
+		void Close();
 
 private:
-    // No copies allowed
-    CDynamicLib(const CDynamicLib & oDynLib);
-    CDynamicLib & operator = (const CDynamicLib & oDynLib);
+		// No copies allowed
+		     CDynamicLib(const CDynamicLib & oDynLib);
+		      CDynamicLib & operator =(const CDynamicLib & oDynLib);
 
-	// Platform-dependent implementations
-	unsigned long PlatformOpen(const char * csLibPath);
-	void * PlatformGetAddress(const char * csFunctionName);
-	void PlatformClose();
+		// Platform-dependent implementations
+		unsigned long PlatformOpen(const char *csLibPath);
+		void *PlatformGetAddress(const char *csFunctionName);
+		void PlatformClose();
 
-	void *m_module;
-};
+		void *m_module;
+	};
 
 }
 

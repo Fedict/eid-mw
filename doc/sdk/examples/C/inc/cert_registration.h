@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,21 +18,27 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 #ifndef cert_registration_h
 #define cert_registration_h
-
+	
 #ifdef WIN32
 #include <windows.h>
 #include <stdio.h>
 #include "base.h"
+	DWORD CheckCertificateExist(char *pCardSerialNumber,
+				     BOOL * pbSignatureContainerFound,
+				     BOOL * pbAuthenticationContainerFound);
+DWORD ImportCertificate(BYTE * certData, DWORD certSize,
+			 CK_BYTE * cardSerialNumber,
+			 CK_ULONG SerialNumberValueLen);
 
-DWORD CheckCertificateExist(char * pCardSerialNumber, BOOL* pbSignatureContainerFound, BOOL* pbAuthenticationContainerFound);
-DWORD ImportCertificate(BYTE* certData, DWORD certSize, CK_BYTE* cardSerialNumber, CK_ULONG SerialNumberValueLen);
-#else
+#else /*  */
+
 /* These try to store a certificate in the certificate store, which is a
- * Windows-specific thing. Ignore on non-Windows. */
+ * Windows-specific thing. Ignore on non-Windows. */ 
 #define ImportCertificate(...) do {} while(0)
 #define CheckCertificateExist(...) do{} while(0)
-#endif
-
-#endif
+#endif /*  */
+	
+#endif /*  */

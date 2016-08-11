@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -23,7 +24,7 @@
 
 using namespace eIDMW;
 
-class dlgWndAskPINs : public Win32Dialog
+class dlgWndAskPINs:public Win32Dialog
 {
 	void GetPinResult();
 	bool CheckPin2Result();
@@ -44,18 +45,19 @@ class dlgWndAskPINs : public Win32Dialog
 	unsigned int m_ulPin1MaxLen;
 	unsigned int m_ulPin2MinLen;
 	unsigned int m_ulPin2MaxLen;
-	const wchar_t * szHeader;
-	const wchar_t * szPIN;
+	const wchar_t *szHeader;
+	const wchar_t *szPIN;
 
 public:
-	dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wstring & Header, std::wstring & PINName, bool UseKeypad, HWND Parent = NULL );
-	virtual ~dlgWndAskPINs();
+	        dlgWndAskPINs(DlgPinInfo pinInfo1, DlgPinInfo pinInfo2,
+			      std::wstring & Header, std::wstring & PINName,
+			      bool UseKeypad, HWND Parent = NULL);
+	        virtual ~ dlgWndAskPINs();
 
 	wchar_t Pin1Result[128];
 	wchar_t Pin2Result[128];
 
-	virtual LRESULT ProcecEvent
-				(	UINT		uMsg,			// Message For This Window
-					WPARAM		wParam,			// Additional Message Information
-					LPARAM		lParam );		// Additional Message Information
+	virtual LRESULT ProcecEvent(UINT uMsg,	// Message For This Window
+				    WPARAM wParam,	// Additional Message Information
+				    LPARAM lParam);	// Additional Message Information
 };

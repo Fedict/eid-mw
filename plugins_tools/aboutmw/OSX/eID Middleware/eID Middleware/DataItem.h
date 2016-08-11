@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -19,10 +20,10 @@
 **************************************************************************** */
 
 #import <Foundation/Foundation.h>
-@import AppKit;
+@ import AppKit;
 
-@interface DataItem : NSObject<NSPasteboardWriting>
-@property NSString *title;
-@property NSString *value;
--(NSString*) description;
+@interface DataItem:NSObject < NSPasteboardWriting >
+	@property NSString * title;
+@property NSString * value;
+-(NSString *) description;
 @end

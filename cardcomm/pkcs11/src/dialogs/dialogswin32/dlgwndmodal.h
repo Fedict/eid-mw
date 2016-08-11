@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,30 +18,24 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-
+ 
 #include "stdafx.h"
 #include "../dialogs.h"
-
-using namespace eIDMW;
-
-class dlgWndModal : public Win32Dialog
+	using namespace eIDMW;
+ class dlgWndModal:public Win32Dialog 
 {
-	HBITMAP ImageICO;
-	HBITMAP ImageICO_Mask;
-	HFONT TextFont;
-	
-	wchar_t * szHeader;
-
-	unsigned char m_ulEnterButton;
-	unsigned char m_ulCancelButton;
-
-public:
-	dlgWndModal( DlgIcon icon, const std::wstring & Msg, const std::wstring & Title, unsigned char ulButtons, 
-		unsigned char ulEnterButton, unsigned char ulCancelButton, HWND Parent = NULL );
-	virtual ~dlgWndModal();
-
-	virtual LRESULT ProcecEvent
-				(	UINT		uMsg,			// Message For This Window
-					WPARAM		wParam,			// Additional Message Information
-					LPARAM		lParam );		// Additional Message Information
+	HBITMAP ImageICO;
+	HBITMAP ImageICO_Mask;
+	HFONT TextFont;
+	 wchar_t * szHeader;
+	 unsigned char m_ulEnterButton;
+	unsigned char m_ulCancelButton;
+ public:dlgWndModal(DlgIcon icon, const std::wstring & Msg,
+		     const std::wstring & Title, unsigned char ulButtons,
+		     unsigned char ulEnterButton,
+		     unsigned char ulCancelButton, HWND Parent = NULL);
+	virtual ~ dlgWndModal();
+	 virtual LRESULT ProcecEvent  (UINT uMsg,	// Message For This Window
+					  WPARAM wParam,	// Additional Message Information
+					  LPARAM lParam);	// Additional Message Information
 };

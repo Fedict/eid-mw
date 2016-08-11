@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -21,4 +22,6 @@
 
 using namespace eIDMW;
 
-CP15Correction::~CP15Correction(){}
+CP15Correction::~CP15Correction()
+{
+}

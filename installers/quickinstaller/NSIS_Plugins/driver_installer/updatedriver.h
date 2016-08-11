@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,20 +18,22 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 #ifndef __UPDATEDRIVER__
 #define __UPDATEDRIVER__
-
-
+	 
 #ifndef _WIN32_WINNT		// Allow use of features specific to Windows XP or later.                   
 #define _WIN32_WINNT 0x0500	// Change this to the appropriate value to target other versions of Windows.
-#endif	
+#endif /*  */
 #include <windows.h>
-
+	
 #define _SETUP_APIVER 0x0500
 #include <SetupApi.h>
 #include <newdev.h>
 #include <cfgmgr32.h>
+typedef DWORD(WINAPI * CMP_WAITNOPENDINGINSTALLEVENTS_PROC) (DWORD time_out);
+BOOL eIDUpdateDriver(HWND hwndParent, char *hardwareID, char *infFilePath,
+		      DWORD flags, BOOL * bootRequired,
+		      DWORD * pLastErrorCode);
 
-typedef DWORD (WINAPI *CMP_WAITNOPENDINGINSTALLEVENTS_PROC)(DWORD time_out); 
-BOOL eIDUpdateDriver(HWND hwndParent, char* hardwareID, char* infFilePath, DWORD flags, BOOL* bootRequired,DWORD* pLastErrorCode);
-#endif __UPDATEDRIVER__
+#endif /* __UPDATEDRIVER__ */

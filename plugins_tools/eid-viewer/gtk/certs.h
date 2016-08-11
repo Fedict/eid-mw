@@ -4,12 +4,12 @@
 #include <gtk/gtk.h>
 #include <eid-viewer/certhelpers.h>
 
-void add_certificate(char* label, void* data, int len);
+void add_certificate(char *label, void *data, int len);
 void clear_certdata();
 void certs_init();
-GtkTreeModel* certificates_get_model();
-void certexport(GtkMenuItem* mi, gpointer user_data);
-void certdetail(GtkMenuItem* mi, gpointer user_data);
+GtkTreeModel *certificates_get_model();
+void certexport(GtkMenuItem * mi, gpointer user_data);
+void certdetail(GtkMenuItem * mi, gpointer user_data);
 void validate_all(gpointer event_source, gpointer user_data);
 
 #endif

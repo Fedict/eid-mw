@@ -3,9 +3,10 @@
 
 #include "convworker.h"
 
-class NationalNumberConvertor : public ConversionWorker {
+class NationalNumberConvertor:public ConversionWorker
+{
 public:
-	virtual EID_STRING convert(const void* normal);
+	virtual EID_STRING convert(const void *normal);
 };
 
 #endif
