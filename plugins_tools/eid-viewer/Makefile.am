@@ -76,6 +76,7 @@ libeidviewer_la_SOURCES = \
 	conversions/xmlspecconv.cpp \
 	conversions.h \
 	cppeidstring.h \
+	dataverify.h \
 	state.c \
 	state.h \
 	state-posix.c \
