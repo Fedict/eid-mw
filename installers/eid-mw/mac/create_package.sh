@@ -45,7 +45,7 @@ ROOT_VIEWER_DIR="$RELEASE_VIEWER_DIR/root"
 EIDVIEWER_INST_DIR="$ROOT_VIEWER_DIR/Applications"
 
 #eIDViewer path
-EIDVIEWER_PATH="$(pwd)/../../../../ThirdParty/eid-viewer/eID Viewer.app"
+EIDVIEWER_PATH="$(pwd)/../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Release/eID Viewer.app"
 
 #eIDViewer.plist path
 EIDVIEWER_PLIST_PATH="$(pwd)/eidviewer.plist"

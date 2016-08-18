@@ -25,7 +25,7 @@ hdiutil attach "./eID-QuickInstaller-uncompressed.dmg"
 ###cp ./DS_Store_test "/Volumes/eID-QuickInstaller/.DS_Store"
 #remove stubs, then copy the build apps
 #rm -R "/Volumes/eID-QuickInstaller/eID Viewer.app"
-cp -R "../../../plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer.app" /Volumes/eID-QuickInstaller/
+cp -R "../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Release/eID Viewer.app" /Volumes/eID-QuickInstaller/
 #rm -R "/Volumes/eID-QuickInstaller/eID Middleware.app"
 cp -R "../../../plugins_tools/aboutmw/OSX/eID Middleware/eID Middleware.app" /Volumes/eID-QuickInstaller/
 cp -R "./DMG/Applications" "/Volumes/eID-QuickInstaller"
