@@ -98,12 +98,13 @@ void be_log(enum eid_vwr_loglevel l, const EID_CHAR* string, ...) {
 		do {
 			va_start(ap, string);
 			strnewsize = EID_VSNPRINTF(str, strsize, string, ap);
+			va_end(ap);
 			strsize = strnewsize +1;
 			str = (EID_CHAR*)realloc(str, strsize * sizeof(EID_CHAR));
 			if(!str) { 
-				va_end(ap);
 				return;
-			}		
+			}
+			va_start(ap, string);
 			strnewsize = EID_VSNPRINTF(str, strsize, string, ap);
 			va_end(ap);
 		} while (strnewsize >= strsize);
