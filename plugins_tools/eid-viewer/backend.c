@@ -94,7 +94,11 @@ void be_log(enum eid_vwr_loglevel l, const EID_CHAR* string, ...) {
 	size_t strsize = 0;
 	size_t strnewsize = 0;
 	if(!cb) return;
-	if(cb->log) {
+	if(cb->logv) {
+		va_start(ap, string);
+		cb->logv(l, string, ap);
+		va_end(ap);
+	} else if(cb->log) {
 		do {
 			va_start(ap, string);
 			strnewsize = EID_VSNPRINTF(str, strsize, string, ap);
@@ -110,10 +114,6 @@ void be_log(enum eid_vwr_loglevel l, const EID_CHAR* string, ...) {
 		} while (strnewsize >= strsize);
 		cb->log(l, str);
 		free(str);
-	} else if(cb->logv) {
-		va_start(ap, string);
-		cb->logv(l, string, ap);
-		va_end(ap);
 	}
 }
 
