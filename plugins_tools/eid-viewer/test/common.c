@@ -48,7 +48,7 @@ static void dolog(enum eid_vwr_loglevel lvl, const EID_CHAR* line) {
 			printf("error");
 			break;
 	}
-	printf("; line: %s", line);
+	printf("; line: %s\n", line);
 }
 
 struct eid_vwr_ui_callbacks* createcbs() {
