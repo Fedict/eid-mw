@@ -7,7 +7,7 @@ check_PROGRAMS = $(TESTS)
 CLEANFILES=foto.jpg
 
 COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la libtestlib.la
-noinst_LIBRARIES = libtestlib.la
+noinst_LTLIBRARIES = libtestlib.la
 libtestlib_la_SOURCES = testlib.h testlib.c
 
 AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util
