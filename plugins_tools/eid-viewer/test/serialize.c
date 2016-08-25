@@ -5,8 +5,6 @@
 
 TEST_FUNC(serialize) {
 	struct eid_vwr_ui_callbacks* cb;
-	void* data;
-	int len;
 
 	if(!have_robot()) {
 		printf("Need a robot\n");
