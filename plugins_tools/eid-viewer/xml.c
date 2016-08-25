@@ -7,6 +7,7 @@
 
 #include <string.h>
 #include "p11.h"
+#include "conversions.h"
 
 #include <libxml/encoding.h>
 #include <libxml/xmlwriter.h>
