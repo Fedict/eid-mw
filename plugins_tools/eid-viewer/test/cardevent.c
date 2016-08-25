@@ -1,7 +1,8 @@
 #include <unix.h>
 #include <pkcs11.h>
 #include <testlib.h>
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
+#include <eid-viewer/macros.h>
 #include <stdlib.h>
 #include "common.h"
 

@@ -1,7 +1,7 @@
 #include <unix.h>
 #include <pkcs11.h>
 #include <testlib.h>
-#include "oslayer.h"
+#include <eid-viewer/oslayer.h>
 #include <stdlib.h>
 
 enum eid_vwr_source cursrc;
@@ -24,15 +24,15 @@ static void newsrc(enum eid_vwr_source src) {
 	}
 }
 
-static void newstringdata(char* label, char* data) {
+static void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
 	printf("Found string data\nLabel:\t%s\nData:\t%s\n", label, data);
 }
 
-static void newbindata(char* label, void* data, int datalen) {
+static void newbindata(const EID_CHAR* label, const unsigned char* data, int datalen) {
 	printf("Found binary data\nLabel:\t%s\nLength:\t%d\n", label, datalen);
 }
 
-static void dolog(enum eid_vwr_loglevel lvl, char* line) {
+static void dolog(enum eid_vwr_loglevel lvl, const EID_CHAR* line) {
 	printf("Log message; level: ");
 	switch(lvl) {
 		case EID_VWR_LOG_DETAIL:
@@ -43,6 +43,9 @@ static void dolog(enum eid_vwr_loglevel lvl, char* line) {
 			break;
 		case EID_VWR_LOG_COARSE:
 			printf("coarse");
+			break;
+		case EID_VWR_LOG_ERROR:
+			printf("error");
 			break;
 	}
 	printf("; line: %s", line);
