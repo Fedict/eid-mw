@@ -1,6 +1,6 @@
 #include "doctypeconv.h"
 #include "cppeidstring.h"
-#include "utftranslate.h"
+#include <eid-viewer/utftranslate.h>
 
 #include <sstream>
 

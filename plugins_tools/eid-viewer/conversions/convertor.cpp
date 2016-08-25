@@ -12,7 +12,7 @@
 #include "valdate.h"
 #include "hexdecode.h"
 #include "genderconv.h"
-#include "utftranslate.h"
+#include <eid-viewer/utftranslate.h>
 #include "cppeidstring.h"
 
 #include <map>

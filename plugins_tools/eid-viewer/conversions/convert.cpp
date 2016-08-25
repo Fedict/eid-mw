@@ -3,7 +3,7 @@
 #include "convworker.h"
 #include "cache.h"
 #include "backend.h"
-#include "utftranslate.h"
+#include <eid-viewer/utftranslate.h>
 
 #include <cstring>
 #include <map>

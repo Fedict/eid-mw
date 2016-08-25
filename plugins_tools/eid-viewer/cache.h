@@ -1,7 +1,7 @@
 #ifndef EID_VWR_CACHE_H
 #define EID_VWR_CACHE_H
 
-#include "utftranslate.h"
+#include <eid-viewer/utftranslate.h>
 
 #ifdef __cplusplus
 extern "C"

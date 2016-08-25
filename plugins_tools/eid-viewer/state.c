@@ -5,7 +5,7 @@
 #include "dataverify.h"
 #include "cache.h"
 #include <stdlib.h>
-#include "utftranslate.h"
+#include <eid-viewer/utftranslate.h>
 
 /* Returns a string representation of the state name */
 static const EID_CHAR* state_to_name(enum eid_vwr_states state) {

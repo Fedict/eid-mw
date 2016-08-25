@@ -12,13 +12,13 @@
 #include <pkcs11.h>
 
 #include <eid-viewer/oslayer.h>
+#include <eid-viewer/utftranslate.h>
 #include "backend.h"
 #include "labels.h"
 #include "cache.h"
 #include "conversions.h"
 #include "state.h"
 #include "p11.h"
-#include "utftranslate.h"
 
 
 

@@ -1,6 +1,6 @@
 #include "cache.h"
 #include "conversions.h"
-#include "utftranslate.h"
+#include <eid-viewer/utftranslate.h>
 #include "cppeidstring.h"
 #include <map>
 #include <string>

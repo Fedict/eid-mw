@@ -6,7 +6,7 @@ extern "C"
 {
 #endif
 
-#include "utftranslate.h"
+#include <eid-viewer/utftranslate.h>
 #include <eid-viewer/oslayer.h>
 
 #ifdef WIN32
