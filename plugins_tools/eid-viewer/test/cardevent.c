@@ -15,6 +15,10 @@ TEST_FUNC(cardevent) {
 		printf("Cannot do card event tests without a card...\n");
 		return TEST_RV_SKIP;
 	}
+	if(!can_confirm()) {
+		printf("Cannot do eID viewer tests without confirmation dialogs...\n");
+		return TEST_RV_SKIP;
+	}
 	robot_remove_card();
 	cb = createcbs();
 	verbose_assert(cb != NULL);
