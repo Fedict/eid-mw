@@ -12,7 +12,6 @@
 #ifndef EID_VWR_OSLAYER_H
 #define EID_VWR_OSLAYER_H
 
-#include <conversions.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <eid-viewer/utftranslate.h>

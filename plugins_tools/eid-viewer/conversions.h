@@ -9,12 +9,6 @@ extern "C"
 #include <eid-viewer/utftranslate.h>
 #include <eid-viewer/oslayer.h>
 
-#ifdef WIN32
-#define SLEEP(x) Sleep(x*1000)
-#else
-#define SLEEP(x) sleep(x)
-#endif
-
 	EID_CHAR *converted_string(const EID_CHAR * label,
 				   const EID_CHAR * normal);
 	EID_CHAR *convert_to_xml(const EID_CHAR * label,

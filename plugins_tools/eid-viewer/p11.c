@@ -9,6 +9,7 @@
 #include <backend.h>
 #include <state.h>
 #include "labels.h"
+#include "conversions.h"
 #include <cache.h>
 #include <string.h>
 
