@@ -106,7 +106,7 @@ eid_viewer_LDADD = @GTK_LIBS@ @GIO_LIBS@ @SSL_LIBS@ @XML2_LIBS@ @CURL_LIBS@ @lib
 libeidviewer_la_LIBADD = $(top_builddir)/plugins_tools/util/liblabels.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la @SSL_LIBS@ @XML2_LIBS@
 AM_CFLAGS = @GTK_CFLAGS@ -I. -I$(srcdir)/include -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@ -fvisibility=hidden
 AM_CXXFLAGS = $(AM_CFLAGS)
-SUBDIRS = gtk/po test
+SUBDIRS = . gtk/po test
 
 resources/%.c: resources/%.png
 	echo -e "#include <gdk-pixbuf/gdk-pixdata.h>\n#if __GNUC__ >= 4\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wpointer-sign\"\n#endif\n" > $@
