@@ -26,8 +26,8 @@ TEST_FUNC(cardevent) {
 	SLEEP(1);
 	verbose_assert(cursrc == EID_VWR_SRC_NONE);
 	robot_insert_card();
-	printf("Card inserted, waiting 10 seconds for card event...\n");
-	for(i=0; i<10; i++) {
+	printf("Card inserted, waiting 20 seconds for card event...\n");
+	for(i=0; i<20; i++) {
 		SLEEP(1);
 		if(cursrc != EID_VWR_SRC_NONE) {
 			i+=10;
