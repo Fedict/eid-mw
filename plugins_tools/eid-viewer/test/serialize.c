@@ -1,6 +1,7 @@
 #include <unix.h>
 #include <pkcs11.h>
 #include <testlib.h>
+#include "common.h"
 #include <eid-viewer/oslayer.h>
 
 TEST_FUNC(serialize) {
