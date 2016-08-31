@@ -1454,6 +1454,7 @@
 				HEADER_SEARCH_PATHS = (
 					/System/Library/Frameworks/PCSC.framework/Headers,
 					doc/sdk/include/rsaref220,
+					plugins_tools/util,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1493,6 +1494,7 @@
 				HEADER_SEARCH_PATHS = (
 					/System/Library/Frameworks/PCSC.framework/Headers,
 					doc/sdk/include/rsaref220,
+					plugins_tools/util,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
