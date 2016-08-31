@@ -13,8 +13,8 @@
 
 #include <eid-viewer/oslayer.h>
 #include <eid-util/utftranslate.h>
+#include <eid-util/labels.h>
 #include "backend.h"
-#include "labels.h"
 #include "cache.h"
 #include "conversions.h"
 #include "state.h"

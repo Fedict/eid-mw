@@ -29,7 +29,7 @@
 #include <string.h>
 
 #include <eid-util/utftranslate.h>
-#include "labels.h"
+#include <eid-util/labels.h>
 
 #include "testlib.h"
 

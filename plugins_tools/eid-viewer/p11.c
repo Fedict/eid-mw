@@ -8,7 +8,7 @@
 #include <pkcs11.h>
 #include <backend.h>
 #include <state.h>
-#include "labels.h"
+#include <eid-util/labels.h>
 #include "conversions.h"
 #include <cache.h>
 #include <string.h>
