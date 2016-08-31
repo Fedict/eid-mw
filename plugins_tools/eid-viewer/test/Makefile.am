@@ -9,6 +9,7 @@ cardevent_SOURCES = cardevent.c $(COMMON_SRCS)
 cardevent_LDADD = $(COMMON_LIB)
 
 deserialize_SOURCES = deserialize.c $(COMMON_SRCS)
+deserialize_CPPFLAGS = -DSRCDIR='"$(srcdir)"'
 deserialize_LDADD = $(COMMON_LIB)
 
 serialize_SOURCES = serialize.c $(COMMON_SRCS)
