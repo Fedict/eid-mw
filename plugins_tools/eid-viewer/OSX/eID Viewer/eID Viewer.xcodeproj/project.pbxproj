@@ -57,6 +57,7 @@
 		65BD08761CECB43D000A30E4 /* verify_cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 65BD084C1CECAB6B000A30E4 /* verify_cert.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65BE1C791BB573C4002E8061 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C781BB573C4002E8061 /* libxml2.a */; };
 		65CEFFFD1CEB490000642B63 /* ReaderMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CEFFFC1CEB490000642B63 /* ReaderMenuItem.m */; };
+		65D80EE11D771C010081F649 /* utftranslate.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D80EE01D771C010081F649 /* utftranslate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65DD2E941D006B3F0005EC86 /* trustdirname.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DD2E931D006B3F0005EC86 /* trustdirname.m */; };
 		65EABAE71C621EE900034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAE31C621E3D00034337 /* labels.c */; };
 		8B195DE51BB3F62900777CC5 /* ResizablePrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B195DE41BB3F62900777CC5 /* ResizablePrintView.m */; };
@@ -202,11 +203,11 @@
 		65C96B8C1D1169480018211E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		65CEFFFB1CEB490000642B63 /* ReaderMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderMenuItem.h; sourceTree = "<group>"; };
 		65CEFFFC1CEB490000642B63 /* ReaderMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderMenuItem.m; sourceTree = "<group>"; };
+		65D80EE01D771C010081F649 /* utftranslate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = "../../../util/eid-util/utftranslate.h"; sourceTree = "<group>"; };
 		65DD2E931D006B3F0005EC86 /* trustdirname.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = trustdirname.m; sourceTree = "<group>"; };
 		65DD2E951D006B530005EC86 /* trustdirname.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = trustdirname.h; sourceTree = "<group>"; };
 		65EABAE31C621E3D00034337 /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = ../../../../util/labels.c; sourceTree = "<group>"; };
 		65EABAE41C621E3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = ../../../../util/labels.h; sourceTree = "<group>"; };
-		65EABAE51C621E3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = ../../../../util/utftranslate.h; sourceTree = "<group>"; };
 		8B195DE31BB3F62900777CC5 /* ResizablePrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizablePrintView.h; sourceTree = "<group>"; };
 		8B195DE41BB3F62900777CC5 /* ResizablePrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizablePrintView.m; sourceTree = "<group>"; };
 		8B3DD9711B03907500E0537B /* coat_of_arms_de.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_de.jpg; path = ../../../resources/coat_of_arms_de.jpg; sourceTree = "<group>"; };
@@ -259,6 +260,7 @@
 		659FFC331AE9360D004CEC1F = {
 			isa = PBXGroup;
 			children = (
+				65D80EE01D771C010081F649 /* utftranslate.h */,
 				651130951CD8DD3F0076682F /* libcrypto.a */,
 				65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.10.dylib */,
 				653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */,
@@ -381,7 +383,6 @@
 				659FFCAB1AE93B3D004CEC1F /* state-posix.c */,
 				659FFCAC1AE93B3D004CEC1F /* state.c */,
 				659FFCAD1AE93B3D004CEC1F /* state.h */,
-				65EABAE51C621E3D00034337 /* utftranslate.h */,
 				659FFCB01AE93B4B004CEC1F /* xml.c */,
 				8BBDE3271B3C063100CBE13E /* preview.c */,
 				652BC8AF1AEA441400DA9519 /* xsdloc.h */,
@@ -434,6 +435,7 @@
 				65BD08751CECB43D000A30E4 /* oslayer.h in Headers */,
 				65BD08761CECB43D000A30E4 /* verify_cert.h in Headers */,
 				65BD08711CECB414000A30E4 /* oslayer-objc.h in Headers */,
+				65D80EE11D771C010081F649 /* utftranslate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,6 +753,7 @@
 					"\"${PROJECT_DIR}/../support/xml/libxml2/include\"",
 					"\"${PROJECT_DIR}/../support/ossl/openssl/include\"",
 					"\"${PROJECT_DIR}/../../include\"",
+					"\"${PROJECT_DIR}/../../../util\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -797,6 +800,7 @@
 					"\"${PROJECT_DIR}/../support/xml/libxml2/include\"",
 					"\"${PROJECT_DIR}/../support/ossl/openssl/include\"",
 					"\"${PROJECT_DIR}/../../include\"",
+					"\"${PROJECT_DIR}/../../../util\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
