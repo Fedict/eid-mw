@@ -169,6 +169,7 @@ fi
 %{_libdir}/pkgconfig/
 %{_includedir}/beid/
 %{_includedir}/eid-viewer/
+%(_includedir}/eid-util/
 
 %files -n eid-viewer
 %defattr(-,root,root,0755)
