@@ -4,7 +4,7 @@
 #include <string>
 #include <conversions.h>
 #include <cstring>
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 #include "cppeidstring.h"
 
 class ConversionWorker

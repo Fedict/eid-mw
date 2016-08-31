@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 #include "labels.h"
 
 #include "testlib.h"

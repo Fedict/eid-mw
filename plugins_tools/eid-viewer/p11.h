@@ -7,7 +7,7 @@
 #include <unix.h>
 #endif
 #include <pkcs11t.h>
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 
 #define EIDV_RV_OK 0
 #define EIDV_RV_FAIL -1

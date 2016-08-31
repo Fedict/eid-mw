@@ -1,7 +1,7 @@
 #ifndef EID_VWR_XMLMAP_H
 #define EID_VWR_XMLMAP_H
 
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 
 #ifdef __cplusplus
 extern "C"

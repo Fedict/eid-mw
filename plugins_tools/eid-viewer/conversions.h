@@ -6,7 +6,7 @@ extern "C"
 {
 #endif
 
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 #include <eid-viewer/oslayer.h>
 
 	EID_CHAR *converted_string(const EID_CHAR * label,

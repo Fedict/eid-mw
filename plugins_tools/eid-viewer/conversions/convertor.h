@@ -2,7 +2,7 @@
 #define EID_VWR_CONVERTOR_H
 
 #include <conversions.h>
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 #include "cppeidstring.h"
 #include <map>
 #include <string>

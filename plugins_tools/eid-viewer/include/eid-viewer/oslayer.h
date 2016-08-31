@@ -14,7 +14,7 @@
 
 #include <stdlib.h>
 #include <stdarg.h>
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 #include <eid-viewer/macros.h>
 
 typedef struct _slotdesc slotdesc;

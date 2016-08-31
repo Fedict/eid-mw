@@ -3,7 +3,7 @@
 #define CPPEIDSTRING_H
 #include <stdio.h>
 #include <string>
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 
 #ifndef WIN32
 typedef std::string EID_STRING;

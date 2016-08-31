@@ -12,7 +12,7 @@
 #include <pkcs11.h>
 
 #include <eid-viewer/oslayer.h>
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 #include "backend.h"
 #include "labels.h"
 #include "cache.h"
