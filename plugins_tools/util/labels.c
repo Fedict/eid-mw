@@ -26,7 +26,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <eid-viewer/utftranslate.h>
+#include <eid-util/utftranslate.h>
 
 #define ADD_LABEL(l, is_string) if(!EID_STRCMP(label, l)) return is_string
 
