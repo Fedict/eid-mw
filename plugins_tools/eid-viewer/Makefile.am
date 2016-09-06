@@ -142,7 +142,6 @@ icon_DATA = gtk/eid-viewer.png
 
 dist_packagedata_DATA = eidv4.xsd
 dist_trust_DATA = \
-	certs/belgiumrca.pem \
 	certs/belgiumrca2.pem \
 	certs/belgiumrca3.pem \
 	certs/belgiumrca4.pem
