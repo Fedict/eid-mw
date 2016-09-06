@@ -2,3 +2,4 @@ usr/bin/eid-viewer
 usr/share/locale/*/LC_MESSAGES/eid-viewer.mo
 usr/share/applications/eid-viewer.desktop
 usr/share/eid-mw
+usr/share/glib-2.0/schemas/eid-viewer.gschema.xml
