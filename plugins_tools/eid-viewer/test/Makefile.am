@@ -1,4 +1,4 @@
-TESTS = cardevent deserialize serialize init
+TESTS = cardevent deserialize serialize init pinop
 check_PROGRAMS = $(TESTS)
 
 export EID_XSDLOC = $(srcdir)/../eidv4.xsd
@@ -19,3 +19,6 @@ serialize_LDADD = $(COMMON_LIB)
 
 init_SOURCES = init.c $(COMMON_SRCS)
 init_LDADD = $(COMMON_LIB)
+
+pinop_SOURCES = pinop.c $(COMMON_SRCS)
+pinop_LDADD = $(COMMON_LIB)
