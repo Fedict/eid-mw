@@ -204,21 +204,26 @@ CK_BBOOL can_enter_pin(CK_SLOT_ID slot) {
 	CK_SESSION_INFO info;
 	CK_BBOOL retval = CK_TRUE;
 
-	if(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session) != CKR_OK) {
-		printf("Could not open a session\n");
+	if(!have_pin()) {
 		return CK_FALSE;
 	}
-	if(C_GetSessionInfo(session, &info) != CKR_OK) {
-		printf("Could not request session info\n");
-		return CK_FALSE;
-	}
-	if(info.flags & CKF_PROTECTED_AUTHENTICATION_PATH) {
-		if(have_robot() && !is_manual_robot()) {
+	if(have_robot() && !is_manual_robot()) {
+		if(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session) != CKR_OK) {
+			printf("Could not open a session\n");
+			return CK_FALSE;
+		}
+		if(C_GetSessionInfo(session, &info) != CKR_OK) {
+			printf("Could not request session info\n");
+			retval = CK_FALSE;
+		}
+		if(info.flags & CKF_PROTECTED_AUTHENTICATION_PATH) {
 			fprintf(stderr, "E: robot cannot enter a pin code on a protected auth path SC reader\n");
 			retval = CK_FALSE;
 		}
+		C_CloseSession(session);
+	} else {
+		retval = CK_TRUE;
 	}
-	C_CloseSession(session);
 	return retval;
 }
 
