@@ -134,12 +134,16 @@ p11kitcfdir=""
 PKG_CHECK_MODULES(p11kit, "p11-kit-1", [HAVE_P11KIT=1], [HAVE_P11KIT=0])
 if test "$HAVE_P11KIT" = 1
 then
-	PKG_CHECK_VAR([p11kit_libdir], "p11-kit-1", "libdir",, [HAVE_P11_KIT=0])
-	PKG_CHECK_VAR([p11kit_datarootdir], "p11-kit-1", "datarootdir",, [HAVE_P11_KIT=0])
 	PKG_CHECK_VAR([p11kitsodir], "p11-kit-1", "p11_module_path",, [HAVE_P11KIT=0])
-	p11kitsodir=$(echo $p11kitsodir|sed -e "s,$p11kit_libdir,\${libdir},g")
+	PKG_CHECK_VAR([p11kit_libdir], "p11-kit-1", "libdir",, [HAVE_P11_KIT=0])
+	if test -z "$ac_cv_env_p11kitsodir_set"; then
+		p11kitsodir=$(echo $p11kitsodir|sed -e "s,$p11kit_libdir,\${libdir},g")
+	fi
 	PKG_CHECK_VAR([p11kitcfdir], "p11-kit-1", "p11_system_config_modules",, [HAVE_P11KIT=0])
-	p11kitcfdir=$(echo $p11kitcfdir|sed -e "s,$p11kit_datarootdir,\${datarootdir},g")
+	PKG_CHECK_VAR([p11kit_datarootdir], "p11-kit-1", "datarootdir",, [HAVE_P11_KIT=0])
+	if test -z "$ac_cv_env_p11kitcfdir_set"; then
+		p11kitcfdir=$(echo $p11kitcfdir|sed -e "s,$p11kit_datarootdir,\${datarootdir},g")
+	fi
 fi
 AM_CONDITIONAL([P11KIT], [test "$HAVE_P11KIT" = 1])
 
