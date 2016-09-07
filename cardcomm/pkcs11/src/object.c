@@ -113,9 +113,7 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-		return ret;
+	p11_lock();
 
 	log_trace(WHERE, "S: C_GetAttributeValue(hObject=%d)",hObject);
 
@@ -247,9 +245,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-		return ret;
+	p11_lock();
 
 	log_trace(WHERE, "S: C_FindObjectsInit(session %d)", hSession);
 	if (ulCount == 0)
@@ -544,9 +540,7 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-		return ret;
+	p11_lock();
 
 	log_trace(WHERE, "S: C_FindObjects(session %d)", hSession);
 
@@ -709,9 +703,7 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-		return ret;
+	p11_lock();
 
 	log_trace(WHERE, "S: C_FindObjectsFinal(session %d)", hSession);
 

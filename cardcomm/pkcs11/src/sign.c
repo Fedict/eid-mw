@@ -41,9 +41,7 @@ CK_RV C_DigestInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter, hSession = %i",hSession);
 
@@ -111,9 +109,7 @@ CK_RV C_Digest(CK_SESSION_HANDLE hSession,     /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter, hSession = %i",hSession);
 
@@ -202,9 +198,7 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
 
@@ -274,9 +268,7 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter, hSession = %i, pDigest=%p",hSession,pDigest);
 
@@ -369,9 +361,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-      return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
 
@@ -585,9 +575,7 @@ CK_RV C_Sign(CK_SESSION_HANDLE hSession,        /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
 
@@ -705,9 +693,7 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
 
@@ -791,9 +777,7 @@ CK_RV C_SignFinal(CK_SESSION_HANDLE hSession,        /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
  

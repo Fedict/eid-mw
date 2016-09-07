@@ -131,12 +131,12 @@ CK_RV p11_init_lock(CK_C_INITIALIZE_ARGS_PTR args)
 	return ret;
 }
 
-CK_RV p11_lock()
+void p11_lock()
 {
 	//      if (context == NULL)
 	//              return CKR_CRYPTOKI_NOT_INITIALIZED;
 	if (!_lock)
-		return CKR_OK;
+		return;
 	if (_locking)
 	{
 		g_mutex_users++;
@@ -147,7 +147,6 @@ CK_RV p11_lock()
 		g_mutex_users++;
 		g_mutex.Lock();
 	}
-	return CKR_OK;
 }
 
 static void __p11_unlock(void *lock)

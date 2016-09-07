@@ -290,9 +290,7 @@ unsigned int index = 0;
 unsigned int size = 0;
 unsigned int diff = 0;
 
-//ret = p11_lock();
-//if (ret != CKR_OK)
-//   return ret;
+//p11_lock();
 
 // search for free entry in object table  
 for (index=0; index < pSlot->nobjects; index++)

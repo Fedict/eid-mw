@@ -3005,19 +3005,12 @@ CK_RV cal_wait_for_the_slot_event(int block)
 						    ulnReaders);
 #endif
 			log_trace(WHERE, "I: status change received");
-			ret = p11_lock();
+			p11_lock();
 			if (p11_get_init() != BEIDP11_INITIALIZED)
 			{
 				log_trace(WHERE,
 					  "I: leave, p11_get_init returned false");
 				CLEANUP(CKR_CRYPTOKI_NOT_INITIALIZED);
-			}
-			if (ret != CKR_OK)
-			{
-				log_trace(WHERE,
-					  "I: leave, p11_lock failed with %i",
-					  ret);
-				CLEANUP(ret);
 			}
 			if (oReadersInfo->IsFirstTime())
 			{

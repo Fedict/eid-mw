@@ -48,12 +48,7 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	}		
 
 
-	ret = p11_lock(slotID);   /* mutex per slot slot 0 tot 9 FF=global slot*/
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	log_trace(WHERE, "S: C_OpenSession (slot %d)", slotID);
 
@@ -141,12 +136,7 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}	
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	log_trace(WHERE, "S: C_CloseSession (session %d)", hSession);
 
@@ -193,12 +183,7 @@ CK_RV C_CloseAllSessions(CK_SLOT_ID slotID) /* the token's slot */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	log_trace(WHERE, "S: C_CloseAllSessions(slot %d)", slotID);
 
@@ -228,12 +213,7 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	log_trace(WHERE, "S: C_GetSessionInfo(session %d)", hSession);
 
@@ -335,12 +315,7 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	memset(&tokeninfo, 0, sizeof(CK_TOKEN_INFO));
 
@@ -414,12 +389,7 @@ CK_RV C_Logout(CK_SESSION_HANDLE hSession) /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	} 
+	p11_lock();
 
 	log_trace(WHERE, "S: Logout (session %d)", hSession);
 
@@ -488,12 +458,7 @@ CK_RV C_SetPIN(CK_SESSION_HANDLE hSession,
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	log_trace(WHERE, "S: C_SetPIN(session %d)", hSession);
 
