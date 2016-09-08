@@ -46,6 +46,7 @@
 @property (weak) IBOutlet NSView *printop_view;
 @property (weak) IBOutlet NSProgressIndicator *spinner;
 @property (weak) IBOutlet NSButton *alwaysValidate;
+@property (weak) IBOutlet NSButton *validateNow;
 
 @property (weak) IBOutlet NSMenuItem *menu_file_open;
 @property (weak) IBOutlet NSMenuItem *menu_file_close;
@@ -148,6 +149,7 @@
 	BOOL fileSave = NO;
 	BOOL fileClose = NO;
 	BOOL pinops = NO;
+	BOOL validate = NO;
 	switch(state) {
 		case eIDStateReady:
 			fileOpen = YES;
@@ -164,6 +166,7 @@
 			filePrint = YES;
 			fileSave = YES;
 			pinops = YES;
+			validate = YES;
 		{
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				[NSApp endSheet:_CardReadSheet];
@@ -205,6 +208,8 @@
 		[_menu_file_close setEnabled:fileClose];
 		[_menu_file_save setEnabled: fileSave];
 		[_pinop_ctrl setEnabled:pinops];
+		[_alwaysValidate setEnabled:validate];
+		[_validateNow setEnabled:validate];
 	}];
 }
 - (NSObject*)searchView:(NSView*)from withName:(NSString*)name {

@@ -35,6 +35,7 @@
                 <outlet property="pinop_ctrl" destination="Vjd-Dd-TOU" id="Kal-SJ-hYA"/>
                 <outlet property="printop_view" destination="ieQ-cl-G8D" id="rWl-5c-j9U"/>
                 <outlet property="spinner" destination="iN8-2b-tEq" id="B3Z-bR-RbU"/>
+                <outlet property="validateNow" destination="0io-gu-IzB" id="v6w-nW-UYO"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
