@@ -173,7 +173,9 @@
 				[_spinner stopAnimation:self];
 			}];
 			if([_alwaysValidate state] == NSOnState) {
-				[self validateNow:nil];
+				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+					[self validateNow:nil];
+				}];
 			}
 		}
 			break;
@@ -191,7 +193,9 @@
 			fileClose = YES;
 			filePrint = YES;
 			if([_alwaysValidate state] == NSOnState) {
-				[self validateNow:nil];
+				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+					[self validateNow:nil];
+				}];
 			}
 		{
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
