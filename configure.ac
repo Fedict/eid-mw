@@ -131,8 +131,9 @@ AC_SUBST(DL_LIBS)
 
 p11kitsodir=""
 p11kitcfdir=""
-PKG_CHECK_MODULES(p11kit, "p11-kit-1", [HAVE_P11KIT=1], [HAVE_P11KIT=0])
-if test "$HAVE_P11KIT" = 1
+PKG_CHECK_MODULES(p11kit, "p11-kit-1", [HAVE_P11KIT=yes], [HAVE_P11KIT=no])
+AC_ARG_ENABLE(p11kit, AS_HELP_STRING([--disable-p11kit], [disregard detection result of p11-kit, and do not install support files]), [if test $enableval = no; then HAVE_P11KIT=no; fi])
+if test "$HAVE_P11KIT" = yes
 then
 	PKG_CHECK_VAR([p11kitsodir], "p11-kit-1", "p11_module_path",, [HAVE_P11KIT=0])
 	PKG_CHECK_VAR([p11kit_libdir], "p11-kit-1", "libdir",, [HAVE_P11_KIT=0])
