@@ -65,7 +65,6 @@ public:
 	 *             this can only be returned if bReconnect = true
 	 * \retval #CARD_UNKNOWN_STATE we were unable to determine card status (e.g., because the slot is in use by another process)
 	 *
-	 * If a card has been inserted then this function won't connect to the card
 	 * If the card has been removed and a (new) card has been inserted
 	 * then if bReconnect is true, this function will reconnect to the (new) card.
 	 */
