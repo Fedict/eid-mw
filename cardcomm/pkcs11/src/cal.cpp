@@ -257,6 +257,7 @@ CK_RV cal_token_present(CK_SLOT_ID hSlot, int *pPresent)
 			break;
 		case P11_CARD_NOT_PRESENT:
 		case P11_CARD_REMOVED:
+		case P11_CARD_UNKNOWN_STATE:
 		default:
 			*pPresent = 0;
 	}
@@ -2592,6 +2593,8 @@ int cal_map_status(tCardStatus calstatus)
 			return (P11_CARD_REMOVED);
 		case CARD_OTHER:
 			return (P11_CARD_OTHER);
+		case CARD_UNKNOWN_STATE:
+			return (P11_CARD_UNKNOWN_STATE);
 		default:
 			return (-1);
 	}

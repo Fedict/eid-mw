@@ -145,6 +145,8 @@ namespace eIDMW
 				return L"card removed";
 			case CARD_OTHER:
 				return L"card removed and (another) card inserted";
+			case CARD_UNKNOWN_STATE:
+				return L"card state unknown (slot in use?)";
 			default:
 				return L"unknown state?!?";
 		}
@@ -155,35 +157,44 @@ namespace eIDMW
 		tCardStatus status;
 		static int iStatusCount = 0;
 
-		if (m_poCard == NULL)
-		{
-			if (m_poContext->m_oPCSC.Status(m_csReader))
-				status = Connect()? CARD_INSERTED :
-					CARD_NOT_PRESENT;
-			else
-				status = CARD_NOT_PRESENT;
-		} else
-		{
-#ifndef __APPLE__
-			if (m_poCard->Status())
+		try {
+			if (m_poCard == NULL)
 			{
-#else
-			if (m_poContext->m_oPCSC.Status(m_csReader))
-			{
-#endif
-				status = CARD_STILL_PRESENT;
+				if (m_poContext->m_oPCSC.Status(m_csReader))
+					status = Connect()? CARD_INSERTED :
+						CARD_NOT_PRESENT;
+				else
+					status = CARD_NOT_PRESENT;
 			} else
 			{
-				Disconnect();
-				// if bReconnect = true, then we try to connect to a
-				// possibly new card that has been inserted
-				if (bReconnect
-				    && m_poContext->m_oPCSC.
-				    Status(m_csReader))
-					status = Connect()? CARD_OTHER :
-						CARD_REMOVED;
-				else
-					status = CARD_REMOVED;
+#ifndef __APPLE__
+				if (m_poCard->Status())
+				{
+#else
+				if (m_poContext->m_oPCSC.Status(m_csReader))
+				{
+#endif
+					status = CARD_STILL_PRESENT;
+				} else
+				{
+					Disconnect();
+					// if bReconnect = true, then we try to connect to a
+					// possibly new card that has been inserted
+					if (bReconnect
+					    && m_poContext->m_oPCSC.
+					    Status(m_csReader))
+						status = Connect()? CARD_OTHER :
+							CARD_REMOVED;
+					else
+						status = CARD_REMOVED;
+				}
+			}
+		}
+		catch(CMWException e) {
+			if(e.GetError() == EIDMW_ERR_CARD_SHARING) {
+				status = CARD_UNKNOWN_STATE;
+			} else {
+				throw e;
 			}
 		}
 

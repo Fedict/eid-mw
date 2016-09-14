@@ -82,6 +82,7 @@ namespace eIDMW
 		CARD_STILL_PRESENT,
 		CARD_REMOVED,
 		CARD_OTHER,
+		CARD_UNKNOWN_STATE,
 	} tCardStatus;
 
 	const unsigned long TIMEOUT_INFINITE = 0xFFFFFFFF;	// used in CCardLayer::GetStatusChange()

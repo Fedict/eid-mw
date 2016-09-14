@@ -96,6 +96,7 @@ extern "C"
 #define P11_CARD_STILL_PRESENT      2
 #define P11_CARD_REMOVED            3
 #define P11_CARD_OTHER              4
+#define P11_CARD_UNKNOWN_STATE	    5
 
 #define P11_EVENT_NONE              0
 #define P11_EVENT_INSERT            1
