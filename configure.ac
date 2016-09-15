@@ -146,7 +146,7 @@ then
 		p11kitcfdir=$(echo $p11kitcfdir|sed -e "s,$p11kit_datarootdir,\${datarootdir},g")
 	fi
 fi
-AM_CONDITIONAL([P11KIT], [test "$HAVE_P11KIT" = 1])
+AM_CONDITIONAL([P11KIT], [test "$HAVE_P11KIT" = yes])
 
 pkgconfigdir="\$(libdir)/pkgconfig"
 pkcs11hincludedir="\$(includedir)/beid/rsaref220"
