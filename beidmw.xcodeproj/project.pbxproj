@@ -206,6 +206,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		651A4F841D8C01C500502DEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 651A4F661D8BFE2200502DEC;
+			remoteInfo = eIDToken;
+		};
 		655E14D41BBA8A2900D855D3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
@@ -233,20 +240,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 658054E51A66C9BB000AEFE0;
 			remoteInfo = "eID Middleware";
-		};
-		658ADE8A1D8A96A200E7F256 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 658ADE811D8A96A200E7F256 /* EIDTokenApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2F3883981CF46C6E00F114A7;
-			remoteInfo = EIDTokenApp;
-		};
-		658ADE8C1D8A96A200E7F256 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 658ADE811D8A96A200E7F256 /* EIDTokenApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2F3883B01CF46C9D00F114A7;
-			remoteInfo = EIDToken;
 		};
 		7FC5353E0F84B84300BA96EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -340,7 +333,6 @@
 		6536232419A7E92B00D46ECB /* tkinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tkinfo.c; path = tests/unit/tkinfo.c; sourceTree = "<group>"; };
 		6536233C19A7E93A00D46ECB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = tests/unit/apple/main.c; sourceTree = "<group>"; };
 		658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Middleware.xcodeproj"; path = "plugins_tools/aboutmw/OSX/eID Middleware/eID Middleware.xcodeproj"; sourceTree = "<group>"; };
-		658ADE811D8A96A200E7F256 /* EIDTokenApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EIDTokenApp.xcodeproj; path = cardcomm/ctkToken/EIDTokenApp.xcodeproj; sourceTree = "<group>"; };
 		6594447B19A8C29B003ABC24 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = cardcomm/pkcs11/src/asn1.c; sourceTree = "<group>"; };
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
 		6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs11util.cpp; path = cardcomm/pkcs11/src/pkcs11util.cpp; sourceTree = "<group>"; };
@@ -568,7 +560,6 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
-				658ADE811D8A96A200E7F256 /* EIDTokenApp.xcodeproj */,
 				659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */,
 				658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */,
 				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
@@ -659,15 +650,7 @@
 			isa = PBXGroup;
 			children = (
 				6580550E1A66C9BE000AEFE0 /* eID Middleware.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		658ADE821D8A96A200E7F256 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				658ADE8B1D8A96A200E7F256 /* EIDTokenApp.app */,
-				658ADE8D1D8A96A200E7F256 /* EIDToken.appex */,
+				651A4F851D8C01C500502DEC /* eIDToken.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1129,10 +1112,6 @@
 					ProjectRef = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
 				},
 				{
-					ProductGroup = 658ADE821D8A96A200E7F256 /* Products */;
-					ProjectRef = 658ADE811D8A96A200E7F256 /* EIDTokenApp.xcodeproj */;
-				},
-				{
 					ProductGroup = 869D00BE18D72DCF00A41853 /* Products */;
 					ProjectRef = 869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */;
 				},
@@ -1154,6 +1133,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		651A4F851D8C01C500502DEC /* eIDToken.appex */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.app-extension";
+			path = eIDToken.appex;
+			remoteRef = 651A4F841D8C01C500502DEC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		655E14D51BBA8A2900D855D3 /* eID Viewer.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -1180,20 +1166,6 @@
 			fileType = wrapper.application;
 			path = "eID Middleware.app";
 			remoteRef = 6580550D1A66C9BE000AEFE0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		658ADE8B1D8A96A200E7F256 /* EIDTokenApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = EIDTokenApp.app;
-			remoteRef = 658ADE8A1D8A96A200E7F256 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		658ADE8D1D8A96A200E7F256 /* EIDToken.appex */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.app-extension";
-			path = EIDToken.appex;
-			remoteRef = 658ADE8C1D8A96A200E7F256 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		869D00C218D72DD000A41853 /* plistMerger */ = {
