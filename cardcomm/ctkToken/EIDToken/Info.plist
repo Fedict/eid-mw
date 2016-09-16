@@ -31,9 +31,9 @@
 			<key>com.apple.ctk.aid</key>
 			<string>a000000177504b43532d3135</string>
 			<key>com.apple.ctk.class-id</key>
-			<string>be.fedict.eid.eID-Middleware.eIDToken</string>
+			<string>be.fedict.eid.eID-Middleware.PIVToken</string>
 			<key>com.apple.ctk.driver-class</key>
-			<string>eIDTokenDriver</string>
+			<string>PIVTokenDriver</string>
 			<key>com.apple.ctk.token-type</key>
 			<string>smartcard</string>
 		</dict>

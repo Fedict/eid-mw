@@ -206,13 +206,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		651A4F841D8C01C500502DEC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 651A4F661D8BFE2200502DEC;
-			remoteInfo = eIDToken;
-		};
 		655E14D41BBA8A2900D855D3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
@@ -650,7 +643,6 @@
 			isa = PBXGroup;
 			children = (
 				6580550E1A66C9BE000AEFE0 /* eID Middleware.app */,
-				651A4F851D8C01C500502DEC /* eIDToken.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1133,13 +1125,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		651A4F851D8C01C500502DEC /* eIDToken.appex */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.app-extension";
-			path = eIDToken.appex;
-			remoteRef = 651A4F841D8C01C500502DEC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		655E14D51BBA8A2900D855D3 /* eID Viewer.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
