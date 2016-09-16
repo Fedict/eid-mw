@@ -77,7 +77,7 @@ NSString* getPcscdStartStatus() {
         switch(errno) {
             case ENOENT:
                 if (darwinver >= 14) {
-                    return @"Not found (OK on OSX 10.10)";
+                    return @"Not found (OK on OSX 10.10+)";
                 }
                 return @"Not found";
             default:
