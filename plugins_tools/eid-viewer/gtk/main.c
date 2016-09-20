@@ -147,7 +147,7 @@ static void newstate(enum eid_vwr_states s) {
 		case STATE_TOKEN_PINOP:
 			uistatus(TRUE, _("Performing a PIN operation"));
 			return;
-		case STATE_FILE:
+		case STATE_FILE_WAIT:
 			uistatus(FALSE, "");
 			g_object_set_threaded(print, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(close, "sensitive", (void*)TRUE, NULL);
