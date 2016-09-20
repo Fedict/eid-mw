@@ -18,7 +18,7 @@
     [self setApp:app];
     [self setViewDict:[[NSMutableDictionary alloc]init]];
     [self indexViews:view];
-    [self setPrintableFields:[[NSArray alloc] initWithObjects:@"surname", @"photo", @"firstnames", @"location_of_birth", @"date_of_birth", @"gender", @"nationality", @"national_number", @"nobility", @"special_status", @"address_street_and_number", @"address_zip", @"address_municipality", @"card_number", @"issuing_municipality", @"chip_number", @"validity_begin_date", @"validity_end_date", @"document_type", nil]];
+    [self setPrintableFields:[[NSArray alloc] initWithObjects:@"surname", @"photo", @"location_of_birth", @"date_of_birth", @"gender", @"nationality", @"national_number", @"nobility", @"special_status", @"address_street_and_number", @"address_zip", @"address_municipality", @"card_number", @"issuing_municipality", @"chip_number", @"validity_begin_date", @"validity_end_date", @"document_type", nil]];
     return self;
 }
 -(void)indexViews:(NSView*)view {
@@ -51,6 +51,10 @@
         }
         [d performSelector:writesel withObject:[s performSelector:readsel]];
     }
+	NSTextField *o = [_viewDict objectForKey:@"firstnames"];
+	NSTextField *fn = (NSTextField*)[_app searchObjectById:@"firstnames" ofClass:[NSTextField class]];
+	NSTextField *ftn = (NSTextField*)[_app searchObjectById:@"first_letter_of_third_given_name" ofClass:[NSTextField class]];
+	[o setStringValue:[NSString stringWithFormat:@"%@ %@", [fn stringValue], [ftn stringValue]]];
     NSString *seal;
     NSString *ctry;
     switch([eIDOSLayerBackend lang]) {
