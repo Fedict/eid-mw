@@ -150,7 +150,11 @@ extern "C"
 	{ BEID_FIELD_TAG_ID_Duplicata,			"duplicata"},  \
 	{ BEID_FIELD_TAG_ID_SpecialOrganization,"special_organization"},  \
 	{ BEID_FIELD_TAG_ID_MemberOfFamily,		"member_of_family"}, \
-	{ BEID_FIELD_TAG_ID_DateAndCountryOfProtection,		"date_and_country_of_protection"}  \
+	{ BEID_FIELD_TAG_ID_DateAndCountryOfProtection,		"date_and_country_of_protection"},  \
+	{ BEID_FIELD_TAG_ID_WorkMarket, "work_market"}, \
+	{ BEID_FIELD_TAG_ID_Vat1, "vat_1"}, \
+	{ BEID_FIELD_TAG_ID_Vat2, "vat_2"}, \
+	{ BEID_FIELD_TAG_ID_RegionalFileNumber, "regional_file_number"}, \
 }
 
 	//{ BEID_FIELD_TAG_ADDR_Version,                        "Address_Version"},
