@@ -564,7 +564,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
 		goto cleanup;
 	}
 	//look for type in table
-	for (i = 0; i < (sizeof(table) / sizeof(table[0])); i++)
+	for (i = 0; i < (int)(sizeof(table) / sizeof(table[0])); i++)
 	{
 		if (table[i].type == type)
 		{
