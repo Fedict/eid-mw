@@ -31,7 +31,7 @@
 		6536233A19A7E92B00D46ECB /* threads.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232319A7E92B00D46ECB /* threads.c */; };
 		6536233B19A7E92B00D46ECB /* tkinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232419A7E92B00D46ECB /* tkinfo.c */; };
 		6536233D19A7E93A00D46ECB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536233C19A7E93A00D46ECB /* main.c */; };
-		65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.1.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.10.dylib */; };
+		65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.1.18.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.18.dylib */; };
 		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
@@ -341,7 +341,7 @@
 		7F9011190F8502F8004A5FCC /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		7F90111C0F850342004A5FCC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		7F90112C0F850450004A5FCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.10.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; name = libbeidpkcs11.4.1.10.dylib; path = libbeidpkcs11.4.1.18.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.18.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.4.1.18.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBB02530F839352009B751F /* libbeidcommon.4.1.18.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcommon.4.1.18.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.18.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcardlayer.4.1.18.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.18.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsmac.4.1.18.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -476,7 +476,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.1.10.dylib in Frameworks */,
+				65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.1.18.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,7 +542,7 @@
 			children = (
 				7FBB02530F839352009B751F /* libbeidcommon.4.1.18.a */,
 				7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.18.a */,
-				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.10.dylib */,
+				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.18.dylib */,
 				8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.18.a */,
 				6536230219A7E8E600D46ECB /* testsuite */,
 				86B4749B1BD798B8004FB8AE /* libbeid_ff_pkcs11.dylib */,
@@ -996,7 +996,7 @@
 			);
 			name = beidpkcs11;
 			productName = beidpkcs11;
-			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.10.dylib */;
+			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.18.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FBB02520F839352009B751F /* beidcommon */ = {
