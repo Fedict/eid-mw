@@ -68,9 +68,9 @@ CK_BBOOL is_string(const EID_CHAR* label) {
 	ADD_LABEL(TEXT("special_organization"), CK_FALSE);
 	ADD_LABEL(TEXT("member_of_family"), CK_FALSE);
 	ADD_LABEL(TEXT("date_and_country_of_protection"), CK_TRUE);
-	ADD_LABEL(TEXT("work_market"), CK_TRUE);
-	ADD_LABEL(TEXT("vat_1"), CK_TRUE);
-	ADD_LABEL(TEXT("vat_2"), CK_TRUE);
+	ADD_LABEL(TEXT("work_permit_type"), CK_TRUE);
+	ADD_LABEL(TEXT("employer_vat_1"), CK_TRUE);
+	ADD_LABEL(TEXT("employer_vat_2"), CK_TRUE);
 	ADD_LABEL(TEXT("regional_file_number"), CK_TRUE);
 	ADD_LABEL(TEXT("ADDRESS_FILE"), CK_FALSE);
 	ADD_LABEL(TEXT("address_street_and_number"), CK_TRUE);

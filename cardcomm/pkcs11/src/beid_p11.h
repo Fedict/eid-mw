@@ -70,7 +70,7 @@
 #define BEID_FIELD_TAG_ID_SpecialOrganization		0x13
 #define BEID_FIELD_TAG_ID_MemberOfFamily		0x14
 #define BEID_FIELD_TAG_ID_DateAndCountryOfProtection	0x15
-#define BEID_FIELD_TAG_ID_WorkMarket			0x16
+#define BEID_FIELD_TAG_ID_WorkPermitType		0x16
 #define BEID_FIELD_TAG_ID_Vat1				0x17
 #define BEID_FIELD_TAG_ID_Vat2				0x18
 #define BEID_FIELD_TAG_ID_RegionalFileNumber		0x19
