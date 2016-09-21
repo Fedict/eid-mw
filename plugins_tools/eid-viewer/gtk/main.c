@@ -82,11 +82,10 @@ static void uistatus(gboolean spin, char* data, ...) {
 
 /* Handle "state changed" elements */
 static void newstate(enum eid_vwr_states s) {
-	GObject *open, *savexml, *savecsv, *print, *close, *pintest, *pinchg, *validate;
+	GObject *open, *save, *print, *close, *pintest, *pinchg, *validate;
 #define want_verify (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "validate_always"))))
 	open = gtk_builder_get_object(builder, "mi_file_open");
-	savexml = gtk_builder_get_object(builder, "mi_file_saveas_xml");
-	savecsv = gtk_builder_get_object(builder, "mi_file_saveas_csv");
+	save = gtk_builder_get_object(builder, "mi_file_saveas");
 	print = gtk_builder_get_object(builder, "mi_file_print");
 	close = gtk_builder_get_object(builder, "mi_file_close");
 	pintest = gtk_builder_get_object(builder, "pintestbut");
@@ -96,8 +95,7 @@ static void newstate(enum eid_vwr_states s) {
 	g_object_set_threaded(open, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(close, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(print, "sensitive", (void*)FALSE, NULL);
-	g_object_set_threaded(savexml, "sensitive", (void*)FALSE, NULL);
-	g_object_set_threaded(savecsv, "sensitive", (void*)FALSE, NULL);
+	g_object_set_threaded(save, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(pintest, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(pinchg, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(validate, "sensitive", (void*)FALSE, NULL);
@@ -123,8 +121,7 @@ static void newstate(enum eid_vwr_states s) {
 		case STATE_TOKEN_WAIT:
 			uistatus(FALSE, "");
 			g_object_set_threaded(print, "sensitive", (void*)TRUE, NULL);
-			g_object_set_threaded(savexml, "sensitive", (void*)TRUE, NULL);
-			g_object_set_threaded(savecsv, "sensitive", (void*)TRUE, NULL);
+			g_object_set_threaded(save, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(pintest, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(pinchg, "sensitive", (void*)TRUE, NULL);
 			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
@@ -279,10 +276,8 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_open"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_open), NULL);
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_saveas_xml"));
-	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), "xml");
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_saveas_csv"));
-	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), "csv");
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_saveas"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_reader_auto"));
 	g_signal_connect(signaltmp, "toggled", G_CALLBACK(auto_reader), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_close"));
