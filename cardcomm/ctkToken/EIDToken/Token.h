@@ -1,10 +1,3 @@
-/*
- Copyright (C) 2016 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- Implements PIV token core
- */
 
 
 #import <Foundation/Foundation.h>
@@ -13,10 +6,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-
-static const unsigned char kBELPIC_EF_AuthCert[] =     { 0xDF, 0x00, 0x50, 0x38 };
-static const unsigned char kBELPIC_EF_SignCert[] =     { 0xDF, 0x00, 0x50, 0x39 };
-static const unsigned char kBELPIC_EF_TokenInfo[] =    { 0xDF, 0x00, 0x50, 0x32 };
+static const unsigned char kBELPIC_DF_BELPIC[] =     { 0xDF, 0x00};
+static const unsigned char kBELPIC_EF_AuthCert[] =     { 0x50, 0x38 };
+static const unsigned char kBELPIC_EF_SignCert[] =     { 0x50, 0x39 };
+static const unsigned char kBELPIC_EF_TokenInfo[] =    { 0x50, 0x32 };
+static const unsigned char kBELPIC_AuthCert[] =     { 0xDF, 0x00, 0x50, 0x38 };
+static const unsigned char kBELPIC_SignCert[] =     { 0xDF, 0x00, 0x50, 0x39 };
+static const unsigned char kBELPIC_TokenInfo[] =    { 0xDF, 0x00, 0x50, 0x32 };
 
 #pragma mark TKSmartCard utility extension for sending/receiving TKBERTLVRecord-formatted APDUs
 

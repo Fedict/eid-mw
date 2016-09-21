@@ -18,6 +18,7 @@
 @implementation PIVAuthOperation
 
 - (instancetype)initWithSession:(PIVTokenSession *)session {
+    os_log_error(OS_LOG_DEFAULT, "BEID initWithSession called");
     if (self = [super init]) {
         _session = session;
 
@@ -33,6 +34,7 @@
 
 // Remove this as soon as PIVAuthOperation implements automatic PIN submission according to APDUTemplate.
 - (BOOL)finishWithError:(NSError * _Nullable __autoreleasing *)error {
+    os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called");
     // Format PIN as UTF-8, right padded with 0xff to 8 bytes.
     NSMutableData *PINData = [NSMutableData dataWithLength:8];
     memset(PINData.mutableBytes, 0xff, PINData.length);
@@ -80,6 +82,7 @@
 }
 
 - (TKTokenAuthOperation *)tokenSession:(TKTokenSession *)session beginAuthForOperation:(TKTokenOperation)operation constraint:(TKTokenOperationConstraint)constraint error:(NSError * _Nullable __autoreleasing *)error {
+    os_log_error(OS_LOG_DEFAULT, "BEID beginAuthForOperation called");
     if (![constraint isEqual:PIVConstraintPIN] && ![constraint isEqual:PIVConstraintPINAlways]) {
         os_log_error(OS_LOG_DEFAULT, "attempt to evaluate unsupported constraint %@", constraint);
         if (error != nil) {
@@ -92,6 +95,7 @@
 }
 
 - (BOOL)tokenSession:(TKTokenSession *)session supportsOperation:(TKTokenOperation)operation usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm {
+    os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called");
     PIVTokenKeychainKey *keyItem = (PIVTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:nil];
     if (keyItem == nil) {
         return NO;
@@ -119,12 +123,12 @@
                 return [algorithm isAlgorithm:kSecKeyAlgorithmRSAEncryptionRaw];
             }
             break;
-        case TKTokenOperationPerformKeyExchange:
+/*        case TKTokenOperationPerformKeyExchange:
             if (keyItem.canPerformKeyExchange && [keyItem.keyType isEqual:(id)kSecAttrKeyTypeECSECPrimeRandom]) {
                 // For NIST p256 and p384, there is no difference between standard and cofactor variants, so answer that both of them are supported.
                 return [algorithm isAlgorithm:kSecKeyAlgorithmECDHKeyExchangeStandard] || [algorithm isAlgorithm:kSecKeyAlgorithmECDHKeyExchangeCofactor];
             }
-            break;
+            break;*/
         default:
             break;
     }
@@ -133,6 +137,7 @@
 
 - (PIVTokenKeychainKey *)authenticatedKeyForObjectID:(TKTokenObjectID)keyObjectID error:(NSError **)error {
     // Check for authentication status.
+    os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID called");
     PIVTokenKeychainKey *keyItem = (PIVTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:error];
     if (keyItem == nil) {
         return nil;
@@ -151,6 +156,7 @@
 
 // Wrapper around GENERAL AUTHENTICATE card command used for sign, decrypt and ECDH.
 - (NSData *)generalAuthenticateWithData:(NSData *)data dataTag:(TKTLVTag)dataTag usingKey:(TKTokenObjectID)keyObjectID error:(NSError **)error {
+    os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData called");
     PIVTokenKeychainKey *keyItem = [self authenticatedKeyForObjectID:keyObjectID error:error];
     if (keyItem == nil) {
         return nil;
@@ -178,15 +184,17 @@
 }
 
 - (NSData *)tokenSession:(TKTokenSession *)session signData:(NSData *)dataToSign usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError * _Nullable __autoreleasing *)error {
+    os_log_error(OS_LOG_DEFAULT, "BEID signData called");
     return [self generalAuthenticateWithData:dataToSign dataTag:0x82 usingKey:keyObjectID error:error];
 }
 
 - (NSData *)tokenSession:(TKTokenSession *)session decryptData:(NSData *)ciphertext usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError * _Nullable __autoreleasing *)error {
+    os_log_error(OS_LOG_DEFAULT, "BEID decryptData called");
     return [self generalAuthenticateWithData:ciphertext dataTag:0x82 usingKey:keyObjectID error:error];
 }
-
+/*
 - (NSData *)tokenSession:(TKTokenSession *)session performKeyExchangeWithPublicKey:(NSData *)otherPartyPublicKeyData usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm parameters:(TKTokenKeyExchangeParameters *)parameters error:(NSError * _Nullable __autoreleasing *)error {
     return [self generalAuthenticateWithData:otherPartyPublicKeyData dataTag:0x85 usingKey:keyObjectID error:error];
-}
+}*/
 
 @end

@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSData (Zip)
+//@interface NSData (Zip)
 
-- (nullable NSData *)inflate;
+//- (nullable NSData *)inflate;
 
-@end
+//@end

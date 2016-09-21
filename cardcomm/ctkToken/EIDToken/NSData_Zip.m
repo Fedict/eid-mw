@@ -14,7 +14,7 @@
 #import "Token.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+/*
 @implementation NSData(Zip)
 
 - (int)getWindowSize {
@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
     dstream.zalloc = (alloc_func)0;
     dstream.zfree = (free_func)0;
     dstream.opaque = (voidpf)0;
-    /* Input not altered , so de-const-casting ok*/
+    // Input not altered , so de-const-casting ok
     dstream.next_in  = (Bytef*)self.bytes;
     dstream.avail_in = (uInt)self.length;
     int err = inflateInit2(&dstream, windowSize);
@@ -69,6 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @end
+ */
 
 NS_ASSUME_NONNULL_END
 
