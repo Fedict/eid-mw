@@ -376,6 +376,7 @@ static void bindata_init() {
 	g_hash_table_insert(binhash, "certvalfromval:past", show_date_state);
 	g_hash_table_insert(binhash, "certvaltilval:future", show_date_state);
 	g_hash_table_insert(binhash, "certimage", show_cert_image);
+	g_hash_table_insert(binhash, "document_type_raw", update_doctype);
 }
 
 /* Helper function for update_info() */
