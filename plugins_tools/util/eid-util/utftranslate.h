@@ -15,6 +15,7 @@ static inline char *f(const char *c, unsigned long *l)
 #define EID_STRDUP(x) strdup(x)
 #define EID_STRLEN(x) strlen(x)
 #define EID_VSNPRINTF(str, size, string, ap) vsnprintf(str, size, string, ap)
+#define EID_SNPRINTF snprintf
 #define EID_FOPEN(filename, mode) fopen(filename, mode)
 typedef char EID_CHAR;
 
