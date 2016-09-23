@@ -31,8 +31,8 @@
 static struct {
 	EID_CHAR * label;
 	CK_BBOOL is_string;
-	CK_BBOOL on_foreigner;
 	CK_BBOOL on_eid;
+	CK_BBOOL on_foreigner;
 } labels[] = {
 	{ TEXT("CARD_DATA"),			CK_FALSE, CK_TRUE, CK_TRUE },
 	{ TEXT("ATR"),				CK_FALSE, CK_TRUE, CK_TRUE },
