@@ -393,12 +393,6 @@ void readers_changed(unsigned long nreaders, slotdesc* slots) {
 	data->slots = malloc(sizeof(slotdesc) * nreaders);
 	memcpy(data->slots, slots, sizeof(slotdesc)*nreaders);
 	for(i=0; i<nreaders; i++) {
-		/* XXX The description is NULL if a reader contains a
-		 * card we don't know about. While that shouldn't
-		 * happen (and we need to fix that bug eventually), we
-		 * should at the very least make sure we don't segfault
-		 * in that case.
-		 */
 		if(slots[i].description != NULL) {
 			data->slots[i].description = strdup(slots[i].description);
 		} else {
