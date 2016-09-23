@@ -365,7 +365,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="nametit">
+                          <object class="GtkLabel" id="title_surname">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -381,7 +381,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="giventit">
+                          <object class="GtkLabel" id="title_firstnames">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -397,7 +397,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="pobtit">
+                          <object class="GtkLabel" id="title_location_of_birth">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -413,7 +413,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="dobtit">
+                          <object class="GtkLabel" id="title_date_of_birth">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -429,7 +429,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="sextit">
+                          <object class="GtkLabel" id="title_gender">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -445,7 +445,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="natnumtit">
+                          <object class="GtkLabel" id="title_national_number">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -461,7 +461,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="munictit">
+                          <object class="GtkLabel" id="title_address_municipality">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -477,7 +477,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="posttit">
+                          <object class="GtkLabel" id="title_address_zip">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -493,7 +493,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="streettit">
+                          <object class="GtkLabel" id="title_address_street_and_number">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -523,7 +523,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="spectit">
+                          <object class="GtkLabel" id="title_special_status">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -539,7 +539,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="tittit">
+                          <object class="GtkLabel" id="title_nobility">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -555,7 +555,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="nattit">
+                          <object class="GtkLabel" id="title_nationality">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -839,7 +839,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="dctit">
+                          <object class="GtkLabel" id="title_date_and_country_of_protection">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -855,7 +855,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="vat1tit">
+                          <object class="GtkLabel" id="title_vat_1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -888,7 +888,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="vat2tit">
+                          <object class="GtkLabel" id="title_vat_2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -938,7 +938,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="permtit">
+                          <object class="GtkLabel" id="title_work_permit_type">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -971,7 +971,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="regfiletit">
+                          <object class="GtkLabel" id="title_regional_file_number">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
