@@ -314,7 +314,7 @@ static int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
 		check_rv(C_SetPIN(session, NULL_PTR, 0, NULL_PTR, 0));
 	}
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
-	
+
 	return 0;
 }
 
