@@ -307,9 +307,6 @@ int eid_vwr_p11_read_certs(void* data) {
  * "failed" message, and otherwise we can't use our check_rv() macro
  */
 static int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
-	/* Need to do a C_Login in both cases (whether we're doing a "test pin"
-	 * or a "change pin", since you can't change your PIN code unless
-	 * you're logged in. */
 	if (p == EID_VWR_PINOP_TEST) {
 		check_rv(C_Login(session, CKU_USER, NULL, 0));
 	}
