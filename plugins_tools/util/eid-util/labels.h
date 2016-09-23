@@ -28,5 +28,7 @@
 #include <pkcs11.h>
 
 CK_BBOOL is_string(const EID_CHAR * label);
+CK_BBOOL on_foreigner(const EID_CHAR * label);
+CK_BBOOL on_eid(const EID_CHAR * label);
 
 #endif
