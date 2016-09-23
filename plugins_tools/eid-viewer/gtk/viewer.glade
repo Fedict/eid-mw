@@ -853,7 +853,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="title_vat_1">
+                          <object class="GtkLabel" id="title_employer_vat_1">
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Employer's VAT number (1):</property>
@@ -868,7 +868,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="vat_1">
+                          <object class="GtkLabel" id="employer_vat_1">
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -884,7 +884,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="title_vat_2">
+                          <object class="GtkLabel" id="title_employer_vat_2">
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Employer's VAT number (2):</property>
@@ -899,7 +899,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="vat_2">
+                          <object class="GtkLabel" id="employer_vat_2">
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
