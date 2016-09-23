@@ -5,6 +5,8 @@
 
 void g_object_set_threaded(GObject * obj, const gchar * name, void *value,
 			   void (*freefunc) (void *));
+void g_object_set_threaded_gvalue(GObject *obj, const gchar * property,
+				  GValue * value, void(*freefunc)(void*));
 void g_object_set_data_threaded(GObject * obj, const gchar * name,
 				void *value, void (*freefunc) (void *));
 

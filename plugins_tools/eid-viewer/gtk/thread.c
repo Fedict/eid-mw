@@ -30,6 +30,16 @@ static gboolean gosdt_helper(gpointer user_data) {
 	return FALSE;
 }
 
+static gboolean gostv_helper(gpointer user_data) {
+	struct gost_helper* help = (struct gost_helper*) user_data;
+	g_object_set_property(help->obj, help->name, (GValue*)help->value);
+	if(help->free) {
+		help->free(help->value);
+	}
+	free(help);
+	return FALSE;
+}
+
 /* Helper function to allow properties to be set transparently from
  * background threads */
 void g_object_set_threaded(GObject* obj, const gchar* property, void* value, void(*freefunc)(void*)) {
@@ -39,6 +49,15 @@ void g_object_set_threaded(GObject* obj, const gchar* property, void* value, voi
 	help->value = value;
 	help->free = freefunc;
 	g_main_context_invoke(NULL, gost_helper, help);
+}
+
+void g_object_set_threaded_gvalue(GObject* obj, const gchar* property, GValue* value, void(*freefunc)(void*)) {
+	struct gost_helper* help = malloc(sizeof(struct gost_helper));
+	help->obj = obj;
+	help->name = property;
+	help->value = value;
+	help->free = freefunc;
+	g_main_context_invoke(NULL, gostv_helper, help);
 }
 
 void g_object_set_data_threaded(GObject* obj, const gchar* key, void* value, void(*freefunc)(void*)) {
