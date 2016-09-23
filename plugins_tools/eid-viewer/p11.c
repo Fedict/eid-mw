@@ -12,6 +12,7 @@
 #include "conversions.h"
 #include <cache.h>
 #include <string.h>
+#include <stdio.h>
 
 typedef struct {
 	CK_RV rv;
@@ -181,10 +182,15 @@ end:
 void eid_vwr_p11_to_ui(const EID_CHAR* label, const void* value, int len) {
 	EID_CHAR* str;
 	if(can_convert(label)) {
+		size_t label_len;
 		be_log(EID_VWR_LOG_DETAIL, TEXT("converting %s"), label);
 		str = converted_string(label, (const EID_CHAR*)value);
 		be_newstringdata(label, str);
 		free(str);
+		label_len = EID_STRLEN(label) + 5 * sizeof(EID_CHAR);
+		str = malloc(len);
+		EID_SNPRINTF(str, label_len, TEXT("%s_raw"), label);
+		be_newbindata(str, value, len);
 	} else if(is_string(label)) {
 		be_newstringdata(label, (const EID_CHAR*)value);
 	} else {
