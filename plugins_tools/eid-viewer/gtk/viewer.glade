@@ -823,7 +823,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="date_and_country_of_protection">
-                            <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -840,7 +839,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="title_date_and_country_of_protection">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Date and country of protection:</property>
@@ -856,7 +854,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="title_vat_1">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Employer's VAT number (1):</property>
@@ -872,7 +869,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="vat_1">
-                            <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -889,7 +885,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="title_vat_2">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Employer's VAT number (2):</property>
@@ -905,7 +900,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="vat_2">
-                            <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -922,7 +916,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="regional_file_number">
-                            <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -939,7 +932,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="title_work_permit_type">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Work permit mention:</property>
@@ -955,7 +947,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="work_permit_type">
-                            <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
@@ -972,7 +963,6 @@
                         </child>
                         <child>
                           <object class="GtkLabel" id="title_regional_file_number">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Regional file number:</property>
