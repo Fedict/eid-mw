@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <eid-util/utftranslate.h>
+#include <eid-util/labels.h>
 
 static struct {
 	EID_CHAR * label;
@@ -90,6 +91,8 @@ static struct {
 	{ NULL,					0, 0, 0 },
 };
 
+static struct labelnames *foreignerlabels = NULL;
+
 #ifndef WIN32
 #define EID_FPRINTF fprintf
 #else
@@ -110,3 +113,18 @@ static struct {
 fun(on_foreigner)
 fun(on_eid)
 fun(is_string)
+
+struct labelnames* get_foreigner_labels() {
+	if(foreignerlabels == NULL) {
+		int i;
+		foreignerlabels = calloc(sizeof(struct labelnames), 1);
+		for(i=0; labels[i].label != NULL; i++) {
+			if(!labels[i].on_eid) {
+				foreignerlabels->label = realloc(foreignerlabels->label, sizeof(struct labelnames) * ++(foreignerlabels->len));
+				foreignerlabels->label[foreignerlabels->len - 1] = labels[i].label;
+			}
+		}
+	}
+
+	return foreignerlabels;
+}

@@ -27,8 +27,15 @@
 #endif
 #include <pkcs11.h>
 
+struct labelnames {
+	EID_CHAR ** label;
+	int len;
+};
+
 CK_BBOOL is_string(const EID_CHAR * label);
 CK_BBOOL on_foreigner(const EID_CHAR * label);
 CK_BBOOL on_eid(const EID_CHAR * label);
+
+struct labelnames* get_foreigner_labels(void);
 
 #endif
