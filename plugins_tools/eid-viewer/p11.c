@@ -333,7 +333,8 @@ int eid_vwr_p11_do_pinop(void* data) {
 
 /* Called by state machine at end of TOKEN_PINOP state. */
 int eid_vwr_p11_leave_pinop() {
-	check_rv(C_Logout(session));
+	/* Try to log out if we can, but don't worry if we can't */
+	C_Logout(session);
 
 	return 0;
 }
