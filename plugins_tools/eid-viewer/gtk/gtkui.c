@@ -407,16 +407,20 @@ void readers_changed(unsigned long nreaders, slotdesc* slots) {
 void update_doctype(char* label G_GNUC_UNUSED, void* data, int length) {
 	static char doctype[2];
 	char* newtype = (char*)data;
-	if(length != 2) {
-		uilog(EID_VWR_LOG_ERROR, _("E: require a length of 2 for raw document type, got %d"), length);
-		return;
+	char b0, b1;
+	if(length == 1) {
+		b0 = ' ';
+		b1 = *newtype;
+	} else {
+		b0 = newtype[0];
+		b1 = newtype[1];
 	}
-	if(newtype[0] != doctype[0] || newtype[1] != doctype[1]) {
+	if(b0 != doctype[0] || b1 != doctype[1]) {
 		gboolean is_foreigner;
 		struct labelnames* toggles = get_foreigner_labels();
 		int i;
 
-		doctype[0] = newtype[0]; doctype[1] = newtype[1];
+		doctype[0] = b0; doctype[1] = b1;
 
 		if((doctype[0] == '0' || doctype[0] == ' ') && doctype[1] == '1') {
 			is_foreigner = FALSE;
