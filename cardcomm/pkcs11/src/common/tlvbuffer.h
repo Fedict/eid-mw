@@ -56,7 +56,7 @@ public:
 		EIDMW_CMN_API void FillASCIIData(unsigned char ucTag,
 						 char *pData,
 						 unsigned long *pulLen);
-		EIDMW_CMN_API void FillUTF8Data(unsigned char ucTag,
+		EIDMW_CMN_API bool FillUTF8Data(unsigned char ucTag,
 						char *pData,
 						unsigned long *pulLen);
 		EIDMW_CMN_API void FillBinaryStringData(unsigned char ucTag,

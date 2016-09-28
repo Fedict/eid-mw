@@ -1593,36 +1593,15 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				{
 					ulLen = sizeof(cBuffer);
 					memset(cBuffer, 0, ulLen);
-					oTLVBuffer.FillUTF8Data(ID_LABELS[i].
-								tag, cBuffer,
-								&ulLen);
-					plabel = ID_LABELS[i].name;
-					ret = p11_add_slot_ID_object(pSlot,
-								     ID_DATA,
-								     sizeof
-								     (ID_DATA)
-								     /
-								     sizeof
-								     (CK_ATTRIBUTE),
-								     CK_TRUE,
-								     CKO_DATA,
-								     CK_FALSE,
-								     &hObject,
-								     (CK_VOID_PTR)
-								     plabel,
-								     (CK_ULONG)
-								     strlen
-								     (plabel),
-								     (CK_VOID_PTR)
-								     cBuffer,
-								     ulLen,
-								     (CK_VOID_PTR)
-								     pobjectID,
-								     (CK_ULONG)
-								     strlen
-								     (pobjectID));
-					if (ret)
-						goto cleanup;
+					if(oTLVBuffer.FillUTF8Data(ID_LABELS[i].tag, cBuffer, &ulLen)) {
+						plabel = ID_LABELS[i].name;
+						ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+									     CK_TRUE, CKO_DATA, CK_FALSE, &hObject, (CK_VOID_PTR)plabel,
+									     (CK_ULONG)strlen(plabel), (CK_VOID_PTR)cBuffer, ulLen,
+									     (CK_VOID_PTR) pobjectID, (CK_ULONG)strlen(pobjectID));
+						if (ret)
+							goto cleanup;
+					}
 				}
 				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
 				{
@@ -1633,32 +1612,13 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 					oReader.ReadFile(BEID_FILE_ADDRESS);
 				plabel = BEID_LABEL_ADDRESS_FILE;
 				pobjectID = BEID_OBJECTID_ADDRESS;
-				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
-							     sizeof(ID_DATA) /
-							     sizeof
-							     (CK_ATTRIBUTE),
-							     CK_TRUE,
-							     CKO_DATA,
-							     CK_FALSE,
-							     &hObject,
-							     (CK_VOID_PTR)
-							     plabel,
-							     (CK_ULONG)
-							     strlen(plabel),
-							     (CK_VOID_PTR)
-							     oFileData.
-							     GetBytes(),
-							     (CK_ULONG)
-							     oFileData.Size(),
-							     (CK_VOID_PTR)
-							     pobjectID,
-							     (CK_ULONG)
-							     strlen
-							     (pobjectID));
+				ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA,
+							     CK_FALSE, &hObject, (CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
+							     (CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
+							     (CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
 				if (ret)
 					goto cleanup;
-				oTLVBufferAddress.ParseTLV(oFileData.
-							   GetBytes(),
+				oTLVBufferAddress.ParseTLV(oFileData.GetBytes(),
 							   oFileData.Size());
 				nrOfItems =
 					sizeof(ADDRESS_LABELS) /
@@ -1667,37 +1627,15 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				{
 					ulLen = sizeof(cBuffer);
 					memset(cBuffer, 0, ulLen);
-					oTLVBufferAddress.
-						FillUTF8Data(ADDRESS_LABELS
-							     [i].tag, cBuffer,
-							     &ulLen);
-					plabel = ADDRESS_LABELS[i].name;
-					ret = p11_add_slot_ID_object(pSlot,
-								     ID_DATA,
-								     sizeof
-								     (ID_DATA)
-								     /
-								     sizeof
-								     (CK_ATTRIBUTE),
-								     CK_TRUE,
-								     CKO_DATA,
-								     CK_FALSE,
-								     &hObject,
-								     (CK_VOID_PTR)
-								     plabel,
-								     (CK_ULONG)
-								     strlen
-								     (plabel),
-								     (CK_VOID_PTR)
-								     cBuffer,
-								     ulLen,
-								     (CK_VOID_PTR)
-								     pobjectID,
-								     (CK_ULONG)
-								     strlen
-								     (pobjectID));
-					if (ret)
-						goto cleanup;
+					if(oTLVBufferAddress.FillUTF8Data(ADDRESS_LABELS[i].tag, cBuffer, &ulLen)) {
+						plabel = ADDRESS_LABELS[i].name;
+						ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE), CK_TRUE,
+									     CKO_DATA, CK_FALSE, &hObject, (CK_VOID_PTR)plabel,
+									     (CK_ULONG)strlen(plabel), (CK_VOID_PTR)cBuffer, ulLen,
+									     (CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID));
+						if (ret)
+							goto cleanup;
+					}
 				}
 				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
 				{
