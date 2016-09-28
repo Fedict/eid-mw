@@ -12,6 +12,9 @@
 #import "PrintOperation.h"
 #import "ReaderMenuItem.h"
 
+#include <eid-util/utftranslate.h>
+#include <eid-util/labels.h>
+
 @interface AppDelegate ()
 - (IBAction)file_open:(id)sender;
 - (IBAction)file_close:(id)sender;
@@ -308,6 +311,7 @@
 		    _certstore, @"Signature",
 		    _certstore, @"CERT_RN_FILE",
 		    self, @"certimage",
+		    self, @"document_type_raw",
 		    nil];
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
@@ -401,7 +405,40 @@
 }
 -(void)handle_bin_data:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui {
 	assert(ui == self);
-	[(NSImageView*) [ui searchObjectById:label ofClass:[NSImageView class]] setImage:(NSImage*)data];
+	if([label isEqualToString:@"certimage"]) {
+		[(NSImageView*) [ui searchObjectById:label ofClass:[NSImageView class]] setImage:(NSImage*)data];
+		return;
+	}
+	if([label isEqualToString:@"document_type_raw"]) {
+		static BOOL is_foreigner = NO;
+		BOOL new_foreigner;
+		char b0, b1;
+		if([data length] > 1) {
+			[data getBytes:&b0 length:1];
+			[data getBytes:&b1 range:NSMakeRange(1, 1)];
+		} else {
+			b0 = ' ';
+			[data getBytes:&b1 length:1];
+		}
+		if((b0 == ' ' || b0 == '0') && b1 == '1') {
+			new_foreigner = NO;
+		} else {
+			new_foreigner = YES;
+		}
+		if(is_foreigner != new_foreigner) {
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				struct labelnames* toggles = get_foreigner_labels();
+				int i;
+				is_foreigner = new_foreigner;
+				for(i=0; i<toggles->len; i++) {
+					NSView *v = (NSView*)[self searchObjectById:[NSString stringWithUTF8String:toggles->label[i]] ofClass:[NSView class]];
+					[v setHidden:!new_foreigner];
+					v = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"title_%s",toggles->label[i]] ofClass:[NSView class]];
+					[v setHidden:!new_foreigner];
+				}
+			}];
+		}
+	}
 }
 -(void)changeLogLevel:(NSPopUpButton *)logLevel {
 	[[NSUserDefaults standardUserDefaults] setInteger:[logLevel indexOfSelectedItem] forKey:@"log_level"];
