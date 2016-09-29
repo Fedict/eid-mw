@@ -141,6 +141,7 @@
 		NSTextField* tf = (NSTextField*)obj;
 		[tf setStringValue:@""];
 	}];
+	[_memberOfFamilyState setState:NSOffState];
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -306,6 +307,7 @@
 		    _certstore, @"CERT_RN_FILE",
 		    self, @"certimage",
 		    self, @"document_type_raw",
+		    self, @"member_of_family",
 		    nil];
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
@@ -402,6 +404,11 @@
 	if([label isEqualToString:@"certimage"]) {
 		[(NSImageView*) [ui searchObjectById:label ofClass:[NSImageView class] forUpdate:NO] setImage:(NSImage*)data];
 		return;
+	}
+	if([label isEqualToString:@"member_of_family"]) {
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[_memberOfFamilyState setState:NSOnState];
+		}];
 	}
 	if([label isEqualToString:@"document_type_raw"]) {
 		static BOOL is_foreigner = NO;
