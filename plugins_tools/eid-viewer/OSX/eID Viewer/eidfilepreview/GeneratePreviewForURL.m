@@ -30,6 +30,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
         NSLog(@"data generated");
         QLPreviewRequestSetDataRepresentation(preview, dat, kUTTypeImage, nil);
         NSLog(@"ok");
+        CFRelease(dat);
     }
     return noErr;
 }
