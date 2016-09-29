@@ -60,6 +60,11 @@
 @property (weak) IBOutlet NSSegmentedControl *pinop_ctrl;
 @property (unsafe_unretained) IBOutlet NSTextView *CertDetailView;
 @property (weak) IBOutlet NSWindow *CertDetailSheet;
+@property (weak) IBOutlet NSBox *centeringLine;
+@property (weak) IBOutlet NSBox *bottomLine;
+@property (weak) IBOutlet NSTextField *lowestItem;
+@property (weak) IBOutlet NSLayoutConstraint *verticalLineBottomConstraint;
+@property (weak) IBOutlet NSButton *memberOfFamilyState;
 
 @end
 
