@@ -158,59 +158,38 @@
 	BOOL fileClose = NO;
 	BOOL pinops = NO;
 	BOOL validate = NO;
+	BOOL doValidateNow = NO;
+	BOOL sheet = NO;
+	BOOL dnd = NO;
 	switch(state) {
 		case eIDStateReady:
 			fileOpen = YES;
 			break;
+		case eIDStateNoReader:
+			fileOpen = YES;
+			break;
 		case eIDStateToken:
-		{
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[_spinner startAnimation:self];
-				[NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
-			}];
-		}
+		case eIDStateTokenID:
+		case eIDStateTokenCerts:
+			sheet = YES;
 			break;
 		case eIDStateTokenWait:
 			filePrint = YES;
 			fileSave = YES;
 			pinops = YES;
 			validate = YES;
-		{
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[NSApp endSheet:_CardReadSheet];
-				[_spinner stopAnimation:self];
-			}];
+			dnd = YES;
 			if([_alwaysValidate state] == NSOnState) {
-				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					[self validateNow:nil];
-				}];
+				doValidateNow = YES;
 			}
-		}
-			break;
-		case eIDStateFile:
-			fileClose = YES;
-			filePrint = YES;
-		{
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[_spinner startAnimation:self];
-				[NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
-			}];
-		}
 			break;
 		case eIDStateFileWait:
 			fileClose = YES;
 			filePrint = YES;
+			dnd = YES;
 			if([_alwaysValidate state] == NSOnState) {
-				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					[self validateNow:nil];
-				}];
+				doValidateNow = YES;
 			}
-		{
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[NSApp endSheet:_CardReadSheet];
-				[_spinner stopAnimation:self];
-			}];
-		}
 		default:
 			break;
 	}
@@ -222,6 +201,16 @@
 		[_pinop_ctrl setEnabled:pinops];
 		[_alwaysValidate setEnabled:validate];
 		[_validateNow setEnabled:validate];
+		if(sheet) {
+			[_spinner startAnimation:self];
+			[NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
+		} else {
+			[NSApp endSheet:_CardReadSheet];
+			[_spinner stopAnimation:self];
+		}
+		if(doValidateNow) {
+			[self validateNow:nil];
+		}
 	}];
 }
 - (NSObject*)searchView:(NSView*)from withName:(NSString*)name {
