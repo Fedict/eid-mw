@@ -68,12 +68,12 @@
 	return YES;
 }
 - (void)log:(NSString *)line withLevel:(eIDLogLevel)level {
+	if([self.logLevel indexOfSelectedItem] > level) {
+		return;
+	}
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		char l;
 		NSAlert* alert;
-		if([self.logLevel indexOfSelectedItem] > level) {
-			return;
-		}
 		switch(level) {
 			case eIDLogLevelDetail:
 				l='D';
