@@ -430,6 +430,14 @@
 					v = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"title_%s",toggles->label[i]] ofClass:[NSView class] forUpdate:NO];
 					[v setHidden:!new_foreigner];
 				}
+				[_IdentityTab removeConstraint:_verticalLineBottomConstraint];
+				if(is_foreigner) {
+					_verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:_centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_lowestItem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+				} else {
+					_verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:_centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_bottomLine attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+				}
+				[_IdentityTab addConstraint:_verticalLineBottomConstraint];
+				[_IdentityTab layoutSubtreeIfNeeded];
 			}];
 		}
 	}
