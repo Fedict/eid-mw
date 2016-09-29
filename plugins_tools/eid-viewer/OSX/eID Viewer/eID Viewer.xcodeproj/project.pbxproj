@@ -135,7 +135,7 @@
 		653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../support/xml/builddir/.libs/libxml2.2.dylib; sourceTree = "<group>"; };
 		654832DE1C451E160030D770 /* verify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = verify.c; path = ../../../verify.c; sourceTree = "<group>"; };
 		6593B10D1CD8F8BC00C089A2 /* certs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = certs; path = ../../../certs; sourceTree = "<group>"; };
-		65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.10.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.10.dylib; sourceTree = "<group>"; };
+		65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.18.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.18.dylib; sourceTree = "<group>"; };
 		659FFC3C1AE9360D004CEC1F /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		659FFC401AE9360D004CEC1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		659FFC411AE9360D004CEC1F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 			children = (
 				65D80EE01D771C010081F649 /* utftranslate.h */,
 				651130951CD8DD3F0076682F /* libcrypto.a */,
-				65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.10.dylib */,
+				65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.18.dylib */,
 				653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */,
 				65BE1C781BB573C4002E8061 /* libxml2.a */,
 				659FFC3E1AE9360D004CEC1F /* eID Viewer */,
