@@ -36,7 +36,7 @@
     for(int i=0; i<[_printableFields count]; i++) {
         NSString* name = [_printableFields objectAtIndex:i];
         NSObject* d = [_viewDict objectForKey:name];
-        NSObject* s = [_app searchObjectById:name ofClass:[d class]];
+        NSObject* s = [_app searchObjectById:name ofClass:[d class] forUpdate:NO];
         SEL readsel;
         SEL writesel;
         if([s isKindOfClass:[NSTextField class]]) {
@@ -52,8 +52,8 @@
         [d performSelector:writesel withObject:[s performSelector:readsel]];
     }
 	NSTextField *o = [_viewDict objectForKey:@"firstnames"];
-	NSTextField *fn = (NSTextField*)[_app searchObjectById:@"firstnames" ofClass:[NSTextField class]];
-	NSTextField *ftn = (NSTextField*)[_app searchObjectById:@"first_letter_of_third_given_name" ofClass:[NSTextField class]];
+	NSTextField *fn = (NSTextField*)[_app searchObjectById:@"firstnames" ofClass:[NSTextField class] forUpdate:NO];
+	NSTextField *ftn = (NSTextField*)[_app searchObjectById:@"first_letter_of_third_given_name" ofClass:[NSTextField class] forUpdate:NO];
 	[o setStringValue:[NSString stringWithFormat:@"%@ %@", [fn stringValue], [ftn stringValue]]];
     NSString *seal;
     NSString *ctry;

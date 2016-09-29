@@ -107,7 +107,7 @@
 - (void)saveDocument:(id)sender {
 	NSSavePanel *panel = [NSSavePanel savePanel];
 	[panel setAllowedFileTypes:[NSArray arrayWithObjects: @"be.fedict.eid.eidviewer", nil]];
-	[panel setNameFieldStringValue:[NSString stringWithFormat:@"%@.eid", [(NSTextField*)[self searchObjectById:@"national_number" ofClass:[NSTextField class]] stringValue]]];
+	[panel setNameFieldStringValue:[NSString stringWithFormat:@"%@.eid", [(NSTextField*)[self searchObjectById:@"national_number" ofClass:[NSTextField class] forUpdate:NO] stringValue]]];
 	[panel beginWithCompletionHandler:^(NSInteger result) {
 		if(result == NSFileHandlingPanelOKButton) {
 			[eIDOSLayerBackend serialize:[panel URL]];
@@ -237,7 +237,7 @@
 	}
 	return nil;
 }
-- (NSObject*)searchObjectById:(NSString*)identity ofClass:(Class)aClass {
+- (NSObject*)searchObjectById:(NSString*)identity ofClass:(Class)aClass forUpdate:(BOOL)update {
 	NSObject* o = [_viewdict objectForKey:identity];
 	if([o isKindOfClass:aClass]) {
 		return o;
@@ -248,7 +248,7 @@
 	}
 	for(int i=0;i<3;i++) {
 		NSObject* o = [self searchView:[elems objectAtIndex:i] withName:identity];
-		if(o != nil) {
+		if(o != nil && update == YES) {
 			[_viewdict setValue:o forKey:identity];
 		}
 		if([o isKindOfClass:aClass]) {
@@ -259,7 +259,7 @@
 }
 - (void)newstringdata:(NSString *)data withLabel:(NSString *)label{
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-		NSTextField* tf = (NSTextField*)[self searchObjectById:label ofClass:[NSTextField class]];
+		NSTextField* tf = (NSTextField*)[self searchObjectById:label ofClass:[NSTextField class] forUpdate:YES];
 		[tf setStringValue:data ? data : @""];
 	}];
 }
@@ -406,7 +406,7 @@
 -(void)handle_bin_data:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui {
 	assert(ui == self);
 	if([label isEqualToString:@"certimage"]) {
-		[(NSImageView*) [ui searchObjectById:label ofClass:[NSImageView class]] setImage:(NSImage*)data];
+		[(NSImageView*) [ui searchObjectById:label ofClass:[NSImageView class] forUpdate:NO] setImage:(NSImage*)data];
 		return;
 	}
 	if([label isEqualToString:@"document_type_raw"]) {
@@ -431,9 +431,9 @@
 				int i;
 				is_foreigner = new_foreigner;
 				for(i=0; i<toggles->len; i++) {
-					NSView *v = (NSView*)[self searchObjectById:[NSString stringWithUTF8String:toggles->label[i]] ofClass:[NSView class]];
+					NSView *v = (NSView*)[self searchObjectById:[NSString stringWithUTF8String:toggles->label[i]] ofClass:[NSView class] forUpdate:NO];
 					[v setHidden:!new_foreigner];
-					v = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"title_%s",toggles->label[i]] ofClass:[NSView class]];
+					v = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"title_%s",toggles->label[i]] ofClass:[NSView class] forUpdate:NO];
 					[v setHidden:!new_foreigner];
 				}
 			}];
