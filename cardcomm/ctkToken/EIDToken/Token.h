@@ -6,12 +6,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static const unsigned char kBELPIC_DF_BELPIC[] =     { 0xDF, 0x00};
-static const unsigned char kBELPIC_EF_AuthCert[] =     { 0x50, 0x38 };
-static const unsigned char kBELPIC_EF_SignCert[] =     { 0x50, 0x39 };
-static const unsigned char kBELPIC_EF_TokenInfo[] =    { 0x50, 0x32 };
+static const unsigned char kBELPIC_DF_BELPIC[] =    { 0xDF, 0x00 };
+static const unsigned char kBELPIC_EF_AuthCert[] =  { 0x50, 0x38 };
+static const unsigned char kBELPIC_EF_SignCert[] =  { 0x50, 0x39 };
+static const unsigned char kBELPIC_EF_TokenInfo[] = { 0x50, 0x32 };
 static const unsigned char kBELPIC_AuthCert[] =     { 0xDF, 0x00, 0x50, 0x38 };
 static const unsigned char kBELPIC_SignCert[] =     { 0xDF, 0x00, 0x50, 0x39 };
+static const unsigned char kBELPIC_CACert[] =       { 0xDF, 0x00, 0x50, 0x3A };
+static const unsigned char kBELPIC_ROOTCACert[] =   { 0xDF, 0x00, 0x50, 0x3B };
 static const unsigned char kBELPIC_TokenInfo[] =    { 0xDF, 0x00, 0x50, 0x32 };
 
 #pragma mark TKSmartCard utility extension for sending/receiving TKBERTLVRecord-formatted APDUs
@@ -62,5 +64,6 @@ static const TKTokenOperationConstraint PIVConstraintPINAlways = @"PINAlways";
 
 @interface PIVTokenDriver : TKSmartCardTokenDriver<TKSmartCardTokenDriverDelegate>
 @end
+
 
 NS_ASSUME_NONNULL_END

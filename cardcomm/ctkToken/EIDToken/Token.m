@@ -162,11 +162,15 @@
    
     if ( (sw&0xFF00) == 0x6100 || (sw&0xFF00) == 0x6c00 ){
          //we asked for an incorrect length of data, the correct length to ask for resides in SW2
-        os_log_error(OS_LOG_DEFAULT, "_BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)replyData.length, sw);
+        os_log_error(OS_LOG_DEFAULT, "_BEID readBinary returned %lu bytes; SW=0x%x; offset = %hu",(unsigned long)replyData.length, sw, offset);
         NSNumber *sw2 = [NSNumber numberWithInt:(sw & 0xFF)];
         replyData = [smartCard sendIns:0xB0 p1:(offset&0xFF00)>>8 p2:offset&0x00FF data:nil le:sw2 sw:&sw error:error];
         if (replyData != nil) {
-            if (replyData.length > 0) {
+            os_log_error(OS_LOG_DEFAULT, "-_BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)replyData.length, sw);
+            if(fileData.length == 0){
+                fileData = [replyData mutableCopy];
+            }
+            else {
                 [fileData appendData:replyData];
             }
         }
@@ -182,11 +186,21 @@
     __block NSData *certificateData;
     const unsigned char *absFileId;
     
-    if(certificateObjectID == 0x5038){
+    switch(certificateObjectID){
+    case 0x5038:
         absFileId = kBELPIC_AuthCert;
-    }
-    else if (certificateObjectID == 0x5039){
+        break;
+    case 0x5039:
         absFileId = kBELPIC_SignCert;
+        break;
+    case 0x503A:
+        absFileId = kBELPIC_CACert;
+        break;
+    case 0x503B:
+        absFileId = kBELPIC_ROOTCACert;
+        break;
+    default:
+        return nil;
     }
     
     BOOL (^readCertData)(NSError**) = ^(NSError** err) {
@@ -216,7 +230,7 @@
     return certificateData;
 }
 
-- (BOOL)populateIdentityFromSmartCard:(TKSmartCard *)smartCard into:(NSMutableArray<TKTokenKeychainItem *> *)items certificateTag:(UInt16)certificateTag name:(NSString *)certificateName keyTag:(TKTLVTag)keyTag name:(NSString *)keyName sign:(BOOL)sign keyManagement:(BOOL)keyManagement alwaysAuthenticate:(BOOL)alwaysAuthenticate error:(NSError **)error {
+- (BOOL)populateIdentityFromSmartCard:(TKSmartCard *)smartCard into:(NSMutableArray<TKTokenKeychainItem *> *)items certificateTag:(UInt16)certificateTag name:(NSString *)certificateName keyTag:(UInt16)keyTag name:(NSString *)keyName sign:(BOOL)sign keyManagement:(BOOL)keyManagement alwaysAuthenticate:(BOOL)alwaysAuthenticate error:(NSError **)error {
     // Read certificate data.
     os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard called");
     TKTokenObjectID certificateID = @(certificateTag) ;//[TKBERTLVRecord dataForTag:certificateTag];
@@ -231,10 +245,11 @@
     id certificate = CFBridgingRelease(SecCertificateCreateWithData(kCFAllocatorDefault, (CFDataRef)certificateData));
     if (certificate == nil) {
         os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard certificate == NIL");
-        if (error != nil) {
-            *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeCorruptedData userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"CORRUPTED_CERT", nil)}];
-        }
-        return NO;
+        //if (error != nil) {
+        //    *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeCorruptedData userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"CORRUPTED_CERT", nil)}];
+        //}
+        //sometimes not all certificates are present on the card, in that case; don't search for any matching keys either
+        return YES;
     }
     os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard created certificate");
     TKTokenKeychainCertificate *certificateItem = [[TKTokenKeychainCertificate alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:certificateID];
@@ -245,38 +260,39 @@
     os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard created certificateItem");
     [certificateItem setName:certificateName];
 
-    // Create key item.
-    TKTokenKeychainKey *keyItem = [[PIVTokenKeychainKey alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:@(keyTag) certificateID:certificateItem.objectID alwaysAuthenticate:alwaysAuthenticate];
-    if (keyItem == nil) {
-        os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard keyItem == NIL");
-        return NO;
-    }
-    os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard created keyItem");
-    [keyItem setName:keyName];
+    if(keyTag != 0) {
+        // Create key item.
+        TKTokenKeychainKey *keyItem = [[PIVTokenKeychainKey alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:@(keyTag) certificateID:certificateItem.objectID alwaysAuthenticate:alwaysAuthenticate];
+        if (keyItem == nil) {
+            os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard keyItem == NIL");
+            return NO;
+        }
+        os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard created keyItem");
+        [keyItem setName:keyName];
+        
+        NSMutableDictionary<NSNumber *, TKTokenOperationConstraint> *constraints = [NSMutableDictionary dictionary];
+        keyItem.canSign = sign;
+        keyItem.suitableForLogin = NO;
+        keyItem.canDecrypt = NO;
+        keyItem.canPerformKeyExchange = NO;
+        
+        TKTokenOperationConstraint constraint = alwaysAuthenticate ? PIVConstraintPINAlways : PIVConstraintPIN;
+        if (sign) {
+            constraints[@(TKTokenOperationSignData)] = constraint;
+            keyItem.constraints = constraints;
+        }
+        /*if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
+            os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]");
+            keyItem.canDecrypt = keyManagement;
+            if (keyManagement) {
+                constraints[@(TKTokenOperationDecryptData)] = constraint;
+            }
+        }*/
 
-    NSMutableDictionary<NSNumber *, TKTokenOperationConstraint> *constraints = [NSMutableDictionary dictionary];
-    keyItem.canSign = sign;
-    keyItem.suitableForLogin = NO;//sign;
-    TKTokenOperationConstraint constraint = alwaysAuthenticate ? PIVConstraintPINAlways : PIVConstraintPIN;
-    if (sign) {
-        constraints[@(TKTokenOperationSignData)] = constraint;
+        [items addObject:keyItem];
     }
-    if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
-        os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]");
-        keyItem.canDecrypt = keyManagement;
-        if (keyManagement) {
-            constraints[@(TKTokenOperationDecryptData)] = constraint;
-        }
-    } /*else if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeECSECPrimeRandom]) {
-        keyItem.canPerformKeyExchange = keyManagement;
-        if (keyManagement) {
-            constraints[@(TKTokenOperationPerformKeyExchange)] = constraint;
-        }
-    }*/
-    
-    keyItem.constraints = constraints;
     [items addObject:certificateItem];
-    [items addObject:keyItem];
+    
     os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard leave success");
     return YES;
 }
@@ -312,8 +328,12 @@
             }
             return retVAL;
         }
+        NSRange range;
+        range.length=16;
+        range.location=7;
+        NSData *tokenSerial = [tokenInfo subdataWithRange:(NSRange)range];
         
-        NSString *stringBuffer = [tokenInfo hexString];
+        NSString *stringBuffer = [tokenSerial hexString];
         
         instanceID = [@"BEID-" stringByAppendingString:stringBuffer];
 
@@ -327,15 +347,17 @@
         
         if (self = [super initWithSmartCard:smartCard AID:AID instanceID:instanceID tokenDriver:tokenDriver]) {
             // Prepare array with keychain items representing on card objects.
-            NSMutableArray<TKTokenKeychainItem *> *items = [NSMutableArray arrayWithCapacity:2];
+            NSMutableArray<TKTokenKeychainItem *> *items = [NSMutableArray arrayWithCapacity:4];
             if (![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x5038 name:NSLocalizedString(@"BEID_AUTH_CERT", nil) keyTag:0x82 name:NSLocalizedString(@"BEID_AUTH_KEY", nil) sign:YES keyManagement:NO alwaysAuthenticate:NO error:error] ||
-                ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x5039 name:NSLocalizedString(@"BEID_SIG_CERT", nil) keyTag:0x83 name:NSLocalizedString(@"BEID_SIG_KEY", nil) sign:YES keyManagement:NO alwaysAuthenticate:YES error:error]
+                ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x5039 name:NSLocalizedString(@"BEID_SIG_CERT", nil) keyTag:0x83 name:NSLocalizedString(@"BEID_SIG_KEY", nil) sign:YES keyManagement:NO alwaysAuthenticate:YES error:error] ||
+                ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x503A name:NSLocalizedString(@"BEID_CA_CERT", nil) keyTag:0 name:NSLocalizedString(@"NO_KEY", nil) sign:NO keyManagement:NO alwaysAuthenticate:NO error:error] ||
+                ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x503B name:NSLocalizedString(@"BEID_ROOTCA_CERT", nil) keyTag:0 name:NSLocalizedString(@"NO_KEY", nil) sign:NO keyManagement:NO alwaysAuthenticate:NO error:error]
                 )
             {
                 return nil;
             }
             
-            // Populate keychain state with keys.
+            // Populate keychain state with certificates and keys.
             [self.keychainContents fillWithItems:items];
         }
     }
