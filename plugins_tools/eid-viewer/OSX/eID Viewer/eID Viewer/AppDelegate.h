@@ -9,8 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BeidView/oslayer-objc.h>
 
-@ interface AppDelegate: NSObject < NSApplicationDelegate, eIDOSLayerUI > -(NSObject *) searchObjectById:(NSString
- *)
-     identity ofClass:(Class) aClass;
+@interface AppDelegate: NSObject < NSApplicationDelegate, eIDOSLayerUI >
+-(NSObject *) searchObjectById:(NSString*)identity ofClass:(Class) aClass forUpdate:(BOOL)update;
 
 @end

@@ -6,6 +6,9 @@
 #include <eid-viewer/oslayer.h>
 #include "state.h"
 #include "certs.h"
+#include "logging.h"
+#include "thread.h"
+#include <eid-util/labels.h>
 
 #include <libxml/xmlreader.h>
 #include "viewer_glade.h"
@@ -390,12 +393,6 @@ void readers_changed(unsigned long nreaders, slotdesc* slots) {
 	data->slots = malloc(sizeof(slotdesc) * nreaders);
 	memcpy(data->slots, slots, sizeof(slotdesc)*nreaders);
 	for(i=0; i<nreaders; i++) {
-		/* XXX The description is NULL if a reader contains a
-		 * card we don't know about. While that shouldn't
-		 * happen (and we need to fix that bug eventually), we
-		 * should at the very least make sure we don't segfault
-		 * in that case.
-		 */
 		if(slots[i].description != NULL) {
 			data->slots[i].description = strdup(slots[i].description);
 		} else {
@@ -405,4 +402,48 @@ void readers_changed(unsigned long nreaders, slotdesc* slots) {
 	data->nreaders = nreaders;
 	g_main_context_invoke(NULL, readers_changed_real, data);
 	g_message("readers changed");
+}
+
+void update_doctype(char* label G_GNUC_UNUSED, void* data, int length) {
+	static char doctype[2];
+	char* newtype = (char*)data;
+	char b0, b1;
+	if(length == 1) {
+		b0 = ' ';
+		b1 = *newtype;
+	} else {
+		b0 = newtype[0];
+		b1 = newtype[1];
+	}
+	if(b0 != doctype[0] || b1 != doctype[1]) {
+		gboolean is_foreigner;
+		struct labelnames* toggles = get_foreigner_labels();
+		int i;
+
+		doctype[0] = b0; doctype[1] = b1;
+
+		if((doctype[0] == '0' || doctype[0] == ' ') && doctype[1] == '1') {
+			is_foreigner = FALSE;
+		} else {
+			is_foreigner = TRUE;
+		}
+		for(i=0; i<toggles->len; i++) {
+			GValue *show_data, *show_label;
+			gchar* titlelabel;
+			GObject* obj = gtk_builder_get_object(builder, toggles->label[i]);
+			if(!obj) {
+				continue;
+			}
+			titlelabel = g_strdup_printf("title_%s", toggles->label[i]);
+			show_data = calloc(sizeof(GValue), 1);
+			g_value_init(show_data, G_TYPE_BOOLEAN);
+			g_value_set_boolean(show_data, is_foreigner);
+			show_label = calloc(sizeof(GValue), 1);
+			g_value_init(show_label, G_TYPE_BOOLEAN);
+			g_value_set_boolean(show_label, is_foreigner);
+			g_object_set_threaded_gvalue(obj, "visible", show_data, free);
+			g_object_set_threaded_gvalue(gtk_builder_get_object(builder, titlelabel), "visible", show_label, free);
+			g_free(titlelabel);
+		}
+	}
 }

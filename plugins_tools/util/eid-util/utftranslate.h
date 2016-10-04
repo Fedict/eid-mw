@@ -14,7 +14,9 @@ static inline char *f(const char *c, unsigned long *l)
 #define EID_STRTOL(x,y,z) strtol(x,y,z)
 #define EID_STRDUP(x) strdup(x)
 #define EID_STRLEN(x) strlen(x)
+#define EID_S_FORMAT "%s"
 #define EID_VSNPRINTF(str, size, string, ap) vsnprintf(str, size, string, ap)
+#define EID_SNPRINTF snprintf
 #define EID_FOPEN(filename, mode) fopen(filename, mode)
 typedef char EID_CHAR;
 
@@ -41,6 +43,7 @@ char *Utf16ToUtf8(const wchar_t * utf16string, unsigned long *utf8len,
 #define EID_STRTOL(x,y,z) wcstol(x,y,z)
 #define EID_STRDUP(x) _wcsdup(x)
 #define EID_STRLEN(x) wcslen(x)
+#define EID_S_FORMAT "%S"
 #define EID_VSNPRINTF(str, size, string, ap) _vsnwprintf(str, size, string, ap)
 #define EID_FOPEN(filename, mode) _wfopen(filename, mode)
 typedef wchar_t EID_CHAR;

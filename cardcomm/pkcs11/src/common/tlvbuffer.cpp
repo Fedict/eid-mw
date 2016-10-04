@@ -211,7 +211,7 @@ namespace eIDMW
 		*pulLen = ulLength;
 	}
 
-	void CTLVBuffer::FillUTF8Data(unsigned char ucTag, char *pData,
+	bool CTLVBuffer::FillUTF8Data(unsigned char ucTag, char *pData,
 				      unsigned long *pulLen)
 	{
 		CTLV *pTagData = NULL;
@@ -219,8 +219,10 @@ namespace eIDMW
 
 		assert(pulLen != NULL);
 
-		if ((NULL != (pTagData = GetTagData(ucTag)))
-		    && (pData != NULL))
+		if (NULL == (pTagData = GetTagData(ucTag))) {
+			return false;
+		}
+		if(pData != NULL)
 		{
 			if ((*pulLen >= (ulLength = pTagData->GetLength())))
 			{
@@ -231,6 +233,7 @@ namespace eIDMW
 		//tag not present -> *pulLen = 0
 
 		*pulLen = ulLength;
+		return true;
 	}
 
 	void CTLVBuffer::FillBinaryStringData(unsigned char ucTag,

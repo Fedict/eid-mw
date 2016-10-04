@@ -8,33 +8,34 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview);
 
 /* -----------------------------------------------------------------------------
-   Generate a preview for file
+ Generate a preview for file
 
-   This function's job is to create preview for designated file
-   ----------------------------------------------------------------------------- */
+ This function's job is to create preview for designated file
+ ----------------------------------------------------------------------------- */
 
 OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options)
 {
-    @autoreleasepool {
-        NSLog(@"generating a preview");
-        NSLog(@"URL: %@", (__bridge NSURL*)url);
-        const char *filename = [(__bridge NSURL*)url fileSystemRepresentation];
-        NSLog(@"Filename: %s", filename);
-        if(!filename) return noSuchIconErr;
-        struct eid_vwr_preview *prev = eid_vwr_get_preview(filename);
-        if(!prev->have_data) {
-            NSLog(@"Could not load preview");
-            return noErr;
-        }
-        CFDataRef dat = CFDataCreate(NULL, prev->imagedata, prev->imagelen);
-        NSLog(@"data generated");
-        QLPreviewRequestSetDataRepresentation(preview, dat, kUTTypeImage, nil);
-        NSLog(@"ok");
-    }
-    return noErr;
+	@autoreleasepool {
+		NSLog(@"generating a preview");
+		NSLog(@"URL: %@", (__bridge NSURL*)url);
+		const char *filename = [(__bridge NSURL*)url fileSystemRepresentation];
+		NSLog(@"Filename: %s", filename);
+		if(!filename) return noSuchIconErr;
+		struct eid_vwr_preview *prev = eid_vwr_get_preview(filename);
+		if(!prev->have_data) {
+			NSLog(@"Could not load preview");
+			return noErr;
+		}
+		CFDataRef dat = CFDataCreate(NULL, prev->imagedata, prev->imagelen);
+		NSLog(@"data generated");
+		QLPreviewRequestSetDataRepresentation(preview, dat, kUTTypeImage, nil);
+		NSLog(@"ok");
+		CFRelease(dat);
+	}
+	return noErr;
 }
 
 void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview)
 {
-    // Implement only if supported
+	// Implement only if supported
 }

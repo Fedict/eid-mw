@@ -12,6 +12,7 @@
 #include "conversions.h"
 #include <cache.h>
 #include <string.h>
+#include <stdio.h>
 
 typedef struct {
 	CK_RV rv;
@@ -181,10 +182,15 @@ end:
 void eid_vwr_p11_to_ui(const EID_CHAR* label, const void* value, int len) {
 	EID_CHAR* str;
 	if(can_convert(label)) {
+		size_t label_len;
 		be_log(EID_VWR_LOG_DETAIL, TEXT("converting %s"), label);
 		str = converted_string(label, (const EID_CHAR*)value);
 		be_newstringdata(label, str);
 		free(str);
+		label_len = EID_STRLEN(label) + 5 * sizeof(EID_CHAR);
+		str = malloc(label_len);
+		EID_SNPRINTF(str, label_len, TEXT("%s_raw"), label);
+		be_newbindata(str, value, len);
 	} else if(is_string(label)) {
 		be_newstringdata(label, (const EID_CHAR*)value);
 	} else {
@@ -307,9 +313,6 @@ int eid_vwr_p11_read_certs(void* data) {
  * "failed" message, and otherwise we can't use our check_rv() macro
  */
 static int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
-	/* Need to do a C_Login in both cases (whether we're doing a "test pin"
-	 * or a "change pin", since you can't change your PIN code unless
-	 * you're logged in. */
 	if (p == EID_VWR_PINOP_TEST) {
 		check_rv(C_Login(session, CKU_USER, NULL, 0));
 	}
@@ -317,7 +320,7 @@ static int eid_vwr_p11_do_pinop_real(enum eid_vwr_pinops p) {
 		check_rv(C_SetPIN(session, NULL_PTR, 0, NULL_PTR, 0));
 	}
 	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
-	
+
 	return 0;
 }
 
@@ -336,7 +339,8 @@ int eid_vwr_p11_do_pinop(void* data) {
 
 /* Called by state machine at end of TOKEN_PINOP state. */
 int eid_vwr_p11_leave_pinop() {
-	check_rv(C_Logout(session));
+	/* Try to log out if we can, but don't worry if we can't */
+	C_Logout(session);
 
 	return 0;
 }

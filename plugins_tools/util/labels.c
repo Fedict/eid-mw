@@ -27,68 +27,104 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <eid-util/utftranslate.h>
+#include <eid-util/labels.h>
 
-#define ADD_LABEL(l, is_string) if(!EID_STRCMP(label, l)) return is_string
+static struct {
+	EID_CHAR * label;
+	CK_BBOOL is_string;
+	CK_BBOOL on_eid;
+	CK_BBOOL on_foreigner;
+} labels[] = {
+	{ TEXT("CARD_DATA"),			CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("ATR"),				CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_serialnumber"),	CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_comp_code"),		CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_os_number"),		CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_os_version"),		CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_glob_os_version"),	CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_soft_mask_number"),	CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_soft_mask_version"),	CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_appl_version"),	CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_appl_int_version"),	CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_pkcs15_version"),	CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_appl_lifecycle"),	CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_pkcs1_support"),	CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("carddata_key_exchange_version"),CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("DATA_FILE"),			CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("card_number"),			CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("chip_number"),			CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("validity_begin_date"),		CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("validity_end_date"),		CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("issuing_municipality"),		CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("national_number"),		CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("surname"),			CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("firstnames"),			CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("first_letter_of_third_given_name"), CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("nationality"),			CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("location_of_birth"),		CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("date_of_birth"),		CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("gender"),			CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("nobility"),			CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("document_type"),		CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("special_status"),		CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("photo_hash"),			CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("duplicata"),			CK_TRUE, CK_FALSE, CK_TRUE },//there is no converter for this field, and according to card spec, there are ascii values in this field
+	{ TEXT("special_organization"),		CK_FALSE, CK_FALSE, CK_TRUE },
+	{ TEXT("member_of_family"),		CK_FALSE, CK_FALSE, CK_TRUE },
+	{ TEXT("date_and_country_of_protection"), CK_TRUE, CK_FALSE, CK_TRUE },
+	{ TEXT("work_permit_type"),		CK_TRUE, CK_FALSE, CK_TRUE },
+	{ TEXT("employer_vat_1"),		CK_TRUE, CK_FALSE, CK_TRUE },
+	{ TEXT("employer_vat_2"),		CK_TRUE, CK_FALSE, CK_TRUE },
+	{ TEXT("regional_file_number"),		CK_TRUE, CK_FALSE, CK_TRUE },
+	{ TEXT("ADDRESS_FILE"),			CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("address_street_and_number"),	CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("address_zip"),			CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("address_municipality"),		CK_TRUE, CK_TRUE, CK_TRUE },
+	{ TEXT("PHOTO_FILE"),			CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("CERT_RN_FILE"),			CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("SIGN_DATA_FILE"),		CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("SIGN_ADDRESS_FILE"),		CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("Authentication"),		CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("Signature"),			CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("Root"),				CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("CA"),				CK_FALSE, CK_TRUE, CK_TRUE },
+	{ NULL,					0, 0, 0 },
+};
 
-CK_BBOOL is_string(const EID_CHAR* label) {
-	ADD_LABEL(TEXT("CARD_DATA"), CK_FALSE);
-	ADD_LABEL(TEXT("ATR"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_serialnumber"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_comp_code"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_os_number"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_os_version"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_glob_os_version"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_soft_mask_number"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_soft_mask_version"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_appl_version"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_appl_int_version"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_pkcs15_version"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_appl_lifecycle"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_pkcs1_support"), CK_FALSE);
-	ADD_LABEL(TEXT("carddata_key_exchange_version"), CK_FALSE);
-	ADD_LABEL(TEXT("DATA_FILE"), CK_FALSE);
-	ADD_LABEL(TEXT("card_number"), CK_TRUE);
-	ADD_LABEL(TEXT("chip_number"), CK_FALSE);
-	ADD_LABEL(TEXT("validity_begin_date"), CK_TRUE);
-	ADD_LABEL(TEXT("validity_end_date"), CK_TRUE);
-	ADD_LABEL(TEXT("issuing_municipality"), CK_TRUE);
-	ADD_LABEL(TEXT("national_number"), CK_TRUE);
-	ADD_LABEL(TEXT("surname"), CK_TRUE);
-	ADD_LABEL(TEXT("firstnames"), CK_TRUE);
-	ADD_LABEL(TEXT("first_letter_of_third_given_name"), CK_TRUE);
-	ADD_LABEL(TEXT("nationality"), CK_TRUE);
-	ADD_LABEL(TEXT("location_of_birth"), CK_TRUE);
-	ADD_LABEL(TEXT("date_of_birth"), CK_TRUE);
-	ADD_LABEL(TEXT("gender"), CK_TRUE);
-	ADD_LABEL(TEXT("nobility"), CK_TRUE);
-	ADD_LABEL(TEXT("document_type"), CK_FALSE);
-	ADD_LABEL(TEXT("special_status"), CK_TRUE);
-	ADD_LABEL(TEXT("photo_hash"), CK_FALSE);
-	ADD_LABEL(TEXT("duplicata"), CK_TRUE);//there is no converter for this field, and according to card spec, there are ascii values in this field
-	ADD_LABEL(TEXT("special_organization"), CK_FALSE);
-	ADD_LABEL(TEXT("member_of_family"), CK_FALSE);
-	ADD_LABEL(TEXT("date_and_country_of_protection"), CK_TRUE);
-	ADD_LABEL(TEXT("work_permit_type"), CK_TRUE);
-	ADD_LABEL(TEXT("employer_vat_1"), CK_TRUE);
-	ADD_LABEL(TEXT("employer_vat_2"), CK_TRUE);
-	ADD_LABEL(TEXT("regional_file_number"), CK_TRUE);
-	ADD_LABEL(TEXT("ADDRESS_FILE"), CK_FALSE);
-	ADD_LABEL(TEXT("address_street_and_number"), CK_TRUE);
-	ADD_LABEL(TEXT("address_zip"), CK_TRUE);
-	ADD_LABEL(TEXT("address_municipality"), CK_TRUE);
-	ADD_LABEL(TEXT("PHOTO_FILE"), CK_FALSE);
-	ADD_LABEL(TEXT("CERT_RN_FILE"), CK_FALSE);
-	ADD_LABEL(TEXT("SIGN_DATA_FILE"), CK_FALSE);
-	ADD_LABEL(TEXT("SIGN_ADDRESS_FILE"), CK_FALSE);
-	ADD_LABEL(TEXT("Authentication"), CK_FALSE);
-	ADD_LABEL(TEXT("Signature"), CK_FALSE);
-	ADD_LABEL(TEXT("Root"), CK_FALSE);
-	ADD_LABEL(TEXT("CA"), CK_FALSE);
+static struct labelnames *foreignerlabels = NULL;
 
 #ifndef WIN32
-	fprintf(stderr, "E: unkown label: %s", label);
+#define EID_FPRINTF fprintf
 #else
-	fwprintf(stderr, TEXT("E: unkown label: %s"), label);
+#define EID_FPRINTF fwprintf
 #endif
-	exit(EXIT_FAILURE);
+
+#define fun(NAME) CK_BBOOL NAME(const EID_CHAR * label) {\
+	int i;\
+	for(i=0; labels[i].label != NULL; i++) {\
+		if(!EID_STRCMP(labels[i].label, label)) {\
+			return labels[i].NAME;\
+		}\
+	}\
+	EID_FPRINTF(stderr, TEXT("E: unkown label: %s"), label);\
+	exit(EXIT_FAILURE);\
+}
+
+fun(on_foreigner)
+fun(on_eid)
+fun(is_string)
+
+struct labelnames* get_foreigner_labels() {
+	if(foreignerlabels == NULL) {
+		int i;
+		foreignerlabels = calloc(sizeof(struct labelnames), 1);
+		for(i=0; labels[i].label != NULL; i++) {
+			if(!labels[i].on_eid) {
+				foreignerlabels->label = realloc(foreignerlabels->label, sizeof(EID_CHAR*) * ++(foreignerlabels->len));
+				foreignerlabels->label[foreignerlabels->len - 1] = labels[i].label;
+			}
+		}
+	}
+
+	return foreignerlabels;
 }

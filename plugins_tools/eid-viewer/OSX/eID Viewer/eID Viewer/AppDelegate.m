@@ -12,6 +12,9 @@
 #import "PrintOperation.h"
 #import "ReaderMenuItem.h"
 
+#include <eid-util/utftranslate.h>
+#include <eid-util/labels.h>
+
 @interface AppDelegate ()
 - (IBAction)file_open:(id)sender;
 - (IBAction)file_close:(id)sender;
@@ -57,6 +60,11 @@
 @property (weak) IBOutlet NSSegmentedControl *pinop_ctrl;
 @property (unsafe_unretained) IBOutlet NSTextView *CertDetailView;
 @property (weak) IBOutlet NSWindow *CertDetailSheet;
+@property (weak) IBOutlet NSBox *centeringLine;
+@property (weak) IBOutlet NSBox *bottomLine;
+@property (weak) IBOutlet NSTextField *lowestItem;
+@property (weak) IBOutlet NSLayoutConstraint *verticalLineBottomConstraint;
+@property (weak) IBOutlet NSButton *memberOfFamilyState;
 
 @end
 
@@ -65,12 +73,12 @@
 	return YES;
 }
 - (void)log:(NSString *)line withLevel:(eIDLogLevel)level {
+	if([self.logLevel indexOfSelectedItem] > level) {
+		return;
+	}
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		char l;
 		NSAlert* alert;
-		if([self.logLevel indexOfSelectedItem] > level) {
-			return;
-		}
 		switch(level) {
 			case eIDLogLevelDetail:
 				l='D';
@@ -104,7 +112,7 @@
 - (void)saveDocument:(id)sender {
 	NSSavePanel *panel = [NSSavePanel savePanel];
 	[panel setAllowedFileTypes:[NSArray arrayWithObjects: @"be.fedict.eid.eidviewer", nil]];
-	[panel setNameFieldStringValue:[NSString stringWithFormat:@"%@.eid", [(NSTextField*)[self searchObjectById:@"national_number" ofClass:[NSTextField class]] stringValue]]];
+	[panel setNameFieldStringValue:[NSString stringWithFormat:@"%@.eid", [(NSTextField*)[self searchObjectById:@"national_number" ofClass:[NSTextField class] forUpdate:NO] stringValue]]];
 	[panel beginWithCompletionHandler:^(NSInteger result) {
 		if(result == NSFileHandlingPanelOKButton) {
 			[eIDOSLayerBackend serialize:[panel URL]];
@@ -133,6 +141,7 @@
 		NSTextField* tf = (NSTextField*)obj;
 		[tf setStringValue:@""];
 	}];
+	[_memberOfFamilyState setState:NSOffState];
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -150,59 +159,38 @@
 	BOOL fileClose = NO;
 	BOOL pinops = NO;
 	BOOL validate = NO;
+	BOOL doValidateNow = NO;
+	BOOL sheet = NO;
+	BOOL dnd = NO;
 	switch(state) {
 		case eIDStateReady:
 			fileOpen = YES;
 			break;
+		case eIDStateNoReader:
+			fileOpen = YES;
+			break;
 		case eIDStateToken:
-		{
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[_spinner startAnimation:self];
-				[NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
-			}];
-		}
+		case eIDStateTokenID:
+		case eIDStateTokenCerts:
+			sheet = YES;
 			break;
 		case eIDStateTokenWait:
 			filePrint = YES;
 			fileSave = YES;
 			pinops = YES;
 			validate = YES;
-		{
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[NSApp endSheet:_CardReadSheet];
-				[_spinner stopAnimation:self];
-			}];
+			dnd = YES;
 			if([_alwaysValidate state] == NSOnState) {
-				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					[self validateNow:nil];
-				}];
+				doValidateNow = YES;
 			}
-		}
-			break;
-		case eIDStateFile:
-			fileClose = YES;
-			filePrint = YES;
-		{
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[_spinner startAnimation:self];
-				[NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
-			}];
-		}
 			break;
 		case eIDStateFileWait:
 			fileClose = YES;
 			filePrint = YES;
+			dnd = YES;
 			if([_alwaysValidate state] == NSOnState) {
-				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-					[self validateNow:nil];
-				}];
+				doValidateNow = YES;
 			}
-		{
-			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-				[NSApp endSheet:_CardReadSheet];
-				[_spinner stopAnimation:self];
-			}];
-		}
 		default:
 			break;
 	}
@@ -214,6 +202,16 @@
 		[_pinop_ctrl setEnabled:pinops];
 		[_alwaysValidate setEnabled:validate];
 		[_validateNow setEnabled:validate];
+		if(sheet) {
+			[_spinner startAnimation:self];
+			[NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
+		} else {
+			[NSApp endSheet:_CardReadSheet];
+			[_spinner stopAnimation:self];
+		}
+		if(doValidateNow) {
+			[self validateNow:nil];
+		}
 	}];
 }
 - (NSObject*)searchView:(NSView*)from withName:(NSString*)name {
@@ -234,7 +232,7 @@
 	}
 	return nil;
 }
-- (NSObject*)searchObjectById:(NSString*)identity ofClass:(Class)aClass {
+- (NSObject*)searchObjectById:(NSString*)identity ofClass:(Class)aClass forUpdate:(BOOL)update {
 	NSObject* o = [_viewdict objectForKey:identity];
 	if([o isKindOfClass:aClass]) {
 		return o;
@@ -245,7 +243,7 @@
 	}
 	for(int i=0;i<3;i++) {
 		NSObject* o = [self searchView:[elems objectAtIndex:i] withName:identity];
-		if(o != nil) {
+		if(o != nil && update == YES) {
 			[_viewdict setValue:o forKey:identity];
 		}
 		if([o isKindOfClass:aClass]) {
@@ -256,7 +254,7 @@
 }
 - (void)newstringdata:(NSString *)data withLabel:(NSString *)label{
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-		NSTextField* tf = (NSTextField*)[self searchObjectById:label ofClass:[NSTextField class]];
+		NSTextField* tf = (NSTextField*)[self searchObjectById:label ofClass:[NSTextField class] forUpdate:YES];
 		[tf setStringValue:data ? data : @""];
 	}];
 }
@@ -308,6 +306,8 @@
 		    _certstore, @"Signature",
 		    _certstore, @"CERT_RN_FILE",
 		    self, @"certimage",
+		    self, @"document_type_raw",
+		    self, @"member_of_family",
 		    nil];
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
@@ -401,7 +401,53 @@
 }
 -(void)handle_bin_data:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui {
 	assert(ui == self);
-	[(NSImageView*) [ui searchObjectById:label ofClass:[NSImageView class]] setImage:(NSImage*)data];
+	if([label isEqualToString:@"certimage"]) {
+		[(NSImageView*) [ui searchObjectById:label ofClass:[NSImageView class] forUpdate:NO] setImage:(NSImage*)data];
+		return;
+	}
+	if([label isEqualToString:@"member_of_family"]) {
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[_memberOfFamilyState setState:NSOnState];
+		}];
+	}
+	if([label isEqualToString:@"document_type_raw"]) {
+		static BOOL is_foreigner = NO;
+		BOOL new_foreigner;
+		char b0, b1;
+		if([data length] > 1) {
+			[data getBytes:&b0 length:1];
+			[data getBytes:&b1 range:NSMakeRange(1, 1)];
+		} else {
+			b0 = ' ';
+			[data getBytes:&b1 length:1];
+		}
+		if((b0 == ' ' || b0 == '0') && b1 == '1') {
+			new_foreigner = NO;
+		} else {
+			new_foreigner = YES;
+		}
+		if(is_foreigner != new_foreigner) {
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				struct labelnames* toggles = get_foreigner_labels();
+				int i;
+				is_foreigner = new_foreigner;
+				for(i=0; i<toggles->len; i++) {
+					NSView *v = (NSView*)[self searchObjectById:[NSString stringWithUTF8String:toggles->label[i]] ofClass:[NSView class] forUpdate:NO];
+					[v setHidden:!new_foreigner];
+					v = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"title_%s",toggles->label[i]] ofClass:[NSView class] forUpdate:NO];
+					[v setHidden:!new_foreigner];
+				}
+				[_IdentityTab removeConstraint:_verticalLineBottomConstraint];
+				if(is_foreigner) {
+					_verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:_centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_lowestItem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+				} else {
+					_verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:_centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_bottomLine attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+				}
+				[_IdentityTab addConstraint:_verticalLineBottomConstraint];
+				[_IdentityTab layoutSubtreeIfNeeded];
+			}];
+		}
+	}
 }
 -(void)changeLogLevel:(NSPopUpButton *)logLevel {
 	[[NSUserDefaults standardUserDefaults] setInteger:[logLevel indexOfSelectedItem] forKey:@"log_level"];

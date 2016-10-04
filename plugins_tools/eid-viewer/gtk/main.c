@@ -362,6 +362,17 @@ static void show_date_state(char* label, void* data, int length) {
 	gtk_label_set_attributes(l, attrs);
 }
 
+static void toggleclear(const char* l) {
+	GtkToggleButton* tb = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, l));
+	gtk_toggle_button_set_active(tb, FALSE);
+}
+
+static void set_family(char* label, void* data, int length) {
+	GtkCheckButton* cb = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "member_of_family"));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cb), TRUE);
+	g_hash_table_insert(touched_labels, g_strdup("member_of_family"), toggleclear);
+}
+
 /* Initialize the hash table for binary data */
 static void bindata_init() {
 	binhash = g_hash_table_new(g_str_hash, g_str_equal);
@@ -376,6 +387,8 @@ static void bindata_init() {
 	g_hash_table_insert(binhash, "certvalfromval:past", show_date_state);
 	g_hash_table_insert(binhash, "certvaltilval:future", show_date_state);
 	g_hash_table_insert(binhash, "certimage", show_cert_image);
+	g_hash_table_insert(binhash, "document_type_raw", update_doctype);
+	g_hash_table_insert(binhash, "member_of_family", set_family);
 }
 
 /* Helper function for update_info() */

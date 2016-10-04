@@ -24,8 +24,6 @@ EID_STRING BBANNumberConvertor::convert(const void *original)
 		       TEXT
 		       ("Could not convert %s to display format: number too short"),
 		       (const EID_CHAR *) original);
-		be_log(EID_VWR_LOG_NORMAL, TEXT("Out of range message: %S"),
-		       oor.what());
 		return normal;
 	}
 }

@@ -16,7 +16,7 @@
 	if(self = [super init]) {
 		_CertificateData = [[NSMutableDictionary alloc] init];
 	}
-	_ov = view;
+	[self setOv:view];
 	return self;
 }
 -(void)handle_bin_data:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui {
