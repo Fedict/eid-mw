@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@ interface ResizablePrintView: NSView - (BOOL) knowsPageRange:(NSRangePointer)
-	range;
--(NSRect) rectForPage:(NSInteger) page;
+@interface ResizablePrintView: NSView
+- (BOOL) knowsPageRange:(NSRangePointer)range;
+- (NSRect) rectForPage:(NSInteger)page;
 @end

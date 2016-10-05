@@ -7,20 +7,19 @@
 //
 
 #import "ResizablePrintView.h"
-
 @implementation ResizablePrintView
 -(BOOL)knowsPageRange:(NSRangePointer)range {
-    *range = NSMakeRange(1, 1);
-    return YES;
+	*range = NSMakeRange(1, 1);
+	return YES;
 }
 
 -(NSRect)rectForPage:(NSInteger)page {
-    NSPrintInfo *pi = [[NSPrintOperation currentOperation] printInfo];
-    
-    NSSize ps = [pi paperSize];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy: NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:ps.width]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:ps.height]];
-    [self layoutSubtreeIfNeeded];
-    return self.bounds;
+	NSPrintInfo *pi = [[NSPrintOperation currentOperation] printInfo];
+
+	NSSize ps = [pi paperSize];
+	[self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy: NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:ps.width]];
+	[self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:ps.height]];
+	[self layoutSubtreeIfNeeded];
+	return self.bounds;
 }
 @end
