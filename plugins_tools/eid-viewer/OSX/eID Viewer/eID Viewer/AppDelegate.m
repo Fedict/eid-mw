@@ -131,17 +131,19 @@
 	[eIDOSLayerBackend pinop:which];
 }
 - (void)newsrc:(eIDSource)which {
-	[_photoview setImage:nil];
-	[_certview setImage:nil];
-	[_certstore clear];
-	[_viewdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-		if(![obj isKindOfClass:[NSTextField class]]) {
-			return;
-		}
-		NSTextField* tf = (NSTextField*)obj;
-		[tf setStringValue:@""];
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		[_photoview setImage:nil];
+		[_certview setImage:nil];
+		[_certstore clear];
+		[_viewdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+			if(![obj isKindOfClass:[NSTextField class]]) {
+				return;
+			}
+			NSTextField* tf = (NSTextField*)obj;
+			[tf setStringValue:@""];
+		}];
+		[_memberOfFamilyState setState:NSOffState];
 	}];
-	[_memberOfFamilyState setState:NSOffState];
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -427,10 +429,10 @@
 			new_foreigner = YES;
 		}
 		if(is_foreigner != new_foreigner) {
+			is_foreigner = new_foreigner;
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				struct labelnames* toggles = get_foreigner_labels();
 				int i;
-				is_foreigner = new_foreigner;
 				for(i=0; i<toggles->len; i++) {
 					NSView *v = (NSView*)[self searchObjectById:[NSString stringWithUTF8String:toggles->label[i]] ofClass:[NSView class] forUpdate:NO];
 					[v setHidden:!new_foreigner];
