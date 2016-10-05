@@ -25,5 +25,6 @@ void drag_data_get(GtkWidget * widget, GdkDragContext * ctx,
 void validate_toggle(gpointer event_source, gpointer user_data);
 void auto_reader(GtkCheckMenuItem * mi, gpointer user_data);
 void update_doctype(char* label, void* data, int length);
+extern gboolean is_foreigner;
 
 #endif

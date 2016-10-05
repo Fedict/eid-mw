@@ -16,6 +16,8 @@
 #include <locale.h>
 #include <stdlib.h>
 
+gboolean is_foreigner = FALSE;
+
 #ifdef _
 #error _ must not be defined
 #endif
@@ -416,7 +418,6 @@ void update_doctype(char* label G_GNUC_UNUSED, void* data, int length) {
 		b1 = newtype[1];
 	}
 	if(b0 != doctype[0] || b1 != doctype[1]) {
-		gboolean is_foreigner;
 		struct labelnames* toggles = get_foreigner_labels();
 		int i;
 
