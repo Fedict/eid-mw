@@ -11,5 +11,5 @@
 
 @interface AppDelegate: NSObject < NSApplicationDelegate, eIDOSLayerUI >
 -(NSObject *) searchObjectById:(NSString*)identity ofClass:(Class) aClass forUpdate:(BOOL)update;
-
+@property BOOL isForeignerCard;
 @end

@@ -47,6 +47,7 @@
 @property (weak) IBOutlet NSPopUpButton *logLevel;
 @property (weak) IBOutlet NSOutlineView *CertificatesView;
 @property (weak) IBOutlet NSView *printop_view;
+@property (weak) IBOutlet NSView *foreigner_printop_view;
 @property (weak) IBOutlet NSProgressIndicator *spinner;
 @property (weak) IBOutlet NSButton *alwaysValidate;
 @property (weak) IBOutlet NSButton *validateNow;
@@ -261,7 +262,7 @@
 	}];
 }
 - (IBAction)print:(id)sender {
-	[[[PrintOperation alloc] initWithView:_printop_view app:self] runOperation];
+	[[[PrintOperation alloc] initWithView:([self isForeignerCard] ? [self foreigner_printop_view] : [self printop_view]) app:self] runOperation];
 }
 
 - (IBAction)showDetail:(id)sender {
@@ -341,6 +342,7 @@
 	} else {
 		[_alwaysValidate setState:NSOffState];
 	}
+	[self setIsForeignerCard:NO];
 	[_logLevel selectItemAtIndex:level];
 	[eIDOSLayerBackend setLang:langcode];
 	[eIDOSLayerBackend mainloopThread];
@@ -413,7 +415,6 @@
 		}];
 	}
 	if([label isEqualToString:@"document_type_raw"]) {
-		static BOOL is_foreigner = NO;
 		BOOL new_foreigner;
 		char b0, b1;
 		if([data length] > 1) {
@@ -428,8 +429,8 @@
 		} else {
 			new_foreigner = YES;
 		}
-		if(is_foreigner != new_foreigner) {
-			is_foreigner = new_foreigner;
+		if([self isForeignerCard] != new_foreigner) {
+			[self setIsForeignerCard: new_foreigner];
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				struct labelnames* toggles = get_foreigner_labels();
 				int i;
@@ -440,7 +441,7 @@
 					[v setHidden:!new_foreigner];
 				}
 				[_IdentityTab removeConstraint:_verticalLineBottomConstraint];
-				if(is_foreigner) {
+				if([self isForeignerCard]) {
 					_verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:_centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_lowestItem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
 				} else {
 					_verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:_centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_bottomLine attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
