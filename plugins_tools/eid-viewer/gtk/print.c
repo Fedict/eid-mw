@@ -28,7 +28,7 @@ static struct field {
 	int group;
 	char* printlabel;
 	char* p11label;
-} fields[] = {
+} regularfields[] = {
 	{ 1, N_("Name:"), "surname" },
 	{ 1, N_("Given names:"), "firstnames" },
 	{ 1, N_("Place of birth:"), "location_of_birth" },
@@ -46,8 +46,22 @@ static struct field {
 	{ 4, N_("Chip number:"), "chip_number" },
 	{ 4, N_("Valid from:"), "validity_begin_date" },
 	{ 4, N_("Valid until:"), "validity_end_date" },
-	{ 5, N_("Printed:"), "printdate" },
-	{ 5, N_("Printed by:"), "printby" },
+};
+
+static struct field foreignerfields[] = {
+	{ 5, N_("Member of family:"), "member_of_family" },
+	{ 5, N_("Special organization:"), "special_organization" },
+	{ 5, N_("Duplicata:"), "duplicata" },
+	{ 5, N_("Date and country of protection:"), "date_and_country_of_protection" },
+	{ 5, N_("Work permit mention:"), "work_permit_type" },
+	{ 5, N_("Employer's VAT number (1):"), "employer_vat_1" },
+	{ 5, N_("Employer's VAT number (2):"), "employer_vat_2" },
+	{ 5, N_("Regional file number:"), "regional_file_number" },
+};
+
+static struct field printfields[] = {
+	{ 6, N_("Printed:"), "printdate" },
+	{ 6, N_("Printed by:"), "printby" },
 };
 
 /* Show the photo on the right location on the page */
@@ -86,12 +100,31 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 	gint p_pagewidth, p_pageheight, p_dataheight, p_titleheight,
 	     p_datawidth, p_titlewidth, p_lineheight, p_headerwidth,
 	     p_headerspace, p_headerheight;
-	int i, lastgroup;
+	int i, j, lastgroup;
+	int fieldlen = 2;
 	int pointsize = 20;
 	GdkPixbuf *photobuf, *coabuf;
 	char today[20];
 	time_t now = time(NULL);
 	gchar* headertext;
+	struct field* allfields[3];
+	int sizes[3] = {
+		sizeof(regularfields) / sizeof(struct field),
+		sizeof(foreignerfields) / sizeof(struct field),
+		sizeof(printfields) / sizeof(struct field),
+	};
+	struct utsname name;
+
+	if(is_foreigner) {
+		fieldlen = 3;
+	}
+	allfields[0] = regularfields;
+	if(is_foreigner) {
+		allfields[1] = foreignerfields;
+	} else {
+		sizes[1] = sizes[2];
+	}
+	allfields[fieldlen-1] = printfields;
 
 	g_assert(page_nr == 0);
 
@@ -187,35 +220,47 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 			p_titlewidth = p_lineheight = 0;
 
 		/* First, loop over all the labels and find the widest one */
-		for(i=0; i<(sizeof(fields) / sizeof(struct field)); i++) {
-			gint width, height;
+		for(i=0; i<fieldlen; i++) {
+			for(j=0; j<sizes[i]; j++) {
+				gint width, height;
 
-			pango_layout_set_text(title, gettext(fields[i].printlabel), -1);
-			pango_layout_get_size(title, &width, &height);
-			p_titlewidth = width > p_titlewidth ? width : p_titlewidth;
-			p_lineheight = p_lineheight > height ? p_lineheight : height;
-			p_titleheight += height;
+				pango_layout_set_text(title, gettext(allfields[i][j].printlabel), -1);
+				pango_layout_get_size(title, &width, &height);
+				p_titlewidth = width > p_titlewidth ? width : p_titlewidth;
+				p_lineheight = p_lineheight > height ? p_lineheight : height;
+				p_titleheight += height;
+			}
 		}
 		p_datawidth = p_pagewidth - P_MARGIN * 2 - P_COL_SPACE - p_titlewidth;
 		pango_layout_set_width(data, p_datawidth);
 		/* Now, loop over all the data elements and calculate each of their
 		 * heights, after wordwrapping */
-		for(i=0; i<(sizeof(fields) / sizeof(struct field)); i++) {
-			gint width, height;
+		for(i=0; i<fieldlen; i++) {
+			for(j=0; j<sizes[i]; j++) {
+				gint width, height;
+				GObject *obj = gtk_builder_get_object(builder, allfields[i][j].p11label);
 
-			pango_layout_set_text(data, gtk_label_get_text(
-						GTK_LABEL(gtk_builder_get_object(builder, fields[i].p11label))), -1);
-			pango_layout_get_size(data, &width, &height);
+				if(GTK_IS_LABEL(obj)) {
+					pango_layout_set_text(data, gtk_label_get_text(GTK_LABEL(obj)), -1);
+				} else { // checkbox
+					if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(obj))) {
+						pango_layout_set_text(data, "🗸", -1);
+					} else {
+						pango_layout_set_text(data, "-", -1);
+					}
+				}
+				pango_layout_get_size(data, &width, &height);
 
-			if(width > p_datawidth) {
-				/* word-wrapping was impossible, we don't fit;
-				 * ensure we don't fit vertically too, so the
-				 * while condition triggers and we try again
-				 * with a smaller font */
-				p_dataheight += p_pageheight;
-				break;
+				if(width > p_datawidth) {
+					/* word-wrapping was impossible, we don't fit;
+					 * ensure we don't fit vertically too, so the
+					 * while condition triggers and we try again
+					 * with a smaller font */
+					p_dataheight += p_pageheight;
+					break;
+				}
+				p_dataheight += height;
 			}
-			p_dataheight += height;
 		}
 	} while(p_dataheight > (p_pageheight - P_HEADER_HEIGHT - p_lineheight * 4 - P_MARGIN * 2)
 		       	|| p_titleheight > (p_pageheight - P_HEADER_HEIGHT - p_lineheight * 4 - P_MARGIN * 2));
@@ -227,32 +272,42 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 	c_lineoffset = C_MARGIN + C_HEADER_HEIGHT + (c_pageheight - C_HEADER_HEIGHT - c_height - C_MARGIN * 2) / 2;
 	c_titlewidth = (gdouble)p_titlewidth / PANGO_SCALE;
 	lastgroup = 1;
-	for(i=0;i<(sizeof(fields) / sizeof(struct field)); i++) {
-		gint p_dh, p_th;
-		gdouble c_h;
+	for(i=0; i<fieldlen; i++) {
+		for(j=0;j<sizes[i]; j++) {
+			gint p_dh, p_th;
+			gdouble c_h;
+			GObject *obj = gtk_builder_get_object(builder, allfields[i][j].p11label);
 
-		if(fields[i].group > lastgroup) {
-			lastgroup = fields[i].group;
-			/* draw a line */
-			cairo_move_to(cr, C_MARGIN, c_lineoffset + c_lineheight / 2);
-			cairo_line_to(cr, c_pagewidth - C_MARGIN, c_lineoffset + c_lineheight / 2);
-			cairo_stroke(cr);
-			c_lineoffset += c_lineheight;
+			if(allfields[i][j].group > lastgroup) {
+				lastgroup = allfields[i][j].group;
+				/* draw a line */
+				cairo_move_to(cr, C_MARGIN, c_lineoffset + c_lineheight / 2);
+				cairo_line_to(cr, c_pagewidth - C_MARGIN, c_lineoffset + c_lineheight / 2);
+				cairo_stroke(cr);
+				c_lineoffset += c_lineheight;
+			}
+
+			pango_layout_set_text(title, gettext(allfields[i][j].printlabel), -1);
+			if(GTK_IS_LABEL(obj)) {
+				pango_layout_set_text(data, gtk_label_get_text(GTK_LABEL(obj)), -1);
+			} else {
+				if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(obj))) {
+					pango_layout_set_text(data, "🗸", -1);
+				} else {
+					pango_layout_set_text(data, "-", -1);
+				}
+			}
+			cairo_move_to(cr, C_MARGIN, c_lineoffset);
+			pango_cairo_show_layout(cr, title);
+			cairo_move_to(cr, C_MARGIN + c_titlewidth + C_COL_SPACE, c_lineoffset);
+			pango_cairo_show_layout(cr, data);
+
+			pango_layout_get_size(title, NULL, &p_th);
+			pango_layout_get_size(data, NULL, &p_dh);
+			c_h = (gdouble)(p_dh > p_th ? p_dh : p_th) / PANGO_SCALE;
+
+			c_lineoffset += c_h;
 		}
-
-		pango_layout_set_text(title, gettext(fields[i].printlabel), -1);
-		pango_layout_set_text(data, gtk_label_get_text(
-					GTK_LABEL(gtk_builder_get_object(builder, fields[i].p11label))), -1);
-		cairo_move_to(cr, C_MARGIN, c_lineoffset);
-		pango_cairo_show_layout(cr, title);
-		cairo_move_to(cr, C_MARGIN + c_titlewidth + C_COL_SPACE, c_lineoffset);
-		pango_cairo_show_layout(cr, data);
-
-		pango_layout_get_size(title, NULL, &p_th);
-		pango_layout_get_size(data, NULL, &p_dh);
-		c_h = (gdouble)(p_dh > p_th ? p_dh : p_th) / PANGO_SCALE;
-
-		c_lineoffset += c_h;
 	}
 	add_photo(cr, photobuf, c_pagewidth, 1);
 	add_photo(cr, coabuf, c_pagewidth, 0);
