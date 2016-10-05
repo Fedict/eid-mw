@@ -6,6 +6,8 @@
 
 #include "gettext.h"
 
+#include <sys/utsname.h>
+
 #ifndef _
 #define _(s) gettext(s)
 #endif
@@ -105,6 +107,7 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 	int pointsize = 20;
 	GdkPixbuf *photobuf, *coabuf;
 	char today[20];
+	gchar *viewver;
 	time_t now = time(NULL);
 	gchar* headertext;
 	struct field* allfields[3];
@@ -130,7 +133,10 @@ static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint p
 
 	/* Fill out data related to "today" and "this software" */
 	strftime(today, 20, _("%B %d, %Y"), localtime(&now));
-	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder, "printby")), "eID Viewer " PACKAGE_VERSION);
+	uname(&name);
+	viewver = g_strdup_printf("eID Viewer %s (%s)", PACKAGE_VERSION, name.sysname);
+	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder, "printby")), viewver);
+	g_free(viewver);
 	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder, "printdate")), today);
 
 	/* Initialization of various coordinate variables. GTK+ has two
