@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>PIVToken</string>
+	<string>BEIDToken</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,12 +28,10 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
-			<key>com.apple.ctk.aid</key>
-			<string>a000000177504b43532d3135</string>
 			<key>com.apple.ctk.class-id</key>
-			<string>be.fedict.eid.eID-Middleware.PIVToken</string>
+			<string>be.fedict.BEIDTokenApp.BEIDToken</string>
 			<key>com.apple.ctk.driver-class</key>
-			<string>PIVTokenDriver</string>
+			<string>BEIDTokenDriver</string>
 			<key>com.apple.ctk.token-type</key>
 			<string>smartcard</string>
 		</dict>

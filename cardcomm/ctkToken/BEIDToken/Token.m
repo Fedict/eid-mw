@@ -5,7 +5,6 @@
 #import <CryptoTokenKit/CryptoTokenKit.h>
 
 #import "Token.h"
-#import "NSData_Zip.h"
 
 @implementation NSData(hexString)
 
@@ -24,7 +23,7 @@
 
 @end
 
-@implementation PIVTokenKeychainKey
+@implementation BEIDTokenKeychainKey
 
 - (instancetype)initWithCertificate:(SecCertificateRef)certificateRef objectID:(TKTokenObjectID)objectID certificateID:(TKTokenObjectID)certificateID alwaysAuthenticate:(BOOL)alwaysAuthenticate {
     if (self = [super initWithCertificate:certificateRef objectID:objectID]) {
@@ -59,8 +58,7 @@
 }
 
 @end
-
-@implementation TKTokenKeychainItem(PIVDataFormat)
+@implementation TKTokenKeychainItem(BEIDDataFormat)
 
 - (void)setName:(NSString *)name {
     if (self.label != nil) {
@@ -73,7 +71,7 @@
 @end
 
 
-@implementation PIVToken
+@implementation BEIDToken
 
 - (BOOL)selectAbsFile:(const unsigned char[]) absFileId len:(UInt8) len smartCard:(TKSmartCard *)smartCard error:(NSError **)error
 {
@@ -262,7 +260,7 @@
 
     if(keyTag != 0) {
         // Create key item.
-        TKTokenKeychainKey *keyItem = [[PIVTokenKeychainKey alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:@(keyTag) certificateID:certificateItem.objectID alwaysAuthenticate:alwaysAuthenticate];
+        TKTokenKeychainKey *keyItem = [[BEIDTokenKeychainKey alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:@(keyTag) certificateID:certificateItem.objectID alwaysAuthenticate:alwaysAuthenticate];
         if (keyItem == nil) {
             os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard keyItem == NIL");
             return NO;
@@ -276,7 +274,7 @@
         keyItem.canDecrypt = NO;
         keyItem.canPerformKeyExchange = NO;
         
-        TKTokenOperationConstraint constraint = alwaysAuthenticate ? PIVConstraintPINAlways : PIVConstraintPIN;
+        TKTokenOperationConstraint constraint = alwaysAuthenticate ? BEIDConstraintPINAlways : BEIDConstraintPIN;
         if (sign) {
             constraints[@(TKTokenOperationSignData)] = constraint;
             keyItem.constraints = constraints;
@@ -297,7 +295,7 @@
     return YES;
 }
 
-- (nullable instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(nullable NSData *)AID PIVDriver:(PIVTokenDriver *)tokenDriver error:(NSError **)error {
+- (nullable instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(nullable NSData *)AID BEIDDriver:(BEIDTokenDriver *)tokenDriver error:(NSError **)error {
     // Read and parse Card Holder Unique Identifier.
     // get card serial number and store it in instanceID
     
@@ -366,7 +364,7 @@
 
 - (TKTokenSession *)token:(TKToken *)token createSessionWithError:(NSError * _Nullable __autoreleasing *)error {
     os_log_error(OS_LOG_DEFAULT, "BEID createSessionWithError called");
-    return [[PIVTokenSession alloc] initWithToken:self];
+    return [[BEIDTokenSession alloc] initWithToken:self];
 }
 
 @end

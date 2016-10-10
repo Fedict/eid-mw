@@ -8,18 +8,27 @@
 
 
 
-@implementation PIVAuthOperation
+@implementation BEIDAuthOperation
 
-- (instancetype)initWithSession:(PIVTokenSession *)session {
+- (instancetype)initWithSession:(BEIDTokenSession *)session {
     os_log_error(OS_LOG_DEFAULT, "BEID initWithSession called");
     if (self = [super init]) {
         _session = session;
 
         self.smartCard = session.smartCard;
-//        const UInt8 template[] = {self.session.smartCard.cla, 0x20, 0x00, 0x01, 0x08, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-//        self.APDUTemplate = [NSData dataWithBytes:template length:sizeof(template)];
-//        self.PINFormat = [[TKSmartCardPINFormat alloc] init];
-//        self.PINFormat.PINBitOffset = 5 * 8;
+        /* TODO: use template when apple implements it
+        //4th byte should become 0x20 + PIN length
+        const UInt8 template[] = {self.session.smartCard.cla, 0x20, 0x00, 0x01, 0x20, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+        self.APDUTemplate = [NSData dataWithBytes:template length:sizeof(template)];
+        self.PINFormat = [[TKSmartCardPINFormat alloc] init];
+        self.PINFormat.PINBitOffset = 5 * 8 - 4;
+        self.PINFormat.encoding=TKSmartCardPINEncodingBCD;
+        self.PINFormat.minPINLength=4;
+        self.PINFormat.maxPINLength=12;
+        self.PINFormat.charset=TKSmartCardPINCharsetNumeric;
+        self.PINFormat.PINJustification=TKSmartCardPINJustificationLeft;
+        //self.PINFormat.PINBlockByteLength
+        self.PINFormat.PINLengthBitSize=4; */
     }
 
     return self;
@@ -40,11 +49,9 @@
 }
 
 
-// Remove this as soon as PIVAuthOperation implements automatic PIN submission according to APDUTemplate.
+// Remove this as soon as BEIDAuthOperation implements automatic PIN submission according to APDUTemplate.
 - (BOOL)finishWithError:(NSError * _Nullable __autoreleasing *)error {
-    os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called");
-    
-    
+    os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called");  
     BOOL (^verifyPIN)(NSError**) = ^(NSError** error) {
         if(self.PIN == nil){
             os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called PIN == nil");
@@ -121,23 +128,23 @@
         //self.session.smartCard.context = @(YES);
         self.smartCard.context = @(YES);
         
-        // Mark PIVTokenSession as freshly authorized.
-        self.session.authState = PIVAuthStateFreshlyAuthorized;
+        // Mark BEIDTokenSession as freshly authorized.
+        self.session.authState = BEIDAuthStateFreshlyAuthorized;
     }
     return success;
 }
 
 @end
 
-@implementation PIVTokenSession
+@implementation BEIDTokenSession
 
-- (instancetype)initWithToken:(PIVToken *)token {
+- (instancetype)initWithToken:(BEIDToken *)token {
     return [super initWithToken:token];
 }
 
 - (TKTokenAuthOperation *)tokenSession:(TKTokenSession *)session beginAuthForOperation:(TKTokenOperation)operation constraint:(TKTokenOperationConstraint)constraint error:(NSError * _Nullable __autoreleasing *)error {
     os_log_error(OS_LOG_DEFAULT, "BEID beginAuthForOperation called");
-    if (![constraint isEqual:PIVConstraintPIN] && ![constraint isEqual:PIVConstraintPINAlways]) {
+    if (![constraint isEqual:BEIDConstraintPIN] && ![constraint isEqual:BEIDConstraintPINAlways]) {
         os_log_error(OS_LOG_DEFAULT, "attempt to evaluate unsupported constraint %@", constraint);
         if (error != nil) {
             *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeBadParameter userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"WRONG_CONSTR", nil)}];
@@ -145,12 +152,12 @@
         return nil;
     }
 
-    return [[PIVAuthOperation alloc] initWithSession:self];
+    return [[BEIDAuthOperation alloc] initWithSession:self];
 }
 
 - (BOOL)tokenSession:(TKTokenSession *)session supportsOperation:(TKTokenOperation)operation usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm {
     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called");
-    PIVTokenKeychainKey *keyItem = (PIVTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:nil];
+    BEIDTokenKeychainKey *keyItem = (BEIDTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:nil];
     if (keyItem == nil) {
         return NO;
     }
@@ -204,10 +211,10 @@
     return NO;
 }
 
-- (PIVTokenKeychainKey *)authenticatedKeyForObjectID:(TKTokenObjectID)keyObjectID error:(NSError **)error {
+- (BEIDTokenKeychainKey *)authenticatedKeyForObjectID:(TKTokenObjectID)keyObjectID error:(NSError **)error {
     // Check for authentication status.
     os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID called");
-    PIVTokenKeychainKey *keyItem = (PIVTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:error];
+    BEIDTokenKeychainKey *keyItem = (BEIDTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:error];
     if (keyItem == nil) {
         os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID keyItem == nil");
         return nil;
@@ -226,8 +233,8 @@
         return YES;
     };
     
-    if (self.authState == PIVAuthStateUnauthorized ||
-        (keyItem.alwaysAuthenticate && self.authState == PIVAuthStateAuthorizedButAlreadyUsed) ||
+    if (self.authState == BEIDAuthStateUnauthorized ||
+        (keyItem.alwaysAuthenticate && self.authState == BEIDAuthStateAuthorizedButAlreadyUsed) ||
         self.smartCard.context == nil) {
         
         BOOL success = [self.smartCard inSessionWithError:(NSError **)error executeBlock:(BOOL(^)(NSError **error))selectKey];
@@ -237,7 +244,7 @@
         }
         os_log_error(OS_LOG_DEFAULT, "BEID selectKey success");
         
-        os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID PIVAuthStateUnauthorized, setting keyItem = nil");
+        os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID BEIDAuthStateUnauthorized, setting keyItem = nil");
         if (error != nil) {
             *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationNeeded userInfo:nil];
             os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID failed with error %@",[*error localizedDescription]);
@@ -293,10 +300,10 @@
 }
 
 // Wrapper around GENERAL AUTHENTICATE card command used for sign.
-- (NSData *)generalAuthenticateWithData:(NSData *)data session:(PIVTokenSession *)session algorithm:(TKTokenKeyAlgorithm *)algorithm usingKey:(TKTokenObjectID)keyObjectID error:(NSError **)error {
+- (NSData *)generalAuthenticateWithData:(NSData *)data session:(BEIDTokenSession *)session algorithm:(TKTokenKeyAlgorithm *)algorithm usingKey:(TKTokenObjectID)keyObjectID error:(NSError **)error {
     os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData called");
     
-    PIVTokenKeychainKey *keyItem = [self authenticatedKeyForObjectID:keyObjectID error:error];
+    BEIDTokenKeychainKey *keyItem = [self authenticatedKeyForObjectID:keyObjectID error:error];
     if (keyItem == nil) {
         os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData failed, keyItem == nil");
         return nil;
@@ -348,8 +355,8 @@
         return nil;
     }
     
-    // Mark PIVTokenSession as already authorized and authorization used.
-    session.authState = PIVAuthStateAuthorizedButAlreadyUsed;
+    // Mark BEIDTokenSession as already authorized and authorization used.
+    session.authState = BEIDAuthStateAuthorizedButAlreadyUsed;
     
     os_log_error(OS_LOG_DEFAULT, "BEID signData signature length = %lu",(unsigned long)statResponse.length);
 /*    Byte* responseBytes = (Byte*)statResponse.bytes;
@@ -364,7 +371,7 @@
 
 - (NSData *)tokenSession:(TKTokenSession *)session signData:(NSData *)dataToSign usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError * _Nullable __autoreleasing *)error {
     os_log_error(OS_LOG_DEFAULT, "BEID signData called");
-    return [self generalAuthenticateWithData:dataToSign session:(PIVTokenSession *)session algorithm:(TKTokenKeyAlgorithm *)algorithm usingKey:keyObjectID error:error];
+    return [self generalAuthenticateWithData:dataToSign session:(BEIDTokenSession *)session algorithm:(TKTokenKeyAlgorithm *)algorithm usingKey:keyObjectID error:error];
 }
 
 @end

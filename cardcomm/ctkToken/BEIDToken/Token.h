@@ -18,16 +18,16 @@ static const unsigned char kBELPIC_TokenInfo[] =    { 0xDF, 0x00, 0x50, 0x32 };
 
 #pragma mark TKSmartCard utility extension for sending/receiving TKBERTLVRecord-formatted APDUs
 
-@interface TKSmartCard(PIVDataFormat)
+@interface TKSmartCard(BEIDDataFormat)
 
 - (nullable TKTLVRecord *)sendIns:(UInt8)ins p1:(UInt8)p1 p2:(UInt8)p2 request:(nullable TKTLVRecord *)request expectedTag:(TKTLVTag)expectedTag sw:(UInt16 *)sw error:(NSError **)error;
 - (nullable NSArray<TKTLVRecord *> *)recordsOfObject:(TKTokenObjectID)objectID error:(NSError **)error;
 
 @end
 
-#pragma mark PIV implementation of TKToken classes
+#pragma mark BEID implementation of TKToken classes
 
-@interface PIVTokenKeychainKey : TKTokenKeychainKey
+@interface BEIDTokenKeychainKey : TKTokenKeychainKey
 
 - (instancetype)initWithCertificate:(SecCertificateRef)certificateRef objectID:(TKTokenObjectID)objectID certificateID:(TKTokenObjectID)certificateID alwaysAuthenticate:(BOOL)alwaysAuthenticate NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCertificate:(nullable SecCertificateRef)certificateRef objectID:(TKTokenObjectID)objectID NS_UNAVAILABLE;
@@ -39,30 +39,30 @@ static const unsigned char kBELPIC_TokenInfo[] =    { 0xDF, 0x00, 0x50, 0x32 };
 
 @end
 
-@class PIVTokenDriver;
-@class PIVToken;
-@class PIVTokenSession;
+@class BEIDTokenDriver;
+@class BEIDToken;
+@class BEIDTokenSession;
 
-static const TKTokenOperationConstraint PIVConstraintPIN = @"PIN";
-static const TKTokenOperationConstraint PIVConstraintPINAlways = @"PINAlways";
+static const TKTokenOperationConstraint BEIDConstraintPIN = @"PIN";
+static const TKTokenOperationConstraint BEIDConstraintPINAlways = @"PINAlways";
 
-@interface PIVTokenSession : TKSmartCardTokenSession<TKTokenSessionDelegate>
+@interface BEIDTokenSession : TKSmartCardTokenSession<TKTokenSessionDelegate>
 - (instancetype)initWithToken:(TKToken *)token delegate:(id<TKTokenSessionDelegate>)delegate NS_UNAVAILABLE;
 
-- (instancetype)initWithToken:(PIVToken *)token;
-@property (readonly) PIVToken *PIVToken;
+- (instancetype)initWithToken:(BEIDToken *)token;
+@property (readonly) BEIDToken *BEIDToken;
 
 @end
 
-@interface PIVToken : TKSmartCardToken<TKTokenDelegate>
+@interface BEIDToken : TKSmartCardToken<TKTokenDelegate>
 - (instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(nullable NSData *)AID tokenDriver:(TKSmartCardTokenDriver *)tokenDriver delegate:(id<TKTokenDelegate>)delegate NS_UNAVAILABLE;
 
-- (nullable instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(nullable NSData *)AID PIVDriver:(PIVTokenDriver *)tokenDriver error:(NSError **)error;
-@property (readonly) PIVTokenDriver *driver;
+- (nullable instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(nullable NSData *)AID BEIDDriver:(BEIDTokenDriver *)tokenDriver error:(NSError **)error;
+@property (readonly) BEIDTokenDriver *driver;
 
 @end
 
-@interface PIVTokenDriver : TKSmartCardTokenDriver<TKSmartCardTokenDriverDelegate>
+@interface BEIDTokenDriver : TKSmartCardTokenDriver<TKSmartCardTokenDriverDelegate>
 @end
 
 
