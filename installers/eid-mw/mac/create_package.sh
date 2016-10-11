@@ -27,7 +27,7 @@ LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 #PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
 BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 #xpi plugin dir, where the xpi plugin will be placed
-#XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
+#XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
 #tokend dir, where the BEID.tokend will be placed
 TOKEND_DIR="$ROOT_DIR/Library/Security/tokend"
 
@@ -125,8 +125,8 @@ cp ../../../installers/certificates/beid-cert-belgiumrca3.der "$INSTALL_SCRIPTS_
 
 
 #LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
-#XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
-#cp $XPI_PLUGIN "$XPI_PLUGIN_DIR"
+#XPI_PLUGIN=../../../plugins_tools/xpi/signed-build/belgiumeid-signed
+#cp -R $XPI_PLUGIN "$XPI_PLUGIN_DIR/belgiumeid@eid.belgium.be"
 
 cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
