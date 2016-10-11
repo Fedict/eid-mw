@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([xpi], [4.0.6], [servicedesk@fedict.be])
+AC_INIT([xpi], [4.1.18], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/content/belgiumeidpkcs11.js])
 AC_CONFIG_MACRO_DIR([m4])
@@ -38,7 +38,7 @@ AC_ARG_WITH([mozext],
 
 AS_IF(
 	[test "x$with_mozext" = "xno"],
-	[mozext]=[${datadir}/mozilla/extensions/],
+	[mozext]=[${datadir}/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}],
 	[[mozext]=[$with_mozext]]
 )
 
@@ -55,5 +55,6 @@ AC_SUBST([mozext])
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
+	signed-build/Makefile
 ])
 AC_OUTPUT

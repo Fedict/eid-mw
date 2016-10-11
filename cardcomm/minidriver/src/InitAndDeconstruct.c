@@ -254,9 +254,12 @@ DWORD WINAPI   CardDeleteContext
    }
 
    LogTrace(LOGTYPE_INFO, WHERE, "Context:[0x%08X]", pCardData->hSCardCtx);
-
-	pCardData->pfnCspFree(pCardData->pvVendorSpecific);
-	pCardData->pvVendorSpecific = NULL;
+   if (pCardData->pvVendorSpecific != NULL)
+   {
+	   pCardData->pfnCspFree(pCardData->pvVendorSpecific);
+	   pCardData->pvVendorSpecific = NULL;
+   }
+	
 cleanup:
 
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");

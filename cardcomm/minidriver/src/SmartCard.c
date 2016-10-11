@@ -1564,6 +1564,8 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
 		{
 			LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadFile errorcode: [0x%08X]", dwReturn);
 			pCardData->pfnCspFree(*ppbStream);
+			*ppbStream = NULL;
+			*cbStream = 0;
 			CLEANUP(dwReturn);
 		}
 		dwOffset += cbReadBuf;
