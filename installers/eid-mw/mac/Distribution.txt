@@ -26,16 +26,6 @@
 	  return false;
 	 }
 	}
-	function macos_since_sierra() {
-	 if((system.compareVersions(system.version.ProductVersion, '10.12')) == -1)
-	 {
-	  return false;
-	 }
-	 else
-	 {
-	  return true;
-	 }
-	}
       ]]>
     </script>
     <readme file="ReadMe.rtf"/>
@@ -48,7 +38,6 @@
     <choices-outline>
         <line choice="eid.belgium.be"/>
 	<line choice="eidviewer.belgium.be"/>
-	<line choice="BEIDToken.belgium.be"/>
         <line choice="com.acs.acsccid"/>
 	<line choice="com.acs.ccid_remove_acs"/>
 	<line choice="org.opensc.pcscd_autostart"/>
@@ -58,9 +47,6 @@
     </choice>
     <choice id="eidviewer.belgium.be" visible="false">
         <pkg-ref id="eidviewer.belgium.be"/>
-    </choice>
-    <choice id="BEIDToken.belgium.be" visible="false" selected="macos_since_sierra()">
-        <pkg-ref id="BEIDToken.belgium.be"/>
     </choice>
     <choice id="com.acs.acsccid" visible="false" selected="osx_before_elcapitan()">
         <pkg-ref id="com.acs.acsccid"/>
@@ -73,7 +59,6 @@
     </choice>
     <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
     <pkg-ref id="eidviewer.belgium.be" onConclusion="none">eidviewer.pkg</pkg-ref>
-    <pkg-ref id="BEIDToken.belgium.be" onConclusion="none">BEIDToken.pkg</pkg-ref>
     <pkg-ref id="com.acs.acsccid" onConclusion="none">acsccid_flat.pkg</pkg-ref>
     <pkg-ref id="com.acs.ccid_remove_acs" onConclusion="none">ccid_remove_acs_flat.pkg/</pkg-ref>
     <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="RequireRestart">pcscd_autostart_flat.pkg</pkg-ref>

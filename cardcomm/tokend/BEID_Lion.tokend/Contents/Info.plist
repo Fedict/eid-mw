@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>13F1112</string>
+	<string>13F1808</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>BEID</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.apple.tokend.belpic</string>
+	<string>be.fedict.tokend.beid</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
