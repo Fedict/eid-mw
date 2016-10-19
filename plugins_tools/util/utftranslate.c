@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <Windows.h>
 
-#include "utftranslate.h"
+#include <eid-util/utftranslate.h>
 
 //caller is responsible for freeing the returned string,
 //utf16len is the length of the returned string in bytes, excluding the terminating null
