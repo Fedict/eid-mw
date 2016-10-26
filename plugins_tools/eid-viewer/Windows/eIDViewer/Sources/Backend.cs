@@ -293,7 +293,14 @@ namespace eIDViewer
                 theData.logText += "Reader slotnr  " + slotDesc.slot.ToString() + "\n";
                 theData.logText += "Reader name  " + slotDesc.description.ToString() + "\n";
 
-                theData.readersList.Enqueue(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
+                if (!slotDesc.description.Equals("\\\\?PnP?\\Notification"))
+                {
+                    theData.readersList.Enqueue(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
+                }
+                else if (nreaders == 1)
+                {
+                    theData.readersList.Enqueue(new ReadersMenuViewModel(" ", 0));
+                }
             }
         }
 

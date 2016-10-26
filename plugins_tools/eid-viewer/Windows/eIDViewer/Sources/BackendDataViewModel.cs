@@ -549,7 +549,7 @@ namespace eIDViewer
             validateAlways = Properties.Settings.Default.AlwaysValidate;
 
             readersList = new ConcurrentQueue<ReadersMenuViewModel>();
-            readersList.Enqueue(new ReadersMenuViewModel("No Readers Found", 0));
+            readersList.Enqueue(new ReadersMenuViewModel(" ", 0));
 
             _certsList = new ObservableCollection<CertViewModel>();
             rootCAViewModel = new CertViewModel { CertLabel = "rootCA" };
