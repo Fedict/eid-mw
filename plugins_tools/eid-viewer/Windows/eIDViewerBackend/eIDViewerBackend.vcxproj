@@ -60,8 +60,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>beidpkcs11D.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\cardcomm\VS_2015\Binaries\Win32_Debug\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>beid_ff_pkcs11D.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\cardcomm\VS_2015\Binaries\Win32_Debug\;..\..\..\..\cardcomm\VS_2015\Binaries\Win32_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
