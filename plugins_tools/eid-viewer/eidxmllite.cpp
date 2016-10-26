@@ -7,6 +7,7 @@
 #include "backend.h"
 #include "p11.h"
 #include "cache.h"
+#include "conversions.h"
 extern "C"
 {
 #include "state.h"
