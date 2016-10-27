@@ -17,10 +17,22 @@ int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 }
 
 void eid_vwr_be_mainloop() {
+#ifdef WIN32
+	CK_FLAGS flags = 0;
+	CK_SLOT_ID_PTR pSlot = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
+#endif
 	for(;;) {
 		eid_vwr_poll();
+#ifdef WIN32
+		//we reuse the eid_vwr_poll() function for maintainebility, though the pSlot already gives us the slot where the changes occured
+		eid_vwr_p11_wait_event(flags, pSlot);
+#else
 		SLEEP(1);
+#endif
 	}
+#ifdef WIN32
+	free (pSlot);
+#endif
 }
 
 void eid_vwr_poll() {

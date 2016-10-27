@@ -89,6 +89,18 @@ int eid_vwr_p11_close_session() {
 	return 0;
 }
 
+/* Called by eid_vwr_wait_event(). */
+int eid_vwr_p11_wait_event(CK_FLAGS flags, CK_SLOT_ID_PTR pSlot) {
+	CK_RV ret;
+
+	ret = C_WaitForSlotEvent(flags,   /*nonblocking flag: CKF_DONT_BLOCK*/
+		pSlot,  /* location that receives the slot ID */
+		NULL_PTR); /* reserved.  Should be NULL_PTR */
+	check_rv_late(ret);
+
+	return ret;
+}
+
 /* Called by eid_vwr_poll(). */
 int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULONG_PTR count) {
 	CK_RV ret;

@@ -15,6 +15,7 @@
 struct _slotdesc;
 
 int eid_vwr_p11_init();
+int eid_vwr_p11_wait_event(CK_FLAGS flags, CK_SLOT_ID_PTR pSlot);
 int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc,
 				CK_ULONG_PTR slots_found);
 int eid_vwr_p11_read_id(void *);
