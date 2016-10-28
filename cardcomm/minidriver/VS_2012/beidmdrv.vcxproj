@@ -595,7 +595,7 @@
       <Culture>0x0813</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>winscard.lib;Crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;Crypt32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)64nd.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
