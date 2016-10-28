@@ -561,6 +561,7 @@ endkeypress:
 			{
 				dwReturn = SCARD_W_WRONG_CHV;
 				LogTrace(LOGTYPE_ERROR, WHERE, "CardAuthenticateEx Failed: [0x%02X][0x%02X]", SW1, SW2);
+#ifndef NO_DIALOGS
 				if (SW1 == 0x64) {
 					//error during pin entry
 					switch(SW2){
@@ -660,7 +661,7 @@ endkeypress:
 					dwReturn = SCARD_W_CHV_BLOCKED;
 				}
 				bRetry = (nButton == IDRETRY);
-
+#endif
 			}
 			else
 			{

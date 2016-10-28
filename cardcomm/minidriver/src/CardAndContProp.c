@@ -958,7 +958,7 @@ DWORD CardSetParentWindow(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, DWOR
 {
    DWORD dwReturn   = 0;
    HWND  hWinHandle = 0;
-
+#ifndef NO_DIALOGS
    LogTrace(LOGTYPE_INFO, WHERE, "SET Property: [CP_PARENT_WINDOW][0x%X]", dwFlags);
 
    if ( dwFlags != 0 )
@@ -985,7 +985,7 @@ DWORD CardSetParentWindow(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, DWOR
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
    LogTrace(LOGTYPE_INFO, WHERE, "Valid Window Handle [0x%X]", hWinHandle);
-
+#endif
    CLEANUP(SCARD_S_SUCCESS);
 
 cleanup:
