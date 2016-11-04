@@ -24,6 +24,8 @@
  */
 #ifdef WIN32
 #pragma once
+#else
+#include <unistd.h>
 #endif
 
 #ifndef __DIALOGS_H__
