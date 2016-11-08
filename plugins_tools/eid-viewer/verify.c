@@ -5,6 +5,7 @@
 #include <openssl/err.h>
 #include <openssl/ocsp.h>
 #include <openssl/x509.h>
+#include <openssl/opensslv.h>
 
 #include <string.h>
 #include <stdint.h>
@@ -20,6 +21,19 @@
 #define CERTTRUSTDIR (DATAROOTDIR "/" PACKAGE_NAME "/trustdir")
 #endif
 // All valid OCSP URLs should have the following as their prefix:
+
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+#define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
+
+#define X509_get0_tbs_sigalg(ci) ((ci)->sig_alg)
+#define algobjcast(obj) ((ASN1_OBJECT**)obj)
+#define ppvalcast(obj) ((void**)obj)
+
+#define OCSP_resp_get0_certs(bresp) ((bresp)->certs)
+#else
+#define algobjcast(obj) ((const ASN1_OBJECT**)obj)
+#define ppvalcast(obj) ((const void**)obj)
+#endif
 
 #define VALID_OCSP_PREFIX "http://ocsp.eid.belgium.be"
 
@@ -39,7 +53,7 @@ static void log_ssl_error(char* message) {
 
 enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen, const void* ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*)) {
 	X509 *cert_i = NULL, *ca_i = NULL;
-	X509_CINF *certv3;
+	const STACK_OF(X509_EXTENSION)* exts;
 	char* url = NULL;
 	int i, j, stat, reason;
 	OCSP_REQUEST *req;
@@ -59,6 +73,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	ASN1_OBJECT *algobj;
 	void *ocsp_handle;
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
+	STACK_OF(X509) *certs_dup = NULL;
 
 	ensure_inited();
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
@@ -71,16 +86,17 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
-	certv3 = cert_i->cert_info;
-	
-	for(i=0; i<sk_X509_EXTENSION_num(certv3->extensions); i++) {
-		X509_EXTENSION *ex = sk_X509_EXTENSION_value(certv3->extensions, i);
+	exts = X509_get0_extensions(cert_i);
+
+	for(i=0; i<sk_X509_EXTENSION_num(exts); i++) {
+		X509_EXTENSION *ex = sk_X509_EXTENSION_value(exts, i);
 		ASN1_OBJECT *obj = X509_EXTENSION_get_object(ex);
 		int nid = OBJ_obj2nid(obj);
 		if(nid == NID_info_access) {
 			const X509V3_EXT_METHOD *method;
 			void *ext_str;
-			const unsigned char *p = ex->value->data;
+			ASN1_OCTET_STRING *exval = X509_EXTENSION_get_data(ex);
+			const unsigned char *p = exval->data;
 			STACK_OF(CONF_VALUE) *nval = NULL;
 
 			if(!(method = X509V3_EXT_get(ex)) || !(method->i2v)) {
@@ -89,9 +105,9 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 				goto exit;
 			}
 			if(method->it) {
-				ext_str = ASN1_item_d2i(NULL, &p, ex->value->length, ASN1_ITEM_ptr(method->it));
+				ext_str = ASN1_item_d2i(NULL, &p, exval->length, ASN1_ITEM_ptr(method->it));
 			} else {
-				ext_str = method->d2i(NULL, &p, ex->value->length);
+				ext_str = method->d2i(NULL, &p, exval->length);
 			}
 			if(!(nval = method->i2v(method, ext_str, NULL))) {
 				log_ssl_error("Could not read OCSP URL from certificate");
@@ -120,7 +136,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	}
 
 	req = OCSP_REQUEST_new();
-	X509_ALGOR_get0(&algobj, (int*)&dummy, (void**)&dummy, cert_i->sig_alg);
+	X509_ALGOR_get0(algobjcast(&algobj), (int*)&dummy, ppvalcast(&dummy), X509_get0_tbs_sigalg(cert_i));
 	sig_nid = OBJ_obj2nid(algobj);
 	OBJ_find_sigid_algs(sig_nid, &md_nid, &pkey_nid);
 	if(md_nid == OBJ_sn2nid("SHA1")) {
@@ -189,7 +205,8 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	store = X509_STORE_new();
 	lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir());
 	X509_LOOKUP_add_dir(lookup, CERTTRUSTDIR, X509_FILETYPE_PEM);
-	if(OCSP_basic_verify(bresp, bresp->certs, store, 0) <= 0) {
+	certs_dup = sk_X509_dup(OCSP_resp_get0_certs(bresp));
+	if(OCSP_basic_verify(bresp, certs_dup, store, 0) <= 0) {
 		log_ssl_error("OCSP signature invalid, or root certificate unknown");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
@@ -199,6 +216,9 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 exit:
 	if(store) {
 		X509_STORE_free(store);
+	}
+	if(certs_dup) {
+		sk_X509_free(certs_dup);
 	}
 	return ret;
 }
