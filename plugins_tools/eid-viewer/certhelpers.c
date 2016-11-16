@@ -8,7 +8,6 @@
 #include <stdbool.h>
 #include <string.h>
 #include <assert.h>
-#include <unistd.h>
 #include "cache.h"
 
 #include "backend.h"
