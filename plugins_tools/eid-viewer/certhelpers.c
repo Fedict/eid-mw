@@ -3,6 +3,7 @@
 #include <openssl/err.h>
 #include <openssl/pem.h>
 #include <openssl/crypto.h>
+#include <openssl/opensslv.h>
 #include <eid-viewer/certhelpers.h>
 #include <stdbool.h>
 #include <string.h>
@@ -15,6 +16,10 @@
 #include <pthread.h>
 
 static pthread_once_t init = PTHREAD_ONCE_INIT;
+
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+#define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
+#endif
 
 static void init_crypto() {
 	ERR_load_crypto_strings();
@@ -29,14 +34,14 @@ void ensure_inited() {
 
 /* Return a string representation of the X509v3 uses of the given certificate. */
 char* eid_vwr_get_use_flags(const char* label, X509* cert) {
-	X509_CINF* ci = cert->cert_info;
+	const STACK_OF(X509_EXTENSION) *exts = X509_get0_extensions(cert);
 	int i;
 	char* retval = 0;
 	int nid = OBJ_sn2nid("keyUsage");
 
 	/* Search for the object with the NID of the keyUsage field */
-	for(i=0; i<sk_X509_EXTENSION_num(ci->extensions); i++) {
-		X509_EXTENSION *ex = sk_X509_EXTENSION_value(ci->extensions, i);
+	for(i=0; i<sk_X509_EXTENSION_num(exts); i++) {
+		X509_EXTENSION *ex = sk_X509_EXTENSION_value(exts, i);
 		ASN1_OBJECT* obj = X509_EXTENSION_get_object(ex);
 
 		if(OBJ_obj2nid(obj) == nid) {
@@ -154,8 +159,8 @@ static int eid_vwr_check_data_validity(const void* photo, int plen,
 		return 0;
 	}
 	pubkey = X509_get_pubkey(rrncert);
-	if(EVP_PKEY_type(pubkey->type) != EVP_PKEY_RSA) {
-		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: wrong key type (expecting RSA, got %d)", pubkey->type);
+	if(EVP_PKEY_base_id(pubkey) != EVP_PKEY_RSA) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: wrong key type (expecting RSA, got %d)", EVP_PKEY_base_id(pubkey));
 		return 0;
 	}
 	/* data signature is created over hash(concatenation(data file, photo hash)).

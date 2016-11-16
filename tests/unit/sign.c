@@ -37,6 +37,18 @@
 #include <openssl/rsa.h>
 #include <openssl/engine.h>
 
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+static int RSA_set0_key(RSA *r, BIGNUM *n, BIGNUM *e, BIGNUM *d) {
+	if(!r || !n || !e) {
+		return 0;
+	}
+	r->n = n;
+	r->e = e;
+	r->d = d;
+	return 1;
+}
+#endif
+
 CK_BYTE digest_sha1[] = {
                 0x0b, 0xee, 0xc7, 0xb5,
                 0xea, 0x3f, 0x0f, 0xdb,
@@ -50,8 +62,7 @@ int verify_sig(unsigned char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULON
 	unsigned char* s = malloc(siglen);
 	int ret;
 
-	rsa->n = BN_bin2bn(modulus, (int) modlen, NULL);
-	rsa->e = BN_bin2bn(exponent, (int) explen, NULL);
+	RSA_set0_key(rsa, BN_bin2bn(modulus, (int) modlen, NULL), BN_bin2bn(exponent, (int) explen, NULL), NULL);
 
 	int v = RSA_verify(NID_sha1, digest_sha1, sizeof(digest_sha1), sig, siglen, rsa);
 

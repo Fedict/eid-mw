@@ -8,7 +8,6 @@
 #include <string>
 
 class ConversionWorker;
-class XmlConversionWorker;
 
 class Convertor
 {
