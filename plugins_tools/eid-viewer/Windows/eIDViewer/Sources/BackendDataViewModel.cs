@@ -848,6 +848,46 @@ namespace eIDViewer
             }
         }
 
+        public void SetLanguage (eid_vwr_langs language)
+        {
+            switch (language)
+            {
+                case eid_vwr_langs.EID_VWR_LANG_DE:
+                    languageDE = true;
+                    languageEN = false;
+                    languageFR = false;
+                    languageNL = false;
+                    break;
+                case eid_vwr_langs.EID_VWR_LANG_EN:
+                    languageDE = false;
+                    languageEN = true;
+                    languageFR = false;
+                    languageNL = false;
+                    break;
+                case eid_vwr_langs.EID_VWR_LANG_FR:
+                    languageDE = false;
+                    languageEN = false;
+                    languageFR = true;
+                    languageNL = false;
+                    break;
+                case eid_vwr_langs.EID_VWR_LANG_NL:
+                    languageDE = false;
+                    languageEN = false;
+                    languageFR = false;
+                    languageNL = true;
+                    break;
+                default:
+                    languageDE = false;
+                    languageEN = false;
+                    languageFR = false;
+                    languageNL = false;
+                    break;
+
+
+            }
+        }
+
+
         public void ResetDataValues()
         {
             text_color = "Gray";
@@ -898,6 +938,50 @@ namespace eIDViewer
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private Boolean _languageDE;
+        public Boolean languageDE
+        {
+            get { return _languageDE; }
+            set
+            {
+                _languageDE = value;
+                this.NotifyPropertyChanged("languageDE");
+            }
+        }
+
+        private Boolean _languageNL;
+        public Boolean languageNL
+        {
+            get { return _languageNL; }
+            set
+            {
+                _languageNL = value;
+                this.NotifyPropertyChanged("languageNL");
+            }
+        }
+
+        private Boolean _languageEN;
+        public Boolean languageEN
+        {
+            get { return _languageEN; }
+            set
+            {
+                _languageEN = value;
+                this.NotifyPropertyChanged("languageEN");
+            }
+        }
+
+        private Boolean _languageFR;
+        public Boolean languageFR
+        {
+            get { return _languageFR; }
+            set
+            {
+                _languageFR = value;
+                this.NotifyPropertyChanged("languageFR");
             }
         }
 

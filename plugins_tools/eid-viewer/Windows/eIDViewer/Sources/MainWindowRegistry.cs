@@ -83,21 +83,25 @@ namespace eIDViewer
             {
                 if( readValue.Equals("nl"))
                 {
+                    theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
                     ChangeLocalization("nl-BE");
                     eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
                 }
                 else if (readValue.Equals("fr"))
                 {
+                    theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
                     ChangeLocalization("fr-BE");
                     eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
                 }
                 else if (readValue.Equals("de"))
                 {
+                    theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
                     ChangeLocalization("de-DE");
                     eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
                 }
                 else if (readValue.Equals("en"))
                 {
+                    theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
                     ChangeLocalization("en-US");
                     eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
                 }
