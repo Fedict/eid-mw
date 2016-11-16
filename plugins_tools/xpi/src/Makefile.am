@@ -40,7 +40,8 @@ dist_skin_DATA = skin/icon.png \
 			skin/icon40x40.png \
 			skin/overlay.css
 
-dist_components_DATA = components/belgiumeidpkcs11.js
+dist_components_DATA = components/belgiumeidpkcs11.js \
+		       components/belgiumeidpkcs11-pre47.js
 endif
 
 xpipackage: $(xpi_files)
