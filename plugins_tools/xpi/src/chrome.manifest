@@ -1,4 +1,5 @@
-content		belgiumeid									content/
+content		belgiumeid								content/
+content         belgiumeid								content/belgiumeid-api.js	contentaccessible=yes
 locale 		belgiumeid	en-US							locale/en-US/
 locale		belgiumeid	en-GB							locale/en-US/
 locale		belgiumeid	nl-NL							locale/nl-NL/

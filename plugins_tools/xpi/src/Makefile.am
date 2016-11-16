@@ -23,7 +23,8 @@ dist_content_DATA = content/belgiumeidpkcs11.js \
 			content/belgiumeidprompt.js \
 			content/belgiumeidprompt.xul \
 			content/belgiumeidpromptsecure.js \
-			content/belgiumeidpromptsecure.xul
+			content/belgiumeidpromptsecure.xul \
+			content/belgiumeid-api.js
 
 dist_defaults_preferences_DATA = defaults/preferences/belgiumeid.js
 
