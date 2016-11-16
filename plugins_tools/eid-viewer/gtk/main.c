@@ -497,6 +497,8 @@ int main(int argc, char** argv) {
 	cb->readers_changed = readers_changed;
 	eid_vwr_createcallbacks(cb);
 
+	eid_vwr_init_crypto();
+
 	pthread_create(&thread, NULL, threadmain, NULL);
 
 	G_GNUC_BEGIN_IGNORE_DEPRECATIONS

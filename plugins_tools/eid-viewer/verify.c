@@ -41,7 +41,6 @@ static void log_ssl_error(char* message) {
 	char buf[100];
 	unsigned long error = ERR_get_error();
 
-	ensure_inited();
 	be_log(EID_VWR_LOG_COARSE, message);
 	while(error != 0) {
 		ERR_error_string_n(error, buf, sizeof buf);
@@ -75,7 +74,6 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
 	STACK_OF(X509) *certs_dup = NULL;
 
-	ensure_inited();
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_ssl_error("Could not parse entity certificate");
 		ret = EID_VWR_RES_FAILED;

@@ -13,24 +13,16 @@
 
 #include "backend.h"
 
-#include <pthread.h>
-
-static pthread_once_t init = PTHREAD_ONCE_INIT;
-
 #if OPENSSL_VERSION_NUMBER < 0x10100000L
 #define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
 #define ASN1_STRING_get0_data ASN1_STRING_data
 #endif
 
-static void init_crypto() {
+void eid_vwr_init_crypto() {
 	ERR_load_crypto_strings();
 	be_log(EID_VWR_LOG_DETAIL, "Built with %s", OPENSSL_VERSION_TEXT);
 	be_log(EID_VWR_LOG_DETAIL, "Using %s", SSLeay_version(SSLEAY_VERSION));
 	OpenSSL_add_all_algorithms();
-}
-
-void ensure_inited() {
-	pthread_once(&init, init_crypto);
 }
 
 /* Return a string representation of the X509v3 uses of the given certificate. */
@@ -213,7 +205,6 @@ void eid_vwr_dumpcert(int fd, const void* derdata, int len, enum dump_type how) 
 			if(d2i_X509(&cert, (const unsigned char**)&derdata, len) == NULL) {
 				char buf[100];
 				unsigned long error = ERR_get_error();
-				ensure_inited();
 				ERR_error_string_n(error, buf, sizeof(buf));
 				buf[99]='\0';
 				be_log(EID_VWR_LOG_ERROR, "Could not parse certificate");
