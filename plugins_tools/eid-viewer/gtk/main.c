@@ -136,7 +136,7 @@ static void newstate(enum eid_vwr_states s) {
 			uistatus(TRUE, _("Reading identity"));
 			return;
 		case STATE_TOKEN_CERTS:
-			uistatus(TRUE, _("Reading certificates from card"));
+			uistatus(TRUE, _("Reading certificates"));
 			return;
 		case STATE_TOKEN_ERROR:
 			uistatus(FALSE, _("Failed to read identity data"));
