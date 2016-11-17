@@ -103,7 +103,7 @@ static void newstate(enum eid_vwr_states s) {
 	switch(s) {
 		case STATE_LIBOPEN:
 		case STATE_CALLBACKS:
-			uistatus(TRUE, _("Initializing"));
+			uistatus(TRUE, _("Initialising"));
 			return;
 		case STATE_READY:
 			uistatus(FALSE, _("Ready to read identity card."));
