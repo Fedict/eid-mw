@@ -12,6 +12,8 @@
 #include "valdate.h"
 #include "hexdecode.h"
 #include "genderconv.h"
+#include "specorgconv.h"
+#include "xmlspecorgconv.h"
 #include <eid-util/utftranslate.h>
 #include "cppeidstring.h"
 
@@ -39,6 +41,7 @@ Convertor::Convertor()
 			new DobWriter(new DobParser);
 		convertors[TEXT("card_number")] = new BBANNumberConvertor();
 		convertors[TEXT("gender")] = new GenderConvertor();
+		convertors[TEXT("special_organisation")] = new SpecOrgConvertor();
 	}
 	if (to_xml.empty())
 	{
@@ -52,6 +55,7 @@ Convertor::Convertor()
 		to_xml[TEXT("validity_end_date")] =
 			new XmlDateWriter(new ValidityDateParser);
 		to_xml[TEXT("gender")] = new XmlGenderConvertor();
+		to_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
 	}
 	if (from_xml.empty())
 	{
@@ -65,6 +69,7 @@ Convertor::Convertor()
 		from_xml[TEXT("validity_end_date")] =
 			new ValidityDateWriter(new XmlDateParser);
 		from_xml[TEXT("gender")] = new XmlGenderConvertor();
+		from_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
 	}
 }
 
