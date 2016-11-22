@@ -107,7 +107,7 @@ namespace eIDViewer
 
         }
 
-        //verify if the chain that was build by .NET is identical to the one on the eID Card
+        //verify if the chain that was build by .NET is identical (or witch cross-signed root) to the one on the eID Card
         public bool CheckChain(ref X509Chain buildChain, ref X509Certificate2 leafCertificate)
         {
             int chainLen = 3;
@@ -117,11 +117,12 @@ namespace eIDViewer
                 chainLen = 2;
             }
             //chain length should be 3
-            if (buildChain.ChainElements.Count != chainLen)
-            {
-                this.logText += "certificate chain is bigger then 3, did the webtrusted Belgian rootCA entered the chain? \n";
-                return false;
-            }
+            //allow cross-signed belgium rootCA
+            //if (buildChain.ChainElements.Count != chainLen)
+            //{
+            //    this.logText += "certificate chain is bigger then 3, did the webtrusted Belgian rootCA entered the chain? \n";
+            //    return false;
+            //}
             //check if entire chain .NET just build is the one on the eID Card
             if (buildChain.ChainElements[0].Certificate.Thumbprint != leafCertificate.Thumbprint)
             {
@@ -131,10 +132,10 @@ namespace eIDViewer
             }
             if (chainLen == 2)
             {
-                if (buildChain.ChainElements[1].Certificate.Thumbprint != rootCA_cert.Thumbprint)
+                if (!buildChain.ChainElements[1].Certificate.GetPublicKey().SequenceEqual(rootCA_cert.GetPublicKey()))
                 {
-                    //root cert in the verified chain is not the one on the eID Card
-                    this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
+                    //root cert in the verified chain has different public key then the one on the eID Card
+                    this.logText += "certificate chain not build correctly, RootCA in Windows store has different public key then the one on the eID Card \n";
                     return false;
                 }
             }
@@ -147,10 +148,10 @@ namespace eIDViewer
                     this.logText += "certificate chain not build correctly, intermediateCA in Windows store differs from the one on eID card \n";
                     return false;
                 }
-                //check if entire chain .NET just build is the one on the eID Card
-                if (buildChain.ChainElements[2].Certificate.Thumbprint != rootCA_cert.Thumbprint)
+                //check if root cert in the verified chain has different public key then the one on the eID Card
+                if (!buildChain.ChainElements[2].Certificate.GetPublicKey().SequenceEqual(rootCA_cert.GetPublicKey()))
                 {
-                    //root cert in the verified chain is not the one on the eID Card
+                    //root cert in the verified chain has different public key then the one on the eID Card
                     this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
                     return false;
                 }
@@ -271,7 +272,7 @@ namespace eIDViewer
                 {                  
                     //alter how the chain is built/validated.
                     chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-                    //chain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
+                    chain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
                     // Set the time span that may elapse during online revocation verification or downloading the certificate revocation list (CRL).
                     TimeSpan verificationTime = new TimeSpan(0, 0, 10);
                     chain.ChainPolicy.UrlRetrievalTimeout = verificationTime;
@@ -336,7 +337,7 @@ namespace eIDViewer
                         }
                         else
                         {
-                            //should never get here, CheckChain() should have seen it
+                            //we're not interested in anything above the belgian rootCA
                             break;
                         }
 
