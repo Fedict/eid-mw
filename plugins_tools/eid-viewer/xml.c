@@ -31,7 +31,7 @@ static int write_attributes(xmlTextWriterPtr writer, struct attribute_desc *attr
 	while(attribute->name) {
 		int have_cache = cache_have_label(attribute->label);
 		if(attribute->reqd && !have_cache) {
-			be_log(EID_VWR_LOG_ERROR, "Could not write file: no data found for required label %s", attribute->label);
+			be_log(EID_VWR_LOG_COARSE, "Could not generate XML version: no data found for required label %s", attribute->label);
 			return -1;
 		}
 		if(have_cache) {
