@@ -68,12 +68,16 @@ libeidviewer_la_SOURCES = \
 	conversions/natnumconv.h \
 	conversions/specconv.h \
 	conversions/specconv.cpp \
+	conversions/specorgconv.h \
+	conversions/specorgconv.cpp \
 	conversions/valdate.h \
 	conversions/valdate.cpp \
 	conversions/xmldoctypeconv.h \
 	conversions/xmldoctypeconv.cpp \
 	conversions/xmlspecconv.h \
 	conversions/xmlspecconv.cpp \
+	conversions/xmlspecorgconv.h \
+	conversions/xmlspecorgconv.cpp \
 	conversions.h \
 	cppeidstring.h \
 	dataverify.h \
