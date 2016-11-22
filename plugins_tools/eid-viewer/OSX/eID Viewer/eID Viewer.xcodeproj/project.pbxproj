@@ -8,48 +8,54 @@
 
 /* Begin PBXBuildFile section */
 		65096FD51BBD39AB0057E4B8 /* eidfilepreview.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BBDE3121B3BF02C00CBE13E /* eidfilepreview.qlgenerator */; };
-		651130961CD8DD3F0076682F /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 651130951CD8DD3F0076682F /* libcrypto.a */; };
 		65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A341AF1181700F0DDE7 /* CertificateStore.m */; };
 		65296A391AF119CB00F0DDE7 /* photohandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A381AF119CB00F0DDE7 /* photohandler.m */; };
-		652BC8AE1AEA41D100DA9519 /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */; };
-		652BC8B11AEA467800DA9519 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
-		652F07691D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 652F07681D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib */; };
-		653BB4D91BBC0D2F00EA73CF /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */; };
-		654832DF1C451E160030D770 /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = 654832DE1C451E160030D770 /* verify.c */; };
 		65669E431DE49B510018F644 /* specorgconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65669E3F1DE49B510018F644 /* specorgconv.h */; };
 		65669E451DE49B510018F644 /* xmlspecorgconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65669E411DE49B510018F644 /* xmlspecorgconv.h */; };
-		65669E461DE49C230018F644 /* specorgconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65669E3E1DE49B510018F644 /* specorgconv.cpp */; };
-		65669E471DE49C230018F644 /* xmlspecorgconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65669E401DE49B510018F644 /* xmlspecorgconv.cpp */; };
+		657641381DE4A4CB00602BC0 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C781BB573C4002E8061 /* libxml2.a */; };
+		657641391DE4A63100602BC0 /* libbeidpkcs11.4.1.18.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 652F07681D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib */; };
+		6576413B1DE4A66200602BC0 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6576413A1DE4A66200602BC0 /* libcrypto.a */; };
+		6576413C1DE4A6CD00602BC0 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C781BB573C4002E8061 /* libxml2.a */; };
+		6576413D1DE4A96E00602BC0 /* oslayer-objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC6C1AE9365F004CEC1F /* oslayer-objc.m */; };
+		6576413E1DE4A96E00602BC0 /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = 654832DE1C451E160030D770 /* verify.c */; };
+		6576413F1DE4A96E00602BC0 /* backend.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC6E1AE93A7B004CEC1F /* backend.c */; };
+		657641401DE4A96E00602BC0 /* base64dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC741AE93AB5004CEC1F /* base64dec.c */; };
+		657641411DE4A96E00602BC0 /* cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC721AE93A9B004CEC1F /* cache.cpp */; };
+		657641421DE4A96E00602BC0 /* certhelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E16991AF2707F004C2B24 /* certhelpers.c */; };
+		657641431DE4A96E00602BC0 /* bbannumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC771AE93AD1004CEC1F /* bbannumconv.cpp */; };
+		657641441DE4A96E00602BC0 /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC791AE93AD1004CEC1F /* convert.cpp */; };
+		657641451DE4A96E00602BC0 /* convertor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC7A1AE93AD1004CEC1F /* convertor.cpp */; };
+		657641461DE4A96E00602BC0 /* convworker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC7C1AE93AD1004CEC1F /* convworker.cpp */; };
+		657641471DE4A96E00602BC0 /* dateconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC7E1AE93AD1004CEC1F /* dateconv.cpp */; };
+		657641481DE4A96E00602BC0 /* dob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC801AE93AD1004CEC1F /* dob.cpp */; };
+		657641491DE4A96E00602BC0 /* doctypeconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC821AE93AD1004CEC1F /* doctypeconv.cpp */; };
+		6576414A1DE4A96E00602BC0 /* genderconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC841AE93AD1004CEC1F /* genderconv.cpp */; };
+		6576414B1DE4A96E00602BC0 /* hexdecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC861AE93AD1004CEC1F /* hexdecode.cpp */; };
+		6576414C1DE4A96E00602BC0 /* hexnumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC881AE93AD1004CEC1F /* hexnumconv.cpp */; };
+		6576414D1DE4A96E00602BC0 /* natnumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC8A1AE93AD1004CEC1F /* natnumconv.cpp */; };
+		6576414E1DE4A96E00602BC0 /* specconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC8C1AE93AD1004CEC1F /* specconv.cpp */; };
+		6576414F1DE4A96E00602BC0 /* specorgconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65669E3E1DE49B510018F644 /* specorgconv.cpp */; };
+		657641501DE4A96E00602BC0 /* valdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC8E1AE93AD1004CEC1F /* valdate.cpp */; };
+		657641511DE4A96E00602BC0 /* xmldoctypeconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC901AE93AD1004CEC1F /* xmldoctypeconv.cpp */; };
+		657641521DE4A96E00602BC0 /* xmlspecconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC921AE93AD1004CEC1F /* xmlspecconv.cpp */; };
+		657641531DE4A96E00602BC0 /* xmlspecorgconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65669E401DE49B510018F644 /* xmlspecorgconv.cpp */; };
+		657641541DE4A96E00602BC0 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAE31C621E3D00034337 /* labels.c */; };
+		657641551DE4A96E00602BC0 /* oslayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCA51AE93B1C004CEC1F /* oslayer.c */; };
+		657641561DE4A96E00602BC0 /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCA81AE93B2E004CEC1F /* p11.c */; };
+		657641571DE4A96E00602BC0 /* state-posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCAB1AE93B3D004CEC1F /* state-posix.c */; };
+		657641581DE4A96E00602BC0 /* state.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCAC1AE93B3D004CEC1F /* state.c */; };
+		657641591DE4A96E00602BC0 /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB01AE93B4B004CEC1F /* xml.c */; };
+		6576415A1DE4A96E00602BC0 /* preview.c in Sources */ = {isa = PBXBuildFile; fileRef = 8BBDE3271B3C063100CBE13E /* preview.c */; };
+		6576415B1DE4A96E00602BC0 /* xmlmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB21AE93B4B004CEC1F /* xmlmap.cpp */; };
+		6576415D1DE4A9F300602BC0 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
+		6576415E1DE4AA1600602BC0 /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */; };
 		6593B10E1CD8F8BC00C089A2 /* certs in Resources */ = {isa = PBXBuildFile; fileRef = 6593B10D1CD8F8BC00C089A2 /* certs */; };
 		659FFC431AE9360D004CEC1F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC421AE9360D004CEC1F /* AppDelegate.m */; };
 		659FFC451AE9360D004CEC1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC441AE9360D004CEC1F /* main.m */; };
 		659FFC471AE9360D004CEC1F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659FFC461AE9360D004CEC1F /* Images.xcassets */; };
 		659FFC4A1AE9360D004CEC1F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 659FFC481AE9360D004CEC1F /* MainMenu.xib */; };
-		659FFC6D1AE9365F004CEC1F /* oslayer-objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC6C1AE9365F004CEC1F /* oslayer-objc.m */; };
-		659FFC701AE93A7B004CEC1F /* backend.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC6E1AE93A7B004CEC1F /* backend.c */; };
-		659FFC731AE93A9B004CEC1F /* cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC721AE93A9B004CEC1F /* cache.cpp */; };
-		659FFC761AE93AB5004CEC1F /* base64dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC741AE93AB5004CEC1F /* base64dec.c */; };
-		659FFC941AE93AD1004CEC1F /* bbannumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC771AE93AD1004CEC1F /* bbannumconv.cpp */; };
-		659FFC951AE93AD1004CEC1F /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC791AE93AD1004CEC1F /* convert.cpp */; };
 		659FFC961AE93AD1004CEC1F /* convertor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC7A1AE93AD1004CEC1F /* convertor.cpp */; };
-		659FFC971AE93AD1004CEC1F /* convworker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC7C1AE93AD1004CEC1F /* convworker.cpp */; };
-		659FFC981AE93AD1004CEC1F /* dateconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC7E1AE93AD1004CEC1F /* dateconv.cpp */; };
-		659FFC991AE93AD1004CEC1F /* dob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC801AE93AD1004CEC1F /* dob.cpp */; };
-		659FFC9A1AE93AD1004CEC1F /* doctypeconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC821AE93AD1004CEC1F /* doctypeconv.cpp */; };
 		659FFC9B1AE93AD1004CEC1F /* genderconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC841AE93AD1004CEC1F /* genderconv.cpp */; };
-		659FFC9C1AE93AD1004CEC1F /* hexdecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC861AE93AD1004CEC1F /* hexdecode.cpp */; };
-		659FFC9D1AE93AD1004CEC1F /* hexnumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC881AE93AD1004CEC1F /* hexnumconv.cpp */; };
-		659FFC9E1AE93AD1004CEC1F /* natnumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC8A1AE93AD1004CEC1F /* natnumconv.cpp */; };
-		659FFC9F1AE93AD1004CEC1F /* specconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC8C1AE93AD1004CEC1F /* specconv.cpp */; };
-		659FFCA01AE93AD1004CEC1F /* valdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC8E1AE93AD1004CEC1F /* valdate.cpp */; };
-		659FFCA11AE93AD1004CEC1F /* xmldoctypeconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC901AE93AD1004CEC1F /* xmldoctypeconv.cpp */; };
-		659FFCA21AE93AD1004CEC1F /* xmlspecconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC921AE93AD1004CEC1F /* xmlspecconv.cpp */; };
-		659FFCA71AE93B1C004CEC1F /* oslayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCA51AE93B1C004CEC1F /* oslayer.c */; };
-		659FFCAA1AE93B2E004CEC1F /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCA81AE93B2E004CEC1F /* p11.c */; };
-		659FFCAE1AE93B3D004CEC1F /* state-posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCAB1AE93B3D004CEC1F /* state-posix.c */; };
-		659FFCAF1AE93B3D004CEC1F /* state.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCAC1AE93B3D004CEC1F /* state.c */; };
-		659FFCB41AE93B4B004CEC1F /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB01AE93B4B004CEC1F /* xml.c */; };
-		659FFCB51AE93B4B004CEC1F /* xmlmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 659FFCB21AE93B4B004CEC1F /* xmlmap.cpp */; };
 		65BD08671CECB257000A30E4 /* BeidView.h in Headers */ = {isa = PBXBuildFile; fileRef = 65BD08661CECB257000A30E4 /* BeidView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65BD086B1CECB257000A30E4 /* BeidView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BD08641CECB257000A30E4 /* BeidView.framework */; };
 		65BD086C1CECB257000A30E4 /* BeidView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65BD08641CECB257000A30E4 /* BeidView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -59,19 +65,16 @@
 		65BD08741CECB43D000A30E4 /* macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 65BD084A1CECAB6B000A30E4 /* macros.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65BD08751CECB43D000A30E4 /* oslayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 65BD084B1CECAB6B000A30E4 /* oslayer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65BD08761CECB43D000A30E4 /* verify_cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 65BD084C1CECAB6B000A30E4 /* verify_cert.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		65BE1C791BB573C4002E8061 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C781BB573C4002E8061 /* libxml2.a */; };
 		65CEFFFD1CEB490000642B63 /* ReaderMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CEFFFC1CEB490000642B63 /* ReaderMenuItem.m */; };
 		65D80EE11D771C010081F649 /* utftranslate.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D80EE01D771C010081F649 /* utftranslate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65D80EE31D771E9C0081F649 /* labels.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D80EE21D771E9C0081F649 /* labels.h */; };
 		65DD2E941D006B3F0005EC86 /* trustdirname.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DD2E931D006B3F0005EC86 /* trustdirname.m */; };
-		65EABAE71C621EE900034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAE31C621E3D00034337 /* labels.c */; };
 		8B195DE51BB3F62900777CC5 /* ResizablePrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B195DE41BB3F62900777CC5 /* ResizablePrintView.m */; };
 		8B3DD9751B03907500E0537B /* coat_of_arms_de.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9711B03907500E0537B /* coat_of_arms_de.jpg */; };
 		8B3DD9761B03907500E0537B /* coat_of_arms_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9721B03907500E0537B /* coat_of_arms_en.jpg */; };
 		8B3DD9771B03907500E0537B /* coat_of_arms_fr.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9731B03907500E0537B /* coat_of_arms_fr.jpg */; };
 		8B3DD9781B03907500E0537B /* coat_of_arms_nl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9741B03907500E0537B /* coat_of_arms_nl.jpg */; };
 		8B4A21C11B330EDD00D489E8 /* DraggingImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A21C01B330EDD00D489E8 /* DraggingImage.m */; };
-		8B4E169B1AF2707F004C2B24 /* certhelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B4E16991AF2707F004C2B24 /* certhelpers.c */; };
 		8BAC043C1AFB7F0400750CF6 /* PrintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC043B1AFB7F0400750CF6 /* PrintOperation.m */; };
 		8BB34E601B468C4C006B0B99 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
 		8BBDE3171B3BF02C00CBE13E /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBDE3161B3BF02C00CBE13E /* GenerateThumbnailForURL.m */; };
@@ -79,7 +82,6 @@
 		8BBDE31B1B3BF02C00CBE13E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 8BBDE31A1B3BF02C00CBE13E /* main.c */; };
 		8BBDE3251B3C05F500CBE13E /* base64dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC741AE93AB5004CEC1F /* base64dec.c */; };
 		8BBDE3261B3C05F500CBE13E /* base64dec.h in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC751AE93AB5004CEC1F /* base64dec.h */; };
-		8BBDE3281B3C063100CBE13E /* preview.c in Sources */ = {isa = PBXBuildFile; fileRef = 8BBDE3271B3C063100CBE13E /* preview.c */; };
 		8BBDE3291B3C063100CBE13E /* preview.c in Sources */ = {isa = PBXBuildFile; fileRef = 8BBDE3271B3C063100CBE13E /* preview.c */; };
 		8BBDE32A1B3C078E00CBE13E /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */; };
 /* End PBXBuildFile section */
@@ -126,22 +128,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		651130951CD8DD3F0076682F /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../support/ossl/openssl-1.0.2g/libcrypto.a"; sourceTree = "<group>"; };
 		65296A331AF1181700F0DDE7 /* CertificateStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateStore.h; sourceTree = "<group>"; };
 		65296A341AF1181700F0DDE7 /* CertificateStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateStore.m; sourceTree = "<group>"; };
 		65296A361AF1197400F0DDE7 /* binhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binhandler.h; sourceTree = "<group>"; };
 		65296A371AF119CB00F0DDE7 /* photohandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = photohandler.h; sourceTree = "<group>"; };
 		65296A381AF119CB00F0DDE7 /* photohandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = photohandler.m; sourceTree = "<group>"; };
-		652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "dataroot-osx.m"; sourceTree = "<group>"; };
+		652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "dataroot-osx.m"; path = "../eID Viewer/dataroot-osx.m"; sourceTree = "<group>"; };
 		652BC8AF1AEA441400DA9519 /* xsdloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xsdloc.h; path = ../../../xsdloc.h; sourceTree = "<group>"; };
 		652BC8B01AEA467800DA9519 /* eidv4.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../eidv4.xsd; sourceTree = "<group>"; };
 		652F07681D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.18.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.18.dylib; sourceTree = "<group>"; };
-		653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../support/xml/builddir/.libs/libxml2.2.dylib; sourceTree = "<group>"; };
 		654832DE1C451E160030D770 /* verify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = verify.c; path = ../../../verify.c; sourceTree = "<group>"; };
 		65669E3E1DE49B510018F644 /* specorgconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = specorgconv.cpp; path = ../../../conversions/specorgconv.cpp; sourceTree = "<group>"; };
 		65669E3F1DE49B510018F644 /* specorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = specorgconv.h; path = ../../../conversions/specorgconv.h; sourceTree = "<group>"; };
 		65669E401DE49B510018F644 /* xmlspecorgconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmlspecorgconv.cpp; path = ../../../conversions/xmlspecorgconv.cpp; sourceTree = "<group>"; };
 		65669E411DE49B510018F644 /* xmlspecorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlspecorgconv.h; path = ../../../conversions/xmlspecorgconv.h; sourceTree = "<group>"; };
+		6576413A1DE4A66200602BC0 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../support/ossl/openssl/libcrypto.a; sourceTree = "<group>"; };
 		6593B10D1CD8F8BC00C089A2 /* certs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = certs; path = ../../../certs; sourceTree = "<group>"; };
 		65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.18.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.18.dylib; sourceTree = "<group>"; };
 		659FFC3C1AE9360D004CEC1F /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -242,10 +243,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				652F07691D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib in Frameworks */,
-				651130961CD8DD3F0076682F /* libcrypto.a in Frameworks */,
 				65BD086B1CECB257000A30E4 /* BeidView.framework in Frameworks */,
-				65BE1C791BB573C4002E8061 /* libxml2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +251,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6576413B1DE4A66200602BC0 /* libcrypto.a in Frameworks */,
+				657641391DE4A63100602BC0 /* libbeidpkcs11.4.1.18.dylib in Frameworks */,
+				657641381DE4A4CB00602BC0 /* libxml2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +261,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				653BB4D91BBC0D2F00EA73CF /* libxml2.2.dylib in Frameworks */,
+				6576413C1DE4A6CD00602BC0 /* libxml2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +271,7 @@
 		652F07671D918C65003BFFD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6576413A1DE4A66200602BC0 /* libcrypto.a */,
 				652F07681D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib */,
 			);
 			name = Frameworks;
@@ -279,9 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				65D80EE01D771C010081F649 /* utftranslate.h */,
-				651130951CD8DD3F0076682F /* libcrypto.a */,
 				65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.18.dylib */,
-				653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */,
 				65BE1C781BB573C4002E8061 /* libxml2.a */,
 				659FFC3E1AE9360D004CEC1F /* eID Viewer */,
 				8BBDE3131B3BF02C00CBE13E /* eidfilepreview */,
@@ -311,7 +311,6 @@
 				65296A361AF1197400F0DDE7 /* binhandler.h */,
 				65296A331AF1181700F0DDE7 /* CertificateStore.h */,
 				65296A341AF1181700F0DDE7 /* CertificateStore.m */,
-				652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */,
 				65296A371AF119CB00F0DDE7 /* photohandler.h */,
 				65296A381AF119CB00F0DDE7 /* photohandler.m */,
 				8BAC043A1AFB7F0400750CF6 /* PrintOperation.h */,
@@ -398,6 +397,7 @@
 				8B4E16991AF2707F004C2B24 /* certhelpers.c */,
 				659FFCA31AE93ADA004CEC1F /* conversions */,
 				659FFCA41AE93AF3004CEC1F /* conversions.h */,
+				652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */,
 				65EABAE31C621E3D00034337 /* labels.c */,
 				65D80EE21D771E9C0081F649 /* labels.h */,
 				659FFCA51AE93B1C004CEC1F /* oslayer.c */,
@@ -504,7 +504,7 @@
 				65BD085F1CECB257000A30E4 /* Sources */,
 				65BD08601CECB257000A30E4 /* Frameworks */,
 				65BD08611CECB257000A30E4 /* Headers */,
-				65BD08621CECB257000A30E4 /* Resources */,
+				6576415C1DE4A9EC00602BC0 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -575,6 +575,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6576415C1DE4A9EC00602BC0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6576415D1DE4A9F300602BC0 /* eidv4.xsd in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		659FFC3A1AE9360D004CEC1F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -584,16 +592,8 @@
 				8B3DD9761B03907500E0537B /* coat_of_arms_en.jpg in Resources */,
 				659FFC471AE9360D004CEC1F /* Images.xcassets in Resources */,
 				659FFC4A1AE9360D004CEC1F /* MainMenu.xib in Resources */,
-				652BC8B11AEA467800DA9519 /* eidv4.xsd in Resources */,
 				8B3DD9781B03907500E0537B /* coat_of_arms_nl.jpg in Resources */,
 				8B3DD9751B03907500E0537B /* coat_of_arms_de.jpg in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		65BD08621CECB257000A30E4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -642,46 +642,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65669E461DE49C230018F644 /* specorgconv.cpp in Sources */,
-				65669E471DE49C230018F644 /* xmlspecorgconv.cpp in Sources */,
-				65EABAE71C621EE900034337 /* labels.c in Sources */,
-				659FFCA21AE93AD1004CEC1F /* xmlspecconv.cpp in Sources */,
-				659FFC941AE93AD1004CEC1F /* bbannumconv.cpp in Sources */,
-				659FFC971AE93AD1004CEC1F /* convworker.cpp in Sources */,
-				659FFCAF1AE93B3D004CEC1F /* state.c in Sources */,
 				659FFC451AE9360D004CEC1F /* main.m in Sources */,
-				659FFC981AE93AD1004CEC1F /* dateconv.cpp in Sources */,
 				8B4A21C11B330EDD00D489E8 /* DraggingImage.m in Sources */,
 				65CEFFFD1CEB490000642B63 /* ReaderMenuItem.m in Sources */,
-				659FFCAA1AE93B2E004CEC1F /* p11.c in Sources */,
-				659FFCA01AE93AD1004CEC1F /* valdate.cpp in Sources */,
-				659FFCAE1AE93B3D004CEC1F /* state-posix.c in Sources */,
 				659FFC431AE9360D004CEC1F /* AppDelegate.m in Sources */,
-				659FFCA11AE93AD1004CEC1F /* xmldoctypeconv.cpp in Sources */,
-				659FFC731AE93A9B004CEC1F /* cache.cpp in Sources */,
-				659FFC701AE93A7B004CEC1F /* backend.c in Sources */,
-				659FFCB41AE93B4B004CEC1F /* xml.c in Sources */,
-				659FFC951AE93AD1004CEC1F /* convert.cpp in Sources */,
-				659FFC6D1AE9365F004CEC1F /* oslayer-objc.m in Sources */,
-				659FFCB51AE93B4B004CEC1F /* xmlmap.cpp in Sources */,
-				659FFC9C1AE93AD1004CEC1F /* hexdecode.cpp in Sources */,
-				654832DF1C451E160030D770 /* verify.c in Sources */,
-				659FFC9F1AE93AD1004CEC1F /* specconv.cpp in Sources */,
-				659FFC9D1AE93AD1004CEC1F /* hexnumconv.cpp in Sources */,
-				659FFCA71AE93B1C004CEC1F /* oslayer.c in Sources */,
-				659FFC991AE93AD1004CEC1F /* dob.cpp in Sources */,
-				659FFC761AE93AB5004CEC1F /* base64dec.c in Sources */,
-				659FFC9A1AE93AD1004CEC1F /* doctypeconv.cpp in Sources */,
-				652BC8AE1AEA41D100DA9519 /* dataroot-osx.m in Sources */,
 				65296A391AF119CB00F0DDE7 /* photohandler.m in Sources */,
 				8BAC043C1AFB7F0400750CF6 /* PrintOperation.m in Sources */,
-				659FFC9E1AE93AD1004CEC1F /* natnumconv.cpp in Sources */,
 				65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */,
 				8B195DE51BB3F62900777CC5 /* ResizablePrintView.m in Sources */,
-				8BBDE3281B3C063100CBE13E /* preview.c in Sources */,
 				659FFC9B1AE93AD1004CEC1F /* genderconv.cpp in Sources */,
 				659FFC961AE93AD1004CEC1F /* convertor.cpp in Sources */,
-				8B4E169B1AF2707F004C2B24 /* certhelpers.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,6 +659,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6576415E1DE4AA1600602BC0 /* dataroot-osx.m in Sources */,
+				6576413D1DE4A96E00602BC0 /* oslayer-objc.m in Sources */,
+				6576413E1DE4A96E00602BC0 /* verify.c in Sources */,
+				6576413F1DE4A96E00602BC0 /* backend.c in Sources */,
+				657641401DE4A96E00602BC0 /* base64dec.c in Sources */,
+				657641411DE4A96E00602BC0 /* cache.cpp in Sources */,
+				657641421DE4A96E00602BC0 /* certhelpers.c in Sources */,
+				657641431DE4A96E00602BC0 /* bbannumconv.cpp in Sources */,
+				657641441DE4A96E00602BC0 /* convert.cpp in Sources */,
+				657641451DE4A96E00602BC0 /* convertor.cpp in Sources */,
+				657641461DE4A96E00602BC0 /* convworker.cpp in Sources */,
+				657641471DE4A96E00602BC0 /* dateconv.cpp in Sources */,
+				657641481DE4A96E00602BC0 /* dob.cpp in Sources */,
+				657641491DE4A96E00602BC0 /* doctypeconv.cpp in Sources */,
+				6576414A1DE4A96E00602BC0 /* genderconv.cpp in Sources */,
+				6576414B1DE4A96E00602BC0 /* hexdecode.cpp in Sources */,
+				6576414C1DE4A96E00602BC0 /* hexnumconv.cpp in Sources */,
+				6576414D1DE4A96E00602BC0 /* natnumconv.cpp in Sources */,
+				6576414E1DE4A96E00602BC0 /* specconv.cpp in Sources */,
+				6576414F1DE4A96E00602BC0 /* specorgconv.cpp in Sources */,
+				657641501DE4A96E00602BC0 /* valdate.cpp in Sources */,
+				657641511DE4A96E00602BC0 /* xmldoctypeconv.cpp in Sources */,
+				657641521DE4A96E00602BC0 /* xmlspecconv.cpp in Sources */,
+				657641531DE4A96E00602BC0 /* xmlspecorgconv.cpp in Sources */,
+				657641541DE4A96E00602BC0 /* labels.c in Sources */,
+				657641551DE4A96E00602BC0 /* oslayer.c in Sources */,
+				657641561DE4A96E00602BC0 /* p11.c in Sources */,
+				657641571DE4A96E00602BC0 /* state-posix.c in Sources */,
+				657641581DE4A96E00602BC0 /* state.c in Sources */,
+				657641591DE4A96E00602BC0 /* xml.c in Sources */,
+				6576415A1DE4A96E00602BC0 /* preview.c in Sources */,
+				6576415B1DE4A96E00602BC0 /* xmlmap.cpp in Sources */,
 				65DD2E941D006B3F0005EC86 /* trustdirname.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -843,12 +845,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					../../../../Debug/,
-					"${PROJECT_DIR}/../support/ossl/openssl",
-					"${PROJECT_DIR}/../support/xml/builddir",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -860,12 +856,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					../../../../Release/,
-					"${PROJECT_DIR}/../support/ossl/openssl",
-					"${PROJECT_DIR}/../support/xml/builddir",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -885,7 +875,13 @@
 				INFOPLIST_FILE = BeidView/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../../../Debug/,
+					"${PROJECT_DIR}/../support/ossl/openssl",
+					"${PROJECT_DIR}/../support/xml/builddir",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -908,7 +904,13 @@
 				INFOPLIST_FILE = BeidView/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../../../../Release/,
+					"${PROJECT_DIR}/../support/ossl/openssl",
+					"${PROJECT_DIR}/../support/xml/builddir",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -928,7 +930,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = eidfilepreview/Info.plist;
 				INSTALL_PATH = /Library/QuickLook;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
@@ -941,7 +943,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = eidfilepreview/Info.plist;
 				INSTALL_PATH = /Library/QuickLook;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
