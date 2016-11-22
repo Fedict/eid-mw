@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\conversions\valdate.cpp" />
     <ClCompile Include="..\..\conversions\xmldoctypeconv.cpp" />
     <ClCompile Include="..\..\conversions\xmlspecconv.cpp" />
+    <ClCompile Include="..\..\noverification.c" />
     <ClCompile Include="..\..\oslayer.c" />
     <ClCompile Include="..\..\p11.c" />
     <ClCompile Include="..\..\state-posix.c" />
