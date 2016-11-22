@@ -23,7 +23,8 @@ dist_content_DATA = content/belgiumeidpkcs11.js \
 			content/belgiumeidprompt.js \
 			content/belgiumeidprompt.xul \
 			content/belgiumeidpromptsecure.js \
-			content/belgiumeidpromptsecure.xul
+			content/belgiumeidpromptsecure.xul \
+			content/belgiumeid-api.js
 
 dist_defaults_preferences_DATA = defaults/preferences/belgiumeid.js
 
@@ -39,7 +40,8 @@ dist_skin_DATA = skin/icon.png \
 			skin/icon40x40.png \
 			skin/overlay.css
 
-dist_components_DATA = components/belgiumeidpkcs11.js
+dist_components_DATA = components/belgiumeidpkcs11.js \
+		       components/belgiumeidpkcs11-pre47.js
 endif
 
 xpipackage: $(xpi_files)

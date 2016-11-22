@@ -103,15 +103,15 @@ static void newstate(enum eid_vwr_states s) {
 	switch(s) {
 		case STATE_LIBOPEN:
 		case STATE_CALLBACKS:
-			uistatus(TRUE, _("Initializing"));
+			uistatus(TRUE, _("Initialising"));
 			return;
 		case STATE_READY:
-			uistatus(FALSE, _("Ready to read identity card."));
+			uistatus(FALSE, _("Ready to read identity card"));
 			g_object_set_threaded(open, "sensitive", (void*)TRUE, NULL);
 			disable_dnd();
 			return;
 		case STATE_NO_READER:
-			uistatus(FALSE, _("No cardreader found."));
+			uistatus(FALSE, _("No cardreader found"));
 			g_object_set_threaded(open, "sensitive", (void*)TRUE, NULL);
 			disable_dnd();
 			return;
@@ -133,13 +133,13 @@ static void newstate(enum eid_vwr_states s) {
 			setup_dnd();
 			return;
 		case STATE_TOKEN_ID:
-			uistatus(TRUE, _("Reading identity."));
+			uistatus(TRUE, _("Reading identity"));
 			return;
 		case STATE_TOKEN_CERTS:
-			uistatus(TRUE, _("Reading certificates from card"));
+			uistatus(TRUE, _("Reading certificates"));
 			return;
 		case STATE_TOKEN_ERROR:
-			uistatus(FALSE, _("Failed to read identity data."));
+			uistatus(FALSE, _("Failed to read identity data"));
 			return;
 		case STATE_TOKEN_PINOP:
 			uistatus(TRUE, _("Performing a PIN operation"));
