@@ -16,6 +16,10 @@
 		652F07691D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 652F07681D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib */; };
 		653BB4D91BBC0D2F00EA73CF /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */; };
 		654832DF1C451E160030D770 /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = 654832DE1C451E160030D770 /* verify.c */; };
+		65669E431DE49B510018F644 /* specorgconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65669E3F1DE49B510018F644 /* specorgconv.h */; };
+		65669E451DE49B510018F644 /* xmlspecorgconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65669E411DE49B510018F644 /* xmlspecorgconv.h */; };
+		65669E461DE49C230018F644 /* specorgconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65669E3E1DE49B510018F644 /* specorgconv.cpp */; };
+		65669E471DE49C230018F644 /* xmlspecorgconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65669E401DE49B510018F644 /* xmlspecorgconv.cpp */; };
 		6593B10E1CD8F8BC00C089A2 /* certs in Resources */ = {isa = PBXBuildFile; fileRef = 6593B10D1CD8F8BC00C089A2 /* certs */; };
 		659FFC431AE9360D004CEC1F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC421AE9360D004CEC1F /* AppDelegate.m */; };
 		659FFC451AE9360D004CEC1F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 659FFC441AE9360D004CEC1F /* main.m */; };
@@ -134,6 +138,10 @@
 		652F07681D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.18.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.18.dylib; sourceTree = "<group>"; };
 		653BB4D81BBC0D2F00EA73CF /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../support/xml/builddir/.libs/libxml2.2.dylib; sourceTree = "<group>"; };
 		654832DE1C451E160030D770 /* verify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = verify.c; path = ../../../verify.c; sourceTree = "<group>"; };
+		65669E3E1DE49B510018F644 /* specorgconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = specorgconv.cpp; path = ../../../conversions/specorgconv.cpp; sourceTree = "<group>"; };
+		65669E3F1DE49B510018F644 /* specorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = specorgconv.h; path = ../../../conversions/specorgconv.h; sourceTree = "<group>"; };
+		65669E401DE49B510018F644 /* xmlspecorgconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmlspecorgconv.cpp; path = ../../../conversions/xmlspecorgconv.cpp; sourceTree = "<group>"; };
+		65669E411DE49B510018F644 /* xmlspecorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlspecorgconv.h; path = ../../../conversions/xmlspecorgconv.h; sourceTree = "<group>"; };
 		6593B10D1CD8F8BC00C089A2 /* certs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = certs; path = ../../../certs; sourceTree = "<group>"; };
 		65967BC71C11DF6400814858 /* libbeidpkcs11.4.1.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.18.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.18.dylib; sourceTree = "<group>"; };
 		659FFC3C1AE9360D004CEC1F /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -360,12 +368,16 @@
 				659FFC8B1AE93AD1004CEC1F /* natnumconv.h */,
 				659FFC8C1AE93AD1004CEC1F /* specconv.cpp */,
 				659FFC8D1AE93AD1004CEC1F /* specconv.h */,
+				65669E3E1DE49B510018F644 /* specorgconv.cpp */,
+				65669E3F1DE49B510018F644 /* specorgconv.h */,
 				659FFC8E1AE93AD1004CEC1F /* valdate.cpp */,
 				659FFC8F1AE93AD1004CEC1F /* valdate.h */,
 				659FFC901AE93AD1004CEC1F /* xmldoctypeconv.cpp */,
 				659FFC911AE93AD1004CEC1F /* xmldoctypeconv.h */,
 				659FFC921AE93AD1004CEC1F /* xmlspecconv.cpp */,
 				659FFC931AE93AD1004CEC1F /* xmlspecconv.h */,
+				65669E401DE49B510018F644 /* xmlspecorgconv.cpp */,
+				65669E411DE49B510018F644 /* xmlspecorgconv.h */,
 			);
 			name = conversions;
 			path = "../eID Viewer";
@@ -440,9 +452,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				65BD08671CECB257000A30E4 /* BeidView.h in Headers */,
+				65669E451DE49B510018F644 /* xmlspecorgconv.h in Headers */,
 				65BD08721CECB43D000A30E4 /* certhelpers.h in Headers */,
 				65D80EE31D771E9C0081F649 /* labels.h in Headers */,
 				65BD08731CECB43D000A30E4 /* eid-viewer.h in Headers */,
+				65669E431DE49B510018F644 /* specorgconv.h in Headers */,
 				65BD08741CECB43D000A30E4 /* macros.h in Headers */,
 				65BD08751CECB43D000A30E4 /* oslayer.h in Headers */,
 				65BD08761CECB43D000A30E4 /* verify_cert.h in Headers */,
@@ -628,6 +642,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65669E461DE49C230018F644 /* specorgconv.cpp in Sources */,
+				65669E471DE49C230018F644 /* xmlspecorgconv.cpp in Sources */,
 				65EABAE71C621EE900034337 /* labels.c in Sources */,
 				659FFCA21AE93AD1004CEC1F /* xmlspecconv.cpp in Sources */,
 				659FFC941AE93AD1004CEC1F /* bbannumconv.cpp in Sources */,
