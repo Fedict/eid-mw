@@ -27,7 +27,8 @@ namespace eIDViewer
     public partial class MainWindow : Window
     {
         eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
-
+        private MenuItem LastCardReaderMenuItem = null;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -331,6 +332,13 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
             if (e.Source.GetType().Name.Equals("MenuItem"))
             {
                 MenuItem menu = e.Source as MenuItem;
+                if ((LastCardReaderMenuItem != null) && (LastCardReaderMenuItem != menu))
+                {
+                    LastCardReaderMenuItem.IsChecked = false;
+                }
+
+                LastCardReaderMenuItem = menu;
+
                 if (menu.DataContext.GetType().Name.Equals("ReadersMenuViewModel"))
                 {
                     ReadersMenuViewModel reader = menu.DataContext as ReadersMenuViewModel;
