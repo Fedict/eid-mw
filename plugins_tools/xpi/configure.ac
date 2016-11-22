@@ -42,7 +42,7 @@ AS_IF(
 	[[mozext]=[$with_mozext]]
 )
 
-AC_ARG_ENABLE(signed, AS_HELP_STRING([--enable-signed], [Use the (pre-)signed version of the extension, rather than building it from source. Required for Firefox >= 43 (default on)]),[],[enable_signed=yes])
+AC_ARG_ENABLE(signed, AS_HELP_STRING([--disable-signed], [Don't use the (pre-)signed version of the extension, instead build it from source. Required for Firefox >= 43 (default on)]),[],[enable_signed=yes])
 AM_CONDITIONAL([SIGNED], [test "$enable_signed" = yes])
 
 AC_SUBST([ZIP])

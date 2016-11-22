@@ -403,6 +403,8 @@ DllExport void eid_vwr_convert_set_lang(enum eid_vwr_langs which);
   */
 DllExport enum eid_vwr_langs eid_vwr_convert_get_lang();
 
+DllExport void eid_vwr_init_crypto();
+
 /**@}*/
 
 #endif

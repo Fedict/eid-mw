@@ -87,9 +87,6 @@ DllExport char *eid_vwr_describe_cert(const char *label, X509 * cert);
   */
 DllExport void eid_vwr_dumpcert(int fd, const void *derdata, int len,
 				enum dump_type how);
-
 /**@}*/
-
-void ensure_inited();
 
 #endif

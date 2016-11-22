@@ -27,7 +27,8 @@ namespace eIDViewer
     public partial class MainWindow : Window
     {
         eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
-
+        private MenuItem LastCardReaderMenuItem = null;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -54,29 +55,49 @@ namespace eIDViewer
 
         private void Deutch_Click(object sender, RoutedEventArgs e)
         {
+            //Change the Localization of the language in the UI
             ChangeLocalization("de-DE");
+            //Store the chosen language in the registry
             StoreLanguage("de");
+            //show the language marker in the menu
+            theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
+            //tell the backend to switch the language
             eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
         }
 
         private void English_Click(object sender, RoutedEventArgs e)
         {
+            //Change the Localization of the language in the UI
             ChangeLocalization("en-US");
+            //Store the chosen language in the registry
             StoreLanguage("en");
+            //show the language marker in the menu
+            theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
+            //tell the backend to switch the language
             eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
         }
 
         private void French_Click(object sender, RoutedEventArgs e)
         {
+            //Change the Localization of the language in the UI
             ChangeLocalization("fr-BE");
+            //Store the chosen language in the registry
             StoreLanguage("fr");
+            //show the language marker in the menu
+            theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
+            //tell the backend to switch the language
             eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
         }
 
         private void Nederlands_Click(object sender, RoutedEventArgs e)
         {
+            //Change the Localization of the language in the UI
             ChangeLocalization("nl-BE");
+            //Store the chosen language in the registry
             StoreLanguage("nl");
+            //show the language marker in the menu
+            theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
+            //tell the backend to switch the language
             eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
         }
 
@@ -311,6 +332,13 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
             if (e.Source.GetType().Name.Equals("MenuItem"))
             {
                 MenuItem menu = e.Source as MenuItem;
+                if ((LastCardReaderMenuItem != null) && (LastCardReaderMenuItem != menu))
+                {
+                    LastCardReaderMenuItem.IsChecked = false;
+                }
+
+                LastCardReaderMenuItem = menu;
+
                 if (menu.DataContext.GetType().Name.Equals("ReadersMenuViewModel"))
                 {
                     ReadersMenuViewModel reader = menu.DataContext as ReadersMenuViewModel;

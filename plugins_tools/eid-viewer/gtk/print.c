@@ -52,7 +52,7 @@ static struct field {
 
 static struct field foreignerfields[] = {
 	{ 5, N_("Member of family:"), "member_of_family" },
-	{ 5, N_("Special organization:"), "special_organization" },
+	{ 5, N_("Organization:"), "special_organization" },
 	{ 5, N_("Duplicata:"), "duplicata" },
 	{ 5, N_("Date and country of protection:"), "date_and_country_of_protection" },
 	{ 5, N_("Work permit mention:"), "work_permit_type" },

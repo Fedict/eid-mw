@@ -8,7 +8,8 @@ export TMPDIR ?= /tmp
 
 if SIGNED
 xpipackage:
-	$(MAKE) -C signed-build xpipackage
+	echo "E: make xpipackage doesn't work with the prebuilt signed package"
+	exit 1
 else
 xpipackage:
 	$(MAKE) -C src xpipackage
