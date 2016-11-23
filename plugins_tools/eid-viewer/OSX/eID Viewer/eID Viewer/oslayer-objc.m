@@ -92,6 +92,7 @@ static void osl_objc_free_ocsp_request(void* data) {
 	eid_vwr_pinop((enum eid_vwr_pinops)which);
 }
 +(NSInteger)setUi:(id<eIDOSLayerUI>)ui {
+	NSInteger rv;
 	struct eid_vwr_ui_callbacks *cb = eid_vwr_cbstruct();
 	cb->log = osl_objc_log;
 	cb->newbindata = osl_objc_newbindata;
@@ -101,7 +102,9 @@ static void osl_objc_free_ocsp_request(void* data) {
 	cb->pinop_result = osl_objc_pinop_result;
 	cb->readers_changed = osl_objc_readers_found;
 	currUi = ui;
-	return eid_vwr_createcallbacks(cb);
+	rv = eid_vwr_createcallbacks(cb);
+	eid_vwr_init_crypto();
+	return rv;
 }
 +(NSImage*)getPreview:(NSURL *)from {
 	if(![from isFileReferenceURL]) {
