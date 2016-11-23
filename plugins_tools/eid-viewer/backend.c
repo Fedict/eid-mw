@@ -87,34 +87,68 @@ int be_newstate(enum eid_vwr_states which) {
 	return EIDV_RV_OK;
 }
 
+static EID_CHAR* format_string(const EID_CHAR* format, va_list ap) {
+	size_t strsize = 0;
+	size_t strnewsize = 0;
+	EID_CHAR* str = NULL;
+	va_list apc;
+	do {
+		va_copy(apc, ap);
+		strnewsize = EID_VSNPRINTF(str, strsize, format, apc);
+		va_end(ap);
+		strsize = strnewsize + 1;
+		str = (EID_CHAR*)realloc(str, strsize * sizeof(EID_CHAR));
+		if(!str) {
+			return NULL;
+		}
+		va_copy(apc, ap);
+		strnewsize = EID_VSNPRINTF(str, strsize, format, apc);
+		va_end(apc);
+	} while(strnewsize >= strsize);
+	return str;
+}
+
 /* Log data to the UI (if implemented). Caller: entire backend. */
 void be_log(enum eid_vwr_loglevel l, const EID_CHAR* string, ...) {
 	va_list ap;
 	EID_CHAR* str = NULL;
-	size_t strsize = 0;
-	size_t strnewsize = 0;
-	if(!cb) return;
-	if(cb->logv) {
-		va_start(ap, string);
-		cb->logv(l, string, ap);
-		va_end(ap);
-	} else if(cb->log) {
-		do {
-			va_start(ap, string);
-			strnewsize = EID_VSNPRINTF(str, strsize, string, ap);
-			va_end(ap);
-			strsize = strnewsize +1;
-			str = (EID_CHAR*)realloc(str, strsize * sizeof(EID_CHAR));
-			if(!str) { 
-				return;
+	static char* logbuf[10];
+	static enum eid_vwr_loglevel loglev[10];
+	static int lastlog=0;
+	static int have_buffered = 0;
+
+	va_start(ap, string);
+	if(!cb) {
+		logbuf[lastlog] = format_string(string, ap);
+		loglev[lastlog++] = l;
+		if(lastlog > 10) {
+			lastlog = 0;
+		}
+		have_buffered = 1;
+		return;
+	}
+	if(have_buffered != 0) {
+		int i;
+
+		have_buffered = 0;
+		for(i=lastlog; i<10; i++) {
+			if(logbuf[i] != NULL) {
+				be_log(loglev[i], logbuf[i]);
+				free(logbuf[i]);
 			}
-			va_start(ap, string);
-			strnewsize = EID_VSNPRINTF(str, strsize, string, ap);
-			va_end(ap);
-		} while (strnewsize >= strsize);
+		}
+		for(i=0; i<lastlog; i++) {
+			be_log(loglev[i], logbuf[i]);
+		}
+	}
+	if(cb->logv) {
+		cb->logv(l, string, ap);
+	} else if(cb->log) {
+		str = format_string(string, ap);
 		cb->log(l, str);
 		free(str);
 	}
+	va_end(ap);
 }
 
 /* Send string data to the UI (if implemented). Caller: p11.c, cache subsystem
