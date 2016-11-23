@@ -163,7 +163,6 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 	}
 
 	resp = d2i_OCSP_RESPONSE(NULL, (const unsigned char**)&(response), len);
-	free_ocsp_request(ocsp_handle);
 	switch(OCSP_response_status(resp)) {
 		case OCSP_RESPONSE_STATUS_SUCCESSFUL:
 			break;
@@ -184,6 +183,10 @@ enum eid_vwr_result eid_vwr_verify_cert(const void* certificate, size_t certlen,
 		goto exit;
 	}
 	bresp = OCSP_response_get1_basic(resp);
+	if(!OCSP_check_nonce(ocsp_handle, bresp)) {
+		be_log(EID_VWR_LOG_NORMAL, "WARNING: OCSP nonce does not match (but that's probably not critical; ignoring and continuing)");
+	}
+	free_ocsp_request(ocsp_handle);
 	OCSP_resp_find_status(bresp, id, &stat, &reason, &rev, &this, &next);
 	switch(stat) {
 		case V_OCSP_CERTSTATUS_GOOD:
