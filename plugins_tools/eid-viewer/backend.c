@@ -112,7 +112,7 @@ static EID_CHAR* format_string(const EID_CHAR* format, va_list ap) {
 void be_log(enum eid_vwr_loglevel l, const EID_CHAR* string, ...) {
 	va_list ap;
 	EID_CHAR* str = NULL;
-	static char* logbuf[10];
+	static EID_CHAR* logbuf[10];
 	static enum eid_vwr_loglevel loglev[10];
 	static int lastlog=0;
 	static int have_buffered = 0;
@@ -121,7 +121,7 @@ void be_log(enum eid_vwr_loglevel l, const EID_CHAR* string, ...) {
 	if(!cb) {
 		logbuf[lastlog] = format_string(string, ap);
 		loglev[lastlog++] = l;
-		if(lastlog > 10) {
+		if(lastlog >= 10) {
 			lastlog = 0;
 		}
 		have_buffered = 1;
