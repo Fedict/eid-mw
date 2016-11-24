@@ -285,6 +285,11 @@ namespace eIDViewer
             Console.WriteLine(structSize);
             theData.readersList = new ConcurrentQueue<ReadersMenuViewModel>();
 
+            if(nreaders == 0)
+            {
+                theData.logText += "No card readers detected\n";
+            }
+
             for (int i = 0; i < nreaders; i++)
             {
                 IntPtr data = new IntPtr(slotList.ToInt64() + structSize * i);
