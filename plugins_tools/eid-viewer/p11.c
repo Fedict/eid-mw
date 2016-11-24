@@ -40,10 +40,10 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 	} \
 }
 #define check_rv(call) check_rv_long(call, defmod)
-#define check_rv_late(rv) { \
+#define check_rv_late(call, rv) { \
 	int retval = ckrv_decode_vwr(rv, 1, defmod); \
 	if(retval != EIDV_RV_OK) { \
-		be_log(EID_VWR_LOG_DETAIL, TEXT("found return value of %d"), rv); \
+		be_log(EID_VWR_LOG_DETAIL, TEXT("%s: found return value of %d"), #call, rv); \
 		return retval; \
 	} \
 }
@@ -96,7 +96,7 @@ int eid_vwr_p11_wait_event(CK_FLAGS flags, CK_SLOT_ID_PTR pSlot) {
 	ret = C_WaitForSlotEvent(flags,   /*nonblocking flag: CKF_DONT_BLOCK*/
 		pSlot,  /* location that receives the slot ID */
 		NULL_PTR); /* reserved.  Should be NULL_PTR */
-	check_rv_late(ret);
+	check_rv_late("C_WaitForSlotEvent", ret);
 
 	return ret;
 }
@@ -116,7 +116,7 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULON
 			return EIDV_RV_FAIL;
 		}
 		ret = C_GetSlotList(with_token, slotlist, count);
-		check_rv_late(ret);
+		check_rv_late("C_GetSlotList", ret);
 		if (*count > 0) {
 			*loc = slotlist[0];
 			free(slotlist);

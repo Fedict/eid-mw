@@ -7,45 +7,30 @@
 static id <eIDOSLayerUI>currUi = nil;
 
 static void osl_objc_newsrc(enum eid_vwr_source src) {
-	if ([currUi respondsToSelector:@selector(newsrc:)]) {
-		[currUi newsrc:(eIDSource)src];
-	}
+	[currUi newsrc:(eIDSource)src];
 }
 
 static void osl_objc_newstringdata(const char* label, const char* data) {
-	if ([currUi respondsToSelector:@selector(newstringdata:withLabel:)]) {
-		[currUi newstringdata:[NSString stringWithCString:data encoding:NSUTF8StringEncoding] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
-	}
+	[currUi newstringdata:[NSString stringWithCString:data encoding:NSUTF8StringEncoding] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
 }
 
 static void osl_objc_newbindata(const char* label, const unsigned char* data, int datalen) {
-	if ([currUi respondsToSelector:@selector(newbindata:withLabel:)]) {
-		[currUi newbindata:[NSData dataWithBytes:data length:datalen] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
-	}
+	[currUi newbindata:[NSData dataWithBytes:data length:datalen] withLabel:[NSString stringWithCString:label encoding:NSUTF8StringEncoding]];
 }
 
 static void osl_objc_log(enum eid_vwr_loglevel level, const char* line) {
-	if ([currUi respondsToSelector:@selector(log:withLevel:)]) {
-		[currUi log:[NSString stringWithCString:line encoding:NSUTF8StringEncoding]withLevel:(eIDLogLevel) level];
-	}
+	[currUi log:[NSString stringWithCString:line encoding:NSUTF8StringEncoding]withLevel:(eIDLogLevel) level];
 }
 
 static void osl_objc_newstate(enum eid_vwr_states state) {
-	if ([currUi respondsToSelector:@selector(newstate:)]) {
-		[currUi newstate:(eIDState)state];
-	}
+	[currUi newstate:(eIDState)state];
 }
 
 static void osl_objc_pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result r) {
-	if ([currUi respondsToSelector:@selector(pinop_result:forOperation:)]) {
-		[currUi pinop_result:(eIDResult)r forOperation:(eIDPinOp)p];
-	}
+	[currUi pinop_result:(eIDResult)r forOperation:(eIDPinOp)p];
 }
 
 static void osl_objc_readers_found(unsigned long nreaders, slotdesc* slots) {
-	if (![currUi respondsToSelector:@selector(readersFound:withSlotNumbers:)]) {
-		return;
-	}
 	NSString* names[nreaders];
 	NSNumber* slotnumbers[nreaders];
 	for(int i=0; i<nreaders; i++) {
@@ -92,16 +77,33 @@ static void osl_objc_free_ocsp_request(void* data) {
 	eid_vwr_pinop((enum eid_vwr_pinops)which);
 }
 +(NSInteger)setUi:(id<eIDOSLayerUI>)ui {
+	NSInteger rv;
 	struct eid_vwr_ui_callbacks *cb = eid_vwr_cbstruct();
-	cb->log = osl_objc_log;
-	cb->newbindata = osl_objc_newbindata;
-	cb->newsrc = osl_objc_newsrc;
-	cb->newstate = osl_objc_newstate;
-	cb->newstringdata = osl_objc_newstringdata;
-	cb->pinop_result = osl_objc_pinop_result;
-	cb->readers_changed = osl_objc_readers_found;
+	if([ui respondsToSelector:@selector(log:withLevel:)]) {
+		cb->log = osl_objc_log;
+	}
+	if([ui respondsToSelector:@selector(newbindata:withLabel:)]) {
+		cb->newbindata = osl_objc_newbindata;
+	}
+	if([ui respondsToSelector:@selector(newsrc:)]) {
+		cb->newsrc = osl_objc_newsrc;
+	}
+	if([ui respondsToSelector:@selector(newstate:)]) {
+		cb->newstate = osl_objc_newstate;
+	}
+	if([ui respondsToSelector:@selector(newstringdata:withLabel:)]) {
+		cb->newstringdata = osl_objc_newstringdata;
+	}
+	if([ui respondsToSelector:@selector(pinop_result:forOperation:)]) {
+		cb->pinop_result = osl_objc_pinop_result;
+	}
+	if([ui respondsToSelector:@selector(readersFound:withSlotNumbers:)]) {
+		cb->readers_changed = osl_objc_readers_found;
+	}
 	currUi = ui;
-	return eid_vwr_createcallbacks(cb);
+	rv = eid_vwr_createcallbacks(cb);
+	eid_vwr_init_crypto();
+	return rv;
 }
 +(NSImage*)getPreview:(NSURL *)from {
 	if(![from isFileReferenceURL]) {
