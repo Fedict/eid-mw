@@ -95,7 +95,7 @@ static EID_CHAR* format_string(const EID_CHAR* format, va_list ap) {
 	do {
 		va_copy(apc, ap);
 		strnewsize = EID_VSNPRINTF(str, strsize, format, apc);
-		va_end(ap);
+		va_end(apc);
 		strsize = strnewsize + 1;
 		str = (EID_CHAR*)realloc(str, strsize * sizeof(EID_CHAR));
 		if(!str) {
