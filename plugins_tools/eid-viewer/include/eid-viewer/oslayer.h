@@ -298,8 +298,10 @@ DllExport struct eid_vwr_preview *eid_vwr_get_preview(const EID_CHAR *
   * Will handle one event and then return. Useful if an event loop
   * exists elsewhere; otherwise, using eid_vwr_be_mainloop() is
   * recommended.
+  * returns zero on succes, non-zero when reader list could not be
+  * formed or when no UI callback has been set
   */
-DllExport void eid_vwr_poll();
+DllExport int eid_vwr_poll();
 
 /** \brief Loop over eid_vwr_poll().
   *

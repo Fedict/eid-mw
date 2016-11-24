@@ -17,15 +17,23 @@ int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 }
 
 void eid_vwr_be_mainloop() {
+	int result;
 #ifdef WIN32
 	CK_FLAGS flags = 0;
 	CK_SLOT_ID_PTR pSlot = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
 #endif
 	for(;;) {
-		eid_vwr_poll();
+		result = eid_vwr_poll();
 #ifdef WIN32
 		//we reuse the eid_vwr_poll() function for maintainebility, though the pSlot already gives us the slot where the changes occured
-		eid_vwr_p11_wait_event(flags, pSlot);
+		if (result == 0)
+		{
+			eid_vwr_p11_wait_event(flags, pSlot);
+		}
+		else
+		{
+			SLEEP(1);
+		}
 #else
 		SLEEP(1);
 #endif
@@ -35,18 +43,21 @@ void eid_vwr_be_mainloop() {
 #endif
 }
 
-void eid_vwr_poll() {
+int eid_vwr_poll() {
 	CK_SLOT_ID_PTR no_token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
 	CK_SLOT_ID_PTR token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
 	static CK_ULONG count_old = 0;
 	static CK_SLOT_ID token_old = 0xCAFEBABE;
 	CK_ULONG count = 0;
 	CK_ULONG i;
+	int retval = 0;
 
 	if(eid_vwr_p11_find_first_slot(CK_FALSE, no_token, &count) == EIDV_RV_OK) {
 		sm_handle_event(EVENT_READER_FOUND, no_token, free, NULL);
 	} else {
 		free(no_token);
+		//pkcs11 not ready yet?
+		retval = 1;
 	}
 	if(count_old != count) {
 		slotdesc* slots = (slotdesc*)malloc(count * sizeof(slotdesc));
@@ -54,6 +65,11 @@ void eid_vwr_poll() {
 		eid_vwr_p11_name_slots(slots, &count);
 		if(be_readers_changed(count, slots) == EIDV_RV_OK) {
 			count_old = count;
+		}
+		else
+		{
+			//no callback present
+			retval = 2;
 		}
 		for (i = 0; i < count; i++)
 		{
@@ -74,6 +90,7 @@ void eid_vwr_poll() {
 	} else {
 		sm_handle_event(EVENT_TOKEN_REMOVED, token, free, NULL);
 	}
+	return retval;
 }
 
 void eid_vwr_be_serialize(const EID_CHAR* target_file) {
