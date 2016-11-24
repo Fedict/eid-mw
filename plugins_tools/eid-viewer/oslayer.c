@@ -20,7 +20,7 @@ void eid_vwr_be_mainloop() {
 	int result;
 #ifdef WIN32
 	CK_FLAGS flags = 0;
-	CK_SLOT_ID_PTR pSlot = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
+	CK_SLOT_ID slotID;
 #endif
 	for(;;) {
 		result = eid_vwr_poll();
@@ -28,7 +28,7 @@ void eid_vwr_be_mainloop() {
 		//we reuse the eid_vwr_poll() function for maintainebility, though the pSlot already gives us the slot where the changes occured
 		if (result == 0)
 		{
-			eid_vwr_p11_wait_event(flags, pSlot);
+			eid_vwr_p11_wait_event(flags, &slotID);
 		}
 		else
 		{
@@ -38,9 +38,6 @@ void eid_vwr_be_mainloop() {
 		SLEEP(1);
 #endif
 	}
-#ifdef WIN32
-	free (pSlot);
-#endif
 }
 
 int eid_vwr_poll() {
