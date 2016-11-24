@@ -336,6 +336,11 @@ Source code and other files are available on https://github.com/Fedict/eid-viewe
                 {
                     LastCardReaderMenuItem.IsChecked = false;
                 }
+                else if (menu.IsChecked == false)
+                {
+                    //if the previous selected card reader is deselected, go back to auto mode
+                    eIDViewer.NativeMethods.SelectCardReader(1, 0);
+                }
 
                 LastCardReaderMenuItem = menu;
 
