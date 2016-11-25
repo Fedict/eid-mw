@@ -54,7 +54,6 @@ x64_Release
 /installers/eid-mw/Windows/obj/*.wixobj
 beidpkcs11.sdf
 *.suo
-*.Designer.cs
 /scripts/windows/beidversions.h
 /scripts/windows/eidmw_revision.wxs
 /scripts/windows/eidversion.txt
