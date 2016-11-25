@@ -27,7 +27,7 @@ LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 #PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
 BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 #xpi plugin dir, where the xpi plugin will be placed
-#XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be"
+#XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
 #tokend dir, where the BEID.tokend will be placed
 TOKEND_DIR="$ROOT_DIR/Library/Security/tokend"
 
@@ -50,6 +50,21 @@ EIDVIEWER_PATH="$(pwd)/../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Re
 #eIDViewer.plist path
 EIDVIEWER_PLIST_PATH="$(pwd)/eidviewer.plist"
 
+
+#BEIDToken installer name defines
+#release dir, where all the beidbuild files to be released will be placed
+RELEASE_BEIDToken_DIR="$(pwd)/release_BEIDToken"
+#root dir, for files that are to be installed by the pkg
+ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDToken_DIR/root"
+
+#BEIDToken inst dir, where our BEIDToken app will be installed
+BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Library/Belgium Identity Card"
+
+#BEIDToken path
+BEIDTOKEN_PATH="$(pwd)/../../../../ThirdParty/BEIDToken/BEIDTokenApp.app"
+
+#eIDViewer.plist path
+BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
 
 
 #base name of the package
@@ -125,8 +140,8 @@ cp ../../../installers/certificates/beid-cert-belgiumrca3.der "$INSTALL_SCRIPTS_
 
 
 #LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
-#XPI_PLUGIN=../../../plugins_tools/xpi/builds/$LATEST_XPI
-#cp $XPI_PLUGIN "$XPI_PLUGIN_DIR"
+#XPI_PLUGIN=../../../plugins_tools/xpi/signed-build/belgiumeid-signed
+#cp -R $XPI_PLUGIN "$XPI_PLUGIN_DIR/belgiumeid@eid.belgium.be"
 
 cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
@@ -160,6 +175,19 @@ mkdir -p "$EIDVIEWER_INST_DIR"
 cp -R "$EIDVIEWER_PATH"  "$EIDVIEWER_INST_DIR"
 
 #####################################################################
+echo "********** prepare BEIDToken.pkg **********"
+
+#cleanup
+test -e "$RELEASE_BEIDTOKEN_DIR" && rm -rdf "$RELEASE_BEIDTOKEN_DIR"
+test -e BEIDToken.pkg && rm BEIDToken.pkg
+
+#create installer dirs
+mkdir -p "$BEIDTOKEN_INST_DIR"
+
+#copy eid middleware app
+cp -R "$BEIDTOKEN_PATH"  "$BEIDTOKEN_INST_DIR"
+
+#####################################################################
 
 echo "********** generate $PKG_NAME and $DMG_NAME **********"
 
@@ -185,6 +213,8 @@ pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid
 
 pkgbuild --root "$ROOT_VIEWER_DIR" --component-plist "$EIDVIEWER_PLIST_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location / eidviewer.pkg
 
+pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken.pkg
+
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
 if [ $SIGN_BUILD -eq 1 ];then
@@ -196,10 +226,14 @@ if [ $SIGN_BUILD -eq 1 ];then
 
   productsign --sign "Developer ID Installer" "eidviewer.pkg" "eidviewer-signed.pkg"
   hdiutil create -srcfolder "eidviewer-signed.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
+
+  productsign --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
+  hdiutil create -srcfolder "BEIDToken-signed.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 else
   hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
   hdiutil create -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
   hdiutil create -srcfolder "eidviewer.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
+  hdiutil create -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 fi
 
 

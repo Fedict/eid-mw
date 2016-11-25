@@ -38,7 +38,7 @@ AC_ARG_WITH([mozext],
 
 AS_IF(
 	[test "x$with_mozext" = "xno"],
-	[mozext]=[${datadir}/mozilla/extensions/],
+	[mozext]=[${datadir}/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}],
 	[[mozext]=[$with_mozext]]
 )
 

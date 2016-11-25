@@ -77,7 +77,17 @@ static const unsigned char sha1sigheader[] = {
 	0x04, 0x14		// OCTECT STRING (20 bytes)
 };
 
-static const unsigned char md5sigheader[] = {
+static const unsigned char sha256sigheader[] =
+{
+    0x30, 0x31,
+    0x30, 0x0d,
+    0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01,
+    0x05, 0x00,
+    0x04, 0x20
+};
+
+static const unsigned char md5sigheader[] =
+{
 	0x30,			// SEQUENCE
 	0x20,			// LENGTH
 	0x30,			// SEQUENCE
@@ -110,6 +120,7 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 
 	if (signOnly == CSSM_ALGID_SHA1)
 	{
+        secdebug("crypto", "CSSM_ALGID_SHA1");
 		if (input.Length != 20)
 			CssmError::throwMe(CSSMERR_CSP_BLOCK_SIZE_MISMATCH);
 
@@ -122,8 +133,19 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 
 		header = md5sigheader;
 		headerLength = sizeof(md5sigheader);
-	} else if (signOnly == CSSM_ALGID_NONE)
+	}
+    else if (signOnly == CSSM_ALGID_SHA256)
 	{
+        secdebug("crypto", "CSSM_ALGID_SHA256");
+		if (input.Length != 32)
+			CssmError::throwMe(CSSMERR_CSP_BLOCK_SIZE_MISMATCH);
+        
+		header = sha256sigheader;
+		headerLength = sizeof(sha256sigheader);
+	}
+	else if (signOnly == CSSM_ALGID_NONE)
+	{
+        secdebug("crypto", "CSSM_ALGID_NONE");
 		// Special case used by SSL it's an RSA signature, without the ASN1
 		// stuff
 		header = NULL;
@@ -131,9 +153,12 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 
 		// @@@ Fix me
 		//CssmError::throwMe(CSSMERR_CSP_BLOCK_SIZE_MISMATCH);
-	} else
+	}
+	else
+    {
+        secdebug("crypto", "CSSMERR_CSP_INVALID_DIGEST_ALGORITHM");
 		CssmError::throwMe(CSSMERR_CSP_INVALID_DIGEST_ALGORITHM);
-
+    }
 #if 0
 	// @@@ Hack for BELPIC card!
 	header = NULL;
