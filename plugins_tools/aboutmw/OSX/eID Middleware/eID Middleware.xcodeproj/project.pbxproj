@@ -12,40 +12,8 @@
 		658054EE1A66C9BB000AEFE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 658054ED1A66C9BB000AEFE0 /* main.m */; };
 		658054F01A66C9BB000AEFE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658054EF1A66C9BB000AEFE0 /* Images.xcassets */; };
 		658054F31A66C9BB000AEFE0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658054F11A66C9BB000AEFE0 /* MainMenu.xib */; };
-		65C7EA9D1D8C0F15003CEB34 /* EIDToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 65C7EA9C1D8C0F04003CEB34 /* EIDToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		65CE8EB51A66D5AC00B20669 /* DataItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CE8EB41A66D5AC00B20669 /* DataItem.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		65C7EA9B1D8C0F04003CEB34 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65C7EA971D8C0F04003CEB34 /* EIDToken.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2F3883B01CF46C9D00F114A7;
-			remoteInfo = EIDToken;
-		};
-		65C7EA9E1D8C0F15003CEB34 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65C7EA971D8C0F04003CEB34 /* EIDToken.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 2F3883AF1CF46C9D00F114A7;
-			remoteInfo = EIDToken;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		65C7EAA01D8C0F15003CEB34 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				65C7EA9D1D8C0F15003CEB34 /* EIDToken.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		65709E9F1A69898E006835B8 /* beidversions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = beidversions.h; path = ../../../../cardcomm/pkcs11/src/common/beidversions.h; sourceTree = "<group>"; };
@@ -56,7 +24,6 @@
 		658054ED1A66C9BB000AEFE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		658054EF1A66C9BB000AEFE0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		658054F21A66C9BB000AEFE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		65C7EA971D8C0F04003CEB34 /* EIDToken.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EIDToken.xcodeproj; path = ../../../../cardcomm/ctkToken/EIDToken.xcodeproj; sourceTree = "<group>"; };
 		65CE8EB31A66D5AC00B20669 /* DataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataItem.h; sourceTree = "<group>"; };
 		65CE8EB41A66D5AC00B20669 /* DataItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,7 +42,6 @@
 		658054DC1A66C9BB000AEFE0 = {
 			isa = PBXGroup;
 			children = (
-				65C7EA971D8C0F04003CEB34 /* EIDToken.xcodeproj */,
 				65709E9F1A69898E006835B8 /* beidversions.h */,
 				658054E71A66C9BB000AEFE0 /* eID Middleware */,
 				658054E61A66C9BB000AEFE0 /* Products */,
@@ -113,14 +79,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		65C7EA981D8C0F04003CEB34 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				65C7EA9C1D8C0F04003CEB34 /* EIDToken.appex */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -144,12 +102,10 @@
 				658054E11A66C9BB000AEFE0 /* Sources */,
 				658054E21A66C9BB000AEFE0 /* Frameworks */,
 				658054E31A66C9BB000AEFE0 /* Resources */,
-				65C7EAA01D8C0F15003CEB34 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				65C7EA9F1D8C0F15003CEB34 /* PBXTargetDependency */,
 			);
 			name = "eID Middleware";
 			productName = "eID Middleware";
@@ -181,28 +137,12 @@
 			mainGroup = 658054DC1A66C9BB000AEFE0;
 			productRefGroup = 658054E61A66C9BB000AEFE0 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 65C7EA981D8C0F04003CEB34 /* Products */;
-					ProjectRef = 65C7EA971D8C0F04003CEB34 /* EIDToken.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				658054E41A66C9BB000AEFE0 /* eID Middleware */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		65C7EA9C1D8C0F04003CEB34 /* EIDToken.appex */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.app-extension";
-			path = EIDToken.appex;
-			remoteRef = 65C7EA9B1D8C0F04003CEB34 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		658054E31A66C9BB000AEFE0 /* Resources */ = {
@@ -244,14 +184,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		65C7EA9F1D8C0F15003CEB34 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = EIDToken;
-			targetProxy = 65C7EA9E1D8C0F15003CEB34 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		658054F11A66C9BB000AEFE0 /* MainMenu.xib */ = {
