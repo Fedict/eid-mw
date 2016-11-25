@@ -234,7 +234,7 @@
     <PreBuildEvent>robocopy  $(ProjectDir)..\..\certs\ $(ProjectDir)\Resources\Certs\ *.pem
 robocopy  $(ProjectDir)..\..\resources\ $(ProjectDir)\Resources\Images\ *.png
 robocopy  $(ProjectDir)..\..\resources\ $(ProjectDir)\Resources\Images\ *.jpg
-</PreBuildEvent>
+exit 0</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
