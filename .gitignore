@@ -54,8 +54,6 @@ x64_Release
 /installers/eid-mw/Windows/obj/*.wixobj
 beidpkcs11.sdf
 *.suo
-/plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Images
-/plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Certs
 *.Designer.cs
 /scripts/windows/beidversions.h
 /scripts/windows/eidmw_revision.wxs
