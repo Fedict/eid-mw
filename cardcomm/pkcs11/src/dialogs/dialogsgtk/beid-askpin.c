@@ -70,7 +70,7 @@ typedef struct {
 // draw number of current theme's "invisible char" corresponding to number of digits in pin
 ///////////////////////////////////////////////////////////////////////////////////////////
 void update_pin_label(PinDialogInfo * pindialog) {
-        int i;
+        unsigned int i;
         gchar tmp[MAX_PIN_LENGTH * 6];
 
         tmp[0] = '\0';
