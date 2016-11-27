@@ -496,7 +496,7 @@ namespace eIDMW
 				       bool bReturnFileInfo)
 	{
 		CByteArray oResp;
-		tFileInfo xFileInfo = { 0 };
+		tFileInfo xFileInfo = { 0, 0, 0 };
 
 		unsigned long ulPathLen = (unsigned long) csPath.size();
 

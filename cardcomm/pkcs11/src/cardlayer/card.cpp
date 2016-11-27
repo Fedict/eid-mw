@@ -171,7 +171,7 @@ namespace eIDMW
 	{
 		// By default no caching, card must implement this method
 		// to allow certain files to be cached (in a certain way).
-		tCacheInfo dontCache = { DONT_CACHE };
+		tCacheInfo dontCache = { DONT_CACHE, 0 };
 
 		return dontCache;
 	}

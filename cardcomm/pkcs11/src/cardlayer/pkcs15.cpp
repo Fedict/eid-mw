@@ -28,9 +28,8 @@ namespace eIDMW
 {
 
 	const static tPin PinInvalid =
-		{ false, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, PIN_ENC_BCD, "",
- "" };
-	const static tCert CertInvalid = { false, "", 0, 0, 0, 0 };
+		{ false, "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, PIN_ENC_BCD, "", "" };
+	const static tCert CertInvalid = { false, "", 0, 0, 0, 0, false, false, "" };
 	const static tPrivKey PrivKeyInvalid =
 		{ false, "", 0, 0, 0, 0, 0, 0, 0, "", 0, false };
 
