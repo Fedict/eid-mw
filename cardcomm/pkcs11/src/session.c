@@ -154,7 +154,7 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 	if (pSlot == NULL)
 	{
 		log_trace(WHERE, "W: Invalid slot (%d) for session (%d)", pSession->hslot, hSession);
-		//ret = CKR_OK;
+		ret = CKR_OK;
 	}
 	else
 	{
