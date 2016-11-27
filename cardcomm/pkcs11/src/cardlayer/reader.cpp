@@ -334,9 +334,7 @@ namespace eIDMW
 		}
 		catch(CMWException & e)
 		{
-			unsigned long err = e.GetError();
-
-			err = err;
+			(void) e.GetError();
 			return m_oPKCS15.GetSerialNr();
 		}
 	}

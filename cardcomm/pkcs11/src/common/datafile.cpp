@@ -266,9 +266,7 @@ namespace eIDMW
 		while (!bDone)
 		{
 			memset(buffer, 0, MAX_BUFFER_LEN);
-			wchar_t *tmp =
-				fgetws(buffer, MAX_BUFFER_LEN, m_stream);
-			tmp = tmp;	// avoid warning
+			(void) fgetws(buffer, MAX_BUFFER_LEN, m_stream);
 
 			szLine = buffer;
 			Trim(szLine);
@@ -1083,9 +1081,7 @@ namespace eIDMW
 		if (buf[nLength] != '\n' && buf[nLength] != '\r')
 			buf[nLength++] = '\n';
 
-		size_t tmp = fwrite(buf, sizeof(wchar_t), nLength, stream);
-
-		tmp = tmp;	// avoid warning
+		(void) fwrite(buf, sizeof(wchar_t), nLength, stream);
 
 		return nLength;
 	}
