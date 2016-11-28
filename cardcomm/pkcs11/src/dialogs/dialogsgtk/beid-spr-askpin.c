@@ -34,7 +34,7 @@
 
 enum { MSG_PIN_CODE_REQUIRED = 1, MSG_PLEASE_ENTER_PIN };
 
-char *beid_messages[4][3] = {
+static char const *const beid_messages[4][3] = {
         {"en", "beID: PIN Code Required",
          "The application [%s] requests your eID PIN code on the secure pinpad reader:\n[%s].."},
         {"nl", "beID: PINcode Vereist",

@@ -1,7 +1,7 @@
-char *_MSG_(int msgnum)
+char const *_MSG_(int msgnum)
 {
-	char *message = beid_messages[0][msgnum];	// default=English
-	char *lang = getenv("LANG");
+	char const *message = beid_messages[0][msgnum]; // default=English
+	char const *lang = getenv("LANG");
 
 	if (lang != NULL && strlen(lang) == 5 && lang[2] == '_')
 	{

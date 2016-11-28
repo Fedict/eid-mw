@@ -49,7 +49,7 @@ enum { MSG_CHANGE_PIN_CODE = 1, MSG_PLEASE_ENTER_OLD_AND_NEW_PINS, MSG_CURRENT_P
         MSG_NEW_PIN, MSG_NEW_PIN_AGAIN
 };
 
-char *beid_messages[4][6] = {
+static char const *const beid_messages[4][6] = {
         {"en", "beID: Change PIN Code",
          "Request from Application [%s]:\n\nPlease enter your current eID PIN, followed by your new eID PIN (twice)",
          "Current PIN:", "New PIN:", "New PIN (again):"},

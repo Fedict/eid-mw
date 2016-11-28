@@ -32,7 +32,7 @@
 
 enum { MSG_ACCESS_CARD_TITLE = 1, MSG_ACCESS_CARD_QUESTION };
 
-char *beid_messages[4][3] = {
+static char const *const beid_messages[4][3] = {
         {"en", "beID: Card Access",
          "The application [%s] wants to access the eID card. Do you want to accept it?"},
         {"nl", "beID: Lezen Kaart",

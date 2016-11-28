@@ -32,7 +32,7 @@
 enum msgs { MSG_INCORRECT_PIN_CODE = 1, MSG_N_ATTEMPTS_LEFT, MSG_LAST_ATTEMPT
 };
 
-char *beid_messages[4][4] = {
+static char const *const beid_messages[4][4] = {
         {"en", "beID: Incorrect PIN Code",
          "You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.",
          "You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."},
