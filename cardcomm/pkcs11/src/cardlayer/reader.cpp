@@ -74,8 +74,7 @@ namespace eIDMW
 	};
 
 	CReader::CReader(const std::string & csReader,
-			 CContext * poContext):m_poCard(NULL),
-		m_oPKCS15(poContext)
+			 CContext * poContext):m_poCard(NULL),m_oPKCS15()
 	{
 		m_csReader = csReader;
 		m_wsReader = utilStringWiden(csReader);

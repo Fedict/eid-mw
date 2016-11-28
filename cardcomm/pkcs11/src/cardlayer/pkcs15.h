@@ -69,7 +69,6 @@ namespace eIDMW
 	{
 public:
 		CPKCS15(void);
-		     CPKCS15(CContext * poContext);
 		    ~CPKCS15(void);
 
 		void Clear(CCard * poCard = NULL);
@@ -93,7 +92,6 @@ public:
 
 private:
 		     CCard * m_poCard;
-		CContext *m_poContext;
 		PKCS15Parser *m_poParser;
 
 #ifdef WIN32
