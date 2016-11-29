@@ -139,7 +139,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;delete previous log
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw64_log.txt"
 		;Delete "$LogFile"
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse
+		ExecWait '$SYSDIR\msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse
 		${Switch} $MsiResponse
 			${Case} 0
 			${Case} 3010 
@@ -148,6 +148,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			${Default}
 				Call ErrorHandler_msiexec
 		${EndSwitch}
+
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
 		
@@ -163,7 +164,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;delete previous log
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw32_log.txt"
 		;Delete "$LogFile"
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse
+		ExecWait '$SYSDIR\msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse
 		${Switch} $MsiResponse
 			${Case} 0
 			${Case} 3010 
@@ -177,6 +178,13 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
 		Delete "$INSTDIR\BeidMW_32.msi"
   ${EndIf}
+
+		File "..\certificates\belgiumrca2.crt"
+		File "..\certificates\belgiumrca3.crt"
+		File "..\certificates\belgiumrca4.crt"
+  		ExecWait '$SYSDIR\certutil -addstore "Root" "$INSTDIR\belgiumrca2.crt"' $MsiResponse
+		ExecWait '$SYSDIR\certutil -addstore "Root" "$INSTDIR\belgiumrca3.crt"' $MsiResponse
+		ExecWait '$SYSDIR\certutil -addstore "Root" "$INSTDIR\belgiumrca4.crt"' $MsiResponse
   
   File /r "ReaderDrivers"
 
@@ -248,6 +256,8 @@ FunctionEnd
 
 ;--------------------------------
 ;Installer Functions
+
+
 
 Function .onInit
 ;images used by this installer
