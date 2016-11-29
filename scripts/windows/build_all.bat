@@ -30,10 +30,6 @@
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release_No_Dialog /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
-@if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release_No_Dialog /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
-@if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 :: create minidriver driver installer
 :: ==================================
@@ -66,37 +62,6 @@ copy %~dp0..\..\cardcomm\VS_2012\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTAL
 @echo [INFO] Sign the catalog
 "%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
-
-
-:: create minidriver_no_dialogs driver installer
-:: ==================================
-
-:: BuildPath
-set MDRVINSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
-@echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
-
-rmdir /s /q %MDRVINSTALLPATH%\Release_nd
-mkdir %MDRVINSTALLPATH%\Release_nd
-@echo [INFO] Copying minidriver files..
-
-:: copy inf files
-copy %MDRVINSTALLPATH%\beidmdrv_nd.inf %MDRVINSTALLPATH%\Release_nd\beidmdrv.inf
-
-:: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-copy %~dp0..\..\cardcomm\VS_2012\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\Release_nd\beidmdrv32.dll
-copy %~dp0..\..\cardcomm\VS_2012\Binaries\x64_Release_No_Dialog\beidmdrv64nd.dll %MDRVINSTALLPATH%\Release_nd\beidmdrv64nd.dll
-
-:: @echo [INFO] Creating cat file
-:: Create catalog
-%INF2CAT_PATH%\inf2cat.exe /driver:%MDRVINSTALLPATH%\Release_nd\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
-@if "%ERRORLEVEL%" == "1" goto inf2cat_failed
-
-:: sign minidriver driver cat file
-:: ===============================
-@echo [INFO] Sign the catalog
-"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release_nd\beidmdrv.cat"
-@if "%ERRORLEVEL%" == "1" goto signtool_failed
-
 
 
 :: create cert
