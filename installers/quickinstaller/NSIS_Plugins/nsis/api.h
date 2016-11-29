@@ -27,51 +27,51 @@
 	
 // NSIS Plug-In Callback Messages
 enum NSPIM 
-{ NSPIM_UNLOAD,	     // This is the last message a plugin gets, do final cleanup
+{ NSPIM_UNLOAD,	     // This is the last message a plugin gets, do final cleanup
 	NSPIM_GUIUNLOAD,     // Called after .onGUIEnd
 };
 
- 
+ 
 // Prototype for callbacks registered with extra_parameters->RegisterPluginCallback()
 // Return NULL for unknown messages
 // Should always be __cdecl for future expansion possibilities
 typedef UINT_PTR(*NSISPLUGINCALLBACK) (enum NSPIM);
 
- 
+ 
 // extra_parameters data structures containing other interesting stuff
 // but the stack, variables and HWND passed on to plug-ins.
 typedef struct 
 {
-	int autoclose;
-	   int all_user_var;
-	   int exec_error;
-	   int abort;
-	   int exec_reboot; // NSIS_SUPPORT_REBOOT
+	int autoclose;
+	   int all_user_var;
+	   int exec_error;
+	   int abort;
+	   int exec_reboot; // NSIS_SUPPORT_REBOOT
 	int reboot_called;   // NSIS_SUPPORT_REBOOT
 	int XXX_cur_insttype;	// depreacted
 	int plugin_api_version;	// see NSISPIAPIVER_CURR
 	// used to be XXX_insttype_changed
 	int silent;	     // NSIS_CONFIG_SILENT_SUPPORT
 	int instdir_error;
-	   int rtl;
-	   int errlvl;
-	   int alter_reg_view;
-	   int status_update;
-   } exec_flags_t;
+	   int rtl;
+	   int errlvl;
+	   int alter_reg_view;
+	   int status_update;
+   } exec_flags_t;
 
- 
+ 
 #ifndef NSISCALL
 #define NSISCALL __stdcall
-#endif /*  */
-	typedef struct
+#endif /*  */
+	typedef struct
 {
-	exec_flags_t * exec_flags;
-	int (NSISCALL * ExecuteCodeSegment) (int, HWND);
-	   void (NSISCALL * validate_filename) (char *);
-	    int (NSISCALL * RegisterPluginCallback) (HMODULE, NSISPLUGINCALLBACK);	// returns 0 on success, 1 if already registered and < 0 on errors
+	exec_flags_t * exec_flags;
+	int (NSISCALL * ExecuteCodeSegment) (int, HWND);
+	   void (NSISCALL * validate_filename) (char *);
+	    int (NSISCALL * RegisterPluginCallback) (HMODULE, NSISPLUGINCALLBACK);	// returns 0 on success, 1 if already registered and < 0 on errors
 } extra_parameters;
 
- 
+ 
 // Definitions for page showing plug-ins
 // See Ui.c to understand better how they're used
 	

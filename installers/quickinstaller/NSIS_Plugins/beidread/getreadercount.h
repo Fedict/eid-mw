@@ -23,7 +23,7 @@
 #define plugin_getreadercount_h
 	
 #include "common.h"
-	CK_RV GetTheReaderCount(int *nrofCardReaders, int cardsInserted);
+	CK_RV GetTheReaderCount(int *nrofCardReaders, int cardsInserted);
 
- 
-#endif /*  */
+ 
+#endif /*  */

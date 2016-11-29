@@ -5,25 +5,25 @@
 extern "C"
 {
 	
-#endif			     /*  */
+#endif			     /*  */
 	
 #include "api.h"
 	
 #ifndef NSISCALL
 #define NSISCALL __stdcall
-#endif			     /*  */
+#endif			     /*  */
 	
 #define EXDLL_INIT()           {  \
 	g_stringsize = string_size;
-	\g_stacktop = stacktop;
-	\g_variables = variables;
-}    typedef struct _stack_t
+	\g_stacktop = stacktop;
+	\g_variables = variables;
+}    typedef struct _stack_t
 {
-	struct _stack_t *next;
-	        char text[1];	// this should be the length of string_size
+	struct _stack_t *next;
+	        char text[1];	// this should be the length of string_size
 } stack_t;
- enum 
-{ INST_0,		     // $0
+ enum 
+{ INST_0,		     // $0
 	INST_1,		     // $1
 	INST_2,		     // $2
 	INST_3,		     // $3
@@ -50,10 +50,10 @@ extern "C"
 	INST_LANG,	     // $LANGUAGE
 	__INST_LAST 
 };
- extern unsigned int g_stringsize;
-extern stack_t **g_stacktop;
-extern char *g_variables;
- int NSISCALL popstring(char *str);	// 0 on success, 1 on empty stack
+ extern unsigned int g_stringsize;
+extern stack_t **g_stacktop;
+extern char *g_variables;
+ int NSISCALL popstring(char *str);	// 0 on success, 1 on empty stack
 int NSISCALL popstringn(char *str, int maxlen);	// with length limit, pass 0 for g_stringsize
 int NSISCALL popint();	     // pops an integer
 int NSISCALL popint_or();    // with support for or'ing (2|4|8)
@@ -61,13 +61,13 @@ int NSISCALL myatoi(const char *s);	// converts a string to an integer
 unsigned NSISCALL myatou(const char *s);	// converts a string to an unsigned integer, decimal only
 int NSISCALL myatoi_or(const char *s);	// with support for or'ing (2|4|8)
 void NSISCALL pushstring(const char *str);
-void NSISCALL pushint(int value);
-char *NSISCALL getuservariable(const int varnum);
-void NSISCALL setuservariable(const int varnum, const char *var);
+void NSISCALL pushint(int value);
+char *NSISCALL getuservariable(const int varnum);
+void NSISCALL setuservariable(const int varnum, const char *var);
 
- 
+ 
 #ifdef __cplusplus
 } 
-#endif /*  */
+#endif /*  */
 	
 #endif //!___NSIS_PLUGIN__H___

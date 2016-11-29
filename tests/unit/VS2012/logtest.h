@@ -29,11 +29,11 @@
  * Logging definitions
  ***************************************************************************/ 
 typedef enum pkcs11test_log_level 
-{ LVL_DEBUG = 0, LVL_INFO, LVL_WARNING, LVL_ERROR, LVL_NOLEVEL 
+{ LVL_DEBUG = 0, LVL_INFO, LVL_WARNING, LVL_ERROR, LVL_NOLEVEL 
 } PKCS11TEST_LOG_LEVEL;
- static PKCS11TEST_LOG_LEVEL g_logLevel = LVL_DEBUG;
+ static PKCS11TEST_LOG_LEVEL g_logLevel = LVL_DEBUG;
 
- 
+ 
 
 /****************************************************************************
  * Logging macro's
@@ -58,15 +58,15 @@ typedef enum pkcs11test_log_level
  * Log Function global variables
  ***************************************************************************/ 
 	FILE * pkcs11test_logfile;
- 
+ 
 
 /****************************************************************************
  * Log Function prototypes
  ***************************************************************************/ 
 	errno_t initLog();
-void endLog();
- void logPrefix(PKCS11TEST_LOG_LEVEL level);
-void testlogbytes(PKCS11TEST_LOG_LEVEL loglevel, unsigned char *pValue,
+void endLog();
+ void logPrefix(PKCS11TEST_LOG_LEVEL level);
+void testlogbytes(PKCS11TEST_LOG_LEVEL loglevel, unsigned char *pValue,
 		   unsigned long ulValueLen);
- 
-#endif /*  */
+ 
+#endif /*  */

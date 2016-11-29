@@ -18,7 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
- 
+ 
 #ifndef IMPORTCERTIMPL_H_
 #define IMPORTCERTIMPL_H_
 #include <winscard.h>
@@ -27,20 +27,20 @@
 	
 #define CARDREADER_POLL_INTERVAL 5000
 #define MAX_CARD_SERIAL_SIZE     100
-	using std::string;
-using std::wstring;
+	using std::string;
+using std::wstring;
 
 #include "../common/log.h"
 #include "../common/config.h"
 #include "../cardlayer/p15objects.h"
 #include "../cardlayer/cardlayer.h"
 #include "../cardlayer/context.h"
-	DWORD ImportCertificates(const char *readerName, char *pSerialNumber,
+	DWORD ImportCertificates(const char *readerName, char *pSerialNumber,
 				  size_t cSerialNumber);
-DWORD RemoveCertificates(char *pSerialNumber);
-DWORD StoreAuthorityCerts(PCCERT_CONTEXT pCertContext,
+DWORD RemoveCertificates(char *pSerialNumber);
+DWORD StoreAuthorityCerts(PCCERT_CONTEXT pCertContext,
 			   unsigned char KeyUsageBits);
-DWORD StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits,
+DWORD StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits,
 		      const char *cardSerialNumber);
- 
+ 
 #endif	/* IMPORTCERTIMPL_H_ */

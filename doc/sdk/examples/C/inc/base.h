@@ -50,7 +50,7 @@
 #define RTLD_NOW	2
 #define RTLD_GLOBAL 4
 	
-#else /*  */
+#else /*  */
 #define HMODULE void*
 #include "rsaref220/unix.h"
 #include "rsaref220/pkcs11.h"
@@ -65,12 +65,12 @@
 	
 #ifdef __APPLE__
 #define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.dylib"
-#else /*  */
+#else /*  */
 #define PKCS11_LIB "libbeidpkcs11.so.0"
-#endif /*  */
+#endif /*  */
 #define TEXT(x) x
 #define _getch() getchar()
-#endif /*  */
+#endif /*  */
 #include <stdlib.h>
 	
-#endif /*  */
+#endif /*  */

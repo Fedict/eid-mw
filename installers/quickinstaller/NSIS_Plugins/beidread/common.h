@@ -34,8 +34,8 @@
 #include <windows.h>
 	
 #define PKCS11_LIB TEXT("beidpkcs11.dll")
-	CK_RV loadpkcs11(CK_FUNCTION_LIST_PTR * pFunctions);
-CK_RV unloadpkcs11(void);
+	CK_RV loadpkcs11(CK_FUNCTION_LIST_PTR * pFunctions);
+CK_RV unloadpkcs11(void);
 
- 
-#endif /*  */
+ 
+#endif /*  */

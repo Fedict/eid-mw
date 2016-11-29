@@ -22,7 +22,7 @@
 #ifndef CERTREG_H_
 #define CERTREG_H_
 #include <windows.h>
-extern HANDLE ghSvcStopEvent;
+extern HANDLE ghSvcStopEvent;
 
 
 #include <stdio.h>
@@ -49,67 +49,67 @@
 #define dlclose(h) FreeLibrary(h)
 #ifdef WIN64
 #define PKCS11_LIB L"..\\_Binaries35\\x64\\Debug\\beid35pkcs11D.dll"
-#else /*  */
+#else /*  */
 #define PKCS11_LIB L"beidpkcs11.dll"
-#endif /*  */
+#endif /*  */
 #define RTLD_LAZY	1
 #define RTLD_NOW	2
 #define RTLD_GLOBAL 4
 	
-#else /*  */
+#else /*  */
 #include <opensc/pkcs11.h>
 #include <dlfcn.h>
 #include <unistd.h>
 #define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.so" 
-#endif /*  */
+#endif /*  */
 #include <stdlib.h>
 	
 //Function that handles card events in a loop,
 //and that exits when a reader event is triggered
 	CK_RV HandleCardEvents(HWND hTextEdit,
 			       CK_FUNCTION_LIST_PTR functions);
- 
+ 
 //Function called when HandleCardEvents detects a new card
 	CK_RV HandleNewCardFound(HWND hTextEdit,
 				 CK_FUNCTION_LIST_PTR functions,
-				 CK_ULONG ulCounter,
+				 CK_ULONG ulCounter,
 				 CK_SLOT_ID_PTR pSlotList,
-				 PCCERT_CONTEXT * pCertContext,
+				 PCCERT_CONTEXT * pCertContext,
 				 CK_ULONG certContextLen);
- 
+ 
 //Get the serial number of the inserted card
 	CK_RV GetSerialNumber(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
 			      CK_SESSION_HANDLE * psession_handle,
-			      CK_BYTE * pbserialNumber,
+			      CK_BYTE * pbserialNumber,
 			      CK_ULONG * pulserialNumberLen);
- 
+ 
 //Get the certificates of the inserted card, and register them
 	CK_RV GetAndRegisterCertificates(HWND hTextEdit,
 					 CK_FUNCTION_LIST_PTR functions,
 					 CK_SESSION_HANDLE * psession_handle,
-					 CK_BYTE * pbserialNumber,
+					 CK_BYTE * pbserialNumber,
 					 CK_ULONG ulserialNumberLen,
-					 PCCERT_CONTEXT * ppCertContext,
+					 PCCERT_CONTEXT * ppCertContext,
 					 CK_ULONG ulcertContextLen);
-  BOOL ImportCertificate(BYTE * pbserialNumber, DWORD serialNumberLen,
+  BOOL ImportCertificate(BYTE * pbserialNumber, DWORD serialNumberLen,
 			    BYTE * pbcertificateData,
 			    DWORD dwcertificateDataLen,
 			    PCCERT_CONTEXT * ppCertContext);
-BOOL StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits,
+BOOL StoreUserCerts(PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits,
 		     BYTE * pbserialNumber, DWORD dwserialNumberLen);
-BOOL StoreAuthorityCerts(PCCERT_CONTEXT pCertContext,
+BOOL StoreAuthorityCerts(PCCERT_CONTEXT pCertContext,
 			  unsigned char KeyUsageBits);
-BOOL ProviderNameCorrect(PCCERT_CONTEXT pCertContext);
-DWORD CertProp();
- 
+BOOL ProviderNameCorrect(PCCERT_CONTEXT pCertContext);
+DWORD CertProp();
+ 
 //Function called when HandleCardEvents detects a card is removed
 	CK_RV HandleCardRemoved(HWND hTextEdit,
 				CK_FUNCTION_LIST_PTR functions,
-				PCCERT_CONTEXT * ppCertContext,
+				PCCERT_CONTEXT * ppCertContext,
 				CK_ULONG ulcertContextLen);
- BOOL DeleteIfUserCert(HWND hTextEdit, PCCERT_CONTEXT pCertContext);
- 
+ BOOL DeleteIfUserCert(HWND hTextEdit, PCCERT_CONTEXT pCertContext);
+ 
 //function used for manual registration of the certificates
 	CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions);
-  
+  
 #endif	/* CERTPROP_H_ */
