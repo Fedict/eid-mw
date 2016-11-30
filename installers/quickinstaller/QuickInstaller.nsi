@@ -179,12 +179,12 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		Delete "$INSTDIR\BeidMW_32.msi"
   ${EndIf}
 
-		File "..\certificates\belgiumrca2.crt"
-		File "..\certificates\belgiumrca3.crt"
-		File "..\certificates\belgiumrca4.crt"
-  		ExecWait '$SYSDIR\certutil -addstore "Root" "$INSTDIR\belgiumrca2.crt"' $MsiResponse
-		ExecWait '$SYSDIR\certutil -addstore "Root" "$INSTDIR\belgiumrca3.crt"' $MsiResponse
-		ExecWait '$SYSDIR\certutil -addstore "Root" "$INSTDIR\belgiumrca4.crt"' $MsiResponse
+;		File "..\certificates\belgiumrca2.crt"
+;		File "..\certificates\belgiumrca3.crt"
+;		File "..\certificates\belgiumrca4.crt"
+; 		ExecWait '$SYSDIR\certutil -addstore "Root" "$INSTDIR\belgiumrca2.crt"' $MsiResponse
+;		ExecWait '$SYSDIR\certutil -addstore "Root" "$INSTDIR\belgiumrca3.crt"' $MsiResponse
+;		ExecWait '$SYSDIR\certutil -addstore "Root" "$INSTDIR\belgiumrca4.crt"' $MsiResponse
   
   File /r "ReaderDrivers"
 
