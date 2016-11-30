@@ -148,7 +148,7 @@
       <Culture>0x0813</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>winscard.lib;Rpcrt4.lib;Crypt32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;Crypt32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)64D.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -234,7 +234,7 @@
       <Culture>0x0813</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>winscard.lib;Rpcrt4.lib;Crypt32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winscard.lib;Crypt32.lib;Advapi32.lib</AdditionalDependencies>
       <OutputFile>..\..\VS_2012\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)64.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
