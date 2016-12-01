@@ -68,37 +68,6 @@ copy %~dp0..\..\cardcomm\VS_2015\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTAL
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 
-:: create minidriver_no_dialogs driver installer
-:: ==================================
-
-:: BuildPath
-set MDRVINSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
-@echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
-
-rmdir /s /q %MDRVINSTALLPATH%\Release_nd
-mkdir %MDRVINSTALLPATH%\Release_nd
-@echo [INFO] Copying minidriver files..
-
-:: copy inf files
-copy %MDRVINSTALLPATH%\beidmdrv_nd.inf %MDRVINSTALLPATH%\Release_nd\beidmdrv.inf
-
-:: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-copy %~dp0..\..\cardcomm\VS_2012\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\Release_nd\beidmdrv32.dll
-copy %~dp0..\..\cardcomm\VS_2012\Binaries\x64_Release_No_Dialog\beidmdrv64nd.dll %MDRVINSTALLPATH%\Release_nd\beidmdrv64nd.dll
-
-:: @echo [INFO] Creating cat file
-:: Create catalog
-%INF2CAT_PATH%\inf2cat.exe /driver:%MDRVINSTALLPATH%\Release_nd\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
-@if "%ERRORLEVEL%" == "1" goto inf2cat_failed
-
-:: sign minidriver driver cat file
-:: ===============================
-@echo [INFO] Sign the catalog
-"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release_nd\beidmdrv.cat"
-@if "%ERRORLEVEL%" == "1" goto signtool_failed
-
-
-
 :: create cert
 :: %SIGNTOOL_PATH%\makecert -r -n CN="FedictTestCert" -b 01/01/2015 -e 01/01/2020 -ss my -sky signature
 
