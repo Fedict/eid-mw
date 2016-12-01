@@ -1,4 +1,3 @@
-
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -18,12 +17,11 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-
 #ifndef plugin_getreadercount_h
 #define plugin_getreadercount_h
-	
-#include "common.h"
-	CK_RV GetTheReaderCount(int *nrofCardReaders, int cardsInserted);
 
- 
-#endif /*  */
+#include "common.h"
+
+CK_RV GetTheReaderCount(int* nrofCardReaders, int cardsInserted);
+
+#endif

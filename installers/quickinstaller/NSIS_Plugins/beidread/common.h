@@ -1,4 +1,3 @@
-
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -18,24 +17,23 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-
 #ifndef plugin_common_h
 #define plugin_common_h
-	
+
 #include <stdio.h>
-	
+
 //allign at 1 byte
 #pragma pack(push, cryptoki, 1)
 #include <win32.h>
 #include <pkcs11.h>
 #pragma pack(pop, cryptoki)
 //back to default allignment
-	
+
 #include <windows.h>
-	
+
 #define PKCS11_LIB TEXT("beidpkcs11.dll")
-	CK_RV loadpkcs11(CK_FUNCTION_LIST_PTR * pFunctions);
+
+CK_RV loadpkcs11(CK_FUNCTION_LIST_PTR * pFunctions);
 CK_RV unloadpkcs11(void);
 
- 
-#endif /*  */
+#endif
