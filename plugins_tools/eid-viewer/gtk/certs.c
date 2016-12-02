@@ -317,7 +317,7 @@ static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 
 	pthread_once(&once, create_proxy_factory);
 	if(!pf) {
-		uilog(EID_VWR_LOG_ERROR, "Certificate validation: Could not find proxy");
+		uilog(EID_VWR_LOG_ERROR, "Certificate validation: Could not look up proxy");
 		return NULL;
 	}
 

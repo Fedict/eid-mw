@@ -39,7 +39,7 @@ static int write_attributes(IXmlWriter * pWriter,
 		if (attribute->reqd && !have_cache)
 		{
 			be_log(EID_VWR_LOG_ERROR,
-			       L"Could not write file: no data found for required label %s",
+			       L"Could not generate XML version: no data found for required label %s",
 			       attribute->label);
 			return -1;
 		}
@@ -99,7 +99,7 @@ static int write_elements(IXmlWriter * pWriter, struct element_desc *element)
 			{
 				be_log(EID_VWR_LOG_ERROR,
 				       TEXT
-				       ("Could not write file: no data found for required label %s"),
+				       ("Could not generate XML version: no data found for required label %s"),
 				       element->label);
 				return -1;
 			}
