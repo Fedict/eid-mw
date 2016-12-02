@@ -40,20 +40,8 @@ public:
 	 */
 		     std::string & GetReaderName();
 
-	/** Specify a callback function to be called each time a
-	 * card is inserted/remove in/from this reader.
-	 * The returned handle can be used to stop the callbacks
-	 * when they are no longer needed. */
-		unsigned long
-			SetEventCallback(void (*callback)
-					 (long lRet, unsigned long ulState,
-					  void *pvRef), void *pvRef);
-
 	/** Returns true is ulState indicates that a card is present, false otherwise. */
 		static bool CardPresent(unsigned long ulState);
-
-	/** To tell that the callbacks are not longer needed. */
-		void StopEventCallback(unsigned long ulHandle);
 
 	/**
 	 * Get the status w.r.t. a card being present in the reader

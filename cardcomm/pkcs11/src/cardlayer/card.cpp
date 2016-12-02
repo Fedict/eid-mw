@@ -19,6 +19,7 @@
 
 **************************************************************************** */
 #include "card.h"
+#include "thread.h"
 #include "common/log.h"
 
 namespace eIDMW

@@ -36,8 +36,6 @@ namespace eIDMW
 
 	CContext::~CContext()
 	{
-		m_oThreadPool.FinishThreads();
-
 		m_oPCSC.ReleaseContext();
 	}
 }

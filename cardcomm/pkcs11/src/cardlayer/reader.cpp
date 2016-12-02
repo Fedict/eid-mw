@@ -94,39 +94,9 @@ namespace eIDMW
 		return m_csReader;
 	}
 
-	unsigned long CReader::
-		SetEventCallback(void (*callback)
-				 (long lRet, unsigned long ulState,
-				  void *pvRef), void *pvRef)
-	{
-		unsigned long ulHandle;
-
-		CEventCallbackThread & oEventCallbackTread =
-			m_poContext->m_oThreadPool.NewThread(&m_poContext->
-							     m_oPCSC,
-							     m_csReader,
-							     callback,
-							     ulHandle, pvRef);
-
-		// Start the thread
-		oEventCallbackTread.Start();
-
-		MWLOG(LEV_INFO, MOD_CAL,
-		      L"    Started event callback thread %d", ulHandle);
-
-		return ulHandle;
-	}
-
 	bool CReader::CardPresent(unsigned long ulState)
 	{
 		return (ulState & 0x20) == 0x20;
-	}
-
-	void CReader::StopEventCallback(unsigned long ulHandle)
-	{
-		m_poContext->m_oThreadPool.RemoveThread(ulHandle);
-		MWLOG(LEV_INFO, MOD_CAL,
-		      L"    Stopped event callback thread %d", ulHandle);
 	}
 
 // Use for logging in Status()
