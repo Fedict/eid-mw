@@ -105,12 +105,6 @@ public:
 				    unsigned long ulOffset =
 				    0, unsigned long ulMaxLen =
 				    FULL_FILE, bool bDoNotCache = false);
-		/* Write to the file indicated by 'csPath'.
-		 * This path can be absolute, relative or empty
-		 * (in which case the currenlty selected file is written) */
-		void WriteFile(const std::string & csPath,
-			       unsigned long ulOffset,
-			       const CByteArray & oData);
 
 		/* Return the remaining PIN attempts;
 		 * returns PIN_STATUS_UNKNOWN if this info isn't available */

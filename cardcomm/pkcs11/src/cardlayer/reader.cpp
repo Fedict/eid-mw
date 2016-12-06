@@ -382,42 +382,6 @@ namespace eIDMW
 		}
 	}
 
-	void CReader::WriteFile(const std::string & csPath,
-				unsigned long ulOffset,
-				const CByteArray & oData)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		try
-		{
-			return m_poCard->WriteFile(csPath, ulOffset, oData);
-		}
-		catch(const CNotAuthenticatedException & e)
-		{
-			// A PIN is needed to write -> ask the correct PIN and do a verification
-			unsigned long ulRemaining;
-			tPin pin = m_oPKCS15.GetPinByRef(e.GetPinRef());
-
-			if (pin.bValid)
-			{
-				if (m_poCard->
-				    PinCmd(PIN_OP_VERIFY, pin, "", "",
-					   ulRemaining, NULL))
-				{
-					return m_poCard->WriteFile(csPath,
-								   ulOffset,
-								   oData);
-				} else
-					throw CMWEXCEPTION(ulRemaining == 0 ?
-							   EIDMW_ERR_PIN_BLOCKED
-							   :
-							   EIDMW_ERR_PIN_BAD);
-			} else
-				throw CMWEXCEPTION(EIDMW_ERR_CMD_NOT_ALLOWED);
-		}
-	}
-
 	unsigned long CReader::PinStatus(const tPin & Pin)
 	{
 		if (m_poCard == NULL)
