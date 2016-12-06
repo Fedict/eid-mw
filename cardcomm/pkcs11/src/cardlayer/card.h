@@ -73,7 +73,7 @@ public:
 		virtual bool IsPinpadReader();
 		virtual std::string GetPinpadPrefix();
 		/** Return the type of the card. */
-		virtual tCardType GetType() = 0;
+		tCardType GetType() { return m_cardType; };
 		/** Convert the return value of GetSerialNrBytes() to
 		    an std::string, and cache it for further usage */
 		virtual std::string GetSerialNr();

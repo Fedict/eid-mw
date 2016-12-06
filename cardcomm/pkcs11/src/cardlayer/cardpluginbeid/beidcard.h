@@ -59,7 +59,6 @@ public:
 
 		virtual std::string GetPinpadPrefix();
 
-		virtual tCardType GetType();
 		virtual CByteArray GetSerialNrBytes();
 
 		/** Returns 3 bytes:

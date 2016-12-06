@@ -43,7 +43,6 @@ public:
 
 		virtual bool IsPinpadReader();
 
-		virtual tCardType GetType() = 0;
 		virtual CByteArray GetInfo() = 0;
 
 		virtual CByteArray GetSerialNrBytes() = 0;

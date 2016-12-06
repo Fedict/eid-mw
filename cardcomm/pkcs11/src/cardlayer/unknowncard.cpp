@@ -50,11 +50,6 @@ namespace eIDMW
 		throw CMWEXCEPTION(EIDMW_ERR_CARDTYPE_UNKNOWN);
 	}
 
-	tCardType CUnknownCard::GetType()
-	{
-		return CARD_UNKNOWN;
-	}
-
 	std::string CUnknownCard::GetSerialNr()
 	{
 		return "";

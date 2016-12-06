@@ -237,11 +237,6 @@ CBeidCard::~CBeidCard(void)
 {
 }
 
-tCardType CBeidCard::GetType() 
-{
-	return CARD_BEID;
-}
-
  CByteArray CBeidCard::GetSerialNrBytes() 
 {
 	return m_oSerialNr;
