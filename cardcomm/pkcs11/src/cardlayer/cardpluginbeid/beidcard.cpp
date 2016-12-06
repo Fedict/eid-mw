@@ -198,9 +198,8 @@ static bool BeidCardSelectApplet(CContext * poContext, SCARDHANDLE hCard)
 	 return poCard;
 }
 
- CBeidCard::CBeidCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, const CByteArray & oData, tSelectAppletMode selectAppletMode):CPkiCard(hCard, poContext,
-	  poPinpad)
-	
+CBeidCard::CBeidCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, const CByteArray & oData, tSelectAppletMode selectAppletMode)
+	: CPkiCard(hCard, poContext, poPinpad), m_ul6CDelay(0)
 {
 	m_cardType = CARD_BEID;
 	try
@@ -217,7 +216,6 @@ static bool BeidCardSelectApplet(CContext * poContext, SCARDHANDLE hCard)
 		 m_oCardData.Chop(2);	// remove SW12 = '90 00'
 		m_oSerialNr = CByteArray(m_oCardData.GetBytes(), 16);
 		 m_ucAppletVersion = m_oCardData.GetByte(21);
-		 m_ul6CDelay = 0;
 		if (m_oCardData.GetByte(22) == 0x00
 		     && m_oCardData.GetByte(23) == 0x01)
 			m_ul6CDelay = 50;

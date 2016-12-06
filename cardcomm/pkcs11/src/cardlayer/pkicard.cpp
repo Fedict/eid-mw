@@ -27,12 +27,10 @@ namespace eIDMW
 {
 
 	CPkiCard::CPkiCard(SCARDHANDLE hCard, CContext * poContext,
-			   CPinpad * poPinpad):CCard(hCard, poContext,
-						     poPinpad)
+			   CPinpad * poPinpad)
+	 : CCard(hCard, poContext, poPinpad), m_selectAppletMode(DONT_SELECT_APPLET), m_ulRemaining(1)
 	{
 		m_ucCLA = 0;
-		m_selectAppletMode = DONT_SELECT_APPLET;
-		m_ulRemaining = 1;
 	}
 
 	CPkiCard::~CPkiCard(void)
