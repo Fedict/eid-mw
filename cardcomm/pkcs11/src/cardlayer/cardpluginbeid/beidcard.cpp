@@ -320,14 +320,14 @@ static bool BeidCardSelectApplet(CContext * poContext, SCARDHANDLE hCard)
 		// The actual call
 		DlgRet ret;
 	std::wstring wideLabel = utilStringWiden(Pin.csLabel);
-	 if (operation == PIN_OP_CHANGE)
+	if (operation == PIN_OP_CHANGE) {
 		ret = DlgAskPins(pinOperation, usage, wideLabel.c_str(),
 				  pinInfo, wsPin1, PIN_MAX_LENGTH + 1,
 				  pinInfo, wsPin2, PIN_MAX_LENGTH + 1);
-	
-	else
+	} else {
 		ret = DlgAskPin(pinOperation, usage, wideLabel.c_str(),
 				 pinInfo, wsPin1, PIN_MAX_LENGTH + 1);
+	}
 	 
 		// Convert back
 		if (ret == DLG_OK)
@@ -637,11 +637,12 @@ static bool BeidCardSelectApplet(CContext * poContext, SCARDHANDLE hCard)
 		CByteArray oResp = SendAPDU(0x2A, 0x9E, 0x9A, oData);
 	unsigned long ulSW12 = getSW12(oResp);
 
-	if (ulSW12 != 0x9000)
+	if (ulSW12 != 0x9000) {
 		throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
+	}
 	 
-		// Remove SW1-SW2 from the response
-		oResp.Chop(2);
+	// Remove SW1-SW2 from the response
+	oResp.Chop(2);
 	 return oResp;
 }
 
