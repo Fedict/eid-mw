@@ -141,45 +141,6 @@ namespace eIDMW
 		return oData;
 	}
 
-	void CPkiCard::WriteUncachedFile(const std::string & csPath,
-					 unsigned long ulOffset,
-					 const CByteArray & oData)
-	{
-		CAutoLock autolock(this);
-
-		tFileInfo fileInfo = SelectFile(csPath, true);
-
-		const unsigned char *pucData = oData.GetBytes();
-		unsigned long ulDataLen = oData.Size();
-
-		for (unsigned long i = 0; i < ulDataLen;
-		     i += MAX_APDU_WRITE_LEN)
-		{
-			unsigned long ulLen = ulDataLen - i;
-
-			if (ulLen > MAX_APDU_WRITE_LEN)
-				ulLen = MAX_APDU_WRITE_LEN;
-
-			CByteArray oResp =
-				UpdateBinary(ulOffset + i,
-					     CByteArray(pucData + i, ulLen));
-			unsigned long ulSW12 = getSW12(oResp);
-
-			if (ulSW12 == 0x6982)
-				throw CNotAuthenticatedException
-					(EIDMW_ERR_NOT_AUTHENTICATED,
-					 fileInfo.lWritePINRef);
-			else
-		if (ulSW12 != 0x9000)
-			throw CMWEXCEPTION(m_poContext->m_oPCSC.
-					   SW12ToErr(ulSW12));
-		}
-
-		MWLOG(LEV_INFO, MOD_CAL, L"Written file %ls to card",
-		      utilStringWiden(csPath).c_str());
-
-	}
-
 	unsigned char CPkiCard::PinUsage2Pinpad(const tPin & Pin,
 						const tPrivKey * pKey)
 	{

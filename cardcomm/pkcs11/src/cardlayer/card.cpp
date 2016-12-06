@@ -154,20 +154,6 @@ namespace eIDMW
 		return ReadUncachedFile(csPath, ulOffset, ulMaxLen);
 	}
 
-	void CCard::WriteFile(const std::string & csPath,
-			      unsigned long ulOffset,
-			      const CByteArray & oData)
-	{
-		WriteUncachedFile(csPath, ulOffset, oData);
-	}
-
-	void CCard::WriteUncachedFile(const std::string & csPath,
-				      unsigned long ulOffset,
-				      const CByteArray & oData)
-	{
-		throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
-	}
-
 	tCacheInfo CCard::GetCacheInfo(const std::string & csPath)
 	{
 		// By default no caching, card must implement this method

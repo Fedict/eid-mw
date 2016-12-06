@@ -85,9 +85,6 @@ public:
 					    0, unsigned long ulMaxLen =
 					    FULL_FILE, bool bDoNotCache =
 					    false);
-		virtual void WriteFile(const std::string & csPath,
-				       unsigned long ulOffset,
-				       const CByteArray & oData);
 		virtual tCacheInfo GetCacheInfo(const std::string & csPath);
 
 		virtual CByteArray ReadUncachedFile(const std::string &
@@ -96,9 +93,6 @@ public:
 						    0,
 						    unsigned long ulMaxLen =
 						    FULL_FILE) = 0;
-		virtual void WriteUncachedFile(const std::string & csPath,
-					       unsigned long ulOffset,
-					       const CByteArray & oData);
 
 		virtual unsigned long PinStatus(const tPin & Pin);
 		virtual bool PinCmd(tPinOperation operation, const tPin & Pin,

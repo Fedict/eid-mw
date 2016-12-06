@@ -56,9 +56,6 @@ public:
 						    0,
 						    unsigned long ulMaxLen =
 						    FULL_FILE);
-		virtual void WriteUncachedFile(const std::string & csPath,
-					       unsigned long ulOffset,
-					       const CByteArray & oData);
 
 		virtual DlgPinUsage PinUsage2Dlg(const tPin & Pin,
 						 const tPrivKey * pKey) = 0;
