@@ -207,8 +207,7 @@ CBeidCard::CBeidCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad
 		m_ucCLA = 0x80;
 		m_oCardData = SendAPDU(0xE4, 0x00, 0x00, 0x1C);
 		m_ucCLA = 0x00;
-		 if (m_oCardData.Size() < 23)
-			
+		if (m_oCardData.Size() < 23)
 		{
 			throw CMWEXCEPTION
 				(EIDMW_ERR_APPLET_VERSION_NOT_FOUND);
@@ -219,7 +218,7 @@ CBeidCard::CBeidCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad
 		if (m_oCardData.GetByte(22) == 0x00
 		     && m_oCardData.GetByte(23) == 0x01)
 			m_ul6CDelay = 50;
-		 m_selectAppletMode = selectAppletMode;
+		m_selectAppletMode = selectAppletMode;
 	}
 	catch(CMWException e) 
 	{
@@ -234,9 +233,11 @@ CBeidCard::CBeidCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad
 	}
 }
 
- CBeidCard::~CBeidCard(void) 
+CBeidCard::~CBeidCard(void) 
 {
-}  tCardType CBeidCard::GetType() 
+}
+
+tCardType CBeidCard::GetType() 
 {
 	return CARD_BEID;
 }

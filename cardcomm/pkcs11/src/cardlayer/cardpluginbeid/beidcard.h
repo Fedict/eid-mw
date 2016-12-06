@@ -55,16 +55,16 @@ public:
 		CBeidCard(SCARDHANDLE hCard, CContext * poContext,
 			  CPinpad * poPinpad, const CByteArray & oData,
 			  tSelectAppletMode selectAppletMode);
-		     ~CBeidCard(void);
+		~CBeidCard(void);
 
 		virtual std::string GetPinpadPrefix();
 
 		virtual tCardType GetType();
 		virtual CByteArray GetSerialNrBytes();
 
-    /** Returns 3 bytes:
-     *   - the appletversion (1 byte): 0x10, 0x11, 0x20
-     *   - the global OS version (2 bytes) */
+		/** Returns 3 bytes:
+		 *   - the appletversion (1 byte): 0x10, 0x11, 0x20
+		 *   - the global OS version (2 bytes) */
 		virtual CByteArray GetInfo();
 
 		virtual DlgPinUsage PinUsage2Dlg(const tPin & Pin,
@@ -88,7 +88,7 @@ public:
 		virtual unsigned char GetAppletVersion();
 
 protected:
-		     virtual bool ShouldSelectApplet(unsigned char ins,
+		virtual bool ShouldSelectApplet(unsigned char ins,
 						     unsigned long ulSW12);
 		virtual bool SelectApplet();
 

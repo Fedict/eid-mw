@@ -41,8 +41,7 @@
 
 namespace eIDMW
 {
-
-/** Compatibility version for the entire plugin-relevant API: V1.00 */
+	/** Compatibility version for the entire plugin-relevant API: V1.00 */
 	const unsigned long PLUGIN_VERSION = 100;
 
 	class EIDMW_CAL_API CCard
@@ -50,32 +49,47 @@ namespace eIDMW
 public:
 		CCard(SCARDHANDLE hCard, CContext * poContext,
 		      CPinpad * poPinpad);
-		virtual ~ CCard(void);
+		virtual ~CCard(void);
 
-    /** Find out which card is present and return the appropriate subclass */
+		/** Find out which card is present and return the appropriate subclass */
 		static CCard *Connect(const std::string & csReader,
 				      CContext * poContext,
 				      CPinpad * poPinpad);
 
+		/** Disconnect from the card, optionally resetting it */
 		virtual void Disconnect(tDisconnectMode disconnectMode =
 					DISCONNECT_LEAVE_CARD);
 
+		/** Call SCardStatus() to get the ATR, and return that. */
 		virtual CByteArray GetATR();
 
+		/** Return the serial number of the card reader */
 		virtual CByteArray GetIFDVersion();
 
+		/** Return true if there is definitely a card in the reader, false otherwise */
 		virtual bool Status();
 
+		/** Return true if the card reader has a PIN pad */
 		virtual bool IsPinpadReader();
 		virtual std::string GetPinpadPrefix();
-
+		/** Return the type of the card. */
 		virtual tCardType GetType() = 0;
+		/** Convert the return value of GetSerialNrBytes() to
+		    an std::string, and cache it for further usage */
 		virtual std::string GetSerialNr();
+		/** Return the serial number of the card */
 		virtual CByteArray GetSerialNrBytes();
+		/** Return a string describing the type of card */
 		virtual std::string GetLabel();
+		/** Return the output of the GET_CARD_DATA command to
+		    the eID card (or nothing if it's not an eID card) */
 		virtual CByteArray GetInfo();
 
+		/** Start a transaction on the card. Can be called
+		    recursively, maintains a counter */
 		virtual void Lock();
+		/** End a transaction on the card, as started with
+		    Lock(). */
 		virtual void Unlock();
 
 		virtual void SelectApplication(const CByteArray & oAID);
