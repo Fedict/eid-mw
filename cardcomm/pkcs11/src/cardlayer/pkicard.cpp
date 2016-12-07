@@ -402,14 +402,6 @@ namespace eIDMW
 		}
 	}
 
-	CByteArray CPkiCard::Sign(const tPrivKey & key, const tPin & Pin,
-				  unsigned long algo, CHash & oHash)
-	{
-		CByteArray oHashResult = oHash.GetHash();
-
-		return Sign(key, Pin, algo, oHashResult);
-	}
-
 	CByteArray CPkiCard::GetRandom(unsigned long ulLen)
 	{
 		CAutoLock oAutoLock(this);

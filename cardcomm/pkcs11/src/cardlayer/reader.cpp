@@ -493,32 +493,6 @@ namespace eIDMW
 		}
 	}
 
-	CByteArray CReader::Sign(const tPrivKey & key, unsigned long algo,
-				 CHash & oHash)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		unsigned long ulSupportedAlgos =
-			m_poCard->GetSupportedAlgorithms();
-		if ((algo & ulSupportedAlgos & SIGN_ALGO_MD5_RSA_PKCS)
-		    || (algo & ulSupportedAlgos & SIGN_ALGO_SHA1_RSA_PKCS)
-		    || (algo & ulSupportedAlgos & SIGN_ALGO_SHA256_RSA_PKCS)
-		    || (algo & ulSupportedAlgos & SIGN_ALGO_SHA384_RSA_PKCS)
-		    || (algo & ulSupportedAlgos & SIGN_ALGO_SHA512_RSA_PKCS)
-		    || (algo & ulSupportedAlgos &
-			SIGN_ALGO_RIPEMD160_RSA_PKCS))
-		{
-			return m_poCard->Sign(key, GetPinByID(key.ulAuthID),
-					      algo, oHash);
-		} else
-		{
-			CByteArray oHashResult = oHash.GetHash();
-
-			return Sign(key, algo, oHashResult);
-		}
-	}
-
 	CByteArray CReader::Decrypt(const tPrivKey & key, unsigned long algo,
 				    const CByteArray & oData)
 	{

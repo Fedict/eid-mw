@@ -87,10 +87,10 @@ public:
 
 		/** Start a transaction on the card. Can be called
 		    recursively, maintains a counter */
-		virtual void Lock();
+		void Lock();
 		/** End a transaction on the card, as started with
 		    Lock(). */
-		virtual void Unlock();
+		void Unlock();
 
 		virtual void SelectApplication(const CByteArray & oAID);
 
@@ -125,9 +125,6 @@ public:
 		virtual CByteArray Sign(const tPrivKey & key,
 					const tPin & Pin, unsigned long algo,
 					const CByteArray & oData);
-		virtual CByteArray Sign(const tPrivKey & key,
-					const tPin & Pin, unsigned long algo,
-					CHash & oHash);
 
 		virtual CByteArray Decrypt(const tPrivKey & key,
 					   unsigned long algo,
