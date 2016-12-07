@@ -78,9 +78,6 @@ public:
 
 		virtual unsigned long GetSupportedAlgorithms();
 
-		virtual CByteArray Ctrl(long ctrl,
-					const CByteArray & oCmdData);
-
 		virtual CP15Correction *GetP15Correction();
 
 		virtual unsigned int GetRSAKeySize();

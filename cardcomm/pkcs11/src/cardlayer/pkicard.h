@@ -72,9 +72,6 @@ public:
 
 		virtual CByteArray GetRandom(unsigned long ulLen);
 
-		virtual CByteArray Ctrl(long ctrl,
-					const CByteArray & oCmdData) = 0;
-
 		virtual unsigned int GetRSAKeySize() = 0;
 
 protected:

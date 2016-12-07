@@ -130,9 +130,6 @@ public:
 		CByteArray GetRandom(unsigned long ulLen);
 
 		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
-		/* Send card-specific command, e.g. for a secure channel
-		 * or the GetCardData command on a BE eID card */
-		CByteArray Ctrl(long ctrl, const CByteArray & oCmdData);
 
 		//--- P15 functions
 		unsigned long PinCount();
