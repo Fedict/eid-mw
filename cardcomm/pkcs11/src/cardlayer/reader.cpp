@@ -493,15 +493,6 @@ namespace eIDMW
 		}
 	}
 
-	CByteArray CReader::Decrypt(const tPrivKey & key, unsigned long algo,
-				    const CByteArray & oData)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		return m_poCard->Decrypt(key, algo, oData);
-	}
-
 	CByteArray CReader::GetRandom(unsigned long ulLen)
 	{
 		if (m_poCard == NULL)

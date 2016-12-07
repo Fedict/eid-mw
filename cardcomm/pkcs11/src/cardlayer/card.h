@@ -126,10 +126,6 @@ public:
 					const tPin & Pin, unsigned long algo,
 					const CByteArray & oData);
 
-		virtual CByteArray Decrypt(const tPrivKey & key,
-					   unsigned long algo,
-					   const CByteArray & oData);
-
 		virtual CByteArray GetRandom(unsigned long ulLen);
 
 		/** Send a case 1 or case 2 commands (no data is sent to the card),
