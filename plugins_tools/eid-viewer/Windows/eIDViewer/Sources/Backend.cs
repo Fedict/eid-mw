@@ -283,7 +283,9 @@ namespace eIDViewer
         {
             int structSize = Marshal.SizeOf(typeof(eid_slotdesc));
             Console.WriteLine(structSize);
-            theData.readersList = new ConcurrentQueue<ReadersMenuViewModel>();
+
+            ConcurrentQueue<ReadersMenuViewModel> tempReadersList = new ConcurrentQueue<ReadersMenuViewModel>();
+            // theData.readersList = new ConcurrentQueue<ReadersMenuViewModel>();
 
             if(nreaders == 0)
             {
@@ -300,13 +302,14 @@ namespace eIDViewer
 
                 if (!slotDesc.description.Equals("\\\\?PnP?\\Notification"))
                 {
-                    theData.readersList.Enqueue(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
+                    tempReadersList.Enqueue(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
                 }
                 else if (nreaders == 1)
                 {
-                    theData.readersList.Enqueue(new ReadersMenuViewModel(" ", 0));
+                    tempReadersList.Enqueue(new ReadersMenuViewModel(" ", 0));
                 }
             }
+            theData.readersList = tempReadersList;
         }
 
         public static void DoPinop(eid_vwr_pinops pinop)
