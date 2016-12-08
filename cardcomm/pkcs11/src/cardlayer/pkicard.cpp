@@ -402,47 +402,6 @@ namespace eIDMW
 		}
 	}
 
-	CByteArray CPkiCard::GetRandom(unsigned long ulLen)
-	{
-		CAutoLock oAutoLock(this);
-
-		if (m_selectAppletMode == ALW_SELECT_APPLET)
-		{
-			SelectApplet();
-		}
-
-		CByteArray oRandom(ulLen);
-
-	      try_again:
-		// Use a Get Challenge command to gather 8 bytes with each loop
-		for (unsigned long i = 0; i < ulLen; i += 20)
-		{
-			unsigned char ucLen =
-				(unsigned char) (ulLen - i >
-						 20 ? 20 : ulLen - i);
-
-			// Get challenge command
-			CByteArray oResp =
-				SendAPDU(0x84, 0x00, 0x00,
-					 (unsigned char) ucLen);
-			if (ShouldSelectApplet(0x84, getSW12(oResp)))
-			{
-				// First try to select 
-				if (SelectApplet())
-				{
-					m_selectAppletMode =
-						ALW_SELECT_APPLET;
-					goto try_again;
-				}
-			}
-			getSW12(oResp, 0x9000);
-
-			oRandom.Append(oResp.GetBytes(), oResp.Size() - 2);
-		}
-
-		return oRandom;
-	}
-
 	tFileInfo CPkiCard::SelectFile(const std::string & csPath,
 				       bool bReturnFileInfo)
 	{

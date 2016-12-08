@@ -70,8 +70,6 @@ public:
 					const tPin & Pin, unsigned long algo,
 					const CByteArray & oData);
 
-		virtual CByteArray GetRandom(unsigned long ulLen);
-
 		virtual unsigned int GetRSAKeySize() = 0;
 
 protected:
