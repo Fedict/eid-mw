@@ -493,14 +493,6 @@ namespace eIDMW
 		}
 	}
 
-	CByteArray CReader::GetRandom(unsigned long ulLen)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		return m_poCard->GetRandom(ulLen);
-	}
-
 	CByteArray CReader::SendAPDU(const CByteArray & oCmdAPDU)
 	{
 		if (m_poCard == NULL)

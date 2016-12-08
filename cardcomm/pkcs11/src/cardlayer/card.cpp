@@ -193,11 +193,6 @@ namespace eIDMW
 		throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
 	}
 
-	CByteArray CCard::GetRandom(unsigned long ulLen)
-	{
-		throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
-	}
-
 	CByteArray CCard::SendAPDU(const CByteArray & oCmdAPDU)
 	{
 		CAutoLock oAutoLock(this);

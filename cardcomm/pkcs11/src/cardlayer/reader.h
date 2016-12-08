@@ -127,8 +127,6 @@ public:
 		CByteArray Sign(const tPrivKey & key, unsigned long algo,
 				const CByteArray & oData);
 
-		CByteArray GetRandom(unsigned long ulLen);
-
 		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
 
 		//--- P15 functions

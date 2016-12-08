@@ -57,17 +57,17 @@ public:
 				      CPinpad * poPinpad);
 
 		/** Disconnect from the card, optionally resetting it */
-		virtual void Disconnect(tDisconnectMode disconnectMode =
+		void Disconnect(tDisconnectMode disconnectMode =
 					DISCONNECT_LEAVE_CARD);
 
 		/** Call SCardStatus() to get the ATR, and return that. */
-		virtual CByteArray GetATR();
+		CByteArray GetATR();
 
 		/** Return the serial number of the card reader */
-		virtual CByteArray GetIFDVersion();
+		CByteArray GetIFDVersion();
 
 		/** Return true if there is definitely a card in the reader, false otherwise */
-		virtual bool Status();
+		bool Status();
 
 		/** Return true if the card reader has a PIN pad */
 		virtual bool IsPinpadReader();
@@ -94,7 +94,7 @@ public:
 
 		virtual void SelectApplication(const CByteArray & oAID);
 
-		virtual CByteArray ReadFile(const std::string & csPath,
+		CByteArray ReadFile(const std::string & csPath,
 					    unsigned long ulOffset =
 					    0, unsigned long ulMaxLen =
 					    FULL_FILE, bool bDoNotCache =
@@ -126,12 +126,10 @@ public:
 					const tPin & Pin, unsigned long algo,
 					const CByteArray & oData);
 
-		virtual CByteArray GetRandom(unsigned long ulLen);
-
 		/** Send a case 1 or case 2 commands (no data is sent to the card),
 		    if you know it's case 1 then preferably set bDataIsReturned
 		    to false. */
-		virtual CByteArray SendAPDU(unsigned char ucINS,
+		CByteArray SendAPDU(unsigned char ucINS,
 					    unsigned char ucP1,
 					    unsigned char ucP2,
 					    unsigned long ulOutLen);
@@ -139,11 +137,11 @@ public:
     		/** Send a case 3 or case 4 commands (data is sent to the card),
 		    if you know it's case 1 then preferably set bDataIsReturned
 		    to false */
-		virtual CByteArray SendAPDU(unsigned char ucINS,
+		CByteArray SendAPDU(unsigned char ucINS,
 					    unsigned char ucP1,
 					    unsigned char ucP2,
 					    const CByteArray & oData);
-		virtual CByteArray SendAPDU(const CByteArray & oCmdAPDU);
+		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
 
 		/* retrieve the correction class for PINs, certificates and private keys */
 		virtual CP15Correction *GetP15Correction();
