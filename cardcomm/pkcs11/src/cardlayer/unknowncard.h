@@ -21,7 +21,7 @@
 
 /**
  * This class is for unknown cards.
- * It only provides some basic functionality such as SendAPDU().
+ * It only provides some basic functionality.
  */
 
 #include "card.h"
