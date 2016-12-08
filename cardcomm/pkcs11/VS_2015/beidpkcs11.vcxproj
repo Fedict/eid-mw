@@ -495,7 +495,6 @@
     <ClCompile Include="..\src\cardlayer\pkicard.cpp" />
     <ClCompile Include="..\src\cardlayer\reader.cpp" />
     <ClCompile Include="..\src\cardlayer\readersinfo.cpp" />
-    <ClCompile Include="..\src\cardlayer\threadpool.cpp" />
     <ClCompile Include="..\src\cardlayer\unknowncard.cpp" />
     <ClCompile Include="..\src\cert.c" />
     <ClCompile Include="..\src\common\bytearray.cpp" />
@@ -566,7 +565,6 @@
     <ClInclude Include="..\src\cardlayer\pkicard.h" />
     <ClInclude Include="..\src\cardlayer\reader.h" />
     <ClInclude Include="..\src\cardlayer\readersinfo.h" />
-    <ClInclude Include="..\src\cardlayer\threadpool.h" />
     <ClInclude Include="..\src\cardlayer\unknowncard.h" />
     <ClInclude Include="..\src\cert.h" />
     <ClInclude Include="..\src\common\beidversions.h" />
