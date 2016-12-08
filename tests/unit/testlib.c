@@ -388,6 +388,9 @@ void robot_insert_card() {
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
 			robot_cmd('i', CK_TRUE);
+			// wait a bit after the card was inserted, to ensure
+			// that the reader has detected it ...
+			sleep(1);
 			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please insert a card and press <enter>\n");
@@ -464,7 +467,8 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 		/* no slots with token found; try asking for a token */
 		if(have_robot()) {
 			robot_insert_card();
-			return find_slot(with_token, slot);
+			// assume we have one token, now
+			count=1;
 		}
 		printf("Need at least one token to run this test\n");
 		return TEST_RV_SKIP;
@@ -487,10 +491,6 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 			check_rv(C_CloseSession(session));
 		} while(rv != CKR_OK && (++i < count));
 		if (i >= count ) {
-			if(have_robot()) {
-				robot_insert_card();
-				return find_slot(with_token, slot);
-			}
 			printf("Need at least one known token for this test\n");
 			return TEST_RV_SKIP;
 		}
