@@ -27,12 +27,10 @@ namespace eIDMW
 {
 
 	CPkiCard::CPkiCard(SCARDHANDLE hCard, CContext * poContext,
-			   CPinpad * poPinpad):CCard(hCard, poContext,
-						     poPinpad)
+			   CPinpad * poPinpad)
+	 : CCard(hCard, poContext, poPinpad), m_selectAppletMode(DONT_SELECT_APPLET), m_ulRemaining(1)
 	{
 		m_ucCLA = 0;
-		m_selectAppletMode = DONT_SELECT_APPLET;
-		m_ulRemaining = 1;
 	}
 
 	CPkiCard::~CPkiCard(void)
@@ -139,45 +137,6 @@ namespace eIDMW
 		      utilStringWiden(csPath).c_str(), oData.Size());
 
 		return oData;
-	}
-
-	void CPkiCard::WriteUncachedFile(const std::string & csPath,
-					 unsigned long ulOffset,
-					 const CByteArray & oData)
-	{
-		CAutoLock autolock(this);
-
-		tFileInfo fileInfo = SelectFile(csPath, true);
-
-		const unsigned char *pucData = oData.GetBytes();
-		unsigned long ulDataLen = oData.Size();
-
-		for (unsigned long i = 0; i < ulDataLen;
-		     i += MAX_APDU_WRITE_LEN)
-		{
-			unsigned long ulLen = ulDataLen - i;
-
-			if (ulLen > MAX_APDU_WRITE_LEN)
-				ulLen = MAX_APDU_WRITE_LEN;
-
-			CByteArray oResp =
-				UpdateBinary(ulOffset + i,
-					     CByteArray(pucData + i, ulLen));
-			unsigned long ulSW12 = getSW12(oResp);
-
-			if (ulSW12 == 0x6982)
-				throw CNotAuthenticatedException
-					(EIDMW_ERR_NOT_AUTHENTICATED,
-					 fileInfo.lWritePINRef);
-			else
-		if (ulSW12 != 0x9000)
-			throw CMWEXCEPTION(m_poContext->m_oPCSC.
-					   SW12ToErr(ulSW12));
-		}
-
-		MWLOG(LEV_INFO, MOD_CAL, L"Written file %ls to card",
-		      utilStringWiden(csPath).c_str());
-
 	}
 
 	unsigned char CPkiCard::PinUsage2Pinpad(const tPin & Pin,
@@ -441,14 +400,6 @@ namespace eIDMW
 			} else
 				throw e;
 		}
-	}
-
-	CByteArray CPkiCard::Sign(const tPrivKey & key, const tPin & Pin,
-				  unsigned long algo, CHash & oHash)
-	{
-		CByteArray oHashResult = oHash.GetHash();
-
-		return Sign(key, Pin, algo, oHashResult);
 	}
 
 	CByteArray CPkiCard::GetRandom(unsigned long ulLen)

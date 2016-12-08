@@ -94,39 +94,9 @@ namespace eIDMW
 		return m_csReader;
 	}
 
-	unsigned long CReader::
-		SetEventCallback(void (*callback)
-				 (long lRet, unsigned long ulState,
-				  void *pvRef), void *pvRef)
-	{
-		unsigned long ulHandle;
-
-		CEventCallbackThread & oEventCallbackTread =
-			m_poContext->m_oThreadPool.NewThread(&m_poContext->
-							     m_oPCSC,
-							     m_csReader,
-							     callback,
-							     ulHandle, pvRef);
-
-		// Start the thread
-		oEventCallbackTread.Start();
-
-		MWLOG(LEV_INFO, MOD_CAL,
-		      L"    Started event callback thread %d", ulHandle);
-
-		return ulHandle;
-	}
-
 	bool CReader::CardPresent(unsigned long ulState)
 	{
 		return (ulState & 0x20) == 0x20;
-	}
-
-	void CReader::StopEventCallback(unsigned long ulHandle)
-	{
-		m_poContext->m_oThreadPool.RemoveThread(ulHandle);
-		MWLOG(LEV_INFO, MOD_CAL,
-		      L"    Stopped event callback thread %d", ulHandle);
 	}
 
 // Use for logging in Status()
@@ -412,42 +382,6 @@ namespace eIDMW
 		}
 	}
 
-	void CReader::WriteFile(const std::string & csPath,
-				unsigned long ulOffset,
-				const CByteArray & oData)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		try
-		{
-			return m_poCard->WriteFile(csPath, ulOffset, oData);
-		}
-		catch(const CNotAuthenticatedException & e)
-		{
-			// A PIN is needed to write -> ask the correct PIN and do a verification
-			unsigned long ulRemaining;
-			tPin pin = m_oPKCS15.GetPinByRef(e.GetPinRef());
-
-			if (pin.bValid)
-			{
-				if (m_poCard->
-				    PinCmd(PIN_OP_VERIFY, pin, "", "",
-					   ulRemaining, NULL))
-				{
-					return m_poCard->WriteFile(csPath,
-								   ulOffset,
-								   oData);
-				} else
-					throw CMWEXCEPTION(ulRemaining == 0 ?
-							   EIDMW_ERR_PIN_BLOCKED
-							   :
-							   EIDMW_ERR_PIN_BAD);
-			} else
-				throw CMWEXCEPTION(EIDMW_ERR_CMD_NOT_ALLOWED);
-		}
-	}
-
 	unsigned long CReader::PinStatus(const tPin & Pin)
 	{
 		if (m_poCard == NULL)
@@ -559,41 +493,6 @@ namespace eIDMW
 		}
 	}
 
-	CByteArray CReader::Sign(const tPrivKey & key, unsigned long algo,
-				 CHash & oHash)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		unsigned long ulSupportedAlgos =
-			m_poCard->GetSupportedAlgorithms();
-		if ((algo & ulSupportedAlgos & SIGN_ALGO_MD5_RSA_PKCS)
-		    || (algo & ulSupportedAlgos & SIGN_ALGO_SHA1_RSA_PKCS)
-		    || (algo & ulSupportedAlgos & SIGN_ALGO_SHA256_RSA_PKCS)
-		    || (algo & ulSupportedAlgos & SIGN_ALGO_SHA384_RSA_PKCS)
-		    || (algo & ulSupportedAlgos & SIGN_ALGO_SHA512_RSA_PKCS)
-		    || (algo & ulSupportedAlgos &
-			SIGN_ALGO_RIPEMD160_RSA_PKCS))
-		{
-			return m_poCard->Sign(key, GetPinByID(key.ulAuthID),
-					      algo, oHash);
-		} else
-		{
-			CByteArray oHashResult = oHash.GetHash();
-
-			return Sign(key, algo, oHashResult);
-		}
-	}
-
-	CByteArray CReader::Decrypt(const tPrivKey & key, unsigned long algo,
-				    const CByteArray & oData)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		return m_poCard->Decrypt(key, algo, oData);
-	}
-
 	CByteArray CReader::GetRandom(unsigned long ulLen)
 	{
 		if (m_poCard == NULL)
@@ -608,14 +507,6 @@ namespace eIDMW
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
 
 		return m_poCard->SendAPDU(oCmdAPDU);
-	}
-
-	CByteArray CReader::Ctrl(long ctrl, const CByteArray & oCmdData)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		return m_poCard->Ctrl(ctrl, oCmdData);
 	}
 
 	unsigned long CReader::PinCount()

@@ -56,8 +56,6 @@ public:
 			return 0;
 		};
 
-		tCardType GetType();
-
 		std::string GetSerialNr();
 
 		std::string GetLabel();

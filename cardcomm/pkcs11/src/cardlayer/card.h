@@ -41,8 +41,7 @@
 
 namespace eIDMW
 {
-
-/** Compatibility version for the entire plugin-relevant API: V1.00 */
+	/** Compatibility version for the entire plugin-relevant API: V1.00 */
 	const unsigned long PLUGIN_VERSION = 100;
 
 	class EIDMW_CAL_API CCard
@@ -50,33 +49,48 @@ namespace eIDMW
 public:
 		CCard(SCARDHANDLE hCard, CContext * poContext,
 		      CPinpad * poPinpad);
-		virtual ~ CCard(void);
+		virtual ~CCard(void);
 
-    /** Find out which card is present and return the appropriate subclass */
+		/** Find out which card is present and return the appropriate subclass */
 		static CCard *Connect(const std::string & csReader,
 				      CContext * poContext,
 				      CPinpad * poPinpad);
 
+		/** Disconnect from the card, optionally resetting it */
 		virtual void Disconnect(tDisconnectMode disconnectMode =
 					DISCONNECT_LEAVE_CARD);
 
+		/** Call SCardStatus() to get the ATR, and return that. */
 		virtual CByteArray GetATR();
 
+		/** Return the serial number of the card reader */
 		virtual CByteArray GetIFDVersion();
 
+		/** Return true if there is definitely a card in the reader, false otherwise */
 		virtual bool Status();
 
+		/** Return true if the card reader has a PIN pad */
 		virtual bool IsPinpadReader();
 		virtual std::string GetPinpadPrefix();
-
-		virtual tCardType GetType() = 0;
+		/** Return the type of the card. */
+		tCardType GetType() { return m_cardType; };
+		/** Convert the return value of GetSerialNrBytes() to
+		    an std::string, and cache it for further usage */
 		virtual std::string GetSerialNr();
+		/** Return the serial number of the card */
 		virtual CByteArray GetSerialNrBytes();
+		/** Return a string describing the type of card */
 		virtual std::string GetLabel();
+		/** Return the output of the GET_CARD_DATA command to
+		    the eID card (or nothing if it's not an eID card) */
 		virtual CByteArray GetInfo();
 
-		virtual void Lock();
-		virtual void Unlock();
+		/** Start a transaction on the card. Can be called
+		    recursively, maintains a counter */
+		void Lock();
+		/** End a transaction on the card, as started with
+		    Lock(). */
+		void Unlock();
 
 		virtual void SelectApplication(const CByteArray & oAID);
 
@@ -85,9 +99,6 @@ public:
 					    0, unsigned long ulMaxLen =
 					    FULL_FILE, bool bDoNotCache =
 					    false);
-		virtual void WriteFile(const std::string & csPath,
-				       unsigned long ulOffset,
-				       const CByteArray & oData);
 		virtual tCacheInfo GetCacheInfo(const std::string & csPath);
 
 		virtual CByteArray ReadUncachedFile(const std::string &
@@ -96,9 +107,6 @@ public:
 						    0,
 						    unsigned long ulMaxLen =
 						    FULL_FILE) = 0;
-		virtual void WriteUncachedFile(const std::string & csPath,
-					       unsigned long ulOffset,
-					       const CByteArray & oData);
 
 		virtual unsigned long PinStatus(const tPin & Pin);
 		virtual bool PinCmd(tPinOperation operation, const tPin & Pin,
@@ -117,33 +125,25 @@ public:
 		virtual CByteArray Sign(const tPrivKey & key,
 					const tPin & Pin, unsigned long algo,
 					const CByteArray & oData);
-		virtual CByteArray Sign(const tPrivKey & key,
-					const tPin & Pin, unsigned long algo,
-					CHash & oHash);
-
-		virtual CByteArray Decrypt(const tPrivKey & key,
-					   unsigned long algo,
-					   const CByteArray & oData);
 
 		virtual CByteArray GetRandom(unsigned long ulLen);
 
-	/** Send a case 1 or case 2 commands (no data is sent to the card),
-     * if you know it's case 1 then preferably set bDataIsReturned to false. */
+		/** Send a case 1 or case 2 commands (no data is sent to the card),
+		    if you know it's case 1 then preferably set bDataIsReturned
+		    to false. */
 		virtual CByteArray SendAPDU(unsigned char ucINS,
 					    unsigned char ucP1,
 					    unsigned char ucP2,
 					    unsigned long ulOutLen);
 
-    /** Send a case 3 or case 4 commands (data is sent to the card),
-     * if you know it's case 1 then preferably set bDataIsReturned to false */
+    		/** Send a case 3 or case 4 commands (data is sent to the card),
+		    if you know it's case 1 then preferably set bDataIsReturned
+		    to false */
 		virtual CByteArray SendAPDU(unsigned char ucINS,
 					    unsigned char ucP1,
 					    unsigned char ucP2,
 					    const CByteArray & oData);
 		virtual CByteArray SendAPDU(const CByteArray & oCmdAPDU);
-
-		virtual CByteArray Ctrl(long ctrl,
-					const CByteArray & oCmdData);
 
 		/* retrieve the correction class for PINs, certificates and private keys */
 		virtual CP15Correction *GetP15Correction();
@@ -152,14 +152,14 @@ public:
 
 protected:
 		// How long to wait (msec) before re-sending an APDU when SW12 = 6CXX is returned
-		            virtual unsigned long Get6CDelay();
+		virtual unsigned long Get6CDelay();
 
 		virtual unsigned char Hex2Byte(char cHex);
 		virtual unsigned char Hex2Byte(const std::string & csHex,
 					       unsigned long ulIdx);
 		virtual bool IsDigit(char c);
 
-	/** Return true if the serial number is present in oData, false otherwise */
+		/** Return true if the serial number is present in oData, false otherwise */
 		bool SerialNrPresent(const CByteArray & oData);
 
 	/** If ulExpected is provided and differs from the return code, an MWException is thrown */

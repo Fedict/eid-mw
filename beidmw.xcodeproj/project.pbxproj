@@ -42,7 +42,6 @@
 		65F3F01B1BE2328A0073F2A3 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		65F3F0201BE232D70073F2A3 /* PCSC.framework in Headers */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; };
-		7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.19.a */; };
 		8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */; };
 		86837479186489B6005EE5D7 /* dialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 8683738D186489B5005EE5D7 /* dialogs.h */; };
@@ -156,7 +155,6 @@
 		86E3DED61653EC3F0015B5E1 /* pkicard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB01653EC3E0015B5E1 /* pkicard.h */; };
 		86E3DED71653EC3F0015B5E1 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB11653EC3E0015B5E1 /* reader.h */; };
 		86E3DED81653EC3F0015B5E1 /* readersinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB21653EC3E0015B5E1 /* readersinfo.h */; };
-		86E3DED91653EC3F0015B5E1 /* threadpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB31653EC3E0015B5E1 /* threadpool.h */; };
 		86E3DEDA1653EC3F0015B5E1 /* unknowncard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB41653EC3E0015B5E1 /* unknowncard.h */; };
 		86E3DEDC1653EC3F0015B5E1 /* card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB61653EC3E0015B5E1 /* card.cpp */; };
 		86E3DEDD1653EC3F0015B5E1 /* cardfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */; };
@@ -172,7 +170,6 @@
 		86E3DEE71653EC3F0015B5E1 /* pkicard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC11653EC3F0015B5E1 /* pkicard.cpp */; };
 		86E3DEE81653EC3F0015B5E1 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC21653EC3F0015B5E1 /* reader.cpp */; };
 		86E3DEE91653EC3F0015B5E1 /* readersinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */; };
-		86E3DEEA1653EC3F0015B5E1 /* threadpool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC41653EC3F0015B5E1 /* threadpool.cpp */; };
 		86E3DEEB1653EC3F0015B5E1 /* unknowncard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */; };
 		86E3DEFA1653ECB10015B5E1 /* beidcard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEEE1653ECB00015B5E1 /* beidcard.cpp */; };
 		86E3DEFB1653ECB10015B5E1 /* beidcard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEEF1653ECB00015B5E1 /* beidcard.h */; };
@@ -421,7 +418,6 @@
 		86E3DEB01653EC3E0015B5E1 /* pkicard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkicard.h; path = cardcomm/pkcs11/src/cardlayer/pkicard.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB11653EC3E0015B5E1 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reader.h; path = cardcomm/pkcs11/src/cardlayer/reader.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB21653EC3E0015B5E1 /* readersinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readersinfo.h; path = cardcomm/pkcs11/src/cardlayer/readersinfo.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB31653EC3E0015B5E1 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = threadpool.h; path = cardcomm/pkcs11/src/cardlayer/threadpool.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB41653EC3E0015B5E1 /* unknowncard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unknowncard.h; path = cardcomm/pkcs11/src/cardlayer/unknowncard.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB61653EC3E0015B5E1 /* card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = card.cpp; path = cardcomm/pkcs11/src/cardlayer/card.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardfactory.cpp; path = cardcomm/pkcs11/src/cardlayer/cardfactory.cpp; sourceTree = SOURCE_ROOT; };
@@ -437,7 +433,6 @@
 		86E3DEC11653EC3F0015B5E1 /* pkicard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkicard.cpp; path = cardcomm/pkcs11/src/cardlayer/pkicard.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC21653EC3F0015B5E1 /* reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = reader.cpp; path = cardcomm/pkcs11/src/cardlayer/reader.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readersinfo.cpp; path = cardcomm/pkcs11/src/cardlayer/readersinfo.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEC41653EC3F0015B5E1 /* threadpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threadpool.cpp; path = cardcomm/pkcs11/src/cardlayer/threadpool.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unknowncard.cpp; path = cardcomm/pkcs11/src/cardlayer/unknowncard.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEEE1653ECB00015B5E1 /* beidcard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidcard.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidcard.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEEF1653ECB00015B5E1 /* beidcard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidcard.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidcard.h; sourceTree = SOURCE_ROOT; };
@@ -745,7 +740,6 @@
 				86E3DEB01653EC3E0015B5E1 /* pkicard.h */,
 				86E3DEB11653EC3E0015B5E1 /* reader.h */,
 				86E3DEB21653EC3E0015B5E1 /* readersinfo.h */,
-				86E3DEB31653EC3E0015B5E1 /* threadpool.h */,
 				86E3DEB41653EC3E0015B5E1 /* unknowncard.h */,
 				86E3DEB61653EC3E0015B5E1 /* card.cpp */,
 				86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */,
@@ -761,7 +755,6 @@
 				86E3DEC11653EC3F0015B5E1 /* pkicard.cpp */,
 				86E3DEC21653EC3F0015B5E1 /* reader.cpp */,
 				86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */,
-				86E3DEC41653EC3F0015B5E1 /* threadpool.cpp */,
 				86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */,
 			);
 			name = Cardlayer;
@@ -923,7 +916,6 @@
 				86E3DED61653EC3F0015B5E1 /* pkicard.h in Headers */,
 				86E3DED71653EC3F0015B5E1 /* reader.h in Headers */,
 				86E3DED81653EC3F0015B5E1 /* readersinfo.h in Headers */,
-				86E3DED91653EC3F0015B5E1 /* threadpool.h in Headers */,
 				86E3DEDA1653EC3F0015B5E1 /* unknowncard.h in Headers */,
 				86E3DEFB1653ECB10015B5E1 /* beidcard.h in Headers */,
 				86E3DEFD1653ECB10015B5E1 /* beidp15correction.h in Headers */,
@@ -1289,7 +1281,6 @@
 				86E3DEE71653EC3F0015B5E1 /* pkicard.cpp in Sources */,
 				86E3DEE81653EC3F0015B5E1 /* reader.cpp in Sources */,
 				86E3DEE91653EC3F0015B5E1 /* readersinfo.cpp in Sources */,
-				86E3DEEA1653EC3F0015B5E1 /* threadpool.cpp in Sources */,
 				86E3DEEB1653EC3F0015B5E1 /* unknowncard.cpp in Sources */,
 				86E3DEFA1653ECB10015B5E1 /* beidcard.cpp in Sources */,
 				86E3DEFC1653ECB10015B5E1 /* beidp15correction.cpp in Sources */,

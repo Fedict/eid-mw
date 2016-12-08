@@ -33,9 +33,8 @@ namespace eIDMW
 
 	CUnknownCard::CUnknownCard(SCARDHANDLE hCard, CContext * poContext,
 				   CPinpad * poPinpad,
-				   const CByteArray & oData):CCard(hCard,
-								   poContext,
-								   poPinpad)
+				   const CByteArray & oData)
+		: CCard(hCard, poContext, poPinpad)
 	{
 	}
 
@@ -48,11 +47,6 @@ namespace eIDMW
 						  unsigned long ulMaxLen)
 	{
 		throw CMWEXCEPTION(EIDMW_ERR_CARDTYPE_UNKNOWN);
-	}
-
-	tCardType CUnknownCard::GetType()
-	{
-		return CARD_UNKNOWN;
 	}
 
 	std::string CUnknownCard::GetSerialNr()

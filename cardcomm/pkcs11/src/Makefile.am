@@ -54,7 +54,6 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/pkicard.cpp \
 	cardlayer/reader.cpp \
 	cardlayer/readersinfo.cpp \
-	cardlayer/threadpool.cpp \
 	cardlayer/unknowncard.cpp \
 	cardlayer/cardpluginbeid/beidcard.cpp \
 	cardlayer/cardpluginbeid/beidp15correction.cpp
@@ -104,7 +103,6 @@ noinst_HEADERS = \
 	cardlayer/cardpluginbeid/beidcard.h \
 	cardlayer/cardreaderinfo.h \
 	cardlayer/pinpadlib.h \
-	cardlayer/threadpool.h \
 	cardlayer/pcsc.h \
 	cardlayer/cardlayerconst.h \
 	cardlayer/pinpad2.h \

@@ -24,7 +24,6 @@
 #define CONTEXT_H
 
 #include "pcsc.h"
-#include "threadpool.h"
 
 namespace eIDMW
 {
@@ -36,7 +35,6 @@ public:
 		~CContext();
 
 		CPCSC m_oPCSC;
-		CThreadPool m_oThreadPool;
 
 		bool m_bSSO; // force Single Sign-On
 		unsigned long m_ulConnectionDelay;

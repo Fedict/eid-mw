@@ -40,20 +40,8 @@ public:
 	 */
 		     std::string & GetReaderName();
 
-	/** Specify a callback function to be called each time a
-	 * card is inserted/remove in/from this reader.
-	 * The returned handle can be used to stop the callbacks
-	 * when they are no longer needed. */
-		unsigned long
-			SetEventCallback(void (*callback)
-					 (long lRet, unsigned long ulState,
-					  void *pvRef), void *pvRef);
-
 	/** Returns true is ulState indicates that a card is present, false otherwise. */
 		static bool CardPresent(unsigned long ulState);
-
-	/** To tell that the callbacks are not longer needed. */
-		void StopEventCallback(unsigned long ulHandle);
 
 	/**
 	 * Get the status w.r.t. a card being present in the reader
@@ -117,12 +105,6 @@ public:
 				    unsigned long ulOffset =
 				    0, unsigned long ulMaxLen =
 				    FULL_FILE, bool bDoNotCache = false);
-		/* Write to the file indicated by 'csPath'.
-		 * This path can be absolute, relative or empty
-		 * (in which case the currenlty selected file is written) */
-		void WriteFile(const std::string & csPath,
-			       unsigned long ulOffset,
-			       const CByteArray & oData);
 
 		/* Return the remaining PIN attempts;
 		 * returns PIN_STATUS_UNKNOWN if this info isn't available */
@@ -144,23 +126,10 @@ public:
 		/* Sign data. If necessary, a PIN will be asked */
 		CByteArray Sign(const tPrivKey & key, unsigned long algo,
 				const CByteArray & oData);
-		/* Sign data. No call to oHash.GetHash() should be done;
-		 * this way it is possible to support 'partial signing'
-		 * in which the last part of the data to be signed (this
-		 * is kept in the oHash object) is sent to the card to
-		 * finish the hashing. */
-		CByteArray Sign(const tPrivKey & key, unsigned long algo,
-				CHash & oHash);
-
-		CByteArray Decrypt(const tPrivKey & key, unsigned long algo,
-				   const CByteArray & oData);
 
 		CByteArray GetRandom(unsigned long ulLen);
 
 		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
-		/* Send card-specific command, e.g. for a secure channel
-		 * or the GetCardData command on a BE eID card */
-		CByteArray Ctrl(long ctrl, const CByteArray & oCmdData);
 
 		//--- P15 functions
 		unsigned long PinCount();

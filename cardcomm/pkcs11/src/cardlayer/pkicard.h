@@ -43,7 +43,6 @@ public:
 
 		virtual bool IsPinpadReader();
 
-		virtual tCardType GetType() = 0;
 		virtual CByteArray GetInfo() = 0;
 
 		virtual CByteArray GetSerialNrBytes() = 0;
@@ -56,9 +55,6 @@ public:
 						    0,
 						    unsigned long ulMaxLen =
 						    FULL_FILE);
-		virtual void WriteUncachedFile(const std::string & csPath,
-					       unsigned long ulOffset,
-					       const CByteArray & oData);
 
 		virtual DlgPinUsage PinUsage2Dlg(const tPin & Pin,
 						 const tPrivKey * pKey) = 0;
@@ -73,14 +69,8 @@ public:
 		virtual CByteArray Sign(const tPrivKey & key,
 					const tPin & Pin, unsigned long algo,
 					const CByteArray & oData);
-		virtual CByteArray Sign(const tPrivKey & key,
-					const tPin & Pin, unsigned long algo,
-					CHash & oHash);
 
 		virtual CByteArray GetRandom(unsigned long ulLen);
-
-		virtual CByteArray Ctrl(long ctrl,
-					const CByteArray & oCmdData) = 0;
 
 		virtual unsigned int GetRSAKeySize() = 0;
 

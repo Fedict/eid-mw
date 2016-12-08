@@ -19,6 +19,7 @@
 
 **************************************************************************** */
 #include "card.h"
+#include "thread.h"
 #include "common/log.h"
 
 namespace eIDMW
@@ -153,20 +154,6 @@ namespace eIDMW
 		return ReadUncachedFile(csPath, ulOffset, ulMaxLen);
 	}
 
-	void CCard::WriteFile(const std::string & csPath,
-			      unsigned long ulOffset,
-			      const CByteArray & oData)
-	{
-		WriteUncachedFile(csPath, ulOffset, oData);
-	}
-
-	void CCard::WriteUncachedFile(const std::string & csPath,
-				      unsigned long ulOffset,
-				      const CByteArray & oData)
-	{
-		throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
-	}
-
 	tCacheInfo CCard::GetCacheInfo(const std::string & csPath)
 	{
 		// By default no caching, card must implement this method
@@ -202,18 +189,6 @@ namespace eIDMW
 
 	CByteArray CCard::Sign(const tPrivKey & key, const tPin & Pin,
 			       unsigned long algo, const CByteArray & oData)
-	{
-		throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
-	}
-
-	CByteArray CCard::Sign(const tPrivKey & key, const tPin & Pin,
-			       unsigned long algo, CHash & oHash)
-	{
-		throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
-	}
-
-	CByteArray CCard::Decrypt(const tPrivKey & key, unsigned long algo,
-				  const CByteArray & oData)
 	{
 		throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
 	}
@@ -326,11 +301,6 @@ namespace eIDMW
 		return SendAPDU(oAPDU);
 	}
 
-
-	CByteArray CCard::Ctrl(long ctrl, const CByteArray & oCmdData)
-	{
-		throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
-	}
 
 	CP15Correction *CCard::GetP15Correction()
 	{

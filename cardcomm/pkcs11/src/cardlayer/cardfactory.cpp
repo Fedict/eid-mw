@@ -56,6 +56,7 @@
  *   continues as in the GetCardInstance() function.
  */
 #include "cardfactory.h"
+#include "thread.h"
 #include "unknowncard.h"
 #include "common/log.h"
 #include "common/util.h"

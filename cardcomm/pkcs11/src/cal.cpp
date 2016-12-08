@@ -30,7 +30,7 @@
 #include "cert.h"
 #include "mw_util.h"
 #include "tlvbuffer.h"
-
+#include "thread.h"
 
 #ifndef WIN32
 #define strcpy_s(a,b,c)         strcpy((a),(c))
