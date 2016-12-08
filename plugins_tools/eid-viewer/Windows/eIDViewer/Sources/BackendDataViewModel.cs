@@ -174,13 +174,20 @@ namespace eIDViewer
 
                 using (System.IO.Stream fileStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(embeddedRootCA))
                 {
-                    var bytes = new byte[fileStream.Length];
-                    fileStream.Read(bytes, 0, bytes.Length);
-                    X509Certificate2 fileCert = new X509Certificate2(bytes);
-
-                    if (rootCertOnCard.Thumbprint.Equals(fileCert.Thumbprint))
+                    if (fileStream != null)
                     {
-                        foundEmbeddedRootCA = true;
+                        var bytes = new byte[fileStream.Length];
+                        fileStream.Read(bytes, 0, bytes.Length);
+                        X509Certificate2 fileCert = new X509Certificate2(bytes);
+
+                        if (rootCertOnCard.Thumbprint.Equals(fileCert.Thumbprint))
+                        {
+                            foundEmbeddedRootCA = true;
+                        }
+                    }
+                    else
+                    {
+                        this.logText += "embeddedRootCA: %s not found\n" + embeddedRootCA;
                     }
                 }
             }
@@ -195,8 +202,7 @@ namespace eIDViewer
         public bool VerifyRootCA(ref X509Certificate2 rootCertOnCard, ref CertViewModel rootViewModel)
         {
             bool foundEmbeddedRootCA = false;
-            string[] embeddedRootCAs = { "eIDViewer.Resources.Certs.belgiumrca.pem",
-                                         "eIDViewer.Resources.Certs.belgiumrca2.pem",
+            string[] embeddedRootCAs = { "eIDViewer.Resources.Certs.belgiumrca2.pem",
                                          "eIDViewer.Resources.Certs.belgiumrca3.pem",
                                          "eIDViewer.Resources.Certs.belgiumrca4.pem"};
 
