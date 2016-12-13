@@ -90,13 +90,10 @@ int eid_vwr_p11_close_session() {
 }
 
 /* Called by eid_vwr_wait_event(). */
-int eid_vwr_p11_wait_event(CK_FLAGS flags, CK_SLOT_ID_PTR pSlot) {
-	CK_RV ret;
+int eid_vwr_p11_wait_event() {
+	CK_RV ret = CKR_OK;
 
-	ret = C_WaitForSlotEvent(flags,   /*nonblocking flag: CKF_DONT_BLOCK*/
-		pSlot,  /* location that receives the slot ID */
-		NULL_PTR); /* reserved.  Should be NULL_PTR */
-	check_rv_late("C_WaitForSlotEvent", ret);
+	WaitForSingleObject(readerCheckEvent, INFINITE);
 
 	return ret;
 }

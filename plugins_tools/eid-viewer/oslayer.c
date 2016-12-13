@@ -16,24 +16,83 @@ int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	return 0;
 }
 
+#ifdef WIN32
+DWORD WINAPI eid_wait_for_pkcs11event(void* val) {
+	int ret;
+	CK_FLAGS flags = 0;
+	CK_SLOT_ID slotID;
+
+	while (1)
+	{
+		ret = C_WaitForSlotEvent(flags,   /*nonblocking flag: CKF_DONT_BLOCK*/
+			&slotID,  /* location that receives the slot ID */
+			NULL_PTR); /* reserved.  Should be NULL_PTR */
+
+		if (ret != CKR_OK)
+		{
+			be_log(EID_VWR_LOG_ERROR, TEXT("C_WaitForSlotEvent with retVal: %.8x"), ret);
+			if (ret == CKR_CRYPTOKI_NOT_INITIALIZED)
+			{
+				return;
+			}
+			SLEEP(1);
+		}
+
+		if (!SetEvent(readerCheckEvent))
+		{
+			be_log(EID_VWR_LOG_ERROR, TEXT("eid_wait_for_pkcs11event with error: %.8x"), GetLastError());
+			return;
+		}
+	}
+	return ret;		
+}
+
+
+int eid_vwr_init()
+{
+	HANDLE hThread;
+	int result = CKR_OK;
+
+	readerCheckEvent = CreateEvent(
+		NULL,   // default security attributes
+		FALSE,  // auto-reset event object
+		FALSE,  // initial state is nonsignaled
+		NULL);  // unnamed object
+
+	if (readerCheckEvent == NULL)
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("CreateEvent error: %.8x"), GetLastError());
+		result = CKR_FUNCTION_FAILED;
+	}
+
+	/* Create the pkcs11 card / card reader event thread */
+	hThread = CreateThread(NULL, 0, eid_wait_for_pkcs11event, NULL, 0, NULL);
+	if (readerCheckEvent == NULL)
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("CreateEvent error: %.8x"), GetLastError());
+		result = CKR_FUNCTION_FAILED;
+	}
+	return result;
+}
+#endif
+
 void eid_vwr_be_mainloop() {
 #ifdef WIN32
 	int result;
-	CK_FLAGS flags = 0;
-	CK_SLOT_ID slotID;
+	int eventSetup = eid_vwr_init();
 #endif
 	for(;;) {
 #ifdef WIN32
-		result =
+		result = eid_vwr_poll();
 #else
-		(void)
+		eid_vwr_poll();
 #endif
-			eid_vwr_poll();
+
 #ifdef WIN32
-		//we reuse the eid_vwr_poll() function for maintainebility, though the pSlot already gives us the slot where the changes occured
-		if (result == 0)
+		//use polling if eid_vwr_init failed
+		if ( (result == 0) && (eventSetup == CKR_OK) )
 		{
-			eid_vwr_p11_wait_event(flags, &slotID);
+			eid_vwr_p11_wait_event();
 		}
 		else
 		{
