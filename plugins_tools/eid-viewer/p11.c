@@ -66,7 +66,13 @@ int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot) {
 	if(!is_auto) {
 		slot_manual = manualslot;
 	}
-
+#ifdef WIN32
+	if (!SetEvent(readerCheckEvent))
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("eid_wait_for_pkcs11event with error: %.8x"), GetLastError());
+		return CKR_FUNCTION_FAILED;
+	}
+#endif
 	return 0;
 }
 
