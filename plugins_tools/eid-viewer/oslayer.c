@@ -17,36 +17,6 @@ int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 }
 
 #ifdef WIN32
-DWORD WINAPI eid_wait_for_pkcs11event(void* val) {
-	int ret;
-	CK_FLAGS flags = 0;
-	CK_SLOT_ID slotID;
-
-	while (1)
-	{
-		ret = C_WaitForSlotEvent(flags,   /*nonblocking flag: CKF_DONT_BLOCK*/
-			&slotID,  /* location that receives the slot ID */
-			NULL_PTR); /* reserved.  Should be NULL_PTR */
-
-		if (ret != CKR_OK)
-		{
-			be_log(EID_VWR_LOG_ERROR, TEXT("C_WaitForSlotEvent with retVal: %.8x"), ret);
-			if (ret == CKR_CRYPTOKI_NOT_INITIALIZED)
-			{
-				return;
-			}
-			SLEEP(1);
-		}
-
-		if (!SetEvent(readerCheckEvent))
-		{
-			be_log(EID_VWR_LOG_ERROR, TEXT("eid_wait_for_pkcs11event with error: %.8x"), GetLastError());
-			return;
-		}
-	}
-	return ret;		
-}
-
 
 int eid_vwr_init()
 {
@@ -74,6 +44,16 @@ int eid_vwr_init()
 	}
 	return result;
 }
+
+/* Called by eid_vwr_wait_event(). */
+int eid_vwr_p11_wait_event() {
+	CK_RV ret = CKR_OK;
+
+	WaitForSingleObject(readerCheckEvent, INFINITE);
+
+	return ret;
+}
+
 #endif
 
 void eid_vwr_be_mainloop() {

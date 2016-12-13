@@ -14,12 +14,12 @@
 
 #ifdef WIN32
 HANDLE readerCheckEvent;
+DWORD WINAPI eid_wait_for_pkcs11event(void* val);
 #endif
 
 struct _slotdesc;
 
 int eid_vwr_p11_init();
-int eid_vwr_p11_wait_event(void);
 int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc,
 				CK_ULONG_PTR slots_found);
 int eid_vwr_p11_read_id(void *);
