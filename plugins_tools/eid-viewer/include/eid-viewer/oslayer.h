@@ -310,7 +310,7 @@ DllExport int eid_vwr_poll();
 #ifdef WIN32
 DWORD WINAPI eid_vwr_be_mainloop(void* val);
 #else
-void eid_vwr_be_mainloop(void* val);
+void* eid_vwr_be_mainloop(void* val);
 #endif
 
 /**
