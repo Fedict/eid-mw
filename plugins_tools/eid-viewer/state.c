@@ -86,6 +86,14 @@ static int do_initialize(void*data) {
 	eid_vwr_p11_init();
 	be_setcallbacks((struct eid_vwr_ui_callbacks*)data);
 
+#ifdef WIN32
+	HANDLE thread = NULL;
+	thread = CreateThread(NULL, 0, eid_vwr_be_mainloop, NULL, 0, NULL);
+#else
+	pthread_t thread;
+	pthread_create(&thread, NULL, eid_vwr_be_mainloop, NULL);
+#endif
+
 	return 0;
 }
 

@@ -56,21 +56,15 @@ int eid_vwr_p11_wait_event() {
 
 #endif
 
-void eid_vwr_be_mainloop() {
-#ifdef WIN32
-	int result;
-	int eventSetup = eid_vwr_init();
-#endif
-	for(;;) {
-#ifdef WIN32
-		result = eid_vwr_poll();
-#else
-		eid_vwr_poll();
-#endif
 
 #ifdef WIN32
+DWORD WINAPI eid_vwr_be_mainloop(void* val) {
+	int result;
+	int eventSetup = eid_vwr_init();
+	for (;;) {
+		result = eid_vwr_poll();
 		//use polling if eid_vwr_init failed
-		if ( (result == 0) && (eventSetup == CKR_OK) )
+		if ((result == 0) && (eventSetup == CKR_OK))
 		{
 			eid_vwr_p11_wait_event();
 		}
@@ -78,11 +72,17 @@ void eid_vwr_be_mainloop() {
 		{
 			SLEEP(1);
 		}
-#else
-		SLEEP(1);
-#endif
 	}
 }
+#else
+	void eid_vwr_be_mainloop(void* val) {
+	for (;;) {
+		eid_vwr_poll();
+		SLEEP(1);
+		}
+	}
+#endif
+
 
 int eid_vwr_poll() {
 	CK_SLOT_ID_PTR no_token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));

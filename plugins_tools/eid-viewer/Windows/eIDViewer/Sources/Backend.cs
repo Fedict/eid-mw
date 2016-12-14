@@ -72,9 +72,6 @@ namespace eIDViewer
             Cbnewbindata theCbnewbindata, Cblog theCbLog, Cbnewstate theCbnewstate, Cbpinop_result theCbpinopResult, CbReaders_changed theCbReadersChanged);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        private static extern void eid_vwr_be_mainloop();
-
-        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_pinop(eid_vwr_pinops pinop);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -315,11 +312,6 @@ namespace eIDViewer
         public static void DoPinop(eid_vwr_pinops pinop)
         {
             eid_vwr_pinop(pinop);
-        }
-
-        public static void backendMainloop()
-        {
-            eid_vwr_be_mainloop();
         }
 
         public static void OpenXML(string sourceFile)
