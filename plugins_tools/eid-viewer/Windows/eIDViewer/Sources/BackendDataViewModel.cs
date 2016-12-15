@@ -750,6 +750,14 @@ namespace eIDViewer
             { validity_end_date = data; }
             else if (String.Equals(label, "document_type", StringComparison.Ordinal))
             { document_type = data; }
+            else if (String.Equals(label, "date_and_country_of_protection", StringComparison.Ordinal))
+            { date_and_country_of_protection = data;
+              foreigner_fields_height = 26;
+            }
+            else if (String.Equals(label, "member_of_family", StringComparison.Ordinal))
+            { member_of_family = true;
+              foreigner_fields_height = 26;
+            }
         }
 
         private byte[] dataFile;
@@ -918,9 +926,12 @@ namespace eIDViewer
             chip_number = "-";
             validity_begin_date = "-";
             validity_end_date = "-";
+            date_and_country_of_protection = "-";
+            member_of_family = false;
             eid_card_present = false;
             progress = 0;
             HideProgressBar();
+            foreigner_fields_height = 0;
             pinop_ready = false;
             print_enabled = false;
 
@@ -1275,6 +1286,39 @@ namespace eIDViewer
             {
                 _document_type = value;
                 this.NotifyPropertyChanged("document_type");
+            }
+        }
+
+        private string _date_and_country_of_protection;
+        public string date_and_country_of_protection
+        {
+            get { return _date_and_country_of_protection; }
+            set
+            {
+                _date_and_country_of_protection = value;
+                this.NotifyPropertyChanged("date_and_country_of_protection");
+            }
+        }
+
+        private bool _member_of_family;
+        public bool member_of_family
+        {
+            get { return _member_of_family; }
+            set
+            {
+                _member_of_family = value;
+                this.NotifyPropertyChanged("member_of_family");
+            }
+        }
+
+        private int _foreigner_fields_height;
+        public int foreigner_fields_height
+        {
+            get { return _foreigner_fields_height; }
+            set
+            {
+                _foreigner_fields_height = value;
+                this.NotifyPropertyChanged("foreigner_fields_height");
             }
         }
 

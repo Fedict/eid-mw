@@ -219,4 +219,10 @@
   <data name="type_KIDS_CARD" xml:space="preserve">
     <value>KIDS CARD</value>
   </data>
+  <data name="MemberLabel" xml:space="preserve">
+    <value>Member of Family</value>
+  </data>
+  <data name="ProtectionLabel" xml:space="preserve">
+    <value>Date and country of protection</value>
+  </data>
 </root>
