@@ -6,6 +6,9 @@
 #include "cache.h"
 #include <stdlib.h>
 #include <eid-util/utftranslate.h>
+#ifndef _WIN32
+#include <pthread.h>
+#endif
 
 /* Returns a string representation of the state name */
 static const EID_CHAR* state_to_name(enum eid_vwr_states state) {
