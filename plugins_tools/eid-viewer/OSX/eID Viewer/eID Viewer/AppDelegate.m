@@ -315,7 +315,6 @@
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
 	[_CertificatesView setDelegate:_certstore];
-	[eIDOSLayerBackend setUi:self];
 
 	// Load preferences (language, log level)
 	NSUserDefaults* prefs = [NSUserDefaults standardUserDefaults];
@@ -345,7 +344,7 @@
 	[self setIsForeignerCard:NO];
 	[_logLevel selectItemAtIndex:level];
 	[eIDOSLayerBackend setLang:langcode];
-	[eIDOSLayerBackend mainloopThread];
+	[eIDOSLayerBackend setUi:self];
 }
 - (void)setLanguage:(NSMenuItem *)sender {
 	NSString* keyeq = sender.keyEquivalent;
