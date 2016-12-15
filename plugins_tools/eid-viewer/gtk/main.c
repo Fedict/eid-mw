@@ -220,14 +220,6 @@ static void newsrc(enum eid_vwr_source src) {
 	// TODO: update display so we see which source we're using
 }
 
-/* Main function for the p11 thread */
-static void* threadmain(void* data G_GNUC_UNUSED) G_GNUC_NORETURN;
-static void* threadmain(void* data) {
-	eid_vwr_be_mainloop();
-
-	assert(1 == 0); // let the compiler know that we shouldn't get here
-}
-
 /* Figure out what language we should use from environment variables */
 enum eid_vwr_langs langfromenv() {
 	char* p;
@@ -454,7 +446,6 @@ int main(int argc, char** argv) {
 	GtkWidget *window;
 	GtkAccelGroup *group;
 	struct eid_vwr_ui_callbacks* cb;
-	pthread_t thread;
 	GdkPixbuf *logo;
 	GError* err = NULL;
 
@@ -498,8 +489,6 @@ int main(int argc, char** argv) {
 	eid_vwr_createcallbacks(cb);
 
 	eid_vwr_init_crypto();
-
-	pthread_create(&thread, NULL, threadmain, NULL);
 
 	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 	logo = gdk_pixbuf_from_pixdata(&logo_128, FALSE, NULL);

@@ -75,7 +75,7 @@ DWORD WINAPI eid_vwr_be_mainloop(void* val) {
 	}
 }
 #else
-	void eid_vwr_be_mainloop(void* val) {
+	void* eid_vwr_be_mainloop(void* val) {
 	for (;;) {
 		eid_vwr_poll();
 		SLEEP(1);
