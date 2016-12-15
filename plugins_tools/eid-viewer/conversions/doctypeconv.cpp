@@ -28,15 +28,15 @@ DocTypeConvertor::DocTypeConvertor()
 			TEXT("Personalausweis f\u00fcr Ausl\u00e4nder");
 		// Foreigner D
 		conversions[EID_VWR_LANG_DE][14] =
-			TEXT("Daueraufenthalt \u2013 EG");
+			TEXT("Daueraufenthalt \u2013 EU");
 		// Foreigner E
 		conversions[EID_VWR_LANG_DE][15] =
 			TEXT
-			("Aufenthaltserlaubnis f\u00fcr Staatsangeh\u00f6rige;eines EWG-Mitgliedstaates;Anmeldebescheinigung");
+			("Anmeldebescheinigung");
 		// Foreigner E+
 		conversions[EID_VWR_LANG_DE][16] =
 			TEXT
-			("Dokument zur Bescheinigung des Daueraufenthalts;eines EU-Ausl\u00e4nders");
+			("Dokument zur Bescheinigung des Daueraufenthalts");
 		// Foreigner F
 		conversions[EID_VWR_LANG_DE][17] =
 			TEXT
@@ -46,7 +46,7 @@ DocTypeConvertor::DocTypeConvertor()
 			TEXT
 			("Daueraufenthaltskarte f\u00fcr Familienangeh\u00f6rige eines Unionsb\u00fcrgers");
 		// European blue card H
-		conversions[EID_VWR_LANG_DE][19] = TEXT("H. Blaue Karte EU");
+		conversions[EID_VWR_LANG_DE][19] = TEXT("Blaue Karte EU");
 
 		conversions[EID_VWR_LANG_EN][1] = TEXT("IDENTITY CARD");
 		conversions[EID_VWR_LANG_EN][6] = TEXT("KIDS CARD");
@@ -69,22 +69,22 @@ DocTypeConvertor::DocTypeConvertor()
 		// Foreigner E
 		conversions[EID_VWR_LANG_EN][15] =
 			TEXT
-			("(Residence) permit of EU Citizen \u2013 Certificate of Registration");
+			("Registration certificate");
 		// Foreigner E+
 		conversions[EID_VWR_LANG_EN][16] =
 			TEXT
-			("Document in evidence of durable residence of an EU Citizen");
+			("Document certifying permanent residence");
 		// Foreigner F
 		conversions[EID_VWR_LANG_EN][17] =
 			TEXT
-			("Permit for non-EU family members of an EU Citizen or Belgian national");
+			("Residence card of a family member of a Union citizen");
 		// Foreigner F+
 		conversions[EID_VWR_LANG_EN][18] =
 			TEXT
-			("Durable residence permit of a family member of an EU Citizen");
+			("Permanent residence card of a family member of a Union citizen");
 		// European blue card H
 		conversions[EID_VWR_LANG_EN][19] =
-			TEXT("H. European Blue Card");
+			TEXT("EU Blue Card");
 
 		conversions[EID_VWR_LANG_FR][1] = TEXT("CARTE D'IDENTITE");
 		conversions[EID_VWR_LANG_FR][6] = TEXT("CARTE POUR ENFANTS");
@@ -104,26 +104,26 @@ DocTypeConvertor::DocTypeConvertor()
 			TEXT("Carte d'identit\u00e9 d'\u00e9tranger");
 		// Foreigner D
 		conversions[EID_VWR_LANG_FR][14] =
-			TEXT("R\u00e9sident de longue dur\u00e9e \u2013 CE");
+			TEXT("R\u00e9sident de longue dur\u00e9e \u2013 UE");
 		// Foreigner E
 		conversions[EID_VWR_LANG_FR][15] =
 			TEXT
-			("Carte (de s\u00e9jour) de ressortissant;d\u2019un Etat membre de la CEE;Attestation d\u2019enregistrement");
+			("Attestation d'enregistrement");
 		// Foreigner E+
 		conversions[EID_VWR_LANG_FR][16] =
 			TEXT
-			("Document attestant de la permanence du s\u00e9jour;d\u2019un ressortissant de l'UE");
+			("Document attestant de la permanence du s\u00e9jour");
 		// Foreigner F
 		conversions[EID_VWR_LANG_FR][17] =
 			TEXT
-			("Carte pour les \u00e9trangers non UE qui sont membres de famille;d\u2019un ressortissant UE ou d\u2019un Belge; Carte de s\u00e9jour de membre de la famille d\u2019un citoyen de l\u2019Union");
+			("Carte de s\u00e9jour de membre de la famille d'un citoyen de l'Union");
 		// Foreigner F+
 		conversions[EID_VWR_LANG_FR][18] =
 			TEXT
-			("Carte de s\u00e9jour permanent de membre de la famille;d\u2019un citoyen de l\u2019Union");
+			("Carte de s\u00e9jour permanent de membre de la famille d\u2019un citoyen de l\u2019Union");
 		// European blue card H
 		conversions[EID_VWR_LANG_FR][19] =
-			TEXT("H. Carte bleue europ\u00e9enne");
+			TEXT("Carte bleue europ\u00e9enne");
 
 		conversions[EID_VWR_LANG_NL][1] = TEXT("IDENTITEITSKAART");
 		conversions[EID_VWR_LANG_NL][6] = TEXT("KIDS KAART");
@@ -132,7 +132,7 @@ DocTypeConvertor::DocTypeConvertor()
 		// Foreigner A");
 		conversions[EID_VWR_LANG_NL][11] =
 			TEXT
-			("Bewijs van inschrijving in het vreemdelingenregister;Tijdelijk verblijf");
+			("Bewijs van inschrijving in het vreemdelingenregister - Tijdelijk verblijf");
 		// Foreigner B");
 		conversions[EID_VWR_LANG_NL][12] =
 			TEXT
@@ -142,11 +142,11 @@ DocTypeConvertor::DocTypeConvertor()
 			TEXT("Identiteitskaart voor vreemdeling");
 		// Foreigner D");
 		conversions[EID_VWR_LANG_NL][14] =
-			TEXT("EG-Langdurig ingezetene");
+			TEXT("EU-Langdurig ingezetene");
 		// Foreigner E");
 		conversions[EID_VWR_LANG_NL][15] =
 			TEXT
-			("(Verblijfs)kaart van een onderdaan van een lidstaat der EEG;Verklaring van inschrijving");
+			("Verklaring van inschrijving");
 		// Foreigner E+");
 		conversions[EID_VWR_LANG_NL][16] =
 			TEXT
@@ -154,14 +154,14 @@ DocTypeConvertor::DocTypeConvertor()
 		// Foreigner F");
 		conversions[EID_VWR_LANG_NL][17] =
 			TEXT
-			("Kaart voor niet-EU familieleden van een EU-onderdaan;of van een Belg;Verblijfskaart van een familielid van een burger van de Unie");
+			("Verblijfskaart van een familielid van een burger van de Unie");
 		// Foreigner F+");
 		conversions[EID_VWR_LANG_NL][18] =
 			TEXT
 			("Duurzame verblijfskaart van een familielid van een burger van de Unie");
 		// European blue card H");
 		conversions[EID_VWR_LANG_NL][19] =
-			TEXT("H. Europese blauwe kaart");
+			TEXT("Europese blauwe kaart");
 	}
 }
 
