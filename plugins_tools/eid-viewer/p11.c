@@ -237,8 +237,8 @@ void eid_vwr_p11_to_ui(const EID_CHAR* label, const void* value, int len) {
 
 /* Performs a previously-initialized find operation. */
 static int perform_find(CK_BBOOL do_objid) {
-	CK_OBJECT_HANDLE object;
-	CK_ULONG count;
+	CK_OBJECT_HANDLE object = 0;
+	CK_ULONG count = 0;
 	do {
 		unsigned char* label_str;
 		unsigned char* value_str;
