@@ -102,7 +102,6 @@ eIDResultFailed = EID_VWR_RES_FAILED,
 +(eIDLanguage) lang;		///< calls eid_vwr_convert_get_lang()
 +(void) poll;			///< calls eid_vwr_poll()
 +(void) mainloop;		///< calls eid_vwr_be_mainloop(), which does not return
-+(void) mainloopThread;		///< calls mainloop in a background thread.
 +(void) deserialize:(NSURL *) from;
 				///< calls eid_vwr_be_deserialize()
 +(void) serialize:(NSURL *) to;
