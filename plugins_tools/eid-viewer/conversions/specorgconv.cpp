@@ -16,7 +16,7 @@ SpecOrgConvertor::SpecOrgConvertor()
 
 		conversions[EID_VWR_LANG_EN][TEXT("1")] = TEXT("SHAPE");
 		conversions[EID_VWR_LANG_EN][TEXT("2")] = TEXT("NATO");
-		conversions[EID_VWR_LANG_EN][TEXT("4")] = TEXT("Previously holder of European Blue Card");
+		conversions[EID_VWR_LANG_EN][TEXT("4")] = TEXT("Former EU Blue Card holder");
 		conversions[EID_VWR_LANG_EN][TEXT("5")] = TEXT("Researcher");
 
 		conversions[EID_VWR_LANG_FR][TEXT("1")] = TEXT("SHAPE");
