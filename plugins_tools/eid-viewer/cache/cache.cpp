@@ -120,8 +120,8 @@ EID_CHAR *cache_get_xmlform(const EID_CHAR * label)
 void cache_add_xmlform(const EID_CHAR * label, const EID_CHAR * value)
 {
 	int len = 0;
-	EID_CHAR* val = convert_from_xml(label, value, &len);
+	EID_CHAR* val = (EID_CHAR*)convert_from_xml(label, value, &len);
 
 	cache_add(label, val, len);
-	EID_FREE(val);
+	free(val);
 }
