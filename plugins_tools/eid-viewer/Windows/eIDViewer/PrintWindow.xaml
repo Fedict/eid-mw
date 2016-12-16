@@ -48,9 +48,9 @@
                 <RowDefinition Height="Auto"/>
 
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="Auto"/>
                 
                 <RowDefinition Height="Auto"/>
