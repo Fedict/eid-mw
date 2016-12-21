@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.4.gc149158.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
 "POT-Creation-Date: 2016-11-22 10:55+0100\n"
-"PO-Revision-Date: 2016-11-22 11:09+0100\n"
+"PO-Revision-Date: 2016-12-21 15:37+0100\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/main.c:106
 msgid "Initialising"
-msgstr ""
+msgstr "Initialiser"
 
 #: plugins_tools/eid-viewer/gtk/main.c:109
 msgid "Ready to read identity card"
@@ -27,11 +27,11 @@ msgstr "Prêt à lire la carte d’identité"
 
 #: plugins_tools/eid-viewer/gtk/main.c:114
 msgid "No cardreader found"
-msgstr ""
+msgstr "Aucun lecteur de cartes trouvé"
 
 #: plugins_tools/eid-viewer/gtk/main.c:119
 msgid "Card available"
-msgstr ""
+msgstr "Carte disponible"
 
 #: plugins_tools/eid-viewer/gtk/main.c:136
 msgid "Reading identity"
@@ -39,15 +39,15 @@ msgstr "Lecture des données d’identité"
 
 #: plugins_tools/eid-viewer/gtk/main.c:139
 msgid "Reading certificates"
-msgstr ""
+msgstr "Lecture de certificats en cours"
 
 #: plugins_tools/eid-viewer/gtk/main.c:142
 msgid "Failed to read identity data"
-msgstr ""
+msgstr "Impossible de lire les données d’identité"
 
 #: plugins_tools/eid-viewer/gtk/main.c:145
 msgid "Performing a PIN operation"
-msgstr ""
+msgstr "Exécution d'une opération PIN en cours"
 
 #: plugins_tools/eid-viewer/gtk/main.c:177
 #, c-format
@@ -69,7 +69,7 @@ msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:67
 msgid "View data on the Belgian eID card"
-msgstr ""
+msgstr "Consultez les données de la carte eID belge"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:71
 msgid ""
@@ -89,21 +89,21 @@ msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:112
 msgid "Open eID file"
-msgstr ""
+msgstr "Ouvrir un fichier eID"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:113
 #: plugins_tools/eid-viewer/gtk/gtkui.c:156
 msgid "_Cancel"
-msgstr ""
+msgstr "_Annuler"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:114
 msgid "_Open"
-msgstr ""
+msgstr "_Ouvrir"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:123
 #: plugins_tools/eid-viewer/gtk/gtkui.c:166
 msgid "All files"
-msgstr ""
+msgstr "Tous les fichiers eID"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:129
 msgid "All eID files"
@@ -112,39 +112,39 @@ msgstr "Tout fichier eID"
 #: plugins_tools/eid-viewer/gtk/gtkui.c:135
 #: plugins_tools/eid-viewer/gtk/gtkui.c:171
 msgid "eID files"
-msgstr ""
+msgstr "Fichiers eID"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:155
 msgid "Save eID file"
-msgstr ""
+msgstr "Enregistrer un fichier eID"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:157
 msgid "_Save"
-msgstr ""
+msgstr "_Enregistrer"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:210
 msgid "PIN incorrect"
-msgstr ""
+msgstr "Code PIN erroné"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:210
 msgid "PIN OK"
-msgstr ""
+msgstr "Code PIN OK"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:210
 msgid "Error occurred while trying to test PIN code"
-msgstr ""
+msgstr "Une erreur s'est produite pendant la vérification du code PIN"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:211
 msgid "PIN change failed"
-msgstr ""
+msgstr "La modification du code PIN a échoué"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:211
 msgid "PIN changed"
-msgstr ""
+msgstr "Code PIN modifié"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:211
 msgid "Error occurred while trying to change PIN code"
-msgstr ""
+msgstr "Une erreur s'est produite pendant la modification du code PIN"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:12
 msgid "Detailed information..."
@@ -168,11 +168,11 @@ msgstr "Dossier"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:112
 msgid "Reader selection"
-msgstr ""
+msgstr "Sélection d'un lecteur de carte"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:123
 msgid "Automatic"
-msgstr ""
+msgstr "Automatique"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:179
 msgid "Language"
@@ -262,12 +262,12 @@ msgstr ""
 #: plugins_tools/eid-viewer/gtk/viewer.glade:861
 #: plugins_tools/eid-viewer/gtk/print.c:59
 msgid "Employer's VAT number (1):"
-msgstr ""
+msgstr "Numéro TVA de l'employeur (1)"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:892
 #: plugins_tools/eid-viewer/gtk/print.c:60
 msgid "Employer's VAT number (2):"
-msgstr ""
+msgstr "Numéro TVA de l'employeur (2)"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:939
 #: plugins_tools/eid-viewer/gtk/print.c:58
@@ -277,12 +277,12 @@ msgstr ""
 #: plugins_tools/eid-viewer/gtk/viewer.glade:970
 #: plugins_tools/eid-viewer/gtk/print.c:61
 msgid "Regional file number:"
-msgstr ""
+msgstr "Numéro de dossier régional"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:985
 #: plugins_tools/eid-viewer/gtk/print.c:54
 msgid "Member of family:"
-msgstr ""
+msgstr "Membre de la famille"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:998
 msgid " "
@@ -296,7 +296,7 @@ msgstr "Organisation:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1031
 #: plugins_tools/eid-viewer/gtk/print.c:56
 msgid "Duplicata:"
-msgstr ""
+msgstr "Duplicata:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1116
 msgid "Identity"
@@ -351,7 +351,7 @@ msgstr "Confiance:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1724
 msgid "Always validate Certificate Trust"
-msgstr ""
+msgstr "Toujours valider la fiabilité des certificats"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1741
 msgid "Validate Now"
@@ -363,11 +363,11 @@ msgstr "Certificats"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1850
 msgid "Clear Log"
-msgstr ""
+msgstr "Effacer le journal"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1864
 msgid "Copy Log To Clipboard"
-msgstr ""
+msgstr "Copier le journal dans le presse-papiers "
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1903
 msgid "Log"
@@ -395,6 +395,8 @@ msgid ""
 "BELGIUM\n"
 "%s"
 msgstr ""
+"BELGIQUE\n"
+"%s"
 
 #~ msgid "PCSC daemon status"
 #~ msgstr "Statut service de système PCSC"

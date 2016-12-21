@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
 "POT-Creation-Date: 2016-11-22 10:55+0100\n"
-"PO-Revision-Date: 2016-11-22 11:01+0100\n"
+"PO-Revision-Date: 2016-12-21 15:44+0100\n"
 "Last-Translator: Wouter Verhelst <wouter.verhelst@fedict.be>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -122,31 +122,31 @@ msgstr "eID bestand opslaan"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:157
 msgid "_Save"
-msgstr "_Opslaan"
+msgstr "Op_slaan"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:210
 msgid "PIN incorrect"
-msgstr "PIN-code fout"
+msgstr "Pincode fout"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:210
 msgid "PIN OK"
-msgstr "PIN-code OK"
+msgstr "Pincode OK"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:210
 msgid "Error occurred while trying to test PIN code"
-msgstr "Een fout deed zich voor tijdens het testen van de PIN-code"
+msgstr "Een fout deed zich voor tijdens het verifiëren van de Pincode"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:211
 msgid "PIN change failed"
-msgstr "Wijzigen van de PIN-code is gefaald"
+msgstr "Wijzigen van de Pincode is gefaald"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:211
 msgid "PIN changed"
-msgstr "PIN-code gewijzigd"
+msgstr "Pincode gewijzigd"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:211
 msgid "Error occurred while trying to change PIN code"
-msgstr "Een foud deed zich voor tijdens het wijzigen van de PIN-code"
+msgstr "Een fout deed zich voor tijdens het wijzigen van de Pincode"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:12
 msgid "Detailed information..."
@@ -264,12 +264,12 @@ msgstr ""
 #: plugins_tools/eid-viewer/gtk/viewer.glade:861
 #: plugins_tools/eid-viewer/gtk/print.c:59
 msgid "Employer's VAT number (1):"
-msgstr ""
+msgstr "BTW nummers van de werkgever (1):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:892
 #: plugins_tools/eid-viewer/gtk/print.c:60
 msgid "Employer's VAT number (2):"
-msgstr ""
+msgstr "BTW nummers van de werkgever (2):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:939
 #: plugins_tools/eid-viewer/gtk/print.c:58
@@ -279,12 +279,12 @@ msgstr ""
 #: plugins_tools/eid-viewer/gtk/viewer.glade:970
 #: plugins_tools/eid-viewer/gtk/print.c:61
 msgid "Regional file number:"
-msgstr ""
+msgstr "Regionaal dossiernummer:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:985
 #: plugins_tools/eid-viewer/gtk/print.c:54
 msgid "Member of family:"
-msgstr ""
+msgstr "Gezinslid:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:998
 msgid " "
@@ -298,7 +298,7 @@ msgstr "Organisatie:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1031
 #: plugins_tools/eid-viewer/gtk/print.c:56
 msgid "Duplicata:"
-msgstr ""
+msgstr "Duplicaat:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1116
 msgid "Identity"
@@ -333,11 +333,11 @@ msgstr "Geldig tot:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1230
 msgid "Verify PIN"
-msgstr "PIN-code testen"
+msgstr "Pincode verifiëren"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1246
 msgid "Change PIN"
-msgstr "PIN-code wijzigen"
+msgstr "Pincode wijzigen"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1405
 msgid "Card/PIN"
@@ -397,6 +397,8 @@ msgid ""
 "BELGIUM\n"
 "%s"
 msgstr ""
+"BELGIE\n"
+"%s"
 
 #~ msgid "Special organization:"
 #~ msgstr "Speciale organisatie:"
