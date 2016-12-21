@@ -1,7 +1,7 @@
 #!/bin/sh
 
 GITDESC=$(git describe --dirty|sed -e 's/-/./g' 2>/dev/null)
-VERCLEAN=$(echo $GITDESC|sed -Ee 's/^.*v([0-9]+\.[0-9]+\.[0-9]+).*$/\1/')
+VERCLEAN=$(echo $GITDESC|sed -Ee 's/^.*v([0-9]+\.[0-9]+(\.[0-9]+|bp)).*$/\1/')
 
 GITDESC="$VERCLEAN-$GITDESC"
 

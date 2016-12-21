@@ -97,6 +97,15 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Member of Family.
+        /// </summary>
+        public static string MemberLabel {
+            get {
+                return ResourceManager.GetString("MemberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Municipality:.
         /// </summary>
         public static string MunicipalityLabel {
@@ -147,6 +156,15 @@ namespace eIDViewer.Resources {
         public static string PostalCodeLabel {
             get {
                 return ResourceManager.GetString("PostalCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date and country of protection.
+        /// </summary>
+        public static string ProtectionLabel {
+            get {
+                return ResourceManager.GetString("ProtectionLabel", resourceCulture);
             }
         }
         

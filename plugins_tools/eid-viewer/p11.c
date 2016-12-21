@@ -66,7 +66,13 @@ int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot) {
 	if(!is_auto) {
 		slot_manual = manualslot;
 	}
-
+#ifdef WIN32
+	if (!SetEvent(readerCheckEvent))
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("eid_wait_for_pkcs11event with error: %.8x"), GetLastError());
+		return CKR_FUNCTION_FAILED;
+	}
+#endif
 	return 0;
 }
 
@@ -88,19 +94,38 @@ int eid_vwr_p11_close_session() {
 
 	return 0;
 }
+#ifdef WIN32
+DWORD WINAPI eid_wait_for_pkcs11event(void* val) {
+	int ret;
+	CK_FLAGS flags = 0;
+	CK_SLOT_ID slotID;
 
-/* Called by eid_vwr_wait_event(). */
-int eid_vwr_p11_wait_event(CK_FLAGS flags, CK_SLOT_ID_PTR pSlot) {
-	CK_RV ret;
+	while (1)
+	{
+		ret = C_WaitForSlotEvent(flags,   /*nonblocking flag: CKF_DONT_BLOCK*/
+			&slotID,  /* location that receives the slot ID */
+			NULL_PTR); /* reserved.  Should be NULL_PTR */
 
-	ret = C_WaitForSlotEvent(flags,   /*nonblocking flag: CKF_DONT_BLOCK*/
-		pSlot,  /* location that receives the slot ID */
-		NULL_PTR); /* reserved.  Should be NULL_PTR */
-	check_rv_late("C_WaitForSlotEvent", ret);
+		if (ret != CKR_OK)
+		{
+			be_log(EID_VWR_LOG_ERROR, TEXT("C_WaitForSlotEvent with retVal: %.8x"), ret);
+			if (ret == CKR_CRYPTOKI_NOT_INITIALIZED)
+			{
+				return CKR_CRYPTOKI_NOT_INITIALIZED;
+			}
+			SLEEP(1);
+		}
 
+		if (!SetEvent(readerCheckEvent))
+		{
+			be_log(EID_VWR_LOG_ERROR, TEXT("eid_wait_for_pkcs11event with error: %.8x"), GetLastError());
+			return CKR_FUNCTION_FAILED;
+		}
+	}
 	return ret;
 }
 
+#endif
 /* Called by eid_vwr_poll(). */
 int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULONG_PTR count) {
 	CK_RV ret;
@@ -212,8 +237,8 @@ void eid_vwr_p11_to_ui(const EID_CHAR* label, const void* value, int len) {
 
 /* Performs a previously-initialized find operation. */
 static int perform_find(CK_BBOOL do_objid) {
-	CK_OBJECT_HANDLE object;
-	CK_ULONG count;
+	CK_OBJECT_HANDLE object = 0;
+	CK_ULONG count = 0;
 	do {
 		unsigned char* label_str;
 		unsigned char* value_str;

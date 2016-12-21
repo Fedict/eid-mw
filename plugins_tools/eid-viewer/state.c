@@ -6,6 +6,9 @@
 #include "cache.h"
 #include <stdlib.h>
 #include <eid-util/utftranslate.h>
+#ifndef _WIN32
+#include <pthread.h>
+#endif
 
 /* Returns a string representation of the state name */
 static const EID_CHAR* state_to_name(enum eid_vwr_states state) {
@@ -85,6 +88,14 @@ static struct state* curstate; /* Current state. Defaults to 0=LIBOPEN */
 static int do_initialize(void*data) {
 	eid_vwr_p11_init();
 	be_setcallbacks((struct eid_vwr_ui_callbacks*)data);
+
+#ifdef WIN32
+	HANDLE thread = NULL;
+	thread = CreateThread(NULL, 0, eid_vwr_be_mainloop, NULL, 0, NULL);
+#else
+	pthread_t thread;
+	pthread_create(&thread, NULL, eid_vwr_be_mainloop, NULL);
+#endif
 
 	return 0;
 }

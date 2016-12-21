@@ -72,9 +72,6 @@ namespace eIDViewer
             Cbnewbindata theCbnewbindata, Cblog theCbLog, Cbnewstate theCbnewstate, Cbpinop_result theCbpinopResult, CbReaders_changed theCbReadersChanged);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        private static extern void eid_vwr_be_mainloop();
-
-        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_pinop(eid_vwr_pinops pinop);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -175,11 +172,12 @@ namespace eIDViewer
         }
         private static void CSCbNewStringData([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPWStr)]string data)
         {
-            theData.StoreStringData(label, data);
             if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
             {
+                theData.logText += "CSCbNewStringData called, label = " + label + "\n";
                 theData.logText += "CSCbNewStringData called, data =  " + data + "\n";
             }
+            theData.StoreStringData(label, data);
         }
 
         private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data, int datalen)
@@ -283,7 +281,9 @@ namespace eIDViewer
         {
             int structSize = Marshal.SizeOf(typeof(eid_slotdesc));
             Console.WriteLine(structSize);
-            theData.readersList = new ConcurrentQueue<ReadersMenuViewModel>();
+
+            ConcurrentQueue<ReadersMenuViewModel> tempReadersList = new ConcurrentQueue<ReadersMenuViewModel>();
+            // theData.readersList = new ConcurrentQueue<ReadersMenuViewModel>();
 
             if(nreaders == 0)
             {
@@ -295,28 +295,30 @@ namespace eIDViewer
                 IntPtr data = new IntPtr(slotList.ToInt64() + structSize * i);
                 eid_slotdesc slotDesc = (eid_slotdesc)Marshal.PtrToStructure(data, typeof(eid_slotdesc));
 
+                if(slotDesc.description == null)
+                {
+                    theData.logText += "CbReadersChanged called without a reader description\n";
+                    break;
+                }
+
                 theData.logText += "Reader slotnr  " + slotDesc.slot.ToString() + "\n";
                 theData.logText += "Reader name  " + slotDesc.description.ToString() + "\n";
 
                 if (!slotDesc.description.Equals("\\\\?PnP?\\Notification"))
                 {
-                    theData.readersList.Enqueue(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
+                    tempReadersList.Enqueue(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
                 }
                 else if (nreaders == 1)
                 {
-                    theData.readersList.Enqueue(new ReadersMenuViewModel(" ", 0));
+                    tempReadersList.Enqueue(new ReadersMenuViewModel(" ", 0));
                 }
             }
+            theData.readersList = tempReadersList;
         }
 
         public static void DoPinop(eid_vwr_pinops pinop)
         {
             eid_vwr_pinop(pinop);
-        }
-
-        public static void backendMainloop()
-        {
-            eid_vwr_be_mainloop();
         }
 
         public static void OpenXML(string sourceFile)
