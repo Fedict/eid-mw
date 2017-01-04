@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -40,7 +41,7 @@ unsigned long CDynamicLib::Open(const std::string & csLibPath)
 	return PlatformOpen(csLibPath.c_str());
 }
 
-void * CDynamicLib::GetAddress(const std::string & csFunctionName)
+void *CDynamicLib::GetAddress(const std::string & csFunctionName)
 {
 	if (m_module == NULL)
 		return NULL;
@@ -62,16 +63,16 @@ void CDynamicLib::Close()
 
 #include <windows.h>
 
-unsigned long CDynamicLib::PlatformOpen(const char * csLibPath)
+unsigned long CDynamicLib::PlatformOpen(const char *csLibPath)
 {
 	m_module = (void *) LoadLibraryA(csLibPath);
 
 	return (m_module == NULL) ? EIDMW_CANT_LOAD_LIB : EIDMW_OK;
 }
 
-void * CDynamicLib::PlatformGetAddress(const char * csFunctionName)
+void *CDynamicLib::PlatformGetAddress(const char *csFunctionName)
 {
-	return (void*)GetProcAddress((HMODULE) m_module, csFunctionName);
+	return (void *) GetProcAddress((HMODULE) m_module, csFunctionName);
 }
 
 void CDynamicLib::PlatformClose()
@@ -88,14 +89,14 @@ void CDynamicLib::PlatformClose()
 
 #include <dlfcn.h>
 
-unsigned long CDynamicLib::PlatformOpen(const char * csLibPath)
+unsigned long CDynamicLib::PlatformOpen(const char *csLibPath)
 {
 	m_module = dlopen(csLibPath, RTLD_NOW);
 
 	return m_module == NULL ? EIDMW_CANT_LOAD_LIB : EIDMW_OK;
 }
 
-void * CDynamicLib::PlatformGetAddress(const char * csFunctionName)
+void *CDynamicLib::PlatformGetAddress(const char *csFunctionName)
 {
 	char csSymName[4096];
 
@@ -121,15 +122,15 @@ void CDynamicLib::PlatformClose()
 #include <Carbon/Carbon.h>
 #include <mach-o/dyld.h>
 
-unsigned long CDynamicLib::PlatformOpen(const char * csLibPath)
+unsigned long CDynamicLib::PlatformOpen(const char *csLibPath)
 {
 	m_module = (struct mach_header *) NSAddImage(csLibPath,
-		NSADDIMAGE_OPTION_WITH_SEARCHING);
+						     NSADDIMAGE_OPTION_WITH_SEARCHING);
 
 	return m_module == NULL ? EIDMW_CANT_LOAD_LIB : EIDMW_OK;
 }
 
-void * CDynamicLib::PlatformGetAddress(const char * csFunctionName)
+void *CDynamicLib::PlatformGetAddress(const char *csFunctionName)
 {
 	char csSymName[4096];
 
@@ -138,9 +139,9 @@ void * CDynamicLib::PlatformGetAddress(const char * csFunctionName)
 	strncat(csSymName, csFunctionName, sizeof(csSymName) - 2);
 	csSymName[sizeof(csSymName) - 1] = '\0';
 
-	NSSymbol nssym = NSLookupSymbolInImage(
-		(const struct mach_header *) m_module, csSymName,
-		NSLOOKUPSYMBOLINIMAGE_OPTION_BIND_NOW);
+	NSSymbol nssym = NSLookupSymbolInImage((const struct mach_header *)
+					       m_module, csSymName,
+					       NSLOOKUPSYMBOLINIMAGE_OPTION_BIND_NOW);
 
 	return nssym == NULL ? NULL : NSAddressOfSymbol(nssym);
 }
@@ -152,4 +153,3 @@ void CDynamicLib::PlatformClose()
 }
 
 #endif
-

@@ -1,0 +1,748 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR FedICT
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eid-mw 4.1.1-v4.1.1.4.gc149158.dirty\n"
+"Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
+"POT-Creation-Date: 2016-11-22 10:55+0100\n"
+"PO-Revision-Date: 2016-12-21 15:32+0100\n"
+"Last-Translator: Wouter Verhelst <wouter.verhelst@fedict.be>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+
+#: plugins_tools/eid-viewer/gtk/main.c:106
+msgid "Initialising"
+msgstr "Initialisieren"
+
+#: plugins_tools/eid-viewer/gtk/main.c:109
+msgid "Ready to read identity card"
+msgstr "Bereit, e-ID zu lesen"
+
+#: plugins_tools/eid-viewer/gtk/main.c:114
+msgid "No cardreader found"
+msgstr "Kein Kartenleser gefunden"
+
+#: plugins_tools/eid-viewer/gtk/main.c:119
+msgid "Card available"
+msgstr "Karte verfügbar"
+
+#: plugins_tools/eid-viewer/gtk/main.c:136
+msgid "Reading identity"
+msgstr "eID wird gelesen"
+
+#: plugins_tools/eid-viewer/gtk/main.c:139
+msgid "Reading certificates"
+msgstr "Zertifikate werden gelesen"
+
+#: plugins_tools/eid-viewer/gtk/main.c:142
+msgid "Failed to read identity data"
+msgstr "Konnte Identitätsangaben nicht lesen"
+
+#: plugins_tools/eid-viewer/gtk/main.c:145
+msgid "Performing a PIN operation"
+msgstr "PIN-Vorgang wird durchgeführt"
+
+#: plugins_tools/eid-viewer/gtk/main.c:177
+#, c-format
+msgid "Could not display label '%s', data '%s': no GtkLabel found for data"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/main.c:199
+#, c-format
+msgid "Could not display binary data with label '%s': not found in hashtable"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:62
+msgid "eID Viewer"
+msgstr "eID Viewer"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:66
+msgid "Copyright 2015-2016 Fedict"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:67
+msgid "View data on the Belgian eID card"
+msgstr "Daten auf der belgischen eID-Karte einsehen"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:71
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU Lesser General Public License as published by the "
+"Free Software Foundation, either version 3 of the License, or (at your "
+"option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License "
+"for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program.  If not, see http://www.gnu.org/licenses/."
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:112
+msgid "Open eID file"
+msgstr "eID-Datei öffnen"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:113
+#: plugins_tools/eid-viewer/gtk/gtkui.c:156
+msgid "_Cancel"
+msgstr "Ab_brechen"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:114
+msgid "_Open"
+msgstr "Ö_ffnen"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:123
+#: plugins_tools/eid-viewer/gtk/gtkui.c:166
+msgid "All files"
+msgstr "All files"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:129
+msgid "All eID files"
+msgstr "Alle eID Dateien"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:135
+#: plugins_tools/eid-viewer/gtk/gtkui.c:171
+msgid "eID files"
+msgstr "eID files"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:155
+msgid "Save eID file"
+msgstr "eID-Datei speichern"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:157
+msgid "_Save"
+msgstr "Speichern"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:210
+msgid "PIN incorrect"
+msgstr "PIN-Code falsch"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:210
+msgid "PIN OK"
+msgstr "PIN-Code OK"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:210
+msgid "Error occurred while trying to test PIN code"
+msgstr "Es ist ein Fehler beim Überprüfen des PIN-Codes aufgetreten"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:211
+msgid "PIN change failed"
+msgstr "Das Ändern des PIN-Codes ist fehlgeschlagen"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:211
+msgid "PIN changed"
+msgstr "PIN-Code geändert"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:211
+msgid "Error occurred while trying to change PIN code"
+msgstr "Es ist ein Fehler beim Ändern des PIN-Codes aufgetreten"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:12
+msgid "Detailed information..."
+msgstr "Detailinformation..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:26
+msgid "Export to PEM file..."
+msgstr "Exportieren zu PEM Datei..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:34
+msgid "Export to DER file..."
+msgstr "Exportieren zu DER Datei..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:48
+msgid "Export chain to PEM file..."
+msgstr "Kette exportieren zu PEM Datei..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:67
+msgid "_File"
+msgstr "_Datei"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:112
+msgid "Reader selection"
+msgstr "Kartenleserauswahl"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:123
+msgid "Automatic"
+msgstr "Automatisch"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:179
+msgid "Language"
+msgstr "Sprache"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:233
+msgid "_Help"
+msgstr "_Hilfe"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:261
+msgid "Frequently asked questions..."
+msgstr "Häufig gestellte Fragen..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:270
+msgid "eID Card Test Site..."
+msgstr "eID Test Site..."
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:286
+msgid "Show Log Tab"
+msgstr "Logbuch anzeigen"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:374
+#: plugins_tools/eid-viewer/gtk/print.c:34
+msgid "Name:"
+msgstr "Name:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:390
+#: plugins_tools/eid-viewer/gtk/print.c:35
+msgid "Given names:"
+msgstr "Vornamen:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:406
+#: plugins_tools/eid-viewer/gtk/print.c:36
+msgid "Place of birth:"
+msgstr "Geburtsort:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:422
+#: plugins_tools/eid-viewer/gtk/print.c:37
+msgid "Date of birth:"
+msgstr "Geburtsdatum:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:438
+#: plugins_tools/eid-viewer/gtk/print.c:38
+msgid "Sex:"
+msgstr "Geschlecht:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:454
+#: plugins_tools/eid-viewer/gtk/print.c:40
+msgid "National number:"
+msgstr "Staatsangehörigkeitsnummer:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:470
+#: plugins_tools/eid-viewer/gtk/print.c:45
+msgid "Municipality:"
+msgstr "Kommune:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:486
+#: plugins_tools/eid-viewer/gtk/print.c:44
+msgid "Postal code:"
+msgstr "Postleitzahl:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:502
+#: plugins_tools/eid-viewer/gtk/print.c:43
+msgid "Street:"
+msgstr "Straße:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:532
+#: plugins_tools/eid-viewer/gtk/print.c:42
+msgid "Special status:"
+msgstr "Besonderer Status:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:548
+#: plugins_tools/eid-viewer/gtk/print.c:41
+msgid "Title:"
+msgstr "Titel:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:564
+#: plugins_tools/eid-viewer/gtk/print.c:39
+msgid "Nationality:"
+msgstr "Staatsangehörigkeit:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:846
+#: plugins_tools/eid-viewer/gtk/print.c:57
+msgid "Date and country of protection:"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:861
+#: plugins_tools/eid-viewer/gtk/print.c:59
+msgid "Employer's VAT number (1):"
+msgstr "Mehrwertsteuernummer des Arbeitgebers (1):"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:892
+#: plugins_tools/eid-viewer/gtk/print.c:60
+msgid "Employer's VAT number (2):"
+msgstr "Mehrwertsteuernummer des Arbeitgebers (2):"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:939
+#: plugins_tools/eid-viewer/gtk/print.c:58
+msgid "Work permit mention:"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:970
+#: plugins_tools/eid-viewer/gtk/print.c:61
+msgid "Regional file number:"
+msgstr "Regionale Aktennummer:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:985
+#: plugins_tools/eid-viewer/gtk/print.c:54
+msgid "Member of family:"
+msgstr "Familienangehöriger"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:998
+msgid " "
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1016
+#: plugins_tools/eid-viewer/gtk/print.c:55
+msgid "Organization:"
+msgstr "Organisation:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1031
+#: plugins_tools/eid-viewer/gtk/print.c:56
+msgid "Duplicata:"
+msgstr "Duplikat:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1116
+msgid "Identity"
+msgstr "Identität"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1165
+#: plugins_tools/eid-viewer/gtk/print.c:46
+msgid "Card number:"
+msgstr "Kartennummer:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1177
+#: plugins_tools/eid-viewer/gtk/print.c:47
+msgid "Place of issue:"
+msgstr "Ausstellungsort:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1191
+#: plugins_tools/eid-viewer/gtk/print.c:48
+msgid "Chip number:"
+msgstr "Chip-Nummer:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1205
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1548
+#: plugins_tools/eid-viewer/gtk/print.c:49
+msgid "Valid from:"
+msgstr "Gültig von:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1219
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1564
+#: plugins_tools/eid-viewer/gtk/print.c:50
+msgid "Valid until:"
+msgstr "Gültig bis:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1230
+msgid "Verify PIN"
+msgstr "PIN uberprufen"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1246
+msgid "Change PIN"
+msgstr "PIN ändern"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1405
+msgid "Card/PIN"
+msgstr "Karte/PIN"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1580
+msgid "Usage:"
+msgstr "Verwendung:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1596
+msgid "Trust:"
+msgstr "Vertrauen:"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1724
+msgid "Always validate Certificate Trust"
+msgstr "Vertrauenszertifikate immer validieren"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1741
+msgid "Validate Now"
+msgstr "Jetzt validieren"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1787
+msgid "Certificates"
+msgstr "Zertifkate"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1850
+msgid "Clear Log"
+msgstr "Protokoll löschen"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1864
+msgid "Copy Log To Clipboard"
+msgstr "Protokoll in Zwischenablage kopieren"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1903
+msgid "Log"
+msgstr "Logbuch"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1988
+msgid "label"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/print.c:65
+msgid "Printed:"
+msgstr "Gedruckt:"
+
+#: plugins_tools/eid-viewer/gtk/print.c:66
+msgid "Printed by:"
+msgstr "Gedruckt von:"
+
+#: plugins_tools/eid-viewer/gtk/print.c:135
+msgid "%B %d, %Y"
+msgstr "%d %B %Y"
+
+#: plugins_tools/eid-viewer/gtk/print.c:196
+#, c-format
+msgid ""
+"BELGIUM\n"
+"%s"
+msgstr ""
+"BELGIEN\n"
+"%s"
+
+#, fuzzy
+#~ msgid "Special organization:"
+#~ msgstr "Organisation:"
+
+#, fuzzy
+#~ msgid "CSV eID files"
+#~ msgstr ".CSV eID Dateien"
+
+#, fuzzy
+#~ msgid "Save XML eID file"
+#~ msgstr ".XML eID Dateien"
+
+#, fuzzy
+#~ msgid "XML file..."
+#~ msgstr "XML-Datei"
+
+#, fuzzy
+#~ msgid "CSV file..."
+#~ msgstr "CSV-Datei"
+
+#, fuzzy
+#~ msgid "Reading data from file"
+#~ msgstr "eID der Datei wird geladen..."
+
+#~ msgid "Yellow Cane"
+#~ msgstr "Gelber Stock"
+
+#~ msgid "Key Agreement"
+#~ msgstr "Schlüsselvereinbarung"
+
+#~ msgid "Document in evidence of durable residence of an EU Citizen"
+#~ msgstr "Dokument zur Bescheinigung des Daueraufenthalts eines EU-Ausländers"
+
+#~ msgid "Unobtainable;(please check your proxy settings)."
+#~ msgstr "Nicht verfügbar;(Bitte überprüfen Sie;Ihre Proxy-Einstellungen)"
+
+#~ msgid "KIDS CARD"
+#~ msgstr "KIDS-KARTE"
+
+#~ msgid "Identity loaded from file"
+#~ msgstr "eID der Datei geladen"
+
+#~ msgid "About.."
+#~ msgstr "Über.."
+
+#~ msgid "Validating identity"
+#~ msgstr "Identität Uberprufen.."
+
+#~ msgid "(preview)"
+#~ msgstr "(Vorschau)"
+
+#~ msgid "NATO"
+#~ msgstr "NATO"
+
+#~ msgid "RRN (National Registry)"
+#~ msgstr "RRN (Nationalregister)"
+
+#~ msgid "IDENTITY CARD"
+#~ msgstr "PERSONALAUSWEIS"
+
+#~ msgid "Reading picture."
+#~ msgstr "Bild wird gelesen."
+
+#~ msgid "Outside validity interval"
+#~ msgstr "Außerhalb des Gültigkeitsintervalls"
+
+#~ msgid "White Cane"
+#~ msgstr "Weißer Stock"
+
+#~ msgid "ctrl pressed O"
+#~ msgstr "ctrl pressed O"
+
+#~ msgid "Quit"
+#~ msgstr "Beenden"
+
+#~ msgid "Signature verification failed"
+#~ msgstr "Unterschriftkontrolle fehlgeschlagen"
+
+#~ msgid "PEM and DER Files"
+#~ msgstr "PEM und DER Dateien"
+
+#~ msgid "Preferences.."
+#~ msgstr "Einstellungen.."
+
+#~ msgid "ctrl pressed W"
+#~ msgstr "ctrl pressed W"
+
+#~ msgid "Belgian eID Authentication Trust Domain"
+#~ msgstr "Authentifizierungsvertrauensdomäne der belgischen eID"
+
+#~ msgid "Proof of registration in the Aliens’ Register – Temporary residence"
+#~ msgstr ""
+#~ "Bescheinigung der Eintragung im Ausländerregister - Vorübergehender "
+#~ "Aufenthalt"
+
+#~ msgid "Print..."
+#~ msgstr "Drucken.."
+
+#~ msgid "Close"
+#~ msgstr "Schließen"
+
+#~ msgid "Save the currently displayed identity to a CSV file"
+#~ msgstr "Informationen zur aktuellen eID in einer CSV-Datei speichern"
+
+#~ msgid "Reading National Registry certificate chain."
+#~ msgstr "Nationalregisterzertifikatskette wird gelesen.."
+
+#~ msgid "Digital Signature"
+#~ msgstr "Digitale Signatur"
+
+#~ msgid "Encipher Only"
+#~ msgstr "Nur verschlüsseln"
+
+#~ msgid "Proxy Settings:"
+#~ msgstr "Proxy-Einstellungen:"
+
+#~ msgid "Save the currently displayed identity to an XML file"
+#~ msgstr "Informationen zur aktuellen eID in einer XML-Datei speichern"
+
+#~ msgid "BOOTSTRAP CARD"
+#~ msgstr "STARTKARTE"
+
+#~ msgid "Identity card in use by another application."
+#~ msgstr "e-ID ist in einer anderen Anwendung geöffnet."
+
+#~ msgid " (Not yet valid!)"
+#~ msgstr " (Noch nicht gültig)"
+
+#~ msgid "Previously holder of European Blue Card"
+#~ msgstr "ehemaliger Inhaber der Blauen Karte EU"
+
+#~ msgid "Not trusted!"
+#~ msgstr "Nicht vertrauenswürdig!"
+
+#~ msgid "Key Encipherment"
+#~ msgstr "Schlüsselverschlüsselung"
+
+#~ msgid "ctrl pressed Q"
+#~ msgstr "ctrl pressed Q"
+
+#~ msgid "Revoked or suspended"
+#~ msgstr "Widerrufen oder suspendiert"
+
+#~ msgid "SHAPE"
+#~ msgstr "SHAPE"
+
+#~ msgid "ctrl pressed P"
+#~ msgstr "ctrl pressed P"
+
+#~ msgid "Save As.."
+#~ msgstr "Speichern unter"
+
+#~ msgid "Use System Settings"
+#~ msgstr "Systemeinstellungen verwenden"
+
+#~ msgid "About"
+#~ msgstr "Über"
+
+#~ msgid "Proof of registration in the Aliens’ Register"
+#~ msgstr "Bescheinigung der Eintragung im Ausländerregister"
+
+#~ msgid "Reading Citizen CA certificate chain."
+#~ msgstr "CitizenCAzertifikatskette wird gelesen.."
+
+#~ msgid "Validating address"
+#~ msgstr "Addresse Uberprufen.."
+
+#~ msgid "${project.version}"
+#~ msgstr "${project.version}"
+
+#~ msgid "Revocation List Signing"
+#~ msgstr "Sperrlisten-Signatur"
+
+#~ msgid "Read error"
+#~ msgstr "Lesefehler"
+
+#~ msgid "Data Encipherment"
+#~ msgstr "Datenverschlüsselung"
+
+#~ msgid "Long-term EU Resident"
+#~ msgstr "Daueraufenthalt – EG"
+
+#~ msgid "Close this identity file"
+#~ msgstr "Diese eID-Datei schließen"
+
+#~ msgid "DER Files"
+#~ msgstr "DER Dateien"
+
+#~ msgid ".EID eID files"
+#~ msgstr ".EID eID Dateien"
+
+#~ msgid "Durable residence permit of a family member of an EU Citizen"
+#~ msgstr "Daueraufenthaltskarte für Familienangehörige eines Unionsbürgers"
+
+#~ msgid "Reading authentication certificate chain."
+#~ msgstr "Authentifizierungszertifikatskette wird gelesen.."
+
+#~ msgid "Habilitation Card"
+#~ msgstr "Berechtigungskarte"
+
+#~ msgid "Non-Repudiation"
+#~ msgstr "Unleugbarkeit"
+
+#~ msgid "H. European Blue Card"
+#~ msgstr "H. Blaue Karte EU"
+
+#~ msgid "Direct Connection"
+#~ msgstr "Kein Proxy"
+
+#~ msgid "Reading address."
+#~ msgstr "Adresse wird gelesen..."
+
+#~ msgid " (Expired!)"
+#~ msgstr " (Abgelaufen!)"
+
+#~ msgid "Prints the currently displayed ID"
+#~ msgstr "Druckt aktuell angezeigte eID"
+
+#~ msgid "Decipher Only"
+#~ msgstr "Nur entschlüsseln"
+
+#~ msgid "PEM Files"
+#~ msgstr "PEM Dateien"
+
+#~ msgid "Save the currently displayed identity to a file"
+#~ msgstr "Aktuell angezeigte eID in einer Datei speichern"
+
+#~ msgid "Please connect a smart card reader."
+#~ msgstr "Bitte schließen Sie einen Kartenleser an."
+
+#~ msgid ""
+#~ "Permit for non-EU family members of an EU Citizen or Belgian national"
+#~ msgstr ""
+#~ "Ausweis für Nicht-EU-Familienmitglieder eines EU-Ausländers oder eines "
+#~ "belgischen Staatsangehörigen"
+
+#~ msgid "Belgian eID Non-Repudiation Trust Domain"
+#~ msgstr "Unleugbarkeitsvertrauensdomäne der belgischen eID"
+
+#~ msgid "Port:"
+#~ msgstr "Port:"
+
+#~ msgid "(Residence) permit of EU Citizen – Certificate of Registration"
+#~ msgstr ""
+#~ "Aufenthaltserlaubnis für Staatsangehörige eines EWG-Mitgliedstaates;"
+#~ "Anmeldebescheinigung"
+
+#~ msgid "F"
+#~ msgstr "F"
+
+#~ msgid "No path to trusted root"
+#~ msgstr "Kein Pfad zur vertrauenswürdigen Root"
+
+#~ msgid "Researcher"
+#~ msgstr "Forscher"
+
+#~ msgid "Exit this program"
+#~ msgstr "Programm beenden"
+
+#~ msgid "Not validated"
+#~ msgstr "Unvalidiert"
+
+#~ msgid "M"
+#~ msgstr "M"
+
+#~ msgid "Extended Nonage"
+#~ msgstr "Verlängerte Minderjährigkeit"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Identity Card for Aliens"
+#~ msgstr "Personalausweis für Ausländer"
+
+#~ msgid "Validating"
+#~ msgstr "Validierung läuft.."
+
+#~ msgid "ctrl pressed S"
+#~ msgstr "ctrl pressed S"
+
+#~ msgid "PCSC daemon status"
+#~ msgstr "Status PCSC-Systemdienst"
+
+#~ msgid "(not running)"
+#~ msgstr "(läuft nicht)"
+
+#~ msgid "running; pid: %s"
+#~ msgstr "läuft; pid: %s"
+
+#~ msgid "Java version"
+#~ msgstr "Java-Version "
+
+#~ msgid "(not found)"
+#~ msgstr "(nicht gefunden) "
+
+#~ msgid "(not found; check failed)"
+#~ msgstr "(nicht gefunden; Test fehlgeschlagen)"
+
+#~ msgid "(not found in path)"
+#~ msgstr "(nicht gefunden im Suchpfad)"
+
+#~ msgid "32-bit PKCS#11 location"
+#~ msgstr "32-bit PKCS#11 Adresse "
+
+#~ msgid "64-bit PKCS#11 location"
+#~ msgstr "64-bit PKCS#11 Adresse "
+
+#~ msgid "PKCS#11 location"
+#~ msgstr "PKCS#11 Adresse "
+
+#~ msgid "System architecture"
+#~ msgstr "Systemarchitektur"
+
+#~ msgid "64-bit PC"
+#~ msgstr "64-bit PC"
+
+#~ msgid "32-bit PC"
+#~ msgstr "32-bit PC"
+
+#~ msgid "Unknown (%s)"
+#~ msgstr "Unbekannt (%s)"
+
+#~ msgid "(unknown)"
+#~ msgstr "(unbekannt)"
+
+#~ msgid "Distribution"
+#~ msgstr "Verteilung"
+
+#~ msgid "Distribution version"
+#~ msgstr "Verteilung-Version "
+
+#~ msgid "Distribution codename"
+#~ msgstr "Verteilung Codebezeichnung "
+
+#~ msgid "Middleware version"
+#~ msgstr "Middleware-Version "
+
+#~ msgid "Middleware build ID"
+#~ msgstr "Middleware Bau-ID"
+
+#~ msgid "Middleware build date"
+#~ msgstr "Middleware Baudatum "
+
+#~ msgid "Item"
+#~ msgstr "Artikel"
+
+#~ msgid "Value"
+#~ msgstr "Wert"

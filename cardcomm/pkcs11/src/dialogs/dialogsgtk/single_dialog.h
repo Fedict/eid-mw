@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
  * eID Middleware Project.
  * Copyright (C) 2008-2011 FedICT.
@@ -16,5 +17,5 @@
  * http://www.gnu.org/licenses/.
 **************************************************************************** */
 
-pid_t 	sdialog_call(const char* path,const char* msg);
-char* 	sdialog_call_modal(const char* path,const char* msg);
+pid_t sdialog_call(const char *path, const char *msg);
+char *sdialog_call_modal(const char *path, const char *msg);

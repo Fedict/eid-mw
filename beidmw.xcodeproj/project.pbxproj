@@ -31,15 +31,18 @@
 		6536233A19A7E92B00D46ECB /* threads.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232319A7E92B00D46ECB /* threads.c */; };
 		6536233B19A7E92B00D46ECB /* tkinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232419A7E92B00D46ECB /* tkinfo.c */; };
 		6536233D19A7E93A00D46ECB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536233C19A7E93A00D46ECB /* main.c */; };
-		6536233E19A7E98200D46ECB /* libbeidpkcs11.4.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.0.dylib */; };
+		65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.1.19.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.19.dylib */; };
 		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
-		7F22A36F0F84C588001AD228 /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
-		7F22A3C40F84D4A1001AD228 /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
-		7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
-		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
+		65EABAF11C621F3D00034337 /* labels.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EABAEE1C621F3D00034337 /* labels.h */; };
+		65EABAF21C621F3D00034337 /* utftranslate.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EABAEF1C621F3D00034337 /* utftranslate.h */; };
+		65EABAF31C621FB400034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAED1C621F3D00034337 /* labels.c */; };
+		65F3F01B1BE2328A0073F2A3 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
+		65F3F0201BE232D70073F2A3 /* PCSC.framework in Headers */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
+		65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; };
+		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.19.a */; };
 		8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */; };
 		86837479186489B6005EE5D7 /* dialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 8683738D186489B5005EE5D7 /* dialogs.h */; };
 		868374CD186489B6005EE5D7 /* language.h in Headers */ = {isa = PBXBuildFile; fileRef = 86837473186489B6005EE5D7 /* language.h */; };
@@ -47,23 +50,50 @@
 		868374D0186489B6005EE5D7 /* langutil.h in Headers */ = {isa = PBXBuildFile; fileRef = 86837476186489B6005EE5D7 /* langutil.h */; };
 		868374D1186489B6005EE5D7 /* sharedmem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86837477186489B6005EE5D7 /* sharedmem.cpp */; };
 		868374D2186489B6005EE5D7 /* sharedmem.h in Headers */ = {isa = PBXBuildFile; fileRef = 86837478186489B6005EE5D7 /* sharedmem.h */; };
-		868374E718648A42005EE5D7 /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
+		868374E718648A42005EE5D7 /* libbeidcommon.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.19.a */; };
 		868374E818648B45005EE5D7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */; };
-		868374EB18648FF7005EE5D7 /* libbeiddialogsmac.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.0.a */; };
+		868374EB18648FF7005EE5D7 /* libbeiddialogsmac.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.19.a */; };
 		86867B3B186304BA00ED5541 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
+		86B474781BD798B8004FB8AE /* asn1.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF251653EFE50015B5E1 /* asn1.h */; };
+		86B474791BD798B8004FB8AE /* beid_p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF261653EFE50015B5E1 /* beid_p11.h */; };
+		86B4747A1BD798B8004FB8AE /* cal.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF271653EFE50015B5E1 /* cal.h */; };
+		86B4747B1BD798B8004FB8AE /* cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF281653EFE50015B5E1 /* cert.h */; };
+		86B4747C1BD798B8004FB8AE /* display.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF291653EFE50015B5E1 /* display.h */; };
+		86B4747D1BD798B8004FB8AE /* log.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2A1653EFE50015B5E1 /* log.h */; };
+		86B4747E1BD798B8004FB8AE /* p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2B1653EFE50015B5E1 /* p11.h */; };
+		86B4747F1BD798B8004FB8AE /* phash.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2C1653EFE50015B5E1 /* phash.h */; };
+		86B474801BD798B8004FB8AE /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2D1653EFE50015B5E1 /* util.h */; };
+		86B474811BD798B8004FB8AE /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF4F1653EFE50015B5E1 /* pkcs11.h */; };
+		86B474821BD798B8004FB8AE /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF501653EFE50015B5E1 /* pkcs11f.h */; };
+		86B474831BD798B8004FB8AE /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF511653EFE50015B5E1 /* pkcs11t.h */; };
+		86B474841BD798B8004FB8AE /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF521653EFE50015B5E1 /* unix.h */; };
+		86B474851BD798B8004FB8AE /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
+		86B474871BD798B8004FB8AE /* cert.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF2F1653EFE50015B5E1 /* cert.c */; };
+		86B474881BD798B8004FB8AE /* encrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF301653EFE50015B5E1 /* encrypt.c */; };
+		86B474891BD798B8004FB8AE /* general.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF311653EFE50015B5E1 /* general.c */; };
+		86B4748A1BD798B8004FB8AE /* object.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF331653EFE50015B5E1 /* object.c */; };
+		86B4748B1BD798B8004FB8AE /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF341653EFE50015B5E1 /* p11.c */; };
+		86B4748C1BD798B8004FB8AE /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF351653EFE50015B5E1 /* session.c */; };
+		86B4748D1BD798B8004FB8AE /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF361653EFE50015B5E1 /* sign.c */; };
+		86B4748E1BD798B8004FB8AE /* cal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF371653EFE50015B5E1 /* cal.cpp */; };
+		86B4748F1BD798B8004FB8AE /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF381653EFE50015B5E1 /* display.cpp */; };
+		86B474901BD798B8004FB8AE /* phash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF391653EFE50015B5E1 /* phash.cpp */; };
+		86B474921BD798B8004FB8AE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */; };
+		86B474931BD798B8004FB8AE /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
+		86B474941BD798B8004FB8AE /* libbeiddialogsmac.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.19.a */; };
+		86B474951BD798B8004FB8AE /* libbeidcardlayer.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.19.a */; };
+		86B474961BD798B8004FB8AE /* libbeidcommon.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.19.a */; };
+		86B474971BD798B8004FB8AE /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
-		86B82D9B1541AFA9008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
-		86CE3682187EA5DA00EB96A5 /* libbeidcommon.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */; };
-		86CE3683187EA5DE00EB96A5 /* libbeidcardlayer.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.0.a */; };
-		86CE3687187EB1B200EB96A5 /* libbeiddialogsmac.4.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.0.a */; };
+		86CE3682187EA5DA00EB96A5 /* libbeidcommon.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.1.19.a */; };
+		86CE3683187EA5DE00EB96A5 /* libbeidcardlayer.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.19.a */; };
+		86CE3687187EB1B200EB96A5 /* libbeiddialogsmac.4.1.19.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.19.a */; };
 		86CE3688187EB58A00EB96A5 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		86CE3689187EB5E700EB96A5 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */; };
 		86E3DDF21653D6210015B5E1 /* beidversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDB91653D6200015B5E1 /* beidversions.h */; };
 		86E3DDF31653D6210015B5E1 /* bytearray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDBA1653D6200015B5E1 /* bytearray.cpp */; };
 		86E3DDF41653D6210015B5E1 /* bytearray.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDBB1653D6200015B5E1 /* bytearray.h */; };
-		86E3DDF51653D6210015B5E1 /* bytearrayreader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDBC1653D6200015B5E1 /* bytearrayreader.cpp */; };
-		86E3DDF61653D6210015B5E1 /* bytearrayreader.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDBD1653D6200015B5E1 /* bytearrayreader.h */; };
 		86E3DDF71653D6210015B5E1 /* configcommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDBE1653D6200015B5E1 /* configcommon.cpp */; };
 		86E3DDF91653D6210015B5E1 /* configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDC01653D6200015B5E1 /* configuration.cpp */; };
 		86E3DDFA1653D6210015B5E1 /* configuration.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDC11653D6200015B5E1 /* configuration.h */; };
@@ -107,7 +137,6 @@
 		86E3DE261653D6210015B5E1 /* tlvtagdefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDEF1653D6210015B5E1 /* tlvtagdefinitions.h */; };
 		86E3DE271653D6210015B5E1 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDF01653D6210015B5E1 /* util.cpp */; };
 		86E3DE281653D6210015B5E1 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDF11653D6210015B5E1 /* util.h */; };
-		86E3DEC61653EC3F0015B5E1 /* cache.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA01653EC3E0015B5E1 /* cache.h */; };
 		86E3DEC71653EC3F0015B5E1 /* card.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA11653EC3E0015B5E1 /* card.h */; };
 		86E3DEC81653EC3F0015B5E1 /* cardfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA21653EC3E0015B5E1 /* cardfactory.h */; };
 		86E3DEC91653EC3F0015B5E1 /* cardlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA31653EC3E0015B5E1 /* cardlayer.h */; };
@@ -126,9 +155,7 @@
 		86E3DED61653EC3F0015B5E1 /* pkicard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB01653EC3E0015B5E1 /* pkicard.h */; };
 		86E3DED71653EC3F0015B5E1 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB11653EC3E0015B5E1 /* reader.h */; };
 		86E3DED81653EC3F0015B5E1 /* readersinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB21653EC3E0015B5E1 /* readersinfo.h */; };
-		86E3DED91653EC3F0015B5E1 /* threadpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB31653EC3E0015B5E1 /* threadpool.h */; };
 		86E3DEDA1653EC3F0015B5E1 /* unknowncard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB41653EC3E0015B5E1 /* unknowncard.h */; };
-		86E3DEDB1653EC3F0015B5E1 /* cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB51653EC3E0015B5E1 /* cache.cpp */; };
 		86E3DEDC1653EC3F0015B5E1 /* card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB61653EC3E0015B5E1 /* card.cpp */; };
 		86E3DEDD1653EC3F0015B5E1 /* cardfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */; };
 		86E3DEDE1653EC3F0015B5E1 /* cardlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */; };
@@ -143,18 +170,11 @@
 		86E3DEE71653EC3F0015B5E1 /* pkicard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC11653EC3F0015B5E1 /* pkicard.cpp */; };
 		86E3DEE81653EC3F0015B5E1 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC21653EC3F0015B5E1 /* reader.cpp */; };
 		86E3DEE91653EC3F0015B5E1 /* readersinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */; };
-		86E3DEEA1653EC3F0015B5E1 /* threadpool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC41653EC3F0015B5E1 /* threadpool.cpp */; };
 		86E3DEEB1653EC3F0015B5E1 /* unknowncard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */; };
 		86E3DEFA1653ECB10015B5E1 /* beidcard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEEE1653ECB00015B5E1 /* beidcard.cpp */; };
 		86E3DEFB1653ECB10015B5E1 /* beidcard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEEF1653ECB00015B5E1 /* beidcard.h */; };
 		86E3DEFC1653ECB10015B5E1 /* beidp15correction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEF01653ECB00015B5E1 /* beidp15correction.cpp */; };
 		86E3DEFD1653ECB10015B5E1 /* beidp15correction.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEF11653ECB00015B5E1 /* beidp15correction.h */; };
-		86E3DEFE1653ECB10015B5E1 /* siscard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEF51653ECB10015B5E1 /* siscard.cpp */; };
-		86E3DEFF1653ECB10015B5E1 /* siscard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEF61653ECB10015B5E1 /* siscard.h */; };
-		86E3DF001653ECB10015B5E1 /* sisplugin1.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEF71653ECB10015B5E1 /* sisplugin1.h */; };
-		86E3DF011653ECB10015B5E1 /* sispluginhandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEF81653ECB10015B5E1 /* sispluginhandler.cpp */; };
-		86E3DF021653ECB10015B5E1 /* sispluginhandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEF91653ECB10015B5E1 /* sispluginhandler.h */; };
-		86E3DF221653EF0E0015B5E1 /* siscard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF211653EF0E0015B5E1 /* siscard.cpp */; };
 		86E3DF541653EFE60015B5E1 /* asn1.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF251653EFE50015B5E1 /* asn1.h */; };
 		86E3DF551653EFE60015B5E1 /* beid_p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF261653EFE50015B5E1 /* beid_p11.h */; };
 		86E3DF561653EFE60015B5E1 /* cal.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF271653EFE50015B5E1 /* cal.h */; };
@@ -179,36 +199,38 @@
 		86E3DF7B1653EFE60015B5E1 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF511653EFE50015B5E1 /* pkcs11t.h */; };
 		86E3DF7C1653EFE60015B5E1 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF521653EFE50015B5E1 /* unix.h */; };
 		86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
+		8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B07D1011B21CEB80033CD62 /* wrong_init.c */; };
+		8B8B71591B74CCA300D8910E /* sign_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B71581B74CCA300D8910E /* sign_state.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		655E14D41BBA8A2900D855D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 659FFC3C1AE9360D004CEC1F;
+			remoteInfo = "eID Viewer";
+		};
+		655E14D61BBA8A2900D855D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8BBDE3121B3BF02C00CBE13E;
+			remoteInfo = eidfilepreview;
+		};
+		657875021D11518000DDA856 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 65BD08641CECB257000A30E4;
+			remoteInfo = BeidView;
+		};
 		6580550D1A66C9BE000AEFE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 658054E51A66C9BB000AEFE0;
 			remoteInfo = "eID Middleware";
-		};
-		6580550F1A66C9BE000AEFE0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 658054F81A66C9BB000AEFE0;
-			remoteInfo = "eID MiddlewareTests";
-		};
-		7F22A3700F84C58C001AD228 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7FBB02520F839352009B751F;
-			remoteInfo = beidcommon;
-		};
-		7F22A3C50F84D4B7001AD228 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7FBB02520F839352009B751F;
-			remoteInfo = beidcommon;
 		};
 		7FC5353E0F84B84300BA96EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -237,6 +259,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 869D00AE18D72DCF00A41853;
 			remoteInfo = plistMerger;
+		};
+		86B474761BD798B8004FB8AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FC5353A0F84B83B00BA96EE;
+			remoteInfo = beidcardlayer;
 		};
 		86BC84C51A037C19009E374E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -298,19 +327,22 @@
 		6594447B19A8C29B003ABC24 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = cardcomm/pkcs11/src/asn1.c; sourceTree = "<group>"; };
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
 		6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs11util.cpp; path = cardcomm/pkcs11/src/pkcs11util.cpp; sourceTree = "<group>"; };
+		659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Viewer.xcodeproj"; path = "plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		65CC20ED19A7DE4E0089CD13 /* ordering.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ordering.c; path = tests/unit/ordering.c; sourceTree = "<group>"; };
+		65EABAED1C621F3D00034337 /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = plugins_tools/util/labels.c; sourceTree = "<group>"; };
+		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = plugins_tools/util/labels.h; sourceTree = "<group>"; };
+		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = plugins_tools/util/utftranslate.h; sourceTree = "<group>"; };
+		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		7F9011190F8502F8004A5FCC /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		7F90111C0F850342004A5FCC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		7F90112C0F850450004A5FCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.0.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.4.1.0.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcommon.4.1.0.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.0.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcardlayer.4.1.0.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FC535AC0F84B9EF00BA96EE /* libsiscardplugin1__ACS__.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsiscardplugin1__ACS__.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsQT.4.1.0.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.0.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsmac.4.1.0.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.19.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.4.1.19.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FBB02530F839352009B751F /* libbeidcommon.4.1.19.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcommon.4.1.19.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.19.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcardlayer.4.1.19.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.19.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsmac.4.1.19.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp; sourceTree = SOURCE_ROOT; };
 		8683738D186489B5005EE5D7 /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialogs.h; path = cardcomm/pkcs11/src/dialogs/dialogs.h; sourceTree = SOURCE_ROOT; };
 		86837473186489B6005EE5D7 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = language.h; path = cardcomm/pkcs11/src/dialogs/language.h; sourceTree = SOURCE_ROOT; };
@@ -319,12 +351,11 @@
 		86837477186489B6005EE5D7 /* sharedmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sharedmem.cpp; path = cardcomm/pkcs11/src/dialogs/sharedmem.cpp; sourceTree = SOURCE_ROOT; };
 		86837478186489B6005EE5D7 /* sharedmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sharedmem.h; path = cardcomm/pkcs11/src/dialogs/sharedmem.h; sourceTree = SOURCE_ROOT; };
 		869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = plistMerger.xcodeproj; path = plugins_tools/plistMerger/plistMerger.xcodeproj; sourceTree = SOURCE_ROOT; };
+		86B4749B1BD798B8004FB8AE /* libbeid_ff_pkcs11.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_pkcs11.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = test_dialogs.xcodeproj; path = tests/dialogs/test_dialogs.xcodeproj; sourceTree = "<group>"; };
 		86E3DDB91653D6200015B5E1 /* beidversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidversions.h; path = cardcomm/pkcs11/src/common/beidversions.h; sourceTree = SOURCE_ROOT; };
 		86E3DDBA1653D6200015B5E1 /* bytearray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytearray.cpp; path = cardcomm/pkcs11/src/common/bytearray.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDBB1653D6200015B5E1 /* bytearray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytearray.h; path = cardcomm/pkcs11/src/common/bytearray.h; sourceTree = SOURCE_ROOT; };
-		86E3DDBC1653D6200015B5E1 /* bytearrayreader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytearrayreader.cpp; path = cardcomm/pkcs11/src/common/bytearrayreader.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDBD1653D6200015B5E1 /* bytearrayreader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytearrayreader.h; path = cardcomm/pkcs11/src/common/bytearrayreader.h; sourceTree = SOURCE_ROOT; };
 		86E3DDBE1653D6200015B5E1 /* configcommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configcommon.cpp; path = cardcomm/pkcs11/src/common/configcommon.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDBF1653D6200015B5E1 /* configreg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configreg.cpp; path = cardcomm/pkcs11/src/common/configreg.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDC01653D6200015B5E1 /* configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configuration.cpp; path = cardcomm/pkcs11/src/common/configuration.cpp; sourceTree = SOURCE_ROOT; };
@@ -369,7 +400,6 @@
 		86E3DDEF1653D6210015B5E1 /* tlvtagdefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlvtagdefinitions.h; path = cardcomm/pkcs11/src/common/tlvtagdefinitions.h; sourceTree = SOURCE_ROOT; };
 		86E3DDF01653D6210015B5E1 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = cardcomm/pkcs11/src/common/util.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDF11653D6210015B5E1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = cardcomm/pkcs11/src/common/util.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA01653EC3E0015B5E1 /* cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cache.h; path = cardcomm/pkcs11/src/cardlayer/cache.h; sourceTree = SOURCE_ROOT; };
 		86E3DEA11653EC3E0015B5E1 /* card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = card.h; path = cardcomm/pkcs11/src/cardlayer/card.h; sourceTree = SOURCE_ROOT; };
 		86E3DEA21653EC3E0015B5E1 /* cardfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardfactory.h; path = cardcomm/pkcs11/src/cardlayer/cardfactory.h; sourceTree = SOURCE_ROOT; };
 		86E3DEA31653EC3E0015B5E1 /* cardlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardlayer.h; path = cardcomm/pkcs11/src/cardlayer/cardlayer.h; sourceTree = SOURCE_ROOT; };
@@ -388,9 +418,7 @@
 		86E3DEB01653EC3E0015B5E1 /* pkicard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkicard.h; path = cardcomm/pkcs11/src/cardlayer/pkicard.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB11653EC3E0015B5E1 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reader.h; path = cardcomm/pkcs11/src/cardlayer/reader.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB21653EC3E0015B5E1 /* readersinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readersinfo.h; path = cardcomm/pkcs11/src/cardlayer/readersinfo.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB31653EC3E0015B5E1 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = threadpool.h; path = cardcomm/pkcs11/src/cardlayer/threadpool.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB41653EC3E0015B5E1 /* unknowncard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unknowncard.h; path = cardcomm/pkcs11/src/cardlayer/unknowncard.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB51653EC3E0015B5E1 /* cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cache.cpp; path = cardcomm/pkcs11/src/cardlayer/cache.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB61653EC3E0015B5E1 /* card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = card.cpp; path = cardcomm/pkcs11/src/cardlayer/card.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardfactory.cpp; path = cardcomm/pkcs11/src/cardlayer/cardfactory.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardlayer.cpp; path = cardcomm/pkcs11/src/cardlayer/cardlayer.cpp; sourceTree = SOURCE_ROOT; };
@@ -405,20 +433,12 @@
 		86E3DEC11653EC3F0015B5E1 /* pkicard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkicard.cpp; path = cardcomm/pkcs11/src/cardlayer/pkicard.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC21653EC3F0015B5E1 /* reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = reader.cpp; path = cardcomm/pkcs11/src/cardlayer/reader.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readersinfo.cpp; path = cardcomm/pkcs11/src/cardlayer/readersinfo.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEC41653EC3F0015B5E1 /* threadpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threadpool.cpp; path = cardcomm/pkcs11/src/cardlayer/threadpool.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unknowncard.cpp; path = cardcomm/pkcs11/src/cardlayer/unknowncard.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEEE1653ECB00015B5E1 /* beidcard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidcard.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidcard.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEEF1653ECB00015B5E1 /* beidcard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidcard.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidcard.h; sourceTree = SOURCE_ROOT; };
 		86E3DEF01653ECB00015B5E1 /* beidp15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidp15correction.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidp15correction.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEF11653ECB00015B5E1 /* beidp15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidp15correction.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidp15correction.h; sourceTree = SOURCE_ROOT; };
 		86E3DEF21653ECB00015B5E1 /* cardpluginBeid.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cardpluginBeid.rc; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/cardpluginBeid.rc; sourceTree = SOURCE_ROOT; };
-		86E3DEF41653ECB10015B5E1 /* cardpluginSIS.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cardpluginSIS.rc; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/cardpluginSIS.rc; sourceTree = SOURCE_ROOT; };
-		86E3DEF51653ECB10015B5E1 /* siscard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = siscard.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/siscard.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEF61653ECB10015B5E1 /* siscard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = siscard.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/siscard.h; sourceTree = SOURCE_ROOT; };
-		86E3DEF71653ECB10015B5E1 /* sisplugin1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sisplugin1.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/sisplugin1.h; sourceTree = SOURCE_ROOT; };
-		86E3DEF81653ECB10015B5E1 /* sispluginhandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sispluginhandler.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/sispluginhandler.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEF91653ECB10015B5E1 /* sispluginhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sispluginhandler.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis/sispluginhandler.h; sourceTree = SOURCE_ROOT; };
-		86E3DF211653EF0E0015B5E1 /* siscard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = siscard.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginsis_acr38u/siscard.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DF251653EFE50015B5E1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = cardcomm/pkcs11/src/asn1.h; sourceTree = SOURCE_ROOT; };
 		86E3DF261653EFE50015B5E1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = cardcomm/pkcs11/src/beid_p11.h; sourceTree = SOURCE_ROOT; };
 		86E3DF271653EFE50015B5E1 /* cal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cal.h; path = cardcomm/pkcs11/src/cal.h; sourceTree = SOURCE_ROOT; };
@@ -443,6 +463,8 @@
 		86E3DF511653EFE50015B5E1 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11t.h; path = doc/sdk/include/rsaref220/pkcs11t.h; sourceTree = SOURCE_ROOT; };
 		86E3DF521653EFE50015B5E1 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = doc/sdk/include/rsaref220/unix.h; sourceTree = SOURCE_ROOT; };
 		86E3DF531653EFE50015B5E1 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win32.h; path = doc/sdk/include/rsaref220/win32.h; sourceTree = SOURCE_ROOT; };
+		8B07D1011B21CEB80033CD62 /* wrong_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrong_init.c; path = tests/unit/wrong_init.c; sourceTree = "<group>"; };
+		8B8B71581B74CCA300D8910E /* sign_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sign_state.c; path = tests/unit/sign_state.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -450,7 +472,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6536233E19A7E98200D46ECB /* libbeidpkcs11.4.1.0.dylib in Frameworks */,
+				65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.1.19.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,9 +482,9 @@
 			files = (
 				86CE3689187EB5E700EB96A5 /* CoreFoundation.framework in Frameworks */,
 				86CE3688187EB58A00EB96A5 /* PCSC.framework in Frameworks */,
-				86CE3687187EB1B200EB96A5 /* libbeiddialogsmac.4.1.0.a in Frameworks */,
-				86CE3683187EA5DE00EB96A5 /* libbeidcardlayer.4.1.0.a in Frameworks */,
-				86CE3682187EA5DA00EB96A5 /* libbeidcommon.4.1.0.a in Frameworks */,
+				86CE3687187EB1B200EB96A5 /* libbeiddialogsmac.4.1.19.a in Frameworks */,
+				86CE3683187EA5DE00EB96A5 /* libbeidcardlayer.4.1.19.a in Frameworks */,
+				86CE3682187EA5DA00EB96A5 /* libbeidcommon.4.1.19.a in Frameworks */,
 				86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,7 +493,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FBB03E00F8397E0009B751F /* Carbon.framework in Frameworks */,
+				65F3F01B1BE2328A0073F2A3 /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,27 +501,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				868374EB18648FF7005EE5D7 /* libbeiddialogsmac.4.1.0.a in Frameworks */,
+				868374EB18648FF7005EE5D7 /* libbeiddialogsmac.4.1.19.a in Frameworks */,
 				86867B3B186304BA00ED5541 /* PCSC.framework in Frameworks */,
-				7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.0.a in Frameworks */,
+				7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.1.19.a in Frameworks */,
 				86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7FC535AA0F84B9EF00BA96EE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7F22A3C40F84D4A1001AD228 /* libbeidcommon.4.1.0.a in Frameworks */,
-				86B82D9B1541AFA9008A964F /* Carbon.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7FC535DD0F84BCDA00BA96EE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7F22A36F0F84C588001AD228 /* libbeidcommon.4.1.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +513,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				868374E818648B45005EE5D7 /* CoreFoundation.framework in Frameworks */,
-				868374E718648A42005EE5D7 /* libbeidcommon.4.1.0.a in Frameworks */,
+				868374E718648A42005EE5D7 /* libbeidcommon.4.1.19.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		86B474911BD798B8004FB8AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86B474921BD798B8004FB8AE /* CoreFoundation.framework in Frameworks */,
+				86B474931BD798B8004FB8AE /* PCSC.framework in Frameworks */,
+				86B474941BD798B8004FB8AE /* libbeiddialogsmac.4.1.19.a in Frameworks */,
+				86B474951BD798B8004FB8AE /* libbeidcardlayer.4.1.19.a in Frameworks */,
+				86B474961BD798B8004FB8AE /* libbeidcommon.4.1.19.a in Frameworks */,
+				86B474971BD798B8004FB8AE /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,13 +536,12 @@
 		034768DDFF38A45A11DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */,
-				7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.0.a */,
-				7FC535AC0F84B9EF00BA96EE /* libsiscardplugin1__ACS__.dylib */,
-				7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */,
-				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.0.dylib */,
-				8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.0.a */,
+				7FBB02530F839352009B751F /* libbeidcommon.4.1.19.a */,
+				7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.19.a */,
+				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.19.dylib */,
+				8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.19.a */,
 				6536230219A7E8E600D46ECB /* testsuite */,
+				86B4749B1BD798B8004FB8AE /* libbeid_ff_pkcs11.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -532,13 +549,13 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
+				659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */,
 				658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */,
 				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
 				6536230C19A7E8FE00D46ECB /* testsuite */,
 				869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */,
 				8683738918648985005EE5D7 /* Dialogsmac */,
 				7FBB025A0F83937F009B751F /* Common */,
-				7FC535950F84B92000BA96EE /* Cardlayer_pluginSIS_ACR38 */,
 				7FC5358D0F84B88B00BA96EE /* Cardlayer */,
 				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
 				5073E0CA09E734BC00EC74B6 /* Configuration Files */,
@@ -572,6 +589,12 @@
 		6536230C19A7E8FE00D46ECB /* testsuite */ = {
 			isa = PBXGroup;
 			children = (
+				65EABAED1C621F3D00034337 /* labels.c */,
+				65EABAEE1C621F3D00034337 /* labels.h */,
+				65EABAEF1C621F3D00034337 /* utftranslate.h */,
+				65F3F0211BE236680073F2A3 /* readdata_sequence.c */,
+				8B8B71581B74CCA300D8910E /* sign_state.c */,
+				8B07D1011B21CEB80033CD62 /* wrong_init.c */,
 				65CC20ED19A7DE4E0089CD13 /* ordering.c */,
 				6536233C19A7E93A00D46ECB /* main.c */,
 				6536230D19A7E92B00D46ECB /* decode_photo.c */,
@@ -602,11 +625,20 @@
 			name = testsuite;
 			sourceTree = "<group>";
 		};
+		655E14CF1BBA8A2800D855D3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				655E14D51BBA8A2900D855D3 /* eID Viewer.app */,
+				655E14D71BBA8A2900D855D3 /* eidfilepreview.qlgenerator */,
+				657875031D11518000DDA856 /* BeidView.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		658055091A66C9BB000AEFE0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				6580550E1A66C9BE000AEFE0 /* eID Middleware.app */,
-				658055101A66C9BE000AEFE0 /* eID MiddlewareTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -647,8 +679,6 @@
 				86E3DDB91653D6200015B5E1 /* beidversions.h */,
 				86E3DDBA1653D6200015B5E1 /* bytearray.cpp */,
 				86E3DDBB1653D6200015B5E1 /* bytearray.h */,
-				86E3DDBC1653D6200015B5E1 /* bytearrayreader.cpp */,
-				86E3DDBD1653D6200015B5E1 /* bytearrayreader.h */,
 				86E3DDBE1653D6200015B5E1 /* configcommon.cpp */,
 				86E3DDBF1653D6200015B5E1 /* configreg.cpp */,
 				86E3DDC01653D6200015B5E1 /* configuration.cpp */,
@@ -692,8 +722,6 @@
 			isa = PBXGroup;
 			children = (
 				86E3DEED1653ECB00015B5E1 /* cardpluginbeid */,
-				86E3DEF31653ECB10015B5E1 /* cardpluginsis */,
-				86E3DEA01653EC3E0015B5E1 /* cache.h */,
 				86E3DEA11653EC3E0015B5E1 /* card.h */,
 				86E3DEA21653EC3E0015B5E1 /* cardfactory.h */,
 				86E3DEA31653EC3E0015B5E1 /* cardlayer.h */,
@@ -712,9 +740,7 @@
 				86E3DEB01653EC3E0015B5E1 /* pkicard.h */,
 				86E3DEB11653EC3E0015B5E1 /* reader.h */,
 				86E3DEB21653EC3E0015B5E1 /* readersinfo.h */,
-				86E3DEB31653EC3E0015B5E1 /* threadpool.h */,
 				86E3DEB41653EC3E0015B5E1 /* unknowncard.h */,
-				86E3DEB51653EC3E0015B5E1 /* cache.cpp */,
 				86E3DEB61653EC3E0015B5E1 /* card.cpp */,
 				86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */,
 				86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */,
@@ -729,18 +755,9 @@
 				86E3DEC11653EC3F0015B5E1 /* pkicard.cpp */,
 				86E3DEC21653EC3F0015B5E1 /* reader.cpp */,
 				86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */,
-				86E3DEC41653EC3F0015B5E1 /* threadpool.cpp */,
 				86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */,
 			);
 			name = Cardlayer;
-			sourceTree = "<group>";
-		};
-		7FC535950F84B92000BA96EE /* Cardlayer_pluginSIS_ACR38 */ = {
-			isa = PBXGroup;
-			children = (
-				86E3DF211653EF0E0015B5E1 /* siscard.cpp */,
-			);
-			name = Cardlayer_pluginSIS_ACR38;
 			sourceTree = "<group>";
 		};
 		8683738918648985005EE5D7 /* Dialogsmac */ = {
@@ -805,20 +822,6 @@
 			path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid;
 			sourceTree = SOURCE_ROOT;
 		};
-		86E3DEF31653ECB10015B5E1 /* cardpluginsis */ = {
-			isa = PBXGroup;
-			children = (
-				86E3DEF41653ECB10015B5E1 /* cardpluginSIS.rc */,
-				86E3DEF51653ECB10015B5E1 /* siscard.cpp */,
-				86E3DEF61653ECB10015B5E1 /* siscard.h */,
-				86E3DEF71653ECB10015B5E1 /* sisplugin1.h */,
-				86E3DEF81653ECB10015B5E1 /* sispluginhandler.cpp */,
-				86E3DEF91653ECB10015B5E1 /* sispluginhandler.h */,
-			);
-			name = cardpluginsis;
-			path = cardcomm/pkcs11/src/cardlayer/cardpluginsis;
-			sourceTree = SOURCE_ROOT;
-		};
 		86E3DF4E1653EFE50015B5E1 /* rsaref220 */ = {
 			isa = PBXGroup;
 			children = (
@@ -862,11 +865,11 @@
 			files = (
 				86E3DDF21653D6210015B5E1 /* beidversions.h in Headers */,
 				86E3DDF41653D6210015B5E1 /* bytearray.h in Headers */,
-				86E3DDF61653D6210015B5E1 /* bytearrayreader.h in Headers */,
 				86E3DDFA1653D6210015B5E1 /* configuration.h in Headers */,
 				86E3DDFC1653D6210015B5E1 /* datafile.h in Headers */,
 				86E3DDFE1653D6210015B5E1 /* dynamiclib.h in Headers */,
 				86E3DDFF1653D6210015B5E1 /* eiderrors.h in Headers */,
+				65EABAF21C621F3D00034337 /* utftranslate.h in Headers */,
 				86E3DE001653D6210015B5E1 /* export.h in Headers */,
 				86E3DE021653D6210015B5E1 /* hash.h in Headers */,
 				86E3DE091653D6210015B5E1 /* tomcrypt_argchk.h in Headers */,
@@ -874,6 +877,7 @@
 				86E3DE0B1653D6210015B5E1 /* tomcrypt_hash.h in Headers */,
 				86E3DE0C1653D6210015B5E1 /* tomcrypt_macros.h in Headers */,
 				86E3DE0E1653D6210015B5E1 /* log.h in Headers */,
+				65EABAF11C621F3D00034337 /* labels.h in Headers */,
 				86E3DE101653D6210015B5E1 /* logbase.h in Headers */,
 				86E3DE121653D6210015B5E1 /* mutex.h in Headers */,
 				86E3DE141653D6210015B5E1 /* mw_util.h in Headers */,
@@ -893,7 +897,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86E3DEC61653EC3F0015B5E1 /* cache.h in Headers */,
+				65F3F0201BE232D70073F2A3 /* PCSC.framework in Headers */,
 				86E3DEC71653EC3F0015B5E1 /* card.h in Headers */,
 				86E3DEC81653EC3F0015B5E1 /* cardfactory.h in Headers */,
 				86E3DEC91653EC3F0015B5E1 /* cardlayer.h in Headers */,
@@ -912,27 +916,9 @@
 				86E3DED61653EC3F0015B5E1 /* pkicard.h in Headers */,
 				86E3DED71653EC3F0015B5E1 /* reader.h in Headers */,
 				86E3DED81653EC3F0015B5E1 /* readersinfo.h in Headers */,
-				86E3DED91653EC3F0015B5E1 /* threadpool.h in Headers */,
 				86E3DEDA1653EC3F0015B5E1 /* unknowncard.h in Headers */,
 				86E3DEFB1653ECB10015B5E1 /* beidcard.h in Headers */,
 				86E3DEFD1653ECB10015B5E1 /* beidp15correction.h in Headers */,
-				86E3DEFF1653ECB10015B5E1 /* siscard.h in Headers */,
-				86E3DF001653ECB10015B5E1 /* sisplugin1.h in Headers */,
-				86E3DF021653ECB10015B5E1 /* sispluginhandler.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7FC535A80F84B9EF00BA96EE /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7FC535DB0F84BCDA00BA96EE /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -944,6 +930,27 @@
 				86837479186489B6005EE5D7 /* dialogs.h in Headers */,
 				868374CD186489B6005EE5D7 /* language.h in Headers */,
 				868374D2186489B6005EE5D7 /* sharedmem.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		86B474771BD798B8004FB8AE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86B474781BD798B8004FB8AE /* asn1.h in Headers */,
+				86B474791BD798B8004FB8AE /* beid_p11.h in Headers */,
+				86B4747A1BD798B8004FB8AE /* cal.h in Headers */,
+				86B4747B1BD798B8004FB8AE /* cert.h in Headers */,
+				86B4747C1BD798B8004FB8AE /* display.h in Headers */,
+				86B4747D1BD798B8004FB8AE /* log.h in Headers */,
+				86B4747E1BD798B8004FB8AE /* p11.h in Headers */,
+				86B4747F1BD798B8004FB8AE /* phash.h in Headers */,
+				86B474801BD798B8004FB8AE /* util.h in Headers */,
+				86B474811BD798B8004FB8AE /* pkcs11.h in Headers */,
+				86B474821BD798B8004FB8AE /* pkcs11f.h in Headers */,
+				86B474831BD798B8004FB8AE /* pkcs11t.h in Headers */,
+				86B474841BD798B8004FB8AE /* unix.h in Headers */,
+				86B474851BD798B8004FB8AE /* win32.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -982,7 +989,7 @@
 			);
 			name = beidpkcs11;
 			productName = beidpkcs11;
-			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.0.dylib */;
+			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.1.19.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FBB02520F839352009B751F /* beidcommon */ = {
@@ -1000,7 +1007,7 @@
 			);
 			name = beidcommon;
 			productName = beidcommon;
-			productReference = 7FBB02530F839352009B751F /* libbeidcommon.4.1.0.a */;
+			productReference = 7FBB02530F839352009B751F /* libbeidcommon.4.1.19.a */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		7FC5353A0F84B83B00BA96EE /* beidcardlayer */ = {
@@ -1019,43 +1026,7 @@
 			);
 			name = beidcardlayer;
 			productName = beidcardlayer;
-			productReference = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.0.a */;
-			productType = "com.apple.product-type.library.dynamic";
-		};
-		7FC535AB0F84B9EF00BA96EE /* siscardplugin */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7FC535B60F84BA0400BA96EE /* Build configuration list for PBXNativeTarget "siscardplugin" */;
-			buildPhases = (
-				7FC535A80F84B9EF00BA96EE /* Headers */,
-				7FC535A90F84B9EF00BA96EE /* Sources */,
-				7FC535AA0F84B9EF00BA96EE /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7F22A3C60F84D4B7001AD228 /* PBXTargetDependency */,
-			);
-			name = siscardplugin;
-			productName = siscardplugin;
-			productReference = 7FC535AC0F84B9EF00BA96EE /* libsiscardplugin1__ACS__.dylib */;
-			productType = "com.apple.product-type.library.dynamic";
-		};
-		7FC535DE0F84BCDA00BA96EE /* beiddialogsQT */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7FC535E30F84BCFA00BA96EE /* Build configuration list for PBXNativeTarget "beiddialogsQT" */;
-			buildPhases = (
-				7FC535DB0F84BCDA00BA96EE /* Headers */,
-				7FC535DC0F84BCDA00BA96EE /* Sources */,
-				7FC535DD0F84BCDA00BA96EE /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7F22A3710F84C58C001AD228 /* PBXTargetDependency */,
-			);
-			name = beiddialogsQT;
-			productName = beiddialogsQT;
-			productReference = 7FC535DF0F84BCDA00BA96EE /* libbeiddialogsQT.4.1.0.dylib */;
+			productReference = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.1.19.a */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		8683738418648918005EE5D7 /* beiddialogsmac */ = {
@@ -1073,7 +1044,25 @@
 			);
 			name = beiddialogsmac;
 			productName = beiddialogsmac;
-			productReference = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.0.a */;
+			productReference = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.1.19.a */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		86B474741BD798B8004FB8AE /* beid_ff_pkcs11 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 86B474981BD798B8004FB8AE /* Build configuration list for PBXNativeTarget "beid_ff_pkcs11" */;
+			buildPhases = (
+				86B474771BD798B8004FB8AE /* Headers */,
+				86B474861BD798B8004FB8AE /* Sources */,
+				86B474911BD798B8004FB8AE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				86B474751BD798B8004FB8AE /* PBXTargetDependency */,
+			);
+			name = beid_ff_pkcs11;
+			productName = beidpkcs11;
+			productReference = 86B4749B1BD798B8004FB8AE /* libbeid_ff_pkcs11.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -1104,6 +1093,10 @@
 					ProjectRef = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
 				},
 				{
+					ProductGroup = 655E14CF1BBA8A2800D855D3 /* Products */;
+					ProjectRef = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
+				},
+				{
 					ProductGroup = 869D00BE18D72DCF00A41853 /* Products */;
 					ProjectRef = 869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */;
 				},
@@ -1115,29 +1108,42 @@
 			projectRoot = "";
 			targets = (
 				7FBB02520F839352009B751F /* beidcommon */,
-				7FC535DE0F84BCDA00BA96EE /* beiddialogsQT */,
 				7FC5353A0F84B83B00BA96EE /* beidcardlayer */,
-				7FC535AB0F84B9EF00BA96EE /* siscardplugin */,
 				7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */,
 				8683738418648918005EE5D7 /* beiddialogsmac */,
 				6536230119A7E8E600D46ECB /* testsuite */,
+				86B474741BD798B8004FB8AE /* beid_ff_pkcs11 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		655E14D51BBA8A2900D855D3 /* eID Viewer.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "eID Viewer.app";
+			remoteRef = 655E14D41BBA8A2900D855D3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		655E14D71BBA8A2900D855D3 /* eidfilepreview.qlgenerator */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = eidfilepreview.qlgenerator;
+			remoteRef = 655E14D61BBA8A2900D855D3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		657875031D11518000DDA856 /* BeidView.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BeidView.framework;
+			remoteRef = 657875021D11518000DDA856 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		6580550E1A66C9BE000AEFE0 /* eID Middleware.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = "eID Middleware.app";
 			remoteRef = 6580550D1A66C9BE000AEFE0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		658055101A66C9BE000AEFE0 /* eID MiddlewareTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "eID MiddlewareTests.xctest";
-			remoteRef = 6580550F1A66C9BE000AEFE0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		869D00C218D72DD000A41853 /* plistMerger */ = {
@@ -1177,6 +1183,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65EABAF31C621FB400034337 /* labels.c in Sources */,
+				65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */,
 				65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */,
 				6536232B19A7E92B00D46ECB /* init_finalize.c in Sources */,
 				6536232F19A7E92B00D46ECB /* nonsensible.c in Sources */,
@@ -1198,10 +1206,12 @@
 				6536232E19A7E92B00D46ECB /* mechlist.c in Sources */,
 				6536233A19A7E92B00D46ECB /* threads.c in Sources */,
 				6536232519A7E92B00D46ECB /* decode_photo.c in Sources */,
+				8B8B71591B74CCA300D8910E /* sign_state.c in Sources */,
 				6536233D19A7E93A00D46ECB /* main.c in Sources */,
 				6536233519A7E92B00D46ECB /* sign.c in Sources */,
 				6536232A19A7E92B00D46ECB /* getinfo.c in Sources */,
 				6536232619A7E92B00D46ECB /* digest.c in Sources */,
+				8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1229,7 +1239,6 @@
 				86E3DDF31653D6210015B5E1 /* bytearray.cpp in Sources */,
 				6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */,
 				6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */,
-				86E3DDF51653D6210015B5E1 /* bytearrayreader.cpp in Sources */,
 				86E3DDF71653D6210015B5E1 /* configcommon.cpp in Sources */,
 				86E3DDF91653D6210015B5E1 /* configuration.cpp in Sources */,
 				86E3DDFB1653D6210015B5E1 /* datafile.cpp in Sources */,
@@ -1258,7 +1267,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86E3DEDB1653EC3F0015B5E1 /* cache.cpp in Sources */,
 				86E3DEDC1653EC3F0015B5E1 /* card.cpp in Sources */,
 				86E3DEDD1653EC3F0015B5E1 /* cardfactory.cpp in Sources */,
 				86E3DEDE1653EC3F0015B5E1 /* cardlayer.cpp in Sources */,
@@ -1273,27 +1281,9 @@
 				86E3DEE71653EC3F0015B5E1 /* pkicard.cpp in Sources */,
 				86E3DEE81653EC3F0015B5E1 /* reader.cpp in Sources */,
 				86E3DEE91653EC3F0015B5E1 /* readersinfo.cpp in Sources */,
-				86E3DEEA1653EC3F0015B5E1 /* threadpool.cpp in Sources */,
 				86E3DEEB1653EC3F0015B5E1 /* unknowncard.cpp in Sources */,
 				86E3DEFA1653ECB10015B5E1 /* beidcard.cpp in Sources */,
 				86E3DEFC1653ECB10015B5E1 /* beidp15correction.cpp in Sources */,
-				86E3DEFE1653ECB10015B5E1 /* siscard.cpp in Sources */,
-				86E3DF011653ECB10015B5E1 /* sispluginhandler.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7FC535A90F84B9EF00BA96EE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				86E3DF221653EF0E0015B5E1 /* siscard.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7FC535DC0F84BCDA00BA96EE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1307,19 +1297,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		86B474861BD798B8004FB8AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86B474871BD798B8004FB8AE /* cert.c in Sources */,
+				86B474881BD798B8004FB8AE /* encrypt.c in Sources */,
+				86B474891BD798B8004FB8AE /* general.c in Sources */,
+				86B4748A1BD798B8004FB8AE /* object.c in Sources */,
+				86B4748B1BD798B8004FB8AE /* p11.c in Sources */,
+				86B4748C1BD798B8004FB8AE /* session.c in Sources */,
+				86B4748D1BD798B8004FB8AE /* sign.c in Sources */,
+				86B4748E1BD798B8004FB8AE /* cal.cpp in Sources */,
+				86B4748F1BD798B8004FB8AE /* display.cpp in Sources */,
+				86B474901BD798B8004FB8AE /* phash.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7F22A3710F84C58C001AD228 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7FBB02520F839352009B751F /* beidcommon */;
-			targetProxy = 7F22A3700F84C58C001AD228 /* PBXContainerItemProxy */;
-		};
-		7F22A3C60F84D4B7001AD228 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7FBB02520F839352009B751F /* beidcommon */;
-			targetProxy = 7F22A3C50F84D4B7001AD228 /* PBXContainerItemProxy */;
-		};
 		7FC5353F0F84B84300BA96EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7FBB02520F839352009B751F /* beidcommon */;
@@ -1335,6 +1332,11 @@
 			target = 8683738418648918005EE5D7 /* beiddialogsmac */;
 			targetProxy = 868374E918648B7B005EE5D7 /* PBXContainerItemProxy */;
 		};
+		86B474751BD798B8004FB8AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FC5353A0F84B83B00BA96EE /* beidcardlayer */;
+			targetProxy = 86B474761BD798B8004FB8AE /* PBXContainerItemProxy */;
+		};
 		86F2229F186495600040D1AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7FC5353A0F84B83B00BA96EE /* beidcardlayer */;
@@ -1346,12 +1348,13 @@
 		1DEB916508733D950010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/output/lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.1.0;
+				CURRENT_PROJECT_VERSION = 4.1.19;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks;
+				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PFE_FILE_C_DIALECTS = "c c++";
@@ -1360,15 +1363,16 @@
 					LTC_NO_ASM,
 					BEID_35,
 				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				ONLY_ACTIVE_ARCH = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
@@ -1379,12 +1383,13 @@
 		1DEB916608733D950010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/output/lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				CURRENT_PROJECT_VERSION = 4.1.0;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CURRENT_PROJECT_VERSION = 4.1.19;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks;
+				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_MODEL_TUNING = "";
 				GCC_PFE_FILE_C_DIALECTS = "c c++";
@@ -1392,14 +1397,15 @@
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
 				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				GCC_THREADSAFE_STATICS = YES;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx;
@@ -1429,6 +1435,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					TEST_NO_ABORT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1437,8 +1444,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
 					doc/sdk/include/rsaref220,
+					plugins_tools/util,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1465,14 +1473,20 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					BEID_35,
+					TEST_NO_ABORT,
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
 					doc/sdk/include/rsaref220,
+					plugins_tools/util,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1485,7 +1499,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4.1.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
@@ -1493,7 +1506,7 @@
 				"EXPORTED_SYMBOLS_FILE[arch=*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks,
+					/System/Library/Frameworks,
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -1509,7 +1522,7 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
@@ -1529,7 +1542,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LIBRARY = "compiler-default";
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/output/lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_COMPATIBILITY_VERSION = "";
@@ -1537,7 +1549,7 @@
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks,
+					/System/Library/Frameworks,
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = "";
@@ -1553,7 +1565,7 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				MACH_O_TYPE = mh_dylib;
@@ -1595,7 +1607,7 @@
 					EIDMW_STATIC_LIB,
 				);
 				GCC_VERSION = "";
-				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib;
 				MACH_O_TYPE = staticlib;
 				ONLY_ACTIVE_ARCH = NO;
@@ -1614,7 +1626,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/output/lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = stabs;
 				DYLIB_COMPATIBILITY_VERSION = "";
@@ -1625,7 +1636,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_LINK_WITH_DYNAMIC_LIBRARIES = YES;
 				GCC_MODEL_TUNING = "";
-				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;
 				INSTALL_PATH = /usr/local/lib;
 				MACH_O_TYPE = staticlib;
 				ONLY_ACTIVE_ARCH = NO;
@@ -1661,11 +1672,13 @@
 					CARDPLUGIN_IN_CAL,
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
+					LTC_NO_ROLC,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
+					"${inherited}",
 				);
 				INSTALL_PATH = "";
 				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
@@ -1685,7 +1698,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/output/lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = YES;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
@@ -1702,14 +1714,16 @@
 					CARDPLUGIN_IN_CAL,
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
+					LTC_NO_ROLC,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
+					"${inherited}",
 				);
 				"HEADER_SEARCH_PATHS[arch=*]" = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers,
+					/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				LD_DYLIB_INSTALL_NAME = "$(EXECUTABLE_PATH)";
@@ -1722,99 +1736,6 @@
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		7FC535AD0F84B9EF00BA96EE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = stabs;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				EXECUTABLE_PREFIX = lib;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = "";
-				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers;
-				INSTALL_PATH = /usr/local/lib/siscardplugins;
-				PREBINDING = NO;
-				PRODUCT_NAME = siscardplugin1__ACS__;
-				VALID_ARCHS = "i386 x86_64";
-			};
-			name = Debug;
-		};
-		7FC535AE0F84B9EF00BA96EE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/output/lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = stabs;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				EXECUTABLE_PREFIX = lib;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = "";
-				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/PCSC.framework/Headers;
-				INSTALL_PATH = /usr/local/lib/siscardplugins;
-				ONLY_ACTIVE_ARCH = NO;
-				PREBINDING = NO;
-				PRODUCT_NAME = siscardplugin1__ACS__;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		7FC535E00F84BCDA00BA96EE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = stabs;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				EXECUTABLE_PREFIX = lib;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = "";
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/cardcomm/pkcs11/src/common/**";
-				INSTALL_PATH = /usr/local/lib;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = "-fno-strict-aliasing";
-				PREBINDING = NO;
-				PRODUCT_NAME = "beiddialogsQT.$(CURRENT_PROJECT_VERSION)";
-				SDKROOT = macosx;
-				STRINGS_FILE_OUTPUT_ENCODING = "UTF-16";
-				VALID_ARCHS = "i386 x86_64";
-			};
-			name = Debug;
-		};
-		7FC535E10F84BCDA00BA96EE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/output/lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = stabs;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				EXECUTABLE_PREFIX = lib;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = "";
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/cardcomm/pkcs11/src/common/**";
-				INSTALL_PATH = /usr/local/lib;
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-fno-strict-aliasing";
-				PREBINDING = NO;
-				PRODUCT_NAME = "beiddialogsQT.$(CURRENT_PROJECT_VERSION)";
-				SDKROOT = macosx;
-				STRINGS_FILE_OUTPUT_ENCODING = "UTF-16";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1855,7 +1776,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRODUCT_NAME = "$(TARGET_NAME).$(CURRENT_PROJECT_VERSION)";
@@ -1879,7 +1800,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/output/lib/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DYLIB_COMPATIBILITY_VERSION = "";
@@ -1901,12 +1821,98 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRODUCT_NAME = "$(TARGET_NAME).$(CURRENT_PROJECT_VERSION)";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
+			};
+			name = Release;
+		};
+		86B474991BD798B8004FB8AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "compiler-default";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				"EXPORTED_SYMBOLS_FILE[arch=*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/System/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					LTC_NO_ASM,
+					BEID_35,
+					EIDMW_STATIC_LIB,
+				);
+				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
+					/System/Library/Frameworks/PCSC.framework/Headers,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				LINKER_DISPLAYS_MANGLED_NAMES = YES;
+				MACH_O_TYPE = mh_dylib;
+				OTHER_CFLAGS = "-fno-strict-aliasing";
+				PREBINDING = NO;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
+				PRODUCT_NAME = beid_ff_pkcs11;
+				SDKROOT = macosx;
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Debug;
+		};
+		86B4749A1BD798B8004FB8AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "compiler-default";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/System/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					BEID_35,
+					EIDMW_STATIC_LIB,
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"EIDMW_PREFIX=/usr/local",
+					BEID_35,
+				);
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
+					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
+					/System/Library/Frameworks/PCSC.framework/Headers,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				MACH_O_TYPE = mh_dylib;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "-fno-strict-aliasing";
+				PREBINDING = NO;
+				PRODUCT_NAME = beid_ff_pkcs11;
+				SDKROOT = macosx;
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -1958,29 +1964,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7FC535B60F84BA0400BA96EE /* Build configuration list for PBXNativeTarget "siscardplugin" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7FC535AD0F84B9EF00BA96EE /* Debug */,
-				7FC535AE0F84B9EF00BA96EE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7FC535E30F84BCFA00BA96EE /* Build configuration list for PBXNativeTarget "beiddialogsQT" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7FC535E00F84BCDA00BA96EE /* Debug */,
-				7FC535E10F84BCDA00BA96EE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		8683738818648918005EE5D7 /* Build configuration list for PBXNativeTarget "beiddialogsmac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8683738618648918005EE5D7 /* Debug */,
 				8683738718648918005EE5D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		86B474981BD798B8004FB8AE /* Build configuration list for PBXNativeTarget "beid_ff_pkcs11" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				86B474991BD798B8004FB8AE /* Debug */,
+				86B4749A1BD798B8004FB8AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

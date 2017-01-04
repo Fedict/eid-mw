@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,10 +18,12 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 #ifndef basetest_h
 #define basetest_h
-
+	
 #include <stdio.h>
+#include <ctype.h>
 #ifdef WIN32
 //allign at 1 byte
 #pragma pack(push, cryptoki, 1)
@@ -28,46 +31,46 @@
 #include <pkcs11.h>
 #pragma pack(pop, cryptoki)
 //back to default allignment
-
+	
 #include <windows.h>
 #include <conio.h>
 #include <tchar.h>
 #include <strsafe.h>
-
+	
 #define dlopen(lib,h) LoadLibrary(lib)
 #define dlsym(h, function) GetProcAddress(h, function)
 #define dlclose(h) FreeLibrary(h)
 //#ifdef _DEBUG
 //  #define PKCS11_LIB TEXT("beidpkcs11D.dll")
 //#else
-  #define PKCS11_LIB TEXT("beidpkcs11.dll")
+#define PKCS11_LIB TEXT("beidpkcs11.dll")
 //#endif
-
+	
 #define RTLD_LAZY	1
 #define RTLD_NOW	2
 #define RTLD_GLOBAL 4
-
-#else
+	
+#else /*  */
 #define HMODULE void*
 #include "rsaref220/unix.h"
 #include "rsaref220/pkcs11.h"
-
+	
 #pragma pack(push, cryptoki, 1)
 #include "rsaref220/pkcs11.h"
 #pragma pack(pop, cryptoki)
-
+	
 #include <dlfcn.h>
 #include <unistd.h>
 #include <string.h>
-
+	
 #ifdef __APPLE__
 #define PKCS11_LIB "/usr/local/lib/libbeidpkcs11.dylib"
-#else
-#define PKCS11_LIB "/usr/lib/x86_64-linux-gnu/libbeidpkcs11.so.0"
-#endif
+#else /*  */
+#define PKCS11_LIB "libbeidpkcs11.so.0"
+#endif /*  */
 #define TEXT(x) x
 #define _getch() getchar()
-#endif
+#endif /*  */
 #include <stdlib.h>
-
-#endif
+	
+#endif /*  */

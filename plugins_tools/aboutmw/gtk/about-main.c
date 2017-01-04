@@ -17,7 +17,12 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
+#define _GNU_SOURCE
+
 #include <config.h>
+
+#define _GNU_SOURCE
 
 #include <errno.h>
 #include <stdio.h>
@@ -27,6 +32,7 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/utsname.h>
 
 #include <gtk/gtk.h>
@@ -35,8 +41,10 @@
 #include "about_glade.h"
 #include "now.h"
 
+#include "gettext.h"
+
 #ifndef _
-#define _(s) (s)
+#define _(s) gettext(s)
 #endif
 
 static enum _bits {
@@ -59,24 +67,25 @@ void check_pcsc(GtkWidget* top, GtkListStore* data) {
 	}
 	if(feof(f)) {
 		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
-		return;
+		goto exit;
 	}
 	pid[5]='\0';
 	if(fgets(pid, 5, f)==NULL) {
 		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
-		return;
+		goto exit;
 	}
-	pclose(f);
 	if((tmp = strchr(pid, '\n'))) {
 		*tmp = '\0';
 	}
 	if(strlen(pid)==0) {
 		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
-		return;
+		goto exit;
 	}
 	tmp = g_strdup_printf(_("running; pid: %s"), pid);
 	gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, tmp, -1);
 	g_free(tmp);
+exit:
+	pclose(f);
 }
 
 void do_java(GtkWidget* top, GtkListStore* data) {
@@ -96,6 +105,7 @@ void do_java(GtkWidget* top, GtkListStore* data) {
 	line[255]='\0';
 	if(fgets(line, 256, f) == NULL) {
 		gtk_list_store_set(data, &iter, 0, _("(not found)"), -1);
+		pclose(f);
 		return;
 	}
 	rv = pclose(f);
@@ -127,17 +137,18 @@ void do_viewer(GtkWidget* top, GtkListStore* data) {
 	tmp[PATH_MAX-1]='\0';
 	if(fgets(tmp, PATH_MAX, f) == NULL) {
 		gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, _("(not found)"), -1);
-		return;
+		goto exit;
 	}
-	pclose(f);
 	if((loc = strrchr(tmp, '\n')) != NULL) {
 		*loc = '\0';
 	}
 	if(strlen(tmp) == 0) {
 		gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, _("(not found)"), -1);
-		return;
+		goto exit;
 	}
 	gtk_list_store_set(data, &iter, 0, _("eID Viewer location"), 1, tmp, -1);
+exit:
+	pclose(f);
 }
 
 void do_files(GtkWidget* top, GtkListStore* data) {
@@ -151,7 +162,7 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 		{ BITS_32, "/usr/lib/i386-linux-gnu/libbeidpkcs11.so.0" },
 		{ BITS_64, "/usr/lib64/libbeidpkcs11.so.0" },
 		{ BITS_64, "/usr/lib/x86_64-linux-gnu/libbeidpkcs11.so.0" },
-		{ bitness, LIBDIR },
+		{ bitness, LIBDIR "/libbeidpkcs11.so.0" },
 	};
 	int i;
 	gboolean found32 = FALSE;
@@ -159,7 +170,7 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 	gboolean foundforeign = FALSE;
 	GtkTreeIter iter;
 
-	for(i=0;i<4;i++) {
+	for(i=0;i<(sizeof(locs) / sizeof(locs[0]));i++) {
 		if(stat(locs[i].loc, &st) < 0) {
 			switch(errno) {
 			case ENOENT:
@@ -175,10 +186,12 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 			gchar* str;
 			switch(locs[i].bitness) {
 				case BITS_32:
+					if(found32) continue;
 					str = _("32-bit PKCS#11 location");
 					found32 = TRUE;
 					break;
 				case BITS_64:
+					if(found64) continue;
 					str = _("64-bit PKCS#11 location");
 					found64 = TRUE;
 					break;
@@ -213,7 +226,21 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 	}
 }
 
-void copyline(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar** text) {
+void copyline_simple(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar** text) {
+	gchar *old = *text;
+	gchar *value;
+
+	gtk_tree_model_get(model, iter, 1, &value, -1);
+	if(*text == NULL) {
+		*text = g_strdup_printf("%s", value);
+	} else {
+		// should not happen, but better safe than sorry...
+		*text = g_strdup_printf("%s\n%s", old, value);
+		g_free(old);
+	}
+}
+
+void copyline_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar** text) {
 	gchar *old = *text;
 	gchar *name, *value;
 	
@@ -229,10 +256,28 @@ void copyline(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar**
 void copy2clip(GtkTreeView* tv) {
 	GtkClipboard* clip = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	GtkTreeSelection* sel = gtk_tree_view_get_selection(tv);
+	GtkTreeSelectionForeachFunc copyline = (GtkTreeSelectionForeachFunc)copyline_detail;
 	gchar* text = NULL;
+	gint rowcount = gtk_tree_selection_count_selected_rows(sel);
 
-	gtk_tree_selection_selected_foreach(sel, (GtkTreeSelectionForeachFunc)copyline, &text);
+	if(rowcount == 1) {
+		copyline = (GtkTreeSelectionForeachFunc)copyline_simple;
+	}
+
+	gtk_tree_selection_selected_foreach(sel, copyline, &text);
 	if(!text) return;
+	gtk_clipboard_set_text(clip, text, strlen(text));
+}
+
+void copy2prim(GtkTreeSelection* sel, gpointer user_data) {
+	GtkClipboard* clip = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
+	gchar* text = NULL;
+	gint rowcount = gtk_tree_selection_count_selected_rows(sel);
+
+	if(rowcount != 1) {
+		return;
+	}
+	gtk_tree_selection_selected_foreach(sel, (GtkTreeSelectionForeachFunc)copyline_simple, &text);
 	gtk_clipboard_set_text(clip, text, strlen(text));
 }
 
@@ -256,14 +301,18 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, _("32-bit PC"), -1);
 	} else {
 		bitness = BITS_FOREIGN;
-		asprintf(&values, _("Unknown (%s)"), undat.machine);
+		if(!strncmp(undat.machine, "arm", 3)) {
+			values = strdup(undat.machine);
+		} else {
+			asprintf(&values, _("Unknown (%s)"), undat.machine);
+		}
 		gtk_list_store_set(data, &iter, 0, _("System architecture"), 1, values, -1);
 		free(values);
 	}
 
 	gtk_list_store_append(data, &iter);
 	asprintf(&values, "%s %s %s %s %s", undat.sysname, undat.nodename, undat.release, undat.version, undat.machine);
-	gtk_list_store_set(data, &iter, 0, _("uname"), 1, values, -1);
+	gtk_list_store_set(data, &iter, 0, "uname", 1, values, -1);
 	free(values);
 }
 
@@ -281,22 +330,25 @@ char* get_lsb_info(char opt) {
 	rv[79]='\0';
 	rv[0]='\0';
 	if(fgets(rv, 79, f) == NULL) {
-		return strdup(_("(unknown)"));
+		free(rv);
+		rv = strdup(_("(unknown)"));
+		goto exit;
 	}
-	pclose(f);
 	if(strlen(rv) == 0) {
 		free(rv);
-		return strdup(_("(unknown)"));
+		rv = strdup(_("(unknown)"));
+		goto exit;
 	}
 	if((loc = strrchr(rv, '\n')) != NULL) {
 		*loc = '\0';
 	}
+exit:
+	pclose(f);
 	return rv;
 }
 
 void do_distro(GtkWidget* top, GtkListStore* data) {
 	GtkTreeIter iter;
-	FILE *f;
 	char *dat;
 
 	dat = get_lsb_info('i');
@@ -323,7 +375,11 @@ int main(int argc, char** argv) {
 	GtkTreeIter iter;
 	GtkListStore *store;
 	GtkAccelGroup *group;
+	GtkTreeSelection* sel;
 	gchar *tmp, *loc;
+
+	bindtextdomain("about-eid-mw", DATAROOTDIR "/locale");
+	textdomain("about-eid-mw");
 
 	gtk_init(&argc, &argv);
 
@@ -361,9 +417,9 @@ int main(int argc, char** argv) {
 	col = gtk_tree_view_column_new_with_attributes(_("Value"), renderer, "text", 1, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), col);
 
-	gtk_tree_selection_set_mode(
-			GTK_TREE_SELECTION(gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview))),
-			GTK_SELECTION_MULTIPLE);
+	sel = GTK_TREE_SELECTION(gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview)));
+	gtk_tree_selection_set_mode(sel, GTK_SELECTION_MULTIPLE);
+	g_signal_connect(G_OBJECT(sel), "changed", G_CALLBACK(copy2prim), NULL);
 
 	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
 	button = GTK_WIDGET(gtk_builder_get_object(builder, "quitbtn"));

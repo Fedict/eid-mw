@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -25,9 +26,9 @@
 namespace eIDMW
 {
 
-CCard * CardConnect(const std::string &csReader,
-	CContext *poContext, CPinpad *poPinpad,
-	CDynamicLib &oCardPluginLib);
+	CCard *CardConnect(const std::string & csReader,
+			   CContext * poContext, CPinpad * poPinpad,
+			   CDynamicLib & oCardPluginLib);
 
 }
 

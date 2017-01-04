@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -29,18 +30,18 @@
 
 using namespace eIDMW;
 
-class dlgWndModal : public dlgWndBase
+class dlgWndModal:public dlgWndBase
 {
-	Q_OBJECT
-
-public:
-	dlgWndModal( DlgIcon icon, QString Msg, unsigned char ulButtons, 
-		unsigned char ulEnterButton, unsigned char ulCancelButton, QWidget *parent = 0 );
-	~dlgWndModal();
+Q_OBJECT public:
+	         dlgWndModal(DlgIcon icon, QString Msg,
+			     unsigned char ulButtons,
+			     unsigned char ulEnterButton,
+			     unsigned char ulCancelButton, QWidget * parent =
+			     0);
+	    ~dlgWndModal();
 	DlgRet dlgResult;
 
-private slots:
-	void on_btnOk_clicked();
+	private slots:void on_btnOk_clicked();
 	void on_btnCancel_clicked();
 	void on_btnRetry_clicked();
 	void on_btnYes_clicked();
@@ -48,7 +49,7 @@ private slots:
 	void reject();
 
 private:
-	Ui::dlgWndModal ui;
+	     Ui::dlgWndModal ui;
 
 	unsigned char m_ulCancelButton;
 

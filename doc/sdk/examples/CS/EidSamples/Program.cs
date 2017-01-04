@@ -28,22 +28,31 @@ namespace EidSamples
     {
         static void Main(string[] args)
         {
-            System.Diagnostics.Stopwatch duurtijd = new System.Diagnostics.Stopwatch();
-            duurtijd.Start();
-
-            //SignTests st = new SignTests();
-            //st.SignAuthentication();
-
-            //IntegrityTests it = new IntegrityTests();
-            //it.IntegrityIdentityFile();
-
+            //System.Diagnostics.Stopwatch duurtijd = new System.Diagnostics.Stopwatch();
+            //duurtijd.Start();
             DataTests dt = new DataTests();
+            SignTests st = new SignTests();
+            IntegrityTests it = new IntegrityTests();
             //dt.StoreCertificateRNFile();
+            //dt.GetSpecialStatus();
+
+           // it.IntegrityIdentityFile();
+            //st.SignSignature();
+ //           CertificateValidityTests ct = new CertificateValidityTests();
+  //          ct.ValidityAuthenticationChain();
             dt.GetSurname();
-            dt.GetChipnumber();
-            dt.GetCertificateLabels();
-            duurtijd.Stop();
-            Console.WriteLine(duurtijd.ElapsedMilliseconds.ToString());
+            /*dt.GetSurname();
+            IntegrityIdentityFile
+            dt.GetSurname();
+            dt.GetSurname();
+            dt.GetSurname();
+            dt.GetSurname();
+            dt.GetSurname();
+            dt.GetSurname();
+            dt.GetSurname();
+            dt.GetCertificateLabels();*/
+            //duurtijd.Stop();
+           // Console.WriteLine(duurtijd.ElapsedMilliseconds.ToString());
         }
     }
 }

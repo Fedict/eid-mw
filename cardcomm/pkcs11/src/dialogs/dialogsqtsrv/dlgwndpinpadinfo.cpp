@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -21,37 +22,41 @@
 #include "dlgwndpinpadinfo.h"
 #include "../langutil.h"
 
-dlgWndPinpadInfo::dlgWndPinpadInfo( unsigned long ulHandle,
-		DlgPinOperation operation, const QString & Reader,  
-		const QString &PINName, const QString & Message, QWidget *parent )
-
-	: QWidget(parent)
+dlgWndPinpadInfo::dlgWndPinpadInfo(unsigned long ulHandle,
+				   DlgPinOperation operation,
+				   const QString & Reader,
+				   const QString & PINName,
+				   const QString & Message,
+				   QWidget * parent):QWidget(parent)
 {
 	ui.setupUi(this);
 
-	QString Title="";
+	QString Title = "";
 
 	//if( DApplic == DLG_APP_BELPIC )
 	//{
-		this->setWindowIcon( QIcon( ":/Resources/ICO_CARD_EID_PLAIN_16x16.png" ) );
-	//	Title+=QString::fromWCharArray(GETSTRING_DLG(Belpic));
-	//	Title+=": ";
+	this->setWindowIcon(QIcon
+			    (":/Resources/ICO_CARD_EID_PLAIN_16x16.png"));
+	//      Title+=QString::fromWCharArray(GETSTRING_DLG(Belpic));
+	//      Title+=": ";
 	//}
-	Title+=QString::fromWCharArray(GETSTRING_DLG(PinpadInfo));
-	if(!Reader.isEmpty())
+	Title += QString::fromWCharArray(GETSTRING_DLG(PinpadInfo));
+	if (!Reader.isEmpty())
 	{
-		Title+=" - ";
-		Title+=Reader;
+		Title += " - ";
+		Title += Reader;
 	}
-	parent->setWindowTitle( Title );
+	parent->setWindowTitle(Title);
 
 	QString tmpHeader;
+
 	tmpHeader = PINName;
 
-	ui.label_2->setText( tmpHeader );
-	ui.label->setText( Message );
+	ui.label_2->setText(tmpHeader);
+	ui.label->setText(Message);
 	m_ulHandle = ulHandle;
-	ui.lblIcon->setPixmap( QPixmap( ":/Resources/ICO_CARD_PIN_128x128.png" ) );
+	ui.lblIcon->
+		setPixmap(QPixmap(":/Resources/ICO_CARD_PIN_128x128.png"));
 
 }
 
@@ -59,12 +64,13 @@ dlgWndPinpadInfo::~dlgWndPinpadInfo()
 {
 }
 
-void dlgWndPinpadInfo::closeEvent( QCloseEvent *event)
+void dlgWndPinpadInfo::closeEvent(QCloseEvent * event)
 {
-	if( m_ulHandle )
+	if (m_ulHandle)
 	{
 		unsigned long tmp = m_ulHandle;
+
 		m_ulHandle = 0;
-		DlgClosePinpadInfo( tmp );
+		DlgClosePinpadInfo(tmp);
 	}
 }

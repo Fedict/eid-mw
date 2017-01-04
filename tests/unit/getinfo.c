@@ -31,6 +31,7 @@ TEST_FUNC(getinfo) {
 	CK_INFO info;
 
 	check_rv(C_Initialize(NULL_PTR));
+	check_rv_long(C_GetInfo(NULL_PTR), m_p11_badarg);
 	check_rv(C_GetInfo(&info));
 	verbose_assert(info.cryptokiVersion.major == 2);
 	verify_null(info.manufacturerID, 32, 0, "Cryptoki manufacturer ID:\t'%s'\n");

@@ -33,7 +33,7 @@
  */
 
 TEST_FUNC(double_init) {
-	ckrv_mod m[] = { CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_OK, CKR_OK, TEST_RV_FAIL };
+	ckrv_mod m[] = { { CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_OK}, { CKR_OK, TEST_RV_FAIL } };
 
 	check_rv(C_Initialize(NULL_PTR));
 	check_rv_long(C_Initialize(NULL_PTR), m);

@@ -33,6 +33,7 @@ HRESULT CALLBACK TaskDialogCallbackProcPinEntry(
     LONG_PTR dwRefData
 	) 
 {
+#ifndef NO_DIALOGS
 	PEXTERNAL_PIN_INFORMATION pExternalPinInfo;
 	LRESULT lResult;
 
@@ -62,12 +63,14 @@ HRESULT CALLBACK TaskDialogCallbackProcPinEntry(
 		default:
 			break;
 	}
+#endif
 	return S_OK;
 }
 
 // thread function called to show External PIN entry dialog box
 DWORD WINAPI DialogThreadPinEntry(LPVOID lpParam)
 {
+#ifndef NO_DIALOGS
     TASKDIALOGCONFIG tc = { 0 };
 
     int nButtonPressed = 0;
@@ -94,7 +97,7 @@ DWORD WINAPI DialogThreadPinEntry(LPVOID lpParam)
 	tc.cbSize = sizeof(tc);
 	pExternalPinInfo->uiState = US_PINENTRY;
 	hr = TaskDialogIndirect(&tc, &nButtonPressed, NULL, NULL);
-
+#endif
 	return 0;
 }
 

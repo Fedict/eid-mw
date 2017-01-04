@@ -63,7 +63,7 @@ namespace EidSamples
                 RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)x509Certificate.PublicKey.Key;
 
                 // verify signature. assume that the data was SHA1 hashed.
-                return rsa.VerifyData(data,"SHA1",signature);
+                return rsa.VerifyData(data,"SHA256",signature);
             }
             catch (Exception e)
             {
@@ -83,7 +83,7 @@ namespace EidSamples
         {
             X509Chain chain = new X509Chain();
             // check CRL of certificates online
-            chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+            chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;//X509RevocationMode.Online;
 
             // add intermediate CA certificates in order to build the correct chain
             foreach (byte[] CACert in CACertificates)

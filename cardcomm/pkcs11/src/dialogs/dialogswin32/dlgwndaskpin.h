@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -25,7 +26,7 @@
 using namespace eIDMW;
 
 
-class dlgWndAskPIN : public Win32Dialog
+class dlgWndAskPIN:public Win32Dialog
 {
 	void GetPinResult();
 	HBITMAP ImagePIN;
@@ -34,24 +35,24 @@ class dlgWndAskPIN : public Win32Dialog
 	HBITMAP ImageKP_BTN[12];
 	HBITMAP ImageKP_BTN_Mask;
 	HFONT TextFont;
-	
+
 	unsigned int m_ulPinMinLen;
 	unsigned int m_ulPinMaxLen;
 	bool m_UseKeypad;
-	const wchar_t * szHeader;
-	const wchar_t * szPIN;
+	const wchar_t *szHeader;
+	const wchar_t *szPIN;
 
 	LONG m_KeypadHeight;
 
 public:
-	dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstring & Header, std::wstring & PINName, bool UseKeypad, HWND Parent = NULL );
-	virtual ~dlgWndAskPIN();
+	     dlgWndAskPIN(DlgPinInfo pinInfo, DlgPinUsage PinPusage,
+			  std::wstring & Header, std::wstring & PINName,
+			  bool UseKeypad, HWND Parent = NULL);
+	     virtual ~ dlgWndAskPIN();
 
 	wchar_t PinResult[DLGWIN_PINRES_LEN];
 
-	virtual LRESULT ProcecEvent
-				(	UINT		uMsg,			// Message For This Window
-					WPARAM		wParam,			// Additional Message Information
-					LPARAM		lParam );		// Additional Message Information
+	virtual LRESULT ProcecEvent(UINT uMsg,	// Message For This Window
+				    WPARAM wParam,	// Additional Message Information
+				    LPARAM lParam);	// Additional Message Information
 };
-

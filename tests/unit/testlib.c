@@ -22,8 +22,10 @@
 #include <win32.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <tchar.h>
 #else
 #include <unix.h>
+#include <unistd.h>
 #endif
 #include <pkcs11.h>
 #include <stdlib.h>
@@ -45,6 +47,10 @@
 
 int va_counter;
 int fc_counter;
+#ifdef WIN32
+extern _TCHAR* eid_robot_style;
+extern _TCHAR*	eid_dialogs_style;
+#endif
 
 enum {
 	ROBOT_NONE,
@@ -60,7 +66,7 @@ enum {
 
 int robot_dev = 0;
 
-void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
+int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	int nullCount = 0;
 	char* buf = (char*)malloc(length + 1);
 	unsigned int i;
@@ -69,7 +75,7 @@ void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 			nullCount++;
 		}
 	}
-	verbose_assert(nullCount == expect);
+	printf("nullCount: %d; expect: %d\n", nullCount, expect);
 #ifdef WIN32
 	strncpy_s(buf,  (size_t)(length + 1),(const char*)string, length);
 #else
@@ -78,6 +84,9 @@ void verify_null(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	buf[length] = '\0';
 	printf(msg, buf);
 	free(buf);
+	verbose_assert(nullCount == expect);
+    
+	return TEST_RV_OK;
 }
 
 #ifdef HAVE_TERMIOS_H
@@ -122,10 +131,10 @@ CK_BBOOL open_robot(char* envvar) {
 
 CK_BBOOL have_robot() {
 #ifdef WIN32
-	return CK_FALSE;
+	char* envvar = eid_robot_style;
 #else
 	char* envvar = getenv("EID_ROBOT_STYLE");
-	
+#endif
 	if(envvar == NULL) {
 		robot_type = ROBOT_NONE;
 		return CK_FALSE;
@@ -148,13 +157,20 @@ CK_BBOOL have_robot() {
 	}
 
 	return CK_FALSE;
-#endif
+
 }
 
 CK_BBOOL want_dialogs() {
+#ifdef WIN32
+	char* envvar = eid_dialogs_style;
+#else
 	char* envvar = getenv("EID_DIALOGS_STYLE");
-
+#endif
+#ifdef NO_DIALOGS
+	dialogs_type = DIALOGS_NOPIN;
+#else
 	dialogs_type = DIALOGS_AVOID;
+#endif
 
 	if(envvar == NULL) {
 		return CK_FALSE;
@@ -168,6 +184,7 @@ CK_BBOOL want_dialogs() {
 	if(dialogs_type == DIALOGS_AVOID) {
 		return CK_FALSE;
 	}
+
 	return CK_TRUE;
 }
 
@@ -187,21 +204,26 @@ CK_BBOOL can_enter_pin(CK_SLOT_ID slot) {
 	CK_SESSION_INFO info;
 	CK_BBOOL retval = CK_TRUE;
 
-	if(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session) != CKR_OK) {
-		printf("Could not open a session\n");
+	if(!have_pin()) {
 		return CK_FALSE;
 	}
-	if(C_GetSessionInfo(session, &info) != CKR_OK) {
-		printf("Could not request session info\n");
-		return CK_FALSE;
-	}
-	if(info.flags & CKF_PROTECTED_AUTHENTICATION_PATH) {
-		if(have_robot() && !is_manual_robot()) {
+	if(have_robot() && !is_manual_robot()) {
+		if(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session) != CKR_OK) {
+			printf("Could not open a session\n");
+			return CK_FALSE;
+		}
+		if(C_GetSessionInfo(session, &info) != CKR_OK) {
+			printf("Could not request session info\n");
+			retval = CK_FALSE;
+		}
+		if(info.flags & CKF_PROTECTED_AUTHENTICATION_PATH) {
 			fprintf(stderr, "E: robot cannot enter a pin code on a protected auth path SC reader\n");
 			retval = CK_FALSE;
 		}
+		C_CloseSession(session);
+	} else {
+		retval = CK_TRUE;
 	}
-	C_CloseSession(session);
 	return retval;
 }
 
@@ -245,6 +267,8 @@ int ckrv_decode(CK_RV rv, char* fc, int count, const ckrv_mod* mods) {
 	ADD_CKRV(CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_SKIP);
 	ADD_CKRV(CKR_GENERAL_ERROR, TEST_RV_FAIL);
 	ADD_CKRV(CKR_HOST_MEMORY, TEST_RV_FAIL);
+	ADD_CKRV(CKR_KEY_HANDLE_INVALID, TEST_RV_FAIL);
+	ADD_CKRV(CKR_KEY_TYPE_INCONSISTENT, TEST_RV_FAIL);
 	ADD_CKRV(CKR_MECHANISM_INVALID, TEST_RV_FAIL);
 	ADD_CKRV(CKR_NEED_TO_CREATE_THREADS, TEST_RV_FAIL);
 	ADD_CKRV(CKR_NO_EVENT, TEST_RV_FAIL);
@@ -364,6 +388,9 @@ void robot_insert_card() {
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
 			robot_cmd('i', CK_TRUE);
+			// wait a bit after the card was inserted, to ensure
+			// that the reader has detected it ...
+			sleep(1);
 			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please insert a card and press <enter>\n");
@@ -430,14 +457,18 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	CK_RV rv;
 	CK_ULONG count = 0;
 	CK_SLOT_ID_PTR list = NULL;
+	int i;
+	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
+	CK_SESSION_HANDLE session;
 
-	ckrv_mod m[] = { CKR_BUFFER_TOO_SMALL, TEST_RV_OK };
 	check_rv_long(C_GetSlotList(with_token, NULL_PTR, &count), m);
-	printf("slots %sfound: %lu\n", with_token ? "with token " : "", count);
+	printf("INFO: slots %sfound: %lu\n", with_token ? "with token " : "", count);
 	if(count == 0 && with_token) {
+		/* no slots with token found; try asking for a token */
 		if(have_robot()) {
 			robot_insert_card();
-			return find_slot(with_token, slot);
+			// assume we have one token, now
+			count=1;
 		}
 		printf("Need at least one token to run this test\n");
 		return TEST_RV_SKIP;
@@ -448,11 +479,25 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	} while((rv = C_GetSlotList(with_token, list, &count) == CKR_BUFFER_TOO_SMALL));
 	check_rv_late("C_GetSlotList");
 
-	if(count > 1) {
-		printf("INFO: multiple slots found, using slot %lu\n", list[0]);
+	i = 0;
+	if(with_token) {
+		do {
+			rv = C_OpenSession(list[i], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
+			if(rv != CKR_TOKEN_NOT_RECOGNIZED) {
+				check_rv_late("C_OpenSession");
+			} else {
+				printf("INFO: skipping slot %lu, token not recognized\n", list[i]);
+			}
+			check_rv(C_CloseSession(session));
+		} while(rv != CKR_OK && (++i < count));
+		if (i >= count ) {
+			printf("Need at least one known token for this test\n");
+			return TEST_RV_SKIP;
+		}
 	}
+	printf("INFO: using slot %lu\n", list[i]);
 
-	*slot = list[0];
+	*slot = list[i];
 	free(list);
 
 	return TEST_RV_OK;

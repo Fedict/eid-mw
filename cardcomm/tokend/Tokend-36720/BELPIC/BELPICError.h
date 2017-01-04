@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -32,21 +33,25 @@
 #include "SCardError.h"
 
 
-class BELPICError : public Tokend::SCardError
+class BELPICError:public Tokend::SCardError
 {
 protected:
-    BELPICError(uint16_t sw);
-	virtual ~BELPICError() throw ();
+	BELPICError(uint16_t sw);
+	virtual ~ BELPICError() throw();
 public:
-    virtual const char *what () const throw ();
+	virtual const char *what() const throw();
 
-    static void check(uint16_t sw)	{ if (sw != SCARD_SUCCESS) throwMe(sw); }
-    static void throwMe(uint16_t sw) __attribute__((noreturn));
+	static void check(uint16_t sw)
+	{
+		if (sw != SCARD_SUCCESS)
+			throwMe(sw);
+	}
+	static void throwMe(uint16_t sw) __attribute__ ((noreturn));
+
 protected:
 #if MAX_OS_X_VERSION_MIN_REQUIRED <= MAX_OS_X_VERSION_10_5
-    IFDEBUG(void debugDiagnose(const void *id) const;)
+	IFDEBUG(void debugDiagnose(const void *id) const;)
 #endif
 };
 
 #endif /* !_BELPICERROR_H_ */
-

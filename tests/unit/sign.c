@@ -25,6 +25,7 @@
 #include <pkcs11.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "testlib.h"
 
@@ -36,6 +37,18 @@
 #include <openssl/rsa.h>
 #include <openssl/engine.h>
 
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+static int RSA_set0_key(RSA *r, BIGNUM *n, BIGNUM *e, BIGNUM *d) {
+	if(!r || !n || !e) {
+		return 0;
+	}
+	r->n = n;
+	r->e = e;
+	r->d = d;
+	return 1;
+}
+#endif
+
 CK_BYTE digest_sha1[] = {
                 0x0b, 0xee, 0xc7, 0xb5,
                 0xea, 0x3f, 0x0f, 0xdb,
@@ -44,13 +57,12 @@ CK_BYTE digest_sha1[] = {
                 0x75, 0xda, 0x8a, 0x33
 };
 
-int verify_sig(char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULONG modlen, CK_BYTE_PTR exponent, CK_ULONG explen) {
+int verify_sig(unsigned char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULONG modlen, CK_BYTE_PTR exponent, CK_ULONG explen) {
 	RSA* rsa = RSA_new();
 	unsigned char* s = malloc(siglen);
 	int ret;
 
-	rsa->n = BN_bin2bn(modulus, (int) modlen, NULL);
-	rsa->e = BN_bin2bn(exponent, (int) explen, NULL);
+	RSA_set0_key(rsa, BN_bin2bn(modulus, (int) modlen, NULL), BN_bin2bn(exponent, (int) explen, NULL), NULL);
 
 	int v = RSA_verify(NID_sha1, digest_sha1, sizeof(digest_sha1), sig, siglen, rsa);
 
@@ -71,21 +83,89 @@ int verify_sig(char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULONG modlen,
 
 #endif
 
+int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
+	CK_ATTRIBUTE attr[2];
+	CK_MECHANISM mech;
+	CK_BYTE data[] = { 'f', 'o', 'o' };
+	CK_BYTE_PTR sig, mod, exp;
+	CK_ULONG sig_len, type, count;
+	CK_OBJECT_HANDLE privatekey, publickey;
+
+	attr[0].type = CKA_CLASS;
+	attr[0].pValue = &type;
+	type = CKO_PRIVATE_KEY;
+	attr[0].ulValueLen = sizeof(CK_ULONG);
+
+	attr[1].type = CKA_LABEL;
+	attr[1].pValue = label;
+	attr[1].ulValueLen = strlen(label);
+
+	check_rv(C_FindObjectsInit(session, attr, 2));
+	check_rv(C_FindObjects(session, &privatekey, 1, &count));
+	verbose_assert(count == 1 || count == 0);
+	check_rv(C_FindObjectsFinal(session));
+
+	if(count == 0) {
+		fprintf(stderr, "Cannot test \"%s\" signature on a card without a \"%s\" key\n", label, label);
+		return TEST_RV_SKIP;
+	}
+
+	mech.mechanism = CKM_SHA1_RSA_PKCS;
+	check_rv(C_SignInit(session, &mech, privatekey));
+
+	check_rv(C_Sign(session, data, sizeof(data), NULL, &sig_len));
+	sig = malloc(sig_len);
+	check_rv(C_Sign(session, data, sizeof(data), sig, &sig_len));
+
+	printf("Received a signature with length %lu:\n", sig_len);
+
+	hex_dump((char*)sig, sig_len);
+
+	type = CKO_PUBLIC_KEY;
+	check_rv(C_FindObjectsInit(session, attr, 2));
+	check_rv(C_FindObjects(session, &publickey, 1, &count));
+	verbose_assert(count == 1);
+	check_rv(C_FindObjectsFinal(session));
+
+	attr[0].type = CKA_MODULUS;
+	attr[0].pValue = NULL_PTR;
+	attr[0].ulValueLen = 0;
+
+	attr[1].type = CKA_PUBLIC_EXPONENT;
+	attr[1].pValue = NULL_PTR;
+	attr[1].ulValueLen = 0;
+
+	check_rv(C_GetAttributeValue(session, publickey, attr, 2));
+
+	verbose_assert(attr[0].ulValueLen == sig_len);
+
+	mod = malloc(attr[0].ulValueLen);
+	mod[0] = 0xde; mod[1] = 0xad; mod[2] = 0xbe; mod[3] = 0xef;
+	exp = malloc(attr[1].ulValueLen);
+	exp[0] = 0xde; exp[1] = 0xad; exp[2] = 0xbe; exp[3] = 0xef;
+
+	attr[0].pValue = mod;
+	attr[1].pValue = exp;
+
+	check_rv(C_GetAttributeValue(session, publickey, attr, 2));
+
+	printf("Received key modulus with length %lu:\n", attr[0].ulValueLen);
+	hex_dump((char*)mod, attr[0].ulValueLen);
+
+	printf("Received public exponent of key with length %lu:\n", attr[1].ulValueLen);
+	hex_dump((char*)exp, attr[1].ulValueLen);
+
+#if HAVE_OPENSSL
+	return verify_sig(sig, sig_len, mod, attr[0].ulValueLen, exp, attr[1].ulValueLen);
+#else
+	return TEST_RV_OK;
+#endif
+}
+
 TEST_FUNC(sign) {
 	int ret;
 	CK_SESSION_HANDLE session;
-	CK_MECHANISM mech;
-	CK_BYTE data[] = { 'f', 'o', 'o' };
 	CK_SLOT_ID slot;
-	CK_BYTE_PTR sig, mod, exp;
-	CK_ULONG sig_len, type, count;
-	CK_OBJECT_HANDLE private, public;
-	ckrv_mod m[] = {
-		{ CKR_PIN_INCORRECT, TEST_RV_SKIP },
-		{ CKR_FUNCTION_CANCELED, TEST_RV_SKIP },
-	};
-	CK_ATTRIBUTE attr[2];
-	int i;
 
 	if(!have_pin()) {
 		fprintf(stderr, "Cannot test signature without a pin code\n");
@@ -105,118 +185,11 @@ TEST_FUNC(sign) {
 		return TEST_RV_SKIP;
 	}
 
-	attr[0].type = CKA_CLASS;
-	attr[0].pValue = &type;
-	type = CKO_PRIVATE_KEY;
-	attr[0].ulValueLen = sizeof(CK_ULONG);
-
-	attr[1].type = CKA_LABEL;
-	attr[1].pValue = "Signature";
-	attr[1].ulValueLen = strlen("Signature");
-
-	check_rv(C_FindObjectsInit(session, attr, 2));
-	check_rv(C_FindObjects(session, &private, 1, &count));
-	verbose_assert(count == 1 || count == 0);
-	check_rv(C_FindObjectsFinal(session));
-
-	if(count == 0) {
-		fprintf(stderr, "Cannot test signature on a card without a signature key\n");
-		return TEST_RV_SKIP;
-	}
-
-	mech.mechanism = CKM_SHA1_RSA_PKCS;
-	check_rv(C_SignInit(session, &mech, private));
-
-	check_rv(C_Sign(session, data, sizeof(data), NULL, &sig_len));
-	sig = malloc(sig_len);
-	check_rv(C_Sign(session, data, sizeof(data), sig, &sig_len));
-
-	printf("Received a signature with length %lu:\n", sig_len);
-
-	hex_dump(sig, sig_len);
-
-	type = CKO_PUBLIC_KEY;
-	check_rv(C_FindObjectsInit(session, attr, 2));
-	check_rv(C_FindObjects(session, &public, 1, &count));
-	verbose_assert(count == 1);
-	check_rv(C_FindObjectsFinal(session));
-
-	attr[0].type = CKA_MODULUS;
-	attr[0].pValue = NULL_PTR;
-	attr[0].ulValueLen = 0;
-
-	attr[1].type = CKA_PUBLIC_EXPONENT;
-	attr[1].pValue = NULL_PTR;
-	attr[1].ulValueLen = 0;
-
-	check_rv(C_GetAttributeValue(session, public, attr, 2));
-
-	verbose_assert(attr[0].ulValueLen == sig_len);
-
-#if HAVE_OPENSSL
-	mod = malloc(attr[0].ulValueLen);
-	mod[0] = 0xde; mod[1] = 0xad; mod[2] = 0xbe; mod[3] = 0xef;
-	exp = malloc(attr[1].ulValueLen);
-	exp[0] = 0xde; exp[1] = 0xad; exp[2] = 0xbe; exp[3] = 0xef;
-
-	attr[0].pValue = mod;
-	attr[1].pValue = exp;
-
-	check_rv(C_GetAttributeValue(session, public, attr, 2));
-
-	printf("Received key modulus with length %lu:\n", attr[0].ulValueLen);
-	hex_dump(mod, attr[0].ulValueLen);
-
-	printf("Received public exponent of key with length %lu:\n", attr[1].ulValueLen);
-	hex_dump(exp, attr[1].ulValueLen);
-
-	if((ret = verify_sig(sig, sig_len, mod, attr[0].ulValueLen, exp, attr[1].ulValueLen)) != TEST_RV_OK) {
+	if((ret = test_key("Authentication", session, slot)) != TEST_RV_OK) {
 		return ret;
 	}
-#endif
-
-	if(have_robot()) {
-		ckrv_mod m_maybe_rmvd[] = {
-			{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
-			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
-		};
-		ckrv_mod m_is_rmvd[] = {
-			{ CKR_OK, TEST_RV_FAIL },
-			{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
-			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
-		};
-		ckrv_mod m_inv[] = {
-			{ CKR_OK, TEST_RV_FAIL },
-			{ CKR_DEVICE_REMOVED, TEST_RV_OK },
-			{ CKR_SESSION_HANDLE_INVALID, TEST_RV_OK },
-		};
-		ckrv_mod m_pubkey[] = {
-			{ CKR_OK, TEST_RV_FAIL },
-			{ CKR_KEY_FUNCTION_NOT_PERMITTED, TEST_RV_OK },
-		};
-
-		check_rv_long(C_SignInit(session, &mech, public), m_pubkey);
-
-		check_rv(C_SignInit(session, &mech, private));
-
-		robot_remove_card();
-		
-		check_rv_long(C_Sign(session, data, sizeof(data), NULL, &sig_len), m_is_rmvd);
-
-		if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
-			check_rv(C_Finalize(NULL_PTR));
-			return ret;
-		}
-
-		check_rv_long(C_SignInit(session, &mech, private), m_inv);
-
-		check_rv(C_CloseSession(session));
-
-		check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
-
-		check_rv(C_SignInit(session, &mech, private));
-	} else {
-		printf("Robot not present, skipping removal/insertion part of test...\n");
+	if((ret = test_key("Signature", session, slot)) != TEST_RV_OK) {
+		return ret;
 	}
 
 	check_rv(C_Finalize(NULL_PTR));

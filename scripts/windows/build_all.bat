@@ -1,3 +1,6 @@
+:: options for build file
+::@set DONT_MERGE_VCRT=yes
+
 :: set all path variables
 :: =====================
 @call "%~dp0.\SetPaths.bat"
@@ -10,56 +13,63 @@
 
 :: build pkcs11, minidriver, cleanuptool and sccertprop
 :: ====================================================
-@echo [INFO] Building "%~dp0..\..\VS_2012\beid.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2012\beid.sln"
+@echo [INFO] Building "%~dp0..\..\VS_2015\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2012\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2015\beid.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 :: create minidriver driver installer
-:: disabled, we take the pre-build and signed minidriver
 :: ==================================
 
 :: BuildPath
-::set INSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
+set MDRVINSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
+@echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
 
-::md %INSTALLPATH%\Release
-::@echo [INFO] Copying minidriver files..
+rmdir /s /q %MDRVINSTALLPATH%\Release
+mkdir %MDRVINSTALLPATH%\Release
+@echo [INFO] Copying minidriver files..
 
 :: copy inf files
-::copy %INSTALLPATH%\beidmdrv.inf %INSTALLPATH%\Release
+copy %MDRVINSTALLPATH%\beidmdrv.inf %MDRVINSTALLPATH%\Release
 
 :: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-::copy %~dp0..\..\VS_2012\Binaries\Win32_Release\beidmdrv.dll %INSTALLPATH%\Release\beidmdrv32.dll
-::copy %~dp0..\..\VS_2012\Binaries\x64_Release\beidmdrv.dll %INSTALLPATH%\Release\beidmdrv64.dll
+copy %~dp0..\..\cardcomm\VS_2015\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\Release\beidmdrv32.dll
+copy %~dp0..\..\cardcomm\VS_2015\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\Release\beidmdrv64.dll
 
 :: copy icon
-::copy %~dp0..\minidriver\img\beid.ico %INSTALLPATH%\Release\
+:: copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\Release\
 
 :: @echo [INFO] Creating cat file
 :: Create catalog
-::%INF2CAT_PATH%\inf2cat.exe /driver:%INSTALLPATH%\Release\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
-::@if "%ERRORLEVEL%" == "1" goto inf2cat_failed
+%INF2CAT_PATH%\inf2cat.exe /driver:%MDRVINSTALLPATH%\Release\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
+@if "%ERRORLEVEL%" == "1" goto inf2cat_failed
 
 :: sign minidriver driver cat file
 :: ===============================
+@echo [INFO] Sign the catalog
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
 
-:: Sign the catalog
-:: @echo [INFO] Sign the catalog
-:: %SIGNTOOL_PATH%\SignTool.exe sign /v /f %~dp0fedicteidtest.pfx /t http://timestamp.verisign.com/scripts/timestamp.dll %INSTALLPATH%\Release\beidmdrv.cat
-:: @if "%ERRORLEVEL%" == "1" goto signtool_failed
+
+:: create cert
+:: %SIGNTOOL_PATH%\makecert -r -n CN="FedictTestCert" -b 01/01/2015 -e 01/01/2020 -ss my -sky signature
 
 :: create the MSI installers
 :: =========================
@@ -71,11 +81,17 @@ set OUR_CURRENT_PATH="%cd%"
 
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw32.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
+@echo [INFO] sign 32 bit msi installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
+@if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
+@echo [INFO] sign 64 bit msi installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
+@if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 
@@ -83,26 +99,36 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 :: create the NSIS plugins
 :: =========================
 @echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2015\beidplugins.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2015\beidplugins.sln"
 
 :: copy the NSIS plugins to NSIS default plugin folder
+:: nsis installer is updated to look into the build folder
 :: =========================
-@echo [INFO] Copying beid NSIS plugin
-copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\beidread\Release\beid.dll "%NSIS_PATH%\Plugins"
-@echo [INFO] Copying driver_installer NSIS plugin
-copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\driver_installer.dll "%NSIS_PATH%\Plugins"
+::@echo [INFO] Copying beid NSIS plugin
+::copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\beidread\Release\beid.dll "%NSIS_PATH%\Plugins"
+::@echo [INFO] Copying driver_installer NSIS plugin
+::copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\driver_installer.dll "%NSIS_PATH%\Plugins"
 
 :: create the NSIS installer
 :: =========================
 @echo [INFO] Make nsis installer
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\Quickinstaller.nsi"
-@if %ERRORLEVEL%==1 goto end_resetpath
+@if %ERRORLEVEL%==1 goto makensis_failed
+
+
+:: sign the NSIS installer
+:: =========================
+@echo [INFO] Sign nsis installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@if %ERRORLEVEL%==1 goto signtool_failed
+
+:: copy the NSIS installer
+:: =========================
 @echo [INFO] copy nsis installer
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
 goto end_resetpath
-
 
 :msbuild_failed
 @echo [ERR ] msbuild failed
@@ -112,8 +138,8 @@ goto end_resetpath
 @echo [ERR ] inf2cat_failed failed
 @goto err
 
-:makecert_failed
-@echo [ERR ] makecert failed
+:makensis_failed
+@echo [ERR ] makensis failed
 @goto err
 
 :signtool_failed

@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -35,89 +36,105 @@
 
 class BELPICToken;
 
-class BELPICRecord : public Tokend::Record
+class BELPICRecord:public Tokend::Record
 {
-	NOCOPY(BELPICRecord)
-public:
-	BELPICRecord(const char *description) :
-		mDescription(description) {}
-	virtual ~BELPICRecord();
+NOCOPY(BELPICRecord) public:
+	BELPICRecord(const char *description):mDescription(description)
+	{
+	}
+	virtual ~ BELPICRecord();
 
-	virtual const char *description() { return mDescription; }
+	virtual const char *description()
+	{
+		return mDescription;
+	}
 
 protected:
 	const char *mDescription;
 };
 
 
-class BELPICBinaryFileRecord : public BELPICRecord
+class BELPICBinaryFileRecord:public BELPICRecord
 {
-	NOCOPY(BELPICBinaryFileRecord)
-public:
-	BELPICBinaryFileRecord(const uint8_t *df, const uint8_t *ef,
-						   const char *description) :
-	BELPICRecord(description), mDF(df), mEF(ef) {}
-	virtual ~BELPICBinaryFileRecord();
-	
-	virtual Tokend::Attribute *getDataAttribute(Tokend::TokenContext *tokenContext) = 0;
-	
+NOCOPY(BELPICBinaryFileRecord) public:
+	BELPICBinaryFileRecord(const uint8_t * df, const uint8_t * ef,
+			       const char
+			       *description):BELPICRecord(description),
+		mDF(df), mEF(ef)
+	{
+	}
+	virtual ~ BELPICBinaryFileRecord();
+
+	virtual Tokend::Attribute * getDataAttribute(Tokend::TokenContext *
+						     tokenContext) = 0;
+
 protected:
 	const uint8_t *mDF;
 	const uint8_t *mEF;
 };
 
-class BELPICCertificateRecord : public BELPICBinaryFileRecord
+class BELPICCertificateRecord:public BELPICBinaryFileRecord
 {
-	NOCOPY(BELPICCertificateRecord)
-public:
-	BELPICCertificateRecord(const uint8_t *df, const uint8_t *ef,
-							   const char *description) :
-		BELPICBinaryFileRecord(df, ef, description) {}
-	virtual ~BELPICCertificateRecord();
-	
-	virtual Tokend::Attribute *getDataAttribute(Tokend::TokenContext *tokenContext);
+NOCOPY(BELPICCertificateRecord) public:
+	BELPICCertificateRecord(const uint8_t * df, const uint8_t * ef,
+				const char
+				*description):BELPICBinaryFileRecord(df, ef,
+								     description)
+	{
+	}
+	virtual ~ BELPICCertificateRecord();
+
+	virtual Tokend::Attribute * getDataAttribute(Tokend::TokenContext *
+						     tokenContext);
 };
 
-class BELPICProtectedRecord : public BELPICBinaryFileRecord
+class BELPICProtectedRecord:public BELPICBinaryFileRecord
 {
-	NOCOPY(BELPICProtectedRecord)
-public:
-	BELPICProtectedRecord(const uint8_t *df, const uint8_t *ef, const char *description) :
-		BELPICBinaryFileRecord(df, ef, description) {}
-	virtual ~BELPICProtectedRecord();
-	
-	virtual Tokend::Attribute *getDataAttribute(Tokend::TokenContext *tokenContext);
-	virtual void getAcl(const char *tag, uint32 &count,
-						AclEntryInfo *&aclList);
+NOCOPY(BELPICProtectedRecord) public:
+	BELPICProtectedRecord(const uint8_t * df, const uint8_t * ef,
+			      const char
+			      *description):BELPICBinaryFileRecord(df, ef,
+								   description)
+	{
+	}
+	virtual ~ BELPICProtectedRecord();
+
+	virtual Tokend::Attribute * getDataAttribute(Tokend::TokenContext *
+						     tokenContext);
+	virtual void getAcl(const char *tag, uint32 & count,
+			    AclEntryInfo * &aclList);
 private:
 	AutoAclEntryInfoList mAclEntries;
 };
 
 
-class BELPICKeyRecord : public BELPICRecord
+class BELPICKeyRecord:public BELPICRecord
 {
-	NOCOPY(BELPICKeyRecord)
-public:
-	BELPICKeyRecord(const uint8_t *keyId, const char *description, uint32_t mKeySize,
-		const Tokend::MetaRecord &metaRecord, bool signOnly, bool PPDU);
-    virtual ~BELPICKeyRecord();
+NOCOPY(BELPICKeyRecord) public:
+	BELPICKeyRecord(const uint8_t * keyId, const char *description,
+			uint32_t mKeySize,
+			const Tokend::MetaRecord & metaRecord, bool signOnly,
+			bool PPDU);
+	virtual ~ BELPICKeyRecord();
 
-	size_t sizeInBits() const { return mKeySize; }
-	void computeCrypt(BELPICToken &belpicToken, bool sign,
-		const AccessCredentials *cred, const unsigned char *data,
-		size_t dataLength, unsigned char *result, size_t &resultLength);
+	size_t sizeInBits() const
+	{
+		return mKeySize;
+	}
+	void computeCrypt(BELPICToken & belpicToken, bool sign,
+			  const AccessCredentials * cred,
+			  const unsigned char *data, size_t dataLength,
+			  unsigned char *result, size_t & resultLength);
 
-	void getAcl(const char *tag, uint32 &count, AclEntryInfo *&acls);
+	void getAcl(const char *tag, uint32 & count, AclEntryInfo * &acls);
 
 private:
 	const uint8_t *mKeyId;
-    uint32_t mKeySize;
+	uint32_t mKeySize;
 	bool mSignOnly;
-    bool mPPDU;
+	bool mPPDU;
 	AutoAclEntryInfoList mAclEntries;
 };
 
 
 #endif /* !_BELPICRECORD_H_ */
-
-

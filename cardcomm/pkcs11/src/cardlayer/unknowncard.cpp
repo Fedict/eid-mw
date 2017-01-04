@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -22,42 +23,40 @@
 namespace eIDMW
 {
 
-bool CUnknownCard::IsUnknownCard(SCARDHANDLE hCard, CContext *poContext,
-	CByteArray & oData)
-{
-	// This function shouldn't be called.
-	return true;
-}
+	bool CUnknownCard::IsUnknownCard(SCARDHANDLE hCard,
+					 CContext * poContext,
+					 CByteArray & oData)
+	{
+		// This function shouldn't be called.
+		return true;
+	}
 
-CUnknownCard::CUnknownCard(SCARDHANDLE hCard, CContext *poContext,
-	CPinpad *poPinpad, const CByteArray & oData) :
-CCard(hCard, poContext, poPinpad)
-{
-}
+	CUnknownCard::CUnknownCard(SCARDHANDLE hCard, CContext * poContext,
+				   CPinpad * poPinpad,
+				   const CByteArray & oData)
+		: CCard(hCard, poContext, poPinpad)
+	{
+	}
 
-CUnknownCard::~CUnknownCard(void)
-{
-}
+	CUnknownCard::~CUnknownCard(void)
+	{
+	}
 
-CByteArray CUnknownCard::ReadUncachedFile(const std::string &csPath,
-    unsigned long ulOffset, unsigned long ulMaxLen)
-{
-    throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);
-}
+	CByteArray CUnknownCard::ReadUncachedFile(const std::string & csPath,
+						  unsigned long ulOffset,
+						  unsigned long ulMaxLen)
+	{
+		throw CMWEXCEPTION(EIDMW_ERR_CARDTYPE_UNKNOWN);
+	}
 
-tCardType CUnknownCard::GetType()
-{
-    return CARD_UNKNOWN;
-}
+	std::string CUnknownCard::GetSerialNr()
+	{
+		return "";
+	}
 
-std::string CUnknownCard::GetSerialNr()
-{
-    return "";
-}
-
-std::string CUnknownCard::GetLabel()
-{
-    return "Unknown";
-}
+	std::string CUnknownCard::GetLabel()
+	{
+		return "Unknown";
+	}
 
 }

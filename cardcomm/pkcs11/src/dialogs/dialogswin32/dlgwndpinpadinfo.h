@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -23,24 +24,25 @@
 
 using namespace eIDMW;
 
-class dlgWndPinpadInfo : public Win32Dialog
+class dlgWndPinpadInfo:public Win32Dialog
 {
 	HBITMAP ImagePIN;
 	HFONT TextFont;
-	
-	wchar_t * m_szHeader;
-	wchar_t * m_szMessage;
+
+	wchar_t *m_szHeader;
+	wchar_t *m_szMessage;
 	unsigned long m_ulHandle;
 
 public:
-	dlgWndPinpadInfo( unsigned long ulHandle, DlgPinUsage usage, 
-		DlgPinOperation operation, const std::wstring & csReader, 
-		const std::wstring & PinName, const std::wstring & Message, HWND Parent = NULL );
-	virtual ~dlgWndPinpadInfo();
+	     dlgWndPinpadInfo(unsigned long ulHandle, DlgPinUsage usage,
+			      DlgPinOperation operation,
+			      const std::wstring & csReader,
+			      const std::wstring & PinName,
+			      const std::wstring & Message, HWND Parent =
+			      NULL);
+	      virtual ~ dlgWndPinpadInfo();
 
-	virtual LRESULT ProcecEvent
-				(	UINT		uMsg,			// Message For This Window
-					WPARAM		wParam,			// Additional Message Information
-					LPARAM		lParam );		// Additional Message Information
+	virtual LRESULT ProcecEvent(UINT uMsg,	// Message For This Window
+				    WPARAM wParam,	// Additional Message Information
+				    LPARAM lParam);	// Additional Message Information
 };
-

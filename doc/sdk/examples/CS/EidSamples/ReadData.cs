@@ -75,6 +75,7 @@ namespace EidSamples
             {
                 //m.Finalize_();
                 m.Dispose();
+                m = null;
             }
             return slotID;
         }
@@ -101,9 +102,19 @@ namespace EidSamples
             finally
             {
                 m.Dispose();//m.Finalize_();
+                m = null;
             }
             return tokenInfoLabel;
 
+        }
+
+        /// <summary>
+        /// Get surname of the owner of the token (eid) in the first non-empty slot (cardreader)
+        /// </summary>
+        /// <returns></returns>
+        public string GetSpecialStatus()
+        {
+            return GetData("special_status");
         }
 
         /// <summary>
@@ -115,16 +126,6 @@ namespace EidSamples
             return GetData("surname");
         }
 
-                /// <summary>
-        /// Get surname of the chipnumber of the token (eid) in the first non-empty slot (cardreader)
-        /// </summary>
-        /// <returns></returns>
-        public string GetChipnumber()
-        {
-            return GetData("chip_number",true);
-        }
-        
-
         /// <summary>
         /// Get date of birth of the owner. This is a language specific string
         /// More info about the format can be found in the eid specs.
@@ -134,21 +135,12 @@ namespace EidSamples
         {
             return GetData("date_of_birth");
         }
-                /// <summary>
-        /// Generic function to get string data objects from label
-        /// </summary>
-        /// <param name="label">Value of label attribute of the object</param>
-        /// <returns></returns>
-        public string GetData(String label)
-        {
-            return GetData(label, false);
-        }
         /// <summary>
         /// Generic function to get string data objects from label
         /// </summary>
         /// <param name="label">Value of label attribute of the object</param>
         /// <returns></returns>
-        public string GetData(String label, Boolean displayBytes)
+        public string GetData(String label)
         {
             String value = "";
             if (m == null)
@@ -188,26 +180,18 @@ namespace EidSamples
                         //foundObjects[counter-1].ReadAttributes(session);
                         //public static BooleanAttribute ReadAttribute(Session session, uint hObj, BooleanAttribute attr)
                         data = foundObjects[counter - 1] as Data;
-                        //label = data.Label.ToString();
+                        label = data.Label.ToString();
                         if (label != null)
                             Console.WriteLine(label);
                         if (data.Value.Value != null)
                         {
-        
-                            if (displayBytes == true)
-                            {
-                                value = BitConverter.ToString(data.Value.Value);
-                                value = value.Replace("-", "");
-                            }
-                            else
-                            {
-                                value = System.Text.Encoding.UTF8.GetString(data.Value.Value);
-                            }
+                            value = System.Text.Encoding.UTF8.GetString(data.Value.Value);
                             Console.WriteLine(value);
                         }
                         counter--;
                     }
                     session.FindObjectsFinal();
+                    session.Dispose();
                 }
                 else
                 {
@@ -218,6 +202,7 @@ namespace EidSamples
             {
                 // pkcs11 finalize
                 m.Dispose();//m.Finalize_();
+                m = null;
             }
             return value;
         }
@@ -228,8 +213,8 @@ namespace EidSamples
             Integrity integrityTest = new Integrity();
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
-            byte[] certificateRRN = null;
-           // Assert.False(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
+            //byte[] certificateRRN = null;
+            //Assert.isFalse(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
         }
         /// <summary>
         /// Return ID data file contents
@@ -419,6 +404,7 @@ namespace EidSamples
             {
                 // pkcs11 finalize
                 m.Dispose();//m.Finalize_();
+                m = null;
             }
             return value;
 
@@ -471,6 +457,7 @@ namespace EidSamples
             {
                 // pkcs11 finalize
                 m.Dispose();//m.Finalize_();
+                m = null;
             }
             return labels;
         }

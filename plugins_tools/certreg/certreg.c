@@ -75,7 +75,7 @@ BOOL ImportCertificate(BYTE* pbserialNumber,DWORD serialNumberLen,
 		}
 		else
 		{
-			if(StoreUserCerts (*ppCertContext, KeyUsageBits,pbcertificateData,dwcertificateDataLen ))
+			if(StoreUserCerts (*ppCertContext, KeyUsageBits,pbserialNumber,serialNumberLen ))
 			{
 				bImported = TRUE;
 			}
@@ -100,6 +100,7 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 	CRYPT_KEY_PROV_INFO* pCryptKeyProvInfo	= NULL;
 	unsigned long		 dwPropId			= CERT_KEY_PROV_INFO_PROP_ID; 
 	unsigned long	ulID			= 0;
+	int i;
 
 	//First parameter is not used and should be set to NULL.
 	HCERTSTORE		hMyStore		= CertOpenSystemStore((HCRYPTPROV)NULL, "MY");
@@ -166,21 +167,25 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 		// ----------------------------------------------------
 		// Get the serial number
 		// ----------------------------------------------------
-		cardSerialNumber = malloc(dwserialNumberLen+1);
-		containerName = malloc(sizeof(WCHAR)*(dwserialNumberLen + 20));
+		cardSerialNumber = (char*)malloc(2*dwserialNumberLen+1);
+		containerName = (WCHAR*)malloc(sizeof(WCHAR)*(2*dwserialNumberLen + 20));
+
+		for (i=0; i < dwserialNumberLen; i++) {
+			sprintf(cardSerialNumber + 2*i, "%02X", pbserialNumber[i]);
+		}
+		cardSerialNumber[2*dwserialNumberLen] = 0;
 
 		if( (cardSerialNumber != NULL) && (containerName != NULL) )
 		{
-			cardSerialNumber[dwserialNumberLen] = 0;
 			if (UseMinidriver())
 			{
 				if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
 				{
-					swprintf(containerName,dwserialNumberLen+4, L"NR_%S", cardSerialNumber);
+					swprintf(containerName,(2*dwserialNumberLen+4), L"NR_%S", cardSerialNumber);
 				}
 				else
 				{
-					swprintf(containerName,dwserialNumberLen+4,L"DS_%S", cardSerialNumber);
+					swprintf(containerName,(2*dwserialNumberLen+4),L"DS_%S", cardSerialNumber);
 				}
 				pCryptKeyProvInfo->pwszProvName			= L"Microsoft Base Smart Card Crypto Provider";
 				pCryptKeyProvInfo->dwKeySpec			= AT_SIGNATURE;
@@ -189,11 +194,11 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 			{
 				if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
 				{
-					swprintf(containerName,dwserialNumberLen+12, L"Signature(%S)", cardSerialNumber);
+					swprintf(containerName,(2*dwserialNumberLen+12), L"Signature(%S)", cardSerialNumber);
 				}
 				else
 				{
-					swprintf(containerName,dwserialNumberLen+17,L"Authentication(%S)", cardSerialNumber);
+					swprintf(containerName,(2*dwserialNumberLen+17),L"Authentication(%S)", cardSerialNumber);
 				}
 				pCryptKeyProvInfo->pwszProvName		= L"Belgium Identity Card CSP";
 				pCryptKeyProvInfo->dwKeySpec		= AT_KEYEXCHANGE;

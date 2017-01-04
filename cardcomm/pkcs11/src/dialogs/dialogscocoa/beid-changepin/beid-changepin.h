@@ -12,21 +12,21 @@
 #define MAX_PIN_LENGTH 12
 
 
-@interface beid_changepin : NSObject <NSTextFieldDelegate>
+@ interface beid_changepin:NSObject < NSTextFieldDelegate >
 {
-	IBOutlet NSSecureTextField*		originalPinEntry;
-	IBOutlet NSSecureTextField*		newPin0Entry;
-	IBOutlet NSSecureTextField*		newPin1Entry;
-	IBOutlet NSButton*				okButton;
-	IBOutlet NSButton*				cancelButton;
-			 NSCharacterSet*		decimalDigits;
-			 Boolean				ok;
+	IBOutlet NSSecureTextField *originalPinEntry;
+	IBOutlet NSSecureTextField *newPin0Entry;
+	IBOutlet NSSecureTextField *newPin1Entry;
+	IBOutlet NSButton *okButton;
+	IBOutlet NSButton *cancelButton;
+	NSCharacterSet *decimalDigits;
+	Boolean ok;
 }
 
--(void)controlTextDidChange:(NSNotification*)notification;
--(void)updateOKButton;
--(IBAction)button_cancel:(id)sender;
--(IBAction)button_ok:(id)sender;
+-(void) controlTextDidChange:(NSNotification *) notification;
+-(void) updateOKButton;
+-(IBAction) button_cancel:(id) sender;
+-(IBAction) button_ok:(id) sender;
 
 
 @end

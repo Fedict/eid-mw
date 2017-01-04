@@ -9,13 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface beid_badpin : NSObject
+@ interface beid_badpin:NSObject
 {
-	IBOutlet NSWindow*    window;
-	IBOutlet NSTextField* textField;
-	IBOutlet NSTextField* lastAttemptTextField;
+	IBOutlet NSWindow *window;
+	IBOutlet NSTextField *textField;
+	IBOutlet NSTextField *lastAttemptTextField;
 }
 
--(IBAction)button_ok:(id)sender;
+-(IBAction) button_ok:(id) sender;
 
 @end

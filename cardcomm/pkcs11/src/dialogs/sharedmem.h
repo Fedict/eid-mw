@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -27,32 +28,37 @@
 namespace eIDMW
 {
 
-  class SharedMem
-  {
-  private:
-    int m_iShmid;
-    unsigned int m_iAttachedProcs;
-    key_t m_tKey;
-    std::string m_csFilename;
-    
-    
-  public:
-    SharedMem();
-    ~SharedMem();
+	class SharedMem
+	{
+private:
+		int m_iShmid;
+		unsigned int m_iAttachedProcs;
+		key_t m_tKey;
+		      std::string m_csFilename;
 
-    void Attach(size_t tMemorySize, 
-		const char *csReadableFilePath,
-		void ** content);
 
-    void Detach(void* content);  
+public:
+		      SharedMem();
+		     ~SharedMem();
 
-    static void Delete(int iSegmentID);
-    static int getNAttached(int iSegmentID);
+		void Attach(size_t tMemorySize,
+			    const char *csReadableFilePath, void **content);
 
-    int getID(){return m_iShmid;};
-    
-    std::string getFilename() {return m_csFilename;};
-  };
+		void Detach(void *content);
+
+		static void Delete(int iSegmentID);
+		static int getNAttached(int iSegmentID);
+
+		int getID()
+		{
+			return m_iShmid;
+		};
+
+		      std::string getFilename()
+		{
+			return m_csFilename;
+		};
+	};
 
 }
 #endif

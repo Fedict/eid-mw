@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -28,16 +29,15 @@
 
 using namespace eIDMW;
 
-class dlgWndBadPIN : public dlgWndBase
+class dlgWndBadPIN:public dlgWndBase
 {
-	Q_OBJECT
-
-public:
-	dlgWndBadPIN( QString & PINName, unsigned long RemainingTries, QWidget *parent = 0 );
-	~dlgWndBadPIN();
+Q_OBJECT public:
+	         dlgWndBadPIN(QString & PINName, unsigned long RemainingTries,
+			      QWidget * parent = 0);
+	    ~dlgWndBadPIN();
 
 private:
-	Ui::dlgWndBadPIN ui;
+	     Ui::dlgWndBadPIN ui;
 
 };
 

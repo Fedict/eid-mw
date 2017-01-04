@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -24,20 +25,27 @@
 
 namespace eIDMW
 {
-  void CBeidP15Correction::CheckPINs(std::vector<tPin>& pinVector) {
-    for (std::vector<tPin>::iterator ip = pinVector.begin();
-	 ip != pinVector.end(); ++ip){
-      // correct the encoding
-      if( (*ip).encoding != PIN_ENC_GP ) (*ip).encoding = PIN_ENC_GP;
-	  if( (*ip).ulMaxLen != 12 ) (*ip).ulMaxLen = 12;
-    }
-  };
+	void CBeidP15Correction::CheckPINs(std::vector < tPin > &pinVector)
+	{
+		for (std::vector < tPin >::iterator ip = pinVector.begin();
+		     ip != pinVector.end(); ++ip)
+		{
+			// correct the encoding
+			if ((*ip).encoding != PIN_ENC_GP)
+				(*ip).encoding = PIN_ENC_GP;
+			if ((*ip).ulMaxLen != 12)
+				(*ip).ulMaxLen = 12;
+		}
+	};
 
-  void CBeidP15Correction::CheckCerts(std::vector<tCert>& certVector) {
-    // do nothing
-  };
-  
-  void CBeidP15Correction::CheckPrKeys(std::vector<tPrivKey>& keyVector) { 
-    // do nothing
-  };
+	void CBeidP15Correction::CheckCerts(std::vector < tCert > &certVector)
+	{
+		// do nothing
+	};
+
+	void CBeidP15Correction::CheckPrKeys(std::vector < tPrivKey >
+					     &keyVector)
+	{
+		// do nothing
+	};
 }

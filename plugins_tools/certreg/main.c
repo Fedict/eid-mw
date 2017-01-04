@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "main.h"
 #include "certreg.h"
+#include "carddata.h"
 
 #define MAX_LOADSTRING 100
 #define IDB_REG 1
@@ -324,13 +325,12 @@ BOOL CALLBACK ChildWindowResize(HWND hWndChild, LPARAM lParam)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	int wmId, wmEvent;
-	int flags = 0;
+	DWORD flags = 0;
 	PAINTSTRUCT ps;
 	HDC hdc;
 	RECT rcClient;
 	HMENU hmenu;            // top-level menu 
 DWORD retval = 0;
-char* stringi;
 	switch (message)
 	{
 	case WM_COMMAND:
@@ -349,7 +349,7 @@ char* stringi;
 			if ((	hmenu = GetMenu(hWnd)) == NULL) 
 				return;
 
-			if( (gAutoFlags & flags) != NULL)
+			if( (gAutoFlags & flags) != 0)
 			{
 				//flag was on, turn it off
 				CheckMenuItem(hmenu,wmId,MF_UNCHECKED|MF_BYCOMMAND);

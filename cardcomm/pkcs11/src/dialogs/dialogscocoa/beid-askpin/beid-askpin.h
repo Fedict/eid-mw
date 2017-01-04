@@ -11,30 +11,30 @@
 #define MIN_PIN_LENGTH 4
 #define MAX_PIN_LENGTH 12
 
-@interface beid_askpin : NSResponder
+@ interface beid_askpin:NSResponder
 {
-	IBOutlet NSLevelIndicator*   pinField;
-	IBOutlet NSWindow*			 pinWindow;
-	IBOutlet NSButton*			 okButton;
-	IBOutlet NSButton*			 backSpaceButton;
-	IBOutlet NSButton*			 clearButton;
-			 NSMutableString*    pinCode;
-			 NSCharacterSet*	 numericSet;
-			 Boolean			 ok;
+	IBOutlet NSLevelIndicator *pinField;
+	IBOutlet NSWindow *pinWindow;
+	IBOutlet NSButton *okButton;
+	IBOutlet NSButton *backSpaceButton;
+	IBOutlet NSButton *clearButton;
+	NSMutableString *pinCode;
+	NSCharacterSet *numericSet;
+	Boolean ok;
 }
 
--(void)keyDown:(NSEvent *)theEvent;
--(void)update_pin_label;
--(void)pin_changed;
--(void)backspace;
--(void)add_digit:(NSString*)digit;
--(void)clear;
+-(void) keyDown:(NSEvent *) theEvent;
+-(void) update_pin_label;
+-(void) pin_changed;
+-(void) backspace;
+-(void) add_digit:(NSString *) digit;
+-(void) clear;
 
--(IBAction)button_digit:(id)sender;
--(IBAction)button_backspace:(id)sender;
--(IBAction)button_clear:(id)sender;
--(IBAction)button_cancel:(id)sender;
--(IBAction)button_ok:(id)sender;
+-(IBAction) button_digit:(id) sender;
+-(IBAction) button_backspace:(id) sender;
+-(IBAction) button_clear:(id) sender;
+-(IBAction) button_cancel:(id) sender;
+-(IBAction) button_ok:(id) sender;
 
 
 @end

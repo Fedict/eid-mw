@@ -38,6 +38,7 @@ TEST_FUNC(slotevent) {
 		return TEST_RV_SKIP;
 	}
 
+	check_rv_long(C_WaitForSlotEvent(CKF_DONT_BLOCK, NULL_PTR, NULL_PTR), m_p11_noinit);
 	check_rv(C_Initialize(NULL_PTR));
 
 	robot_remove_card();

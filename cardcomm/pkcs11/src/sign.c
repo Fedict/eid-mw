@@ -41,9 +41,7 @@ CK_RV C_DigestInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter, hSession = %i",hSession);
 
@@ -111,9 +109,7 @@ CK_RV C_Digest(CK_SESSION_HANDLE hSession,     /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter, hSession = %i",hSession);
 
@@ -202,9 +198,7 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
 
@@ -274,9 +268,7 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter, hSession = %i, pDigest=%p",hSession,pDigest);
 
@@ -369,9 +361,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-      return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
 
@@ -397,6 +387,21 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
       ret = CKR_SESSION_HANDLE_INVALID;
       goto cleanup;
       }
+
+   if(!(pSlot->ulCardDataCached & CACHED_DATA_TYPE_CDF))
+   {
+	   log_trace(WHERE, "E: Key handle but no CDF read yet!");
+	   ret = CKR_KEY_HANDLE_INVALID;
+	   goto cleanup;
+   }
+
+#ifndef PKCS11_FF
+   ret = cal_init_objects(pSlot);
+   if(ret != CKR_OK)
+   {
+	   log_trace(WHERE, "E: cal_init_objects() returns %s_", log_map_error(ret));
+   }
+#endif
 
    //check mechanism
    //since this module is only for BEID, we check for RSA here and we do not check the device capabilities
@@ -458,7 +463,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 
    //can we use the object for signing?
    pObject = p11_get_slot_object(pSlot, hKey);
-   if (pObject == NULL)
+   if (pObject == NULL || pObject->count == 0)
       {
       log_trace(WHERE, "E: invalid key handle");
       ret = CKR_KEY_HANDLE_INVALID;
@@ -570,9 +575,7 @@ CK_RV C_Sign(CK_SESSION_HANDLE hSession,        /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
 
@@ -690,9 +693,7 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
 
@@ -776,9 +777,7 @@ CK_RV C_SignFinal(CK_SESSION_HANDLE hSession,        /* the session's handle */
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-   ret = p11_lock();
-   if (ret != CKR_OK)
-          return ret;
+   p11_lock();
 
 	 log_trace(WHERE, "I: enter");
  

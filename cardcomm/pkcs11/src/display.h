@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -27,14 +28,14 @@
 #define P11_DISPLAY_ALWAYS		3
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-CK_BYTE AllowCardReading(void);
+	CK_BYTE AllowCardReading(void);
 
 #ifdef __cplusplus
-   }
+}
 #endif
 
 #endif
-

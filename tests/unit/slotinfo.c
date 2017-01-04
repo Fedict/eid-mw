@@ -28,17 +28,22 @@
 #include "testlib.h"
 
 TEST_FUNC(slotinfo) {
-	CK_SLOT_ID slot;
+	CK_SLOT_ID slot = 0;
 	CK_SLOT_INFO info;
 	int ret;
 
+	check_rv_long(C_GetSlotInfo(slot, &info), m_p11_noinit);
+
 	check_rv(C_Initialize(NULL_PTR));
+
+	check_rv_long(C_GetSlotInfo(slot, NULL_PTR), m_p11_badarg);
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		check_rv(C_Finalize(NULL_PTR));
 		return ret;
 	}
 
+	check_rv_long(C_GetSlotInfo(slot+30, &info), m_p11_badslot);
 	check_rv(C_GetSlotInfo(slot, &info));
 
 	verify_null(info.slotDescription, 64, 0, "Slot description:\t'%s'\n");

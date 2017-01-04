@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -24,15 +25,15 @@
 
 namespace eIDMW
 {
-  class CBeidP15Correction: public CP15Correction
-  {
-  public:
-    void CheckPINs(std::vector<tPin>& pinVector);
-    void CheckCerts(std::vector<tCert>& certVector);
-    void CheckPrKeys(std::vector<tPrivKey>& keyVector);
+	class CBeidP15Correction:public CP15Correction
+	{
+public:
+		void CheckPINs(std::vector < tPin > &pinVector);
+		void CheckCerts(std::vector < tCert > &certVector);
+		void CheckPrKeys(std::vector < tPrivKey > &keyVector);
 
-  private:
+private:
 
-  };
+	};
 }
 #endif

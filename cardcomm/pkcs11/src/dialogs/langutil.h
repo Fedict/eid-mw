@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -30,30 +31,46 @@
 namespace eIDMW
 {
 
-class CLang
-{
+	class CLang
+	{
 public:
-	static tLanguage GetLang()			{ if(!ms_InitOk) Init(); return ms_Lang; }
-	static const wchar_t *GetLangW();
-	static unsigned long GetLangL();
-	static void SetLang(tLanguage lang)	{ ms_Lang=lang; ms_InitOk=true; }
-	static void SetLangW(const wchar_t *lang);
-	static void SetLangL(unsigned long lang);
-	static void ResetInit()				{ ms_InitOk=false; }
-	static std::wstring GetMessageFromID(DlgMessageID messageID);
+		static tLanguage GetLang()
+		{
+			if (!ms_InitOk)
+				Init();
+			return ms_Lang;
+		}
+		static const wchar_t *GetLangW();
+		static unsigned long GetLangL();
+		static void SetLang(tLanguage lang)
+		{
+			ms_Lang = lang;
+			ms_InitOk = true;
+		}
+		static void SetLangW(const wchar_t * lang);
+		static void SetLangL(unsigned long lang);
+		static void ResetInit()
+		{
+			ms_InitOk = false;
+		}
+		static std::wstring GetMessageFromID(DlgMessageID messageID);
 
-	//static const wchar_t *GetString(const wchar_t *stringRef);
+		//static const wchar_t *GetString(const wchar_t *stringRef);
 
 private:
-	CLang() {};
-	~CLang() {};
-	static void Init();
+		CLang()
+		{
+		};
+		~CLang()
+		{
+		};
+		static void Init();
 
 private:
-	static bool   ms_InitOk;
-	static tLanguage   ms_Lang;
+		static bool ms_InitOk;
+		static tLanguage ms_Lang;
 
-};
+	};
 
 }
 #endif //__LANGUTIL_H__

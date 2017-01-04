@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -45,14 +46,14 @@
 #if ( defined( __UNIX__ ) || defined( __XMK__ ) ) && defined( USE_THREADS )
 
 #if defined( __osf__ ) || defined( __alpha__ )
-  #define __C_ASM_H
-#endif /* __osf__  __alpha__*/
+#define __C_ASM_H
+#endif /* __osf__  __alpha__ */
 
 #include <pthread.h>
 #include <sys/time.h>
-#ifdef __XMK__  /* Xilinx XMK */
-  #include <sys/process.h>
-  #include <sys/timer.h>
+#ifdef __XMK__			/* Xilinx XMK */
+#include <sys/process.h>
+#include <sys/timer.h>
 #endif /* __XMK__ */
 
 
@@ -67,13 +68,13 @@
 
 #if ( defined( __osf__ ) || defined( __alpha__ ) ) && \
     !defined( pthread_self )
-  extern pthread_t pthread_self( void );
+extern pthread_t pthread_self(void);
 #endif /* __osf__ */
 
 
 #ifdef _MPRAS
-  #undef THREAD_START
-  #define THREAD_START( function, arg, hThread, syncHandle, status ) \
+#undef THREAD_START
+#define THREAD_START( function, arg, hThread, syncHandle, status ) \
             { \
             status = pthread_create( &hThread, pthread_attr_default, \
                                      function, arg ) ? \
@@ -100,9 +101,9 @@
 /* if building for PPC: create tasks with FP register saving enabled */
 
 #ifdef __ppc__
-  #define TASK_ATTRIBUTES	VX_FP_TASK
+#define TASK_ATTRIBUTES	VX_FP_TASK
 #else
-  #define TASK_ATTRIBUTES	0
+#define TASK_ATTRIBUTES	0
 #endif /* __ppc__ */
 
 
@@ -132,13 +133,13 @@
 #elif ( defined( __WIN32__ ) && !defined( NT_DRIVER ) ) || defined( __WINCE__ )
 
 #ifndef __WINCE__
-  #include <process.h>
+#include <process.h>
 #endif /* __WINCE__ */
 
 
-//#define THREAD_OBJ			DWORD           //object handle
-#define THREAD_OBJ			unsigned int           //object handle
-#define MUTEX_OBJ			unsigned int    // STH: HANDLE is a void * on VS2005 - WinXP
+//#define THREAD_OBJ                    DWORD           //object handle
+#define THREAD_OBJ			unsigned int	//object handle
+#define MUTEX_OBJ			unsigned int	// STH: HANDLE is a void * on VS2005 - WinXP
 
 /*
   InitializeCriticalSection(): throws exception STATUS_NO_MEMORY
@@ -148,10 +149,10 @@
 
 
 #if defined( __WIN32__ )
-  #define THREAD_INITFUNCTION( parm1, arg ) \
+#define THREAD_INITFUNCTION( parm1, arg ) \
                 unsigned __stdcall parm1( void *arg )
-  #if defined( _MSC_VER ) && VC_GE_2005( _MSC_VER )
-    #define THREAD_START( function, arg, hThread, syncHandle, status ) \
+#if defined( _MSC_VER ) && VC_GE_2005( _MSC_VER )
+#define THREAD_START( function, arg, hThread, syncHandle, status ) \
                 { \
                 uintptr_t oThread; \
                 oThread = _beginthreadex( NULL, 0, ( function ), ( arg ), 0, \
@@ -159,8 +160,8 @@
                 syncHandle =oThread; \
                 status = ( oThread == 0 ) ? CRYPT_ERROR : CRYPT_OK; \
                 }
-  #else
-    #define THREAD_START( function, arg, hThread, syncHandle, status ) \
+#else
+#define THREAD_START( function, arg, hThread, syncHandle, status ) \
                 { \
                 unsigned long oThread; \
                 oThread = _beginthreadex( NULL, 0, ( function ), ( arg ), 0, \
@@ -168,12 +169,12 @@
                 syncHandle = ( MUTEX_OBJ ) oThread; \
                 status = ( oThread == 0 ) ? CRYPT_ERROR : CRYPT_OK; \
                 }
-  #endif /* _MSC_VER */
+#endif /* _MSC_VER */
 #define THREAD_END( sync ) _endthreadex( 0 ); return( 0 )
 #elif defined( __WINCE__ )
-  #define THREAD_INITFUNCTION( parm1, arg ) \
+#define THREAD_INITFUNCTION( parm1, arg ) \
                 DWORD WINAPI parm1( void *arg )
-  #define THREAD_START( function, arg, hThread, syncHandle, status ) \
+#define THREAD_START( function, arg, hThread, syncHandle, status ) \
                 { \
                 HANDLE oThread; \
                 oThread = CreateThread( NULL, 0, ( function ), ( arg ), 0, \
@@ -181,7 +182,7 @@
                 syncHandle = oThread; \
                 status = ( oThread == NULL ) ? CRYPT_ERROR : CRYPT_OK; \
                 }
-  #define THREAD_END( sync )	ExitThread( 0 ); return( 0 )
+#define THREAD_END( sync )	ExitThread( 0 ); return( 0 )
 #endif /* Win32 - WINCE */
 
 #elif defined( __WIN32__ ) && defined( NT_DRIVER )
@@ -193,7 +194,9 @@
 
 
 #else /* OS-switch */
+
 /*-------------------------------------	default --------------------------------*/
+
 /* for OS's without threading */
 
 #define MUTEX_OBJ							int

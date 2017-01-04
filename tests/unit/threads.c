@@ -98,7 +98,7 @@ int threaded_test() {
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		check_rv(C_Finalize(NULL_PTR));
-		return ret;
+		return (int) ret;
 	}
 
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION, NULL_PTR, NULL_PTR, &h));
@@ -147,7 +147,7 @@ TEST_FUNC(threads) {
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		check_rv(C_Finalize(NULL_PTR));
-		return ret;
+		return (int)ret;
 	}
 
 	pthread_mutex_lock(&condmutex);
@@ -173,7 +173,7 @@ TEST_FUNC(threads) {
 	verbose_assert((slinfo.flags & CKF_RW_SESSION) == 0);
 
 	if(threaded_test_result != TEST_RV_OK) {
-		return threaded_test_result;
+		return (int)threaded_test_result;
 	}
 
 	check_rv(C_Finalize(NULL_PTR));

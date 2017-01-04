@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -35,16 +36,18 @@
 
 namespace eIDMW
 {
-  class EIDMW_CAL_API CP15Correction
-  {
-  public:
-    virtual ~CP15Correction() = 0;
-    virtual void CheckPINs(std::vector<tPin>& pinVector) = 0;
-    virtual void CheckCerts(std::vector<tCert>& certVector) = 0;
-    virtual void CheckPrKeys(std::vector<tPrivKey>& keyVector) = 0;
+	class EIDMW_CAL_API CP15Correction
+	{
+public:
+		virtual ~ CP15Correction() = 0;
+		virtual void CheckPINs(std::vector < tPin > &pinVector) = 0;
+		virtual void CheckCerts(std::vector < tCert > &certVector) =
+			0;
+		virtual void CheckPrKeys(std::vector < tPrivKey >
+					 &keyVector) = 0;
 
-  private:
+private:
 
-  };
+	};
 }
 #endif

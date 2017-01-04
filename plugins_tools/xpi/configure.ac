@@ -1,5 +1,5 @@
 AC_PREREQ([2.61])
-AC_INIT([xpi], [4.0.6], [servicedesk@fedict.be])
+AC_INIT([xpi], [4.1.18], [servicedesk@fedict.be])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/content/belgiumeidpkcs11.js])
 AC_CONFIG_MACRO_DIR([m4])
@@ -42,6 +42,9 @@ AS_IF(
 	[[mozext]=[$with_mozext]]
 )
 
+AC_ARG_ENABLE(signed, AS_HELP_STRING([--disable-signed], [Don't use the (pre-)signed version of the extension, instead build it from source. Required for Firefox >= 43 (default on)]),[],[enable_signed=yes])
+AM_CONDITIONAL([SIGNED], [test "$enable_signed" = yes])
+
 AC_SUBST([ZIP])
 AC_SUBST([DEBUG])
 AC_SUBST([DEBUG_POSTFIX])
@@ -52,5 +55,6 @@ AC_SUBST([mozext])
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
+	signed-build/Makefile
 ])
 AC_OUTPUT

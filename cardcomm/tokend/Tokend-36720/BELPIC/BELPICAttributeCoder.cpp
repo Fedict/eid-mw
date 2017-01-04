@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -47,22 +48,29 @@ BELPICDataAttributeCoder::~BELPICDataAttributeCoder()
 {
 }
 
-void BELPICDataAttributeCoder::decode(TokenContext *tokenContext,
-	const MetaAttribute &metaAttribute, Record &record)
+void BELPICDataAttributeCoder::decode(TokenContext * tokenContext,
+				      const MetaAttribute & metaAttribute,
+				      Record & record)
 {
-	BELPICRecord &belpicRecord = dynamic_cast<BELPICRecord &>(record);
+	BELPICRecord & belpicRecord = dynamic_cast < BELPICRecord & >(record);
 	record.attributeAtIndex(metaAttribute.attributeIndex(),
-		belpicRecord.getDataAttribute(tokenContext));
+				belpicRecord.getDataAttribute(tokenContext));
 }
 
 //
 // BELPICKeySizeAttributeCoder
 //
-BELPICKeySizeAttributeCoder::~BELPICKeySizeAttributeCoder() {}
-
-void BELPICKeySizeAttributeCoder::decode(Tokend::TokenContext *tokenContext,
-                                      const Tokend::MetaAttribute &metaAttribute, Tokend::Record &record)
+BELPICKeySizeAttributeCoder::~BELPICKeySizeAttributeCoder()
 {
-	uint32 keySize = dynamic_cast<BELPICKeyRecord &>(record).sizeInBits();
-	record.attributeAtIndex(metaAttribute.attributeIndex(), new Attribute(keySize));
+}
+
+void BELPICKeySizeAttributeCoder::decode(Tokend::TokenContext * tokenContext,
+					 const Tokend::
+					 MetaAttribute & metaAttribute,
+					 Tokend::Record & record)
+{
+	uint32 keySize =
+		dynamic_cast < BELPICKeyRecord & >(record).sizeInBits();
+	record.attributeAtIndex(metaAttribute.attributeIndex(),
+				new Attribute(keySize));
 }

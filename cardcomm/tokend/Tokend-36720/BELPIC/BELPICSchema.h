@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -40,17 +41,16 @@ namespace Tokend
 	class AttributeCoder;
 }
 
-class BELPICSchema : public Tokend::Schema
+class BELPICSchema:public Tokend::Schema
 {
-	NOCOPY(BELPICSchema)
-public:
-    BELPICSchema();
-    virtual ~BELPICSchema();
+NOCOPY(BELPICSchema) public:
+	BELPICSchema();
+	virtual ~ BELPICSchema();
 
 	virtual void create();
 
 protected:
-	Tokend::Relation *createKeyRelation(CSSM_DB_RECORDTYPE keyType);
+	Tokend::Relation * createKeyRelation(CSSM_DB_RECORDTYPE keyType);
 
 private:
 	// Coders we need.
@@ -63,4 +63,3 @@ private:
 };
 
 #endif /* !_BELPICSCHEMA_H_ */
-

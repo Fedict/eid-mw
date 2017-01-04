@@ -62,7 +62,7 @@ void __declspec(dllexport) GetReaderCount(HWND hwndParent, int string_size,
 
 void testandpushstring(char* thestring)
 {
-	if( (thestring != NULL) && (thestring != "") ){
+	if(thestring != NULL){
 		pushstring(thestring);
 	}
 	else{

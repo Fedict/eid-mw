@@ -41,16 +41,12 @@ TEST_FUNC(sessions) {
 		{ CKR_OK, TEST_RV_FAIL },
 		{ CKR_SESSION_PARALLEL_NOT_SUPPORTED, TEST_RV_OK },
 	};
-	ckrv_mod m_inv_slot[] = {
-		{ CKR_OK, TEST_RV_FAIL },
-		{ CKR_SLOT_ID_INVALID, TEST_RV_OK },
-	};
 
 	check_rv_long(C_OpenSession(slot, 0, NULL_PTR, NULL_PTR, &handle), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
 
-	check_rv_long(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &handle), m_inv_slot);
+	check_rv_long(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &handle), m_p11_badslot);
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		check_rv(C_Finalize(NULL_PTR));

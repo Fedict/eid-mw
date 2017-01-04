@@ -25,6 +25,7 @@
 #include <pkcs11.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "testlib.h"
 
@@ -55,10 +56,10 @@
 }
 
 TEST_FUNC(ordering) {
-	CK_SESSION_HANDLE session;
+	CK_SESSION_HANDLE session = 0;
 	CK_BYTE data[] = { 'f', 'o', 'o' };
 	CK_SLOT_ID slot = UINT32_MAX;
-	CK_BYTE_PTR result;
+	CK_BYTE_PTR result = NULL;
 	CK_ULONG len = 0;
 	CK_MECHANISM mech;
 	CK_OBJECT_HANDLE obj;
@@ -73,6 +74,9 @@ TEST_FUNC(ordering) {
 		{ CKR_OPERATION_NOT_INITIALIZED, TEST_RV_OK },
 	};
 
+	memset(&attr, 0, sizeof attr);
+	memset(&obj, 0, sizeof obj);
+	memset(&mech, 0, sizeof mech);
 
 	/* Before C_Initialize: everything should return
 	 * CKR_CRYPTOKI_NOT_INITIALIZED */

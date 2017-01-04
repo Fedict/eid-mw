@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,9 +18,10 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 /**
  * This class is for unknown cards.
- * It only provides some basic functionality such as SendAPDU().
+ * It only provides some basic functionality.
  */
 
 #include "card.h"
@@ -27,26 +29,36 @@
 namespace eIDMW
 {
 
-class CUnknownCard : public CCard
-{
+	class CUnknownCard:public CCard
+	{
 public:
-	static bool IsUnknownCard(SCARDHANDLE hCard, CContext *poContext,
-		CByteArray & oData);
+		static bool IsUnknownCard(SCARDHANDLE hCard,
+					  CContext * poContext,
+					  CByteArray & oData);
 
-	CUnknownCard(SCARDHANDLE hCard, CContext *poContext,
-		CPinpad *poPinpad, const CByteArray & oData);
-    ~CUnknownCard(void);
+		     CUnknownCard(SCARDHANDLE hCard, CContext * poContext,
+				  CPinpad * poPinpad,
+				  const CByteArray & oData);
+		     ~CUnknownCard(void);
 
-    virtual CByteArray ReadUncachedFile(const std::string & csPath,
-        unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
-    virtual unsigned int GetRSAKeySize() { return 0; };
-    virtual unsigned char GetAppletVersion() { return 0; };
+		virtual CByteArray ReadUncachedFile(const std::string &
+						    csPath,
+						    unsigned long ulOffset =
+						    0,
+						    unsigned long ulMaxLen =
+						    FULL_FILE);
+		virtual unsigned int GetRSAKeySize()
+		{
+			return 0;
+		};
+		virtual unsigned char GetAppletVersion()
+		{
+			return 0;
+		};
 
-    tCardType GetType();
+		std::string GetSerialNr();
 
-    std::string GetSerialNr();
-
-	std::string GetLabel();
-};
+		std::string GetLabel();
+	};
 
 }

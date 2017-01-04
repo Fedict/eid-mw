@@ -110,6 +110,7 @@ int ret = 0;
 unsigned int index = 0;
 unsigned int size = 0;
 unsigned int diff = 0;
+P11_SESSION *gpSessions_realloc;
 
 *ppSession = NULL;
 // search for free entry in session table  
@@ -125,11 +126,16 @@ if (index == nSessions)
    size = nSessions * sizeof(P11_SESSION);
    diff = SESSION_TAB_STEP_SIZE * sizeof(P11_SESSION);
 
-   if ((gpSessions = realloc(gpSessions, size+diff)) == NULL)
-      {
-      log_trace(WHERE, "E: unable to allocate memory for session table, %d bytes\n", size+diff);
-      return(CKR_HOST_MEMORY);      
-      }      
+   gpSessions_realloc = realloc(gpSessions, size + diff);
+   if (gpSessions_realloc == NULL)
+   {
+	   log_trace(WHERE, "E: unable to allocate memory for session table, %d bytes\n", size + diff);
+	   return(CKR_HOST_MEMORY);
+   }
+   else
+   {
+	   gpSessions = gpSessions_realloc;
+   }
 
    memset(&gpSessions[index], 0, diff);
    nSessions += SESSION_TAB_STEP_SIZE;
@@ -151,7 +157,7 @@ CK_RV p11_close_sessions_finalize()
 	CK_RV r, ret;
 	P11_SESSION *pSession;
 	P11_SLOT *pSlot;
-	int i;
+	unsigned int i;
 
 	ret = CKR_OK;
 	for(i=0;i<nSessions; i++) {
@@ -284,9 +290,7 @@ unsigned int index = 0;
 unsigned int size = 0;
 unsigned int diff = 0;
 
-//ret = p11_lock();
-//if (ret != CKR_OK)
-//   return ret;
+//p11_lock();
 
 // search for free entry in object table  
 for (index=0; index < pSlot->nobjects; index++)

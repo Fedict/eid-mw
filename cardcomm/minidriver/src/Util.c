@@ -178,6 +178,7 @@ DWORD BeidCreateMSRoots(PCARD_DATA  pCardData, DWORD *pcbMSRoots, PBYTE *ppbMSRo
 	if ( pbCertif != NULL )
 	{
 		pCardData->pfnCspFree(pbCertif);
+		pbCertif = NULL;
 	}
 
 	dwReturn = BeidReadCert(pCardData, CERT_ROOTCA, &cbCertif, &pbCertif);
@@ -255,6 +256,7 @@ cleanup:
 	if ( pbCertif != NULL )
 	{
 		pCardData->pfnCspFree(pbCertif);
+		pbCertif = NULL;
 	}
 	if ( hMemoryStore != NULL )
 	{

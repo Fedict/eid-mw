@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -44,7 +45,8 @@
 #define E_X509_INCOMPLETE            -7
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #define X509_VERSION          "\1\1\1\1"
@@ -63,33 +65,34 @@ extern "C" {
 #define X509_SIGNATURE_OID    "\1\2\1"
 #define X509_SIGNATURE        "\1\3"
 
-typedef struct
-  {
-    unsigned int lcert;
-    char *subject;
-    unsigned int l_subject;
-    char *issuer;
-    unsigned int l_issuer;
-    char *mod;
-    unsigned int l_mod;
-    char *exp;
-    unsigned int l_exp;
-    char *pkinfo;
-    unsigned int l_pkinfo;
-    char *serial;
-    unsigned int l_serial;
-    char *validfrom;
-    unsigned int l_validfrom;
-    char *validto;
-    unsigned int l_validto;
-  } T_CERT_INFO;
+	typedef struct
+	{
+		unsigned int lcert;
+		char *subject;
+		unsigned int l_subject;
+		char *issuer;
+		unsigned int l_issuer;
+		char *mod;
+		unsigned int l_mod;
+		char *exp;
+		unsigned int l_exp;
+		char *pkinfo;
+		unsigned int l_pkinfo;
+		char *serial;
+		unsigned int l_serial;
+		char *validfrom;
+		unsigned int l_validfrom;
+		char *validto;
+		unsigned int l_validto;
+	} T_CERT_INFO;
 
 
-int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *info);
-void cert_free_info(T_CERT_INFO *info);
+	int cert_get_info(const unsigned char *pcert, unsigned int lcert,
+			  T_CERT_INFO * info);
+	void cert_free_info(T_CERT_INFO * info);
 
 #ifdef __cplusplus
-   }
+}
 #endif
 
 

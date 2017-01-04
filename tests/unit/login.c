@@ -29,13 +29,13 @@
 #include "testlib.h"
 
 CK_RV notify_login(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
+	printf("INFO: notification called\n");
 	return CKR_OK;
 }
 
-TEST_FUNC(login) {
+TEST_FUNC(slogin) {
 	CK_SLOT_ID slot;
 	CK_SESSION_HANDLE handle = 0;
-	CK_TOKEN_INFO info;
 	CK_SESSION_INFO sinfo;
 	int ret;
 	ckrv_mod m[] = {
@@ -50,11 +50,6 @@ TEST_FUNC(login) {
 		{ CKR_SESSION_HANDLE_INVALID, TEST_RV_OK },
 		{ CKR_OK, TEST_RV_FAIL },
 	};
-
-	if(!have_pin()) {
-		fprintf(stderr, "cannot test login without a pin code\n");
-		return TEST_RV_SKIP;
-	}
 
 	check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m_p11_noinit);
 	check_rv_long(C_Logout(handle), m_p11_noinit);
@@ -74,7 +69,9 @@ TEST_FUNC(login) {
 	printf("State: %lu\n", sinfo.state);
 	printf("Flags: %#08lx\n", sinfo.flags);
 
-	if(!can_enter_pin(slot)) {
+	if(!have_pin() || !can_enter_pin(slot)) {
+		fprintf(stderr, "cannot test login without the ability to enter a pin code\n");
+        check_rv(C_Finalize(NULL_PTR));
 		return TEST_RV_SKIP;
 	}
 
@@ -89,8 +86,15 @@ TEST_FUNC(login) {
 
 	check_rv(C_Logout(handle));
 	check_rv_long(C_Logout(handle), m_nlogin);
-
 	check_rv(C_CloseSession(handle));
+
+	if(have_robot()) {
+		check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &handle));
+		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);
+		robot_remove_card();
+		check_rv_long(C_Logout(handle), m_p11_nocard);
+		C_CloseSession(handle);
+	}
 
 	check_rv(C_Finalize(NULL_PTR));
 

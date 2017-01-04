@@ -1,0 +1,473 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2F3883B31CF46C9D00F114A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3883B21CF46C9D00F114A7 /* Cocoa.framework */; };
+		2F3883BF1CF46C9D00F114A7 /* BEIDToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2F3883B01CF46C9D00F114A7 /* BEIDToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2F3883CA1CF46DD400F114A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3883C91CF46DD400F114A7 /* libz.dylib */; };
+		8B27BEFC1DA53FC7009652DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B27BEF71DA53FC7009652DF /* Assets.xcassets */; };
+		8B27BEFD1DA53FC7009652DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B27BEF91DA53FC7009652DF /* AppDelegate.m */; };
+		8B27BEFE1DA53FC7009652DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B27BEFA1DA53FC7009652DF /* main.m */; };
+		8B6D46D51DAB98AD00149838 /* TokenDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B27BEFF1DA54051009652DF /* TokenDriver.m */; };
+		8B6D46D61DAB98AD00149838 /* Token.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B27BF011DA54051009652DF /* Token.m */; };
+		8B6D46D71DAB98AD00149838 /* TokenSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B27BF041DA54051009652DF /* TokenSession.m */; };
+		8B6D46D91DAB9AF800149838 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 8B27BF061DA54051009652DF /* en.lproj */; };
+		8B91F8B21DAB8C8B00FA5E0C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B91F8B01DAB8C8B00FA5E0C /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2F3883BD1CF46C9D00F114A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F3883901CF46C6E00F114A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F3883AF1CF46C9D00F114A7;
+			remoteInfo = BEIDToken;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2F3883C31CF46C9D00F114A7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2F3883BF1CF46C9D00F114A7 /* BEIDToken.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2F3883981CF46C6E00F114A7 /* BEIDTokenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BEIDTokenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F3883B01CF46C9D00F114A7 /* BEIDToken.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BEIDToken.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F3883B21CF46C9D00F114A7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2F3883C91CF46DD400F114A7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		2F3883CB1CF46FA300F114A7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8B27BEF61DA53FC7009652DF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BEIDTokenApp/Info.plist; sourceTree = SOURCE_ROOT; };
+		8B27BEF71DA53FC7009652DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = BEIDTokenApp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		8B27BEF81DA53FC7009652DF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = BEIDTokenApp/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		8B27BEF91DA53FC7009652DF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = BEIDTokenApp/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		8B27BEFA1DA53FC7009652DF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BEIDTokenApp/main.m; sourceTree = SOURCE_ROOT; };
+		8B27BEFF1DA54051009652DF /* TokenDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenDriver.m; path = BEIDToken/TokenDriver.m; sourceTree = SOURCE_ROOT; };
+		8B27BF001DA54051009652DF /* BEIDToken.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = BEIDToken.entitlements; path = BEIDToken/BEIDToken.entitlements; sourceTree = SOURCE_ROOT; };
+		8B27BF011DA54051009652DF /* Token.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Token.m; path = BEIDToken/Token.m; sourceTree = SOURCE_ROOT; };
+		8B27BF021DA54051009652DF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BEIDToken/Info.plist; sourceTree = SOURCE_ROOT; };
+		8B27BF031DA54051009652DF /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Token.h; path = BEIDToken/Token.h; sourceTree = SOURCE_ROOT; };
+		8B27BF041DA54051009652DF /* TokenSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenSession.m; path = BEIDToken/TokenSession.m; sourceTree = SOURCE_ROOT; };
+		8B27BF051DA54051009652DF /* TokenSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenSession.h; path = BEIDToken/TokenSession.h; sourceTree = SOURCE_ROOT; };
+		8B27BF061DA54051009652DF /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = en.lproj; path = BEIDToken/en.lproj; sourceTree = SOURCE_ROOT; };
+		8B91F8B11DAB8C8B00FA5E0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = BEIDTokenApp/Base.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2F3883951CF46C6E00F114A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F3883AD1CF46C9D00F114A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F3883CA1CF46DD400F114A7 /* libz.dylib in Frameworks */,
+				2F3883B31CF46C9D00F114A7 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2F38838F1CF46C6E00F114A7 = {
+			isa = PBXGroup;
+			children = (
+				2F3883CB1CF46FA300F114A7 /* README.md */,
+				2F38839A1CF46C6E00F114A7 /* BEIDTokenApp */,
+				2F3883B41CF46C9D00F114A7 /* BEIDToken */,
+				2F3883B11CF46C9D00F114A7 /* Frameworks */,
+				2F3883991CF46C6E00F114A7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2F3883991CF46C6E00F114A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2F3883981CF46C6E00F114A7 /* BEIDTokenApp.app */,
+				2F3883B01CF46C9D00F114A7 /* BEIDToken.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2F38839A1CF46C6E00F114A7 /* BEIDTokenApp */ = {
+			isa = PBXGroup;
+			children = (
+				8B91F8B01DAB8C8B00FA5E0C /* MainMenu.xib */,
+				8B27BEF61DA53FC7009652DF /* Info.plist */,
+				8B27BEF71DA53FC7009652DF /* Assets.xcassets */,
+				8B27BEF81DA53FC7009652DF /* AppDelegate.h */,
+				8B27BEF91DA53FC7009652DF /* AppDelegate.m */,
+				2F38839E1CF46C6E00F114A7 /* Supporting Files */,
+			);
+			path = BEIDTokenApp;
+			sourceTree = "<group>";
+		};
+		2F38839E1CF46C6E00F114A7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8B27BEFA1DA53FC7009652DF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2F3883B11CF46C9D00F114A7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2F3883C91CF46DD400F114A7 /* libz.dylib */,
+				2F3883B21CF46C9D00F114A7 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2F3883B41CF46C9D00F114A7 /* BEIDToken */ = {
+			isa = PBXGroup;
+			children = (
+				8B27BEFF1DA54051009652DF /* TokenDriver.m */,
+				8B27BF011DA54051009652DF /* Token.m */,
+				8B27BF021DA54051009652DF /* Info.plist */,
+				8B27BF031DA54051009652DF /* Token.h */,
+				8B27BF041DA54051009652DF /* TokenSession.m */,
+				8B27BF051DA54051009652DF /* TokenSession.h */,
+				8B27BF061DA54051009652DF /* en.lproj */,
+				2F3883B51CF46C9D00F114A7 /* Supporting Files */,
+			);
+			path = BEIDToken;
+			sourceTree = "<group>";
+		};
+		2F3883B51CF46C9D00F114A7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8B27BF001DA54051009652DF /* BEIDToken.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2F3883971CF46C6E00F114A7 /* BEIDTokenApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F3883A91CF46C6F00F114A7 /* Build configuration list for PBXNativeTarget "BEIDTokenApp" */;
+			buildPhases = (
+				2F3883941CF46C6E00F114A7 /* Sources */,
+				2F3883951CF46C6E00F114A7 /* Frameworks */,
+				2F3883961CF46C6E00F114A7 /* Resources */,
+				2F3883C31CF46C9D00F114A7 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2F3883BE1CF46C9D00F114A7 /* PBXTargetDependency */,
+			);
+			name = BEIDTokenApp;
+			productName = BEIDTokenApp;
+			productReference = 2F3883981CF46C6E00F114A7 /* BEIDTokenApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2F3883AF1CF46C9D00F114A7 /* BEIDToken */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F3883C01CF46C9D00F114A7 /* Build configuration list for PBXNativeTarget "BEIDToken" */;
+			buildPhases = (
+				2F3883AC1CF46C9D00F114A7 /* Sources */,
+				2F3883AD1CF46C9D00F114A7 /* Frameworks */,
+				2F3883AE1CF46C9D00F114A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BEIDToken;
+			productName = BEIDToken;
+			productReference = 2F3883B01CF46C9D00F114A7 /* BEIDToken.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2F3883901CF46C6E00F114A7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Libor sykora";
+				TargetAttributes = {
+					2F3883971CF46C6E00F114A7 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Automatic;
+					};
+					2F3883AF1CF46C9D00F114A7 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 2F3883931CF46C6E00F114A7 /* Build configuration list for PBXProject "BEIDTokenApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2F38838F1CF46C6E00F114A7;
+			productRefGroup = 2F3883991CF46C6E00F114A7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2F3883971CF46C6E00F114A7 /* BEIDTokenApp */,
+				2F3883AF1CF46C9D00F114A7 /* BEIDToken */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2F3883961CF46C6E00F114A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B91F8B21DAB8C8B00FA5E0C /* MainMenu.xib in Resources */,
+				8B27BEFC1DA53FC7009652DF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F3883AE1CF46C9D00F114A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B6D46D91DAB9AF800149838 /* en.lproj in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2F3883941CF46C6E00F114A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B27BEFE1DA53FC7009652DF /* main.m in Sources */,
+				8B27BEFD1DA53FC7009652DF /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F3883AC1CF46C9D00F114A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B6D46D51DAB98AD00149838 /* TokenDriver.m in Sources */,
+				8B6D46D61DAB98AD00149838 /* Token.m in Sources */,
+				8B6D46D71DAB98AD00149838 /* TokenSession.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2F3883BE1CF46C9D00F114A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2F3883AF1CF46C9D00F114A7 /* BEIDToken */;
+			targetProxy = 2F3883BD1CF46C9D00F114A7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		8B91F8B01DAB8C8B00FA5E0C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8B91F8B11DAB8C8B00FA5E0C /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2F3883A71CF46C6F00F114A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPRESSION = lossless;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2F3883A81CF46C6F00F114A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPRESSION = "respect-asset-catalog";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2F3883AA1CF46C6F00F114A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				INFOPLIST_FILE = BEIDTokenApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2F3883AB1CF46C6F00F114A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				INFOPLIST_FILE = BEIDTokenApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2F3883C11CF46C9D00F114A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = BEIDToken/BEIDToken.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				INFOPLIST_FILE = BEIDToken/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp.BEIDToken;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		2F3883C21CF46C9D00F114A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = BEIDToken/BEIDToken.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				INFOPLIST_FILE = BEIDToken/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp.BEIDToken;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2F3883931CF46C6E00F114A7 /* Build configuration list for PBXProject "BEIDTokenApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F3883A71CF46C6F00F114A7 /* Debug */,
+				2F3883A81CF46C6F00F114A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F3883A91CF46C6F00F114A7 /* Build configuration list for PBXNativeTarget "BEIDTokenApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F3883AA1CF46C6F00F114A7 /* Debug */,
+				2F3883AB1CF46C6F00F114A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F3883C01CF46C9D00F114A7 /* Build configuration list for PBXNativeTarget "BEIDToken" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F3883C11CF46C9D00F114A7 /* Debug */,
+				2F3883C21CF46C9D00F114A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2F3883901CF46C6E00F114A7 /* Project object */;
+}

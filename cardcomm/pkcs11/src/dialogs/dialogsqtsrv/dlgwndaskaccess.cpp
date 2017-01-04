@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -21,9 +22,8 @@
 #include "dlgwndaskaccess.h"
 #include "../langutil.h"
 
-dlgWndAskAccess::dlgWndAskAccess( QString AppPath, QString ReaderName,
-								 DlgPFOperation ulOperation, QWidget *parent) : dlgWndBase(parent)
-
+dlgWndAskAccess::dlgWndAskAccess(QString AppPath, QString ReaderName, DlgPFOperation ulOperation, QWidget * parent):dlgWndBase
+	(parent)
 {
 	ui.setupUi(this);
 
@@ -31,55 +31,83 @@ dlgWndAskAccess::dlgWndAskAccess( QString AppPath, QString ReaderName,
 
 	//if( DApplic == DLG_APP_BELPIC )
 	//{
-		this->setWindowIcon( QIcon( ":/Resources/ICO_CARD_EID_PLAIN_16x16.png" ) );
-		tmpTitle=QString::fromWCharArray(GETSTRING_DLG(ReadIdentityData)) + ": " + QString::fromWCharArray(GETSTRING_DLG(PrivacyFilter));
+	this->setWindowIcon(QIcon
+			    (":/Resources/ICO_CARD_EID_PLAIN_16x16.png"));
+	tmpTitle =
+		QString::fromWCharArray(GETSTRING_DLG(ReadIdentityData)) +
+		": " + QString::fromWCharArray(GETSTRING_DLG(PrivacyFilter));
 	//}
 	//else
 	//{
-	//	tmpTitle=QString::fromWCharArray(GETSTRING_DLG(PrivacyFilter));
+	//      tmpTitle=QString::fromWCharArray(GETSTRING_DLG(PrivacyFilter));
 	//}
-	if(!ReaderName.isEmpty())
+	if (!ReaderName.isEmpty())
 	{
 		tmpTitle.append(" - ");
 		tmpTitle.append(ReaderName);
 	}
 
-	this->setWindowTitle( tmpTitle );
+	this->setWindowTitle(tmpTitle);
 
-	setMaximumSize( 380,200 );
+	setMaximumSize(380, 200);
 
-	ui.lblIcon->setPixmap( QPixmap( ":/Resources/ICO_CARD_QUESTION_64x64.png" ) );
+	ui.lblIcon->
+		setPixmap(QPixmap(":/Resources/ICO_CARD_QUESTION_64x64.png"));
 
-	ui.lblMessage_1->setText( QString::fromWCharArray(GETSTRING_DLG(AnApplicationWantsToAccessTheCard)) );
-	ui.lblMessage_2->setText( QString::fromWCharArray(GETSTRING_DLG(Application)) );
-	ui.lblMessage_3->setText( AppPath );
-	ui.lblMessage_4->setText( QString::fromWCharArray(GETSTRING_DLG(Function)) );
-	switch(ulOperation)
+	ui.lblMessage_1->
+		setText(QString::
+			fromWCharArray(GETSTRING_DLG
+				       (AnApplicationWantsToAccessTheCard)));
+	ui.lblMessage_2->
+		setText(QString::fromWCharArray(GETSTRING_DLG(Application)));
+	ui.lblMessage_3->setText(AppPath);
+	ui.lblMessage_4->
+		setText(QString::fromWCharArray(GETSTRING_DLG(Function)));
+	switch (ulOperation)
 	{
-	case 	DLG_PF_OP_READ_ID:
-		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadIdentityData)) );
-		break;
-	case 	DLG_PF_OP_READ_PHOTO:
-		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadPhoto)) );
-		break;
-	case 	DLG_PF_OP_READ_ADDRESS:
-		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadAddressData)) );
-		break;
-	case 	DLG_PF_OP_READ_CERTS:
-		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadCertificates)) );
-		break;
-	default:
-		ui.lblMessage_5->setText( QString::fromWCharArray(GETSTRING_DLG(ReadUnknownData)) );
-		break;
+		case DLG_PF_OP_READ_ID:
+			ui.lblMessage_5->
+				setText(QString::
+					fromWCharArray(GETSTRING_DLG
+						       (ReadIdentityData)));
+			break;
+		case DLG_PF_OP_READ_PHOTO:
+			ui.lblMessage_5->
+				setText(QString::
+					fromWCharArray(GETSTRING_DLG
+						       (ReadPhoto)));
+			break;
+		case DLG_PF_OP_READ_ADDRESS:
+			ui.lblMessage_5->
+				setText(QString::
+					fromWCharArray(GETSTRING_DLG
+						       (ReadAddressData)));
+			break;
+		case DLG_PF_OP_READ_CERTS:
+			ui.lblMessage_5->
+				setText(QString::
+					fromWCharArray(GETSTRING_DLG
+						       (ReadCertificates)));
+			break;
+		default:
+			ui.lblMessage_5->
+				setText(QString::
+					fromWCharArray(GETSTRING_DLG
+						       (ReadUnknownData)));
+			break;
 	}
-	ui.lblMessage_6->setText( QString::fromWCharArray(GETSTRING_DLG(DoYouWantToAcceptIt)) );
+	ui.lblMessage_6->
+		setText(QString::
+			fromWCharArray(GETSTRING_DLG(DoYouWantToAcceptIt)));
 
-	ui.chkForAll->setText( QString::fromWCharArray(GETSTRING_DLG(ForAllOperations)) );
+	ui.chkForAll->
+		setText(QString::
+			fromWCharArray(GETSTRING_DLG(ForAllOperations)));
 
-	ui.btnYes->setText( QString::fromWCharArray(GETSTRING_DLG(Yes)) );
-	ui.btnNo->setText( QString::fromWCharArray(GETSTRING_DLG(CancelNo)) );
-	ui.btnAlways->setText( QString::fromWCharArray(GETSTRING_DLG(Always)) );
-	ui.btnNever->setText( QString::fromWCharArray(GETSTRING_DLG(Never)) );
+	ui.btnYes->setText(QString::fromWCharArray(GETSTRING_DLG(Yes)));
+	ui.btnNo->setText(QString::fromWCharArray(GETSTRING_DLG(CancelNo)));
+	ui.btnAlways->setText(QString::fromWCharArray(GETSTRING_DLG(Always)));
+	ui.btnNever->setText(QString::fromWCharArray(GETSTRING_DLG(Never)));
 
 	dlgResult = DLG_ERR;
 }

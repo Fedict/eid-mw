@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -38,31 +39,35 @@
 //
 // A coder that reads the data of an object
 //
-class BELPICDataAttributeCoder : public Tokend::AttributeCoder
+class BELPICDataAttributeCoder:public Tokend::AttributeCoder
 {
-	NOCOPY(BELPICDataAttributeCoder)
-public:
+NOCOPY(BELPICDataAttributeCoder) public:
 
-	BELPICDataAttributeCoder() {}
-	virtual ~BELPICDataAttributeCoder();
+	BELPICDataAttributeCoder()
+	{
+	}
+	virtual ~ BELPICDataAttributeCoder();
 
-	virtual void decode(Tokend::TokenContext *tokenContext,
-		const Tokend::MetaAttribute &metaAttribute, Tokend::Record &record);
+	virtual void decode(Tokend::TokenContext * tokenContext,
+			    const Tokend::MetaAttribute & metaAttribute,
+			    Tokend::Record & record);
 };
 
 
 //
 // A coder that produces the LogicalKeySizeInBits of a key
 //
-class BELPICKeySizeAttributeCoder : public Tokend::AttributeCoder
+class BELPICKeySizeAttributeCoder:public Tokend::AttributeCoder
 {
-	NOCOPY(BELPICKeySizeAttributeCoder)
-public:
-	BELPICKeySizeAttributeCoder() {}
-	virtual ~BELPICKeySizeAttributeCoder();
-    
-	virtual void decode(Tokend::TokenContext *tokenContext, const Tokend::MetaAttribute &metaAttribute, Tokend::Record &record);
+NOCOPY(BELPICKeySizeAttributeCoder) public:
+	BELPICKeySizeAttributeCoder()
+	{
+	}
+	virtual ~ BELPICKeySizeAttributeCoder();
+
+	virtual void decode(Tokend::TokenContext * tokenContext,
+			    const Tokend::MetaAttribute & metaAttribute,
+			    Tokend::Record & record);
 };
 
 #endif /* !_BELPICATTRIBUTECODER_H_ */
-

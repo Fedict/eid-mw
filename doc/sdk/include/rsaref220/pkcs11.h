@@ -1,4 +1,6 @@
+
 /* pkcs11.h include file for PKCS #11. */
+
 /* $Revision: 1.4 $ */
 
 /* License to copy and use this software is granted provided that it is
@@ -20,7 +22,8 @@
 #define _PKCS11_H_ 1
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Before including this file (pkcs11.h) (or pkcs11t.h by
@@ -224,7 +227,7 @@ extern "C" {
 /* All the various Cryptoki types and #define'd values are in the
  * file pkcs11t.h. */
 //#if defined( INC_ALL )
-  #include "pkcs11t.h"
+#include "pkcs11t.h"
 //#else
 //  #include "pkcs11t.h"
 //#endif /* Compiler-specific includes */
@@ -244,7 +247,7 @@ extern "C" {
 /* pkcs11f.h has all the information about the Cryptoki
  * function prototypes. */
 //#if defined( INC_ALL )
-  #include "pkcs11f.h"
+#include "pkcs11f.h"
 //#else
 //  #include "device/pkcs11f.h"
 //#endif /* Compiler-specific includes */
@@ -267,7 +270,7 @@ extern "C" {
 /* pkcs11f.h has all the information about the Cryptoki
  * function prototypes. */
 //#if defined( INC_ALL )
-  #include "pkcs11f.h"
+#include "pkcs11f.h"
 //#else
 //  #include "device/pkcs11f.h"
 //#endif /* Compiler-specific includes */
@@ -288,20 +291,22 @@ extern "C" {
 #define CK_PKCS11_FUNCTION_INFO(name) \
   __PASTE(CK_,name) name;
 
-struct CK_FUNCTION_LIST {
+	struct CK_FUNCTION_LIST
+	{
 
-  CK_VERSION    version;  /* Cryptoki version */
+		CK_VERSION version;	/* Cryptoki version */
 
 /* Pile all the function pointers into the CK_FUNCTION_LIST. */
+
 /* pkcs11f.h has all the information about the Cryptoki
  * function prototypes. */
 //#if defined( INC_ALL )
-  #include "pkcs11f.h"
+#include "pkcs11f.h"
 //#else
 //  #include "device/pkcs11f.h"
 //#endif /* Compiler-specific includes */
 
-};
+	};
 
 #undef CK_PKCS11_FUNCTION_INFO
 

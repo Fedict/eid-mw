@@ -51,6 +51,7 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 {
 	int ret = CKR_OK;
 	CK_C_INITIALIZE_ARGS_PTR p_args;
+	unsigned char initial_state = p11_get_init();
 
 #if _DEBUG
 	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_INFO);
@@ -103,6 +104,9 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 
 cleanup:
 	log_trace(WHERE, "I: leave, ret = %i",ret);
+	if (ret != CKR_OK) {
+		p11_set_init(initial_state);
+	}
 	return ret;
 }
 #undef WHERE
@@ -127,12 +131,7 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 		return (CKR_ARGUMENTS_BAD);
 	}
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	//g_final = 0; /* Belpic */
 	p11_set_init(BEIDP11_DEINITIALIZING);
@@ -181,7 +180,7 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 	strcpy_n(pInfo->manufacturerID,  "Belgium Government",  sizeof(pInfo->manufacturerID), ' ');
 	strcpy_n(pInfo->libraryDescription, "Belgium eID PKCS#11 interface v2", sizeof(pInfo->libraryDescription), ' ');
 	pInfo->libraryVersion.major = 4;
-	pInfo->libraryVersion.minor = 1;
+	pInfo->libraryVersion.minor = 2;
 
 cleanup:
 	log_trace(WHERE, "I: leave, ret = %i",ret);
@@ -232,13 +231,8 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}
 
-	ret = p11_lock();
-	log_trace(WHERE, "I: p11_lock() acquiered");
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return (ret);
-	}
+	p11_lock();
+	log_trace(WHERE, "I: p11_lock() acquired");
 
 	if (++l<LOG_MAX_REC)
 		log_trace(WHERE, "S: C_GetSlotList()");
@@ -276,10 +270,11 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
 		{
 			int pPresent = 0;
 			ret = cal_token_present(h, &pPresent);
-			if(ret != CKR_OK)
+			if(ret != CKR_OK && ret != CKR_TOKEN_NOT_RECOGNIZED)
 			{
 				goto cleanup;
 			}
+			ret = CKR_OK; // CKR_TOKEN_NOT_RECOGNIZED is useless as a return value from this function, and we just ensured that nothing else is possible
 			if (pPresent)
 			{
 				log_trace(WHERE, "I: cal_token_present");
@@ -356,12 +351,7 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	if (++l < LOG_MAX_REC)  
 		log_trace(WHERE, "S: C_GetSlotInfo(slot %d)", slotID);
@@ -418,12 +408,7 @@ CK_RV C_GetTokenInfo(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	log_trace(WHERE, "S: C_GetTokenInfo(slot %d)", slotID);
 	if (pInfo == NULL_PTR) 
@@ -462,12 +447,7 @@ CK_RV C_GetMechanismList(CK_SLOT_ID slotID,
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	log_trace(WHERE, "S: C_GetMechanismList(slot %d)", slotID);
 
@@ -501,12 +481,7 @@ CK_RV C_GetMechanismInfo(CK_SLOT_ID slotID,
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}		
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	log_trace(WHERE, "S: C_GetMechanismInfo(slot %d)", slotID);
 
@@ -588,12 +563,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 			}	
 		}
 		//pcsc just got launched, so establish a new context
-		ret = p11_lock();
-		if (ret != CKR_OK)
-		{
-			log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-			return ret;
-		}
+		p11_lock();
 		//check if nowhere else the context has been reestablished
 		//TODO : if()
 		cal_re_establish_context();
@@ -601,12 +571,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 	}*/
 #endif
 
-	ret = p11_lock();
-	if (ret != CKR_OK)
-	{
-		log_trace(WHERE, "I: leave, p11_lock failed with %i",ret);
-		return ret;
-	}
+	p11_lock();
 
 	//check again, in case c_finalize got the lock right before we did
 	//(then c_finalize will give us a chance to fall through, right before he resets the lock))

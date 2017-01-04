@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -40,375 +41,222 @@
 #include "util.h"
 #include "mw_util.h"
 
-char a_cHexChars[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+char a_cHexChars[] =
+	{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
+   'D', 'E', 'F' };
 
 namespace eIDMW
 {
 
-  std::wstring utilStringWiden(const std::string& in, const std::locale& locale)
-  {
-    std::wstring out(in.size(), 0);
+	std::wstring utilStringWiden(const std::string & in,
+				     const std::locale & locale)
+	{
+		std::wstring out(in.size(), 0);
 
-    for(std::string::size_type i = 0; in.size() > i; ++i)
-      out[i] = std::use_facet<std::ctype<wchar_t> >(locale).widen(in[i]);
-    return out;
+		for (std::string::size_type i = 0; in.size() > i; ++i)
+			out[i] = std::use_facet < std::ctype < wchar_t >
+				>(locale).widen(in[i]);
+		return out;
 
-  }
+	}
 
-  std::string utilStringNarrow(const std::wstring& in, const std::locale& locale)
-  {
-    std::string out(in.size(), 0);
+	std::     string utilStringNarrow(const std::wstring & in,
+					  const std::locale & locale)
+	{
+		std::string out(in.size(), 0);
 
-    for(std::wstring::size_type i = 0; in.size() > i; ++i)
+		for (std::wstring::size_type i = 0; in.size() > i; ++i)
 #ifdef WIN32
-      out[i] = std::use_facet<std::ctype<wchar_t> >(locale).narrow(in[i]);
+			out[i] = std::use_facet < std::ctype < wchar_t >
+				>(locale).narrow(in[i]);
 #else
-      // in the unix implementation of std::locale narrow needs 2 arguments
-      // (the second is a default char, here the choice is random)
-      out[i] = std::use_facet<std::ctype<wchar_t> >(locale).narrow(in[i],'x');
+			// in the unix implementation of std::locale narrow needs 2 arguments
+			// (the second is a default char, here the choice is random)
+			out[i] = std::use_facet < std::ctype < wchar_t >
+				>(locale).narrow(in[i], 'x');
 #endif
-    return out;
-  }
+		return out;
+	}
 
 /**
  * Case insensitve search, csSearch should be in lower case.
  * Returns true is csSearch is present in csData.
  */
-bool StartsWithCI(const char *csData, const char *csSearch)
-{
-	for (const char *pc1 = csData, *pc2 = csSearch; *pc2 != '\0'; pc1++, pc2++)
+	bool StartsWithCI(const char *csData, const char *csSearch)
 	{
-		if ((*pc1 != *pc2) && (*pc1 - 'A' + 'a' != *pc2))
-			return false;
-	}
-
-	return true;
-}
-
-/**
- * Returns true is csSearch is present in csData.
- */
-bool StartsWith(const char *csData, const char *csSearch)
-{
-	for (const char *pc1 = csData, *pc2 = csSearch; *pc2 != '\0'; pc1++, pc2++)
-	{
-		if (*pc1 != *pc2)
-			return false;
-	}
-
-	return true;
-}
-//--------------------------------------------
-// conversion table to convert IBM 850 to UTF8
-// only the highest 128 characters can/will be converted
-// The UTF8 version is for simplicity divided per 3 bytes.
-//--------------------------------------------
-static unsigned char IBM850_to_utf8[]=
-{
-	(unsigned char) 0xc3,(unsigned char) 0x87,(unsigned char) 0x00,		// (unsigned char) 0x80
-	(unsigned char) 0xc3,(unsigned char) 0xbc,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xa9,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xa2,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xa4,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xa0,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xa5,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xa7,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xaa,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xab,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xa8,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xaf,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xae,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xac,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x84,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x85,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x89,(unsigned char) 0x00,		// (unsigned char) 0x90
-	(unsigned char) 0xc3,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x86,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb4,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb6,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb2,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xbb,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb9,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xbf,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x96,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x9c,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb8,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa3,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x98,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x97,(unsigned char) 0x00,
-	(unsigned char) 0xc6,(unsigned char) 0x92,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xa1,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xad,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb3,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xba,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb1,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x91,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xaa,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xba,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xbf,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xae,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xac,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xbd,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xbc,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa1,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xab,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xbb,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x81,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x82,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x80,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa9,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa2,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa5,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2d,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2d,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2d,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xa3,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x83,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2d,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2d,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0x2d,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa4,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb0,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x90,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x8a,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x8b,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x88,(unsigned char) 0x00,
-	(unsigned char) 0x69,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x8d,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x8e,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x8f,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0x2b,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0x5f,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x8c,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xaf,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x93,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x9f,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x94,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x92,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb5,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x95,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb5,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xbe,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x9e,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x9a,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x9b,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x99,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xbd,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0x9d,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xaf,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb4,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xad,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb1,(unsigned char) 0x00,
-	(unsigned char) 0x3d,(unsigned char) 0x00,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xbe,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb6,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa7,(unsigned char) 0x00,
-	(unsigned char) 0xc3,(unsigned char) 0xb7,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb8,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb0,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa8,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb7,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb9,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb3,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xb2,(unsigned char) 0x00,
-	(unsigned char) 0xc2,(unsigned char) 0xa6,(unsigned char) 0x00,
-};
-
-//--------------------------------------------
-// convert the IBM850 encoded inbuf to UTF8
-//--------------------------------------------
-std::string IBM850_toUtf8( std::string const& inBuf )
-{
-	std::string in_utf8;
-	for (int x=0;x<(int) inBuf.length();x++)
-	{
-		int  idx = 0;
-		char ch  = inBuf[x];
-
-		//--------------------------------------------
-		// only highest 128 characters should be converted
-		//--------------------------------------------
-		if ( (unsigned)ch > (unsigned)0x80)
+		for (const char *pc1 = csData, *pc2 = csSearch; *pc2 != '\0';
+		     pc1++, pc2++)
 		{
-			ch      = ch - 0x80;
-			idx		= ch*3;
-
-			do 
+			if (*pc1 != tolower(*pc2))
 			{
-				in_utf8 += IBM850_to_utf8[idx];
-				idx++;
-
-			} while(IBM850_to_utf8[idx]!=0);
-
+				return false;
+			}
 		}
-		else
-		{
-			in_utf8 += ch;
-		}
+
+		return true;
 	}
-	return in_utf8;
-}
 
 /* convert binary to ascii-hexadecimal, terminate with a 00-byte
    You have to free the returned buffer yourself !!
  */
-char* bin2AsciiHex(const unsigned char * pData, unsigned long ulLen) 
-{
-    char *pszHex = new char[ulLen*2 + 1];
-    if(pData != NULL)
-    {
-        int j = 0;
-        for(unsigned long i = 0; i < ulLen; i++) 
-        {
-            pszHex[j++] = a_cHexChars[pData[i]>>4 & 0x0F];
-            pszHex[j++] = a_cHexChars[pData[i] & 0x0F];
-         }
-         pszHex[j] = 0;
-    }
-    return pszHex;
-}
+	char *bin2AsciiHex(const unsigned char *pData, unsigned long ulLen)
+	{
+		char *pszHex = new char[ulLen * 2 + 1];
+
+		if (pData != NULL)
+		{
+			int j = 0;
+
+			for (unsigned long i = 0; i < ulLen; i++)
+			{
+				pszHex[j++] =
+					a_cHexChars[pData[i] >> 4 & 0x0F];
+				pszHex[j++] = a_cHexChars[pData[i] & 0x0F];
+			}
+			pszHex[j] = 0;
+		}
+		return pszHex;
+	}
 
 /* Return the name of the process that calls the library
  */
 #ifdef WIN32
-	#include <windows.h>
+#include <windows.h>
 	//typedef DWORD (WINAPI *DYN_GETPROCESSNAME)(HANDLE,LPWSTR,DWORD); 
-	typedef DWORD (WINAPI *DYN_GETPROCESSNAME)(HANDLE,HMODULE,LPWSTR,DWORD);
+	typedef DWORD(WINAPI * DYN_GETPROCESSNAME) (HANDLE, HMODULE, LPWSTR,
+						    DWORD);
 #endif
 #ifdef __APPLE__
-	#include <Carbon/Carbon.h>
+#include <Carbon/Carbon.h>
 #endif
 
-void GetProcessName(wchar_t *wBuffer,unsigned long ulLen)
-{
-	try
+	void GetProcessName(wchar_t * wBuffer, unsigned long ulLen)
 	{
-#ifdef WIN32
-		HMODULE hLibrary=LoadLibrary(L"psapi.dll");
-		if(!hLibrary)
-			return;
-
-		DYN_GETPROCESSNAME getProcessName; 
-
-		HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS,FALSE,GetCurrentProcessId());
-
-		//getProcessName = (DYN_GETPROCESSNAME) GetProcAddress(hLibrary, "GetProcessImageFileNameW"); 
-		getProcessName = (DYN_GETPROCESSNAME) GetProcAddress(hLibrary, "GetModuleFileNameExW"); 
- 
-        // If the function address is valid, call the function.
- 
-        if (NULL != getProcessName) 
-        {
-			//if(getProcessName(hProcess,wBuffer,ulLen)==0)
-			if(getProcessName(hProcess,NULL,wBuffer,ulLen)==0)
-				wcscpy_s(wBuffer,ulLen,L"");
-        }
-
-		CloseHandle(hProcess);
-		FreeLibrary(hLibrary);
-#elif defined __APPLE__
-        
-        CFBundleRef thisBundle = CFBundleGetMainBundle();
-        if(thisBundle != NULL)
-        {
-            CFURLRef thisurl = CFBundleCopyExecutableURL ( thisBundle );
-            if(thisurl != NULL)
-            {
-                UInt8 csPath[250];
-                UInt8 csPathLen = sizeof(csPath);
-                CFIndex index = CFURLGetBytes ( thisurl, csPath, csPathLen );
-                if(index != -1)
-                {
-                    if(index < csPathLen)
-                    {
-                        csPath[index]='\0';
-                    }
-                    else
-                    {
-                        csPath[csPathLen -1]='\0';
-                    }
-                    std::string strPath = (char *) csPath;
-                    wcscpy_s(wBuffer, ulLen, utilStringWiden(strPath).c_str());
-            
-                }
-                CFRelease(thisurl);
-            }
-        }
-        
- /*       ProcessSerialNumber xPSN = {kNoProcess, kCurrentProcess};
-	FSRef location;
-        OSStatus ret = GetProcessBundleLocation (&xPSN, &location);
-        if (noErr == ret)
-        {
-                unsigned char csPath[250];
-                ret = FSRefMakePath(&location, csPath, sizeof(csPath));
-                if (noErr == ret)
+		try
 		{
-			std::string strPath = (char *) csPath;
-			wcscpy_s(wBuffer, ulLen, utilStringWiden(strPath).c_str());
-		}
-        }*/
+#ifdef WIN32
+			HMODULE hLibrary = LoadLibrary(L"psapi.dll");
+
+			if (!hLibrary)
+				return;
+
+			DYN_GETPROCESSNAME getProcessName;
+
+			HANDLE hProcess =
+				OpenProcess(PROCESS_ALL_ACCESS, FALSE,
+					    GetCurrentProcessId());
+
+			//getProcessName = (DYN_GETPROCESSNAME) GetProcAddress(hLibrary, "GetProcessImageFileNameW"); 
+			getProcessName =
+				(DYN_GETPROCESSNAME) GetProcAddress(hLibrary,
+								    "GetModuleFileNameExW");
+
+			// If the function address is valid, call the function.
+
+			if (NULL != getProcessName)
+			{
+				//if(getProcessName(hProcess,wBuffer,ulLen)==0)
+				if (getProcessName
+				    (hProcess, NULL, wBuffer, ulLen) == 0)
+					wcscpy_s(wBuffer, ulLen, L"");
+			}
+
+			CloseHandle(hProcess);
+			FreeLibrary(hLibrary);
+#elif defined __APPLE__
+
+			CFBundleRef thisBundle = CFBundleGetMainBundle();
+
+			if (thisBundle != NULL)
+			{
+				CFURLRef thisurl =
+					CFBundleCopyExecutableURL(thisBundle);
+				if (thisurl != NULL)
+				{
+					UInt8 csPath[250];
+					UInt8 csPathLen = sizeof(csPath);
+					CFIndex index =
+						CFURLGetBytes(thisurl, csPath,
+							      csPathLen);
+					if (index != -1)
+					{
+						if (index < csPathLen)
+						{
+							csPath[index] = '\0';
+						} else
+						{
+							csPath[csPathLen -
+							       1] = '\0';
+						}
+						std::string strPath =
+							(char *) csPath;
+						wcscpy_s(wBuffer, ulLen,
+							 utilStringWiden
+							 (strPath).c_str());
+
+					}
+					CFRelease(thisurl);
+				}
+			}
+
+			/*       ProcessSerialNumber xPSN = {kNoProcess, kCurrentProcess};
+			   FSRef location;
+			   OSStatus ret = GetProcessBundleLocation (&xPSN, &location);
+			   if (noErr == ret)
+			   {
+			   unsigned char csPath[250];
+			   ret = FSRefMakePath(&location, csPath, sizeof(csPath));
+			   if (noErr == ret)
+			   {
+			   std::string strPath = (char *) csPath;
+			   wcscpy_s(wBuffer, ulLen, utilStringWiden(strPath).c_str());
+			   }
+			   } */
 #else
-	char linkname[64]; /* /proc/<pid>/exe */
-	pid_t pid;
-	int ret;
-	
-	/* Get our PID and build the name of the link in /proc */
-	pid = getpid();
-	
-	if (snprintf(linkname, sizeof(linkname), "/proc/%i/exe", pid) < 0)
-	{
-		/* This should only happen on large word systems. I'm not sure
-		   what the proper response is here.
-		   Since it really is an assert-like condition, aborting the
-		   program seems to be in order. */
-		//abort();
-		return;
-	}	
-	/* Now read the symbolic link */
-	char *buf=new char[ulLen];
-	ret = readlink(linkname, buf, (size_t)ulLen);
+			char linkname[64];	/* /proc/<pid>/exe */
+			pid_t pid;
+			int ret;
 
-	/* In case of an error, leave the handling up to the caller */
-	/* Report insufficient buffer size */
-	if (ret == -1 || (unsigned long)ret >= ulLen)
-	{
-		delete[]  buf;
-		return;
-	}
-	
-	buf[ret]=0; //The string coming from readlink is not null-terminated
+			/* Get our PID and build the name of the link in /proc */
+			pid = getpid();
 
-	wcscpy_s(wBuffer,ulLen,utilStringWiden(buf).c_str());
+			if (snprintf
+			    (linkname, sizeof(linkname), "/proc/%i/exe",
+			     pid) < 0)
+			{
+				/* This should only happen on large word systems. I'm not sure
+				   what the proper response is here.
+				   Since it really is an assert-like condition, aborting the
+				   program seems to be in order. */
+				//abort();
+				return;
+			}
+			/* Now read the symbolic link */
+			char *buf = new char[ulLen];
 
-	delete[]  buf;
+			ret = readlink(linkname, buf, (size_t) ulLen);
+
+			/* In case of an error, leave the handling up to the caller */
+			/* Report insufficient buffer size */
+			if (ret == -1 || (unsigned long) ret >= ulLen)
+			{
+				delete[]buf;
+				return;
+			}
+
+			buf[ret] = 0;	//The string coming from readlink is not null-terminated
+
+			wcscpy_s(wBuffer, ulLen,
+				 utilStringWiden(buf).c_str());
+
+			delete[]buf;
 
 #endif
+		}
+		catch( ...)
+		{
+		}
 	}
-	catch(...)
-	{
-	}
-}
 }
 
 #ifndef WIN32
@@ -439,15 +287,15 @@ int strcat_s(char *dest, size_t len, const char *src)
 	if (dest == NULL)
 		return -1;
 
-	for ( ; *dest != '\0' && len > 1 ; dest++, len--)
+	for (; *dest != '\0' && len > 1; dest++, len--)
 		;
 
-	for ( ; len > 1 && *src != '\0'; dest++, src++, len--)
+	for (; len > 1 && *src != '\0'; dest++, src++, len--)
 		*dest = *src;
 
 	*dest = '\0';
 
-	return *src == '\0' ? 0 : -1; // 0: OK, -1: NOK
+	return *src == '\0' ? 0 : -1;	// 0: OK, -1: NOK
 }
 
 int strncpy_s(char *dest, size_t len, const char *src, long count)
@@ -459,13 +307,14 @@ int strncpy_s(char *dest, size_t len, const char *src, long count)
 	char *dest_start = dest;
 	size_t orig_len = len;
 
-	for ( ; len > 1 && *src != '\0' && count > 0; dest++, src++, len--, count--)
+	for (; len > 1 && *src != '\0' && count > 0;
+	     dest++, src++, len--, count--)
 		*dest = *src;
 
 	*dest = '\0';
 
 	if (*src == '\0' || count == 0)
-		return 0; // OK
+		return 0;	// OK
 
 	if (orig_len > 0)
 		*dest_start = '\0';
@@ -473,7 +322,7 @@ int strncpy_s(char *dest, size_t len, const char *src, long count)
 	return -1;
 }
 
-int fopen_s(FILE** pFile, const char *filename, const char *mode)
+int fopen_s(FILE ** pFile, const char *filename, const char *mode)
 {
 	int r = 0;
 
@@ -490,7 +339,7 @@ int fopen_s(FILE** pFile, const char *filename, const char *mode)
 	return r;
 }
 
-EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...)
+EIDMW_CMN_API int fprintf_s(FILE * stream, const char *format, ...)
 {
 	va_list args;
 	char *csTmp = NULL;
@@ -509,7 +358,8 @@ EIDMW_CMN_API int fprintf_s(FILE *stream, const char *format, ...)
 	return r;
 }
 
-EIDMW_CMN_API int vfprintf_s(FILE *stream, const char *format, va_list argptr)
+EIDMW_CMN_API int vfprintf_s(FILE * stream, const char *format,
+			     va_list argptr)
 {
 	char *csTmp = NULL;
 	int r = -1;
@@ -522,17 +372,21 @@ EIDMW_CMN_API int vfprintf_s(FILE *stream, const char *format, va_list argptr)
 		free(csTmp);
 	}
 
-	return r;}
+	return r;
+}
 
-EIDMW_CMN_API errno_t freopen_s(FILE **pFile, const char *filename, const char *mode, FILE* stream)
+EIDMW_CMN_API errno_t freopen_s(FILE ** pFile, const char *filename,
+				const char *mode, FILE * stream)
 {
-    FILE *fd;
-    fd = freopen(filename, mode,stream);
-    if( !fd ) {
-        return 2; /* No such file or directory (dummy) */
-    }
-    *pFile = fd;
-    return 0;
+	FILE *fd;
+
+	fd = freopen(filename, mode, stream);
+	if (!fd)
+	{
+		return 2;	/* No such file or directory (dummy) */
+	}
+	*pFile = fd;
+	return 0;
 }
 
 #endif

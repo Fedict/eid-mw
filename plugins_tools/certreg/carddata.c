@@ -31,33 +31,34 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pA
 	CK_ULONG ulPreviousCount = 0;
 	CK_ULONG ulCount = 0;
 	CK_ULONG ulCounter = 0;
-	CK_SLOT_ID_PTR pSlotList;
-	CK_ULONG_PTR pCardPresentList;
+	CK_SLOT_ID_PTR pSlotList = NULL;
+	CK_ULONG_PTR pCardPresentList = NULL;
 	//CK_BYTE_PTR pserialNumberList;
 	//CK_ULONG_PTR pserialNumberLenList;
 								//CK_ULONG certContextLen = 5;
-	PCCERT_CONTEXT**	pCertContextArray;
+	PCCERT_CONTEXT** pCertContextArray = NULL;
 
 	retVal = functions->C_GetSlotList(FALSE, NULL_PTR, &ulCount);
 	ulPreviousCount = ulCount;
-	pSlotList = (CK_SLOT_ID_PTR) malloc(ulCount*sizeof(CK_SLOT_ID));
-	pCardPresentList = (CK_ULONG_PTR)malloc(ulCount*sizeof(CK_SLOT_ID));
+
 	//pserialNumberList = (CK_BYTE*)malloc(ulCount*sizeof(CK_BYTE));
 	//memset(pserialNumberList,0,ulCount*sizeof(CK_BYTE));
 	//pserialNumberLenList = (CK_ULONG*)malloc(ulCount*sizeof(CK_ULONG));
 	//allocate space for the array of certificate pointers per slot
-	pCertContextArray = malloc(ulCount*sizeof(PCCERT_CONTEXT*));
-	//initialize with zero's
-	memset(pCertContextArray,0,ulCount*sizeof(PCCERT_CONTEXT*));
 
-	if((pSlotList != NULL) &&(pCardPresentList != NULL) &&(pCertContextArray != NULL))
-	{
-		//retVal = functions->C_GetSlotList(FALSE, NULL_PTR, &ulCount);
-		//if(retVal != CKR_OK){}
-		if ((retVal == CKR_OK) && (ulCount > 0)) {
-			SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)"Readers found: \r\n");
-			retVal = functions->C_GetSlotList(FALSE, pSlotList, &ulCount);
-			if(retVal != CKR_OK){}
+
+	retVal = functions->C_GetSlotList(FALSE, NULL_PTR, &ulCount);
+
+	if ((retVal == CKR_OK) && (ulCount > 0)) {
+		SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)"Readers found: \r\n");
+		//we retrieved the number of readers, now allocate memory for them
+		pSlotList = (CK_SLOT_ID_PTR) malloc(ulCount*sizeof(CK_SLOT_ID));
+		pCardPresentList = (CK_ULONG_PTR)malloc(ulCount*sizeof(CK_SLOT_ID));
+		pCertContextArray = (PCCERT_CONTEXT** ) calloc (ulCount, sizeof(PCCERT_CONTEXT*) );
+
+		retVal = functions->C_GetSlotList(FALSE, pSlotList, &ulCount);
+		if ((retVal == CKR_OK) && (pSlotList != NULL) && (pCardPresentList != NULL) &&(pCertContextArray != NULL) && (ulCount > 0)) {
+
 
 			//ulCount readers found, now fill in the certificate context array,
 			//and register all certificates found
@@ -70,7 +71,7 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pA
 				{
 					slotInfo.slotDescription[63] = 0;
 					//do not display the PnP slot
-					if(strncmp(slotInfo.slotDescription,"\\\\?PnP?\\Notification",20) != 0)
+					if(strncmp((const char*)slotInfo.slotDescription,"\\\\?PnP?\\Notification",20) != 0)
 					{
 						SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"- ");
 						SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)slotInfo.slotDescription);
@@ -90,11 +91,9 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pA
 							SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)tokenInfo.label);
 							SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"\r\n");
 							//allocate space for 5 certificate context pointers
-							pCertContextArray[ulCounter] = malloc (5*sizeof(PCCERT_CONTEXT));
-							memset(pCertContextArray[ulCounter],0,5*sizeof(PCCERT_CONTEXT));
+							pCertContextArray[ulCounter] = (PCCERT_CONTEXT*) calloc (5,sizeof(PCCERT_CONTEXT));
 							if(pCertContextArray[ulCounter] != NULL)
 							{
-								memset(pCertContextArray[ulCounter],0,5*sizeof(PCCERT_CONTEXT));
 								if(*pAutoFlags & AUTO_REGISTER)
 									retVal = HandleNewCardFound(hTextEdit, functions, ulCounter, pSlotList,pCertContextArray[ulCounter], 5);						
 							}
@@ -108,106 +107,108 @@ CK_RV WaitForCardEvent(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions, DWORD *pA
 				ulCounter++;
 			}//end of while
 		}
+	}
 
-		//as long as the readercount didn't change; keep the current slotlist
-		//TODO: match the entire slotList, not just checking its size
-		while(ulCount == ulPreviousCount)
+	//as long as the readercount didn't change; keep the current slotlist
+	//TODO: match the entire slotList, not just checking its size
+	while(ulCount == ulPreviousCount)
+	{
+		/* Block and wait for a slot event */
+		retVal = functions->C_WaitForSlotEvent(flags, &slotID, NULL_PTR);
+		if(retVal != CKR_OK)
 		{
-			/* Block and wait for a slot event */
-			retVal = functions->C_WaitForSlotEvent(flags, &slotID, NULL_PTR);
-			if(retVal != CKR_OK)
-			{
-				SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"WARNING: C_WaitForSlotEvent returned an error \r\n");
-				return retVal;
+			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"WARNING: C_WaitForSlotEvent returned an error \r\n");
+			return retVal;
 
-				//	printError()
-				//		char errormessage[100];
-				//		_snprintf(errormessage,100,"C_GetAttributeValue returned 0x%0.8x\r\n",retval);
-				//		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"\r\n");
-			}
-			/* Check if we already know that slot */
-			retVal = functions->C_GetSlotInfo(slotID, &slotInfo);
-			if(retVal != CKR_OK){}
-
-			ulCounter = 0;
-			while(ulCounter < ulCount)
-			{
-				if(pSlotList[ulCounter] == slotID)
-				{
-					// Get token information
-					retVal = functions->C_GetTokenInfo(slotID, &tokenInfo);
-					if( (retVal == CKR_TOKEN_NOT_PRESENT) && (pCardPresentList[ulCounter] == 1) )
-					{
-						SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Card removed\r\n");
-						pCardPresentList[ulCounter] = 0;
-						//token removed, so remove its certificates
-						if(*pAutoFlags & AUTO_REMOVE)
-							retVal = HandleCardRemoved(hTextEdit, functions, pCertContextArray[ulCounter], 5);
-						//free the allocated space of the certificate context pointers
-						if(pCertContextArray[ulCounter] != NULL)
-							free (pCertContextArray[ulCounter]);
-					}
-					else
-					{
-						if(pCardPresentList[ulCounter] == 0)
-						{
-							SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Card inserted\r\n");
-							pCardPresentList[ulCounter] = 1;
-							//allocate space for 5 certificate context pointers
-							pCertContextArray[ulCounter] = malloc (5*sizeof(PCCERT_CONTEXT));
-							if(pCertContextArray[ulCounter] != NULL)
-							{
-								memset(pCertContextArray[ulCounter],0,5*sizeof(PCCERT_CONTEXT));
-								//token added, so add its certificates
-								if(*pAutoFlags & AUTO_REGISTER)
-									retVal = HandleNewCardFound(hTextEdit, functions, ulCounter, pSlotList,
-									pCertContextArray[ulCounter], 5);
-							}
-							else
-							{
-								SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR:  Out of memory\r\n");
-							}
-						}					
-					}			
-					break;
-				}
-				ulCounter++;
-			}
-
-			if(ulCounter == ulCount)
-			{
-				//a new reader is detected
-				SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"New reader detected \r\n");
-				// Get token information
-				//				retVal = functions->C_GetTokenInfo(slotID, &tokenInfo);
-				//				if (retVal == CKR_TOKEN_NOT_PRESENT) 
-				//				{
-				//					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"  No Card Found \r\n");
-				//				}
-				//				else
-				//				{
-				//					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Card Found: \r\n");
-				//				}
-			}
-			retVal = functions->C_GetSlotList(FALSE, NULL_PTR, &ulCount);
-		}// end of while
-		if(pSlotList != NULL)
-			free(pSlotList);
-		if(pCardPresentList != NULL)
-			free(pCardPresentList);
-
-		if(pCertContextArray != NULL)
-		{
-			for(ulCounter = 0;ulCounter < ulPreviousCount;ulCounter++ )
-			{
-				if(pCertContextArray[ulCounter] != NULL)
-				{
-					free(pCertContextArray[ulCounter]);
-					pCertContextArray[ulCounter] = NULL;
-				}
-			}
-			free(pCertContextArray);
+			//	printError()
+			//		char errormessage[100];
+			//		_snprintf(errormessage,100,"C_GetAttributeValue returned 0x%0.8x\r\n",retval);
+			//		SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"\r\n");
 		}
+		/* Check if we already know that slot */
+		retVal = functions->C_GetSlotInfo(slotID, &slotInfo);
+		if(retVal != CKR_OK){}
+
+		ulCounter = 0;
+		while(ulCounter < ulCount)
+		{
+			if(pSlotList[ulCounter] == slotID)
+			{
+				// Get token information
+				retVal = functions->C_GetTokenInfo(slotID, &tokenInfo);
+				if( (retVal == CKR_TOKEN_NOT_PRESENT) && (pCardPresentList[ulCounter] == 1) )
+				{
+					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Card removed\r\n");
+					pCardPresentList[ulCounter] = 0;
+					//token removed, so remove its certificates
+					if(*pAutoFlags & AUTO_REMOVE)
+						retVal = HandleCardRemoved(hTextEdit, functions, pCertContextArray[ulCounter], 5);
+					//free the allocated space of the certificate context pointers
+					if(pCertContextArray[ulCounter] != NULL)
+					{
+						free (pCertContextArray[ulCounter]);
+						pCertContextArray[ulCounter] = NULL;
+					}
+				}
+				else
+				{
+					if(pCardPresentList[ulCounter] == 0)
+					{
+						SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Card inserted\r\n");
+						pCardPresentList[ulCounter] = 1;
+						//allocate space for 5 certificate context pointers
+						pCertContextArray[ulCounter] = (PCCERT_CONTEXT*)calloc (5,sizeof(PCCERT_CONTEXT));
+						if(pCertContextArray[ulCounter] != NULL)
+						{
+							//token added, so add its certificates
+							if(*pAutoFlags & AUTO_REGISTER)
+								retVal = HandleNewCardFound(hTextEdit, functions, ulCounter, pSlotList,
+								pCertContextArray[ulCounter], 5);
+						}
+						else
+						{
+							SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR:  Out of memory\r\n");
+						}
+					}					
+				}			
+				break;
+			}
+			ulCounter++;
+		}
+
+		if(ulCounter == ulCount)
+		{
+			//a new reader is detected
+			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"New reader detected \r\n");
+			// Get token information
+			//				retVal = functions->C_GetTokenInfo(slotID, &tokenInfo);
+			//				if (retVal == CKR_TOKEN_NOT_PRESENT) 
+			//				{
+			//					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"  No Card Found \r\n");
+			//				}
+			//				else
+			//				{
+			//					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Card Found: \r\n");
+			//				}
+		}
+		retVal = functions->C_GetSlotList(FALSE, NULL_PTR, &ulCount);
+	}// end of while
+	if(pSlotList != NULL)
+		free(pSlotList);
+	if(pCardPresentList != NULL)
+		free(pCardPresentList);
+
+	if(pCertContextArray != NULL)
+	{
+		for(ulCounter = 0;ulCounter < ulPreviousCount;ulCounter++ )
+		{
+			if(pCertContextArray[ulCounter] != NULL)
+			{
+				free(pCertContextArray[ulCounter]);
+				pCertContextArray[ulCounter] = NULL;
+			}
+		}
+		free(pCertContextArray);
 	}
 	return retVal;
 }
@@ -338,7 +339,7 @@ CK_RV GetAndRegisterCertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
 				retval = (functions->C_GetAttributeValue)(*psession_handle,hKey,&attr_label_templ,1);
 				if (retval == CKR_OK)
 				{
-					pbcertificateData = attr_label_templ.pValue;										
+					pbcertificateData = (CK_BYTE_PTR)attr_label_templ.pValue;										
 					pbcertificateData[attr_label_templ.ulValueLen] = 0;
 					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"certificate found: ");
 					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)pbcertificateData);
@@ -347,7 +348,7 @@ CK_RV GetAndRegisterCertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
 				retval = (functions->C_GetAttributeValue)(*psession_handle,hKey,&attr_value_templ,1);
 				if ((retval == CKR_OK) && (ulcertContextLen > certCount) )
 				{
-					pbcertificateData = attr_value_templ.pValue;
+					pbcertificateData = (CK_BYTE_PTR)attr_value_templ.pValue;
 					dwcertificateDataLen = attr_value_templ.ulValueLen; 
 
 					if( ImportCertificate(pbserialNumber,ulserialNumberLen,pbcertificateData,dwcertificateDataLen, &(ppCertContext[certCount])) == TRUE)
@@ -455,9 +456,9 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 	//	CK_FUNCTION_LIST_PTR functions;
 	CK_RV retval = CKR_OK; 
 	CK_SESSION_HANDLE session_handle;
-	long slot_count = 0;
+	CK_ULONG slot_count = 0;
 	CK_SLOT_ID_PTR slotIds;
-	int slotIdx;
+	CK_ULONG slotIdx;
 	CK_ULONG ulObjectCount=1;
 
 	//	retval = (functions->C_Initialize) (NULL);
@@ -475,7 +476,7 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"eID card found \r\n");
 			SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"Retrieving certificates.. \r\n");
 		}
-		slotIds = malloc(slot_count * sizeof(CK_SLOT_INFO));
+		slotIds = (CK_SLOT_ID_PTR)malloc(slot_count * sizeof(CK_SLOT_INFO));
 		//check failure
 
 		retval = (functions->C_GetSlotList) (CK_TRUE, slotIds, &slot_count);
@@ -522,7 +523,7 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 								retval = (functions->C_GetAttributeValue)(session_handle,hKey,&attr_value_templ,1);
 								if (retval == CKR_OK)
 								{
-									pbserialNumber = malloc (attr_value_templ.ulValueLen + 1);
+									pbserialNumber = (CK_BYTE_PTR)malloc (attr_value_templ.ulValueLen + 1);
 									if (pbserialNumber != NULL)
 									{
 										memcpy(pbserialNumber, attr_value_templ.pValue, attr_value_templ.ulValueLen);
@@ -558,7 +559,7 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 								retval = (functions->C_GetAttributeValue)(session_handle,hKey,&attr_label_templ,1);
 								if (retval == CKR_OK)
 								{
-									pbcertificateData = attr_label_templ.pValue;										
+									pbcertificateData = (CK_BYTE_PTR)attr_label_templ.pValue;										
 									pbcertificateData[attr_label_templ.ulValueLen] = 0;
 									SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"certificate found: ");
 									SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)pbcertificateData);
@@ -568,7 +569,7 @@ CK_RV getcertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions) {
 								if (retval == CKR_OK)
 								{
 									PCCERT_CONTEXT	pCertContext = NULL;
-									pbcertificateData = attr_value_templ.pValue;
+									pbcertificateData = (CK_BYTE_PTR)attr_value_templ.pValue;
 									dwcertificateDataLen = attr_value_templ.ulValueLen; 
 									
 									if( ImportCertificate(pbserialNumber,dwserialNumberLen,pbcertificateData,dwcertificateDataLen, &pCertContext) == TRUE)

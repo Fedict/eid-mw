@@ -1,7 +1,7 @@
 ﻿/* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2010-2010 FedICT.
+ * Copyright (C) 2010-2016 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -17,15 +17,21 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EidSamples;
 using System;
 namespace EidSamples.tests
 {
-    [TestFixture]
+    /// <summary> 
+    /// Tests the integrity of the data files that are retrieved from the eID card
+    /// </summary>
+    [TestClass]
     public class IntegrityTests
     {
-        [Test]
+        /// <summary> 
+        /// Tests if integrity test fails when no certificateRRN is supplied
+        /// </summary>
+        [TestMethod]
         public void IntegrityFails()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
@@ -33,9 +39,12 @@ namespace EidSamples.tests
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
             byte[] certificateRRN = null;
-            Assert.False(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
+            Assert.IsFalse(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
         }
-        [Test]
+        /// <summary> 
+        /// Tests the integrity of the identity data file that is retrieved from the eID card
+        /// </summary>
+        [TestMethod]
         public void IntegrityIdentityFile()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
@@ -43,9 +52,12 @@ namespace EidSamples.tests
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
             byte[] certificateRRN = dataTest.GetCertificateRNFile();
-            Assert.True(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
+            Assert.IsTrue(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
         }
-        [Test]
+        /// <summary> 
+        /// Tests if integrity test fails when address file signature is used to check validity of id file
+        /// </summary>
+        [TestMethod]
         public void IntegrityIdentityFileWrongSignature()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
@@ -53,9 +65,12 @@ namespace EidSamples.tests
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetAddressSignatureFile();
             byte[] certificateRRN = dataTest.GetCertificateRNFile();
-            Assert.False(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
+            Assert.IsFalse(integrityTest.Verify(idFile, idSignatureFile, certificateRRN));
         }
-        [Test]
+        /// <summary> 
+        /// Tests if integrity test fails when the root certificate is used to check file integrity of the id data file
+        /// </summary>
+        [TestMethod]
         public void IntegrityIdentityFileWrongCertificate()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
@@ -63,9 +78,12 @@ namespace EidSamples.tests
             byte[] idFile = dataTest.GetIdFile();
             byte[] idSignatureFile = dataTest.GetIdSignatureFile();
             byte[] certificateRoot = dataTest.GetCertificateRootFile();
-            Assert.False(integrityTest.Verify(idFile, idSignatureFile, certificateRoot));
+            Assert.IsFalse(integrityTest.Verify(idFile, idSignatureFile, certificateRoot));
         }
-        [Test]
+        /// <summary> 
+        /// Tests the integrity of the address data file that is retrieved from the eID card
+        /// </summary>
+        [TestMethod]
         public void IntegrityAddressFile()
         {
             ReadData dataTest = new ReadData("beidpkcs11.dll");
@@ -77,7 +95,7 @@ namespace EidSamples.tests
             Array.Copy(idSignatureFile, 0, concatFiles, addressFile.Length, idSignatureFile.Length);
             byte[] addressSignatureFile = dataTest.GetAddressSignatureFile();
             byte[] certificateRRN = dataTest.GetCertificateRNFile();
-            Assert.True(integrityTest.Verify(concatFiles, addressSignatureFile, certificateRRN));
+            Assert.IsTrue(integrityTest.Verify(concatFiles, addressSignatureFile, certificateRRN));
         }
         private byte[] trimRight(byte[] addressFile)
         {

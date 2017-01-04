@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2014 FedICT.
+ * Copyright (C) 2015 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -24,6 +24,7 @@
 #include <sys/stat.h>
 #include "beidversions.h"
 
+@import Foundation;
 @interface AppDelegate ()
 @property (weak) IBOutlet NSTableView *table;
 @property (weak) IBOutlet NSWindow *window;
@@ -34,33 +35,35 @@
 @end
 
 struct utsname uts;
-long osver;
+long darwinver;
+static const long max_supported_darwin_version = 16; // 10.12
+static const long min_supported_darwin_version = 12; // 10.8
+
 
 NSString* getOsRel() {
-    NSDictionary *RelMap = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @" (OSX 10.10, Yosemite)", @"14",
-                            @" (OSX 10.9, Mavericks)", @"13",
-                            @" (OSX 10.8, Mountain Lion)", @"12",
-                            @" (OSX 10.7, Lion)", @"11",
-                            nil];
-    NSMutableString *retval = [NSMutableString stringWithCapacity:30];
+    NSMutableString *retval = [NSMutableString stringWithCapacity:64];
     char* tmp;
     char* majrel;
-
-    [retval appendString:@"Darwin "];
 
     uname(&uts);
     tmp = strdup(uts.release);
     majrel = strtok(tmp, ".");
-    osver = strtol(majrel, NULL, 10);
-    NSString *reldesc = [RelMap valueForKey:[NSString stringWithCString:majrel encoding:NSUTF8StringEncoding]];
-    [retval appendString:[NSString stringWithCString:uts.release encoding:NSUTF8StringEncoding]];
-    if (reldesc == nil) {
-        [retval appendString:@" (unknown OSX release; please upgrade the eID middleware)"];
-    } else {
-        [retval appendString:reldesc];
-    }
+    darwinver = strtol(majrel, NULL, 10);
     free(tmp);
+    
+    NSString * OSVersionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
+    if (OSVersionString == nil) {
+        [retval appendString:@"unknown OS X release"];
+    } else {
+        [retval appendString:OSVersionString];
+    }
+    if (darwinver > max_supported_darwin_version) {
+        [retval appendString:@" (unknown OS X release; please upgrade the eID middleware)"];
+    }
+    if (darwinver < min_supported_darwin_version) {
+        [retval appendString:@" (no longer supported by this version of the middleware)"];
+    }
+ 
     return retval;
 }
 
@@ -73,18 +76,15 @@ NSString* getPcscdStartStatus() {
     if(stat("/System/Library/LaunchDaemons/org.opensc.pcscd.autostart.plist", &stbuf)<0) {
         switch(errno) {
             case ENOENT:
-                if (osver >= 14) {
-                    return @"Not found (OK on OSX 10.10)";
+                if (darwinver >= 14) {
+                    return @"Not found (OK on OSX 10.10+)";
                 }
-                return @"Not OK";
+                return @"Not found";
             default:
                 return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
         }
     }
-    if (osver >= 14) {
-        return @"Found, yet OS is 10.10+?";
-    }
-    return @"OK";
+    return @"Found";
 }
 
 NSString* getMwVersion() {
@@ -93,6 +93,53 @@ NSString* getMwVersion() {
 
 NSString* getMwRel() {
     return [NSString stringWithCString:EIDMW_REVISION_STR encoding:NSUTF8StringEncoding];
+}
+
+NSString* getMwBdate() {
+    return [NSString stringWithCString:BEID_BUILD_DATE encoding:NSUTF8StringEncoding];
+}
+
+NSString* getJavaVers() {
+    char* paths[] = {
+        "/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bin/java",
+        "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java",
+        NULL
+    };
+    char line[256];
+    struct stat stbuf;
+    int i;
+    for(i=0; paths[i] != NULL; i++) {
+        if(stat(paths[i], &stbuf)< 0) {
+            switch(errno) {
+                case ENOENT:
+                    // not here, look further
+                    break;
+                default:
+                    // error
+                    return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
+            }
+        } else {
+            FILE* f;
+            int rv;
+            char* loc;
+            snprintf(line, 256, "'%s' -version 2>&1", paths[i]);
+            f = popen(line, "r");
+            if(!f || feof(f) || fgets(line, 256, f) == NULL) {
+                pclose(f);
+                return @"(check failed)";
+            }
+            rv = pclose(f);
+            if(!WIFEXITED(rv) || WEXITSTATUS(rv) == 127) {
+                return @"(check failed)";
+            }
+            if((loc = strrchr(line, '"')) != NULL) {
+                *loc = '\0';
+                return [NSString stringWithCString:strchr(line, '"')+1 encoding:NSUTF8StringEncoding];
+            }
+        }
+    }
+    
+    return @"(not found)";
 }
 
 NSString* getPcscdStatus() {
@@ -123,12 +170,26 @@ NSString* getTokendStatus() {
     if(stat("/System/Library/Security/tokend/BEID.tokend", &stbuf) < 0) {
         switch(errno) {
             case ENOENT:
+                break;
+            default:
+                return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
+        }
+    }
+    else {
+        return @"/System/Library/Security/tokend/BEID.tokend";
+    }
+    if(stat("/Library/Security/tokend/BEID.tokend", &stbuf) < 0) {
+        switch(errno) {
+            case ENOENT:
                 return @"Not found";
             default:
                 return [NSString stringWithFormat:@"Could not check: %s", strerror(errno)];
         }
     }
-    return @"/System/Library/Security/tokend/BEID.tokend";
+    else {
+        return @"/Library/Security/tokend/BEID.tokend";
+    }
+    
 }
 
 @implementation AppDelegate
@@ -161,8 +222,16 @@ NSString* getTokendStatus() {
     [item setValue: getMwVersion()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];
-    [item setTitle: @"Middleware build"];
+    [item setTitle: @"Middleware build ID"];
     [item setValue: getMwRel()];
+    [self.ctrl addObject:item];
+    item = [DataItem alloc];
+    [item setTitle: @"Middleware build date"];
+    [item setValue: getMwBdate()];
+    [self.ctrl addObject:item];
+    item = [DataItem alloc];
+    [item setTitle: @"Java version"];
+    [item setValue: getJavaVers()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];
     [item setTitle: @"OS release"];
@@ -173,7 +242,7 @@ NSString* getTokendStatus() {
     [item setValue: getOsArch()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];
-    [item setTitle: @"pcscd autostart"];
+    [item setTitle: @"opensc pcscd autostart"];
     [item setValue: getPcscdStartStatus()];
     [self.ctrl addObject:item];
     item = [DataItem alloc];

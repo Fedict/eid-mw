@@ -1,8 +1,10 @@
 lib_LTLIBRARIES = libbeidpkcs11.la
-AM_CFLAGS = -DLTC_NO_ASM
-libbeidpkcs11_la_CXXFLAGS = -DUSING_DL_OPEN -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM -fvisibility=hidden -I$(srcdir)/common -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/rsaref220 @PCSC_CFLAGS@
+AM_CFLAGS = -Wall -Wextra -Wno-unused-parameter
+AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter
+libbeidpkcs11_la_CFLAGS = $(AM_CFLAGS) -DLTC_NO_ASM
+libbeidpkcs11_la_CXXFLAGS = $(AM_CXXFLAGS) -DUSING_DL_OPEN -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM -fvisibility=hidden -I$(srcdir)/common -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/rsaref220 @PCSC_CFLAGS@
 libbeidpkcs11_la_CPPFLAGS = -I$(srcdir)/common -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/rsaref220 @PCSC_CFLAGS@ -DLIBEXECDIR='"$(libexecdir)"'
-libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ -ldl
+libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ @DL_LIBS@
 libbeidpkcs11_la_SOURCES = \
 	asn1.c \
 	cal.cpp \
@@ -25,7 +27,6 @@ libbeidpkcs11_la_SOURCES = \
 	common/libtomcrypt/sha384.c \
 	common/libtomcrypt/sha512.c \
 	common/bytearray.cpp \
-	common/bytearrayreader.cpp \
 	common/configcommon.cpp \
 	common/configuration.cpp \
 	common/datafile.cpp \
@@ -39,7 +40,6 @@ libbeidpkcs11_la_SOURCES = \
 	common/tlvbuffer.cpp \
 	common/tlv.cpp \
 	common/util.cpp \
-	cardlayer/cache.cpp \
 	cardlayer/card.cpp \
 	cardlayer/cardfactory.cpp \
 	cardlayer/cardlayer.cpp \
@@ -54,12 +54,9 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/pkicard.cpp \
 	cardlayer/reader.cpp \
 	cardlayer/readersinfo.cpp \
-	cardlayer/threadpool.cpp \
 	cardlayer/unknowncard.cpp \
 	cardlayer/cardpluginbeid/beidcard.cpp \
-	cardlayer/cardpluginbeid/beidp15correction.cpp \
-	cardlayer/cardpluginsis/siscard.cpp \
-	cardlayer/cardpluginsis/sispluginhandler.cpp
+	cardlayer/cardpluginbeid/beidp15correction.cpp
 
 noinst_HEADERS = \
 	p11.h \
@@ -71,7 +68,6 @@ noinst_HEADERS = \
 	util.h \
 	log.h \
 	display.h \
-	common/bytearrayreader.h \
 	common/thread.h \
 	common/prefix.h \
 	common/bytearray.h \
@@ -102,18 +98,13 @@ noinst_HEADERS = \
 	cardlayer/card.h \
 	cardlayer/cardfactory.h \
 	cardlayer/pkcs15.h \
-	cardlayer/cache.h \
 	cardlayer/context.h \
 	cardlayer/cardpluginbeid/beidp15correction.h \
 	cardlayer/cardpluginbeid/beidcard.h \
 	cardlayer/cardreaderinfo.h \
 	cardlayer/pinpadlib.h \
-	cardlayer/threadpool.h \
 	cardlayer/pcsc.h \
 	cardlayer/cardlayerconst.h \
-	cardlayer/cardpluginsis/siscard.h \
-	cardlayer/cardpluginsis/sispluginhandler.h \
-	cardlayer/cardpluginsis/sisplugin1.h \
 	cardlayer/pinpad2.h \
 	cardlayer/pinpad.h \
 	cardlayer/p15objects.h \
@@ -176,6 +167,15 @@ endif
 
 libexec_PROGRAMS = beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin
 
+if P11KIT
+dist_p11kitcf_DATA = beid.module
+install-exec-hook:
+	$(MKDIR_P) $(DESTDIR)$(p11kitsodir) && \
+	cd $(DESTDIR)$(p11kitsodir) && \
+		rm -f beidpkcs11.so && \
+		$(LN_S) $(libdir)/libbeidpkcs11.so.0 beidpkcs11.so
+endif
+
 beid_askpin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-askpin.c
 beid_askpin_CPPFLAGS = -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src @GTK_CFLAGS@
 beid_askpin_LDADD = @GTK_LIBS@
@@ -199,3 +199,5 @@ beid_spr_askpin_LDADD = @GTK_LIBS@
 beid_spr_changepin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-spr-changepin.c
 beid_spr_changepin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@
 beid_spr_changepin_LDADD = @GTK_LIBS@
+
+pkgconfig_DATA=libbeidpkcs11.pc

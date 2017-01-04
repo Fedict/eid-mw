@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -44,31 +45,37 @@
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-std::wstring wstring_From_string(std::string const& in)
+std::wstring wstring_From_string(std::string const &in)
 {
 	//----------------------------------------------------------
 	// just put every char to a wchar and prevent sign extension
 	//----------------------------------------------------------
 	std::wstring wzString;
-	for(size_t i=0;i<in.length();i++)
+	for (size_t i = 0; i < in.length(); i++)
 	{
 		wchar_t c = in.at(i);
+
 		wzString += c & 0x00ff;
 	}
 	return wzString;
 }
 
-std::string string_From_wstring(std::wstring const& in)
+std::string string_From_wstring(std::wstring const &in)
 {
-  int length = (int)(in.length());
-  char* pc = new char [length+1];
-  use_facet< ctype<wchar_t> >(std::locale()).narrow (in.c_str(),in.c_str()+length+1,'?',pc);
-  return std::string(pc);
+	int length = (int) (in.length());
+	char *pc = new char[length + 1];
+
+	use_facet < ctype < wchar_t > >(std::locale()).narrow(in.c_str(),
+							      in.c_str() +
+							      length + 1, '?',
+							      pc);
+	return std::string(pc);
 
 }
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*void wstring_TrimR(std::wstring *in)
 {
 	if(in == NULL)
@@ -89,6 +96,7 @@ std::string string_From_wstring(std::wstring const& in)
 }*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*void vector_From_bytes(std::vector<unsigned char> *out, const unsigned char *in, size_t len)
 {
 	out->clear();
@@ -98,6 +106,7 @@ std::string string_From_wstring(std::wstring const& in)
 		out->push_back(in[i]);
 
 }*/
+
 /*
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void TokenizeS (const std::string& str, std::vector<std::string>& tokens, const std::string& delimiters, unsigned long maxToken)
@@ -161,6 +170,7 @@ void TokenizeW (const std::wstring& str, std::vector<std::wstring>& tokens, cons
 {
        std::transform(str.begin(),str.end(),str.begin(),(int(*)(int))tolower);
 }*/
+
 /*
 wchar_t clean_char(wchar_t in)
 {
@@ -194,59 +204,64 @@ errno_t _localtime_s(struct tm* _tm, const time_t *time)
 #ifndef HAVE_VASPRINTF
 int vasprintf(char **strp, const char *fmt, va_list ap)
 {
-	size_t size=VASPRINTF_INITIAL_SIZE;
+	size_t size = VASPRINTF_INITIAL_SIZE;
 
-	char* buf=(char*)malloc(size);			// initial attempt for a "reasonable" string length
-	if(buf==NULL)
+	char *buf = (char *) malloc(size);	// initial attempt for a "reasonable" string length
+	char *tmp = buf;
+
+	if (buf == NULL)
 		return VASPRINTF_FAILED;
 
-	int written=vsnprintf(buf, size, fmt, ap);	// try and vsnprintf to it
+	int written = vsnprintf(buf, size, fmt, ap);	// try and vsnprintf to it
 
-	if(written<0)					// if failed, clean up buf and return error
-	{	
+	if (written < 0)	// if failed, clean up buf and return error
+	{
 		free(buf);
 		return VASPRINTF_FAILED;
 	}
 
-	if(written>size)				// if written, but buffer was too small
+	if (written > size)	// if written, but buffer was too small
 	{
-		size=written;				// we now know exactly which size we need
-		buf=(char*)realloc(buf, size);	// try and grow buffer
-		if(buf==NULL)
+		size = written;	// we now know exactly which size we need
+		buf = (char *) realloc(buf, size);	// try and grow buffer
+		if (buf == NULL)
 		{
+			free(tmp);
 			return VASPRINTF_FAILED;	// return error.
 		}
 
-		written=vsnprintf(buf, size, fmt, ap);
-	}	
+		written = vsnprintf(buf, size, fmt, ap);
+	}
 
-	if(written<0)
+	if (written < 0)
 	{
-		free(buf);				// if we couldn't write (=Threading issue ; va_list or fmt changed) clean up buf and return error
+		free(buf);	// if we couldn't write (=Threading issue ; va_list or fmt changed) clean up buf and return error
 		return VASPRINTF_FAILED;
 	}
 
-	if(written==size)				// if we did write and filled the buffer, set strp and return number of bytes written
+	if (written == size)	// if we did write and filled the buffer, set strp and return number of bytes written
 	{
-		*strp=buf;
-		return (int)written;
-			
+		*strp = buf;
+		return (int) written;
+
 	}
 	free(buf);
-	return VASPRINTF_FAILED;			// if we fall through here, return error.
+	return VASPRINTF_FAILED;	// if we fall through here, return error.
 }
 #endif
 ////////////////////////////////////////////////////////////////////////////////////////////////
-int _wfopen_s(FILE** pFile, const wchar_t *filename, const wchar_t *mode)
+int _wfopen_s(FILE ** pFile, const wchar_t * filename, const wchar_t * mode)
 {
 	int r = 0;
 
 	if (pFile == NULL)
 		return -1;
 
-	std::wstring wFileName=filename;
-	std::wstring wMode=mode;
-	FILE *f = fopen(string_From_wstring(wFileName).c_str(), string_From_wstring(wMode).c_str());
+	std::wstring wFileName = filename;
+	std::wstring wMode = mode;
+	FILE *f =
+		fopen(string_From_wstring(wFileName).c_str(),
+		      string_From_wstring(wMode).c_str());
 
 	if (f != NULL)
 		*pFile = f;
@@ -257,14 +272,14 @@ int _wfopen_s(FILE** pFile, const wchar_t *filename, const wchar_t *mode)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-int fwprintf_s(FILE *stream, const wchar_t *format, ...)
+int fwprintf_s(FILE * stream, const wchar_t * format, ...)
 {
 	va_list args;
 	char *csTmp = NULL;
 	int r = -1;
 
 	va_start(args, format);
-	std::wstring wFormat=format;
+	std::wstring wFormat = format;
 	r = vasprintf(&csTmp, string_From_wstring(wFormat).c_str(), args);
 	va_end(args);
 
@@ -278,12 +293,12 @@ int fwprintf_s(FILE *stream, const wchar_t *format, ...)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-int _vfwprintf_s(FILE *stream, const wchar_t *format, va_list argptr)
+int _vfwprintf_s(FILE * stream, const wchar_t * format, va_list argptr)
 {
 	char *csTmp = NULL;
 	int r = -1;
 
-	std::wstring wFormat=format;
+	std::wstring wFormat = format;
 	r = vasprintf(&csTmp, string_From_wstring(wFormat).c_str(), argptr);
 
 	if (r != -1 && csTmp != NULL)
@@ -294,14 +309,14 @@ int _vfwprintf_s(FILE *stream, const wchar_t *format, va_list argptr)
 
 	return r;
 }
- 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
-int _vfprintf_s(FILE *stream, const char* format, va_list argptr)
+int _vfprintf_s(FILE * stream, const char *format, va_list argptr)
 {
 	char *csTmp = NULL;
 	int r = -1;
 
-	r = vasprintf(&csTmp,format, argptr);
+	r = vasprintf(&csTmp, format, argptr);
 
 	if (r != -1 && csTmp != NULL)
 	{
@@ -310,7 +325,7 @@ int _vfprintf_s(FILE *stream, const char* format, va_list argptr)
 	}
 
 	return r;
-} 
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int strcpy_s(char *dest, size_t len, const char *src)
@@ -318,89 +333,95 @@ int strcpy_s(char *dest, size_t len, const char *src)
 	if (dest == NULL)
 		return -1;
 
-	for ( ; len > 1 && *src != '\0'; dest++, src++, len--)
+	for (; len > 1 && *src != '\0'; dest++, src++, len--)
 		*dest = *src;
 
 	*dest = *src;
 
-	return *src == '\0' ? 0 : -1; // 0: OK, -1: NOK
+	return *src == '\0' ? 0 : -1;	// 0: OK, -1: NOK
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-int wcscpy_s(wchar_t *dest, size_t len, const wchar_t *src)
+int wcscpy_s(wchar_t * dest, size_t len, const wchar_t * src)
 {
 	if (dest == NULL)
 		return -1;
 
-	for ( ; len > 1 && *src != L'\0'; dest++, src++, len--)
+	for (; len > 1 && *src != L'\0'; dest++, src++, len--)
 		*dest = *src;
 
 	*dest = *src;
 
-	return *src == L'\0' ? 0 : -1; // 0: OK, -1: NOK
+	return *src == L'\0' ? 0 : -1;	// 0: OK, -1: NOK
 }
 
-int wcscpy_s(wchar_t *dest, const wchar_t *src)
+int wcscpy_s(wchar_t * dest, const wchar_t * src)
 {
-	size_t len=wcslen(src);
+	size_t len = wcslen(src);
 
 	if (dest == NULL)
 		return -1;
 
-	for ( ; len > 1 && *src != L'\0'; dest++, src++, len--)
+	for (; len > 1 && *src != L'\0'; dest++, src++, len--)
 		*dest = *src;
 
 	*dest = *src;
 
-	return *src == L'\0' ? 0 : -1; // 0: OK, -1: NOK
+	return *src == L'\0' ? 0 : -1;	// 0: OK, -1: NOK
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-int _swprintf_s(wchar_t *buffer, size_t sizeOfBuffer, const wchar_t *format, ...)
+int _swprintf_s(wchar_t * buffer, size_t sizeOfBuffer, const wchar_t * format,
+		...)
 {
 	va_list args;
 	char *csTmp = NULL;
 	int r = -1;
 
 	va_start(args, format);
-	std::wstring wFormat=format;
+	std::wstring wFormat = format;
 	r = vasprintf(&csTmp, string_From_wstring(wFormat).c_str(), args);
 	va_end(args);
 
 	if (r != -1 && csTmp != NULL)
 	{
-		std::string sTmp=csTmp;
-		r = wcscpy_s(buffer, sizeOfBuffer, wstring_From_string(sTmp).c_str());
+		std::string sTmp = csTmp;
+		r = wcscpy_s(buffer, sizeOfBuffer,
+			     wstring_From_string(sTmp).c_str());
 		free(csTmp);
 	}
 
 	return r;
-} 
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-int wcscat_s(wchar_t* dst, size_t elem, const wchar_t* src)
+int wcscat_s(wchar_t * dst, size_t elem, const wchar_t * src)
 {
-    wchar_t* ptr = dst;
+	wchar_t *ptr = dst;
 
-    if (!dst || elem == 0) return EINVAL;
-    if (!src)
-    {
-        dst[0] = '\0';
-        return EINVAL;
-    }
+	if (!dst || elem == 0)
+		return EINVAL;
+	if (!src)
+	{
+		dst[0] = '\0';
+		return EINVAL;
+	}
 
-    /* seek to end of dst string (or elem if no end of string is found */
-    while (ptr < dst + elem && *ptr != '\0') ptr++;
-    while (ptr < dst + elem)
-    {
-        if ((*ptr++ = *src++) == '\0') return 0;
-    }
-    /* not enough space */
-    dst[0] = '\0';
-    return ERANGE;
+	/* seek to end of dst string (or elem if no end of string is found */
+	while (ptr < dst + elem && *ptr != '\0')
+		ptr++;
+	while (ptr < dst + elem)
+	{
+		if ((*ptr++ = *src++) == '\0')
+			return 0;
+	}
+	/* not enough space */
+	dst[0] = '\0';
+	return ERANGE;
 }
 
 // after https://www.securecoding.cert.org/confluence/pages/viewpage.action?pageId=2981930
+
 /*#else //WIN32
 int dupenv_s(char **buffer, size_t *numberOfElements, const char *varname)
 {

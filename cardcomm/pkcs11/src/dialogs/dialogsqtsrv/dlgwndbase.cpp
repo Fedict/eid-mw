@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -20,7 +21,7 @@
 
 #include "dlgwndbase.h"
 
-dlgWndBase::dlgWndBase( QWidget *parent ) : QDialog(parent)
+dlgWndBase::dlgWndBase(QWidget * parent):QDialog(parent)
 {
 }
 

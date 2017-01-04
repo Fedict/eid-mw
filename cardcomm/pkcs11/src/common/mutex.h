@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -32,29 +33,27 @@
 namespace eIDMW
 {
 
-class EIDMW_CMN_API CMutex
-{
+	class EIDMW_CMN_API CMutex
+	{
 public:
-	CMutex();
-	~CMutex();
+		CMutex();
+		~CMutex();
 
-	void Lock();
+		void Lock();
 
-	void Unlock();
+		void Unlock();
 
 private:
-    // No copies allowed
-    CMutex(const CMutex & oMutex);
-    CMutex & operator = (const CMutex & oMutex);
+		// No copies allowed
+		     CMutex(const CMutex & oMutex);
+		      CMutex & operator =(const CMutex & oMutex);
 
 #ifdef WIN32
-	CRITICAL_SECTION m_Mutex;
+		CRITICAL_SECTION m_Mutex;
 #else
-	pthread_mutex_t m_Mutex;
-	pthread_t m_MutexOwner;
-	int m_MutexLockcount;
+		pthread_mutex_t m_Mutex;
 #endif
-};
+	};
 
 /**
  * A usefull helper class, similar to the std::auto_ptr class.
@@ -62,26 +61,27 @@ private:
  * so you don't need to do an explicit Unlock(), it is done when
  * the CAutoMutex object goes out of scope.
  */
-class CAutoMutex
-{
+	class CAutoMutex
+	{
 public:
-	CAutoMutex(CMutex *poMutex): m_poMutex(poMutex)
-	{
-		m_poMutex->Lock();
-	}
+		CAutoMutex(CMutex * poMutex):m_poMutex(poMutex)
+		{
+			m_poMutex->Lock();
+		}
 
-	~CAutoMutex()
-	{
-		m_poMutex->Unlock();
-	}
+		     ~CAutoMutex()
+		{
+			m_poMutex->Unlock();
+		}
 
 private:
-	CMutex *m_poMutex;
-};
+		          CMutex * m_poMutex;
+	};
 
 //-------------------------------
 // Abstract base class for mutexes
 //-------------------------------
+
 /* The following code is untested
 class IMutex
 {

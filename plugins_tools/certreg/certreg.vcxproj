@@ -91,6 +91,7 @@
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="carddata.h" />
     <ClInclude Include="certreg.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Resource.h" />

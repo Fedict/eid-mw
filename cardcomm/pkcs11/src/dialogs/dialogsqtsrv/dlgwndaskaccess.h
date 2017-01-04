@@ -1,3 +1,4 @@
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -17,6 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+
 /**
  * eID middleware Dialogs.
  */
@@ -32,19 +34,21 @@
 
 using namespace eIDMW;
 
-class dlgWndAskAccess : public dlgWndBase
+class dlgWndAskAccess:public dlgWndBase
 {
-	Q_OBJECT
-
-public:
-	dlgWndAskAccess( QString AppPath, QString ReaderName,
-			DlgPFOperation ulOperation, QWidget *parent = 0 );
-	~dlgWndAskAccess();
+Q_OBJECT public:
+	         dlgWndAskAccess(QString AppPath, QString ReaderName,
+				 DlgPFOperation ulOperation,
+				 QWidget * parent = 0);
+	        ~dlgWndAskAccess();
 	DlgRet dlgResult;
-	bool ForAllIsChecked() { return (ui.chkForAll->checkState()==Qt::Checked?true:false); }
+	bool ForAllIsChecked()
+	{
+		return (ui.chkForAll->checkState() ==
+			Qt::Checked ? true : false);
+	}
 
-private slots:
-	void on_btnYes_clicked();
+	private slots:void on_btnYes_clicked();
 	void on_btnNo_clicked();
 	void on_btnAlways_clicked();
 	void on_btnNever_clicked();
