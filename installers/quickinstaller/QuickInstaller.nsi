@@ -8,12 +8,18 @@
 !include WinMessages.nsh
 !include "eidmw_version.nsh"
 !include WinVer.nsh
+!include "buttons.nsh"
 
 ;!include nsDialogs_createTextMultiline.nsh
 ;!include MUI2.nsh
 
 ;--------------------------------
 ;General
+
+;Function runFinish
+;    MessageBox MB_OK "runFinish called"
+;	Abort
+;FunctionEnd
 
   ;defines
 !define LOGFILE ""
@@ -26,7 +32,7 @@
   ;NSIS complains that Fileversion was not set for English, though it should have been done by the line above
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${EIDMW_VERSION}"
 VIAddVersionKey "CompanyName" "Belgian Government"
-VIAddVersionKey "LegalCopyright" "Copyright (C) 2015"
+VIAddVersionKey "LegalCopyright" "Copyright (C) 2017"
 VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 
  
@@ -41,8 +47,8 @@ VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 	;installer will run on Win2000 and newer
   
   ;XPStyle on
-	WindowIcon on
-	Icon Setup.ico
+;	WindowIcon on
+;	Icon Setup.ico
 	caption "Belgium eID-QuickInstaller ${EIDMW_VERSION_SHORT}"
 	;SubCaption 
 	
@@ -67,6 +73,9 @@ VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 	Var FileToCopy
 	Var LogFile
 	Var MsiResponse
+	Var InstallFailed
+	Var ReaderFailed
+	Var FindCardFailed
 
 ;--------------------------------
 	;Interface Settings
@@ -74,18 +83,38 @@ VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 BrandingText " "
 ;"Fedict"
 InstallColors /windows
-;InstProgressFlags smooth
+;SetBrandingImage [/IMGID=item_id_in_dialog] [/RESIZETOFIT] path_to_bitmap_file.bmp
+CompletedText "klaar"
 
+
+;InstProgressFlags smooth
+;do not show installation details
+ShowInstDetails nevershow
+ShowUninstDetails nevershow
+
+;  !define MUI_HEADERIMAGE
+ ; !define MUI_HEADERIMAGE_BITMAP "bannrbmp.bmp" ; optional
+  ;!define MUI_ABORTWARNING
 ;--------------------------------
 ;Pages
 
-Page license
+;Page license
 Page custom nsdWelcome nsdWelcomeLeave
+
+;!insertmacro MUI_PAGE_INSTFILES
+;!define MUI_PAGE_CUSTOMFUNCTION_PRE dirPre
+;!define MUI_FINISHPAGE_RUN_FUNCTION "runFinish"
+;!insertmacro MUI_PAGE_FINISH
+;!define MUI_FINISHPAGE_RUN_FUNCTION 
 Page instfiles "" show_instfiles ""
+Page custom nsdInstallCheck nsdInstallCheckLeave
 Page custom nsdDone nsdDoneLeave
 Page custom nsdConnectReader nsdConnectReaderLeave
+Page custom nsdReaderCheck nsdReaderCheckLeave
 Page custom nsdInsertCard nsdInsertCardLeave
+Page custom nsdCardCheck nsdCardCheckLeave
 Page custom nsdCardData
+
 
 ;--------------------------------
 ;Languages
@@ -144,8 +173,11 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			${Case} 0
 			${Case} 3010 
 				;3010 is 'success, but reboot requiered'
+				;set 1 for testing, 0 otherwise
+				StrCpy $InstallFailed 0
 			${Break}
 			${Default}
+				StrCpy $InstallFailed $MsiResponse
 				Call ErrorHandler_msiexec
 		${EndSwitch}
 		;IfErrors 0 +2
@@ -167,9 +199,13 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		${Switch} $MsiResponse
 			${Case} 0
 			${Case} 3010 
+				StrCpy $InstallFailed 0
+;set 1 for testing				
 				;3010 is 'success, but reboot requiered'
 			${Break}
 			${Default}
+				StrCpy $InstallFailed $MsiResponse
+				;$InstallFailed=$MsiResponse
 				Call ErrorHandler_msiexec
 		${EndSwitch}
 		;IfErrors 0 +2
@@ -256,7 +292,7 @@ InitPluginsDir
 File /oname=$PLUGINSDIR\"welcome.bmp" "welcome.bmp"
 File /oname=$PLUGINSDIR\"insert_card.bmp" "insert_card.bmp"
 File /oname=$PLUGINSDIR\"connect_reader.bmp" "connect_reader.bmp"
-
+;File /oname=$PLUGINSDIR\"bannrbmp.bmp" "bannrbmp.bmp"
 
 ;for testing different languages
 	;Push ${LANG_GERMAN}
@@ -306,6 +342,8 @@ Function nsdWelcome
 
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
 	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_install)"
+	; hide the Back button
+	${buttonVisible} "Back" 0
 	
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
@@ -315,11 +353,82 @@ FunctionEnd
 Function  nsdWelcomeLeave
 FunctionEnd
 
+Function RelGotoPage
+  IntCmp $R9 0 0 Move Move
+    StrCmp $R9 "X" 0 Move
+      StrCpy $R9 "120"
+
+  Move:
+  SendMessage $HWNDPARENT "0x408" "$R9" ""
+FunctionEnd
+
+Function GotoNextPage
+    StrCpy $R9 "1"
+    Call RelGotoPage
+FunctionEnd
+
+Function GotoPrevPage
+    StrCpy $R9 "-1"
+    Call RelGotoPage
+FunctionEnd
+
 Function show_instfiles
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
 	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_next)"
 	GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
 	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_cancel)"
+
+	${buttonVisible} "Back" 0
+FunctionEnd
+
+;Function button_click
+;	Call GotoNextPage
+    ;MessageBox MB_OK "Hi there!"
+;FunctionEnd
+
+
+Function nsdInstallCheck
+    ${If} $InstallFailed == 0
+        ;MessageBox MB_OK "Install ok, skipping error"
+        Abort   
+    ${EndIf}
+	nsDialogs::Create 1018
+	Pop $nsdCustomDialog
+	${If} $nsdCustomDialog == error
+		Abort
+	${EndIf}
+
+	;${NSD_CreateButton} 25% 25% 50% 25% "Find Solution"
+	;${NSD_CreateButton} -20u -10u 20u 10u "Find Solution"
+	;Pop $button
+	;${NSD_OnClick} $button FindSolutionButton_click
+	;EnableWindow $button 0 # start out disabled	
+	
+	;${NSD_CreateTextMultiline} 
+	${NSD_CreateLabel} 0 0 100% 16u "Installation failed, press button below to find a solution online)" ; $\r$\n if you'd like to test reading your eidcard, press next"
+	Pop $Label
+	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+	SendMessage $Label ${WM_SETFont} $Font_Title 1
+
+	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapwelcome)"
+	Pop $Background_Image
+	${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
+
+	${buttonVisible} "Back" 0
+	${buttonVisible} "Next" 1
+	${buttonVisible} "Cancel" 1
+	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
+	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_helpsite)"
+	
+		
+	nsDialogs::Show
+	${NSD_FreeImage} $Background_Image_Handle
+	
+	
+FunctionEnd
+
+Function nsdInstallCheckLeave
+	call FindSolutionButton_click
 FunctionEnd
 
 Function nsdDone
@@ -330,26 +439,43 @@ Function nsdDone
 		Abort
 	${EndIf}
 
+;		${NSD_CreateButton} 25% 25% 50% 25% "eID Software testen"
+;		Pop $button
+;		${NSD_OnClick} $button button_click
+		;EnableWindow $button 0 # start out disabled	
+	
 	;${NSD_CreateTextMultiline} 
-	${NSD_CreateLabel} 0 0 100% 16u "$(ls_complete)" ; $\r$\n if you'd like to test reading your eidcard, press next"
+	${NSD_CreateLabel} 0 0 100% 16u "eID Software geïnstalleerd" ; $\r$\n if you'd like to test reading your eidcard, press next"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 
-	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapwelcome)"
-	Pop $Background_Image
-  ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
+;	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapwelcome)"
+;	Pop $Background_Image
+;  ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
 
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
-	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
-	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_test)"
-	GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
-	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_finish)"
+	;GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
+	;SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_test)"
+	;GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
+	;SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_finish)"
 	;EnableWindow $NextButton 1 ;enable the previous button
 	;SetCtlColors $NextButton 0xFF0000 0x00FF00
+	
+	; hide the Back button
+${buttonVisible} "Back" 0
+; hide the Next button
+;${buttonVisible} "Next" 0
+; hide the Cancel button
+;${buttonVisible} "Cancel" 0
+		
+		
+	;GetDlgItem $0 $HWNDPARENT 1 ;move the next button
+    ;System::Call 'user32::MoveWindow(i $0, i 100, i 50, i 200, i 30, i 1)'
+		
 		
 	nsDialogs::Show
-	${NSD_FreeImage} $Background_Image_Handle
+;	${NSD_FreeImage} $Background_Image_Handle
 	
 FunctionEnd
 
@@ -365,7 +491,11 @@ Function nsdConnectReader
 		Abort
 	${EndIf}
 	
-	${NSD_CreateLabel} 0 0 100% 16u "$(ls_pleaseconnect)"
+;	${NSD_CreateButton} 25% 25% 50% 25% "Volgende"
+;	Pop $button
+;	${NSD_OnClick} $button button_click
+	
+	${NSD_CreateLabel} 0 0 100% 16u "Sluit uw kaartlezer aan"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
@@ -373,6 +503,10 @@ Function nsdConnectReader
 	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapconnectreader)"
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\connect_reader.bmp" $Background_Image_Handle 
+	
+	${buttonVisible} "Back" 0
+	${buttonVisible} "Next" 1
+	${buttonVisible} "Cancel" 1
 	
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
@@ -382,17 +516,62 @@ Function  nsdConnectReaderLeave
 	beid::GetReaderCount 0
 	Pop $retval
 	${If} $retval <> '0'
-		MessageBox MB_OK "$(ls_errorreadersearch) $\r$\n $(ls_error) = $retval"
-		Abort
+		StrCpy $ReaderFailed $retval
+		;MessageBox MB_OK "$(ls_errorreadersearch) $\r$\n $(ls_error) = $retval"
+		;Abort
 	${EndIf}
   Pop $readercount
 	${If} $readercount > 0
+		StrCpy $ReaderFailed 0
 		;MessageBox MB_OK "$$readercount is $readercount"
 	${Else}
 		MessageBox MB_OK "$(ls_noreaderfound)"
-		Abort
+		StrCpy $ReaderFailed "no_readers_found"
+		;Abort
 	${EndIf}
 FunctionEnd
+
+Function nsdReaderCheck
+    ${If} $ReaderFailed == 0
+        ;MessageBox MB_OK "Reader found, skipping reader error"
+        Abort   
+    ${EndIf}
+	nsDialogs::Create 1018
+	Pop $nsdCustomDialog
+	${If} $nsdCustomDialog == error
+		Abort
+	${EndIf}
+
+	;	${NSD_CreateButton} 25% 25% 50% 25% "Opnieuw"
+	;	Pop $button
+	;	${NSD_OnClick} $button RetryCardReader_click
+		;EnableWindow $button 0 # start out disabled	
+	
+	;${NSD_CreateTextMultiline} 
+	${NSD_CreateLabel} 0 0 100% 16u "Sorry, kaartlezer niet gevonden" ; $\r$\n if you'd like to test reading your eidcard, press next"
+	Pop $Label
+	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+	SendMessage $Label ${WM_SETFont} $Font_Title 1
+
+	${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapwelcome)"
+	Pop $Background_Image
+	${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
+
+	${buttonVisible} "Back" 1
+	${buttonVisible} "Next" 1
+	${buttonVisible} "Cancel" 1
+	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
+	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_helpsite)"
+	
+	nsDialogs::Show
+	${NSD_FreeImage} $Background_Image_Handle
+	
+FunctionEnd
+
+Function nsdReaderCheckLeave
+	call FindSolutionButton_click
+FunctionEnd
+
 
 Function nsdInsertCard 
 	;File "insert_card.bmp"
@@ -410,25 +589,75 @@ Function nsdInsertCard
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\insert_card.bmp" $Background_Image_Handle 
 	
+	${buttonVisible} "Back" 0
+	${buttonVisible} "Next" 1
+	${buttonVisible} "Cancel" 1
+	
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
 FunctionEnd
 
 Function nsdInsertCardLeave
+	;GetReaderCount 1 in order to get the readers with an eID card inserted
 	beid::GetReaderCount 1	
 	Pop $retval
 	${If} $retval <> '0'
-		MessageBox MB_OK "$(ls_errorreadingcard)"
-		Abort
+		StrCpy $FindCardFailed $retval
+		;MessageBox MB_OK "$(ls_errorreadingcard)"
+		;Abort
 	${EndIf}
-  Pop $readercount
+	Pop $readercount
 	${If} $readercount > 0
+		StrCpy $FindCardFailed 0
 		;MessageBox MB_OK "number of beidcards found is $readercount"
 	${Else}
-		MessageBox MB_OK "$(ls_nocardfound)"
-		Abort
+		StrCpy $FindCardFailed "no_readers_found"
+		;MessageBox MB_OK "$(ls_nocardfound)"
+		;Abort
 	${EndIf}
 FunctionEnd
+
+Function nsdCardCheck
+    ${If} $FindCardFailed == 0
+        ;MessageBox MB_OK "Reader found, skipping reader error"
+        Abort   
+    ${EndIf}
+	nsDialogs::Create 1018
+	Pop $nsdCustomDialog
+	${If} $nsdCustomDialog == error
+		Abort
+	${EndIf}
+
+	;	${NSD_CreateButton} 25% 25% 50% 25% "Opnieuw"
+	;	Pop $button
+	;	${NSD_OnClick} $button RetryCardReader_click
+		;EnableWindow $button 0 # start out disabled	
+	
+	;${NSD_CreateTextMultiline} 
+	${NSD_CreateLabel} 0 0 100% 16u "Sorry, kaart niet gevonden" ; $\r$\n if you'd like to test reading your eidcard, press next"
+	Pop $Label
+	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+	SendMessage $Label ${WM_SETFont} $Font_Title 1
+
+	;${NSD_CreateBitmap} 0 18u 100% -13u "$(ls_bitmapwelcome)"
+	;Pop $Background_Image
+	;${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
+
+	${buttonVisible} "Back" 1
+	${buttonVisible} "Next" 1
+	${buttonVisible} "Cancel" 1
+	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
+	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_helpsite)"
+	
+	nsDialogs::Show
+	${NSD_FreeImage} $Background_Image_Handle
+	
+FunctionEnd
+
+Function nsdCardCheckLeave
+	call FindSolutionButton_click
+FunctionEnd
+
 
 Function nsdCardData
 	nsDialogs::Create 1018
@@ -452,7 +681,9 @@ Function nsdCardData
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	SendMessage $Label ${WM_SETTEXT} 0 "$(ls_testfailed)"
-	Goto nsdCardDataDone
+	;Goto nsdCardDataDone
+	Call GotoPrevPage
+	
 	${EndIf}
 	
 	;MessageBox MB_OK "$$retval is 0"
@@ -491,6 +722,28 @@ Function nsdCardData
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	;pop the others off the stack
 
+	${buttonVisible} "Back" 0
+	${buttonVisible} "Next" 1
+	${buttonVisible} "Cancel" 1
+	
 	nsdCardDataDone:
 	nsDialogs::Show
 FunctionEnd
+
+Function FindSolutionButton_click
+    ExecShell "open" "http://eid.belgium.be/"
+	;when keeping the nsis installer alive, it can permit the webbrowser to take the foreground.
+	;should we quit in stead, the webbrowser will be openened in the background
+	Abort
+	;Quit
+FunctionEnd
+
+Function RetryCardReader_click
+    Call GotoPrevPage
+FunctionEnd
+
+
+
+
+
+

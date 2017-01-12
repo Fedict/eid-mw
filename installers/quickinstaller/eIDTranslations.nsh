@@ -9,7 +9,7 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Belgium eID Middleware"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Software for reading the Belgium Identity Card"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Fedict"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" ""
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright © 2015"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright © 2017"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "eID QuickInstaller"
 
 
@@ -100,6 +100,12 @@ LangString ls_test ${LANG_ENGLISH} "Test"
 LangString ls_test ${LANG_FRENCH} "Tester"
 LangString ls_test ${LANG_DUTCH} "Testen"
 LangString ls_test ${LANG_GERMAN} "Prüfen"
+
+LangString ls_helpsite ${LANG_ENGLISH} "FAQ"
+LangString ls_helpsite ${LANG_FRENCH} "FAQ"
+LangString ls_helpsite ${LANG_DUTCH} "FAQ"
+LangString ls_helpsite ${LANG_GERMAN} "FAQ"
+
 
 ;below texts are error reports, they are show in a message box, no length limits
 LangString ls_testfailed ${LANG_ENGLISH} "STR:Test failed,$\n$\ngo back and try again,$\nor reboot your pc and launch the eID Viewer to continue testing"
