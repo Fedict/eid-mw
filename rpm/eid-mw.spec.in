@@ -78,10 +78,8 @@ Summary: Belgium electronic identity card viewer
 Obsoletes: eid-viewer
 Requires: eid-mw
 %if 0%{?suse_version}
-Requires: java >= 1.6.0
 Requires: pcsc-ccid
 %else
-Requires: java >= 1:1.6.0
 Requires: ccid
 %endif
 Requires: pcsc-lite
