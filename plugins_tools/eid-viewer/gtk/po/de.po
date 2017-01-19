@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.4.gc149158.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
 "POT-Creation-Date: 2016-11-22 10:55+0100\n"
-"PO-Revision-Date: 2016-11-22 10:56+0100\n"
+"PO-Revision-Date: 2016-12-21 15:32+0100\n"
 "Last-Translator: Wouter Verhelst <wouter.verhelst@fedict.be>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/main.c:106
 msgid "Initialising"
-msgstr ""
+msgstr "Initialisieren"
 
 #: plugins_tools/eid-viewer/gtk/main.c:109
 msgid "Ready to read identity card"
@@ -27,11 +27,11 @@ msgstr "Bereit, e-ID zu lesen"
 
 #: plugins_tools/eid-viewer/gtk/main.c:114
 msgid "No cardreader found"
-msgstr ""
+msgstr "Kein Kartenleser gefunden"
 
 #: plugins_tools/eid-viewer/gtk/main.c:119
 msgid "Card available"
-msgstr ""
+msgstr "Karte verfügbar"
 
 #: plugins_tools/eid-viewer/gtk/main.c:136
 msgid "Reading identity"
@@ -39,15 +39,15 @@ msgstr "eID wird gelesen"
 
 #: plugins_tools/eid-viewer/gtk/main.c:139
 msgid "Reading certificates"
-msgstr ""
+msgstr "Zertifikate werden gelesen"
 
 #: plugins_tools/eid-viewer/gtk/main.c:142
 msgid "Failed to read identity data"
-msgstr ""
+msgstr "Konnte Identitätsangaben nicht lesen"
 
 #: plugins_tools/eid-viewer/gtk/main.c:145
 msgid "Performing a PIN operation"
-msgstr ""
+msgstr "PIN-Vorgang wird durchgeführt"
 
 #: plugins_tools/eid-viewer/gtk/main.c:177
 #, c-format
@@ -69,7 +69,7 @@ msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:67
 msgid "View data on the Belgian eID card"
-msgstr ""
+msgstr "Daten auf der belgischen eID-Karte einsehen"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:71
 msgid ""
@@ -89,21 +89,21 @@ msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:112
 msgid "Open eID file"
-msgstr ""
+msgstr "eID-Datei öffnen"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:113
 #: plugins_tools/eid-viewer/gtk/gtkui.c:156
 msgid "_Cancel"
-msgstr ""
+msgstr "Ab_brechen"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:114
 msgid "_Open"
-msgstr ""
+msgstr "Ö_ffnen"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:123
 #: plugins_tools/eid-viewer/gtk/gtkui.c:166
 msgid "All files"
-msgstr ""
+msgstr "All files"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:129
 msgid "All eID files"
@@ -112,39 +112,39 @@ msgstr "Alle eID Dateien"
 #: plugins_tools/eid-viewer/gtk/gtkui.c:135
 #: plugins_tools/eid-viewer/gtk/gtkui.c:171
 msgid "eID files"
-msgstr ""
+msgstr "eID files"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:155
 msgid "Save eID file"
-msgstr ""
+msgstr "eID-Datei speichern"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:157
 msgid "_Save"
-msgstr ""
+msgstr "Speichern"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:210
 msgid "PIN incorrect"
-msgstr ""
+msgstr "PIN-Code falsch"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:210
 msgid "PIN OK"
-msgstr ""
+msgstr "PIN-Code OK"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:210
 msgid "Error occurred while trying to test PIN code"
-msgstr ""
+msgstr "Es ist ein Fehler beim Überprüfen des PIN-Codes aufgetreten"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:211
 msgid "PIN change failed"
-msgstr ""
+msgstr "Das Ändern des PIN-Codes ist fehlgeschlagen"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:211
 msgid "PIN changed"
-msgstr ""
+msgstr "PIN-Code geändert"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:211
 msgid "Error occurred while trying to change PIN code"
-msgstr ""
+msgstr "Es ist ein Fehler beim Ändern des PIN-Codes aufgetreten"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:12
 msgid "Detailed information..."
@@ -168,11 +168,11 @@ msgstr "_Datei"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:112
 msgid "Reader selection"
-msgstr ""
+msgstr "Kartenleserauswahl"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:123
 msgid "Automatic"
-msgstr ""
+msgstr "Automatisch"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:179
 msgid "Language"
@@ -262,12 +262,12 @@ msgstr ""
 #: plugins_tools/eid-viewer/gtk/viewer.glade:861
 #: plugins_tools/eid-viewer/gtk/print.c:59
 msgid "Employer's VAT number (1):"
-msgstr ""
+msgstr "Mehrwertsteuernummer des Arbeitgebers (1):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:892
 #: plugins_tools/eid-viewer/gtk/print.c:60
 msgid "Employer's VAT number (2):"
-msgstr ""
+msgstr "Mehrwertsteuernummer des Arbeitgebers (2):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:939
 #: plugins_tools/eid-viewer/gtk/print.c:58
@@ -277,12 +277,12 @@ msgstr ""
 #: plugins_tools/eid-viewer/gtk/viewer.glade:970
 #: plugins_tools/eid-viewer/gtk/print.c:61
 msgid "Regional file number:"
-msgstr ""
+msgstr "Regionale Aktennummer:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:985
 #: plugins_tools/eid-viewer/gtk/print.c:54
 msgid "Member of family:"
-msgstr ""
+msgstr "Familienangehöriger"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:998
 msgid " "
@@ -296,7 +296,7 @@ msgstr "Organisation:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1031
 #: plugins_tools/eid-viewer/gtk/print.c:56
 msgid "Duplicata:"
-msgstr ""
+msgstr "Duplikat:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1116
 msgid "Identity"
@@ -315,13 +315,13 @@ msgstr "Ausstellungsort:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1191
 #: plugins_tools/eid-viewer/gtk/print.c:48
 msgid "Chip number:"
-msgstr "Nummer:"
+msgstr "Chip-Nummer:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1205
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1548
 #: plugins_tools/eid-viewer/gtk/print.c:49
 msgid "Valid from:"
-msgstr "Gültig ab:"
+msgstr "Gültig von:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1219
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1564
@@ -363,11 +363,11 @@ msgstr "Zertifkate"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1850
 msgid "Clear Log"
-msgstr ""
+msgstr "Protokoll löschen"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1864
 msgid "Copy Log To Clipboard"
-msgstr ""
+msgstr "Protokoll in Zwischenablage kopieren"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1903
 msgid "Log"
@@ -383,7 +383,7 @@ msgstr "Gedruckt:"
 
 #: plugins_tools/eid-viewer/gtk/print.c:66
 msgid "Printed by:"
-msgstr ""
+msgstr "Gedruckt von:"
 
 #: plugins_tools/eid-viewer/gtk/print.c:135
 msgid "%B %d, %Y"
@@ -395,6 +395,8 @@ msgid ""
 "BELGIUM\n"
 "%s"
 msgstr ""
+"BELGIEN\n"
+"%s"
 
 #, fuzzy
 #~ msgid "Special organization:"

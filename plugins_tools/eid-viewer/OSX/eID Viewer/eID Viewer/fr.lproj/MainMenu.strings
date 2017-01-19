@@ -12,7 +12,7 @@
 "1Xt-HY-uBw.title" = "eID Viewer";
 
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[0] = "Test PIN"; ObjectID = "1fk-Wt-tsG"; */
-"1fk-Wt-tsG.ibShadowedLabels[0]" = "Verifier le code PIN";
+"1fk-Wt-tsG.ibShadowedLabels[0]" = "Tester le code PIN";
 
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[1] = "Change PIN"; ObjectID = "1fk-Wt-tsG"; */
 "1fk-Wt-tsG.ibShadowedLabels[1]" = "Changer le code PIN";
@@ -105,7 +105,7 @@
 "8nN-Wk-ZVM.placeholderString" = "-";
 
 /* Class = "NSMenuItem"; title = "Reader selection"; ObjectID = "997-Qu-fV1"; */
-"997-Qu-fV1.title" = "Reader selection";
+"997-Qu-fV1.title" = "Sélection d'un lecteur de carte";
 
 /* Class = "NSTextFieldCell"; title = "Given names:"; ObjectID = "9mr-Oa-QVJ"; */
 "9mr-Oa-QVJ.title" = "Prénoms:";
@@ -120,7 +120,7 @@
 "AYu-sK-qS6.title" = "Main Menu";
 
 /* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
-"BOF-NM-1cW.title" = "Preferences…";
+"BOF-NM-1cW.title" = "Préférences…";
 
 /* Class = "NSBox"; title = "Box"; ObjectID = "Bgq-7g-MVk"; */
 "Bgq-7g-MVk.title" = "Box";
@@ -186,7 +186,7 @@
 "LE2-aR-0XJ.title" = "Bring All to Front";
 
 /* Class = "NSMenuItem"; title = "Frequently Asked Questions..."; ObjectID = "LIr-jk-FtC"; */
-"LIr-jk-FtC.title" = "Frequently Asked Questions...";
+"LIr-jk-FtC.title" = "Foire aux questions...";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "LJh-Dh-dMy"; */
 "LJh-Dh-dMy.placeholderString" = "-";
@@ -195,7 +195,7 @@
 "LaX-z8-D8m.placeholderString" = "-";
 
 /* Class = "NSMenuItem"; title = "Automatic"; ObjectID = "LcD-R6-Nvz"; */
-"LcD-R6-Nvz.title" = "Automatic";
+"LcD-R6-Nvz.title" = "Automatique";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Lj9-7P-I8X"; */
 "Lj9-7P-I8X.placeholderString" = "-";
@@ -255,7 +255,7 @@
 "SbE-j5-DtL.headerCell.title" = "Certificat";
 
 /* Class = "NSMenuItem"; title = "Export to DER file..."; ObjectID = "SuP-ea-w46"; */
-"SuP-ea-w46.title" = "Exporter vers fichier DER...";
+"SuP-ea-w46.title" = "Exporter vers le fichier DER...";
 
 /* Class = "NSTabViewItem"; label = "Card/PIN"; ObjectID = "TI0-e6-w10"; */
 "TI0-e6-w10.label" = "Carte/PIN";
@@ -267,7 +267,7 @@
 "Tr5-53-x9e.title" = "English";
 
 /* Class = "NSTextFieldCell"; title = "Reading data from card..."; ObjectID = "UKa-9U-r1R"; */
-"UKa-9U-r1R.title" = "Reading data from card...";
+"UKa-9U-r1R.title" = "Lecture en cours des données de la carte...";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "VUf-yO-cOS"; */
 "VUf-yO-cOS.placeholderString" = "-";
@@ -312,7 +312,7 @@
 "beP-LX-TKz.title" = "Box";
 
 /* Class = "NSMenu"; title = "File"; ObjectID = "bib-Uj-vzu"; */
-"bib-Uj-vzu.title" = "File";
+"bib-Uj-vzu.title" = "Dossier";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "bzd-tP-vCa"; */
 "bzd-tP-vCa.placeholderString" = "-";
@@ -330,7 +330,7 @@
 "dhS-8B-cyZ.placeholderString" = "-";
 
 /* Class = "NSMenuItem"; title = "Detailed information..."; ObjectID = "dyA-Hf-sf0"; */
-"dyA-Hf-sf0.title" = "Information Détaillée...";
+"dyA-Hf-sf0.title" = "Informations Détaillées...";
 
 /* Class = "NSTextFieldCell"; title = "Postal code:"; ObjectID = "eIi-C8-04B"; */
 "eIi-C8-04B.title" = "Code postal:";
@@ -342,10 +342,10 @@
 "edC-Ka-Qw1.placeholderString" = "-";
 
 /* Class = "NSSegmentedCell"; f7q-4j-TGg.ibShadowedLabels[0] = "Clear Log"; ObjectID = "f7q-4j-TGg"; */
-"f7q-4j-TGg.ibShadowedLabels[0]" = "Clear Log";
+"f7q-4j-TGg.ibShadowedLabels[0]" = "Effacer le journal";
 
 /* Class = "NSSegmentedCell"; f7q-4j-TGg.ibShadowedLabels[1] = "Copy Log To Clipboard"; ObjectID = "f7q-4j-TGg"; */
-"f7q-4j-TGg.ibShadowedLabels[1]" = "Copy Log To Clipboard";
+"f7q-4j-TGg.ibShadowedLabels[1]" = "Copier le journal dans le presse-papiers";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "f9r-Ux-HAC"; */
 "f9r-Ux-HAC.placeholderString" = "-";
@@ -366,7 +366,7 @@
 "gQe-pA-MDp.title" = "Box";
 
 /* Class = "NSMenuItem"; title = "Detail"; ObjectID = "hRa-Yu-bbZ"; */
-"hRa-Yu-bbZ.title" = "Detail";
+"hRa-Yu-bbZ.title" = "Détail";
 
 /* Class = "NSMenu"; title = "Services"; ObjectID = "hz9-B4-Xy5"; */
 "hz9-B4-Xy5.title" = "Services";
@@ -387,7 +387,7 @@
 "kZU-gG-wde.placeholderString" = "-";
 
 /* Class = "NSMenuItem"; title = "Export Chain to PEM file..."; ObjectID = "lxJ-yv-7p4"; */
-"lxJ-yv-7p4.title" = "Exporter la chaine vers fichier PEM...";
+"lxJ-yv-7p4.title" = "Exporter la chaîne vers le fichier PEM...";
 
 /* Class = "NSMenuItem"; title = "Nederlands"; ObjectID = "mrE-xY-icY"; */
 "mrE-xY-icY.title" = "Nederlands";
@@ -396,7 +396,7 @@
 "nDz-ak-r4z.placeholderString" = "-";
 
 /* Class = "NSButtonCell"; title = "Always validate"; ObjectID = "nYB-fR-NCY"; */
-"nYB-fR-NCY.title" = "Toucjours valider les certificats de confiance";
+"nYB-fR-NCY.title" = "Toucjours valider la fiabilité des certificats";
 
 /* Class = "NSBox"; title = "Box"; ObjectID = "nZj-wx-QfF"; */
 "nZj-wx-QfF.title" = "Box";
@@ -432,7 +432,7 @@
 "uQy-DD-JDr.title" = "eID Viewer";
 
 /* Class = "NSMenu"; title = "Reader selection"; ObjectID = "vdP-FZ-jf2"; */
-"vdP-FZ-jf2.title" = "Reader selection";
+"vdP-FZ-jf2.title" = "Sélection d'un lecteur de la carte";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "wk0-KT-q0Z"; */
 "wk0-KT-q0Z.placeholderString" = "-";
