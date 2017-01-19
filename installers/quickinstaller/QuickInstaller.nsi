@@ -691,7 +691,7 @@ Function nsdInsertCardLeave
 FunctionEnd
 
 Function nsdCardCheck
-    ${If} $FindCardFailed == 0
+    ${If} $FindCardFailed <> '0'
         ;MessageBox MB_OK "Reader found, skipping reader error"
         Abort   
     ${EndIf}
