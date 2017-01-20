@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
@@ -1148,7 +1148,7 @@
                                             </holdingPriorities>
                                         </splitView>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0io-gu-IzB">
-                                            <rect key="frame" x="427" y="18" width="91" height="25"/>
+                                            <rect key="frame" x="476" y="18" width="91" height="25"/>
                                             <buttonCell key="cell" type="roundTextured" title="Validate now" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fPW-Dr-YAR">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1158,8 +1158,8 @@
                                             </connections>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="DP5-Vd-vKQ">
-                                            <rect key="frame" x="306" y="22" width="115" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Always validate" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nYB-fR-NCY">
+                                            <rect key="frame" x="258" y="22" width="212" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Always validate certificate trust" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nYB-fR-NCY">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -1168,7 +1168,7 @@
                                             </connections>
                                         </button>
                                         <box hidden="YES" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="iSU-im-9Io">
-                                            <rect key="frame" x="308" y="29" width="210" height="5"/>
+                                            <rect key="frame" x="260" y="29" width="307" height="5"/>
                                         </box>
                                     </subviews>
                                     <constraints>
@@ -1195,7 +1195,7 @@
                                             <rect key="frame" x="20" y="49" width="786" height="570"/>
                                             <clipView key="contentView" id="5ef-zU-ZQu">
                                                 <rect key="frame" x="1" y="1" width="784" height="568"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <textView importsGraphics="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="I3G-tI-1MG">
                                                         <rect key="frame" x="0.0" y="0.0" width="784" height="568"/>
@@ -1270,7 +1270,7 @@
                     <constraint firstItem="5Om-bz-RVh" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="12" symbolic="YES" id="nqi-su-YXf"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="547" y="806.5"/>
+            <point key="canvasLocation" x="130" y="175"/>
         </window>
         <customView id="ieQ-cl-G8D" userLabel="ForeignerPrintOperation" customClass="ResizablePrintView">
             <rect key="frame" x="0.0" y="0.0" width="569" height="863"/>
@@ -2039,7 +2039,7 @@ DQ
                         <rect key="frame" x="20" y="61" width="440" height="189"/>
                         <clipView key="contentView" id="rBk-zL-wWH">
                             <rect key="frame" x="1" y="1" width="438" height="187"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView importsGraphics="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="RNs-UU-2CF">
                                     <rect key="frame" x="0.0" y="0.0" width="438" height="187"/>

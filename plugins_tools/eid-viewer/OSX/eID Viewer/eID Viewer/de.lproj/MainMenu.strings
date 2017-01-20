@@ -12,10 +12,10 @@
 "1Xt-HY-uBw.title" = "eID Viewer";
 
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[0] = "Test PIN"; ObjectID = "1fk-Wt-tsG"; */
-"1fk-Wt-tsG.ibShadowedLabels[0]" = "PIN uberprufen";
+"1fk-Wt-tsG.ibShadowedLabels[0]" = "PIN-Code uberprufen";
 
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[1] = "Change PIN"; ObjectID = "1fk-Wt-tsG"; */
-"1fk-Wt-tsG.ibShadowedLabels[1]" = "PIN ändern";
+"1fk-Wt-tsG.ibShadowedLabels[1]" = "PIN-Code ändern";
 
 /* Class = "NSTextFieldCell"; title = "Title:"; ObjectID = "23k-Z7-jnC"; */
 "23k-Z7-jnC.title" = "Titel:";
@@ -105,7 +105,7 @@
 "8nN-Wk-ZVM.placeholderString" = "-";
 
 /* Class = "NSMenuItem"; title = "Reader selection"; ObjectID = "997-Qu-fV1"; */
-"997-Qu-fV1.title" = "Reader selection";
+"997-Qu-fV1.title" = "Kartenleserauswahl";
 
 /* Class = "NSTextFieldCell"; title = "Given names:"; ObjectID = "9mr-Oa-QVJ"; */
 "9mr-Oa-QVJ.title" = "Vornamen:";
@@ -186,7 +186,7 @@
 "LE2-aR-0XJ.title" = "Bring All to Front";
 
 /* Class = "NSMenuItem"; title = "Frequently Asked Questions..."; ObjectID = "LIr-jk-FtC"; */
-"LIr-jk-FtC.title" = "Frequently Asked Questions...";
+"LIr-jk-FtC.title" = "Häufig gestellte Fragen...";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "LJh-Dh-dMy"; */
 "LJh-Dh-dMy.placeholderString" = "-";
@@ -195,7 +195,7 @@
 "LaX-z8-D8m.placeholderString" = "-";
 
 /* Class = "NSMenuItem"; title = "Automatic"; ObjectID = "LcD-R6-Nvz"; */
-"LcD-R6-Nvz.title" = "Automatic";
+"LcD-R6-Nvz.title" = "Automatisch";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Lj9-7P-I8X"; */
 "Lj9-7P-I8X.placeholderString" = "-";
@@ -267,7 +267,7 @@
 "Tr5-53-x9e.title" = "English";
 
 /* Class = "NSTextFieldCell"; title = "Reading data from card..."; ObjectID = "UKa-9U-r1R"; */
-"UKa-9U-r1R.title" = "Reading data from card...";
+"UKa-9U-r1R.title" = "Daten werden von der Karte gelesen...";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "VUf-yO-cOS"; */
 "VUf-yO-cOS.placeholderString" = "-";
@@ -336,16 +336,16 @@
 "eIi-C8-04B.title" = "Postleitzahl:";
 
 /* Class = "NSMenuItem"; title = "Language"; ObjectID = "eWg-zO-bzv"; */
-"eWg-zO-bzv.title" = "Language";
+"eWg-zO-bzv.title" = "Sprache";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "edC-Ka-Qw1"; */
 "edC-Ka-Qw1.placeholderString" = "-";
 
 /* Class = "NSSegmentedCell"; f7q-4j-TGg.ibShadowedLabels[0] = "Clear Log"; ObjectID = "f7q-4j-TGg"; */
-"f7q-4j-TGg.ibShadowedLabels[0]" = "Clear Log";
+"f7q-4j-TGg.ibShadowedLabels[0]" = "Protokoll löschen";
 
 /* Class = "NSSegmentedCell"; f7q-4j-TGg.ibShadowedLabels[1] = "Copy Log To Clipboard"; ObjectID = "f7q-4j-TGg"; */
-"f7q-4j-TGg.ibShadowedLabels[1]" = "Copy Log To Clipboard";
+"f7q-4j-TGg.ibShadowedLabels[1]" = "Protocoll in Zwischenablage kopieren";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "f9r-Ux-HAC"; */
 "f9r-Ux-HAC.placeholderString" = "-";
@@ -396,7 +396,7 @@
 "nDz-ak-r4z.placeholderString" = "-";
 
 /* Class = "NSButtonCell"; title = "Always validate"; ObjectID = "nYB-fR-NCY"; */
-"nYB-fR-NCY.title" = "Vertrauenszertifikate immer validieren";
+"nYB-fR-NCY.title" = "Zuverlässigkeit der Zertifikate stets validieren";
 
 /* Class = "NSBox"; title = "Box"; ObjectID = "nZj-wx-QfF"; */
 "nZj-wx-QfF.title" = "Box";
@@ -432,7 +432,7 @@
 "uQy-DD-JDr.title" = "eID Viewer";
 
 /* Class = "NSMenu"; title = "Reader selection"; ObjectID = "vdP-FZ-jf2"; */
-"vdP-FZ-jf2.title" = "Reader selection";
+"vdP-FZ-jf2.title" = "Kartenleserauswahl";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "wk0-KT-q0Z"; */
 "wk0-KT-q0Z.placeholderString" = "-";

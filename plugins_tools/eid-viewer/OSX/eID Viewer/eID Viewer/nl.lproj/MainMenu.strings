@@ -12,10 +12,10 @@
 "1Xt-HY-uBw.title" = "eID Viewer";
 
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[0] = "Test PIN"; ObjectID = "1fk-Wt-tsG"; */
-"1fk-Wt-tsG.ibShadowedLabels[0]" = "PIN testen";
+"1fk-Wt-tsG.ibShadowedLabels[0]" = "Pincode verifiëren";
 
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[1] = "Change PIN"; ObjectID = "1fk-Wt-tsG"; */
-"1fk-Wt-tsG.ibShadowedLabels[1]" = "PIN wijzigen";
+"1fk-Wt-tsG.ibShadowedLabels[1]" = "Pincode wijzigen";
 
 /* Class = "NSTextFieldCell"; title = "Title:"; ObjectID = "23k-Z7-jnC"; */
 "23k-Z7-jnC.title" = "Titel:";
@@ -105,7 +105,7 @@
 "8nN-Wk-ZVM.placeholderString" = "-";
 
 /* Class = "NSMenuItem"; title = "Reader selection"; ObjectID = "997-Qu-fV1"; */
-"997-Qu-fV1.title" = "Kaartlezer-selectie";
+"997-Qu-fV1.title" = "Kaartlezerselectie";
 
 /* Class = "NSTextFieldCell"; title = "Given names:"; ObjectID = "9mr-Oa-QVJ"; */
 "9mr-Oa-QVJ.title" = "Voornamen:";
@@ -396,7 +396,7 @@
 "nDz-ak-r4z.placeholderString" = "-";
 
 /* Class = "NSButtonCell"; title = "Always validate"; ObjectID = "nYB-fR-NCY"; */
-"nYB-fR-NCY.title" = "Altijd valideren";
+"nYB-fR-NCY.title" = "Certificaatbetrouwbaarheid altijd valideren";
 
 /* Class = "NSBox"; title = "Box"; ObjectID = "nZj-wx-QfF"; */
 "nZj-wx-QfF.title" = "Box";
@@ -432,7 +432,7 @@
 "uQy-DD-JDr.title" = "eID Viewer";
 
 /* Class = "NSMenu"; title = "Reader selection"; ObjectID = "vdP-FZ-jf2"; */
-"vdP-FZ-jf2.title" = "Kaartlezer-selectie";
+"vdP-FZ-jf2.title" = "Kaartlezerselectie";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "wk0-KT-q0Z"; */
 "wk0-KT-q0Z.placeholderString" = "-";
