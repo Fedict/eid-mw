@@ -166,6 +166,29 @@ NSString* getPcscdStatus() {
 }
 
 NSString* getTokendStatus() {
+	FILE* pipe = popen("ps aux|awk '/[B]EID.tokend/{print $2}'", "r");
+	char line[80];
+	char *tmp;
+
+	if(!pipe) {
+		return @"(check failed)";
+	}
+	if(feof(pipe)) {
+		return @"(not running)";
+	}
+	if(fgets(line, 80, pipe) == NULL) {
+		return @"(not running)";
+	}
+	if((tmp = strchr(line, '\n'))) {
+		*tmp = '\0';
+	}
+	if(strlen(line)==0) {
+		return @"(not running)";
+	}
+	return [NSString stringWithFormat:@"running; pid: %s", line];
+}
+
+NSString* getTokendLoc() {
 	struct stat stbuf;
 	if(stat("/System/Library/Security/tokend/BEID.tokend", &stbuf) < 0) {
 		switch(errno) {
@@ -250,7 +273,11 @@ NSString* getTokendStatus() {
 	[item setValue: getPcscdStatus()];
 	[self.ctrl addObject:item];
 	item = [DataItem alloc];
-	[item setTitle: @"BEID tokend"];
+	[item setTitle: @"BEID tokend location"];
+	[item setValue: getTokendLoc()];
+	[self.ctrl addObject:item];
+	item = [DataItem alloc];
+	[item setTitle: @"BEID tokend process"];
 	[item setValue: getTokendStatus()];
 	[self.ctrl addObject:item];
 }
