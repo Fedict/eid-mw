@@ -94,12 +94,17 @@
           <Directory Id="ApplicationProgramsFolderUtilities" Name="Utilities"/>
         </Directory>
       </Directory>
-
+	
+	  <Directory Id="CommonAppDataFolder">
+        <Directory Id="APPLICATIONDATAFOLDER" Name="Belgium Identity Card">
+          <Directory Id="LOGDIR" Name="log"/>
+        </Directory>
+	  </Directory>
+	  
       <Directory Id="ProgramFilesFolder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
           <Directory Id="BEIDVIEWERDIR" Name="EidViewer" />
 		  <Directory Id="BEIDCERTPROPROOTFOLDER" Name="BeID Certprop"/>
-          <Directory Id="LOGDIR" Name="log"/>
         </Directory>
         <Directory Id="FIREFOXROOTFOLDER" Name="Mozilla Firefox">
           <Directory Id="FIREFOXEXTENSIONS" Name="extensions">
@@ -376,7 +381,7 @@
           </RegistryKey>
           
           <RegistryKey Key="logging" Action="createAndRemoveOnUninstall">
-            <RegistryValue Type="string" Name="log_dirname" Value="[ProgramFilesFolder]Belgium Identity Card\log"/>
+            <RegistryValue Type="string" Name="log_dirname" Value="[CommonAppDataFolder]Belgium Identity Card\log"/>
           </RegistryKey>
           
         </RegistryKey>

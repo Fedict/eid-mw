@@ -99,12 +99,16 @@
         <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID">
           <Directory Id="ApplicationProgramsFolderUtilities" Name="Utilities"/>
         </Directory>
-      </Directory>
+      </Directory>	  
+	  <Directory Id="CommonAppDataFolder" Name="CommonAppDataFolder">
+        <Directory Id="APPLICATIONDATAFOLDER" Name="Belgium Identity Card">
+          <Directory Id="LOGDIR" Name="log"/>
+        </Directory>
+	  </Directory>
       <Directory Id="ProgramFilesFolder" Name="ProgramFilesFolder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
           <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
           <Directory Id="BEIDVIEWERDIR" Name="EidViewer" />
-          <Directory Id="LOGDIR" Name="log"/>
         </Directory>
         <Directory Id="FIREFOXROOTFOLDER" Name="Mozilla Firefox">
           <Directory Id="FIREFOXEXTENSIONS" Name="extensions">
@@ -125,9 +129,6 @@
             </Directory>
           </Directory>
         </Directory>
-      </Directory>
-      <Directory Id="ProgramFiles64Folder" Name="ProgramFiles64Folder">
-        <Directory Id="LOGDIR_64" Name="log"/>
       </Directory>
 
       <Directory Id="DesktopFolder" Name="DesktopFolder"/>
@@ -158,16 +159,6 @@
         </CreateFolder>
         <RemoveFile Id="RemoveLogFiles" On="uninstall" Name="*"/>
         <RemoveFolder Id="RemoveLogFolder" On="uninstall"/>
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="LOGDIR_64">
-      <Component Id="LogDir_64" Guid="{8d2d7f7c-64d5-43d4-905f-b52c1cf7411c}" KeyPath="yes" Win64="yes">
-        <CreateFolder>
-          <util:PermissionEx GenericAll="yes" User="Users" />
-        </CreateFolder>
-        <RemoveFile Id="RemoveLogFiles64" On="uninstall" Name="*"/>
-        <RemoveFolder Id="RemoveLogFolder64" On="uninstall"/>
       </Component>
     </DirectoryRef>
 
@@ -436,12 +427,9 @@
           </RegistryKey>
 
           <RegistryKey Key="logging" Action="createAndRemoveOnUninstall">
-            <RegistryValue Type="string" Name="log_dirname" Value="[ProgramFilesFolder]Belgium Identity Card\log"/>
+            <RegistryValue Type="string" Name="log_dirname" Value="[CommonAppDataFolder]Belgium Identity Card\log"/>
           </RegistryKey>
-
         </RegistryKey>
-
-
       </Component>
 
     </DirectoryRef>
@@ -514,7 +502,6 @@
       <ComponentRef Id="Icon" />
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
-      <ComponentRef Id="LogDir_64"/>
       <ComponentRef Id="Extensions"/>
       <ComponentRef Id="FireFoxRoot"/>
       <ComponentRef Id="XPIRoot"/>
