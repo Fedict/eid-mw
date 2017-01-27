@@ -1,10 +1,1 @@
-#!/bin/bash
-
-case $(lsb_release -i -s) in
-	Debian)
-		echo plugins_tools/xpi/signed-build/belgiumeid-1.0.18.1-signed.1-signed.xpi /usr/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be.xpi
-	;;
-	*)
-		echo plugins_tools/xpi/signed-build/eid_belgie-1.0.21-fx.xpi /usr/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be.xpi
-	;;
-esac
+usr/share/mozilla/extensions

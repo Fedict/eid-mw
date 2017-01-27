@@ -180,6 +180,9 @@ fi
 %{_datadir}/glib-2.0/schemas/
 %endif
 
+%post -n eid-viewer
+[ -x /usr/bin/glib-compile-schemas ] && /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
+
 %changelog
 * Fri May 20 2016 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.1.18-0.R
 - Update to 4.1.18
