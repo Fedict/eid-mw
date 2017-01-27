@@ -4,55 +4,35 @@
 !include "x64.nsh"
 !include LogicLib.nsh
 !include nsDialogs.nsh
-!include "eIDTranslations.nsh"
 !include WinMessages.nsh
 !include "eidmw_version.nsh"
 !include WinVer.nsh
 !include "buttons.nsh"
 
-;!include nsDialogs_createTextMultiline.nsh
-;!include MUI2.nsh
-
 ;--------------------------------
 ;General
 
-;Function runFinish
-;    MessageBox MB_OK "runFinish called"
-;	Abort
-;FunctionEnd
-
-  ;defines
-!define LOGFILE ""
+;defines
 !addplugindir "NSIS_Plugins\beidread\Release"
-  ;Name and file
-  Name "Belgium eID-QuickInstaller ${EIDMW_VERSION}"
-  OutFile "Belgium eID-QuickInstaller ${EIDMW_VERSION}.exe"
-  VIProductVersion "${EIDMW_VERSION}"
-  VIAddVersionKey "FileVersion" "${EIDMW_VERSION}"
-  ;NSIS complains that Fileversion was not set for English, though it should have been done by the line above
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${EIDMW_VERSION}"
+;Name and file
+Name "Belgium eID-QuickInstaller ${EIDMW_VERSION}"
+OutFile "Belgium eID-QuickInstaller ${EIDMW_VERSION}.exe"
+VIProductVersion "${EIDMW_VERSION}"
+VIAddVersionKey "FileVersion" "${EIDMW_VERSION}"
 VIAddVersionKey "CompanyName" "Belgian Government"
 VIAddVersionKey "LegalCopyright" "Copyright (C) 2017"
 VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 
- 
-  ;Default installation folder
-  InstallDir "$PROGRAMFILES\Belgium Identity Card"
-	;InstallDir "$LOCALAPPDATA\Belgium Identity Card"
+;Default installation folder
+InstallDir "$PROGRAMFILES\Belgium Identity Card"
 	
-  ;Request application privileges for Windows Vista
-  RequestExecutionLevel admin
-	;admin;user
-	;TargetMinimalOS 5.0
-	;installer will run on Win2000 and newer
-  
-  XPStyle on
-;	WindowIcon on
-	Icon beID.ico
-	caption "Belgium eID-QuickInstaller ${EIDMW_VERSION_SHORT}"
-	caption $(ls_caption)
-	;SubCaption 
-	
+;Request application privileges for Windows Vista
+RequestExecutionLevel admin  
+XPStyle on
+Icon beID.ico
+
+caption $(ls_caption)
+
 	Var versionMajor
 	Var versionMinor
 	Var retval
@@ -81,33 +61,28 @@ VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 
 ;--------------------------------
 	;Interface Settings
-	;SilentInstall silent
 BrandingText " "
-;"Fedict"
-InstallColors /windows
-;SetBrandingImage [/IMGID=item_id_in_dialog] [/RESIZETOFIT] path_to_bitmap_file.bmp
-CompletedText "$(ls_completedtext)"
-
-
-;InstProgressFlags smooth
+InstProgressFlags smooth
 ;do not show installation details
 ShowInstDetails nevershow
 ShowUninstDetails nevershow
 
-;  !define MUI_HEADERIMAGE
- ; !define MUI_HEADERIMAGE_BITMAP "bannrbmp.bmp" ; optional
-  ;!define MUI_ABORTWARNING
+Function InstShow
+SetCtlColors $HWNDPARENT 0 0xFFFFFF ; parent background white, black text
+
+GetDlgItem $0 $HWNDPARENT 1028 ;1028 is the bar between the default buttons
+SetCtlColors $0 0 0xFFFFFF ; background white, black text
+
+FindWindow $0 "#32770" "" $HWNDPARENT ; get the inner dialog
+SetCtlColors $0 0 0xFFFFFF ; make the background white, black text
+GetDlgItem $1 $0 1006 ; get the item handle of detail text
+SetCtlColors $1 0 0xFFFFFF ; make that item's background white, black text
+FunctionEnd
+
 ;--------------------------------
 ;Pages
 
-;Page license
 Page custom nsdWelcome nsdWelcomeLeave
-
-;!insertmacro MUI_PAGE_INSTFILES
-;!define MUI_PAGE_CUSTOMFUNCTION_PRE dirPre
-;!define MUI_FINISHPAGE_RUN_FUNCTION "runFinish"
-;!insertmacro MUI_PAGE_FINISH
-;!define MUI_FINISHPAGE_RUN_FUNCTION 
 Page instfiles "" show_instfiles ""
 Page custom nsdInstallCheck nsdInstallCheckLeave
 Page custom nsdDone nsdDoneLeave
@@ -122,25 +97,12 @@ Page custom nsdCardData
 ;Languages
 ; its all in "eIDTranslations.nsh"
 ;--------------------------------
-;Reserve Files
-
+!include "eIDTranslations.nsh"
   
 ;If you are using solid compression, files that are required before
 ;the actual installation should be stored first in the data block,
 ;because this will make your installer start faster.
   
-;!insertmacro MUI_RESERVEFILE_LANGDLL
-
-MiscButtonText $(ls_back) $(ls_next) $(ls_cancel) $(ls_close)
-; MessageBox MB_OK "A translated message: $(message)"
-LicenseLangString license ${LANG_ENGLISH} "..\..\doc\licenses\English\License_en.rtf"
-LicenseLangString license ${LANG_GERMAN} "..\..\doc\licenses\German\License_de.rtf"
-LicenseLangString license ${LANG_FRENCH} "..\..\doc\licenses\French\License_fr.rtf"
-LicenseLangString license ${LANG_DUTCH} "..\..\doc\licenses\Dutch\License_nl.rtf"
-
-LicenseData $(license)
-;LicenseText "text" "button_text"
-
 ;--------------------------------
 ;Installer Sections
 
@@ -150,15 +112,6 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	
 	${WinVerGetMajor} $versionMajor
 	${WinVerGetMinor} $versionMinor
-	
-	;${If} $versionMajor == 5
-	;${AndIf} $versionMinor == 1
-		;xp
-		;install windows installer v4.5
-	;	File "..\..\..\ThirdParty\windows-installer\WindowsXP-KB942288-v3-x86.exe"
-	;	ExecWait "$INSTDIR\WindowsXP-KB942288-v3-x86.exe"
-	;	Delete "$INSTDIR\WindowsXP-KB942288-v3-x86.exe"
-	;${EndIf}
 	
 	${If} ${RunningX64}
 		ClearErrors
@@ -201,8 +154,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		${Switch} $MsiResponse
 			${Case} 0
 			${Case} 3010 
-				StrCpy $InstallFailed 0
-;set 1 for testing				
+				StrCpy $InstallFailed 0		
 				;3010 is 'success, but reboot requiered'
 			${Break}
 			${Default}
@@ -271,12 +223,6 @@ ${EnableX64FSRedirection}
 
 SectionEnd
 
-;--------------------------------
-;Error Messages
-;Function ErrorHandler_msiexec
- ; MessageBox MB_ICONSTOP "$(ls_errorinstallmsi) $LogFile"
-  ;  Abort
-;FunctionEnd
 
 Function ErrorHandler_file
   MessageBox MB_ICONSTOP "$(ls_errorcopyfile) $FileToCopy"
@@ -334,6 +280,8 @@ Function nsdWelcome
 		Abort
 	${EndIf}
 
+	Call InstShow
+	
 	${NSD_CreateLabel} 0 25% 100% 16u "Welkom!"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -391,6 +339,7 @@ Function show_instfiles
 	GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
 	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_cancel)"
 
+	Call InstShow
 	${buttonVisible} "Back" 0
 FunctionEnd
 
@@ -406,13 +355,6 @@ Function nsdInstallCheck
 		Abort
 	${EndIf}
 
-	;${NSD_CreateButton} 25% 25% 50% 25% "Find Solution"
-	;${NSD_CreateButton} -20u -10u 20u 10u "Find Solution"
-	;Pop $button
-	;${NSD_OnClick} $button FindSolutionButton_click
-	;EnableWindow $button 0 # start out disabled	
-	
-	;${NSD_CreateTextMultiline} 
 	${NSD_CreateLabel} 0 40% 100% 20u "$(ls_install_failed)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -466,13 +408,6 @@ Function nsdDone
 		Abort
 	${EndIf}
 
-;		${NSD_CreateButton} 25% 25% 50% 25% "eID Software testen"
-;		Pop $button
-;		${NSD_OnClick} $button button_click
-		;EnableWindow $button 0 # start out disabled	
-	
-	;${NSD_CreateTextMultiline} 
-
 	${NSD_CreateLabel} 0 40% 100% 18u "$(ls_complete)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -525,10 +460,6 @@ Function nsdConnectReader
 		Abort
 	${EndIf}
 	
-;	${NSD_CreateButton} 25% 25% 50% 25% "Volgende"
-;	Pop $button
-;	${NSD_OnClick} $button button_click
-	
 	${NSD_CreateLabel} 0 -20u 100% 18u "Sluit uw kaartlezer aan"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -560,8 +491,7 @@ Function  nsdConnectReaderLeave
 		;Abort
 	${EndIf}
   Pop $readercount
-	;${If} $readercount > 0
-	${If} $readercount == 0
+	${If} $readercount > 0
 		StrCpy $ReaderFailed 0
 		;MessageBox MB_OK "$$readercount is $readercount"
 	${Else}
@@ -582,12 +512,6 @@ Function nsdReaderCheck
 		Abort
 	${EndIf}
 
-	;	${NSD_CreateButton} 25% 25% 50% 25% "Opnieuw"
-	;	Pop $button
-	;	${NSD_OnClick} $button RetryCardReader_click
-		;EnableWindow $button 0 # start out disabled	
-	
-	;${NSD_CreateTextMultiline} 
 	${NSD_CreateLabel} 0 40% 100% 20u "$(ls_cardreader_failed)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -718,9 +642,6 @@ Function nsdCardCheck
 	CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x008080 transparent
-
-	
-	
 	
 	${NSD_CreateLabel} 0 70% 100% 36u "$(ls_test_failed_info)"
 	Pop $Label
@@ -746,8 +667,6 @@ Function nsdCardCheck
 	
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
-	
-
 	
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
@@ -827,38 +746,6 @@ Function nsdCardData
 	${buttonVisible} "Back" 0
 	${buttonVisible} "Next" 1
 	${buttonVisible} "Cancel" 0	
-	
-	
-	
-;	${NSD_CreateLabel} 0 0 100% 16u "$(ls_cardread)"
-;	Pop $Label
-;	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
-;	SendMessage $Label ${WM_SETFont} $Font_Title 1
-;	;SendMessage $Label ${WM_SETTEXT} 0 "STR:Card Read"
-;
-;	CreateFont $Font_CardData "Times New Roman" "14" "500" ;/UNDERLINE
-;	${NSD_CreateLabel} 0 28u 18% 14u "$(ls_name)"
-;	Pop $Label
-;	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-;	${if} $firstletterthirdname == ""
-;		${NSD_CreateLabel} 20% 28u 85% 14u "$firstname $lastname"
-;	${Else}
-;		${NSD_CreateLabel} 20% 28u 85% 14u "$firstname $firstletterthirdname $lastname"
-;	${EndIf}
-;	Pop $Label
-;	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-;	${NSD_CreateLabel} 0 42u 18% 14u "$(ls_address)"
-;	Pop $Label
-;	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-;	${NSD_CreateLabel} 20% 42u 85% 14u "$street"
-;	Pop $Label
-;	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-;	${NSD_CreateLabel} 20% 56u 85% 14u "$zip $municipality"
-;	Pop $Label
-;	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-;	;pop the others off the stack
-;
-
 	
 	nsdCardDataDone:
 	nsDialogs::Show
