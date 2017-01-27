@@ -1,16 +1,4 @@
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Dutch.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
 
-
-
-VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Belgium eID Middleware"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Software for reading the Belgium Identity Card"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Fedict"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" ""
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright © 2017"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "eID QuickInstaller"
 
 
 ;below are the screen header texts, they should be 38 characters maximum
@@ -69,7 +57,7 @@ LangString ls_test_failed ${LANG_FRENCH} "De test is niet geslaagd"
 LangString ls_test_failed ${LANG_DUTCH} "De test is niet geslaagd"
 LangString ls_test_failed ${LANG_GERMAN} "De test is niet geslaagd"
 
-LangString ls_test_failed_info ${LANG_ENGLISH} "We hebben de eID software niet kunnen testen.$\nKlik op 'Helpwebsite' voor meer informatie"
+LangString ls_test_failed_info ${LANG_ENGLISH} "We hebben de eID software niet kunnen testen.$\nKlik op $\"Helpwebsite$\" voor meer informatie"
 LangString ls_test_failed_info ${LANG_FRENCH} "We hebben de eID software niet kunnen testen.$\nKlik op 'Helpwebsite' voor meer informatie"
 LangString ls_test_failed_info ${LANG_DUTCH} "We hebben de eID software niet kunnen testen.$\nKlik op 'Helpwebsite' voor meer informatie"
 LangString ls_test_failed_info ${LANG_GERMAN} "We hebben de eID software niet kunnen testen.$\nKlik op 'Helpwebsite' voor meer informatie"
