@@ -25,29 +25,10 @@
 #include <ctype.h>
 #include "config.h"
 #include "parent.h"
+#include "gettext.h"
 
 #define EXIT_OK			0
 #define EXIT_ERROR		2
-
-enum msgs { MSG_INCORRECT_PIN_CODE = 1, MSG_N_ATTEMPTS_LEFT, MSG_LAST_ATTEMPT
-};
-
-static char const *const beid_messages[4][4] = {
-        {"en", "beID: Incorrect PIN Code",
-         "You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.",
-         "You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."},
-        {"nl", "beID: Foutive PINcode",
-         "U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat u nog slechts %d pogingen hebt alvorens uw PIN code geblokkeerd wordt.",
-         "U hebt een foutive PIN code ingegeven.\nGelieve te noteren dat bij de volgende incorrecte ingave uw PIN code geblokkeerd wordt."},
-        {"fr", "beID: Code PIN incorrect",
-         "Vous avez entré un code PIN incorrect.\nVeuillez noter qu'il ne vous reste plus que %d tentatives avant que votre PIN soit bloqué",
-         "Vous avez entré un code PIN incorrect.\nVieullez noter qu'a la prochaine entree incorrecte votre code PIN sera bloqué"},
-        {"de", "beID: Incorrect PIN Code",
-         "You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.",
-         "You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked."}
-};
-
-#include "beid-i18n.h"
 
 int main(int argc, char *argv[]) {
         int return_value = EXIT_ERROR;
@@ -55,28 +36,29 @@ int main(int argc, char *argv[]) {
 
         gtk_init(&argc, &argv); // initialize gtk+
 
+	putenv("LANGUAGE=");
+	bindtextdomain("beid-dialogs", DATAROOTDIR "/locale");
+	textdomain("beid-dialogs");
+
         // create new message dialog with CANCEL button in standard places, in center of user's screen
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        enum msgs msg;
+	char* msg;
         int attempts;
 
         if ((argc == 2) && (argv[1] != NULL) && (strlen(argv[1]) == 1)
             && isdigit(*(argv[1]))) {
                 attempts = atoi(argv[1]);
-                if (attempts > 1)
-                        msg = MSG_N_ATTEMPTS_LEFT;
-                else
-                        msg = MSG_LAST_ATTEMPT;
+                msg = ngettext("You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked.", "You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", attempts);
         } else {
                 fprintf(stderr, "Incorrect Parameter for <number of attempts left>\n");
                 exit(EXIT_ERROR);
         }
 
         dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING,
-                                        GTK_BUTTONS_OK, _MSG_(msg), attempts);
+                                        GTK_BUTTONS_OK, msg, attempts);
         gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
-        gtk_window_set_title(GTK_WINDOW(dialog), _MSG_(MSG_INCORRECT_PIN_CODE));
+        gtk_window_set_title(GTK_WINDOW(dialog), gettext("beID: Incorrect PIN Code"));
         gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
         // show all these widgets, and run the dialog as a modal dialog until it is closed by the user
