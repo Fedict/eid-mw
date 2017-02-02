@@ -154,7 +154,6 @@ noinst_HEADERS = \
 	dialogs/dialogsqtsrv/resource/KeyPadButtonCE.png \
 	dialogs/dialogsqtsrv/resource/KeyPadButton.png \
 	dialogs/dialogsqtsrv/resource/PINdisplay.png \
-	dialogs/dialogsgtk/beid-i18n.h \
 	dialogs/dialogsgtk/single_dialog.h \
 	dialogs/dialogsgtk/parent.h \
 	dialogs/dialogsgtk/gtk_dialog_names.h
