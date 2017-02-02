@@ -1,0 +1,7 @@
+# List of source files which contain translatable strings.
+cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askaccess.c
+cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askpin.c
+cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-badpin.c
+cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c
+cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-askpin.c
+cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-changepin.c
