@@ -202,3 +202,5 @@ beid_spr_changepin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../comm
 beid_spr_changepin_LDADD = @GTK_LIBS@
 
 pkgconfig_DATA=libbeidpkcs11.pc
+
+SUBDIRS = dialogs/dialogsgtk/po
