@@ -43,6 +43,7 @@ namespace eIDViewer
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(localization);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(localization);
+
             eIDViewer.LocalizedStrings theLocalizedStrings = (LocalizedStrings)(App.Current.Resources["LocalizedStrings"]);
 
             theLocalizedStrings.NotifyPropertyChanged("identityTabResource");
@@ -50,7 +51,6 @@ namespace eIDViewer
             theLocalizedStrings.NotifyPropertyChanged("certificateTabResource");
             theLocalizedStrings.NotifyPropertyChanged("applicationResource");
             theLocalizedStrings.NotifyPropertyChanged("menuItemResource");
-
         }
 
         private void Deutch_Click(object sender, RoutedEventArgs e)

@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using System.Security;
 using System.IO;
 using System.Windows;
+using System.Globalization;
 
 namespace eIDViewer
 {
@@ -76,6 +77,60 @@ namespace eIDViewer
             WriteRegistryStringValue("SOFTWARE\\BEID\\general", "language", language);
         }
 
+        public void SetLanguageNL()
+        {
+            theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
+            ChangeLocalization("nl-BE");
+            eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
+        }
+
+        public void SetLanguageFR()
+        {
+            theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
+            ChangeLocalization("fr-BE");
+            eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
+        }
+
+        public void SetLanguageDE()
+        {
+            theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
+            ChangeLocalization("de-DE");
+            eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
+        }
+
+        public void SetLanguageEN()
+        {
+            theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
+            ChangeLocalization("en-US");
+            eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
+        }
+
+        public void SetSystemLanguage()
+        {
+            if (CultureInfo.InstalledUICulture.TwoLetterISOLanguageName.Equals("nl"))
+            {
+                SetLanguageNL();
+            }
+            else if (CultureInfo.InstalledUICulture.TwoLetterISOLanguageName.Equals("fr"))
+            {
+                SetLanguageFR();
+            }
+            else if (CultureInfo.InstalledUICulture.TwoLetterISOLanguageName.Equals("de"))
+            {
+                SetLanguageDE();
+            }
+            else if (CultureInfo.InstalledUICulture.TwoLetterISOLanguageName.Equals("en"))
+            {
+                SetLanguageEN();
+            }
+            else
+            {
+                theBackendData.logText += "unsupported system language: " + CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
+                theBackendData.logText += "switching language to english ";
+                SetLanguageEN();
+            }
+        }
+
         public void GetLanguage()
         {
             string readValue = ReadRegistryStringValue("SOFTWARE\\BEID\\general", "language", null);
@@ -83,32 +138,31 @@ namespace eIDViewer
             {
                 if( readValue.Equals("nl"))
                 {
-                    theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
-                    ChangeLocalization("nl-BE");
-                    eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_NL);
+                    SetLanguageNL();
                 }
                 else if (readValue.Equals("fr"))
                 {
-                    theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
-                    ChangeLocalization("fr-BE");
-                    eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_FR);
+                    SetLanguageFR();
                 }
                 else if (readValue.Equals("de"))
                 {
-                    theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
-                    ChangeLocalization("de-DE");
-                    eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_DE);
+                    SetLanguageDE();
                 }
                 else if (readValue.Equals("en"))
                 {
-                    theBackendData.SetLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
-                    ChangeLocalization("en-US");
-                    eIDViewer.NativeMethods.ChangeLanguage(eid_vwr_langs.EID_VWR_LANG_EN);
+                    SetLanguageEN();
                 }
                 else
                 {
-                    theBackendData.logText += "unknow language identifier found in registry: " + readValue;
+                    theBackendData.logText += "unknown language identifier found in registry: " + readValue;
+                    theBackendData.logText += "switching language to the system setting ";
+                    SetSystemLanguage();
                 }
+            }
+            else
+            {
+                theBackendData.logText += "no language identifier found in registry, using the system localization ";
+                SetSystemLanguage();
             }
         }
 

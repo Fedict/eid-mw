@@ -162,9 +162,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\ApplicationStringResources.de-DE.resx" />
-    <EmbeddedResource Include="Resources\ApplicationStringResources.fr-BE.resx" />
-    <EmbeddedResource Include="Resources\ApplicationStringResources.nl-BE.resx" />
+    <EmbeddedResource Include="Resources\ApplicationStringResources.de.resx" />
+    <EmbeddedResource Include="Resources\ApplicationStringResources.fr.resx" />
+    <EmbeddedResource Include="Resources\ApplicationStringResources.nl.resx" />
     <EmbeddedResource Include="Resources\ApplicationStringResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApplicationStringResources.Designer.cs</LastGenOutput>
@@ -173,28 +173,28 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CardTabStringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\CardTabStringResources.fr-BE.resx" />
-    <EmbeddedResource Include="Resources\CardTabStringResources.nl-BE.resx" />
-    <EmbeddedResource Include="Resources\CardTabStringResources.de-DE.resx" />
-    <EmbeddedResource Include="Resources\CertificateTabStringResources.de-DE.resx" />
-    <EmbeddedResource Include="Resources\CertificateTabStringResources.fr-BE.resx" />
-    <EmbeddedResource Include="Resources\CertificateTabStringResources.nl-BE.resx" />
+    <EmbeddedResource Include="Resources\CardTabStringResources.fr.resx" />
+    <EmbeddedResource Include="Resources\CardTabStringResources.nl.resx" />
+    <EmbeddedResource Include="Resources\CardTabStringResources.de.resx" />
+    <EmbeddedResource Include="Resources\CertificateTabStringResources.de.resx" />
+    <EmbeddedResource Include="Resources\CertificateTabStringResources.fr.resx" />
+    <EmbeddedResource Include="Resources\CertificateTabStringResources.nl.resx" />
     <EmbeddedResource Include="Resources\CertificateTabStringResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CertificateTabStringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\IdentityTabStringResources.de-DE.resx">
+    <EmbeddedResource Include="Resources\IdentityTabStringResources.de.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\IdentityTabStringResources.fr-BE.resx" />
-    <EmbeddedResource Include="Resources\IdentityTabStringResources.nl-BE.resx" />
+    <EmbeddedResource Include="Resources\IdentityTabStringResources.fr.resx" />
+    <EmbeddedResource Include="Resources\IdentityTabStringResources.nl.resx" />
     <EmbeddedResource Include="Resources\IdentityTabStringResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IdentityTabStringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MenuItemStringResources.de-DE.resx" />
-    <EmbeddedResource Include="Resources\MenuItemStringResources.fr-BE.resx" />
-    <EmbeddedResource Include="Resources\MenuItemStringResources.nl-BE.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.de.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.fr.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.nl.resx" />
     <EmbeddedResource Include="Resources\MenuItemStringResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MenuItemStringResources.Designer.cs</LastGenOutput>
