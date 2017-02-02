@@ -753,7 +753,6 @@
     <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndmodal.cpp" />
     <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndpinpadinfo.cpp" />
     <ClCompile Include="..\src\dialogs\langutil.cpp" />
-    <ClCompile Include="..\src\display.cpp" />
     <ClCompile Include="..\src\encrypt.c" />
     <ClCompile Include="..\src\general.c" />
     <ClCompile Include="..\src\object.c" />
@@ -828,7 +827,6 @@
     <ClInclude Include="..\src\dialogs\dialogswin32\stdafx.h" />
     <ClInclude Include="..\src\dialogs\language.h" />
     <ClInclude Include="..\src\dialogs\langutil.h" />
-    <ClInclude Include="..\src\display.h" />
     <ClInclude Include="..\src\log.h" />
     <ClInclude Include="..\src\p11.h" />
     <ClInclude Include="..\src\phash.h" />

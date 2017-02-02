@@ -188,7 +188,7 @@ extern "C"
 //int               nObjects;
 //P11_OBJECT        **ppObjects;
 		P11_OPERATION Operation[P11_NUM_OPERATIONS];
-		CK_BYTE bReadDataAllowed;
+//		CK_BYTE bReadDataAllowed;
 	} P11_SESSION;
 
 
