@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Fedict
+# This file is distributed under the same license as the eid-mw package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: eid-mw 4.2.0-v4.2.0.dirty\n"
+"Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
+"POT-Creation-Date: 2017-01-27 13:56+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askaccess.c:50
+#, c-format
+msgid ""
+"The application [%s] wants to access the eID card. Do you want to accept it?"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askaccess.c:57
+msgid "beID: Card Access"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askpin.c:202
+#, c-format
+msgid ""
+"The application\n"
+"[%s]\n"
+"requests your eID PIN code."
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askpin.c:217
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-askpin.c:77
+msgid "beID: PIN Code Required"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-badpin.c:51
+#, c-format
+msgid ""
+"You have entered an incorrect PIN code.\n"
+"Please note that at the next incorrect entry your PIN code will be blocked."
+msgid_plural ""
+"You have entered an incorrect PIN code.\n"
+"Please note that you have only %d attempts left before your PIN is blocked."
+msgstr[0] ""
+msgstr[1] ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-badpin.c:60
+msgid "beID: Incorrect PIN Code"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:164
+#, c-format
+msgid ""
+"Request from Application [%s]:\n"
+"\n"
+"Please enter your current eID PIN, followed by your new eID PIN (twice)"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:179
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-changepin.c:77
+msgid "beID: Change PIN Code"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:188
+msgid "Current PIN:"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:189
+msgid "New PIN:"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:190
+msgid "New PIN (again):"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-askpin.c:74
+#, c-format
+msgid ""
+"The application [%s] requests your eID PIN code on the secure pinpad "
+"reader:\n"
+"[%s]..."
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-changepin.c:74
+#, c-format
+msgid ""
+"Request from Application [%s]:\n"
+"\n"
+"Please change your eID PIN code on the secure pinpad reader:\n"
+"[%s]..."
+msgstr ""
