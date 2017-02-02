@@ -156,6 +156,7 @@ noinst_HEADERS = \
 	dialogs/dialogsqtsrv/resource/PINdisplay.png \
 	dialogs/dialogsgtk/single_dialog.h \
 	dialogs/dialogsgtk/parent.h \
+	dialogs/dialogsgtk/gettext.h \
 	dialogs/dialogsgtk/gtk_dialog_names.h
 if NO_DIALOGS
 libbeidpkcs11_la_CXXFLAGS += -DNO_DIALOGS
