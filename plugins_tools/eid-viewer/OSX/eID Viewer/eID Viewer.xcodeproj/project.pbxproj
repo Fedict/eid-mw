@@ -10,7 +10,8 @@
 		65096FD51BBD39AB0057E4B8 /* eidfilepreview.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BBDE3121B3BF02C00CBE13E /* eidfilepreview.qlgenerator */; };
 		65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A341AF1181700F0DDE7 /* CertificateStore.m */; };
 		65296A391AF119CB00F0DDE7 /* photohandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A381AF119CB00F0DDE7 /* photohandler.m */; };
-		653D201D1DE85860003EA728 /* libbeidpkcs11.4.1.19.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 653D201C1DE85860003EA728 /* libbeidpkcs11.4.1.19.dylib */; };
+		655E7B601E44C95200F2590C /* libbeidpkcs11.4.2.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65A29A8F1E44BAC70091FB0E /* libbeidpkcs11.4.2.1.dylib */; };
+		655E7B611E44C95E00F2590C /* libbeidpkcs11.4.2.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 65A29A8F1E44BAC70091FB0E /* libbeidpkcs11.4.2.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		65669E431DE49B510018F644 /* specorgconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65669E3F1DE49B510018F644 /* specorgconv.h */; };
 		65669E451DE49B510018F644 /* xmlspecorgconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65669E411DE49B510018F644 /* xmlspecorgconv.h */; };
 		657641381DE4A4CB00602BC0 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65BE1C781BB573C4002E8061 /* libxml2.a */; };
@@ -114,6 +115,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		659139301E44C853000BE742 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				655E7B611E44C95E00F2590C /* libbeidpkcs11.4.2.1.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		65BD085E1CECAFBE000A30E4 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -139,6 +150,8 @@
 		652F07681D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.18.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.18.dylib; sourceTree = "<group>"; };
 		653D201C1DE85860003EA728 /* libbeidpkcs11.4.1.19.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.19.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.19.dylib; sourceTree = "<group>"; };
 		654832DE1C451E160030D770 /* verify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = verify.c; path = ../../../verify.c; sourceTree = "<group>"; };
+		655E7B5C1E44C90C00F2590C /* project.pbxproj */ = {isa = PBXFileReference; lastKnownFileType = text.pbxproject; name = project.pbxproj; path = ../../../../beidmw.xcodeproj/project.pbxproj; sourceTree = "<group>"; };
+		655E7B5E1E44C94000F2590C /* libbeid_ff_pkcs11.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeid_ff_pkcs11.dylib; path = ../../../../Debug/libbeid_ff_pkcs11.dylib; sourceTree = "<group>"; };
 		65669E3E1DE49B510018F644 /* specorgconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = specorgconv.cpp; path = ../../../conversions/specorgconv.cpp; sourceTree = "<group>"; };
 		65669E3F1DE49B510018F644 /* specorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = specorgconv.h; path = ../../../conversions/specorgconv.h; sourceTree = "<group>"; };
 		65669E401DE49B510018F644 /* xmlspecorgconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmlspecorgconv.cpp; path = ../../../conversions/xmlspecorgconv.cpp; sourceTree = "<group>"; };
@@ -200,6 +213,7 @@
 		659FFCB11AE93B4B004CEC1F /* xml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xml.h; path = ../../../xml.h; sourceTree = "<group>"; };
 		659FFCB21AE93B4B004CEC1F /* xmlmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmlmap.cpp; path = ../../../xmlmap.cpp; sourceTree = "<group>"; };
 		659FFCB31AE93B4B004CEC1F /* xmlmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlmap.h; path = ../../../xmlmap.h; sourceTree = "<group>"; };
+		65A29A8F1E44BAC70091FB0E /* libbeidpkcs11.4.2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.2.1.dylib; path = ../../../../Debug/libbeidpkcs11.4.2.1.dylib; sourceTree = "<group>"; };
 		65BD08481CECAB6B000A30E4 /* certhelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = certhelpers.h; path = "../../../include/eid-viewer/certhelpers.h"; sourceTree = "<group>"; };
 		65BD08491CECAB6B000A30E4 /* eid-viewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "eid-viewer.h"; path = "../../../include/eid-viewer/eid-viewer.h"; sourceTree = "<group>"; };
 		65BD084A1CECAB6B000A30E4 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = macros.h; path = "../../../include/eid-viewer/macros.h"; sourceTree = "<group>"; };
@@ -251,7 +265,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				653D201D1DE85860003EA728 /* libbeidpkcs11.4.1.19.dylib in Frameworks */,
+				655E7B601E44C95200F2590C /* libbeidpkcs11.4.2.1.dylib in Frameworks */,
 				6576413B1DE4A66200602BC0 /* libcrypto.a in Frameworks */,
 				657641381DE4A4CB00602BC0 /* libxml2.a in Frameworks */,
 			);
@@ -505,6 +519,8 @@
 				65BD08601CECB257000A30E4 /* Frameworks */,
 				65BD08611CECB257000A30E4 /* Headers */,
 				6576415C1DE4A9EC00602BC0 /* Resources */,
+				659139301E44C853000BE742 /* CopyFiles */,
+				6591392F1E44C83A000BE742 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -634,6 +650,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "make -C $(dirname \"${PROJECT_DIR}\")/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C $(dirname \"${PROJECT_DIR}\")/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build";
+		};
+		6591392F1E44C83A000BE742 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\ninstall_name_tool -change /usr/local/lib/libbeidpkcs11.4.2.1.dylib \"@rpath/libbeidpkcs11.4.2.1.dylib\" \"BeidView\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
