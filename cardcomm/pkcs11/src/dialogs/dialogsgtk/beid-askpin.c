@@ -190,8 +190,8 @@ int main(int argc, char *argv[]) {
 
 	/* initialize gettext */
 	putenv("LANGUAGE=");
-	bindtextdomain("beid-dialogs", DATAROOTDIR "/locale");
-	textdomain("beid-dialogs");
+	bindtextdomain("dialogs-beid", DATAROOTDIR "/locale");
+	textdomain("dialogs-beid");
 
         // create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

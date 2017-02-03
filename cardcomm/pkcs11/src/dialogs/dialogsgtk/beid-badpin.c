@@ -37,8 +37,8 @@ int main(int argc, char *argv[]) {
         gtk_init(&argc, &argv); // initialize gtk+
 
 	putenv("LANGUAGE=");
-	bindtextdomain("beid-dialogs", DATAROOTDIR "/locale");
-	textdomain("beid-dialogs");
+	bindtextdomain("dialogs-beid", DATAROOTDIR "/locale");
+	textdomain("dialogs-beid");
 
         // create new message dialog with CANCEL button in standard places, in center of user's screen
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
