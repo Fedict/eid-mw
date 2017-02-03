@@ -1,3 +1,7 @@
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Dutch.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
 
 
 

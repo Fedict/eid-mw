@@ -9,8 +9,12 @@
 !include WinVer.nsh
 !include "buttons.nsh"
 
+
 ;--------------------------------
 ;General
+;inner dialog size in units in classic nsdialogs: 266 * 130
+;in modern UI: 300 * 140
+
 
 ;defines
 !addplugindir "NSIS_Plugins\beidread\Release"
@@ -48,6 +52,8 @@ caption $(ls_caption)
   Var Label
 	Var Background_Image
 	Var Background_Image_Handle
+	Var Background_Image2
+	Var Background_Image_Handle2
 	Var Button
 	Var Font_Title
 	Var Font_Info
@@ -237,11 +243,12 @@ Function .onInit
 ;images used by this installer
 InitPluginsDir
 ;extract the bitmaps to the temporary pluginsdir (which will be auto removed after installation)
-File /oname=$PLUGINSDIR\"welcome.bmp" "welcome.bmp"
+;File /oname=$PLUGINSDIR\"welcome.bmp" "welcome.bmp"
 File /oname=$PLUGINSDIR\"done.bmp" "done.bmp"
 File /oname=$PLUGINSDIR\"insert_card.bmp" "insert_card.bmp"
 File /oname=$PLUGINSDIR\"connect_reader.bmp" "connect_reader.bmp"
 File /oname=$PLUGINSDIR\"Failed.bmp" "failed.bmp"
+File /oname=$PLUGINSDIR\"White.bmp" "white.bmp"
 ;File /oname=$PLUGINSDIR\"bannrbmp.bmp" "bannrbmp.bmp"
 
 ;for testing different languages
@@ -296,10 +303,10 @@ Function nsdWelcome
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x000000 transparent
 	
-	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapwelcome)"
-	Pop $Background_Image
-    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
-	SetCtlColors $Background_Image 0xFFFFFF transparent
+;	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapwelcome)"
+;	Pop $Background_Image
+;    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
+;	SetCtlColors $Background_Image 0xFFFFFF transparent
 	
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
 	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_install)"
@@ -307,7 +314,7 @@ Function nsdWelcome
 	${buttonVisible} "Back" 0
 	
 	nsDialogs::Show
-	${NSD_FreeImage} $Background_Image_Handle
+;	${NSD_FreeImage} $Background_Image_Handle
 	
 FunctionEnd
 
@@ -345,16 +352,20 @@ FunctionEnd
 
 
 Function nsdInstallCheck
+
     ${If} $InstallFailed == 0
         ;MessageBox MB_OK "Install ok, skipping error"
         Abort   
     ${EndIf}
+
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
 	${If} $nsdCustomDialog == error
 		Abort
 	${EndIf}
-
+	
+	Call InstShow
+	
 	${NSD_CreateLabel} 0 40% 100% 20u "$(ls_install_failed)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -376,11 +387,16 @@ Function nsdInstallCheck
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x000000 transparent
 	
-	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapwelcome)"
+	${NSD_CreateBitmap} 40% 0 20% 41% "$(ls_bitmapwelcome)"
 	Pop $Background_Image
-	SetCtlColors $Background_Image 0xFFFFFF transparent
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Failed.bmp" $Background_Image_Handle 
 
+	;first page after install page doesn't get its inner dialog color correct (not even when refreshed),
+	;so we add a white background
+	${NSD_CreateBitmap} 0 0 100% 100% ""
+	Pop $Background_Image2
+    ${NSD_SetStretchedImage} $Background_Image2 "$PLUGINSDIR\White.bmp" $Background_Image_Handle2 
+	
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
 	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_helpsite)"
@@ -397,7 +413,7 @@ Function nsdInstallCheck
 FunctionEnd
 
 Function nsdInstallCheckLeave
-	call FindSolutionButton_click
+;	call FindSolutionButton_click
 FunctionEnd
 
 Function nsdDone
@@ -407,7 +423,18 @@ Function nsdDone
 	${If} $nsdCustomDialog == error
 		Abort
 	${EndIf}
+	
+	Call InstShow
 
+;FindWindow $0 "#32770" "" $HWNDPARENT ; get the inner dialog
+;SetCtlColors $0 0 0
+;;  ShowWindow $0 ${SW_HIDE}
+;  ShowWindow $0 ${SW_SHOW}
+	
+	${NSD_CreateBitmap} 40% 0 20% 41% "$(ls_bitmapwelcome)"
+	Pop $Background_Image
+    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
+	
 	${NSD_CreateLabel} 0 40% 100% 18u "$(ls_complete)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -422,10 +449,11 @@ Function nsdDone
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x000000 transparent
 	
-	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapwelcome)"
-	Pop $Background_Image
-	SetCtlColors $Background_Image 0xFFFFFF transparent
-    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
+	;first page after install page doesn't get its inner dialog color correct (not even when refreshed),
+	;so we add a white background
+	${NSD_CreateBitmap} 0 0 100% 100% ""
+	Pop $Background_Image2
+    ${NSD_SetStretchedImage} $Background_Image2 "$PLUGINSDIR\White.bmp" $Background_Image_Handle2 
 
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
@@ -441,10 +469,11 @@ Function nsdDone
 		
 	;GetDlgItem $0 $HWNDPARENT 1 ;move the next button
     ;System::Call 'user32::MoveWindow(i $0, i 100, i 50, i 200, i 30, i 1)'
-		
-		
+			
 	nsDialogs::Show
-;	${NSD_FreeImage} $Background_Image_Handle
+
+	${NSD_FreeImage} $Background_Image_Handle
+	${NSD_FreeImage} $Background_Image_Handle2
 	
 FunctionEnd
 
@@ -460,6 +489,8 @@ Function nsdConnectReader
 		Abort
 	${EndIf}
 	
+	Call InstShow
+	
 	${NSD_CreateLabel} 0 -20u 100% 18u "Sluit uw kaartlezer aan"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -470,7 +501,6 @@ Function nsdConnectReader
 
 	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapconnectreader)"
 	Pop $Background_Image
-	SetCtlColors $Background_Image 0xFFFFFF transparent
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\connect_reader.bmp" $Background_Image_Handle 
 	
 	${buttonVisible} "Back" 0
@@ -509,9 +539,12 @@ Function nsdReaderCheck
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
 	${If} $nsdCustomDialog == error
+		MessageBox MB_OK "nsdCustomDialog error"
 		Abort
 	${EndIf}
 
+	Call InstShow
+	
 	${NSD_CreateLabel} 0 40% 100% 20u "$(ls_cardreader_failed)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -533,9 +566,8 @@ Function nsdReaderCheck
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x000000 transparent
 	
-	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapwelcome)"
+	${NSD_CreateBitmap} 40% 0% 20% 41% "$(ls_bitmapwelcome)"
 	Pop $Background_Image
-	SetCtlColors $Background_Image 0xFFFFFF transparent
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Failed.bmp" $Background_Image_Handle 
 
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
@@ -569,6 +601,8 @@ Function nsdInsertCard
 	${If} $nsdCustomDialog == error
 		Abort
 	${EndIf}
+	
+	Call InstShow
 	${NSD_CreateLabel} 0 -20u 100% 18u "$(ls_pleaseinsertcard)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -579,7 +613,6 @@ Function nsdInsertCard
 
 	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapinsertcard)"
 	Pop $Background_Image
-	SetCtlColors $Background_Image 0xFFFFFF transparent
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\insert_card.bmp" $Background_Image_Handle 
 	
 	${buttonVisible} "Back" 1
@@ -625,6 +658,8 @@ Function nsdCardCheck
 		Abort
 	${EndIf}
 
+	Call InstShow
+	
 	${NSD_CreateLabel} 0 40% 100% 20u "$(ls_test_failed)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -650,9 +685,8 @@ Function nsdCardCheck
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x000000 transparent
 	
-	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapwelcome)"
+	${NSD_CreateBitmap} 40% 0% 20% 41% "$(ls_bitmapwelcome)"
 	Pop $Background_Image
-	SetCtlColors $Background_Image 0xFFFFFF transparent
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Failed.bmp" $Background_Image_Handle 
 
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
@@ -664,9 +698,6 @@ Function nsdCardCheck
 	${buttonVisible} "Back" 1
 	${buttonVisible} "Next" 1
 	${buttonVisible} "Cancel" 1
-	
-	nsDialogs::Show
-	${NSD_FreeImage} $Background_Image_Handle
 	
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
@@ -684,6 +715,8 @@ Function nsdCardData
 	${If} $nsdCustomDialog == error
 		Abort
 	${EndIf}
+		
+	Call InstShow
 		
 	beid::ReadCardData
 	Pop $retval
@@ -729,7 +762,6 @@ Function nsdCardData
 	
 	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapwelcome)"
 	Pop $Background_Image
-	SetCtlColors $Background_Image 0xFFFFFF transparent
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
 
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
