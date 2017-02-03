@@ -53,8 +53,8 @@ int main(int argc, char *argv[]) {
         gtk_init(&argc, &argv); // initialize gtk+
 
 	putenv("LANGUAGE=");
-	bindtextdomain("beid-dialogs", DATAROOTDIR "/locale");
-	textdomain("beid-dialogs");
+	bindtextdomain("dialogs-beid", DATAROOTDIR "/locale");
+	textdomain("dialogs-beid");
 
         if (get_parent_path(caller_path, sizeof(caller_path) - 2) > 0) {
                 if (!((argc == 2) && (argv[1] != NULL)
