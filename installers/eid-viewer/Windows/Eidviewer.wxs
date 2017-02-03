@@ -85,7 +85,11 @@
       
       <Directory Id="ProgramFilesFolder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
-          <Directory Id="BEIDVIEWERDIR" Name="EidViewer" />
+          <Directory Id="BEIDVIEWERDIR" Name="EidViewer">
+			<Directory Id="BEIDVIEWERDIRNL" Name="nl" />
+			<Directory Id="BEIDVIEWERDIRFR" Name="fr" />
+			<Directory Id="BEIDVIEWERDIRDE" Name="de" />
+		  </Directory>
         </Directory>
       </Directory>
 
@@ -95,13 +99,31 @@
     </Directory>
 
     <DirectoryRef Id="BEIDVIEWERDIR">
-
       <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
         <File Id="eidviewer.exe" Name="eID Viewer.exe" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe" />
-      </Component>
-
+		<File Id="eIDViewerBackend" Name="eIDViewerBackend.dll" KeyPath="no" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewerBackend.dll" />	
+		<File Id="beid_ff_pkcs11" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\VS_2015\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />			
+	  </Component>
     </DirectoryRef>
-
+	
+    <DirectoryRef Id="BEIDVIEWERDIRNL">
+	  <Component Id="BEIDVIEWERNL" Guid="{7C199B6A-72EF-40A2-B9C3-93856836985C}">
+        <File Id="eIDViewer.resourcesNL.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\nl\eIDViewer.resources.dll" />
+      </Component>
+    </DirectoryRef>
+	
+	<DirectoryRef Id="BEIDVIEWERDIRFR">
+      <Component Id="BEIDVIEWERFR" Guid="{0BF38D61-45B6-4988-859B-CFA2AF2F4B92}">
+        <File Id="eIDViewer.resourcesFR.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\fr\eIDViewer.resources.dll" />
+      </Component>
+    </DirectoryRef>
+	
+	<DirectoryRef Id="BEIDVIEWERDIRDE">
+      <Component Id="BEIDVIEWERDE" Guid="{E7F0C1A0-AF8F-42B2-85E0-28CE56D073DB}">
+        <File Id="eIDViewer.resourcesDE.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\de\eIDViewer.resources.dll" />
+      </Component>
+    </DirectoryRef>
+	
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
         <Shortcut Id="eidviewerStartMenuShortcut"
@@ -129,6 +151,9 @@
       <!-- Program Files -->
 	  <ComponentRef Id="BeidApplicationProgramsFolder"/>
       <ComponentRef Id="BEIDVIEWER"/>
+	  <ComponentRef Id="BEIDVIEWERNL"/>
+	  <ComponentRef Id="BEIDVIEWERFR"/>
+	  <ComponentRef Id="BEIDVIEWERDE"/>  
       <ComponentRef Id="eidviewerShortcut"/>
     </Feature>
     
