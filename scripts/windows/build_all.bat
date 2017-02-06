@@ -11,8 +11,8 @@
 @call "%~dp0.\create_eidmw_version_files.cmd"
 
 
-:: build pkcs11, minidriver, cleanuptool and sccertprop
-:: ====================================================
+:: build pkcs11, minidriver and viewer
+:: ===================================
 @echo [INFO] Building "%~dp0..\..\VS_2015\beid.sln"
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
@@ -96,6 +96,19 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 
 @cd "%OUR_CURRENT_PATH%"
+
+@cd %~dp0..\..\installers\eid-mw\Windows
+
+@call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
+@if %ERRORLEVEL%==1 goto end_resetpath_with_error
+@echo [INFO] sign 32 bit msi installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
+@if %ERRORLEVEL%==1 goto signtool_failed
+@echo [INFO] copy 32 bit msi installer
+copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
+
+@cd "%OUR_CURRENT_PATH%"
+
 :: create the NSIS plugins
 :: =========================
 @echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
