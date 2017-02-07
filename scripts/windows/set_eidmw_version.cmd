@@ -3,6 +3,7 @@
 @SET BASE_VERSION1=4
 @SET BASE_VERSION2=2
 @SET BASE_VERSION3=1
+@SET YEAR=2017
 
 @FOR /F "tokens=1" %%i in ('"C:\Program Files (x86)\Git\bin\git.exe" rev-list --count HEAD') do @SET EIDMW_REVISION=%%i
 ::"C:\Program Files (x86)\Git\bin\git.exe" describe
@@ -14,6 +15,7 @@
 @echo BASE_VERSION1 set to %BASE_VERSION1%
 @echo BASE_VERSION2 set to %BASE_VERSION2%
 @echo BASE_VERSION3 set to %BASE_VERSION3%
+@echo YEAR set to %YEAR%
 @GOTO end
 
 :set_zero_revision
