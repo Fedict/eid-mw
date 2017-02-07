@@ -25,6 +25,20 @@ set MDRVINSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
+
+:: sign pkcs11
+:: ===========
+
+@echo [INFO] Sign the pkcs11 dll, 32bit
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2015\Binaries\Win32_Release\beidpkcs11.dll"
+@echo [INFO] Sign the pkcs11_ff dll, 32bit
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2015\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+@echo [INFO] Sign the pkcs11 dll, 64bit
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2015\Binaries\x64_Release\beidpkcs11.dll"
+@echo [INFO] Sign the pkcs11_ff dll, 64bit
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2015\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+
+
 :: create the MSI installers
 :: =========================
 set OUR_CURRENT_PATH="%cd%"
@@ -46,7 +60,7 @@ set OUR_CURRENT_PATH="%cd%"
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
-@if %ERRORLEVEL%==1 goto 
+@if %ERRORLEVEL%==1 goto signtool_failed
 ::sign the 64bit msi
 @echo [INFO] sign 64 bit msi installer
 ::signtool fails at dual-signing msi's at the moment
@@ -56,6 +70,23 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
+
+::need current dir to be pointing at one of the wxs files, or light.exe can't find the paths
+@cd %~dp0..\..\installers\eid-viewer\Windows
+
+@echo [INFO] Sign the eID Viewer executable
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\eIDViewer.exe"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\eIDViewerBackend.dll"
+
+@echo [INFO] create eID Viewer msi installer
+@call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
+@if %ERRORLEVEL%==1 goto end_resetpath_with_error
+
+@echo [INFO] sign eID Viewer msi installer
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
+@echo [INFO] copy 64 bit msi installer
+copy %~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi %~dp0
 
 @cd "%OUR_CURRENT_PATH%"
 
