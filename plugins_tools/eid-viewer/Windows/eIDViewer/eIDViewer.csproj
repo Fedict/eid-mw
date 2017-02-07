@@ -98,6 +98,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MenuItemStringResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Sources\About.cs" />
     <Compile Include="Sources\Backend.cs" />
     <Compile Include="Sources\BackendDataViewModel.cs" />
     <Compile Include="Sources\BackendEnums.cs" />
