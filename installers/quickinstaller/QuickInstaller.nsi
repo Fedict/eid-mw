@@ -289,14 +289,14 @@ Function nsdWelcome
 
 	Call InstShow
 	
-	${NSD_CreateLabel} 0 25% 100% 16u "Welkom!"
+	${NSD_CreateLabel} 0 25% 100% 16u "$(ls_welcome_short)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
-	${NSD_CreateLabel} 0 50% 100% 12u "Klik op 'Installeren' om de eID software te installeren"
+	${NSD_CreateLabel} 0 50% 100% 12u "$(ls_welcome_info)"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
@@ -373,7 +373,7 @@ Function nsdInstallCheck
 	CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
-	${NSD_CreateLabel} 0 60% 100% 16u "FOUTMELDING $InstallFailed"
+	${NSD_CreateLabel} 0 60% 100% 16u "$(ls_error) $InstallFailed"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
@@ -491,7 +491,7 @@ Function nsdConnectReader
 	
 	Call InstShow
 	
-	${NSD_CreateLabel} 0 -20u 100% 18u "Sluit uw kaartlezer aan"
+	${NSD_CreateLabel} 0 -20u 100% 18u "$(ls_pleaseconnect)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
@@ -526,7 +526,7 @@ Function  nsdConnectReaderLeave
 		;MessageBox MB_OK "$$readercount is $readercount"
 	${Else}
 		;MessageBox MB_OK "$(ls_noreaderfound)"
-		StrCpy $ReaderFailed "no_readers_found"
+		StrCpy $ReaderFailed "$(ls_noreaderfound)"
 		;Abort
 	${EndIf}
 FunctionEnd
@@ -552,7 +552,7 @@ Function nsdReaderCheck
 	CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
-	${NSD_CreateLabel} 0 60% 100% 16u "FOUTMELDING $ReaderFailed"
+	${NSD_CreateLabel} 0 60% 100% 16u "$(ls_error) $ReaderFailed"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
@@ -641,7 +641,7 @@ Function nsdInsertCardLeave
 		StrCpy $FindCardFailed 0
 		;MessageBox MB_OK "number of beidcards found is $readercount"
 	${Else}
-		StrCpy $FindCardFailed "no_readers_found"
+		StrCpy $FindCardFailed "$(ls_nocardfound)"
 		;MessageBox MB_OK "$(ls_nocardfound)"
 		;Abort
 	${EndIf}
@@ -668,9 +668,9 @@ Function nsdCardCheck
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
 	${If} $retval <> '0'
-		${NSD_CreateLabel} 0 60% 100% 16u "FOUTMELDING R$retval"
+		${NSD_CreateLabel} 0 60% 100% 16u "$(ls_error) R$retval"
 	${Else}
-		${NSD_CreateLabel} 0 60% 100% 16u "FOUTMELDING I$InstallFailed"
+		${NSD_CreateLabel} 0 60% 100% 16u "$(ls_error) I$InstallFailed"
 	${EndIf}	
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
