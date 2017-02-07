@@ -24,7 +24,7 @@ OutFile "Belgium eID-QuickInstaller ${EIDMW_VERSION}.exe"
 VIProductVersion "${EIDMW_VERSION}"
 VIAddVersionKey "FileVersion" "${EIDMW_VERSION}"
 VIAddVersionKey "CompanyName" "Belgian Government"
-VIAddVersionKey "LegalCopyright" "Copyright (C) 2017"
+VIAddVersionKey "LegalCopyright" "Copyright (C) ${EIDMW_YEAR}"
 VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 
 ;Default installation folder
