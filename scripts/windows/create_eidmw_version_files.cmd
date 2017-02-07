@@ -45,7 +45,7 @@
 @echo // To specified in the .rc files                                            >> "%~dp0\beidversions.h"
 @echo: >> "%~dp0\beidversions.h"
 @echo #define BEID_COMPANY_NAME    	"Belgian Government"                          >> "%~dp0\beidversions.h"
-@echo #define BEID_COPYRIGHT    	"Copyright (C) 2016"                          >> "%~dp0\beidversions.h"
+@echo #define BEID_COPYRIGHT    	"Copyright (C) 2017"                          >> "%~dp0\beidversions.h"
 @echo #define BEID_PRODUCT_NAME    	"Belgium eID MiddleWare"                      >> "%~dp0\beidversions.h"
 @echo: >> "%~dp0\beidversions.h"
 @echo #define BEID_PRODUCT_VERSION   "%BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%" >> "%~dp0\beidversions.h"
@@ -142,7 +142,7 @@ set ASSEMBLYINFO_PATH="%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\Pro
 @echo [assembly: AssemblyConfiguration("")]>> %ASSEMBLYINFO_PATH%
 @echo [assembly: AssemblyCompany("")]>> %ASSEMBLYINFO_PATH%
 @echo [assembly: AssemblyProduct("eIDViewer")]>> %ASSEMBLYINFO_PATH%
-@echo [assembly: AssemblyCopyright("Copyright ©  2016")]>> %ASSEMBLYINFO_PATH%
+@echo [assembly: AssemblyCopyright("Copyright ©  2017")]>> %ASSEMBLYINFO_PATH%
 @echo [assembly: AssemblyTrademark("")]>> %ASSEMBLYINFO_PATH%
 @echo [assembly: AssemblyCulture("")]>> %ASSEMBLYINFO_PATH%
 @echo:>> %ASSEMBLYINFO_PATH%
