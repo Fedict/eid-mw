@@ -154,18 +154,18 @@ File /oname=$PLUGINSDIR\"White.bmp" "white.bmp"
 ;File /oname=$PLUGINSDIR\"bannrbmp.bmp" "bannrbmp.bmp"
 
 ;for testing different languages
-	;Push ${LANG_GERMAN}
-	;Pop $LANGUAGE
+;	Push ${LANG_GERMAN}
+;	Pop $LANGUAGE
 	;Language selection dialog
 
 ;	Push ${LANG_ENGLISH}
-;	Push English
+;	Pop $LANGUAGE
 ;	Push ${LANG_DUTCH}
-;	Push Dutch
+;	Pop $LANGUAGE
 ;	Push ${LANG_FRENCH}
-;	Push French
+;	Pop $LANGUAGE
 ;	Push ${LANG_GERMAN}
-;	Push German
+;	Pop $LANGUAGE
 
 ;	Push A ; A means auto count languages
 	       ; for the auto count to work the first empty push (Push "") must remain
@@ -315,7 +315,7 @@ Function nsdInstallCheck
 FunctionEnd
 
 Function nsdInstallCheckLeave
-;	call FindSolutionButton_click
+	call FindSolutionButton_click
 FunctionEnd
 
 Function nsdDone
@@ -332,7 +332,7 @@ Function nsdDone
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
 	
-	${NSD_CreateLabel} 0 40% 100% 18u "$(ls_viewer_complete)"
+	${NSD_CreateLabel} 0 50% 100% 18u "$(ls_viewer_complete)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text

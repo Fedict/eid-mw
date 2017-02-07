@@ -22,7 +22,7 @@ LangString ls_welcome_info ${LANG_DUTCH} "Klik op 'Installeren' om de eID softwa
 LangString ls_welcome_info ${LANG_GERMAN} "Klicken Sie auf „Installieren“, um die eID-Software zu installieren."
 
 LangString ls_welcome_viewer_info ${LANG_ENGLISH} "Click 'Install' to install the eIDViewer"
-LangString ls_welcome_viewer_info ${LANG_FRENCH} "Cliquez sur $\"Installer$\" pour installer le eIDViewer"
+LangString ls_welcome_viewer_info ${LANG_FRENCH} "Cliquez sur $\"Installer$\" pour installer l'eIDViewer"
 LangString ls_welcome_viewer_info ${LANG_DUTCH} "Klik op 'Installeren' om de eIDViewer te installeren"
 LangString ls_welcome_viewer_info ${LANG_GERMAN} "Klicken Sie auf „Installieren“, um die eIDViewer zu installieren."
 
@@ -188,10 +188,10 @@ LangString ls_caption ${LANG_FRENCH} "Installation Logiciel eID"
 LangString ls_caption ${LANG_DUTCH} "eID software installatie"
 LangString ls_caption ${LANG_GERMAN} "Installation der eID-Software"
 
-LangString ls_caption_viewer ${LANG_ENGLISH} "eID Viewer installatie"
-LangString ls_caption_viewer ${LANG_FRENCH} "Installation eID Viewer"
-LangString ls_caption_viewer ${LANG_DUTCH} "eID Viewer installatie"
-LangString ls_caption_viewer ${LANG_GERMAN} "eID Viewer installatie"
+LangString ls_caption_viewer ${LANG_ENGLISH} "eIDViewer installation"
+LangString ls_caption_viewer ${LANG_FRENCH} "Installation eIDViewer"
+LangString ls_caption_viewer ${LANG_DUTCH} "eIDViewer installatie"
+LangString ls_caption_viewer ${LANG_GERMAN} "Installation der eIDViewer"
 
 LangString ls_completedtext ${LANG_ENGLISH} "ready"
 LangString ls_completedtext ${LANG_FRENCH} "terminé"
