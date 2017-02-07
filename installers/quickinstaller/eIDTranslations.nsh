@@ -21,10 +21,20 @@ LangString ls_welcome_info ${LANG_FRENCH} "Cliquez sur $\"Installer$\" pour inst
 LangString ls_welcome_info ${LANG_DUTCH} "Klik op $\"Installeren$\" om de eID software te installeren"
 LangString ls_welcome_info ${LANG_GERMAN} "Klicken Sie auf $\"Installieren$\" , um die eID-Software zu installieren."
 
+LangString ls_welcome_viewer_info ${LANG_ENGLISH} "Click $\"Install$\" to install the eIDViewer"
+LangString ls_welcome_viewer_info ${LANG_FRENCH} "Cliquez sur $\"Installer$\" pour installer le eIDViewer"
+LangString ls_welcome_viewer_info ${LANG_DUTCH} "Klik op $\"Installeren$\" om de eIDViewer te installeren"
+LangString ls_welcome_viewer_info ${LANG_GERMAN} "Klicken Sie auf $\"Installieren$\" , um die eIDViewer zu installieren."
+
 LangString ls_complete ${LANG_ENGLISH} "eID software geïnstalleerd!"
 LangString ls_complete ${LANG_FRENCH} "Logiciel eID installé !"
 LangString ls_complete ${LANG_DUTCH} "eID software geïnstalleerd!"
 LangString ls_complete ${LANG_GERMAN} "eID software geïnstalleerd!"
+
+LangString ls_viewer_complete ${LANG_ENGLISH} "eID Viewer geïnstalleerd!"
+LangString ls_viewer_complete ${LANG_FRENCH} "eID Viewer installé !"
+LangString ls_viewer_complete ${LANG_DUTCH} "eID Viewer geïnstalleerd!"
+LangString ls_viewer_complete ${LANG_GERMAN} "eID Viewer geïnstalleerd!"
 
 LangString ls_complete_info ${LANG_ENGLISH} "U kan de eID software testen met behulp van een geschikte eID kaartlezer.$\nKlik op $\"Testen$\" en volg de instructies stap voor stap"
 LangString ls_complete_info ${LANG_FRENCH} "Vous pouvez tester le logiciel eID avec un lecteur de cartes eID approprié.$\nCliquez sur $\"Tester$\" et suivez les instructions étape par étape."
@@ -51,10 +61,20 @@ LangString ls_install_failed ${LANG_FRENCH} "Le logiciel eID n'a pas été install
 LangString ls_install_failed ${LANG_DUTCH} "eID software niet geïnstalleerd"
 LangString ls_install_failed ${LANG_GERMAN} "eID software niet geïnstalleerd"
 
+LangString ls_install_viewer_failed ${LANG_ENGLISH} "eID Viewer niet geïnstalleerd"
+LangString ls_install_viewer_failed ${LANG_FRENCH} "L'eID Viewer n'a pas été installé."
+LangString ls_install_viewer_failed ${LANG_DUTCH} "eID Viewer niet geïnstalleerd"
+LangString ls_install_viewer_failed ${LANG_GERMAN} "eID Viewer niet geïnstalleerd"
+
 LangString ls_install_failed_info ${LANG_ENGLISH} "We hebben de eID software niet kunnen installeren.$\nKlik op $\"Helpwebsite$\" voor meer informatie"
 LangString ls_install_failed_info ${LANG_FRENCH} "Nous n'avons pas pu installer le logiciel eID.$\nCliquez sur $\"Site web d'aide$\" pour plus d'informations."
 LangString ls_install_failed_info ${LANG_DUTCH} "We hebben de eID software niet kunnen installeren.$\nKlik op $\"Helpwebsite$\" voor meer informatie"
 LangString ls_install_failed_info ${LANG_GERMAN} "We hebben de eID software niet kunnen installeren.$\nKlik op $\"Helpwebsite$\" voor meer informatie"
+
+LangString ls_install_viewer_failed_info ${LANG_ENGLISH} "We hebben de eID Viewer niet kunnen installeren.$\nKlik op $\"Helpwebsite$\" voor meer informatie"
+LangString ls_install_viewer_failed_info ${LANG_FRENCH} "Nous n'avons pas pu installer l'eID Viewer.$\nCliquez sur $\"Site web d'aide$\" pour plus d'informations."
+LangString ls_install_viewer_failed_info ${LANG_DUTCH} "We hebben de eID Viewer niet kunnen installeren.$\nKlik op $\"Helpwebsite$\" voor meer informatie"
+LangString ls_install_viewer_failed_info ${LANG_GERMAN} "We hebben de eID Viewer niet kunnen installeren.$\nKlik op $\"Helpwebsite$\" voor meer informatie"
 
 LangString ls_cardreader_failed ${LANG_ENGLISH} "Kaartlezer niet gevonden"
 LangString ls_cardreader_failed ${LANG_FRENCH} "Lecteur de cartes non trouvé"
@@ -167,6 +187,11 @@ LangString ls_caption ${LANG_ENGLISH} "eID software installatie"
 LangString ls_caption ${LANG_FRENCH} "Installation Logiciel eID"
 LangString ls_caption ${LANG_DUTCH} "eID software installatie"
 LangString ls_caption ${LANG_GERMAN} "eID software installatie"
+
+LangString ls_caption_viewer ${LANG_ENGLISH} "eID Viewer installatie"
+LangString ls_caption_viewer ${LANG_FRENCH} "Installation eID Viewer"
+LangString ls_caption_viewer ${LANG_DUTCH} "eID Viewer installatie"
+LangString ls_caption_viewer ${LANG_GERMAN} "eID Viewer installatie"
 
 LangString ls_completedtext ${LANG_ENGLISH} "klaar"
 LangString ls_completedtext ${LANG_FRENCH} "terminé"
