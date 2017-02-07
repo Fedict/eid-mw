@@ -75,8 +75,9 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 @cd %~dp0..\..\installers\eid-viewer\Windows
 
 @echo [INFO] Sign the eID Viewer executable
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\eIDViewer.exe"
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\eIDViewerBackend.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewerBackend.dll"
+@if %ERRORLEVEL%==1 goto signtool_failed
 
 @echo [INFO] create eID Viewer msi installer
 @call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
@@ -97,14 +98,25 @@ copy %~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi %~dp0
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\Quickinstaller.nsi"
 @if %ERRORLEVEL%==1 goto end_resetpath
 
+@echo [INFO] Make nsis viewer installer
+"%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerInstaller.nsi"
+@if %ERRORLEVEL%==1 goto end_resetpath
+
 :: sign the nsis installer
 :: =======================
 @echo [INFO] sign nsis installer
 "%SIGNTOOL_PATH%\signtool" sign /n "FedICT" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 "%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
+
+@echo [INFO] sign nsis viewer installer
+"%SIGNTOOL_PATH%\signtool" sign /n "FedICT" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID ViewerInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
+
 @echo [INFO] copy nsis installer
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
+copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
 goto end_resetpath
 
 

@@ -124,23 +124,31 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 ::@echo [INFO] Copying driver_installer NSIS plugin
 ::copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\driver_installer.dll "%NSIS_PATH%\Plugins"
 
-:: create the NSIS installer
-:: =========================
+:: create the NSIS installers
+:: ==========================
 @echo [INFO] Make nsis installer
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\Quickinstaller.nsi"
 @if %ERRORLEVEL%==1 goto makensis_failed
 
+@echo [INFO] Make nsis installer
+"%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerInstaller.nsi"
+@if %ERRORLEVEL%==1 goto makensis_failed
 
-:: sign the NSIS installer
+:: sign the NSIS installers
 :: =========================
 @echo [INFO] Sign nsis installer
 "%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if %ERRORLEVEL%==1 goto signtool_failed
 
-:: copy the NSIS installer
+@echo [INFO] Sign nsis viewer installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@if %ERRORLEVEL%==1 goto signtool_failed
+
+:: copy the NSIS installers
 :: =========================
-@echo [INFO] copy nsis installer
+@echo [INFO] copy nsis installers
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
+copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
 goto end_resetpath
 
 :msbuild_failed
