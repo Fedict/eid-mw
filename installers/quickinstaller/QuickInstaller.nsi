@@ -257,13 +257,13 @@ File /oname=$PLUGINSDIR\"White.bmp" "white.bmp"
 	;Language selection dialog
 
 ;	Push ${LANG_ENGLISH}
-;	Push English
+;	Pop $LANGUAGE
 ;	Push ${LANG_DUTCH}
-;	Push Dutch
+;	Pop $LANGUAGE
 ;	Push ${LANG_FRENCH}
-;	Push French
+;	Pop $LANGUAGE
 ;	Push ${LANG_GERMAN}
-;	Push German
+;	Pop $LANGUAGE
 
 ;	Push A ; A means auto count languages
 	       ; for the auto count to work the first empty push (Push "") must remain
@@ -413,7 +413,7 @@ Function nsdInstallCheck
 FunctionEnd
 
 Function nsdInstallCheckLeave
-;	call FindSolutionButton_click
+	call FindSolutionButton_click
 FunctionEnd
 
 Function nsdDone
@@ -491,7 +491,7 @@ Function nsdConnectReader
 	
 	Call InstShow
 	
-	${NSD_CreateLabel} 0 -20u 100% 18u "$(ls_pleaseconnect)"
+	${NSD_CreateLabel} 0 -40u 100% 40u "$(ls_pleaseconnect)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
@@ -499,7 +499,7 @@ Function nsdConnectReader
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
 
-	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapconnectreader)"
+	${NSD_CreateBitmap} 0 0 100% 90% "$(ls_bitmapconnectreader)"
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\connect_reader.bmp" $Background_Image_Handle 
 	
@@ -603,7 +603,7 @@ Function nsdInsertCard
 	${EndIf}
 	
 	Call InstShow
-	${NSD_CreateLabel} 0 -20u 100% 18u "$(ls_pleaseinsertcard)"
+	${NSD_CreateLabel} 0 -40u 100% 40u "$(ls_pleaseinsertcard)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
@@ -611,7 +611,7 @@ Function nsdInsertCard
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
 
-	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapinsertcard)"
+	${NSD_CreateBitmap} 0 0 100% 90% "$(ls_bitmapinsertcard)"
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\insert_card.bmp" $Background_Image_Handle 
 	
@@ -629,7 +629,7 @@ Function nsdInsertCardLeave
 	Pop $retval
 	
 	;the instruction below is just for testing
-	StrCpy $retval 004180
+	;StrCpy $retval 004180
 	
 	${If} $retval <> '0'
 		StrCpy $FindCardFailed $retval
@@ -637,8 +637,8 @@ Function nsdInsertCardLeave
 		;Abort
 	${EndIf}
 	Pop $readercount
-	${If} $readercount > 0
-		StrCpy $FindCardFailed 0
+	${If} $readercount > '0'
+		StrCpy $FindCardFailed '0'
 		;MessageBox MB_OK "number of beidcards found is $readercount"
 	${Else}
 		StrCpy $FindCardFailed "$(ls_nocardfound)"
@@ -648,7 +648,8 @@ Function nsdInsertCardLeave
 FunctionEnd
 
 Function nsdCardCheck
-    ${If} $FindCardFailed <> '0'
+
+    ${If} $FindCardFailed == '0'
         ;MessageBox MB_OK "Reader found, skipping reader error"
         Abort   
     ${EndIf}
