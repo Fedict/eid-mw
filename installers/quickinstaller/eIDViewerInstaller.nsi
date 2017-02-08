@@ -36,34 +36,20 @@ XPStyle on
 Icon beID.ico
 
 caption $(ls_caption_viewer)
-
-	Var versionMajor
-	Var versionMinor
-	Var retval
-	Var readercount
-  Var municipality
-  Var zip
-	Var street
-  Var lastname
-	Var firstletterthirdname
-  Var firstname
 	
-	Var nsdCustomDialog
-  Var Label
-	Var Background_Image
-	Var Background_Image_Handle
-	Var Background_Image2
-	Var Background_Image_Handle2
-	Var Button
-	Var Font_Title
-	Var Font_Info
-	Var Font_CardData
-	Var FileToCopy
-	Var LogFile
-	Var MsiResponse
-	Var InstallFailed
-	Var ReaderFailed
-	Var FindCardFailed
+Var nsdCustomDialog
+Var Label
+Var Background_Image
+Var Background_Image_Handle
+Var Background_Image2
+Var Background_Image_Handle2
+Var Button
+Var Font_Title
+Var Font_Info
+Var FileToCopy
+Var LogFile
+Var MsiResponse
+Var InstallFailed
 
 ;--------------------------------
 	;Interface Settings
@@ -221,25 +207,6 @@ Function nsdWelcome
 FunctionEnd
 
 Function  nsdWelcomeLeave
-FunctionEnd
-
-Function RelGotoPage
-  IntCmp $R9 0 0 Move Move
-    StrCmp $R9 "X" 0 Move
-      StrCpy $R9 "120"
-
-  Move:
-  SendMessage $HWNDPARENT "0x408" "$R9" ""
-FunctionEnd
-
-Function GotoNextPage
-    StrCpy $R9 "1"
-    Call RelGotoPage
-FunctionEnd
-
-Function GotoPrevPage
-    StrCpy $R9 "-1"
-    Call RelGotoPage
 FunctionEnd
 
 Function show_instfiles
