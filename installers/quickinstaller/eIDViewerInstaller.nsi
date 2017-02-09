@@ -75,6 +75,7 @@ FunctionEnd
 ;Pages
 
 Page custom nsdWelcome nsdWelcomeLeave
+Page license "" show_instfiles ""
 Page instfiles "" show_instfiles ""
 Page custom nsdInstallCheck nsdInstallCheckLeave
 Page custom nsdDone nsdDoneLeave
@@ -85,9 +86,14 @@ Page custom nsdDone nsdDoneLeave
 ;--------------------------------
 !include "eIDTranslations.nsh"
   
-;If you are using solid compression, files that are required before
-;the actual installation should be stored first in the data block,
-;because this will make your installer start faster.
+MiscButtonText $(ls_back) $(ls_next) $(ls_cancel) $(ls_close)
+; MessageBox MB_OK "A translated message: $(message)"
+LicenseLangString license ${LANG_ENGLISH} "..\..\doc\licenses\English\License_en.rtf"
+LicenseLangString license ${LANG_GERMAN} "..\..\doc\licenses\German\License_de.rtf"
+LicenseLangString license ${LANG_FRENCH} "..\..\doc\licenses\French\License_fr.rtf"
+LicenseLangString license ${LANG_DUTCH} "..\..\doc\licenses\Dutch\License_nl.rtf"
+
+LicenseData $(license)
   
 ;--------------------------------
 ;Installer Sections

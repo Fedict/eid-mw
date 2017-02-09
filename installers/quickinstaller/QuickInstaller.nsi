@@ -89,6 +89,7 @@ FunctionEnd
 ;Pages
 
 Page custom nsdWelcome nsdWelcomeLeave
+Page license "" show_instfiles ""
 Page instfiles "" show_instfiles ""
 Page custom nsdInstallCheck nsdInstallCheckLeave
 Page custom nsdDone nsdDoneLeave
@@ -105,9 +106,16 @@ Page custom nsdCardData
 ;--------------------------------
 !include "eIDTranslations.nsh"
   
-;If you are using solid compression, files that are required before
-;the actual installation should be stored first in the data block,
-;because this will make your installer start faster.
+
+MiscButtonText $(ls_back) $(ls_next) $(ls_cancel) $(ls_close)
+; MessageBox MB_OK "A translated message: $(message)"
+LicenseLangString license ${LANG_ENGLISH} "..\..\doc\licenses\English\License_en.rtf"
+LicenseLangString license ${LANG_GERMAN} "..\..\doc\licenses\German\License_de.rtf"
+LicenseLangString license ${LANG_FRENCH} "..\..\doc\licenses\French\License_fr.rtf"
+LicenseLangString license ${LANG_DUTCH} "..\..\doc\licenses\Dutch\License_nl.rtf"
+
+LicenseData $(license)
+
   
 ;--------------------------------
 ;Installer Sections
@@ -747,7 +755,11 @@ Function nsdCardData
 	Pop $firstletterthirdname
 	Pop $firstname
 
-	${NSD_CreateLabel} 0 40% 100% 36u "$(ls_testcomplete_pre) $firstname$(ls_testcomplete_post)"
+	${NSD_CreateBitmap} 40% 0 20% 41% "$(ls_bitmapwelcome)"
+	Pop $Background_Image
+    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
+	
+	${NSD_CreateLabel} 0 50% 100% 36u "$(ls_testcomplete_pre) $firstname$(ls_testcomplete_post)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
@@ -761,10 +773,6 @@ Function nsdCardData
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x000000 transparent
 	
-	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapwelcome)"
-	Pop $Background_Image
-    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
-
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
 	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_test)"
