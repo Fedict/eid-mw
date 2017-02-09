@@ -182,6 +182,7 @@ Function nsdWelcome
 	${EndIf}
 
 	Call InstShow
+
 	
 	${NSD_CreateLabel} 0 25% 100% 16u "$(ls_welcome_short)"
 	Pop $Label
@@ -197,7 +198,7 @@ Function nsdWelcome
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x000000 transparent
 	
-	${NSD_CreateBitmap} 0 0 100% 100% "$(ls_bitmapwelcome)"
+	${NSD_CreateBitmap} 0 0 100% 100% ""
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\welcome.bmp" $Background_Image_Handle 
 	SetCtlColors $Background_Image 0xFFFFFF transparent
@@ -261,16 +262,16 @@ Function nsdInstallCheck
 	CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x000000 transparent
-	
-	${NSD_CreateBitmap} 40% 0 20% 41% "$(ls_bitmapwelcome)"
-	Pop $Background_Image
-    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Failed.bmp" $Background_Image_Handle 
 
+	${NSD_CreateBitmap} 0% 0 100% 100% ""
+	Pop $Background_Image
+    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Failed.bmp" $Background_Image_Handle 	
+	
 	;first page after install page doesn't get its inner dialog color correct (not even when refreshed),
 	;so we add a white background
-	${NSD_CreateBitmap} 0 0 100% 100% ""
-	Pop $Background_Image2
-    ${NSD_SetStretchedImage} $Background_Image2 "$PLUGINSDIR\White.bmp" $Background_Image_Handle2 
+	;${NSD_CreateBitmap} 0 0 100% 100% ""
+	;Pop $Background_Image2
+    ;${NSD_SetStretchedImage} $Background_Image2 "$PLUGINSDIR\White.bmp" $Background_Image_Handle2 
 	
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
@@ -300,11 +301,7 @@ Function nsdDone
 	${EndIf}
 	
 	Call InstShow
-	
-	${NSD_CreateBitmap} 40% 0 20% 41% "$(ls_bitmapwelcome)"
-	Pop $Background_Image
-    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
-	
+		
 	${NSD_CreateLabel} 0 50% 100% 18u "$(ls_viewer_complete)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
@@ -321,9 +318,13 @@ Function nsdDone
 	
 	;first page after install page doesn't get its inner dialog color correct (not even when refreshed),
 	;so we add a white background
-	${NSD_CreateBitmap} 0 0 100% 100% ""
-	Pop $Background_Image2
-    ${NSD_SetStretchedImage} $Background_Image2 "$PLUGINSDIR\White.bmp" $Background_Image_Handle2 
+;	${NSD_CreateBitmap} 0 0 100% 100% ""
+;	Pop $Background_Image2
+;    ${NSD_SetStretchedImage} $Background_Image2 "$PLUGINSDIR\White.bmp" $Background_Image_Handle2 
+
+	${NSD_CreateBitmap} 0% 0 100% 100% ""
+	Pop $Background_Image
+    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
 
 	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
@@ -339,7 +340,7 @@ Function nsdDone
 	nsDialogs::Show
 
 	${NSD_FreeImage} $Background_Image_Handle
-	${NSD_FreeImage} $Background_Image_Handle2
+;	${NSD_FreeImage} $Background_Image_Handle2
 	
 FunctionEnd
 
