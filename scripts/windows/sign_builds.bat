@@ -15,13 +15,17 @@
 %INF2CAT_PATH%\inf2cat.exe /driver:%MDRVINSTALLPATH%\Release\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
 @if "%ERRORLEVEL%" == "1" goto inf2cat_failed
 
-:: sign minidriver driver cat file
-:: ===============================
+:: sign minidriver driver dll's and cat file
+:: =========================================
 set MDRVINSTALLPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 @echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
 @echo [INFO] Sign the minidriver catalog
 ::"%SIGNTOOL_PATH%\signtool" sign /ac "%MDRVINSTALLPATH%\GlobalSign Root CA.crt" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
 "%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVINSTALLPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\Release\beidmdrv.cat"
+@echo [INFO] Sign the minidriver 32bit dll
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\Release\beidmdrv32.dll"
+@echo [INFO] Sign the minidriver 64bit dll
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\Release\beidmdrv64.dll"
 
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
