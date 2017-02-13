@@ -304,7 +304,7 @@ Function nsdWelcome
 	CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
-	${NSD_CreateLabel} 0 50% 100% 12u "$(ls_welcome_info)"
+	${NSD_CreateLabel} 0 45% 100% 12u "$(ls_welcome_info)"
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
@@ -505,7 +505,7 @@ Function nsdConnectReader
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
-	CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
+	CreateFont $Font_Title "Arial" "14" "700" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
 
@@ -617,7 +617,7 @@ Function nsdInsertCard
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
-	CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
+	CreateFont $Font_Title "Arial" "14" "700" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
 
@@ -758,7 +758,7 @@ Function nsdCardData
 	Pop $firstname
 
 	
-	${NSD_CreateLabel} 0 50% 100% 36u "$(ls_testcomplete_pre) $firstname$(ls_testcomplete_post)"
+	${NSD_CreateLabel} 0 40% 100% 36u "$(ls_testcomplete_pre) $firstname$(ls_testcomplete_post)"
 	Pop $Label
 	SetCtlColors $Label 0x008080 transparent
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
