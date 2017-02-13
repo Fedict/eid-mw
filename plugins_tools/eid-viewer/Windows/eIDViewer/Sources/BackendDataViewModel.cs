@@ -13,13 +13,71 @@ using System.Security.Cryptography.X509Certificates;
 using System.Collections.ObjectModel;
 using System.Collections.Concurrent;
 using System.Reflection;
+using System.Threading;
+using System.Globalization;
 
 namespace eIDViewer
 {
-
-
     public class BackendDataViewModel : INotifyPropertyChanged
     {
+
+        private readonly SynchronizationContext _syncContext;
+
+        public BackendDataViewModel()
+        {
+            // we assume this ctor is called from the UI thread!
+            _syncContext = SynchronizationContext.Current;
+
+            viewerVersion = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            validateAlways = Properties.Settings.Default.AlwaysValidate;
+
+            readersList = new ConcurrentQueue<ReadersMenuViewModel>();
+            readersList.Enqueue(new ReadersMenuViewModel(" ", 0));
+
+            _certsList = new ObservableCollection<CertViewModel>();
+            rootCAViewModel = new CertViewModel { CertLabel = "rootCA" };
+            rootCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            RNCertViewModel = new CertViewModel { CertLabel = "RN cert" };
+            RNCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            intermediateCAViewModel = new CertViewModel { CertLabel = "citizen CA" };
+            intermediateCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            authCertViewModel = new CertViewModel { CertLabel = "Authentication" };
+            authCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            signCertViewModel = new CertViewModel { CertLabel = "Signature" };
+            signCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+
+            certsList.Add(rootCAViewModel);
+
+            certsList[0].Certs.Add(RNCertViewModel);
+            certsList[0].Certs.Add(intermediateCAViewModel);
+
+            certsList[0].Certs[1].Certs.Add(authCertViewModel);
+            certsList[0].Certs[1].Certs.Add(signCertViewModel);
+        }
+
+        ~BackendDataViewModel()
+        {
+            //store application settings
+            if (Properties.Settings.Default.AlwaysValidate != validateAlways)
+            {
+                Properties.Settings.Default.AlwaysValidate = validateAlways;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public void ShowPINVerifiedOKCallback()
+        {
+            ResourceManager rm = new ResourceManager("eIDViewer.Resources.ApplicationStringResources",
+                    Assembly.GetExecutingAssembly());
+            CultureInfo culture = Thread.CurrentThread.CurrentCulture;
+            System.Windows.MessageBox.Show(rm.GetString("pinVerifiedOKDialogMessage", culture));
+        }
+
+        public void pincodeVerifiedSucces()
+        {
+            _syncContext.Post(o => ShowPINVerifiedOKCallback(), null);
+        }
+
         //hashAlg being "SHA1", or "SHA256"
         public bool CheckRNSignature(byte[] data, byte[] signedHash, string hashAlg)
         {
@@ -550,45 +608,6 @@ namespace eIDViewer
             }
         }
 
-        public BackendDataViewModel()
-        {
-            viewerVersion = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            validateAlways = Properties.Settings.Default.AlwaysValidate;
-
-            readersList = new ConcurrentQueue<ReadersMenuViewModel>();
-            readersList.Enqueue(new ReadersMenuViewModel(" ", 0));
-
-            _certsList = new ObservableCollection<CertViewModel>();
-            rootCAViewModel = new CertViewModel { CertLabel = "rootCA" };
-            rootCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            RNCertViewModel = new CertViewModel { CertLabel = "RN cert" };
-            RNCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            intermediateCAViewModel = new CertViewModel { CertLabel = "citizen CA" };
-            intermediateCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            authCertViewModel = new CertViewModel { CertLabel = "Authentication" };
-            authCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            signCertViewModel = new CertViewModel { CertLabel = "Signature" };
-            signCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-
-            certsList.Add(rootCAViewModel);
-
-            certsList[0].Certs.Add(RNCertViewModel);
-            certsList[0].Certs.Add(intermediateCAViewModel);
-
-            certsList[0].Certs[1].Certs.Add(authCertViewModel);
-            certsList[0].Certs[1].Certs.Add(signCertViewModel);
-        }
-
-        ~BackendDataViewModel()
-        {
-            //store application settings
-            if(Properties.Settings.Default.AlwaysValidate != validateAlways)
-            {
-                Properties.Settings.Default.AlwaysValidate = validateAlways;
-                Properties.Settings.Default.Save();
-            }
-        }
-
         private CertViewModel rootCAViewModel = null;
         private CertViewModel intermediateCAViewModel = null;
         private CertViewModel RNCertViewModel = null;
@@ -897,8 +916,6 @@ namespace eIDViewer
                     languageFR = false;
                     languageNL = false;
                     break;
-
-
             }
         }
 

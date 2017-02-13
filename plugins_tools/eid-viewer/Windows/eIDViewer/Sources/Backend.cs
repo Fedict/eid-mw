@@ -8,6 +8,7 @@ using System.Resources;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Input;
+using System.Globalization;
 
 
 
@@ -266,7 +267,9 @@ namespace eIDViewer
                     //    System.Windows.MessageBox.Show("PinOp Failed");
                     //    break;
                     case eid_vwr_result.EID_VWR_RES_SUCCESS:
-                        System.Windows.MessageBox.Show(rm.GetString("pinVerifiedOKDialogMessage", Thread.CurrentThread.CurrentUICulture));
+                        theData.pincodeVerifiedSucces();
+                        //CultureInfo culture = new CultureInfo(theData.localization);
+                       // System.Windows.MessageBox.Show(rm.GetString("pinVerifiedOKDialogMessage", culture));
                         break;
                 }
             }
