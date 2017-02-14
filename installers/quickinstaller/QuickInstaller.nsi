@@ -750,9 +750,9 @@ Function nsdCardData
 	${EndIf}
 	
 	;MessageBox MB_OK "$$retval is 0"
-	Pop $municipality
-	Pop $zip
-	Pop $street
+	;Pop $municipality
+	;Pop $zip
+	;Pop $street
 	Pop $lastname
 	Pop $firstletterthirdname
 	Pop $firstname

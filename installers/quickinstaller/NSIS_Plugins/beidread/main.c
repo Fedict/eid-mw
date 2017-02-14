@@ -11,9 +11,9 @@ HWND g_hwndParent;
 extern char* g_firstNames;
 extern char* g_firstLetterThirdName;
 extern char* g_surName;
-extern char* g_address_Street_Number;
-extern char* g_address_Zip;
-extern char* g_address_Municipality;
+//extern char* g_address_Street_Number;
+//extern char* g_address_Zip;
+//extern char* g_address_Municipality;
 
 void testandpushstring(char* thestring);
 
@@ -32,9 +32,9 @@ void __declspec(dllexport) ReadCardData(HWND hwndParent, int string_size,
 			testandpushstring(g_firstNames);
 			testandpushstring(g_firstLetterThirdName);
 			testandpushstring(g_surName);
-			testandpushstring(g_address_Street_Number);
-			testandpushstring(g_address_Zip);
-			testandpushstring(g_address_Municipality);
+//			testandpushstring(g_address_Street_Number);
+//			testandpushstring(g_address_Zip);
+//			testandpushstring(g_address_Municipality);
 		}
 		pushint(retval);
 	}
