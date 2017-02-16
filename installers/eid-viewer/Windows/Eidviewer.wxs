@@ -127,9 +127,9 @@
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
         <Shortcut Id="eidviewerStartMenuShortcut"
-          Name="Belgium EidViewer"
+          Name="Eid Viewer"
           Description="!(loc.BeidGuiDescr)"
-          Target="[BEIDVIEWERDIR]eIDViewer.exe"
+          Target="[BEIDVIEWERDIR]eID Viewer.exe"
           WorkingDirectory="BEIDVIEWERDIR"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="1" KeyPath="yes" />
       </Component>
