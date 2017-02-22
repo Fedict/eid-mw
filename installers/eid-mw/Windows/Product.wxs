@@ -201,7 +201,6 @@
             Action="createAndRemoveOnUninstall">
           
           <RegistryKey Key="general" Action="createAndRemoveOnUninstall">
-            <RegistryValue Type="string" Name="language" Value="!(loc.Langpref)"/>
             <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFilesFolder]Belgium Identity Card"/>
           </RegistryKey>
           
@@ -219,7 +218,6 @@
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="BeidApplicationProgramsFolder" Guid="{09FD9493-DF96-442c-80EA-1858CE65E796}">				  
         <RemoveFolder Id="ApplicationProgramsFolder" On="both"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="BeidApplicationProgramsFolder" Type="integer" Value="1" KeyPath="yes" />
       </Component>
     </DirectoryRef>
 

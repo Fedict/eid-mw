@@ -231,13 +231,8 @@
         <RegistryKey Root="HKLM"
             Key="SOFTWARE\BEID"
             Action="createAndRemoveOnUninstall">
-          <RegistryKey Key="certificatevalidation" Action="createAndRemoveOnUninstall">
-            <RegistryValue Type="integer" Name="cert_validation_ocsp" Value="0"/>
-            <RegistryValue Type="integer" Name="cert_validation_crl" Value="0"/>
-          </RegistryKey>
 
           <RegistryKey Key="general" Action="createAndRemoveOnUninstall">
-            <RegistryValue Type="string" Name="language" Value="!(loc.Langpref)"/>
             <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFilesFolder]Belgium Identity Card"/>
           </RegistryKey>
 
@@ -252,7 +247,6 @@
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="BeidApplicationProgramsFolder" Guid="{CBD0F388-EAE5-4FA1-8C38-EC223928FF13}" Win64="no">
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="BeidApplicationProgramsFolder" Type="integer" Value="1" KeyPath="yes" />
       </Component>
     </DirectoryRef>
 
