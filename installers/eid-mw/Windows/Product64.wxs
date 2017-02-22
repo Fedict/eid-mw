@@ -23,7 +23,6 @@
            Manufacturer="Belgian Government"
            UpgradeCode="$(var.UpgradeCode)">
 
-    <!-- InstallerVersion="300" Released with Windows XP with Service Pack 2 (SP2) -->
 	<!-- InstallerVersion="405"(v4.5)Released with Vista Service Pack 2, or update for Windows XP(SP2, SP3) -->	
     <Package Id="$(var.PackageCode)"
              InstallerVersion="405"
@@ -80,9 +79,7 @@
     <Property Id="ALLUSERS" Value="1" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramMenuFolder" Name="Menu">
-        <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID"/>
-      </Directory>	  
+ 
 	  <Directory Id="CommonAppDataFolder" Name="CommonAppDataFolder">
         <Directory Id="APPLICATIONDATAFOLDER" Name="Belgium Identity Card">
           <Directory Id="LOGDIR" Name="log"/>
@@ -94,9 +91,6 @@
         </Directory>
       </Directory>
 
-      <Directory Id="DesktopFolder" Name="DesktopFolder"/>
-
-      <Directory Id="WindowsFolder" Name="WindowsFolder"/>
       <Directory Id="SystemFolder" Name="SystemFolder">
 <?ifndef env.DONT_MERGE_VCRT?>
         <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC140_CRT_x86.msm" Language="0" DiskId="1" />
@@ -153,10 +147,6 @@
 
     </DirectoryRef>
 
-
-    <DirectoryRef Id="WindowsFolder">
-    </DirectoryRef>
-
     <DirectoryRef Id="System64Folder">
 
       <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="no" Win64="yes">
@@ -185,8 +175,6 @@
 
     <DirectoryRef Id="BEIDPPDIR">
       <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes" Win64="no">
-        <!--File Id="ch44xxeid.dll" Name="ch44xxeid.dll" Source="..\..\..\pinpad\ch44xxeid.dll" /-->
-        <!--File Id="sprx32eid.dll" Name="sprx32eid.dll" Source="..\..\..\pinpad\sprx32eid.dll" /-->
         <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\beidpp\xireid.dll" />
       </Component>
     </DirectoryRef>
@@ -244,12 +232,6 @@
 
     </DirectoryRef>
 
-    <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="BeidApplicationProgramsFolder" Guid="{CBD0F388-EAE5-4FA1-8C38-EC223928FF13}" Win64="no">
-        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-      </Component>
-    </DirectoryRef>
-
     <Feature Id="BeidRuntime"
              Title="!(loc.BeidRuntime)"
              Description="!(loc.BeidRuntimeDesc)"
@@ -288,7 +270,6 @@
         <ComponentRef Id="SCardSvrService"/>
         <ComponentRef Id="pkcs11"/>
         <ComponentRef Id="pkcs11_64"/>	
-        <ComponentRef Id="BeidApplicationProgramsFolder" />
 
         <!-- Shortcuts -->
         <Feature Id="Install_Minidriver" Title="Minidriver" Absent="allow" Level="1">
