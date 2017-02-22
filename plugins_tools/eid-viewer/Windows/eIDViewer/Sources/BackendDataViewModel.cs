@@ -65,17 +65,18 @@ namespace eIDViewer
             }
         }
 
-        public void ShowPINVerifiedOKCallback()
+
+        public void ShowPINVerifiedOKCallback(string message)
         {
             ResourceManager rm = new ResourceManager("eIDViewer.Resources.ApplicationStringResources",
                     Assembly.GetExecutingAssembly());
             CultureInfo culture = Thread.CurrentThread.CurrentCulture;
-            System.Windows.MessageBox.Show(rm.GetString("pinVerifiedOKDialogMessage", culture));
+            System.Windows.MessageBox.Show(rm.GetString(message, culture));
         }
 
-        public void pincodeVerifiedSucces()
+        public void pincodeVerifiedSucces(string message)
         {
-            _syncContext.Post(o => ShowPINVerifiedOKCallback(), null);
+            _syncContext.Post(o => ShowPINVerifiedOKCallback(message), null);
         }
 
         //hashAlg being "SHA1", or "SHA256"

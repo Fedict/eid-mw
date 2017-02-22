@@ -160,6 +160,24 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your PIN was changed correctly..
+        /// </summary>
+        public static string pinChangedOKDialogMessage {
+            get {
+                return ResourceManager.GetString("pinChangedOKDialogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PIN changed.
+        /// </summary>
+        public static string pinChangedOKDialogTitle {
+            get {
+                return ResourceManager.GetString("pinChangedOKDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your PIN was validated correctly..
         /// </summary>
         public static string pinVerifiedOKDialogMessage {

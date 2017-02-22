@@ -168,4 +168,10 @@
   <data name="printedDateLabel" xml:space="preserve">
     <value>Afgedrukt:</value>
   </data>
+  <data name="pinChangedOKDialogMessage" xml:space="preserve">
+    <value>De PIN werd succesvol gewijzigd.</value>
+  </data>
+  <data name="pinChangedOKDialogTitle" xml:space="preserve">
+    <value>Pincode gewijzigd</value>
+  </data>
 </root>

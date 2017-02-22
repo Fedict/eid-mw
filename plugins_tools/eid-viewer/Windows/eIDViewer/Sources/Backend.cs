@@ -260,6 +260,8 @@ namespace eIDViewer
                 ResourceManager rm = new ResourceManager("eIDViewer.Resources.ApplicationStringResources",
                     Assembly.GetExecutingAssembly());
 
+                
+
                 switch (result)
                 {
                     //pkcs11 will bring up a message box in case of a failure
@@ -267,9 +269,16 @@ namespace eIDViewer
                     //    System.Windows.MessageBox.Show("PinOp Failed");
                     //    break;
                     case eid_vwr_result.EID_VWR_RES_SUCCESS:
-                        theData.pincodeVerifiedSucces();
+                        if (pinop == eid_vwr_pinops.EID_VWR_PINOP_TEST)
+                        {
+                            theData.pincodeVerifiedSucces("pinVerifiedOKDialogMessage");
+                        }
+                        else if (pinop == eid_vwr_pinops.EID_VWR_PINOP_CHG)
+                        {
+                            theData.pincodeVerifiedSucces("pinChangedOKDialogMessage");
+                        }
                         //CultureInfo culture = new CultureInfo(theData.localization);
-                       // System.Windows.MessageBox.Show(rm.GetString("pinVerifiedOKDialogMessage", culture));
+                        // System.Windows.MessageBox.Show(rm.GetString("pinVerifiedOKDialogMessage", culture));
                         break;
                 }
             }
