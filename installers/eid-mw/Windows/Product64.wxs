@@ -74,21 +74,6 @@
 
     <Icon Id="eid.ico" SourceFile="..\..\eid.ico"/>
 
-    <Property Id="PROPOFFICE2010SIGNREG_64">
-      <RegistrySearch Id="PropOffice2010SignaturesRegistered_64"
-                      Root="HKCU"
-                      Key="SOFTWARE\Microsoft\Office\14.0\Common\Signatures"
-                      Name="TSALocation"
-                      Type="raw" />
-    </Property>
-    <Property Id="PROPOFFICE2010SIGNREG_32">
-      <RegistrySearch Id="PropOffice2010SignaturesRegistered_32"
-                      Root="HKCU"
-                      Key="SOFTWARE\Wow6432Node\Microsoft\Office\14.0\Common\Signatures"
-                      Name="TSALocation"
-                      Type="raw" />
-    </Property>
-
     <Property Id="ARPPRODUCTICON" Value="eid.ico" />
     <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
 
@@ -96,9 +81,7 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramMenuFolder" Name="Menu">
-        <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID">
-          <Directory Id="ApplicationProgramsFolderUtilities" Name="Utilities"/>
-        </Directory>
+        <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID"/>
       </Directory>	  
 	  <Directory Id="CommonAppDataFolder" Name="CommonAppDataFolder">
         <Directory Id="APPLICATIONDATAFOLDER" Name="Belgium Identity Card">
@@ -161,14 +144,6 @@
         <File Id="eid.ico" Name="eid.ico" KeyPath="yes" Source="..\..\eid.ico" />
       </Component>
 
-      <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}" Win64="no">
-        <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\plugins_tools\Outlook_snc\beidoutlooksnc.exe" />
-      </Component>
-
-      <Component Id="Office2010XAdESTool" Guid="{B42CF78B-952A-4768-8605-2E6F3BBA340B}" Win64="no">
-        <File Id="beidoffice2010_XAdES_XL.exe" Name="beidoffice2010_XAdES_XL.exe" KeyPath="yes" Source="..\..\..\plugins_tools\Office2010_XAdES_XL\beidoffice2010_XAdES_XL.exe" />
-      </Component>
-
       <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="no" Win64="no">
         <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\doc\licenses\English\License_en.rtf" />
         <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\doc\licenses\Dutch\License_nl.rtf" />
@@ -223,27 +198,7 @@
         <!-- Start SCardSvr Service now -->
         <!-- <ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" /> -->
       </Component>
-
-      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010" Guid="{DBD8E310-00D3-402f-A2F2-1984DD825C4D}" Win64="no">
-        <RegistryKey Root="HKCU"
-                     Key="Software\Microsoft\Office\14.0\Common\Signatures"
-                     Action="create" >
-          <RegistryValue Type="string" Name="TSALocation" Value="http://tsa.belgium.be/connect" KeyPath="yes"/>
-          <RegistryValue Type="integer" Name="XAdESLevel" Value="5" KeyPath="no"/>
-          <RegistryValue Type="integer" Name="MinXAdESLevel" Value="0" KeyPath="no"/>
-        </RegistryKey>
-      </Component>
       
-      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010_64" Guid="{BF57853B-C3CF-4126-A71B-6DD6EE8E44B8}" Win64="yes">
-        <RegistryKey Root="HKCU"
-                     Key="Software\Microsoft\Office\14.0\Common\Signatures"
-                     Action="create" >
-          <RegistryValue Type="string" Name="TSALocation" Value="http://tsa.belgium.be/connect" KeyPath="yes"/>
-          <RegistryValue Type="integer" Name="XAdESLevel" Value="5" KeyPath="no"/>
-          <RegistryValue Type="integer" Name="MinXAdESLevel" Value="0" KeyPath="no"/>
-        </RegistryKey>
-      </Component>
-
       <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}" Win64="no">
         <RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
@@ -301,26 +256,6 @@
       </Component>
     </DirectoryRef>
 
-    <DirectoryRef Id="ApplicationProgramsFolderUtilities">
-      <Component Id="OutlookShortcut" Guid="{813C0984-0401-4604-9D7F-E13BDD28FBD7}" Win64="no">
-        <Shortcut Id="OutlookStartMenuShortcut"
-          Name="MS Outlook registry configuration"
-          Description="!(loc.OutlooksncDescr)"
-          Target="[APPLICATIONROOTFOLDER]beidoutlooksnc.exe"
-          WorkingDirectory="APPLICATIONROOTFOLDER"/>
-        <RemoveFolder Id="ApplicationProgramsFolderUtilities" On="uninstall"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="OutlookShortcut" Type="integer" Value="1" KeyPath="yes" />
-      </Component>
-      <Component Id="Office2010XAdESShortcut" Guid="{B2D00383-20A7-4058-A153-80D4DC15FD42}" Win64="no">
-        <Shortcut Id="Office2010XAdESStartMenuShortcut"
-          Name="MS Office 2010 XAdES XL signature configuration"
-          Description="!(loc.Office2010XAdESDescr)"
-          Target="[APPLICATIONROOTFOLDER]beidoffice2010_XAdES_XL.exe"
-          WorkingDirectory="APPLICATIONROOTFOLDER"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="Office2010XAdESShortcut" Type="integer" Value="1" KeyPath="yes" />
-      </Component>
-    </DirectoryRef>
-
     <Feature Id="BeidRuntime"
              Title="!(loc.BeidRuntime)"
              Description="!(loc.BeidRuntimeDesc)"
@@ -329,11 +264,11 @@
              >
 
 <?ifndef env.DONT_MERGE_VCRT?>
-      <Feature Id="VCRedist" Title="VC++ 12.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
+      <Feature Id="VCRedist" Title="VC++ 14.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
         <MergeRef Id="VCRT" />
       </Feature>
 
-      <Feature Id="VCRedist_64" Title="VC++ 12.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
+      <Feature Id="VCRedist_64" Title="VC++ 14.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
         <MergeRef Id="VCRT_64" />
       </Feature>
 <?endif?>
@@ -358,24 +293,10 @@
                 >
         <ComponentRef Id="SCardSvrService"/>
         <ComponentRef Id="pkcs11"/>
-        <ComponentRef Id="pkcs11_64"/>
-
-        <Feature Id="Office2010Signatureregistration_32" Level="1" Display="hidden" Absent="disallow">
-          <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>
-          <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG_32]]></Condition>
-        </Feature>
-
-		<Feature Id="Office2010Signatureregistration_64" Level="1" Display="hidden" Absent="disallow">
-          <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010_64"/>
-          <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG_64]]></Condition>
-        </Feature>
-	
+        <ComponentRef Id="pkcs11_64"/>	
         <ComponentRef Id="BeidApplicationProgramsFolder" />
-        <ComponentRef Id="OutlookTool" />
-        <ComponentRef Id="Office2010XAdESTool"/>
+
         <!-- Shortcuts -->
-        <ComponentRef Id ="OutlookShortcut"/>
-        <ComponentRef Id="Office2010XAdESShortcut"/>
         <Feature Id="Install_Minidriver" Title="Minidriver" Absent="allow" Level="1">
           <ComponentRef Id="beidmdrv"/>
           <ComponentRef Id="CertPropService"/>
@@ -385,22 +306,6 @@
           <ComponentRef Id="REGISTERMINIDRIVER_64"/>
           <Condition Level="1">VersionNT >= 600</Condition>
         </Feature>
-    <Feature  Id="Install_Utilities"
-          Title="!(loc.UtilsTitle)"
-          Description="!(loc.UtilsDesc)"
-          Absent="allow"
-          Level="1"
-                >
-
-      <Feature Id="Install_Outlooksnc"
-               Title="!(loc.OutlooksncTitle)"
-               Description="!(loc.OutlooksncDescr)"
-               Absent="allow"
-               Level="1">
-        <ComponentRef Id ="OutlookShortcut"/>
-        <ComponentRef Id="OutlookTool" />
-      </Feature>
-    </Feature>
 
   </Feature>
 </Feature>
