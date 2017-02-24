@@ -55,9 +55,6 @@ namespace eIDMW
 
 	enum tHashAlgo
 	{
-		ALGO_MD5,    // 16-byte hash
-		ALGO_SHA1,   // 20-byte hash
-		ALGO_MD5_SHA1,	// 36-byte hash, useful for SSL/TLS
 		ALGO_SHA256, // 32-byte hash
 		ALGO_SHA384, // 48-byte hash
 		ALGO_SHA512, // 64-byte hash

@@ -33,12 +33,6 @@ unsigned long CHash::GetHashLength(tHashAlgo algo)
 {
 	switch (algo)
 	{
-		case ALGO_MD5:
-			return 16;
-		case ALGO_SHA1:
-			return 20;
-		case ALGO_MD5_SHA1:
-			return 36;
 		case ALGO_SHA256:
 			return 32;
 		case ALGO_SHA384:
@@ -70,16 +64,6 @@ void CHash::Init(tHashAlgo algo)
 {
 	switch (algo)
 	{
-		case ALGO_MD5:
-			md5_init(&m_md1);
-			break;
-		case ALGO_SHA1:
-			sha1_init(&m_md1);
-			break;
-		case ALGO_MD5_SHA1:
-			md5_init(&m_md1);
-			sha1_init(&m_md2);
-			break;
 		case ALGO_SHA256:
 			sha256_init(&m_md1);
 			break;
@@ -117,16 +101,6 @@ void CHash::Update(const CByteArray & data, unsigned long ulOffset,
 
 		switch (m_Algo)
 		{
-			case ALGO_MD5:
-				md5_process(&m_md1, pucData, ulLen);
-				break;
-			case ALGO_SHA1:
-				sha1_process(&m_md1, pucData, ulLen);
-				break;
-			case ALGO_MD5_SHA1:
-				md5_process(&m_md1, pucData, ulLen);
-				sha1_process(&m_md2, pucData, ulLen);
-				break;
 			case ALGO_SHA256:
 				sha256_process(&m_md1, pucData, ulLen);
 				break;
@@ -157,16 +131,6 @@ CByteArray CHash::GetHash()
 
 	switch (m_Algo)
 	{
-		case ALGO_MD5:
-			md5_done(&m_md1, tucHash);
-			break;
-		case ALGO_SHA1:
-			sha1_done(&m_md1, tucHash);
-			break;
-		case ALGO_MD5_SHA1:
-			md5_done(&m_md1, tucHash);
-			sha1_done(&m_md2, tucHash + 16);
-			break;
 		case ALGO_SHA256:
 			sha256_done(&m_md1, tucHash);
 			break;
