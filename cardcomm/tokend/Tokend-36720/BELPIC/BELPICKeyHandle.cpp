@@ -67,16 +67,6 @@ uint32 BELPICKeyHandle::getOutputSize(const Context & context,
 	CssmError::throwMe(CSSM_ERRCODE_FUNCTION_NOT_IMPLEMENTED);
 }
 
-static const unsigned char sha1sigheader[] = {
-	0x30,			// SEQUENCE
-	0x21,			// LENGTH
-	0x30,			// SEQUENCE
-	0x09,			// LENGTH
-	0x06, 0x05, 0x2B, 0x0E, 0x03, 0x02, 0x1a,	// SHA1 OID (1 4 14 3 2 26)
-	0x05, 0x00,		// OPTIONAL ANY algorithm params (NULL)
-	0x04, 0x14		// OCTECT STRING (20 bytes)
-};
-
 static const unsigned char sha256sigheader[] =
 {
     0x30, 0x31,
@@ -84,18 +74,6 @@ static const unsigned char sha256sigheader[] =
     0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01,
     0x05, 0x00,
     0x04, 0x20
-};
-
-static const unsigned char md5sigheader[] =
-{
-	0x30,			// SEQUENCE
-	0x20,			// LENGTH
-	0x30,			// SEQUENCE
-	0x0C,			// LENGTH
-	// MD5 OID (1 2 840 113549 2 5)
-	0x06, 0x08, 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x02, 0x05,
-	0x05, 0x00,		// OPTIONAL ANY algorithm params (NULL)
-	0x04, 0x10		// OCTECT STRING (16 bytes)
 };
 
 void BELPICKeyHandle::generateSignature(const Context & context,
@@ -118,23 +96,7 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 	const unsigned char *header;
 	size_t headerLength;
 
-	if (signOnly == CSSM_ALGID_SHA1)
-	{
-        secdebug("crypto", "CSSM_ALGID_SHA1");
-		if (input.Length != 20)
-			CssmError::throwMe(CSSMERR_CSP_BLOCK_SIZE_MISMATCH);
-
-		header = sha1sigheader;
-		headerLength = sizeof(sha1sigheader);
-	} else if (signOnly == CSSM_ALGID_MD5)
-	{
-		if (input.Length != 16)
-			CssmError::throwMe(CSSMERR_CSP_BLOCK_SIZE_MISMATCH);
-
-		header = md5sigheader;
-		headerLength = sizeof(md5sigheader);
-	}
-    else if (signOnly == CSSM_ALGID_SHA256)
+        if (signOnly == CSSM_ALGID_SHA256)
 	{
         secdebug("crypto", "CSSM_ALGID_SHA256");
 		if (input.Length != 32)
