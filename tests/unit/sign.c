@@ -49,12 +49,15 @@ static int RSA_set0_key(RSA *r, BIGNUM *n, BIGNUM *e, BIGNUM *d) {
 }
 #endif
 
-CK_BYTE digest_sha1[] = {
-                0x0b, 0xee, 0xc7, 0xb5,
-                0xea, 0x3f, 0x0f, 0xdb,
-                0xc9, 0x5d, 0x0d, 0xd4,
-                0x7f, 0x3c, 0x5b, 0xc2,
-                0x75, 0xda, 0x8a, 0x33
+CK_BYTE digest_sha256[] = {
+                0x2c, 0x26, 0xb4, 0x6b,
+                0x68, 0xff, 0xc6, 0x8f,
+                0xf9, 0x9b, 0x45, 0x3c,
+                0x1d, 0x30, 0x41, 0x34,
+                0x13, 0x42, 0x2d, 0x70,
+		0x64, 0x83, 0xbf, 0xa0,
+		0xf9, 0x8a, 0x5e, 0x88,
+		0x62, 0x66, 0xe7, 0xae
 };
 
 int verify_sig(unsigned char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULONG modlen, CK_BYTE_PTR exponent, CK_ULONG explen) {
@@ -64,7 +67,7 @@ int verify_sig(unsigned char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULON
 
 	RSA_set0_key(rsa, BN_bin2bn(modulus, (int) modlen, NULL), BN_bin2bn(exponent, (int) explen, NULL), NULL);
 
-	int v = RSA_verify(NID_sha1, digest_sha1, sizeof(digest_sha1), sig, siglen, rsa);
+	int v = RSA_verify(NID_sha1, digest_sha256, sizeof(digest_sha256), sig, siglen, rsa);
 
 	printf("Signature verification returned: %d\n", v);
 	if(!v) {
@@ -110,7 +113,7 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 		return TEST_RV_SKIP;
 	}
 
-	mech.mechanism = CKM_SHA1_RSA_PKCS;
+	mech.mechanism = CKM_SHA256_RSA_PKCS;
 	check_rv(C_SignInit(session, &mech, privatekey));
 
 	check_rv(C_Sign(session, data, sizeof(data), NULL, &sig_len));
