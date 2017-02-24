@@ -67,7 +67,7 @@ int verify_sig(unsigned char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULON
 
 	RSA_set0_key(rsa, BN_bin2bn(modulus, (int) modlen, NULL), BN_bin2bn(exponent, (int) explen, NULL), NULL);
 
-	int v = RSA_verify(NID_sha1, digest_sha256, sizeof(digest_sha256), sig, siglen, rsa);
+	int v = RSA_verify(NID_sha256, digest_sha256, sizeof(digest_sha256), sig, siglen, rsa);
 
 	printf("Signature verification returned: %d\n", v);
 	if(!v) {
