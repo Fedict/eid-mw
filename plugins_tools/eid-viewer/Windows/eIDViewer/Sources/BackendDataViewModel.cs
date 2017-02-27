@@ -239,7 +239,7 @@ namespace eIDViewer
                         fileStream.Read(bytes, 0, bytes.Length);
                         X509Certificate2 fileCert = new X509Certificate2(bytes);
 
-                        if (rootCertOnCard.Thumbprint.Equals(fileCert.Thumbprint))
+                        if (rootCertOnCard.GetPublicKeyString().Equals(fileCert.GetPublicKeyString()))
                         {
                             foundEmbeddedRootCA = true;
                         }
