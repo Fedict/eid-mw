@@ -96,6 +96,9 @@
       <Directory Id="DesktopFolder"/>
       <Directory Id="WindowsFolder"/>
 
+	<?ifndef env.DONT_MERGE_VCRT?>
+      <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC140_CRT_x86.msm" Language="0" DiskId="1" />
+	<?endif?>
     </Directory>
 
     <DirectoryRef Id="BEIDVIEWERDIR">
@@ -147,7 +150,11 @@
              Absent="disallow"
              Level="1"
              >
-
+<?ifndef env.DONT_MERGE_VCRT?>
+      <Feature Id="VCRedist" Title="VC++ 14.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
+        <MergeRef Id="VCRT" />
+      </Feature>
+<?endif?>
       <!-- Program Files -->
 	  <ComponentRef Id="BeidApplicationProgramsFolder"/>
       <ComponentRef Id="BEIDVIEWER"/>

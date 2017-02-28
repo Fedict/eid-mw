@@ -7,7 +7,7 @@ namespace eIDViewer
     {
         public static string AboutMessage()
         {
-            string message = @"eID Viewer 4.2.2
+            string message = @"eID Viewer 4.2.4
 eID Middleware Project
 Copyright(C) 2017 Fedict
 
