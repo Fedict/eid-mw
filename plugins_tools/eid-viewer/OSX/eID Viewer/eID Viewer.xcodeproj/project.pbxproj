@@ -213,7 +213,7 @@
 		659FFCB11AE93B4B004CEC1F /* xml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xml.h; path = ../../../xml.h; sourceTree = "<group>"; };
 		659FFCB21AE93B4B004CEC1F /* xmlmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmlmap.cpp; path = ../../../xmlmap.cpp; sourceTree = "<group>"; };
 		659FFCB31AE93B4B004CEC1F /* xmlmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlmap.h; path = ../../../xmlmap.h; sourceTree = "<group>"; };
-		65A29A8F1E44BAC70091FB0E /* libbeidpkcs11.4.2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.2.1.dylib; path = ../../../../Debug/libbeidpkcs11.4.2.1.dylib; sourceTree = "<group>"; };
+		65A29A8F1E44BAC70091FB0E /* libbeidpkcs11.4.2.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.2.1.dylib; path = ../../../../Release/libbeidpkcs11.4.2.1.dylib; sourceTree = "<group>"; };
 		65B5373B1E5DAF6900568525 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65B537401E5DAF6A00568525 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		65B537451E5DAF6B00568525 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
