@@ -7,7 +7,7 @@ clean:
 	rm -rf configured openssl openssl-$(OSSL_VERSION) openssl-$(OSSL_VERSION).tar.gz
 
 configured: openssl/Configure
-	cd openssl; ./Configure no-shared no-asm darwin64-x86_64:cc:-mmacosx-version-min=10.7
+	cd openssl; ./Configure no-shared no-asm darwin64-x86_64:cc:-mmacosx-version-min=10.8
 	$(MAKE) -C openssl depend
 	touch configured
 
