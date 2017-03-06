@@ -151,8 +151,6 @@
 		652BC8AD1AEA41D100DA9519 /* dataroot-osx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "dataroot-osx.m"; path = "../eID Viewer/dataroot-osx.m"; sourceTree = "<group>"; };
 		652BC8AF1AEA441400DA9519 /* xsdloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xsdloc.h; path = ../../../xsdloc.h; sourceTree = "<group>"; };
 		652BC8B01AEA467800DA9519 /* eidv4.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../eidv4.xsd; sourceTree = "<group>"; };
-		652F07681D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.18.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.18.dylib; sourceTree = "<group>"; };
-		653D201C1DE85860003EA728 /* libbeidpkcs11.4.1.19.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbeidpkcs11.4.1.19.dylib; path = ../../../../Debug/libbeidpkcs11.4.1.19.dylib; sourceTree = "<group>"; };
 		654832DE1C451E160030D770 /* verify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = verify.c; path = ../../../verify.c; sourceTree = "<group>"; };
 		65669E3E1DE49B510018F644 /* specorgconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = specorgconv.cpp; path = ../../../conversions/specorgconv.cpp; sourceTree = "<group>"; };
 		65669E3F1DE49B510018F644 /* specorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = specorgconv.h; path = ../../../conversions/specorgconv.h; sourceTree = "<group>"; };
@@ -299,9 +297,7 @@
 		652F07671D918C65003BFFD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				653D201C1DE85860003EA728 /* libbeidpkcs11.4.1.19.dylib */,
 				6576413A1DE4A66200602BC0 /* libcrypto.a */,
-				652F07681D918C65003BFFD5 /* libbeidpkcs11.4.1.18.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
