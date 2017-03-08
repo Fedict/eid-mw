@@ -24,9 +24,9 @@
 char* g_firstNames = NULL;
 char* g_firstLetterThirdName = NULL;
 char* g_surName = NULL;
-char* g_address_Street_Number = NULL;
-char* g_address_Zip = NULL;
-char* g_address_Municipality = NULL;
+//char* g_address_Street_Number = NULL;
+//char* g_address_Zip = NULL;
+//char* g_address_Municipality = NULL;
 
 
 CK_RV ReadTheCardData(void) {
@@ -79,18 +79,18 @@ CK_RV ReadTheCardData(void) {
 									ConvertUtf8toAscii(&g_firstLetterThirdName); //don't mind the return value, if it failed, we'll return the utf8 string
 									if ((retval = FindAndStore(functions, session_handle, "surname",&g_surName)) == CKR_OK)
 									{
-										ConvertUtf8toAscii(&g_surName); //don't mind the return value, if it failed, we'll return the utf8 string
-										if ((retval = FindAndStore(functions, session_handle, "address_street_and_number",&g_address_Street_Number)) == CKR_OK)
-										{
-											ConvertUtf8toAscii(&g_address_Street_Number); //don't mind the return value, if it failed, we'll return the utf8 string
-											if ((retval = FindAndStore(functions, session_handle, "address_zip",&g_address_Zip)) == CKR_OK)
-											{
-												if ((retval = FindAndStore(functions, session_handle, "address_municipality",&g_address_Municipality)) == CKR_OK)
-												{
-													ConvertUtf8toAscii(&g_address_Municipality); //don't mind the return value, if it failed, we'll return the utf8 string
-												}
-											}
-										}
+//										ConvertUtf8toAscii(&g_surName); //don't mind the return value, if it failed, we'll return the utf8 string
+//										if ((retval = FindAndStore(functions, session_handle, "address_street_and_number",&g_address_Street_Number)) == CKR_OK)
+//										{
+//											ConvertUtf8toAscii(&g_address_Street_Number); //don't mind the return value, if it failed, we'll return the utf8 string
+//											if ((retval = FindAndStore(functions, session_handle, "address_zip",&g_address_Zip)) == CKR_OK)
+//											{
+//												if ((retval = FindAndStore(functions, session_handle, "address_municipality",&g_address_Municipality)) == CKR_OK)
+//												{
+//													ConvertUtf8toAscii(&g_address_Municipality); //don't mind the return value, if it failed, we'll return the utf8 string
+//												}
+//											}
+//										}
 									}
 								}
 							}

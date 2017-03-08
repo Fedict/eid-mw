@@ -152,9 +152,9 @@ noinst_HEADERS = \
 	dialogs/dialogsqtsrv/resource/KeyPadButtonCE.png \
 	dialogs/dialogsqtsrv/resource/KeyPadButton.png \
 	dialogs/dialogsqtsrv/resource/PINdisplay.png \
-	dialogs/dialogsgtk/beid-i18n.h \
 	dialogs/dialogsgtk/single_dialog.h \
 	dialogs/dialogsgtk/parent.h \
+	dialogs/dialogsgtk/gettext.h \
 	dialogs/dialogsgtk/gtk_dialog_names.h
 if NO_DIALOGS
 libbeidpkcs11_la_CXXFLAGS += -DNO_DIALOGS
@@ -177,27 +177,29 @@ install-exec-hook:
 endif
 
 beid_askpin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-askpin.c
-beid_askpin_CPPFLAGS = -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src @GTK_CFLAGS@
+beid_askpin_CPPFLAGS = -I$(srcdir)/dialogsgtk -I$(srcdir)/../common/src -I$(srcdir)/src @GTK_CFLAGS@ -DDATAROOTDIR='"$(datarootdir)"'
 beid_askpin_LDADD = @GTK_LIBS@
 
 beid_changepin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-changepin.c
-beid_changepin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@
+beid_changepin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@ -DDATAROOTDIR='"$(datarootdir)"'
 beid_changepin_LDADD = @GTK_LIBS@
 
 beid_badpin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-badpin.c
-beid_badpin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@
+beid_badpin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@ -DDATAROOTDIR='"$(datarootdir)"'
 beid_badpin_LDADD = @GTK_LIBS@
 
 beid_askaccess_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-askaccess.c
-beid_askaccess_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@
+beid_askaccess_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@ -DDATAROOTDIR='"$(datarootdir)"'
 beid_askaccess_LDADD = @GTK_LIBS@
 
 beid_spr_askpin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-spr-askpin.c
-beid_spr_askpin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@
+beid_spr_askpin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@ -DDATAROOTDIR='"$(datarootdir)"'
 beid_spr_askpin_LDADD = @GTK_LIBS@
 
 beid_spr_changepin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid-spr-changepin.c
-beid_spr_changepin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@
+beid_spr_changepin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@ -DDATAROOTDIR='"$(datarootdir)"'
 beid_spr_changepin_LDADD = @GTK_LIBS@
 
 pkgconfig_DATA=libbeidpkcs11.pc
+
+SUBDIRS = dialogs/dialogsgtk/po

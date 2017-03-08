@@ -22,8 +22,7 @@
            Version="$(var.ProductVersion)"
            Manufacturer="Belgian Government"
            UpgradeCode="$(var.UpgradeCode)">
-
-    <!-- InstallerVersion="300" Released with Windows XP with Service Pack 2 (SP2) -->		
+	
 	<!-- InstallerVersion="405"(v4.5) Released with Vista Service Pack 2, or update for Windows XP(SP2, SP3) -->		
     <Package Id="$(var.PackageCode)"
              InstallerVersion="405" 
@@ -73,14 +72,6 @@
     <Media Id="1" Cabinet="Middleware.cab" EmbedCab="yes" />
 
     <Icon Id="eid.ico" SourceFile="..\..\eid.ico"/>
-
-    <Property Id="PROPOFFICE2010SIGNREG">
-      <RegistrySearch Id="PropOffice2010SignaturesRegistered"
-                      Root="HKCU"
-                      Key="SOFTWARE\Microsoft\Office\14.0\Common\Signatures"
-                      Name="TSALocation" 
-                      Type="raw" />
-    </Property>
     
     <Property Id="ARPPRODUCTICON" Value="eid.ico" />
     <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
@@ -88,45 +79,17 @@
     <Property Id="ALLUSERS" Value="1" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-
-      <Directory Id="ProgramMenuFolder" Name="Menu">
-        <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID">
-          <Directory Id="ApplicationProgramsFolderUtilities" Name="Utilities"/>
-        </Directory>
-      </Directory>
-
-      <Directory Id="ProgramFilesFolder">
-        <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
-          <Directory Id="BEIDVIEWERDIR" Name="EidViewer" />
-		  <Directory Id="BEIDCERTPROPROOTFOLDER" Name="BeID Certprop"/>
+	
+	  <Directory Id="CommonAppDataFolder">
+        <Directory Id="APPLICATIONDATAFOLDER" Name="Belgium Identity Card">
           <Directory Id="LOGDIR" Name="log"/>
         </Directory>
-        <Directory Id="FIREFOXROOTFOLDER" Name="Mozilla Firefox">
-          <Directory Id="FIREFOXEXTENSIONS" Name="extensions">
-            <Directory Id="XPIROOTFOLDER" Name="belgiumeid@eid.belgium.be">
-              <Directory Id="XPICONTENTFOLDER" Name="content"/>
-              <Directory Id="XPICOMPONENTSFOLDER" Name="components"/>
-              <Directory Id="XPIDEFAULTSFOLDER" Name="defaults">
-                <Directory Id="XPIDEFAULTSPREFSFOLDER" Name="preferences"/>
-              </Directory>
-              <Directory Id="XPILOCALEFOLDER" Name="locale">
-                <Directory Id="XPILOCALEENFOLDER" Name="en-US"/>
-                <Directory Id="XPILOCALEFRFOLDER" Name="fr-FR"/>
-                <Directory Id="XPILOCALENLFOLDER" Name="nl-NL"/>
-				        <Directory Id="XPILOCALEDEFOLDER" Name="de-DE"/>
-              </Directory>
-              <Directory Id="XPIMETA_INF" Name="META-INF"/>
-              <Directory Id="XPISKINFOLDER" Name="skin"/>
-            </Directory>
-          </Directory>
-        </Directory>
+	  </Directory>
+	  
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card"/>
         <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
-
       </Directory>
-
-      <Directory Id="DesktopFolder"/>
-
-      <Directory Id="WindowsFolder"/>
 
       <Directory Id="SystemFolder">
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
@@ -135,12 +98,6 @@
       <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC140_CRT_x86.msm" Language="0" DiskId="1" />
 <?endif?>
 	  </Directory>
-    
-	<DirectoryRef Id="BEIDVIEWERDIR">
-      <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
-        <File Id="eidviewer.exe" Name="eID Viewer.exe" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe" />
-      </Component>
-    </DirectoryRef>
 	
     <DirectoryRef Id="LOGDIR">
       <Component Id="LogDir" Guid="{A300DA04-F8DF-4506-B654-1E5EB2782DF3}" KeyPath="yes">
@@ -149,112 +106,6 @@
         </CreateFolder>
         <RemoveFile Id="RemoveLogFiles" On="uninstall" Name="*"/>
         <RemoveFolder Id="RemoveLogFolder" On="uninstall"/>
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="FIREFOXROOTFOLDER">
-      <Component Id="FireFoxRoot" Guid="{3F6140E7-B25A-41c5-BACE-9DBCDE8019D9}" KeyPath="no">
-        <CreateFolder />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="FIREFOXEXTENSIONS">
-      <Component Id="Extensions" Guid="{DBEFB6AD-3282-4625-8257-2CF7EA4E7264}">
-        <CreateFolder />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIROOTFOLDER">
-      <Component Id="XPIRoot" Guid="{6E56CA5C-29ED-47e0-9EEF-64FDF8A0B353}" KeyPath="no">
-        <CreateFolder />
-        <File Id="xpi.chrome.manifest" Name="chrome.manifest" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\chrome.manifest" />
-        <File Id="xpi.icon.png.root" Name="icon.png" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\icon.png" />
-        <File Id="xpi.install.rdf" Name="install.rdf" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\install.rdf" />
-        <File Id="xpi.Makefile.am" Name="Makefile.am" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\Makefile.am" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPICOMPONENTSFOLDER">
-      <Component Id="XPIComponents" Guid="{2761C1B0-4EA2-4047-8A31-32679BB4651D}" KeyPath="no">
-        <CreateFolder />
-        <File Id="comp_belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\components\belgiumeidpkcs11.js" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPICONTENTFOLDER">
-      <Component Id="XPIContent" Guid="{DC052180-264F-4ace-ACF1-FC482715EB86}" KeyPath="no">
-        <CreateFolder />
-        <File Id="belgiumeidpkcs11.js" Name="belgiumeidpkcs11.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\content\belgiumeidpkcs11.js" />
-        <File Id="belgiumeidpkcs11.xul" Name="belgiumeidpkcs11.xul" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\content\belgiumeidpkcs11.xul" />
-        <File Id="belgiumeidprompt.js" Name="belgiumeidprompt.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\content\belgiumeidprompt.js" />
-        <File Id="belgiumeidprompt.xul" Name="belgiumeidprompt.xul" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\content\belgiumeidprompt.xul" />
-        <File Id="belgiumeidpromptsecure.js" Name="belgiumeidpromptsecure.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\content\belgiumeidpromptsecure.js" />
-        <File Id="belgiumeidpromptsecure.xul" Name="belgiumeidpromptsecure.xul" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\content\belgiumeidpromptsecure.xul" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIDEFAULTSFOLDER">
-      <Component Id="XPIdefaults" Guid="{B635FD45-0FCE-4285-9FA6-F9559C0F7EBB}" KeyPath="no">
-        <CreateFolder />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIDEFAULTSPREFSFOLDER">
-      <Component Id="XPIdefaultsprefs" Guid="{FA937E34-AE32-4acd-AC77-3487EBC2ABCD}" KeyPath="no">
-        <CreateFolder />
-        <File Id="belgiumeid.js" Name="belgiumeid.js" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\defaults\preferences\belgiumeid.js" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPILOCALEFOLDER">
-      <Component Id="XPIlocale" Guid="{B8A44A30-F2EF-44c3-BBE5-54395F47C869}" KeyPath="no">
-        <CreateFolder />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPILOCALEDEFOLDER">
-      <Component Id="XPIlocalede" Guid="{54BC660D-7C9D-4ddc-AA96-29D7A5DD0E53}" KeyPath="no">
-        <CreateFolder />
-        <File Id="belgiumeid.properties.de" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\locale\de-DE\belgiumeid.properties" />
-      </Component>
-    </DirectoryRef>
-    
-    <DirectoryRef Id="XPILOCALEENFOLDER">
-      <Component Id="XPIlocaleen" Guid="{F2BBAA41-E463-409d-B4AB-CE3626339663}" KeyPath="no">
-        <CreateFolder />
-          <File Id="belgiumeid.properties.en" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\locale\en-US\belgiumeid.properties" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPILOCALEFRFOLDER">
-      <Component Id="XPIlocalefr" Guid="{C0F969BB-3678-4828-BAE7-023054072A01}" KeyPath="no">
-        <CreateFolder />
-          <File Id="belgiumeid.properties.fr" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\locale\fr-FR\belgiumeid.properties" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPILOCALENLFOLDER">
-      <Component Id="XPIlocalenl" Guid="{E8587941-7B32-4a9d-8F4B-23C1E8EC1126}" KeyPath="no">
-        <CreateFolder />
-        <File Id="belgiumeid.properties.nl" Name="belgiumeid.properties" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\locale\nl-NL\belgiumeid.properties" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPIMETA_INF">
-      <Component Id="XPIMetainf" Guid="{B3FE34C4-8ECB-4302-89D0-C4B3CDA98E12}" KeyPath="no">
-        <CreateFolder />
-        <File Id="manifest.mf" Name="manifest.mf" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\META-INF\manifest.mf" />
-        <File Id="mozilla.rsa" Name="mozilla.rsa" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\META-INF\mozilla.rsa" />
-        <File Id="mozilla.sf" Name="mozilla.sf" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\META-INF\mozilla.sf" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="XPISKINFOLDER">
-      <Component Id="XPIskin" Guid="{7FF22F5F-E42E-47af-91EE-9A9491B196AC}" KeyPath="no">
-        <CreateFolder />
-        <File Id="overlay.css" Name="overlay.css" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\skin\overlay.css" />
-        <File Id="icon.png" Name="icon.png" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\skin\icon.png" />
-		    <File Id="icon40x40.png" Name="icon40x40.png" KeyPath="no" Source="..\..\..\plugins_tools\xpi\signed-build\belgiumeid-signed\skin\icon40x40.png" />
       </Component>
     </DirectoryRef>
 
@@ -282,14 +133,6 @@
       <Component Id="Icon" Guid="{5B657BAD-8CFC-4E42-AF8C-13338C50D784}" SharedDllRefCount="no">
         <File Id="eid.ico" Name="eid.ico" KeyPath="yes" Source="..\..\eid.ico" />
       </Component>
-      
-      <Component Id="OutlookTool" Guid="{F36A543C-CB17-4D91-BF0C-2EAEFEC3CB3A}">
-        <File Id="beidoutlooksnc.exe" Name="beidoutlooksnc.exe" KeyPath="yes" Source="..\..\..\plugins_tools\Outlook_snc\beidoutlooksnc.exe" />
-      </Component>
-
-      <Component Id="Office2010XAdESTool" Guid="{B42CF78B-952A-4768-8605-2E6F3BBA340B}">
-        <File Id="beidoffice2010_XAdES_XL.exe" Name="beidoffice2010_XAdES_XL.exe" KeyPath="yes" Source="..\..\..\plugins_tools\Office2010_XAdES_XL\beidoffice2010_XAdES_XL.exe" />
-      </Component>
 
       <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="no" Win64="no">
         <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\doc\licenses\English\License_en.rtf" />
@@ -315,8 +158,6 @@
 
     <DirectoryRef Id="BEIDPPDIR">
       <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes">
-        <!--File Id="ch44xxeid.dll" Name="ch44xxeid.dll" Source="..\..\..\pinpad\ch44xxeid.dll" /-->
-        <!--File Id="sprx32eid.dll" Name="sprx32eid.dll" Source="..\..\..\pinpad\sprx32eid.dll" /-->
         <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\beidpp\xireid.dll" />
       </Component>
     </DirectoryRef>
@@ -328,24 +169,6 @@
         <!-- Start SCardSvr Service now -->
         <!--<ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" Wait="no"/>-->
       </Component>
-
-      <Component Permanent="yes" Id="REGISTERXADESSETTINGSOFFICE2010" Guid="{DBD8E310-00D3-402f-A2F2-1984DD825C4D}">
-        <RegistryKey Root="HKCU"
-                     Key="Software\Microsoft\Office\14.0\Common\Signatures"
-                     Action="create" >
-          <RegistryValue Type="string" Name="TSALocation" Value="http://tsa.belgium.be/connect" KeyPath="yes"/>
-          <RegistryValue Type="integer" Name="XAdESLevel" Value="5" KeyPath="no"/>
-          <RegistryValue Type="integer" Name="MinXAdESLevel" Value="0" KeyPath="no"/>
-        </RegistryKey>
-      </Component>
-
-      <Component Id="REGISTERXPI" Guid="{946B85B6-99CC-4893-8A42-E7EC6FFE0D87}">
-        <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Mozilla\Firefox\Extensions"
-                     Action="createAndRemoveOnUninstall">
-          <RegistryValue Type="string" Name="belgiumeid@eid.belgium.be" Value="C:\Program Files\Mozilla Firefox\extensions\belgiumeid@eid.belgium.be" KeyPath="yes"/>
-		</RegistryKey>
-      </Component> 
 	  
       <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}">
         <RegistryKey Root="HKLM"
@@ -365,18 +188,13 @@
         <RegistryKey Root="HKLM"
             Key="SOFTWARE\BEID"
             Action="createAndRemoveOnUninstall">
-          <RegistryKey Key="certificatevalidation" Action="createAndRemoveOnUninstall">
-            <RegistryValue Type="integer" Name="cert_validation_ocsp" Value="0"/>
-            <RegistryValue Type="integer" Name="cert_validation_crl" Value="0"/>
-          </RegistryKey>
           
           <RegistryKey Key="general" Action="createAndRemoveOnUninstall">
-            <RegistryValue Type="string" Name="language" Value="!(loc.Langpref)"/>
             <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFilesFolder]Belgium Identity Card"/>
           </RegistryKey>
           
           <RegistryKey Key="logging" Action="createAndRemoveOnUninstall">
-            <RegistryValue Type="string" Name="log_dirname" Value="[ProgramFilesFolder]Belgium Identity Card\log"/>
+            <RegistryValue Type="string" Name="log_dirname" Value="[CommonAppDataFolder]Belgium Identity Card\log"/>
           </RegistryKey>
           
         </RegistryKey>
@@ -386,53 +204,6 @@
     </DirectoryRef>
 
 
-    <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="RemoveGui35Shortcuts" Guid="{93B9A186-E198-4a67-8AB1-6041D59BBE7F}">
-        <RemoveFile Id="RemoveBeidGuiStartMenuShortcut" Name="eID-Viewer.lnk" On="both"/>
-        <RemoveFile Id="RemoveEidViewerShortcut" Name="eID-Viewer.lnk" Directory="DesktopFolder" On="both"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="0" KeyPath="yes" />
-      </Component>
-      <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
-        <Shortcut Id="eidviewerStartMenuShortcut"
-          Name="eID Viewer"
-          Description="!(loc.BeidGuiDescr)"
-          Target="[BEIDVIEWERDIR]eID Viewer.exe"
-          WorkingDirectory="BEIDVIEWERDIR"/>
-        <Shortcut Id="EidViewerDesktopShortcut"
-                  Name="eID Viewer"
-                  Directory="DesktopFolder"
-                  Description="!(loc.BeidGuiDescr)"
-                  Target="[BEIDVIEWERDIR]eID Viewer.exe"
-                  WorkingDirectory="BEIDVIEWERDIR"/>
-          <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eID Viewer" Type="integer" Value="1" KeyPath="yes" />
-      </Component>
-      <Component Id="BeidApplicationProgramsFolder" Guid="{09FD9493-DF96-442c-80EA-1858CE65E796}">				  
-        <RemoveFolder Id="ApplicationProgramsFolder" On="both"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="BeidApplicationProgramsFolder" Type="integer" Value="1" KeyPath="yes" />
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="ApplicationProgramsFolderUtilities">
-      <Component Id="OutlookShortcut" Guid="{813C0984-0401-4604-9D7F-E13BDD28FBD7}">
-        <Shortcut Id="OutlookStartMenuShortcut"
-          Name="MS Outlook registry configuration"
-          Description="!(loc.OutlooksncDescr)"
-          Target="[APPLICATIONROOTFOLDER]beidoutlooksnc.exe"
-          WorkingDirectory="APPLICATIONROOTFOLDER"/>
-        <RemoveFolder Id="ApplicationProgramsFolderUtilities" On="uninstall"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="OutlookShortcut" Type="integer" Value="1" KeyPath="yes" />
-      </Component>
-      
-      <Component Id="Office2010XAdESShortcut" Guid="{B2D00383-20A7-4058-A153-80D4DC15FD42}">
-        <Shortcut Id="Office2010XAdESStartMenuShortcut"
-          Name="MS Office 2010 XAdES XL signature configuration"
-          Description="!(loc.Office2010XAdESDescr)"
-          Target="[APPLICATIONROOTFOLDER]beidoffice2010_XAdES_XL.exe"
-          WorkingDirectory="APPLICATIONROOTFOLDER"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="Office2010XAdESShortcut" Type="integer" Value="1" KeyPath="yes" />
-      </Component>      
-    </DirectoryRef>
-
     <Feature Id="BeidRuntime"
              Title="!(loc.BeidRuntime)"
              Description="!(loc.BeidRuntimeDesc)"
@@ -440,7 +211,7 @@
              Level="1"
              >
 <?ifndef env.DONT_MERGE_VCRT?>
-      <Feature Id="VCRedist" Title="VC++ 12.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
+      <Feature Id="VCRedist" Title="VC++ 14.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
         <MergeRef Id="VCRT" />
       </Feature>
 <?endif?>
@@ -448,38 +219,12 @@
       <ComponentRef Id="Icon" />
       <ComponentRef Id="License"/>
       <ComponentRef Id="LogDir"/>
-      <ComponentRef Id="Extensions"/>
-      <ComponentRef Id="FireFoxRoot"/>
-      <ComponentRef Id="XPIRoot"/>
-      <ComponentRef Id="XPIContent"/>
-      <ComponentRef Id="XPIComponents"/>
-      <ComponentRef Id="XPIdefaults"/>
-      <ComponentRef Id="XPIdefaultsprefs"/>
-      <ComponentRef Id="XPIlocale"/>
-      <ComponentRef Id="XPIlocaleen"/>
-      <ComponentRef Id="XPIlocalefr"/>
-      <ComponentRef Id="XPIlocalenl"/>
-      <ComponentRef Id="XPIlocalede"/>
-      <ComponentRef Id="XPIMetainf"/>
-      <ComponentRef Id="XPIskin"/>
 
       <!-- Beid pinpad dir-->
       <ComponentRef Id="PinpadLib"/>
 
       <!-- Registry -->
       <ComponentRef Id="RegistryBeidSystem"/>
-
-	  <Feature Id="BeidGuiInstall"
-             Title="!(loc.BeidGui)"
-           Description="!(loc.BeidGuiDescr)"
-           Level="1"
-      >
-
-      <!-- Program Files -->
-      <ComponentRef Id="BEIDVIEWER"/>
-      <ComponentRef Id="eidviewerShortcut"/>
-      <ComponentRef Id="RemoveGui35Shortcuts"/>
-    </Feature>
 
     <Feature Id="Crypto"
                 Title="!(loc.Crypto)"
@@ -488,23 +233,7 @@
                 >
       <ComponentRef Id="SCardSvrService"/>
       <ComponentRef Id="pkcs11"/>
-      <ComponentRef Id="REGISTERXPI"/>
 
-      <Feature Id="Office2010Signatureregistration" Level="1" Display="hidden" Absent="disallow">
-        <ComponentRef Id="REGISTERXADESSETTINGSOFFICE2010"/>
-        <Condition Level="0"><![CDATA[PROPOFFICE2010SIGNREG]]></Condition>
-      </Feature>
-
-
-      <!--<ComponentRef Id="pkcs11_cfg"/>
-        <ComponentRef Id="pkcs11_register" />-->
-      <ComponentRef Id="BeidApplicationProgramsFolder"/>
-      <ComponentRef Id="OutlookTool"/>
-      <ComponentRef Id="Office2010XAdESTool"/>
-
-      <!-- Shortcuts -->
-      <ComponentRef Id ="OutlookShortcut"/>
-      <ComponentRef Id="Office2010XAdESShortcut"/>
       <Feature Id="Install_Minidriver" Title="Minidriver" Absent="allow" Level="1">
         <ComponentRef Id="beidmdrv"/>
         <ComponentRef Id="CertPropService"/>
@@ -512,25 +241,7 @@
         <ComponentRef Id="REGISTERMINIDRIVER"/>
         <Condition Level="1">VersionNT >= 600</Condition>
       </Feature>
-
     </Feature>
-
-      <Feature  Id="Install_Utilities"
-                Title="!(loc.UtilsTitle)"
-                Description="!(loc.UtilsDesc)"
-                Absent="allow"
-                Level="1"
-                >
-
-        <Feature Id="Install_Outlooksnc"
-                 Title="!(loc.OutlooksncTitle)"
-                 Description="!(loc.OutlooksncDescr)"
-                 Absent="allow"
-                 Level="1">
-          <ComponentRef Id ="OutlookShortcut"/>
-          <ComponentRef Id="OutlookTool" />
-        </Feature>
-      </Feature>
 
     </Feature>
     <UI>

@@ -118,54 +118,60 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ABOUT" xml:space="preserve">
-    <value>Über</value>
+    <value>Over</value>
   </data>
   <data name="CARD" xml:space="preserve">
-    <value>Karte/PIN</value>
+    <value>Kaart/PIN</value>
   </data>
   <data name="CERTIFICATES" xml:space="preserve">
-    <value>Zertifikate</value>
+    <value>Certificaten</value>
   </data>
   <data name="fileMenuQuitItem" xml:space="preserve">
-    <value>Beenden</value>
+    <value>Verlaten</value>
   </data>
   <data name="fileMenuTitle" xml:space="preserve">
-    <value>Datei</value>
+    <value>Bestand</value>
   </data>
   <data name="helpMenuTitle" xml:space="preserve">
-    <value>Hilfe</value>
+    <value>Hulp</value>
   </data>
   <data name="IDENTITY" xml:space="preserve">
-    <value>Identität</value>
+    <value>Identiteit</value>
   </data>
   <data name="languageMenuTitle" xml:space="preserve">
-    <value>Sprache</value>
+    <value>Taal</value>
   </data>
   <data name="LOG" xml:space="preserve">
-    <value>Logbuch</value>
+    <value>Logboek</value>
   </data>
   <data name="printButtonTitle" xml:space="preserve">
-    <value>Drucken</value>
+    <value>Afdrukken..</value>
   </data>
   <data name="showLogTab" xml:space="preserve">
-    <value>Logbuch anzeigen</value>
+    <value>Logboek tonen</value>
   </data>
   <data name="Belgium" xml:space="preserve">
-    <value>Belgien</value>
+    <value>België</value>
   </data>
   <data name="coat_of_arms_jpg_location" xml:space="preserve">
-    <value>pack://application:,,,/Resources/Images/coat_of_arms_de.jpg</value>
+    <value>pack://application:,,,/Resources/Images/coat_of_arms_nl.jpg</value>
   </data>
   <data name="pinVerifiedOKDialogMessage" xml:space="preserve">
-    <value>Ihr PIN-Code war korrekt validiert</value>
+    <value>De PIN werd succesvol geverifieerd.</value>
   </data>
   <data name="pinVerifiedOKDialogTitle" xml:space="preserve">
-    <value>PIN validiert</value>
+    <value>Pincode geverifieerd</value>
   </data>
   <data name="printedBy" xml:space="preserve">
-    <value>Gedruckt von:</value>
+    <value>Afgedrukt door:</value>
   </data>
   <data name="printedDateLabel" xml:space="preserve">
-    <value>Gedruckt:</value>
+    <value>Afgedrukt:</value>
+  </data>
+  <data name="pinChangedOKDialogMessage" xml:space="preserve">
+    <value>De PIN werd succesvol gewijzigd.</value>
+  </data>
+  <data name="pinChangedOKDialogTitle" xml:space="preserve">
+    <value>Pincode gewijzigd</value>
   </data>
 </root>

@@ -8,7 +8,7 @@ Class=SmartCard
 ClassGuid={990A2BD7-E738-46c7-B26F-1CF8FB9F1391}
 Provider=%FEDICT%
 CatalogFile=beidmdrv.cat
-DriverVer=11/30/2016,4.1.9
+DriverVer=02/22/2017,4.2.2
 
 [Manufacturer]
 %FEDICT%=Fedict,NTamd64,NTamd64.6.1,NTx86,NTx86.6.1
