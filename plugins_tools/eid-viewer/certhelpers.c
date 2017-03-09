@@ -184,8 +184,12 @@ static int eid_vwr_check_data_validity(const void* photo, int plen,
 	hash(address_data, (ptr - address_data) + datsiglen, digest);
 	free(address_data);
 	if(RSA_verify(nid, digest, hashlen, addrsig, addsiglen, EVP_PKEY_get1_RSA(pubkey)) != 1) {
-		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: address signature invalid!");
-		return 0;
+		/* Some CA4 cards are re-signed CA3 ones where the photo hash is still SHA1, but everything else is SHA256. Try if this is such a card */
+		SHA256(datafile, datfilelen, digest);
+		if(RSA_verify(NID_sha256, digest, 32, datasig, datsiglen, EVP_PKEY_get1_RSA(pubkey)) != 1) {
+			be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: address signature invalid!");
+			return 0;
+		}
 	}
 
 	return 1;
