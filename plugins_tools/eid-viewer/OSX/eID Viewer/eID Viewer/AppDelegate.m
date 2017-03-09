@@ -328,6 +328,7 @@
 	NSUserDefaults* prefs = [NSUserDefaults standardUserDefaults];
 	eIDLanguage langcode = [prefs integerForKey:@"ContentLanguage"];
 	if(langcode == eIDLanguageNone||langcode > eIDLanguageNl) {
+		langcode = eIDLanguageNone;
 		NSArray* langs = [NSLocale preferredLanguages];
 		for(int i=0; i<[langs count] && langcode == eIDLanguageNone;i++) {
 			NSString* str = [langs objectAtIndex:i];
