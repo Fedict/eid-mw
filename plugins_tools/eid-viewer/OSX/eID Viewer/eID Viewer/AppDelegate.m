@@ -331,7 +331,7 @@
 		langcode = eIDLanguageNone;
 		NSArray* langs = [NSLocale preferredLanguages];
 		for(int i=0; i<[langs count] && langcode == eIDLanguageNone;i++) {
-			NSString* str = [langs objectAtIndex:i];
+			NSString* str = [[langs objectAtIndex:i] substringToIndex:2];
 			if([str isEqualToString:@"de"]) {
 				langcode = eIDLanguageDe;
 			} else if([str isEqualToString:@"en"]) {
@@ -341,6 +341,10 @@
 			} else if([str isEqualToString:@"nl"]) {
 				langcode = eIDLanguageNl;
 			}
+		}
+		if(langcode == eIDLanguageNone) {
+			// system language doesn't work, choose English instead
+			langcode = eIDLanguageEn;
 		}
 	}
 	eIDLogLevel level = [prefs integerForKey:@"log_level"];
