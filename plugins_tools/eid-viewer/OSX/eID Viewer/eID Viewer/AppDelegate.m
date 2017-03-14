@@ -199,9 +199,15 @@
 		default:
 			break;
 	}
-	if(prevState == eIDStateNoReader) {
+	if(prevState == eIDStateNoReader || prevState == eIDStateTokenError) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[_readerLogo setHidden:YES];
+		}];
+	}
+	if(state == eIDStateTokenError) {
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[_readerLogo setImage:[NSImage imageNamed:@"state_error.png"]];
+			[_readerLogo setHidden:NO];
 		}];
 	}
 	prevState = state;
