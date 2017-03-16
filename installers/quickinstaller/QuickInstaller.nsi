@@ -185,16 +185,6 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
   File /r "ReaderDrivers"
 
 ${DisableX64FSRedirection}
-	 
-	${If} $versionMajor == 5
-	${AndIf} $versionMinor == 1
-		;xp
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\ACR38U\a38usb.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\OmniKey3121\cxbu0wdm.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\SCR331\scr3xx.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\VascoDP509\usbccid.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\SPR532\Spr332.inf"'
-	${EndIf}
 	
 	${If} $versionMajor == 6
 	${AndIf} $versionMinor == 0
