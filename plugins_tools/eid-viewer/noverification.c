@@ -2,7 +2,7 @@
 
 //return 0 for succes
 int eid_vwr_verify_card(void* d) {
-	const struct eid_vwr_cache_item *photo, *phash, *data, *datsig, *address, *adsig, *cert;
+	//const struct eid_vwr_cache_item *photo, *phash, *data, *datsig, *address, *adsig, *cert;
 
 	return 0;
 }
