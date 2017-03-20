@@ -110,6 +110,12 @@ namespace eIDViewer
                 }
                 else
                 {
+                    //check if this is not a re-keyed card that received a hash upgrade sha1 -> sha256
+                    if (hashAlg.Equals("SHA1"))
+                    {
+                        this.logText += "The SHA1 signature of the data is invalid, checking if the card is re-keyed \n";                    
+                        return CheckRNSignature(data, signedHash, "SHA256");
+                    }
                     Console.WriteLine("The signature is not valid.");
                     this.logText += "The signature of the data is not valid \n";
                     ResetDataValues();
