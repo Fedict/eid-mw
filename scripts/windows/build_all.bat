@@ -38,6 +38,7 @@
 :: create minidriver driver installer
 :: ==================================
 
+
 :: BuildPath
 set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
 @echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
@@ -47,7 +48,7 @@ mkdir %MDRVINSTALLPATH%\beidmdrv
 @echo [INFO] Copying minidriver files..
 
 :: copy inf files
-copy %MDRVINSTALLPATH%\beidmdrv.inf %MDRVINSTALLPATH%\beidmdrv
+copy %~dp0..\..\cardcomm\minidriver\makemsi\beidmdrv.inf %MDRVINSTALLPATH%\beidmdrv
 
 :: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
 copy %~dp0..\..\cardcomm\VS_2015\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll
