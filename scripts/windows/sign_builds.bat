@@ -7,6 +7,9 @@
 :: =================
 @call "%~dp0.\set_eidmw_version.cmd"
 
+set OUR_CURRENT_PATH="%cd%"
+@echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
+
 set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
 
 :: Create catalog
@@ -31,6 +34,16 @@ set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 
+@cd "%MDRVINSTALLPATH%"
+:: zip the minidriver folder
+powershell.exe -nologo -noprofile -command "Compress-Archive -Path .\beidmdrv\* -CompressionLevel Optimal -DestinationPath ./beidmdrv.zip"
+@echo [INFO] Sign the zip file
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv.zip"
+
+copy %~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv.zip %~dp0
+
+@cd "%OUR_CURRENT_PATH%"
+
 :: sign pkcs11
 :: ===========
 
@@ -46,8 +59,6 @@ set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
 
 :: create the MSI installers
 :: =========================
-set OUR_CURRENT_PATH="%cd%"
-@echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
 
 ::need current dir to be pointing at the one of the wxs files, or light.exe can't find the paths
 @cd %~dp0..\..\installers\eid-mw\Windows
