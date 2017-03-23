@@ -104,8 +104,7 @@ namespace eIDViewer
 
                 if (csp.VerifyHash(HashValue, CryptoConfig.MapNameToOID(hashAlg), signedHash))
                 {
-                    Console.WriteLine("The signature is valid.");
-                    this.logText += "The signature of the data is valid \n";
+                    WriteLog( "The signature of the data is valid \n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
                     return true;
                 }
                 else
@@ -113,17 +112,16 @@ namespace eIDViewer
                     //check if this is not a re-keyed card that received a hash upgrade sha1 -> sha256
                     if (hashAlg.Equals("SHA1"))
                     {
-                        this.logText += "The SHA1 signature of the data is invalid, checking if the card is re-keyed \n";                    
+                        this.WriteLog("The SHA1 signature of the data is invalid, checking if the card is re-keyed \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);               
                         return CheckRNSignature(data, signedHash, "SHA256");
                     }
-                    Console.WriteLine("The signature is not valid.");
-                    this.logText += "The signature of the data is not valid \n";
+                    this.WriteLog("The signature of the data is not valid \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                     ResetDataValues();
                 }
             }
             catch (Exception e)
             {
-                this.logText += "An error occurred validating the data signature\n Exception message is: " + e.Message + "\n";
+                this.WriteLog("An error occurred validating the data signature\n Exception message is: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
             return false;
         }
@@ -165,8 +163,7 @@ namespace eIDViewer
             }
             catch (Exception e)
             {
-                this.logText += "An error occurred computing a sha1 hash \n";
-                this.logText += "Exception message: " + e.Message + "\n";
+                this.WriteLog("An error occurred computing a sha1 hash \nException message: " + e.Message + "\n" , eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
             return false;
 
@@ -192,15 +189,15 @@ namespace eIDViewer
             if (buildChain.ChainElements[0].Certificate.Thumbprint != leafCertificate.Thumbprint)
             {
                 //leaf cert in the verified chain is not the one on the eID Card
-                this.logText += "certificate chain not build correctly, leafCertificate in Windows store differs from the one on eID card \n";
-               return false;
+                this.WriteLog("certificate chain not build correctly, leafCertificate in Windows store differs from the one on eID card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                return false;
             }
             if (chainLen == 2)
             {
                 if (!buildChain.ChainElements[1].Certificate.GetPublicKey().SequenceEqual(rootCA_cert.GetPublicKey()))
                 {
                     //root cert in the verified chain has different public key then the one on the eID Card
-                    this.logText += "certificate chain not build correctly, RootCA in Windows store has different public key then the one on the eID Card \n";
+                    this.WriteLog("certificate chain not build correctly, RootCA in Windows store has different public key then the one on the eID Card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                     return false;
                 }
             }
@@ -210,14 +207,14 @@ namespace eIDViewer
                 if (buildChain.ChainElements[1].Certificate.Thumbprint != intermediateCA_cert.Thumbprint)
                 {
                     //intermediateCA cert  in the verified chain is not the one on the eID Card
-                    this.logText += "certificate chain not build correctly, intermediateCA in Windows store differs from the one on eID card \n";
+                    this.WriteLog("certificate chain not build correctly, intermediateCA in Windows store differs from the one on eID card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                     return false;
                 }
                 //check if root cert in the verified chain has different public key then the one on the eID Card
                 if (!buildChain.ChainElements[2].Certificate.GetPublicKey().SequenceEqual(rootCA_cert.GetPublicKey()))
                 {
                     //root cert in the verified chain has different public key then the one on the eID Card
-                    this.logText += "certificate chain not build correctly, RootCA in Windows store differs from the one on eID card \n";
+                    this.WriteLog("certificate chain not build correctly, RootCA in Windows store has different public key then the one on the eID Card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                     return false;
                 }
             }
@@ -252,13 +249,13 @@ namespace eIDViewer
                     }
                     else
                     {
-                        this.logText += "embeddedRootCA: %s not found\n" + embeddedRootCA;
+                        this.WriteLog("embeddedRootCA: %s not found\n" + embeddedRootCA + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                     }
                 }
             }
             catch (CryptographicException e)
             {
-                this.logText += "An error occurred comparing the Belgium rootCA on the card with the ones in the EIDViewer\n" + e.ToString();
+                this.WriteLog("An error occurred comparing the Belgium rootCA on the card with the ones in the EIDViewer\n" + e.ToString(), eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
             return foundEmbeddedRootCA;
         }
@@ -273,7 +270,7 @@ namespace eIDViewer
 
             if( (rootCertOnCard == null) || (rootViewModel == null) )
             {
-                this.logText += "No root certificate present to verify\n";
+                this.WriteLog("No root certificate present to verify\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                 return false;
             }
 
@@ -290,6 +287,7 @@ namespace eIDViewer
             if (foundEmbeddedRootCA == false)
             {
                 rootViewModel.CertTrust = "Unknow RootCA";
+                this.WriteLog("Unknow RootCA", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                 SetCertificateIcon(rootViewModel, eid_cert_status.EID_CERT_STATUS_INVALID);
             }
             else
@@ -303,28 +301,28 @@ namespace eIDViewer
 
         public void LogChainInfo(ref X509Chain chain)
         {
-            this.logText += "Chain Information \n";
-            this.logText += "Chain revocation flag: " + chain.ChainPolicy.RevocationFlag  + "\n";
-            this.logText += "Chain revocation mode: " + chain.ChainPolicy.RevocationMode + "\n";
-            this.logText += "Chain verification flag: " + chain.ChainPolicy.VerificationFlags + "\n";
-            this.logText += "Chain verification time: " + chain.ChainPolicy.VerificationTime + "\n";
-            this.logText += "Chain status length: " + chain.ChainStatus.Length + "\n";
-            this.logText += "Chain application policy count: " + chain.ChainPolicy.ApplicationPolicy.Count + "\n";
-            this.logText += "Chain certificate policy count: " + chain.ChainPolicy.CertificatePolicy.Count + "\n";
+            this.WriteLog("Chain Information \n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("Chain revocation flag: " + chain.ChainPolicy.RevocationFlag + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("Chain revocation mode: " + chain.ChainPolicy.RevocationMode + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("Chain verification flag: " + chain.ChainPolicy.VerificationFlags + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("Chain verification time: " + chain.ChainPolicy.VerificationTime + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("Chain status length: " + chain.ChainStatus.Length + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("Chain application policy count: " + chain.ChainPolicy.ApplicationPolicy.Count + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("Chain certificate policy count: " + chain.ChainPolicy.CertificatePolicy.Count + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
 
             //Output chain element information.
-            this.logText += "Chain Element Information \n";
-            this.logText += "Number of chain elements: " + chain.ChainElements.Count + "\n";
-            this.logText += "Chain elements synchronized? " + chain.ChainElements.IsSynchronized + "\n";
+            this.WriteLog("Chain Element Information \n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("Number of chain elements: " + chain.ChainElements.Count + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("Chain elements synchronized? " + chain.ChainElements.IsSynchronized + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
         }
 
         public void LogChainElement(ref X509ChainElement element, int index)
         {
-            this.logText += "Certificate in chain \n";
-            this.logText += "subject: " + element.Certificate.Subject + "\n";
-            this.logText += "issuer name: " + element.Certificate.Issuer + "\n";
-            this.logText += "valid from: " + element.Certificate.NotBefore + "\n";
-            this.logText += "valid until: " + element.Certificate.NotAfter + "\n";
+            this.WriteLog("Certificate in chain \n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("subject: " + element.Certificate.Subject + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("issuer name: " + element.Certificate.Issuer + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("valid from: " + element.Certificate.NotBefore + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            this.WriteLog("valid until: " + element.Certificate.NotAfter + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
         }
 
         //if .NET cannot build a validated chain, return invalid
@@ -360,7 +358,7 @@ namespace eIDViewer
                     if (chainok == false)
                     {
                         //no valid chain could be build
-                        this.logText += "no valid certificate chain could be constructed \n";
+                        this.WriteLog("no valid certificate chain could be constructed \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                         chainStatus = eid_cert_status.EID_CERT_STATUS_UNKNOWN;
                     }
                     else
@@ -368,12 +366,12 @@ namespace eIDViewer
                         //a valid certificate chain is constructed, now verify if it is the same as the one on the eID Card
                         if (CheckChain(ref chain, ref leafCertificate))
                         {
-                            this.logText += "certificate chain build correctly \n";
+                            this.WriteLog("certificate chain build correctly \n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
                             chainStatus = eid_cert_status.EID_CERT_STATUS_VALID;
                         }
                         else
                         {
-                            this.logText += "this was not the certificate chain we were looking for \n";
+                            this.WriteLog("this was not the certificate chain we were looking for \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                             //leafCertificateViewModel.CertTrust = "Did not validate\n";
                             SetCertificateIcon(leafCertificateViewModel, eid_cert_status.EID_CERT_STATUS_WARNING);
                             return;
@@ -419,10 +417,8 @@ namespace eIDViewer
                         {
                             for (int index = 0; index < element.ChainElementStatus.Length; index++)
                             {
-                                Console.WriteLine(element.ChainElementStatus[index].Status);
-                                Console.WriteLine(element.ChainElementStatus[index].StatusInformation);
-                                this.logText += "certificate status is " + element.ChainElementStatus[index].Status + "\n";
-                                this.logText += "certificate status information: " + element.ChainElementStatus[index].StatusInformation + "\n";
+                                this.WriteLog("certificate status is " + element.ChainElementStatus[index].Status + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                                this.WriteLog("certificate status information: " + element.ChainElementStatus[index].StatusInformation + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
 
                                 certModel.CertTrust += element.ChainElementStatus[index].StatusInformation;
                                 switch (element.ChainElementStatus[index].Status)
@@ -467,14 +463,14 @@ namespace eIDViewer
                 }
                 else
                 {
-                    this.logText += "Leaf certificate was null, cannot verify \n";
+                    this.WriteLog("Leaf certificate was null, cannot verify \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                 }
             }
 
             catch (Exception e)
             {
-                this.logText += "An error occurred checking the certificate status \n";
-                this.logText += "Exception message: " + e.Message + "\n";
+                this.WriteLog("An error occurred checking the certificate status \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                this.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }     
             finally
             {
@@ -507,7 +503,8 @@ namespace eIDViewer
             }
             else
             {
-                this.logText += "this root certificate is not know by this version of the eID Viewer \n";
+                this.WriteLog("this root certificate is not know by this version of the eID Viewer \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+//                this.WriteLog("Either you are not running the latest version of the eID Viewer, or there is an issue with this eID Card", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
             progress_info = "";
         }
@@ -546,7 +543,7 @@ namespace eIDViewer
             //check if the identity signature is ok
             if (CheckRNSignature(dataFile, dataSignFile, hashAlg) != true)
             {
-                this.logText += "dataFile signature check failed \n";
+                this.WriteLog("identity dataFile signature check failed \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                 return false;
             }
 
@@ -558,14 +555,14 @@ namespace eIDViewer
 
             if (CheckRNSignature(trimmedAddressFile, addressSignFile, hashAlg) != true)
             {
-                this.logText += "addressFile signature check failed \n";
+                this.WriteLog("addressFile signature check failed \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                 return false;
             }
 
             //check if the photo corresponds with the photo hash in the identity file
             if (CheckShaHash(photoFile, photo_hash) != true)
             {
-                this.logText += "photo doesn't match the hash in the signature file \n";
+                this.WriteLog("photo doesn't match the hash in the signature file \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                 return false;
             }
 
@@ -728,8 +725,7 @@ namespace eIDViewer
             }
             catch (Exception e)
             {
-                this.logText+= "An error occurred displaying the image \n";
-				this.logText += "Exception message: " + e.Message + "\n";
+                this.WriteLog("An error occurred displaying the image \nException message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                 return null;
             }
         }
@@ -884,8 +880,7 @@ namespace eIDViewer
             }
             catch (Exception e)
             {
-                this.logText += "An error occurred storing binary data of " + label + "\n";
-                this.logText += "Exception message: " + e.Message + "\n";
+                this.WriteLog("An error occurred storing binary data of " + label + "\nException message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
         }
 
@@ -973,6 +968,31 @@ namespace eIDViewer
             rootCA_cert = null;
             intermediateCA_cert = null;
             RN_cert = null; 
+        }
+
+        public void WriteLog(String logLine, eid_vwr_loglevel loglevelofLine)
+        {
+            if (log_level <= loglevelofLine)
+            {
+                switch (log_level)
+                {
+                    case eid_vwr_loglevel.EID_VWR_LOG_ERROR:
+                        logText += "E: ";
+                        break;
+                    case eid_vwr_loglevel.EID_VWR_LOG_COARSE:
+                        logText += "W: ";
+                        break;
+                    case eid_vwr_loglevel.EID_VWR_LOG_NORMAL:
+                        logText += "N: ";
+                        break;
+                    case eid_vwr_loglevel.EID_VWR_LOG_DETAIL:
+                        logText += "D: ";
+                        break;
+                    default:
+                        break;
+                }
+                logText += logLine;
+            }
         }
 
         public void NotifyPropertyChanged(String propertyName)

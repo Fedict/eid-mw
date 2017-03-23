@@ -141,10 +141,7 @@ namespace eIDViewer
 
         private static void CSCbNewSrc(eid_vwr_source eid_vwr_source)
         {
-            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
-            {
-                theData.logText += "CSCbNewSrc called " + eid_vwr_source.ToString() + "\n";
-            }
+            theData.WriteLog("CSCbNewSrc called " + eid_vwr_source.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
             switch (eid_vwr_source)
             {
                 case eid_vwr_source.EID_VWR_SRC_UNKNOWN:
@@ -173,20 +170,15 @@ namespace eIDViewer
         }
         private static void CSCbNewStringData([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPWStr)]string data)
         {
-            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
-            {
-                theData.logText += "CSCbNewStringData called, label = " + label + "\n";
-                theData.logText += "CSCbNewStringData called, data =  " + data + "\n";
-            }
+            
+            theData.WriteLog("CSCbNewStringData called, data =  " + data + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
             theData.StoreStringData(label, data);
         }
 
         private static void CSCbnewbindata([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data, int datalen)
         {
-            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
-            {
-                theData.logText += "CSCbnewbindata called " + label + "\n";
-            }
+            theData.WriteLog("CSCbnewbindata called " + label + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+
             if (data != null)
             {
                 theData.StoreBinData(label, data, datalen);
@@ -195,18 +187,13 @@ namespace eIDViewer
 
         private static void CSCblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPWStr)]string str)
         {
-            if (logLevel >= theData.log_level)
-            {
-                theData.logText += "CSCblogtest called " + str + "\n";
-            }
+            theData.WriteLog("CSCblogtest called " + str + "\n", logLevel);          
         }
 
         private static void CSCbnewstate(eid_vwr_states state)
         {
-            if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
-            {
-                theData.logText += "CSCbnewstate called " + state.ToString() + "\n";
-            }
+            theData.WriteLog("CSCbnewstate called " + state.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+
             switch (state)
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
@@ -252,10 +239,7 @@ namespace eIDViewer
         {
             try
             {
-                if (theData.log_level == eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
-                {
-                    theData.logText += "CSCbpinopResult called, result = " + result.ToString() + "\n";
-                }
+                theData.WriteLog("CSCbpinopResult called, result = " + result.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
 
                 ResourceManager rm = new ResourceManager("eIDViewer.Resources.ApplicationStringResources",
                     Assembly.GetExecutingAssembly());
@@ -284,7 +268,7 @@ namespace eIDViewer
             }
             catch (Exception e)
             {
-                theData.logText += "CSCbpinopResult encountered an error " + e.ToString() + "\n";
+                theData.WriteLog("CSCbpinopResult encountered an error " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
         }
 
@@ -299,7 +283,7 @@ namespace eIDViewer
 
             if(nreaders == 0)
             {
-                theData.logText += "No card readers detected\n";
+                theData.WriteLog("No card readers detected\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
             }
 
             for (int i = 0; i < nreaders; i++)
@@ -309,12 +293,12 @@ namespace eIDViewer
 
                 if(slotDesc.description == null)
                 {
-                    theData.logText += "CbReadersChanged called without a reader description\n";
+                    theData.WriteLog("CbReadersChanged called without a reader description\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
                     break;
                 }
 
-                theData.logText += "Reader slotnr  " + slotDesc.slot.ToString() + "\n";
-                theData.logText += "Reader name  " + slotDesc.description.ToString() + "\n";
+                theData.WriteLog("Reader slotnr  " + slotDesc.slot.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                theData.WriteLog("Reader name  " + slotDesc.description.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
 
                 if (!slotDesc.description.Equals("\\\\?PnP?\\Notification"))
                 {
