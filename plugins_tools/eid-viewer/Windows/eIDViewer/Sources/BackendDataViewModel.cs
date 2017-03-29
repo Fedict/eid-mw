@@ -13,13 +13,72 @@ using System.Security.Cryptography.X509Certificates;
 using System.Collections.ObjectModel;
 using System.Collections.Concurrent;
 using System.Reflection;
+using System.Threading;
+using System.Globalization;
 
 namespace eIDViewer
 {
-
-
     public class BackendDataViewModel : INotifyPropertyChanged
     {
+
+        private readonly SynchronizationContext _syncContext;
+
+        public BackendDataViewModel()
+        {
+            // we assume this ctor is called from the UI thread!
+            _syncContext = SynchronizationContext.Current;
+
+            viewerVersion = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            validateAlways = Properties.Settings.Default.AlwaysValidate;
+
+            readersList = new ConcurrentQueue<ReadersMenuViewModel>();
+            readersList.Enqueue(new ReadersMenuViewModel(" ", 0));
+
+            _certsList = new ObservableCollection<CertViewModel>();
+            rootCAViewModel = new CertViewModel { CertLabel = "rootCA" };
+            rootCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            RNCertViewModel = new CertViewModel { CertLabel = "RN cert" };
+            RNCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            intermediateCAViewModel = new CertViewModel { CertLabel = "citizen CA" };
+            intermediateCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            authCertViewModel = new CertViewModel { CertLabel = "Authentication" };
+            authCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+            signCertViewModel = new CertViewModel { CertLabel = "Signature" };
+            signCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
+
+            certsList.Add(rootCAViewModel);
+
+            certsList[0].Certs.Add(RNCertViewModel);
+            certsList[0].Certs.Add(intermediateCAViewModel);
+
+            certsList[0].Certs[1].Certs.Add(authCertViewModel);
+            certsList[0].Certs[1].Certs.Add(signCertViewModel);
+        }
+
+        ~BackendDataViewModel()
+        {
+            //store application settings
+            if (Properties.Settings.Default.AlwaysValidate != validateAlways)
+            {
+                Properties.Settings.Default.AlwaysValidate = validateAlways;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+
+        public void ShowPINVerifiedOKCallback(string message)
+        {
+            ResourceManager rm = new ResourceManager("eIDViewer.Resources.ApplicationStringResources",
+                    Assembly.GetExecutingAssembly());
+            CultureInfo culture = Thread.CurrentThread.CurrentCulture;
+            System.Windows.MessageBox.Show(rm.GetString(message, culture));
+        }
+
+        public void pincodeVerifiedSucces(string message)
+        {
+            _syncContext.Post(o => ShowPINVerifiedOKCallback(message), null);
+        }
+
         //hashAlg being "SHA1", or "SHA256"
         public bool CheckRNSignature(byte[] data, byte[] signedHash, string hashAlg)
         {
@@ -174,13 +233,20 @@ namespace eIDViewer
 
                 using (System.IO.Stream fileStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(embeddedRootCA))
                 {
-                    var bytes = new byte[fileStream.Length];
-                    fileStream.Read(bytes, 0, bytes.Length);
-                    X509Certificate2 fileCert = new X509Certificate2(bytes);
-
-                    if (rootCertOnCard.Thumbprint.Equals(fileCert.Thumbprint))
+                    if (fileStream != null)
                     {
-                        foundEmbeddedRootCA = true;
+                        var bytes = new byte[fileStream.Length];
+                        fileStream.Read(bytes, 0, bytes.Length);
+                        X509Certificate2 fileCert = new X509Certificate2(bytes);
+
+                        if (rootCertOnCard.GetPublicKeyString().Equals(fileCert.GetPublicKeyString()))
+                        {
+                            foundEmbeddedRootCA = true;
+                        }
+                    }
+                    else
+                    {
+                        this.logText += "embeddedRootCA: %s not found\n" + embeddedRootCA;
                     }
                 }
             }
@@ -195,8 +261,7 @@ namespace eIDViewer
         public bool VerifyRootCA(ref X509Certificate2 rootCertOnCard, ref CertViewModel rootViewModel)
         {
             bool foundEmbeddedRootCA = false;
-            string[] embeddedRootCAs = { "eIDViewer.Resources.Certs.belgiumrca.pem",
-                                         "eIDViewer.Resources.Certs.belgiumrca2.pem",
+            string[] embeddedRootCAs = { "eIDViewer.Resources.Certs.belgiumrca2.pem",
                                          "eIDViewer.Resources.Certs.belgiumrca3.pem",
                                          "eIDViewer.Resources.Certs.belgiumrca4.pem"};
 
@@ -544,45 +609,6 @@ namespace eIDViewer
             }
         }
 
-        public BackendDataViewModel()
-        {
-            viewerVersion = Assembly.GetExecutingAssembly().GetName().Name + " " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            validateAlways = Properties.Settings.Default.AlwaysValidate;
-
-            readersList = new ConcurrentQueue<ReadersMenuViewModel>();
-            readersList.Enqueue(new ReadersMenuViewModel(" ", 0));
-
-            _certsList = new ObservableCollection<CertViewModel>();
-            rootCAViewModel = new CertViewModel { CertLabel = "rootCA" };
-            rootCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            RNCertViewModel = new CertViewModel { CertLabel = "RN cert" };
-            RNCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            intermediateCAViewModel = new CertViewModel { CertLabel = "citizen CA" };
-            intermediateCAViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            authCertViewModel = new CertViewModel { CertLabel = "Authentication" };
-            authCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-            signCertViewModel = new CertViewModel { CertLabel = "Signature" };
-            signCertViewModel.CertificateSelectionChanged += this.CertificateSelectionChanged;
-
-            certsList.Add(rootCAViewModel);
-
-            certsList[0].Certs.Add(RNCertViewModel);
-            certsList[0].Certs.Add(intermediateCAViewModel);
-
-            certsList[0].Certs[1].Certs.Add(authCertViewModel);
-            certsList[0].Certs[1].Certs.Add(signCertViewModel);
-        }
-
-        ~BackendDataViewModel()
-        {
-            //store application settings
-            if(Properties.Settings.Default.AlwaysValidate != validateAlways)
-            {
-                Properties.Settings.Default.AlwaysValidate = validateAlways;
-                Properties.Settings.Default.Save();
-            }
-        }
-
         private CertViewModel rootCAViewModel = null;
         private CertViewModel intermediateCAViewModel = null;
         private CertViewModel RNCertViewModel = null;
@@ -744,6 +770,14 @@ namespace eIDViewer
             { validity_end_date = data; }
             else if (String.Equals(label, "document_type", StringComparison.Ordinal))
             { document_type = data; }
+            else if (String.Equals(label, "date_and_country_of_protection", StringComparison.Ordinal))
+            { date_and_country_of_protection = data;
+              foreigner_fields_height = 26;
+            }
+            else if (String.Equals(label, "member_of_family", StringComparison.Ordinal))
+            { member_of_family = true;
+              foreigner_fields_height = 26;
+            }
         }
 
         private byte[] dataFile;
@@ -883,8 +917,6 @@ namespace eIDViewer
                     languageFR = false;
                     languageNL = false;
                     break;
-
-
             }
         }
 
@@ -912,9 +944,12 @@ namespace eIDViewer
             chip_number = "-";
             validity_begin_date = "-";
             validity_end_date = "-";
+            date_and_country_of_protection = "-";
+            member_of_family = false;
             eid_card_present = false;
             progress = 0;
             HideProgressBar();
+            foreigner_fields_height = 0;
             pinop_ready = false;
             print_enabled = false;
 
@@ -1269,6 +1304,39 @@ namespace eIDViewer
             {
                 _document_type = value;
                 this.NotifyPropertyChanged("document_type");
+            }
+        }
+
+        private string _date_and_country_of_protection;
+        public string date_and_country_of_protection
+        {
+            get { return _date_and_country_of_protection; }
+            set
+            {
+                _date_and_country_of_protection = value;
+                this.NotifyPropertyChanged("date_and_country_of_protection");
+            }
+        }
+
+        private bool _member_of_family;
+        public bool member_of_family
+        {
+            get { return _member_of_family; }
+            set
+            {
+                _member_of_family = value;
+                this.NotifyPropertyChanged("member_of_family");
+            }
+        }
+
+        private int _foreigner_fields_height;
+        public int foreigner_fields_height
+        {
+            get { return _foreigner_fields_height; }
+            set
+            {
+                _foreigner_fields_height = value;
+                this.NotifyPropertyChanged("foreigner_fields_height");
             }
         }
 

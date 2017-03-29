@@ -465,13 +465,13 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	printf("INFO: slots %sfound: %lu\n", with_token ? "with token " : "", count);
 	if(count == 0 && with_token) {
 		/* no slots with token found; try asking for a token */
-		if(have_robot()) {
-			robot_insert_card();
-			// assume we have one token, now
-			count=1;
+		if(!have_robot()) {
+			printf("Need at least one token to run this test\n");
+			return TEST_RV_SKIP;
 		}
-		printf("Need at least one token to run this test\n");
-		return TEST_RV_SKIP;
+		robot_insert_card();
+		// assume we have one token, now
+		count=1;
 	}
 
 	do {

@@ -62,13 +62,18 @@ TEST_FUNC(mechinfo) {
 	check_rv_long(C_GetMechanismInfo(slot, 0xdeadbeef, &info), m_mech_inv);
 
 	switch(count) {
+		case 8:
 		case 13:
 			printf("Found 1K card\n");
 			break;
+		case 10:
 		case 15:
 			printf("Found 2K card\n");
 			card_2k = 1;
 			break;
+		default:
+			printf("Dunno what kind of card this is!\n");
+			return TEST_RV_FAIL;
 	}
 
 	for(i=0; i<count; i++) {

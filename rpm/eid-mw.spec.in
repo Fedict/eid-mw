@@ -78,10 +78,8 @@ Summary: Belgium electronic identity card viewer
 Obsoletes: eid-viewer
 Requires: eid-mw
 %if 0%{?suse_version}
-Requires: java >= 1.6.0
 Requires: pcsc-ccid
 %else
-Requires: java >= 1:1.6.0
 Requires: ccid
 %endif
 Requires: pcsc-lite
@@ -158,6 +156,7 @@ fi
 %{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
+%{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
 %{_datadir}/p11-kit/
 
 %files devel
@@ -181,6 +180,9 @@ fi
 %if ! 0%{?el6}
 %{_datadir}/glib-2.0/schemas/
 %endif
+
+%post -n eid-viewer
+[ -x /usr/bin/glib-compile-schemas ] && /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
 %changelog
 * Fri May 20 2016 Wouter Verhelst <wouter.verhelst@fedict.be> - 4.1.18-0.R

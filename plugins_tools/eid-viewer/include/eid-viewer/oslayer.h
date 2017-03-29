@@ -307,7 +307,11 @@ DllExport int eid_vwr_poll();
   *
   * \return never
   */
-DllExport void eid_vwr_be_mainloop();
+#ifdef WIN32
+DWORD WINAPI eid_vwr_be_mainloop(void* val);
+#else
+void* eid_vwr_be_mainloop(void* val);
+#endif
 
 /**
   * \brief Save the currently-open data.

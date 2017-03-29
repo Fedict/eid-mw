@@ -26,6 +26,7 @@
 #include <locale.h>
 #include "config.h"
 #include "parent.h"
+#include "gettext.h"
 #include <ctype.h>
 
 #define MIN_PIN_LENGTH 4
@@ -44,30 +45,6 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
-
-enum { MSG_CHANGE_PIN_CODE = 1, MSG_PLEASE_ENTER_OLD_AND_NEW_PINS, MSG_CURRENT_PIN,
-        MSG_NEW_PIN, MSG_NEW_PIN_AGAIN
-};
-
-static char const *const beid_messages[4][6] = {
-        {"en", "beID: Change PIN Code",
-         "Request from Application [%s]:\n\nPlease enter your current eID PIN, followed by your new eID PIN (twice)",
-         "Current PIN:", "New PIN:", "New PIN (again):"},
-        {"nl", "beID: PIN Code Wijzigen",
-         "Verzoek van programma [%s]:\n\nGelieve Uw bestaande eID PIN code, en tweemaal uw nieuwe eID PINcode in te voeren.",
-         "Huidige PIN:", "Nieuwe PIN:", "Nieuwe PIN (opnieuw):"},
-        {"fr", "beID: Changement de code PIN",
-         "Demande de l'application [%s]:\n\nVeuillez entrer votre code PIN eID existant, suivi de votre nouveau code PIN eID (2 fois)",
-         "Code PIN existant:", "Nouveau code PIN:",
-         "Nouveau code PIN (verification):"},
-        {"de", "beID: PIN Code ändern",
-         "Anfrage von Anwendug [%s]:\n\nBitte geben Sie ihren bestehenden eID PIN-Code, gefolgt von Ihrem neuen eID PIN-Code (zwei mal), ein",
-         "Aktueller PIN-Code:", "Neuer PIN-Code:",
-         "Neuer PIN-Code (noch einmal):"}
-};
-
-#include "beid-i18n.h"
-
 
 // struct holding all the runtime data, so we can use callbacks without global variables
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -174,6 +151,10 @@ int main(int argc, char *argv[]) {
 
         gtk_init(&argc, &argv); // initialize gtk+
 
+	putenv("LANGUAGE=");
+	bindtextdomain("dialogs-beid", DATAROOTDIR "/locale");
+	textdomain("dialogs-beid");
+
         // create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -181,7 +162,7 @@ int main(int argc, char *argv[]) {
                 pindialog.dialog =
                         gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
                                                GTK_BUTTONS_NONE,
-                                               _MSG_(MSG_PLEASE_ENTER_OLD_AND_NEW_PINS),
+                                               gettext("Request from Application [%s]:\n\nPlease enter your current eID PIN, followed by your new eID PIN (twice)"),
                                                caller_path);
         } else {
                 fprintf(stderr, "Failed To Determine Parent Process. Aborting.\n");
@@ -196,7 +177,7 @@ int main(int argc, char *argv[]) {
                            (GTK_DIALOG(pindialog.dialog), GTK_STOCK_OK, GTK_RESPONSE_OK));
 
         gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog), GTK_RESPONSE_OK);
-        gtk_window_set_title(GTK_WINDOW(pindialog.dialog), _MSG_(MSG_CHANGE_PIN_CODE));
+        gtk_window_set_title(GTK_WINDOW(pindialog.dialog), gettext("beID: Change PIN Code"));
         gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
         g_signal_connect(pindialog.dialog, "delete-event", G_CALLBACK(on_delete_event), &pindialog);
 
@@ -205,9 +186,9 @@ int main(int argc, char *argv[]) {
 
         pindialog.newPinsTable = gtk_table_new(3, 2, TRUE);     // table of 4 rows, 3 columns
 
-        pindialog.originalPinLabel = gtk_label_new(_MSG_(MSG_CURRENT_PIN));
-        pindialog.newPin0Label = gtk_label_new(_MSG_(MSG_NEW_PIN));
-        pindialog.newPin1Label = gtk_label_new(_MSG_(MSG_NEW_PIN_AGAIN));
+        pindialog.originalPinLabel = gtk_label_new(gettext("Current PIN:"));
+        pindialog.newPin0Label = gtk_label_new(gettext("New PIN:"));
+        pindialog.newPin1Label = gtk_label_new(gettext("New PIN (again):"));
         pindialog.originalPinEntry = gtk_entry_new();
         pindialog.newPin0Entry = gtk_entry_new();
         pindialog.newPin1Entry = gtk_entry_new();

@@ -77,20 +77,20 @@ TEST_FUNC(mechlist) {
 
 		switch(mechlist[i]) {
 		HAS_CKM(CKM_RSA_PKCS, 1);
-		HAS_CKM(CKM_RIPEMD160, 0);
+		HAS_CKM(CKM_RIPEMD160, 1);
 		HAS_CKM(CKM_MD5, 0);
-		HAS_CKM(CKM_SHA_1, 1);
+		HAS_CKM(CKM_SHA_1, 0);
 		HAS_CKM(CKM_SHA256, 1);
-		HAS_CKM(CKM_SHA384, 0);
-		HAS_CKM(CKM_SHA512, 0);
-		HAS_CKM(CKM_RIPEMD160_RSA_PKCS, 0);
+		HAS_CKM(CKM_SHA384, 1);
+		HAS_CKM(CKM_SHA512, 1);
+		HAS_CKM(CKM_RIPEMD160_RSA_PKCS, 1);
 		HAS_CKM(CKM_MD5_RSA_PKCS, 0);
-		HAS_CKM(CKM_SHA1_RSA_PKCS, 1);
+		HAS_CKM(CKM_SHA1_RSA_PKCS, 0);
 		HAS_CKM(CKM_SHA1_RSA_PKCS_PSS, 0);
 		HAS_CKM(CKM_SHA256_RSA_PKCS, 1);
 		HAS_CKM(CKM_SHA256_RSA_PKCS_PSS, 0);
-		HAS_CKM(CKM_SHA384_RSA_PKCS, 0);
-		HAS_CKM(CKM_SHA512_RSA_PKCS, 0);
+		HAS_CKM(CKM_SHA384_RSA_PKCS, 1);
+		HAS_CKM(CKM_SHA512_RSA_PKCS, 1);
 		case 0xdeadbeef:
 			printf("E: found uninitialized data\n");
 			retval = TEST_RV_FAIL;
@@ -118,7 +118,7 @@ TEST_FUNC(mechlist) {
 		}
 	}
 
-	verbose_assert(crit_mechs == 5);
+	verbose_assert(crit_mechs == 9);
 
 	check_rv_long(C_GetMechanismList(slot+30, mechlist, &count), m_p11_badslot);
 

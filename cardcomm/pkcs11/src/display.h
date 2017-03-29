@@ -32,7 +32,7 @@ extern "C"
 {
 #endif
 
-	CK_BYTE AllowCardReading(void);
+//	CK_BYTE AllowCardReading(void);
 
 #ifdef __cplusplus
 }

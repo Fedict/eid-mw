@@ -31,7 +31,7 @@ using namespace eIDMW;
 using namespace eIDMW;
 #endif
 #endif
-
+/*
 CK_BYTE AllowCardReading(void)
 {
 #ifndef NO_DIALOGS
@@ -66,3 +66,4 @@ CK_BYTE AllowCardReading(void)
 	return P11_DISPLAY_YES;
 #endif
 }
+*/

@@ -27,7 +27,7 @@
 #include "display.h"
 
 //global variable 
-int eidmw_readpermission = 0;
+//int eidmw_readpermission = 0;
 
 //function declarations
 void SetParseFlagByLabel(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len);
@@ -236,7 +236,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	CK_ULONG       len = 0;
 	CK_BBOOL			addIdObjects = CK_FALSE;
 	CK_ULONG			filesToCacheFlag = CACHED_DATA_TYPE_ALL_DATA;
-	CK_BYTE				allowCardRead = P11_DISPLAY_NO;
+//	CK_BYTE				allowCardRead = P11_DISPLAY_NO;
 	log_trace(WHERE, "I: enter");
 
 	if (p11_get_init() != BEIDP11_INITIALIZED)
@@ -362,6 +362,8 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				SetParseFlagByLabel(&filesToCacheFlag,pLabel,len);
 			}
 		}
+
+		/*
 		if((filesToCacheFlag != CACHED_DATA_TYPE_CARDDATA) && (filesToCacheFlag != CACHED_DATA_TYPE_RNCERT))
 		{
 			if ((pSession->bReadDataAllowed == P11_READDATA_ASK) & (eidmw_readpermission != P11_READDATA_ALWAYS))
@@ -396,6 +398,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				goto cleanup;
 			}
 		}
+		*/
 	}
 
 	/* init search operation */

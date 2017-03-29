@@ -5,24 +5,96 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
 
 
 
-VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Belgium eID Middleware"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Software for reading the Belgium Identity Card"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Fedict"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" ""
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright © 2015"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "eID QuickInstaller"
-
-
 ;below are the screen header texts, they should be 38 characters maximum
+LangString ls_welcome_short ${LANG_ENGLISH} "Welcome!"
+LangString ls_welcome_short ${LANG_FRENCH} "Bienvenue!"
+LangString ls_welcome_short ${LANG_DUTCH} "Welkom!"
+LangString ls_welcome_short ${LANG_GERMAN} "Willkommen!"
+
 LangString ls_welcome ${LANG_ENGLISH} "Welcome to the eID QuickInstaller"
 LangString ls_welcome ${LANG_FRENCH} "Bienvenue dans l'eID QuickInstaller"
 LangString ls_welcome ${LANG_DUTCH} "Welkom bij de eID QuickInstaller"
 LangString ls_welcome ${LANG_GERMAN} "Willkommen beim eID Installer"
 
-LangString ls_complete ${LANG_ENGLISH} "Installation complete"
-LangString ls_complete ${LANG_FRENCH} "Installation complète"
-LangString ls_complete ${LANG_DUTCH} "Installatie voltooid"
-LangString ls_complete ${LANG_GERMAN} "Installation abgeschlossen"
+LangString ls_welcome_info ${LANG_ENGLISH} "Click 'Install' to install the eID software"
+LangString ls_welcome_info ${LANG_FRENCH} "Cliquez sur $\"Installer$\" pour installer le logiciel eID"
+LangString ls_welcome_info ${LANG_DUTCH} "Klik op 'Installeren' om de eID software te installeren"
+LangString ls_welcome_info ${LANG_GERMAN} "Klicken Sie auf „Installieren“ um die eID-Software zu installieren."
+
+LangString ls_welcome_viewer_info ${LANG_ENGLISH} "Click 'Install' to install the eIDViewer"
+LangString ls_welcome_viewer_info ${LANG_FRENCH} "Cliquez sur $\"Installer$\" pour installer l'eIDViewer"
+LangString ls_welcome_viewer_info ${LANG_DUTCH} "Klik op 'Installeren' om de eIDViewer te installeren"
+LangString ls_welcome_viewer_info ${LANG_GERMAN} "Klicken Sie auf „Installieren“ um die eIDViewer zu installieren."
+
+LangString ls_complete ${LANG_ENGLISH} "eID software installed!"
+LangString ls_complete ${LANG_FRENCH} "Logiciel eID installé !"
+LangString ls_complete ${LANG_DUTCH} "eID software geïnstalleerd!"
+LangString ls_complete ${LANG_GERMAN} "eID-Software installiert!"
+
+LangString ls_viewer_complete ${LANG_ENGLISH} "eIDViewer installed!"
+LangString ls_viewer_complete ${LANG_FRENCH} "eIDViewer installé !"
+LangString ls_viewer_complete ${LANG_DUTCH} "eIDViewer geïnstalleerd!"
+LangString ls_viewer_complete ${LANG_GERMAN} "eIDViewer installiert!"
+
+LangString ls_complete_info ${LANG_ENGLISH} "You can test the eID software using a suitable eID card reader.$\nClick 'Test' and follow the instructions step by step"
+LangString ls_complete_info ${LANG_FRENCH} "Vous pouvez tester le logiciel eID avec un lecteur de cartes eID approprié.$\nCliquez sur $\"Tester$\" et suivez les instructions étape par étape."
+LangString ls_complete_info ${LANG_DUTCH} "U kan de eID software testen met behulp van een geschikte eID kaartlezer.$\nKlik op 'Testen' en volg de instructies stap voor stap"
+LangString ls_complete_info ${LANG_GERMAN} "Sie können die eID-Software mit einem geeigneten eID-Kartenleser testen.$\nKlicken Sie auf „Testen“ und befolgen Sie die Anweisungen Schritt für Schritt"
+
+LangString ls_testcomplete_pre ${LANG_ENGLISH} "Dear "
+LangString ls_testcomplete_pre ${LANG_FRENCH} "Cher/Chère"
+LangString ls_testcomplete_pre ${LANG_DUTCH} "Beste"
+LangString ls_testcomplete_pre ${LANG_GERMAN} "Hallo"
+
+LangString ls_testcomplete_post ${LANG_ENGLISH} ",$\nthe software test was successful"
+LangString ls_testcomplete_post ${LANG_FRENCH} ",$\nle test du logiciel a réussi"
+LangString ls_testcomplete_post ${LANG_DUTCH} ",$\nde software test is geslaagd"
+LangString ls_testcomplete_post ${LANG_GERMAN} ",$\nder Software-Test wurde erfolgreich durchgeführt"
+
+LangString ls_testcomplete_info ${LANG_ENGLISH} "It is advisable to reboot your computer"
+LangString ls_testcomplete_info ${LANG_FRENCH} "Nous vous recommandons de redémarrer votre ordinateur."
+LangString ls_testcomplete_info ${LANG_DUTCH} "Herstarten van uw computer is aanbevolen"
+LangString ls_testcomplete_info ${LANG_GERMAN} "Neustart Ihres Computers wird empfohlen"
+
+LangString ls_install_failed ${LANG_ENGLISH} "eID software not installed"
+LangString ls_install_failed ${LANG_FRENCH} "Le logiciel eID n'a pas été installé."
+LangString ls_install_failed ${LANG_DUTCH} "eID software niet geïnstalleerd"
+LangString ls_install_failed ${LANG_GERMAN} "eID-Software nicht installiert"
+
+LangString ls_install_viewer_failed ${LANG_ENGLISH} "eIDViewer not installed"
+LangString ls_install_viewer_failed ${LANG_FRENCH} "L'eIDViewer n'a pas été installé."
+LangString ls_install_viewer_failed ${LANG_DUTCH} "eIDViewer niet geïnstalleerd"
+LangString ls_install_viewer_failed ${LANG_GERMAN} "eIDViewer nicht installiert"
+
+LangString ls_install_failed_info ${LANG_ENGLISH} "We were unable to install the eID software.$\nClick 'Help website' for further details"
+LangString ls_install_failed_info ${LANG_FRENCH} "Nous n'avons pas pu installer le logiciel eID.$\nCliquez sur $\"Site web d'aide$\" pour plus d'informations."
+LangString ls_install_failed_info ${LANG_DUTCH} "We hebben de eID software niet kunnen installeren.$\nKlik op 'Helpwebsite' voor meer informatie"
+LangString ls_install_failed_info ${LANG_GERMAN} "Wir konnten die eID-Software nicht installieren.$\nKlicken Sie auf „Hilfe-Website“ für weitere Informationen"
+
+LangString ls_install_viewer_failed_info ${LANG_ENGLISH} "We were unable to install the eIDViewer.$\nClick 'Help website' for further details"
+LangString ls_install_viewer_failed_info ${LANG_FRENCH} "Nous n'avons pas pu installer l'eIDViewer.$\nCliquez sur $\"Site web d'aide$\" pour plus d'informations."
+LangString ls_install_viewer_failed_info ${LANG_DUTCH} "We hebben de eIDViewer niet kunnen installeren.$\nKlik op 'Helpwebsite' voor meer informatie"
+LangString ls_install_viewer_failed_info ${LANG_GERMAN} "Wir konnten die eIDViewer nicht installieren.$\nKlicken Sie auf „Hilfe-Website“ für weitere Informationen"
+
+LangString ls_cardreader_failed ${LANG_ENGLISH} "No card reader found"
+LangString ls_cardreader_failed ${LANG_FRENCH} "Lecteur de cartes non trouvé"
+LangString ls_cardreader_failed ${LANG_DUTCH} "Kaartlezer niet gevonden"
+LangString ls_cardreader_failed ${LANG_GERMAN} "Kartenleser nicht gefunden"
+
+LangString ls_cardreader_failed_info ${LANG_ENGLISH} "Make sure it is properly connected. Then click 'Again'.$\nIf this problem persists, click 'Go to help website' for further details"
+LangString ls_cardreader_failed_info ${LANG_FRENCH} "Vérifiez si le lecteur est branché correctement et cliquez sur $\"Recommencer$\".$\nSi le problème persiste, cliquez sur $\"Allez sur le site web d'aide$\" pour plus d'informations."
+LangString ls_cardreader_failed_info ${LANG_DUTCH} "Controleer of deze correct is aangesloten en klik op 'Opnieuw'.$\nAls dit probleem aanhoudt, klik op 'Ga naar helpwebsite' voor meer informatie"
+LangString ls_cardreader_failed_info ${LANG_GERMAN} "Kontrollieren Sie, ob dieser korrekt angeschlossen ist und klicken Sie auf „Wiederholen“.$\nWenn das Problem weiter besteht, klicken Sie auf „Zur Hilfe-Website“ für weitere Informationen"
+
+LangString ls_test_failed ${LANG_ENGLISH} "The test was unsuccessful"
+LangString ls_test_failed ${LANG_FRENCH} "Le test a échoué."
+LangString ls_test_failed ${LANG_DUTCH} "De test is niet geslaagd"
+LangString ls_test_failed ${LANG_GERMAN} "Der Test ist fehlgeschlagen"
+
+LangString ls_test_failed_info ${LANG_ENGLISH} "We were unable to test the eID software.$\nClick 'Help website' for further details"
+LangString ls_test_failed_info ${LANG_FRENCH} "Nous n'avons pas pu tester le logiciel eID.$\nCliquez sur $\"Site web d'aide$\" pour plus d'informations."
+LangString ls_test_failed_info ${LANG_DUTCH} "We hebben de eID software niet kunnen testen.$\nKlik op 'Helpwebsite' voor meer informatie"
+LangString ls_test_failed_info ${LANG_GERMAN} "Wir konnten die eID-Software nicht testen.$\nKlicken Sie auf „Hilfe-Website“ für weitere Informationen"
 
 LangString ls_pleaseconnect ${LANG_ENGLISH} "Please connect your card reader"
 LangString ls_pleaseconnect ${LANG_FRENCH} "Connectez votre lecteur de cartes"
@@ -34,10 +106,10 @@ LangString ls_noreaderfound ${LANG_FRENCH} "Aucun lecteur de cartes détecté"
 LangString ls_noreaderfound ${LANG_DUTCH} "Geen kaartlezer gevonden"
 LangString ls_noreaderfound ${LANG_GERMAN} "Kein Kartenleser gefunden"
 
-LangString ls_pleaseinsertcard ${LANG_ENGLISH} "Please insert your eID card"
-LangString ls_pleaseinsertcard ${LANG_FRENCH} "Veuillez insérer votre carte eID"
-LangString ls_pleaseinsertcard ${LANG_DUTCH} "Gelieve uw eID kaart in te steken"
-LangString ls_pleaseinsertcard ${LANG_GERMAN} "Bitte stecken Sie Ihre eID-Karte ein"
+LangString ls_pleaseinsertcard ${LANG_ENGLISH} "Insert your eID into the card reader"
+LangString ls_pleaseinsertcard ${LANG_FRENCH} "Insérez votre eID dans le lecteur de cartes."
+LangString ls_pleaseinsertcard ${LANG_DUTCH} "Steek uw eID in de kaartlezer"
+LangString ls_pleaseinsertcard ${LANG_GERMAN} "Stecken Sie Ihre eID in den Kartenleser"
 
 LangString ls_nocardfound ${LANG_ENGLISH} "No eID card was found"
 LangString ls_nocardfound ${LANG_FRENCH} "Aucune carte eID détectée"
@@ -86,6 +158,11 @@ LangString ls_back ${LANG_FRENCH} "Précédent"
 LangString ls_back ${LANG_DUTCH} "Vorige"
 LangString ls_back ${LANG_GERMAN} "Zurück"
 
+LangString ls_retry ${LANG_ENGLISH} "Retry"
+LangString ls_retry ${LANG_FRENCH} "Opnieuw"
+LangString ls_retry ${LANG_DUTCH} "Opnieuw"
+LangString ls_retry ${LANG_GERMAN} "Opnieuw"
+
 LangString ls_close ${LANG_ENGLISH} "Close"
 LangString ls_close ${LANG_FRENCH} "Fermer"
 LangString ls_close ${LANG_DUTCH} "Sluiten"
@@ -100,6 +177,26 @@ LangString ls_test ${LANG_ENGLISH} "Test"
 LangString ls_test ${LANG_FRENCH} "Tester"
 LangString ls_test ${LANG_DUTCH} "Testen"
 LangString ls_test ${LANG_GERMAN} "Prüfen"
+
+LangString ls_helpsite ${LANG_ENGLISH} "Helpwebsite"
+LangString ls_helpsite ${LANG_FRENCH} "Site web d'aide"
+LangString ls_helpsite ${LANG_DUTCH} "Helpwebsite"
+LangString ls_helpsite ${LANG_GERMAN} "Helpwebsite"
+
+LangString ls_caption ${LANG_ENGLISH} "eID software installation"
+LangString ls_caption ${LANG_FRENCH} "Installation Logiciel eID"
+LangString ls_caption ${LANG_DUTCH} "eID software installatie"
+LangString ls_caption ${LANG_GERMAN} "Installation der eID-Software"
+
+LangString ls_caption_viewer ${LANG_ENGLISH} "eIDViewer installation"
+LangString ls_caption_viewer ${LANG_FRENCH} "Installation eIDViewer"
+LangString ls_caption_viewer ${LANG_DUTCH} "eIDViewer installatie"
+LangString ls_caption_viewer ${LANG_GERMAN} "Installation der eIDViewer"
+
+LangString ls_completedtext ${LANG_ENGLISH} "ready"
+LangString ls_completedtext ${LANG_FRENCH} "terminé"
+LangString ls_completedtext ${LANG_DUTCH} "klaar"
+LangString ls_completedtext ${LANG_GERMAN} "fertig"
 
 ;below texts are error reports, they are show in a message box, no length limits
 LangString ls_testfailed ${LANG_ENGLISH} "STR:Test failed,$\n$\ngo back and try again,$\nor reboot your pc and launch the eID Viewer to continue testing"

@@ -1137,34 +1137,6 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
    unsigned long           recvlen = sizeof(recvbuf);
    BYTE                    SW1, SW2;
 
-   static const unsigned char MD2_AID[] = {
-      0x30, 0x20, 
-         0x30, 0x0c, 
-            0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x02, 
-            0x05, 0x00, 
-         0x04, 0x10
-   };
-   static const unsigned char MD4_AID[] = {
-      0x30, 0x20, 
-         0x30, 0x0c, 
-            0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x04, 
-            0x05, 0x00, 
-         0x04, 0x10
-   };
-   static const unsigned char MD5_AID[] = {
-       0x30, 0x20,
-           0x30, 0x0c,
-               0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x05,
-               0x05, 0x00,
-           0x04, 0x10
-   };
-   static const unsigned char SHA1_AID[] = {
-       0x30, 0x21,
-           0x30, 0x09,
-               0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a,
-           0x05, 0x00,
-           0x04, 0x14
-   };
    static const unsigned char SHA256_AID[] = {
        0x30, 0x31,
            0x30, 0x0d,
@@ -1214,26 +1186,6 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
       pbHdrHash = NULL;
       break;
 
-   case HASH_ALGO_MD2:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_MD2");
-      cbHdrHash = sizeof(MD2_AID);
-      pbHdrHash = MD2_AID;
-      break;
-   case HASH_ALGO_MD4:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_MD4");
-      cbHdrHash = sizeof(MD4_AID);
-      pbHdrHash = MD4_AID;
-      break;
-   case HASH_ALGO_MD5:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_MD5");
-      cbHdrHash = sizeof(MD5_AID);
-      pbHdrHash = MD5_AID;
-      break;
-   case HASH_ALGO_SHA1:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA1");
-      cbHdrHash = sizeof(SHA1_AID);
-      pbHdrHash = SHA1_AID;
-      break;
    case HASH_ALGO_SHA_256:
       LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA_256");
       cbHdrHash = sizeof(SHA256_AID);

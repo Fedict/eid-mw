@@ -52,13 +52,10 @@ namespace eIDMW
 
 	const unsigned long SIGN_ALGO_RSA_RAW = 0x01;
 	const unsigned long SIGN_ALGO_RSA_PKCS = 0x02;
-	const unsigned long SIGN_ALGO_MD5_RSA_PKCS = 0x04;
-	const unsigned long SIGN_ALGO_SHA1_RSA_PKCS = 0x08;
 	const unsigned long SIGN_ALGO_SHA256_RSA_PKCS = 0x10;
 	const unsigned long SIGN_ALGO_SHA384_RSA_PKCS = 0x20;
 	const unsigned long SIGN_ALGO_SHA512_RSA_PKCS = 0x40;
 	const unsigned long SIGN_ALGO_RIPEMD160_RSA_PKCS = 0x80;
-	const unsigned long SIGN_ALGO_SHA1_RSA_PSS = 0x100;
 	const unsigned long SIGN_ALGO_SHA256_RSA_PSS = 0x200;
 
 	typedef enum

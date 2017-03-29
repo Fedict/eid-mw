@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,6 +40,7 @@
                 <outlet property="photoview" destination="xjA-5d-ByW" id="8wT-9a-gCB"/>
                 <outlet property="pinop_ctrl" destination="Vjd-Dd-TOU" id="Kal-SJ-hYA"/>
                 <outlet property="printop_view" destination="Bjh-Rs-MRH" id="bTy-wn-DUN"/>
+                <outlet property="readerLogo" destination="YDM-Mg-xdZ" id="dfG-hm-WXT"/>
                 <outlet property="spinner" destination="iN8-2b-tEq" id="B3Z-bR-RbU"/>
                 <outlet property="validateNow" destination="0io-gu-IzB" id="v6w-nW-UYO"/>
                 <outlet property="verticalLineBottomConstraint" destination="IJ5-G4-aj0" id="uIw-A3-4g6"/>
@@ -624,10 +625,15 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <imageView identifier="readerlogo" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YDM-Mg-xdZ">
+                                            <rect key="frame" x="742" y="20" width="64" height="64"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="state_noreaders" id="t9D-Nf-mad"/>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="zc6-dI-2GF" firstAttribute="trailing" secondItem="zdm-MS-LoZ" secondAttribute="trailing" id="0ww-kV-OGJ"/>
                                         <constraint firstItem="z2f-UJ-T29" firstAttribute="leading" secondItem="2Cp-It-1RO" secondAttribute="trailing" constant="8" symbolic="YES" id="11s-MN-Vc2"/>
+                                        <constraint firstAttribute="bottom" secondItem="YDM-Mg-xdZ" secondAttribute="bottom" constant="20" symbolic="YES" id="19Y-tl-iL3"/>
                                         <constraint firstItem="HFX-Ns-Kc4" firstAttribute="top" secondItem="LS2-EH-nXE" secondAttribute="bottom" constant="8" symbolic="YES" id="1Ah-V2-ebg"/>
                                         <constraint firstItem="nrP-Rp-Yyg" firstAttribute="leading" secondItem="eBO-Iq-zMd" secondAttribute="leading" id="1Ib-db-T2l"/>
                                         <constraint firstItem="Td2-rl-G4t" firstAttribute="top" secondItem="6Ns-0y-WKF" secondAttribute="bottom" constant="8" symbolic="YES" id="1It-bC-LxW"/>
@@ -637,6 +643,7 @@
                                         <constraint firstAttribute="centerX" secondItem="5j0-eh-0XV" secondAttribute="centerX" id="2Px-bf-N5Z"/>
                                         <constraint firstItem="Mhu-Wd-C6t" firstAttribute="top" secondItem="hng-9T-9SU" secondAttribute="bottom" constant="8" symbolic="YES" id="2TV-NU-vVd"/>
                                         <constraint firstItem="a6w-Pn-Vae" firstAttribute="top" secondItem="nrP-Rp-Yyg" secondAttribute="bottom" constant="8" symbolic="YES" id="31s-lK-RzV"/>
+                                        <constraint firstAttribute="trailing" secondItem="YDM-Mg-xdZ" secondAttribute="trailing" constant="20" symbolic="YES" id="4fF-0S-HLM"/>
                                         <constraint firstItem="LTL-TZ-G5R" firstAttribute="leading" secondItem="cSU-EZ-fdf" secondAttribute="trailing" constant="8" symbolic="YES" id="552-Y7-hxp"/>
                                         <constraint firstItem="feA-T9-MfQ" firstAttribute="top" secondItem="TiT-3B-6ju" secondAttribute="bottom" constant="8" symbolic="YES" id="5UU-iS-6Cg"/>
                                         <constraint firstItem="NPE-9U-EaK" firstAttribute="leading" secondItem="mi9-1R-cMn" secondAttribute="trailing" constant="8" symbolic="YES" id="6Z6-lX-LLY"/>
@@ -943,7 +950,7 @@
                                                             <rect key="frame" x="20" y="20" width="746" height="238"/>
                                                             <clipView key="contentView" id="M9k-Yc-9qu">
                                                                 <rect key="frame" x="1" y="1" width="744" height="236"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="SbE-j5-DtL" id="G1r-zp-mgg">
                                                                         <rect key="frame" x="0.0" y="0.0" width="744" height="236"/>
@@ -1148,7 +1155,7 @@
                                             </holdingPriorities>
                                         </splitView>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0io-gu-IzB">
-                                            <rect key="frame" x="427" y="18" width="91" height="25"/>
+                                            <rect key="frame" x="476" y="18" width="91" height="25"/>
                                             <buttonCell key="cell" type="roundTextured" title="Validate now" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fPW-Dr-YAR">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1158,8 +1165,8 @@
                                             </connections>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="DP5-Vd-vKQ">
-                                            <rect key="frame" x="306" y="22" width="115" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Always validate" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nYB-fR-NCY">
+                                            <rect key="frame" x="258" y="22" width="212" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Always validate certificate trust" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nYB-fR-NCY">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -1168,7 +1175,7 @@
                                             </connections>
                                         </button>
                                         <box hidden="YES" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="iSU-im-9Io">
-                                            <rect key="frame" x="308" y="29" width="210" height="5"/>
+                                            <rect key="frame" x="260" y="29" width="307" height="5"/>
                                         </box>
                                     </subviews>
                                     <constraints>
@@ -1195,7 +1202,7 @@
                                             <rect key="frame" x="20" y="49" width="786" height="570"/>
                                             <clipView key="contentView" id="5ef-zU-ZQu">
                                                 <rect key="frame" x="1" y="1" width="784" height="568"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <textView importsGraphics="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="I3G-tI-1MG">
                                                         <rect key="frame" x="0.0" y="0.0" width="784" height="568"/>
@@ -1270,7 +1277,7 @@
                     <constraint firstItem="5Om-bz-RVh" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="12" symbolic="YES" id="nqi-su-YXf"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="547" y="806.5"/>
+            <point key="canvasLocation" x="130" y="175"/>
         </window>
         <customView id="ieQ-cl-G8D" userLabel="ForeignerPrintOperation" customClass="ResizablePrintView">
             <rect key="frame" x="0.0" y="0.0" width="569" height="863"/>
@@ -2039,7 +2046,7 @@ DQ
                         <rect key="frame" x="20" y="61" width="440" height="189"/>
                         <clipView key="contentView" id="rBk-zL-wWH">
                             <rect key="frame" x="1" y="1" width="438" height="187"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView importsGraphics="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="RNs-UU-2CF">
                                     <rect key="frame" x="0.0" y="0.0" width="438" height="187"/>
@@ -2586,5 +2593,6 @@ DQ
     </objects>
     <resources>
         <image name="coat_of_arms_en" width="108" height="120"/>
+        <image name="state_noreaders" width="64" height="64"/>
     </resources>
 </document>

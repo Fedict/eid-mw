@@ -42,12 +42,6 @@ static void osl_objc_readers_found(unsigned long nreaders, slotdesc* slots) {
 	[currUi readersFound:readerNames withSlotNumbers:slotNumbers];
 }
 
-static void* threadmain(void* val) {
-	eid_vwr_be_mainloop();
-
-	assert(1 == 0); // we shouldn't ever get here...
-}
-
 static const void* osl_objc_perform_ocsp_request(char* url, void* data, long len, long* retlen, void** handle) {
 	NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithCString:url encoding:NSUTF8StringEncoding]]];
 	NSData* dat = [NSData dataWithBytes:data length:len];
@@ -118,15 +112,10 @@ static void osl_objc_free_ocsp_request(void* data) {
 	return [[NSImage alloc] initWithData:[NSData dataWithBytes:prv->imagedata length:prv->imagelen]];
 }
 +(void)mainloop {
-	eid_vwr_be_mainloop();
+	eid_vwr_be_mainloop(NULL);
 }
 +(void)poll {
 	eid_vwr_poll();
-}
-+(void)mainloopThread {
-	pthread_t thread;
-	pthread_create(&thread, NULL, threadmain, NULL);
-	pthread_detach(thread);
 }
 +(void)deserialize:(NSURL*)from {
 	eid_vwr_be_deserialize(from.fileSystemRepresentation);

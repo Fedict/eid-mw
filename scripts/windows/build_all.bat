@@ -11,8 +11,8 @@
 @call "%~dp0.\create_eidmw_version_files.cmd"
 
 
-:: build pkcs11, minidriver, cleanuptool and sccertprop
-:: ====================================================
+:: build pkcs11, minidriver and viewer
+:: ===================================
 @echo [INFO] Building "%~dp0..\..\VS_2015\beid.sln"
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\VS_2015\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
@@ -58,7 +58,7 @@ copy %~dp0..\..\cardcomm\VS_2015\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTAL
 
 :: @echo [INFO] Creating cat file
 :: Create catalog
-%INF2CAT_PATH%\inf2cat.exe /driver:%MDRVINSTALLPATH%\Release\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
+"%INF2CAT_PATH%\inf2cat.exe" /driver:%MDRVINSTALLPATH%\Release\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
 @if "%ERRORLEVEL%" == "1" goto inf2cat_failed
 
 :: sign minidriver driver cat file
@@ -96,6 +96,19 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 
 @cd "%OUR_CURRENT_PATH%"
+
+@cd %~dp0..\..\installers\eid-viewer\Windows
+
+@call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
+@if %ERRORLEVEL%==1 goto end_resetpath_with_error
+@echo [INFO] sign 32 bit msi installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
+@if %ERRORLEVEL%==1 goto signtool_failed
+@echo [INFO] copy 32 bit msi installer
+copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
+
+@cd "%OUR_CURRENT_PATH%"
+
 :: create the NSIS plugins
 :: =========================
 @echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2012\beidplugins.sln"
@@ -111,23 +124,31 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 ::@echo [INFO] Copying driver_installer NSIS plugin
 ::copy %~dp0..\..\installers\quickinstaller\NSIS_Plugins\driver_installer\Release\driver_installer.dll "%NSIS_PATH%\Plugins"
 
-:: create the NSIS installer
-:: =========================
+:: create the NSIS installers
+:: ==========================
 @echo [INFO] Make nsis installer
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\Quickinstaller.nsi"
 @if %ERRORLEVEL%==1 goto makensis_failed
 
+@echo [INFO] Make nsis installer
+"%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerInstaller.nsi"
+@if %ERRORLEVEL%==1 goto makensis_failed
 
-:: sign the NSIS installer
+:: sign the NSIS installers
 :: =========================
 @echo [INFO] Sign nsis installer
 "%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if %ERRORLEVEL%==1 goto signtool_failed
 
-:: copy the NSIS installer
+@echo [INFO] Sign nsis viewer installer
+"%SIGNTOOL_PATH%\signtool" sign /a /n "FedictTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@if %ERRORLEVEL%==1 goto signtool_failed
+
+:: copy the NSIS installers
 :: =========================
-@echo [INFO] copy nsis installer
+@echo [INFO] copy nsis installers
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
+copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
 goto end_resetpath
 
 :msbuild_failed

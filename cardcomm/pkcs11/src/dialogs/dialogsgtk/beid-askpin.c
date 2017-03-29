@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include "config.h"
 #include "parent.h"
+#include "gettext.h"
 
 
 #define MIN_PIN_LENGTH 4
@@ -42,21 +43,6 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
-
-enum { MSG_PIN_CODE_REQUIRED = 1, MSG_PLEASE_ENTER_PIN };
-
-static char const *const beid_messages[4][3] = {
-        {"en", "beID: PIN Code Required",
-         "The application\n[%s]\nrequests your eID PIN code."},
-        {"nl", "beID: PINcode Vereist",
-         "Het programma\n[%s]\nvraagt uw eID PINcode"},
-        {"fr", "beID: Code PIN Necessaire",
-         "l'application\n[%s]\nvous demande votre code PIN eID"},
-        {"de", "beID: PIN Code Required",
-         "Die Anwendung\n[%s]\nfragt um Ihren eID PIN-code"}
-};
-
-#include "beid-i18n.h"
 
 // struct holding all the runtime data, so we can use callbacks without global variables
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -202,6 +188,11 @@ int main(int argc, char *argv[]) {
 
         gtk_init(&argc, &argv); // initialize gtk+
 
+	/* initialize gettext */
+	putenv("LANGUAGE=");
+	bindtextdomain("dialogs-beid", DATAROOTDIR "/locale");
+	textdomain("dialogs-beid");
+
         // create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -209,7 +200,7 @@ int main(int argc, char *argv[]) {
                 pindialog_init(&pindialog);     // setup PinDialogInfo structure
                 pindialog.dialog =
                         gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
-                                               GTK_BUTTONS_NONE, _MSG_(MSG_PLEASE_ENTER_PIN),
+                                               GTK_BUTTONS_NONE, gettext("The application\n[%s]\nrequests your eID PIN code."),
                                                caller_path);
         } else {
                 fprintf(stderr, "Failed To Determine Parent Process. Aborting.\n");
@@ -224,7 +215,7 @@ int main(int argc, char *argv[]) {
                            (GTK_DIALOG(pindialog.dialog), GTK_STOCK_OK, GTK_RESPONSE_OK));
 
         gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog), GTK_RESPONSE_OK);
-        gtk_window_set_title(GTK_WINDOW(pindialog.dialog), _MSG_(MSG_PIN_CODE_REQUIRED));
+        gtk_window_set_title(GTK_WINDOW(pindialog.dialog), gettext("beID: PIN Code Required"));
         gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
         g_signal_connect(pindialog.dialog, "delete-event", G_CALLBACK(on_delete_event), &pindialog);
 

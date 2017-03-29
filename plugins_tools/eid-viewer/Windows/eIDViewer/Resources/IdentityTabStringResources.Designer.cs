@@ -47,7 +47,8 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   Overrides the current thread's CurrentUI
+        ///   property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -93,6 +94,15 @@ namespace eIDViewer.Resources {
         public static string GivenNamesLabel {
             get {
                 return ResourceManager.GetString("GivenNamesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Member of Family.
+        /// </summary>
+        public static string MemberLabel {
+            get {
+                return ResourceManager.GetString("MemberLabel", resourceCulture);
             }
         }
         
@@ -147,6 +157,15 @@ namespace eIDViewer.Resources {
         public static string PostalCodeLabel {
             get {
                 return ResourceManager.GetString("PostalCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date and country of protection.
+        /// </summary>
+        public static string ProtectionLabel {
+            get {
+                return ResourceManager.GetString("ProtectionLabel", resourceCulture);
             }
         }
         

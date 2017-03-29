@@ -16,34 +16,73 @@ int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 	return 0;
 }
 
-void eid_vwr_be_mainloop() {
 #ifdef WIN32
+
+int eid_vwr_init()
+{
+	HANDLE hThread;
+	int result = CKR_OK;
+
+	readerCheckEvent = CreateEvent(
+		NULL,   // default security attributes
+		FALSE,  // auto-reset event object
+		FALSE,  // initial state is nonsignaled
+		NULL);  // unnamed object
+
+	if (readerCheckEvent == NULL)
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("CreateEvent error: %.8x"), GetLastError());
+		result = CKR_FUNCTION_FAILED;
+	}
+
+	/* Create the pkcs11 card / card reader event thread */
+	hThread = CreateThread(NULL, 0, eid_wait_for_pkcs11event, NULL, 0, NULL);
+	if (readerCheckEvent == NULL)
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("CreateEvent error: %.8x"), GetLastError());
+		result = CKR_FUNCTION_FAILED;
+	}
+	return result;
+}
+
+/* Called by eid_vwr_wait_event(). */
+int eid_vwr_p11_wait_event() {
+	CK_RV ret = CKR_OK;
+
+	WaitForSingleObject(readerCheckEvent, INFINITE);
+
+	return ret;
+}
+
+#endif
+
+
+#ifdef WIN32
+DWORD WINAPI eid_vwr_be_mainloop(void* val) {
 	int result;
-	CK_FLAGS flags = 0;
-	CK_SLOT_ID slotID;
-#endif
-	for(;;) {
-#ifdef WIN32
-		result =
-#else
-		(void)
-#endif
-			eid_vwr_poll();
-#ifdef WIN32
-		//we reuse the eid_vwr_poll() function for maintainebility, though the pSlot already gives us the slot where the changes occured
-		if (result == 0)
+	int eventSetup = eid_vwr_init();
+	for (;;) {
+		result = eid_vwr_poll();
+		//use polling if eid_vwr_init failed
+		if ((result == 0) && (eventSetup == CKR_OK))
 		{
-			eid_vwr_p11_wait_event(flags, &slotID);
+			eid_vwr_p11_wait_event();
 		}
 		else
 		{
 			SLEEP(1);
 		}
-#else
-		SLEEP(1);
-#endif
 	}
 }
+#else
+	void* eid_vwr_be_mainloop(void* val) {
+	for (;;) {
+		eid_vwr_poll();
+		SLEEP(1);
+		}
+	}
+#endif
+
 
 int eid_vwr_poll() {
 	CK_SLOT_ID_PTR no_token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));

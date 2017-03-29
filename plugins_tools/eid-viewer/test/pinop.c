@@ -48,14 +48,12 @@ TEST_FUNC(pinop) {
 	cb->newstate = newstate;
 	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
 	SLEEP(1);
-	verbose_assert(cursrc == EID_VWR_SRC_NONE);
 	printf("Card inserted, waiting 20 seconds for card event...\n");
 	for(i=0; i<20; i++) {
 		SLEEP(1);
 		if(cursrc != EID_VWR_SRC_NONE) {
 			i+=20;
 		}
-		eid_vwr_poll();
 		printf(".");
 	}
 	if(cursrc != EID_VWR_SRC_CARD) {

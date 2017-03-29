@@ -61,7 +61,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>beid_ff_pkcs11D.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\cardcomm\VS_2015\Binaries\Win32_Debug\;..\..\..\..\cardcomm\VS_2015\Binaries\Win32_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\cardcomm\VS_2015\Binaries\Win32_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -81,8 +81,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>beidpkcs11.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\cardcomm\VS_2015\Binaries\Win32_release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>beid_ff_pkcs11.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\cardcomm\VS_2015\Binaries\Win32_PKCS11_FF_Release\</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <AdditionalDependencies>beidpkcs11.lib</AdditionalDependencies>

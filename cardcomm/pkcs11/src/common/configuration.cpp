@@ -21,6 +21,9 @@
 #include <iostream>
 #include <stdlib.h>
 #include <limits.h>
+#include <unistd.h>
+#include <pwd.h>
+#include <sys/types.h>
 
 #include "configuration.h"
 #include "util.h"
@@ -59,11 +62,23 @@ namespace eIDMW
 
 		if (!bIsInitialized)
 		{
+			char *home;
+			char buf[1024];
 			const std::wstring system_datafilePath =
 				utilStringWiden(STRINGIFY(EIDMW_PREFIX)) +
 				L"/etc/";
+			home = getenv("HOME");
+			if(!home) {
+				struct passwd pw;
+				struct passwd *ppw;
+				getpwuid_r(geteuid(), &pw, buf, sizeof buf, &ppw);
+				if(ppw != NULL) {
+					throw CMWEXCEPTION(EIDMW_CONF);
+				}
+				home = pw.pw_dir;
+			}
 			home_path =
-				utilStringWiden(std::string(getenv("HOME")));
+				utilStringWiden(std::string(home));
 #ifdef __APPLE__
 			const std::wstring user_datafilePath =
 				L"Library/Preferences/";

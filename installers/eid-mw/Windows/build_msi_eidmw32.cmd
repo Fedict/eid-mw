@@ -3,6 +3,10 @@
 :: or by start_build_msi_eidmw32.cmd (create only the 32bit MSI installer)
 
 
+:: because we use Visual studio merge modules, some warning messages (string overflow and duplicate sequence number) will be generated, see also
+:: http://wixtoolset.org/documentation/manual/v3/howtos/redistributables_and_install_checks/install_vcredist.html
+:: These warnings are expected and are due to how the Visual C++ merge modules were authored.
+
 :: create the language specific msi's
 :: ==================================
 

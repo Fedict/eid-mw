@@ -119,13 +119,17 @@ void be_log(enum eid_vwr_loglevel l, const EID_CHAR* string, ...) {
 
 	va_start(ap, string);
 	if(!cb) {
+		if(logbuf[lastlog] != NULL) {
+			free(logbuf[lastlog]);
+			logbuf[lastlog] = NULL;
+		}
 		logbuf[lastlog] = format_string(string, ap);
 		loglev[lastlog++] = l;
 		if(lastlog >= 10) {
 			lastlog = 0;
 		}
 		have_buffered = 1;
-		return;
+		goto end;
 	}
 	if(have_buffered != 0) {
 		int i;
@@ -148,6 +152,7 @@ void be_log(enum eid_vwr_loglevel l, const EID_CHAR* string, ...) {
 		cb->log(l, str);
 		free(str);
 	}
+end:
 	va_end(ap);
 }
 

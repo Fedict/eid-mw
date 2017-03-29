@@ -29,20 +29,7 @@
 
 #include "testlib.h"
 
-CK_BYTE digest_results[6][512] = {
-	{
-		0xac, 0xbd, 0x18, 0xdb,
-		0x4c, 0xc2, 0xf8, 0x5c,
-		0xed, 0xef, 0x65, 0x4f,
-		0xcc, 0xc4, 0xa4, 0xd8
-	},
-	{
-		0x0b, 0xee, 0xc7, 0xb5,
-		0xea, 0x3f, 0x0f, 0xdb,
-		0xc9, 0x5d, 0x0d, 0xd4,
-		0x7f, 0x3c, 0x5b, 0xc2,
-		0x75, 0xda, 0x8a, 0x33
-	},
+CK_BYTE digest_results[4][512] = {
 	{
 		0x2c, 0x26, 0xb4, 0x6b,
 		0x68, 0xff, 0xc6, 0x8f,
@@ -94,9 +81,7 @@ CK_BYTE digest_results[6][512] = {
 	},
 };
 
-CK_MECHANISM_TYPE digest_mechs[6] = {
-	CKM_MD5,
-	CKM_SHA_1, 
+CK_MECHANISM_TYPE digest_mechs[4] = {
 	CKM_SHA256,
 	CKM_SHA384,
 	CKM_SHA512,
@@ -122,7 +107,7 @@ TEST_FUNC(digest) {
 
 	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
 
-	for(i=0; i<6; i++) {
+	for(i=0; i<4; i++) {
 		memset(&mech, 0, sizeof(mech));
 		mech.mechanism = digest_mechs[i];
 

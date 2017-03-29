@@ -39,7 +39,6 @@
     <ProjectGuid>{12F6CD4F-FC01-4E0A-AE06-F7A315094DFE}</ProjectGuid>
     <RootNamespace>beidpkcs11</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -529,7 +528,6 @@
     <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndmodal.cpp" />
     <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndpinpadinfo.cpp" />
     <ClCompile Include="..\src\dialogs\langutil.cpp" />
-    <ClCompile Include="..\src\display.cpp" />
     <ClCompile Include="..\src\encrypt.c" />
     <ClCompile Include="..\src\general.c" />
     <ClCompile Include="..\src\object.c" />
@@ -603,7 +601,6 @@
     <ClInclude Include="..\src\dialogs\dialogswin32\stdafx.h" />
     <ClInclude Include="..\src\dialogs\language.h" />
     <ClInclude Include="..\src\dialogs\langutil.h" />
-    <ClInclude Include="..\src\display.h" />
     <ClInclude Include="..\src\log.h" />
     <ClInclude Include="..\src\p11.h" />
     <ClInclude Include="..\src\phash.h" />

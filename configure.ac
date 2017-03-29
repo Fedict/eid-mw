@@ -158,6 +158,7 @@ AC_SUBST([p11kitcfdir])
 AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/Makefile
 		 cardcomm/pkcs11/src/libbeidpkcs11.pc
+		 cardcomm/pkcs11/src/dialogs/dialogsgtk/po/Makefile.in
 		 doc/sdk/include/rsaref220/Makefile
 		 tests/unit/Makefile
 		 plugins_tools/util/Makefile

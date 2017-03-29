@@ -109,7 +109,7 @@ TEST_FUNC(sign_state) {
 	attr[1].pValue = NULL_PTR;
 	attr[1].ulValueLen = 0;
 
-	mech.mechanism = CKM_SHA1_RSA_PKCS;
+	mech.mechanism = CKM_SHA256_RSA_PKCS;
 
 	check_rv(C_GetAttributeValue(session, publickey, attr, 2));
 

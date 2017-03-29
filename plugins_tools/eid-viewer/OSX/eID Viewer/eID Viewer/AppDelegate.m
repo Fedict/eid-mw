@@ -66,6 +66,7 @@
 @property (weak) IBOutlet NSTextField *lowestItem;
 @property (weak) IBOutlet NSLayoutConstraint *verticalLineBottomConstraint;
 @property (weak) IBOutlet NSButton *memberOfFamilyState;
+@property (weak) IBOutlet NSImageView *readerLogo;
 
 @end
 
@@ -156,6 +157,7 @@
 	[sheet orderOut:self];
 }
 - (void)newstate:(eIDState)state {
+	static eIDState prevState = eIDStateLibOpen;
 	BOOL fileOpen = NO;
 	BOOL filePrint = NO;
 	BOOL fileSave = NO;
@@ -197,6 +199,12 @@
 		default:
 			break;
 	}
+	if(prevState == eIDStateNoReader) {
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[_readerLogo setHidden:YES];
+		}];
+	}
+	prevState = state;
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		[_menu_file_print setEnabled:filePrint];
 		[_menu_file_open setEnabled:fileOpen];
@@ -315,7 +323,6 @@
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
 	[_CertificatesView setDelegate:_certstore];
-	[eIDOSLayerBackend setUi:self];
 
 	// Load preferences (language, log level)
 	NSUserDefaults* prefs = [NSUserDefaults standardUserDefaults];
@@ -345,7 +352,7 @@
 	[self setIsForeignerCard:NO];
 	[_logLevel selectItemAtIndex:level];
 	[eIDOSLayerBackend setLang:langcode];
-	[eIDOSLayerBackend mainloopThread];
+	[eIDOSLayerBackend setUi:self];
 }
 - (void)setLanguage:(NSMenuItem *)sender {
 	NSString* keyeq = sender.keyEquivalent;
