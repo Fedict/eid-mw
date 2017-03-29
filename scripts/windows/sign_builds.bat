@@ -35,6 +35,7 @@ set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
 
 
 @cd "%MDRVINSTALLPATH%"
+del /q ./beidmdrv.zip
 :: zip the minidriver folder
 powershell.exe -nologo -noprofile -command "Compress-Archive -Path .\beidmdrv\* -CompressionLevel Optimal -DestinationPath ./beidmdrv.zip"
 @echo [INFO] Sign the zip file
