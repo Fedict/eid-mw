@@ -37,16 +37,12 @@
     <options customize="never" require-scripts="false"/>
     <choices-outline>
         <line choice="eid.belgium.be"/>
-	<line choice="eidviewer.belgium.be"/>
         <line choice="com.acs.acsccid"/>
 	<line choice="com.acs.ccid_remove_acs"/>
 	<line choice="org.opensc.pcscd_autostart"/>
     </choices-outline>
     <choice id="eid.belgium.be" visible="false">
         <pkg-ref id="eid.belgium.be"/>
-    </choice>
-    <choice id="eidviewer.belgium.be" visible="false">
-        <pkg-ref id="eidviewer.belgium.be"/>
     </choice>
     <choice id="com.acs.acsccid" visible="false" selected="osx_before_elcapitan()">
         <pkg-ref id="com.acs.acsccid"/>
@@ -58,7 +54,6 @@
         <pkg-ref id="org.opensc.pcscd_autostart"/>
     </choice>
     <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
-    <pkg-ref id="eidviewer.belgium.be" onConclusion="none">eidviewer.pkg</pkg-ref>
     <pkg-ref id="com.acs.acsccid" onConclusion="none">acsccid_flat.pkg</pkg-ref>
     <pkg-ref id="com.acs.ccid_remove_acs" onConclusion="none">ccid_remove_acs_flat.pkg/</pkg-ref>
     <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="RequireRestart">pcscd_autostart_flat.pkg</pkg-ref>
