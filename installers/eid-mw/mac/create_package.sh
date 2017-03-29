@@ -37,18 +37,18 @@ EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/
 
 #viewer installer name defines
 #release dir, where all the beidbuild files to be released will be placed
-RELEASE_VIEWER_DIR="$(pwd)/release_viewer"
+#RELEASE_VIEWER_DIR="$(pwd)/release_viewer"
 #root dir, for files that are to be installed by the pkg
-ROOT_VIEWER_DIR="$RELEASE_VIEWER_DIR/root"
+#ROOT_VIEWER_DIR="$RELEASE_VIEWER_DIR/root"
 
 #eidviewer inst dir, where our eidviewer.app will be installed
-EIDVIEWER_INST_DIR="$ROOT_VIEWER_DIR/Applications"
+#EIDVIEWER_INST_DIR="$ROOT_VIEWER_DIR/Applications"
 
 #eIDViewer path
-EIDVIEWER_PATH="$(pwd)/../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Release/eID Viewer.app"
+#EIDVIEWER_PATH="$(pwd)/../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Release/eID Viewer.app"
 
 #eIDViewer.plist path
-EIDVIEWER_PLIST_PATH="$(pwd)/eidviewer.plist"
+#EIDVIEWER_PLIST_PATH="$(pwd)/eidviewer.plist"
 
 
 #BEIDToken installer name defines
@@ -162,17 +162,17 @@ cp -R "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
 
 
 #####################################################################
-echo "********** prepare eidviewer.pkg **********"
+#echo "********** prepare eidviewer.pkg **********"
 
 #cleanup
-test -e "$RELEASE_VIEWER_DIR" && rm -rdf "$RELEASE_VIEWER_DIR"
-test -e eidviewer.pkg && rm eidviewer.pkg
+#test -e "$RELEASE_VIEWER_DIR" && rm -rdf "$RELEASE_VIEWER_DIR"
+#test -e eidviewer.pkg && rm eidviewer.pkg
 
 #create installer dirs
-mkdir -p "$EIDVIEWER_INST_DIR"
+#mkdir -p "$EIDVIEWER_INST_DIR"
 
 #copy eid middleware app
-cp -R "$EIDVIEWER_PATH"  "$EIDVIEWER_INST_DIR"
+#cp -R "$EIDVIEWER_PATH"  "$EIDVIEWER_INST_DIR"
 
 #####################################################################
 echo "********** prepare BEIDToken.pkg **********"
@@ -211,7 +211,7 @@ pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid
 
 #pkgbuild --analyze --root "$ROOT_VIEWER_DIR" eidviewer.plist
 
-pkgbuild --root "$ROOT_VIEWER_DIR" --component-plist "$EIDVIEWER_PLIST_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location / eidviewer.pkg
+#pkgbuild --root "$ROOT_VIEWER_DIR" --component-plist "$EIDVIEWER_PLIST_PATH" --identifier be.eid.viewer.app --version $REL_VERSION --install-location / eidviewer.pkg
 
 #pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken.pkg
 
@@ -224,15 +224,15 @@ if [ $SIGN_BUILD -eq 1 ];then
   productsign --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
   hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
 
-  productsign --sign "Developer ID Installer" "eidviewer.pkg" "eidviewer-signed.pkg"
-  hdiutil create -srcfolder "eidviewer-signed.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
+#  productsign --sign "Developer ID Installer" "eidviewer.pkg" "eidviewer-signed.pkg"
+#  hdiutil create -srcfolder "eidviewer-signed.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
 
   productsign --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
   hdiutil create -srcfolder "BEIDToken-signed.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 else
   hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
   hdiutil create -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
-  hdiutil create -srcfolder "eidviewer.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
+#  hdiutil create -srcfolder "eidviewer.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
   #hdiutil create -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 fi
 
