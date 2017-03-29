@@ -95,12 +95,9 @@ void log_init(char *pszLogFile, unsigned int uiLogLevel)
 	{
 		// getting log_level
 		dwData = sizeof(lpData);
-		dwRet = RegQueryValueExA( hKey,
-			"log_level",
-			NULL,
-			NULL,
-			(LPBYTE) lpData,
-			&dwData );
+		dwRet = RegGetValueA(hKey, NULL, "log_level", RRF_RT_REG_SZ, NULL, (LPBYTE)lpData, &dwData);
+
+		//dwRet = RegQueryValueExA( hKey,"log_level",NULL,NULL,(LPBYTE) lpData,&dwData );
 
 		if (dwRet == ERROR_SUCCESS) {
 			// log_level found

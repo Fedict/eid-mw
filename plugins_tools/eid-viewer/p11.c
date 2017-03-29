@@ -35,7 +35,7 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 	CK_RV rv = call; \
 	int retval = ckrv_decode_vwr(rv, sizeof(mods) / sizeof(ckrv_mod), mods); \
 	if(retval != EIDV_RV_OK) { \
-		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(" returned %d"),#call, rv); \
+		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(" returned %#x"),#call, rv); \
 		return retval; \
 	} \
 }
@@ -43,7 +43,7 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 #define check_rv_late(call, rv) { \
 	int retval = ckrv_decode_vwr(rv, 1, defmod); \
 	if(retval != EIDV_RV_OK) { \
-		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(": found return value of %d"), #call, rv); \
+		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(": found return value of %#x"), #call, rv); \
 		return retval; \
 	} \
 }
@@ -135,18 +135,22 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULON
 		CK_SLOT_ID_PTR slotlist = NULL;
 		C_GetSlotList(with_token, slotlist, count);
 
+		if (*count == 0)
+		{
+			return EIDV_RV_FAIL;
+		}
 		slotlist = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), *count);
+
 		if (slotlist == NULL)
 		{
 			return EIDV_RV_FAIL;
 		}
 		ret = C_GetSlotList(with_token, slotlist, count);
 		check_rv_late("C_GetSlotList", ret);
-		if (*count > 0) {
-			*loc = slotlist[0];
-			free(slotlist);
-			return EIDV_RV_OK;
-		}
+
+		*loc = slotlist[0];
+		free(slotlist);
+		return EIDV_RV_OK;
 
 	} else {
 		CK_SLOT_INFO info;

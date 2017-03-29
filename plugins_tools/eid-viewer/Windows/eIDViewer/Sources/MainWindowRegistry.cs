@@ -39,19 +39,19 @@ namespace eIDViewer
             }
             catch (SecurityException e)
             {
-                theBackendData.logText += "ReadRegistryStringValue failed, no permission to read key " + keyName;
-                theBackendData.logText += "Exception message: " + e.Message + "\n";
+                theBackendData.WriteLog("ReadRegistryStringValue failed, no permission to read key " + keyName, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                theBackendData.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                 return "";
             }
             catch (IOException e)
             {
-                theBackendData.logText += "ReadRegistryStringValue failed, the key " + keyName + " was marked for deletion";
-                theBackendData.logText += "Exception message: " + e.Message + "\n";
+                theBackendData.WriteLog("ReadRegistryStringValue failed, the key " + keyName + " was marked for deletion", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                theBackendData.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                 return "";
             }
             catch (Exception e)
             {
-                theBackendData.logText += "Exception message: " + e.Message + "\n";
+                theBackendData.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                 return "";
             }
         }
@@ -67,8 +67,7 @@ namespace eIDViewer
 
             catch (Exception e)
             {
-               theBackendData.logText += "Exception caught when trying to write to registry key " + keyName;
-               Console.WriteLine("{0} Exception caught.", e);
+                theBackendData.WriteLog("Exception caught when trying to write to registry key " + keyName, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
             }
         }
 
@@ -125,8 +124,8 @@ namespace eIDViewer
             }
             else
             {
-                theBackendData.logText += "unsupported system language: " + CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
-                theBackendData.logText += "switching language to english ";
+                theBackendData.WriteLog("unsupported system language: " + CultureInfo.InstalledUICulture.TwoLetterISOLanguageName + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                theBackendData.WriteLog("switching language to english \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                 SetLanguageEN();
             }
         }
@@ -154,14 +153,14 @@ namespace eIDViewer
                 }
                 else
                 {
-                    theBackendData.logText += "unknown language identifier found in registry: " + readValue;
-                    theBackendData.logText += "switching language to the system setting ";
+                    theBackendData.WriteLog("unknown language identifier found in registry: " + readValue + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                    theBackendData.WriteLog("switching language to the system setting \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                     SetSystemLanguage();
                 }
             }
             else
             {
-                theBackendData.logText += "no language identifier found in registry, using the system localization ";
+                theBackendData.WriteLog("no language identifier found in registry, using the system localization \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                 SetSystemLanguage();
             }
         }

@@ -182,58 +182,51 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		Delete "$INSTDIR\BeidMW_32.msi"
   ${EndIf}
   
-  File /r "ReaderDrivers"
+  File /r "Drivers"
 
 ${DisableX64FSRedirection}
-	 
-	${If} $versionMajor == 5
-	${AndIf} $versionMinor == 1
-		;xp
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\ACR38U\a38usb.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\OmniKey3121\cxbu0wdm.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\SCR331\scr3xx.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\VascoDP509\usbccid.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\XP\SPR532\Spr332.inf"'
-	${EndIf}
 	
 	${If} $versionMajor == 6
 	${AndIf} $versionMinor == 0
 		;vista
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\ACR38U\a38usb.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\OmniKey3121\cxbu0wdm.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\SCR331\scr3xx.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\VascoDP509\usbccid.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\VISTA\SPR532\Spr332.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN8\ACR38U\a38usb.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN7\OmniKey3121\cxbu0wdm.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN7\SCR331\scr3xx.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN7\VascoDP509\usbccid.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN7\SPR532\Spr332.inf"'
 	${EndIf}
 	
 	${If} $versionMajor == 6
 	${AndIf} $versionMinor == 1
 		;windows 7
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\ReaderDrivers\WIN7\ACR38U\a38usb.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\ReaderDrivers\WIN7\OmniKey3121\cxbu0wdm.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\ReaderDrivers\WIN7\SCR331\scr3xx.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\ReaderDrivers\WIN7\VascoDP509\usbccid.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WIN7\SPR532\Spr332.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\Drivers\XP-WIN8\ACR38U\a38usb.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\Drivers\XP-WIN7\OmniKey3121\cxbu0wdm.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\Drivers\XP-WIN7\SCR331\scr3xx.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\Drivers\XP-WIN7\VascoDP509\usbccid.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN7\SPR532\Spr332.inf"'
 	${EndIf}
 		
 	${If} $versionMajor == 6
 	${AndIf} $versionMinor == 2 
 		;windows 8
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WIN8\ACR38U\a38usb.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN8\ACR38U\a38usb.inf"'
 	${EndIf}
 	
 	${If} $versionMajor == 6
 	${AndIf} $versionMinor == 3 
 		;windows 8.1
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WIN8\ACR38U\a38usb.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN8\ACR38U\a38usb.inf"'
 	${EndIf}
 	;driver to install on all OS's
 
-	nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\ReaderDrivers\WINALL\APG8201Z\apg8201z.inf"'
+	nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\WINALL\APG8201Z\apg8201z.inf"'
+	
+	;install the eid minidriver
+	nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\WINALL\beidmdrv\beidmdrv.inf"'
 
 ${EnableX64FSRedirection}
 
-  RMDir /r /REBOOTOK $INSTDIR\ReaderDrivers
+  RMDir /r /REBOOTOK $INSTDIR\Drivers
 
 SectionEnd
 

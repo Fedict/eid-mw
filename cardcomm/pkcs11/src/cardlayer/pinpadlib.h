@@ -2,7 +2,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2014 FedICT.
+ * Copyright (C) 2008-2017 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -72,7 +72,7 @@ public:
 	/** Send a command to the pinpad lib */
 		CByteArray PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 				  CByteArray oCmd, unsigned char ucPintype,
-				  unsigned char ucOperation);
+				  unsigned char ucOperation, unsigned long langCode);
 
 	/** This method is also called when no pinpad lib is used */
 		bool ShowDlg(unsigned char pinpadOperation,

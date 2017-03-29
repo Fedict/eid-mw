@@ -2,7 +2,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2014 FedICT.
+ * Copyright (C) 2008-2017 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -53,12 +53,11 @@ void CPinpadLib::Unload()
 
 CByteArray CPinpadLib::PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 			      CByteArray oCmd, unsigned char ucPintype,
-			      unsigned char ucOperation)
+			      unsigned char ucOperation, unsigned long ulLangCode)
 {
 #if defined WIN32 && defined BEID_OLD_PINPAD
 	if (m_oPinpadLibOldBeid.UseOldLib())
-		return m_oPinpadLibOldBeid.PinCmd(hCard, ulControl, oCmd,
-						  ucPintype, ucOperation);
+		return m_oPinpadLibOldBeid.PinCmd(hCard, ulControl, oCmd, ucPintype, ucOperation, ulLangCode);
 #endif
 
 	if (m_ppCmd2 == NULL)

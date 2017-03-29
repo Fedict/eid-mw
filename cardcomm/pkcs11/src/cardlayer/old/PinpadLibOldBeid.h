@@ -2,7 +2,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2017 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -37,15 +37,9 @@
 #include "scr.h"		// the old API
 #include "../pinpad2.h"		// the new API
 
-typedef long (*BEID_OLD_PP_INIT) (const char *szReader, DWORD version,
-				  SCR_SupportConstants * supported);
-typedef long (*BEID_OLD_VERIFY_PIN) (const SCR_Card *, BYTE pinID,
-				     const SCR_PinUsage *,
-				     const SCR_Application *,
-				     BYTE * cardStatus);
-typedef long (*BEID_OLD_CHANGE_PIN) (const SCR_Card *, BYTE pinID,
-				     const SCR_Application *,
-				     BYTE * cardStatus);
+typedef long (*BEID_OLD_PP_INIT) (const char *szReader, DWORD version, SCR_SupportConstants * supported);
+typedef long (*BEID_OLD_VERIFY_PIN) (const SCR_Card *, BYTE pinID, const SCR_PinUsage *, const SCR_Application *, BYTE * cardStatus);
+typedef long (*BEID_OLD_CHANGE_PIN) (const SCR_Card *, BYTE pinID, const SCR_Application *, BYTE * cardStatus);
 
 namespace eIDMW
 {
@@ -61,20 +55,17 @@ public:
 		~CPinpadLibOldBeid();
 
 		bool Load(unsigned long hContext, SCARDHANDLE hCard,
-			  const std::string & csReader,
-			  const std::string & csPinpadPrefix,
-			  unsigned long ulLanguage);
+			  const std::string & csReader, const std::string & csPinpadPrefix, unsigned long ulLanguage);
 
 		void UnLoad();
 
-		CByteArray PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
-				  CByteArray oCmd, unsigned char ucPintype,
-				  unsigned char ucOperation);
+		CByteArray PinCmd(SCARDHANDLE hCard, unsigned long ulControl, CByteArray oCmd, unsigned char ucPintype,
+				  unsigned char ucOperation, unsigned long ulLangCode);
 
 		bool UseOldLib();
 
 private:
-		     bool CheckLib(const std::string & csPinpadDir,
+		bool CheckLib(const std::string & csPinpadDir,
 				   const char *csFileName,
 				   unsigned long ulLanguage,
 				   unsigned long hContext, SCARDHANDLE hCard,

@@ -2,7 +2,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2008-2014 FedICT.
+* Copyright (C) 2008-2017 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -78,9 +78,7 @@ namespace eIDMW
 		if (m_bNewCard)
 		{
 			m_bUsePinpadLib =
-				m_oPinpadLib.
-				Load((unsigned long) m_poContext->m_oPCSC.
-				     m_hContext, m_hCard, m_csReader,
+				m_oPinpadLib.Load((unsigned long) m_poContext->m_oPCSC.m_hContext, m_hCard, m_csReader,
 				     m_csPinpadPrefix, GetLanguage());
 
 			// The GemPC pinpad reader does a "Verify PIN" with empty buffer in an attempt
@@ -239,13 +237,11 @@ namespace eIDMW
 		xVerifyCmd.bmPINBlockString = ToPinBlockString(pin);
 		xVerifyCmd.bmPINLengthFormat = ToPinLengthFormat(pin);
 		xVerifyCmd.wPINMaxExtraDigit[0] = GetMaxPinLen(pin);
-		xVerifyCmd.wPINMaxExtraDigit[1] =
-			(unsigned char) pin.ulMinLen;
+		xVerifyCmd.wPINMaxExtraDigit[1] = (unsigned char) pin.ulMinLen;
 		xVerifyCmd.bEntryValidationCondition = 0x02;
 		xVerifyCmd.bNumberMessage = 0x01;
 		//ToUchar2(m_ulLangCode, xVerifyCmd.wLangId);
-		xVerifyCmd.wLangId[0] =
-			(unsigned char) ((m_ulLangCode & 0xff00) / 256);
+		xVerifyCmd.wLangId[0] = (unsigned char) ((m_ulLangCode & 0xff00) / 256);
 		xVerifyCmd.wLangId[1] = (unsigned char) (m_ulLangCode & 0xff);
 		xVerifyCmd.bMsgIndex = 0;
 		ToUchar4(oAPDU.Size(), xVerifyCmd.ulDataLength);
@@ -392,10 +388,11 @@ namespace eIDMW
 								     oCmd);
 			} else
 			{
-				oResp = m_oPinpadLib.PinCmd(m_hCard,
-							    ulControl, oCmd,
-							    ucPintype,
-							    pinpadOperation);
+				m_ulLangCode = 0;//forget the previously know language, so the register is checked once more
+				GetLanguage();
+				MWLOG(LEV_INFO, MOD_CAL,L"PinpadControl using pinpadlib with lang=0x%u\n",m_ulLangCode);
+				oResp = m_oPinpadLib.PinCmd(m_hCard, ulControl, oCmd,ucPintype,
+							    pinpadOperation,m_ulLangCode);
 			}
 		}
 		catch( ...)
