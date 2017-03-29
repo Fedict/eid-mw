@@ -2,7 +2,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2008-2009 FedICT.
+ * Copyright (C) 2008-2017 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -184,10 +184,8 @@ static unsigned char tucErrCancel[] = { 0x64, 0x01 };
 static unsigned char tucErrPinsDiffer[] = { 0x64, 0x02 };
 static unsigned char tucErrGeneral[] = { 0x6B, 0x80 };
 
-CByteArray CPinpadLibOldBeid::PinCmd(SCARDHANDLE hCard,
-				     unsigned long ulControl, CByteArray oCmd,
-				     unsigned char ucPintype,
-				     unsigned char ucOperation)
+CByteArray CPinpadLibOldBeid::PinCmd(SCARDHANDLE hCard, unsigned long ulControl, CByteArray oCmd,
+				     unsigned char ucPintype, unsigned char ucOperation, unsigned long ulLangCode)
 {
 	if (ulControl == CCID_IOCTL_GET_FEATURE_REQUEST)
 	{
@@ -196,6 +194,7 @@ CByteArray CPinpadLibOldBeid::PinCmd(SCARDHANDLE hCard,
 	  0x00, 0x31, 0x32, 0x33 };
 		return CByteArray(tucFeatures, sizeof(tucFeatures));
 	}
+	m_iLangIdx = LangToId(ulLangCode);
 
 	SCR_Card xCard = {
 		hCard,
