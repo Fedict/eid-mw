@@ -392,7 +392,7 @@ namespace eIDMW
 				GetLanguage();
 				MWLOG(LEV_INFO, MOD_CAL,L"PinpadControl using pinpadlib with lang=0x%u\n",m_ulLangCode);
 				oResp = m_oPinpadLib.PinCmd(m_hCard, ulControl, oCmd,ucPintype,
-							    pinpadOperation,m_ulLangCode, (unsigned long) m_poContext->m_oPCSC.m_hContext, m_csReader);
+							    pinpadOperation,m_ulLangCode);
 			}
 		}
 		catch( ...)
