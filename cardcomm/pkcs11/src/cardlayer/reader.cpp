@@ -26,6 +26,21 @@
 namespace eIDMW
 {
 //the DigestInfo Values:
+	static const unsigned char MD5_AID[] = {
+		0x30, 0x20,
+		0x30, 0x0c,
+		0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x05,
+		0x05, 0x00,
+		0x04, 0x10
+	};
+
+	static const unsigned char SHA1_AID[] = {
+		0x30, 0x21,
+		0x30, 0x09,
+		0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a,
+		0x05, 0x00,
+		0x04, 0x14
+	};
 	static const unsigned char SHA256_AID[] = {
 		0x30, 0x31,
 		0x30, 0x0d,
@@ -397,7 +412,9 @@ namespace eIDMW
 		if (algos & SIGN_ALGO_RSA_RAW)
 			algos |= SIGN_ALGO_RSA_PKCS;
 		if (algos & SIGN_ALGO_RSA_PKCS)
-			algos |= (SIGN_ALGO_SHA256_RSA_PKCS |
+			algos |= (SIGN_ALGO_MD5_RSA_PKCS |
+				  SIGN_ALGO_SHA1_RSA_PKCS |
+				  SIGN_ALGO_SHA256_RSA_PKCS |
 				  SIGN_ALGO_SHA384_RSA_PKCS |
 				  SIGN_ALGO_SHA512_RSA_PKCS |
 				  SIGN_ALGO_RIPEMD160_RSA_PKCS);
@@ -421,7 +438,11 @@ namespace eIDMW
 		{
 			CByteArray oAID_Data;
 
-			if (algo & SIGN_ALGO_SHA256_RSA_PKCS)
+			if (algo & SIGN_ALGO_MD5_RSA_PKCS)
+				oAID_Data.Append(MD5_AID, sizeof(MD5_AID));
+			else if (algo & SIGN_ALGO_SHA1_RSA_PKCS)
+				oAID_Data.Append(SHA1_AID, sizeof(SHA1_AID));
+			else if (algo & SIGN_ALGO_SHA256_RSA_PKCS)
 				oAID_Data.Append(SHA256_AID,
 						 sizeof(SHA256_AID));
 			else if (algo & SIGN_ALGO_SHA384_RSA_PKCS)

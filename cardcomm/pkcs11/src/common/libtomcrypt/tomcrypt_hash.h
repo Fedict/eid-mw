@@ -1,9 +1,11 @@
 #ifndef __TOMCRYPT_HASH_H__
 #define __TOMCRYPT_HASH_H__
 
+#define USE_SHA1
 #define USE_SHA256
 #define USE_SHA384
 #define USE_SHA512
+#define USE_MD5
 #define USE_RIPEMD160
 
 #define CRYPT_OK               0
