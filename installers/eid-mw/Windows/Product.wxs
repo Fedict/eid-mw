@@ -109,6 +109,13 @@
     </DirectoryRef>
 
     <DirectoryRef Id="MINIDRIVERROOTFOLDER">
+      <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" >
+        <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
+        <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv64.dll" KeyPath="no" DiskId="1" />
+
+      </Component>
       <!-- Certificate Propagation Service is a standard Windows service available in from Windows Vista on. In order to use the minidriver
 			   it is necessary that this service is running. When a smart card reader is inserted this service should be started  by the smart card
 			   driver. As not all drivers are following this guidance, we start CertPropSvc during the minidriver install -->
@@ -137,6 +144,10 @@
 
     <DirectoryRef Id="SystemFolder">
 
+      <Component Id="beidmdrvsystem32" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" Permanent="no" Win64="no">
+        <File Id="system32_beidmdrv.dll" Name="beidmdrv32.dll" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="yes" DiskId="1" />
+      </Component>
+
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="no">
         <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\VS_2015\binaries\win32_release\beidpkcs11.dll" />
         <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\VS_2015\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
@@ -157,6 +168,20 @@
         <!-- Start SCardSvr Service now -->
         <!--<ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" Wait="no"/>-->
       </Component>
+	  
+      <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}">
+        <RegistryKey Root="HKLM"
+                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
+                     Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="yes"/>
+          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
+          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no"/>
+          <RegistryValue Type="string" Name="Smart Card Key Storage Provider" Value="Microsoft Smart Card Key Storage Provider" KeyPath="no"/>
+          <RegistryValue Type="string" Name="80000100" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no"/>
+          <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no"/>
+        </RegistryKey>
+      </Component> 
 
       <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}">
         <RegistryKey Root="HKLM"
@@ -209,7 +234,10 @@
       <ComponentRef Id="pkcs11"/>
 
       <Feature Id="Install_Minidriver" Title="Minidriver" Absent="allow" Level="1">
+        <ComponentRef Id="beidmdrv"/>
         <ComponentRef Id="CertPropService"/>
+        <ComponentRef Id="beidmdrvsystem32"/>
+        <ComponentRef Id="REGISTERMINIDRIVER"/>
         <Condition Level="1">VersionNT >= 600</Condition>
       </Feature>
     </Feature>
