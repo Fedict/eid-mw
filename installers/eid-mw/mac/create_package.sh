@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-set -x
 
 SIGN_BUILD=0
 #set SIGN_BUILD=1 to sign the .pkg files
