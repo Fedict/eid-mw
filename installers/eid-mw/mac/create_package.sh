@@ -204,7 +204,8 @@ mkdir -p $RELEASE_VIEWER_DIR
 
 hdiutil create -srcdir $RELEASE_VIEWER_DIR -volname "$EIDVIEWER_VOL_NAME" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW -size 100m "tmp-$EIDVIEWER_DMG_NAME"
 DEVNAME=$(hdiutil attach -readwrite -noverify -noautoopen "tmp-$EIDVIEWER_DMG_NAME" | egrep '^/dev/' | sed 1q | awk '{print $1}')
-cp -a $EIDVIEWER_TMPL_DIR/.background "/Volumes/$EIDVIEWER_VOL_NAME/"
+mkdir -p "/Volumes/$EIDVIEWER_VOL_NAME/.background/"
+cp -a $EIDVIEWER_TMPL_DIR/bg.png "/Volumes/$EIDVIEWER_VOL_NAME/.background/"
 cp -a "$EIDVIEWER_PATH" "/Volumes/$EIDVIEWER_VOL_NAME/"
 ln -s /Applications "/Volumes/$EIDVIEWER_VOL_NAME/ "
 /usr/bin/osascript ../setlayout.applescript "eID Viewer" || true
