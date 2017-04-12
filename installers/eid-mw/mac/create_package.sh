@@ -41,7 +41,7 @@ RELEASE_VIEWER_DIR="$(pwd)/release_viewer"
 #root dir, for files that are to be installed by the pkg
 #ROOT_VIEWER_DIR="$RELEASE_VIEWER_DIR/root"
 
-EIDVIEWER_TMPL_DIR="$(pwd)/../../eid-viewer/mac/files/"
+EIDVIEWER_TMPL_DIR="$(pwd)/../../eid-viewer/mac/"
 
 #eIDViewer path
 EIDVIEWER_PATH="$(pwd)/../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Release/eID Viewer.app"
