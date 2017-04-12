@@ -37,14 +37,14 @@ EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/
 
 #viewer installer name defines
 #release dir, where all the beidbuild files to be released will be placed
-#RELEASE_VIEWER_DIR="$(pwd)/release_viewer"
+RELEASE_VIEWER_DIR="$(pwd)/release_viewer"
 #root dir, for files that are to be installed by the pkg
 #ROOT_VIEWER_DIR="$RELEASE_VIEWER_DIR/root"
 
 EIDVIEWER_TMPL_DIR="$(pwd)/../../eid-viewer/mac/files/"
 
 #eIDViewer path
-#EIDVIEWER_PATH="$(pwd)/../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Release/eID Viewer.app"
+EIDVIEWER_PATH="$(pwd)/../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Release/eID Viewer.app"
 
 EIDVIEWER_DMG_NAME="eID Viewer-${REL_VERSION}.dmg"
 EIDVIEWER_VOL_NAME="eID Viewer"
