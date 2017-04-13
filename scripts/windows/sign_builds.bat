@@ -11,6 +11,7 @@ set OUR_CURRENT_PATH="%cd%"
 @echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
 
 set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
+set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 
 :: Create catalog
 :: create the MSI installers
@@ -25,7 +26,7 @@ set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
 @echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
 @echo [INFO] Sign the minidriver catalog
 ::"%SIGNTOOL_PATH%\signtool" sign /ac "%MDRVINSTALLPATH%\GlobalSign Root CA.crt" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
-"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVINSTALLPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
+"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
 @echo [INFO] Sign the minidriver 32bit dll
 "%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll"
 @echo [INFO] Sign the minidriver 64bit dll
@@ -35,6 +36,7 @@ set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
 
 
 @cd "%MDRVINSTALLPATH%"
+del /q beidmdrv.zip
 :: zip the minidriver folder
 powershell.exe -nologo -noprofile -command "Compress-Archive -Path .\beidmdrv\* -CompressionLevel Optimal -DestinationPath ./beidmdrv.zip"
 @echo [INFO] Sign the zip file
