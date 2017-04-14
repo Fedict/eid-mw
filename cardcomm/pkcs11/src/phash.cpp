@@ -71,6 +71,7 @@ int hash_init(CK_MECHANISM_PTR pMechanism, void **pphashinfo,
 
 		default:
 			ret = CKR_MECHANISM_INVALID;
+			delete oHash;
 			goto cleanup;
 	}
 
