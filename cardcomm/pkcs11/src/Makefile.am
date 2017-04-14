@@ -163,9 +163,8 @@ libbeidpkcs11_la_CXXFLAGS += -I$(srcdir)/dialogs
 libbeidpkcs11_la_SOURCES += \
 	dialogs/dialogsgtk/dlgs_gtk.cpp \
 	dialogs/dialogsgtk/single_dialog.c
-endif
-
 libexec_PROGRAMS = beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin
+endif
 
 if P11KIT
 dist_p11kitcf_DATA = beid.module
