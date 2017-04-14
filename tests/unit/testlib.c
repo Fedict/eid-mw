@@ -492,6 +492,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 		} while(rv != CKR_OK && (++i < count));
 		if (i >= count ) {
 			printf("Need at least one known token for this test\n");
+			free(list);
 			return TEST_RV_SKIP;
 		}
 	}
