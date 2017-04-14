@@ -38,7 +38,7 @@ LDFLAGS="$PCSC_LIBS $CPPFLAGS"
 ])
 
 AC_ARG_WITH([gtkvers],
-	[AS_HELP_STRING([--with-gtkvers],[select GTK version to use [default: 3 if available, falls back to 2 if not]])],
+	[AS_HELP_STRING([--with-gtkvers],[select GTK version to use [default: 3 if available, falls back to 2 if not]; --without-gtkvers disables GTK altogether [note: this implies --disable-dialogs].])],
 	[gtkvers=$withval],[gtkvers=detect])
 have_gtk=no
 AC_MSG_CHECKING([for wanted GTK version])
@@ -61,24 +61,38 @@ AC_DEFINE_UNQUOTED([HAVE_GTK], [$have_gtk], [Set to major version of libgtk])
 
 if test "$have_gtk" = "no"
 then
-	AC_MSG_ERROR([At least one version of GTK is required.])
+	if test "$gtkvers" != "no"
+	then
+		AC_MSG_ERROR([At least one version of GTK is recommended. If you do not wish the eID viewer or the PIN dialogs, please use --without-gtkvers.])
+	fi
 fi
 
-PKG_CHECK_MODULES([XML2], [libxml-2.0])
-PKG_CHECK_MODULES([libproxy], [libproxy-1.0])
+AM_CONDITIONAL(GTK, [test "$have_gtk" != "no"])
+if test "$have_gtk" != "no"
+then
+	PKG_CHECK_MODULES([XML2], [libxml-2.0])
+	PKG_CHECK_MODULES([libproxy], [libproxy-1.0])
+fi
 
 ###########################################################################
 ####### read user-specific requests from --enable directives         ######
 ###########################################################################
 AC_MSG_CHECKING(whether to enable dialogs)
 default="yes"
+if test "$have_gtk" = "no"
+then
+	default=no
+fi
 NO_DIALOGS=
 AC_ARG_ENABLE(dialogs, [  --enable-dialogs=[yes/no] turn off dialogs
                                [default=$default]],, enable_dialogs=$default)
 if test "x$enable_dialogs" = "xno"; then
-AC_MSG_RESULT(no)
+	AC_MSG_RESULT(no)
 else
-AC_MSG_RESULT(yes)
+	if test $have_gtk = no; then
+		AC_MSG_ERROR([You cannot combine --without-gtkvers and --enable-dialogs, as the dialogs require GTK])
+	fi
+	AC_MSG_RESULT(yes)
 fi
 AM_CONDITIONAL([NO_DIALOGS],[test x$enable_dialogs = xno])
 
