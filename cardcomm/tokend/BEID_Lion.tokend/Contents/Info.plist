@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>BEID</string>
 	<key>CFBundleIdentifier</key>
-	<string>be.fedict.tokend.beid</string>
+	<string>com.apple.tokend.belpic</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
