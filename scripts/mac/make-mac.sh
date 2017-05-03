@@ -35,10 +35,10 @@ xcodebuild -project "eID Middleware.xcodeproj" clean
 xcodebuild -project "eID Middleware.xcodeproj" -target "eID Middleware" -configuration Release
 popd
 
-#pushd "../../../plugins_tools/eid-viewer/OSX/eID Viewer"
-#xcodebuild -project "eID Viewer.xcodeproj" clean
-#xcodebuild -project "eID Viewer.xcodeproj" -target "eID Viewer" -configuration Release
-#popd
+pushd "../../../plugins_tools/eid-viewer/OSX/eID Viewer"
+xcodebuild -project "eID Viewer.xcodeproj" clean
+xcodebuild -project "eID Viewer.xcodeproj" -target "eID Viewer" -configuration Release
+popd
 
 
 #pushd "../../../plugins_tools/plistMerger"
