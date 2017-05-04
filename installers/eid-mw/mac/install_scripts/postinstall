@@ -57,10 +57,4 @@ test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart && mv /Library/LaunchD
 #sudo cp "/Library/Belgium Identity Card/plistMerger/Info_merged.plist" /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle/Contents/Info.plist;
 #fi
 
-#trust beid-cert-belgiumrca2.der
-sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain ./beid-cert-belgiumrca2.der
-
-#trust beid-cert-belgiumrca3.der
-sudo /usr/bin/security add-trusted-cert -d -r trustRoot -k /Library/KeyChains/System.keychain ./beid-cert-belgiumrca3.der
-
 echo "postinstall succeeded"
