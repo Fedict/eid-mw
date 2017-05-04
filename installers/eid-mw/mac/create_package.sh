@@ -42,12 +42,6 @@ RELEASE_VIEWER_DIR="$(pwd)/release_viewer"
 
 EIDVIEWER_TMPL_DIR="$(pwd)/../../eid-viewer/mac/"
 
-#eIDViewer path
-EIDVIEWER_PATH="$(pwd)/../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Release/eID Viewer.app"
-
-EIDVIEWER_DMG_NAME="eID Viewer-${REL_VERSION}.dmg"
-EIDVIEWER_VOL_NAME="eID Viewer"
-
 #BEIDToken installer name defines
 #release dir, where all the beidbuild files to be released will be placed
 #RELEASE_BEIDToken_DIR="$(pwd)/release_BEIDToken"
@@ -195,21 +189,6 @@ pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
 #####################################################################
-echo "********** prepare eidviewer.dmg **********"
-
-#cleanup
-rm -rf $RELEASE_VIEWER_DIR
-mkdir -p $RELEASE_VIEWER_DIR
-
-hdiutil create -srcdir $RELEASE_VIEWER_DIR -volname "$EIDVIEWER_VOL_NAME" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW -size 100m "tmp-$EIDVIEWER_DMG_NAME"
-DEVNAME=$(hdiutil attach -readwrite -noverify -noautoopen "tmp-$EIDVIEWER_DMG_NAME" | egrep '^/dev/' | sed 1q | awk '{print $1}')
-mkdir -p "/Volumes/$EIDVIEWER_VOL_NAME/.background/"
-cp -a $EIDVIEWER_TMPL_DIR/bg.png "/Volumes/$EIDVIEWER_VOL_NAME/.background/"
-cp -a "$EIDVIEWER_PATH" "/Volumes/$EIDVIEWER_VOL_NAME/"
-ln -s /Applications "/Volumes/$EIDVIEWER_VOL_NAME/ "
-/usr/bin/osascript ../setlayout.applescript "eID Viewer" || true
-sleep 4
-hdiutil detach $DEVNAME
 
 if [ $SIGN_BUILD -eq 1 ];then
   productsign --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAME
@@ -230,8 +209,6 @@ if [ $SIGN_BUILD -eq 1 ];then
 else
   hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
   hdiutil create -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
-  hdiutil convert "tmp-$EIDVIEWER_DMG_NAME" -format UDBZ -o "$EIDVIEWER_DMG_NAME"
-  rm "tmp-$EIDVIEWER_DMG_NAME"
   #hdiutil create -srcfolder "eidviewer.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
   #hdiutil create -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 fi
