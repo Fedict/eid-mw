@@ -232,6 +232,7 @@ SectionEnd
 
 
 Function ErrorHandler_file
+IfSilent +2 0 
   MessageBox MB_ICONSTOP "$(ls_errorcopyfile) $FileToCopy"
     Abort
 FunctionEnd
@@ -282,6 +283,10 @@ FunctionEnd
 
 Function nsdWelcome
 	;File "welcome.bmp"
+	;skip the windows when silent
+	IfSilent 0 +2 
+        Abort   
+	
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog ;popped from the stack to prevent stack corruption
 	${If} $nsdCustomDialog == error
@@ -354,10 +359,17 @@ FunctionEnd
 
 Function nsdInstallCheck
 
+
     ${If} $InstallFailed == 0
         ;MessageBox MB_OK "Install ok, skipping error"
         Abort   
     ${EndIf}
+	
+	
+	;abort the installer when silent and error occured
+	IfSilent 0 +3
+		SetErrorLevel 3
+        Quit   
 
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
@@ -418,7 +430,11 @@ Function nsdInstallCheckLeave
 FunctionEnd
 
 Function nsdDone
-	;File "welcome.bmp"
+	
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort   
+	
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
 	${If} $nsdCustomDialog == error
@@ -484,6 +500,10 @@ Function  nsdDoneLeave
 FunctionEnd
 
 Function nsdConnectReader
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
 	;File "connect_reader.bmp"
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
@@ -515,6 +535,10 @@ Function nsdConnectReader
 FunctionEnd
 
 Function  nsdConnectReaderLeave
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
 	beid::GetReaderCount 0
 	Pop $retval
 	
@@ -535,6 +559,10 @@ Function  nsdConnectReaderLeave
 FunctionEnd
 
 Function nsdReaderCheck
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
     ${If} $ReaderFailed == 0
         ;MessageBox MB_OK "Reader found, skipping reader error"
         Abort   
@@ -593,11 +621,19 @@ Function nsdReaderCheck
 FunctionEnd
 
 Function nsdReaderCheckLeave
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
 	call FindSolutionButton_click
 FunctionEnd
 
 
 Function nsdInsertCard 
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
 	;File "insert_card.bmp"
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
@@ -627,6 +663,10 @@ Function nsdInsertCard
 FunctionEnd
 
 Function nsdInsertCardLeave
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
 	;GetReaderCount 1 in order to get the readers with an eID card inserted
 	beid::GetReaderCount 1	
 	Pop $retval
@@ -651,7 +691,10 @@ Function nsdInsertCardLeave
 FunctionEnd
 
 Function nsdCardCheck
-
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
     ${If} $FindCardFailed == '0'
         ;MessageBox MB_OK "Reader found, skipping reader error"
         Abort   
@@ -709,11 +752,19 @@ Function nsdCardCheck
 FunctionEnd
 
 Function nsdCardCheckLeave
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
 	call FindSolutionButton_click
 FunctionEnd
 
 
 Function nsdCardData
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog	
 	${If} $nsdCustomDialog == error
