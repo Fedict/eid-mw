@@ -174,6 +174,10 @@ Function .onInstSuccess
 FunctionEnd
 
 Function nsdWelcome
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort   
+
 	File "welcome.bmp"
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog ;popped from the stack to prevent stack corruption
@@ -234,6 +238,10 @@ Function nsdInstallCheck
         Abort   
     ${EndIf}
 
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort   
+	
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
 	${If} $nsdCustomDialog == error
@@ -289,10 +297,18 @@ Function nsdInstallCheck
 FunctionEnd
 
 Function nsdInstallCheckLeave
+	;skip the function when silent
+	IfSilent 0 +2 
+        Abort   
+		
 	call FindSolutionButton_click
 FunctionEnd
 
 Function nsdDone
+	;skip the window when silent
+	IfSilent 0 +2 
+        Abort   
+
 	;File "welcome.bmp"
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog
