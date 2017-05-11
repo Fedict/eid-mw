@@ -1,12 +1,12 @@
 #!/bin/bash
 
-rm -rf release-viewer
-mkdir -p release-viewer
-rm tmp-eidviewer.dmg
-
 pushd $(dirname $0)
 
 . set_eidmw_version.sh
+
+rm -rf release-viewer
+mkdir -p release-viewer
+rm tmp-eidviewer.dmg
 
 pushd "../../plugins_tools/eid-viewer/OSX/eID Viewer"
 xcodebuild -project "eID Viewer.xcodeproj" clean
