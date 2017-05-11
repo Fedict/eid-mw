@@ -7,6 +7,7 @@ pushd $(dirname $0)
 rm -rf release-viewer
 mkdir -p release-viewer
 rm tmp-eidviewer.dmg
+rm -f "eID Viewer-$REL_VERSION.dmg"
 
 pushd "../../plugins_tools/eid-viewer/OSX/eID Viewer"
 xcodebuild -project "eID Viewer.xcodeproj" clean
