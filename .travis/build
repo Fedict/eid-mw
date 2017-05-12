@@ -8,8 +8,8 @@ set -o pipefail
 case $(uname -s) in
 	Darwin)
 		cd $(dirname $0)/..
-		./scripts/mac/make-mac.sh | xcpretty -f $(xcpretty-travis-formatter)
-		xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release | xcpretty -f $(xcpretty-travis-formatter)
+		./scripts/mac/make-mac.sh | xcpretty
+		xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release | xcpretty
 		cd build/Release
 		DYLD_LIBRARY_PATH=$(pwd) ./testsuite
 		;;
