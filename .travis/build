@@ -10,7 +10,7 @@ case $(uname -s) in
 		cd $(dirname $0)/..
 		./scripts/mac/make-mac.sh | xcpretty
 		xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release | xcpretty
-		cd build/Release
+		cd Release
 		DYLD_LIBRARY_PATH=$(pwd) ./testsuite
 		;;
 	Linux)
