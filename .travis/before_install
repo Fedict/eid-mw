@@ -9,6 +9,9 @@ case $(uname -s) in
 		apt-get update
 		apt-get install -y autotools-dev libgtk2.0-dev libpcsclite-dev libtool automake autoconf libcurl4-openssl-dev libxml2-dev libproxy-dev pkg-config libp11-kit-dev
 	;;
+	Darwin)
+		sudo gem install xcpretty xcpretty-travis-formatter
+	;;
 	*)
 		continue
 	;;

@@ -3,11 +3,13 @@
 set -e
 set -x
 
+set -o pipefail
+
 case $(uname -s) in
 	Darwin)
 		cd $(dirname $0)/..
-		./scripts/mac/make-mac.sh
-		xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release
+		./scripts/mac/make-mac.sh | xcpretty -f $(xcpretty-travis-formatter)
+		xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release | xcpretty -f $(xcpretty-travis-formatter)
 		cd build/Release
 		DYLD_LIBRARY_PATH=$(pwd) ./testsuite
 		;;
