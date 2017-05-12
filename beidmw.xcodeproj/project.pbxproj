@@ -1397,6 +1397,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
+					USING_DL_OPEN,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				GCC_THREADSAFE_STATICS = YES;
@@ -1600,12 +1601,7 @@
 					LTC_NO_ASM,
 					BEID_35,
 					EIDMW_STATIC_LIB,
-				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"EIDMW_PREFIX=/usr/local",
-					LTC_NO_ASM,
-					BEID_35,
-					EIDMW_STATIC_LIB,
+					USING_DL_OPEN,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;

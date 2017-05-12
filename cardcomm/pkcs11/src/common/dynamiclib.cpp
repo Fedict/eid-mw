@@ -117,7 +117,7 @@ void CDynamicLib::PlatformClose()
 
 /////////////////////////////////// Mac //////////////////////////
 
-#ifdef __APPLE__
+#if defined(__APPLE__) && !defined(USING_DL_OPEN)
 
 #include <Carbon/Carbon.h>
 #include <mach-o/dyld.h>
