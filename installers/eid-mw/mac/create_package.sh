@@ -144,9 +144,6 @@ cp ./Distribution.txt "$RELEASE_DIR"
 #copy drivers
 cp -R ./drivers/* "$RELEASE_DIR"
 
-#copy the eID Viewer
-cp -R "./eID Viewer.app/" "$RELEASE_DIR"
-
 #copy eid middleware app
 cp -R "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
 
