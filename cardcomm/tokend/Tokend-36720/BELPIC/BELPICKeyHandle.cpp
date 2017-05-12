@@ -1,4 +1,3 @@
-
 /*
  *  Copyright (c) 2004 Apple Computer, Inc. All Rights Reserved.
  * 
@@ -41,10 +40,10 @@
 //
 // BELPICKeyHandle
 //
-BELPICKeyHandle::BELPICKeyHandle(BELPICToken & belpicToken,
-				 const Tokend::MetaRecord & metaRecord,
-				 BELPICKeyRecord & cacKey):Tokend::
-KeyHandle(metaRecord, &cacKey), mToken(belpicToken), mKey(cacKey)
+BELPICKeyHandle::BELPICKeyHandle(BELPICToken &belpicToken,
+	const Tokend::MetaRecord &metaRecord, BELPICKeyRecord &cacKey) :
+	Tokend::KeyHandle(metaRecord, &cacKey),
+	mToken(belpicToken), mKey(cacKey)
 {
 }
 
@@ -52,7 +51,7 @@ BELPICKeyHandle::~BELPICKeyHandle()
 {
 }
 
-void BELPICKeyHandle::getKeySize(CSSM_KEY_SIZE & keySize)
+void BELPICKeyHandle::getKeySize(CSSM_KEY_SIZE &keySize)
 {
 	secdebug("crypto", "getKeySize");
 	keySize.LogicalKeySizeInBits = mKey.sizeInBits();
@@ -60,21 +59,22 @@ void BELPICKeyHandle::getKeySize(CSSM_KEY_SIZE & keySize)
 
 }
 
-uint32 BELPICKeyHandle::getOutputSize(const Context & context,
-				      uint32 inputSize, bool encrypting)
+uint32 BELPICKeyHandle::getOutputSize(const Context &context,
+	uint32 inputSize, bool encrypting)
 {
 	secdebug("crypto", "getOutputSize");
 	CssmError::throwMe(CSSM_ERRCODE_FUNCTION_NOT_IMPLEMENTED);
 }
 
-static const unsigned char sha1sigheader[] = {
-	0x30,			// SEQUENCE
-	0x21,			// LENGTH
-	0x30,			// SEQUENCE
-	0x09,			// LENGTH
-	0x06, 0x05, 0x2B, 0x0E, 0x03, 0x02, 0x1a,	// SHA1 OID (1 4 14 3 2 26)
-	0x05, 0x00,		// OPTIONAL ANY algorithm params (NULL)
-	0x04, 0x14		// OCTECT STRING (20 bytes)
+static const unsigned char sha1sigheader[] =
+{
+	0x30, // SEQUENCE
+	0x21, // LENGTH
+	  0x30, // SEQUENCE
+	  0x09, // LENGTH
+		0x06, 0x05, 0x2B, 0x0E, 0x03, 0x02, 0x1a, // SHA1 OID (1 4 14 3 2 26)
+	    0x05, 0x00, // OPTIONAL ANY algorithm params (NULL)
+	  0x04, 0x14 // OCTECT STRING (20 bytes)
 };
 
 static const unsigned char sha256sigheader[] =
@@ -86,25 +86,32 @@ static const unsigned char sha256sigheader[] =
     0x04, 0x20
 };
 
-static const unsigned char md5sigheader[] =
+static const unsigned char sha512sigheader[] =
 {
-	0x30,			// SEQUENCE
-	0x20,			// LENGTH
-	0x30,			// SEQUENCE
-	0x0C,			// LENGTH
-	// MD5 OID (1 2 840 113549 2 5)
-	0x06, 0x08, 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x02, 0x05,
-	0x05, 0x00,		// OPTIONAL ANY algorithm params (NULL)
-	0x04, 0x10		// OCTECT STRING (16 bytes)
+    0x30, 0x51,
+    0x30, 0x0d,
+    0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03,
+    0x05, 0x00,
+    0x04, 0x40
 };
 
-void BELPICKeyHandle::generateSignature(const Context & context,
-					CSSM_ALGORITHMS signOnly,
-					const CssmData & input,
-					CssmData & signature)
+static const unsigned char md5sigheader[] =
+{
+	0x30, // SEQUENCE
+	0x20, // LENGTH
+	  0x30, // SEQUENCE
+	  0x0C, // LENGTH
+		// MD5 OID (1 2 840 113549 2 5)
+	    0x06, 0x08, 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x02, 0x05,
+	    0x05, 0x00, // OPTIONAL ANY algorithm params (NULL)
+	  0x04, 0x10 // OCTECT STRING (16 bytes)
+};
+
+void BELPICKeyHandle::generateSignature(const Context &context,
+	CSSM_ALGORITHMS signOnly, const CssmData &input, CssmData &signature)
 {
 	secdebug("crypto", "generateSignature alg: %u signOnly: %u",
-		 context.algorithm(), signOnly);
+		context.algorithm(), signOnly);
 	IFDUMPING("crypto", context.dump("signature context"));
 
 	if (context.type() != CSSM_ALGCLASS_SIGNATURE)
@@ -117,7 +124,6 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 	// point to the right asn1 blob.
 	const unsigned char *header;
 	size_t headerLength;
-
 	if (signOnly == CSSM_ALGID_SHA1)
 	{
         secdebug("crypto", "CSSM_ALGID_SHA1");
@@ -126,7 +132,8 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 
 		header = sha1sigheader;
 		headerLength = sizeof(sha1sigheader);
-	} else if (signOnly == CSSM_ALGID_MD5)
+	}
+	else if (signOnly == CSSM_ALGID_MD5)
 	{
 		if (input.Length != 16)
 			CssmError::throwMe(CSSMERR_CSP_BLOCK_SIZE_MISMATCH);
@@ -142,6 +149,15 @@ void BELPICKeyHandle::generateSignature(const Context & context,
         
 		header = sha256sigheader;
 		headerLength = sizeof(sha256sigheader);
+	}
+    else if (signOnly == CSSM_ALGID_SHA512)
+	{
+        secdebug("crypto", "CSSM_ALGID_SHA512");
+		if (input.Length != 64)
+			CssmError::throwMe(CSSMERR_CSP_BLOCK_SIZE_MISMATCH);
+        
+		header = sha512sigheader;
+		headerLength = sizeof(sha512sigheader);
 	}
 	else if (signOnly == CSSM_ALGID_NONE)
 	{
@@ -169,12 +185,11 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 	// the token.
 	size_t inputDataSize = headerLength + input.Length;
 	size_t keyLength = mKey.sizeInBits() / 8;
-	auto_array < unsigned char >inputData(keyLength);
+	auto_array<unsigned char> inputData(keyLength);
 	unsigned char *to = inputData.get();
 
 	// Get padding, but default to pkcs1 style padding
 	uint32 padding = CSSM_PADDING_PKCS1;
-
 	context.getInt(CSSM_ATTRIBUTE_PADDING, padding);
 
 #if 1
@@ -185,18 +200,19 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 	{
 		// Add PKCS1 style padding
 		*(to++) = 0;
-		*(to++) = 1;	/* Private Key Block Type. */
+		*(to++) = 1; /* Private Key Block Type. */
 		size_t padLength = keyLength - 3 - inputDataSize;
-
 		memset(to, 0xff, padLength);
 		to += padLength;
 		*(to++) = 0;
 		inputDataSize = keyLength;
-	} else if (padding == CSSM_PADDING_NONE)
+	}
+	else if (padding == CSSM_PADDING_NONE)
 	{
 		// Token will fail if the input data isn't exactly keysize / 8 octects
 		// long
-	} else
+	}
+	else
 		CssmError::throwMe(CSSMERR_CSP_INVALID_ATTR_PADDING);
 #endif
 
@@ -211,24 +227,23 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 		memcpy(to, header, headerLength);
 		to += headerLength;
 	}
+
 	// Finally copy the passed in data to the input buffer.
 	memcpy(to, input.Data, input.Length);
 
 	// @@@ Switch to using tokend allocators
 	unsigned char *outputData =
-		reinterpret_cast < unsigned char *>(malloc(keyLength));
+		reinterpret_cast<unsigned char *>(malloc(keyLength));
 	size_t outputLength = keyLength;
-
 	try
 	{
-		const AccessCredentials *cred =
-			context.get < const AccessCredentials >
-			(CSSM_ATTRIBUTE_ACCESS_CREDENTIALS);
+		const AccessCredentials *cred = context.get<const AccessCredentials>(
+			CSSM_ATTRIBUTE_ACCESS_CREDENTIALS);
 		// Sign the inputData using the token
-		mKey.computeCrypt(mToken, true, cred, inputData.get(),
-				  inputDataSize, outputData, outputLength);
+		mKey.computeCrypt(mToken, true, cred, inputData.get(), inputDataSize,
+			outputData, outputLength);
 	}
-	catch( ...)
+	catch (...)
 	{
 		// @@@ Switch to using tokend allocators
 		free(outputData);
@@ -239,47 +254,43 @@ void BELPICKeyHandle::generateSignature(const Context & context,
 	signature.Length = outputLength;
 }
 
-void BELPICKeyHandle::verifySignature(const Context & context,
-				      CSSM_ALGORITHMS signOnly,
-				      const CssmData & input,
-				      const CssmData & signature)
+void BELPICKeyHandle::verifySignature(const Context &context,
+	CSSM_ALGORITHMS signOnly, const CssmData &input, const CssmData &signature)
 {
 	secdebug("crypto", "verifySignature");
 	CssmError::throwMe(CSSM_ERRCODE_FUNCTION_NOT_IMPLEMENTED);
 }
 
-void BELPICKeyHandle::generateMac(const Context & context,
-				  const CssmData & input, CssmData & output)
+void BELPICKeyHandle::generateMac(const Context &context,
+	const CssmData &input, CssmData &output)
 {
 	secdebug("crypto", "generateMac");
 	CssmError::throwMe(CSSM_ERRCODE_FUNCTION_NOT_IMPLEMENTED);
 }
 
-void BELPICKeyHandle::verifyMac(const Context & context,
-				const CssmData & input,
-				const CssmData & compare)
+void BELPICKeyHandle::verifyMac(const Context &context,
+	const CssmData &input, const CssmData &compare)
 {
 	secdebug("crypto", "verifyMac");
 	CssmError::throwMe(CSSM_ERRCODE_FUNCTION_NOT_IMPLEMENTED);
 }
 
-void BELPICKeyHandle::encrypt(const Context & context,
-			      const CssmData & clear, CssmData & cipher)
+void BELPICKeyHandle::encrypt(const Context &context,
+	const CssmData &clear, CssmData &cipher)
 {
 	secdebug("crypto", "encrypt");
 	CssmError::throwMe(CSSM_ERRCODE_FUNCTION_NOT_IMPLEMENTED);
 }
 
-void BELPICKeyHandle::decrypt(const Context & context,
-			      const CssmData & cipher, CssmData & clear)
+void BELPICKeyHandle::decrypt(const Context &context,
+	const CssmData &cipher, CssmData &clear)
 {
 	secdebug("crypto", "decrypt alg: %u", context.algorithm());
 	CssmError::throwMe(CSSMERR_CSP_KEY_USAGE_INCORRECT);
 }
 
-void BELPICKeyHandle::exportKey(const Context & context,
-				const AccessCredentials * cred,
-				CssmKey & wrappedKey)
+void BELPICKeyHandle::exportKey(const Context &context,
+	const AccessCredentials *cred, CssmKey &wrappedKey)
 {
 	secdebug("crypto", "exportKey");
 	CssmError::throwMe(CSSM_ERRCODE_FUNCTION_NOT_IMPLEMENTED);
@@ -294,16 +305,12 @@ BELPICKeyHandleFactory::~BELPICKeyHandleFactory()
 }
 
 
-Tokend::KeyHandle * BELPICKeyHandleFactory::keyHandle(Tokend::TokenContext *
-						      tokenContext,
-						      const Tokend::
-						      MetaRecord & metaRecord,
-						      Tokend::
-						      Record & record) const
-	const
+Tokend::KeyHandle *BELPICKeyHandleFactory::keyHandle(
+	Tokend::TokenContext *tokenContext, const Tokend::MetaRecord &metaRecord,
+	Tokend::Record &record) const
 {
-	BELPICKeyRecord & key = dynamic_cast < BELPICKeyRecord & >(record);
-	BELPICToken & belpicToken =
-		static_cast < BELPICToken & >(*tokenContext);
+	BELPICKeyRecord &key = dynamic_cast<BELPICKeyRecord &>(record);
+	BELPICToken &belpicToken = static_cast<BELPICToken &>(*tokenContext);
 	return new BELPICKeyHandle(belpicToken, metaRecord, key);
 }
+

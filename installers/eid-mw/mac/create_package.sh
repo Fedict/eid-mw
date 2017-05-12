@@ -2,8 +2,11 @@
 
 set -e
 
-SIGN_BUILD=0
-#set SIGN_BUILD=1 to sign the .pkg files
+#set SIGN_BUILD=1 in the environment to sign the .pkg files:
+# SIGN_BUILD=1 ./create_package.sh
+#or
+# SIGN_BUILD=1 ./make-mac.sh
+SIGN_BUILD=${SIGN_BUILD:-0}
 
 #get the release number
 source "$(pwd)/../../../scripts/mac/set_eidmw_version.sh"
@@ -41,12 +44,6 @@ RELEASE_VIEWER_DIR="$(pwd)/release_viewer"
 #ROOT_VIEWER_DIR="$RELEASE_VIEWER_DIR/root"
 
 EIDVIEWER_TMPL_DIR="$(pwd)/../../eid-viewer/mac/"
-
-#eIDViewer path
-EIDVIEWER_PATH="$(pwd)/../../../plugins_tools/eid-viewer/OSX/eID Viewer/build/Release/eID Viewer.app"
-
-EIDVIEWER_DMG_NAME="eID Viewer-${REL_VERSION}.dmg"
-EIDVIEWER_VOL_NAME="eID Viewer"
 
 #BEIDToken installer name defines
 #release dir, where all the beidbuild files to be released will be placed
@@ -131,10 +128,6 @@ cp ../../../doc/licenses/THIRDPARTY-LICENSES-Mac.txt "$LICENSES_DIR/"
 
 cp -R ./resources/* $RESOURCES_DIR
 
-#copy certificates to scripts folder, as they are only used during install (to trust them)
-cp ../../../installers/certificates/beid-cert-belgiumrca2.der "$INSTALL_SCRIPTS_DIR"
-cp ../../../installers/certificates/beid-cert-belgiumrca3.der "$INSTALL_SCRIPTS_DIR"
-
 
 #LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
 #XPI_PLUGIN=../../../plugins_tools/xpi/signed-build/belgiumeid-signed
@@ -144,15 +137,15 @@ cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
 cp "$(pwd)/../../../scripts/mac/set_eidmw_version.sh" "$INSTALL_SCRIPTS_DIR"
 cp -R ./install_scripts/* "$INSTALL_SCRIPTS_DIR"
-	 
-#cp  ../../../plugins_tools/bin/Release/plistMerger "$PLISTMERGER_DIR"
-#cp  ../../../plugins_tools/plistMerger/Info.plist "$PLISTMERGER_DIR"
 
 #copy distribution file
 cp ./Distribution.txt "$RELEASE_DIR"
 
 #copy drivers
 cp -R ./drivers/* "$RELEASE_DIR"
+
+#copy the eID Viewer
+cp -R "./eID Viewer.app/" "$RELEASE_DIR"
 
 #copy eid middleware app
 cp -R "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
@@ -195,21 +188,6 @@ pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
 #####################################################################
-echo "********** prepare eidviewer.dmg **********"
-
-#cleanup
-rm -rf $RELEASE_VIEWER_DIR
-mkdir -p $RELEASE_VIEWER_DIR
-
-hdiutil create -srcdir $RELEASE_VIEWER_DIR -volname "$EIDVIEWER_VOL_NAME" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW -size 100m "tmp-$EIDVIEWER_DMG_NAME"
-DEVNAME=$(hdiutil attach -readwrite -noverify -noautoopen "tmp-$EIDVIEWER_DMG_NAME" | egrep '^/dev/' | sed 1q | awk '{print $1}')
-mkdir -p "/Volumes/$EIDVIEWER_VOL_NAME/.background/"
-cp -a $EIDVIEWER_TMPL_DIR/bg.png "/Volumes/$EIDVIEWER_VOL_NAME/.background/"
-cp -a "$EIDVIEWER_PATH" "/Volumes/$EIDVIEWER_VOL_NAME/"
-ln -s /Applications "/Volumes/$EIDVIEWER_VOL_NAME/ "
-/usr/bin/osascript ../setlayout.applescript "eID Viewer" || true
-sleep 4
-hdiutil detach $DEVNAME
 
 if [ $SIGN_BUILD -eq 1 ];then
   productsign --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAME
@@ -218,20 +196,13 @@ if [ $SIGN_BUILD -eq 1 ];then
   productsign --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
   hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
 
-  #productsign --sign "Developer ID Installer" "eidviewer.pkg" "eidviewer-signed.pkg"
-  #hdiutil create -srcfolder "eidviewer-signed.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
-
-  productsign --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
-  hdiutil create -srcfolder "BEIDToken-signed.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
-  hdiutil convert "tmp-$EIDVIEWER_DMG_NAME" -o "$EIDVIEWER_DMG_NAME"
-  rm "tmp-$EIDVIEWER_DMG_NAME"
-  echo "E: no signing set up for eID Viewer yet!" >&2
+  #productsign --sign "Developer ID Application" "eID Viewer.app" "eID Viewer.app-signed.app"
+#  productsign --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
+#  hdiutil create -srcfolder "BEIDToken-signed.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
   exit 1
 else
   hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
   hdiutil create -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
-  hdiutil convert "tmp-$EIDVIEWER_DMG_NAME" -format UDBZ -o "$EIDVIEWER_DMG_NAME"
-  rm "tmp-$EIDVIEWER_DMG_NAME"
   #hdiutil create -srcfolder "eidviewer.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
   #hdiutil create -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 fi

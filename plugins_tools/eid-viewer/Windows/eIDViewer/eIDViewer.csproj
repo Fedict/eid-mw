@@ -51,9 +51,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\eIDViewerIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -73,6 +77,11 @@
     </ApplicationDefinition>
     <Compile Include="PrintWindow.xaml.cs">
       <DependentUpon>PrintWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\ApplicationStringResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -139,6 +148,10 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Certs\belgiumrca2.pem" />
     <EmbeddedResource Include="Resources\Certs\belgiumrca3.pem" />
     <EmbeddedResource Include="Resources\Certs\belgiumrca4.pem" />
@@ -229,6 +242,9 @@
     <Resource Include="Resources\Images\state_noreaders.png" />
     <Resource Include="Resources\Images\stop_large.png" />
     <Resource Include="Resources\Images\warning_large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eIDViewerIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

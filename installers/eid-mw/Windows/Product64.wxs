@@ -115,10 +115,10 @@
 
     <DirectoryRef Id="MINIDRIVERROOTFOLDER">
       <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Win64="no">
-        <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv.inf" KeyPath="yes" DiskId="1" />
-        <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv.cat" KeyPath="no" DiskId="1" />
-        <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv32.dll" KeyPath="no" DiskId="1" />
-        <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv64.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.inf" KeyPath="yes" DiskId="1" />
+        <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.cat" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv32.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv64.dll" KeyPath="no" DiskId="1" />
       </Component>
       <!-- Certificate Propagation Service is a standard Windows service available in from Windows Vista on. In order to use the minidriver
 			   it is necessary that this service is running. When a smart card reader is inserted this service should be started  by the smart card
@@ -154,7 +154,7 @@
       </Component>
 
       <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="no" Win64="yes">
-        <File Id="MINIDRIVER_64.dll" Name="beidmdrv64.dll" KeyPath="yes" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv64.dll" />
+        <File Id="MINIDRIVER_64.dll" Name="beidmdrv64.dll" KeyPath="yes" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv64.dll" />
       </Component>
 
     </DirectoryRef>
@@ -162,7 +162,7 @@
     <DirectoryRef Id="SystemFolder">
 
       <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes" Win64="no">
-        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\cardcomm\minidriver\makemsi\Release\beidmdrv32.dll" />
+        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv32.dll" />
       </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes" Win64="no">
