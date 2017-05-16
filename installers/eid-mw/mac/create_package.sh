@@ -144,9 +144,6 @@ cp ./Distribution.txt "$RELEASE_DIR"
 #copy drivers
 cp -R ./drivers/* "$RELEASE_DIR"
 
-#copy the eID Viewer
-cp -R "./eID Viewer.app/" "$RELEASE_DIR"
-
 #copy eid middleware app
 cp -R "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
 
@@ -196,7 +193,7 @@ if [ $SIGN_BUILD -eq 1 ];then
   productsign --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
   hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
 
-productsign --sign "Developer ID Application" "eID Viewer.app" "eID Viewer.app-signed.app"
+  #productsign --sign "Developer ID Application" "eID Viewer.app" "eID Viewer.app-signed.app"
 #  productsign --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
 #  hdiutil create -srcfolder "BEIDToken-signed.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
   exit 1
