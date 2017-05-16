@@ -2,6 +2,11 @@
 
 . set_eidmw_version.sh
 
+set -e
+
+rm -f tmp-eidviewer.dmg
+rm -f "eID Viewer-$REL_VERSION-signed.dmg"
+
 hdiutil convert "eID Viewer-$REL_VERSION.dmg" -format UDRW -o "tmp-eidviewer.dmg"
 DEVNAME=$(hdiutil attach -readwrite -noverify -noautoopen "tmp-eidviewer.dmg" | egrep '^/dev/' | sed 1q | awk '{print $1}')
 codesign -s "Developer ID Application" "/Volumes/eID Viewer/eID Viewer.app/Contents/Library/QuickLook/eidfilepreview.qlgenerator/"
