@@ -116,7 +116,7 @@ DWORD WINAPI   CardReadFile
 	DWORD				      cbSerialNumber = sizeof(pbSerialNumber);
 	DWORD				      cbDataLen;
 	char					   szSerialNumber[33];
-	char					   szContainerName[64];
+	char					   szContainerName[40];
 	int					   iReturn;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
@@ -267,7 +267,7 @@ DWORD WINAPI   CardReadFile
 				/* Container name for Authentication key */
 				sprintf (szContainerName, "DS_%s", szSerialNumber);
 				memset(cmr[0].wszGuid, '\0', sizeof(cmr[0].wszGuid));
-				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[0].wszGuid, (int)sizeof(cmr[0].wszGuid));
+				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[0].wszGuid, (int)(sizeof(cmr[0].wszGuid)/sizeof(WCHAR)) );
 
 				if (iReturn == 0) 
 				{
@@ -321,7 +321,7 @@ DWORD WINAPI   CardReadFile
 				/* Container name for Non-repudiation key */
 				sprintf (szContainerName, "NR_%s", szSerialNumber);
 				memset(cmr[1].wszGuid, '\0', sizeof(cmr[1].wszGuid));
-				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[1].wszGuid, (int)sizeof(cmr[1].wszGuid));
+				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[1].wszGuid, (int)(sizeof(cmr[1].wszGuid) / sizeof(WCHAR)) );
 
 				if (iReturn == 0) 
 				{
