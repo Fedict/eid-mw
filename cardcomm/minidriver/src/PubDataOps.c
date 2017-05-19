@@ -169,7 +169,7 @@ DWORD WINAPI   CardReadFile
    }
    if ( pszFileName == NULL )
    {
-      LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
+      LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [NULL]");
    }
    else
    {
@@ -594,7 +594,7 @@ DWORD WINAPI   CardGetFileInfo
    }
    if ( pszFileName == NULL )
    {
-      LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
+      LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [NULL]");
    }
    else
    {
