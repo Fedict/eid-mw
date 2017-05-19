@@ -1071,19 +1071,20 @@ cleanup:
 DWORD CardGetFirstTwoGivenNames(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pdwDataLen, DWORD dwFlags)
 {
    DWORD    dwReturn       = 0;
-	PBYTE*   ppbFile = NULL;
+   PBYTE pbFile = NULL;
+
 	DWORD    cbFile         = 0;
 
    LogTrace(LOGTYPE_INFO, WHERE, "GET Property: [CP_ID_FIRST_TWO_GIVEN_NAMES]");
 
-	dwReturn = pCardData->pfnCardReadFile(pCardData, "id", "id", 0, ppbFile, &cbFile);
+	dwReturn = pCardData->pfnCardReadFile(pCardData, "id", "id", 0, &pbFile, &cbFile);
 
 	if (dwReturn != SCARD_S_SUCCESS) {
 		LogTrace(LOGTYPE_ERROR, WHERE, "CardRead File Failed [0x%x]",dwReturn);
 		CLEANUP(dwReturn);
 	}
 
-	dwReturn = TLVGetField(*ppbFile, cbFile, pbData, cbData, pdwDataLen, ID_FIRST_TWO_GIVEN_NAMES);
+	dwReturn = TLVGetField(pbFile, cbFile, pbData, cbData, pdwDataLen, ID_FIRST_TWO_GIVEN_NAMES);
 
    if (dwReturn != SCARD_S_SUCCESS) {
 		LogTrace(LOGTYPE_ERROR, WHERE, "TLVGetField Failed [0x%x]",dwReturn);
@@ -1092,6 +1093,10 @@ DWORD CardGetFirstTwoGivenNames(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData
    CLEANUP(SCARD_S_SUCCESS);
 
 cleanup:
+   if (pbFile != NULL)
+   {
+	   pCardData->pfnCspFree(pbFile);
+   }
    return(dwReturn);
 }
 #undef WHERE
