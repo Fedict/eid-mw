@@ -665,8 +665,7 @@ DWORD CardGetPinInfo(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD pd
    LogTrace(LOGTYPE_INFO, WHERE, "GET Property: [CP_CARD_PIN_INFO][%d]", dwFlags);
 
    /* dwFlags contains the identifier of the PIN to return */
-   if ( (dwFlags < 0        ) ||
-        (dwFlags > MAX_PINS ) )
+   if ( dwFlags > MAX_PINS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [dwFlags = %d]", dwFlags);
       CLEANUP(SCARD_E_INVALID_PARAMETER);
@@ -838,8 +837,7 @@ DWORD CardGetPinStrengthVerify(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData,
 
    LogTrace(LOGTYPE_INFO, WHERE, "GET Property: [CP_CARD_PIN_STRENGTH_VERIFY]");
 
-   if ( ( dwFlags < 0         ) ||
-        ( dwFlags >= MAX_PINS ) )
+   if ( dwFlags >= MAX_PINS )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [dwFlags][%d]", dwFlags);
       CLEANUP(SCARD_E_INVALID_PARAMETER);
