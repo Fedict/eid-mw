@@ -167,11 +167,7 @@ DWORD WINAPI   CardReadFile
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszDirectoryName = [%s]", pszDirectoryName);
    }
-   if ( pszFileName == NULL )
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [NULL]");
-   }
-   else
+   if ( pszFileName != NULL )
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
    }
@@ -285,12 +281,6 @@ DWORD WINAPI   CardReadFile
 				if (dwReturn != 0)  {
 					LogTrace(LOGTYPE_ERROR, WHERE, "Error BeidParsePrKDF 0x%.08x keySize = %d", dwReturn,keySize);
 					CLEANUP(dwReturn);
-				}
-
-				if ( dwReturn != SCARD_S_SUCCESS )
-				{
-					LogTrace(LOGTYPE_ERROR, WHERE, "BeidSelectAndReadFile returned [%d]", dwReturn);
-					CLEANUP(SCARD_E_UNEXPECTED);
 				}
 
 				*pcbData = sizeof(cmr);
@@ -592,11 +582,7 @@ DWORD WINAPI   CardGetFileInfo
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszDirectoryName = [%s]", pszDirectoryName);
    }
-   if ( pszFileName == NULL )
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [NULL]");
-   }
-   else
+   if ( pszFileName != NULL )
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
    }
