@@ -120,7 +120,7 @@
                                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Certs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" DataType="x:Type viewer:ICerts">
                                     <StackPanel Orientation="Horizontal" Margin="2">
                                         <Image Source="{Binding Path=ImagePath}" Width="16" Height="16" SnapsToDevicePixels="True"/>
-                                        <TextBlock Text="{Binding Path=CertLabel}" GotFocus="TextBlockCertificate_GotFocus"/>
+                                        <TextBlock Text="{Binding Path=CertLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="TextBlockCertificate_GotFocus"/>
                                     </StackPanel>
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
