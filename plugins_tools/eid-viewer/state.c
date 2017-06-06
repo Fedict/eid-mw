@@ -248,9 +248,15 @@ void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 	be_log(EID_VWR_LOG_DETAIL, TEXT("Handling state transition for event %s"), event_to_name(e));
 	be_log(EID_VWR_LOG_DETAIL, TEXT("Leaving state %s"), state_to_name(curstate->me));
 	if(curstate->leave != NULL) {
-		if(curstate->leave() != 0 && e != EVENT_STATE_ERROR) {
+		int rv;
+		if((rv = curstate->leave()) != 0 && e != EVENT_STATE_ERROR) {
 			be_log(EID_VWR_LOG_ERROR, TEXT("state transition failed"));
-			sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
+			struct error_data d = {
+				.from = curstate->me,
+				.which = SM_LEAVE,
+				.error = rv,
+			};
+			sm_handle_event_onthread(EVENT_STATE_ERROR, &d);
 		}
 	}
 	if(hold != curstate) {
@@ -293,8 +299,14 @@ exit_loop:
 	/* Call the target state's "enter" function, and pass on the data that
 	 * we got from the event */
 	if(curstate->enter != NULL) {
-		if(curstate->enter(data) != 0 && e != EVENT_STATE_ERROR) {
-			sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
+		int rv;
+		if((rv = curstate->enter(data)) != 0 && e != EVENT_STATE_ERROR) {
+			struct error_data d = {
+				.from = curstate->me,
+				.which = SM_ENTER,
+				.error = rv,
+			};
+			sm_handle_event_onthread(EVENT_STATE_ERROR, &d);
 		}
 	}
 	if(hold != curstate) {

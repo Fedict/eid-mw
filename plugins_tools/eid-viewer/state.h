@@ -18,6 +18,15 @@ enum eid_vwr_state_event
 	EVENT_COUNT
 };
 
+struct error_data {
+	int from;
+	enum {
+		SM_ENTER,
+		SM_LEAVE
+	} which;
+	int error;
+};
+
 void sm_init();
 void sm_handle_event(enum eid_vwr_state_event e, void *data,
 		     void (*freefunc) (void *), void (*donefunc) (void *));
