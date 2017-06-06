@@ -143,7 +143,6 @@ void sm_init() {
 	states[STATE_TOKEN].leave = eid_vwr_p11_close_session;
 	states[STATE_TOKEN].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
 	states[STATE_TOKEN].out[EVENT_DATA_INVALID] = &(states[STATE_CARD_INVALID]);
-	states[STATE_TOKEN].out[EVENT_STATE_ERROR] = &(states[STATE_READY]);
 
 	states[STATE_CARD_INVALID].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_CARD_INVALID].enter = source_none;
