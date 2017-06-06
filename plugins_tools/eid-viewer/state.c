@@ -212,8 +212,8 @@ static void parent_enter_recursive(struct state* start, struct state* end, enum 
 		return;
 	}
 	if(start != NULL) {
-		parent_enter_recursive(start->parent, end, e);
 		be_log(EID_VWR_LOG_DETAIL, TEXT("Entering state %s (parent)"), state_to_name(start->me));
+		parent_enter_recursive(start->parent, end, e);
 		if(start->enter != NULL) {
 			if(start->enter(NULL) != 0 && e != EVENT_STATE_ERROR) {
 				sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
