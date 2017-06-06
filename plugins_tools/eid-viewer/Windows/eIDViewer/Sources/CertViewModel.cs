@@ -1,6 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Windows;
+using Microsoft.Win32;
+using System.IO;
 
 namespace eIDViewer
 {
@@ -13,6 +17,7 @@ namespace eIDViewer
             IsExpanded = true;
             CertVisibility = System.Windows.Visibility.Hidden;
             ImagePath = "Resources/Images/certificate_large.png";
+            _SaveCommand = null;
         }
 
         public void ClearData()
@@ -60,6 +65,7 @@ namespace eIDViewer
         public string CertUsage { get; set; }
         //the certificate trust status
         public string CertTrust { get; set; }
+        public byte[] CertData { get; set; }
         public ObservableCollection<CertViewModel> Certs { get; set; }
         public bool IsExpanded { get; set; }
 
@@ -103,5 +109,85 @@ namespace eIDViewer
             }
         }
 
+        private ICommand _SaveCommand;
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (_SaveCommand == null)
+                {
+                    _SaveCommand = new RelayCommand((o) =>
+                    {
+                        //Stream myStream = null;
+                        String filename = null;
+                        SaveFileDialog mySaveFileDialog = new SaveFileDialog();
+
+                        mySaveFileDialog.Filter = "crt files (*.crt)|*.crt|All files (*.*)|*.*";
+                        mySaveFileDialog.FilterIndex = 1;
+
+                        if (mySaveFileDialog.ShowDialog() == true)
+                        {
+                            try
+                            {
+                                if ((filename = mySaveFileDialog.FileName) != null)
+                                {
+                                    MessageBox.Show("filename" + mySaveFileDialog.FileName);
+                                    using (FileStream output = File.OpenWrite(filename))
+                                    {
+                                        output.Write(CertData, 0, CertData.Length);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Error: Could not save file to disk. Error message: " + ex.Message);
+                            }
+                        }
+                    });
+                }
+                return _SaveCommand;
+            }
+        }
+
+        public class RelayCommand : ICommand
+        {
+            #region Fields
+            readonly Action<object> _execute;
+            readonly Predicate<object> _canExecute;
+            #endregion // Fields
+
+            #region Constructors
+            public RelayCommand(Action<object> execute)
+                : this(execute, null)
+            {
+            }
+            public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+            {
+                if (execute == null)
+                    throw new ArgumentNullException("execute");
+
+                _execute = execute;
+                _canExecute = canExecute;
+            }
+            #endregion // Constructors
+            #region ICommand Members
+            public bool CanExecute(object parameter)
+            {
+                return _canExecute == null ? true : _canExecute(parameter);
+            }
+            public event EventHandler CanExecuteChanged
+            {
+                add { CommandManager.RequerySuggested += value; }
+                remove { CommandManager.RequerySuggested -= value; }
+            }
+            public void Execute(object parameter)
+            {
+                _execute(parameter);
+            }
+
+            #endregion // ICommand Members
+        }
     }
+
 }
+

@@ -109,6 +109,13 @@
                                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                                     <Setter Property="Visibility" Value="{Binding CertVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <Setter Property="FontWeight" Value="Normal"/>
+                                    <Setter Property="ContextMenu">
+                                        <Setter.Value>
+                                            <ContextMenu>
+                                                <MenuItem Header="Save" Command="{Binding SaveCommand}"/>
+                                            </ContextMenu>
+                                        </Setter.Value>
+                                    </Setter>
                                     <Style.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
                                             <Setter Property="FontWeight" Value="Bold"/>

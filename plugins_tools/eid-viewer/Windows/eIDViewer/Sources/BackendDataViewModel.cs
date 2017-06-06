@@ -651,6 +651,7 @@ namespace eIDViewer
 
         private void StoreCertificate (ref CertViewModel theCertViewModel, ref X509Certificate2 theX509Certificate)
         {
+            theCertViewModel.CertData = theX509Certificate.GetRawCertData();
             theCertViewModel.CertValidfrom = theX509Certificate.GetEffectiveDateString();
             theCertViewModel.CertValidUntill = theX509Certificate.GetExpirationDateString();
             theCertViewModel.CertVisibility = Visibility.Visible;
