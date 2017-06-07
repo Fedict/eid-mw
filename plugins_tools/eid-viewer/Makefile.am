@@ -8,6 +8,7 @@ MAYBE_PREFS =
 endif
 
 eid_viewer_SOURCES = \
+	gtk/main.h \
 	gtk/main.c \
 	gtk/viewer_glade.h \
 	gtk/certs.h \
