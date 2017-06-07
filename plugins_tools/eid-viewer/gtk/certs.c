@@ -3,6 +3,7 @@
 #include "prefs.h"
 #include "gtk_globals.h"
 #include "glib_util.h"
+#include "main.h"
 
 #include <string.h>
 #include <ctype.h>
@@ -129,6 +130,14 @@ static void tst_set(char* w, gint* c, GValue* v, gint n) {
 	/* GTK+ does not like it when you modify UI elements from a background
 	 * thread, so ensure it's called on the main thread instead */
 	g_main_context_invoke(NULL, tst_helper, dat);
+}
+
+static gboolean trigger_update_info(gpointer user_data G_GNUC_UNUSED) {
+	GtkTreeSelection *sel = gtk_tree_view_get_selection(
+			GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_cert")));
+	update_info(sel, NULL);
+
+	return FALSE;
 }
 
 /* Helper function to initialize the tree store if that hasn't happened yet */
@@ -305,6 +314,8 @@ static enum eid_vwr_result check_cert(char* which) {
 	tst_set("CA", col_tca, val_tca, 1);
 	tst_set("Root", col_root, val_root, 1);
 	tst_set("Root", col_troot, val_troot, 1);
+
+	g_main_context_invoke(NULL, trigger_update_info, NULL);
 
 	return verify_result;
 }

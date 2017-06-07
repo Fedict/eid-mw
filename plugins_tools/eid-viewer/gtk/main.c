@@ -411,7 +411,7 @@ static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIt
 
 /* Called when the user changes the selection of the treeview on the
  * certificates tab */
-static void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
+void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
 	gtk_tree_selection_selected_foreach(sel, update_info_detail, NULL);
 }
 
