@@ -22,7 +22,7 @@
 #endif
 // All valid OCSP URLs should have the following as their prefix:
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
+#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
 #define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
 
 #define X509_get0_tbs_sigalg(ci) ((ci)->sig_alg)

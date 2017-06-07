@@ -37,7 +37,7 @@
 #include <openssl/rsa.h>
 #include <openssl/engine.h>
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
+#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
 static int RSA_set0_key(RSA *r, BIGNUM *n, BIGNUM *e, BIGNUM *d) {
 	if(!r || !n || !e) {
 		return 0;
