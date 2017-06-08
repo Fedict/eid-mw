@@ -67,7 +67,7 @@ namespace eIDViewer
 
             catch (Exception e)
             {
-                theBackendData.WriteLog("Exception caught when trying to write to registry key " + keyName, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                theBackendData.WriteLog("Exception" + e.Message + " caught when trying to write to registry key " + keyName, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
             }
         }
 
