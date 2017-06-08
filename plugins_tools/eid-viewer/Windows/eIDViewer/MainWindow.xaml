@@ -112,7 +112,9 @@
                                     <Setter Property="ContextMenu">
                                         <Setter.Value>
                                             <ContextMenu>
-                                                <MenuItem Header="{Binding Path=certificateTabResource.Export_DER, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Command="{Binding SaveCommand}"/> 
+                                                <MenuItem Header="{Binding Path=certificateTabResource.Detailed_Information, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Command="{Binding DetailInfoCommand}"/>
+                                                <Separator/>
+                                                <MenuItem Header="{Binding Path=certificateTabResource.Export_DER, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Command="{Binding SaveCommand}"/>
                                             </ContextMenu>
                                         </Setter.Value>
                                     </Setter>

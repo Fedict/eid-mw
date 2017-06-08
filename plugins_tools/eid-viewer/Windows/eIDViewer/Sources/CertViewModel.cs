@@ -5,6 +5,8 @@ using System.Windows.Input;
 using System.Windows;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Controls.Primitives;
+using System.Security.Cryptography.X509Certificates;
 
 namespace eIDViewer
 {
@@ -54,6 +56,7 @@ namespace eIDViewer
         //notify the view that one of our properties changed
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public X509Certificate2 Cert;
         //the certificate label, as shown in the treeview
         public string CertLabel { get; set; }
         //the certificate image, as shown in the treeview
@@ -65,7 +68,7 @@ namespace eIDViewer
         public string CertUsage { get; set; }
         //the certificate trust status
         public string CertTrust { get; set; }
-        public byte[] CertData { get; set; }
+        //public byte[] CertData { get; set; }
         public ObservableCollection<CertViewModel> Certs { get; set; }
         public bool IsExpanded { get; set; }
 
@@ -109,6 +112,28 @@ namespace eIDViewer
             }
         }
 
+        private ICommand _DetailInfoCommand;
+        public ICommand DetailInfoCommand
+        {
+            get
+            {
+                if (_DetailInfoCommand == null)
+                {
+                    _DetailInfoCommand = new RelayCommand((o) =>
+                    {
+                        //Stream myStream = null;
+                        Popup myPopup = new Popup();
+                        myPopup.IsOpen = true;
+
+                       // MessageBoxResult result = new MessageBoxResult();
+                        System.Security.Cryptography.X509Certificates.X509Certificate2UI.DisplayCertificate(Cert);
+                       // MessageBox.Show(Cert.ToString(), Cert.Subject, MessageBoxButton.OK, MessageBoxImage.Information, result);
+                    });
+                }
+                return _DetailInfoCommand;
+            }
+        }
+
         private ICommand _SaveCommand;
         public ICommand SaveCommand
         {
@@ -120,9 +145,10 @@ namespace eIDViewer
                     {
                         //Stream myStream = null;
                         String filename = null;
+                        
                         SaveFileDialog mySaveFileDialog = new SaveFileDialog();
-
-                        mySaveFileDialog.Filter = "crt files (*.crt)|*.crt|All files (*.*)|*.*";
+                        mySaveFileDialog.FileName = CertLabel + ".DER";
+                        mySaveFileDialog.Filter = "DER files (*.DER)|*.DER|All files (*.*)|*.*";
                         mySaveFileDialog.FilterIndex = 1;
 
                         if (mySaveFileDialog.ShowDialog() == true)
@@ -131,9 +157,9 @@ namespace eIDViewer
                             {
                                 if ((filename = mySaveFileDialog.FileName) != null)
                                 {
-                                    MessageBox.Show("filename" + mySaveFileDialog.FileName);
                                     using (FileStream output = File.OpenWrite(filename))
                                     {
+                                        byte[] CertData = Cert.GetRawCertData();
                                         output.Write(CertData, 0, CertData.Length);
                                     }
                                 }
