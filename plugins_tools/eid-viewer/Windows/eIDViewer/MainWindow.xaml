@@ -112,7 +112,7 @@
                                     <Setter Property="ContextMenu">
                                         <Setter.Value>
                                             <ContextMenu>
-                                                <MenuItem Header="Save" Command="{Binding SaveCommand}"/>
+                                                <MenuItem Header="{Binding Path=certificateTabResource.Export_DER, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Command="{Binding SaveCommand}"/> 
                                             </ContextMenu>
                                         </Setter.Value>
                                     </Setter>
