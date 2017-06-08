@@ -68,7 +68,6 @@ namespace eIDViewer
         public string CertUsage { get; set; }
         //the certificate trust status
         public string CertTrust { get; set; }
-        //public byte[] CertData { get; set; }
         public ObservableCollection<CertViewModel> Certs { get; set; }
         public bool IsExpanded { get; set; }
 
@@ -121,13 +120,7 @@ namespace eIDViewer
                 {
                     _DetailInfoCommand = new RelayCommand((o) =>
                     {
-                        //Stream myStream = null;
-                        Popup myPopup = new Popup();
-                        myPopup.IsOpen = true;
-
-                       // MessageBoxResult result = new MessageBoxResult();
                         System.Security.Cryptography.X509Certificates.X509Certificate2UI.DisplayCertificate(Cert);
-                       // MessageBox.Show(Cert.ToString(), Cert.Subject, MessageBoxButton.OK, MessageBoxImage.Information, result);
                     });
                 }
                 return _DetailInfoCommand;
@@ -143,7 +136,6 @@ namespace eIDViewer
                 {
                     _SaveCommand = new RelayCommand((o) =>
                     {
-                        //Stream myStream = null;
                         String filename = null;
                         
                         SaveFileDialog mySaveFileDialog = new SaveFileDialog();

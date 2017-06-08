@@ -652,13 +652,11 @@ namespace eIDViewer
         private void StoreCertificate (ref CertViewModel theCertViewModel, ref X509Certificate2 theX509Certificate)
         {
             theCertViewModel.Cert = theX509Certificate;
-            //theCertViewModel.CertData = theX509Certificate.GetRawCertData();
             theCertViewModel.CertValidfrom = theX509Certificate.GetEffectiveDateString();
             theCertViewModel.CertValidUntill = theX509Certificate.GetExpirationDateString();
             theCertViewModel.CertVisibility = Visibility.Visible;
             theCertViewModel.CertTrust = "Not checked";
             theCertViewModel.CertSubject = theX509Certificate.Subject.Replace(',', '\n');
-            //theCertViewModel.CertLabel = theX509Certificate.SubjectName.Name;
             theCertViewModel.CertLabel = theX509Certificate.SubjectName.Name;
             string subjectName = theX509Certificate.SubjectName.Name;
             // This search returns the substring between two strings, so 
