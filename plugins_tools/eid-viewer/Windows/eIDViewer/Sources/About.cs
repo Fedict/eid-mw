@@ -27,7 +27,7 @@ You should have received a copy of the GNU Lesser General Public
 License along with this software; if not, see 
 http://www.gnu.org/licenses
 
-Official releases and support are available on http://eid.belgium.be
+Official releases and support are available on https://eid.belgium.be
 Source code and other files are available on https://github.com/Fedict/eid-viewer";
 
             return message;

@@ -1,4 +1,6 @@
 :: set the eID Middleware versions
+:: for eIDViewer: set the viewer version also in eidmw\plugins_tools\eid-viewer\Windows\eIDViewer\Sources\About.cs
+
 
 @SET BASE_VERSION1=4
 @SET BASE_VERSION2=2
