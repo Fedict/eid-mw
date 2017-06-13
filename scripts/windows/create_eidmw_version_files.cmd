@@ -217,7 +217,7 @@ set ASSEMBLYINFO_PATH="%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\Sou
 @echo License along with this software; if not, see >> %ASSEMBLYINFO_PATH%
 @echo http://www.gnu.org/licenses>> %ASSEMBLYINFO_PATH%
 @echo:>> %ASSEMBLYINFO_PATH%
-@echo Official releases and support are available on http://eid.belgium.be>> %ASSEMBLYINFO_PATH%
+@echo Official releases and support are available on https://eid.belgium.be>> %ASSEMBLYINFO_PATH%
 @echo Source code and other files are available on https://github.com/Fedict/eid-viewer^";>> %ASSEMBLYINFO_PATH%
 @echo:>> %ASSEMBLYINFO_PATH%
 @echo             return message;>> %ASSEMBLYINFO_PATH%
