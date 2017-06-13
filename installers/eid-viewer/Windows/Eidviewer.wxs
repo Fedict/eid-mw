@@ -80,6 +80,8 @@
       <Directory Id="ProgramMenuFolder" Name="Menu">
         <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID"/>
       </Directory>
+	  
+	  <Directory Id="DesktopFolder"/>
       
       <Directory Id="ProgramFilesFolder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
@@ -124,21 +126,17 @@
 	
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
-        <Shortcut Id="eidviewerStartMenuShortcut"
-          Name="Eid Viewer"
-          Description="!(loc.BeidGuiDescr)"
-          Target="[BEIDVIEWERDIR]eID Viewer.exe"
-          WorkingDirectory="BEIDVIEWERDIR"/>
-		<Shortcut Id="EidViewerDesktopShortcut"
-          Name="eID Viewer"
-          Directory="DesktopFolder"
-          Description="!(loc.BeidGuiDescr)"
-          Target="[BEIDVIEWERDIR]eID Viewer.exe"
-          WorkingDirectory="BEIDVIEWERDIR"/>
-      </Component>	  
-    </DirectoryRef>
-
-
+        <Shortcut Id="eidviewerStartMenuShortcut" Name="eID Viewer" Description="!(loc.BeidGuiDescr)" Target="[BEIDVIEWERDIR]eID Viewer.exe" WorkingDirectory="BEIDVIEWERDIR"/>
+        <Shortcut Id="EidViewerDesktopShortcut" Name="eID Viewer" Directory="DesktopFolder" Description="!(loc.BeidGuiDescr)" Target="[BEIDVIEWERDIR]eID Viewer.exe" WorkingDirectory="BEIDVIEWERDIR"/>
+        <!-- shortcuts cannot be keypaths, so we'll add a registry key here-->
+		<RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eID Viewer" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      <Component Id="BeidApplicationProgramsFolder" Guid="{09FD9493-DF96-442c-80EA-1858CE65E796}">				  
+        <RemoveFolder Id="ApplicationProgramsFolder" On="both"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="BeidApplicationProgramsFolder" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>  
+	
     <Feature Id="BeidGuiInstall"
              Title="!(loc.BeidGui)"
              Description="!(loc.BeidGuiDescr)"
@@ -156,6 +154,7 @@
 	  <ComponentRef Id="BEIDVIEWERFR"/>
 	  <ComponentRef Id="BEIDVIEWERDE"/>  
       <ComponentRef Id="eidviewerShortcut"/>
+	  <ComponentRef Id="BeidApplicationProgramsFolder"/>
     </Feature>
     
     
