@@ -129,13 +129,13 @@
           Description="!(loc.BeidGuiDescr)"
           Target="[BEIDVIEWERDIR]eID Viewer.exe"
           WorkingDirectory="BEIDVIEWERDIR"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="1" KeyPath="yes" />
-      </Component>
-	  
-	  <Component Id="BeidApplicationProgramsFolder" Guid="{09FD9493-DF96-442c-80EA-1858CE65E796}">				  
-        <RemoveFolder Id="ApplicationProgramsFolder" On="both"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="BeidApplicationProgramsFolder" Type="integer" Value="1" KeyPath="yes" />
-      </Component>
+		<Shortcut Id="EidViewerDesktopShortcut"
+          Name="eID Viewer"
+          Directory="DesktopFolder"
+          Description="!(loc.BeidGuiDescr)"
+          Target="[BEIDVIEWERDIR]eID Viewer.exe"
+          WorkingDirectory="BEIDVIEWERDIR"/>
+      </Component>	  
     </DirectoryRef>
 
 
@@ -151,7 +151,6 @@
       </Feature>
 <?endif?>
       <!-- Program Files -->
-	  <ComponentRef Id="BeidApplicationProgramsFolder"/>
       <ComponentRef Id="BEIDVIEWER"/>
 	  <ComponentRef Id="BEIDVIEWERNL"/>
 	  <ComponentRef Id="BEIDVIEWERFR"/>
