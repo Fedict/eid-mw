@@ -53,3 +53,7 @@ To change the install location:
 To create an XPI package, run:
  
     make xpipackage   
+
+# Build etc status
+
+[![Coverage Status](https://coveralls.io/repos/github/Fedict/eid-mw/badge.svg?branch=v4.2)](https://coveralls.io/github/Fedict/eid-mw?branch=v4.2) [![Build Status](https://travis-ci.org/Fedict/eid-mw.svg?branch=master)](https://travis-ci.org/Fedict/eid-mw)
