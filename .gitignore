@@ -62,3 +62,5 @@ beidpkcs11.sdf
 *~
 .version
 /plugins_tools/eid-viewer/Windows/eIDViewer/Properties/AssemblyInfo.cs
+/scripts/windows/fedicteidtest.cer
+/scripts/windows/fedicteidtest.pfx

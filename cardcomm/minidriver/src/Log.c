@@ -211,7 +211,7 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 	err = _wfopen_s(&fp,g_szLogFile, TEXT("a"));
 	if ( (fp != NULL) && (err == 0))
 	{
-		fprintf (fp, "%S %d %d %s|%30s|%s\n",baseName, GetCurrentProcessId(), GetCurrentThreadId(), timebuf, pWhere, buffer);
+		fprintf (fp, "%S %d %d %s|%30s|%s\n",baseName, (int)GetCurrentProcessId(), (int)GetCurrentThreadId(), timebuf, pWhere, buffer);
 		fclose(fp);
 	}
 }

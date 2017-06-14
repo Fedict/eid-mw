@@ -6,10 +6,13 @@
 
 #ifdef WIN32
 #include <win32.h>
+#pragma pack(push, cryptoki, 1)
+#include "pkcs11.h"
+#pragma pack(pop, cryptoki)
 #else
-#include <unix.h>
+#include "unix.h"
+#include "pkcs11.h"
 #endif
-#include <pkcs11.h>
 
 #include <eid-viewer/oslayer.h>
 #include <eid-util/utftranslate.h>

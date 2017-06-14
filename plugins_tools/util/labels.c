@@ -1,7 +1,7 @@
 /* ****************************************************************************
 
  * eID Middleware Project.
- * Copyright (C) 2016 FedICT.
+ * Copyright (C) 2017 FedICT.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License version
@@ -19,10 +19,13 @@
 **************************************************************************** */
 #ifdef WIN32
 #include <win32.h>
+#pragma pack(push, cryptoki, 1)
+#include "pkcs11.h"
+#pragma pack(pop, cryptoki)
 #else
 #include "unix.h"
-#endif
 #include "pkcs11.h"
+#endif
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>

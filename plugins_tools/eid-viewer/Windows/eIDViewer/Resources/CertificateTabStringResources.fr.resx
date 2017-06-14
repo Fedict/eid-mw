@@ -132,6 +132,18 @@
   <data name="CertValidUntilLabel" xml:space="preserve">
     <value>Valable jusqu'au:</value>
   </data>
+  <data name="Detailed_Information" xml:space="preserve">
+    <value>Information Détaillée</value>
+  </data>
+  <data name="Export_CHAIN_PEM" xml:space="preserve">
+    <value>Exporter la chaine vers fichier PEM..</value>
+  </data>
+  <data name="Export_DER" xml:space="preserve">
+    <value>Exporter vers fichier DER..</value>
+  </data>
+  <data name="Export_PEM" xml:space="preserve">
+    <value>Exporter vers fichier PEM..</value>
+  </data>
   <data name="TrustStatus_trusted" xml:space="preserve">
     <value>Fiable</value>
   </data>

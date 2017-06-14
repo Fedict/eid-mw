@@ -116,7 +116,7 @@ DWORD WINAPI   CardReadFile
 	DWORD				      cbSerialNumber = sizeof(pbSerialNumber);
 	DWORD				      cbDataLen;
 	char					   szSerialNumber[33];
-	char					   szContainerName[64];
+	char					   szContainerName[40];
 	int					   iReturn;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
@@ -167,11 +167,7 @@ DWORD WINAPI   CardReadFile
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszDirectoryName = [%s]", pszDirectoryName);
    }
-   if ( pszFileName == NULL )
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
-   }
-   else
+   if ( pszFileName != NULL )
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
    }
@@ -267,7 +263,7 @@ DWORD WINAPI   CardReadFile
 				/* Container name for Authentication key */
 				sprintf (szContainerName, "DS_%s", szSerialNumber);
 				memset(cmr[0].wszGuid, '\0', sizeof(cmr[0].wszGuid));
-				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[0].wszGuid, (int)sizeof(cmr[0].wszGuid));
+				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[0].wszGuid, (int)(sizeof(cmr[0].wszGuid)/sizeof(WCHAR)) );
 
 				if (iReturn == 0) 
 				{
@@ -285,12 +281,6 @@ DWORD WINAPI   CardReadFile
 				if (dwReturn != 0)  {
 					LogTrace(LOGTYPE_ERROR, WHERE, "Error BeidParsePrKDF 0x%.08x keySize = %d", dwReturn,keySize);
 					CLEANUP(dwReturn);
-				}
-
-				if ( dwReturn != SCARD_S_SUCCESS )
-				{
-					LogTrace(LOGTYPE_ERROR, WHERE, "BeidSelectAndReadFile returned [%d]", dwReturn);
-					CLEANUP(SCARD_E_UNEXPECTED);
 				}
 
 				*pcbData = sizeof(cmr);
@@ -321,7 +311,7 @@ DWORD WINAPI   CardReadFile
 				/* Container name for Non-repudiation key */
 				sprintf (szContainerName, "NR_%s", szSerialNumber);
 				memset(cmr[1].wszGuid, '\0', sizeof(cmr[1].wszGuid));
-				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[1].wszGuid, (int)sizeof(cmr[1].wszGuid));
+				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[1].wszGuid, (int)(sizeof(cmr[1].wszGuid) / sizeof(WCHAR)) );
 
 				if (iReturn == 0) 
 				{
@@ -592,11 +582,7 @@ DWORD WINAPI   CardGetFileInfo
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszDirectoryName = [%s]", pszDirectoryName);
    }
-   if ( pszFileName == NULL )
-   {
-      LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
-   }
-   else
+   if ( pszFileName != NULL )
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
    }

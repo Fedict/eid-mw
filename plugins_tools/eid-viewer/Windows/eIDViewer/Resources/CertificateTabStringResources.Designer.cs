@@ -106,6 +106,42 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detailed Information...
+        /// </summary>
+        public static string Detailed_Information {
+            get {
+                return ResourceManager.GetString("Detailed_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export chain to PEM file...
+        /// </summary>
+        public static string Export_CHAIN_PEM {
+            get {
+                return ResourceManager.GetString("Export_CHAIN_PEM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to DER file...
+        /// </summary>
+        public static string Export_DER {
+            get {
+                return ResourceManager.GetString("Export_DER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to PEM file...
+        /// </summary>
+        public static string Export_PEM {
+            get {
+                return ResourceManager.GetString("Export_PEM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trusted..
         /// </summary>
         public static string TrustStatus_trusted {

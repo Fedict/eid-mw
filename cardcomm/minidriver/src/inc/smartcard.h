@@ -184,4 +184,6 @@ extern DWORD BeidParsePrKDF
 		WORD *cbKeySize
 	);
 
+BOOL IsAppContainer();
+
 #endif

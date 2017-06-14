@@ -651,11 +651,33 @@ namespace eIDViewer
 
         private void StoreCertificate (ref CertViewModel theCertViewModel, ref X509Certificate2 theX509Certificate)
         {
+            theCertViewModel.Cert = theX509Certificate;
             theCertViewModel.CertValidfrom = theX509Certificate.GetEffectiveDateString();
             theCertViewModel.CertValidUntill = theX509Certificate.GetExpirationDateString();
             theCertViewModel.CertVisibility = Visibility.Visible;
             theCertViewModel.CertTrust = "Not checked";
             theCertViewModel.CertSubject = theX509Certificate.Subject.Replace(',', '\n');
+            theCertViewModel.CertLabel = theX509Certificate.SubjectName.Name;
+            string subjectName = theX509Certificate.SubjectName.Name;
+            // This search returns the substring between two strings, so 
+            // the first index is moved to the character just after the first string.
+            Int32 first = subjectName.IndexOf("CN=") + "CN=".Length;
+            if(first < 1)
+            {
+                //no CN field found, just clear the certlabel
+                theCertViewModel.CertLabel = "";
+            }
+            else
+            {
+                Int32 last = subjectName.IndexOf(",", first);
+                if(last == -1)
+                {
+                    last = subjectName.Length - 1;
+                }
+                theCertViewModel.CertLabel = subjectName.Substring(first, last - first);
+            }
+
+            theCertViewModel.CertNotifyPropertyChanged("CertLabel");
 
             foreach (X509Extension extension in theX509Certificate.Extensions)
             {

@@ -482,6 +482,7 @@ DWORD WINAPI   CardChangeAuthenticator
 	/********************/
 	/* Check Parameters */
 	/********************/
+	/*
 	if ( pCardData == NULL )
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pCardData]");
@@ -513,8 +514,8 @@ DWORD WINAPI   CardChangeAuthenticator
 		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [dwFlags]");
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
 	}
-
-	/* Don't support setting the retry count */
+	
+	// Don't support setting the retry count 
 	if ( cRetryCount != 0 )
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [cRetryCount]");
@@ -532,7 +533,7 @@ DWORD WINAPI   CardChangeAuthenticator
 		LogTrace(LOGTYPE_ERROR, WHERE, "Logon: [0x%02X]", dwReturn);
 		CLEANUP(dwReturn);
 	}
-
+	*/
 cleanup:
 	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
 	return(dwReturn);

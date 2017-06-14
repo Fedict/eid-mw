@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
-     xmlns:difx="http://schemas.microsoft.com/wix/DifxAppExtension"
-     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include ..\..\..\scripts\windows\eidmw_revision.wxs ?>
 
   <?define var.OfficialProductVersion =$(var.BaseVersion1).$(var.BaseVersion2).$(var.BaseVersion3)?>
@@ -73,7 +71,7 @@
     <Icon Id="eid.ico" SourceFile="..\..\eid.ico"/>
 
     <Property Id="ARPPRODUCTICON" Value="eid.ico" />
-    <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
+    <Property Id="ARPURLINFOABOUT" Value="https://eid.belgium.be"/>
 
     <Property Id="ALLUSERS" Value="1" />
 
@@ -82,6 +80,8 @@
       <Directory Id="ProgramMenuFolder" Name="Menu">
         <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID"/>
       </Directory>
+	  
+	  <Directory Id="DesktopFolder"/>
       
       <Directory Id="ProgramFilesFolder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
@@ -92,9 +92,6 @@
 		  </Directory>
         </Directory>
       </Directory>
-
-      <Directory Id="DesktopFolder"/>
-      <Directory Id="WindowsFolder"/>
 
 	<?ifndef env.DONT_MERGE_VCRT?>
       <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC140_CRT_x86.msm" Language="0" DiskId="1" />
@@ -129,21 +126,17 @@
 	
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
-        <Shortcut Id="eidviewerStartMenuShortcut"
-          Name="Eid Viewer"
-          Description="!(loc.BeidGuiDescr)"
-          Target="[BEIDVIEWERDIR]eID Viewer.exe"
-          WorkingDirectory="BEIDVIEWERDIR"/>
-        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eid-viewer" Type="integer" Value="1" KeyPath="yes" />
+        <Shortcut Id="eidviewerStartMenuShortcut" Name="eID Viewer" Description="!(loc.BeidGuiDescr)" Target="[BEIDVIEWERDIR]eID Viewer.exe" WorkingDirectory="BEIDVIEWERDIR"/>
+        <Shortcut Id="EidViewerDesktopShortcut" Name="eID Viewer" Directory="DesktopFolder" Description="!(loc.BeidGuiDescr)" Target="[BEIDVIEWERDIR]eID Viewer.exe" WorkingDirectory="BEIDVIEWERDIR"/>
+        <!-- shortcuts cannot be keypaths, so we'll add a registry key here-->
+		<RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eID Viewer" Type="integer" Value="1" KeyPath="yes" />
       </Component>
-	  
-	  <Component Id="BeidApplicationProgramsFolder" Guid="{09FD9493-DF96-442c-80EA-1858CE65E796}">				  
+      <Component Id="BeidApplicationProgramsFolder" Guid="{09FD9493-DF96-442c-80EA-1858CE65E796}">				  
         <RemoveFolder Id="ApplicationProgramsFolder" On="both"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="BeidApplicationProgramsFolder" Type="integer" Value="1" KeyPath="yes" />
       </Component>
-    </DirectoryRef>
-
-
+    </DirectoryRef>  
+	
     <Feature Id="BeidGuiInstall"
              Title="!(loc.BeidGui)"
              Description="!(loc.BeidGuiDescr)"
@@ -156,12 +149,12 @@
       </Feature>
 <?endif?>
       <!-- Program Files -->
-	  <ComponentRef Id="BeidApplicationProgramsFolder"/>
       <ComponentRef Id="BEIDVIEWER"/>
 	  <ComponentRef Id="BEIDVIEWERNL"/>
 	  <ComponentRef Id="BEIDVIEWERFR"/>
 	  <ComponentRef Id="BEIDVIEWERDE"/>  
       <ComponentRef Id="eidviewerShortcut"/>
+	  <ComponentRef Id="BeidApplicationProgramsFolder"/>
     </Feature>
     
     

@@ -331,7 +331,7 @@ DWORD WINAPI   CardSignData
 					LogTrace(LOGTYPE_ERROR, WHERE, "CARD_PADDING_PSS unsupported...");
 					CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
 				//}
-				LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_PSS");
+				//LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_PSS");
 				////memcpy (&PssPadInfo, pInfo->pPaddingInfo, sizeof(PssPadInfo));
 				break;
 			case CARD_PADDING_NONE:
