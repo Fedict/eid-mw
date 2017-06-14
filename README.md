@@ -56,4 +56,4 @@ To create an XPI package, run:
 
 # Build etc status
 
-[![Coverage Status](https://coveralls.io/repos/github/Fedict/eid-mw/badge.svg?branch=v4.2)](https://coveralls.io/github/Fedict/eid-mw?branch=v4.2) [![Build Status](https://travis-ci.org/Fedict/eid-mw.svg?branch=master)](https://travis-ci.org/Fedict/eid-mw)
+[![Coverage Status](https://coveralls.io/repos/github/Fedict/eid-mw/badge.svg?branch=v4.2)](https://coveralls.io/github/Fedict/eid-mw?branch=v4.2) [![Build Status](https://travis-ci.org/Fedict/eid-mw.svg?branch=master)](https://travis-ci.org/Fedict/eid-mw) [![Coverity Scan Build Status](https://scan.coverity.com/projects/2576/badge.svg?flat=1)](https://scan.coverity.com/projects/eid-middleware)
