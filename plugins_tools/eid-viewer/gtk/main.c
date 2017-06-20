@@ -217,6 +217,9 @@ static void cleardata(gpointer key, gpointer value, gpointer user_data G_GNUC_UN
 static void newsrc(enum eid_vwr_source src) {
 	clear_certdata();
 	g_hash_table_foreach(touched_labels, cleardata, NULL);
+	if(src == EID_VWR_SRC_CARD) {
+		g_object_set_threaded(G_OBJECT(gtk_builder_get_object(builder, "mainwin")), "urgency-hint", (void*)TRUE, NULL);
+	}
 	// TODO: update display so we see which source we're using
 }
 
