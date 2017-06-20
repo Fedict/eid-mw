@@ -75,6 +75,7 @@
 	BIO_free(bio);
 	free(bytes_b);
 	[_ov reloadData];
+	[_ov expandItem:nil expandChildren:YES];
 }
 -(BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {
 	if([item isEqualToString:@"Root"]) {
