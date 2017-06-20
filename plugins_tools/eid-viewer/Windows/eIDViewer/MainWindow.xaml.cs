@@ -292,16 +292,20 @@ namespace eIDViewer
         {
             if (e.Source.GetType().Name.Equals("Image"))
             {
-                Image item = (Image)e.Source;
-
-                if (item != null)
+                if ((theBackendData.eid_backend_state == eid_vwr_states.STATE_FILE) || (theBackendData.eid_backend_state == eid_vwr_states.STATE_TOKEN_WAIT))
                 {
-                    IntPtr intptrXML = eIDViewer.NativeMethods.GetXMLForm();
-                    string XMLForm = Utf8ToString(intptrXML);
+                    Image item = (Image)e.Source;
 
-                    DataObject dataObject = new DataObject();
-                    dataObject.SetData(DataFormats.StringFormat, XMLForm.ToString());
-                    DragDrop.DoDragDrop(item, dataObject, DragDropEffects.Copy);
+                    //STATE_FILE or STATE_TOKEN_WAIT
+                    if (item != null)
+                    {
+                        IntPtr intptrXML = eIDViewer.NativeMethods.GetXMLForm();
+                        string XMLForm = Utf8ToString(intptrXML);
+
+                        DataObject dataObject = new DataObject();
+                        dataObject.SetData(DataFormats.StringFormat, XMLForm.ToString());
+                        DragDrop.DoDragDrop(item, dataObject, DragDropEffects.Copy);
+                    }
                 }
             }
         }

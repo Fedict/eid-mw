@@ -53,6 +53,7 @@ namespace eIDViewer
 
             certsList[0].Certs[1].Certs.Add(authCertViewModel);
             certsList[0].Certs[1].Certs.Add(signCertViewModel);
+            eid_backend_state = eid_vwr_states.STATE_COUNT;//this is a invalid state, using it as initialization value
         }
 
         ~BackendDataViewModel()
@@ -1016,6 +1017,8 @@ namespace eIDViewer
                 logText += logLine;
             }
         }
+
+        public eid_vwr_states eid_backend_state { get; set; }
 
         public void NotifyPropertyChanged(String propertyName)
         {

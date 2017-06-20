@@ -193,6 +193,7 @@ namespace eIDViewer
         private static void CSCbnewstate(eid_vwr_states state)
         {
             theData.WriteLog("CSCbnewstate called " + state.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theData.eid_backend_state = state;
 
             switch (state)
             {
