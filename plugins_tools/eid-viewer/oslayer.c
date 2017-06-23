@@ -35,6 +35,18 @@ int eid_vwr_init()
 		result = CKR_FUNCTION_FAILED;
 	}
 
+	readerContinueWaitEvent = CreateEvent(
+		NULL,   // default security attributes
+		FALSE,  // auto-reset event object
+		FALSE,  // initial state is nonsignaled
+		NULL);  // unnamed object
+
+	if (readerContinueWaitEvent == NULL)
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("CreateEvent error: %.8x"), GetLastError());
+		result = CKR_FUNCTION_FAILED;
+	}
+
 	/* Create the pkcs11 card / card reader event thread */
 	hThread = CreateThread(NULL, 0, eid_wait_for_pkcs11event, NULL, 0, NULL);
 	if (readerCheckEvent == NULL)
@@ -61,15 +73,29 @@ int eid_vwr_p11_wait_event() {
 DWORD WINAPI eid_vwr_be_mainloop(void* val) {
 	int result;
 	int eventSetup = eid_vwr_init();
+	BOOL waiting = 0;
 	for (;;) {
 		result = eid_vwr_poll();
 		//use polling if eid_vwr_init failed
+		
 		if ((result == 0) && (eventSetup == CKR_OK))
 		{
+			if (waiting)
+			{
+				//notify the pkcs11waitforchanges thread that it may start waiting again
+				if (!SetEvent(readerContinueWaitEvent))
+				{
+					be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_be_mainloop with error: %.8x"), GetLastError());
+					return CKR_FUNCTION_FAILED;
+				}
+			}
+			//start waiting ourself untill some other thread asks us to check for reader changes
 			eid_vwr_p11_wait_event();
+			waiting = TRUE;
 		}
 		else
 		{
+			waiting = FALSE;
 			SLEEP(1);
 		}
 	}

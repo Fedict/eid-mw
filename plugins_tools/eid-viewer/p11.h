@@ -13,7 +13,10 @@
 #define EIDV_RV_FAIL -1
 
 #ifdef WIN32
+//event waited for by the mainloop, before checking the reader states
 HANDLE readerCheckEvent;
+//event set by the mainloop, to notify it completed checking the reader states
+HANDLE readerContinueWaitEvent;
 DWORD WINAPI eid_wait_for_pkcs11event(void* val);
 #endif
 

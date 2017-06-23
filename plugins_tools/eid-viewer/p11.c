@@ -123,7 +123,14 @@ DWORD WINAPI eid_wait_for_pkcs11event(void* val) {
 		{
 			be_log(EID_VWR_LOG_ERROR, TEXT("eid_wait_for_pkcs11event with error: %.8x"), GetLastError());
 			return CKR_FUNCTION_FAILED;
-		}
+		}	
+
+		//according to pkcs#11v2.20 standard, C_GetSlotList need to be called (with NULL) again before the new slots will be taken into account
+		//is a new reader is added and we would start waiting (blocked) for a new event before the mainloop has updated the slotlist, 
+		//we would not be waiting for events of the new reader
+
+		//wait for max 5 seconds for the mainloop to have updated the slotlist when needed
+		WaitForSingleObject(readerContinueWaitEvent, 5000);
 	}
 	return ret;
 }
