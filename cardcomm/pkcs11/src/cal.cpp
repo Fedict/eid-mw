@@ -2461,9 +2461,7 @@ CK_RV cal_get_slot_changes(int *ph)
 					{
 						if (gnFFReaders == 0)
 						{
-							gnFFReaders =
-								p11_get_nreaders
-								() + 1;
+							gnFFReaders = p11_get_nreaders() + 1;
 						} else
 						{
 							gnFFReaders++;
@@ -2489,13 +2487,10 @@ CK_RV cal_get_slot_changes(int *ph)
 						pSlot = p11_get_slot(i);
 						if (pSlot)
 						{
-							if (oReadersInfo->
-							    CardPresent(i))
-								pSlot->ievent
-									= 1;
+							if (oReadersInfo->CardPresent(i))
+								pSlot->ievent = 1;
 							else
-								pSlot->ievent
-									= -1;
+								pSlot->ievent = -1;
 						}
 					}
 				}
@@ -2550,8 +2545,7 @@ CK_RV cal_refresh_readers()
 		if (oReadersInfo)
 		{
 			//check if readerlist changed?
-			CReadersInfo *pNewReadersInfo =
-				new CReadersInfo(oCardLayer->ListReaders());
+			CReadersInfo *pNewReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
 			if (pNewReadersInfo->SameList(oReadersInfo) == TRUE)
 			{
 				//same reader list as before, so we keep the readers' status
@@ -2564,8 +2558,7 @@ CK_RV cal_refresh_readers()
 			}
 		} else
 		{
-			oReadersInfo =
-				new CReadersInfo(oCardLayer->ListReaders());
+			oReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
 		}
 		//new reader list, so please stop the scardgetstatuschange that is waiting on the old list
 		//oCardLayer->CancelActions();
@@ -2923,8 +2916,7 @@ CK_RV cal_wait_for_the_slot_event(int block)
 	unsigned long ulnReaders = 0;
 
 	memset(txReaderStates, 0, sizeof(txReaderStates));
-	oReadersInfo->GetReaderStates(txReaderStates, MAX_READERS,
-				      &ulnReaders);
+	oReadersInfo->GetReaderStates(txReaderStates, MAX_READERS, &ulnReaders);
 
 	try
 	{
@@ -2962,8 +2954,7 @@ CK_RV cal_wait_for_the_slot_event(int block)
 			}
 		} else
 		{
-			oCardLayer->GetStatusChange(0, txReaderStates,
-						    ulnReaders);
+			oCardLayer->GetStatusChange(0, txReaderStates, ulnReaders);
 		}
 	}
 	catch(CMWException e)
@@ -2993,8 +2984,7 @@ CK_RV cal_wait_for_the_slot_event(int block)
 
 #undef WHERE
 
-void cal_free_reader_states(SCARD_READERSTATEA * txReaderStates,
-			    unsigned long ulnReaders)
+void cal_free_reader_states(SCARD_READERSTATEA * txReaderStates, unsigned long ulnReaders)
 {
 	// Free the memory allocated for the reader names
 	for (DWORD i = 0; i < ulnReaders; i++)

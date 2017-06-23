@@ -143,24 +143,18 @@ wait_again:
 			m_tInfos[m_ulReaderCount].csReader = csReaders;
 			m_tInfos[m_ulReaderCount].ulCurrentState = 0;
 			m_tInfos[m_ulReaderCount].ulEventState = 0;
-			csReaders +=
-				m_tInfos[m_ulReaderCount].csReader.length() +
-				1;
+			csReaders += m_tInfos[m_ulReaderCount].csReader.length() + 1;
 		}
 #ifdef PKCS11_FF
 		//Add an extra hidden reader to detect new attached reader events
-		m_tInfos[m_ulReaderCount].csReader =
-			"\\\\?PnP?\\Notification";
+		m_tInfos[m_ulReaderCount].csReader = "\\\\?PnP?\\Notification";
 		m_tInfos[m_ulReaderCount].ulCurrentState = 0;
 		m_tInfos[m_ulReaderCount].ulEventState = 0;
 		m_ulReaderCount++;
 #endif
 	}
 
-	bool CReadersInfo::GetReaderStates(SCARD_READERSTATEA *
-					   txReaderStates,
-					   unsigned long length,
-					   unsigned long *ulnReaders)
+	bool CReadersInfo::GetReaderStates(SCARD_READERSTATEA * txReaderStates, unsigned long length, unsigned long *ulnReaders)
 	{
 		*ulnReaders = m_ulReaderCount;
 		if (length < m_ulReaderCount)
@@ -169,24 +163,15 @@ wait_again:
 		for (DWORD i = 0; i < m_ulReaderCount; i++)
 		{
 			//copy the reader name, instead of giving the pointer, as C_GetSlotList might free it.
-			txReaderStates[i].szReader =
-				(char *)
-				malloc(strlen(m_tInfos[i].csReader.c_str()) +
-				       1);
-			memset((void *) txReaderStates[i].szReader, 0,
-			       strlen(m_tInfos[i].csReader.c_str()) + 1);
-			memcpy((void *) txReaderStates[i].szReader,
-			       (const void *) (m_tInfos[i].csReader.c_str()),
-			       strlen(m_tInfos[i].csReader.c_str()));
-			txReaderStates[i].dwCurrentState =
-				m_tInfos[i].ulEventState;
+			txReaderStates[i].szReader = (char *)malloc(strlen(m_tInfos[i].csReader.c_str()) + 1);
+			memset((void *) txReaderStates[i].szReader, 0, strlen(m_tInfos[i].csReader.c_str()) + 1);
+			memcpy((void *) txReaderStates[i].szReader, (const void *) (m_tInfos[i].csReader.c_str()), strlen(m_tInfos[i].csReader.c_str()));
+			txReaderStates[i].dwCurrentState = m_tInfos[i].ulEventState;
 		}
 		return true;
 	}
 
-	bool CReadersInfo::UpdateReaderStates(SCARD_READERSTATEA *
-					      txReaderStates,
-					      unsigned long ulnReaders)
+	bool CReadersInfo::UpdateReaderStates(SCARD_READERSTATEA * txReaderStates, unsigned long ulnReaders)
 	{
 		if (m_ulReaderCount != ulnReaders)
 			return false;
@@ -195,9 +180,7 @@ wait_again:
 		for (DWORD i = 0; i < m_ulReaderCount; i++)
 		{
 			m_tInfos[i].ulCurrentState = m_tInfos[i].ulEventState;
-			m_tInfos[i].ulEventState =
-				txReaderStates[i].
-				dwEventState & ~SCARD_STATE_CHANGED;
+			m_tInfos[i].ulEventState = txReaderStates[i].dwEventState & ~SCARD_STATE_CHANGED;
 		}
 
 		return true;
