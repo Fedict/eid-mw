@@ -103,7 +103,6 @@ namespace eIDViewer
 
         private void ClearLog_Click(object sender, RoutedEventArgs e)
         {
-            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
             theBackendData.logText = "";
         }
 
@@ -112,31 +111,54 @@ namespace eIDViewer
             ComboBox logCombo = sender as ComboBox;
             if (logCombo != null)
             {
-                eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
+                theBackendData.WriteLog("log_level combo selected", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
 
                 switch (logCombo.SelectedIndex)
                 {
+                    //only save changes if they are not set yet (this event also gets fired during initialization)
                     case 0:
-                        theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
+                        if (theBackendData.log_level != eid_vwr_loglevel.EID_VWR_LOG_ERROR)
+                        {
+                            theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
+                            theBackendData.StoreViewerLogLevel("Error");
+                            theBackendData.WriteLog("switched log_level to Error", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                        }
                         break;
                     case 1:
-                        theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_COARSE;
+                        if (theBackendData.log_level != eid_vwr_loglevel.EID_VWR_LOG_COARSE)
+                        {
+                            theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_COARSE;
+                            theBackendData.StoreViewerLogLevel("Warning");
+                            theBackendData.WriteLog("switched log_level to Warning", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                        }
                         break;
                     case 2:
-                        theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
+                        if (theBackendData.log_level != eid_vwr_loglevel.EID_VWR_LOG_NORMAL)
+                        {
+                            theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
+                            theBackendData.StoreViewerLogLevel("Info");
+                            theBackendData.WriteLog("switched log_level to Info", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                        }
                         break;
                     case 3:
-                        theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_DETAIL;
+                        if (theBackendData.log_level != eid_vwr_loglevel.EID_VWR_LOG_DETAIL)
+                        {
+                            theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_DETAIL;
+                            theBackendData.StoreViewerLogLevel("Debug");
+                            theBackendData.WriteLog("switched log_level to Debug", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                        }
                         break;
                     default:
-                        break;
+                        {
+                            theBackendData.WriteLog("invalid index of log_level combo selected", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                            break;
+                        }
                 }
             }
         }
 
         private void CopyLogToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
             System.Windows.Clipboard.SetText(theBackendData.logText);
         }
 
@@ -252,7 +274,6 @@ namespace eIDViewer
 
         private void MenuItemPrint_Click(object sender, RoutedEventArgs e)
         {
-            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
 
             theBackendData.date = DateTime.Now.ToString("D",Thread.CurrentThread.CurrentUICulture);
 
@@ -272,7 +293,6 @@ namespace eIDViewer
 
         private void ValidateNowButton_Click(object sender, RoutedEventArgs e)
         {
-            eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
             theBackendData.VerifyAllCertificates();
         }
 

@@ -201,7 +201,7 @@
                             <ColumnDefinition Width="Auto" MinWidth="100" />
                             <ColumnDefinition Width="Auto" MinWidth="200"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox SelectionChanged="LogLevel_OnSelectionChanged" Background="{StaticResource DefaultBackground}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" SelectedIndex="3">
+                        <ComboBox SelectionChanged="LogLevel_OnSelectionChanged" Background="{StaticResource DefaultBackground}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" SelectedIndex="{Binding Path=log_level_index, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                             <ComboBoxItem Content="Error" Background="{StaticResource DefaultBackground}"/>
                             <ComboBoxItem Content="Warning" Background="{StaticResource DefaultBackground}"/>
                             <ComboBoxItem Content="Normal" Background="{StaticResource DefaultBackground}" />

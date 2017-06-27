@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Sources\About.cs" />
     <Compile Include="Sources\Backend.cs" />
+    <Compile Include="Sources\BackendDataRegistry.cs" />
     <Compile Include="Sources\BackendDataViewModel.cs" />
     <Compile Include="Sources\BackendEnums.cs" />
     <Compile Include="Sources\ReadersMenuViewModel.cs" />

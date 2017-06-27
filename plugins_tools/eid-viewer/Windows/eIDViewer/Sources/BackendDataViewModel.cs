@@ -18,7 +18,7 @@ using System.Globalization;
 
 namespace eIDViewer
 {
-    public class BackendDataViewModel : INotifyPropertyChanged
+    public partial class BackendDataViewModel : INotifyPropertyChanged
     {
 
         private readonly SynchronizationContext _syncContext;
@@ -54,6 +54,10 @@ namespace eIDViewer
             certsList[0].Certs[1].Certs.Add(authCertViewModel);
             certsList[0].Certs[1].Certs.Add(signCertViewModel);
             eid_backend_state = eid_vwr_states.STATE_COUNT;//this is a invalid state, using it as initialization value
+
+            //try to find a log_level setting in the registry, 
+            //and initialize log_level and log_level_index
+            GetViewerLogLevel();
         }
 
         ~BackendDataViewModel()
@@ -1547,7 +1551,7 @@ namespace eIDViewer
             }
         }
 
-        private eid_vwr_loglevel _log_level = eid_vwr_loglevel.EID_VWR_LOG_DETAIL;
+        private eid_vwr_loglevel _log_level;
         public eid_vwr_loglevel log_level
         {
             get { return _log_level; }
@@ -1555,6 +1559,17 @@ namespace eIDViewer
             {
                 _log_level = value;
                 this.NotifyPropertyChanged("log_level");
+            }
+        }
+
+        private int _log_level_index;
+        public int log_level_index
+        {
+            get { return _log_level_index; }
+            set
+            {
+                _log_level_index = value;
+                this.NotifyPropertyChanged("log_level_index");
             }
         }
 
