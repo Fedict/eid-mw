@@ -111,7 +111,7 @@ namespace eIDViewer
             ComboBox logCombo = sender as ComboBox;
             if (logCombo != null)
             {
-                theBackendData.WriteLog("log_level combo selected", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                theBackendData.WriteLog("log_level combo selected\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
 
                 switch (logCombo.SelectedIndex)
                 {
@@ -121,7 +121,7 @@ namespace eIDViewer
                         {
                             theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
                             theBackendData.StoreViewerLogLevel("Error");
-                            theBackendData.WriteLog("switched log_level to Error", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                            theBackendData.WriteLog("switched log_level to Error\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
                         }
                         break;
                     case 1:
@@ -129,7 +129,7 @@ namespace eIDViewer
                         {
                             theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_COARSE;
                             theBackendData.StoreViewerLogLevel("Warning");
-                            theBackendData.WriteLog("switched log_level to Warning", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                            theBackendData.WriteLog("switched log_level to Warning\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
                         }
                         break;
                     case 2:
@@ -137,7 +137,7 @@ namespace eIDViewer
                         {
                             theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
                             theBackendData.StoreViewerLogLevel("Info");
-                            theBackendData.WriteLog("switched log_level to Info", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                            theBackendData.WriteLog("switched log_level to Info\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
                         }
                         break;
                     case 3:
@@ -145,12 +145,12 @@ namespace eIDViewer
                         {
                             theBackendData.log_level = eid_vwr_loglevel.EID_VWR_LOG_DETAIL;
                             theBackendData.StoreViewerLogLevel("Debug");
-                            theBackendData.WriteLog("switched log_level to Debug", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                            theBackendData.WriteLog("switched log_level to Debug\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
                         }
                         break;
                     default:
                         {
-                            theBackendData.WriteLog("invalid index of log_level combo selected", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                            theBackendData.WriteLog("invalid index of log_level combo selected\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                             break;
                         }
                 }
