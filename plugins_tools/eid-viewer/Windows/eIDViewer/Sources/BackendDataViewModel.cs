@@ -1001,7 +1001,7 @@ namespace eIDViewer
         {
             if (log_level <= loglevelofLine)
             {
-                switch (log_level)
+                switch (loglevelofLine)
                 {
                     case eid_vwr_loglevel.EID_VWR_LOG_ERROR:
                         logText += "E: ";
