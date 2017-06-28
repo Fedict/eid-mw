@@ -1607,6 +1607,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				{
 					break;
 				}
+				/* Falls through */
 			case CACHED_DATA_TYPE_ADDRESS:
 				oFileData =
 					oReader.ReadFile(BEID_FILE_ADDRESS);
@@ -1641,6 +1642,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				{
 					break;
 				}
+				/* Falls through */
 			case CACHED_DATA_TYPE_PHOTO:
 				plabel = BEID_LABEL_PHOTO;
 				pobjectID = BEID_OBJECTID_PHOTO;
@@ -1673,6 +1675,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				{
 					break;
 				}
+				/* Falls through */
 			case CACHED_DATA_TYPE_RNCERT:
 				oFileData =
 					oReader.ReadFile(BEID_FILE_CERT_RRN);
@@ -1706,6 +1709,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				{
 					break;
 				}
+				/* Falls through */
 			case CACHED_DATA_TYPE_SIGN_DATA_FILE:
 				plabel = BEID_LABEL_SGN_RN;
 				oFileData =
@@ -1738,6 +1742,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				{
 					break;
 				}
+				/* Falls through */
 			case CACHED_DATA_TYPE_SIGN_ADDRESS_FILE:
 				plabel = BEID_LABEL_SGN_ADDRESS;
 				oFileData =
@@ -1771,6 +1776,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				{
 					break;
 				}
+				/* Falls through */
 			default:
 				break;
 		}

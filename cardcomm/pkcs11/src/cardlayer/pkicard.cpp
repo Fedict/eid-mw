@@ -591,7 +591,7 @@ namespace eIDMW
 			case PIN_ENC_GP:
 				oBuf.Append((unsigned char) (0x20 +
 							     ulPinLen));
-				// no break here
+				// Falls through
 			case PIN_ENC_BCD:
 				i = 0;
 				while (i < ulPinLen)
