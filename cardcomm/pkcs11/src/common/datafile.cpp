@@ -265,7 +265,7 @@ namespace eIDMW
 
 		while (!bDone)
 		{
-			memset(buffer, 0, MAX_BUFFER_LEN);
+			memset(buffer, 0, MAX_BUFFER_LEN * sizeof(wchar_t));
 			(void) fgetws(buffer, MAX_BUFFER_LEN, m_stream);
 
 			szLine = buffer;
