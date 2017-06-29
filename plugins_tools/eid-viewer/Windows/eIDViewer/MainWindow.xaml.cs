@@ -283,9 +283,20 @@ namespace eIDViewer
             if (dialog.ShowDialog() != true)
                 return;
 
-            //re-arrange the printwindow grid to fill the entire page
-            thePrintWindow.printWindowGrid.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
-            thePrintWindow.printWindowGrid.Arrange(new Rect(new Point(0, 0), thePrintWindow.printWindowGrid.DesiredSize));
+            System.Printing.PrintCapabilities capabilities = dialog.PrintQueue.GetPrintCapabilities(dialog.PrintTicket);
+
+            Point printMargin = new Point(capabilities.PageImageableArea.OriginWidth, capabilities.PageImageableArea.OriginHeight);
+            Size printSize = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
+
+
+            theBackendData.WriteLog("capabilities.PageImageableArea.OriginWidth = " + capabilities.PageImageableArea.OriginWidth, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theBackendData.WriteLog("capabilities.PageImageableArea.OriginHeight = " + capabilities.PageImageableArea.OriginHeight, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theBackendData.WriteLog("capabilities.PageImageableArea.ExtentWidth = " + capabilities.PageImageableArea.ExtentWidth, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theBackendData.WriteLog("capabilities.PageImageableArea.ExtentHeight = " + capabilities.PageImageableArea.ExtentHeight, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+
+            //Size printSize = new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight);
+            //thePrintWindow.printWindowGrid.Measure(printSize);
+            thePrintWindow.printWindowGrid.Arrange(new Rect(printMargin, printSize));
 
             dialog.PrintVisual(thePrintWindow.printWindowGrid, "Printing");
             thePrintWindow.Close();
