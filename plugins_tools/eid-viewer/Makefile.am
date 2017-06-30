@@ -110,7 +110,7 @@ dist_eidvinclude_HEADERS = \
 eid_viewer_LDADD = @GTK_LIBS@ @GIO_LIBS@ @SSL_LIBS@ @XML2_LIBS@ @CURL_LIBS@ @libproxy_LIBS@ $(top_builddir)/plugins_tools/util/liblabels.la libeidviewer.la
 libeidviewer_la_LIBADD = $(top_builddir)/plugins_tools/util/liblabels.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la @SSL_LIBS@ @XML2_LIBS@
 AM_CFLAGS = @GTK_CFLAGS@ -I. -I$(srcdir)/include -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@ -fvisibility=hidden
-AM_CXXFLAGS = $(AM_CFLAGS) -std=c++11
+AM_CXXFLAGS = $(AM_CFLAGS) -std=c++98
 SUBDIRS = . gtk/po test
 
 resources/%.c: resources/%.png
