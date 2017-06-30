@@ -55,9 +55,11 @@
     <ApplicationIcon>Resources\eIDViewerIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -111,6 +113,7 @@
     </Compile>
     <Compile Include="Sources\About.cs" />
     <Compile Include="Sources\Backend.cs" />
+    <Compile Include="Sources\BackendDataRegistry.cs" />
     <Compile Include="Sources\BackendDataViewModel.cs" />
     <Compile Include="Sources\BackendEnums.cs" />
     <Compile Include="Sources\ReadersMenuViewModel.cs" />

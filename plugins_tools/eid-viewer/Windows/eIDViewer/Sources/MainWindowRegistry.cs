@@ -7,73 +7,16 @@ using System.Security;
 using System.IO;
 using System.Windows;
 using System.Globalization;
+using System.ComponentModel;
 
 namespace eIDViewer
 {
 
     public partial class MainWindow : Window
-    {  
-        string ReadRegistryStringValue(string subkey, string valueName, object defaultValue)
+    {
+        public void StoreLanguage(string language)
         {
-            const string userRoot = "HKEY_CURRENT_USER";
-            const string localMachineRoot = "HKEY_LOCAL_MACHINE";
-            string keyName = userRoot + "\\" + subkey;
-            try
-            {
-
-                object readValue = Registry.GetValue(keyName, valueName, null);
-
-                if (readValue == null)
-                {
-                    keyName = localMachineRoot + "\\" + subkey;
-                    readValue = Registry.GetValue(keyName, valueName, null);
-                }
-                if (readValue == null)
-                {
-                    return "";
-                }
-                else
-                {
-                    return readValue as string;
-                }
-            }
-            catch (SecurityException e)
-            {
-                theBackendData.WriteLog("ReadRegistryStringValue failed, no permission to read key " + keyName, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                theBackendData.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                return "";
-            }
-            catch (IOException e)
-            {
-                theBackendData.WriteLog("ReadRegistryStringValue failed, the key " + keyName + " was marked for deletion", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                theBackendData.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                return "";
-            }
-            catch (Exception e)
-            {
-                theBackendData.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                return "";
-            }
-        }
-
-        void WriteRegistryStringValue(string subkey, string valueName, object valueValue)
-        {
-            const string userRoot = "HKEY_CURRENT_USER";
-            string keyName = userRoot + "\\" + subkey;
-            try
-            {
-                Registry.SetValue(keyName, valueName, valueValue as string, RegistryValueKind.String);
-            }
-
-            catch (Exception e)
-            {
-                theBackendData.WriteLog("Exception" + e.Message + " caught when trying to write to registry key " + keyName, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-            }
-        }
-
-        public void StoreLanguage (string language)
-        {
-            WriteRegistryStringValue("SOFTWARE\\BEID\\general", "language", language);
+            theBackendData.WriteRegistryStringValue("SOFTWARE\\BEID\\general", "language", language);
         }
 
         public void SetLanguageNL()
@@ -132,7 +75,7 @@ namespace eIDViewer
 
         public void GetLanguage()
         {
-            string readValue = ReadRegistryStringValue("SOFTWARE\\BEID\\general", "language", null);
+            string readValue = theBackendData.ReadRegistryStringValue("SOFTWARE\\BEID\\general", "language", null);
             if(readValue != null)
             {
                 if( readValue.Equals("nl"))

@@ -59,8 +59,8 @@
                     <Label Grid.Column="1" Grid.Row="16" Content="{Binding Path=identityTabResource.MunicipalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
                     <Label Grid.Column="2" Grid.Row="2" Content="{Binding Path=surName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
                     <Label Grid.Column="2" Grid.Row="3" Content="{Binding Path=firstNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="4" Content="{Binding Path=date_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="5" Content="{Binding Path=location_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                    <Label Grid.Column="2" Grid.Row="4" Content="{Binding Path=location_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                    <Label Grid.Column="2" Grid.Row="5" Content="{Binding Path=date_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
                     <Label Grid.Column="2" Grid.Row="6" Content="{Binding Path=gender, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
                     <Label Grid.Column="2" Grid.Row="7" Content="{Binding Path=national_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
                     <Label Grid.Column="2" Grid.Row="8" Content="{Binding Path=nationality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
@@ -201,7 +201,7 @@
                             <ColumnDefinition Width="Auto" MinWidth="100" />
                             <ColumnDefinition Width="Auto" MinWidth="200"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox SelectionChanged="LogLevel_OnSelectionChanged" Background="{StaticResource DefaultBackground}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" SelectedIndex="3">
+                        <ComboBox SelectionChanged="LogLevel_OnSelectionChanged" Background="{StaticResource DefaultBackground}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" SelectedIndex="{Binding Path=log_level_index, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                             <ComboBoxItem Content="Error" Background="{StaticResource DefaultBackground}"/>
                             <ComboBoxItem Content="Warning" Background="{StaticResource DefaultBackground}"/>
                             <ComboBoxItem Content="Normal" Background="{StaticResource DefaultBackground}" />

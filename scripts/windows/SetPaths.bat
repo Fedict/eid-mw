@@ -10,7 +10,7 @@
 @set SEARCH_BEID_DIR_PLATFORMSDK_4=C:\Program Files (x86)\Windows Kits\8.0\bin\x86
 @set SEARCH_BEID_DIR_PLATFORMSDK_5=C:\Program Files (x86)\Windows Kits\8.1\bin\x86
 @set SEARCH_BEID_DIR_PLATFORMSDK_6=C:\Program Files (x86)\Windows Kits\10\bin\x86
-@set SEARCH_WIX_PATH=C:\Program Files (x86)\WiX Toolset v3.9\bin
+@set SEARCH_WIX_PATH=C:\Program Files (x86)\WiX Toolset v3.11\bin
 @set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
 @set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
 ::end of search paths

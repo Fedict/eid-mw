@@ -1,19 +1,31 @@
 #ifndef EID_VWR_P11_H
 #define EID_VWR_P11_H
 
+
+
+
+
+
 #ifdef WIN32
 #include <win32.h>
+#pragma pack(push, cryptoki, 1)
+#include <pkcs11t.h>
+#pragma pack(pop, cryptoki)
 #else
 #include <unix.h>
-#endif
 #include <pkcs11t.h>
+#endif
+
 #include <eid-util/utftranslate.h>
 
 #define EIDV_RV_OK 0
 #define EIDV_RV_FAIL -1
 
 #ifdef WIN32
+//event waited for by the mainloop, before checking the reader states
 HANDLE readerCheckEvent;
+//event set by the mainloop, to notify it completed checking the reader states
+HANDLE readerContinueWaitEvent;
 DWORD WINAPI eid_wait_for_pkcs11event(void* val);
 #endif
 

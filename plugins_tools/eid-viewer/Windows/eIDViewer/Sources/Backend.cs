@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Input;
 using System.Globalization;
-
+using System.Windows;
 
 
 /*
@@ -233,6 +233,7 @@ namespace eIDViewer
                     theData.eid_data_from_file = false;
                     break;
             }
+            theData.eid_backend_state = state;
         }
 
         private static void CSCbpinopResult(eid_vwr_pinops pinop, eid_vwr_result result)
@@ -313,43 +314,109 @@ namespace eIDViewer
         }
 
         public static void DoPinop(eid_vwr_pinops pinop)
-        {
-            eid_vwr_pinop(pinop);
+        {            
+            try
+            {
+                eid_vwr_pinop(pinop);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_pinop " + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_pinop " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
         }
 
         public static void OpenXML(string sourceFile)
-        {
-            eid_vwr_be_deserialize(sourceFile);
+        {  
+            try
+            {
+                eid_vwr_be_deserialize(sourceFile);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_be_deserialize " + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_be_deserialize " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
         }
 
         public static void SaveXML(string destFile)
-        {
-            eid_vwr_be_serialize(destFile);
+        {        
+            try
+            {
+                eid_vwr_be_serialize(destFile);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_be_serialize " + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_be_serialize " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
         }
 
         public static void ChangeLanguage(eid_vwr_langs language)
         {
-            eid_vwr_convert_set_lang(language);
+            try
+            { 
+                eid_vwr_convert_set_lang(language);
+            }
+//            catch (System.DllNotFoundException e)
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_convert_set_lang" + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_convert_set_lang" + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
         }
 
         public static IntPtr GetXMLForm()
-        {
-            return eid_vwr_be_get_xmlform();
+        {       
+            try
+            {
+                return eid_vwr_be_get_xmlform();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_be_get_xmlform " + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_be_get_xmlform " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                throw;
+            }
         }
 
         public static void SelectCardReader(int auto, UInt32 slotnr)
         {
-            eid_vwr_be_select_slot(auto, slotnr);
+            try
+            {
+                eid_vwr_be_select_slot(auto, slotnr);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_be_select_slot " + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_be_select_slot " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            } 
         }
 
         public static void MarkCardInvalid()
-        {
-            eid_vwr_be_set_invalid();
+        {        
+            try
+            {
+                eid_vwr_be_set_invalid();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_be_set_invalid " + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_be_set_invalid " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
         }
 
         public static void CloseXML()
-        {
-            eid_vwr_close_file();
+        {     
+            try
+            {
+                eid_vwr_close_file();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_close_file " + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_close_file " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
         }
 
 

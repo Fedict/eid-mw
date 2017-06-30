@@ -39,9 +39,10 @@ TEST_FUNC(pinop) {
 		printf("Cannot do eID viewer tests without confirmation dialogs...\n");
 		return TEST_RV_SKIP;
 	}
-	if(have_robot()) {
-		robot_insert_card();
+	if(!have_robot()) {
+		return TEST_RV_SKIP;
 	}
+	robot_insert_card();
 	cb = createcbs();
 	verbose_assert(cb != NULL);
 	cb->pinop_result = pinop_result;
