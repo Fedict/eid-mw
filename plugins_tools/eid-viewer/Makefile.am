@@ -159,7 +159,7 @@ resources/logos/%/eid-viewer.png: resources/logo_%.png
 	mkdir -p $(shell dirname $@)
 	cp $^ $@
 
-resources/logos/%/eid-viewer.png: resources/logo_%.png
+resources/logos/48/eid-viewer.png: gtk/eid-viewer.png
 	mkdir -p $(shell dirname $@)
 	cp $^ $@
 
