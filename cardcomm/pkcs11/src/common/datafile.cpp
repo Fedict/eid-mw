@@ -1064,7 +1064,7 @@ namespace eIDMW
 		int nLength;
 		t_Str szMsg;
 
-		memset(buf, 0, MAX_BUFFER_LEN);
+		memset(buf, 0, sizeof(wchar_t) * MAX_BUFFER_LEN);
 		va_list args;
 
 		va_start(args, fmt);
