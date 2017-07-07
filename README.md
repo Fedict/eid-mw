@@ -27,6 +27,10 @@ desk of the administration whose services you are attempting to use.
 
 ### Code from a source package, or code you just bootstrapped as above
 
+#### Ubuntu 16.04.2 LTS 64-bit (automated script)
+
+https://mark911.wordpress.com/2014/01/04/how-to-get-the-eid-electronic-card-reader-acr38u-working-in-ubuntu-14-04-64-bit/
+
 #### GNU/Linux
 
 Make sure you have pcsc-lite and GTK+ and and their development libraries
