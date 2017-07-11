@@ -18,9 +18,9 @@ EID_STRING GenderConvertor::convert(const void *original)
 				case EID_VWR_LANG_NL:
 					return TEXT("V");
 				case EID_VWR_LANG_FR:
-				case EID_VWR_LANG_DE:
-					return TEXT("F");
 				case EID_VWR_LANG_EN:
+					return TEXT("F");			
+				case EID_VWR_LANG_DE:
 					return TEXT("W");
 				default:
 					return eid_original;
