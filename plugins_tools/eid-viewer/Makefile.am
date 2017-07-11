@@ -136,13 +136,38 @@ EXTRA_DIST = gtk/viewer.glade \
 	     resources/coat_of_arms_en.jpg \
 	     resources/coat_of_arms_fr.jpg \
 	     resources/coat_of_arms_nl.jpg \
+	     resources/logo_16.png \
+	     resources/logo_32.png \
+	     resources/logo_128.png \
+	     resources/logo_256.png \
+	     resources/logo_512.png \
 	     gtk/eid-viewer.desktop.sh.in \
 	     gtk/eid-viewer.png
 
 packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
 trustdir = $(packagedatadir)/trustdir
-icondir = @datadir@/icons
-icon_DATA = gtk/eid-viewer.png
+icondir = @datadir@/icons/hicolor
+icon16dir = @icondir@/16x16
+icon32dir = @icondir@/32x32
+icon48dir = @icondir@/48x48
+icon128dir = @icondir@/128x128
+icon256dir = @icondir@/256x256
+icon512dir = @icondir@/512x512
+
+resources/logos/48/eid-viewer.png: gtk/eid-viewer.png
+	mkdir -p $(shell dirname $@)
+	cp $^ $@
+
+resources/logos/%/eid-viewer.png: resources/logo_%.png
+	mkdir -p $(shell dirname $@)
+	cp $^ $@
+
+icon16_DATA = resources/logos/16/eid-viewer.png
+icon32_DATA = resources/logos/32/eid-viewer.png
+icon48_DATA = resources/logos/48/eid-viewer.png
+icon128_DATA = resources/logos/128/eid-viewer.png
+icon256_DATA = resources/logos/256/eid-viewer.png
+icon512_DATA = resources/logos/512/eid-viewer.png
 
 dist_packagedata_DATA = eidv4.xsd
 dist_trust_DATA = \
