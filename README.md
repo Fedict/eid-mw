@@ -19,6 +19,13 @@ desk of the administration whose services you are attempting to use.
 
 ## Installation
 
+### Binary installation
+
+The instructions below are meant for people who want to work on the eID
+software. If you want to just *use* the software, these instructions are
+not for you; in that case, we instead recommend you download it from the
+[official website](https://eid.belgium.be/).
+
 ### Code from git repository:
 
 - Make sure you have libtool 2.2.7c or above, autoconf and automake installed, and in your `$PATH`
