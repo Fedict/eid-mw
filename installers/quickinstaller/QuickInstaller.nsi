@@ -788,15 +788,11 @@ Function nsdCardData
 	Pop $Label
 	SendMessage $Label ${WM_SETFont} $Font_CardData 1
 	SendMessage $Label ${WM_SETTEXT} 0 "$(ls_testfailed)"
-	;Goto nsdCardDataDone
+
 	Call GotoPrevPage
 	
 	${EndIf}
 	
-	;MessageBox MB_OK "$$retval is 0"
-	;Pop $municipality
-	;Pop $zip
-	;Pop $street
 	Pop $lastname
 	Pop $firstletterthirdname
 	Pop $firstname
@@ -820,22 +816,15 @@ Function nsdCardData
 	Pop $Background_Image
     ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
 	
-	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
-	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
-	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_test)"
-	GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
-	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_finish)"
-	;EnableWindow $NextButton 1 ;enable the previous button
-	;SetCtlColors $NextButton 0xFF0000 0x00FF00
-	
 	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
 	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_close)"
-	
+	GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
+	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_finish)"
+		
 	${buttonVisible} "Back" 0
 	${buttonVisible} "Next" 1
 	${buttonVisible} "Cancel" 0	
 	
-	nsdCardDataDone:
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
 FunctionEnd
