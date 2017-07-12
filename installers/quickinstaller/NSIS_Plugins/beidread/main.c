@@ -41,8 +41,7 @@ void __declspec(dllexport) ReadCardData(HWND hwndParent, int string_size,
 }
 
 void __declspec(dllexport) GetReaderCount(HWND hwndParent, int string_size, 
-	char *variables, stack_t **stacktop,
-	extra_parameters *extra)
+	char *variables, stack_t **stacktop, extra_parameters *extra)
 {
 	CK_RV retval;	
 	int nrofCardReaders = 0;
