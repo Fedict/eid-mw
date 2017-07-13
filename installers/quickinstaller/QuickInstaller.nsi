@@ -863,7 +863,7 @@ Function nsdCardDataLeave
 FunctionEnd
 
 Function FindSolutionButton_click
-    ExecShell "open" "http://eid.belgium.be/"
+    ExecShell "open" "https://eid.belgium.be/"
 	;when keeping the nsis installer alive, it can permit the webbrowser to take the foreground.
 	;should we quit in stead, the webbrowser will be openened in the background
 	Abort
