@@ -70,8 +70,8 @@ caption $(ls_caption)
 BrandingText " "
 InstProgressFlags smooth
 ;do not show installation details
-ShowInstDetails nevershow
-ShowUninstDetails nevershow
+;ShowInstDetails nevershow
+;ShowUninstDetails nevershow
 
 Function InstShow
 SetCtlColors $HWNDPARENT 0 0xFFFFFF ; parent background white, black text
