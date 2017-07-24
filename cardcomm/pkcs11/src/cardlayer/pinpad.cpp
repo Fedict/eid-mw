@@ -304,41 +304,54 @@ namespace eIDMW
 		xChangeCmd.bmPINBlockString = ToPinBlockString(pin);
 		xChangeCmd.bmPINLengthFormat = ToPinLengthFormat(pin);
 		xChangeCmd.bInsertionOffsetOld = 0x00;
-		xChangeCmd.bInsertionOffsetNew =
-			(unsigned char) pin.ulStoredLen;
+		xChangeCmd.bInsertionOffsetNew = (unsigned char) pin.ulStoredLen;
 		xChangeCmd.wPINMaxExtraDigit[0] = GetMaxPinLen(pin);
-		xChangeCmd.wPINMaxExtraDigit[1] =
-			(unsigned char) pin.ulMinLen;
+		xChangeCmd.wPINMaxExtraDigit[1] = (unsigned char) pin.ulMinLen;
 		xChangeCmd.bConfirmPIN = 0x03;
 		xChangeCmd.bEntryValidationCondition = 0x02;
 		xChangeCmd.bNumberMessage = 0x03;
 		//ToUchar2(m_ulLangCode, xChangeCmd.wLangId);
-		xChangeCmd.wLangId[0] =
-			(unsigned char) ((m_ulLangCode & 0xff00) / 256);
+		xChangeCmd.wLangId[0] = (unsigned char) ((m_ulLangCode & 0xff00) / 256);
 		xChangeCmd.wLangId[1] = (unsigned char) (m_ulLangCode & 0xff);
 		xChangeCmd.bMsgIndex1 = 0x00;
 		xChangeCmd.bMsgIndex2 = 0x01;
 		xChangeCmd.bMsgIndex3 = 0x02;
 		ToUchar4(oAPDU.Size(), xChangeCmd.ulDataLength);
 		memcpy(xChangeCmd.abData, oAPDU.GetBytes(), oAPDU.Size());
-		ulChangeCmdLen =
-			sizeof(xChangeCmd) - PP_APDU_MAX_LEN + oAPDU.Size();
+		ulChangeCmdLen = sizeof(xChangeCmd) - PP_APDU_MAX_LEN + oAPDU.Size();
 
-		CByteArray oCmd((unsigned char *) &xChangeCmd,
-				ulChangeCmdLen);
-		if (m_ioctlChangeDirect)
+		CByteArray oCmd((unsigned char *) &xChangeCmd, ulChangeCmdLen);
+
+		if (m_bCanUsePPDU)
 		{
-			return PinpadControl(m_ioctlChangeDirect, oCmd,
-					     operation, ucPinType,
-					     pin.csLabel, true);
-		} else
-		{
-			PinpadControl(m_ioctlChangeStart, oCmd, operation,
-				      ucPinType, pin.csLabel, false);
-			return PinpadControl(m_ioctlChangeFinish,
-					     CByteArray(), operation,
-					     ucPinType, "", true);
+			if (m_ioctlChangeDirect)
+			{
+				return PinpadPPDU(FEATURE_MODIFY_PIN_DIRECT, oCmd, operation, ucPinType, pin.csLabel, true);
+			}
+			else	//m_bCanUsePPDU can only be true if either m_ioctlChangeDirect or m_ioctlChangeStart are set
+			{
+				PinpadPPDU(FEATURE_MODIFY_PIN_START, oCmd, operation, ucPinType, pin.csLabel, false);
+				return PinpadPPDU(FEATURE_MODIFY_PIN_FINISH, CByteArray(), operation, ucPinType, "", true);
+			}
 		}
+		else
+		{
+			if (m_ioctlChangeDirect)
+			{
+				return PinpadControl(m_ioctlChangeDirect, oCmd,
+					operation, ucPinType,
+					pin.csLabel, true);
+			}
+			else
+			{
+				PinpadControl(m_ioctlChangeStart, oCmd, operation,
+					ucPinType, pin.csLabel, false);
+				return PinpadControl(m_ioctlChangeFinish,
+					CByteArray(), operation,
+					ucPinType, "", true);
+			}
+		}
+
 	}
 
 	void CPinpad::UnloadPinpadLib()
@@ -421,10 +434,8 @@ namespace eIDMW
 		m_bCanVerifyUnlock = false;
 		m_bCanChangeUnlock = false;
 		m_bCanUsePPDU = false;
-		m_ioctlVerifyStart = m_ioctlVerifyFinish =
-			m_ioctlVerifyDirect = 0;
-		m_ioctlChangeStart = m_ioctlChangeFinish =
-			m_ioctlChangeDirect = 0;
+		m_ioctlVerifyStart = m_ioctlVerifyFinish = m_ioctlVerifyDirect = 0;
+		m_ioctlChangeStart = m_ioctlChangeFinish = m_ioctlChangeDirect = 0;
 
 		try
 		{
@@ -441,9 +452,7 @@ namespace eIDMW
 
 			unsigned long ulFeatureLen = oFeatures.Size();
 
-			MWLOG(LEV_DEBUG, MOD_CAL,
-			      L"CPinpad::GetFeatureList() oFeatures.size = %lu\n",
-			      ulFeatureLen);
+			MWLOG(LEV_DEBUG, MOD_CAL, L"CPinpad::GetFeatureList() oFeatures.size = %lu\n", ulFeatureLen);
 
 			//if(ulFeatureLen > 0)
 			//{
@@ -456,33 +465,19 @@ namespace eIDMW
 
 			if (((ulFeatureLen % 6) == 0) && (ulFeatureLen > 0))
 			{
-				const unsigned char *pucFeatures =
-					oFeatures.GetBytes();
+				const unsigned char *pucFeatures = oFeatures.GetBytes();
 				ulFeatureLen /= 6;
-				MWLOG(LEV_DEBUG, MOD_CAL,
-				      L"checking features");
+				MWLOG(LEV_DEBUG, MOD_CAL, L"checking features");
 				for (unsigned long i = 0; i < ulFeatureLen;
 				     i++)
 				{
-					CHECK_FEATURE(pucFeatures,
-						      CCID_VERIFY_START,
-						      m_ioctlVerifyStart)
-						CHECK_FEATURE(pucFeatures,
-							      CCID_VERIFY_FINISH,
-							      m_ioctlVerifyFinish)
-						CHECK_FEATURE(pucFeatures,
-							      CCID_VERIFY_DIRECT,
-							      m_ioctlVerifyDirect)
-						CHECK_FEATURE(pucFeatures,
-							      CCID_CHANGE_START,
-							      m_ioctlChangeStart)
-						CHECK_FEATURE(pucFeatures,
-							      CCID_CHANGE_FINISH,
-							      m_ioctlChangeFinish)
-						CHECK_FEATURE(pucFeatures,
-							      CCID_CHANGE_DIRECT,
-							      m_ioctlChangeDirect)
-						pucFeatures += 6;
+					CHECK_FEATURE(pucFeatures, CCID_VERIFY_START, m_ioctlVerifyStart)
+					CHECK_FEATURE(pucFeatures, CCID_VERIFY_FINISH, m_ioctlVerifyFinish)
+					CHECK_FEATURE(pucFeatures, CCID_VERIFY_DIRECT, m_ioctlVerifyDirect)
+					CHECK_FEATURE(pucFeatures, CCID_CHANGE_START, m_ioctlChangeStart)
+					CHECK_FEATURE(pucFeatures, CCID_CHANGE_FINISH, m_ioctlChangeFinish)
+					CHECK_FEATURE(pucFeatures, CCID_CHANGE_DIRECT, m_ioctlChangeDirect)
+					pucFeatures += 6;
 				}
 			} else
 			{
@@ -499,15 +494,13 @@ namespace eIDMW
 
 			e.GetError();
 		}
-		m_bCanVerifyUnlock = (m_ioctlVerifyStart
-				      && m_ioctlVerifyFinish)
-			|| m_ioctlVerifyDirect;
-		m_bCanChangeUnlock = (m_ioctlChangeStart
-				      && m_ioctlChangeFinish)
-			|| m_ioctlChangeDirect;
+		m_bCanVerifyUnlock = (m_ioctlVerifyStart && m_ioctlVerifyFinish) || m_ioctlVerifyDirect;
+		m_bCanChangeUnlock = (m_ioctlChangeStart && m_ioctlChangeFinish) || m_ioctlChangeDirect;
 
 		if (m_bCanVerifyUnlock || m_bCanChangeUnlock)
+		{
 			m_ulLangCode = GetLanguage();
+		}
 
 		m_bNewCard = false;
 	}
@@ -531,9 +524,7 @@ namespace eIDMW
 		if (m_ulLangCode == 0)
 		{
 			m_ulLangCode = PP_LANG_EN;
-			std::wstring csLang =
-				CConfig::GetString(CConfig::
-						   EIDMW_CONFIG_PARAM_GENERAL_LANGUAGE);
+			std::wstring csLang = CConfig::GetString(CConfig::EIDMW_CONFIG_PARAM_GENERAL_LANGUAGE);
 			if (csLang == L"nl")
 				m_ulLangCode = PP_LANG_NL;
 			else if (csLang == L"fr")
@@ -560,12 +551,20 @@ namespace eIDMW
 		    (m_csReader.find("VASCO DIGIPASS 920") == 0) ||
 		    (m_csReader.find("Gemalto ING Shield Pro") == 0))
 		{
-			oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd,
-							      &lRetVal);
+			oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd, &lRetVal);
 			for (; counter < (oResp.Size() - 2); counter++)
 			{
 				switch (oResp.GetByte(counter))
 				{
+					case FEATURE_MODIFY_PIN_START:
+						m_ioctlChangeStart = true;
+						m_bCanUsePPDU = true;
+						break;
+	
+					case FEATURE_MODIFY_PIN_FINISH:
+						m_ioctlChangeFinish = true;
+						break;
+
 					case FEATURE_VERIFY_PIN_START:
 						m_ioctlVerifyStart = true;
 						m_bCanUsePPDU = true;
@@ -577,6 +576,11 @@ namespace eIDMW
 
 					case FEATURE_VERIFY_PIN_DIRECT:
 						m_ioctlVerifyDirect = true;
+						m_bCanUsePPDU = true;
+						break;
+
+					case FEATURE_MODIFY_PIN_DIRECT:
+						m_ioctlChangeDirect = true;
 						m_bCanUsePPDU = true;
 						break;
 
