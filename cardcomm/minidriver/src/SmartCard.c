@@ -458,6 +458,8 @@ DWORD BeidAuthenticateExternal(
 					memcpy(&pbSendBufferVerifyPINDirect[5], &verifyCommand, sizeof(verifyCommand));
 					bSendBufferVerifyPINDirectLength += sizeof(verifyCommand);
 				}
+				LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit PPDU");
+
 				dwReturn = SCardTransmit(pCardData->hScard,
 					&ioSendPci,
 					pbSendBufferVerifyPINDirect,
@@ -1888,60 +1890,47 @@ DWORD CCIDgetPPDUFeatures(PFEATURES pFeatures, SCARDHANDLE hCard)
 	DWORD dwState;
 	DWORD dwProtocol;
 	BYTE bAttribute[32];
-	DWORD dwAtrLen;
+	DWORD dwAtrLen = 32;
 
-dwReturn = SCardStatus( hCard, 
-  szReaderName, 
-  &dwReaderLen, 
-  &dwState, 
-  &dwProtocol, 
-  &bAttribute[0], 
-  &dwAtrLen 
-);
+	dwReturn = SCardStatus(hCard, szReaderName, &dwReaderLen, &dwState, &dwProtocol, &bAttribute[0], &dwAtrLen);
 
-if( (dwReaderLen > 1024) || dwReturn != SCARD_S_SUCCESS)
-{
-	return dwReturn;
-}
-//add friendlynames of readers that support PPDU over transmit here
-if( (_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"VASCO DIGIPASS 870",wcslen(L"VASCO DIGIPASS 870"))==0) ||
-	(_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"VASCO DIGIPASS 875",wcslen(L"VASCO DIGIPASS 875"))==0) ||
-	(_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"VASCO DIGIPASS 920",wcslen(L"VASCO DIGIPASS 920"))==0) ||
-	(_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"Gemalto ING Shield Pro",wcslen(L"Gemalto ING Shield Pro"))==0) )
-{
-	BYTE Cmd[] = {0xFF ,0xC2 ,0x01 ,0x00 , 0x00};
-	DWORD uiCmdLg = sizeof(Cmd);
-
-	dwReturn = SCardTransmit(hCard, 
-                            &ioSendPci, 
-                            Cmd, 
-                            uiCmdLg, 
-                            &ioRecvPci, 
-                            pbRecvBuffer, 
-                            &cbRecvLength);
-	//Sleep(25);//checked by whitelist, goes to reader, not card
-	LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetPPDUFeatures returncode: [0x%08X]", dwReturn);
-	if(dwReturn == SCARD_S_SUCCESS)
+	if ((dwReaderLen > 1024) || dwReturn != SCARD_S_SUCCESS)
 	{
-		if ( (pbRecvBuffer[cbRecvLength-2] == 0x90) && (pbRecvBuffer[cbRecvLength-1] == 0x00) )
-		{
-			BYTE bsupportedFeatureIndex = 0;
-			pFeatures->USE_PPDU = 1;
-			for( bsupportedFeatureIndex = 0;bsupportedFeatureIndex < (cbRecvLength -2);bsupportedFeatureIndex++ )
-			{
-				switch(pbRecvBuffer[bsupportedFeatureIndex])
-				{
-				case 0x06:
-					pFeatures->VERIFY_PIN_DIRECT = 1;
-					break;
-				default:
-					break;
-				}
-			}//end of for
-		}
-		dwReturn = SCARD_F_INTERNAL_ERROR;
+		return dwReturn;
 	}
-}
+	//add friendlynames of readers that support PPDU over transmit here
+	if ((_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 870", wcslen(L"VASCO DIGIPASS 870")) == 0) ||
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 875", wcslen(L"VASCO DIGIPASS 875")) == 0) ||
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 920", wcslen(L"VASCO DIGIPASS 920")) == 0) ||
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"Gemalto ING Shield Pro", wcslen(L"Gemalto ING Shield Pro")) == 0))
+	{
+		BYTE Cmd[] = { 0xFF ,0xC2 ,0x01 ,0x00 , 0x00 };
+		DWORD uiCmdLg = sizeof(Cmd);
+
+		dwReturn = SCardTransmit(hCard, &ioSendPci, Cmd, uiCmdLg, &ioRecvPci, pbRecvBuffer, &cbRecvLength);
+		//Sleep(25);//checked by whitelist, goes to reader, not card
+		LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetPPDUFeatures returncode: [0x%08X]", dwReturn);
+		if (dwReturn == SCARD_S_SUCCESS)
+		{
+			if ((pbRecvBuffer[cbRecvLength - 2] == 0x90) && (pbRecvBuffer[cbRecvLength - 1] == 0x00))
+			{
+				BYTE bsupportedFeatureIndex = 0;
+				pFeatures->USE_PPDU = 1;
+				for (bsupportedFeatureIndex = 0; bsupportedFeatureIndex < (cbRecvLength - 2); bsupportedFeatureIndex++)
+				{
+					switch (pbRecvBuffer[bsupportedFeatureIndex])
+					{
+					case 0x06:
+						pFeatures->VERIFY_PIN_DIRECT = 1;
+						break;
+					default:
+						break;
+					}
+				}//end of for
+			}
+			dwReturn = SCARD_F_INTERNAL_ERROR;
+		}
+	}
 	return dwReturn;
 }
 #undef WHERE
@@ -2130,7 +2119,8 @@ BOOL IsAppContainer()
 			//couldn't get the token information, so asume the worst scenario (appcontainer)
 			appCont = 1;
 		}
-		CloseHandle(hToken);
+		//no need to close pseudo handles
+		//CloseHandle(hToken);
 	}
 	if (appCont != 0)
 	{
