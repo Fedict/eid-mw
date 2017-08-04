@@ -403,10 +403,10 @@ DWORD WINAPI   CardChangeAuthenticatorEx
 	__in                                PCARD_DATA  pCardData,
 	__in                                DWORD       dwFlags,
 	__in                                PIN_ID      dwAuthenticatingPinId,
-	__in_bcount(cbCurrentAuthenticator) PBYTE       pbAuthenticatingPinData,
+	__in_bcount(cbAuthenticatingPinData) PBYTE      pbAuthenticatingPinData,
 	__in                                DWORD       cbAuthenticatingPinData,
 	__in                                PIN_ID      dwTargetPinId,
-	__in_bcount(cbNewAuthenticator)     PBYTE       pbTargetData,
+	__in_bcount(cbTargetData)			PBYTE       pbTargetData,
 	__in                                DWORD       cbTargetData,
 	__in                                DWORD       cRetryCount,
 	__out_opt                           PDWORD      pcAttemptsRemaining
