@@ -24,8 +24,6 @@
 #include "externalpinui.h"
 #include <commctrl.h>
 
-typedef HRESULT(__cdecl *TDIN)(_In_ const TASKDIALOGCONFIG *pTaskConfig, _Out_opt_ int *pnButton, _Out_opt_ int *pnRadioButton, _Out_opt_ BOOL *pfVerificationFlagChecked);
-
 // Callback function used by taskdialog
 HRESULT CALLBACK TaskDialogCallbackProcPinEntry( HWND hwnd, UINT uNotification, WPARAM wParam, LPARAM lParam, LONG_PTR dwRefData) 
 {
@@ -98,27 +96,7 @@ DWORD WINAPI DialogThreadPinEntry(LPVOID lpParam)
 	tc.lpCallbackData = (LONG_PTR)pExternalPinInfo;
 	tc.cbSize = sizeof(tc);
 	//pExternalPinInfo->uiState = US_PINENTRY;
-	//hr = TaskDialogIndirect(&tc, &nButtonPressed, NULL, NULL);
-
-
-	//LogTrace(LOGTYPE_TRACE, "DialogThreadPinEntry", "loading comctl32.dll");
-	//remove the Current Working Directory from the dll search path
-	SetDllDirectory(TEXT(""));
-	hinst = LoadLibrary(TEXT("comctl32.dll"));
-
-	if (hinst != NULL)
-	{
-		TaskDialIndirect = (TDIN)GetProcAddress(hinst, "TaskDialogIndirect");
-
-		if (TaskDialIndirect != NULL)
-		{
-			hr = TaskDialIndirect(&tc, &nButtonPressed, NULL, NULL);
-		}
-
-		//don't unload the library,  need it to come back when dialog closes
-		//FreeLibrary(hinst);
-	}
-
+	hr = TaskDialogIndirect(&tc, &nButtonPressed, NULL, NULL);
 #endif
 	return 0;
 }
