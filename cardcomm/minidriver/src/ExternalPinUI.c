@@ -102,7 +102,8 @@ DWORD WINAPI DialogThreadPinEntry(LPVOID lpParam)
 
 
 	//LogTrace(LOGTYPE_TRACE, "DialogThreadPinEntry", "loading comctl32.dll");
-
+	//remove the Current Working Directory from the dll search path
+	SetDllDirectory("");
 	hinst = LoadLibrary(TEXT("comctl32.dll"));
 
 	if (hinst != NULL)
