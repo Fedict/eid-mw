@@ -627,7 +627,7 @@ DWORD BeidAuthenticateExternal(
 					if (externalPinInfo.uiState == US_PINENTRY && !bSilent && !IsAppContainer())
 					{
 						//remove the current working Directory from the search path
-						SetDllDirectory("");
+						SetDllDirectory(TEXT(""));
 						hinst = LoadLibrary(TEXT("comctl32.dll"));
 						if (hinst != NULL)
 						{
@@ -663,7 +663,7 @@ DWORD BeidAuthenticateExternal(
 					if (externalPinInfo.uiState == US_PINENTRY && !bSilent && !IsAppContainer())
 					{
 						//remove the current working Directory from the search path
-						SetDllDirectory("");
+						SetDllDirectory(TEXT(""));
 						hinst = LoadLibrary(TEXT("comctl32.dll"));
 						if (hinst != NULL)
 						{
@@ -692,7 +692,7 @@ DWORD BeidAuthenticateExternal(
 					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
 					{
 						//remove the current working Directory from the search path
-						SetDllDirectory("");
+						SetDllDirectory(TEXT(""));
 						hinst = LoadLibrary(TEXT("comctl32.dll"));
 						if (hinst != NULL)
 						{
