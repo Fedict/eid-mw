@@ -319,30 +319,31 @@ DWORD BeidAuthenticateExternal(
 	) 
 {
 	DWORD						dwReturn  = 0;
-	SCARD_IO_REQUEST				ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
-	SCARD_IO_REQUEST				ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
+	SCARD_IO_REQUEST			ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
+	SCARD_IO_REQUEST			ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
 
-	PIN_VERIFY_STRUCTURE			verifyCommand;
+	PIN_VERIFY_STRUCTURE		verifyCommand;
 
-	unsigned int					uiCmdLg   = 0;
+	unsigned int				uiCmdLg   = 0;
 	unsigned char				recvbuf[256];
 	unsigned char				ucLastKey;
 	unsigned long				recvlen     = sizeof(recvbuf);
-	BYTE							SW1, SW2;
+	BYTE						SW1, SW2;
 	int							i           = 0;
 	int							offset		= 0;
-	DWORD						dwRetriesLeft, dwDataLen;
-	BOOL							bRetry      = TRUE;
+	DWORD						dwDataLen;
+	BOOL						bRetry      = TRUE;
 	int							nButton;
-	HRESULT						hResult;
 
-	EXTERNAL_PIN_INFORMATION		externalPinInfo;
+	EXTERNAL_PIN_INFORMATION	externalPinInfo;
 	HANDLE						DialogThreadHandle;
 
+#ifndef NO_DIALOGS
+	DWORD						dwRetriesLeft;
 
 	wchar_t						wchErrorMessage[500];
 	wchar_t						wchMainInstruction[100];
-
+#endif
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
@@ -615,7 +616,7 @@ endkeypress:
 						break;
 					}
 					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-						hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
+						TaskDialog(externalPinInfo.hwndParentWindow, 
 						NULL, 
 						t[WINDOW_TITLE][getLanguage()], 
 						wchMainInstruction, 
@@ -637,7 +638,7 @@ endkeypress:
 					swprintf(wchErrorMessage, t[PIN_INVALID_CONTENT][getLanguage()], dwRetriesLeft);
 
 					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-						hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
+						TaskDialog(externalPinInfo.hwndParentWindow, 
 						NULL, 
 						t[WINDOW_TITLE][getLanguage()], 
 						wchMainInstruction, 
@@ -652,7 +653,7 @@ endkeypress:
 					swprintf(wchMainInstruction, t[PIN_BLOCKED_MAININSTRUCTIONS][getLanguage()]);
 					swprintf(wchErrorMessage, t[PIN_BLOCKED_CONTENT][getLanguage()]);
 					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-						hResult = TaskDialog(externalPinInfo.hwndParentWindow, 
+						TaskDialog(externalPinInfo.hwndParentWindow, 
 						NULL, 
 						t[WINDOW_TITLE][getLanguage()], 
 						wchMainInstruction, 
