@@ -75,8 +75,6 @@ DWORD WINAPI DialogThreadPinEntry(LPVOID lpParam)
 	HRESULT hr;
 
 	PEXTERNAL_PIN_INFORMATION pExternalPinInfo = (PEXTERNAL_PIN_INFORMATION) lpParam;
-	HINSTANCE hinst;
-	TDIN TaskDialIndirect;
 	
 	tc.hwndParent = pExternalPinInfo->hwndParentWindow;
 	tc.hInstance = GetModuleHandle(NULL);
