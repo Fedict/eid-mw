@@ -146,13 +146,13 @@ EXTRA_DIST = gtk/viewer.glade \
 
 packagedatadir = $(datarootdir)/$(PACKAGE_NAME)
 trustdir = $(packagedatadir)/trustdir
-icondir = @datadir@/icons/hicolor
-icon16dir = @icondir@/16x16
-icon32dir = @icondir@/32x32
-icon48dir = @icondir@/48x48
-icon128dir = @icondir@/128x128
-icon256dir = @icondir@/256x256
-icon512dir = @icondir@/512x512
+icondir = $(datadir)/icons/hicolor
+icon16dir = $(icondir)/16x16
+icon32dir = $(icondir)/32x32
+icon48dir = $(icondir)/48x48
+icon128dir = $(icondir)/128x128
+icon256dir = $(icondir)/256x256
+icon512dir = $(icondir)/512x512
 
 resources/logos/48/eid-viewer.png: gtk/eid-viewer.png
 	mkdir -p $(shell dirname $@)
