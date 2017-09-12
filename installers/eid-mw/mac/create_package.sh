@@ -25,11 +25,7 @@ INSTALL_SCRIPTS_DIR="$RELEASE_DIR/install_scripts"
 PKCS11_INST_DIR="$ROOT_DIR/usr/local/lib"
 #licenses dir, where our licences will be placed
 LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
-#plistmerger dir, where our plistmerger tool will be placed
-#PLISTMERGER_DIR="$ROOT_DIR/Library/Belgium Identity Card/plistMerger"
 BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
-#xpi plugin dir, where the xpi plugin will be placed
-#XPI_PLUGIN_DIR="$ROOT_DIR/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
 #tokend dir, where the BEID.tokend will be placed
 TOKEND_DIR="$ROOT_DIR/Library/Security/tokend"
 
@@ -57,8 +53,11 @@ BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Library/Belgium Identity Card"
 #BEIDToken path
 BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/Release/BEIDTokenApp.app"
 
-#eIDViewer.plist path
+#BEIDToken.plist path
 BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
+
+#install scripts dir, where the install scripts are that will be executed by the package
+BEIDTOKEN_INSTALL_SCRIPTS_DIR="$RELEASE_BEIDToken_DIR/install_scripts"
 
 
 #base name of the package
@@ -84,9 +83,15 @@ DMG_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}.dmg"
 #cleanup previous build
 
 #cleanup() {
-test -e "$RELEASE_DIR" && rm -rdf "$RELEASE_DIR"
-test -e beidbuild.pkg && rm beidbuild.pkg
-test -e $PKG_NAME && rm $PKG_NAME
+if test -e "$RELEASE_DIR"; then
+ rm -rdf "$RELEASE_DIR"
+fi
+if test -e beidbuild.pkg; then
+ rm beidbuild.pkg
+fi
+if test -e $PKG_NAME; then
+ rm $PKG_NAME
+fi
 #}
 
 #leave created dir there for now
@@ -100,10 +105,8 @@ echo "********** prepare beidbuild.pkg **********"
 mkdir -p "$PKCS11_INST_DIR"
 mkdir -p "$LICENSES_DIR"
 mkdir -p "$TOKEND_DIR"
-#mkdir -p "$XPI_PLUGIN_DIR"
 mkdir -p "$RESOURCES_DIR"
 mkdir -p "$INSTALL_SCRIPTS_DIR"
-#mkdir -p "$PLISTMERGER_DIR"
 
 #copy all files that should be part of the installer:
 cp ../../../Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
@@ -129,10 +132,6 @@ cp ../../../doc/licenses/THIRDPARTY-LICENSES-Mac.txt "$LICENSES_DIR/"
 cp -R ./resources/* $RESOURCES_DIR
 
 
-#LATEST_XPI=$(readlink ../../../plugins_tools/xpi/builds/belgiumeid-CURRENT.xpi)
-#XPI_PLUGIN=../../../plugins_tools/xpi/signed-build/belgiumeid-signed
-#cp -R $XPI_PLUGIN "$XPI_PLUGIN_DIR/belgiumeid@eid.belgium.be"
-
 cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_DIR/BEID.tokend"
 
 cp "$(pwd)/../../../scripts/mac/set_eidmw_version.sh" "$INSTALL_SCRIPTS_DIR"
@@ -151,11 +150,19 @@ cp -R "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
 echo "********** prepare BEIDTokenApp.pkg **********"
 
 #cleanup
-#test -e "$RELEASE_BEIDTOKEN_DIR" && rm -rdf "$RELEASE_BEIDTOKEN_DIR"
-#test -e BEIDToken.pkg && rm BEIDToken.pkg
+if test -e "$RELEASE_BEIDTOKEN_DIR"; then
+ rm -rdf "$RELEASE_BEIDTOKEN_DIR"
+fi
+if test -e BEIDToken.pkg; then
+ rm BEIDToken.pkg
+fi
 
 #create installer dirs
 mkdir -p "$BEIDTOKEN_INST_DIR"
+mkdir -p "$BEIDTOKEN_INSTALL_SCRIPTS_DIR"
+
+#copy install scripts
+cp -R ./install_scripts_BEIDToken/* "$BEIDTOKEN_INSTALL_SCRIPTS_DIR"
 
 #copy eid token app
 cp -R "$BEIDTOKEN_PATH"  "$BEIDTOKEN_INST_DIR"
@@ -180,7 +187,7 @@ pushd $RELEASE_DIR
 
 pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
 
-pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDTokenApp.pkg
+pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDTokenApp.pkg
 
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
