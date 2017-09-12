@@ -64,3 +64,4 @@ beidpkcs11.sdf
 /plugins_tools/eid-viewer/Windows/eIDViewer/Properties/AssemblyInfo.cs
 /scripts/windows/fedicteidtest.cer
 /scripts/windows/fedicteidtest.pfx
+/installers/eid-mw/mac/release_BEIDToken
