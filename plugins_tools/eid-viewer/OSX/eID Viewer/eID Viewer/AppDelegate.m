@@ -153,9 +153,6 @@
 		[handler handle_bin_data:data forLabel:label withUi:self];
 	}];
 }
-- (void) endSheet:(NSWindow*)sheet returnCode:(NSInteger)returnCode contextInfo:(void*)ctxInfo {
-	[sheet orderOut:self];
-}
 - (void)newstate:(eIDState)state {
 	static eIDState prevState = eIDStateLibOpen;
 	BOOL fileOpen = NO;
@@ -221,9 +218,10 @@
 		[_validateNow setEnabled:validate];
 		if(sheet) {
 			[_spinner startAnimation:self];
-			[NSApp beginSheet:_CardReadSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
+			[_window beginSheet:_CardReadSheet completionHandler:nil];
 		} else {
-			[NSApp endSheet:_CardReadSheet];
+			[_window endSheet:_CardReadSheet];
+			[_CardReadSheet orderOut:_window];
 			[_spinner stopAnimation:self];
 		}
 		if(doValidateNow) {

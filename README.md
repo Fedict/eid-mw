@@ -19,6 +19,13 @@ desk of the administration whose services you are attempting to use.
 
 ## Installation
 
+### Binary installation
+
+The instructions below are meant for people who want to work on the eID
+software. If you want to just *use* the software, these instructions are
+not for you; in that case, we instead recommend you download it from the
+[official website](https://eid.belgium.be/).
+
 ### Code from git repository:
 
 - Make sure you have libtool 2.2.7c or above, autoconf and automake installed, and in your `$PATH`
@@ -29,8 +36,21 @@ desk of the administration whose services you are attempting to use.
 
 #### GNU/Linux
 
-Make sure you have pcsc-lite and GTK+ and and their development libraries
-installed. After that it's just:
+Make sure you have the development packages for the following libraries
+installed:
+
+- [PC/SC Lite](https://pcsclite.alioth.debian.org)
+- [GTK3](https://www.gtk.org) (note: GTK2 is still supported for now, but this
+  support will be dropped at some point in the future)
+- [OpenSSL](https://www.openssl.org). Note: you'll also need the "openssl"
+  binary in your path, which is often not part of the openssl development
+  package.
+- [libxml2](http://xmlsoft.org)
+- [cURL](https://curl.haxx.se)
+- [libproxy](https://github.com/libproxy/libproxy)
+- (Optionally) [p11-kit](https://p11-glue.freedesktop.org/p11-kit.html)
+
+After that it's just:
 
     ./configure 
     make
