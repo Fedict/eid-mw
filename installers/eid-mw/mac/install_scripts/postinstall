@@ -38,4 +38,5 @@ fi
 if test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart; then
  mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;
 fi
+
 echo "postinstall succeeded"
