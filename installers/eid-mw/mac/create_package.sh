@@ -201,7 +201,7 @@ if [ $SIGN_BUILD -eq 1 ];then
   hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
 
   #productsign --sign "Developer ID Application" "eID Viewer.app" "eID Viewer.app-signed.app"
-  productsign --sign "Developer ID Installer" "BEIDTokenApp.pkg" "BEIDToken-signedApp.pkg"
+  productsign --sign "Developer ID Installer" "BEIDTokenApp.pkg" "BEIDTokenApp-signed.pkg"
   hdiutil create -srcfolder "BEIDTokenApp-signed.pkg" -volname "BEIDTokenApp${REL_VERSION}" "BEIDTokenApp${REL_VERSION}.dmg"
   exit 1
 else
