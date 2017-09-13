@@ -190,6 +190,7 @@
 			fileClose = YES;
 			filePrint = YES;
 			dnd = YES;
+			validate = YES;
 			if([_alwaysValidate state] == NSOnState) {
 				doValidateNow = YES;
 			}
