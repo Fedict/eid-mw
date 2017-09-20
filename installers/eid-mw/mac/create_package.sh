@@ -50,7 +50,7 @@ ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDToken_DIR/root"
 BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Library/Belgium Identity Card"
 
 #BEIDToken path
-BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/Release/BEIDTokenApp.app"
+BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/Release/BEIDToken.app"
 
 #BEIDToken.plist path
 BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
@@ -156,7 +156,7 @@ cp -R ./drivers/* "$RELEASE_DIR"
 cp -R "$EIDMIDDLEWAREAPP_PATH"  "$BEIDCARD_DIR"
 
 #####################################################################
-echo "********** prepare BEIDTokenApp.pkg **********"
+echo "********** prepare BEIDToken.pkg **********"
 
 #cleanup
 if test -e "$RELEASE_BEIDTOKEN_DIR"; then
@@ -220,7 +220,7 @@ pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid
 
 pkgbuild --root "$ROOT_TOKEND_DIR" --scripts "$TOKEND_INSTALL_SCRIPTS_DIR" --identifier be.eid.tokend --version $REL_VERSION --install-location / beidtokend.pkg
 
-pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDTokenApp.pkg
+pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken.pkg
 
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
@@ -237,15 +237,15 @@ if [ $SIGN_BUILD -eq 1 ];then
   hdiutil create -srcfolder "beidtokend-signed.pkg" -volname "beidtokend ${REL_VERSION}" "beidtokend ${REL_VERSION}.dmg"
 
   #productsign --sign "Developer ID Application" "eID Viewer.app" "eID Viewer.app-signed.app"
-  productsign --sign "Developer ID Installer" "BEIDTokenApp.pkg" "BEIDTokenApp-signed.pkg"
-  hdiutil create -srcfolder "BEIDTokenApp-signed.pkg" -volname "BEIDTokenApp${REL_VERSION}" "BEIDTokenApp${REL_VERSION}.dmg"
+  productsign --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
+  hdiutil create -srcfolder "BEIDToken-signed.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
   exit 1
 else
   hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
   hdiutil create -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
   hdiutil create -srcfolder "beidtokend.pkg" -volname "beidtokend${REL_VERSION}" "beidtokend${REL_VERSION}.dmg"
   #hdiutil create -srcfolder "eidviewer.pkg" -volname "eidviewer${REL_VERSION}" "eidviewer${REL_VERSION}.dmg"
-  hdiutil create -srcfolder "BEIDTokenApp.pkg" -volname "BEIDTokenApp${REL_VERSION}" "BEIDTokenApp${REL_VERSION}.dmg"
+  hdiutil create -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 fi
 
 
