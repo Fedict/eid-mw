@@ -134,8 +134,11 @@ DobWriter::DobWriter(DateParser * p):DateWriter(p)
 void DobParser::input(EID_STRING original)
 {
 	day = original.substr(0, 2);
-	month = frommonth[original.
-			  substr(3, original.find_last_of(TEXT(" .")) - 3)];
+	int spaceIdx = original.find_first_of(TEXT("."));
+	if (-1 == spaceIdx) {
+		spaceIdx = original.find_first_of(TEXT(" "));
+	}
+	month = frommonth[original.substr(spaceIdx + 1, original.find_first_of(TEXT(" ."), spaceIdx + 1) - (spaceIdx + 1))];
 	year = original.substr(original.find_last_of(TEXT(" .")) + 1);
 }
 
