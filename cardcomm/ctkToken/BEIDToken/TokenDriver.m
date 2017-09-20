@@ -16,14 +16,17 @@
     
     Byte* dataBytes = (Byte*)atrBytes.bytes;
     int i;
+#ifdef DEBUG
     for ( i = 0 ; i < atrBytes.length ; i++)
     {
         os_log_error(OS_LOG_DEFAULT, "%d: 0x%x ",i, dataBytes[i]);
     }
+#endif
     if (![atrBytes isEqualToData:eIDCardATR] ){
+        os_log_error(OS_LOG_DEFAULT, "NOT attaching BEID tokendriver, no ATR match");
         return nil;
     }
-
+//Keep this log message
     os_log_error(OS_LOG_DEFAULT, "BEID attaching tokendriver");
     return [[BEIDToken alloc] initWithSmartCard:smartCard AID:AID BEIDDriver:self error:error];
 }
