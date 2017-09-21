@@ -37,17 +37,8 @@ Icon beID.ico
 
 caption "Belgium eID Viewer"
 	
-Var nsdCustomDialog
-Var Label
-Var Background_Image
-Var Background_Image_Handle
-Var Background_Image2
-Var Background_Image_Handle2
 Var Button
-Var Font_Title
-Var Font_Info
 Var FileToCopy
-Var LogFile
 Var Response
 Var InstallFailed
 

@@ -578,21 +578,20 @@ CardCreateFile(
 //
 typedef DWORD (WINAPI *PFN_CARD_READ_FILE)(
     __in                       PCARD_DATA  pCardData,
-    __in                       LPSTR       pszDirectoryName,
+	__in_opt                       LPSTR       pszDirectoryName,
     __in                       LPSTR       pszFileName,
     __in                       DWORD       dwFlags,
-    __out_bcount(*pcbData)     PBYTE      *ppbData,
-    __out                      PDWORD      pcbData);
+	__deref_out_bcount_opt(*pcbData)     PBYTE      *ppbData,
+	__out_opt                      PDWORD      pcbData);
 
-DWORD
-WINAPI
-CardReadFile(
+DWORD WINAPI CardReadFile(
     __in                             PCARD_DATA  pCardData,
-    __in                             LPSTR       pszDirectoryName,
+	__in_opt                             LPSTR       pszDirectoryName,
     __in                             LPSTR       pszFileName,
     __in                             DWORD       dwFlags,
-    __deref_out_bcount(*pcbData)     PBYTE      *ppbData,
-    __out                            PDWORD      pcbData);
+	__deref_out_bcount_opt(*pcbData)     PBYTE      *ppbData,
+	__out_opt                            PDWORD      pcbData);
+
 
 //
 // Function: CardWriteFile

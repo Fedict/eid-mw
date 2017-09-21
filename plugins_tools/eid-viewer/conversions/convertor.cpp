@@ -32,13 +32,11 @@ Convertor::Convertor()
 {
 	if (convertors.empty())
 	{
-		convertors[TEXT("national_number")] =
-			new NationalNumberConvertor();
+		convertors[TEXT("national_number")] = new NationalNumberConvertor();
 		convertors[TEXT("chip_number")] = new HexNumberConvertor(16);
 		convertors[TEXT("special_status")] = new SpecConvertor();
 		convertors[TEXT("document_type")] = new DocTypeConvertor();
-		convertors[TEXT("date_of_birth")] =
-			new DobWriter(new DobParser);
+		convertors[TEXT("date_of_birth")] = new DobWriter(new DobParser);
 		convertors[TEXT("card_number")] = new BBANNumberConvertor();
 		convertors[TEXT("gender")] = new GenderConvertor();
 		convertors[TEXT("special_organisation")] = new SpecOrgConvertor();
@@ -48,12 +46,9 @@ Convertor::Convertor()
 		to_xml[TEXT("document_type")] = new XmlDoctypeConvertor();
 		to_xml[TEXT("special_status")] = new XmlSpecConvertor();
 		to_xml[TEXT("chip_number")] = new HexNumberConvertor(16);
-		to_xml[TEXT("date_of_birth")] =
-			new XmlDateWriter(new DobParser);
-		to_xml[TEXT("validity_begin_date")] =
-			new XmlDateWriter(new ValidityDateParser);
-		to_xml[TEXT("validity_end_date")] =
-			new XmlDateWriter(new ValidityDateParser);
+		to_xml[TEXT("date_of_birth")] = new XmlDateWriter(new DobParser);
+		to_xml[TEXT("validity_begin_date")] = new XmlDateWriter(new ValidityDateParser);
+		to_xml[TEXT("validity_end_date")] = new XmlDateWriter(new ValidityDateParser);
 		to_xml[TEXT("gender")] = new XmlGenderConvertor();
 		to_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
 	}
@@ -62,12 +57,9 @@ Convertor::Convertor()
 		from_xml[TEXT("document_type")] = new XmlDoctypeConvertor();
 		from_xml[TEXT("special_status")] = new XmlSpecConvertor();
 		from_xml[TEXT("chip_number")] = new HexDecodeConvertor(16);
-		from_xml[TEXT("date_of_birth")] =
-			new DobWriter(new XmlDateParser);
-		from_xml[TEXT("validity_begin_date")] =
-			new ValidityDateWriter(new XmlDateParser);
-		from_xml[TEXT("validity_end_date")] =
-			new ValidityDateWriter(new XmlDateParser);
+		from_xml[TEXT("date_of_birth")] = new DobWriter(new XmlDateParser);
+		from_xml[TEXT("validity_begin_date")] = new ValidityDateWriter(new XmlDateParser);
+		from_xml[TEXT("validity_end_date")] = new ValidityDateWriter(new XmlDateParser);
 		from_xml[TEXT("gender")] = new XmlGenderConvertor();
 		from_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
 	}
