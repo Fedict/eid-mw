@@ -47,7 +47,7 @@ RELEASE_BEIDToken_DIR="$(pwd)/release_BEIDToken"
 ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDToken_DIR/root"
 
 #BEIDToken inst dir, where our BEIDToken app will be installed
-BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Library/Belgium Identity Card"
+BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
 
 #BEIDToken path
 BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/Release/BEIDToken.app"
@@ -160,10 +160,7 @@ echo "********** prepare BEIDToken.pkg **********"
 
 #cleanup
 if test -e "$RELEASE_BEIDTOKEN_DIR"; then
- rm -rdf "$RELEASE_BEIDTOKEN_DIR"
-fi
-if test -e BEIDToken.pkg; then
- rm BEIDToken.pkg
+ sudo rm -rdf "$RELEASE_BEIDTOKEN_DIR"
 fi
 
 #create installer dirs
@@ -181,10 +178,7 @@ echo "********** prepare BEIDTokenD.pkg **********"
 
 #cleanup
 if test -e "$RELEASE_TOKEND_DIR"; then
- rm -rdf "$RELEASE_TOKEND_DIR"
-fi
-if test -e BEIDTokenD.pkg; then
- rm BEIDTokenD.pkg
+ sudo rm -rdf "$RELEASE_TOKEND_DIR"
 fi
 
 #create installer dirs
