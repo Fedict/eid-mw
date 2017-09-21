@@ -3,6 +3,6 @@
 echo "postinstall BEIDTokenApp started"
 
 #start the BEIDTokenApp so that the BEID ctkToken gets registered
-open "/Library/Belgium Identity Card/BEIDTokenApp.app"
+#open "/Applications/BEIDToken.app"
 
 echo "postinstall BEIDTokenApp succeeded"
