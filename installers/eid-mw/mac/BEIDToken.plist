@@ -12,7 +12,7 @@
 		<key>BundleOverwriteAction</key>
 		<string>upgrade</string>
 		<key>RootRelativeBundlePath</key>
-		<string>Applications/BEIDTokenApp.app</string>
+		<string>Applications/BEIDToken.app</string>
 	</dict>
 </array>
 </plist>
