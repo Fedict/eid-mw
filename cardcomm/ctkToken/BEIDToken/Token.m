@@ -379,7 +379,7 @@
             // Prepare array with keychain items representing on card objects.
             NSMutableArray<TKTokenKeychainItem *> *items = [NSMutableArray arrayWithCapacity:4];
             if (![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x5038 name:NSLocalizedString(@"BEID_AUTH_CERT", nil) keyTag:0x82 name:NSLocalizedString(@"BEID_AUTH_KEY", nil) sign:YES keyManagement:NO alwaysAuthenticate:NO error:error] ||
-                ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x5039 name:NSLocalizedString(@"BEID_SIG_CERT", nil) keyTag:0x83 name:NSLocalizedString(@"BEID_SIG_KEY", nil) sign:YES keyManagement:NO alwaysAuthenticate:YES error:error] ||
+//                ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x5039 name:NSLocalizedString(@"BEID_SIG_CERT", nil) keyTag:0x83 name:NSLocalizedString(@"BEID_SIG_KEY", nil) sign:YES keyManagement:NO alwaysAuthenticate:YES error:error] ||
                 ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x503A name:NSLocalizedString(@"BEID_CA_CERT", nil) keyTag:0 name:NSLocalizedString(@"NO_KEY", nil) sign:NO keyManagement:NO alwaysAuthenticate:NO error:error] ||
                 ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x503B name:NSLocalizedString(@"BEID_ROOTCA_CERT", nil) keyTag:0 name:NSLocalizedString(@"NO_KEY", nil) sign:NO keyManagement:NO alwaysAuthenticate:NO error:error]
                 )
