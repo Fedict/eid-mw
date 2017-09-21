@@ -14,9 +14,10 @@
     NSData * eIDCardATR = [NSData dataWithBytes:eIDCardATRBytes length:13];
     NSData * atrBytes = smartCard.slot.ATR.bytes;
     
+#ifdef DEBUG
     Byte* dataBytes = (Byte*)atrBytes.bytes;
     int i;
-#ifdef DEBUG
+    
     for ( i = 0 ; i < atrBytes.length ; i++)
     {
         os_log_error(OS_LOG_DEFAULT, "%d: 0x%x ",i, dataBytes[i]);
