@@ -24,35 +24,30 @@
 #include "externalpinui.h"
 #include <commctrl.h>
 
-typedef HRESULT(__cdecl *TDIN)(_In_ const TASKDIALOGCONFIG *pTaskConfig, _Out_opt_ int *pnButton, _Out_opt_ int *pnRadioButton, _Out_opt_ BOOL *pfVerificationFlagChecked);
-
 // Callback function used by taskdialog
-HRESULT CALLBACK TaskDialogCallbackProcPinEntry(      
-    HWND hwnd,
-    UINT uNotification,
-    WPARAM wParam,
-    LPARAM lParam,
-    LONG_PTR dwRefData
-	) 
+HRESULT CALLBACK TaskDialogCallbackProcPinEntry( HWND hwnd, UINT uNotification, WPARAM wParam, LPARAM lParam, LONG_PTR dwRefData) 
 {
 #ifndef NO_DIALOGS
 	PEXTERNAL_PIN_INFORMATION pExternalPinInfo;
 	LRESULT lResult;
 
 	if (dwRefData != 0)
+	{
 		pExternalPinInfo = (PEXTERNAL_PIN_INFORMATION)dwRefData;
-	if (pExternalPinInfo->cardState != CS_PINENTRY) {
-		// Dialog should close when pin entry stopped.
-		SendMessage(hwnd, WM_CLOSE,0,0);
-		return S_OK;
-	}
-	switch(uNotification) {
-		case (TDN_TIMER):
+		if (pExternalPinInfo->cardState != CS_PINENTRY) 
+		{
+			// Dialog should close when pin entry stopped.
+			SendMessage(hwnd, WM_CLOSE, 0, 0);
+			return S_OK;
+		}
+		switch (uNotification)
+		{
+		case (TDN_TIMER) :
 			// progress bar 30 seconds.
-			SendMessage(hwnd, TDM_SET_PROGRESS_BAR_POS, wParam / 300 , 0L);
+			SendMessage(hwnd, TDM_SET_PROGRESS_BAR_POS, wParam / 300, 0L);
 			break;
-		case (TDN_BUTTON_CLICKED):
-			if( (int) wParam == IDCANCEL ) {
+		case (TDN_BUTTON_CLICKED) :
+			if ((int)wParam == IDCANCEL) {
 				if (pExternalPinInfo->cardState == CS_PINENTRY && pExternalPinInfo->uiState == US_PINENTRY) {
 					lResult = SendMessage(hwnd, TDM_SET_ELEMENT_TEXT, TDE_CONTENT, (LPARAM)t[CANCEL_CONTENT][getLanguage()]);
 					lResult = SendMessage(hwnd, TDM_SET_ELEMENT_TEXT, TDE_MAIN_INSTRUCTION, (LPARAM)t[CANCEL_MAININSTRUCTIONS][getLanguage()]);
@@ -64,6 +59,7 @@ HRESULT CALLBACK TaskDialogCallbackProcPinEntry(
 			break;
 		default:
 			break;
+		}
 	}
 #endif
 	return S_OK;
@@ -97,28 +93,8 @@ DWORD WINAPI DialogThreadPinEntry(LPVOID lpParam)
 	tc.pfCallback = TaskDialogCallbackProcPinEntry;
 	tc.lpCallbackData = (LONG_PTR)pExternalPinInfo;
 	tc.cbSize = sizeof(tc);
-	pExternalPinInfo->uiState = US_PINENTRY;
-	//hr = TaskDialogIndirect(&tc, &nButtonPressed, NULL, NULL);
-
-
-	HINSTANCE hinst;
-	TDIN TaskDialIndirect;
-
-	hinst = LoadLibrary(TEXT("comctl32.dll"));
-
-	if (hinst != NULL)
-	{
-		TaskDialIndirect = (TDIN)GetProcAddress(hinst, "TaskDialogIndirect");
-
-		if (TaskDialIndirect != NULL)
-		{
-			hr = TaskDialIndirect(&tc, &nButtonPressed, NULL, NULL);
-		}
-
-		//don't unload the library,  need it to come back when dialog closes
-		//FreeLibrary(hinst);
-	}
-
+	//pExternalPinInfo->uiState = US_PINENTRY;
+	hr = TaskDialogIndirect(&tc, &nButtonPressed, NULL, NULL);
 #endif
 	return 0;
 }

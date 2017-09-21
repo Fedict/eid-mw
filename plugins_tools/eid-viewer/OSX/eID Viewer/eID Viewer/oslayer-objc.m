@@ -139,6 +139,9 @@ static void osl_objc_free_ocsp_request(void* data) {
 	return [NSData dataWithBytes:xml length:strlen(xml)];
 }
 +(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca {
+	if(certificate == nil) {
+		return eIDResultUnknown;
+	}
 	return (eIDResult)eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request, osl_objc_free_ocsp_request);
 }
 +(eIDResult)validateRrnCert:(NSData *)certificate {

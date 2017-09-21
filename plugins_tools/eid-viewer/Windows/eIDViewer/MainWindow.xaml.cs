@@ -33,8 +33,33 @@ namespace eIDViewer
         {
             InitializeComponent();
             GetLanguage();
+
+            this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
         }
-        void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Application.Current.Properties["eidFileToOpen"] != null)
+                {
+                    string eIDFile = Application.Current.Properties["eidFileToOpen"].ToString();
+                    if (eIDFile != null)
+                    {
+                        //close previous file
+                        eIDViewer.NativeMethods.CloseXML();
+                        //MessageBox.Show("File selected is " + filename);
+                        eIDViewer.NativeMethods.OpenXML(eIDFile);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not read file that started the eIDViewer. Error message: " + ex.Message);
+            }
+        }
+
+    void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

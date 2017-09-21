@@ -30,31 +30,31 @@ DobParser::DobParser()
 		domap(EID_VWR_LANG_DE, 11, TEXT("NOV"));
 		domap(EID_VWR_LANG_DE, 12, TEXT("DEZ"));
 
-		domap(EID_VWR_LANG_FR, 1, TEXT("JAN "));
-		domap(EID_VWR_LANG_FR, 2, TEXT("FEV "));
+		domap(EID_VWR_LANG_FR, 1, TEXT("JAN"));
+		domap(EID_VWR_LANG_FR, 2, TEXT("FEV"));
 		domap(EID_VWR_LANG_FR, 3, TEXT("MARS"));
-		domap(EID_VWR_LANG_FR, 4, TEXT("AVR "));
-		domap(EID_VWR_LANG_FR, 5, TEXT("MAI "));
+		domap(EID_VWR_LANG_FR, 4, TEXT("AVR"));
+		domap(EID_VWR_LANG_FR, 5, TEXT("MAI"));
 		domap(EID_VWR_LANG_FR, 6, TEXT("JUIN"));
 		domap(EID_VWR_LANG_FR, 7, TEXT("JUIL"));
 		domap(EID_VWR_LANG_FR, 8, TEXT("AOUT"));
 		domap(EID_VWR_LANG_FR, 9, TEXT("SEPT"));
-		domap(EID_VWR_LANG_FR, 10, TEXT("OCT "));
-		domap(EID_VWR_LANG_FR, 11, TEXT("NOV "));
-		domap(EID_VWR_LANG_FR, 12, TEXT("DEC "));
+		domap(EID_VWR_LANG_FR, 10, TEXT("OCT"));
+		domap(EID_VWR_LANG_FR, 11, TEXT("NOV"));
+		domap(EID_VWR_LANG_FR, 12, TEXT("DEC"));
 
-		domap(EID_VWR_LANG_NL, 1, TEXT("JAN "));
-		domap(EID_VWR_LANG_NL, 2, TEXT("FEB "));
+		domap(EID_VWR_LANG_NL, 1, TEXT("JAN"));
+		domap(EID_VWR_LANG_NL, 2, TEXT("FEB"));
 		domap(EID_VWR_LANG_NL, 3, TEXT("MAAR"));
-		domap(EID_VWR_LANG_NL, 4, TEXT("APR "));
-		domap(EID_VWR_LANG_NL, 5, TEXT("MEI "));
-		domap(EID_VWR_LANG_NL, 6, TEXT("JUN "));
-		domap(EID_VWR_LANG_NL, 7, TEXT("JUL "));
-		domap(EID_VWR_LANG_NL, 8, TEXT("AUG "));
-		domap(EID_VWR_LANG_NL, 9, TEXT("SEP "));
-		domap(EID_VWR_LANG_NL, 10, TEXT("OKT "));
-		domap(EID_VWR_LANG_NL, 11, TEXT("NOV "));
-		domap(EID_VWR_LANG_NL, 12, TEXT("DEC "));
+		domap(EID_VWR_LANG_NL, 4, TEXT("APR"));
+		domap(EID_VWR_LANG_NL, 5, TEXT("MEI"));
+		domap(EID_VWR_LANG_NL, 6, TEXT("JUN"));
+		domap(EID_VWR_LANG_NL, 7, TEXT("JUL"));
+		domap(EID_VWR_LANG_NL, 8, TEXT("AUG"));
+		domap(EID_VWR_LANG_NL, 9, TEXT("SEP"));
+		domap(EID_VWR_LANG_NL, 10, TEXT("OKT"));
+		domap(EID_VWR_LANG_NL, 11, TEXT("NOV"));
+		domap(EID_VWR_LANG_NL, 12, TEXT("DEC"));
 
 		domap(EID_VWR_LANG_EN, 1, TEXT("JAN"));
 		domap(EID_VWR_LANG_EN, 2, TEXT("FEB"));
@@ -134,8 +134,11 @@ DobWriter::DobWriter(DateParser * p):DateWriter(p)
 void DobParser::input(EID_STRING original)
 {
 	day = original.substr(0, 2);
-	month = frommonth[original.
-			  substr(3, original.find_last_of(TEXT(" .")) - 3)];
+	int spaceIdx = original.find_first_of(TEXT("."));
+	if (-1 == spaceIdx) {
+		spaceIdx = original.find_first_of(TEXT(" "));
+	}
+	month = frommonth[original.substr(spaceIdx + 1, original.find_first_of(TEXT(" ."), spaceIdx + 1) - (spaceIdx + 1))];
 	year = original.substr(original.find_last_of(TEXT(" .")) + 1);
 }
 
