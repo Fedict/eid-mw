@@ -70,8 +70,8 @@ caption $(ls_caption)
 BrandingText " "
 InstProgressFlags smooth
 ;do not show installation details
-ShowInstDetails nevershow
-ShowUninstDetails nevershow
+;ShowInstDetails nevershow
+;ShowUninstDetails nevershow
 
 Function InstShow
 SetCtlColors $HWNDPARENT 0 0xFFFFFF ; parent background white, black text
@@ -97,8 +97,7 @@ Page custom nsdConnectReader nsdConnectReaderLeave
 Page custom nsdReaderCheck nsdReaderCheckLeave
 Page custom nsdInsertCard nsdInsertCardLeave
 Page custom nsdCardCheck nsdCardCheckLeave
-Page custom nsdCardData
-
+Page custom nsdCardData nsdCardDataLeave
 
 ;--------------------------------
 ;Languages
@@ -612,8 +611,6 @@ Function nsdReaderCheck
 	${buttonVisible} "Back" 1
 	${buttonVisible} "Next" 1
 	${buttonVisible} "Cancel" 1
-	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
-	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_helpsite)"
 	
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
@@ -696,7 +693,7 @@ Function nsdCardCheck
         Abort  
 		
     ${If} $FindCardFailed == '0'
-        ;MessageBox MB_OK "Reader found, skipping reader error"
+        ;MessageBox MB_OK "Card found, skipping card error"
         Abort   
     ${EndIf}
 	nsDialogs::Create 1018
@@ -714,11 +711,7 @@ Function nsdCardCheck
 	CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Title 1
 	
-	${If} $retval <> '0'
-		${NSD_CreateLabel} 0 60% 100% 16u "$(ls_error) R$retval"
-	${Else}
-		${NSD_CreateLabel} 0 60% 100% 16u "$(ls_error) I$InstallFailed"
-	${EndIf}	
+	${NSD_CreateLabel} 0 60% 100% 16u "$(ls_error) $FindCardFailed"	
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
@@ -776,72 +769,101 @@ Function nsdCardData
 	beid::ReadCardData
 	Pop $retval
 	
-	${If} $retval <> '0'
-	  ;MessageBox MB_OK "$$retval is $retval"
-	${NSD_CreateLabel} 0 0 18% 20% "$(ls_error)"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 20% 0 100% 20% "$retval"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	${NSD_CreateLabel} 0 20% 100% 100% "$(ls_cardread)"
-	Pop $Label
-	SendMessage $Label ${WM_SETFont} $Font_CardData 1
-	SendMessage $Label ${WM_SETTEXT} 0 "$(ls_testfailed)"
-	;Goto nsdCardDataDone
-	Call GotoPrevPage
-	
-	${EndIf}
-	
-	;MessageBox MB_OK "$$retval is 0"
-	;Pop $municipality
-	;Pop $zip
-	;Pop $street
 	Pop $lastname
 	Pop $firstletterthirdname
 	Pop $firstname
 
+	;for testing
+	;StrCpy $retval 004180
 	
-	${NSD_CreateLabel} 0 40% 100% 36u "$(ls_testcomplete_pre) $firstname$(ls_testcomplete_post)"
-	Pop $Label
-	SetCtlColors $Label 0x008080 transparent
-	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
-	CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
-	SendMessage $Label ${WM_SETFont} $Font_Title 1
+	${If} $retval == '0'
 	
-	${NSD_CreateLabel} 0 80% 100% 36u "$(ls_testcomplete_info)"
-	Pop $Label
-	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
-	CreateFont $Font_Info "Arial" "9" "700" ;/UNDERLINE
-	SendMessage $Label ${WM_SETFont} $Font_Info 1
-	SetCtlColors $Label 0x000000 transparent
+		;all went well, show a succes message on this final page
+		${NSD_CreateLabel} 0 40% 100% 36u "$(ls_testcomplete_pre) $firstname $(ls_testcomplete_post)"
+		Pop $Label
+		SetCtlColors $Label 0x008080 transparent
+		${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+		CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
+		SendMessage $Label ${WM_SETFont} $Font_Title 1
+		
+		${NSD_CreateLabel} 0 80% 100% 36u "$(ls_testcomplete_info)"
+		Pop $Label
+		${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+		CreateFont $Font_Info "Arial" "9" "700" ;/UNDERLINE
+		SendMessage $Label ${WM_SETFont} $Font_Info 1
+		SetCtlColors $Label 0x000000 transparent
+		
+		${NSD_CreateBitmap} 0 0 266u 124u ""
+		Pop $Background_Image
+		${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
+		
+		GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
+		SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_close)"
+		GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
+		SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_finish)"
+			
+		${buttonVisible} "Back" 1
+		${buttonVisible} "Next" 1
+		${buttonVisible} "Cancel" 0	
+	${Else} 
+
+		${NSD_CreateLabel} 0 40% 100% 20u "$(ls_errorreadingcard)"
+		Pop $Label
+		SetCtlColors $Label 0x008080 transparent
+		${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+		CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
+		SendMessage $Label ${WM_SETFont} $Font_Title 1
+		
+		${NSD_CreateLabel} 0 60% 100% 16u "$(ls_error) R$retval"
+		Pop $Label
+		${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+		CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
+		SendMessage $Label ${WM_SETFont} $Font_Info 1
+		SetCtlColors $Label 0x008080 transparent
+		
+		${NSD_CreateLabel} 0 70% 100% 36u "$(ls_test_failed_info)"
+		Pop $Label
+		${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
+		CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
+		SendMessage $Label ${WM_SETFont} $Font_Info 1
+		SetCtlColors $Label 0x000000 transparent
+		
+		${NSD_CreateBitmap} 0 0 266u 124u ""
+		Pop $Background_Image
+		${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Failed.bmp" $Background_Image_Handle 
 	
-	${NSD_CreateBitmap} 0 0 266u 124u ""
-	Pop $Background_Image
-    ${NSD_SetStretchedImage} $Background_Image "$PLUGINSDIR\Done.bmp" $Background_Image_Handle 
+		;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
+		GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
+		SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_helpsite)"
+		GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
+		SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_finish)"
 	
-	;GetDlgItem $NextButton $nsdDoneDialog 1 ; next=1, cancel=2, back=3
-	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
-	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_test)"
-	GetDlgItem $Button $HWNDPARENT 2 ; next=1, cancel=2, back=3
-	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_finish)"
-	;EnableWindow $NextButton 1 ;enable the previous button
-	;SetCtlColors $NextButton 0xFF0000 0x00FF00
+		;enable the cancel(finish) button
+		GetDlgItem $1 $HWNDPARENT 2 
+		EnableWindow $1 1
 	
-	GetDlgItem $Button $HWNDPARENT 1 ; next=1, cancel=2, back=3
-	SendMessage $Button ${WM_SETTEXT} 0 "STR:$(ls_close)"
+		${buttonVisible} "Back" 1
+		${buttonVisible} "Next" 1
+		${buttonVisible} "Cancel" 1
 	
-	${buttonVisible} "Back" 0
-	${buttonVisible} "Next" 1
-	${buttonVisible} "Cancel" 0	
-	
-	nsdCardDataDone:
+	${EndIf}
+		
 	nsDialogs::Show
 	${NSD_FreeImage} $Background_Image_Handle
 FunctionEnd
 
+Function nsdCardDataLeave
+		;skip the window when silent
+	IfSilent 0 +2 
+        Abort  
+		
+	${If} $retval <> '0'
+		call FindSolutionButton_click
+	${EndIf}
+FunctionEnd
+
 Function FindSolutionButton_click
-    ExecShell "open" "http://eid.belgium.be/"
+    ExecShell "open" "https://eid.belgium.be/"
 	;when keeping the nsis installer alive, it can permit the webbrowser to take the foreground.
 	;should we quit in stead, the webbrowser will be openened in the background
 	Abort

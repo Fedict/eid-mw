@@ -26,7 +26,6 @@
 
 #include <commctrl.h>
 /****************************************************************************************************/
-typedef HRESULT(__cdecl *TD)(_In_opt_ HWND hwndOwner, _In_opt_ HINSTANCE hInstance, _In_opt_ PCWSTR pszWindowTitle, _In_opt_ PCWSTR pszMainInstruction, _In_opt_ PCWSTR pszContent, TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons, _In_opt_ PCWSTR pszIcon, _Out_opt_ int *pnButton);
 
 #define CHALLENGE_DATA_SIZE         16
 
@@ -314,45 +313,44 @@ cleanup:
 
 #define WHERE "BeidAuthenticateExternal"
 DWORD BeidAuthenticateExternal(
-	PCARD_DATA   pCardData,
+	PCARD_DATA   pCardData, 
 	PDWORD       pcAttemptsRemaining,
 	BOOL		 bSilent
-	)
+	) 
 {
-	DWORD						dwReturn = 0;
-	SCARD_IO_REQUEST				ioSendPci = { 1, sizeof(SCARD_IO_REQUEST) };
-	SCARD_IO_REQUEST				ioRecvPci = { 1, sizeof(SCARD_IO_REQUEST) };
+	DWORD						dwReturn  = 0;
+	SCARD_IO_REQUEST			ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
+	SCARD_IO_REQUEST			ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
 
-	PIN_VERIFY_STRUCTURE			verifyCommand;
+	PIN_VERIFY_STRUCTURE		verifyCommand;
 
-	unsigned int					uiCmdLg = 0;
+	unsigned int				uiCmdLg   = 0;
 	unsigned char				recvbuf[256];
 	unsigned char				ucLastKey;
-	unsigned long				recvlen = sizeof(recvbuf);
-	BYTE							SW1, SW2;
-	int							i = 0;
-	int							offset = 0;
-	DWORD						dwRetriesLeft, dwDataLen;
-	BOOL							bRetry = TRUE;
+	unsigned long				recvlen     = sizeof(recvbuf);
+	BYTE						SW1, SW2;
+	int							i           = 0;
+	int							offset		= 0;
+	DWORD						dwDataLen;
+	BOOL						bRetry      = TRUE;
 	int							nButton;
-	HRESULT						hResult;
 
-	EXTERNAL_PIN_INFORMATION		externalPinInfo;
-	HANDLE						DialogThreadHandle = NULL;
+	EXTERNAL_PIN_INFORMATION	externalPinInfo;
+	HANDLE						DialogThreadHandle;
 
+#ifndef NO_DIALOGS
+	DWORD						dwRetriesLeft;
 
 	wchar_t						wchErrorMessage[500];
 	wchar_t						wchMainInstruction[100];
-
-	HINSTANCE hinst;
-	TD TaskDial;
+#endif
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
 	/********************/
 	/* Check Parameters */
 	/********************/
-	if (pCardData == NULL)
+	if ( pCardData == NULL )
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pCardData]");
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
@@ -368,11 +366,11 @@ DWORD BeidAuthenticateExternal(
 	/*********************/
 	/* Get Parent Window */
 	/*********************/
-	dwReturn = CardGetProperty(pCardData,
-		CP_PARENT_WINDOW,
-		(PBYTE)&(externalPinInfo.hwndParentWindow),
-		sizeof(externalPinInfo.hwndParentWindow),
-		&dwDataLen,
+	dwReturn = CardGetProperty(pCardData, 
+		CP_PARENT_WINDOW, 
+		(PBYTE) &(externalPinInfo.hwndParentWindow), 
+		sizeof(externalPinInfo.hwndParentWindow), 
+		&dwDataLen, 
 		0);
 	if (dwReturn != 0) {
 		LogTrace(LOGTYPE_ERROR, WHERE, "CardGetProperty Failed: %02X", dwReturn);
@@ -382,12 +380,12 @@ DWORD BeidAuthenticateExternal(
 
 	/*********************/
 	/* Get Pin Context String */
-	/*********************/
-	dwReturn = CardGetProperty(pCardData,
-		CP_PIN_CONTEXT_STRING,
-		(PBYTE)externalPinInfo.lpstrPinContextString,
-		sizeof(externalPinInfo.lpstrPinContextString),
-		&dwDataLen,
+	/*********************/		
+	dwReturn = CardGetProperty(pCardData, 
+		CP_PIN_CONTEXT_STRING, 
+		(PBYTE) externalPinInfo.lpstrPinContextString, 
+		sizeof(externalPinInfo.lpstrPinContextString), 
+		&dwDataLen, 
 		0);
 	if (dwReturn != 0) {
 		LogTrace(LOGTYPE_ERROR, WHERE, "CardGetProperty Failed: %02X", dwReturn);
@@ -415,35 +413,33 @@ DWORD BeidAuthenticateExternal(
 
 		Sleep(100);
 
-		if (externalPinInfo.features.VERIFY_PIN_DIRECT != 0)
+		if(externalPinInfo.features.VERIFY_PIN_DIRECT != 0)
 		{
 			externalPinInfo.iPinCharacters = 0;
 			externalPinInfo.cardState = CS_PINENTRY;
 			// show dialog
-			if ((!bSilent) && (!IsAppContainer()))
-			{
+			if (!bSilent)
 				DialogThreadHandle = CreateThread(NULL, 0, DialogThreadPinEntry, &externalPinInfo, 0, NULL);
-			}
 
-			if (externalPinInfo.features.USE_PPDU == 0)
+			if(externalPinInfo.features.USE_PPDU == 0)
 			{
-				dwReturn = SCardControl(pCardData->hScard,
-					externalPinInfo.features.VERIFY_PIN_DIRECT,
-					&verifyCommand,
-					uiCmdLg,
-					recvbuf,
+				dwReturn = SCardControl(pCardData->hScard, 
+					externalPinInfo.features.VERIFY_PIN_DIRECT, 
+					&verifyCommand, 
+					uiCmdLg,                              
+					recvbuf, 
 					recvlen,
 					&recvlen);
 
 				LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
 				externalPinInfo.cardState = CS_PINENTERED;
-				if (dwReturn != SCARD_S_SUCCESS)
+				if ( dwReturn != SCARD_S_SUCCESS )
 				{
 					LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
 					CLEANUP(dwReturn);
 				}
 			}
-			else {
+			else{
 				BYTE pbSendBufferVerifyPINDirect[256];// = {0xFF ,0xC2 ,0x01 ,0x06 , 0x00};
 				BYTE bSendBufferVerifyPINDirectLength = 5;
 
@@ -451,13 +447,15 @@ DWORD BeidAuthenticateExternal(
 				pbSendBufferVerifyPINDirect[1] = 0xC2;
 				pbSendBufferVerifyPINDirect[2] = 0x01;
 				pbSendBufferVerifyPINDirect[3] = 0x06;
-				pbSendBufferVerifyPINDirect[4] = sizeof(verifyCommand);
+				pbSendBufferVerifyPINDirect[4] = sizeof(verifyCommand);				
 
-				if (sizeof(verifyCommand) < (sizeof(pbSendBufferVerifyPINDirect) + 5))
+				if(sizeof(verifyCommand) < (sizeof(pbSendBufferVerifyPINDirect)+5) )
 				{
-					memcpy(&pbSendBufferVerifyPINDirect[5], &verifyCommand, sizeof(verifyCommand));
+					memcpy(&pbSendBufferVerifyPINDirect[5],&verifyCommand,sizeof(verifyCommand));
 					bSendBufferVerifyPINDirectLength += sizeof(verifyCommand);
 				}
+				LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit PPDU");
+
 				dwReturn = SCardTransmit(pCardData->hScard,
 					&ioSendPci,
 					pbSendBufferVerifyPINDirect,
@@ -468,7 +466,7 @@ DWORD BeidAuthenticateExternal(
 
 				LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit PPDU return code: [0x%08X]", dwReturn);
 				externalPinInfo.cardState = CS_PINENTERED;
-				if (dwReturn != SCARD_S_SUCCESS)
+				if ( dwReturn != SCARD_S_SUCCESS )
 				{
 					LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit PPDU errorcode: [0x%08X]", dwReturn);
 					CLEANUP(dwReturn);
@@ -478,15 +476,15 @@ DWORD BeidAuthenticateExternal(
 		}
 		else
 		{
-			dwReturn = SCardControl(pCardData->hScard,
-				externalPinInfo.features.VERIFY_PIN_START,
-				&verifyCommand,
-				uiCmdLg,
-				recvbuf,
+			dwReturn = SCardControl(pCardData->hScard, 
+				externalPinInfo.features.VERIFY_PIN_START, 
+				&verifyCommand, 
+				uiCmdLg,                              
+				recvbuf, 
 				recvlen,
 				&recvlen);
 			LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
-			if (dwReturn != SCARD_S_SUCCESS)
+			if ( dwReturn != SCARD_S_SUCCESS )
 			{
 				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
 				CLEANUP(dwReturn);
@@ -495,10 +493,8 @@ DWORD BeidAuthenticateExternal(
 			externalPinInfo.cardState = CS_PINENTRY;
 
 			// show dialog
-			if ((!bSilent) && (!IsAppContainer()))
-			{
+			if (!bSilent)
 				DialogThreadHandle = CreateThread(NULL, 0, DialogThreadPinEntry, &externalPinInfo, 0, NULL);
-			}
 			while (1) {
 				dwReturn = SCardControl(pCardData->hScard,
 					externalPinInfo.features.GET_KEY_PRESSED,
@@ -508,7 +504,7 @@ DWORD BeidAuthenticateExternal(
 					recvlen,
 					&recvlen);
 				LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
-				if (dwReturn != SCARD_S_SUCCESS)
+				if ( dwReturn != SCARD_S_SUCCESS )
 				{
 					LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
 					CLEANUP(dwReturn);
@@ -532,7 +528,7 @@ DWORD BeidAuthenticateExternal(
 					// 0-9
 					externalPinInfo.iPinCharacters++;
 					break;
-				case 0x08:
+				case 0x08:	
 					// Backspace
 					externalPinInfo.iPinCharacters--;
 					break;
@@ -546,7 +542,7 @@ DWORD BeidAuthenticateExternal(
 				}
 
 			}
-		endkeypress:
+endkeypress:
 
 			externalPinInfo.cardState = CS_PINENTERED;
 			dwReturn = SCardControl(pCardData->hScard,
@@ -557,30 +553,29 @@ DWORD BeidAuthenticateExternal(
 				sizeof(recvbuf),
 				&recvlen);
 			LogTrace(LOGTYPE_TRACE, WHERE, "SCardControl return code: [0x%08X]", dwReturn);
-			if (dwReturn != SCARD_S_SUCCESS)
+			if ( dwReturn != SCARD_S_SUCCESS )
 			{
 				LogTrace(LOGTYPE_ERROR, WHERE, "SCardControl errorcode: [0x%08X]", dwReturn);
 				CLEANUP(dwReturn);
 			}
-			SW1 = recvbuf[recvlen - 2];
-			SW2 = recvbuf[recvlen - 1];
-			if ((SW1 != 0x90) || (SW2 != 0x00))
+			SW1 = recvbuf[recvlen-2];
+			SW2 = recvbuf[recvlen-1];
+			if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
 			{
 				dwReturn = SCARD_W_WRONG_CHV;
 				LogTrace(LOGTYPE_ERROR, WHERE, "CardAuthenticateEx Failed: [0x%02X][0x%02X]", SW1, SW2);
 #ifndef NO_DIALOGS
 				if (SW1 == 0x64) {
 					//error during pin entry
-					switch (SW2) {
+					switch(SW2){
 					case 0x00:
 						// Timeout
 						if (ucLastKey == 0x0d) {
 							// OK button preceded by no other keys also results in 0x64 0x00
 
 							swprintf(wchMainInstruction, t[PIN_TOO_SHORT_MAININSTRUCTIONS][getLanguage()]);
-							swprintf(wchErrorMessage, t[PIN_TOO_SHORT_CONTENT][getLanguage()]);
-						}
-						else {
+							swprintf(wchErrorMessage, t[PIN_TOO_SHORT_CONTENT][getLanguage()] );
+						} else {
 							swprintf(wchMainInstruction, t[PIN_TIMED_OUT_MAININSTRUCTIONS][getLanguage()]);
 							// the user entered something but probably forgot to push OK.
 							swprintf(wchErrorMessage, t[PIN_TIMED_OUT_CONTENT][getLanguage()]);
@@ -602,16 +597,14 @@ DWORD BeidAuthenticateExternal(
 							// PIN too short
 							swprintf(wchMainInstruction, t[PIN_TOO_SHORT_MAININSTRUCTIONS][getLanguage()]);
 							swprintf(wchErrorMessage, t[PIN_TOO_SHORT_CONTENT][getLanguage()]);
-						}
-						else {
+						} else {
 							if (externalPinInfo.iPinCharacters >= BELPIC_MAX_USER_PIN_LEN) {
 								// PIN too long
 								swprintf(wchMainInstruction, t[PIN_TOO_LONG_MAININSTRUCTIONS][getLanguage()]);
 								swprintf(wchErrorMessage, t[PIN_TOO_LONG_CONTENT][getLanguage()]);
-							}
-							else {
+							} else {
 								// no info about PIN chars
-								swprintf(wchMainInstruction, t[PIN_SIZE_MAININSTRUCTIONS][getLanguage()]);
+								swprintf(wchMainInstruction,  t[PIN_SIZE_MAININSTRUCTIONS][getLanguage()]);
 								swprintf(wchErrorMessage, t[PIN_SIZE_CONTENT][getLanguage()]);
 							}
 						}
@@ -619,36 +612,24 @@ DWORD BeidAuthenticateExternal(
 					default:
 						// Should not happen
 						swprintf(wchMainInstruction, t[PIN_UNKNOWN_MAININSTRUCTIONS][getLanguage()]);
-						swprintf(wchErrorMessage, t[PIN_UNKNOWN_CONTENT][getLanguage()], SW1, SW2);
+						swprintf(wchErrorMessage,  t[PIN_UNKNOWN_CONTENT][getLanguage()], SW1,SW2);
 						break;
 					}
-					if (externalPinInfo.uiState == US_PINENTRY && !bSilent && !IsAppContainer())
-					{
-						hinst = LoadLibrary(TEXT("comctl32.dll"));
-						if (hinst != NULL)
-						{
-							TaskDial = (TD)GetProcAddress(hinst, "TaskDialog");
-							if (TaskDial != NULL)
-							{
-								hResult = TaskDial(externalPinInfo.hwndParentWindow,
-									NULL,
-									t[WINDOW_TITLE][getLanguage()],
-									wchMainInstruction,
-									wchErrorMessage,
-									TDCBF_RETRY_BUTTON | TDCBF_CANCEL_BUTTON,
-									TD_ERROR_ICON,
-									&nButton);
-							}
-							//keep it in memory, probably need PIN entry again later on
-							//FreeLibrary(hinst);
-						}
-					}
+					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
+						TaskDialog(externalPinInfo.hwndParentWindow, 
+						NULL, 
+						t[WINDOW_TITLE][getLanguage()], 
+						wchMainInstruction, 
+						wchErrorMessage, 
+						TDCBF_RETRY_BUTTON  | TDCBF_CANCEL_BUTTON ,
+						TD_ERROR_ICON,
+						&nButton);
 
 				}
 				if (SW1 == 0x63) {
 					// Invalid PIN
 					dwRetriesLeft = SW2 & 0x0F;
-					if (pcAttemptsRemaining != NULL)
+					if ( pcAttemptsRemaining != NULL )
 					{
 						/* -1: Don't support returning the count of remaining authentication attempts */
 						*pcAttemptsRemaining = dwRetriesLeft;
@@ -656,27 +637,15 @@ DWORD BeidAuthenticateExternal(
 					swprintf(wchMainInstruction, t[PIN_INVALID_MAININSTRUCTIONS][getLanguage()]);
 					swprintf(wchErrorMessage, t[PIN_INVALID_CONTENT][getLanguage()], dwRetriesLeft);
 
-					if (externalPinInfo.uiState == US_PINENTRY && !bSilent && !IsAppContainer())
-					{
-						hinst = LoadLibrary(TEXT("comctl32.dll"));
-						if (hinst != NULL)
-						{
-							TaskDial = (TD)GetProcAddress(hinst, "TaskDialog");
-							if (TaskDial != NULL)
-							{
-								hResult = TaskDial(externalPinInfo.hwndParentWindow,
-									NULL,
-									t[WINDOW_TITLE][getLanguage()],
-									wchMainInstruction,
-									wchErrorMessage,
-									TDCBF_RETRY_BUTTON | TDCBF_CANCEL_BUTTON,
-									TD_ERROR_ICON,
-									&nButton);
-							}
-							//keep it in memory, probably need PIN entry again later on
-							//FreeLibrary(hinst);
-						}
-					}
+					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
+						TaskDialog(externalPinInfo.hwndParentWindow, 
+						NULL, 
+						t[WINDOW_TITLE][getLanguage()], 
+						wchMainInstruction, 
+						wchErrorMessage, 
+						TDCBF_RETRY_BUTTON  | TDCBF_CANCEL_BUTTON,
+						TD_ERROR_ICON,
+						&nButton);
 				}
 
 				if (SW1 == 0x69 && SW2 == 0x83) {
@@ -684,26 +653,14 @@ DWORD BeidAuthenticateExternal(
 					swprintf(wchMainInstruction, t[PIN_BLOCKED_MAININSTRUCTIONS][getLanguage()]);
 					swprintf(wchErrorMessage, t[PIN_BLOCKED_CONTENT][getLanguage()]);
 					if (externalPinInfo.uiState == US_PINENTRY && !bSilent)
-					{
-						hinst = LoadLibrary(TEXT("comctl32.dll"));
-						if (hinst != NULL)
-						{
-							TaskDial = (TD)GetProcAddress(hinst, "TaskDialog");
-							if (TaskDial != NULL)
-							{
-								hResult = TaskDial(externalPinInfo.hwndParentWindow,
-									NULL,
-									t[WINDOW_TITLE][getLanguage()],
-									wchMainInstruction,
-									wchErrorMessage,
-									TDCBF_OK_BUTTON,
-									TD_ERROR_ICON,
-									&nButton);
-							}
-							//keep it in memory, probably need PIN entry again later on
-							//FreeLibrary(hinst);
-						}
-					}
+						TaskDialog(externalPinInfo.hwndParentWindow, 
+						NULL, 
+						t[WINDOW_TITLE][getLanguage()], 
+						wchMainInstruction, 
+						wchErrorMessage, 
+						TDCBF_OK_BUTTON,
+						TD_ERROR_ICON,
+						&nButton);
 					dwReturn = SCARD_W_CHV_BLOCKED;
 				}
 				bRetry = (nButton == IDRETRY);
@@ -719,30 +676,6 @@ DWORD BeidAuthenticateExternal(
 cleanup:
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
-
-	if (DialogThreadHandle != NULL)
-	{
-		DWORD dwExitCode = 0;
-		for (int i = 0; i < 10; i++)
-		{
-			if (GetExitCodeThread(DialogThreadHandle,&dwExitCode))
-			{
-				if (dwExitCode == STILL_ACTIVE)
-				{
-					//wait for the secure PIN dialog thread to exit
-					Sleep(100);
-				}
-				else
-				{
-					break;
-				}
-			}
-			else
-			{
-				break;
-			}
-		}
-	}
 	return(dwReturn);
 }
 #undef WHERE
@@ -1888,60 +1821,47 @@ DWORD CCIDgetPPDUFeatures(PFEATURES pFeatures, SCARDHANDLE hCard)
 	DWORD dwState;
 	DWORD dwProtocol;
 	BYTE bAttribute[32];
-	DWORD dwAtrLen;
+	DWORD dwAtrLen = 32;
 
-dwReturn = SCardStatus( hCard, 
-  szReaderName, 
-  &dwReaderLen, 
-  &dwState, 
-  &dwProtocol, 
-  &bAttribute[0], 
-  &dwAtrLen 
-);
+	dwReturn = SCardStatus(hCard, szReaderName, &dwReaderLen, &dwState, &dwProtocol, &bAttribute[0], &dwAtrLen);
 
-if( (dwReaderLen > 1024) || dwReturn != SCARD_S_SUCCESS)
-{
-	return dwReturn;
-}
-//add friendlynames of readers that support PPDU over transmit here
-if( (_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"VASCO DIGIPASS 870",wcslen(L"VASCO DIGIPASS 870"))==0) ||
-	(_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"VASCO DIGIPASS 875",wcslen(L"VASCO DIGIPASS 875"))==0) ||
-	(_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"VASCO DIGIPASS 920",wcslen(L"VASCO DIGIPASS 920"))==0) ||
-	(_wcsnicmp((wchar_t*)szReaderName,(const wchar_t*)L"Gemalto ING Shield Pro",wcslen(L"Gemalto ING Shield Pro"))==0) )
-{
-	BYTE Cmd[] = {0xFF ,0xC2 ,0x01 ,0x00 , 0x00};
-	DWORD uiCmdLg = sizeof(Cmd);
-
-	dwReturn = SCardTransmit(hCard, 
-                            &ioSendPci, 
-                            Cmd, 
-                            uiCmdLg, 
-                            &ioRecvPci, 
-                            pbRecvBuffer, 
-                            &cbRecvLength);
-	//Sleep(25);//checked by whitelist, goes to reader, not card
-	LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetPPDUFeatures returncode: [0x%08X]", dwReturn);
-	if(dwReturn == SCARD_S_SUCCESS)
+	if ((dwReaderLen > 1024) || dwReturn != SCARD_S_SUCCESS)
 	{
-		if ( (pbRecvBuffer[cbRecvLength-2] == 0x90) && (pbRecvBuffer[cbRecvLength-1] == 0x00) )
-		{
-			BYTE bsupportedFeatureIndex = 0;
-			pFeatures->USE_PPDU = 1;
-			for( bsupportedFeatureIndex = 0;bsupportedFeatureIndex < (cbRecvLength -2);bsupportedFeatureIndex++ )
-			{
-				switch(pbRecvBuffer[bsupportedFeatureIndex])
-				{
-				case 0x06:
-					pFeatures->VERIFY_PIN_DIRECT = 1;
-					break;
-				default:
-					break;
-				}
-			}//end of for
-		}
-		dwReturn = SCARD_F_INTERNAL_ERROR;
+		return dwReturn;
 	}
-}
+	//add friendlynames of readers that support PPDU over transmit here
+	if ((_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 870", wcslen(L"VASCO DIGIPASS 870")) == 0) ||
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 875", wcslen(L"VASCO DIGIPASS 875")) == 0) ||
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 920", wcslen(L"VASCO DIGIPASS 920")) == 0) ||
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"Gemalto ING Shield Pro", wcslen(L"Gemalto ING Shield Pro")) == 0))
+	{
+		BYTE Cmd[] = { 0xFF ,0xC2 ,0x01 ,0x00 , 0x00 };
+		DWORD uiCmdLg = sizeof(Cmd);
+
+		dwReturn = SCardTransmit(hCard, &ioSendPci, Cmd, uiCmdLg, &ioRecvPci, pbRecvBuffer, &cbRecvLength);
+		//Sleep(25);//checked by whitelist, goes to reader, not card
+		LogTrace(LOGTYPE_TRACE, WHERE, "CCIDgetPPDUFeatures returncode: [0x%08X]", dwReturn);
+		if (dwReturn == SCARD_S_SUCCESS)
+		{
+			if ((pbRecvBuffer[cbRecvLength - 2] == 0x90) && (pbRecvBuffer[cbRecvLength - 1] == 0x00))
+			{
+				BYTE bsupportedFeatureIndex = 0;
+				pFeatures->USE_PPDU = 1;
+				for (bsupportedFeatureIndex = 0; bsupportedFeatureIndex < (cbRecvLength - 2); bsupportedFeatureIndex++)
+				{
+					switch (pbRecvBuffer[bsupportedFeatureIndex])
+					{
+					case 0x06:
+						pFeatures->VERIFY_PIN_DIRECT = 1;
+						break;
+					default:
+						break;
+					}
+				}//end of for
+			}
+			dwReturn = SCARD_F_INTERNAL_ERROR;
+		}
+	}
 	return dwReturn;
 }
 #undef WHERE
@@ -2111,33 +2031,4 @@ DWORD createVerifyCommand(PPIN_VERIFY_STRUCTURE pVerifyCommand) {
 
     return 0;
 }
-
-BOOL IsAppContainer()
-{
-	HANDLE hToken;
-	HANDLE hProcess;
-
-	DWORD dwLengthNeeded;
-	DWORD appCont = 1;
-
-
-	hProcess = GetCurrentProcess();
-	if (OpenProcessToken(hProcess, TOKEN_QUERY, &hToken))
-	{
-		// Get the Integrity level.
-		if (!GetTokenInformation(hToken, TokenIsAppContainer, &appCont, sizeof(DWORD), &dwLengthNeeded))
-		{
-			//couldn't get the token information, so asume the worst scenario (appcontainer)
-			appCont = 1;
-		}
-		CloseHandle(hToken);
-	}
-	if (appCont != 0)
-	{
-		return 1;
-	}
-	
-	return 0;
-}
-
 /****************************************************************************************************/

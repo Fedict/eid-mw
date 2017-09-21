@@ -21,6 +21,15 @@ namespace eIDViewer
                 NativeMethods.theData = (BackendDataViewModel)(this.Resources["eIDViewerBackendObj"]);
                 NativeMethods.Init();
 
+                //get the command line arguments
+                if (e != null && e.Args != null)
+                {
+                    if ( (e.Args.Length != 0) && (e.Args[0] != null) )
+                    {
+                        this.Properties["eidFileToOpen"] = e.Args[0];
+                    }
+                }
+
                 base.OnStartup(e);
             }
             catch(Exception ex)

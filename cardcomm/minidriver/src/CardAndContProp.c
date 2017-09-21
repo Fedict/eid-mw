@@ -49,6 +49,7 @@ DWORD WINAPI   CardGetContainerProperty
    DWORD			 dwCertSpec = 0;
    PBYTE			 pbCertif = NULL;
    PIN_ID            dwPinId = 0;
+   *pdwDataLen = 0;
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
    memset(&ContInfo, '\0', sizeof(ContInfo));
@@ -1394,6 +1395,7 @@ DWORD WINAPI   CardGetProperty
 {
    DWORD             dwReturn       = 0;
    int               i              = 0;
+   *pdwDataLen = 0;
 
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");

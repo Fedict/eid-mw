@@ -99,13 +99,13 @@ cleanup:
 #define WHERE "CardReadFile()"
 DWORD WINAPI   CardReadFile
 (
-   __in                             PCARD_DATA  pCardData,
-   __in                             LPSTR       pszDirectoryName,
-   __in                             LPSTR       pszFileName,
-   __in                             DWORD       dwFlags,
-   __deref_out_bcount(*pcbData)     PBYTE      *ppbData,
-   __out                            PDWORD      pcbData
-)
+	__in                             PCARD_DATA  pCardData,
+	__in_opt                         LPSTR       pszDirectoryName,
+	__in                             LPSTR       pszFileName,
+	__in                             DWORD       dwFlags,
+	__deref_out_bcount_opt(*pcbData) PBYTE      *ppbData,
+	__out_opt                        PDWORD      pcbData
+	)
 {
    DWORD                dwReturn    = 0;
    int                  i           = 0;
