@@ -4,5 +4,6 @@ echo "postinstall BEIDTokenApp started"
 
 #start the BEIDTokenApp so that the BEID ctkToken gets registered
 #open "/Applications/BEIDToken.app"
+/usr/bin/osascript "./openBEIDToken.scpt"
 
 echo "postinstall BEIDTokenApp succeeded"
