@@ -87,5 +87,4 @@
     <pkg-ref id="com.acs.ccid_remove_acs" onConclusion="none">ccid_remove_acs_flat.pkg/</pkg-ref>
     <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="RequireRestart">pcscd_autostart_flat.pkg</pkg-ref>
     <pkg-ref id="beidtoken" onConclusion="none">BEIDToken.pkg</pkg-ref>
-    <conclusion file="Conclusion.rtf" mime-type="RTF"/>
 </installer-gui-script>
