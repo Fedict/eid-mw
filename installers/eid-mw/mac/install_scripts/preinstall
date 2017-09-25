@@ -1,6 +1,6 @@
 #!/bin/bash
 ## Remove parts of the previous middleware if they exist
-# only remove sub folders of "/Library/Belgium Identity Card/", as BEIDToken will also install in there
+# only remove sub folders of "/Library/Belgium Identity Card/", as other eid modules might be installed in there
 if test -e "/Library/Belgium Identity Card"; then
 	rm -rf "/Library/Belgium Identity Card/eID Middleware.app"
 	rm -rf "/Library/Belgium Identity Card/Licenses"
