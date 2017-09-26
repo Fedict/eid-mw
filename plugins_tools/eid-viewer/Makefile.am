@@ -170,6 +170,14 @@ icon128_DATA = resources/logos/128/eid-viewer.png
 icon256_DATA = resources/logos/256/eid-viewer.png
 icon512_DATA = resources/logos/512/eid-viewer.png
 
+DISTCLEANFILES = \
+	$(icon16_DATA) \
+	$(icon32_DATA) \
+	$(icon48_DATA) \
+	$(icon128_DATA) \
+	$(icon256_DATA) \
+	$(icon512_DATA)
+
 dist_packagedata_DATA = eidv4.xsd
 dist_trust_DATA = \
 	certs/belgiumrca2.pem \
