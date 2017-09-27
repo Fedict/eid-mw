@@ -3,28 +3,28 @@
 "1Xt-HY-uBw.title" = "BEIDTokenApp";
 
 /* Class = "NSMenuItem"; title = "Quit BEIDTokenApp"; ObjectID = "4sb-4s-VLi"; */
-"4sb-4s-VLi.title" = "Quit BEIDTokenApp";
+"4sb-4s-VLi.title" = "Stop BEIDTokenApp";
 
 /* Class = "NSMenuItem"; title = "About BEIDTokenApp"; ObjectID = "5kV-Vb-QxS"; */
-"5kV-Vb-QxS.title" = "About BEIDTokenApp";
+"5kV-Vb-QxS.title" = "Over BEIDTokenApp";
 
 /* Class = "NSButtonCell"; title = "Register BEIDToken"; ObjectID = "6PN-x3-4VU"; */
-"6PN-x3-4VU.title" = "Register BEIDToken";
+"6PN-x3-4VU.title" = "BEIDToken registreren";
 
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
-"AYu-sK-qS6.title" = "Main Menu";
+"AYu-sK-qS6.title" = "Hoofdmenu";
 
 /* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
-"Kd2-mp-pUS.title" = "Show All";
+"Kd2-mp-pUS.title" = "Toon alles";
 
 /* Class = "NSMenuItem"; title = "Hide BEIDTokenApp"; ObjectID = "Olw-nP-bQN"; */
-"Olw-nP-bQN.title" = "Hide BEIDTokenApp";
+"Olw-nP-bQN.title" = "Verberg BEIDTokenApp";
 
 /* Class = "NSWindow"; title = "BEIDTokenApp"; ObjectID = "QvC-M9-y7g"; */
 "QvC-M9-y7g.title" = "BEIDTokenApp";
 
 /* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
-"Vdr-fp-XzO.title" = "Hide Others";
+"Vdr-fp-XzO.title" = "Verberg alles";
 
 /* Class = "NSMenu"; title = "BEIDTokenApp"; ObjectID = "uQy-DD-JDr"; */
 "uQy-DD-JDr.title" = "BEIDTokenApp";
