@@ -75,10 +75,10 @@
 	return YES;
 }
 - (void)log:(NSString *)line withLevel:(eIDLogLevel)level {
-	if([self.logLevel indexOfSelectedItem] > level) {
-		return;
-	}
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		if([self.logLevel indexOfSelectedItem] > level) {
+			return;
+		}
 		char l;
 		NSAlert* alert;
 		switch(level) {
@@ -182,18 +182,14 @@
 			pinops = YES;
 			validate = YES;
 			dnd = YES;
-			if([_alwaysValidate state] == NSOnState) {
-				doValidateNow = YES;
-			}
+			doValidateNow = YES;
 			break;
 		case eIDStateFileWait:
 			fileClose = YES;
 			filePrint = YES;
 			dnd = YES;
 			validate = YES;
-			if([_alwaysValidate state] == NSOnState) {
-				doValidateNow = YES;
-			}
+			doValidateNow = YES;
 		default:
 			break;
 	}
@@ -225,7 +221,7 @@
 			[_CardReadSheet orderOut:_window];
 			[_spinner stopAnimation:self];
 		}
-		if(doValidateNow) {
+		if(doValidateNow && ([_alwaysValidate state] == NSOnState)) {
 			[self validateNow:nil];
 		}
 	}];
