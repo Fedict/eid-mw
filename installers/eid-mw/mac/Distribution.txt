@@ -37,7 +37,7 @@
 	 }
 	}
 	function macos_after_sierra() {
-	 if((system.compareVersions(system.version.ProductVersion, '10.12')) == 1)
+	 if((system.compareVersions(system.version.ProductVersion, '10.13')) >= 0)
 	 {
 	  return true;
 	 }
