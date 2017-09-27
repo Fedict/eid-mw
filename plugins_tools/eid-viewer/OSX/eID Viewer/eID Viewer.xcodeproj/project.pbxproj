@@ -312,6 +312,7 @@
 				65BD08651CECB257000A30E4 /* BeidView */,
 				659FFC3D1AE9360D004CEC1F /* Products */,
 				652F07671D918C65003BFFD5 /* Frameworks */,
+				65DD56261F7BAD8800B69AC4 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -452,6 +453,14 @@
 			path = BeidView;
 			sourceTree = "<group>";
 		};
+		65DD56261F7BAD8800B69AC4 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				65A29A8F1E44BAC70091FB0E /* libbeidpkcs11.4.2.7.dylib */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		8BBDE3131B3BF02C00CBE13E /* eidfilepreview */ = {
 			isa = PBXGroup;
 			children = (
@@ -575,12 +584,18 @@
 				TargetAttributes = {
 					659FFC3B1AE9360D004CEC1F = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Automatic;
 					};
 					65BD08631CECB257000A30E4 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Automatic;
 					};
 					8BBDE3111B3BF02C00CBE13E = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -931,10 +946,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				INFOPLIST_FILE = "eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -942,10 +961,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				INFOPLIST_FILE = "eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -953,9 +976,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -970,9 +996,10 @@
 					"${PROJECT_DIR}/../support/ossl/openssl",
 					"${PROJECT_DIR}/../support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -983,9 +1010,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -999,9 +1029,10 @@
 					"${PROJECT_DIR}/../support/ossl/openssl",
 					"${PROJECT_DIR}/../support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1011,7 +1042,10 @@
 		8BBDE31C1B3BF02C00CBE13E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1021,6 +1055,7 @@
 				INSTALL_PATH = /Library/QuickLook;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Debug;
@@ -1028,12 +1063,16 @@
 		8BBDE31D1B3BF02C00CBE13E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = eidfilepreview/Info.plist;
 				INSTALL_PATH = /Library/QuickLook;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Release;
