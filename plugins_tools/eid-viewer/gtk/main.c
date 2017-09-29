@@ -422,7 +422,11 @@ void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
 static gboolean show_menu(GtkWidget* widget, GdkEvent* event, gpointer user_data) {
 	GtkMenu* menu = GTK_MENU(gtk_builder_get_object(builder, "certmenu"));
 	if(event->button.button == 3) { // RMB click
+#if GTK_CHECK_VERSION(3, 22, 0)
+		gtk_menu_popup_at_pointer(menu, event);
+#else
 		gtk_menu_popup(menu, NULL, NULL, NULL, NULL, event->button.button, event->button.time);
+#endif
 	}
 	return FALSE;
 }
