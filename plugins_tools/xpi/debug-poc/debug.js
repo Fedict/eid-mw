@@ -1,5 +1,5 @@
 function postmsg() {
-  $('#testResult').html("<div class='row'><div class='col-xs-11'>eID add-on installed</div><div class='col-xs-1'><span class='glyphicon glyphicon-remove text-danger'></span></div></div><div class='jumbotron'><h1>Add-on not found</h1><p>Solution: <a href='https://addons.mozilla.org/en-US/firefox/addon/belgium-eid/'>Install the add-on</a></p><p><small>Note: it may also be that detecting the add-on is taking longer than expected. Give it a moment...</small></p></div>");
+  $('#testResult').html("<div class='row'><div class='col-xs-11'>eID add-on installed</div><div class='col-xs-1'><span class='glyphicon glyphicon-remove text-danger'></span></div></div><div class='jumbotron'><h1>Waiting for add-on...</h1><p>This should not take more than a few seconds. If it does, that means the add-on is not installed. In that case, the solution is to <a href='https://addons.mozilla.org/en-US/firefox/addon/belgium-eid/'>install the add-on</a>.</p></div>");
   if(typeof(be) !== 'undefined') {
     if(typeof(be.fedict) !== 'undefined') {
       if(typeof(be.fedict.belgiumeid) !== 'undefined') {
