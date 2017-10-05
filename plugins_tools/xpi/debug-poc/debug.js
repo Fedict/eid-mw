@@ -1,5 +1,4 @@
 function postmsg() {
-  $('#command').text("working...");
   $('#testResult').html("<div class='row'><div class='col-xs-11'>eID add-on installed</div><div class='col-xs-1'><span class='glyphicon glyphicon-remove text-danger'></span></div></div><div class='jumbotron'><h1>Add-on not found</h1><p>Solution: <a href='https://addons.mozilla.org/en-US/firefox/addon/belgium-eid/'>Install the add-on</a></p><p><small>Note: it may also be that detecting the add-on is taking longer than expected. Give it a moment...</small></p></div>");
   if(typeof(be) !== 'undefined') {
     if(typeof(be.fedict) !== 'undefined') {
@@ -9,7 +8,9 @@ function postmsg() {
         }
       }
     }
+    $('#command').text('Redo the test');
   } else {
+    $('#command').text("working...");
     window.postMessage({
       target: "belgiumeid@eid.belgium.be",
       query: "get-all"
