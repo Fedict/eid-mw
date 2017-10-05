@@ -1,19 +1,34 @@
-if(typeof browser.pkcs11 !== 'undefined') {
-  browser.pkcs11.isModuleInstalled("beidpkcs11").then(res => {
-    console.log("isModuleInstalled result", res)
-    if (!res) {
-      browser.pkcs11.installModule("beidpkcs11", 0x1<<28).then(res => console.log("installModule result", res)).catch(err => console.error("installModule error", err));
+async function installPKCS11Module() {
+  if(typeof browser.pkcs11 !== 'undefined') {
+    var res;
+    try {
+      res = await browser.pkcs11.isModuleInstalled("beidpkcs11");
+      console.log("module installed: ", res);
+    } catch (err) {
+      browser.notifications.onClicked.addListener(function(n) {
+        browser.tabs.create({url: browser.i18n.getMessage("installUrl")});
+      });
+      browser.notifications.create({
+        "type": "basic",
+        "title": browser.i18n.getMessage("noMiddlewareFoundTitle"),
+        "message": browser.i18n.getMessage("noMiddlewareFoundContent"),
+      });
     }
-  }).catch(err => {
-    browser.notifications.onClicked.addListener(function(n) {
-      browser.tabs.create({url: browser.i18n.getMessage("installUrl")});
-    });
-    browser.notifications.create({
-      "type": "basic",
-      "title": browser.i18n.getMessage("noMiddlewareFoundTitle"),
-      "message": browser.i18n.getMessage("noMiddlewareFoundContent"),
-    });
-  });
+    if(res) {
+      return;
+    }
+    try {
+      res = await browser.pkcs11.installModule("beidpkcs11", 0x1<<28);
+      console.log("installModule result: ", res);
+    } catch(err) {
+      console.error("installModule error: ", err);
+      browser.notifications.create({
+        "type": "basic",
+        "title": browser.i18n.getMessage("installFailedTitle"),
+        "message": browser.i18n.getMessage("installFailedContent"),
+      });
+    }
+  }
 }
 
 function connected(port) {
@@ -43,4 +58,5 @@ function connected(port) {
   port.onMessage.addListener(messageReceived);
 }
 
+installPKCS11Module();
 browser.runtime.onConnect.addListener(connected);
