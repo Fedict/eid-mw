@@ -1,0 +1,17 @@
+{
+  "extensionName": {
+    "message": "eID Belgium"
+  },
+  "extensionDescription": {
+    "message": "Use the Belgian electronic identity card (eID) in Firefox"
+  },
+  "noMiddlewareFoundTitle": {
+    "message": "eID software not found"
+  },
+  "noMiddlewareFoundContent": {
+    "message": "The configuration of the Belgian electronic identity card in Firefox has failed. Is the eID software installed?"
+  },
+  "installUrl": {
+    "message": "https://eid.belgium.be/en"
+  }
+}
