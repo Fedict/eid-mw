@@ -35,11 +35,13 @@ window.addEventListener("message", function(m) {
         if(slots > 0) {
           var foundAnyToken = false;
           for (let slot of m.data.message.slots) {
-            let hasToken = (slot.token != null ? "ok text-success" : (slots > 1 ? "remove text-warning" : "remove text-danger"));
-            if (hasToken === "ok text-success") {
-              foundAnyToken = true;
+            if(slot.name !== String.raw`\\PnP\Notification`) {
+              let hasToken = (slot.name != null ? "ok text-success" : (slots > 1 ? "remove text-warning" : "remove text-danger"));
+              if (hasToken === "ok text-success") {
+                foundAnyToken = true;
+              }
+              $(`<div class='row'><div class='col-xs-11'>Found a card in card reader named ${slot.name}?</div><div class='col-xs-1'><span class='glyphicon glyphicon-${hasToken}'></span></div></div>`).appendTo("#testResult");
             }
-            $(`<div class='row'><div class='col-xs-11'>Found a card in card reader named ${slot.name}?</div><div class='col-xs-1'><span class='glyphicon glyphicon-${hasToken}'></span></div></div>`).appendTo("#testResult");
           }
           if(slots > 1) {
             $("<div class='row'><div class='col-xs-11'>Found any card at all?</div><div class='col-xs-1'><span class='glyphicon glyphicon-" + (foundAnyToken ? "ok text-success" : "remove text-danger") + "'></span></div></div>").appendTo("#testResult");
