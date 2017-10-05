@@ -3,14 +3,14 @@
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "homepage_url": "https://eid.belgium.be/",
-  "version": "1.0",
+  "version": "1.0.24",
 
   "permissions": [ "pkcs11", "notifications" ],
 
   "background": { "scripts": ["background-script.js"] },
   "applications": {
     "gecko": {
-      "id": "beid-test-webext@fedict.be"
+      "id": "belgiumeid@eid.belgium.be"
     }
   },
   "content_scripts": [
