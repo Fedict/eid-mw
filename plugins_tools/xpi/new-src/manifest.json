@@ -11,6 +11,7 @@
   "applications": {
     "gecko": {
       "id": "belgiumeid@eid.belgium.be"
+      "strict_min_version": "57.0"
     }
   },
   "content_scripts": [
