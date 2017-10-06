@@ -37,7 +37,7 @@ window.addEventListener("message", function(m) {
           var foundAnyToken = false;
           for (let slot of m.data.message.slots) {
             if(slot.name !== String.raw`\\PnP\Notification`) {
-              let hasToken = (slot.name != null ? "ok text-success" : (slots > 1 ? "remove text-warning" : "remove text-danger"));
+              let hasToken = (slot.token !== null ? "ok text-success" : (slots > 1 ? "remove text-warning" : "remove text-danger"));
               if (hasToken === "ok text-success") {
                 foundAnyToken = true;
               }
