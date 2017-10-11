@@ -3,8 +3,8 @@
 
 
 @SET BASE_VERSION1=4
-@SET BASE_VERSION2=2
-@SET BASE_VERSION3=11
+@SET BASE_VERSION2=3
+@SET BASE_VERSION3=2
 @SET YEAR=2017
 
 @FOR /F "tokens=1" %%i in ('"C:\Program Files (x86)\Git\bin\git.exe" rev-list --count HEAD') do @SET EIDMW_REVISION=%%i
