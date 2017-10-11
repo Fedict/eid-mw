@@ -1,4 +1,4 @@
-#include <ole2.h>
+//#include <ole2.h>
 #include <xmllite.h>
 #include <stdio.h>
 #include <shlwapi.h>
