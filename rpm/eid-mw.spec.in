@@ -158,6 +158,7 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
 %{_datadir}/p11-kit/
+%{_libdir}/mozilla/pkcs11-modules/beidpkcs11.json
 
 %files devel
 %defattr(-, root, root, 0755)

@@ -1,0 +1,7 @@
+{
+  "name": "beidpkcs11",
+  "description": "Belgium eID PKCS#11 module",
+  "path": "libbeidpkcs11.so",
+  "type": "pkcs11",
+  "allowed_extensions": "belgiumeid@eid.belgium.be"
+}
