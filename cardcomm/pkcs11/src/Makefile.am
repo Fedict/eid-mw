@@ -200,4 +200,7 @@ beid_spr_changepin_SOURCES = dialogs/dialogsgtk/parent.c dialogs/dialogsgtk/beid
 beid_spr_changepin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../common/dialogs -I$(dialogsdir)/dialogs @GTK_CFLAGS@ -DDATAROOTDIR='"$(datarootdir)"'
 beid_spr_changepin_LDADD = @GTK_LIBS@
 
+pkcs11_manifestdir = $(prefix)/lib/mozilla/pkcs11-modules
+pkcs11_manifest_DATA = beidpkcs11.json
+
 pkgconfig_DATA=libbeidpkcs11.pc
