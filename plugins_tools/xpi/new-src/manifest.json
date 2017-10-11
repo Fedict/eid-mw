@@ -10,7 +10,7 @@
   "background": { "scripts": ["background-script.js"] },
   "applications": {
     "gecko": {
-      "id": "belgiumeid@eid.belgium.be"
+      "id": "belgiumeid@eid.belgium.be",
       "strict_min_version": "57.0"
     }
   },
