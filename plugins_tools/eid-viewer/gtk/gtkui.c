@@ -33,7 +33,7 @@ void n(GtkMenuItem* item, gpointer user_data) { \
 }
 
 #if !GTK_CHECK_VERSION(3,22,0)
-#define gtk_show_uri_on_window(parent,uri,timestamp,error) gtk_show_uri(gtk_widget_get_screen(parent),uri,timestamp,error)
+#define gtk_show_uri_on_window(parent,uri,timestamp,error) gtk_show_uri(gtk_widget_get_screen(GTK_WIDGET(parent)),uri,timestamp,error)
 #endif
 
 static enum eid_vwr_langs curlang = EID_VWR_LANG_NONE;
@@ -337,9 +337,9 @@ void validate_toggle(gpointer event_source, gpointer user_data G_GNUC_UNUSED) {
 void showurl(GtkMenuItem *item, gpointer user_data) {
 	GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
 	if(strcmp((gchar*)user_data, "faq") == 0) {
-		gtk_show_uri_on_window(window, "http://faq.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
+		gtk_show_uri_on_window(GTK_WINDOW(window), "http://faq.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
 	} else {
-		gtk_show_uri_on_window(window, "http://test.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
+		gtk_show_uri_on_window(GTK_WINDOW(window), "http://test.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
 	}
 }
 
