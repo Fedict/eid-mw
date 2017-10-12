@@ -12,7 +12,7 @@
 		<key>BundleOverwriteAction</key>
 		<string>upgrade</string>
 		<key>RootRelativeBundlePath</key>
-		<string>Library/Belgium Identity Card/BEIDTokenApp.app</string>
+		<string>Applications/BEIDToken.app</string>
 	</dict>
 </array>
 </plist>

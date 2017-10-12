@@ -9,10 +9,13 @@
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
 @end
 
 @implementation AppDelegate
-
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+	return YES;
+}
 
 
 @end

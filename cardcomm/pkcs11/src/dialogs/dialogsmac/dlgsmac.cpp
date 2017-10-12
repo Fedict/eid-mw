@@ -25,7 +25,7 @@
 #include "errno.h"
 	
 #include "../dialogs.h"
-#include "../langUtil.h"
+#include "../langutil.h"
 	
 #include <map>
 	
@@ -37,8 +37,10 @@
 #include <CoreFoundation/CFNumber.h>
 #include <CoreFoundation/CFUserNotification.h>
 #include <CoreFoundation/CFBundle.h>
-	using namespace eIDMW;
- 
+	
+using namespace eIDMW;
+
+ 
 #define THROW_ERROR_IF_NULL(a) if(a==NULL){throw CMWEXCEPTION(EIDMW_ERR_UNKNOWN);}
 #define THROW_ERROR_IF_NON_ZERO(a) if(a!=0){throw CMWEXCEPTION(EIDMW_ERR_UNKNOWN);}
 	
@@ -47,77 +49,128 @@
  *       DIALOGS
  ************************/ 
 #define BEID_MAX_MESSAGE_ARRAY_LEN 8
-typedef std::map < unsigned long, CFUserNotificationRef > TD_MCPINPAD_MAP;
 
- TD_MCPINPAD_MAP mc_pinpad_map;
-unsigned long mc_pinpad_map_index = 0;
- CFMutableStringRef CreateStringFromWChar(const wchar_t * wcsMessage) 
+typedef std::map < unsigned long, CFUserNotificationRef > TD_MCPINPAD_MAP;
+
+
+ 
+TD_MCPINPAD_MAP mc_pinpad_map;
+
+unsigned long mc_pinpad_map_index = 0;
+
+ 
+CFMutableStringRef CreateStringFromWChar(const wchar_t * wcsMessage) 
 {
-	if (wcsMessage == NULL)
-		return NULL;
-	 CFStringRef utf8String =
-		CFStringCreateWithBytes(kCFAllocatorDefault,
-					(const UInt8 *) wcsMessage,
-					wcslen(wcsMessage) *
+	
+if (wcsMessage == NULL)
+		
+return NULL;
+	
+ 
+CFStringRef utf8String =
+		CFStringCreateWithBytes(
+kCFAllocatorDefault,
+					
+(const UInt8 *) wcsMessage,
+					
+wcslen(wcsMessage) *
 					sizeof(wchar_t) / sizeof(UInt8),
-					kCFStringEncodingUTF32LE, false );
-	THROW_ERROR_IF_NULL(utf8String);
-	 CFMutableStringRef toBeStrippedString =
+					
+kCFStringEncodingUTF32LE, 
+false 
+);
+	
+THROW_ERROR_IF_NULL(utf8String);
+	
+ 
+CFMutableStringRef toBeStrippedString =
 		CFStringCreateMutableCopy(kCFAllocatorDefault, 0, utf8String);
-	CFStringFindAndReplace(toBeStrippedString, CFSTR("&"), CFSTR(""),
+	
+CFStringFindAndReplace(toBeStrippedString, CFSTR("&"), CFSTR(""),
 				CFRangeMake(0,
 					    CFStringGetLength
 					    (toBeStrippedString)), NULL);
-	CFRelease(utf8String);
-	 return toBeStrippedString;
-}
+	
+CFRelease(utf8String);
+	
+ 
+return toBeStrippedString;
 
- void AppendToStringFromWChar(CFMutableStringRef mutableString,
+}
+
+
+ 
+void AppendToStringFromWChar(CFMutableStringRef mutableString,
 				const wchar_t * wcsMessage) 
 {
-	if (wcsMessage != NULL)
+	
+if (wcsMessage != NULL)
 		
 	{
-		CFMutableStringRef str = CreateStringFromWChar(wcsMessage);
-		CFStringAppend(mutableString, str);
-		CFRelease(str);
-	}
-}
+		
+CFMutableStringRef str = CreateStringFromWChar(wcsMessage);
+		
+CFStringAppend(mutableString, str);
+		
+CFRelease(str);
+	
+}
 
- void AppendButtonToArrays(unsigned char ulButtons,
+}
+
+
+ 
+void AppendButtonToArrays(unsigned char ulButtons,
 			     unsigned char ulButtonToAdd,
-			     CFMutableArrayRef mutArrayKeys,
+			     
+CFMutableArrayRef mutArrayKeys,
 			     CFMutableArrayRef mutArrayValues,
-			     CFStringRef buttonTitleKey) 
+			     
+CFStringRef buttonTitleKey) 
 {
-	if (ulButtonToAdd & ulButtons)
+	
+if (ulButtonToAdd & ulButtons)
 		
 	{
-		CFArrayAppendValue(mutArrayKeys, buttonTitleKey);
+		
+CFArrayAppendValue(mutArrayKeys, buttonTitleKey);
 		
 			//DLG_BUTTON_ALWAYS | DLG_BUTTON_YES | DLG_BUTTON_NO
 			switch (ulButtonToAdd)
 		{
-			case DLG_BUTTON_YES:
-				CFArrayAppendValue(mutArrayValues,
+			
+case DLG_BUTTON_YES:
+				
+CFArrayAppendValue(mutArrayValues,
 						    CreateStringFromWChar
 						    (GETSTRING_DLG(Yes)));
-				break;
-			case DLG_BUTTON_NO:
-				CFArrayAppendValue(mutArrayValues,
+				
+break;
+			
+case DLG_BUTTON_NO:
+				
+CFArrayAppendValue(mutArrayValues,
 						    CreateStringFromWChar
 						    (GETSTRING_DLG(No)));
-				break;
-			default:
-				CFArrayAppendValue(mutArrayValues,
+				
+break;
+			
+default:
+				
+CFArrayAppendValue(mutArrayValues,
 						    CreateStringFromWChar
 						    (GETSTRING_DLG(Ok)));
-				break;
-		}
-	}
-}
+				
+break;
+		
+}
+	
+}
 
- 
+}
+
+
+ 
 //keep in mind that you need to release the return value of this function
 	CFDictionaryRef BeidCreateDictFromArrays(const void **keys,
 						 const void **values,
@@ -126,50 +179,91 @@
 						 CFMutableArrayRef
 						 mutArrayValues) 
 {
-	CFRange range;
-	range.length = CFArrayGetCount(mutArrayValues);
-	range.location = 0;
-	CFArrayGetValues(mutArrayValues, range, (const void **) values);
-	 range.length = CFArrayGetCount(mutArrayKeys);
-	range.location = 0;
-	CFArrayGetValues(mutArrayKeys, range, (const void **) keys);
-	 CFDictionaryRef dictRef =
+	
+CFRange range;
+	
+range.length = CFArrayGetCount(mutArrayValues);
+	
+range.location = 0;
+	
+CFArrayGetValues(mutArrayValues, range, (const void **) values);
+	
+ 
+range.length = CFArrayGetCount(mutArrayKeys);
+	
+range.location = 0;
+	
+CFArrayGetValues(mutArrayKeys, range, (const void **) keys);
+	
+ 
+CFDictionaryRef dictRef =
 		CFDictionaryCreate(0, keys, values,
 				   CFArrayGetCount(mutArrayKeys), NULL, NULL);
-	 THROW_ERROR_IF_NULL(dictRef);
-	 return dictRef;
-}
+	
+ 
+THROW_ERROR_IF_NULL(dictRef);
+	
+ 
+return dictRef;
 
- DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
-				       DlgPinUsage usage,
+}
+
+
+ 
+DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
+				       
+DlgPinUsage usage,
 				       const wchar_t * wsPinName,
-				       DlgPinInfo pinInfo, wchar_t * wsPin,
+				       
+DlgPinInfo pinInfo, wchar_t * wsPin,
 				       unsigned long ulPinBufferLen) 
 {
-	DlgRet lRet = DLG_CANCEL;
-	 std::string csReadableFilePath;
-	const wchar_t *wcsTitle = NULL;
+	
+DlgRet lRet = DLG_CANCEL;
+	
+ 
+std::string csReadableFilePath;
+	
+const wchar_t *wcsTitle = NULL;
 
-	CFUserNotificationRef userNotificationRef = NULL;
-	SInt32 error = 0;
-	 CFOptionFlags optionFlags = CFUserNotificationSecureTextField(0);
-	CFOptionFlags responseFlags = 0;
-	 void *keys[BEID_MAX_MESSAGE_ARRAY_LEN];	//to store the keys
+	
+CFUserNotificationRef userNotificationRef = NULL;
+	
+SInt32 error = 0;
+	
+ 
+CFOptionFlags optionFlags = CFUserNotificationSecureTextField(0);
+	
+CFOptionFlags responseFlags = 0;
+	
+ 
+void *keys[BEID_MAX_MESSAGE_ARRAY_LEN];	//to store the keys
 	void *values[BEID_MAX_MESSAGE_ARRAY_LEN];	//to store the values
 	CFMutableArrayRef mutArrayKeys = NULL;	//to create the array of keys
 	CFMutableArrayRef mutArrayValues = NULL;	//to create the array of values
 
-	CFStringRef IconURLString = NULL;
-	CFURLRef urlRef = NULL;
-	CFStringRef headerString = NULL;
-	CFMutableStringRef titleString = NULL;
-	CFStringRef messageString = NULL;
-	CFDictionaryRef parameters = NULL;
-	CFStringRef defaultButtonString = NULL;
-	CFStringRef alternateButtonString = NULL;
-	 try
+	
+CFStringRef IconURLString = NULL;
+	
+CFURLRef urlRef = NULL;
+	
+CFStringRef headerString = NULL;
+	
+CFMutableStringRef titleString = NULL;
+	
+CFStringRef messageString = NULL;
+	
+CFDictionaryRef parameters = NULL;
+	
+CFStringRef defaultButtonString = NULL;
+	
+CFStringRef alternateButtonString = NULL;
+	
+ 
+try
 	{
-		 
+		
+ 
 			//create header text
 			headerString =
 			CreateStringFromWChar(GETSTRING_DLG(EnterYourPin));
@@ -185,21 +279,31 @@
 			//create message text
 			messageString =
 			CreateStringFromWChar(GETSTRING_DLG(Pin));
-		 mutArrayKeys = CFArrayCreateMutable(kCFAllocatorDefault, BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
+		
+ 
+mutArrayKeys = CFArrayCreateMutable(kCFAllocatorDefault, 
+BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
 						       NULL	//const CFArrayCallBacks *callBacks
 			);
-		mutArrayValues = CFArrayCreateMutable(kCFAllocatorDefault, BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
+		
+mutArrayValues = CFArrayCreateMutable(kCFAllocatorDefault, 
+BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
 						       NULL	//const CFArrayCallBacks *callBacks
 			);
-		 
+		
+ 
 			//CFStringRef bundleID = CFSTR("beid.pkcs11");
 			//CFBundleRef bundle = CFBundleGetBundleWithIdentifier(bundleID);
-			if (usage == DLG_PIN_SIGN)
+			
+if (usage == DLG_PIN_SIGN)
 			
 		{
-			optionFlags |= kCFUserNotificationCautionAlertLevel;
-			wcsTitle = GETSTRING_DLG(SigningWith);
-			IconURLString =
+			
+optionFlags |= kCFUserNotificationCautionAlertLevel;
+			
+wcsTitle = GETSTRING_DLG(SigningWith);
+			
+IconURLString =
 				CreateStringFromWChar
 				(L"/usr/local/lib/beid-pkcs11.bundle/Contents/Resources/ICO_CARD_DIGSIG_128x128.png");
 			
@@ -209,51 +313,68 @@
 		else
 			
 		{
-			optionFlags |= kCFUserNotificationPlainAlertLevel;
-			wcsTitle = GETSTRING_DLG(Asking);
-			IconURLString =
+			
+optionFlags |= kCFUserNotificationPlainAlertLevel;
+			
+wcsTitle = GETSTRING_DLG(Asking);
+			
+IconURLString =
 				CreateStringFromWChar
 				(L"/usr/local/lib/beid-pkcs11.bundle/Contents/Resources/ICO_CARD_PIN_128x128.png");
 			
 				//urlRef = CFBundleCopyResourceURL(bundle, CFSTR("ICO_CARD_PIN_128x128"), CFSTR("png"), NULL);
 		}
-		urlRef =
+		
+urlRef =
 			CFURLCreateWithString(kCFAllocatorDefault,
 					      IconURLString, NULL);
-		 
+		
+ 
 			//need room for space and pin name
 			if (wcslen(wcsTitle) >= 250)
-			return DLG_ERR;
-		 titleString =
+			
+return DLG_ERR;
+		
+ 
+titleString =
 			CFStringCreateMutable(kCFAllocatorDefault, 0);
-		AppendToStringFromWChar(titleString, wcsTitle);
-		AppendToStringFromWChar(titleString, L" ");
-		AppendToStringFromWChar(titleString, wsPinName);
-		 
+		
+AppendToStringFromWChar(titleString, wcsTitle);
+		
+AppendToStringFromWChar(titleString, L" ");
+		
+AppendToStringFromWChar(titleString, wsPinName);
+		
+ 
 			//always display header
 			CFArrayAppendValue(mutArrayKeys,
 					   kCFUserNotificationAlertHeaderKey);
-		CFArrayAppendValue(mutArrayValues, headerString);
+		
+CFArrayAppendValue(mutArrayValues, headerString);
 		
 			//always display tittle
 			CFArrayAppendValue(mutArrayKeys,
 					   kCFUserNotificationAlertMessageKey);
-		CFArrayAppendValue(mutArrayValues, titleString);
+		
+CFArrayAppendValue(mutArrayValues, titleString);
 		
 			//always display textbox tittle
 			CFArrayAppendValue(mutArrayKeys,
 					   kCFUserNotificationTextFieldTitlesKey);
-		CFArrayAppendValue(mutArrayValues, messageString);
+		
+CFArrayAppendValue(mutArrayValues, messageString);
 		
 			//always display default button text
 			CFArrayAppendValue(mutArrayKeys,
 					   kCFUserNotificationDefaultButtonTitleKey);
-		CFArrayAppendValue(mutArrayValues, defaultButtonString);
+		
+CFArrayAppendValue(mutArrayValues, defaultButtonString);
 		
 			//always display default button text
 			CFArrayAppendValue(mutArrayKeys,
 					   kCFUserNotificationAlternateButtonTitleKey);
-		CFArrayAppendValue(mutArrayValues, alternateButtonString);
+		
+CFArrayAppendValue(mutArrayValues, alternateButtonString);
 		
 			//add url if it exists
 			if (urlRef != NULL)
@@ -263,31 +384,49 @@
 				//add the image as icon
 				CFArrayAppendValue(mutArrayKeys,
 						   kCFUserNotificationIconURLKey);
-			CFArrayAppendValue(mutArrayValues, urlRef);
-		}
-		  parameters =
+			
+CFArrayAppendValue(mutArrayValues, urlRef);
+		
+}
+		
+ 
+ 
+parameters =
 			BeidCreateDictFromArrays((const void **) keys,
 						 (const void **) values,
 						 mutArrayKeys,
 						 mutArrayValues);
-		 userNotificationRef = CFUserNotificationCreate(kCFAllocatorDefault,	//CFAllocatorRef allocator,
+		
+ 
+userNotificationRef = CFUserNotificationCreate(kCFAllocatorDefault,	//CFAllocatorRef allocator,
 								  30,	//CFTimeInterval timeout,
 								  optionFlags,	//CFOptionFlags flags,
 								  &error,	//SInt32 *error,
 								  parameters);	//CFDictionaryRef dictionary
-		THROW_ERROR_IF_NULL(userNotificationRef);
-		THROW_ERROR_IF_NON_ZERO(error);
-		 error = CFUserNotificationReceiveResponse(userNotificationRef,	//CFUserNotificationRef userNotification,
+		
+THROW_ERROR_IF_NULL(userNotificationRef);
+		
+THROW_ERROR_IF_NON_ZERO(error);
+		
+ 
+error = CFUserNotificationReceiveResponse(
+userNotificationRef,	//CFUserNotificationRef userNotification,
 							     0,	//CFTimeInterval timeout,
 							     &responseFlags	//CFOptionFlags responseFlags
 			);
-		CFStringRef PinValue = NULL;
-		CFIndex length;
-		 switch (responseFlags & 0x03)
+		
+CFStringRef PinValue = NULL;
+		
+CFIndex length;
+		
+ 
+switch (responseFlags & 0x03)
 			
 		{
-			case kCFUserNotificationDefaultResponse:
-				lRet = DLG_OK;
+			
+case kCFUserNotificationDefaultResponse:
+				
+lRet = DLG_OK;
 				
 					//get the PIN
 					PinValue =
@@ -295,527 +434,936 @@
 					(userNotificationRef,
 					 kCFUserNotificationTextFieldValuesKey,
 					 0);
-				 if ((length =
+				
+ 
+if ((length =
 					CFStringGetLength(PinValue)) >=
 				       ulPinBufferLen)
 				{
 					
 						//PIN entered is too long, we'll return an error (need 1 char for string termination)
 						lRet = DLG_ERR;
-				} else
+				
+} else
 				{
-					char *chars =
+					
+char *chars =
 						(char *) malloc(length * 2);
-					CFStringGetCString(PinValue, chars,
+					
+CFStringGetCString(PinValue, chars,
 							    length * 2,
 							    kCFStringEncodingUTF8);
-					mbstowcs(wsPin, chars,
+					
+mbstowcs(wsPin, chars,
 						  ulPinBufferLen);
-					free(chars);
-				} break;
-			case kCFUserNotificationAlternateResponse:
-				lRet = DLG_CANCEL;
-				break;
-			case kCFUserNotificationOtherResponse:
-				lRet = DLG_RETRY;
-				break;
-			case kCFUserNotificationCancelResponse:
-				lRet = DLG_CANCEL;
-				break;
-			default:
-				lRet = DLG_CANCEL;
-		}
-		CFRelease(userNotificationRef);
-		userNotificationRef = NULL;
-	}
+					
+free(chars);
+				
+} 
+break;
+			
+case kCFUserNotificationAlternateResponse:
+				
+lRet = DLG_CANCEL;
+				
+break;
+			
+case kCFUserNotificationOtherResponse:
+				
+lRet = DLG_RETRY;
+				
+break;
+			
+case kCFUserNotificationCancelResponse:
+				
+lRet = DLG_CANCEL;
+				
+break;
+			
+default:
+				
+lRet = DLG_CANCEL;
+		
+}
+		
+CFRelease(userNotificationRef);
+		
+userNotificationRef = NULL;
+	
+}
 	catch( ...)
 	{
-		 lRet = DLG_ERR;
-	}
-	 
+		
+ 
+lRet = DLG_ERR;
+	
+}
+	
+ 
 		//cleanup
 		if (defaultButtonString != NULL)
-		CFRelease(defaultButtonString);
-	if (alternateButtonString != NULL)
-		CFRelease(alternateButtonString);
-	if (userNotificationRef != NULL)
+		
+CFRelease(defaultButtonString);
+	
+if (alternateButtonString != NULL)
+		
+CFRelease(alternateButtonString);
+	
+if (userNotificationRef != NULL)
 	{
-		CFUserNotificationCancel(userNotificationRef);
-		CFRelease(userNotificationRef);
-	}
-	if (urlRef != NULL)
-		CFRelease(urlRef);
-	if (IconURLString != NULL)
-		CFRelease(IconURLString);
-	if (userNotificationRef != NULL)
-		CFRelease(userNotificationRef);
-	if (parameters != NULL)
-		CFRelease(parameters);
-	if (messageString != NULL)
-		CFRelease(messageString);
-	if (titleString != NULL)
-		CFRelease(titleString);
-	if (headerString != NULL)
-		CFRelease(headerString);
-	 return lRet;
- }
+		
+CFUserNotificationCancel(userNotificationRef);
+		
+CFRelease(userNotificationRef);
+	
+}
+	
+if (urlRef != NULL)
+		
+CFRelease(urlRef);
+	
+if (IconURLString != NULL)
+		
+CFRelease(IconURLString);
+	
+if (userNotificationRef != NULL)
+		
+CFRelease(userNotificationRef);
+	
+if (parameters != NULL)
+		
+CFRelease(parameters);
+	
+if (messageString != NULL)
+		
+CFRelease(messageString);
+	
+if (titleString != NULL)
+		
+CFRelease(titleString);
+	
+if (headerString != NULL)
+		
+CFRelease(headerString);
+	
+ 
+return lRet;
 
- DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
-					DlgPinUsage usage,
+ 
+}
+
+
+ 
+DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
+					
+DlgPinUsage usage,
 					const wchar_t * wsPinName,
-					DlgPinInfo pin1Info,
+					
+DlgPinInfo pin1Info,
 					wchar_t * wsPin1,
 					unsigned long ulPin1BufferLen,
-					DlgPinInfo pin2Info,
+					
+DlgPinInfo pin2Info,
 					wchar_t * wsPin2,
 					unsigned long ulPin2BufferLen) 
 {
-	DlgRet lRet = DLG_CANCEL;
-	try
+	
+DlgRet lRet = DLG_CANCEL;
+	
+try
 	{
-	} catch( ...)
+	
+} catch( ...)
 	{
-		return DLG_ERR;
-	}
-	return lRet;
-}
+		
+return DLG_ERR;
+	
+}
+	
+return lRet;
 
-  DLGS_EXPORT DlgRet eIDMW::DlgBadPin(DlgPinUsage usage,
+}
+
+
+ 
+ 
+DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
+DlgPinUsage usage,
 					 const wchar_t * wsPinName,
-					 unsigned long ulRemainingTries) 
+					 
+unsigned long ulRemainingTries) 
 {
-	DlgRet lRet = DLG_CANCEL;
-	 CFMutableStringRef headerString = NULL;
-	CFMutableStringRef titleString = NULL;
-	CFStringRef defButtonString = NULL;
-	CFStringRef altButtonString = NULL;
-	 std::string csReadableFilePath;
-	CFUserNotificationRef userNotificationRef = NULL;
-	SInt32 error = 0;
-	CFOptionFlags optionFlags;
-	CFOptionFlags responseFlags;
-	 optionFlags = kCFUserNotificationCautionAlertLevel;
-	CFMutableArrayRef mutArrayKeys = NULL;
-	CFMutableArrayRef mutArrayValues = NULL;
-	CFDictionaryRef parameters = NULL;
-	 void *keys[BEID_MAX_MESSAGE_ARRAY_LEN];
-	void *values[BEID_MAX_MESSAGE_ARRAY_LEN];
+	
+DlgRet lRet = DLG_CANCEL;
+	
+ 
+CFMutableStringRef headerString = NULL;
+	
+CFMutableStringRef titleString = NULL;
+	
+CFStringRef defButtonString = NULL;
+	
+CFStringRef altButtonString = NULL;
+	
+ 
+std::string csReadableFilePath;
+	
+CFUserNotificationRef userNotificationRef = NULL;
+	
+SInt32 error = 0;
+	
+CFOptionFlags optionFlags;
+	
+CFOptionFlags responseFlags;
+	
+ 
+optionFlags = kCFUserNotificationCautionAlertLevel;
+	
+CFMutableArrayRef mutArrayKeys = NULL;
+	
+CFMutableArrayRef mutArrayValues = NULL;
+	
+CFDictionaryRef parameters = NULL;
+	
+ 
+void *keys[BEID_MAX_MESSAGE_ARRAY_LEN];
+	
+void *values[BEID_MAX_MESSAGE_ARRAY_LEN];
 
-	 try
+	
+ 
+try
 	{
-		 mutArrayKeys = CFArrayCreateMutable(kCFAllocatorDefault, BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
+		
+ 
+mutArrayKeys = CFArrayCreateMutable(kCFAllocatorDefault, 
+BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
 						       NULL	//const CFArrayCallBacks *callBacks
 			);
-		mutArrayValues = CFArrayCreateMutable(kCFAllocatorDefault, BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
+		
+mutArrayValues = CFArrayCreateMutable(kCFAllocatorDefault, 
+BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
 						       NULL	//const CFArrayCallBacks *callBacks
 			);
-		 
+		
+ 
 			//create header string
 			headerString =
 			CFStringCreateMutable(kCFAllocatorDefault, 0);
-		AppendToStringFromWChar(headerString,
+		
+AppendToStringFromWChar(headerString,
 					 GETSTRING_DLG(Notification));
-		CFStringAppend(headerString, CFSTR(": "));
-		AppendToStringFromWChar(headerString, GETSTRING_DLG(Bad));
-		CFStringAppend(headerString, CFSTR(" "));
-		AppendToStringFromWChar(headerString, wsPinName);
-		 
+		
+CFStringAppend(headerString, CFSTR(": "));
+		
+AppendToStringFromWChar(headerString, GETSTRING_DLG(Bad));
+		
+CFStringAppend(headerString, CFSTR(" "));
+		
+AppendToStringFromWChar(headerString, wsPinName);
+		
+ 
 			//create title string
 			titleString =
 			CFStringCreateMutable(kCFAllocatorDefault, 0);
-		AppendToStringFromWChar(titleString, GETSTRING_DLG(Bad));
-		CFStringAppend(titleString, CFSTR(" "));
-		AppendToStringFromWChar(titleString, wsPinName);
-		CFStringAppend(titleString, CFSTR(": "));
-		 CFDictionaryRef formatOptions = NULL;
-		CFStringAppendFormat(titleString, formatOptions,
+		
+AppendToStringFromWChar(titleString, GETSTRING_DLG(Bad));
+		
+CFStringAppend(titleString, CFSTR(" "));
+		
+AppendToStringFromWChar(titleString, wsPinName);
+		
+CFStringAppend(titleString, CFSTR(": "));
+		
+ 
+CFDictionaryRef formatOptions = NULL;
+		
+CFStringAppendFormat(titleString, formatOptions,
 				      CFSTR("%lu"), ulRemainingTries);
-		CFStringAppend(titleString, CFSTR(" "));
-		AppendToStringFromWChar(titleString,
+		
+CFStringAppend(titleString, CFSTR(" "));
+		
+AppendToStringFromWChar(titleString,
 					 GETSTRING_DLG(RemainingAttempts));
-		CFStringAppend(titleString, CFSTR("\n\n"));
-		 if (ulRemainingTries == 0)
+		
+CFStringAppend(titleString, CFSTR("\n\n"));
+		
+ 
+if (ulRemainingTries == 0)
 			
 		{
-			AppendToStringFromWChar(titleString, wsPinName);
-			CFStringAppend(titleString, CFSTR(" "));
-			AppendToStringFromWChar(titleString,
+			
+AppendToStringFromWChar(titleString, wsPinName);
+			
+CFStringAppend(titleString, CFSTR(" "));
+			
+AppendToStringFromWChar(titleString,
 						 GETSTRING_DLG(PinBlocked));
-			defButtonString =
+			
+defButtonString =
 				CreateStringFromWChar(GETSTRING_DLG(Ok));
-			 CFArrayAppendValue(mutArrayKeys,
+			
+ 
+CFArrayAppendValue(mutArrayKeys,
 					      kCFUserNotificationDefaultButtonTitleKey);
-			CFArrayAppendValue(mutArrayValues, defButtonString);
-		}
+			
+CFArrayAppendValue(mutArrayValues, defButtonString);
+		
+}
 		
 		else
 			
 		{
-			AppendToStringFromWChar(titleString,
+			
+AppendToStringFromWChar(titleString,
 						 GETSTRING_DLG
 						 (TryAgainOrCancel));
-			defButtonString =
+			
+defButtonString =
 				CreateStringFromWChar(GETSTRING_DLG(Cancel));
-			altButtonString =
+			
+altButtonString =
 				CreateStringFromWChar(GETSTRING_DLG(Retry));
-			 CFArrayAppendValue(mutArrayKeys,
+			
+ 
+CFArrayAppendValue(mutArrayKeys,
 					      kCFUserNotificationDefaultButtonTitleKey);
-			CFArrayAppendValue(mutArrayValues, defButtonString);
-			CFArrayAppendValue(mutArrayKeys,
+			
+CFArrayAppendValue(mutArrayValues, defButtonString);
+			
+CFArrayAppendValue(mutArrayKeys,
 					    kCFUserNotificationAlternateButtonTitleKey);
-			CFArrayAppendValue(mutArrayValues, altButtonString);
-		}
-		 CFArrayAppendValue(mutArrayKeys,
+			
+CFArrayAppendValue(mutArrayValues, altButtonString);
+		
+}
+		
+ 
+CFArrayAppendValue(mutArrayKeys,
 				      kCFUserNotificationAlertHeaderKey);
-		CFArrayAppendValue(mutArrayKeys,
+		
+CFArrayAppendValue(mutArrayKeys,
 				    kCFUserNotificationAlertMessageKey);
-		CFArrayAppendValue(mutArrayValues, headerString);
-		CFArrayAppendValue(mutArrayValues, titleString);
-		 parameters =
+		
+CFArrayAppendValue(mutArrayValues, headerString);
+		
+CFArrayAppendValue(mutArrayValues, titleString);
+		
+ 
+parameters =
 			BeidCreateDictFromArrays((const void **) keys,
 						 (const void **) values,
 						 mutArrayKeys,
 						 mutArrayValues);
-		 userNotificationRef = CFUserNotificationCreate(kCFAllocatorDefault,	//CFAllocatorRef allocator,
+		
+ 
+userNotificationRef = CFUserNotificationCreate(kCFAllocatorDefault,	//CFAllocatorRef allocator,
 								  30,	//CFTimeInterval timeout,
 								  optionFlags,	//CFOptionFlags flags,
 								  &error,	//SInt32 *error,
 								  parameters);	//CFDictionaryRef dictionary
 		THROW_ERROR_IF_NULL(userNotificationRef);
-		 error = CFUserNotificationReceiveResponse(userNotificationRef,	//CFUserNotificationRef userNotification,
+		
+ 
+error = CFUserNotificationReceiveResponse(
+userNotificationRef,	//CFUserNotificationRef userNotification,
 							     0,	//CFTimeInterval timeout,
 							     &responseFlags	//CFOptionFlags responseFlags
 			);
-		THROW_ERROR_IF_NON_ZERO(error);
-		 switch (responseFlags & 0x03)
+		
+THROW_ERROR_IF_NON_ZERO(error);
+		
+ 
+switch (responseFlags & 0x03)
 			
 		{
-			case kCFUserNotificationDefaultResponse:
-				lRet = DLG_OK;
-				break;
-			case kCFUserNotificationAlternateResponse:
-				lRet = DLG_CANCEL;
-				break;
-			case kCFUserNotificationOtherResponse:
-				lRet = DLG_RETRY;
-				break;
-			case kCFUserNotificationCancelResponse:
-				lRet = DLG_CANCEL;
-				break;
-			default:
-				lRet = DLG_CANCEL;
-		}
-	 }
+			
+case kCFUserNotificationDefaultResponse:
+				
+lRet = DLG_OK;
+				
+break;
+			
+case kCFUserNotificationAlternateResponse:
+				
+lRet = DLG_CANCEL;
+				
+break;
+			
+case kCFUserNotificationOtherResponse:
+				
+lRet = DLG_RETRY;
+				
+break;
+			
+case kCFUserNotificationCancelResponse:
+				
+lRet = DLG_CANCEL;
+				
+break;
+			
+default:
+				
+lRet = DLG_CANCEL;
+		
+}
+	
+ 
+}
 	catch( ...)
 	{
-		lRet = DLG_ERR;
-	}
-	if (mutArrayKeys != NULL)
-		CFRelease(mutArrayKeys);
-	if (mutArrayValues != NULL)
-		CFRelease(mutArrayValues);
-	if (userNotificationRef != NULL)
-		CFRelease(userNotificationRef);
-	if (parameters != NULL)
-		CFRelease(parameters);
-	if (headerString != NULL)
-		CFRelease(headerString);
-	if (titleString != NULL)
-		CFRelease(titleString);
-	if (defButtonString != NULL)
-		CFRelease(defButtonString);
-	if (altButtonString != NULL)
-		CFRelease(altButtonString);
-	return lRet;
- }
+		
+lRet = DLG_ERR;
+	
+}
+	
+if (mutArrayKeys != NULL)
+		
+CFRelease(mutArrayKeys);
+	
+if (mutArrayValues != NULL)
+		
+CFRelease(mutArrayValues);
+	
+if (userNotificationRef != NULL)
+		
+CFRelease(userNotificationRef);
+	
+if (parameters != NULL)
+		
+CFRelease(parameters);
+	
+if (headerString != NULL)
+		
+CFRelease(headerString);
+	
+if (titleString != NULL)
+		
+CFRelease(titleString);
+	
+if (defButtonString != NULL)
+		
+CFRelease(defButtonString);
+	
+if (altButtonString != NULL)
+		
+CFRelease(altButtonString);
+	
+return lRet;
 
-  
+ 
+}
+
+
+ 
+ 
 //DlgDisplayModal is only used as dialog askaccess at the moment,
 	DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
-						  DlgMessageID messageID,
+						  
+DlgMessageID messageID,
 						  const wchar_t * csMesg,
-						  unsigned char ulButtons,
+						  
+unsigned char ulButtons,
 						  unsigned char ulEnterButton,
-						  unsigned char
+						  
+unsigned char
 						  ulCancelButton) 
 {
-	DlgRet lRet = DLG_CANCEL;
-	 std::string csReadableFilePath;
-	CFUserNotificationRef userNotificationRef = NULL;
-	SInt32 error = 0;
-	CFOptionFlags optionFlags;
-	CFOptionFlags responseFlags;
-	CFStringRef tittleStrRef = NULL;
-	 void *keys[BEID_MAX_MESSAGE_ARRAY_LEN];	//to store the keys
+	
+DlgRet lRet = DLG_CANCEL;
+	
+ 
+std::string csReadableFilePath;
+	
+CFUserNotificationRef userNotificationRef = NULL;
+	
+SInt32 error = 0;
+	
+CFOptionFlags optionFlags;
+	
+CFOptionFlags responseFlags;
+	
+CFStringRef tittleStrRef = NULL;
+	
+ 
+void *keys[BEID_MAX_MESSAGE_ARRAY_LEN];	//to store the keys
 	void *values[BEID_MAX_MESSAGE_ARRAY_LEN];	//to store the values
 	CFMutableArrayRef mutArrayKeys = NULL;	//to create the array of keys
 	CFMutableArrayRef mutArrayValues = NULL;	//to create the array of values
 
-	CFRange range;
-	CFDictionaryRef parameters = NULL;
-	CFStringRef datacharRefBytes = NULL;
-	 try
+	
+CFRange range;
+	
+CFDictionaryRef parameters = NULL;
+	
+CFStringRef datacharRefBytes = NULL;
+	
+ 
+try
 	{
-		 mutArrayKeys = CFArrayCreateMutable(kCFAllocatorDefault, BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
+		
+ 
+mutArrayKeys = CFArrayCreateMutable(kCFAllocatorDefault, 
+BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
 						       NULL	//const CFArrayCallBacks *callBacks
 			);
-		 mutArrayValues = CFArrayCreateMutable(kCFAllocatorDefault, BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
+		
+ 
+mutArrayValues = CFArrayCreateMutable(kCFAllocatorDefault, 
+BEID_MAX_MESSAGE_ARRAY_LEN,	//CFIndex capacity,
 							 NULL	//const CFArrayCallBacks *callBacks
 			);
-		 switch (icon)
+		
+ 
+switch (icon)
 		{
-			case DLG_ICON_ERROR:
-				optionFlags =
+			
+case DLG_ICON_ERROR:
+				
+optionFlags =
 					kCFUserNotificationStopAlertLevel;
-				break;
-			case DLG_ICON_WARN:
-				optionFlags =
+				
+break;
+			
+case DLG_ICON_WARN:
+				
+optionFlags =
 					kCFUserNotificationCautionAlertLevel;
-				break;
-			case DLG_ICON_INFO:
-			case DLG_ICON_QUESTION:
-				optionFlags =
+				
+break;
+			
+case DLG_ICON_INFO:
+			
+case DLG_ICON_QUESTION:
+				
+optionFlags =
 					kCFUserNotificationNoteAlertLevel;
-				break;
-			case DLG_ICON_NONE:
-			default:
-				optionFlags =
+				
+break;
+			
+case DLG_ICON_NONE:
+			
+default:
+				
+optionFlags =
 					kCFUserNotificationPlainAlertLevel;
-				break;
-		}
-		 if (csMesg == NULL)
+				
+break;
+		
+}
+		
+ 
+if (csMesg == NULL)
 			
 		{
-			tittleStrRef = CreateStringFromWChar(L"");
-		}
+			
+tittleStrRef = CreateStringFromWChar(L"");
+		
+}
 		
 		else
 			
 		{
-			tittleStrRef = CreateStringFromWChar(csMesg);
-		}
-		std::wstring translatedMessage(CLang::
+			
+tittleStrRef = CreateStringFromWChar(csMesg);
+		
+}
+		
+std::wstring translatedMessage(CLang::
 						GetMessageFromID(messageID));
-		datacharRefBytes =
-			CFStringCreateWithBytes(kCFAllocatorDefault,
-						(const UInt8 *)
+		
+datacharRefBytes =
+			CFStringCreateWithBytes(
+kCFAllocatorDefault,
+						
+(const UInt8 *)
 						translatedMessage.c_str(),
-						translatedMessage.size() *
+						
+translatedMessage.size() *
 						sizeof(wchar_t) /
 						sizeof(UInt8),
-						kCFStringEncodingUTF32LE,
-						false );
-		 
+						
+kCFStringEncodingUTF32LE,
+						
+false 
+);
+		
+ 
 			//always display tittle
 			CFArrayAppendValue(mutArrayKeys,
 					   kCFUserNotificationAlertHeaderKey);
-		CFArrayAppendValue(mutArrayValues, tittleStrRef);
+		
+CFArrayAppendValue(mutArrayValues, tittleStrRef);
 		
 			//always display message
 			CFArrayAppendValue(mutArrayKeys,
 					   kCFUserNotificationAlertMessageKey);
-		CFArrayAppendValue(mutArrayValues,
+		
+CFArrayAppendValue(mutArrayValues,
 				    datacharRefBytes ? :
 				    CreateStringFromWChar(L""));
-		 
+		
+ 
 			//check which buttons are requested to be shown
 			//ulEnterButton is the one on the right, only show it when part of the button list
 			AppendButtonToArrays(ulButtons, ulEnterButton,
 					     mutArrayKeys, mutArrayValues,
-					     kCFUserNotificationDefaultButtonTitleKey);
-		 
+					     
+kCFUserNotificationDefaultButtonTitleKey);
+		
+ 
 			//ulCancelButton is the one on the left
 			AppendButtonToArrays(ulButtons, ulCancelButton,
 					     mutArrayKeys, mutArrayValues,
-					     kCFUserNotificationAlternateButtonTitleKey);
-		 if (ulButtons & DLG_BUTTON_ALWAYS)
+					     
+kCFUserNotificationAlternateButtonTitleKey);
+		
+ 
+if (ulButtons & DLG_BUTTON_ALWAYS)
 			
 		{
-			CFArrayAppendValue(mutArrayKeys,
+			
+CFArrayAppendValue(mutArrayKeys,
 					    kCFUserNotificationOtherButtonTitleKey);
-			CFArrayAppendValue(mutArrayValues,
+			
+CFArrayAppendValue(mutArrayValues,
 					    CreateStringFromWChar
 					    (GETSTRING_DLG(Always)));
-		}
-		 range.length = CFArrayGetCount(mutArrayValues);
-		range.location = 0;
-		CFArrayGetValues(mutArrayValues, range,
+		
+}
+		
+ 
+range.length = CFArrayGetCount(mutArrayValues);
+		
+range.location = 0;
+		
+CFArrayGetValues(mutArrayValues, range,
 				  (const void **) values);
-		 range.length = CFArrayGetCount(mutArrayKeys);
-		range.location = 0;
-		CFArrayGetValues(mutArrayKeys, range, (const void **) keys);
-		 parameters =
+		
+ 
+range.length = CFArrayGetCount(mutArrayKeys);
+		
+range.location = 0;
+		
+CFArrayGetValues(mutArrayKeys, range, (const void **) keys);
+		
+ 
+parameters =
 			CFDictionaryCreate(0, (const void **) keys,
 					   (const void **) values,
-					   CFArrayGetCount(mutArrayKeys),
-					   NULL, NULL);
-		 userNotificationRef = CFUserNotificationCreate(kCFAllocatorDefault,	//CFAllocatorRef allocator,
+					   
+CFArrayGetCount(mutArrayKeys),
+					   NULL, 
+NULL);
+		
+ 
+userNotificationRef = CFUserNotificationCreate(kCFAllocatorDefault,	//CFAllocatorRef allocator,
 								  30,	//CFTimeInterval timeout,
 								  optionFlags,	//CFOptionFlags flags,
 								  &error,	//SInt32 *error,
 								  parameters);	//CFDictionaryRef dictionary
 		THROW_ERROR_IF_NULL(userNotificationRef);
-		 error = CFUserNotificationReceiveResponse(userNotificationRef,	//CFUserNotificationRef userNotification,
+		
+ 
+error = CFUserNotificationReceiveResponse(userNotificationRef,	//CFUserNotificationRef userNotification,
 							     0,	//CFTimeInterval timeout,
 							     &responseFlags	//CFOptionFlags responseFlags
 			);
-		THROW_ERROR_IF_NON_ZERO(error);
-		 switch (responseFlags & 0x03)
+		
+THROW_ERROR_IF_NON_ZERO(error);
+		
+ 
+switch (responseFlags & 0x03)
 			
 		{
-			case kCFUserNotificationDefaultResponse:
-				lRet = DLG_OK;
-				break;
-			case kCFUserNotificationAlternateResponse:
-				lRet = DLG_CANCEL;
-				break;
-			 case kCFUserNotificationOtherResponse:
-				if (ulButtons & DLG_BUTTON_ALWAYS)
-					lRet = DLG_ALWAYS;
+			
+case kCFUserNotificationDefaultResponse:
+				
+lRet = DLG_OK;
+				
+break;
+			
+case kCFUserNotificationAlternateResponse:
+				
+lRet = DLG_CANCEL;
+				
+break;
+			
+ 
+case kCFUserNotificationOtherResponse:
+				
+if (ulButtons & DLG_BUTTON_ALWAYS)
+					
+lRet = DLG_ALWAYS;
 				
 				else if (ulButtons & DLG_BUTTON_YES)
-					lRet = DLG_YES;
+					
+lRet = DLG_YES;
 				
 				else if (ulButtons & DLG_BUTTON_NO)
-					lRet = DLG_NO;
+					
+lRet = DLG_NO;
 				
 				else if (ulButtons & DLG_BUTTON_OK)
-					lRet = DLG_OK;
+					
+lRet = DLG_OK;
 				
 				else if (ulButtons & DLG_BUTTON_CANCEL)
-					lRet = DLG_CANCEL;
-				break;
-			 case kCFUserNotificationCancelResponse:
-				lRet = DLG_CANCEL;
-				break;
-			 default:
-				lRet = DLG_CANCEL;
-		}
-	 }
-	catch( ...)
+					
+lRet = DLG_CANCEL;
+				
+break;
+			
+ 
+case kCFUserNotificationCancelResponse:
+				
+lRet = DLG_CANCEL;
+				
+break;
+			
+ 
+default:
+				
+lRet = DLG_CANCEL;
+		
+}
+	
+ 
+}
+	
+catch( ...)
 	{
-		lRet = DLG_ERR;
-	}
-	 if (tittleStrRef != NULL)
-		CFRelease(tittleStrRef);
-	if (datacharRefBytes != NULL)
-		CFRelease(datacharRefBytes);
-	if (mutArrayKeys != NULL)
-		CFRelease(mutArrayKeys);
-	if (mutArrayValues != NULL)
-		CFRelease(mutArrayValues);
-	if (parameters != NULL)
-		CFRelease(parameters);
-	if (userNotificationRef != NULL)
-		CFRelease(userNotificationRef);
-	 return lRet;
-}
+		
+lRet = DLG_ERR;
+	
+}
+	
+ 
+if (tittleStrRef != NULL)
+		
+CFRelease(tittleStrRef);
+	
+if (datacharRefBytes != NULL)
+		
+CFRelease(datacharRefBytes);
+	
+if (mutArrayKeys != NULL)
+		
+CFRelease(mutArrayKeys);
+	
+if (mutArrayValues != NULL)
+		
+CFRelease(mutArrayValues);
+	
+if (parameters != NULL)
+		
+CFRelease(parameters);
+	
+if (userNotificationRef != NULL)
+		
+CFRelease(userNotificationRef);
+	
+ 
+return lRet;
 
-  DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
-						    const wchar_t * wsReader,
+}
+
+
+ 
+ 
+DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
+						    
+const wchar_t * wsReader,
 						    DlgPinUsage usage,
 						    const wchar_t * wsPinName,
-						    const wchar_t *
+						    
+const wchar_t *
 						    wsMessage,
-						    unsigned long *pulHandle)
+						    
+unsigned long *pulHandle)
 	
 {
-	DlgRet lRet = DLG_CANCEL;
-	CFArrayRef titlesArray = NULL;
-	 std::string csReadableFilePath;
-	const wchar_t *Title;
+	
+DlgRet lRet = DLG_CANCEL;
+	
+CFArrayRef titlesArray = NULL;
+	
+ 
+std::string csReadableFilePath;
+	
+const wchar_t *Title;
 
-	CFUserNotificationRef userNotificationRef = NULL;
-	SInt32 error = 0;
-	CFOptionFlags optionFlags;
-	CFStringRef datacharRefBytes = NULL;
-	CFStringRef titlecharRefBytes = NULL;
-	CFDictionaryRef parameters = NULL;
-	 const void *keys[] =
+	
+CFUserNotificationRef userNotificationRef = NULL;
+	
+SInt32 error = 0;
+	
+CFOptionFlags optionFlags;
+	
+CFStringRef datacharRefBytes = NULL;
+	
+CFStringRef titlecharRefBytes = NULL;
+	
+CFDictionaryRef parameters = NULL;
+	
+ 
+const void *keys[] =
 		{ kCFUserNotificationAlertHeaderKey,
-	kCFUserNotificationAlertMessageKey
+	
+kCFUserNotificationAlertMessageKey
 	};
-	 try
+	
+ 
+try
 	{
-		 if (usage == DLG_PIN_SIGN)
+		
+ 
+if (usage == DLG_PIN_SIGN)
 			
 		{
-			optionFlags = kCFUserNotificationCautionAlertLevel;
-			Title = GETSTRING_DLG(YouAreAboutToMakeALegallyBindingElectronic);	//SigningWith);
+			
+optionFlags = kCFUserNotificationCautionAlertLevel;
+			
+Title = GETSTRING_DLG(YouAreAboutToMakeALegallyBindingElectronic);	//SigningWith);
 		}
 		
 		else
 			
 		{
-			optionFlags = kCFUserNotificationPlainAlertLevel;
-			Title = GETSTRING_DLG
+			
+optionFlags = kCFUserNotificationPlainAlertLevel;
+			
+Title = GETSTRING_DLG
 				(PleaseEnterYourPinOnThePinpadReader);
-		}
-		 datacharRefBytes =
-			CFStringCreateWithBytes(kCFAllocatorDefault,
-						(const UInt8 *) wsReader,
-						wcslen(wsReader) *
+		
+}
+		
+ 
+datacharRefBytes =
+			CFStringCreateWithBytes(
+kCFAllocatorDefault,
+						
+(const UInt8 *) wsReader,
+						
+wcslen(wsReader) *
 						sizeof(wchar_t) /
 						sizeof(UInt8),
-						kCFStringEncodingUTF32LE,
-						false );
-		 titlecharRefBytes =
-			CFStringCreateWithBytes(kCFAllocatorDefault,
-						(const UInt8 *) Title,
-						wcslen(Title) *
+						
+kCFStringEncodingUTF32LE,
+						
+false 
+);
+		
+ 
+titlecharRefBytes =
+			CFStringCreateWithBytes(
+kCFAllocatorDefault,
+						
+(const UInt8 *) Title,
+						
+wcslen(Title) *
 						sizeof(wchar_t) /
 						sizeof(UInt8),
-						kCFStringEncodingUTF32LE,
-						false );
-		 const void *textFieldTitles[] = { Title };
-		 titlesArray =
+						
+kCFStringEncodingUTF32LE,
+						
+false 
+);
+		
+ 
+const void *textFieldTitles[] = { Title };
+		
+ 
+titlesArray =
 			CFArrayCreate(NULL, textFieldTitles, 1, NULL);
-		 const void *values[] =
-			{ titlecharRefBytes, datacharRefBytes
+		
+ 
+const void *values[] =
+			{ titlecharRefBytes, 
+datacharRefBytes
 		};
-		 parameters =
+		
+ 
+parameters =
 			CFDictionaryCreate(0, keys, values,
-					   sizeof(keys) / sizeof(*keys),
-					   NULL, NULL);
-		 userNotificationRef = CFUserNotificationCreate(kCFAllocatorDefault,	//CFAllocatorRef allocator,
+					   
+sizeof(keys) / sizeof(*keys),
+					   NULL, 
+NULL);
+		
+ 
+userNotificationRef = CFUserNotificationCreate(kCFAllocatorDefault,	//CFAllocatorRef allocator,
 								  30,	//CFTimeInterval timeout,
 								  optionFlags,	//CFOptionFlags flags,
 								  &error,	//SInt32 *error,
 								  parameters);	//CFDictionaryRef dictionary
 		THROW_ERROR_IF_NULL(userNotificationRef);
-		 mc_pinpad_map[mc_pinpad_map_index++] = userNotificationRef;
-		if (pulHandle)
+		
+ 
+mc_pinpad_map[mc_pinpad_map_index++] = userNotificationRef;
+		
+if (pulHandle)
 		{
-			*pulHandle = mc_pinpad_map_index;
-		}
-	}
-	catch( ...)
+			
+*pulHandle = mc_pinpad_map_index;
+		
+}
+	
+}
+	
+catch( ...)
 	{
-		lRet = DLG_ERR;
-	}
-	if (titlecharRefBytes != NULL)
-		CFRelease(titlecharRefBytes);
-	if (datacharRefBytes != NULL)
-		CFRelease(datacharRefBytes);
-	if (titlesArray != NULL)
-		CFRelease(titlesArray);
-	if (parameters != NULL)
-		CFRelease(parameters);
-	 return lRet;
-}
+		
+lRet = DLG_ERR;
+	
+}
+	
+if (titlecharRefBytes != NULL)
+		
+CFRelease(titlecharRefBytes);
+	
+if (datacharRefBytes != NULL)
+		
+CFRelease(datacharRefBytes);
+	
+if (titlesArray != NULL)
+		
+CFRelease(titlesArray);
+	
+if (parameters != NULL)
+		
+CFRelease(parameters);
+	
+ 
+return lRet;
 
-  DLGS_EXPORT void eIDMW::
+}
+
+
+ 
+ 
+DLGS_EXPORT void eIDMW::
 DlgClosePinpadInfo(unsigned long theUserNotificationRef) 
 {
-	SInt32 error = 0;
-	 CFUserNotificationRef userNotificationRef =
+	
+SInt32 error = 0;
+	
+ 
+CFUserNotificationRef userNotificationRef =
 		mc_pinpad_map[theUserNotificationRef];
-	error = CFUserNotificationCancel(userNotificationRef);
-	 if (userNotificationRef != NULL)
-		CFRelease(userNotificationRef);
-}
+	
+error = CFUserNotificationCancel(userNotificationRef);
+	
+ 
+if (userNotificationRef != NULL)
+		
+CFRelease(userNotificationRef);
 
-  
+}
+
+
+ 
+ 
 
 /*
  //TODO: Add Keypad possibility in DlgAskPin(s)
@@ -962,7 +1510,13 @@ DlgClosePinpadInfo(unsigned long theUserNotificationRef)
  }
  return lRet;
  }*/ 
-	      
+	
+ 
+ 
+ 
+ 
+ 
+ 
 
 /*done
  DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
@@ -1084,7 +1638,8 @@ DlgClosePinpadInfo(unsigned long theUserNotificationRef)
 //CFDictionaryAddValue(dict, kCFUserNotificationAlertHeaderKey, CFSTR("my title"));
 	
 //CFDictionaryAddValue(dict, kCFUserNotificationAlternateButtonTitleKey, CFSTR("Cancel"));
-	 
+	
+ 
 
 /*	userNotificationRef = CFUserNotificationCreate (kCFAllocatorDefault, //CFAllocatorRef allocator,
  30, //CFTimeInterval timeout,
@@ -1104,7 +1659,9 @@ DlgClosePinpadInfo(unsigned long theUserNotificationRef)
 /*
  */ 
 //   return lRet;
-	  
+	
+ 
+ 
 
 /*
  DlgRet lRet = DLG_CANCEL;
@@ -1161,7 +1718,9 @@ DlgClosePinpadInfo(unsigned long theUserNotificationRef)
  //return lRet;
  
  }*/ 
-	  
+	
+ 
+ 
 
 /* only for linux, dlgmodal for win and apple */ 
 

@@ -11,7 +11,9 @@
 @implementation BEIDAuthOperation
 
 - (instancetype)initWithSession:(BEIDTokenSession *)session {
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID initWithSession called");
+#endif
     if (self = [super init]) {
         _session = session;
 
@@ -51,7 +53,9 @@
 
 // Remove this as soon as BEIDAuthOperation implements automatic PIN submission according to APDUTemplate.
 - (BOOL)finishWithError:(NSError * _Nullable __autoreleasing *)error {
-    os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called");  
+#ifdef DEBUG
+    os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called");
+#endif
     BOOL (^verifyPIN)(NSError**) = ^(NSError** error) {
         if(self.PIN == nil){
             os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called PIN == nil");
@@ -70,7 +74,9 @@
         }
         [[self.PIN dataUsingEncoding:NSUTF8StringEncoding] getBytes:pin length:PinLength];
         
+#ifdef DEBUG
         os_log(OS_LOG_DEFAULT, "verify PIN with length %lu", (unsigned long)PinLength);
+#endif
 
         // Send VERIFY command to the card.
         UInt16 sw;
@@ -89,7 +95,9 @@
             os_log(OS_LOG_DEFAULT, "verify PIN sendIns failed");
             return NO;
         }
+#ifdef DEBUG
         os_log_error(OS_LOG_DEFAULT, "verify PIN returned sw: 0x%04x", sw);
+#endif
         if ((sw & 0xff00) == 0x6300) {
             int triesLeft = sw & 0x3f;
             os_log(OS_LOG_DEFAULT, "Failed to verify PIN sw:0x%04x retries: %d", sw, triesLeft);
@@ -143,7 +151,9 @@
 }
 
 - (TKTokenAuthOperation *)tokenSession:(TKTokenSession *)session beginAuthForOperation:(TKTokenOperation)operation constraint:(TKTokenOperationConstraint)constraint error:(NSError * _Nullable __autoreleasing *)error {
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID beginAuthForOperation called");
+#endif
     if (![constraint isEqual:BEIDConstraintPIN] && ![constraint isEqual:BEIDConstraintPINAlways]) {
         os_log_error(OS_LOG_DEFAULT, "attempt to evaluate unsupported constraint %@", constraint);
         if (error != nil) {
@@ -156,9 +166,12 @@
 }
 
 - (BOOL)tokenSession:(TKTokenSession *)session supportsOperation:(TKTokenOperation)operation usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm {
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called");
+#endif
     BEIDTokenKeychainKey *keyItem = (BEIDTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:nil];
     if (keyItem == nil) {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation returning NO, keyItem == nil");
         return NO;
     }
     //NSString* algo = algorithm.description;
@@ -191,13 +204,17 @@
 
     switch (operation) {
         case TKTokenOperationSignData:
+#ifdef DEBUG
             os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called TKTokenOperationSignData");
+#endif
             if (keyItem.canSign) {
                 if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
                     // We support only RAW data format and PKCS1 padding.  Once SecKey gets support for PSS padding,
                     // we should add it here.
                     BOOL returnValue = ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] && [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw]);
+#ifdef DEBUG
                     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation returning %i",returnValue);
+#endif
                     return returnValue;
                 }
             }
@@ -207,13 +224,16 @@
             os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called default");
             break;
     }
+    
     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation returning NO");
     return NO;
 }
 
 - (BEIDTokenKeychainKey *)authenticatedKeyForObjectID:(TKTokenObjectID)keyObjectID error:(NSError **)error {
     // Check for authentication status.
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID called");
+#endif
     BEIDTokenKeychainKey *keyItem = (BEIDTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:error];
     if (keyItem == nil) {
         os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID keyItem == nil");
@@ -221,13 +241,15 @@
     }
     //select key on token
     const uint8_t keyId = keyItem.keyID;//0x82;
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID keyId = %ux", keyItem.keyID);
+#endif
     
     BOOL (^selectKey)(NSError**) = ^(NSError** err) {
         //first select key and algo
         BOOL retVAL = [self selectKeyForSign:keyId smartCard:self.smartCard error:error];
         if (retVAL == NO){
-            os_log_error(OS_LOG_DEFAULT, "BEID egeneralAuthenticateWithData selectKeyForSign failed");
+            os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID selectKeyForSign failed");
             return retVAL;
         }
         return YES;
@@ -242,9 +264,10 @@
             os_log_error(OS_LOG_DEFAULT, "BEID selectKey failed");
             return nil;
         }
+#ifdef DEBUG
         os_log_error(OS_LOG_DEFAULT, "BEID selectKey success");
-        
         os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID BEIDAuthStateUnauthorized, setting keyItem = nil");
+#endif
         if (error != nil) {
             *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationNeeded userInfo:nil];
             os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID failed with error %@",[*error localizedDescription]);
@@ -256,8 +279,9 @@
 
 - (BOOL) selectKeyForSign:(const uint8_t)keyId smartCard:(TKSmartCard *)smartCard error:(NSError **)error
 {
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID selectKeyForSign called");
-
+#endif
     // Select signing algorithm, pkcs1 padding and key keyId
     //unsigned char command[] = { 0x00, 0x22, 0x41, 0xB6, 0x05, 0x04, 0x80, 0x01, 0x84, keyId };
     unsigned char command[] = { 0x04, 0x80, 0x01, 0x84, 0x82 };//1 for unknown hash
@@ -275,7 +299,9 @@
         }
         return NO;
     }
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID selectKeyForSign success");
+#endif
     return YES;
 }
 
@@ -294,15 +320,17 @@
         }
         return NO;
     }
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID signData result length is %lu", (unsigned long)(*result).length);
-
+#endif
     return YES;
 }
 
 // Wrapper around GENERAL AUTHENTICATE card command used for sign.
 - (NSData *)generalAuthenticateWithData:(NSData *)data session:(BEIDTokenSession *)session algorithm:(TKTokenKeyAlgorithm *)algorithm usingKey:(TKTokenObjectID)keyObjectID error:(NSError **)error {
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData called");
-    
+#endif
     BEIDTokenKeychainKey *keyItem = [self authenticatedKeyForObjectID:keyObjectID error:error];
     if (keyItem == nil) {
         os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData failed, keyItem == nil");
@@ -312,14 +340,17 @@
     NSNumber *resultLen = [NSNumber numberWithUnsignedChar:keyItem.keySizeInBits];
     __block NSData *statResponse;
     
-    os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData original Data to be signed length = %lu, data :",data.length);
+    
     Byte* dataBytes = (Byte*)data.bytes;
     int i;
+    
+#ifdef DEBUG
+    os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData original Data to be signed length = %lu, data :",data.length);
     for ( i = 0 ; i < data.length ; i++)
     {
         os_log_error(OS_LOG_DEFAULT, "%d: 0x%x ",i, dataBytes[i]);
     }
-    
+#endif
     //remove the pkcs1 padding 00 01 ff ff ... ff 00
     for ( i = 0 ; i < data.length ; i++)
     {
@@ -330,7 +361,9 @@
     i++;
  
     NSData * blockData = [[NSData alloc] initWithBytes:&dataBytes[i] length:((data.length)-(i))];
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData tempered Data to be signed length = %lu, data :",blockData.length);
+#endif
 /*    dataBytes = (Byte*)blockData.bytes;
     for ( i = 0 ; i < blockData.length ; i++)
     {
@@ -357,8 +390,9 @@
     
     // Mark BEIDTokenSession as already authorized and authorization used.
     session.authState = BEIDAuthStateAuthorizedButAlreadyUsed;
-    
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID signData signature length = %lu",(unsigned long)statResponse.length);
+#endif
 /*    Byte* responseBytes = (Byte*)statResponse.bytes;
     int iii;
     for ( iii = 0 ; iii < statResponse.length ; iii++)
@@ -370,7 +404,9 @@
 }
 
 - (NSData *)tokenSession:(TKTokenSession *)session signData:(NSData *)dataToSign usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError * _Nullable __autoreleasing *)error {
+#ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID signData called");
+#endif
     return [self generalAuthenticateWithData:dataToSign session:(BEIDTokenSession *)session algorithm:(TKTokenKeyAlgorithm *)algorithm usingKey:keyObjectID error:error];
 }
 
