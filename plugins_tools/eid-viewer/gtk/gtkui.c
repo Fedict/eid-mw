@@ -337,9 +337,9 @@ void validate_toggle(gpointer event_source, gpointer user_data G_GNUC_UNUSED) {
 void showurl(GtkMenuItem *item, gpointer user_data) {
 	GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
 	if(strcmp((gchar*)user_data, "faq") == 0) {
-		gtk_show_uri_on_window(GTK_WINDOW(window), "http://faq.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
+		gtk_show_uri_on_window(GTK_WINDOW(window), _("https://eid.belgium.be/en/question-and-answer"), GDK_CURRENT_TIME, NULL);
 	} else {
-		gtk_show_uri_on_window(GTK_WINDOW(window), "http://test.eid.belgium.be/", GDK_CURRENT_TIME, NULL);
+		gtk_show_uri_on_window(GTK_WINDOW(window), _("https://iamapps.belgium.be/tma/"), GDK_CURRENT_TIME, NULL);
 	}
 }
 
