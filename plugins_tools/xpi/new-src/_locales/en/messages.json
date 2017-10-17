@@ -11,6 +11,12 @@
   "noMiddlewareFoundContent": {
     "message": "The configuration of the Belgian electronic identity card in Firefox has failed. Is the eID software installed?"
   },
+  "installFailedTitle": {
+    "message": "eID software installation failed"
+  },
+  "installFailedContent": {
+    "message": "Although the Belgian electronic identity card software could be found on this system, installing it in Firefox was not successful."
+  },
   "installUrl": {
     "message": "https://eid.belgium.be/en"
   }

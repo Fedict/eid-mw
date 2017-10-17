@@ -11,6 +11,12 @@
   "noMiddlewareFoundContent": {
     "message": "Configuratie voor de Belgische elektronische identiteitskaart is mislukt. Is de eID Middleware geïnstalleerd?"
   },
+  "installFailedTitle": {
+    "message": "eID software niet installeerbaar"
+  },
+  "installFailedContent": {
+    "message": "Configuratie voor de Belgische elektronische identiteitskaart is mislukt; de software is geïnstalleerd, maar kon niet geconfigureerd worden."
+  },
   "installUrl": {
     "message": "https://eid.belgium.be/nl"
   }
