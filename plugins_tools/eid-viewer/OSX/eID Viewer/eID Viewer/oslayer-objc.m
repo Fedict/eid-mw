@@ -34,7 +34,11 @@ static void osl_objc_readers_found(unsigned long nreaders, slotdesc* slots) {
 	NSString* names[nreaders];
 	NSNumber* slotnumbers[nreaders];
 	for(int i=0; i<nreaders; i++) {
-		names[i] = [NSString stringWithCString:(const char*)(slots[i].description) encoding:NSUTF8StringEncoding];
+		if(slots[i].description == NULL) {
+			names[i] = [NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"cardreaderno", nil, [NSBundle mainBundle], @"Card reader #%d", "Fallback string for card reader name in case none was provided")];
+		} else {
+			names[i] = [NSString stringWithCString:(const char*)(slots[i].description) encoding:NSUTF8StringEncoding];
+		}
 		slotnumbers[i] = [NSNumber numberWithUnsignedLong:slots[i].slot];
 	}
 	NSArray *readerNames = [NSArray arrayWithObjects:names count:nreaders];
