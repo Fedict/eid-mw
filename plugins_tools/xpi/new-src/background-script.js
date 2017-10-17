@@ -13,6 +13,7 @@ async function installPKCS11Module() {
         "title": browser.i18n.getMessage("noMiddlewareFoundTitle"),
         "message": browser.i18n.getMessage("noMiddlewareFoundContent"),
       });
+      return;
     }
     if(res) {
       return;
