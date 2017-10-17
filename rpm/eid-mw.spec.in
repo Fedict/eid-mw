@@ -158,7 +158,10 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
 %{_datadir}/p11-kit/
-%{_libdir}/mozilla/pkcs11-modules/beidpkcs11.json
+# The below should really use prefix, but Firefox won't look in
+# /usr/lib/x86_64-linux-gnu (etc) on Debian; so Makefile.am currently
+# hardcodes the lib directory and doesn't put anything in lib64
+%{_prefix}/lib/mozilla/pkcs11-modules/beidpkcs11.json
 
 %files devel
 %defattr(-, root, root, 0755)
