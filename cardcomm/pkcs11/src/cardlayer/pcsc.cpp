@@ -168,7 +168,7 @@ namespace eIDMW
 		for (DWORD i = 0; i < ulReaderCount; i++)
 		{
 			//initialize all members with zero to prevent issues with remote card readers
-			memcpy(&txReaderStates[i], 0, sizeof(SCARD_READERSTATEA));
+			memset(&txReaderStates[i], 0, sizeof(SCARD_READERSTATEA));
 			txReaderStates[i].szReader = pReaderInfos[i].csReader.c_str();
 			txReaderStates[i].dwCurrentState = pReaderInfos[i].ulEventState;
 			txReaderStates[i].cbAtr = 0;
@@ -254,7 +254,7 @@ namespace eIDMW
 		SCARD_READERSTATEA xReaderState;
 
 		//initialize all members with zero's in order to prevent failures with remote card readers
-		memcpy(&xReaderState, 0, sizeof(SCARD_READERSTATEA));
+		memset(&xReaderState, 0, sizeof(SCARD_READERSTATEA));
 		xReaderState.szReader = csReader.c_str();
 		xReaderState.dwCurrentState = 0;
 		xReaderState.cbAtr = 0;
