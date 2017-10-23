@@ -2,7 +2,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2010-2014 FedICT.
+* Copyright (C) 2010-2017 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -167,10 +167,10 @@ namespace eIDMW
 		// Convert from tReaderInfo[] -> SCARD_READERSTATE array
 		for (DWORD i = 0; i < ulReaderCount; i++)
 		{
-			txReaderStates[i].szReader =
-				pReaderInfos[i].csReader.c_str();
-			txReaderStates[i].dwCurrentState =
-				pReaderInfos[i].ulEventState;
+		//initialize all members with zero's in order to prevent failures with remote card readers
+			memcpy(&txReaderStates[i],0,sizeof(SCARD_READERSTATEA));
+			txReaderStates[i].szReader = pReaderInfos[i].csReader.c_str();
+			txReaderStates[i].dwCurrentState = pReaderInfos[i].ulEventState;
 			txReaderStates[i].cbAtr = 0;
 			txReaderStates[i].pvUserData = 0;
 		}
@@ -274,17 +274,17 @@ namespace eIDMW
 	{
 		SCARD_READERSTATEA xReaderState;
 
+		//initialize all members with zero's in order to prevent failures with remote card readers
+		memcpy(&xReaderState, 0, sizeof(SCARD_READERSTATEA));
 		xReaderState.szReader = csReader.c_str();
 		xReaderState.dwCurrentState = 0;
 		xReaderState.cbAtr = 0;
 
-		long lRet =
-			SCardGetStatusChange(m_hContext, 0, &xReaderState, 1);
+		long lRet = SCardGetStatusChange(m_hContext, 0, &xReaderState, 1);
 		if (SCARD_S_SUCCESS != lRet)
 			throw CMWEXCEPTION(PcscToErr(lRet));
 
-		return (xReaderState.dwEventState & SCARD_STATE_PRESENT) ==
-			SCARD_STATE_PRESENT;
+		return (xReaderState.dwEventState & SCARD_STATE_PRESENT) == SCARD_STATE_PRESENT;
 	}
 
 	SCARDHANDLE CPCSC::Connect(const std::string & csReader,
