@@ -356,7 +356,7 @@ static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 
 	res = check_cert("CA");
 	if(iters[Signature] != NULL) {
-		res = worst(check_cert("Signature"));
+		res = worst(res, check_cert("Signature"));
 	}
 	if(iters[Authentication] != NULL) {
 		res = worst(res, check_cert("Authentication"));
