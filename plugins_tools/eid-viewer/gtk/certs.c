@@ -276,6 +276,8 @@ static enum eid_vwr_result check_cert(char* which) {
 	g_value_init(val_tcert, G_TYPE_STRING);
 	if(strcmp(which, "CERT_RN_FILE") != 0) {
 		verify_result = eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free);
+	} else if(strcmp(which, "CA") != 0) {
+		verify_result = eid_vwr_verify_int_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_http_request, free);
 	} else {
 		verify_result = eid_vwr_verify_rrncert(cert->data, cert->len);
 	}
@@ -347,16 +349,19 @@ static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 		return NULL;
 	}
 
+	if(iters[Root] == NULL) {
+		uilog(EID_VWR_LOG_ERROR, "Certificate validation failed: no Root certificate found");
+		return NULL;
+	}
+
+	res = check_cert("CA");
 	if(iters[Signature] != NULL) {
-		res = check_cert("Signature");
+		res = worst(check_cert("Signature"));
 	}
 	if(iters[Authentication] != NULL) {
 		res = worst(res, check_cert("Authentication"));
 	}
 	if(iters[CERT_RN_FILE] != NULL) {
-		if(iters[Root] == NULL) {
-			uilog(EID_VWR_LOG_ERROR, "RRN certificate validation failed: no Root certificate found");
-		}
 		res = worst(res, check_cert("CERT_RN_FILE"));
 	}
 	if(res == EID_VWR_RES_FAILED) {
