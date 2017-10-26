@@ -180,10 +180,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 	ASN1_GENERALIZEDTIME *rev, *this, *next;
 	X509_STORE *store = NULL;
 	X509_LOOKUP *lookup = NULL;
-	int md_nid, sig_nid, pkey_nid;
-	intptr_t dummy;
 	const EVP_MD *md;
-	ASN1_OBJECT *algobj;
 	void *ocsp_handle;
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
 	STACK_OF(X509) *certs_dup = NULL;
