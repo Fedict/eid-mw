@@ -9,7 +9,7 @@
     "message": "eID software not found"
   },
   "noMiddlewareFoundContent": {
-    "message": "The configuration of the Belgian electronic identity card in Firefox has failed. Is the eID software installed?"
+    "message": "The Belgian electronic identity card software could not be found. Is the eID software installed?"
   },
   "installFailedTitle": {
     "message": "eID software installation failed"
