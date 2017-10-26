@@ -182,26 +182,17 @@ static size_t appendmem(char *ptr, size_t size, size_t nmemb, void* data) {
 	return realsize;
 }
 
-static const void* perform_ocsp_request(char* url, void* data, long datlen, long* retlen, void** handle) {
-	CURL *curl;
-	CURLcode curl_res;
-	struct curl_slist *list = NULL;
+static const void* perform_curl_request(char *url, CURL *curl, long *retlen) {
+	int i=0;
 	char** proxies = px_proxy_factory_get_proxies(pf, url);
-	int i;
-	struct recvdata *dat;
 	void* retval;
+	CURLcode curl_res;
+	struct recvdata *dat;
 
 	dat = calloc(sizeof(struct recvdata), 1);
-	curl_slist_append(list, "Content-Type: application/ocsp-request");
-	curl = curl_easy_init();
 	curl_easy_setopt(curl, CURLOPT_URL, url);
-	curl_easy_setopt(curl, CURLOPT_POST, (long)1);
-	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
-	curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, datlen);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, appendmem);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, dat);
-	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
-	i=0;
 	do {
 		if((curl_res = curl_easy_perform(curl)) != CURLE_OK) {
 			uilog(EID_VWR_LOG_COARSE, "Could not perform OCSP request (with proxy: %s): %s",
@@ -234,10 +225,29 @@ static const void* perform_ocsp_request(char* url, void* data, long datlen, long
 
 	free(dat);
 	curl_easy_cleanup(curl);
-	curl_slist_free_all(list);
-
-	*handle = retval;
 	return retval;
+}
+
+static const void* perform_ocsp_request(char* url, void* data, long datlen, long* retlen, void** handle) {
+	CURL *curl;
+	struct curl_slist *list = NULL;
+	const void *retval;
+
+	curl_slist_append(list, "Content-Type: application/ocsp-request");
+	curl = curl_easy_init();
+	curl_easy_setopt(curl, CURLOPT_POST, (long)1);
+	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+	curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, datlen);
+	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
+	retval = perform_curl_request(url, curl, retlen);
+	*handle = (void*)retval;
+	curl_slist_free_all(list);
+	return retval;
+}
+
+static const void* perform_http_request(char* url, long *retlen, void** handle) {
+	CURL *curl = curl_easy_init();
+	return (*handle = (void*)perform_curl_request(url, curl, retlen));
 }
 
 static enum eid_vwr_result check_cert(char* which) {

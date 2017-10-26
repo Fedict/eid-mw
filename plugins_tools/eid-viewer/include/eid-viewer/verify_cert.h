@@ -21,9 +21,9 @@ extern "C"
 #include <eid-viewer/oslayer.h>
 
 /**
-  * \brief Verify the validity of a certificate.
+  * \brief Verify the validity of a leaf certificate.
   *
-  * This function will verify the validity of a certificate by
+  * This function will verify the validity of a leaf certificate by
   * checking signatures, ensuring they're signed by a valid root
   * certificate, and performing an OCSP request against the OCSP server.
   *
@@ -61,6 +61,41 @@ extern "C"
 							  void
 							  (*free_ocsp_request)
 							  (void *));
+/**
+  * \brief Verify the validity of an intermediate certificate.
+  *
+  * This function will verify the validity of an intermediate
+  * certificate by checking signatures, ensuring they're signed by a
+  * valid root certificate, and performing a CRL check against the
+  * correct CRL.
+  *
+  * \param certificate the X.509 certificate to check, in DER format.
+  * \param certlen the length (in bytes) of certificate.
+  * \param root the root certificate by which the certificate is signed
+  * \param rootlen the length (in bytes) of root.
+  * \param perform_http_request a pointer to a function which should
+  * perform an HTTP GET request and return the reply. It should return
+  * the data as returned by the webserver in question. Its parameters
+  * are:
+  *  - The URL of the resource to retrieve
+  *  - A pointer to store the length of the returned body
+  *  - A pointer to store a handle to the request (which may, but is not
+  *    required to, be the same as the return value).
+  * \param free_http_request: called when the return value of
+  * perform_http_request is no longer needed. Its parameter will be the
+  * data which was returned in perform_http_request's last parameter.
+  */
+	DllExport enum eid_vwr_result eid_vwr_verify_int_cert(const void
+							  *certificate,
+							  size_t certlen,
+							  const void *root,
+							  size_t rootlen,
+							  const void
+							  *(*perform_http_request)
+							  (char *, long *,
+							  void **), void
+							  (free_http_request)
+							  (void*));
 
 /**
   * \brief Verify the validity of the RRN certificate.
