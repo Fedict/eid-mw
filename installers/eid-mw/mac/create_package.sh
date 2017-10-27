@@ -2,6 +2,11 @@
 
 set -e
 
+if [ -z "$MAC_BUILD_CONFIG" ]
+then
+	MAC_BUILD_CONFIG=Release
+fi
+
 #set SIGN_BUILD=1 in the environment to sign the .pkg files:
 # SIGN_BUILD=1 ./create_package.sh
 #or
@@ -28,7 +33,7 @@ LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 
 #eIDMiddleware app path
-EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/Release/eID Middleware.app"
+EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/$MAC_BUILD_CONFIG/eID Middleware.app"
 
 
 #viewer installer name defines
@@ -50,7 +55,7 @@ ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDToken_DIR/root"
 BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
 
 #BEIDToken path
-BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/Release/BEIDToken.app"
+BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/$MAC_BUILD_CONFIG/BEIDToken.app"
 
 #BEIDToken.plist path
 BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
@@ -121,7 +126,7 @@ mkdir -p "$RESOURCES_DIR"
 mkdir -p "$INSTALL_SCRIPTS_DIR"
 
 #copy all files that should be part of the installer:
-cp ../../../Release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
+cp ../../../$MAC_BUILD_CONFIG/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
 #copy pkcs11 bundle
 cp -R ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
 #make relative symblic link from bundle to the dylib
