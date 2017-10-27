@@ -2,7 +2,7 @@
 /* ****************************************************************************
 
 * eID Middleware Project.
-* Copyright (C) 2010-2014 FedICT.
+* Copyright (C) 2010-2017 FedICT.
 *
 * This is free software; you can redistribute it and/or modify it
 * under the terms of the GNU Lesser General Public License version
@@ -167,18 +167,16 @@ namespace eIDMW
 		// Convert from tReaderInfo[] -> SCARD_READERSTATE array
 		for (DWORD i = 0; i < ulReaderCount; i++)
 		{
-			txReaderStates[i].szReader =
-				pReaderInfos[i].csReader.c_str();
-			txReaderStates[i].dwCurrentState =
-				pReaderInfos[i].ulEventState;
+			//initialize all members with zero to prevent issues with remote card readers
+			memset(&txReaderStates[i], 0, sizeof(SCARD_READERSTATEA));
+			txReaderStates[i].szReader = pReaderInfos[i].csReader.c_str();
+			txReaderStates[i].dwCurrentState = pReaderInfos[i].ulEventState;
 			txReaderStates[i].cbAtr = 0;
 			txReaderStates[i].pvUserData = 0;
 		}
 
 	      wait_again:
-		long lRet = SCardGetStatusChange(m_hContext,
-						 ulTimeout, txReaderStates,
-						 ulReaderCount);
+		long lRet = SCardGetStatusChange(m_hContext, ulTimeout, txReaderStates, ulReaderCount);
 		if ((long) SCARD_E_TIMEOUT != lRet)
 		{
 			if (SCARD_S_SUCCESS != lRet)
@@ -194,20 +192,13 @@ namespace eIDMW
 				// So we take the exor of the current and the event state for
 				// both flags; if the exor isn't 0 then at least 1 of the flags
 				// changed value
-				DWORD exor1 =
-					(txReaderStates[i].
-					 dwCurrentState & (SCARD_STATE_EMPTY |
-							   SCARD_STATE_PRESENT))
-					^ (txReaderStates[i].
-					   dwEventState & (SCARD_STATE_EMPTY |
-							   SCARD_STATE_PRESENT));
+				DWORD exor1 = (txReaderStates[i].dwCurrentState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT))
+					^ (txReaderStates[i].dwEventState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT));
 				bool bUnpowered = false;	// Ignore this state
 
 				//((txReaderStates[i].dwCurrentState & SCARD_STATE_UNPOWERED) == 0) &&
 				//((txReaderStates[i].dwEventState & SCARD_STATE_UNPOWERED) != 0);
-				tChangedState[i] = ((exor1 == 0)
-						    && !bUnpowered) ? 0 :
-					SCARD_STATE_CHANGED;
+				tChangedState[i] = ((exor1 == 0) && !bUnpowered) ? 0 : SCARD_STATE_CHANGED;
 #else
 				tChangedState[i] =
 					txReaderStates[i].
@@ -222,17 +213,10 @@ namespace eIDMW
 				for (DWORD i = 0; i < ulReaderCount; i++)
 				{
 					// take previous state, reset bits that are not supported as input
-					txReaderStates[i].dwCurrentState =
-						(txReaderStates[i].
-						 dwEventState &
-						 ~SCARD_STATE_CHANGED &
-						 ~SCARD_STATE_UNKNOWN);
+					txReaderStates[i].dwCurrentState = (txReaderStates[i].dwEventState & ~SCARD_STATE_CHANGED & ~SCARD_STATE_UNKNOWN);
 					txReaderStates[i].pvUserData = 0;
 				}
-				long lRet = SCardGetStatusChange(m_hContext,
-								 0,
-								 txReaderStates,
-								 ulReaderCount);
+				long lRet = SCardGetStatusChange(m_hContext, 0, txReaderStates, ulReaderCount);
 				if (SCARD_S_SUCCESS != lRet
 				    && SCARD_E_TIMEOUT != lRet)
 					throw CMWEXCEPTION(PcscToErr(lRet));
@@ -242,21 +226,16 @@ namespace eIDMW
 			// Update the event states in pReaderInfos
 			for (DWORD i = 0; i < ulReaderCount; i++)
 			{
-				pReaderInfos[i].ulCurrentState =
-					pReaderInfos[i].ulEventState;
+				pReaderInfos[i].ulCurrentState = pReaderInfos[i].ulEventState;
 				// Clear and SCARD_STATE_CHANGED flag, and use tChangedState instead
-				pReaderInfos[i].ulEventState =
-					(txReaderStates[i].
-					 dwEventState & ~SCARD_STATE_CHANGED)
-					| tChangedState[i];
+				pReaderInfos[i].ulEventState = (txReaderStates[i].dwEventState & ~SCARD_STATE_CHANGED) | tChangedState[i];
 			}
 
 			// Sometimes, it seems we're getting here even without a status change,
 			// so in this case we'll just go waiting again, if there's no timeout
 			if (!bChanged)
 			{
-				unsigned long ulDelay =
-					ulTimeout > 250 ? 250 : ulTimeout;
+				unsigned long ulDelay = ulTimeout > 250 ? 250 : ulTimeout;
 				if (ulTimeout != TIMEOUT_INFINITE)
 					ulTimeout -= ulDelay;
 				if (ulTimeout != 0)
@@ -274,17 +253,17 @@ namespace eIDMW
 	{
 		SCARD_READERSTATEA xReaderState;
 
+		//initialize all members with zero's in order to prevent failures with remote card readers
+		memset(&xReaderState, 0, sizeof(SCARD_READERSTATEA));
 		xReaderState.szReader = csReader.c_str();
 		xReaderState.dwCurrentState = 0;
 		xReaderState.cbAtr = 0;
 
-		long lRet =
-			SCardGetStatusChange(m_hContext, 0, &xReaderState, 1);
+		long lRet = SCardGetStatusChange(m_hContext, 0, &xReaderState, 1);
 		if (SCARD_S_SUCCESS != lRet)
 			throw CMWEXCEPTION(PcscToErr(lRet));
 
-		return (xReaderState.dwEventState & SCARD_STATE_PRESENT) ==
-			SCARD_STATE_PRESENT;
+		return (xReaderState.dwEventState & SCARD_STATE_PRESENT) == SCARD_STATE_PRESENT;
 	}
 
 	SCARDHANDLE CPCSC::Connect(const std::string & csReader,
