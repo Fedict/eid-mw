@@ -45,7 +45,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2F3883981CF46C6E00F114A7 /* BEIDTokenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BEIDTokenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F3883981CF46C6E00F114A7 /* BEIDToken.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BEIDToken.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F3883B01CF46C9D00F114A7 /* BEIDToken.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BEIDToken.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F3883B21CF46C9D00F114A7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2F3883C91CF46DD400F114A7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -103,7 +103,7 @@
 		2F3883991CF46C6E00F114A7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2F3883981CF46C6E00F114A7 /* BEIDTokenApp.app */,
+				2F3883981CF46C6E00F114A7 /* BEIDToken.app */,
 				2F3883B01CF46C9D00F114A7 /* BEIDToken.appex */,
 			);
 			name = Products;
@@ -181,7 +181,7 @@
 			);
 			name = BEIDTokenApp;
 			productName = BEIDTokenApp;
-			productReference = 2F3883981CF46C6E00F114A7 /* BEIDTokenApp.app */;
+			productReference = 2F3883981CF46C6E00F114A7 /* BEIDToken.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2F3883AF1CF46C9D00F114A7 /* BEIDToken */ = {
@@ -406,7 +406,7 @@
 				INFOPLIST_FILE = BEIDTokenApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BEIDToken;
 			};
 			name = Debug;
 		};
