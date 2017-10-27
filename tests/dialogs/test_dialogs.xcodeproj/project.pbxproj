@@ -119,6 +119,7 @@
 				TargetAttributes = {
 					86F33B0B1987A6B400E200F0 = {
 						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -254,6 +255,7 @@
 		86F33B191987A6B400E200F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -266,12 +268,14 @@
 					/Users/Frederik/trunk/output/lib/Debug,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		86F33B1A1987A6B400E200F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -284,6 +288,7 @@
 					/Users/Frederik/trunk/output/lib/Debug,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

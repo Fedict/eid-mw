@@ -124,6 +124,7 @@
 					658054E41A66C9BB000AEFE0 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};

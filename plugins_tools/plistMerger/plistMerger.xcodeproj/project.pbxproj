@@ -105,6 +105,7 @@
 				TargetAttributes = {
 					869D00AD18D72DCF00A41853 = {
 						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -214,14 +215,18 @@
 		869D00BB18D72DCF00A41853 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		869D00BC18D72DCF00A41853 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

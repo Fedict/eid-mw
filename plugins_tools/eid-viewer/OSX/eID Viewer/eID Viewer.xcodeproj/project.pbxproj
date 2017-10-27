@@ -585,14 +585,17 @@
 					659FFC3B1AE9360D004CEC1F = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
 					};
 					65BD08631CECB257000A30E4 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
 					};
 					8BBDE3111B3BF02C00CBE13E = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -976,7 +979,6 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1009,8 +1011,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+<<<<<<< HEAD
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
+=======
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+>>>>>>> v4.3
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
