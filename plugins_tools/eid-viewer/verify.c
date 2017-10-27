@@ -64,10 +64,10 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 	char *url = NULL;
 	int i, j;
 	long len;
-	void *http_handle;
+	void *http_handle = NULL;
 	const unsigned char *response;
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
-	EVP_PKEY *ca_k;
+	EVP_PKEY *ca_k = NULL;
 	X509_CRL *crl;
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
