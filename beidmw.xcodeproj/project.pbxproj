@@ -1072,6 +1072,27 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					6536230119A7E8E600D46ECB = {
+						DevelopmentTeam = D4SW6VZB8M;
+					};
+					7FA1A9F60F85F36E000D9EE1 = {
+						DevelopmentTeam = D4SW6VZB8M;
+					};
+					7FBB02520F839352009B751F = {
+						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
+					};
+					7FC5353A0F84B83B00BA96EE = {
+						DevelopmentTeam = D4SW6VZB8M;
+					};
+					8683738418648918005EE5D7 = {
+						DevelopmentTeam = D4SW6VZB8M;
+					};
+					86B474741BD798B8004FB8AE = {
+						DevelopmentTeam = D4SW6VZB8M;
+					};
+				};
 			};
 			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beidmw" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1351,10 +1372,12 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 4.3.1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1386,10 +1409,12 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LIBRARY = "libstdc++";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CURRENT_PROJECT_VERSION = 4.3.1;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_MODEL_TUNING = "";
@@ -1587,6 +1612,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_EXTENSION = a;
@@ -1610,6 +1636,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcommon.$(CURRENT_PROJECT_VERSION)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-16";
@@ -1625,6 +1652,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = stabs;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				DYLIB_COMPATIBILITY_VERSION = "";
 				DYLIB_CURRENT_VERSION = "";
 				EXECUTABLE_EXTENSION = a;
@@ -1639,6 +1667,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "beidcommon.$(CURRENT_PROJECT_VERSION)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				STRINGS_FILE_OUTPUT_ENCODING = "UTF-16";
