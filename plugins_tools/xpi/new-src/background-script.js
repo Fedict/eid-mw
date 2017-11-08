@@ -1,8 +1,16 @@
+var modname = "beidpkcs11";
 async function installPKCS11Module() {
   if(typeof browser.pkcs11 !== 'undefined') {
     var res;
     try {
-      res = await browser.pkcs11.isModuleInstalled("beidpkcs11");
+      if(browser.runtime.PlatformOs === "win") {
+        if(browser.runtime.PlatformArch === "x86-32") {
+          modname = "beidpkcs11_32";
+        } else {
+          modname = "beidpkcs11_64";
+        }
+      }
+      res = await browser.pkcs11.isModuleInstalled(modname);
       console.log("module installed: ", res);
     } catch (err) {
       browser.notifications.onClicked.addListener(function(n) {
@@ -19,7 +27,7 @@ async function installPKCS11Module() {
       return;
     }
     try {
-      res = await browser.pkcs11.installModule("beidpkcs11", 0x1<<28);
+      res = await browser.pkcs11.installModule(modname, 0x1<<28);
       console.log("installModule result: ", res);
     } catch(err) {
       console.error("installModule error: ", err);
@@ -41,14 +49,14 @@ function connected(port) {
       retval.supported = true;
       if(msg.query === "get-status" || msg.query === "get-all") {
         try {
-          retval.foundModule = await browser.pkcs11.isModuleInstalled("beidpkcs11");
+          retval.foundModule = await browser.pkcs11.isModuleInstalled(modname);
         } catch (e) {
           retval.foundModule = false;
         }
       }
       if(msg.query === "get-slots" || msg.query === "get-all") {
         try {
-          retval.slots = await browser.pkcs11.getModuleSlots("beidpkcs11");
+          retval.slots = await browser.pkcs11.getModuleSlots(modname);
         } catch(e) {
           retval.slots = null;
         }
