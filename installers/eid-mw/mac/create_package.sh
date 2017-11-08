@@ -28,6 +28,7 @@ INSTALL_SCRIPTS_DIR="$RELEASE_DIR/install_scripts"
 
 #pkcs11_inst dir, where our pkcs11 lib will be placed
 PKCS11_INST_DIR="$ROOT_DIR/usr/local/lib"
+MOZ_PKCS11_MANIFEST_DIR="$ROOT_DIR/Library/Application Support/Mozilla/PKCS11Modules"
 #licenses dir, where our licences will be placed
 LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
@@ -124,6 +125,7 @@ mkdir -p "$PKCS11_INST_DIR"
 mkdir -p "$LICENSES_DIR"
 mkdir -p "$RESOURCES_DIR"
 mkdir -p "$INSTALL_SCRIPTS_DIR"
+mkdir -p "$MOZ_PKCS11_MANIFEST_DIR"
 
 #copy all files that should be part of the installer:
 cp ../../../$MAC_BUILD_CONFIG/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
@@ -133,6 +135,16 @@ cp -R ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
 mkdir -p "$PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/MacOS/"
 ln -s ../../../libbeidpkcs11.$REL_VERSION.dylib "$PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib"
 
+# Create PKCS#11 manifest file for Mozilla
+cat > "$MOZ_PKCS11_MANIFEST_DIR/beidpkcs11.json" <<EOF
+{
+  "name": "beidpkcs11",
+  "description": "Belgium eID PKCS#11 Module",
+  "type": "pkcs11",
+  "path": "/usr/local/lib/beid-pkcs11.bundle",
+  "allowed_extensions": ["belgiumeid@eid.belgium.be"]
+}
+EOF
 
 #copy licenses
 cp ../../../doc/licenses/Dutch/eID-toolkit_licensingtermsconditions.txt \
