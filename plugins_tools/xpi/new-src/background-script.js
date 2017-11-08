@@ -3,8 +3,9 @@ async function installPKCS11Module() {
   if(typeof browser.pkcs11 !== 'undefined') {
     var res;
     try {
-      if(browser.runtime.PlatformOs === "win") {
-        if(browser.runtime.PlatformArch === "x86-32") {
+      var platform = await browser.runtime.getPlatformInfo();
+      if(platform.os === "win") {
+        if(platform.arch === "x86-32") {
           modname = "beidpkcs11_32";
         } else {
           modname = "beidpkcs11_64";
