@@ -15,7 +15,7 @@
     "message": "L'installation du logiciel eID a échoué."
   },
   "installFailedContent": {
-    "mssage": "La configuration de la carte d'identité électronique belge a échoué. Le logiciel a été installé mais n'a pas pu être configuré."
+    "message": "La configuration de la carte d'identité électronique belge a échoué. Le logiciel a été installé mais n'a pas pu être configuré."
   },
   "installUrl": {
     "message": "https://eid.belgium.be/fr"
