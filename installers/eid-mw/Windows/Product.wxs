@@ -73,7 +73,7 @@
     <Icon Id="eid.ico" SourceFile="..\..\eid.ico"/>
     
     <Property Id="ARPPRODUCTICON" Value="eid.ico" />
-    <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
+    <Property Id="ARPURLINFOABOUT" Value="https://eid.belgium.be"/>
 
     <Property Id="ALLUSERS" Value="1" />
 
