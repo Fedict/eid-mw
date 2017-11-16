@@ -280,8 +280,7 @@
     <InstallExecuteSequence>    
       <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>  
       <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
-      <RemoveExistingProducts After="InstallExecute"/>
-      <ScheduleReboot After="InstallFinalize">NOT Installed</ScheduleReboot>      
+      <RemoveExistingProducts After="InstallExecute"/>    
     </InstallExecuteSequence>
 
   </Product>
