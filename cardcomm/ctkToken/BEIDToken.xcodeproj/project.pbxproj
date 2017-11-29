@@ -45,7 +45,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2F3883981CF46C6E00F114A7 /* BEIDToken.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BEIDToken.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F3883981CF46C6E00F114A7 /* BEIDTokenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BEIDTokenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F3883B01CF46C9D00F114A7 /* BEIDToken.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BEIDToken.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F3883B21CF46C9D00F114A7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2F3883C91CF46DD400F114A7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -103,7 +103,7 @@
 		2F3883991CF46C6E00F114A7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2F3883981CF46C6E00F114A7 /* BEIDToken.app */,
+				2F3883981CF46C6E00F114A7 /* BEIDTokenApp.app */,
 				2F3883B01CF46C9D00F114A7 /* BEIDToken.appex */,
 			);
 			name = Products;
@@ -181,7 +181,7 @@
 			);
 			name = BEIDTokenApp;
 			productName = BEIDTokenApp;
-			productReference = 2F3883981CF46C6E00F114A7 /* BEIDToken.app */;
+			productReference = 2F3883981CF46C6E00F114A7 /* BEIDTokenApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2F3883AF1CF46C9D00F114A7 /* BEIDToken */ = {
@@ -213,12 +213,12 @@
 					2F3883971CF46C6E00F114A7 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = D4SW6VZB8M;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					2F3883AF1CF46C9D00F114A7 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = D4SW6VZB8M;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -328,7 +328,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application: Linux Belgium b.v.b.a. (D4SW6VZB8M)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = D4SW6VZB8M;
@@ -377,7 +377,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Developer ID Application: Linux Belgium b.v.b.a. (D4SW6VZB8M)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = D4SW6VZB8M;
@@ -401,13 +401,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BEIDTokenApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp;
-				PRODUCT_NAME = BEIDToken;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
@@ -416,9 +418,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BEIDTokenApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp;
@@ -431,9 +435,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = BEIDToken/BEIDToken.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BEIDToken/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp.BEIDToken;
@@ -447,9 +453,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = BEIDToken/BEIDToken.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BEIDToken/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp.BEIDToken;
