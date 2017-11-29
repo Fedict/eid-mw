@@ -7,11 +7,11 @@ then
 	MAC_BUILD_CONFIG=Release
 fi
 
-#set SIGN_BUILD=1 in the environment to sign the .pkg files:
-# SIGN_BUILD=1 ./create_package.sh
+#set SIGN_BUILD=0 in the environment to not sign the .pkg files:
+# SIGN_BUILD=0 ./create_package.sh
 #or
-# SIGN_BUILD=1 ./make-mac.sh
-SIGN_BUILD=${SIGN_BUILD:-0}
+# SIGN_BUILD=0 ./make-mac.sh
+SIGN_BUILD=${SIGN_BUILD:-1}
 
 #get the release number
 source "$(pwd)/../../../scripts/mac/set_eidmw_version.sh"
