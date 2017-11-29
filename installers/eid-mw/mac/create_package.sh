@@ -141,7 +141,7 @@ cat > "$MOZ_PKCS11_MANIFEST_DIR/beidpkcs11.json" <<EOF
   "name": "beidpkcs11",
   "description": "Belgium eID PKCS#11 Module",
   "type": "pkcs11",
-  "path": "/usr/local/lib/beid-pkcs11.bundle",
+  "path": "/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib",
   "allowed_extensions": ["belgiumeid@eid.belgium.be"]
 }
 EOF

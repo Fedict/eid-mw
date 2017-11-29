@@ -312,6 +312,7 @@
 				65BD08651CECB257000A30E4 /* BeidView */,
 				659FFC3D1AE9360D004CEC1F /* Products */,
 				652F07671D918C65003BFFD5 /* Frameworks */,
+				65AECACA1FCEC5C300402CB9 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -406,6 +407,14 @@
 			);
 			name = conversions;
 			path = "../eID Viewer";
+			sourceTree = "<group>";
+		};
+		65AECACA1FCEC5C300402CB9 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				65A29A8F1E44BAC70091FB0E /* libbeidpkcs11.4.2.7.dylib */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		65BD08651CECB257000A30E4 /* BeidView */ = {
