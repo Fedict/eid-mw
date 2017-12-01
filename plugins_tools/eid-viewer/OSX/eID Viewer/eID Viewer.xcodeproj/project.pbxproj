@@ -11,7 +11,6 @@
 		651626AC1E49D4E30023E315 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 652BC8B01AEA467800DA9519 /* eidv4.xsd */; };
 		65296A351AF1181700F0DDE7 /* CertificateStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A341AF1181700F0DDE7 /* CertificateStore.m */; };
 		65296A391AF119CB00F0DDE7 /* photohandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65296A381AF119CB00F0DDE7 /* photohandler.m */; };
-		655E7B601E44C95200F2590C /* libbeidpkcs11.4.2.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65A29A8F1E44BAC70091FB0E /* libbeidpkcs11.4.2.7.dylib */; };
 		655E7B611E44C95E00F2590C /* libbeidpkcs11.4.2.7.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 65A29A8F1E44BAC70091FB0E /* libbeidpkcs11.4.2.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		65669E431DE49B510018F644 /* specorgconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65669E3F1DE49B510018F644 /* specorgconv.h */; };
 		65669E451DE49B510018F644 /* xmlspecorgconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65669E411DE49B510018F644 /* xmlspecorgconv.h */; };
@@ -74,6 +73,7 @@
 		65D80EE11D771C010081F649 /* utftranslate.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D80EE01D771C010081F649 /* utftranslate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65D80EE31D771E9C0081F649 /* labels.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D80EE21D771E9C0081F649 /* labels.h */; };
 		65DD2E941D006B3F0005EC86 /* trustdirname.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DD2E931D006B3F0005EC86 /* trustdirname.m */; };
+		65ED38101FD16FEE00310ABD /* libbeidpkcs11.4.3.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 65ED38111FD16FEE00310ABD /* libbeidpkcs11.4.3.5.dylib */; };
 		8B195DE51BB3F62900777CC5 /* ResizablePrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B195DE41BB3F62900777CC5 /* ResizablePrintView.m */; };
 		8B3DD9751B03907500E0537B /* coat_of_arms_de.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9711B03907500E0537B /* coat_of_arms_de.jpg */; };
 		8B3DD9761B03907500E0537B /* coat_of_arms_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8B3DD9721B03907500E0537B /* coat_of_arms_en.jpg */; };
@@ -245,6 +245,7 @@
 		65DD2E931D006B3F0005EC86 /* trustdirname.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = trustdirname.m; sourceTree = "<group>"; };
 		65DD2E951D006B530005EC86 /* trustdirname.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = trustdirname.h; sourceTree = "<group>"; };
 		65EABAE31C621E3D00034337 /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = ../../../../util/labels.c; sourceTree = "<group>"; };
+		65ED38111FD16FEE00310ABD /* libbeidpkcs11.4.3.5.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libbeidpkcs11.4.3.5.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B195DE31BB3F62900777CC5 /* ResizablePrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizablePrintView.h; sourceTree = "<group>"; };
 		8B195DE41BB3F62900777CC5 /* ResizablePrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizablePrintView.m; sourceTree = "<group>"; };
 		8B3DD9711B03907500E0537B /* coat_of_arms_de.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_de.jpg; path = ../../../resources/coat_of_arms_de.jpg; sourceTree = "<group>"; };
@@ -277,7 +278,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				655E7B601E44C95200F2590C /* libbeidpkcs11.4.2.7.dylib in Frameworks */,
+				65ED38101FD16FEE00310ABD /* libbeidpkcs11.4.3.5.dylib in Frameworks */,
 				6576413B1DE4A66200602BC0 /* libcrypto.a in Frameworks */,
 				657641381DE4A4CB00602BC0 /* libxml2.a in Frameworks */,
 			);
@@ -297,6 +298,7 @@
 		652F07671D918C65003BFFD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65ED38111FD16FEE00310ABD /* libbeidpkcs11.4.3.5.dylib */,
 				6576413A1DE4A66200602BC0 /* libcrypto.a */,
 			);
 			name = Frameworks;
@@ -585,7 +587,7 @@
 					659FFC3B1AE9360D004CEC1F = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = D4SW6VZB8M;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					65BD08631CECB257000A30E4 = {
 						CreatedOnToolsVersion = 7.3;
@@ -595,7 +597,7 @@
 					8BBDE3111B3BF02C00CBE13E = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = D4SW6VZB8M;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1011,12 +1013,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
-<<<<<<< HEAD
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-=======
 				CODE_SIGN_IDENTITY = "Developer ID Application";
->>>>>>> v4.3
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
