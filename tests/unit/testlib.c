@@ -295,6 +295,7 @@ int ckrv_decode(CK_RV rv, char* fc, int count, const ckrv_mod* mods) {
 	ADD_CKRV(CKR_USER_TYPE_INVALID, TEST_RV_FAIL);
 	ADD_CKRV(CKR_USER_NOT_LOGGED_IN, TEST_RV_FAIL);
 	ADD_CKRV(CKR_KEY_FUNCTION_NOT_PERMITTED, TEST_RV_FAIL);
+	ADD_CKRV(CKR_OBJECT_HANDLE_INVALID, TEST_RV_FAIL);
 
 	for(i=0; i<count; i++) {
 		CK_RV modrv = mods[i].rv;
