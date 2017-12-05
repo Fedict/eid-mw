@@ -123,6 +123,9 @@
   <data name="fileMenuCloseItem" xml:space="preserve">
     <value>Sluiten</value>
   </data>
+  <data name="fileMenuExportFoto" xml:space="preserve">
+    <value>Foto Exporteren naar JPG bestand..</value>
+  </data>
   <data name="fileMenuFAQItem" xml:space="preserve">
     <value>Veel gestelde vragen..</value>
   </data>
