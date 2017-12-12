@@ -375,9 +375,10 @@ HRESULT ParseAttributes(IXmlReader * pReader, const WCHAR * pwszLocalName)
 	if (retVal != S_OK)
 	{
 		return retVal;
-	} else
+	} 
+	else
 	{
-		while (pReader->MoveToNextAttribute() == S_OK)
+		do
 		{
 			if (!pReader->IsDefault())
 			{
@@ -419,9 +420,9 @@ HRESULT ParseAttributes(IXmlReader * pReader, const WCHAR * pwszLocalName)
 					}
 				}
 			}
-		}
+		} while (pReader->MoveToNextAttribute() == S_OK);
 	}
-      out:
+    out:
 
 	return retVal;
 }
