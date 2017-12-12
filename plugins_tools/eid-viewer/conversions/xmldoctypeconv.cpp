@@ -38,6 +38,10 @@ XmlDoctypeConvertor::XmlDoctypeConvertor()
 EID_STRING XmlDoctypeConvertor::convert(const void *original)
 {
 	EID_STRING str((EID_CHAR *) original);
+	if (str.size() == 0)
+	{
+		return TEXT("");
+	}
 
 	if (conversions.count(str) > 0)
 	{
