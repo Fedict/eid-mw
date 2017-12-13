@@ -14,7 +14,7 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_DE][TEXT("6")] = TEXT("KIDS-KARTE");
 		conversions[EID_VWR_LANG_DE][TEXT("7")] = TEXT("STARTKARTE");
 		conversions[EID_VWR_LANG_DE][TEXT("8")] = TEXT("Berechtigungskarte");
-		conversions[EID_VWR_LANG_DE][TEXT("01")] = TEXT("PERSONALAUSWEIS");// in practice we find 01
+		conversions[EID_VWR_LANG_DE][TEXT("01")] = TEXT("PERSONALAUSWEIS");// in the field, both 1 and 01 are present
 		conversions[EID_VWR_LANG_DE][TEXT("06")] = TEXT("KIDS-KARTE");
 		conversions[EID_VWR_LANG_DE][TEXT("07")] = TEXT("STARTKARTE");
 		conversions[EID_VWR_LANG_DE][TEXT("08")] = TEXT("Berechtigungskarte");
