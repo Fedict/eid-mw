@@ -68,7 +68,7 @@ static struct {
 	{ TEXT("date_of_birth"),		CK_TRUE, CK_TRUE, CK_TRUE },
 	{ TEXT("gender"),			CK_TRUE, CK_TRUE, CK_TRUE },
 	{ TEXT("nobility"),			CK_TRUE, CK_TRUE, CK_TRUE },
-	{ TEXT("document_type"),		CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("document_type"),		CK_TRUE, CK_TRUE, CK_TRUE },
 	{ TEXT("special_status"),		CK_TRUE, CK_TRUE, CK_TRUE },
 	{ TEXT("photo_hash"),			CK_FALSE, CK_TRUE, CK_TRUE },
 	{ TEXT("duplicata"),			CK_TRUE, CK_FALSE, CK_TRUE },//there is no converter for this field, and according to card spec, there are ascii values in this field
