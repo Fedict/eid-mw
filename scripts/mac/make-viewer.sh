@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -z "$MAC_BUILD_CONFIG" ]
 then
 	MAC_BUILD_CONFIG=Release
