@@ -13,7 +13,7 @@ pushd $(dirname $0)
 
 rm -rf release-viewer
 mkdir -p release-viewer
-rm tmp-eidviewer.dmg
+rm -f tmp-eidviewer.dmg
 rm -f "eID Viewer-$REL_VERSION.dmg"
 
 pushd "../../"
