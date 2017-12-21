@@ -7,6 +7,71 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		651DDF241FEA833C00C4961E /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 651DDF231FEA833C00C4961E /* eidv4.xsd */; };
+		651DDF2D1FEA843D00C4961E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF2C1FEA843D00C4961E /* AppDelegate.m */; };
+		651DDF321FEA843D00C4961E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 651DDF301FEA843D00C4961E /* MainMenu.xib */; };
+		651DDF351FEA843D00C4961E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF341FEA843D00C4961E /* main.m */; };
+		651DDF541FEA84F200C4961E /* CertificateStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF421FEA84B100C4961E /* CertificateStore.m */; };
+		651DDF551FEA84F800C4961E /* DraggingImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF431FEA84B200C4961E /* DraggingImage.m */; };
+		651DDF561FEA850200C4961E /* photohandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF3B1FEA84B100C4961E /* photohandler.m */; };
+		651DDF571FEA850900C4961E /* PrintOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF3D1FEA84B100C4961E /* PrintOperation.m */; };
+		651DDF581FEA850F00C4961E /* ReaderMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF451FEA84B200C4961E /* ReaderMenuItem.m */; };
+		651DDF591FEA851500C4961E /* ResizablePrintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF3A1FEA84B000C4961E /* ResizablePrintView.m */; };
+		651DDF5D1FEA85AE00C4961E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 651DDF5B1FEA853D00C4961E /* Images.xcassets */; };
+		651DDF5E1FEA85C400C4961E /* certs in Resources */ = {isa = PBXBuildFile; fileRef = 651DDF5C1FEA854600C4961E /* certs */; };
+		652709FE1FE975A1004F326D /* BeidView.h in Headers */ = {isa = PBXBuildFile; fileRef = 652709FC1FE975A1004F326D /* BeidView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		65270A0A1FE9761A004F326D /* trustdirname.m in Sources */ = {isa = PBXBuildFile; fileRef = 65270A091FE9761A004F326D /* trustdirname.m */; };
+		65270A2C1FE976BE004F326D /* base64dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A231FE976BC004F326D /* base64dec.c */; };
+		65270A2D1FE976BE004F326D /* oslayer.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A241FE976BD004F326D /* oslayer.c */; };
+		65270A2E1FE976BE004F326D /* backend.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A101FE976B8004F326D /* backend.c */; };
+		65270A2F1FE976BE004F326D /* certhelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A111FE976B8004F326D /* certhelpers.c */; };
+		65270A301FE976BE004F326D /* xmlmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A121FE976B8004F326D /* xmlmap.cpp */; };
+		65270A311FE976BE004F326D /* cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A131FE976B9004F326D /* cache.cpp */; };
+		65270A321FE976BE004F326D /* state-posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A151FE976B9004F326D /* state-posix.c */; };
+		65270A331FE976BE004F326D /* state.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A171FE976B9004F326D /* state.c */; };
+		65270A341FE976BE004F326D /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A1B1FE976BA004F326D /* labels.c */; };
+		65270A351FE976BE004F326D /* preview.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A1C1FE976BB004F326D /* preview.c */; };
+		65270A361FE976BE004F326D /* oslayer-objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 65270A1D1FE976BB004F326D /* oslayer-objc.m */; };
+		65270A371FE976BE004F326D /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A1F1FE976BB004F326D /* verify.c */; };
+		65270A381FE976BE004F326D /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A201FE976BC004F326D /* xml.c */; };
+		65270A391FE976BE004F326D /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A251FE976BD004F326D /* p11.c */; };
+		65270A3A1FE976BE004F326D /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 65270A2A1FE976BE004F326D /* dataroot-osx.m */; };
+		65270A3B1FE97991004F326D /* utftranslate.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EABAEF1C621F3D00034337 /* utftranslate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		65270A3C1FE97991004F326D /* oslayer-objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A191FE976BA004F326D /* oslayer-objc.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		65270A3D1FE97991004F326D /* certhelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A0F1FE976B7004F326D /* certhelpers.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		65270A3E1FE97991004F326D /* eid-viewer.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A1E1FE976BB004F326D /* eid-viewer.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		65270A3F1FE97991004F326D /* macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A2B1FE976BE004F326D /* macros.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		65270A401FE97991004F326D /* oslayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A1A1FE976BA004F326D /* oslayer.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		65270A411FE97991004F326D /* verify_cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A271FE976BD004F326D /* verify_cert.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		65270A631FE97A2B004F326D /* bbannumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A421FE97A27004F326D /* bbannumconv.cpp */; };
+		65270A641FE97A2B004F326D /* specconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A431FE97A27004F326D /* specconv.cpp */; };
+		65270A651FE97A2B004F326D /* xmlspecorgconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A441FE97A27004F326D /* xmlspecorgconv.cpp */; };
+		65270A671FE97A2B004F326D /* dateconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A461FE97A27004F326D /* dateconv.cpp */; };
+		65270A681FE97A2B004F326D /* convertor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A471FE97A28004F326D /* convertor.cpp */; };
+		65270A6A1FE97A2B004F326D /* hexnumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A491FE97A28004F326D /* hexnumconv.cpp */; };
+		65270A6B1FE97A2B004F326D /* convworker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A4A1FE97A28004F326D /* convworker.cpp */; };
+		65270A6C1FE97A2B004F326D /* xmldoctypeconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A4B1FE97A28004F326D /* xmldoctypeconv.cpp */; };
+		65270A6E1FE97A2B004F326D /* doctypeconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A4D1FE97A28004F326D /* doctypeconv.cpp */; };
+		65270A701FE97A2B004F326D /* dob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A4F1FE97A28004F326D /* dob.cpp */; };
+		65270A711FE97A2B004F326D /* xmlspecconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A501FE97A28004F326D /* xmlspecconv.cpp */; };
+		65270A751FE97A2B004F326D /* hexdecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A541FE97A29004F326D /* hexdecode.cpp */; };
+		65270A781FE97A2B004F326D /* specorgconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A571FE97A29004F326D /* specorgconv.cpp */; };
+		65270A791FE97A2B004F326D /* valdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A581FE97A29004F326D /* valdate.cpp */; };
+		65270A7A1FE97A2B004F326D /* genderconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A591FE97A29004F326D /* genderconv.cpp */; };
+		65270A7C1FE97A2B004F326D /* natnumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A5B1FE97A2A004F326D /* natnumconv.cpp */; };
+		65270A821FE97A2B004F326D /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A611FE97A2A004F326D /* convert.cpp */; };
+		65270A881FE97E7D004F326D /* libbeidpkcs11.4.3.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.3.5.dylib */; };
+		65270A8A1FE97E97004F326D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A891FE97E97004F326D /* libcrypto.a */; };
+		65270A8C1FE97EBD004F326D /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A8B1FE97EBD004F326D /* libxml2.a */; };
+		653490F01FEA75FE000F7787 /* libbeidpkcs11.4.3.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.3.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		653490FD1FEA7B3A000F7787 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 653490FC1FEA7B3A000F7787 /* main.c */; };
+		6534910E1FEA7BE7000F7787 /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 6534910C1FEA7BE6000F7787 /* GeneratePreviewForURL.m */; };
+		6534910F1FEA7BE7000F7787 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 6534910D1FEA7BE7000F7787 /* GenerateThumbnailForURL.m */; };
+		653491101FEA7C64000F7787 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A8B1FE97EBD004F326D /* libxml2.a */; };
+		653491111FEA8065000F7787 /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 65270A2A1FE976BE004F326D /* dataroot-osx.m */; };
+		653491121FEA8072000F7787 /* base64dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A231FE976BC004F326D /* base64dec.c */; };
+		653491131FEA8074000F7787 /* base64dec.h in Sources */ = {isa = PBXBuildFile; fileRef = 65270A221FE976BC004F326D /* base64dec.h */; };
+		653491141FEA807E000F7787 /* preview.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A1C1FE976BB004F326D /* preview.c */; };
 		6536232519A7E92B00D46ECB /* decode_photo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230D19A7E92B00D46ECB /* decode_photo.c */; };
 		6536232619A7E92B00D46ECB /* digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230E19A7E92B00D46ECB /* digest.c */; };
 		6536232719A7E92B00D46ECB /* double_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230F19A7E92B00D46ECB /* double_init.c */; };
@@ -35,6 +100,14 @@
 		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
+		659FD5851FEA867600E4AF83 /* BeidView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652709FA1FE975A1004F326D /* BeidView.framework */; };
+		659FD5861FEA867600E4AF83 /* BeidView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 652709FA1FE975A1004F326D /* BeidView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		659FD58C1FEA919100E4AF83 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 651DDF231FEA833C00C4961E /* eidv4.xsd */; };
+		659FD5961FEA926F00E4AF83 /* coat_of_arms_de.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659FD5941FEA926900E4AF83 /* coat_of_arms_de.jpg */; };
+		659FD5971FEA927200E4AF83 /* coat_of_arms_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659FD5931FEA926800E4AF83 /* coat_of_arms_en.jpg */; };
+		659FD5981FEA927500E4AF83 /* coat_of_arms_fr.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659FD5921FEA926800E4AF83 /* coat_of_arms_fr.jpg */; };
+		659FD5991FEA927800E4AF83 /* coat_of_arms_nl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659FD5951FEA926900E4AF83 /* coat_of_arms_nl.jpg */; };
+		659FD59B1FEA92EF00E4AF83 /* eidfilepreview.qlgenerator in CopyFiles */ = {isa = PBXBuildFile; fileRef = 653490F61FEA7B39000F7787 /* eidfilepreview.qlgenerator */; };
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
 		65EABAF11C621F3D00034337 /* labels.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EABAEE1C621F3D00034337 /* labels.h */; };
 		65EABAF21C621F3D00034337 /* utftranslate.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EABAEF1C621F3D00034337 /* utftranslate.h */; };
@@ -204,26 +277,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		655E14D41BBA8A2900D855D3 /* PBXContainerItemProxy */ = {
+		65270A851FE97E6C004F326D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 659FFC3C1AE9360D004CEC1F;
-			remoteInfo = "eID Viewer";
-		};
-		655E14D61BBA8A2900D855D3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8BBDE3121B3BF02C00CBE13E;
-			remoteInfo = eidfilepreview;
-		};
-		657875021D11518000DDA856 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 65BD08641CECB257000A30E4;
-			remoteInfo = BeidView;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FA1A9F60F85F36E000D9EE1;
+			remoteInfo = beidpkcs11;
 		};
 		6580550D1A66C9BE000AEFE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -231,6 +290,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 658054E51A66C9BB000AEFE0;
 			remoteInfo = "eID Middleware";
+		};
+		659FD5871FEA867600E4AF83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 652709F91FE975A1004F326D;
+			remoteInfo = BeidView;
+		};
+		659FD58A1FEA87E000E4AF83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 653490F51FEA7B39000F7787;
+			remoteInfo = eidfilepreview;
 		};
 		7FC5353E0F84B84300BA96EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -284,6 +357,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		653490E91FEA75E2000F7787 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				653490F01FEA75FE000F7787 /* libbeidpkcs11.4.3.5.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6536230019A7E8E600D46ECB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -293,10 +376,129 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		659FD5891FEA867600E4AF83 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				659FD5861FEA867600E4AF83 /* BeidView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		659FD59A1FEA92C600E4AF83 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "eID Viewer.app/Contents/Library/QuickLook";
+			dstSubfolderSpec = 16;
+			files = (
+				659FD59B1FEA92EF00E4AF83 /* eidfilepreview.qlgenerator in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		651DDF231FEA833C00C4961E /* eidv4.xsd */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../eidv4.xsd; sourceTree = "<group>"; };
+		651DDF291FEA843C00C4961E /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		651DDF2B1FEA843D00C4961E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		651DDF2C1FEA843D00C4961E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		651DDF311FEA843D00C4961E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		651DDF331FEA843D00C4961E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		651DDF341FEA843D00C4961E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		651DDF3A1FEA84B000C4961E /* ResizablePrintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizablePrintView.m; sourceTree = "<group>"; };
+		651DDF3B1FEA84B100C4961E /* photohandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = photohandler.m; sourceTree = "<group>"; };
+		651DDF3C1FEA84B100C4961E /* ReaderMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderMenuItem.h; sourceTree = "<group>"; };
+		651DDF3D1FEA84B100C4961E /* PrintOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintOperation.m; sourceTree = "<group>"; };
+		651DDF3E1FEA84B100C4961E /* PrintOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintOperation.h; sourceTree = "<group>"; };
+		651DDF3F1FEA84B100C4961E /* CertificateStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateStore.h; sourceTree = "<group>"; };
+		651DDF401FEA84B100C4961E /* ResizablePrintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizablePrintView.h; sourceTree = "<group>"; };
+		651DDF411FEA84B100C4961E /* DraggingImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggingImage.h; sourceTree = "<group>"; };
+		651DDF421FEA84B100C4961E /* CertificateStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateStore.m; sourceTree = "<group>"; };
+		651DDF431FEA84B200C4961E /* DraggingImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggingImage.m; sourceTree = "<group>"; };
+		651DDF441FEA84B200C4961E /* binhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binhandler.h; sourceTree = "<group>"; };
+		651DDF451FEA84B200C4961E /* ReaderMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderMenuItem.m; sourceTree = "<group>"; };
+		651DDF461FEA84B200C4961E /* photohandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = photohandler.h; sourceTree = "<group>"; };
+		651DDF5B1FEA853D00C4961E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		651DDF5C1FEA854600C4961E /* certs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = certs; path = ../../../certs; sourceTree = "<group>"; };
+		652709FA1FE975A1004F326D /* BeidView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BeidView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		652709FC1FE975A1004F326D /* BeidView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeidView.h; sourceTree = "<group>"; };
+		652709FD1FE975A1004F326D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65270A081FE9761A004F326D /* trustdirname.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = trustdirname.h; sourceTree = "<group>"; };
+		65270A091FE9761A004F326D /* trustdirname.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = trustdirname.m; sourceTree = "<group>"; };
+		65270A0D1FE976B7004F326D /* state.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = state.h; path = ../../../state.h; sourceTree = "<group>"; };
+		65270A0E1FE976B7004F326D /* labels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = labels.h; path = "../../../../util/eid-util/labels.h"; sourceTree = "<group>"; };
+		65270A0F1FE976B7004F326D /* certhelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = certhelpers.h; path = "../../../include/eid-viewer/certhelpers.h"; sourceTree = "<group>"; };
+		65270A101FE976B8004F326D /* backend.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = backend.c; path = ../../../backend.c; sourceTree = "<group>"; };
+		65270A111FE976B8004F326D /* certhelpers.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = certhelpers.c; path = ../../../certhelpers.c; sourceTree = "<group>"; };
+		65270A121FE976B8004F326D /* xmlmap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = xmlmap.cpp; path = ../../../xmlmap.cpp; sourceTree = "<group>"; };
+		65270A131FE976B9004F326D /* cache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cache.cpp; path = ../../../cache/cache.cpp; sourceTree = "<group>"; };
+		65270A141FE976B9004F326D /* xml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xml.h; path = ../../../xml.h; sourceTree = "<group>"; };
+		65270A151FE976B9004F326D /* state-posix.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = "state-posix.c"; path = "../../../state-posix.c"; sourceTree = "<group>"; };
+		65270A161FE976B9004F326D /* xsdloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xsdloc.h; path = ../../../xsdloc.h; sourceTree = "<group>"; };
+		65270A171FE976B9004F326D /* state.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = state.c; path = ../../../state.c; sourceTree = "<group>"; };
+		65270A181FE976BA004F326D /* cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cache.h; path = ../../../cache.h; sourceTree = "<group>"; };
+		65270A191FE976BA004F326D /* oslayer-objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "oslayer-objc.h"; path = "../eID Viewer/oslayer-objc.h"; sourceTree = "<group>"; };
+		65270A1A1FE976BA004F326D /* oslayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = oslayer.h; path = "../../../include/eid-viewer/oslayer.h"; sourceTree = "<group>"; };
+		65270A1B1FE976BA004F326D /* labels.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = labels.c; path = ../../../../util/labels.c; sourceTree = "<group>"; };
+		65270A1C1FE976BB004F326D /* preview.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = preview.c; path = ../../../preview.c; sourceTree = "<group>"; };
+		65270A1D1FE976BB004F326D /* oslayer-objc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "oslayer-objc.m"; path = "../eID Viewer/oslayer-objc.m"; sourceTree = "<group>"; };
+		65270A1E1FE976BB004F326D /* eid-viewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "eid-viewer.h"; path = "../../../include/eid-viewer/eid-viewer.h"; sourceTree = "<group>"; };
+		65270A1F1FE976BB004F326D /* verify.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = verify.c; path = ../../../verify.c; sourceTree = "<group>"; };
+		65270A201FE976BC004F326D /* xml.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = xml.c; path = ../../../xml.c; sourceTree = "<group>"; };
+		65270A211FE976BC004F326D /* conversions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = conversions.h; path = ../../../conversions.h; sourceTree = "<group>"; };
+		65270A221FE976BC004F326D /* base64dec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = base64dec.h; path = ../../../b64/base64dec.h; sourceTree = "<group>"; };
+		65270A231FE976BC004F326D /* base64dec.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = base64dec.c; path = ../../../b64/base64dec.c; sourceTree = "<group>"; };
+		65270A241FE976BD004F326D /* oslayer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = oslayer.c; path = ../../../oslayer.c; sourceTree = "<group>"; };
+		65270A251FE976BD004F326D /* p11.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = p11.c; path = ../../../p11.c; sourceTree = "<group>"; };
+		65270A261FE976BD004F326D /* xmlmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xmlmap.h; path = ../../../xmlmap.h; sourceTree = "<group>"; };
+		65270A271FE976BD004F326D /* verify_cert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = verify_cert.h; path = "../../../include/eid-viewer/verify_cert.h"; sourceTree = "<group>"; };
+		65270A281FE976BE004F326D /* p11.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = p11.h; path = ../../../p11.h; sourceTree = "<group>"; };
+		65270A291FE976BE004F326D /* backend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = backend.h; path = ../../../backend.h; sourceTree = "<group>"; };
+		65270A2A1FE976BE004F326D /* dataroot-osx.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "dataroot-osx.m"; path = "../eID Viewer/dataroot-osx.m"; sourceTree = "<group>"; };
+		65270A2B1FE976BE004F326D /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = macros.h; path = "../../../include/eid-viewer/macros.h"; sourceTree = "<group>"; };
+		65270A421FE97A27004F326D /* bbannumconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bbannumconv.cpp; sourceTree = "<group>"; };
+		65270A431FE97A27004F326D /* specconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specconv.cpp; sourceTree = "<group>"; };
+		65270A441FE97A27004F326D /* xmlspecorgconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmlspecorgconv.cpp; sourceTree = "<group>"; };
+		65270A451FE97A27004F326D /* bbannumconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bbannumconv.h; sourceTree = "<group>"; };
+		65270A461FE97A27004F326D /* dateconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dateconv.cpp; sourceTree = "<group>"; };
+		65270A471FE97A28004F326D /* convertor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convertor.cpp; sourceTree = "<group>"; };
+		65270A481FE97A28004F326D /* dateconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dateconv.h; sourceTree = "<group>"; };
+		65270A491FE97A28004F326D /* hexnumconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hexnumconv.cpp; sourceTree = "<group>"; };
+		65270A4A1FE97A28004F326D /* convworker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convworker.cpp; sourceTree = "<group>"; };
+		65270A4B1FE97A28004F326D /* xmldoctypeconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmldoctypeconv.cpp; sourceTree = "<group>"; };
+		65270A4C1FE97A28004F326D /* dob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dob.h; sourceTree = "<group>"; };
+		65270A4D1FE97A28004F326D /* doctypeconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = doctypeconv.cpp; sourceTree = "<group>"; };
+		65270A4E1FE97A28004F326D /* xmlspecorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmlspecorgconv.h; sourceTree = "<group>"; };
+		65270A4F1FE97A28004F326D /* dob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dob.cpp; sourceTree = "<group>"; };
+		65270A501FE97A28004F326D /* xmlspecconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmlspecconv.cpp; sourceTree = "<group>"; };
+		65270A511FE97A29004F326D /* genderconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = genderconv.h; sourceTree = "<group>"; };
+		65270A521FE97A29004F326D /* valdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = valdate.h; sourceTree = "<group>"; };
+		65270A531FE97A29004F326D /* natnumconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = natnumconv.h; sourceTree = "<group>"; };
+		65270A541FE97A29004F326D /* hexdecode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hexdecode.cpp; sourceTree = "<group>"; };
+		65270A551FE97A29004F326D /* hexdecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hexdecode.h; sourceTree = "<group>"; };
+		65270A561FE97A29004F326D /* specconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = specconv.h; sourceTree = "<group>"; };
+		65270A571FE97A29004F326D /* specorgconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = specorgconv.cpp; sourceTree = "<group>"; };
+		65270A581FE97A29004F326D /* valdate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = valdate.cpp; sourceTree = "<group>"; };
+		65270A591FE97A29004F326D /* genderconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = genderconv.cpp; sourceTree = "<group>"; };
+		65270A5A1FE97A2A004F326D /* hexnumconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hexnumconv.h; sourceTree = "<group>"; };
+		65270A5B1FE97A2A004F326D /* natnumconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = natnumconv.cpp; sourceTree = "<group>"; };
+		65270A5C1FE97A2A004F326D /* convworker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convworker.h; sourceTree = "<group>"; };
+		65270A5D1FE97A2A004F326D /* xmldoctypeconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmldoctypeconv.h; sourceTree = "<group>"; };
+		65270A5E1FE97A2A004F326D /* xmlspecconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmlspecconv.h; sourceTree = "<group>"; };
+		65270A5F1FE97A2A004F326D /* doctypeconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = doctypeconv.h; sourceTree = "<group>"; };
+		65270A601FE97A2A004F326D /* convertor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convertor.h; sourceTree = "<group>"; };
+		65270A611FE97A2A004F326D /* convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert.cpp; sourceTree = "<group>"; };
+		65270A621FE97A2B004F326D /* specorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = specorgconv.h; sourceTree = "<group>"; };
+		65270A891FE97E97004F326D /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "plugins_tools/eid-viewer/OSX/support/ossl/openssl-1.0.2l/libcrypto.a"; sourceTree = "<group>"; };
+		65270A8B1FE97EBD004F326D /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = "plugins_tools/eid-viewer/OSX/support/xml/builddir/.libs/libxml2.a"; sourceTree = "<group>"; };
+		653490F61FEA7B39000F7787 /* eidfilepreview.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eidfilepreview.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
+		653490FC1FEA7B3A000F7787 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		653490FE1FEA7B3A000F7787 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6534910C1FEA7BE6000F7787 /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
+		6534910D1FEA7BE7000F7787 /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenerateThumbnailForURL.m; sourceTree = "<group>"; };
 		6536230219A7E8E600D46ECB /* testsuite */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testsuite; sourceTree = BUILT_PRODUCTS_DIR; };
 		6536230D19A7E92B00D46ECB /* decode_photo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decode_photo.c; path = tests/unit/decode_photo.c; sourceTree = "<group>"; };
 		6536230E19A7E92B00D46ECB /* digest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = digest.c; path = tests/unit/digest.c; sourceTree = "<group>"; };
@@ -327,11 +529,17 @@
 		6594447B19A8C29B003ABC24 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = cardcomm/pkcs11/src/asn1.c; sourceTree = "<group>"; };
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
 		6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs11util.cpp; path = cardcomm/pkcs11/src/pkcs11util.cpp; sourceTree = "<group>"; };
-		659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Viewer.xcodeproj"; path = "plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		659FD58D1FEA920900E4AF83 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		659FD5901FEA921400E4AF83 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		659FD5911FEA921800E4AF83 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		659FD5921FEA926800E4AF83 /* coat_of_arms_fr.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_fr.jpg; path = "plugins_tools/eid-viewer/resources/coat_of_arms_fr.jpg"; sourceTree = SOURCE_ROOT; };
+		659FD5931FEA926800E4AF83 /* coat_of_arms_en.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_en.jpg; path = "plugins_tools/eid-viewer/resources/coat_of_arms_en.jpg"; sourceTree = SOURCE_ROOT; };
+		659FD5941FEA926900E4AF83 /* coat_of_arms_de.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_de.jpg; path = "plugins_tools/eid-viewer/resources/coat_of_arms_de.jpg"; sourceTree = SOURCE_ROOT; };
+		659FD5951FEA926900E4AF83 /* coat_of_arms_nl.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = coat_of_arms_nl.jpg; path = "plugins_tools/eid-viewer/resources/coat_of_arms_nl.jpg"; sourceTree = SOURCE_ROOT; };
 		65CC20ED19A7DE4E0089CD13 /* ordering.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ordering.c; path = tests/unit/ordering.c; sourceTree = "<group>"; };
 		65EABAED1C621F3D00034337 /* labels.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = labels.c; path = plugins_tools/util/labels.c; sourceTree = "<group>"; };
-		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = plugins_tools/util/labels.h; sourceTree = "<group>"; };
-		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = plugins_tools/util/utftranslate.h; sourceTree = "<group>"; };
+		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = "plugins_tools/util/eid-util/labels.h"; sourceTree = "<group>"; };
+		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = "plugins_tools/util/eid-util/utftranslate.h"; sourceTree = "<group>"; };
 		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
@@ -468,6 +676,32 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		651DDF261FEA843C00C4961E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				659FD5851FEA867600E4AF83 /* BeidView.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		652709F61FE975A1004F326D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65270A881FE97E7D004F326D /* libbeidpkcs11.4.3.5.dylib in Frameworks */,
+				65270A8A1FE97E97004F326D /* libcrypto.a in Frameworks */,
+				65270A8C1FE97EBD004F326D /* libxml2.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		653490F21FEA7B39000F7787 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				653491101FEA7C64000F7787 /* libxml2.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		653622FF19A7E8E600D46ECB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -542,6 +776,9 @@
 				8683738518648918005EE5D7 /* libbeiddialogsmac.4.3.5.a */,
 				6536230219A7E8E600D46ECB /* testsuite */,
 				86B4749B1BD798B8004FB8AE /* libbeid_ff_pkcs11.dylib */,
+				652709FA1FE975A1004F326D /* BeidView.framework */,
+				653490F61FEA7B39000F7787 /* eidfilepreview.qlgenerator */,
+				651DDF291FEA843C00C4961E /* eID Viewer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -549,7 +786,6 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
-				659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */,
 				658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */,
 				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
 				6536230C19A7E8FE00D46ECB /* testsuite */,
@@ -560,7 +796,11 @@
 				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
 				5073E0CA09E734BC00EC74B6 /* Configuration Files */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				652709FB1FE975A1004F326D /* BeidView */,
+				653490F71FEA7B3A000F7787 /* eidfilepreview */,
+				651DDF2A1FEA843D00C4961E /* eID Viewer */,
 				034768DDFF38A45A11DB9C8B /* Products */,
+				65270A871FE97E7D004F326D /* Frameworks */,
 			);
 			name = beidmw;
 			sourceTree = "<group>";
@@ -584,6 +824,141 @@
 			children = (
 			);
 			name = "Configuration Files";
+			sourceTree = "<group>";
+		};
+		651DDF2A1FEA843D00C4961E /* eID Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				65F8CC2B1FEBBE79006C30B6 /* Supporting files */,
+				651DDF441FEA84B200C4961E /* binhandler.h */,
+				651DDF3F1FEA84B100C4961E /* CertificateStore.h */,
+				651DDF421FEA84B100C4961E /* CertificateStore.m */,
+				651DDF411FEA84B100C4961E /* DraggingImage.h */,
+				651DDF431FEA84B200C4961E /* DraggingImage.m */,
+				651DDF461FEA84B200C4961E /* photohandler.h */,
+				651DDF3B1FEA84B100C4961E /* photohandler.m */,
+				651DDF3E1FEA84B100C4961E /* PrintOperation.h */,
+				651DDF3D1FEA84B100C4961E /* PrintOperation.m */,
+				651DDF3C1FEA84B100C4961E /* ReaderMenuItem.h */,
+				651DDF451FEA84B200C4961E /* ReaderMenuItem.m */,
+				651DDF401FEA84B100C4961E /* ResizablePrintView.h */,
+				651DDF3A1FEA84B000C4961E /* ResizablePrintView.m */,
+				651DDF2B1FEA843D00C4961E /* AppDelegate.h */,
+				651DDF2C1FEA843D00C4961E /* AppDelegate.m */,
+				651DDF301FEA843D00C4961E /* MainMenu.xib */,
+				651DDF331FEA843D00C4961E /* Info.plist */,
+				651DDF341FEA843D00C4961E /* main.m */,
+			);
+			name = "eID Viewer";
+			path = "plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer";
+			sourceTree = "<group>";
+		};
+		652709FB1FE975A1004F326D /* BeidView */ = {
+			isa = PBXGroup;
+			children = (
+				65270A0B1FE976B6004F326D /* InfoPlist.strings */,
+				65270A191FE976BA004F326D /* oslayer-objc.h */,
+				65270A1D1FE976BB004F326D /* oslayer-objc.m */,
+				65270A1F1FE976BB004F326D /* verify.c */,
+				65270A101FE976B8004F326D /* backend.c */,
+				65270A291FE976BE004F326D /* backend.h */,
+				65270A231FE976BC004F326D /* base64dec.c */,
+				65270A221FE976BC004F326D /* base64dec.h */,
+				65270A131FE976B9004F326D /* cache.cpp */,
+				65270A181FE976BA004F326D /* cache.h */,
+				65270A111FE976B8004F326D /* certhelpers.c */,
+				65270A0C1FE976B7004F326D /* conversions */,
+				65270A211FE976BC004F326D /* conversions.h */,
+				65270A2A1FE976BE004F326D /* dataroot-osx.m */,
+				65270A1B1FE976BA004F326D /* labels.c */,
+				65270A0E1FE976B7004F326D /* labels.h */,
+				65270A241FE976BD004F326D /* oslayer.c */,
+				65270A251FE976BD004F326D /* p11.c */,
+				65270A281FE976BE004F326D /* p11.h */,
+				65270A151FE976B9004F326D /* state-posix.c */,
+				65270A171FE976B9004F326D /* state.c */,
+				65270A0D1FE976B7004F326D /* state.h */,
+				65270A201FE976BC004F326D /* xml.c */,
+				65270A1C1FE976BB004F326D /* preview.c */,
+				65270A161FE976B9004F326D /* xsdloc.h */,
+				65270A141FE976B9004F326D /* xml.h */,
+				65270A121FE976B8004F326D /* xmlmap.cpp */,
+				65270A261FE976BD004F326D /* xmlmap.h */,
+				65270A0F1FE976B7004F326D /* certhelpers.h */,
+				65270A1E1FE976BB004F326D /* eid-viewer.h */,
+				65270A2B1FE976BE004F326D /* macros.h */,
+				65270A1A1FE976BA004F326D /* oslayer.h */,
+				65270A271FE976BD004F326D /* verify_cert.h */,
+				65270A081FE9761A004F326D /* trustdirname.h */,
+				65270A091FE9761A004F326D /* trustdirname.m */,
+				652709FC1FE975A1004F326D /* BeidView.h */,
+				652709FD1FE975A1004F326D /* Info.plist */,
+			);
+			name = BeidView;
+			path = "plugins_tools/eid-viewer/OSX/eID Viewer/BeidView";
+			sourceTree = "<group>";
+		};
+		65270A0C1FE976B7004F326D /* conversions */ = {
+			isa = PBXGroup;
+			children = (
+				65270A421FE97A27004F326D /* bbannumconv.cpp */,
+				65270A451FE97A27004F326D /* bbannumconv.h */,
+				65270A611FE97A2A004F326D /* convert.cpp */,
+				65270A471FE97A28004F326D /* convertor.cpp */,
+				65270A601FE97A2A004F326D /* convertor.h */,
+				65270A4A1FE97A28004F326D /* convworker.cpp */,
+				65270A5C1FE97A2A004F326D /* convworker.h */,
+				65270A461FE97A27004F326D /* dateconv.cpp */,
+				65270A481FE97A28004F326D /* dateconv.h */,
+				65270A4F1FE97A28004F326D /* dob.cpp */,
+				65270A4C1FE97A28004F326D /* dob.h */,
+				65270A4D1FE97A28004F326D /* doctypeconv.cpp */,
+				65270A5F1FE97A2A004F326D /* doctypeconv.h */,
+				65270A591FE97A29004F326D /* genderconv.cpp */,
+				65270A511FE97A29004F326D /* genderconv.h */,
+				65270A541FE97A29004F326D /* hexdecode.cpp */,
+				65270A551FE97A29004F326D /* hexdecode.h */,
+				65270A491FE97A28004F326D /* hexnumconv.cpp */,
+				65270A5A1FE97A2A004F326D /* hexnumconv.h */,
+				65270A5B1FE97A2A004F326D /* natnumconv.cpp */,
+				65270A531FE97A29004F326D /* natnumconv.h */,
+				65270A431FE97A27004F326D /* specconv.cpp */,
+				65270A561FE97A29004F326D /* specconv.h */,
+				65270A571FE97A29004F326D /* specorgconv.cpp */,
+				65270A621FE97A2B004F326D /* specorgconv.h */,
+				65270A581FE97A29004F326D /* valdate.cpp */,
+				65270A521FE97A29004F326D /* valdate.h */,
+				65270A4B1FE97A28004F326D /* xmldoctypeconv.cpp */,
+				65270A5D1FE97A2A004F326D /* xmldoctypeconv.h */,
+				65270A501FE97A28004F326D /* xmlspecconv.cpp */,
+				65270A5E1FE97A2A004F326D /* xmlspecconv.h */,
+				65270A441FE97A27004F326D /* xmlspecorgconv.cpp */,
+				65270A4E1FE97A28004F326D /* xmlspecorgconv.h */,
+			);
+			name = conversions;
+			path = ../../../conversions;
+			sourceTree = "<group>";
+		};
+		65270A871FE97E7D004F326D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65270A8B1FE97EBD004F326D /* libxml2.a */,
+				65270A891FE97E97004F326D /* libcrypto.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		653490F71FEA7B3A000F7787 /* eidfilepreview */ = {
+			isa = PBXGroup;
+			children = (
+				651DDF231FEA833C00C4961E /* eidv4.xsd */,
+				6534910C1FEA7BE6000F7787 /* GeneratePreviewForURL.m */,
+				6534910D1FEA7BE7000F7787 /* GenerateThumbnailForURL.m */,
+				653490FC1FEA7B3A000F7787 /* main.c */,
+				653490FE1FEA7B3A000F7787 /* Info.plist */,
+			);
+			name = eidfilepreview;
+			path = "plugins_tools/eid-viewer/OSX/eID Viewer/eidfilepreview";
 			sourceTree = "<group>";
 		};
 		6536230C19A7E8FE00D46ECB /* testsuite */ = {
@@ -625,22 +1000,25 @@
 			name = testsuite;
 			sourceTree = "<group>";
 		};
-		655E14CF1BBA8A2800D855D3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				655E14D51BBA8A2900D855D3 /* eID Viewer.app */,
-				655E14D71BBA8A2900D855D3 /* eidfilepreview.qlgenerator */,
-				657875031D11518000DDA856 /* BeidView.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		658055091A66C9BB000AEFE0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				6580550E1A66C9BE000AEFE0 /* eID Middleware.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		65F8CC2B1FEBBE79006C30B6 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				659FD5941FEA926900E4AF83 /* coat_of_arms_de.jpg */,
+				659FD5931FEA926800E4AF83 /* coat_of_arms_en.jpg */,
+				659FD5921FEA926800E4AF83 /* coat_of_arms_fr.jpg */,
+				659FD5951FEA926900E4AF83 /* coat_of_arms_nl.jpg */,
+				651DDF5C1FEA854600C4961E /* certs */,
+				651DDF5B1FEA853D00C4961E /* Images.xcassets */,
+			);
+			name = "Supporting files";
 			sourceTree = "<group>";
 		};
 		7FA1AA420F85F446000D9EE1 /* Pkcs11 */ = {
@@ -838,6 +1216,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		652709F71FE975A1004F326D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				652709FE1FE975A1004F326D /* BeidView.h in Headers */,
+				65270A3B1FE97991004F326D /* utftranslate.h in Headers */,
+				65270A3C1FE97991004F326D /* oslayer-objc.h in Headers */,
+				65270A3D1FE97991004F326D /* certhelpers.h in Headers */,
+				65270A3E1FE97991004F326D /* eid-viewer.h in Headers */,
+				65270A3F1FE97991004F326D /* macros.h in Headers */,
+				65270A401FE97991004F326D /* oslayer.h in Headers */,
+				65270A411FE97991004F326D /* verify_cert.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		653490F31FEA7B39000F7787 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FA1A9F30F85F36E000D9EE1 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -957,6 +1357,66 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		651DDF281FEA843C00C4961E /* eID Viewer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 651DDF371FEA843D00C4961E /* Build configuration list for PBXNativeTarget "eID Viewer" */;
+			buildPhases = (
+				651DDF251FEA843C00C4961E /* Sources */,
+				651DDF261FEA843C00C4961E /* Frameworks */,
+				651DDF271FEA843C00C4961E /* Resources */,
+				659FD59A1FEA92C600E4AF83 /* CopyFiles */,
+				659FD5891FEA867600E4AF83 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				659FD58B1FEA87E000E4AF83 /* PBXTargetDependency */,
+				659FD5881FEA867600E4AF83 /* PBXTargetDependency */,
+			);
+			name = "eID Viewer";
+			productName = "eID Viewer";
+			productReference = 651DDF291FEA843C00C4961E /* eID Viewer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		652709F91FE975A1004F326D /* BeidView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65270A071FE975A1004F326D /* Build configuration list for PBXNativeTarget "BeidView" */;
+			buildPhases = (
+				65270A841FE97E22004F326D /* ShellScript */,
+				652709F51FE975A1004F326D /* Sources */,
+				652709F61FE975A1004F326D /* Frameworks */,
+				652709F71FE975A1004F326D /* Headers */,
+				653490E91FEA75E2000F7787 /* CopyFiles */,
+				652709F81FE975A1004F326D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65270A861FE97E6C004F326D /* PBXTargetDependency */,
+			);
+			name = BeidView;
+			productName = BeidView;
+			productReference = 652709FA1FE975A1004F326D /* BeidView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		653490F51FEA7B39000F7787 /* eidfilepreview */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 653490FF1FEA7B3A000F7787 /* Build configuration list for PBXNativeTarget "eidfilepreview" */;
+			buildPhases = (
+				653490F11FEA7B39000F7787 /* Sources */,
+				653490F21FEA7B39000F7787 /* Frameworks */,
+				653490F31FEA7B39000F7787 /* Headers */,
+				653490F41FEA7B39000F7787 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = eidfilepreview;
+			productName = eidfilepreview;
+			productReference = 653490F61FEA7B39000F7787 /* eidfilepreview.qlgenerator */;
+			productType = "com.apple.product-type.bundle";
+		};
 		6536230119A7E8E600D46ECB /* testsuite */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6536230B19A7E8E600D46ECB /* Build configuration list for PBXNativeTarget "testsuite" */;
@@ -1073,6 +1533,26 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				TargetAttributes = {
+					651DDF281FEA843C00C4961E = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+					652709F91FE975A1004F326D = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
+					};
+					653490F51FEA7B39000F7787 = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = D4SW6VZB8M;
+						ProvisioningStyle = Manual;
+					};
 					6536230119A7E8E600D46ECB = {
 						DevelopmentTeam = D4SW6VZB8M;
 						ProvisioningStyle = Manual;
@@ -1109,6 +1589,7 @@
 				English,
 				French,
 				German,
+				Base,
 			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* beidmw */;
 			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
@@ -1117,10 +1598,6 @@
 				{
 					ProductGroup = 658055091A66C9BB000AEFE0 /* Products */;
 					ProjectRef = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
-				},
-				{
-					ProductGroup = 655E14CF1BBA8A2800D855D3 /* Products */;
-					ProjectRef = 659FFC5F1AE9360D004CEC1F /* eID Viewer.xcodeproj */;
 				},
 				{
 					ProductGroup = 869D00BE18D72DCF00A41853 /* Products */;
@@ -1139,32 +1616,14 @@
 				8683738418648918005EE5D7 /* beiddialogsmac */,
 				6536230119A7E8E600D46ECB /* testsuite */,
 				86B474741BD798B8004FB8AE /* beid_ff_pkcs11 */,
+				652709F91FE975A1004F326D /* BeidView */,
+				653490F51FEA7B39000F7787 /* eidfilepreview */,
+				651DDF281FEA843C00C4961E /* eID Viewer */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		655E14D51BBA8A2900D855D3 /* eID Viewer.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "eID Viewer.app";
-			remoteRef = 655E14D41BBA8A2900D855D3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		655E14D71BBA8A2900D855D3 /* eidfilepreview.qlgenerator */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = eidfilepreview.qlgenerator;
-			remoteRef = 655E14D61BBA8A2900D855D3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		657875031D11518000DDA856 /* BeidView.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BeidView.framework;
-			remoteRef = 657875021D11518000DDA856 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		6580550E1A66C9BE000AEFE0 /* eID Middleware.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -1188,7 +1647,53 @@
 		};
 /* End PBXReferenceProxy section */
 
+/* Begin PBXResourcesBuildPhase section */
+		651DDF271FEA843C00C4961E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				659FD58C1FEA919100E4AF83 /* eidv4.xsd in Resources */,
+				659FD5971FEA927200E4AF83 /* coat_of_arms_en.jpg in Resources */,
+				651DDF5D1FEA85AE00C4961E /* Images.xcassets in Resources */,
+				659FD5961FEA926F00E4AF83 /* coat_of_arms_de.jpg in Resources */,
+				659FD5991FEA927800E4AF83 /* coat_of_arms_nl.jpg in Resources */,
+				651DDF5E1FEA85C400C4961E /* certs in Resources */,
+				659FD5981FEA927500E4AF83 /* coat_of_arms_fr.jpg in Resources */,
+				651DDF321FEA843D00C4961E /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		652709F81FE975A1004F326D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		653490F41FEA7B39000F7787 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				651DDF241FEA833C00C4961E /* eidv4.xsd in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXShellScriptBuildPhase section */
+		65270A841FE97E22004F326D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build";
+		};
 		6545A1B01A6986DE00125548 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1206,6 +1711,75 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		651DDF251FEA843C00C4961E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				651DDF591FEA851500C4961E /* ResizablePrintView.m in Sources */,
+				651DDF561FEA850200C4961E /* photohandler.m in Sources */,
+				651DDF551FEA84F800C4961E /* DraggingImage.m in Sources */,
+				651DDF541FEA84F200C4961E /* CertificateStore.m in Sources */,
+				651DDF351FEA843D00C4961E /* main.m in Sources */,
+				651DDF581FEA850F00C4961E /* ReaderMenuItem.m in Sources */,
+				651DDF2D1FEA843D00C4961E /* AppDelegate.m in Sources */,
+				651DDF571FEA850900C4961E /* PrintOperation.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		652709F51FE975A1004F326D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65270A311FE976BE004F326D /* cache.cpp in Sources */,
+				65270A0A1FE9761A004F326D /* trustdirname.m in Sources */,
+				65270A681FE97A2B004F326D /* convertor.cpp in Sources */,
+				65270A2F1FE976BE004F326D /* certhelpers.c in Sources */,
+				65270A391FE976BE004F326D /* p11.c in Sources */,
+				65270A381FE976BE004F326D /* xml.c in Sources */,
+				65270A7A1FE97A2B004F326D /* genderconv.cpp in Sources */,
+				65270A671FE97A2B004F326D /* dateconv.cpp in Sources */,
+				65270A7C1FE97A2B004F326D /* natnumconv.cpp in Sources */,
+				65270A701FE97A2B004F326D /* dob.cpp in Sources */,
+				65270A631FE97A2B004F326D /* bbannumconv.cpp in Sources */,
+				65270A2D1FE976BE004F326D /* oslayer.c in Sources */,
+				65270A2E1FE976BE004F326D /* backend.c in Sources */,
+				65270A791FE97A2B004F326D /* valdate.cpp in Sources */,
+				65270A781FE97A2B004F326D /* specorgconv.cpp in Sources */,
+				65270A6C1FE97A2B004F326D /* xmldoctypeconv.cpp in Sources */,
+				65270A371FE976BE004F326D /* verify.c in Sources */,
+				65270A301FE976BE004F326D /* xmlmap.cpp in Sources */,
+				65270A641FE97A2B004F326D /* specconv.cpp in Sources */,
+				65270A711FE97A2B004F326D /* xmlspecconv.cpp in Sources */,
+				65270A6E1FE97A2B004F326D /* doctypeconv.cpp in Sources */,
+				65270A331FE976BE004F326D /* state.c in Sources */,
+				65270A6A1FE97A2B004F326D /* hexnumconv.cpp in Sources */,
+				65270A751FE97A2B004F326D /* hexdecode.cpp in Sources */,
+				65270A2C1FE976BE004F326D /* base64dec.c in Sources */,
+				65270A351FE976BE004F326D /* preview.c in Sources */,
+				65270A651FE97A2B004F326D /* xmlspecorgconv.cpp in Sources */,
+				65270A821FE97A2B004F326D /* convert.cpp in Sources */,
+				65270A6B1FE97A2B004F326D /* convworker.cpp in Sources */,
+				65270A341FE976BE004F326D /* labels.c in Sources */,
+				65270A321FE976BE004F326D /* state-posix.c in Sources */,
+				65270A3A1FE976BE004F326D /* dataroot-osx.m in Sources */,
+				65270A361FE976BE004F326D /* oslayer-objc.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		653490F11FEA7B39000F7787 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				653491111FEA8065000F7787 /* dataroot-osx.m in Sources */,
+				653491121FEA8072000F7787 /* base64dec.c in Sources */,
+				653491131FEA8074000F7787 /* base64dec.h in Sources */,
+				653491141FEA807E000F7787 /* preview.c in Sources */,
+				653490FD1FEA7B3A000F7787 /* main.c in Sources */,
+				6534910E1FEA7BE7000F7787 /* GeneratePreviewForURL.m in Sources */,
+				6534910F1FEA7BE7000F7787 /* GenerateThumbnailForURL.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		653622FE19A7E8E600D46ECB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1344,6 +1918,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		65270A861FE97E6C004F326D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */;
+			targetProxy = 65270A851FE97E6C004F326D /* PBXContainerItemProxy */;
+		};
+		659FD5881FEA867600E4AF83 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 652709F91FE975A1004F326D /* BeidView */;
+			targetProxy = 659FD5871FEA867600E4AF83 /* PBXContainerItemProxy */;
+		};
+		659FD58B1FEA87E000E4AF83 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 653490F51FEA7B39000F7787 /* eidfilepreview */;
+			targetProxy = 659FD58A1FEA87E000E4AF83 /* PBXContainerItemProxy */;
+		};
 		7FC5353F0F84B84300BA96EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7FBB02520F839352009B751F /* beidcommon */;
@@ -1371,6 +1960,27 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		651DDF301FEA843D00C4961E /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				651DDF311FEA843D00C4961E /* Base */,
+				659FD58D1FEA920900E4AF83 /* nl */,
+				659FD5901FEA921400E4AF83 /* fr */,
+				659FD5911FEA921800E4AF83 /* de */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		65270A0B1FE976B6004F326D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		1DEB916508733D950010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1394,12 +2004,18 @@
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				GCC_THREADSAFE_STATICS = YES;
-				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = (
+					plugins_tools/util,
+					"plugins_tools/eid-viewer/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+					"plugins_tools/eid-viewer",
+					doc/sdk/include/rsaref220,
+					"$(inherited)",
+				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
-				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
@@ -1418,7 +2034,7 @@
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CURRENT_PROJECT_VERSION = 4.3.5;
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = D4SW6VZB8M;
 				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1431,18 +2047,348 @@
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				GCC_THREADSAFE_STATICS = YES;
-				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /System/Library/Frameworks/PCSC.framework/Headers;
+				HEADER_SEARCH_PATHS = (
+					plugins_tools/util,
+					"plugins_tools/eid-viewer/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+					"plugins_tools/eid-viewer",
+					doc/sdk/include/rsaref220,
+					"$(inherited)",
+				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
-				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Release;
+		};
+		651DDF381FEA843D00C4961E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = Debug;
+		};
+		651DDF391FEA843D00C4961E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = Release;
+		};
+		652709FF1FE975A1004F326D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					doc/sdk/include/rsaref220,
+					plugins_tools/util/,
+					"plugins_tools/eid-viewer",
+					"plugins_tools/eid-viewer/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+				);
+				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
+				INFOPLIST_FILE = "plugins_tools/eid-viewer/OSX/eID Viewer/BeidView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		65270A001FE975A1004F326D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					doc/sdk/include/rsaref220,
+					plugins_tools/util/,
+					"plugins_tools/eid-viewer",
+					"plugins_tools/eid-viewer/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+				);
+				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
+				INFOPLIST_FILE = "plugins_tools/eid-viewer/OSX/eID Viewer/BeidView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		653491001FEA7B3A000F7787 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eidfilepreview/Info.plist";
+				INSTALL_PATH = /Library/QuickLook;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = qlgenerator;
+			};
+			name = Debug;
+		};
+		653491011FEA7B3A000F7787 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eidfilepreview/Info.plist";
+				INSTALL_PATH = /Library/QuickLook;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Release;
 		};
@@ -1975,6 +2921,33 @@
 			buildConfigurations = (
 				1DEB916508733D950010E9CD /* Debug */,
 				1DEB916608733D950010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		651DDF371FEA843D00C4961E /* Build configuration list for PBXNativeTarget "eID Viewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				651DDF381FEA843D00C4961E /* Debug */,
+				651DDF391FEA843D00C4961E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65270A071FE975A1004F326D /* Build configuration list for PBXNativeTarget "BeidView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				652709FF1FE975A1004F326D /* Debug */,
+				65270A001FE975A1004F326D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		653490FF1FEA7B3A000F7787 /* Build configuration list for PBXNativeTarget "eidfilepreview" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				653491001FEA7B3A000F7787 /* Debug */,
+				653491011FEA7B3A000F7787 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
