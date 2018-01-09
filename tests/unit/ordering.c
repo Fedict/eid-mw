@@ -52,7 +52,7 @@
 		check_rv_long(C_FindObjectsInit(session, &attr, 1), mod); \
 	} \
 	check_rv_long(C_FindObjects(session, &obj, 1, &len), mod); \
-	check_rv_long(C_GetAttributeValue(session, &obj, &attr, 1), mod); \
+	check_rv_long(C_GetAttributeValue(session, obj, &attr, 1), mod); \
 	check_rv_long(C_FindObjectsFinal(session), mod); \
 }
 
