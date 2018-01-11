@@ -7,11 +7,11 @@ then
 	MAC_BUILD_CONFIG=Release
 fi
 
-#set SIGN_BUILD=1 in the environment to sign the .pkg files:
-# SIGN_BUILD=1 ./create_package.sh
+#set SIGN_BUILD=0 in the environment to not sign the .pkg files:
+# SIGN_BUILD=0 ./create_package.sh
 #or
-# SIGN_BUILD=1 ./make-mac.sh
-SIGN_BUILD=${SIGN_BUILD:-0}
+# SIGN_BUILD=0 ./make-mac.sh
+SIGN_BUILD=${SIGN_BUILD:-1}
 
 #get the release number
 source "$(pwd)/../../../scripts/mac/set_eidmw_version.sh"
@@ -141,7 +141,7 @@ cat > "$MOZ_PKCS11_MANIFEST_DIR/beidpkcs11.json" <<EOF
   "name": "beidpkcs11",
   "description": "Belgium eID PKCS#11 Module",
   "type": "pkcs11",
-  "path": "/usr/local/lib/beid-pkcs11.bundle",
+  "path": "/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib",
   "allowed_extensions": ["belgiumeid@eid.belgium.be"]
 }
 EOF

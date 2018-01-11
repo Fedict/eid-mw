@@ -3,13 +3,19 @@
     "message": "eID Belgique"
   },
   "extensionDescription": {
-    "message": "Utilisez la carte d’identité électronique belge (eID) dans Firefox"
+    "message": "Utilisez la carte d’identité électronique belge (eID) dans Firefox."
   },
   "noMiddlewareFoundTitle": {
-    "message": "eID software not found"
+    "message": "Le logiciel eID n'a pas été trouvé."
   },
   "noMiddlewareFoundContent": {
-    "message": "La configuration de la carte d’identité électronique belge a échoué. Le middleware eID est-il installé ?"
+    "message": "La configuration de la carte d'identité électronique belge a échoué. Le logiciel eID a-t-il été bien installé?"
+  },
+  "installFailedTitle": {
+    "message": "L'installation du logiciel eID a échoué."
+  },
+  "installFailedContent": {
+    "message": "La configuration de la carte d'identité électronique belge a échoué. Le logiciel a été installé mais n'a pas pu être configuré."
   },
   "installUrl": {
     "message": "https://eid.belgium.be/fr"

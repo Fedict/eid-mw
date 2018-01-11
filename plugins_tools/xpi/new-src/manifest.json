@@ -3,7 +3,7 @@
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "homepage_url": "https://eid.belgium.be/",
-  "version": "1.0.24a2",
+  "version": "1.0.27",
 
   "permissions": [ "pkcs11", "notifications" ],
 
@@ -16,7 +16,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*.belgium.be/"],
+      "matches": ["https://*.belgium.be/*"],
       "js": ["content.js"]
     }
   ],

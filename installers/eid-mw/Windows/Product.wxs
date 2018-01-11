@@ -73,7 +73,7 @@
     <Icon Id="eid.ico" SourceFile="..\..\eid.ico"/>
     
     <Property Id="ARPPRODUCTICON" Value="eid.ico" />
-    <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be"/>
+    <Property Id="ARPURLINFOABOUT" Value="https://eid.belgium.be"/>
 
     <Property Id="ALLUSERS" Value="1" />
 
@@ -86,8 +86,10 @@
 	  </Directory>
 	  
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card"/>
-        <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
+        <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
+		  <Directory Id="FFPLUGMANFOLDER" Name="FireFox Plugin Manifests"/>
+          <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
+		</Directory>
       </Directory>
 
       <Directory Id="SystemFolder">
@@ -142,6 +144,13 @@
 
     </DirectoryRef>
 
+	<DirectoryRef Id="FFPLUGMANFOLDER">
+	  <Component Id="FF_Manifest_FilesID" Guid="{10A0598E-9F54-4386-959C-FB56FC1C412C}" Win64="no">
+        <File Id="FF_Manifest_File_32ID" Name="beidpkcs11_32.json" KeyPath="yes" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_32.json" />
+		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\vs_2015\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+      </Component>	  
+	</DirectoryRef>
+	
     <DirectoryRef Id="SystemFolder">
 
       <Component Id="beidmdrvsystem32" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" Permanent="no" Win64="no">
@@ -162,6 +171,14 @@
     </DirectoryRef>
 
     <DirectoryRef Id="TARGETDIR">
+	
+	  <Component Id="FF_pkcs11_plugin_32_setup" Guid="{CE09E849-91E3-4EDE-9C8B-5261162FCD42}">
+        <!-- Create our 32 bit beid_ff_pkcs11.dll manifest location -->
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_32" Action="createAndRemoveOnUninstall">
+            <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_32.json"/>
+		</RegistryKey>
+      </Component>
+	
       <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes">
         <!-- Start SCardSvr Service during startup -->
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
@@ -240,6 +257,12 @@
         <ComponentRef Id="REGISTERMINIDRIVER"/>
         <Condition Level="1">VersionNT >= 600</Condition>
       </Feature>
+	  
+	  <Feature Id="Firefox_Modules_Setup" Title="Firefox_PKCS11Modules_Manifests" Absent="allow" Level="1">
+		  <ComponentRef Id="FF_Manifest_FilesID"/>
+          <ComponentRef Id="FF_pkcs11_plugin_32_setup"/>
+      </Feature>
+	  
     </Feature>
 
     </Feature>
@@ -257,8 +280,7 @@
     <InstallExecuteSequence>    
       <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>  
       <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
-      <RemoveExistingProducts After="InstallExecute"/>
-      <ScheduleReboot After="InstallFinalize">NOT Installed</ScheduleReboot>      
+      <RemoveExistingProducts After="InstallExecute"/>    
     </InstallExecuteSequence>
 
   </Product>

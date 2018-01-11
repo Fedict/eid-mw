@@ -52,6 +52,7 @@
 		check_rv_long(C_FindObjectsInit(session, &attr, 1), mod); \
 	} \
 	check_rv_long(C_FindObjects(session, &obj, 1, &len), mod); \
+	check_rv_long(C_GetAttributeValue(session, obj, &attr, 1), mod); \
 	check_rv_long(C_FindObjectsFinal(session), mod); \
 }
 
@@ -72,6 +73,7 @@ TEST_FUNC(ordering) {
 	ckrv_mod m_op_noinit[] = {
 		{ CKR_OK, TEST_RV_FAIL },
 		{ CKR_OPERATION_NOT_INITIALIZED, TEST_RV_OK },
+		{ CKR_OBJECT_HANDLE_INVALID, TEST_RV_OK },
 	};
 
 	memset(&attr, 0, sizeof attr);

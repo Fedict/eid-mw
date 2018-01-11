@@ -545,9 +545,10 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_FindObjects(session %d)", hSession);
+	log_trace(WHERE, "S: p11_get_session(session %d) enter", hSession);
 
 	ret = p11_get_session(hSession, &pSession);
+	log_trace(WHERE, "S: p11_get_session(session %d) leave", hSession);
 	if (pSession == NULL || ret != CKR_OK)
 		// if (ret)
 	{
@@ -683,6 +684,7 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 	ret = CKR_OK;
 
 cleanup: 
+	log_trace(WHERE, "I: leave");
 	p11_unlock();
 	return ret;
 }

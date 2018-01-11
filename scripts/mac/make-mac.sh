@@ -55,6 +55,6 @@ popd
 # create the pkg files
 #-----------------------------------------
 echo "creating the beid package..."
-sudo MAC_BUILD_CONFIG=$MAC_BUILD_CONFIG ./create_package.sh
+sudo SIGN_BUILD=$SIGN_BUILD MAC_BUILD_CONFIG=$MAC_BUILD_CONFIG ./create_package.sh
 
 echo "[Info ] Done..."
