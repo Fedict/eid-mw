@@ -29,9 +29,9 @@
 	
 #include <map>
 	
-#include "Util.h"
-#include "MWException.h"
-#include "eidErrors.h"
+#include "util.h"
+#include "mwexception.h"
+#include "eiderrors.h"
 #include "configuration.h"
 	
 #include <CoreFoundation/CFNumber.h>

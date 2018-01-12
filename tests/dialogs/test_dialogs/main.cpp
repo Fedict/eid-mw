@@ -9,7 +9,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 #include "mwexception.h"
-#include "eidErrors.h"
+#include "eiderrors.h"
 #include <dialogs.h>
 #include "language.h"
 #include "langutil.h"
