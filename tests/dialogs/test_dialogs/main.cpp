@@ -39,6 +39,7 @@ int main(int argc, char **argv, char **envp, char **apple)
 
 		DisplayAllModalCombinations();
 		DisplayAllAskPinCombinations();
+        DisplayChangePinCombinations();
 		DisplayAllPinpadInfoCombinations();
 		DisplayAllBadPinCombinations();
 	}
@@ -133,6 +134,41 @@ void DisplayAllAskPinCombinations()
 		DisplayButtonPressed(dlgret);
 		DisplayPINPressed(dlgret, wsPin, ulPinBufferLen);
 	}
+}
+
+void DisplayChangePinCombinations()
+{
+    DlgPinInfo pinInfo;
+    
+    pinInfo.ulFlags = 0;
+    pinInfo.ulMinLen = 4;
+    pinInfo.ulMaxLen = 12;
+    wchar_t wsPin1[12];
+    unsigned long ulPin1BufferLen = 12;
+    wchar_t wsPin2[12];
+    unsigned long ulPin2BufferLen = 12;
+    
+    VerifyPinDialogCombo allAskPinCombos[] = {
+        {DLG_PIN_SIGN, L"PIN", NULL, NULL, 3, DLG_PIN_OP_CHANGE}
+    };
+    
+    DlgRet dlgret;
+    
+    unsigned long ulNrOfCombos =
+    sizeof(allAskPinCombos) / sizeof(VerifyPinDialogCombo);
+    
+    unsigned char counter;
+    
+    for (counter = 0; counter < ulNrOfCombos; counter++)
+    {
+        dlgret = DlgAskPins(allAskPinCombos[counter].operation,
+                           allAskPinCombos[counter].usage,
+                           allAskPinCombos[counter].wsPinName,
+                           pinInfo, wsPin1, ulPin1BufferLen,
+                           pinInfo, wsPin2, ulPin2BufferLen);
+        DisplayButtonPressed(dlgret);
+        DisplayPINPressed(dlgret, wsPin2, ulPin2BufferLen);
+    }
 }
 
 void DisplayAllPinpadInfoCombinations()
