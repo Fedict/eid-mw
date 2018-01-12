@@ -79,6 +79,15 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export photo to JPG file...
+        /// </summary>
+        public static string fileMenuExportFoto {
+            get {
+                return ResourceManager.GetString("fileMenuExportFoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frequently Asked Questions...
         /// </summary>
         public static string fileMenuFAQItem {

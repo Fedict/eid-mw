@@ -226,7 +226,18 @@ namespace eIDViewer
                     theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_FILE:
-                    theData.eid_data_from_file = true;
+                    theData.eid_data_from_file = true;           
+                    theData.open_enabled = true;
+                    break;
+                case eid_vwr_states.STATE_TOKEN:
+                    theData.eid_data_ready = true;
+                    theData.eid_data_from_file = false;
+                    theData.open_enabled = false;
+                    break;
+                case eid_vwr_states.STATE_NO_TOKEN:
+                    theData.eid_data_ready = true;
+                    theData.eid_data_from_file = false;
+                    theData.open_enabled = true;
                     break;
                 default:
                     theData.eid_data_ready = true;

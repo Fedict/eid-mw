@@ -123,6 +123,9 @@
   <data name="fileMenuCloseItem" xml:space="preserve">
     <value>Fermer</value>
   </data>
+  <data name="fileMenuExportFoto" xml:space="preserve">
+    <value>Exporter la photo vers fichier JPG..</value>
+  </data>
   <data name="fileMenuFAQItem" xml:space="preserve">
     <value>Foire aux questions..</value>
   </data>
