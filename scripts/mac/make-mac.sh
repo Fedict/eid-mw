@@ -23,23 +23,23 @@ chmod +x ./create_package.sh
 
 pushd ../../..
 echo "cleaning former project..."
-xcodebuild -project beidmw.xcodeproj -target beidpkcs11 clean
+xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG clean
 xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG
 
 # store the SDK version (with own dialogs)
 
-xcodebuild -project beidmw.xcodeproj -target beid_ff_pkcs11 clean
+xcodebuild -project beidmw.xcodeproj -target beid_ff_pkcs11 -configuration $MAC_BUILD_CONFIG clean
 xcodebuild -project beidmw.xcodeproj -target beid_ff_pkcs11 -configuration $MAC_BUILD_CONFIG GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS='NO_DIALOGS=1' 
 popd
 
 
 pushd "../../../plugins_tools/aboutmw/OSX/eID Middleware"
-xcodebuild -project "eID Middleware.xcodeproj" clean
+xcodebuild -project "eID Middleware.xcodeproj" -configuration $MAC_BUILD_CONFIG clean
 xcodebuild -project "eID Middleware.xcodeproj" -target "eID Middleware" -configuration $MAC_BUILD_CONFIG
 popd
 
 pushd "../../../cardcomm/ctkToken"
-xcodebuild -project "BEIDToken.xcodeproj" clean
+xcodebuild -project "BEIDToken.xcodeproj" -configuration $MAC_BUILD_CONFIG clean
 xcodebuild -project "BEIDToken.xcodeproj" -target "BEIDTokenApp" -configuration $MAC_BUILD_CONFIG
 popd
 

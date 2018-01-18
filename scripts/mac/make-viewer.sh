@@ -17,7 +17,7 @@ rm -f tmp-eidviewer.dmg
 rm -f "eID Viewer-$REL_VERSION.dmg"
 
 pushd "../../"
-xcodebuild -project "beidmw.xcodeproj" clean
+xcodebuild -project "beidmw.xcodeproj" -target "eID Viewer" -configuration $MAC_BUILD_CONFIG clean
 xcodebuild -project "beidmw.xcodeproj" -target "eID Viewer" -configuration $MAC_BUILD_CONFIG
 popd
 
