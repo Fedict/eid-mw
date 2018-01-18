@@ -39,16 +39,24 @@ not for you; in that case, we instead recommend you download it from the
 Make sure you have the development packages for the following libraries
 installed:
 
+For the PKCS#11 authentication module:
+
 - [PC/SC Lite](https://pcsclite.alioth.debian.org)
+- (Optionally) [p11-kit](https://p11-glue.freedesktop.org/p11-kit.html)
+
+If the dialogs and/or the viewer are not disabled:
+
 - [GTK3](https://www.gtk.org) (note: GTK2 is still supported for now, but this
-  support will be dropped at some point in the future)
+  support will be dropped at some point in the future).
+
+If the viewer is not disabled:
+
 - [OpenSSL](https://www.openssl.org). Note: you'll also need the "openssl"
   binary in your path, which is often not part of the openssl development
   package.
 - [libxml2](http://xmlsoft.org)
 - [cURL](https://curl.haxx.se)
 - [libproxy](https://github.com/libproxy/libproxy)
-- (Optionally) [p11-kit](https://p11-glue.freedesktop.org/p11-kit.html)
 
 After that it's just:
 
