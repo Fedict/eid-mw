@@ -155,8 +155,6 @@ cp ../../../doc/licenses/French/eID-toolkit_licensingtermsconditions.txt \
 	"$LICENSES_DIR/license_FR.txt" ; \
 cp ../../../doc/licenses/German/eID-toolkit_licensingtermsconditions.txt \
 	"$LICENSES_DIR/license_DE.txt" ; \
-cp ../../../doc/licenses/THIRDPARTY-LICENSES-Mac.txt "$LICENSES_DIR/"
-
 
 cp -R ./resources/* $RESOURCES_DIR
 
