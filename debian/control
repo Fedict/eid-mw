@@ -79,9 +79,8 @@ Description: Belgian Electronic Identity Card - Mozilla plugin
 Package: beid-mozilla-webext
 Section: web
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0, firefox (>= 58) | firefox-esr (>= 58)
 Conflicts: eid-mw (<< 4.0.6r1508)
-Depends: firefox (>= 58) | firefox-esr (>= 58)
 Description: Belgian Electronic Identity Card - WebExtension
  This package contains the mozilla WebExtension-based addon for the
  Belgian Electronic Identity Card. Install it if you wish to log on to
@@ -95,7 +94,7 @@ Package: beid-mozilla-xpcext
 Section: web
 Architecture: all
 Conflicts: eid-mw (<< 4.0.6r1508)
-Depends: firefox (<< 57) | firefox-esr (<< 57)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0, firefox (<< 57) | firefox-esr (<< 57)
 Description: Belgian Electronic Identity Card - XPCOM extension
  This package contains the mozilla XPCOM-based addon for the Belgian
  Electronic Identity Card. Install it if you wish to log on to websites
