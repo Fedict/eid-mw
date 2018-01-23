@@ -19,18 +19,20 @@
 
         self.smartCard = session.smartCard;
         /* TODO: use template when apple implements it
-        //4th byte should become 0x20 + PIN length
-        const UInt8 template[] = {self.session.smartCard.cla, 0x20, 0x00, 0x01, 0x20, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+        
+        const UInt8 template[] = {self.session.smartCard.cla, 0x20, 0x00, 0x01, 0x08, 0x20, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
         self.APDUTemplate = [NSData dataWithBytes:template length:sizeof(template)];
         self.PINFormat = [[TKSmartCardPINFormat alloc] init];
-        self.PINFormat.PINBitOffset = 5 * 8 - 4;
-        self.PINFormat.encoding=TKSmartCardPINEncodingBCD;
-        self.PINFormat.minPINLength=4;
-        self.PINFormat.maxPINLength=12;
-        self.PINFormat.charset=TKSmartCardPINCharsetNumeric;
-        self.PINFormat.PINJustification=TKSmartCardPINJustificationLeft;
-        //self.PINFormat.PINBlockByteLength
-        self.PINFormat.PINLengthBitSize=4; */
+        self.PINFormat.PINBlockByteLength = 8;
+        self.PINFormat.PINLengthBitOffset = 4;
+        self.PINFormat.PINLengthBitSize = 4;
+        self.PINFormat.PINBitOffset = 8;
+        self.PINFormat.encoding = TKSmartCardPINEncodingBCD;
+        self.PINFormat.minPINLength = 4;
+        self.PINFormat.maxPINLength = 12;
+        self.PINFormat.charset = TKSmartCardPINCharsetNumeric;
+        self.PINFormat.PINJustification = TKSmartCardPINJustificationLeft;
+        */
     }
 
     return self;

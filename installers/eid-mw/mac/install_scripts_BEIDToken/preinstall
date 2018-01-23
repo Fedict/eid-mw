@@ -4,3 +4,17 @@ if test -e "/Library/Belgium Identity Card/BEIDTokenApp.App"; then
 	rm -rf "/Library/Belgium Identity Card/BEIDTokenApp.App"
 fi
 
+## Remove parts of the other previous middleware packages that are no longer installed
+if test -e "/Library/Belgium Identity Card"; then
+	rm -rf "/Library/Belgium Identity Card/eID Middleware.app"
+	rm -rf "/Library/Belgium Identity Card/eID Info.app"
+fi
+
+## Remove BEID.tokend if it exists
+if test -e /Library/Security/tokend/BEID.tokend; then
+	rm -rf /Library/Security/tokend/BEID.tokend
+fi
+
+
+echo "preinstall BEIDTokenApp succeeded"
+
