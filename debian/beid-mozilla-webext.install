@@ -1,2 +1,0 @@
-#!/bin/sh
-cp -a plugins_tools/xpi/signed-build/belgium_eid-1.0.27.xpi debian/beid-mozilla-webext/usr/share/mozilla/extensions/\{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}/belgiumeid@eid.belgium.be.xpi

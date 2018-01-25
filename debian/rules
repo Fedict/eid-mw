@@ -25,3 +25,7 @@ override_dh_makeshlibs:
 override_dh_strip:
 	dh_strip -p libbeidpkcs11-0 --dbg-package=libbeidpkcs11-dbg
 	dh_strip -a
+
+override_dh_install-indep:
+	cp -a plugins_tools/xpi/signed-build/belgium_eid-1.0.27.xpi debian/beid-mozilla-webext/usr/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/belgiumeid@eid.belgium.be.xpi
+	dh_install -i
