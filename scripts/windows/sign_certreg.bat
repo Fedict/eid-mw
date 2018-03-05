@@ -12,12 +12,16 @@
 set OUR_CURRENT_PATH="%cd%"
 @echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
 
+set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
+
 ::need current dir to be pointing at the one of the wxs files, or light.exe can't find the paths
 @cd %~dp0..\..\installers\eid-mw\Windows
 @if %ERRORLEVEL%==1 goto 
 ::sign the certreg tool
 @echo [INFO] sign the certreg tool
-%SIGNTOOL_PATH%\SignTool.exe sign /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\plugins_tools\certreg\Release\certreg.exe"
+::%SIGNTOOL_PATH%\SignTool.exe sign /n "FedICT - BE0367302178" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\plugins_tools\certreg\Release\certreg.exe"
+"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\certreg\Release\certreg.exe"
+
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy the certreg tool
 copy %~dp0..\..\plugins_tools\certreg\Release\certreg.exe %~dp0
