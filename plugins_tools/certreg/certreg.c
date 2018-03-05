@@ -137,8 +137,9 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 							//QMessageBox::information(NULL,strCaption,strMessage);
 						}
 					}
-					//pPrevCert = NULL;
-					//continue;
+					//pDesiredCert and pPrevCert are freed, so set pPrevCert = NULL and search again
+					pPrevCert = NULL;
+					continue;
 				}
 			}
 			pPrevCert = pDesiredCert;
