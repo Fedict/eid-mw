@@ -42,6 +42,17 @@ AS_IF(
 	[[mozext]=[$with_mozext]]
 )
 
+AC_ARG_ENABLE([webextension],
+	AS_HELP_STRING([--enable-webextension],[Mozilla addon API style to use: enable for WebExtension, disable for older XPCOM add-on]),
+	[],
+	[enable_webextension=no])
+AS_IF(
+	[test "x$enable_webextension" = "xno"],
+	[we]=[yes],
+	[[we]=[$enable_webextension]]
+)
+AM_CONDITIONAL([WEBEXT],[test "$enable_webextension" = yes])
+
 AC_ARG_ENABLE(signed, AS_HELP_STRING([--disable-signed], [Don't use the (pre-)signed version of the extension, instead build it from source. Required for Firefox >= 43 (default on)]),[],[enable_signed=yes])
 AM_CONDITIONAL([SIGNED], [test "$enable_signed" = yes])
 
