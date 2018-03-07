@@ -4,6 +4,7 @@ XPI_UUID={ec8030f7-c20a-464f-9b0e-13a3a9e97384}
 CLEANFILES = $(XPI_NAME) $(XPI_ID).xpi
 
 if !SIGNED
+if !WEBEXT
 xpi_files = $(dist_content_DATA) \
 			$(dist_defaults_preferences_DATA) \
 			$(dist_locale_enus_DATA) \
@@ -43,7 +44,13 @@ dist_skin_DATA = skin/icon.png \
 dist_components_DATA = components/belgiumeidpkcs11.js \
 		       components/belgiumeidpkcs11-pre47.js
 endif
+endif
 
+if WEBEXT
+xpipackage:
+	echo "E: make xpipackage not supported for webextension" >&2
+	exit 1
+else
 xpipackage: $(xpi_files)
 #	 Create a temporary directory $tmp in $TMPDIR (default /tmp).
 #	 Use mktemp if possible; otherwise fall back on mkdir,
@@ -63,6 +70,7 @@ xpipackage: $(xpi_files)
 	@ZIP@ -rq $(abs_builddir)/$(XPI_NAME) .; \
 	cd -; \
 	rm -rf $$tmp;
+endif
 
 extensionbasedir=$(mozext)/$(XPI_UUID)
 extensionrootdir=$(extensionbasedir)/$(XPI_ID)/
