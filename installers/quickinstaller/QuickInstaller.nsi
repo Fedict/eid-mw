@@ -769,14 +769,14 @@ Function nsdCardData
 	beid::ReadCardData
 	Pop $retval
 	
-	Pop $lastname
-	Pop $firstletterthirdname
-	Pop $firstname
-
 	;for testing
 	;StrCpy $retval 004180
 	
 	${If} $retval == '0'
+	
+		Pop $lastname
+		Pop $firstletterthirdname
+		Pop $firstname
 	
 		;all went well, show a succes message on this final page
 		${NSD_CreateLabel} 0 40% 100% 36u "$(ls_testcomplete_pre) $firstname $(ls_testcomplete_post)"
