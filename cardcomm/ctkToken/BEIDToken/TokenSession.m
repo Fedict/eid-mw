@@ -18,9 +18,13 @@
         _session = session;
 
         self.smartCard = session.smartCard;
-        /* TODO: use template when apple implements it
+        // TODO: use template when apple implements it
+ /*
+        self.smartCard.cla = 0x00;
+        self.smartCard.useCommandChaining = NO;
+        self.smartCard.useExtendedLength = NO;
         
-        const UInt8 template[] = {self.session.smartCard.cla, 0x20, 0x00, 0x01, 0x08, 0x20, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+        const UInt8 template[] = {self.smartCard.cla, 0x20, 0x00, 0x01, 0x08, 0x20, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
         self.APDUTemplate = [NSData dataWithBytes:template length:sizeof(template)];
         self.PINFormat = [[TKSmartCardPINFormat alloc] init];
         self.PINFormat.PINBlockByteLength = 8;
@@ -32,9 +36,109 @@
         self.PINFormat.maxPINLength = 12;
         self.PINFormat.charset = TKSmartCardPINCharsetNumeric;
         self.PINFormat.PINJustification = TKSmartCardPINJustificationLeft;
-        */
-    }
+*/
+        //self.PINByteOffset=5;
+#ifdef DEBUG
+         os_log_error(OS_LOG_DEFAULT, "BEID new TEST 16");
+#endif
+ 
+        BOOL (^verifySecurePIN)(NSError**) = ^(NSError** error) {
 
+            TKSmartCardPINFormat *PINFormat;
+            TKSmartCardUserInteractionForSecurePINVerification *userInter;
+            NSData *APDUTemplate;
+            
+            const UInt8 template[] = {0x00, 0x20, 0x00, 0x01, 0x08, 0x20, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+            APDUTemplate = [NSData dataWithBytes:template length:sizeof(template)];
+            PINFormat = [[TKSmartCardPINFormat alloc] init];
+            PINFormat.PINBlockByteLength = 8;
+            PINFormat.PINLengthBitOffset = 4;
+            PINFormat.PINLengthBitSize = 4;
+            PINFormat.PINBitOffset = 8;
+            PINFormat.encoding = TKSmartCardPINEncodingBCD;
+            PINFormat.minPINLength = 4;
+            PINFormat.maxPINLength = 12;
+            PINFormat.charset = TKSmartCardPINCharsetNumeric;
+            PINFormat.PINJustification = TKSmartCardPINJustificationLeft;
+            
+            // try to Verify PIN on the card reader
+            NSData *data = [NSData dataWithBytes:template length:sizeof template];
+            userInter = [self.smartCard userInteractionForSecurePINVerificationWithPINFormat:PINFormat APDU:data PINByteOffset:0];
+            
+            if (nil == userInter)
+            {
+#ifdef DEBUG
+                os_log_error(OS_LOG_DEFAULT, "userInteractionForSecurePINVerificationWithPINFormat returned nil. You are not using a pinpad reader");
+#endif
+                return NO;
+            }
+            else
+            {
+                //reader is supporting secure PIN entry
+                dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+                
+                userInter.initialTimeout = 300;
+                userInter.interactionTimeout = 300;
+                //NSLocale* PINLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"nl_BE"];
+                //userInter.locale=PINLocale;
+                
+#ifdef DEBUG
+                os_log_error(OS_LOG_DEFAULT, "Enter the PIN on the pinpad");
+#endif
+               [userInter runWithReply:^(BOOL success, NSError *error)
+                 {
+                     if (success)
+                     {
+#ifdef DEBUG
+                         NSLog(@"resultData: %@", [userInter resultData]);
+                         NSLog(@"resultSW: %04X", [userInter resultSW]);
+                         NSLog(@"Smartcard reader name: %@", self.session.smartCard.slot.name);
+#endif
+                         self.session.authState=BEIDAuthStateFreshlyAuthorized;
+
+                         // Mark card session sensitive, because we entered PIN into it and no session should access it in this state.
+                         self.smartCard.sensitive = YES;
+                         
+                         // Remember in card context that the card is authenticated.
+                         self.smartCard.context = @(YES);
+
+                         // Mark BEIDTokenSession as freshly authorized.
+                         self.session.authState = BEIDAuthStateFreshlyAuthorized;
+                     }
+                     else
+                     {
+#ifdef DEBUG
+                         NSLog(@"Failure enterring PIN on cardreader");
+                         NSLog(@"Error: %@", error);
+#endif
+                         self.session.authState=BEIDAuthStateUnauthorized;
+                     }
+                     dispatch_semaphore_signal(sema);
+                 }];
+                //wait max 30 seconds for user to enter PIN on secure PIN pad reader
+                dispatch_time_t  waitTime = dispatch_time(DISPATCH_TIME_NOW,  300000000000);
+                dispatch_semaphore_wait(sema ,waitTime);
+#ifdef DEBUG
+                NSLog(@"PIN handled by reader");
+#endif
+                return YES;
+            }
+        };
+        
+        NSError *error ;
+        //check if smard card reader has PIN support
+        BOOL success = [self.smartCard inSessionWithError:(NSError **)&error executeBlock:(BOOL(^)(NSError **error))verifySecurePIN];
+        if (success == YES){
+#ifdef DEBUG
+            os_log_error(OS_LOG_DEFAULT, "BEID initWithSession return nil");
+#endif
+            return nil;
+        }
+    
+    }
+#ifdef DEBUG
+    os_log_error(OS_LOG_DEFAULT, "BEID initWithSession return self");
+#endif
     return self;
 }
 
@@ -52,22 +156,37 @@
     }
 }
 
-
-// Remove this as soon as BEIDAuthOperation implements automatic PIN submission according to APDUTemplate.
 - (BOOL)finishWithError:(NSError * _Nullable __autoreleasing *)error {
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called");
 #endif
+
+    //use this if when you want to use the auto template set in initWithSession()
+    /*
+    if(self.session.authState == BEIDAuthStateFreshlyAuthorized){
+        return YES;
+    }
+    
+    BOOL (^autoVerify)(NSError**) = ^(NSError** error) {
+        if(![super finishWithError:error]){
+            return NO;
+        }
+        self.session.smartCard.context=@(YES);
+        self.session.authState = BEIDAuthStateFreshlyAuthorized;
+        
+        return YES;
+    };
+    
+    BOOL success = [self.smartCard inSessionWithError:(NSError **)error executeBlock:(BOOL(^)(NSError **error))autoVerify];
+    return success;
+*/
+ 
     BOOL (^verifyPIN)(NSError**) = ^(NSError** error) {
         if(self.PIN == nil){
             os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called PIN == nil");
             return NO;
         }
-        //NSMutableData *PINData = [NSMutableData dataWithLength:8];
-        //memset(PINData.mutableBytes, 0xff, PINData.length);
-        //[[self.PIN dataUsingEncoding:NSUTF8StringEncoding] getBytes:PINData.mutableBytes length:PINData.length];
-        
-        //uint8_t *pin;
+
         uint8_t pin[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
         uint64_t PinLength = self.PIN.length;
         if(PinLength < 4 || PinLength > 12){
@@ -126,9 +245,7 @@
         }
         return YES;
     };
-    
-    
-    
+
     BOOL success = [self.smartCard inSessionWithError:(NSError **)error executeBlock:(BOOL(^)(NSError **error))verifyPIN];
     if (success){
         // Mark card session sensitive, because we entered PIN into it and no session should access it in this state.
@@ -141,6 +258,7 @@
         // Mark BEIDTokenSession as freshly authorized.
         self.session.authState = BEIDAuthStateFreshlyAuthorized;
     }
+ 
     return success;
 }
 
@@ -377,7 +495,7 @@
 
         BOOL retVAL = [self signData:blockData result:&statResponse resultLength:resultLen smartCard:self.smartCard error:error];
         if (retVAL == NO){
-            os_log_error(OS_LOG_DEFAULT, "BEID egeneralAuthenticateWithData signData failed");
+            os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData signData failed");
             return retVAL;
         }
         
