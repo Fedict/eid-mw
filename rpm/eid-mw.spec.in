@@ -99,7 +99,11 @@ checks the certificate against the government's Trust Service.
 %setup -n eid-mw-%{version}-%{revision}
 
 %build
+%if 0%{?el6} || 0%{?el7} || 0%{?suse_version}
 %configure
+%else
+%configure --enable-webextension
+%endif
 %{__make} %{?_smp_mflags}
 
 %install
