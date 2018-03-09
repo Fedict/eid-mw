@@ -39,7 +39,7 @@
 */
         //self.PINByteOffset=5;
 #ifdef DEBUG
-         os_log_error(OS_LOG_DEFAULT, "BEID new TEST 16");
+         os_log_error(OS_LOG_DEFAULT, "BEID new TEST 18");
 #endif
  
         BOOL (^verifySecurePIN)(NSError**) = ^(NSError** error) {
@@ -76,11 +76,16 @@
             {
                 //reader is supporting secure PIN entry
                 dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+                NSArray *messages = @[@0];//0 is Pin insertion prompt, and only this message is needed
+                userInter.PINMessageIndices = messages;
+                userInter.PINCompletion = TKSmartCardPINCompletionKey;//is 2
                 
                 userInter.initialTimeout = 300;
                 userInter.interactionTimeout = 300;
+                //using the system Locale by default
                 //NSLocale* PINLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"nl_BE"];
                 //userInter.locale=PINLocale;
+                
                 
 #ifdef DEBUG
                 os_log_error(OS_LOG_DEFAULT, "Enter the PIN on the pinpad");
