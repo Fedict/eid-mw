@@ -287,7 +287,14 @@
         return nil;
     }
 
-    return [[BEIDAuthOperation alloc] initWithSession:self];
+    
+    TKTokenAuthOperation * tokenAuth = [[BEIDAuthOperation alloc] initWithSession:self];
+    if(tokenAuth == nil)
+    {
+        return [[TKTokenAuthOperation alloc] init];
+    }
+    
+    return tokenAuth;
 }
 
 - (BOOL)tokenSession:(TKTokenSession *)session supportsOperation:(TKTokenOperation)operation usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm {
