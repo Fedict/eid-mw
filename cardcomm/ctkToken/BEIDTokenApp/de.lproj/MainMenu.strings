@@ -23,6 +23,9 @@
 /* Class = "NSWindow"; title = "BEIDTokenApp"; ObjectID = "QvC-M9-y7g"; */
 "QvC-M9-y7g.title" = "BEIDTokenApp";
 
+/* Class = "NSTextFieldCell"; title = "Configuration completed"; ObjectID = "SQb-Av-NzX"; */
+"SQb-Av-NzX.title" = "Configuration completed";
+
 /* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
 "Vdr-fp-XzO.title" = "Andere ausblenden";
 
