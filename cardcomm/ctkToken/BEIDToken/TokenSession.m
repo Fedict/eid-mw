@@ -18,6 +18,7 @@
         _session = session;
 
         self.smartCard = session.smartCard;
+        self.session.authState=BEIDAuthStateUnauthorized;
         // TODO: use template when apple implements it
  /*
         self.smartCard.cla = 0x00;
@@ -126,6 +127,11 @@
 #ifdef DEBUG
                 NSLog(@"PIN handled by reader");
 #endif
+                //some secure PIN pad readers support both secure and on PC PIN entries
+                //when secure failed, try on PC as backup
+                if(self.session.authState==BEIDAuthStateUnauthorized){
+                    return NO;
+                }
                 return YES;
             }
         };
