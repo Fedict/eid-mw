@@ -366,7 +366,8 @@
         
         instanceID = [@"BEID-" stringByAppendingString:stringBuffer];
 #ifdef DEBUG
-        os_log_error(OS_LOG_DEFAULT, "instanceID = %@",instanceID);
+        //os_log_error(OS_LOG_DEFAULT, "instanceID = %@",instanceID);
+        NSLog(@"instanceID = %@",instanceID);
 #endif
         retVAL = true;
         return retVAL;
@@ -384,6 +385,7 @@
                 ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x503B name:NSLocalizedString(@"BEID_ROOTCA_CERT", nil) keyTag:0 name:NSLocalizedString(@"NO_KEY", nil) sign:NO keyManagement:NO alwaysAuthenticate:NO error:error]
                 )
             {
+                NSLog(@"super initWithSmartCard:smartCard failed");
                 return nil;
             }
             
@@ -400,5 +402,12 @@
 #endif
     return [[BEIDTokenSession alloc] initWithToken:self];
 }
+
+- (void)token:(TKToken *)token terminateSession:(TKTokenSession *)session{
+#ifdef DEBUG
+    os_log_error(OS_LOG_DEFAULT, "BEID terminateSession called");
+#endif
+}
+
 
 @end

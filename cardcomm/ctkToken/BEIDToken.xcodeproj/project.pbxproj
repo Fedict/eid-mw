@@ -50,9 +50,6 @@
 		2F3883B21CF46C9D00F114A7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		2F3883C91CF46DD400F114A7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2F3883CB1CF46FA300F114A7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		65AFFBB51F7BA3A0007783CE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		65AFFBB61F7BA3A3007783CE /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainMenu.strings; sourceTree = "<group>"; };
-		65AFFBB71F7BA3AB007783CE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		8B27BEF61DA53FC7009652DF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BEIDTokenApp/Info.plist; sourceTree = SOURCE_ROOT; };
 		8B27BEF71DA53FC7009652DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = BEIDTokenApp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		8B27BEF81DA53FC7009652DF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = BEIDTokenApp/AppDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -66,6 +63,9 @@
 		8B27BF041DA54051009652DF /* TokenSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenSession.m; path = BEIDToken/TokenSession.m; sourceTree = SOURCE_ROOT; };
 		8B27BF051DA54051009652DF /* TokenSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenSession.h; path = BEIDToken/TokenSession.h; sourceTree = SOURCE_ROOT; };
 		8B27BF061DA54051009652DF /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = en.lproj; path = BEIDToken/en.lproj; sourceTree = SOURCE_ROOT; };
+		8B7FA335205282A0008DC9D9 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		8B7FA33A205284F2008DC9D9 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		8B7FA33C20528532008DC9D9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		8B91F8B11DAB8C8B00FA5E0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = BEIDTokenApp/Base.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -296,9 +296,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B91F8B11DAB8C8B00FA5E0C /* Base */,
-				65AFFBB51F7BA3A0007783CE /* fr */,
-				65AFFBB61F7BA3A3007783CE /* nl */,
-				65AFFBB71F7BA3AB007783CE /* de */,
+				8B7FA335205282A0008DC9D9 /* nl */,
+				8B7FA33A205284F2008DC9D9 /* de */,
+				8B7FA33C20528532008DC9D9 /* fr */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";

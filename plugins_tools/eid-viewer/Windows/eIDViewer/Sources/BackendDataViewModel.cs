@@ -803,10 +803,6 @@ namespace eIDViewer
             { date_and_country_of_protection = data;
               foreigner_fields_height = 26;
             }
-            else if (String.Equals(label, "member_of_family", StringComparison.Ordinal))
-            { member_of_family = true;
-              foreigner_fields_height = 26;
-            }
         }
 
         private byte[] dataFile;
@@ -903,6 +899,11 @@ namespace eIDViewer
                     RN_cert = new X509Certificate2(data);
                     StoreCertificate(ref RNCertViewModel, ref RN_cert);
                     progress += 6;
+                }
+                else if (String.Equals(label, "member_of_family", StringComparison.Ordinal))
+                {
+                    member_of_family = true;
+                    foreigner_fields_height = 26;
                 }
             }
             catch (Exception e)
