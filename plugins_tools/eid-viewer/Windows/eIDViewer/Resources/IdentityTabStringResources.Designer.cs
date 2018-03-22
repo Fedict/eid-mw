@@ -47,8 +47,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Overrides the current thread's CurrentUI
-        ///   property for all
+        ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -67,6 +66,33 @@ namespace eIDViewer.Resources {
         public static string DateOfBirthLabel {
             get {
                 return ResourceManager.GetString("DateOfBirthLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicata:.
+        /// </summary>
+        public static string DuplicateLabel {
+            get {
+                return ResourceManager.GetString("DuplicateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employer&apos;s VAT number (1):.
+        /// </summary>
+        public static string EmployersVATNumber1Label {
+            get {
+                return ResourceManager.GetString("EmployersVATNumber1Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employer&apos;s VAT number (2):.
+        /// </summary>
+        public static string EmployersVATNumber2Label {
+            get {
+                return ResourceManager.GetString("EmployersVATNumber2Label", resourceCulture);
             }
         }
         
@@ -170,6 +196,15 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regional File Number.
+        /// </summary>
+        public static string RegionalFileNumberLabel {
+            get {
+                return ResourceManager.GetString("RegionalFileNumberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sex:.
         /// </summary>
         public static string SexLabel {
@@ -238,6 +273,15 @@ namespace eIDViewer.Resources {
         public static string special_status_yellow_cane {
             get {
                 return ResourceManager.GetString("special_status_yellow_cane", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Special Organization:.
+        /// </summary>
+        public static string SpecialOrganisationLabel {
+            get {
+                return ResourceManager.GetString("SpecialOrganisationLabel", resourceCulture);
             }
         }
         
@@ -382,6 +426,15 @@ namespace eIDViewer.Resources {
         public static string type_KIDS_CARD {
             get {
                 return ResourceManager.GetString("type_KIDS_CARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work permit mention:.
+        /// </summary>
+        public static string WorkPermitMentionLabel {
+            get {
+                return ResourceManager.GetString("WorkPermitMentionLabel", resourceCulture);
             }
         }
     }

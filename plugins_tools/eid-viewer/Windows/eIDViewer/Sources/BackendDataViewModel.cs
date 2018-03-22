@@ -801,7 +801,26 @@ namespace eIDViewer
             { document_type = data; }
             else if (String.Equals(label, "date_and_country_of_protection", StringComparison.Ordinal))
             { date_and_country_of_protection = data;
-              foreigner_fields_height = 26;
+              foreigner_fields_height = 26; }
+            else if (String.Equals(label, "special_organization", StringComparison.Ordinal))
+            { special_organisation = data;
+              foreigner_fields_height = 26; }         
+            else if (String.Equals(label, "duplicata", StringComparison.Ordinal)){
+                duplicate = data;
+                foreigner_fields_height = 26; }
+            else if (String.Equals(label, "work_permit_mention", StringComparison.Ordinal)) {
+                work_permit_mention = data;
+                foreigner_fields_height = 26; }
+            else if (String.Equals(label, "employers_vat_number1", StringComparison.Ordinal)) {
+                employers_vat_number1 = data;
+                foreigner_fields_height = 26; }
+            else if (String.Equals(label, "employers_vat_number2", StringComparison.Ordinal)) {
+                employers_vat_number2 = data;
+                foreigner_fields_height = 26; }
+            else if (String.Equals(label, "regional_file_number", StringComparison.Ordinal))
+            {
+                regional_file_number = data;
+                foreigner_fields_height = 26;
             }
         }
 
@@ -975,6 +994,12 @@ namespace eIDViewer
             validity_end_date = "-";
             date_and_country_of_protection = "-";
             member_of_family = false;
+            special_organisation = "-";
+            duplicate = "-";
+            work_permit_mention = "-";
+            employers_vat_number1 = "-";
+            employers_vat_number2 = "-";
+            regional_file_number = "-";
             eid_card_present = false;
             progress = 0;
             HideProgressBar();
@@ -1383,6 +1408,72 @@ namespace eIDViewer
             {
                 _member_of_family = value;
                 this.NotifyPropertyChanged("member_of_family");
+            }
+        }
+
+        private string _special_organisation;
+        public string special_organisation
+        {
+            get { return _special_organisation; }
+            set
+            {
+                _special_organisation = value;
+                this.NotifyPropertyChanged("special_organisation");
+            }
+        }
+
+        private string _duplicate;
+        public string duplicate
+        {
+            get { return _duplicate; }
+            set
+            {
+                _duplicate = value;
+                this.NotifyPropertyChanged("duplicate");
+            }
+        }
+
+        private string _work_permit_mention;
+        public string work_permit_mention
+        {
+            get { return _work_permit_mention; }
+            set
+            {
+                _work_permit_mention = value;
+                this.NotifyPropertyChanged("work_permit_mention");
+            }
+        }
+
+        private string _employers_vat_number1;
+        public string employers_vat_number1
+        {
+            get { return _employers_vat_number1; }
+            set
+            {
+                _employers_vat_number1 = value;
+                this.NotifyPropertyChanged("Employers_vat_number1");
+            }
+        }
+
+        private string _employers_vat_number2;
+        public string employers_vat_number2
+        {
+            get { return _employers_vat_number2; }
+            set
+            {
+                _employers_vat_number2 = value;
+                this.NotifyPropertyChanged("Employers_vat_number2");
+            }
+        }
+
+        private string _regional_file_number;
+        public string regional_file_number
+        {
+            get { return _regional_file_number; }
+            set
+            {
+                _regional_file_number = value;
+                this.NotifyPropertyChanged("regional_file_number");
             }
         }
 
