@@ -483,14 +483,15 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	i = 0;
 	if(with_token) {
 		do {
+			CK_RV closerv;
 			rv = C_OpenSession(list[i], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session);
 			if(rv != CKR_TOKEN_NOT_RECOGNIZED) {
 				check_rv_late("C_OpenSession");
 			} else {
 				printf("INFO: skipping slot %lu, token not recognized\n", list[i]);
 			}
-			rv = C_CloseSession(session);
-			if(rv != CKR_OK) {
+			closerv = C_CloseSession(session);
+			if(closerv != CKR_OK) {
 				free(list);
 				return ckrv_decode(rv, "C_CloseSession(session)", 0, NULL);
 			}
