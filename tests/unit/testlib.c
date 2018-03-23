@@ -492,6 +492,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 			rv = C_CloseSession(session);
 			if(rv != CKR_OK) {
 				free(list);
+				return ckrv_decode(rv, "C_CloseSession(session)", 0, NULL);
 			}
 			check_rv_late("C_CloseSession(session)");
 		} while(rv != CKR_OK && (++i < count));
