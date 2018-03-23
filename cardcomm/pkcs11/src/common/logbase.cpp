@@ -404,10 +404,15 @@ namespace eIDMW
 	}
 
 //Copy constructor
-	CLog::CLog(const CLog & log)
-	{
-		*this = log;
-	}
+	CLog::CLog(const CLog & log) : m_directory(log.m_directory),
+		m_prefix(log.m_prefix), m_group(log.m_group),
+		m_filesize(log.m_filesize), m_filenr(log.m_filenr),
+		m_maxlevel(log.m_maxlevel), m_groupinnewfile(log.m_groupinnewfile),
+		m_openfailed(log.m_openfailed), m_f(log.m_f)
+#ifndef WIN32
+		, m_flock(log.m_flock)
+#endif
+	{ }
 
 	CLog & CLog::operator=(const CLog & log)
 	{
