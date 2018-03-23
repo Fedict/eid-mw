@@ -489,7 +489,11 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 			} else {
 				printf("INFO: skipping slot %lu, token not recognized\n", list[i]);
 			}
-			check_rv(C_CloseSession(session));
+			rv = C_CloseSession(session);
+			if(rv != CKR_OK) {
+				free(list);
+			}
+			check_rv_late("C_CloseSession(session)");
 		} while(rv != CKR_OK && (++i < count));
 		if (i >= count ) {
 			printf("Need at least one known token for this test\n");
