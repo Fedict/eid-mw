@@ -199,14 +199,16 @@ static const void* perform_curl_request(char *url, CURL *curl, long *retlen) {
 					proxies[i] ? "none" : proxies[i],
 					curl_easy_strerror(curl_res));
 		}
-		if(!strcmp(proxies[i], "direct://")) {
-			// skip that
-			i++;
-		}
 		if(proxies[i] == NULL) {
 			curl_easy_setopt(curl, CURLOPT_PROXY, "");
 		} else {
-			curl_easy_setopt(curl, CURLOPT_PROXY, proxies[i]);
+			if(!strcmp(proxies[i], "direct://")) {
+				// skip that
+				i++;
+				curl_easy_setopt(curl, CURLOPT_PROXY, "");
+			} else {
+				curl_easy_setopt(curl, CURLOPT_PROXY, proxies[i]);
+			}
 		}
 	} while(proxies[i++] != NULL && curl_res != CURLE_OK);
 
