@@ -3,13 +3,10 @@ sudo: required
 dist: trusty
 os:
   - linux
-  - osx
 compiler:
   - clang
   - gcc
 matrix:
-  allow_failures:
-  - os: osx
   fast_finish: true
 before_install:
   - sudo bash .travis/before_install
