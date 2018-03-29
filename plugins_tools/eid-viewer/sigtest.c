@@ -23,7 +23,7 @@ int main(void) {
 	addrs = fread(addr, 1, sizeof addr, f);
 	fclose(f);
 	f = fopen("3F00_DF01_4034", "rb");
-	asigs = fread(addr, 1, sizeof asig, f);
+	asigs = fread(asig, 1, sizeof asig, f);
 	fclose(f);
 	f = fopen("3F00_DF01_4035", "rb");
 	phots = fread(phot, 1, sizeof phot, f);
