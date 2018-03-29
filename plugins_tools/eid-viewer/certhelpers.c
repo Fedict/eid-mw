@@ -9,6 +9,7 @@
 #include <string.h>
 #include <assert.h>
 #include "cache.h"
+#include "dataverify.h"
 
 #include "backend.h"
 
