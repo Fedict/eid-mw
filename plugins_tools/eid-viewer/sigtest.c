@@ -31,5 +31,5 @@ int main(void) {
 	f = fopen("3F00_DF00_503C", "rb");
 	certs = fread(cert, 1, sizeof cert, f);
 	fclose(f);
-	eid_vwr_check_data_validity(phot, phots, photohash, sizeof photohash, data, datas, dsig, dsigs, addr, addrs, asig, asigs, cert, certs);
+	return eid_vwr_check_data_validity(phot, phots, photohash, sizeof photohash, data, datas, dsig, dsigs, addr, addrs, asig, asigs, cert, certs);
 }
