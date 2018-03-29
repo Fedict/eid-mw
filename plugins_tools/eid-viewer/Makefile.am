@@ -1,6 +1,6 @@
 bin_PROGRAMS = eid-viewer
 lib_LTLIBRARIES = libeidviewer.la
-noinst_PROGRAMS = sigtest
+EXTRA_PROGRAMS = sigtest
 sigtest_SOURCES = sigtest.c
 sigtest_LDADD = libeidviewer.la
 
