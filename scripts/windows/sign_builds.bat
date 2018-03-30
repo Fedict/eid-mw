@@ -39,10 +39,7 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 del /q beidmdrv.zip
 :: zip the minidriver folder
 powershell.exe -nologo -noprofile -command "Compress-Archive -Path .\beidmdrv\* -CompressionLevel Optimal -DestinationPath ./beidmdrv.zip"
-@echo [INFO] Sign the zip file
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv.zip"
-
-copy %~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv.zip %~dp0
+move %~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv.zip %~dp0
 
 @cd "%OUR_CURRENT_PATH%"
 
