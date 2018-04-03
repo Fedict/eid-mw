@@ -144,6 +144,11 @@ static void reallog(enum eid_vwr_loglevel l, const char* line, va_list ap) {
 			   abort(), so don't use it. */
 			gtklog = G_LOG_LEVEL_CRITICAL;
 			break;
+		default:
+			/* This shouldn't happen, so here we do want to
+			 * make things be problematic */
+			gtklog = G_LOG_LEVEL_ERROR;
+			break;
 	}
 	g_logv(NULL, gtklog, line, ap);
 }
