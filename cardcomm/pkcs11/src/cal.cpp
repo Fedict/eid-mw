@@ -119,7 +119,7 @@ CK_RV cal_init()
 		oCardLayer = new CCardLayer();
 		oReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -224,7 +224,7 @@ CK_RV cal_init_slots(void)
 				 (unsigned int) reader.size(), (char) '\x00');
 		}
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -323,7 +323,7 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 			pInfo->flags = CKF_PROTECTED_AUTHENTICATION_PATH;
 		pInfo->firmwareVersion.major = oReader.GetAppletVersion();
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -410,7 +410,7 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 		CReader & oReader = oCardLayer->getReader(szReader);
 		algos = oReader.GetSupportedAlgorithms();
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -606,7 +606,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
 				pInfo->ulMinKeySize = pInfo->ulMaxKeySize =
 					(CK_ULONG) oReader.GetRSAKeySize();
 			}
-			catch(CMWException e)
+			catch(CMWException &e)
 			{
 				return (cal_translate_error
 					(WHERE, e.GetError()));
@@ -697,7 +697,7 @@ CK_RV cal_disconnect(CK_SLOT_ID hSlot)
 			CReader & oReader = oCardLayer->getReader(szreader);
 			oReader.Disconnect();
 		}
-		catch(CMWException e)
+		catch(CMWException &e)
 		{
 			return (cal_translate_error(WHERE, e.GetError()));
 		}
@@ -947,7 +947,7 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 			}
 		}
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -1005,7 +1005,7 @@ CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 				ret = CKR_PIN_INCORRECT;
 		}
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -1092,7 +1092,7 @@ CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin,
 				ret = CKR_PIN_INCORRECT;
 		}
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -1485,7 +1485,7 @@ CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 		//              if (ret) goto cleanup;
 		//
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -1781,7 +1781,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				break;
 		}
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -2130,7 +2130,7 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				pPubKeyObject->state = P11_CACHED;
 			}
 		}
-		catch(CMWException e)
+		catch(CMWException &e)
 		{
 			cert_free_info(&certinfo);
 			return (cal_translate_error(WHERE, e.GetError()));
@@ -2304,7 +2304,7 @@ CK_RV cal_validate_session(P11_SESSION * pSession)
 			//         ret = CKR_OK;
 		}
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -2392,7 +2392,7 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 			}
 		}
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -2503,7 +2503,7 @@ CK_RV cal_get_slot_changes(int *ph)
 			}
 		}
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -2569,7 +2569,7 @@ CK_RV cal_refresh_readers()
 		//new reader list, so please stop the scardgetstatuschange that is waiting on the old list
 		//oCardLayer->CancelActions();
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
@@ -2963,7 +2963,7 @@ CK_RV cal_wait_for_the_slot_event(int block)
 			oCardLayer->GetStatusChange(0, txReaderStates, ulnReaders);
 		}
 	}
-	catch(CMWException e)
+	catch(CMWException &e)
 	{
 		if (block)
 		{

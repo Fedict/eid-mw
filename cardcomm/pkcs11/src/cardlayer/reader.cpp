@@ -159,7 +159,7 @@ namespace eIDMW
 				}
 			}
 		}
-		catch(CMWException e) {
+		catch(CMWException &e) {
 			if(e.GetError() == EIDMW_ERR_CARD_SHARING) {
 				status = CARD_UNKNOWN_STATE;
 			} else {

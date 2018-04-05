@@ -65,7 +65,7 @@ static bool BeidCardSelectApplet(CContext * poContext, SCARDHANDLE hCard)
 	{
 		oResp = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
 	}
-	catch(CMWException e) 
+	catch(CMWException &e) 
 	{
 		MWLOG(LEV_CRIT, MOD_CAL, L"Failed to select applet: 0x%0x",
 		       e.GetError());
@@ -220,7 +220,7 @@ CBeidCard::CBeidCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad
 			m_ul6CDelay = 50;
 		m_selectAppletMode = selectAppletMode;
 	}
-	catch(CMWException e) 
+	catch(CMWException &e) 
 	{
 		MWLOG(LEV_CRIT, MOD_CAL, L"Failed to get CardData: 0x%0x",
 		       e.GetError());
