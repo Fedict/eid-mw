@@ -17,6 +17,7 @@ DobParser::DobParser()
 {
 	if (frommonth.size() == 0)
 	{
+		domap(EID_VWR_LANG_DE, 0, TEXT("   "));
 		domap(EID_VWR_LANG_DE, 1, TEXT("JAN"));
 		domap(EID_VWR_LANG_DE, 2, TEXT("FEB"));
 		domap(EID_VWR_LANG_DE, 3, TEXT("MÄR"));
@@ -30,6 +31,7 @@ DobParser::DobParser()
 		domap(EID_VWR_LANG_DE, 11, TEXT("NOV"));
 		domap(EID_VWR_LANG_DE, 12, TEXT("DEZ"));
 
+		domap(EID_VWR_LANG_FR, 0, TEXT("   "));
 		domap(EID_VWR_LANG_FR, 1, TEXT("JAN"));
 		domap(EID_VWR_LANG_FR, 2, TEXT("FEV"));
 		domap(EID_VWR_LANG_FR, 3, TEXT("MARS"));
@@ -43,6 +45,7 @@ DobParser::DobParser()
 		domap(EID_VWR_LANG_FR, 11, TEXT("NOV"));
 		domap(EID_VWR_LANG_FR, 12, TEXT("DEC"));
 
+		domap(EID_VWR_LANG_NL, 0, TEXT("   "));
 		domap(EID_VWR_LANG_NL, 1, TEXT("JAN"));
 		domap(EID_VWR_LANG_NL, 2, TEXT("FEB"));
 		domap(EID_VWR_LANG_NL, 3, TEXT("MAAR"));
@@ -56,6 +59,7 @@ DobParser::DobParser()
 		domap(EID_VWR_LANG_NL, 11, TEXT("NOV"));
 		domap(EID_VWR_LANG_NL, 12, TEXT("DEC"));
 
+		domap(EID_VWR_LANG_EN, 0, TEXT("   "));
 		domap(EID_VWR_LANG_EN, 1, TEXT("JAN"));
 		domap(EID_VWR_LANG_EN, 2, TEXT("FEB"));
 		domap(EID_VWR_LANG_EN, 3, TEXT("MAR"));
@@ -77,6 +81,7 @@ DobWriter::DobWriter(DateParser * p):DateWriter(p)
 {
 	if (tomonth.size() == 0)
 	{
+		domap(EID_VWR_LANG_DE, 0, TEXT("   "));
 		domap(EID_VWR_LANG_DE, 1, TEXT("JAN"));
 		domap(EID_VWR_LANG_DE, 2, TEXT("FEB"));
 		domap(EID_VWR_LANG_DE, 3, TEXT("MÄR"));
@@ -90,6 +95,7 @@ DobWriter::DobWriter(DateParser * p):DateWriter(p)
 		domap(EID_VWR_LANG_DE, 11, TEXT("NOV"));
 		domap(EID_VWR_LANG_DE, 12, TEXT("DEZ"));
 
+		domap(EID_VWR_LANG_FR, 0, TEXT("    "));
 		domap(EID_VWR_LANG_FR, 1, TEXT("JAN "));
 		domap(EID_VWR_LANG_FR, 2, TEXT("FEV "));
 		domap(EID_VWR_LANG_FR, 3, TEXT("MARS"));
@@ -103,6 +109,7 @@ DobWriter::DobWriter(DateParser * p):DateWriter(p)
 		domap(EID_VWR_LANG_FR, 11, TEXT("NOV "));
 		domap(EID_VWR_LANG_FR, 12, TEXT("DEC "));
 
+		domap(EID_VWR_LANG_NL, 0, TEXT("    "));
 		domap(EID_VWR_LANG_NL, 1, TEXT("JAN "));
 		domap(EID_VWR_LANG_NL, 2, TEXT("FEB "));
 		domap(EID_VWR_LANG_NL, 3, TEXT("MAAR"));
@@ -116,6 +123,7 @@ DobWriter::DobWriter(DateParser * p):DateWriter(p)
 		domap(EID_VWR_LANG_NL, 11, TEXT("NOV "));
 		domap(EID_VWR_LANG_NL, 12, TEXT("DEC "));
 
+		domap(EID_VWR_LANG_EN, 0, TEXT("   "));
 		domap(EID_VWR_LANG_EN, 1, TEXT("JAN"));
 		domap(EID_VWR_LANG_EN, 2, TEXT("FEB"));
 		domap(EID_VWR_LANG_EN, 3, TEXT("MAR"));
@@ -144,8 +152,11 @@ void DobParser::input(EID_STRING original)
 
 EID_STRING DobWriter::output()
 {
-	EID_CHAR sep = target_ == EID_VWR_LANG_DE ? TEXT('.') : TEXT(' ');
+	EID_CHAR sep1 = target_ == EID_VWR_LANG_DE ? TEXT('.') : TEXT(' ');
+	EID_CHAR sep2 = sep1;
 
-	return parser->day + sep + tomonth[target_][parser->month] + sep +
+	if(parser->day == "  ") sep1 = TEXT(' ');
+	if(parser->month == 0) sep2 = TEXT(' ');
+	return parser->day + sep1 + tomonth[target_][parser->month] + sep2 +
 		parser->year;
 }
