@@ -155,7 +155,7 @@ EID_STRING DobWriter::output()
 	EID_CHAR sep1 = target_ == EID_VWR_LANG_DE ? TEXT('.') : TEXT(' ');
 	EID_CHAR sep2 = sep1;
 
-	if(parser->day == "  ") sep1 = TEXT(' ');
+	if(parser->day == TEXT("  ")) sep1 = TEXT(' ');
 	if(parser->month == 0) sep2 = TEXT(' ');
 	return parser->day + sep1 + tomonth[target_][parser->month] + sep2 +
 		parser->year;
