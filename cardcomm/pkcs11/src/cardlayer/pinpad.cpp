@@ -549,6 +549,8 @@ namespace eIDMW
 		if ((m_csReader.find("VASCO DIGIPASS 870") == 0) ||
 		    (m_csReader.find("VASCO DIGIPASS 875") == 0) ||
 		    (m_csReader.find("VASCO DIGIPASS 920") == 0) ||
+			(m_csReader.find("VASCO DIGIPASS 840") == 0) ||
+			(m_csReader.find("VASCO DIGIPASS 876") == 0) ||    
 		    (m_csReader.find("Gemalto ING Shield Pro") == 0))
 		{
 			oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd, &lRetVal);
