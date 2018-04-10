@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
-"POT-Creation-Date: 2017-10-12 11:03+0200\n"
+"POT-Creation-Date: 2018-04-10 11:37+0200\n"
 "PO-Revision-Date: 2016-12-21 15:44+0100\n"
 "Last-Translator: Wouter Verhelst <wouter.verhelst@fedict.be>\n"
 "Language-Team: \n"
@@ -66,7 +66,9 @@ msgid "eID Viewer"
 msgstr "eID Viewer"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:70
-msgid "Copyright 2015-2016 Fedict"
+msgid ""
+"Copyright 2015-2016 Fedict\n"
+"Copyright 2017-2018 BOSA"
 msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:71

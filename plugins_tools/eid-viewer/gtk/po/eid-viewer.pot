@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: eid-mw 4.3.0-v4.3.0.41.g6819eedb\n"
+"Project-Id-Version: eid-mw 4.3.8-v4.3.8.107.g578aa6a0.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
-"POT-Creation-Date: 2017-10-12 11:03+0200\n"
+"POT-Creation-Date: 2018-04-10 11:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,9 @@ msgid "eID Viewer"
 msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:70
-msgid "Copyright 2015-2016 Fedict"
+msgid ""
+"Copyright 2015-2016 Fedict\n"
+"Copyright 2017-2018 BOSA"
 msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:71

@@ -67,7 +67,7 @@ void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {
 			"version", PACKAGE_VERSION,
 			"website", "http://eid.belgium.be/",
 			"authors", authors,
-			"copyright", _("Copyright 2015-2016 Fedict"),
+			"copyright", _("Copyright 2015-2016 Fedict\nCopyright 2017-2018 BOSA"),
 			"comments", _("View data on the Belgian eID card"),
 #if (HAVE_GTK == 3)
 			"license-type", GTK_LICENSE_LGPL_3_0,
