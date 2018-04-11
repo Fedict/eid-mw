@@ -8,7 +8,7 @@ void XmlDateParser::input(EID_STRING original)
 	year = original.substr(0, 4);
 	month = (int) EID_STRTOL(original.substr(4, 2).c_str(), NULL, 10);
 	day = original.substr(6, 2);
-	if (day == TEXT("00")) {
+	if (month == 0) {
 		day = TEXT("  ");
 	}
 }
