@@ -110,7 +110,6 @@ static struct labelnames *foreignerlabels = NULL;
 		}\
 	}\
 	EID_FPRINTF(stderr, TEXT("E: unkown label: %s"), label);\
-	exit(EXIT_FAILURE);\
 }
 
 fun(on_foreigner)
