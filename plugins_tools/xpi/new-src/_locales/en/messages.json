@@ -9,7 +9,7 @@
     "message": "eID software not found"
   },
   "noMiddlewareFoundContent": {
-    "message": "The Belgian electronic identity card software could not be found. Is the eID software installed?"
+    "message": "A recent enough version of the Belgian electronic identity card software could not be found. Is the eID software installed and up-to-date?"
   },
   "installFailedTitle": {
     "message": "eID software installation failed"

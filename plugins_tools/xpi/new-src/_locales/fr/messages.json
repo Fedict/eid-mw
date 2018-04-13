@@ -9,7 +9,7 @@
     "message": "Le logiciel eID n'a pas été trouvé."
   },
   "noMiddlewareFoundContent": {
-    "message": "La configuration de la carte d'identité électronique belge a échoué. Le logiciel eID a-t-il été bien installé?"
+    "message": "Une version suffisamment récente du logiciel de la carte d'identité électronique belge n'a pas été trouvée. Le logiciel eID a-t-il été installé et est-il à jour ?"
   },
   "installFailedTitle": {
     "message": "L'installation du logiciel eID a échoué."

@@ -9,7 +9,7 @@
     "message": "eID-Software nicht gefunden"
   },
   "noMiddlewareFoundContent": {
-    "message": "Die Konfiguration des belgischen elektronischen Personalausweises schlug fehl. Wurde die eID-Software installiert?"
+    "message": "Es wurde keine ausreichend aktuelle Version der belgischen elektronischen Personalausweis-Software gefunden. Wurde die eID-Software installiert und ist sie aktuell?"
   },
   "installFailedTitle": {
     "message": "Die Installation der eID-Software schlug fehl."
