@@ -931,7 +931,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="title_work_permit_type">
+                          <object class="GtkLabel" id="title_work_permit_mention">
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Work permit mention:</property>
@@ -946,7 +946,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="work_permit_type">
+                          <object class="GtkLabel" id="work_permit_mention">
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
