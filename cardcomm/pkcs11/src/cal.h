@@ -151,7 +151,7 @@ extern "C"
 	{ BEID_FIELD_TAG_ID_SpecialOrganization,"special_organization"},  \
 	{ BEID_FIELD_TAG_ID_MemberOfFamily,		"member_of_family"}, \
 	{ BEID_FIELD_TAG_ID_DateAndCountryOfProtection,		"date_and_country_of_protection"},  \
-	{ BEID_FIELD_TAG_ID_WorkPermitType, "work_permit_type"}, \
+	{ BEID_FIELD_TAG_ID_WorkPermitType, "work_permit_mention"}, \
 	{ BEID_FIELD_TAG_ID_Vat1, "employer_vat_1"}, \
 	{ BEID_FIELD_TAG_ID_Vat2, "employer_vat_2"}, \
 	{ BEID_FIELD_TAG_ID_RegionalFileNumber, "regional_file_number"}, \
