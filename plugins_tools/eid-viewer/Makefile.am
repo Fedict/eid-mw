@@ -76,6 +76,8 @@ libeidviewer_la_SOURCES = \
 	conversions/specorgconv.cpp \
 	conversions/valdate.h \
 	conversions/valdate.cpp \
+	conversions/workpermitconv.h \
+	conversions/workpermitconv.cpp \
 	conversions/xmldoctypeconv.h \
 	conversions/xmldoctypeconv.cpp \
 	conversions/xmlspecconv.h \
