@@ -75,7 +75,7 @@ static struct {
 	{ TEXT("special_organization"),		CK_FALSE, CK_FALSE, CK_TRUE },
 	{ TEXT("member_of_family"),		CK_FALSE, CK_FALSE, CK_TRUE },
 	{ TEXT("date_and_country_of_protection"), CK_TRUE, CK_FALSE, CK_TRUE },
-	{ TEXT("work_permit_type"),		CK_TRUE, CK_FALSE, CK_TRUE },
+	{ TEXT("work_permit_mention"),		CK_TRUE, CK_FALSE, CK_TRUE },
 	{ TEXT("employer_vat_1"),		CK_TRUE, CK_FALSE, CK_TRUE },
 	{ TEXT("employer_vat_2"),		CK_TRUE, CK_FALSE, CK_TRUE },
 	{ TEXT("regional_file_number"),		CK_TRUE, CK_FALSE, CK_TRUE },
