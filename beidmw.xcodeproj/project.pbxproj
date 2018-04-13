@@ -60,10 +60,12 @@
 		65270A7A1FE97A2B004F326D /* genderconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A591FE97A29004F326D /* genderconv.cpp */; };
 		65270A7C1FE97A2B004F326D /* natnumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A5B1FE97A2A004F326D /* natnumconv.cpp */; };
 		65270A821FE97A2B004F326D /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A611FE97A2A004F326D /* convert.cpp */; };
-		65270A881FE97E7D004F326D /* libbeidpkcs11.4.3.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.3.5.dylib */; };
+		65270A881FE97E7D004F326D /* libbeidpkcs11.4.3.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.3.8.dylib */; };
 		65270A8A1FE97E97004F326D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A891FE97E97004F326D /* libcrypto.a */; };
 		65270A8C1FE97EBD004F326D /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A8B1FE97EBD004F326D /* libxml2.a */; };
-		653490F01FEA75FE000F7787 /* libbeidpkcs11.4.3.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.3.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		65314FBC2080E9E10079D0B0 /* workpermitconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65314FB72080E9E10079D0B0 /* workpermitconv.cpp */; };
+		65314FBD2080E9E20079D0B0 /* workpermitconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65314FBB2080E9E10079D0B0 /* workpermitconv.h */; };
+		653490F01FEA75FE000F7787 /* libbeidpkcs11.4.3.8.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.3.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		653490FD1FEA7B3A000F7787 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 653490FC1FEA7B3A000F7787 /* main.c */; };
 		6534910E1FEA7BE7000F7787 /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 6534910C1FEA7BE6000F7787 /* GeneratePreviewForURL.m */; };
 		6534910F1FEA7BE7000F7787 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 6534910D1FEA7BE7000F7787 /* GenerateThumbnailForURL.m */; };
@@ -363,7 +365,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				653490F01FEA75FE000F7787 /* libbeidpkcs11.4.3.5.dylib in CopyFiles */,
+				653490F01FEA75FE000F7787 /* libbeidpkcs11.4.3.8.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +496,8 @@
 		65270A621FE97A2B004F326D /* specorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = specorgconv.h; sourceTree = "<group>"; };
 		65270A891FE97E97004F326D /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "plugins_tools/eid-viewer/OSX/support/ossl/openssl-1.0.2l/libcrypto.a"; sourceTree = "<group>"; };
 		65270A8B1FE97EBD004F326D /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = "plugins_tools/eid-viewer/OSX/support/xml/builddir/.libs/libxml2.a"; sourceTree = "<group>"; };
+		65314FB72080E9E10079D0B0 /* workpermitconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = workpermitconv.cpp; sourceTree = "<group>"; };
+		65314FBB2080E9E10079D0B0 /* workpermitconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = workpermitconv.h; sourceTree = "<group>"; };
 		653490F61FEA7B39000F7787 /* eidfilepreview.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eidfilepreview.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		653490FC1FEA7B3A000F7787 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		653490FE1FEA7B3A000F7787 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -687,7 +691,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65270A881FE97E7D004F326D /* libbeidpkcs11.4.3.5.dylib in Frameworks */,
+				65270A881FE97E7D004F326D /* libbeidpkcs11.4.3.8.dylib in Frameworks */,
 				65270A8A1FE97E97004F326D /* libcrypto.a in Frameworks */,
 				65270A8C1FE97EBD004F326D /* libxml2.a in Frameworks */,
 			);
@@ -927,6 +931,8 @@
 				65270A621FE97A2B004F326D /* specorgconv.h */,
 				65270A581FE97A29004F326D /* valdate.cpp */,
 				65270A521FE97A29004F326D /* valdate.h */,
+				65314FB72080E9E10079D0B0 /* workpermitconv.cpp */,
+				65314FBB2080E9E10079D0B0 /* workpermitconv.h */,
 				65270A4B1FE97A28004F326D /* xmldoctypeconv.cpp */,
 				65270A5D1FE97A2A004F326D /* xmldoctypeconv.h */,
 				65270A501FE97A28004F326D /* xmlspecconv.cpp */,
@@ -1146,7 +1152,7 @@
 				86837476186489B6005EE5D7 /* langutil.h */,
 				86837477186489B6005EE5D7 /* sharedmem.cpp */,
 				86837478186489B6005EE5D7 /* sharedmem.h */,
-				8683738A18648985005EE5D7 /* dlgsmac.cpp */,
+				8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */,
 			);
 			name = Dialogsmac;
 			path = cardcomm/pkcs11/src/dialogs/dialogsmac;
@@ -1223,6 +1229,7 @@
 				65270A3C1FE97991004F326D /* oslayer-objc.h in Headers */,
 				65270A3D1FE97991004F326D /* certhelpers.h in Headers */,
 				65270A3E1FE97991004F326D /* eid-viewer.h in Headers */,
+				65314FBD2080E9E20079D0B0 /* workpermitconv.h in Headers */,
 				65270A3F1FE97991004F326D /* macros.h in Headers */,
 				65270A401FE97991004F326D /* oslayer.h in Headers */,
 				65270A411FE97991004F326D /* verify_cert.h in Headers */,
@@ -1731,6 +1738,7 @@
 				65270A311FE976BE004F326D /* cache.cpp in Sources */,
 				65270A0A1FE9761A004F326D /* trustdirname.m in Sources */,
 				65270A681FE97A2B004F326D /* convertor.cpp in Sources */,
+				65314FBC2080E9E10079D0B0 /* workpermitconv.cpp in Sources */,
 				65270A2F1FE976BE004F326D /* certhelpers.c in Sources */,
 				65270A391FE976BE004F326D /* p11.c in Sources */,
 				65270A381FE976BE004F326D /* xml.c in Sources */,
@@ -1891,7 +1899,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				868374D1186489B6005EE5D7 /* sharedmem.cpp in Sources */,
-				8683738B18648985005EE5D7 /* dlgsmac.cpp in Sources */,
+				8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */,
 				868374CF186489B6005EE5D7 /* langutil.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
