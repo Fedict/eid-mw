@@ -9,7 +9,7 @@
     "message": "eID software niet gevonden"
   },
   "noMiddlewareFoundContent": {
-    "message": "Configuratie voor de Belgische elektronische identiteitskaart is mislukt. Is de eID Middleware geïnstalleerd?"
+    "message": "Een voldoende recente versie van de Belgische elektronische identiteitskaartsoftware werd niet gevonden. Werd de eID-software geïnstalleerd en is ze up-to-date?"
   },
   "installFailedTitle": {
     "message": "eID software niet installeerbaar"
