@@ -111,6 +111,9 @@
     <ClCompile Include="..\..\conversions\specorgconv.cpp">
       <Filter>Conversions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\conversions\workpermitconv.cpp">
+      <Filter>Conversions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\backend.h">

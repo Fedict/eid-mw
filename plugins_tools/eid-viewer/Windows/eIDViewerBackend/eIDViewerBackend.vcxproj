@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\conversions\specconv.cpp" />
     <ClCompile Include="..\..\conversions\specorgconv.cpp" />
     <ClCompile Include="..\..\conversions\valdate.cpp" />
+    <ClCompile Include="..\..\conversions\workpermitconv.cpp" />
     <ClCompile Include="..\..\conversions\xmldoctypeconv.cpp" />
     <ClCompile Include="..\..\conversions\xmlspecconv.cpp" />
     <ClCompile Include="..\..\conversions\xmlspecorgconv.cpp" />
