@@ -531,43 +531,49 @@ namespace eIDViewer
         public bool IsVerifiedDataOK( )
         {
             string hashAlg;
+            try {
+                if (photo_hash.Length == 20)
+                {
+                    hashAlg = "SHA1";
+                }
+                else if (photo_hash.Length == 32)
+                {
+                    hashAlg = "SHA256";
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (photo_hash.Length == 20)
-            {
-                hashAlg = "SHA1";
-            }
-            else if (photo_hash.Length == 32)
-            {
-                hashAlg = "SHA256";
-            }
-            else
-            {
-                return false;
-            }
+                //check if the identity signature is ok
+                if (CheckRNSignature(dataFile, dataSignFile, hashAlg) != true)
+                {
+                    this.WriteLog("identity dataFile signature check failed \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                    return false;
+                }
 
-            //check if the identity signature is ok
-            if (CheckRNSignature(dataFile, dataSignFile, hashAlg) != true)
-            {
-                this.WriteLog("identity dataFile signature check failed \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
-                return false;
+                //check if the address signature is ok
+                byte[] trimmedAddressFile = (byte[])addressFile.Clone();
+                int lastIndex = Array.FindLastIndex(trimmedAddressFile, b => b != 0);
+                Array.Resize(ref trimmedAddressFile, lastIndex + 1 + dataSignFile.Length);
+                dataSignFile.CopyTo(trimmedAddressFile, lastIndex + 1);
+
+                if (CheckRNSignature(trimmedAddressFile, addressSignFile, hashAlg) != true)
+                {
+                    this.WriteLog("addressFile signature check failed \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                    return false;
+                }
+
+                //check if the photo corresponds with the photo hash in the identity file
+                if (CheckShaHash(photoFile, photo_hash) != true)
+                {
+                    this.WriteLog("photo doesn't match the hash in the signature file \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                    return false;
+                }
             }
-
-            //check if the address signature is ok
-            byte[] trimmedAddressFile = (byte[]) addressFile.Clone();
-            int lastIndex = Array.FindLastIndex(trimmedAddressFile, b => b != 0);
-            Array.Resize(ref trimmedAddressFile, lastIndex + 1 + dataSignFile.Length);
-            dataSignFile.CopyTo(trimmedAddressFile, lastIndex + 1);
-
-            if (CheckRNSignature(trimmedAddressFile, addressSignFile, hashAlg) != true)
+            catch (Exception e)
             {
-                this.WriteLog("addressFile signature check failed \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
-                return false;
-            }
-
-            //check if the photo corresponds with the photo hash in the identity file
-            if (CheckShaHash(photoFile, photo_hash) != true)
-            {
-                this.WriteLog("photo doesn't match the hash in the signature file \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                this.WriteLog("Error occuder during verification of data \nException message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                 return false;
             }
 
