@@ -15,14 +15,14 @@ WorkPermitConvertor::WorkPermitConvertor() {
 		conversions[EID_VWR_LANG_EN]['9'] = TEXT("none");
 		conversions[EID_VWR_LANG_EN]['A'] = TEXT("seasonal worker");
 
-		conversions[EID_VWR_LANG_FR]['7'] = TEXT("illimité");
-		conversions[EID_VWR_LANG_FR]['8'] = TEXT("limité");
-		conversions[EID_VWR_LANG_FR]['9'] = TEXT("non");
-		conversions[EID_VWR_LANG_FR]['A'] = TEXT("saisonnier");
+		conversions[EID_VWR_LANG_FR]['7'] = TEXT("Marché du travail: illimité");
+		conversions[EID_VWR_LANG_FR]['8'] = TEXT("Marché du travail: limité");
+		conversions[EID_VWR_LANG_FR]['9'] = TEXT("Marché du travail: non");
+		conversions[EID_VWR_LANG_FR]['A'] = TEXT("Saisonnier");
 
-		conversions[EID_VWR_LANG_NL]['7'] = TEXT("onbeperkt");
-		conversions[EID_VWR_LANG_NL]['8'] = TEXT("beperkt");
-		conversions[EID_VWR_LANG_NL]['9'] = TEXT("geen");
+		conversions[EID_VWR_LANG_NL]['7'] = TEXT("Arbeidsmarkt: onbeperkt");
+		conversions[EID_VWR_LANG_NL]['8'] = TEXT("Arbeidsmarkt: beperkt");
+		conversions[EID_VWR_LANG_NL]['9'] = TEXT("Arbeidsmarkt: geen");
 		conversions[EID_VWR_LANG_NL]['A'] = TEXT("seizoensarbeider");
 	}
 }
