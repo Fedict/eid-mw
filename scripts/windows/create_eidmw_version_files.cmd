@@ -199,7 +199,7 @@ set ASSEMBLYINFO_PATH="%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\Sou
 @echo         {>> %ASSEMBLYINFO_PATH%
 @echo             string message = ^@^"eID Viewer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%>> %ASSEMBLYINFO_PATH%
 @echo eID Middleware Project>> %ASSEMBLYINFO_PATH%
-@echo Copyright(C) %YEAR% Fedict>> %ASSEMBLYINFO_PATH%
+@echo Copyright(C) %YEAR% Bosa>> %ASSEMBLYINFO_PATH%
 @echo:>> %ASSEMBLYINFO_PATH%
 @echo By Frederik Vernelen and Wouter Verhelst>> %ASSEMBLYINFO_PATH%
 @echo Based on the design of Frank Marien>> %ASSEMBLYINFO_PATH%
