@@ -278,7 +278,7 @@ namespace eIDViewer
 
         private void TestSiteMenu_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://test.eid.belgium.be");
+            System.Diagnostics.Process.Start("https://eid.belgium.be");
         }
 
         private void FAQMenuItem_Click(object sender, RoutedEventArgs e)
