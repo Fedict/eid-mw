@@ -112,7 +112,7 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 		goto exit;
 	}
 	if(!X509_CRL_verify(crl, ca_k)) {
-		be_log(EID_VWR_LOG_ERROR, "Found certificate revocation list with invalid signature. Certificates not valid");
+		be_log(EID_VWR_LOG_NORMAL, "Found certificate revocation list with invalid signature. Certificates not valid");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
