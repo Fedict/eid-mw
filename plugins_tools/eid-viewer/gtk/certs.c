@@ -262,7 +262,11 @@ static enum eid_vwr_result check_cert(char* which) {
 	int *col_tcert, *col_tca, *col_troot;
 	enum eid_vwr_result verify_result;
 
-	ca_iter = get_iter_for("CA");
+	if(strcmp(which, "CA")==0) {
+		ca_iter = get_iter_for("Root");
+	} else {
+		ca_iter = get_iter_for("CA");
+	}
 
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), cert_iter, CERT_COL_DATA, &cert, -1);
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), ca_iter, CERT_COL_DATA, &ca_cert, -1);
