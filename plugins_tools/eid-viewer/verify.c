@@ -97,7 +97,7 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
-	if((ca_k = X509_get_pubkey(cert_i)) == NULL) {
+	if((ca_k = X509_get_pubkey(ca_i)) == NULL) {
 		be_log(EID_VWR_LOG_NORMAL, "Could not get root certificate public key. Is this an actual eID card?");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
