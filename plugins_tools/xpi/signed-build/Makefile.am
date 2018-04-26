@@ -1,5 +1,5 @@
 XPI_NAME=belgiumeid.xpi
-EXTRA_DIST = eid_belgie-1.0.23.xpi belgium_eid-1.0.27.xpi
+EXTRA_DIST = eid_belgie-1.0.23.xpi belgium_eid-1.0.28.xpi
 if SIGNED
 extensionbase_DATA = $(XPI_ID).xpi
 endif
