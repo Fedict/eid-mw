@@ -26,12 +26,19 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>crl.eid.belgium.be</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<false/>
+			</dict>
 			<key>ocsp.eid.belgium.be</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 				<key>NSIncludesSubdomains</key>
-				<true/>
+				<false/>
 			</dict>
 		</dict>
 	</dict>

@@ -470,6 +470,7 @@
 }
 -(IBAction)validateNow:(id)sender {
 	NSData* ca = [_certstore certificateForKey:@"CA"];
+	eIDResult resCa = [eIDOSLayerBackend validateIntCert:ca withCa:[_certstore certificateForKey:@"Root"]];
 	eIDResult resSig = [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Signature"] withCa:ca];
 	eIDResult resAuth = [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca];
 	eIDResult resRRN = [eIDOSLayerBackend validateRrnCert:[_certstore certificateForKey:@"CERT_RN_FILE"]];
@@ -484,7 +485,7 @@
 		}
 	}
 	[_certstore setValid:resParents forKey:@"Root"];
-	[_certstore setValid:resParents forKey:@"CA"];
+	[_certstore setValid:resCa forKey:@"CA"];
 	[_certstore setValid:resRRN forKey:@"CERT_RN_FILE"];
 	[_certstore setValid:resAuth forKey:@"Authentication"];
 	[_certstore setValid:resSig forKey:@"Signature"];
