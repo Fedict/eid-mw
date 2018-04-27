@@ -1,20 +1,20 @@
-OSSL_VERSION=1.0.2l
+OSSL_VERSION=1.1.0h
 TP_DIR=../../../../../../ThirdParty
 
-build: openssl/libcrypto.dylib
+build: openssl/libcrypto.a
 
 clean:
 	rm -rf configured openssl openssl-$(OSSL_VERSION) openssl-$(OSSL_VERSION).tar.gz
 
 configured: openssl/Configure
-	cd openssl; ./Configure no-shared no-asm darwin64-x86_64:cc:-mmacosx-version-min=10.8
+	cd openssl; ./Configure no-shared no-asm -mmacosx-version-min=10.8 darwin64-x86_64-cc
 	$(MAKE) -C openssl depend
 	touch configured
 
 openssl/Configure: openssl
 
-openssl/lib%.dylib: configured
-	$(MAKE) -C openssl $(patsubst openssl/%.dylib,build_%,$@)
+openssl/lib%.a: configured
+	$(MAKE) -C openssl
 
 openssl: openssl-$(OSSL_VERSION)
 	ln -sf openssl-$(OSSL_VERSION) openssl
