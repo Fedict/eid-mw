@@ -68,7 +68,7 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 	const unsigned char *response;
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
 	EVP_PKEY *ca_k = NULL;
-	X509_CRL *crl;
+	X509_CRL *crl = NULL;
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_ssl_error("Could not parse certificate");
@@ -82,44 +82,13 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 	}
 	exts = X509_get0_extensions(cert_i);
 
-	for(i=0; i<sk_X509_EXTENSION_num(exts); i++) {
-		X509_EXTENSION *ex = sk_X509_EXTENSION_value(exts, i);
-		ASN1_OBJECT *obj = X509_EXTENSION_get_object(ex);
-		int nid = OBJ_obj2nid(obj);
-		if(nid == NID_crl_distribution_points) {
-			const X509V3_EXT_METHOD *method;
-			void *ext_str;
-			ASN1_OCTET_STRING *exval = X509_EXTENSION_get_data(ex);
-			const unsigned char *p = exval->data;
-			STACK_OF(CONF_VALUE) *nval = NULL;
-
-			if(!(method = X509V3_EXT_get(ex)) || !(method->i2v)) {
-				log_ssl_error("Could not find CRL URL information");
-				ret = EID_VWR_RES_FAILED;
-				goto exit;
-			}
-			if(method->it) {
-				ext_str = ASN1_item_d2i(NULL, &p, exval->length, ASN1_ITEM_ptr(method->it));
-			} else {
-				ext_str = method->d2i(NULL, &p, exval->length);
-			}
-			if(!(nval = method->i2v(method, ext_str, NULL))) {
-				log_ssl_error("Could not read OCSP URL from certificate");
-				ret = EID_VWR_RES_FAILED;
-				goto exit;
-			}
-			for(j=0; j<sk_CONF_VALUE_num(nval); j++) {
-				CONF_VALUE *val = sk_CONF_VALUE_value(nval, j);
-				if(val->name != NULL && val->value != NULL) {
-					if(!strcmp(val->name, "URI")) {
-						url = val->value;
-						if(strncmp(url, VALID_CRL_PREFIX, strlen(VALID_CRL_PREFIX))) {
-							be_log(EID_VWR_LOG_NORMAL, "Invalid CRL URL. Is this an actual eID card?");
-							ret = EID_VWR_RES_FAILED;
-							goto exit;
-						}
-					}
-				}
+	CRL_DIST_POINTS *pts = X509V3_get_d2i(exts, NID_crl_distribution_points, NULL, NULL);
+	for(i=0; i<sk_DIST_POINT_num(pts); i++) {
+		DIST_POINT *point = sk_DIST_POINT_value(pts, i);
+		for(j=0; j<sk_GENERAL_NAME_num(point->distpoint->name.fullname); j++) {
+			GENERAL_NAME *name = sk_GENERAL_NAME_value(point->distpoint->name.fullname, j);
+			if(name->type == GEN_URI) {
+				url = (char*)name->d.ia5->data;
 			}
 		}
 	}
@@ -128,7 +97,7 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
-	if((ca_k = X509_get_pubkey(cert_i)) == NULL) {
+	if((ca_k = X509_get_pubkey(ca_i)) == NULL) {
 		be_log(EID_VWR_LOG_NORMAL, "Could not get root certificate public key. Is this an actual eID card?");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
@@ -143,7 +112,7 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 		goto exit;
 	}
 	if(!X509_CRL_verify(crl, ca_k)) {
-		be_log(EID_VWR_LOG_ERROR, "Found certificate revocation list with invalid signature. Certificates not valid");
+		be_log(EID_VWR_LOG_NORMAL, "Found certificate revocation list with invalid signature. Certificates not valid");
 		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}

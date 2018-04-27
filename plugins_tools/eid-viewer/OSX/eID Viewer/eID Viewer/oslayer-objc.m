@@ -66,6 +66,22 @@ static const void* osl_objc_perform_ocsp_request(char* url, void* data, long len
 	}
 }
 
+static const void* osl_objc_perform_http_request(char* url, long *retlen, void** handle) {
+	NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithCString:url encoding:NSUTF8StringEncoding]]];
+	NSURLResponse *resp;
+	NSError *err;
+	NSData *respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
+	if(respdata != nil) {
+		void *retval = malloc(respdata.length+1);
+		*retlen = (long)respdata.length;
+		*handle = retval;
+		[respdata getBytes:retval length:*retlen];
+		return retval;
+	} else {
+		return NULL;
+	}
+}
+
 static void osl_objc_free_ocsp_request(void* data) {
 	free(data);
 }
@@ -147,6 +163,12 @@ static void osl_objc_free_ocsp_request(void* data) {
 		return eIDResultUnknown;
 	}
 	return (eIDResult)eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request, osl_objc_free_ocsp_request);
+}
++(eIDResult)validateIntCert:(NSData *)certificate withCa:(NSData *)ca {
+	if(certificate == nil) {
+		return eIDResultUnknown;
+	}
+	return (eIDResult)eid_vwr_verify_int_cert([certificate bytes], [certificate length], [ca bytes], [ca length], osl_objc_perform_http_request, osl_objc_free_ocsp_request);
 }
 +(eIDResult)validateRrnCert:(NSData *)certificate {
 	return (eIDResult)eid_vwr_verify_rrncert([certificate bytes], [certificate length]);

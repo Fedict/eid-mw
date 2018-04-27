@@ -114,6 +114,7 @@ eIDResultFailed = EID_VWR_RES_FAILED,
 
 +(eIDResult) validateRrnCert:(NSData *) certificate;
 				///< calls eid_vwr_verify_rrncert()
++(eIDResult) validateIntCert:(NSData *) certificate withCa:(NSData *)ca; ///< calls eid_vwr_verify_int_cert() with valid perform_http_request and free_http_request function pointers
 +(void) selectReader:(NSInteger) readerNumber;
 				///< calls eid_vwr_be_select_slot() with 0 as the first parameter, and the given reader number as the second parameter.
 +(void) setReaderAuto:(BOOL) automatic;

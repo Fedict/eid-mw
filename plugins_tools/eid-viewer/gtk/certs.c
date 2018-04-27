@@ -262,7 +262,11 @@ static enum eid_vwr_result check_cert(char* which) {
 	int *col_tcert, *col_tca, *col_troot;
 	enum eid_vwr_result verify_result;
 
-	ca_iter = get_iter_for("CA");
+	if(strcmp(which, "CA")==0) {
+		ca_iter = get_iter_for("Root");
+	} else {
+		ca_iter = get_iter_for("CA");
+	}
 
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), cert_iter, CERT_COL_DATA, &cert, -1);
 	gtk_tree_model_get(GTK_TREE_MODEL(certificates), ca_iter, CERT_COL_DATA, &ca_cert, -1);
@@ -276,12 +280,12 @@ static enum eid_vwr_result check_cert(char* which) {
 	g_value_init(val_cert, GDK_TYPE_PIXBUF);
 	*col_tcert = CERT_COL_VALIDITY;
 	g_value_init(val_tcert, G_TYPE_STRING);
-	if(strcmp(which, "CERT_RN_FILE") != 0) {
-		verify_result = eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free);
-	} else if(strcmp(which, "CA") != 0) {
+	if(strcmp(which, "CERT_RN_FILE") == 0) {
+		verify_result = eid_vwr_verify_rrncert(cert->data, cert->len);
+	} else if(strcmp(which, "CA") == 0) {
 		verify_result = eid_vwr_verify_int_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_http_request, free);
 	} else {
-		verify_result = eid_vwr_verify_rrncert(cert->data, cert->len);
+		verify_result = eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free);
 	}
 
 	switch(verify_result) {
