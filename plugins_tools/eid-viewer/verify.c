@@ -68,7 +68,7 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 	const unsigned char *response;
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
 	EVP_PKEY *ca_k = NULL;
-	X509_CRL *crl;
+	X509_CRL *crl = NULL;
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_ssl_error("Could not parse certificate");
