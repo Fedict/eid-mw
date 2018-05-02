@@ -162,10 +162,7 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
 %{_datadir}/p11-kit/
-# The below should really use the _libdir macro, but Firefox won't look
-# in /usr/lib/x86_64-linux-gnu (etc) on Debian; so Makefile.am currently
-# hardcodes the lib directory and doesn't put anything in lib64
-%{_prefix}/lib/mozilla/
+%{_libdir}/mozilla/
 
 %files devel
 %defattr(-, root, root, 0755)
