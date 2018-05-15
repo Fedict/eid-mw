@@ -9,7 +9,7 @@ Homepage: http://github.com/Fedict/eid-mw
 Package: eid-mw
 Section: metapackages
 Architecture: any
-Depends: ${misc:Depends}, libbeidpkcs11-0, beid-mozilla-extension
+Depends: ${misc:Depends}, libbeidpkcs11-0, beid-mozilla-extension, pcscd
 Recommends: libccid, libacr38u
 Description: low-level support for Belgian Electronic Identity Card
  This metapackage depends on a PKCS#11 module and a Firefox plugin for
@@ -23,7 +23,7 @@ Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Replaces: eid-mw (<< 4.0.6r1508)
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-bin, pcscd
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-bin
 Description: PKCS#11 library for Belgian Electronic Identity Card
  This package contains the PKCS#11 module for the Belgian Electronic
  Identity card, and a few helper libraries. It handles all low-level
@@ -112,7 +112,7 @@ Provides: beidgui
 Replaces: beidgui
 Conflicts: beidgui
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, pcscd
 Description: Graphical interface to Belgian Electronic Identity Card
  This package contains a graphical application to read data from the
  Belgian electronic identity card.
