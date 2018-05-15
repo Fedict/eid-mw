@@ -386,10 +386,12 @@ namespace eIDViewer
                     FAQ_url_updatecruntime = "https://eid.belgium.be/de/technical-documentation#7483";
                 }
 
-                MessageBox.Show("eid_vwr_convert_set_lang" + e.ToString() + "\n" + "Info: " + FAQ_url_updatecruntime + "\n", "eID Viewer Backend Error");
+                MessageBox.Show("eid_vwr_convert_set_lang" + e.ToString() + "\n" + "\n" + "Info: " + FAQ_url_updatecruntime + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_convert_set_lang" + e.ToString() + "\n" + "\n" + "Info: " + FAQ_url_updatecruntime + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+
                 /*theData.WriteLog("eid_vwr_convert_set_lang" + e.ToString() + "\n" + "Is your Windows up to date?" + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                 theData.WriteLog("In case your Windows 7, 8 or 8.1 is missing the universal c runtime in Windows: \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
-                theData.WriteLog("https://support.microsoft.com/en-us/help/2999226/update-for-universal-c-runtime-in-windows" + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);       */ 
+                theData.WriteLog("https://support.microsoft.com/en-us/help/2999226/update-for-universal-c-runtime-in-windows" + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);       */
             }
             catch (Exception e)
             {
