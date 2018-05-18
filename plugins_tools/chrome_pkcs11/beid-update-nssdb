@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Lauri Võsandi
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+# Changes to deal with BeID rather than EstEID:
+# Copyright(c) Wouter Verhelst, 2018
+
+NSSDB=$HOME/.pki/nssdb
+MODUTIL="/usr/bin/modutil -force -dbdir sql:$NSSDB"
+CERTUTIL="/usr/bin/certutil -d sql:$NSSDB"
+LIBS=$(ld --verbose | grep SEARCH | awk '{ gsub(/;/,"\n"); print }' | awk -F '\"' '/SEARCH_DIR\(\"=?/ { gsub(/=/,""); print $2 }')
+PKCS11=libbeidpkcs11.so.0
+
+if [ ! -f $NSSDB/cert9.db ]; then
+    echo "Initializing new database"
+    mkdir -p $NSSDB
+    $CERTUTIL -N --empty-password
+fi
+
+for DIR in $LIBS; do
+    LIB=$DIR/$PKCS11
+    if [ -f $LIB ]; then
+        echo "Found PKCS#11 library at: $LIB"
+        if grep -q library=$LIB $NSSDB/pkcs11.txt; then
+            echo "ID-card support for Google Chrome/Chromium already enabled"
+        else
+            echo "Enabling ID-card functionality in Google Chrome/Chromium via $LIB"
+            $MODUTIL -delete opensc-pkcs11
+            $MODUTIL -add opensc-pkcs11 -libfile $LIB -mechanisms FRIENDLY
+        fi
+        exit
+    fi
+done
+echo "Can't find $PKCS11"
