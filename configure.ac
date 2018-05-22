@@ -179,6 +179,7 @@ AC_CONFIG_FILES([Makefile
 		 plugins_tools/util/Makefile
 		 plugins_tools/aboutmw/gtk/Makefile
 		 plugins_tools/aboutmw/gtk/po/Makefile.in
+		 plugins_tools/chrome_pkcs11/Makefile
 		 plugins_tools/eid-viewer/Makefile
 		 plugins_tools/eid-viewer/test/Makefile
 		 plugins_tools/eid-viewer/gtk/po/Makefile.in

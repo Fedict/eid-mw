@@ -58,6 +58,11 @@ to develop against the eID Middleware.
 %package bin
 Summary: Belgium electronic identity card PKCS#11 module - helper binaries
 Requires: eid-mw
+%if 0%{?suse_version}
+Requires: mozilla-nss-tools
+%else
+Requires: nss-tools
+%endif
 
 %description bin
 The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
@@ -160,6 +165,8 @@ fi
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
+%{_bindir}/beid-update-nssdb
+%{_sysconfdir}/xdg/autostart/beid-update-nssdb.desktop
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
 %{_datadir}/p11-kit/
