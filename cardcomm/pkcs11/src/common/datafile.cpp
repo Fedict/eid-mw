@@ -184,7 +184,7 @@ namespace eIDMW
 			if (err != 0 && err != EACCES && err != ENOENT)
 				return false;	// Added for unit testing
 
-			if (err == EACCES)
+			if (err == EACCES && bLock)
 			{
 				CThread::SleepMillisecs(100);
 			} else if (err == ENOENT && bLock)
