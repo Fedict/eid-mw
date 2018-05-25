@@ -216,7 +216,7 @@ namespace eIDMW
 					return false;
 				}
 			}
-		} while (err == EACCES);
+		} while (err == EACCES && bLock);
 
 		//If the lock is not needed, we don't have to create the file
 		if (m_stream == NULL)
