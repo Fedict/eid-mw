@@ -61,6 +61,7 @@ caption $(ls_caption)
 	Var FileToCopy
 	Var LogFile
 	Var MsiResponse
+	Var RegResponse
 	Var InstallFailed
 	Var ReaderFailed
 	Var FindCardFailed
@@ -125,6 +126,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	
 	${WinVerGetMajor} $versionMajor
 	${WinVerGetMinor} $versionMinor
+	File ".\beid_reg.reg"
 	
 	${If} ${RunningX64}
 		ClearErrors
@@ -137,22 +139,26 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw64_log.txt"
 		;Delete "$LogFile"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse
+		;for testing
+		;StrCpy $MsiResponse 1618
 		${Switch} $MsiResponse
-			${Case} 0
-			${Case} 3010 
-				;3010 is 'success, but reboot requiered'
-				;set 1 for testing, 0 otherwise
-				StrCpy $InstallFailed 0
+			${Case} 1612
+			;The installation source for this product is not available. Verify that the source exists and that you can access it.
+			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
+				ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
+				ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse			
 			${Break}
-			${Default}
-				StrCpy $InstallFailed $MsiResponse
-				;Call ErrorHandler_msiexec
+			${Case} 1622
+			;install log failure, try to install without logging
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse			
+			${Break}								
 		${EndSwitch}
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
 		
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
 		Delete "$INSTDIR\BeidMW_64.msi"
+		Delete "$INSTDIR\beid_reg.reg"
 	${Else}	
 		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\BeidMW_32.msi"
@@ -164,22 +170,43 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw32_log.txt"
 		;Delete "$LogFile"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse
+		
+		;try to recover from some errors
 		${Switch} $MsiResponse
-			${Case} 0
-			${Case} 3010 
-				StrCpy $InstallFailed 0		
-				;3010 is 'success, but reboot requiered'
+			${Case} 1612
+			;The installation source for this product is not available. Verify that the source exists and that you can access it.
+			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
+				ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
+				ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse			
 			${Break}
-			${Default}
-				StrCpy $InstallFailed $MsiResponse
-				;$InstallFailed=$MsiResponse
-				;Call ErrorHandler_msiexec
+			${Case} 1622
+			;install log failure, try to install without logging
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse			
+			${Break}
 		${EndSwitch}
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
 		Delete "$INSTDIR\BeidMW_32.msi"
-  ${EndIf}
+		Delete "$INSTDIR\beid_reg.reg"
+	${EndIf}
+	
+	;check if msi install went ok (initially or after correction)
+ 	${Switch} $MsiResponse
+		${Case} 0
+		${Case} 3010 
+			StrCpy $InstallFailed 0		
+			;3010 is 'success, but reboot requiered'
+		${Break}		
+		${Case} 1618
+			;the installer is already running in another instance	
+			MessageBox MB_OK "$(ls_errorinstallmsi_1618) $\r$\n $(ls_error) = $MsiResponse"	
+			StrCpy $InstallFailed $MsiResponse
+		${Break}			
+		${Default}
+			StrCpy $InstallFailed $MsiResponse
+			;Call ErrorHandler_msiexec
+	${EndSwitch}	
   
   File /r "Drivers"
 

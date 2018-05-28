@@ -224,6 +224,11 @@ LangString ls_errorcopyfile ${LANG_FRENCH} "Une erreur est survenue lors de la c
 LangString ls_errorcopyfile ${LANG_DUTCH} "Er is een probleem opgetreden bij het aanmaken van bestand"
 LangString ls_errorcopyfile ${LANG_GERMAN} "Fehler bei der Erstellung von Datei"
 
+LangString ls_errorinstallmsi_1618 ${LANG_ENGLISH} "Another installation is already in progress. $\nComplete that installation before proceeding with this install."
+LangString ls_errorinstallmsi_1618 ${LANG_FRENCH} "Une autre installation est déjà en cours. $\nComplétez cette installation avant de procéder à cette installation."
+LangString ls_errorinstallmsi_1618 ${LANG_DUTCH} "Er is al een installatie aan de gang. $\nVoltooi die installatie voordat je verder gaat met deze installatie."
+LangString ls_errorinstallmsi_1618 ${LANG_GERMAN} "Eine andere Installation ist bereits in Arbeit. $\nKomplettieren Sie diese Installation, bevor Sie mit dieser Installation fortfahren."
+
 ;below are texts linked to the bitmaps, no length limits
 LangString ls_bitmapwelcome ${LANG_ENGLISH} "Background welcome image"
 LangString ls_bitmapwelcome ${LANG_FRENCH} "Image de bienvenue en arrière-plan"
