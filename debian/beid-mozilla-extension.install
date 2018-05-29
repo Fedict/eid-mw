@@ -1,1 +1,1 @@
-debian/beid.apparmor etc/apparmor.d/abstractions/beid
+debian/apparmor-profiles/beid etc/apparmor.d/abstractions/
