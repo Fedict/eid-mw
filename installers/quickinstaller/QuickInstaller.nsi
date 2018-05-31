@@ -41,15 +41,12 @@ caption $(ls_caption)
 	Var versionMinor
 	Var retval
 	Var readercount
-  Var municipality
-  Var zip
-	Var street
-  Var lastname
+	Var lastname
 	Var firstletterthirdname
-  Var firstname
+	Var firstname
 	
 	Var nsdCustomDialog
-  Var Label
+	Var Label
 	Var Background_Image
 	Var Background_Image_Handle
 	Var Background_Image2
@@ -57,7 +54,6 @@ caption $(ls_caption)
 	Var Button
 	Var Font_Title
 	Var Font_Info
-	Var Font_CardData
 	Var FileToCopy
 	Var LogFile
 	Var TempFile
