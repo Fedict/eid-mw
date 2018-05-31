@@ -145,7 +145,6 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			${Case} 1603
 			;general failure, parse through the log file to find the root cause
 			;check if error 1612 occured
-				MessageBox MB_OK "MSI_1603_Error"
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
 				!insertmacro GetFirstLineOfFile $TempFile $firstLine
 				StrCmp "$firstLine" "" +2 0	
@@ -187,6 +186,14 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		
 		;try to recover from some errors
 		${Switch} $MsiResponse
+			${Case} 1603
+			;general failure, parse through the log file to find the root cause
+			;check if error 1612 occured
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error			
+			${Break}
 			${Case} 1612
 			;The installation source for this product is not available. Verify that the source exists and that you can access it.
 			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
