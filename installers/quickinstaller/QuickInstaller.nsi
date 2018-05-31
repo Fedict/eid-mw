@@ -8,7 +8,7 @@
 !include "eidmw_version.nsh"
 !include WinVer.nsh
 !include "buttons.nsh"
-
+!include "fileSearch.nsh"
 
 ;--------------------------------
 ;General
@@ -60,6 +60,8 @@ caption $(ls_caption)
 	Var Font_CardData
 	Var FileToCopy
 	Var LogFile
+	Var TempFile
+	Var firstLine
 	Var MsiResponse
 	Var RegResponse
 	Var InstallFailed
@@ -135,14 +137,27 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
-		;delete previous log
+		
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw64_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		;delete previous log
 		;Delete "$LogFile"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse
 		;for testing
-		;StrCpy $MsiResponse 1618
+		;StrCpy $MsiResponse 1612
 		${Switch} $MsiResponse
+			${Case} 1603
+			;general failure, parse through the log file to find the root cause
+			;check if error 1612 occured
+				MessageBox MB_OK "MSI_1603_Error"
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error			
+			${Break}
 			${Case} 1612
+			MSI_1612_Error:
+				DetailPrint "MSI error 1612, count = $firstLine"
 			;The installation source for this product is not available. Verify that the source exists and that you can access it.
 			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
 				ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
@@ -151,7 +166,10 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			${Case} 1622
 			;install log failure, try to install without logging
 				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse			
-			${Break}								
+			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}				
 		${EndSwitch}
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
