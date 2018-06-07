@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 #DEBHELPER#
 
 # ensure that beid AppArmor profile is enabled if it exists
@@ -11,7 +13,7 @@ if [ -f /etc/apparmor.d/usr.bin.firefox ]; then
 # For BeID
   #include <abstractions/beid>
 EOF
-			apparmor_parser -r -W -T /etc/apparmor.d/usr.bin.firefox
+			apparmor_parser -r -W -T /etc/apparmor.d/usr.bin.firefox || true
 		fi
 	else
 		echo "IEK: usr.bin.firefox apparmor profile exists, but local/usr.bin.firefox does not. Can't fix up firefox profile!" >&2
