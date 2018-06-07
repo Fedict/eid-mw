@@ -224,10 +224,21 @@ LangString ls_errorcopyfile ${LANG_FRENCH} "Une erreur est survenue lors de la c
 LangString ls_errorcopyfile ${LANG_DUTCH} "Er is een probleem opgetreden bij het aanmaken van bestand"
 LangString ls_errorcopyfile ${LANG_GERMAN} "Fehler bei der Erstellung von Datei"
 
+LangString ls_errorinstallmsi_1612 ${LANG_ENGLISH} "The installation source for this product is not available. $\nVerify that the source exists and that you can access it."; $\nPlease check the FAQ for further details:  $\nhttps://eid.belgium.be/en/technical-documentation#7567"
+LangString ls_errorinstallmsi_1612 ${LANG_FRENCH} "La source d'installation de ce produit n'est pas disponible. $\nVérifiez que la source existe et que vous pouvez y accéder."; $\nVeuillez consulter le FAQ pour obtenir de plus amples détails : $\nhttps://eid.belgium.be/fr/technical-documentation#7567"
+LangString ls_errorinstallmsi_1612 ${LANG_DUTCH} "De installatiebron voor dit product is niet beschikbaar. $\nControleer of de bron bestaat en of u toegang hebt tot de bron."; $\nGelieve de FAQ te bekijken voor meer details: $\nhttps://eid.belgium.be/nl/technical-documentation#7567"
+LangString ls_errorinstallmsi_1612 ${LANG_GERMAN} "Die Installationsquelle für dieses Produkt ist nicht verfügbar. $\nStellen Sie sicher, dass die Quelle vorhanden ist und Sie darauf zugreifen können."; $\nBitte prüfen Sie die Log-Datei für weitere Einzelheiten: $\nhttps://eid.belgium.be/de/technical-documentation#7567"
+
 LangString ls_errorinstallmsi_1618 ${LANG_ENGLISH} "Another installation is already in progress. $\nComplete that installation before proceeding with this install."
 LangString ls_errorinstallmsi_1618 ${LANG_FRENCH} "Une autre installation est déjà en cours. $\nComplétez cette installation avant de procéder à cette installation."
 LangString ls_errorinstallmsi_1618 ${LANG_DUTCH} "Er is al een installatie aan de gang. $\nVoltooi die installatie voordat je verder gaat met deze installatie."
 LangString ls_errorinstallmsi_1618 ${LANG_GERMAN} "Eine andere Installation ist bereits in Arbeit. $\nKomplettieren Sie diese Installation, bevor Sie mit dieser Installation fortfahren."
+
+LangString ls_errorinstallmsi_1612_FAQurl ${LANG_ENGLISH} "https://eid.belgium.be/en/technical-documentation#7567"
+LangString ls_errorinstallmsi_1612_FAQurl ${LANG_FRENCH} "https://eid.belgium.be/fr/technical-documentation#7565"
+LangString ls_errorinstallmsi_1612_FAQurl ${LANG_DUTCH} "https://eid.belgium.be/nl/technische-documentatie#7564"
+LangString ls_errorinstallmsi_1612_FAQurl ${LANG_GERMAN} "https://eid.belgium.be/de/technische-dokumentation#7566"
+
 
 ;below are texts linked to the bitmaps, no length limits
 LangString ls_bitmapwelcome ${LANG_ENGLISH} "Background welcome image"

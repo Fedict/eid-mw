@@ -63,6 +63,7 @@ caption $(ls_caption)
 	Var InstallFailed
 	Var ReaderFailed
 	Var FindCardFailed
+	Var FAQ_url
 
 ;--------------------------------
 	;Interface Settings
@@ -124,7 +125,9 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	
 	${WinVerGetMajor} $versionMajor
 	${WinVerGetMinor} $versionMinor
-	File ".\beid_reg.reg"
+	;File ".\beid_reg.reg"
+	
+	StrCpy $FAQ_url "https://eid.belgium.be/"
 	
 	${If} ${RunningX64}
 		ClearErrors
@@ -140,32 +143,25 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;Delete "$LogFile"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse
 		;for testing
-		;StrCpy $MsiResponse 1612
+		StrCpy $MsiResponse 1612
 		${Switch} $MsiResponse
 			${Case} 1603
 			;general failure, parse through the log file to find the root cause
 			;check if error 1612 occured
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
 				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
 				StrCmp "$firstLine" "" +2 0	
 				StrCmp "$firstLine" "0" 0 MSI_1612_Error			
 			${Break}
 			${Case} 1612
 			MSI_1612_Error:
-				DetailPrint "MSI error 1612, count = $firstLine"
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				;Refer to the FAQ where the user can find a manuel to manually repair the registry, or to run a MS tool that does the cleanup
+				MessageBox MB_OK "$(ls_errorinstallmsi_1612)"; $\r$\n $(ls_error) = $MsiResponse"	
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
 			;The installation source for this product is not available. Verify that the source exists and that you can access it.
 			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
-			;	ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
-				SetRegView 64
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71554}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71698}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71717}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71779}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73170}"
-				DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73252}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73551}"
-				SetRegView 32
-				ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse			
 			${Break}
 			${Case} 1622
 			;install log failure, try to install without logging
@@ -930,7 +926,7 @@ Function nsdCardDataLeave
 FunctionEnd
 
 Function FindSolutionButton_click
-    ExecShell "open" "https://eid.belgium.be/"
+    ExecShell "open" "$FAQ_url"
 	;when keeping the nsis installer alive, it can permit the webbrowser to take the foreground.
 	;should we quit in stead, the webbrowser will be openened in the background
 	Abort
