@@ -86,7 +86,7 @@
 	  <xsd:enumeration value="unlimited" />
 	  <xsd:enumeration value="limited" />
 	  <xsd:enumeration value="no" />
-	  <xsd:enumeration value="seasoner" />
+	  <xsd:enumeration value="seasonal worker" />
 	</xsd:restriction>
       </xsd:simpleType>
     </xsd:attribute>
