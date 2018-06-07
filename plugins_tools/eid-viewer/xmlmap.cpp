@@ -19,6 +19,7 @@ struct attribute_desc identity_attributes[] = {
 	{TEXT("noblecondition"), TEXT("nobility"), 0},
 	{TEXT("specialstatus"), TEXT("special_status"), 0},
 	{TEXT("duplicate"), TEXT("duplicata"), 0},
+	{TEXT("memberoffamily"), TEXT("member_of_family"), 0},
 	{NULL, NULL, 0},
 };
 
@@ -34,10 +35,20 @@ struct element_desc identity_elements[] = {
 	{NULL, NULL, 0, 0, NULL, NULL},
 };
 
+/* Attributes of the <workpermit> element */
+struct attribute_desc workpermit_attributes[] = {
+	{TEXT("mention"), TEXT("work_permit_mention"), 1},
+	{TEXT("vat1"), TEXT("employer_vat_1"), 0},
+	{TEXT("vat2"), TEXT("employer_vat_2"), 0},
+	{TEXT("regionalfile"), TEXT("regional_file_number"), 0},
+	{NULL, NULL, 0},
+};
+
 /* Child elements of the <card> element */
 static struct element_desc card_elements[] = {
 	{TEXT("deliverymunicipality"), TEXT("issuing_municipality"), 1, 0,
 	 NULL, NULL},
+	{TEXT("workpermit"), TEXT("work_permit_mention"), 0, 0, NULL, workpermit_attributes},
 	{NULL, NULL, 0, 0, NULL, NULL},
 };
 
@@ -81,9 +92,15 @@ static struct element_desc eid_elements[] = {
 	{NULL, NULL, 0, 0, NULL, NULL},
 };
 
+/* attributes of the <eid> element (the toplevel element) */
+static struct attribute_desc eid_attributes[] = {
+	{TEXT("version"), TEXT("xml_file_version"), 0},
+	{NULL, NULL, 0},
+};
+
 /* The toplevel element, <eid> */
 static struct element_desc toplevel_arr[] = {
-	{TEXT("eid"), NULL, 1, 0, eid_elements, NULL},
+	{TEXT("eid"), NULL, 1, 0, eid_elements, eid_attributes},
 	{NULL, NULL, 0, 0, NULL, NULL},
 };
 
