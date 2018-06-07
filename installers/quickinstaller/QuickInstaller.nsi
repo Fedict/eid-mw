@@ -155,7 +155,16 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				DetailPrint "MSI error 1612, count = $firstLine"
 			;The installation source for this product is not available. Verify that the source exists and that you can access it.
 			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
-				ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
+			;	ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
+				SetRegView 64
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71554}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71698}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71717}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71779}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73170}"
+				DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73252}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73551}"
+				SetRegView 32
 				ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse			
 			${Break}
 			${Case} 1622
@@ -198,6 +207,16 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			;The installation source for this product is not available. Verify that the source exists and that you can access it.
 			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
 				ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
+				;	ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
+				SetRegView 32
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71554}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71698}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71717}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71779}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73170}"
+				DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73252}"
+				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73551}"
+
 				ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse			
 			${Break}
 			${Case} 1622
