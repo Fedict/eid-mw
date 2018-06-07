@@ -31,3 +31,24 @@ EID_STRING WorkPermitConvertor::convert(const void *normal) {
 	const char *norm = (const char*)normal;
 	return conversions[target_][*norm];
 }
+
+std::map < EID_STRING, EID_STRING > XmlWorkPermitConvertor::conversions;
+
+XmlWorkPermitConvertor::XmlWorkPermitConvertor() {
+	if(conversions.size() == 0)
+	{
+		conversions[TEXT("7")] = TEXT("unlimited");
+		conversions[TEXT("8")] = TEXT("limited");
+		conversions[TEXT("9")] = TEXT("no");
+		conversions[TEXT("A")] = TEXT("seasonal worker");
+		conversions[TEXT("unlimited")] = TEXT("7");
+		conversions[TEXT("limited")] = TEXT("8");
+		conversions[TEXT("no")] = TEXT("9");
+		conversions[TEXT("seasonal worker")] = TEXT("A");
+	}
+}
+
+EID_STRING XmlWorkPermitConvertor::convert(const void *normal) {
+	EID_STRING norm((const EID_CHAR *) normal);
+	return conversions[norm];
+}

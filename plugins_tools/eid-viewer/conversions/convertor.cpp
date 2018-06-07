@@ -53,7 +53,7 @@ Convertor::Convertor()
 		to_xml[TEXT("validity_end_date")] = new XmlDateWriter(new ValidityDateParser);
 		to_xml[TEXT("gender")] = new XmlGenderConvertor();
 		to_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
-		to_xml[TEXT("work_permit_mention")] = new WorkPermitConvertor();
+		to_xml[TEXT("work_permit_mention")] = new XmlWorkPermitConvertor();
 	}
 	if (from_xml.empty())
 	{
@@ -65,7 +65,7 @@ Convertor::Convertor()
 		from_xml[TEXT("validity_end_date")] = new ValidityDateWriter(new XmlDateParser);
 		from_xml[TEXT("gender")] = new XmlGenderConvertor();
 		from_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
-		from_xml[TEXT("work_permit_mention")] = new WorkPermitConvertor();
+		from_xml[TEXT("work_permit_mention")] = new XmlWorkPermitConvertor();
 	}
 }
 
