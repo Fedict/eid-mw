@@ -110,7 +110,7 @@ static struct labelnames *foreignerlabels = NULL;
 			return labels[i].NAME;\
 		}\
 	}\
-	EID_FPRINTF(stderr, TEXT("E: unkown label: %s"), label);\
+	EID_FPRINTF(stderr, TEXT("E: unknown label: %s"), label);\
 	return CK_FALSE; \
 }
 
