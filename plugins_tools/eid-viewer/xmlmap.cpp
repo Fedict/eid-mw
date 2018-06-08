@@ -48,7 +48,7 @@ struct attribute_desc workpermit_attributes[] = {
 static struct element_desc card_elements[] = {
 	{TEXT("deliverymunicipality"), TEXT("issuing_municipality"), 1, 0,
 	 NULL, NULL},
-	{TEXT("workpermit"), TEXT("work_permit_mention"), 0, 0, NULL, workpermit_attributes},
+	{TEXT("workpermit"), NULL, 0, 0, NULL, workpermit_attributes},
 	{NULL, NULL, 0, 0, NULL, NULL},
 };
 

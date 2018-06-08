@@ -59,12 +59,14 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 	char* val = NULL;
 	while(element->name) {
 		if(element->label == NULL) {
-			assert(element->child_elements != NULL);
+			assert(element->child_elements != NULL || element->attributes != NULL);
 			check_xml(xmlTextWriterStartElement(writer, BAD_CAST element->name));
 			if(element->attributes != NULL) {
-				write_attributes(writer, element->attributes);
+				check_xml(write_attributes(writer, element->attributes));
 			}
-			check_xml(write_elements(writer, element->child_elements));
+			if(element->child_elements != NULL) {
+				check_xml(write_elements(writer, element->child_elements));
+			}
 			check_xml(xmlTextWriterEndElement(writer));
 		} else {
 			int have_cache = cache_have_label(element->label);
