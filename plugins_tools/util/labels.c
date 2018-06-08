@@ -91,6 +91,7 @@ static struct {
 	{ TEXT("Signature"),			CK_FALSE, CK_TRUE, CK_TRUE },
 	{ TEXT("Root"),				CK_FALSE, CK_TRUE, CK_TRUE },
 	{ TEXT("CA"),				CK_FALSE, CK_TRUE, CK_TRUE },
+	{ TEXT("xml_file_version"),		CK_TRUE, CK_FALSE, CK_FALSE }, // virtual label only used when reading an XML file
 	{ NULL,					0, 0, 0 },
 };
 
