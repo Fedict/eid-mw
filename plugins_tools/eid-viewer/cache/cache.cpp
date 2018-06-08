@@ -1,6 +1,7 @@
 #include "cache.h"
 #include "conversions.h"
 #include <eid-util/utftranslate.h>
+#include <eid-util/labels.h>
 #include "cppeidstring.h"
 #include <map>
 #include <string>
@@ -18,7 +19,7 @@ struct cache_item_container
 		 
 		 
 		 
-		 cache_item_container(EID_CHAR * data,
+		 cache_item_container(const EID_CHAR * data,
 				      size_t len):item(new eid_vwr_cache_item)
 	{
 		item->data = malloc((len + 1) * sizeof(EID_CHAR));
@@ -53,6 +54,13 @@ std::map < EID_STRING, cache_item_container * >cache;
 void cache_add(const EID_CHAR * label, EID_CHAR * data, unsigned long len)
 {
 	cache[label] = new cache_item_container(data, len);
+	const EID_CHAR *vers = min_version((const EID_CHAR* const)label);
+	if(vers != NULL) {
+		std::map<EID_STRING, cache_item_container *>::iterator it = cache.find(TEXT("xml_file_version"));
+		if(it == cache.end() || EID_STRCMP((const EID_CHAR*)((*it).second->item->data), vers) > 0) {
+			cache["xml_file_version"] = new cache_item_container(vers, strlen(vers));
+		}
+	}
 }
 
 void cache_add_bin(const EID_CHAR * label, BYTE * data, unsigned long len)
