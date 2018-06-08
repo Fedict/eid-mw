@@ -24,6 +24,34 @@
 	goto out; \
 }
 
+static int missing_reqd_attributes(struct attribute_desc *attribute) {
+	while(attribute != NULL && attribute->name) {
+		int have_cache = cache_have_label(attribute->label);
+		if(!have_cache && attribute->reqd) {
+			return 1;
+		}
+		attribute++;
+	}
+	return 0;
+}
+
+static int missing_reqd_elements(struct element_desc *element) {
+	while(element != NULL && element->name) {
+		if(element->label == NULL) {
+			if(missing_reqd_attributes(element->attributes) || missing_reqd_elements(element->child_elements)) {
+				return 1;
+			}
+		} else {
+			int have_cache = cache_have_label(element->label);
+			if(!have_cache && element->reqd) {
+				return 1;
+			}
+		}
+		element++;
+	}
+	return 0;
+}
+
 /* Write attributes to the description in *attribute */
 static int write_attributes(xmlTextWriterPtr writer, struct attribute_desc *attribute) {
 	int rc = 0;
@@ -60,6 +88,12 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 	while(element->name) {
 		if(element->label == NULL) {
 			assert(element->child_elements != NULL || element->attributes != NULL);
+			if(!element->reqd) {
+				if(missing_reqd_attributes(element->attributes) || missing_reqd_elements(element->child_elements)) {
+					rc=0;
+					goto out;
+				}
+			}
 			check_xml(xmlTextWriterStartElement(writer, BAD_CAST element->name));
 			if(element->attributes != NULL) {
 				check_xml(write_attributes(writer, element->attributes));
