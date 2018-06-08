@@ -54,11 +54,14 @@ std::map < EID_STRING, cache_item_container * >cache;
 void cache_add(const EID_CHAR * label, EID_CHAR * data, unsigned long len)
 {
 	cache[label] = new cache_item_container(data, len);
-	const EID_CHAR *vers = min_version((const EID_CHAR* const)label);
-	if(vers != NULL) {
-		std::map<EID_STRING, cache_item_container *>::iterator it = cache.find(TEXT("xml_file_version"));
-		if(it == cache.end() || EID_STRCMP((const EID_CHAR*)((*it).second->item->data), vers) > 0) {
-			cache["xml_file_version"] = new cache_item_container(vers, strlen(vers));
+	/* TODO: don't special-case the "xml" label here, but add it to the map too */
+	if(EID_STRCMP(data, "xml") != 0) {
+		const EID_CHAR *vers = min_version((const EID_CHAR* const)label);
+		if(vers != NULL) {
+			std::map<EID_STRING, cache_item_container *>::iterator it = cache.find(TEXT("xml_file_version"));
+			if(it == cache.end() || EID_STRCMP((const EID_CHAR*)((*it).second->item->data), vers) > 0) {
+				cache["xml_file_version"] = new cache_item_container(vers, strlen(vers));
+			}
 		}
 	}
 }
