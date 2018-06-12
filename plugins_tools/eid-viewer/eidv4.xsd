@@ -90,9 +90,9 @@
 	</xsd:restriction>
       </xsd:simpleType>
     </xsd:attribute>
-    <xsd:attribute name="vat1" type="vatType" />
-    <xsd:attribute name="vat2" type="vatType" />
-    <xsd:attribute name="regionalfile">
+    <xsd:attribute name="vat1" type="vatType" use="optional" />
+    <xsd:attribute name="vat2" type="vatType" use="optional" />
+    <xsd:attribute name="regionalfile" use="optional">
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">
           <xsd:maxLength value="18" />

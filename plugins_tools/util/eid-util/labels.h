@@ -1,6 +1,11 @@
 #ifndef EID_LABELS_H
 #define EID_LABELS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 /* ****************************************************************************
 
  * eID Middleware Project.
@@ -32,10 +37,15 @@ struct labelnames {
 	int len;
 };
 
-CK_BBOOL is_string(const EID_CHAR * label);
-CK_BBOOL on_foreigner(const EID_CHAR * label);
-CK_BBOOL on_eid(const EID_CHAR * label);
+CK_BBOOL is_string(const EID_CHAR * const label);
+CK_BBOOL on_foreigner(const EID_CHAR * const label);
+CK_BBOOL on_eid(const EID_CHAR * const label);
+const EID_CHAR * min_version(const EID_CHAR * const label);
 
 struct labelnames* get_foreigner_labels(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

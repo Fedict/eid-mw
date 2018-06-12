@@ -12,4 +12,9 @@ public:
 
 class XmlWorkPermitConvertor:public ConversionWorker
 {
+private:
+	static std::map < EID_STRING, EID_STRING > conversions;
+public:
+	XmlWorkPermitConvertor();
+	virtual EID_STRING convert(const void *original);
 };

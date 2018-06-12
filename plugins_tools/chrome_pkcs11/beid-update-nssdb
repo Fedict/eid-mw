@@ -42,11 +42,11 @@ for DIR in $LIBS; do
     if [ -f $LIB ]; then
         echo "Found PKCS#11 library at: $LIB"
         if grep -q library=$LIB $NSSDB/pkcs11.txt; then
-            echo "ID-card support for Google Chrome/Chromium already enabled"
+            echo "ID-card support for Google Chrome/Chromium/Opera already enabled"
         else
-            echo "Enabling ID-card functionality in Google Chrome/Chromium via $LIB"
-            $MODUTIL -delete opensc-pkcs11
-            $MODUTIL -add opensc-pkcs11 -libfile $LIB -mechanisms FRIENDLY
+            echo "Enabling ID-card functionality in Google Chrome/Chromium/Opera via $LIB"
+            $MODUTIL -delete "Belgium eID"
+            $MODUTIL -add "Belgium eID" -libfile $LIB -mechanisms FRIENDLY
         fi
         exit
     fi
