@@ -56,10 +56,10 @@ caption $(ls_caption)
 	Var Font_Info
 	Var FileToCopy
 	Var LogFile
+	;Var TestLogFile
 	Var TempFile
 	Var firstLine
 	Var MsiResponse
-	Var RegResponse
 	Var InstallFailed
 	Var ReaderFailed
 	Var FindCardFailed
@@ -125,7 +125,6 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	
 	${WinVerGetMajor} $versionMajor
 	${WinVerGetMinor} $versionMinor
-	;File ".\beid_reg.reg"
 	
 	StrCpy $FAQ_url "https://eid.belgium.be/"
 	
@@ -143,22 +142,24 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;Delete "$LogFile"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse
 		;for testing
-		StrCpy $MsiResponse 1612
+		;StrCpy $MsiResponse 1603
+		;StrCpy $TestLogFile "$INSTDIR\log\install_eidmw64_error_1612_log.txt"
 		${Switch} $MsiResponse
 			${Case} 1603
 			;general failure, parse through the log file to find the root cause
 			;check if error 1612 occured
+				;for testing
+				;ExecWait 'cmd.exe /C FIND "1612" "$TestLogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
 				!insertmacro GetFirstLineOfFile $TempFile $firstLine
 				DetailPrint "MSI error 1612, count = $firstLine"
 				StrCmp "$firstLine" "" +2 0	
-				StrCmp "$firstLine" "0" 0 MSI_1612_Error			
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_64			
 			${Break}
 			${Case} 1612
-			MSI_1612_Error:
+			MSI_1612_Error_64:
 				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
 				;Refer to the FAQ where the user can find a manuel to manually repair the registry, or to run a MS tool that does the cleanup
-				MessageBox MB_OK "$(ls_errorinstallmsi_1612)"; $\r$\n $(ls_error) = $MsiResponse"	
 				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
 			;The installation source for this product is not available. Verify that the source exists and that you can access it.
 			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
@@ -176,7 +177,6 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
 		Delete "$INSTDIR\BeidMW_64.msi"
-		Delete "$INSTDIR\beid_reg.reg"
 	${Else}	
 		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\BeidMW_32.msi"
@@ -196,35 +196,30 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			;check if error 1612 occured
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
 				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
 				StrCmp "$firstLine" "" +2 0	
-				StrCmp "$firstLine" "0" 0 MSI_1612_Error			
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_32			
 			${Break}
 			${Case} 1612
+			MSI_1612_Error_32:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				;Refer to the FAQ where the user can find a manuel to manually repair the registry, or to run a MS tool that does the cleanup
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
 			;The installation source for this product is not available. Verify that the source exists and that you can access it.
 			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
-				ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
-				;	ExecWait 'regedit /s "$INSTDIR\beid_reg.reg"' $RegResponse
-				SetRegView 32
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71554}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71698}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71717}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A71779}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73170}"
-				DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73252}"
-				DeleteRegKey /ifempty HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{DB942AEA-93D6-4FE4-8862-180D35A73551}"
-
-				ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse			
-			${Break}
+			${Break}				
 			${Case} 1622
 			;install log failure, try to install without logging
 				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse			
 			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}	
 		${EndSwitch}
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
 		Delete "$INSTDIR\BeidMW_32.msi"
-		Delete "$INSTDIR\beid_reg.reg"
 	${EndIf}
 	
 	;check if msi install went ok (initially or after correction)
