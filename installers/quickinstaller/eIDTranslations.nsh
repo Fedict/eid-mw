@@ -234,11 +234,16 @@ LangString ls_errorinstallmsi_1618 ${LANG_FRENCH} "Une autre installation est dé
 LangString ls_errorinstallmsi_1618 ${LANG_DUTCH} "Er is al een installatie aan de gang. $\nVoltooi die installatie voordat je verder gaat met deze installatie."
 LangString ls_errorinstallmsi_1618 ${LANG_GERMAN} "Eine andere Installation ist bereits in Arbeit. $\nKomplettieren Sie diese Installation, bevor Sie mit dieser Installation fortfahren."
 
-LangString ls_errorinstallmsi_1612_FAQurl ${LANG_ENGLISH} "https://eid.belgium.be/en/technical-documentation#7567"
-LangString ls_errorinstallmsi_1612_FAQurl ${LANG_FRENCH} "https://eid.belgium.be/fr/technical-documentation#7565"
-LangString ls_errorinstallmsi_1612_FAQurl ${LANG_DUTCH} "https://eid.belgium.be/nl/technische-documentatie#7564"
-LangString ls_errorinstallmsi_1612_FAQurl ${LANG_GERMAN} "https://eid.belgium.be/de/technische-dokumentation#7566"
+;LangString ls_errorinstallmsi_1612_FAQurl ${LANG_ENGLISH} "https://eid.belgium.be/en/technical-documentation#7567"
+;LangString ls_errorinstallmsi_1612_FAQurl ${LANG_FRENCH} "https://eid.belgium.be/fr/technical-documentation#7565"
+;LangString ls_errorinstallmsi_1612_FAQurl ${LANG_DUTCH} "https://eid.belgium.be/nl/technische-documentatie#7564"
+;LangString ls_errorinstallmsi_1612_FAQurl ${LANG_GERMAN} "https://eid.belgium.be/de/technische-dokumentation#7566"
 
+;Use the site's error codes instead of linking direct to the FAQ itemnr.
+LangString ls_errorinstallmsi_1612_FAQurl ${LANG_ENGLISH} "https://eid.belgium.be/en/error-codes/1612"
+LangString ls_errorinstallmsi_1612_FAQurl ${LANG_FRENCH} "https://eid.belgium.be/fr/error-codes/1612"
+LangString ls_errorinstallmsi_1612_FAQurl ${LANG_DUTCH} "https://eid.belgium.be/nl/error-codes/1612"
+LangString ls_errorinstallmsi_1612_FAQurl ${LANG_GERMAN} "https://eid.belgium.be/de/error-codes/1612"
 
 ;below are texts linked to the bitmaps, no length limits
 LangString ls_bitmapwelcome ${LANG_ENGLISH} "Background welcome image"
