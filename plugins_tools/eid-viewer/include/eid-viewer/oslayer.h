@@ -279,7 +279,7 @@ DllExport int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks *cb);
   * \return an allocated eid_vwr_ui_callbacks struct, with all members
   * set to NULL.
   */
-DllExport struct eid_vwr_ui_callbacks *eid_vwr_cbstruct();
+DllExport struct eid_vwr_ui_callbacks *eid_vwr_cbstruct(void);
 
 /** \brief Create a preview for the given file 
   *
@@ -287,7 +287,7 @@ DllExport struct eid_vwr_ui_callbacks *eid_vwr_cbstruct();
   * JPEG photo. It is useful for an "open file" dialog, or similar.
   * \param filename the full path to the filename from which to extract
   * the photo
-  * \return 
+  * \return a preview description
   */
 DllExport struct eid_vwr_preview *eid_vwr_get_preview(const EID_CHAR *
 						      filename);
@@ -301,7 +301,7 @@ DllExport struct eid_vwr_preview *eid_vwr_get_preview(const EID_CHAR *
   * returns zero on succes, non-zero when reader list could not be
   * formed or when no UI callback has been set
   */
-DllExport int eid_vwr_poll();
+DllExport int eid_vwr_poll(void);
 
 /** \brief Loop over eid_vwr_poll().
   *
@@ -350,7 +350,7 @@ DllExport void eid_vwr_be_deserialize(const EID_CHAR * source_file);
   * \note this data is owned by the eid-viewer library and should *not*
   * be freed by the caller.
   */
-DllExport const char *eid_vwr_be_get_xmlform();
+DllExport const char *eid_vwr_be_get_xmlform(void);
 
 /** \brief Select the current reader.
   *
@@ -380,14 +380,14 @@ DllExport void eid_vwr_be_select_slot(int automatic,
   *    is signed by the given RRN certificate (but does not check the
   *    RRN certificate itself)
   */
-DllExport void eid_vwr_be_set_invalid();
+DllExport void eid_vwr_be_set_invalid(void);
 
 /** \brief Close the current file
   *
   * If the current state is STATE_FILE, switch to STATE_NO_TOKEN. In all
   * other cases, does nothing.
   */
-DllExport void eid_vwr_close_file();
+DllExport void eid_vwr_close_file(void);
 
 /** \brief Set the backend language.
   *
@@ -407,9 +407,9 @@ DllExport void eid_vwr_convert_set_lang(enum eid_vwr_langs which);
   * eid_vwr_convert_set_lang(). If no language has previously been set,
   * returns EID_VWR_LANG_NONE.
   */
-DllExport enum eid_vwr_langs eid_vwr_convert_get_lang();
+DllExport enum eid_vwr_langs eid_vwr_convert_get_lang(void);
 
-DllExport void eid_vwr_init_crypto();
+DllExport void eid_vwr_init_crypto(void);
 
 /**@}*/
 

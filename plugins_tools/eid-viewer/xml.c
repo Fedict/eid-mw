@@ -26,8 +26,7 @@
 
 static int missing_reqd_attributes(struct attribute_desc *attribute) {
 	while(attribute != NULL && attribute->name) {
-		int have_cache = cache_have_label(attribute->label);
-		if(!have_cache && attribute->reqd) {
+		if(attribute->reqd && !(cache_have_label(attribute->label))) {
 			return 1;
 		}
 		attribute++;
@@ -85,13 +84,12 @@ out:
 static int write_elements(xmlTextWriterPtr writer, struct element_desc *element) {
 	int rc;
 	char* val = NULL;
-	while(element->name) {
+	for(;element->name != NULL; element++) {
 		if(element->label == NULL) {
 			assert(element->child_elements != NULL || element->attributes != NULL);
 			if(!element->reqd) {
 				if(missing_reqd_attributes(element->attributes) || missing_reqd_elements(element->child_elements)) {
-					rc=0;
-					goto out;
+					continue;
 				}
 			}
 			check_xml(xmlTextWriterStartElement(writer, BAD_CAST element->name));
@@ -124,7 +122,6 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 				val = NULL;
 			}
 		}
-		element++;
 	}
 	rc=0;
 out:
@@ -181,13 +178,16 @@ out:
 /* Read data from the cache and store it to the file whose name we get
  * in the *data argument */
 int eid_vwr_serialize(void* data) {
+	int rv = 0;
 	const struct eid_vwr_cache_item* item = cache_get_data("xml");
 	FILE* f = fopen((const char*)data, "w");
 	if(!f) {
 		return 1;
 	}
 	fwrite(item->data, item->len, 1, f);
-	return fclose(f);
+	rv = fclose(f);
+	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+	return rv;
 }
 
 /* Read elements according to the description in *element */

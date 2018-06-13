@@ -99,6 +99,8 @@
 		6536233B19A7E92B00D46ECB /* tkinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232419A7E92B00D46ECB /* tkinfo.c */; };
 		6536233D19A7E93A00D46ECB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536233C19A7E93A00D46ECB /* main.c */; };
 		65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.3.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.3.8.dylib */; };
+		6578015420D135F4002B826A /* xmlfileversconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6578014F20D135F4002B826A /* xmlfileversconv.h */; };
+		6578015620D1364A002B826A /* xmlfileversconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6578015320D135F4002B826A /* xmlfileversconv.cpp */; };
 		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		6594448019A8C2B0003ABC24 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
@@ -529,6 +531,8 @@
 		6536232319A7E92B00D46ECB /* threads.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = threads.c; path = tests/unit/threads.c; sourceTree = "<group>"; };
 		6536232419A7E92B00D46ECB /* tkinfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tkinfo.c; path = tests/unit/tkinfo.c; sourceTree = "<group>"; };
 		6536233C19A7E93A00D46ECB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = tests/unit/apple/main.c; sourceTree = "<group>"; };
+		6578014F20D135F4002B826A /* xmlfileversconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmlfileversconv.h; sourceTree = "<group>"; };
+		6578015320D135F4002B826A /* xmlfileversconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmlfileversconv.cpp; sourceTree = "<group>"; };
 		658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Middleware.xcodeproj"; path = "plugins_tools/aboutmw/OSX/eID Middleware/eID Middleware.xcodeproj"; sourceTree = "<group>"; };
 		6594447B19A8C29B003ABC24 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = cardcomm/pkcs11/src/asn1.c; sourceTree = "<group>"; };
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
@@ -904,6 +908,8 @@
 		65270A0C1FE976B7004F326D /* conversions */ = {
 			isa = PBXGroup;
 			children = (
+				6578015320D135F4002B826A /* xmlfileversconv.cpp */,
+				6578014F20D135F4002B826A /* xmlfileversconv.h */,
 				65270A421FE97A27004F326D /* bbannumconv.cpp */,
 				65270A451FE97A27004F326D /* bbannumconv.h */,
 				65270A611FE97A2A004F326D /* convert.cpp */,
@@ -1274,6 +1280,7 @@
 				86E3DDFC1653D6210015B5E1 /* datafile.h in Headers */,
 				86E3DDFE1653D6210015B5E1 /* dynamiclib.h in Headers */,
 				86E3DDFF1653D6210015B5E1 /* eiderrors.h in Headers */,
+				6578015420D135F4002B826A /* xmlfileversconv.h in Headers */,
 				65EABAF21C621F3D00034337 /* utftranslate.h in Headers */,
 				86E3DE001653D6210015B5E1 /* export.h in Headers */,
 				86E3DE021653D6210015B5E1 /* hash.h in Headers */,
@@ -1735,6 +1742,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6578015620D1364A002B826A /* xmlfileversconv.cpp in Sources */,
 				65270A311FE976BE004F326D /* cache.cpp in Sources */,
 				65270A0A1FE9761A004F326D /* trustdirname.m in Sources */,
 				65270A681FE97A2B004F326D /* convertor.cpp in Sources */,
