@@ -184,7 +184,7 @@ namespace eIDMW
 			if (err != 0 && err != EACCES && err != ENOENT)
 				return false;	// Added for unit testing
 
-			if (err == EACCES)
+			if (err == EACCES && bLock)
 			{
 				CThread::SleepMillisecs(100);
 			} else if (err == ENOENT && bLock)
@@ -216,7 +216,7 @@ namespace eIDMW
 					return false;
 				}
 			}
-		} while (err == EACCES);
+		} while (err == EACCES && bLock);
 
 		//If the lock is not needed, we don't have to create the file
 		if (m_stream == NULL)

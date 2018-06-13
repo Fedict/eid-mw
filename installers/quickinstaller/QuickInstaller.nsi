@@ -8,7 +8,7 @@
 !include "eidmw_version.nsh"
 !include WinVer.nsh
 !include "buttons.nsh"
-
+!include "fileSearch.nsh"
 
 ;--------------------------------
 ;General
@@ -41,15 +41,12 @@ caption $(ls_caption)
 	Var versionMinor
 	Var retval
 	Var readercount
-  Var municipality
-  Var zip
-	Var street
-  Var lastname
+	Var lastname
 	Var firstletterthirdname
-  Var firstname
+	Var firstname
 	
 	Var nsdCustomDialog
-  Var Label
+	Var Label
 	Var Background_Image
 	Var Background_Image_Handle
 	Var Background_Image2
@@ -57,13 +54,16 @@ caption $(ls_caption)
 	Var Button
 	Var Font_Title
 	Var Font_Info
-	Var Font_CardData
 	Var FileToCopy
 	Var LogFile
+	;Var TestLogFile
+	Var TempFile
+	Var firstLine
 	Var MsiResponse
 	Var InstallFailed
 	Var ReaderFailed
 	Var FindCardFailed
+	Var FAQ_url
 
 ;--------------------------------
 	;Interface Settings
@@ -126,6 +126,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	${WinVerGetMajor} $versionMajor
 	${WinVerGetMinor} $versionMinor
 	
+	StrCpy $FAQ_url "https://eid.belgium.be/"
+	
 	${If} ${RunningX64}
 		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\BeidMW_64.msi"
@@ -133,20 +135,42 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
-		;delete previous log
+		
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw64_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		;delete previous log
 		;Delete "$LogFile"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse
+		;for testing
+		;StrCpy $MsiResponse 1603
+		;StrCpy $TestLogFile "$INSTDIR\log\install_eidmw64_error_1612_log.txt"
 		${Switch} $MsiResponse
-			${Case} 0
-			${Case} 3010 
-				;3010 is 'success, but reboot requiered'
-				;set 1 for testing, 0 otherwise
-				StrCpy $InstallFailed 0
+			${Case} 1603
+			;general failure, parse through the log file to find the root cause
+			;check if error 1612 occured
+				;for testing
+				;ExecWait 'cmd.exe /C FIND "1612" "$TestLogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_64			
 			${Break}
-			${Default}
-				StrCpy $InstallFailed $MsiResponse
-				;Call ErrorHandler_msiexec
+			${Case} 1612
+			MSI_1612_Error_64:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				;Refer to the FAQ where the user can find a manuel to manually repair the registry, or to run a MS tool that does the cleanup
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			;The installation source for this product is not available. Verify that the source exists and that you can access it.
+			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
+			${Break}
+			${Case} 1622
+			;install log failure, try to install without logging
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_64.msi"' $MsiResponse			
+			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}				
 		${EndSwitch}
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
@@ -164,22 +188,56 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw32_log.txt"
 		;Delete "$LogFile"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse
+		
+		;try to recover from some errors
 		${Switch} $MsiResponse
-			${Case} 0
-			${Case} 3010 
-				StrCpy $InstallFailed 0		
-				;3010 is 'success, but reboot requiered'
+			${Case} 1603
+			;general failure, parse through the log file to find the root cause
+			;check if error 1612 occured
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_32			
 			${Break}
-			${Default}
-				StrCpy $InstallFailed $MsiResponse
-				;$InstallFailed=$MsiResponse
-				;Call ErrorHandler_msiexec
+			${Case} 1612
+			MSI_1612_Error_32:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				;Refer to the FAQ where the user can find a manuel to manually repair the registry, or to run a MS tool that does the cleanup
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			;The installation source for this product is not available. Verify that the source exists and that you can access it.
+			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
+			${Break}				
+			${Case} 1622
+			;install log failure, try to install without logging
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse			
+			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}	
 		${EndSwitch}
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
 		Delete "$INSTDIR\BeidMW_32.msi"
-  ${EndIf}
+	${EndIf}
+	
+	;check if msi install went ok (initially or after correction)
+ 	${Switch} $MsiResponse
+		${Case} 0
+		${Case} 3010 
+			StrCpy $InstallFailed 0		
+			;3010 is 'success, but reboot requiered'
+		${Break}		
+		${Case} 1618
+			;the installer is already running in another instance	
+			MessageBox MB_OK "$(ls_errorinstallmsi_1618) $\r$\n $(ls_error) = $MsiResponse"	
+			StrCpy $InstallFailed $MsiResponse
+		${Break}			
+		${Default}
+			StrCpy $InstallFailed $MsiResponse
+			;Call ErrorHandler_msiexec
+	${EndSwitch}	
   
   File /r "Drivers"
 
@@ -863,7 +921,7 @@ Function nsdCardDataLeave
 FunctionEnd
 
 Function FindSolutionButton_click
-    ExecShell "open" "https://eid.belgium.be/"
+    ExecShell "open" "$FAQ_url"
 	;when keeping the nsis installer alive, it can permit the webbrowser to take the foreground.
 	;should we quit in stead, the webbrowser will be openened in the background
 	Abort

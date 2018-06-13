@@ -8,7 +8,7 @@ URL: http://eid.belgium.be/
 
 Source: http://eidmw.yourict.net/dist/sources/eid-mw-%{version}-%{revision}.tar.gz
 Source1: baselibs.conf
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+#BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if 0%{?el6}
 BuildRequires: gtk2-devel
@@ -58,6 +58,11 @@ to develop against the eID Middleware.
 %package bin
 Summary: Belgium electronic identity card PKCS#11 module - helper binaries
 Requires: eid-mw
+%if 0%{?suse_version}
+Requires: mozilla-nss-tools
+%else
+Requires: nss-tools
+%endif
 
 %description bin
 The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
@@ -75,7 +80,6 @@ websites and/or sign documents. This package contains the actual libraries.
 
 %package -n eid-viewer
 Summary: Belgium electronic identity card viewer
-Obsoletes: eid-viewer
 Requires: eid-mw
 %if 0%{?suse_version}
 Requires: pcsc-ccid
@@ -109,6 +113,8 @@ checks the certificate against the government's Trust Service.
 %install
 %{__rm} -rf %{buildroot}
 %{__make} install DESTDIR="%{buildroot}"
+mkdir -p %{buildroot}%{_libdir}/mozilla/
+mv %{buildroot}/usr/lib/mozilla/pkcs11-modules %{buildroot}%{_libdir}/mozilla/ || true
 rm -f %{buildroot}%{_datadir}/applications/eid-viewer.desktop
 desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict plugins_tools/eid-viewer/eid-viewer.desktop || true
 
@@ -159,13 +165,12 @@ fi
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
+%{_bindir}/beid-update-nssdb
+%{_sysconfdir}/xdg/autostart/beid-update-nssdb.desktop
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
 %{_datadir}/p11-kit/
-# The below should really use the _libdir macro, but Firefox won't look
-# in /usr/lib/x86_64-linux-gnu (etc) on Debian; so Makefile.am currently
-# hardcodes the lib directory and doesn't put anything in lib64
-%{_prefix}/lib/mozilla/
+%{_libdir}/mozilla/
 
 %files devel
 %defattr(-, root, root, 0755)

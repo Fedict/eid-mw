@@ -1,0 +1,5 @@
+  /etc/ld.so.conf r,
+  /etc/ld.so.conf.d/ r,
+  /etc/ld.so.conf.d/* r,
+  /run/pcscd/pcscd.comm rw,
+  /usr/lib/eid-mw/* ix,
