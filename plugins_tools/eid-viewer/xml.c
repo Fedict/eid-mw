@@ -178,13 +178,16 @@ out:
 /* Read data from the cache and store it to the file whose name we get
  * in the *data argument */
 int eid_vwr_serialize(void* data) {
+	int rv = 0;
 	const struct eid_vwr_cache_item* item = cache_get_data("xml");
 	FILE* f = fopen((const char*)data, "w");
 	if(!f) {
 		return 1;
 	}
 	fwrite(item->data, item->len, 1, f);
-	return fclose(f);
+	rv = fclose(f);
+	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+	return rv;
 }
 
 /* Read elements according to the description in *element */
