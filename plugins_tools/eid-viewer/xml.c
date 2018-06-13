@@ -84,13 +84,12 @@ out:
 static int write_elements(xmlTextWriterPtr writer, struct element_desc *element) {
 	int rc;
 	char* val = NULL;
-	while(element->name) {
+	for(;element->name != NULL; element++) {
 		if(element->label == NULL) {
 			assert(element->child_elements != NULL || element->attributes != NULL);
 			if(!element->reqd) {
 				if(missing_reqd_attributes(element->attributes) || missing_reqd_elements(element->child_elements)) {
-					rc=0;
-					goto out;
+					continue;
 				}
 			}
 			check_xml(xmlTextWriterStartElement(writer, BAD_CAST element->name));
@@ -123,7 +122,6 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 				val = NULL;
 			}
 		}
-		element++;
 	}
 	rc=0;
 out:
