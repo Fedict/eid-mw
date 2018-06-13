@@ -95,9 +95,6 @@ inline rT join (const cT& list, const rT& sep)
 std::wstring wstring_From_string(std::string const &in);
 std::string string_From_wstring(std::wstring const &in);
 
-#ifndef HAVE_VASPRINTF
-int vasprintf(char **strp, const char *fmt, va_list ap);
-#endif
 int _wfopen_s(FILE ** pFile, const wchar_t * filename, const wchar_t * mode);
 int fwprintf_s(FILE * stream, const wchar_t * format, ...);
 int strcpy_s(char *dest, size_t len, const char *src);
