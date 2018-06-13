@@ -80,6 +80,8 @@ libeidviewer_la_SOURCES = \
 	conversions/workpermitconv.cpp \
 	conversions/xmldoctypeconv.h \
 	conversions/xmldoctypeconv.cpp \
+	conversions/xmlfileversconv.h \
+	conversions/xmlfileversconv.cpp \
 	conversions/xmlspecconv.h \
 	conversions/xmlspecconv.cpp \
 	conversions/xmlspecorgconv.h \

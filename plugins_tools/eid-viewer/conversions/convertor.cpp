@@ -15,6 +15,7 @@
 #include "specorgconv.h"
 #include "xmlspecorgconv.h"
 #include "workpermitconv.h"
+#include "xmlfileversconv.h"
 #include <eid-util/utftranslate.h>
 #include "cppeidstring.h"
 
@@ -66,6 +67,7 @@ Convertor::Convertor()
 		from_xml[TEXT("gender")] = new XmlGenderConvertor();
 		from_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
 		from_xml[TEXT("work_permit_mention")] = new XmlWorkPermitConvertor();
+		from_xml[TEXT("xml_file_version")] = new XmlFileversConvertor(); // hack to produce an error message when file is opened that was created by a more recent version of eID Viewer
 	}
 }
 
