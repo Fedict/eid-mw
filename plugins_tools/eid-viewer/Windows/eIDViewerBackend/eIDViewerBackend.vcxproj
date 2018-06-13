@@ -116,6 +116,7 @@
     <ClCompile Include="..\..\conversions\valdate.cpp" />
     <ClCompile Include="..\..\conversions\workpermitconv.cpp" />
     <ClCompile Include="..\..\conversions\xmldoctypeconv.cpp" />
+    <ClCompile Include="..\..\conversions\xmlfileversconv.cpp" />
     <ClCompile Include="..\..\conversions\xmlspecconv.cpp" />
     <ClCompile Include="..\..\conversions\xmlspecorgconv.cpp" />
     <ClCompile Include="..\..\noverification.c" />
