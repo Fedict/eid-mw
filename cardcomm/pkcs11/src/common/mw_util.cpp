@@ -39,11 +39,6 @@
 
 #ifndef WIN32
 
-#ifndef HAVE_VASPRINTF
-#define VASPRINTF_INITIAL_SIZE	128
-#define VASPRINTF_FAILED	-1
-#endif
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 std::wstring wstring_From_string(std::string const &in)
 {
@@ -201,54 +196,6 @@ errno_t _localtime_s(struct tm* _tm, const time_t *time)
 	return errno;
 }*/
 #ifndef WIN32
-#ifndef HAVE_VASPRINTF
-int vasprintf(char **strp, const char *fmt, va_list ap)
-{
-	size_t size = VASPRINTF_INITIAL_SIZE;
-
-	char *buf = (char *) malloc(size);	// initial attempt for a "reasonable" string length
-	char *tmp = buf;
-
-	if (buf == NULL)
-		return VASPRINTF_FAILED;
-
-	int written = vsnprintf(buf, size, fmt, ap);	// try and vsnprintf to it
-
-	if (written < 0)	// if failed, clean up buf and return error
-	{
-		free(buf);
-		return VASPRINTF_FAILED;
-	}
-
-	if (written > size)	// if written, but buffer was too small
-	{
-		size = written;	// we now know exactly which size we need
-		buf = (char *) realloc(buf, size);	// try and grow buffer
-		if (buf == NULL)
-		{
-			free(tmp);
-			return VASPRINTF_FAILED;	// return error.
-		}
-
-		written = vsnprintf(buf, size, fmt, ap);
-	}
-
-	if (written < 0)
-	{
-		free(buf);	// if we couldn't write (=Threading issue ; va_list or fmt changed) clean up buf and return error
-		return VASPRINTF_FAILED;
-	}
-
-	if (written == size)	// if we did write and filled the buffer, set strp and return number of bytes written
-	{
-		*strp = buf;
-		return (int) written;
-
-	}
-	free(buf);
-	return VASPRINTF_FAILED;	// if we fall through here, return error.
-}
-#endif
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int _wfopen_s(FILE ** pFile, const wchar_t * filename, const wchar_t * mode)
 {
