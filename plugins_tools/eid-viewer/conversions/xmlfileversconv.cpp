@@ -5,7 +5,7 @@ std::map<eid_vwr_langs, const EID_CHAR*> XmlFileversConvertor::msgs_;
 
 XmlFileversConvertor::XmlFileversConvertor() {
 	if(msgs_.empty()) {
-		msgs_[EID_VWR_LANG_DE] = TEXT("The opened file was created with a more recent eID version of the eID Viewer. Some data may not be displayed");
+		msgs_[EID_VWR_LANG_DE] = TEXT("Die geöffnete Datei wurde von einer aktuelleren Version des eID Viewers erstellt. Möglicherweise werden einige Daten nicht angezeigt.");
 		msgs_[EID_VWR_LANG_EN] = TEXT("The opened file was created with a more recent eID version of the eID Viewer. Some data may not be displayed");
 		msgs_[EID_VWR_LANG_FR] = TEXT("The opened file was created with a more recent eID version of the eID Viewer. Some data may not be displayed");
 		msgs_[EID_VWR_LANG_NL] = TEXT("Het geopende bestand werd aangemaakt met een recentere versie van de eID Viewer. Bepaalde data wordt mogelijk niet weergegeven.");
