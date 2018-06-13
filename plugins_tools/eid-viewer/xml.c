@@ -26,8 +26,7 @@
 
 static int missing_reqd_attributes(struct attribute_desc *attribute) {
 	while(attribute != NULL && attribute->name) {
-		int have_cache = cache_have_label(attribute->label);
-		if(!have_cache && attribute->reqd) {
+		if(attribute->reqd && !(cache_have_label(attribute->label))) {
 			return 1;
 		}
 		attribute++;
