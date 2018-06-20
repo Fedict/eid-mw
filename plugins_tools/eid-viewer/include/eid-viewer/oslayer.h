@@ -303,15 +303,24 @@ DllExport struct eid_vwr_preview *eid_vwr_get_preview(const EID_CHAR *
   */
 DllExport int eid_vwr_poll(void);
 
+/**
+*\brief Loops over waiting function for pkcs11 card and reader insertion/removal event
+*
+*Will notify the viewer event handling thread by putting a DEVICE_CHANGED event on the event list
+*/
+#ifdef WIN32
+DWORD WINAPI eid_vwr_wait_for_pkcs11_event_loop(void* val);
+#else
+
 /** \brief Loop over eid_vwr_poll().
   *
   * \return never
   */
-#ifdef WIN32
-DWORD WINAPI eid_vwr_be_mainloop(void* val);
-#else
+
 void* eid_vwr_be_mainloop(void* val) NORETURN;
 #endif
+
+
 
 /**
   * \brief Save the currently-open data.

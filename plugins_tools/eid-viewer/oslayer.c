@@ -17,88 +17,34 @@ int eid_vwr_createcallbacks(struct eid_vwr_ui_callbacks* cb_) {
 }
 
 #ifdef WIN32
+DWORD WINAPI eid_vwr_wait_for_pkcs11_event_loop(void* val) {
+	int ret;
+	CK_FLAGS flags = 0;
+	CK_SLOT_ID slotID = 0;
 
-int eid_vwr_init()
-{
-	HANDLE hThread;
-	int result = CKR_OK;
+	//fire a EVENT_DEVICE_CHANGED event in order to detect the slots and cards in the state thread
+	sm_handle_event(EVENT_DEVICE_CHANGED, &slotID, NULL, NULL);
 
-	readerCheckEvent = CreateEvent(
-		NULL,   // default security attributes
-		FALSE,  // auto-reset event object
-		FALSE,  // initial state is nonsignaled
-		NULL);  // unnamed object
-
-	if (readerCheckEvent == NULL)
+	while (1)
 	{
-		be_log(EID_VWR_LOG_ERROR, TEXT("CreateEvent error: %.8x"), GetLastError());
-		result = CKR_FUNCTION_FAILED;
+		ret = eid_vwr_p11_wait_for_slot_event(TRUE, &slotID);
+
+		if (ret == EIDV_RV_OK)
+		{
+			CK_SLOT_ID* pslotID = malloc(sizeof(CK_SLOT_ID)); //will be freed by statehandler
+			*pslotID = slotID;
+			sm_handle_event(EVENT_DEVICE_CHANGED, pslotID, free, NULL);
+		}
+		else if (ret == EIDV_RV_TERMINATE)
+		{
+			return 0;
+		}
+		//according to pkcs#11v2.20 standard, C_GetSlotList need to be called (with NULL) again before the new slots will be taken into account
+		//if a new reader is added and we would start waiting (blocked) for a new event before the mainloop has updated the slotlist, 
+		//we would not be getting the events of the new reader untill the slotlist is updated. (C_WaitForSlotEvent will not notify us because in the 
+		//old slot list, no change was detected)
 	}
-
-	readerContinueWaitEvent = CreateEvent(
-		NULL,   // default security attributes
-		FALSE,  // auto-reset event object
-		FALSE,  // initial state is nonsignaled
-		NULL);  // unnamed object
-
-	if (readerContinueWaitEvent == NULL)
-	{
-		be_log(EID_VWR_LOG_ERROR, TEXT("CreateEvent error: %.8x"), GetLastError());
-		result = CKR_FUNCTION_FAILED;
-	}
-
-	/* Create the pkcs11 card / card reader event thread */
-	hThread = CreateThread(NULL, 0, eid_wait_for_pkcs11event, NULL, 0, NULL);
-	if (readerCheckEvent == NULL)
-	{
-		be_log(EID_VWR_LOG_ERROR, TEXT("CreateEvent error: %.8x"), GetLastError());
-		result = CKR_FUNCTION_FAILED;
-	}
-	return result;
-}
-
-/* Called by eid_vwr_wait_event(). */
-int eid_vwr_p11_wait_event() {
-	CK_RV ret = CKR_OK;
-
-	WaitForSingleObject(readerCheckEvent, INFINITE);
-
 	return ret;
-}
-
-#endif
-
-
-#ifdef WIN32
-DWORD WINAPI eid_vwr_be_mainloop(void* val) {
-	int result;
-	int eventSetup = eid_vwr_init();
-	BOOL waiting = 0;
-	for (;;) {
-		result = eid_vwr_poll();
-		//use polling if eid_vwr_init failed
-		
-		if ((result == 0) && (eventSetup == CKR_OK))
-		{
-			if (waiting)
-			{
-				//notify the pkcs11waitforchanges thread that it may start waiting again
-				if (!SetEvent(readerContinueWaitEvent))
-				{
-					be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_be_mainloop with error: %.8x"), GetLastError());
-					return CKR_FUNCTION_FAILED;
-				}
-			}
-			//start waiting ourself untill some other thread asks us to check for reader changes
-			eid_vwr_p11_wait_event();
-			waiting = TRUE;
-		}
-		else
-		{
-			waiting = FALSE;
-			SLEEP(1);
-		}
-	}
 }
 #else
 	void* eid_vwr_be_mainloop(void* val) {
@@ -107,8 +53,6 @@ DWORD WINAPI eid_vwr_be_mainloop(void* val) {
 		SLEEP(1);
 		}
 	}
-#endif
-
 
 int eid_vwr_poll() {
 	CK_SLOT_ID_PTR no_token = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
@@ -159,6 +103,7 @@ int eid_vwr_poll() {
 	}
 	return retval;
 }
+#endif
 
 void eid_vwr_be_serialize(const EID_CHAR* target_file) {
 	EID_CHAR* copy = EID_STRDUP(target_file);

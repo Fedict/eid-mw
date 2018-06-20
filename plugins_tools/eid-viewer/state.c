@@ -51,6 +51,7 @@ static const EID_CHAR* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(DATA_INVALID);
 	EVENT_NAME(SERIALIZE);
 	EVENT_NAME(READER_FOUND);
+	EVENT_NAME(DEVICE_CHANGED);
 #undef EVENT_NAME
 	default:
 		return TEXT("unknown event");
@@ -91,7 +92,7 @@ static int do_initialize(void*data) {
 
 #ifdef WIN32
 	HANDLE thread = NULL;
-	thread = CreateThread(NULL, 0, eid_vwr_be_mainloop, NULL, 0, NULL);
+	thread = CreateThread(NULL, 0, eid_vwr_wait_for_pkcs11_event_loop, NULL, 0, NULL);
 #else
 	pthread_t thread;
 	pthread_create(&thread, NULL, eid_vwr_be_mainloop, NULL);

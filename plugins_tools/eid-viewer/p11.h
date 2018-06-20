@@ -20,6 +20,7 @@
 
 #define EIDV_RV_OK 0
 #define EIDV_RV_FAIL -1
+#define EIDV_RV_TERMINATE -2
 
 #ifdef WIN32
 //event waited for by the mainloop, before checking the reader states
@@ -27,6 +28,12 @@ HANDLE readerCheckEvent;
 //event set by the mainloop, to notify it completed checking the reader states
 HANDLE readerContinueWaitEvent;
 DWORD WINAPI eid_wait_for_pkcs11event(void* val);
+int eid_vwr_p11_check_reader_list(void* slot_ID);
+int eid_vwr_p11_update_slot_list_ui(CK_SLOT_ID_PTR slotlist, CK_ULONG slotCount);
+int eid_vwr_p11_refresh_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcurrentReaderCount, CK_SLOT_ID *pcurrentCardSlotID);
+int eid_vwr_p11_find_card(CK_SLOT_ID_PTR slotID);
+int eid_vwr_p11_wait_for_slot_event(BOOLEAN blocking, CK_SLOT_ID_PTR pSlotID);
+
 #endif
 
 struct _slotdesc;

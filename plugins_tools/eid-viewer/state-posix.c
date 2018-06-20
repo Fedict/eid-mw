@@ -1,6 +1,7 @@
 #ifdef WIN32
 #include <windows.h>
 #include <stdio.h>
+#include "p11.h"
 #else
 #include <pthread.h>
 #endif
@@ -76,6 +77,18 @@ static void* thread_main(void* val) {
 
 
 			UNLOCK_MUTEX(mutex);
+
+#ifdef WIN32
+			//the EVENT_DEVICE_CHANGED is not a state changing event
+			//it can be several combinations of READER_FOUND, CARD_INSERTED, CARD_REMOVED, READER_ATTACHED, READER_REMOVED events
+			//in order to find out which of the STATE changing events should be triggered, some pkcs11 calls need to be made, 
+			//and we want all (especially getslotlist in v2.20) pkcs11 calls (besides waiting for device changes) to be done on this thread
+			if (tmp->e == EVENT_DEVICE_CHANGED)
+			{
+				eid_vwr_p11_check_reader_list(tmp->data);
+				break;
+			}
+#endif
 			sm_handle_event_onthread(tmp->e, tmp->data);
 			if(tmp->done != NULL) {
 				tmp->done(tmp->data);

@@ -68,14 +68,12 @@ int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot) {
 	is_auto = automatic;
 	if(!is_auto) {
 		slot_manual = manualslot;
-	}
 #ifdef WIN32
-	if (!SetEvent(readerCheckEvent))
-	{
-		be_log(EID_VWR_LOG_ERROR, TEXT("eid_wait_for_pkcs11event with error: %.8x"), GetLastError());
-		return CKR_FUNCTION_FAILED;
-	}
+		CK_SLOT_ID* pslotID =  malloc(sizeof(CK_SLOT_ID));
+		*pslotID = manualslot;
+		sm_handle_event(EVENT_DEVICE_CHANGED, pslotID, free, NULL);
 #endif
+	}
 	return 0;
 }
 
@@ -97,45 +95,7 @@ int eid_vwr_p11_close_session() {
 
 	return 0;
 }
-#ifdef WIN32
-DWORD WINAPI eid_wait_for_pkcs11event(void* val) {
-	int ret;
-	CK_FLAGS flags = 0;
-	CK_SLOT_ID slotID;
 
-	while (1)
-	{
-		ret = C_WaitForSlotEvent(flags,   /*nonblocking flag: CKF_DONT_BLOCK*/
-			&slotID,  /* location that receives the slot ID */
-			NULL_PTR); /* reserved.  Should be NULL_PTR */
-
-		if (ret != CKR_OK)
-		{
-			be_log(EID_VWR_LOG_ERROR, TEXT("C_WaitForSlotEvent with retVal: %.8x"), ret);
-			if (ret == CKR_CRYPTOKI_NOT_INITIALIZED)
-			{
-				return CKR_CRYPTOKI_NOT_INITIALIZED;
-			}
-			SLEEP(1);
-		}
-
-		if (!SetEvent(readerCheckEvent))
-		{
-			be_log(EID_VWR_LOG_ERROR, TEXT("eid_wait_for_pkcs11event with error: %.8x"), GetLastError());
-			return CKR_FUNCTION_FAILED;
-		}	
-
-		//according to pkcs#11v2.20 standard, C_GetSlotList need to be called (with NULL) again before the new slots will be taken into account
-		//is a new reader is added and we would start waiting (blocked) for a new event before the mainloop has updated the slotlist, 
-		//we would not be waiting for events of the new reader
-
-		//wait for max 5 seconds for the mainloop to have updated the slotlist when needed
-		WaitForSingleObject(readerContinueWaitEvent, 5000);
-	}
-	return ret;
-}
-
-#endif
 /* Called by eid_vwr_poll(). */
 int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULONG_PTR count) {
 	CK_RV ret;
@@ -406,3 +366,308 @@ int eid_vwr_p11_check_version(void* data) {
 
 	return 0;
 }
+
+#ifdef WIN32
+/* Called by state machine when a card/reader change is inserted,
+ * it should not be called from any other thread but the state machine thread
+ */
+int eid_vwr_p11_check_reader_list(void* slot_ID) {
+
+	static CK_SLOT_ID_PTR pcurrentSlotList = NULL;
+	static CK_ULONG currentReaderCount = 0;
+	static CK_SLOT_ID currentCardSlotID = -1;
+	CK_RV p11Ret = 0;
+	int ret = 0;
+	CK_ULONG tempCount = 0;
+	CK_ULONG cardCount = 0;
+	CK_SLOT_ID slotID = *((CK_SLOT_ID_PTR)slot_ID);
+	boolean slotIDKnown = FALSE;
+
+	//if reader list is not known yet, retrieve it
+	if (pcurrentSlotList == NULL)
+	{
+		//pkcs11v2.20: refresh the slotlist
+		eid_vwr_p11_refresh_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
+	}
+	else 
+	{
+		//we already have a slotlist, so first check if slot_ID is in this list
+		//if not, add the slot by updating the slotlist
+		//if so, check for changes of the slot_ID
+		for (CK_ULONG i = 0; i < currentReaderCount; i++)
+		{
+			if (pcurrentSlotList[i] == slotID)
+			{
+				slotIDKnown = TRUE;
+				continue;
+			}
+		}
+
+		if (slotIDKnown == FALSE)
+		{
+			//new reader attached
+			//pkcs11v2.20: refresh the slotlist
+			free(pcurrentSlotList);
+			pcurrentSlotList = NULL;
+			currentReaderCount = 0;
+			currentCardSlotID = -1;
+
+			eid_vwr_p11_refresh_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
+		}
+		else
+		{
+			CK_SLOT_INFO info;
+
+			p11Ret = C_GetSlotInfo(slotID, &info);
+			if (p11Ret != CKR_OK)
+			{
+				//the slotID is already know, first check if the reader is removed
+				//if so, update the slot list
+
+				//ignore this state change
+				return EIDV_RV_FAIL;
+			}
+			if ((info.flags & CKF_TOKEN_PRESENT) != 0)
+			{
+				//a token is present in the slot_ID that caused the event
+				//check if we did not already found a card
+				if (currentCardSlotID == -1)
+				{
+					//no card was know already, so check if we should report it
+					//(in case of manuel tracking a certain reader, we might not want to report the card in slot_ID)
+					if ((is_auto) || (slot_manual == slotID))
+					{
+						sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &slotID);
+						currentCardSlotID = slotID;
+					}
+				}
+			}
+			else
+			{
+				//if the token that was removed, was in the currentCardSlotID
+				if (currentCardSlotID == slotID)
+				{
+					sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &slotID);
+					currentCardSlotID = -1;//or do we search for another card ?
+
+					ret = eid_vwr_p11_find_card(&currentCardSlotID);
+					if (ret == EIDV_RV_OK)
+					{
+						//we found another eID card, report it
+						sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &currentCardSlotID);
+					}
+				}
+			}
+		}
+	}
+	return ret;
+}
+
+
+
+//inform the UI of update reader list
+int eid_vwr_p11_update_slot_list_ui(CK_SLOT_ID_PTR slotlist, CK_ULONG slotCount)
+{
+	slotdesc* slotDescs = (slotdesc*)malloc(slotCount * sizeof(slotdesc));
+	if (slotDescs == NULL)
+	{
+		return EIDV_RV_FAIL;
+	}
+	memset(slotDescs, 0, slotCount * sizeof(slotdesc));
+
+	CK_RV p11Ret;
+	int ret = EIDV_RV_OK;
+	CK_ULONG i;
+	int counter;
+	char description[65];
+	description[64] = '\0';
+	unsigned int description_len = 65;
+
+	//retrieve all slot descriptions
+	for (i = 0; i < slotCount; i++)
+	{
+		CK_SLOT_INFO info;
+		slotDescs[i].slot = slotlist[i];
+
+		p11Ret = C_GetSlotInfo(slotlist[i], &info);
+		if (p11Ret != CKR_OK)
+		{
+			ret = EIDV_RV_FAIL;
+			goto end;
+		}
+		//null-terminate the description (and remove padding spaces)
+		memcpy(description, info.slotDescription, sizeof(info.slotDescription) > description_len ? description_len : sizeof(info.slotDescription));
+		for (counter = description_len - 1; (description[counter] == ' ' || description[counter] == '\0') && (counter > 0); counter--)
+		{
+			description[counter] = '\0';
+		}
+
+		//transform it into a wchar if needed, memory will be allocated and need to be freed by caller
+		unsigned long len;
+		slotDescs[i].description = UTF8TOEID(description, &len);
+	}
+
+	if (be_readers_changed(slotCount, slotDescs) != EIDV_RV_OK)
+	{
+		//no callback present, UI will not be informed
+		be_log(EID_VWR_LOG_ERROR, TEXT("readers changed, but cannot inform UI about it, no callback specified"));
+		ret = EIDV_RV_FAIL;
+	}
+	for (i = 0; i < slotCount; i++)
+	{
+		if (slotDescs[i].description != NULL) 
+		{
+			free(slotDescs[i].description);
+		}
+	}
+
+end:
+	free(slotDescs);
+	return ret;
+}
+
+
+/* May only be called by the state machine thread
+ * Discards the current slot list and fetches a new one from pkcs11
+ * It will check this new slot list for readers and cards found, 
+ * and will handle the corresponding events on its thread
+ * It will also send the new reader list to the UI, if the callback for it is set
+ */
+int eid_vwr_p11_refresh_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcurrentReaderCount, CK_SLOT_ID *pcurrentCardSlotID) {
+
+	CK_RV p11Ret = CKR_OK;
+	int ret = EIDV_RV_OK;
+	CK_ULONG tempCount = 0;
+	CK_SLOT_ID cardSlotID = 0;
+	CK_ULONG cardCount = 0;
+
+	p11Ret = C_GetSlotList(CK_FALSE, NULL, &tempCount);
+	if ( (tempCount > 0) && (p11Ret == CKR_OK))
+	{
+		*ppcurrentSlotList = (CK_SLOT_ID_PTR)malloc(tempCount * sizeof(CK_SLOT_ID));
+		if (*ppcurrentSlotList == NULL)
+		{
+			be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_p11_refresh_slot_list: malloc failed, could not store the readers list"));
+			return EIDV_RV_FAIL;
+		}
+
+		p11Ret = C_GetSlotList(CK_FALSE, *ppcurrentSlotList, &tempCount);
+		if(p11Ret == CKR_OK)
+		{ 
+			*pcurrentReaderCount = tempCount;
+			//a reader was found, handle the reader found event
+			sm_handle_event_onthread(EVENT_READER_FOUND, *ppcurrentSlotList);
+
+			//we have a new slot list, now we fetch the reader descriptions and send them to the UI
+			eid_vwr_p11_update_slot_list_ui(*ppcurrentSlotList, *pcurrentReaderCount);
+
+			//now try to retrieve an eID card
+			ret = eid_vwr_p11_find_card(&cardSlotID);
+			if (ret == EIDV_RV_OK)
+			{
+				*pcurrentCardSlotID = cardSlotID;
+				sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &cardSlotID);
+			}
+		}
+	}
+	return ret;
+}
+
+/* try to find an eID card depending on the preferences that are set 
+ * will return EIDV_RV_OK if a card if found, EIDV_RV_FAIL otherwise
+ * if a card is found, slotID will be its slot number
+ */
+int eid_vwr_p11_find_card(CK_SLOT_ID_PTR slotID ) {
+	CK_RV p11Ret;
+	CK_SLOT_ID_PTR slotList;
+
+	CK_ULONG slotCount = 0;
+
+	if (is_auto)
+	{
+		slotList = (CK_SLOT_ID_PTR)malloc(sizeof(CK_SLOT_ID));
+		if (slotList == NULL)
+		{
+			return EIDV_RV_FAIL;
+		}
+		p11Ret = C_GetSlotList(CK_TRUE, slotList, &slotCount);
+
+		if (slotCount == 0)
+		{
+			free(slotList);
+			return EIDV_RV_FAIL;//no card found
+		}
+		else if (p11Ret == CKR_BUFFER_TOO_SMALL)
+		{
+			slotList = (CK_SLOT_ID_PTR)calloc(sizeof(CK_SLOT_ID), slotCount);
+
+			if (slotList == NULL)
+			{
+				return EIDV_RV_FAIL;
+			}
+
+			p11Ret = C_GetSlotList(CK_TRUE, slotList, &slotCount);
+			if (p11Ret != CKR_OK)
+			{
+				free(slotList);
+				return EIDV_RV_FAIL;
+			}
+			*slotID = slotList[0];
+		}
+		
+		free(slotList);
+		return EIDV_RV_OK;
+	}
+	else
+	{
+		CK_SLOT_INFO info;
+		p11Ret = C_GetSlotInfo(slot_manual, &info);
+
+		if ((p11Ret == CKR_OK) && ((info.flags & CKF_TOKEN_PRESENT) == CKF_TOKEN_PRESENT))
+		{
+			*slotID = slot_manual;
+			return EIDV_RV_OK;
+		}
+	}
+	return EIDV_RV_FAIL;
+}
+/* Wait untill pkcs11 detects a slot event
+ * 
+ * returns EIDV_RV_OK in case a state change was detected
+ * returns EIDV_RV_FAIL in case no state change was detected
+ * returns EIDV_RV_TERMINATE in case pkcs11 was finalized and caller need to stop calling this function
+ */
+
+int eid_vwr_p11_wait_for_slot_event(BOOLEAN blocking, CK_SLOT_ID_PTR pSlotID)
+{
+	CK_RV p11Ret = CKR_OK;
+	CK_FLAGS flags = 0;
+
+	if (blocking == FALSE)
+	{
+		flags = CKF_DONT_BLOCK;
+	}
+
+	p11Ret = C_WaitForSlotEvent(flags,   /*nonblocking flag: CKF_DONT_BLOCK*/
+		pSlotID,  /* location that receives the slot ID */
+		NULL_PTR); /* reserved.  Should be NULL_PTR */
+
+	if (p11Ret != CKR_OK)
+	{
+		if (p11Ret == CKR_NO_EVENT)
+		{
+			be_log(EID_VWR_LOG_DETAIL, TEXT("C_WaitForSlotEvent with retVal: %.8x"), p11Ret);
+			return EIDV_RV_FAIL;
+		}
+		be_log(EID_VWR_LOG_ERROR, TEXT("C_WaitForSlotEvent with retVal: %.8x"), p11Ret);
+		if (p11Ret == CKR_CRYPTOKI_NOT_INITIALIZED)
+		{
+			return EIDV_RV_TERMINATE;
+		}
+		SLEEP(1);
+		return EIDV_RV_FAIL;
+	}
+	return EIDV_RV_OK;
+}
+
+#endif
