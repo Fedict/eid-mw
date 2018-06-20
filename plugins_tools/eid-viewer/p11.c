@@ -209,7 +209,9 @@ void eid_vwr_p11_to_ui(const EID_CHAR* label, const void* value, int len) {
 	}
 }
 
-/* Performs a previously-initialized find operation. */
+/* Performs a previously-initialized find operation. 
+ * This function may only be called from the state machine thread
+ */
 static int perform_find(CK_BBOOL do_objid) {
 	CK_OBJECT_HANDLE object = 0;
 	CK_ULONG count = 0;
@@ -279,7 +281,7 @@ static int perform_find(CK_BBOOL do_objid) {
 	} while(count);
 	/* Inform state machine that we're done reading, which will
 	 * cause the state machine to enter the next state */
-	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+	sm_handle_event_onthread(EVENT_READ_READY, NULL);
 	return 0;
 }
 
@@ -289,7 +291,9 @@ int eid_vwr_p11_finalize_find() {
 	return 0;
 }
 
-/* Called by state machine at start of TOKEN_ID state */
+/* Called by state machine at start of TOKEN_ID state 
+ * This function may only be called from the state machine thread
+ */
 int eid_vwr_p11_read_id(void* data) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
@@ -304,7 +308,9 @@ int eid_vwr_p11_read_id(void* data) {
 	return perform_find(1);
 }
 
-/* Called by state machine at start of TOKEN_CERTS state */
+/* Called by state machine at start of TOKEN_CERTS state
+ * This function may only be called from the state machine thread
+ */
 int eid_vwr_p11_read_certs(void* data) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
