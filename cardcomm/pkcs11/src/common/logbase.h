@@ -88,6 +88,7 @@ Example of usage through objects and macro are give at the end of this file
 
 #ifndef WIN32
 #include <sys/file.h>
+#include <fcntl.h>
 #endif
 
 #include <stdarg.h>
