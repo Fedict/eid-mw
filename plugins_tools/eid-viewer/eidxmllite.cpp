@@ -25,9 +25,45 @@ const UINT MAX_ELEMENT_DEPTH = 8;
 	goto out; \
 }
 
+
+static int any_attributes_present(struct attribute_desc *attribute) 
+{
+	while (attribute != NULL && attribute->name) 
+	{
+		if (cache_have_label(attribute->label)) 
+		{
+			return 1;
+		}
+		attribute++;
+	}
+	return 0;
+}
+
+static int any_elements_present(struct element_desc *element) 
+{
+	while (element != NULL && element->name) 
+	{
+		if (element->label == NULL) 
+		{
+			if (any_attributes_present(element->attributes) || any_elements_present(element->child_elements))
+			{
+				return 1;
+			}
+		}
+		else 
+		{
+			if (cache_have_label(element->label))
+			{
+				return 1;
+			}
+		}
+		element++;
+	}
+	return 0;
+}
+
 /* Write attributes to the description in *attribute */
-static int write_attributes(IXmlWriter * pWriter,
-			    struct attribute_desc *attribute)
+static int write_attributes(IXmlWriter * pWriter, struct attribute_desc *attribute)
 {
 	HRESULT retVal = 0;
 	EID_CHAR *val = NULL;
@@ -73,16 +109,32 @@ static int write_elements(IXmlWriter * pWriter, struct element_desc *element)
 		{
 			//assert(element->child_elements != NULL);
 			//check_xml(xmlTextWriterStartElement(writer, BAD_CAST element->name));
+			if (element->reqd == 0)
+			{
+				//element is not requiered, so might not be needed to write it
+				//do some tests here to determine if it has any attributes or sub elements present
+				//if none present, skip this element
+				if ( (any_attributes_present(element->attributes) || any_elements_present(element->child_elements)) == 0)
+				{
+					element++;
+					continue;
+				}
+			}
+
+			//if the element is requiered, write it down
 			pWriter->WriteStartElement(NULL, element->name, NULL);
 			if (element->attributes != NULL)
 			{
 				retVal = write_attributes(pWriter, element->attributes);
 			}
-			FAILED_OUT(retVal =
-				   write_elements(pWriter,
-						  element->child_elements));
+			if ((element->child_elements != NULL))
+			{
+				FAILED_OUT(retVal = write_elements(pWriter, element->child_elements));
+			}
+
 			//check_xml(xmlTextWriterEndElement(writer));
 			pWriter->WriteEndElement();
+
 		} else
 		{
 			int have_cache = cache_have_label(element->label);
