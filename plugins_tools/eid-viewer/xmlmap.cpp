@@ -27,8 +27,7 @@ struct attribute_desc identity_attributes[] = {
 struct element_desc identity_elements[] = {
 	{TEXT("name"), TEXT("surname"), 1, 0, NULL, NULL},
 	{TEXT("firstname"), TEXT("firstnames"), 1, 0, NULL, NULL},
-	{TEXT("middlenames"), TEXT("first_letter_of_third_given_name"), 0, 0,
-	 NULL, NULL},
+	{TEXT("middlenames"), TEXT("first_letter_of_third_given_name"), 0, 0, NULL, NULL},
 	{TEXT("nationality"), TEXT("nationality"), 1, 0, NULL, NULL},
 	{TEXT("placeofbirth"), TEXT("location_of_birth"), 1, 0, NULL, NULL},
 	{TEXT("photo"), TEXT("PHOTO_FILE"), 1, 1, NULL, NULL},
@@ -46,8 +45,7 @@ struct attribute_desc workpermit_attributes[] = {
 
 /* Child elements of the <card> element */
 static struct element_desc card_elements[] = {
-	{TEXT("deliverymunicipality"), TEXT("issuing_municipality"), 1, 0,
-	 NULL, NULL},
+	{TEXT("deliverymunicipality"), TEXT("issuing_municipality"), 1, 0, NULL, NULL},
 	{TEXT("workpermit"), NULL, 0, 0, NULL, workpermit_attributes},
 	{NULL, NULL, 0, 0, NULL, NULL},
 };
@@ -64,11 +62,9 @@ static struct attribute_desc card_attributes[] = {
 
 /* Child elements of the <address> element */
 static struct element_desc address_elements[] = {
-	{TEXT("streetandnumber"), TEXT("address_street_and_number"), 1, 0,
-	 NULL, NULL},
+	{TEXT("streetandnumber"), TEXT("address_street_and_number"), 1, 0, NULL, NULL},
 	{TEXT("zip"), TEXT("address_zip"), 1, 0, NULL, NULL},
-	{TEXT("municipality"), TEXT("address_municipality"), 1, 0, NULL,
-	 NULL},
+	{TEXT("municipality"), TEXT("address_municipality"), 1, 0, NULL, NULL},
 	{NULL, NULL, 0, 0, NULL, NULL},
 };
 
@@ -84,8 +80,7 @@ static struct element_desc certificate_elements[] = {
 
 /* Child elements of the <eid> element (the toplevel element) */
 static struct element_desc eid_elements[] = {
-	{TEXT("identity"), NULL, 1, 0, identity_elements,
-	 identity_attributes},
+	{TEXT("identity"), NULL, 1, 0, identity_elements, identity_attributes},
 	{TEXT("card"), NULL, 1, 0, card_elements, card_attributes},
 	{TEXT("address"), NULL, 1, 0, address_elements, NULL},
 	{TEXT("certificates"), NULL, 1, 0, certificate_elements, NULL},
