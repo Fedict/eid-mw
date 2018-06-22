@@ -433,16 +433,32 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 				//ignore this state change
 				return EIDV_RV_FAIL;
 			}
+
+
 			if ((info.flags & CKF_TOKEN_PRESENT) != 0)
 			{
 				//a token is present in the slot_ID that caused the event
-				//check if we did not already found a card
-				if (currentCardSlotID == -1)
+				//check if this slot_ID needs to be watched
+				if (is_auto)
 				{
-					//no card was know already, so check if we should report it
-					//(in case of manuel tracking a certain reader, we might not want to report the card in slot_ID)
-					if ((is_auto) || (slot_manual == slotID))
+					//in case of auto, only handle new card if none was active already
+					if (currentCardSlotID == -1)
 					{
+						sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &slotID);
+						currentCardSlotID = slotID;
+					}
+				}
+				else
+				{
+					//in case of manual, only handle new card if the slotID is the one set to slot_manual
+					if (slot_manual == slotID)
+					{
+						//if another card was already present in another card reader, remove that one first 
+						if ((currentCardSlotID != -1) && (currentCardSlotID != slot_manual))
+						{
+							sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &currentCardSlotID);
+							currentCardSlotID = -1;
+						}
 						sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &slotID);
 						currentCardSlotID = slotID;
 					}
@@ -450,17 +466,30 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 			}
 			else
 			{
-				//if the token that was removed, was in the currentCardSlotID
-				if (currentCardSlotID == slotID)
+				if (is_auto)
 				{
-					sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &slotID);
-					currentCardSlotID = -1;//or do we search for another card ?
-
-					ret = eid_vwr_p11_find_card(&currentCardSlotID);
-					if (ret == EIDV_RV_OK)
+					//if the token that was removed, was in the currentCardSlotID
+					if (currentCardSlotID == slotID)
 					{
-						//we found another eID card, report it
-						sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &currentCardSlotID);
+						sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &slotID);
+						currentCardSlotID = -1;
+
+						//token was removed, check if another is present in another slot (that is being watched)
+						ret = eid_vwr_p11_find_card(&currentCardSlotID);
+						if (ret == EIDV_RV_OK)
+						{
+							//we found another eID card, report it
+							sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &currentCardSlotID);
+						}
+					}
+				}
+				else if (slot_manual == slotID)
+				{
+					//if another card was already present in another card reader, remove that one 
+					if ((currentCardSlotID != -1) && (currentCardSlotID != slot_manual))
+					{
+						sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &currentCardSlotID);
+						currentCardSlotID = -1;
 					}
 				}
 			}
