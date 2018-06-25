@@ -34,6 +34,9 @@ int ckrv_decode_vwr(CK_RV rv, int count, ckrv_mod* mods) {
 	return EIDV_RV_FAIL;
 }
 
+//use this one if you want the slot_changed event handler to select the first slotID
+#define SLOTID_FIRSTSLOT -1
+
 #define check_rv_long(call, mods) { \
 	CK_RV rv = call; \
 	int retval = ckrv_decode_vwr(rv, sizeof(mods) / sizeof(ckrv_mod), mods); \
@@ -65,8 +68,22 @@ static CK_BBOOL is_auto = CK_TRUE;
 
 /* Called by UI when user selects a slot (or selects the "automatic" option again */
 int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot) {
+
+	be_log(EID_VWR_LOG_DETAIL, TEXT("Read modus selected. automatic = %d, manualslot = %ul"), automatic, manualslot);
+
+	if ( (automatic == CK_TRUE) && (!is_auto) )
+	{
+		//when we switch back from manual to automatic, issue a device changed event, 
+		//so cards are searched if needed
+#ifdef WIN32
+		CK_SLOT_ID* pslotID0 = malloc(sizeof(CK_SLOT_ID));
+		*pslotID0 = SLOTID_FIRSTSLOT;//let the handler select the first slotID
+		sm_handle_event(EVENT_DEVICE_CHANGED, pslotID0, free, NULL);
+#endif
+	}
 	is_auto = automatic;
-	if(!is_auto) {
+	if(!is_auto)
+	{
 		slot_manual = manualslot;
 #ifdef WIN32
 		CK_SLOT_ID* pslotID =  malloc(sizeof(CK_SLOT_ID));
@@ -397,6 +414,12 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 	}
 	else 
 	{
+		//if we received the SLOTID_FIRSTSLOT, set slotID to first slot in the list
+		if (slotID == SLOTID_FIRSTSLOT)
+		{
+			slotID = pcurrentSlotList[0];
+		}
+
 		//we already have a slotlist, so first check if slot_ID is in this list
 		//if not, add the slot by updating the slotlist
 		//if so, check for changes of the slot_ID
@@ -434,7 +457,6 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 				return EIDV_RV_FAIL;
 			}
 
-
 			if ((info.flags & CKF_TOKEN_PRESENT) != 0)
 			{
 				//a token is present in the slot_ID that caused the event
@@ -459,8 +481,11 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 							sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &currentCardSlotID);
 							currentCardSlotID = -1;
 						}
-						sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &slotID);
-						currentCardSlotID = slotID;
+						if (currentCardSlotID != slot_manual)
+						{
+							sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &slotID);
+							currentCardSlotID = slotID;
+						}
 					}
 				}
 			}
@@ -473,8 +498,10 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 					{
 						sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &slotID);
 						currentCardSlotID = -1;
-
-						//token was removed, check if another is present in another slot (that is being watched)
+					}
+					if (currentCardSlotID == -1)
+					{
+						//token was removed (or auto was activated), check if another token is present in another slot (that is being watched)
 						ret = eid_vwr_p11_find_card(&currentCardSlotID);
 						if (ret == EIDV_RV_OK)
 						{
@@ -485,10 +512,10 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 				}
 				else if (slot_manual == slotID)
 				{
-					//if another card was already present in another card reader, remove that one 
-					if ((currentCardSlotID != -1) && (currentCardSlotID != slot_manual))
+					//if a card was already present in a card reader, remove it 
+					if (currentCardSlotID != -1)
 					{
-						sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &currentCardSlotID);
+						sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &slotID);
 						currentCardSlotID = -1;
 					}
 				}
