@@ -647,8 +647,8 @@ int eid_vwr_p11_find_card(CK_SLOT_ID_PTR slotID ) {
 				free(slotList);
 				return EIDV_RV_FAIL;
 			}
-			*slotID = slotList[0];
 		}
+		*slotID = slotList[0];
 		
 		free(slotList);
 		return EIDV_RV_OK;
