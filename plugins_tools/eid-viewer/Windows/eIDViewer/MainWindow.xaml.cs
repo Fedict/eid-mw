@@ -379,6 +379,7 @@ namespace eIDViewer
                 {
                     //if the previous selected card reader is deselected, go back to auto mode
                     eIDViewer.NativeMethods.SelectCardReader(1, 0);
+                    return;
                 }
 
                 LastCardReaderMenuItem = menu;
