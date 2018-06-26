@@ -399,7 +399,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 	static CK_SLOT_ID_PTR pcurrentSlotList = NULL;
 	static CK_ULONG currentReaderCount = 0;
 	static CK_SLOT_ID currentCardSlotID = -1;
-	CK_RV p11Ret = 0;
+	CK_RV p11Ret = EIDV_RV_OK;
 	int ret = 0;
 	CK_ULONG tempCount = 0;
 	CK_ULONG cardCount = 0;
@@ -410,7 +410,8 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 	if (pcurrentSlotList == NULL)
 	{
 		//pkcs11v2.20: refresh the slotlist
-		eid_vwr_p11_refresh_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
+		eid_vwr_p11_reset_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
+		is_auto = TRUE;
 	}
 	else 
 	{
@@ -428,7 +429,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 			if (pcurrentSlotList[i] == slotID)
 			{
 				slotIDKnown = TRUE;
-				continue;
+				break;
 			}
 		}
 
@@ -436,12 +437,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 		{
 			//new reader attached
 			//pkcs11v2.20: refresh the slotlist
-			free(pcurrentSlotList);
-			pcurrentSlotList = NULL;
-			currentReaderCount = 0;
-			currentCardSlotID = -1;
-
-			eid_vwr_p11_refresh_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
+			eid_vwr_p11_reset_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
 		}
 		else
 		{
@@ -450,8 +446,15 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 			p11Ret = C_GetSlotInfo(slotID, &info);
 			if (p11Ret != CKR_OK)
 			{
-				//the slotID is already know, first check if the reader is removed
+				//the slotID is already known, first check if the reader is removed
 				//if so, update the slot list
+				be_log(EID_VWR_LOG_COARSE, TEXT("Failed retrieving slot information\n C_GetSlotInfo failed. slotID = %d"), slotID);
+				if (p11Ret == CKR_DEVICE_ERROR)
+				{
+					//error trying to communicate with the slot, reset the slot list (as most lickely the card reader got removed)
+					eid_vwr_p11_reset_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
+					return EIDV_RV_OK;
+				}
 
 				//ignore this state change
 				return EIDV_RV_FAIL;
@@ -595,13 +598,22 @@ end:
  * and will handle the corresponding events on its thread
  * It will also send the new reader list to the UI, if the callback for it is set
  */
-int eid_vwr_p11_refresh_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcurrentReaderCount, CK_SLOT_ID *pcurrentCardSlotID) {
+int eid_vwr_p11_reset_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcurrentReaderCount, CK_SLOT_ID *pcurrentCardSlotID) {
 
 	CK_RV p11Ret = CKR_OK;
 	int ret = EIDV_RV_OK;
 	CK_ULONG tempCount = 0;
 	CK_SLOT_ID cardSlotID = 0;
 	CK_ULONG cardCount = 0;
+
+	if (*ppcurrentSlotList != NULL)
+	{
+		free(*ppcurrentSlotList);
+		*ppcurrentSlotList = NULL;
+	}
+	*pcurrentReaderCount = 0;
+	*pcurrentCardSlotID = -1;
+	is_auto = TRUE;//we are not certain that slots have kept their position in the list, so move back to auto selection
 
 	p11Ret = C_GetSlotList(CK_FALSE, NULL, &tempCount);
 	if ( (tempCount > 0) && (p11Ret == CKR_OK))
