@@ -88,7 +88,7 @@ namespace eIDMW
 	{
 		if (m_hContext != 0)
 		{
-			//              SCardCancel(m_hContext);
+			SCardCancel(m_hContext);
 		}
 	}
 
