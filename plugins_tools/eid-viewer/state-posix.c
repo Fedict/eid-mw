@@ -86,22 +86,26 @@ static void* thread_main(void* val) {
 			if (tmp->e == EVENT_DEVICE_CHANGED)
 			{
 				eid_vwr_p11_check_reader_list(tmp->data);
-				break;
 			}
-#endif
+			else
+			{
+				sm_handle_event_onthread(tmp->e, tmp->data);
+			}
+#else
 			sm_handle_event_onthread(tmp->e, tmp->data);
-			if(tmp->done != NULL) {
+#endif
+			if (tmp->done != NULL) {
 				tmp->done(tmp->data);
 			}
+
 			LOCK_MUTEX(mutex);
-			if(tmp->free != NULL) {
+			if (tmp->free != NULL) {
 				tmp->free(tmp->data);
 			}
 			free(tmp);
 		}
 
 		WAIT_SIGNAL(cond, mutex);
-
 	}
 exit:
 	UNLOCK_MUTEX(mutex);
