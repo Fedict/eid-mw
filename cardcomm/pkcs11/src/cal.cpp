@@ -1535,6 +1535,10 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 
 	CK_ULONG hObject = 0;
 
+//	FILE* BEIDfile = fopen("F:\\idFile.dat", "rb");
+//	BYTE buffer[4096];
+//	int dataSize = 0;
+
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
@@ -1551,6 +1555,10 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 			case CACHED_DATA_TYPE_ALL_DATA:
 			case CACHED_DATA_TYPE_ID:
 				oFileData = oReader.ReadFile(BEID_FILE_ID);
+
+//				dataSize = fread((void *)buffer,1,4096, BEIDfile);
+//				fclose(BEIDfile);
+//				oFileData.Append(buffer, dataSize);
 
 				plabel = BEID_LABEL_DATA_FILE;
 				pobjectID = (char *) BEID_OBJECTID_ID;
@@ -2566,11 +2574,15 @@ CK_RV cal_refresh_readers()
 		{
 			oReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
 		}
-		//new reader list, so please stop the scardgetstatuschange that is waiting on the old list
-		//oCardLayer->CancelActions();
+#ifdef PKCS11_V2_20
+		//new _reader list, so please stop the scardgetstatuschange that is waiting on the old list
+		oCardLayer->CancelActions();
+		log_trace(WHERE, "I: called oCardLayer->CancelActions()");
+#endif
 	}
 	catch(CMWException &e)
 	{
+		log_trace(WHERE, "E: CMWException exception thrown: ox%8x", e.GetError());
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
 	catch( ...)
@@ -2631,7 +2643,7 @@ CK_RV cal_translate_error(const char *WHERE, long err)
 			break;
 			/* the action was cancelled */
 		case EIDMW_ERR_CANCELLED:
-			return (CKR_FUNCTION_FAILED);
+			return (CKR_FUNCTION_CANCELED);
 			break;
 			// Card errors
 
@@ -2956,7 +2968,7 @@ CK_RV cal_wait_for_the_slot_event(int block)
 				//we never call GetStatusChange with blocked flag when its the first time,
 				//if we get here, C_getslotlist must have reset oReadersInfo, in which case
 				//all reader states we have here are obsolete
-				CLEANUP(CKR_FUNCTION_FAILED);
+				CLEANUP(CKR_NO_EVENT);
 			}
 		} else
 		{
@@ -2969,6 +2981,7 @@ CK_RV cal_wait_for_the_slot_event(int block)
 		{
 			p11_lock();
 		}
+		log_trace(WHERE, "E: CMWException exception thrown ox%0x", e.GetError());
 		CLEANUP(cal_translate_error(WHERE, e.GetError()));
 	}
 	catch( ...)
