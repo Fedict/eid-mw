@@ -9,7 +9,7 @@ Homepage: http://github.com/Fedict/eid-mw
 Package: eid-mw
 Section: metapackages
 Architecture: any
-Depends: ${misc:Depends}, libbeidpkcs11-0 (>> ${binary:Version}.~), beid-mozilla-extension (>> ${binary:Version}.~), pcscd
+Depends: ${misc:Depends}, libbeidpkcs11-0, beid-mozilla-extension, pcscd
 Recommends: libccid, libacr38u
 Description: low-level support for Belgian Electronic Identity Card
  This metapackage depends on a PKCS#11 module and a Firefox plugin for
@@ -23,7 +23,7 @@ Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Replaces: eid-mw (<< 4.0.6r1508)
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-bin (>> ${binary:Version}.~)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-bin
 Description: PKCS#11 library for Belgian Electronic Identity Card
  This package contains the PKCS#11 module for the Belgian Electronic
  Identity card, and a few helper libraries. It handles all low-level
@@ -34,7 +34,7 @@ Section: debug
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0 (>> ${binary:Version}.~)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0
 Description: PKCS#11 library for Belgian Electronic Identity Card - Debug symbols
  This package contains the debug symbols for the Belgian Electronic
  Identity Card's PKCS#11 library. It is only useful in case of problems,
@@ -69,7 +69,7 @@ Description: helper programs for libbeidpkcs11-0
 Package: beid-mozilla-extension
 Section: web
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, beid-mozilla-webext (>> ${binary:Version}.~) | beid-mozilla-xpcext (>> ${binary:Version}.~)
+Depends: ${shlibs:Depends}, ${misc:Depends}, beid-mozilla-webext | beid-mozilla-xpcext
 Description: Belgian Electronic Identity Card - Mozilla plugin
  This package contains the mozilla plugin for the Belgian Electronic
  Identity Card. Install it if you wish to log on to websites using your
@@ -79,7 +79,7 @@ Description: Belgian Electronic Identity Card - Mozilla plugin
 Package: beid-mozilla-webext
 Section: web
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0 (>> ${binary:Version}.~), firefox (>= 58) | firefox-esr (>= 58)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0, firefox (>= 58) | firefox-esr (>= 58)
 Conflicts: beid-mozilla-extension (<< 4.3.6), beid-mozilla-xpcext
 Replaces: beid-mozilla-extension (<< 4.3.6)
 Description: Belgian Electronic Identity Card - WebExtension
@@ -96,7 +96,7 @@ Section: web
 Architecture: all
 Conflicts: beid-mozilla-extension (<< 4.3.6), beid-mozilla-webext
 Replaces: beid-mozilla-extension (<< 4.3.6)
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0 (>> ${binary:Version}.~), firefox (<< 57) | firefox-esr (<< 57)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0, firefox (<< 57) | firefox-esr (<< 57)
 Description: Belgian Electronic Identity Card - XPCOM extension
  This package contains the mozilla XPCOM-based addon for the Belgian
  Electronic Identity Card. Install it if you wish to log on to websites
@@ -153,7 +153,7 @@ Section: debug
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libeidviewer0 (>> ${binary:Version}.~)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libeidviewer0
 Description: eid-viewer library - debug symbols
  The eid-viewer library is a high-level, event-based library written
  originally for use by the official eID-viewer program. It is a simple
