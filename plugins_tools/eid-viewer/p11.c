@@ -410,6 +410,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 	if (pcurrentSlotList == NULL)
 	{
 		//pkcs11v2.20: refresh the slotlist
+		be_log(EID_VWR_LOG_NORMAL, TEXT("SLOTEVENT No slot list set, resetting slot list slotID given = %d"), slotID);
 		eid_vwr_p11_reset_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
 		is_auto = TRUE;
 	}
@@ -437,6 +438,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 		{
 			//new reader attached
 			//pkcs11v2.20: refresh the slotlist
+			be_log(EID_VWR_LOG_NORMAL, TEXT("SLOTEVENT with unknown slotID = %d resetting slot list"), slotID);
 			eid_vwr_p11_reset_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
 		}
 		else
@@ -452,6 +454,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 				if (p11Ret == CKR_DEVICE_ERROR)
 				{
 					//error trying to communicate with the slot, reset the slot list (as most lickely the card reader got removed)
+					be_log(EID_VWR_LOG_NORMAL, TEXT("CKR_DEVICE_ERROR received, was reader removed?"));
 					eid_vwr_p11_reset_slot_list(&pcurrentSlotList, &currentReaderCount, &currentCardSlotID);
 					return EIDV_RV_OK;
 				}
@@ -469,6 +472,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 					//in case of auto, only handle new card if none was active already
 					if (currentCardSlotID == -1)
 					{
+						be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_TOKEN_INSERTED slotID = %d"), slotID);
 						sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &slotID);
 						currentCardSlotID = slotID;
 					}
@@ -481,11 +485,13 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 						//if another card was already present in another card reader, remove that one first 
 						if ((currentCardSlotID != -1) && (currentCardSlotID != slot_manual))
 						{
+							be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_TOKEN_REMOVED slotID = %d"), currentCardSlotID);
 							sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &currentCardSlotID);
 							currentCardSlotID = -1;
 						}
 						if (currentCardSlotID != slot_manual)
 						{
+							be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_TOKEN_INSERTED slotID = %d"), slotID);
 							sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &slotID);
 							currentCardSlotID = slotID;
 						}
@@ -499,6 +505,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 					//if the token that was removed, was in the currentCardSlotID
 					if (currentCardSlotID == slotID)
 					{
+						be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_TOKEN_REMOVED slotID = %d"), slotID);
 						sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &slotID);
 						currentCardSlotID = -1;
 					}
@@ -509,6 +516,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 						if (ret == EIDV_RV_OK)
 						{
 							//we found another eID card, report it
+							be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_TOKEN_INSERTED slotID = %d"), currentCardSlotID);
 							sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &currentCardSlotID);
 						}
 					}
@@ -518,6 +526,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 					//if a card was already present in a card reader, remove it 
 					if (currentCardSlotID != -1)
 					{
+						be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_TOKEN_REMOVED slotID = %d"), slotID);
 						sm_handle_event_onthread(EVENT_TOKEN_REMOVED, &slotID);
 						currentCardSlotID = -1;
 					}
@@ -611,8 +620,14 @@ int eid_vwr_p11_reset_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcu
 		free(*ppcurrentSlotList);
 		*ppcurrentSlotList = NULL;
 	}
+	if (*pcurrentCardSlotID != -1)
+	{
+		be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_TOKEN_REMOVED slotID = %d"),*pcurrentCardSlotID);
+		sm_handle_event_onthread(EVENT_TOKEN_REMOVED, pcurrentCardSlotID);
+		*pcurrentCardSlotID = -1;
+	}
 	*pcurrentReaderCount = 0;
-	*pcurrentCardSlotID = -1;
+
 	is_auto = TRUE;//we are not certain that slots have kept their position in the list, so move back to auto selection
 
 	p11Ret = C_GetSlotList(CK_FALSE, NULL, &tempCount);
@@ -630,6 +645,7 @@ int eid_vwr_p11_reset_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcu
 		{ 
 			*pcurrentReaderCount = tempCount;
 			//a reader was found, handle the reader found event
+			be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_READER_FOUND slotID = %d"), *(*ppcurrentSlotList));
 			sm_handle_event_onthread(EVENT_READER_FOUND, *ppcurrentSlotList);
 
 			//we have a new slot list, now we fetch the reader descriptions and send them to the UI
@@ -640,6 +656,7 @@ int eid_vwr_p11_reset_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcu
 			if (ret == EIDV_RV_OK)
 			{
 				*pcurrentCardSlotID = cardSlotID;
+				be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_TOKEN_INSERTED slotID = %d"), cardSlotID);
 				sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &cardSlotID);
 			}
 		}
@@ -730,13 +747,22 @@ int eid_vwr_p11_wait_for_slot_event(BOOLEAN blocking, CK_SLOT_ID_PTR pSlotID)
 	{
 		if (p11Ret == CKR_NO_EVENT)
 		{
-			be_log(EID_VWR_LOG_DETAIL, TEXT("C_WaitForSlotEvent with retVal: %.8x"), p11Ret);
+			be_log(EID_VWR_LOG_DETAIL, TEXT("C_WaitForSlotEvent with CKR_NO_EVENT, retVal: %.8x"), p11Ret);
 			return EIDV_RV_FAIL;
 		}
-		be_log(EID_VWR_LOG_ERROR, TEXT("C_WaitForSlotEvent with retVal: %.8x"), p11Ret);
+		
 		if (p11Ret == CKR_CRYPTOKI_NOT_INITIALIZED)
 		{
+			be_log(EID_VWR_LOG_ERROR, TEXT("C_WaitForSlotEvent returned EIDV_RV_TERMINATE"));
 			return EIDV_RV_TERMINATE;
+		}
+		if (CKR_FUNCTION_CANCELED)
+		{
+			be_log(EID_VWR_LOG_NORMAL, TEXT("C_WaitForSlotEvent returned CKR_FUNCTION_CANCELED"), p11Ret);
+		}
+		else
+		{
+			be_log(EID_VWR_LOG_ERROR, TEXT("C_WaitForSlotEvent with retVal: %.8x"), p11Ret);
 		}
 		SLEEP(1);
 		return EIDV_RV_FAIL;
