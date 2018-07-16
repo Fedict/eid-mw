@@ -88,41 +88,6 @@ exit:
 	pclose(f);
 }
 
-void do_java(GtkWidget* top, GtkListStore* data) {
-	FILE* f = popen("java -version 2>&1", "r");
-	GtkTreeIter iter;
-	char line[256];
-	char* loc;
-	int rv;
-
-	gtk_list_store_append(data, &iter);
-	gtk_list_store_set(data, &iter, 0, _("Java version"), -1);
-
-	if(!f) {
-		gtk_list_store_set(data, &iter, 1, _("(not found)"), -1);
-		return;
-	}
-	line[255]='\0';
-	if(fgets(line, 256, f) == NULL) {
-		gtk_list_store_set(data, &iter, 0, _("(not found)"), -1);
-		pclose(f);
-		return;
-	}
-	rv = pclose(f);
-	if(!WIFEXITED(rv)) {
-		gtk_list_store_set(data, &iter, 1, _("(not found; check failed)"), -1);
-		return;
-	}
-	if(WEXITSTATUS(rv) == 127) {
-		gtk_list_store_set(data, &iter, 1, _("(not found in path)"), -1);
-		return;
-	}
-	if((loc = strrchr(line, '"')) != NULL) {
-		*loc = '\0';
-		gtk_list_store_set(data, &iter, 1, strchr(line, '"')+1, -1);
-	}
-}
-
 void do_viewer(GtkWidget* top, GtkListStore* data) {
 	FILE* f = popen("which eid-viewer", "r");
 	GtkTreeIter iter;
@@ -406,7 +371,6 @@ int main(int argc, char** argv) {
 
 	check_pcsc(window, store);
 	do_viewer(window, store);
-	do_java(window, store);
 	do_distro(window, store);
 	do_uname(window, store);
 	do_files(window, store);

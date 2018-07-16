@@ -6,6 +6,7 @@
 #include "state.h"
 
 #include <string.h>
+#include <stdbool.h>
 #include "p11.h"
 #include "conversions.h"
 
@@ -24,31 +25,30 @@
 	goto out; \
 }
 
-static int missing_reqd_attributes(struct attribute_desc *attribute) {
+static bool have_attribute_data(struct attribute_desc *attribute) {
 	while(attribute != NULL && attribute->name) {
-		if(attribute->reqd && !(cache_have_label(attribute->label))) {
-			return 1;
+		if(cache_have_label(attribute->label)) {
+			return true;
 		}
 		attribute++;
 	}
-	return 0;
+	return false;
 }
 
-static int missing_reqd_elements(struct element_desc *element) {
+static bool have_element_data(struct element_desc *element) {
 	while(element != NULL && element->name) {
 		if(element->label == NULL) {
-			if(missing_reqd_attributes(element->attributes) || missing_reqd_elements(element->child_elements)) {
-				return 1;
+			if(have_attribute_data(element->attributes) || have_element_data(element->child_elements)) {
+				return true;
 			}
 		} else {
-			int have_cache = cache_have_label(element->label);
-			if(!have_cache && element->reqd) {
-				return 1;
+			if(cache_have_label(element->label)) {
+				return true;
 			}
 		}
 		element++;
 	}
-	return 0;
+	return false;
 }
 
 /* Write attributes to the description in *attribute */
@@ -88,7 +88,7 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 		if(element->label == NULL) {
 			assert(element->child_elements != NULL || element->attributes != NULL);
 			if(!element->reqd) {
-				if(missing_reqd_attributes(element->attributes) || missing_reqd_elements(element->child_elements)) {
+				if(!have_attribute_data(element->attributes) || !have_element_data(element->child_elements)) {
 					continue;
 				}
 			}
