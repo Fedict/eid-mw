@@ -2339,16 +2339,6 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 	unsigned int i = 0;
 	P11_SLOT *pSlot = NULL;
 
-#ifdef PKCS11_FF
-	//our fake firefox slots should not return CKR_SLOT_ID_INVALID, or firefox will ignore them
-	if ((hSlot >= (CK_ULONG) (p11_get_nreaders() - 1))
-	    && (hSlot <= (CK_ULONG) cal_getgnFFReaders()))
-	{
-		*pStatus = P11_CARD_NOT_PRESENT;
-		return ret;
-	}
-#endif
-
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
@@ -2465,22 +2455,22 @@ CK_RV cal_get_slot_changes(int *ph)
 				//there could be more than one reader that changed state,
 				//keep these events in the slotlist
 #ifdef PKCS11_FF
-				//incase the upnp reader detected a reader event, we report it,
+				//in case the upnp reader detected a reader event, we report it,
 				if (i == (p11_get_nreaders() - 1))
 				{
 					//the '\\Pnp\\Notification' reader reported an event, check if number of readers is higher
 					//so the list of readers can be adjusted
 					//other reader's events will be ignored as the reader list will get refreshed
-					if (oReadersInfo->IsReaderInserted(i))	//-1 as we don't count the pnp reader
+					if (oReadersInfo->IsReaderInserted(i))
 					{
 						if (gnFFReaders == 0)
 						{
-							gnFFReaders = p11_get_nreaders() + 1;
+							gnFFReaders = p11_get_nreaders();
 						} else
 						{
 							gnFFReaders++;
 						}
-						*ph = gnFFReaders - 1;
+						*ph = gnFFReaders;
 					}
 					//if this is the only reader change, report the reader removal as a change of the upnp slot
 					else if (*ph == -1)
@@ -2941,20 +2931,9 @@ CK_RV cal_wait_for_the_slot_event(int block)
 		if (block)
 		{
 			p11_unlock();
-/*#ifdef PKCS11_FF
-			while ((p11_get_init() == BEIDP11_INITIALIZED)
-			       && (lret == SCARD_E_TIMEOUT))
-			{
-				lret = oCardLayer->
-					GetStatusChange(TIMEOUT_POLL,
-							txReaderStates,
-							ulnReaders);
-			}
-#else*/
-			oCardLayer->GetStatusChange(TIMEOUT_INFINITE,
-						    txReaderStates,
-						    ulnReaders);
-//#endif
+
+			oCardLayer->GetStatusChange(TIMEOUT_INFINITE, txReaderStates, ulnReaders);
+
 			log_trace(WHERE, "I: status change received");
 			p11_lock();
 			if (p11_get_init() != BEIDP11_INITIALIZED)

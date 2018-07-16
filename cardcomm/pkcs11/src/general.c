@@ -256,8 +256,7 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
 	//to overcome this problem, we start our SlotIDs from 0 and not 1 !!!
 
 	log_trace(WHERE, "I: h=0");
-	//Do not show the virtual reader (used to capture the reader connect events)
-	//for (h=0; h < (p11_get_nreaders()-1); h++)
+
 	for (h=0; h < p11_get_nreaders(); h++)
 	{
 		log_trace(WHERE, "I: h=%i",h);
@@ -295,29 +294,6 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
 			continue;
 		}
 	} //end for
-
-#ifdef PKCS11_FF
-	//return the fake slotID for the attached/removed reader
-	if (cal_getgnFFReaders()!= 0)
-	{
-		//return a higher number of slots, so FF starts waiting for slotchanges again
-		if(pSlotList == NULL)
-		{
-			c = cal_getgnFFReaders();
-		}
-		else
-		{
-			for(; h < cal_getgnFFReaders(); h++)
-			{
-				log_trace(WHERE, "I: h=%i",h);
-				c++;
-				if (c <= *pulCount )
-					pSlotList[c-1] = h;
-			}
-		}
-	}
-
-#endif
 
 	//if more slots are found than can be returned in slotlist, return buffer too smal 
 	if ((c > *pulCount) && (pSlotList != NULL_PTR) )
@@ -532,10 +508,6 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 	P11_SLOT *p11Slot = NULL;
 	int i = 0;
 	CK_BBOOL locked = CK_FALSE;
-#ifdef PKCS11_FF
-	CK_BBOOL bRunning = CK_TRUE;
-	long error = 0;
-#endif
 
 	log_trace(WHERE, "I: enter");
 
@@ -545,31 +517,6 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
 	}	
-
-#ifdef PKCS11_FF
-	/*error = cal_check_pcsc(&bRunning);
-	if(bRunning == CK_FALSE)
-	{
-		while( (error == 0) && (bRunning == CK_FALSE) )
-		{
-			cal_wait (500);
-			error = cal_check_pcsc(&bRunning);
-
-			//check if pkcs11 isn't finalizing
-			if (p11_get_init() != BEIDP11_INITIALIZED)
-			{
-				log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NO_LONGER_INITIALIZED");
-				return (CKR_CRYPTOKI_NOT_INITIALIZED);
-			}	
-		}
-		//pcsc just got launched, so establish a new context
-		p11_lock();
-		//check if nowhere else the context has been reestablished
-		//TODO : if()
-		cal_re_establish_context();
-		p11_unlock();
-	}*/
-#endif
 
 	p11_lock();
 
@@ -586,8 +533,10 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 	log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
 
-	// Doesn't seem to work on Linux: if you insert a card then Mozilla freezes
-	// until you remove the card. This function however seems to work fine.
+	/* Doesn't seem to work on Linux: if you insert a card then Mozilla freezes
+	 * until you remove the card. 
+	 * So we might have to return "not supported" in which case Ff 1.5 defaults
+	 * to polling in the main thread, like before. */
 #ifndef _WIN32
 	CLEANUP(CKR_FUNCTION_NOT_SUPPORTED);
 #endif
@@ -607,14 +556,18 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 			{
 				if(cal_getgnFFReaders() == 0)
 				{
-					cal_setgnFFReaders(p11_get_nreaders()+1);
+					cal_setgnFFReaders(p11_get_nreaders());
 				}
 				else
 				{
 					cal_incgnFFReaders();
 				}
-				i = (cal_getgnFFReaders()-1);
-			}
+				i = (cal_getgnFFReaders());
+			}/*
+			if (i == (p11_get_nreaders() - 1))
+			{
+				i = p11_get_nreaders();
+			}*/
 #endif
 			*pSlot = i;
 			//clear event
@@ -648,13 +601,6 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 	if (ret == CKR_OK)
 		*pSlot = h;
-
-	//else CKR_NO_EVENT
-
-	/* Firefox 1.5 tries to call this function (with the blocking flag)
-	* in a separate thread; and this causes the pkcs11 lib to hang on Linux
-	* So we might have to return "not supported" in which case Ff 1.5 defaults
-	* to polling in the main thread, like before. */
 
 cleanup:
 	if(locked == CK_TRUE)
