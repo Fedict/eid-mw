@@ -406,6 +406,8 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 	CK_SLOT_ID slotID = *((CK_SLOT_ID_PTR)slot_ID);
 	boolean slotIDKnown = FALSE;
 
+	be_log(EID_VWR_LOG_DETAIL, TEXT("eid_vwr_p11_check_reader_list called slotID given = %d"), slotID);
+
 	//if reader list is not known yet, retrieve it
 	if (pcurrentSlotList == NULL)
 	{
@@ -420,6 +422,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 		if (slotID == SLOTID_FIRSTSLOT)
 		{
 			slotID = pcurrentSlotList[0];
+			be_log(EID_VWR_LOG_DETAIL, TEXT("SLOTID_FIRSTSLOT received setting it to %d"), slotID);
 		}
 
 		//we already have a slotlist, so first check if slot_ID is in this list
@@ -460,6 +463,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 				}
 
 				//ignore this state change
+				be_log(EID_VWR_LOG_COARSE, TEXT("Ignoring this state change"));
 				return EIDV_RV_FAIL;
 			}
 
@@ -545,6 +549,7 @@ int eid_vwr_p11_update_slot_list_ui(CK_SLOT_ID_PTR slotlist, CK_ULONG slotCount)
 	slotdesc* slotDescs = (slotdesc*)malloc(slotCount * sizeof(slotdesc));
 	if (slotDescs == NULL)
 	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_p11_update_slot_list_ui failed allocating memory for the slot descriptions"));
 		return EIDV_RV_FAIL;
 	}
 	memset(slotDescs, 0, slotCount * sizeof(slotdesc));
@@ -629,7 +634,7 @@ int eid_vwr_p11_reset_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcu
 	*pcurrentReaderCount = 0;
 
 	is_auto = TRUE;//we are not certain that slots have kept their position in the list, so move back to auto selection
-
+	be_log(EID_VWR_LOG_DETAIL, TEXT("eid_vwr_p11_reset_slot_list resetting slotList"), p11Ret, tempCount);
 	p11Ret = C_GetSlotList(CK_FALSE, NULL, &tempCount);
 	if ( (tempCount > 0) && (p11Ret == CKR_OK))
 	{
@@ -660,6 +665,12 @@ int eid_vwr_p11_reset_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcu
 				sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &cardSlotID);
 			}
 		}
+		else {
+			be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_p11_reset_slot_list failed populating new slotList: C_GetSlotList returned = 0X%x \n number of slots = %d"), p11Ret, tempCount);
+		}
+	}
+	else{
+		be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_p11_reset_slot_list failed creating new slotList: C_GetSlotList returned = 0X%x number of slots = %d"), p11Ret, tempCount);
 	}
 	return ret;
 }
