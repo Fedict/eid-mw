@@ -76,7 +76,7 @@ wait_again:
 	return bChanged;
 }
 */
-	bool CReadersInfo::IsReaderInserted(unsigned long ulIndex)
+/*	bool CReadersInfo::IsReaderInserted(unsigned long ulIndex)
 	{
 		unsigned long eventCount = (m_tInfos[ulIndex].ulEventState >> 16) & 0x00FF;
 		unsigned long currentCount = (m_tInfos[ulIndex].ulCurrentState >> 16) & 0x00FF;
@@ -85,7 +85,7 @@ wait_again:
 			return true;
 		}
 		return false;
-	}
+	}*/
 
 	bool CReadersInfo::ReaderStateChanged(unsigned long ulIndex)
 	{

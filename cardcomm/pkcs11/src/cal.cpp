@@ -54,6 +54,7 @@ extern "C"
 }
 
 #ifdef PKCS11_FF
+/*
 static int gnFFReaders;
 int cal_getgnFFReaders(void)
 {
@@ -73,7 +74,7 @@ void cal_incgnFFReaders(void)
 void cal_re_establish_context(void)
 {
 	oCardLayer->PCSCReEstablishContext();
-}
+}*/
 
 #endif
 
@@ -131,7 +132,7 @@ CK_RV cal_init()
 
 	//init slots and token in slots
 #ifdef PKCS11_FF
-	gnFFReaders = 0;
+//	gnFFReaders = 0;
 #endif
 	memset(gpSlot, 0, sizeof(gpSlot));
 	ret = cal_init_slots();
@@ -2455,29 +2456,21 @@ CK_RV cal_get_slot_changes(int *ph)
 				//there could be more than one reader that changed state,
 				//keep these events in the slotlist
 #ifdef PKCS11_FF
-				//in case the upnp reader detected a reader event, we report it,
+				//in case the upnp reader detected a reader event, we report it with a slotID that is above the highest slotID in the current slotList
 				if (i == (p11_get_nreaders() - 1))
 				{
-					//the '\\Pnp\\Notification' reader reported an event, check if number of readers is higher
-					//so the list of readers can be adjusted
-					//other reader's events will be ignored as the reader list will get refreshed
-					if (oReadersInfo->IsReaderInserted(i))
-					{
-						if (gnFFReaders == 0)
+					if(first)
+					{ 
+						*ph = p11_get_nreaders();
+						ret = CKR_OK;
+					}
+					else {
+						pSlot = p11_get_slot(i);
+						if (pSlot)
 						{
-							gnFFReaders = p11_get_nreaders();
-						} else
-						{
-							gnFFReaders++;
+							pSlot->ievent = 2;
 						}
-						*ph = gnFFReaders;
 					}
-					//if this is the only reader change, report the reader removal as a change of the upnp slot
-					else if (*ph == -1)
-					{
-						*ph = i;
-					}
-					ret = CKR_OK;
 				} else
 #endif
 				{
@@ -2494,7 +2487,7 @@ CK_RV cal_get_slot_changes(int *ph)
 							if (oReadersInfo->CardPresent(i))
 								pSlot->ievent = 1;
 							else
-								pSlot->ievent = -1;
+								pSlot->ievent = 2;
 						}
 					}
 				}

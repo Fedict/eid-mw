@@ -551,23 +551,11 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 		if (p11Slot->ievent != P11_EVENT_NONE)
 		{
 #ifdef PKCS11_FF
-			//in case the upnp reader caused the event, return a new slotnumber
-			if( (i+1) == p11_get_nreaders())
-			{
-				if(cal_getgnFFReaders() == 0)
-				{
-					cal_setgnFFReaders(p11_get_nreaders());
-				}
-				else
-				{
-					cal_incgnFFReaders();
-				}
-				i = (cal_getgnFFReaders());
-			}/*
+			//in case the upnp reader caused the event, return a slotnumber higher then the highest slotnumber in the current slotList
 			if (i == (p11_get_nreaders() - 1))
 			{
 				i = p11_get_nreaders();
-			}*/
+			}
 #endif
 			*pSlot = i;
 			//clear event

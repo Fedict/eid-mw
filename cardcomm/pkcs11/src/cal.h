@@ -31,10 +31,10 @@ extern "C"
 #endif
 
 #ifdef PKCS11_FF
-	int cal_getgnFFReaders(void);
+/*	int cal_getgnFFReaders(void);
 	void cal_setgnFFReaders(int newgnFFReaders);
 	void cal_incgnFFReaders(void);
-	void cal_re_establish_context(void);
+	void cal_re_establish_context(void);*/
 #endif
 
 #define CAL_MECHANISM_TABLE { \

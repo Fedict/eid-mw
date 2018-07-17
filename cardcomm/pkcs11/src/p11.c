@@ -57,34 +57,28 @@ unsigned int nSessions = 0;
 
 P11_SLOT * p11_get_slot(unsigned int h)
 {
-   //thanks to Adobe, handles have to start from 0!!!
-   if (h >= nReaders)
-	 {
-#ifdef PKCS11_FF
-		 //return the upnp reader, as FF is probably asking info about the detected/removed reader
-		 if(nReaders > 0)
-				h = nReaders-1; 
-		 else
-			 h = 0;
-#else
-      return NULL; //invalid handle
-#endif
-	 }
-   return &gpSlot[h];
+	//thanks to Adobe, handles start from 0!!!
+	if (h >= nReaders)
+	{
+		return NULL; //invalid handle
+	}
+	return &gpSlot[h];
 }
 
 int p11_get_session(unsigned int h, P11_SESSION **ppSession)
 {
-int ret = 0;
+	int ret = 0;
 
-if ( (h == 0) || (h > nSessions) )
-   return (CKR_SESSION_HANDLE_INVALID); //invalid handle
+	if ((h == 0) || (h > nSessions))
+	{
+		return (CKR_SESSION_HANDLE_INVALID); //invalid handle
+	}		
 
-*ppSession = &gpSessions[h-1];
+	*ppSession = &gpSessions[h - 1];
 
-ret = cal_validate_session(*ppSession);
+	ret = cal_validate_session(*ppSession);
 
-return (ret);
+	return (ret);
 }
 
 P11_OBJECT *p11_get_slot_object(P11_SLOT *pSlot, unsigned int h)
