@@ -78,14 +78,9 @@ wait_again:
 */
 	bool CReadersInfo::IsReaderInserted(unsigned long ulIndex)
 	{
-		unsigned long eventCount =
-			(m_tInfos[ulIndex].ulEventState >> 16) & 0x00FF;
-		unsigned long currentCount =
-			(m_tInfos[ulIndex].ulCurrentState >> 16) & 0x00FF;
-		if ((strcmp
-		     (m_tInfos[ulIndex].csReader.c_str(),
-		      "\\\\?PnP?\\Notification") == 0)
-		    && (eventCount > currentCount))
+		unsigned long eventCount = (m_tInfos[ulIndex].ulEventState >> 16) & 0x00FF;
+		unsigned long currentCount = (m_tInfos[ulIndex].ulCurrentState >> 16) & 0x00FF;
+		if ((strcmp (m_tInfos[ulIndex].csReader.c_str(), "\\\\?PnP?\\Notification") == 0) && (eventCount > currentCount))
 		{
 			return true;
 		}
@@ -97,8 +92,7 @@ wait_again:
 		if (ulIndex >= m_ulReaderCount)
 			throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
 
-		return (m_tInfos[ulIndex].ulEventState !=
-			m_tInfos[ulIndex].ulCurrentState);
+		return (m_tInfos[ulIndex].ulEventState != m_tInfos[ulIndex].ulCurrentState);
 		//return ( (m_tInfos[ulIndex].ulEventState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT)) != (m_tInfos[ulIndex].ulCurrentState & (SCARD_STATE_EMPTY | SCARD_STATE_PRESENT)) );
 		//return 0 != (m_tInfos[ulIndex].ulEventState & EIDMW_STATE_CHANGED);
 	}
