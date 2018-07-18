@@ -143,14 +143,13 @@ namespace eIDViewer
         private static void CSCbNewSrc(eid_vwr_source eid_vwr_source)
         {
             theData.WriteLog("CSCbNewSrc called " + eid_vwr_source.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theData.ResetDataValues();
             switch (eid_vwr_source)
             {
-                case eid_vwr_source.EID_VWR_SRC_UNKNOWN:
-                    theData.ResetDataValues();
+                case eid_vwr_source.EID_VWR_SRC_UNKNOWN:            
                     AdjustIconImage("Resources/Images/state_error.png");
                     break;
                 case eid_vwr_source.EID_VWR_SRC_NONE:
-                    theData.ResetDataValues();
                     AdjustIconImage("Resources/Images/state_noeidpresent.png");
                     break;
                 case eid_vwr_source.EID_VWR_SRC_CARD:
