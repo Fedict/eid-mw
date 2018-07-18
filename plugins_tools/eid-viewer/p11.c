@@ -453,7 +453,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 			{
 				//the slotID is already known, first check if the reader is removed
 				//if so, update the slot list
-				be_log(EID_VWR_LOG_COARSE, TEXT("Failed retrieving slot information\n C_GetSlotInfo failed. slotID = %d"), slotID);
+				be_log(EID_VWR_LOG_COARSE, TEXT("Failed retrieving slot information\n C_GetSlotInfo failed with 0X%x. slotID = %d"), p11Ret, slotID);
 				if (p11Ret == CKR_DEVICE_ERROR)
 				{
 					//error trying to communicate with the slot, reset the slot list (as most lickely the card reader got removed)
