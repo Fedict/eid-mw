@@ -142,7 +142,7 @@ namespace eIDViewer
 
         private static void CSCbNewSrc(eid_vwr_source eid_vwr_source)
         {
-            theData.WriteLog("CSCbNewSrc called " + eid_vwr_source.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theData.WriteLog("CSCbNewSrc called " + eid_vwr_source.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
             theData.ResetDataValues();
             switch (eid_vwr_source)
             {
@@ -153,6 +153,7 @@ namespace eIDViewer
                     AdjustIconImage("Resources/Images/state_noeidpresent.png");
                     break;
                 case eid_vwr_source.EID_VWR_SRC_CARD:
+                    theData.open_enabled = false;
                     theData.text_color = "Black";
                     AdjustIconImage("Resources/Images/state_eidpresent.png");
                     theData.eid_card_present = true;
@@ -192,7 +193,7 @@ namespace eIDViewer
 
         private static void CSCbnewstate(eid_vwr_states state)
         {
-            theData.WriteLog("CSCbnewstate called " + state.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theData.WriteLog("CSCbnewstate called " + state.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
 
             switch (state)
             {
