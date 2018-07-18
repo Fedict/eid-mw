@@ -73,8 +73,7 @@ namespace eIDMW
 		0x04, 0x14
 	};
 
-	CReader::CReader(const std::string & csReader,
-			 CContext * poContext):m_poCard(NULL),m_oPKCS15()
+	CReader::CReader(const std::string & csReader, CContext * poContext):m_poCard(NULL),m_oPKCS15()
 	{
 		m_csReader = csReader;
 		m_wsReader = utilStringWiden(csReader);
@@ -130,8 +129,9 @@ namespace eIDMW
 			if (m_poCard == NULL)
 			{
 				if (m_poContext->m_oPCSC.Status(m_csReader))
-					status = Connect()? CARD_INSERTED :
-						CARD_NOT_PRESENT;
+				{ 
+					status = Connect()? CARD_INSERTED : CARD_NOT_PRESENT;
+				}
 				else
 					status = CARD_NOT_PRESENT;
 			} else
@@ -149,11 +149,11 @@ namespace eIDMW
 					Disconnect();
 					// if bReconnect = true, then we try to connect to a
 					// possibly new card that has been inserted
-					if (bReconnect
-					    && m_poContext->m_oPCSC.
-					    Status(m_csReader))
-						status = Connect()? CARD_OTHER :
-							CARD_REMOVED;
+					if (bReconnect && m_poContext->m_oPCSC.Status(m_csReader))
+					{
+						status = Connect()? CARD_OTHER : CARD_REMOVED;
+					}
+						
 					else
 						status = CARD_REMOVED;
 				}
@@ -169,8 +169,7 @@ namespace eIDMW
 
 		if (iStatusCount < 5)
 		{
-			MWLOG(LEV_DEBUG, MOD_CAL, L"    ReaderStatus(): %ls",
-			      Status2String(status));
+			MWLOG(LEV_DEBUG, MOD_CAL, L"    ReaderStatus(): %ls", Status2String(status));
 			iStatusCount++;
 		}
 
@@ -196,9 +195,7 @@ namespace eIDMW
 		if (m_poCard != NULL)
 			Disconnect(DISCONNECT_LEAVE_CARD);
 
-		m_poCard =
-			CardConnect(m_csReader, m_poContext, &m_oPinpad,
-				    m_oCardPluginLib);
+		m_poCard = CardConnect(m_csReader, m_poContext, &m_oPinpad, m_oCardPluginLib);
 		if (m_poCard != NULL)
 		{
 			m_oPKCS15.SetCard(m_poCard);
@@ -206,23 +203,15 @@ namespace eIDMW
 			if ((strstr(m_csReader.c_str(), "SPRx32 USB") !=
 			     NULL))
 			{
-				m_oPinpad.Init(m_poContext, m_poCard->m_hCard,
-					       m_csReader,
-					       m_poCard->GetPinpadPrefix(),
-					       m_poCard->GetIFDVersion());
+				m_oPinpad.Init(m_poContext, m_poCard->m_hCard, m_csReader, m_poCard->GetPinpadPrefix(), m_poCard->GetIFDVersion());
 			} else
 			{
 #endif
-				m_oPinpad.Init(m_poContext, m_poCard->m_hCard,
-					       m_csReader,
-					       m_poCard->GetPinpadPrefix());
+				m_oPinpad.Init(m_poContext, m_poCard->m_hCard, m_csReader, m_poCard->GetPinpadPrefix());
 #ifdef WIN32
 			}
 #endif
-			MWLOG(LEV_INFO, MOD_CAL,
-			      L" Connected to %ls card in reader %ls",
-			      Type2String(m_poCard->GetType()),
-			      m_wsReader.c_str());
+			MWLOG(LEV_INFO, MOD_CAL, L" Connected to %ls card in reader %ls", Type2String(m_poCard->GetType()), m_wsReader.c_str());
 		}
 
 		return m_poCard != 0;
@@ -248,9 +237,7 @@ namespace eIDMW
 			try
 			{
 				poTemp->Disconnect(disconnectMode);
-				MWLOG(LEV_INFO, MOD_CAL,
-				      L" Disconnected from card in reader %ls",
-				      m_wsReader.c_str());
+				MWLOG(LEV_INFO, MOD_CAL, L" Disconnected from card in reader %ls", m_wsReader.c_str());
 				delete poTemp;
 			}
 			catch( ...)
@@ -345,9 +332,7 @@ namespace eIDMW
 		return m_poCard->SelectApplication(oAID);
 	}
 
-	CByteArray CReader::ReadFile(const std::string & csPath,
-				     unsigned long ulOffset,
-				     unsigned long ulMaxLen, bool bDoNotCache)
+	CByteArray CReader::ReadFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen, bool bDoNotCache)
 	{
 		if (m_poCard == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
@@ -365,18 +350,13 @@ namespace eIDMW
 
 			if (pin.bValid)
 			{
-				if (m_poCard->
-				    PinCmd(PIN_OP_VERIFY, pin, "", "",
-					   ulRemaining, NULL))
+				if (m_poCard-> PinCmd(PIN_OP_VERIFY, pin, "", "", ulRemaining, NULL))
 				{
-					return m_poCard->ReadFile(csPath,
-								  ulOffset,
-								  ulMaxLen);
-				} else
-					throw CMWEXCEPTION(ulRemaining == 0 ?
-							   EIDMW_ERR_PIN_BLOCKED
-							   :
-							   EIDMW_ERR_PIN_BAD);
+					return m_poCard->ReadFile(csPath, ulOffset, ulMaxLen);
+				} 
+				else {
+					throw CMWEXCEPTION(ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
+				}
 			} else
 				throw CMWEXCEPTION(EIDMW_ERR_CMD_NOT_ALLOWED);
 		}
@@ -398,8 +378,7 @@ namespace eIDMW
 		if (m_poCard == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
 
-		return m_poCard->PinCmd(operation, Pin, csPin1, csPin2,
-					ulRemaining);
+		return m_poCard->PinCmd(operation, Pin, csPin1, csPin2, ulRemaining);
 	}
 
 	unsigned long CReader::GetSupportedAlgorithms()
@@ -428,12 +407,10 @@ namespace eIDMW
 		if (m_poCard == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
 
-		unsigned long ulSupportedAlgos =
-			m_poCard->GetSupportedAlgorithms();
+		unsigned long ulSupportedAlgos = m_poCard->GetSupportedAlgorithms();
 
 		if (algo & ulSupportedAlgos)
-			return m_poCard->Sign(key, GetPinByID(key.ulAuthID),
-					      algo, oData);
+			return m_poCard->Sign(key, GetPinByID(key.ulAuthID), algo, oData);
 		else
 		{
 			CByteArray oAID_Data;
@@ -443,51 +420,37 @@ namespace eIDMW
 			else if (algo & SIGN_ALGO_SHA1_RSA_PKCS)
 				oAID_Data.Append(SHA1_AID, sizeof(SHA1_AID));
 			else if (algo & SIGN_ALGO_SHA256_RSA_PKCS)
-				oAID_Data.Append(SHA256_AID,
-						 sizeof(SHA256_AID));
+				oAID_Data.Append(SHA256_AID, sizeof(SHA256_AID));
 			else if (algo & SIGN_ALGO_SHA384_RSA_PKCS)
-				oAID_Data.Append(SHA384_AID,
-						 sizeof(SHA384_AID));
+				oAID_Data.Append(SHA384_AID, sizeof(SHA384_AID));
 			else if (algo & SIGN_ALGO_SHA512_RSA_PKCS)
-				oAID_Data.Append(SHA512_AID,
-						 sizeof(SHA512_AID));
+				oAID_Data.Append(SHA512_AID, sizeof(SHA512_AID));
 			else if (algo & SIGN_ALGO_RIPEMD160_RSA_PKCS)
-				oAID_Data.Append(RIPEMD160_AID,
-						 sizeof(RIPEMD160_AID));
+				oAID_Data.Append(RIPEMD160_AID, sizeof(RIPEMD160_AID));
 			oAID_Data.Append(oData);
 
 			if (ulSupportedAlgos & SIGN_ALGO_RSA_PKCS)
 			{
-				return m_poCard->Sign(key,
-						      GetPinByID(key.
-								 ulAuthID),
-						      SIGN_ALGO_RSA_PKCS,
-						      oAID_Data);
+				return m_poCard->Sign(key, GetPinByID(key.ulAuthID), SIGN_ALGO_RSA_PKCS, oAID_Data);
 			} else if (ulSupportedAlgos & SIGN_ALGO_RSA_RAW)
 			{
 				if (oAID_Data.Size() > key.ulKeyLenBytes - 11)
 				{
-					throw CMWEXCEPTION
-						(EIDMW_ERR_PARAM_RANGE);
+					throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
 				}
 
-				CByteArray oRawData(NULL, 0,
-						    key.ulKeyLenBytes);
+				CByteArray oRawData(NULL, 0, key.ulKeyLenBytes);
 
 				oRawData.Append(0x00);
 				oRawData.Append(0x01);
-				for (unsigned long i = 2;
-				     i <
-				     key.ulKeyLenBytes - oAID_Data.Size() - 1;
-				     i++)
+				for (unsigned long i = 2; i < key.ulKeyLenBytes - oAID_Data.Size() - 1; i++)
+				{
 					oRawData.Append(0xFF);
+				}		
 				oRawData.Append(0x00);
 				oRawData.Append(oAID_Data);
 
-				return m_poCard->Sign(key,
-						      GetPinByID(key.ulID),
-						      SIGN_ALGO_RSA_RAW,
-						      oData);
+				return m_poCard->Sign(key, GetPinByID(key.ulID), SIGN_ALGO_RSA_RAW, oData);
 			} else
 				throw CMWEXCEPTION(EIDMW_ERR_CHECK);
 		}
