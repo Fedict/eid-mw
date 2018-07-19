@@ -13,7 +13,7 @@
   <String Id="XSign" Overridable="yes">Xsign</String>
   <String Id="XSignDescr" Overridable="yes">Application XSign</String>
   <String Id="OutlooksncTitle" Overridable="yes">Configure MS Outlook for eID card</String>
-  <String Id="Office2010XAdESDescr" Overridable="yes">MS Office 2010: XAdES XL and TSA configuration for signatures</String>
+  <String Id="Office2010XAdESDescr" Overridable="yes">MS Office 2010: XAdES XL configuration for signatures</String>
   <String Id="OutlooksncDescr" Overridable="yes">Ensure that MS Outlook also accepts certificates that do not contain e-mail addresses, such as is the case with the Belgian identity card certificates.</String>
   <String Id="UtilsTitle" Overridable="yes">Useful tools for use of the eID card</String>
   <String Id="UtilsDesc" Overridable="yes">These tools can be used for the automatic configuration of existing applications that use the eID card.</String>
