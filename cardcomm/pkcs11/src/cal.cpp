@@ -35,11 +35,13 @@
 #ifndef WIN32
 #define strcpy_s(a,b,c)         strcpy((a),(c))
 #define sprintf_s(a,b,c,d)    sprintf((a),(c),(d))
-#endif
 
+//linux config file
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#endif
+
 
 using namespace eIDMW;
 

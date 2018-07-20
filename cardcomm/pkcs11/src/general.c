@@ -27,8 +27,11 @@
 #include "p11.h"
 #include "cal.h"
 
+#ifndef WIN32
+//linux config file
 #ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 #endif
 
 #define LOG_MAX_REC  10
