@@ -99,7 +99,6 @@
 		6536233B19A7E92B00D46ECB /* tkinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232419A7E92B00D46ECB /* tkinfo.c */; };
 		6536233D19A7E93A00D46ECB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536233C19A7E93A00D46ECB /* main.c */; };
 		65388A341A94A7F3007EBD2D /* libbeidpkcs11.4.3.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.3.8.dylib */; };
-		6578015420D135F4002B826A /* xmlfileversconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6578014F20D135F4002B826A /* xmlfileversconv.h */; };
 		6578015620D1364A002B826A /* xmlfileversconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6578015320D135F4002B826A /* xmlfileversconv.cpp */; };
 		6594447C19A8C29B003ABC24 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
 		6594447F19A8C2B0003ABC24 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
@@ -278,10 +277,10 @@
 		86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
 		8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B07D1011B21CEB80033CD62 /* wrong_init.c */; };
 		8B8B71591B74CCA300D8910E /* sign_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B71581B74CCA300D8910E /* sign_state.c */; };
-		8BC8E013210216900026D6AB /* booldecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E00F210216900026D6AB /* booldecode.cpp */; };
-		8BC8E014210216900026D6AB /* booldecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BC8E010210216900026D6AB /* booldecode.h */; };
-		8BC8E015210216900026D6AB /* toxmlmemberoffamilyconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */; };
-		8BC8E016210216900026D6AB /* toxmlmemberoffamilyconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */; };
+		8BD62CA021021C6000C28B6D /* toxmlmemberoffamilyconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */; };
+		8BD62CA121021C6300C28B6D /* toxmlmemberoffamilyconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */; };
+		8BD62CA221021C7000C28B6D /* xmlfileversconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6578014F20D135F4002B826A /* xmlfileversconv.h */; };
+		8BD62CA321021C9300C28B6D /* booldecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E00F210216900026D6AB /* booldecode.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1249,7 +1248,9 @@
 				65270A3E1FE97991004F326D /* eid-viewer.h in Headers */,
 				65314FBD2080E9E20079D0B0 /* workpermitconv.h in Headers */,
 				65270A3F1FE97991004F326D /* macros.h in Headers */,
+				8BD62CA221021C7000C28B6D /* xmlfileversconv.h in Headers */,
 				65270A401FE97991004F326D /* oslayer.h in Headers */,
+				8BD62CA121021C6300C28B6D /* toxmlmemberoffamilyconv.h in Headers */,
 				65270A411FE97991004F326D /* verify_cert.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1288,13 +1289,10 @@
 			files = (
 				86E3DDF21653D6210015B5E1 /* beidversions.h in Headers */,
 				86E3DDF41653D6210015B5E1 /* bytearray.h in Headers */,
-				8BC8E014210216900026D6AB /* booldecode.h in Headers */,
 				86E3DDFA1653D6210015B5E1 /* configuration.h in Headers */,
 				86E3DDFC1653D6210015B5E1 /* datafile.h in Headers */,
 				86E3DDFE1653D6210015B5E1 /* dynamiclib.h in Headers */,
 				86E3DDFF1653D6210015B5E1 /* eiderrors.h in Headers */,
-				6578015420D135F4002B826A /* xmlfileversconv.h in Headers */,
-				8BC8E016210216900026D6AB /* toxmlmemberoffamilyconv.h in Headers */,
 				65EABAF21C621F3D00034337 /* utftranslate.h in Headers */,
 				86E3DE001653D6210015B5E1 /* export.h in Headers */,
 				86E3DE021653D6210015B5E1 /* hash.h in Headers */,
@@ -1756,6 +1754,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD62CA321021C9300C28B6D /* booldecode.cpp in Sources */,
 				6578015620D1364A002B826A /* xmlfileversconv.cpp in Sources */,
 				65270A311FE976BE004F326D /* cache.cpp in Sources */,
 				65270A0A1FE9761A004F326D /* trustdirname.m in Sources */,
@@ -1789,6 +1788,7 @@
 				65270A6B1FE97A2B004F326D /* convworker.cpp in Sources */,
 				65270A341FE976BE004F326D /* labels.c in Sources */,
 				65270A321FE976BE004F326D /* state-posix.c in Sources */,
+				8BD62CA021021C6000C28B6D /* toxmlmemberoffamilyconv.cpp in Sources */,
 				65270A3A1FE976BE004F326D /* dataroot-osx.m in Sources */,
 				65270A361FE976BE004F326D /* oslayer-objc.m in Sources */,
 			);
@@ -1872,14 +1872,12 @@
 				86E3DDF91653D6210015B5E1 /* configuration.cpp in Sources */,
 				86E3DDFB1653D6210015B5E1 /* datafile.cpp in Sources */,
 				86E3DDFD1653D6210015B5E1 /* dynamiclib.cpp in Sources */,
-				8BC8E015210216900026D6AB /* toxmlmemberoffamilyconv.cpp in Sources */,
 				86E3DE011653D6210015B5E1 /* hash.cpp in Sources */,
 				86E3DE031653D6210015B5E1 /* md5.c in Sources */,
 				86E3DE041653D6210015B5E1 /* rmd160.c in Sources */,
 				86E3DE051653D6210015B5E1 /* sha1.c in Sources */,
 				86E3DE061653D6210015B5E1 /* sha256.c in Sources */,
 				86E3DE071653D6210015B5E1 /* sha384.c in Sources */,
-				8BC8E013210216900026D6AB /* booldecode.cpp in Sources */,
 				86E3DE081653D6210015B5E1 /* sha512.c in Sources */,
 				86E3DE0D1653D6210015B5E1 /* log.cpp in Sources */,
 				86E3DE0F1653D6210015B5E1 /* logbase.cpp in Sources */,
