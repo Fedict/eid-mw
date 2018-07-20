@@ -27,6 +27,10 @@
 #include "p11.h"
 #include "cal.h"
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #define LOG_MAX_REC  10
 
 extern CK_FUNCTION_LIST pkcs11_function_list;

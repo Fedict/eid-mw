@@ -84,8 +84,7 @@ then
 	default=no
 fi
 NO_DIALOGS=
-AC_ARG_ENABLE(dialogs, [  --enable-dialogs=[yes/no] turn off dialogs
-                               [default=$default]],, enable_dialogs=$default)
+AC_ARG_ENABLE(dialogs, AS_HELP_STRING([--enable-dialogs],[Turn off dialogs. default: on, unless gtk has been disabled]),, enable_dialogs=$default)
 if test "x$enable_dialogs" = "xno"; then
 	AC_MSG_RESULT(no)
 else
@@ -102,6 +101,10 @@ if test "$HAVE_GIO" -gt 0; then
 GLIB_GSETTINGS
 fi
 AM_CONDITIONAL(HAVE_GIO, [test "$HAVE_GIO" = 1])
+
+AC_ARG_ENABLE(p11v220, AS_HELP_STRING([--enable-p11v220], [Enable PKCS#11 v2.20 features (default off, uses PKCS#11 v2.11 instead)]),,[enable_p11v220=no])
+
+AS_IF([test "$enable_p11v220" = "yes"], AC_DEFINE(PKCS11_V2_20,[],[Define this if you want PKCS#11 v2.20 features]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

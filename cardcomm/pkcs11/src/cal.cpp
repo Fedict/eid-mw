@@ -37,6 +37,10 @@
 #define sprintf_s(a,b,c,d)    sprintf((a),(c),(d))
 #endif
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 using namespace eIDMW;
 
 CCardLayer *oCardLayer;
