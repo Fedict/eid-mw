@@ -84,8 +84,7 @@ then
 	default=no
 fi
 NO_DIALOGS=
-AC_ARG_ENABLE(dialogs, [  --enable-dialogs=[yes/no] turn off dialogs
-                               [default=$default]],, enable_dialogs=$default)
+AC_ARG_ENABLE(dialogs, AS_HELP_STRING([--enable-dialogs],[Turn off dialogs. default: on, unless gtk has been disabled]),, enable_dialogs=$default)
 if test "x$enable_dialogs" = "xno"; then
 	AC_MSG_RESULT(no)
 else
