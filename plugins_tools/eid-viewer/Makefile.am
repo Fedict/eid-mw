@@ -57,6 +57,8 @@ libeidviewer_la_SOURCES = \
 	conversions/hexnumconv.h \
 	conversions/hexdecode.h \
 	conversions/hexdecode.cpp \
+	conversions/booldecode.h \
+	conversions/booldecode.cpp \
 	conversions/convert.cpp \
 	conversions/convertor.cpp \
 	conversions/convertor.h \
@@ -74,6 +76,8 @@ libeidviewer_la_SOURCES = \
 	conversions/specconv.cpp \
 	conversions/specorgconv.h \
 	conversions/specorgconv.cpp \
+	conversions/toxmlmemberoffamilyconv.h \
+	conversions/toxmlmemberoffamilyconv.cpp \
 	conversions/valdate.h \
 	conversions/valdate.cpp \
 	conversions/workpermitconv.h \
