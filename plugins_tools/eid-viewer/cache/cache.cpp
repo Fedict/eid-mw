@@ -118,9 +118,7 @@ int cache_have_label(const EID_CHAR * label)
 
 EID_CHAR *cache_get_xmlform(const EID_CHAR * label)
 {
-	return (EID_CHAR *) convert_to_xml(label,
-					   (EID_CHAR *)
-					   cache_get_data(label)->data);
+	return (EID_CHAR *) convert_to_xml(label,(EID_CHAR *)cache_get_data(label)->data);
 }
 
 void cache_add_xmlform(const EID_CHAR * label, const EID_CHAR * value)

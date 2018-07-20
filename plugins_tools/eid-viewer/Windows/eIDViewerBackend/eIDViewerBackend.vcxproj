@@ -107,12 +107,14 @@
     <ClCompile Include="..\..\conversions\dateconv.cpp" />
     <ClCompile Include="..\..\conversions\dob.cpp" />
     <ClCompile Include="..\..\conversions\doctypeconv.cpp" />
+    <ClCompile Include="..\..\conversions\booldecode.cpp" />
     <ClCompile Include="..\..\conversions\genderconv.cpp" />
     <ClCompile Include="..\..\conversions\hexdecode.cpp" />
     <ClCompile Include="..\..\conversions\hexnumconv.cpp" />
     <ClCompile Include="..\..\conversions\natnumconv.cpp" />
     <ClCompile Include="..\..\conversions\specconv.cpp" />
     <ClCompile Include="..\..\conversions\specorgconv.cpp" />
+    <ClCompile Include="..\..\conversions\toxmlmemberoffamilyconv.cpp" />
     <ClCompile Include="..\..\conversions\valdate.cpp" />
     <ClCompile Include="..\..\conversions\workpermitconv.cpp" />
     <ClCompile Include="..\..\conversions\xmldoctypeconv.cpp" />
@@ -134,7 +136,9 @@
     <ClInclude Include="..\..\backend.h" />
     <ClInclude Include="..\..\conversions.h" />
     <ClInclude Include="..\..\conversions\convertor.h" />
+    <ClInclude Include="..\..\conversions\booldecode.h" />
     <ClInclude Include="..\..\conversions\specconv.h" />
+    <ClInclude Include="..\..\conversions\toxmlmemberoffamilyconv.h" />
     <ClInclude Include="..\..\conversions\xmlspecconv.h" />
     <ClInclude Include="..\..\cppeidstring.h" />
     <ClInclude Include="..\..\eidxmllite.h" />

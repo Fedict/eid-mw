@@ -223,9 +223,7 @@ int eid_vwr_gen_xml(void *data)
 		return E_OUTOFMEMORY;
 
 	// Creates the xml writer and generates the content.
-	FAILED_OUT(retVal =
-		   CreateXmlWriter(__uuidof(IXmlWriter), (void **) &pWriter,
-				   NULL));
+	FAILED_OUT(retVal = CreateXmlWriter(__uuidof(IXmlWriter), (void **) &pWriter, NULL));
 	retVal = CreateXmlWriterOutputWithEncodingName(pMemoryStream, NULL, L"utf-8", &pWriterOutput);
 	retVal = pWriter->SetOutput(pWriterOutput);
 	retVal = pWriter->SetProperty(XmlWriterProperty_Indent, TRUE);

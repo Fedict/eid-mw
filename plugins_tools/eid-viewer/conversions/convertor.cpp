@@ -16,6 +16,8 @@
 #include "xmlspecorgconv.h"
 #include "workpermitconv.h"
 #include "xmlfileversconv.h"
+#include "toxmlmemberoffamilyconv.h"
+#include "booldecode.h"
 #include <eid-util/utftranslate.h>
 #include "cppeidstring.h"
 
@@ -55,6 +57,7 @@ Convertor::Convertor()
 		to_xml[TEXT("gender")] = new XmlGenderConvertor();
 		to_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
 		to_xml[TEXT("work_permit_mention")] = new XmlWorkPermitConvertor();
+		to_xml[TEXT("member_of_family")] = new ToXmlMemberOfFamilyConvertor();
 	}
 	if (from_xml.empty())
 	{
@@ -68,6 +71,7 @@ Convertor::Convertor()
 		from_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
 		from_xml[TEXT("work_permit_mention")] = new XmlWorkPermitConvertor();
 		from_xml[TEXT("xml_file_version")] = new XmlFileversConvertor(); // hack to produce an error message when file is opened that was created by a more recent version of eID Viewer
+		from_xml[TEXT("member_of_family")] = new BoolDecodeConvertor();
 	}
 }
 
