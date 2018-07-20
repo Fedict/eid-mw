@@ -278,6 +278,10 @@
 		86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
 		8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B07D1011B21CEB80033CD62 /* wrong_init.c */; };
 		8B8B71591B74CCA300D8910E /* sign_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B71581B74CCA300D8910E /* sign_state.c */; };
+		8BC8E013210216900026D6AB /* booldecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E00F210216900026D6AB /* booldecode.cpp */; };
+		8BC8E014210216900026D6AB /* booldecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BC8E010210216900026D6AB /* booldecode.h */; };
+		8BC8E015210216900026D6AB /* toxmlmemberoffamilyconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */; };
+		8BC8E016210216900026D6AB /* toxmlmemberoffamilyconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -680,6 +684,10 @@
 		86E3DF531653EFE50015B5E1 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win32.h; path = doc/sdk/include/rsaref220/win32.h; sourceTree = SOURCE_ROOT; };
 		8B07D1011B21CEB80033CD62 /* wrong_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrong_init.c; path = tests/unit/wrong_init.c; sourceTree = "<group>"; };
 		8B8B71581B74CCA300D8910E /* sign_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sign_state.c; path = tests/unit/sign_state.c; sourceTree = "<group>"; };
+		8BC8E00F210216900026D6AB /* booldecode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = booldecode.cpp; sourceTree = "<group>"; };
+		8BC8E010210216900026D6AB /* booldecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = booldecode.h; sourceTree = "<group>"; };
+		8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = toxmlmemberoffamilyconv.cpp; sourceTree = "<group>"; };
+		8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toxmlmemberoffamilyconv.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -908,6 +916,10 @@
 		65270A0C1FE976B7004F326D /* conversions */ = {
 			isa = PBXGroup;
 			children = (
+				8BC8E00F210216900026D6AB /* booldecode.cpp */,
+				8BC8E010210216900026D6AB /* booldecode.h */,
+				8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */,
+				8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */,
 				6578015320D135F4002B826A /* xmlfileversconv.cpp */,
 				6578014F20D135F4002B826A /* xmlfileversconv.h */,
 				65270A421FE97A27004F326D /* bbannumconv.cpp */,
@@ -1276,11 +1288,13 @@
 			files = (
 				86E3DDF21653D6210015B5E1 /* beidversions.h in Headers */,
 				86E3DDF41653D6210015B5E1 /* bytearray.h in Headers */,
+				8BC8E014210216900026D6AB /* booldecode.h in Headers */,
 				86E3DDFA1653D6210015B5E1 /* configuration.h in Headers */,
 				86E3DDFC1653D6210015B5E1 /* datafile.h in Headers */,
 				86E3DDFE1653D6210015B5E1 /* dynamiclib.h in Headers */,
 				86E3DDFF1653D6210015B5E1 /* eiderrors.h in Headers */,
 				6578015420D135F4002B826A /* xmlfileversconv.h in Headers */,
+				8BC8E016210216900026D6AB /* toxmlmemberoffamilyconv.h in Headers */,
 				65EABAF21C621F3D00034337 /* utftranslate.h in Headers */,
 				86E3DE001653D6210015B5E1 /* export.h in Headers */,
 				86E3DE021653D6210015B5E1 /* hash.h in Headers */,
@@ -1858,12 +1872,14 @@
 				86E3DDF91653D6210015B5E1 /* configuration.cpp in Sources */,
 				86E3DDFB1653D6210015B5E1 /* datafile.cpp in Sources */,
 				86E3DDFD1653D6210015B5E1 /* dynamiclib.cpp in Sources */,
+				8BC8E015210216900026D6AB /* toxmlmemberoffamilyconv.cpp in Sources */,
 				86E3DE011653D6210015B5E1 /* hash.cpp in Sources */,
 				86E3DE031653D6210015B5E1 /* md5.c in Sources */,
 				86E3DE041653D6210015B5E1 /* rmd160.c in Sources */,
 				86E3DE051653D6210015B5E1 /* sha1.c in Sources */,
 				86E3DE061653D6210015B5E1 /* sha256.c in Sources */,
 				86E3DE071653D6210015B5E1 /* sha384.c in Sources */,
+				8BC8E013210216900026D6AB /* booldecode.cpp in Sources */,
 				86E3DE081653D6210015B5E1 /* sha512.c in Sources */,
 				86E3DE0D1653D6210015B5E1 /* log.cpp in Sources */,
 				86E3DE0F1653D6210015B5E1 /* logbase.cpp in Sources */,
