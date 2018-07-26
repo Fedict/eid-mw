@@ -1,0 +1,41 @@
+#!/bin/bash
+## Remove all folders and files created by the eIDMW installer
+
+if test -e "/Library/Belgium Identity Card"; then
+	rm -rf "/Library/Belgium Identity Card"
+fi
+
+#older installers used a directory without spaces, so check for those too
+if test -e "/Library/BelgiumIdentityCard"; then
+	rm -rf "/Library/BelgiumIdentityCard"
+fi
+
+#remove tokend if present (should not be present on macOS version 10.13 and above)
+if test -e /Library/Security/tokend/BEID.tokend; then
+	rm -rf /Library/Security/tokend/BEID.tokend
+fi
+
+#prior to OS X 10.11, tokend was placed into the /System folder, later macOS versions protect the /System folder( by SIP )
+#so we do not even try to take a peek in /System in more recent macOS versions
+if [[ $(sw_vers -productVersion) == *10.10* || $(sw_vers -productVersion) == *10.9* || $(sw_vers -productVersion) == *10.8* || $(sw_vers -productVersion) == *10.7* ]]; then
+	if test -e /System/Library/Security/tokend/BEID.tokend; then
+		sudo rm -r /System/Library/Security/tokend/BEID.tokend
+	fi
+fi
+
+#remove all pkcs11 links and versions
+if test -e /usr/local/lib/libbeidpkcs11*; then
+	sudo rm /usr/local/lib/libbeidpkcs11*
+fi
+
+if test -e /usr/local/lib/beid-pkcs11.bundle; then
+	sudo rm -r /usr/local/lib/beid-pkcs11.bundle
+fi
+
+#remove our beidpkcs11 JSON file
+if test -e "/Library/Application Support/Mozilla/PKCS11Modules/beidpkcs11.json"
+	sudo rm "/Library/Application Support/Mozilla/PKCS11Modules/beidpkcs11.json"
+fi
+
+
+echo "uninstall BEID software script succeeded, all beid software is removed"
