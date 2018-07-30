@@ -1,0 +1,9 @@
+#!/bin/bash
+
+pkgutil --forget be.eid.BEIDtoken.app
+pkgutil --forget be.eid.middleware
+pkgutil --forget be.eid.uninstall
+pkgutil --forget be.eid.tokend
+pkgutil --forget be.eid.eidinfo
+
+echo "postinstall succeeded"

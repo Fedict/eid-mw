@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<installer-gui-script minSpecVersion="2">
+    <title>eID Middleware Uninstaller</title>
+    <options hostArchitectures="i386"/>
+    <options customize="never" rootVolumeOnly="true"/>
+    <readme file="ReadMe.rtf"/>
+    <license file="license.rtf"/>
+    <background file="eid.png" scaling="proportional" alignment="bottomleft" mime-type="image/png"/>
+    <allowed-os-versions>
+        <os-version min="10.7.0" />
+    </allowed-os-versions>    
+    <options customize="never" require-scripts="false"/>
+    <choices-outline>
+        <line choice="eid.belgium.uninstall"/>
+    </choices-outline>
+    <choice id="eid.belgium.uninstall" visible="false">
+        <pkg-ref id="eid.belgium.uninstall"/>
+    </choice>  
+    <pkg-ref id="eid.belgium.uninstall" onConclusion="none">BEIDUninstall.pkg</pkg-ref>
+</installer-gui-script>
