@@ -23,8 +23,13 @@ if [[ $(sw_vers -productVersion) == *10.10* || $(sw_vers -productVersion) == *10
 	fi
 fi
 
+#remove BEIDtoken if present
+if test -e /Applications/BEIDToken.app; then
+	sudo rm -r /Applications/BEIDToken.app
+fi
+
 #remove all pkcs11 links and versions
-if test -e /usr/local/lib/libbeidpkcs11*; then
+if test -e /usr/local/lib/libbeidpkcs11.dylib; then
 	sudo rm /usr/local/lib/libbeidpkcs11*
 fi
 
