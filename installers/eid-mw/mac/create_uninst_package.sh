@@ -72,16 +72,9 @@ mkdir -p "$ROOT_BEIDUNINSTALL_DIR"
 #copy all files that should be part of the installer:
 
 #copy licenses
-cp ../../../doc/licenses/Dutch/eID-toolkit_licensingtermsconditions.txt \
-	"$BEIDUNINSTALL_LICENSES_DIR/license_NL.txt" ; \
-cp ../../../doc/licenses/English/eID-toolkit_licensingtermsconditions.txt \
-	"$BEIDUNINSTALL_LICENSES_DIR/license_EN.txt" ; \
-cp ../../../doc/licenses/French/eID-toolkit_licensingtermsconditions.txt \
-	"$BEIDUNINSTALL_LICENSES_DIR/license_FR.txt" ; \
-cp ../../../doc/licenses/German/eID-toolkit_licensingtermsconditions.txt \
-	"$BEIDUNINSTALL_LICENSES_DIR/license_DE.txt" ; \
+cp -R ./resources/* $BEIDUNINSTALL_RESOURCES_DIR
 
-#copy resources
+#overwrite the readme files
 cp -R ./uninstall_resources/* $BEIDUNINSTALL_RESOURCES_DIR
 
 #copy uninstall scripts
