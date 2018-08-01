@@ -15,7 +15,7 @@ void *BoolDecodeConvertor::convert(const void *original, int *len_return)
 
 	*len_return = 1;
 
-	if ( (EID_STRCMP((EID_CHAR *)original, TEXT("false")) != 0) || (EID_STRCMP((EID_CHAR *)original, TEXT("0")) != 0) )
+	if ( (EID_STRCMP((EID_CHAR *)original, TEXT("false")) == 0) || (EID_STRCMP((EID_CHAR *)original, TEXT("0")) == 0) )
 	{
 		*rv = 0;
 	}
