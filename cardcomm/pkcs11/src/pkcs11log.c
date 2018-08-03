@@ -54,11 +54,9 @@
  * Globals
  *
  ******************************************************************************/
-#ifdef _DEBUG
-unsigned int g_uiLogLevel          = LOG_LEVEL_PKCS11_DEBUG;
-#else
+
 unsigned int g_uiLogLevel          = LOG_LEVEL_PKCS11_NONE;
-#endif
+
 
 void *logmutex = NULL;
 char g_szLogFile[MAX_PATH];
@@ -245,7 +243,7 @@ void log_trace(const char *where, const char *string,... )
 #endif
    va_end(args);                                                               // free arguments
 
-#ifdef _DEBUG
+#ifdef EIDMW_DEBUG
   printf("%s %s\n", where, buf);
 #endif
 
@@ -303,7 +301,7 @@ void log_xtrace(const char *where, char *string,void *data,int len)
 	string += 2;
 
   util_lock(logmutex);
-#ifdef _DEBUG
+#ifdef EIDMW_DEBUG
   _log_xtrace(string, data, len);
 #endif
 

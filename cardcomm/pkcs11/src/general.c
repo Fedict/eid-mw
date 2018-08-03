@@ -60,11 +60,8 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 	CK_C_INITIALIZE_ARGS_PTR p_args;
 	unsigned char initial_state = p11_get_init();
 
-#ifdef _DEBUG
-	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_INFO);
-#else
 	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_NONE);
-#endif
+
 	log_trace(WHERE, "I: enter pReserved = %p",pReserved);
 	if (p11_get_init() != BEIDP11_NOT_INITIALIZED)
 	{
