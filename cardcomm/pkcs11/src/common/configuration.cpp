@@ -26,11 +26,13 @@
 #include <sys/types.h>
 
 #include "configuration.h"
+#include "configbase.h"
 #include "util.h"
 #include "datafile.h"
 #include "eiderrors.h"
 #include "mwexception.h"
 #include "prefix.h"
+#include "loglevels.h"
 
 // open the user config file and also the general config file
 // search first in the user config file and then in the general one
@@ -461,3 +463,35 @@ namespace eIDMW
 	};
 
 }				// namespace eidMW
+
+const wchar_t *eidmw_get_config_string(wchar_t *name, wchar_t *section, wchar_t *default_value, bool expand)
+{
+	eIDMW::CConfig config;
+	return config.GetString(name, section, default_value, (bool)expand).c_str();
+}
+
+unsigned int eidmw_config_get_log_level(wchar_t *defaultLevel)
+{
+	eIDMW::CConfig config;
+	std::wstring level;
+	if(defaultLevel != NULL) {
+		level = config.GetString(L"log_level", L"logging", defaultLevel, false);
+	} else {
+		level = config.GetString(L"log_level", L"logging");
+	}
+	if(level.compare(L"info")) {
+		return LOG_LEVEL_PKCS11_INFO;
+	}
+	if(level.compare(L"debug")) {
+		return LOG_LEVEL_PKCS11_DEBUG;
+	}
+	if(level.compare(L"warning")) {
+		return LOG_LEVEL_PKCS11_WARNING;
+	}
+	if(level.compare(L"error")) {
+		return LOG_LEVEL_PKCS11_ERROR;
+	}
+	// if (level.compare(L"none")) {
+	return LOG_LEVEL_PKCS11_NONE;
+	// } -- but default to none, too
+}

@@ -26,17 +26,13 @@ extern "C"
 {
 #endif
 
+#include "loglevels.h"
+
 /******************************************************************************
  *
  * Definitions
  *
  ******************************************************************************/
-
-#define LOG_LEVEL_PKCS11_NONE	       0
-#define LOG_LEVEL_PKCS11_ERROR       1
-#define LOG_LEVEL_PKCS11_WARNING     2
-#define LOG_LEVEL_PKCS11_INFO        4
-#define LOG_LEVEL_PKCS11_DEBUG       5
 
 #ifdef _WIN32
 #define DEFAULT_LOG_FILE "c:\\temp\\beidpkcs11\\p11.log"

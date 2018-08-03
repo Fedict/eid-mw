@@ -66,7 +66,7 @@ noinst_HEADERS = \
 	cert.h \
 	asn1.h \
 	util.h \
-	log.h \
+	pkcs11log.h \
 	display.h \
 	common/thread.h \
 	common/prefix.h \
@@ -78,6 +78,7 @@ noinst_HEADERS = \
 	common/tlvbuffer.h \
 	common/hash.h \
 	common/configuration.h \
+	common/configbase.h \
 	common/util.h \
 	common/mwexception.h \
 	common/datafile.h \

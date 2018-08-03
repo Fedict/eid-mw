@@ -30,8 +30,9 @@
 #include <time.h>
 
 #include "p11.h"
-#include "log.h"
+#include "pkcs11log.h"
 #include "util.h"
+#include "configbase.h"
 
 /******************************************************************************
  *
@@ -146,7 +147,7 @@ void log_init(char *pszLogFile, unsigned int uiLogLevel)
 		}
 	}
 #else //WIN32
-	g_uiLogLevel = uiLogLevel;
+	g_uiLogLevel = eidmw_config_get_log_level(L"info");
 	strncpy(g_szLogFile, pszLogFile,sizeof(g_szLogFile));
 	g_szLogFile[sizeof(g_szLogFile)-1]='\0';
 #endif

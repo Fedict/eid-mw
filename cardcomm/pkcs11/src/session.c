@@ -23,7 +23,7 @@
 #include <string.h>
 #include "beid_p11.h"
 #include "p11.h"
-#include "log.h"
+#include "pkcs11log.h"
 #include "util.h"
 #include "cal.h"
 

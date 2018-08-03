@@ -23,7 +23,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "log.h"
+#include "pkcs11log.h"
 
 //#define DUMP_TEMPLATE_MAX     32
 #define BEIDP11_NOT_INITIALIZED			0

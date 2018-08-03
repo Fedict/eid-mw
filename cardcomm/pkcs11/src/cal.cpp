@@ -26,7 +26,7 @@
 #include "p11.h"
 #include "util.h"
 #include "cal.h"
-#include "log.h"
+#include "pkcs11log.h"
 #include "cert.h"
 #include "mw_util.h"
 #include "tlvbuffer.h"

@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "beid_p11.h"
-#include "log.h"
+#include "pkcs11log.h"
 
 
 #define WHERE "C_EncryptInit()"
