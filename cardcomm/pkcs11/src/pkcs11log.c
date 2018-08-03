@@ -279,6 +279,7 @@ cleanup:
  * log_xtrace
  *
  ******************************************************************************/
+void _log_xtrace(char *text, void *data, int l_data);
 void log_xtrace(const char *where, char *string,void *data,int len)
 {
   static  char  hex[]="0123456789abcdef";
