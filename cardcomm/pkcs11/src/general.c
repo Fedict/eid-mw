@@ -60,7 +60,7 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 	CK_C_INITIALIZE_ARGS_PTR p_args;
 	unsigned char initial_state = p11_get_init();
 
-#if _DEBUG
+#if DEBUG
 	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_INFO);
 #else
 	log_init(DEFAULT_LOG_FILE, LOG_LEVEL_PKCS11_NONE);
