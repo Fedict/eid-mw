@@ -135,7 +135,6 @@
 		86B4747A1BD798B8004FB8AE /* cal.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF271653EFE50015B5E1 /* cal.h */; };
 		86B4747B1BD798B8004FB8AE /* cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF281653EFE50015B5E1 /* cert.h */; };
 		86B4747C1BD798B8004FB8AE /* display.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF291653EFE50015B5E1 /* display.h */; };
-		86B4747D1BD798B8004FB8AE /* log.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2A1653EFE50015B5E1 /* log.h */; };
 		86B4747E1BD798B8004FB8AE /* p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2B1653EFE50015B5E1 /* p11.h */; };
 		86B4747F1BD798B8004FB8AE /* phash.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2C1653EFE50015B5E1 /* phash.h */; };
 		86B474801BD798B8004FB8AE /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2D1653EFE50015B5E1 /* util.h */; };
@@ -256,7 +255,6 @@
 		86E3DF561653EFE60015B5E1 /* cal.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF271653EFE50015B5E1 /* cal.h */; };
 		86E3DF571653EFE60015B5E1 /* cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF281653EFE50015B5E1 /* cert.h */; };
 		86E3DF581653EFE60015B5E1 /* display.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF291653EFE50015B5E1 /* display.h */; };
-		86E3DF591653EFE60015B5E1 /* log.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2A1653EFE50015B5E1 /* log.h */; };
 		86E3DF5A1653EFE60015B5E1 /* p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2B1653EFE50015B5E1 /* p11.h */; };
 		86E3DF5B1653EFE60015B5E1 /* phash.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2C1653EFE50015B5E1 /* phash.h */; };
 		86E3DF5C1653EFE60015B5E1 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2D1653EFE50015B5E1 /* util.h */; };
@@ -277,6 +275,9 @@
 		86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
 		8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B07D1011B21CEB80033CD62 /* wrong_init.c */; };
 		8B8B71591B74CCA300D8910E /* sign_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B71581B74CCA300D8910E /* sign_state.c */; };
+		8BCC05F12114795F0015C705 /* configbase.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BCC05F02114795F0015C705 /* configbase.h */; };
+		8BCC05F6211479930015C705 /* loglevels.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BCC05F5211479930015C705 /* loglevels.h */; };
+		8BCC05F8211479F90015C705 /* pkcs11log.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BCC05F7211479F90015C705 /* pkcs11log.h */; };
 		8BD62CA021021C6000C28B6D /* toxmlmemberoffamilyconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */; };
 		8BD62CA121021C6300C28B6D /* toxmlmemberoffamilyconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */; };
 		8BD62CA221021C7000C28B6D /* xmlfileversconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6578014F20D135F4002B826A /* xmlfileversconv.h */; };
@@ -662,7 +663,6 @@
 		86E3DF271653EFE50015B5E1 /* cal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cal.h; path = cardcomm/pkcs11/src/cal.h; sourceTree = SOURCE_ROOT; };
 		86E3DF281653EFE50015B5E1 /* cert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cert.h; path = cardcomm/pkcs11/src/cert.h; sourceTree = SOURCE_ROOT; };
 		86E3DF291653EFE50015B5E1 /* display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = display.h; path = cardcomm/pkcs11/src/display.h; sourceTree = SOURCE_ROOT; };
-		86E3DF2A1653EFE50015B5E1 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log.h; path = cardcomm/pkcs11/src/log.h; sourceTree = SOURCE_ROOT; };
 		86E3DF2B1653EFE50015B5E1 /* p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p11.h; path = cardcomm/pkcs11/src/p11.h; sourceTree = SOURCE_ROOT; };
 		86E3DF2C1653EFE50015B5E1 /* phash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = phash.h; path = cardcomm/pkcs11/src/phash.h; sourceTree = SOURCE_ROOT; };
 		86E3DF2D1653EFE50015B5E1 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = cardcomm/pkcs11/src/util.h; sourceTree = SOURCE_ROOT; };
@@ -687,6 +687,9 @@
 		8BC8E010210216900026D6AB /* booldecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = booldecode.h; sourceTree = "<group>"; };
 		8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = toxmlmemberoffamilyconv.cpp; sourceTree = "<group>"; };
 		8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toxmlmemberoffamilyconv.h; sourceTree = "<group>"; };
+		8BCC05F02114795F0015C705 /* configbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = configbase.h; path = cardcomm/pkcs11/src/common/configbase.h; sourceTree = "<group>"; };
+		8BCC05F5211479930015C705 /* loglevels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = loglevels.h; path = cardcomm/pkcs11/src/loglevels.h; sourceTree = "<group>"; };
+		8BCC05F7211479F90015C705 /* pkcs11log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11log.h; path = cardcomm/pkcs11/src/pkcs11log.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1046,6 +1049,7 @@
 		7FA1AA420F85F446000D9EE1 /* Pkcs11 */ = {
 			isa = PBXGroup;
 			children = (
+				8BCC05F7211479F90015C705 /* pkcs11log.h */,
 				6594447D19A8C2B0003ABC24 /* pkcs11log.c */,
 				6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */,
 				6594447B19A8C29B003ABC24 /* asn1.c */,
@@ -1055,7 +1059,6 @@
 				86E3DF271653EFE50015B5E1 /* cal.h */,
 				86E3DF281653EFE50015B5E1 /* cert.h */,
 				86E3DF291653EFE50015B5E1 /* display.h */,
-				86E3DF2A1653EFE50015B5E1 /* log.h */,
 				86E3DF2B1653EFE50015B5E1 /* p11.h */,
 				86E3DF2C1653EFE50015B5E1 /* phash.h */,
 				86E3DF2D1653EFE50015B5E1 /* util.h */,
@@ -1076,6 +1079,8 @@
 		7FBB025A0F83937F009B751F /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				8BCC05F5211479930015C705 /* loglevels.h */,
+				8BCC05F02114795F0015C705 /* configbase.h */,
 				86E3DDB91653D6200015B5E1 /* beidversions.h */,
 				86E3DDBA1653D6200015B5E1 /* bytearray.cpp */,
 				86E3DDBB1653D6200015B5E1 /* bytearray.h */,
@@ -1271,7 +1276,6 @@
 				86E3DF561653EFE60015B5E1 /* cal.h in Headers */,
 				86E3DF571653EFE60015B5E1 /* cert.h in Headers */,
 				86E3DF581653EFE60015B5E1 /* display.h in Headers */,
-				86E3DF591653EFE60015B5E1 /* log.h in Headers */,
 				86E3DF5A1653EFE60015B5E1 /* p11.h in Headers */,
 				86E3DF5B1653EFE60015B5E1 /* phash.h in Headers */,
 				86E3DF5C1653EFE60015B5E1 /* util.h in Headers */,
@@ -1290,6 +1294,8 @@
 				86E3DDF21653D6210015B5E1 /* beidversions.h in Headers */,
 				86E3DDF41653D6210015B5E1 /* bytearray.h in Headers */,
 				86E3DDFA1653D6210015B5E1 /* configuration.h in Headers */,
+				8BCC05F12114795F0015C705 /* configbase.h in Headers */,
+				8BCC05F8211479F90015C705 /* pkcs11log.h in Headers */,
 				86E3DDFC1653D6210015B5E1 /* datafile.h in Headers */,
 				86E3DDFE1653D6210015B5E1 /* dynamiclib.h in Headers */,
 				86E3DDFF1653D6210015B5E1 /* eiderrors.h in Headers */,
@@ -1308,6 +1314,7 @@
 				86E3DE161653D6210015B5E1 /* mwexception.h in Headers */,
 				86E3DE171653D6210015B5E1 /* prefix.h in Headers */,
 				86E3DE1E1653D6210015B5E1 /* svn_revision.h in Headers */,
+				8BCC05F6211479930015C705 /* loglevels.h in Headers */,
 				86E3DE201653D6210015B5E1 /* thread.h in Headers */,
 				86E3DE211653D6210015B5E1 /* threaddefines.h in Headers */,
 				86E3DE231653D6210015B5E1 /* tlv.h in Headers */,
@@ -1366,7 +1373,6 @@
 				86B4747A1BD798B8004FB8AE /* cal.h in Headers */,
 				86B4747B1BD798B8004FB8AE /* cert.h in Headers */,
 				86B4747C1BD798B8004FB8AE /* display.h in Headers */,
-				86B4747D1BD798B8004FB8AE /* log.h in Headers */,
 				86B4747E1BD798B8004FB8AE /* p11.h in Headers */,
 				86B4747F1BD798B8004FB8AE /* phash.h in Headers */,
 				86B474801BD798B8004FB8AE /* util.h in Headers */,
