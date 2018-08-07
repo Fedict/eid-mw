@@ -67,6 +67,7 @@ noinst_HEADERS = \
 	asn1.h \
 	util.h \
 	pkcs11log.h \
+	loglevels.h \
 	display.h \
 	common/thread.h \
 	common/prefix.h \
