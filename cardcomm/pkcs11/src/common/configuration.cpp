@@ -462,12 +462,6 @@ namespace eIDMW
 		DelString(location, csName, czSection);
 	};
 
-}				// namespace eidMW
-
-const wchar_t *eidmw_get_config_string(wchar_t *name, wchar_t *section, wchar_t *default_value, bool expand)
-{
-	eIDMW::CConfig config;
-	return config.GetString(name, section, default_value, (bool)expand).c_str();
 }
 
 unsigned int eidmw_config_get_log_level(wchar_t *defaultLevel)
@@ -495,3 +489,4 @@ unsigned int eidmw_config_get_log_level(wchar_t *defaultLevel)
 	return LOG_LEVEL_PKCS11_NONE;
 	// } -- but default to none, too
 }
+// namespace eidMW
