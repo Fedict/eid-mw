@@ -172,7 +172,7 @@
     os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called");
 #endif
 
-    //use this if when you want to use the auto template set in initWithSession()
+    //use this if you want to use the auto template set in initWithSession()
     /*
     if(self.session.authState == BEIDAuthStateFreshlyAuthorized){
         return YES;
@@ -378,7 +378,7 @@
         return nil;
     }
     //select key on token
-    const uint8_t keyId = keyItem.keyID;//0x82;
+    const uint8_t keyId = keyItem.keyID;//0x82 0r 0x83;
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID keyId = %ux", keyItem.keyID);
 #endif
@@ -422,8 +422,8 @@
 #endif
     // Select signing algorithm, pkcs1 padding and key keyId
     //unsigned char command[] = { 0x00, 0x22, 0x41, 0xB6, 0x05, 0x04, 0x80, 0x01, 0x84, keyId };
-    unsigned char command[] = { 0x04, 0x80, 0x01, 0x84, 0x82 };//1 for unknown hash
-    //unsigned char command[] = { 0x04, 0x80, 0x08, 0x84, 0x82 };//8 for sha256
+    unsigned char command[] = { 0x04, 0x80, 0x01, 0x84, keyId };//1 for unknown hash
+    //unsigned char command[] = { 0x04, 0x80, 0x08, 0x84, keyId };//8 for sha256
     
     NSData *data = [NSData dataWithBytes:command length:5];
     UInt16 sw = 0;
