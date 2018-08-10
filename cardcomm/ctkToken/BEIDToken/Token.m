@@ -203,6 +203,7 @@
     os_log_error(OS_LOG_DEFAULT, "BEID dataOfCertificate called");
 #endif
     __block NSData *certificateData;
+    __block NSData *realCertificateData;
     const unsigned char *absFileId;
     
     switch(certificateObjectID){
@@ -238,15 +239,42 @@
             }
             return NO;
         }
+        
+        const unsigned char* CertBytes = (const unsigned char*)certificateData.bytes;
+        if ( (certificateData.length > 4) && (CertBytes[0] == 0x30) && (CertBytes[1] == 0x82)){
+            
+            unsigned int realCertLength = (256 * CertBytes[2]) + CertBytes[3] + 4;
+#ifdef DEBUG
+            os_log_error(OS_LOG_DEFAULT, "realCertLength = %d",realCertLength);
+#endif
+            if (realCertLength <= certificateData.length)
+            {
+                realCertificateData = [NSData dataWithBytes:CertBytes length:realCertLength];
+            } else {
+                //ASN.1 info tells us the certificate is longer then the file it is in is
+                os_log_error(OS_LOG_DEFAULT, "BEID readCertData wrong certificate length; certfile length = %lu realCertLength = %d ",(unsigned long)certificateData.length, realCertLength);
+                if (error != nil) {
+                    *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeCorruptedData userInfo:nil];
+                }
+                return NO;
+            }
+#ifdef DEBUG
+            os_log_error(OS_LOG_DEFAULT, "realCertificateData has length = %lu",(unsigned long)realCertificateData.length);
+#endif
+        }
+        else {
+            realCertificateData = certificateData;
+        }
+        
         return YES;
     };
     
     BOOL success = [smartCard inSessionWithError:(NSError **)error executeBlock:(BOOL(^)(NSError **error))readCertData];
     if(success == NO){
         os_log_error(OS_LOG_DEFAULT, "BEID dataOfCertificate failed");
-        certificateData = nil;
+        realCertificateData = nil;
     }
-    return certificateData;
+    return realCertificateData;
 }
 
 - (BOOL)populateIdentityFromSmartCard:(TKSmartCard *)smartCard into:(NSMutableArray<TKTokenKeychainItem *> *)items certificateTag:(UInt16)certificateTag name:(NSString *)certificateName keyTag:(UInt16)keyTag name:(NSString *)keyName sign:(BOOL)sign keyManagement:(BOOL)keyManagement alwaysAuthenticate:(BOOL)alwaysAuthenticate error:(NSError **)error {
@@ -269,7 +297,7 @@
         //if (error != nil) {
         //    *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeCorruptedData userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"CORRUPTED_CERT", nil)}];
         //}
-        //sometimes not all certificates are present on the card, in that case; don't search for any matching keys either
+        //sometimes not all certificates are present on the card (but the files to store them into are filled with padding data), in that case; just skip the certificate and don't search for any matching keys either
         return YES;
     }
 #ifdef DEBUG
