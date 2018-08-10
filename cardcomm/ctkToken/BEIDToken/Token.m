@@ -200,7 +200,7 @@
 
     // Read authentication certificate
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID dataOfCertificate called");
+    os_log_error(OS_LOG_DEFAULT, "BEID dataOfCertificate called with certificateObjectID 0x%xl",certificateObjectID);
 #endif
     __block NSData *certificateData;
     __block NSData *realCertificateData;
