@@ -285,9 +285,9 @@
 #endif
     [certificateItem setName:certificateName];
 
-    if(keyTag != 0) {
+    if( (keyTag != 0) && (keyTag <= 0xFF) ){
         // Create key item.
-        TKTokenKeychainKey *keyItem = [[BEIDTokenKeychainKey alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:@(keyTag) certificateID:certificateItem.objectID alwaysAuthenticate:alwaysAuthenticate];
+        BEIDTokenKeychainKey *keyItem = [[BEIDTokenKeychainKey alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:@(keyTag) certificateID:certificateItem.objectID alwaysAuthenticate:alwaysAuthenticate];
         if (keyItem == nil) {
             os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard keyItem == NIL");
             return NO;
