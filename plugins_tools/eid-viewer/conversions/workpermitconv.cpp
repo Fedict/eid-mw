@@ -5,10 +5,10 @@ std::map < eid_vwr_langs, std::map <char, EID_STRING> > WorkPermitConvertor::con
 WorkPermitConvertor::WorkPermitConvertor() {
 	if(conversions.size() == 0)
 	{
-		conversions[EID_VWR_LANG_DE]['7'] = TEXT("unlimited");
-		conversions[EID_VWR_LANG_DE]['8'] = TEXT("limited");
-		conversions[EID_VWR_LANG_DE]['9'] = TEXT("none");
-		conversions[EID_VWR_LANG_DE]['A'] = TEXT("seasonal worker");
+		conversions[EID_VWR_LANG_DE]['7'] = TEXT("Arbeitsmarkt : unbegrenzt");
+		conversions[EID_VWR_LANG_DE]['8'] = TEXT("Arbeitsmarkt : begrenzt");
+		conversions[EID_VWR_LANG_DE]['9'] = TEXT("Arbeitsmarkt : nein");
+		conversions[EID_VWR_LANG_DE]['A'] = TEXT("Saisonarbeiter");
 
 		conversions[EID_VWR_LANG_EN]['7'] = TEXT("unlimited");
 		conversions[EID_VWR_LANG_EN]['8'] = TEXT("limited");
