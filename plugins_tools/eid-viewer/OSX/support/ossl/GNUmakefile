@@ -1,4 +1,4 @@
-OSSL_VERSION=1.1.0h
+OSSL_VERSION=1.1.0i
 TP_DIR=../../../../../../ThirdParty
 
 build: openssl/libcrypto.a
