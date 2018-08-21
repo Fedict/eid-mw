@@ -423,7 +423,7 @@ void robot_remove_card() {
 			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
-			robot_cmd('p', CK_TRUE);
+			robot_cmd('e', CK_TRUE);
 			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please remove the card from the slot and press <enter>\n");
