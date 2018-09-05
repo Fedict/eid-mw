@@ -2147,7 +2147,7 @@
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
@@ -2204,7 +2204,7 @@
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2248,7 +2248,7 @@
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2294,7 +2294,7 @@
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
