@@ -158,9 +158,6 @@
 		86B474941BD798B8004FB8AE /* libbeiddialogsmac.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.4.6.a */; };
 		86B474951BD798B8004FB8AE /* libbeidcardlayer.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.4.6.a */; };
 		86B474961BD798B8004FB8AE /* libbeidcommon.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.4.6.a */; };
-		86B474971BD798B8004FB8AE /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
-		86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
-		86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB77AAFE841565C02AAC07 /* Carbon.framework */; };
 		86CE3682187EA5DA00EB96A5 /* libbeidcommon.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.4.6.a */; };
 		86CE3683187EA5DE00EB96A5 /* libbeidcardlayer.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.4.6.a */; };
 		86CE3687187EB1B200EB96A5 /* libbeiddialogsmac.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.4.6.a */; };
@@ -736,7 +733,6 @@
 				86CE3687187EB1B200EB96A5 /* libbeiddialogsmac.4.4.6.a in Frameworks */,
 				86CE3683187EA5DE00EB96A5 /* libbeidcardlayer.4.4.6.a in Frameworks */,
 				86CE3682187EA5DA00EB96A5 /* libbeidcommon.4.4.6.a in Frameworks */,
-				86B82D8E1541AE2F008A964F /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,7 +751,6 @@
 				868374EB18648FF7005EE5D7 /* libbeiddialogsmac.4.4.6.a in Frameworks */,
 				86867B3B186304BA00ED5541 /* PCSC.framework in Frameworks */,
 				7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.4.6.a in Frameworks */,
-				86B82D9A1541AF7B008A964F /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,7 +772,6 @@
 				86B474941BD798B8004FB8AE /* libbeiddialogsmac.4.4.6.a in Frameworks */,
 				86B474951BD798B8004FB8AE /* libbeidcardlayer.4.4.6.a in Frameworks */,
 				86B474961BD798B8004FB8AE /* libbeidcommon.4.4.6.a in Frameworks */,
-				86B474971BD798B8004FB8AE /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
