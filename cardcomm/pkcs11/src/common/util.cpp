@@ -126,9 +126,9 @@ namespace eIDMW
 	typedef DWORD(WINAPI * DYN_GETPROCESSNAME) (HANDLE, HMODULE, LPWSTR,
 						    DWORD);
 #endif
-#ifdef __APPLE__
-#include <Carbon/Carbon.h>
-#endif
+//#ifdef __APPLE__
+//#include <Carbon/Carbon.h>
+//#endif
 
 	void GetProcessName(wchar_t * wBuffer, unsigned long ulLen)
 	{
@@ -164,7 +164,7 @@ namespace eIDMW
 			CloseHandle(hProcess);
 			FreeLibrary(hLibrary);
 #elif defined __APPLE__
-
+/*
 			CFBundleRef thisBundle = CFBundleGetMainBundle();
 
 			if (thisBundle != NULL)
@@ -198,7 +198,7 @@ namespace eIDMW
 					CFRelease(thisurl);
 				}
 			}
-
+*/
 			/*       ProcessSerialNumber xPSN = {kNoProcess, kCurrentProcess};
 			   FSRef location;
 			   OSStatus ret = GetProcessBundleLocation (&xPSN, &location);
