@@ -7,7 +7,7 @@ namespace eIDViewer
     {
         public static string AboutMessage()
         {
-            string message = @"eID Viewer 4.4.3
+            string message = @"eID Viewer 4.4.5
 eID Middleware Project
 Copyright(C) 2018 Bosa
 
