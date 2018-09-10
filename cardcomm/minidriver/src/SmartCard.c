@@ -1835,7 +1835,8 @@ DWORD CCIDgetPPDUFeatures(PFEATURES pFeatures, SCARDHANDLE hCard)
 		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 920", wcslen(L"VASCO DIGIPASS 920")) == 0) ||
 		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 876", wcslen(L"VASCO DIGIPASS 876")) == 0) ||
 		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 840", wcslen(L"VASCO DIGIPASS 840")) == 0) ||
-		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"Gemalto ING Shield Pro", wcslen(L"Gemalto ING Shield Pro")) == 0))
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"Gemalto ING Shield Pro", wcslen(L"Gemalto ING Shield Pro")) == 0)
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"ETSWW eKrypto PINPhab", wcslen(L"ETSWW eKrypto PINPhab")) == 0) )
 	{
 		BYTE Cmd[] = { 0xFF ,0xC2 ,0x01 ,0x00 , 0x00 };
 		DWORD uiCmdLg = sizeof(Cmd);
