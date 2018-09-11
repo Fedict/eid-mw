@@ -487,6 +487,8 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 					if (currentCardSlotID == -1)
 					{
 						be_log(EID_VWR_LOG_NORMAL, TEXT("EVENT_TOKEN_INSERTED slotID = %d"), slotID);
+						sm_handle_event_onthread(EVENT_TOKEN_INSERTED, &slotID);
+						currentCardSlotID = slotID;
 					}
 				}
 				else
@@ -691,7 +693,6 @@ int eid_vwr_token_supported(CK_SLOT_ID_PTR slotID) {
 	p11Ret = C_GetTokenInfo(*slotID, &tokenInfo);
 	if (p11Ret == CKR_OK)
 	{
-		*slotID = slot_manual;
 		return EIDV_RV_OK;
 	}
 	if (p11Ret != CKR_TOKEN_NOT_RECOGNIZED)
