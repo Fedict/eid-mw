@@ -474,7 +474,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 			{
 				//a token is present in the slot_ID that caused the event
 				//first check if the token is supported by our pkcs11 library
-				if (eid_vwr_token_supported(&slotID) != EIDV_RV_OK)
+				if (eid_vwr_p11_token_supported(&slotID) != EIDV_RV_OK)
 				{
 					//we don't support this token, ignore this event
 					return EIDV_RV_OK;
@@ -686,7 +686,7 @@ int eid_vwr_p11_reset_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcu
 }
 
 /* check if the card that is present in the slotID is in fact an eid card that we support*/
-int eid_vwr_token_supported(CK_SLOT_ID_PTR slotID) {
+int eid_vwr_p11_token_supported(CK_SLOT_ID_PTR slotID) {
 	CK_RV p11Ret = CKR_OK;
 	CK_TOKEN_INFO tokenInfo;
 
@@ -697,7 +697,7 @@ int eid_vwr_token_supported(CK_SLOT_ID_PTR slotID) {
 	}
 	if (p11Ret != CKR_TOKEN_NOT_RECOGNIZED)
 	{
-		be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_token_supported failed getting slot info: C_GetTokenInfo returned = 0x%08x "), p11Ret);
+		be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_p11_token_supported failed getting slot info: C_GetTokenInfo returned = 0x%08x "), p11Ret);
 	}
 	return EIDV_RV_FAIL;
 }
