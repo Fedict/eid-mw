@@ -581,6 +581,7 @@ int eid_vwr_p11_update_slot_list_ui(CK_SLOT_ID_PTR slotlist, CK_ULONG slotCount)
 		p11Ret = C_GetSlotInfo(slotlist[i], &info);
 		if (p11Ret != CKR_OK)
 		{
+			be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_p11_update_slot_list_ui for slot %d failed C_GetSlotInfo returned 0x%08u"), slotlist[i],p11Ret);
 			ret = EIDV_RV_FAIL;
 			goto end;
 		}
