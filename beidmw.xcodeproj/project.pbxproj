@@ -2353,6 +2353,11 @@
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eidfilepreview/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2411,6 +2416,11 @@
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eidfilepreview/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
