@@ -67,7 +67,12 @@ ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDToken_DIR/root"
 BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
 
 #BEIDToken path
-BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/$MAC_BUILD_CONFIG/BEIDToken.app"
+if [ "$MAC_BUILD_CONFIG" -eq "Debug" ]
+then
+	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/$MAC_BUILD_CONFIG/BEIDTokenApp.app"
+else
+	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/$MAC_BUILD_CONFIG/BEIDToken.app"
+fi
 
 #BEIDToken.plist path
 BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
@@ -214,7 +219,7 @@ mkdir -p "$BEIDTOKEN_INSTALL_SCRIPTS_DIR"
 cp -R ./install_scripts_BEIDToken/* "$BEIDTOKEN_INSTALL_SCRIPTS_DIR"
 
 #copy eid token app
-cp -R "$BEIDTOKEN_PATH"  "$BEIDTOKEN_INST_DIR"
+cp -R "$BEIDTOKEN_PATH"  "$BEIDTOKEN_INST_DIR"/BEIDToken.app
 
 #####################################################################
 echo "********** prepare BEIDTokenD.pkg **********"
