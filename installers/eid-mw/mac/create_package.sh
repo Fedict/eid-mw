@@ -67,7 +67,7 @@ ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDToken_DIR/root"
 BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
 
 #BEIDToken path
-if [ "$MAC_BUILD_CONFIG" -eq "Debug" ]
+if [ "$MAC_BUILD_CONFIG" = "Debug" ]
 then
 	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/$MAC_BUILD_CONFIG/BEIDTokenApp.app"
 else
