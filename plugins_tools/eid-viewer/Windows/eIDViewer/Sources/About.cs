@@ -7,7 +7,7 @@ namespace eIDViewer
     {
         public static string AboutMessage()
         {
-            string message = @"eID Viewer 4.4.5
+            string message = @"eID Viewer 4.4.7
 eID Middleware Project
 Copyright(C) 2018 Bosa
 
@@ -28,7 +28,7 @@ License along with this software; if not, see
 http://www.gnu.org/licenses
 
 Official releases and support are available on https://eid.belgium.be
-Source code and other files are available on https://github.com/Fedict/eid-viewer";
+Source code and other files are available on https://github.com/Fedict/eid-mw";
 
             return message;
         }
