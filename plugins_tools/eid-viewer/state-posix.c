@@ -57,7 +57,7 @@ DWORD WINAPI thread_main(void* val) {
 	}
 
 #else
-static void* thread_main(void* val) {
+static void* thread_main(void* val EIDV_UNUSED) {
 	int rv;
 	if((rv = pthread_mutex_lock(&mutex)) != 0) {
 		be_log(EID_VWR_LOG_COARSE, TEXT("Could not lock mutex: %s"), strerror(rv));
@@ -160,6 +160,7 @@ void sm_handle_event(enum eid_vwr_state_event e, void* data, void(*freefunc)(voi
 	item->e = e;
 	item->data = data;
 	item->free = freefunc;
+	item->done = donefunc;
 
 	add_item(item);
 }

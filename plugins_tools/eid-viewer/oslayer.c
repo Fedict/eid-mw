@@ -47,7 +47,7 @@ DWORD WINAPI eid_vwr_wait_for_pkcs11_event_loop(void* val) {
 	return ret;
 }
 #else
-	void* eid_vwr_be_mainloop(void* val) {
+	void* eid_vwr_be_mainloop(void* val EIDV_UNUSED) {
 	for (;;) {
 		eid_vwr_poll();
 		SLEEP(1);

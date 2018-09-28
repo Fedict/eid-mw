@@ -28,7 +28,7 @@ static void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
 	printf("Found string data\nLabel:\t%s\nData:\t%s\n", label, data);
 }
 
-static void newbindata(const EID_CHAR* label, const unsigned char* data, int datalen) {
+static void newbindata(const EID_CHAR* label, const unsigned char* data EIDT_UNUSED, int datalen) {
 	printf("Found binary data\nLabel:\t%s\nLength:\t%d\n", label, datalen);
 }
 

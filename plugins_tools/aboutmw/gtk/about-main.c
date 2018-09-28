@@ -54,7 +54,7 @@ static enum _bits {
 	BITS_FOREIGN,
 } bitness;
 
-void check_pcsc(GtkWidget* top, GtkListStore* data) {
+void check_pcsc(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 	FILE* f = popen("pidof pcscd", "r");
 	GtkTreeIter iter;
 	char pid[6];
@@ -88,7 +88,7 @@ exit:
 	pclose(f);
 }
 
-void do_viewer(GtkWidget* top, GtkListStore* data) {
+void do_viewer(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 	FILE* f = popen("which eid-viewer", "r");
 	GtkTreeIter iter;
 	char tmp[PATH_MAX];
@@ -191,7 +191,7 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 	}
 }
 
-void copyline_simple(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar** text) {
+void copyline_simple(GtkTreeModel* model, GtkTreePath *path G_GNUC_UNUSED, GtkTreeIter *iter, gchar** text) {
 	gchar *old = *text;
 	gchar *value;
 
@@ -205,7 +205,7 @@ void copyline_simple(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, 
 	}
 }
 
-void copyline_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter *iter, gchar** text) {
+void copyline_detail(GtkTreeModel* model, GtkTreePath *path G_GNUC_UNUSED, GtkTreeIter *iter, gchar** text) {
 	gchar *old = *text;
 	gchar *name, *value;
 	
@@ -234,7 +234,7 @@ void copy2clip(GtkTreeView* tv) {
 	gtk_clipboard_set_text(clip, text, strlen(text));
 }
 
-void copy2prim(GtkTreeSelection* sel, gpointer user_data) {
+void copy2prim(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
 	GtkClipboard* clip = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
 	gchar* text = NULL;
 	gint rowcount = gtk_tree_selection_count_selected_rows(sel);
@@ -312,7 +312,7 @@ exit:
 	return rv;
 }
 
-void do_distro(GtkWidget* top, GtkListStore* data) {
+void do_distro(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 	GtkTreeIter iter;
 	char *dat;
 

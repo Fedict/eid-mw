@@ -499,7 +499,7 @@ void clear_certdata() {
 
 /* Export a certificate to a file. Called by a menu option in the right-mouse
  * popup menu on the treeview */
-void certexport(GtkMenuItem* item, gpointer userdata) {
+void certexport(GtkMenuItem* item G_GNUC_UNUSED, gpointer userdata) {
 	GtkWindow* win = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
 			_("Save eID file"), win, GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -591,8 +591,8 @@ void certexport(GtkMenuItem* item, gpointer userdata) {
 	gtk_widget_destroy(dialog);
 }
 
-/* Show details on a given certificate. Not actually implemented yet. */
-void certdetail(GtkMenuItem* item, gpointer userdata) {
+/* Show details on a given certificate. */
+void certdetail(GtkMenuItem* item G_GNUC_UNUSED, gpointer userdata G_GNUC_UNUSED) {
 	GtkWindow* win = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkTreeSelection *sel = gtk_tree_view_get_selection(
 			GTK_TREE_VIEW(gtk_builder_get_object(builder, "tv_cert")));

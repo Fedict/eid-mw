@@ -22,9 +22,11 @@ extern int fc_counter;
 #ifdef __GNUC__
 #define EIDT_LIKELY(expr) __builtin_expect((expr), 1)
 #define EIDT_UNLIKELY(expr) __builtin_expect((expr), 0)
+#define EIDT_UNUSED __attribute__((unused))
 #else
 #define EIDT_LIKELY(expr) (expr)
 #define EIDT_UNLIKELY(expr) (expr)
+#define EIDT_UNUSED
 #endif
 
 typedef struct
