@@ -31,7 +31,7 @@
 TEST_FUNC(slotlist) {
 	CK_SLOT_ID_PTR list=NULL;
 	CK_ULONG count=0;
-	int i;
+	unsigned int i;
 	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
 	ckrv_mod m_small[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK }, { CKR_OK, TEST_RV_FAIL } };
 

@@ -129,7 +129,7 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 		{ BITS_64, "/usr/lib/x86_64-linux-gnu/libbeidpkcs11.so.0" },
 		{ bitness, LIBDIR "/libbeidpkcs11.so.0" },
 	};
-	int i;
+	unsigned int i;
 	gboolean found32 = FALSE;
 	gboolean found64 = FALSE;
 	gboolean foundforeign = FALSE;

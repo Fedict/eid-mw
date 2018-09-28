@@ -363,7 +363,7 @@ struct rdri {
 };
 
 static gboolean readers_changed_real(gpointer user_data) {
-	int i;
+	unsigned long i;
 	GtkMenuShell *menu = GTK_MENU_SHELL(gtk_builder_get_object(builder, "menu_reader"));
 	static GtkWidget** items = NULL;
 	struct rdri* info = (struct rdri*) user_data;
@@ -396,7 +396,7 @@ static gboolean readers_changed_real(gpointer user_data) {
 
 void readers_changed(unsigned long nreaders, slotdesc* slots) {
 	struct rdri* data = malloc(sizeof(struct rdri));
-	int i;
+	unsigned long i;
 	data->slots = malloc(sizeof(slotdesc) * nreaders);
 	memcpy(data->slots, slots, sizeof(slotdesc)*nreaders);
 	for(i=0; i<nreaders; i++) {
