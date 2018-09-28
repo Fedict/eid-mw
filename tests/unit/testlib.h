@@ -35,22 +35,22 @@ typedef struct
 	int retval;
 } ckrv_mod;
 
-const static ckrv_mod m_p11_noinit[] = {
+static const ckrv_mod m_p11_noinit[] = {
 	{CKR_OK, TEST_RV_FAIL},
 	{CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_OK},
 };
 
-const static ckrv_mod m_p11_badarg[] = {
+static const ckrv_mod m_p11_badarg[] = {
 	{CKR_OK, TEST_RV_FAIL},
 	{CKR_ARGUMENTS_BAD, TEST_RV_OK},
 };
 
-const static ckrv_mod m_p11_badslot[] = {
+static const ckrv_mod m_p11_badslot[] = {
 	{CKR_OK, TEST_RV_FAIL},
 	{CKR_SLOT_ID_INVALID, TEST_RV_OK},
 };
 
-const static ckrv_mod m_p11_nocard[] = {
+static const ckrv_mod m_p11_nocard[] = {
 	{CKR_OK, TEST_RV_FAIL},
 	{CKR_DEVICE_ERROR, TEST_RV_OK},
 	{CKR_DEVICE_REMOVED, TEST_RV_OK},
