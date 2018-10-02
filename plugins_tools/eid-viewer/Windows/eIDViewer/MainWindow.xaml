@@ -1,7 +1,7 @@
 ﻿<Window x:Class="eIDViewer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="eID Viewer" Height="808" Width="510" 
+        Title="eID Viewer" Height="808" Width="550" 
         xmlns:resx="clr-namespace:eIDViewer.Resources"
         DataContext="{StaticResource eIDViewerBackendObj}"
         xml:lang="en-US"
@@ -263,11 +263,11 @@
                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuTestSiteItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Click="TestSiteMenu_Click" />
             </MenuItem>
         </Menu>
-        <Grid Height="55" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+        <Grid Height="55" Margin="0,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="100"  />
+                <ColumnDefinition Width="100"  />
                 <ColumnDefinition Width="Auto" MinWidth="300" />
-                <ColumnDefinition Width="Auto" MinWidth="80"/>
+                <ColumnDefinition Width="*" MinWidth="80"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Style="{DynamicResource ImageButton}" IsEnabled="{Binding Path=print_enabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="MenuItemPrint_Click" >
                 <Image  HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="100" Source="Resources/Images/print.png" />
