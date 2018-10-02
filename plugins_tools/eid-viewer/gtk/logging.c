@@ -31,7 +31,7 @@ static gboolean append_logline(gpointer ptr) {
 	tmp = g_strdup_printf("%s%s\n", msg->prefix, msg->msg);
 	if(gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(
 					gtk_builder_get_object(builder, "mi_help_log")))) {
-		if(msg->l >= gtk_combo_box_get_active(GTK_COMBO_BOX(
+		if(msg->l >= (enum eid_vwr_loglevel)gtk_combo_box_get_active(GTK_COMBO_BOX(
 						gtk_builder_get_object(builder, "loglvl")))) {
 			GtkTextView* tv = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "logtext"));
 			GtkTextBuffer* buf = gtk_text_view_get_buffer(tv);

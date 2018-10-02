@@ -34,9 +34,10 @@ TEST_FUNC(mechlist) {
 	CK_SLOT_ID slot;
 	CK_ULONG count=0;
 	CK_MECHANISM_TYPE_PTR mechlist;
-	int known_mechs = 0;
+	CK_ULONG known_mechs = 0;
 	int crit_mechs = 0;
-	int i, ret;
+	unsigned int i;
+	int ret;
 	int retval = TEST_RV_OK;
 	ckrv_mod m_small[] = {
 		{ CKR_BUFFER_TOO_SMALL, TEST_RV_OK },

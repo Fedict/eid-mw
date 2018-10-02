@@ -322,7 +322,7 @@ static void connect_signals(GtkWidget* window) {
 /* Set the colour of the "valid from" and "valid until" elements on the
  * Certificate page to red if they are incorrectly in the future or
  * past. */
-static void show_date_state(char* label, void* data, int length) {
+static void show_date_state(char* label, void* data, int length G_GNUC_UNUSED) {
 	gchar* labelname = g_strndup(label, strstr(label, ":") - label);
 	GtkLabel* l = GTK_LABEL(gtk_builder_get_object(builder, labelname));
 	PangoAttrList *attrs = pango_attr_list_new();
@@ -362,7 +362,7 @@ static void toggleclear(const char* l) {
 	gtk_toggle_button_set_active(tb, FALSE);
 }
 
-static void set_family(char* label, void* data, int length) {
+static void set_family(char* label G_GNUC_UNUSED, void* data G_GNUC_UNUSED, int length G_GNUC_UNUSED) {
 	GtkCheckButton* cb = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "member_of_family"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cb), TRUE);
 	g_hash_table_insert(touched_labels, g_strdup("member_of_family"), toggleclear);
@@ -387,7 +387,7 @@ static void bindata_init() {
 }
 
 /* Helper function for update_info() */
-static void update_info_detail(GtkTreeModel* model, GtkTreePath *path, GtkTreeIter* iter, gpointer data G_GNUC_UNUSED) {
+static void update_info_detail(GtkTreeModel* model, GtkTreePath *path G_GNUC_UNUSED, GtkTreeIter* iter, gpointer data G_GNUC_UNUSED) {
 	gchar *from, *to, *use, *certdata, *trustval;
 	gboolean past, future;
 	GdkPixbuf *image;
@@ -419,7 +419,7 @@ void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
 }
 
 /* Called when the user clicks on the treeview on the certificates tab */
-static gboolean show_menu(GtkWidget* widget, GdkEvent* event, gpointer user_data) {
+static gboolean show_menu(GtkWidget* widget G_GNUC_UNUSED, GdkEvent* event, gpointer user_data G_GNUC_UNUSED) {
 	GtkMenu* menu = GTK_MENU(gtk_builder_get_object(builder, "certmenu"));
 	if(event->button.button == 3) { // RMB click
 #if GTK_CHECK_VERSION(3, 22, 0)

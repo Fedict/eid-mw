@@ -38,4 +38,10 @@ extern "C"
 }
 #endif
 
+#ifdef __GNUC__
+#define EIDV_UNUSED __attribute__((unused))
+#else
+#define EIDV_UNUSED
+#endif
+
 #endif

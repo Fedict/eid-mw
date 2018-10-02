@@ -93,7 +93,7 @@ static gdouble get_photo_width(GdkPixbuf *buf) {
 }
 
 /* Called by the GtkPrintOperation when it wants us to draw a page */
-static void draw_page(GtkPrintOperation* print, GtkPrintContext* context, gint page_nr, gpointer user_data) {
+static void draw_page(GtkPrintOperation* print G_GNUC_UNUSED, GtkPrintContext* context, gint page_nr, gpointer user_data G_GNUC_UNUSED) {
 	cairo_t *cr;
 	PangoLayout *header, *title, *data;
 	gdouble c_pagewidth, c_pageheight, c_lineoffset, c_height,

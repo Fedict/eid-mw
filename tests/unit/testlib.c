@@ -353,7 +353,7 @@ void robot_cmd(char cmd, CK_BBOOL check_result) {
 	};
 	int len = 0;
 	char line[80];
-	int i;
+	unsigned int i;
 
 	printf("sending robot command %c...\n", cmd);
 	write(robot_dev, &cmd, 1);
@@ -458,7 +458,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	CK_RV rv;
 	CK_ULONG count = 0;
 	CK_SLOT_ID_PTR list = NULL;
-	int i;
+	unsigned int i;
 	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
 	CK_SESSION_HANDLE session;
 

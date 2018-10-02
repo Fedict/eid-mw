@@ -11,7 +11,7 @@
 static struct photo_info pi;
 
 /* Clear the photo element on the identity tab */
-static void clearphoto(char* label) {
+static void clearphoto(char* label G_GNUC_UNUSED) {
 	GtkWidget* image = GTK_WIDGET(gtk_builder_get_object(builder, "photo"));
 	g_object_set_threaded(G_OBJECT(image), "stock", "gtk-file", NULL);
 	g_object_set_threaded(G_OBJECT(image), "sensitive", (void*)FALSE, NULL);

@@ -3,7 +3,7 @@
 #include <sstream>
 #include <iomanip>
 
-EID_STRING BoolDecodeConvertor::convert(const void *normal)
+EID_STRING BoolDecodeConvertor::convert(const void *)
 {
 	return(TEXT(""));
 }

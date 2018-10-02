@@ -25,7 +25,7 @@ gboolean is_foreigner = FALSE;
 #define N_(s) gettext_noop(s)
 
 #define GEN_FUNC(n, d) \
-void n(GtkMenuItem* item, gpointer user_data) { \
+void n(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data) { \
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin")); \
 	GtkWidget* dlg = gtk_message_dialog_new(window, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, d " (not yet implemented)", (gchar*)user_data); \
 	gtk_dialog_run(GTK_DIALOG(dlg)); \
@@ -48,7 +48,7 @@ END_IGNORE_DEPRECATED
 
 /* Show the correct certificate state icon. TODO: make this match what the
  * certificate validation returns */
-void show_cert_image(const char* label, void *data, int len) {
+void show_cert_image(const char* label, void *data, int len G_GNUC_UNUSED) {
 	GdkPixbuf *buf = GDK_PIXBUF(data);
 	GtkImage *ci = GTK_IMAGE(gtk_builder_get_object(builder, "certimage"));
 
@@ -58,7 +58,7 @@ void show_cert_image(const char* label, void *data, int len) {
 }
 
 /* Show an "about" dialog */
-void showabout(GtkMenuItem* about, gpointer user_data G_GNUC_UNUSED) {
+void showabout(GtkMenuItem* about G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	const char *authors[] = { "Wouter Verhelst", "Frederik Vernelen", NULL };
 	const char *artists[] = { "Frank Mariën", NULL };
@@ -110,7 +110,7 @@ static void update_preview(GtkFileChooser* chooser, gpointer data) {
 GEN_FUNC(open_file_detail, "opening %s")
 
 /* Show an "open file" dialog, and make the backend open it if the user accepted the selection */
-void file_open(GtkMenuItem* item, gpointer user_data) {
+void file_open(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
 			_("Open eID file"), window, GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -153,7 +153,7 @@ void file_open(GtkMenuItem* item, gpointer user_data) {
 }
 
 /* Show a "save file" dialog, and make the backend save the XML data there if the user accepted the selection */
-void file_save(GtkMenuItem* item, gpointer user_data) {
+void file_save(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
 			_("Save eID file"), window, GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -190,12 +190,12 @@ void file_save(GtkMenuItem* item, gpointer user_data) {
 }
 
 /* Close the currently-open file */
-void file_close(GtkMenuItem* item, gpointer user_data) {
+void file_close(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	eid_vwr_close_file();
 }
 
 /* Perform a PIN operation */
-void pinop(GtkWidget* button, gpointer which) {
+void pinop(GtkWidget* button G_GNUC_UNUSED, gpointer which) {
 	enum eid_vwr_pinops op = (enum eid_vwr_pinops) which;
 
 	eid_vwr_pinop(op);
@@ -269,7 +269,7 @@ static void retranslate_gtkui() {
 }
 
 /* Translate the UI to the target language */
-void translate(GtkMenuItem* item, gpointer target) {
+void translate(GtkMenuItem* item G_GNUC_UNUSED, gpointer target) {
 	enum eid_vwr_langs lang = EID_VWR_LANG_EN;
 	if(!strncmp(target, "de", 2)) {
 		lang = EID_VWR_LANG_DE;
@@ -313,7 +313,7 @@ void disable_dnd(void) {
 }
 
 /* Perform a drag-and-drop operation */
-void drag_data_get(GtkWidget* widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, gpointer user_data) {
+void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDragContext *ctx G_GNUC_UNUSED, GtkSelectionData *data, guint info G_GNUC_UNUSED, guint time G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	const char* xml = eid_vwr_be_get_xmlform();
 	if(!xml) return;
 	gtk_selection_data_set_text(data, xml, -1);
@@ -334,7 +334,7 @@ void validate_toggle(gpointer event_source, gpointer user_data G_GNUC_UNUSED) {
 	}
 }
 
-void showurl(GtkMenuItem *item, gpointer user_data) {
+void showurl(GtkMenuItem *item G_GNUC_UNUSED, gpointer user_data) {
 	GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
 	if(strcmp((gchar*)user_data, "faq") == 0) {
 		gtk_show_uri_on_window(GTK_WINDOW(window), _("https://eid.belgium.be/en/question-and-answer"), GDK_CURRENT_TIME, NULL);
@@ -343,7 +343,7 @@ void showurl(GtkMenuItem *item, gpointer user_data) {
 	}
 }
 
-void auto_reader(GtkCheckMenuItem *mi, gpointer user_data) {
+void auto_reader(GtkCheckMenuItem *mi, gpointer user_data G_GNUC_UNUSED) {
 	if(gtk_check_menu_item_get_active(mi)) {
 		eid_vwr_be_select_slot(1, 0);
 	}
@@ -363,7 +363,7 @@ struct rdri {
 };
 
 static gboolean readers_changed_real(gpointer user_data) {
-	int i;
+	unsigned long i;
 	GtkMenuShell *menu = GTK_MENU_SHELL(gtk_builder_get_object(builder, "menu_reader"));
 	static GtkWidget** items = NULL;
 	struct rdri* info = (struct rdri*) user_data;
@@ -396,7 +396,7 @@ static gboolean readers_changed_real(gpointer user_data) {
 
 void readers_changed(unsigned long nreaders, slotdesc* slots) {
 	struct rdri* data = malloc(sizeof(struct rdri));
-	int i;
+	unsigned long i;
 	data->slots = malloc(sizeof(slotdesc) * nreaders);
 	memcpy(data->slots, slots, sizeof(slotdesc)*nreaders);
 	for(i=0; i<nreaders; i++) {

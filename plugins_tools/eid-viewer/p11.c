@@ -313,7 +313,7 @@ int eid_vwr_p11_finalize_find() {
 /* Called by state machine at start of TOKEN_ID state 
  * This function may only be called from the state machine thread
  */
-int eid_vwr_p11_read_id(void* data) {
+int eid_vwr_p11_read_id(void* data EIDV_UNUSED) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
 
@@ -330,7 +330,7 @@ int eid_vwr_p11_read_id(void* data) {
 /* Called by state machine at start of TOKEN_CERTS state
  * This function may only be called from the state machine thread
  */
-int eid_vwr_p11_read_certs(void* data) {
+int eid_vwr_p11_read_certs(void* data EIDV_UNUSED) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
 	
@@ -381,7 +381,7 @@ int eid_vwr_p11_leave_pinop() {
 	return 0;
 }
 
-int eid_vwr_p11_check_version(void* data) {
+int eid_vwr_p11_check_version(void* data EIDV_UNUSED) {
 	CK_INFO info;
 	check_rv(C_GetInfo(&info));
 	if(info.libraryVersion.major < 4 || (info.libraryVersion.major == 4 && info.libraryVersion.minor < 2)) {

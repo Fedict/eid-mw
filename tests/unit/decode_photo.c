@@ -93,7 +93,8 @@ int jpegdump(char* data, CK_ULONG length) {
 	struct jpeg_error_mgr jerr;
 	JSAMPARRAY imgbuf;
 	JDIMENSION size = 0;
-	int rlen, i, j;
+	int rlen, j;
+	unsigned int i;
 
 	/* initialize JPEG decompression */
 	cinfo.err = jpeg_std_error(&jerr);
