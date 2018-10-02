@@ -223,16 +223,19 @@
     <value>Membre de famille</value>
   </data>
   <data name="ProtectionLabel" xml:space="preserve">
-    <value>Date et pays de protection internationale:</value>
+    <value>Date et pays
+de protection internationale:</value>
   </data>
   <data name="DuplicateLabel" xml:space="preserve">
     <value>Duplicata:</value>
   </data>
   <data name="EmployersVATNumber1Label" xml:space="preserve">
-    <value>Numéro de TVA/BCE de l’employeur (1):</value>
+    <value>Numéro de TVA/
+BCE de l’employeur (1):</value>
   </data>
   <data name="EmployersVATNumber2Label" xml:space="preserve">
-    <value>Numéro de TVA/BCE de l’employeur (2):</value>
+    <value>Numéro de TVA/
+BCE de l’employeur (2):</value>
   </data>
   <data name="RegionalFileNumberLabel" xml:space="preserve">
     <value>Numéro de dossier régional:</value>

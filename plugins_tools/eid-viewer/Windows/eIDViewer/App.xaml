@@ -12,6 +12,11 @@
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
+        <Style x:Key="DataLabelDouble" TargetType="{x:Type Label}" BasedOn="{x:Null}">
+            <Setter Property="Height"  Value="26"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
         <Style x:Key="CheckBoxAsData" TargetType="{x:Type CheckBox}" BasedOn="{x:Null}">
             <Setter Property="Height"  Value="20"/>
             <Setter Property="VerticalAlignment" Value="Center"/>

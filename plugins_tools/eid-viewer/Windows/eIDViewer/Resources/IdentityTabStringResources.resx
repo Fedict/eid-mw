@@ -223,16 +223,19 @@
     <value>Family member</value>
   </data>
   <data name="ProtectionLabel" xml:space="preserve">
-    <value>Data and country of international protection:</value>
+    <value>Data and country
+of international protection:</value>
   </data>
   <data name="DuplicateLabel" xml:space="preserve">
     <value>Duplicate:</value>
   </data>
   <data name="EmployersVATNumber1Label" xml:space="preserve">
-    <value>Employer's VAT/CBE number (1):</value>
+    <value>Employer's VAT/
+CBE number (1):</value>
   </data>
   <data name="EmployersVATNumber2Label" xml:space="preserve">
-    <value>Employer's VAT/CBE number (2):</value>
+    <value>Employer's VAT/
+CBE number (2):</value>
   </data>
   <data name="RegionalFileNumberLabel" xml:space="preserve">
     <value>Regional file number:</value>

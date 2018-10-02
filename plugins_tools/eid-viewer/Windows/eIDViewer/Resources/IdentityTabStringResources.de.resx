@@ -139,7 +139,7 @@
     <value>Staatsangehörigkeit:</value>
   </data>
   <data name="NationalNumberLabel" xml:space="preserve">
-    <value>Staatsangehörigkeitsnummer:</value>
+    <value>Nationale Nummer:</value>
   </data>
   <data name="PlaceOfBirthLabel" xml:space="preserve">
     <value>Geburtsort:</value>
@@ -223,16 +223,19 @@
     <value>Familienangehöriger</value>
   </data>
   <data name="ProtectionLabel" xml:space="preserve">
-    <value>Datum und Land des internationalen Schutzes:</value>
+    <value>Datum und Land 
+des internationalen Schutzes:</value>
   </data>
   <data name="DuplicateLabel" xml:space="preserve">
     <value>Duplikat:</value>
   </data>
   <data name="EmployersVATNumber1Label" xml:space="preserve">
-    <value>Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (1):</value>
+    <value>Mehrwertsteuernummer/
+ZDU-Nummer des Arbeitgebers (1):</value>
   </data>
   <data name="EmployersVATNumber2Label" xml:space="preserve">
-    <value>Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (2):</value>
+    <value>Mehrwertsteuernummer/
+ZDU-Nummer des Arbeitgebers (2):</value>
   </data>
   <data name="RegionalFileNumberLabel" xml:space="preserve">
     <value>Regionale Aktennummer:</value>

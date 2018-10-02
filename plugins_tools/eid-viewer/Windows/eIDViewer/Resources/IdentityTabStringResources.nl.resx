@@ -223,16 +223,19 @@
     <value>Gezinslid</value>
   </data>
   <data name="ProtectionLabel" xml:space="preserve">
-    <value>Datum en land van internationale bescherming:</value>
+    <value>Datum en land
+van internationale bescherming:</value>
   </data>
   <data name="DuplicateLabel" xml:space="preserve">
     <value>Duplicaat:</value>
   </data>
   <data name="EmployersVATNumber1Label" xml:space="preserve">
-    <value>BTW/KBO-nummer van de werkgever (1):</value>
+    <value>BTW/KBO-nummer
+van de werkgever (1):</value>
   </data>
   <data name="EmployersVATNumber2Label" xml:space="preserve">
-    <value>BTW/KBO-nummer van de werkgever (2):</value>
+    <value>BTW/KBO-nummer
+van de werkgever (2):</value>
   </data>
   <data name="RegionalFileNumberLabel" xml:space="preserve">
     <value>Gewestelijk dossiernummer:</value>

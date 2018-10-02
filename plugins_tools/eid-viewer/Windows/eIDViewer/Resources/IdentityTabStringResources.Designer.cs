@@ -79,7 +79,8 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employer’s VAT/CBE number (1):.
+        ///   Looks up a localized string similar to Employer&apos;s VAT/
+        ///CBE number (1):.
         /// </summary>
         public static string EmployersVATNumber1Label {
             get {
@@ -88,7 +89,8 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employer’s VAT/CBE number (2):.
+        ///   Looks up a localized string similar to Employer&apos;s VAT/
+        ///CBE number (2):.
         /// </summary>
         public static string EmployersVATNumber2Label {
             get {
@@ -187,7 +189,8 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data and country of international protection:.
+        ///   Looks up a localized string similar to Data and country
+        ///of international protection:.
         /// </summary>
         public static string ProtectionLabel {
             get {
