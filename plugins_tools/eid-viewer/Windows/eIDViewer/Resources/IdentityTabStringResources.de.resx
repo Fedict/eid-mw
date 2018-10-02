@@ -130,7 +130,7 @@
     <value>Vornamen:</value>
   </data>
   <data name="MunicipalityLabel" xml:space="preserve">
-    <value>Kommune:</value>
+    <value>Gemeinde:</value>
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Name:</value>
@@ -145,7 +145,7 @@
     <value>Geburtsort:</value>
   </data>
   <data name="PostalCodeLabel" xml:space="preserve">
-    <value>ostleitzahl:</value>
+    <value>Postleitzahl:</value>
   </data>
   <data name="SexLabel" xml:space="preserve">
     <value>Geschlecht:</value>
@@ -220,27 +220,27 @@
     <value>KIDS-KARTE</value>
   </data>
   <data name="MemberLabel" xml:space="preserve">
-    <value>Member of Family</value>
+    <value>Familienangehöriger</value>
   </data>
   <data name="ProtectionLabel" xml:space="preserve">
-    <value>Date and country of protection</value>
+    <value>Datum und Land des internationalen Schutzes:</value>
   </data>
   <data name="DuplicateLabel" xml:space="preserve">
-    <value>Duplicata:</value>
+    <value>Duplikat:</value>
   </data>
   <data name="EmployersVATNumber1Label" xml:space="preserve">
-    <value>Employer's VAT number (1):</value>
+    <value>Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (1):</value>
   </data>
   <data name="EmployersVATNumber2Label" xml:space="preserve">
-    <value>Employer's VAT number (2):</value>
+    <value>Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (2):</value>
   </data>
   <data name="RegionalFileNumberLabel" xml:space="preserve">
-    <value>Regional file number:</value>
+    <value>Regionale Aktennummer:</value>
   </data>
   <data name="SpecialOrganisationLabel" xml:space="preserve">
-    <value>Special Organization:</value>
+    <value>Besondere Organisation:</value>
   </data>
   <data name="WorkPermitMentionLabel" xml:space="preserve">
-    <value>Work permit mention:</value>
+    <value>Zugang zum Arbeitsmarkt:</value>
   </data>
 </root>

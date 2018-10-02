@@ -151,7 +151,7 @@
     <value>Sexe</value>
   </data>
   <data name="SpecialStatusLabel" xml:space="preserve">
-    <value>Etat spécial:</value>
+    <value>Statut spécial:</value>
   </data>
   <data name="special_organisation_former_blue_card" xml:space="preserve">
     <value>Ancien titulaire d’une carte bleue européenne</value>
@@ -220,27 +220,27 @@
     <value>CARTE POUR ENFANTS</value>
   </data>
   <data name="MemberLabel" xml:space="preserve">
-    <value>Member of Family</value>
+    <value>Membre de famille</value>
   </data>
   <data name="ProtectionLabel" xml:space="preserve">
-    <value>Date and country of protection</value>
+    <value>Date et pays de protection internationale:</value>
   </data>
   <data name="DuplicateLabel" xml:space="preserve">
     <value>Duplicata:</value>
   </data>
   <data name="EmployersVATNumber1Label" xml:space="preserve">
-    <value>Employer's VAT number (1):</value>
+    <value>Numéro de TVA/BCE de l’employeur (1):</value>
   </data>
   <data name="EmployersVATNumber2Label" xml:space="preserve">
-    <value>Employer's VAT number (2):</value>
+    <value>Numéro de TVA/BCE de l’employeur (2):</value>
   </data>
   <data name="RegionalFileNumberLabel" xml:space="preserve">
-    <value>Regional file number:</value>
+    <value>Numéro de dossier régional:</value>
   </data>
   <data name="SpecialOrganisationLabel" xml:space="preserve">
-    <value>Special Organization:</value>
+    <value>Organisation spéciale:</value>
   </data>
   <data name="WorkPermitMentionLabel" xml:space="preserve">
-    <value>Work permit mention:</value>
+    <value>Accès au marché du travail:</value>
   </data>
 </root>

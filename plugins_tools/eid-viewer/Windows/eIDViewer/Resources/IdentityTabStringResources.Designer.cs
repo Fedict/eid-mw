@@ -70,7 +70,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplicata:.
+        ///   Looks up a localized string similar to Duplicate:.
         /// </summary>
         public static string DuplicateLabel {
             get {
@@ -79,7 +79,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employer&apos;s VAT number (1):.
+        ///   Looks up a localized string similar to Employer’s VAT/CBE number (1):.
         /// </summary>
         public static string EmployersVATNumber1Label {
             get {
@@ -88,7 +88,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employer&apos;s VAT number (2):.
+        ///   Looks up a localized string similar to Employer’s VAT/CBE number (2):.
         /// </summary>
         public static string EmployersVATNumber2Label {
             get {
@@ -124,7 +124,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Member of Family.
+        ///   Looks up a localized string similar to Family member.
         /// </summary>
         public static string MemberLabel {
             get {
@@ -187,7 +187,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date and country of protection.
+        ///   Looks up a localized string similar to Data and country of international protection:.
         /// </summary>
         public static string ProtectionLabel {
             get {
@@ -196,7 +196,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regional File Number.
+        ///   Looks up a localized string similar to Regional file number:.
         /// </summary>
         public static string RegionalFileNumberLabel {
             get {
@@ -277,7 +277,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Special Organization:.
+        ///   Looks up a localized string similar to Special organisation:.
         /// </summary>
         public static string SpecialOrganisationLabel {
             get {
@@ -430,7 +430,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Work permit mention:.
+        ///   Looks up a localized string similar to Access to the labour market:.
         /// </summary>
         public static string WorkPermitMentionLabel {
             get {

@@ -220,27 +220,27 @@
     <value>KIDS CARD</value>
   </data>
   <data name="MemberLabel" xml:space="preserve">
-    <value>Member of Family</value>
+    <value>Family member</value>
   </data>
   <data name="ProtectionLabel" xml:space="preserve">
-    <value>Date and country of protection</value>
+    <value>Data and country of international protection:</value>
   </data>
   <data name="DuplicateLabel" xml:space="preserve">
-    <value>Duplicata:</value>
+    <value>Duplicate:</value>
   </data>
   <data name="EmployersVATNumber1Label" xml:space="preserve">
-    <value>Employer's VAT number (1):</value>
+    <value>Employer's VAT/CBE number (1):</value>
   </data>
   <data name="EmployersVATNumber2Label" xml:space="preserve">
-    <value>Employer's VAT number (2):</value>
+    <value>Employer's VAT/CBE number (2):</value>
   </data>
   <data name="RegionalFileNumberLabel" xml:space="preserve">
-    <value>Regional File Number</value>
+    <value>Regional file number:</value>
   </data>
   <data name="SpecialOrganisationLabel" xml:space="preserve">
-    <value>Special Organization:</value>
+    <value>Special organisation:</value>
   </data>
   <data name="WorkPermitMentionLabel" xml:space="preserve">
-    <value>Work permit mention:</value>
+    <value>Access to the labour market:</value>
   </data>
 </root>
