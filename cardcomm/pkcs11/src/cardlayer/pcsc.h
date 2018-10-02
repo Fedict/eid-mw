@@ -135,10 +135,8 @@ public:
 		bool Status(const std::string & csReader);
 
 		SCARDHANDLE Connect(const std::string & csReader,
-				    unsigned long ulShareMode =
-				    SCARD_SHARE_SHARED,
-				    unsigned long ulPreferredProtocols =
-				    SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1);
+				    unsigned long ulShareMode = SCARD_SHARE_SHARED,
+				    unsigned long ulPreferredProtocols = SCARD_PROTOCOL_T0 );
 		void Disconnect(SCARDHANDLE hCard,
 				tDisconnectMode disconnectMode);
 
