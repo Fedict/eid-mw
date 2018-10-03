@@ -42,7 +42,7 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 "%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
-copy %~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi %~dp0
+@copy "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi" "%~dp0\BeidViewer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi"
 
 @cd "%OUR_CURRENT_PATH%"
 
