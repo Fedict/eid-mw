@@ -50,12 +50,12 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <RowDefinition Height="{Binding Path=foreigner_fields_height_double, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <RowDefinition Height="{Binding Path=foreigner_fields_height_double, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <RowDefinition Height="{Binding Path=foreigner_fields_height_double, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="Auto"/>
                 
@@ -115,12 +115,12 @@
             <Label Grid.Column="1" Grid.Row="10" Content="{Binding Path=nobility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="11" Content="{Binding Path=special_status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="12" Content="{Binding Path=member_of_family, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="13" Content="{Binding Path=date_and_country_of_protection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="13" Content="{Binding Path=date_and_country_of_protection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
             <Label Grid.Column="1" Grid.Row="14" Content="{Binding Path=special_organisation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="15" Content="{Binding Path=duplicate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="16" Content="{Binding Path=work_permit_mention, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="17" Content="{Binding Path=employers_vat_number1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="18" Content="{Binding Path=employers_vat_number2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="17" Content="{Binding Path=employers_vat_number1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
+            <Label Grid.Column="1" Grid.Row="18" Content="{Binding Path=employers_vat_number2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
             <Label Grid.Column="1" Grid.Row="19" Content="{Binding Path=regional_file_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="21" Content="{Binding Path=address_street_and_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="22" Content="{Binding Path=address_zip, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
