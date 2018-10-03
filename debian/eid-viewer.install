@@ -4,3 +4,4 @@ usr/share/applications/eid-viewer.desktop
 usr/share/eid-mw
 usr/share/glib-2.0/schemas/eid-viewer.gschema.xml
 usr/share/icons/hicolor/*/
+usr/share/metainfo
