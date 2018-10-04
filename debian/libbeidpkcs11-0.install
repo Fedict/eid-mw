@@ -1,4 +1,5 @@
 #!/bin/sh
 
 echo "usr/lib/*/libbeidpkcs11.so.0*"
+echo "usr/share/metainfo/*metainfo.xml"
 pkg-config --variable=p11_module_path p11-kit-1 | sed -e 's,^/,,'
