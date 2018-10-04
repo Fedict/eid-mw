@@ -154,6 +154,7 @@ fi
 %{_libdir}/libbeidpkcs11.so.*
 %{_libdir}/libeidviewer.so.*
 %{_libdir}/pkcs11/
+%{_datadir}/metainfo/*metainfo.xml
 %exclude %{_libdir}/libbeidpkcs11.so
 
 %files bin
@@ -189,7 +190,7 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/eid-viewer.mo
 %{_datadir}/applications/fedict-eid-viewer.desktop
 %{_datadir}/eid-mw/
-%{_datadir}/metainfo
+%{_datadir}/metainfo/*appdata.xml
 %{_datadir}/icons/hicolor/*/*/eid-viewer.png
 %if ! 0%{?el6}
 %{_datadir}/glib-2.0/schemas/
