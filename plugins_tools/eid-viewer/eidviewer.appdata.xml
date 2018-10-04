@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:its="http://www.w3.org/2005/11/its" xmlns="https://specifications.freedesktop.org/metainfo/1.0" type="desktop-application">
-  <id>eid_viewer.desktop</id>
+  <id>be.belgium.eid.eid_viewer</id>
   <metadata_license>GPL-3.0+</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>eID Viewer</name>
@@ -9,6 +9,10 @@
   <summary>Display and administer your eID card</summary>
   <summary xml:lang="nl">Weergeven en beheren van uw eID kaart</summary>
   <summary xml:lang="fr">Affichage et gestion de votre carte eID</summary>
+  <categories>
+    <category>Utility</category>
+    <category>FileTools</category>
+  </categories>
   <description>
     <p>The eID viewer allows you to view the data on a Belgian
     electronic ID card. Additionally, it also allows you to verify if
@@ -20,6 +24,8 @@
     zelf) nog geldig zijn, en ook om de PIN-code te verifiëren en/of
     wijzigen.</p>
   </description>
+  <launchable>eid-viewer.desktop</launchable>
   <url type="homepage">https://eid.belgium.be/</url>
   <developer_name>Belgian Federal Government</developer_name>
+  <translation type="gettext">eid-viewer</translation>
 </component>
