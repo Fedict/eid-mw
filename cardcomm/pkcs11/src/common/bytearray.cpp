@@ -153,8 +153,7 @@ namespace eIDMW
 // CByteArray::~CByteArray()
 	CByteArray::~CByteArray()
 	{
-		if (m_pucData)
-			free(m_pucData);
+		SecureClearContents();
 	}
 
 	unsigned long CByteArray::Size() const
@@ -354,6 +353,19 @@ namespace eIDMW
 	{
 		if (m_pucData)
 		{
+			free(m_pucData);
+			m_pucData = NULL;
+		}
+		m_ulSize = 0;
+		m_ulCapacity = 0;
+	}
+
+// void CByteArray::SecureClearContents() set content value to zero's before freeing
+	void CByteArray::SecureClearContents()
+	{
+		if (m_pucData)
+		{
+			memset(m_pucData,0, m_ulSize);
 			free(m_pucData);
 			m_pucData = NULL;
 		}
