@@ -28,7 +28,11 @@ cp -a ../../installers/eid-viewer/mac/bg.png "/Volumes/eID Viewer/.background/"
 cp -a "../../$MAC_BUILD_CONFIG/eID Viewer.app" "/Volumes/eID Viewer/"
 ln -s /Applications "/Volumes/eID Viewer/ "
 /usr/bin/osascript "../../installers/eid-viewer/mac/setlayout.applescript" "eID Viewer" || true
-sleep 10
-hdiutil eject ${DEVNAME}s1
-hdiutil convert tmp-eidviewer.dmg -format UDBZ -o "eID Viewer-$REL_VERSION.dmg"
-popd
+for i in $(seq 1 10); do
+	sleep 10
+	if hdiutil eject ${DEVNAME}s1; then
+		hdiutil convert tmp-eidviewer.dmg -format UDBZ -o "eID Viewer-$REL_VERSION.dmg"
+		exit 0
+	fi
+done
+exit 1
