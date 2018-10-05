@@ -83,6 +83,8 @@ public:
 
 		void ClearContents();
 
+		void SecureClearContents();
+
 		bool Equals(const CByteArray & oByteArray) const;
 
     /** Returns a hex string, either on 1 line and truncated if needed

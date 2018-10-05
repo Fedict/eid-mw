@@ -220,15 +220,13 @@ namespace eIDMW
 		const std::string * pcsPin1 = &csPin1;
 		const std::string * pcsPin2 = &csPin2;
 		bool bAskPIN = csPin1.empty();
-		bool bUsePinpad =
-			bAskPIN ? m_poPinpad->UsePinpad(operation) : false;
+		bool bUsePinpad = bAskPIN ? m_poPinpad->UsePinpad(operation) : false;
 
 	      bad_pin:
 		//If no Pin(s) provided and it's no Pinpad reader -> ask Pins
 		if (bAskPIN && !bUsePinpad)
 		{
-			showPinDialog(operation, Pin, csReadPin1, csReadPin2,
-				      pKey);
+			showPinDialog(operation, Pin, csReadPin1, csReadPin2, pKey);
 			pcsPin1 = &csReadPin1;
 			pcsPin2 = &csReadPin2;
 		}
@@ -251,20 +249,19 @@ namespace eIDMW
 			CAutoLock autolock(this);
 
 			// Select the path where the Pin is, if necessary
-			if (!Pin.csPath.empty() && !bSelected
-			    && Pin.csPath != "3F00")
+			if (!Pin.csPath.empty() && !bSelected && Pin.csPath != "3F00")
 			{
 				SelectFile(Pin.csPath);
 				bSelected = true;
 			}
 			// Send the command
 			if (csPin1.empty() && bUsePinpad)
-				oResp = m_poPinpad->PinCmd(operation, Pin,
-							   PinUsage2Pinpad
-							   (Pin, pKey), oAPDU,
-							   ulRemaining);
+				oResp = m_poPinpad->PinCmd(operation, Pin, PinUsage2Pinpad(Pin, pKey), oAPDU, ulRemaining);
 			else
+			{
 				oResp = SendAPDU(oAPDU);
+				oAPDU.SecureClearContents();
+			}
 		}
 
 		unsigned long ulSW12 = getSW12(oResp);
@@ -541,31 +538,24 @@ namespace eIDMW
 		return oCmd;
 	}
 
-	CByteArray CPkiCard::MakePinBuf(const tPin & Pin,
-					const std::string & csPin,
-					bool bEmptyPin)
+	CByteArray CPkiCard::MakePinBuf(const tPin & Pin, const std::string & csPin, bool bEmptyPin)
 	{
 		CByteArray oBuf(16);
 		unsigned long i;
 
-		unsigned long ulPinLen =
-			bEmptyPin ? 0 : (unsigned long) csPin.size();
+		unsigned long ulPinLen = bEmptyPin ? 0 : (unsigned long) csPin.size();
 
-		if (!bEmptyPin)
+	if (!bEmptyPin)
 		{
 			// Test if it's a valid PIN value
 			if (Pin.ulMinLen != 0 && ulPinLen < Pin.ulMinLen)
 			{
-				MWLOG(LEV_WARN, MOD_CAL,
-				      L"PIN length is %d, should be at least %d",
-				      ulPinLen, Pin.ulMinLen);
+				MWLOG(LEV_WARN, MOD_CAL, L"PIN length is %d, should be at least %d", ulPinLen, Pin.ulMinLen);
 				throw CMWEXCEPTION(EIDMW_ERR_PIN_FORMAT);
 			}
 			if (Pin.ulMaxLen != 0 && ulPinLen > Pin.ulMaxLen)
 			{
-				MWLOG(LEV_WARN, MOD_CAL,
-				      L"PIN length is %d, should be at most %d",
-				      ulPinLen, Pin.ulMaxLen);
+				MWLOG(LEV_WARN, MOD_CAL, L"PIN length is %d, should be at most %d", ulPinLen, Pin.ulMaxLen);
 				throw CMWEXCEPTION(EIDMW_ERR_PIN_FORMAT);
 			}
 		}
@@ -574,49 +564,37 @@ namespace eIDMW
 		{
 			if (!IsDigit(csPin[i]))
 			{
-				MWLOG(LEV_WARN, MOD_CAL,
-				      L"The PIN contains non-digit values");
+				MWLOG(LEV_WARN, MOD_CAL, L"The PIN contains non-digit values");
 				throw CMWEXCEPTION(EIDMW_ERR_PIN_FORMAT);
 			}
 		}
 
-		switch (Pin.encoding)
+		switch(Pin.encoding)
 		{
 			case PIN_ENC_ASCII:
 				for (i = 0; i < ulPinLen; i++)
 					oBuf.Append((unsigned char) csPin[i]);
-				for (; i < Pin.ulStoredLen; i++)
+				for ( ; i < Pin.ulStoredLen; i++)
 					oBuf.Append(Pin.ucPadChar);
 				break;
 			case PIN_ENC_GP:
-				oBuf.Append((unsigned char) (0x20 +
-							     ulPinLen));
+				oBuf.Append((unsigned char) (0x20 + ulPinLen));
 				// Falls through
 			case PIN_ENC_BCD:
 				i = 0;
 				while (i < ulPinLen)
 				{
-					unsigned char uc =
-						(unsigned char) (16 *
-								 (csPin[i] -
-								  '0'));
+					unsigned char uc = (unsigned char) (16 * (csPin[i] - '0'));
 					i++;
 					if (i < ulPinLen)
-						uc += (unsigned
-						       char) (csPin[i] - '0');
+						uc += (unsigned char) (csPin[i] - '0');
 					else
-						uc += (unsigned char) (Pin.
-								       ucPadChar
-								       % 16);
+						uc += (unsigned char) (Pin.ucPadChar % 16);
 					i++;
 					oBuf.Append(uc);
 				}
 				while (oBuf.Size() < Pin.ulStoredLen)
-					oBuf.Append((unsigned char)
-						    Pin.ucPadChar >
-						    0x0F ? Pin.
-						    ucPadChar : Pin.
-						    ucPadChar % 16);
+					oBuf.Append((unsigned char)Pin.ucPadChar > 0x0F ? Pin.ucPadChar : Pin.ucPadChar % 16);
 				break;
 			default:
 				throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
