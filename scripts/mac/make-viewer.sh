@@ -28,7 +28,7 @@ cp -a ../../installers/eid-viewer/mac/bg.png "/Volumes/eID Viewer/.background/"
 cp -a "../../$MAC_BUILD_CONFIG/eID Viewer.app" "/Volumes/eID Viewer/"
 ln -s /Applications "/Volumes/eID Viewer/ "
 /usr/bin/osascript "../../installers/eid-viewer/mac/setlayout.applescript" "eID Viewer" || true
-sleep 4
+sleep 10
 hdiutil eject $DEVNAME
 hdiutil convert tmp-eidviewer.dmg -format UDBZ -o "eID Viewer-$REL_VERSION.dmg"
 popd
