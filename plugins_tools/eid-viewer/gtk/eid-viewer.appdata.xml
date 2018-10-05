@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:its="http://www.w3.org/2005/11/its" xmlns="https://specifications.freedesktop.org/metainfo/1.0" type="desktop-application">
-  <id>be.belgium.eid.eidviewer</id>
+<component type="desktop-application">
+  <id>eid-viewer.desktop</id>
   <metadata_license>MIT</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>eID Viewer</name>
@@ -24,7 +24,6 @@
     zelf) nog geldig zijn, en ook om de PIN-code te verifiëren en/of
     wijzigen.</p>
   </description>
-  <launchable type="desktop-id">eid-viewer.desktop</launchable>
   <url type="homepage">https://eid.belgium.be/</url>
   <developer_name>Belgian Federal Government</developer_name>
   <translation type="gettext">eid-viewer</translation>
