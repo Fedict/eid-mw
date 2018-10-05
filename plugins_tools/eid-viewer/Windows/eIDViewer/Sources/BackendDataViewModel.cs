@@ -784,7 +784,10 @@ namespace eIDViewer
             else if (String.Equals(label, "nationality", StringComparison.Ordinal))
             { nationality = data; }
             else if (String.Equals(label, "nobility", StringComparison.Ordinal))
-            { nobility = data; }
+            {
+                if (data != "")
+                    { nobility = data; }
+            }
             else if (String.Equals(label, "special_status", StringComparison.Ordinal))
             { special_status = data; }
             else if (String.Equals(label, "address_street_and_number", StringComparison.Ordinal))
