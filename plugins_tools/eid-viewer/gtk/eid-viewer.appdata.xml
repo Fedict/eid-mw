@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:its="http://www.w3.org/2005/11/its" xmlns="https://specifications.freedesktop.org/metainfo/1.0" type="desktop-application">
-  <id>eid_viewer.desktop</id>
-  <metadata_license>GPL-3.0+</metadata_license>
+<component type="desktop-application">
+  <id>eid-viewer.desktop</id>
+  <metadata_license>MIT</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>eID Viewer</name>
-  <name xml:lang="nl">eID Kaart Lezer</name>
-  <name xml:lang="fr">Lecteur de Carte eID</name>
+  <name lang="nl">eID Kaart Lezer</name>
+  <name lang="fr">Lecteur de Carte eID</name>
   <summary>Display and administer your eID card</summary>
-  <summary xml:lang="nl">Weergeven en beheren van uw eID kaart</summary>
-  <summary xml:lang="fr">Affichage et gestion de votre carte eID</summary>
+  <summary lang="nl">Weergeven en beheren van uw eID kaart</summary>
+  <summary lang="fr">Affichage et gestion de votre carte eID</summary>
+  <categories>
+    <category>Utility</category>
+    <category>FileTools</category>
+  </categories>
   <description>
     <p>The eID viewer allows you to view the data on a Belgian
     electronic ID card. Additionally, it also allows you to verify if
@@ -22,4 +26,6 @@
   </description>
   <url type="homepage">https://eid.belgium.be/</url>
   <developer_name>Belgian Federal Government</developer_name>
+  <developer_name lang="nl">Belgische Federale Overheid</developer_name>
+  <translation type="gettext">eid-viewer</translation>
 </component>
