@@ -1026,8 +1026,6 @@ CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 #undef WHERE
 
 
-
-
 #define WHERE "cal_logout()"
 CK_RV cal_logout(CK_SLOT_ID hSlot)
 {
@@ -1040,12 +1038,30 @@ CK_RV cal_logout(CK_SLOT_ID hSlot)
 		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
+	
+	try
+	{
+		std::string szReader = pSlot->name;
+		CReader &oReader = oCardLayer->getReader(szReader);
+		tPin tpin;
+		unsigned long ulRemaining = 0;
 
-	std::string szReader = pSlot->name;
-	//CReader &oReader = oCardLayer->getReader(szReader);
-
-	/*TODO ??? oReader. */
-
+		if (!oReader.PinCmd(PIN_OP_LOGOFF, tpin, "", "", ulRemaining))
+		{
+			//can only get here if we're not a BEID card
+			log_trace(WHERE, "E: PIN_OP_LOGOFF failed");
+			ret = CKR_FUNCTION_FAILED;
+		}
+	}
+	catch (CMWException &e)
+	{
+		return (cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...)
+	{
+		log_trace(WHERE, "E: unkown exception thrown");
+		return (CKR_FUNCTION_FAILED);
+	}
 	return (ret);
 }
 
