@@ -28,7 +28,16 @@ namespace eIDViewer
     {
         eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
         private MenuItem LastCardReaderMenuItem = null;
-        
+        public static RoutedCommand SelectGermanCommand = new RoutedCommand();
+        public static RoutedCommand SelectEnglishCommand = new RoutedCommand();
+        public static RoutedCommand SelectFrenchCommand = new RoutedCommand();
+        public static RoutedCommand SelectDutchCommand = new RoutedCommand();
+        public static RoutedCommand SelectOpenCommand = new RoutedCommand();
+        public static RoutedCommand SelectSaveCommand = new RoutedCommand();
+        public static RoutedCommand SelectCloseCommand = new RoutedCommand();
+        public static RoutedCommand SelectPrintCommand = new RoutedCommand();
+        public static RoutedCommand SelectQuitCommand = new RoutedCommand();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -59,7 +68,7 @@ namespace eIDViewer
             }
         }
 
-    void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
