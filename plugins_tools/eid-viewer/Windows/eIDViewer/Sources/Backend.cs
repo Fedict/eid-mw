@@ -201,7 +201,6 @@ namespace eIDViewer
                     theData.eid_data_from_file = false;
                     theData.VerifyAllData();
                     theData.HideProgressBar();
-                    theData.print_enabled = true;
                     break;
                 case eid_vwr_states.STATE_FILE_WAIT:
                     theData.eid_data_from_file = true;

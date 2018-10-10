@@ -1019,7 +1019,6 @@ namespace eIDViewer
             foreigner_fields_height = 0;
             foreigner_fields_height_double = 0;
             pinop_ready = false;
-            print_enabled = false;
             open_enabled = true;
 
             photo = null;
@@ -1699,17 +1698,6 @@ namespace eIDViewer
             {
                 _pinop_ready = value;
                 this.NotifyPropertyChanged("pinop_ready");
-            }
-        }
-
-        private Boolean _print_enabled = false;
-        public Boolean print_enabled
-        {
-            get { return _print_enabled; }
-            set
-            {
-                _print_enabled = value;
-                this.NotifyPropertyChanged("print_enabled");
             }
         }
 
