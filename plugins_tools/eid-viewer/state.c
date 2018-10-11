@@ -213,8 +213,9 @@ static void parent_enter_recursive(struct state* start, struct state* end, enum 
 		return;
 	}
 	if(start != NULL) {
-		be_log(EID_VWR_LOG_DETAIL, TEXT("Entering state %s (parent)"), state_to_name(start->me));
 		parent_enter_recursive(start->parent, end, e);
+		be_log(EID_VWR_LOG_DETAIL, TEXT("Entering state %s (parent)"), state_to_name(start->me));
+		be_newstate(start->me);
 		if(start->enter != NULL) {
 			if(start->enter(NULL) != 0 && e != EVENT_STATE_ERROR) {
 				sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
@@ -293,11 +294,8 @@ exit_loop:
 			return;
 		}
 	}
-
 	/* Now do the actual state transition */
-	be_log(EID_VWR_LOG_DETAIL, TEXT("Entering state %s (target)"), state_to_name(target->me));
 	hold = curstate = target;
-	be_newstate(curstate->me);
 
 	/* If the target state has parent states that don't share a common
 	 * ancestor with the (previously) current state, call their "enter"
@@ -316,6 +314,10 @@ exit_loop:
 			sm_handle_event_onthread(EVENT_STATE_ERROR, &d);
 		}
 	}
+	/* Now report the actual state transition (after its parent's state entries have been reported)*/
+	be_log(EID_VWR_LOG_DETAIL, TEXT("Entering state %s (target)"), state_to_name(target->me));	
+	be_newstate(curstate->me);
+
 	if(hold != curstate) {
 		be_log(EID_VWR_LOG_DETAIL, TEXT("State transition detected, aborting handling of %s"), event_to_name(e));
 		return;
