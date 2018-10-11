@@ -241,6 +241,12 @@ void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 			thistree = thistree->parent;
 		}
 		if(!thistree) {
+			if (e == EVENT_SERIALIZE)
+			{
+				//UI asked us to write the data to file, but our state has changed so we're no longer
+				//able to do so. Report this to the UI
+				be_log(EID_VWR_LOG_ERROR, TEXT("failed writing card data, current state is %s"), state_to_name(curstate->me));
+			}
 			return; // event is irrelevant for this state
 		}
 		target = thistree->out[e];
