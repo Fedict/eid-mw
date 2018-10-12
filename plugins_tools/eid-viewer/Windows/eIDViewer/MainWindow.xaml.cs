@@ -249,7 +249,8 @@ namespace eIDViewer
         }
         private void MenuItemSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            //Stream myStream = null;
+            //We allow choosing the file to save to already before the card has been fully read
+            //(for time saving purposes)
             String filename = null;
             SaveFileDialog mySaveFileDialog = new SaveFileDialog();
 
@@ -262,12 +263,19 @@ namespace eIDViewer
                 {
                     if ((filename = mySaveFileDialog.FileName) != null)
                     {
-                        eIDViewer.NativeMethods.SaveXML(filename);
+                        if(theBackendData.eid_data_ready == true)
+                        {
+                            eIDViewer.NativeMethods.SaveXML(filename);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: Data not ready yet, file not saved ");
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: Could not read file from disk. Error message: " + ex.Message);
+                    MessageBox.Show("Error: Could not save file to disk. Error message: " + ex.Message);
                 }
             }
         }

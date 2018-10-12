@@ -519,9 +519,11 @@ namespace eIDViewer
             if(IsVerifiedDataOK() == false)
             {
                 ResetDataValues();
+                eid_data_ready = false;
                 eIDViewer.NativeMethods.MarkCardInvalid();
                 return;
             }
+            eid_data_ready = true;
             if (validateAlways == true)
             {
                 VerifyAllCertificates();
@@ -1135,6 +1137,17 @@ namespace eIDViewer
             {
                 _eid_data_ready = value;
                 this.NotifyPropertyChanged("eid_data_ready");
+            }
+        }
+
+        private Boolean _eid_read_data_started;
+        public Boolean eid_read_data_started
+        {
+            get { return _eid_read_data_started; }
+            set
+            {
+                _eid_read_data_started = value;
+                this.NotifyPropertyChanged("eid_read_data_started");
             }
         }
 
