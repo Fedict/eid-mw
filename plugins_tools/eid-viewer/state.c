@@ -164,7 +164,7 @@ void sm_init() {
 	states[STATE_TOKEN_PINOP].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_PINOP].enter = eid_vwr_p11_do_pinop;
 	states[STATE_TOKEN_PINOP].leave = eid_vwr_p11_leave_pinop;
-	states[STATE_TOKEN_PINOP].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_PINOP].out[EVENT_PINOP_READY] = &(states[STATE_TOKEN_WAIT]);
 	states[STATE_TOKEN_PINOP].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_WAIT]);
 
 	states[STATE_TOKEN_WAIT].parent = &(states[STATE_TOKEN]);
@@ -176,7 +176,7 @@ void sm_init() {
 
 	states[STATE_TOKEN_SERIALIZE].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_SERIALIZE].enter = (int(*)(void*))eid_vwr_serialize;
-	states[STATE_TOKEN_SERIALIZE].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_SERIALIZE].out[EVENT_SERIALIZE_READY] = &(states[STATE_TOKEN_WAIT]);
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
 	states[STATE_NO_TOKEN].parent = &(states[STATE_CALLBACKS]);
