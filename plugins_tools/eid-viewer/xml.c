@@ -186,7 +186,7 @@ int eid_vwr_serialize(void* data) {
 	}
 	fwrite(item->data, item->len, 1, f);
 	rv = fclose(f);
-	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+	sm_handle_event(EVENT_SERIALIZE_READY, NULL, NULL, NULL);
 	return rv;
 }
 
