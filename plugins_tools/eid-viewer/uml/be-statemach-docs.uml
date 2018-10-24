@@ -42,8 +42,7 @@ state CALLBACKS {
     state TOKEN_CERTS
     state TOKEN_ERROR
     state TOKEN_WAIT
-    state TOKEN_PINOP
-    state TOKEN_SERIALIZE
+
 
     [*] --> TOKEN_ID
 
@@ -53,14 +52,24 @@ state CALLBACKS {
     TOKEN_CERTS --> TOKEN_WAIT
     TOKEN_CERTS --> TOKEN_ERROR
  
-    TOKEN_WAIT --> TOKEN_PINOP : eid_vwr_pinop()
-    TOKEN_WAIT --> TOKEN_SERIALIZE : eid_vwr_be_serialize()
+    state TOKEN_WAIT {
+      state TOKEN_IDLE
+      state TOKEN_PINOP
+      state TOKEN_SERIALIZE
 
-    TOKEN_PINOP --> TOKEN_WAIT
-    TOKEN_PINOP --> TOKEN_WAIT
+      [*] --> TOKEN_IDLE
 
-    TOKEN_SERIALIZE --> TOKEN_WAIT
-    TOKEN_SERIALIZE --> TOKEN_ERROR
+      TOKEN_IDLE --> TOKEN_PINOP : eid_vwr_pinop()
+      TOKEN_IDLE --> TOKEN_SERIALIZE : eid_vwr_be_serialize()
+
+      TOKEN_PINOP --> TOKEN_IDLE
+      TOKEN_PINOP --> TOKEN_IDLE
+
+      TOKEN_SERIALIZE --> TOKEN_IDLE
+      TOKEN_SERIALIZE --> TOKEN_ERROR
+
+    }
+
   }
 }
 
