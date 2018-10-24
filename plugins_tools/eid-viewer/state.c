@@ -21,6 +21,7 @@ static const EID_CHAR* state_to_name(enum eid_vwr_states state) {
 	STATE_NAME(TOKEN_WAIT);
 	STATE_NAME(TOKEN_ID);
 	STATE_NAME(TOKEN_CERTS);
+	STATE_NAME(TOKEN_IDLE);
 	STATE_NAME(TOKEN_PINOP);
 	STATE_NAME(TOKEN_SERIALIZE);
 	STATE_NAME(TOKEN_ERROR);
@@ -46,6 +47,8 @@ static const EID_CHAR* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(TOKEN_INSERTED);
 	EVENT_NAME(TOKEN_REMOVED);
 	EVENT_NAME(READ_READY);
+	EVENT_NAME(PINOP_READY);
+	EVENT_NAME(SERIALIZE_READY);
 	EVENT_NAME(DO_PINOP);
 	EVENT_NAME(STATE_ERROR);
 	EVENT_NAME(DATA_INVALID);
@@ -149,6 +152,8 @@ void sm_init() {
 	states[STATE_CARD_INVALID].enter = source_none;
 	states[STATE_CARD_INVALID].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
 
+	states[STATE_TOKEN_ERROR].parent = &(states[STATE_TOKEN]);
+
 	states[STATE_TOKEN_ID].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_ID].enter = eid_vwr_p11_read_id;
 	states[STATE_TOKEN_ID].leave = eid_vwr_p11_finalize_find;
@@ -161,22 +166,23 @@ void sm_init() {
 	states[STATE_TOKEN_CERTS].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
 	states[STATE_TOKEN_CERTS].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
-	states[STATE_TOKEN_PINOP].parent = &(states[STATE_TOKEN]);
-	states[STATE_TOKEN_PINOP].enter = eid_vwr_p11_do_pinop;
-	states[STATE_TOKEN_PINOP].leave = eid_vwr_p11_leave_pinop;
-	states[STATE_TOKEN_PINOP].out[EVENT_PINOP_READY] = &(states[STATE_TOKEN_WAIT]);
-	states[STATE_TOKEN_PINOP].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_WAIT]);
-
 	states[STATE_TOKEN_WAIT].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_WAIT].enter = enter_token_wait;
+	states[STATE_TOKEN_WAIT].first_child = &(states[STATE_TOKEN_IDLE]);
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
 	states[STATE_TOKEN_WAIT].out[EVENT_SERIALIZE] = &(states[STATE_TOKEN_SERIALIZE]);
 
-	states[STATE_TOKEN_ERROR].parent = &(states[STATE_TOKEN]);
+	states[STATE_TOKEN_IDLE].parent = &(states[STATE_TOKEN_WAIT]);
 
-	states[STATE_TOKEN_SERIALIZE].parent = &(states[STATE_TOKEN]);
+	states[STATE_TOKEN_PINOP].parent = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_PINOP].enter = eid_vwr_p11_do_pinop;
+	states[STATE_TOKEN_PINOP].leave = eid_vwr_p11_leave_pinop;
+	states[STATE_TOKEN_PINOP].out[EVENT_PINOP_READY] = &(states[STATE_TOKEN_IDLE]);
+	states[STATE_TOKEN_PINOP].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_IDLE]);
+
+	states[STATE_TOKEN_SERIALIZE].parent = &(states[STATE_TOKEN_WAIT]);
 	states[STATE_TOKEN_SERIALIZE].enter = (int(*)(void*))eid_vwr_serialize;
-	states[STATE_TOKEN_SERIALIZE].out[EVENT_SERIALIZE_READY] = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_SERIALIZE].out[EVENT_SERIALIZE_READY] = &(states[STATE_TOKEN_IDLE]);
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
 	states[STATE_NO_TOKEN].parent = &(states[STATE_CALLBACKS]);

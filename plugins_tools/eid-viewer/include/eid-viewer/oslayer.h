@@ -79,10 +79,11 @@ enum eid_vwr_states
 	STATE_TOKEN_WAIT,    ///< The card has been read, we're now waiting for events to do something else.
 	STATE_TOKEN_ID,	     ///< Reading identity data
 	STATE_TOKEN_CERTS,   ///< Reading certificates
+	STATE_TOKEN_IDLE,	 ///<not performing any action in the taoken_wait state
 	STATE_TOKEN_PINOP,   ///< Performing a PIN operation
 	STATE_TOKEN_SERIALIZE,	///< Saving data to a file
 	STATE_TOKEN_ERROR,   ///< An error occurred while dealing with the card
-	STATE_FILE,	     ///< We're dealing with files
+	STATE_FILE,			 ///< We're dealing with files
 	STATE_FILE_READING,  ///< We're reading from the file currently
 	STATE_FILE_WAIT,     ///< We finished parsing the file.
 	STATE_CARD_INVALID,  ///< The data was determined to be invalid. That is, the card could be read, but signature validation failed.
