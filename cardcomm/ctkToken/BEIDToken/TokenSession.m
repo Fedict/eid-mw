@@ -64,6 +64,8 @@
             
             // try to Verify PIN on the card reader
             NSData *data = [NSData dataWithBytes:template length:sizeof template];
+            // using PINByteOffset:0 (in stead of 5) as requested due to not currently used 
+            //(see https://developer.apple.com/documentation/cryptotokenkit/tksmartcard/1390289-userinteractionforsecurepinverif?language=objc)
             userInter = [self.smartCard userInteractionForSecurePINVerificationWithPINFormat:PINFormat APDU:data PINByteOffset:0];
             
             if (nil == userInter)
