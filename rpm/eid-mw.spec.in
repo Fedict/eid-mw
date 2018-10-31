@@ -22,9 +22,9 @@ Requires(pre): /sbin/chkconfig
 Requires(pre): /sbin/service
 Requires: eid-mw-bin
 Requires: eid-mw-libs
+BuildRequires: gcc-c++
 %if 0%{?suse_version}
 Requires: pcsc-ccid
-BuildRequires: gcc-c++
 BuildRequires: libopenssl-devel
 BuildRequires: libltdl7
 BuildRequires: libtool
