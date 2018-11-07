@@ -203,6 +203,6 @@ beid_spr_changepin_CPPFLAGS = -I$(dialogsdir)/dialogsgtk -I$(dialogsdir)/../comm
 beid_spr_changepin_LDADD = @GTK_LIBS@
 
 pkcs11_manifestdir = $(prefix)/lib/mozilla/pkcs11-modules
-pkcs11_manifest_DATA = beidpkcs11.json
+pkcs11_manifest_DATA = beidpkcs11.json beidp11kit.json
 
 pkgconfig_DATA=libbeidpkcs11.pc

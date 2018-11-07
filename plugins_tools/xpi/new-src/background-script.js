@@ -32,10 +32,14 @@ async function installPKCS11Module() {
       console.log("installModule result: ", res);
     } catch(err) {
       console.error("installModule error: ", err);
-      browser.notifications.create({
-        "type": "basic",
-        "title": browser.i18n.getMessage("installFailedTitle"),
-        "message": browser.i18n.getMessage("installFailedContent"),
+      browser.pkcs11.isModuleInstalled("beidp11kit").then(() => {
+        console.log("found p11-kit-proxy module, assuming BeID installed through there");
+      }).catch(() => {
+        browser.notifications.create({
+          "type": "basic",
+          "title": browser.i18n.getMessage("installFailedTitle"),
+          "message": browser.i18n.getMessage("installFailedContent"),
+        })
       });
     }
   }
