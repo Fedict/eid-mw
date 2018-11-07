@@ -32,10 +32,15 @@ async function installPKCS11Module() {
       console.log("installModule result: ", res);
     } catch(err) {
       console.error("installModule error: ", err);
-      browser.notifications.create({
-        "type": "basic",
-        "title": browser.i18n.getMessage("installFailedTitle"),
-        "message": browser.i18n.getMessage("installFailedContent"),
+      browser.pkcs11.isModuleInstalled("beidp11kit").then(() => {
+        modname = "beidp11kit";
+        console.log("found p11-kit-proxy module, assuming BeID installed through there");
+      }).catch(() => {
+        browser.notifications.create({
+          "type": "basic",
+          "title": browser.i18n.getMessage("installFailedTitle"),
+          "message": browser.i18n.getMessage("installFailedContent"),
+        })
       });
     }
   }
@@ -57,7 +62,16 @@ function connected(port) {
       }
       if(msg.query === "get-slots" || msg.query === "get-all") {
         try {
-          retval.slots = await browser.pkcs11.getModuleSlots(modname);
+          var slots = await browser.pkcs11.getModuleSlots(modname);
+          retval.slots = [];
+          for(slot of slots) {
+            if(slot.token === null || slot.token.name === "BELPIC") {
+              retval.slots.push(slot);
+            }
+          }
+          if(retval.slots.length === 0) {
+            retval.slots = null;
+          }
         } catch(e) {
           retval.slots = null;
         }

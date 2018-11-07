@@ -1,0 +1,7 @@
+{
+  "name": "beidp11kit",
+  "description": "BeID access to check p11-kit installation on failure",
+  "path": "p11-kit-proxy.so",
+  "type": "pkcs11",
+  "allowed_extensions": ["belgiumeid@eid.belgium.be"]
+}
