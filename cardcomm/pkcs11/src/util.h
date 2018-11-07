@@ -37,9 +37,9 @@ extern "C"
 #endif
 
 	CK_RV p11_init_lock(CK_C_INITIALIZE_ARGS_PTR args);
-	void p11_lock();
-	void p11_unlock();
-	void p11_free_lock();
+    void p11_lock(void);
+    void p11_unlock(void);
+    void p11_free_lock(void);
 	void util_init_lock(void **lock);
 	void util_clean_lock(void **lock);
 	void util_lock(void *lock);

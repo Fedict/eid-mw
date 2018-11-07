@@ -207,11 +207,11 @@ extern "C"
 
 
 
-	CK_RV cal_init();
+	CK_RV cal_init(void);
 //void cal_init_pcsc();
 	long cal_check_pcsc(CK_BBOOL * pRunning);
 	void cal_wait(int millisecs);
-	void cal_close();
+	void cal_close(void);
 	void cal_clean_slots(void);
 	CK_RV cal_init_slots(void);
 	CK_RV cal_token_present(CK_SLOT_ID hSlot, int *pPresent);
@@ -241,7 +241,7 @@ extern "C"
 	CK_RV cal_wait_for_slot_event(int block);
 	CK_RV cal_wait_for_the_slot_event(int block);
 	CK_RV cal_get_slot_changes(int *ph);
-	CK_RV cal_refresh_readers();
+	CK_RV cal_refresh_readers(void);
 
 #ifdef __cplusplus
 }

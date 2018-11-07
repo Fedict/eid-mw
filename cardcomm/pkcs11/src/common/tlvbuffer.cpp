@@ -94,9 +94,7 @@ namespace eIDMW
 //            int iNrBytes = ulLen - ulIndex - 1;     //calculate remaining bytes
 				int iNrBytes = ulLen - ulIndex;	//calculate remaining bytes
 
-				if (!TlvDecodeLen
-				    (pucData + ulIndex, &iNrBytes,
-				     &ulFieldLen))
+				if (!TlvDecodeLen(pucData + ulIndex, &iNrBytes, &ulFieldLen))
 				{
 					bRet = false;
 					break;
@@ -438,8 +436,7 @@ Decode the length from the TLV format
 		int iStreamLenMax = 0;	//length of the stream
 
 		//--- parameter check   
-		if (pucBufSrc == NULL || piBufLen == NULL || (*piBufLen == 0)
-		    || pulLenVal == NULL)
+		if (pucBufSrc == NULL || piBufLen == NULL || (*piBufLen == 0) || pulLenVal == NULL)
 		{
 			return false;
 		}

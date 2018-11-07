@@ -318,8 +318,7 @@ namespace eIDMW
 // void CByteArray::Append()
 	void CByteArray::AppendString(const std::string scData)
 	{
-		unsigned int length =
-			static_cast < unsigned long >(scData.length());
+		unsigned long length = static_cast < unsigned long >(scData.length());
 		this->AppendLong(length);
 		this->Append(scData);
 	}

@@ -512,7 +512,7 @@ void log_attr(CK_ATTRIBUTE_PTR pAttr)
   FILE      *fp = NULL;
   char      string[129];
   const char *s;
-  int       len = 0;
+  unsigned long  len = 0;
   CK_ULONG  ul = 0;
   CK_BBOOL	b;
 
