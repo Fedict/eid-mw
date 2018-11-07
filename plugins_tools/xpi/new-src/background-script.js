@@ -65,8 +65,8 @@ function connected(port) {
           var slots = await browser.pkcs11.getModuleSlots(modname);
           retval.slots = [];
           for(slot of slots) {
-            if(slot.token === null || slot.token.manufacturer === "Belgium Government") {
-              retval.slotS.push(slot);
+            if(slot.token === null || slot.token.name === "BELPIC") {
+              retval.slots.push(slot);
             }
           }
           if(retval.slots.length === 0) {
