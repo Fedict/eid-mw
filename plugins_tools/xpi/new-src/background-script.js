@@ -33,6 +33,7 @@ async function installPKCS11Module() {
     } catch(err) {
       console.error("installModule error: ", err);
       browser.pkcs11.isModuleInstalled("beidp11kit").then(() => {
+        modname = "beidp11kit";
         console.log("found p11-kit-proxy module, assuming BeID installed through there");
       }).catch(() => {
         browser.notifications.create({
@@ -61,7 +62,16 @@ function connected(port) {
       }
       if(msg.query === "get-slots" || msg.query === "get-all") {
         try {
-          retval.slots = await browser.pkcs11.getModuleSlots(modname);
+          var slots = await browser.pkcs11.getModuleSlots(modname);
+          retval.slots = [];
+          for(slot of slots) {
+            if(slot.token === null || slot.token.manufacturer === "Belgium Government") {
+              retval.slotS.push(slot);
+            }
+          }
+          if(retval.slots.length === 0) {
+            retval.slots = null;
+          }
         } catch(e) {
           retval.slots = null;
         }
