@@ -75,7 +75,7 @@ void strcpy_n(unsigned char *to, const char *from, size_t n, char padding)
  */
 CK_RV p11_init_lock(CK_C_INITIALIZE_ARGS_PTR args)
 {
-	int ret = CKR_OK;
+	CK_RV ret = CKR_OK;
 
 	if (_lock)
 		return CKR_OK;
@@ -119,8 +119,7 @@ CK_RV p11_init_lock(CK_C_INITIALIZE_ARGS_PTR args)
 		//   ret = CKR_CANT_LOCK;
 	}
 #undef CreateMutex
-	else if (args->CreateMutex && args->DestroyMutex && args->LockMutex
-		 && args->UnlockMutex)
+	else if (args->CreateMutex && args->DestroyMutex && args->LockMutex && args->UnlockMutex)
 	{
 		ret = args->CreateMutex(&_lock);
 		if (ret == CKR_OK)
