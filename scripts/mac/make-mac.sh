@@ -5,7 +5,10 @@ set -e
 if [ -z "$MAC_BUILD_CONFIG" ]
 then
 	MAC_BUILD_CONFIG=Release
+	echo "running Release Build"
 fi
+
+echo "MAC_BUILD_CONFIG is $MAC_BUILD_CONFIG"
 
 # Go to the mac installers directory
 cd $(dirname $0)/../../installers/eid-mw/mac
