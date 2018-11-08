@@ -1427,6 +1427,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 653490FF1FEA7B3A000F7787 /* Build configuration list for PBXNativeTarget "eidfilepreview" */;
 			buildPhases = (
+				8604AB082194798F00FB3C92 /* Run Script */,
 				653490F11FEA7B39000F7787 /* Sources */,
 				653490F21FEA7B39000F7787 /* Frameworks */,
 				653490F31FEA7B39000F7787 /* Headers */,
@@ -1731,6 +1732,24 @@
 			shellPath = /bin/sh;
 			shellScript = "scripts/mac/create-vers.sh cardcomm/pkcs11/src/common/beidversions.h";
 			showEnvVarsInLog = 0;
+		};
+		8604AB082194798F00FB3C92 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmake -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
