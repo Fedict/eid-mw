@@ -56,7 +56,7 @@ extern CK_FUNCTION_LIST pkcs11_function_list;
 #define WHERE "C_Initialize()"
 CK_RV C_Initialize(CK_VOID_PTR pReserved)
 {
-	int ret = CKR_OK;
+	CK_RV ret = CKR_OK;
 	CK_C_INITIALIZE_ARGS_PTR p_args;
 	unsigned char initial_state = p11_get_init();
 

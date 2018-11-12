@@ -607,7 +607,7 @@ cleanup:
 
 
 
-char* log_map_error(int err)
+char* log_map_error(CK_RV err)
 {
 static char cerr[20];
 switch(err)
