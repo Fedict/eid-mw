@@ -1903,9 +1903,8 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				return (CKR_DEVICE_ERROR);
 			}
 
-			if (cert_get_info
-			    (oCertData.GetBytes(), oCertData.Size(),
-			     &certinfo) < 0)
+            //at least 64K Bytes as size (unsigned int) will suffice for cert length
+			if (cert_get_info(oCertData.GetBytes(), (unsigned int)(oCertData.Size()), &certinfo) < 0)
 			{
 				// ASN.1 parser failed. Assume hardware failure.
 				ret = CKR_DEVICE_ERROR;
