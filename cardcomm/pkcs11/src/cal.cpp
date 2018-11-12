@@ -1057,8 +1057,8 @@ CK_RV cal_logout(CK_SLOT_ID hSlot)
 
 
 #define WHERE "cal_change_pin()"
-CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin,
-		     int l_newpin, CK_CHAR_PTR newpin)
+CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
+		     CK_ULONG l_newpin, CK_CHAR_PTR newpin)
 {
 	CK_RV ret = CKR_OK;
 	P11_SLOT *pSlot = NULL;

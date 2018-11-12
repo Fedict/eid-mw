@@ -227,8 +227,8 @@ extern "C"
 	CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 			int sec_messaging);
 	CK_RV cal_logout(CK_SLOT_ID hSlot);
-	CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin,
-			     CK_CHAR_PTR oldpin, int l_newpin,
+	CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin,
+			     CK_CHAR_PTR oldpin, CK_ULONG l_newpin,
 			     CK_CHAR_PTR newpin);
 	CK_RV cal_get_card_data(CK_SLOT_ID hSlot);
 	CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType);
