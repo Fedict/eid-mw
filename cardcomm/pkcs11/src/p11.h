@@ -260,7 +260,7 @@ extern "C"
 #endif
 
 	P11_SLOT *p11_get_slot(unsigned int h);
-	int p11_get_session(unsigned int h, P11_SESSION ** ppSession);
+	CK_RV p11_get_session(unsigned int h, P11_SESSION ** ppSession);
 	P11_OBJECT *p11_get_slot_object(P11_SLOT * pSlot, unsigned int h);
 	int p11_get_nreaders(void);
 
