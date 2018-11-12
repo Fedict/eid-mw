@@ -532,7 +532,8 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 	void          *p = NULL;
 	CK_ULONG      *pclass = NULL;
 	int           match = 0;
-	unsigned int           h,j = 0;
+    unsigned long h = 0;
+    unsigned int  j = 0;
 
 	CK_ULONG len = 0;
 
