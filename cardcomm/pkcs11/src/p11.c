@@ -55,7 +55,7 @@ unsigned int nSessions = 0;
    } //extern "C"
 #endif
 
-P11_SLOT * p11_get_slot(unsigned int h)
+P11_SLOT * p11_get_slot(CK_SESSION_HANDLE h)
 {
 	//thanks to Adobe, handles start from 0!!!
 	if (h >= nReaders)
@@ -65,7 +65,7 @@ P11_SLOT * p11_get_slot(unsigned int h)
 	return &gpSlot[h];
 }
 
-CK_RV p11_get_session(unsigned int h, P11_SESSION **ppSession)
+CK_RV p11_get_session(CK_SESSION_HANDLE h, P11_SESSION **ppSession)
 {
 	CK_RV ret = 0;
 
@@ -81,7 +81,7 @@ CK_RV p11_get_session(unsigned int h, P11_SESSION **ppSession)
 	return (ret);
 }
 
-P11_OBJECT *p11_get_slot_object(P11_SLOT *pSlot, unsigned int h)
+P11_OBJECT *p11_get_slot_object(P11_SLOT *pSlot, CK_SESSION_HANDLE h)
 {
    if ( (h < 1) || (h > pSlot->nobjects) )
       return (NULL); //invalid handle

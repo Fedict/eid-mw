@@ -259,9 +259,9 @@ extern "C"
 	int p11_read_object(P11_SLOT * pSlot, P11_OBJECT * pObject);
 #endif
 
-	P11_SLOT *p11_get_slot(unsigned int h);
-	CK_RV p11_get_session(unsigned int h, P11_SESSION ** ppSession);
-	P11_OBJECT *p11_get_slot_object(P11_SLOT * pSlot, unsigned int h);
+	P11_SLOT *p11_get_slot(CK_SESSION_HANDLE h);
+	CK_RV p11_get_session(CK_SESSION_HANDLE h, P11_SESSION ** ppSession);
+	P11_OBJECT *p11_get_slot_object(P11_SLOT * pSlot, CK_SESSION_HANDLE h);
 	int p11_get_nreaders(void);
 
 	CK_RV p11_close_sessions_finalize(void);

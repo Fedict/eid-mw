@@ -701,7 +701,7 @@ switch(err)
 #ifdef WIN32
       sprintf_s(cerr,sizeof(cerr), "0x%0X", err);
 #else
-      sprintf(cerr, "0x%0X", err);
+           sprintf(cerr, "0x%0lX", err);
 #endif
       return(cerr); break;
    }
