@@ -595,7 +595,7 @@ void log_attr(CK_ATTRIBUTE_PTR pAttr)
            {
            fclose(fp);
            fp = NULL;
-           log_xtrace(0, "Attribute Value: ", pAttr->pValue, pAttr->ulValueLen);
+           log_xtrace(0, "Attribute Value: ", pAttr->pValue, (int)(pAttr->ulValueLen));
            }
      }
  

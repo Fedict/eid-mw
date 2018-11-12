@@ -219,7 +219,7 @@ CK_RV cal_init_slots(void)
 
 	try
 	{
-		nReaders = oReadersInfo->ReaderCount();
+		nReaders = (unsigned int)(oReadersInfo->ReaderCount());
 		//get readernames
 		for (i = 0; i < nReaders; i++)
 		{
