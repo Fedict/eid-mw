@@ -181,10 +181,10 @@ CK_RV p11_close_session(P11_SLOT* pSlot, P11_SESSION* pSession)
 	if (pSlot->nsessions > 0)
 		pSlot->nsessions--;
 
-	if ((pSlot->nsessions < 1) && (pSlot->login_type >= 0) )
+	if ((pSlot->nsessions < 1) && (pSlot->logged_in == CK_TRUE) )
 	{
 		cal_logout(pSession->hslot);
-		pSlot->login_type = -1;
+		pSlot->logged_in = CK_FALSE;
 	}
 
 	//disconnect this session to device

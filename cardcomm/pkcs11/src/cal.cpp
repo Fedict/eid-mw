@@ -224,7 +224,7 @@ CK_RV cal_init_slots(void)
 		for (i = 0; i < nReaders; i++)
 		{
 			//initialize login state to not logged in by SO nor user
-			gpSlot[i].login_type = -1;
+			gpSlot[i].logged_in = CK_FALSE;
 			std::string reader = oReadersInfo->ReaderName(i);
 			strcpy_n((unsigned char *) gpSlot[i].name,
 				 (const char *) reader.c_str(),

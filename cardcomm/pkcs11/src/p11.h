@@ -146,6 +146,7 @@ extern "C"
 	typedef struct P11_SLOT
 	{
 		char name[MAX_SLOT_NAME];
+		CK_BBOOL logged_in;
 		int login_type;
 		unsigned int nsessions;
 		unsigned int connect;

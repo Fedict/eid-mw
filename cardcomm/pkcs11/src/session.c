@@ -75,7 +75,7 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 
 	/* Check that no conflictions sessions exist */
 	/* RO session when SO session exists is not allowed */
-	if ( !(flags & CKF_RW_SESSION) && (pSlot->login_type == CKU_SO)) 
+	if ( !(flags & CKF_RW_SESSION) && (pSlot->login_type == CKU_SO) && (pSlot->logged_in == CK_TRUE))
 	{
 		log_trace(WHERE, "E: R/W Session exists", slotID);
 		ret = CKR_SESSION_READ_WRITE_SO_EXISTS;
@@ -242,16 +242,19 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 		goto cleanup;
 	}
 
-	//SO only can create RW_SO sessions
-	if (pSlot->login_type == CKU_SO) 
+	if (pSlot->logged_in == CK_TRUE)
 	{
-		pInfo->state = CKS_RW_SO_FUNCTIONS;
+		//SO only can create RW_SO sessions
+		if (pSlot->login_type == CKU_SO)
+		{
+			pInfo->state = CKS_RW_SO_FUNCTIONS;
+		}
+		//USER can create RW or RO sessions
+		else if (pSlot->login_type == CKU_USER)
+		{
+			pInfo->state = (pSession->flags & CKF_RW_SESSION) ? CKS_RW_USER_FUNCTIONS : CKS_RO_USER_FUNCTIONS;
+		}
 	}
-	//USER can create RW or RO sessions
-	else if (pSlot->login_type == CKU_USER) 
-	{
-		pInfo->state = (pSession->flags & CKF_RW_SESSION)? CKS_RW_USER_FUNCTIONS : CKS_RO_USER_FUNCTIONS;
-	} 
 	//if login not required => we can also get USER sessions without being logged on
 	else 
 	{
@@ -342,7 +345,7 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 		goto cleanup;
 	}
 
-	if (pSlot->login_type >= 0)
+	if (pSlot->logged_in == CK_TRUE)
 	{
 		// Needed for Acrobat, in case you want to sign with a 2nd card
 		ret = CKR_OK; //CKR_USER_ALREADY_LOGGED_IN;
@@ -364,7 +367,10 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 	ret = cal_logon(pSession->hslot, ulPinLen, pPin, 0);
 	if (ret == CKR_OK)
+	{
 		pSlot->login_type = userType;
+		pSlot->logged_in = CK_TRUE;
+	}		
 
 cleanup:
 	p11_unlock();
@@ -408,9 +414,9 @@ CK_RV C_Logout(CK_SESSION_HANDLE hSession) /* the session's handle */
 		goto cleanup;
 	}
 
-	if (pSlot->login_type >= 0)
+	if (pSlot->logged_in == CK_TRUE)
 	{
-		pSlot->login_type = -1;
+		pSlot->logged_in = CK_FALSE;
 		ret = cal_logout(pSession->hslot);
 	}
 	else
