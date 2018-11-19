@@ -34,7 +34,7 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	CK_NOTIFY             Notify,        /* notification callback function */
 	CK_SESSION_HANDLE_PTR phSession)     /* receives new session handle */
 {
-	int ret;
+	CK_RV ret;
 	P11_SLOT* pSlot = NULL;
 	P11_SESSION *pSession = NULL;
 
@@ -174,7 +174,7 @@ cleanup:
 #define WHERE "C_CloseAllSessions()"
 CK_RV C_CloseAllSessions(CK_SLOT_ID slotID) /* the token's slot */
 {
-	int ret;
+	CK_RV ret;
 	log_trace(WHERE, "I: enter");
 
 	if (p11_get_init() != BEIDP11_INITIALIZED)
@@ -201,7 +201,7 @@ CK_RV C_CloseAllSessions(CK_SLOT_ID slotID) /* the token's slot */
 CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 	CK_SESSION_INFO_PTR pInfo)   /* receives session information */
 {
-	int ret;
+	CK_RV ret;
 	P11_SESSION *pSession = NULL;
 	P11_SLOT *pSlot = NULL;
 	CK_TOKEN_INFO tokeninfo;
@@ -304,7 +304,7 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 	CK_CHAR_PTR       pPin,      /* the user's PIN */
 	CK_ULONG          ulPinLen)  /* the length of the PIN */
 {
-	int ret;
+	CK_RV ret;
 	P11_SESSION *pSession = NULL;
 	P11_SLOT *pSlot = NULL;
 	CK_TOKEN_INFO tokeninfo;
@@ -384,7 +384,7 @@ cleanup:
 #define WHERE "C_Logout()"
 CK_RV C_Logout(CK_SESSION_HANDLE hSession) /* the session's handle */
 {
-	int ret = CKR_OK;
+	CK_RV ret = CKR_OK;
 	P11_SESSION *pSession = NULL;
 	P11_SLOT *pSlot = NULL;
 	log_trace(WHERE, "I: enter");
@@ -454,7 +454,7 @@ CK_RV C_SetPIN(CK_SESSION_HANDLE hSession,
 	CK_CHAR_PTR pNewPin,
 	CK_ULONG ulNewLen)
 {
-	int ret;
+	CK_RV ret;
 	P11_SESSION *pSession = NULL;
 	log_trace(WHERE, "I: enter");
 

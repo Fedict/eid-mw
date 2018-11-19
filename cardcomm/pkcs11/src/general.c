@@ -56,7 +56,7 @@ extern CK_FUNCTION_LIST pkcs11_function_list;
 #define WHERE "C_Initialize()"
 CK_RV C_Initialize(CK_VOID_PTR pReserved)
 {
-	int ret = CKR_OK;
+	CK_RV ret = CKR_OK;
 	CK_C_INITIALIZE_ARGS_PTR p_args;
 	unsigned char initial_state = p11_get_init();
 
@@ -516,9 +516,11 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 {
 	CK_RV ret = CKR_OK;
+#ifdef _WIN32
 	int h;
 	P11_SLOT *p11Slot = NULL;
 	int i = 0;
+#endif
 	CK_BBOOL locked = CK_FALSE;
 
 	log_trace(WHERE, "I: enter");
@@ -551,7 +553,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 	 * to polling in the main thread, like before. */
 #ifndef _WIN32
 	CLEANUP(CKR_FUNCTION_NOT_SUPPORTED);
-#endif
+#else
 
 	//first check if no events are set for slots in previous run
 	//this could happen if more cards are inserted/removed at the same time
@@ -601,7 +603,8 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 	if (ret == CKR_OK)
 		*pSlot = h;
-
+#endif //not _WIN32
+    
 cleanup:
 	if(locked == CK_TRUE)
 		p11_unlock();

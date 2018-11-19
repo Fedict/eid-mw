@@ -31,7 +31,7 @@
 CK_RV C_DigestInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
                    CK_MECHANISM_PTR  pMechanism) /* the digesting mechanism */
 {
-   int ret;
+   CK_RV ret;
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
@@ -99,7 +99,7 @@ CK_RV C_Digest(CK_SESSION_HANDLE hSession,     /* the session's handle */
                CK_BYTE_PTR       pDigest,      /* receives the message digest */
                CK_ULONG_PTR      pulDigestLen) /* receives byte length of digest */
 {
-   int ret;
+   CK_RV ret;
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
@@ -188,7 +188,7 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
                      CK_BYTE_PTR       pPart,     /* data to be digested */
                      CK_ULONG          ulPartLen) /* bytes of data to be digested */
 {
-   int ret;
+   CK_RV ret;
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
@@ -258,7 +258,7 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
                     CK_BYTE_PTR       pDigest,      /* receives the message digest */
                     CK_ULONG_PTR      pulDigestLen) /* receives byte count of digest */
 {
-   int ret;
+   CK_RV ret;
    P11_SESSION *pSession = NULL;
    P11_DIGEST_DATA *pDigestData = NULL;
 
@@ -338,7 +338,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
                  CK_MECHANISM_PTR  pMechanism,  /* the signature mechanism */
                  CK_OBJECT_HANDLE  hKey)        /* handle of the signature key */
 {
-   int ret;
+   CK_RV ret;
    P11_SESSION *pSession = NULL;
    P11_SLOT    *pSlot = NULL;
    P11_SIGN_DATA *pSignData = NULL;
@@ -562,7 +562,7 @@ CK_RV C_Sign(CK_SESSION_HANDLE hSession,        /* the session's handle */
              CK_BYTE_PTR       pSignature,      /* receives the signature */
              CK_ULONG_PTR      pulSignatureLen) /* receives byte count of signature */
 {
-   int 		  ret         = CKR_OK;
+   CK_RV ret                  = CKR_OK;
    P11_SESSION*   pSession    = NULL;
    P11_SIGN_DATA* pSignData   = NULL;
    unsigned char* pDigest     = NULL;
@@ -683,7 +683,7 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
                    CK_BYTE_PTR       pPart,     /* the data (digest) to be signed */
                    CK_ULONG          ulPartLen) /* count of bytes to be signed */
 {
-   int ret;
+   CK_RV ret;
    P11_SESSION *pSession = NULL;
    P11_SIGN_DATA *pSignData = NULL;
 
@@ -765,7 +765,7 @@ CK_RV C_SignFinal(CK_SESSION_HANDLE hSession,        /* the session's handle */
                   CK_BYTE_PTR       pSignature,      /* receives the signature */
                   CK_ULONG_PTR      pulSignatureLen) /* receives byte count of signature */
 {
-   int ret;
+   CK_RV ret;
    P11_SESSION *pSession = NULL;
    P11_SIGN_DATA *pSignData = NULL;
    unsigned char *pDigest = NULL;

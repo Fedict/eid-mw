@@ -219,7 +219,7 @@ CK_RV cal_init_slots(void)
 
 	try
 	{
-		nReaders = oReadersInfo->ReaderCount();
+		nReaders = (unsigned int)(oReadersInfo->ReaderCount());
 		//get readernames
 		for (i = 0; i < nReaders; i++)
 		{
@@ -1071,8 +1071,8 @@ CK_RV cal_logout(CK_SLOT_ID hSlot)
 
 
 #define WHERE "cal_change_pin()"
-CK_RV cal_change_pin(CK_SLOT_ID hSlot, int l_oldpin, CK_CHAR_PTR oldpin,
-		     int l_newpin, CK_CHAR_PTR newpin)
+CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
+		     CK_ULONG l_newpin, CK_CHAR_PTR newpin)
 {
 	CK_RV ret = CKR_OK;
 	P11_SLOT *pSlot = NULL;
@@ -1917,9 +1917,8 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				return (CKR_DEVICE_ERROR);
 			}
 
-			if (cert_get_info
-			    (oCertData.GetBytes(), oCertData.Size(),
-			     &certinfo) < 0)
+            //at least 64K Bytes as size (unsigned int) will suffice for cert length
+			if (cert_get_info(oCertData.GetBytes(), (unsigned int)(oCertData.Size()), &certinfo) < 0)
 			{
 				// ASN.1 parser failed. Assume hardware failure.
 				ret = CKR_DEVICE_ERROR;

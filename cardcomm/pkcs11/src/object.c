@@ -98,7 +98,8 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 	Objects are allready initialized (but not read) during connection with token.
 	*/
 
-	int status, ret = 0;
+    CK_RV status;
+    CK_RV ret = 0;
 	P11_SESSION *pSession = NULL;
 	P11_SLOT    *pSlot    = NULL;
 	P11_OBJECT  *pObject  = NULL;
@@ -231,7 +232,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	P11_SESSION *pSession = NULL;
 	P11_SLOT    *pSlot    = NULL;
 	P11_FIND_DATA *pData = NULL;
-	int ret;
+	CK_RV ret;
 	CK_ULONG      *pclass = NULL;
 	CK_ULONG       len = 0;
 	CK_BBOOL			addIdObjects = CK_FALSE;
@@ -522,7 +523,7 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 
 	*/
 
-	int ret = 0;
+	CK_RV ret = 0;
 	P11_SESSION   *pSession = NULL;
 	P11_SLOT      *pSlot = NULL;
 	P11_FIND_DATA *pData = NULL;
@@ -531,7 +532,8 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 	void          *p = NULL;
 	CK_ULONG      *pclass = NULL;
 	int           match = 0;
-	unsigned int           h,j = 0;
+    unsigned long h = 0;
+    unsigned int  j = 0;
 
 	CK_ULONG len = 0;
 
@@ -699,7 +701,7 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 {
 	P11_SESSION *pSession = NULL;
 	P11_FIND_DATA *pData = NULL;
-	int ret;
+	CK_RV ret;
 	log_trace(WHERE, "I: enter");
 
 	if (p11_get_init() != BEIDP11_INITIALIZED)

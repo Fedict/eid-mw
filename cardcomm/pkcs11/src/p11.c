@@ -55,7 +55,7 @@ unsigned int nSessions = 0;
    } //extern "C"
 #endif
 
-P11_SLOT * p11_get_slot(unsigned int h)
+P11_SLOT * p11_get_slot(CK_SESSION_HANDLE h)
 {
 	//thanks to Adobe, handles start from 0!!!
 	if (h >= nReaders)
@@ -65,9 +65,9 @@ P11_SLOT * p11_get_slot(unsigned int h)
 	return &gpSlot[h];
 }
 
-int p11_get_session(unsigned int h, P11_SESSION **ppSession)
+CK_RV p11_get_session(CK_SESSION_HANDLE h, P11_SESSION **ppSession)
 {
-	int ret = 0;
+	CK_RV ret = 0;
 
 	if ((h == 0) || (h > nSessions))
 	{
@@ -81,7 +81,7 @@ int p11_get_session(unsigned int h, P11_SESSION **ppSession)
 	return (ret);
 }
 
-P11_OBJECT *p11_get_slot_object(P11_SLOT *pSlot, unsigned int h)
+P11_OBJECT *p11_get_slot_object(P11_SLOT *pSlot, CK_SESSION_HANDLE h)
 {
    if ( (h < 1) || (h > pSlot->nobjects) )
       return (NULL); //invalid handle
@@ -100,7 +100,7 @@ int p11_get_nreaders()
 #define WHERE "p11_get_free_session()"
 CK_RV p11_get_free_session(CK_SESSION_HANDLE_PTR phSession, P11_SESSION **ppSession)
 {
-int ret = 0;
+CK_RV ret = 0;
 unsigned int index = 0;
 unsigned int size = 0;
 unsigned int diff = 0;
@@ -220,7 +220,7 @@ CK_RV p11_close_session(P11_SLOT* pSlot, P11_SESSION* pSession)
 #define WHERE "p11_close_all_sessions()"
 CK_RV p11_close_all_sessions(CK_SLOT_ID slotID)
 {
-int ret = 0;
+CK_RV ret = 0;
 unsigned int i = 0;
 P11_SLOT    *pSlot = NULL;
 P11_SESSION *pSession = NULL;
@@ -259,7 +259,7 @@ return (ret);
 #define WHERE "p11_invalidate_sessions()"
 CK_RV p11_invalidate_sessions(CK_SLOT_ID hSlot, int status)
 {
-int ret = 0;
+CK_RV ret = 0;
 unsigned int i = 0;
 P11_SESSION *pSession = NULL;
 

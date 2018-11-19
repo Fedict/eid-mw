@@ -169,7 +169,7 @@ extern "C"
 	void log_attr(CK_ATTRIBUTE_PTR pAttr);
 	void log_template(const char *string, CK_ATTRIBUTE_PTR pTemplate,
 			  CK_ULONG count);
-	char *log_map_error(int err);
+	char *log_map_error(CK_RV err);
 
 #ifdef __cplusplus
 }

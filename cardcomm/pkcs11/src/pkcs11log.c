@@ -595,7 +595,7 @@ void log_attr(CK_ATTRIBUTE_PTR pAttr)
            {
            fclose(fp);
            fp = NULL;
-           log_xtrace(0, "Attribute Value: ", pAttr->pValue, pAttr->ulValueLen);
+           log_xtrace(0, "Attribute Value: ", pAttr->pValue, (int)(pAttr->ulValueLen));
            }
      }
  
@@ -607,7 +607,7 @@ cleanup:
 
 
 
-char* log_map_error(int err)
+char* log_map_error(CK_RV err)
 {
 static char cerr[20];
 switch(err)
@@ -701,7 +701,7 @@ switch(err)
 #ifdef WIN32
       sprintf_s(cerr,sizeof(cerr), "0x%0X", err);
 #else
-      sprintf(cerr, "0x%0X", err);
+           sprintf(cerr, "0x%0lX", err);
 #endif
       return(cerr); break;
    }
