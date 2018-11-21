@@ -147,7 +147,7 @@ extern "C"
 	{
 		char name[MAX_SLOT_NAME];
 		CK_BBOOL logged_in;
-		int login_type;
+		CK_USER_TYPE login_type;
 		unsigned int nsessions;
 		unsigned int connect;
 		int ievent;  //0:nothing   1:inserted    2:removed
