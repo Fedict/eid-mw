@@ -289,13 +289,6 @@
 			remoteGlobalIDString = 7FA1A9F60F85F36E000D9EE1;
 			remoteInfo = beidpkcs11;
 		};
-		6580550D1A66C9BE000AEFE0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 658054E51A66C9BB000AEFE0;
-			remoteInfo = "eID Middleware";
-		};
 		659FD5871FEA867600E4AF83 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -330,13 +323,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8683738418648918005EE5D7;
 			remoteInfo = beiddialogsmac;
-		};
-		869D00C118D72DD000A41853 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 869D00AE18D72DCF00A41853;
-			remoteInfo = plistMerger;
 		};
 		86B474761BD798B8004FB8AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -534,7 +520,6 @@
 		6536233C19A7E93A00D46ECB /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = tests/unit/apple/main.c; sourceTree = "<group>"; };
 		6578014F20D135F4002B826A /* xmlfileversconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmlfileversconv.h; sourceTree = "<group>"; };
 		6578015320D135F4002B826A /* xmlfileversconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmlfileversconv.cpp; sourceTree = "<group>"; };
-		658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Middleware.xcodeproj"; path = "plugins_tools/aboutmw/OSX/eID Middleware/eID Middleware.xcodeproj"; sourceTree = "<group>"; };
 		6594447B19A8C29B003ABC24 /* asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = cardcomm/pkcs11/src/asn1.c; sourceTree = "<group>"; };
 		6594447D19A8C2B0003ABC24 /* pkcs11log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pkcs11log.c; path = cardcomm/pkcs11/src/pkcs11log.c; sourceTree = "<group>"; };
 		6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs11util.cpp; path = cardcomm/pkcs11/src/pkcs11util.cpp; sourceTree = "<group>"; };
@@ -567,7 +552,6 @@
 		86837476186489B6005EE5D7 /* langutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = langutil.h; path = cardcomm/pkcs11/src/dialogs/langutil.h; sourceTree = SOURCE_ROOT; };
 		86837477186489B6005EE5D7 /* sharedmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sharedmem.cpp; path = cardcomm/pkcs11/src/dialogs/sharedmem.cpp; sourceTree = SOURCE_ROOT; };
 		86837478186489B6005EE5D7 /* sharedmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sharedmem.h; path = cardcomm/pkcs11/src/dialogs/sharedmem.h; sourceTree = SOURCE_ROOT; };
-		869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = plistMerger.xcodeproj; path = plugins_tools/plistMerger/plistMerger.xcodeproj; sourceTree = SOURCE_ROOT; };
 		86B4749B1BD798B8004FB8AE /* libbeid_ff_pkcs11.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_pkcs11.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = test_dialogs.xcodeproj; path = tests/dialogs/test_dialogs.xcodeproj; sourceTree = "<group>"; };
 		86E3DDB91653D6200015B5E1 /* beidversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidversions.h; path = cardcomm/pkcs11/src/common/beidversions.h; sourceTree = SOURCE_ROOT; };
@@ -797,10 +781,8 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
-				658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */,
 				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
 				6536230C19A7E8FE00D46ECB /* testsuite */,
-				869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */,
 				8683738918648985005EE5D7 /* Dialogsmac */,
 				7FBB025A0F83937F009B751F /* Common */,
 				7FC5358D0F84B88B00BA96EE /* Cardlayer */,
@@ -1019,14 +1001,6 @@
 			name = testsuite;
 			sourceTree = "<group>";
 		};
-		658055091A66C9BB000AEFE0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				6580550E1A66C9BE000AEFE0 /* eID Middleware.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		65F8CC2B1FEBBE79006C30B6 /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1172,14 +1146,6 @@
 			);
 			name = Dialogsmac;
 			path = cardcomm/pkcs11/src/dialogs/dialogsmac;
-			sourceTree = "<group>";
-		};
-		869D00BE18D72DCF00A41853 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				869D00C218D72DD000A41853 /* plistMerger */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		86BC84C11A037C19009E374E /* Products */ = {
@@ -1621,14 +1587,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 658055091A66C9BB000AEFE0 /* Products */;
-					ProjectRef = 658055081A66C9BB000AEFE0 /* eID Middleware.xcodeproj */;
-				},
-				{
-					ProductGroup = 869D00BE18D72DCF00A41853 /* Products */;
-					ProjectRef = 869D00BD18D72DCF00A41853 /* plistMerger.xcodeproj */;
-				},
-				{
 					ProductGroup = 86BC84C11A037C19009E374E /* Products */;
 					ProjectRef = 86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */;
 				},
@@ -1649,20 +1607,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		6580550E1A66C9BE000AEFE0 /* eID Middleware.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "eID Middleware.app";
-			remoteRef = 6580550D1A66C9BE000AEFE0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		869D00C218D72DD000A41853 /* plistMerger */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = plistMerger;
-			remoteRef = 869D00C118D72DD000A41853 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		86BC84C61A037C19009E374E /* test_dialogs */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
