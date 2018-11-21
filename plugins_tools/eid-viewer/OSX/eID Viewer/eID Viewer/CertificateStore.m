@@ -69,6 +69,9 @@
 	arr[CERT_COL_VALIDITY] = @(eIDResultUnknown);
 	NSString *str = [[NSBundle mainBundle] pathForResource:@"certificate_large" ofType:@"png"];
 	NSImage *img = [[NSImage alloc] initByReferencingFile:str];
+    if(!img) {
+        img = [[NSImage alloc] initWithSize:NSMakeSize(10, 10)];
+    }
 	arr[CERT_COL_IMAGE] = img;
 	[self.CertificateData setObject:[NSMutableArray arrayWithObjects:arr count:CERT_COL_NCOLS] forKey:label];
 
