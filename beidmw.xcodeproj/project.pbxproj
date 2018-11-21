@@ -118,6 +118,12 @@
 		65F3F01B1BE2328A0073F2A3 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		65F3F0201BE232D70073F2A3 /* PCSC.framework in Headers */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; };
+		6CD1B8C421A5A6470005F6E9 /* state_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C221A5A6470005F6E9 /* state_error.png */; };
+		6CD1B8C521A5A6470005F6E9 /* state_noreaders.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */; };
+		6CD1B8C621A5A6510005F6E9 /* certificate_bad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */; };
+		6CD1B8C721A5A6530005F6E9 /* certificate_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C021A5A61A0005F6E9 /* certificate_checked.png */; };
+		6CD1B8C821A5A6570005F6E9 /* certificate_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */; };
+		6CD1B8C921A5A65B0005F6E9 /* certificate_warn.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */; };
 		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.4.6.a */; };
 		8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */; };
 		86837479186489B6005EE5D7 /* dialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 8683738D186489B5005EE5D7 /* dialogs.h */; };
@@ -535,6 +541,12 @@
 		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = "plugins_tools/util/eid-util/labels.h"; sourceTree = "<group>"; };
 		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = "plugins_tools/util/eid-util/utftranslate.h"; sourceTree = "<group>"; };
 		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
+		6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_bad.png; path = "plugins_tools/eid-viewer/resources/certificate_bad.png"; sourceTree = SOURCE_ROOT; };
+		6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_large.png; path = "plugins_tools/eid-viewer/resources/certificate_large.png"; sourceTree = SOURCE_ROOT; };
+		6CD1B8C021A5A61A0005F6E9 /* certificate_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_checked.png; path = "plugins_tools/eid-viewer/resources/certificate_checked.png"; sourceTree = SOURCE_ROOT; };
+		6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_warn.png; path = "plugins_tools/eid-viewer/resources/certificate_warn.png"; sourceTree = SOURCE_ROOT; };
+		6CD1B8C221A5A6470005F6E9 /* state_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = state_error.png; path = "plugins_tools/eid-viewer/resources/state_error.png"; sourceTree = SOURCE_ROOT; };
+		6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = state_noreaders.png; path = "plugins_tools/eid-viewer/resources/state_noreaders.png"; sourceTree = SOURCE_ROOT; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -1004,6 +1016,12 @@
 		65F8CC2B1FEBBE79006C30B6 /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				6CD1B8C221A5A6470005F6E9 /* state_error.png */,
+				6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */,
+				6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */,
+				6CD1B8C021A5A61A0005F6E9 /* certificate_checked.png */,
+				6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */,
+				6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */,
 				659FD5941FEA926900E4AF83 /* coat_of_arms_de.jpg */,
 				659FD5931FEA926800E4AF83 /* coat_of_arms_en.jpg */,
 				659FD5921FEA926800E4AF83 /* coat_of_arms_fr.jpg */,
@@ -1624,11 +1642,17 @@
 				659FD58C1FEA919100E4AF83 /* eidv4.xsd in Resources */,
 				659FD5971FEA927200E4AF83 /* coat_of_arms_en.jpg in Resources */,
 				651DDF5D1FEA85AE00C4961E /* Images.xcassets in Resources */,
+				6CD1B8C521A5A6470005F6E9 /* state_noreaders.png in Resources */,
 				659FD5961FEA926F00E4AF83 /* coat_of_arms_de.jpg in Resources */,
+				6CD1B8C921A5A65B0005F6E9 /* certificate_warn.png in Resources */,
 				659FD5991FEA927800E4AF83 /* coat_of_arms_nl.jpg in Resources */,
 				651DDF5E1FEA85C400C4961E /* certs in Resources */,
+				6CD1B8C821A5A6570005F6E9 /* certificate_large.png in Resources */,
 				659FD5981FEA927500E4AF83 /* coat_of_arms_fr.jpg in Resources */,
 				651DDF321FEA843D00C4961E /* MainMenu.xib in Resources */,
+				6CD1B8C421A5A6470005F6E9 /* state_error.png in Resources */,
+				6CD1B8C621A5A6510005F6E9 /* certificate_bad.png in Resources */,
+				6CD1B8C721A5A6530005F6E9 /* certificate_checked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
