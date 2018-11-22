@@ -4,7 +4,10 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <assert.h>
+#include <string.h>
 #include <malloc.h>
+
+#include <testlib.h>
 
 #include <beid_fuzz.h>
 
@@ -19,13 +22,13 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 	CK_OBJECT_HANDLE object;
 
 	beid_set_fuzz_data(data, size, "3F00DF014031");
-	C_Initialize(NULL);
+	check_rv(C_Initialize(NULL));
 	do {
 		slotlist = realloc(slotlist, sizeof(CK_SLOT_ID) * count);
 	} while((rv = C_GetSlotList(CK_TRUE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL);
 
-	assert(rv == CKR_OK);
-	assert(C_OpenSession(slotlist[0], CKF_SERIAL_SESSION, NULL, NULL, &session) == CKR_OK);
+	check_rv_late("C_GetSlotList");
+	check_rv(C_OpenSession(slotlist[0], CKF_SERIAL_SESSION, NULL, NULL, &session));
 	free(slotlist);
 	slotlist = NULL;
 
@@ -35,25 +38,31 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 	attrs[0].ulValueLen = sizeof(CK_ULONG);
 	attrs[1].type = CKA_OBJECT_ID;
 	attrs[1].pValue = "id";
-	attrs[1].ulValueLen = sizeof("id");
+	attrs[1].ulValueLen = strlen("id");
 
-	C_FindObjectsInit(session, attrs, 2);
+	check_rv(C_FindObjectsInit(session, attrs, 2));
+
+	char *label_str = NULL;
+	char *value_str = NULL;
+	char *objid_str = NULL;
 
 	do {
 		char junk[1024];
-		char *label_str;
-		char *value_str;
-		char *objid_str;
+
 		CK_ATTRIBUTE data[3] = {
 			{CKA_LABEL, NULL_PTR, 0},
 			{CKA_VALUE, NULL_PTR, 0},
 			{CKA_OBJECT_ID, NULL_PTR, 0},
 		};
 
-		C_FindObjects(session, &object, 1, &count);
+		check_rv(C_FindObjects(session, &object, 1, &count));
 		if(!count) continue;
 
-		C_GetAttributeValue(session, object, data, 3);
+		free(label_str);
+		free(value_str);
+		free(objid_str);
+
+		check_rv(C_GetAttributeValue(session, object, data, 3));
 
 		label_str = malloc(data[0].ulValueLen + 1);
 		data[0].pValue = label_str;
@@ -64,17 +73,19 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 		objid_str = malloc(data[2].ulValueLen + 1);
 		data[2].pValue = objid_str;
 
-		C_GetAttributeValue(session, object, data, 3);
+		check_rv(C_GetAttributeValue(session, object, data, 3));
 
 		snprintf(junk, sizeof(junk), "%s%s%s", label_str, value_str, objid_str);
-
-		free(label_str);
-		free(value_str);
-		free(objid_str);
 	} while(count);
 
-	C_CloseSession(session);
-	C_Finalize(NULL);
+	printf("label: %s, objid: %s, value: %s\n", label_str, objid_str, value_str);
+
+	free(label_str);
+	free(value_str);
+	free(objid_str);
+
+	check_rv(C_CloseSession(session));
+	check_rv(C_Finalize(NULL));
 
 	return 0;
 }

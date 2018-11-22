@@ -44,7 +44,7 @@ then
 	case $CC in
 		*clang*)
 			AC_MSG_RESULT([yes])
-			AC_SUBST(FUZZING,"-fsanitize=fuzzer-no-link -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION")
+			AC_SUBST(FUZZING,["-fsanitize=fuzzer-no-link,address -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION"])
 			;;
 		*)
 			AC_MSG_ERROR([Fuzzing only works with clang. Please set CC to clang version 6.0 or higher])
