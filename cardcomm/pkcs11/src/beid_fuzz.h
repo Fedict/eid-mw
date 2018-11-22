@@ -9,7 +9,4 @@ EIDMW_CAL_API void beid_set_fuzz_data(const uint8_t *data, size_t size, const ch
 #ifdef __cplusplus
 }
 #endif
-#else
-#error this header is only meant for fuzzing
-#endif
 #endif
