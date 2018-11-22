@@ -2,7 +2,7 @@ bin_PROGRAMS = about-eid-mw
 
 about_eid_mw_SOURCES = about-main.c gettext.h
 about_eid_mw_LDFLAGS = @GTK_LIBS@
-about_eid_mw_CFLAGS = @GTK_CFLAGS@ -DLIBDIR='"$(libdir)"' -DDATAROOTDIR='"$(datarootdir)"'
+about_eid_mw_CFLAGS = @GTK_CFLAGS@ -DLIBDIR='"$(libdir)"' -DDATAROOTDIR='"$(datarootdir)"' @FUZZING@
 
 BUILT_SOURCES = about_glade.h now.h
 EXTRA_DIST = about.glade gen.sh

@@ -22,6 +22,17 @@
 #include "thread.h"
 #include "common/log.h"
 
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+static std::string fuzz_path = "";
+static eIDMW::CByteArray fuzz_data = eIDMW::CByteArray();
+extern "C" {
+	void beid_set_fuzz_data(const uint8_t *data, size_t size, const char *path) {
+		fuzz_path = path;
+		fuzz_data = eIDMW::CByteArray(data, size);
+	}
+}
+#endif
+
 namespace eIDMW
 {
 
@@ -151,6 +162,11 @@ namespace eIDMW
 				   unsigned long ulOffset,
 				   unsigned long ulMaxLen, bool bDoNotCache)
 	{
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+		if(csPath == fuzz_path) {
+			return fuzz_data;
+		}
+#endif
 		return ReadUncachedFile(csPath, ulOffset, ulMaxLen);
 	}
 

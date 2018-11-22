@@ -39,6 +39,11 @@
 #include "p15correction.h"
 #include "dialogs/dialogs.h"
 
+#include <stddef.h>
+#include <stdint.h>
+
+#include "beid_fuzz.h"
+
 namespace eIDMW
 {
 	/** Compatibility version for the entire plugin-relevant API: V1.00 */
