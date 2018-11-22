@@ -10,3 +10,4 @@ EIDMW_CAL_API void beid_set_fuzz_data(const uint8_t *data, size_t size, const ch
 }
 #endif
 #endif
+#endif
