@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <malloc.h>
 
-#include <beid-fuzz.h>
+#include <beid_fuzz.h>
 
 int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 	static bool initialized = false;

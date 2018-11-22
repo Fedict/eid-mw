@@ -63,6 +63,7 @@ noinst_HEADERS = \
 	phash.h \
 	cal.h \
 	beid_p11.h \
+	beid_fuzz.h \
 	cert.h \
 	asn1.h \
 	util.h \
