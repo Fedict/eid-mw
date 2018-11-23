@@ -199,22 +199,21 @@
       
 	  <Component Id="FF_pkcs11_plugin_32_setup" Guid="{C5D92550-C65F-46D6-A1A5-35FA8AE2594F}" Win64="yes">
         <!-- Create our 32 bit beid_ff_pkcs11.dll manifest location -->
-        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_32" Action="createAndRemoveOnUninstall">
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_32">
             <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_32.json"/>
 		</RegistryKey>
       </Component>
 	  
 	  <Component Id="FF_pkcs11_plugin_64_setup" Guid="{5127623F-59F2-4A7E-8E73-3450D68A5B5E}" Win64="yes">
         <!-- Create our 64 bit beid_ff_pkcs11.dll manifest location -->
-        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_64" Action="createAndRemoveOnUninstall">
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_64">
             <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_64.json"/>
 		</RegistryKey>
       </Component>
 	  
       <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}" Win64="no">
         <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
-                     Action="createAndRemoveOnUninstall">
+                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid">
           <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="yes"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
@@ -227,8 +226,7 @@
 
       <Component Id="REGISTERMINIDRIVER_64" Guid="{3BCA1B2C-08AF-4727-AD85-1C60025656EA}" Win64="yes">
         <RegistryKey Root="HKLM"
-          Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
-          Action="createAndRemoveOnUninstall">
+          Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid">
           <RegistryValue Type="string" Name="80000001" Value="beidmdrv64.dll" KeyPath="yes"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
@@ -242,13 +240,13 @@
       <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}" Win64="no">
         <RegistryKey Root="HKLM"
             Key="SOFTWARE\BEID"
-            Action="createAndRemoveOnUninstall">
+            ForceDeleteOnUninstall="yes">
 
-          <RegistryKey Key="general" Action="createAndRemoveOnUninstall">
+          <RegistryKey Key="general">
             <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFilesFolder]Belgium Identity Card"/>
           </RegistryKey>
 
-          <RegistryKey Key="logging" Action="createAndRemoveOnUninstall">
+          <RegistryKey Key="logging">
             <RegistryValue Type="string" Name="log_dirname" Value="[CommonAppDataFolder]Belgium Identity Card\log"/>
           </RegistryKey>
         </RegistryKey>
