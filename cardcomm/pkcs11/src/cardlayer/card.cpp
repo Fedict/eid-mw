@@ -166,8 +166,10 @@ namespace eIDMW
 		if(csPath == fuzz_path) {
 			return fuzz_data;
 		}
-#endif
+		return CByteArray();
+#else
 		return ReadUncachedFile(csPath, ulOffset, ulMaxLen);
+#endif
 	}
 
 	tCacheInfo CCard::GetCacheInfo(const std::string & csPath)
