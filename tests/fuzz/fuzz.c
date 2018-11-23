@@ -92,3 +92,16 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 
 	return 0;
 }
+
+#ifdef FUZZ_AFL
+int main(int argc, char** argv) {
+	assert(argc > 1);
+	FILE *fd = fopen(argv[1], "rb");
+	fseek(fd, 0, SEEK_END);
+	size_t needed = ftell(fd);
+	char * data = malloc(needed);
+	rewind(fd);
+	fread(data, needed, 1, fd);
+	return LLVMFuzzerTestOneInput(data, needed);
+}
+#endif

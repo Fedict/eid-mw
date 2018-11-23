@@ -37,30 +37,40 @@ CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
 LDFLAGS="$PCSC_LIBS $CPPFLAGS"
 ])
 
-AC_ARG_ENABLE([test-fuzzer],AS_HELP_STRING([--enable-test-fuzzer],[Build a version of eid-mw instrumented for fuzzing (not meant for production use!)]),[fuzzer=$withval],[fuzzer=no])
+AC_ARG_ENABLE([test-fuzzer],AS_HELP_STRING([--enable-test-fuzzer],[Build a version of eid-mw instrumented for fuzzing (not meant for production use!)]),[fuzzer=$enableval],[fuzzer=no])
 AC_MSG_CHECKING([whether to build for fuzzing])
-if test "$fuzzer" = "yes"
-then
-	case $CC in
-		*clang*)
-			AC_MSG_RESULT([yes])
-			AC_SUBST(FUZZING,["-fsanitize=fuzzer-no-link,address -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION"])
-			;;
-		*)
-			AC_MSG_ERROR([Fuzzing only works with clang. Please set CC to clang version 6.0 or higher])
-			;;
-	esac
-	case $CXX in
-		*clang++*)
-			;;
-		*)
-			AC_MSG_ERROR([Fuzzing only works with clang. Please set CXX to clang version 6.0 or higher])
-			;;
-	esac
-else
-	AC_MSG_RESULT([no])
-fi
-AM_CONDITIONAL([FUZZING], [test x$fuzzer = xyes])
+case $fuzzer in
+	yes|libfuzz)
+		case $CC in
+			*clang*)
+				AC_MSG_RESULT([yes, with libfuzz])
+				AC_SUBST(FUZZING,["-fsanitize=fuzzer-no-link,address -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION"])
+				;;
+			*)
+				AC_MSG_ERROR([Fuzzing with libfuzz only works with clang. Please set CC to clang version 6.0 or higher])
+				;;
+		esac
+		case $CXX in
+			*clang++*)
+				;;
+			*)
+				AC_MSG_ERROR([Fuzzing with libfuzz only works with clang. Please set CXX to clang version 6.0 or higher])
+				;;
+		esac
+	;;
+	afl)
+		AC_MSG_RESULT([yes, with AFL])
+		CC=afl-$CC
+		CXX=afl-$CXX
+		AC_SUBST(FUZZING,["-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION"])
+	;;
+	*)
+		fuzzer=no
+		AC_MSG_RESULT([no])
+	;;
+esac
+AM_CONDITIONAL([FUZZING], [test x$fuzzer != xno])
+AM_CONDITIONAL([FUZZ_AFL], [test x$fuzzer = xafl])
 
 AC_ARG_WITH([gtkvers],
 	[AS_HELP_STRING([--with-gtkvers],[select GTK version to use [default: 3 if available, falls back to 2 if not]; --without-gtkvers disables GTK altogether [note: this implies --disable-dialogs].])],
