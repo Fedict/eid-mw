@@ -28,6 +28,9 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 	} while((rv = C_GetSlotList(CK_TRUE, slotlist, &count)) == CKR_BUFFER_TOO_SMALL);
 
 	check_rv_late("C_GetSlotList");
+
+	assert(count > 0);
+
 	check_rv(C_OpenSession(slotlist[0], CKF_SERIAL_SESSION, NULL, NULL, &session));
 	free(slotlist);
 	slotlist = NULL;
@@ -64,13 +67,13 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 
 		check_rv(C_GetAttributeValue(session, object, data, 3));
 
-		label_str = malloc(data[0].ulValueLen + 1);
+		label_str = calloc(data[0].ulValueLen + 1, 1);
 		data[0].pValue = label_str;
 
-		value_str = malloc(data[1].ulValueLen + 1);
+		value_str = calloc(data[1].ulValueLen + 1, 1);
 		data[1].pValue = value_str;
 
-		objid_str = malloc(data[2].ulValueLen + 1);
+		objid_str = calloc(data[2].ulValueLen + 1, 1);
 		data[2].pValue = objid_str;
 
 		check_rv(C_GetAttributeValue(session, object, data, 3));
