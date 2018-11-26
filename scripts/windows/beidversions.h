@@ -18,8 +18,8 @@
 #define BASE_VERSION1          4                              
 #define BASE_VERSION2          4                              
 #define BASE_VERSION3          10                              
-#define EIDMW_REVISION         0000        
-#define EIDMW_REVISION_STR     "0000"  
+#define EIDMW_REVISION         4062        
+#define EIDMW_REVISION_STR     "4062"  
  
 // Common Lib                                                               
 #define WIN_CL_VERSION_STRING    BASE_VERSION_STRING EIDMW_REVISION_STR     
