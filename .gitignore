@@ -66,3 +66,6 @@ beidpkcs11.sdf
 /scripts/windows/fedicteidtest.pfx
 /installers/eid-mw/mac/release_BEIDToken
 /installers/eid-mw/mac/release_TokenD
+/cardcomm/minidriver/VS_2017/beidmdrv.vcxproj.user
+/VS_2017/.vs/beid/v15
+/.vs
