@@ -47,5 +47,5 @@ Install certificate as trusted root on test machine to trust the signatures
 ---------------------------------------------------------------------------
 Run commands:
 
-certutil -addstore root fedicteidtest.cer
-certutil -addstore TrustedPublisher fedicteidtest.cer
+certutil -addstore root zeteseidtest.cer
+certutil -addstore TrustedPublisher zeteseidtest.cer
