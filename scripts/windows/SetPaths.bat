@@ -82,7 +82,7 @@
 
 @echo [INFO] Define default value for BEID_DIR_PLATFORMSDK if not defined yet
 @echo [INFO] Input BEID_DIR_PLATFORMSDK=%BEID_DIR_PLATFORMSDK%
-@set FILE_TO_FIND="msitran.exe" "msidb.exe" "..\Include\newdev.h"
+@set FILE_TO_FIND="msitran.exe" "msidb.exe"
 @echo [INFO] Looking for files: %FILE_TO_FIND%
 
 @set FILE_NOT_FOUND=
@@ -109,7 +109,7 @@
 @echo        Not found in "%BEID_DIR_PLATFORMSDK%"
 
 @rem paths for Windows 8 SDK are slightly different
-@set FILE_TO_FIND="msitran.exe" "msidb.exe" "..\..\Include\um\newdev.h"
+@set FILE_TO_FIND="msitran.exe" "msidb.exe"
 
 @set BEID_DIR_PLATFORMSDK=%SEARCH_BEID_DIR_PLATFORMSDK_4%
 @set FILE_NOT_FOUND=
