@@ -1,45 +1,50 @@
 Packages needed to create the eidmw for windows
 -----------------------------------------------
-1) Visual Studio 2010 Express Edition
-For the compilation of the crypto libraries and the sccertprop tool
-http://www.microsoft.com/express/Downloads/
+1) Visual Studio 2017 Community Edition
+For the compilation of the crypto libraries and the eID Viewer
+Select desktop development and .Net desktop development
+https://visualstudio.microsoft.com/downloads/
 
-2) Windows Driver Kit (version used is 7600.16385.1)
+2) Windows Driver Kit
 For the creation of the minidriver cat file (from the inf file)
 For the test signing of the cat file
-http://www.microsoft.com/whdc/devtools/wdk/wdkpkg.mspx
+https://docs.microsoft.com/en-us/windows-hardware/drivers/download-the-wdk
 
 3) NSIS (version used is 2.46)
-For the creation of the outlook supress names tool
+For the creation of the quick installers
 http://nsis.sourceforge.net/Download
 
-4) Wix (version used is Windows Installer XML Toolset 3.0.5419.0)
+4) Wix Toolset
 For the creation of the MSI installers
+http://wixtoolset.org/releases/
+This one currently still need .NET 3.5 installed
+To install .NET 3.5: press the windows keys and type "Windows Features",
+then select .NET 3.5 from te WIndows Features dialog box
 
-5) Windows platform SDK 2008 or Microsoft SDK v7.1
-For the tools to create multi language MSI's
+5) Git can be installed as part of Visual Studio installation
+(or added later by updating the Visual Studio installation through add/remove applications)
+Select "git" (and github extention if you like it integrated into VS) from the detailed installation list
+
 
 Code Signing Certificate for testing
 ------------------------------------
-A test code signing certificate and private key is checked in. This certificate should be used 
-for test signing only!
-
 
 How to create a new code signing certificate/key pair (only written down here for the reference)
 
 1) Make sure you have the tools makecert and pvk2pfx. These tools can be found int the Windows
-   Driver Kit (eg in C:\WinDDK\7600.16385.1\bin\amd64\)
+   Driver Kit (e.g. C:\Program Files (x86)\Windows Kits\10\bin\10.0.17134.0\x64\)
 
-2) run:
-   MakeCert.exe -r -pe -n "CN=Fedict eID(test)" -sv fedicteidtest.pvk fedicteidtest.cer
+2) To make the keys and the certificate run:
+   MakeCert.exe -r -pe -ss my -a sha256 -n "CN=ZetesTestCert" -sv zeteseidtest.pvk zeteseidtest.cer
    Leave the pvk password blank
 
-3) run:
-   pvk2pfx.exe /pvk fedicteidtest.pvk /spc fedicteidtest.cer /pfx fedicteidtest.pfx
+3) To combine the keys and certificate in a single file run:
+   pvk2pfx.exe /pvk zeteseidtest.pvk /spc zeteseidtest.cer /pfx zeteseidtest.pfx
 
-
-Install certificate as trusted root on test machine
----------------------------------------------------
+4) double click the zeteseidtest.pfx file to install the certificate and its keys into the user's "my" store
+   
+Install certificate as trusted root on test machine to trust the signatures
+---------------------------------------------------------------------------
 Run commands:
 
 certutil -addstore root fedicteidtest.cer
