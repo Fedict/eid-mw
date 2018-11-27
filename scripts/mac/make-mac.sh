@@ -27,6 +27,7 @@ pushd ../../..
 echo "cleaning former project..."
 xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG clean
 xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG
+popd
 
 pushd "../../../cardcomm/ctkToken"
 xcodebuild -project "BEIDToken.xcodeproj" -configuration $MAC_BUILD_CONFIG clean
