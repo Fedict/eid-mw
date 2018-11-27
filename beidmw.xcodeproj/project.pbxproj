@@ -2543,6 +2543,7 @@
 					LTC_NO_ASM,
 					BEID_35,
 					EIDMW_STATIC_LIB,
+					PKCS11_V2_20,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
@@ -2585,6 +2586,7 @@
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
 					EIDMW_STATIC_LIB,
+					PKCS11_V2_20,
 				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
 					"EIDMW_PREFIX=/usr/local",
@@ -2703,6 +2705,7 @@
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
 					LTC_NO_ROLC,
+					PKCS11_V2_20,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
@@ -2747,6 +2750,7 @@
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
 					LTC_NO_ROLC,
+					PKCS11_V2_20,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
@@ -2893,6 +2897,8 @@
 					LTC_NO_ASM,
 					BEID_35,
 					EIDMW_STATIC_LIB,
+					PKCS11_V2_20,
+					PKCS11_FF,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
@@ -2935,6 +2941,8 @@
 					"EIDMW_PREFIX=/usr/local",
 					BEID_35,
 					EIDMW_STATIC_LIB,
+					PKCS11_V2_20,
+					PKCS11_FF,
 				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
 					"EIDMW_PREFIX=/usr/local",
