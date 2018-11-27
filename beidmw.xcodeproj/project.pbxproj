@@ -136,34 +136,6 @@
 		868374E818648B45005EE5D7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */; };
 		868374EB18648FF7005EE5D7 /* libbeiddialogsmac.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.4.6.a */; };
 		86867B3B186304BA00ED5541 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
-		86B474781BD798B8004FB8AE /* asn1.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF251653EFE50015B5E1 /* asn1.h */; };
-		86B474791BD798B8004FB8AE /* beid_p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF261653EFE50015B5E1 /* beid_p11.h */; };
-		86B4747A1BD798B8004FB8AE /* cal.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF271653EFE50015B5E1 /* cal.h */; };
-		86B4747B1BD798B8004FB8AE /* cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF281653EFE50015B5E1 /* cert.h */; };
-		86B4747C1BD798B8004FB8AE /* display.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF291653EFE50015B5E1 /* display.h */; };
-		86B4747E1BD798B8004FB8AE /* p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2B1653EFE50015B5E1 /* p11.h */; };
-		86B4747F1BD798B8004FB8AE /* phash.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2C1653EFE50015B5E1 /* phash.h */; };
-		86B474801BD798B8004FB8AE /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF2D1653EFE50015B5E1 /* util.h */; };
-		86B474811BD798B8004FB8AE /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF4F1653EFE50015B5E1 /* pkcs11.h */; };
-		86B474821BD798B8004FB8AE /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF501653EFE50015B5E1 /* pkcs11f.h */; };
-		86B474831BD798B8004FB8AE /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF511653EFE50015B5E1 /* pkcs11t.h */; };
-		86B474841BD798B8004FB8AE /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF521653EFE50015B5E1 /* unix.h */; };
-		86B474851BD798B8004FB8AE /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
-		86B474871BD798B8004FB8AE /* cert.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF2F1653EFE50015B5E1 /* cert.c */; };
-		86B474881BD798B8004FB8AE /* encrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF301653EFE50015B5E1 /* encrypt.c */; };
-		86B474891BD798B8004FB8AE /* general.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF311653EFE50015B5E1 /* general.c */; };
-		86B4748A1BD798B8004FB8AE /* object.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF331653EFE50015B5E1 /* object.c */; };
-		86B4748B1BD798B8004FB8AE /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF341653EFE50015B5E1 /* p11.c */; };
-		86B4748C1BD798B8004FB8AE /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF351653EFE50015B5E1 /* session.c */; };
-		86B4748D1BD798B8004FB8AE /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF361653EFE50015B5E1 /* sign.c */; };
-		86B4748E1BD798B8004FB8AE /* cal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF371653EFE50015B5E1 /* cal.cpp */; };
-		86B4748F1BD798B8004FB8AE /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF381653EFE50015B5E1 /* display.cpp */; };
-		86B474901BD798B8004FB8AE /* phash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF391653EFE50015B5E1 /* phash.cpp */; };
-		86B474921BD798B8004FB8AE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */; };
-		86B474931BD798B8004FB8AE /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
-		86B474941BD798B8004FB8AE /* libbeiddialogsmac.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.4.6.a */; };
-		86B474951BD798B8004FB8AE /* libbeidcardlayer.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.4.6.a */; };
-		86B474961BD798B8004FB8AE /* libbeidcommon.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.4.6.a */; };
 		86CE3682187EA5DA00EB96A5 /* libbeidcommon.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.4.6.a */; };
 		86CE3683187EA5DE00EB96A5 /* libbeidcardlayer.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.4.6.a */; };
 		86CE3687187EB1B200EB96A5 /* libbeiddialogsmac.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.4.6.a */; };
@@ -329,13 +301,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8683738418648918005EE5D7;
 			remoteInfo = beiddialogsmac;
-		};
-		86B474761BD798B8004FB8AE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7FC5353A0F84B83B00BA96EE;
-			remoteInfo = beidcardlayer;
 		};
 		86BC84C51A037C19009E374E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -564,7 +529,6 @@
 		86837476186489B6005EE5D7 /* langutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = langutil.h; path = cardcomm/pkcs11/src/dialogs/langutil.h; sourceTree = SOURCE_ROOT; };
 		86837477186489B6005EE5D7 /* sharedmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sharedmem.cpp; path = cardcomm/pkcs11/src/dialogs/sharedmem.cpp; sourceTree = SOURCE_ROOT; };
 		86837478186489B6005EE5D7 /* sharedmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sharedmem.h; path = cardcomm/pkcs11/src/dialogs/sharedmem.h; sourceTree = SOURCE_ROOT; };
-		86B4749B1BD798B8004FB8AE /* libbeid_ff_pkcs11.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeid_ff_pkcs11.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = test_dialogs.xcodeproj; path = tests/dialogs/test_dialogs.xcodeproj; sourceTree = "<group>"; };
 		86E3DDB91653D6200015B5E1 /* beidversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidversions.h; path = cardcomm/pkcs11/src/common/beidversions.h; sourceTree = SOURCE_ROOT; };
 		86E3DDBA1653D6200015B5E1 /* bytearray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytearray.cpp; path = cardcomm/pkcs11/src/common/bytearray.cpp; sourceTree = SOURCE_ROOT; };
@@ -759,18 +723,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		86B474911BD798B8004FB8AE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				86B474921BD798B8004FB8AE /* CoreFoundation.framework in Frameworks */,
-				86B474931BD798B8004FB8AE /* PCSC.framework in Frameworks */,
-				86B474941BD798B8004FB8AE /* libbeiddialogsmac.4.4.6.a in Frameworks */,
-				86B474951BD798B8004FB8AE /* libbeidcardlayer.4.4.6.a in Frameworks */,
-				86B474961BD798B8004FB8AE /* libbeidcommon.4.4.6.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -782,7 +734,6 @@
 				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.4.6.dylib */,
 				8683738518648918005EE5D7 /* libbeiddialogsmac.4.4.6.a */,
 				6536230219A7E8E600D46ECB /* testsuite */,
-				86B4749B1BD798B8004FB8AE /* libbeid_ff_pkcs11.dylib */,
 				652709FA1FE975A1004F326D /* BeidView.framework */,
 				653490F61FEA7B39000F7787 /* eidfilepreview.qlgenerator */,
 				651DDF291FEA843C00C4961E /* eID Viewer.app */,
@@ -1342,26 +1293,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		86B474771BD798B8004FB8AE /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				86B474781BD798B8004FB8AE /* asn1.h in Headers */,
-				86B474791BD798B8004FB8AE /* beid_p11.h in Headers */,
-				86B4747A1BD798B8004FB8AE /* cal.h in Headers */,
-				86B4747B1BD798B8004FB8AE /* cert.h in Headers */,
-				86B4747C1BD798B8004FB8AE /* display.h in Headers */,
-				86B4747E1BD798B8004FB8AE /* p11.h in Headers */,
-				86B4747F1BD798B8004FB8AE /* phash.h in Headers */,
-				86B474801BD798B8004FB8AE /* util.h in Headers */,
-				86B474811BD798B8004FB8AE /* pkcs11.h in Headers */,
-				86B474821BD798B8004FB8AE /* pkcs11f.h in Headers */,
-				86B474831BD798B8004FB8AE /* pkcs11t.h in Headers */,
-				86B474841BD798B8004FB8AE /* unix.h in Headers */,
-				86B474851BD798B8004FB8AE /* win32.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -1516,24 +1447,6 @@
 			productReference = 8683738518648918005EE5D7 /* libbeiddialogsmac.4.4.6.a */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
-		86B474741BD798B8004FB8AE /* beid_ff_pkcs11 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 86B474981BD798B8004FB8AE /* Build configuration list for PBXNativeTarget "beid_ff_pkcs11" */;
-			buildPhases = (
-				86B474771BD798B8004FB8AE /* Headers */,
-				86B474861BD798B8004FB8AE /* Sources */,
-				86B474911BD798B8004FB8AE /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				86B474751BD798B8004FB8AE /* PBXTargetDependency */,
-			);
-			name = beid_ff_pkcs11;
-			productName = beidpkcs11;
-			productReference = 86B4749B1BD798B8004FB8AE /* libbeid_ff_pkcs11.dylib */;
-			productType = "com.apple.product-type.library.dynamic";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1582,10 +1495,6 @@
 						DevelopmentTeam = D4SW6VZB8M;
 						ProvisioningStyle = Manual;
 					};
-					86B474741BD798B8004FB8AE = {
-						DevelopmentTeam = D4SW6VZB8M;
-						ProvisioningStyle = Manual;
-					};
 				};
 			};
 			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beidmw" */;
@@ -1616,7 +1525,6 @@
 				7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */,
 				8683738418648918005EE5D7 /* beiddialogsmac */,
 				6536230119A7E8E600D46ECB /* testsuite */,
-				86B474741BD798B8004FB8AE /* beid_ff_pkcs11 */,
 				652709F91FE975A1004F326D /* BeidView */,
 				653490F51FEA7B39000F7787 /* eidfilepreview */,
 				651DDF281FEA843C00C4961E /* eID Viewer */,
@@ -1913,23 +1821,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		86B474861BD798B8004FB8AE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				86B474871BD798B8004FB8AE /* cert.c in Sources */,
-				86B474881BD798B8004FB8AE /* encrypt.c in Sources */,
-				86B474891BD798B8004FB8AE /* general.c in Sources */,
-				86B4748A1BD798B8004FB8AE /* object.c in Sources */,
-				86B4748B1BD798B8004FB8AE /* p11.c in Sources */,
-				86B4748C1BD798B8004FB8AE /* session.c in Sources */,
-				86B4748D1BD798B8004FB8AE /* sign.c in Sources */,
-				86B4748E1BD798B8004FB8AE /* cal.cpp in Sources */,
-				86B4748F1BD798B8004FB8AE /* display.cpp in Sources */,
-				86B474901BD798B8004FB8AE /* phash.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1962,11 +1853,6 @@
 			isa = PBXTargetDependency;
 			target = 8683738418648918005EE5D7 /* beiddialogsmac */;
 			targetProxy = 868374E918648B7B005EE5D7 /* PBXContainerItemProxy */;
-		};
-		86B474751BD798B8004FB8AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7FC5353A0F84B83B00BA96EE /* beidcardlayer */;
-			targetProxy = 86B474761BD798B8004FB8AE /* PBXContainerItemProxy */;
 		};
 		86F2229F186495600040D1AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2896,101 +2782,6 @@
 			};
 			name = Release;
 		};
-		86B474991BD798B8004FB8AE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LIBRARY = "libc++";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = D4SW6VZB8M;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				EXECUTABLE_PREFIX = lib;
-				"EXPORTED_SYMBOLS_FILE[arch=*]" = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/System/Library/Frameworks,
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"EIDMW_PREFIX=/usr/local",
-					LTC_NO_ASM,
-					BEID_35,
-					EIDMW_STATIC_LIB,
-					PKCS11_V2_20,
-					PKCS11_FF,
-				);
-				GCC_VERSION = "";
-				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
-					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
-					/System/Library/Frameworks/PCSC.framework/Headers,
-				);
-				INSTALL_PATH = /usr/local/lib;
-				LINKER_DISPLAYS_MANGLED_NAMES = YES;
-				MACH_O_TYPE = mh_dylib;
-				OTHER_CFLAGS = "-fno-strict-aliasing";
-				PREBINDING = NO;
-				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
-				PRODUCT_NAME = beid_ff_pkcs11;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
-				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
-				VALID_ARCHS = x86_64;
-			};
-			name = Debug;
-		};
-		86B4749A1BD798B8004FB8AE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LIBRARY = "libc++";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = D4SW6VZB8M;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				EXECUTABLE_PREFIX = lib;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/System/Library/Frameworks,
-				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"EIDMW_PREFIX=/usr/local",
-					BEID_35,
-					EIDMW_STATIC_LIB,
-					PKCS11_V2_20,
-					PKCS11_FF,
-				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"EIDMW_PREFIX=/usr/local",
-					BEID_35,
-				);
-				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
-					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
-					/System/Library/Frameworks/PCSC.framework/Headers,
-				);
-				INSTALL_PATH = /usr/local/lib;
-				MACH_O_TYPE = mh_dylib;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = "-fno-strict-aliasing";
-				PREBINDING = NO;
-				PRODUCT_NAME = beid_ff_pkcs11;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
-				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
-				VALID_ARCHS = x86_64;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3071,15 +2862,6 @@
 			buildConfigurations = (
 				8683738618648918005EE5D7 /* Debug */,
 				8683738718648918005EE5D7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		86B474981BD798B8004FB8AE /* Build configuration list for PBXNativeTarget "beid_ff_pkcs11" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				86B474991BD798B8004FB8AE /* Debug */,
-				86B4749A1BD798B8004FB8AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
