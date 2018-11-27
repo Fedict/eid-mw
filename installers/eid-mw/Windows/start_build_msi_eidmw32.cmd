@@ -10,9 +10,11 @@
 
 :: Create the version and revision number
 :: ======================================
+@echo [INFO] Creating version numbers
 @call "%~dp0..\..\..\scripts\windows\create_eidmw_version_files.cmd"
 
 
 :: Create the MSI installer
 :: ========================
+@echo [INFO] Creating msi installer
 @call "%~dp0.\build_msi_eidmw32.cmd"

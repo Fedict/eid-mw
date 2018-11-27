@@ -176,7 +176,7 @@
 		case eIDStateTokenCerts:
 			sheet = YES;
 			break;
-		case eIDStateTokenWait:
+		case eIDStateTokenIdle:
 			filePrint = YES;
 			fileSave = YES;
 			pinops = YES;

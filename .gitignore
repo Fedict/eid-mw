@@ -66,3 +66,16 @@ beidpkcs11.sdf
 /scripts/windows/fedicteidtest.pfx
 /installers/eid-mw/mac/release_BEIDToken
 /installers/eid-mw/mac/release_TokenD
+/cardcomm/minidriver/VS_2017/beidmdrv.vcxproj.user
+/VS_2017/.vs/beid/v15
+/.vs
+/cardcomm/pkcs11/VS_2017/Binaries
+/cardcomm/pkcs11/VS_2017/beidpkcs11.vcxproj.user
+/cardcomm/pkcs11/VS_2017/Win32_PKCS11_FF_Release
+/cardcomm/pkcs11/VS_2017/x64_PKCS11_FF_Release
+/installers/quickinstaller/Drivers/WINALL/beidmdrv
+/installers/eid-mw/Windows/2067
+/installers/eid-mw/Windows/2060
+/installers/eid-mw/Windows/1031
+/plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Certs
+/plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Images

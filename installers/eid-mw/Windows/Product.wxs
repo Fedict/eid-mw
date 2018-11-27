@@ -96,7 +96,7 @@
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
       </Directory>
 <?ifndef env.DONT_MERGE_VCRT?>
-      <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC140_CRT_x86.msm" Language="0" DiskId="1" />
+      <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\Microsoft_VC141_CRT_x86.msm" Language="0" DiskId="1" />
 <?endif?>
 	  </Directory>
 	
@@ -147,7 +147,7 @@
 	<DirectoryRef Id="FFPLUGMANFOLDER">
 	  <Component Id="FF_Manifest_FilesID" Guid="{10A0598E-9F54-4386-959C-FB56FC1C412C}" Win64="no">
         <File Id="FF_Manifest_File_32ID" Name="beidpkcs11_32.json" KeyPath="yes" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_32.json" />
-		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\vs_2015\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>	  
 	</DirectoryRef>
 	
@@ -158,8 +158,8 @@
       </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="no">
-        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\VS_2015\binaries\win32_release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\VS_2015\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\win32_release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>
 
     </DirectoryRef>
@@ -174,11 +174,10 @@
 	
 	  <Component Id="FF_pkcs11_plugin_32_setup" Guid="{CE09E849-91E3-4EDE-9C8B-5261162FCD42}">
         <!-- Create our 32 bit beid_ff_pkcs11.dll manifest location -->
-        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_32" Action="createAndRemoveOnUninstall">
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_32">
             <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_32.json"/>
 		</RegistryKey>
       </Component>
-	
       <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes">
         <!-- Start SCardSvr Service during startup -->
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
@@ -188,8 +187,7 @@
 	  
       <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}">
         <RegistryKey Root="HKLM"
-                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
-                     Action="createAndRemoveOnUninstall">
+                     Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid">
           <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="yes"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no"/>
@@ -203,13 +201,13 @@
       <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}">
         <RegistryKey Root="HKLM"
             Key="SOFTWARE\BEID"
-            Action="createAndRemoveOnUninstall">
+			ForceDeleteOnUninstall="yes">
           
-          <RegistryKey Key="general" Action="createAndRemoveOnUninstall">
+          <RegistryKey Key="general">
             <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFilesFolder]Belgium Identity Card"/>
           </RegistryKey>
           
-          <RegistryKey Key="logging" Action="createAndRemoveOnUninstall">
+          <RegistryKey Key="logging">
             <RegistryValue Type="string" Name="log_dirname" Value="[CommonAppDataFolder]Belgium Identity Card\log"/>
           </RegistryKey>
           
@@ -227,7 +225,7 @@
              Level="1"
              >
 <?ifndef env.DONT_MERGE_VCRT?>
-      <Feature Id="VCRedist" Title="VC++ 14.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
+      <Feature Id="VCRedist" Title="VC++ 15.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
         <MergeRef Id="VCRT" />
       </Feature>
 <?endif?>

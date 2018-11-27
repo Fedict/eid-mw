@@ -31,6 +31,7 @@
 #include "mw_util.h"
 #include "tlvbuffer.h"
 #include "thread.h"
+#include "beid_fuzz.h"
 
 #ifndef WIN32
 #define strcpy_s(a,b,c)         strcpy((a),(c))
