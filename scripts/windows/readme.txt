@@ -2,7 +2,7 @@ Packages needed to create the eidmw for windows
 -----------------------------------------------
 1) Visual Studio 2017 Community Edition
 For the compilation of the crypto libraries and the eID Viewer
-Select desktop development and .Net desktop development
+Select desktop development, .Net desktop development and Windows 10 SDK (10.0.17134.0)
 https://visualstudio.microsoft.com/downloads/
 
 2) Windows Driver Kit
@@ -49,3 +49,6 @@ Run commands:
 
 certutil -addstore root zeteseidtest.cer
 certutil -addstore TrustedPublisher zeteseidtest.cer
+
+To test sign a document
+-----------------------
