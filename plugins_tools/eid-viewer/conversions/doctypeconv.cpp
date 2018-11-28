@@ -19,7 +19,7 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_DE][TEXT("07")] = TEXT("STARTKARTE");
 		conversions[EID_VWR_LANG_DE][TEXT("08")] = TEXT("Berechtigungskarte");
 		// Foreigner A
-		conversions[EID_VWR_LANG_DE][TEXT("11")] = TEXT("Bescheinigung der Eintragung im Ausl\u00e4nderregister;Vor\u00fcbergehender Aufenthalt");
+		conversions[EID_VWR_LANG_DE][TEXT("11")] = TEXT("Bescheinigung der Eintragung im Ausl\u00e4nderregister - Vor\u00fcbergehender Aufenthalt");
 		// Foreigner B
 		conversions[EID_VWR_LANG_DE][TEXT("12")] = TEXT("Bescheinigung der Eintragung im Ausl\u00e4nderregister");
 		// Foreigner C
@@ -46,7 +46,7 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_EN][TEXT("07")] = TEXT("BOOTSTRAP CARD");
 		conversions[EID_VWR_LANG_EN][TEXT("08")] = TEXT("Habilitation Card");
 		// Foreigner A
-		conversions[EID_VWR_LANG_EN][TEXT("11")] = TEXT("Proof of registration in the Aliens\u2019 Register \u2013 Temporary residence");
+		conversions[EID_VWR_LANG_EN][TEXT("11")] = TEXT("Proof of registration in the Aliens\u2019 Register - Temporary residence");
 		// Foreigner B
 		conversions[EID_VWR_LANG_EN][TEXT("12")] = TEXT("Proof of registration in the Aliens\u2019 Register");
 		// Foreigner C
@@ -73,7 +73,7 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_FR][TEXT("07")] = TEXT("CARTE DE DEMARRAGE");
 		conversions[EID_VWR_LANG_FR][TEXT("08")] = TEXT("CARTE D'HABILITATION");
 		// Foreigner A
-		conversions[EID_VWR_LANG_FR][TEXT("11")] = TEXT("Certificat d'inscription au Registre des Etrangers \u2013;S\u00e9jour temporaire");
+		conversions[EID_VWR_LANG_FR][TEXT("11")] = TEXT("Certificat d'inscription au Registre des Etrangers - S\u00e9jour temporaire");
 		// Foreigner B
 		conversions[EID_VWR_LANG_FR][TEXT("12")] = TEXT("Certificat d'inscription au Registre des Etrangers");
 		// Foreigner C
