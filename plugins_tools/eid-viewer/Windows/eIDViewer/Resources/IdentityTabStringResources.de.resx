@@ -151,7 +151,7 @@
     <value>Geschlecht:</value>
   </data>
   <data name="SpecialStatusLabel" xml:space="preserve">
-    <value>Besonderer Status:</value>
+    <value>Sonderstatus:</value>
   </data>
   <data name="special_organisation_former_blue_card" xml:space="preserve">
     <value>ehemaliger Inhaber der Blauen Karte EU</value>
