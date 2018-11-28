@@ -19,7 +19,7 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_DE][TEXT("07")] = TEXT("STARTKARTE");
 		conversions[EID_VWR_LANG_DE][TEXT("08")] = TEXT("Berechtigungskarte");
 		// Foreigner A
-		conversions[EID_VWR_LANG_DE][TEXT("11")] = TEXT("Bescheinigung der Eintragung im Ausl\u00e4nderregister;Vor\u00fcbergehender Aufenthalt");
+		conversions[EID_VWR_LANG_DE][TEXT("11")] = TEXT("Bescheinigung der Eintragung im Ausl\u00e4nderregister \u2013 Vor\u00fcbergehender Aufenthalt");
 		// Foreigner B
 		conversions[EID_VWR_LANG_DE][TEXT("12")] = TEXT("Bescheinigung der Eintragung im Ausl\u00e4nderregister");
 		// Foreigner C
@@ -73,7 +73,7 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_FR][TEXT("07")] = TEXT("CARTE DE DEMARRAGE");
 		conversions[EID_VWR_LANG_FR][TEXT("08")] = TEXT("CARTE D'HABILITATION");
 		// Foreigner A
-		conversions[EID_VWR_LANG_FR][TEXT("11")] = TEXT("Certificat d'inscription au Registre des Etrangers \u2013;S\u00e9jour temporaire");
+		conversions[EID_VWR_LANG_FR][TEXT("11")] = TEXT("Certificat d'inscription au Registre des Etrangers \u2013 S\u00e9jour temporaire");
 		// Foreigner B
 		conversions[EID_VWR_LANG_FR][TEXT("12")] = TEXT("Certificat d'inscription au Registre des Etrangers");
 		// Foreigner C
@@ -100,7 +100,7 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_NL][TEXT("07")] = TEXT("OPSTARTKAART");
 		conversions[EID_VWR_LANG_NL][TEXT("08")] = TEXT("HABILITATIEKAART");
 		// Foreigner A");
-		conversions[EID_VWR_LANG_NL][TEXT("11")] = TEXT("Bewijs van inschrijving in het vreemdelingenregister - Tijdelijk verblijf");
+		conversions[EID_VWR_LANG_NL][TEXT("11")] = TEXT("Bewijs van inschrijving in het vreemdelingenregister \u2013 Tijdelijk verblijf");
 		// Foreigner B");
 		conversions[EID_VWR_LANG_NL][TEXT("12")] = TEXT("Bewijs van inschrijving in het vreemdelingenregister");
 		// Foreigner C");
