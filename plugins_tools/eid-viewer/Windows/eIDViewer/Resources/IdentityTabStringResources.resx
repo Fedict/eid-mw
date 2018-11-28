@@ -223,7 +223,6 @@
     <value>Member of Family</value>
   </data>
   <data name="ProtectionLabel" xml:space="preserve">
-    <value>Date and country of protection</value>
   </data>
   <data name="DuplicateLabel" xml:space="preserve">
     <value>Duplicata:</value>

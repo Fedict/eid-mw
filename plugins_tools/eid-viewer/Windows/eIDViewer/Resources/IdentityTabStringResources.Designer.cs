@@ -187,7 +187,6 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date and country of protection.
         /// </summary>
         public static string ProtectionLabel {
             get {
