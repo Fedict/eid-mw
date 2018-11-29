@@ -93,6 +93,7 @@ static struct {
 	{ TEXT("Root"),				CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("CA"),				CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("xml_file_version"),		CK_TRUE, CK_FALSE, CK_FALSE, NULL }, // virtual label only used when reading an XML file
+	{ TEXT("xml"),				CK_TRUE, CK_FALSE, CK_FALSE, NULL }, // virtual label only used when reading an XML file
 	{ NULL,					0, 0, 0, NULL },
 };
 
