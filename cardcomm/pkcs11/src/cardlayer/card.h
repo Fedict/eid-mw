@@ -21,7 +21,7 @@
 
 /**
  * Subclasses of this class implement functionality for a specific
- * type of card (e.g. BE eID, PT eID, SIS, ...)
+ * type of card (e.g. BE eID, PT eID, ...)
  * This subclasses can either part of the CAL or be separate libraries
  * ('plugins'), see CardFactory.cpp for more info.
  */
@@ -41,9 +41,9 @@
 
 #include <stddef.h>
 #include <stdint.h>
-
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 #include "beid_fuzz.h"
-
+#endif
 namespace eIDMW
 {
 	/** Compatibility version for the entire plugin-relevant API: V1.00 */
