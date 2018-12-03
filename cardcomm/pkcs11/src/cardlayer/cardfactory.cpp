@@ -24,9 +24,7 @@
 #include "thread.h"
 #include "unknowncard.h"
 #include "common/log.h"
-#ifdef CAL_BEID
 #include "cardpluginbeid/beidcard.h"
-#endif
 
 #include <string>
 
@@ -78,17 +76,17 @@ namespace eIDMW
 		{
 			// 1. A card is present and we could connect to it via a normal SCardConnect()
 
-#ifdef CAL_BEID
 			if (poCard == NULL)
+			{
 				poCard = BeidCardGetInstance(PLUGIN_VERSION, strReader, hCard, poContext, poPinpad);
-#endif // CAL_BEID
+			}
 
 #ifndef __APPLE__
 			// If no other CCard subclass could be found
 			if (poCard == NULL)
-				poCard = new CUnknownCard(hCard, poContext,
-							  poPinpad,
-							  CByteArray());
+			{
+				poCard = new CUnknownCard(hCard, poContext, poPinpad, CByteArray());
+			}
 #else
 			// On Mac OS X, SCardConnect() always works when reading a SIS card on an ACR38U,
 			// but not the following SCardTransmit() to read out the data. So we set hCard
@@ -102,14 +100,10 @@ namespace eIDMW
 		{
 			// 2. A card is present, but connecting to it is reader-specific (e.g. synchron. cards)
 
-#ifdef CAL_BEID
-
 			if (poCard == NULL)
 			{
 				poCard = new CUnknownCard(hCard, poContext, poPinpad, CByteArray());
 			}
-
-#endif // CAL_BEID
 
 			// If the card is still not recognized here, then it may as well
 			// be an badly inserted card, so we'll throw the exception that we
