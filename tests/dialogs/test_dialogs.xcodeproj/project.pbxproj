@@ -196,7 +196,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 					LTC_NO_ASM,
-					BEID_35,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

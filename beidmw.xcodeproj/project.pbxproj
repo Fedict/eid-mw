@@ -1918,7 +1918,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
 					LTC_NO_ASM,
-					BEID_35,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				GCC_THREADSAFE_STATICS = YES;
@@ -1982,7 +1981,6 @@
 				GCC_PFE_FILE_C_DIALECTS = "c c++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
-					BEID_35,
 					USING_DL_OPEN,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
@@ -2409,7 +2407,6 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
-					BEID_35,
 					TEST_NO_ABORT,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2451,7 +2448,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
 					LTC_NO_ASM,
-					BEID_35,
 					EIDMW_STATIC_LIB,
 					PKCS11_V2_20,
 				);
@@ -2494,14 +2490,10 @@
 				GCC_MODEL_TUNING = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
-					BEID_35,
 					EIDMW_STATIC_LIB,
 					PKCS11_V2_20,
 				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"EIDMW_PREFIX=/usr/local",
-					BEID_35,
-				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "EIDMW_PREFIX=/usr/local";
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
@@ -2540,7 +2532,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
 					LTC_NO_ASM,
-					BEID_35,
 					EIDMW_STATIC_LIB,
 					USING_DL_OPEN,
 				);
@@ -2611,7 +2602,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					EIDMW_STATIC_LIB,
 					"EIDMW_PREFIX=/usr/local",
-					BEID_35,
 					LTC_NO_ROLC,
 					PKCS11_V2_20,
 				);
@@ -2654,7 +2644,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					EIDMW_STATIC_LIB,
 					"EIDMW_PREFIX=/usr/local",
-					BEID_35,
 					LTC_NO_ROLC,
 					PKCS11_V2_20,
 				);
@@ -2758,7 +2747,6 @@
 				GCC_LINK_WITH_DYNAMIC_LIBRARIES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
-					BEID_35,
 					EIDMW_STATIC_LIB,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
