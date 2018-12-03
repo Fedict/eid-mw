@@ -31,8 +31,9 @@
 #include "mw_util.h"
 #include "tlvbuffer.h"
 #include "thread.h"
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 #include "beid_fuzz.h"
-
+#endif
 #ifndef WIN32
 #define strcpy_s(a,b,c)         strcpy((a),(c))
 #define sprintf_s(a,b,c,d)    sprintf((a),(c),(d))
