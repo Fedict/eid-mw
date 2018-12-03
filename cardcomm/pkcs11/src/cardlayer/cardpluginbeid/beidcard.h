@@ -26,15 +26,6 @@
 
 using namespace eIDMW;
 
-// If we want to 'hardcode' this plugin internally in the CAL, this function
-// can't be present because it's the same for all plugins
-#ifndef CARDPLUGIN_IN_CAL
-EIDMW_CAL_API CCard *GetCardInstance(unsigned long ulVersion,
-				     const char *csReader, SCARDHANDLE hCard,
-				     CContext * poContext,
-				     CPinpad * poPinpad);
-#endif
-
 CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 			   SCARDHANDLE hCard, CContext * poContext,
 			   CPinpad * poPinpad);

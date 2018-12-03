@@ -39,19 +39,6 @@ static const tFileInfo PREFS_FILE_INFO_V1 = { -1, -1, 1 };
 static const tFileInfo PREFS_FILE_INFO_V2 = { -1, -1, 0x85 };
 
  
-// If we want to 'hardcode' this plugin internally in the CAL, this function
-// can't be present because it's the same for all plugins
-#ifndef CARDPLUGIN_IN_CAL
-	CCard * GetCardInstance(unsigned long ulVersion, const char *csReader,
-				SCARDHANDLE hCard, CContext * poContext,
-				CPinpad * poPinpad) 
-{
-	return BeidCardGetInstance(ulVersion, csReader, hCard, poContext,
-				    poPinpad);
-}
-
-
-#endif	/*  */
 static bool BeidCardSelectApplet(CContext * poContext, SCARDHANDLE hCard) 
 {
 	long lRetVal = 0;
