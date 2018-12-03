@@ -250,12 +250,12 @@ private:
 
 
 		//TODO: waiting to be cleaned up (aka removed)
-		bool CCard::PinCmd_2(tPinOperation operation, const tPin & Pin,
+		bool PinCmd_2(tPinOperation operation, const tPin & Pin,
 			const std::string & csPin1,
 			const std::string & csPin2,
 			unsigned long &ulRemaining,
 			const tPrivKey * pKey);
-		tFileInfo CCard::SelectFile_2(const std::string & csPath, bool bReturnFileInfo);
+		tFileInfo SelectFile_2(const std::string & csPath, bool bReturnFileInfo);
 		CByteArray SelectByPath_2(const std::string & csPath, bool bReturnFileInfo);
 	};
 

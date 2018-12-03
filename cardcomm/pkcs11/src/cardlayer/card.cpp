@@ -23,6 +23,7 @@
 #include "common/log.h"
 #include "common/thread.h"
 #include "pinpad2.h"
+#include "unknowncard.h"
 
 #ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 static std::string fuzz_path = "";
