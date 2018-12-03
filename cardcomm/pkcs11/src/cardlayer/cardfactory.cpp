@@ -63,8 +63,6 @@
 #include "common/prefix.h"
 #ifdef CAL_BEID
 #include "cardpluginbeid/beidcard.h"
-//#include "cardpluginsis/siscard.h"
-//#include "cardpluginsis/sispluginhandler.h"
 #endif
 #include <vector>
 #include <string>
@@ -175,39 +173,6 @@ namespace eIDMW
 							     poContext,
 							     poPinpad);
 
-			//if (poCard == NULL)
-			//      poCard = SISPluginReadData(strReader, hCard, poContext, poPinpad, oCardPluginLib);
-
-/* SIS support no longer in the CardLayer�, only via the plugins */
-#if SIS_IN_CAL
-
-			if (poCard == NULL
-			    && StartsWith(csReader.c_str(), "ACS ACR38"))
-			{
-#ifdef __APPLE__
-				poContext->m_oPCSC.Disconnect(hCard,
-							      DISCONNECT_RESET_CARD);
-				poCard = SISCardConnectGetInstance
-					(PLUGIN_VERSION, strReader, poContext,
-					 poPinpad);
-#else
-				poCard = SISCardGetInstance(PLUGIN_VERSION,
-							    strReader, hCard,
-							    poContext,
-							    poPinpad);
-#endif
-			}
-#ifdef CAL_EMULATION
-			// Emulated reader doesn't start with "ACS ACR38"
-			if (poCard == NULL)
-				poCard = SISCardGetInstance(PLUGIN_VERSION,
-							    strReader, hCard,
-							    poContext,
-							    poPinpad);
-#endif
-
-#endif // SIS_IN_CAL
-
 #endif // CAL_BEID
 
 #ifndef __APPLE__
@@ -252,28 +217,17 @@ namespace eIDMW
 			}
 
 #ifdef CAL_BEID
-//              if (poCard == NULL)
-//                      poCard = SISPluginReadData(strReader, hCard, poContext, poPinpad, oCardPluginLib);
 
 			if (poCard == NULL)
 				poCard = new CUnknownCard(hCard, poContext,
 							  poPinpad,
 							  CByteArray());
 
-/* SIS support no longer in the CardLayer�, only via the plugins */
-#if SIS_IN_CAL
-			if (poCard == NULL
-			    && StartsWith(csReader.c_str(), "ACS ACR38"))
-				poCard = SISCardConnectGetInstance
-					(PLUGIN_VERSION, strReader, poContext,
-					 poPinpad);
-#endif // SIS_IN_CAL
-
 #endif // CAL_BEID
 
 			// If the card is still not recognized here, then it may as well
 			// be an badly inserted card, so we'll throw the exception that we
-			// caught in the beginnin of this function
+			// caught in the beginning of this function
 			if (poCard == NULL)
 				throw CMWEXCEPTION(lErrCode);
 		}

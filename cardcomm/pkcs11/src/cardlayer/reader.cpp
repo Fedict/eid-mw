@@ -183,8 +183,6 @@ namespace eIDMW
 		{
 			case CARD_BEID:
 				return L"BE eID";;
-			case CARD_SIS:
-				return L"SIS";
 			default:
 				return L"unknown";
 		}

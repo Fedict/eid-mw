@@ -2726,7 +2726,7 @@ CK_RV cal_translate_error(const char *WHERE, long err)
 			return (CKR_DEVICE_ERROR);
 			break;
 
-		/** A card is present but we can't connect in a normal way (e.g. SIS card) */
+		/** A card is present but we can't connect in a normal way*/
 		case EIDMW_ERR_CANT_CONNECT:
 			return (CKR_DEVICE_ERROR);
 			break;
