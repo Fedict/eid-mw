@@ -34,7 +34,7 @@ namespace eIDMW
 	CUnknownCard::CUnknownCard(SCARDHANDLE hCard, CContext * poContext,
 				   CPinpad * poPinpad,
 				   const CByteArray & oData)
-		: CCard(hCard, poContext, poPinpad)
+		: CCard(hCard, poContext, poPinpad, oData, DONT_SELECT_APPLET)
 	{
 	}
 

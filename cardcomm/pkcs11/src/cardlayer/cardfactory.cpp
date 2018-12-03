@@ -24,7 +24,7 @@
 #include "thread.h"
 #include "unknowncard.h"
 #include "common/log.h"
-#include "cardpluginbeid/beidcard.h"
+#include "card.h"
 
 #include <string>
 

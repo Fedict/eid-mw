@@ -481,7 +481,6 @@
     <ClCompile Include="..\src\cardlayer\card.cpp" />
     <ClCompile Include="..\src\cardlayer\cardfactory.cpp" />
     <ClCompile Include="..\src\cardlayer\cardlayer.cpp" />
-    <ClCompile Include="..\src\cardlayer\cardpluginbeid\beidcard.cpp" />
     <ClCompile Include="..\src\cardlayer\cardpluginbeid\beidp15correction.cpp" />
     <ClCompile Include="..\src\cardlayer\cardreaderinfo.cpp" />
     <ClCompile Include="..\src\cardlayer\context.cpp" />
@@ -492,7 +491,6 @@
     <ClCompile Include="..\src\cardlayer\pinpadlib.cpp" />
     <ClCompile Include="..\src\cardlayer\pkcs15.cpp" />
     <ClCompile Include="..\src\cardlayer\pkcs15parser.cpp" />
-    <ClCompile Include="..\src\cardlayer\pkicard.cpp" />
     <ClCompile Include="..\src\cardlayer\reader.cpp" />
     <ClCompile Include="..\src\cardlayer\readersinfo.cpp" />
     <ClCompile Include="..\src\cardlayer\unknowncard.cpp" />
@@ -546,7 +544,6 @@
     <ClInclude Include="..\src\cardlayer\cardfactory.h" />
     <ClInclude Include="..\src\cardlayer\cardlayer.h" />
     <ClInclude Include="..\src\cardlayer\cardlayerconst.h" />
-    <ClInclude Include="..\src\cardlayer\cardpluginbeid\beidcard.h" />
     <ClInclude Include="..\src\cardlayer\cardpluginbeid\beidp15correction.h" />
     <ClInclude Include="..\src\cardlayer\cardreaderinfo.h" />
     <ClInclude Include="..\src\cardlayer\context.h" />
@@ -561,7 +558,6 @@
     <ClInclude Include="..\src\cardlayer\pinpadlib.h" />
     <ClInclude Include="..\src\cardlayer\pkcs15.h" />
     <ClInclude Include="..\src\cardlayer\pkcs15parser.h" />
-    <ClInclude Include="..\src\cardlayer\pkicard.h" />
     <ClInclude Include="..\src\cardlayer\reader.h" />
     <ClInclude Include="..\src\cardlayer\readersinfo.h" />
     <ClInclude Include="..\src\cardlayer\unknowncard.h" />

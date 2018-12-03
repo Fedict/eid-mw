@@ -39,22 +39,38 @@
 #include "p15correction.h"
 #include "dialogs/dialogs.h"
 
+
+#include "beidp15correction.h"
+
+
 #include <stddef.h>
 #include <stdint.h>
 #ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 #include "beid_fuzz.h"
 #endif
+
 namespace eIDMW
 {
+	typedef enum
+	{
+		BELPIC_DF,
+		ID_DF,
+		UNKNOWN_DF,
+	} tBelpicDF;
+
+
 	/** Compatibility version for the entire plugin-relevant API: V1.00 */
 	const unsigned long PLUGIN_VERSION = 100;
 
 	class EIDMW_CAL_API CCard
 	{
 public:
-		CCard(SCARDHANDLE hCard, CContext * poContext,
-		      CPinpad * poPinpad);
-		virtual ~CCard(void);
+		//CCard(SCARDHANDLE hCard, CContext * poContext,  CPinpad * poPinpad);
+		CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad,
+			const CByteArray & oData, tSelectAppletMode selectAppletMode);
+		~CCard(void);
+
+
 
 		/** Find out which card is present and return the appropriate subclass */
 		static CCard *Connect(const std::string & csReader,
@@ -62,8 +78,7 @@ public:
 				      CPinpad * poPinpad);
 
 		/** Disconnect from the card, optionally resetting it */
-		void Disconnect(tDisconnectMode disconnectMode =
-					DISCONNECT_LEAVE_CARD);
+		void Disconnect(tDisconnectMode disconnectMode = DISCONNECT_LEAVE_CARD);
 
 		/** Call SCardStatus() to get the ATR, and return that. */
 		CByteArray GetATR();
@@ -75,20 +90,17 @@ public:
 		bool Status();
 
 		/** Return true if the card reader has a PIN pad */
-		virtual bool IsPinpadReader();
-		virtual std::string GetPinpadPrefix();
+		bool IsPinpadReader();
+		std::string GetPinpadPrefix();
 		/** Return the type of the card. */
 		tCardType GetType() { return m_cardType; };
 		/** Convert the return value of GetSerialNrBytes() to
 		    an std::string, and cache it for further usage */
-		virtual std::string GetSerialNr();
-		/** Return the serial number of the card */
-		virtual CByteArray GetSerialNrBytes();
+		std::string GetSerialNr();
+
 		/** Return a string describing the type of card */
-		virtual std::string GetLabel();
-		/** Return the output of the GET_CARD_DATA command to
-		    the eID card (or nothing if it's not an eID card) */
-		virtual CByteArray GetInfo();
+		std::string GetLabel();
+
 
 		/** Start a transaction on the card. Can be called
 		    recursively, maintains a counter */
@@ -97,37 +109,31 @@ public:
 		    Lock(). */
 		void Unlock();
 
-		virtual void SelectApplication(const CByteArray & oAID);
+		void SelectApplication(const CByteArray & oAID);
 
 		CByteArray ReadFile(const std::string & csPath,
 					    unsigned long ulOffset =
 					    0, unsigned long ulMaxLen =
 					    FULL_FILE, bool bDoNotCache =
 					    false);
-		virtual tCacheInfo GetCacheInfo(const std::string & csPath);
+		tCacheInfo GetCacheInfo(const std::string & csPath);
 
-		virtual CByteArray ReadUncachedFile(const std::string &
-						    csPath,
-						    unsigned long ulOffset =
-						    0,
-						    unsigned long ulMaxLen =
-						    FULL_FILE) = 0;
+		CByteArray ReadUncachedFile(const std::string &csPath,
+						    unsigned long ulOffset = 0,
+						    unsigned long ulMaxLen = FULL_FILE);
 
-		virtual unsigned long PinStatus(const tPin & Pin);
-		virtual bool PinCmd(tPinOperation operation, const tPin & Pin,
+		unsigned long PinStatus(const tPin & Pin);
+		bool PinCmd(tPinOperation operation, const tPin & Pin,
 				    const std::string & csPin1,
 				    const std::string & csPin2,
 				    unsigned long &ulRemaining,
 				    const tPrivKey * pKey = NULL);
 
-		virtual DlgPinUsage PinUsage2Dlg(const tPin & Pin,
-						 const tPrivKey * pKey);
+		DlgPinUsage PinUsage2Dlg(const tPin & Pin, const tPrivKey * pKey);
 
-		virtual unsigned long GetSupportedAlgorithms();
-		virtual unsigned int GetRSAKeySize() = 0;
-		virtual unsigned char GetAppletVersion() = 0;
+		unsigned long GetSupportedAlgorithms();
 
-		virtual CByteArray Sign(const tPrivKey & key,
+		CByteArray Sign(const tPrivKey & key,
 					const tPin & Pin, unsigned long algo,
 					const CByteArray & oData);
 
@@ -149,31 +155,83 @@ public:
 		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
 
 		/* retrieve the correction class for PINs, certificates and private keys */
-		virtual CP15Correction *GetP15Correction();
+		CP15Correction *GetP15Correction();
 
 		SCARDHANDLE m_hCard;
 
+		CByteArray GetSerialNrBytes();
+
+		/** Return the output of the GET_CARD_DATA command to
+		the eID card (or nothing if it's not an eID card) */
+		/** Returns 3 bytes:
+		 *   - the appletversion (1 byte): 0x10, 0x11, 0x20
+		 *   - the global OS version (2 bytes) */
+		CByteArray GetInfo();
+
+		bool LogOff(const tPin & Pin);
+
+		unsigned int GetRSAKeySize();
+		 unsigned char GetAppletVersion();
+
 protected:
 		// How long to wait (msec) before re-sending an APDU when SW12 = 6CXX is returned
-		virtual unsigned long Get6CDelay();
+		 unsigned long Get6CDelay();
 
-		virtual unsigned char Hex2Byte(char cHex);
-		virtual unsigned char Hex2Byte(const std::string & csHex,
-					       unsigned long ulIdx);
-		virtual bool IsDigit(char c);
+		 unsigned char Hex2Byte(char cHex);
+		 unsigned char Hex2Byte(const std::string & csHex, unsigned long ulIdx);
+		 bool IsDigit(char c);
+		std::vector < unsigned long >m_verifiedPINs;
+
+		 CByteArray ReadBinary(unsigned long ulOffset, unsigned long ulLen);
+		 CByteArray UpdateBinary(unsigned long ulOffset, const CByteArray & oData);
+		 unsigned char PinUsage2Pinpad(const tPin & Pin, const tPrivKey * pKey);
+		 DlgPinOperation PinOperation2Dlg(tPinOperation operation);
+
+		 CByteArray MakePinCmd(tPinOperation operation, const tPin & Pin);
+		 CByteArray MakePinBuf(const tPin & Pin, const std::string & csPin, bool bEmptyPin);
+
+		 CByteArray VerifyAndSign(const tPrivKey & key, const tPin & Pin,
+			unsigned long algo, const CByteArray & oData);
+		 void AskPin(tPinOperation operation, const tPin & Pin, std::string & csPin1,
+			std::string & csPin2, const tPrivKey * pKey);
+		 bool AskPinRetry(tPinOperation operation, const tPin & Pin, unsigned long ulRemaining,
+			const tPrivKey * pKey);
 
 		/** Return true if the serial number is present in oData, false otherwise */
 		bool SerialNrPresent(const CByteArray & oData);
 
 	/** If ulExpected is provided and differs from the return code, an MWException is thrown */
-		virtual unsigned long getSW12(const CByteArray & oRespAPDU,
-					      unsigned long ulExpected = 0);
+		 unsigned long getSW12(const CByteArray & oRespAPDU, unsigned long ulExpected = 0);
+
+		bool ShouldSelectApplet(unsigned char ins, unsigned long ulSW12);
+		bool SelectApplet();
+
+		 tBelpicDF getDF(const std::string & csPath, unsigned long &ulOffset);
+		tFileInfo SelectFile(const std::string & csPath, bool bReturnFileInfo = false);
+		 tFileInfo ParseFileInfo(CByteArray & oFCI);
+		CByteArray SelectByPath(const std::string & csPath, bool bReturnFileInfo = false);
+
+		void showPinDialog(tPinOperation operation, const tPin & Pin, std::string & csPin1,
+			std::string & csPin2, const tPrivKey * pKey);
+
+		void SetSecurityEnv(const tPrivKey & key, unsigned long algo, unsigned long ulInputLen);
+		CByteArray SignInternal(const tPrivKey & key, unsigned long algo, const CByteArray & oData,
+			const tPin * pPin = NULL);
 
 		CContext *m_poContext;
 		CPinpad *m_poPinpad;
 		tCardType m_cardType;
 		unsigned long m_ulLockCount;
 		bool m_bSerialNrString;
+		tSelectAppletMode m_selectAppletMode;
+		unsigned long m_ulRemaining;
+		CByteArray m_oCardData;
+		CByteArray m_oSerialNr;
+		unsigned char m_ucAppletVersion;
+		unsigned long m_ul6CDelay;
+
+		CBeidP15Correction p15correction;
+
 #ifdef WIN32
 #pragma warning(push)
 #pragma warning(disable:4251)	// m_csSerialNr does not need to have dll-interface
@@ -187,8 +245,18 @@ protected:
 
 private:
 		// No copies allowed
-		     CCard(const CCard & oCard);
-		      CCard & operator =(const CCard & oCard);
+		CCard(const CCard & oCard);
+		CCard & operator =(const CCard & oCard);
+
+
+		//TODO: waiting to be cleaned up (aka removed)
+		bool CCard::PinCmd_2(tPinOperation operation, const tPin & Pin,
+			const std::string & csPin1,
+			const std::string & csPin2,
+			unsigned long &ulRemaining,
+			const tPrivKey * pKey);
+		tFileInfo CCard::SelectFile_2(const std::string & csPath, bool bReturnFileInfo);
+		CByteArray SelectByPath_2(const std::string & csPath, bool bReturnFileInfo);
 	};
 
 	class CAutoLock
@@ -210,5 +278,13 @@ private:
 		SCARDHANDLE m_hCard;
 	};
 
+	CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
+		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad);
 }
+
+
+
+
+
+
 #endif
