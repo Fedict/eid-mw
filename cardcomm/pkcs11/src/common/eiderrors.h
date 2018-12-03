@@ -111,7 +111,7 @@
 #define EIDMW_ERR_PINPAD               0xe1d00302L
 
 /** A card is present but we can't connect.
- * E.g. no card present, or a synchronous (e.g. SIS card) is
+ * E.g. no card present, or a synchronous card is
  * inserted in the reader, but no 'reader specific card plugin'
  * is available for that reader */
 #define EIDMW_ERR_CANT_CONNECT         0xe1d00303L
