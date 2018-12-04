@@ -21,7 +21,7 @@
 #ifndef BEIDP15CORRECTION_H
 #define BEIDP15CORRECTION_H
 
-#include "../p15correction.h"
+#include "p15correction.h"
 
 namespace eIDMW
 {

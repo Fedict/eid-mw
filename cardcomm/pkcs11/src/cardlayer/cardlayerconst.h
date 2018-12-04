@@ -71,7 +71,6 @@ namespace eIDMW
 	typedef enum
 	{
 		CARD_BEID,
-		CARD_SIS,
 		CARD_UNKNOWN,
 	} tCardType;
 

@@ -183,8 +183,6 @@ namespace eIDMW
 		{
 			case CARD_BEID:
 				return L"BE eID";;
-			case CARD_SIS:
-				return L"SIS";
 			default:
 				return L"unknown";
 		}
@@ -195,7 +193,7 @@ namespace eIDMW
 		if (m_poCard != NULL)
 			Disconnect(DISCONNECT_LEAVE_CARD);
 
-		m_poCard = CardConnect(m_csReader, m_poContext, &m_oPinpad, m_oCardPluginLib);
+		m_poCard = CardConnect(m_csReader, m_poContext, &m_oPinpad);
 		if (m_poCard != NULL)
 		{
 			m_oPKCS15.SetCard(m_poCard);
