@@ -125,6 +125,8 @@
 		6CD1B8C821A5A6570005F6E9 /* certificate_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */; };
 		6CD1B8C921A5A65B0005F6E9 /* certificate_warn.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */; };
 		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.4.6.a */; };
+		8615C60B21B6AE9C00E9DC55 /* beidp15correction.h in Headers */ = {isa = PBXBuildFile; fileRef = 8615C60921B6AE9C00E9DC55 /* beidp15correction.h */; };
+		8615C60C21B6AE9C00E9DC55 /* beidp15correction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8615C60A21B6AE9C00E9DC55 /* beidp15correction.cpp */; };
 		8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */; };
 		86837479186489B6005EE5D7 /* dialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 8683738D186489B5005EE5D7 /* dialogs.h */; };
 		868374CD186489B6005EE5D7 /* language.h in Headers */ = {isa = PBXBuildFile; fileRef = 86837473186489B6005EE5D7 /* language.h */; };
@@ -219,8 +221,6 @@
 		86E3DEE81653EC3F0015B5E1 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC21653EC3F0015B5E1 /* reader.cpp */; };
 		86E3DEE91653EC3F0015B5E1 /* readersinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */; };
 		86E3DEEB1653EC3F0015B5E1 /* unknowncard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */; };
-		86E3DEFC1653ECB10015B5E1 /* beidp15correction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEF01653ECB00015B5E1 /* beidp15correction.cpp */; };
-		86E3DEFD1653ECB10015B5E1 /* beidp15correction.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEF11653ECB00015B5E1 /* beidp15correction.h */; };
 		86E3DF541653EFE60015B5E1 /* asn1.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF251653EFE50015B5E1 /* asn1.h */; };
 		86E3DF551653EFE60015B5E1 /* beid_p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF261653EFE50015B5E1 /* beid_p11.h */; };
 		86E3DF561653EFE60015B5E1 /* cal.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF271653EFE50015B5E1 /* cal.h */; };
@@ -517,6 +517,8 @@
 		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.4.6.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.4.4.6.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBB02530F839352009B751F /* libbeidcommon.4.4.6.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcommon.4.4.6.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.4.6.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcardlayer.4.4.6.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8615C60921B6AE9C00E9DC55 /* beidp15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidp15correction.h; path = cardcomm/pkcs11/src/cardlayer/beidp15correction.h; sourceTree = "<group>"; };
+		8615C60A21B6AE9C00E9DC55 /* beidp15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidp15correction.cpp; path = cardcomm/pkcs11/src/cardlayer/beidp15correction.cpp; sourceTree = "<group>"; };
 		8683738518648918005EE5D7 /* libbeiddialogsmac.4.4.6.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsmac.4.4.6.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp; sourceTree = SOURCE_ROOT; };
 		8683738D186489B5005EE5D7 /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialogs.h; path = cardcomm/pkcs11/src/dialogs/dialogs.h; sourceTree = SOURCE_ROOT; };
@@ -605,8 +607,6 @@
 		86E3DEC21653EC3F0015B5E1 /* reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = reader.cpp; path = cardcomm/pkcs11/src/cardlayer/reader.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readersinfo.cpp; path = cardcomm/pkcs11/src/cardlayer/readersinfo.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unknowncard.cpp; path = cardcomm/pkcs11/src/cardlayer/unknowncard.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEF01653ECB00015B5E1 /* beidp15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidp15correction.cpp; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidp15correction.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEF11653ECB00015B5E1 /* beidp15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidp15correction.h; path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid/beidp15correction.h; sourceTree = SOURCE_ROOT; };
 		86E3DF251653EFE50015B5E1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = cardcomm/pkcs11/src/asn1.h; sourceTree = SOURCE_ROOT; };
 		86E3DF261653EFE50015B5E1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = cardcomm/pkcs11/src/beid_p11.h; sourceTree = SOURCE_ROOT; };
 		86E3DF271653EFE50015B5E1 /* cal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cal.h; path = cardcomm/pkcs11/src/cal.h; sourceTree = SOURCE_ROOT; };
@@ -1055,7 +1055,8 @@
 		7FC5358D0F84B88B00BA96EE /* Cardlayer */ = {
 			isa = PBXGroup;
 			children = (
-				86E3DEED1653ECB00015B5E1 /* cardpluginbeid */,
+				8615C60A21B6AE9C00E9DC55 /* beidp15correction.cpp */,
+				8615C60921B6AE9C00E9DC55 /* beidp15correction.h */,
 				86E3DEA11653EC3E0015B5E1 /* card.h */,
 				86E3DEA21653EC3E0015B5E1 /* cardfactory.h */,
 				86E3DEA31653EC3E0015B5E1 /* cardlayer.h */,
@@ -1131,16 +1132,6 @@
 			);
 			name = libtomcrypt;
 			path = cardcomm/pkcs11/src/common;
-			sourceTree = SOURCE_ROOT;
-		};
-		86E3DEED1653ECB00015B5E1 /* cardpluginbeid */ = {
-			isa = PBXGroup;
-			children = (
-				86E3DEF01653ECB00015B5E1 /* beidp15correction.cpp */,
-				86E3DEF11653ECB00015B5E1 /* beidp15correction.h */,
-			);
-			name = cardpluginbeid;
-			path = cardcomm/pkcs11/src/cardlayer/cardpluginbeid;
 			sourceTree = SOURCE_ROOT;
 		};
 		86E3DF4E1653EFE50015B5E1 /* rsaref220 */ = {
@@ -1221,6 +1212,7 @@
 				86E3DE021653D6210015B5E1 /* hash.h in Headers */,
 				86E3DE091653D6210015B5E1 /* tomcrypt_argchk.h in Headers */,
 				86E3DE0A1653D6210015B5E1 /* tomcrypt_cfg.h in Headers */,
+				8615C60B21B6AE9C00E9DC55 /* beidp15correction.h in Headers */,
 				86E3DE0B1653D6210015B5E1 /* tomcrypt_hash.h in Headers */,
 				86E3DE0C1653D6210015B5E1 /* tomcrypt_macros.h in Headers */,
 				86E3DE0E1653D6210015B5E1 /* log.h in Headers */,
@@ -1264,7 +1256,6 @@
 				86E3DED71653EC3F0015B5E1 /* reader.h in Headers */,
 				86E3DED81653EC3F0015B5E1 /* readersinfo.h in Headers */,
 				86E3DEDA1653EC3F0015B5E1 /* unknowncard.h in Headers */,
-				86E3DEFD1653ECB10015B5E1 /* beidp15correction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1768,6 +1759,7 @@
 				86E3DE1F1653D6210015B5E1 /* thread.cpp in Sources */,
 				86E3DE221653D6210015B5E1 /* tlv.cpp in Sources */,
 				86E3DE241653D6210015B5E1 /* tlvbuffer.cpp in Sources */,
+				8615C60C21B6AE9C00E9DC55 /* beidp15correction.cpp in Sources */,
 				6594447C19A8C29B003ABC24 /* asn1.c in Sources */,
 				86E3DE271653D6210015B5E1 /* util.cpp in Sources */,
 			);
@@ -1791,7 +1783,6 @@
 				86E3DEE81653EC3F0015B5E1 /* reader.cpp in Sources */,
 				86E3DEE91653EC3F0015B5E1 /* readersinfo.cpp in Sources */,
 				86E3DEEB1653EC3F0015B5E1 /* unknowncard.cpp in Sources */,
-				86E3DEFC1653ECB10015B5E1 /* beidp15correction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
