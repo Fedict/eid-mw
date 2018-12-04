@@ -18,7 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-#include "../cardlayerconst.h"
+#include "cardlayerconst.h"
 
 #include "beidp15correction.h"
 

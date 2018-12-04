@@ -51,12 +51,10 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/pinpadlib.cpp \
 	cardlayer/pkcs15.cpp \
 	cardlayer/pkcs15parser.cpp \
-	cardlayer/pkicard.cpp \
 	cardlayer/reader.cpp \
 	cardlayer/readersinfo.cpp \
 	cardlayer/unknowncard.cpp \
-	cardlayer/cardpluginbeid/beidcard.cpp \
-	cardlayer/cardpluginbeid/beidp15correction.cpp
+	cardlayer/beidp15correction.cpp
 
 noinst_HEADERS = \
 	p11.h \
@@ -102,8 +100,7 @@ noinst_HEADERS = \
 	cardlayer/cardfactory.h \
 	cardlayer/pkcs15.h \
 	cardlayer/context.h \
-	cardlayer/cardpluginbeid/beidp15correction.h \
-	cardlayer/cardpluginbeid/beidcard.h \
+	cardlayer/beidp15correction.h \
 	cardlayer/cardreaderinfo.h \
 	cardlayer/pinpadlib.h \
 	cardlayer/pcsc.h \
@@ -113,7 +110,6 @@ noinst_HEADERS = \
 	cardlayer/p15objects.h \
 	cardlayer/p15correction.h \
 	cardlayer/readersinfo.h \
-	cardlayer/pkicard.h \
 	cardlayer/unknowncard.h \
 	cardlayer/reader.h \
 	dialogs/langutil.h \
