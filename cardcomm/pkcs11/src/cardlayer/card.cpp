@@ -1229,7 +1229,7 @@ namespace eIDMW
 			if (m_selectAppletMode == ALW_SELECT_APPLET)
 			{
 				SelectApplet();
-				oResp = SelectByPath_2(csPath, bReturnFileInfo);
+				oResp = SelectByPath(csPath, bReturnFileInfo);
 			}
 			else
 			{
@@ -1252,7 +1252,7 @@ namespace eIDMW
 							SW12ToErr(ulSW12));
 
 					// The file wasn't found in this DF, so let's select by full path
-					oResp = SelectByPath_2(csPath, bReturnFileInfo);
+					oResp = SelectByPath(csPath, bReturnFileInfo);
 				}
 				else
 				{
