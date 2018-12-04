@@ -103,11 +103,7 @@ checks the certificate against the government's Trust Service.
 %setup -n eid-mw-%{version}-%{revision}
 
 %build
-%if 0%{?el6}
-%configure --enable-p11v220
-%else
 %configure --enable-p11v220 --enable-webextension
-%endif
 %{__make} %{?_smp_mflags}
 
 %install
