@@ -319,9 +319,7 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 		std::string oSerialNr = oReader.GetSerialNr();
 		size_t serialNrLen = oSerialNr.size();
 		size_t snoffset = serialNrLen > 16 ? serialNrLen - 16 : 0;
-		size_t snlen =
-			serialNrLen - snoffset >
-			16 ? 16 : serialNrLen - snoffset;
+		size_t snlen = serialNrLen - snoffset > 16 ? 16 : serialNrLen - snoffset;
 		//printf("off = %d, len = %d\n", snoffset, snlen);
 		strcpy_n(pInfo->serialNumber, oSerialNr.c_str() + snoffset,
 			 snlen, ' ');
