@@ -53,7 +53,6 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/pkcs15parser.cpp \
 	cardlayer/reader.cpp \
 	cardlayer/readersinfo.cpp \
-	cardlayer/unknowncard.cpp \
 	cardlayer/beidp15correction.cpp
 
 noinst_HEADERS = \
@@ -110,7 +109,6 @@ noinst_HEADERS = \
 	cardlayer/p15objects.h \
 	cardlayer/p15correction.h \
 	cardlayer/readersinfo.h \
-	cardlayer/unknowncard.h \
 	cardlayer/reader.h \
 	dialogs/langutil.h \
 	dialogs/language.h \
