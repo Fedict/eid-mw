@@ -22,7 +22,6 @@
 
 #include "cardfactory.h"
 #include "thread.h"
-#include "unknowncard.h"
 #include "common/log.h"
 #include "card.h"
 

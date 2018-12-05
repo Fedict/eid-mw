@@ -206,7 +206,6 @@
 		86E3DED51653EC3F0015B5E1 /* pkcs15parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEAF1653EC3E0015B5E1 /* pkcs15parser.h */; };
 		86E3DED71653EC3F0015B5E1 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB11653EC3E0015B5E1 /* reader.h */; };
 		86E3DED81653EC3F0015B5E1 /* readersinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB21653EC3E0015B5E1 /* readersinfo.h */; };
-		86E3DEDA1653EC3F0015B5E1 /* unknowncard.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEB41653EC3E0015B5E1 /* unknowncard.h */; };
 		86E3DEDC1653EC3F0015B5E1 /* card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB61653EC3E0015B5E1 /* card.cpp */; };
 		86E3DEDD1653EC3F0015B5E1 /* cardfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */; };
 		86E3DEDE1653EC3F0015B5E1 /* cardlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */; };
@@ -220,7 +219,6 @@
 		86E3DEE61653EC3F0015B5E1 /* pkcs15parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC01653EC3F0015B5E1 /* pkcs15parser.cpp */; };
 		86E3DEE81653EC3F0015B5E1 /* reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC21653EC3F0015B5E1 /* reader.cpp */; };
 		86E3DEE91653EC3F0015B5E1 /* readersinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */; };
-		86E3DEEB1653EC3F0015B5E1 /* unknowncard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */; };
 		86E3DF541653EFE60015B5E1 /* asn1.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF251653EFE50015B5E1 /* asn1.h */; };
 		86E3DF551653EFE60015B5E1 /* beid_p11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF261653EFE50015B5E1 /* beid_p11.h */; };
 		86E3DF561653EFE60015B5E1 /* cal.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF271653EFE50015B5E1 /* cal.h */; };
@@ -592,7 +590,6 @@
 		86E3DEAF1653EC3E0015B5E1 /* pkcs15parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs15parser.h; path = cardcomm/pkcs11/src/cardlayer/pkcs15parser.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB11653EC3E0015B5E1 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reader.h; path = cardcomm/pkcs11/src/cardlayer/reader.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB21653EC3E0015B5E1 /* readersinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readersinfo.h; path = cardcomm/pkcs11/src/cardlayer/readersinfo.h; sourceTree = SOURCE_ROOT; };
-		86E3DEB41653EC3E0015B5E1 /* unknowncard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unknowncard.h; path = cardcomm/pkcs11/src/cardlayer/unknowncard.h; sourceTree = SOURCE_ROOT; };
 		86E3DEB61653EC3E0015B5E1 /* card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = card.cpp; path = cardcomm/pkcs11/src/cardlayer/card.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardfactory.cpp; path = cardcomm/pkcs11/src/cardlayer/cardfactory.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardlayer.cpp; path = cardcomm/pkcs11/src/cardlayer/cardlayer.cpp; sourceTree = SOURCE_ROOT; };
@@ -606,7 +603,6 @@
 		86E3DEC01653EC3F0015B5E1 /* pkcs15parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pkcs15parser.cpp; path = cardcomm/pkcs11/src/cardlayer/pkcs15parser.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC21653EC3F0015B5E1 /* reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = reader.cpp; path = cardcomm/pkcs11/src/cardlayer/reader.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readersinfo.cpp; path = cardcomm/pkcs11/src/cardlayer/readersinfo.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unknowncard.cpp; path = cardcomm/pkcs11/src/cardlayer/unknowncard.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DF251653EFE50015B5E1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = cardcomm/pkcs11/src/asn1.h; sourceTree = SOURCE_ROOT; };
 		86E3DF261653EFE50015B5E1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = cardcomm/pkcs11/src/beid_p11.h; sourceTree = SOURCE_ROOT; };
 		86E3DF271653EFE50015B5E1 /* cal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cal.h; path = cardcomm/pkcs11/src/cal.h; sourceTree = SOURCE_ROOT; };
@@ -1074,7 +1070,6 @@
 				86E3DEAF1653EC3E0015B5E1 /* pkcs15parser.h */,
 				86E3DEB11653EC3E0015B5E1 /* reader.h */,
 				86E3DEB21653EC3E0015B5E1 /* readersinfo.h */,
-				86E3DEB41653EC3E0015B5E1 /* unknowncard.h */,
 				86E3DEB61653EC3E0015B5E1 /* card.cpp */,
 				86E3DEB71653EC3F0015B5E1 /* cardfactory.cpp */,
 				86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */,
@@ -1088,7 +1083,6 @@
 				86E3DEC01653EC3F0015B5E1 /* pkcs15parser.cpp */,
 				86E3DEC21653EC3F0015B5E1 /* reader.cpp */,
 				86E3DEC31653EC3F0015B5E1 /* readersinfo.cpp */,
-				86E3DEC51653EC3F0015B5E1 /* unknowncard.cpp */,
 			);
 			name = Cardlayer;
 			sourceTree = "<group>";
@@ -1255,7 +1249,6 @@
 				86E3DED51653EC3F0015B5E1 /* pkcs15parser.h in Headers */,
 				86E3DED71653EC3F0015B5E1 /* reader.h in Headers */,
 				86E3DED81653EC3F0015B5E1 /* readersinfo.h in Headers */,
-				86E3DEDA1653EC3F0015B5E1 /* unknowncard.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1782,7 +1775,6 @@
 				86E3DEE61653EC3F0015B5E1 /* pkcs15parser.cpp in Sources */,
 				86E3DEE81653EC3F0015B5E1 /* reader.cpp in Sources */,
 				86E3DEE91653EC3F0015B5E1 /* readersinfo.cpp in Sources */,
-				86E3DEEB1653EC3F0015B5E1 /* unknowncard.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
