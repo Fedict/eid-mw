@@ -50,9 +50,9 @@ static const tFileInfo PREFS_FILE_INFO_V2 = { -1, -1, 0x85 };
 namespace eIDMW
 {
 
-	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, bool bCardSupported)
-		: m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad),m_cardType(CARD_BEID), m_ulLockCount(0),
-			m_bSerialNrString(false), m_ucCLA(0), m_ul6CDelay(0), m_selectAppletMode(selectAppletMode),m_bCardSupported(bCardSupported), m_ulRemaining(1)
+	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
+		: m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad), m_ulLockCount(0), m_cardType(cardType),
+			m_bSerialNrString(false), m_ucCLA(0), m_ul6CDelay(0), m_selectAppletMode(selectAppletMode), m_ulRemaining(1)
 	{
 		try
 		{
@@ -376,7 +376,7 @@ namespace eIDMW
 	CCard * UnknownCardGetInstance(unsigned long ulVersion, const char *csReader,
 		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad)
 	{
-		CCard *poCard = new CCard(hCard, poContext, poPinpad, DONT_SELECT_APPLET, false);
+		CCard *poCard = new CCard(hCard, poContext, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
 
 		return poCard;
 	}
@@ -427,11 +427,11 @@ namespace eIDMW
 				if (bIsBeidCard)
 				{
 					poCard = new CCard(hCard, poContext, poPinpad,
-						bNeedToSelectApplet ? ALW_SELECT_APPLET : TRY_SELECT_APPLET, true);
+						bNeedToSelectApplet ? ALW_SELECT_APPLET : TRY_SELECT_APPLET, CARD_BEID);
 				}
 				else
 				{
-					poCard = new CCard(hCard, poContext, poPinpad, DONT_SELECT_APPLET, false);
+					poCard = new CCard(hCard, poContext, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
 				}
 				if (ulLockCount)
 				{

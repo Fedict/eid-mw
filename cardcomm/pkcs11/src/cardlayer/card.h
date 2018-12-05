@@ -67,7 +67,7 @@ namespace eIDMW
 public:
 		//CCard(SCARDHANDLE hCard, CContext * poContext,  CPinpad * poPinpad);
 		CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad,
-			tSelectAppletMode selectAppletMode, bool bCardSupported);
+			tSelectAppletMode selectAppletMode, tCardType cardType);
 		~CCard(void);
 
 		/** Find out which card is present and return the appropriate subclass */
@@ -244,8 +244,6 @@ private:
 		CCard(const CCard & oCard);
 		CCard & operator =(const CCard & oCard);
 
-
-		bool m_bCardSupported;
 		//TODO: waiting to be cleaned up (aka removed)
 		bool PinCmd_2(tPinOperation operation, const tPin & Pin,
 			const std::string & csPin1,
