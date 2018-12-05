@@ -67,15 +67,11 @@ namespace eIDMW
 public:
 		//CCard(SCARDHANDLE hCard, CContext * poContext,  CPinpad * poPinpad);
 		CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad,
-			const CByteArray & oData, tSelectAppletMode selectAppletMode);
+			tSelectAppletMode selectAppletMode, bool bCardSupported);
 		~CCard(void);
 
-
-
 		/** Find out which card is present and return the appropriate subclass */
-		static CCard *Connect(const std::string & csReader,
-				      CContext * poContext,
-				      CPinpad * poPinpad);
+		static CCard *Connect(const std::string & csReader, CContext * poContext, CPinpad * poPinpad);
 
 		/** Disconnect from the card, optionally resetting it */
 		void Disconnect(tDisconnectMode disconnectMode = DISCONNECT_LEAVE_CARD);
@@ -249,6 +245,7 @@ private:
 		CCard & operator =(const CCard & oCard);
 
 
+		bool m_bCardSupported;
 		//TODO: waiting to be cleaned up (aka removed)
 		bool PinCmd_2(tPinOperation operation, const tPin & Pin,
 			const std::string & csPin1,
@@ -279,6 +276,9 @@ private:
 	};
 
 	CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
+		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad);
+
+	CCard *UnknownCardGetInstance(unsigned long ulVersion, const char *csReader,
 		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad);
 }
 

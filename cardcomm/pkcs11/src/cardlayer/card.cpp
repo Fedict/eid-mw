@@ -23,7 +23,6 @@
 #include "common/log.h"
 #include "common/thread.h"
 #include "pinpad2.h"
-#include "unknowncard.h"
 
 #ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 static std::string fuzz_path = "";
@@ -51,9 +50,9 @@ static const tFileInfo PREFS_FILE_INFO_V2 = { -1, -1, 0x85 };
 namespace eIDMW
 {
 
-	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, const CByteArray & oData, tSelectAppletMode selectAppletMode)
+	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, bool bCardSupported)
 		: m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad),m_cardType(CARD_BEID), m_ulLockCount(0),
-			m_bSerialNrString(false), m_ucCLA(0), m_ul6CDelay(0), m_selectAppletMode(DONT_SELECT_APPLET), m_ulRemaining(1)
+			m_bSerialNrString(false), m_ucCLA(0), m_ul6CDelay(0), m_selectAppletMode(selectAppletMode),m_bCardSupported(bCardSupported), m_ulRemaining(1)
 	{
 		try
 		{
@@ -71,7 +70,6 @@ namespace eIDMW
 			{
 				m_ul6CDelay = 50;
 			}
-			m_selectAppletMode = selectAppletMode;
 		}
 		catch (CMWException &e)
 		{
@@ -85,7 +83,7 @@ namespace eIDMW
 		}
 	}
 
-	CCard::  ~CCard(void)
+	CCard::~CCard(void)
 	{
 		Disconnect(DISCONNECT_LEAVE_CARD);
 	}
@@ -375,6 +373,14 @@ namespace eIDMW
 			&& (oResp.GetByte(0) == 0x61 || oResp.GetByte(0) == 0x90));
 	}
 
+	CCard * UnknownCardGetInstance(unsigned long ulVersion, const char *csReader,
+		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad)
+	{
+		CCard *poCard = new CCard(hCard, poContext, poPinpad, DONT_SELECT_APPLET, false);
+
+		return poCard;
+	}
+
 	CCard * BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
 		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad)
 	{
@@ -388,8 +394,7 @@ namespace eIDMW
 				bool bNeedToSelectApplet = false;
 				CByteArray oData;
 				CByteArray oCmd(40);
-				unsigned char tucSelectApp[] =
-				{ 0x00, 0xA4, 0x04, 0x0C };
+				unsigned char tucSelectApp[] = { 0x00, 0xA4, 0x04, 0x0C };
 				oCmd.Append(tucSelectApp, sizeof(tucSelectApp));
 				oCmd.Append((unsigned char) sizeof(BELPIC_AID));
 				oCmd.Append(BELPIC_AID, sizeof(BELPIC_AID));
@@ -402,7 +407,6 @@ namespace eIDMW
 				poContext->m_oPCSC.BeginTransaction(hCard);
 				oData = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
 				if (lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED)
-
 				{
 					poContext->m_oPCSC.Recover(hCard, &ulLockCount);
 					bNeedToSelectApplet = BeidCardSelectApplet(poContext, hCard);
@@ -422,34 +426,13 @@ namespace eIDMW
 				bool bIsBeidCard = oData.Size() == 2 && oData.GetByte(0) == 0x90 && oData.GetByte(1) == 0x00;
 				if (bIsBeidCard)
 				{
-					poCard = new CCard(hCard, poContext, poPinpad, oData, bNeedToSelectApplet ? ALW_SELECT_APPLET : TRY_SELECT_APPLET);
+					poCard = new CCard(hCard, poContext, poPinpad,
+						bNeedToSelectApplet ? ALW_SELECT_APPLET : TRY_SELECT_APPLET, true);
 				}
-#ifdef __APPLE__
 				else
 				{
-
-					// On Mac, if an unknown asynchronous card is inserted,
-					// we don't return NULL but a CUnknownCard instance.
-					// Reason: if we return NULL then the SISCardPlugin who
-					// will be consulted next in card of a ACR38U reader
-					// causes the reader/driver to get in a strange state
-					// (if no SIS card is present) and if then a CUnknownCard
-					// is instantiated, it will throw an exception if e.g.
-					// SCardStatus() is called.
-					// Remark: this trick won't work if synchronous card
-					// (other then the SIS card is inserted).
-					if (ulLockCount)
-
-					{
-						poContext->m_oPCSC.
-							EndTransaction(hCard);
-					}
-					return new CUnknownCard(hCard, poContext,
-						poPinpad,
-						CByteArray());
+					poCard = new CCard(hCard, poContext, poPinpad, DONT_SELECT_APPLET, false);
 				}
-
-#endif	/*  */
 				if (ulLockCount)
 				{
 					poContext->m_oPCSC.EndTransaction(hCard);

@@ -75,25 +75,10 @@ namespace eIDMW
 		if (hCard != 0)
 		{
 			// 1. A card is present and we could connect to it via a normal SCardConnect()
-
 			if (poCard == NULL)
 			{
 				poCard = BeidCardGetInstance(PLUGIN_VERSION, strReader, hCard, poContext, poPinpad);
 			}
-
-#ifndef __APPLE__
-			// If no other CCard subclass could be found
-			if (poCard == NULL)
-			{
-				poCard = new CUnknownCard(hCard, poContext, poPinpad, CByteArray());
-			}
-#else
-			// On Mac OS X, SCardConnect() always works when reading a SIS card on an ACR38U,
-			// but not the following SCardTransmit() to read out the data. So we set hCard
-			// to 0 which will cause SISCardConnectGetInstance() below to first switch to
-			// the correct mode to read out the SIS card.
-			hCard = 0;
-#endif
 		}
 
 		if (hCard == 0)
@@ -102,7 +87,7 @@ namespace eIDMW
 
 			if (poCard == NULL)
 			{
-				poCard = new CUnknownCard(hCard, poContext, poPinpad, CByteArray());
+				poCard = UnknownCardGetInstance(PLUGIN_VERSION, strReader, hCard, poContext, poPinpad);
 			}
 
 			// If the card is still not recognized here, then it may as well
