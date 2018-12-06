@@ -596,7 +596,6 @@
     <ClInclude Include="..\src\dialogs\dialogswin32\stdafx.h" />
     <ClInclude Include="..\src\dialogs\language.h" />
     <ClInclude Include="..\src\dialogs\langutil.h" />
-    <ClInclude Include="..\src\log.h" />
     <ClInclude Include="..\src\p11.h" />
     <ClInclude Include="..\src\phash.h" />
     <ClInclude Include="..\src\include\rsaref220\pkcs11t.h" />
