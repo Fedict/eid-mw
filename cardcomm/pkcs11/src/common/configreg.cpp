@@ -83,8 +83,7 @@ Search the first occurence of the $-sign, retrieve the $-string, replace with th
 		basic_string < char >::size_type iTotLenght =
 			czSectionOriginal.length();
 		basic_string < char >::size_type iStrLenght;
-		wchar_t wsSectionCustom[256];
-
+		wchar_t wsSectionCustom[MAX_PATH];
 
 		//--- Find if anything to expand
 		if ((iTotLenght == 0) || (czSectionOriginal[0] != '$'))
