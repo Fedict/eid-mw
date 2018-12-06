@@ -502,7 +502,7 @@ namespace eIDMW
 	}
 
 // CByteArray::HideNewLineCharsA()
-	void CByteArray::HideNewLineCharsA()
+/*	void CByteArray::HideNewLineCharsA()
 	{
 
 		unsigned long noOfSpecials = 0;
@@ -544,9 +544,9 @@ namespace eIDMW
 		m_ulSize = theNewSize;
 
 	}
-
+	*/
 // CByteArray::RevealNewLineCharsA()
-	void CByteArray::RevealNewLineCharsA()
+/*	void CByteArray::RevealNewLineCharsA()
 	{
 
 		unsigned char *src = m_pucData;
@@ -566,7 +566,7 @@ namespace eIDMW
 		m_ulSize -= noOfSpecials;
 
 	}
-
+	*/
 	void CByteArray::Replace(unsigned char ucByteSrc,
 				 unsigned char ucByteDest)
 	{

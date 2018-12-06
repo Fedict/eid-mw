@@ -107,8 +107,8 @@ public:
 		// Any embedded new line character is replaced with an escape character and an 
 		// encoded newline character. So, '\n' becomes '0x271a'.
 		// To allow for embedded escape characters, '0x27' becomes '0x2737'.
-		void HideNewLineCharsA();
-		void RevealNewLineCharsA();
+		//void HideNewLineCharsA();
+		//void RevealNewLineCharsA();
 
 private:
 		void MakeArray(const unsigned char *pucData,
