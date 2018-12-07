@@ -36,11 +36,7 @@
 #include "common/hash.h"
 #include "common/util.h"
 #include "pinpad.h"
-#include "p15correction.h"
 #include "dialogs/dialogs.h"
-
-
-#include "beidp15correction.h"
 
 
 #include <stddef.h>
@@ -146,9 +142,6 @@ public:
 					    const CByteArray & oData);
 		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
 
-		/* retrieve the correction class for PINs, certificates and private keys */
-		CP15Correction *GetP15Correction();
-
 		SCARDHANDLE m_hCard;
 
 		CByteArray GetSerialNrBytes();
@@ -221,8 +214,6 @@ protected:
 		CByteArray m_oSerialNr;
 		unsigned char m_ucAppletVersion;
 		unsigned long m_ul6CDelay;
-
-		CBeidP15Correction p15correction;
 
 #ifdef WIN32
 #pragma warning(push)

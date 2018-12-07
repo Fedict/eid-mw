@@ -569,11 +569,6 @@ namespace eIDMW
 		return ulAlgos;
 	}
 
-	CP15Correction * CCard::GetP15Correction()
-	{
-		return &p15correction;
-	}
-
 	tFileInfo CCard::ParseFileInfo(CByteArray & oFCI)
 	{
 		// We should never come here
