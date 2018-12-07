@@ -123,7 +123,7 @@ libeidviewer_la_LIBADD = $(top_builddir)/plugins_tools/util/liblabels.la $(top_b
 libeidviewer_la_LDFLAGS = -version-info 1:0:1
 AM_CFLAGS = @GTK_CFLAGS@ -I. -I$(srcdir)/include -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@ -fvisibility=hidden @FUZZING@
 AM_CXXFLAGS = $(AM_CFLAGS) -std=c++98
-SUBDIRS = . gtk/po test
+SUBDIRS = . gtk/po test uml
 
 resources/%.c: resources/%.png
 	echo -e "#include <gdk-pixbuf/gdk-pixdata.h>\n#if __GNUC__ >= 4\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wpointer-sign\"\n#endif\n" > $@

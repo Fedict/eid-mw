@@ -1,0 +1,815 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+namespace eIDMW {
+	class CAutoLock {
+		+CAutoLock(CCard* poCard)
+		+CAutoLock(CPCSC* poPCSC, SCARDHANDLE hCard)
+		+~CAutoLock()
+		-m_poCard : CCard*
+		-m_poPCSC : CPCSC*
+		-m_hCard : SCARDHANDLE
+	}
+}
+
+
+namespace eIDMW {
+	class CBeidP15Correction {
+		+CheckCerts(std::vector< tCert>& certVector) : void
+		+CheckPINs(std::vector< tPin>& pinVector) : void
+		+CheckPrKeys(std::vector< tPrivKey>& keyVector) : void
+	}
+}
+
+
+namespace eIDMW {
+	class CCard {
+		-CCard(const CCard& oCard)
+		+CCard(SCARDHANDLE hCard, CContext* poContext, CPinpad* poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
+		+~CCard(void)
+		#p15correction : CBeidP15Correction
+		+GetATR() : CByteArray
+		+GetIFDVersion() : CByteArray
+		+GetInfo() : CByteArray
+		+GetSerialNrBytes() : CByteArray
+		#MakePinBuf(const tPin& Pin, const std::string& csPin, bool bEmptyPin) : CByteArray
+		#MakePinCmd(tPinOperation operation, const tPin& Pin) : CByteArray
+		#ReadBinary(unsigned long ulOffset, unsigned long ulLen) : CByteArray
+		+ReadFile(const std::string& csPath, unsigned long ulOffset, unsigned long ulMaxLen, bool bDoNotCache) : CByteArray
+		+ReadUncachedFile(const std::string& csPath, unsigned long ulOffset, unsigned long ulMaxLen) : CByteArray
+		#SelectByPath(const std::string& csPath, bool bReturnFileInfo) : CByteArray
+		-SelectByPath_2(const std::string& csPath, bool bReturnFileInfo) : CByteArray
+		+SendAPDU(unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, unsigned long ulOutLen) : CByteArray
+		+SendAPDU(unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, const CByteArray& oData) : CByteArray
+		+SendAPDU(const CByteArray& oCmdAPDU) : CByteArray
+		+Sign(const tPrivKey& key, const tPin& Pin, unsigned long algo, const CByteArray& oData) : CByteArray
+		#SignInternal(const tPrivKey& key, unsigned long algo, const CByteArray& oData, const tPin* pPin) : CByteArray
+		#UpdateBinary(unsigned long ulOffset, const CByteArray& oData) : CByteArray
+		#VerifyAndSign(const tPrivKey& key, const tPin& Pin, unsigned long algo, const CByteArray& oData) : CByteArray
+		#m_oCardData : CByteArray
+		#m_oSerialNr : CByteArray
+		-operator=(const CCard& oCard) : CCard&
+		+{static} Connect(const std::string& csReader, CContext* poContext, CPinpad* poPinpad) : CCard*
+		#m_poContext : CContext*
+		+GetP15Correction() : CP15Correction*
+		#m_poPinpad : CPinpad*
+		#PinOperation2Dlg(tPinOperation operation) : DlgPinOperation
+		+PinUsage2Dlg(const tPin& Pin, const tPrivKey* pKey) : DlgPinUsage
+		+m_hCard : SCARDHANDLE
+		#AskPinRetry(tPinOperation operation, const tPin& Pin, unsigned long ulRemaining, const tPrivKey* pKey) : bool
+		#IsDigit(char c) : bool
+		+IsPinpadReader() : bool
+		+LogOff(const tPin& Pin) : bool
+		+PinCmd(tPinOperation operation, const tPin& Pin, const std::string& csPin1, const std::string& csPin2, unsigned long& ulRemaining, const tPrivKey* pKey) : bool
+		-PinCmd_2(tPinOperation operation, const tPin& Pin, const std::string& csPin1, const std::string& csPin2, unsigned long& ulRemaining, const tPrivKey* pKey) : bool
+		#SelectApplet() : bool
+		#SerialNrPresent(const CByteArray& oData) : bool
+		#ShouldSelectApplet(unsigned char ins, unsigned long ulSW12) : bool
+		+Status() : bool
+		#m_bSerialNrString : bool
+		#getDF(const std::string& csPath, unsigned long& ulOffset) : int
+		+GetLabel() : std::string
+		+GetPinpadPrefix() : std::string
+		+GetSerialNr() : std::string
+		#m_csSerialNr : std::string
+		#>m_verifiedPINs : std::vector< unsigned long
+		+GetCacheInfo(const std::string& csPath) : tCacheInfo
+		+GetType() : tCardType
+		#m_cardType : tCardType
+		#ParseFileInfo(CByteArray& oFCI) : tFileInfo
+		#SelectFile(const std::string& csPath, bool bReturnFileInfo) : tFileInfo
+		-SelectFile_2(const std::string& csPath, bool bReturnFileInfo) : tFileInfo
+		#m_selectAppletMode : tSelectAppletMode
+		+GetAppletVersion() : unsigned char
+		#Hex2Byte(char cHex) : unsigned char
+		#Hex2Byte(const std::string& csHex, unsigned long ulIdx) : unsigned char
+		#PinUsage2Pinpad(const tPin& Pin, const tPrivKey* pKey) : unsigned char
+		#m_ucAppletVersion : unsigned char
+		#m_ucCLA : unsigned char
+		+GetRSAKeySize() : unsigned int
+		#Get6CDelay() : unsigned long
+		+GetSupportedAlgorithms() : unsigned long
+		+PinStatus(const tPin& Pin) : unsigned long
+		#getSW12(const CByteArray& oRespAPDU, unsigned long ulExpected) : unsigned long
+		#m_ul6CDelay : unsigned long
+		#m_ulLockCount : unsigned long
+		#m_ulRemaining : unsigned long
+		#AskPin(tPinOperation operation, const tPin& Pin, std::string& csPin1, std::string& csPin2, const tPrivKey* pKey) : void
+		+Disconnect(tDisconnectMode disconnectMode) : void
+		+Lock() : void
+		+SelectApplication(const CByteArray& oAID) : void
+		#SetSecurityEnv(const tPrivKey& key, unsigned long algo, unsigned long ulInputLen) : void
+		+Unlock() : void
+		#showPinDialog(tPinOperation operation, const tPin& Pin, std::string& csPin1, std::string& csPin2, const tPrivKey* pKey) : void
+	}
+}
+
+
+namespace eIDMW {
+	class CCardLayer {
+		-CCardLayer(const CCardLayer& oCardLayer)
+		+CCardLayer(void)
+		+~CCardLayer(void)
+		-operator=(const CCardLayer& oCardLayer) : CCardLayer&
+		-m_oContext : CContext
+		+getReader(const std::string& csReaderName) : CReader&
+		-m_tpReaders : CReader*
+		+ListReaders() : CReadersInfo
+		+GetStatusChange(unsigned long ulTimeout, SCARD_READERSTATEA* txReaderStates, unsigned long ulReaderCount) : long
+		+PCSCServiceRunning(bool* pRunning) : long
+		-m_szDefaultReaderName : std::string
+		-GetDefaultReader() : std::string*
+		-m_ulReaderCount : unsigned long
+		+CancelActions() : void
+		+ForceRelease() : void
+		+PCSCReEstablishContext() : void
+	}
+}
+
+
+namespace eIDMW {
+	class CCardReaderInfo {
+		-CCardReaderInfo(void)
+		+{static} GetCardReaderInfo(void) : CCardReaderInfo*
+		+GetNoOfReaders(void) : int
+		-m_NoOfReaders : int
+		-{static} m_CardReaderInfo : static CCardReaderInfo*
+		+CollectInfo(void) : void
+	}
+}
+
+
+namespace eIDMW {
+	class CContext {
+		+CContext()
+		+~CContext()
+		+m_oPCSC : CPCSC
+		+m_bSSO : bool
+		+m_ulConnectionDelay : unsigned long
+	}
+}
+
+
+namespace eIDMW {
+	abstract class CP15Correction {
+		+CheckCerts(std::vector< tCert>& certVector) : void
+		+{abstract} CheckPINs(std::vector< tPin>& pinVector) : void
+		+{abstract} CheckPrKeys(std::vector< tPrivKey>& keyVector) : void
+		+{abstract} CP15Correction() : ~
+	}
+}
+
+
+namespace eIDMW {
+	class CPCSC {
+		+CPCSC(void)
+		+~CPCSC(void)
+		+Control(SCARDHANDLE hCard, unsigned long ulControl, const CByteArray& oCmd, unsigned long ulMaxResponseSize) : CByteArray
+		+GetATR(SCARDHANDLE hCard) : CByteArray
+		+GetIFDVersion(SCARDHANDLE hCard) : CByteArray
+		+ListReaders() : CByteArray
+		+Transmit(SCARDHANDLE hCard, const CByteArray& oCmdAPDU, long* plRetVal, void* pSendPci, void* pRecvPci) : CByteArray
+		+GetContext() : SCARDCONTEXT
+		-m_hContext : SCARDCONTEXT
+		+Connect(const std::string& csReader, unsigned long ulShareMode, unsigned long ulPreferredProtocols) : SCARDHANDLE
+		+GetStatusChange(unsigned long ulTimeout, tReaderInfo* pReaderInfos, unsigned long ulReaderCount) : bool
+		+Status(const std::string& csReader) : bool
+		+Status(SCARDHANDLE hCard) : bool
+		-m_iListReadersCount : int
+		-m_iTimeoutCount : int
+		+GetTheStatusChange(unsigned long ulTimeout, SCARD_READERSTATEA* txReaderStates, unsigned long ulReaderCount) : long
+		-PcscToErr(unsigned long lRet) : long
+		+SW12ToErr(unsigned long ulSW12) : long
+		-m_ulCardTxDelay : unsigned long
+		+BeginTransaction(SCARDHANDLE hCard) : void
+		+Cancel() : void
+		+Disconnect(SCARDHANDLE hCard, tDisconnectMode disconnectMode) : void
+		+EndTransaction(SCARDHANDLE hCard) : void
+		+EstablishContext() : void
+		+Recover(SCARDHANDLE hCard, unsigned long* pulLockCount) : void
+		+ReleaseContext() : void
+	}
+}
+
+
+namespace eIDMW {
+	class CPKCS15 {
+		+CPKCS15(void)
+		+~CPKCS15(void)
+		-m_poCard : CCard*
+		-m_poParser : PKCS15Parser*
+		+GetCardLabel() : std::string
+		+GetSerialNr() : std::string
+		-m_csLabel : std::string
+		-m_csSerial : std::string
+		-m_oCertificates : std::vector< tCert>
+		-m_oPins : std::vector< tPin>
+		-m_oPrKeys : std::vector< tPrivKey>
+		+GetCert(unsigned long ulIndex) : tCert
+		+GetCertByID(unsigned long ulID) : tCert
+		-m_tDir : tDirInfo
+		-m_xAODF : tPKCSFile
+		-m_xCDF : tPKCSFile
+		-m_xCert : tPKCSFile
+		-m_xDir : tPKCSFile
+		-m_xODF : tPKCSFile
+		-m_xPin : tPKCSFile
+		-m_xPrKDF : tPKCSFile
+		-m_xPrKey : tPKCSFile
+		-m_xPuKDF : tPKCSFile
+		-m_xTokenInfo : tPKCSFile
+		+GetPin(unsigned long ulIndex) : tPin
+		+GetPinByID(unsigned long ulID) : tPin
+		+GetPinByRef(unsigned long ulPinRef) : tPin
+		+GetPrivKey(unsigned long ulIndex) : tPrivKey
+		+GetPrivKeyByID(unsigned long ulID) : tPrivKey
+		+CertCount() : unsigned long
+		+PinCount() : unsigned long
+		+PrivKeyCount() : unsigned long
+		+Clear(CCard* poCard) : void
+		-ReadFile(tPKCSFile* pFile, int upperLevel) : void
+		-ReadLevel1() : void
+		-ReadLevel2(tPKCSFileName name) : void
+		-ReadLevel3(tPKCSFileName name) : void
+		+SetCard(CCard* poCard) : void
+	}
+}
+
+
+namespace eIDMW {
+	class CPinpad {
+		+CPinpad(void)
+		+PinCmd(tPinOperation operation, const tPin& pin, unsigned char ucPinType, const CByteArray& oAPDU, unsigned long& ulRemaining) : CByteArray
+		#PinCmd1(tPinOperation operation, const tPin& pin, unsigned char ucPinType, const CByteArray& oAPDU, unsigned long& ulRemaining) : CByteArray
+		#PinCmd2(tPinOperation operation, const tPin& pin, unsigned char ucPinType, const CByteArray& oAPDU, unsigned long& ulRemaining) : CByteArray
+		#PinpadControl(unsigned long ulControl, const CByteArray& oCmd, tPinOperation operation, unsigned char ucPintype, const std::string& csPinLabel, bool bShowDlg) : CByteArray
+		#PinpadPPDU(BYTE cbControl, const CByteArray& oCmd, tPinOperation operation, unsigned char ucPintype, const std::string& csPinLabel, bool bShowDlg) : CByteArray
+		#m_poContext : CContext*
+		#m_oPinpadLib : CPinpadLib
+		#m_hCard : SCARDHANDLE
+		+UsePinpad(tPinOperation operation) : bool
+		#m_bCanChangeUnlock : bool
+		#m_bCanUsePPDU : bool
+		#m_bCanVerifyUnlock : bool
+		#m_bNewCard : bool
+		#m_bUsePinpadLib : bool
+		#m_csPinpadPrefix : std::string
+		#m_csReader : std::string
+		#GetMaxPinLen(const tPin& pin) : unsigned char
+		#PinOperation2Lib(tPinOperation operation) : unsigned char
+		#ToFormatString(const tPin& pin) : unsigned char
+		#ToPinBlockString(const tPin& pin) : unsigned char
+		#ToPinLengthFormat(const tPin& pin) : unsigned char
+		#GetLanguage() : unsigned long
+		#m_ioctlChangeDirect : unsigned long
+		#m_ioctlChangeFinish : unsigned long
+		#m_ioctlChangeStart : unsigned long
+		#m_ioctlVerifyDirect : unsigned long
+		#m_ioctlVerifyFinish : unsigned long
+		#m_ioctlVerifyStart : unsigned long
+		#m_ulLangCode : unsigned long
+		#m_usReaderFirmVers : unsigned short
+		#GetFeatureList() : void
+		#GetPPDUFeatureList() : void
+		+Init(CContext* poContext, SCARDHANDLE hCard, const std::string& csReader, const std::string& csPinpadPrefix) : void
+		+Init(CContext* poContext, SCARDHANDLE hCard, const std::string& csReader, const std::string& csPinpadPrefix, CByteArray usReaderFirmVers) : void
+		#UnloadPinpadLib() : void
+	}
+}
+
+
+namespace eIDMW {
+	class CReader {
+		-CReader(const std::string& csReader, CContext* poContext)
+		-CReader(const CReader& oReader)
+		+~CReader(void)
+		+GetATR() : CByteArray
+		+GetInfo() : CByteArray
+		+ReadFile(const std::string& csPath, unsigned long ulOffset, unsigned long ulMaxLen, bool bDoNotCache) : CByteArray
+		+SendAPDU(const CByteArray& oCmdAPDU) : CByteArray
+		+Sign(const tPrivKey& key, unsigned long algo, const CByteArray& oData) : CByteArray
+		-m_poCard : CCard*
+		-m_poContext : CContext*
+		-m_oPKCS15 : CPKCS15
+		-m_oPinpad : CPinpad
+		-operator=(const CReader& oReader) : CReader&
+		+GetPinUsage(const tPin& pin) : PinUsage
+		+{static} CardPresent(unsigned long ulState) : bool
+		+Connect() : bool
+		+IsPinpadReader() : bool
+		+PinCmd(tPinOperation operation, const tPin& Pin, const std::string& csPin1, const std::string& csPin2, unsigned long& ulRemaining) : bool
+		-m_bIgnoreRemoval : bool
+		+GetCardLabel() : std::string
+		+GetSerialNr() : std::string
+		-m_csReader : std::string
+		+GetReaderName() : std::string&
+		-m_wsReader : std::wstring
+		+Status(bool bReconnect) : tCardStatus
+		+GetCardType() : tCardType
+		+GetCert(unsigned long ulIndex) : tCert
+		+GetCertByID(unsigned long ulID) : tCert
+		+GetPin(unsigned long ulIndex) : tPin
+		+GetPinByID(unsigned long ulID) : tPin
+		+GetPrivKey(unsigned long ulIndex) : tPrivKey
+		+GetPrivKeyByID(unsigned long ulID) : tPrivKey
+		+GetAppletVersion() : unsigned char
+		+GetRSAKeySize() : unsigned int
+		+CertCount() : unsigned long
+		+GetSupportedAlgorithms() : unsigned long
+		+PinCount() : unsigned long
+		+PinStatus(const tPin& Pin) : unsigned long
+		+PrivKeyCount() : unsigned long
+		+Disconnect(tDisconnectMode disconnectMode) : void
+		+Lock() : void
+		+SelectApplication(const CByteArray& oAID) : void
+		+Unlock() : void
+	}
+}
+
+
+namespace eIDMW {
+	class CReadersInfo {
+		-CReadersInfo(const CByteArray& oReaders)
+		+CReadersInfo()
+		+CardPresent(unsigned long ulIndex) : bool
+		+GetReaderStates(SCARD_READERSTATEA* txReaderStates, unsigned long length, unsigned long* ulnReaders) : bool
+		+IsFirstTime(void) : bool
+		+ReaderStateChanged(unsigned long ulIndex) : bool
+		+SameList(CReadersInfo* newReadersInfo) : bool
+		+UpdateReaderStates(SCARD_READERSTATEA* txReaderStates, unsigned long ulnReaders) : bool
+		-bFirstTime : bool
+		+ReaderName(unsigned long ulIndex) : std::string
+		-m_tInfos : tReaderInfo
+		+ReaderCount() : unsigned long
+		-m_ulReaderCount : unsigned long
+		+FreeReaderStates(SCARD_READERSTATEA* txReaderStates, unsigned long ulnReaders) : void
+		+SetFirstTime(bool firstTime) : void
+	}
+}
+
+
+class EIDMW_PP_CHANGE_CCID {
+	+abData : unsigned char
+	+bConfirmPIN : unsigned char
+	+bEntryValidationCondition : unsigned char
+	+bInsertionOffsetNew : unsigned char
+	+bInsertionOffsetOld : unsigned char
+	+bMsgIndex1 : unsigned char
+	+bMsgIndex2 : unsigned char
+	+bMsgIndex3 : unsigned char
+	+bNumberMessage : unsigned char
+	+bTeoPrologue : unsigned char
+	+bTimerOut : unsigned char
+	+bTimerOut2 : unsigned char
+	+bmFormatString : unsigned char
+	+bmPINBlockString : unsigned char
+	+bmPINLengthFormat : unsigned char
+	+ulDataLength : unsigned char
+	+wLangId : unsigned char
+	+wPINMaxExtraDigit : unsigned char
+}
+
+
+class EIDMW_PP_VERIFY_CCID {
+	+abData : unsigned char
+	+bEntryValidationCondition : unsigned char
+	+bMsgIndex : unsigned char
+	+bNumberMessage : unsigned char
+	+bTeoPrologue : unsigned char
+	+bTimerOut : unsigned char
+	+bTimerOut2 : unsigned char
+	+bmFormatString : unsigned char
+	+bmPINBlockString : unsigned char
+	+bmPINLengthFormat : unsigned char
+	+ulDataLength : unsigned char
+	+wLangId : unsigned char
+	+wPINMaxExtraDigit : unsigned char
+}
+
+
+namespace eIDMW {
+	class PKCS15Parser {
+		+ParseCdf(const CByteArray& contents) : std::vector<tCert>
+		+ParseAodf(const CByteArray& contents) : std::vector<tPin>
+		+ParsePrkdf(const CByteArray& contents) : std::vector<tPrivKey>
+		+ParseDir(const CByteArray& contents) : tDirInfo
+		+ParseOdf(const CByteArray& contents) : tOdfInfo
+		+ParseTokenInfo(const CByteArray& contents) : tTokenInfo
+		-FillCOACert(tCert* cert, tCommonObjAttr* coa) : void
+		-FillCOAPin(tPin* pin, tCommonObjAttr* coa) : void
+		-FillCOAPrKey(tPrivKey* key, tCommonObjAttr* coa) : void
+	}
+}
+
+
+namespace eIDMW {
+	class tAlgoInfo <<(S,cyan)>> {
+		+iAlgRef : int
+		+iRef : int
+	}
+}
+
+
+namespace eIDMW {
+	class tCacheInfo <<(S,cyan)>> {
+		+action : tCacheAction
+		+ulOffset : unsigned long
+	}
+}
+
+
+namespace eIDMW {
+	class tCert <<(S,cyan)>> {
+		+bAuthority : bool
+		+bImplicitTrust : bool
+		+bValid : bool
+		+csLabel : std::string
+		+csPath : std::string
+		+ulAuthID : unsigned long
+		+ulFlags : unsigned long
+		+ulID : unsigned long
+		+ulUserConsent : unsigned long
+	}
+}
+
+
+namespace eIDMW {
+	class tCommonObjAttr <<(S,cyan)>> {
+		+lastPosition : int
+		+csLabel : std::string
+		+ulAuthID : unsigned long
+		+ulFlags : unsigned long
+		+ulUserConsent : unsigned long
+		+Reset() : void
+	}
+}
+
+
+namespace eIDMW {
+	class tDirInfo <<(S,cyan)>> {
+		+csAppPath : std::string
+		+csLabel : std::string
+		+oAppID : std::string
+	}
+}
+
+
+namespace eIDMW {
+	class tFileInfo <<(S,cyan)>> {
+		+lFileLen : long
+		+lReadPINRef : long
+		+lWritePINRef : long
+	}
+}
+
+
+class tGuiInfo <<(S,cyan)>> {
+	+csChangeInfo : char*
+	+csRfu1 : char*
+	+csRfu2 : char*
+	+csRfu3 : char*
+	+csRfu4 : char*
+	+csUnblockChangeInfo : char*
+	+csUnblockMergeChangeInfo : char*
+	+csUnblockMergeNoChangeInfo : char*
+	+csUnblockNoChangeInfo : char*
+	+csVerifyInfo : char*
+}
+
+
+namespace eIDMW {
+	class tOdfInfo <<(S,cyan)>> {
+		+csAodfPath : std::string
+		+csCdfPath : std::string
+		+csDodfPath : std::string
+		+csPrkdfPath : std::string
+		+csPukdfPath : std::string
+		+csSecretPukdfPath : std::string
+		+csTrustedCdfPath : std::string
+		+csTrustedPukdfPath : std::string
+		+csUsefulCdfPath : std::string
+	}
+}
+
+
+namespace eIDMW {
+	class tPKCSFile <<(S,cyan)>> {
+		+byteArray : CByteArray
+		+isRead : bool
+		+path : std::string
+		+setDefault() : void
+	}
+}
+
+
+namespace eIDMW {
+	class tPin <<(S,cyan)>> {
+		+bValid : bool
+		+csLabel : std::string
+		+csLastChange : std::string
+		+csPath : std::string
+		+encoding : tPinEncoding
+		+ucPadChar : unsigned char
+		+ulAuthID : unsigned long
+		+ulFlags : unsigned long
+		+ulID : unsigned long
+		+ulMaxLen : unsigned long
+		+ulMinLen : unsigned long
+		+ulPinFlags : unsigned long
+		+ulPinRef : unsigned long
+		+ulPinType : unsigned long
+		+ulStoredLen : unsigned long
+		+ulUserConsent : unsigned long
+	}
+}
+
+
+namespace eIDMW {
+	class tPrivKey <<(S,cyan)>> {
+		+bUsedInP11 : bool
+		+bValid : bool
+		+csLabel : std::string
+		+csPath : std::string
+		+ulAuthID : unsigned long
+		+ulFlags : unsigned long
+		+ulID : unsigned long
+		+ulKeyAccessFlags : unsigned long
+		+ulKeyLenBytes : unsigned long
+		+ulKeyRef : unsigned long
+		+ulKeyUsageFlags : unsigned long
+		+ulUserConsent : unsigned long
+	}
+}
+
+
+namespace eIDMW {
+	class tReaderInfo <<(S,cyan)>> {
+		+csReader : std::string
+		+ulCurrentState : unsigned long
+		+ulEventState : unsigned long
+	}
+}
+
+
+namespace eIDMW {
+	class tTokenInfo <<(S,cyan)>> {
+		+iAppVersion : int
+		+iSecEnv : int
+		+iVersion : int
+		+piRecordInfo : int
+		+csHolder : std::string
+		+csIssuer : std::string
+		+csLabel : std::string
+		+csLastUpdate : std::string
+		+csManufactID : std::string
+		+csOwner : std::string
+		+csSerial : std::string
+		+oAlgoInfo : std::vector< tAlgoInfo>
+		+ulFlags : unsigned long
+	}
+}
+
+
+namespace eIDMW {
+	enum PinUsage {
+		DLG_USG_PIN_ADDRESS
+		DLG_USG_PIN_AUTH
+		DLG_USG_PIN_SIGN
+		PIN_USG_UNKNOWN
+	}
+}
+
+
+namespace eIDMW {
+	enum tBelpicDF {
+		BELPIC_DF
+		ID_DF
+		UNKNOWN_DF
+	}
+}
+
+
+namespace eIDMW {
+	enum tCacheAction {
+		CERT_CACHE
+		CHECK_16_CACHE
+		CHECK_SERIAL
+		DONT_CACHE
+		SIMPLE_CACHE
+	}
+}
+
+
+namespace eIDMW {
+	enum tCardStatus {
+		CARD_INSERTED
+		CARD_NOT_PRESENT
+		CARD_OTHER
+		CARD_REMOVED
+		CARD_STILL_PRESENT
+		CARD_UNKNOWN_STATE
+	}
+}
+
+
+namespace eIDMW {
+	enum tCardType {
+		CARD_BEID
+		CARD_UNKNOWN
+	}
+}
+
+
+namespace eIDMW {
+	enum tDisconnectMode {
+		DISCONNECT_LEAVE_CARD
+		DISCONNECT_RESET_CARD
+	}
+}
+
+
+namespace eIDMW {
+	enum tFileOperation {
+		FILE_OP_READ
+		FILE_OP_WRITE
+	}
+}
+
+
+namespace eIDMW {
+	enum tPKCSFileName {
+		AODF
+		CDF
+		EFDIR
+		ODF
+		PRKDF
+		TOKENINFO
+	}
+}
+
+
+namespace eIDMW {
+	enum tPinEncoding {
+		PIN_ENC_ASCII
+		PIN_ENC_BCD
+		PIN_ENC_GP
+	}
+}
+
+
+namespace eIDMW {
+	enum tPinOperation {
+		PIN_OP_CHANGE
+		PIN_OP_LOGOFF
+		PIN_OP_VERIFY
+	}
+}
+
+
+namespace eIDMW {
+	enum tSelectAppletMode {
+		ALW_SELECT_APPLET
+		DONT_SELECT_APPLET
+		TRY_SELECT_APPLET
+	}
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+namespace eIDMW {
+	CP15Correction <|-- CBeidP15Correction
+}
+
+
+
+
+
+/' Aggregation relationships '/
+
+namespace eIDMW {
+	CAutoLock o-- CCard
+}
+
+
+namespace eIDMW {
+	CAutoLock o-- CPCSC
+}
+
+
+namespace eIDMW {
+	CCard o-- CBeidP15Correction
+}
+
+
+namespace eIDMW {
+	CCard o-- CContext
+}
+
+
+namespace eIDMW {
+	CCard o-- CPinpad
+}
+
+
+namespace eIDMW {
+	CCardLayer o-- CContext
+}
+
+
+namespace eIDMW {
+	CCardLayer o-- CReader
+}
+
+
+namespace eIDMW {
+	CCardReaderInfo o-- CCardReaderInfo
+}
+
+
+namespace eIDMW {
+	CContext o-- CPCSC
+}
+
+
+namespace eIDMW {
+	CPKCS15 o-- CCard
+}
+
+
+namespace eIDMW {
+	CPKCS15 o-- PKCS15Parser
+}
+
+
+namespace eIDMW {
+	CPKCS15 o-- tCert
+}
+
+
+namespace eIDMW {
+	CPKCS15 o-- tDirInfo
+}
+
+
+namespace eIDMW {
+	CPKCS15 "10" o-- tPKCSFile
+}
+
+
+namespace eIDMW {
+	CPKCS15 o-- tPin
+}
+
+
+namespace eIDMW {
+	CPKCS15 o-- tPrivKey
+}
+
+
+namespace eIDMW {
+	CPinpad o-- CContext
+}
+
+
+namespace eIDMW {
+	CReader o-- CCard
+}
+
+
+namespace eIDMW {
+	CReader o-- CContext
+}
+
+
+namespace eIDMW {
+	CReader o-- CPKCS15
+}
+
+
+namespace eIDMW {
+	CReader o-- CPinpad
+}
+
+
+namespace eIDMW {
+	CReadersInfo o-- tReaderInfo
+}
+
+
+namespace eIDMW {
+	tTokenInfo o-- tAlgoInfo
+}
+
+
+
+
+@enduml

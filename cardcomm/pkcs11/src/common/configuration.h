@@ -417,19 +417,13 @@ public:
 private:
 		//below info if not needed any more when the ini-file is hard-coded.
 		// See http://groups.google.com/group/microsoft.public.vc.stl/msg/c4dfeb8987d7b8f0
-#ifdef WIN32
-#pragma warning(push)
-#pragma warning(disable:4251)
-#endif
+#ifndef WIN32
 		static CDataFile o_userDataFile;
 		static CDataFile o_systemDataFile;
-
+#endif
 		static CMutex m_Mutex;
 
 				/**< Mutex for exclusive access */
-#ifdef WIN32
-#pragma warning(pop)
-#endif
 	};
 
 }

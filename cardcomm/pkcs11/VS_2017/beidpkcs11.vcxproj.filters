@@ -10,9 +10,6 @@
     <ClCompile Include="..\src\common\configreg.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\common\datafile.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\common\hash.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -178,9 +175,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\configuration.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\datafile.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\export.h">

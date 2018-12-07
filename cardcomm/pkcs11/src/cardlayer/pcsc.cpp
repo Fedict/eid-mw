@@ -155,7 +155,7 @@ namespace eIDMW
 	   char csNextState[200];
 	 */
 
-	bool CPCSC::GetStatusChange(unsigned long ulTimeout,
+/*	bool CPCSC::GetStatusChange(unsigned long ulTimeout,
 				    tReaderInfo * pReaderInfos,
 				    unsigned long ulReaderCount)
 	{
@@ -248,7 +248,7 @@ namespace eIDMW
 
 		return bChanged;
 	}
-
+*/
 	bool CPCSC::Status(const std::string & csReader)
 	{
 		SCARD_READERSTATEA xReaderState;

@@ -116,9 +116,7 @@ public:
 		CByteArray ListReaders();
 
 	/** Returns true if something changed */
-		bool GetStatusChange(unsigned long ulTimeout,
-				     tReaderInfo * pReaderInfos,
-				     unsigned long ulReaderCount);
+//		bool GetStatusChange(unsigned long ulTimeout, tReaderInfo * pReaderInfos, unsigned long ulReaderCount);
 
 		//created a new function for pkcs11, as we don't want to change the CSP's behaviour
 		//this is temporary, pkcs11 will move away from using this cardlayer

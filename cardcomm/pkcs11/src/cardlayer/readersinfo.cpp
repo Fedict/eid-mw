@@ -158,6 +158,11 @@ wait_again:
 		{
 			//copy the reader name, instead of giving the pointer, as C_GetSlotList might free it.
 			txReaderStates[i].szReader = (char *)malloc(strlen(m_tInfos[i].csReader.c_str()) + 1);
+			if (txReaderStates[i].szReader == NULL)
+			{
+				txReaderStates[i].dwCurrentState = m_tInfos[i].ulEventState;
+				return false;
+			}
 			memset((void *) txReaderStates[i].szReader, 0, strlen(m_tInfos[i].csReader.c_str()) + 1);
 			memcpy((void *) txReaderStates[i].szReader, (const void *) (m_tInfos[i].csReader.c_str()), strlen(m_tInfos[i].csReader.c_str()));
 			txReaderStates[i].dwCurrentState = m_tInfos[i].ulEventState;

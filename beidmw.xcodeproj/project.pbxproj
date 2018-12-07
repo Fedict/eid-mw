@@ -530,7 +530,6 @@
 		86E3DDBA1653D6200015B5E1 /* bytearray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytearray.cpp; path = cardcomm/pkcs11/src/common/bytearray.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDBB1653D6200015B5E1 /* bytearray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytearray.h; path = cardcomm/pkcs11/src/common/bytearray.h; sourceTree = SOURCE_ROOT; };
 		86E3DDBE1653D6200015B5E1 /* configcommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configcommon.cpp; path = cardcomm/pkcs11/src/common/configcommon.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DDBF1653D6200015B5E1 /* configreg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configreg.cpp; path = cardcomm/pkcs11/src/common/configreg.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDC01653D6200015B5E1 /* configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = configuration.cpp; path = cardcomm/pkcs11/src/common/configuration.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDC11653D6200015B5E1 /* configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = configuration.h; path = cardcomm/pkcs11/src/common/configuration.h; sourceTree = SOURCE_ROOT; };
 		86E3DDC21653D6200015B5E1 /* datafile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = datafile.cpp; path = cardcomm/pkcs11/src/common/datafile.cpp; sourceTree = SOURCE_ROOT; };
@@ -1010,7 +1009,6 @@
 				86E3DDBA1653D6200015B5E1 /* bytearray.cpp */,
 				86E3DDBB1653D6200015B5E1 /* bytearray.h */,
 				86E3DDBE1653D6200015B5E1 /* configcommon.cpp */,
-				86E3DDBF1653D6200015B5E1 /* configreg.cpp */,
 				86E3DDC01653D6200015B5E1 /* configuration.cpp */,
 				86E3DDC11653D6200015B5E1 /* configuration.h */,
 				86E3DDC21653D6200015B5E1 /* datafile.cpp */,
