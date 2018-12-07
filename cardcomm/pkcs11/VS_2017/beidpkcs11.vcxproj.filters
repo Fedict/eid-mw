@@ -28,9 +28,6 @@
     <ClCompile Include="..\src\common\util.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cardlayer\beidp15correction.cpp">
-      <Filter>Cardlayer</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\cardlayer\card.cpp">
       <Filter>Cardlayer</Filter>
     </ClCompile>
@@ -104,9 +101,6 @@
       <Filter>Pkcs11</Filter>
     </ClCompile>
     <ClCompile Include="..\src\cardlayer\pcsc.cpp">
-      <Filter>Cardlayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\cardlayer\p15correction.cpp">
       <Filter>Cardlayer</Filter>
     </ClCompile>
     <ClCompile Include="..\src\phash.cpp">
@@ -198,9 +192,6 @@
     <ClInclude Include="..\src\common\util.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cardlayer\beidp15correction.h">
-      <Filter>Cardlayer</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\common\beidversions.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -280,9 +271,6 @@
       <Filter>Cardlayer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cardlayer\p15objects.h">
-      <Filter>Cardlayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cardlayer\p15correction.h">
       <Filter>Cardlayer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\phash.h">
