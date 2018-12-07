@@ -131,11 +131,6 @@ namespace eIDMW
 		return m_csSerialNr;
 	}
 
-	std::string CCard::GetLabel()
-	{
-		return "";
-	}
-
 	void CCard::Lock()
 	{
 		if (m_ulLockCount == 0)

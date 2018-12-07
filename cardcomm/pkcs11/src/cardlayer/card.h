@@ -94,10 +94,6 @@ public:
 		    an std::string, and cache it for further usage */
 		std::string GetSerialNr();
 
-		/** Return a string describing the type of card */
-		std::string GetLabel();
-
-
 		/** Start a transaction on the card. Can be called
 		    recursively, maintains a counter */
 		void Lock();
