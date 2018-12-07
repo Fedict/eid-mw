@@ -45,15 +45,13 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/cardlayer.cpp \
 	cardlayer/cardreaderinfo.cpp \
 	cardlayer/context.cpp \
-	cardlayer/p15correction.cpp \
 	cardlayer/pcsc.cpp \
 	cardlayer/pinpad.cpp \
 	cardlayer/pinpadlib.cpp \
 	cardlayer/pkcs15.cpp \
 	cardlayer/pkcs15parser.cpp \
 	cardlayer/reader.cpp \
-	cardlayer/readersinfo.cpp \
-	cardlayer/beidp15correction.cpp
+	cardlayer/readersinfo.cpp
 
 noinst_HEADERS = \
 	p11.h \
@@ -99,7 +97,6 @@ noinst_HEADERS = \
 	cardlayer/cardfactory.h \
 	cardlayer/pkcs15.h \
 	cardlayer/context.h \
-	cardlayer/beidp15correction.h \
 	cardlayer/cardreaderinfo.h \
 	cardlayer/pinpadlib.h \
 	cardlayer/pcsc.h \
@@ -107,7 +104,6 @@ noinst_HEADERS = \
 	cardlayer/pinpad2.h \
 	cardlayer/pinpad.h \
 	cardlayer/p15objects.h \
-	cardlayer/p15correction.h \
 	cardlayer/readersinfo.h \
 	cardlayer/reader.h \
 	dialogs/langutil.h \
@@ -161,7 +157,7 @@ libbeidpkcs11_la_SOURCES += \
 	dialogs/dialogsgtk/dlgs_gtk.cpp \
 	dialogs/dialogsgtk/single_dialog.c
 libexec_PROGRAMS = beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin
-SUBDIRS = dialogs/dialogsgtk/po
+SUBDIRS = dialogs/dialogsgtk/po cardlayer/uml
 endif
 
 if P11KIT

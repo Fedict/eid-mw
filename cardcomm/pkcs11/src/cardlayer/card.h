@@ -36,11 +36,7 @@
 #include "common/hash.h"
 #include "common/util.h"
 #include "pinpad.h"
-#include "p15correction.h"
 #include "dialogs/dialogs.h"
-
-
-#include "beidp15correction.h"
 
 
 #include <stddef.h>
@@ -94,10 +90,6 @@ public:
 		    an std::string, and cache it for further usage */
 		std::string GetSerialNr();
 
-		/** Return a string describing the type of card */
-		std::string GetLabel();
-
-
 		/** Start a transaction on the card. Can be called
 		    recursively, maintains a counter */
 		void Lock();
@@ -149,9 +141,6 @@ public:
 					    unsigned char ucP2,
 					    const CByteArray & oData);
 		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
-
-		/* retrieve the correction class for PINs, certificates and private keys */
-		CP15Correction *GetP15Correction();
 
 		SCARDHANDLE m_hCard;
 
@@ -225,8 +214,6 @@ protected:
 		CByteArray m_oSerialNr;
 		unsigned char m_ucAppletVersion;
 		unsigned long m_ul6CDelay;
-
-		CBeidP15Correction p15correction;
 
 #ifdef WIN32
 #pragma warning(push)

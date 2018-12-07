@@ -25,6 +25,9 @@ AC_PROG_LN_S
 AC_PROG_MKDIR_P
 PKG_PROG_PKG_CONFIG
 
+AC_CHECK_PROGS(PLANTUML, plantuml)
+AM_CONDITIONAL([PLANTUML], [test x$PLANTUML != x])
+
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/file.h sys/ioctl.h sys/time.h unistd.h malloc.h memory.h sys/timeb.h termios.h])
 
@@ -209,6 +212,7 @@ AC_SUBST([p11kitcfdir])
 
 AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/Makefile
+		 cardcomm/pkcs11/src/cardlayer/uml/Makefile
 		 cardcomm/pkcs11/src/libbeidpkcs11.pc
 		 cardcomm/pkcs11/src/beidpkcs11.json
 		 cardcomm/pkcs11/src/beidp11kit.json
@@ -224,6 +228,7 @@ AC_CONFIG_FILES([Makefile
 		 plugins_tools/eid-viewer/test/Makefile
 		 plugins_tools/eid-viewer/gtk/po/Makefile.in
 		 plugins_tools/eid-viewer/gtk/eid-viewer.desktop.sh
+		 plugins_tools/eid-viewer/uml/Makefile
 		 rpm/eid-mw.spec])
 AC_CONFIG_SUBDIRS([plugins_tools/xpi])
 

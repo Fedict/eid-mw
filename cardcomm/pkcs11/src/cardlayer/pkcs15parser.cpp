@@ -752,20 +752,8 @@ namespace eIDMW
 							}
 						}
 						// pin encoding
-						switch (pin.ulPinType)
-						{
-							case 0:	// bcd
-								pin.encoding =
-									PIN_ENC_BCD;
-								break;
-							case 1:	// ascii
-								pin.encoding =
-									PIN_ENC_ASCII;
-								break;
-							default:
-								pin.encoding = PIN_ENC_BCD;	// ??
-								break;
-						}
+						pin.encoding = PIN_ENC_GP;
+						pin.ulMaxLen = 12;
 					}
 				}
 

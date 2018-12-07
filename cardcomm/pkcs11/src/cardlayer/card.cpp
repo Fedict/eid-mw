@@ -132,11 +132,6 @@ namespace eIDMW
 		return m_csSerialNr;
 	}
 
-	std::string CCard::GetLabel()
-	{
-		return "";
-	}
-
 	void CCard::Lock()
 	{
 		if (m_ulLockCount == 0)
@@ -572,11 +567,6 @@ namespace eIDMW
 			ulAlgos |= SIGN_ALGO_SHA256_RSA_PSS;
 		}
 		return ulAlgos;
-	}
-
-	CP15Correction * CCard::GetP15Correction()
-	{
-		return &p15correction;
 	}
 
 	tFileInfo CCard::ParseFileInfo(CByteArray & oFCI)

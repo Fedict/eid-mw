@@ -298,12 +298,7 @@ namespace eIDMW
 		if (m_poCard == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
 
-		std::string csLabel = m_poCard->GetLabel();
-
-		if (csLabel == "")
-			csLabel = m_oPKCS15.GetCardLabel();
-
-		return csLabel;
+		return m_oPKCS15.GetCardLabel();
 	}
 
 	void CReader::Lock()
