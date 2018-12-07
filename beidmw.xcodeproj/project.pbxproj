@@ -125,8 +125,6 @@
 		6CD1B8C821A5A6570005F6E9 /* certificate_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */; };
 		6CD1B8C921A5A65B0005F6E9 /* certificate_warn.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */; };
 		7FC535BE0F84BADB00BA96EE /* libbeidcommon.4.4.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB02530F839352009B751F /* libbeidcommon.4.4.6.a */; };
-		8615C60B21B6AE9C00E9DC55 /* beidp15correction.h in Headers */ = {isa = PBXBuildFile; fileRef = 8615C60921B6AE9C00E9DC55 /* beidp15correction.h */; };
-		8615C60C21B6AE9C00E9DC55 /* beidp15correction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8615C60A21B6AE9C00E9DC55 /* beidp15correction.cpp */; };
 		8683738B18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */; };
 		86837479186489B6005EE5D7 /* dialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 8683738D186489B5005EE5D7 /* dialogs.h */; };
 		868374CD186489B6005EE5D7 /* language.h in Headers */ = {isa = PBXBuildFile; fileRef = 86837473186489B6005EE5D7 /* language.h */; };
@@ -196,7 +194,6 @@
 		86E3DECB1653EC3F0015B5E1 /* cardreaderinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA51653EC3E0015B5E1 /* cardreaderinfo.h */; };
 		86E3DECC1653EC3F0015B5E1 /* context.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA61653EC3E0015B5E1 /* context.h */; };
 		86E3DECD1653EC3F0015B5E1 /* internalconst.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA71653EC3E0015B5E1 /* internalconst.h */; };
-		86E3DECE1653EC3F0015B5E1 /* p15correction.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA81653EC3E0015B5E1 /* p15correction.h */; };
 		86E3DECF1653EC3F0015B5E1 /* p15objects.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEA91653EC3E0015B5E1 /* p15objects.h */; };
 		86E3DED01653EC3F0015B5E1 /* pcsc.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEAA1653EC3E0015B5E1 /* pcsc.h */; };
 		86E3DED11653EC3F0015B5E1 /* pinpad.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DEAB1653EC3E0015B5E1 /* pinpad.h */; };
@@ -211,7 +208,6 @@
 		86E3DEDE1653EC3F0015B5E1 /* cardlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */; };
 		86E3DEDF1653EC3F0015B5E1 /* cardreaderinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEB91653EC3F0015B5E1 /* cardreaderinfo.cpp */; };
 		86E3DEE01653EC3F0015B5E1 /* context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEBA1653EC3F0015B5E1 /* context.cpp */; };
-		86E3DEE11653EC3F0015B5E1 /* p15correction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEBB1653EC3F0015B5E1 /* p15correction.cpp */; };
 		86E3DEE21653EC3F0015B5E1 /* pcsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEBC1653EC3F0015B5E1 /* pcsc.cpp */; };
 		86E3DEE31653EC3F0015B5E1 /* pinpad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEBD1653EC3F0015B5E1 /* pinpad.cpp */; };
 		86E3DEE41653EC3F0015B5E1 /* pinpadlib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DEBE1653EC3F0015B5E1 /* pinpadlib.cpp */; };
@@ -515,8 +511,6 @@
 		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.4.6.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.4.4.6.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FBB02530F839352009B751F /* libbeidcommon.4.4.6.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcommon.4.4.6.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC5353B0F84B83B00BA96EE /* libbeidcardlayer.4.4.6.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidcardlayer.4.4.6.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		8615C60921B6AE9C00E9DC55 /* beidp15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beidp15correction.h; path = cardcomm/pkcs11/src/cardlayer/beidp15correction.h; sourceTree = "<group>"; };
-		8615C60A21B6AE9C00E9DC55 /* beidp15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = beidp15correction.cpp; path = cardcomm/pkcs11/src/cardlayer/beidp15correction.cpp; sourceTree = "<group>"; };
 		8683738518648918005EE5D7 /* libbeiddialogsmac.4.4.6.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeiddialogsmac.4.4.6.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8683738A18648985005EE5D7 /* cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardcomm/pkcs11/src/dialogs/dialogsmac/dlgsmac.cpp; sourceTree = SOURCE_ROOT; };
 		8683738D186489B5005EE5D7 /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dialogs.h; path = cardcomm/pkcs11/src/dialogs/dialogs.h; sourceTree = SOURCE_ROOT; };
@@ -579,7 +573,6 @@
 		86E3DEA51653EC3E0015B5E1 /* cardreaderinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cardreaderinfo.h; path = cardcomm/pkcs11/src/cardlayer/cardreaderinfo.h; sourceTree = SOURCE_ROOT; };
 		86E3DEA61653EC3E0015B5E1 /* context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = context.h; path = cardcomm/pkcs11/src/cardlayer/context.h; sourceTree = SOURCE_ROOT; };
 		86E3DEA71653EC3E0015B5E1 /* internalconst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = internalconst.h; path = cardcomm/pkcs11/src/cardlayer/internalconst.h; sourceTree = SOURCE_ROOT; };
-		86E3DEA81653EC3E0015B5E1 /* p15correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p15correction.h; path = cardcomm/pkcs11/src/cardlayer/p15correction.h; sourceTree = SOURCE_ROOT; };
 		86E3DEA91653EC3E0015B5E1 /* p15objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p15objects.h; path = cardcomm/pkcs11/src/cardlayer/p15objects.h; sourceTree = SOURCE_ROOT; };
 		86E3DEAA1653EC3E0015B5E1 /* pcsc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pcsc.h; path = cardcomm/pkcs11/src/cardlayer/pcsc.h; sourceTree = SOURCE_ROOT; };
 		86E3DEAB1653EC3E0015B5E1 /* pinpad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pinpad.h; path = cardcomm/pkcs11/src/cardlayer/pinpad.h; sourceTree = SOURCE_ROOT; };
@@ -594,7 +587,6 @@
 		86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardlayer.cpp; path = cardcomm/pkcs11/src/cardlayer/cardlayer.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEB91653EC3F0015B5E1 /* cardreaderinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cardreaderinfo.cpp; path = cardcomm/pkcs11/src/cardlayer/cardreaderinfo.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEBA1653EC3F0015B5E1 /* context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = context.cpp; path = cardcomm/pkcs11/src/cardlayer/context.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DEBB1653EC3F0015B5E1 /* p15correction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = p15correction.cpp; path = cardcomm/pkcs11/src/cardlayer/p15correction.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEBC1653EC3F0015B5E1 /* pcsc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pcsc.cpp; path = cardcomm/pkcs11/src/cardlayer/pcsc.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEBD1653EC3F0015B5E1 /* pinpad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pinpad.cpp; path = cardcomm/pkcs11/src/cardlayer/pinpad.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DEBE1653EC3F0015B5E1 /* pinpadlib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pinpadlib.cpp; path = cardcomm/pkcs11/src/cardlayer/pinpadlib.cpp; sourceTree = SOURCE_ROOT; };
@@ -1049,8 +1041,6 @@
 		7FC5358D0F84B88B00BA96EE /* Cardlayer */ = {
 			isa = PBXGroup;
 			children = (
-				8615C60A21B6AE9C00E9DC55 /* beidp15correction.cpp */,
-				8615C60921B6AE9C00E9DC55 /* beidp15correction.h */,
 				86E3DEA11653EC3E0015B5E1 /* card.h */,
 				86E3DEA21653EC3E0015B5E1 /* cardfactory.h */,
 				86E3DEA31653EC3E0015B5E1 /* cardlayer.h */,
@@ -1058,7 +1048,6 @@
 				86E3DEA51653EC3E0015B5E1 /* cardreaderinfo.h */,
 				86E3DEA61653EC3E0015B5E1 /* context.h */,
 				86E3DEA71653EC3E0015B5E1 /* internalconst.h */,
-				86E3DEA81653EC3E0015B5E1 /* p15correction.h */,
 				86E3DEA91653EC3E0015B5E1 /* p15objects.h */,
 				86E3DEAA1653EC3E0015B5E1 /* pcsc.h */,
 				86E3DEAB1653EC3E0015B5E1 /* pinpad.h */,
@@ -1073,7 +1062,6 @@
 				86E3DEB81653EC3F0015B5E1 /* cardlayer.cpp */,
 				86E3DEB91653EC3F0015B5E1 /* cardreaderinfo.cpp */,
 				86E3DEBA1653EC3F0015B5E1 /* context.cpp */,
-				86E3DEBB1653EC3F0015B5E1 /* p15correction.cpp */,
 				86E3DEBC1653EC3F0015B5E1 /* pcsc.cpp */,
 				86E3DEBD1653EC3F0015B5E1 /* pinpad.cpp */,
 				86E3DEBE1653EC3F0015B5E1 /* pinpadlib.cpp */,
@@ -1204,7 +1192,6 @@
 				86E3DE021653D6210015B5E1 /* hash.h in Headers */,
 				86E3DE091653D6210015B5E1 /* tomcrypt_argchk.h in Headers */,
 				86E3DE0A1653D6210015B5E1 /* tomcrypt_cfg.h in Headers */,
-				8615C60B21B6AE9C00E9DC55 /* beidp15correction.h in Headers */,
 				86E3DE0B1653D6210015B5E1 /* tomcrypt_hash.h in Headers */,
 				86E3DE0C1653D6210015B5E1 /* tomcrypt_macros.h in Headers */,
 				86E3DE0E1653D6210015B5E1 /* log.h in Headers */,
@@ -1237,7 +1224,6 @@
 				86E3DECB1653EC3F0015B5E1 /* cardreaderinfo.h in Headers */,
 				86E3DECC1653EC3F0015B5E1 /* context.h in Headers */,
 				86E3DECD1653EC3F0015B5E1 /* internalconst.h in Headers */,
-				86E3DECE1653EC3F0015B5E1 /* p15correction.h in Headers */,
 				86E3DECF1653EC3F0015B5E1 /* p15objects.h in Headers */,
 				86E3DED01653EC3F0015B5E1 /* pcsc.h in Headers */,
 				86E3DED11653EC3F0015B5E1 /* pinpad.h in Headers */,
@@ -1750,7 +1736,6 @@
 				86E3DE1F1653D6210015B5E1 /* thread.cpp in Sources */,
 				86E3DE221653D6210015B5E1 /* tlv.cpp in Sources */,
 				86E3DE241653D6210015B5E1 /* tlvbuffer.cpp in Sources */,
-				8615C60C21B6AE9C00E9DC55 /* beidp15correction.cpp in Sources */,
 				6594447C19A8C29B003ABC24 /* asn1.c in Sources */,
 				86E3DE271653D6210015B5E1 /* util.cpp in Sources */,
 			);
@@ -1765,7 +1750,6 @@
 				86E3DEDE1653EC3F0015B5E1 /* cardlayer.cpp in Sources */,
 				86E3DEDF1653EC3F0015B5E1 /* cardreaderinfo.cpp in Sources */,
 				86E3DEE01653EC3F0015B5E1 /* context.cpp in Sources */,
-				86E3DEE11653EC3F0015B5E1 /* p15correction.cpp in Sources */,
 				86E3DEE21653EC3F0015B5E1 /* pcsc.cpp in Sources */,
 				86E3DEE31653EC3F0015B5E1 /* pinpad.cpp in Sources */,
 				86E3DEE41653EC3F0015B5E1 /* pinpadlib.cpp in Sources */,
