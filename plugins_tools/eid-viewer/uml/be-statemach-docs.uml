@@ -4,6 +4,13 @@ title Backend state machine
 ' This file documents the state machine as implemented in state.c. It
 ' can be converted to a diagram by way of PlantUML, see
 ' http://plantuml.com/
+'
+' This version of the state machine is for the benefit of people who
+' want to use the eID Viewer backend library, and don't care about how
+' everything is implemented. It therefore contains documents which
+' external function call has which state machine transition as an
+' effect, rather than which event (as in the other state machine
+' diagram)
 
 [*] --> LIBOPEN
 
