@@ -35,7 +35,7 @@
 namespace eIDMW
 {
 
-	class EIDMW_CMN_API CDynamicLib
+	class CDynamicLib
 	{
 public:
 		CDynamicLib();

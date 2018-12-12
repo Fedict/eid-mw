@@ -40,39 +40,39 @@ namespace eIDMW
 	class CTLVBuffer
 	{
 public:
-		EIDMW_CMN_API CTLVBuffer();
-		EIDMW_CMN_API virtual ~ CTLVBuffer();
+		CTLVBuffer();
+		virtual ~ CTLVBuffer();
 
-		EIDMW_CMN_API void SetTagData(unsigned char ucTag,
+		void SetTagData(unsigned char ucTag,
 					      const unsigned char *pucData,
 					      unsigned long ulLen);
-		EIDMW_CMN_API unsigned long Extract(unsigned char *pucData,
+		unsigned long Extract(unsigned char *pucData,
 						    unsigned long ulLen);
-		EIDMW_CMN_API int ParseTLV(const unsigned char *pucData,
+		int ParseTLV(const unsigned char *pucData,
 					   unsigned long ulLen);
-		EIDMW_CMN_API bool ParseFileTLV(const unsigned char *pucData,
+		bool ParseFileTLV(const unsigned char *pucData,
 						unsigned long ulLen);
-		EIDMW_CMN_API CTLV *GetTagData(unsigned char ucTag);
-		EIDMW_CMN_API void FillASCIIData(unsigned char ucTag,
+		CTLV *GetTagData(unsigned char ucTag);
+		void FillASCIIData(unsigned char ucTag,
 						 char *pData,
 						 unsigned long *pulLen);
-		EIDMW_CMN_API bool FillUTF8Data(unsigned char ucTag,
+		bool FillUTF8Data(unsigned char ucTag,
 						char *pData,
 						unsigned long *pulLen);
-		EIDMW_CMN_API void FillBinaryStringData(unsigned char ucTag,
+		void FillBinaryStringData(unsigned char ucTag,
 							char *pData,
 							unsigned long
 							*pulLen);
-		EIDMW_CMN_API void FillLongData(unsigned char ucTag,
+		void FillLongData(unsigned char ucTag,
 						long *piData);
-		EIDMW_CMN_API void FillBinaryData(unsigned char ucTag,
+		void FillBinaryData(unsigned char ucTag,
 						  unsigned char *pData,
 						  unsigned long *pulLen);
-		EIDMW_CMN_API bool FillBinaryDataCheck(unsigned char ucTag,
+		bool FillBinaryDataCheck(unsigned char ucTag,
 						       unsigned char *pData,
 						       unsigned long
 						       *pulMaxLen);
-		EIDMW_CMN_API unsigned long GetLengthNeeded();
+		unsigned long GetLengthNeeded();
 
 private:
 		static char *Hexify(unsigned char *pData,

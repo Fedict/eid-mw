@@ -64,7 +64,7 @@ namespace eIDMW
 		ALGO_RIPEMD160,	// 64-byte hash
 	};
 
-	class EIDMW_CMN_API CHash
+	class CHash
 	{
 public:
 		CHash();

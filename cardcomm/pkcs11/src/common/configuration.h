@@ -208,7 +208,7 @@ namespace eIDMW
 
 /** Class to set and get configuration-data from the registry(Windows) or the ini-file(Linux and Mac).
 */
-	class EIDMW_CMN_API CConfig
+	class CConfig
 	{
 public:
 		typedef enum

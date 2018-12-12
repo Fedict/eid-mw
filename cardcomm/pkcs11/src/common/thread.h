@@ -62,7 +62,7 @@ typedef _opaque_pthread_t *beid_thread_id;
 namespace eIDMW
 {
 
-	class EIDMW_CMN_API CThread
+	class CThread
 	{
 public:
 		CThread();

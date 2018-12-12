@@ -65,7 +65,7 @@ namespace eIDMW
 		PRKDF,
 	} tPKCSFileName;
 
-	class EIDMW_CAL_API CPKCS15
+	class CPKCS15
 	{
 public:
 		CPKCS15(void);

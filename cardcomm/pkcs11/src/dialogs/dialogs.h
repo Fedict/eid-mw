@@ -33,19 +33,6 @@
 
 #include <string>
 
-#ifdef WIN32
-#ifdef EIDMW_STATIC_LIB
-#define DLGS_EXPORT
-#else
-#ifdef DLGSWIN32_EXPORTS
-#define DLGS_EXPORT __declspec(dllexport)
-#else
-#define DLGS_EXPORT __declspec(dllimport)
-#endif
-#endif
-#else
-#define DLGS_EXPORT __attribute__((visibility("default")))
-#endif
 
 namespace eIDMW
 {
@@ -168,7 +155,7 @@ namespace eIDMW
  *          DLG_CANCEL if the Cancel button was pressed,
  *          DLG_BAD_PARAM or DLG_ERR otherwise
  */
-	DLGS_EXPORT DlgRet DlgAskPin(DlgPinOperation operation,
+	DlgRet DlgAskPin(DlgPinOperation operation,
 				     DlgPinUsage usage,
 				     const wchar_t * csPinName,
 				     DlgPinInfo pinInfo, wchar_t * csPin,
@@ -187,7 +174,7 @@ namespace eIDMW
  *          DLG_CANCEL if the Cancel button was pressed,
  *          DLG_BAD_PARAM or DLG_ERR otherwise
  */
-	DLGS_EXPORT DlgRet DlgAskPins(DlgPinOperation operation,
+	DlgRet DlgAskPins(DlgPinOperation operation,
 				      DlgPinUsage usage,
 				      const wchar_t * csPinName,
 				      DlgPinInfo pin1Info, wchar_t * csPin1,
@@ -203,7 +190,7 @@ namespace eIDMW
  *          DLG_RETRY if the Retry button was pressed
  *          DLG_BAD_PARAM or DLG_ERR otherwise
  */
-	DLGS_EXPORT DlgRet DlgBadPin(DlgPinUsage usage,
+	DlgRet DlgBadPin(DlgPinUsage usage,
 				     const wchar_t * csPinName,
 				     unsigned long ulRemainingTries);
 
@@ -225,7 +212,7 @@ namespace eIDMW
  * Returns: DLG_OK if all went fine,
  *          DLG_BAD_PARAM or DLG_ERR otherwise
  */
-	DLGS_EXPORT DlgRet DlgDisplayPinpadInfo(DlgPinOperation operation,
+	DlgRet DlgDisplayPinpadInfo(DlgPinOperation operation,
 						const wchar_t * csReader,
 						DlgPinUsage usage,
 						const wchar_t * csPinName,
@@ -235,14 +222,14 @@ namespace eIDMW
 /**
 * Close the pinpad info dialog 
 */
-	DLGS_EXPORT void DlgClosePinpadInfo(unsigned long ulHandle);
+	void DlgClosePinpadInfo(unsigned long ulHandle);
 
 #ifndef WIN32
 
 /**
 * Close the all the open pinpad info dialogs 
 */
-	DLGS_EXPORT void DlgCloseAllPinpadInfo();
+	void DlgCloseAllPinpadInfo();
 #endif
 
 /************************************************************************************
@@ -262,7 +249,7 @@ namespace eIDMW
  *          or otherwise the return code that corresponds
  *          to the button that was clicked.
  */
-	DLGS_EXPORT DlgRet DlgDisplayModal(DlgIcon icon,
+	DlgRet DlgDisplayModal(DlgIcon icon,
 					   DlgMessageID messageID,
 					   const wchar_t * csMesg,
 					   unsigned char ulButtons,
@@ -282,7 +269,7 @@ namespace eIDMW
  * all operations (so the user won't be bothered again).
  * - piForAllOperations: [OUT] 1 if the checkbox was checked, 0 otherwise.
  */
-	DLGS_EXPORT DlgRet DlgAskAccess(const wchar_t * csAppPath,
+	DlgRet DlgAskAccess(const wchar_t * csAppPath,
 					const wchar_t * csReaderName,
 					DlgPFOperation ulOperation,
 					int *piForAllOperations);

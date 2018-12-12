@@ -28,7 +28,7 @@ namespace eIDMW
 
 	class CCardLayer;
 
-	class EIDMW_CAL_API CReadersInfo
+	class CReadersInfo
 	{
 public:
 

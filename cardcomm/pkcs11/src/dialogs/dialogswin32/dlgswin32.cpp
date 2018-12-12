@@ -48,26 +48,7 @@ unsigned long dlgPinPadInfoCollectorIndex = 0;
 #pragma managed(push, off)
 #endif	/*  */
 	
-#ifndef EIDMW_STATIC_LIB
-	BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call,
-			      LPVOID lpReserved ) 
-{
-	switch (ul_reason_for_call)
-		
-	{
-		case DLL_PROCESS_ATTACH:
-			g_hDLLInstance = hModule;
-			break;
-		case DLL_THREAD_ATTACH:
-		case DLL_THREAD_DETACH:
-		case DLL_PROCESS_DETACH:
-			break;
-	}
-	return TRUE;
-}
 
-
-#endif	/*  */
 	
 #ifdef _MANAGED
 #pragma managed(pop)
@@ -92,7 +73,7 @@ unsigned long dlgPinPadInfoCollectorIndex = 0;
 	*       DIALOGS
 	************************/ 
 //TODO: Add Keypad possibility in DlgAskPin(s)     
-	DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
+	DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 					    DlgPinUsage usage,
 					    const wchar_t * csPinName,
 					    DlgPinInfo pinInfo,
@@ -210,7 +191,7 @@ unsigned long dlgPinPadInfoCollectorIndex = 0;
 	return DLG_CANCEL;
 }
 
- DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
+DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
 					DlgPinUsage usage,
 					const wchar_t * csPinName,
 					DlgPinInfo pin1Info,
@@ -283,7 +264,7 @@ unsigned long dlgPinPadInfoCollectorIndex = 0;
 	return DLG_CANCEL;
 }
 
- DLGS_EXPORT DlgRet eIDMW::DlgBadPin(DlgPinUsage usage,
+DlgRet eIDMW::DlgBadPin(DlgPinUsage usage,
 				       const wchar_t * csPinName,
 				       unsigned long ulRemainingTries) 
 {
@@ -340,7 +321,7 @@ unsigned long dlgPinPadInfoCollectorIndex = 0;
 	return DLG_CANCEL;
 }
 
- DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
+DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 						  const wchar_t * csReader,
 						  DlgPinUsage usage,
 						  const wchar_t * csPinName,
@@ -579,7 +560,7 @@ unsigned long dlgPinPadInfoCollectorIndex = 0;
 	return DLG_CANCEL;
 }
 
- DLGS_EXPORT void eIDMW::DlgClosePinpadInfo(unsigned long ulHandle) 
+void eIDMW::DlgClosePinpadInfo(unsigned long ulHandle) 
 {
 	MWLOG(LEV_DEBUG, MOD_DLG, L"DlgClosePinpadInfo() called");
 	TD_WNDPINPAD_MAP::iterator it_WndPinpad_Map =
@@ -599,7 +580,7 @@ unsigned long dlgPinPadInfoCollectorIndex = 0;
 	MWLOG(LEV_DEBUG, MOD_DLG, L"  --> DlgClosePinpadInfo() returns");
 }
 
- DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
+DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
 					     DlgMessageID messageID,
 					     const wchar_t * csMesg,
 					     unsigned char ulButtons,
@@ -653,7 +634,7 @@ unsigned long dlgPinPadInfoCollectorIndex = 0;
 	return DLG_CANCEL;
 }
 
- DLGS_EXPORT DlgRet eIDMW::DlgAskAccess(const wchar_t * csAppPath,
+DlgRet eIDMW::DlgAskAccess(const wchar_t * csAppPath,
 					  const wchar_t * csReaderName,
 					  DlgPFOperation ulOperation,
 					  int *piForAllOperations) 

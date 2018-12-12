@@ -32,7 +32,7 @@ using namespace std;
 namespace eIDMW
 {
 
-	class EIDMW_CMN_API CMWException:public std::exception
+	class CMWException:public std::exception
 	{
 public:
 		//CMWException(long lError);
@@ -69,7 +69,7 @@ protected:
 		long m_lLine;
 	};
 
-	class EIDMW_CMN_API CNotAuthenticatedException:public CMWException
+	class CNotAuthenticatedException:public CMWException
 	{
 public:
 		CNotAuthenticatedException(long lError, long lPinRef);

@@ -113,50 +113,50 @@ namespace eIDMW
 	class CLogger
 	{
 public:
-		EIDMW_CMN_API static CLogger & instance();
-		       EIDMW_CMN_API ~ CLogger();
+		static CLogger & instance();
+		~ CLogger();
 
 private:
-		       CLogger();
-		       CLogger(const CLogger & logger);
-		      CLogger & operator=(const CLogger & logger);
+		CLogger();
+		CLogger(const CLogger & logger);
+		CLogger & operator=(const CLogger & logger);
 
 public:
-		      EIDMW_CMN_API void initFromConfig();
-		EIDMW_CMN_API void init(const wchar_t * directory,
+		void initFromConfig();
+		void init(const wchar_t * directory,
 					const wchar_t * prefix, long filesize,
 					long filenr, tLOG_Level minlevel,
 					bool groupinnewfile);
-		EIDMW_CMN_API void init(const char *directory,
+		void init(const char *directory,
 					const char *prefix, long filesize,
 					long filenr, tLOG_Level minlevel,
 					bool groupinnewfile);
-		EIDMW_CMN_API CLog & getLogW(const wchar_t * group = L"");
-		EIDMW_CMN_API CLog & getLogA(const char *group = "");
-		EIDMW_CMN_API void writeToGroup(const wchar_t * group,
+		CLog & getLogW(const wchar_t * group = L"");
+		CLog & getLogA(const char *group = "");
+		void writeToGroup(const wchar_t * group,
 						tLOG_Level level,
 						const wchar_t * format, ...);
-		EIDMW_CMN_API void writeToGroup(const char *group,
+		void writeToGroup(const char *group,
 						tLOG_Level level,
 						const char *format, ...);
-		EIDMW_CMN_API void writeToGroup(const wchar_t * group,
+		void writeToGroup(const wchar_t * group,
 						tLOG_Level level,
 						const int line,
 						const wchar_t * file,
 						const wchar_t * format, ...);
-		EIDMW_CMN_API void writeToGroup(const char *group,
+		void writeToGroup(const char *group,
 						tLOG_Level level,
 						const int line,
 						const char *file,
 						const char *format, ...);
-		EIDMW_CMN_API void write(tLOG_Level level,
+		void write(tLOG_Level level,
 					 const wchar_t * format, ...);
-		EIDMW_CMN_API void write(tLOG_Level level, const char *format,
+		void write(tLOG_Level level, const char *format,
 					 ...);
-		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+		void write(tLOG_Level level, const int line,
 					 const wchar_t * file,
 					 const wchar_t * format, ...);
-		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+		void write(tLOG_Level level, const int line,
 					 const char *file, const char *format,
 					 ...);
 
@@ -177,7 +177,7 @@ private:
 	class CLog
 	{
 public:
-		EIDMW_CMN_API ~ CLog();
+		~ CLog();
 
 private:
 		CLog(const wchar_t * directory, const wchar_t * prefix,
@@ -187,80 +187,80 @@ private:
 		      CLog & operator=(const CLog &);
 
 public:
-		      EIDMW_CMN_API void write(tLOG_Level level,
+		void write(tLOG_Level level,
 					       const wchar_t * format, ...);
-		EIDMW_CMN_API void write(tLOG_Level level, const char *format,
+		void write(tLOG_Level level, const char *format,
 					 ...);
-		EIDMW_CMN_API void write(tLOG_Level level,
+		void write(tLOG_Level level,
 					 const wchar_t * format,
 					 va_list args);
-		EIDMW_CMN_API void write(tLOG_Level level, const char *format,
+		void write(tLOG_Level level, const char *format,
 					 va_list args);
-		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+		void write(tLOG_Level level, const int line,
 					 const wchar_t * file,
 					 const wchar_t * format, ...);
-		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+		void write(tLOG_Level level, const int line,
 					 const char *file, const char *format,
 					 ...);
-		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+		void write(tLOG_Level level, const int line,
 					 const wchar_t * file,
 					 const wchar_t * format,
 					 va_list args);
-		EIDMW_CMN_API void write(tLOG_Level level, const int line,
+		void write(tLOG_Level level, const int line,
 					 const char *file, const char *format,
 					 va_list args);
 
-		EIDMW_CMN_API void writeCritical(const wchar_t * format, ...);
-		EIDMW_CMN_API void writeCritical(const char *format, ...);
-		EIDMW_CMN_API void writeCritical(const int line,
+		void writeCritical(const wchar_t * format, ...);
+		void writeCritical(const char *format, ...);
+		void writeCritical(const int line,
 						 const wchar_t * file,
 						 const wchar_t * format, ...);
-		EIDMW_CMN_API void writeCritical(const int line,
+		void writeCritical(const int line,
 						 const char *file,
 						 const char *format, ...);
-		EIDMW_CMN_API void writeError(const wchar_t * format, ...);
-		EIDMW_CMN_API void writeError(const char *format, ...);
-		EIDMW_CMN_API void writeError(const int line,
+		void writeError(const wchar_t * format, ...);
+		void writeError(const char *format, ...);
+		void writeError(const int line,
 					      const wchar_t * file,
 					      const wchar_t * format, ...);
-		EIDMW_CMN_API void writeError(const int line,
+		void writeError(const int line,
 					      const char *file,
 					      const char *format, ...);
-		EIDMW_CMN_API void writeWarning(const wchar_t * format, ...);
-		EIDMW_CMN_API void writeWarning(const char *format, ...);
-		EIDMW_CMN_API void writeWarning(const int line,
+		void writeWarning(const wchar_t * format, ...);
+		void writeWarning(const char *format, ...);
+		void writeWarning(const int line,
 						const wchar_t * file,
 						const wchar_t * format, ...);
-		EIDMW_CMN_API void writeWarning(const int line,
+		void writeWarning(const int line,
 						const char *file,
 						const char *format, ...);
-		EIDMW_CMN_API void writeInfo(const wchar_t * format, ...);
-		EIDMW_CMN_API void writeInfo(const char *format, ...);
-		EIDMW_CMN_API void writeInfo(const int line,
+		void writeInfo(const wchar_t * format, ...);
+		void writeInfo(const char *format, ...);
+		void writeInfo(const int line,
 					     const wchar_t * file,
 					     const wchar_t * format, ...);
-		EIDMW_CMN_API void writeInfo(const int line, const char *file,
+		void writeInfo(const int line, const char *file,
 					     const char *format, ...);
-		EIDMW_CMN_API void writeDebug(const wchar_t * format, ...);
-		EIDMW_CMN_API void writeDebug(const char *format, ...);
-		EIDMW_CMN_API void writeDebug(const int line,
+		void writeDebug(const wchar_t * format, ...);
+		void writeDebug(const char *format, ...);
+		void writeDebug(const int line,
 					      const wchar_t * file,
 					      const wchar_t * format, ...);
-		EIDMW_CMN_API void writeDebug(const int line,
+		void writeDebug(const int line,
 					      const char *file,
 					      const char *format, ...);
 
 		//USE ONLY IN MACRO
-		EIDMW_CMN_API bool writeLineHeaderW(tLOG_Level level,
+		bool writeLineHeaderW(tLOG_Level level,
 						    const int line =
 						    0, const wchar_t * file =
 						    L"");
-		EIDMW_CMN_API bool writeLineHeaderA(tLOG_Level level,
+		bool writeLineHeaderA(tLOG_Level level,
 						    const int line =
 						    0, const char *file = "");
-		EIDMW_CMN_API bool writeLineMessageW(const wchar_t * format,
+		bool writeLineMessageW(const wchar_t * format,
 						     ...);
-		EIDMW_CMN_API bool writeLineMessageA(const char *format, ...);
+		bool writeLineMessageA(const char *format, ...);
 
 		friend class CLogger;
 

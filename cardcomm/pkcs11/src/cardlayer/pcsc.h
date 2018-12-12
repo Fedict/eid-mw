@@ -97,7 +97,7 @@ namespace eIDMW
 		unsigned long ulEventState;	// the state after the new check
 	} tReaderInfo;
 
-	class EIDMW_CAL_API CPCSC
+	class CPCSC
 	{
 public:
 		CPCSC(void);

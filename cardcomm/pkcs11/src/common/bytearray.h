@@ -27,7 +27,7 @@
 namespace eIDMW
 {
 
-	class EIDMW_CMN_API CByteArray
+	class CByteArray
 	{
 public:
 		CByteArray(unsigned long ulCapacity = 0);

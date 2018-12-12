@@ -33,17 +33,17 @@ namespace eIDMW
 	class CCardReaderInfo
 	{
 public:
-		EIDMW_CAL_API static CCardReaderInfo *GetCardReaderInfo(void);
+		static CCardReaderInfo *GetCardReaderInfo(void);
 
-		EIDMW_CAL_API void CollectInfo(void);
+		void CollectInfo(void);
 
-		EIDMW_CAL_API int GetNoOfReaders(void)
+		int GetNoOfReaders(void)
 		{
 			return m_NoOfReaders;
 		};
 
 private:
-		      CCardReaderInfo(void);
+		CCardReaderInfo(void);
 
 		static CCardReaderInfo *m_CardReaderInfo;
 

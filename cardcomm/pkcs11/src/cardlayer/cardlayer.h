@@ -28,7 +28,7 @@
 namespace eIDMW
 {
 
-	class EIDMW_CAL_API CCardLayer
+	class CCardLayer
 	{
 public:
 

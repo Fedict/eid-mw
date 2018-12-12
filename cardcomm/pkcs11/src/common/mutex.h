@@ -33,7 +33,7 @@
 namespace eIDMW
 {
 
-	class EIDMW_CMN_API CMutex
+	class CMutex
 	{
 public:
 		CMutex();

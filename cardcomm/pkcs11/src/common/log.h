@@ -70,7 +70,7 @@ namespace eIDMW
  * Example:
  *          MWLOG(LEV_ERROR, MOD_P11, "Invalid session handle %d\n", handle);
  */
-	EIDMW_CMN_API bool MWLOG(tLevel level, tModule mod,
+	bool MWLOG(tLevel level, tModule mod,
 				 const wchar_t * format, ...);
 
 /**
@@ -78,7 +78,7 @@ namespace eIDMW
  * Example:
  *          MWLOG(LEV_ERROR, theException);
  */
-	EIDMW_CMN_API bool MWLOG(tLevel level, tModule mod,
+	bool MWLOG(tLevel level, tModule mod,
 				 CMWException theException);
 
 

@@ -339,7 +339,7 @@ int fopen_s(FILE ** pFile, const char *filename, const char *mode)
 	return r;
 }
 
-EIDMW_CMN_API int fprintf_s(FILE * stream, const char *format, ...)
+int fprintf_s(FILE * stream, const char *format, ...)
 {
 	va_list args;
 	char *csTmp = NULL;
@@ -358,7 +358,7 @@ EIDMW_CMN_API int fprintf_s(FILE * stream, const char *format, ...)
 	return r;
 }
 
-EIDMW_CMN_API int vfprintf_s(FILE * stream, const char *format,
+int vfprintf_s(FILE * stream, const char *format,
 			     va_list argptr)
 {
 	char *csTmp = NULL;
@@ -375,7 +375,7 @@ EIDMW_CMN_API int vfprintf_s(FILE * stream, const char *format,
 	return r;
 }
 
-EIDMW_CMN_API errno_t freopen_s(FILE ** pFile, const char *filename,
+errno_t freopen_s(FILE ** pFile, const char *filename,
 				const char *mode, FILE * stream)
 {
 	FILE *fd;

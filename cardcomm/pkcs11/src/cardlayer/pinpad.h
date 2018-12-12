@@ -49,7 +49,7 @@ namespace eIDMW
 {
 	class CContext;
 
-	class EIDMW_CAL_API CPinpad
+	class CPinpad
 	{
 public:
 		CPinpad(void);

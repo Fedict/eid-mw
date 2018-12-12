@@ -47,7 +47,7 @@ namespace eIDMW
 #ifdef EIDMW_PF_EXPORT
 	class CPinpadLibOldBeid
 #else
-	class EIDMW_CAL_API CPinpadLibOldBeid
+	class CPinpadLibOldBeid
 #endif
 	{
 public:

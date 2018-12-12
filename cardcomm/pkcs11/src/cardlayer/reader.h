@@ -30,7 +30,7 @@ namespace eIDMW
 	class CCardLayer;
 	class CCard;
 
-	class EIDMW_CAL_API CReader
+	class CReader
 	{
 public:
 		~CReader(void);

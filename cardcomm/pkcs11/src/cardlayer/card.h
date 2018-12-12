@@ -58,7 +58,7 @@ namespace eIDMW
 	/** Compatibility version for the entire plugin-relevant API: V1.00 */
 	const unsigned long PLUGIN_VERSION = 100;
 
-	class EIDMW_CAL_API CCard
+	class CCard
 	{
 public:
 		//CCard(SCARDHANDLE hCard, CContext * poContext,  CPinpad * poPinpad);
