@@ -22,8 +22,6 @@
 
 #include <stdio.h>
 
-#include "common/export.h"
-
 namespace eIDMW
 {
 #ifdef WIN32

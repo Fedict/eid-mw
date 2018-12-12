@@ -560,7 +560,6 @@
     <ClInclude Include="..\src\common\configuration.h" />
     <ClInclude Include="..\src\common\dynamiclib.h" />
     <ClInclude Include="..\src\common\eiderrors.h" />
-    <ClInclude Include="..\src\common\export.h" />
     <ClInclude Include="..\src\common\hash.h" />
     <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_argchk.h" />
     <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_cfg.h" />

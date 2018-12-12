@@ -23,8 +23,6 @@
 #ifndef __THREAD_H__
 #define __THREAD_H__
 
-#include "export.h"
-
 #ifdef WIN32
 #ifndef __WIN32__
 #define __WIN32__
@@ -89,15 +87,13 @@ public:
 		virtual void Stop(unsigned long ulSleepFrequency = 100);
 
 	/** Wait until the thread ends */
-		virtual void WaitTillStopped(unsigned long ulSleepFrequency =
-					     100);
+		virtual void WaitTillStopped(unsigned long ulSleepFrequency = 100);
 
 	/** Wait until the thread ends or the timeout occure (in second) 
 	iStopMode : 0 = do not stop the thread after timeout
 	            1 = request the thread o stop after timeout
 				2 = force the thread to stop*/
-		virtual bool WaitTimeout(unsigned long ulTimeout,
-					 int iStopMode = 0);
+		virtual bool WaitTimeout(unsigned long ulTimeout, int iStopMode = 0);
 #ifdef WIN32
 		uintptr_t m_SyncHandle;
 #else

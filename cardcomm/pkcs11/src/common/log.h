@@ -27,7 +27,6 @@ TODO:
 
 
 */
-#include "export.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -70,16 +69,14 @@ namespace eIDMW
  * Example:
  *          MWLOG(LEV_ERROR, MOD_P11, "Invalid session handle %d\n", handle);
  */
-	bool MWLOG(tLevel level, tModule mod,
-				 const wchar_t * format, ...);
+	bool MWLOG(tLevel level, tModule mod, const wchar_t * format, ...);
 
 /**
  * Log.
  * Example:
  *          MWLOG(LEV_ERROR, theException);
  */
-	bool MWLOG(tLevel level, tModule mod,
-				 CMWException theException);
+	bool MWLOG(tLevel level, tModule mod, CMWException theException);
 
 
 }

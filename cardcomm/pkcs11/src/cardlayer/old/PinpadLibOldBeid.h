@@ -22,13 +22,12 @@
 /**
  * Class that takes care of the older BE eID pinpad libs
  * (xipass, cashmouse, ..).
- * This class is needed on Windows only becuase the old
+ * This class is needed on Windows only because the old
  * pinpad libs were only for Windows.
  */
 #ifndef __PINPADLIBOLDBEID_H__
 #define __PINPADLIBOLDBEID_H__
 
-#include "../common/Export.h"
 #include "../common/DynamicLib.h"
 #include "../common/ByteArray.h"
 
@@ -43,12 +42,7 @@ typedef long (*BEID_OLD_CHANGE_PIN) (const SCR_Card *, BYTE pinID, const SCR_App
 
 namespace eIDMW
 {
-
-#ifdef EIDMW_PF_EXPORT
 	class CPinpadLibOldBeid
-#else
-	class CPinpadLibOldBeid
-#endif
 	{
 public:
 		CPinpadLibOldBeid();

@@ -36,7 +36,6 @@
 #define __PINPADLIB_H__
 
 #include "stdlib.h"
-#include "common/export.h"
 #include "common/dynamiclib.h"
 #include "common/bytearray.h"
 #include "pinpad2.h"
@@ -50,11 +49,7 @@ typedef unsigned long BEID_DIALOGHANDLE;
 
 namespace eIDMW
 {
-#ifdef EIDMW_PF_EXPORT
 	class CPinpadLib
-#else
-	class CPinpadLib
-#endif
 	{
 public:
 		CPinpadLib();

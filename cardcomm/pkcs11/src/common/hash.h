@@ -46,7 +46,6 @@
 #ifndef HASH_H
 #define HASH_H
 
-#include "export.h"
 #include "bytearray.h"
 #include "libtomcrypt/tomcrypt_hash.h"
 
@@ -73,17 +72,15 @@ public:
 
 		/* All at once */
 		CByteArray Hash(tHashAlgo algo, const CByteArray & data);
-		CByteArray Hash(tHashAlgo algo, const CByteArray & data,
-				unsigned long ulOffset, unsigned long ulLen);
+		CByteArray Hash(tHashAlgo algo, const CByteArray & data, unsigned long ulOffset, unsigned long ulLen);
 
 		void Init(tHashAlgo algo);
 		void Update(const CByteArray & data);
-		void Update(const CByteArray & data, unsigned long ulOffset,
-			    unsigned long ulLen);
+		void Update(const CByteArray & data, unsigned long ulOffset, unsigned long ulLen);
 		CByteArray GetHash();
 
 private:
-		           hash_state m_md1;
+		hash_state m_md1;
 		hash_state m_md2;
 		tHashAlgo m_Algo;
 		bool m_bInitialized;

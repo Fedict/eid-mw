@@ -28,7 +28,6 @@
 #define __DYNAMICLIB_H__
 
 #include "eiderrors.h"
-#include "export.h"
 #include <string.h>
 #include <string>
 
@@ -52,8 +51,8 @@ public:
 
 private:
 		// No copies allowed
-		     CDynamicLib(const CDynamicLib & oDynLib);
-		      CDynamicLib & operator =(const CDynamicLib & oDynLib);
+		CDynamicLib(const CDynamicLib & oDynLib);
+		CDynamicLib & operator =(const CDynamicLib & oDynLib);
 
 		// Platform-dependent implementations
 		unsigned long PlatformOpen(const char *csLibPath);

@@ -29,7 +29,6 @@
 #endif
 #endif
 
-#include "export.h"
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
@@ -53,16 +52,13 @@ namespace eIDMW
  * Case insensitve search, csSearch should be in lower case.
  * Returns true is csSearch is present in csData.
  */
-	bool StartsWithCI(const char *csData,
-					const char *csSearch);
+	bool StartsWithCI(const char *csData, const char *csSearch);
 
 	int Test(void);
 
-	char *bin2AsciiHex(const unsigned char *pData,
-					 unsigned long ulLen);
+	char *bin2AsciiHex(const unsigned char *pData, unsigned long ulLen);
 
-	void GetProcessName(wchar_t * wBuffer,
-					  unsigned long ulLen);
+	void GetProcessName(wchar_t * wBuffer, unsigned long ulLen);
 }
 
 #ifndef WIN32

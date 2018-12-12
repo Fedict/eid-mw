@@ -21,7 +21,6 @@
 #ifndef __MUTEX_H__
 #define __MUTEX_H__
 
-#include "export.h"
 
 #ifdef WIN32
 #include <windows.h>
@@ -45,8 +44,8 @@ public:
 
 private:
 		// No copies allowed
-		     CMutex(const CMutex & oMutex);
-		      CMutex & operator =(const CMutex & oMutex);
+		CMutex(const CMutex & oMutex);
+		CMutex & operator =(const CMutex & oMutex);
 
 #ifdef WIN32
 		CRITICAL_SECTION m_Mutex;
@@ -75,7 +74,7 @@ public:
 		}
 
 private:
-		          CMutex * m_poMutex;
+		CMutex * m_poMutex;
 	};
 
 //-------------------------------

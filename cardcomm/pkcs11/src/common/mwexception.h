@@ -22,7 +22,6 @@
 #ifndef MWEXCEPTION_H
 #define MWEXCEPTION_H
 
-#include "export.h"
 
 #include <exception>
 #include <iostream>
@@ -37,7 +36,7 @@ namespace eIDMW
 public:
 		//CMWException(long lError);
 		CMWException(long lError, const char *cpFile, long lLine);
-		    ~CMWException() throw()
+		~CMWException() throw()
 		{
 		};
 		virtual const char *what() const throw();

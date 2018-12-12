@@ -20,7 +20,6 @@
 **************************************************************************** */
 #pragma once
 
-#include "export.h"
 #include <string>
 #include "mutex.h"
 #include "datafile.h"
