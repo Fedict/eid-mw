@@ -71,7 +71,6 @@ noinst_HEADERS = \
 	common/mutex.h \
 	common/dynamiclib.h \
 	common/tlv.h \
-	common/export.h \
 	common/tlvbuffer.h \
 	common/hash.h \
 	common/configuration.h \
