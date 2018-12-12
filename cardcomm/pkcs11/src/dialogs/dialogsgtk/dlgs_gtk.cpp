@@ -80,7 +80,7 @@ void dlg_log_error(const char *label)
 	MW_PERROR(LEV_ERROR, MOD_DLG, label);
 }
 
-DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
+DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 				    DlgPinUsage usage,
 				    const wchar_t * wsPinName,
 				    DlgPinInfo pinInfo, wchar_t * wsPin,
@@ -100,7 +100,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 	}
 }
 
-DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
+DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
 				     DlgPinUsage usage,
 				     const wchar_t * wsPinName,
 				     DlgPinInfo pin1Info, wchar_t * wsPin1,
@@ -134,7 +134,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
 }
 
 
-DLGS_EXPORT DlgRet eIDMW::DlgBadPin(DlgPinUsage usage,
+DlgRet eIDMW::DlgBadPin(DlgPinUsage usage,
 				    const wchar_t * wsPinName,
 				    unsigned long ulRemainingTries)
 {
@@ -150,7 +150,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin(DlgPinUsage usage,
 }
 
 
-DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
+DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 					       const wchar_t * wsReader,
 					       DlgPinUsage usage,
 					       const wchar_t * wsPinName,
@@ -177,7 +177,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 }
 
 
-DLGS_EXPORT void eIDMW::DlgClosePinpadInfo(unsigned long ulHandle)
+void eIDMW::DlgClosePinpadInfo(unsigned long ulHandle)
 {
 	MWLOG(LEV_DEBUG, MOD_DLG, L"eIDMW::DlgClosePinPadInfo called");
 
@@ -197,7 +197,7 @@ DLGS_EXPORT void eIDMW::DlgClosePinpadInfo(unsigned long ulHandle)
 }
 
 
-DLGS_EXPORT DlgRet eIDMW::DlgAskAccess(const wchar_t * wsAppPath,
+DlgRet eIDMW::DlgAskAccess(const wchar_t * wsAppPath,
 				       const wchar_t * wsReaderName,
 				       DlgPFOperation ulOperation,
 				       int *piForAllOperations)
