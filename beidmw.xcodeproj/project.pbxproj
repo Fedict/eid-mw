@@ -152,7 +152,6 @@
 		86E3DDFD1653D6210015B5E1 /* dynamiclib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDC41653D6200015B5E1 /* dynamiclib.cpp */; };
 		86E3DDFE1653D6210015B5E1 /* dynamiclib.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDC51653D6200015B5E1 /* dynamiclib.h */; };
 		86E3DDFF1653D6210015B5E1 /* eiderrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDC61653D6200015B5E1 /* eiderrors.h */; };
-		86E3DE001653D6210015B5E1 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDC71653D6200015B5E1 /* export.h */; };
 		86E3DE011653D6210015B5E1 /* hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDC81653D6200015B5E1 /* hash.cpp */; };
 		86E3DE021653D6210015B5E1 /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DDC91653D6200015B5E1 /* hash.h */; };
 		86E3DE031653D6210015B5E1 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DDCB1653D6200015B5E1 /* md5.c */; };
@@ -531,7 +530,6 @@
 		86E3DDC41653D6200015B5E1 /* dynamiclib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dynamiclib.cpp; path = cardcomm/pkcs11/src/common/dynamiclib.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDC51653D6200015B5E1 /* dynamiclib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dynamiclib.h; path = cardcomm/pkcs11/src/common/dynamiclib.h; sourceTree = SOURCE_ROOT; };
 		86E3DDC61653D6200015B5E1 /* eiderrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eiderrors.h; path = cardcomm/pkcs11/src/common/eiderrors.h; sourceTree = SOURCE_ROOT; };
-		86E3DDC71653D6200015B5E1 /* export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = export.h; path = cardcomm/pkcs11/src/common/export.h; sourceTree = SOURCE_ROOT; };
 		86E3DDC81653D6200015B5E1 /* hash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hash.cpp; path = cardcomm/pkcs11/src/common/hash.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DDC91653D6200015B5E1 /* hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hash.h; path = cardcomm/pkcs11/src/common/hash.h; sourceTree = SOURCE_ROOT; };
 		86E3DDCB1653D6200015B5E1 /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = cardcomm/pkcs11/src/common/libtomcrypt/md5.c; sourceTree = SOURCE_ROOT; };
@@ -1008,7 +1006,6 @@
 				86E3DDC41653D6200015B5E1 /* dynamiclib.cpp */,
 				86E3DDC51653D6200015B5E1 /* dynamiclib.h */,
 				86E3DDC61653D6200015B5E1 /* eiderrors.h */,
-				86E3DDC71653D6200015B5E1 /* export.h */,
 				86E3DDC81653D6200015B5E1 /* hash.cpp */,
 				86E3DDC91653D6200015B5E1 /* hash.h */,
 				86E3DDCA1653D6200015B5E1 /* libtomcrypt */,
@@ -1188,7 +1185,6 @@
 				86E3DDFE1653D6210015B5E1 /* dynamiclib.h in Headers */,
 				86E3DDFF1653D6210015B5E1 /* eiderrors.h in Headers */,
 				65EABAF21C621F3D00034337 /* utftranslate.h in Headers */,
-				86E3DE001653D6210015B5E1 /* export.h in Headers */,
 				86E3DE021653D6210015B5E1 /* hash.h in Headers */,
 				86E3DE091653D6210015B5E1 /* tomcrypt_argchk.h in Headers */,
 				86E3DE0A1653D6210015B5E1 /* tomcrypt_cfg.h in Headers */,

@@ -123,7 +123,7 @@ CFDictionaryRef BeidCreateDictFromArrays(const void**keys, const void** values, 
     return dictRef;
 }
 
-DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
+DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
                                     DlgPinUsage usage, const wchar_t *wsPinName,
                                     DlgPinInfo pinInfo, wchar_t *wsPin, unsigned long ulPinBufferLen)
 {
@@ -306,7 +306,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
     
 }
 
-DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
+DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
                                      DlgPinUsage usage, const wchar_t *wsPinName,
                                      DlgPinInfo pin1Info, wchar_t *wsPin1, unsigned long ulPin1BufferLen,
                                      DlgPinInfo pin2Info, wchar_t *wsPin2, unsigned long ulPin2BufferLen)
@@ -516,7 +516,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
 }
 
 
-DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
+DlgRet eIDMW::DlgBadPin(
                                     DlgPinUsage usage, const wchar_t *wsPinName,
                                     unsigned long ulRemainingTries)
 {
@@ -659,7 +659,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgBadPin(
 
 
 //DlgDisplayModal is only used as dialog askaccess at the moment,
-DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
+DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
                                           DlgMessageID messageID, const wchar_t *csMesg,
                                           unsigned char ulButtons, unsigned char ulEnterButton,
                                           unsigned char ulCancelButton)
@@ -827,7 +827,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayModal(DlgIcon icon,
 }
 
 
-DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
+DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 											   const wchar_t *wsReader, DlgPinUsage usage, const wchar_t *wsPinName,
 											   const wchar_t *wsMessage,
 											   unsigned long *pulHandle)
@@ -915,7 +915,7 @@ DLGS_EXPORT DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 }
 
 
-DLGS_EXPORT void eIDMW::DlgClosePinpadInfo( unsigned long theUserNotificationRef )
+void eIDMW::DlgClosePinpadInfo( unsigned long theUserNotificationRef )
 {
     SInt32 error = 0;
     
