@@ -22,6 +22,7 @@ void DisplayPINPressed(DlgRet dlgret, wchar_t * wsPin,
 
 void DisplayAllModalCombinations();
 void DisplayAllAskPinCombinations();
+void DisplayChangePinCombinations();
 void DisplayAllPinpadInfoCombinations();
 void DisplayAllBadPinCombinations();
 
