@@ -439,8 +439,8 @@
 		86F33B191987A6B400E200F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
-				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				CLANG_CXX_LIBRARY = "libc++";
+				DEVELOPMENT_TEAM = 5CB8NW4G4V;
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -462,8 +462,8 @@
 		86F33B1A1987A6B400E200F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
-				DEVELOPMENT_TEAM = D4SW6VZB8M;
+				CLANG_CXX_LIBRARY = "libc++";
+				DEVELOPMENT_TEAM = 5CB8NW4G4V;
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
