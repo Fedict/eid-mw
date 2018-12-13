@@ -2802,6 +2802,8 @@
 					BEID_35,
 					EIDMW_STATIC_LIB,
 					PKCS11_V2_20,
+					USING_DL_OPEN,
+					LTC_NO_ROLC,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
@@ -2845,6 +2847,8 @@
 					BEID_35,
 					EIDMW_STATIC_LIB,
 					PKCS11_V2_20,
+					USING_DL_OPEN,
+					LTC_NO_ROLC,
 				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
 					"EIDMW_PREFIX=/usr/local",
