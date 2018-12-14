@@ -104,7 +104,6 @@ public:
 					    0, unsigned long ulMaxLen =
 					    FULL_FILE, bool bDoNotCache =
 					    false);
-		tCacheInfo GetCacheInfo(const std::string & csPath);
 
 		CByteArray ReadUncachedFile(const std::string &csPath,
 						    unsigned long ulOffset = 0,

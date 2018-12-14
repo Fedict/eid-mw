@@ -47,23 +47,7 @@ namespace eIDMW
 #endif
 	const unsigned long MAX_APDU_LEN = 256;
 	const unsigned long APDU_BUF_LEN = MAX_APDU_LEN + 2;	// for SW1 and SW2
-
 	const unsigned long CTRL_BUF_LEN = 258;	// Fixme: this won't be enough for a pinpad init !!!
-
-	typedef enum
-	{
-		DONT_CACHE,
-		SIMPLE_CACHE,	// for data that can never be modified
-		CERT_CACHE,  // for certs that can be modified
-		CHECK_16_CACHE,	// for data where checking 16 bytes is enough
-		CHECK_SERIAL,	// for data where the card serial number should be present
-	} tCacheAction;
-
-	typedef struct
-	{
-		tCacheAction action;
-		unsigned long ulOffset;	// for CHECK_16_CACHE
-	} tCacheInfo;
 
 	typedef enum
 	{

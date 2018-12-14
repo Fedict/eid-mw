@@ -730,14 +730,6 @@ namespace eIDMW
 		return m_ul6CDelay;
 	}
 
-	tCacheInfo CCard::GetCacheInfo(const std::string & csPath)
-	{
-		// no caching
-		tCacheInfo dontCache = { DONT_CACHE, 0 };
-
-		return dontCache;
-	}
-
 	unsigned int CCard::GetRSAKeySize()
 	{
 		if (m_ucAppletVersion >= 0x17)
