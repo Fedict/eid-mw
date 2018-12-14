@@ -35,6 +35,12 @@
 #include <iostream>
 #include "mw_util.h"
 
+#ifndef WIN32
+// macros for the conversion of the EIDMW_PREFIX path (passed with the -D option to gcc) to a string
+#define STRINGIFY(x) XSTRINGIFY(x)
+#define XSTRINGIFY(x) #x
+#endif
+
 namespace eIDMW
 {
 

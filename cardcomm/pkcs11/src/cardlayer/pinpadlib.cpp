@@ -20,7 +20,6 @@
 **************************************************************************** */
 #include "pinpadlib.h"
 #include "common/mwexception.h"
-#include "common/prefix.h"
 #include "common/util.h"
 
 using namespace eIDMW;

@@ -297,9 +297,6 @@
     <ClInclude Include="..\src\cardlayer\pkcs15parser.h">
       <Filter>Cardlayer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\common\prefix.h">
-      <Filter>Cardlayer</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cardlayer\reader.h">
       <Filter>Cardlayer</Filter>
     </ClInclude>
