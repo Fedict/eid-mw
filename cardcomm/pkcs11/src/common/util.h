@@ -38,8 +38,6 @@
 namespace eIDMW
 {
 
-	void LogShitLevel(int x);
-
 //--- string conversion between std::wstring and std::string
 	std::wstring utilStringWiden(const std::string & in,
 						   const std::locale & locale
@@ -53,8 +51,6 @@ namespace eIDMW
  * Returns true is csSearch is present in csData.
  */
 	bool StartsWithCI(const char *csData, const char *csSearch);
-
-	int Test(void);
 
 	char *bin2AsciiHex(const unsigned char *pData, unsigned long ulLen);
 
