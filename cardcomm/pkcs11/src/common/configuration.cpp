@@ -31,7 +31,6 @@
 #include "datafile.h"
 #include "eiderrors.h"
 #include "mwexception.h"
-#include "prefix.h"
 #include "loglevels.h"
 
 // open the user config file and also the general config file

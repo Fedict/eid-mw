@@ -148,7 +148,6 @@
 		86C0E77421C2586E00602028 /* hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74421C2586E00602028 /* hash.cpp */; };
 		86C0E77521C2586E00602028 /* svn_revision.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74521C2586E00602028 /* svn_revision.h */; };
 		86C0E77621C2586E00602028 /* dynamiclib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74621C2586E00602028 /* dynamiclib.cpp */; };
-		86C0E77721C2586E00602028 /* prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74721C2586E00602028 /* prefix.h */; };
 		86C0E77821C2586E00602028 /* tomcrypt_hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74921C2586E00602028 /* tomcrypt_hash.h */; };
 		86C0E77921C2586E00602028 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74A21C2586E00602028 /* sha1.c */; };
 		86C0E77A21C2586E00602028 /* tomcrypt_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74B21C2586E00602028 /* tomcrypt_macros.h */; };
@@ -498,7 +497,6 @@
 		86C0E74421C2586E00602028 /* hash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hash.cpp; sourceTree = "<group>"; };
 		86C0E74521C2586E00602028 /* svn_revision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svn_revision.h; sourceTree = "<group>"; };
 		86C0E74621C2586E00602028 /* dynamiclib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dynamiclib.cpp; sourceTree = "<group>"; };
-		86C0E74721C2586E00602028 /* prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.h; sourceTree = "<group>"; };
 		86C0E74921C2586E00602028 /* tomcrypt_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tomcrypt_hash.h; sourceTree = "<group>"; };
 		86C0E74A21C2586E00602028 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha1.c; sourceTree = "<group>"; };
 		86C0E74B21C2586E00602028 /* tomcrypt_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tomcrypt_macros.h; sourceTree = "<group>"; };
@@ -947,7 +945,6 @@
 				86C0E73821C2586E00602028 /* mw_util.h */,
 				86C0E73F21C2586E00602028 /* mwexception.cpp */,
 				86C0E75521C2586E00602028 /* mwexception.h */,
-				86C0E74721C2586E00602028 /* prefix.h */,
 				86C0E74521C2586E00602028 /* svn_revision.h */,
 				86C0E72D21C2586E00602028 /* thread.cpp */,
 				86C0E73921C2586E00602028 /* thread.h */,
@@ -1087,7 +1084,6 @@
 			files = (
 				86C0E96E21C25E4700602028 /* pinpadlib.h in Headers */,
 				86C0E96821C25E4700602028 /* context.h in Headers */,
-				86C0E77721C2586E00602028 /* prefix.h in Headers */,
 				86C0E96921C25E4700602028 /* p15objects.h in Headers */,
 				86C0E77821C2586E00602028 /* tomcrypt_hash.h in Headers */,
 				86C0E77E21C2586E00602028 /* tomcrypt_argchk.h in Headers */,
