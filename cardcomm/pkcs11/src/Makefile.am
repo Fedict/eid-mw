@@ -66,7 +66,6 @@ noinst_HEADERS = \
 	loglevels.h \
 	display.h \
 	common/thread.h \
-	common/prefix.h \
 	common/bytearray.h \
 	common/mutex.h \
 	common/dynamiclib.h \
