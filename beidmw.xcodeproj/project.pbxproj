@@ -130,7 +130,6 @@
 		86C0E76221C2586E00602028 /* tlvbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E73221C2586E00602028 /* tlvbuffer.cpp */; };
 		86C0E76321C2586E00602028 /* configuration.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E73321C2586E00602028 /* configuration.h */; };
 		86C0E76421C2586E00602028 /* datafile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E73421C2586E00602028 /* datafile.cpp */; };
-		86C0E76521C2586E00602028 /* tlvtagdefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E73521C2586E00602028 /* tlvtagdefinitions.h */; };
 		86C0E76621C2586E00602028 /* threaddefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E73621C2586E00602028 /* threaddefines.h */; };
 		86C0E76721C2586E00602028 /* tlv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E73721C2586E00602028 /* tlv.cpp */; };
 		86C0E76821C2586E00602028 /* mw_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E73821C2586E00602028 /* mw_util.h */; };
@@ -479,7 +478,6 @@
 		86C0E73221C2586E00602028 /* tlvbuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tlvbuffer.cpp; sourceTree = "<group>"; };
 		86C0E73321C2586E00602028 /* configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = configuration.h; sourceTree = "<group>"; };
 		86C0E73421C2586E00602028 /* datafile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datafile.cpp; sourceTree = "<group>"; };
-		86C0E73521C2586E00602028 /* tlvtagdefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tlvtagdefinitions.h; sourceTree = "<group>"; };
 		86C0E73621C2586E00602028 /* threaddefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threaddefines.h; sourceTree = "<group>"; };
 		86C0E73721C2586E00602028 /* tlv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tlv.cpp; sourceTree = "<group>"; };
 		86C0E73821C2586E00602028 /* mw_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mw_util.h; sourceTree = "<group>"; };
@@ -953,7 +951,6 @@
 				86C0E75721C2586E00602028 /* tlv.h */,
 				86C0E73221C2586E00602028 /* tlvbuffer.cpp */,
 				86C0E72721C2586E00602028 /* tlvbuffer.h */,
-				86C0E73521C2586E00602028 /* tlvtagdefinitions.h */,
 				86C0E72F21C2586E00602028 /* util.cpp */,
 				86C0E74021C2586E00602028 /* util.h */,
 			);
@@ -1138,7 +1135,6 @@
 				86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */,
 				86C0E77521C2586E00602028 /* svn_revision.h in Headers */,
 				86C0E95C21C25E4700602028 /* pinpad.h in Headers */,
-				86C0E76521C2586E00602028 /* tlvtagdefinitions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
