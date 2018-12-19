@@ -509,7 +509,6 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\cardlayer\src;..\src\dialogs\dialogswin32;..\src\dialogs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\src\common\mwexception.cpp" />
-    <ClCompile Include="..\src\common\mw_util.cpp" />
     <ClCompile Include="..\src\common\thread.cpp" />
     <ClCompile Include="..\src\common\tlv.cpp" />
     <ClCompile Include="..\src\common\tlvbuffer.cpp" />
@@ -569,7 +568,6 @@
     <ClInclude Include="..\src\common\logbase.h" />
     <ClInclude Include="..\src\common\mutex.h" />
     <ClInclude Include="..\src\common\mwexception.h" />
-    <ClInclude Include="..\src\common\mw_util.h" />
     <ClInclude Include="..\src\common\thread.h" />
     <ClInclude Include="..\src\common\threaddefines.h" />
     <ClInclude Include="..\src\common\tlv.h" />

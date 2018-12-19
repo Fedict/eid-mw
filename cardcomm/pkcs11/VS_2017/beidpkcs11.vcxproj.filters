@@ -22,9 +22,6 @@
     <ClCompile Include="..\src\common\mutex.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\common\mw_util.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\common\util.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -181,9 +178,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\mutex.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\mw_util.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\util.h">
