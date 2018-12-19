@@ -80,7 +80,6 @@ noinst_HEADERS = \
 	common/mw_util.h \
 	common/log.h \
 	common/svn_revision.h \
-	common/tlvtagdefinitions.h \
 	common/eiderrors.h \
 	common/libtomcrypt/tomcrypt_hash.h \
 	common/libtomcrypt/tomcrypt_cfg.h \
