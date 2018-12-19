@@ -303,9 +303,6 @@
     <ClInclude Include="..\src\dialogs\dialogswin32\stdafx.h">
       <Filter>Dialogs</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\common\tlvtagdefinitions.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\common\thread.h">
       <Filter>Common</Filter>
     </ClInclude>

@@ -572,7 +572,6 @@
     <ClInclude Include="..\src\common\threaddefines.h" />
     <ClInclude Include="..\src\common\tlv.h" />
     <ClInclude Include="..\src\common\tlvbuffer.h" />
-    <ClInclude Include="..\src\common\tlvtagdefinitions.h" />
     <ClInclude Include="..\src\common\util.h" />
     <ClInclude Include="..\src\dialogs\dialogs.h" />
     <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndaskaccess.h" />
