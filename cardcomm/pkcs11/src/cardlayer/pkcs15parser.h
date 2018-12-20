@@ -37,7 +37,6 @@ namespace eIDMW
 
 	typedef struct
 	{
-		//CByteArray oAppID;
 		std::string oAppID;
 		std::string csAppPath;
 		std::string csLabel;
@@ -46,18 +45,18 @@ namespace eIDMW
 	typedef struct
 	{
 		int iVersion;
-		    std::string csSerial;
-		    std::string csLabel;
-		    std::string csManufactID;
+		std::string csSerial;
+		std::string csLabel;
+		std::string csManufactID;
 		unsigned long ulFlags;	// readonly, login required, prn generation, eid compliant
 		int iAppVersion;
 		int iSecEnv; // security env. info
-		    std::string csOwner;	// security env. info
+		std::string csOwner;	// security env. info
 		int piRecordInfo[7];	// record info 
-		    std::vector < tAlgoInfo > oAlgoInfo;	// array of algorithm info
-		    std::string csIssuer;
-		    std::string csHolder;
-		    std::string csLastUpdate;
+		std::vector < tAlgoInfo > oAlgoInfo;	// array of algorithm info
+		std::string csIssuer;
+		std::string csHolder;
+		std::string csLastUpdate;
 	} tTokenInfo;
 
 	typedef struct
@@ -102,14 +101,11 @@ public:
 
 		tOdfInfo ParseOdf(const CByteArray & contents);
 
-		      std::vector < tPin >
-			ParseAodf(const CByteArray & contents);
+		std::vector < tPin > ParseAodf(const CByteArray & contents);
 
-		      std::vector < tPrivKey >
-			ParsePrkdf(const CByteArray & contents);
+		std::vector < tPrivKey > ParsePrkdf(const CByteArray & contents);
 
-		      std::vector < tCert >
-			ParseCdf(const CByteArray & contents);
+		std::vector < tCert > ParseCdf(const CByteArray & contents);
 
 private:
 
