@@ -45,22 +45,22 @@
 		NSString* name = [arr objectAtIndex:i];
 		NSView* d = [_viewDict objectForKey:name];
 		NSObject* s = [_app searchObjectById:name ofClass:[d class] forUpdate:NO];
-		SEL readsel;
-		SEL writesel;
 		if([s isKindOfClass:[NSTextField class]]) {
-			readsel = @selector(stringValue);
-			writesel = @selector(setStringValue:);
+            NSTextField *src = (NSTextField*)s;
+            NSTextField *dest = (NSTextField*)d;
+            [dest setStringValue:[src stringValue]];
 		} else if([s isKindOfClass:[NSImageView class]]) {
-			readsel = @selector(image);
-			writesel = @selector(setImage:);
+            NSImageView *src = (NSImageView*)s;
+            NSImageView *dest = (NSImageView*)d;
+            [dest setImage:[src image]];
 		} else if([s isKindOfClass:[NSButton class]]){
-			readsel = @selector(state);
-			writesel = @selector(setState:);
+            NSButton *src = (NSButton*)s;
+            NSButton *dest = (NSButton*)d;
+            [dest setState:[src state]];
 		} else {
 			[_app log:[NSString stringWithFormat:@"Could not find field for %@; print operation cancelled", name] withLevel:eIDLogLevelError];
 			return NO;
 		}
-		[d performSelector:writesel withObject:[s performSelector:readsel]];
 	}
 	return YES;
 }
