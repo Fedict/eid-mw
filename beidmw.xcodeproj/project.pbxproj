@@ -171,7 +171,6 @@
 		86C0E93421C25D5400602028 /* pkcs11log.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447D19A8C2B0003ABC24 /* pkcs11log.c */; };
 		86C0E93521C25D5400602028 /* pkcs11util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */; };
 		86C0E93621C25D5400602028 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = 6594447B19A8C29B003ABC24 /* asn1.c */; };
-		86C0E95B21C25E4700602028 /* cardreaderinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E93821C25E4700602028 /* cardreaderinfo.h */; };
 		86C0E95C21C25E4700602028 /* pinpad.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E93921C25E4700602028 /* pinpad.h */; };
 		86C0E95D21C25E4700602028 /* pcsc.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E93A21C25E4700602028 /* pcsc.h */; };
 		86C0E95E21C25E4700602028 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E93B21C25E4700602028 /* reader.h */; };
@@ -197,7 +196,6 @@
 		86C0E97521C25E4700602028 /* card.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E95621C25E4700602028 /* card.cpp */; };
 		86C0E97621C25E4700602028 /* cardlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E95721C25E4700602028 /* cardlayer.h */; };
 		86C0E97721C25E4700602028 /* readersinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E95821C25E4700602028 /* readersinfo.h */; };
-		86C0E97821C25E4700602028 /* cardreaderinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E95921C25E4700602028 /* cardreaderinfo.cpp */; };
 		86C0E97921C25E4700602028 /* pkcs15parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E95A21C25E4700602028 /* pkcs15parser.h */; };
 		86CE3688187EB58A00EB96A5 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A4110F84D948001AD228 /* PCSC.framework */; };
 		86CE3689187EB5E700EB96A5 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */; };
@@ -516,7 +514,6 @@
 		86C0E7F121C258D800602028 /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dialogs.h; sourceTree = "<group>"; };
 		86C0E87121C258D900602028 /* langutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = langutil.cpp; sourceTree = "<group>"; };
 		86C0E89921C258D900602028 /* sharedmem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sharedmem.cpp; sourceTree = "<group>"; };
-		86C0E93821C25E4700602028 /* cardreaderinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cardreaderinfo.h; sourceTree = "<group>"; };
 		86C0E93921C25E4700602028 /* pinpad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinpad.h; sourceTree = "<group>"; };
 		86C0E93A21C25E4700602028 /* pcsc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcsc.h; sourceTree = "<group>"; };
 		86C0E93B21C25E4700602028 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
@@ -542,7 +539,6 @@
 		86C0E95621C25E4700602028 /* card.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = card.cpp; sourceTree = "<group>"; };
 		86C0E95721C25E4700602028 /* cardlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cardlayer.h; sourceTree = "<group>"; };
 		86C0E95821C25E4700602028 /* readersinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readersinfo.h; sourceTree = "<group>"; };
-		86C0E95921C25E4700602028 /* cardreaderinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardreaderinfo.cpp; sourceTree = "<group>"; };
 		86C0E95A21C25E4700602028 /* pkcs15parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs15parser.h; sourceTree = "<group>"; };
 		86E3DF251653EFE50015B5E1 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = cardcomm/pkcs11/src/asn1.h; sourceTree = SOURCE_ROOT; };
 		86E3DF261653EFE50015B5E1 /* beid_p11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beid_p11.h; path = cardcomm/pkcs11/src/beid_p11.h; sourceTree = SOURCE_ROOT; };
@@ -1001,7 +997,6 @@
 		86C0E93721C25E4700602028 /* cardlayer */ = {
 			isa = PBXGroup;
 			children = (
-				86C0E93821C25E4700602028 /* cardreaderinfo.h */,
 				86C0E93921C25E4700602028 /* pinpad.h */,
 				86C0E93A21C25E4700602028 /* pcsc.h */,
 				86C0E93B21C25E4700602028 /* reader.h */,
@@ -1027,7 +1022,6 @@
 				86C0E95621C25E4700602028 /* card.cpp */,
 				86C0E95721C25E4700602028 /* cardlayer.h */,
 				86C0E95821C25E4700602028 /* readersinfo.h */,
-				86C0E95921C25E4700602028 /* cardreaderinfo.cpp */,
 				86C0E95A21C25E4700602028 /* pkcs15parser.h */,
 			);
 			name = cardlayer;
@@ -1093,7 +1087,6 @@
 				86E3DF551653EFE60015B5E1 /* beid_p11.h in Headers */,
 				86C0E75D21C2586E00602028 /* dynamiclib.h in Headers */,
 				86E3DF561653EFE60015B5E1 /* cal.h in Headers */,
-				86C0E95B21C25E4700602028 /* cardreaderinfo.h in Headers */,
 				86E3DF571653EFE60015B5E1 /* cert.h in Headers */,
 				86C0E75A21C2586E00602028 /* bytearray.h in Headers */,
 				86E3DF581653EFE60015B5E1 /* display.h in Headers */,
@@ -1513,7 +1506,6 @@
 				86C0E75C21C2586E00602028 /* mutex.cpp in Sources */,
 				86E3DF5E1653EFE60015B5E1 /* cert.c in Sources */,
 				86E3DF5F1653EFE60015B5E1 /* encrypt.c in Sources */,
-				86C0E97821C25E4700602028 /* cardreaderinfo.cpp in Sources */,
 				86E3DF601653EFE60015B5E1 /* general.c in Sources */,
 				86C0E77421C2586E00602028 /* hash.cpp in Sources */,
 				86C0E97021C25E4700602028 /* pkcs15.cpp in Sources */,
