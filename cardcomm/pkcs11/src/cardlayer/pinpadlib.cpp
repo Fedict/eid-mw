@@ -60,51 +60,39 @@ CByteArray CPinpadLib::PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 #endif
 
 	if (m_ppCmd2 == NULL)
-		throw CMWEXCEPTION(EIDMW_ERR_UNKNOWN);	// shouldn't happen
+		throw CMWEXCEPTION(EIDMW_ERR_UNKNOWN); // shouldn't happen
 
 	unsigned char tucOut[258];
 	DWORD dwOutLen = sizeof(tucOut);
-	long lRet =
-		m_ppCmd2(hCard, (int) ulControl, oCmd.GetBytes(), oCmd.Size(),
-			 tucOut, sizeof(tucOut), &dwOutLen,
-			 ucPintype, ucOperation, 0, NULL);
-
+	long lRet = m_ppCmd2(hCard, (int) ulControl, oCmd.GetBytes(), oCmd.Size(),
+		tucOut, sizeof(tucOut), &dwOutLen,
+		ucPintype, ucOperation, 0, NULL);
 	if (lRet != SCARD_S_SUCCESS)
 		throw CMWEXCEPTION(EIDMW_ERR_PINPAD);
 
 	return CByteArray(tucOut, dwOutLen);
 }
 
-bool CPinpadLib::CheckLib(const std::string & csPinpadDir,
-			  const char *csFileName, unsigned long ulLanguage,
-			  int iVersion, unsigned long hContext,
-			  SCARDHANDLE hCard, const char *csReader)
+bool CPinpadLib::CheckLib(const std::string & csPinpadDir, const char *csFileName,
+	unsigned long ulLanguage, int iVersion,
+	unsigned long hContext, SCARDHANDLE hCard, const char *csReader)
 {
 	bool bRet = false;
-
 	// Load the pinpad lib
 	unsigned long ulRes = m_oPinpadLib.Open(csPinpadDir + csFileName);
-
 	if (ulRes == EIDMW_OK)
 	{
 		// Get the 2 functions
-		EIDMW_PP2_INIT ppInit2 =
-			(EIDMW_PP2_INIT) m_oPinpadLib.
-			GetAddress("EIDMW_PP2_Init");
-		m_ppCmd2 =
-			(EIDMW_PP2_COMMAND) m_oPinpadLib.
-			GetAddress("EIDMW_PP2_Command");
+		EIDMW_PP2_INIT ppInit2 = (EIDMW_PP2_INIT) m_oPinpadLib.GetAddress("EIDMW_PP2_Init");
+		m_ppCmd2 = (EIDMW_PP2_COMMAND) m_oPinpadLib.GetAddress("EIDMW_PP2_Command");
 		if (ppInit2 == NULL || m_ppCmd2 == NULL)
 			m_oPinpadLib.Close();
 		else
 		{
-			long lRet =
-				ppInit2(PTEID_MINOR_VERSION, hContext, hCard,
-					csReader,
-					ulLanguage, InitGuiInfo(), 0, NULL);
-
+			long lRet = ppInit2(PTEID_MINOR_VERSION, hContext, hCard, csReader,
+				ulLanguage, InitGuiInfo(), 0, NULL);
 			if (lRet == SCARD_S_SUCCESS)
-				bRet = true;	// OK, the pinpad lib supports this reader
+				bRet = true; // OK, the pinpad lib supports this reader
 			else
 				m_oPinpadLib.Close();
 		}
@@ -116,15 +104,12 @@ bool CPinpadLib::CheckLib(const std::string & csPinpadDir,
 	return bRet;
 }
 
-bool CPinpadLib::ShowDlg(unsigned char pinpadOperation,
-			 unsigned char ucPintype,
-			 const std::string & csPinLabel,
-			 const std::string & csReader,
-			 BEID_DIALOGHANDLE * pDlgHandle)
+bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
+	const std::string & csPinLabel, const std::string & csReader,
+	BEID_DIALOGHANDLE *pDlgHandle)
 {
 #ifndef NO_DIALOGS
 	const char *csMesg = GetGuiMesg(pinpadOperation);
-
 	if (csMesg == NULL)
 		csMesg = "";
 
@@ -134,45 +119,29 @@ bool CPinpadLib::ShowDlg(unsigned char pinpadOperation,
 	else
 	{
 		DlgPinUsage dlgUsage = DLG_PIN_UNKNOWN;
-
-		switch (ucPintype)
+		switch(ucPintype)
 		{
-			case EIDMW_PP_TYPE_AUTH:
-				dlgUsage = DLG_PIN_AUTH;
-				break;
-			case EIDMW_PP_TYPE_SIGN:
-				dlgUsage = DLG_PIN_SIGN;
-				break;
-			case EIDMW_PP_TYPE_ADDR:
-				dlgUsage = DLG_PIN_ADDRESS;
-				break;
+		case EIDMW_PP_TYPE_AUTH: dlgUsage = DLG_PIN_AUTH; break;
+		case EIDMW_PP_TYPE_SIGN: dlgUsage = DLG_PIN_SIGN; break;
+		case EIDMW_PP_TYPE_ADDR: dlgUsage = DLG_PIN_ADDRESS; break;
 		}
 
 		DlgPinOperation dlgOperation;
-
-		switch (pinpadOperation)
+		switch(pinpadOperation)
 		{
-			case EIDMW_PP_OP_VERIFY:
-				dlgOperation = DLG_PIN_OP_VERIFY;
-				break;
-			case EIDMW_PP_OP_CHANGE:
-				dlgOperation = DLG_PIN_OP_CHANGE;
-				break;
-			default:
-				throw CMWEXCEPTION(EIDMW_ERR_CHECK);
+		case EIDMW_PP_OP_VERIFY: dlgOperation = DLG_PIN_OP_VERIFY; break;
+		case EIDMW_PP_OP_CHANGE: dlgOperation = DLG_PIN_OP_CHANGE; break;
+		default: throw CMWEXCEPTION(EIDMW_ERR_CHECK);
 		}
-		std::wstring wideReader = utilStringWiden(csReader);
+		std::wstring wideReader = utilStringWiden(csReader);	
 		std::wstring widePinLabel = utilStringWiden(csPinLabel);
 		std::wstring wideMesg = utilStringWiden(csMesg);
 		return EIDMW_OK == DlgDisplayPinpadInfo(dlgOperation,
-							wideReader.c_str(),
-							dlgUsage,
-							widePinLabel.c_str(),
-							wideMesg.c_str(),
-							pDlgHandle);
+			wideReader.c_str(), dlgUsage,
+			widePinLabel.c_str(), wideMesg.c_str(), pDlgHandle);
 	}
 #else
-	return false;
+  return false;
 #endif
 
 }
@@ -186,15 +155,12 @@ void CPinpadLib::CloseDlg(BEID_DIALOGHANDLE DlgHandle)
 
 const char *CPinpadLib::GetGuiMesg(unsigned char ucOperation)
 {
-	switch (ucOperation)
+	switch(ucOperation)
 	{
-		case EIDMW_PP_OP_VERIFY:
-			return m_guiInfo.csVerifyInfo;
-		case EIDMW_PP_OP_CHANGE:
-			return m_guiInfo.csChangeInfo;
-			// Others to be added later when needed
-		default:
-			throw CMWEXCEPTION(EIDMW_ERR_CHECK);
+	case EIDMW_PP_OP_VERIFY: return m_guiInfo.csVerifyInfo;
+	case EIDMW_PP_OP_CHANGE: return m_guiInfo.csChangeInfo;
+	// Others to be added later when needed
+	default: throw CMWEXCEPTION(EIDMW_ERR_CHECK);
 	}
 }
 
@@ -205,16 +171,15 @@ const char *CPinpadLib::GetGuiMesg(unsigned char ucOperation)
 tGuiInfo *CPinpadLib::InitGuiInfo()
 {
 	DO_ALLOC(m_guiInfo.csVerifyInfo)
-		DO_ALLOC(m_guiInfo.csChangeInfo)
-		DO_ALLOC(m_guiInfo.csUnblockNoChangeInfo)
-		DO_ALLOC(m_guiInfo.csUnblockChangeInfo)
-		DO_ALLOC(m_guiInfo.csUnblockMergeNoChangeInfo)
-		DO_ALLOC(m_guiInfo.csUnblockMergeChangeInfo)
-		if (!m_guiInfo.csVerifyInfo || !m_guiInfo.csChangeInfo ||
-		    !m_guiInfo.csUnblockNoChangeInfo
-		    || !m_guiInfo.csUnblockChangeInfo
-		    || !m_guiInfo.csUnblockMergeNoChangeInfo
-		    || !m_guiInfo.csUnblockMergeChangeInfo)
+	DO_ALLOC(m_guiInfo.csChangeInfo)
+	DO_ALLOC(m_guiInfo.csUnblockNoChangeInfo)
+	DO_ALLOC(m_guiInfo.csUnblockChangeInfo)
+	DO_ALLOC(m_guiInfo.csUnblockMergeNoChangeInfo)
+	DO_ALLOC(m_guiInfo.csUnblockMergeChangeInfo)
+
+	if (!m_guiInfo.csVerifyInfo || ! m_guiInfo.csChangeInfo ||
+		!m_guiInfo.csUnblockNoChangeInfo || !m_guiInfo.csUnblockChangeInfo ||
+		!m_guiInfo.csUnblockMergeNoChangeInfo || !m_guiInfo.csUnblockMergeChangeInfo)
 	{
 		ClearGuiInfo();
 		throw CMWEXCEPTION(EIDMW_ERR_MEMORY);
@@ -230,26 +195,25 @@ tGuiInfo *CPinpadLib::InitGuiInfo()
 
 void CPinpadLib::ClearGuiInfo()
 {
-DO_FREE_CLEAR(m_guiInfo.csVerifyInfo)
-		DO_FREE_CLEAR(m_guiInfo.csChangeInfo)
-		DO_FREE_CLEAR(m_guiInfo.csUnblockNoChangeInfo)
-		DO_FREE_CLEAR(m_guiInfo.csUnblockChangeInfo)
-		DO_FREE_CLEAR(m_guiInfo.csUnblockMergeNoChangeInfo)
-		DO_FREE_CLEAR(m_guiInfo.csUnblockMergeChangeInfo)}
+	DO_FREE_CLEAR (m_guiInfo.csVerifyInfo)
+	DO_FREE_CLEAR(m_guiInfo.csChangeInfo)
+	DO_FREE_CLEAR(m_guiInfo.csUnblockNoChangeInfo)
+	DO_FREE_CLEAR(m_guiInfo.csUnblockChangeInfo)
+	DO_FREE_CLEAR(m_guiInfo.csUnblockMergeNoChangeInfo)
+	DO_FREE_CLEAR(m_guiInfo.csUnblockMergeChangeInfo)
+}
 
 /** Little helper function for the Load() method */
 static inline std::string GetSearchString(const std::string & csDir,
-					  const std::string & csPinpadPrefix,
-					  int iVersion)
+	const std::string & csPinpadPrefix, int iVersion)
 {
 	// E.g. C:\WINDOWS\System32\beidpp\beidpp2*.*
 #ifdef WIN32
 	char csBuf[20];
-
 	_itoa_s(iVersion, csBuf, sizeof(csBuf), 10);
 	return csDir + csPinpadPrefix + csBuf + std::string("*.*");
 #else
-	return csDir;
+	return csDir ;
 #endif
 }
 
@@ -264,13 +228,11 @@ static inline std::string GetSearchString(const std::string & csDir,
 #include <windows.h>
 
 bool CPinpadLib::Load(unsigned long hContext, SCARDHANDLE hCard,
-		      const std::string & strReader,
-		      const std::string & csPinpadPrefix,
-		      unsigned long ulLanguage)
+		const std::string & strReader, const std::string & csPinpadPrefix,
+		unsigned long ulLanguage)
 {
 	bool bPinpadLibFound = false;
 	char csSystemDir[_MAX_PATH];
-
 	GetSystemDirectoryA(csSystemDir, sizeof(csSystemDir) - 50);
 
 	// E.g. "C:\WINDOWS\System32\beidpp\" or "/usr/local/lib/pteidpp/"
@@ -283,27 +245,22 @@ bool CPinpadLib::Load(unsigned long hContext, SCARDHANDLE hCard,
 	for (int iVersion = 2; iVersion >= 2 && !bPinpadLibFound; iVersion--)
 	{
 		std::string strSearchFor = GetSearchString(csPinpadDir,
-							   csPinpadPrefix,
-							   iVersion);
+			csPinpadPrefix, iVersion);
 		const char *csSearchFor = strSearchFor.c_str();
 
 		// Search for files in csPinpadDir that are candidate pinpad lib,
 		// load them and ask them if they support this reader + pinpad lib version
-		struct _finddata_t c_file;
+	    struct _finddata_t c_file;
 		intptr_t hFile = _findfirst(csSearchFor, &c_file);
-
 		if (hFile != -1)
 		{
 			int iFindRes;
-
 			do
 			{
-				bPinpadLibFound =
-					CheckLib(csPinpadDir, c_file.name,
-						 ulLanguage, iVersion,
-						 hContext, hCard, csReader);
+				bPinpadLibFound = CheckLib(csPinpadDir, c_file.name,
+					ulLanguage, iVersion, hContext, hCard, csReader);
 				if (bPinpadLibFound)
-					break;	// OK: a good pinpad lib was found and loaded
+					break; // OK: a good pinpad lib was found and loaded
 
 				iFindRes = _findnext(hFile, &c_file);
 			}
@@ -316,9 +273,8 @@ bool CPinpadLib::Load(unsigned long hContext, SCARDHANDLE hCard,
 #ifdef BEID_OLD_PINPAD
 	if (!bPinpadLibFound)
 	{
-		bPinpadLibFound =
-			m_oPinpadLibOldBeid.Load(hContext, hCard, strReader,
-						 csPinpadPrefix, ulLanguage);
+		bPinpadLibFound = m_oPinpadLibOldBeid.Load(hContext, hCard, strReader,
+			csPinpadPrefix, ulLanguage);
 		if (bPinpadLibFound)
 		{
 			InitGuiInfo();
@@ -333,56 +289,45 @@ bool CPinpadLib::Load(unsigned long hContext, SCARDHANDLE hCard,
 	return bPinpadLibFound;
 }
 
-#else // For Linux and Mac OS X
+#else  // For Linux and Mac OS X
 
 #include <dirent.h>
 
 bool CPinpadLib::Load(unsigned long hContext, SCARDHANDLE hCard,
-		      const std::string & strReader,
-		      const std::string & csPinpadPrefix,
+		      const std::string & strReader, const std::string & csPinpadPrefix,
 		      unsigned long ulLanguage)
 {
 	bool bPinpadLibFound = false;
-
-	std::string csPinpadDir =
-		std::string(STRINGIFY(EIDMW_PREFIX)) + "/lib/" +
-		csPinpadPrefix + "/";
+	std::string csPinpadDir = std::string(STRINGIFY(EIDMW_PREFIX)) + "/lib/" + csPinpadPrefix + "/";
 	const char *csReader = strReader.c_str();
 
 	// For each supported pinpad lib version (starting with the most recent one)
 	for (int iVersion = 2; iVersion >= 2 && !bPinpadLibFound; iVersion--)
 	{
 		std::string strSearchFor = GetSearchString(csPinpadDir,
-							   csPinpadPrefix,
-							   iVersion);
+			csPinpadPrefix, iVersion);
 		const char *csSearchFor = strSearchFor.c_str();
 
 		// Search for files in csPinpadDir that are candidate pinpad lib,
 		// load them and ask them if they support this reader + pinpad lib version
 		DIR *pDir = opendir(csSearchFor);
-
 		// If pDir is NULL then the dir doesn't exist
-		if (pDir != NULL)
+		if(pDir != NULL)
 		{
 			struct dirent *pFile = readdir(pDir);
 			char csBuf[50];
-
-			sprintf_s(csBuf, sizeof(csBuf), "lib%s%i",
-				  csPinpadPrefix.c_str(), iVersion);
+			sprintf_s(csBuf,sizeof(csBuf), "lib%s%i", csPinpadPrefix.c_str(), iVersion);
 			csBuf[sizeof(csBuf) - 1] = '\0';
-			for (; pFile != NULL; pFile = readdir(pDir))
+			for ( ;pFile != NULL; pFile = readdir(pDir))
 			{
-				// only look at files called libbeidpp<version> 
-				if (strstr(pFile->d_name, csBuf) == NULL)
-					continue;
-
-				bPinpadLibFound =
-					CheckLib(csPinpadDir, pFile->d_name,
-						 ulLanguage, iVersion,
-						 hContext, hCard, csReader);
-
-				if (bPinpadLibFound)
-					break;	// OK: a good pinpad lib was found and loaded
+			  // only look at files called libbeidpp<version> 
+			  if(strstr(pFile->d_name, csBuf) == NULL ) continue;
+			    
+				bPinpadLibFound = CheckLib(csPinpadDir, pFile->d_name,
+							   ulLanguage, iVersion, hContext, hCard, csReader);
+			  
+			  if (bPinpadLibFound)
+				break; // OK: a good pinpad lib was found and loaded
 			}
 			closedir(pDir);
 		}

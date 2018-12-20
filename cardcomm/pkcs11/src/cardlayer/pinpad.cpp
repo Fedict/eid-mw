@@ -33,20 +33,14 @@
 namespace eIDMW
 {
 
-	CPinpad::CPinpad(void):m_poContext(NULL), m_hCard(0),
-		m_usReaderFirmVers(0), m_bNewCard(true),
-		m_bUsePinpadLib(false), m_ulLangCode(0),
-		m_bCanVerifyUnlock(false), m_bCanChangeUnlock(false),
-		m_ioctlVerifyStart(0), m_ioctlVerifyFinish(0),
-		m_ioctlVerifyDirect(0), m_ioctlChangeStart(0),
-		m_ioctlChangeFinish(0), m_ioctlChangeDirect(0),
-		m_bCanUsePPDU(false)
+	CPinpad::CPinpad(void):m_poContext(NULL), m_hCard(0), m_usReaderFirmVers(0), m_bNewCard(true),
+		m_bUsePinpadLib(false), m_ulLangCode(0), m_bCanVerifyUnlock(false), m_bCanChangeUnlock(false),
+		m_ioctlVerifyStart(0), m_ioctlVerifyFinish(0), m_ioctlVerifyDirect(0), m_ioctlChangeStart(0),
+		m_ioctlChangeFinish(0), m_ioctlChangeDirect(0), m_bCanUsePPDU(false)
 	{
 	}
 
-	void CPinpad::Init(CContext * poContext, SCARDHANDLE hCard,
-			   const std::string & csReader,
-			   const std::string & csPinpadPrefix)
+	void CPinpad::Init(CContext * poContext, SCARDHANDLE hCard, const std::string & csReader, const std::string & csPinpadPrefix)
 	{
 		m_poContext = poContext;
 		m_hCard = hCard;
@@ -61,34 +55,29 @@ namespace eIDMW
 		m_csPinpadPrefix = csPinpadPrefix;
 	}
 
-	void CPinpad::Init(CContext * poContext, SCARDHANDLE hCard,
-			   const std::string & csReader,
-			   const std::string & csPinpadPrefix,
-			   CByteArray usReaderFirmVers)
+	void CPinpad::Init(CContext * poContext, SCARDHANDLE hCard, const std::string & csReader,
+			   const std::string & csPinpadPrefix, CByteArray usReaderFirmVers)
 	{
 		this->Init(poContext, hCard, csReader, csPinpadPrefix);
 
-		m_usReaderFirmVers =
-			usReaderFirmVers.GetByte(3) * 256 +
-			usReaderFirmVers.GetByte(2);
+		m_usReaderFirmVers = usReaderFirmVers.GetByte(3) * 256 + usReaderFirmVers.GetByte(2);
 	}
 
 	bool CPinpad::UsePinpad(tPinOperation operation)
 	{
 		if (m_bNewCard)
 		{
-			m_bUsePinpadLib =
-				m_oPinpadLib.Load((unsigned long) m_poContext->m_oPCSC.m_hContext, m_hCard, m_csReader,
+			m_bUsePinpadLib = m_oPinpadLib.Load((unsigned long) m_poContext->m_oPCSC.m_hContext, m_hCard, m_csReader,
 				     m_csPinpadPrefix, GetLanguage());
 
 			// The GemPC pinpad reader does a "Verify PIN" with empty buffer in an attempt
 			// to get and display the remainings attempts. But the BE eID card takes this
 			// empty buffer to be a bad PIN, so you quickly end up with a blocked card.
 			// Therefore, we don't allow this reader to be used as a pinpad reader..
-			if (!m_bUsePinpadLib
-			    && m_csReader.find("Gemplus GemPC Pinpad") == 0)
+			if (!m_bUsePinpadLib && m_csReader.find("Gemplus GemPC Pinpad") == 0)
+			{
 				return false;
-
+			}
 			GetFeatureList();
 		}
 
@@ -117,10 +106,7 @@ namespace eIDMW
 				// The SPR532 reader wants this value to be as for BCD
 				const char *csReader = m_csReader.c_str();
 
-				if ((m_usReaderFirmVers != 0x0000)
-				    && (m_usReaderFirmVers < 0x0506)
-				    && (strstr(csReader, "SPRx32 USB") !=
-					NULL))
+				if ((m_usReaderFirmVers != 0x0000) && (m_usReaderFirmVers < 0x0506) && (strstr(csReader, "SPRx32 USB") != NULL))
 				{
 					return 0x00 | 0x00 | 0x00 | 0x01;
 				}
@@ -139,9 +125,7 @@ namespace eIDMW
 			case PIN_ENC_BCD:
 				return (unsigned char) pin.ulStoredLen;
 			case PIN_ENC_GP:
-				return 0x40 | (unsigned char) (pin.
-							       ulStoredLen -
-							       1);
+				return 0x40 | (unsigned char) (pin.ulStoredLen - 1);
 		}
 		return (unsigned char) pin.ulStoredLen;
 	}
@@ -163,23 +147,21 @@ namespace eIDMW
 
 	unsigned char CPinpad::GetMaxPinLen(const tPin & pin)
 	{
-		unsigned char ucRes = (unsigned char)
-			(pin.ulMaxLen > 0 ? pin.ulMaxLen : pin.ulStoredLen);
+		unsigned char ucRes = (unsigned char)(pin.ulMaxLen > 0 ? pin.ulMaxLen : pin.ulStoredLen);
 
 		// READER FIX:
 		// Limitation of the GemPC reader: at most 8 PIN digits
 		const char *csReader = m_csReader.c_str();
 
 		if (strstr(csReader, "Gemplus GemPC Pinpad") == csReader)
+		{
 			ucRes = (ucRes > 8) ? 8 : ucRes;
-
+		}
 		return ucRes;
 	}
 
-	CByteArray CPinpad::PinCmd(tPinOperation operation,
-				   const tPin & pin, unsigned char ucPinType,
-				   const CByteArray & oAPDU,
-				   unsigned long &ulRemaining)
+	CByteArray CPinpad::PinCmd(tPinOperation operation, const tPin & pin, unsigned char ucPinType,
+				   const CByteArray & oAPDU, unsigned long &ulRemaining)
 	{
 		if (!UsePinpad(operation))
 			throw CMWEXCEPTION(EIDMW_ERR_PIN_OPERATION);
@@ -187,17 +169,17 @@ namespace eIDMW
 		CByteArray oResp;
 
 		if (operation == PIN_OP_VERIFY)
-			oResp = PinCmd1(operation, pin, ucPinType, oAPDU,
-					ulRemaining);
+		{
+			oResp = PinCmd1(operation, pin, ucPinType, oAPDU, ulRemaining);
+		}
 		else
-			oResp = PinCmd2(operation, pin, ucPinType, oAPDU,
-					ulRemaining);
+		{
+			oResp = PinCmd2(operation, pin, ucPinType, oAPDU, ulRemaining);
+		}
 
 		if (oResp.Size() != 2)
 		{
-			MWLOG(LEV_ERROR, MOD_CAL,
-			      L"pinpad reader returned %ls\n",
-			      oResp.ToWString().c_str());
+			MWLOG(LEV_ERROR, MOD_CAL, L"pinpad reader returned %ls\n", oResp.ToWString().c_str());
 			return EIDMW_ERR_UNKNOWN;	// should never happen
 		}
 
@@ -222,10 +204,8 @@ namespace eIDMW
 	}
 
 	/** For operations involving 1 PIN */
-	CByteArray CPinpad::PinCmd1(tPinOperation operation,
-				    const tPin & pin, unsigned char ucPinType,
-				    const CByteArray & oAPDU,
-				    unsigned long &ulRemaining)
+	CByteArray CPinpad::PinCmd1(tPinOperation operation, const tPin & pin, unsigned char ucPinType,
+				    const CByteArray & oAPDU, unsigned long &ulRemaining)
 	{
 		EIDMW_PP_VERIFY_CCID xVerifyCmd;
 		unsigned long ulVerifyCmdLen;
@@ -246,53 +226,38 @@ namespace eIDMW
 		xVerifyCmd.bMsgIndex = 0;
 		ToUchar4(oAPDU.Size(), xVerifyCmd.ulDataLength);
 		memcpy(xVerifyCmd.abData, oAPDU.GetBytes(), oAPDU.Size());
-		ulVerifyCmdLen =
-			sizeof(xVerifyCmd) - PP_APDU_MAX_LEN + oAPDU.Size();
+		ulVerifyCmdLen = sizeof(xVerifyCmd) - PP_APDU_MAX_LEN + oAPDU.Size();
 
-		CByteArray oCmd((unsigned char *) &xVerifyCmd,
-				ulVerifyCmdLen);
+		CByteArray oCmd((unsigned char *) &xVerifyCmd, ulVerifyCmdLen);
 
 		if (m_bCanUsePPDU)
 		{
 			if (m_ioctlVerifyDirect)
 			{
-				return PinpadPPDU(FEATURE_VERIFY_PIN_DIRECT,
-						  oCmd, operation, ucPinType,
-						  pin.csLabel, true);
-			} else	//m_bCanUsePPDU can only be true if either m_ioctlVerifyDirect or m_ioctlVerifyStart are set
+				return PinpadPPDU(FEATURE_VERIFY_PIN_DIRECT, oCmd, operation, ucPinType, pin.csLabel, true);
+			} 
+			else	//m_bCanUsePPDU can only be true if either m_ioctlVerifyDirect or m_ioctlVerifyStart are set
 			{
-				PinpadPPDU(FEATURE_VERIFY_PIN_START, oCmd,
-					   operation, ucPinType, pin.csLabel,
-					   false);
-				return PinpadPPDU(FEATURE_VERIFY_PIN_FINISH,
-						  CByteArray(), operation,
-						  ucPinType, "", true);
+				PinpadPPDU(FEATURE_VERIFY_PIN_START, oCmd, operation, ucPinType, pin.csLabel, false);
+				return PinpadPPDU(FEATURE_VERIFY_PIN_FINISH, CByteArray(), operation, ucPinType, "", true);
 			}
 		} else
 		{
 			if (m_ioctlVerifyDirect)
 			{
-				return PinpadControl(m_ioctlVerifyDirect,
-						     oCmd, operation,
-						     ucPinType, pin.csLabel,
-						     true);
-			} else
+				return PinpadControl(m_ioctlVerifyDirect, oCmd, operation, ucPinType, pin.csLabel, true);
+			} 
+			else
 			{
-				PinpadControl(m_ioctlVerifyStart, oCmd,
-					      operation, ucPinType,
-					      pin.csLabel, false);
-				return PinpadControl(m_ioctlVerifyFinish,
-						     CByteArray(), operation,
-						     ucPinType, "", true);
+				PinpadControl(m_ioctlVerifyStart, oCmd, operation, ucPinType, pin.csLabel, false);
+				return PinpadControl(m_ioctlVerifyFinish, CByteArray(), operation, ucPinType, "", true);
 			}
 		}
 	}
 
 	/** For operations involving 2 PINs */
-	CByteArray CPinpad::PinCmd2(tPinOperation operation,
-				    const tPin & pin, unsigned char ucPinType,
-				    const CByteArray & oAPDU,
-				    unsigned long &ulRemaining)
+	CByteArray CPinpad::PinCmd2(tPinOperation operation, const tPin & pin, unsigned char ucPinType,
+				    const CByteArray & oAPDU, unsigned long &ulRemaining)
 	{
 		EIDMW_PP_CHANGE_CCID xChangeCmd;
 		unsigned long ulChangeCmdLen;
@@ -364,12 +329,8 @@ namespace eIDMW
 		m_oPinpadLib.Unload();
 	}
 
-	CByteArray CPinpad::PinpadControl(unsigned long ulControl,
-					  const CByteArray & oCmd,
-					  tPinOperation operation,
-					  unsigned char ucPintype,
-					  const std::string & csPinLabel,
-					  bool bShowDlg)
+	CByteArray CPinpad::PinpadControl(unsigned long ulControl, const CByteArray & oCmd, tPinOperation operation,
+					  unsigned char ucPintype, const std::string & csPinLabel, bool bShowDlg)
 	{
 		unsigned char pinpadOperation = PinOperation2Lib(operation);
 
@@ -384,11 +345,9 @@ namespace eIDMW
 		bool bCloseDlg = bShowDlg;
 
 		if (bShowDlg)
-			bCloseDlg = m_oPinpadLib.ShowDlg(pinpadOperation,
-							 ucPintype,
-							 csPinLabel,
-							 m_csReader,
-							 &dlgHandle);
+		{
+			bCloseDlg = m_oPinpadLib.ShowDlg(pinpadOperation, ucPintype, csPinLabel, m_csReader, &dlgHandle);
+		}
 
 		CByteArray oResp;
 
@@ -396,16 +355,13 @@ namespace eIDMW
 		{
 			if (!m_bUsePinpadLib)
 			{
-				oResp = m_poContext->m_oPCSC.Control(m_hCard,
-								     ulControl,
-								     oCmd);
+				oResp = m_poContext->m_oPCSC.Control(m_hCard, ulControl, oCmd);
 			} else
 			{
 				m_ulLangCode = 0;//forget the previously know language, so the register is checked once more
 				GetLanguage();
 				MWLOG(LEV_INFO, MOD_CAL,L"PinpadControl using pinpadlib with lang=0x%u\n",m_ulLangCode);
-				oResp = m_oPinpadLib.PinCmd(m_hCard, ulControl, oCmd,ucPintype,
-							    pinpadOperation,m_ulLangCode);
+				oResp = m_oPinpadLib.PinCmd(m_hCard, ulControl, oCmd,ucPintype, pinpadOperation,m_ulLangCode);
 			}
 		}
 		catch( ...)
@@ -439,10 +395,7 @@ namespace eIDMW
 
 		try
 		{
-			CByteArray oFeatures =
-				PinpadControl(CCID_IOCTL_GET_FEATURE_REQUEST,
-					      CByteArray(), PIN_OP_VERIFY, 0,
-					      "", false);
+			CByteArray oFeatures = PinpadControl(CCID_IOCTL_GET_FEATURE_REQUEST, CByteArray(), PIN_OP_VERIFY, 0, "", false);
 
 			// Example of a feature list: 06 04 00 31 20 30 07 04 00 31 20 34
 			// Which means:
@@ -468,8 +421,7 @@ namespace eIDMW
 				const unsigned char *pucFeatures = oFeatures.GetBytes();
 				ulFeatureLen /= 6;
 				MWLOG(LEV_DEBUG, MOD_CAL, L"checking features");
-				for (unsigned long i = 0; i < ulFeatureLen;
-				     i++)
+				for (unsigned long i = 0; i < ulFeatureLen; i++)
 				{
 					CHECK_FEATURE(pucFeatures, CCID_VERIFY_START, m_ioctlVerifyStart)
 					CHECK_FEATURE(pucFeatures, CCID_VERIFY_FINISH, m_ioctlVerifyFinish)
@@ -594,12 +546,8 @@ namespace eIDMW
 		}
 	}
 
-	CByteArray CPinpad::PinpadPPDU(BYTE cbControl,
-				       const CByteArray & oCmd,
-				       tPinOperation operation,
-				       unsigned char ucPintype,
-				       const std::string & csPinLabel,
-				       bool bShowDlg)
+	CByteArray CPinpad::PinpadPPDU(BYTE cbControl, const CByteArray & oCmd, tPinOperation operation,
+				       unsigned char ucPintype, const std::string & csPinLabel, bool bShowDlg)
 	{
 		unsigned char pinpadOperation = PinOperation2Lib(operation);
 
@@ -629,18 +577,15 @@ namespace eIDMW
 		}
 
 		if (bShowDlg)
-			bCloseDlg = m_oPinpadLib.ShowDlg(pinpadOperation,
-							 ucPintype,
-							 csPinLabel,
-							 m_csReader,
-							 &dlgHandle);
-
-		oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oTransmit,
-						      &lRetVal);
+		{
+			bCloseDlg = m_oPinpadLib.ShowDlg(pinpadOperation, ucPintype, csPinLabel, m_csReader, &dlgHandle);
+		}
+		oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oTransmit, &lRetVal);
 
 		if (bCloseDlg)
+		{
 			m_oPinpadLib.CloseDlg(dlgHandle);
-
+		}
 #ifdef PP_DUMP_CMDS
 		printf("PP OUT: %s\n",
 		       oResp.ToString(true, false, 0, 0xFFFFFFFF).c_str());
