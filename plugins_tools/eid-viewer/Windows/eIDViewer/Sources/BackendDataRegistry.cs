@@ -104,16 +104,26 @@ namespace eIDViewer
                 }
                 else
                 {
+                    //set log_level to something <= warning so we are sure the next messages get logged.
+                    this.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
                     this.WriteLog("unknown eidviewer_log_level setting identifier found in registry: " + readValue + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                     this.WriteLog("Known values are: Error, Warning, Info, Debug\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                    this.WriteLog("switching viewer log level to the default setting (Error)\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                    this.WriteLog("switching viewer log level to the default setting \"Error\"\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                     this.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
+                    this.log_level_index = 0;
+                    //also try to write it into the registry
+                    StoreViewerLogLevel("Error");
                 }
             }
             else
             {
-                this.WriteLog("no viewer log level setting found in registry, using the default (Error) \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                //set log_level to something <= warning so we are sure the next messages get logged.
+                this.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
+                this.WriteLog("no viewer log level setting found in registry, using the default \"Error\" \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                 this.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
+                this.log_level_index = 0;
+                //also try to write it into the registry
+                StoreViewerLogLevel("Error");
             }
         }
 
