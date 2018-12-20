@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Fedict
+# Copyright (C) YEAR BOSA
 # This file is distributed under the same license as the eid-mw package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: eid-mw 4.3.8-v4.3.8.107.g578aa6a0.dirty\n"
-"Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
-"POT-Creation-Date: 2018-04-10 11:37+0200\n"
+"Project-Id-Version: eid-mw 4.4.10-v4.4.10.160.g7d9f474a.dirty\n"
+"Report-Msgid-Bugs-To: servicedesk@bosa.fgov.be\n"
+"POT-Creation-Date: 2018-12-20 10:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
