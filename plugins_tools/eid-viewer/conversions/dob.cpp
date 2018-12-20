@@ -142,7 +142,7 @@ DobWriter::DobWriter(DateParser * p):DateWriter(p)
 void DobParser::input(EID_STRING original)
 {
 	day = original.substr(0, 2);
-	int spaceIdx = original.find_first_of(TEXT("."));
+	unsigned long spaceIdx = original.find_first_of(TEXT("."));
 	if (-1 == spaceIdx) {
 		spaceIdx = original.find_first_of(TEXT(" "));
 	}

@@ -134,17 +134,17 @@
 }
 - (void)newsrc:(eIDSource)which {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-		[_photoview setImage:nil];
-		[_certview setImage:nil];
-		[_certstore clear];
-		[_viewdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+        [self.photoview setImage:nil];
+        [self.certview setImage:nil];
+        [self.certstore clear];
+        [self.viewdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
 			if(![obj isKindOfClass:[NSTextField class]]) {
 				return;
 			}
 			NSTextField* tf = (NSTextField*)obj;
 			[tf setStringValue:@""];
 		}];
-		[_memberOfFamilyState setState:NSOffState];
+        [self.memberOfFamilyState setState:NSOffState];
 	}];
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
@@ -195,33 +195,33 @@
 	}
 	if(prevState == eIDStateNoReader || prevState == eIDStateTokenError) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[_readerLogo setHidden:YES];
+            [self.readerLogo setHidden:YES];
 		}];
 	}
 	if(state == eIDStateTokenError) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[_readerLogo setImage:[NSImage imageNamed:@"state_error.png"]];
-			[_readerLogo setHidden:NO];
+			[self.readerLogo setImage:[NSImage imageNamed:@"state_error.png"]];
+			[self.readerLogo setHidden:NO];
 		}];
 	}
 	prevState = state;
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-		[_menu_file_print setEnabled:filePrint];
-		[_menu_file_open setEnabled:fileOpen];
-		[_menu_file_close setEnabled:fileClose];
-		[_menu_file_save setEnabled: fileSave];
-		[_pinop_ctrl setEnabled:pinops];
-		[_alwaysValidate setEnabled:validate];
-		[_validateNow setEnabled:validate];
+		[self.menu_file_print setEnabled:filePrint];
+		[self.menu_file_open setEnabled:fileOpen];
+		[self.menu_file_close setEnabled:fileClose];
+		[self.menu_file_save setEnabled: fileSave];
+		[self.pinop_ctrl setEnabled:pinops];
+		[self.alwaysValidate setEnabled:validate];
+		[self.validateNow setEnabled:validate];
 		if(sheet) {
-			[_spinner startAnimation:self];
-			[_window beginSheet:_CardReadSheet completionHandler:nil];
+			[self.spinner startAnimation:self];
+            [self.window beginSheet:self.CardReadSheet completionHandler:nil];
 		} else {
-			[_window endSheet:_CardReadSheet];
-			[_CardReadSheet orderOut:_window];
-			[_spinner stopAnimation:self];
+			[self.window endSheet:self.CardReadSheet];
+			[self.CardReadSheet orderOut:self.window];
+			[self.spinner stopAnimation:self];
 		}
-		if(doValidateNow && ([_alwaysValidate state] == NSOnState)) {
+		if(doValidateNow && ([self.alwaysValidate state] == NSOnState)) {
 			[self validateNow:nil];
 		}
 	}];
@@ -294,12 +294,12 @@
 	[panel beginWithCompletionHandler:^(NSInteger result) {
 		if(!result) return;
 		int fd=open([panel.URL fileSystemRepresentation], O_CREAT|O_RDWR, S_IWRITE|S_IREAD);
-		[_certstore dumpFile:fd forKey:key withFormat:sender.tag == 2 ? eIDDumpTypeDer : eIDDumpTypePem];
+		[self.certstore dumpFile:fd forKey:key withFormat:sender.tag == 2 ? eIDDumpTypeDer : eIDDumpTypePem];
 		if(sender.tag == 3) {
-			NSString* newKey = [_certstore keyForParent:key];
+			NSString* newKey = [self.certstore keyForParent:key];
 			while(newKey != nil) {
-				[_certstore dumpFile:fd forKey:key withFormat:eIDDumpTypePem];
-				newKey = [_certstore keyForParent:newKey];
+				[self.certstore dumpFile:fd forKey:key withFormat:eIDDumpTypePem];
+				newKey = [self.certstore keyForParent:newKey];
 			}
 		}
 		close(fd);
@@ -424,7 +424,7 @@
 	}
 	if([label isEqualToString:@"member_of_family"]) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[_memberOfFamilyState setState:NSOnState];
+			[self.memberOfFamilyState setState:NSOnState];
 		}];
 	}
 	if([label isEqualToString:@"document_type_raw"]) {
@@ -453,14 +453,14 @@
 					v = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"title_%s",toggles->label[i]] ofClass:[NSView class] forUpdate:NO];
 					[v setHidden:!new_foreigner];
 				}
-				[_IdentityTab removeConstraint:_verticalLineBottomConstraint];
+				[self.IdentityTab removeConstraint:self.verticalLineBottomConstraint];
 				if([self isForeignerCard]) {
-					_verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:_centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_lowestItem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+					self.verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:self.centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.lowestItem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
 				} else {
-					_verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:_centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_bottomLine attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+					self.verticalLineBottomConstraint = [NSLayoutConstraint constraintWithItem:self.centeringLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLine attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
 				}
-				[_IdentityTab addConstraint:_verticalLineBottomConstraint];
-				[_IdentityTab layoutSubtreeIfNeeded];
+				[self.IdentityTab addConstraint:self.verticalLineBottomConstraint];
+				[self.IdentityTab layoutSubtreeIfNeeded];
 			}];
 		}
 	}

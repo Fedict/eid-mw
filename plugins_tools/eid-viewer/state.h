@@ -30,11 +30,11 @@ struct error_data {
 	int error;
 };
 
-void sm_init();
+void sm_init(void);
 void sm_handle_event(enum eid_vwr_state_event e, void *data,
 		     void (*freefunc) (void *), void (*donefunc) (void *));
 void sm_handle_event_onthread(enum eid_vwr_state_event e, void *data);
-void sm_start_thread();
-void sm_stop_thread();
+void sm_start_thread(void);
+void sm_stop_thread(void);
 
 #endif
