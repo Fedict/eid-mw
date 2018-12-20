@@ -20,8 +20,6 @@
 **************************************************************************** */
 #pragma once
 
-#include "internalconst.h"
-
 namespace eIDMW
 {
 
