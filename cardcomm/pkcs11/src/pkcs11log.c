@@ -47,7 +47,15 @@
 
 #ifndef WIN32
 #define strcpy_s(a,b,c)         strncpy((a),(c),(b))
-#define sprintf_s(a,b,c,d,e,f,g,h,i)    snprintf((a),(b),(c),(d),(e),(f),(g),(h),(i))
+
+static inline void sprintf_s(char* dest,size_t size, char* format,...) {
+	va_list ap;
+	va_start(ap, format);
+	if(vsnprintf(dest, size, format, ap)<0) {
+		strncpy(dest,"<copy time fail>", size);
+	}
+	va_end(ap);
+}
 #endif
 
 /******************************************************************************
@@ -255,13 +263,13 @@ void log_trace(const char *where, const char *string,... )
 	stime = *(localtime(&ltime ));
 #endif
   
-  sprintf_s(asctime,sizeof(asctime), "%02d.%02d.%04d %02d:%02d:%02d", 
-                    stime.tm_mday,
-                    stime.tm_mon+1,
-                    stime.tm_year+1900,
-                    stime.tm_hour,
-                    stime.tm_min,
-                    stime.tm_sec); 
+	sprintf_s(asctime,sizeof(asctime), "%02d.%02d.%04d %02d:%02d:%02d",
+		stime.tm_mday,
+		stime.tm_mon+1,
+		stime.tm_year+1900,
+		stime.tm_hour,
+		stime.tm_min,
+		stime.tm_sec);
 #ifdef WIN32
   fprintf(fp, "%d %d %19s %-26s | %s\n",GetCurrentProcessId(), GetCurrentThreadId(), asctime, where, buf);
 #else
@@ -322,12 +330,12 @@ void log_xtrace(const char *where, char *string,void *data,int len)
 #endif
    
   sprintf_s(asctime,sizeof(asctime), "%02d.%02d.%04d %02d:%02d:%02d", 
-                    stime.tm_mday,
-                    stime.tm_mon+1,
-                    stime.tm_year+1900,
-                    stime.tm_hour,
-                    stime.tm_min,
-                    stime.tm_sec); 
+		stime.tm_mday,
+		stime.tm_mon+1,
+		stime.tm_year+1900,
+		stime.tm_hour,
+		stime.tm_min,
+		stime.tm_sec);
   
 if (where)
    {
