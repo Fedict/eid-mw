@@ -1,7 +1,9 @@
 #!/bin/sh
 
+if [ -d debian/tmp/usr/lib/eid-mw ]; then
+	echo usr/lib/eid-mw
+fi
 cat <<EOF
-usr/lib/eid-mw
 usr/bin/about-eid-mw
 usr/share/locale/*/LC_MESSAGES/about-eid-mw.mo
 usr/share/locale/*/LC_MESSAGES/dialogs-beid.mo
