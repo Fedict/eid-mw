@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: eid-mw 4.2.0-v4.2.0.9.gd1f9c781\n"
+"Project-Id-Version: eid-mw 4.4.10-v4.4.10.160.g7d9f474a.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@fedict.be\n"
-"POT-Creation-Date: 2017-02-03 10:03+0100\n"
+"POT-Creation-Date: 2018-12-14 13:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
