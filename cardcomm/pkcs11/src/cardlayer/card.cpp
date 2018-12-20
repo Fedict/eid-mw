@@ -635,10 +635,8 @@ namespace eIDMW
 		getSW12(oResp, 0x9000);
 	}
 
-	CByteArray CCard::SignInternal(const tPrivKey & key,
-		unsigned long algo,
-		const CByteArray & oData,
-		const tPin * pPin)
+	CByteArray CCard::SignInternal(const tPrivKey & key, unsigned long algo,
+		const CByteArray & oData, const tPin * pPin)
 	{
 		std::string csReadPin1;
 		std::string csReadPin2;
@@ -697,6 +695,7 @@ namespace eIDMW
 			return false;
 		if (ins == 0xA4)
 			return ulSW12 == 0x6A82 || ulSW12 == 0x6A86;
+
 		return ulSW12 == 0x6A82 || ulSW12 == 0x6A86 || ulSW12 == 0x6D00;
 	}
 
@@ -710,7 +709,9 @@ namespace eIDMW
 	{
 		ulOffset = 0;
 		if (csPath.substr(0, 4) == "3F00")
+		{
 			ulOffset = 4;
+		}
 		if (ulOffset < csPath.size())
 		{
 			std::string csPartialPath = csPath.substr(ulOffset, 4);
@@ -746,14 +747,10 @@ namespace eIDMW
 		return m_ucAppletVersion;
 	}
 
-	CByteArray CCard::ReadUncachedFile(const std::string & csPath,
-		unsigned long ulOffset,
-		unsigned long ulMaxLen)
+	CByteArray CCard::ReadUncachedFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
 	{
 		CByteArray oData(ulMaxLen);
-
 		CAutoLock autolock(this);
-
 		tFileInfo fileInfo = SelectFile(csPath, true);
 
 		// Loop until we've read ulMaxLen bytes or until EOF (End Of File)
@@ -864,11 +861,8 @@ namespace eIDMW
 		return bRetry;
 	}
 
-	bool CCard::PinCmd(tPinOperation operation, const tPin & Pin,
-		const std::string & csPin1,
-		const std::string & csPin2,
-		unsigned long &ulRemaining,
-		const tPrivKey * pKey)
+	bool CCard::PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1,
+		const std::string & csPin2, unsigned long &ulRemaining, const tPrivKey * pKey)
 	{
 		tPin beidPin = Pin;
 

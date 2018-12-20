@@ -27,7 +27,9 @@ namespace eIDMW
 	{
 		m_ulReaderCount = 0;
 		for (unsigned long i = 0; i < MAX_READERS; i++)
+		{
 			m_tpReaders[i] = NULL;
+		}
 	}
 
 	CCardLayer::~CCardLayer(void)
@@ -37,7 +39,6 @@ namespace eIDMW
 			if (m_tpReaders[i] != NULL)
 			{
 				delete m_tpReaders[i];
-
 				m_tpReaders[i] = NULL;
 			}
 		}
@@ -53,11 +54,6 @@ namespace eIDMW
 		m_oContext.m_oPCSC.Cancel();
 	}
 
-/*void CCardLayer::StartPCSCService(void)
-{
-	m_oContext.m_oPCSC.StartPCSCService();
-}*/
-
 	void CCardLayer::PCSCReEstablishContext()
 	{
 		m_oContext.m_oPCSC.ReleaseContext();
@@ -65,18 +61,9 @@ namespace eIDMW
 		m_oContext.m_oPCSC.EstablishContext();
 	}
 
-/*long CCardLayer::PCSCServiceRunning(bool* pRunning)
-{
-	return m_oContext.m_oPCSC.PCSCServiceRunning(pRunning);
-}*/
-
-	long CCardLayer::GetStatusChange(unsigned long ulTimeout,
-					 SCARD_READERSTATEA * txReaderStates,
-					 unsigned long ulReaderCount)
+	long CCardLayer::GetStatusChange(unsigned long ulTimeout, SCARD_READERSTATEA * txReaderStates,unsigned long ulReaderCount)
 	{
-		return m_oContext.m_oPCSC.GetTheStatusChange(ulTimeout,
-							     txReaderStates,
-							     ulReaderCount);
+		return m_oContext.m_oPCSC.GetTheStatusChange(ulTimeout, txReaderStates, ulReaderCount);
 	}
 
 /**
@@ -125,12 +112,11 @@ namespace eIDMW
 		CReader *pRet = NULL;
 
 		// If csReaderName == "", take the default (= first found) reader name
-		const std::string * pcsReaderName =
-			(csReaderName.size() ==
-			 0) ? GetDefaultReader() : &csReaderName;
+		const std::string * pcsReaderName = (csReaderName.size() == 0) ? GetDefaultReader() : &csReaderName;
 		if (pcsReaderName->size() == 0)
+		{
 			throw CMWEXCEPTION(EIDMW_ERR_NO_READER);
-
+		}
 		// First check if the reader doesn't exist already
 		for (unsigned long i = 0; i < MAX_READERS; i++)
 		{
@@ -152,8 +138,7 @@ namespace eIDMW
 			{
 				if (m_tpReaders[i] == NULL)
 				{
-					pRet = new CReader(*pcsReaderName,
-							   &m_oContext);
+					pRet = new CReader(*pcsReaderName, &m_oContext);
 					m_tpReaders[i] = pRet;
 					break;
 				}
@@ -161,7 +146,9 @@ namespace eIDMW
 		}
 		// No room in m_tpReaders -> throw an exception
 		if (pRet == NULL)
+		{
 			throw CMWEXCEPTION(EIDMW_ERR_LIMIT);
+		}
 
 		return *pRet;
 	}
@@ -172,11 +159,11 @@ namespace eIDMW
 
 		if (m_szDefaultReaderName.size() == 0)
 		{
-			CByteArray csReaders =
-				m_oContext.m_oPCSC.ListReaders();
+			CByteArray csReaders = m_oContext.m_oPCSC.ListReaders();
 			if (csReaders.Size() != 0)
-				m_szDefaultReaderName =
-					(char *) csReaders.GetBytes();
+			{
+				m_szDefaultReaderName = (char *)csReaders.GetBytes();
+			}
 		}
 
 		return pRet;

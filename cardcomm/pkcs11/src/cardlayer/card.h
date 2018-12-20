@@ -60,7 +60,7 @@ namespace eIDMW
 
 	class CCard
 	{
-public:
+	public:
 		//CCard(SCARDHANDLE hCard, CContext * poContext,  CPinpad * poPinpad);
 		CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad,
 			tSelectAppletMode selectAppletMode, tCardType cardType);
@@ -87,58 +87,43 @@ public:
 		/** Return the type of the card. */
 		tCardType GetType() { return m_cardType; };
 		/** Convert the return value of GetSerialNrBytes() to
-		    an std::string, and cache it for further usage */
+			an std::string, and cache it for further usage */
 		std::string GetSerialNr();
 
 		/** Start a transaction on the card. Can be called
-		    recursively, maintains a counter */
+			recursively, maintains a counter */
 		void Lock();
 		/** End a transaction on the card, as started with
-		    Lock(). */
+			Lock(). */
 		void Unlock();
 
 		void SelectApplication(const CByteArray & oAID);
 
-		CByteArray ReadFile(const std::string & csPath,
-					    unsigned long ulOffset =
-					    0, unsigned long ulMaxLen =
-					    FULL_FILE, bool bDoNotCache =
-					    false);
+		CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0,
+			unsigned long ulMaxLen = FULL_FILE, bool bDoNotCache = false);
 
-		CByteArray ReadUncachedFile(const std::string &csPath,
-						    unsigned long ulOffset = 0,
-						    unsigned long ulMaxLen = FULL_FILE);
+		CByteArray ReadUncachedFile(const std::string &csPath, unsigned long ulOffset = 0,
+			unsigned long ulMaxLen = FULL_FILE);
 
 		unsigned long PinStatus(const tPin & Pin);
-		bool PinCmd(tPinOperation operation, const tPin & Pin,
-				    const std::string & csPin1,
-				    const std::string & csPin2,
-				    unsigned long &ulRemaining,
-				    const tPrivKey * pKey = NULL);
+		bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1,
+			const std::string & csPin2, unsigned long &ulRemaining, const tPrivKey * pKey = NULL);
 
 		DlgPinUsage PinUsage2Dlg(const tPin & Pin, const tPrivKey * pKey);
 
 		unsigned long GetSupportedAlgorithms();
 
-		CByteArray Sign(const tPrivKey & key,
-					const tPin & Pin, unsigned long algo,
-					const CByteArray & oData);
+		CByteArray Sign(const tPrivKey & key, const tPin & Pin, unsigned long algo, const CByteArray & oData);
 
 		/** Send a case 1 or case 2 commands (no data is sent to the card),
-		    if you know it's case 1 then preferably set bDataIsReturned
-		    to false. */
-		CByteArray SendAPDU(unsigned char ucINS,
-					    unsigned char ucP1,
-					    unsigned char ucP2,
-					    unsigned long ulOutLen);
+			if you know it's case 1 then preferably set bDataIsReturned
+			to false. */
+		CByteArray SendAPDU(unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, unsigned long ulOutLen);
 
-    		/** Send a case 3 or case 4 commands (data is sent to the card),
-		    if you know it's case 1 then preferably set bDataIsReturned
-		    to false */
-		CByteArray SendAPDU(unsigned char ucINS,
-					    unsigned char ucP1,
-					    unsigned char ucP2,
-					    const CByteArray & oData);
+		/** Send a case 3 or case 4 commands (data is sent to the card),
+		if you know it's case 1 then preferably set bDataIsReturned
+		to false */
+		CByteArray SendAPDU(unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, const CByteArray & oData);
 		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
 
 		SCARDHANDLE m_hCard;
@@ -155,44 +140,44 @@ public:
 		bool LogOff(const tPin & Pin);
 
 		unsigned int GetRSAKeySize();
-		 unsigned char GetAppletVersion();
+		unsigned char GetAppletVersion();
 
-protected:
+	protected:
 		// How long to wait (msec) before re-sending an APDU when SW12 = 6CXX is returned
-		 unsigned long Get6CDelay();
+		unsigned long Get6CDelay();
 
-		 unsigned char Hex2Byte(char cHex);
-		 unsigned char Hex2Byte(const std::string & csHex, unsigned long ulIdx);
-		 bool IsDigit(char c);
+		unsigned char Hex2Byte(char cHex);
+		unsigned char Hex2Byte(const std::string & csHex, unsigned long ulIdx);
+		bool IsDigit(char c);
 		std::vector < unsigned long >m_verifiedPINs;
 
-		 CByteArray ReadBinary(unsigned long ulOffset, unsigned long ulLen);
-		 CByteArray UpdateBinary(unsigned long ulOffset, const CByteArray & oData);
-		 unsigned char PinUsage2Pinpad(const tPin & Pin, const tPrivKey * pKey);
-		 DlgPinOperation PinOperation2Dlg(tPinOperation operation);
+		CByteArray ReadBinary(unsigned long ulOffset, unsigned long ulLen);
+		CByteArray UpdateBinary(unsigned long ulOffset, const CByteArray & oData);
+		unsigned char PinUsage2Pinpad(const tPin & Pin, const tPrivKey * pKey);
+		DlgPinOperation PinOperation2Dlg(tPinOperation operation);
 
-		 CByteArray MakePinCmd(tPinOperation operation, const tPin & Pin);
-		 CByteArray MakePinBuf(const tPin & Pin, const std::string & csPin, bool bEmptyPin);
+		CByteArray MakePinCmd(tPinOperation operation, const tPin & Pin);
+		CByteArray MakePinBuf(const tPin & Pin, const std::string & csPin, bool bEmptyPin);
 
-		 CByteArray VerifyAndSign(const tPrivKey & key, const tPin & Pin,
+		CByteArray VerifyAndSign(const tPrivKey & key, const tPin & Pin,
 			unsigned long algo, const CByteArray & oData);
-		 void AskPin(tPinOperation operation, const tPin & Pin, std::string & csPin1,
+		void AskPin(tPinOperation operation, const tPin & Pin, std::string & csPin1,
 			std::string & csPin2, const tPrivKey * pKey);
-		 bool AskPinRetry(tPinOperation operation, const tPin & Pin, unsigned long ulRemaining,
+		bool AskPinRetry(tPinOperation operation, const tPin & Pin, unsigned long ulRemaining,
 			const tPrivKey * pKey);
 
 		/** Return true if the serial number is present in oData, false otherwise */
 		bool SerialNrPresent(const CByteArray & oData);
 
-	/** If ulExpected is provided and differs from the return code, an MWException is thrown */
-		 unsigned long getSW12(const CByteArray & oRespAPDU, unsigned long ulExpected = 0);
+		/** If ulExpected is provided and differs from the return code, an MWException is thrown */
+		unsigned long getSW12(const CByteArray & oRespAPDU, unsigned long ulExpected = 0);
 
 		bool ShouldSelectApplet(unsigned char ins, unsigned long ulSW12);
 		bool SelectApplet();
 
-		 tBelpicDF getDF(const std::string & csPath, unsigned long &ulOffset);
+		tBelpicDF getDF(const std::string & csPath, unsigned long &ulOffset);
 		tFileInfo SelectFile(const std::string & csPath, bool bReturnFileInfo = false);
-		 tFileInfo ParseFileInfo(CByteArray & oFCI);
+		tFileInfo ParseFileInfo(CByteArray & oFCI);
 		CByteArray SelectByPath(const std::string & csPath, bool bReturnFileInfo = false);
 
 		void showPinDialog(tPinOperation operation, const tPin & Pin, std::string & csPin1,
@@ -218,42 +203,39 @@ protected:
 #pragma warning(push)
 #pragma warning(disable:4251)	// m_csSerialNr does not need to have dll-interface
 #endif
-		     std::string m_csSerialNr;
+		std::string m_csSerialNr;
 #ifdef WIN32
 #pragma warning(pop)
 #endif
 
 		unsigned char m_ucCLA;
 
-private:
+	private:
 		// No copies allowed
 		CCard(const CCard & oCard);
 		CCard & operator =(const CCard & oCard);
 
 		//TODO: waiting to be cleaned up (aka removed)
-		bool PinCmd_2(tPinOperation operation, const tPin & Pin,
-			const std::string & csPin1,
-			const std::string & csPin2,
-			unsigned long &ulRemaining,
-			const tPrivKey * pKey);
+		bool PinCmd_2(tPinOperation operation, const tPin & Pin, const std::string & csPin1, const std::string & csPin2,
+			unsigned long &ulRemaining, const tPrivKey * pKey);
 		tFileInfo SelectFile_2(const std::string & csPath, bool bReturnFileInfo);
 		CByteArray SelectByPath_2(const std::string & csPath, bool bReturnFileInfo);
 	};
 
 	class CAutoLock
 	{
-public:
+	public:
 		CAutoLock(CCard * poCard);
 
-	/** Warning: no lock counter is kept (as opposed as for
-	 *  the CAutoLock(CCard *poCard) ctor; so make sure this
-	 *  object gets out of scope before making a new one for
-	 *  the same card handle! */
+		/** Warning: no lock counter is kept (as opposed as for
+		 *  the CAutoLock(CCard *poCard) ctor; so make sure this
+		 *  object gets out of scope before making a new one for
+		 *  the same card handle! */
 		CAutoLock(CPCSC * poPCSC, SCARDHANDLE hCard);
 
 		~CAutoLock();
 
-private:
+	private:
 		CCard * m_poCard;
 		CPCSC *m_poPCSC;
 		SCARDHANDLE m_hCard;
@@ -265,10 +247,5 @@ private:
 	CCard *UnknownCardGetInstance(unsigned long ulVersion, const char *csReader,
 		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad);
 }
-
-
-
-
-
 
 #endif

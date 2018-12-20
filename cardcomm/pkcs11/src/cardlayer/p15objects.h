@@ -79,7 +79,7 @@ namespace eIDMW
 	{
 		bool bValid;
 		// common object attributes
-		     std::string csLabel;
+		std::string csLabel;
 		unsigned long ulFlags;
 		unsigned long ulAuthID;
 		unsigned long ulUserConsent;
@@ -94,15 +94,15 @@ namespace eIDMW
 		unsigned long ulPinRef;
 		unsigned char ucPadChar;
 		tPinEncoding encoding;
-		             std::string csLastChange;
-		             std::string csPath;
+		std::string csLastChange;
+		std::string csPath;
 	} tPin;
 
 	typedef struct
 	{
 		bool bValid;
 		// common object attributes
-		     std::string csLabel;
+		std::string csLabel;
 		unsigned long ulFlags;
 		unsigned long ulAuthID;
 		unsigned long ulUserConsent;
@@ -114,7 +114,7 @@ namespace eIDMW
 		unsigned long ulKeyRef;
 
 		// private RSA key attributes
-		     std::string csPath;
+		std::string csPath;
 		unsigned long ulKeyLenBytes;
 
 		bool bUsedInP11;
@@ -124,7 +124,7 @@ namespace eIDMW
 	{
 		bool bValid;
 		// common object attributes
-		     std::string csLabel;
+		std::string csLabel;
 		unsigned long ulFlags;
 		unsigned long ulAuthID;
 		unsigned long ulUserConsent;
@@ -135,7 +135,7 @@ namespace eIDMW
 		bool bImplicitTrust;
 
 		// X509 certificate attributes
-		     std::string csPath;
+		std::string csPath;
 
 	} tCert;
 
