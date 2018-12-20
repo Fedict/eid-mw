@@ -43,7 +43,6 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/card.cpp \
 	cardlayer/cardfactory.cpp \
 	cardlayer/cardlayer.cpp \
-	cardlayer/cardreaderinfo.cpp \
 	cardlayer/context.cpp \
 	cardlayer/pcsc.cpp \
 	cardlayer/pinpad.cpp \
@@ -94,7 +93,6 @@ noinst_HEADERS = \
 	cardlayer/cardfactory.h \
 	cardlayer/pkcs15.h \
 	cardlayer/context.h \
-	cardlayer/cardreaderinfo.h \
 	cardlayer/pinpadlib.h \
 	cardlayer/pcsc.h \
 	cardlayer/cardlayerconst.h \
@@ -146,15 +144,26 @@ noinst_HEADERS = \
 	dialogs/dialogsgtk/parent.h \
 	dialogs/dialogsgtk/gettext.h \
 	dialogs/dialogsgtk/gtk_dialog_names.h
+
+SUBDIRS = cardlayer/uml
 if NO_DIALOGS
 libbeidpkcs11_la_CXXFLAGS += -DNO_DIALOGS
 else
 libbeidpkcs11_la_CXXFLAGS += -I$(srcdir)/dialogs
+if ASSUAN
+libbeidpkcs11_la_SOURCES += \
+	dialogs/dialogspinentry/dlgs_pinentry.cpp
+libbeidpkcs11_la_CFLAGS += $(LIBASSUAN_CFLAGS)
+libbeidpkcs11_la_CPPFLAGS += -DDATAROOTDIR='"$(datarootdir)"'
+libbeidpkcs11_la_CXXFLAGS += $(LIBASSUAN_CFLAGS)
+libbeidpkcs11_la_LIBADD += $(LIBASSUAN_LIBS)
+else
 libbeidpkcs11_la_SOURCES += \
 	dialogs/dialogsgtk/dlgs_gtk.cpp \
 	dialogs/dialogsgtk/single_dialog.c
 libexec_PROGRAMS = beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin
-SUBDIRS = dialogs/dialogsgtk/po cardlayer/uml
+endif
+SUBDIRS += dialogs/dialogsgtk/po
 endif
 
 if P11KIT

@@ -34,9 +34,6 @@
     <ClCompile Include="..\src\cardlayer\cardlayer.cpp">
       <Filter>Cardlayer</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cardlayer\cardreaderinfo.cpp">
-      <Filter>Cardlayer</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\cardlayer\context.cpp">
       <Filter>Cardlayer</Filter>
     </ClCompile>
@@ -196,9 +193,6 @@
       <Filter>Cardlayer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cardlayer\cardlayerconst.h">
-      <Filter>Cardlayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cardlayer\cardreaderinfo.h">
       <Filter>Cardlayer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cardlayer\context.h">
@@ -417,6 +411,7 @@
     <None Include="..\src\common\beid_registry.reg">
       <Filter>Common</Filter>
     </None>
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="beidpkcs11.rc">

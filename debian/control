@@ -1,10 +1,12 @@
 Source: eid-mw
 Priority: optional
 Maintainer: FedICT Servicedesk <servicedesk@fedict.be>
-Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk-3-dev | libgtk2.0-dev (<= 2.24.11), libtool, lsb-release, libssl-dev, libxml2-dev, libcurl4-openssl-dev, libproxy-dev, openssl, libp11-kit-dev
+Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk-3-dev | libgtk2.0-dev (<= 2.24.11), libtool, lsb-release, libssl-dev, libxml2-dev, libcurl4-openssl-dev, libproxy-dev, openssl, libp11-kit-dev, libassuan-dev, libgpg-error-dev
 Standards-Version: 3.8.3
 Section: libs
-Homepage: http://github.com/Fedict/eid-mw
+Vcs-Browser: https://github.com/Fedict/eid-mw
+Vcs-Git: https://github.com/Fedict/eid-mw
+Homepage: https://eid.belgium.be/
 
 Package: eid-mw
 Section: metapackages
@@ -23,7 +25,7 @@ Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Replaces: eid-mw (<< 4.0.6r1508)
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-bin
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-bin, pinentry
 Description: PKCS#11 library for Belgian Electronic Identity Card
  This package contains the PKCS#11 module for the Belgian Electronic
  Identity card, and a few helper libraries. It handles all low-level
