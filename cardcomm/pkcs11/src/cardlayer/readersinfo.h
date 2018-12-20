@@ -46,26 +46,7 @@ public:
 	 * Return the reader name, this value never changes.
 	 * - ulIndex ranges from 0 to (but not included) ReaderCount.
 	 */
-		     std::string ReaderName(unsigned long ulIndex);
-
-	/**
-	 * Checks if cards have been inserted/removed (by calling
-	 * the SCardGetStatusChange function).
-	 * Specify ulTimeout = TIMEOUT_INFINITE to never time out,
- 	 * ulIndex ranges from 0 to (but not included) ReaderCount;
-	 * or can be ALL_READERS to check for all readers.
-	 * Returns true if something changed, false otherwise (this
-	 * corresponds to whether or not the timeout has been reached).
-	 */
-//      bool CheckReaderEvents(
-//              unsigned long ulTimeout = TIMEOUT_INFINITE,
-//              unsigned long ulIndex = ALL_READERS);
-
-	/**
-	 * Did the \\?Pnp?\\Notification reader's event reported a reader insertion?
-	 * (and not a reader removal)
-	 */
-	//	bool IsReaderInserted(unsigned long ulIndex);
+	std::string ReaderName(unsigned long ulIndex);
 
 	/**
 	 * Whether or not the state of the reader has changed since the last Update()
@@ -98,7 +79,7 @@ public:
 		bool SameList(CReadersInfo * newReadersInfo);
 
 private:
-		     CReadersInfo(const CByteArray & oReaders);
+		CReadersInfo(const CByteArray & oReaders);
 
 		bool bFirstTime;
 		unsigned long m_ulReaderCount;
@@ -106,7 +87,6 @@ private:
 
 		friend class CCardLayer;	// calls the CReadersInfo constructor
 
-		//CPCSC *m_poPCSC;
 	};
 
 }

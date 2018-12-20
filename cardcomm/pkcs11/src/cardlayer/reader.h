@@ -38,7 +38,7 @@ public:
 	/**
 	 * Returns the reader name
 	 */
-		     std::string & GetReaderName();
+		std::string & GetReaderName();
 
 	/** Returns true is ulState indicates that a card is present, false otherwise. */
 		static bool CardPresent(unsigned long ulState);
@@ -68,8 +68,7 @@ public:
 		bool Connect();
 
 	/** Disconnect from the card; it's safe to call this function multiple times */
-		void Disconnect(tDisconnectMode disconnectMode =
-				DISCONNECT_LEAVE_CARD);
+		void Disconnect(tDisconnectMode disconnectMode = DISCONNECT_LEAVE_CARD);
 
 	/**
 	 * Returns the ATR of the card that is currently present.
@@ -84,8 +83,8 @@ public:
 		 * of the "Get Card Data" command (unsigned) */
 		CByteArray GetInfo();
 
-		           std::string GetSerialNr();
-		           std::string GetCardLabel();
+		std::string GetSerialNr();
+		std::string GetCardLabel();
 
 		/* Lock the card for exclusive use. Multiple calls are possible
 		 * (only the first call will lock the card), but for each Lock()
@@ -124,8 +123,7 @@ public:
 		unsigned char GetAppletVersion();
 
 		/* Sign data. If necessary, a PIN will be asked */
-		CByteArray Sign(const tPrivKey & key, unsigned long algo,
-				const CByteArray & oData);
+		CByteArray Sign(const tPrivKey & key, unsigned long algo, const CByteArray & oData);
 
 		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
 
@@ -158,19 +156,19 @@ public:
 		PinUsage GetPinUsage(const tPin & pin);
 
 private:
-		      CReader(const std::string & csReader,
+		CReader(const std::string & csReader,
 			      CContext * poContext);
 		// No copies allowed
-		      CReader(const CReader & oReader);
-		      CReader & operator =(const CReader & oReader);
+		CReader(const CReader & oReader);
+		CReader & operator =(const CReader & oReader);
 
 		bool m_bIgnoreRemoval;
 #ifdef WIN32
 #pragma warning(push)
 #pragma warning(disable:4251)	// these strings do not need a dll interface
 #endif
-		     std::string m_csReader;
-		     std::wstring m_wsReader;
+		std::string m_csReader;
+		std::wstring m_wsReader;
 #ifdef WIN32
 #pragma warning(pop)
 #endif
