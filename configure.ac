@@ -171,7 +171,7 @@ AC_FUNC_ERROR_AT_LINE
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 saved_CFLAGS=$CFLAGS
-export CFLAGS="$CFLAGS -Wno-error=builtin-declaration-mismatch"
+export CFLAGS="$CFLAGS -Wno-error"
 AC_CHECK_FUNCS([gethostbyname socket strerror memchr memset mkdir select strchr strdup strerror strncasecmp strrchr strstr strtol strtoul vasprintf],,[AC_MSG_ERROR([missing required function])])
 CFLAGS=$saved_CFLAGS
 
