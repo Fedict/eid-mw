@@ -16,7 +16,7 @@ extern "C"
 	void *convert_from_xml(const EID_CHAR * name, const EID_CHAR * value,
 			       int *len_return);
 	int can_convert(const EID_CHAR * label);
-	enum eid_vwr_langs convert_get_lang();
+    enum eid_vwr_langs convert_get_lang(void);
 
 #ifdef __cplusplus
 }

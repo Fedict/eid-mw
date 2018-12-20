@@ -81,7 +81,7 @@ struct state {
 				   of the target state will have their
 				   enter() function called, but will not
 				   get any data. */
-	int(*leave)(); /* Function called when we leave the current
+    int(*leave)(void); /* Function called when we leave the current
 			  state (directly or by leaving its parent) */
 };
 
