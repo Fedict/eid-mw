@@ -176,9 +176,8 @@ namespace eIDMW
 		bool SelectApplet();
 
 		tBelpicDF getDF(const std::string & csPath, unsigned long &ulOffset);
-		tFileInfo SelectFile(const std::string & csPath, bool bReturnFileInfo = false);
-		tFileInfo ParseFileInfo(CByteArray & oFCI);
-		CByteArray SelectByPath(const std::string & csPath, bool bReturnFileInfo = false);
+		void SelectFile(const std::string & csPath);
+		CByteArray SelectByPath(const std::string & csPath);
 
 		void showPinDialog(tPinOperation operation, const tPin & Pin, std::string & csPin1,
 			std::string & csPin2, const tPrivKey * pKey);
@@ -218,8 +217,6 @@ namespace eIDMW
 		//TODO: waiting to be cleaned up (aka removed)
 		bool PinCmd_2(tPinOperation operation, const tPin & Pin, const std::string & csPin1, const std::string & csPin2,
 			unsigned long &ulRemaining, const tPrivKey * pKey);
-		tFileInfo SelectFile_2(const std::string & csPath, bool bReturnFileInfo);
-		CByteArray SelectByPath_2(const std::string & csPath, bool bReturnFileInfo);
 	};
 
 	class CAutoLock

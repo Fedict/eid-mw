@@ -332,18 +332,21 @@ namespace eIDMW
 
 		try
 		{
-			return m_poCard->ReadFile(csPath, ulOffset, ulMaxLen,
-						  bDoNotCache);
+			return m_poCard->ReadFile(csPath, ulOffset, ulMaxLen, bDoNotCache);
 		}
 		catch(const CNotAuthenticatedException & e)
 		{
 			// A PIN is needed to read -> ask the correct PIN and do a verification
 			unsigned long ulRemaining;
-			tPin pin = m_oPKCS15.GetPinByRef(e.GetPinRef());
+
+			//the reference for the PINreadef is 0x05
+			tPin pin = m_oPKCS15.GetPinByRef(0x05);
+
+			(void)e.GetError();
 
 			if (pin.bValid)
 			{
-				if (m_poCard-> PinCmd(PIN_OP_VERIFY, pin, "", "", ulRemaining, NULL))
+				if (m_poCard->PinCmd(PIN_OP_VERIFY, pin, "", "", ulRemaining, NULL))
 				{
 					return m_poCard->ReadFile(csPath, ulOffset, ulMaxLen);
 				} 

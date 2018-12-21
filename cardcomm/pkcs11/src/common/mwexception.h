@@ -71,12 +71,7 @@ protected:
 	class CNotAuthenticatedException:public CMWException
 	{
 public:
-		CNotAuthenticatedException(long lError, long lPinRef);
-
-		long GetPinRef() const;
-
-protected:
-		long m_lPinRef;
+		CNotAuthenticatedException(long lError);
 	};
 
 #define CMWEXCEPTION(i)	CMWException(i, __FILE__, __LINE__)

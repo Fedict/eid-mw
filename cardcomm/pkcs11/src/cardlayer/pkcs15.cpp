@@ -139,9 +139,10 @@ namespace eIDMW
 	{
 		if (!m_xAODF.isRead)  ReadLevel3(AODF);
 
-		for (std::vector<tPin>::const_iterator ip = m_oPins.begin();
-			ip != m_oPins.end(); ++ip) {
-			if (ip->ulID == ulID) return *ip;
+		for (std::vector<tPin>::const_iterator ip = m_oPins.begin(); ip != m_oPins.end(); ++ip) 
+		{
+			if (ip->ulID == ulID)
+				return *ip;
 		}
 		return PinInvalid;
 	}
@@ -150,13 +151,13 @@ namespace eIDMW
 	{
 		if (!m_xAODF.isRead)  ReadLevel3(AODF);
 
-		for (std::vector<tPin>::const_iterator ip = m_oPins.begin();
-			ip != m_oPins.end(); ++ip) {
-			if (ip->ulPinRef == ulPinRef) return *ip;
+		for (std::vector<tPin>::const_iterator ip = m_oPins.begin(); ip != m_oPins.end(); ++ip) 
+		{
+			if (ip->ulPinRef == ulPinRef) 
+				return *ip;
 		}
 		return PinInvalid;
 	}
-
 
 	unsigned long CPKCS15::CertCount()
 	{

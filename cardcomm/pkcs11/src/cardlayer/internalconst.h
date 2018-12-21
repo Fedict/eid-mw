@@ -28,13 +28,6 @@ namespace eIDMW
 
 	const static unsigned long READERS_BUF_LEN = 600;
 
-	typedef struct
-	{
-		long lFileLen;	// -1 means 'unknown'
-		long lReadPINRef;	// -1 means 'no PIN needed' or 'unknown'
-		long lWritePINRef;	// -1 means 'no PIN needed' or 'unknown'
-	} tFileInfo;
-
 #ifdef __APPLE__
 // SCM331 reader on Mac PPC 10.4 can't read 252 bytes
 	const unsigned long MAX_APDU_READ_LEN = 248;

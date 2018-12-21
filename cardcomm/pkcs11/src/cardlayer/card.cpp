@@ -43,10 +43,6 @@ static const unsigned char BELPIC_AID[] =
 { 0xA0, 0x00, 0x00, 0x01, 0x77, 0x50, 0x4B, 0x43, 0x53, 0x2D, 0x31,
 0x35 };
 
-static const tFileInfo DEFAULT_FILE_INFO = { -1, -1, -1 };
-static const tFileInfo PREFS_FILE_INFO_V1 = { -1, -1, 1 };
-static const tFileInfo PREFS_FILE_INFO_V2 = { -1, -1, 0x85 };
-
 namespace eIDMW
 {
 
@@ -568,12 +564,6 @@ namespace eIDMW
 		return ulAlgos;
 	}
 
-	tFileInfo CCard::ParseFileInfo(CByteArray & oFCI)
-	{
-		// We should never come here
-		throw CMWEXCEPTION(EIDMW_ERR_CHECK);
-	}
-
 	void CCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo, unsigned long ulInputLen)
 	{
 		// Data = [04 80 <algoref> 84 <keyref>]  (5 bytes)
@@ -751,7 +741,7 @@ namespace eIDMW
 	{
 		CByteArray oData(ulMaxLen);
 		CAutoLock autolock(this);
-		tFileInfo fileInfo = SelectFile(csPath, true);
+		SelectFile(csPath);
 
 		// Loop until we've read ulMaxLen bytes or until EOF (End Of File)
 		bool bEOF = false;
@@ -772,7 +762,7 @@ namespace eIDMW
 			}
 			else if (ulSW12 == 0x6982)
 			{
-				throw CNotAuthenticatedException (EIDMW_ERR_NOT_AUTHENTICATED, fileInfo.lReadPINRef);
+				throw CNotAuthenticatedException (EIDMW_ERR_NOT_AUTHENTICATED);
 			}
 			else if (ulSW12 == 0x6B00)
 			{
@@ -1059,32 +1049,9 @@ namespace eIDMW
 	}
 
 
-	tFileInfo CCard::SelectFile(const std::string & csPath,
-		bool bReturnFileInfo)
-	{
-		SelectFile_2(csPath, false);
-
-		// The EF(Preferences) file can be written using the authentication PIN;
-		// that's the only exception to the 'read always' - 'write never' ACs.
-		if (csPath.substr(csPath.size() - 4, 4) == "4039")
-		{
-			if (m_ucAppletVersion < 0x17)
-			{
-				return PREFS_FILE_INFO_V1;
-			}
-			else
-			{
-				return PREFS_FILE_INFO_V2;
-			}
-		}
-		else
-			return DEFAULT_FILE_INFO;
-	}
-
-	tFileInfo CCard::SelectFile_2(const std::string & csPath, bool bReturnFileInfo)
+	void CCard::SelectFile(const std::string & csPath)
 	{
 		CByteArray oResp;
-		tFileInfo xFileInfo = { 0, 0, 0 };
 
 		unsigned long ulPathLen = (unsigned long)csPath.size();
 
@@ -1093,14 +1060,14 @@ namespace eIDMW
 
 		ulPathLen /= 2;
 
-		unsigned char ucP2 = bReturnFileInfo ? 0x00 : 0x0C;
+		unsigned char ucP2 = 0x0C;
 
 		CAutoLock autolock(this);
 
 		if (m_selectAppletMode == ALW_SELECT_APPLET)
 		{
 			SelectApplet();
-			oResp = SelectByPath(csPath, bReturnFileInfo);
+			oResp = SelectByPath(csPath);
 		}
 		else
 		{
@@ -1120,18 +1087,13 @@ namespace eIDMW
 					throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
 
 				// The file wasn't found in this DF, so let's select by full path
-				oResp = SelectByPath(csPath, bReturnFileInfo);
+				oResp = SelectByPath(csPath);
 			}
 			else
 			{
 				getSW12(oResp, 0x9000);
 			}
 		}
-
-		if (bReturnFileInfo)
-			xFileInfo = ParseFileInfo(oResp);
-
-		return xFileInfo;
 	}
 
 
@@ -1149,8 +1111,7 @@ namespace eIDMW
 	 * first selected the MF (3F00) even if it is specified
 	 * because selection by AID always works.
 	 */
-	CByteArray CCard::SelectByPath(const std::string & csPath,
-		bool bReturnFileInfo)
+	CByteArray CCard::SelectByPath(const std::string & csPath)
 	{
 		unsigned long ulOffset = 0;
 
@@ -1224,37 +1185,6 @@ namespace eIDMW
 		// don't return it, we just return the path that can be used
 		// later on to return the harcoded FCI for that file.
 		return CByteArray((unsigned char *)csPath.c_str(), (unsigned long)csPath.size());
-	}
-
-	// Only called from SelectFile(), no locking is done here
-	CByteArray CCard::SelectByPath_2(const std::string & csPath, bool bReturnFileInfo)
-	{
-		unsigned char ucP2 = bReturnFileInfo ? 0x00 : 0x0C;
-
-		unsigned long ulPathLen = (unsigned long)(csPath.size() / 2);
-
-		CByteArray oPath(ulPathLen);
-
-		for (unsigned long i = 0; i < ulPathLen; i++)
-		{
-			oPath.Append(Hex2Byte(csPath, i));
-		}
-
-		CByteArray oResp = SendAPDU(0xA4, 0x80, ucP2, oPath);
-
-		if (ShouldSelectApplet(0xA4, getSW12(oResp)))
-		{
-			// The file still wasn't found, so let's first try to select the applet
-			if (SelectApplet())
-			{
-				m_selectAppletMode = ALW_SELECT_APPLET;
-				oResp = SendAPDU(0xA4, 0x80, ucP2, oPath);
-			}
-		}
-
-		getSW12(oResp, 0x9000);
-
-		return oResp;
 	}
 
 	CByteArray CCard::ReadBinary(unsigned long ulOffset, unsigned long ulLen)

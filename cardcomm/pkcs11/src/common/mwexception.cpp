@@ -46,16 +46,8 @@ namespace eIDMW
 	}
 
 // CNotAuthenticatedException::CNotAuthenticatedException(...)
-      CNotAuthenticatedException::CNotAuthenticatedException(long lError, long lPinRef):CMWException(lError, "", 0),
-		m_lPinRef
-		(lPinRef)
+      CNotAuthenticatedException::CNotAuthenticatedException(long lError):CMWException(lError, "", 0)
 	{
-	}
-
-// long CNotAuthenticatedException::GetPinRef()
-	long CNotAuthenticatedException::GetPinRef() const
-	{
-		return m_lPinRef;
 	}
 
 }
