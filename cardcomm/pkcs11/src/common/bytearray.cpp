@@ -254,18 +254,22 @@ namespace eIDMW
 
 	void CByteArray::Append(const unsigned char * pucData, unsigned long ulSize)
 	{
+		unsigned char* pucOldData;
 		if (m_bMallocError)
 			throw CMWEXCEPTION(EIDMW_ERR_MEMORY);
 
-		if (pucData != NULL && ulSize != 0)		//add only if object exist and is not empty, else ??
+		if (pucData != NULL && ulSize != 0)		//add only if there is something to add
 		{
 			if (m_ulSize + ulSize > m_ulCapacity || m_pucData == NULL)
 			{
 				m_ulCapacity = m_ulSize + ulSize + EXTRA_INCREMENT_LEN;
+				pucOldData = m_pucData;
 				m_pucData = static_cast<unsigned char *>(realloc(m_pucData, m_ulCapacity));
 				if (m_pucData == NULL)
 				{
 					m_bMallocError = true;
+					if(pucOldData != NULL)
+						free(pucOldData);
 					throw CMWEXCEPTION(EIDMW_ERR_MEMORY);
 				}
 			}

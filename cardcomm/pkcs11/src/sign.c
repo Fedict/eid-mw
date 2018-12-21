@@ -686,6 +686,7 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
    CK_RV ret;
    P11_SESSION *pSession = NULL;
    P11_SIGN_DATA *pSignData = NULL;
+   char* oldBuf = NULL;
 
 	if (p11_get_init() != BEIDP11_INITIALIZED)
 	{
@@ -694,8 +695,8 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
 	}		
 
    p11_lock();
-
-	 log_trace(WHERE, "I: enter");
+	
+   log_trace(WHERE, "I: enter");
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
@@ -728,11 +729,16 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
          ret = CKR_DATA_LEN_RANGE;
          goto cleanup;
          }
-      pSignData->pbuf = (char*) realloc(pSignData->pbuf, pSignData->lbuf + ulPartLen);
+	  oldBuf = pSignData->pbuf;
+	  pSignData->pbuf = (char*)realloc(pSignData->pbuf, pSignData->lbuf + ulPartLen);
+
       if (pSignData->pbuf == NULL)
          {
          log_trace(WHERE, "E: memory allocation problem for host");
          ret = CKR_HOST_MEMORY;
+		 //old location has not been freed, so do that now
+		 if (oldBuf != NULL)
+			free(oldBuf);
          goto cleanup;
          }
       //add data
@@ -951,8 +957,8 @@ CK_RV C_VerifyRecoverInit(CK_SESSION_HANDLE hSession,    /* the session's handle
                           CK_MECHANISM_PTR  pMechanism,  /* the verification mechanism */
                           CK_OBJECT_HANDLE  hKey)        /* handle of the verification key */
 {
-log_trace(WHERE, "S: C_VerifyRecoverInit(): nop");
-   return CKR_FUNCTION_NOT_SUPPORTED;
+	log_trace(WHERE, "S: C_VerifyRecoverInit(): nop");
+	return CKR_FUNCTION_NOT_SUPPORTED;
 }
 #undef WHERE
 
