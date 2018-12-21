@@ -87,7 +87,7 @@ namespace eIDMW
 	const unsigned long TIMEOUT_INFINITE = 0xFFFFFFFF;	// used in CCardLayer::GetStatusChange()
 	const unsigned long TIMEOUT_POLL = 0x000001F4;	// used in CCardLayer::GetStatusChange(), timeout in ms
 
-	const unsigned long ALL_READERS = 0xFFFFFFFF;	// used in CCardLayer::GetStatusChange()
+//	const unsigned long ALL_READERS = 0xFFFFFFFF;	// used in CCardLayer::GetStatusChange()
 
 	const unsigned long FULL_FILE = 0xFFFFFFFF;	// used in CReader::ReadFile()
 
@@ -96,26 +96,26 @@ namespace eIDMW
 
 /* used in CReader::Ctrl() */
 
-	const long CTRL_BEID = 1000;
+//	const long CTRL_BEID = 1000;
 
 /** Returns the unsigned card data (= same as CReader::GetInfo(), in case of a BE eID card).
  *  No input data is needed, 28 bytes are returned. */
-	const long CTRL_BEID_GETCARDDATA = CTRL_BEID;
+//	const long CTRL_BEID_GETCARDDATA = CTRL_BEID;
 
 /** Returns the signed card data (28 + 128 bytes). No input data is needed.
  *  Not for V1 cards! */
-	const long CTRL_BEID_GETSIGNEDCARDDATA = CTRL_BEID + 1;
+//	const long CTRL_BEID_GETSIGNEDCARDDATA = CTRL_BEID + 1;
 
 /** Returns the signed PIN status (1 + 128 bytes).
  * Not for V1 cards!
  * The input data should consist of 1 byte: the pin reference. */
-	const long CTRL_BEID_GETSIGNEDPINSTATUS = CTRL_BEID + 2;
+//	const long CTRL_BEID_GETSIGNEDPINSTATUS = CTRL_BEID + 2;
 
 /** Does an Internal Authenticate command, the signed challenge (128 bytes) is returned.
  *  The input data should be 21 bytes:
  *    - the key reference (1 byte)
  *    - the challenge to be signed (20 bytes) */
-	const long CTRL_BEID_INTERNAL_AUTH = CTRL_BEID + 3;
+//	const long CTRL_BEID_INTERNAL_AUTH = CTRL_BEID + 3;
 }
 
 #endif
