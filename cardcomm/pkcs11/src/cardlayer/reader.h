@@ -100,18 +100,12 @@ public:
 		 * If too much bytes are specified by ulMaxLen, no
 		 * exception is throw, the function just returns the
 		 * number of bytes that are available. */
-		CByteArray ReadFile(const std::string & csPath,
-				    unsigned long ulOffset =
-				    0, unsigned long ulMaxLen =
-				    FULL_FILE, bool bDoNotCache = false);
+		CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
 
 		/* Return the remaining PIN attempts;
 		 * returns PIN_STATUS_UNKNOWN if this info isn't available */
 		unsigned long PinStatus(const tPin & Pin);
-		bool PinCmd(tPinOperation operation, const tPin & Pin,
-			    const std::string & csPin1,
-			    const std::string & csPin2,
-			    unsigned long &ulRemaining);
+		bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1, const std::string & csPin2, unsigned long &ulRemaining);
 
 	/** Returns the OR-ing of all supported crypto algorithms */
 		unsigned long GetSupportedAlgorithms();

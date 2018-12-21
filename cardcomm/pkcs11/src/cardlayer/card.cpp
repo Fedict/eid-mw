@@ -189,8 +189,7 @@ namespace eIDMW
 		return false;
 	}
 
-	CByteArray CCard::ReadFile(const std::string & csPath, unsigned long ulOffset,
-				   unsigned long ulMaxLen, bool bDoNotCache)
+	CByteArray CCard::ReadFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
 	{
 #ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 		if(csPath == fuzz_path) {

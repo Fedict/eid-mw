@@ -325,14 +325,14 @@ namespace eIDMW
 		return m_poCard->SelectApplication(oAID);
 	}
 
-	CByteArray CReader::ReadFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen, bool bDoNotCache)
+	CByteArray CReader::ReadFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
 	{
 		if (m_poCard == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
 
 		try
 		{
-			return m_poCard->ReadFile(csPath, ulOffset, ulMaxLen, bDoNotCache);
+			return m_poCard->ReadFile(csPath, ulOffset, ulMaxLen);
 		}
 		catch(const CNotAuthenticatedException & e)
 		{

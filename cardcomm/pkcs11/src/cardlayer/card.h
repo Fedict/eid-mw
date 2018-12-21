@@ -99,11 +99,9 @@ namespace eIDMW
 
 		void SelectApplication(const CByteArray & oAID);
 
-		CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0,
-			unsigned long ulMaxLen = FULL_FILE, bool bDoNotCache = false);
+		CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
 
-		CByteArray ReadUncachedFile(const std::string &csPath, unsigned long ulOffset = 0,
-			unsigned long ulMaxLen = FULL_FILE);
+		CByteArray ReadUncachedFile(const std::string &csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
 
 		unsigned long PinStatus(const tPin & Pin);
 		bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1,
