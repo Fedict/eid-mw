@@ -196,9 +196,58 @@ namespace eIDMW
 			return fuzz_data;
 		}
 		return CByteArray();
-#else
-		return ReadUncachedFile(csPath, ulOffset, ulMaxLen);
 #endif
+		CByteArray oData(ulMaxLen);
+		CAutoLock autolock(this);
+		SelectFile(csPath);
+
+		// Loop until we've read ulMaxLen bytes or until EOF (End Of File)
+		bool bEOF = false;
+
+		for (unsigned long i = 0; i < ulMaxLen && !bEOF; i += MAX_APDU_READ_LEN)
+		{
+			unsigned long ulLen = ulMaxLen - i <= MAX_APDU_READ_LEN ? ulMaxLen - i : MAX_APDU_READ_LEN;
+
+			CByteArray oResp = ReadBinary(ulOffset + i, ulLen);
+
+			unsigned long ulSW12 = getSW12(oResp);
+
+			// If the file is a multiple of the block read size, you will get
+			// an SW12 = 6B00 (at least with BE eID) but that OK then..
+			if (ulSW12 == 0x9000 || (i != 0 && ulSW12 == 0x6B00))
+			{
+				oData.Append(oResp.GetBytes(), oResp.Size() - 2);
+			}
+			else if (ulSW12 == 0x6982)
+			{
+				throw CNotAuthenticatedException (EIDMW_ERR_NOT_AUTHENTICATED);
+			}
+			else if (ulSW12 == 0x6B00)
+			{
+				throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
+			}
+			else
+			{
+				if (ulSW12 == 0x6D00)
+				{
+					throw CMWEXCEPTION(EIDMW_ERR_NOT_ACTIVATED);
+				}
+				else
+				{
+					throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
+				}
+			}
+			// If the driver/reader itself did the 6CXX handling,
+			// we assume we're at the EOF
+			if (oResp.Size() < MAX_APDU_READ_LEN)
+			{
+				bEOF = true;
+			}
+		}
+
+		MWLOG(LEV_INFO, MOD_CAL,L"   Read file %ls (%d bytes) from card", utilStringWiden(csPath).c_str(), oData.Size());
+
+		return oData;
 	}
 
 	CByteArray CCard::SendAPDU(const CByteArray & oCmdAPDU)
@@ -734,61 +783,6 @@ namespace eIDMW
 	unsigned char CCard::GetAppletVersion()
 	{
 		return m_ucAppletVersion;
-	}
-
-	CByteArray CCard::ReadUncachedFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
-	{
-		CByteArray oData(ulMaxLen);
-		CAutoLock autolock(this);
-		SelectFile(csPath);
-
-		// Loop until we've read ulMaxLen bytes or until EOF (End Of File)
-		bool bEOF = false;
-
-		for (unsigned long i = 0; i < ulMaxLen && !bEOF; i += MAX_APDU_READ_LEN)
-		{
-			unsigned long ulLen = ulMaxLen - i <= MAX_APDU_READ_LEN ? ulMaxLen - i : MAX_APDU_READ_LEN;
-
-			CByteArray oResp = ReadBinary(ulOffset + i, ulLen);
-
-			unsigned long ulSW12 = getSW12(oResp);
-
-			// If the file is a multiple of the block read size, you will get
-			// an SW12 = 6B00 (at least with BE eID) but that OK then..
-			if (ulSW12 == 0x9000 || (i != 0 && ulSW12 == 0x6B00))
-			{
-				oData.Append(oResp.GetBytes(), oResp.Size() - 2);
-			}
-			else if (ulSW12 == 0x6982)
-			{
-				throw CNotAuthenticatedException (EIDMW_ERR_NOT_AUTHENTICATED);
-			}
-			else if (ulSW12 == 0x6B00)
-			{
-				throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
-			}
-			else
-			{
-				if (ulSW12 == 0x6D00)
-				{
-					throw CMWEXCEPTION(EIDMW_ERR_NOT_ACTIVATED);
-				}
-				else
-				{
-					throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
-				}
-			}
-			// If the driver/reader itself did the 6CXX handling,
-			// we assume we're at the EOF
-			if (oResp.Size() < MAX_APDU_READ_LEN)
-			{
-				bEOF = true;
-			}
-		}
-
-		MWLOG(LEV_INFO, MOD_CAL,L"   Read file %ls (%d bytes) from card", utilStringWiden(csPath).c_str(), oData.Size());
-
-		return oData;
 	}
 
 	unsigned char CCard::PinUsage2Pinpad(const tPin & Pin, const tPrivKey * pKey)

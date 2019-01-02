@@ -101,8 +101,6 @@ namespace eIDMW
 
 		CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
 
-		CByteArray ReadUncachedFile(const std::string &csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
-
 		unsigned long PinStatus(const tPin & Pin);
 		bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1,
 			const std::string & csPin2, unsigned long &ulRemaining, const tPrivKey * pKey = NULL);
