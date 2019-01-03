@@ -42,8 +42,8 @@ TEST_FUNC(fork_init) {
 			printf("fork failed, skipping test\n");
 			return TEST_RV_SKIP;
 		}
-		wait(&status);
-		if(!WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+        waitpid(child, &status, 0);
+		if(!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
 			check_rv(C_Finalize(NULL_PTR));
 			return TEST_RV_FAIL;
 		}
