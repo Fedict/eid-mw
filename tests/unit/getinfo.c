@@ -42,7 +42,7 @@ TEST_FUNC(getinfo) {
 	printf("Cryptoki version: %d.%d\n", info.cryptokiVersion.major, info.cryptokiVersion.minor);
 	verify_null(info.libraryDescription, 32, 0, "Library description:\t'%s'\n");
 	printf("Library version: %d.%d\n", info.libraryVersion.major, info.libraryVersion.minor);
-#ifdef CRYPTOKIMINORVERS
+#if CRYPTOKIMINORVERS
 	verbose_assert(info.libraryVersion.minor == CRYPTOKIMINORVERS);
 #endif
 	check_rv(C_Finalize(NULL_PTR));

@@ -191,6 +191,7 @@ MAINVERSION=$(echo $PACKAGE_VERSION|sed -e 's/-.*$//')
 AC_DEFINE_UNQUOTED([MAINVERSION], $MAINVERSION, [do not change this])
 AC_SUBST(MAINVERSION)
 CRYPTOKIMINORVERS=$(echo $MAINVERSION|cut -d'.' -f2)
+AS_IF([test -z "$CRYPTOKIMINORVERS"],[CRYPTOKIMINORVERS=0])
 AC_DEFINE_UNQUOTED([CRYPTOKIMINORVERS], $CRYPTOKIMINORVERS, [minor version of PKCS#11 library])
 
 # need dlopen() for the pincode plugin thing
