@@ -24,6 +24,8 @@
 #include "reader.h"
 #include "readersinfo.h"
 #include "context.h"
+#include <vector>
+#include <memory>
 
 namespace eIDMW
 {
@@ -104,7 +106,7 @@ namespace eIDMW
 #endif
 
 		unsigned long m_ulReaderCount;
-		CReader *m_tpReaders[MAX_READERS];
+        std::vector<std::auto_ptr<CReader> > m_tpReaders;
 	};
 
 }
