@@ -16,6 +16,7 @@ case $(uname -s) in
 		;;
 	Linux)
 		cd $(dirname $0)/..
+		git fetch --depth=500 --tags
 		autoreconf -f -i
 		if ! ./configure; then
 			cat config.log
