@@ -255,7 +255,7 @@ CK_RV cal_token_present(CK_SLOT_ID hSlot, int *pPresent)
 	CK_RV ret = CKR_OK;
 	int status = P11_CARD_NOT_PRESENT;
 
-	ret = cal_update_token(hSlot, &status);
+	ret = cal_update_token(hSlot, &status, 1);
 
 	switch (status)
 	{
@@ -297,7 +297,7 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 
 	std::string reader = pSlot->name;
 
-	ret = cal_update_token(hSlot, &status);
+	ret = cal_update_token(hSlot, &status, 0);
 	if (ret != CKR_OK)
 		goto cleanup;
 
@@ -400,7 +400,7 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 	unsigned long algos = 0;
 	unsigned int n = 0;
 
-	ret = cal_update_token(hSlot, &status);
+	ret = cal_update_token(hSlot, &status, 0);
 	if (ret != CKR_OK)
 	{
 		return (ret);
@@ -582,7 +582,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
 	{
 		if (info->flags & CKF_SIGN)
 		{
-			ret = cal_update_token(hSlot, &status);
+			ret = cal_update_token(hSlot, &status, 0);
 			if (ret != CKR_OK)
 			{
 				return (ret);
@@ -649,7 +649,7 @@ CK_RV cal_connect(CK_SLOT_ID hSlot)
 	P11_SLOT *pSlot = NULL;
 
 	//connect to token
-	ret = cal_update_token(hSlot, &status);
+	ret = cal_update_token(hSlot, &status, 0);
 	if (ret != CKR_OK)
 		goto cleanup;
 
@@ -1865,7 +1865,7 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 
 	szReader = pSlot->name;
 
-	ret = cal_update_token(hSlot, &status);
+	ret = cal_update_token(hSlot, &status, 0);
 	if (ret != CKR_OK)
 		goto cleanup;
 
@@ -2315,7 +2315,7 @@ CK_RV cal_validate_session(P11_SESSION * pSession)
 	try
 	{
 		//previous state is STILL_PRESENT so get new state to see if this has changed
-		ret = cal_update_token(pSession->hslot, &status);
+		ret = cal_update_token(pSession->hslot, &status, 0);
 		if (ret != CKR_OK)
 		{
 			return (ret);
@@ -2350,7 +2350,7 @@ CK_RV cal_validate_session(P11_SESSION * pSession)
 
 
 #define WHERE "cal_update_token()"
-CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
+CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 {
 	P11_OBJECT *pObject = NULL;
 	CK_RV ret = CKR_OK;
@@ -2371,11 +2371,11 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 		std::string reader = pSlot->name;
 		CReader & oReader = oCardLayer->getReader(reader);
 
-		*pStatus = cal_map_status(oReader.Status(true));
+		*pStatus = cal_map_status(oReader.Status(true, bPresenceOnly ? true : false));
 		//we get an error thrown here when the cardobject has not been created yet
 		if ( (*pStatus == P11_CARD_INSERTED) || (*pStatus == P11_CARD_STILL_PRESENT)  || (*pStatus == P11_CARD_OTHER) )
 		{
-			if (oReader.GetCardType() == CARD_UNKNOWN)
+			if (!bPresenceOnly && oReader.GetCardType() == CARD_UNKNOWN)
 			{
 				return (CKR_TOKEN_NOT_RECOGNIZED);
 			}

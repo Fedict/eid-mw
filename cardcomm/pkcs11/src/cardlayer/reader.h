@@ -56,7 +56,7 @@ public:
 	 * If the card has been removed and a (new) card has been inserted
 	 * then if bReconnect is true, this function will reconnect to the (new) card.
 	 */
-		tCardStatus Status(bool bReconnect = false);
+		tCardStatus Status(bool bReconnect = false, bool bPresenceOnly = false);
 
 	/**
 	 * Connect to the card; it's sae to call this function multiple times.

@@ -120,7 +120,7 @@ namespace eIDMW
 		}
 	}
 
-	tCardStatus CReader::Status(bool bReconnect)
+	tCardStatus CReader::Status(bool bReconnect, bool bPresenceOnly)
 	{
 		tCardStatus status;
 		static int iStatusCount = 0;
@@ -129,8 +129,12 @@ namespace eIDMW
 			if (m_poCard == NULL)
 			{
 				if (m_poContext->m_oPCSC.Status(m_csReader))
-				{ 
-					status = Connect()? CARD_INSERTED : CARD_NOT_PRESENT;
+				{
+					if (!bPresenceOnly) {
+						status = Connect()? CARD_INSERTED : CARD_NOT_PRESENT;
+					} else {
+						status = CARD_INSERTED;
+					}
 				}
 				else
 					status = CARD_NOT_PRESENT;

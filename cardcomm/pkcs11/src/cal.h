@@ -237,7 +237,7 @@ extern "C"
 		       unsigned char *in, unsigned long l_in,
 		       unsigned char *out, unsigned long *l_out);
 	CK_RV cal_validate_session(P11_SESSION * pSession);
-	CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus);
+	CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly);
 	CK_RV cal_wait_for_slot_event(int block);
 	CK_RV cal_wait_for_the_slot_event(int block);
 	CK_RV cal_get_slot_changes(int *ph);
