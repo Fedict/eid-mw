@@ -235,7 +235,7 @@ AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/beidpkcs11.json
 		 cardcomm/pkcs11/src/beidp11kit.json
 		 cardcomm/pkcs11/src/dialogs/dialogsgtk/po/Makefile.in
-		 doc/sdk/include/rsaref220/Makefile
+		 doc/sdk/include/v240/Makefile
 		 tests/unit/Makefile
 		 tests/fuzz/Makefile
 		 plugins_tools/util/Makefile
