@@ -25,10 +25,7 @@ namespace eIDMW
 
     CCardLayer::CCardLayer(void) : m_ulReaderCount(0)
 	{
-		for (unsigned long i = 0; i < MAX_READERS; i++)
-		{
-			m_tpReaders[i] = NULL;
-		}
+        memset(m_tpReaders, 0, sizeof m_tpReaders);
 	}
 
 	CCardLayer::~CCardLayer(void)
