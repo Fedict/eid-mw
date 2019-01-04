@@ -59,7 +59,6 @@ namespace eIDMW
 		return 0 != (m_tInfos[ulIndex].ulEventState & EIDMW_STATE_PRESENT);
 	}
 
-/** Constructor */
 	CReadersInfo::CReadersInfo(const CByteArray & oReaders)
 	{
 		bFirstTime = true;
