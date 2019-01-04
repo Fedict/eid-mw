@@ -60,6 +60,13 @@ namespace eIDMW
 	const unsigned long SIGN_ALGO_RIPEMD160_RSA_PKCS = 0x80;
 	const unsigned long SIGN_ALGO_SHA1_RSA_PSS = 0x100;
 	const unsigned long SIGN_ALGO_SHA256_RSA_PSS = 0x200;
+	const unsigned long SIGN_ALGO_ECDSA_RAW = 0x400;
+	const unsigned long SIGN_ALGO_SHA256_ECDSA = 0x800;
+	const unsigned long SIGN_ALGO_SHA384_ECDSA = 0x1000;
+	const unsigned long SIGN_ALGO_SHA512_ECDSA = 0x2000;
+	const unsigned long SIGN_ALGO_SHA3_256_ECDSA = 0x4000;
+	const unsigned long SIGN_ALGO_SHA3_384_ECDSA = 0x8000;
+	const unsigned long SIGN_ALGO_SHA3_512_ECDSA = 0x10000;
 
 	typedef enum
 	{

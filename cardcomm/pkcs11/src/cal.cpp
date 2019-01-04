@@ -448,6 +448,15 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 			*pulCount += 1;
 		if (algos & SIGN_ALGO_SHA256_RSA_PSS)
 			*pulCount += 1;
+		if (algos & SIGN_ALGO_SHA256_ECDSA)
+			*pulCount += 1;
+		if (algos & SIGN_ALGO_SHA384_ECDSA)
+			*pulCount += 1;
+		if (algos & SIGN_ALGO_SHA512_ECDSA)
+			*pulCount += 1;
+		if (algos & SIGN_ALGO_ECDSA_RAW)
+			*pulCount += 1;
+		// TODO: also add SHA3 mechanisms -- PKCS#11 v2.40 does not yet support those, though; PKCS#11 v3 will, but is not released yet.
 		return (CKR_OK);
 	}
 
@@ -546,7 +555,34 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
-
+	if (algos & SIGN_ALGO_SHA256_ECDSA)
+	{
+		if (n++ < *pulCount)
+			pMechanismList[n - 1] = CKM_ECDSA_SHA256;
+		else
+			return (CKR_BUFFER_TOO_SMALL);
+	}
+	if (algos & SIGN_ALGO_SHA384_ECDSA)
+	{
+		if (n++ < *pulCount)
+			pMechanismList[n - 1] = CKM_ECDSA_SHA384;
+		else
+			return (CKR_BUFFER_TOO_SMALL);
+	}
+	if (algos & SIGN_ALGO_SHA512_ECDSA)
+	{
+		if (n++ < *pulCount)
+			pMechanismList[n - 1] = CKM_ECDSA_SHA512;
+		else
+			return (CKR_BUFFER_TOO_SMALL);
+	}
+	if (algos & SIGN_ALGO_ECDSA_RAW)
+	{
+		if (n++ < *pulCount)
+			pMechanismList[n - 1] = CKM_ECDSA;
+		else
+			return (CKR_BUFFER_TOO_SMALL);
+	}
 	return (ret);
 }
 
