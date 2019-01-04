@@ -499,7 +499,6 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 				free(list);
 				return ckrv_decode(rv, "C_CloseSession(session)", 0, NULL);
 			}
-			check_rv_late("C_CloseSession(session)");
 		} while(rv != CKR_OK && (++i < count));
 		if (i >= count ) {
 			printf("Need at least one known token for this test\n");
