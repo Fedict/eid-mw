@@ -2580,11 +2580,9 @@ CK_RV cal_refresh_readers()
 		{
 			oReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
 		}
-#ifdef PKCS11_V2_20
 		//new _reader list, so please stop the scardgetstatuschange that is waiting on the old list
 		oCardLayer->CancelActions();
 		log_trace(WHERE, "I: called oCardLayer->CancelActions()");
-#endif
 	}
 	catch(CMWException &e)
 	{

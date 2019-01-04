@@ -2155,7 +2155,6 @@
 					"EIDMW_PREFIX=/usr/local",
 					LTC_NO_ASM,
 					EIDMW_STATIC_LIB,
-					PKCS11_V2_20,
 					USING_DL_OPEN,
 					LTC_NO_ROLC,
 				);
@@ -2199,7 +2198,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EIDMW_PREFIX=/usr/local",
 					EIDMW_STATIC_LIB,
-					PKCS11_V2_20,
 					USING_DL_OPEN,
 					LTC_NO_ROLC,
 				);
