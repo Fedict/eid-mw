@@ -111,6 +111,10 @@
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
 		65EABAF31C621FB400034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAED1C621F3D00034337 /* labels.c */; };
 		65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; };
+		6CAFE1D821DF86E40078C7E2 /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D521DF86E40078C7E2 /* pkcs11.h */; };
+		6CAFE1D921DF86E40078C7E2 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */; };
+		6CAFE1DA21DF86E40078C7E2 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */; };
+		6CAFE1DC21DF889B0078C7E2 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1DB21DF889B0078C7E2 /* unix.h */; };
 		6CD1B8C421A5A6470005F6E9 /* state_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C221A5A6470005F6E9 /* state_error.png */; };
 		6CD1B8C521A5A6470005F6E9 /* state_noreaders.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */; };
 		6CD1B8C621A5A6510005F6E9 /* certificate_bad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */; };
@@ -217,11 +221,6 @@
 		86E3DF661653EFE60015B5E1 /* cal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF371653EFE50015B5E1 /* cal.cpp */; };
 		86E3DF671653EFE60015B5E1 /* display.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF381653EFE50015B5E1 /* display.cpp */; };
 		86E3DF681653EFE60015B5E1 /* phash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86E3DF391653EFE50015B5E1 /* phash.cpp */; };
-		86E3DF791653EFE60015B5E1 /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF4F1653EFE50015B5E1 /* pkcs11.h */; };
-		86E3DF7A1653EFE60015B5E1 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF501653EFE50015B5E1 /* pkcs11f.h */; };
-		86E3DF7B1653EFE60015B5E1 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF511653EFE50015B5E1 /* pkcs11t.h */; };
-		86E3DF7C1653EFE60015B5E1 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF521653EFE50015B5E1 /* unix.h */; };
-		86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E3DF531653EFE50015B5E1 /* win32.h */; };
 		8B07D1061B21CECF0033CD62 /* wrong_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B07D1011B21CEB80033CD62 /* wrong_init.c */; };
 		8B8B71591B74CCA300D8910E /* sign_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B71581B74CCA300D8910E /* sign_state.c */; };
 		8BD62CA021021C6000C28B6D /* toxmlmemberoffamilyconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */; };
@@ -449,6 +448,10 @@
 		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = "plugins_tools/util/eid-util/labels.h"; sourceTree = "<group>"; };
 		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = "plugins_tools/util/eid-util/utftranslate.h"; sourceTree = "<group>"; };
 		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
+		6CAFE1D521DF86E40078C7E2 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
+		6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11t.h; sourceTree = "<group>"; };
+		6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11f.h; sourceTree = "<group>"; };
+		6CAFE1DB21DF889B0078C7E2 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unix.h; sourceTree = "<group>"; };
 		6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_bad.png; path = "plugins_tools/eid-viewer/resources/certificate_bad.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_large.png; path = "plugins_tools/eid-viewer/resources/certificate_large.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8C021A5A61A0005F6E9 /* certificate_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_checked.png; path = "plugins_tools/eid-viewer/resources/certificate_checked.png"; sourceTree = SOURCE_ROOT; };
@@ -558,11 +561,6 @@
 		86E3DF371653EFE50015B5E1 /* cal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cal.cpp; path = cardcomm/pkcs11/src/cal.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DF381653EFE50015B5E1 /* display.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = display.cpp; path = cardcomm/pkcs11/src/display.cpp; sourceTree = SOURCE_ROOT; };
 		86E3DF391653EFE50015B5E1 /* phash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = phash.cpp; path = cardcomm/pkcs11/src/phash.cpp; sourceTree = SOURCE_ROOT; };
-		86E3DF4F1653EFE50015B5E1 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11.h; path = doc/sdk/include/rsaref220/pkcs11.h; sourceTree = SOURCE_ROOT; };
-		86E3DF501653EFE50015B5E1 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11f.h; path = doc/sdk/include/rsaref220/pkcs11f.h; sourceTree = SOURCE_ROOT; };
-		86E3DF511653EFE50015B5E1 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11t.h; path = doc/sdk/include/rsaref220/pkcs11t.h; sourceTree = SOURCE_ROOT; };
-		86E3DF521653EFE50015B5E1 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = doc/sdk/include/rsaref220/unix.h; sourceTree = SOURCE_ROOT; };
-		86E3DF531653EFE50015B5E1 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = win32.h; path = doc/sdk/include/rsaref220/win32.h; sourceTree = SOURCE_ROOT; };
 		8B07D1011B21CEB80033CD62 /* wrong_init.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrong_init.c; path = tests/unit/wrong_init.c; sourceTree = "<group>"; };
 		8B8B71581B74CCA300D8910E /* sign_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sign_state.c; path = tests/unit/sign_state.c; sourceTree = "<group>"; };
 		8BC8E00F210216900026D6AB /* booldecode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = booldecode.cpp; sourceTree = "<group>"; };
@@ -870,9 +868,22 @@
 			name = "Supporting files";
 			sourceTree = "<group>";
 		};
+		6CAFE1D421DF86E40078C7E2 /* v240 */ = {
+			isa = PBXGroup;
+			children = (
+				6CAFE1DB21DF889B0078C7E2 /* unix.h */,
+				6CAFE1D521DF86E40078C7E2 /* pkcs11.h */,
+				6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */,
+				6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */,
+			);
+			name = v240;
+			path = doc/sdk/include/v240;
+			sourceTree = "<group>";
+		};
 		7FA1AA420F85F446000D9EE1 /* Pkcs11 */ = {
 			isa = PBXGroup;
 			children = (
+				6CAFE1D421DF86E40078C7E2 /* v240 */,
 				86C0E93721C25E4700602028 /* cardlayer */,
 				86C0E72621C2586E00602028 /* common */,
 				86C0E7CA21C258D800602028 /* dialogs */,
@@ -880,7 +891,6 @@
 				6594447D19A8C2B0003ABC24 /* pkcs11log.c */,
 				6594447E19A8C2B0003ABC24 /* pkcs11util.cpp */,
 				6594447B19A8C29B003ABC24 /* asn1.c */,
-				86E3DF4E1653EFE50015B5E1 /* rsaref220 */,
 				86E3DF251653EFE50015B5E1 /* asn1.h */,
 				86E3DF261653EFE50015B5E1 /* beid_p11.h */,
 				86E3DF271653EFE50015B5E1 /* cal.h */,
@@ -1028,19 +1038,6 @@
 			path = cardcomm/pkcs11/src/cardlayer;
 			sourceTree = "<group>";
 		};
-		86E3DF4E1653EFE50015B5E1 /* rsaref220 */ = {
-			isa = PBXGroup;
-			children = (
-				86E3DF4F1653EFE50015B5E1 /* pkcs11.h */,
-				86E3DF501653EFE50015B5E1 /* pkcs11f.h */,
-				86E3DF511653EFE50015B5E1 /* pkcs11t.h */,
-				86E3DF521653EFE50015B5E1 /* unix.h */,
-				86E3DF531653EFE50015B5E1 /* win32.h */,
-			);
-			name = rsaref220;
-			path = doc/sdk/include/rsaref220;
-			sourceTree = SOURCE_ROOT;
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1085,6 +1082,8 @@
 				86E3DF541653EFE60015B5E1 /* asn1.h in Headers */,
 				86C0E96221C25E4700602028 /* cardlayerconst.h in Headers */,
 				86E3DF551653EFE60015B5E1 /* beid_p11.h in Headers */,
+				6CAFE1DC21DF889B0078C7E2 /* unix.h in Headers */,
+				6CAFE1D821DF86E40078C7E2 /* pkcs11.h in Headers */,
 				86C0E75D21C2586E00602028 /* dynamiclib.h in Headers */,
 				86E3DF561653EFE60015B5E1 /* cal.h in Headers */,
 				86E3DF571653EFE60015B5E1 /* cert.h in Headers */,
@@ -1094,11 +1093,13 @@
 				86C0E8DE21C258D900602028 /* sharedmem.h in Headers */,
 				86E3DF5A1653EFE60015B5E1 /* p11.h in Headers */,
 				86E3DF5B1653EFE60015B5E1 /* phash.h in Headers */,
+				6CAFE1D921DF86E40078C7E2 /* pkcs11t.h in Headers */,
 				86C0E97321C25E4700602028 /* internalconst.h in Headers */,
 				86C0E77A21C2586E00602028 /* tomcrypt_macros.h in Headers */,
 				86C0E96321C25E4700602028 /* card.h in Headers */,
 				86C0E95F21C25E4700602028 /* pinpad2.h in Headers */,
 				86C0E75821C2586E00602028 /* tlvbuffer.h in Headers */,
+				6CAFE1DA21DF86E40078C7E2 /* pkcs11f.h in Headers */,
 				86C0E76C21C2586E00602028 /* logbase.h in Headers */,
 				86E3DF5C1653EFE60015B5E1 /* util.h in Headers */,
 				86C0E97621C25E4700602028 /* cardlayer.h in Headers */,
@@ -1107,17 +1108,13 @@
 				86C0E76321C2586E00602028 /* configuration.h in Headers */,
 				86C0E78621C2586E00602028 /* tlv.h in Headers */,
 				86C0E8EC21C258D900602028 /* dialogs.h in Headers */,
-				86E3DF791653EFE60015B5E1 /* pkcs11.h in Headers */,
 				86C0E76921C2586E00602028 /* thread.h in Headers */,
-				86E3DF7A1653EFE60015B5E1 /* pkcs11f.h in Headers */,
 				86C0E97921C25E4700602028 /* pkcs15parser.h in Headers */,
 				86C0E76821C2586E00602028 /* mw_util.h in Headers */,
 				86C0E75921C2586E00602028 /* eiderrors.h in Headers */,
 				86C0E77221C2586E00602028 /* beidversions.h in Headers */,
 				86C0E77B21C2586E00602028 /* tomcrypt_cfg.h in Headers */,
 				86C0E78421C2586E00602028 /* mwexception.h in Headers */,
-				86E3DF7B1653EFE60015B5E1 /* pkcs11t.h in Headers */,
-				86E3DF7C1653EFE60015B5E1 /* unix.h in Headers */,
 				86C0E78221C2586E00602028 /* hash.h in Headers */,
 				86C0E96F21C25E4700602028 /* cardfactory.h in Headers */,
 				86C0E95E21C25E4700602028 /* reader.h in Headers */,
@@ -1125,7 +1122,6 @@
 				86C0E76B21C2586E00602028 /* log.h in Headers */,
 				86C0E8DD21C258D900602028 /* langutil.h in Headers */,
 				86C0E95D21C25E4700602028 /* pcsc.h in Headers */,
-				86E3DF7D1653EFE60015B5E1 /* win32.h in Headers */,
 				86C0E77521C2586E00602028 /* svn_revision.h in Headers */,
 				86C0E95C21C25E4700602028 /* pinpad.h in Headers */,
 			);
