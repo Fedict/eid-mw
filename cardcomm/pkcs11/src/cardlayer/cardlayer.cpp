@@ -25,11 +25,22 @@ namespace eIDMW
 
     CCardLayer::CCardLayer(void) : m_ulReaderCount(0)
 	{
-    }
+		for (unsigned long i = 0; i < MAX_READERS; i++)
+		{
+			m_tpReaders[i] = NULL;
+		}
+	}
 
 	CCardLayer::~CCardLayer(void)
 	{
-        m_tpReaders.clear();
+		for (unsigned long i = 0; i < MAX_READERS; i++)
+		{
+			if (m_tpReaders[i] != NULL)
+			{
+				delete m_tpReaders[i];
+				m_tpReaders[i] = NULL;
+			}
+		}
 	}
 
 	void CCardLayer::ForceRelease(void)
@@ -106,19 +117,31 @@ namespace eIDMW
 			throw CMWEXCEPTION(EIDMW_ERR_NO_READER);
 		}
 		// First check if the reader doesn't exist already
-        for (std::vector<std::auto_ptr<CReader> >::iterator it = m_tpReaders.begin(); it < m_tpReaders.end(); it++)
+		for (unsigned long i = 0; i < MAX_READERS; i++)
 		{
-			if ((*it)->GetReaderName() == *pcsReaderName)
-            {
-				pRet = (*it).get();
-				break;
+			if (m_tpReaders[i] != NULL)
+			{
+				if (m_tpReaders[i]->GetReaderName() ==
+				    *pcsReaderName)
+				{
+					pRet = m_tpReaders[i];
+					break;
+				}
 			}
 		}
 
 		// No CReader object for this readername -> make one
 		if (pRet == NULL)
 		{
-            m_tpReaders.push_back(std::auto_ptr<CReader>(new CReader(*pcsReaderName, &m_oContext)));
+			for (unsigned long i = 0; i < MAX_READERS; i++)
+			{
+				if (m_tpReaders[i] == NULL)
+				{
+					pRet = new CReader(*pcsReaderName, &m_oContext);
+					m_tpReaders[i] = pRet;
+					break;
+				}
+			}
 		}
 		// No room in m_tpReaders -> throw an exception
 		if (pRet == NULL)
