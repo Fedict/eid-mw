@@ -603,23 +603,25 @@ namespace eIDMW
 	unsigned long CCard::GetSupportedAlgorithms()
 	{
 		unsigned long ulAlgos;
-        	if(m_ucAppletVersion < 0x18) {
-            		ulAlgos = SIGN_ALGO_RSA_PKCS | SIGN_ALGO_MD5_RSA_PKCS | SIGN_ALGO_SHA1_RSA_PKCS;
-            		if (m_ucAppletVersion >= 0x17)
-            		{
-                		ulAlgos |= SIGN_ALGO_SHA256_RSA_PKCS;
+		if (m_ucAppletVersion < 0x18) {
+			ulAlgos = SIGN_ALGO_RSA_PKCS | SIGN_ALGO_MD5_RSA_PKCS | SIGN_ALGO_SHA1_RSA_PKCS;
+			if (m_ucAppletVersion == 0x17)
+			{
+				ulAlgos |= SIGN_ALGO_SHA256_RSA_PKCS;
 				ulAlgos |= SIGN_ALGO_SHA1_RSA_PSS;
 				ulAlgos |= SIGN_ALGO_SHA256_RSA_PSS;
 			}
-		} else {
-			ulAlgos = SIGN_ALGO_SHA256_ECDSA | SIGN_ALGO_SHA384_ECDSA | SIGN_ALGO_SHA512_ECDSA | SIGN_ALGO_SHA3_256_ECDSA | SIGN_ALGO_SHA3_384_ECDSA | SIGN_ALGO_SHA3_512_ECDSA | SIGN_ALGO_ECDSA_RAW;
 		}
-            	return ulAlgos;
+		else {
+			ulAlgos = SIGN_ALGO_SHA256_ECDSA | SIGN_ALGO_SHA384_ECDSA | SIGN_ALGO_SHA512_ECDSA | 
+				SIGN_ALGO_SHA3_256_ECDSA | SIGN_ALGO_SHA3_384_ECDSA | SIGN_ALGO_SHA3_512_ECDSA | SIGN_ALGO_ECDSA_RAW;
+		}
+		return ulAlgos;
 	}
 
 #define PRE18_ONLY if(m_ucAppletVersion >= 0x18) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: RSA algorithms not supported on V1.8+ cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
 #define POST18_ONLY if(m_ucAppletVersion < 0x18) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: ECDSA algorithms not supported on pre V1.8 cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
-#define EXCL17 if(m_ucAppletVersion < 0x18) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
+#define EXCL17 if(m_ucAppletVersion != 0x17) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
 	void CCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo, unsigned long ulInputLen)
 	{
 		// Data = [04 80 <algoref> 84 <keyref>]  (5 bytes)
