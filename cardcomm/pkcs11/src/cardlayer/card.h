@@ -54,10 +54,6 @@ namespace eIDMW
 		UNKNOWN_DF,
 	} tBelpicDF;
 
-
-	/** Compatibility version for the entire plugin-relevant API: V1.00 */
-	const unsigned long PLUGIN_VERSION = 100;
-
 	class CCard
 	{
 	public:
@@ -234,10 +230,10 @@ namespace eIDMW
 		SCARDHANDLE m_hCard;
 	};
 
-	CCard *BeidCardGetInstance(unsigned long ulVersion, const char *csReader,
+	CCard *BeidCardGetInstance(const char *csReader,
 		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad);
 
-	CCard *UnknownCardGetInstance(unsigned long ulVersion, const char *csReader,
+	CCard *UnknownCardGetInstance(const char *csReader,
 		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad);
 }
 

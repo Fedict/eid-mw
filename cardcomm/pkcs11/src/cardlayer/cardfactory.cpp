@@ -76,7 +76,7 @@ namespace eIDMW
 			// 1. A card is present and we could connect to it via a normal SCardConnect()
 			if (poCard == NULL)
 			{
-				poCard = BeidCardGetInstance(PLUGIN_VERSION, strReader, hCard, poContext, poPinpad);
+				poCard = BeidCardGetInstance(strReader, hCard, poContext, poPinpad);
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace eIDMW
 
 			if (poCard == NULL)
 			{
-				poCard = UnknownCardGetInstance(PLUGIN_VERSION, strReader, hCard, poContext, poPinpad);
+				poCard = UnknownCardGetInstance(strReader, hCard, poContext, poPinpad);
 			}
 
 			// If the card is still not recognized here, then it may as well
