@@ -681,9 +681,11 @@ namespace eIDMW
 			case SIGN_ALGO_SHA3_512_ECDSA:
 				POST18_ONLY;
 				ucAlgo = 0x20;
+				break;
 			case SIGN_ALGO_ECDSA_RAW:
 				POST18_ONLY;
 				ucAlgo = 0x40;
+				break;
 			default:
 				throw CMWEXCEPTION(EIDMW_ERR_ALGO_BAD);
 		}
