@@ -10,7 +10,7 @@ COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la libtestlib.la
 noinst_LTLIBRARIES = libtestlib.la
 libtestlib_la_SOURCES = testlib.h testlib.c
 
-AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/plugins_tools/util @FUZZING@
+AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/v240 -I$(top_srcdir)/plugins_tools/util @FUZZING@
 if NO_DIALOGS
 AM_CFLAGS += -DNO_DIALOGS
 endif
