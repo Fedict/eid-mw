@@ -2292,6 +2292,18 @@ CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData, unsigned char *in,
 			case CKM_SHA256_RSA_PKCS_PSS:
 				algo = SIGN_ALGO_SHA256_RSA_PSS;
 				break;
+			case CKM_ECDSA_SHA256:
+				algo = SIGN_ALGO_SHA256_ECDSA;
+				break;
+			case CKM_ECDSA_SHA384:
+				algo = SIGN_ALGO_SHA384_ECDSA;
+				break;
+			case CKM_ECDSA_SHA512:
+				algo = SIGN_ALGO_SHA512_ECDSA;
+				break;
+			case CKM_ECDSA:
+				algo = SIGN_ALGO_ECDSA_RAW;
+				break;
 			default:
 				ret = CKR_MECHANISM_INVALID;
 				goto cleanup;
