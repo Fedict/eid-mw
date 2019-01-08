@@ -454,8 +454,14 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
       case CKM_SHA384_RSA_PKCS:
       case CKM_SHA512_RSA_PKCS: 
       case CKM_SHA1_RSA_PKCS_PSS:
-      case CKM_SHA256_RSA_PKCS_PSS:	ihash = 1; break;
-      case CKM_RSA_PKCS:        ihash = 0; break;
+      case CKM_SHA256_RSA_PKCS_PSS:
+      case CKM_ECDSA_SHA256:
+      case CKM_ECDSA_SHA384:
+      case CKM_ECDSA_SHA512:
+      	ihash = 1; break;
+      case CKM_RSA_PKCS:
+      case CKM_ECDSA:
+      	ihash = 0; break;
       default: 
          ret = CKR_MECHANISM_INVALID;
          goto cleanup;            
