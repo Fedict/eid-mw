@@ -94,7 +94,7 @@ TEST_FUNC(mechinfo) {
 		verbose_assert(info.ulMaxKeySize != 0xdeadbeef);
 		verbose_assert(info.flags != 0xdeadbeef);
 
-		if(mechlist[i] != CKM_SHA1_RSA_PKCS_PSS && mechlist[i] != CKM_SHA256_RSA_PKCS_PSS) {
+		if(mechlist[i] != CKM_SHA1_RSA_PKCS_PSS && mechlist[i] != CKM_SHA256_RSA_PKCS_PSS && mechlist[i] != CKM_ECDSA_SHA256 && mechlist[i] != CKM_ECDSA_SHA384 && mechlist[i] != CKM_ECDSA_SHA512 && mechlist[i] != CKM_ECDSA) {
 			verbose_assert(info.ulMinKeySize == info.ulMaxKeySize);
 		}
 		if(mechlist[i] == CKM_RSA_PKCS) {
