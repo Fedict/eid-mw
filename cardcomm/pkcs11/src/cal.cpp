@@ -611,6 +611,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
 		if (table[i].type == type)
 		{
 			info = &table[i];
+			break;
 		}
 	}
 
