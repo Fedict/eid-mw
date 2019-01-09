@@ -46,7 +46,7 @@ dlgWndBadPIN::dlgWndBadPIN( std::wstring & PINName, unsigned long RemainingTries
 
 	wchar_t tmpBuf[128];
 	std::wstring tmpStr = L"";
-	_itow(RemainingTries, tmpBuf, 10 ); 
+	_itow_s(RemainingTries, tmpBuf, 128, 10);
 	szHeader = new wchar_t[128];
 	szBody = L"";
 
