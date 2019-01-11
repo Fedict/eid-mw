@@ -2943,6 +2943,8 @@
 					PKCS11_V2_20,
 					CAL_BEID,
 					CARDPLUGIN_IN_CAL,
+					USING_DL_OPEN,
+					LTC_NO_ROLC,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
