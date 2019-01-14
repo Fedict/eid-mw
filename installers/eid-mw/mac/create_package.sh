@@ -18,7 +18,7 @@ source "$(pwd)/../../../scripts/mac/set_eidmw_version.sh"
 
 
 #####################################################################
-################## eIDInfo installer name defines ###########
+################## eIDMW installer name defines ###########
 #installer name defines
 #release dir, where all the beidbuild files to be released will be placed
 RELEASE_DIR="$(pwd)/release"
@@ -35,24 +35,6 @@ MOZ_PKCS11_MANIFEST_DIR="$ROOT_DIR/Library/Application Support/Mozilla/PKCS11Mod
 #licenses dir, where our licences will be placed
 LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
-#####################################################################
-
-#####################################################################
-################## eIDInfo installer name defines ###########
-#eIDInfo installer name defines
-#release dir, where all the eIDInfo files to be released will be placed
-RELEASE_EIDINFO_DIR="$(pwd)/release_eidinfo"
-#root dir, for files that are to be installed by the pkg
-ROOT_EIDINFO_DIR="$RELEASE_EIDINFO_DIR/root"
-
-#eIDInfo inst dir, where our eIDInfo app will be installed
-EIDINFO_INST_DIR="$ROOT_EIDINFO_DIR/Library/Belgium Identity Card"
-
-#eIDInfo path
-EIDMIDDLEWAREAPP_PATH="$(pwd)/../../../plugins_tools/aboutmw/OSX/eID Middleware/$MAC_BUILD_CONFIG/eID Middleware.app"
-
-#install scripts dir, where the install scripts are that will be executed by the package
-EIDINFO_INSTALL_SCRIPTS_DIR="$RELEASE_EIDINFO_DIR/install_scripts"
 #####################################################################
 
 #####################################################################
@@ -82,7 +64,7 @@ BEIDTOKEN_INSTALL_SCRIPTS_DIR="$RELEASE_BEIDToken_DIR/install_scripts"
 #####################################################################
 
 #####################################################################
-################## BEIDToken installer name defines ###########
+################## TokenD installer name defines ###########
 #Tokend installer name defines
 #release dir, where all the Tokend files to be released will be placed
 RELEASE_TokenD_DIR="$(pwd)/release_TokenD"
@@ -185,23 +167,6 @@ cp ./Distribution.txt "$RELEASE_DIR"
 #copy drivers
 cp -R ./drivers/* "$RELEASE_DIR"
 
-#####################################################################
-echo "********** prepare eID Info.app **********"
-
-#cleanup
-if test -e "$RELEASE_EIDINFO_DIR"; then
- sudo rm -rdf "$RELEASE_EIDINFO_DIR"
-fi
-
-#create installer dirs
-mkdir -p "$EIDINFO_INST_DIR"
-mkdir -p "$EIDINFO_INSTALL_SCRIPTS_DIR"
-
-#copy install scripts
-cp -R ./install_scripts_eIDInfo/* "$EIDINFO_INSTALL_SCRIPTS_DIR"
-
-#copy eid middleware app
-cp -R "$EIDMIDDLEWAREAPP_PATH"  "$EIDINFO_INST_DIR"
 
 #####################################################################
 echo "********** prepare BEIDToken.pkg **********"
@@ -264,8 +229,6 @@ pkgbuild --root "$ROOT_TOKEND_DIR" --scripts "$TOKEND_INSTALL_SCRIPTS_DIR" --ide
 
 pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken.pkg
 
-pkgbuild --root "$ROOT_EIDINFO_DIR" --scripts "$EIDINFO_INSTALL_SCRIPTS_DIR" --identifier be.eid.eidinfo --version $REL_VERSION --install-location / EIDInfo.pkg
-
 productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
 #####################################################################
@@ -277,9 +240,6 @@ if [ $SIGN_BUILD -eq 1 ];then
   productsign --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
   hdiutil create -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
 
-  productsign --sign "Developer ID Installer" "EIDInfo.pkg" "EIDInfo-signed.pkg"
-  hdiutil create -srcfolder "EIDInfo-signed.pkg" -volname "EIDInfo${REL_VERSION}" "EIDInfo${REL_VERSION}.dmg"
-
   productsign --sign "Developer ID Installer" "beidtokend.pkg" "beidtokend-signed.pkg"
   hdiutil create -srcfolder "beidtokend-signed.pkg" -volname "beidtokend ${REL_VERSION}" "beidtokend ${REL_VERSION}.dmg"
 
@@ -290,7 +250,6 @@ if [ $SIGN_BUILD -eq 1 ];then
 else
   hdiutil create -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
   hdiutil create -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
-  hdiutil create -srcfolder "EIDInfo.pkg" -volname "EIDInfo${REL_VERSION}" "EIDInfo${REL_VERSION}.dmg"
   hdiutil create -srcfolder "beidtokend.pkg" -volname "beidtokend${REL_VERSION}" "beidtokend${REL_VERSION}.dmg"
   hdiutil create -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 fi

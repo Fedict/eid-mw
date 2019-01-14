@@ -62,7 +62,6 @@
 	<line choice="com.acs.ccid_remove_acs"/>
 	<line choice="org.opensc.pcscd_autostart"/>
 	<line choice="beidtoken"/>
-	<line choice="eid.belgium.eidinfo"/>
     </choices-outline>
     <choice id="eid.belgium.be" visible="false">
         <pkg-ref id="eid.belgium.be"/>
@@ -82,14 +81,11 @@
     <choice id="beidtoken" visible="false" selected="macos_after_sierra()">
         <pkg-ref id="beidtoken"/>
     </choice>
-    <choice id="eid.belgium.eidinfo" visible="false" selected="osx_before_highsierra()">
-        <pkg-ref id="eid.belgium.eidinfo"/>
-    </choice>
+
     <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
     <pkg-ref id="eid.belgium.tokend" onConclusion="none">beidtokend.pkg</pkg-ref>
     <pkg-ref id="com.acs.acsccid" onConclusion="none">acsccid_flat.pkg</pkg-ref>
     <pkg-ref id="com.acs.ccid_remove_acs" onConclusion="none">ccid_remove_acs_flat.pkg/</pkg-ref>
     <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="RequireRestart">pcscd_autostart_flat.pkg</pkg-ref>
     <pkg-ref id="beidtoken" onConclusion="none">BEIDToken.pkg</pkg-ref>
-    <pkg-ref id="eid.belgium.eidinfo" onConclusion="none">EIDInfo.pkg</pkg-ref>
 </installer-gui-script>
