@@ -131,7 +131,7 @@ namespace eIDMW
 
 		bool LogOff(const tPin & Pin);
 
-		unsigned int GetRSAKeySize();
+		unsigned int GetPrivKeySize();
 		unsigned char GetAppletVersion();
 
 	protected:

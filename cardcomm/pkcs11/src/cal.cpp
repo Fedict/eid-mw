@@ -646,7 +646,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
 				CReader & oReader =
 					oCardLayer->getReader(szReader);
 				pInfo->ulMinKeySize = pInfo->ulMaxKeySize =
-					(CK_ULONG) oReader.GetRSAKeySize();
+					(CK_ULONG) oReader.GetPrivKeySize();
 			}
 			catch(CMWException &e)
 			{

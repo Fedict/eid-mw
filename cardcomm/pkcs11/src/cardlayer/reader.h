@@ -111,7 +111,7 @@ public:
 		unsigned long GetSupportedAlgorithms();
 
 	/** Returns the key size of the RSA key on the card */
-		unsigned int GetRSAKeySize();
+		unsigned int GetPrivKeySize();
 
 	/** Returns the applet version of the card */
 		unsigned char GetAppletVersion();

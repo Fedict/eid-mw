@@ -799,7 +799,7 @@ namespace eIDMW
 		return m_ul6CDelay;
 	}
 
-	unsigned int CCard::GetRSAKeySize()
+	unsigned int CCard::GetPrivKeySize()
 	{
 		if (m_ucAppletVersion >= 0x17)
 		{

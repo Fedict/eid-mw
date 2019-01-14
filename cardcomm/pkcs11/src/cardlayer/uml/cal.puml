@@ -91,7 +91,7 @@ namespace eIDMW {
 		#PinUsage2Pinpad(const tPin& Pin, const tPrivKey* pKey) : unsigned char
 		#m_ucAppletVersion : unsigned char
 		#m_ucCLA : unsigned char
-		+GetRSAKeySize() : unsigned int
+		+GetPrivKeySize() : unsigned int
 		#Get6CDelay() : unsigned long
 		+GetSupportedAlgorithms() : unsigned long
 		+PinStatus(const tPin& Pin) : unsigned long
@@ -318,7 +318,7 @@ namespace eIDMW {
 		+GetPrivKey(unsigned long ulIndex) : tPrivKey
 		+GetPrivKeyByID(unsigned long ulID) : tPrivKey
 		+GetAppletVersion() : unsigned char
-		+GetRSAKeySize() : unsigned int
+		+GetPrivKeySize() : unsigned int
 		+CertCount() : unsigned long
 		+GetSupportedAlgorithms() : unsigned long
 		+PinCount() : unsigned long

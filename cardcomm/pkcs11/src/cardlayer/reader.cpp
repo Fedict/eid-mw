@@ -556,12 +556,12 @@ namespace eIDMW
 		}
 	}
 
-	unsigned int CReader::GetRSAKeySize()
+	unsigned int CReader::GetPrivKeySize()
 	{
 		if (m_poCard == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
 
-		return m_poCard->GetRSAKeySize();
+		return m_poCard->GetPrivKeySize();
 	}
 
 	unsigned char CReader::GetAppletVersion()
