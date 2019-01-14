@@ -385,7 +385,7 @@
     os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID keyId = %ux", keyItem.keyID);
 #endif
     
-    BOOL (^selectKey)(NSError**) = ^(NSError** err) {
+    BOOL (^selectKey)(NSError**) = ^(NSError** error) {
         //first select key and algo
         BOOL retVAL = [self selectKeyForSign:keyId smartCard:self.smartCard error:error];
         if (retVAL == NO){
@@ -417,7 +417,7 @@
     return keyItem;
 }
 
-- (BOOL) selectKeyForSign:(const uint8_t)keyId smartCard:(TKSmartCard *)smartCard error:(NSError **)error
+- (BOOL) selectKeyForSign:(const uint8_t)keyId smartCard:(TKSmartCard *)smartCard error:( NSError **)error
 {
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID selectKeyForSign called");
@@ -511,7 +511,7 @@
     }*/
 
  
-    BOOL (^sign)(NSError**) = ^(NSError** err) {
+    BOOL (^sign)(NSError**) = ^(NSError** error) {
 
         BOOL retVAL = [self signData:blockData result:&statResponse resultLength:resultLen smartCard:self.smartCard error:error];
         if (retVAL == NO){
