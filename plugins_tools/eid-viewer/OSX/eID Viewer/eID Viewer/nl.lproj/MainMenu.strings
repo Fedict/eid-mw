@@ -194,7 +194,7 @@
 "F2S-fz-NVQ.title" = "Help";
 
 /* Class = "NSTextFieldCell"; title = "Valid from:"; ObjectID = "FKY-D7-GGe"; */
-"FKY-D7-GGe.title" = "Geldig vanaf:";
+"FKY-D7-GGe.title" = "Geldig van:";
 
 /* Class = "NSMenuItem"; title = "Normal"; ObjectID = "Fme-4t-8wK"; */
 "Fme-4t-8wK.title" = "Normaal";
@@ -554,7 +554,7 @@
 "qQW-ve-OY4.placeholderString" = "BELGIË";
 
 /* Class = "NSTextFieldCell"; title = "Valid from:"; ObjectID = "qgY-bn-TbG"; */
-"qgY-bn-TbG.title" = "Geldig tot:";
+"qgY-bn-TbG.title" = "Geldig van:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "rBB-kJ-Hht"; */
 "rBB-kJ-Hht.placeholderString" = "-";
