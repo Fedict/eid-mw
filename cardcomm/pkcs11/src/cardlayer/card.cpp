@@ -801,6 +801,14 @@ namespace eIDMW
 
 	unsigned int CCard::GetPrivKeySize()
 	{
+		if (m_ucAppletVersion >= 0x18)
+		{
+			// TODO: The below may be anything between 256
+			// and 521. Figure out what the right size is
+			// from the actual card, rather than hardcoding.
+			// For now this will work, however.
+			return 256;
+		}
 		if (m_ucAppletVersion >= 0x17)
 		{
 			return 2048;
