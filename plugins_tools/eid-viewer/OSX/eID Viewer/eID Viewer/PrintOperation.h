@@ -15,6 +15,7 @@
 @property NSArray* printableFields;
 @property NSArray* foreignerFields;
 @property AppDelegate* app;
+@property BOOL isIndexed;
 -(instancetype) initWithView:(NSView *)view app:(AppDelegate *)app;
 -(BOOL) runOperation;
 -(BOOL)copyDataWithArray:(NSArray*)arr;
