@@ -142,8 +142,8 @@ DobWriter::DobWriter(DateParser * p):DateWriter(p)
 void DobParser::input(EID_STRING original)
 {
 	day = original.substr(0, 2);
-	unsigned long spaceIdx = original.find_first_of(TEXT("."));
-	if (-1 == spaceIdx) {
+	size_t spaceIdx = original.find_first_of(TEXT("."));
+	if (std::string::npos == spaceIdx) {
 		spaceIdx = original.find_first_of(TEXT(" "));
 	}
 	month = frommonth[original.substr(spaceIdx + 1, original.find_first_of(TEXT(" ."), spaceIdx + 1) - (spaceIdx + 1))];
