@@ -32,6 +32,10 @@ TEST_FUNC(slotevent) {
 	CK_SLOT_ID slot;
 	int ret;
 	CK_RV rv;
+	ckrv_mod no_event[] = {
+		{CKR_OK, TEST_RV_FAIL},
+		{CKR_NO_EVENT, TEST_RV_OK},
+	};
 
 	if(!have_robot()) {
 		printf("Need ability to remove token to perform this test\n");
@@ -41,30 +45,30 @@ TEST_FUNC(slotevent) {
 	check_rv_long(C_WaitForSlotEvent(CKF_DONT_BLOCK, NULL_PTR, NULL_PTR), m_p11_noinit);
 	check_rv(C_Initialize(NULL_PTR));
 
+	if(find_slot(CK_TRUE, &slot) != TEST_RV_OK) {
+		printf("Couldn't find a card!\n");
+		return TEST_RV_FAIL;
+	}
+
 	robot_remove_card();
 
-	printf("Checking for slot for already-removed card\n");
-	check_rv(C_WaitForSlotEvent(0, &slot, NULL_PTR));
-
+	check_rv_long(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR), no_event);
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
 		check_rv(C_Finalize(NULL_PTR));
 		return ret;
 	}
 
-	printf("Waiting for slot event with CKF_DONT_BLOCK...\n");
-	robot_remove_card_delayed();
-	do {
-		rv = C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR);
-	} while(rv == CKR_NO_EVENT);
-	check_rv_late("C_WaitForSlotEvent");
+	check_rv(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR))
 
 	printf("Waiting for slot event without flags...\n");
-	robot_insert_card_delayed();
+	robot_remove_card_delayed();
 	check_rv(C_WaitForSlotEvent(0, &slot, NULL_PTR));
 
 	robot_insert_card_delayed();
 	check_rv(C_WaitForSlotEvent(0, &slot, NULL_PTR));
+
+	check_rv_long(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR), no_event);
 
 	check_rv(C_Finalize(NULL_PTR));
 
