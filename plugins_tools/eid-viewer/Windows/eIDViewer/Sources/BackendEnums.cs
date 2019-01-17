@@ -80,7 +80,6 @@ namespace eIDViewer
         STATE_TOKEN_WAIT, ///< The card has been read, we're now waiting for events to do something else.
         STATE_TOKEN_ID, ///< Reading identity data
         STATE_TOKEN_CERTS, ///< Reading certificates
-        STATE_TOKEN_IDLE, /// < done reading identity data and certificates
         STATE_TOKEN_PINOP, ///< Performing a PIN operation
         STATE_TOKEN_SERIALIZE, ///< Saving data to a file
         STATE_TOKEN_ERROR, ///< An error occurred while dealing with the card
@@ -88,8 +87,9 @@ namespace eIDViewer
         STATE_FILE_READING, ///< We're reading from the file currently
         STATE_FILE_WAIT, ///< We finished parsing the file.
         STATE_CARD_INVALID, ///< The data was determined to be invalid. That is, the card could be read, but signature validation failed.
-        STATE_NO_READER, ///< We don't have a reader (yet?)
         STATE_NO_TOKEN, ///< We don't have a card, and we also don't have a file.
+        STATE_NO_READER, ///< We don't have a reader (yet?)
+        STATE_TOKEN_IDLE, /// < done reading identity data and certificates
 
         STATE_COUNT,
     };
