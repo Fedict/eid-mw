@@ -2155,6 +2155,7 @@
 					LTC_NO_ROLC,
 				);
 				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
@@ -2198,6 +2199,7 @@
 					LTC_NO_ROLC,
 				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "EIDMW_PREFIX=/usr/local";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
 					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
