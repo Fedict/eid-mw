@@ -195,7 +195,7 @@
 	}
 	if(prevState == eIDStateNoReader || prevState == eIDStateTokenError) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self.readerLogo setHidden:YES];
+			[self.readerLogo setHidden:YES];
 		}];
 	}
 	if(state == eIDStateTokenError) {
@@ -215,7 +215,7 @@
 		[self.validateNow setEnabled:validate];
 		if(sheet) {
 			[self.spinner startAnimation:self];
-            [self.window beginSheet:self.CardReadSheet completionHandler:nil];
+			[self.window beginSheet:self.CardReadSheet completionHandler:nil];
 		} else {
 			[self.window endSheet:self.CardReadSheet];
 			[self.CardReadSheet orderOut:self.window];
