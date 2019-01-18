@@ -276,11 +276,15 @@
 
 - (IBAction)showDetail:(id)sender {
 	NSString* details = [eIDOSLayerBackend getCertDetail:[_certstore certificateForKey:[_CertificatesView itemAtRow:[_CertificatesView selectedRow]]]];
-	[NSApp beginSheet:_CertDetailSheet modalForWindow:_window modalDelegate:self didEndSelector:@selector(endSheet:returnCode:contextInfo:) contextInfo:nil];
+	if(details == nil) return;
+	[_window beginSheet:_CertDetailSheet completionHandler:^(NSModalResponse r){
+		[self.window endSheet:self.CertDetailSheet];
+	}];
+	[_CertDetailView setEditable:YES];
 	[_CertDetailView selectAll:nil];
 	[_CertDetailView delete:nil];
-	[_CertDetailView setEditable:YES];
 	[_CertDetailView insertText:details];
+	[_CertDetailView setEditable:NO];
 }
 
 - (IBAction)export:(NSMenuItem *)sender {
