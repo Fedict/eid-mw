@@ -70,6 +70,16 @@ TEST_FUNC(slotevent) {
 
 	check_rv_long(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR), no_event);
 
+	robot_remove_card();
+	check_rv(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR));
+
+	robot_insert_card_delayed();
+
+	do {
+		rv = C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR);
+	} while(rv == CKR_NO_EVENT);
+	check_rv_late("C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR)");
+
 	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
