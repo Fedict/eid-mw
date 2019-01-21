@@ -72,7 +72,7 @@ typedef NS_ENUM(NSInteger, eIDResult)
 /** \brief Protocol for implementing a UI.
  * \see cbstruct for details on what each method does; these methods are
  * straightforward C-to-ObjC translations */
-@protocol eIDOSLayerUI < NSObject >
+@protocol eIDOSLayerUI <NSObject>
 @optional
 -(void) newsrc:(eIDSource) which;						///< called by eid_vwr_ui_callbacks::newsrc()
 -(void) newstringdata: (NSString *) data /**< . */ withLabel:(NSString *)label; ///< called by eid_vwr_ui_callbacks::newstringdata()
@@ -85,7 +85,8 @@ typedef NS_ENUM(NSInteger, eIDResult)
 
 /** Class method-only class which wraps the corresponding C-only APIs for the
  benefit of ObjC applications. */
-@interface eIDOSLayerBackend: NSObject + (void) pinop:(eIDPinOp) which;		///< calls eid_vwr_pinop()
+@interface eIDOSLayerBackend: NSObject
++(void) pinop:(eIDPinOp) which;							///< calls eid_vwr_pinop()
 +(NSInteger) setUi:(id < eIDOSLayerUI >) ui;					///< calls eid_vwr_ui_callbacks() and eid_vwr_createcallbacks()
 +(NSImage *) getPreview:(NSURL *) from;						///< calls eid_vwr_get_preview(), and converts the result to an NSImage*
 +(void) setLang:(eIDLanguage) language;						///< calls eid_vwr_convert_set_lang()
