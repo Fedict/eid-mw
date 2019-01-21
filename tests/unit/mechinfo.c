@@ -108,9 +108,15 @@ TEST_FUNC(mechinfo) {
 			verbose_assert(info.flags & CKF_SIGN);
 			verbose_assert((info.flags & ~CKF_HW & ~CKF_SIGN) == 0);
 		}
+		if(mechlist[i] == CKM_ECDSA) {
+			found=1;
+			verbose_assert(info.flags & CKF_HW);
+			verbose_assert(info.flags & CKF_SIGN);
+			verbose_assert((info.flags & ~CKF_HW & ~CKF_SIGN) == 0);
+		}
 	}
 	if(!found) {
-		printf("Couldn't find PKCS RSA mechanism on this token\n");
+		printf("Couldn't find PKCS RSA or ECDSA mechanism on this token\n");
 		return TEST_RV_FAIL;
 	}
 
