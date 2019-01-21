@@ -55,6 +55,7 @@ static const EID_CHAR* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(SERIALIZE);
 	EVENT_NAME(READER_FOUND);
 	EVENT_NAME(DEVICE_CHANGED);
+	EVENT_NAME(READER_LOST);
 #undef EVENT_NAME
 	default:
 		return TEXT("unknown event");
@@ -147,6 +148,7 @@ void sm_init() {
 	states[STATE_TOKEN].leave = eid_vwr_p11_close_session;
 	states[STATE_TOKEN].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
 	states[STATE_TOKEN].out[EVENT_DATA_INVALID] = &(states[STATE_CARD_INVALID]);
+	states[STATE_TOKEN].out[EVENT_READER_LOST] = &(states[STATE_NO_READER]);
 
 	states[STATE_CARD_INVALID].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_CARD_INVALID].enter = source_none;
@@ -189,6 +191,7 @@ void sm_init() {
 	states[STATE_NO_TOKEN].enter = source_none;
 	states[STATE_NO_TOKEN].first_child = &(states[STATE_NO_READER]);
 	states[STATE_NO_TOKEN].out[EVENT_OPEN_FILE] = &(states[STATE_FILE_READING]);
+	states[STATE_NO_TOKEN].out[EVENT_READER_LOST] = &(states[STATE_NO_READER]);
 
 	states[STATE_NO_READER].parent = &(states[STATE_NO_TOKEN]);
 	states[STATE_NO_READER].out[EVENT_READER_FOUND] = &(states[STATE_READY]);

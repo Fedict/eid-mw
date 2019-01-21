@@ -198,6 +198,11 @@
 			[self.readerLogo setHidden:YES];
 		}];
 	}
+	if(state == eIDStateNoReader) {
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[self.readerLogo setHidden:NO];
+		}];
+	}
 	if(state == eIDStateTokenError) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self.readerLogo setImage:[NSImage imageNamed:@"state_error.png"]];

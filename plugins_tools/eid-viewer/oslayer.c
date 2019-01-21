@@ -70,6 +70,9 @@ int eid_vwr_poll() {
 		//pkcs11 not ready yet?
 		retval = 1;
 	}
+	if(count == 0) {
+		sm_handle_event(EVENT_READER_LOST, NULL, NULL, NULL);
+	}
 	if(count_old != count) {
 		slotdesc* slots = (slotdesc*)malloc(count * sizeof(slotdesc));
 		memset(slots, 0, count * sizeof(slotdesc));
