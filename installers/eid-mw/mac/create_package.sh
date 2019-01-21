@@ -41,9 +41,9 @@ BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 ################## BEIDToken installer name defines ###########
 #BEIDToken installer name defines
 #release dir, where all the BEIDToken files to be released will be placed
-RELEASE_BEIDToken_DIR="$(pwd)/release_BEIDToken"
+RELEASE_BEIDTOKEN_DIR="$(pwd)/release_BEIDToken"
 #root dir, for files that are to be installed by the pkg
-ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDToken_DIR/root"
+ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDTOKEN_DIR/root"
 
 #BEIDToken inst dir, where our BEIDToken app will be installed
 BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
@@ -60,22 +60,22 @@ fi
 BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
 
 #install scripts dir, where the install scripts are that will be executed by the package
-BEIDTOKEN_INSTALL_SCRIPTS_DIR="$RELEASE_BEIDToken_DIR/install_scripts"
+BEIDTOKEN_INSTALL_SCRIPTS_DIR="$RELEASE_BEIDTOKEN_DIR/install_scripts"
 #####################################################################
 
 #####################################################################
 ################## TokenD installer name defines ###########
 #Tokend installer name defines
 #release dir, where all the Tokend files to be released will be placed
-RELEASE_TokenD_DIR="$(pwd)/release_TokenD"
+RELEASE_TOKEND_DIR="$(pwd)/release_TokenD"
 #root dir, for files that are to be installed by the pkg
-ROOT_TOKEND_DIR="$RELEASE_TokenD_DIR/root"
+ROOT_TOKEND_DIR="$RELEASE_TOKEND_DIR/root"
 
 #tokenD dir, where the BEID.tokenD will be placed
 TOKEND_INST_DIR="$ROOT_TOKEND_DIR/Library/Security/tokend"
 
 #install scripts dir, where the install scripts are that will be executed by the package
-TOKEND_INSTALL_SCRIPTS_DIR="$RELEASE_TokenD_DIR/install_scripts"
+TOKEND_INSTALL_SCRIPTS_DIR="$RELEASE_TOKEND_DIR/install_scripts"
 #####################################################################
 
 
@@ -131,7 +131,7 @@ mkdir -p "$MOZ_PKCS11_MANIFEST_DIR"
 cp ../../../$MAC_BUILD_CONFIG/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
 #copy pkcs11 bundle
 cp -R ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
-#make relative symblic link from bundle to the dylib
+#make relative symbolic link from bundle to the dylib
 mkdir -p "$PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/MacOS/"
 ln -s ../../../libbeidpkcs11.$REL_VERSION.dylib "$PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib"
 
@@ -173,7 +173,7 @@ echo "********** prepare BEIDToken.pkg **********"
 
 #cleanup
 if test -e "$RELEASE_BEIDTOKEN_DIR"; then
- sudo rm -rdf "$RELEASE_BEIDTOKEN_DIR"
+ rm -rdf "$RELEASE_BEIDTOKEN_DIR"
 fi
 
 #create installer dirs
@@ -191,7 +191,7 @@ echo "********** prepare BEIDTokenD.pkg **********"
 
 #cleanup
 if test -e "$RELEASE_TOKEND_DIR"; then
- sudo rm -rdf "$RELEASE_TOKEND_DIR"
+ rm -rdf "$RELEASE_TOKEND_DIR"
 fi
 
 #create installer dirs
