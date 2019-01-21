@@ -48,6 +48,9 @@ If the dialogs and/or the viewer are not disabled:
 
 - [GTK3](https://www.gtk.org) (note: GTK2 is still supported for now, but this
   support will be dropped at some point in the future).
+- (Optionally)
+  [libassuan](https://www.gnupg.org/related_software/libassuan/index.en.html),
+  for better integration of the dialogs with desktop environments
 
 If the viewer is not disabled:
 
