@@ -11,27 +11,32 @@
 
 @implementation DraggingImage
 -(void)mouseDown:(NSEvent*)event {
-    NSPasteboardItem *pbItem = [NSPasteboardItem new];
-    [pbItem setDataProvider:self forTypes:[NSArray arrayWithObject:NSPasteboardTypeString]];
-    NSDraggingItem *drItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
-    NSDraggingSession *session = [self beginDraggingSessionWithItems:[NSArray arrayWithObject:drItem] event:event source:self];
-    session.animatesToStartingPositionsOnCancelOrFail = YES;
-    session.draggingFormation = NSDraggingFormationNone;
+	NSImage *img = [self image];
+	if(!img) {
+		return;
+	}
+	NSPasteboardItem *pbItem = [NSPasteboardItem new];
+	[pbItem setDataProvider:self forTypes:[NSArray arrayWithObject:NSPasteboardTypeString]];
+	NSDraggingItem *drItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
+	[drItem setDraggingFrame:[img alignmentRect]contents:img];
+	NSDraggingSession *session = [self beginDraggingSessionWithItems:[NSArray arrayWithObject:drItem] event:event source:self];
+	session.animatesToStartingPositionsOnCancelOrFail = YES;
+	session.draggingFormation = NSDraggingFormationDefault;
 }
 -(NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
-    if(![eIDOSLayerBackend xmlform]) {
-        return NSDragOperationNone;
-    }
-    return NSDragOperationCopy;
+	if(![eIDOSLayerBackend xmlform]) {
+		return NSDragOperationNone;
+	}
+	return NSDragOperationCopy;
 }
 -(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
-    return YES;
+	return YES;
 }
 -(void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSString *)type {
-    if([type compare:NSPasteboardTypeString] != NSOrderedSame) {
-        [pasteboard setData:nil forType:type];
-        return;
-    }
-    [pasteboard setData:[eIDOSLayerBackend xmlform] forType:type];
+	if([type compare:NSPasteboardTypeString] != NSOrderedSame) {
+		[pasteboard setData:nil forType:type];
+		return;
+	}
+	[pasteboard setData:[eIDOSLayerBackend xmlform] forType:type];
 }
 @end
