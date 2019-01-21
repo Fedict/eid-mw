@@ -28,14 +28,15 @@
 
 #include "testlib.h"
 
-#define HAS_CKM(ckm, crit) case ckm: { printf("Found " #ckm "\n"); known_mechs++; if(crit) crit_mechs++; } break;
+#define HAS_CKM(ckm, crit_rsa, crit_ecdsa) case ckm: { printf("Found " #ckm "\n"); known_mechs++; if(crit_rsa) rsa_mechs++; if(crit_ecdsa) ecdsa_mechs++; } break;
 
 TEST_FUNC(mechlist) {
 	CK_SLOT_ID slot;
 	CK_ULONG count=0;
 	CK_MECHANISM_TYPE_PTR mechlist;
 	CK_ULONG known_mechs = 0;
-	int crit_mechs = 0;
+	int rsa_mechs = 0;
+	int ecdsa_mechs = 0;
 	unsigned int i;
 	int ret;
 	int retval = TEST_RV_OK;
@@ -77,21 +78,26 @@ TEST_FUNC(mechlist) {
 		unsigned long temp = i+1;
 
 		switch(mechlist[i]) {
-		HAS_CKM(CKM_RSA_PKCS, 1);
-		HAS_CKM(CKM_RIPEMD160, 1);
-		HAS_CKM(CKM_MD5, 0);
-		HAS_CKM(CKM_SHA_1, 0);
-		HAS_CKM(CKM_SHA256, 1);
-		HAS_CKM(CKM_SHA384, 1);
-		HAS_CKM(CKM_SHA512, 1);
-		HAS_CKM(CKM_RIPEMD160_RSA_PKCS, 1);
-		HAS_CKM(CKM_MD5_RSA_PKCS, 0);
-		HAS_CKM(CKM_SHA1_RSA_PKCS, 0);
-		HAS_CKM(CKM_SHA1_RSA_PKCS_PSS, 0);
-		HAS_CKM(CKM_SHA256_RSA_PKCS, 1);
-		HAS_CKM(CKM_SHA256_RSA_PKCS_PSS, 0);
-		HAS_CKM(CKM_SHA384_RSA_PKCS, 1);
-		HAS_CKM(CKM_SHA512_RSA_PKCS, 1);
+		HAS_CKM(CKM_RSA_PKCS, 1, 0);
+		HAS_CKM(CKM_RIPEMD160, 0, 0);
+		HAS_CKM(CKM_MD5, 0, 0);
+		HAS_CKM(CKM_SHA_1, 0, 0);
+		HAS_CKM(CKM_SHA256, 0, 0);
+		HAS_CKM(CKM_SHA384, 0, 0);
+		HAS_CKM(CKM_SHA512, 0, 0);
+		HAS_CKM(CKM_RIPEMD160_RSA_PKCS, 1, 0);
+		HAS_CKM(CKM_MD5_RSA_PKCS, 1, 0);
+		HAS_CKM(CKM_SHA1_RSA_PKCS, 1, 0);
+		HAS_CKM(CKM_SHA1_RSA_PKCS_PSS, 0, 0);
+		HAS_CKM(CKM_SHA256_RSA_PKCS, 1, 0);
+		HAS_CKM(CKM_SHA256_RSA_PKCS_PSS, 1, 0);
+		HAS_CKM(CKM_SHA384_RSA_PKCS, 1, 0);
+		HAS_CKM(CKM_SHA512_RSA_PKCS, 1, 0);
+		HAS_CKM(CKM_ECDSA, 0, 1);
+		HAS_CKM(CKM_ECDSA_SHA1, 0, 0);
+		HAS_CKM(CKM_ECDSA_SHA256, 0, 1);
+		HAS_CKM(CKM_ECDSA_SHA384, 0, 1);
+		HAS_CKM(CKM_ECDSA_SHA512, 0, 1);
 		case 0xdeadbeef:
 			printf("E: found uninitialized data\n");
 			retval = TEST_RV_FAIL;
@@ -119,7 +125,8 @@ TEST_FUNC(mechlist) {
 		}
 	}
 
-	verbose_assert(crit_mechs == 9);
+	verbose_assert(count == known_mechs);
+	verbose_assert(rsa_mechs == 8 || ecdsa_mechs == 4);
 
 	check_rv_long(C_GetMechanismList(slot+30, mechlist, &count), m_p11_badslot);
 
