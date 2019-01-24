@@ -26,8 +26,8 @@
 	  return false;
 	 }
 	}
-	function osx_before_highsierra() {
-	 if((system.compareVersions(system.version.ProductVersion, '10.13')) == -1)
+	function osx_before_sierra() {
+	 if((system.compareVersions(system.version.ProductVersion, '10.12')) == -1)
 	 {
 	  return true;
 	 }
@@ -36,8 +36,8 @@
 	  return false;
 	 }
 	}
-	function macos_after_sierra() {
-	 if((system.compareVersions(system.version.ProductVersion, '10.13')) >= 0)
+	function macos_after_elcapitan() {
+	 if((system.compareVersions(system.version.ProductVersion, '10.12')) >= 0)
 	 {
 	  return true;
 	 }
@@ -66,7 +66,7 @@
     <choice id="eid.belgium.be" visible="false">
         <pkg-ref id="eid.belgium.be"/>
     </choice>
-    <choice id="eid.belgium.tokend" visible="false" selected="osx_before_highsierra()">
+    <choice id="eid.belgium.tokend" visible="false" selected="osx_before_sierra()">
         <pkg-ref id="eid.belgium.tokend"/>
     </choice>
     <choice id="com.acs.acsccid" visible="false" selected="osx_before_elcapitan()">
@@ -78,7 +78,7 @@
     <choice id="org.opensc.pcscd_autostart" visible="false" selected="osx_before_yosemite()">
         <pkg-ref id="org.opensc.pcscd_autostart"/>
     </choice>
-    <choice id="beidtoken" visible="false" selected="macos_after_sierra()">
+    <choice id="beidtoken" visible="false" selected="macos_after_elcapitan()">
         <pkg-ref id="beidtoken"/>
     </choice>
 
