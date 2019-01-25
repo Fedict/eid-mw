@@ -1,4 +1,4 @@
-TESTS = init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_sequence digest threads sign sign_state ordering
+TESTS = init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_limited readdata_sequence digest threads sign sign_state ordering
 if JPEG
 TESTS += decode_photo
 endif
@@ -71,6 +71,9 @@ objects_LDADD = $(COMMON_LIB)
 
 readdata_SOURCES = readdata.c
 readdata_LDADD = $(COMMON_LIB) $(top_builddir)/plugins_tools/util/liblabels.la
+
+readdata_limited_SOURCES = readdata_limited.c
+readdata_limited_LDADD = $(COMMON_LIB) $(top_builddir)/plugins_tools/util/liblabels.la
 
 digest_SOURCES = digest.c
 digest_LDADD = $(COMMON_LIB)
