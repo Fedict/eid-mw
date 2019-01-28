@@ -67,6 +67,7 @@ namespace eIDMW
 				// Use applet 1.8-specific extended card data
 				m_ucCLA = 0x80;
 				m_oCardData = SendAPDU(0xE4, 0x00, 0x01, 0x1F);
+				m_ucCLA = 0x00;
 				m_oCardData.Chop(2);
 				m_ulRemaining[0] = m_oCardData.GetByte(28);
 				m_ulRemaining[1] = m_oCardData.GetByte(29);
