@@ -54,6 +54,12 @@ namespace eIDMW
 		UNKNOWN_DF,
 	} tBelpicDF;
 
+	typedef enum
+	{
+		BEID_PIN_COUNT_1,
+		BEID_PIN_COUNT_3
+	} tPinCount;
+
 	class CCard
 	{
 	public:
@@ -184,7 +190,8 @@ namespace eIDMW
 		unsigned long m_ulLockCount;
 		bool m_bSerialNrString;
 		tSelectAppletMode m_selectAppletMode;
-		unsigned long m_ulRemaining;
+		unsigned long m_ulRemaining[3];
+		tPinCount m_pinCount;
 		CByteArray m_oCardData;
 		CByteArray m_oSerialNr;
 		unsigned char m_ucAppletVersion;

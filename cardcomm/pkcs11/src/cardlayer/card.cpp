@@ -48,13 +48,14 @@ namespace eIDMW
 
 	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
 	  : m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0),
-	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_ulRemaining(1), m_ucAppletVersion(0), m_ul6CDelay(0), m_ucCLA(0)
+	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinCount(BEID_PIN_COUNT_1), m_ucAppletVersion(0), m_ul6CDelay(0), m_ucCLA(0)
 	{
 		try
 		{
 			m_ucCLA = 0x80;
 			m_oCardData = SendAPDU(0xE4, 0x00, 0x00, 0x1C);
 			m_ucCLA = 0x00;
+			m_ulRemaining[0] = 1;
 			if (m_oCardData.Size() < 23)
 			{
 				throw CMWEXCEPTION(EIDMW_ERR_APPLET_VERSION_NOT_FOUND);
@@ -740,7 +741,7 @@ namespace eIDMW
 			bool bOK = PinCmd(PIN_OP_VERIFY, *pPin, csPin1, csPin2, ulRemaining, &key);
 			if (!bOK)
 			{
-				m_ulRemaining = ulRemaining;
+				m_ulRemaining[pPin->ulPinRef - 1] = ulRemaining;
 				throw CMWEXCEPTION(ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
 			}
 		}
@@ -1018,7 +1019,7 @@ namespace eIDMW
 			{
 				MWLOG(LEV_INFO, MOD_CAL, L"     Couldn't sign, asking PIN and trying again");
 				// Bad PIN: show a dialog to ask the user to try again
-				bool retry = AskPinRetry(PIN_OP_VERIFY, Pin, m_ulRemaining, &key);
+				bool retry = AskPinRetry(PIN_OP_VERIFY, Pin, m_ulRemaining[Pin.ulPinRef - 1], &key);
 				if (retry)
 					retBytes = VerifyAndSign(key, Pin, algo, oData);
 				else
