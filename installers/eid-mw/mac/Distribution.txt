@@ -52,7 +52,7 @@
     <license file="license.rtf"/>
     <background file="eid.png" scaling="proportional" alignment="bottomleft" mime-type="image/png"/>
     <allowed-os-versions>
-        <os-version min="10.7.0" />
+        <os-version min="10.9.0" />
     </allowed-os-versions>    
     <options customize="never" require-scripts="false"/>
     <choices-outline>
