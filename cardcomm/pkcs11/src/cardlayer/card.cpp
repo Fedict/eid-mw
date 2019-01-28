@@ -63,6 +63,18 @@ namespace eIDMW
 			m_oCardData.Chop(2);	// remove SW12 = '90 00'
 			m_oSerialNr = CByteArray(m_oCardData.GetBytes(), 16);
 			m_ucAppletVersion = m_oCardData.GetByte(21);
+			if (m_ucAppletVersion >= 0x18) {
+				// Use applet 1.8-specific extended card data
+				m_ucCLA = 0x80;
+				m_oCardData = SendAPDU(0xE4, 0x00, 0x01, 0x1F);
+				m_oCardData.Chop(2);
+				m_ulRemaining[0] = m_oCardData.GetByte(28);
+				m_ulRemaining[1] = m_oCardData.GetByte(29);
+				m_ulRemaining[2] = m_oCardData.GetByte(30);
+				if (m_ulRemaining[1] != 0xFF || m_ulRemaining[2] != 0xFF) {
+					m_pinCount = BEID_PIN_COUNT_3;
+				}
+			}
 			if (m_oCardData.GetByte(22) == 0x00 && m_oCardData.GetByte(23) == 0x01)
 			{
 				m_ul6CDelay = 50;
