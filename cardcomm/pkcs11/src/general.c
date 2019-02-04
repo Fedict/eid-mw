@@ -163,7 +163,6 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 #define WHERE "C_GetInfo()"
 CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 {
-
 	CK_RV ret = CKR_OK;
 	log_trace(WHERE, "I: enter");
 	if (pInfo == NULL_PTR)
@@ -174,13 +173,13 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 
 	log_trace(WHERE, "S: C_GetInfo()");
 
-	memset(pInfo, 0, sizeof(CK_INFO));
 	pInfo->cryptokiVersion.major = 2;
-	pInfo->cryptokiVersion.minor = 20;
+	pInfo->cryptokiVersion.minor = 40;//0x28
 	strcpy_n(pInfo->manufacturerID,  "Belgium Government",  sizeof(pInfo->manufacturerID), ' ');
+	pInfo->flags = 0;
 	strcpy_n(pInfo->libraryDescription, "Belgium eID PKCS#11 interface v2", sizeof(pInfo->libraryDescription), ' ');
-	pInfo->libraryVersion.major = 4;
-	pInfo->libraryVersion.minor = 4;
+	pInfo->libraryVersion.major = 5;
+	pInfo->libraryVersion.minor = 0;
 
 cleanup:
 	log_trace(WHERE, "I: leave, ret = %i",ret);
