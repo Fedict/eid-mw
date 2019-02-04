@@ -122,5 +122,6 @@ int sign_state();
 int decode_photo();
 int ordering();
 int wrong_init();
+int login_state();
 
 #endif

@@ -121,6 +121,8 @@
 		6CD1B8C721A5A6530005F6E9 /* certificate_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C021A5A61A0005F6E9 /* certificate_checked.png */; };
 		6CD1B8C821A5A6570005F6E9 /* certificate_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */; };
 		6CD1B8C921A5A65B0005F6E9 /* certificate_warn.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */; };
+		6CDC503F220858980078C7E2 /* readdata_limited.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CDC503C220858980078C7E2 /* readdata_limited.c */; };
+		6CDC5040220858980078C7E2 /* login_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CDC503E220858980078C7E2 /* login_state.c */; };
 		86C0E75821C2586E00602028 /* tlvbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E72721C2586E00602028 /* tlvbuffer.h */; };
 		86C0E75921C2586E00602028 /* eiderrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E72821C2586E00602028 /* eiderrors.h */; };
 		86C0E75A21C2586E00602028 /* bytearray.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E72921C2586E00602028 /* bytearray.h */; };
@@ -458,6 +460,8 @@
 		6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_warn.png; path = "plugins_tools/eid-viewer/resources/certificate_warn.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8C221A5A6470005F6E9 /* state_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = state_error.png; path = "plugins_tools/eid-viewer/resources/state_error.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = state_noreaders.png; path = "plugins_tools/eid-viewer/resources/state_noreaders.png"; sourceTree = SOURCE_ROOT; };
+		6CDC503C220858980078C7E2 /* readdata_limited.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_limited.c; path = tests/unit/readdata_limited.c; sourceTree = "<group>"; };
+		6CDC503E220858980078C7E2 /* login_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = login_state.c; path = tests/unit/login_state.c; sourceTree = "<group>"; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -813,6 +817,8 @@
 		6536230C19A7E8FE00D46ECB /* testsuite */ = {
 			isa = PBXGroup;
 			children = (
+				6CDC503E220858980078C7E2 /* login_state.c */,
+				6CDC503C220858980078C7E2 /* readdata_limited.c */,
 				65EABAED1C621F3D00034337 /* labels.c */,
 				65EABAEE1C621F3D00034337 /* labels.h */,
 				65EABAEF1C621F3D00034337 /* utftranslate.h */,
@@ -1507,6 +1513,7 @@
 				86C0E97021C25E4700602028 /* pkcs15.cpp in Sources */,
 				86C0E96421C25E4700602028 /* cardlayer.cpp in Sources */,
 				86C0E76D21C2586E00602028 /* bytearray.cpp in Sources */,
+				6CDC5040220858980078C7E2 /* login_state.c in Sources */,
 				86E3DF621653EFE60015B5E1 /* object.c in Sources */,
 				86C0E96D21C25E4700602028 /* pinpad.cpp in Sources */,
 				86C0E76F21C2586E00602028 /* mwexception.cpp in Sources */,
@@ -1534,6 +1541,7 @@
 				86C0E78021C2586E00602028 /* rmd160.c in Sources */,
 				86C0E76121C2586E00602028 /* configcommon.cpp in Sources */,
 				86C0E75F21C2586E00602028 /* log.cpp in Sources */,
+				6CDC503F220858980078C7E2 /* readdata_limited.c in Sources */,
 				86C0E96021C25E4700602028 /* pcsc.cpp in Sources */,
 				86C0E91121C258D900602028 /* langutil.cpp in Sources */,
 				86E3DF671653EFE60015B5E1 /* display.cpp in Sources */,

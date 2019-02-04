@@ -66,10 +66,12 @@ int main(int argc, char** argv) {
 	run_test(sessions_nocard());
 	run_test(sessioninfo());
 	run_test(slogin());
+	run_test(login_state());
 	run_test(nonsensible());
 	run_test(objects());
 	run_test(readdata());
 	run_test(readdata_sequence());
+	run_test(readdata_limited());
 	run_test(digest());
 	run_test(threads());
 	run_test(sign());
