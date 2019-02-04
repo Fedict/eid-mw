@@ -363,6 +363,20 @@ void robot_cmd(char cmd, CK_BBOOL check_result) {
 	char line[80];
 	unsigned int i;
 
+	fd_set rb;
+	do {
+		struct timeval tv;
+
+		FD_ZERO(&rb);
+		FD_SET(robot_dev, &rb);
+		tv.tv_sec = 0;
+		tv.tv_usec = 0;
+		select(robot_dev+1, &rb, NULL, NULL, &tv);
+		if(FD_ISSET(robot_dev, &rb)) {
+			read(robot_dev, line, 79);
+		}
+	} while(FD_ISSET(robot_dev, &rb));
+
 	printf("sending robot command %c...\n", cmd);
 	write(robot_dev, &cmd, 1);
 	if(!check_result) {

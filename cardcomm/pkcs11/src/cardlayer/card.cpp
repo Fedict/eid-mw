@@ -48,13 +48,14 @@ namespace eIDMW
 
 	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
 	  : m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0),
-	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_ulRemaining(1), m_ucAppletVersion(0), m_ul6CDelay(0), m_ucCLA(0)
+	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinCount(BEID_PIN_COUNT_1), m_ucAppletVersion(0), m_ul6CDelay(0), m_ucCLA(0)
 	{
 		try
 		{
 			m_ucCLA = 0x80;
 			m_oCardData = SendAPDU(0xE4, 0x00, 0x00, 0x1C);
 			m_ucCLA = 0x00;
+			m_ulRemaining[0] = 1;
 			if (m_oCardData.Size() < 23)
 			{
 				throw CMWEXCEPTION(EIDMW_ERR_APPLET_VERSION_NOT_FOUND);
@@ -62,6 +63,19 @@ namespace eIDMW
 			m_oCardData.Chop(2);	// remove SW12 = '90 00'
 			m_oSerialNr = CByteArray(m_oCardData.GetBytes(), 16);
 			m_ucAppletVersion = m_oCardData.GetByte(21);
+			if (m_ucAppletVersion >= 0x18) {
+				// Use applet 1.8-specific extended card data
+				m_ucCLA = 0x80;
+				m_oCardData = SendAPDU(0xE4, 0x00, 0x01, 0x1F);
+				m_ucCLA = 0x00;
+				m_oCardData.Chop(2);
+				m_ulRemaining[0] = m_oCardData.GetByte(28);
+				m_ulRemaining[1] = m_oCardData.GetByte(29);
+				m_ulRemaining[2] = m_oCardData.GetByte(30);
+				if (m_ulRemaining[1] != 0xFF || m_ulRemaining[2] != 0xFF) {
+					m_pinCount = BEID_PIN_COUNT_3;
+				}
+			}
 			if (m_oCardData.GetByte(22) == 0x00 && m_oCardData.GetByte(23) == 0x01)
 			{
 				m_ul6CDelay = 50;
@@ -740,7 +754,7 @@ namespace eIDMW
 			bool bOK = PinCmd(PIN_OP_VERIFY, *pPin, csPin1, csPin2, ulRemaining, &key);
 			if (!bOK)
 			{
-				m_ulRemaining = ulRemaining;
+				m_ulRemaining[pPin->ulPinRef - 1] = ulRemaining;
 				throw CMWEXCEPTION(ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
 			}
 		}
@@ -1018,7 +1032,7 @@ namespace eIDMW
 			{
 				MWLOG(LEV_INFO, MOD_CAL, L"     Couldn't sign, asking PIN and trying again");
 				// Bad PIN: show a dialog to ask the user to try again
-				bool retry = AskPinRetry(PIN_OP_VERIFY, Pin, m_ulRemaining, &key);
+				bool retry = AskPinRetry(PIN_OP_VERIFY, Pin, m_ulRemaining[Pin.ulPinRef - 1], &key);
 				if (retry)
 					retBytes = VerifyAndSign(key, Pin, algo, oData);
 				else

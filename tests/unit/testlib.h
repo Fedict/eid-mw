@@ -113,6 +113,7 @@ int slogin();
 int nonsensible();
 int objects();
 int readdata();
+int readdata_limited();
 int readdata_sequence();
 int digest();
 int threads();
