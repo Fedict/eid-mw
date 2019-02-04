@@ -200,6 +200,7 @@
 	}
 	if(state == eIDStateNoReader) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			[self.readerLogo setImage:[NSImage imageNamed:@"state_noreaders.png"]];
 			[self.readerLogo setHidden:NO];
 		}];
 	}
