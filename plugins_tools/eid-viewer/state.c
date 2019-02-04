@@ -141,6 +141,7 @@ void sm_init() {
 	states[STATE_READY].parent = &(states[STATE_NO_TOKEN]);
 	states[STATE_READY].enter = eid_vwr_p11_check_version;
 	states[STATE_READY].out[EVENT_TOKEN_INSERTED] = &(states[STATE_TOKEN]);
+	states[STATE_READY].out[EVENT_READER_LOST] = &(states[STATE_NO_READER]);
 
 	states[STATE_TOKEN].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_TOKEN].first_child = &(states[STATE_TOKEN_ID]);
@@ -153,6 +154,7 @@ void sm_init() {
 	states[STATE_CARD_INVALID].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_CARD_INVALID].enter = source_none;
 	states[STATE_CARD_INVALID].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
+	states[STATE_CARD_INVALID].out[EVENT_READER_LOST] = &(states[STATE_NO_READER]);
 
 	states[STATE_TOKEN_ERROR].parent = &(states[STATE_TOKEN]);
 
@@ -191,7 +193,6 @@ void sm_init() {
 	states[STATE_NO_TOKEN].enter = source_none;
 	states[STATE_NO_TOKEN].first_child = &(states[STATE_NO_READER]);
 	states[STATE_NO_TOKEN].out[EVENT_OPEN_FILE] = &(states[STATE_FILE_READING]);
-	states[STATE_NO_TOKEN].out[EVENT_READER_LOST] = &(states[STATE_NO_READER]);
 
 	states[STATE_NO_READER].parent = &(states[STATE_NO_TOKEN]);
 	states[STATE_NO_READER].out[EVENT_READER_FOUND] = &(states[STATE_READY]);

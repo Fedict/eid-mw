@@ -31,6 +31,8 @@ state CALLBACKS {
   TOKEN: enter: eid_vwr_p11_open_session\nexit: eid_vwr_p11_close_session
   TOKEN --> NO_TOKEN : TOKEN_REMOVED
   TOKEN -down-> CARD_INVALID : DATA_INVALID
+  TOKEN --> NO_READER : READER_LOST
+  CARD_INVALID --> NO_READER : READER_LOST
 ' Force the arrow to go down for layout purposes
 
   CARD_INVALID -left-> NO_TOKEN : TOKEN_REMOVED
@@ -44,6 +46,7 @@ state CALLBACKS {
 
     READY --> TOKEN : TOKEN_INSERTED
     READY: enter: source_none
+    READY --> NO_READER: READER_LOST
   }
 
   state TOKEN {
