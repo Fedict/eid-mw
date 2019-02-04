@@ -78,17 +78,17 @@ int verify_null_func(CK_UTF8CHAR * string, size_t length, int nulls_expected,
 #define verify_null(s, l, e, m) { int retval = verify_null_func(s, l, e, m); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) return retval; }
 
 /* Functions to work with card moving robots */
-CK_BBOOL have_robot();
-CK_BBOOL is_manual_robot();
-CK_BBOOL can_confirm();
-CK_BBOOL have_pin();
+CK_BBOOL have_robot(void);
+CK_BBOOL is_manual_robot(void);
+CK_BBOOL can_confirm(void);
+CK_BBOOL have_pin(void);
 CK_BBOOL can_enter_pin(CK_SLOT_ID slot);
-void robot_remove_card();
-void robot_remove_card_delayed();
-void robot_insert_card();
-void robot_insert_card_delayed();
-void robot_remove_reader();
-void robot_insert_reader();
+void robot_remove_card(void);
+void robot_remove_card_delayed(void);
+void robot_insert_card(void);
+void robot_insert_card_delayed(void);
+void robot_remove_reader(void);
+void robot_insert_reader(void);
 void hex_dump(char *data, CK_ULONG length);
 
 /* Helper functions to not have to repeat common operations all the time */
@@ -96,32 +96,32 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);
 
 /* function definitions for tests that exist */
 int init_finalize(void);
-int getinfo();
-int funclist();
-int slotlist();
-int slotinfo();
-int tkinfo();
-int double_init();
-int fork_init();
-int slotevent();
-int mechlist();
-int mechinfo();
-int sessions();
-int sessions_nocard();
-int sessioninfo();
-int slogin();
-int nonsensible();
-int objects();
-int readdata();
-int readdata_limited();
-int readdata_sequence();
-int digest();
-int threads();
-int sign();
-int sign_state();
-int decode_photo();
-int ordering();
-int wrong_init();
-int login_state();
+int getinfo(void);
+int funclist(void);
+int slotlist(void);
+int slotinfo(void);
+int tkinfo(void);
+int double_init(void);
+int fork_init(void);
+int slotevent(void);
+int mechlist(void);
+int mechinfo(void);
+int sessions(void);
+int sessions_nocard(void);
+int sessioninfo(void);
+int slogin(void);
+int nonsensible(void);
+int objects(void);
+int readdata(void);
+int readdata_limited(void);
+int readdata_sequence(void);
+int digest(void);
+int threads(void);
+int sign(void);
+int sign_state(void);
+int decode_photo(void);
+int ordering(void);
+int wrong_init(void);
+int login_state(void);
 
 #endif
