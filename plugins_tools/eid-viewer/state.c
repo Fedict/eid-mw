@@ -105,7 +105,7 @@ static int do_initialize(void*data) {
 }
 
 /* Called whenever we enter the STATE_NO_TOKEN state. */
-static int source_none(void*data) {
+static int source_none(void*data EIDV_UNUSED) {
 	be_newsource(EID_VWR_SRC_NONE);
 
 	return 0;

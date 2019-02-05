@@ -140,7 +140,7 @@ out:
    - If we would want to modify the XML format at some undefined point
      in the future, it is a good idea generally to ensure that we
      already generate new XML data */
-int eid_vwr_gen_xml(void* data) {
+int eid_vwr_gen_xml(void* data EIDV_UNUSED) {
 	xmlTextWriterPtr writer = NULL;
 	int rc;
 	xmlBufferPtr buf;
@@ -191,7 +191,7 @@ int eid_vwr_serialize(void* data) {
 }
 
 /* Read elements according to the description in *element */
-static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) {
+static int read_elements(xmlTextReaderPtr reader, struct element_desc* element EIDV_UNUSED) {
 	int rc;
 	void* val = NULL;
 	while((rc = xmlTextReaderRead(reader)) > 0) {

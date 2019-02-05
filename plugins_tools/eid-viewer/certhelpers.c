@@ -26,7 +26,7 @@ void eid_vwr_init_crypto() {
 }
 
 /* Return a string representation of the X509v3 uses of the given certificate. */
-char* eid_vwr_get_use_flags(const char* label, X509* cert) {
+char* eid_vwr_get_use_flags(const char* label EIDV_UNUSED, X509* cert) {
 	const STACK_OF(X509_EXTENSION) *exts = X509_get0_extensions(cert);
 	int i;
 	char* retval = 0;
@@ -56,7 +56,7 @@ char* eid_vwr_get_use_flags(const char* label, X509* cert) {
 
 /* Return a detailed description of the X509 certificate (a multiline string of
  * all the subject name fields) */
-char* eid_vwr_detail_cert(const char* label, X509* cert) {
+char* eid_vwr_detail_cert(const char* label EIDV_UNUSED, X509* cert) {
 	X509_NAME* subject = X509_get_subject_name(cert);
 	X509_NAME_ENTRY* entry;
 	int i;
@@ -222,7 +222,7 @@ void eid_vwr_dumpcert(int fd, const void* derdata, int len, enum dump_type how) 
 	}
 }
 
-int eid_vwr_verify_card(void* d) {
+int eid_vwr_verify_card(void* d EIDV_UNUSED) {
 	const struct eid_vwr_cache_item *photo, *phash, *data, *datsig, *address, *adsig, *cert;
 
 #define GET(t, s) if(!cache_have_label(s)) { return 1; }; t = cache_get_data(s)
