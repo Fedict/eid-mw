@@ -30,7 +30,7 @@
 
 #define ADD_STATE(state) statenames[state] = #state
 
-CK_RV notify(CK_SESSION_HANDLE handle, CK_NOTIFICATION event, CK_VOID_PTR ptr) {
+CK_RV notify(CK_SESSION_HANDLE handle EIDT_UNUSED, CK_NOTIFICATION event EIDT_UNUSED, CK_VOID_PTR ptr EIDT_UNUSED) {
 	return CKR_OK;
 }
 

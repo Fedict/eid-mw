@@ -86,7 +86,7 @@ int verify_sig(unsigned char* sig, CK_ULONG siglen, CK_BYTE_PTR modulus, CK_ULON
 
 #endif
 
-int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
+int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot EIDT_UNUSED) {
 	CK_ATTRIBUTE attr[2];
 	CK_MECHANISM mech;
 	CK_BYTE data[] = { 'f', 'o', 'o' };

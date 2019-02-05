@@ -115,7 +115,7 @@ int threaded_test() {
 	return CKR_OK;
 }
 
-void* thread_func(void* v) {
+void* thread_func(void* v EIDT_UNUSED) {
 	threaded_test_result = threaded_test();
 
 	pthread_mutex_unlock(&condmutex);

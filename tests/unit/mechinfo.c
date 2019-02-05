@@ -33,7 +33,8 @@ TEST_FUNC(mechinfo) {
 	CK_ULONG count=0;
 	CK_MECHANISM_INFO info;
 	CK_MECHANISM_TYPE_PTR mechlist;
-	int i, ret;
+	unsigned int i;
+	int ret;
 	int found = 0;
 	int card_2k = 0;
 	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
