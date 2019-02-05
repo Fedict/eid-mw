@@ -11,7 +11,7 @@ public:
 	    HexDecodeConvertor(int len):len_(len)
 	{
 	};
-	virtual EID_STRING convert(const void *original)
+	virtual EID_STRING convert(const void *)
 	{
 		return TEXT("");
 	};
