@@ -113,6 +113,7 @@ int eid_vwr_p11_close_session() {
 	return 0;
 }
 
+#ifndef WIN32
 /* Called by eid_vwr_poll(). */
 int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULONG_PTR count) {
 	CK_RV ret;
@@ -158,6 +159,7 @@ int eid_vwr_p11_find_first_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR loc, CK_ULON
 	}
 	return EIDV_RV_FAIL;
 }
+#endif
 
 /* Called by UI to get list of slots */
 int eid_vwr_p11_name_slots(struct _slotdesc* slots, CK_ULONG_PTR len) {
@@ -311,7 +313,7 @@ int eid_vwr_p11_finalize_find() {
 /* Called by state machine at start of TOKEN_ID state 
  * This function may only be called from the state machine thread
  */
-int eid_vwr_p11_read_id(void* data) {
+int eid_vwr_p11_read_id(void* data EIDV_UNUSED) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
 
@@ -328,7 +330,7 @@ int eid_vwr_p11_read_id(void* data) {
 /* Called by state machine at start of TOKEN_CERTS state
  * This function may only be called from the state machine thread
  */
-int eid_vwr_p11_read_certs(void* data) {
+int eid_vwr_p11_read_certs(void* data EIDV_UNUSED) {
 	CK_ATTRIBUTE attr;
 	CK_ULONG type;
 	
@@ -379,7 +381,7 @@ int eid_vwr_p11_leave_pinop() {
 	return 0;
 }
 
-int eid_vwr_p11_check_version(void* data) {
+int eid_vwr_p11_check_version(void* data EIDV_UNUSED) {
 	CK_INFO info;
 	check_rv(C_GetInfo(&info));
 	if(info.libraryVersion.major < 4 || (info.libraryVersion.major == 4 && info.libraryVersion.minor < 2)) {
@@ -418,7 +420,8 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 	}
 	else 
 	{
-		//if we received the SLOTID_FIRSTSLOT, set slotID to first slot in the list
+		//if we received the SLOTID_FIRSTSLOT (when we switch back from manual to automatic slot selection this value is given),
+		//set slotID to first slot in the list
 		if (slotID == SLOTID_FIRSTSLOT)
 		{
 			slotID = pcurrentSlotList[0];
@@ -470,6 +473,13 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 			if ((info.flags & CKF_TOKEN_PRESENT) != 0)
 			{
 				//a token is present in the slot_ID that caused the event
+				//first check if the token is supported by our pkcs11 library
+				if (eid_vwr_p11_token_supported(&slotID) != EIDV_RV_OK)
+				{
+					//we don't support this token, ignore this event
+					return EIDV_RV_OK;
+				}
+
 				//check if this slot_ID needs to be watched
 				if (is_auto)
 				{
@@ -516,7 +526,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 					if (currentCardSlotID == -1)
 					{
 						//token was removed (or auto was activated), check if another token is present in another slot (that is being watched)
-						ret = eid_vwr_p11_find_card(&currentCardSlotID);
+						ret = eid_vwr_p11_find_eid_card(&currentCardSlotID);
 						if (ret == EIDV_RV_OK)
 						{
 							//we found another eID card, report it
@@ -571,6 +581,7 @@ int eid_vwr_p11_update_slot_list_ui(CK_SLOT_ID_PTR slotlist, CK_ULONG slotCount)
 		p11Ret = C_GetSlotInfo(slotlist[i], &info);
 		if (p11Ret != CKR_OK)
 		{
+			be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_p11_update_slot_list_ui for slot %d failed C_GetSlotInfo returned 0x%08u"), slotlist[i],p11Ret);
 			ret = EIDV_RV_FAIL;
 			goto end;
 		}
@@ -657,7 +668,7 @@ int eid_vwr_p11_reset_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcu
 			eid_vwr_p11_update_slot_list_ui(*ppcurrentSlotList, *pcurrentReaderCount);
 
 			//now try to retrieve an eID card
-			ret = eid_vwr_p11_find_card(&cardSlotID);
+			ret = eid_vwr_p11_find_eid_card(&cardSlotID);
 			if (ret == EIDV_RV_OK)
 			{
 				*pcurrentCardSlotID = cardSlotID;
@@ -675,15 +686,35 @@ int eid_vwr_p11_reset_slot_list(CK_SLOT_ID_PTR *ppcurrentSlotList, CK_ULONG *pcu
 	return ret;
 }
 
+/* check if the card that is present in the slotID is in fact an eid card that we support*/
+int eid_vwr_p11_token_supported(CK_SLOT_ID_PTR slotID) {
+	CK_RV p11Ret = CKR_OK;
+	CK_TOKEN_INFO tokenInfo;
+
+	p11Ret = C_GetTokenInfo(*slotID, &tokenInfo);
+	if (p11Ret == CKR_OK)
+	{
+		return EIDV_RV_OK;
+	}
+	if (p11Ret != CKR_TOKEN_NOT_RECOGNIZED)
+	{
+		be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_p11_token_supported failed getting slot info: C_GetTokenInfo returned = 0x%08x "), p11Ret);
+	}
+	return EIDV_RV_FAIL;
+}
+
+
 /* try to find an eID card depending on the preferences that are set 
- * will return EIDV_RV_OK if a card if found, EIDV_RV_FAIL otherwise
+ * will return EIDV_RV_OK if a card is found, EIDV_RV_FAIL otherwise
  * if a card is found, slotID will be its slot number
  */
-int eid_vwr_p11_find_card(CK_SLOT_ID_PTR slotID ) {
+int eid_vwr_p11_find_eid_card(CK_SLOT_ID_PTR slotID ) {
 	CK_RV p11Ret;
 	CK_SLOT_ID_PTR slotList;
+	CK_TOKEN_INFO tokenInfo;
 
 	CK_ULONG slotCount = 0;
+	CK_ULONG counter;
 
 	if (is_auto)
 	{
@@ -715,10 +746,22 @@ int eid_vwr_p11_find_card(CK_SLOT_ID_PTR slotID ) {
 				return EIDV_RV_FAIL;
 			}
 		}
-		*slotID = slotList[0];
+
+		//we retrieved a list of tokens, now check which one of them are eID cards
+		for (counter = 0; counter < slotCount; counter++)
+		{
+			p11Ret = C_GetTokenInfo(slotList[counter], &tokenInfo);
+			if (p11Ret == CKR_OK)
+			{
+				*slotID = slotList[counter];
+				free(slotList);
+				return EIDV_RV_OK;
+			}
+		}
 		
+		//we did not get any ok return from the tokens found, so none of them are eID cards
 		free(slotList);
-		return EIDV_RV_OK;
+		return EIDV_RV_FAIL;
 	}
 	else
 	{
@@ -727,8 +770,13 @@ int eid_vwr_p11_find_card(CK_SLOT_ID_PTR slotID ) {
 
 		if ((p11Ret == CKR_OK) && ((info.flags & CKF_TOKEN_PRESENT) == CKF_TOKEN_PRESENT))
 		{
-			*slotID = slot_manual;
-			return EIDV_RV_OK;
+			//token found, now check if we support it
+			p11Ret = C_GetTokenInfo(slot_manual, &tokenInfo);
+			if (p11Ret == CKR_OK)
+			{
+				*slotID = slot_manual;
+				return EIDV_RV_OK;
+			}	
 		}
 	}
 	return EIDV_RV_FAIL;
