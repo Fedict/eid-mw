@@ -406,15 +406,12 @@ namespace eIDMW
 		unsigned long ulLen = ucINS == 0xA4
 			|| ucINS == 0x22 ? 0xFFFFFFFF : 5;
 
-		SCARD_IO_REQUEST *pioSendPci =
-			(pSendPci !=
-			 NULL) ? (SCARD_IO_REQUEST *) pSendPci : &m_ioSendPci;
-		SCARD_IO_REQUEST *pioRecvPci =
-			(pRecvPci !=
-			 NULL) ? (SCARD_IO_REQUEST *) pRecvPci : &m_ioRecvPci;
+		SCARD_IO_REQUEST *pioSendPci = (pSendPci != NULL) ? (SCARD_IO_REQUEST *) pSendPci : &m_ioSendPci;
+		SCARD_IO_REQUEST *pioRecvPci = (pRecvPci != NULL) ? (SCARD_IO_REQUEST *) pRecvPci : &m_ioRecvPci;
 
-		MWLOG(LEV_DEBUG, MOD_CAL, L"      SCardTransmit(%ls)",
-		      oCmdAPDU.ToWString(true, true, 0, ulLen).c_str());
+		MWLOG(LEV_DEBUG, MOD_CAL, L"      SCardTransmit(%ls)", oCmdAPDU.ToWString(true, true, 0, ulLen).c_str());
+		//MWLOG(LEV_DEBUG, MOD_CAL, L"      SCardTransmit pioSendPci (dwProtocol = 0X%x, cbPciLength = 0x%x)", pioSendPci->dwProtocol, pioSendPci->cbPciLength);
+		//MWLOG(LEV_DEBUG, MOD_CAL, L"      SCardTransmit pioRecvPci (dwProtocol = 0X%x, cbPciLength = 0x%x)", pioRecvPci->dwProtocol, pioRecvPci->cbPciLength);
 
 		// Very strange: sometimes an SCardTransmit() returns a communications
 		// error or a SW12 = 6D 00 error.
