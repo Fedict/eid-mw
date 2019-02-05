@@ -37,15 +37,15 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 @cd "%OUR_CURRENT_PATH%"
 
 
-:: create the NSIS installer
+:: create the NSIS launcher
 :: =========================
 
 
-@echo [INFO] Make nsis viewer installer
+@echo [INFO] Make nsis viewer launcher
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerLauncher.nsi"
 @if %ERRORLEVEL%==1 goto end_resetpath
 
-:: sign the nsis installer
+:: sign the nsis launcher
 :: =======================
 
 @echo [INFO] sign nsis viewer launcher
@@ -54,7 +54,7 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 "%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
-@echo [INFO] copy nsis installer
+@echo [INFO] copy nsis launcher
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
 goto end_resetpath
 
