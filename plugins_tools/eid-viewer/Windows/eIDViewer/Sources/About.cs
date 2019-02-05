@@ -9,7 +9,7 @@ namespace eIDViewer
         {
             string message = @"eID Viewer 4.4.14
 eID Middleware Project
-Copyright(C) 2018 Bosa
+Copyright(C) 2019 Bosa
 
 By Frederik Vernelen and Wouter Verhelst
 Based on the design of Frank Marien
