@@ -80,6 +80,23 @@ namespace EidSamples
             return slotID;
         }
 
+
+        /// <summary>
+        /// Tries to create a Session, returns NULL in case of failure
+        /// </summary>
+        /// <returns></returns>
+        private Session CreateSession (Slot slot )
+        {
+            try
+            {
+                return slot.Token.OpenSession(true);
+            }
+            catch
+            {
+                return null;
+            }       
+        }
+
         /// <summary>
         /// Gets label of token found in the first non-empty slot (cardreader)
         /// </summary>
@@ -135,6 +152,8 @@ namespace EidSamples
         {
             return GetData("date_of_birth");
         }
+
+    
         /// <summary>
         /// Generic function to get string data objects from label
         /// </summary>
@@ -157,41 +176,45 @@ namespace EidSamples
                 {
                     Slot slot = slotlist[0];
 
-                    Session session = slot.Token.OpenSession(true);
-
-                    // Search for objects
-                    // First, define a search template 
-
-                    // "The label attribute of the objects should equal ..."
-                    ByteArrayAttribute classAttribute = new ByteArrayAttribute(CKA.CLASS);
-                    classAttribute.Value = BitConverter.GetBytes((uint)Net.Sf.Pkcs11.Wrapper.CKO.DATA);
-
-
-                    ByteArrayAttribute labelAttribute = new ByteArrayAttribute(CKA.LABEL);
-                    labelAttribute.Value = System.Text.Encoding.UTF8.GetBytes(label);      
-
-
-                    session.FindObjectsInit(new P11Attribute[] { classAttribute, labelAttribute });
-                    P11Object[] foundObjects = session.FindObjects(50);
-                    int counter = foundObjects.Length;
-                    Data data;
-                    while (counter > 0)
+                    //Session session = slot.Token.OpenSession(true);
+                    Session session = CreateSession(slot);
+                    if (session != null)
                     {
-                        //foundObjects[counter-1].ReadAttributes(session);
-                        //public static BooleanAttribute ReadAttribute(Session session, uint hObj, BooleanAttribute attr)
-                        data = foundObjects[counter - 1] as Data;
-                        label = data.Label.ToString();
-                        if (label != null)
-                            Console.WriteLine(label);
-                        if (data.Value.Value != null)
+
+                        // Search for objects
+                        // First, define a search template 
+
+                        // "The label attribute of the objects should equal ..."
+                        ByteArrayAttribute classAttribute = new ByteArrayAttribute(CKA.CLASS);
+                        classAttribute.Value = BitConverter.GetBytes((uint)Net.Sf.Pkcs11.Wrapper.CKO.DATA);
+
+
+                        ByteArrayAttribute labelAttribute = new ByteArrayAttribute(CKA.LABEL);
+                        labelAttribute.Value = System.Text.Encoding.UTF8.GetBytes(label);
+
+
+                        session.FindObjectsInit(new P11Attribute[] { classAttribute, labelAttribute });
+                        P11Object[] foundObjects = session.FindObjects(50);
+                        int counter = foundObjects.Length;
+                        Data data;
+                        while (counter > 0)
                         {
-                            value = System.Text.Encoding.UTF8.GetString(data.Value.Value);
-                            Console.WriteLine(value);
+                            //foundObjects[counter-1].ReadAttributes(session);
+                            //public static BooleanAttribute ReadAttribute(Session session, uint hObj, BooleanAttribute attr)
+                            data = foundObjects[counter - 1] as Data;
+                            label = data.Label.ToString();
+                            if (label != null)
+                                Console.WriteLine(label);
+                            if (data.Value.Value != null)
+                            {
+                                value = System.Text.Encoding.UTF8.GetString(data.Value.Value);
+                                Console.WriteLine(value);
+                            }
+                            counter--;
                         }
-                        counter--;
+                        session.FindObjectsFinal();
+                        session.Dispose();
                     }
-                    session.FindObjectsFinal();
-                    session.Dispose();
                 }
                 else
                 {
