@@ -4,8 +4,8 @@
 
 @SET BASE_VERSION1=4
 @SET BASE_VERSION2=4
-@SET BASE_VERSION3=10
-@SET YEAR=2018
+@SET BASE_VERSION3=14
+@SET YEAR=2019
 
 @IF EXIST "C:\Program Files (x86)\Git\bin\git.exe" (
 	set GIT_PATH="C:\Program Files (x86)\Git\bin\git.exe"

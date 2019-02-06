@@ -1,4 +1,4 @@
-#include "workpermitconv.h"
+﻿#include "workpermitconv.h"
 
 std::map < eid_vwr_langs, std::map <char, EID_STRING> > WorkPermitConvertor::conversions;
 

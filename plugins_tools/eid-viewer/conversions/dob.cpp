@@ -1,4 +1,4 @@
-#include "dob.h"
+﻿#include "dob.h"
 #include "cppeidstring.h"
 
 std::map < eid_vwr_langs, std::map < int, EID_STRING > >DobWriter::tomonth;

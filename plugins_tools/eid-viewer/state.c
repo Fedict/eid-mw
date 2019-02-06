@@ -122,6 +122,11 @@ static int enter_token_wait(void* data) {
 	return eid_vwr_gen_xml(data);
 }
 
+/* called when we enter the FILE_WAIT state. */
+static int enter_file_wait(void* data) {
+	return eid_vwr_gen_xml(data);
+}
+
 /* Initialize the state machine.
    Please see be-statemach.uml in the uml directory for more details */
 void sm_init() {
@@ -209,6 +214,7 @@ void sm_init() {
 	states[STATE_FILE_READING].out[EVENT_READ_READY] = &(states[STATE_FILE_WAIT]);
 
 	states[STATE_FILE_WAIT].parent = &(states[STATE_FILE]);
+	states[STATE_FILE_WAIT].enter = enter_file_wait;
 
 	curstate = &(states[STATE_LIBOPEN]);
 

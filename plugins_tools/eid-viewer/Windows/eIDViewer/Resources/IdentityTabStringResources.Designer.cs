@@ -189,7 +189,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data and country
+        ///   Looks up a localized string similar to Date and country
         ///of international protection:.
         /// </summary>
         public static string ProtectionLabel {
