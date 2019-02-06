@@ -74,7 +74,7 @@ extern "C"
 	{ CKA_UNWRAP,           ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_MODULUS,          ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_MODULUS_BITS,     ( CK_VOID_PTR ) NULL, 0 },   \
-	{ CKA_EXTRACTABLE,			( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_EXTRACTABLE,	( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_PUBLIC_EXPONENT,  ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_PRIVATE,          ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_PRIVATE_EXPONENT, ( CK_VOID_PTR ) NULL, 0 },   \
@@ -83,7 +83,7 @@ extern "C"
 	{ CKA_EXPONENT_1,       ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_EXPONENT_2,       ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_COEFFICIENT,      ( CK_VOID_PTR ) NULL, 0 },   \
-	{ CKA_DERIVE,						( CK_VOID_PTR ) NULL, 0 }    \
+	{ CKA_DERIVE,		( CK_VOID_PTR ) NULL, 0 }    \
 }
 
 #define BEID_TEMPLATE_PUB_KEY  {  \
@@ -99,11 +99,11 @@ extern "C"
 	{ CKA_ENCRYPT,          ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_VERIFY,           ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_WRAP,             ( CK_VOID_PTR ) NULL, 0 },  \
-	{ CKA_VALUE,						( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_VALUE,		( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_MODULUS,          ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_MODULUS_BITS,     ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_PUBLIC_EXPONENT,  ( CK_VOID_PTR ) NULL, 0 },  \
-	{ CKA_DERIVE,						( CK_VOID_PTR ) NULL, 0 }   \
+	{ CKA_DERIVE,		( CK_VOID_PTR ) NULL, 0 }   \
 }
 
 #define BEID_TEMPLATE_CERTIFICATE  {  \
@@ -129,7 +129,7 @@ extern "C"
 	{ CKA_VALUE_LEN,        ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_LABEL,            ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_MODIFIABLE,       ( CK_VOID_PTR )    NULL, 0 },  \
-	{ CKA_OBJECT_ID,				( CK_VOID_PTR )    NULL, 0 }	 \
+	{ CKA_OBJECT_ID,	( CK_VOID_PTR )    NULL, 0 }	 \
 }
 
 	//      { BEID_FIELD_TAG_ID_Version,                    "Version"},

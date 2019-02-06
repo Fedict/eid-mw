@@ -121,6 +121,7 @@
 		6CD1B8C721A5A6530005F6E9 /* certificate_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C021A5A61A0005F6E9 /* certificate_checked.png */; };
 		6CD1B8C821A5A6570005F6E9 /* certificate_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */; };
 		6CD1B8C921A5A65B0005F6E9 /* certificate_warn.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */; };
+		6CDC504222085AFB0078C7E2 /* readdata_limited.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CDC503C220858980078C7E2 /* readdata_limited.c */; };
 		86C0E75821C2586E00602028 /* tlvbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E72721C2586E00602028 /* tlvbuffer.h */; };
 		86C0E75921C2586E00602028 /* eiderrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E72821C2586E00602028 /* eiderrors.h */; };
 		86C0E75A21C2586E00602028 /* bytearray.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E72921C2586E00602028 /* bytearray.h */; };
@@ -458,6 +459,7 @@
 		6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_warn.png; path = "plugins_tools/eid-viewer/resources/certificate_warn.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8C221A5A6470005F6E9 /* state_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = state_error.png; path = "plugins_tools/eid-viewer/resources/state_error.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = state_noreaders.png; path = "plugins_tools/eid-viewer/resources/state_noreaders.png"; sourceTree = SOURCE_ROOT; };
+		6CDC503C220858980078C7E2 /* readdata_limited.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_limited.c; path = tests/unit/readdata_limited.c; sourceTree = "<group>"; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -816,6 +818,7 @@
 				65EABAED1C621F3D00034337 /* labels.c */,
 				65EABAEE1C621F3D00034337 /* labels.h */,
 				65EABAEF1C621F3D00034337 /* utftranslate.h */,
+				6CDC503C220858980078C7E2 /* readdata_limited.c */,
 				65F3F0211BE236680073F2A3 /* readdata_sequence.c */,
 				8B8B71581B74CCA300D8910E /* sign_state.c */,
 				8B07D1011B21CEB80033CD62 /* wrong_init.c */,
@@ -1456,6 +1459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CDC504222085AFB0078C7E2 /* readdata_limited.c in Sources */,
 				65EABAF31C621FB400034337 /* labels.c in Sources */,
 				65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */,
 				65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */,
@@ -2048,7 +2052,6 @@
 		6536230819A7E8E600D46ECB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2089,7 +2092,6 @@
 		6536230919A7E8E600D46ECB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

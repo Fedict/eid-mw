@@ -46,36 +46,40 @@
 int main(int argc, char** argv) {
 	int skipped_count=0, failed_count=0, ok_count=0;
 	char* test_target = NULL;
+	int i=1;
 
-	if(argc > 1) {
-		test_target = argv[1];
-	}
-	run_test(init_finalize());
-	run_test(fork_init());
-	run_test(double_init());
-	run_test(wrong_init());
-	run_test(getinfo());
-	run_test(funclist());
-	run_test(slotlist());
-	run_test(slotinfo());
-	run_test(tkinfo());
-	run_test(slotevent());
-	run_test(mechlist());
-	run_test(mechinfo());
-	run_test(sessions());
-	run_test(sessions_nocard());
-	run_test(sessioninfo());
-	run_test(slogin());
-	run_test(nonsensible());
-	run_test(objects());
-	run_test(readdata());
-	run_test(readdata_sequence());
-	run_test(digest());
-	run_test(threads());
-	run_test(sign());
-	run_test(sign_state());
-	run_test(decode_photo());
-	run_test(ordering());
+	do {
+		if(argc > 1) {
+			test_target = argv[i];
+		}
+		run_test(init_finalize());
+		run_test(fork_init());
+		run_test(double_init());
+		run_test(wrong_init());
+		run_test(getinfo());
+		run_test(funclist());
+		run_test(slotlist());
+		run_test(slotinfo());
+		run_test(tkinfo());
+		run_test(slotevent());
+		run_test(mechlist());
+		run_test(mechinfo());
+		run_test(sessions());
+		run_test(sessions_nocard());
+		run_test(sessioninfo());
+		run_test(slogin());
+		run_test(nonsensible());
+		run_test(objects());
+		run_test(readdata());
+		run_test(readdata_sequence());
+		run_test(readdata_limited());
+		run_test(digest());
+		run_test(threads());
+		run_test(sign());
+		run_test(sign_state());
+		run_test(decode_photo());
+		run_test(ordering());
+	} while(++i < argc);
 
 	printf("Test suite finished.\nOK: %d\nFailed: %d\nSkipped: %d\n", ok_count, failed_count, skipped_count);
 
