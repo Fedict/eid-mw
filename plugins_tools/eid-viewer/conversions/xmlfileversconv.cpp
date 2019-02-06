@@ -1,4 +1,4 @@
-#include "xmlfileversconv.h"
+﻿#include "xmlfileversconv.h"
 #include "backend.h"
 
 std::map<eid_vwr_langs, const EID_CHAR*> XmlFileversConvertor::msgs_;

@@ -1,4 +1,6 @@
-#include "specconv.h"
+﻿#include "specconv.h"
+
+std::map < eid_vwr_langs, std::map < EID_CHAR, EID_STRING > >SpecConvertor::conversions;
 
 SpecConvertor::SpecConvertor()
 {
