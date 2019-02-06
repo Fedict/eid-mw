@@ -292,7 +292,7 @@ namespace eIDViewer
             if (foundEmbeddedRootCA == false)
             {
                 rootViewModel.CertTrust = "Unknow RootCA";
-                this.WriteLog("Unknow RootCA", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                this.WriteLog("Unknow RootCA \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                 SetCertificateIcon(rootViewModel, eid_cert_status.EID_CERT_STATUS_INVALID);
             }
             else
