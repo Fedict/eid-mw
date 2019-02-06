@@ -17,8 +17,7 @@
 using namespace eIDMW;
 
 void DisplayButtonPressed(DlgRet dlgret);
-void DisplayPINPressed(DlgRet dlgret, wchar_t * wsPin,
-		       unsigned long ulPinBufferLen);
+void DisplayPINPressed(DlgRet dlgret, wchar_t * wsPin, unsigned long ulPinBufferLen);
 
 void DisplayAllModalCombinations();
 void DisplayAllAskPinCombinations();

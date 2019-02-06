@@ -26,8 +26,8 @@
 	  return false;
 	 }
 	}
-	function osx_before_highsierra() {
-	 if((system.compareVersions(system.version.ProductVersion, '10.13')) == -1)
+	function osx_before_sierra() {
+	 if((system.compareVersions(system.version.ProductVersion, '10.12')) == -1)
 	 {
 	  return true;
 	 }
@@ -36,8 +36,8 @@
 	  return false;
 	 }
 	}
-	function macos_after_sierra() {
-	 if((system.compareVersions(system.version.ProductVersion, '10.13')) >= 0)
+	function macos_after_elcapitan() {
+	 if((system.compareVersions(system.version.ProductVersion, '10.12')) >= 0)
 	 {
 	  return true;
 	 }
@@ -52,7 +52,7 @@
     <license file="license.rtf"/>
     <background file="eid.png" scaling="proportional" alignment="bottomleft" mime-type="image/png"/>
     <allowed-os-versions>
-        <os-version min="10.7.0" />
+        <os-version min="10.9.0" />
     </allowed-os-versions>    
     <options customize="never" require-scripts="false"/>
     <choices-outline>
@@ -62,12 +62,11 @@
 	<line choice="com.acs.ccid_remove_acs"/>
 	<line choice="org.opensc.pcscd_autostart"/>
 	<line choice="beidtoken"/>
-	<line choice="eid.belgium.eidinfo"/>
     </choices-outline>
     <choice id="eid.belgium.be" visible="false">
         <pkg-ref id="eid.belgium.be"/>
     </choice>
-    <choice id="eid.belgium.tokend" visible="false" selected="osx_before_highsierra()">
+    <choice id="eid.belgium.tokend" visible="false" selected="osx_before_sierra()">
         <pkg-ref id="eid.belgium.tokend"/>
     </choice>
     <choice id="com.acs.acsccid" visible="false" selected="osx_before_elcapitan()">
@@ -79,17 +78,14 @@
     <choice id="org.opensc.pcscd_autostart" visible="false" selected="osx_before_yosemite()">
         <pkg-ref id="org.opensc.pcscd_autostart"/>
     </choice>
-    <choice id="beidtoken" visible="false" selected="macos_after_sierra()">
+    <choice id="beidtoken" visible="false" selected="macos_after_elcapitan()">
         <pkg-ref id="beidtoken"/>
     </choice>
-    <choice id="eid.belgium.eidinfo" visible="false" selected="osx_before_highsierra()">
-        <pkg-ref id="eid.belgium.eidinfo"/>
-    </choice>
+
     <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
     <pkg-ref id="eid.belgium.tokend" onConclusion="none">beidtokend.pkg</pkg-ref>
     <pkg-ref id="com.acs.acsccid" onConclusion="none">acsccid_flat.pkg</pkg-ref>
     <pkg-ref id="com.acs.ccid_remove_acs" onConclusion="none">ccid_remove_acs_flat.pkg/</pkg-ref>
     <pkg-ref id="org.opensc.pcscd_autostart" onConclusion="RequireRestart">pcscd_autostart_flat.pkg</pkg-ref>
     <pkg-ref id="beidtoken" onConclusion="none">BEIDToken.pkg</pkg-ref>
-    <pkg-ref id="eid.belgium.eidinfo" onConclusion="none">EIDInfo.pkg</pkg-ref>
 </installer-gui-script>

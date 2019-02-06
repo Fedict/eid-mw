@@ -361,7 +361,7 @@
 #endif
     __block NSString* instanceID;
     
-    BOOL (^readInstanceID)(NSError**) = ^(NSError** err) {
+    BOOL (^readInstanceID)(NSError**) = ^(NSError** error) {
         BOOL retVAL = false;
         
         [self selectRelFile:kBELPIC_DF_BELPIC len:2 smartCard:smartCard error:error];

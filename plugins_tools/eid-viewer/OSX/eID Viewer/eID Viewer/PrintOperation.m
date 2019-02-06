@@ -37,7 +37,9 @@
 		return;
 	}
 	NSObject<NSUserInterfaceItemIdentification>*from = (NSObject<NSUserInterfaceItemIdentification>*)view;
-	[_viewDict setObject:from forKey:[from identifier]];
+	NSString *key = [from identifier];
+	if(key == nil) return;
+	[_viewDict setObject:from forKey:key];
 	NSArray* arr = [view subviews];
 	for(int i=0;i<[arr count]; i++) {
 		[self indexViews:[arr objectAtIndex:i]];
