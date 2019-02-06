@@ -275,7 +275,6 @@ int eid_vwr_deserialize(void* data) {
 	 * file "somewhere", in an OS-dependent way. */
 	check_xml(xmlTextReaderSchemaValidate(reader, get_xsdloc()));
 	check_xml(read_elements(reader, toplevel));
-	check_xml(eid_vwr_gen_xml(NULL));
 out:
 	if(rc) {
 		xmlError* err = xmlGetLastError();
