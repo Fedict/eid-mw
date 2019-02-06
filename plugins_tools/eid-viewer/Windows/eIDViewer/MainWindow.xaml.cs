@@ -365,7 +365,7 @@ namespace eIDViewer
         {
             if (e.Source.GetType().Name.Equals("Image"))
             {
-                if ((theBackendData.eid_backend_state == eid_vwr_states.STATE_FILE) || (theBackendData.eid_backend_state == eid_vwr_states.STATE_TOKEN_WAIT))
+                if ((theBackendData.eid_backend_state == eid_vwr_states.STATE_FILE_WAIT) || (theBackendData.eid_backend_state == eid_vwr_states.STATE_TOKEN_IDLE))
                 {
                     Image item = (Image)e.Source;
 
