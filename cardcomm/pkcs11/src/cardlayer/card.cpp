@@ -422,8 +422,7 @@ namespace eIDMW
 			MWLOG(LEV_CRIT, MOD_CAL, L"Failed to select applet");
 			return false;
 		}
-		return (oResp.Size() == 2
-			&& (oResp.GetByte(0) == 0x61 || oResp.GetByte(0) == 0x90));
+		return (oResp.Size() == 2 && (oResp.GetByte(0) == 0x90 || oResp.GetByte(1) == 0x00));
 	}
 
 	CCard * UnknownCardGetInstance(const char *csReader,
