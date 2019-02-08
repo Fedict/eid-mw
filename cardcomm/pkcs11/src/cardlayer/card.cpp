@@ -443,59 +443,20 @@ namespace eIDMW
 
 		try
 		{
-			bool bNeedToSelectApplet = false;
-			CByteArray oData;
-			CByteArray oCmd(40);
-			unsigned char tucSelectApp[] = { 0x00, 0xA4, 0x04, 0x0C };
-			oCmd.Append(tucSelectApp, sizeof(tucSelectApp));
-			oCmd.Append((unsigned char) sizeof(BELPIC_AID));
-			oCmd.Append(BELPIC_AID, sizeof(BELPIC_AID));
-			long lRetVal;
+			bool bIsBeidCard = BeidCardSelectApplet(poContext, hCard);
 
-			// Don't remove these brackets, CAutoLock dtor must be called!
-			//{
-			//don't use autolock when card might be reset
-			//CAutoLock oAutLock(&poContext->m_oPCSC, hCard);
-			poContext->m_oPCSC.BeginTransaction(hCard);
-			oData = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
-			if (lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED)
-			{
-				poContext->m_oPCSC.Recover(hCard, &ulLockCount);
-				bNeedToSelectApplet = BeidCardSelectApplet(poContext, hCard);
-				if (bNeedToSelectApplet)	// try again to select the belpic app
-					oData = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
-			}
-			if (oData.Size() == 2 && oData.GetByte(0) == 0x6A
-				&& (oData.GetByte(1) == 0x82 || oData.GetByte(1) == 0x86))
-			{
-				// Perhaps the applet is no longer selected; so try to select it
-				// first; and if successfull then try to select the Belpic AID again
-				bNeedToSelectApplet = BeidCardSelectApplet(poContext, hCard);
-				if (bNeedToSelectApplet)
-					oData = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
-			}
-			bool bIsBeidCard = oData.Size() == 2 && oData.GetByte(0) == 0x90 && oData.GetByte(1) == 0x00;
 			if (bIsBeidCard)
 			{
-				poCard = new CCard(hCard, poContext, poPinpad,
-					bNeedToSelectApplet ? ALW_SELECT_APPLET : TRY_SELECT_APPLET, CARD_BEID);
+				poCard = new CCard(hCard, poContext, poPinpad, TRY_SELECT_APPLET, CARD_BEID);
 			}
 			else
 			{
 				poCard = new CCard(hCard, poContext, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
 			}
-			if (ulLockCount)
-			{
-				poContext->m_oPCSC.EndTransaction(hCard);
-			}
 		}
 		catch (...)
 		{
-			if (ulLockCount)
-			{
-				poContext->m_oPCSC.EndTransaction(hCard);
-			}
-			//printf("Exception in cardPluginBeid.CardGetInstance()\n");
+			MWLOG(LEV_ERROR, MOD_CAL, L"Exception in cardPluginBeid.CardGetInstance()");
 		}
 
 		return poCard;
