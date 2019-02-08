@@ -160,7 +160,7 @@ namespace eIDMW
 		}
 	}
 
-	void CCard::SelectApplication(const CByteArray & oAID)
+/*	void CCard::SelectApplication(const CByteArray & oAID)
 	{
 		CAutoLock autolock(this);
 
@@ -181,7 +181,7 @@ namespace eIDMW
 		}
 
 		getSW12(oResp, 0x9000);
-	}
+	}*/
 
 	bool CCard::SerialNrPresent(const CByteArray & oData)
 	{

@@ -99,7 +99,7 @@ namespace eIDMW
 			Lock(). */
 		void Unlock();
 
-		void SelectApplication(const CByteArray & oAID);
+		//void SelectApplication(const CByteArray & oAID);
 
 		CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
 

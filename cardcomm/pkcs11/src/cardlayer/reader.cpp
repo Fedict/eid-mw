@@ -321,13 +321,13 @@ namespace eIDMW
 		return m_poCard->Unlock();
 	}
 
-	void CReader::SelectApplication(const CByteArray & oAID)
+	/*void CReader::SelectApplication(const CByteArray & oAID)
 	{
 		if (m_poCard == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
 
 		return m_poCard->SelectApplication(oAID);
-	}
+	}*/
 
 	CByteArray CReader::ReadFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
 	{

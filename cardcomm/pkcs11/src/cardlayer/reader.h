@@ -92,7 +92,7 @@ public:
 		void Lock();
 		void Unlock();
 
-		void SelectApplication(const CByteArray & oAID);
+		//void SelectApplication(const CByteArray & oAID);
 
 		/* Read the file indicated by 'csPath'.
 		 * This path can be absolute, relative or empty
