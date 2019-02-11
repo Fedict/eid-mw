@@ -68,9 +68,6 @@ namespace eIDMW
 			tSelectAppletMode selectAppletMode, tCardType cardType);
 		~CCard(void);
 
-		/** Find out which card is present and return the appropriate subclass */
-		static CCard *Connect(const std::string & csReader, CContext * poContext, CPinpad * poPinpad);
-
 		/** Disconnect from the card, optionally resetting it */
 		void Disconnect(tDisconnectMode disconnectMode = DISCONNECT_LEAVE_CARD);
 

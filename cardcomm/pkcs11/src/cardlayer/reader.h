@@ -86,12 +86,6 @@ public:
 		std::string GetSerialNr();
 		std::string GetCardLabel();
 
-		/* Lock the card for exclusive use. Multiple calls are possible
-		 * (only the first call will lock the card), but for each Lock()
-		 * call, an UnLock() must be called. */
-		void Lock();
-		void Unlock();
-
 		//void SelectApplication(const CByteArray & oAID);
 
 		/* Read the file indicated by 'csPath'.

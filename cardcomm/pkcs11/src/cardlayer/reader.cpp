@@ -201,7 +201,8 @@ namespace eIDMW
 		{
 			m_oPKCS15.SetCard(m_poCard);
 #ifdef WIN32
-			if ((strstr(m_csReader.c_str(), "SPRx32 USB") != NULL))
+			if ((strstr(m_csReader.c_str(), "SPRx32 USB") !=
+			     NULL))
 			{
 				m_oPinpad.Init(m_poContext, m_poCard->m_hCard, m_csReader, m_poCard->GetPinpadPrefix(), m_poCard->GetIFDVersion());
 			} else
@@ -302,30 +303,6 @@ namespace eIDMW
 
 		return m_oPKCS15.GetCardLabel();
 	}
-
-	void CReader::Lock()
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		return m_poCard->Lock();
-	}
-
-	void CReader::Unlock()
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		return m_poCard->Unlock();
-	}
-
-	/*void CReader::SelectApplication(const CByteArray & oAID)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		return m_poCard->SelectApplication(oAID);
-	}*/
 
 	CByteArray CReader::ReadFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
 	{
@@ -454,14 +431,6 @@ namespace eIDMW
 		}
 	}
 
-/*	CByteArray CReader::SendAPDU(const CByteArray & oCmdAPDU)
-	{
-		if (m_poCard == NULL)
-			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
-
-		return m_poCard->SendAPDU(oCmdAPDU);
-	}*/
-
 	unsigned long CReader::PinCount()
 	{
 		if (m_poCard == NULL)
@@ -517,7 +486,7 @@ namespace eIDMW
 
 		return m_oPKCS15.PrivKeyCount();
 	}
-	
+
 	tPrivKey CReader::GetPrivKey(unsigned long ulIndex)
 	{
 		if (m_poCard == NULL)
@@ -533,7 +502,7 @@ namespace eIDMW
 
 		return m_oPKCS15.GetPrivKeyByID(ulID);
 	}
-	
+
 	PinUsage CReader::GetPinUsage(const tPin & pin)
 	{
 		if (m_poCard == NULL)
@@ -553,7 +522,7 @@ namespace eIDMW
 				return PIN_USG_UNKNOWN;
 		}
 	}
-	
+
 	unsigned int CReader::GetPrivKeySize()
 	{
 		if (m_poCard == NULL)
@@ -561,7 +530,7 @@ namespace eIDMW
 
 		return m_poCard->GetPrivKeySize();
 	}
-	
+
 	unsigned char CReader::GetAppletVersion()
 	{
 		if (m_poCard == NULL)
