@@ -119,7 +119,7 @@ public:
 		/* Sign data. If necessary, a PIN will be asked */
 		CByteArray Sign(const tPrivKey & key, unsigned long algo, const CByteArray & oData);
 
-		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
+		//CByteArray SendAPDU(const CByteArray & oCmdAPDU);
 
 		//--- P15 functions
 		unsigned long PinCount();
@@ -156,7 +156,6 @@ private:
 		CReader(const CReader & oReader);
 		CReader & operator =(const CReader & oReader);
 
-		bool m_bIgnoreRemoval;
 #ifdef WIN32
 #pragma warning(push)
 #pragma warning(disable:4251)	// these strings do not need a dll interface
