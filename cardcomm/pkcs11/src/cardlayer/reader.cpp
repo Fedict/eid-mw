@@ -248,6 +248,14 @@ namespace eIDMW
 		}
 	}
 
+	CCard* CReader::GetCard(void)
+	{
+		if (m_poCard == NULL)
+			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
+
+		return m_poCard;
+	}
+	/*
 	CByteArray CReader::GetATR()
 	{
 		if (m_poCard == NULL)
@@ -279,7 +287,7 @@ namespace eIDMW
 
 		return m_poCard->GetInfo();
 	}
-
+	*/
 	std::string CReader::GetSerialNr()
 	{
 		if (m_poCard == NULL)
@@ -295,7 +303,7 @@ namespace eIDMW
 			return m_oPKCS15.GetSerialNr();
 		}
 	}
-
+	
 	std::string CReader::GetCardLabel()
 	{
 		if (m_poCard == NULL)
@@ -336,7 +344,7 @@ namespace eIDMW
 				throw CMWEXCEPTION(EIDMW_ERR_CMD_NOT_ALLOWED);
 		}
 	}
-
+	/*
 	unsigned long CReader::PinStatus(const tPin & Pin)
 	{
 		if (m_poCard == NULL)
@@ -354,7 +362,7 @@ namespace eIDMW
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
 
 		return m_poCard->PinCmd(operation, Pin, csPin1, csPin2, ulRemaining);
-	}
+	}*/
 
 	unsigned long CReader::GetSupportedAlgorithms()
 	{
@@ -430,7 +438,7 @@ namespace eIDMW
 				throw CMWEXCEPTION(EIDMW_ERR_CHECK);
 		}
 	}
-
+	
 	unsigned long CReader::PinCount()
 	{
 		if (m_poCard == NULL)
@@ -522,7 +530,7 @@ namespace eIDMW
 				return PIN_USG_UNKNOWN;
 		}
 	}
-
+	/*
 	unsigned int CReader::GetPrivKeySize()
 	{
 		if (m_poCard == NULL)
@@ -538,5 +546,5 @@ namespace eIDMW
 
 		return m_poCard->GetAppletVersion();
 	}
-
+	*/
 }

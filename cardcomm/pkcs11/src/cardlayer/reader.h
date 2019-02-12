@@ -23,12 +23,12 @@
 #include "pkcs15.h"
 #include "pinpad.h"
 #include "common/hash.h"
+#include "card.h"
 
 namespace eIDMW
 {
 
 	class CCardLayer;
-	class CCard;
 
 	class CReader
 	{
@@ -42,6 +42,8 @@ public:
 
 	/** Returns true is ulState indicates that a card is present, false otherwise. */
 		static bool CardPresent(unsigned long ulState);
+
+		CCard* GetCard(void);
 
 	/**
 	 * Get the status w.r.t. a card being present in the reader
@@ -73,15 +75,15 @@ public:
 	/**
 	 * Returns the ATR of the card that is currently present.
 	 */
-		CByteArray GetATR();
+	//	CByteArray GetATR();
 
-		bool IsPinpadReader();
+	//	bool IsPinpadReader();
 
-		tCardType GetCardType();
+	//	tCardType GetCardType();
 		/* Return card-specific info.
 		 * E.g. for the BeID card, this will return the result
 		 * of the "Get Card Data" command (unsigned) */
-		CByteArray GetInfo();
+	//	CByteArray GetInfo();
 
 		std::string GetSerialNr();
 		std::string GetCardLabel();
@@ -98,17 +100,17 @@ public:
 
 		/* Return the remaining PIN attempts;
 		 * returns PIN_STATUS_UNKNOWN if this info isn't available */
-		unsigned long PinStatus(const tPin & Pin);
-		bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1, const std::string & csPin2, unsigned long &ulRemaining);
+	//	unsigned long PinStatus(const tPin & Pin);
+	//	bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1, const std::string & csPin2, unsigned long &ulRemaining);
 
 	/** Returns the OR-ing of all supported crypto algorithms */
 		unsigned long GetSupportedAlgorithms();
 
 	/** Returns the key size of the RSA key on the card */
-		unsigned int GetPrivKeySize();
+	//	unsigned int GetPrivKeySize();
 
 	/** Returns the applet version of the card */
-		unsigned char GetAppletVersion();
+	//	unsigned char GetAppletVersion();
 
 		/* Sign data. If necessary, a PIN will be asked */
 		CByteArray Sign(const tPrivKey & key, unsigned long algo, const CByteArray & oData);

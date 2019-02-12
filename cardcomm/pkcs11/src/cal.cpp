@@ -316,18 +316,18 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 		// For BE eID cards, the serial nr. is 32 hex chars long,
 		// and the first one are the same for all cards
 		CReader & oReader = oCardLayer->getReader(reader);
-		std::string oSerialNr = oReader.GetSerialNr();
+		CCard* poCard = oReader.GetCard();
+
+		std::string oSerialNr = poCard->GetSerialNr();
 		size_t serialNrLen = oSerialNr.size();
 		size_t snoffset = serialNrLen > 16 ? serialNrLen - 16 : 0;
 		size_t snlen = serialNrLen - snoffset > 16 ? 16 : serialNrLen - snoffset;
 		//printf("off = %d, len = %d\n", snoffset, snlen);
-		strcpy_n(pInfo->serialNumber, oSerialNr.c_str() + snoffset,
-			 snlen, ' ');
-		strcpy_n(pInfo->label, oReader.GetCardLabel().c_str(), 32,
-			 ' ');
-		if (oReader.IsPinpadReader())
+		strcpy_n(pInfo->serialNumber, oSerialNr.c_str() + snoffset, snlen, ' ');
+		strcpy_n(pInfo->label, oReader.GetCardLabel().c_str(), 32,  ' ');
+		if (poCard->IsPinpadReader())
 			pInfo->flags = CKF_PROTECTED_AUTHENTICATION_PATH;
-		pInfo->firmwareVersion.major = oReader.GetAppletVersion();
+		pInfo->firmwareVersion.major = poCard->GetAppletVersion();
 	}
 	catch(CMWException &e)
 	{
@@ -636,17 +636,14 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
 
 				if (pSlot == NULL)
 				{
-					log_trace(WHERE,
-						  "E: Invalid slot(%d)",
-						  hSlot);
+					log_trace(WHERE, "E: Invalid slot(%d)", hSlot);
 					return (CKR_SLOT_ID_INVALID);
 				}
 				std::string szReader = pSlot->name;
 
-				CReader & oReader =
-					oCardLayer->getReader(szReader);
-				pInfo->ulMinKeySize = pInfo->ulMaxKeySize =
-					(CK_ULONG) oReader.GetPrivKeySize();
+				CReader & oReader = oCardLayer->getReader(szReader);
+				CCard* poCard = oReader.GetCard();
+				pInfo->ulMinKeySize = pInfo->ulMaxKeySize = (CK_ULONG)poCard->GetPrivKeySize();
 			}
 			catch(CMWException &e)
 			{
@@ -655,8 +652,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
 			}
 			catch( ...)
 			{
-				log_trace(WHERE,
-					  "E: unknown exception thrown");
+				log_trace(WHERE, "E: unknown exception thrown");
 				return (CKR_FUNCTION_FAILED);
 			}
 		} else
@@ -1035,11 +1031,12 @@ CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 
 	try
 	{
-		CReader & oReader = oCardLayer->getReader(szReader);
+		CReader& oReader = oCardLayer->getReader(szReader);
+		CCard* poCard = oReader.GetCard();
+
 		tPin tpin = oReader.GetPin(ulPinIdx);
 
-		if (!oReader.
-		    PinCmd(PIN_OP_VERIFY, tpin, csPin, "", ulRemaining))
+		if (!poCard->PinCmd(PIN_OP_VERIFY, tpin, csPin, "", ulRemaining))
 		{
 			if (ulRemaining == 0)
 				ret = CKR_PIN_LOCKED;
@@ -1080,10 +1077,12 @@ CK_RV cal_logout(CK_SLOT_ID hSlot)
 	{
 		std::string szReader = pSlot->name;
 		CReader &oReader = oCardLayer->getReader(szReader);
+		CCard* poCard = oReader.GetCard();
+
 		tPin tpin;
 		unsigned long ulRemaining = 0;
 
-		if (!oReader.PinCmd(PIN_OP_LOGOFF, tpin, "", "", ulRemaining))
+		if (!poCard->PinCmd(PIN_OP_LOGOFF, tpin, "", "", ulRemaining))
 		{
 			//can only get here if we're not a BEID card
 			log_trace(WHERE, "E: PIN_OP_LOGOFF failed");
@@ -1128,6 +1127,7 @@ CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
 		std::string szReader = pSlot->name;
 
 		CReader & oReader = oCardLayer->getReader(szReader);
+		CCard* poCard = oReader.GetCard();
 
 		if (oldpin != NULL)
 		{
@@ -1141,8 +1141,7 @@ CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
 
 		tPin tpin = oReader.GetPin(0);
 
-		if (!oReader.
-		    PinCmd(PIN_OP_CHANGE, tpin, csPin, csNewPin, ulRemaining))
+		if (!(poCard->PinCmd(PIN_OP_CHANGE, tpin, csPin, csNewPin, ulRemaining)))
 		{
 			if (ulRemaining == 0)
 				ret = CKR_PIN_LOCKED;
@@ -1198,9 +1197,11 @@ CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 	szReader = pSlot->name;
 	try
 	{
-		CReader & oReader = oCardLayer->getReader(szReader);
-		oATR = oReader.GetATR();
-		oCardData = oReader.GetInfo();
+		CReader& oReader = oCardLayer->getReader(szReader);
+		CCard* poCard = oReader.GetCard();
+
+		oATR = poCard->GetATR();
+		oCardData = poCard->GetInfo();
 
 		plabel = BEID_LABEL_ATR;
 		ret = p11_add_slot_ID_object(pSlot, ID_DATA,
@@ -2419,12 +2420,13 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 	{
 		std::string reader = pSlot->name;
 		CReader & oReader = oCardLayer->getReader(reader);
+		CCard* poCard = oReader.GetCard();
 
 		*pStatus = cal_map_status(oReader.Status(true, bPresenceOnly ? true : false));
 		//we get an error thrown here when the cardobject has not been created yet
 		if ( (*pStatus == P11_CARD_INSERTED) || (*pStatus == P11_CARD_STILL_PRESENT)  || (*pStatus == P11_CARD_OTHER) )
 		{
-			if (!bPresenceOnly && oReader.GetCardType() == CARD_UNKNOWN)
+			if (!bPresenceOnly && (poCard->GetType() == CARD_UNKNOWN))
 			{
 				return (CKR_TOKEN_NOT_RECOGNIZED);
 			}

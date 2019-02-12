@@ -100,7 +100,7 @@ namespace eIDMW
 		return theReadersInfo;
 	}
 
-	CReader & CCardLayer::getReader(const std::string & csReaderName)
+	CReader& CCardLayer::getReader(const std::string & csReaderName)
 	{
 		// Do an SCardEstablishContext() if not done yet
 		m_oContext.m_oPCSC.EstablishContext();
