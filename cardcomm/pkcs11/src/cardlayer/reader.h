@@ -35,9 +35,7 @@ namespace eIDMW
 public:
 		~CReader(void);
 
-	/**
-	 * Returns the reader name
-	 */
+	/** Returns the reader name */
 		std::string & GetReaderName();
 
 	/** Returns true is ulState indicates that a card is present, false otherwise. */
@@ -61,7 +59,7 @@ public:
 		tCardStatus Status(bool bReconnect = false, bool bPresenceOnly = false);
 
 	/**
-	 * Connect to the card; it's sae to call this function multiple times.
+	 * Connect to the card; it's save to call this function multiple times.
 	 * Returns true if successfully connected, false otherwise (in which case
 	 * no card or an unresponsive card is present).
 	 * NOTE: this method must be called successfully before calling
@@ -72,82 +70,8 @@ public:
 	/** Disconnect from the card; it's safe to call this function multiple times */
 		void Disconnect(tDisconnectMode disconnectMode = DISCONNECT_LEAVE_CARD);
 
-	/**
-	 * Returns the ATR of the card that is currently present.
-	 */
-	//	CByteArray GetATR();
-
-	//	bool IsPinpadReader();
-
-	//	tCardType GetCardType();
-		/* Return card-specific info.
-		 * E.g. for the BeID card, this will return the result
-		 * of the "Get Card Data" command (unsigned) */
-	//	CByteArray GetInfo();
-
-		//std::string GetSerialNr();
-		//std::string GetCardLabel();
-
-		//void SelectApplication(const CByteArray & oAID);
-
-		/* Read the file indicated by 'csPath'.
-		 * This path can be absolute, relative or empty
-		 * (in which case the currenlty selected file is read)
-		 * If too much bytes are specified by ulMaxLen, no
-		 * exception is throw, the function just returns the
-		 * number of bytes that are available. */
-		//CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
-
-		/* Return the remaining PIN attempts;
-		 * returns PIN_STATUS_UNKNOWN if this info isn't available */
-	//	unsigned long PinStatus(const tPin & Pin);
-	//	bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1, const std::string & csPin2, unsigned long &ulRemaining);
-
-	/** Returns the OR-ing of all supported crypto algorithms */
-	//	unsigned long GetSupportedAlgorithms();
-
-	/** Returns the key size of the RSA key on the card */
-	//	unsigned int GetPrivKeySize();
-
-	/** Returns the applet version of the card */
-	//	unsigned char GetAppletVersion();
-
-		/* Sign data. If necessary, a PIN will be asked */
-		//CByteArray Sign(const tPrivKey & key, unsigned long algo, const CByteArray & oData);
-
-		//CByteArray SendAPDU(const CByteArray & oCmdAPDU);
-
-		//--- P15 functions
-		//unsigned long PinCount();
-
-    /** ulIndex ranges from 0 to PinCount() - 1 */
-		//tPin GetPin(unsigned long ulIndex);
-
-	/** If bValid == false, then no PIN with this ID was found */
-		//tPin GetPinByID(unsigned long ulID);
-
-		//unsigned long CertCount();
-
-    /** ulIndex ranges from 0 to CertCount() - 1 */
-		//tCert GetCert(unsigned long ulIndex);
-
-	/** If bValid == false, then no PIN with this ID was found */
-		//tCert GetCertByID(unsigned long ulID);
-
-		//unsigned long PrivKeyCount();
-
-    /** ulIndex ranges from 0 to PrivKeyCount() - 1 */
-		//tPrivKey GetPrivKey(unsigned long ulIndex);
-
-	/** If bValid == false, then no PIN with this ID was found */
-		//tPrivKey GetPrivKeyByID(unsigned long ulID);
-
-	/** Returns a card-independent way to identify a PIN */
-		//PinUsage GetPinUsage(const tPin & pin);
-
 private:
-		CReader(const std::string & csReader,
-			      CContext * poContext);
+		CReader(const std::string & csReader, CContext * poContext);
 		// No copies allowed
 		CReader(const CReader & oReader);
 		CReader & operator =(const CReader & oReader);
