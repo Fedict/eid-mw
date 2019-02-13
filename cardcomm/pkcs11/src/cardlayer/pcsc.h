@@ -101,7 +101,7 @@ namespace eIDMW
 	{
 public:
 		CPCSC(void);
-		    ~CPCSC(void);
+		~CPCSC(void);
 
 		void EstablishContext();
 
@@ -115,28 +115,15 @@ public:
 	 */
 		CByteArray ListReaders();
 
-	/** Returns true if something changed */
-//		bool GetStatusChange(unsigned long ulTimeout, tReaderInfo * pReaderInfos, unsigned long ulReaderCount);
-
 		//created a new function for pkcs11, as we don't want to change the CSP's behaviour
 		//this is temporary, pkcs11 will move away from using this cardlayer
-		long GetTheStatusChange(unsigned long ulTimeout,
-					SCARD_READERSTATEA * txReaderStates,
-					unsigned long ulReaderCount);
-
-		//checks if the pcsc service is running
-		//long PCSCServiceRunning(bool* pRunning);
-
-		//attempt to start the pcsc service is if ain't running yet
-		//void StartPCSCService();
+		long GetTheStatusChange(unsigned long ulTimeout, SCARD_READERSTATEA * txReaderStates, unsigned long ulReaderCount);
 
 		bool Status(const std::string & csReader);
 
-		SCARDHANDLE Connect(const std::string & csReader,
-				    unsigned long ulShareMode = SCARD_SHARE_SHARED,
+		SCARDHANDLE Connect(const std::string & csReader, unsigned long ulShareMode = SCARD_SHARE_SHARED,
 				    unsigned long ulPreferredProtocols = SCARD_PROTOCOL_T0 );
-		void Disconnect(SCARDHANDLE hCard,
-				tDisconnectMode disconnectMode);
+		void Disconnect(SCARDHANDLE hCard, tDisconnectMode disconnectMode);
 
 		CByteArray GetATR(SCARDHANDLE hCard);
 		CByteArray GetIFDVersion(SCARDHANDLE hCard);
@@ -148,15 +135,9 @@ public:
 	 */
 		bool Status(SCARDHANDLE hCard);
 
-		CByteArray Transmit(SCARDHANDLE hCard,
-				    const CByteArray & oCmdAPDU,
-				    long *plRetVal, void *pSendPci =
-				    NULL, void *pRecvPci = NULL);
+		CByteArray Transmit(SCARDHANDLE hCard, const CByteArray & oCmdAPDU, long *plRetVal, void *pSendPci = NULL, void *pRecvPci = NULL);
 		void Recover(SCARDHANDLE hCard, unsigned long *pulLockCount);
-		CByteArray Control(SCARDHANDLE hCard, unsigned long ulControl,
-				   const CByteArray & oCmd,
-				   unsigned long ulMaxResponseSize =
-				   CTRL_BUF_LEN);
+		CByteArray Control(SCARDHANDLE hCard, unsigned long ulControl, const CByteArray & oCmd, unsigned long ulMaxResponseSize = CTRL_BUF_LEN);
 
 		void BeginTransaction(SCARDHANDLE hCard);
 		void EndTransaction(SCARDHANDLE hCard);
