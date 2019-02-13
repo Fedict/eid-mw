@@ -37,7 +37,7 @@
 #include "common/util.h"
 #include "pinpad.h"
 #include "dialogs/dialogs.h"
-
+#include "pkcs15.h"
 
 #include <stddef.h>
 #include <stdint.h>
@@ -125,6 +125,42 @@ namespace eIDMW
 
 		CByteArray GetSerialNrBytes();
 
+		std::string GetCardLabel();
+
+		/* Read the file indicated by 'csPath'.
+		 * This path can be absolute, relative or empty
+		* (in which case the currenlty selected file is read)
+		* If too much bytes are specified by ulMaxLen, no
+		* exception is throw, the function just returns the
+		* number of bytes that are available. */
+		CByteArray ReadCardFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
+
+
+		//--- P15 functions
+		unsigned long PinCount();
+
+		/** ulIndex ranges from 0 to PinCount() - 1 */
+		tPin GetPin(unsigned long ulIndex);
+
+		/** If bValid == false, then no PIN with this ID was found */
+		tPin GetPinByID(unsigned long ulID);
+
+		unsigned long CertCount();
+
+		/** ulIndex ranges from 0 to CertCount() - 1 */
+		tCert GetCert(unsigned long ulIndex);
+
+		/** If bValid == false, then no PIN with this ID was found */
+		tCert GetCertByID(unsigned long ulID);
+
+		unsigned long PrivKeyCount();
+
+		/** ulIndex ranges from 0 to PrivKeyCount() - 1 */
+		tPrivKey GetPrivKey(unsigned long ulIndex);
+
+		/** If bValid == false, then no PIN with this ID was found */
+		tPrivKey GetPrivKeyByID(unsigned long ulID);
+
 		/** Return the output of the GET_CARD_DATA command to
 		the eID card (or nothing if it's not an eID card) */
 		/** Returns 3 bytes:
@@ -209,6 +245,8 @@ namespace eIDMW
 		// No copies allowed
 		CCard(const CCard & oCard);
 		CCard & operator =(const CCard & oCard);
+
+		CPKCS15 m_oPKCS15;
 
 		//TODO: waiting to be cleaned up (aka removed)
 		bool PinCmd_2(tPinOperation operation, const tPin & Pin, const std::string & csPin1, const std::string & csPin2,

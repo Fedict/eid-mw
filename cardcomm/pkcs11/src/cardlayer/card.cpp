@@ -47,7 +47,7 @@ namespace eIDMW
 {
 
 	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
-	  : m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0),
+	  : m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0), m_oPKCS15(),
 	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinCount(BEID_PIN_COUNT_1), m_ucAppletVersion(0), m_ul6CDelay(0), m_ucCLA(0)
 	{
 		try
@@ -80,6 +80,7 @@ namespace eIDMW
 			{
 				m_ul6CDelay = 50;
 			}
+			m_oPKCS15.SetCard(this);
 		}
 		catch (CMWException &e)
 		{
@@ -107,6 +108,7 @@ namespace eIDMW
 
 			m_hCard = 0;
 			m_poContext->m_oPCSC.Disconnect(hTemp, disconnectMode);
+			m_oPKCS15.Clear(NULL);
 		}
 	}
 
@@ -139,6 +141,88 @@ namespace eIDMW
 		}
 
 		return m_csSerialNr;
+	}
+
+	std::string CCard::GetCardLabel()
+	{
+		return m_oPKCS15.GetCardLabel();
+	}
+
+	CByteArray CCard::ReadCardFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
+	{
+
+		try
+		{
+			return ReadFile(csPath, ulOffset, ulMaxLen);
+		}
+		catch (const CNotAuthenticatedException & e)
+		{
+			// A PIN is needed to read -> ask the correct PIN and do a verification
+			unsigned long ulRemaining;
+
+			//the reference for the PINreadef is 0x05
+			tPin pin = m_oPKCS15.GetPinByRef(0x05);
+
+			(void)e.GetError();
+
+			if (pin.bValid)
+			{
+				if (PinCmd(PIN_OP_VERIFY, pin, "", "", ulRemaining, NULL))
+				{
+					return ReadFile(csPath, ulOffset, ulMaxLen);
+				}
+				else {
+					throw CMWEXCEPTION(ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
+				}
+			}
+			else
+				throw CMWEXCEPTION(EIDMW_ERR_CMD_NOT_ALLOWED);
+		}
+	}
+
+	unsigned long CCard::PinCount()
+	{
+		return m_oPKCS15.PinCount();
+	}
+
+	tPin CCard::GetPin(unsigned long ulIndex)
+	{
+		return m_oPKCS15.GetPin(ulIndex);
+	}
+
+	tPin CCard::GetPinByID(unsigned long ulID)
+	{
+		return m_oPKCS15.GetPinByID(ulID);
+	}
+
+	unsigned long CCard::CertCount()
+	{
+		return m_oPKCS15.CertCount();
+	}
+
+	tCert CCard::GetCert(unsigned long ulIndex)
+	{
+		return m_oPKCS15.GetCert(ulIndex);
+	}
+
+	tCert CCard::GetCertByID(unsigned long ulID)
+	{
+		return m_oPKCS15.GetCertByID(ulID);
+	}
+
+	unsigned long CCard::PrivKeyCount()
+	{
+		return m_oPKCS15.PrivKeyCount();
+	}
+
+	tPrivKey CCard::GetPrivKey(unsigned long ulIndex)
+	{
+		return m_oPKCS15.GetPrivKey(ulIndex);
+	}
+
+	tPrivKey CCard::GetPrivKeyByID(unsigned long ulID)
+	{
+		return m_oPKCS15.GetPrivKeyByID(ulID);
 	}
 
 	void CCard::Lock()

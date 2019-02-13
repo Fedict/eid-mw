@@ -324,7 +324,7 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 		size_t snlen = serialNrLen - snoffset > 16 ? 16 : serialNrLen - snoffset;
 		//printf("off = %d, len = %d\n", snoffset, snlen);
 		strcpy_n(pInfo->serialNumber, oSerialNr.c_str() + snoffset, snlen, ' ');
-		strcpy_n(pInfo->label, oReader.GetCardLabel().c_str(), 32,  ' ');
+		strcpy_n(pInfo->label, poCard->GetCardLabel().c_str(), 32,  ' ');
 		if (poCard->IsPinpadReader())
 			pInfo->flags = CKF_PROTECTED_AUTHENTICATION_PATH;
 		pInfo->firmwareVersion.major = poCard->GetAppletVersion();
@@ -794,16 +794,15 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 	try
 	{
 		CReader & oReader = oCardLayer->getReader(szReader);
+		CCard* poCard = oReader.GetCard();
 
 		/* add all certificate objects from card */
-		for (certCounter = 0; certCounter < oReader.CertCount();
+		for (certCounter = 0; certCounter < poCard->CertCount();
 		     certCounter++)
 		{
-			CertId = (CK_ULONG) oReader.GetCert(certCounter).ulID;
+			CertId = (CK_ULONG)poCard->GetCert(certCounter).ulID;
 			//      sprintf_s(clabel,sizeof(clabel), "Certificate %d (%s)", i+1, oReader.GetCert(i).csLabel.c_str());
-			sprintf_s(clabel, sizeof(clabel), "%s",
-				  oReader.GetCert(certCounter).csLabel.
-				  c_str());
+			sprintf_s(clabel, sizeof(clabel), "%s", poCard->GetCert(certCounter).csLabel.c_str());
 
 			ret = p11_add_slot_object(pSlot, CERTIFICATE,
 						  sizeof(CERTIFICATE) /
@@ -833,7 +832,7 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 
 			//only add keys that have a matching cert
 			for (keyCounter = 0;
-			     keyCounter < oReader.PrivKeyCount();
+			     keyCounter < poCard->PrivKeyCount();
 			     keyCounter++)
 			{
 
@@ -841,7 +840,7 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 				/* Private key */
 
 				/***************/
-				tPrivKey key = oReader.GetPrivKey(keyCounter);
+				tPrivKey key = poCard->GetPrivKey(keyCounter);
 
 				KeyId = (CK_ULONG) key.ulID;
 
@@ -1034,7 +1033,7 @@ CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 		CReader& oReader = oCardLayer->getReader(szReader);
 		CCard* poCard = oReader.GetCard();
 
-		tPin tpin = oReader.GetPin(ulPinIdx);
+		tPin tpin = poCard->GetPin(ulPinIdx);
 
 		if (!poCard->PinCmd(PIN_OP_VERIFY, tpin, csPin, "", ulRemaining))
 		{
@@ -1139,7 +1138,7 @@ CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
 		}
 		unsigned long ulRemaining = 0;
 
-		tPin tpin = oReader.GetPin(0);
+		tPin tpin = poCard->GetPin(0);
 
 		if (!(poCard->PinCmd(PIN_OP_CHANGE, tpin, csPin, csNewPin, ulRemaining)))
 		{
@@ -1609,11 +1608,12 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 	try
 	{
 		CReader & oReader = oCardLayer->getReader(szReader);
+		CCard* poCard = oReader.GetCard();
 		switch (dataType)
 		{
 			case CACHED_DATA_TYPE_ALL_DATA:
 			case CACHED_DATA_TYPE_ID:
-				oFileData = oReader.ReadFile(BEID_FILE_ID);
+				oFileData = poCard->ReadCardFile(BEID_FILE_ID);
 
 //				dataSize = fread((void *)buffer,1,4096, BEIDfile);
 //				fclose(BEIDfile);
@@ -1676,8 +1676,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				}
 				/* Falls through */
 			case CACHED_DATA_TYPE_ADDRESS:
-				oFileData =
-					oReader.ReadFile(BEID_FILE_ADDRESS);
+				oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS);
 				plabel = BEID_LABEL_ADDRESS_FILE;
 				pobjectID = BEID_OBJECTID_ADDRESS;
 				ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA,
@@ -1713,7 +1712,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 			case CACHED_DATA_TYPE_PHOTO:
 				plabel = BEID_LABEL_PHOTO;
 				pobjectID = BEID_OBJECTID_PHOTO;
-				oFileData = oReader.ReadFile(BEID_FILE_PHOTO);
+				oFileData = poCard->ReadCardFile(BEID_FILE_PHOTO);
 				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
 							     sizeof(ID_DATA) /
 							     sizeof
@@ -1744,8 +1743,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				}
 				/* Falls through */
 			case CACHED_DATA_TYPE_RNCERT:
-				oFileData =
-					oReader.ReadFile(BEID_FILE_CERT_RRN);
+				oFileData = poCard->ReadCardFile(BEID_FILE_CERT_RRN);
 				plabel = BEID_LABEL_CERT_RN;
 				pobjectID = BEID_OBJECTID_RNCERT;
 				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
@@ -1779,8 +1777,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				/* Falls through */
 			case CACHED_DATA_TYPE_SIGN_DATA_FILE:
 				plabel = BEID_LABEL_SGN_RN;
-				oFileData =
-					oReader.ReadFile(BEID_FILE_ID_SIGN);
+				oFileData = poCard->ReadCardFile(BEID_FILE_ID_SIGN);
 				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
 							     sizeof(ID_DATA) /
 							     sizeof
@@ -1812,9 +1809,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				/* Falls through */
 			case CACHED_DATA_TYPE_SIGN_ADDRESS_FILE:
 				plabel = BEID_LABEL_SGN_ADDRESS;
-				oFileData =
-					oReader.
-					ReadFile(BEID_FILE_ADDRESS_SIGN);
+				oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS_SIGN);
 				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
 							     sizeof(ID_DATA) /
 							     sizeof
@@ -1944,12 +1939,13 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 		try
 		{
 			CReader & oReader = oCardLayer->getReader(szReader);
+			CCard* poCard = oReader.GetCard();
 
-			cert = oReader.GetCertByID(*pID);
+			cert = poCard->GetCertByID(*pID);
 
 			//bValid duidt aan if cert met deze ID
 			if (cert.bValid)
-				oCertData = oReader.ReadFile(cert.csPath);
+				oCertData = poCard->ReadCardFile(cert.csPath);
 			else
 			{
 				return (CKR_DEVICE_ERROR);
@@ -2011,7 +2007,7 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 
 			pCertObject->state = P11_CACHED;
 
-			key = oReader.GetPrivKeyByID(*pID);
+			key = poCard->GetPrivKeyByID(*pID);
 
 			if (pPrivKeyObject != NULL)
 			{
@@ -2257,7 +2253,8 @@ CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData, unsigned char *in,
 	try
 	{
 		CReader & oReader = oCardLayer->getReader(szReader);
-		tPrivKey key = oReader.GetPrivKeyByID(pSignData->id);
+		CCard* poCard = oReader.GetCard();
+		tPrivKey key = poCard->GetPrivKeyByID(pSignData->id);
 
 		switch (pSignData->mechanism)
 		{

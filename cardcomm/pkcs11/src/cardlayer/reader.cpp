@@ -73,7 +73,7 @@ namespace eIDMW
 		0x04, 0x14
 	};
 
-	CReader::CReader(const std::string & csReader, CContext * poContext):m_poCard(NULL),m_oPKCS15()
+	CReader::CReader(const std::string & csReader, CContext * poContext):m_poCard(NULL)
 	{
 		m_csReader = csReader;
 		m_wsReader = utilStringWiden(csReader);
@@ -199,7 +199,7 @@ namespace eIDMW
 		m_poCard = CardConnect(m_csReader, m_poContext, &m_oPinpad);
 		if (m_poCard != NULL)
 		{
-			m_oPKCS15.SetCard(m_poCard);
+			
 #ifdef WIN32
 			if ((strstr(m_csReader.c_str(), "SPRx32 USB") !=
 			     NULL))
@@ -220,8 +220,6 @@ namespace eIDMW
 
 	void CReader::Disconnect(tDisconnectMode disconnectMode)
 	{
-		m_oPKCS15.Clear(NULL);
-
 		if (m_poCard != NULL)
 		{
 			// Strange behaviour with Ctrl-C:
@@ -287,7 +285,7 @@ namespace eIDMW
 
 		return m_poCard->GetInfo();
 	}
-	*/
+	
 	std::string CReader::GetSerialNr()
 	{
 		if (m_poCard == NULL)
@@ -344,7 +342,7 @@ namespace eIDMW
 				throw CMWEXCEPTION(EIDMW_ERR_CMD_NOT_ALLOWED);
 		}
 	}
-	/*
+	
 	unsigned long CReader::PinStatus(const tPin & Pin)
 	{
 		if (m_poCard == NULL)
@@ -393,7 +391,7 @@ namespace eIDMW
 		unsigned long ulSupportedAlgos = m_poCard->GetSupportedAlgorithms();
 
 		if (algo & ulSupportedAlgos)
-			return m_poCard->Sign(key, GetPinByID(key.ulAuthID), algo, oData);
+			return m_poCard->Sign(key, m_poCard->GetPinByID(key.ulAuthID), algo, oData);
 		else
 		{
 			CByteArray oAID_Data;
@@ -414,7 +412,7 @@ namespace eIDMW
 
 			if (ulSupportedAlgos & SIGN_ALGO_RSA_PKCS)
 			{
-				return m_poCard->Sign(key, GetPinByID(key.ulAuthID), SIGN_ALGO_RSA_PKCS, oAID_Data);
+				return m_poCard->Sign(key, m_poCard->GetPinByID(key.ulAuthID), SIGN_ALGO_RSA_PKCS, oAID_Data);
 			} else if (ulSupportedAlgos & SIGN_ALGO_RSA_RAW)
 			{
 				if (oAID_Data.Size() > key.ulKeyLenBytes - 11)
@@ -433,12 +431,12 @@ namespace eIDMW
 				oRawData.Append(0x00);
 				oRawData.Append(oAID_Data);
 
-				return m_poCard->Sign(key, GetPinByID(key.ulID), SIGN_ALGO_RSA_RAW, oData);
+				return m_poCard->Sign(key, m_poCard->GetPinByID(key.ulID), SIGN_ALGO_RSA_RAW, oData);
 			} else
 				throw CMWEXCEPTION(EIDMW_ERR_CHECK);
 		}
 	}
-	
+/*
 	unsigned long CReader::PinCount()
 	{
 		if (m_poCard == NULL)
@@ -510,7 +508,7 @@ namespace eIDMW
 
 		return m_oPKCS15.GetPrivKeyByID(ulID);
 	}
-
+	*/
 	PinUsage CReader::GetPinUsage(const tPin & pin)
 	{
 		if (m_poCard == NULL)
