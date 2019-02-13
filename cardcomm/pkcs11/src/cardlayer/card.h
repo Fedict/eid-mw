@@ -89,6 +89,12 @@ namespace eIDMW
 			an std::string, and cache it for further usage */
 		std::string GetSerialNr();
 
+		/** Returns the OR-ing of all supported crypto algorithms */
+		unsigned long GetCardSupportedAlgorithms();
+
+		/* Sign data. If necessary, a PIN will be asked */
+		CByteArray CardSign(const tPrivKey & key, unsigned long algo, const CByteArray & oData);
+
 		/** Start a transaction on the card. Can be called
 			recursively, maintains a counter */
 		void Lock();

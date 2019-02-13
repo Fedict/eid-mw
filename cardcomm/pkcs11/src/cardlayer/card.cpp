@@ -45,6 +45,53 @@ static const unsigned char BELPIC_AID[] =
 
 namespace eIDMW
 {
+	//the DigestInfo Values:
+	static const unsigned char MD5_AID[] = {
+		0x30, 0x20,
+		0x30, 0x0c,
+		0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x05,
+		0x05, 0x00,
+		0x04, 0x10
+	};
+
+	static const unsigned char SHA1_AID[] = {
+		0x30, 0x21,
+		0x30, 0x09,
+		0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a,
+		0x05, 0x00,
+		0x04, 0x14
+	};
+	static const unsigned char SHA256_AID[] = {
+		0x30, 0x31,
+		0x30, 0x0d,
+		0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02,
+			0x01,
+		0x05, 0x00,
+		0x04, 0x20
+	};
+	static const unsigned char SHA384_AID[] = {
+		0x30, 0x41,
+		0x30, 0x0d,
+		0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02,
+			0x02,
+		0x05, 0x00,
+		0x04, 0x30
+	};
+	static const unsigned char SHA512_AID[] = {
+		0x30, 0x51,
+		0x30, 0x0d,
+		0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02,
+			0x03,
+		0x05, 0x00,
+		0x04, 0x40
+	};
+	static const unsigned char RIPEMD160_AID[] = {
+		0x30, 0x21,
+		0x30, 0x09,
+		0x06, 0x05, 0x2B, 0x24, 0x03, 0x02, 0x01,
+		0x05, 0x00,
+		0x04, 0x14
+	};
 
 	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
 	  : m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0), m_oPKCS15(),
@@ -223,6 +270,76 @@ namespace eIDMW
 	tPrivKey CCard::GetPrivKeyByID(unsigned long ulID)
 	{
 		return m_oPKCS15.GetPrivKeyByID(ulID);
+	}
+
+	unsigned long CCard::GetCardSupportedAlgorithms()
+	{
+		unsigned long algos = GetSupportedAlgorithms();
+
+		if (algos & SIGN_ALGO_RSA_RAW)
+			algos |= SIGN_ALGO_RSA_PKCS;
+		if (algos & SIGN_ALGO_RSA_PKCS)
+			algos |= (SIGN_ALGO_MD5_RSA_PKCS |
+				SIGN_ALGO_SHA1_RSA_PKCS |
+				SIGN_ALGO_SHA256_RSA_PKCS |
+				SIGN_ALGO_SHA384_RSA_PKCS |
+				SIGN_ALGO_SHA512_RSA_PKCS |
+				SIGN_ALGO_RIPEMD160_RSA_PKCS);
+
+		return algos;
+	}
+
+	CByteArray CCard::CardSign(const tPrivKey & key, unsigned long algo, const CByteArray & oData)
+	{
+		unsigned long ulSupportedAlgos = GetSupportedAlgorithms();
+
+		if (algo & ulSupportedAlgos)
+			return Sign(key, GetPinByID(key.ulAuthID), algo, oData);
+		else
+		{
+			CByteArray oAID_Data;
+
+			if (algo & SIGN_ALGO_MD5_RSA_PKCS)
+				oAID_Data.Append(MD5_AID, sizeof(MD5_AID));
+			else if (algo & SIGN_ALGO_SHA1_RSA_PKCS)
+				oAID_Data.Append(SHA1_AID, sizeof(SHA1_AID));
+			else if (algo & SIGN_ALGO_SHA256_RSA_PKCS)
+				oAID_Data.Append(SHA256_AID, sizeof(SHA256_AID));
+			else if (algo & SIGN_ALGO_SHA384_RSA_PKCS)
+				oAID_Data.Append(SHA384_AID, sizeof(SHA384_AID));
+			else if (algo & SIGN_ALGO_SHA512_RSA_PKCS)
+				oAID_Data.Append(SHA512_AID, sizeof(SHA512_AID));
+			else if (algo & SIGN_ALGO_RIPEMD160_RSA_PKCS)
+				oAID_Data.Append(RIPEMD160_AID, sizeof(RIPEMD160_AID));
+			oAID_Data.Append(oData);
+
+			if (ulSupportedAlgos & SIGN_ALGO_RSA_PKCS)
+			{
+				return Sign(key, GetPinByID(key.ulAuthID), SIGN_ALGO_RSA_PKCS, oAID_Data);
+			}
+			else if (ulSupportedAlgos & SIGN_ALGO_RSA_RAW)
+			{
+				if (oAID_Data.Size() > key.ulKeyLenBytes - 11)
+				{
+					throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
+				}
+
+				CByteArray oRawData(NULL, 0, key.ulKeyLenBytes);
+
+				oRawData.Append(0x00);
+				oRawData.Append(0x01);
+				for (unsigned long i = 2; i < key.ulKeyLenBytes - oAID_Data.Size() - 1; i++)
+				{
+					oRawData.Append(0xFF);
+				}
+				oRawData.Append(0x00);
+				oRawData.Append(oAID_Data);
+
+				return Sign(key, GetPinByID(key.ulID), SIGN_ALGO_RSA_RAW, oData);
+			}
+			else
+				throw CMWEXCEPTION(EIDMW_ERR_CHECK);
+		}
 	}
 
 	void CCard::Lock()

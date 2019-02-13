@@ -414,7 +414,8 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 	try
 	{
 		CReader & oReader = oCardLayer->getReader(szReader);
-		algos = oReader.GetSupportedAlgorithms();
+		CCard* poCard = oReader.GetCard();
+		algos = poCard->GetCardSupportedAlgorithms();
 	}
 	catch(CMWException &e)
 	{
@@ -2308,7 +2309,7 @@ CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData, unsigned char *in,
 				goto cleanup;
 		}
 
-		oDataOut = oReader.Sign(key, algo, oData);
+		oDataOut = poCard->CardSign(key, algo, oData);
 	}
 	catch(CMWException & e)
 	{

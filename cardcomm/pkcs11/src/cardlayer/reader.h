@@ -21,7 +21,7 @@
 #pragma once
 
 //#include "pkcs15.h"
-#include "pinpad.h"
+//#include "pinpad.h"
 #include "common/hash.h"
 #include "card.h"
 
@@ -104,7 +104,7 @@ public:
 	//	bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1, const std::string & csPin2, unsigned long &ulRemaining);
 
 	/** Returns the OR-ing of all supported crypto algorithms */
-		unsigned long GetSupportedAlgorithms();
+	//	unsigned long GetSupportedAlgorithms();
 
 	/** Returns the key size of the RSA key on the card */
 	//	unsigned int GetPrivKeySize();
@@ -113,7 +113,7 @@ public:
 	//	unsigned char GetAppletVersion();
 
 		/* Sign data. If necessary, a PIN will be asked */
-		CByteArray Sign(const tPrivKey & key, unsigned long algo, const CByteArray & oData);
+		//CByteArray Sign(const tPrivKey & key, unsigned long algo, const CByteArray & oData);
 
 		//CByteArray SendAPDU(const CByteArray & oCmdAPDU);
 
