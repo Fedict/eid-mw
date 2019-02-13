@@ -509,7 +509,7 @@ namespace eIDMW
 		return m_oPKCS15.GetPrivKeyByID(ulID);
 	}
 	*/
-	PinUsage CReader::GetPinUsage(const tPin & pin)
+	/*PinUsage CReader::GetPinUsage(const tPin & pin)
 	{
 		if (m_poCard == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
@@ -527,7 +527,7 @@ namespace eIDMW
 			default:
 				return PIN_USG_UNKNOWN;
 		}
-	}
+	}*/
 	/*
 	unsigned int CReader::GetPrivKeySize()
 	{

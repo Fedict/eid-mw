@@ -143,7 +143,7 @@ public:
 		//tPrivKey GetPrivKeyByID(unsigned long ulID);
 
 	/** Returns a card-independent way to identify a PIN */
-		PinUsage GetPinUsage(const tPin & pin);
+		//PinUsage GetPinUsage(const tPin & pin);
 
 private:
 		CReader(const std::string & csReader,
