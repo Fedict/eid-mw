@@ -279,7 +279,6 @@ namespace eIDMW
 	}
 
 
-
 	void CPCSC::Recover(SCARDHANDLE hCard, unsigned long *pulLockCount)
 	{
 		//try to recover when the card is not responding (properly) anymore

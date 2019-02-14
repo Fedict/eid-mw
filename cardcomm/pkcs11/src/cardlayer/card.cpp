@@ -472,6 +472,7 @@ namespace eIDMW
 
 		CByteArray oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmdAPDU, &lRetVal);
 
+		//try to recover from communication issues with the card
 		if (m_cardType == CARD_BEID && (lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED))
 		{
 			m_poContext->m_oPCSC.Recover(m_hCard, &m_ulLockCount);
@@ -479,15 +480,15 @@ namespace eIDMW
 			CByteArray oData;
 			CByteArray oCmd(40);
 			const unsigned char Cmd[] =
-				{ 0x00, 0xA4, 0x04, 0x00, 0x0F, 0xA0, 0x00,
-				  0x00, 0x00, 0x30, 0x29, 0x05, 0x70, 0x00, 0xAD, 0x13,
-				  0x10, 0x01, 0x01, 0xFF };
+			{ 0x00, 0xA4, 0x04, 0x00, 0x0F, 0xA0, 0x00,
+			  0x00, 0x00, 0x30, 0x29, 0x05, 0x70, 0x00, 0xAD, 0x13,
+			  0x10, 0x01, 0x01, 0xFF };
 			oCmd.Append(Cmd, sizeof(Cmd));
 
 			oData = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd, &lRetVal);
 
 			if ((oData.Size() == 2) && ((oData.GetByte(0) == 0x61)
-			     || ((oData.GetByte(0) == 0x90) && (oData.GetByte(1) == 0x00))))
+				|| ((oData.GetByte(0) == 0x90) && (oData.GetByte(1) == 0x00))))
 			{
 				//try again, now that the card has been reset
 				oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmdAPDU, &lRetVal);
@@ -497,9 +498,19 @@ namespace eIDMW
 		if (oResp.Size() == 2)
 		{
 			// If SW1 = 0x61, then SW2 indicates the maximum value to be given to the
-			// short Le  field (length of extra/ data still available) in a GET RESPONSE.
+			// short Le  field (length of data still available) in a GET RESPONSE.
 			if (oResp.GetByte(0) == 0x61)
-				return SendAPDU(0xC0, 0x00, 0x00, oResp.GetByte(1));	// Get Response
+			{
+				//create the GET RESPONSE command
+				CByteArray oCommand(10);
+				const unsigned char Command[] = { 0x00, 0xC0, 0x00, 0x00 };
+				oCommand.Append(Command, sizeof(Command));
+
+				//add the correct length
+				oCommand.Append(oResp.GetByte(1));
+
+				return SendAPDU(oCommand);	// Get Response
+			}
 
 			// If SW1 = 0x6c, then SW2 indicates the value to be given to the short
 			// Le field (exact length of requested data) when re-issuing the same command.
@@ -512,14 +523,16 @@ namespace eIDMW
 				oNewCmdAPDU.Append(pucCmd, 4);
 				oNewCmdAPDU.Append(oResp.GetByte(1));
 				if (ulCmdLen > 5)
+				{
 					oNewCmdAPDU.Append(pucCmd + 5, ulCmdLen - 5);
-
+				}
 				// for cards that may need a delay (e.g. Belpic V1)
 				unsigned long ulDelay = Get6CDelay();
 
 				if (ulDelay != 0)
+				{
 					CThread::SleepMillisecs(ulDelay);
-
+				}
 				return SendAPDU(oNewCmdAPDU);
 			}
 		}
@@ -892,7 +905,7 @@ namespace eIDMW
 		}
 		CAutoLock autolock(this);
 
-		// For V1.7 cards, the Belpic dir has to be selected
+		// For V1.7 cards, the Belpic dir (3F00DF00) has to be selected
 		if (m_ucAppletVersion >= 0x17)
 		{
 			SelectFile(key.csPath);
@@ -1309,83 +1322,51 @@ namespace eIDMW
 	 * The Belpic card doesn't support select by path (only
 	 * select by File ID or by AID) , so we make a loop with
 	 * 'select by file' commands.
-	 * E.g. if path = AAAABBBCCC the we do
+	 * E.g. if path = AAAABBBBCCCC the we do
 	 *   Select(AAAA)
 	 *   Select(BBBB)
 	 *   Select(CCCC)
-	 * If the the path contains the Belpic DF (DF00) or
-	 * the ID DF (DF01) then we select by AID without
-	 * first selected the MF (3F00) even if it is specified
-	 * because selection by AID always works.
 	 */
 	CByteArray CCard::SelectByPath(const std::string & csPath)
 	{
-		unsigned long ulOffset = 0;
+		CByteArray oResp = NULL;
+		unsigned long ulOffset;
 
-		tBelpicDF belpicDF = getDF(csPath, ulOffset);
-		if (belpicDF == UNKNOWN_DF)
+		//two ANSI chars per byte value that will by send to the card
+		//ulPathLen is the path length in bytes, not in ANSI chars
+		unsigned long ulPathLen = (unsigned long)csPath.size() / 2;
+
+		//Do a loop of "Select File by file ID (DF or EF)" commands
+		//ulOffset is the offset in bytes, not in ANSI chars
+		for (ulOffset = 0; ulOffset < ulPathLen; ulOffset += 2)
 		{
-			// 1. Do a loop of "Select File by file ID" commands
-			unsigned long ulPathLen = (unsigned long)csPath.size() / 2;
+			CByteArray oCmd(6);
 
-			for (ulOffset = 0; ulOffset < ulPathLen; ulOffset += 2)
-			{
-				CByteArray oPath(ulPathLen);
-				oPath.Append(Hex2Byte(csPath, ulOffset));
-				oPath.Append(Hex2Byte(csPath, ulOffset + 1));
-				CByteArray oResp =
-					SendAPDU(0xA4, 0x02, 0x0C, oPath);
-				unsigned long ulSW12 = getSW12(oResp);
+			//select file by relative path APDU
+			const unsigned char Cmd[] = { 0x00, 0xA4, 0x02, 0x0C };
+			oCmd.Append(Cmd, sizeof(Cmd));
 
-				if ((ulSW12 == 0x6A82 || ulSW12 == 0x6A86) && m_selectAppletMode == TRY_SELECT_APPLET)
-				{
-					// The file still wasn't found, so let's first try to select the applet
-					if (SelectApplet())
-					{
-						m_selectAppletMode = ALW_SELECT_APPLET;
-						oResp = SendAPDU(0xA4, 0x02, 0x0C, oPath);
-					}
-				}
-				getSW12(oResp, 0x9000);
-			}
-		}
-		else
-		{
-			// 2.a Select the BELPIC DF or the ID DF by AID
-			CByteArray oAID(20);
+			//add the correct path
+			oCmd.Append(Hex2Byte(csPath, ulOffset));
+			oCmd.Append(Hex2Byte(csPath, ulOffset + 1));
 
-			//              if (belpicDF == BELPIC_DF)
-			oAID.Append(BELPIC_AID, sizeof(BELPIC_AID));
-
-			//              else
-			//                      oAID.Append(ID_AID, sizeof(ID_AID));
-			CByteArray oResp = SendAPDU(0xA4, 0x04, 0x0C, oAID);
+			//send the APDU
+			oResp = SendAPDU(oCmd);
 			unsigned long ulSW12 = getSW12(oResp);
 
+
+			// in case of file not found, or wrong P1/P2 parameter
+			//try to select the applet and try again
 			if ((ulSW12 == 0x6A82 || ulSW12 == 0x6A86) && m_selectAppletMode == TRY_SELECT_APPLET)
 			{
 				// The file still wasn't found, so let's first try to select the applet
 				if (SelectApplet())
 				{
 					m_selectAppletMode = ALW_SELECT_APPLET;
-					oResp = SendAPDU(0xA4, 0x04, 0x0C, oAID);
+					oResp = SendAPDU(oCmd);
 				}
 			}
 			getSW12(oResp, 0x9000);
-
-			// 2.b Select the file inside the DF, if needed
-			ulOffset += 4;
-			if (ulOffset + 4 == csPath.size())
-			{
-				CByteArray oPath(2);
-				oPath.Append(Hex2Byte(csPath, ulOffset / 2));
-				oPath.Append(Hex2Byte(csPath, ulOffset / 2 + 1));
-				CByteArray oResp = SendAPDU(0xA4, 0x02, 0x0C, oPath);
-				unsigned long ulSW12 = getSW12(oResp);
-
-				if (ulSW12 != 0x9000)
-					throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
-			}
 		}
 
 		// Normally we should put here the FCI, but since Belpic cards
