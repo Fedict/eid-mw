@@ -652,8 +652,6 @@ namespace eIDMW
 	{
 		CCard * poCard = NULL;
 
-		unsigned long ulLockCount = 1;
-
 		try
 		{
 			bool bIsBeidCard = BeidCardSelectApplet(poContext, hCard);
@@ -1329,7 +1327,7 @@ namespace eIDMW
 	 */
 	CByteArray CCard::SelectByPath(const std::string & csPath)
 	{
-		CByteArray oResp = NULL;
+		CByteArray oResp;
 		unsigned long ulOffset;
 
 		//two ANSI chars per byte value that will by send to the card
