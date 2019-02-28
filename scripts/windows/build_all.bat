@@ -116,9 +116,9 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 :: create the NSIS plugins
 :: =========================
 @echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2017\beidplugins.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2017\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2017\beidplugins.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2017\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2017\beidplugins.sln"
 
 :: copy the NSIS plugins to NSIS default plugin folder
 :: nsis installer is updated to look into the build folder
