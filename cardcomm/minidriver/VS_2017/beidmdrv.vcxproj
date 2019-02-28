@@ -69,16 +69,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\VS_2017\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\VS_2017\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\VS_2017\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\VS_2017\Binaries\$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)_$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid$(ProjectName)32</TargetName>
@@ -107,7 +107,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winscard.lib;Crypt32.lib;Advapi32.lib</AdditionalDependencies>
-      <OutputFile>..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)32D.dll</OutputFile>
+      <OutputFile>..\..\VS_2017\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)32D.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -150,7 +150,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winscard.lib;Crypt32.lib;Advapi32.lib</AdditionalDependencies>
-      <OutputFile>..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)64D.dll</OutputFile>
+      <OutputFile>..\..\VS_2017\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)64D.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
@@ -194,7 +194,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winscard.lib;Crypt32.lib;Advapi32.lib</AdditionalDependencies>
-      <OutputFile>..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)32.dll</OutputFile>
+      <OutputFile>..\..\VS_2017\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)32.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -236,7 +236,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winscard.lib;Crypt32.lib;Advapi32.lib</AdditionalDependencies>
-      <OutputFile>..\..\VS_2015\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)64.dll</OutputFile>
+      <OutputFile>..\..\VS_2017\Binaries\$(Platform)_$(Configuration)\beid$(ProjectName)64.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ModuleDefinitionFile>..\src\res\beidmdrv.def</ModuleDefinitionFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
