@@ -18,9 +18,9 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 :: ===========
 
 ::@echo [INFO] Sign the pkcs11_ff dll, 32bit
-::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2015\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 ::@echo [INFO] Sign the pkcs11_ff dll, 64bit
-::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2015\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2017\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 
 
 :: create the MSI installers
