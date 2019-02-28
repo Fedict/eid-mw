@@ -102,7 +102,7 @@
       <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
         <File Id="eidviewer.exe" Name="eID Viewer.exe" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe" />
 		<File Id="eIDViewerBackend" Name="eIDViewerBackend.dll" KeyPath="no" Source="..\..\..\plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer\bin\Release\eIDViewerBackend.dll" />	
-		<File Id="beid_ff_pkcs11" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />			
+		<File Id="beid_ff_pkcs11" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />			
 	  </Component>
     </DirectoryRef>
 	
