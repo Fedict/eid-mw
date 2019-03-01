@@ -21,6 +21,7 @@
 #pragma once
 
 #include <string>
+#include <cstring>
 #include "pcsc.h"
 
 namespace eIDMW
