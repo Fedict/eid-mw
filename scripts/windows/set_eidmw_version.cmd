@@ -7,6 +7,7 @@
 @SET BASE_VERSION3=14
 @SET YEAR=2019
 
+
 @IF EXIST "C:\Program Files (x86)\Git\bin\git.exe" (
 	set GIT_PATH="C:\Program Files (x86)\Git\bin\git.exe"
 	) ELSE (
@@ -16,6 +17,11 @@
 	)	
 @FOR /F "tokens=1" %%i in ('%GIT_PATH% rev-list --count HEAD') do @SET EIDMW_REVISION=%%i
 
+@IF DEFINED EIDMW_REVISION GOTO set_revisions
+:: try if git.exe is in PATH env var
+@FOR /F "tokens=1" %%i in ('"git.exe" rev-list --count HEAD') do @SET EIDMW_REVISION=%%i
+
+:set_revisions
 @IF NOT DEFINED EIDMW_REVISION GOTO set_zero_revision
 @IF "%EIDMW_REVISION%"=="" GOTO set_zero_revision
 @IF EIDMW_REVISION==exported GOTO set_zero_revision
