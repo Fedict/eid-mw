@@ -2419,9 +2419,10 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 		std::string reader = pSlot->name;
 		CReader & oReader = oCardLayer->getReader(reader);
 		CCard* poCard = oReader.GetCard();
+		//we get an error thrown here when the cardobject has not been created yet
 
 		*pStatus = cal_map_status(oReader.Status(true, bPresenceOnly ? true : false));
-		//we get an error thrown here when the cardobject has not been created yet
+		
 		if ( (*pStatus == P11_CARD_INSERTED) || (*pStatus == P11_CARD_STILL_PRESENT)  || (*pStatus == P11_CARD_OTHER) )
 		{
 			if (!bPresenceOnly && (poCard->GetType() == CARD_UNKNOWN))
@@ -2446,17 +2447,14 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 			p11_invalidate_sessions(hSlot, *pStatus);
 
 			//if Present, other => init objects
-			if ((*pStatus == P11_CARD_OTHER)
-			    || (*pStatus == P11_CARD_INSERTED))
+			if ((*pStatus == P11_CARD_OTHER) || (*pStatus == P11_CARD_INSERTED))
 			{
 				//(re)initialize objects
 #ifdef PKCS11_FF
 				ret = cal_init_objects(pSlot);
 				if (ret != CKR_OK)
 				{
-					log_trace(WHERE,
-						  "E: cal_init_objects() returned %s",
-						  log_map_error(ret));
+					log_trace(WHERE, "E: cal_init_objects() returned %s", log_map_error(ret));
 				}
 #endif
 			}
@@ -2465,7 +2463,14 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 	}
 	catch(CMWException &e)
 	{
-		return (cal_translate_error(WHERE, e.GetError()));
+		ret = cal_translate_error(WHERE, e.GetError());
+		//token not present is a status, not an error
+		if (ret == CKR_TOKEN_NOT_PRESENT)
+		{
+			*pStatus = P11_CARD_NOT_PRESENT;
+			ret = CKR_OK;
+		}
+		return ret;
 	}
 	catch( ...)
 	{
