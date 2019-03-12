@@ -18,7 +18,9 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
+#include <stdlib.h>
 #include "readersinfo.h"
+
 
 namespace eIDMW
 {
