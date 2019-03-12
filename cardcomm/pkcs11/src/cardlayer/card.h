@@ -119,12 +119,12 @@ namespace eIDMW
 		/** Send a case 1 or case 2 commands (no data is sent to the card),
 			if you know it's case 1 then preferably set bDataIsReturned
 			to false. */
-		CByteArray SendAPDU(unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, unsigned long ulOutLen);
+		CByteArray SendAPDU(unsigned char ucCLA, unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, unsigned long ulOutLen);
 
 		/** Send a case 3 or case 4 commands (data is sent to the card),
 		if you know it's case 1 then preferably set bDataIsReturned
 		to false */
-		CByteArray SendAPDU(unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, const CByteArray & oData);
+		CByteArray SendAPDU(unsigned char ucCLA, unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, const CByteArray & oData);
 		CByteArray SendAPDU(const CByteArray & oCmdAPDU);
 
 		SCARDHANDLE m_hCard;
@@ -244,8 +244,6 @@ namespace eIDMW
 #ifdef WIN32
 #pragma warning(pop)
 #endif
-
-		unsigned char m_ucCLA;
 
 	private:
 		// No copies allowed

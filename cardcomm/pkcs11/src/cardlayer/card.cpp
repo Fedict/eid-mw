@@ -95,13 +95,13 @@ namespace eIDMW
 
 	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
 	  : m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0), m_oPKCS15(),
-	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinCount(BEID_PIN_COUNT_1), m_ucAppletVersion(0), m_ul6CDelay(0), m_ucCLA(0)
+	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinCount(BEID_PIN_COUNT_1), m_ucAppletVersion(0), m_ul6CDelay(0)
 	{
 		try
 		{
-			m_ucCLA = 0x80;
-			m_oCardData = SendAPDU(0xE4, 0x00, 0x00, 0x1C);
-			m_ucCLA = 0x00;
+			//Get Card Data (compatible with all applets)
+			m_oCardData = SendAPDU(0x80, 0xE4, 0x00, 0x00, 0x1C);
+
 			m_ulRemaining[0] = 1;
 			if (m_oCardData.Size() < 23)
 			{
@@ -112,9 +112,7 @@ namespace eIDMW
 			m_ucAppletVersion = m_oCardData.GetByte(21);
 			if (m_ucAppletVersion >= 0x18) {
 				// Use applet 1.8-specific extended card data
-				m_ucCLA = 0x80;
-				m_oCardData = SendAPDU(0xE4, 0x00, 0x01, 0x1F);
-				m_ucCLA = 0x00;
+				m_oCardData = SendAPDU(0x80,0xE4, 0x00, 0x01, 0x1F);
 				m_oCardData.Chop(2);
 				m_ulRemaining[0] = m_oCardData.GetByte(28);
 				m_ulRemaining[1] = m_oCardData.GetByte(29);
@@ -540,12 +538,12 @@ namespace eIDMW
 		return oResp;
 	}
 
-	CByteArray CCard::SendAPDU(unsigned char ucINS, unsigned char ucP1,
+	CByteArray CCard::SendAPDU(unsigned char ucCLA, unsigned char ucINS, unsigned char ucP1,
 				   unsigned char ucP2, unsigned long ulOutLen)
 	{
 		CByteArray oAPDU(5);
 
-		oAPDU.Append(m_ucCLA);
+		oAPDU.Append(ucCLA);
 		oAPDU.Append(ucINS);
 		oAPDU.Append(ucP1);
 		oAPDU.Append(ucP2);
@@ -554,11 +552,11 @@ namespace eIDMW
 		return SendAPDU(oAPDU);
 	}
 
-	CByteArray CCard::SendAPDU(unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, const CByteArray & oData)
+	CByteArray CCard::SendAPDU(unsigned char ucCLA, unsigned char ucINS, unsigned char ucP1, unsigned char ucP2, const CByteArray & oData)
 	{
 		CByteArray oAPDU(5 + oData.Size());
 
-		oAPDU.Append(m_ucCLA);
+		oAPDU.Append(ucCLA);
 		oAPDU.Append(ucINS);
 		oAPDU.Append(ucP1);
 		oAPDU.Append(ucP2);
@@ -695,15 +693,12 @@ namespace eIDMW
 			return PIN_STATUS_UNKNOWN;
 		try
 		{
-			m_ucCLA = 0x80;
-			CByteArray oResp = SendAPDU(0xEA, 0x00, (unsigned char)Pin.ulPinRef, 1);
-			m_ucCLA = 0x00;
+			CByteArray oResp = SendAPDU(0x80, 0xEA, 0x00, (unsigned char)Pin.ulPinRef, 1);
 			getSW12(oResp, 0x9000);
 			return oResp.GetByte(0);
 		}
 		catch (...)
 		{
-			m_ucCLA = 0x00;
 			throw;
 		}
 	}
@@ -775,11 +770,9 @@ namespace eIDMW
 
 	bool CCard::LogOff(const tPin & Pin)
 	{
-		m_ucCLA = 0x80;
-
 		// No PIN has to be specified
-		CByteArray oResp = SendAPDU(0xE6, 0x00, 0x00, 0);
-		m_ucCLA = 0x00;
+		CByteArray oResp = SendAPDU(0x80, 0xE6, 0x00, 0x00, 0);
+
 		getSW12(oResp, 0x9000);
 		return true;
 	}
@@ -802,30 +795,34 @@ namespace eIDMW
 		}
 		return ulAlgos;
 	}
+//algo only allowed on applets before applet 1.8
+#define ALLOWED_PRE_APPLET18_ONLY if(m_ucAppletVersion >= 0x18) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: RSA algorithms not supported on V1.8+ cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
 
-#define PRE18_ONLY if(m_ucAppletVersion >= 0x18) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: RSA algorithms not supported on V1.8+ cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
-#define POST18_ONLY if(m_ucAppletVersion < 0x18) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: ECDSA algorithms not supported on pre V1.8 cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
-#define EXCL17 if(m_ucAppletVersion != 0x17) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
+//algo only allowed on applets after applet 1.7
+#define ALLOWED_POST_APPLET17_ONLY if(m_ucAppletVersion < 0x18) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: ECDSA algorithms not supported on pre V1.8 cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
+
+//algo only allowed on applet 1.7
+#define ALLOWED_APPLET17_ONLY if(m_ucAppletVersion != 0x17) { MWLOG(LEV_WARN, MOD_CAL, L"MSE SET: PSS not supported on pre V1.7 cards"); throw CMWEXCEPTION(EIDMW_ERR_NOT_SUPPORTED);}
+	
 	void CCard::SetSecurityEnv(const tPrivKey & key, unsigned long algo, unsigned long ulInputLen)
 	{
 		// Data = [04 80 <algoref> 84 <keyref>]  (5 bytes)
 		CByteArray oData(5);
-		oData.Append(0x04);
-		oData.Append(0x80);
+
 		unsigned char ucAlgo;
 
 		switch (algo)
 		{
 			case SIGN_ALGO_RSA_PKCS:
-				PRE18_ONLY;
+				ALLOWED_PRE_APPLET18_ONLY;
 				ucAlgo = 0x01;
 				break;
 			case SIGN_ALGO_SHA1_RSA_PKCS:
-				PRE18_ONLY;
+				ALLOWED_PRE_APPLET18_ONLY;
 				ucAlgo = 0x02;
 				break;
 			case SIGN_ALGO_MD5_RSA_PKCS:
-				PRE18_ONLY;
+				ALLOWED_PRE_APPLET18_ONLY;
 				ucAlgo = 0x04;
 				break;
 			case SIGN_ALGO_SHA256_RSA_PKCS:
@@ -837,54 +834,57 @@ namespace eIDMW
 				ucAlgo = 0x08;
 				break;
 			case SIGN_ALGO_SHA1_RSA_PSS:
-				EXCL17;
+				ALLOWED_APPLET17_ONLY;
 				ucAlgo = 0x10;
 				break;
 			case SIGN_ALGO_SHA256_RSA_PSS:
-				EXCL17
+				ALLOWED_APPLET17_ONLY
 				ucAlgo = 0x20;
 				break;
 			case SIGN_ALGO_SHA256_ECDSA:
-				POST18_ONLY;
+				ALLOWED_POST_APPLET17_ONLY;
 				ucAlgo = 0x01;
 				break;
 			case SIGN_ALGO_SHA384_ECDSA:
-				POST18_ONLY;
+				ALLOWED_POST_APPLET17_ONLY;
 				ucAlgo = 0x02;
 				break;
 			case SIGN_ALGO_SHA512_ECDSA:
-				POST18_ONLY;
+				ALLOWED_POST_APPLET17_ONLY;
 				ucAlgo = 0x04;
 				break;
 			case SIGN_ALGO_SHA3_256_ECDSA:
-				POST18_ONLY;
+				ALLOWED_POST_APPLET17_ONLY;
 				ucAlgo = 0x08;
 				break;
 			case SIGN_ALGO_SHA3_384_ECDSA:
-				POST18_ONLY;
+				ALLOWED_POST_APPLET17_ONLY;
 				ucAlgo = 0x10;
 				break;
 			case SIGN_ALGO_SHA3_512_ECDSA:
-				POST18_ONLY;
+				ALLOWED_POST_APPLET17_ONLY;
 				ucAlgo = 0x20;
 				break;
 			case SIGN_ALGO_ECDSA_RAW:
-				POST18_ONLY;
+				ALLOWED_POST_APPLET17_ONLY;
 				ucAlgo = 0x40;
 				break;
 			default:
 				throw CMWEXCEPTION(EIDMW_ERR_ALGO_BAD);
 		}
+
+		oData.Append(0x04);
+		oData.Append(0x80);
 		oData.Append(ucAlgo);
 		oData.Append(0x84);
 		oData.Append((unsigned char)key.ulKeyRef);
-		CByteArray oResp = SendAPDU(0x22, 0x41, 0xB6, oData);
+		CByteArray oResp = SendAPDU(0x00, 0x22, 0x41, 0xB6, oData);
 		if (ShouldSelectApplet(0x22, getSW12(oResp)))
 		{
 			if (SelectApplet())
 			{
 				m_selectAppletMode = ALW_SELECT_APPLET;
-				oResp = SendAPDU(0x22, 0x41, 0xB6, oData);
+				oResp = SendAPDU(0x00, 0x22, 0x41, 0xB6, oData);
 			}
 		}
 		getSW12(oResp, 0x9000);
@@ -932,7 +932,7 @@ namespace eIDMW
 		}
 
 		// PSO: Compute Digital Signature
-		CByteArray oResp = SendAPDU(0x2A, 0x9E, 0x9A, oData);
+		CByteArray oResp = SendAPDU(0x00, 0x2A, 0x9E, 0x9A, oData);
 		unsigned long ulSW12 = getSW12(oResp);
 
 		if (ulSW12 != 0x9000) {
@@ -1296,7 +1296,7 @@ namespace eIDMW
 			oPath.Append(Hex2Byte(csPath, ulPathLen - 1));
 
 			// Select File
-			oResp = SendAPDU(0xA4, 0x02, ucP2, oPath);
+			oResp = SendAPDU(0x00, 0xA4, 0x02, ucP2, oPath);
 			unsigned long ulSW12 = getSW12(oResp);
 
 			if (ulSW12 == 0x6A82 || ulSW12 == 0x6A86)
@@ -1376,13 +1376,13 @@ namespace eIDMW
 	CByteArray CCard::ReadBinary(unsigned long ulOffset, unsigned long ulLen)
 	{
 		// Read Binary
-		return SendAPDU(0xB0, (unsigned char)(ulOffset / 256), (unsigned char)(ulOffset % 256), (unsigned char)(ulLen));
+		return SendAPDU(0x00, 0xB0, (unsigned char)(ulOffset / 256), (unsigned char)(ulOffset % 256), (unsigned char)(ulLen));
 	}
 
 	CByteArray CCard::UpdateBinary(unsigned long ulOffset, const CByteArray & oData)
 	{
 		// Update Binary
-		return SendAPDU(0xD6, (unsigned char)(ulOffset / 256), (unsigned char)(ulOffset % 256), oData);
+		return SendAPDU(0x00, 0xD6, (unsigned char)(ulOffset / 256), (unsigned char)(ulOffset % 256), oData);
 	}
 
 	DlgPinOperation CCard::PinOperation2Dlg(tPinOperation operation)
@@ -1400,7 +1400,7 @@ namespace eIDMW
 	{
 		CByteArray oCmd(5 + 32);
 
-		oCmd.Append(m_ucCLA);
+		oCmd.Append(0x00);//CLA
 
 		switch (operation)
 		{
