@@ -292,7 +292,7 @@ namespace eIDViewer
             if (foundEmbeddedRootCA == false)
             {
                 rootViewModel.CertTrust = "Unknow RootCA";
-                this.WriteLog("Unknow RootCA", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                this.WriteLog("Unknow RootCA \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                 SetCertificateIcon(rootViewModel, eid_cert_status.EID_CERT_STATUS_INVALID);
             }
             else
@@ -519,9 +519,11 @@ namespace eIDViewer
             if(IsVerifiedDataOK() == false)
             {
                 ResetDataValues();
+                eid_data_ready = false;
                 eIDViewer.NativeMethods.MarkCardInvalid();
                 return;
             }
+            eid_data_ready = true;
             if (validateAlways == true)
             {
                 VerifyAllCertificates();
@@ -763,6 +765,12 @@ namespace eIDViewer
             }
         }
 
+        private void ForeignersFieldPresent()
+        {
+            foreigner_fields_height = 26;
+            foreigner_fields_height_double = 42;
+        }
+
         public void StoreStringData(string label, string data)
         {
             progress_info = "reading data";
@@ -784,7 +792,10 @@ namespace eIDViewer
             else if (String.Equals(label, "nationality", StringComparison.Ordinal))
             { nationality = data; }
             else if (String.Equals(label, "nobility", StringComparison.Ordinal))
-            { nobility = data; }
+            {
+                if (data != "")
+                    { nobility = data; }
+            }
             else if (String.Equals(label, "special_status", StringComparison.Ordinal))
             { special_status = data; }
             else if (String.Equals(label, "address_street_and_number", StringComparison.Ordinal))
@@ -807,27 +818,25 @@ namespace eIDViewer
             { document_type = data; }
             else if (String.Equals(label, "date_and_country_of_protection", StringComparison.Ordinal))
             { date_and_country_of_protection = data;
-              foreigner_fields_height = 26; }
+                ForeignersFieldPresent(); }
             else if (String.Equals(label, "special_organization", StringComparison.Ordinal))
             { special_organisation = data;
-              foreigner_fields_height = 26; }         
-            else if (String.Equals(label, "duplicata", StringComparison.Ordinal)){
-                duplicate = data;
-                foreigner_fields_height = 26; }
-            else if (String.Equals(label, "work_permit_mention", StringComparison.Ordinal)) {
-                work_permit_mention = data;
-                foreigner_fields_height = 26; }
-            else if (String.Equals(label, "employers_vat_number1", StringComparison.Ordinal)) {
-                employers_vat_number1 = data;
-                foreigner_fields_height = 26; }
-            else if (String.Equals(label, "employers_vat_number2", StringComparison.Ordinal)) {
-                employers_vat_number2 = data;
-                foreigner_fields_height = 26; }
+                ForeignersFieldPresent(); }         
+            else if (String.Equals(label, "duplicata", StringComparison.Ordinal))
+            { duplicate = data;
+                ForeignersFieldPresent(); }
+            else if (String.Equals(label, "work_permit_mention", StringComparison.Ordinal))
+            { work_permit_mention = data;
+                ForeignersFieldPresent(); }
+            else if (String.Equals(label, "employers_vat_number1", StringComparison.Ordinal))
+            { employers_vat_number1 = data;
+                ForeignersFieldPresent(); }
+            else if (String.Equals(label, "employers_vat_number2", StringComparison.Ordinal))
+            { employers_vat_number2 = data;
+                ForeignersFieldPresent(); }
             else if (String.Equals(label, "regional_file_number", StringComparison.Ordinal))
-            {
-                regional_file_number = data;
-                foreigner_fields_height = 26;
-            }
+            { regional_file_number = data;
+                ForeignersFieldPresent(); }
         }
 
         private byte[] dataFile;
@@ -928,7 +937,7 @@ namespace eIDViewer
                 else if (String.Equals(label, "member_of_family", StringComparison.Ordinal))
                 {
                     member_of_family = true;
-                    foreigner_fields_height = 26;
+                    ForeignersFieldPresent();
                 }
             }
             catch (Exception e)
@@ -1010,8 +1019,8 @@ namespace eIDViewer
             progress = 0;
             HideProgressBar();
             foreigner_fields_height = 0;
+            foreigner_fields_height_double = 0;
             pinop_ready = false;
-            print_enabled = false;
             open_enabled = true;
 
             photo = null;
@@ -1128,6 +1137,17 @@ namespace eIDViewer
             {
                 _eid_data_ready = value;
                 this.NotifyPropertyChanged("eid_data_ready");
+            }
+        }
+
+        private Boolean _eid_read_data_started;
+        public Boolean eid_read_data_started
+        {
+            get { return _eid_read_data_started; }
+            set
+            {
+                _eid_read_data_started = value;
+                this.NotifyPropertyChanged("eid_read_data_started");
             }
         }
 
@@ -1494,6 +1514,17 @@ namespace eIDViewer
             }
         }
 
+        private int _foreigner_fields_height_double;
+        public int foreigner_fields_height_double
+        {
+            get { return _foreigner_fields_height_double; }
+            set
+            {
+                _foreigner_fields_height_double = value;
+                this.NotifyPropertyChanged("foreigner_fields_height_double");
+            }
+        }
+
         private BitmapImage _photo;
         public BitmapImage photo
         {
@@ -1680,17 +1711,6 @@ namespace eIDViewer
             {
                 _pinop_ready = value;
                 this.NotifyPropertyChanged("pinop_ready");
-            }
-        }
-
-        private Boolean _print_enabled = false;
-        public Boolean print_enabled
-        {
-            get { return _print_enabled; }
-            set
-            {
-                _print_enabled = value;
-                this.NotifyPropertyChanged("print_enabled");
             }
         }
 

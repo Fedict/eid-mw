@@ -25,11 +25,16 @@
  */
 
 CK_RV Beidsdk_GetObjectValue(CK_FUNCTION_LIST_PTR pFunctions, CK_SESSION_HANDLE session_handle,CK_CHAR_PTR pName,CK_VOID_PTR *ppValue, CK_ULONG_PTR pvalueLen);
-void Beidsdk_PrintValue(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen);
+void Beidsdk_PrintCharArray(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen);
+void Beidsdk_PrintUTF8String(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen);
 CK_ULONG beidsdk_GetData(void);
 
 int main() {
 	CK_ULONG retval = CKR_OK;
+#ifdef WIN32
+	//we will write in utf-8 to the windows command prompt
+	SetConsoleOutputCP(CP_UTF8);
+#endif
 	retval = beidsdk_GetData();
 
 	printf("Done. Press a key to continue...\n");
@@ -120,21 +125,21 @@ CK_ULONG beidsdk_GetData()
 		//retrieve the card OS version
 		retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pFilename, &pFileValue, &FileValueLen);
 		if(retVal == CKR_OK)
-			Beidsdk_PrintValue(pFilename,(CK_BYTE_PTR)pFileValue, FileValueLen);
+			Beidsdk_PrintCharArray(pFilename,(CK_BYTE_PTR)pFileValue, FileValueLen);
 		else
 			printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
 
 		//retrieve the data of the signature file
 		retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pSignatureFilename, &pSignatureValue, &SignatureValueLen);
 		if(retVal == CKR_OK)
-			Beidsdk_PrintValue(pSignatureFilename,(CK_BYTE_PTR)pSignatureValue, SignatureValueLen);
+			Beidsdk_PrintCharArray(pSignatureFilename,(CK_BYTE_PTR)pSignatureValue, SignatureValueLen);
 		else
 			printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
 
 		//retrieve the lastname
 		retVal = Beidsdk_GetObjectValue(pFunctions, session_handle, pLastname, &pLastnameValue, &LastnameValueLen);
 		if(retVal == CKR_OK)
-			Beidsdk_PrintValue(pLastname,(CK_BYTE_PTR)pLastnameValue, LastnameValueLen);
+			Beidsdk_PrintUTF8String(pLastname,(CK_BYTE_PTR)pLastnameValue, LastnameValueLen);
 		else
 			printf("error 0x%.8x Beidsdk_GetObjectValue\n",retVal);
 
@@ -208,7 +213,7 @@ finalize:
 	return retVal;
 }
 
-void Beidsdk_PrintValue(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen)
+void Beidsdk_PrintCharArray(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen)
 {
 	unsigned long counter = 0;
 	printf("%s:\n\n",pName);
@@ -219,9 +224,21 @@ void Beidsdk_PrintValue(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen
 			if( isprint(*(pValue+counter)) )
 				printf("%c", *(pValue+counter));
 			else
-				printf(".", *(pValue+counter));
+				printf(".");
 			counter++;
 		}
 	}
+	printf("\n");
+}
+
+void Beidsdk_PrintUTF8String(CK_CHAR_PTR pName, CK_BYTE_PTR pValue, CK_ULONG valueLen)
+{
+	CK_BYTE_PTR pValueNullTerminated = malloc(valueLen + 1);
+	memcpy_s(pValueNullTerminated, sizeof(CK_BYTE)*(valueLen+1), pValue, sizeof(CK_BYTE)*valueLen);
+	pValueNullTerminated[valueLen] = 0;
+
+	unsigned long counter = 0;
+	printf("%s:\n", pName);
+	printf("%s\n", pValueNullTerminated);
 	printf("\n");
 }

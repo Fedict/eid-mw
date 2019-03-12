@@ -21,6 +21,7 @@ static const EID_CHAR* state_to_name(enum eid_vwr_states state) {
 	STATE_NAME(TOKEN_WAIT);
 	STATE_NAME(TOKEN_ID);
 	STATE_NAME(TOKEN_CERTS);
+	STATE_NAME(TOKEN_IDLE);
 	STATE_NAME(TOKEN_PINOP);
 	STATE_NAME(TOKEN_SERIALIZE);
 	STATE_NAME(TOKEN_ERROR);
@@ -46,6 +47,8 @@ static const EID_CHAR* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(TOKEN_INSERTED);
 	EVENT_NAME(TOKEN_REMOVED);
 	EVENT_NAME(READ_READY);
+	EVENT_NAME(PINOP_READY);
+	EVENT_NAME(SERIALIZE_READY);
 	EVENT_NAME(DO_PINOP);
 	EVENT_NAME(STATE_ERROR);
 	EVENT_NAME(DATA_INVALID);
@@ -102,7 +105,7 @@ static int do_initialize(void*data) {
 }
 
 /* Called whenever we enter the STATE_NO_TOKEN state. */
-static int source_none(void*data) {
+static int source_none(void*data EIDV_UNUSED) {
 	be_newsource(EID_VWR_SRC_NONE);
 
 	return 0;
@@ -115,6 +118,11 @@ static int enter_token_wait(void* data) {
 		sm_handle_event_onthread(EVENT_DATA_INVALID, NULL);
 		return 0;
 	}
+	return eid_vwr_gen_xml(data);
+}
+
+/* called when we enter the FILE_WAIT state. */
+static int enter_file_wait(void* data) {
 	return eid_vwr_gen_xml(data);
 }
 
@@ -149,6 +157,8 @@ void sm_init() {
 	states[STATE_CARD_INVALID].enter = source_none;
 	states[STATE_CARD_INVALID].out[EVENT_TOKEN_REMOVED] = &(states[STATE_READY]);
 
+	states[STATE_TOKEN_ERROR].parent = &(states[STATE_TOKEN]);
+
 	states[STATE_TOKEN_ID].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_ID].enter = eid_vwr_p11_read_id;
 	states[STATE_TOKEN_ID].leave = eid_vwr_p11_finalize_find;
@@ -161,22 +171,23 @@ void sm_init() {
 	states[STATE_TOKEN_CERTS].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
 	states[STATE_TOKEN_CERTS].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
-	states[STATE_TOKEN_PINOP].parent = &(states[STATE_TOKEN]);
-	states[STATE_TOKEN_PINOP].enter = eid_vwr_p11_do_pinop;
-	states[STATE_TOKEN_PINOP].leave = eid_vwr_p11_leave_pinop;
-	states[STATE_TOKEN_PINOP].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
-	states[STATE_TOKEN_PINOP].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_WAIT]);
-
 	states[STATE_TOKEN_WAIT].parent = &(states[STATE_TOKEN]);
 	states[STATE_TOKEN_WAIT].enter = enter_token_wait;
+	states[STATE_TOKEN_WAIT].first_child = &(states[STATE_TOKEN_IDLE]);
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
 	states[STATE_TOKEN_WAIT].out[EVENT_SERIALIZE] = &(states[STATE_TOKEN_SERIALIZE]);
 
-	states[STATE_TOKEN_ERROR].parent = &(states[STATE_TOKEN]);
+	states[STATE_TOKEN_IDLE].parent = &(states[STATE_TOKEN_WAIT]);
 
-	states[STATE_TOKEN_SERIALIZE].parent = &(states[STATE_TOKEN]);
+	states[STATE_TOKEN_PINOP].parent = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_PINOP].enter = eid_vwr_p11_do_pinop;
+	states[STATE_TOKEN_PINOP].leave = eid_vwr_p11_leave_pinop;
+	states[STATE_TOKEN_PINOP].out[EVENT_PINOP_READY] = &(states[STATE_TOKEN_IDLE]);
+	states[STATE_TOKEN_PINOP].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_IDLE]);
+
+	states[STATE_TOKEN_SERIALIZE].parent = &(states[STATE_TOKEN_WAIT]);
 	states[STATE_TOKEN_SERIALIZE].enter = (int(*)(void*))eid_vwr_serialize;
-	states[STATE_TOKEN_SERIALIZE].out[EVENT_READ_READY] = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_SERIALIZE].out[EVENT_SERIALIZE_READY] = &(states[STATE_TOKEN_IDLE]);
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
 
 	states[STATE_NO_TOKEN].parent = &(states[STATE_CALLBACKS]);
@@ -199,6 +210,7 @@ void sm_init() {
 	states[STATE_FILE_READING].out[EVENT_READ_READY] = &(states[STATE_FILE_WAIT]);
 
 	states[STATE_FILE_WAIT].parent = &(states[STATE_FILE]);
+	states[STATE_FILE_WAIT].enter = enter_file_wait;
 
 	curstate = &(states[STATE_LIBOPEN]);
 
@@ -213,8 +225,9 @@ static void parent_enter_recursive(struct state* start, struct state* end, enum 
 		return;
 	}
 	if(start != NULL) {
-		be_log(EID_VWR_LOG_DETAIL, TEXT("Entering state %s (parent)"), state_to_name(start->me));
 		parent_enter_recursive(start->parent, end, e);
+		be_log(EID_VWR_LOG_DETAIL, TEXT("Entering state %s (parent)"), state_to_name(start->me));
+		be_newstate(start->me);
 		if(start->enter != NULL) {
 			if(start->enter(NULL) != 0 && e != EVENT_STATE_ERROR) {
 				sm_handle_event_onthread(EVENT_STATE_ERROR, NULL);
@@ -241,6 +254,12 @@ void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 			thistree = thistree->parent;
 		}
 		if(!thistree) {
+			if (e == EVENT_SERIALIZE)
+			{
+				//UI asked us to write the data to file, but our state has changed so we're no longer
+				//able to do so. Report this to the UI
+				be_log(EID_VWR_LOG_ERROR, TEXT("failed writing card data, current state is %s"), state_to_name(curstate->me));
+			}
 			return; // event is irrelevant for this state
 		}
 		target = thistree->out[e];
@@ -287,11 +306,8 @@ exit_loop:
 			return;
 		}
 	}
-
 	/* Now do the actual state transition */
-	be_log(EID_VWR_LOG_DETAIL, TEXT("Entering state %s (target)"), state_to_name(target->me));
 	hold = curstate = target;
-	be_newstate(curstate->me);
 
 	/* If the target state has parent states that don't share a common
 	 * ancestor with the (previously) current state, call their "enter"
@@ -310,6 +326,10 @@ exit_loop:
 			sm_handle_event_onthread(EVENT_STATE_ERROR, &d);
 		}
 	}
+	/* Now report the actual state transition (after its parent's state entries have been reported)*/
+	be_log(EID_VWR_LOG_DETAIL, TEXT("Entering state %s (target)"), state_to_name(target->me));	
+	be_newstate(curstate->me);
+
 	if(hold != curstate) {
 		be_log(EID_VWR_LOG_DETAIL, TEXT("State transition detected, aborting handling of %s"), event_to_name(e));
 		return;

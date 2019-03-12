@@ -308,7 +308,6 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 	pInfo->firmwareVersion.major = 1;
 	pInfo->firmwareVersion.minor = 0;
 
-	//TODO token recognized  CKR_TOKEN_NOT_RECOGNIZED
 	try
 	{
 		// Take the last 16 hex chars of the serialnr.
@@ -589,8 +588,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
 				return (ret);
 			}
 
-			if ((status == P11_CARD_REMOVED)
-			    || (status == P11_CARD_NOT_PRESENT))
+			if ((status == P11_CARD_REMOVED) || (status == P11_CARD_NOT_PRESENT))
 			{
 				return (CKR_TOKEN_NOT_PRESENT);
 			}
@@ -1028,8 +1026,6 @@ CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 #undef WHERE
 
 
-
-
 #define WHERE "cal_logout()"
 CK_RV cal_logout(CK_SLOT_ID hSlot)
 {
@@ -1042,12 +1038,30 @@ CK_RV cal_logout(CK_SLOT_ID hSlot)
 		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
+	
+	try
+	{
+		std::string szReader = pSlot->name;
+		CReader &oReader = oCardLayer->getReader(szReader);
+		tPin tpin;
+		unsigned long ulRemaining = 0;
 
-	std::string szReader = pSlot->name;
-	//CReader &oReader = oCardLayer->getReader(szReader);
-
-	/*TODO ??? oReader. */
-
+		if (!oReader.PinCmd(PIN_OP_LOGOFF, tpin, "", "", ulRemaining))
+		{
+			//can only get here if we're not a BEID card
+			log_trace(WHERE, "E: PIN_OP_LOGOFF failed");
+			ret = CKR_FUNCTION_FAILED;
+		}
+	}
+	catch (CMWException &e)
+	{
+		return (cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...)
+	{
+		log_trace(WHERE, "E: unkown exception thrown");
+		return (CKR_FUNCTION_FAILED);
+	}
 	return (ret);
 }
 
@@ -2290,7 +2304,7 @@ CK_RV cal_validate_session(P11_SESSION * pSession)
 			case P11_CARD_INSERTED:	//card is inserted (Opensession allready called connect(update) so state PRESENT is not expected anymore)
 			case P11_CARD_NOT_PRESENT:	//card is not present
 			case P11_CARD_REMOVED:	//card is removed
-			case P11_CARD_OTHER:	//other card has been inserted
+			case P11_CARD_OTHER:	//another card has been inserted, replacing the previous one
 			default:
 				//        return (CKR_TOKEN_NOT_PRESENT);
 				return (CKR_DEVICE_REMOVED);
@@ -2356,7 +2370,16 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 	{
 		std::string reader = pSlot->name;
 		CReader & oReader = oCardLayer->getReader(reader);
+
 		*pStatus = cal_map_status(oReader.Status(true));
+		//we get an error thrown here when the cardobject has not been created yet
+		if ( (*pStatus == P11_CARD_INSERTED) || (*pStatus == P11_CARD_STILL_PRESENT)  || (*pStatus == P11_CARD_OTHER) )
+		{
+			if (oReader.GetCardType() == CARD_UNKNOWN)
+			{
+				return (CKR_TOKEN_NOT_RECOGNIZED);
+			}
+		}
 
 		if (*pStatus != P11_CARD_STILL_PRESENT)
 		{
@@ -2388,12 +2411,7 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus)
 				}
 #endif
 			}
-		} else
-		{
-			if (oReader.GetCardType() == CARD_UNKNOWN)
-			{
-				return (CKR_TOKEN_NOT_RECOGNIZED);
-			}
+
 		}
 	}
 	catch(CMWException &e)

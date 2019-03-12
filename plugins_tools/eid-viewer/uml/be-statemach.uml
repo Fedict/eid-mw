@@ -30,10 +30,11 @@ state CALLBACKS {
 
   TOKEN: enter: eid_vwr_p11_open_session\nexit: eid_vwr_p11_close_session
   TOKEN --> NO_TOKEN : TOKEN_REMOVED
-  TOKEN --> CARD_INVALID : DATA_INVALID
+  TOKEN -down-> CARD_INVALID : DATA_INVALID
+' Force the arrow to go down for layout purposes
 
-  CARD_INVALID --> NO_TOKEN : TOKEN_REMOVED
-
+  CARD_INVALID -left-> NO_TOKEN : TOKEN_REMOVED
+' Force the arrow to go up for layout purposes
   state NO_TOKEN {
     state NO_READER
     state READY
@@ -50,8 +51,6 @@ state CALLBACKS {
     state TOKEN_CERTS
     state TOKEN_ERROR
     state TOKEN_WAIT
-    state TOKEN_PINOP
-    state TOKEN_SERIALIZE
 
     [*] --> TOKEN_ID
 
@@ -63,17 +62,26 @@ state CALLBACKS {
     TOKEN_CERTS --> TOKEN_ERROR : STATE_ERROR
     TOKEN_CERTS: enter: eid_vwr_p11_read_certs\nexit:eid_vwr_p11_finalize_find
  
-    TOKEN_WAIT --> TOKEN_PINOP : DO_PINOP
-    TOKEN_WAIT --> TOKEN_SERIALIZE : SERIALIZE
+    state TOKEN_WAIT {
+      state TOKEN_IDLE
+      state TOKEN_PINOP
+      state TOKEN_SERIALIZE
 
-    TOKEN_PINOP --> TOKEN_WAIT : READ_READY
-    TOKEN_PINOP --> TOKEN_WAIT : STATE_ERROR
-    TOKEN_PINOP: enter: eid_vwr_p11_do_pinop\nexit :eid_vwr_p11_leave_pinop
+      [*] --> TOKEN_IDLE
 
-    TOKEN_SERIALIZE --> TOKEN_WAIT : READ_READY
-    TOKEN_SERIALIZE --> TOKEN_ERROR : STATE_ERROR
-    TOKEN_SERIALIZE: enter: eid_vwr_p11_serialize
+      TOKEN_IDLE --> TOKEN_PINOP : eid_vwr_pinop()
+      TOKEN_IDLE --> TOKEN_SERIALIZE : eid_vwr_be_serialize()
+
+      TOKEN_PINOP --> TOKEN_IDLE : PINOP_READY 
+      TOKEN_PINOP --> TOKEN_IDLE : STATE_ERROR
+      TOKEN_PINOP: enter: eid_vwr_p11_do_pinop\nexit :eid_vwr_p11_leave_pinop
+
+      TOKEN_SERIALIZE --> TOKEN_IDLE : SERIALIZE_READY 
+      TOKEN_SERIALIZE --> TOKEN_ERROR : STATE_ERROR
+      TOKEN_SERIALIZE: enter: eid_vwr_p11_serialize
+
+    }  
   }
-}
 
+}
 @enduml

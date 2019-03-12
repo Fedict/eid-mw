@@ -140,7 +140,7 @@ out:
    - If we would want to modify the XML format at some undefined point
      in the future, it is a good idea generally to ensure that we
      already generate new XML data */
-int eid_vwr_gen_xml(void* data) {
+int eid_vwr_gen_xml(void* data EIDV_UNUSED) {
 	xmlTextWriterPtr writer = NULL;
 	int rc;
 	xmlBufferPtr buf;
@@ -186,12 +186,12 @@ int eid_vwr_serialize(void* data) {
 	}
 	fwrite(item->data, item->len, 1, f);
 	rv = fclose(f);
-	sm_handle_event(EVENT_READ_READY, NULL, NULL, NULL);
+	sm_handle_event(EVENT_SERIALIZE_READY, NULL, NULL, NULL);
 	return rv;
 }
 
 /* Read elements according to the description in *element */
-static int read_elements(xmlTextReaderPtr reader, struct element_desc* element) {
+static int read_elements(xmlTextReaderPtr reader, struct element_desc* element EIDV_UNUSED) {
 	int rc;
 	void* val = NULL;
 	while((rc = xmlTextReaderRead(reader)) > 0) {
@@ -275,7 +275,6 @@ int eid_vwr_deserialize(void* data) {
 	 * file "somewhere", in an OS-dependent way. */
 	check_xml(xmlTextReaderSchemaValidate(reader, get_xsdloc()));
 	check_xml(read_elements(reader, toplevel));
-	check_xml(eid_vwr_gen_xml(NULL));
 out:
 	if(rc) {
 		xmlError* err = xmlGetLastError();

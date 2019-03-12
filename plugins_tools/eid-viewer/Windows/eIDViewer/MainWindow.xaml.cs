@@ -28,7 +28,16 @@ namespace eIDViewer
     {
         eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
         private MenuItem LastCardReaderMenuItem = null;
-        
+        public static RoutedCommand SelectGermanCommand = new RoutedCommand();
+        public static RoutedCommand SelectEnglishCommand = new RoutedCommand();
+        public static RoutedCommand SelectFrenchCommand = new RoutedCommand();
+        public static RoutedCommand SelectDutchCommand = new RoutedCommand();
+        public static RoutedCommand SelectOpenCommand = new RoutedCommand();
+        public static RoutedCommand SelectSaveCommand = new RoutedCommand();
+        public static RoutedCommand SelectCloseCommand = new RoutedCommand();
+        public static RoutedCommand SelectPrintCommand = new RoutedCommand();
+        public static RoutedCommand SelectQuitCommand = new RoutedCommand();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -59,7 +68,7 @@ namespace eIDViewer
             }
         }
 
-    void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -240,7 +249,8 @@ namespace eIDViewer
         }
         private void MenuItemSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            //Stream myStream = null;
+            //We allow choosing the file to save to already before the card has been fully read
+            //(for time saving purposes)
             String filename = null;
             SaveFileDialog mySaveFileDialog = new SaveFileDialog();
 
@@ -253,12 +263,19 @@ namespace eIDViewer
                 {
                     if ((filename = mySaveFileDialog.FileName) != null)
                     {
-                        eIDViewer.NativeMethods.SaveXML(filename);
+                        if(theBackendData.eid_data_ready == true)
+                        {
+                            eIDViewer.NativeMethods.SaveXML(filename);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: Data not ready yet, file not saved ");
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: Could not read file from disk. Error message: " + ex.Message);
+                    MessageBox.Show("Error: Could not save file to disk. Error message: " + ex.Message);
                 }
             }
         }
@@ -313,11 +330,10 @@ namespace eIDViewer
             Point printMargin = new Point(capabilities.PageImageableArea.OriginWidth, capabilities.PageImageableArea.OriginHeight);
             Size printSize = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
 
-
-            theBackendData.WriteLog("capabilities.PageImageableArea.OriginWidth = " + capabilities.PageImageableArea.OriginWidth, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
-            theBackendData.WriteLog("capabilities.PageImageableArea.OriginHeight = " + capabilities.PageImageableArea.OriginHeight, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
-            theBackendData.WriteLog("capabilities.PageImageableArea.ExtentWidth = " + capabilities.PageImageableArea.ExtentWidth, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
-            theBackendData.WriteLog("capabilities.PageImageableArea.ExtentHeight = " + capabilities.PageImageableArea.ExtentHeight, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theBackendData.WriteLog("capabilities.PageImageableArea.OriginWidth = " + capabilities.PageImageableArea.OriginWidth + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theBackendData.WriteLog("capabilities.PageImageableArea.OriginHeight = " + capabilities.PageImageableArea.OriginHeight + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theBackendData.WriteLog("capabilities.PageImageableArea.ExtentWidth = " + capabilities.PageImageableArea.ExtentWidth + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+            theBackendData.WriteLog("capabilities.PageImageableArea.ExtentHeight = " + capabilities.PageImageableArea.ExtentHeight + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
 
             //Size printSize = new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight);
             //thePrintWindow.printWindowGrid.Measure(printSize);
@@ -348,7 +364,7 @@ namespace eIDViewer
         {
             if (e.Source.GetType().Name.Equals("Image"))
             {
-                if ((theBackendData.eid_backend_state == eid_vwr_states.STATE_FILE) || (theBackendData.eid_backend_state == eid_vwr_states.STATE_TOKEN_WAIT))
+                if ((theBackendData.eid_backend_state == eid_vwr_states.STATE_FILE_WAIT) || (theBackendData.eid_backend_state == eid_vwr_states.STATE_TOKEN_IDLE))
                 {
                     Image item = (Image)e.Source;
 

@@ -193,7 +193,7 @@ DWORD BeidAuthenticate(PCARD_DATA   pCardData,
    unsigned char     recvbuf[256];
    unsigned long     recvlen   = sizeof(recvbuf);
    BYTE              SW1, SW2;
-   int               i         = 0;
+   unsigned int      i         = 0;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
@@ -268,6 +268,9 @@ DWORD BeidAuthenticate(PCARD_DATA   pCardData,
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+
+   memset(Cmd, 0, uiCmdLg);
+
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
    LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit returncode: [0x%08X]", dwReturn);
@@ -851,7 +854,7 @@ DWORD    BeidChangePIN
    unsigned long     recvlen = sizeof(recvbuf);
    BYTE              SW1, SW2;
 
-   int               i        = 0;
+   unsigned int      i        = 0;
    int               offset   = 0;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
@@ -959,6 +962,9 @@ DWORD    BeidChangePIN
                             &ioRecvPci, 
                             recvbuf, 
                             &recvlen);
+
+   memset(Cmd, 0, uiCmdLg);
+
    SW1 = recvbuf[recvlen-2];
    SW2 = recvbuf[recvlen-1];
    LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
@@ -1836,7 +1842,8 @@ DWORD CCIDgetPPDUFeatures(PFEATURES pFeatures, SCARDHANDLE hCard)
 		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 876", wcslen(L"VASCO DIGIPASS 876")) == 0) ||
 		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"VASCO DIGIPASS 840", wcslen(L"VASCO DIGIPASS 840")) == 0) ||
 		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"Gemalto ING Shield Pro", wcslen(L"Gemalto ING Shield Pro")) == 0) ||
-		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"ETSWW eKrypto PINPhab", wcslen(L"ETSWW eKrypto PINPhab")) == 0) )
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"ETSWW eKrypto PINPhab", wcslen(L"ETSWW eKrypto PINPhab")) == 0) ||
+		(_wcsnicmp((wchar_t*)szReaderName, (const wchar_t*)L"DIOSS pinpad", wcslen(L"DIOSS pinpad")) == 0))
 	{
 		BYTE Cmd[] = { 0xFF ,0xC2 ,0x01 ,0x00 , 0x00 };
 		DWORD uiCmdLg = sizeof(Cmd);

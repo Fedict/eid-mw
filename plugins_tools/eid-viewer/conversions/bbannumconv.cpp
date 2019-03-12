@@ -18,7 +18,7 @@ EID_STRING BBANNumberConvertor::convert(const void *original)
 	}
 	catch(const std::out_of_range & oor)
 	{
-		be_log(EID_VWR_LOG_NORMAL, TEXT("Could not convert %s to display format: number too short"), (const EID_CHAR *) original);
+		be_log(EID_VWR_LOG_NORMAL, TEXT("Could not convert card number %s to display format: number too short"), (const EID_CHAR *) original);
 		(void)oor;//unused variable
 		return normal;
 	}

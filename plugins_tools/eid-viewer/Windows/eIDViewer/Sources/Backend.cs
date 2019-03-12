@@ -198,51 +198,61 @@ namespace eIDViewer
             switch (state)
             {
                 case eid_vwr_states.STATE_TOKEN_WAIT:
+                    //Token has been read completely
                     theData.eid_data_from_file = false;
+                    //VerifyAllData will check data integrity
+                    //no data will be displayed, and eid_data_ready will be set to false when data integrity check fails
+                    //eid_data_ready will be set to true when id and address data integrity check succeeds
                     theData.VerifyAllData();
                     theData.HideProgressBar();
-                    theData.print_enabled = true;
                     break;
                 case eid_vwr_states.STATE_FILE_WAIT:
+                    //File has been read completely
                     theData.eid_data_from_file = true;
+                    theData.eid_data_ready = true;
                     theData.HideProgressBar();
                     break;
-                case eid_vwr_states.STATE_READY:
-                    theData.eid_data_ready = false;
-                    theData.eid_data_from_file = false;
-                    break;
                 case eid_vwr_states.STATE_LIBOPEN:
+                    //initial state of the eID Viewer Backend
+                    theData.eid_read_data_started = false;
                     theData.eid_data_ready = false;
                     theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_CARD_INVALID:
                     theData.ResetDataValues();
                     theData.eid_data_ready = false;
+                    theData.eid_read_data_started = false;
                     theData.eid_data_from_file = false;
                     AdjustIconImage("Resources/Images/state_error.png");
                     break;
                 case eid_vwr_states.STATE_TOKEN_ERROR:
+                    //substate of state_token 
                     theData.ResetDataValues();
+                    theData.eid_read_data_started = false;
                     theData.eid_data_ready = false;
                     theData.eid_data_from_file = false;
                     break;
                 case eid_vwr_states.STATE_FILE:
+                    //file is present
+                    theData.eid_read_data_started = true;
                     theData.eid_data_from_file = true;           
                     theData.open_enabled = true;
                     break;
                 case eid_vwr_states.STATE_TOKEN:
-                    theData.eid_data_ready = true;
+                    //token is present
+                    theData.eid_read_data_started = true;
+                    theData.eid_data_ready = false;
                     theData.eid_data_from_file = false;
                     theData.open_enabled = false;
                     break;
                 case eid_vwr_states.STATE_NO_TOKEN:
-                    theData.eid_data_ready = true;
+                    //no token, nor file is present
+                    theData.eid_read_data_started = false;
+                    theData.eid_data_ready = false;
                     theData.eid_data_from_file = false;
                     theData.open_enabled = true;
                     break;
                 default:
-                    theData.eid_data_ready = true;
-                    theData.eid_data_from_file = false;
                     break;
             }
             theData.eid_backend_state = state;

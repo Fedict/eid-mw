@@ -167,6 +167,9 @@ icon128dir = $(icondir)/128x128/apps
 icon256dir = $(icondir)/256x256/apps
 icon512dir = $(icondir)/512x512/apps
 
+metainfodir = $(datarootdir)/metainfo
+dist_metainfo_DATA = gtk/eid-viewer.appdata.xml
+
 resources/logos/%/eid-viewer.png: resources/logo_%.png
 	mkdir -p $(shell dirname $@)
 	cp $^ $@

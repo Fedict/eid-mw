@@ -496,9 +496,15 @@ out:
 //return the xml data
 int eid_vwr_serialize(const EID_CHAR * filename)
 {
+	int retVal = 0;
 	const struct eid_vwr_cache_item *item = cache_get_data(TEXT("xml"));
 	FILE *f = EID_FOPEN(filename, TEXT("w"));
-
+	if (f == NULL) {
+		return 1;
+	}
 	fwrite(item->data, item->len, 1, f);
-	return fclose(f);
+
+	retVal = fclose(f);
+	sm_handle_event(EVENT_SERIALIZE_READY, NULL, NULL, NULL);
+	return retVal;
 }
