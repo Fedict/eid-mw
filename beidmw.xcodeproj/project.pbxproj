@@ -1359,7 +1359,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\n";
+			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\n\ncd \"${CONFIGURATION_BUILD_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\ninstall_name_tool -change /usr/local/lib/libbeidpkcs11.4.4.16.dylib \"@rpath/libbeidpkcs11.4.4.16.dylib\" \"BeidView\"\n";
 		};
 		8604AB082194798F00FB3C92 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
