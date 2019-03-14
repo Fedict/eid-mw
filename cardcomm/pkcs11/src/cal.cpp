@@ -2463,12 +2463,16 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 	}
 	catch(CMWException &e)
 	{
-		ret = cal_translate_error(WHERE, e.GetError());
-		//token not present is a status, not an error
-		if (ret == CKR_TOKEN_NOT_PRESENT)
+		if (e.GetError() == EIDMW_ERR_NO_CARD)
 		{
+			//token not present is a status, not an error
 			*pStatus = P11_CARD_NOT_PRESENT;
 			ret = CKR_OK;
+			log_trace(WHERE, "I: No card present");
+		} 
+		else 
+		{
+			ret = cal_translate_error(WHERE, e.GetError());
 		}
 		return ret;
 	}
@@ -2635,6 +2639,7 @@ CK_RV cal_refresh_readers()
 			oReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
 		}
 		//new _reader list, so please stop the scardgetstatuschange that is waiting on the old list
+		log_trace(WHERE, "I: stopping the scardgetstatuschange that is waiting on the old list");
 		oCardLayer->CancelActions();
 		log_trace(WHERE, "I: called oCardLayer->CancelActions()");
 	}
