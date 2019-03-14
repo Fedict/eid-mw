@@ -149,6 +149,7 @@ namespace eIDMW
 		if (m_poCard != NULL)
 			Disconnect(DISCONNECT_LEAVE_CARD);
 
+		MWLOG(LEV_INFO, MOD_CAL, L" CReader::Connect()");
 		m_poCard = CardConnect(m_csReader, m_poContext, &m_oPinpad);
 		if (m_poCard != NULL)
 		{

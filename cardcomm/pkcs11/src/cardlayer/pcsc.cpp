@@ -45,7 +45,6 @@ namespace eIDMW
 		m_ulCardTxDelay = config.GetLong(CConfig::EIDMW_CONFIG_PARAM_GENERAL_CARDTXDELAY);
 		m_hContext = 0;
 		m_iTimeoutCount = 0;
-		m_iListReadersCount = 0;
 	}
 
 	CPCSC::~CPCSC(void)
@@ -90,14 +89,11 @@ namespace eIDMW
 		char csReaders[1024];
 		DWORD dwReadersLen = sizeof(csReaders);
 
-		long lRet =
-			SCardListReaders(m_hContext, NULL, csReaders,
-					 &dwReadersLen);
-		if (SCARD_S_SUCCESS != lRet || m_iListReadersCount < 6)
+		long lRet = SCardListReaders(m_hContext, NULL, csReaders, &dwReadersLen);
+		if (SCARD_S_SUCCESS != lRet)
 		{
-			MWLOG(LEV_DEBUG, MOD_CAL,
-			      L"    SCardListReaders(): 0x%0x", lRet);
-			m_iListReadersCount++;
+			MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardListReaders() returned error: 0x%0x", lRet);
+
 		}
 		if (SCARD_S_SUCCESS == lRet)
 		{

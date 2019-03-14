@@ -57,6 +57,7 @@ namespace eIDMW
 		}
 		catch(CMWException & e)
 		{
+			MWLOG(LEV_INFO, MOD_CAL, L"    CardConnect threw error: [0x%08X]", e.GetError());
 			if (e.GetError() == (long)EIDMW_ERR_NO_CARD)
 			{
 				goto done;

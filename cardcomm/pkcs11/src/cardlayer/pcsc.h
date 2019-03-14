@@ -156,7 +156,6 @@ private:
 		friend class CPinpad;
 
 		int m_iTimeoutCount;
-		int m_iListReadersCount;
 
 		unsigned long m_ulCardTxDelay;	//delay before each transmission to a smartcard; in millie-seconds, default 1
 
