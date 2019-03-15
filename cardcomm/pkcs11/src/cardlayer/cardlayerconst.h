@@ -37,17 +37,17 @@ namespace eIDMW
 		DISCONNECT_RESET_CARD = 1,
 	} tDisconnectMode;
 
-	typedef enum
+/*	typedef enum
 	{
 		FILE_OP_READ,
 		FILE_OP_WRITE,
 	} tFileOperation;
-
+*/
 	typedef enum
 	{
 		PIN_OP_VERIFY,
 		PIN_OP_CHANGE,
-		PIN_OP_LOGOFF,
+//		PIN_OP_LOGOFF,
 	} tPinOperation;
 
 	const unsigned long SIGN_ALGO_RSA_RAW = 0x01;
@@ -68,12 +68,12 @@ namespace eIDMW
 	const unsigned long SIGN_ALGO_SHA3_384_ECDSA = 0x8000;
 	const unsigned long SIGN_ALGO_SHA3_512_ECDSA = 0x10000;
 
-	typedef enum
-	{
-		PIN_ENC_ASCII,
-		PIN_ENC_BCD,
-		PIN_ENC_GP,  // Global platorm encoding e.g. "12345" -> {0x25, 0x12, 0x34, 0x5F, 0xFF, ... 0xFF}
-	} tPinEncoding;
+//	typedef enum
+//	{
+//		PIN_ENC_ASCII,
+//		PIN_ENC_BCD,
+//		PIN_ENC_GP,  // Global platorm encoding e.g. "12345" -> {0x25, 0x12, 0x34, 0x5F, 0xFF, ... 0xFF}
+//	} tPinEncoding;
 
 	typedef enum
 	{
