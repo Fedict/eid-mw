@@ -573,7 +573,7 @@ namespace eIDMW {
 						// pin encoding is wrongly written as PIN_ENC_BCD on the Aod file,
 						// as this pkcs15 parser is for eid cards only, we hardcode it here
 						// (as well as adding max PIN length)
-						pin.encoding = PIN_ENC_GP;
+						//pin.encoding = PIN_ENC_GP;
 						pin.ulMaxLen = 12;
 						}
 					}

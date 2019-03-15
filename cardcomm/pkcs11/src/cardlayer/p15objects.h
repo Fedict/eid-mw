@@ -93,7 +93,7 @@ namespace eIDMW
 		unsigned long ulMaxLen;
 		unsigned long ulPinRef;
 		unsigned char ucPadChar;
-		tPinEncoding encoding;
+		//tPinEncoding encoding;
 		std::string csLastChange;
 		std::string csPath;
 	} tPin;

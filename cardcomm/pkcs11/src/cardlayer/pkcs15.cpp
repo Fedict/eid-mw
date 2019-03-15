@@ -26,7 +26,7 @@
 namespace eIDMW
 {
 
-	const static tPin PinInvalid = { false, "",0,0,0,0,0,0, 0, 0, 0, 0, 0,PIN_ENC_BCD,"","" };
+	const static tPin PinInvalid = { false, "",0,0,0,0,0,0, 0, 0, 0, 0, 0,"","" };
 	const static tCert CertInvalid = { false, "", 0, 0, 0, 0, false, false, "" };
 	const static tPrivKey PrivKeyInvalid = { false, "", 0, 0, 0, 0, 0, 0, 0, "", 0, false };
 
@@ -43,12 +43,12 @@ namespace eIDMW
 	unsigned long   ulMaxLen;  // optional ?
 	unsigned char   ulPinRef;  // optional
 	unsigned char   ucPadChar;
-	tPinEncoding    encoding;
+	//tPinEncoding    encoding;
 	std::string     csPath;
 
-	const static tPin PinBeidV1 = { true, "Basic PIN",0,1,1,1,0,NO_ID, 4, 8, 12, 1, 0xFF,PIN_ENC_BCD,"","3F00" };
-	const static tPin pinBeidAuthV2 = { true, "Authentication",0,1,1,1,0,NO_ID, 4, 8, 12, 0x85, 0xFF,PIN_ENC_BCD,"","3F00" };
-	const static tPin pinBeidSignV2 = { true, "Signature",0,1,1,1,0,NO_ID,4, 8, 12, 0x86, 0xFF,PIN_ENC_BCD,"","3F00" };
+	const static tPin PinBeidV1 = { true, "Basic PIN",0,1,1,1,0,NO_ID, 4, 8, 12, 1, 0xFF,"","3F00" };
+	const static tPin pinBeidAuthV2 = { true, "Authentication",0,1,1,1,0,NO_ID, 4, 8, 12, 0x85, 0xFF,"","3F00" };
+	const static tPin pinBeidSignV2 = { true, "Signature",0,1,1,1,0,NO_ID,4, 8, 12, 0x86, 0xFF,"","3F00" };
 
 	const static tPrivKey KeyAuthBeidV1 = { true, "Authentication", 0,2,0,1,0,0,0x82,"3F00DF00", 128,true };
 	const static tPrivKey KeySignBeidV1 = { true, "Signature", 0,3,0,1,0,0,0x83,"3F00DF00", 128,true };
