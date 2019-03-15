@@ -174,7 +174,7 @@ namespace eIDMW
 		 *   - the global OS version (2 bytes) */
 		CByteArray GetInfo();
 
-		bool LogOff(const tPin & Pin);
+		bool LogOff();
 
 		unsigned int GetPrivKeySize();
 		unsigned char GetAppletVersion();

@@ -1079,10 +1079,7 @@ CK_RV cal_logout(CK_SLOT_ID hSlot)
 		CReader &oReader = oCardLayer->getReader(szReader);
 		CCard* poCard = oReader.GetCard();
 
-		tPin tpin;
-		unsigned long ulRemaining = 0;
-
-		if (!poCard->PinCmd(PIN_OP_LOGOFF, tpin, "", "", ulRemaining))
+		if (!poCard->LogOff())
 		{
 			//can only get here if we're not a BEID card
 			log_trace(WHERE, "E: PIN_OP_LOGOFF failed");

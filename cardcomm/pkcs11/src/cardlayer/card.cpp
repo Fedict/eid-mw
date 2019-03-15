@@ -768,7 +768,7 @@ namespace eIDMW
 #endif	/* NO_DIALOGS */
 	}
 
-	bool CCard::LogOff(const tPin & Pin)
+	bool CCard::LogOff()
 	{
 		// No PIN has to be specified
 		CByteArray oResp = SendAPDU(0x80, 0xE6, 0x00, 0x00, 0);
@@ -1092,8 +1092,8 @@ namespace eIDMW
 	{
 		// No standard for Logoff, so each card has to implement
 		// it's own command here.
-		if (operation == PIN_OP_LOGOFF)
-			return LogOff(Pin);
+		//if (operation == PIN_OP_LOGOFF)
+		//	return LogOff();
 
 		bool bRet = false;
 
