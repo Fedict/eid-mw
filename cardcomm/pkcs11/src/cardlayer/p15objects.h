@@ -94,8 +94,8 @@ namespace eIDMW
 		unsigned long ulPinRef;
 		unsigned char ucPadChar;
 		//tPinEncoding encoding;
-		std::string csLastChange;
-		std::string csPath;
+		//std::string csLastChange;
+		//std::string csPath;
 	} tPin;
 
 	typedef struct

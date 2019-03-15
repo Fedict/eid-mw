@@ -479,7 +479,7 @@ namespace eIDMW {
 				pin.ulMaxLen = 0;
 				pin.ulPinRef = 0;
 				pin.ucPadChar = '\0';
-				pin.csLastChange = "";
+				//pin.csLastChange = "";
 
 				// ---- common object attributes, level.2
 				tCommonObjAttr coAttr = ParseCommonObjectAttributes(&xLev1Item);     //parse level.2 sequence, updates xLev1Item.data-info!
@@ -559,12 +559,14 @@ namespace eIDMW {
 								break;
 							case ASN_GENERALIZEDTIME:	// last change
 							{
-								std::string csLastChange((char *)xLev4Item.p_data, 0, xLev4Item.l_data);
-								pin.csLastChange = csLastChange;
+								//we are not using this variable
+								//std::string csLastChange((char *)xLev4Item.p_data, 0, xLev4Item.l_data);
+								//pin.csLastChange = csLastChange;
 							}
 							break;
 							case ASN_SEQUENCE:	// path
-								pin.csPath = ParsePath(&xLev4Item);
+								//we are not using this variable
+								//pin.csPath = ParsePath(&xLev4Item);
 								break;
 							default:
 								break;

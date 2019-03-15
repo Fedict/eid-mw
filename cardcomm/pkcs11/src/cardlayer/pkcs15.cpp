@@ -26,11 +26,11 @@
 namespace eIDMW
 {
 
-	const static tPin PinInvalid = { false, "",0,0,0,0,0,0, 0, 0, 0, 0, 0,"","" };
+	const static tPin PinInvalid = { false, "",0,0,0,0,0,0, 0, 0, 0, 0, 0 };
 	const static tCert CertInvalid = { false, "", 0, 0, 0, 0, false, false, "" };
 	const static tPrivKey PrivKeyInvalid = { false, "", 0, 0, 0, 0, 0, 0, 0, "", 0, false };
 
-	// Hardcoded Beid V1 PINs, keys, certs -- to be removed
+	// Hardcoded Beid V1 PINs, keys, certs
 	bool            bValid;
 	std::string     csLabel;
 	bool            bFlags[2];
@@ -44,11 +44,11 @@ namespace eIDMW
 	unsigned char   ulPinRef;  // optional
 	unsigned char   ucPadChar;
 	//tPinEncoding    encoding;
-	std::string     csPath;
+	//std::string     csPath;
 
-	const static tPin PinBeidV1 = { true, "Basic PIN",0,1,1,1,0,NO_ID, 4, 8, 12, 1, 0xFF,"","3F00" };
-	const static tPin pinBeidAuthV2 = { true, "Authentication",0,1,1,1,0,NO_ID, 4, 8, 12, 0x85, 0xFF,"","3F00" };
-	const static tPin pinBeidSignV2 = { true, "Signature",0,1,1,1,0,NO_ID,4, 8, 12, 0x86, 0xFF,"","3F00" };
+	const static tPin PinBeidV1 = { true, "Basic PIN",0,1,1,1,0,NO_ID, 4, 8, 12, 1, 0xFF };
+	const static tPin pinBeidAuthV2 = { true, "Authentication",0,1,1,1,0,NO_ID, 4, 8, 12, 0x85, 0xFF };
+	const static tPin pinBeidSignV2 = { true, "Signature",0,1,1,1,0,NO_ID,4, 8, 12, 0x86, 0xFF };
 
 	const static tPrivKey KeyAuthBeidV1 = { true, "Authentication", 0,2,0,1,0,0,0x82,"3F00DF00", 128,true };
 	const static tPrivKey KeySignBeidV1 = { true, "Signature", 0,3,0,1,0,0,0x83,"3F00DF00", 128,true };
