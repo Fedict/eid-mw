@@ -251,10 +251,6 @@ namespace eIDMW
 		CCard & operator =(const CCard & oCard);
 
 		CPKCS15 m_oPKCS15;
-
-		//TODO: waiting to be cleaned up (aka removed)
-		bool PinCmd_2(tPinOperation operation, const tPin & Pin, const std::string & csPin1, const std::string & csPin2,
-			unsigned long &ulRemaining, const tPrivKey * pKey);
 	};
 
 	class CAutoLock

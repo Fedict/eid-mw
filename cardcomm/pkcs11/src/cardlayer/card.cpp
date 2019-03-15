@@ -1069,22 +1069,23 @@ namespace eIDMW
 		return bRetry;
 	}
 
-	bool CCard::PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1,
+	/*bool CCard::PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1,
 		const std::string & csPin2, unsigned long &ulRemaining, const tPrivKey * pKey)
 	{
 		tPin beidPin = Pin;
 
 		// There's a path in the EF(AODF) for the PINs, but it's
 		// not necessary, so we can save a Select File command
-		beidPin.csPath = "";
+		//beidPin.csPath = "";
 
 		// Encoding is Global Platform, there is/was no way to encode
 		// this in PKCS15 AODF so it says/said erroneously "BCD encoding".
-		beidPin.encoding = PIN_ENC_GP;
+		// this is allready corrected in the pkcs15 parser
+		//beidPin.encoding = PIN_ENC_GP;
 		return PinCmd_2(operation, beidPin, csPin1, csPin2, ulRemaining, pKey);
-	}
+	}*/
 
-	bool CCard::PinCmd_2(tPinOperation operation, const tPin & Pin,
+	bool CCard::PinCmd(tPinOperation operation, const tPin & Pin,
 		const std::string & csPin1,
 		const std::string & csPin2,
 		unsigned long &ulRemaining,
@@ -1092,7 +1093,8 @@ namespace eIDMW
 	{
 		// No standard for Logoff, so each card has to implement
 		// it's own command here.
-		//if (operation == PIN_OP_LOGOFF)
+		// it doesn't use the PIN, so we call it directly
+		// if (operation == PIN_OP_LOGOFF)
 		//	return LogOff();
 
 		bool bRet = false;
@@ -1129,12 +1131,14 @@ namespace eIDMW
 		{
 			CAutoLock autolock(this);
 
-			// Select the path where the Pin is, if necessary
+			// There's a path in the EF(AODF) for the PINs, but it's
+			// not necessary, so we can save a Select File command
+			/* Select the path where the Pin is, if necessary
 			if (!Pin.csPath.empty() && !bSelected && Pin.csPath != "3F00")
 			{
 				SelectFile(Pin.csPath);
 				bSelected = true;
-			}
+			}*/
 			// Send the command
 			if (csPin1.empty() && bUsePinpad)
 			{
