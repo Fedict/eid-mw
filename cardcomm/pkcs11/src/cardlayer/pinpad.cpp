@@ -95,13 +95,15 @@ namespace eIDMW
 	// See par 4.1.11.3 bmFormatString description
 	unsigned char CPinpad::ToFormatString(const tPin & pin)
 	{
-		switch (pin.encoding)
-		{
-			case PIN_ENC_ASCII:
-				return 0x00 | 0x00 | 0x00 | 0x02;
-			case PIN_ENC_BCD:
-				return 0x00 | 0x00 | 0x00 | 0x01;
-			case PIN_ENC_GP:
+		//all our supported cards only use PIN_ENC_GP
+
+//		switch (pin.encoding)
+//		{
+//			case PIN_ENC_ASCII:
+//				return 0x00 | 0x00 | 0x00 | 0x02;
+//			case PIN_ENC_BCD:
+//				return 0x00 | 0x00 | 0x00 | 0x01;
+//			case PIN_ENC_GP:
 				// READER FIX:
 				// The SPR532 reader wants this value to be as for BCD
 				const char *csReader = m_csReader.c_str();
@@ -111,38 +113,40 @@ namespace eIDMW
 					return 0x00 | 0x00 | 0x00 | 0x01;
 				}
 				return 0x80 | 0x08 | 0x00 | 0x01;
-		}
-		return 0;
+//		}
+//		return 0;
 	}
 
 	// See par 4.1.11.4 bmPINBlockString description
 	unsigned char CPinpad::ToPinBlockString(const tPin & pin)
 	{
-		switch (pin.encoding)
-		{
-			case PIN_ENC_ASCII:
-				return (unsigned char) pin.ulStoredLen;
-			case PIN_ENC_BCD:
-				return (unsigned char) pin.ulStoredLen;
-			case PIN_ENC_GP:
+		//all our supported cards only use PIN_ENC_GP
+//		switch (pin.encoding)
+//		{
+//			case PIN_ENC_ASCII:
+//				return (unsigned char) pin.ulStoredLen;
+//			case PIN_ENC_BCD:
+//				return (unsigned char) pin.ulStoredLen;
+//			case PIN_ENC_GP:
 				return 0x40 | (unsigned char) (pin.ulStoredLen - 1);
-		}
-		return (unsigned char) pin.ulStoredLen;
+//		}
+//		return (unsigned char) pin.ulStoredLen;
 	}
 
 	// See par 4.1.11.5 bmPINLengthFormat
 	unsigned char CPinpad::ToPinLengthFormat(const tPin & pin)
 	{
-		switch (pin.encoding)
-		{
-			case PIN_ENC_ASCII:
-				return 0x00 | 0x00;
-			case PIN_ENC_BCD:
-				return 0x00 | 0x00;
-			case PIN_ENC_GP:
+		//all our supported cards only use PIN_ENC_GP
+//		switch (pin.encoding)
+//		{
+//			case PIN_ENC_ASCII:
+//				return 0x00 | 0x00;
+//			case PIN_ENC_BCD:
+//				return 0x00 | 0x00;
+//			case PIN_ENC_GP:
 				return 0x00 | 0x04;
-		}
-		return 0x00;
+//		}
+//		return 0x00;
 	}
 
 	unsigned char CPinpad::GetMaxPinLen(const tPin & pin)

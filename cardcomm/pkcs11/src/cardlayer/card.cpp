@@ -1454,36 +1454,43 @@ namespace eIDMW
 			}
 		}
 
-		switch (Pin.encoding)
-		{
-		case PIN_ENC_ASCII:
-			for (i = 0; i < ulPinLen; i++)
-				oBuf.Append((unsigned char)csPin[i]);
-			for (; i < Pin.ulStoredLen; i++)
-				oBuf.Append(Pin.ucPadChar);
-			break;
-		case PIN_ENC_GP:
+		//all our supported cards only use PIN_ENC_GP
+//		switch (Pin.encoding)
+//		{
+//		case PIN_ENC_ASCII:
+//			for (i = 0; i < ulPinLen; i++)
+//				oBuf.Append((unsigned char)csPin[i]);
+//			for (; i < Pin.ulStoredLen; i++)
+//				oBuf.Append(Pin.ucPadChar);
+//			break;
+//		case PIN_ENC_GP:
 			oBuf.Append((unsigned char)(0x20 + ulPinLen));
 			// Falls through
-		case PIN_ENC_BCD:
+//		case PIN_ENC_BCD:
 			i = 0;
 			while (i < ulPinLen)
 			{
 				unsigned char uc = (unsigned char)(16 * (csPin[i] - '0'));
 				i++;
 				if (i < ulPinLen)
+				{
 					uc += (unsigned char)(csPin[i] - '0');
+				}
 				else
+				{
 					uc += (unsigned char)(Pin.ucPadChar % 16);
+				}
 				i++;
 				oBuf.Append(uc);
 			}
 			while (oBuf.Size() < Pin.ulStoredLen)
+			{
 				oBuf.Append((unsigned char)Pin.ucPadChar > 0x0F ? Pin.ucPadChar : Pin.ucPadChar % 16);
-			break;
-		default:
-			throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
-		}
+			}
+//			break;
+//		default:
+//			throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
+//		}
 
 		return oBuf;
 	}
