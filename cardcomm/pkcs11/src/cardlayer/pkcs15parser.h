@@ -62,9 +62,9 @@ namespace eIDMW
 	typedef struct
 	{
 		std::string csPrkdfPath;	// contains the private key info
-		std::string csPukdfPath;	// contains the public key info
-		std::string csTrustedPukdfPath;
-		std::string csSecretPukdfPath;
+//		std::string csPukdfPath;	// contains the public key info
+//		std::string csTrustedPukdfPath;
+//		std::string csSecretPukdfPath;
 		std::string csCdfPath;	// contains the cert info
 		std::string csTrustedCdfPath;
 		std::string csUsefulCdfPath;

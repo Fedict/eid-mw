@@ -74,8 +74,8 @@ public:
 		void Clear(CCard * poCard = NULL);
 		void SetCard(CCard * poCard);
 
-		     std::string GetSerialNr();
-		     std::string GetCardLabel();
+		     //std::string GetSerialNr();
+		     //std::string GetCardLabel();
 
 		unsigned long PinCount();
 		tPin GetPin(unsigned long ulIndex);
@@ -101,8 +101,8 @@ private:
 #pragma warning(push)
 #pragma warning(disable:4251)
 #endif
-		             std::string m_csSerial;
-		             std::string m_csLabel;
+//		             std::string m_csSerial;
+//		             std::string m_csLabel;
 		             std::vector < tPin > m_oPins;
 		             std::vector < tCert > m_oCertificates;
 		             std::vector < tPrivKey > m_oPrKeys;
@@ -121,7 +121,7 @@ private:
 		tPKCSFile m_xAODF;
 		tPKCSFile m_xCDF;
 		tPKCSFile m_xPrKDF;
-		tPKCSFile m_xPuKDF;
+//		tPKCSFile m_xPuKDF;
 
 
 		tPKCSFile m_xPin;	// there could be more than one

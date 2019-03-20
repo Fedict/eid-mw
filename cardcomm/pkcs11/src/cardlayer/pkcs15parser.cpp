@@ -632,13 +632,13 @@ namespace eIDMW {
 					result.csPrkdfPath = csPath;
 					break;
 				case ASN_CONSTRUCTED_CONTEXT_N(1):
-					result.csPukdfPath = csPath;
+//					result.csPukdfPath = csPath;
 					break;
 				case ASN_CONSTRUCTED_CONTEXT_N(2):
-					result.csTrustedPukdfPath = csPath;
+//					result.csTrustedPukdfPath = csPath;
 					break;
 				case ASN_CONSTRUCTED_CONTEXT_N(3):
-					result.csSecretPukdfPath = csPath;
+//					result.csSecretPukdfPath = csPath;
 					break;
 				case ASN_CONSTRUCTED_CONTEXT_N(4):
 					result.csCdfPath = csPath;

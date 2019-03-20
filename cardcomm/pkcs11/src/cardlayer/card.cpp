@@ -190,7 +190,7 @@ namespace eIDMW
 
 	std::string CCard::GetCardLabel()
 	{
-		return m_oPKCS15.GetCardLabel();
+		return "BELPIC";// m_oPKCS15.GetCardLabel();
 	}
 
 	CByteArray CCard::ReadCardFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)

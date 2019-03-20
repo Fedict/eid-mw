@@ -56,8 +56,9 @@ namespace eIDMW
 	const static tPrivKey KeySignBeidV2 = { true, "Signature", 0,3,0,2,0,0,0x89,"3F00DF00", 128,true };
 
 	const std::string defaultEFTokenInfo = "3F00DF005032";
-	const std::string defaultEFODF = "3F00DF005031";
-
+	const std::string AODFPath = "3F00DF005034";
+	const std::string PrKDFPath = "3F00DF005035";
+	const std::string CDFPath = "3F00DF005037";
 
 	CPKCS15::CPKCS15(void) :m_poParser(NULL)
 	{
@@ -73,8 +74,8 @@ namespace eIDMW
 		m_poCard = poCard;
 
 		// clear everything
-		m_csSerial = "";
-		m_csLabel = "";
+		//m_csSerial = "";
+		//m_csLabel = "";
 
 		m_oPins.clear();
 		m_oCertificates.clear();
@@ -97,8 +98,8 @@ namespace eIDMW
 		m_poCard = poCard;
 	}
 
-
-	std::string CPKCS15::GetSerialNr()
+	//serial number is already retrieved by Get Card Data in the CCard constructor: m_oCardData = SendAPDU(0x80, 0xE4, 0x00, 0x00, 0x1C);
+/*	std::string CPKCS15::GetSerialNr()
 	{
 		if (m_csSerial == "")
 		{
@@ -109,9 +110,10 @@ namespace eIDMW
 		}
 
 		return m_csSerial;
-	}
+	}*/
 
-	std::string CPKCS15::GetCardLabel()
+	//this is the applet label "BELPIC", hardcoded now
+/*	std::string CPKCS15::GetCardLabel()
 	{
 		// check if we know it already
 		if (m_csLabel == "") {
@@ -119,7 +121,7 @@ namespace eIDMW
 		}
 		return m_csLabel;
 	}
-
+*/
 
 	unsigned long CPKCS15::PinCount()
 	{
@@ -234,11 +236,12 @@ namespace eIDMW
 			ReadFile(&m_xODF, 1);
 			// parse
 			resultOdf = m_poParser->ParseOdf(m_xODF.byteArray);
+
 			// propagate the path info  
 			m_xAODF.path = resultOdf.csAodfPath;
 			m_xCDF.path = resultOdf.csCdfPath;
 			m_xPrKDF.path = resultOdf.csPrkdfPath;
-			m_xPuKDF.path = resultOdf.csPukdfPath;
+//			m_xPuKDF.path = resultOdf.csPukdfPath;
 			break;
 		case TOKENINFO:
 			ReadFile(&m_xTokenInfo, 1);
@@ -260,7 +263,6 @@ namespace eIDMW
 			ReadFile(&m_xAODF, 2);
 			// parse
 			m_oPins = m_poParser->ParseAodf(m_xAODF.byteArray);
-
 			break;
 		case CDF:
 			ReadFile(&m_xCDF, 2);
