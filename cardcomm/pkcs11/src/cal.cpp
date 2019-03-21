@@ -1487,7 +1487,7 @@ CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 		if (ret != CKR_OK)
 			goto cleanup;
 
-		if(oCardData.Size() > 28) {
+		if(oCardData.Size() > 30) {
 			oByte = oCardData.GetByte(28);
 			plabel = BEID_LABEL_DATA_PinAuth;
 			ret = p11_add_slot_ID_object(pSlot, ID_DATA,
