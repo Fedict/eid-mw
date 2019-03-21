@@ -1504,34 +1504,41 @@ CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 				goto cleanup;
 
 			oByte = oCardData.GetByte(29);
-			plabel = BEID_LABEL_DATA_PinNonRep;
-			ret = p11_add_slot_ID_object(pSlot, ID_DATA,
-						     sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
-						     CK_TRUE, CKO_DATA,
-						     CK_FALSE, &hObject,
-						     (CK_VOID_PTR) plabel,
-						     (CK_ULONG) strlen(plabel),
-						     (CK_VOID_PTR) & oByte,
-						     (CK_ULONG) 1,
-						     (CK_VOID_PTR) BEID_OBJECTID_CARDDATA,
-						     (CK_ULONG) strlen(BEID_OBJECTID_CARDDATA));
-			if (ret != CKR_OK)
-				goto cleanup;
-
+			//If PIN is not found, the # attempts returned for this PIN is set to ‘FF’.
+			//do not create objects for non-existing PINs
+			if (oByte != 0xFF)
+			{
+				plabel = BEID_LABEL_DATA_PinNonRep;
+				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
+					sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+					CK_TRUE, CKO_DATA,
+					CK_FALSE, &hObject,
+					(CK_VOID_PTR)plabel,
+					(CK_ULONG)strlen(plabel),
+					(CK_VOID_PTR)& oByte,
+					(CK_ULONG)1,
+					(CK_VOID_PTR)BEID_OBJECTID_CARDDATA,
+					(CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+				if (ret != CKR_OK)
+					goto cleanup;
+			}
 			oByte = oCardData.GetByte(30);
-			plabel = BEID_LABEL_DATA_PinReadEf;
-			ret = p11_add_slot_ID_object(pSlot, ID_DATA,
-						     sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
-						     CK_TRUE, CKO_DATA,
-						     CK_FALSE, &hObject,
-						     (CK_VOID_PTR) plabel,
-						     (CK_ULONG) strlen(plabel),
-						     (CK_VOID_PTR) & oByte,
-						     (CK_ULONG) 1,
-						     (CK_VOID_PTR) BEID_OBJECTID_CARDDATA,
-						     (CK_ULONG) strlen(BEID_OBJECTID_CARDDATA));
-			if (ret != CKR_OK)
-				goto cleanup;
+			if (oByte != 0xFF)
+			{
+				plabel = BEID_LABEL_DATA_PinReadEf;
+				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
+					sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+					CK_TRUE, CKO_DATA,
+					CK_FALSE, &hObject,
+					(CK_VOID_PTR)plabel,
+					(CK_ULONG)strlen(plabel),
+					(CK_VOID_PTR)& oByte,
+					(CK_ULONG)1,
+					(CK_VOID_PTR)BEID_OBJECTID_CARDDATA,
+					(CK_ULONG)strlen(BEID_OBJECTID_CARDDATA));
+				if (ret != CKR_OK)
+					goto cleanup;
+			}
 		}
 		//              data.ClearContents();
 		//              data = oCardData.GetBytes(28);
