@@ -47,18 +47,20 @@
 
 namespace eIDMW
 {
-	typedef enum
+	/*typedef enum
 	{
 		BELPIC_DF,
 		ID_DF,
 		UNKNOWN_DF,
-	} tBelpicDF;
+	} tBelpicDF;*/
 
 	typedef enum
 	{
-		BEID_PIN_COUNT_1,
-		BEID_PIN_COUNT_3
-	} tPinCount;
+		//BEID_PINS_USE_CARDHOLDER_PIN,		//1 PIN :  (PINcardholder (01) in applets before 1.8)
+		//BEID_PINS_USE_AUTH_PIN,			//3 PINS: PINauthenticate, PINnonrepudiation, PINreadEF will always use PINauthenticate ID (01)
+		BEID_PINS_USE_ONE_PIN,				//The above cases should have the same flow in the code
+		BEID_PINS_USE_SEPARATE_PINS			//3 PINS: PINauthenticate, PINnonrepudiation, PINreadEF will use their own IDs
+	} tPinUsage;
 
 	class CCard
 	{
@@ -212,7 +214,7 @@ namespace eIDMW
 		bool ShouldSelectApplet(unsigned char ins, unsigned long ulSW12);
 		bool SelectApplet();
 
-		tBelpicDF getDF(const std::string & csPath, unsigned long &ulOffset);
+//		tBelpicDF getDF(const std::string & csPath, unsigned long &ulOffset);
 		void SelectFile(const std::string & csPath);
 		CByteArray SelectByPath(const std::string & csPath);
 
@@ -230,7 +232,7 @@ namespace eIDMW
 		bool m_bSerialNrString;
 		tSelectAppletMode m_selectAppletMode;
 		unsigned long m_ulRemaining[3];
-		tPinCount m_pinCount;
+		tPinUsage m_pinUsage;
 		CByteArray m_oCardData;
 		CByteArray m_oSerialNr;
 		unsigned char m_ucAppletVersion;

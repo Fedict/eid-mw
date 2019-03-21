@@ -95,7 +95,7 @@ namespace eIDMW
 
 	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
 	  : m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0), m_oPKCS15(),
-	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinCount(BEID_PIN_COUNT_1), m_ucAppletVersion(0), m_ul6CDelay(0)
+	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinUsage(BEID_PINS_USE_ONE_PIN), m_ucAppletVersion(0), m_ul6CDelay(0)
 	{
 		try
 		{
@@ -113,12 +113,12 @@ namespace eIDMW
 			if (m_ucAppletVersion >= 0x18) {
 				// Use applet 1.8-specific extended card data
 				m_oCardData = SendAPDU(0x80,0xE4, 0x00, 0x01, 0x1F);
-				m_oCardData.Chop(2);
 				m_ulRemaining[0] = m_oCardData.GetByte(28);
 				m_ulRemaining[1] = m_oCardData.GetByte(29);
 				m_ulRemaining[2] = m_oCardData.GetByte(30);
 				if (m_ulRemaining[1] != 0xFF || m_ulRemaining[2] != 0xFF) {
-					m_pinCount = BEID_PIN_COUNT_3;
+//TODO: check this when we get feedback on the usecase
+					m_pinUsage = BEID_PINS_USE_SEPARATE_PINS;
 				}
 			}
 			if (m_oCardData.GetByte(22) == 0x00 && m_oCardData.GetByte(23) == 0x01)
@@ -958,7 +958,7 @@ namespace eIDMW
 	{
 		return BeidCardSelectApplet(m_poContext, m_hCard);
 	}
-
+/*
 	tBelpicDF CCard::getDF(const std::string & csPath,
 		unsigned long &ulOffset)
 	{
@@ -978,7 +978,7 @@ namespace eIDMW
 			//this AID doesn't exist for applet v1.7
 		}
 		return UNKNOWN_DF;
-	}
+	}*/
 	
 	unsigned long CCard::Get6CDelay()
 	{
