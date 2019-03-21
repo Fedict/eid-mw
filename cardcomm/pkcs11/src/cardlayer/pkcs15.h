@@ -36,10 +36,10 @@ namespace eIDMW
 	class CContext;
 
 	// token flags
-	const unsigned long TOKENFLAG_READONLY = 0x00000001;
-	const unsigned long TOKENFLAG_LOGINREQUIRED = 0x00000002;
-	const unsigned long TOKENFLAG_PRNGENERATION = 0x00000004;
-	const unsigned long TOKENFLAG_EIDCOMPLIANT = 0x00000008;
+//	const unsigned long TOKENFLAG_READONLY = 0x00000001;
+//	const unsigned long TOKENFLAG_LOGINREQUIRED = 0x00000002;
+//	const unsigned long TOKENFLAG_PRNGENERATION = 0x00000004;
+//	const unsigned long TOKENFLAG_EIDCOMPLIANT = 0x00000008;
 
 	typedef struct
 	{
@@ -57,9 +57,9 @@ namespace eIDMW
 
 	typedef enum
 	{
-		EFDIR,
-		ODF,
-		TOKENINFO,
+//		EFDIR,
+//		ODF,
+//		TOKENINFO,
 		AODF,
 		CDF,
 		PRKDF,
