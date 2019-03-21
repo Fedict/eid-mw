@@ -105,8 +105,6 @@ private:
 #pragma warning(pop)
 #endif
 
-		tDirInfo m_tDir;
-
 		// files on the card
 
 		tPKCSFile m_xAODF;

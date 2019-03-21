@@ -30,51 +30,6 @@ namespace eIDMW
 
 	typedef struct
 	{
-		int iRef;
-		// add: id, parameters, supported operations, algID
-		int iAlgRef;
-	} tAlgoInfo;
-
-	typedef struct
-	{
-		std::string oAppID;
-		std::string csAppPath;
-		std::string csLabel;
-	} tDirInfo;
-
-	typedef struct
-	{
-		int iVersion;
-		std::string csSerial;
-		std::string csLabel;
-		std::string csManufactID;
-		unsigned long ulFlags;	// readonly, login required, prn generation, eid compliant
-		int iAppVersion;
-		int iSecEnv; // security env. info
-		std::string csOwner;	// security env. info
-		int piRecordInfo[7];	// record info 
-		std::vector < tAlgoInfo > oAlgoInfo;	// array of algorithm info
-		std::string csIssuer;
-		std::string csHolder;
-		std::string csLastUpdate;
-	} tTokenInfo;
-
-	typedef struct
-	{
-		std::string csPrkdfPath;	// contains the private key info
-//		std::string csPukdfPath;	// contains the public key info
-//		std::string csTrustedPukdfPath;
-//		std::string csSecretPukdfPath;
-		std::string csCdfPath;	// contains the cert info
-		std::string csTrustedCdfPath;
-		std::string csUsefulCdfPath;
-		std::string csDodfPath;	// contains the cert info
-		std::string csAodfPath;	// contains the PIN info
-
-	} tOdfInfo;
-
-	typedef struct
-	{
 		std::string csLabel;
 		unsigned long ulFlags;
 		unsigned long ulAuthID;
@@ -95,11 +50,11 @@ namespace eIDMW
 	class PKCS15Parser
 	{
 public:
-		tDirInfo ParseDir(const CByteArray & contents);
+		//tDirInfo ParseDir(const CByteArray & contents);
 
-		tTokenInfo ParseTokenInfo(const CByteArray & contents);
+		//tTokenInfo ParseTokenInfo(const CByteArray & contents);
 
-		tOdfInfo ParseOdf(const CByteArray & contents);
+		//tOdfInfo ParseOdf(const CByteArray & contents);
 
 		std::vector < tPin > ParseAodf(const CByteArray & contents);
 

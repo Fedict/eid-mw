@@ -246,7 +246,7 @@ namespace eIDMW {
 
   /* parse P15 top structure into AID/LABEL/PATH
   */
-	tDirInfo PKCS15Parser::ParseDir(const CByteArray & contents)
+/*	tDirInfo PKCS15Parser::ParseDir(const CByteArray & contents)
 	{
 		tDirInfo    dir;
 		ASN1_ITEM           xLev0Item;  // 
@@ -298,10 +298,10 @@ namespace eIDMW {
 		}
 	}
 		return dir;
-}
+}*/
 
 	//----------------------------------------------------------------------------------------
-
+/*
 	tTokenInfo PKCS15Parser::ParseTokenInfo(const CByteArray & contents) {
 #ifdef VERBOSE
 		std::cerr << "\n----------- PKCS15Parser::ParseTokenInfo ------------ " << std::endl;
@@ -440,7 +440,7 @@ namespace eIDMW {
 
 		return tInfo;
 	}
-
+	*/
 
 	//----------------------------------------------------------------------------------------
 
@@ -596,7 +596,7 @@ namespace eIDMW {
 
 
 	//----------------------------------------------------------------------------------------
-
+/*
 
 	tOdfInfo PKCS15Parser::ParseOdf(const CByteArray & contents) {
 #ifdef VERBOSE
@@ -661,7 +661,7 @@ namespace eIDMW {
 
 		return result;
 	}
-
+	*/
 
 	//----------------------------------------------------------------------------------------
 
