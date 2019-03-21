@@ -44,13 +44,13 @@ namespace eIDMW
 	typedef struct
 	{
 		bool isRead;
-		     std::string path;
+		std::string path;
 		CByteArray byteArray;
 
-		void setDefault()
+		void setDefault(std::string defaultPath = "")
 		{
 			isRead = false;
-			path = "";
+			path = defaultPath;
 			byteArray.ClearContents();
 		}
 	} tPKCSFile;
@@ -69,13 +69,10 @@ namespace eIDMW
 	{
 public:
 		CPKCS15(void);
-		    ~CPKCS15(void);
+		~CPKCS15(void);
 
 		void Clear(CCard * poCard = NULL);
 		void SetCard(CCard * poCard);
-
-		     //std::string GetSerialNr();
-		     //std::string GetCardLabel();
 
 		unsigned long PinCount();
 		tPin GetPin(unsigned long ulIndex);
@@ -91,7 +88,7 @@ public:
 		tPrivKey GetPrivKeyByID(unsigned long ulID);
 
 private:
-		     CCard * m_poCard;
+		CCard * m_poCard;
 		PKCS15Parser *m_poParser;
 
 #ifdef WIN32
@@ -101,11 +98,9 @@ private:
 #pragma warning(push)
 #pragma warning(disable:4251)
 #endif
-//		             std::string m_csSerial;
-//		             std::string m_csLabel;
-		             std::vector < tPin > m_oPins;
-		             std::vector < tCert > m_oCertificates;
-		             std::vector < tPrivKey > m_oPrKeys;
+		std::vector < tPin > m_oPins;
+		std::vector < tCert > m_oCertificates;
+		std::vector < tPrivKey > m_oPrKeys;
 #ifdef WIN32
 #pragma warning(pop)
 #endif
@@ -114,23 +109,15 @@ private:
 
 		// files on the card
 
-		tPKCSFile m_xDir;
-
-		tPKCSFile m_xTokenInfo;
-		tPKCSFile m_xODF;
 		tPKCSFile m_xAODF;
 		tPKCSFile m_xCDF;
 		tPKCSFile m_xPrKDF;
-//		tPKCSFile m_xPuKDF;
-
 
 		tPKCSFile m_xPin;	// there could be more than one
 		tPKCSFile m_xPrKey;
 		tPKCSFile m_xCert;
 
-		// read methods for level1 (dir file), level 2 (token info and odf) and level 3 (aodf,cdf and prkdf)
-		void ReadLevel1();
-		void ReadLevel2(tPKCSFileName name);
+		// read method for level 3 (aodf,cdf and prkdf)
 		void ReadLevel3(tPKCSFileName name);
 
 		void ReadFile(tPKCSFile * pFile, int upperLevel);

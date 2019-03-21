@@ -56,6 +56,7 @@ namespace eIDMW
 	const static tPrivKey KeySignBeidV2 = { true, "Signature", 0,3,0,2,0,0,0x89,"3F00DF00", 128,true };
 
 	const std::string defaultEFTokenInfo = "3F00DF005032";
+
 	const std::string AODFPath = "3F00DF005034";
 	const std::string PrKDFPath = "3F00DF005035";
 	const std::string CDFPath = "3F00DF005037";
@@ -82,15 +83,12 @@ namespace eIDMW
 		m_oPrKeys.clear();
 
 		m_xPin.setDefault();
-		m_xDir.setDefault();
 		m_xPrKey.setDefault();
 		m_xCert.setDefault();
 
-		m_xTokenInfo.setDefault();
-		m_xODF.setDefault();
-		m_xAODF.setDefault();
-		m_xCDF.setDefault();
-		m_xPrKDF.setDefault();
+		m_xAODF.setDefault(AODFPath);
+		m_xCDF.setDefault(CDFPath);
+		m_xPrKDF.setDefault(PrKDFPath);
 	}
 
 	void CPKCS15::SetCard(CCard *poCard)
@@ -211,51 +209,6 @@ namespace eIDMW
 		return PrivKeyInvalid;
 	}
 
-	void CPKCS15::ReadLevel1() {
-
-		// read info in 3f002f00
-		if (m_xDir.path == "") m_xDir.path = "3F002F00";
-		m_xDir.byteArray = m_poCard->ReadFile(m_xDir.path);
-
-		// parse
-		m_tDir = m_poParser->ParseDir(m_xDir.byteArray);
-		m_xDir.isRead = true;
-
-		// store paths for tokenInfo and for ODF
-		m_xTokenInfo.path = m_tDir.csAppPath + "5032";
-		m_xODF.path = m_tDir.csAppPath + "5031";
-	}
-
-	void CPKCS15::ReadLevel2(tPKCSFileName name) {
-		// read info for the requested file (ODF or tokenInfo)
-		// propagate the information about the path of the corresponding level 3 (only ODF)
-		tOdfInfo resultOdf;
-		tTokenInfo resultTokenInfo;
-		switch (name) {
-		case ODF:
-			ReadFile(&m_xODF, 1);
-			// parse
-			resultOdf = m_poParser->ParseOdf(m_xODF.byteArray);
-
-			// propagate the path info  
-			m_xAODF.path = resultOdf.csAodfPath;
-			m_xCDF.path = resultOdf.csCdfPath;
-			m_xPrKDF.path = resultOdf.csPrkdfPath;
-//			m_xPuKDF.path = resultOdf.csPukdfPath;
-			break;
-		case TOKENINFO:
-			ReadFile(&m_xTokenInfo, 1);
-			// parse
-			resultTokenInfo = m_poParser->ParseTokenInfo(m_xTokenInfo.byteArray);
-			m_csSerial = resultTokenInfo.csSerial;
-			m_csLabel = resultTokenInfo.csLabel;
-			break;
-		default:
-			// error: this method can only be called with ODF or TOKENINFO
-			return;
-		}
-	}
-
 	void CPKCS15::ReadLevel3(tPKCSFileName name) {
 
 		switch (name) {
@@ -282,17 +235,8 @@ namespace eIDMW
 
 	void CPKCS15::ReadFile(tPKCSFile* pFile, int upperLevel) {
 		if (pFile->path == "") {
-			switch (upperLevel) {
-			case 1:
-				ReadLevel1();
-				break;
-			case 2:
-				ReadLevel2(ODF);
-				break;
-			default:
-				// error: no other levels alllowed
-				return;
-			}
+			//path should be set
+			return;
 		}
 		pFile->byteArray = m_poCard->ReadFile(pFile->path);
 		pFile->isRead = true;
