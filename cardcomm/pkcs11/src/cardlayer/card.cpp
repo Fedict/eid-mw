@@ -1234,7 +1234,7 @@ namespace eIDMW
 		// If SSO (Single Sign-On) is false and we didn't verify the
 		// PIN yet, then we do this first without trying if it's
 		// realy needed.
-		if (!m_poContext->m_bSSO)
+		if (!m_poPCSC->m_bSSO)
 		{
 			bool bFound = false;
 
