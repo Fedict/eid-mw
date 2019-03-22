@@ -43,7 +43,6 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/card.cpp \
 	cardlayer/cardfactory.cpp \
 	cardlayer/cardlayer.cpp \
-	cardlayer/context.cpp \
 	cardlayer/pcsc.cpp \
 	cardlayer/pinpad.cpp \
 	cardlayer/pinpadlib.cpp \
@@ -92,7 +91,6 @@ noinst_HEADERS = \
 	cardlayer/card.h \
 	cardlayer/cardfactory.h \
 	cardlayer/pkcs15.h \
-	cardlayer/context.h \
 	cardlayer/pinpadlib.h \
 	cardlayer/pcsc.h \
 	cardlayer/cardlayerconst.h \
