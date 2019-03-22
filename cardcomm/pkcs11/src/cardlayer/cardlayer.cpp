@@ -42,24 +42,24 @@ namespace eIDMW
 
 	void CCardLayer::ForceRelease(void)
 	{
-		m_oContext.m_oPCSC.ReleaseContext();
+		m_oPCSC.ReleaseContext();
 	}
 
 	void CCardLayer::CancelActions(void)
 	{
-		m_oContext.m_oPCSC.Cancel();
+		m_oPCSC.Cancel();
 	}
 
 	void CCardLayer::PCSCReEstablishContext()
 	{
-		m_oContext.m_oPCSC.ReleaseContext();
+		m_oPCSC.ReleaseContext();
 
-		m_oContext.m_oPCSC.EstablishContext();
+		m_oPCSC.EstablishContext();
 	}
 
 	long CCardLayer::GetStatusChange(unsigned long ulTimeout, SCARD_READERSTATEA * txReaderStates,unsigned long ulReaderCount)
 	{
-		return m_oContext.m_oPCSC.GetTheStatusChange(ulTimeout, txReaderStates, ulReaderCount);
+		return m_oPCSC.GetTheStatusChange(ulTimeout, txReaderStates, ulReaderCount);
 	}
 
 /**
@@ -77,8 +77,8 @@ namespace eIDMW
 		// Do an SCardEstablishContext() if not done yet
 		try
 		{
-			m_oContext.m_oPCSC.EstablishContext();
-			oReaders = m_oContext.m_oPCSC.ListReaders();
+			m_oPCSC.EstablishContext();
+			oReaders = m_oPCSC.ListReaders();
 		}
 		catch(CMWException & e)
 		{
@@ -103,7 +103,7 @@ namespace eIDMW
 	CReader& CCardLayer::getReader(const std::string & csReaderName)
 	{
 		// Do an SCardEstablishContext() if not done yet
-		m_oContext.m_oPCSC.EstablishContext();
+		m_oPCSC.EstablishContext();
 
 		CReader *pRet = NULL;
 
@@ -118,8 +118,7 @@ namespace eIDMW
 		{
 			if (m_tpReaders[i] != NULL)
 			{
-				if (m_tpReaders[i]->GetReaderName() ==
-				    *pcsReaderName)
+				if (m_tpReaders[i]->GetReaderName() == *pcsReaderName)
 				{
 					pRet = m_tpReaders[i];
 					break;
@@ -134,7 +133,7 @@ namespace eIDMW
 			{
 				if (m_tpReaders[i] == NULL)
 				{
-					pRet = new CReader(*pcsReaderName, &m_oContext);
+					pRet = new CReader(*pcsReaderName, &m_oPCSC);
 					m_tpReaders[i] = pRet;
 					break;
 				}
@@ -155,7 +154,7 @@ namespace eIDMW
 
 		if (m_szDefaultReaderName.size() == 0)
 		{
-			CByteArray csReaders = m_oContext.m_oPCSC.ListReaders();
+			CByteArray csReaders = m_oPCSC.ListReaders();
 			if (csReaders.Size() != 0)
 			{
 				m_szDefaultReaderName = (char *)csReaders.GetBytes();

@@ -71,7 +71,7 @@ public:
 		void Disconnect(tDisconnectMode disconnectMode = DISCONNECT_LEAVE_CARD);
 
 private:
-		CReader(const std::string & csReader, CContext * poContext);
+		CReader(const std::string & csReader, CPCSC * poPCSC);
 		// No copies allowed
 		CReader(const CReader & oReader);
 		CReader & operator =(const CReader & oReader);
@@ -91,7 +91,7 @@ private:
 
 		friend class CCardLayer;	// calls the CReader constructor
 
-		CContext *m_poContext;
+		CPCSC *m_poPCSC;
 	};
 
 }

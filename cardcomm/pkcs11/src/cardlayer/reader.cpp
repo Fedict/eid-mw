@@ -26,11 +26,11 @@
 namespace eIDMW
 {
 
-	CReader::CReader(const std::string & csReader, CContext * poContext):m_poCard(NULL)
+	CReader::CReader(const std::string & csReader, CPCSC * poPCSC):m_poCard(NULL)
 	{
 		m_csReader = csReader;
 		m_wsReader = utilStringWiden(csReader);
-		m_poContext = poContext;
+		m_poPCSC = poPCSC;
 		m_poCard = NULL;
 	}
 
@@ -80,7 +80,7 @@ namespace eIDMW
 		try {
 			if (m_poCard == NULL)
 			{
-				if (m_poContext->m_oPCSC.Status(m_csReader))
+				if (m_poPCSC->Status(m_csReader))
 				{
 					if (!bPresenceOnly) {
 						status = Connect()? CARD_INSERTED : CARD_NOT_PRESENT;
@@ -96,7 +96,7 @@ namespace eIDMW
 				if (m_poCard->Status())
 				{
 #else
-				if (m_poContext->m_oPCSC.Status(m_csReader))
+				if (m_poPCSC->Status(m_csReader))
 				{
 #endif
 					status = CARD_STILL_PRESENT;
@@ -105,7 +105,7 @@ namespace eIDMW
 					Disconnect();
 					// if bReconnect = true, then we try to connect to a
 					// possibly new card that has been inserted
-					if (bReconnect && m_poContext->m_oPCSC.Status(m_csReader))
+					if (bReconnect && m_poPCSC->Status(m_csReader))
 					{
 						status = Connect()? CARD_OTHER : CARD_REMOVED;
 					}
@@ -150,18 +150,18 @@ namespace eIDMW
 			Disconnect(DISCONNECT_LEAVE_CARD);
 
 		MWLOG(LEV_INFO, MOD_CAL, L" CReader::Connect()");
-		m_poCard = CardConnect(m_csReader, m_poContext, &m_oPinpad);
+		m_poCard = CardConnect(m_csReader, m_poPCSC, &m_oPinpad);
 		if (m_poCard != NULL)
 		{
 			
 #ifdef WIN32
 			if ((strstr(m_csReader.c_str(), "SPRx32 USB") != NULL))
 			{
-				m_oPinpad.Init(m_poContext, m_poCard->m_hCard, m_csReader, m_poCard->GetPinpadPrefix(), m_poCard->GetIFDVersion());
+				m_oPinpad.Init(m_poPCSC, m_poCard->m_hCard, m_csReader, m_poCard->GetPinpadPrefix(), m_poCard->GetIFDVersion());
 			} else
 			{
 #endif
-				m_oPinpad.Init(m_poContext, m_poCard->m_hCard, m_csReader, m_poCard->GetPinpadPrefix());
+				m_oPinpad.Init(m_poPCSC, m_poCard->m_hCard, m_csReader, m_poCard->GetPinpadPrefix());
 #ifdef WIN32
 			}
 #endif

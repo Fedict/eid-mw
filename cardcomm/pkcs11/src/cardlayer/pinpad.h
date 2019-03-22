@@ -47,17 +47,17 @@
 
 namespace eIDMW
 {
-	class CContext;
+	class CPCSC;
 
 	class CPinpad
 	{
 public:
 		CPinpad(void);
 
-		void Init(CContext * poContext, SCARDHANDLE hCard,
+		void Init(CPCSC * poPCSC, SCARDHANDLE hCard,
 			  const std::string & csReader,
 			  const std::string & csPinpadPrefix);
-		void Init(CContext * poContext, SCARDHANDLE hCard,
+		void Init(CPCSC * poPCSC, SCARDHANDLE hCard,
 			  const std::string & csReader,
 			  const std::string & csPinpadPrefix,
 			  CByteArray usReaderFirmVers);
@@ -70,7 +70,7 @@ public:
 				  unsigned long &ulRemaining);
 
 protected:
-		     CByteArray PinpadControl(unsigned long ulControl,
+		CByteArray PinpadControl(unsigned long ulControl,
 					      const CByteArray & oCmd,
 					      tPinOperation operation,
 					      unsigned char ucPintype,
@@ -103,14 +103,14 @@ protected:
 				   const CByteArray & oAPDU,
 				   unsigned long &ulRemaining);
 
-		CContext *m_poContext;
+		CPCSC *m_poPCSC;
 		SCARDHANDLE m_hCard;
 #ifdef WIN32
 #pragma warning(push)
 #pragma warning(disable:4251)	// these strings do not need a dll interface
 #endif
-		            std::string m_csReader;
-		            std::string m_csPinpadPrefix;
+		std::string m_csReader;
+		std::string m_csPinpadPrefix;
 #ifdef WIN32
 #pragma warning(pop)
 #endif

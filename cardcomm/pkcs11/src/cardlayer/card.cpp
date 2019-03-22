@@ -93,8 +93,8 @@ namespace eIDMW
 		0x04, 0x14
 	};
 
-	CCard::CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
-	  : m_hCard(hCard), m_poContext(poContext), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0), m_oPKCS15(),
+	CCard::CCard(SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
+	  : m_hCard(hCard), m_poPCSC(poPCSC), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0), m_oPKCS15(),
 	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinUsage(BEID_PINS_USE_ONE_PIN), m_ucAppletVersion(0), m_ul6CDelay(0)
 	{
 		try
@@ -152,24 +152,24 @@ namespace eIDMW
 			SCARDHANDLE hTemp = m_hCard;
 
 			m_hCard = 0;
-			m_poContext->m_oPCSC.Disconnect(hTemp, disconnectMode);
+			m_poPCSC->Disconnect(hTemp, disconnectMode);
 			m_oPKCS15.Clear(NULL);
 		}
 	}
 
 	CByteArray CCard::GetATR()
 	{
-		return m_poContext->m_oPCSC.GetATR(m_hCard);
+		return m_poPCSC->GetATR(m_hCard);
 	}
 
 	CByteArray CCard::GetIFDVersion()
 	{
-		return m_poContext->m_oPCSC.GetIFDVersion(m_hCard);
+		return m_poPCSC->GetIFDVersion(m_hCard);
 	}
 
 	bool CCard::Status()
 	{
-		return m_poContext->m_oPCSC.Status(m_hCard);
+		return m_poPCSC->Status(m_hCard);
 	}
 
 	bool CCard::IsPinpadReader()
@@ -343,7 +343,7 @@ namespace eIDMW
 	void CCard::Lock()
 	{
 		if (m_ulLockCount == 0)
-			m_poContext->m_oPCSC.BeginTransaction(m_hCard);
+			m_poPCSC->BeginTransaction(m_hCard);
 		m_ulLockCount++;
 	}
 
@@ -355,7 +355,7 @@ namespace eIDMW
 		{
 			m_ulLockCount--;
 			if (m_ulLockCount == 0)
-				m_poContext->m_oPCSC.EndTransaction(m_hCard);
+				m_poPCSC->EndTransaction(m_hCard);
 		}
 	}
 
@@ -447,7 +447,7 @@ namespace eIDMW
 				}
 				else
 				{
-					throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
+					throw CMWEXCEPTION(m_poPCSC->SW12ToErr(ulSW12));
 				}
 			}
 			// If the driver/reader itself did the 6CXX handling,
@@ -468,12 +468,12 @@ namespace eIDMW
 		CAutoLock oAutoLock(this);
 		long lRetVal = 0;
 
-		CByteArray oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmdAPDU, &lRetVal);
+		CByteArray oResp = m_poPCSC->Transmit(m_hCard, oCmdAPDU, &lRetVal);
 
 		//try to recover from communication issues with the card
 		if (m_cardType == CARD_BEID && (lRetVal == SCARD_E_COMM_DATA_LOST || lRetVal == SCARD_E_NOT_TRANSACTED))
 		{
-			m_poContext->m_oPCSC.Recover(m_hCard, &m_ulLockCount);
+			m_poPCSC->Recover(m_hCard, &m_ulLockCount);
 			// try again to select the applet
 			CByteArray oData;
 			CByteArray oCmd(40);
@@ -483,13 +483,13 @@ namespace eIDMW
 			  0x10, 0x01, 0x01, 0xFF };
 			oCmd.Append(Cmd, sizeof(Cmd));
 
-			oData = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd, &lRetVal);
+			oData = m_poPCSC->Transmit(m_hCard, oCmd, &lRetVal);
 
 			if ((oData.Size() == 2) && ((oData.GetByte(0) == 0x61)
 				|| ((oData.GetByte(0) == 0x90) && (oData.GetByte(1) == 0x00))))
 			{
 				//try again, now that the card has been reset
-				oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmdAPDU, &lRetVal);
+				oResp = m_poPCSC->Transmit(m_hCard, oCmdAPDU, &lRetVal);
 			}
 		}
 
@@ -604,14 +604,14 @@ namespace eIDMW
 		if (ulExpected != 0 && ulExpected != ulSW12)
 		{
 			MWLOG(LEV_WARN, MOD_CAL, L"Card returned SW12 = %04X, expected %04X", ulSW12, ulExpected);
-			throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
+			throw CMWEXCEPTION(m_poPCSC->SW12ToErr(ulSW12));
 		}
 
 		return ulSW12;
 	}
 
 
-	static bool BeidCardSelectApplet(CContext * poContext, SCARDHANDLE hCard)
+	static bool BeidCardSelectApplet(CPCSC * poPCSC, SCARDHANDLE hCard)
 	{
 		long lRetVal = 0;
 		unsigned char tucSelectApp[] = { 0x00, 0xA4, 0x04, 0x00 };
@@ -622,7 +622,7 @@ namespace eIDMW
 		CByteArray oResp;
 		try
 		{
-			oResp = poContext->m_oPCSC.Transmit(hCard, oCmd, &lRetVal);
+			oResp = poPCSC->Transmit(hCard, oCmd, &lRetVal);
 		}
 		catch (CMWException &e)
 		{
@@ -638,29 +638,29 @@ namespace eIDMW
 	}
 
 	CCard * UnknownCardGetInstance(const char *csReader,
-		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad)
+		SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad)
 	{
-		CCard *poCard = new CCard(hCard, poContext, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
+		CCard *poCard = new CCard(hCard, poPCSC, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
 
 		return poCard;
 	}
 
 	CCard * BeidCardGetInstance(const char *csReader,
-		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad)
+		SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad)
 	{
 		CCard * poCard = NULL;
 
 		try
 		{
-			bool bIsBeidCard = BeidCardSelectApplet(poContext, hCard);
+			bool bIsBeidCard = BeidCardSelectApplet(poPCSC, hCard);
 
 			if (bIsBeidCard)
 			{
-				poCard = new CCard(hCard, poContext, poPinpad, TRY_SELECT_APPLET, CARD_BEID);
+				poCard = new CCard(hCard, poPCSC, poPinpad, TRY_SELECT_APPLET, CARD_BEID);
 			}
 			else
 			{
-				poCard = new CCard(hCard, poContext, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
+				poCard = new CCard(hCard, poPCSC, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
 			}
 		}
 		catch (...)
@@ -936,7 +936,7 @@ namespace eIDMW
 		unsigned long ulSW12 = getSW12(oResp);
 
 		if (ulSW12 != 0x9000) {
-			throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
+			throw CMWEXCEPTION(m_poPCSC->SW12ToErr(ulSW12));
 		}
 
 		// Remove SW1-SW2 from the response
@@ -956,7 +956,7 @@ namespace eIDMW
 
 	bool CCard::SelectApplet()
 	{
-		return BeidCardSelectApplet(m_poContext, m_hCard);
+		return BeidCardSelectApplet(m_poPCSC, m_hCard);
 	}
 /*
 	tBelpicDF CCard::getDF(const std::string & csPath,
@@ -1160,7 +1160,7 @@ namespace eIDMW
 		else if (ulSW12 / 16 == 0x63C)
 			ulRemaining = ulSW12 % 16;
 		else
-			throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
+			throw CMWEXCEPTION(m_poPCSC->SW12ToErr(ulSW12));
 
 #ifndef NO_DIALOGS
 		// Bad PIN: show a dialog to ask the user to try again
@@ -1173,10 +1173,10 @@ namespace eIDMW
 				goto bad_pin;
 		}
 #endif
-
+		
 		// If PIN command OK and no SSO, then state that we have now
 		// verified this PIN, this info is needed in the Sign() method
-		if (bRet && !m_poContext->m_bSSO)
+		if (bRet && !m_poPCSC->m_bSSO)
 		{
 			bool bFound = false;
 
@@ -1306,7 +1306,7 @@ namespace eIDMW
 			if (ulSW12 == 0x6A82 || ulSW12 == 0x6A86)
 			{
 				if (ulPathLen == 2)
-					throw CMWEXCEPTION(m_poContext->m_oPCSC.SW12ToErr(ulSW12));
+					throw CMWEXCEPTION(m_poPCSC->SW12ToErr(ulSW12));
 
 				// The file wasn't found in this DF, so let's select by full path
 				oResp = SelectByPath(csPath);

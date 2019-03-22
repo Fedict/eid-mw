@@ -92,7 +92,7 @@ namespace eIDMW
 		CCardLayer & operator =(const CCardLayer & oCardLayer);
 		std::string * GetDefaultReader();
 
-		CContext m_oContext;
+		CPCSC m_oPCSC;
 
 #ifdef WIN32
 #pragma warning(push)

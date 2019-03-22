@@ -33,16 +33,16 @@
 namespace eIDMW
 {
 
-	CPinpad::CPinpad(void):m_poContext(NULL), m_hCard(0), m_usReaderFirmVers(0), m_bNewCard(true),
+	CPinpad::CPinpad(void):m_poPCSC(NULL), m_hCard(0), m_usReaderFirmVers(0), m_bNewCard(true),
 		m_bUsePinpadLib(false), m_ulLangCode(0), m_bCanVerifyUnlock(false), m_bCanChangeUnlock(false),
 		m_ioctlVerifyStart(0), m_ioctlVerifyFinish(0), m_ioctlVerifyDirect(0), m_ioctlChangeStart(0),
 		m_ioctlChangeFinish(0), m_ioctlChangeDirect(0), m_bCanUsePPDU(false)
 	{
 	}
 
-	void CPinpad::Init(CContext * poContext, SCARDHANDLE hCard, const std::string & csReader, const std::string & csPinpadPrefix)
+	void CPinpad::Init(CPCSC* poPCSC, SCARDHANDLE hCard, const std::string & csReader, const std::string & csPinpadPrefix)
 	{
-		m_poContext = poContext;
+		m_poPCSC = poPCSC;
 		m_hCard = hCard;
 		m_csReader = csReader;
 
@@ -55,10 +55,10 @@ namespace eIDMW
 		m_csPinpadPrefix = csPinpadPrefix;
 	}
 
-	void CPinpad::Init(CContext * poContext, SCARDHANDLE hCard, const std::string & csReader,
+	void CPinpad::Init(CPCSC * poPCSC, SCARDHANDLE hCard, const std::string & csReader,
 			   const std::string & csPinpadPrefix, CByteArray usReaderFirmVers)
 	{
-		this->Init(poContext, hCard, csReader, csPinpadPrefix);
+		this->Init(poPCSC, hCard, csReader, csPinpadPrefix);
 
 		m_usReaderFirmVers = usReaderFirmVers.GetByte(3) * 256 + usReaderFirmVers.GetByte(2);
 	}
@@ -67,7 +67,7 @@ namespace eIDMW
 	{
 		if (m_bNewCard)
 		{
-			m_bUsePinpadLib = m_oPinpadLib.Load((unsigned long) m_poContext->m_oPCSC.m_hContext, m_hCard, m_csReader,
+			m_bUsePinpadLib = m_oPinpadLib.Load((unsigned long) m_poPCSC->m_hContext, m_hCard, m_csReader,
 				     m_csPinpadPrefix, GetLanguage());
 
 			// The GemPC pinpad reader does a "Verify PIN" with empty buffer in an attempt
@@ -359,7 +359,7 @@ namespace eIDMW
 		{
 			if (!m_bUsePinpadLib)
 			{
-				oResp = m_poContext->m_oPCSC.Control(m_hCard, ulControl, oCmd);
+				oResp = m_poPCSC->Control(m_hCard, ulControl, oCmd);
 			} else
 			{
 				m_ulLangCode = 0;//forget the previously know language, so the register is checked once more
@@ -511,7 +511,7 @@ namespace eIDMW
 			(m_csReader.find("ETSWW eKrypto PINPhab") == 0) ||
 			(m_csReader.find("DIOSS pinpad") == 0))
 		{
-			oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oCmd, &lRetVal);
+			oResp = m_poPCSC->Transmit(m_hCard, oCmd, &lRetVal);
 			for (; counter < (oResp.Size() - 2); counter++)
 			{
 				switch (oResp.GetByte(counter))
@@ -585,7 +585,7 @@ namespace eIDMW
 		{
 			bCloseDlg = m_oPinpadLib.ShowDlg(pinpadOperation, ucPintype, csPinLabel, m_csReader, &dlgHandle);
 		}
-		oResp = m_poContext->m_oPCSC.Transmit(m_hCard, oTransmit, &lRetVal);
+		oResp = m_poPCSC->Transmit(m_hCard, oTransmit, &lRetVal);
 
 		if (bCloseDlg)
 		{

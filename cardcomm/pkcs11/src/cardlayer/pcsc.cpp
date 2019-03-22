@@ -41,7 +41,8 @@ namespace eIDMW
 	CPCSC::CPCSC()
 	{
 		CConfig config;
-
+		m_bSSO = CConfig::GetLong(CConfig::EIDMW_CONFIG_PARAM_SECURITY_SINGLESIGNON) != 0;
+		m_ulConnectionDelay = CConfig::GetLong(CConfig::EIDMW_CONFIG_PARAM_GENERAL_CARDCONNDELAY);
 		m_ulCardTxDelay = config.GetLong(CConfig::EIDMW_CONFIG_PARAM_GENERAL_CARDTXDELAY);
 		m_hContext = 0;
 		m_iTimeoutCount = 0;

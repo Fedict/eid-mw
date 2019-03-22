@@ -65,8 +65,8 @@ namespace eIDMW
 	class CCard
 	{
 	public:
-		//CCard(SCARDHANDLE hCard, CContext * poContext,  CPinpad * poPinpad);
-		CCard(SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad,
+
+		CCard(SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad,
 			tSelectAppletMode selectAppletMode, tCardType cardType);
 		~CCard(void);
 
@@ -225,7 +225,7 @@ namespace eIDMW
 		CByteArray SignInternal(const tPrivKey & key, unsigned long algo, const CByteArray & oData,
 			const tPin * pPin = NULL);
 
-		CContext *m_poContext;
+		CPCSC *m_poPCSC;
 		CPinpad *m_poPinpad;
 		tCardType m_cardType;
 		unsigned long m_ulLockCount;
@@ -253,6 +253,7 @@ namespace eIDMW
 		CCard & operator =(const CCard & oCard);
 
 		CPKCS15 m_oPKCS15;
+
 	};
 
 	class CAutoLock
@@ -275,10 +276,10 @@ namespace eIDMW
 	};
 
 	CCard *BeidCardGetInstance(const char *csReader,
-		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad);
+		SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad);
 
 	CCard *UnknownCardGetInstance(const char *csReader,
-		SCARDHANDLE hCard, CContext * poContext, CPinpad * poPinpad);
+		SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad);
 }
 
 #endif

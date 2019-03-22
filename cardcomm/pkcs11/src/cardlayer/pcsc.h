@@ -103,6 +103,9 @@ public:
 		CPCSC(void);
 		~CPCSC(void);
 
+		bool m_bSSO; // force Single Sign-On
+		unsigned long m_ulConnectionDelay;
+
 		void EstablishContext();
 
 		void ReleaseContext();

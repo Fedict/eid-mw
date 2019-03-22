@@ -35,21 +35,21 @@ namespace eIDMW
  * (that should free()-ed when no longer used) that can be used
  * to communicate to a beidcard.
  */
-	CCard *CardConnect(const std::string & csReader, CContext * poContext, CPinpad * poPinpad)
+	CCard *CardConnect(const std::string & csReader, CPCSC * poPCSC, CPinpad * poPinpad)
 	{
 		CCard *poCard = NULL;
 		long lErrCode = EIDMW_ERR_CHECK;	// should never be returned
 		const char *strReader = NULL;
 
-		if (poContext->m_ulConnectionDelay != 0)
+		if (poPCSC->m_ulConnectionDelay != 0)
 		{
-			CThread::SleepMillisecs(poContext->m_ulConnectionDelay);
+			CThread::SleepMillisecs(poPCSC->m_ulConnectionDelay);
 		}
 		// Try if we can connect to the card via a normal SCardConnect()
 		SCARDHANDLE hCard = 0;
 		try
 		{
-			hCard = poContext->m_oPCSC.Connect(csReader);
+			hCard = poPCSC->Connect(csReader);
 			if (hCard == 0)
 			{
 				goto done;
@@ -77,7 +77,7 @@ namespace eIDMW
 			// 1. A card is present and we could connect to it via a normal SCardConnect()
 			if (poCard == NULL)
 			{
-				poCard = BeidCardGetInstance(strReader, hCard, poContext, poPinpad);
+				poCard = BeidCardGetInstance(strReader, hCard, poPCSC, poPinpad);
 			}
 		}
 
@@ -87,7 +87,7 @@ namespace eIDMW
 
 			if (poCard == NULL)
 			{
-				poCard = UnknownCardGetInstance(strReader, hCard, poContext, poPinpad);
+				poCard = UnknownCardGetInstance(strReader, hCard, poPCSC, poPinpad);
 			}
 
 			// If the card is still not recognized here, then it may as well
