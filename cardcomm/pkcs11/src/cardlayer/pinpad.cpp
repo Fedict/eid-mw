@@ -19,7 +19,7 @@
 
 **************************************************************************** */
 #include "pinpad.h"
-#include "context.h"
+#include "pcsc.h"
 #include "pinpad2.h"
 #include "common/log.h"
 #include "common/util.h"

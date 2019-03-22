@@ -23,7 +23,7 @@
 
 #include "reader.h"
 #include "readersinfo.h"
-#include "context.h"
+#include "pcsc.h"
 
 namespace eIDMW
 {

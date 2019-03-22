@@ -185,10 +185,8 @@
 		86C0E96221C25E4700602028 /* cardlayerconst.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E94221C25E4700602028 /* cardlayerconst.h */; };
 		86C0E96321C25E4700602028 /* card.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E94321C25E4700602028 /* card.h */; };
 		86C0E96421C25E4700602028 /* cardlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E94421C25E4700602028 /* cardlayer.cpp */; };
-		86C0E96521C25E4700602028 /* context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E94521C25E4700602028 /* context.cpp */; };
 		86C0E96621C25E4700602028 /* pinpadlib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E94621C25E4700602028 /* pinpadlib.cpp */; };
 		86C0E96721C25E4700602028 /* pkcs15parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E94721C25E4700602028 /* pkcs15parser.cpp */; };
-		86C0E96821C25E4700602028 /* context.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E94821C25E4700602028 /* context.h */; };
 		86C0E96921C25E4700602028 /* p15objects.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E94921C25E4700602028 /* p15objects.h */; };
 		86C0E96D21C25E4700602028 /* pinpad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E94E21C25E4700602028 /* pinpad.cpp */; };
 		86C0E96E21C25E4700602028 /* pinpadlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E94F21C25E4700602028 /* pinpadlib.h */; };
@@ -528,10 +526,8 @@
 		86C0E94221C25E4700602028 /* cardlayerconst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cardlayerconst.h; sourceTree = "<group>"; };
 		86C0E94321C25E4700602028 /* card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = card.h; sourceTree = "<group>"; };
 		86C0E94421C25E4700602028 /* cardlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardlayer.cpp; sourceTree = "<group>"; };
-		86C0E94521C25E4700602028 /* context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = context.cpp; sourceTree = "<group>"; };
 		86C0E94621C25E4700602028 /* pinpadlib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pinpadlib.cpp; sourceTree = "<group>"; };
 		86C0E94721C25E4700602028 /* pkcs15parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pkcs15parser.cpp; sourceTree = "<group>"; };
-		86C0E94821C25E4700602028 /* context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = context.h; sourceTree = "<group>"; };
 		86C0E94921C25E4700602028 /* p15objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = p15objects.h; sourceTree = "<group>"; };
 		86C0E94E21C25E4700602028 /* pinpad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pinpad.cpp; sourceTree = "<group>"; };
 		86C0E94F21C25E4700602028 /* pinpadlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinpadlib.h; sourceTree = "<group>"; };
@@ -1019,10 +1015,8 @@
 				86C0E94221C25E4700602028 /* cardlayerconst.h */,
 				86C0E94321C25E4700602028 /* card.h */,
 				86C0E94421C25E4700602028 /* cardlayer.cpp */,
-				86C0E94521C25E4700602028 /* context.cpp */,
 				86C0E94621C25E4700602028 /* pinpadlib.cpp */,
 				86C0E94721C25E4700602028 /* pkcs15parser.cpp */,
-				86C0E94821C25E4700602028 /* context.h */,
 				86C0E94921C25E4700602028 /* p15objects.h */,
 				86C0E94E21C25E4700602028 /* pinpad.cpp */,
 				86C0E94F21C25E4700602028 /* pinpadlib.h */,
@@ -1074,7 +1068,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				86C0E96E21C25E4700602028 /* pinpadlib.h in Headers */,
-				86C0E96821C25E4700602028 /* context.h in Headers */,
 				86C0E96921C25E4700602028 /* p15objects.h in Headers */,
 				86C0E77821C2586E00602028 /* tomcrypt_hash.h in Headers */,
 				86C0E77E21C2586E00602028 /* tomcrypt_argchk.h in Headers */,
@@ -1517,7 +1510,6 @@
 				86C0E76A21C2586E00602028 /* logbase.cpp in Sources */,
 				86C0E76721C2586E00602028 /* tlv.cpp in Sources */,
 				86C0E96621C25E4700602028 /* pinpadlib.cpp in Sources */,
-				86C0E96521C25E4700602028 /* context.cpp in Sources */,
 				86E3DF631653EFE60015B5E1 /* p11.c in Sources */,
 				86E3DF641653EFE60015B5E1 /* session.c in Sources */,
 				86C0E76E21C2586E00602028 /* configuration.cpp in Sources */,

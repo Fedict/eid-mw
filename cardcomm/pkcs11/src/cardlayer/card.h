@@ -29,7 +29,7 @@
 #define CARD_H
 
 #include "p15objects.h"
-#include "context.h"
+#include "pcsc.h"
 #include "internalconst.h"
 #include "common/bytearray.h"
 #include "common/mwexception.h"
