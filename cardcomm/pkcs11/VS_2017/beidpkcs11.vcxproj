@@ -481,7 +481,6 @@
     <ClCompile Include="..\src\cardlayer\card.cpp" />
     <ClCompile Include="..\src\cardlayer\cardfactory.cpp" />
     <ClCompile Include="..\src\cardlayer\cardlayer.cpp" />
-    <ClCompile Include="..\src\cardlayer\context.cpp" />
     <ClCompile Include="..\src\cardlayer\old\PinpadLibOldBeid.cpp" />
     <ClCompile Include="..\src\cardlayer\pcsc.cpp" />
     <ClCompile Include="..\src\cardlayer\pinpad.cpp" />
@@ -538,7 +537,6 @@
     <ClInclude Include="..\src\cardlayer\cardfactory.h" />
     <ClInclude Include="..\src\cardlayer\cardlayer.h" />
     <ClInclude Include="..\src\cardlayer\cardlayerconst.h" />
-    <ClInclude Include="..\src\cardlayer\context.h" />
     <ClInclude Include="..\src\cardlayer\internalconst.h" />
     <ClInclude Include="..\src\cardlayer\old\PinpadLibOldBeid.h" />
     <ClInclude Include="..\src\cardlayer\old\scr.h" />

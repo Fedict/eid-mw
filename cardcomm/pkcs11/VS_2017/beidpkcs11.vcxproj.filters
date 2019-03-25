@@ -34,9 +34,6 @@
     <ClCompile Include="..\src\cardlayer\cardlayer.cpp">
       <Filter>Cardlayer</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cardlayer\context.cpp">
-      <Filter>Cardlayer</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\dialogs\dialogswin32\dlgswin32.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
@@ -193,9 +190,6 @@
       <Filter>Cardlayer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cardlayer\cardlayerconst.h">
-      <Filter>Cardlayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cardlayer\context.h">
       <Filter>Cardlayer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\dialogs\dialogs.h">
