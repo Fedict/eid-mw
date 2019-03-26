@@ -2422,11 +2422,13 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 	{
 		std::string reader = pSlot->name;
 		CReader & oReader = oCardLayer->getReader(reader);
-		CCard* poCard = oReader.GetCard();
+		CCard* poCard = NULL;
 		//we get an error thrown here when the cardobject has not been created yet
 
 		*pStatus = cal_map_status(oReader.Status(true, bPresenceOnly ? true : false));
 		
+		poCard = oReader.GetCard();
+
 		if ( (*pStatus == P11_CARD_INSERTED) || (*pStatus == P11_CARD_STILL_PRESENT)  || (*pStatus == P11_CARD_OTHER) )
 		{
 			if (!bPresenceOnly && (poCard->GetType() == CARD_UNKNOWN))
