@@ -1125,7 +1125,6 @@ namespace eIDMW
 		oAPDU.Append(oPinBuf);
 
 		CByteArray oResp;
-		bool bSelected = false;
 
 		// Don't remove these brackets!!
 		{
