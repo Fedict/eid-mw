@@ -94,8 +94,8 @@ namespace eIDMW
 	};
 
 	CCard::CCard(SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
-	  : m_hCard(hCard), m_poPCSC(poPCSC), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0), m_oPKCS15(),
-	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinUsage(BEID_PINS_USE_ONE_PIN), m_ucAppletVersion(0), m_ul6CDelay(0)
+	  : m_hCard(hCard), m_poPCSC(poPCSC), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0),
+	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinUsage(BEID_PINS_USE_ONE_PIN), m_ucAppletVersion(0), m_ul6CDelay(0), m_oPKCS15()
 	{
 		try
 		{
