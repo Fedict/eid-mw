@@ -1345,7 +1345,7 @@ namespace eIDMW
 			CByteArray oCmd(6);
 
 			//select file by relative path APDU
-			const unsigned char Cmd[] = { 0x00, 0xA4, 0x02, 0x0C };
+			const unsigned char Cmd[] = { 0x00, 0xA4, 0x02, 0x0C, 0x02 };
 			oCmd.Append(Cmd, sizeof(Cmd));
 
 			//add the correct path
