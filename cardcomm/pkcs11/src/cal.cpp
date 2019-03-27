@@ -255,7 +255,7 @@ CK_RV cal_token_present(CK_SLOT_ID hSlot, int *pPresent)
 	CK_RV ret = CKR_OK;
 	int status = P11_CARD_NOT_PRESENT;
 
-	ret = cal_update_token(hSlot, &status, 1);
+	ret = cal_update_token(hSlot, &status, 0);
 
 	switch (status)
 	{
