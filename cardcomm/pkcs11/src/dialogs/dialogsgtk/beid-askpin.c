@@ -96,7 +96,10 @@ static void add_digit(PinDialogInfo * pindialog, int digit) {
         if (strlen(pindialog->pin) < MAX_PIN_LENGTH) {
                 char tmp[MAX_PIN_LENGTH + 1];
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-truncation"
                 snprintf(tmp, MAX_PIN_LENGTH + 1, "%s%1d", pindialog->pin, digit);
+#pragma GCC diagnostic pop
                 strcpy(pindialog->pin, tmp);
                 pin_changed(pindialog);
         }
