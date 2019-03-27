@@ -1504,7 +1504,7 @@ CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 				goto cleanup;
 
 			oByte = oCardData.GetByte(29);
-			//If PIN is not found, the # attempts returned for this PIN is set to ‘FF’.
+			//If PIN is not found, the # attempts returned for this PIN is set to "FF".
 			//do not create objects for non-existing PINs
 			if (oByte != 0xFF)
 			{
