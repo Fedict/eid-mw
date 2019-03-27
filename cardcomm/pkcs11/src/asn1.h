@@ -136,7 +136,12 @@ extern "C"
 
 
 #define OID_RSA_ENCRYPTION      "\x2A\x86\x48\x86\xF7\x0D\x01\x01\x01"
+#define OID_EC_PUBLIC_KEY	"\x2A\x86\x48\xCE\x3D\x02\x01"
 #define ASNPATH_FIRST           "\x01"
+
+#define OID_SECP384R1		"\x2B\x81\x04\x00\x22"
+#define OID_SECP521R1		"\x2B\x81\x04\x00\x23"
+#define OID_BRAINPOOLP512R1	"\x2B\x24\x03\x03\x02\x08\x01\x01\x0D"
 
 /* ASN1 decoding functions */
 	int asn1_get_item(const unsigned char *content, unsigned int len,
