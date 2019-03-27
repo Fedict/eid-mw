@@ -455,6 +455,7 @@ namespace eIDMW
 				break;
 			case SCARD_E_NO_SERVICE:
 			case SCARD_E_SERVICE_STOPPED:
+			case SCARD_E_UNKNOWN_READER:
 				lRet = EIDMW_ERR_NO_READER;
 				break;
 			case SCARD_W_RESET_CARD:
