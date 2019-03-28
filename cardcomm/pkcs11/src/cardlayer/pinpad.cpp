@@ -151,7 +151,7 @@ namespace eIDMW
 
 	unsigned char CPinpad::GetMaxPinLen(const tPin & pin)
 	{
-		unsigned char ucRes = (unsigned char)(pin.ulMaxLen > 0 ? pin.ulMaxLen : pin.ulStoredLen);
+		unsigned char ucRes = (unsigned char)(pin.ulMaxLen);
 
 		// READER FIX:
 		// Limitation of the GemPC reader: at most 8 PIN digits

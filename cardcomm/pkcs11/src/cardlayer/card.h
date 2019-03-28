@@ -62,6 +62,18 @@ namespace eIDMW
 		BEID_PINS_USE_SEPARATE_PINS			//3 PINS: PINauthenticate, PINnonrepudiation, PINreadEF will use their own IDs
 	} tPinUsage;
 
+	typedef enum {
+		BEID_PIN_READ_EF,
+		BEID_PIN_AUTH,
+		BEID_PIN_NONREP,
+	} tPinObjective;
+
+	const static tPin PinInvalid = { false, "", 0, 0, 0, 0, 0 };
+	const static tPin PinBeid = { true, "Basic PIN", 1, 0, 4, 12, 8 };
+	const static tPin PinBeidAuth = { true, "Authentication", 1, 0, 4, 12, 8 };
+	const static tPin PinBeidSign = { true, "Signature", 4, 1, 4, 12, 8 };
+	const static tPin PinBeidEF = { true, "Data Access", 5, 2, 4, 12, 8 };
+
 	class CCard
 	{
 	public:
@@ -108,6 +120,8 @@ namespace eIDMW
 
 		CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
 
+		tPin GetPinFor(tPinObjective obj);
+		tPin GetPinByKeyID(unsigned long id);
 		unsigned long PinStatus(const tPin & Pin);
 		bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1,
 			const std::string & csPin2, unsigned long &ulRemaining, const tPrivKey * pKey = NULL);
@@ -146,12 +160,6 @@ namespace eIDMW
 
 		//--- P15 functions
 		unsigned long PinCount();
-
-		/** ulIndex ranges from 0 to PinCount() - 1 */
-		tPin GetPin(unsigned long ulIndex);
-
-		/** If bValid == false, then no PIN with this ID was found */
-		tPin GetPinByID(unsigned long ulID);
 
 		unsigned long CertCount();
 

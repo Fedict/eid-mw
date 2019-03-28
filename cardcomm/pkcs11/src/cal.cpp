@@ -1027,14 +1027,13 @@ CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 
 	std::string csPin = cpin;
 	unsigned long ulRemaining = 0;
-	unsigned long ulPinIdx = 0;
 
 	try
 	{
 		CReader& oReader = oCardLayer->getReader(szReader);
 		CCard* poCard = oReader.GetCard();
 
-		tPin tpin = poCard->GetPin(ulPinIdx);
+		tPin tpin = poCard->GetPinFor(eIDMW::BEID_PIN_AUTH);
 
 		if (!poCard->PinCmd(PIN_OP_VERIFY, tpin, csPin, "", ulRemaining))
 		{
@@ -1104,7 +1103,7 @@ CK_RV cal_logout(CK_SLOT_ID hSlot)
 
 
 #define WHERE "cal_change_pin()"
-CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
+CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG pinref, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
 		     CK_ULONG l_newpin, CK_CHAR_PTR newpin)
 {
 	CK_RV ret = CKR_OK;
@@ -1136,7 +1135,7 @@ CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
 		}
 		unsigned long ulRemaining = 0;
 
-		tPin tpin = poCard->GetPin(0);
+		tPin tpin = poCard->GetPinFor((eIDMW::tPinObjective)pinref);
 
 		if (!(poCard->PinCmd(PIN_OP_CHANGE, tpin, csPin, csNewPin, ulRemaining)))
 		{
