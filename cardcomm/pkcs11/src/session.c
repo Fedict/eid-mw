@@ -475,7 +475,7 @@ CK_RV C_SetPIN(CK_SESSION_HANDLE hSession,
 		goto cleanup;
 	}
 
-	ret = cal_change_pin(pSession->hslot, ulOldLen, pOldPin, ulNewLen, pNewPin);
+	ret = cal_change_pin(pSession->hslot, BEID_PIN_AUTH, ulOldLen, pOldPin, ulNewLen, pNewPin);
 cleanup:
 	p11_unlock();
 	log_trace(WHERE, "I: leave, ret = %i",ret);

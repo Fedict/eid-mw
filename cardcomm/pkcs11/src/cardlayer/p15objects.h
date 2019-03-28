@@ -40,20 +40,6 @@ namespace eIDMW
 		DLG_USG_PIN_ADDRESS,
 	} PinUsage;
 
-	// pin flags
-	const unsigned long PINFLAG_CASE_SENSITIVE = 0x00000001;
-	const unsigned long PINFLAG_LOCAL = 0x00000002;
-	const unsigned long PINFLAG_CHANGE_DISABLED = 0x00000004;
-	const unsigned long PINFLAG_UNBLOCK_DISABLED = 0x00000008;
-	const unsigned long PINFLAG_INITIALIZED = 0x00000010;
-	const unsigned long PINFLAG_NEEDS_PADDING = 0x00000020;
-	const unsigned long PINFLAG_UNBLOCKINGPIN = 0x00000040;
-	const unsigned long PINFLAG_SOPIN = 0x00000080;
-	const unsigned long PINFLAG_DISABLE_ALLOWED = 0x00000100;
-	const unsigned long PINFLAG_INTEGRITY_PROTECTED = 0x00000200;
-	const unsigned long PINFLAG_CONFIDENTIALITY_PROTECTED = 0x00000400;
-	const unsigned long PINFLAG_EXCHANGEREFDATA = 0x00000800;
-
 	// key usage flags
 	const unsigned long KEYUFLAG_ENCRYPT = 0x00000001;
 	const unsigned long KEYUFLAG_DECRYPT = 0x00000002;
@@ -73,29 +59,16 @@ namespace eIDMW
 	const unsigned long KEYAFLAG_NEVEREXTRACTABLE = 0x00000008;
 	const unsigned long KEYAFLAG_LOCAL = 0x00000010;
 
-	const unsigned long NO_ID = 0xFFFFFFFF;
-
 	typedef struct
 	{
 		bool bValid;
 		// common object attributes
 		std::string csLabel;
-		unsigned long ulFlags;
 		unsigned long ulAuthID;
-		unsigned long ulUserConsent;
-
-		// pin attributes
-		unsigned long ulID;
-		unsigned long ulPinFlags;
-		unsigned long ulPinType;
+		unsigned long ulIndex;
 		unsigned long ulMinLen;
-		unsigned long ulStoredLen;
 		unsigned long ulMaxLen;
-		unsigned long ulPinRef;
-		unsigned char ucPadChar;
-		//tPinEncoding encoding;
-		//std::string csLastChange;
-		//std::string csPath;
+		unsigned long ulStoredLen;
 	} tPin;
 
 	typedef struct

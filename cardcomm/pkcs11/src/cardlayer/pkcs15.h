@@ -60,7 +60,6 @@ namespace eIDMW
 //		EFDIR,
 //		ODF,
 //		TOKENINFO,
-		AODF,
 		CDF,
 		PRKDF,
 	} tPKCSFileName;
@@ -73,11 +72,6 @@ public:
 
 		void Clear(CCard * poCard = NULL);
 		void SetCard(CCard * poCard);
-
-		unsigned long PinCount();
-		tPin GetPin(unsigned long ulIndex);
-		tPin GetPinByID(unsigned long ulID);
-		tPin GetPinByRef(unsigned long ulPinRef);
 
 		unsigned long CertCount();
 		tCert GetCert(unsigned long ulIndex);
