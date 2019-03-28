@@ -211,9 +211,9 @@ namespace eIDMW
 
 	tPin CCard::GetPinByKeyID(unsigned long key) {
 		switch(key) {
-			case 82:
+			case 0x82:
 				return GetPinFor(BEID_PIN_AUTH);
-			case 83:
+			case 0x83:
 				return GetPinFor(BEID_PIN_NONREP);
 		}
 		return PinInvalid;
@@ -307,7 +307,7 @@ namespace eIDMW
 		unsigned long ulSupportedAlgos = GetSupportedAlgorithms();
 
 		if (algo & ulSupportedAlgos)
-			return Sign(key, GetPinByKeyID(key.ulAuthID), algo, oData);
+			return Sign(key, GetPinByKeyID(key.ulKeyRef), algo, oData);
 		else
 		{
 			CByteArray oAID_Data;
@@ -328,7 +328,7 @@ namespace eIDMW
 
 			if (ulSupportedAlgos & SIGN_ALGO_RSA_PKCS)
 			{
-				return Sign(key, GetPinByKeyID(key.ulAuthID), SIGN_ALGO_RSA_PKCS, oAID_Data);
+				return Sign(key, GetPinByKeyID(key.ulKeyRef), SIGN_ALGO_RSA_PKCS, oAID_Data);
 			}
 			else if (ulSupportedAlgos & SIGN_ALGO_RSA_RAW)
 			{
@@ -348,7 +348,7 @@ namespace eIDMW
 				oRawData.Append(0x00);
 				oRawData.Append(oAID_Data);
 
-				return Sign(key, GetPinByKeyID(key.ulAuthID), SIGN_ALGO_RSA_RAW, oData);
+				return Sign(key, GetPinByKeyID(key.ulKeyRef), SIGN_ALGO_RSA_RAW, oData);
 			}
 			else
 				throw CMWEXCEPTION(EIDMW_ERR_CHECK);
