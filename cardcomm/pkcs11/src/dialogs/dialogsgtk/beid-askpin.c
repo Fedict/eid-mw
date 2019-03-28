@@ -90,20 +90,20 @@ void pin_changed(PinDialogInfo * pindialog) {
         update_ok_button(pindialog);
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-truncation"
 // add one digit at the end of the current pin
 //////////////////////////////////////////////
 static void add_digit(PinDialogInfo * pindialog, int digit) {
         if (strlen(pindialog->pin) < MAX_PIN_LENGTH) {
                 char tmp[MAX_PIN_LENGTH + 1];
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-truncation"
                 snprintf(tmp, MAX_PIN_LENGTH + 1, "%s%1d", pindialog->pin, digit);
-#pragma GCC diagnostic pop
                 strcpy(pindialog->pin, tmp);
                 pin_changed(pindialog);
         }
 }
+#pragma GCC diagnostic pop
 
 // remove one digit from the current pin
 ////////////////////////////////////////
