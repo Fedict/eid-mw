@@ -1152,9 +1152,10 @@
 			buildConfigurationList = 65270A071FE975A1004F326D /* Build configuration list for PBXNativeTarget "BeidView" */;
 			buildPhases = (
 				65270A841FE97E22004F326D /* ShellScript */,
+				652709F71FE975A1004F326D /* Headers */,
 				652709F51FE975A1004F326D /* Sources */,
 				652709F61FE975A1004F326D /* Frameworks */,
-				652709F71FE975A1004F326D /* Headers */,
+				86C65C5C223913D4001ED3A7 /* Run Script */,
 				653490E91FEA75E2000F7787 /* CopyFiles */,
 				652709F81FE975A1004F326D /* Resources */,
 			);
@@ -1270,6 +1271,9 @@
 				French,
 				German,
 				Base,
+				nl,
+				fr,
+				de,
 			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* beidmw */;
 			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
@@ -1371,6 +1375,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmake -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\n";
+		};
+		86C65C5C223913D4001ED3A7 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Change the fixed dependency path of our pkcs11 module in BeidView to a runpath\n\ncd \"${CONFIGURATION_BUILD_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\ninstall_name_tool -change /usr/local/lib/libbeidpkcs11.4.4.16.dylib \"@rpath/libbeidpkcs11.4.4.16.dylib\" \"BeidView\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
