@@ -1,7 +1,7 @@
 @startuml
 actor App
-collections "Pkcs11:general.c" as gen
-collections "Cardlayer:cal.cpp" as cal
+participant "Pkcs11:general.c" as gen
+participant "Cardlayer:cal.cpp" as cal
 
 App -> gen: C_Initialize
 gen -> cal: cal_init
