@@ -11,5 +11,4 @@ dist_noinst_DATA = \
 endif
 EXTRA_DIST = \
 	cal.puml \
-	C_Initialize.txt
-			
+	C_Initialize.puml
