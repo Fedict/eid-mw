@@ -1,0 +1,41 @@
+---
+stages:
+ - source
+ - build
+ - publish
+ - sync
+build-source:
+  stage: source
+  before_script:
+    - apt-get update
+    - apt-get -y install autoconf automake libtool libpcsclite-dev libp11-kit-dev libgtk-3-dev libassuan-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml
+  script:
+    - autoreconf -f -i
+    - ./configure
+    - make distcheck
+  artifacts:
+    when:
+      on_success
+    paths:
+      - eid-mw-*.tar.gz
+      - eid-mw-*.zip
+.build-deb: &build-deb
+  before_script:
+    - apt-get update
+    - apt-get -y install devscripts adduser fakeroot sudo
+    - mk-build-deps -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends" -i -r
+    - adduser --disabled-password --gecos "" builduser
+    - chown -R builduser:builduser .
+    - mkdir build
+  stage: build
+  script:
+    - cd build && sudo -u builduser tar --strip-components=1 xvf ../eid-mw-*.tar.gz
+    - cd build && sudo -u builduser dpkg-buildpackage -uc -us -i -rfakeroot
+  after_script:
+    - mkdir output
+    - dcmd mv build/*ges output/
+  artifacts:
+    paths:
+      - output
+    when:
+      on_success
