@@ -27,9 +27,9 @@ build-source:
     - adduser --disabled-password --gecos "" builduser
     - mkdir build
     - chown -R builduser:builduser .
+    - cd build && sudo -u builduser tar xvf ../eid-mw-*.tar.gz --strip-components=1
   stage: build
   script:
-    - cd build && sudo -u builduser tar xvf ../eid-mw-*.tar.gz --strip-components=1
     - cd build && sudo -u builduser dpkg-buildpackage -uc -us -i -rfakeroot
   after_script:
     - mkdir output
