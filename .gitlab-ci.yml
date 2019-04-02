@@ -39,3 +39,6 @@ build-source:
       - output
     when:
       on_success
+build-deb9:
+  <<: *build-deb
+  image: debian:stretch
