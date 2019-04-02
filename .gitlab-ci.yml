@@ -25,8 +25,8 @@ build-source:
     - apt-get -y install devscripts adduser fakeroot sudo
     - mk-build-deps -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends" -i -r
     - adduser --disabled-password --gecos "" builduser
-    - chown -R builduser:builduser .
     - mkdir build
+    - chown -R builduser:builduser .
   stage: build
   script:
     - cd build && sudo -u builduser tar xvf ../eid-mw-*.tar.gz --strip-components=1
