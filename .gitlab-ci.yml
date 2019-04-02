@@ -14,7 +14,7 @@ build-source:
   script:
     - autoreconf -f -i
     - ./configure
-    - make distcheck
+    - make -j $(nproc) distcheck
   artifacts:
     when:
       on_success
