@@ -29,7 +29,7 @@ build-source:
     - mkdir build
   stage: build
   script:
-    - cd build && sudo -u builduser tar --strip-components=1 xvf ../eid-mw-*.tar.gz
+    - cd build && sudo -u builduser tar xvf ../eid-mw-*.tar.gz --strip-components=1
     - cd build && sudo -u builduser dpkg-buildpackage -uc -us -i -rfakeroot
   after_script:
     - mkdir output
