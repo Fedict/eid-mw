@@ -1,7 +1,8 @@
 ---
 stages:
  - source
- - build
+ - source-package
+ - binary-package
  - publish
  - sync
 build-source:
@@ -37,7 +38,7 @@ build-source:
     - if [ $DIST = "ubuntu" ]; then sbuild-createchroot --make-sbuild-tarball=/tarballs/$CODE-$ARCH.tgz --keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg $CODE $CODE http://192.168.122.1/apt-cacher/archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy; fi
     - mkdir build
     - cd build && tar xvf ../eid-mw-*.tar.gz --strip-components=1
-  stage: build
+  stage: binary-package
   script:
     - sbuild -n -d $TARGET-$CODE -c $CODE-$ARCH-sbuild --arch=$ARCH
   after_script:
