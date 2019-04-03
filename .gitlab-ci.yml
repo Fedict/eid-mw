@@ -42,8 +42,6 @@ build-source:
     - mkdir -p output
     - dcmd mv *ges output/
   image: $DIST:$CODE
-  tags:
-    - docker
   artifacts:
     paths:
       - output
@@ -56,6 +54,7 @@ build-deb8-32:
     CODE: jessie
     SHORT: deb8
   tags:
+    - docker
     - linux-32
 build-deb8-64:
   <<: *build-deb
@@ -64,6 +63,7 @@ build-deb8-64:
     CODE: jessie
     SHORT: deb8
   tags:
+    - docker
     - linux-64
 build-deb9-32:
   <<: *build-deb
@@ -72,6 +72,7 @@ build-deb9-32:
     CODE: stretch
     SHORT: deb9
   tags:
+    - docker
     - linux-32
 build-deb9-64:
   <<: *build-deb
@@ -80,6 +81,7 @@ build-deb9-64:
     CODE: stretch
     SHORT: deb9
   tags:
+    - docker
     - linux-64
 build-deb10-32:
   <<: *build-deb
@@ -88,6 +90,7 @@ build-deb10-32:
     CODE: buster
     SHORT: deb10
   tags:
+    - docker
     - linux-32
 build-deb10-64:
   <<: *build-deb
@@ -96,6 +99,7 @@ build-deb10-64:
     CODE: buster
     SHORT: deb10
   tags:
+    - docker
     - linux-64
 build-sid-32:
   <<: *build-deb
@@ -104,6 +108,7 @@ build-sid-32:
     CODE: sid
     SHORT: sid
   tags:
+    - docker
     - linux-32
 build-sid-64:
   <<: *build-deb
@@ -112,6 +117,7 @@ build-sid-64:
     CODE: sid
     SHORT: sid
   tags:
+    - docker
     - linux-64
 build-xenial-32:
   <<: *build-deb
@@ -120,6 +126,7 @@ build-xenial-32:
     CODE: xenial
     SHORT: u1604
   tags:
+    - docker
     - linux-32
 build-xenial-64:
   <<: *build-deb
@@ -128,6 +135,7 @@ build-xenial-64:
     CODE: xenial
     SHORT: u1604
   tags:
+    - docker
     - linux-64
 build-bionic-32:
   <<: *build-deb
@@ -136,6 +144,7 @@ build-bionic-32:
     CODE: bionic
     SHORT: u1804
   tags:
+    - docker
     - linux-32
 build-bionic-64:
   <<: *build-deb
@@ -144,6 +153,7 @@ build-bionic-64:
     CODE: bionic
     SHORT: u1804
   tags:
+    - docker
     - linux-64
 build-cosmic-32:
   <<: *build-deb
@@ -152,6 +162,7 @@ build-cosmic-32:
     CODE: cosmic
     SHORT: u1810
   tags:
+    - docker
     - linux-32
 build-cosmic-64:
   <<: *build-deb
@@ -160,6 +171,7 @@ build-cosmic-64:
     CODE: cosmic
     SHORT: u1810
   tags:
+    - docker
     - linux-64
 build-disco-32:
   <<: *build-deb
@@ -168,6 +180,7 @@ build-disco-32:
     CODE: disco
     SHORT: u1904
   tags:
+    - docker
     - linux-32
 build-disco-64:
   <<: *build-deb
@@ -176,4 +189,5 @@ build-disco-64:
     CODE: disco
     SHORT: u1904
   tags:
+    - docker
     - linux-64
