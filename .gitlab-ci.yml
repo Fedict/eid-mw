@@ -9,6 +9,8 @@ build-source:
     GIT_STRATEGY: clone
     TARGET: continuous
   stage: source
+  tags:
+    - docker
   image: debian:testing
   before_script:
     - sed -i -e 's,http://,http://192.168.122.1/apt-cacher/,g' /etc/apt/sources.list
@@ -48,7 +50,7 @@ build-source:
     when:
       on_success
   tags:
-    - docker
+    - shell
 build-deb8-32:
   <<: *build-deb
   variables:
