@@ -37,6 +37,7 @@ build-source:
   after_script:
     - mkdir ../output
     - dcmd mv ../*ges ../output/
+  image: $DIST:$CODE
   artifacts:
     paths:
       - output
@@ -44,4 +45,13 @@ build-source:
       on_success
 build-deb9:
   <<: *build-deb
-  image: debian:stretch
+  variables:
+    DIST: debian
+    CODE: stretch
+    SHORT: deb9
+build-deb10:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: buster
+    SHORT: deb10
