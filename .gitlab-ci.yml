@@ -35,7 +35,7 @@ build-source:
   script:
     - sudo -u builduser dpkg-buildpackage -uc -us -i -rfakeroot
   after_script:
-    - mkdir ../output
+    - mkdir -p ../output
     - dcmd mv ../*ges ../output/
   image: $DIST:$CODE
   artifacts:
