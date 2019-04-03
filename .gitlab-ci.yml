@@ -35,7 +35,8 @@ build-source:
     - cd build && tar xvf ../eid-mw-*.tar.gz --strip-components=1
   stage: binary-package
   script:
-    - sbuild -n -d $TARGET-$CODE -c $CODE-$ARCH-sbuild --arch=$ARCH
+    - if [ $ARCH = "i386" ]; then DASHA=-A; else DASHA=""; fi
+    - sbuild -n $DASHA -d $TARGET-$CODE -c $CODE-$ARCH-sbuild --arch=$ARCH
   after_script:
     - mkdir -p output
     - dcmd mv *ges output/
