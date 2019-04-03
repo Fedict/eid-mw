@@ -42,56 +42,138 @@ build-source:
     - mkdir -p output
     - dcmd mv *ges output/
   image: $DIST:$CODE
+  tags:
+    - docker
   artifacts:
     paths:
       - output
     when:
       on_success
-build-deb8:
+build-deb8-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: jessie
     SHORT: deb8
-build-deb9:
+  tags:
+    - linux-32
+build-deb8-64:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: jessie
+    SHORT: deb8
+  tags:
+    - linux-64
+build-deb9-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: stretch
     SHORT: deb9
-build-deb10:
+  tags:
+    - linux-32
+build-deb9-64:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: stretch
+    SHORT: deb9
+  tags:
+    - linux-64
+build-deb10-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: buster
     SHORT: deb10
-build-sid:
+  tags:
+    - linux-32
+build-deb10-64:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: buster
+    SHORT: deb10
+  tags:
+    - linux-64
+build-sid-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: sid
     SHORT: sid
-build-xenial:
+  tags:
+    - linux-32
+build-sid-64:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: sid
+    SHORT: sid
+  tags:
+    - linux-64
+build-xenial-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: xenial
     SHORT: u1604
-build-bionic:
+  tags:
+    - linux-32
+build-xenial-64:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: xenial
+    SHORT: u1604
+  tags:
+    - linux-64
+build-bionic-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: bionic
     SHORT: u1804
-build-cosmic:
+  tags:
+    - linux-32
+build-bionic-64:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: bionic
+    SHORT: u1804
+  tags:
+    - linux-64
+build-cosmic-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: cosmic
     SHORT: u1810
-build-disco:
+  tags:
+    - linux-32
+build-cosmic-64:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: cosmic
+    SHORT: u1810
+  tags:
+    - linux-64
+build-disco-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: disco
     SHORT: u1904
+  tags:
+    - linux-32
+build-disco-64:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: disco
+    SHORT: u1904
+  tags:
+    - linux-64
