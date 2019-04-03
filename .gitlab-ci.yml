@@ -31,8 +31,8 @@ build-source:
     - sed -i -e 's,http://,http://192.168.122.1/apt-cacher/,g' /etc/apt/sources.list
     - apt-get update
     - apt-get -y --no-install-recommends install ubuntu-archive-keyring
-    - if [ $DIST = "debian" ]; then sbuild-createchroot --make-sbuild-tarball=/tarballs/$CODE-$ARCH.tgz $CODE $CODE http://192.168.122.1/apt-cacher/deb.debian.org/debian sid; fi
-    - if [ $DIST = "ubuntu" ]; then sbuild-createchroot --make-sbuild-tarball=/tarballs/$CODE-$ARCH.tgz --keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg $CODE $CODE http://192.168.122.1/apt-cacher/archive.ubuntu.com/ubuntu gutsy; fi
+    - if [ $DIST = "debian" ]; then sbuild-createchroot --make-sbuild-tarball=/tarballs/$CODE-$ARCH.tgz $CODE $CODE http://192.168.122.1/apt-cacher/deb.debian.org/debian /usr/share/debootstrap/scripts/sid; fi
+    - if [ $DIST = "ubuntu" ]; then sbuild-createchroot --make-sbuild-tarball=/tarballs/$CODE-$ARCH.tgz --keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg $CODE $CODE http://192.168.122.1/apt-cacher/archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy; fi
     - mkdir build
     - cd build && tar xvf ../eid-mw-*.tar.gz --strip-components=1
   stage: build
