@@ -27,7 +27,7 @@ build-source:
   before_script:
     - sed -i -e 's,http://,http://192.168.122.1/apt-cacher/,g' /etc/apt/sources.list
     - apt-get update
-    - apt-get -y --no-install-recommends install devscripts adduser fakeroot sudo
+    - apt-get -y --no-install-recommends install devscripts adduser fakeroot sudo equivs
     - mk-build-deps -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends" -i -r
     - adduser --disabled-password --gecos "" builduser
     - mkdir build
