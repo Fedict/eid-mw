@@ -22,6 +22,8 @@ build-source:
       - eid-mw-*.tar.gz
       - eid-mw-*.zip
 .build-deb: &build-deb
+  variables:
+    GIT_STRATEGY: none
   before_script:
     - sed -i -e 's,http://,http://192.168.122.1/apt-cacher/,g' /etc/apt/sources.list
     - apt-get update
