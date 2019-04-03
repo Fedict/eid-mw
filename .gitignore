@@ -13,7 +13,6 @@ VS_2005
 VS_2010
 VS_2012
 autom4te.cache
-build-aux
 build_*
 compile
 config.*
