@@ -1038,8 +1038,8 @@ namespace eIDMW
 		case DLG_PIN_SIGN:
 			ucPinpadUsage = EIDMW_PP_TYPE_SIGN;
 			break;
-		case DLG_PIN_ADDRESS:
-			ucPinpadUsage = EIDMW_PP_TYPE_ADDR;
+		case DLG_PIN_READ_EF:
+			ucPinpadUsage = EIDMW_PP_TYPE_READ_EF;
 			break;
 		default:
 			break;
