@@ -7,6 +7,7 @@ stages:
 build-source:
   variables:
     GIT_STRATEGY: clone
+    TARGET: continuous
   stage: source
   image: debian:testing
   before_script:
@@ -29,165 +30,134 @@ build-source:
   before_script:
     - sed -i -e 's,http://,http://192.168.122.1/apt-cacher/,g' /etc/apt/sources.list
     - apt-get update
-    - apt-get -y --no-install-recommends install devscripts adduser fakeroot sudo equivs
-    - mk-build-deps -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends" -i -r
-    - adduser --disabled-password --gecos "" builduser
+    - apt-get -y --no-install-recommends install ubuntu-archive-keyring
+    - if [ $DIST = "debian" ]; then sbuild-createchroot --make-sbuild-tarball=/tarballs/$CODE-$ARCH.tgz $CODE $CODE http://192.168.122.1/apt-cacher/deb.debian.org/debian sid; fi
+    - if [ $DIST = "ubuntu" ]; then sbuild-createchroot --make-sbuild-tarball=/tarballs/$CODE-$ARCH.tgz --keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg $CODE $CODE http://192.168.122.1/apt-cacher/archive.ubuntu.com/ubuntu gutsy; fi
     - mkdir build
-    - chown -R builduser:builduser .
-    - cd build && sudo -u builduser tar xvf ../eid-mw-*.tar.gz --strip-components=1
+    - cd build && tar xvf ../eid-mw-*.tar.gz --strip-components=1
   stage: build
   script:
-    - sudo -u builduser dpkg-buildpackage -uc -us -i -rfakeroot
+    - sbuild -n -d $TARGET-$CODE -c $CODE-$ARCH-sbuild --arch=$ARCH
   after_script:
     - mkdir -p output
     - dcmd mv *ges output/
-  image: $DIST:$CODE
+  image: tianon/sbuild
   artifacts:
     paths:
       - output
     when:
       on_success
+  tags:
+    - docker
 build-deb8-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: jessie
     SHORT: deb8
-  tags:
-    - docker
-    - linux-32
+    ARCH: i386
 build-deb8-64:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: jessie
     SHORT: deb8
-  tags:
-    - docker
-    - linux-64
+    ARCH: amd64
 build-deb9-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: stretch
     SHORT: deb9
-  tags:
-    - docker
-    - linux-32
+    ARCH: i386
 build-deb9-64:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: stretch
     SHORT: deb9
-  tags:
-    - docker
-    - linux-64
+    ARCH: amd64
 build-deb10-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: buster
     SHORT: deb10
-  tags:
-    - docker
-    - linux-32
+    ARCH: i386
 build-deb10-64:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: buster
     SHORT: deb10
-  tags:
-    - docker
-    - linux-64
+    ARCH: amd64
 build-sid-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: sid
     SHORT: sid
-  tags:
-    - docker
-    - linux-32
+    ARCH: i386
 build-sid-64:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: sid
     SHORT: sid
-  tags:
-    - docker
-    - linux-64
+    ARCH: amd64
 build-xenial-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: xenial
     SHORT: u1604
-  tags:
-    - docker
-    - linux-32
+    ARCH: i386
 build-xenial-64:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: xenial
     SHORT: u1604
-  tags:
-    - docker
-    - linux-64
+    ARCH: amd64
 build-bionic-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: bionic
     SHORT: u1804
-  tags:
-    - docker
-    - linux-32
+    ARCH: i386
 build-bionic-64:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: bionic
     SHORT: u1804
-  tags:
-    - docker
-    - linux-64
+    ARCH: amd64
 build-cosmic-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: cosmic
     SHORT: u1810
-  tags:
-    - docker
-    - linux-32
+    ARCH: i386
 build-cosmic-64:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: cosmic
     SHORT: u1810
-  tags:
-    - docker
-    - linux-64
+    ARCH: amd64
 build-disco-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: disco
     SHORT: u1904
-  tags:
-    - docker
-    - linux-32
+    ARCH: i386
 build-disco-64:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: disco
     SHORT: u1904
-  tags:
-    - docker
-    - linux-64
+    ARCH: amd64
