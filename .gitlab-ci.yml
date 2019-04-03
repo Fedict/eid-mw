@@ -49,6 +49,12 @@ build-source:
       - output
     when:
       on_success
+build-deb8:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: jessie
+    SHORT: deb8
 build-deb9:
   <<: *build-deb
   variables:
@@ -61,3 +67,33 @@ build-deb10:
     DIST: debian
     CODE: buster
     SHORT: deb10
+build-sid:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: sid
+    SHORT: sid
+build-xenial:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: xenial
+    SHORT: u1604
+build-bionic:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: bionic
+    SHORT: u1804
+build-cosmic:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: cosmic
+    SHORT: u1810
+build-disco:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: disco
+    SHORT: u1904
