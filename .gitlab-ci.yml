@@ -39,8 +39,8 @@ build-source:
   after_script:
     - pwd
     - ls . ..
-    - mkdir -p ../output
-    - dcmd mv ../*ges ../output/
+    - mkdir -p output
+    - dcmd mv *ges output/
   image: $DIST:$CODE
   artifacts:
     paths:
