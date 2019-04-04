@@ -7,7 +7,7 @@ stages:
  - sync
 variables:
   TARGET: continuous
-build-source:
+build:source:
   variables:
     GIT_STRATEGY: clone
   stage: source
@@ -50,112 +50,112 @@ build-source:
       on_success
   tags:
     - shell
-build-deb8-32:
+build:deb8-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: jessie
     SHORT: deb8
     ARCH: i386
-build-deb8-64:
+build:deb8-64:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: jessie
     SHORT: deb8
     ARCH: amd64
-build-deb9-32:
+build:deb9-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: stretch
     SHORT: deb9
     ARCH: i386
-build-deb9-64:
+build:deb9-64:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: stretch
     SHORT: deb9
     ARCH: amd64
-build-deb10-32:
+build:deb10-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: buster
     SHORT: deb10
     ARCH: i386
-build-deb10-64:
+build:deb10-64:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: buster
     SHORT: deb10
     ARCH: amd64
-build-sid-32:
+build:sid-32:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: sid
     SHORT: sid
     ARCH: i386
-build-sid-64:
+build:sid-64:
   <<: *build-deb
   variables:
     DIST: debian
     CODE: sid
     SHORT: sid
     ARCH: amd64
-build-xenial-32:
+build:xenial-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: xenial
     SHORT: u1604
     ARCH: i386
-build-xenial-64:
+build:xenial-64:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: xenial
     SHORT: u1604
     ARCH: amd64
-build-bionic-32:
+build:bionic-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: bionic
     SHORT: u1804
     ARCH: i386
-build-bionic-64:
+build:bionic-64:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: bionic
     SHORT: u1804
     ARCH: amd64
-build-cosmic-32:
+build:cosmic-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: cosmic
     SHORT: u1810
     ARCH: i386
-build-cosmic-64:
+build:cosmic-64:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: cosmic
     SHORT: u1810
     ARCH: amd64
-build-disco-32:
+build:disco-32:
   <<: *build-deb
   variables:
     DIST: ubuntu
     CODE: disco
     SHORT: u1904
     ARCH: i386
-build-disco-64:
+build:disco-64:
   <<: *build-deb
   variables:
     DIST: ubuntu
