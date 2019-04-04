@@ -218,6 +218,7 @@ build:disco-64:
     - dnf -y install mock git
     - VER=$(scripts/build-aux/genver.sh)
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
+    - ls
   script:
     - mock --verbose -r $DIST-$DVER-$ARCH --rebuild $HOME/rpmbuild/SRPMS/eid-mw-$VER.fc29.src.rpm --define "revision $VERSHORT"
   artifacts:
