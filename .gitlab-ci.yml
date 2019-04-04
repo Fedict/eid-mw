@@ -56,7 +56,7 @@ build:srpm:
     - docker
   image: fedora:29
   before_script:
-    - dnf -y install rpm-build git
+    - dnf -y install rpm-build git rpmdevtools
     - rpmdev-setuptree
     - VER=$(scripts/build-aux/genver.sh)
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
