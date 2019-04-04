@@ -241,7 +241,7 @@ build:fedora-29-32:
 build:centos-6-32:
   <<: *build-fed
   variables:
-    DIST: centos
+    DIST: epel
     DVER: 6
     ARCH: i386
 build:fedora-28-64:
@@ -259,12 +259,12 @@ build:fedora-29-64:
 build:centos-6-64:
   <<: *build-fed
   variables:
-    DIST: centos
+    DIST: epel
     DVER: 6
     ARCH: x86_64
 build:centos-7-64:
   <<: *build-fed
   variables:
-    DIST: centos
+    DIST: epel
     DVER: 7
     ARCH: x86_64
