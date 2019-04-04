@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Dpkg::Changelog::Debian;
+use File::Basename;
 
 my $c = Dpkg::Changelog::Debian->new();
 
@@ -24,8 +25,10 @@ print $c;
 
 my $author = 'Build Slave <buildslave@eidmw.yourict.net>';
 
+my $entry = new Dpkg::Changelog::Entry;
+
 if(!defined($date)) {
-	open GIT, "git log --date=rfc \$CI_COMMIT_SHA^..\$CI_COMMIT_SHA |";
+	open GIT, "git log --date=rfc HEAD^..HEAD |";
 	while(<GIT>) {
 		chomp;
 		if(/^Date:\s+(.*)$/) {
@@ -34,7 +37,15 @@ if(!defined($date)) {
 	}
 	close GIT;
 }
-$c->{data}[0]{trailer} = " -- $author  $date";
+open my $vers, dirname($0) . "/genver.sh|";
+my $version = <$vers>;
+close $vers;
+chomp $version;
+$entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "-1) " . $ENV{TARGET} . "-" . $ENV{DIST} . "; urgency=low";
+$entry->{changes} = ["  * Snapshot release"];
+$entry->{trailer} = " -- $author  $date";
+$entry->normalize;
+unshift @{$c->{data}}, $entry;
 $c->save($changefile);
 print "after:\n------\n";
 print $c;
