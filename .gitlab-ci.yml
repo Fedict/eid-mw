@@ -3,7 +3,7 @@ stages:
  - source
  - source-package
  - binary-package
- - publish
+ - build-repository
  - sync
 variables:
   TARGET: continuous
