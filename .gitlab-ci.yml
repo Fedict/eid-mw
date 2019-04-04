@@ -48,6 +48,24 @@ build:source:
       on_success
   tags:
     - sbuild
+build:srpm:
+  stage: source-package
+  tags:
+    - docker
+  image: fedora:29
+  before_script:
+    - dnf install rpmbuild git
+    - rpmdev-setuptree
+    - VER=$(scripts/build-aux/genver.sh)
+    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
+    - mv output/eid-mw-$VER.tar.gz $HOME/rpmbuild/SOURCES/
+    - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SPECS/ --strip-components=2 eid-mw-$VER/rpm/eid-mw.spec
+    - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SOURCES/ --strip-components=2 eid-mw-$VER/rpm/baselibs.conf
+  script:
+    - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
+  artifacts:
+    paths:
+      - $HOME/rpmbuild
 inject-debs:
   dependencies:
     - build:deb8-32
