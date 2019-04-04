@@ -207,3 +207,63 @@ build:disco-64:
     CODE: disco
     SHORT: u1904
     ARCH: amd64
+.build-fed: &build-fed
+  dependencies:
+    - build:srpm
+  stage: binary-package
+  tags:
+    - docker
+  image: fedora:29
+  before_script:
+    - dnf -y install mock
+    - VER=$(scripts/build-aux/genver.sh)
+    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
+  script:
+    - mock --verbose -r $DIST-$DVER-$ARCH --rebuild $HOME/rpmbuild/SRPMS/eid-mw-$VER.fc29.src.rpm --define "revision $VERSHORT"
+  artifacts:
+    paths:
+      - $HOME/rpmbuild
+    when:
+      on_success
+build:fedora-28-32:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: 28
+    ARCH: i386
+build:fedora-29-32:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: 29
+    ARCH: i386
+build:centos-6-32:
+  <<: *build-fed
+  variables:
+    DIST: centos
+    DVER: 6
+    ARCH: i386
+build:fedora-28-64:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: 28
+    ARCH: x86_64
+build:fedora-29-64:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: 29
+    ARCH: x86_64
+build:centos-6-64:
+  <<: *build-fed
+  variables:
+    DIST: centos
+    DVER: 6
+    ARCH: x86_64
+build:centos-7-64:
+  <<: *build-fed
+  variables:
+    DIST: centos
+    DVER: 7
+    ARCH: x86_64
