@@ -47,7 +47,7 @@ build:source:
     when:
       on_success
   tags:
-    - shell
+    - sbuild
 build:deb8-32:
   <<: *build-deb
   variables:
