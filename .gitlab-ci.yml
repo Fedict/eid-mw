@@ -29,6 +29,8 @@ build:source:
       - eid-mw-*.tar.gz
       - eid-mw-*.zip
 .build-deb: &build-deb
+  dependencies:
+    - build:source
   before_script:
     - mkdir build
     - cd build && tar xvf ../eid-mw-*.tar.gz --strip-components=1
