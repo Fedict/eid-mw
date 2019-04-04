@@ -5,10 +5,11 @@ stages:
  - binary-package
  - publish
  - sync
+variables:
+  TARGET: continuous
 build-source:
   variables:
     GIT_STRATEGY: clone
-    TARGET: continuous
   stage: source
   tags:
     - docker
@@ -33,6 +34,8 @@ build-source:
   before_script:
     - mkdir build
     - cd build && tar xvf ../eid-mw-*.tar.gz --strip-components=1
+    - yes | dch -v $(../scripts/build-aux/genver.sh)-0$SHORT-1 -D$TARGET-$CODE "Snapshot build"
+    - ../scripts/fixdate.pl debian/changelog
   stage: binary-package
   script:
     - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA=""; fi
