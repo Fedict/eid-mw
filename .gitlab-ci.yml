@@ -90,7 +90,7 @@ inject-debs:
   before_script:
     - dcmd mv output/*ges /srv/repo/reprepro/incoming
   script:
-    - reprepro processincoming incoming
+    - cd /srv/repo/reprepro && reprepro processincoming incoming
   variables:
     GIT_STRATEGY: none
 build:deb8-32:
