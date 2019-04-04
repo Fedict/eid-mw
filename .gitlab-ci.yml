@@ -65,9 +65,11 @@ build:srpm:
     - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SOURCES/ --strip-components=2 eid-mw-$VER/rpm/baselibs.conf
   script:
     - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
+  after_script:
+    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.rpm .
   artifacts:
     paths:
-      - $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.src.rpm
+      - eid-mw-*.src.rpm
 inject-debs:
   dependencies:
     - build:deb8-32
@@ -220,7 +222,7 @@ build:disco-64:
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
     - ls
   script:
-    - mock --verbose -r $DIST-$DVER-$ARCH --rebuild $HOME/rpmbuild/SRPMS/eid-mw-$VER.fc29.src.rpm --define "revision $VERSHORT"
+    - mock --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-$VER.fc29.src.rpm --define "revision $VERSHORT"
   artifacts:
     paths:
       - $HOME/rpmbuild
