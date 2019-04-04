@@ -60,8 +60,7 @@ build:srpm:
     - rpmdev-setuptree
     - VER=$(scripts/build-aux/genver.sh)
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
-    - ls
-    - mv output/eid-mw-$VER.tar.gz $HOME/rpmbuild/SOURCES/
+    - mv eid-mw-$VER.tar.gz $HOME/rpmbuild/SOURCES/
     - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SPECS/ --strip-components=2 eid-mw-$VER/rpm/eid-mw.spec
     - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SOURCES/ --strip-components=2 eid-mw-$VER/rpm/baselibs.conf
   script:
