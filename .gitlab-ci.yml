@@ -217,7 +217,7 @@ build:disco-64:
     - docker
   image: fedora:29
   before_script:
-    - dnf -y install mock
+    - dnf -y install mock git
     - VER=$(scripts/build-aux/genver.sh)
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
