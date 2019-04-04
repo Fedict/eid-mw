@@ -67,7 +67,7 @@ build:srpm:
     - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
   artifacts:
     paths:
-      - $HOME/rpmbuild/SRPMS/eid-mw-$VER.fc29.src.rpm
+      - $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.src.rpm
 inject-debs:
   dependencies:
     - build:deb8-32
