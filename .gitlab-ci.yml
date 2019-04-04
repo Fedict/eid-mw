@@ -48,6 +48,33 @@ build:source:
       on_success
   tags:
     - sbuild
+inject-debs:
+  dependencies:
+    - build:deb8-32
+    - build:deb9-32
+    - build:deb10-32
+    - build:sid-32
+    - build:xenial-32
+    - build:bionic-32
+    - build:cosmic-32
+    - build:disco-32
+    - build:deb8-64
+    - build:deb9-64
+    - build:deb10-64
+    - build:sid-64
+    - build:xenial-64
+    - build:bionic-64
+    - build:cosmic-64
+    - build:disco-64
+  stage: build-repository
+  tags:
+    - reprepro
+  before_script:
+    - dcmd mv output/*ges /srv/repo/reprepro/incoming
+  script:
+    - reprepro processincoming incoming
+  variables:
+    GIT_STRATEGY: none
 build:deb8-32:
   <<: *build-deb
   variables:
