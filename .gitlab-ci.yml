@@ -230,7 +230,7 @@ build:disco-64:
     - cp $HOME/rpmbuild/RPMS/* .
   artifacts:
     paths:
-      - *.rpm
+      - eid*.rpm
     when:
       on_success
 build:fedora-28-32:
