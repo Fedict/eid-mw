@@ -5,8 +5,6 @@ stages:
  - binary-package
  - build-repository
  - sync
-variables:
-  TARGET: continuous
 build:source:
   variables:
     GIT_STRATEGY: clone
@@ -37,6 +35,9 @@ build:source:
     - ../scripts/build-aux/deb-cl.pl debian/changelog
   stage: binary-package
   script:
+    - TARGET=continuous
+    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
+    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
     - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA=""; fi
     - sbuild -n $DASHA -d $TARGET-$CODE -c $CODE-$ARCH-sbuild --arch=$ARCH
   after_script:
@@ -97,6 +98,11 @@ inject-debs:
     - cd /srv/repo/reprepro && reprepro processincoming incoming
   variables:
     GIT_STRATEGY: none
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
 build:deb8-32:
   <<: *build-deb
   variables:
