@@ -355,14 +355,15 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 	ret = (cal_token_present(slotID, &isPresent));
 
 	//don't mind that the token is not recognized, just report that a token is present
-	if (ret == CKR_TOKEN_NOT_RECOGNIZED)
+	if ( (ret == CKR_TOKEN_NOT_RECOGNIZED) || (ret == CKR_TOKEN_NOT_PRESENT) )
 	{
 		ret = CKR_OK;
+		isPresent = 0;
 	} 
 	else if (ret != CKR_OK)
-		{
-			goto cleanup;
-		}
+	{
+		goto cleanup;
+	}
 	if (isPresent)
 	{
 		pInfo->flags |= CKF_TOKEN_PRESENT;

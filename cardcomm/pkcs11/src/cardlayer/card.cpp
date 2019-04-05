@@ -94,8 +94,8 @@ namespace eIDMW
 	};
 
 	CCard::CCard(SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
-	  : m_hCard(hCard), m_poPCSC(poPCSC), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0), m_oPKCS15(),
-	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinUsage(BEID_PINS_USE_ONE_PIN), m_ucAppletVersion(0), m_ul6CDelay(0)
+	  : m_hCard(hCard), m_poPCSC(poPCSC), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0),
+	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_pinUsage(BEID_PINS_USE_ONE_PIN), m_ucAppletVersion(0), m_ul6CDelay(0), m_oPKCS15()
 	{
 		try
 		{
@@ -113,6 +113,7 @@ namespace eIDMW
 			if (m_ucAppletVersion >= 0x18) {
 				// Use applet 1.8-specific extended card data
 				m_oCardData = SendAPDU(0x80,0xE4, 0x00, 0x01, 0x1F);
+				m_oCardData.Chop(2);
 				m_ulRemaining[0] = m_oCardData.GetByte(28);
 				m_ulRemaining[1] = m_oCardData.GetByte(29);
 				m_ulRemaining[2] = m_oCardData.GetByte(30);
@@ -193,6 +194,31 @@ namespace eIDMW
 		return "BELPIC";// m_oPKCS15.GetCardLabel();
 	}
 
+	tPin CCard::GetPinFor(tPinObjective what) {
+		if(m_pinUsage == BEID_PINS_USE_ONE_PIN) {
+			return PinBeid;
+		}
+		switch(what) {
+			case BEID_PIN_READ_EF:
+				return PinBeidEF;
+			case BEID_PIN_AUTH:
+				return PinBeidAuth;
+			case BEID_PIN_NONREP:
+				return PinBeidSign;
+		}
+		return PinInvalid;
+	}
+
+	tPin CCard::GetPinByKeyID(unsigned long key) {
+		switch(key) {
+			case 0x82:
+				return GetPinFor(BEID_PIN_AUTH);
+			case 0x83:
+				return GetPinFor(BEID_PIN_NONREP);
+		}
+		return PinInvalid;
+	}
+
 	CByteArray CCard::ReadCardFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
 	{
 
@@ -205,8 +231,7 @@ namespace eIDMW
 			// A PIN is needed to read -> ask the correct PIN and do a verification
 			unsigned long ulRemaining;
 
-			//the reference for the PINreadef is 0x05
-			tPin pin = m_oPKCS15.GetPinByRef(0x05);
+			tPin pin = GetPinFor(BEID_PIN_READ_EF);
 
 			(void)e.GetError();
 
@@ -227,17 +252,7 @@ namespace eIDMW
 
 	unsigned long CCard::PinCount()
 	{
-		return m_oPKCS15.PinCount();
-	}
-
-	tPin CCard::GetPin(unsigned long ulIndex)
-	{
-		return m_oPKCS15.GetPin(ulIndex);
-	}
-
-	tPin CCard::GetPinByID(unsigned long ulID)
-	{
-		return m_oPKCS15.GetPinByID(ulID);
+		return (m_pinUsage == BEID_PINS_USE_ONE_PIN) ? 1 : 3;
 	}
 
 	unsigned long CCard::CertCount()
@@ -292,7 +307,7 @@ namespace eIDMW
 		unsigned long ulSupportedAlgos = GetSupportedAlgorithms();
 
 		if (algo & ulSupportedAlgos)
-			return Sign(key, GetPinByID(key.ulAuthID), algo, oData);
+			return Sign(key, GetPinByKeyID(key.ulKeyRef), algo, oData);
 		else
 		{
 			CByteArray oAID_Data;
@@ -313,7 +328,7 @@ namespace eIDMW
 
 			if (ulSupportedAlgos & SIGN_ALGO_RSA_PKCS)
 			{
-				return Sign(key, GetPinByID(key.ulAuthID), SIGN_ALGO_RSA_PKCS, oAID_Data);
+				return Sign(key, GetPinByKeyID(key.ulKeyRef), SIGN_ALGO_RSA_PKCS, oAID_Data);
 			}
 			else if (ulSupportedAlgos & SIGN_ALGO_RSA_RAW)
 			{
@@ -333,7 +348,7 @@ namespace eIDMW
 				oRawData.Append(0x00);
 				oRawData.Append(oAID_Data);
 
-				return Sign(key, GetPinByID(key.ulID), SIGN_ALGO_RSA_RAW, oData);
+				return Sign(key, GetPinByKeyID(key.ulKeyRef), SIGN_ALGO_RSA_RAW, oData);
 			}
 			else
 				throw CMWEXCEPTION(EIDMW_ERR_CHECK);
@@ -693,7 +708,7 @@ namespace eIDMW
 			return PIN_STATUS_UNKNOWN;
 		try
 		{
-			CByteArray oResp = SendAPDU(0x80, 0xEA, 0x00, (unsigned char)Pin.ulPinRef, 1);
+			CByteArray oResp = SendAPDU(0x80, 0xEA, 0x00, (unsigned char)Pin.ulAuthID, 1);
 			getSW12(oResp, 0x9000);
 			return oResp.GetByte(0);
 		}
@@ -715,7 +730,7 @@ namespace eIDMW
 			else if (pKey->ulID == 3)
 				usage = DLG_PIN_SIGN;
 		}
-		else if (Pin.ulID == 2)
+		else if (Pin.ulAuthID == 4)
 			usage = DLG_PIN_SIGN;
 
 		else
@@ -926,7 +941,7 @@ namespace eIDMW
 			bool bOK = PinCmd(PIN_OP_VERIFY, *pPin, csPin1, csPin2, ulRemaining, &key);
 			if (!bOK)
 			{
-				m_ulRemaining[pPin->ulPinRef - 1] = ulRemaining;
+				m_ulRemaining[pPin->ulIndex] = ulRemaining;
 				throw CMWEXCEPTION(ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
 			}
 		}
@@ -1023,8 +1038,8 @@ namespace eIDMW
 		case DLG_PIN_SIGN:
 			ucPinpadUsage = EIDMW_PP_TYPE_SIGN;
 			break;
-		case DLG_PIN_ADDRESS:
-			ucPinpadUsage = EIDMW_PP_TYPE_ADDR;
+		case DLG_PIN_READ_EF:
+			ucPinpadUsage = EIDMW_PP_TYPE_READ_EF;
 			break;
 		default:
 			break;
@@ -1125,7 +1140,6 @@ namespace eIDMW
 		oAPDU.Append(oPinBuf);
 
 		CByteArray oResp;
-		bool bSelected = false;
 
 		// Don't remove these brackets!!
 		{
@@ -1182,11 +1196,11 @@ namespace eIDMW
 
 			for (size_t i = 0; i < m_verifiedPINs.size() && !bFound; i++)
 			{
-				bFound = (m_verifiedPINs[i] == Pin.ulID);
+				bFound = (m_verifiedPINs[i] == Pin.ulIndex);
 			}
 			if (!bFound)
 			{
-				m_verifiedPINs.push_back(Pin.ulID);
+				m_verifiedPINs.push_back(Pin.ulIndex);
 			}
 		}
 		return bRet;
@@ -1208,7 +1222,7 @@ namespace eIDMW
 			{
 				MWLOG(LEV_INFO, MOD_CAL, L"     Couldn't sign, asking PIN and trying again");
 				// Bad PIN: show a dialog to ask the user to try again
-				bool retry = AskPinRetry(PIN_OP_VERIFY, Pin, m_ulRemaining[Pin.ulPinRef - 1], &key);
+				bool retry = AskPinRetry(PIN_OP_VERIFY, Pin, m_ulRemaining[Pin.ulIndex], &key);
 				if (retry)
 					retBytes = VerifyAndSign(key, Pin, algo, oData);
 				else
@@ -1240,7 +1254,7 @@ namespace eIDMW
 
 			for (size_t i = 0; i < m_verifiedPINs.size() && !bFound; i++)
 			{
-				bFound = (m_verifiedPINs[i] == Pin.ulID);
+				bFound = (m_verifiedPINs[i] == Pin.ulIndex);
 			}
 			if (!bFound)
 			{
@@ -1345,7 +1359,7 @@ namespace eIDMW
 			CByteArray oCmd(6);
 
 			//select file by relative path APDU
-			const unsigned char Cmd[] = { 0x00, 0xA4, 0x02, 0x0C };
+			const unsigned char Cmd[] = { 0x00, 0xA4, 0x02, 0x0C, 0x02 };
 			oCmd.Append(Cmd, sizeof(Cmd));
 
 			//add the correct path
@@ -1418,7 +1432,7 @@ namespace eIDMW
 			throw CMWEXCEPTION(EIDMW_ERR_PIN_OPERATION);
 		}
 		oCmd.Append(0x00);	// P1
-		oCmd.Append((unsigned char)Pin.ulPinRef);	// P2
+		oCmd.Append((unsigned char)Pin.ulAuthID);	// P2
 
 		return oCmd;
 	}
@@ -1433,12 +1447,12 @@ namespace eIDMW
 		if (!bEmptyPin)
 		{
 			// Test if it's a valid PIN value
-			if (Pin.ulMinLen != 0 && ulPinLen < Pin.ulMinLen)
+			if (Pin.ulMinLen > 0 && ulPinLen < Pin.ulMinLen)
 			{
 				MWLOG(LEV_WARN, MOD_CAL, L"PIN length is %d, should be at least %d", ulPinLen, Pin.ulMinLen);
 				throw CMWEXCEPTION(EIDMW_ERR_PIN_FORMAT);
 			}
-			if (Pin.ulMaxLen != 0 && ulPinLen > Pin.ulMaxLen)
+			if (Pin.ulMaxLen > 0 && ulPinLen > Pin.ulMaxLen)
 			{
 				MWLOG(LEV_WARN, MOD_CAL, L"PIN length is %d, should be at most %d", ulPinLen, Pin.ulMaxLen);
 				throw CMWEXCEPTION(EIDMW_ERR_PIN_FORMAT);
@@ -1478,14 +1492,14 @@ namespace eIDMW
 				}
 				else
 				{
-					uc += (unsigned char)(Pin.ucPadChar % 16);
+					uc += (unsigned char)(0xFF % 16);
 				}
 				i++;
 				oBuf.Append(uc);
 			}
 			while (oBuf.Size() < Pin.ulStoredLen)
 			{
-				oBuf.Append((unsigned char)Pin.ucPadChar > 0x0F ? Pin.ucPadChar : Pin.ucPadChar % 16);
+				oBuf.Append((unsigned char)0xFF);
 			}
 //			break;
 //		default:

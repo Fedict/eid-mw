@@ -26,7 +26,6 @@
 namespace eIDMW
 {
 
-	const static tPin PinInvalid = { false, "",0,0,0,0,0,0, 0, 0, 0, 0, 0 };
 	const static tCert CertInvalid = { false, "", 0, 0, 0, 0, false, false, "" };
 	const static tPrivKey PrivKeyInvalid = { false, "", 0, 0, 0, 0, 0, 0, 0, "", 0, false };
 
@@ -45,10 +44,6 @@ namespace eIDMW
 	unsigned char   ucPadChar;
 	//tPinEncoding    encoding;
 	//std::string     csPath;
-
-	const static tPin PinBeidV1 = { true, "Basic PIN",0,1,1,1,0,NO_ID, 4, 8, 12, 1, 0xFF };
-	const static tPin pinBeidAuthV2 = { true, "Authentication",0,1,1,1,0,NO_ID, 4, 8, 12, 0x85, 0xFF };
-	const static tPin pinBeidSignV2 = { true, "Signature",0,1,1,1,0,NO_ID,4, 8, 12, 0x86, 0xFF };
 
 	const static tPrivKey KeyAuthBeidV1 = { true, "Authentication", 0,2,0,1,0,0,0x82,"3F00DF00", 128,true };
 	const static tPrivKey KeySignBeidV1 = { true, "Signature", 0,3,0,1,0,0,0x83,"3F00DF00", 128,true };
@@ -121,44 +116,6 @@ namespace eIDMW
 	}
 */
 
-	unsigned long CPKCS15::PinCount()
-	{
-		if (!m_xAODF.isRead)  ReadLevel3(AODF);
-		return (unsigned long)m_oPins.size();
-	}
-
-	tPin CPKCS15::GetPin(unsigned long ulIndex)
-	{
-		if (!m_xAODF.isRead)  ReadLevel3(AODF);
-		if (ulIndex >= m_oPins.size())
-			throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
-		return m_oPins.at(ulIndex);
-	}
-
-	tPin CPKCS15::GetPinByID(unsigned long ulID)
-	{
-		if (!m_xAODF.isRead)  ReadLevel3(AODF);
-
-		for (std::vector<tPin>::const_iterator ip = m_oPins.begin(); ip != m_oPins.end(); ++ip) 
-		{
-			if (ip->ulID == ulID)
-				return *ip;
-		}
-		return PinInvalid;
-	}
-
-	tPin CPKCS15::GetPinByRef(unsigned long ulPinRef)
-	{
-		if (!m_xAODF.isRead)  ReadLevel3(AODF);
-
-		for (std::vector<tPin>::const_iterator ip = m_oPins.begin(); ip != m_oPins.end(); ++ip) 
-		{
-			if (ip->ulPinRef == ulPinRef) 
-				return *ip;
-		}
-		return PinInvalid;
-	}
-
 	unsigned long CPKCS15::CertCount()
 	{
 		if (!m_xCDF.isRead) ReadLevel3(CDF);
@@ -212,11 +169,6 @@ namespace eIDMW
 	void CPKCS15::ReadLevel3(tPKCSFileName name) {
 
 		switch (name) {
-		case AODF:
-			ReadFile(&m_xAODF, 2);
-			// parse
-			m_oPins = m_poParser->ParseAodf(m_xAODF.byteArray);
-			break;
 		case CDF:
 			ReadFile(&m_xCDF, 2);
 			// parse 
@@ -228,7 +180,7 @@ namespace eIDMW
 			m_oPrKeys = m_poParser->ParsePrkdf(m_xPrKDF.byteArray);
 			break;
 		default:
-			// error: this method can only be called with AODF, CDF or PRKDF
+			// error: this method can only be called with CDF or PRKDF
 			return;
 		}
 	}

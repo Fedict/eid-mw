@@ -35,7 +35,7 @@ extern "C"
  ******************************************************************************/
 
 #ifdef _WIN32
-#define DEFAULT_LOG_FILE "c:\\temp\\beidpkcs11\\p11.log"
+#define DEFAULT_LOG_FILE "C:\\ProgramData\\Belgium Identity Card\\log\\p11.log"
 #else
 #ifdef __APPLE__
 #define DEFAULT_LOG_FILE "/Library/Belgium Identity Card/p11.log"

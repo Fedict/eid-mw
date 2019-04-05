@@ -201,6 +201,8 @@ namespace eIDMW
 
 	CCard* CReader::GetCard(void)
 	{
+		//if (m_poCard == NULL)
+		//	Connect();
 		if (m_poCard == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_NO_CARD);
 

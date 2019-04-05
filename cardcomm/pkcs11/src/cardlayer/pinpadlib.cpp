@@ -123,7 +123,7 @@ bool CPinpadLib::ShowDlg(unsigned char pinpadOperation, unsigned char ucPintype,
 		{
 		case EIDMW_PP_TYPE_AUTH: dlgUsage = DLG_PIN_AUTH; break;
 		case EIDMW_PP_TYPE_SIGN: dlgUsage = DLG_PIN_SIGN; break;
-		case EIDMW_PP_TYPE_ADDR: dlgUsage = DLG_PIN_ADDRESS; break;
+		case EIDMW_PP_TYPE_READ_EF: dlgUsage = DLG_PIN_READ_EF; break;
 		}
 
 		DlgPinOperation dlgOperation;

@@ -212,7 +212,11 @@ extern "C"
 #define BEID_LABEL_SGN_RN			"SIGN_DATA_FILE"
 #define BEID_LABEL_SGN_ADDRESS	"SIGN_ADDRESS_FILE"
 
-
+	typedef enum {
+		BEID_PIN_READ_EF,
+		BEID_PIN_AUTH,
+		BEID_PIN_NONREP,
+	} tPinObjective;
 
 	CK_RV cal_init(void);
 //void cal_init_pcsc();
@@ -234,7 +238,7 @@ extern "C"
 	CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 			int sec_messaging);
 	CK_RV cal_logout(CK_SLOT_ID hSlot);
-	CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin,
+	CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG pinref, CK_ULONG l_oldpin,
 			     CK_CHAR_PTR oldpin, CK_ULONG l_newpin,
 			     CK_CHAR_PTR newpin);
 	CK_RV cal_get_card_data(CK_SLOT_ID hSlot);

@@ -81,7 +81,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -436,15 +436,17 @@
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PKCS11_FF;WIN32;_DEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PKCS11_FF;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>
-      </DebugInformationFormat>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <OmitFramePointers>false</OmitFramePointers>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>BEID_35;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -481,7 +483,6 @@
     <ClCompile Include="..\src\cardlayer\card.cpp" />
     <ClCompile Include="..\src\cardlayer\cardfactory.cpp" />
     <ClCompile Include="..\src\cardlayer\cardlayer.cpp" />
-    <ClCompile Include="..\src\cardlayer\context.cpp" />
     <ClCompile Include="..\src\cardlayer\old\PinpadLibOldBeid.cpp" />
     <ClCompile Include="..\src\cardlayer\pcsc.cpp" />
     <ClCompile Include="..\src\cardlayer\pinpad.cpp" />
@@ -538,7 +539,6 @@
     <ClInclude Include="..\src\cardlayer\cardfactory.h" />
     <ClInclude Include="..\src\cardlayer\cardlayer.h" />
     <ClInclude Include="..\src\cardlayer\cardlayerconst.h" />
-    <ClInclude Include="..\src\cardlayer\context.h" />
     <ClInclude Include="..\src\cardlayer\internalconst.h" />
     <ClInclude Include="..\src\cardlayer\old\PinpadLibOldBeid.h" />
     <ClInclude Include="..\src\cardlayer\old\scr.h" />

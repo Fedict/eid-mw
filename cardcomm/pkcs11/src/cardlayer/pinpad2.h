@@ -98,7 +98,7 @@ extern "C"
 
 #define EIDMW_PP_TYPE_AUTH         0x00	/* The Authentication PIN/PUK */
 #define EIDMW_PP_TYPE_SIGN         0x01	/* The Signature PIN/PUK */
-#define EIDMW_PP_TYPE_ADDR         0x02	/* The Address PIN/PUK */
+#define EIDMW_PP_TYPE_READ_EF      0x02	/* The Read EF PIN/PUK */
 #define EIDMW_PP_TYPE_ACTIV        0x03	/* The Activation PIN */
 #define EIDMW_PP_TYPE_UNKNOWN      0xFF	/* Unkonwn PIN/PUK */
 

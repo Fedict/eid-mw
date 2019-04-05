@@ -73,7 +73,7 @@ namespace eIDMW
 		DLG_PIN_UNKNOWN,
 		DLG_PIN_AUTH,
 		DLG_PIN_SIGN,
-		DLG_PIN_ADDRESS,
+		DLG_PIN_READ_EF,
 	} DlgPinUsage;
 
 	const unsigned char PIN_FLAG_DIGITS = 1;

@@ -255,7 +255,7 @@ CK_RV cal_token_present(CK_SLOT_ID hSlot, int *pPresent)
 	CK_RV ret = CKR_OK;
 	int status = P11_CARD_NOT_PRESENT;
 
-	ret = cal_update_token(hSlot, &status, 1);
+	ret = cal_update_token(hSlot, &status, 0);
 
 	switch (status)
 	{
@@ -1027,14 +1027,13 @@ CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 
 	std::string csPin = cpin;
 	unsigned long ulRemaining = 0;
-	unsigned long ulPinIdx = 0;
 
 	try
 	{
 		CReader& oReader = oCardLayer->getReader(szReader);
 		CCard* poCard = oReader.GetCard();
 
-		tPin tpin = poCard->GetPin(ulPinIdx);
+		tPin tpin = poCard->GetPinFor(eIDMW::BEID_PIN_AUTH);
 
 		if (!poCard->PinCmd(PIN_OP_VERIFY, tpin, csPin, "", ulRemaining))
 		{
@@ -1104,7 +1103,7 @@ CK_RV cal_logout(CK_SLOT_ID hSlot)
 
 
 #define WHERE "cal_change_pin()"
-CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
+CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG pinref, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
 		     CK_ULONG l_newpin, CK_CHAR_PTR newpin)
 {
 	CK_RV ret = CKR_OK;
@@ -1136,7 +1135,7 @@ CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG l_oldpin, CK_CHAR_PTR oldpin,
 		}
 		unsigned long ulRemaining = 0;
 
-		tPin tpin = poCard->GetPin(0);
+		tPin tpin = poCard->GetPinFor((eIDMW::tPinObjective)pinref);
 
 		if (!(poCard->PinCmd(PIN_OP_CHANGE, tpin, csPin, csNewPin, ulRemaining)))
 		{
@@ -1504,7 +1503,7 @@ CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 				goto cleanup;
 
 			oByte = oCardData.GetByte(29);
-			//If PIN is not found, the # attempts returned for this PIN is set to ‘FF’.
+			//If PIN is not found, the # attempts returned for this PIN is set to "FF".
 			//do not create objects for non-existing PINs
 			if (oByte != 0xFF)
 			{
@@ -2422,11 +2421,13 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 	{
 		std::string reader = pSlot->name;
 		CReader & oReader = oCardLayer->getReader(reader);
-		CCard* poCard = oReader.GetCard();
+		CCard* poCard = NULL;
 		//we get an error thrown here when the cardobject has not been created yet
 
 		*pStatus = cal_map_status(oReader.Status(true, bPresenceOnly ? true : false));
 		
+		poCard = oReader.GetCard();
+
 		if ( (*pStatus == P11_CARD_INSERTED) || (*pStatus == P11_CARD_STILL_PRESENT)  || (*pStatus == P11_CARD_OTHER) )
 		{
 			if (!bPresenceOnly && (poCard->GetType() == CARD_UNKNOWN))
