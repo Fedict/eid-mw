@@ -67,7 +67,7 @@ build:srpm:
   script:
     - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
   after_script:
-    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.rpm .
+    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.src.rpm .
   artifacts:
     paths:
       - eid-mw-*.src.rpm
