@@ -227,7 +227,7 @@ build:disco-64:
   script:
     - mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
   after_script:
-    - cp $HOME/rpmbuild/RPMS/* .
+    - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm .
   artifacts:
     paths:
       - eid*.rpm
