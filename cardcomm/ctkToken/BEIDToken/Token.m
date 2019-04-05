@@ -37,26 +37,6 @@
     return [self.objectID unsignedCharValue];
 }
 
-- (UInt8)algID {
-    //SP 800-78-4 Table 6-2 and 6-3
-    if ([self.keyType isEqual:(id)kSecAttrKeyTypeECSECPrimeRandom]) {
-        switch (self.keySizeInBits) {
-            case 256:
-                return 0x11; //EC 256
-            case 384:
-                return 0x14; //EC 384
-        }
-    } else if ([self.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
-        switch (self.keySizeInBits) {
-            case 1024:
-                return 0x06;    //RSA 1024
-            case 2048:
-                return 0x07;    //RSA 2048
-        }
-    }
-    return 0;
-}
-
 @end
 @implementation TKTokenKeychainItem(BEIDDataFormat)
 

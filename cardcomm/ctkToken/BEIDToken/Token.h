@@ -35,7 +35,6 @@ static const unsigned char kBELPIC_TokenInfo[] =    { 0xDF, 0x00, 0x50, 0x32 };
 @property (readonly) TKTokenObjectID certificateID;
 @property (readonly) BOOL alwaysAuthenticate;
 @property (readonly) UInt8 keyID;
-@property (readonly) UInt8 algID;
 
 @end
 
