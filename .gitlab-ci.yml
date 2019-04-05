@@ -225,7 +225,7 @@ build:disco-64:
     - dnf -y install mock git
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
-    - mock --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
+    - mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
   after_script:
     - cp $HOME/rpmbuild/RPMS/* .
   artifacts:
