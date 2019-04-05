@@ -224,14 +224,14 @@ build:disco-64:
   image: fedora:29
   before_script:
     - dnf -y install mock git
-    - VER=$(scripts/build-aux/genver.sh)
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
-    - ls
   script:
-    - mock --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-$VER.fc29.src.rpm --define "revision $VERSHORT"
+    - mock --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
+  after_script:
+    - cp $HOME/rpmbuild/RPMS/* .
   artifacts:
     paths:
-      - $HOME/rpmbuild
+      - *.rpm
     when:
       on_success
 build:fedora-28-32:
