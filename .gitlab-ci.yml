@@ -221,6 +221,7 @@ build:disco-64:
   stage: binary-package
   tags:
     - docker
+    - fedora
   image: fedora:29
   before_script:
     - dnf -y install mock git
