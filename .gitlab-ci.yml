@@ -13,7 +13,7 @@ build:source:
     - docker
   image: debian:testing
   before_script:
-    - if [ ! -z "$ACNG" ]; then echo "Acuire::http::Proxy \"$ACNG\";" > /etc/apt/apt.conf.d/99zzproxy; fi
+    - if [ ! -z "$ACNG" ]; then echo "Acuire::http::Proxy \"$ACNG\";" | tee /etc/apt/apt.conf.d/99zzproxy; else echo "no proxy configured"; fi
     - apt-get update
     - apt-get -y install --no-install-recommends autoconf automake libtool libpcsclite-dev libp11-kit-dev libgtk-3-dev libassuan-dev libgpg-error-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
   script:
