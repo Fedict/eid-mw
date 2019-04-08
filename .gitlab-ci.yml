@@ -20,18 +20,20 @@ build:source:
     - autoreconf -f -i
     - ./configure
     - make -j $(nproc) distcheck
+  after_script:
+    - mkdir -p products/source
+    - cp eid-mw-*.tar.gz eid-mw-*.zip products/source/
   artifacts:
     when:
       on_success
     paths:
-      - eid-mw-*.tar.gz
-      - eid-mw-*.zip
+      - products/source
 .build-deb: &build-deb
   dependencies:
     - build:source
   before_script:
     - mkdir build
-    - cd build && tar xvf ../eid-mw-*.tar.gz --strip-components=1
+    - cd build && tar xvf ../products/source/eid-mw-*.tar.gz --strip-components=1
     - ../scripts/build-aux/deb-cl.pl debian/changelog
   stage: binary-package
   script:
@@ -41,12 +43,12 @@ build:source:
     - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA=""; fi
     - sbuild -n $DASHA -d $TARGET-$CODE -c $CODE-$ARCH-sbuild --arch=$ARCH
   after_script:
-    - mkdir -p output
-    - dcmd mv *ges output/
+    - mkdir -p products/deb/
+    - dcmd mv *ges products/deb/
   image: tianon/sbuild
   artifacts:
     paths:
-      - output
+      - products/deb
     when:
       on_success
   tags:
@@ -67,10 +69,11 @@ build:srpm:
   script:
     - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
   after_script:
-    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.src.rpm .
+    - mkdir -p products/srpm/
+    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.src.rpm products/srpm/
   artifacts:
     paths:
-      - eid-mw-*.src.rpm
+      - products/srpm
 inject-debs:
   dependencies:
     - build:deb8-32
@@ -91,9 +94,9 @@ inject-debs:
     - build:disco-64
   stage: build-repository
   tags:
-    - reprepro
+    - repobuilder
   before_script:
-    - dcmd mv output/*ges /srv/repo/reprepro/incoming
+    - dcmd mv products/deb/*ges /srv/repo/reprepro/incoming
   script:
     - cd /srv/repo/reprepro && reprepro processincoming incoming
   variables:
@@ -103,6 +106,33 @@ inject-debs:
     - $CI_COMMIT_REF_NAME == "master"
     - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
     - $CI_COMMIT_TAG
+inject-fed:
+  variables:
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  dependencies:
+    - build:fedora-28-32
+    - build:fedora-28-64
+    - build:fedora-29-32
+    - build:fedora-29-64
+    - build:centos-6-32
+    - build:centos-6-64
+    - build:centos-7-64
+  stage: build-repository
+  tags:
+    - repobuilder
+  script:
+    - TARGET=continuous
+    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
+    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
+    - ARCHMAP=([i386]=32 [x86_64]=64)
+    - DISTS=([fedora]="28 29" [epel]="6 7")
+    - VERARCHS=([6]="i386 x86_64" [7]="x86_64" [28]="i386 x86_64" [29]="i386 x86_64")
+    - for dist in fedora epel; do for vers in ${DISTS[$dist]}; do for arch in ${VERARCHS[$vers]}; do mkdir -p /srv/repo/repo/rpm/$TARGET/$dist/$vers/RPMS/$arch; for i in products/$dist-$vers-${ARCHS[$arch]}/*rpm; do targetfile=/srv/repo/repo/rpm/$TARGET/$dist/$vers/RPMS/$arch/$(basename $i); echo "$i => $targetfile"; cp $i $targetfile; rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile; done; done; createrepo /srv/repo/repo/rpm/$TARGET/$dist/$vers; done; done
 build:deb8-32:
   <<: *build-deb
   variables:
@@ -229,10 +259,11 @@ build:disco-64:
   script:
     - http_proxy="$ACNG" mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
   after_script:
-    - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm .
+    - mkdir -p products/$DIST-$DVER-$ARCH
+    - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm products/$DIST-$DVER-$ARCH/
   artifacts:
     paths:
-      - eid*.rpm
+      - products/$DIST-$DVER-$ARCH
     when:
       on_success
 build:fedora-28-32:
