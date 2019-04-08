@@ -13,7 +13,7 @@ build:source:
     - docker
   image: debian:testing
   before_script:
-    - if [ ! -z "$APTCACHER" ]; then sed -i -e "s,http://,$APTCACHER,g" /etc/apt/sources.list; cat /etc/apt/sources.list; fi
+    - if [ ! -z "$ACNG" ]; then echo "Acuire::http::Proxy \"$ACNG\";" > /etc/apt/apt.conf.d/99zzproxy; fi
     - apt-get update
     - apt-get -y install --no-install-recommends autoconf automake libtool libpcsclite-dev libp11-kit-dev libgtk-3-dev libassuan-dev libgpg-error-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
   script:
@@ -224,10 +224,10 @@ build:disco-64:
     - fedora
   image: fedora:29
   before_script:
-    - dnf -y install mock git
+    - http_proxy="$ACNG" dnf -y install mock git
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
-    - mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
+    - http_proxy="$ACNG" mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
   after_script:
     - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm .
   artifacts:
