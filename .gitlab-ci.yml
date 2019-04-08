@@ -251,7 +251,6 @@ build:disco-64:
   stage: binary-package
   tags:
     - docker
-    - fedora
   image: fedora:29
   before_script:
     - if [ ! -z "$ACNG" ]; then sed -i -e '/metalink/d;s/^#baseurl/baseurl/' /etc/yum.repos.d/*.repo; fi
