@@ -255,7 +255,7 @@ build:disco-64:
   before_script:
     - if [ ! -z "$ACNG" ]; then sed -i -e '/metalink/d;s/^#baseurl/baseurl/' /etc/yum.repos.d/*.repo; fi
     - http_proxy="$ACNG" dnf -y install mock git
-    - if [ ! -z "$ACNG" ]; then sed -i -e '/metalink/d;s/^#baseurl/baseurl/' /etc/mock/$DIST-$DVER-$ARCH.cfg; for i in $(grep mirrorlist /etc/mock/$DIST-$DVER-$ARCH.cfg; do sed -i -e "s,mirrorlist=$i,baseurl=$(curl $i|grep http://|while read a; do echo -n $a' '; done; echo ',')" /etc/mock/$DIST-$DVER-$ARCH.cfg; done
+    - if [ ! -z "$ACNG" ]; then for i in $(grep mirrorlist /etc/mock/$DIST-$DVER-$ARCH.cfg | cut -d'=' -f2-); do sed -i -e "s,mirrorlist=$i,baseurl=$(curl $i|grep http://|while read a; do echo -n $a' '; done; echo ',')" /etc/mock/$DIST-$DVER-$ARCH.cfg; done; fi
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
     - http_proxy="$ACNG" mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
