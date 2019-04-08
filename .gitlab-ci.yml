@@ -63,7 +63,7 @@ build:srpm:
     - rpmdev-setuptree
     - VER=$(scripts/build-aux/genver.sh)
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
-    - mv eid-mw-$VER.tar.gz $HOME/rpmbuild/SOURCES/
+    - mv products/source/eid-mw-$VER.tar.gz $HOME/rpmbuild/SOURCES/
     - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SPECS/ --strip-components=2 eid-mw-$VER/rpm/eid-mw.spec
     - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SOURCES/ --strip-components=2 eid-mw-$VER/rpm/baselibs.conf
   script:
@@ -257,7 +257,7 @@ build:disco-64:
     - http_proxy="$ACNG" dnf -y install mock git
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
-    - http_proxy="$ACNG" mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
+    - http_proxy="$ACNG" mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
     - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm products/$DIST-$DVER-$ARCH/
