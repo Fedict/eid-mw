@@ -247,6 +247,7 @@ build:disco-64:
   dependencies:
     - build:srpm
   stage: binary-package
+  retry: 2
   tags:
     - docker
   image: fedora:29
