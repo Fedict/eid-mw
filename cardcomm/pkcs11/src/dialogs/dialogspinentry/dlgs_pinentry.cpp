@@ -144,7 +144,9 @@ DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 			const wchar_t * csPinName,
 			DlgPinInfo pinInfo, wchar_t * csPin,
 			unsigned long ulPinBufferLen) {
-	DlgRet rv = setup_dialog(_("beID: PIN Code Required"), _("The application\n[%s]\nrequests your eID PIN code."), true, false);
+	char msg[1024];
+	snprintf(msg, sizeof msg, _("The application\n[%%s]\nrequests your eID %ls PIN code."), csPinName);
+	DlgRet rv = setup_dialog(_("beID: PIN Code Required"), msg, true, false);
 	if(rv != DLG_OK) return rv;
 
 	gpg_error_t r;

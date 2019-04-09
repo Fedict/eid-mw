@@ -44,7 +44,7 @@ using namespace eIDMW;
 extern "C"
 {
 	pid_t sdialog_call(const char *path, const char *msg);
-	char *sdialog_call_modal(const char *path, const char *msg);
+	char *sdialog_call_modal(const char *path, const char *msg, const wchar_t *pinName);
 	void dlg_log_printf(const char *format, ...);
 	void dlg_log_error(const char *label);
 }
@@ -88,7 +88,7 @@ DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 {
 	MWLOG(LEV_DEBUG, MOD_DLG, L"eIDMW::DlgAskPin called");
 
-	char *response = sdialog_call_modal(BEID_ASKPIN_DIALOG, "");
+	char *response = sdialog_call_modal(BEID_ASKPIN_DIALOG, "", wsPinName);
 
 	if (response == NULL)
 		return DLG_CANCEL;
@@ -112,7 +112,7 @@ DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
 
 	MWLOG(LEV_DEBUG, MOD_DLG, L"eIDMW::DlgAskPins called");
 
-	char *response = sdialog_call_modal(BEID_CHANGEPIN_DIALOG, "");
+	char *response = sdialog_call_modal(BEID_CHANGEPIN_DIALOG, "", wsPinName);
 
 	if (response == NULL)
 		result = DLG_CANCEL;
@@ -143,7 +143,7 @@ DlgRet eIDMW::DlgBadPin(DlgPinUsage usage,
 	MWLOG(LEV_DEBUG, MOD_DLG, L"eIDMW::DlgBadPin called");
 
 	snprintf(count, sizeof(count) - 2, "%1lu", ulRemainingTries);
-	char *response = sdialog_call_modal(BEID_BADPIN_DIALOG, count);
+	char *response = sdialog_call_modal(BEID_BADPIN_DIALOG, count, wsPinName);
 
 	free(response);
 	return DLG_OK;
@@ -198,9 +198,10 @@ void eIDMW::DlgClosePinpadInfo(unsigned long ulHandle)
 
 
 DlgRet eIDMW::DlgAskAccess(const wchar_t * wsAppPath,
-				       const wchar_t * wsReaderName,
-				       DlgPFOperation ulOperation,
-				       int *piForAllOperations)
+			   const wchar_t * wsReaderName,
+			   const wchar_t * wsPinName,
+			   DlgPFOperation ulOperation,
+			   int *piForAllOperations)
 {
 	char message[1024];
 	DlgRet result = DLG_CANCEL;
@@ -209,7 +210,7 @@ DlgRet eIDMW::DlgAskAccess(const wchar_t * wsAppPath,
 
 
 	wcstombs(message, wsAppPath, 1024);
-	char *response = sdialog_call_modal(BEID_ASKACCESS_DIALOG, message);
+	char *response = sdialog_call_modal(BEID_ASKACCESS_DIALOG, message, wsPinName);
 
 	if (response != NULL)
 	{
