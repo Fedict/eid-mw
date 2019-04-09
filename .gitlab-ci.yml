@@ -107,8 +107,6 @@ inject-debs:
     - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
     - $CI_COMMIT_TAG
 inject-fed:
-  variables:
-    GIT_STRATEGY: none
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"
