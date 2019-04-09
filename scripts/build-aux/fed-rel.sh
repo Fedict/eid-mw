@@ -12,7 +12,7 @@ do
 		for arch in ${VERARCHS[$vers]}
 		do
 			mkdir -p /srv/repo/repo/rpm/$TARGET/$dist/$vers/RPMS/$arch
-			for i in products/$dist-$vers-${ARCHMAP[$arch]}
+			for i in products/$dist-$vers-${ARCHMAP[$arch]}/*
 			do
 				targetfile=/srv/repo/repo/rpm/$TARGET/$dist/$vers/RPMS/$arch/$(basename $i)
 				echo "$i => $targetfile"
