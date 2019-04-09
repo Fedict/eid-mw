@@ -90,6 +90,11 @@ void pin_changed(PinDialogInfo * pindialog) {
         update_ok_button(pindialog);
 }
 
+/* The snprintf below triggers a GCC warning, because we give it space
+ * for only one character. What GCC doesn't know is that the function is
+ * only ever called with one digit. Disable the format truncation
+ * warning, so we don't see it again.
+ */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wformat-truncation"
 // add one digit at the end of the current pin
