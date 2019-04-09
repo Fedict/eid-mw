@@ -41,7 +41,7 @@ open my $vers, dirname($0) . "/genver.sh|";
 my $version = <$vers>;
 close $vers;
 chomp $version;
-$entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "-1) " . $ENV{TARGET} . "-" . $ENV{DIST} . "; urgency=low";
+$entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "-1) " . $ENV{TARGET} . "-" . $ENV{CODE} . "; urgency=low";
 $entry->{changes} = ["  * Snapshot release"];
 $entry->{trailer} = " -- $author  $date";
 $entry->normalize;
