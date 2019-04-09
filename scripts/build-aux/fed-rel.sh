@@ -4,6 +4,10 @@ set -e
 
 find ./products -print
 
+declare -A ARCHMAP
+declare -A DISTS
+declare -A VERARCHS
+
 ARCHMAP=([i386]=32 [x86_64]=64)
 DISTS=([fedora]="28 29" [epel]="6 7")
 VERARCHS=([6]="i386 x86_64" [7]="x86_64" [28]="i386 x86_64" [29]="i386 x86_64")
