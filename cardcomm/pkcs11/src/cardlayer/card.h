@@ -70,9 +70,9 @@ namespace eIDMW
 
 	const static tPin PinInvalid = { false, "", 0, 0, 0, 0, 0 };
 	const static tPin PinBeid = { true, "Basic PIN", 1, 0, 4, 12, 8 };
-	const static tPin PinBeidAuth = { true, "Authentication", 1, 0, 4, 12, 8 };
-	const static tPin PinBeidSign = { true, "Signature", 4, 1, 4, 12, 8 };
-	const static tPin PinBeidEF = { true, "Data Access", 5, 2, 4, 12, 8 };
+	const static tPin PinBeidAuth = { true, "Authentication PIN", 1, 0, 4, 12, 8 };
+	const static tPin PinBeidSign = { true, "Signature PIN", 4, 1, 4, 12, 8 };
+	const static tPin PinBeidEF = { true, "Data Access PIN", 5, 2, 4, 12, 8 };
 
 	class CCard
 	{

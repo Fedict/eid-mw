@@ -213,7 +213,7 @@ int main(int argc, char *argv[]) {
                 pindialog_init(&pindialog);     // setup PinDialogInfo structure
                 pindialog.dialog =
                         gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
-                                               GTK_BUTTONS_NONE, gettext("The application\n[%s]\nrequests your eID %s PIN code."),
+                                               GTK_BUTTONS_NONE, gettext("The application\n[%s]\nrequests your eID %s code."),
                                                caller_path, argv[1]);
         } else {
                 fprintf(stderr, "Failed To Determine Parent Process. Aborting.\n");

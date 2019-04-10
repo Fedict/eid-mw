@@ -167,7 +167,7 @@ int main(int argc, char *argv[]) {
                 pindialog.dialog =
                         gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
                                                GTK_BUTTONS_NONE,
-                                               gettext("Request from Application [%s]:\n\nPlease enter your current eID %s PIN, followed by your new eID %s PIN (twice)"),
+                                               gettext("Request from Application [%s]:\n\nPlease enter your current eID %s, followed by your new eID %s (twice)"),
                                                caller_path, argv[1], argv[1]);
         } else {
                 fprintf(stderr, "Failed To Determine Parent Process. Aborting.\n");

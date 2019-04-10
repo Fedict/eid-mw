@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         if ((argc == 3) && (argv[2] != NULL) && (strlen(argv[2]) == 1)
             && isdigit(*(argv[2])) && (argv[1] != NULL) && (strlen(argv[1]) != 0)) {
                 attempts = atoi(argv[1]);
-                msg = ngettext("You have entered an incorrect %s PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked.", "You have entered an incorrect %s PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", attempts);
+                msg = ngettext("You have entered an incorrect %s code.\nPlease note that at the next incorrect entry your PIN code will be blocked.", "You have entered an incorrect %s code.\nPlease note that you have only %d attempts left before your PIN is blocked.", attempts);
         } else {
                 fprintf(stderr, "Incorrect Parameter for <number of attempts left>\n");
                 exit(EXIT_ERROR);

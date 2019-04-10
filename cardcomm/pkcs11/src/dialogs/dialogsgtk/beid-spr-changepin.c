@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 
         pindialog.dialog =
                 gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
-                                       GTK_BUTTONS_NONE, gettext("Request from Application [%s]:\n\nPlease change your eID %s PIN code on the secure pinpad reader:\n[%s]..."),
+                                       GTK_BUTTONS_NONE, gettext("Request from Application [%s]:\n\nPlease change your eID %s code on the secure pinpad reader:\n[%s]..."),
                                        caller_path, argv[1], argv[2]);
         gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog), GTK_RESPONSE_OK);
         gtk_window_set_title(GTK_WINDOW(pindialog.dialog), gettext("beID: Change PIN Code"));
