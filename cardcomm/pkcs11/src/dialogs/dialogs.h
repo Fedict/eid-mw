@@ -271,7 +271,6 @@ namespace eIDMW
  */
 	DlgRet DlgAskAccess(const wchar_t * csAppPath,
 					const wchar_t * csReaderName,
-					const wchar_t * wsPinName,
 					DlgPFOperation ulOperation,
 					int *piForAllOperations);
 

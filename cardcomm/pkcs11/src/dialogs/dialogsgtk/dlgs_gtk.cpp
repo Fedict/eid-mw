@@ -199,7 +199,6 @@ void eIDMW::DlgClosePinpadInfo(unsigned long ulHandle)
 
 DlgRet eIDMW::DlgAskAccess(const wchar_t * wsAppPath,
 			   const wchar_t * wsReaderName,
-			   const wchar_t * wsPinName,
 			   DlgPFOperation ulOperation,
 			   int *piForAllOperations)
 {
@@ -210,7 +209,7 @@ DlgRet eIDMW::DlgAskAccess(const wchar_t * wsAppPath,
 
 
 	wcstombs(message, wsAppPath, 1024);
-	char *response = sdialog_call_modal(BEID_ASKACCESS_DIALOG, message, wsPinName);
+	char *response = sdialog_call_modal(BEID_ASKACCESS_DIALOG, message, L"");
 
 	if (response != NULL)
 	{
