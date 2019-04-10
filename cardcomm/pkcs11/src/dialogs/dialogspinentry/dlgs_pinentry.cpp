@@ -90,7 +90,7 @@ static ssize_t get_exec_path(char *exec_path, size_t exec_path_size) {
 	return exec_path_len;
 }
 
-static DlgRet setup_dialog(char* title, char* desc, bool do_exec_path, bool is_error) {
+static DlgRet setup_dialog(char* title, char* desc, const wchar_t *csPinName, bool do_exec_path, bool is_error) {
 	if(setup()) return DLG_ERR;
 
 	char s[1024], t[1024];
@@ -110,10 +110,11 @@ static DlgRet setup_dialog(char* title, char* desc, bool do_exec_path, bool is_e
 	}
 	if(do_exec_path) {
 		get_exec_path(s, sizeof s);
-		snprintf(t, sizeof t, desc, s);
+		snprintf(t, sizeof t, desc, s, csPinName);
 		snprintf(s, sizeof s, cmd, t);
 	} else {
-		snprintf(s, sizeof s, cmd, desc);
+		snprintf(t, sizeof t, desc, csPinName);
+		snprintf(s, sizeof s, cmd, t);
 	}
 	char *loc;
 	while((loc = strchr(s, '\n'))) {
@@ -144,9 +145,7 @@ DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 			const wchar_t * csPinName,
 			DlgPinInfo pinInfo, wchar_t * csPin,
 			unsigned long ulPinBufferLen) {
-	char msg[1024];
-	snprintf(msg, sizeof msg, _("The application\n[%%s]\nrequests your eID %ls PIN code."), csPinName);
-	DlgRet rv = setup_dialog(_("beID: PIN Code Required"), msg, true, false);
+	DlgRet rv = setup_dialog(_("beID: PIN Code Required"), _("The application\n[%s]\nrequests your eID %ls code."), csPinName, msg, true, false);
 	if(rv != DLG_OK) return rv;
 
 	gpg_error_t r;
@@ -162,7 +161,7 @@ DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 }
 
 DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usage, const wchar_t * csPinName, DlgPinInfo pin1Info, wchar_t * csPin1, unsigned long ulPin1BufferLen, DlgPinInfo pin2Info, wchar_t * csPin2, unsigned long ulPin2BufferLen) {
-	DlgRet rv = setup_dialog(_("beID: PIN Code Required"), _("Request from Application [%s]:\n\nPlease enter your current eID PIN"), true, false);
+	DlgRet rv = setup_dialog(_("beID: PIN Code Required"), _("Request from Application [%s]:\n\nPlease enter your current eID %ls"), csPinName, true, false);
 	if(rv != DLG_OK) return rv;
 
 	gpg_error_t r;
@@ -176,7 +175,7 @@ DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usage, const wch
 	}
 	pin.pin = csPin2;
 	pin.pinlen = ulPin2BufferLen;
-	if( (rv = setup_dialog(_("beID: PIN Code Required"), _("Please enter your new eID PIN (twice)"), false, false)) != DLG_OK) {
+	if( (rv = setup_dialog(_("beID: PIN Code Required"), _("Please enter your new eID %ls (twice)"), csPinName, false, false)) != DLG_OK) {
 		return rv;
 	}
 	if ((r = assuan_transact(ctx, "SETREPEAT", NULL, NULL, NULL, NULL, NULL, NULL))) {
@@ -195,7 +194,7 @@ DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usage, const wch
 
 DlgRet eIDMW::DlgBadPin(DlgPinUsage usage, const wchar_t *csPinName, unsigned long ulRemainingTries) {
 	gpg_error_t r;
-	DlgRet rv = setup_dialog(_("beID: Incorrect PIN Code"), n_("You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked.","You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", ulRemainingTries), false, true);
+	DlgRet rv = setup_dialog(_("beID: Incorrect PIN Code"), n_("You have entered an incorrect eID %ls code.\nPlease note that at the next incorrect entry your PIN code will be blocked.","You have entered an incorrect eID %ls code.\nPlease note that you have only %d attempts left before your PIN is blocked.", ulRemainingTries), csPinName, false, true);
 	if(rv != DLG_OK) return rv;
 
 	if((r = assuan_transact(ctx, "MESSAGE", NULL, NULL, NULL, NULL, NULL, NULL))) {
@@ -209,27 +208,25 @@ DlgRet eIDMW::DlgBadPin(DlgPinUsage usage, const wchar_t *csPinName, unsigned lo
 }
 
 DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation, const wchar_t * csReader, DlgPinUsage usage, const wchar_t * csPinName, const wchar_t * csMessage, unsigned long *pulHandle) {
-	char reader[1024];
 	char msg[1024];
 	char *title;
 
-	wcstombs(reader, csReader, 1024);
 	switch(operation) {
 		case DLG_PIN_OP_VERIFY:
 		case DLG_PIN_OP_UNBLOCK_NO_CHANGE:
-			snprintf(msg, sizeof msg, _("The application [%%s] requests your eID PIN code on the secure pinpad reader:[%s]..."), reader);
+			snprintf(msg, sizeof msg, _("The application [%%s] requests your eID %%ls code on the secure pinpad reader:[%ls]..."), csReader);
 			title = _("beID: PIN Code Required");
 			break;
 		case DLG_PIN_OP_CHANGE:
 		case DLG_PIN_OP_UNBLOCK_CHANGE:
-			snprintf(msg, sizeof msg, _("Request from application [%%s]:\n\nPlease change your eID PIN code on the secure pinpad reader:\n[%s]..."), reader);
+			snprintf(msg, sizeof msg, _("Request from application [%%s]:\n\nPlease change your eID %%ls code on the secure pinpad reader:\n[%ls]..."), csReader);
 			title = _("beID Change PIN Code");
 			break;
 		default:
 			MWLOG(LEV_ERROR, MOD_DLG, L"Unknown pinop received: %d", operation);
 			return DLG_ERR;
 	}
-	DlgRet rv = setup_dialog(title, msg, true, false);
+	DlgRet rv = setup_dialog(title, msg, csPinName, true, false);
 	if(rv != DLG_OK) {
 		return rv;
 	}
