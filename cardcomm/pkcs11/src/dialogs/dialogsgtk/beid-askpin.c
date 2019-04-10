@@ -204,12 +204,17 @@ int main(int argc, char *argv[]) {
         // create new message dialog with CANCEL and OK buttons in standard places, in center of user's screen
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	if(argc < 2 || (strlen(argv[1]) == 0)) {
+		fprintf(stderr, "E: required argument: PIN name\n");
+		exit(EXIT_ERROR);
+	}
+
         if (get_parent_path(caller_path, sizeof(caller_path) - 2) > 0) {
                 pindialog_init(&pindialog);     // setup PinDialogInfo structure
                 pindialog.dialog =
                         gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
-                                               GTK_BUTTONS_NONE, gettext("The application\n[%s]\nrequests your eID PIN code."),
-                                               caller_path);
+                                               GTK_BUTTONS_NONE, gettext("The application\n[%s]\nrequests your eID %s PIN code."),
+                                               caller_path, argv[1]);
         } else {
                 fprintf(stderr, "Failed To Determine Parent Process. Aborting.\n");
                 exit(EXIT_ERROR);

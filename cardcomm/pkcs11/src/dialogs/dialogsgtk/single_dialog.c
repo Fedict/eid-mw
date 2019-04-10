@@ -80,7 +80,7 @@ extern void dlg_log_error(const char *label);
 
 // execute dialog in a child process, leave it running
 ///////////////////////////////////////////////////////////////////////////////////////////
-pid_t sdialog_call(const char *path, const char *msg) {
+pid_t sdialog_call(const char *path, const char *msg, const char *pinName) {
         pid_t pid;
 
         dlg_log_printf("sdialog_call/fork\n");
@@ -101,7 +101,7 @@ pid_t sdialog_call(const char *path, const char *msg) {
                 umask(0);
                 chdir("/");
                 DPRINTF("call_dialog: about to exec %s\n", path);
-                execlp(path, path, msg, (char *) 0);
+                execlp(path, path, pinName, msg, (char *) 0);
                 DERROR("sdialog_call/execlp");
                 exit(1);
         }
@@ -112,7 +112,7 @@ pid_t sdialog_call(const char *path, const char *msg) {
 
 // execute dialog in a child process, read back it's stdout via a pipe, wait for it to exit
 ///////////////////////////////////////////////////////////////////////////////////////////
-char *sdialog_call_modal(const char *path, const char *msg) {
+char *sdialog_call_modal(const char *path, const char *msg, const char *pinName) {
         pid_t pid;
         size_t len;
         char *response;
@@ -156,7 +156,7 @@ char *sdialog_call_modal(const char *path, const char *msg) {
                 }
 
                 DPRINTF("call_dialog_result: about to exec %s\n", path);
-                execlp(path, path, msg, (char *) 0);
+                execlp(path, path, pinName, msg, (char *) 0);
 
                 DPRINTF("sdialog_call_modal/execlp");
                 exit(1);

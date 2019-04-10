@@ -46,17 +46,17 @@ int main(int argc, char *argv[]) {
 	char* msg;
         int attempts;
 
-        if ((argc == 2) && (argv[1] != NULL) && (strlen(argv[1]) == 1)
-            && isdigit(*(argv[1]))) {
+        if ((argc == 3) && (argv[2] != NULL) && (strlen(argv[2]) == 1)
+            && isdigit(*(argv[2])) && (argv[1] != NULL) && (strlen(argv[1]) != 0)) {
                 attempts = atoi(argv[1]);
-                msg = ngettext("You have entered an incorrect PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked.", "You have entered an incorrect PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", attempts);
+                msg = ngettext("You have entered an incorrect %s PIN code.\nPlease note that at the next incorrect entry your PIN code will be blocked.", "You have entered an incorrect %s PIN code.\nPlease note that you have only %d attempts left before your PIN is blocked.", attempts);
         } else {
                 fprintf(stderr, "Incorrect Parameter for <number of attempts left>\n");
                 exit(EXIT_ERROR);
         }
 
         dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING,
-                                        GTK_BUTTONS_OK, msg, attempts);
+                                        GTK_BUTTONS_OK, msg, argv[1], attempts);
         gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
         gtk_window_set_title(GTK_WINDOW(dialog), gettext("beID: Incorrect PIN Code"));
         gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);

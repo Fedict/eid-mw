@@ -57,9 +57,9 @@ int main(int argc, char *argv[]) {
 	textdomain("dialogs-beid");
 
         if (get_parent_path(caller_path, sizeof(caller_path) - 2) > 0) {
-                if (!((argc == 2) && (argv[1] != NULL)
-                      && (strlen(argv[1]) > 0))) {
-                        fprintf(stderr, "Incorrect Parameter for <description of SPR>\n");
+                if (!((argc == 3) && (argv[1] != NULL) && (argv[2] != NULL)
+                      && (strlen(argv[1]) > 0) && (strlen(argv[2]) > 0))) {
+                        fprintf(stderr, "Incorrect parameters. Expected: <PIN name> <description of SPR>\n");
                         exit(EXIT_ERROR);
                 }
         } else {
@@ -72,8 +72,8 @@ int main(int argc, char *argv[]) {
 
         pindialog.dialog =
                 gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
-                                       GTK_BUTTONS_NONE, gettext("The application [%s] requests your eID PIN code on the secure pinpad reader:\n[%s]..."), caller_path,
-                                       argv[1]);
+                                       GTK_BUTTONS_NONE, gettext("The application [%s] requests your eID %s PIN code on the secure pinpad reader:\n[%s]..."), caller_path,
+                                       argv[1], argv[2]);
         gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog), GTK_RESPONSE_OK);
         gtk_window_set_title(GTK_WINDOW(pindialog.dialog), gettext("beID: PIN Code Required"));
         gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);

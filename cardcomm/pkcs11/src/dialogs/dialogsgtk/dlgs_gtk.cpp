@@ -43,8 +43,8 @@ using namespace eIDMW;
 
 extern "C"
 {
-	pid_t sdialog_call(const char *path, const char *msg);
-	char *sdialog_call_modal(const char *path, const char *msg, const wchar_t *pinName);
+	pid_t sdialog_call(const char *path, const char *msg, const char *pinName);
+	char *sdialog_call_modal(const char *path, const char *msg, const char *pinName);
 	void dlg_log_printf(const char *format, ...);
 	void dlg_log_error(const char *label);
 }
@@ -88,7 +88,10 @@ DlgRet eIDMW::DlgAskPin(DlgPinOperation operation,
 {
 	MWLOG(LEV_DEBUG, MOD_DLG, L"eIDMW::DlgAskPin called");
 
-	char *response = sdialog_call_modal(BEID_ASKPIN_DIALOG, "", wsPinName);
+	char pin[1024];
+	wcstombs(pin, wsPinName, sizeof pin);
+
+	char *response = sdialog_call_modal(BEID_ASKPIN_DIALOG, "", pin);
 
 	if (response == NULL)
 		return DLG_CANCEL;
@@ -110,9 +113,12 @@ DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
 {
 	DlgRet result = DLG_ERR;
 
+	char pin[1024];
+	wcstombs(pin, wsPinName, sizeof pin);
+
 	MWLOG(LEV_DEBUG, MOD_DLG, L"eIDMW::DlgAskPins called");
 
-	char *response = sdialog_call_modal(BEID_CHANGEPIN_DIALOG, "", wsPinName);
+	char *response = sdialog_call_modal(BEID_CHANGEPIN_DIALOG, "", pin);
 
 	if (response == NULL)
 		result = DLG_CANCEL;
@@ -140,10 +146,13 @@ DlgRet eIDMW::DlgBadPin(DlgPinUsage usage,
 {
 	char count[4];
 
+	char pin[1024];
+	wcstombs(pin, wsPinName, sizeof pin);
+
 	MWLOG(LEV_DEBUG, MOD_DLG, L"eIDMW::DlgBadPin called");
 
 	snprintf(count, sizeof(count) - 2, "%1lu", ulRemainingTries);
-	char *response = sdialog_call_modal(BEID_BADPIN_DIALOG, count, wsPinName);
+	char *response = sdialog_call_modal(BEID_BADPIN_DIALOG, count, pin);
 
 	free(response);
 	return DLG_OK;
@@ -164,10 +173,14 @@ DlgRet eIDMW::DlgDisplayPinpadInfo(DlgPinOperation operation,
 
 	wcstombs(message, wsReader, 1024);
 
+	char pin[1024];
+	wcstombs(pin, wsPinName, sizeof pin);
+
+
 	if (operation == DLG_PIN_OP_VERIFY)
-		dialog_pid = sdialog_call(BEID_SPR_ASKPIN_DIALOG, message);
+		dialog_pid = sdialog_call(BEID_SPR_ASKPIN_DIALOG, message, pin);
 	else
-		dialog_pid = sdialog_call(BEID_SPR_CHANGEPIN_DIALOG, message);
+		dialog_pid = sdialog_call(BEID_SPR_CHANGEPIN_DIALOG, message, pin);
 
 	if (dialog_pid < 0)
 		return DLG_ERR;
@@ -209,7 +222,7 @@ DlgRet eIDMW::DlgAskAccess(const wchar_t * wsAppPath,
 
 
 	wcstombs(message, wsAppPath, 1024);
-	char *response = sdialog_call_modal(BEID_ASKACCESS_DIALOG, message, L"");
+	char *response = sdialog_call_modal(BEID_ASKACCESS_DIALOG, message, "");
 
 	if (response != NULL)
 	{
