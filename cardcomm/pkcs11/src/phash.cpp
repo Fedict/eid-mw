@@ -50,16 +50,19 @@ int hash_init(CK_MECHANISM_PTR pMechanism, void **pphashinfo,
 		case CKM_SHA256:
 		case CKM_SHA256_RSA_PKCS_PSS:
 		case CKM_SHA256_RSA_PKCS:
+		case CKM_ECDSA_SHA256:
 			algo = ALGO_SHA256;
 			*size = 32;
 			break;
 		case CKM_SHA384:
 		case CKM_SHA384_RSA_PKCS:
+		case CKM_ECDSA_SHA384:
 			algo = ALGO_SHA384;
 			*size = 48;
 			break;
 		case CKM_SHA512:
 		case CKM_SHA512_RSA_PKCS:
+		case CKM_ECDSA_SHA512:
 			algo = ALGO_SHA512;
 			*size = 64;
 			break;
