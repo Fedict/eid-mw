@@ -39,6 +39,8 @@
 #include <openssl/evp.h>
 #include <openssl/engine.h>
 
+#if OPENSSL_VERSION_NUMBER > 0x10100000L
+
 int verify_sig(const unsigned char *sig, CK_ULONG siglen, const unsigned char *certificate, size_t certlen) {
 	X509 *cert = NULL;
 	EVP_PKEY *pkey = NULL;
@@ -64,6 +66,7 @@ int verify_sig(const unsigned char *sig, CK_ULONG siglen, const unsigned char *c
 	return TEST_RV_OK;
 }
 
+#endif
 #endif
 
 int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
