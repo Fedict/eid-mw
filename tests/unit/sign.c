@@ -163,7 +163,7 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 		printf("Received public exponent of key with length %lu:\n", attr[1].ulValueLen);
 		hex_dump((char*)exp, attr[1].ulValueLen);
 
-#if HAVE_OPENSSL
+#if HAVE_OPENSSL && OPENSSL_VERSION_NUMBER > 0x10100000L
 		unsigned char cert[4096];
 		attr[0].type = CKA_CLASS;
 		attr[0].pValue = &type;
