@@ -78,6 +78,7 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 	CK_ULONG sig_len, type, count;
 	CK_OBJECT_HANDLE privatekey, publickey, certificate;
 	bool is_rsa = false;
+	int i;
 
 	attr[0].type = CKA_CLASS;
 	attr[0].pValue = &type;
@@ -103,7 +104,7 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 
 	check_rv(C_GetMechanismList(slot, mechlist, &count));
 
-	for(int i=0; i<count; i++) {
+	for(i=0; i<count; i++) {
 		if(mechlist[i] == CKM_SHA256_RSA_PKCS) {
 			mech.mechanism = mechlist[i];
 			i=count;
