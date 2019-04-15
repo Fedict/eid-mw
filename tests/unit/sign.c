@@ -58,7 +58,10 @@ int verify_sig(const unsigned char *sig, CK_ULONG siglen, const unsigned char *c
 		return TEST_RV_FAIL;
 	}
 	mdctx = EVP_MD_CTX_new();
-	EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pkey);
+	if(EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pkey) != 1) {
+		fprintf(stderr, "E: initialization for signature validation failed!\n");
+		return TEST_RV_FAIL;
+	}
 	if(EVP_DigestVerifyUpdate(mdctx, (const unsigned char*)"foo", 3) != 1) {
 		fprintf(stderr, "E: hashing for signature failed!\n");
 		return TEST_RV_FAIL;
