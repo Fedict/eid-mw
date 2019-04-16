@@ -36,12 +36,12 @@
 #include <stdbool.h>
 
 #if HAVE_OPENSSL
+#include <openssl/opensslv.h>
 #include <openssl/evp.h>
 #include <openssl/engine.h>
 
-#if OPENSSL_VERSION_NUMBER > 0x10100000L
-
 int verify_sig(const unsigned char *sig, CK_ULONG siglen, const unsigned char *certificate, size_t certlen) {
+#if OPENSSL_VERSION_NUMBER > 0x10100000L
 	X509 *cert = NULL;
 	EVP_PKEY *pkey = NULL;
 	EVP_MD_CTX *mdctx;
@@ -71,9 +71,10 @@ int verify_sig(const unsigned char *sig, CK_ULONG siglen, const unsigned char *c
 		return TEST_RV_FAIL;
 	}
 	return TEST_RV_OK;
-}
-
+#else
+	printf("OpenSSL too old for verification\n");
 #endif
+}
 #endif
 
 int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
