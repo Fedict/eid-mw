@@ -171,33 +171,34 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 
 		printf("Received public exponent of key with length %lu:\n", attr[1].ulValueLen);
 		hex_dump((char*)exp, attr[1].ulValueLen);
-
-#if HAVE_OPENSSL && OPENSSL_VERSION_NUMBER > 0x10100000L
-		unsigned char cert[4096];
-		attr[0].type = CKA_CLASS;
-		attr[0].pValue = &type;
-		type = CKO_CERTIFICATE;
-		attr[0].ulValueLen = sizeof(CK_ULONG);
-
-		attr[1].type = CKA_LABEL;
-		attr[1].pValue = label;
-		attr[1].ulValueLen = strlen(label);
-
-		check_rv(C_FindObjectsInit(session, attr, 2));
-		check_rv(C_FindObjects(session, &certificate, 1, &count));
-		verbose_assert(count == 1);
-		check_rv(C_FindObjectsFinal(session));
-
-		attr[0].type = CKA_VALUE;
-		attr[0].pValue = cert;
-		attr[0].ulValueLen = sizeof(cert);
-
-		check_rv(C_GetAttributeValue(session, certificate, attr, 1));
-		return verify_sig(sig, sig_len, cert, attr[0].ulValueLen);
-#endif
 	}
 
+#if HAVE_OPENSSL && OPENSSL_VERSION_NUMBER > 0x10100000L
+	unsigned char cert[4096];
+	attr[0].type = CKA_CLASS;
+	attr[0].pValue = &type;
+	type = CKO_CERTIFICATE;
+	attr[0].ulValueLen = sizeof(CK_ULONG);
+
+	attr[1].type = CKA_LABEL;
+	attr[1].pValue = label;
+	attr[1].ulValueLen = strlen(label);
+
+	check_rv(C_FindObjectsInit(session, attr, 2));
+	check_rv(C_FindObjects(session, &certificate, 1, &count));
+	verbose_assert(count == 1);
+	check_rv(C_FindObjectsFinal(session));
+
+	attr[0].type = CKA_VALUE;
+	attr[0].pValue = cert;
+	attr[0].ulValueLen = sizeof(cert);
+
+	check_rv(C_GetAttributeValue(session, certificate, attr, 1));
+
+	return verify_sig(sig, sig_len, cert, attr[0].ulValueLen);
+#else
 	return TEST_RV_OK;
+#endif
 }
 
 TEST_FUNC(sign) {
