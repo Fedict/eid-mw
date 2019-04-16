@@ -195,6 +195,9 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 
 	check_rv(C_GetAttributeValue(session, certificate, attr, 1));
 
+	printf("Received certificate with length %lu:\n", attr[0].ulValueLen);
+	hex_dump((char*)cert, attr[0].ulValueLen);
+
 	return verify_sig(sig, sig_len, cert, attr[0].ulValueLen);
 #else
 	return TEST_RV_OK;
