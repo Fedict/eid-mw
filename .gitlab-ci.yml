@@ -252,7 +252,7 @@ build:disco-64:
   before_script:
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
-    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo http://download.opensuse.org/distribution/leap/$DVER/repo/oss --define "revision $VERSHORT" products/srpm/eid-mw-*.fc29.src.rpm
+    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo $REPOURL --define "revision $VERSHORT" products/srpm/eid-mw-*.fc29.src.rpm
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
     - mv /var/tmp/build-root/home/abuild/rpmbuild/*rpm products/$DIST-$DVER-$ARCH/
@@ -331,10 +331,12 @@ build:suse-15.0:
   variables:
     DIST: opensuse
     DVER: "15.0"
+    REPOURL: http://download.opensuse.org/distribution/leap/15.0/repo/oss
     ARCH: x86_64
 build:suse-42.3:
   <<: *build-suse
   variables:
     DIST: opensuse
     DVER: "42.3"
+    REPOURL: http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse
     ARCH: x86_64
