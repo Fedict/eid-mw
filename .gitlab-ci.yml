@@ -255,7 +255,7 @@ build:disco-64:
   before_script:
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
-    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DISTVER --repo http://download.opensuse.org/distribution/leap/$DISTVER/repo/oss --define "revision $VERSHORT" products/srpm/eid-mw-*.fc29.src.rpm
+    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo http://download.opensuse.org/distribution/leap/$DVER/repo/oss --define "revision $VERSHORT" products/srpm/eid-mw-*.fc29.src.rpm
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
     - mv /var/tmp/build-root/home/abuild/rpmbuild/*rpm products/$DIST-$DVER-$ARCH/
