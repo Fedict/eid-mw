@@ -82,7 +82,6 @@ inject-debs:
     - build:sid-32
     - build:xenial-32
     - build:bionic-32
-    - build:cosmic-32
     - build:disco-32
     - build:deb8-64
     - build:deb9-64
@@ -90,7 +89,6 @@ inject-debs:
     - build:sid-64
     - build:xenial-64
     - build:bionic-64
-    - build:cosmic-64
     - build:disco-64
   stage: build-repository
   tags:
@@ -214,20 +212,6 @@ build:bionic-64:
     DIST: ubuntu
     CODE: bionic
     SHORT: u1804
-    ARCH: amd64
-build:cosmic-32:
-  <<: *build-deb
-  variables:
-    DIST: ubuntu
-    CODE: cosmic
-    SHORT: u1810
-    ARCH: i386
-build:cosmic-64:
-  <<: *build-deb
-  variables:
-    DIST: ubuntu
-    CODE: cosmic
-    SHORT: u1810
     ARCH: amd64
 build:disco-32:
   <<: *build-deb
