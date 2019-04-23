@@ -227,6 +227,26 @@ build:disco-64:
     CODE: disco
     SHORT: u1904
     ARCH: amd64
+.build-suse: &build-suse
+  dependencies:
+    - build:srpm
+  stage: binary-package
+  retry: 2
+  tags:
+    - docker
+  image: wouterverhelst/obs-build:latest
+  before_script:
+    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
+  script:
+    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DISTVER --repo http://download.opensuse.org/distribution/leap/$DISTVER/repo/oss --define "revision $VERSHORT" products/srpm/eid-mw-*.fc29.src.rpm
+  after_script:
+    - mkdir -p products/$DIST-$DVER-$ARCH
+    - mv /var/tmp/build-root/home/abuild/rpmbuild/*rpm products/$DIST-$DVER-$ARCH/
+  artifacts:
+    paths:
+      - products/$DIST-$DVER-$ARCH
+    when:
+      on_success
 .build-fed: &build-fed
   dependencies:
     - build:srpm
@@ -291,4 +311,16 @@ build:centos-7-64:
   variables:
     DIST: epel
     DVER: 7
+    ARCH: x86_64
+build:suse-15.0:
+  <<: *build-suse
+  variables:
+    DIST: opensuse
+    DVER: "15.0"
+    ARCH: x86_64
+build:suse-42.3:
+  <<: *build-suse
+  variables:
+    DIST: opensuse
+    DVER: "42.3"
     ARCH: x86_64
