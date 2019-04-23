@@ -129,6 +129,23 @@ inject-fed:
     - DISTS=([fedora]="28 29" [epel]="6 7")
     - VERARCHS=([6]="i386 x86_64" [7]="x86_64" [28]="i386 x86_64" [29]="i386 x86_64")
     - bash -x scripts/build-aux/fed-rel.sh
+inject-suse:
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  dependencies:
+    - build:suse-15.0
+    - build:suse-42.3
+  stage: build-repository
+  tags:
+    - repobuilder
+  script:
+    - TARGET=continuous
+    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
+    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
+    - bash -x scripts/build-aux/suse-rel.sh
 build:deb8-32:
   <<: *build-deb
   variables:
