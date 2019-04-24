@@ -5,7 +5,7 @@ set -e
 find ./products -print
 
 declare -A DISTVERS
-declare -a DISTNAMES
+declare -A DISTNAMES
 declare -A VERARCHS
 
 DISTVERS=([fedora]="28 29" [epel]="6 7")
