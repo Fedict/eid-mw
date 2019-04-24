@@ -28,7 +28,7 @@ build:source:
       on_success
     paths:
       - products/source
-.build-deb: &build-deb
+.build-deb-base: &build-deb-base
   dependencies:
     - build:source
   before_script:
@@ -53,6 +53,11 @@ build:source:
       on_success
   tags:
     - sbuild
+.build-deb: &build-deb
+  <<: *build-deb-base
+  except:
+    variables:
+    - $EXTRADIST
 build:srpm:
   stage: source-package
   tags:
@@ -104,12 +109,18 @@ inject-debs:
     - $CI_COMMIT_REF_NAME == "master"
     - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
     - $CI_COMMIT_TAG
+  except:
+    variables:
+    - $EXTRADIST
 inject-fed:
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"
     - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
     - $CI_COMMIT_TAG
+  except:
+    variables:
+    - $EXTRADIST
   dependencies:
     - build:fedora-28-32
     - build:fedora-28-64
@@ -132,6 +143,9 @@ inject-suse:
     - $CI_COMMIT_REF_NAME == "master"
     - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
     - $CI_COMMIT_TAG
+  except:
+    variables:
+    - $EXTRADIST
   dependencies:
     - build:suse-15.0
     - build:suse-42.3
@@ -241,7 +255,7 @@ build:disco-64:
     CODE: disco
     SHORT: u1904
     ARCH: amd64
-.build-suse: &build-suse
+.build-suse-base: &build-suse-base
   dependencies:
     - build:srpm
   stage: binary-package
@@ -261,7 +275,12 @@ build:disco-64:
       - products/$DIST-$DVER-$ARCH
     when:
       on_success
-.build-fed: &build-fed
+.build-suse: &build-suse
+  <<: *build-suse-base
+  except:
+    variables:
+    - $EXTRADIST
+.build-fed-base: &build-fed-base
   dependencies:
     - build:srpm
   stage: binary-package
@@ -284,6 +303,11 @@ build:disco-64:
       - products/$DIST-$DVER-$ARCH
     when:
       on_success
+.build-fed: &build-fed
+  <<: *build-fed-base
+  except:
+    variables:
+    - $EXTRADIST
 build:fedora-28-32:
   <<: *build-fed
   variables:
