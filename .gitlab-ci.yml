@@ -255,7 +255,7 @@ build:disco-64:
     - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo $REPOURL --define "revision $VERSHORT" products/srpm/eid-mw-*.fc29.src.rpm
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
-    - mv /var/tmp/build-root/home/abuild/rpmbuild/*rpm products/$DIST-$DVER-$ARCH/
+    - mv /var/tmp/build-root/home/abuild/rpmbuild/RPMS/*/*rpm products/$DIST-$DVER-$ARCH/
   artifacts:
     paths:
       - products/$DIST-$DVER-$ARCH
