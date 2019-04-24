@@ -26,6 +26,6 @@ do
 				rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile
 			done
 		done
-		createrepo /srv/repo/repo/rpm/$TARGET/$dist/$vers
+		createrepo /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers
 	done
 done
