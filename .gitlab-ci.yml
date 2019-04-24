@@ -340,3 +340,47 @@ build:suse-42.3:
     DVER: "42.3"
     REPOURL: http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse
     ARCH: x86_64
+extra:deb-32:
+  <<: *build-deb
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    ARCH: i386
+  when: manual
+extra:deb-64:
+  <<: *build-deb
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    ARCH: amd64
+  when: manual
+extra:fed-32:
+  <<: *build-fed
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    ARCH: i386
+  when: manual
+extra:fed-64:
+  <<: *build-fed
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    ARCH: x86_64
+  when: manual
+extra:suse-32:
+  <<: *build-suse
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    REPOURL: $EXTRAURL
+    ARCH: x86_64
+  when: manual
+extra:suse-64:
+  <<: *build-suse
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    REPOURL: $EXTRAURL
+    ARCH: x86_64
+  when: manual
