@@ -24,9 +24,9 @@ do
 				echo "$i => $targetfile"
 				cp $i $targetfile
 				rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile
-				gpg --yes --batch --passphrase "" --no-tty -b --armor repomd.xml
 			done
 		done
 		createrepo /srv/repo/repo/rpm/$TARGET/$dist/$vers
+		(cd /srv/repo/repo/rpm/$TARGET/$dist/$vers && gpg --yes --batch --passphrase "" --no-tty -b --armor repomd.xml)
 	done
 done
