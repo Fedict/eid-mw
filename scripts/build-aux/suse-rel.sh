@@ -27,6 +27,6 @@ do
 			done
 		done
 		createrepo /srv/repo/repo/rpm/$TARGET/$dist/$vers
-		(cd /srv/repo/repo/rpm/$TARGET/$dist/$vers && gpg --yes --batch --passphrase "" --no-tty -b --armor repomd.xml)
+		(cd /srv/repo/repo/rpm/$TARGET/$dist/$vers/repodata && gpg --yes --batch --passphrase "" --no-tty -b --armor repomd.xml)
 	done
 done
