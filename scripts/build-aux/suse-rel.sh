@@ -8,10 +8,10 @@ declare -A DISTVERS
 declare -a DISTNAMES
 declare -A VERARCHS
 
-DISTVERS=([leap]="15.0 42.3")
-DISTNAMES=([leap]="opensuse")
+DISTVERS=([opensuse]="15.0 42.3")
+DISTNAMES=([opensuse]="opensuse")
 VERARCHS=([15.0]="x86_64" [42.3]="x86_64")
-for dist in leap
+for dist in opensuse
 do
 	for vers in ${DISTVERS[$dist]}
 	do
