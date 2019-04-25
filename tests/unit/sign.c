@@ -40,13 +40,15 @@
 #include <openssl/evp.h>
 #include <openssl/engine.h>
 
-int verify_sig(const unsigned char *sig, CK_ULONG siglen, const unsigned char *certificate, size_t certlen) {
+// These were copied from eid-test-ca:derencode.c
+int verify_sig(const unsigned char *sig_in, CK_ULONG siglen, const unsigned char *certificate, size_t certlen, bool is_rsa) {
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
 	X509 *cert = NULL;
 	EVP_PKEY *pkey = NULL;
 	EVP_MD_CTX *mdctx;
 	EVP_PKEY_CTX *pctx;
 	const EVP_MD *md = EVP_get_digestbyname("sha256");
+	unsigned char *sig = (unsigned char*)sig_in;
 
 	if(d2i_X509(&cert, &certificate, certlen) == NULL) {
 		fprintf(stderr, "E: could not parse X509 certificate\n");
@@ -66,10 +68,36 @@ int verify_sig(const unsigned char *sig, CK_ULONG siglen, const unsigned char *c
 		fprintf(stderr, "E: hashing for signature failed!\n");
 		return TEST_RV_FAIL;
 	}
+
+	ECDSA_SIG* ec_sig;
+	if(!is_rsa) {
+		BIGNUM *r;
+		BIGNUM *s;
+		ec_sig = ECDSA_SIG_new();
+		if((r = BN_bin2bn(sig, siglen / 2, NULL)) == NULL) {
+			fprintf(stderr, "E: could not convert R part of ECDSA signature!\n");
+			return TEST_RV_FAIL;
+		}
+		if((s = BN_bin2bn(sig + (siglen / 2), siglen / 2, NULL)) == NULL) {
+			fprintf(stderr, "E: could not convert S part of ECDSA signature!\n");
+			return TEST_RV_FAIL;
+		}
+		if(ECDSA_SIG_set0(ec_sig, r, s) == 0) {
+			fprintf(stderr, "E: could not set ECDSA_SIG structure!\n");
+			return TEST_RV_FAIL;
+		}
+		siglen = i2d_ECDSA_SIG(ec_sig, NULL);
+		unsigned char *dersig = sig = malloc(siglen);
+		siglen = i2d_ECDSA_SIG(ec_sig, &dersig);
+	}
 	if(EVP_DigestVerifyFinal(mdctx, sig, siglen) != 1) {
 		fprintf(stderr, "E: signature fails validation!\n");
 		return TEST_RV_FAIL;
 	}
+	if(!is_rsa) {
+		free(sig);
+	}
+	printf("signature verified\n");
 	return TEST_RV_OK;
 #else
 	printf("OpenSSL too old for verification\n");
@@ -198,7 +226,7 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 	printf("Received certificate with length %lu:\n", attr[0].ulValueLen);
 	hex_dump((char*)cert, attr[0].ulValueLen);
 
-	return verify_sig(sig, sig_len, cert, attr[0].ulValueLen);
+	return verify_sig(sig, sig_len, cert, attr[0].ulValueLen, is_rsa);
 #else
 	return TEST_RV_OK;
 #endif
