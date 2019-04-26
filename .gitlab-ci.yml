@@ -193,14 +193,16 @@ extra:deb-32:
   <<: *build-deb-base
   variables:
     DIST: $EXTRADIST
-    DVER: $EXTRAVER
+    CODE: $EXTRACODE
+    SHORT: $EXTRASHORT
     ARCH: i386
   when: manual
 extra:deb-64:
   <<: *build-deb-base
   variables:
     DIST: $EXTRADIST
-    DVER: $EXTRAVER
+    CODE: $EXTRACODE
+    SHORT: $EXTRASHORT
     ARCH: amd64
   when: manual
 # Fedora-based distributions
