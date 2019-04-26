@@ -5,6 +5,10 @@ stages:
  - binary-package
  - build-repository
  - sync
+
+################################################
+# Stage "source": build source, run test suite #
+################################################
 build:source:
   variables:
     GIT_STRATEGY: clone
@@ -28,6 +32,35 @@ build:source:
       on_success
     paths:
       - products/source
+#################################################
+# Stage "source-package": build source packages #
+#################################################
+build:srpm:
+  stage: source-package
+  tags:
+    - docker
+  image: fedora:29
+  before_script:
+    - http_proxy=$ACNG dnf -y install rpm-build git rpmdevtools
+    - rpmdev-setuptree
+    - VER=$(scripts/build-aux/genver.sh)
+    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
+    - mv products/source/eid-mw-$VER.tar.gz $HOME/rpmbuild/SOURCES/
+    - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SPECS/ --strip-components=2 eid-mw-$VER/rpm/eid-mw.spec
+    - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SOURCES/ --strip-components=2 eid-mw-$VER/rpm/baselibs.conf
+  script:
+    - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
+  after_script:
+    - mkdir -p products/srpm/
+    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.src.rpm products/srpm/
+  artifacts:
+    paths:
+      - products/srpm
+##############################################################
+# Stage "binary-package": build binaries and binary packages #
+##############################################################
+
+## Debian-based distributions
 .build-deb-base: &build-deb-base
   dependencies:
     - build:source
@@ -58,105 +91,6 @@ build:source:
   except:
     variables:
     - $EXTRADIST
-build:srpm:
-  stage: source-package
-  tags:
-    - docker
-  image: fedora:29
-  before_script:
-    - http_proxy=$ACNG dnf -y install rpm-build git rpmdevtools
-    - rpmdev-setuptree
-    - VER=$(scripts/build-aux/genver.sh)
-    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
-    - mv products/source/eid-mw-$VER.tar.gz $HOME/rpmbuild/SOURCES/
-    - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SPECS/ --strip-components=2 eid-mw-$VER/rpm/eid-mw.spec
-    - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SOURCES/ --strip-components=2 eid-mw-$VER/rpm/baselibs.conf
-  script:
-    - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
-  after_script:
-    - mkdir -p products/srpm/
-    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.src.rpm products/srpm/
-  artifacts:
-    paths:
-      - products/srpm
-inject-debs:
-  dependencies:
-    - build:deb8-32
-    - build:deb9-32
-    - build:deb10-32
-    - build:sid-32
-    - build:xenial-32
-    - build:bionic-32
-    - build:disco-32
-    - build:deb8-64
-    - build:deb9-64
-    - build:deb10-64
-    - build:sid-64
-    - build:xenial-64
-    - build:bionic-64
-    - build:disco-64
-  stage: build-repository
-  tags:
-    - repobuilder
-  before_script:
-    - dcmd mv products/deb/*ges /srv/repo/reprepro/incoming
-  script:
-    - cd /srv/repo/reprepro && reprepro processincoming incoming
-  variables:
-    GIT_STRATEGY: none
-  only:
-    variables:
-    - $CI_COMMIT_REF_NAME == "master"
-    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
-    - $CI_COMMIT_TAG
-  except:
-    variables:
-    - $EXTRADIST
-inject-fed:
-  only:
-    variables:
-    - $CI_COMMIT_REF_NAME == "master"
-    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
-    - $CI_COMMIT_TAG
-  except:
-    variables:
-    - $EXTRADIST
-  dependencies:
-    - build:fedora-28-32
-    - build:fedora-28-64
-    - build:fedora-29-32
-    - build:fedora-29-64
-    - build:centos-6-32
-    - build:centos-6-64
-    - build:centos-7-64
-  stage: build-repository
-  tags:
-    - repobuilder
-  script:
-    - export TARGET=continuous
-    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
-    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
-    - bash -x scripts/build-aux/fed-rel.sh
-inject-suse:
-  only:
-    variables:
-    - $CI_COMMIT_REF_NAME == "master"
-    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
-    - $CI_COMMIT_TAG
-  except:
-    variables:
-    - $EXTRADIST
-  dependencies:
-    - build:suse-15.0
-    - build:suse-42.3
-  stage: build-repository
-  tags:
-    - repobuilder
-  script:
-    - export TARGET=continuous
-    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
-    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
-    - bash -x scripts/build-aux/suse-rel.sh
 build:deb8-32:
   <<: *build-deb
   variables:
@@ -255,31 +189,21 @@ build:disco-64:
     CODE: disco
     SHORT: u1904
     ARCH: amd64
-.build-suse-base: &build-suse-base
-  dependencies:
-    - build:srpm
-  stage: binary-package
-  retry: 2
-  tags:
-    - docker
-  image: wouterverhelst/obs-build:latest
-  before_script:
-    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
-  script:
-    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo $REPOURL --define "revision $VERSHORT" products/srpm/eid-mw-*.fc29.src.rpm
-  after_script:
-    - mkdir -p products/$DIST-$DVER-$ARCH
-    - mv /var/tmp/build-root/home/abuild/rpmbuild/RPMS/*/*rpm products/$DIST-$DVER-$ARCH/
-  artifacts:
-    paths:
-      - products/$DIST-$DVER-$ARCH
-    when:
-      on_success
-.build-suse: &build-suse
-  <<: *build-suse-base
-  except:
-    variables:
-    - $EXTRADIST
+extra:deb-32:
+  <<: *build-deb-base
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    ARCH: i386
+  when: manual
+extra:deb-64:
+  <<: *build-deb-base
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    ARCH: amd64
+  when: manual
+# Fedora-based distributions
 .build-fed-base: &build-fed-base
   dependencies:
     - build:srpm
@@ -350,6 +274,46 @@ build:centos-7-64:
     DIST: epel
     DVER: 7
     ARCH: x86_64
+extra:fed-32:
+  <<: *build-fed-base
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    ARCH: i386
+  when: manual
+extra:fed-64:
+  <<: *build-fed-base
+  variables:
+    DIST: $EXTRADIST
+    DVER: $EXTRAVER
+    ARCH: x86_64
+  when: manual
+# openSUSE-based distributions
+.build-suse-base: &build-suse-base
+  dependencies:
+    - build:srpm
+  stage: binary-package
+  retry: 2
+  tags:
+    - docker
+  image: wouterverhelst/obs-build:latest
+  before_script:
+    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
+  script:
+    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo $REPOURL --define "revision $VERSHORT" products/srpm/eid-mw-*.fc29.src.rpm
+  after_script:
+    - mkdir -p products/$DIST-$DVER-$ARCH
+    - mv /var/tmp/build-root/home/abuild/rpmbuild/RPMS/*/*rpm products/$DIST-$DVER-$ARCH/
+  artifacts:
+    paths:
+      - products/$DIST-$DVER-$ARCH
+    when:
+      on_success
+.build-suse: &build-suse
+  <<: *build-suse-base
+  except:
+    variables:
+    - $EXTRADIST
 build:suse-15.0:
   <<: *build-suse
   variables:
@@ -358,42 +322,14 @@ build:suse-15.0:
     REPOURL: http://download.opensuse.org/distribution/leap/15.0/repo/oss
     ARCH: x86_64
 build:suse-42.3:
-  <<: *build-suse
+  <<: *build-suse-base
   variables:
     DIST: opensuse
     DVER: "42.3"
     REPOURL: http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse
     ARCH: x86_64
-extra:deb-32:
-  <<: *build-deb
-  variables:
-    DIST: $EXTRADIST
-    DVER: $EXTRAVER
-    ARCH: i386
-  when: manual
-extra:deb-64:
-  <<: *build-deb
-  variables:
-    DIST: $EXTRADIST
-    DVER: $EXTRAVER
-    ARCH: amd64
-  when: manual
-extra:fed-32:
-  <<: *build-fed
-  variables:
-    DIST: $EXTRADIST
-    DVER: $EXTRAVER
-    ARCH: i386
-  when: manual
-extra:fed-64:
-  <<: *build-fed
-  variables:
-    DIST: $EXTRADIST
-    DVER: $EXTRAVER
-    ARCH: x86_64
-  when: manual
 extra:suse-32:
-  <<: *build-suse
+  <<: *build-suse-base
   variables:
     DIST: $EXTRADIST
     DVER: $EXTRAVER
@@ -401,7 +337,7 @@ extra:suse-32:
     ARCH: x86_64
   when: manual
 extra:suse-64:
-  <<: *build-suse
+  <<: *build-suse-base
   variables:
     DIST: $EXTRADIST
     DVER: $EXTRAVER
@@ -409,7 +345,7 @@ extra:suse-64:
     ARCH: x86_64
   when: manual
 build:windows:
-  stage: source-package
+  stage: binary-package
   variables:
   dependencies:
   script:
@@ -418,3 +354,135 @@ build:windows:
   tags:
   - windows
   allow_failure: true
+####################################################################
+# Stage "build-repository": copy binaries into a repository layout #
+####################################################################
+inject-debs:
+  dependencies:
+    - build:deb8-32
+    - build:deb9-32
+    - build:deb10-32
+    - build:sid-32
+    - build:xenial-32
+    - build:bionic-32
+    - build:disco-32
+    - build:deb8-64
+    - build:deb9-64
+    - build:deb10-64
+    - build:sid-64
+    - build:xenial-64
+    - build:bionic-64
+    - build:disco-64
+  stage: build-repository
+  tags:
+    - repobuilder
+  before_script:
+    - dcmd mv products/deb/*ges /srv/repo/reprepro/incoming
+  script:
+    - cd /srv/repo/reprepro && reprepro processincoming incoming
+  variables:
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  except:
+    variables:
+    - $EXTRADIST
+add:debs:
+  dependencies:
+  - extra:deb-32
+  - extra:deb-64
+  stage: build-repository
+  tags:
+  - repobuilder
+  before_script:
+  - dcmd mv products/deb/*ges /srv/repo/reprepro/incoming
+  script:
+  - cd /srv/repo/reprepro && reprepro processincoming incoming
+  variables:
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master" && $EXTRADIST
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH && $EXTRADIST
+    - $CI_COMMIT_TAG && $EXTRADIST
+inject-fed:
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  except:
+    variables:
+    - $EXTRADIST
+  dependencies:
+    - build:fedora-28-32
+    - build:fedora-28-64
+    - build:fedora-29-32
+    - build:fedora-29-64
+    - build:centos-6-32
+    - build:centos-6-64
+    - build:centos-7-64
+  stage: build-repository
+  tags:
+    - repobuilder
+  script:
+    - export TARGET=continuous
+    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
+    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
+    - bash -x scripts/build-aux/fed-rel.sh
+add:fedora:
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master" && $EXTRADIST
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH && $EXTRADIST
+    - $CI_COMMIT_TAG && $EXTRADIST
+  dependencies:
+  - extra:fed-32
+  - extra:fed-64
+  stage: build-repository
+  tags:
+  - repobuilder
+  script:
+  - export TARGET=continuous
+  - if [ "$CANDIDATEBRANCH" = "$CI_COMMIT_REF_NAME" ]; then TARGET=candidate; fi
+  - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
+  - bash -x scripts/build-aux/fed-rel.sh extra
+inject-suse:
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  except:
+    variables:
+    - $EXTRADIST
+  dependencies:
+    - build:suse-15.0
+    - build:suse-42.3
+  stage: build-repository
+  tags:
+    - repobuilder
+  script:
+    - export TARGET=continuous
+    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
+    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
+    - bash -x scripts/build-aux/suse-rel.sh
+add:suse:
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master" && $EXTRADIST
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH && $EXTRADIST
+    - $CI_COMMIT_TAG && $EXTRADIST
+  dependencies:
+  - extra:suse-64
+  stage: build-repository
+  tags:
+  - repobuilder
+  script:
+  - export TARGET=continuous
+  - if [ "$CANDIDATEBRANCH" = "$CI_COMMIT_REF_NAME" ]; then TARGET=candidate; fi
+  - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
+  - bash -x scripts/build-aux/suse-rel.sh extra
