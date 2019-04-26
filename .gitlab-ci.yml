@@ -408,3 +408,12 @@ extra:suse-64:
     REPOURL: $EXTRAURL
     ARCH: x86_64
   when: manual
+build:windows:
+  stage: source-package
+  variables:
+  dependencies:
+  script:
+  - cd scripts\windows
+  - build_all.bat
+  tags:
+  - windows
