@@ -8,10 +8,28 @@ declare -A DISTVERS
 declare -a DISTNAMES
 declare -A VERARCHS
 
+extra=$1
+shift
+
+DISTS=(opensuse)
+
 DISTVERS=([opensuse]="15.0 42.3")
 DISTNAMES=([opensuse]="opensuse")
 VERARCHS=([15.0]="x86_64" [42.3]="x86_64")
-for dist in opensuse
+
+if [ ! -z "$extra" ]
+then
+	if [ -z "$EXTRADIST" -o -z "$EXTRAVER" ]
+	then
+		echo "E: extra packages but EXTRADIST or EXTRAVER is not set" >> &2
+		exit 1
+	fi
+	DISTS=($extra)
+	DISTVERS[$extra]=$EXTRAVER
+	VERARCHS[$extra]="x86_64"
+fi
+
+for dist in $DISTS
 do
 	for vers in ${DISTVERS[$dist]}
 	do

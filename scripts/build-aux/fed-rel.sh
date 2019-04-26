@@ -8,10 +8,28 @@ declare -A DISTVERS
 declare -A DISTNAMES
 declare -A VERARCHS
 
+extra=$1
+shift
+
+DISTS=(fedora epel)
+
 DISTVERS=([fedora]="28 29" [epel]="6 7")
 DISTNAMES=([fedora]="fedora" [epel]="el")
 VERARCHS=([6]="i386 x86_64" [7]="x86_64" [28]="i386 x86_64" [29]="i386 x86_64")
-for dist in fedora epel
+
+if [ ! -z "$extra" ]
+then
+	if [ -z "$EXTRADIST" -o -z "$EXTRAVER" ]
+	then
+		echo "E: extra packages but EXTRADIST or EXTRAVER is not set" >> &2
+		exit 1
+	fi
+	DISTS=($extra)
+	DISTVERS[$extra]=$EXTRAVER
+	VERARCHS[$extra]="x86_64 i386"
+fi
+
+for dist in $DISTS
 do
 	for vers in ${DISTVERS[$dist]}
 	do
