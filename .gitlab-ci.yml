@@ -417,3 +417,4 @@ build:windows:
   - build_all.bat
   tags:
   - windows
+  allow_failure: true
