@@ -407,9 +407,13 @@ add:debs:
     GIT_STRATEGY: none
   only:
     variables:
-    - $CI_COMMIT_REF_NAME == "master" && $EXTRADIST
-    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH && $EXTRADIST
-    - $CI_COMMIT_TAG && $EXTRADIST
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  except:
+    variables:
+    - $EXTRADIST == null
+    - $EXTRADIST == ""
 inject-fed:
   only:
     variables:
@@ -438,9 +442,13 @@ inject-fed:
 add:fedora:
   only:
     variables:
-    - $CI_COMMIT_REF_NAME == "master" && $EXTRADIST
-    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH && $EXTRADIST
-    - $CI_COMMIT_TAG && $EXTRADIST
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  except:
+    variables:
+    - $EXTRADIST == null
+    - $EXTRADIST == ""
   dependencies:
   - extra:fed-32
   - extra:fed-64
@@ -475,9 +483,13 @@ inject-suse:
 add:suse:
   only:
     variables:
-    - $CI_COMMIT_REF_NAME == "master" && $EXTRADIST
-    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH && $EXTRADIST
-    - $CI_COMMIT_TAG && $EXTRADIST
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  except:
+    variables:
+    - $EXTRADIST == null
+    - $EXTRADIST == ""
   dependencies:
   - extra:suse-64
   stage: build-repository
