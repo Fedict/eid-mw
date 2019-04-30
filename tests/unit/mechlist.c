@@ -126,7 +126,7 @@ TEST_FUNC(mechlist) {
 	}
 
 	verbose_assert(count == known_mechs);
-	verbose_assert(rsa_mechs == 8 || ecdsa_mechs == 4);
+	verbose_assert(rsa_mechs == 7 || rsa_mechs == 8 || ecdsa_mechs == 4);
 
 	check_rv_long(C_GetMechanismList(slot+30, mechlist, &count), m_p11_badslot);
 
