@@ -18,7 +18,7 @@ if [ ! -z "$1" ]
 then
 	if [ -z "$EXTRADIST" -o -z "$EXTRAVER" ]
 	then
-		echo "E: extra packages but EXTRADIST or EXTRAVER is not set" >> &2
+		echo "E: extra packages but EXTRADIST or EXTRAVER is not set" >&2
 		exit 1
 	fi
 	DISTS=($1)
