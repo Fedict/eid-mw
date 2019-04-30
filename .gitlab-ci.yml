@@ -234,17 +234,17 @@ extra:deb-64:
   except:
     variables:
     - $EXTRADIST
-build:fedora-28-32:
-  <<: *build-fed
-  variables:
-    DIST: fedora
-    DVER: 28
-    ARCH: i386
 build:fedora-29-32:
   <<: *build-fed
   variables:
     DIST: fedora
     DVER: 29
+    ARCH: i386
+build:fedora-30-32:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: 30
     ARCH: i386
 build:centos-6-32:
   <<: *build-fed
@@ -252,17 +252,17 @@ build:centos-6-32:
     DIST: epel
     DVER: 6
     ARCH: i386
-build:fedora-28-64:
-  <<: *build-fed
-  variables:
-    DIST: fedora
-    DVER: 28
-    ARCH: x86_64
 build:fedora-29-64:
   <<: *build-fed
   variables:
     DIST: fedora
     DVER: 29
+    ARCH: x86_64
+build:fedora-30-64:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: 30
     ARCH: x86_64
 build:centos-6-64:
   <<: *build-fed
@@ -424,10 +424,10 @@ inject-fed:
     variables:
     - $EXTRADIST
   dependencies:
-    - build:fedora-28-32
-    - build:fedora-28-64
     - build:fedora-29-32
     - build:fedora-29-64
+    - build:fedora-30-32
+    - build:fedora-30-64
     - build:centos-6-32
     - build:centos-6-64
     - build:centos-7-64
