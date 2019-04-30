@@ -233,7 +233,6 @@ CK_BBOOL have_robot() {
 	}
 
 	return CK_FALSE;
-
 }
 
 CK_BBOOL want_dialogs() {
