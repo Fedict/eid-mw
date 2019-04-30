@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <stdbool.h>
 
 #include "testlib.h"
 
@@ -56,6 +57,7 @@ enum {
 	ROBOT_NONE,
 	ROBOT_MECHANICAL_TURK,
 	ROBOT_AUTO,
+	ROBOT_AUTO_2,
 } robot_type;
 
 enum {
@@ -65,6 +67,7 @@ enum {
 } dialogs_type;
 
 int robot_dev = 0;
+int robot_unit = 0;
 
 int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	int nullCount = 0;
@@ -89,16 +92,53 @@ int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) 
 	return TEST_RV_OK;
 }
 
+static bool robot_has_data(int delay_secs) {
+	struct timeval tv;
+
+	fd_set rb;
+	FD_ZERO(&rb);
+	FD_SET(robot_dev, &rb);
+	tv.tv_sec = delay_secs;
+	tv.tv_usec = 0;
+	select(robot_dev+1, &rb, NULL, NULL, &tv);
+	return FD_ISSET(robot_dev, &rb) ? true : false;
+}
+
+static int robot_clear(int delay_secs, char* line, size_t line_size) {
+	int my_delay = delay_secs;
+	int retval = 0;
+
+	while(robot_has_data(my_delay)) {
+		retval += read(robot_dev, line, line_size - 1);
+		my_delay = 0;
+	}
+	return retval;
+}
+
 #ifdef HAVE_TERMIOS_H
 CK_BBOOL open_robot(char* envvar) {
 	char* dev;
 	char line[80];
 	int len;
 	struct termios ios;
-	if(strlen(envvar) == strlen("fedict")) {
-		dev = "/dev/ttyACM0";
-	} else {
-		dev = envvar + strlen("fedict") + 1;
+	switch(robot_type) {
+	case ROBOT_AUTO:
+		if(strlen(envvar) == strlen("fedict")) {
+			dev = "/dev/ttyACM0";
+		} else {
+			dev = envvar + strlen("fedict") + 1;
+		}
+		break;
+	case ROBOT_AUTO_2:
+		if(strlen(envvar) == strlen("zetes")) {
+			dev = "/dev/ttyACM0";
+		} else {
+			dev = envvar + strlen("zetes") + 1;
+		}
+		break;
+	default:
+		fprintf(stderr, "E: can't open the robot when it's not there!\n");
+		return CK_FALSE;
 	}
 	robot_dev = open(dev, O_RDWR | O_NOCTTY);
 	if(robot_dev < 0) {
@@ -112,16 +152,40 @@ CK_BBOOL open_robot(char* envvar) {
 	ios.c_cflag |= CREAD | CS8 | CRTSCTS;
 	ios.c_cflag &= ~PARENB;
 	tcsetattr(robot_dev, TCSANOW, &ios);
-	
+
 	write(robot_dev, "R", 1);
+	if(robot_type == ROBOT_AUTO_2) {
+		usleep(200);
+		write(robot_dev, "t", 1);
+	}
 
 	len = 0;
 	do {
 		len += read(robot_dev, line+len, 79);
 		line[len]=0;
-		if(strncmp(line, "READY.", len < 6 ? len : 6)) {
-			printf("Robot not found: received %s from serial line, expecting \"READY.\\n\"", line);
-			return CK_FALSE;
+		if(robot_type == ROBOT_AUTO) {
+			if(strncmp(line, "READY.", len < 6 ? len : 6)) {
+				fprintf(stderr, "Robot not found: received %s from serial line, expecting \"READY.\\n\"\n", line);
+				return CK_FALSE;
+			}
+		} else {
+			if(line[0] != 'T') {
+				fprintf(stderr, "Robot not found: received %s from serial line, expecting \"T\"\n", line);
+				return CK_FALSE;
+			}
+			if(len > 2 && line[1] == 'B') {
+				if(robot_unit != 0) {
+					if(line[2] - 0x30 != robot_unit) {
+						fprintf(stderr, "Robot does not match: card and USB devices not the same\n");
+						return CK_FALSE;
+					}
+				}
+				robot_unit = line[2] - 0x30;
+				if(line[4] == 'U') {
+					fprintf(stderr, "Robot does not match: USB device found where card expected\n");
+					return CK_FALSE;
+				}
+			}
 		}
 	} while(line[len-1] != '\n');
 
@@ -148,6 +212,18 @@ CK_BBOOL have_robot() {
 		return CK_TRUE;
 #else
 		fprintf(stderr, "E: cannot initiate fedict robot without serial port support!\n");
+		return CK_FALSE;
+#endif
+	}
+	if(!strncmp(envvar, "zetes", strlen("zetes"))) {
+#ifdef HAVE_TERMIOS_H
+		robot_type = ROBOT_AUTO_2;
+		if(!robot_dev) {
+			return open_robot(envvar);
+		}
+		return CK_TRUE;
+#else
+		fprintf(stderr, "E: cannot initiate Zetes robot without serial port support!\n");
 		return CK_FALSE;
 #endif
 	}
@@ -363,19 +439,7 @@ void robot_cmd(char cmd, CK_BBOOL check_result) {
 	char line[80];
 	unsigned int i;
 
-	fd_set rb;
-	do {
-		struct timeval tv;
-
-		FD_ZERO(&rb);
-		FD_SET(robot_dev, &rb);
-		tv.tv_sec = 0;
-		tv.tv_usec = 0;
-		select(robot_dev+1, &rb, NULL, NULL, &tv);
-		if(FD_ISSET(robot_dev, &rb)) {
-			read(robot_dev, line, 79);
-		}
-	} while(FD_ISSET(robot_dev, &rb));
+	robot_clear(0, line, sizeof(line));
 
 	printf("sending robot command %c...\n", cmd);
 	write(robot_dev, &cmd, 1);
@@ -410,10 +474,11 @@ void robot_insert_card() {
 			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
+		case ROBOT_AUTO_2:
 			robot_cmd('i', CK_TRUE);
 			// wait a bit after the card was inserted, to ensure
 			// that the reader has detected it ...
-			sleep(1);
+			sleep(2);
 			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please insert a card and press <enter>\n");
@@ -430,6 +495,7 @@ void robot_insert_card_delayed() {
 			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
+		case ROBOT_AUTO_2:
 			robot_cmd('I', CK_FALSE);
 			break;
 		case ROBOT_MECHANICAL_TURK:
@@ -445,6 +511,7 @@ void robot_remove_card() {
 			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
+		case ROBOT_AUTO_2:
 			robot_cmd('e', CK_TRUE);
 			break;
 		case ROBOT_MECHANICAL_TURK:
@@ -462,6 +529,7 @@ void robot_remove_card_delayed() {
 			fprintf(stderr, "E: robot needed, no robot configured\n");
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO:
+		case ROBOT_AUTO_2:
 			robot_cmd('E', CK_FALSE);
 			break;
 		case ROBOT_MECHANICAL_TURK:
