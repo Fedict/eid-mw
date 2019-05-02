@@ -10,9 +10,9 @@ declare -A VERARCHS
 
 DISTS=(fedora epel)
 
-DISTVERS=([fedora]="28 29" [epel]="6 7")
+DISTVERS=([fedora]="30 29" [epel]="6 7")
 DISTNAMES=([fedora]="fedora" [epel]="el")
-VERARCHS=([6]="i386 x86_64" [7]="x86_64" [28]="i386 x86_64" [29]="i386 x86_64")
+VERARCHS=([6]="i386 x86_64" [7]="x86_64" [30]="i386 x86_64" [29]="i386 x86_64")
 
 if [ ! -z "$1" ]
 then
