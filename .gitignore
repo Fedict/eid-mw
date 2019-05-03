@@ -66,3 +66,12 @@ beidpkcs11.sdf
 /scripts/windows/fedicteidtest.pfx
 /installers/eid-mw/mac/release_BEIDToken
 /installers/eid-mw/mac/release_TokenD
+.vs
+/scripts/windows/disk1/Beidmdrv.cab
+/scripts/windows/beidmdrvb.zip
+/cardcomm/pkcs11/VS_2017/Win32_PKCS11_FF_Release
+/cardcomm/pkcs11/VS_2017/x64_PKCS11_FF_Release
+/cardcomm/VS_2017/Binaries/Win32_PKCS11_FF_DEBUG
+/cardcomm/pkcs11/VS_2017/Win32_PKCS11_FF_DEBUG
+/cardcomm/VS_2017/Binaries/Win32_PKCS11_FF_Release
+/cardcomm/VS_2017/Binaries/x64_PKCS11_FF_Release
