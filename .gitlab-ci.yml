@@ -476,3 +476,16 @@ add:suse:
   - if [ "$CANDIDATEBRANCH" = "$CI_COMMIT_REF_NAME" ]; then TARGET=candidate; fi
   - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
   - bash -x scripts/build-aux/suse-rel.sh extra
+
+inject-source:
+  dependencies:
+  - build:source
+  stage: build-repository
+  tags:
+  - repobuilder
+  script:
+  - SOURCETGZ=products/source/eid-mw-*.tar.gz
+  - SOURCEZIP=products/source/eid-mw-*.zip
+  - cp $SOURCETGZ $SOURCEZIP /srv/dist/eid-mw/continuous/sources/
+  - cd /srv/dist/eid-mw/continuous/sources
+  - gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor $(basename $SOURCETGZ)
