@@ -653,12 +653,10 @@ void robot_insert_reader() {
 			sleep(2);
 			break;
 		case ROBOT_MECHANICAL_TURK:
-			if(have_reader_robot()) {
-				printf("Please insert a reader and press <enter>\n");
-				if(fgets(buf, 80, stdin) == NULL) {
-					printf("something happened, skipping test\n");
-					exit(TEST_RV_SKIP);
-				}
+			printf("Please insert a reader and press <enter>\n");
+			if(fgets(buf, 80, stdin) == NULL) {
+				printf("something happened, skipping test\n");
+				exit(TEST_RV_SKIP);
 			}
 	}
 }
@@ -679,12 +677,10 @@ void robot_remove_reader() {
 			sleep(2);
 			break;
 		case ROBOT_MECHANICAL_TURK:
-			if(have_reader_robot()) {
-				printf("Please remove all readers and press <enter>\nIf you are not able to remove one or more readers from the computer, please set the EID_BUILTIN_READER environment variable to a non-empty value\n");
-				if(fgets(buf, 80, stdin) == NULL) {
-					printf("something happened, skipping test\n");
-					exit(TEST_RV_SKIP);
-				}
+			printf("Please remove all readers and press <enter>\nIf you are not able to remove one or more readers from the computer, please set the EID_BUILTIN_READER environment variable to a non-empty value\n");
+			if(fgets(buf, 80, stdin) == NULL) {
+				printf("something happened, skipping test\n");
+				exit(TEST_RV_SKIP);
 			}
 	}
 }
