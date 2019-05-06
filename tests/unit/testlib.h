@@ -91,6 +91,13 @@ void robot_remove_reader(void);
 void robot_insert_reader(void);
 void hex_dump(char *data, CK_ULONG length);
 
+/* Functions to work with reader robots */
+CK_BBOOL have_reader_robot(void);
+void robot_remove_reader(void);
+void robot_remove_reader_delayed(void);
+void robot_insert_reader(void);
+void robot_remove_card_delayed(void);
+
 /* Helper functions to not have to repeat common operations all the time */
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);
 

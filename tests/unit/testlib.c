@@ -28,6 +28,7 @@
 #include <unistd.h>
 #endif
 #include <pkcs11.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
@@ -50,7 +51,8 @@ int va_counter;
 int fc_counter;
 #ifdef WIN32
 extern _TCHAR* eid_robot_style;
-extern _TCHAR*	eid_dialogs_style;
+extern _TCHAR* eid_dialogs_style;
+extern _TCHAR* eid_builtin_reader;
 #endif
 
 enum {
@@ -68,6 +70,8 @@ enum {
 
 int robot_dev = 0;
 int robot_unit = 0;
+int reader_dev = 0;
+bool have_builtin_reader = false;
 
 int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
 	int nullCount = 0;
@@ -191,6 +195,66 @@ CK_BBOOL open_robot(char* envvar) {
 
 	return CK_TRUE;
 }
+
+CK_BBOOL open_reader_robot(char* envvar) {
+	char* dev;
+	char line[80];
+	char *buf = (char*)line;
+	int len;
+	struct termios ios;
+	if(robot_type != ROBOT_AUTO_2) {
+		fprintf(stderr, "E: no reader robot connected!\n");
+		return CK_FALSE;
+	}
+	if(strlen(envvar) == strlen("zetes")) {
+		dev = "/dev/ttyACM1";
+	} else {
+		strtok_r(envvar, ":", &buf);
+		strtok_r(envvar, ":", &buf);
+		dev = strtok_r(envvar, ":", &buf);
+	}
+	reader_dev = open(dev, O_RDWR | O_NOCTTY);
+	if(reader_dev < 0) {
+		perror("could not open reader robot");
+		return CK_FALSE;
+	}
+	tcgetattr(reader_dev, &ios);
+	cfmakeraw(&ios);
+	cfsetispeed(&ios, B9600);
+	cfsetospeed(&ios, B9600);
+	ios.c_cflag |= CREAD | CS8 | CRTSCTS;
+	ios.c_cflag &= ~PARENB;
+	tcsetattr(robot_dev, TCSANOW, &ios);
+
+	write(robot_dev, "R", 1);
+	usleep(200);
+	write(robot_dev, "t", 1);
+	
+	len = 0;
+	do {
+		len += read(robot_dev, line+len, 79);
+		line[len]=0;
+		if(line[0] != 'T') {
+			fprintf(stderr, "Robot not found: received %s from serial line, expecting \"T\"\n", line);
+			return CK_FALSE;
+		}
+		if(len > 2 && line[1] == 'B') {
+			if(robot_unit != 0) {
+				if(line[2] - 0x30 != robot_unit) {
+					fprintf(stderr, "Robot does not match: card and USB devices not the same\n");
+					return CK_FALSE;
+				}
+			}
+			robot_unit = line[2] = 0x30;
+			if(line[4] == 'C') {
+				fprintf(stderr, "Robot does not match: card device found where USB expected\n");
+				return CK_FALSE;
+			}
+		}
+	} while(line[len-1] != '\n');
+
+	return CK_TRUE;
+}
 #endif
 
 CK_BBOOL have_robot() {
@@ -232,6 +296,34 @@ CK_BBOOL have_robot() {
 		return CK_TRUE;
 	}
 
+	return CK_FALSE;
+}
+
+CK_BBOOL have_reader_robot(void) {
+#ifdef WIN32
+	char* envvar = eid_reader_style;
+#else
+	char* envvar = getenv("EID_BUILTIN_READER");
+#endif
+
+	if(!have_robot()) {
+		return CK_FALSE;
+	}
+	if(envvar == NULL || strlen(envvar) == 0) {
+		have_builtin_reader = false;
+		switch(robot_type) {
+			case ROBOT_NONE:
+			case ROBOT_AUTO:
+				return CK_FALSE;
+			case ROBOT_MECHANICAL_TURK:
+				return CK_TRUE;
+			case ROBOT_AUTO_2:
+				if(!reader_dev) {
+					return open_reader_robot(envvar);
+				}
+				return CK_TRUE;
+		}
+	}
 	return CK_FALSE;
 }
 
@@ -424,7 +516,7 @@ char* ckm_to_charp(CK_MECHANISM_TYPE mech) {
 	}
 }
 
-void robot_cmd(char cmd, CK_BBOOL check_result) {
+void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
 #ifdef HAVE_TERMIOS_H
 	struct expect {
 		char command;
@@ -441,13 +533,13 @@ void robot_cmd(char cmd, CK_BBOOL check_result) {
 	robot_clear(0, line, sizeof(line));
 
 	printf("sending robot command %c...\n", cmd);
-	write(robot_dev, &cmd, 1);
+	write(dev, &cmd, 1);
 	if(!check_result) {
 		printf("\tdone, not waiting\n");
 		return;
 	}
 	do {
-		len += read(robot_dev, line+len, 79);
+		len += read(dev, line+len, 79);
 		line[len]='\0';
 	} while(line[len-1] != '\n');
 	for(i=0; i<sizeof(expected) / sizeof(struct expect); i++) {
@@ -464,6 +556,14 @@ void robot_cmd(char cmd, CK_BBOOL check_result) {
 #else
 	return;
 #endif
+}
+
+void robot_cmd(char cmd, CK_BBOOL check_result) {
+	return robot_cmd_l(robot_dev, cmd, check_result);
+}
+
+void reader_cmd(char cmd, CK_BBOOL check_result) {
+	return robot_cmd_l(reader_dev, cmd, check_result);
 }
 
 void robot_insert_card() {
@@ -538,9 +638,55 @@ void robot_remove_card_delayed() {
 }
 
 void robot_insert_reader() {
+	assert(have_reader_robot() != CK_FALSE);
+
+	char buf[80];
+	switch(robot_type) {
+		case ROBOT_NONE:
+			fprintf(stderr, "E: robot needed, no robot configured\n");
+			exit(EXIT_FAILURE);
+		case ROBOT_AUTO:
+			fprintf(stderr, "E: card robot needed, not supported by current robot\n");
+			exit(EXIT_FAILURE);
+		case ROBOT_AUTO_2:
+			reader_cmd('i', CK_TRUE);
+			sleep(2);
+			break;
+		case ROBOT_MECHANICAL_TURK:
+			if(have_reader_robot()) {
+				printf("Please insert a reader and press <enter>\n");
+				if(fgets(buf, 80, stdin) == NULL) {
+					printf("something happened, skipping test\n");
+					exit(TEST_RV_SKIP);
+				}
+			}
+	}
 }
 
 void robot_remove_reader() {
+	assert(have_reader_robot() != CK_FALSE);
+
+	char buf[80];
+	switch(robot_type) {
+		case ROBOT_NONE:
+			fprintf(stderr, "E: robot needed, no robot configured\n");
+			exit(EXIT_FAILURE);
+		case ROBOT_AUTO:
+			fprintf(stderr, "E: card robot needed, not supported by current robot\n");
+			exit(EXIT_FAILURE);
+		case ROBOT_AUTO_2:
+			reader_cmd('e', CK_TRUE);
+			sleep(2);
+			break;
+		case ROBOT_MECHANICAL_TURK:
+			if(have_reader_robot()) {
+				printf("Please remove all readers and press <enter>\nIf you are not able to remove one or more readers from the computer, please set the EID_BUILTIN_READER environment variable to a non-empty value\n");
+				if(fgets(buf, 80, stdin) == NULL) {
+					printf("something happened, skipping test\n");
+					exit(TEST_RV_SKIP);
+				}
+			}
+	}
 }
 
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {

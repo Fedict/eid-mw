@@ -80,7 +80,17 @@ TEST_FUNC(slotevent) {
 	} while(rv == CKR_NO_EVENT);
 	check_rv_late("C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR)");
 
-	check_rv(C_Finalize(NULL_PTR));
+	if(!have_reader_robot()) {
+		printf("Need ability to remove card reader to do the rest of this test\n");
+		goto end;
+	}
 
+	robot_remove_reader();
+	check_rv(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR));
+	robot_insert_reader();
+	check_rv(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR));
+
+end:
+	check_rv(C_Finalize(NULL_PTR));
 	return TEST_RV_OK;
 }
