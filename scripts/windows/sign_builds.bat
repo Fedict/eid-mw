@@ -14,6 +14,12 @@ call "%~dp0.\sign_minidriver.bat"
 @if "%ERRORLEVEL%" == "1" goto minidriver_failed
 
 
+:: sign the minidriver cabinet
+:: ===========================
+call "%~dp0.\sign_minidriver_cab.bat"
+@if "%ERRORLEVEL%" == "1" goto minidriver_cabinet_failed
+
+
 :: sign pkcs11
 :: ===========
 @echo [INFO] Sign the pkcs11 dll, 32bit
@@ -116,6 +122,10 @@ goto end_resetpath
 
 :minidriver_failed
 @echo [ERR ] signing minidriver failed
+@goto err
+
+:minidriver_cabinet_failed
+@echo [ERR ] signing minidriver cabinet failed
 @goto err
 
 :inf2cat_failed_failed
