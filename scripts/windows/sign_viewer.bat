@@ -29,7 +29,7 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 ::need current dir to be pointing at one of the wxs files, or light.exe can't find the paths
 @cd %~dp0..\..\installers\eid-viewer\Windows
 
-@echo [INFO] Sign the eID Viewer executable
+@echo [INFO] Sign the eID Viewer executable and the viewer backend dll
 "%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
 "%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewerBackend.dll"
 @if %ERRORLEVEL%==1 goto signtool_failed
