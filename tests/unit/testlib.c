@@ -224,15 +224,15 @@ static CK_BBOOL open_reader_robot(char* envvar) {
 	cfsetospeed(&ios, B9600);
 	ios.c_cflag |= CREAD | CS8 | CRTSCTS;
 	ios.c_cflag &= ~PARENB;
-	tcsetattr(robot_dev, TCSANOW, &ios);
+	tcsetattr(reader_dev, TCSANOW, &ios);
 
-	write(robot_dev, "R", 1);
+	write(reader_dev, "R", 1);
 	usleep(200);
-	write(robot_dev, "t", 1);
+	write(reader_dev, "t", 1);
 	
 	len = 0;
 	do {
-		len += read(robot_dev, line+len, 79);
+		len += read(reader_dev, line+len, 79);
 		line[len]=0;
 		if(line[0] != 'T') {
 			fprintf(stderr, "Robot not found: received %s from serial line, expecting \"T\"\n", line);
