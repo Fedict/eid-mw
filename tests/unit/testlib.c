@@ -301,15 +301,17 @@ CK_BBOOL have_robot() {
 
 CK_BBOOL have_reader_robot(void) {
 #ifdef WIN32
-	char* envvar = eid_reader_style;
+	char* envvar_rbt = eid_robot_style;
+	char* envvar_rdr = eid_builtin_reader
 #else
-	char* envvar = getenv("EID_BUILTIN_READER");
+	char* envvar_rbt = getenv("EID_ROBOT_STYLE");
+	char* envvar_rdr = getenv("EID_BUILTIN_READER");
 #endif
 
 	if(!have_robot()) {
 		return CK_FALSE;
 	}
-	if(envvar == NULL || strlen(envvar) == 0) {
+	if(envvar_rdr == NULL || strlen(envvar_rdr) == 0) {
 		have_builtin_reader = false;
 		switch(robot_type) {
 			case ROBOT_NONE:
@@ -319,7 +321,7 @@ CK_BBOOL have_reader_robot(void) {
 				return CK_TRUE;
 			case ROBOT_AUTO_2:
 				if(!reader_dev) {
-					return open_reader_robot(envvar);
+					return open_reader_robot(envvar_rbt);
 				}
 				return CK_TRUE;
 		}
