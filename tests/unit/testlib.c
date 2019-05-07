@@ -245,7 +245,7 @@ static CK_BBOOL open_reader_robot(char* envvar) {
 					return CK_FALSE;
 				}
 			}
-			robot_unit = line[2] = 0x30;
+			robot_unit = line[2] - 0x30;
 			if(line[4] == 'C') {
 				fprintf(stderr, "Robot does not match: card device found where USB expected\n");
 				return CK_FALSE;
