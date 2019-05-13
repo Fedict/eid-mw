@@ -196,7 +196,7 @@ CK_BBOOL open_robot(char* envvar) {
 	return CK_TRUE;
 }
 
-static CK_BBOOL open_reader_robot(char* envvar) {
+CK_BBOOL open_reader_robot(char* envvar) {
 	char* dev;
 	char line[80];
 	char *buf = (char*)line;
