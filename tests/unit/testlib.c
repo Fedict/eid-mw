@@ -123,6 +123,7 @@ static int robot_clear(int delay_secs, char* line, size_t line_size) {
 CK_BBOOL open_robot(char* envvar) {
 	char* dev;
 	char line[80];
+	char *buf = (char*)line;
 	int len;
 	struct termios ios;
 	switch(robot_type) {
@@ -137,7 +138,8 @@ CK_BBOOL open_robot(char* envvar) {
 		if(strlen(envvar) == strlen("zetes")) {
 			dev = "/dev/ttyACM0";
 		} else {
-			dev = envvar + strlen("zetes") + 1;
+			strtok_r(envvar, ":", &buf);
+			dev = strtok_r(NULL, ":", &buf);
 		}
 		break;
 	default:
@@ -211,8 +213,8 @@ CK_BBOOL open_reader_robot(char* envvar) {
 		dev = "/dev/ttyACM1";
 	} else {
 		strtok_r(envvar, ":", &buf);
-		strtok_r(envvar, ":", &buf);
-		dev = strtok_r(envvar, ":", &buf);
+		strtok_r(NULL, ":", &buf);
+		dev = strtok_r(NULL, ":", &buf);
 	}
 	printf("opening reader robot at %s\n", dev);
 	reader_dev = open(dev, O_RDWR | O_NOCTTY);
