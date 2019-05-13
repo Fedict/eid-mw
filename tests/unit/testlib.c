@@ -144,6 +144,7 @@ CK_BBOOL open_robot(char* envvar) {
 		fprintf(stderr, "E: can't open the robot when it's not there!\n");
 		return CK_FALSE;
 	}
+	printf("opening card robot at %s\n", dev);
 	robot_dev = open(dev, O_RDWR | O_NOCTTY);
 	if(robot_dev < 0) {
 		perror("could not open robot");
@@ -213,6 +214,7 @@ CK_BBOOL open_reader_robot(char* envvar) {
 		strtok_r(envvar, ":", &buf);
 		dev = strtok_r(envvar, ":", &buf);
 	}
+	printf("opening reader robot at %s\n", dev);
 	reader_dev = open(dev, O_RDWR | O_NOCTTY);
 	if(reader_dev < 0) {
 		perror("could not open reader robot");
