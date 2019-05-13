@@ -320,10 +320,14 @@ CK_BBOOL have_reader_robot(void) {
 			case ROBOT_MECHANICAL_TURK:
 				return CK_TRUE;
 			case ROBOT_AUTO_2:
+#ifdef HAVE_TERMIOS_H
 				if(!reader_dev) {
 					return open_reader_robot(envvar_rbt);
 				}
 				return CK_TRUE;
+#else
+				fprintf(stderr, "E: Cannot talk to robots without serial port support!\n");
+#endif
 		}
 	}
 	return CK_FALSE;
