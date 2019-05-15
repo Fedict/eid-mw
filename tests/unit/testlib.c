@@ -274,7 +274,7 @@ CK_BBOOL have_robot() {
 	if(!strncmp(envvar, "fedict", strlen("fedict"))) {
 #ifdef HAVE_TERMIOS_H
 		robot_type = ROBOT_AUTO;
-		if(!robot_dev) {
+		if(robot_dev <= 0) {
 			return open_robot(envvar);
 		}
 		return CK_TRUE;
@@ -286,7 +286,7 @@ CK_BBOOL have_robot() {
 	if(!strncmp(envvar, "zetes", strlen("zetes"))) {
 #ifdef HAVE_TERMIOS_H
 		robot_type = ROBOT_AUTO_2;
-		if(!robot_dev) {
+		if(robot_dev <= 0) {
 			return open_robot(envvar);
 		}
 		return CK_TRUE;
@@ -325,7 +325,7 @@ CK_BBOOL have_reader_robot(void) {
 				return CK_TRUE;
 			case ROBOT_AUTO_2:
 #ifdef HAVE_TERMIOS_H
-				if(!reader_dev) {
+				if(reader_dev <= 0) {
 					return open_reader_robot(envvar_rbt);
 				}
 				return CK_TRUE;
