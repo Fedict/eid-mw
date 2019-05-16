@@ -129,17 +129,20 @@ CK_BBOOL open_robot(char* envvar) {
 	switch(robot_type) {
 	case ROBOT_AUTO:
 		if(strlen(envvar) == strlen("fedict")) {
-			dev = "/dev/ttyACM0";
+			dev = strdup("/dev/ttyACM0");
 		} else {
-			dev = envvar + strlen("fedict") + 1;
+			dev = strdup(envvar + strlen("fedict") + 1);
 		}
 		break;
 	case ROBOT_AUTO_2:
 		if(strlen(envvar) == strlen("zetes")) {
-			dev = "/dev/ttyACM0";
+			dev = strdup("/dev/ttyACM0");
 		} else {
-			strtok_r(envvar, ":", &buf);
-			dev = strtok_r(NULL, ":", &buf);
+			char *p;
+			dev = strdup(strchr(envvar, ':') + 1);
+			if((p = strchr(dev, ':')) != NULL) {
+				*p = NULL;
+			}
 		}
 		break;
 	default:
@@ -148,6 +151,7 @@ CK_BBOOL open_robot(char* envvar) {
 	}
 	printf("opening card robot at %s\n", dev);
 	robot_dev = open(dev, O_RDWR | O_NOCTTY);
+	free(dev);
 	if(robot_dev < 0) {
 		perror("could not open robot");
 		return CK_FALSE;
@@ -212,9 +216,7 @@ CK_BBOOL open_reader_robot(char* envvar) {
 	if(strlen(envvar) == strlen("zetes")) {
 		dev = "/dev/ttyACM1";
 	} else {
-		strtok_r(envvar, ":", &buf);
-		strtok_r(NULL, ":", &buf);
-		dev = strtok_r(NULL, ":", &buf);
+		dev = strrchr(envvar, ':');
 	}
 	printf("opening reader robot at %s\n", dev);
 	reader_dev = open(dev, O_RDWR | O_NOCTTY);
