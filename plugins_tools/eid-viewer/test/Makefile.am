@@ -22,3 +22,5 @@ init_LDADD = $(COMMON_LIB)
 
 pinop_SOURCES = pinop.c $(COMMON_SRCS)
 pinop_LDADD = $(COMMON_LIB)
+
+EXTRA_DIST = 67.06.30-296.59.eid
