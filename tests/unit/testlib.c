@@ -216,7 +216,7 @@ CK_BBOOL open_reader_robot(char* envvar) {
 	if(strlen(envvar) == strlen("zetes")) {
 		dev = "/dev/ttyACM1";
 	} else {
-		dev = strrchr(envvar, ':');
+		dev = strrchr(envvar, ':') + 1;
 	}
 	printf("opening reader robot at %s\n", dev);
 	reader_dev = open(dev, O_RDWR | O_NOCTTY);
