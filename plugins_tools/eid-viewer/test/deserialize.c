@@ -28,7 +28,7 @@ TEST_FUNC(deserialize) {
 	nsd = cb->newstringdata;
 	cb->newstringdata = newstringdata;
 	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
-	printf("opening " SRCDIR " /67.06.30-296.59.eid");
+	printf("opening " SRCDIR "/67.06.30-296.59.eid");
 	eid_vwr_be_deserialize(SRCDIR "/67.06.30-296.59.eid");
 	SLEEP(1);
 	verbose_assert(cursrc == EID_VWR_SRC_FILE);
