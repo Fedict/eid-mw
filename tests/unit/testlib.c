@@ -96,27 +96,16 @@ int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) 
 	return TEST_RV_OK;
 }
 
-static bool robot_has_data(int delay_secs) {
+static bool robot_has_data(int fd, int delay_secs) {
 	struct timeval tv;
 
 	fd_set rb;
 	FD_ZERO(&rb);
-	FD_SET(robot_dev, &rb);
+	FD_SET(fd, &rb);
 	tv.tv_sec = delay_secs;
 	tv.tv_usec = 0;
-	select(robot_dev+1, &rb, NULL, NULL, &tv);
-	return FD_ISSET(robot_dev, &rb) ? true : false;
-}
-
-static int robot_clear(int delay_secs, char* line, size_t line_size) {
-	int my_delay = delay_secs;
-	int retval = 0;
-
-	while(robot_has_data(my_delay)) {
-		retval += read(robot_dev, line, line_size - 1);
-		my_delay = 0;
-	}
-	return retval;
+	select(fd+1, &rb, NULL, NULL, &tv);
+	return FD_ISSET(fd, &rb) ? true : false;
 }
 
 #ifdef HAVE_TERMIOS_H
@@ -150,7 +139,7 @@ CK_BBOOL open_robot(char* envvar) {
 		return CK_FALSE;
 	}
 	printf("opening card robot at %s\n", dev);
-	robot_dev = open(dev, O_RDWR | O_NOCTTY);
+	robot_dev = open(dev, O_RDWR | O_NOCTTY | O_NONBLOCK);
 	free(dev);
 	if(robot_dev < 0) {
 		perror("could not open robot");
@@ -167,11 +156,15 @@ CK_BBOOL open_robot(char* envvar) {
 	write(robot_dev, "R", 1);
 	if(robot_type == ROBOT_AUTO_2) {
 		usleep(200);
+		tcflush(robot_dev, TCIFLUSH);
 		write(robot_dev, "t", 1);
 	}
 
 	len = 0;
 	do {
+		if(!robot_has_data(robot_dev, 1)) {
+			return CK_FALSE;
+		}
 		len += read(robot_dev, line+len, 79);
 		line[len]=0;
 		if(robot_type == ROBOT_AUTO) {
@@ -219,7 +212,7 @@ CK_BBOOL open_reader_robot(char* envvar) {
 		dev = strrchr(envvar, ':') + 1;
 	}
 	printf("opening reader robot at %s\n", dev);
-	reader_dev = open(dev, O_RDWR | O_NOCTTY);
+	reader_dev = open(dev, O_RDWR | O_NOCTTY | O_NONBLOCK);
 	if(reader_dev < 0) {
 		perror("could not open reader robot");
 		return CK_FALSE;
@@ -234,10 +227,15 @@ CK_BBOOL open_reader_robot(char* envvar) {
 
 	write(reader_dev, "R", 1);
 	usleep(200);
+	tcflush(dev, TCIFLUSH);
 	write(reader_dev, "t", 1);
-	
+	tcdrain(reader_dev);
+
 	len = 0;
 	do {
+		if(!robot_has_data(reader_dev, 1)) {
+			return CK_FALSE;
+		}
 		len += read(reader_dev, line+len, 79);
 		line[len]=0;
 		if(line[0] != 'T') {
@@ -542,7 +540,7 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
 	char line[80];
 	unsigned int i;
 
-	robot_clear(0, line, sizeof(line));
+	tcflush(dev, TCIFLUSH);
 
 	printf("sending robot command %c...\n", cmd);
 	write(dev, &cmd, 1);
@@ -551,6 +549,9 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
 		return;
 	}
 	do {
+		if(!robot_has_data(dev, 1)) {
+			exit(EXIT_FAILURE);
+		}
 		len += read(dev, line+len, 79);
 		line[len]='\0';
 	} while(line[len-1] != '\n');
