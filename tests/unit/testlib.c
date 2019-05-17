@@ -55,6 +55,12 @@ extern _TCHAR* eid_dialogs_style;
 extern _TCHAR* eid_builtin_reader;
 #endif
 
+static const char* banners[] = {
+	"VELLEMAN_SHIELD_KIT     800 STEPS       60 RPM",
+	"system ready",
+	"READY.",
+};
+
 enum {
 	ROBOT_NONE,
 	ROBOT_MECHANICAL_TURK,
@@ -536,9 +542,10 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
 		{ 'e', "ejected" },
 		{ 'p', "parked" },
 	};
-	int len = 0;
+	int len;
 	char line[80];
 	unsigned int i;
+	bool found;
 
 	tcflush(dev, TCIFLUSH);
 
@@ -549,12 +556,20 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
 		return;
 	}
 	do {
-		if(!robot_has_data(dev, 1)) {
-			exit(EXIT_FAILURE);
+		found = true;
+		do {
+			if(!robot_has_data(dev, 1)) {
+				exit(EXIT_FAILURE);
+			}
+			len += read(dev, line+len, 79);
+			line[len]='\0';
+		} while(line[len-1] != '\n');
+		for(i=0;i<sizeof(banners) / sizeof(banners[0]); i++) {
+			if(strstr(banners[i], line) != NULL) {
+				found=false;
+			}
 		}
-		len += read(dev, line+len, 79);
-		line[len]='\0';
-	} while(line[len-1] != '\n');
+	} while(!found);
 	for(i=0; i<sizeof(expected) / sizeof(struct expect); i++) {
 		if(expected[i].command == cmd) {
 			if(strncmp(expected[i].result, line, strlen(expected[i].result))) {
