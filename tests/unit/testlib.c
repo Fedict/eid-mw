@@ -146,11 +146,11 @@ CK_BBOOL open_robot(char* envvar) {
 		return CK_FALSE;
 	}
 	tcgetattr(robot_dev, &ios);
-	cfmakeraw(&ios);
 	cfsetispeed(&ios, B9600);
 	cfsetospeed(&ios, B9600);
 	ios.c_cflag |= CREAD | CS8 | CRTSCTS;
 	ios.c_cflag &= ~PARENB;
+	ios.c_lflag |= ICANON;
 	tcsetattr(robot_dev, TCSANOW, &ios);
 
 	write(robot_dev, "R", 1);
@@ -218,11 +218,11 @@ CK_BBOOL open_reader_robot(char* envvar) {
 		return CK_FALSE;
 	}
 	tcgetattr(reader_dev, &ios);
-	cfmakeraw(&ios);
 	cfsetispeed(&ios, B9600);
 	cfsetospeed(&ios, B9600);
 	ios.c_cflag |= CREAD | CS8 | CRTSCTS;
 	ios.c_cflag &= ~PARENB;
+	ios.c_lflag |= ICANON;
 	tcsetattr(reader_dev, TCSANOW, &ios);
 
 	write(reader_dev, "R", 1);
