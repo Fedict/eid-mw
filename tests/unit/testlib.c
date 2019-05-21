@@ -48,6 +48,10 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <termios.h>
+#ifndef O_EXLOCK
+// Needed on macOS
+#define O_EXLOCK 0
+#endif
 #endif
 
 int va_counter;
