@@ -510,9 +510,11 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 {
 	CK_RV ret = CKR_OK;
+#ifndef __APPLE__
 	int h;
 	P11_SLOT *p11Slot = NULL;
 	int i = 0;
+#endif
 	CK_BBOOL locked = CK_FALSE;
 
 	log_trace(WHERE, "I: enter");
@@ -538,6 +540,14 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 	locked = CK_TRUE;
 
 	log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
+
+	/* Doesn't seem to work on Linux: if you insert a card then Mozilla freezes
+	 * until you remove the card. 
+	 * So we might have to return "not supported" in which case Ff 1.5 defaults
+	 * to polling in the main thread, like before. */
+#ifdef __APPLE__
+	CLEANUP(CKR_FUNCTION_NOT_SUPPORTED);
+#else
 
 	//first check if no events are set for slots in previous run
 	//this could happen if more cards are inserted/removed at the same time
@@ -587,6 +597,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 	if (ret == CKR_OK)
 		*pSlot = h;
+#endif // !__APPLE__
     
 cleanup:
 	if(locked == CK_TRUE)
@@ -596,6 +607,9 @@ cleanup:
 	return ret;
 }
 #undef WHERE
+
+
+
 
 CK_FUNCTION_LIST pkcs11_function_list = {
 	{ 2, 20 },
