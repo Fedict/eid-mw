@@ -182,7 +182,7 @@ static bool robot_has_data(int fd, int delay_secs) {
 	return FD_ISSET(fd, &rb) ? true : false;
 }
 
-CK_BBOOL init_robot(int fd) {
+CK_BBOOL init_robot(int fd, char type_char) {
 	struct termios ios;
 	char line[80];
 	int len = 0;
@@ -273,8 +273,8 @@ CK_BBOOL init_robot(int fd) {
 					}
 				}
 				robot_unit = line[rp.offset + 2] - 0x30;
-				if(line[rp.offset + 4] == 'U') {
-					fprintf(stderr, "Robot does not match: USB device found where card expected\n");
+				if(line[rp.offset + 4] != type_char) {
+					fprintf(stderr, "Robot does not match: wrong robot type found\n");
 					return CK_FALSE;
 				}
 			}
@@ -313,7 +313,7 @@ CK_BBOOL open_robot(char* envvar) {
 	printf("opening card robot at %s\n", dev);
 	robot_dev = open(dev, O_RDWR | O_NOCTTY | O_EXLOCK | O_NONBLOCK);
 	free(dev);
-	return init_robot(robot_dev);
+	return init_robot(robot_dev, 'C');
 }
 
 CK_BBOOL open_reader_robot(char* envvar) {
@@ -330,7 +330,7 @@ CK_BBOOL open_reader_robot(char* envvar) {
 	}
 	printf("opening reader robot at %s\n", dev);
 	reader_dev = open(dev, O_RDWR | O_NOCTTY | O_NONBLOCK);
-	return init_robot(reader_dev);
+	return init_robot(reader_dev, 'U');
 }
 #endif
 
