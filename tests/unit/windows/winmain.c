@@ -161,7 +161,7 @@ int	_tmain(int argc, _TCHAR* argv[]){
 		}
 		if(eIDTests[i].result != eIDTests[i].expectresult)
 		{
-			testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x Expected Result\n", eIDTests[i].result, eIDTests[i].expectresult );
+			testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x Expected Result  0x%.8x\n", eIDTests[i].result, eIDTests[i].expectresult );
 		}
 		/*
 		else
