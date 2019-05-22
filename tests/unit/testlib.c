@@ -33,6 +33,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <errno.h>
 
 #include "testlib.h"
 
@@ -41,10 +42,16 @@
 #endif
 
 #ifdef HAVE_TERMIOS_H
+#include <sys/select.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/ioctl.h>
 #include <fcntl.h>
 #include <termios.h>
+#ifndef O_EXLOCK
+// Needed on macOS
+#define O_EXLOCK 0
+#endif
 #endif
 
 int va_counter;
@@ -55,11 +62,71 @@ extern _TCHAR* eid_dialogs_style;
 extern _TCHAR* eid_builtin_reader;
 #endif
 
-static const char* banners[] = {
-	"VELLEMAN_SHIELD_KIT     800 STEPS       60 RPM",
-	"system ready",
-	"READY.",
+typedef enum {
+	NOTHING_FOUND,
+	VELLEMAN_FOUND,
+	SYSTEM_FOUND,
+} reading_pos;
+
+struct rpos {
+	reading_pos pos;
+	size_t offset;
+	bool is_complete;
 };
+
+struct banners {
+	char* banner;
+	reading_pos pos;
+};
+
+static struct banners banners[] = {
+	{ "VELLEMAN_SHIELD_KIT\t800 STEPS\t60 RPM", VELLEMAN_FOUND },
+	{ "system ready", SYSTEM_FOUND },
+	{ "READY.", SYSTEM_FOUND },
+};
+
+struct rpos skip_uninteresting(char* line) {
+	size_t len;
+	int i;
+	char *firstline = strdup(line);
+	bool finished = false;
+	struct rpos rv = {NOTHING_FOUND, 0, false};
+
+	while(!finished) {
+		if(rv.offset == strlen(line)) {
+			finished = true;
+			continue;
+		}
+		if((len = strcspn(line + rv.offset, "\r\n")) != strlen(line + rv.offset)) {
+			if(len == 0) {
+				rv.offset++;
+				continue;
+			} else {
+				free(firstline);
+				firstline = strndup(line + rv.offset, len);
+			}
+		}
+		if(!finished) {
+			finished = true;
+			for(i=0; i<sizeof(banners) / sizeof(banners[0]); i++) {
+				char *pos = strstr(banners[i].banner, firstline);
+				if(pos != NULL) {
+					rv.offset += len;
+					rv.pos = banners[i].pos;
+					finished = false;
+					if(strlen(pos) == strlen(firstline)) {
+						rv.is_complete = true;
+					} else {
+						rv.is_complete = false;
+					}
+				}
+			}
+		}
+	}
+
+	free(firstline);
+	return rv;
+}
 
 enum {
 	ROBOT_NONE,
@@ -102,6 +169,7 @@ int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) 
 	return TEST_RV_OK;
 }
 
+#ifdef HAVE_TERMIOS_H
 static bool robot_has_data(int fd, int delay_secs) {
 	struct timeval tv;
 
@@ -114,13 +182,111 @@ static bool robot_has_data(int fd, int delay_secs) {
 	return FD_ISSET(fd, &rb) ? true : false;
 }
 
-#ifdef HAVE_TERMIOS_H
+CK_BBOOL init_robot(int fd, char type_char) {
+	struct termios ios;
+	char line[80];
+	int len = 0;
+	struct rpos rp;
+
+	if(fd < 0) {
+		perror("open card robot");
+		return CK_FALSE;
+	}
+	if(ioctl(fd, TIOCEXCL) == -1) {
+		perror("ioctl TIOCEXCL");
+		return CK_FALSE;
+	}
+	if(fcntl(fd, F_SETFL, 0) == -1) {
+		perror("clearing O_NONBLOCK");
+		return CK_FALSE;
+	}
+	tcgetattr(fd, &ios);
+	cfsetispeed(&ios, B9600);
+	cfsetospeed(&ios, B9600);
+	ios.c_cflag &= ~PARENB & ~CSTOPB & ~CSIZE;
+	ios.c_cflag |= CLOCAL | CREAD | CS8 | CRTSCTS;
+	ios.c_lflag |= ICANON;
+	tcsetattr(fd, TCSANOW, &ios);
+	tcflow(fd, TCOON);
+
+	bool written = false;
+	while(!written) {
+		if(write(fd, "R", 1) == -1) {
+			if(errno != EAGAIN) {
+				perror("write");
+				return CK_FALSE;
+			}
+		} else {
+			written = true;
+		}
+	}
+
+	len = 0;
+	do {
+		ssize_t read_len = read(fd, line+len, sizeof(line) - len);
+		if(read_len < 0) {
+			if(errno == EAGAIN) {
+				usleep(20);
+				continue;
+			} else {
+				perror("Could not read robot");
+				return CK_FALSE;
+			}
+		}
+		len += read_len;
+		line[len]=0;
+		if(robot_type == ROBOT_AUTO) {
+			if(strncmp(line, "READY.", len < 6 ? len : 6)) {
+				fprintf(stderr, "Robot not found: received %s from serial line, expecting \"READY.\\n\"\n", line);
+				return CK_FALSE;
+			}
+		} else {
+			rp = skip_uninteresting(line);
+			if(rp.pos < SYSTEM_FOUND || !rp.is_complete) {
+				continue;
+			}
+			if(strlen(line) == rp.offset) {
+				written = false;
+				while(!written) {
+					if(write(fd, "t", 1) == -1) {
+						if(errno != EAGAIN) {
+							perror("write");
+							return CK_FALSE;
+						} else {
+							usleep(20);
+						}
+					} else {
+						written = true;
+					}
+				}
+				continue;
+			}
+			if(line[rp.offset] != 'T') {
+				fprintf(stderr, "Robot not found: received %s from serial line, expecting \"T\"\n", line);
+				return CK_FALSE;
+			}
+			if((len - rp.offset) > 4 && line[rp.offset + 1] == 'B') {
+				if(robot_unit != 0) {
+					if(line[rp.offset + 2] - 0x30 != robot_unit) {
+						fprintf(stderr, "Robot does not match: card and USB devices not the same\n");
+						return CK_FALSE;
+					}
+				}
+				robot_unit = line[rp.offset + 2] - 0x30;
+				if(line[rp.offset + 4] != type_char) {
+					fprintf(stderr, "Robot does not match: wrong robot type found\n");
+					return CK_FALSE;
+				}
+			}
+		}
+	} while(line[len-1] != '\n' || rp.pos < SYSTEM_FOUND || !rp.is_complete || rp.offset == strlen(line));
+
+	return CK_TRUE;
+}
+
 CK_BBOOL open_robot(char* envvar) {
 	char* dev;
-	char line[80];
-	char *buf = (char*)line;
-	int len;
-	struct termios ios;
+
 	switch(robot_type) {
 	case ROBOT_AUTO:
 		if(strlen(envvar) == strlen("fedict")) {
@@ -136,7 +302,7 @@ CK_BBOOL open_robot(char* envvar) {
 			char *p;
 			dev = strdup(strchr(envvar, ':') + 1);
 			if((p = strchr(dev, ':')) != NULL) {
-				*p = NULL;
+				*p = '\0';
 			}
 		}
 		break;
@@ -145,69 +311,14 @@ CK_BBOOL open_robot(char* envvar) {
 		return CK_FALSE;
 	}
 	printf("opening card robot at %s\n", dev);
-	robot_dev = open(dev, O_RDWR | O_NOCTTY | O_NONBLOCK);
+	robot_dev = open(dev, O_RDWR | O_NOCTTY | O_EXLOCK | O_NONBLOCK);
 	free(dev);
-	if(robot_dev < 0) {
-		perror("could not open robot");
-		return CK_FALSE;
-	}
-	tcgetattr(robot_dev, &ios);
-	cfsetispeed(&ios, B9600);
-	cfsetospeed(&ios, B9600);
-	ios.c_cflag |= CREAD | CS8 | CRTSCTS;
-	ios.c_cflag &= ~PARENB;
-	ios.c_lflag |= ICANON;
-	tcsetattr(robot_dev, TCSANOW, &ios);
-
-	write(robot_dev, "R", 1);
-	if(robot_type == ROBOT_AUTO_2) {
-		usleep(200);
-		tcflush(robot_dev, TCIFLUSH);
-		write(robot_dev, "t", 1);
-	}
-
-	len = 0;
-	do {
-		if(!robot_has_data(robot_dev, 1)) {
-			return CK_FALSE;
-		}
-		len += read(robot_dev, line+len, 79);
-		line[len]=0;
-		if(robot_type == ROBOT_AUTO) {
-			if(strncmp(line, "READY.", len < 6 ? len : 6)) {
-				fprintf(stderr, "Robot not found: received %s from serial line, expecting \"READY.\\n\"\n", line);
-				return CK_FALSE;
-			}
-		} else {
-			if(line[0] != 'T') {
-				fprintf(stderr, "Robot not found: received %s from serial line, expecting \"T\"\n", line);
-				return CK_FALSE;
-			}
-			if(len > 2 && line[1] == 'B') {
-				if(robot_unit != 0) {
-					if(line[2] - 0x30 != robot_unit) {
-						fprintf(stderr, "Robot does not match: card and USB devices not the same\n");
-						return CK_FALSE;
-					}
-				}
-				robot_unit = line[2] - 0x30;
-				if(line[4] == 'U') {
-					fprintf(stderr, "Robot does not match: USB device found where card expected\n");
-					return CK_FALSE;
-				}
-			}
-		}
-	} while(line[len-1] != '\n');
-
-	return CK_TRUE;
+	return init_robot(robot_dev, 'C');
 }
 
 CK_BBOOL open_reader_robot(char* envvar) {
 	char* dev;
-	char line[80];
-	char *buf = (char*)line;
-	int len;
-	struct termios ios;
+
 	if(robot_type != ROBOT_AUTO_2) {
 		fprintf(stderr, "E: no reader robot connected!\n");
 		return CK_FALSE;
@@ -219,51 +330,7 @@ CK_BBOOL open_reader_robot(char* envvar) {
 	}
 	printf("opening reader robot at %s\n", dev);
 	reader_dev = open(dev, O_RDWR | O_NOCTTY | O_NONBLOCK);
-	if(reader_dev < 0) {
-		perror("could not open reader robot");
-		return CK_FALSE;
-	}
-	tcgetattr(reader_dev, &ios);
-	cfsetispeed(&ios, B9600);
-	cfsetospeed(&ios, B9600);
-	ios.c_cflag |= CREAD | CS8 | CRTSCTS;
-	ios.c_cflag &= ~PARENB;
-	ios.c_lflag |= ICANON;
-	tcsetattr(reader_dev, TCSANOW, &ios);
-
-	write(reader_dev, "R", 1);
-	usleep(200);
-	tcflush(dev, TCIFLUSH);
-	write(reader_dev, "t", 1);
-	tcdrain(reader_dev);
-
-	len = 0;
-	do {
-		if(!robot_has_data(reader_dev, 1)) {
-			return CK_FALSE;
-		}
-		len += read(reader_dev, line+len, 79);
-		line[len]=0;
-		if(line[0] != 'T') {
-			fprintf(stderr, "Robot not found: received %s from serial line, expecting \"T\"\n", line);
-			return CK_FALSE;
-		}
-		if(len > 2 && line[1] == 'B') {
-			if(robot_unit != 0) {
-				if(line[2] - 0x30 != robot_unit) {
-					fprintf(stderr, "Robot does not match: card and USB devices not the same\n");
-					return CK_FALSE;
-				}
-			}
-			robot_unit = line[2] - 0x30;
-			if(line[4] == 'C') {
-				fprintf(stderr, "Robot does not match: card device found where USB expected\n");
-				return CK_FALSE;
-			}
-		}
-	} while(line[len-1] != '\n');
-
-	return CK_TRUE;
+	return init_robot(reader_dev, 'U');
 }
 #endif
 
@@ -532,7 +599,7 @@ char* ckm_to_charp(CK_MECHANISM_TYPE mech) {
 	}
 }
 
-void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
+void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result, char *which) {
 #ifdef HAVE_TERMIOS_H
 	struct expect {
 		char command;
@@ -542,34 +609,24 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
 		{ 'e', "ejected" },
 		{ 'p', "parked" },
 	};
-	int len;
+	int len = 0;
 	char line[80];
 	unsigned int i;
-	bool found;
 
-	tcflush(dev, TCIFLUSH);
-
-	printf("sending robot command %c...\n", cmd);
+	printf("sending command %c to %s robot...\n", cmd, which);
 	write(dev, &cmd, 1);
 	if(!check_result) {
 		printf("\tdone, not waiting\n");
 		return;
 	}
 	do {
-		found = true;
-		do {
-			if(!robot_has_data(dev, 1)) {
-				exit(EXIT_FAILURE);
-			}
-			len += read(dev, line+len, 79);
-			line[len]='\0';
-		} while(line[len-1] != '\n');
-		for(i=0;i<sizeof(banners) / sizeof(banners[0]); i++) {
-			if(strstr(banners[i], line) != NULL) {
-				found=false;
-			}
+		if(!robot_has_data(dev, 5)) {
+			fprintf(stderr, "No reply from robot after 5 seconds\n");
+			exit(EXIT_FAILURE);
 		}
-	} while(!found);
+		len += read(dev, line+len, 79);
+		line[len]='\0';
+	} while(line[len-1] != '\n');
 	for(i=0; i<sizeof(expected) / sizeof(struct expect); i++) {
 		if(expected[i].command == cmd) {
 			if(strncmp(expected[i].result, line, strlen(expected[i].result))) {
@@ -587,11 +644,11 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
 }
 
 void robot_cmd(char cmd, CK_BBOOL check_result) {
-	return robot_cmd_l(robot_dev, cmd, check_result);
+	return robot_cmd_l(robot_dev, cmd, check_result, "card");
 }
 
 void reader_cmd(char cmd, CK_BBOOL check_result) {
-	return robot_cmd_l(reader_dev, cmd, check_result);
+	return robot_cmd_l(reader_dev, cmd, check_result, "reader");
 }
 
 void robot_insert_card() {

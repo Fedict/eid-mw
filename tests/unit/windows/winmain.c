@@ -31,6 +31,7 @@
 
 _TCHAR* eid_robot_style = NULL;
 _TCHAR*	eid_dialogs_style = NULL;
+_TCHAR* eid_builtin_reader = NULL;
 
 /*
  * Main function
@@ -131,6 +132,9 @@ int	_tmain(int argc, _TCHAR* argv[]){
 
 	if(argc >=3)
 		eid_dialogs_style = argv[2];
+
+	if(argc >=4)
+		eid_builtin_reader = argv[3];
 
 	error = initLog();
 	if(error != 0)
