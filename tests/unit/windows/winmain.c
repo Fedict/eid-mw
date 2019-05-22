@@ -103,7 +103,7 @@ int	_tmain(int argc, _TCHAR* argv[]){
 			{0,CKR_OK,"tests sessions",&sessions},
 			{0,CKR_OK,"tests sessions_nocard",&sessions_nocard},
 			{0,CKR_OK,"tests sessioninfo",&sessioninfo},
-			{0,CKR_OK,"tests login",&login},
+//			{0,CKR_OK,"tests login",&login},
 			{0,CKR_OK,"tests nonsensible",&nonsensible},
 			{0,CKR_OK,"tests objects",&objects},
 			{0,CKR_OK,"tests readdata",&readdata},

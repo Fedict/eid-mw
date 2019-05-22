@@ -88,7 +88,11 @@ static struct banners banners[] = {
 struct rpos skip_uninteresting(char* line) {
 	size_t len;
 	int i;
+#ifdef WIN32
+	char *firstline = _strdup(line);
+#else
 	char *firstline = strdup(line);
+#endif
 	bool finished = false;
 	struct rpos rv = {NOTHING_FOUND, 0, false};
 
@@ -379,7 +383,7 @@ CK_BBOOL have_robot() {
 CK_BBOOL have_reader_robot(void) {
 #ifdef WIN32
 	char* envvar_rbt = eid_robot_style;
-	char* envvar_rdr = eid_builtin_reader
+	char* envvar_rdr = eid_builtin_reader;
 #else
 	char* envvar_rbt = getenv("EID_ROBOT_STYLE");
 	char* envvar_rdr = getenv("EID_BUILTIN_READER");
