@@ -599,7 +599,7 @@ char* ckm_to_charp(CK_MECHANISM_TYPE mech) {
 	}
 }
 
-void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
+void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result, char *which) {
 #ifdef HAVE_TERMIOS_H
 	struct expect {
 		char command;
@@ -613,7 +613,7 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
 	char line[80];
 	unsigned int i;
 
-	printf("sending robot command %c...\n", cmd);
+	printf("sending command %c to %s robot...\n", cmd, which);
 	write(dev, &cmd, 1);
 	if(!check_result) {
 		printf("\tdone, not waiting\n");
@@ -644,11 +644,11 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result) {
 }
 
 void robot_cmd(char cmd, CK_BBOOL check_result) {
-	return robot_cmd_l(robot_dev, cmd, check_result);
+	return robot_cmd_l(robot_dev, cmd, check_result, "card");
 }
 
 void reader_cmd(char cmd, CK_BBOOL check_result) {
-	return robot_cmd_l(reader_dev, cmd, check_result);
+	return robot_cmd_l(reader_dev, cmd, check_result, "reader");
 }
 
 void robot_insert_card() {
