@@ -617,6 +617,9 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result, char *which) {
 	char line[80];
 	unsigned int i;
 
+	while(robot_has_data(dev, 0)) {
+		read(dev, line, sizeof line);
+	}
 	printf("sending command %c to %s robot...\n", cmd, which);
 	write(dev, &cmd, 1);
 	if(!check_result) {
