@@ -252,9 +252,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>robocopy  "$(ProjectDir)..\..\certs\" "$(ProjectDir)\Resources\Certs\" *.pem
-robocopy  "$(ProjectDir)..\..\resources\" "$(ProjectDir)\Resources\Images\" *.png
-robocopy  "$(ProjectDir)..\..\resources\" "$(ProjectDir)\Resources\Images\" *.jpg
+    <PreBuildEvent>robocopy  $(ProjectDir)..\..\certs\ $(ProjectDir)\Resources\Certs\ *.pem
+robocopy  $(ProjectDir)..\..\resources\ $(ProjectDir)\Resources\Images\ *.png
+robocopy  $(ProjectDir)..\..\resources\ $(ProjectDir)\Resources\Images\ *.jpg
 exit 0</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
