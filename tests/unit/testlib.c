@@ -616,10 +616,11 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result, char *which) {
 	struct expect {
 		char command;
 		char* result;
+		bool wait;
 	} expected[] = {
-		{ 'i', "inserted" },
-		{ 'e', "ejected" },
-		{ 'p', "parked" },
+		{ 'i', "inserted", true },
+		{ 'e', "ejected", false },
+		{ 'p', "parked", false },
 	};
 	int len = 0;
 	char line[80];
@@ -648,7 +649,11 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result, char *which) {
 				fprintf(stderr, "Robot handling failed: expected %s, received %s\n", expected[i].result, line);
 				exit(TEST_RV_SKIP);
 			}
-			usleep(200);
+			if(expected[i].wait) {
+				sleep(2);
+			} else {
+				usleep(200);
+			}
 			printf("\tok\n");
 			return;
 		}
