@@ -28,10 +28,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef WIN32
 #include <eid-util/utftranslate.h>
 #include <eid-util/labels.h>
-#endif
 
 #include "testlib.h"
 

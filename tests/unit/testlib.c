@@ -54,6 +54,14 @@
 #endif
 #endif
 
+#ifdef WIN32
+char *strndup(const char *s, size_t n) {
+	char *rv = calloc(n + 1, 1);
+	strncpy(rv, s, n);
+	return rv;
+}
+#endif
+
 int va_counter;
 int fc_counter;
 #ifdef WIN32
@@ -667,9 +675,6 @@ void robot_insert_card() {
 		case ROBOT_AUTO:
 		case ROBOT_AUTO_2:
 			robot_cmd('i', CK_TRUE);
-			// wait a bit after the card was inserted, to ensure
-			// that the reader has detected it ...
-			sleep(2);
 			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please insert a card and press <enter>\n");
@@ -742,7 +747,6 @@ void robot_insert_reader() {
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO_2:
 			reader_cmd('i', CK_TRUE);
-			sleep(2);
 			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please insert a reader and press <enter>\n");
@@ -766,7 +770,6 @@ void robot_remove_reader() {
 			exit(EXIT_FAILURE);
 		case ROBOT_AUTO_2:
 			reader_cmd('e', CK_TRUE);
-			sleep(2);
 			break;
 		case ROBOT_MECHANICAL_TURK:
 			printf("Please remove all readers and press <enter>\nIf you are not able to remove one or more readers from the computer, please set the EID_BUILTIN_READER environment variable to a non-empty value\n");
