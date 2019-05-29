@@ -150,6 +150,7 @@ int	_tmain(int argc, _TCHAR* argv[]){
 
 	while (i < nrofTests )
 	{
+		printf("test %d: %s\n", i, eIDTests[i].testDescription);
 		eIDTests[i].result = eIDTests[i].test_function_ptr();
 		i++;
 	}
