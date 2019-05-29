@@ -95,16 +95,22 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\decode_photo.c" />
     <ClCompile Include="..\digest.c" />
     <ClCompile Include="..\double_init.c" />
+    <ClCompile Include="..\funclist.c" />
     <ClCompile Include="..\getinfo.c" />
     <ClCompile Include="..\init_finalize.c" />
     <ClCompile Include="..\login.c" />
+    <ClCompile Include="..\login_state.c" />
     <ClCompile Include="..\mechinfo.c" />
     <ClCompile Include="..\mechlist.c" />
     <ClCompile Include="..\nonsensible.c" />
     <ClCompile Include="..\objects.c" />
+    <ClCompile Include="..\ordering.c" />
     <ClCompile Include="..\readdata.c" />
+    <ClCompile Include="..\readdata_limited.c" />
+    <ClCompile Include="..\readdata_sequence.c" />
     <ClCompile Include="..\sessioninfo.c" />
     <ClCompile Include="..\sessions.c" />
     <ClCompile Include="..\sessions_nocard.c" />
@@ -115,6 +121,7 @@
     <ClCompile Include="..\slotlist.c" />
     <ClCompile Include="..\testlib.c" />
     <ClCompile Include="..\tkinfo.c" />
+    <ClCompile Include="..\wrong_init.c" />
     <ClCompile Include="logtest.c" />
     <ClCompile Include="winmain.c" />
     <ClCompile Include="..\..\..\plugins_tools\util\labels.c" />

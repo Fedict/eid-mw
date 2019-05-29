@@ -98,20 +98,23 @@ int	_tmain(int argc, _TCHAR* argv[]){
 			{0,"tests double_init",&double_init},
 			{0,"tests slotevent",&slotevent},
 			{0,"tests mechlist",&mechlist},
-	
-
-		{0,"tests mechinfo",&mechinfo},
+			{0,"tests mechinfo",&mechinfo},
 			{0,"tests sessions",&sessions},
 			{0,"tests sessions_nocard",&sessions_nocard},
 			{0,"tests sessioninfo",&sessioninfo},
-//			{0,"tests login",&login},
+			{0,"tests login",&slogin},
 			{0,"tests nonsensible",&nonsensible},
 			{0,"tests objects",&objects},
 			{0,"tests readdata",&readdata},
+			{0,"tests readdata_limited", &readdata_limited},
+			{0,"tests readdata_sequence", &readdata_sequence},
 			{0,"tests digest",&digest},
+			{0,"tests sign", &sign},
 			{0,"tests sign_state",&sign_state},
-
-			//{0,"tests initialize/finalize",&decode_photo},
+			{0,"tests reading the photo",&decode_photo},
+			{0,"tests ordering",&ordering},
+			{0,"tests wrong_init", &wrong_init},
+			{0,"tests login_state", &login_state},
 
 
 //		{{0,TEST_SKIPPED},"tests getting all the objects from the card",&test_getallidobjects},
