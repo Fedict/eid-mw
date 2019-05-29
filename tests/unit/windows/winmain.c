@@ -18,8 +18,11 @@
 
 **************************************************************************** */
 
-#include <win32.h>
-#include <pkcs11.h>
+#include "win32.h"
+#pragma pack(push, cryptoki, 1)
+#include "pkcs11.h"
+#pragma pack(pop, cryptoki)
+
 #include <time.h>
 
 #include "stdafx.h"
