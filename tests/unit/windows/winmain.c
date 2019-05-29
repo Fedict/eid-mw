@@ -166,13 +166,13 @@ int	_tmain(int argc, _TCHAR* argv[]){
 		}
 		switch(eIDTests[i].result) {
 			case TEST_RV_OK:
-				testlog(LVL_NOLEVEL,"OK");
+				testlog(LVL_NOLEVEL,"OK\n");
 				break;
 			case TEST_RV_SKIP:
-				testlog(LVL_NOLEVEL, "SKIPPED");
+				testlog(LVL_NOLEVEL, "SKIPPED\n");
 				break;
 			case TEST_RV_FAIL:
-				testlog(LVL_NOLEVEL, "FAILED");
+				testlog(LVL_NOLEVEL, "FAILED\n");
 				break;
 		}
 		/*
