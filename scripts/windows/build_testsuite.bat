@@ -11,9 +11,9 @@
 @call "%~dp0.\create_eidmw_version_files.cmd"
 
 
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\tests\units\windows\Pkcs11_tests.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\tests\unit\windows\Pkcs11_tests.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\tests\units\windows\Pkcs11_tests.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\tests\unit\windows\Pkcs11_tests.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 goto end_resetpath
