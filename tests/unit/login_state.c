@@ -30,7 +30,7 @@
 
 static int notify_called = 0;
 
-CK_RV notify_login(CK_SESSION_HANDLE handle EIDT_UNUSED, CK_NOTIFICATION event EIDT_UNUSED, CK_VOID_PTR ptr EIDT_UNUSED) {
+static CK_RV notify_login(CK_SESSION_HANDLE handle EIDT_UNUSED, CK_NOTIFICATION event EIDT_UNUSED, CK_VOID_PTR ptr EIDT_UNUSED) {
 	printf("INFO: notify called\n");
 	notify_called = 1;
 	return CKR_OK;

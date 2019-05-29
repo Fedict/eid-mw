@@ -28,7 +28,7 @@
 
 #include "testlib.h"
 
-CK_RV notify_login(CK_SESSION_HANDLE handle EIDT_UNUSED, CK_NOTIFICATION event EIDT_UNUSED, CK_VOID_PTR ptr EIDT_UNUSED) {
+static CK_RV notify_login(CK_SESSION_HANDLE handle EIDT_UNUSED, CK_NOTIFICATION event EIDT_UNUSED, CK_VOID_PTR ptr EIDT_UNUSED) {
 	printf("INFO: notification called\n");
 	return CKR_OK;
 }
