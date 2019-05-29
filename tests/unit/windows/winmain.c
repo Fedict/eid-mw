@@ -43,7 +43,6 @@ _TCHAR* eid_builtin_reader = NULL;
 //int _tmain(int argc, _TCHAR* argv[]){
 typedef	struct {
 	int result;
-	int expectresult;
 	char* testDescription;
 	int (*test_function_ptr)(void);
 } eIDTest;
@@ -91,29 +90,29 @@ int	_tmain(int argc, _TCHAR* argv[]){
 //	{{0,TEST_SKIPPED},"tests getting the keys from the card",&test_getkeys},
 //	{{0,TEST_SKIPPED},"tests the return values of the getattributes function",&test_getkeys_retvals},
 	//{{0,TEST_SKIPPED},"tests getting all the objects from the card",&test_getallobjects},
-		{0,CKR_OK,"tests initialize/finalize",&init_finalize},
-			{0,CKR_OK,"tests getinfo",&getinfo},
-			//{0,CKR_OK,"tests initialize/finalize",&funclist},
-			{0,CKR_OK,"tests slotlist",&slotlist},
-			{0,CKR_OK,"tests slotinfo",&slotinfo},
-			{0,CKR_OK,"tests tkinfo",&tkinfo},
-			{0,CKR_OK,"tests double_init",&double_init},
-			{0,CKR_OK,"tests slotevent",&slotevent},
-			{0,CKR_OK,"tests mechlist",&mechlist},
+		{0,"tests initialize/finalize",&init_finalize},
+			{0,"tests getinfo",&getinfo},
+			//{0,"tests initialize/finalize",&funclist},
+			{0,"tests slotlist",&slotlist},
+			{0,"tests slotinfo",&slotinfo},
+			{0,"tests tkinfo",&tkinfo},
+			{0,"tests double_init",&double_init},
+			{0,"tests slotevent",&slotevent},
+			{0,"tests mechlist",&mechlist},
 	
 
-		{0,CKR_OK,"tests mechinfo",&mechinfo},
-			{0,CKR_OK,"tests sessions",&sessions},
-			{0,CKR_OK,"tests sessions_nocard",&sessions_nocard},
-			{0,CKR_OK,"tests sessioninfo",&sessioninfo},
-//			{0,CKR_OK,"tests login",&login},
-			{0,CKR_OK,"tests nonsensible",&nonsensible},
-			{0,CKR_OK,"tests objects",&objects},
-			{0,CKR_OK,"tests readdata",&readdata},
-			{0,CKR_OK,"tests digest",&digest},
-			{0,CKR_OK,"tests sign_state",&sign_state},
+		{0,"tests mechinfo",&mechinfo},
+			{0,"tests sessions",&sessions},
+			{0,"tests sessions_nocard",&sessions_nocard},
+			{0,"tests sessioninfo",&sessioninfo},
+//			{0,"tests login",&login},
+			{0,"tests nonsensible",&nonsensible},
+			{0,"tests objects",&objects},
+			{0,"tests readdata",&readdata},
+			{0,"tests digest",&digest},
+			{0,"tests sign_state",&sign_state},
 
-			//{0,CKR_OK,"tests initialize/finalize",&decode_photo},
+			//{0,"tests initialize/finalize",&decode_photo},
 
 
 //		{{0,TEST_SKIPPED},"tests getting all the objects from the card",&test_getallidobjects},
@@ -162,9 +161,16 @@ int	_tmain(int argc, _TCHAR* argv[]){
 			testlog(LVL_NOLEVEL,"_______________________________________________\n");
 			testlog(LVL_NOLEVEL,"Test %d %s \n", i, eIDTests[i].testDescription);
 		}
-		if(eIDTests[i].result != eIDTests[i].expectresult)
-		{
-			testlog(LVL_NOLEVEL,"FAILED : Result = 0x%.8x Expected Result  0x%.8x\n", eIDTests[i].result, eIDTests[i].expectresult );
+		switch(eIDTests[i].result) {
+			case TEST_RV_OK:
+				testlog(LVL_NOLEVEL,"OK");
+				break;
+			case TEST_RV_SKIP:
+				testlog(LVL_NOLEVEL, "SKIPPED");
+				break;
+			case TEST_RV_FAIL:
+				testlog(LVL_NOLEVEL, "FAILED");
+				break;
 		}
 		/*
 		else
