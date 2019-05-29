@@ -241,10 +241,4 @@ int	_tmain(int argc, _TCHAR* argv[]){
 	testlog(LVL_NOLEVEL,"\n===============================================\n");
 
 	endLog();
-	testlog(LVL_NOLEVEL,"press a key to end the test\n");
-	// Wait for user to end this test
-#ifdef WIN32
-	getchar();
-#endif
 }
-
